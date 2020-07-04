@@ -19,13 +19,11 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace ImageGlass.ImageListView
-{
+namespace ImageGlass.ImageListView {
     /// <summary>
     /// Represents the layout of the image list view drawing area.
     /// </summary>
-    internal class ImageListViewLayoutManager
-    {
+    internal class ImageListViewLayoutManager {
         #region Member Variables
         private Rectangle mClientArea;
         private ImageListView mImageListView;
@@ -115,10 +113,8 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Determines whether an update is required.
         /// </summary>
-        public bool UpdateRequired
-        {
-            get
-            {
+        public bool UpdateRequired {
+            get {
                 if (mImageListView.View != cachedView)
                     return true;
                 else if (mImageListView.ViewOffset != cachedViewOffset)
@@ -156,8 +152,7 @@ namespace ImageGlass.ImageListView
         /// Initializes a new instance of the ImageListViewLayoutManager class.
         /// </summary>
         /// <param name="owner">The owner control.</param>
-        public ImageListViewLayoutManager(ImageListView owner)
-        {
+        public ImageListViewLayoutManager(ImageListView owner) {
             mImageListView = owner;
             cachedVisibleItems = new Dictionary<Guid, bool>();
 
@@ -174,31 +169,25 @@ namespace ImageGlass.ImageListView
         /// (partially) visible.
         /// </summary>
         /// <param name="guid">The guid of the item to check.</param>
-        public bool IsItemVisible(Guid guid)
-        {
+        public bool IsItemVisible(Guid guid) {
             return cachedVisibleItems.ContainsKey(guid);
         }
         /// <summary>
         /// Returns the bounds of the item with the specified index.
         /// </summary>
-        public Rectangle GetItemBounds(int itemIndex)
-        {
+        public Rectangle GetItemBounds(int itemIndex) {
             Point location = new Point();
 
-            if (mImageListView.showGroups)
-            {
-                foreach (ImageListView.ImageListViewGroup group in mImageListView.groups)
-                {
-                    if (itemIndex >= group.FirstItemIndex && itemIndex <= group.LastItemIndex)
-                    {
+            if (mImageListView.showGroups) {
+                foreach (ImageListView.ImageListViewGroup group in mImageListView.groups) {
+                    if (itemIndex >= group.FirstItemIndex && itemIndex <= group.LastItemIndex) {
                         location = group.itemBounds.Location;
                         location.X += cachedItemMargin.Width / 2;
                         location.Y += cachedItemMargin.Height / 2;
 
                         if (mImageListView.View == View.Gallery)
                             location.X += (itemIndex - group.FirstItemIndex) * mItemSizeWithMargin.Width;
-                        else
-                        {
+                        else {
                             location.X += ((itemIndex - group.FirstItemIndex) % mDisplayedCols) * mItemSizeWithMargin.Width;
                             location.Y += ((itemIndex - group.FirstItemIndex) / mDisplayedCols) * mItemSizeWithMargin.Height;
                         }
@@ -206,16 +195,14 @@ namespace ImageGlass.ImageListView
                     }
                 }
             }
-            else
-            {
+            else {
                 location = mItemAreaBounds.Location;
                 location.X += cachedItemMargin.Width / 2 - mImageListView.ViewOffset.X;
                 location.Y += cachedItemMargin.Height / 2 - mImageListView.ViewOffset.Y;
 
                 if (mImageListView.View == View.Gallery)
                     location.X += itemIndex * mItemSizeWithMargin.Width;
-                else
-                {
+                else {
                     location.X += (itemIndex % mDisplayedCols) * mItemSizeWithMargin.Width;
                     location.Y += (itemIndex / mDisplayedCols) * mItemSizeWithMargin.Height;
                 }
@@ -227,8 +214,7 @@ namespace ImageGlass.ImageListView
         /// Returns the bounds of the item with the specified index, 
         /// including the margin around the item.
         /// </summary>
-        public Rectangle GetItemBoundsWithMargin(int itemIndex)
-        {
+        public Rectangle GetItemBoundsWithMargin(int itemIndex) {
             Rectangle rec = GetItemBounds(itemIndex);
             rec.Inflate(cachedItemMargin.Width / 2, cachedItemMargin.Height / 2);
             return rec;
@@ -237,16 +223,14 @@ namespace ImageGlass.ImageListView
         /// Returns the item checkbox bounds.
         /// This method assumes a checkbox icon size of 16x16
         /// </summary>
-        public Rectangle GetCheckBoxBounds(int itemIndex)
-        {
+        public Rectangle GetCheckBoxBounds(int itemIndex) {
             Rectangle bounds = GetWidgetBounds(GetItemBounds(itemIndex), new Size(16, 16),
                 mImageListView.CheckBoxPadding, mImageListView.CheckBoxAlignment);
 
             // If the checkbox and the icon have the same alignment,
             // move the checkbox horizontally away from the icon
             if (mImageListView.View != View.Details && mImageListView.CheckBoxAlignment == mImageListView.IconAlignment &&
-                mImageListView.ShowCheckBoxes && mImageListView.ShowFileIcons)
-            {
+                mImageListView.ShowCheckBoxes && mImageListView.ShowFileIcons) {
                 ContentAlignment alignment = mImageListView.CheckBoxAlignment;
                 if (alignment == ContentAlignment.BottomCenter || alignment == ContentAlignment.MiddleCenter || alignment == ContentAlignment.TopCenter)
                     bounds.X -= 8 + mImageListView.IconPadding.Width / 2;
@@ -260,8 +244,7 @@ namespace ImageGlass.ImageListView
         /// Returns the item icon bounds.
         /// This method assumes an icon size of 16x16
         /// </summary>
-        public Rectangle GetIconBounds(int itemIndex)
-        {
+        public Rectangle GetIconBounds(int itemIndex) {
             Rectangle bounds = GetWidgetBounds(GetItemBounds(itemIndex), new Size(16, 16),
                 mImageListView.IconPadding, mImageListView.IconAlignment);
 
@@ -270,8 +253,7 @@ namespace ImageGlass.ImageListView
             if (mImageListView.View == View.Details && mImageListView.ShowCheckBoxes && mImageListView.ShowFileIcons)
                 bounds.X += 16 + 2;
             else if (mImageListView.CheckBoxAlignment == mImageListView.IconAlignment &&
-                mImageListView.ShowCheckBoxes && mImageListView.ShowFileIcons)
-            {
+                mImageListView.ShowCheckBoxes && mImageListView.ShowFileIcons) {
                 ContentAlignment alignment = mImageListView.CheckBoxAlignment;
                 if (alignment == ContentAlignment.BottomLeft || alignment == ContentAlignment.MiddleLeft || alignment == ContentAlignment.TopLeft)
                     bounds.X += 16 + mImageListView.IconPadding.Width;
@@ -285,8 +267,7 @@ namespace ImageGlass.ImageListView
         /// Returns the bounds of a widget.
         /// Used to calculate the bounds of checkboxes and icons.
         /// </summary>
-        private Rectangle GetWidgetBounds(Rectangle bounds, Size size, Size padding, ContentAlignment alignment)
-        {
+        private Rectangle GetWidgetBounds(Rectangle bounds, Size size, Size padding, ContentAlignment alignment) {
             // Apply padding
             if (mImageListView.View == View.Details)
                 bounds.Inflate(-2, -2);
@@ -318,22 +299,19 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Recalculates the control layout.
         /// </summary>
-        public void Update()
-        {
+        public void Update() {
             Update(false);
         }
         /// <summary>
         /// Recalculates the control layout.
         /// <param name="forceUpdate">true to force an update; otherwise false.</param>
         /// </summary>
-        public void Update(bool forceUpdate)
-        {
+        public void Update(bool forceUpdate) {
             if (mImageListView.ClientRectangle.Width == 0 || mImageListView.ClientRectangle.Height == 0)
                 return;
 
             // If only item order is changed, just update visible items.
-            if (!forceUpdate && !UpdateRequired && mImageListView.Items.collectionModified)
-            {
+            if (!forceUpdate && !UpdateRequired && mImageListView.Items.collectionModified) {
                 UpdateGroups();
                 UpdateVisibleItems();
                 return;
@@ -381,8 +359,7 @@ namespace ImageGlass.ImageListView
 
             // Check if we need the scroll bars.
             // Recalculate the layout if scroll bar visibility changes.
-            if (CheckScrollBars())
-            {
+            if (CheckScrollBars()) {
                 Update(true);
                 return;
             }
@@ -401,8 +378,7 @@ namespace ImageGlass.ImageListView
         /// Calculates the maximum number of rows and columns 
         /// that can be fully displayed.
         /// </summary>
-        private void CalculateGrid()
-        {
+        private void CalculateGrid() {
             // Number of rows and columns shown on screen
             mDisplayedRows = (int)System.Math.Floor((float)mItemAreaBounds.Height / (float)mItemSizeWithMargin.Height);
             mDisplayedCols = (int)System.Math.Floor((float)mItemAreaBounds.Width / (float)mItemSizeWithMargin.Width);
@@ -413,13 +389,11 @@ namespace ImageGlass.ImageListView
             if (mDisplayedRows < 1) mDisplayedRows = 1;
 
             // Number of rows and columns to enclose all items
-            if (mImageListView.View == View.Gallery)
-            {
+            if (mImageListView.View == View.Gallery) {
                 mItemRows = mDisplayedRows;
                 mItemCols = (int)System.Math.Ceiling((float)mImageListView.Items.Count / (float)mDisplayedRows);
             }
-            else
-            {
+            else {
                 mItemCols = mDisplayedCols;
                 mItemRows = (int)System.Math.Ceiling((float)mImageListView.Items.Count / (float)mDisplayedCols);
             }
@@ -432,8 +406,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <returns>true if the item area is not empty (both width and height
         /// greater than zero); otherwise false.</returns>
-        private bool UpdateItemArea()
-        {
+        private bool UpdateItemArea() {
             // Calculate drawing area
             mClientArea = mImageListView.ClientRectangle;
             if (mImageListView.BorderStyle != System.Windows.Forms.BorderStyle.None)
@@ -441,20 +414,17 @@ namespace ImageGlass.ImageListView
             mItemAreaBounds = mClientArea;
 
             // Allocate space for scrollbars
-            if (mImageListView.hScrollBar.Visible)
-            {
+            if (mImageListView.hScrollBar.Visible) {
                 mClientArea.Height -= mImageListView.hScrollBar.Height;
                 mItemAreaBounds.Height -= mImageListView.hScrollBar.Height;
             }
-            if (mImageListView.vScrollBar.Visible)
-            {
+            if (mImageListView.vScrollBar.Visible) {
                 mClientArea.Width -= mImageListView.vScrollBar.Width;
                 mItemAreaBounds.Width -= mImageListView.vScrollBar.Width;
             }
 
             // Allocate space for column headers
-            if (mImageListView.View == View.Details)
-            {
+            if (mImageListView.View == View.Details) {
                 int headerHeight = cachedColumnHeaderHeight;
 
                 // Location of the column headers
@@ -466,19 +436,16 @@ namespace ImageGlass.ImageListView
                 mItemAreaBounds.Y += headerHeight;
                 mItemAreaBounds.Height -= headerHeight;
             }
-            else
-            {
+            else {
                 mColumnHeaderBounds = Rectangle.Empty;
             }
             // Modify item area for the gallery view mode
-            if (mImageListView.View == View.Gallery)
-            {
+            if (mImageListView.View == View.Gallery) {
                 mItemAreaBounds.Height = mItemSizeWithMargin.Height;
                 mItemAreaBounds.Y = mClientArea.Bottom - mItemSizeWithMargin.Height;
             }
             // Modify item area for the pane view mode
-            if (mImageListView.View == View.Pane)
-            {
+            if (mImageListView.View == View.Pane) {
                 mItemAreaBounds.Width -= cachedPaneWidth;
                 mItemAreaBounds.X += cachedPaneWidth;
             }
@@ -490,16 +457,14 @@ namespace ImageGlass.ImageListView
         /// Returns true if the layout needs to be recalculated; otherwise false.
         /// </summary>
         /// <returns></returns>
-        private bool CheckScrollBars()
-        {
+        private bool CheckScrollBars() {
             // Horizontal scroll bar
             bool hScrollRequired = false;
             bool hScrollChanged = false;
             if (mImageListView.ScrollBars)
                 hScrollRequired = (mImageListView.Items.Count > 0) && (mItemAreaBounds.Width < totalWidth);
 
-            if (hScrollRequired != hScrollVisible)
-            {
+            if (hScrollRequired != hScrollVisible) {
                 hScrollVisible = hScrollRequired;
                 mImageListView.hScrollBar.Visible = hScrollRequired;
                 hScrollChanged = true;
@@ -511,8 +476,7 @@ namespace ImageGlass.ImageListView
             if (mImageListView.ScrollBars)
                 vScrollRequired = (mImageListView.Items.Count > 0) && (mItemAreaBounds.Height < totalHeight);
 
-            if (vScrollRequired != vScrollVisible)
-            {
+            if (vScrollRequired != vScrollVisible) {
                 vScrollVisible = vScrollRequired;
                 mImageListView.vScrollBar.Visible = vScrollRequired;
                 vScrollChanged = true;
@@ -524,14 +488,11 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Updates scroll bar parameters.
         /// </summary>
-        private void UpdateScrollBars()
-        {
+        private void UpdateScrollBars() {
             // Set scroll range
-            if (mImageListView.Items.Count != 0)
-            {
+            if (mImageListView.Items.Count != 0) {
                 // Horizontal scroll range
-                if (mImageListView.ScrollOrientation == System.Windows.Forms.ScrollOrientation.HorizontalScroll)
-                {
+                if (mImageListView.ScrollOrientation == System.Windows.Forms.ScrollOrientation.HorizontalScroll) {
                     mImageListView.hScrollBar.Minimum = 0;
                     mImageListView.hScrollBar.Maximum = Math.Max(0, totalWidth - 1);
                     if (!mImageListView.IntegralScroll)
@@ -540,29 +501,25 @@ namespace ImageGlass.ImageListView
                         mImageListView.hScrollBar.LargeChange = mItemSizeWithMargin.Width * mDisplayedCols;
                     mImageListView.hScrollBar.SmallChange = mItemSizeWithMargin.Width;
                 }
-                else
-                {
+                else {
                     mImageListView.hScrollBar.Minimum = 0;
                     mImageListView.hScrollBar.Maximum = mDisplayedCols * mItemSizeWithMargin.Width;
                     mImageListView.hScrollBar.LargeChange = mItemAreaBounds.Width;
                     mImageListView.hScrollBar.SmallChange = 1;
                 }
-                if (mImageListView.ViewOffset.X > mImageListView.hScrollBar.Maximum - mImageListView.hScrollBar.LargeChange + 1)
-                {
+                if (mImageListView.ViewOffset.X > mImageListView.hScrollBar.Maximum - mImageListView.hScrollBar.LargeChange + 1) {
                     mImageListView.hScrollBar.Value = mImageListView.hScrollBar.Maximum - mImageListView.hScrollBar.LargeChange + 1;
                     mImageListView.ViewOffset = new Point(mImageListView.hScrollBar.Value, mImageListView.ViewOffset.Y);
                 }
 
                 // Vertical scroll range
-                if (mImageListView.ScrollOrientation == System.Windows.Forms.ScrollOrientation.HorizontalScroll)
-                {
+                if (mImageListView.ScrollOrientation == System.Windows.Forms.ScrollOrientation.HorizontalScroll) {
                     mImageListView.vScrollBar.Minimum = 0;
                     mImageListView.vScrollBar.Maximum = mDisplayedRows * mItemSizeWithMargin.Height;
                     mImageListView.vScrollBar.LargeChange = mItemAreaBounds.Height;
                     mImageListView.vScrollBar.SmallChange = 1;
                 }
-                else
-                {
+                else {
                     mImageListView.vScrollBar.Minimum = 0;
                     mImageListView.vScrollBar.Maximum = Math.Max(0, totalHeight - 1);
                     if (!mImageListView.IntegralScroll)
@@ -571,8 +528,7 @@ namespace ImageGlass.ImageListView
                         mImageListView.vScrollBar.LargeChange = mItemSizeWithMargin.Height * mDisplayedRows;
                     mImageListView.vScrollBar.SmallChange = mItemSizeWithMargin.Height;
                 }
-                if (mImageListView.ViewOffset.Y > mImageListView.vScrollBar.Maximum - mImageListView.vScrollBar.LargeChange + 1)
-                {
+                if (mImageListView.ViewOffset.Y > mImageListView.vScrollBar.Maximum - mImageListView.vScrollBar.LargeChange + 1) {
                     mImageListView.vScrollBar.Value = mImageListView.vScrollBar.Maximum - mImageListView.vScrollBar.LargeChange + 1;
                     mImageListView.ViewOffset = new Point(mImageListView.ViewOffset.X, mImageListView.vScrollBar.Value);
                 }
@@ -601,18 +557,15 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Updates the dictionary of visible items.
         /// </summary>
-        private void UpdateVisibleItems()
-        {
+        private void UpdateVisibleItems() {
             // Find the first and last visible items
-            if (mImageListView.showGroups)
-            {
+            if (mImageListView.showGroups) {
                 mFirstPartiallyVisible = -1;
                 mLastPartiallyVisible = -1;
                 mFirstVisible = -1;
                 mLastVisible = -1;
 
-                foreach (ImageListView.ImageListViewGroup group in mImageListView.groups)
-                {
+                foreach (ImageListView.ImageListViewGroup group in mImageListView.groups) {
                     // Break out if we moved outside the item area
                     if ((mImageListView.View == View.Gallery && group.itemBounds.Left > ItemAreaBounds.Right) ||
                         (mImageListView.View != View.Gallery && group.itemBounds.Top > ItemAreaBounds.Bottom))
@@ -623,43 +576,35 @@ namespace ImageGlass.ImageListView
                         (mImageListView.View != View.Gallery && group.itemBounds.Bottom < ItemAreaBounds.Top))
                         continue;
 
-                    if (mFirstPartiallyVisible < 0)
-                    {
-                        if (mImageListView.View == View.Gallery)
-                        {
+                    if (mFirstPartiallyVisible < 0) {
+                        if (mImageListView.View == View.Gallery) {
                             mFirstPartiallyVisible = group.FirstItemIndex + (int)System.Math.Floor((float)(ItemAreaBounds.Left - group.itemBounds.Left) / (float)mItemSizeWithMargin.Width) * group.itemRows;
                             mFirstVisible = group.FirstItemIndex + (int)System.Math.Ceiling((float)(ItemAreaBounds.Left - group.itemBounds.Left) / (float)mItemSizeWithMargin.Width) * group.itemRows;
                         }
-                        else
-                        {
+                        else {
                             mFirstPartiallyVisible = group.FirstItemIndex + (int)System.Math.Floor((float)(ItemAreaBounds.Top - group.itemBounds.Top) / (float)mItemSizeWithMargin.Height) * group.itemCols;
                             mFirstVisible = group.FirstItemIndex + (int)System.Math.Ceiling((float)(ItemAreaBounds.Top - group.itemBounds.Top) / (float)mItemSizeWithMargin.Height) * group.itemCols;
                         }
                     }
 
-                    if (mImageListView.View == View.Gallery)
-                    {
+                    if (mImageListView.View == View.Gallery) {
                         mLastPartiallyVisible = group.FirstItemIndex + (int)System.Math.Ceiling((float)((ItemAreaBounds.Left - group.itemBounds.Left) + mItemAreaBounds.Width) / (float)mItemSizeWithMargin.Width) * group.itemRows - 1;
                         mLastVisible = group.FirstItemIndex + (int)System.Math.Floor((float)((ItemAreaBounds.Left - group.itemBounds.Left) + mItemAreaBounds.Width) / (float)mItemSizeWithMargin.Width) * group.itemRows - 1;
                     }
-                    else
-                    {
+                    else {
                         mLastPartiallyVisible = group.FirstItemIndex + (int)System.Math.Ceiling((float)((ItemAreaBounds.Top - group.itemBounds.Top) + mItemAreaBounds.Height) / (float)mItemSizeWithMargin.Height) * group.itemCols - 1;
                         mLastVisible = group.FirstItemIndex + (int)System.Math.Floor((float)((ItemAreaBounds.Top - group.itemBounds.Top) + mItemAreaBounds.Height) / (float)mItemSizeWithMargin.Height) * group.itemCols - 1;
                     }
                 }
             }
-            else
-            {
-                if (mImageListView.View == View.Gallery)
-                {
+            else {
+                if (mImageListView.View == View.Gallery) {
                     mFirstPartiallyVisible = (int)System.Math.Floor((float)mImageListView.ViewOffset.X / (float)mItemSizeWithMargin.Width) * mDisplayedRows;
                     mLastPartiallyVisible = (int)System.Math.Ceiling((float)(mImageListView.ViewOffset.X + mItemAreaBounds.Width) / (float)mItemSizeWithMargin.Width) * mDisplayedRows - 1;
                     mFirstVisible = (int)System.Math.Ceiling((float)mImageListView.ViewOffset.X / (float)mItemSizeWithMargin.Width) * mDisplayedRows;
                     mLastVisible = (int)System.Math.Floor((float)(mImageListView.ViewOffset.X + mItemAreaBounds.Width) / (float)mItemSizeWithMargin.Width) * mDisplayedRows - 1;
                 }
-                else
-                {
+                else {
                     mFirstPartiallyVisible = (int)System.Math.Floor((float)mImageListView.ViewOffset.Y / (float)mItemSizeWithMargin.Height) * mDisplayedCols;
                     mLastPartiallyVisible = (int)System.Math.Ceiling((float)(mImageListView.ViewOffset.Y + mItemAreaBounds.Height) / (float)mItemSizeWithMargin.Height) * mDisplayedCols - 1;
                     mFirstVisible = (int)System.Math.Ceiling((float)mImageListView.ViewOffset.Y / (float)mItemSizeWithMargin.Height) * mDisplayedCols;
@@ -683,8 +628,7 @@ namespace ImageGlass.ImageListView
             if (mFirstPartiallyVisible >= 0 &&
                 mLastPartiallyVisible >= 0 &&
                 mFirstPartiallyVisible <= mImageListView.Items.Count - 1 &&
-                mLastPartiallyVisible <= mImageListView.Items.Count - 1)
-            {
+                mLastPartiallyVisible <= mImageListView.Items.Count - 1) {
                 for (int i = mFirstPartiallyVisible; i <= mLastPartiallyVisible; i++)
                     cachedVisibleItems.Add(mImageListView.Items[i].Guid, false);
             }
@@ -695,33 +639,27 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Updates the group display properties.
         /// </summary>
-        private void UpdateGroups()
-        {
+        private void UpdateGroups() {
             if (!mImageListView.showGroups)
                 return;
 
             int x = mItemAreaBounds.Left - mImageListView.ViewOffset.X;
             int y = mItemAreaBounds.Top - mImageListView.ViewOffset.Y;
 
-            if (mImageListView.View == View.Gallery)
-            {
+            if (mImageListView.View == View.Gallery) {
                 totalWidth = 0;
                 totalHeight = mItemAreaBounds.Height;
             }
-            else if (mImageListView.View == View.Details)
-            {
+            else if (mImageListView.View == View.Details) {
                 totalHeight = 0;
             }
-            else
-            {
+            else {
                 totalHeight = 0;
                 totalWidth = mItemAreaBounds.Width;
             }
 
-            foreach (ImageListView.ImageListViewGroup group in mImageListView.groups)
-            {
-                if (mImageListView.View == View.Gallery)
-                {
+            foreach (ImageListView.ImageListViewGroup group in mImageListView.groups) {
+                if (mImageListView.View == View.Gallery) {
                     // Number of rows and columns to enclose all items
                     group.itemRows = mDisplayedRows;
                     group.itemCols = (int)System.Math.Ceiling((float)group.ItemCount / (float)mDisplayedRows);
@@ -741,8 +679,7 @@ namespace ImageGlass.ImageListView
                     // Offset to next group
                     x += group.itemBounds.Width;
                 }
-                else
-                {
+                else {
                     // Number of rows and columns to enclose all items
                     group.itemCols = mDisplayedCols;
                     group.itemRows = (int)System.Math.Ceiling((float)group.ItemCount / (float)mDisplayedCols);

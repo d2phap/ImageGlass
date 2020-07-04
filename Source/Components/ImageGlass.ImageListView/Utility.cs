@@ -17,33 +17,29 @@
 
 using System;
 using System.Drawing;
-using System.IO;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Text;
 
-namespace ImageGlass.ImageListView
-{
+namespace ImageGlass.ImageListView {
     /// <summary>
     /// Contains utility functions.
     /// </summary>
-    public static class Utility
-    {
+    public static class Utility {
         #region Text Utilities
         /// <summary>
         /// Formats the given file size as a human readable string.
         /// </summary>
         /// <param name="size">File size in bytes.</param>
         /// <returns>The formatted string.</returns>
-        public static string FormatSize(long size)
-        {
+        public static string FormatSize(long size) {
             double mod = 1024;
             double sized = size;
 
             // string[] units = new string[] { "B", "KiB", "MiB", "GiB", "TiB", "PiB" };
             string[] units = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
             int i;
-            for (i = 0; sized > mod; i++)
-            {
+            for (i = 0; sized > mod; i++) {
                 sized /= mod;
             }
 
@@ -57,8 +53,7 @@ namespace ImageGlass.ImageListView
         /// grouping with past dates.
         /// </summary>
         /// <param name="date">Date to format.</param>
-        internal static Tuple<int, string> GroupTextDate(DateTime date)
-        {
+        internal static Tuple<int, string> GroupTextDate(DateTime date) {
             DateTime now = DateTime.Now;
             DateTime weekStart = now - new TimeSpan((int)now.DayOfWeek, now.Hour, now.Minute, now.Second, now.Millisecond);
             DateTime monthStart = now - new TimeSpan((int)now.Day, now.Hour, now.Minute, now.Second, now.Millisecond);
@@ -67,68 +62,55 @@ namespace ImageGlass.ImageListView
 
             int order = 0;
             string txt = string.Empty;
-            if (secs < 0)
-            {
+            if (secs < 0) {
                 order = 0;
                 txt = "Not Yet";
             }
-            else if (secs < 60)
-            {
+            else if (secs < 60) {
                 order = 1;
                 txt = "Just now";
             }
-            else if (date.Year == now.Year && date.Month == now.Month && date.Day == now.Day)
-            {
+            else if (date.Year == now.Year && date.Month == now.Month && date.Day == now.Day) {
                 order = 2;
                 txt = "Today";
             }
-            else if (date.Year == now.Year && date.Month == now.Month && date.Day == now.Day - 1)
-            {
+            else if (date.Year == now.Year && date.Month == now.Month && date.Day == now.Day - 1) {
                 order = 3;
                 txt = "Yesterday";
             }
-            else if (date > weekStart)
-            {
+            else if (date > weekStart) {
                 order = 4;
                 txt = "This week";
             }
-            else if (date > weekStart.AddDays(-7))
-            {
+            else if (date > weekStart.AddDays(-7)) {
                 order = 5;
                 txt = "Last week";
             }
-            else if (date > weekStart.AddDays(-14))
-            {
+            else if (date > weekStart.AddDays(-14)) {
                 order = 6;
                 txt = "Two weeks ago";
             }
-            else if (date > weekStart.AddDays(-21))
-            {
+            else if (date > weekStart.AddDays(-21)) {
                 order = 7;
                 txt = "Three weeks ago";
             }
-            else if (date > monthStart)
-            {
+            else if (date > monthStart) {
                 order = 8;
                 txt = "Earlier this month";
             }
-            else if (date > monthStart.AddMonths(-1))
-            {
+            else if (date > monthStart.AddMonths(-1)) {
                 order = 9;
                 txt = "Last month";
             }
-            else if (date > yearStart)
-            {
+            else if (date > yearStart) {
                 order = 10;
                 txt = "Earlier this year";
             }
-            else if (date > yearStart.AddYears(-1))
-            {
+            else if (date > yearStart.AddYears(-1)) {
                 order = 11;
                 txt = "Last year";
             }
-            else
-            {
+            else {
                 order = 12;
                 txt = "Older";
             }
@@ -139,42 +121,34 @@ namespace ImageGlass.ImageListView
         /// Formats the given file size as a human readable string. For use in grouping.
         /// </summary>
         /// <param name="size">File size in bytes.</param>
-        internal static Tuple<int, string> GroupTextFileSize(long size)
-        {
+        internal static Tuple<int, string> GroupTextFileSize(long size) {
             int order = 0;
             string txt = string.Empty;
-            if (size < 10 * 1024)
-            {
+            if (size < 10 * 1024) {
                 order = 0;
                 txt = "< 10 KB";
             }
-            else if (size < 100 * 1024)
-            {
+            else if (size < 100 * 1024) {
                 order = 1;
                 txt = "10 - 100 KB";
             }
-            else if (size < 1024 * 1024)
-            {
+            else if (size < 1024 * 1024) {
                 order = 2;
                 txt = "100 KB - 1 MB";
             }
-            else if (size < 10 * 1024 * 1024)
-            {
+            else if (size < 10 * 1024 * 1024) {
                 order = 3;
                 txt = "1 - 10 MB";
             }
-            else if (size < 100 * 1024 * 1024)
-            {
+            else if (size < 100 * 1024 * 1024) {
                 order = 4;
                 txt = "10 - 100 MB";
             }
-            else if (size < 1024 * 1024 * 1024)
-            {
+            else if (size < 1024 * 1024 * 1024) {
                 order = 5;
                 txt = "100 MB - 1 GB";
             }
-            else
-            {
+            else {
                 order = 6;
                 txt = "> 1 GB";
             }
@@ -184,32 +158,26 @@ namespace ImageGlass.ImageListView
         /// Formats the given image size as a human readable string.
         /// </summary>
         /// <param name="size">Image dimension.</param>
-        internal static Tuple<int, string> GroupTextDimension(Size size)
-        {
+        internal static Tuple<int, string> GroupTextDimension(Size size) {
             int order = 0;
             string txt = string.Empty;
-            if (size.Width <= 32 && size.Height <= 32)
-            {
+            if (size.Width <= 32 && size.Height <= 32) {
                 order = 0;
                 txt = "Icon";
             }
-            else if (size.Width <= 240 && size.Height <= 240)
-            {
+            else if (size.Width <= 240 && size.Height <= 240) {
                 order = 1;
                 txt = "Small";
             }
-            else if (size.Width <= 640 && size.Height <= 640)
-            {
+            else if (size.Width <= 640 && size.Height <= 640) {
                 order = 2;
                 txt = "Medium";
             }
-            else if (size.Width <= 1280 && size.Height <= 1280)
-            {
+            else if (size.Width <= 1280 && size.Height <= 1280) {
                 order = 3;
                 txt = "Large";
             }
-            else
-            {
+            else {
                 order = 4;
                 txt = "Very large";
             }
@@ -220,8 +188,7 @@ namespace ImageGlass.ImageListView
         /// the first letter of the text.
         /// </summary>
         /// <param name="text">The text to format.</param>
-        internal static Tuple<int, string> GroupTextAlpha(string text)
-        {
+        internal static Tuple<int, string> GroupTextAlpha(string text) {
             string txt = text.Substring(0, 1).ToUpperInvariant();
             char order = txt[0];
             return Tuple.Create((int)order, txt);
@@ -236,8 +203,7 @@ namespace ImageGlass.ImageListView
         /// <param name="stream">An open stream pointing to an image file.</param>
         /// <returns>true if the stream is an image file (BMP, TIFF, PNG, GIF, JPEG, WMF, EMF, ICO, CUR);
         /// false otherwise.</returns>
-        internal static bool IsImage(Stream stream)
-        {
+        internal static bool IsImage(Stream stream) {
             // Sniff some bytes from the start of the stream
             // and check against magic numbers of supported 
             // image file formats
@@ -306,10 +272,8 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Draws the given caption and text inside the given rectangle.
         /// </summary>
-        internal static int DrawStringPair(Graphics g, Rectangle r, string caption, string text, Font font, Brush captionBrush, Brush textBrush)
-        {
-            using (StringFormat sf = new StringFormat())
-            {
+        internal static int DrawStringPair(Graphics g, Rectangle r, string caption, string text, Font font, Brush captionBrush, Brush textBrush) {
+            using (StringFormat sf = new StringFormat()) {
                 sf.Alignment = StringAlignment.Near;
                 sf.LineAlignment = StringAlignment.Near;
                 sf.Trimming = StringTrimming.EllipsisCharacter;
@@ -322,8 +286,7 @@ namespace ImageGlass.ImageListView
                 g.DrawString(caption, font, captionBrush, txrect, sf);
                 txrect.X += txrect.Width;
                 txrect.Width = r.Width;
-                if (txrect.X < r.Right)
-                {
+                if (txrect.X < r.Right) {
                     SizeF szt = g.MeasureString(text, font, r.Size, sf);
                     y = Math.Max(y, (int)szt.Height);
                     txrect = Rectangle.Intersect(r, txrect);
@@ -340,8 +303,7 @@ namespace ImageGlass.ImageListView
         /// <param name="image">The source image.</param>
         /// <param name="fit">The size to fit in to.</param>
         /// <returns>New image size.</returns>
-        internal static Size GetSizedImageBounds(Image image, Size fit)
-        {
+        internal static Size GetSizedImageBounds(Image image, Size fit) {
             float f = System.Math.Max((float)image.Width / (float)fit.Width, (float)image.Height / (float)fit.Height);
             if (f < 1.0f) f = 1.0f; // Do not upsize small images
             int width = (int)System.Math.Round((float)image.Width / f);
@@ -357,8 +319,7 @@ namespace ImageGlass.ImageListView
         /// <param name="hAlign">Horizontal image aligment in percent.</param>
         /// <param name="vAlign">Vertical image aligment in percent.</param>
         /// <returns>New image size.</returns>
-        public static Rectangle GetSizedImageBounds(Image image, Rectangle fit, float hAlign, float vAlign)
-        {
+        public static Rectangle GetSizedImageBounds(Image image, Rectangle fit, float hAlign, float vAlign) {
             if (hAlign < 0 || hAlign > 100.0f)
                 throw new ArgumentException("hAlign must be between 0.0 and 100.0 (inclusive).", "hAlign");
             if (vAlign < 0 || vAlign > 100.0f)
@@ -377,15 +338,13 @@ namespace ImageGlass.ImageListView
         /// <param name="image">The source image.</param>
         /// <param name="fit">The rectangle to fit in to.</param>
         /// <returns>New image size.</returns>
-        public static Rectangle GetSizedImageBounds(Image image, Rectangle fit)
-        {
+        public static Rectangle GetSizedImageBounds(Image image, Rectangle fit) {
             return GetSizedImageBounds(image, fit, 50.0f, 50.0f);
         }
         /// <summary>
         /// Gets a path representing a rounded rectangle.
         /// </summary>
-        private static GraphicsPath GetRoundedRectanglePath(int x, int y, int width, int height, int radius)
-        {
+        private static GraphicsPath GetRoundedRectanglePath(int x, int y, int width, int height, int radius) {
             GraphicsPath path = new GraphicsPath();
             path.AddLine(x + radius, y, x + width - radius, y);
             if (radius > 0)
@@ -411,10 +370,8 @@ namespace ImageGlass.ImageListView
         /// <param name="width">Width of the rectangle to draw.</param>
         /// <param name="height">Height of the rectangle to draw.</param>
         /// <param name="radius">The radius of rounded corners.</param>
-        public static void FillRoundedRectangle(System.Drawing.Graphics graphics, Brush brush, int x, int y, int width, int height, int radius)
-        {
-            using (GraphicsPath path = GetRoundedRectanglePath(x, y, width, height, radius))
-            {
+        public static void FillRoundedRectangle(System.Drawing.Graphics graphics, Brush brush, int x, int y, int width, int height, int radius) {
+            using (GraphicsPath path = GetRoundedRectanglePath(x, y, width, height, radius)) {
                 graphics.FillPath(brush, path);
             }
         }
@@ -428,8 +385,7 @@ namespace ImageGlass.ImageListView
         /// <param name="width">Width of the rectangle to draw.</param>
         /// <param name="height">Height of the rectangle to draw.</param>
         /// <param name="radius">The radius of rounded corners.</param>
-        public static void FillRoundedRectangle(System.Drawing.Graphics graphics, Brush brush, float x, float y, float width, float height, float radius)
-        {
+        public static void FillRoundedRectangle(System.Drawing.Graphics graphics, Brush brush, float x, float y, float width, float height, float radius) {
             FillRoundedRectangle(graphics, brush, (int)x, (int)y, (int)width, (int)height, (int)radius);
         }
         /// <summary>
@@ -439,8 +395,7 @@ namespace ImageGlass.ImageListView
         /// <param name="brush">The brush to use to fill the rectangle.</param>
         /// <param name="rect">The rectangle to draw.</param>
         /// <param name="radius">The radius of rounded corners.</param>
-        public static void FillRoundedRectangle(System.Drawing.Graphics graphics, Brush brush, Rectangle rect, int radius)
-        {
+        public static void FillRoundedRectangle(System.Drawing.Graphics graphics, Brush brush, Rectangle rect, int radius) {
             FillRoundedRectangle(graphics, brush, rect.Left, rect.Top, rect.Width, rect.Height, radius);
         }
         /// <summary>
@@ -450,8 +405,7 @@ namespace ImageGlass.ImageListView
         /// <param name="brush">The brush to use to fill the rectangle.</param>
         /// <param name="rect">The rectangle to draw.</param>
         /// <param name="radius">The radius of rounded corners.</param>
-        public static void FillRoundedRectangle(System.Drawing.Graphics graphics, Brush brush, RectangleF rect, float radius)
-        {
+        public static void FillRoundedRectangle(System.Drawing.Graphics graphics, Brush brush, RectangleF rect, float radius) {
             FillRoundedRectangle(graphics, brush, (int)rect.Left, (int)rect.Top, (int)rect.Width, (int)rect.Height, (int)radius);
         }
         /// <summary>
@@ -464,10 +418,8 @@ namespace ImageGlass.ImageListView
         /// <param name="width">Width of the rectangle to draw.</param>
         /// <param name="height">Height of the rectangle to draw.</param>
         /// <param name="radius">The radius of rounded corners.</param>
-        public static void DrawRoundedRectangle(System.Drawing.Graphics graphics, Pen pen, int x, int y, int width, int height, int radius)
-        {
-            using (GraphicsPath path = GetRoundedRectanglePath(x, y, width, height, radius))
-            {
+        public static void DrawRoundedRectangle(System.Drawing.Graphics graphics, Pen pen, int x, int y, int width, int height, int radius) {
+            using (GraphicsPath path = GetRoundedRectanglePath(x, y, width, height, radius)) {
                 graphics.DrawPath(pen, path);
             }
         }
@@ -481,8 +433,7 @@ namespace ImageGlass.ImageListView
         /// <param name="width">Width of the rectangle to draw.</param>
         /// <param name="height">Height of the rectangle to draw.</param>
         /// <param name="radius">The radius of rounded corners.</param>
-        public static void DrawRoundedRectangle(System.Drawing.Graphics graphics, Pen pen, float x, float y, float width, float height, float radius)
-        {
+        public static void DrawRoundedRectangle(System.Drawing.Graphics graphics, Pen pen, float x, float y, float width, float height, float radius) {
             DrawRoundedRectangle(graphics, pen, (int)x, (int)y, (int)width, (int)height, (int)radius);
         }
         /// <summary>
@@ -492,8 +443,7 @@ namespace ImageGlass.ImageListView
         /// <param name="pen">The pen to use to draw the rectangle.</param>
         /// <param name="rect">The rectangle to draw.</param>
         /// <param name="radius">The radius of rounded corners.</param>
-        public static void DrawRoundedRectangle(System.Drawing.Graphics graphics, Pen pen, Rectangle rect, int radius)
-        {
+        public static void DrawRoundedRectangle(System.Drawing.Graphics graphics, Pen pen, Rectangle rect, int radius) {
             DrawRoundedRectangle(graphics, pen, rect.Left, rect.Top, rect.Width, rect.Height, radius);
         }
         /// <summary>
@@ -503,8 +453,7 @@ namespace ImageGlass.ImageListView
         /// <param name="pen">The pen to use to draw the rectangle.</param>
         /// <param name="rect">The rectangle to draw.</param>
         /// <param name="radius">The radius of rounded corners.</param>
-        public static void DrawRoundedRectangle(System.Drawing.Graphics graphics, Pen pen, RectangleF rect, float radius)
-        {
+        public static void DrawRoundedRectangle(System.Drawing.Graphics graphics, Pen pen, RectangleF rect, float radius) {
             DrawRoundedRectangle(graphics, pen, (int)rect.Left, (int)rect.Top, (int)rect.Width, (int)rect.Height, (int)radius);
         }
         #endregion
@@ -513,8 +462,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Represents a factory class for creating tuples.
         /// </summary>
-        public static class Tuple
-        {
+        public static class Tuple {
             /// <summary>
             /// Creates a new 1-tuple.
             /// </summary>
@@ -523,8 +471,7 @@ namespace ImageGlass.ImageListView
             /// <returns>
             /// A 1-tuple whose value is (<paramref name="item1"/>).
             /// </returns>
-            public static Tuple<T1> Create<T1>(T1 item1)
-            {
+            public static Tuple<T1> Create<T1>(T1 item1) {
                 return new Tuple<T1>(item1);
             }
             /// <summary>
@@ -537,8 +484,7 @@ namespace ImageGlass.ImageListView
             /// <returns>
             /// A 2-tuple whose value is (<paramref name="item1"/>, <paramref name="item2"/>).
             /// </returns>
-            public static Tuple<T1, T2> Create<T1, T2>(T1 item1, T2 item2)
-            {
+            public static Tuple<T1, T2> Create<T1, T2>(T1 item1, T2 item2) {
                 return new Tuple<T1, T2>(item1, item2);
             }
             /// <summary>
@@ -553,8 +499,7 @@ namespace ImageGlass.ImageListView
             /// <returns>
             /// A 3-tuple whose value is (<paramref name="item1"/>, <paramref name="item2"/>, <paramref name="item3"/>).
             /// </returns>
-            public static Tuple<T1, T2, T3> Create<T1, T2, T3>(T1 item1, T2 item2, T3 item3)
-            {
+            public static Tuple<T1, T2, T3> Create<T1, T2, T3>(T1 item1, T2 item2, T3 item3) {
                 return new Tuple<T1, T2, T3>(item1, item2, item3);
             }
         }
@@ -562,8 +507,7 @@ namespace ImageGlass.ImageListView
         /// Represents a tuple with one element.
         /// </summary>
         /// <typeparam name="T1">The type of the first element of the tuple.</typeparam>
-        public class Tuple<T1>
-        {
+        public class Tuple<T1> {
             private T1 mItem1;
 
             /// <summary>
@@ -575,8 +519,7 @@ namespace ImageGlass.ImageListView
             /// Initializes a new instance of the <see cref="Tuple&lt;T1&gt;"/> class.
             /// </summary>
             /// <param name="item1">The value of the first component of the tuple.</param>
-            public Tuple(T1 item1)
-            {
+            public Tuple(T1 item1) {
                 mItem1 = item1;
             }
         }
@@ -585,8 +528,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <typeparam name="T1">The type of the first element of the tuple.</typeparam>
         /// <typeparam name="T2">The type of the second element of the tuple.</typeparam>
-        public class Tuple<T1, T2> : Tuple<T1>
-        {
+        public class Tuple<T1, T2>: Tuple<T1> {
             private T2 mItem2;
 
             /// <summary>
@@ -600,8 +542,7 @@ namespace ImageGlass.ImageListView
             /// <param name="item1">The value of the first component of the tuple.</param>
             /// <param name="item2">The value of the second component of the tuple.</param>
             public Tuple(T1 item1, T2 item2)
-                : base(item1)
-            {
+                : base(item1) {
                 mItem2 = item2;
             }
         }
@@ -611,8 +552,7 @@ namespace ImageGlass.ImageListView
         /// <typeparam name="T1">The type of the first element of the tuple.</typeparam>
         /// <typeparam name="T2">The type of the second element of the tuple.</typeparam>
         /// <typeparam name="T3">The type of the third element of the tuple.</typeparam>
-        public class Tuple<T1, T2, T3> : Tuple<T1, T2>
-        {
+        public class Tuple<T1, T2, T3>: Tuple<T1, T2> {
             private T3 mItem3;
 
             /// <summary>
@@ -627,8 +567,7 @@ namespace ImageGlass.ImageListView
             /// <param name="item2">The value of the second component of the tuple.</param>
             /// <param name="item3">The value of the third component of the tuple.</param>
             public Tuple(T1 item1, T2 item2, T3 item3)
-                : base(item1, item2)
-            {
+                : base(item1, item2) {
                 mItem3 = item3;
             }
         }

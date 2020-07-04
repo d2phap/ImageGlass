@@ -20,15 +20,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ImageGlass.ImageListView
-{
-    public partial class ImageListView
-    {
+namespace ImageGlass.ImageListView {
+    public partial class ImageListView {
         /// <summary>
         /// Represents details of keyboard and mouse navigation events.
         /// </summary>
-        internal class ImageListViewNavigationManager : IDisposable
-        {
+        internal class ImageListViewNavigationManager: IDisposable {
             #region Constants
             /// <summary>
             /// Selection tolerance in pixels.
@@ -143,8 +140,7 @@ namespace ImageGlass.ImageListView
             /// Initializes a new instance of the ImageListViewNavigationManager class.
             /// </summary>
             /// <param name="owner">The owner control.</param>
-            public ImageListViewNavigationManager(ImageListView owner)
-            {
+            public ImageListViewNavigationManager(ImageListView owner) {
                 mImageListView = owner;
 
                 DraggingSeperator = false;
@@ -183,11 +179,9 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Determines whether the item is highlighted.
             /// </summary>
-            public ItemHighlightState HighlightState(ImageListViewItem item)
-            {
+            public ItemHighlightState HighlightState(ImageListViewItem item) {
                 bool highlighted = false;
-                if (highlightedItems.TryGetValue(item, out highlighted))
-                {
+                if (highlightedItems.TryGetValue(item, out highlighted)) {
                     if (highlighted)
                         return ItemHighlightState.HighlightedAndSelected;
                     else
@@ -199,8 +193,7 @@ namespace ImageGlass.ImageListView
             /// Performs application-defined tasks associated with freeing, 
             /// releasing, or resetting unmanaged resources.
             /// </summary>
-            public void Dispose()
-            {
+            public void Dispose() {
                 scrollTimer.Dispose();
             }
             #endregion
@@ -209,8 +202,7 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Handles control's MouseDown event.
             /// </summary>
-            public void MouseDown(MouseEventArgs e)
-            {
+            public void MouseDown(MouseEventArgs e) {
                 if ((e.Button & MouseButtons.Left) != MouseButtons.None)
                     LeftButton = true;
                 if ((e.Button & MouseButtons.Right) != MouseButtons.None)
@@ -232,8 +224,7 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Handles control's MouseMove event.
             /// </summary>
-            public void MouseMove(MouseEventArgs e)
-            {
+            public void MouseMove(MouseEventArgs e) {
                 ImageListViewItem oldHoveredItem = HoveredItem;
                 int oldHoveredSubItem = HoveredSubItem;
                 ImageListView.ImageListViewColumnHeader oldHoveredColumn = HoveredColumn;
@@ -244,45 +235,36 @@ namespace ImageGlass.ImageListView
                 mImageListView.SuspendPaint();
 
                 // Do we need to scroll the view?
-                if (MouseSelecting && mImageListView.ScrollOrientation == ScrollOrientation.VerticalScroll && !scrollTimer.Enabled)
-                {
-                    if (e.Y > mImageListView.ClientRectangle.Bottom)
-                    {
+                if (MouseSelecting && mImageListView.ScrollOrientation == ScrollOrientation.VerticalScroll && !scrollTimer.Enabled) {
+                    if (e.Y > mImageListView.ClientRectangle.Bottom) {
                         scrollTimer.Tag = -SystemInformation.MouseWheelScrollDelta;
                         scrollTimer.Enabled = true;
                     }
-                    else if (e.Y < mImageListView.ClientRectangle.Top)
-                    {
+                    else if (e.Y < mImageListView.ClientRectangle.Top) {
                         scrollTimer.Tag = SystemInformation.MouseWheelScrollDelta;
                         scrollTimer.Enabled = true;
                     }
                 }
-                else if (MouseSelecting && mImageListView.ScrollOrientation == ScrollOrientation.HorizontalScroll && !scrollTimer.Enabled)
-                {
-                    if (e.X > mImageListView.ClientRectangle.Right)
-                    {
+                else if (MouseSelecting && mImageListView.ScrollOrientation == ScrollOrientation.HorizontalScroll && !scrollTimer.Enabled) {
+                    if (e.X > mImageListView.ClientRectangle.Right) {
                         scrollTimer.Tag = -SystemInformation.MouseWheelScrollDelta;
                         scrollTimer.Enabled = true;
                     }
-                    else if (e.X < mImageListView.ClientRectangle.Left)
-                    {
+                    else if (e.X < mImageListView.ClientRectangle.Left) {
                         scrollTimer.Tag = SystemInformation.MouseWheelScrollDelta;
                         scrollTimer.Enabled = true;
                     }
                 }
-                else if (scrollTimer.Enabled && mImageListView.ClientRectangle.Contains(e.Location))
-                {
+                else if (scrollTimer.Enabled && mImageListView.ClientRectangle.Contains(e.Location)) {
                     scrollTimer.Enabled = false;
                 }
 
-                if (DraggingSeperator)
-                {
+                if (DraggingSeperator) {
                     int delta = e.Location.X - lastSeparatorDragLocation.X;
                     int colwidth = SelectedSeparator.Width + delta;
                     if (colwidth > 16)
                         lastSeparatorDragLocation = e.Location;
-                    else
-                    {
+                    else {
                         lastSeparatorDragLocation = new Point(e.Location.X - colwidth + 16, e.Location.Y);
                         colwidth = 16;
                     }
@@ -293,14 +275,12 @@ namespace ImageGlass.ImageListView
                     HoveredSeparator = SelectedSeparator;
                     mImageListView.Refresh();
                 }
-                else if (ResizingPane)
-                {
+                else if (ResizingPane) {
                     int delta = e.Location.X - lastPaneResizeLocation.X;
                     int width = mImageListView.mPaneWidth + delta;
                     if (width > 2)
                         lastPaneResizeLocation = e.Location;
-                    else
-                    {
+                    else {
                         lastPaneResizeLocation = new Point(e.Location.X - width + 2, e.Location.Y);
                         width = 2;
                     }
@@ -313,8 +293,7 @@ namespace ImageGlass.ImageListView
 
                     mImageListView.OnPaneResizing(new PaneResizingEventArgs(width));
                 }
-                else if (MouseSelecting)
-                {
+                else if (MouseSelecting) {
                     if (!ShiftKey && !ControlKey)
                         mImageListView.SelectedItems.Clear(false);
 
@@ -327,14 +306,11 @@ namespace ImageGlass.ImageListView
 
                     // Determine which items are highlighted
                     highlightedItems.Clear();
-                    if (mImageListView.showGroups)
-                    {
-                        foreach (ImageListViewGroup group in mImageListView.groups)
-                        {
+                    if (mImageListView.showGroups) {
+                        foreach (ImageListViewGroup group in mImageListView.groups) {
                             List<int> indices = group.ItemIndicesInRectangle(SelectionRectangle, mImageListView.ScrollOrientation, mImageListView.layoutManager.ItemSizeWithMargin);
 
-                            foreach (int i in indices)
-                            {
+                            foreach (int i in indices) {
                                 if (i >= 0 && i <= mImageListView.Items.Count - 1 &&
                                     !highlightedItems.ContainsKey(mImageListView.Items[i]) &&
                                     mImageListView.Items[i].Enabled)
@@ -343,8 +319,7 @@ namespace ImageGlass.ImageListView
                             }
                         }
                     }
-                    else
-                    {
+                    else {
                         // Normalize to item area coordinates
                         pt1 = new Point(SelectionRectangle.Left, SelectionRectangle.Top);
                         pt2 = new Point(SelectionRectangle.Right, SelectionRectangle.Bottom);
@@ -362,10 +337,8 @@ namespace ImageGlass.ImageListView
                         int endCol = (int)Math.Floor((float)(Math.Max(pt1.X, pt2.X) + viewOffset.X) /
                             (float)mImageListView.layoutManager.ItemSizeWithMargin.Width);
                         if (mImageListView.ScrollOrientation == ScrollOrientation.HorizontalScroll &&
-                            (startRow >= 0 || endRow >= 0))
-                        {
-                            for (int i = startCol; i <= endCol; i++)
-                            {
+                            (startRow >= 0 || endRow >= 0)) {
+                            for (int i = startCol; i <= endCol; i++) {
                                 if (i >= 0 && i <= mImageListView.Items.Count - 1 &&
                                     !highlightedItems.ContainsKey(mImageListView.Items[i]) &&
                                     mImageListView.Items[i].Enabled)
@@ -375,14 +348,11 @@ namespace ImageGlass.ImageListView
                         }
                         else if (mImageListView.ScrollOrientation == ScrollOrientation.VerticalScroll &&
                             (startCol >= 0 || endCol >= 0) && (startRow >= 0 || endRow >= 0) &&
-                            (startCol <= mImageListView.layoutManager.Cols - 1 || endCol <= mImageListView.layoutManager.Cols - 1))
-                        {
+                            (startCol <= mImageListView.layoutManager.Cols - 1 || endCol <= mImageListView.layoutManager.Cols - 1)) {
                             startCol = Math.Min(mImageListView.layoutManager.Cols - 1, Math.Max(0, startCol));
                             endCol = Math.Min(mImageListView.layoutManager.Cols - 1, Math.Max(0, endCol));
-                            for (int row = startRow; row <= endRow; row++)
-                            {
-                                for (int col = startCol; col <= endCol; col++)
-                                {
+                            for (int row = startRow; row <= endRow; row++) {
+                                for (int col = startCol; col <= endCol; col++) {
                                     int i = row * mImageListView.layoutManager.Cols + col;
                                     if (i >= 0 && i <= mImageListView.Items.Count - 1 &&
                                         !highlightedItems.ContainsKey(mImageListView.Items[i]) &&
@@ -404,20 +374,16 @@ namespace ImageGlass.ImageListView
                     inItemArea && lastMouseDownInItemArea &&
                     (LeftButton || RightButton) &&
                     ((Math.Abs(e.Location.X - lastMouseDownLocation.X) > SelectionTolerance ||
-                    Math.Abs(e.Location.Y - lastMouseDownLocation.Y) > SelectionTolerance)))
-                {
-                    if (mImageListView.MultiSelect && !lastMouseDownOverItem && HoveredItem == null)
-                    {
+                    Math.Abs(e.Location.Y - lastMouseDownLocation.Y) > SelectionTolerance))) {
+                    if (mImageListView.MultiSelect && !lastMouseDownOverItem && HoveredItem == null) {
                         // Start mouse selection
                         MouseSelecting = true;
                         SelectionRectangle = new Rectangle(lastMouseDownLocation, new Size(0, 0));
                         mImageListView.Refresh();
                     }
-                    else if (lastMouseDownOverItem && HoveredItem != null && mImageListView.AllowDrag)
-                    {
+                    else if (lastMouseDownOverItem && HoveredItem != null && mImageListView.AllowDrag) {
                         // Start drag&drop
-                        if (!HoveredItem.Selected)
-                        {
+                        if (!HoveredItem.Selected) {
                             mImageListView.SelectedItems.Clear(false);
                             HoveredItem.mSelected = true;
                             mImageListView.OnSelectionChangedInternal();
@@ -427,8 +393,7 @@ namespace ImageGlass.ImageListView
 
                         // Set drag data
                         List<string> filenames = new List<string>();
-                        foreach (ImageListViewItem item in mImageListView.SelectedItems)
-                        {
+                        foreach (ImageListViewItem item in mImageListView.SelectedItems) {
                             // Get the source image
                             string sourceFile = item.Adaptor.GetSourceImage(item.VirtualItemKey);
                             if (!string.IsNullOrEmpty(sourceFile))
@@ -451,8 +416,7 @@ namespace ImageGlass.ImageListView
                 }
                 else if (!MouseSelecting && !DraggingSeperator && !ResizingPane &&
                     inHeaderArea && lastMouseDownInColumnHeaderArea && lastMouseDownOverSeparator && LeftButton &&
-                    mImageListView.AllowColumnResize && HoveredSeparator != null)
-                {
+                    mImageListView.AllowColumnResize && HoveredSeparator != null) {
                     // Start dragging a separator
                     DraggingSeperator = true;
                     SelectedSeparator = HoveredSeparator;
@@ -460,8 +424,7 @@ namespace ImageGlass.ImageListView
                 }
                 else if (!MouseSelecting && !DraggingSeperator && !ResizingPane &&
                     inPaneArea && lastMouseDownInPaneArea && lastMouseDownOverPaneBorder && LeftButton &&
-                    mImageListView.AllowPaneResize && HoveredPaneBorder != false)
-                {
+                    mImageListView.AllowPaneResize && HoveredPaneBorder != false) {
                     // Start dragging the pane
                     ResizingPane = true;
                     lastPaneResizeLocation = e.Location;
@@ -469,8 +432,7 @@ namespace ImageGlass.ImageListView
                 else if (!ReferenceEquals(HoveredItem, oldHoveredItem) ||
                     (HoveredSubItem != oldHoveredSubItem) ||
                     !ReferenceEquals(HoveredColumn, oldHoveredColumn) ||
-                    !ReferenceEquals(HoveredSeparator, oldHoveredSeparator))
-                {
+                    !ReferenceEquals(HoveredSeparator, oldHoveredSeparator)) {
                     // Hovered item changed
                     if (!ReferenceEquals(HoveredItem, oldHoveredItem) || (HoveredSubItem != oldHoveredSubItem))
                         mImageListView.OnItemHover(new ItemHoverEventArgs(HoveredItem, HoveredSubItem, oldHoveredItem, oldHoveredSubItem));
@@ -484,14 +446,12 @@ namespace ImageGlass.ImageListView
                 mImageListView.ResumePaint();
 
                 // Change to size cursor if mouse is over a column separator or pane border
-                if (mImageListView.Cursor != Cursors.VSplit && !MouseSelecting)
-                {
+                if (mImageListView.Cursor != Cursors.VSplit && !MouseSelecting) {
                     if ((mImageListView.AllowColumnResize && HoveredSeparator != null) ||
                         (mImageListView.AllowPaneResize && HoveredPaneBorder != false))
                         mImageListView.Cursor = Cursors.VSplit;
                 }
-                else if (mImageListView.Cursor == Cursors.VSplit)
-                {
+                else if (mImageListView.Cursor == Cursors.VSplit) {
                     if (!((inHeaderArea && (DraggingSeperator || HoveredSeparator != null)) ||
                         (inPaneArea && (ResizingPane || HoveredPaneBorder != false))))
                         mImageListView.Cursor = Cursors.Default;
@@ -502,8 +462,7 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Handles control's MouseUp event.
             /// </summary>
-            public void MouseUp(MouseEventArgs e)
-            {
+            public void MouseUp(MouseEventArgs e) {
                 DoHitTest(e.Location);
 
                 mImageListView.SuspendPaint();
@@ -512,24 +471,19 @@ namespace ImageGlass.ImageListView
                 if (scrollTimer.Enabled)
                     scrollTimer.Enabled = false;
 
-                if (DraggingSeperator)
-                {
+                if (DraggingSeperator) {
                     mImageListView.OnColumnWidthChanged(new ColumnEventArgs(SelectedSeparator));
                     SelectedSeparator = null;
                     DraggingSeperator = false;
                 }
-                else if (ResizingPane)
-                {
+                else if (ResizingPane) {
                     ResizingPane = false;
                     mImageListView.OnPaneResized(new PaneResizedEventArgs(mImageListView.mPaneWidth));
                 }
-                else if (MouseSelecting)
-                {
+                else if (MouseSelecting) {
                     // Apply highlighted items
-                    if (highlightedItems.Count != 0)
-                    {
-                        foreach (KeyValuePair<ImageListViewItem, bool> pair in highlightedItems)
-                        {
+                    if (highlightedItems.Count != 0) {
+                        foreach (KeyValuePair<ImageListViewItem, bool> pair in highlightedItems) {
                             if (pair.Key.Enabled)
                                 pair.Key.mSelected = pair.Value;
                         }
@@ -543,21 +497,17 @@ namespace ImageGlass.ImageListView
                     mImageListView.Refresh();
                 }
                 else if (mImageListView.AllowCheckBoxClick && lastMouseDownInItemArea &&
-                    lastMouseDownOverCheckBox && HoveredItem != null && overCheckBox && LeftButton)
-                {
-                    if (HoveredItem.Selected)
-                    {
+                    lastMouseDownOverCheckBox && HoveredItem != null && overCheckBox && LeftButton) {
+                    if (HoveredItem.Selected) {
                         // if multiple items selected and Hovered item among selected,
                         // then give all selected check state !HoveredItem.Checked
                         bool check = !HoveredItem.Checked;
-                        foreach (ImageListViewItem item in mImageListView.Items)
-                        {
+                        foreach (ImageListViewItem item in mImageListView.Items) {
                             if (item.Selected)
                                 item.Checked = check;
                         }
                     }
-                    else
-                    {
+                    else {
                         // if multiple items selected and HoveredItem NOT among selected,
                         // or if only HoveredItem selected or hovered
                         // then toggle HoveredItem.Checked
@@ -565,57 +515,46 @@ namespace ImageGlass.ImageListView
                     }
                     mImageListView.Refresh();
                 }
-                else if (lastMouseDownInItemArea && lastMouseDownOverItem && HoveredItem != null && LeftButton)
-                {
+                else if (lastMouseDownInItemArea && lastMouseDownOverItem && HoveredItem != null && LeftButton) {
                     // Select the item under the cursor
-                    if (!mImageListView.MultiSelect && ControlKey)
-                    {
+                    if (!mImageListView.MultiSelect && ControlKey) {
                         bool oldSelected = HoveredItem.Selected;
                         mImageListView.SelectedItems.Clear(false);
                         HoveredItem.mSelected = !oldSelected;
                     }
-                    else if (!mImageListView.MultiSelect)
-                    {
+                    else if (!mImageListView.MultiSelect) {
                         mImageListView.SelectedItems.Clear(false);
                         HoveredItem.mSelected = true;
                     }
-                    else if (ControlKey)
-                    {
+                    else if (ControlKey) {
                         HoveredItem.mSelected = !HoveredItem.mSelected;
                     }
-                    else if (ShiftKey)
-                    {
+                    else if (ShiftKey) {
                         int startIndex = 0;
-                        if (mImageListView.SelectedItems.Count != 0)
-                        {
+                        if (mImageListView.SelectedItems.Count != 0) {
                             startIndex = mImageListView.SelectedItems[0].Index;
                             mImageListView.SelectedItems.Clear(false);
                         }
                         int endIndex = HoveredItem.Index;
-                        if (mImageListView.ScrollOrientation == ScrollOrientation.VerticalScroll)
-                        {
+                        if (mImageListView.ScrollOrientation == ScrollOrientation.VerticalScroll) {
                             int startRow = Math.Min(startIndex, endIndex) / mImageListView.layoutManager.Cols;
                             int endRow = Math.Max(startIndex, endIndex) / mImageListView.layoutManager.Cols;
                             int startCol = Math.Min(startIndex, endIndex) % mImageListView.layoutManager.Cols;
                             int endCol = Math.Max(startIndex, endIndex) % mImageListView.layoutManager.Cols;
 
-                            for (int row = startRow; row <= endRow; row++)
-                            {
-                                for (int col = startCol; col <= endCol; col++)
-                                {
+                            for (int row = startRow; row <= endRow; row++) {
+                                for (int col = startCol; col <= endCol; col++) {
                                     int index = row * mImageListView.layoutManager.Cols + col;
                                     mImageListView.Items[index].mSelected = true;
                                 }
                             }
                         }
-                        else
-                        {
+                        else {
                             for (int i = Math.Min(startIndex, endIndex); i <= Math.Max(startIndex, endIndex); i++)
                                 mImageListView.Items[i].mSelected = true;
                         }
                     }
-                    else
-                    {
+                    else {
                         mImageListView.SelectedItems.Clear(false);
                         HoveredItem.mSelected = true;
                     }
@@ -629,10 +568,8 @@ namespace ImageGlass.ImageListView
 
                     mImageListView.Refresh();
                 }
-                else if (lastMouseDownInItemArea && lastMouseDownOverItem && HoveredItem != null && RightButton)
-                {
-                    if (!ControlKey && !HoveredItem.Selected)
-                    {
+                else if (lastMouseDownInItemArea && lastMouseDownOverItem && HoveredItem != null && RightButton) {
+                    if (!ControlKey && !HoveredItem.Selected) {
                         // Clear the selection if Control key is not pressed
                         mImageListView.SelectedItems.Clear(false);
                         HoveredItem.mSelected = true;
@@ -642,22 +579,17 @@ namespace ImageGlass.ImageListView
                     mImageListView.OnItemClick(new ItemClickEventArgs(HoveredItem, HoveredSubItem, e.Location, e.Button));
                     mImageListView.Items.FocusedItem = HoveredItem;
                 }
-                else if (lastMouseDownInItemArea && inItemArea && HoveredItem == null && (LeftButton || RightButton))
-                {
+                else if (lastMouseDownInItemArea && inItemArea && HoveredItem == null && (LeftButton || RightButton)) {
                     // Clear selection if clicked in empty space
                     mImageListView.SelectedItems.Clear();
                     mImageListView.Refresh();
                 }
                 else if (lastMouseDownInColumnHeaderArea && lastMouseDownOverColumn &&
-                    mImageListView.AllowColumnClick && HoveredColumn != null && HoveredSeparator == null)
-                {
-                    if (!suppressClick)
-                    {
-                        if (LeftButton)
-                        {
+                    mImageListView.AllowColumnClick && HoveredColumn != null && HoveredSeparator == null) {
+                    if (!suppressClick) {
+                        if (LeftButton) {
                             // Change the sort column
-                            if (mImageListView.Columns[mImageListView.SortColumn].Guid == HoveredColumn.Guid)
-                            {
+                            if (mImageListView.Columns[mImageListView.SortColumn].Guid == HoveredColumn.Guid) {
                                 if (mImageListView.SortOrder == SortOrder.Descending)
                                     mImageListView.SortOrder = SortOrder.Ascending;
                                 else if (mImageListView.SortOrder == SortOrder.Ascending)
@@ -667,8 +599,7 @@ namespace ImageGlass.ImageListView
                                 else
                                     mImageListView.SortOrder = SortOrder.DescendingNatural;
                             }
-                            else
-                            {
+                            else {
                                 mImageListView.mSortColumn = mImageListView.Columns.IndexOf(HoveredColumn);
                                 mImageListView.mSortOrder = SortOrder.Ascending;
                                 mImageListView.Sort();
@@ -691,15 +622,12 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Handles control's MouseDoubleClick event.
             /// </summary>
-            public void MouseDoubleClick(MouseEventArgs e)
-            {
-                if (lastMouseDownInItemArea && lastMouseDownOverItem && HoveredItem != null)
-                {
+            public void MouseDoubleClick(MouseEventArgs e) {
+                if (lastMouseDownInItemArea && lastMouseDownOverItem && HoveredItem != null) {
                     mImageListView.OnItemDoubleClick(new ItemClickEventArgs(HoveredItem, HoveredSubItem, e.Location, e.Button));
                 }
                 else if (lastMouseDownInColumnHeaderArea && lastMouseDownOverSeparator &&
-                    mImageListView.AllowColumnClick && HoveredSeparator != null)
-                {
+                    mImageListView.AllowColumnClick && HoveredSeparator != null) {
                     HoveredSeparator.AutoFit();
                     mImageListView.Refresh();
                     suppressClick = true;
@@ -708,10 +636,8 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Handles control's MouseLeave event.
             /// </summary>
-            public void MouseLeave()
-            {
-                if (HoveredItem != null || HoveredColumn != null || HoveredSeparator != null || HoveredPaneBorder != false)
-                {
+            public void MouseLeave() {
+                if (HoveredItem != null || HoveredColumn != null || HoveredSeparator != null || HoveredPaneBorder != false) {
                     if (HoveredItem != null)
                         mImageListView.OnItemHover(new ItemHoverEventArgs(null, -1, HoveredItem, HoveredSubItem));
                     if (HoveredColumn != null)
@@ -730,11 +656,9 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// [IG_Change] Handles control's KeyDown event.
             /// </summary>
-            public void KeyDown(KeyEventArgs e)
-            {
+            public void KeyDown(KeyEventArgs e) {
                 //[Pháp]
-                if (!mImageListView.EnableKeyNavigation)
-                {
+                if (!mImageListView.EnableKeyNavigation) {
                     return;
                 }
 
@@ -746,32 +670,26 @@ namespace ImageGlass.ImageListView
                 // If the shift key or the control key is pressed and there is no focused item
                 // set the first item as the focused item.
                 if ((ShiftKey || ControlKey) && mImageListView.Items.Count != 0 &&
-                    mImageListView.Items.FocusedItem == null)
-                {
+                    mImageListView.Items.FocusedItem == null) {
                     mImageListView.Items.FocusedItem = mImageListView.Items[0];
                     mImageListView.Refresh();
                 }
 
-                if (mImageListView.Items.Count != 0)
-                {
+                if (mImageListView.Items.Count != 0) {
                     int index = 0;
                     if (mImageListView.Items.FocusedItem != null)
                         index = mImageListView.Items.FocusedItem.Index;
 
                     int newindex = ApplyNavKey(index, e.KeyCode);
-                    if (index != newindex)
-                    {
-                        if (ControlKey)
-                        {
+                    if (index != newindex) {
+                        if (ControlKey) {
                             // Just move the focus
                         }
-                        else if (mImageListView.MultiSelect && ShiftKey)
-                        {
+                        else if (mImageListView.MultiSelect && ShiftKey) {
                             int startIndex = 0;
                             int endIndex = 0;
                             int selCount = mImageListView.SelectedItems.Count;
-                            if (selCount != 0)
-                            {
+                            if (selCount != 0) {
                                 startIndex = mImageListView.SelectedItems[0].Index;
                                 endIndex = mImageListView.SelectedItems[selCount - 1].Index;
                                 mImageListView.SelectedItems.Clear(false);
@@ -792,15 +710,13 @@ namespace ImageGlass.ImageListView
                                     endIndex = newindex;
                             }
 
-                            for (int i = Math.Min(startIndex, endIndex); i <= Math.Max(startIndex, endIndex); i++)
-                            {
+                            for (int i = Math.Min(startIndex, endIndex); i <= Math.Max(startIndex, endIndex); i++) {
                                 if (mImageListView.Items[i].mEnabled)
                                     mImageListView.Items[i].mSelected = true;
                             }
                             mImageListView.OnSelectionChangedInternal();
                         }
-                        else if (mImageListView.Items[newindex].mEnabled)
-                        {
+                        else if (mImageListView.Items[newindex].mEnabled) {
                             mImageListView.SelectedItems.Clear(false);
                             mImageListView.Items[newindex].mSelected = true;
                             mImageListView.OnSelectionChangedInternal();
@@ -816,8 +732,7 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Handles control's KeyUp event.
             /// </summary>
-            public void KeyUp(KeyEventArgs e)
-            {
+            public void KeyUp(KeyEventArgs e) {
                 ShiftKey = (e.Modifiers & Keys.Shift) == Keys.Shift;
                 ControlKey = (e.Modifiers & Keys.Control) == Keys.Control;
             }
@@ -827,18 +742,15 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Handles control's DragDrop event.
             /// </summary>
-            public void DragDrop(DragEventArgs e)
-            {
+            public void DragDrop(DragEventArgs e) {
                 mImageListView.SuspendPaint();
 
-                if (selfDragging)
-                {
+                if (selfDragging) {
                     // Reorder items
                     List<ImageListViewItem> draggedItems = new List<ImageListViewItem>();
                     int i = -1;
                     if (DropTarget != null) i = DropTarget.Index;
-                    foreach (ImageListViewItem item in mImageListView.SelectedItems)
-                    {
+                    foreach (ImageListViewItem item in mImageListView.SelectedItems) {
                         if (item.Index <= i) i--;
                         draggedItems.Add(item);
                         mImageListView.Items.RemoveInternal(item, false);
@@ -846,15 +758,13 @@ namespace ImageGlass.ImageListView
                     if (i < 0) i = 0;
                     if (i > mImageListView.Items.Count - 1) i = mImageListView.Items.Count - 1;
                     if (DropToRight) i++;
-                    foreach (ImageListViewItem item in draggedItems)
-                    {
+                    foreach (ImageListViewItem item in draggedItems) {
                         mImageListView.Items.InsertInternal(i, item, item.Adaptor);
                         i++;
                     }
                     mImageListView.OnSelectionChangedInternal();
                 }
-                else
-                {
+                else {
                     int index = mImageListView.Items.Count;
                     if (DropTarget != null) index = DropTarget.Index;
                     if (DropToRight) index++;
@@ -875,8 +785,7 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Handles control's DragEnter event.
             /// </summary>
-            public void DragEnter(DragEventArgs e)
-            {
+            public void DragEnter(DragEventArgs e) {
                 if (!selfDragging && e.Data.GetDataPresent(DataFormats.FileDrop))
                     e.Effect = DragDropEffects.Copy;
                 else
@@ -885,46 +794,38 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Handles control's DragOver event.
             /// </summary>
-            public void DragOver(DragEventArgs e)
-            {
+            public void DragOver(DragEventArgs e) {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop) &&
-                    (mImageListView.AllowDrop || (mImageListView.AllowDrag && selfDragging)))
-                {
-                    if (mImageListView.Items.Count == 0)
-                    {
+                    (mImageListView.AllowDrop || (mImageListView.AllowDrag && selfDragging))) {
+                    if (mImageListView.Items.Count == 0) {
                         if (selfDragging)
                             e.Effect = DragDropEffects.None;
                         else
                             e.Effect = DragDropEffects.Copy;
                     }
-                    else
-                    {
+                    else {
                         // Calculate the location of the insertion cursor
                         Point pt = new Point(e.X, e.Y);
                         pt = mImageListView.PointToClient(pt);
 
                         // Do we need to scroll the view?
                         if (mImageListView.ScrollOrientation == ScrollOrientation.VerticalScroll &&
-                            pt.Y > mImageListView.ClientRectangle.Bottom - 20)
-                        {
+                            pt.Y > mImageListView.ClientRectangle.Bottom - 20) {
                             scrollTimer.Tag = -SystemInformation.MouseWheelScrollDelta;
                             scrollTimer.Enabled = true;
                         }
                         else if (mImageListView.ScrollOrientation == ScrollOrientation.VerticalScroll &&
-                            pt.Y < mImageListView.ClientRectangle.Top + 20)
-                        {
+                            pt.Y < mImageListView.ClientRectangle.Top + 20) {
                             scrollTimer.Tag = SystemInformation.MouseWheelScrollDelta;
                             scrollTimer.Enabled = true;
                         }
                         else if (mImageListView.ScrollOrientation == ScrollOrientation.HorizontalScroll &&
-                            pt.X > mImageListView.ClientRectangle.Right - 20)
-                        {
+                            pt.X > mImageListView.ClientRectangle.Right - 20) {
                             scrollTimer.Tag = -SystemInformation.MouseWheelScrollDelta;
                             scrollTimer.Enabled = true;
                         }
                         else if (mImageListView.ScrollOrientation == ScrollOrientation.HorizontalScroll &&
-                            pt.X < mImageListView.ClientRectangle.Left + 20)
-                        {
+                            pt.X < mImageListView.ClientRectangle.Left + 20) {
                             scrollTimer.Tag = SystemInformation.MouseWheelScrollDelta;
                             scrollTimer.Enabled = true;
                         }
@@ -939,16 +840,13 @@ namespace ImageGlass.ImageListView
                         bool dragCaretOnRight = false;
                         int index = 0;
 
-                        if (mImageListView.ScrollOrientation == ScrollOrientation.HorizontalScroll)
-                        {
+                        if (mImageListView.ScrollOrientation == ScrollOrientation.HorizontalScroll) {
                             index = (pt.X + mImageListView.ViewOffset.X) / mImageListView.layoutManager.ItemSizeWithMargin.Width;
                         }
-                        else
-                        {
+                        else {
                             int col = pt.X / mImageListView.layoutManager.ItemSizeWithMargin.Width;
                             int row = (pt.Y + mImageListView.ViewOffset.Y) / mImageListView.layoutManager.ItemSizeWithMargin.Height;
-                            if (col > mImageListView.layoutManager.Cols - 1)
-                            {
+                            if (col > mImageListView.layoutManager.Cols - 1) {
                                 col = mImageListView.layoutManager.Cols - 1;
                                 dragCaretOnRight = true;
                             }
@@ -956,8 +854,7 @@ namespace ImageGlass.ImageListView
                         }
 
                         if (index < 0) index = 0;
-                        if (index > mImageListView.Items.Count - 1)
-                        {
+                        if (index > mImageListView.Items.Count - 1) {
                             index = mImageListView.Items.Count - 1;
                             dragCaretOnRight = true;
                         }
@@ -966,8 +863,7 @@ namespace ImageGlass.ImageListView
 
                         if (selfDragging && (dragDropTarget.Selected ||
                             (!dragCaretOnRight && index > 0 && mImageListView.Items[index - 1].Selected) ||
-                            (dragCaretOnRight && index < mImageListView.Items.Count - 1 && mImageListView.Items[index + 1].Selected)))
-                        {
+                            (dragCaretOnRight && index < mImageListView.Items.Count - 1 && mImageListView.Items[index + 1].Selected))) {
                             e.Effect = DragDropEffects.None;
 
                             dragDropTarget = null;
@@ -977,8 +873,7 @@ namespace ImageGlass.ImageListView
                         else
                             e.Effect = DragDropEffects.Copy;
 
-                        if (!ReferenceEquals(dragDropTarget, DropTarget) || dragCaretOnRight != DropToRight)
-                        {
+                        if (!ReferenceEquals(dragDropTarget, DropTarget) || dragCaretOnRight != DropToRight) {
                             DropTarget = dragDropTarget;
                             DropToRight = dragCaretOnRight;
                             mImageListView.Refresh(true);
@@ -991,8 +886,7 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Handles control's DragLeave event.
             /// </summary>
-            public void DragLeave()
-            {
+            public void DragLeave() {
                 DropTarget = null;
                 mImageListView.Refresh(true);
 
@@ -1005,18 +899,15 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Performs a hit test.
             /// </summary>
-            private void DoHitTest(Point pt)
-            {
+            private void DoHitTest(Point pt) {
                 ImageListView.HitInfo h;
                 mImageListView.HitTest(pt, out h);
 
-                if (h.ItemHit && mImageListView.Items[h.ItemIndex].Enabled)
-                {
+                if (h.ItemHit && mImageListView.Items[h.ItemIndex].Enabled) {
                     HoveredItem = mImageListView.Items[h.ItemIndex];
                     HoveredSubItem = h.SubItemIndex;
                 }
-                else
-                {
+                else {
                     HoveredItem = null;
                     HoveredSubItem = -1;
                 }
@@ -1044,10 +935,8 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Returns the item index after applying the given navigation key.
             /// </summary>
-            private int ApplyNavKey(int index, Keys key)
-            {
-                if (mImageListView.ScrollOrientation == ScrollOrientation.VerticalScroll)
-                {
+            private int ApplyNavKey(int index, Keys key) {
+                if (mImageListView.ScrollOrientation == ScrollOrientation.VerticalScroll) {
                     if (key == Keys.Up && index >= mImageListView.layoutManager.Cols)
                         index -= mImageListView.layoutManager.Cols;
                     else if (key == Keys.Down && index < mImageListView.Items.Count - mImageListView.layoutManager.Cols)
@@ -1065,8 +954,7 @@ namespace ImageGlass.ImageListView
                     else if (key == Keys.End)
                         index = mImageListView.Items.Count - 1;
                 }
-                else
-                {
+                else {
                     if (key == Keys.Left && index > 0)
                         index--;
                     else if (key == Keys.Right && index < mImageListView.Items.Count - 1)
@@ -1094,8 +982,7 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Handles the Tick event of the scrollTimer control.
             /// </summary>
-            private void scrollTimer_Tick(object sender, EventArgs e)
-            {
+            private void scrollTimer_Tick(object sender, EventArgs e) {
                 int delta = (int)scrollTimer.Tag;
                 Point location = mImageListView.PointToClient(Control.MousePosition);
                 mImageListView.OnMouseMove(new MouseEventArgs(Control.MouseButtons, 0, location.X, location.Y, 0));

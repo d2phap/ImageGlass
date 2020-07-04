@@ -110,7 +110,7 @@ namespace ImageGlass.UI.Renderers {
         }
 
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e) {
-            using (Pen pen = new Pen(this.ThemeTextColor, 1)) // KBR 20181231 fix handle leak
+            using (var pen = new Pen(ThemeTextColor, 1)) // KBR 20181231 fix handle leak
             {
                 e.Graphics.DrawLine(pen,
                     e.Item.Width - (5 * e.Item.Height / 8),
@@ -127,7 +127,7 @@ namespace ImageGlass.UI.Renderers {
         }
 
         protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e) {
-            using (Pen pen = new Pen(this.ThemeTextColor, 2)) // KBR 20181231 fix handle leak
+            using (var pen = new Pen(ThemeTextColor, 2)) // KBR 20181231 fix handle leak
             {
                 e.Graphics.DrawLine(pen,
                     2 * e.Item.Height / 10 + 1,
@@ -148,68 +148,19 @@ namespace ImageGlass.UI.Renderers {
 
 
     public class ModernColors: ProfessionalColorTable {
-        public override Color MenuItemSelected {
-            get {
-                return Color.FromArgb(35, 0, 0, 0);
-            }
-        }
-        public override Color MenuBorder {
-            get {
-                return Color.Transparent;
-            }
-        }
-        public override Color MenuItemBorder {
-            get {
-                return Color.Transparent;
-            }
-        }
+        public override Color MenuItemSelected => Color.FromArgb(35, 0, 0, 0);
+        public override Color MenuBorder => Color.Transparent;
+        public override Color MenuItemBorder => Color.Transparent;
 
-        public override Color ImageMarginGradientBegin {
-            get {
-                return Color.Transparent;
-            }
-        }
-        public override Color ImageMarginGradientMiddle {
-            get {
-                return Color.Transparent;
-            }
-        }
-        public override Color ImageMarginGradientEnd {
-            get {
-                return Color.Transparent;
-            }
-        }
-        public override Color SeparatorDark {
-            get {
-                return Color.Transparent;
-            }
-        }
-        public override Color SeparatorLight {
-            get {
-                return Color.Transparent;
-            }
-        }
-        public override Color CheckBackground {
-            get {
-                return Color.Transparent;
-            }
-        }
-        public override Color CheckPressedBackground {
-            get {
-                return Color.Transparent;
-            }
-        }
-        public override Color CheckSelectedBackground {
-            get {
-                return Color.Transparent;
-            }
-        }
-        public override Color ButtonSelectedBorder {
-            get {
-                return Color.Transparent;
-            }
-        }
-
+        public override Color ImageMarginGradientBegin => Color.Transparent;
+        public override Color ImageMarginGradientMiddle => Color.Transparent;
+        public override Color ImageMarginGradientEnd => Color.Transparent;
+        public override Color SeparatorDark => Color.Transparent;
+        public override Color SeparatorLight => Color.Transparent;
+        public override Color CheckBackground => Color.Transparent;
+        public override Color CheckPressedBackground => Color.Transparent;
+        public override Color CheckSelectedBackground => Color.Transparent;
+        public override Color ButtonSelectedBorder => Color.Transparent;
         public override Color ToolStripDropDownBackground => base.ToolStripDropDownBackground;
     }
 }

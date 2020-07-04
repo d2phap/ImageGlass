@@ -25,13 +25,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Drawing;
 
-namespace ImageGlass
-{
+namespace ImageGlass {
     /// <summary>
     /// Used to animate gifs. 
     /// </summary>
-    public interface GifAnimator
-    {
+    public interface GifAnimator {
         /// <summary>
         /// Updates the time frame for this image.
         /// </summary>

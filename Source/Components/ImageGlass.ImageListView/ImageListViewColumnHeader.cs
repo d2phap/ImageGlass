@@ -16,20 +16,17 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
-using System.Windows.Forms;
 using System.ComponentModel;
 using System.Resources;
+using System.Windows.Forms;
 
-namespace ImageGlass.ImageListView
-{
-    public partial class ImageListView
-    {
+namespace ImageGlass.ImageListView {
+    public partial class ImageListView {
         /// <summary>
         /// Represents a column header displayed in details view mode.
         /// </summary>
         [TypeConverter(typeof(ImageListViewColumnHeaderTypeConverter))]
-        public class ImageListViewColumnHeader : ICloneable
-        {
+        public class ImageListViewColumnHeader: ICloneable {
             #region Member Variables
             private Guid mGuid;
             private int mDisplayIndex;
@@ -52,10 +49,8 @@ namespace ImageGlass.ImageListView
             /// Gets the default header text for this column type.
             /// </summary>
             [Category("Appearance"), Browsable(false), Description("Gets the default header text for this column type."), Localizable(true)]
-            public virtual string DefaultText
-            {
-                get
-                {
+            public virtual string DefaultText {
+                get {
                     return GetDefaultText(mType);
                 }
             }
@@ -63,16 +58,12 @@ namespace ImageGlass.ImageListView
             /// Gets or sets the display order of the column.
             /// </summary>
             [Category("Appearance"), Browsable(true), Description("Gets or sets the display order of the column.")]
-            public int DisplayIndex
-            {
-                get
-                {
+            public int DisplayIndex {
+                get {
                     return mDisplayIndex;
                 }
-                set
-                {
-                    if (mDisplayIndex != value)
-                    {
+                set {
+                    if (mDisplayIndex != value) {
                         mDisplayIndex = value;
 
                         if (owner != null)
@@ -92,17 +83,14 @@ namespace ImageGlass.ImageListView
             /// Gets or sets the column header text.
             /// </summary>
             [Category("Appearance"), Browsable(true), Description("Gets or sets the column header text.")]
-            public string Text
-            {
-                get
-                {
+            public string Text {
+                get {
                     if (!string.IsNullOrEmpty(mText))
                         return mText;
                     else
                         return DefaultText;
                 }
-                set
-                {
+                set {
                     mText = value;
                     if (mImageListView != null)
                         mImageListView.Refresh();
@@ -112,18 +100,14 @@ namespace ImageGlass.ImageListView
             /// Gets or sets the type of information displayed by the column.
             /// </summary>
             [Category("Appearance"), Browsable(true), Description("Gets or sets the type of information displayed by the column.")]
-            public ColumnType Type
-            {
-                get
-                {
+            public ColumnType Type {
+                get {
                     return mType;
                 }
-                set
-                {
+                set {
                     ColumnType oldType = mType;
 
-                    if (owner != null && oldType == ColumnType.Custom)
-                    {
+                    if (owner != null && oldType == ColumnType.Custom) {
                         if (mImageListView == null)
                             throw new InvalidOperationException("Owner control is null.");
                         mImageListView.Items.RemoveCustomColumn(mGuid);
@@ -131,8 +115,7 @@ namespace ImageGlass.ImageListView
 
                     mType = value;
 
-                    if (owner != null && mType == ColumnType.Custom)
-                    {
+                    if (owner != null && mType == ColumnType.Custom) {
                         if (mImageListView == null)
                             throw new InvalidOperationException("Owner control is null.");
                         mImageListView.Items.AddCustomColumn(mGuid);
@@ -143,14 +126,11 @@ namespace ImageGlass.ImageListView
             /// Gets or sets a value indicating whether the control is displayed.
             /// </summary>
             [Category("Appearance"), Browsable(true), Description("Gets or sets a value indicating whether the control is displayed."), DefaultValue(true)]
-            public bool Visible
-            {
-                get
-                {
+            public bool Visible {
+                get {
                     return mVisible;
                 }
-                set
-                {
+                set {
                     mVisible = value;
 
                     if (owner != null)
@@ -164,14 +144,11 @@ namespace ImageGlass.ImageListView
             /// Gets or sets the column width.
             /// </summary>
             [Category("Appearance"), Browsable(true), Description("Gets or sets the column width."), DefaultValue(ImageListView.DefaultColumnWidth)]
-            public int Width
-            {
-                get
-                {
+            public int Width {
+                get {
                     return mWidth;
                 }
-                set
-                {
+                set {
                     mWidth = System.Math.Max(12, value);
                     if (mImageListView != null)
                         mImageListView.Refresh();
@@ -185,15 +162,13 @@ namespace ImageGlass.ImageListView
             /// </summary>
             /// <returns>true if the designer should serialize 
             /// the property; otherwise false.</returns>
-            public bool ShouldSerializeText()
-            {
+            public bool ShouldSerializeText() {
                 return Text != DefaultText;
             }
             /// <summary>
             /// Resets the column text to its default value.
             /// </summary>
-            public void ResetText()
-            {
+            public void ResetText() {
                 Text = DefaultText;
             }
             #endregion
@@ -207,8 +182,7 @@ namespace ImageGlass.ImageListView
             /// <param name="width">Width in pixels of the column header.</param>
             /// <param name="displayIndex">Display order of the column.</param>
             /// <param name="visible">Whether the column is initially visible.</param>
-            public ImageListViewColumnHeader(ColumnType type, string text, int width, int displayIndex, bool visible)
-            {
+            public ImageListViewColumnHeader(ColumnType type, string text, int width, int displayIndex, bool visible) {
                 mImageListView = null;
                 owner = null;
                 mGuid = Guid.NewGuid();
@@ -226,8 +200,7 @@ namespace ImageGlass.ImageListView
             /// <param name="width">Width in pixels of the column header.</param>
             /// <param name="displayIndex">Display order of the column.</param>
             public ImageListViewColumnHeader(ColumnType type, string text, int width, int displayIndex)
-                : this(type, text, width, displayIndex, true)
-            {
+                : this(type, text, width, displayIndex, true) {
                 ;
             }
             /// <summary>
@@ -237,8 +210,7 @@ namespace ImageGlass.ImageListView
             /// <param name="width">Width in pixels of the column header.</param>
             /// <param name="displayIndex">Display order of the column.</param>
             public ImageListViewColumnHeader(ColumnType type, int width, int displayIndex)
-                : this(type, "", width, displayIndex)
-            {
+                : this(type, "", width, displayIndex) {
                 ;
             }
             /// <summary>
@@ -248,8 +220,7 @@ namespace ImageGlass.ImageListView
             /// <param name="text">Text of the column header.</param>
             /// <param name="width">Width in pixels of the column header.</param>
             public ImageListViewColumnHeader(ColumnType type, string text, int width)
-                : this(type, text, width, -1)
-            {
+                : this(type, text, width, -1) {
                 ;
             }
             /// <summary>
@@ -258,8 +229,7 @@ namespace ImageGlass.ImageListView
             /// <param name="type">The type of data to display in this column.</param>
             /// <param name="text">Text of the column header.</param>
             public ImageListViewColumnHeader(ColumnType type, string text)
-                : this(type, text, ImageListView.DefaultColumnWidth)
-            {
+                : this(type, text, ImageListView.DefaultColumnWidth) {
                 ;
             }
             /// <summary>
@@ -268,8 +238,7 @@ namespace ImageGlass.ImageListView
             /// <param name="type">The type of data to display in this column.</param>
             /// <param name="width">Width in pixels of the column header.</param>
             public ImageListViewColumnHeader(ColumnType type, int width)
-                : this(type, "", width)
-            {
+                : this(type, "", width) {
                 ;
             }
             /// <summary>
@@ -277,16 +246,14 @@ namespace ImageGlass.ImageListView
             /// </summary>
             /// <param name="type">The type of data to display in this column.</param>
             public ImageListViewColumnHeader(ColumnType type)
-                : this(type, "", ImageListView.DefaultColumnWidth)
-            {
+                : this(type, "", ImageListView.DefaultColumnWidth) {
                 ;
             }
             /// <summary>
             /// Initializes a new instance of the ImageListViewColumnHeader class.
             /// </summary>
             public ImageListViewColumnHeader()
-                : this(ColumnType.Name)
-            {
+                : this(ColumnType.Name) {
                 ;
             }
             #endregion
@@ -295,37 +262,30 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Resizes the width of the column based on the length of the column content.
             /// </summary>
-            public void AutoFit()
-            {
+            public void AutoFit() {
                 if (mImageListView == null)
                     throw new InvalidOperationException("Cannot calculate column width. Owner image list view is null.");
 
                 int width = 0;
-                if (mType == ColumnType.Rating)
-                {
+                if (mType == ColumnType.Rating) {
                     if (mImageListView.RatingImage != null)
                         width = mImageListView.RatingImage.Width * 5;
                 }
-                else if (mType == ColumnType.Custom)
-                {
-                    foreach (ImageListViewItem item in mImageListView.Items)
-                    {
+                else if (mType == ColumnType.Custom) {
+                    foreach (ImageListViewItem item in mImageListView.Items) {
                         int itemwidth = TextRenderer.MeasureText(item.GetSubItemText(mGuid), mImageListView.Font).Width;
                         width = System.Math.Max(width, itemwidth);
                     }
                 }
-                else
-                {
-                    foreach (ImageListViewItem item in mImageListView.Items)
-                    {
+                else {
+                    foreach (ImageListViewItem item in mImageListView.Items) {
                         int itemwidth = TextRenderer.MeasureText(item.GetSubItemText(Type), mImageListView.Font).Width;
                         width = System.Math.Max(width, itemwidth);
                     }
                 }
 
                 // Add space for checkboxes and file icon
-                if (mType == ColumnType.Name)
-                {
+                if (mType == ColumnType.Name) {
                     if (ImageListView.ShowCheckBoxes && ImageListView.ShowFileIcons)
                         width += 2 * 16 + 3 * 2;
                     else if (ImageListView.ShowCheckBoxes)
@@ -343,8 +303,7 @@ namespace ImageGlass.ImageListView
             /// <returns>
             /// A <see cref="System.String"/> that represents this instance.
             /// </returns>
-            public override string ToString()
-            {
+            public override string ToString() {
                 return mType.ToString();
             }
             #endregion
@@ -354,8 +313,7 @@ namespace ImageGlass.ImageListView
             /// Gets the default column header text for the given column type.
             /// </summary>
             [Localizable(true)]
-            private string GetDefaultText(ColumnType type)
-            {
+            private string GetDefaultText(ColumnType type) {
                 ResourceManager manager = new ResourceManager("ImageGlass.ImageListView.ImageListViewResources", GetType().Assembly);
                 return manager.GetString(type.ToString());
             }
@@ -368,8 +326,7 @@ namespace ImageGlass.ImageListView
             /// <returns>
             /// A new object that is a copy of this instance.
             /// </returns>
-            public object Clone()
-            {
+            public object Clone() {
                 ImageListViewColumnHeader column = new ImageListViewColumnHeader();
 
                 column.mDisplayIndex = mDisplayIndex;

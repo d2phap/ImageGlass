@@ -39,8 +39,8 @@ namespace ImageGlass.Services {
             { "System.FileName", ImageOrderBy.Name},
             { "System.ItemNameDisplay", ImageOrderBy.Name},
             { "System.Size", ImageOrderBy.Length },
-            { "System.DateCreated",ImageOrderBy.CreationTime},
-            { "System.DateAccessed",ImageOrderBy.LastAccessTime},
+            { "System.DateCreated", ImageOrderBy.CreationTime},
+            { "System.DateAccessed", ImageOrderBy.LastAccessTime},
         };
 
         [DllImport("ExplorerSortOrder32.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]

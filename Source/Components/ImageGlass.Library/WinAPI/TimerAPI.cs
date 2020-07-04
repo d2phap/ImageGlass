@@ -58,7 +58,7 @@ namespace ImageGlass.Library.WinAPI {
         static TimerAPI() {
             ourLock = new object();
 
-            TIMECAPS tc = new TIMECAPS();
+            var tc = new TIMECAPS();
             timeGetDevCaps(ref tc, Marshal.SizeOf(tc));
             ourMinPeriod = tc.periodMin;
             ourMaxPeriod = tc.periodMax;

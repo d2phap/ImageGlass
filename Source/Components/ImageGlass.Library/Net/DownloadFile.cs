@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace ImageGlass.Library.Net {
     public class FileDownloader {
@@ -38,9 +39,7 @@ namespace ImageGlass.Library.Net {
         /// <summary>
         /// Tập tin hiện tại
         /// </summary>
-        public string CurrentFile {
-            get { return _currentFile; }
-        }
+        public string CurrentFile => _currentFile;
 
         /// <summary>
         /// Tải 1 tập tin
@@ -51,7 +50,7 @@ namespace ImageGlass.Library.Net {
         public bool DownloadFile(string URL, string filename) {
             try {
                 _currentFile = GetFileName(URL);
-                WebClient WC = new WebClient();
+                var WC = new WebClient();
                 WC.DownloadFile(URL, filename);
                 if (FileDownloadComplete != null) {
                     FileDownloadComplete();
@@ -86,7 +85,7 @@ namespace ImageGlass.Library.Net {
         /// <param name="URL">Liên kết của tập tin</param>
         /// <param name="filename">Đương dẫn lưu tập tin</param>
         /// <returns></returns>
-        public bool DownloadFileWithProgress(string URL, string filename) {
+        public async Task<bool> DownloadFileWithProgress(string URL, string filename) {
             FileStream fs = default(FileStream);
             try {
                 _currentFile = GetFileName(URL);
@@ -98,7 +97,7 @@ namespace ImageGlass.Library.Net {
 
                 fs = new FileStream(filename, FileMode.Create, FileAccess.Write);
                 wRemote = WebRequest.Create(URL);
-                WebResponse myWebResponse = wRemote.GetResponse();
+                WebResponse myWebResponse = await wRemote.GetResponseAsync();
 
                 if (FileDownloadSizeObtained != null) {
                     FileDownloadSizeObtained(myWebResponse.ContentLength);
@@ -106,8 +105,8 @@ namespace ImageGlass.Library.Net {
                 Stream sChunks = myWebResponse.GetResponseStream();
 
                 do {
-                    iBytesRead = sChunks.Read(bBuffer, 0, 256);
-                    fs.Write(bBuffer, 0, iBytesRead);
+                    iBytesRead = await sChunks.ReadAsync(bBuffer, 0, 256);
+                    await fs.WriteAsync(bBuffer, 0, iBytesRead);
                     iTotalBytesRead += iBytesRead;
 
                     if (myWebResponse.ContentLength < iTotalBytesRead) {

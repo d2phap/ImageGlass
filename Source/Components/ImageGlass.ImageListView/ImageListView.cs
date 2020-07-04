@@ -17,19 +17,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.ComponentModel;
 using System.Drawing;
 using System.Resources;
+using System.Windows.Forms;
 
-namespace ImageGlass.ImageListView
-{
+namespace ImageGlass.ImageListView {
     /// <summary>
     /// The ImageGlass.ImageListView namespace contains new and
     /// enhanced windows forms components.
     /// </summary>
-    internal class NamespaceDoc
-    {
+    internal class NamespaceDoc {
     }
 
     /// <summary>
@@ -41,8 +39,7 @@ namespace ImageGlass.ImageListView
     [DefaultProperty("Items")]
     [Designer(typeof(ImageListViewDesigner))]
     [Docking(DockingBehavior.Ask)]
-    public partial class ImageListView : Control, IComponent
-    {
+    public partial class ImageListView: Control, IComponent {
         #region Constants
         /// <summary>
         /// Default width of column headers in pixels.
@@ -173,11 +170,9 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the background color of the control.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets the background color of the control."), DefaultValue(typeof(Color), "Window")]
-        public override Color BackColor
-        {
+        public override Color BackColor {
             get { return mColors.ControlBackColor; }
-            set
-            {
+            set {
                 mColors.ControlBackColor = value;
                 Refresh();
             }
@@ -186,11 +181,9 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the border style of the control.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets the border style of the control."), DefaultValue(typeof(BorderStyle), "Fixed3D")]
-        public BorderStyle BorderStyle
-        {
+        public BorderStyle BorderStyle {
             get { return mBorderStyle; }
-            set
-            {
+            set {
                 mBorderStyle = value;
                 UpdateStyles();
             }
@@ -199,24 +192,19 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the cache mode. Setting the the CacheMode to Continuous disables the CacheLimit.
         /// </summary>
         [Category("Behavior"), Description("Gets or sets the cache mode."), DefaultValue(typeof(CacheMode), "OnDemand"), RefreshProperties(RefreshProperties.All)]
-        public CacheMode CacheMode
-        {
+        public CacheMode CacheMode {
             get { return mCacheMode; }
-            set
-            {
-                if (mCacheMode != value)
-                {
+            set {
+                if (mCacheMode != value) {
                     mCacheMode = value;
 
                     if (thumbnailCache != null)
                         thumbnailCache.CacheMode = mCacheMode;
 
-                    if (mCacheMode == CacheMode.Continuous)
-                    {
+                    if (mCacheMode == CacheMode.Continuous) {
                         mCacheLimitAsItemCount = 0;
                         mCacheLimitAsMemory = 0;
-                        if (thumbnailCache != null)
-                        {
+                        if (thumbnailCache != null) {
                             thumbnailCache.CacheLimitAsItemCount = 0;
                             thumbnailCache.CacheLimitAsMemory = 0;
                         }
@@ -229,13 +217,11 @@ namespace ImageGlass.ImageListView
 
         // IG_CHANGE : provide the ability to control the metadata caching
         [Category("Behavior"), Description("Controls metadata caching"), DefaultValue(false)]
-        public bool MetadataCacheEnabled
-        {
-            set
-            {
-                if (value) 
+        public bool MetadataCacheEnabled {
+            set {
+                if (value)
                     metadataCache.Resume();
-                else 
+                else
                     metadataCache.Pause();
             }
         }
@@ -244,36 +230,29 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the cache limit as either the count of thumbnail images or the memory allocated for cache (e.g. 10MB).
         /// </summary>
         [Category("Behavior"), Description("Gets or sets the cache limit as either the count of thumbnail images or the memory allocated for cache (e.g. 10MB)."), DefaultValue("20MB"), RefreshProperties(RefreshProperties.All)]
-        public string CacheLimit
-        {
-            get
-            {
+        public string CacheLimit {
+            get {
                 if (mCacheLimitAsMemory != 0)
                     return (mCacheLimitAsMemory / 1024 / 1024).ToString() + "MB";
                 else
                     return mCacheLimitAsItemCount.ToString();
             }
-            set
-            {
+            set {
                 string slimit = value;
                 int limit = 0;
                 mCacheMode = CacheMode.OnDemand;
-                if ((slimit.EndsWith("MB", StringComparison.OrdinalIgnoreCase) && int.TryParse(slimit.Substring(0, slimit.Length - 2).Trim(), out limit)) || (slimit.EndsWith("MiB", StringComparison.OrdinalIgnoreCase) && int.TryParse(slimit.Substring(0, slimit.Length - 3).Trim(), out limit)))
-                {
+                if ((slimit.EndsWith("MB", StringComparison.OrdinalIgnoreCase) && int.TryParse(slimit.Substring(0, slimit.Length - 2).Trim(), out limit)) || (slimit.EndsWith("MiB", StringComparison.OrdinalIgnoreCase) && int.TryParse(slimit.Substring(0, slimit.Length - 3).Trim(), out limit))) {
                     mCacheLimitAsItemCount = 0;
                     mCacheLimitAsMemory = limit * 1024 * 1024;
-                    if (thumbnailCache != null)
-                    {
+                    if (thumbnailCache != null) {
                         thumbnailCache.CacheLimitAsItemCount = 0;
                         thumbnailCache.CacheLimitAsMemory = mCacheLimitAsMemory;
                     }
                 }
-                else if (int.TryParse(slimit, out limit))
-                {
+                else if (int.TryParse(slimit, out limit)) {
                     mCacheLimitAsMemory = 0;
                     mCacheLimitAsItemCount = limit;
-                    if (thumbnailCache != null)
-                    {
+                    if (thumbnailCache != null) {
                         thumbnailCache.CacheLimitAsMemory = 0;
                         thumbnailCache.CacheLimitAsItemCount = mCacheLimitAsItemCount;
                     }
@@ -286,14 +265,11 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the path to the persistent cache file.
         /// </summary>
         [Category("Behavior"), Description("Gets or sets the path to the persistent cache file."), Browsable(false)]
-        public string PersistentCacheFile
-        {
-            get
-            {
+        public string PersistentCacheFile {
+            get {
                 return thumbnailCache.diskCache.FileName;
             }
-            set
-            {
+            set {
                 thumbnailCache.diskCache.FileName = value;
             }
         }
@@ -301,14 +277,11 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the size of the persistent cache file in MB.
         /// </summary>
         [Category("Behavior"), Description("Gets or sets the size of the persistent cache file in MB."), Browsable(false)]
-        public long PersistentCacheSize
-        {
-            get
-            {
+        public long PersistentCacheSize {
+            get {
                 return thumbnailCache.diskCache.Size / 1024 / 1024;
             }
-            set
-            {
+            set {
                 thumbnailCache.diskCache.Size = value * 1024 * 1024;
             }
         }
@@ -316,17 +289,14 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the color palette of the ImageListView.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets the color palette of the ImageListView.")]
-        public ImageListViewColor Colors
-        {
-            get
-            {
+        public ImageListViewColor Colors {
+            get {
                 if (mColors == null)
                     mColors = ImageListViewColor.Default;
 
                 return mColors;
             }
-            set
-            {
+            set {
                 mColors = value;
                 Refresh();
             }
@@ -337,11 +307,9 @@ namespace ImageGlass.ImageListView
         /// </summary>
         [Category("Appearance"), Description("Gets the collection of columns of the image list view.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public ImageListViewColumnHeaderCollection Columns
-        {
+        public ImageListViewColumnHeaderCollection Columns {
             get { return mColumns; }
-            internal set
-            {
+            internal set {
                 mColumns = value;
                 Refresh();
             }
@@ -350,17 +318,14 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the placeholder image.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets the placeholder image.")]
-        public Image DefaultImage
-        {
-            get
-            {
+        public Image DefaultImage {
+            get {
                 if (mDefaultImage == null)
                     return resources.GetObject("DefaultImage") as Image;
                 else
                     return mDefaultImage;
             }
-            set
-            {
+            set {
                 mDefaultImageChanged = true;
                 mDefaultImage = value;
                 Refresh();
@@ -370,10 +335,8 @@ namespace ImageGlass.ImageListView
         /// Gets the rectangle that represents the display area of the control.
         /// </summary>
         [Category("Appearance"), Browsable(false), Description("Gets the rectangle that represents the display area of the control.")]
-        public override Rectangle DisplayRectangle
-        {
-            get
-            {
+        public override Rectangle DisplayRectangle {
+            get {
                 if (layoutManager == null)
                     return base.DisplayRectangle;
                 else
@@ -386,20 +349,16 @@ namespace ImageGlass.ImageListView
         /// enabled.
         /// </summary>
         [Category("Behavior"), Browsable(true), Description("Gets or sets a value indicating whether the control can respond to user interaction."), DefaultValue(true)]
-        public new bool Enabled
-        {
+        public new bool Enabled {
             get { return base.Enabled; }
-            set
-            {
+            set {
                 base.Enabled = value;
-                if (value)
-                {
+                if (value) {
                     thumbnailCache.Resume();
                     shellInfoCache.Resume();
                     metadataCache.Resume();
                 }
-                else
-                {
+                else {
                     thumbnailCache.Pause();
                     shellInfoCache.Pause();
                     metadataCache.Pause();
@@ -410,11 +369,9 @@ namespace ImageGlass.ImageListView
         /// [Pháp] Gets or sets whether Key Navigation is enabled.
         /// </summary>
         [Category("Behavior"), Description("Gets or sets whether Key Navigation is enabled.")]
-        public bool EnableKeyNavigation
-        {
+        public bool EnableKeyNavigation {
             get { return mEnableKeyNavigation; }
-            set
-            {
+            set {
                 mEnableKeyNavigation = value;
             }
         }
@@ -422,17 +379,14 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the error image.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets the error image.")]
-        public Image ErrorImage
-        {
-            get
-            {
+        public Image ErrorImage {
+            get {
                 if (mErrorImage == null)
                     return resources.GetObject("ErrorImage") as Image;
                 else
                     return mErrorImage;
             }
-            set
-            {
+            set {
                 mErrorImageChanged = true;
                 mErrorImage = value;
                 Refresh();
@@ -442,12 +396,9 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the font of the group headers.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets the font of the group headers.")]
-        public Font GroupHeaderFont
-        {
-            get
-            {
-                if (mGroupHeaderFont == null)
-                {
+        public Font GroupHeaderFont {
+            get {
+                if (mGroupHeaderFont == null) {
                     if (Font != null)
                         mGroupHeaderFont = (Font)Font.Clone();
                     else
@@ -456,8 +407,7 @@ namespace ImageGlass.ImageListView
 
                 return mGroupHeaderFont;
             }
-            set
-            {
+            set {
                 mGroupHeaderFont = value;
                 Refresh();
             }
@@ -466,12 +416,9 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the font of the column headers.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets the font of the column headers.")]
-        public Font ColumnHeaderFont
-        {
-            get
-            {
-                if (mColumnHeaderFont == null)
-                {
+        public Font ColumnHeaderFont {
+            get {
+                if (mColumnHeaderFont == null) {
                     if (Font != null)
                         mColumnHeaderFont = (Font)Font.Clone();
                     else
@@ -480,8 +427,7 @@ namespace ImageGlass.ImageListView
 
                 return mColumnHeaderFont;
             }
-            set
-            {
+            set {
                 mColumnHeaderFont = value;
                 Refresh();
             }
@@ -490,13 +436,10 @@ namespace ImageGlass.ImageListView
         /// Gets or sets whether scrollbars scroll by an amount which is a multiple of item height.
         /// </summary>
         [Browsable(true), Category("Behavior"), Description("Gets or sets whether scrollbars scroll by an amount which is a multiple of item height."), DefaultValue(false)]
-        public bool IntegralScroll
-        {
+        public bool IntegralScroll {
             get { return mIntegralScroll; }
-            set
-            {
-                if (mIntegralScroll != value)
-                {
+            set {
+                if (mIntegralScroll != value) {
                     mIntegralScroll = value;
                     Refresh();
                 }
@@ -507,11 +450,9 @@ namespace ImageGlass.ImageListView
         /// </summary>
         [Category("Behavior"), Description("Gets the collection of items contained in the image list view.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public ImageListViewItemCollection Items
-        {
+        public ImageListViewItemCollection Items {
             get { return mItems; }
-            internal set
-            {
+            internal set {
                 mItems = value;
                 Refresh();
             }
@@ -525,13 +466,10 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the width of the left pane.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets the width of the left pane."), DefaultValue(240)]
-        public int PaneWidth
-        {
+        public int PaneWidth {
             get { return mPaneWidth; }
-            set
-            {
-                if (mPaneWidth != value)
-                {
+            set {
+                if (mPaneWidth != value) {
                     if (mPaneWidth < 2)
                         mPaneWidth = 2;
                     mPaneWidth = value;
@@ -543,17 +481,14 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the rating image.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets the rating image.")]
-        public Image RatingImage
-        {
-            get
-            {
+        public Image RatingImage {
+            get {
                 if (mRatingImage == null)
                     return resources.GetObject("RatingImage") as Image;
                 else
                     return mRatingImage;
             }
-            set
-            {
+            set {
                 mRatingImageChanged = true;
                 mRatingImage = value;
                 Refresh();
@@ -563,17 +498,14 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the empty rating image.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets the empty rating image.")]
-        public Image EmptyRatingImage
-        {
-            get
-            {
+        public Image EmptyRatingImage {
+            get {
                 if (mEmptyRatingImage == null)
                     return resources.GetObject("EmptyRatingImage") as Image;
                 else
                     return mEmptyRatingImage;
             }
-            set
-            {
+            set {
                 mEmptyRatingImageChanged = true;
                 mEmptyRatingImage = value;
                 Refresh();
@@ -583,11 +515,9 @@ namespace ImageGlass.ImageListView
         /// Gets or sets whether the control will retry loading thumbnails on an error.
         /// </summary>
         [Category("Behavior"), Description("Gets or sets whether the control will retry loading thumbnails on an error."), DefaultValue(true)]
-        public bool RetryOnError
-        {
+        public bool RetryOnError {
             get { return mRetryOnError; }
-            set
-            {
+            set {
                 mRetryOnError = value;
                 if (thumbnailCache != null)
                     thumbnailCache.RetryOnError = mRetryOnError;
@@ -601,11 +531,9 @@ namespace ImageGlass.ImageListView
         /// Gets or sets whether the scrollbars should be shown.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets whether the scrollbars should be shown."), DefaultValue(true)]
-        public bool ScrollBars
-        {
+        public bool ScrollBars {
             get { return mShowScrollBars; }
-            set
-            {
+            set {
                 mShowScrollBars = value;
                 Refresh();
             }
@@ -615,8 +543,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         [Browsable(false), Category("Behavior"), Description("Gets the collection of selected items contained in the image list view.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public ImageListViewSelectedItemCollection SelectedItems
-        {
+        public ImageListViewSelectedItemCollection SelectedItems {
             get { return mSelectedItems; }
         }
         /// <summary>
@@ -624,8 +551,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         [Browsable(false), Category("Behavior"), Description("Gets the collection of checked items contained in the image list view.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public ImageListViewCheckedItemCollection CheckedItems
-        {
+        public ImageListViewCheckedItemCollection CheckedItems {
             get { return mCheckedItems; }
         }
         /// <summary>
@@ -637,11 +563,9 @@ namespace ImageGlass.ImageListView
         /// Gets or sets whether to display the file icons.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets whether to display the file icons."), DefaultValue(false)]
-        public bool ShowFileIcons
-        {
+        public bool ShowFileIcons {
             get { return mShowFileIcons; }
-            set
-            {
+            set {
                 mShowFileIcons = value;
                 Refresh();
             }
@@ -650,11 +574,9 @@ namespace ImageGlass.ImageListView
         /// Gets or sets whether to display the item checkboxes.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets whether to display the item checkboxes."), DefaultValue(false)]
-        public bool ShowCheckBoxes
-        {
+        public bool ShowCheckBoxes {
             get { return mShowCheckBoxes; }
-            set
-            {
+            set {
                 mShowCheckBoxes = value;
                 Refresh();
             }
@@ -663,11 +585,9 @@ namespace ImageGlass.ImageListView
         /// Gets or sets alignment of file icons.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets alignment of file icons."), DefaultValue(ContentAlignment.TopRight)]
-        public ContentAlignment IconAlignment
-        {
+        public ContentAlignment IconAlignment {
             get { return mIconAlignment; }
-            set
-            {
+            set {
                 mIconAlignment = value;
                 Refresh();
             }
@@ -676,11 +596,9 @@ namespace ImageGlass.ImageListView
         /// Gets or sets file icon padding.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets file icon padding."), DefaultValue(typeof(Size), "2,2")]
-        public Size IconPadding
-        {
+        public Size IconPadding {
             get { return mIconPadding; }
-            set
-            {
+            set {
                 mIconPadding = value;
                 Refresh();
             }
@@ -689,11 +607,9 @@ namespace ImageGlass.ImageListView
         /// Gets or sets alignment of item checkboxes.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets alignment of item checkboxes."), DefaultValue(ContentAlignment.BottomRight)]
-        public ContentAlignment CheckBoxAlignment
-        {
+        public ContentAlignment CheckBoxAlignment {
             get { return mCheckBoxAlignment; }
-            set
-            {
+            set {
                 mCheckBoxAlignment = value;
                 Refresh();
             }
@@ -702,11 +618,9 @@ namespace ImageGlass.ImageListView
         /// Gets or sets item checkbox padding.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets item checkbox padding."), DefaultValue(typeof(Size), "2,2")]
-        public Size CheckBoxPadding
-        {
+        public Size CheckBoxPadding {
             get { return mCheckBoxPadding; }
-            set
-            {
+            set {
                 mCheckBoxPadding = value;
                 Refresh();
             }
@@ -715,13 +629,10 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the index of the sort column.
         /// </summary>
         [Category("Appearance"), DefaultValue(0), Description("Gets or sets the index of the sort column.")]
-        public int SortColumn
-        {
+        public int SortColumn {
             get { return mSortColumn; }
-            set
-            {
-                if (value != mSortColumn)
-                {
+            set {
+                if (value != mSortColumn) {
                     mSortColumn = value;
                     Sort();
                 }
@@ -731,13 +642,10 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the sort order.
         /// </summary>
         [Category("Appearance"), DefaultValue(typeof(SortOrder), "None"), Description("Gets or sets the sort order.")]
-        public SortOrder SortOrder
-        {
+        public SortOrder SortOrder {
             get { return mSortOrder; }
-            set
-            {
-                if (value != mSortOrder)
-                {
+            set {
+                if (value != mSortOrder) {
                     mSortOrder = value;
                     Sort();
                 }
@@ -747,13 +655,10 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the index of the group column.
         /// </summary>
         [Category("Appearance"), DefaultValue(0), Description("Gets or sets the index of the group column.")]
-        public int GroupColumn
-        {
+        public int GroupColumn {
             get { return mGroupColumn; }
-            set
-            {
-                if (value != mGroupColumn)
-                {
+            set {
+                if (value != mGroupColumn) {
                     mGroupColumn = value;
                     Sort();
                 }
@@ -763,13 +668,10 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the group order.
         /// </summary>
         [Category("Appearance"), DefaultValue(typeof(SortOrder), "None"), Description("Gets or sets the group order.")]
-        public SortOrder GroupOrder
-        {
+        public SortOrder GroupOrder {
             get { return mGroupOrder; }
-            set
-            {
-                if (value != mGroupOrder)
-                {
+            set {
+                if (value != mGroupOrder) {
                     mGroupOrder = value;
                     Sort();
                 }
@@ -784,13 +686,10 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the size of image thumbnails.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets the size of image thumbnails."), DefaultValue(typeof(Size), "96,96")]
-        public Size ThumbnailSize
-        {
+        public Size ThumbnailSize {
             get { return mThumbnailSize; }
-            set
-            {
-                if (mThumbnailSize != value)
-                {
+            set {
+                if (mThumbnailSize != value) {
                     mThumbnailSize = value;
                     thumbnailCache.Rebuild();
                     Refresh();
@@ -801,13 +700,10 @@ namespace ImageGlass.ImageListView
         /// Gets or sets the embedded thumbnails extraction behavior.
         /// </summary>
         [Category("Behavior"), Description("Gets or sets the embedded thumbnails extraction behavior."), DefaultValue(typeof(UseEmbeddedThumbnails), "Auto")]
-        public UseEmbeddedThumbnails UseEmbeddedThumbnails
-        {
+        public UseEmbeddedThumbnails UseEmbeddedThumbnails {
             get { return mUseEmbeddedThumbnails; }
-            set
-            {
-                if (mUseEmbeddedThumbnails != value)
-                {
+            set {
+                if (mUseEmbeddedThumbnails != value) {
                     mUseEmbeddedThumbnails = value;
                     Refresh();
                 }
@@ -817,13 +713,10 @@ namespace ImageGlass.ImageListView
         /// Gets or sets whether Windows Imaging Compomnent will be used.
         /// </summary>
         [Browsable(false), Category("Behavior"), Description("Gets or sets whether Windows Imaging Compomnent will be used."), DefaultValue(typeof(UseWIC), "Auto")]
-        public UseWIC UseWIC
-        {
+        public UseWIC UseWIC {
             get { return mUseWIC; }
-            set
-            {
-                if (mUseWIC != value)
-                {
+            set {
+                if (mUseWIC != value) {
                     mUseWIC = value;
                     Refresh();
                 }
@@ -833,13 +726,10 @@ namespace ImageGlass.ImageListView
         /// [IG_Change] Gets or sets the view mode of the image list view.
         /// </summary>
         [Category("Appearance"), Description("Gets or sets the view mode of the image list view."), DefaultValue(typeof(View), "Thumbnails")]
-        public View View
-        {
+        public View View {
             get { return mView; }
-            set
-            {
-                if (mView != value)
-                {
+            set {
+                if (mView != value) {
                     int current = layoutManager.FirstPartiallyVisible;
                     mView = value;
                     Refresh();
@@ -851,25 +741,22 @@ namespace ImageGlass.ImageListView
         /// Gets whether groups are displayed.
         /// </summary>
         [Browsable(false), Category("Appearance"), Description("Gets whether groups are displayed.")]
-        public bool GroupsVisible
-        {
+        public bool GroupsVisible {
             get { return showGroups; }
         }
-        
+
 
         /// <summary>
         /// Gets or sets the scroll offset.
         /// </summary>
-        internal Point ViewOffset
-        {
+        internal Point ViewOffset {
             get { return mViewOffset; }
             set { mViewOffset = value; }
         }
         /// <summary>
         /// Gets the scroll orientation.
         /// </summary>
-        internal ScrollOrientation ScrollOrientation
-        {
+        internal ScrollOrientation ScrollOrientation {
             get { return ((mView == View.Gallery) ? ScrollOrientation.HorizontalScroll : ScrollOrientation.VerticalScroll); }
         }
         #endregion
@@ -880,18 +767,15 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <returns>true if the designer should serialize 
         /// the property; otherwise false.</returns>
-        public bool ShouldSerializeHeaderFont()
-        {
-            using (Font font = new Font("Microsoft Sans Serif", 8.25f))
-            {
+        public bool ShouldSerializeHeaderFont() {
+            using (Font font = new Font("Microsoft Sans Serif", 8.25f)) {
                 return !mColumnHeaderFont.Equals(font);
             }
         }
         /// <summary>
         /// Resets the header font to its default value.
         /// </summary>
-        public void ResetHeaderFont()
-        {
+        public void ResetHeaderFont() {
             ColumnHeaderFont = new Font("Microsoft Sans Serif", 8.25f);
         }
 
@@ -900,16 +784,14 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <returns>true if the designer should serialize 
         /// the property; otherwise false.</returns>
-        public bool ShouldSerializeColors()
-        {
+        public bool ShouldSerializeColors() {
             ImageListViewColor defaultColors = ImageListViewColor.Default;
             return !mColors.Equals(defaultColors);
         }
         /// <summary>
         /// Resets the colors to their default value.
         /// </summary>
-        public void ResetColors()
-        {
+        public void ResetColors() {
             Colors = ImageListViewColor.Default;
         }
 
@@ -918,15 +800,13 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <returns>true if the designer should serialize 
         /// the property; otherwise false.</returns>
-        public bool ShouldSerializeDefaultImage()
-        {
+        public bool ShouldSerializeDefaultImage() {
             return mDefaultImageChanged;
         }
         /// <summary>
         /// Resets the default image to its default value.
         /// </summary>
-        public void ResetDefaultImage()
-        {
+        public void ResetDefaultImage() {
             DefaultImage = resources.GetObject("DefaultImage") as Image;
             mDefaultImageChanged = false;
         }
@@ -936,15 +816,13 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <returns>true if the designer should serialize 
         /// the property; otherwise false.</returns>
-        public bool ShouldSerializeErrorImage()
-        {
+        public bool ShouldSerializeErrorImage() {
             return mErrorImageChanged;
         }
         /// <summary>
         /// Resets the error image to its default value.
         /// </summary>
-        public void ResetErrorImage()
-        {
+        public void ResetErrorImage() {
             ErrorImage = resources.GetObject("ErrorImage") as Image;
             mErrorImageChanged = false;
         }
@@ -954,15 +832,13 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <returns>true if the designer should serialize 
         /// the property; otherwise false.</returns>
-        public bool ShouldSerializeRatingImage()
-        {
+        public bool ShouldSerializeRatingImage() {
             return mRatingImageChanged;
         }
         /// <summary>
         /// Resets the rating image to its default value.
         /// </summary>
-        public void ResetRatingImage()
-        {
+        public void ResetRatingImage() {
             RatingImage = resources.GetObject("RatingImage") as Image;
             mRatingImageChanged = false;
         }
@@ -972,15 +848,13 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <returns>true if the designer should serialize 
         /// the property; otherwise false.</returns>
-        public bool ShouldSerializeEmptyRatingImage()
-        {
+        public bool ShouldSerializeEmptyRatingImage() {
             return mEmptyRatingImageChanged;
         }
         /// <summary>
         /// Resets the empty rating image to its default value.
         /// </summary>
-        public void ResetEmptyRatingImage()
-        {
+        public void ResetEmptyRatingImage() {
             EmptyRatingImage = resources.GetObject("EmptyRatingImage") as Image;
             mEmptyRatingImageChanged = false;
         }
@@ -990,8 +864,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Initializes a new instance of the ImageListView class.
         /// </summary>
-        public ImageListView()
-        {
+        public ImageListView() {
             // Renderer parameters
             controlSuspended = false;
             rendererSuspendCount = 0;
@@ -1089,8 +962,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Marks all items as selected.
         /// </summary>
-        public void SelectAll()
-        {
+        public void SelectAll() {
             SuspendPaint();
 
             foreach (ImageListViewItem item in Items)
@@ -1104,8 +976,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Marks all items as unselected.
         /// </summary>
-        public void ClearSelection()
-        {
+        public void ClearSelection() {
             SuspendPaint();
             mSelectedItems.Clear();
             Refresh();
@@ -1114,8 +985,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Reverses the selection state of all items.
         /// </summary>
-        public void InvertSelection()
-        {
+        public void InvertSelection() {
             SuspendPaint();
 
             foreach (ImageListViewItem item in Items)
@@ -1129,12 +999,10 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Marks all items as checked.
         /// </summary>
-        public void CheckAll()
-        {
+        public void CheckAll() {
             SuspendPaint();
 
-            foreach (ImageListViewItem item in Items)
-            {
+            foreach (ImageListViewItem item in Items) {
                 item.mChecked = true;
                 OnItemCheckBoxClickInternal(item);
             }
@@ -1145,8 +1013,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Marks all items as unchecked.
         /// </summary>
-        public void UncheckAll()
-        {
+        public void UncheckAll() {
             SuspendPaint();
             mCheckedItems.Clear();
             Refresh();
@@ -1155,12 +1022,10 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Reverses the check state of all items.
         /// </summary>
-        public void InvertCheckState()
-        {
+        public void InvertCheckState() {
             SuspendPaint();
 
-            foreach (ImageListViewItem item in Items)
-            {
+            foreach (ImageListViewItem item in Items) {
                 item.mChecked = !item.mChecked;
                 OnItemCheckBoxClickInternal(item);
             }
@@ -1171,8 +1036,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Marks all items as enabled.
         /// </summary>
-        public void EnableAll()
-        {
+        public void EnableAll() {
             SuspendPaint();
 
             foreach (ImageListViewItem item in Items)
@@ -1184,8 +1048,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Marks all items as disabled.
         /// </summary>
-        public void DisableAll()
-        {
+        public void DisableAll() {
             SuspendPaint();
 
             foreach (ImageListViewItem item in Items)
@@ -1200,15 +1063,11 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Clears the thumbnail cache.
         /// </summary>
-        public void ClearThumbnailCache()
-        {
-            if (thumbnailCache != null)
-            {
+        public void ClearThumbnailCache() {
+            if (thumbnailCache != null) {
                 thumbnailCache.Clear();
-                if (CacheMode == CacheMode.Continuous)
-                {
-                    foreach (ImageListViewItem item in mItems)
-                    {
+                if (CacheMode == CacheMode.Continuous) {
+                    foreach (ImageListViewItem item in mItems) {
                         thumbnailCache.Add(item.Guid, item.Adaptor, item.VirtualItemKey, mThumbnailSize, mUseEmbeddedThumbnails, AutoRotateThumbnails, (mUseWIC == UseWIC.Auto || mUseWIC == UseWIC.ThumbnailsOnly));
                     }
                 }
@@ -1218,8 +1077,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Temporarily suspends the layout logic for the control.
         /// </summary>
-        public new void SuspendLayout()
-        {
+        public new void SuspendLayout() {
             if (controlSuspended)
                 return;
 
@@ -1230,16 +1088,14 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Resumes usual layout logic.
         /// </summary>
-        public new void ResumeLayout()
-        {
+        public new void ResumeLayout() {
             ResumeLayout(false);
         }
         /// <summary>
         /// Resumes usual layout logic, optionally forcing an immediate layout of pending layout requests.
         /// </summary>
         /// <param name="performLayout">true to execute pending layout requests; otherwise, false.</param>
-        public new void ResumeLayout(bool performLayout)
-        {
+        public new void ResumeLayout(bool performLayout) {
             if (!controlSuspended)
                 return;
 
@@ -1254,8 +1110,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="renderer">An <see cref="ImageListViewRenderer"/> to assign to the control.</param>
         /// <param name="keepColors">true to keep current colors; otherwise false.</param>
-        public void SetRenderer(ImageListViewRenderer renderer, bool keepColors)
-        {
+        public void SetRenderer(ImageListViewRenderer renderer, bool keepColors) {
             if (renderer == null)
                 throw new ArgumentNullException("renderer");
 
@@ -1263,8 +1118,7 @@ namespace ImageGlass.ImageListView
 
             mRenderer = renderer;
             mRenderer.ImageListView = this;
-            if (!keepColors)
-            {
+            if (!keepColors) {
                 ImageListViewColor[] preferredColors = mRenderer.PreferredColors;
                 if (preferredColors != null)
                     mColors = preferredColors[0];
@@ -1284,15 +1138,13 @@ namespace ImageGlass.ImageListView
         /// Sets the renderer for this instance.
         /// </summary>
         /// <param name="renderer">An <see cref="ImageListViewRenderer"/> to assign to the control.</param>
-        public void SetRenderer(ImageListViewRenderer renderer)
-        {
+        public void SetRenderer(ImageListViewRenderer renderer) {
             SetRenderer(renderer, false);
         }
         /// <summary>
         /// Sorts the items.
         /// </summary>
-        public void Sort()
-        {
+        public void Sort() {
             mItems.Sort();
             Refresh();
         }
@@ -1301,18 +1153,14 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="pt">The client coordinates of the point to be tested.</param>
         /// <param name="hitInfo">Details of the hit test.</param>
-        public void HitTest(Point pt, out HitInfo hitInfo)
-        {
-            if (View == View.Details && pt.Y <= mRenderer.MeasureColumnHeaderHeight())
-            {
+        public void HitTest(Point pt, out HitInfo hitInfo) {
+            if (View == View.Details && pt.Y <= mRenderer.MeasureColumnHeaderHeight()) {
                 int i = 0;
                 int x = layoutManager.ColumnHeaderBounds.Left;
                 ImageListViewColumnHeader colIndex = null;
                 ImageListViewColumnHeader sepIndex = null;
-                if (AllowColumnClick || AllowColumnResize)
-                {
-                    foreach (ImageListViewColumnHeader col in Columns.GetDisplayedColumns())
-                    {
+                if (AllowColumnClick || AllowColumnResize) {
+                    foreach (ImageListViewColumnHeader col in Columns.GetDisplayedColumns()) {
                         // Over a column?
                         if (pt.X >= x && pt.X < x + col.Width + SeparatorSize / 2)
                             colIndex = col;
@@ -1329,19 +1177,14 @@ namespace ImageGlass.ImageListView
                 }
                 hitInfo = new HitInfo(colIndex, sepIndex);
             }
-            else if (View == View.Pane && pt.X <= mPaneWidth)
-            {
+            else if (View == View.Pane && pt.X <= mPaneWidth) {
                 bool overBorder = (pt.X >= mPaneWidth - PaneBorderSize);
                 hitInfo = new HitInfo(overBorder);
             }
-            else
-            {
-                if (showGroups)
-                {
-                    foreach (ImageListViewGroup @group in groups)
-                    {
-                        if (@group.headerBounds.Contains(pt))
-                        {
+            else {
+                if (showGroups) {
+                    foreach (ImageListViewGroup @group in groups) {
+                        if (@group.headerBounds.Contains(pt)) {
                             hitInfo = new HitInfo(@group);
                             return;
                         }
@@ -1352,29 +1195,23 @@ namespace ImageGlass.ImageListView
                 bool checkBoxHit = false;
                 int subItemIndex = -1;
 
-                if (showGroups)
-                {
-                    foreach (ImageListViewGroup @group in groups)
-                    {
-                        if (@group.itemBounds.Contains(pt))
-                        {
+                if (showGroups) {
+                    foreach (ImageListViewGroup @group in groups) {
+                        if (@group.itemBounds.Contains(pt)) {
                             // Normalize to group item area coordinates
                             pt.X -= @group.itemBounds.Left;
                             pt.Y -= @group.itemBounds.Top;
 
-                            if (pt.X > 0 && pt.Y > 0)
-                            {
+                            if (pt.X > 0 && pt.Y > 0) {
                                 int col = pt.X / layoutManager.ItemSizeWithMargin.Width;
                                 int row = pt.Y / layoutManager.ItemSizeWithMargin.Height;
 
                                 int index = @group.FirstItemIndex + row * @group.itemCols + col;
-                                if (index >= 0 && index <= Items.Count - 1)
-                                {
+                                if (index >= 0 && index <= Items.Count - 1) {
                                     Rectangle bounds = layoutManager.GetItemBounds(index);
                                     if (bounds.Contains(pt.X + @group.itemBounds.Left, pt.Y + @group.itemBounds.Top))
                                         itemIndex = index;
-                                    if (ShowCheckBoxes)
-                                    {
+                                    if (ShowCheckBoxes) {
                                         Rectangle checkBoxBounds = layoutManager.GetCheckBoxBounds(index);
                                         if (checkBoxBounds.Contains(pt.X + @group.itemBounds.Left, pt.Y + @group.itemBounds.Top))
                                             checkBoxHit = true;
@@ -1382,15 +1219,12 @@ namespace ImageGlass.ImageListView
                                 }
 
                                 // Calculate sub item index
-                                if (itemIndex != -1 && View == View.Details)
-                                {
+                                if (itemIndex != -1 && View == View.Details) {
                                     int xc1 = layoutManager.ColumnHeaderBounds.Left;
                                     int colIndex = 0;
-                                    foreach (ImageListViewColumnHeader column in mColumns.GetDisplayedColumns())
-                                    {
+                                    foreach (ImageListViewColumnHeader column in mColumns.GetDisplayedColumns()) {
                                         int xc2 = xc1 + column.Width;
-                                        if (pt.X >= xc1 && pt.X < xc2)
-                                        {
+                                        if (pt.X >= xc1 && pt.X < xc2) {
                                             subItemIndex = colIndex;
                                             break;
                                         }
@@ -1404,27 +1238,22 @@ namespace ImageGlass.ImageListView
                         }
                     }
                 }
-                else
-                {
+                else {
                     // Normalize to item area coordinates
                     pt.X -= layoutManager.ItemAreaBounds.Left;
                     pt.Y -= layoutManager.ItemAreaBounds.Top;
 
-                    if (pt.X > 0 && pt.Y > 0)
-                    {
+                    if (pt.X > 0 && pt.Y > 0) {
                         int col = (pt.X + mViewOffset.X) / layoutManager.ItemSizeWithMargin.Width;
                         int row = (pt.Y + mViewOffset.Y) / layoutManager.ItemSizeWithMargin.Height;
 
-                        if (ScrollOrientation == ScrollOrientation.HorizontalScroll || (ScrollOrientation == ScrollOrientation.VerticalScroll && col <= layoutManager.Cols))
-                        {
+                        if (ScrollOrientation == ScrollOrientation.HorizontalScroll || (ScrollOrientation == ScrollOrientation.VerticalScroll && col <= layoutManager.Cols)) {
                             int index = row * layoutManager.Cols + col;
-                            if (index >= 0 && index <= Items.Count - 1)
-                            {
+                            if (index >= 0 && index <= Items.Count - 1) {
                                 Rectangle bounds = layoutManager.GetItemBounds(index);
                                 if (bounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
                                     itemIndex = index;
-                                if (ShowCheckBoxes)
-                                {
+                                if (ShowCheckBoxes) {
                                     Rectangle checkBoxBounds = layoutManager.GetCheckBoxBounds(index);
                                     if (checkBoxBounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
                                         checkBoxHit = true;
@@ -1433,15 +1262,12 @@ namespace ImageGlass.ImageListView
                         }
 
                         // Calculate sub item index
-                        if (itemIndex != -1 && View == View.Details)
-                        {
+                        if (itemIndex != -1 && View == View.Details) {
                             int xc1 = layoutManager.ColumnHeaderBounds.Left;
                             int colIndex = 0;
-                            foreach (ImageListViewColumnHeader column in mColumns.GetDisplayedColumns())
-                            {
+                            foreach (ImageListViewColumnHeader column in mColumns.GetDisplayedColumns()) {
                                 int xc2 = xc1 + column.Width;
-                                if (pt.X >= xc1 && pt.X < xc2)
-                                {
+                                if (pt.X >= xc1 && pt.X < xc2) {
                                     subItemIndex = colIndex;
                                     break;
                                 }
@@ -1463,8 +1289,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="delta">Delta to move scrolling.</param>
         /// <returns>true if scroll position was changed; false otherwise</returns>
-        private bool ScrollHorizontalDelta(int delta)
-        {
+        private bool ScrollHorizontalDelta(int delta) {
             int newXOffset = mViewOffset.X - delta;
 
             if (newXOffset > hScrollBar.Maximum - hScrollBar.LargeChange + 1)
@@ -1491,8 +1316,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="delta">Delta to move scrolling.</param>
         /// <returns>true if scroll position was changed; false otherwise</returns>
-        private bool ScrollVerticalDelta(int delta)
-        {
+        private bool ScrollVerticalDelta(int delta) {
             int newYOffset = mViewOffset.Y - delta;
 
             if (newYOffset > vScrollBar.Maximum - vScrollBar.LargeChange + 1)
@@ -1519,8 +1343,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="itemIndex">The index of the item to make visible.</param>
         /// <returns>true if the item was made visible; otherwise false (item is already visible or the image list view is empty).</returns>
-        public bool EnsureVisible(int itemIndex)
-        {
+        public bool EnsureVisible(int itemIndex) {
             if (Items.Count == 0 || itemIndex < 0 || itemIndex > Items.Count - 1)
                 return false;
 
@@ -1531,13 +1354,11 @@ namespace ImageGlass.ImageListView
                 return false;
 
             // Scroll to item
-            if (ScrollOrientation == ScrollOrientation.HorizontalScroll)
-            {
+            if (ScrollOrientation == ScrollOrientation.HorizontalScroll) {
                 int delta = bounds.Left - itemBounds.Left;
                 return ScrollHorizontalDelta(delta);
             }
-            else
-            {
+            else {
                 int delta = bounds.Top - itemBounds.Top;
                 return ScrollVerticalDelta(delta);
             }
@@ -1551,8 +1372,7 @@ namespace ImageGlass.ImageListView
         /// <param name="itemIndex">The index of the item to scroll to.</param>
         /// <returns>true if the scroll position was changed; otherwise false 
         /// (item is already centered or the image list view is empty).</returns>
-        public bool ScrollToIndex(int itemIndex)
-        {
+        public bool ScrollToIndex(int itemIndex) {
             if (Items.Count == 0 || itemIndex < 0 || itemIndex > Items.Count - 1)
                 return false;
 
@@ -1560,13 +1380,11 @@ namespace ImageGlass.ImageListView
             Rectangle itemBounds = layoutManager.GetItemBounds(itemIndex);
 
             // Align center of the element with center of visible area.
-            if (ScrollOrientation == ScrollOrientation.HorizontalScroll)
-            {
+            if (ScrollOrientation == ScrollOrientation.HorizontalScroll) {
                 int delta = (bounds.Left + bounds.Right) / 2 - (itemBounds.Left + itemBounds.Right) / 2;
                 return ScrollHorizontalDelta(delta);
             }
-            else
-            {
+            else {
                 int delta = (bounds.Bottom + bounds.Top) / 2 - (itemBounds.Bottom + itemBounds.Top) / 2;
                 return ScrollVerticalDelta(delta);
             }
@@ -1578,8 +1396,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="item">The item to test.</param>
         /// <returns>An ItemVisibility value.</returns>
-        public ItemVisibility IsItemVisible(ImageListViewItem item)
-        {
+        public ItemVisibility IsItemVisible(ImageListViewItem item) {
             return IsItemVisible(item.Index);
         }
         /// <summary>
@@ -1589,8 +1406,7 @@ namespace ImageGlass.ImageListView
         /// <returns>
         /// The zero-based index of the first item found; or -1 if no match is found.
         /// </returns>
-        public int FindString(string s)
-        {
+        public int FindString(string s) {
             return FindString(s, 0);
         }
         /// <summary>
@@ -1603,13 +1419,10 @@ namespace ImageGlass.ImageListView
         /// <returns>
         /// The zero-based index of the first item found; or -1 if no match is found.
         /// </returns>
-        public int FindString(string s, int startIndex)
-        {
-            for (int i = startIndex; i < mItems.Count; i++)
-            {
+        public int FindString(string s, int startIndex) {
+            for (int i = startIndex; i < mItems.Count; i++) {
                 ImageListViewItem item = mItems[i];
-                if (item.Text.StartsWith(s, StringComparison.InvariantCultureIgnoreCase))
-                {
+                if (item.Text.StartsWith(s, StringComparison.InvariantCultureIgnoreCase)) {
                     return item.Index;
                 }
             }
@@ -1625,12 +1438,10 @@ namespace ImageGlass.ImageListView
         /// <param name="force">Forces a refresh even if the renderer is suspended.</param>
         /// <param name="lazy">Refreshes the control only if a set amount of time
         /// has passed since the last refresh.</param>
-        internal void Refresh(bool force, bool lazy)
-        {
+        internal void Refresh(bool force, bool lazy) {
             if (force)
                 base.Refresh();
-            else if (lazy)
-            {
+            else if (lazy) {
                 rendererNeedsPaint = true;
                 lazyRefreshTimer.Start();
             }
@@ -1644,22 +1455,19 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="force">If true, forces an immediate update, even if
         /// the renderer is suspended by a SuspendPaint call.</param>
-        private void Refresh(bool force)
-        {
+        private void Refresh(bool force) {
             Refresh(force, false);
         }
         /// <summary>
         /// Redraws the owner control.
         /// </summary>
-        private new void Refresh()
-        {
+        private new void Refresh() {
             Refresh(false, false);
         }
         /// <summary>
         /// Suspends painting until a matching ResumePaint call is made.
         /// </summary>
-        private void SuspendPaint()
-        {
+        private void SuspendPaint() {
             if (rendererSuspendCount == 0)
                 rendererNeedsPaint = false;
             rendererSuspendCount++;
@@ -1667,8 +1475,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Resumes painting. This call must be matched by a prior SuspendPaint call.
         /// </summary>
-        private void ResumePaint()
-        {
+        private void ResumePaint() {
             System.Diagnostics.Debug.Assert(rendererSuspendCount > 0, "Suspend count does not match resume count.", "ResumePaint() must be matched by a prior SuspendPaint() call.");
 
             rendererSuspendCount--;
@@ -1678,8 +1485,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Determines if the control can be painted.
         /// </summary>
-        private bool CanPaint()
-        {
+        private bool CanPaint() {
             if (mRenderer == null)
                 return false;
             if (controlSuspended || rendererSuspendCount != 0)
@@ -1695,8 +1501,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="guid">The Guid of the item to test.</param>
         /// <returns>true if the item is visible or partially visible; otherwise false.</returns>
-        internal bool IsItemVisible(Guid guid)
-        {
+        internal bool IsItemVisible(Guid guid) {
             return layoutManager.IsItemVisible(guid);
         }
         /// <summary>
@@ -1704,8 +1509,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="guid">The Guid of the item to test.</param>
         /// <returns>true if the item is modified; otherwise false.</returns>
-        internal bool IsItemDirty(Guid guid)
-        {
+        internal bool IsItemDirty(Guid guid) {
             ImageListViewItem item = null;
             if (mItems.TryGetValue(guid, out item))
                 return item.isDirty;
@@ -1717,8 +1521,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="itemIndex">The index of the item to test.</param>
         /// <returns>An ItemVisibility value.</returns>
-        internal ItemVisibility IsItemVisible(int itemIndex)
-        {
+        internal ItemVisibility IsItemVisible(int itemIndex) {
             if (mItems.Count == 0)
                 return ItemVisibility.NotVisible;
             if (itemIndex < 0 || itemIndex > mItems.Count - 1)
@@ -1734,11 +1537,9 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Gets the guids of visible items.
         /// </summary>
-        internal Dictionary<Guid, bool> GetVisibleItems()
-        {
+        internal Dictionary<Guid, bool> GetVisibleItems() {
             Dictionary<Guid, bool> visible = new Dictionary<Guid, bool>();
-            if (layoutManager.FirstPartiallyVisible != -1 && layoutManager.LastPartiallyVisible != -1)
-            {
+            if (layoutManager.FirstPartiallyVisible != -1 && layoutManager.LastPartiallyVisible != -1) {
                 int start = layoutManager.FirstPartiallyVisible;
                 int end = layoutManager.LastPartiallyVisible;
 
@@ -1760,8 +1561,7 @@ namespace ImageGlass.ImageListView
         /// Handles the DragOver event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.DragEventArgs"/> that contains the event data.</param>
-        protected override void OnDragOver(DragEventArgs e)
-        {
+        protected override void OnDragOver(DragEventArgs e) {
             navigationManager.DragOver(e);
             base.OnDragOver(e);
         }
@@ -1769,8 +1569,7 @@ namespace ImageGlass.ImageListView
         /// Handles the DragEnter event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.DragEventArgs"/> that contains the event data.</param>
-        protected override void OnDragEnter(DragEventArgs e)
-        {
+        protected override void OnDragEnter(DragEventArgs e) {
             navigationManager.DragEnter(e);
             base.OnDragEnter(e);
         }
@@ -1778,8 +1577,7 @@ namespace ImageGlass.ImageListView
         /// Handles the DragLeave event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
-        protected override void OnDragLeave(EventArgs e)
-        {
+        protected override void OnDragLeave(EventArgs e) {
             navigationManager.DragLeave();
             base.OnDragLeave(e);
         }
@@ -1788,8 +1586,7 @@ namespace ImageGlass.ImageListView
         /// Handles the DragDrop event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.DragEventArgs"/> that contains the event data.</param>
-        protected override void OnDragDrop(DragEventArgs e)
-        {
+        protected override void OnDragDrop(DragEventArgs e) {
             navigationManager.DragDrop(e);
             base.OnDragDrop(e);
         }
@@ -1798,8 +1595,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Forms.ScrollEventArgs"/> instance containing the event data.</param>
-        private void vScrollBar_Scroll(object sender, ScrollEventArgs e)
-        {
+        private void vScrollBar_Scroll(object sender, ScrollEventArgs e) {
             mViewOffset.Y = e.NewValue;
             Refresh();
         }
@@ -1808,8 +1604,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Forms.ScrollEventArgs"/> instance containing the event data.</param>
-        private void hScrollBar_Scroll(object sender, ScrollEventArgs e)
-        {
+        private void hScrollBar_Scroll(object sender, ScrollEventArgs e) {
             mViewOffset.X = e.NewValue;
             Refresh();
         }
@@ -1818,16 +1613,13 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        void lazyRefreshTimer_Tick(object sender, EventArgs e)
-        {
-            try
-            {
+        void lazyRefreshTimer_Tick(object sender, EventArgs e) {
+            try {
                 if (IsHandleCreated && !IsDisposed)
                     BeginInvoke(lazyRefreshCallback);
                 lazyRefreshTimer.Stop();
             }
-            finally
-            {
+            finally {
                 ;
             }
         }
@@ -1835,8 +1627,7 @@ namespace ImageGlass.ImageListView
         /// Handles the Resize event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
-        protected override void OnResize(EventArgs e)
-        {
+        protected override void OnResize(EventArgs e) {
             base.OnResize(e);
 
             if (!disposed && mRenderer != null)
@@ -1851,8 +1642,7 @@ namespace ImageGlass.ImageListView
         /// Handles the Paint event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.PaintEventArgs"/> that contains the event data.</param>
-        protected override void OnPaint(PaintEventArgs e)
-        {
+        protected override void OnPaint(PaintEventArgs e) {
             if (!disposed && mRenderer != null)
                 mRenderer.Render(e.Graphics);
             rendererNeedsPaint = false;
@@ -1861,8 +1651,7 @@ namespace ImageGlass.ImageListView
         /// Handles the MouseDown event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data.</param>
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
+        protected override void OnMouseDown(MouseEventArgs e) {
             // Capture focus if right clicked
             if (!Focused && (e.Button & MouseButtons.Right) == MouseButtons.Right)
                 Focus();
@@ -1874,8 +1663,7 @@ namespace ImageGlass.ImageListView
         /// Handles the MouseUp event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data.</param>
-        protected override void OnMouseUp(MouseEventArgs e)
-        {
+        protected override void OnMouseUp(MouseEventArgs e) {
             navigationManager.MouseUp(e);
             base.OnMouseUp(e);
         }
@@ -1883,8 +1671,7 @@ namespace ImageGlass.ImageListView
         /// Handles the MouseMove event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data.</param>
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
+        protected override void OnMouseMove(MouseEventArgs e) {
             navigationManager.MouseMove(e);
             base.OnMouseMove(e);
         }
@@ -1892,12 +1679,10 @@ namespace ImageGlass.ImageListView
         /// Handles the MouseWheel event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data.</param>
-        protected override void OnMouseWheel(MouseEventArgs e)
-        {
+        protected override void OnMouseWheel(MouseEventArgs e) {
             SuspendPaint();
 
-            if (ScrollOrientation == ScrollOrientation.VerticalScroll)
-            {
+            if (ScrollOrientation == ScrollOrientation.VerticalScroll) {
                 int newYOffset = mViewOffset.Y - (e.Delta / SystemInformation.MouseWheelScrollDelta) * vScrollBar.SmallChange;
                 if (newYOffset > vScrollBar.Maximum - vScrollBar.LargeChange + 1)
                     newYOffset = vScrollBar.Maximum - vScrollBar.LargeChange + 1;
@@ -1910,8 +1695,7 @@ namespace ImageGlass.ImageListView
                 mViewOffset.Y = newYOffset;
                 vScrollBar.Value = newYOffset;
             }
-            else
-            {
+            else {
                 int newXOffset = mViewOffset.X - (e.Delta / SystemInformation.MouseWheelScrollDelta) * hScrollBar.SmallChange;
                 if (newXOffset > hScrollBar.Maximum - hScrollBar.LargeChange + 1)
                     newXOffset = hScrollBar.Maximum - hScrollBar.LargeChange + 1;
@@ -1935,8 +1719,7 @@ namespace ImageGlass.ImageListView
         /// Handles the MouseLeave event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
-        protected override void OnMouseLeave(EventArgs e)
-        {
+        protected override void OnMouseLeave(EventArgs e) {
             navigationManager.MouseLeave();
             base.OnMouseLeave(e);
         }
@@ -1944,8 +1727,7 @@ namespace ImageGlass.ImageListView
         /// Handles the MouseDoubleClick event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data.</param>
-        protected override void OnMouseDoubleClick(MouseEventArgs e)
-        {
+        protected override void OnMouseDoubleClick(MouseEventArgs e) {
             navigationManager.MouseDoubleClick(e);
             base.OnMouseDoubleClick(e);
         }
@@ -1956,8 +1738,7 @@ namespace ImageGlass.ImageListView
         /// <returns>
         /// true if the specified key is a regular input key; otherwise, false.
         /// </returns>
-        protected override bool IsInputKey(Keys keyData)
-        {
+        protected override bool IsInputKey(Keys keyData) {
             if ((keyData & Keys.Left) == Keys.Left || (keyData & Keys.Right) == Keys.Right || (keyData & Keys.Up) == Keys.Up || (keyData & Keys.Down) == Keys.Down)
                 return true;
             else
@@ -1967,8 +1748,7 @@ namespace ImageGlass.ImageListView
         /// Handles the KeyDown event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.KeyEventArgs"/> that contains the event data.</param>
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
+        protected override void OnKeyDown(KeyEventArgs e) {
             navigationManager.KeyDown(e);
             base.OnKeyDown(e);
         }
@@ -1976,8 +1756,7 @@ namespace ImageGlass.ImageListView
         /// Handles the KeyUp event.
         /// </summary>
         /// <param name="e">A <see cref="T:System.Windows.Forms.KeyEventArgs"/> that contains the event data.</param>
-        protected override void OnKeyUp(KeyEventArgs e)
-        {
+        protected override void OnKeyUp(KeyEventArgs e) {
             navigationManager.KeyUp(e);
             base.OnKeyUp(e);
         }
@@ -1985,8 +1764,7 @@ namespace ImageGlass.ImageListView
         /// Handles the GotFocus event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
-        protected override void OnGotFocus(EventArgs e)
-        {
+        protected override void OnGotFocus(EventArgs e) {
             base.OnGotFocus(e);
             Refresh();
         }
@@ -1994,8 +1772,7 @@ namespace ImageGlass.ImageListView
         /// Handles the LostFocus event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
-        protected override void OnLostFocus(EventArgs e)
-        {
+        protected override void OnLostFocus(EventArgs e) {
             base.OnLostFocus(e);
             Refresh();
         }
@@ -2005,12 +1782,9 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="disposing">true to release both managed and unmanaged resources;
         /// false to release only unmanaged resources.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
+        protected override void Dispose(bool disposing) {
+            if (!disposed) {
+                if (disposing) {
                     // Events
                     hScrollBar.Scroll -= hScrollBar_Scroll;
                     vScrollBar.Scroll -= vScrollBar_Scroll;
@@ -2057,8 +1831,7 @@ namespace ImageGlass.ImageListView
         /// Raises the CacheError event.
         /// </summary>
         /// <param name="e">A CacheErrorEventArgs that contains event data.</param>
-        protected virtual void OnCacheError(CacheErrorEventArgs e)
-        {
+        protected virtual void OnCacheError(CacheErrorEventArgs e) {
             CacheError?.Invoke(this, e);
         }
 
@@ -2066,8 +1839,7 @@ namespace ImageGlass.ImageListView
         /// [IG_Change] Raises the DropFiles event.
         /// </summary>
         /// <param name="e">A DropFileEventArgs that contains event data.</param>
-        protected virtual void OnDropFiles(DropFileEventArgs e)
-        {
+        protected virtual void OnDropFiles(DropFileEventArgs e) {
             DropFiles?.Invoke(this, e);
 
             if (e.Cancel)
@@ -2079,11 +1851,9 @@ namespace ImageGlass.ImageListView
 
             // Add items
             bool first = true;
-            foreach (string filename in e.FileNames)
-            {
+            foreach (string filename in e.FileNames) {
                 ImageListViewItem item = new ImageListViewItem(filename);
-                if (first || MultiSelect)
-                {
+                if (first || MultiSelect) {
                     item.mSelected = true;
                     first = false;
                 }
@@ -2099,14 +1869,13 @@ namespace ImageGlass.ImageListView
 
             ScrollToIndex(firstItemIndex);
             OnSelectionChangedInternal();
-            
+
         }
         /// <summary>
         /// Raises the ColumnWidthChanged event.
         /// </summary>
         /// <param name="e">A ColumnEventArgs that contains event data.</param>
-        protected virtual void OnColumnWidthChanged(ColumnEventArgs e)
-        {
+        protected virtual void OnColumnWidthChanged(ColumnEventArgs e) {
             if (ColumnWidthChanged != null)
                 ColumnWidthChanged(this, e);
         }
@@ -2114,8 +1883,7 @@ namespace ImageGlass.ImageListView
         /// Raises the ColumnClick event.
         /// </summary>
         /// <param name="e">A ColumnClickEventArgs that contains event data.</param>
-        protected virtual void OnColumnClick(ColumnClickEventArgs e)
-        {
+        protected virtual void OnColumnClick(ColumnClickEventArgs e) {
             if (ColumnClick != null)
                 ColumnClick(this, e);
         }
@@ -2123,8 +1891,7 @@ namespace ImageGlass.ImageListView
         /// Raises the ColumnHover event.
         /// </summary>
         /// <param name="e">A ColumnClickEventArgs that contains event data.</param>
-        protected virtual void OnColumnHover(ColumnHoverEventArgs e)
-        {
+        protected virtual void OnColumnHover(ColumnHoverEventArgs e) {
             if (ColumnHover != null)
                 ColumnHover(this, e);
         }
@@ -2132,8 +1899,7 @@ namespace ImageGlass.ImageListView
         /// Raises the ItemClick event.
         /// </summary>
         /// <param name="e">A ItemClickEventArgs that contains event data.</param>
-        protected virtual void OnItemClick(ItemClickEventArgs e)
-        {
+        protected virtual void OnItemClick(ItemClickEventArgs e) {
             if (ItemClick != null)
                 ItemClick(this, e);
         }
@@ -2141,8 +1907,7 @@ namespace ImageGlass.ImageListView
         /// Raises the ItemCheckBoxClick event.
         /// </summary>
         /// <param name="e">A ItemEventArgs that contains event data.</param>
-        protected virtual void OnItemCheckBoxClick(ItemEventArgs e)
-        {
+        protected virtual void OnItemCheckBoxClick(ItemEventArgs e) {
             if (ItemCheckBoxClick != null)
                 ItemCheckBoxClick(this, e);
         }
@@ -2150,16 +1915,14 @@ namespace ImageGlass.ImageListView
         /// Raises the ItemCheckBoxClick event.
         /// </summary>
         /// <param name="item">The checked item.</param>
-        internal virtual void OnItemCheckBoxClickInternal(ImageListViewItem item)
-        {
+        internal virtual void OnItemCheckBoxClickInternal(ImageListViewItem item) {
             OnItemCheckBoxClick(new ItemEventArgs(item));
         }
         /// <summary>
         /// Raises the ItemHover event.
         /// </summary>
         /// <param name="e">A ItemClickEventArgs that contains event data.</param>
-        protected virtual void OnItemHover(ItemHoverEventArgs e)
-        {
+        protected virtual void OnItemHover(ItemHoverEventArgs e) {
             if (ItemHover != null)
                 ItemHover(this, e);
         }
@@ -2167,8 +1930,7 @@ namespace ImageGlass.ImageListView
         /// Raises the ItemDoubleClick event.
         /// </summary>
         /// <param name="e">A ItemClickEventArgs that contains event data.</param>
-        protected virtual void OnItemDoubleClick(ItemClickEventArgs e)
-        {
+        protected virtual void OnItemDoubleClick(ItemClickEventArgs e) {
             if (ItemDoubleClick != null)
                 ItemDoubleClick(this, e);
         }
@@ -2176,24 +1938,21 @@ namespace ImageGlass.ImageListView
         /// Raises the SelectionChanged event.
         /// </summary>
         /// <param name="e">A EventArgs that contains event data.</param>
-        protected virtual void OnSelectionChanged(EventArgs e)
-        {
+        protected virtual void OnSelectionChanged(EventArgs e) {
             if (SelectionChanged != null)
                 SelectionChanged(this, e);
         }
         /// <summary>
         /// Raises the SelectionChanged event.
         /// </summary>
-        internal void OnSelectionChangedInternal()
-        {
+        internal void OnSelectionChangedInternal() {
             OnSelectionChanged(new EventArgs());
         }
         /// <summary>
         /// Raises the ThumbnailCached event.
         /// </summary>
         /// <param name="e">A ThumbnailCachedEventArgs that contains event data.</param>
-        protected virtual void OnThumbnailCached(ThumbnailCachedEventArgs e)
-        {
+        protected virtual void OnThumbnailCached(ThumbnailCachedEventArgs e) {
             if (ThumbnailCached != null)
                 ThumbnailCached(this, e);
         }
@@ -2201,8 +1960,7 @@ namespace ImageGlass.ImageListView
         /// Raises the PaneReszied event.
         /// </summary>
         /// <param name="e">A PaneResizedEventArgs that contains event data.</param>
-        protected virtual void OnPaneResized(PaneResizedEventArgs e)
-        {
+        protected virtual void OnPaneResized(PaneResizedEventArgs e) {
             if (PaneResized != null)
                 PaneResized(this, e);
         }
@@ -2210,8 +1968,7 @@ namespace ImageGlass.ImageListView
         /// Raises the PaneResizing event.
         /// </summary>
         /// <param name="e">A PaneResizingEventArgs that contains event data.</param>
-        protected virtual void OnPaneResizing(PaneResizingEventArgs e)
-        {
+        protected virtual void OnPaneResizing(PaneResizingEventArgs e) {
             if (PaneResizing != null)
                 PaneResizing(this, e);
         }
@@ -2223,8 +1980,7 @@ namespace ImageGlass.ImageListView
         /// This parameter can be null.</param>
         /// <param name="error">The error that occurred during an asynchronous operation.</param>
         /// <param name="cacheThread">The thread raising the error.</param>
-        internal void OnCacheErrorInternal(Guid guid, Exception error, CacheThread cacheThread)
-        {
+        internal void OnCacheErrorInternal(Guid guid, Exception error, CacheThread cacheThread) {
             ImageListViewItem item = null;
             mItems.TryGetValue(guid, out item);
             OnCacheError(new CacheErrorEventArgs(item, error, cacheThread));
@@ -2238,8 +1994,7 @@ namespace ImageGlass.ImageListView
         /// <param name="size">Requested thumbnail size.</param>
         /// <param name="thumbnailImage">true if the cached image is a thumbnail image; otherwise false
         /// if the image is a large image for gallery or pane views.</param>
-        internal void OnThumbnailCachedInternal(Guid guid, Image thumbnail, Size size, bool thumbnailImage)
-        {
+        internal void OnThumbnailCachedInternal(Guid guid, Image thumbnail, Size size, bool thumbnailImage) {
             ImageListViewItem item = null;
             if (mItems.TryGetValue(guid, out item))
                 OnThumbnailCached(new ThumbnailCachedEventArgs(item, thumbnail, size, thumbnailImage));
@@ -2250,8 +2005,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="guid">Item guid.</param>
         /// <param name="details">Array of item details.</param>
-        internal void UpdateItemDetailsInternal(Guid guid, Utility.Tuple<ColumnType, string, object>[] details)
-        {
+        internal void UpdateItemDetailsInternal(Guid guid, Utility.Tuple<ColumnType, string, object>[] details) {
             ImageListViewItem item = null;
             if (mItems.TryGetValue(guid, out item))
                 item.UpdateDetailsInternal(details);
@@ -2262,8 +2016,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="guid">The guid of the item whose thumbnail is cached.</param>
         /// <param name="size">Requested thumbnail size.</param>
-        internal void OnThumbnailCachingInternal(Guid guid, Size size)
-        {
+        internal void OnThumbnailCachingInternal(Guid guid, Size size) {
             ImageListViewItem item = null;
             if (mItems.TryGetValue(guid, out item))
                 OnThumbnailCaching(new ThumbnailCachingEventArgs(item, size));
@@ -2272,8 +2025,7 @@ namespace ImageGlass.ImageListView
         /// Raises the ThumbnailCaching event.
         /// </summary>
         /// <param name="e">A ThumbnailCachingEventArgs that contains event data.</param>
-        protected virtual void OnThumbnailCaching(ThumbnailCachingEventArgs e)
-        {
+        protected virtual void OnThumbnailCaching(ThumbnailCachingEventArgs e) {
             if (ThumbnailCaching != null)
                 ThumbnailCaching(this, e);
         }
@@ -2281,8 +2033,7 @@ namespace ImageGlass.ImageListView
         /// Raises the ItemCollectionChanged event.
         /// </summary>
         /// <param name="e">A ItemCollectionChangedEventArgs that contains event data.</param>
-        protected virtual void OnItemCollectionChanged(ItemCollectionChangedEventArgs e)
-        {
+        protected virtual void OnItemCollectionChanged(ItemCollectionChangedEventArgs e) {
             if (ItemCollectionChanged != null)
                 ItemCollectionChanged(this, e);
         }

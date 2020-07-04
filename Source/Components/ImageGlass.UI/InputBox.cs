@@ -61,8 +61,7 @@ namespace ImageGlass.UI {
         /// <param name="isFilename">Filename input</param>
         /// <returns></returns>
         public static DialogResult ShowDialog(Theme theme, string title, string message, string defaultValue, bool isNumberOnly = false, bool topMost = false, bool isFilename = false) {
-            var frm = new frmDialogBox(title, message, theme)
-            {
+            var frm = new frmDialogBox(title, message, theme) {
                 Content = defaultValue,
                 TopMost = topMost
             };

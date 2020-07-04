@@ -31,8 +31,7 @@ namespace igtasks {
         /// Install new language packs
         /// </summary>
         public static void InstallLanguagePacks() {
-            OpenFileDialog o = new OpenFileDialog
-            {
+            OpenFileDialog o = new OpenFileDialog {
                 Filter = "ImageGlass language pack (*.iglang)|*.iglang",
                 Multiselect = true
             };
@@ -60,8 +59,7 @@ namespace igtasks {
         /// Create new language packs
         /// </summary>
         public static void CreateNewLanguagePacks() {
-            SaveFileDialog s = new SaveFileDialog
-            {
+            SaveFileDialog s = new SaveFileDialog {
                 Filter = "ImageGlass language pack (*.iglang)|*.iglang"
             };
 
@@ -107,8 +105,7 @@ namespace igtasks {
         /// <param name="deleteAllKeys">TRUE: delete all keys</param>
         /// <returns>0 = SUCCESS; 1 = ERROR</returns>
         public static int DeleteRegistryAssociations(string exts, bool deleteAllKeys = false) {
-            RegistryHelper reg = new RegistryHelper
-            {
+            RegistryHelper reg = new RegistryHelper {
                 ShowError = true,
                 BaseRegistryKey = Registry.LocalMachine,
 
@@ -146,8 +143,7 @@ namespace igtasks {
         public static int SetRegistryAssociations(string extensions) {
             DeleteRegistryAssociations(extensions);
 
-            var reg = new RegistryHelper
-            {
+            var reg = new RegistryHelper {
                 ShowError = true,
                 BaseRegistryKey = Registry.LocalMachine,
 
@@ -227,8 +223,7 @@ namespace igtasks {
         public static int DeleteURIScheme() {
             string baseKey = $@"SOFTWARE\Classes\{Constants.URI_SCHEME}";
 
-            RegistryHelper reg = new RegistryHelper
-            {
+            RegistryHelper reg = new RegistryHelper {
                 ShowError = true,
                 BaseRegistryKey = Registry.CurrentUser,
                 SubKey = baseKey
@@ -251,8 +246,7 @@ namespace igtasks {
 
 
             string baseKey = $@"SOFTWARE\Classes\{Constants.URI_SCHEME}";
-            RegistryHelper reg = new RegistryHelper
-            {
+            RegistryHelper reg = new RegistryHelper {
                 ShowError = true,
                 BaseRegistryKey = Registry.CurrentUser,
                 SubKey = baseKey

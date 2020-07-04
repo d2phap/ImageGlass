@@ -34,19 +34,19 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// User config file
         /// </summary>
-        public string Filename { get => App.ConfigDir(PathType.File, "igconfig.xml"); }
+        public string Filename => App.ConfigDir(PathType.File, "igconfig.xml");
 
 
         /// <summary>
         /// The default config file located in StartUpDir, the default configs if it does not exist in user's configs
         /// </summary>
-        public string DefaultConfigFilename { get => App.StartUpDir("igconfig.default.xml"); }
+        public string DefaultConfigFilename => App.StartUpDir("igconfig.default.xml");
 
 
         /// <summary>
         /// The admin config file located in StartUpDir. All configs here will override user's configs and default configs
         /// </summary>
-        public string AdminConfigFilename { get => App.StartUpDir("igconfig.admin.xml"); }
+        public string AdminConfigFilename => App.StartUpDir("igconfig.admin.xml");
 
 
         /// <summary>

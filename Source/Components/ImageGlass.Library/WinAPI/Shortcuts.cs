@@ -31,7 +31,7 @@ namespace ImageGlass.Library.WinAPI {
         /// <param name="shortcutPath">Path of shortcut (*.lnk)</param>
         /// <returns></returns>
         public static string GetTargetPathFromShortcut(string shortcutPath) {
-            IWshRuntimeLibrary.WshShell shell = new IWshRuntimeLibrary.WshShell();
+            var shell = new IWshRuntimeLibrary.WshShell();
 
             try {
                 IWshRuntimeLibrary.IWshShortcut shortcut = (IWshRuntimeLibrary.IWshShortcut)shell.CreateShortcut(shortcutPath);

@@ -184,9 +184,7 @@ namespace ImageGlass.UI {
         /// Initiate theme object with configuration file (Version 1.5+)
         /// </summary>
         /// <param name="themeFolderPath">The absolute path of theme folder.</param>
-        public Theme(string themeFolderPath = "") {
-            this.IsValid = LoadTheme(themeFolderPath);
-        }
+        public Theme(string themeFolderPath = "") => this.IsValid = LoadTheme(themeFolderPath);
 
 
 
@@ -374,7 +372,7 @@ namespace ImageGlass.UI {
                     NavArrowMultiplier = val;
                 }
             }
-            catch (Exception ex) { };
+            catch (Exception) { };
 
             #endregion
 
@@ -462,11 +460,11 @@ namespace ImageGlass.UI {
         public void SaveAsThemeConfigs(string dir) {
             Compatibility = "5.0";
 
-            XmlDocument doc = new XmlDocument();
-            XmlElement root = doc.CreateElement("ImageGlass");//<ImageGlass>
-            XmlElement nType = doc.CreateElement("Theme");//<Theme>
+            var doc = new XmlDocument();
+            var root = doc.CreateElement("ImageGlass");//<ImageGlass>
+            var nType = doc.CreateElement("Theme");//<Theme>
 
-            XmlElement n = doc.CreateElement("Info");// <Info>
+            var n = doc.CreateElement("Info");// <Info>
             n.SetAttribute("name", Name);
             n.SetAttribute("version", Version);
             n.SetAttribute("author", Author);
@@ -552,7 +550,7 @@ namespace ImageGlass.UI {
             _extractThemeResult = ThemeInstallingResult.UNKNOWN;
 
             try {
-                using (ZipFile z = new ZipFile(themePath, Encoding.UTF8)) {
+                using (var z = new ZipFile(themePath, Encoding.UTF8)) {
                     z.ExtractProgress += new EventHandler<ExtractProgressEventArgs>(z_ExtractProgress);
                     z.ZipError += new EventHandler<ZipErrorEventArgs>(z_ZipError);
                     z.ExtractAll(dir, ExtractExistingFileAction.OverwriteSilently);
@@ -638,7 +636,7 @@ namespace ImageGlass.UI {
                 return ThemePackingResult.ERROR;
             }
 
-            Theme th = new Theme(themeFolderPath);
+            var th = new Theme(themeFolderPath);
 
             //updated theme config file
             th.SaveAsThemeConfigs(themeFolderPath);
@@ -649,12 +647,12 @@ namespace ImageGlass.UI {
             }
 
             try {
-                using (ZipFile z = new ZipFile(outputThemeFile, Encoding.UTF8)) {
+                using (var z = new ZipFile(outputThemeFile, Encoding.UTF8)) {
                     z.AddDirectory(themeFolderPath, th.Name);
                     z.Save();
                 };
             }
-            catch (Exception ex) {
+            catch (Exception) {
                 // restore backup file
                 if (File.Exists(outputThemeFile + ".old")) {
                     File.Move(outputThemeFile + ".old", outputThemeFile);
