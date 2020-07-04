@@ -70,8 +70,6 @@ namespace ImageGlass {
             _isWindows10 = Environment.OSVersion.Version.Major >= 10;
         }
 
-
-
         #region Local variables
 
         // window size value before resizing
@@ -104,32 +102,28 @@ namespace ImageGlass {
         // slideshow countdown interval
         private uint _slideshowCountdown = 5;
 
-        private ToolFormManager _toolManager = new ToolFormManager();
+        private readonly ToolFormManager _toolManager = new ToolFormManager();
 
         private MovableForm _movableForm = null;
 
         private Icon _formIcon = null;
 
-
         // gets, sets the CancellationTokenSource of synchronious image loading task
         private System.Threading.CancellationTokenSource _cancelToken = new System.Threading.CancellationTokenSource();
-
 
         /***********************************
          * Variables for FileWatcherEx
          ***********************************/
         // the list of local deleted files, need to be deleted in the memory list
-        private List<string> _queueListForDeleting = new List<string>();
+        private readonly List<string> _queueListForDeleting = new List<string>();
 
         // File system watcher
         private FileWatcherEx.FileWatcherEx _fileWatcher = new FileWatcherEx.FileWatcherEx();
 
 
-        private bool _isWindows10;
+        private readonly bool _isWindows10;
 
         #endregion
-
-
 
         #region Drag - drop
         private void picMain_DragOver(object sender, DragEventArgs e) {
@@ -214,14 +208,14 @@ namespace ImageGlass {
         /// </summary>
         private void OpenFile() {
             var formats = Configs.GetImageFormats(Configs.AllFormats);
-            using (var o = new OpenFileDialog() {
+            using var o = new OpenFileDialog() {
                 Filter = Configs.Language.Items[$"{Name}._OpenFileDialog"] + "|" +
                         formats,
                 CheckFileExists = true,
-            }) {
-                if (o.ShowDialog() == DialogResult.OK) {
-                    PrepareLoading(o.FileNames, o.FileNames[0]);
-                }
+            };
+            if (o.ShowDialog() == DialogResult.OK)
+            {
+                PrepareLoading(o.FileNames, o.FileNames[0]);
             }
         }
 
@@ -441,7 +435,7 @@ namespace ImageGlass {
         /// Sort and find all supported image from directory
         /// </summary>
         /// <param name="path">Image folder path</param>
-        private IEnumerable<string> LoadImageFilesFromDirectory(string path) {
+        private static IEnumerable<string> LoadImageFilesFromDirectory(string path) {
             // Get files from dir
             var fileList = DirectoryFinder.FindFiles(path,
                 Configs.IsRecursiveLoading,
@@ -478,7 +472,7 @@ namespace ImageGlass {
         }
 
 
-        private List<string> SortImageList(IEnumerable<string> fileList) {
+        private static List<string> SortImageList(IEnumerable<string> fileList) {
             // NOTE: relies on LocalSetting.ActiveImageLoadingOrder been updated first!
 
             var list = new List<string>();
@@ -825,22 +819,21 @@ namespace ImageGlass {
         private void UpdateStatusBar() {
             string appName = Application.ProductName;
             const string SEP = "  |  ";
-
-            var indexTotal = string.Empty;
-            var filename = string.Empty;
-            var zoom = string.Empty;
             var imgSize = string.Empty;
             var fileSize = string.Empty;
-            var pageInfo = string.Empty;
             var exifInfo = string.Empty;
 
 
-            if (Local.IsTempMemoryData) {
+            string zoom;
+            if (Local.IsTempMemoryData)
+            {
                 var imgData = Configs.Language.Items[$"{Name}._ImageData"];
                 zoom = $"{picMain.Zoom}%";
 
-                if (picMain.Image != null) {
-                    try {
+                if (picMain.Image != null)
+                {
+                    try
+                    {
                         imgSize = $"{picMain.Image.Width} x {picMain.Image.Height} px";
                     }
                     catch { }
@@ -848,25 +841,29 @@ namespace ImageGlass {
                     // (Image data)  |  {zoom}  |  {image size} - ImageGlass
                     this.Text = $"{imgData}  |  {zoom}  |  {imgSize}  - {appName}";
                 }
-                else {
+                else
+                {
                     this.Text = $"{imgData}  |  {zoom}  - {appName}";
                 }
             }
-            else {
-                if (Local.ImageList.Length < 1) {
+            else
+            {
+                if (Local.ImageList.Length < 1)
+                {
                     this.Text = appName;
                     return;
                 }
 
-                filename = Local.ImageList.GetFileName(Local.CurrentIndex);
+                string filename = Local.ImageList.GetFileName(Local.CurrentIndex);
 
                 // when there is a problem with a file, don't try to show more info
                 bool isShowMoreData = File.Exists(filename);
 
-                indexTotal = $"{Local.CurrentIndex + 1}/{Local.ImageList.Length} {Configs.Language.Items[$"{Name}._Files"]}";
+                string indexTotal = $"{Local.CurrentIndex + 1}/{Local.ImageList.Length} {Configs.Language.Items[$"{Name}._Files"]}";
 
 
-                if (isShowMoreData) {
+                if (isShowMoreData)
+                {
                     fileSize = ImageInfo.GetFileSize(filename);
 
                     // get color profile
@@ -879,10 +876,12 @@ namespace ImageGlass {
                 }
 
 
-                if (Configs.IsDisplayBasenameOfImage) {
+                if (Configs.IsDisplayBasenameOfImage)
+                {
                     filename = Path.GetFileName(filename);
                 }
-                else {
+                else
+                {
                     // auto ellipsis the filename
                     // the minimum text to show is Drive letter + basename.
                     // ex: C:\...\example.jpg
@@ -897,7 +896,8 @@ namespace ImageGlass {
 
 
                 // image error
-                if (Local.ImageError != null) {
+                if (Local.ImageError != null)
+                {
                     Local.FPageNav.lblPageInfo.Text = "";
 
 
@@ -906,24 +906,29 @@ namespace ImageGlass {
                     else
                         this.Text = $"{filename}{SEP}{indexTotal}{SEP}{fileSize}  - {appName}";
                 }
-                else {
+                else
+                {
                     zoom = $"{picMain.Zoom:F2}%";
 
                     // pages information
-                    pageInfo = $"{Local.CurrentPageIndex + 1}/{Local.CurrentPageCount}";
+                    string pageInfo = $"{Local.CurrentPageIndex + 1}/{Local.CurrentPageCount}";
                     Local.FPageNav.lblPageInfo.Text = pageInfo;
 
-                    if (Local.CurrentPageCount > 1) {
+                    if (Local.CurrentPageCount > 1)
+                    {
                         pageInfo = $"{pageInfo} {Configs.Language.Items[$"{Name}._Pages"]}{SEP}";
                     }
-                    else {
+                    else
+                    {
                         pageInfo = "";
                     }
 
 
                     // image info
-                    if (picMain.Image != null) {
-                        try {
+                    if (picMain.Image != null)
+                    {
+                        try
+                        {
                             imgSize = $"{picMain.Image.Width} x {picMain.Image.Height} px";
                         }
                         catch { }
@@ -931,7 +936,8 @@ namespace ImageGlass {
 
                         this.Text = $"{filename}{SEP}{indexTotal}{SEP}{pageInfo}{zoom}{SEP}{imgSize}{SEP}{fileSize}{exifInfo}  - {appName}";
                     }
-                    else {
+                    else
+                    {
                         this.Text = $"{filename}{SEP}{indexTotal}{SEP}{pageInfo}{zoom}{SEP}{fileSize}{exifInfo}  - {appName}";
                     }
                 }
@@ -945,8 +951,8 @@ namespace ImageGlass {
         /// </summary>
         /// <param name="filename">The full file path</param>
         /// <returns></returns>
-        private string GetImageDateInfo(string filename) {
-            string GetExifDateInfo(ExifTag<string> tag) {
+        private static string GetImageDateInfo(string filename) {
+            static string GetExifDateInfo(ExifTag<string> tag) {
                 // get date
                 var dateExif = Local.CurrentExif?.GetValue(tag)?.Value;
 
@@ -1958,7 +1964,7 @@ namespace ImageGlass {
         /// <side_effect>Updates LocalSetting.ActiveImageLoadingOrder</side_effect>
         /// <side_effect>Updates LocalSetting.ActiveImageLoadingOrderType</side_effect>
         /// </summary>
-        private void DetermineSortOrder(string fullPath) {
+        private static void DetermineSortOrder(string fullPath) {
             // Initialize to the user-configured sorting order. Fetching the Explorer sort
             // order may fail, or may be on an unsupported column.
             Local.ActiveImageLoadingOrder = Configs.ImageLoadingOrder;
@@ -3712,26 +3718,13 @@ namespace ImageGlass {
 
         // Use mouse wheel to navigate, scroll, or zoom images
         private void picMain_MouseWheel(object sender, MouseEventArgs e) {
-            MouseWheelActions action;
-            switch (Control.ModifierKeys) {
-                case Keys.Control:
-                    action = Configs.MouseWheelCtrlAction;
-                    break;
-
-                case Keys.Shift:
-                    action = Configs.MouseWheelShiftAction;
-                    break;
-
-                case Keys.Alt:
-                    action = Configs.MouseWheelAltAction;
-                    break;
-
-                case Keys.None:
-                default:
-                    action = Configs.MouseWheelAction;
-                    break;
-            }
-
+            var action = Control.ModifierKeys switch
+            {
+                Keys.Control => Configs.MouseWheelCtrlAction,
+                Keys.Shift => Configs.MouseWheelShiftAction,
+                Keys.Alt => Configs.MouseWheelAltAction,
+                _ => Configs.MouseWheelAction,
+            };
             switch (action) {
                 case MouseWheelActions.Zoom:
                     picMain.ZoomWithMouseWheel(e.Delta, e.Location);
@@ -4317,21 +4310,21 @@ namespace ImageGlass {
                 return;
             }
 
-            using (var p = new Process()) {
-                p.StartInfo.FileName = "openwith";
+            using var p = new Process();
+            p.StartInfo.FileName = "openwith";
 
-                // Build the arguments
-                var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
-                p.StartInfo.Arguments = $"\"{filename}\"";
+            // Build the arguments
+            var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
+            p.StartInfo.Arguments = $"\"{filename}\"";
 
-                // show error dialog
-                p.StartInfo.ErrorDialog = true;
+            // show error dialog
+            p.StartInfo.ErrorDialog = true;
 
-                try {
-                    p.Start();
-                }
-                catch { }
+            try
+            {
+                p.Start();
             }
+            catch { }
         }
 
 
@@ -4359,21 +4352,21 @@ namespace ImageGlass {
 
                 if (app != null && File.Exists(app.AppPath)) {
                     // Open configured app for editing
-                    using (var p = new Process()) {
-                        p.StartInfo.FileName = app.AppPath;
+                    using var p = new Process();
+                    p.StartInfo.FileName = app.AppPath;
 
-                        // Build the arguments
-                        var args = app.AppArguments.Replace(EditApp.FileMacro, filename);
-                        p.StartInfo.Arguments = $"{args}";
+                    // Build the arguments
+                    var args = app.AppArguments.Replace(EditApp.FileMacro, filename);
+                    p.StartInfo.Arguments = $"{args}";
 
-                        // show error dialog
-                        p.StartInfo.ErrorDialog = true;
+                    // show error dialog
+                    p.StartInfo.ErrorDialog = true;
 
-                        try {
-                            p.Start();
-                        }
-                        catch (Exception) { }
+                    try
+                    {
+                        p.Start();
                     }
+                    catch (Exception) { }
                 }
                 else // Edit by default associated app
                 {
@@ -4382,18 +4375,18 @@ namespace ImageGlass {
             }
 
             void EditByDefaultApp() {
-                using (var p = new Process()) {
-                    p.StartInfo.FileName = filename;
-                    p.StartInfo.Verb = "edit";
+                using var p = new Process();
+                p.StartInfo.FileName = filename;
+                p.StartInfo.Verb = "edit";
 
-                    // show error dialog
-                    p.StartInfo.ErrorDialog = true;
+                // show error dialog
+                p.StartInfo.ErrorDialog = true;
 
-                    try {
-                        p.Start();
-                    }
-                    catch (Exception) { }
+                try
+                {
+                    p.Start();
                 }
+                catch (Exception) { }
             }
         }
 
@@ -4543,18 +4536,18 @@ namespace ImageGlass {
             // save image to temp file
             string temFile = SaveTemporaryMemoryData();
 
-            using (var p = new Process()) {
-                p.StartInfo.FileName = temFile;
-                p.StartInfo.Verb = "print";
+            using var p = new Process();
+            p.StartInfo.FileName = temFile;
+            p.StartInfo.Verb = "print";
 
-                // show error dialog
-                p.StartInfo.ErrorDialog = true;
+            // show error dialog
+            p.StartInfo.ErrorDialog = true;
 
-                try {
-                    p.Start();
-                }
-                catch (Exception) { }
+            try
+            {
+                p.Start();
             }
+            catch (Exception) { }
         }
 
 
@@ -4780,18 +4773,18 @@ namespace ImageGlass {
             if (!(sender as ToolStripMenuItem).Enabled || Local.ImageError != null)
                 return;
 
-            using (var fb = new FolderBrowserDialog() {
+            using var fb = new FolderBrowserDialog() {
                 Description = Configs.Language.Items[$"{Name}._ExtractPageText"],
                 ShowNewFolderButton = true
-            }) {
-                var result = fb.ShowDialog();
+            };
+            var result = fb.ShowDialog();
 
-                if (result == DialogResult.OK && Directory.Exists(fb.SelectedPath)) {
-                    var img = await Local.ImageList.GetImgAsync(Local.CurrentIndex);
-                    await img.SaveImagePages(fb.SelectedPath);
+            if (result == DialogResult.OK && Directory.Exists(fb.SelectedPath))
+            {
+                var img = await Local.ImageList.GetImgAsync(Local.CurrentIndex);
+                await img.SaveImagePages(fb.SelectedPath);
 
-                    ShowToastMsg(Configs.Language.Items[$"{Name}._PageExtractComplete"], 2000);
-                }
+                ShowToastMsg(Configs.Language.Items[$"{Name}._PageExtractComplete"], 2000);
             }
         }
 
@@ -4805,32 +4798,33 @@ namespace ImageGlass {
                     // save the current image data to temp file
                     var imgFile = SaveTemporaryMemoryData();
 
-                    using (var p = new Process()) {
-                        var args = string.Format("setwallpaper \"{0}\" {1}", imgFile, (int)DesktopWallapaper.Style.Current);
+                    using var p = new Process();
+                    var args = string.Format("setwallpaper \"{0}\" {1}", imgFile, (int)DesktopWallapaper.Style.Current);
 
-                        // Issue #326: first attempt to set wallpaper w/o privs. 
-                        p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
+                    // Issue #326: first attempt to set wallpaper w/o privs. 
+                    p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
+                    p.StartInfo.Arguments = args;
+                    p.Start();
+
+                    p.WaitForExit();
+
+
+                    // If that fails due to privs error, re-attempt with admin privs.
+                    if (p.ExitCode == (int)DesktopWallapaper.Result.PrivsFail)
+                    {
+                        p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
                         p.StartInfo.Arguments = args;
                         p.Start();
 
                         p.WaitForExit();
 
-
-                        // If that fails due to privs error, re-attempt with admin privs.
-                        if (p.ExitCode == (int)DesktopWallapaper.Result.PrivsFail) {
-                            p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                            p.StartInfo.Arguments = args;
-                            p.Start();
-
-                            p.WaitForExit();
-
-                            // success or error
-                            isError = p.ExitCode != 0;
-                        }
-                        else {
-                            // success or error
-                            isError = p.ExitCode != 0;
-                        }
+                        // success or error
+                        isError = p.ExitCode != 0;
+                    }
+                    else
+                    {
+                        // success or error
+                        isError = p.ExitCode != 0;
                     }
                 }
                 catch { isError = true; }
@@ -4859,19 +4853,18 @@ namespace ImageGlass {
                     // save the current image data to temp file
                     var imgFile = SaveTemporaryMemoryData();
 
-                    using (var p = new Process()) {
-                        var args = string.Format("setlockimage \"{0}\"", imgFile);
+                    using var p = new Process();
+                    var args = string.Format("setlockimage \"{0}\"", imgFile);
 
-                        p.StartInfo.FileName = App.StartUpDir("igcmdWin10.exe");
-                        p.StartInfo.Arguments = args;
-                        p.EnableRaisingEvents = true;
-                        p.Start();
+                    p.StartInfo.FileName = App.StartUpDir("igcmdWin10.exe");
+                    p.StartInfo.Arguments = args;
+                    p.EnableRaisingEvents = true;
+                    p.Start();
 
-                        p.WaitForExit();
+                    p.WaitForExit();
 
-                        // success or error
-                        isError = p.ExitCode != 0;
-                    }
+                    // success or error
+                    isError = p.ExitCode != 0;
                 });
             }
             catch { isError = true; }
@@ -5125,8 +5118,9 @@ namespace ImageGlass {
         }
 
         private void mnuMainAbout_Click(object sender, EventArgs e) {
-            var f = new frmAbout();
-            f.TopMost = this.TopMost;
+            var f = new frmAbout {
+                TopMost = this.TopMost
+            };
             f.ShowDialog();
         }
 
@@ -5267,17 +5261,7 @@ namespace ImageGlass {
             }
         }
 
-
-
-
-
-
-
-
-
         #endregion
-
-
 
     }
 }

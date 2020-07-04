@@ -52,15 +52,11 @@ namespace ImageGlass.Library.Net {
                 _currentFile = GetFileName(URL);
                 var WC = new WebClient();
                 WC.DownloadFile(URL, filename);
-                if (FileDownloadComplete != null) {
-                    FileDownloadComplete();
-                }
+                FileDownloadComplete?.Invoke();
                 return true;
             }
             catch (Exception ex) {
-                if (FileDownloadFailed != null) {
-                    FileDownloadFailed(ex);
-                }
+                FileDownloadFailed?.Invoke(ex);
                 return false;
             }
         }
@@ -70,7 +66,7 @@ namespace ImageGlass.Library.Net {
         /// </summary>
         /// <param name="URL">Liên kết</param>
         /// <returns></returns>
-        private string GetFileName(string URL) {
+        private static string GetFileName(string URL) {
             try {
                 return URL.Substring(URL.LastIndexOf("/") + 1);
             }
@@ -86,10 +82,10 @@ namespace ImageGlass.Library.Net {
         /// <param name="filename">Đương dẫn lưu tập tin</param>
         /// <returns></returns>
         public async Task<bool> DownloadFileWithProgress(string URL, string filename) {
-            FileStream fs = default(FileStream);
+            FileStream fs = default;
             try {
                 _currentFile = GetFileName(URL);
-                WebRequest wRemote = default(WebRequest);
+                WebRequest wRemote = default;
                 byte[] bBuffer = null;
                 bBuffer = new byte[257];
                 int iBytesRead = 0;
@@ -99,9 +95,7 @@ namespace ImageGlass.Library.Net {
                 wRemote = WebRequest.Create(URL);
                 WebResponse myWebResponse = await wRemote.GetResponseAsync();
 
-                if (FileDownloadSizeObtained != null) {
-                    FileDownloadSizeObtained(myWebResponse.ContentLength);
-                }
+                FileDownloadSizeObtained?.Invoke(myWebResponse.ContentLength);
                 Stream sChunks = myWebResponse.GetResponseStream();
 
                 do {
@@ -110,23 +104,17 @@ namespace ImageGlass.Library.Net {
                     iTotalBytesRead += iBytesRead;
 
                     if (myWebResponse.ContentLength < iTotalBytesRead) {
-                        if (AmountDownloadedChanged != null) {
-                            AmountDownloadedChanged(myWebResponse.ContentLength);
-                        }
+                        AmountDownloadedChanged?.Invoke(myWebResponse.ContentLength);
                     }
                     else {
-                        if (AmountDownloadedChanged != null) {
-                            AmountDownloadedChanged(iTotalBytesRead);
-                        }
+                        AmountDownloadedChanged?.Invoke(iTotalBytesRead);
                     }
                 } while (!(iBytesRead == 0));
 
                 sChunks.Close();
                 fs.Close();
 
-                if (FileDownloadComplete != null) {
-                    FileDownloadComplete();
-                }
+                FileDownloadComplete?.Invoke();
 
                 return true;
             }
@@ -136,9 +124,7 @@ namespace ImageGlass.Library.Net {
                     fs = null;
                 }
 
-                if (FileDownloadFailed != null) {
-                    FileDownloadFailed(ex);
-                }
+                FileDownloadFailed?.Invoke(ex);
                 return false;
             }
         }

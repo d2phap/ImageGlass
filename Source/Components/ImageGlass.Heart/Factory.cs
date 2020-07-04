@@ -26,7 +26,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace ImageGlass.Heart {
-    public class Factory: IDisposable {
+    public sealed class Factory: IDisposable {
 
         #region PRIVATE PROPERTIES
 

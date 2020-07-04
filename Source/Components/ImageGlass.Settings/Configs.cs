@@ -1019,7 +1019,7 @@ namespace ImageGlass.Settings {
         public static string GetEditApps(List<EditApp> apps) {
             var appStr = new StringBuilder();
             foreach (var item in apps) {
-                appStr.Append($"[{item.ToString()}]");
+                appStr.Append($"[{item}]");
             }
 
             return appStr.ToString();
@@ -1056,7 +1056,7 @@ namespace ImageGlass.Settings {
         public static string GetImageFormats(HashSet<string> list) {
             var sb = new StringBuilder(list.Count);
             foreach (var item in list) {
-                sb.Append($"*{item.ToString()};");
+                sb.Append($"*{item};");
             }
 
             return sb.ToString();
@@ -1148,7 +1148,7 @@ namespace ImageGlass.Settings {
         public static string GetToolbarButtons(List<ToolbarButton> list) {
             var sb = new StringBuilder(list.Count);
             foreach (var item in list) {
-                sb.Append($"{item.ToString()};");
+                sb.Append($"{item};");
             }
 
             return sb.ToString();

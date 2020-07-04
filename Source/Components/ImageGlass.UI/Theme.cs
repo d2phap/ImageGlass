@@ -198,7 +198,7 @@ namespace ImageGlass.UI {
         /// <param name="attribname">name of theme attribute</param>
         /// <param name="iconHeight">optional target height/width</param>
         /// <returns></returns>
-        private ThemeImage LoadThemeImage(string dir, XmlElement n, string attribname, int iconHeight = 0) {
+        private static ThemeImage LoadThemeImage(string dir, XmlElement n, string attribname, int iconHeight = 0) {
             try {
                 var attrib = n.GetAttribute(attribname);
 

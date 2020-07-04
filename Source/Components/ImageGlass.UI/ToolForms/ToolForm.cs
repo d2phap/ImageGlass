@@ -94,7 +94,7 @@ namespace ImageGlass.UI.ToolForms {
 
         protected bool m_aeroEnabled;              // variables for box shadow
 
-        public struct MARGINS                           // struct for box shadow
+        internal struct MARGINS                           // struct for box shadow
         {
             public int leftWidth;
             public int rightWidth;
@@ -102,11 +102,11 @@ namespace ImageGlass.UI.ToolForms {
             public int bottomHeight;
         }
 
-        protected bool CheckAeroEnabled() {
+        protected static bool CheckAeroEnabled() {
             if (Environment.OSVersion.Version.Major >= 6) {
                 int enabled = 0;
                 DwmIsCompositionEnabled(ref enabled);
-                return (enabled == 1) ? true : false;
+                return (enabled == 1);
             }
             return false;
         }

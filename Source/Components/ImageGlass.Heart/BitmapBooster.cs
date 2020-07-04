@@ -23,11 +23,10 @@ using System.Drawing.Imaging;
 
 namespace ImageGlass.Heart {
     public class BitmapBooster {
-
-        Bitmap src;
-        BitmapData bd;
-        IntPtr dst;
-        int str;
+        readonly Bitmap src;
+        readonly BitmapData bd;
+        readonly IntPtr dst;
+        readonly int str;
 
         public BitmapBooster(Bitmap src) {
             this.src = src;

@@ -24,7 +24,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 
 namespace ImageGlass.Library.Image {
-    public class ImageInfo {
+    public static class ImageInfo {
         [StructLayout(LayoutKind.Sequential)]
         private struct SHELLEXECUTEINFO {
             public int cbSize;

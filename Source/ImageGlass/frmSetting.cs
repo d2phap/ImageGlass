@@ -812,8 +812,9 @@ namespace ImageGlass {
 
 
             foreach (var ext in Configs.AllFormats) {
-                var li = new ListViewItem();
-                li.Text = ext;
+                var li = new ListViewItem {
+                    Text = ext
+                };
 
                 // Build new list
                 var newEditingAssoc = new EditApp() {
@@ -857,37 +858,38 @@ namespace ImageGlass {
             if (assoc == null)
                 return;
 
-            using (var frm = new frmEditApp() {
+            using var frm = new frmEditApp() {
                 FileExtension = assoc.Extension,
                 AppName = assoc.AppName,
                 AppPath = assoc.AppPath,
                 AppArguments = assoc.AppArguments,
                 TopMost = this.TopMost
-            }) {
-                if (frm.ShowDialog() == DialogResult.OK) {
-                    assoc.AppName = frm.AppName;
-                    assoc.AppPath = frm.AppPath;
-                    assoc.AppArguments = frm.AppArguments;
+            };
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                assoc.AppName = frm.AppName;
+                assoc.AppPath = frm.AppPath;
+                assoc.AppArguments = frm.AppArguments;
 
-                    LoadEditApps();
-                }
+                LoadEditApps();
             }
         }
 
         private void btnEditEditAllExt_Click(object sender, EventArgs e) {
-            using (var frm = new frmEditApp() {
+            using var frm = new frmEditApp() {
                 FileExtension = $"<{string.Format(Configs.Language.Items[$"{Name}._allExtensions"])}>",
                 TopMost = this.TopMost
-            }) {
-                if (frm.ShowDialog() == DialogResult.OK) {
-                    foreach (var assoc in Configs.EditApps) {
-                        assoc.AppName = frm.AppName;
-                        assoc.AppPath = frm.AppPath;
-                        assoc.AppArguments = frm.AppArguments;
-                    }
-
-                    LoadEditApps();
+            };
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var assoc in Configs.EditApps)
+                {
+                    assoc.AppName = frm.AppName;
+                    assoc.AppPath = frm.AppPath;
+                    assoc.AppArguments = frm.AppArguments;
                 }
+
+                LoadEditApps();
             }
         }
 
@@ -907,39 +909,39 @@ namespace ImageGlass {
         }
 
         private void lnkInstallLanguage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            using (var p = new Process()) {
-                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                p.StartInfo.Arguments = "iginstalllang";
+            using var p = new Process();
+            p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+            p.StartInfo.Arguments = "iginstalllang";
 
-                try {
-                    p.Start();
-                }
-                catch { }
+            try
+            {
+                p.Start();
             }
+            catch { }
         }
 
         private void lnkCreateNew_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            using (var p = new Process()) {
-                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                p.StartInfo.Arguments = "ignewlang";
+            using var p = new Process();
+            p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+            p.StartInfo.Arguments = "ignewlang";
 
-                try {
-                    p.Start();
-                }
-                catch { }
+            try
+            {
+                p.Start();
             }
+            catch { }
         }
 
         private void lnkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            using (var p = new Process()) {
-                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                p.StartInfo.Arguments = "igeditlang \"" + Configs.Language.FileName + "\"";
+            using var p = new Process();
+            p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+            p.StartInfo.Arguments = "igeditlang \"" + Configs.Language.FileName + "\"";
 
-                try {
-                    p.Start();
-                }
-                catch { }
+            try
+            {
+                p.Start();
             }
+            catch { }
         }
 
         private async void lnkRefresh_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -1023,32 +1025,35 @@ namespace ImageGlass {
             LoadExtensionList(resetFormatList);
 
             try {
-                using (var p = new Process()) {
-                    var isError = true;
-                    var formats = Configs.GetImageFormats(Configs.AllFormats);
+                using var p = new Process();
+                var isError = true;
+                var formats = Configs.GetImageFormats(Configs.AllFormats);
 
-                    p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                    p.StartInfo.Arguments = $"regassociations {formats}";
+                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+                p.StartInfo.Arguments = $"regassociations {formats}";
+                p.Start();
+
+                try
+                {
                     p.Start();
+                }
+                catch
+                {
+                    // Clicking 'Cancel' in the "User Account Control" dialog throws a
+                    // "User cancelled" exception. Just continue quietly in that case.
+                    return;
+                }
 
-                    try {
-                        p.Start();
-                    }
-                    catch {
-                        // Clicking 'Cancel' in the "User Account Control" dialog throws a
-                        // "User cancelled" exception. Just continue quietly in that case.
-                        return;
-                    }
+                p.WaitForExit();
+                isError = p.ExitCode != 0;
 
-                    p.WaitForExit();
-                    isError = p.ExitCode != 0;
-
-                    if (isError) {
-                        MessageBox.Show(Configs.Language.Items[$"{Name}._RegisterAppExtensions_Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else {
-                        MessageBox.Show(Configs.Language.Items[$"{Name}._RegisterAppExtensions_Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                if (isError)
+                {
+                    MessageBox.Show(Configs.Language.Items[$"{Name}._RegisterAppExtensions_Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show(Configs.Language.Items[$"{Name}._RegisterAppExtensions_Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch { }
@@ -1083,23 +1088,24 @@ namespace ImageGlass {
         }
 
         private void btnAddNewExt_Click(object sender, EventArgs e) {
-            using (var frm = new frmAddNewFormat() {
+            using var frm = new frmAddNewFormat()
+            {
                 FileFormat = ".svg",
                 TopMost = this.TopMost
-            }) {
-                if (frm.ShowDialog() == DialogResult.OK) {
-                    // If the ext exist
-                    if (Configs.AllFormats.Contains(frm.FileFormat))
-                        return;
+            };
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                // If the ext exist
+                if (Configs.AllFormats.Contains(frm.FileFormat))
+                    return;
 
-                    Configs.AllFormats.Add(frm.FileFormat);
+                Configs.AllFormats.Add(frm.FileFormat);
 
-                    // update the list
-                    LoadExtensionList();
+                // update the list
+                LoadExtensionList();
 
-                    // Request frmMain to update
-                    Local.ForceUpdateActions |= ForceUpdateActions.IMAGE_LIST;
-                }
+                // Request frmMain to update
+                Local.ForceUpdateActions |= ForceUpdateActions.IMAGE_LIST;
             }
         }
 
@@ -1585,19 +1591,24 @@ namespace ImageGlass {
         }
 
 
-        private void btnThemeInstall_Click(object sender, EventArgs e) {
-            var o = new OpenFileDialog();
-            o.Filter = "ImageGlass theme (*.igtheme)|*.igtheme|All files (*.*)|*.*";
-
-            if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName)) {
+        private void btnThemeInstall_Click(object sender, EventArgs e)
+        {
+            using var o = new OpenFileDialog
+            {
+                Filter = "ImageGlass theme (*.igtheme)|*.igtheme|All files (*.*)|*.*"
+            };
+            if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName))
+            {
                 var result = UI.Theme.InstallTheme(o.FileName);
 
-                if (result == ThemeInstallingResult.SUCCESS) {
+                if (result == ThemeInstallingResult.SUCCESS)
+                {
                     RefreshThemeList();
 
                     MessageBox.Show(Configs.Language.Items[$"{Name}.btnThemeInstall._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                else {
+                else
+                {
                     MessageBox.Show(Configs.Language.Items[$"{Name}.btnThemeInstall._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -2038,7 +2049,7 @@ namespace ImageGlass {
             #region ThumbnailDimension: MainFormForceUpdateAction.THUMBNAIL_ITEMS
 
             // ThumbnailDimension
-            newUInt = cmbThumbnailDimension.SelectedItem.ToString() == ""
+            newUInt = (cmbThumbnailDimension.SelectedItem.ToString().Length == 0)
                 ? Configs.ThumbnailDimension
                 : uint.Parse(cmbThumbnailDimension.SelectedItem.ToString(), Constants.NumberFormat);
 

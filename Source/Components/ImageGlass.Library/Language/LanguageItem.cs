@@ -26,6 +26,7 @@ namespace ImageGlass.Library {
         Active = 1
     }
 
+    [Serializable]
     public class LanguageItem<K, V>: Dictionary<K, V> {
         /// <summary>
         /// ImageGlass version that supported
@@ -49,6 +50,11 @@ namespace ImageGlass.Library {
             Version = new Version("3.5.0.0");
             State = LanguageItemState.Inactive;
             Remarks = string.Empty;
+        }
+
+        protected LanguageItem(System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext)
+        {
+            throw new NotImplementedException();
         }
     }
 

@@ -28,8 +28,8 @@ namespace ImageGlass.Library.Comparer {
         public NumericComparer() { }
 
         public int Compare(object x, object y) {
-            if ((x is string) && (y is string)) {
-                return StringLogicalComparer.Compare((string)x, (string)y);
+            if ((x is string @string) && (y is string string1)) {
+                return StringLogicalComparer.Compare(@string, string1);
             }
             return -1;
         }

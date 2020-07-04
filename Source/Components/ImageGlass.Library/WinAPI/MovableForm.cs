@@ -37,7 +37,7 @@ namespace ImageGlass.Library.WinAPI {
 
 
 
-        private Form _form;
+        private readonly Form _form;
         private bool _isKeyDown = true;
 
 

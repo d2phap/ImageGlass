@@ -80,7 +80,7 @@ namespace ImageGlass.Settings {
         /// Reads XML file and returns the Document object
         /// </summary>
         /// <returns></returns>
-        private XmlDocument ReadXMLFile(string filename) {
+        private static XmlDocument ReadXMLFile(string filename) {
             var doc = new XmlDocument();
 
             try {

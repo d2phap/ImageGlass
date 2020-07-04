@@ -58,7 +58,7 @@ namespace ImageGlass.UI {
         }
 
 
-        private int GetCorrectHeight(int height) {
+        private static int GetCorrectHeight(int height) {
             // Get Scaling factor
             var scaleFactor = DPIScaling.GetDPIScaleFactor();
             var iconHeight = (int)(height * scaleFactor);

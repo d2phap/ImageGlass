@@ -43,7 +43,7 @@ namespace ImageGlass.UI {
     public class ToolStripToolTip: ToolStrip {
         ToolStripItem mouseOverItem = null;
         Point mouseOverPoint;
-        Timer timer;
+        readonly Timer timer;
         private ToolTip _tooltip;
         public int ToolTipInterval = 4000;
         public string ToolTipText;
@@ -99,7 +99,9 @@ namespace ImageGlass.UI {
 
         protected override void OnMouseUp(MouseEventArgs mea) {
             base.OnMouseUp(mea);
-            ToolStripItem newMouseOverItem = this.GetItemAt(mea.Location);
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
+            var newMouseOverItem = this.GetItemAt(mea.Location);
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
         }
 
         protected override void OnMouseLeave(EventArgs e) {
@@ -125,8 +127,12 @@ namespace ImageGlass.UI {
                     }
                 }
                 else if ((!(mouseOverItem is ToolStripDropDownButton) && !(mouseOverItem is ToolStripSplitButton)) ||
+#pragma warning disable IDE0038 // Use pattern matching
                     ((mouseOverItem is ToolStripDropDownButton) && !((ToolStripDropDownButton)mouseOverItem).DropDown.Visible) ||
+#pragma warning restore IDE0038 // Use pattern matching
+#pragma warning disable IDE0038 // Use pattern matching
                     (((mouseOverItem is ToolStripSplitButton) && !((ToolStripSplitButton)mouseOverItem).DropDown.Visible))) {
+#pragma warning restore IDE0038 // Use pattern matching
                     if (mouseOverItem.ToolTipText != null && mouseOverItem.ToolTipText.Length > 0 && Tooltip != null) {
                         Tooltip.Show(mouseOverItem.ToolTipText, this, currentMouseOverPoint, ToolTipInterval);
                     }

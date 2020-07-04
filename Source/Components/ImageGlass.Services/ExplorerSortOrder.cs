@@ -98,7 +98,7 @@ namespace ImageGlass.Services {
                 return loadOrder != null; // will be false on not-yet-supported column
             }
 #pragma warning disable 168
-            catch (Exception e)
+            catch
 #pragma warning restore 168
             {
                 return false; // failure

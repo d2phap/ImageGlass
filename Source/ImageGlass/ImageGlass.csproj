@@ -197,6 +197,7 @@
     <Compile Include="frmAddNewFormat.Designer.cs">
       <DependentUpon>frmAddNewFormat.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ToolForms\frmColorPicker.cs">
       <SubType>Form</SubType>
     </Compile>

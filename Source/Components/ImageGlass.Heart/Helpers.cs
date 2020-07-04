@@ -24,7 +24,7 @@ using System.IO;
 using System.Linq;
 
 namespace ImageGlass.Heart {
-    public class Helpers {
+    public static class Helpers {
 
         /// <summary>
         /// Get built-in color profiles
@@ -129,7 +129,7 @@ namespace ImageGlass.Heart {
         }
 
 
-        private static string LONG_PATH_PREFIX = @"\\?\";
+        private const string LONG_PATH_PREFIX = @"\\?\";
 
         /// <summary>
         /// Fallout from Issue #530. To handle a long path name (i.e. a file path

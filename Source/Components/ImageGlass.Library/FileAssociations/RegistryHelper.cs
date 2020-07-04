@@ -210,12 +210,12 @@ namespace ImageGlass.Library.FileAssociations {
                 if (sk1 != null)
                     return sk1.GetValueNames();
                 else
-                    return new string[0];
+                    return Array.Empty<string>();
             }
             catch (Exception e) {
                 // AAAAAAAAAAARGH, an error!
                 ShowErrorMessage(e, "Retrieving keys of " + SubKey);
-                return new string[0];
+                return Array.Empty<string>();
             }
         }
 

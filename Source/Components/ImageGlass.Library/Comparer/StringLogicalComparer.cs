@@ -27,16 +27,16 @@ namespace ImageGlass.Library.Comparer {
     /// <summary>
     /// Emulates StrCmpLogicalW, but not fully
     /// </summary>
-    public class StringLogicalComparer {
+    public static class StringLogicalComparer {
         public static int Compare(string s1, string s2) {
             //get rid of special cases
             if ((s1 == null) && (s2 == null)) return 0;
             else if (s1 == null) return -1;
             else if (s2 == null) return 1;
 
-            if ((s1.Equals(string.Empty) && (s2.Equals(string.Empty)))) return 0;
-            else if (s1.Equals(string.Empty)) return -1;
-            else if (s2.Equals(string.Empty)) return -1;
+            if (s1.Length == 0 && s2.Length == 0) return 0;
+            else if (s1.Length == 0) return -1;
+            else if (s2.Length == 0) return -1;
 
             //WE style, special case
             bool sp1 = Char.IsLetterOrDigit(s1, 0);
@@ -45,18 +45,23 @@ namespace ImageGlass.Library.Comparer {
             if (!sp1 && sp2) return -1;
 
             int i1 = 0, i2 = 0; //current index
-            int r = 0; // temp result
-            while (true) {
+            while (true)
+            {
                 bool c1 = Char.IsDigit(s1, i1);
                 bool c2 = Char.IsDigit(s2, i2);
-                if (!c1 && !c2) {
+                int r;
+                if (!c1 && !c2)
+                {
                     bool letter1 = Char.IsLetter(s1, i1);
                     bool letter2 = Char.IsLetter(s2, i2);
-                    if ((letter1 && letter2) || (!letter1 && !letter2)) {
-                        if (letter1 && letter2) {
+                    if ((letter1 && letter2) || (!letter1 && !letter2))
+                    {
+                        if (letter1 && letter2)
+                        {
                             r = Char.ToLower(s1[i1]).CompareTo(Char.ToLower(s2[i2]));
                         }
-                        else {
+                        else
+                        {
                             r = s1[i1].CompareTo(s2[i2]);
                         }
                         if (r != 0) return r;
@@ -64,25 +69,31 @@ namespace ImageGlass.Library.Comparer {
                     else if (!letter1 && letter2) return -1;
                     else if (letter1 && !letter2) return 1;
                 }
-                else if (c1 && c2) {
+                else if (c1 && c2)
+                {
                     r = CompareNum(s1, ref i1, s2, ref i2);
                     if (r != 0) return r;
                 }
-                else if (c1) {
+                else if (c1)
+                {
                     return -1;
                 }
-                else if (c2) {
+                else if (c2)
+                {
                     return 1;
                 }
                 i1++;
                 i2++;
-                if ((i1 >= s1.Length) && (i2 >= s2.Length)) {
+                if ((i1 >= s1.Length) && (i2 >= s2.Length))
+                {
                     return 0;
                 }
-                else if (i1 >= s1.Length) {
+                else if (i1 >= s1.Length)
+                {
                     return -1;
                 }
-                else if (i2 >= s2.Length) {
+                else if (i2 >= s2.Length)
+                {
                     return -1;
                 }
             }

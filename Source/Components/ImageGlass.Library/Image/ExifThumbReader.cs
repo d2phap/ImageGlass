@@ -26,7 +26,7 @@ namespace ImageGlass.Library.Image {
 
 
         // EXIT tag value for thumbnail data. Value specified by EXIF standard
-        private static int THUMBNAIL_DATA = 0x501B;
+        private const int THUMBNAIL_DATA = 0x501B;
 
         /// <summary>
         /// Reads the thumbnail in the given image. If no thumbnail is found, returns null
@@ -34,10 +34,8 @@ namespace ImageGlass.Library.Image {
         public static async Task<System.Drawing.Image> ReadThumb(string imagePath) {
             const int GDI_ERR_PROP_NOT_FOUND = 19;  // Property not found error
             const int GDI_ERR_OUT_OF_MEMORY = 3;
-
-            IntPtr hImage = IntPtr.Zero;
             IntPtr buffer = IntPtr.Zero;    // Holds the thumbnail data
-            int ret = GdipLoadImageFromFile(imagePath, out hImage);
+            int ret = GdipLoadImageFromFile(imagePath, out IntPtr hImage);
 
             try {
                 if (ret != 0)

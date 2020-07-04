@@ -146,6 +146,7 @@ namespace ImageGlass.Base {
     /// <summary>
     /// Zooming modes.
     /// </summary>
+    [Flags]
     public enum ZoomMode {
         AutoZoom = 0,
         ScaleToFit = 1,

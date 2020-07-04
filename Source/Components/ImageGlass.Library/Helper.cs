@@ -60,7 +60,9 @@ namespace ImageGlass.Library {
             return false;
         }
 
+#pragma warning disable CA2101 // Specify marshaling for P/Invoke string arguments
         [DllImport("shlwapi.dll", CharSet = CharSet.Auto)]
+#pragma warning restore CA2101 // Specify marshaling for P/Invoke string arguments
         static extern bool PathCompactPathEx([Out] StringBuilder pszOut, string szPath, int cchMax, int dwFlags);
 
         /// <summary>

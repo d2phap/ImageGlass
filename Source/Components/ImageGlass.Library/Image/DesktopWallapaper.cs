@@ -23,7 +23,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 
 namespace ImageGlass.Library.Image {
-    public class DesktopWallapaper {
+    public static class DesktopWallapaper {
         const int SPI_SETDESKWALLPAPER = 20;
         const int SPIF_UPDATEINIFILE = 0x01;
         const int SPIF_SENDWININICHANGE = 0x02;

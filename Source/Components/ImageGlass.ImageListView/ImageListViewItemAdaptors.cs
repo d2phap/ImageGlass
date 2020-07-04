@@ -12,7 +12,7 @@ namespace ImageGlass.ImageListView {
         /// <summary>
         /// Represents a file system adaptor.
         /// </summary>
-        public class FileSystemAdaptor: ImageListView.ImageListViewItemAdaptor {
+        internal class FileSystemAdaptor: ImageListView.ImageListViewItemAdaptor {
             // [IG_CHANGE] use a cache for commonly repeated strings
             private static readonly StringCache _stringCache = new StringCache();
             private bool disposed;
@@ -118,7 +118,7 @@ namespace ImageGlass.ImageListView {
         /// <summary>
         /// Represents a URI adaptor.
         /// </summary>
-        public class URIAdaptor: ImageListView.ImageListViewItemAdaptor {
+        protected class URIAdaptor: ImageListView.ImageListViewItemAdaptor {
             private bool disposed;
 
             /// <summary>

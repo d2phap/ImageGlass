@@ -102,15 +102,14 @@ namespace ImageGlass {
                     if (_bmpBooster != null) {
                         _bmpBooster.Dispose();
                     }
-                    using (var bmp = new Bitmap(_imgBox.Image)) {
-                        _bmpBooster = new BitmapBooster(bmp);
+                    using var bmp = new Bitmap(_imgBox.Image);
+                    _bmpBooster = new BitmapBooster(bmp);
 
-                        Color color = _bmpBooster.Get(_cursorPos.X, _cursorPos.Y);
-                        _DisplayColor(color);
+                    Color color = _bmpBooster.Get(_cursorPos.X, _cursorPos.Y);
+                    _DisplayColor(color);
 
-                        _bmpBooster.Dispose();
-                        _bmpBooster = null;
-                    }
+                    _bmpBooster.Dispose();
+                    _bmpBooster = null;
                 }
             }
             catch { }

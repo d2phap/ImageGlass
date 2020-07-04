@@ -24,7 +24,7 @@ using System.Drawing.Imaging;
 using System.Threading.Tasks;
 
 namespace ImageGlass.Heart {
-    public class Img: IDisposable {
+    public sealed class Img: IDisposable {
 
         #region PUBLIC PROPERTIES
 
@@ -37,7 +37,7 @@ namespace ImageGlass.Heart {
         /// <summary>
         /// Gets the value indicates that image loading is done
         /// </summary>
-        public bool IsDone { get; private set; } = false;
+        public bool IsDone { get; set; } = false;
 
 
         /// <summary>
@@ -55,25 +55,25 @@ namespace ImageGlass.Heart {
         /// <summary>
         /// Gets, sets number of image pages
         /// </summary>
-        public int PageCount { get; private set; } = 0;
+        public int PageCount { get; set; } = 0;
 
 
         /// <summary>
         /// Gets, sets the active page index
         /// </summary>
-        public int ActivePageIndex { get; private set; } = 0;
+        public int ActivePageIndex { get; set; } = 0;
 
 
         /// <summary>
         /// Gets the Exif profile of image
         /// </summary>
-        public IExifProfile Exif { get; protected set; } = null;
+        public IExifProfile Exif { get; set; } = null;
 
 
         /// <summary>
         /// Gets the color profile of image
         /// </summary>
-        public IColorProfile ColorProfile { get; protected set; } = null;
+        public IColorProfile ColorProfile { get; set; } = null;
 
         #endregion
 
