@@ -55,8 +55,7 @@ namespace ImageGlass.Library.WinAPI {
             var attrValue = DWMWA_NCRENDERING_POLICY;
             DwmSetWindowAttribute(handle, DWMWA_NCRENDERING_POLICY, ref attrValue, 4);
 
-            var margins = new MARGINS()
-            {
+            var margins = new MARGINS() {
                 bottomHeight = borderWidth,
                 leftWidth = borderWidth,
                 rightWidth = borderWidth,

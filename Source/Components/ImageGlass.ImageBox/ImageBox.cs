@@ -6,8 +6,7 @@ using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace ImageGlass
-{
+namespace ImageGlass {
     // Cyotek ImageBox
     // Copyright (c) 2010-2015 Cyotek Ltd.
     // http://cyotek.com
@@ -24,8 +23,7 @@ namespace ImageGlass
     [ToolboxBitmap(typeof(ImageBox), "ImageBox.bmp")]
     [ToolboxItem(true)]
     /* [Designer("ImageGlass.ImageBox.Design.ImageBoxDesigner", ImageGlass.ImageBox.ImageBox.Design.dll, PublicKeyToken=58daa28b0b2de221")] */
-    public class ImageBox : Control
-    {
+    public class ImageBox: Control {
         #region Instance Fields
 
         private BorderStyle _borderStyle;
@@ -47,16 +45,13 @@ namespace ImageGlass
         /// <summary>
         /// Gets the required creation parameters when the control handle is created.
         /// </summary>
-        protected override CreateParams CreateParams
-        {
-            get
-            {
+        protected override CreateParams CreateParams {
+            get {
                 CreateParams createParams;
 
                 createParams = base.CreateParams;
 
-                switch (_borderStyle)
-                {
+                switch (_borderStyle) {
                     case BorderStyle.FixedSingle:
                         createParams.Style |= NativeMethods.WS_BORDER;
                         break;
@@ -78,13 +73,10 @@ namespace ImageGlass
         /// </summary>
         [Category("Appearance")]
         [DefaultValue(typeof(BorderStyle), "Fixed3D")]
-        public virtual BorderStyle BorderStyle
-        {
+        public virtual BorderStyle BorderStyle {
             get { return _borderStyle; }
-            set
-            {
-                if (BorderStyle != value)
-                {
+            set {
+                if (BorderStyle != value) {
                     _borderStyle = value;
 
                     OnBorderStyleChanged(EventArgs.Empty);
@@ -95,8 +87,7 @@ namespace ImageGlass
         /// <summary>
         /// [IG_CHANGE] Gets value whether the image can animate or not
         /// </summary>
-        public bool CanAnimate
-        {
+        public bool CanAnimate {
             get { return Animator.CanAnimate(Image); }
         }
 
@@ -110,16 +101,14 @@ namespace ImageGlass
         /// <param name="e">
         ///   An <see cref="T:System.EventArgs" /> that contains the event data.
         /// </param>
-        protected virtual void OnBorderStyleChanged(EventArgs e)
-        {
+        protected virtual void OnBorderStyleChanged(EventArgs e) {
             EventHandler handler;
 
             base.UpdateStyles();
 
             handler = BorderStyleChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -231,8 +220,7 @@ namespace ImageGlass
         /// <summary>
         /// [IG_CHANGE] Initializes a new instance of the <see cref="ImageBox" /> class.
         /// </summary>
-        public ImageBox()
-        {
+        public ImageBox() {
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
             // [IG_CHANGE] double click event
@@ -242,15 +230,13 @@ namespace ImageGlass
             //[IG_CHANGE]
             _animator = new DefaultGifAnimator();
 
-            _vScrollBar = new VScrollBar
-            {
+            _vScrollBar = new VScrollBar {
                 Visible = false
             };
             // ReSharper disable once HeapView.DelegateAllocation
             _vScrollBar.Scroll += ScrollBarScrollHandler;
 
-            _hScrollBar = new HScrollBar
-            {
+            _hScrollBar = new HScrollBar {
                 Visible = false
             };
             // ReSharper disable once HeapView.DelegateAllocation
@@ -551,8 +537,7 @@ namespace ImageGlass
         /// <param name="cellColor">Cell color.</param>
         /// <param name="alternateCellColor">Alternate cell color.</param>
         /// <returns></returns>
-        public static Bitmap CreateCheckerBoxTile(int cellSize, Color cellColor, Color alternateCellColor)
-        {
+        public static Bitmap CreateCheckerBoxTile(int cellSize, Color cellColor, Color alternateCellColor) {
             Bitmap result;
             int width;
             int height;
@@ -562,16 +547,13 @@ namespace ImageGlass
             height = cellSize * 2;
             result = new Bitmap(width, height);
 
-            using (Graphics g = Graphics.FromImage(result))
-            {
-                using (Brush brush = new SolidBrush(cellColor))
-                {
+            using (Graphics g = Graphics.FromImage(result)) {
+                using (Brush brush = new SolidBrush(cellColor)) {
                     g.FillRectangle(brush, new Rectangle(cellSize, 0, cellSize, cellSize));
                     g.FillRectangle(brush, new Rectangle(0, cellSize, cellSize, cellSize));
                 }
 
-                using (Brush brush = new SolidBrush(alternateCellColor))
-                {
+                using (Brush brush = new SolidBrush(alternateCellColor)) {
                     g.FillRectangle(brush, new Rectangle(0, 0, cellSize, cellSize));
                     g.FillRectangle(brush, new Rectangle(cellSize, cellSize, cellSize, cellSize));
                 }
@@ -584,8 +566,7 @@ namespace ImageGlass
         ///   Creates a checked tile texture using default values.
         /// </summary>
         /// <returns></returns>
-        public static Bitmap CreateCheckerBoxTile()
-        {
+        public static Bitmap CreateCheckerBoxTile() {
             return ImageBox.CreateCheckerBoxTile(8, Color.Gainsboro, Color.WhiteSmoke);
         }
 
@@ -594,21 +575,16 @@ namespace ImageGlass
         /// </summary>
         /// <param name="delta"></param>
         /// <param name="horizontal"></param>
-        public void ScrollWithMouseWheel(int delta, bool horizontal = false)
-        {
+        public void ScrollWithMouseWheel(int delta, bool horizontal = false) {
             Size clientSize;
             clientSize = GetInsideViewPort(true).Size;
-            if (horizontal)
-            {
-                if (ScaledImageWidth > clientSize.Width)
-                {
+            if (horizontal) {
+                if (ScaledImageWidth > clientSize.Width) {
                     AdjustScroll(-delta, 0);
                 }
             }
-            else
-            {
-                if (ScaledImageHeight > clientSize.Height)
-                {
+            else {
+                if (ScaledImageHeight > clientSize.Height) {
                     AdjustScroll(0, -delta);
                 }
             }
@@ -619,16 +595,13 @@ namespace ImageGlass
         /// </summary>
         /// <param name="delta"></param>
         /// <param name="cursorPosition"></param>
-        public void ZoomWithMouseWheel(int delta, Point cursorPosition)
-        {
-            if (SizeMode == ImageBoxSizeMode.Normal)
-            {
+        public void ZoomWithMouseWheel(int delta, Point cursorPosition) {
+            if (SizeMode == ImageBoxSizeMode.Normal) {
                 int spins;
                 // The MouseWheel event can contain multiple "spins" of the wheel so we need to adjust accordingly
                 spins = Math.Abs(delta / SystemInformation.MouseWheelScrollDelta);
                 // TODO: Really should update the source method to handle multiple increments rather than calling it multiple times
-                for (int i = 0; i < spins; i++)
-                {
+                for (int i = 0; i < spins; i++) {
                     ProcessMouseZoom(delta > 0, cursorPosition);
                 }
             }
@@ -649,13 +622,10 @@ namespace ImageGlass
         [EditorBrowsable(EditorBrowsableState.Always)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [DefaultValue(false)]
-        public override bool AutoSize
-        {
+        public override bool AutoSize {
             get { return base.AutoSize; }
-            set
-            {
-                if (base.AutoSize != value)
-                {
+            set {
+                if (base.AutoSize != value) {
                     base.AutoSize = value;
 
                     AdjustLayout();
@@ -674,8 +644,7 @@ namespace ImageGlass
         ///   property.
         /// </returns>
         [DefaultValue(typeof(Color), "White")]
-        public override Color BackColor
-        {
+        public override Color BackColor {
             get { return base.BackColor; }
             set { base.BackColor = value; }
         }
@@ -690,8 +659,7 @@ namespace ImageGlass
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override Image BackgroundImage
-        {
+        public override Image BackgroundImage {
             get { return base.BackgroundImage; }
             set { base.BackgroundImage = value; }
         }
@@ -715,8 +683,7 @@ namespace ImageGlass
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override ImageLayout BackgroundImageLayout
-        {
+        public override ImageLayout BackgroundImageLayout {
             get { return base.BackgroundImageLayout; }
             set { base.BackgroundImageLayout = value; }
         }
@@ -732,12 +699,10 @@ namespace ImageGlass
         /// <returns>
         ///   An ordered pair of type <see cref="T:System.Drawing.Size" /> representing the width and height of a rectangle.
         /// </returns>
-        public override Size GetPreferredSize(Size proposedSize)
-        {
+        public override Size GetPreferredSize(Size proposedSize) {
             Size size;
 
-            if (!ViewSize.IsEmpty)
-            {
+            if (!ViewSize.IsEmpty) {
                 int width;
                 int height;
 
@@ -755,8 +720,7 @@ namespace ImageGlass
 
                 size = new Size(width, height);
             }
-            else
-            {
+            else {
                 size = base.GetPreferredSize(proposedSize);
             }
 
@@ -767,40 +731,33 @@ namespace ImageGlass
         ///   Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (IsAnimating)
-                {
+        protected override void Dispose(bool disposing) {
+            if (disposing) {
+                if (IsAnimating) {
                     // ReSharper disable once HeapView.DelegateAllocation
                     Animator.StopAnimate(Image, OnFrameChangedHandler);
                 }
 
-                if (_hScrollBar != null)
-                {
+                if (_hScrollBar != null) {
                     Controls.Remove(_hScrollBar);
                     // ReSharper disable once HeapView.DelegateAllocation
                     _hScrollBar.Scroll -= ScrollBarScrollHandler;
                     _hScrollBar.Dispose();
                 }
 
-                if (_vScrollBar != null)
-                {
+                if (_vScrollBar != null) {
                     Controls.Remove(_vScrollBar);
                     // ReSharper disable once HeapView.DelegateAllocation
                     _vScrollBar.Scroll -= ScrollBarScrollHandler;
                     _vScrollBar.Dispose();
                 }
 
-                if (_texture != null)
-                {
+                if (_texture != null) {
                     _texture.Dispose();
                     _texture = null;
                 }
 
-                if (_gridTile != null)
-                {
+                if (_gridTile != null) {
                     _gridTile.Dispose();
                     _gridTile = null;
                 }
@@ -818,16 +775,13 @@ namespace ImageGlass
         /// <returns>
         ///   true if the specified key is a regular input key; otherwise, false.
         /// </returns>
-        protected override bool IsInputKey(Keys keyData)
-        {
+        protected override bool IsInputKey(Keys keyData) {
             bool result;
 
-            if ((keyData & Keys.Right) == Keys.Right | (keyData & Keys.Left) == Keys.Left | (keyData & Keys.Up) == Keys.Up | (keyData & Keys.Down) == Keys.Down)
-            {
+            if ((keyData & Keys.Right) == Keys.Right | (keyData & Keys.Left) == Keys.Left | (keyData & Keys.Up) == Keys.Up | (keyData & Keys.Down) == Keys.Down) {
                 result = true;
             }
-            else
-            {
+            else {
                 result = base.IsInputKey(keyData);
             }
 
@@ -840,8 +794,7 @@ namespace ImageGlass
         /// <param name="e">
         ///   An <see cref="T:System.EventArgs" /> that contains the event data.
         /// </param>
-        protected override void OnBackColorChanged(EventArgs e)
-        {
+        protected override void OnBackColorChanged(EventArgs e) {
             base.OnBackColorChanged(e);
 
             Invalidate();
@@ -853,12 +806,10 @@ namespace ImageGlass
         /// <param name="e">
         ///   An <see cref="T:System.EventArgs" /> that contains the event data.
         /// </param>
-        protected override void OnDockChanged(EventArgs e)
-        {
+        protected override void OnDockChanged(EventArgs e) {
             base.OnDockChanged(e);
 
-            if (Dock != DockStyle.None)
-            {
+            if (Dock != DockStyle.None) {
                 AutoSize = false;
             }
         }
@@ -867,8 +818,7 @@ namespace ImageGlass
         /// Raises the <see cref="E:System.Windows.Forms.Control.FontChanged" /> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
-        protected override void OnFontChanged(EventArgs e)
-        {
+        protected override void OnFontChanged(EventArgs e) {
             base.OnFontChanged(e);
 
             Invalidate();
@@ -878,8 +828,7 @@ namespace ImageGlass
         /// Raises the <see cref="E:System.Windows.Forms.Control.ForeColorChanged" /> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
-        protected override void OnForeColorChanged(EventArgs e)
-        {
+        protected override void OnForeColorChanged(EventArgs e) {
             base.OnForeColorChanged(e);
 
             Invalidate();
@@ -891,14 +840,12 @@ namespace ImageGlass
         /// <param name="e">
         ///   A <see cref="T:System.Windows.Forms.KeyEventArgs" /> that contains the event data.
         /// </param>
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
+        protected override void OnKeyDown(KeyEventArgs e) {
             base.OnKeyDown(e);
 
             ProcessScrollingShortcuts(e);
 
-            if (ShortcutsEnabled && SizeMode == ImageBoxSizeMode.Normal)
-            {
+            if (ShortcutsEnabled && SizeMode == ImageBoxSizeMode.Normal) {
                 ProcessImageShortcuts(e);
             }
         }
@@ -909,12 +856,10 @@ namespace ImageGlass
         /// <param name="e">
         ///   A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data.
         /// </param>
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
+        protected override void OnMouseDown(MouseEventArgs e) {
             base.OnMouseDown(e);
 
-            if (!Focused)
-            {
+            if (!Focused) {
                 Focus();
             }
         }
@@ -925,12 +870,10 @@ namespace ImageGlass
         /// <param name="e">
         ///   A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data.
         /// </param>
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
+        protected override void OnMouseMove(MouseEventArgs e) {
             base.OnMouseMove(e);
 
-            if (e.Button == MouseButtons.Left)
-            {
+            if (e.Button == MouseButtons.Left) {
                 ProcessPanning(e);
                 ProcessSelection(e);
             }
@@ -942,33 +885,27 @@ namespace ImageGlass
         /// <param name="e">
         ///   A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data.
         /// </param>
-        protected override void OnMouseUp(MouseEventArgs e)
-        {
+        protected override void OnMouseUp(MouseEventArgs e) {
             bool doNotProcessClick;
 
             base.OnMouseUp(e);
 
             doNotProcessClick = IsPanning || IsSelecting;
 
-            if (IsPanning)
-            {
+            if (IsPanning) {
                 IsPanning = false;
             }
 
-            if (IsSelecting)
-            {
+            if (IsSelecting) {
                 EndDrag();
             }
             WasDragCancelled = false;
 
-            if (!doNotProcessClick && AllowClickZoom && !IsPanning && SizeMode == ImageBoxSizeMode.Normal)
-            {
-                if (e.Button == MouseButtons.Left && ModifierKeys == Keys.None)
-                {
+            if (!doNotProcessClick && AllowClickZoom && !IsPanning && SizeMode == ImageBoxSizeMode.Normal) {
+                if (e.Button == MouseButtons.Left && ModifierKeys == Keys.None) {
                     ProcessMouseZoom(true, e.Location);
                 }
-                else if (e.Button == MouseButtons.Right || (e.Button == MouseButtons.Left && ModifierKeys != Keys.None))
-                {
+                else if (e.Button == MouseButtons.Right || (e.Button == MouseButtons.Left && ModifierKeys != Keys.None)) {
                     ProcessMouseZoom(false, e.Location);
                 }
             }
@@ -980,8 +917,7 @@ namespace ImageGlass
         /// <param name="e">
         ///   A <see cref="T:System.Windows.Forms.MouseEventArgs" /> that contains the event data.
         /// </param>
-        protected override void OnMouseWheel(MouseEventArgs e)
-        {
+        protected override void OnMouseWheel(MouseEventArgs e) {
             base.OnMouseWheel(e);
         }
 
@@ -991,8 +927,7 @@ namespace ImageGlass
         /// <param name="e">
         ///   An <see cref="T:System.EventArgs" /> that contains the event data.
         /// </param>
-        protected override void OnPaddingChanged(EventArgs e)
-        {
+        protected override void OnPaddingChanged(EventArgs e) {
             base.OnPaddingChanged(e);
             AdjustLayout();
         }
@@ -1003,48 +938,39 @@ namespace ImageGlass
         /// <param name="e">
         ///   A <see cref="T:System.Windows.Forms.PaintEventArgs" /> that contains the event data.
         /// </param>
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            if (AllowPainting)
-            {
+        protected override void OnPaint(PaintEventArgs e) {
+            if (AllowPainting) {
                 // draw the background
                 DrawBackground(e);
 
                 // draw the image
-                if (!ViewSize.IsEmpty)
-                {
+                if (!ViewSize.IsEmpty) {
                     DrawImageBorder(e.Graphics);
                 }
-                if (VirtualMode)
-                {
+                if (VirtualMode) {
                     OnVirtualDraw(e);
                 }
-                else if (Image != null)
-                {
+                else if (Image != null) {
                     DrawImage(e.Graphics);
                 }
 
                 // draw the grid
-                if (ShowPixelGrid && !VirtualMode)
-                {
+                if (ShowPixelGrid && !VirtualMode) {
                     DrawPixelGrid(e.Graphics);
                 }
 
                 // draw the selection. [IG_CHANGE]: add SelectionRegion != Rectangle.Empty
-                if (SelectionRegion != Rectangle.Empty || SelectionMode == ImageBoxSelectionMode.Rectangle)
-                {
+                if (SelectionRegion != Rectangle.Empty || SelectionMode == ImageBoxSelectionMode.Rectangle) {
                     DrawSelection(e);
                 }
 
                 // text
-                if (!string.IsNullOrEmpty(Text) && TextDisplayMode != ImageBoxGridDisplayMode.None)
-                {
+                if (!string.IsNullOrEmpty(Text) && TextDisplayMode != ImageBoxGridDisplayMode.None) {
                     DrawText(e);
                 }
 
                 // scrollbar corners
-                if (HorizontalScroll.Visible && VerticalScroll.Visible)
-                {
+                if (HorizontalScroll.Visible && VerticalScroll.Visible) {
                     int x;
                     int y;
                     int w;
@@ -1070,8 +996,7 @@ namespace ImageGlass
         /// <param name="e">
         ///   An <see cref="T:System.EventArgs" /> that contains the event data.
         /// </param>
-        protected override void OnParentChanged(EventArgs e)
-        {
+        protected override void OnParentChanged(EventArgs e) {
             base.OnParentChanged(e);
             AdjustLayout();
         }
@@ -1082,8 +1007,7 @@ namespace ImageGlass
         /// <param name="e">
         ///   An <see cref="T:System.EventArgs" /> that contains the event data.
         /// </param>
-        protected override void OnResize(EventArgs e)
-        {
+        protected override void OnResize(EventArgs e) {
             AdjustLayout();
 
             base.OnResize(e);
@@ -1093,8 +1017,7 @@ namespace ImageGlass
         /// Raises the <see cref="E:System.Windows.Forms.Control.TextChanged" /> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
-        protected override void OnTextChanged(EventArgs e)
-        {
+        protected override void OnTextChanged(EventArgs e) {
             base.OnTextChanged(e);
 
             Invalidate();
@@ -1112,13 +1035,10 @@ namespace ImageGlass
         /// </value>
         [DefaultValue(false)]
         [Category("Behavior")]
-        public virtual bool AllowClickZoom
-        {
+        public virtual bool AllowClickZoom {
             get { return _allowClickZoom; }
-            set
-            {
-                if (_allowClickZoom != value)
-                {
+            set {
+                if (_allowClickZoom != value) {
                     _allowClickZoom = value;
                     OnAllowClickZoomChanged(EventArgs.Empty);
                 }
@@ -1131,13 +1051,10 @@ namespace ImageGlass
         /// <value><c>true</c> if the DoubleClick event can be raised; otherwise, <c>false</c>.</value>
         [Category("Behavior")]
         [DefaultValue(false)]
-        public virtual bool AllowDoubleClick
-        {
+        public virtual bool AllowDoubleClick {
             get { return _allowDoubleClick; }
-            set
-            {
-                if (AllowDoubleClick != value)
-                {
+            set {
+                if (AllowDoubleClick != value) {
                     _allowDoubleClick = value;
 
                     OnAllowDoubleClickChanged(EventArgs.Empty);
@@ -1170,13 +1087,10 @@ namespace ImageGlass
         /// </value>
         [DefaultValue(true)]
         [Category("Appearance")]
-        public virtual bool AutoCenter
-        {
+        public virtual bool AutoCenter {
             get { return _autoCenter; }
-            set
-            {
-                if (_autoCenter != value)
-                {
+            set {
+                if (_autoCenter != value) {
                     _autoCenter = value;
                     OnAutoCenterChanged(EventArgs.Empty);
                 }
@@ -1192,13 +1106,10 @@ namespace ImageGlass
         /// <remarks>If this property is set, the SizeToFit property cannot be used.</remarks>
         [DefaultValue(true)]
         [Category("Behavior")]
-        public virtual bool AutoPan
-        {
+        public virtual bool AutoPan {
             get { return _autoPan; }
-            set
-            {
-                if (_autoPan != value)
-                {
+            set {
+                if (_autoPan != value) {
                     _autoPan = value;
                     OnAutoPanChanged(EventArgs.Empty);
                 }
@@ -1210,10 +1121,8 @@ namespace ImageGlass
         /// </summary>
         /// <value>The point at the center of the current image viewport.</value>
         [Browsable(false)]
-        public Point CenterPoint
-        {
-            get
-            {
+        public Point CenterPoint {
+            get {
                 Rectangle viewport;
 
                 viewport = GetImageViewPort();
@@ -1228,13 +1137,10 @@ namespace ImageGlass
         /// <value>The size of the drop shadow.</value>
         [Category("Appearance")]
         [DefaultValue(3)]
-        public virtual int DropShadowSize
-        {
+        public virtual int DropShadowSize {
             get { return _dropShadowSize; }
-            set
-            {
-                if (DropShadowSize != value)
-                {
+            set {
+                if (DropShadowSize != value) {
                     _dropShadowSize = value;
 
                     OnDropShadowSizeChanged(EventArgs.Empty);
@@ -1248,13 +1154,10 @@ namespace ImageGlass
         /// <value>The size of the grid cells.</value>
         [Category("Appearance")]
         [DefaultValue(8)]
-        public virtual int GridCellSize
-        {
+        public virtual int GridCellSize {
             get { return _gridCellSize; }
-            set
-            {
-                if (_gridCellSize != value)
-                {
+            set {
+                if (_gridCellSize != value) {
                     _gridCellSize = value;
                     OnGridCellSizeChanged(EventArgs.Empty);
                 }
@@ -1267,13 +1170,10 @@ namespace ImageGlass
         /// <value>The color of primary cells in the grid.</value>
         [Category("Appearance")]
         [DefaultValue(typeof(Color), "Gainsboro")]
-        public virtual Color GridColor
-        {
+        public virtual Color GridColor {
             get { return _gridColor; }
-            set
-            {
-                if (_gridColor != value)
-                {
+            set {
+                if (_gridColor != value) {
                     _gridColor = value;
                     OnGridColorChanged(EventArgs.Empty);
                 }
@@ -1286,13 +1186,10 @@ namespace ImageGlass
         /// <value>The color of alternate cells in the grid.</value>
         [Category("Appearance")]
         [DefaultValue(typeof(Color), "White")]
-        public virtual Color GridColorAlternate
-        {
+        public virtual Color GridColorAlternate {
             get { return _gridColorAlternate; }
-            set
-            {
-                if (_gridColorAlternate != value)
-                {
+            set {
+                if (_gridColorAlternate != value) {
                     _gridColorAlternate = value;
                     OnGridColorAlternateChanged(EventArgs.Empty);
                 }
@@ -1305,13 +1202,10 @@ namespace ImageGlass
         /// <value>The grid display mode.</value>
         [DefaultValue(ImageBoxGridDisplayMode.Client)]
         [Category("Appearance")]
-        public virtual ImageBoxGridDisplayMode GridDisplayMode
-        {
+        public virtual ImageBoxGridDisplayMode GridDisplayMode {
             get { return _gridDisplayMode; }
-            set
-            {
-                if (_gridDisplayMode != value)
-                {
+            set {
+                if (_gridDisplayMode != value) {
                     _gridDisplayMode = value;
                     OnGridDisplayModeChanged(EventArgs.Empty);
                 }
@@ -1324,13 +1218,10 @@ namespace ImageGlass
         /// <value>The grid scale.</value>
         [DefaultValue(typeof(ImageBoxGridScale), "Small")]
         [Category("Appearance")]
-        public virtual ImageBoxGridScale GridScale
-        {
+        public virtual ImageBoxGridScale GridScale {
             get { return _gridScale; }
-            set
-            {
-                if (_gridScale != value)
-                {
+            set {
+                if (_gridScale != value) {
                     _gridScale = value;
                     OnGridScaleChanged(EventArgs.Empty);
                 }
@@ -1343,16 +1234,12 @@ namespace ImageGlass
         /// <value>The image.</value>
         [Category("Appearance")]
         [DefaultValue(null)]
-        public virtual Image Image
-        {
+        public virtual Image Image {
             get { return _image; }
-            set
-            {
-                if (_image != value)
-                {
+            set {
+                if (_image != value) {
                     // disable animations
-                    if (IsAnimating)
-                    {
+                    if (IsAnimating) {
                         Animator.StopAnimate(Image, OnFrameChangedHandler);
                     }
 
@@ -1368,13 +1255,10 @@ namespace ImageGlass
         /// <value>The color of the image border.</value>
         [Category("Appearance")]
         [DefaultValue(typeof(Color), "ControlDark")]
-        public virtual Color ImageBorderColor
-        {
+        public virtual Color ImageBorderColor {
             get { return _imageBorderColor; }
-            set
-            {
-                if (ImageBorderColor != value)
-                {
+            set {
+                if (ImageBorderColor != value) {
                     _imageBorderColor = value;
 
                     OnImageBorderColorChanged(EventArgs.Empty);
@@ -1388,13 +1272,10 @@ namespace ImageGlass
         /// <value>The image border style.</value>
         [Category("Appearance")]
         [DefaultValue(typeof(ImageBoxBorderStyle), "None")]
-        public virtual ImageBoxBorderStyle ImageBorderStyle
-        {
+        public virtual ImageBoxBorderStyle ImageBorderStyle {
             get { return _imageBorderStyle; }
-            set
-            {
-                if (ImageBorderStyle != value)
-                {
+            set {
+                if (ImageBorderStyle != value) {
                     _imageBorderStyle = value;
 
                     OnImageBorderStyleChanged(EventArgs.Empty);
@@ -1408,18 +1289,14 @@ namespace ImageGlass
         /// <value>The interpolation mode.</value>
         [Category("Appearance")]
         [DefaultValue(InterpolationMode.NearestNeighbor)]
-        public virtual InterpolationMode InterpolationMode
-        {
+        public virtual InterpolationMode InterpolationMode {
             get { return _interpolationMode; }
-            set
-            {
-                if (value == InterpolationMode.Invalid)
-                {
+            set {
+                if (value == InterpolationMode.Invalid) {
                     value = InterpolationMode.Default;
                 }
 
-                if (_interpolationMode != value)
-                {
+                if (_interpolationMode != value) {
                     _interpolationMode = value;
                     OnInterpolationModeChanged(EventArgs.Empty);
                 }
@@ -1434,13 +1311,10 @@ namespace ImageGlass
         /// </value>
         [DefaultValue(false)]
         [Category("Behavior")]
-        public virtual bool InvertMouse
-        {
+        public virtual bool InvertMouse {
             get { return _invertMouse; }
-            set
-            {
-                if (_invertMouse != value)
-                {
+            set {
+                if (_invertMouse != value) {
                     _invertMouse = value;
                     OnInvertMouseChanged(EventArgs.Empty);
                 }
@@ -1452,8 +1326,7 @@ namespace ImageGlass
         /// </summary>
         /// <value><c>true</c> if the image is currently being displayed at 100% zoom; otherwise, <c>false</c>.</value>
         [Browsable(false)]
-        public virtual bool IsActualSize
-        {
+        public virtual bool IsActualSize {
             get { return Zoom == 100; }
         }
 
@@ -1466,37 +1339,29 @@ namespace ImageGlass
         [DefaultValue(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
-        public virtual bool IsPanning
-        {
+        public virtual bool IsPanning {
             get { return _isPanning; }
-            protected set
-            {
-                if (_isPanning != value)
-                {
+            protected set {
+                if (_isPanning != value) {
                     CancelEventArgs args;
 
                     args = new CancelEventArgs();
 
-                    if (value)
-                    {
+                    if (value) {
                         OnPanStart(args);
                     }
-                    else
-                    {
+                    else {
                         OnPanEnd(EventArgs.Empty);
                     }
 
-                    if (!args.Cancel)
-                    {
+                    if (!args.Cancel) {
                         _isPanning = value;
 
-                        if (value)
-                        {
+                        if (value) {
                             _startScrollPosition = AutoScrollPosition;
                             Cursor = Cursors.SizeAll;
                         }
-                        else
-                        {
+                        else {
                             Cursor = Cursors.Default;
                         }
                     }
@@ -1522,13 +1387,10 @@ namespace ImageGlass
         /// </value>
         [Category("Behavior")]
         [DefaultValue(true)]
-        public virtual bool LimitSelectionToImage
-        {
+        public virtual bool LimitSelectionToImage {
             get { return _limitSelectionToImage; }
-            set
-            {
-                if (LimitSelectionToImage != value)
-                {
+            set {
+                if (LimitSelectionToImage != value) {
                     _limitSelectionToImage = value;
 
                     OnLimitSelectionToImageChanged(EventArgs.Empty);
@@ -1542,13 +1404,10 @@ namespace ImageGlass
         /// <value>The color of the pixel grid.</value>
         [Category("Appearance")]
         [DefaultValue(typeof(Color), "DimGray")]
-        public virtual Color PixelGridColor
-        {
+        public virtual Color PixelGridColor {
             get { return _pixelGridColor; }
-            set
-            {
-                if (PixelGridColor != value)
-                {
+            set {
+                if (PixelGridColor != value) {
                     _pixelGridColor = value;
 
                     OnPixelGridColorChanged(EventArgs.Empty);
@@ -1562,13 +1421,10 @@ namespace ImageGlass
         /// <value>The pixel grid threshold.</value>
         [Category("Behavior")]
         [DefaultValue(5)]
-        public virtual int PixelGridThreshold
-        {
+        public virtual int PixelGridThreshold {
             get { return _pixelGridThreshold; }
-            set
-            {
-                if (PixelGridThreshold != value)
-                {
+            set {
+                if (PixelGridThreshold != value) {
                     _pixelGridThreshold = value;
 
                     OnPixelGridThresholdChanged(EventArgs.Empty);
@@ -1582,13 +1438,10 @@ namespace ImageGlass
         /// <value><c>true</c> if the size of text is scaled according to the current zoom level; otherwise, <c>false</c>.</value>
         [Category("Appearance")]
         [DefaultValue(false)]
-        public virtual bool ScaleText
-        {
+        public virtual bool ScaleText {
             get { return _scaleText; }
-            set
-            {
-                if (ScaleText != value)
-                {
+            set {
+                if (ScaleText != value) {
                     _scaleText = value;
 
                     OnScaleTextChanged(EventArgs.Empty);
@@ -1604,13 +1457,10 @@ namespace ImageGlass
         /// </value>
         [Category("Appearance")]
         [DefaultValue(typeof(Color), "Highlight")]
-        public virtual Color SelectionColor
-        {
+        public virtual Color SelectionColor {
             get { return _selectionColor; }
-            set
-            {
-                if (SelectionColor != value)
-                {
+            set {
+                if (SelectionColor != value) {
                     _selectionColor = value;
 
                     OnSelectionColorChanged(EventArgs.Empty);
@@ -1626,13 +1476,10 @@ namespace ImageGlass
         /// </value>
         [Category("Behavior")]
         [DefaultValue(typeof(ImageBoxSelectionMode), "None")]
-        public virtual ImageBoxSelectionMode SelectionMode
-        {
+        public virtual ImageBoxSelectionMode SelectionMode {
             get { return _selectionMode; }
-            set
-            {
-                if (SelectionMode != value)
-                {
+            set {
+                if (SelectionMode != value) {
                     _selectionMode = value;
 
                     OnSelectionModeChanged(EventArgs.Empty);
@@ -1648,13 +1495,10 @@ namespace ImageGlass
         /// </value>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public virtual RectangleF SelectionRegion
-        {
+        public virtual RectangleF SelectionRegion {
             get { return _selectionRegion; }
-            set
-            {
-                if (SelectionRegion != value)
-                {
+            set {
+                if (SelectionRegion != value) {
                     _selectionRegion = value;
 
                     OnSelectionRegionChanged(EventArgs.Empty);
@@ -1670,13 +1514,10 @@ namespace ImageGlass
         /// </value>
         [Category("Behavior")]
         [DefaultValue(true)]
-        public virtual bool ShortcutsEnabled
-        {
+        public virtual bool ShortcutsEnabled {
             get { return _shortcutsEnabled; }
-            set
-            {
-                if (ShortcutsEnabled != value)
-                {
+            set {
+                if (ShortcutsEnabled != value) {
                     _shortcutsEnabled = value;
 
                     OnShortcutsEnabledChanged(EventArgs.Empty);
@@ -1690,13 +1531,10 @@ namespace ImageGlass
         /// <value><c>true</c> if a pixel grid is displayed when the control is zoomed; otherwise, <c>false</c>.</value>
         [Category("Appearance")]
         [DefaultValue(false)]
-        public virtual bool ShowPixelGrid
-        {
+        public virtual bool ShowPixelGrid {
             get { return _showPixelGrid; }
-            set
-            {
-                if (ShowPixelGrid != value)
-                {
+            set {
+                if (ShowPixelGrid != value) {
                     _showPixelGrid = value;
 
                     OnShowPixelGridChanged(EventArgs.Empty);
@@ -1710,13 +1548,10 @@ namespace ImageGlass
         /// <value>The size mode.</value>
         [Category("Behavior")]
         [DefaultValue(typeof(ImageBoxSizeMode), "Normal")]
-        public virtual ImageBoxSizeMode SizeMode
-        {
+        public virtual ImageBoxSizeMode SizeMode {
             get { return _sizeMode; }
-            set
-            {
-                if (SizeMode != value)
-                {
+            set {
+                if (SizeMode != value) {
                     _sizeMode = value;
 
                     OnSizeModeChanged(EventArgs.Empty);
@@ -1736,22 +1571,17 @@ namespace ImageGlass
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Obsolete("This property is deprecated and will be removed in a future version of the component. Implementors should use the SizeMode property instead.")]
-        public virtual bool SizeToFit
-        {
+        public virtual bool SizeToFit {
             get { return SizeMode == ImageBoxSizeMode.Fit; }
-            set
-            {
-                if ((SizeMode == ImageBoxSizeMode.Fit) != value)
-                {
+            set {
+                if ((SizeMode == ImageBoxSizeMode.Fit) != value) {
                     SizeMode = value ? ImageBoxSizeMode.Fit : ImageBoxSizeMode.Normal;
                     OnSizeToFitChanged(EventArgs.Empty);
 
-                    if (value)
-                    {
+                    if (value) {
                         AutoPan = false;
                     }
-                    else
-                    {
+                    else {
                         ActualSize();
                     }
                 }
@@ -1764,13 +1594,10 @@ namespace ImageGlass
         /// <value>One of the <see cref="ContentAlignment"/> values. The default is <c>MiddleCenter</c>.</value>
         [Category("Appearance")]
         [DefaultValue(typeof(ContentAlignment), "MiddleCenter")]
-        public virtual ContentAlignment TextAlign
-        {
+        public virtual ContentAlignment TextAlign {
             get { return _textAlign; }
-            set
-            {
-                if (TextAlign != value)
-                {
+            set {
+                if (TextAlign != value) {
                     _textAlign = value;
 
                     OnTextAlignChanged(EventArgs.Empty);
@@ -1784,13 +1611,10 @@ namespace ImageGlass
         /// <value>The color of the text background.</value>
         [Category("Appearance")]
         [DefaultValue(typeof(Color), "Transparent")]
-        public virtual Color TextBackColor
-        {
+        public virtual Color TextBackColor {
             get { return _textBackColor; }
-            set
-            {
-                if (TextBackColor != value)
-                {
+            set {
+                if (TextBackColor != value) {
                     _textBackColor = value;
 
                     OnTextBackColorChanged(EventArgs.Empty);
@@ -1804,13 +1628,10 @@ namespace ImageGlass
         /// <value>The text display mode.</value>
         [Category("Appearance")]
         [DefaultValue(typeof(ImageBoxGridDisplayMode), "Client")]
-        public virtual ImageBoxGridDisplayMode TextDisplayMode
-        {
+        public virtual ImageBoxGridDisplayMode TextDisplayMode {
             get { return _textDisplayMode; }
-            set
-            {
-                if (TextDisplayMode != value)
-                {
+            set {
+                if (TextDisplayMode != value) {
                     _textDisplayMode = value;
 
                     OnTextDisplayModeChanged(EventArgs.Empty);
@@ -1823,13 +1644,10 @@ namespace ImageGlass
         /// </summary>
         [Category("Appearance")]
         [DefaultValue(typeof(Padding), "0, 0, 0, 0")]
-        public virtual Padding TextPadding
-        {
+        public virtual Padding TextPadding {
             get { return _textPadding; }
-            set
-            {
-                if (TextPadding != value)
-                {
+            set {
+                if (TextPadding != value) {
                     _textPadding = value;
 
                     OnTextPaddingChanged(EventArgs.Empty);
@@ -1848,13 +1666,10 @@ namespace ImageGlass
         /// </remarks>
         [Category("Behavior")]
         [DefaultValue(false)]
-        public virtual bool VirtualMode
-        {
+        public virtual bool VirtualMode {
             get { return _virtualMode; }
-            set
-            {
-                if (VirtualMode != value)
-                {
+            set {
+                if (VirtualMode != value) {
                     _virtualMode = value;
 
                     OnVirtualModeChanged(EventArgs.Empty);
@@ -1868,13 +1683,10 @@ namespace ImageGlass
         /// <value>The size of the virtual image.</value>
         [Category("Appearance")]
         [DefaultValue(typeof(Size), "0, 0")]
-        public virtual Size VirtualSize
-        {
+        public virtual Size VirtualSize {
             get { return _virtualSize; }
-            set
-            {
-                if (VirtualSize != value)
-                {
+            set {
+                if (VirtualSize != value) {
                     _virtualSize = value;
 
                     OnVirtualSizeChanged(EventArgs.Empty);
@@ -1889,8 +1701,7 @@ namespace ImageGlass
         /// <value>The zoom.</value>
         [DefaultValue(100)]
         [Category("Appearance")]
-        public virtual double Zoom
-        {
+        public virtual double Zoom {
             get { return _zoom; }
             set { SetZoom(value, value > Zoom ? ImageBoxZoomActions.ZoomIn : ImageBoxZoomActions.ZoomOut, ImageBoxActionSources.Unknown); }
         }
@@ -1902,8 +1713,7 @@ namespace ImageGlass
         /// <value>The zoom factor.</value>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public virtual double ZoomFactor
-        {
+        public virtual double ZoomFactor {
             get { return (double)Zoom / 100; }
         }
 
@@ -1913,13 +1723,10 @@ namespace ImageGlass
         /// <value>The zoom levels.</value>
         [Browsable(false) /*Category("Behavior"), DefaultValue(typeof(ZoomLevelCollection), "7, 10, 15, 20, 25, 30, 50, 70, 100, 150, 200, 300, 400, 500, 600, 700, 800, 1200, 1600, 2000, 2500, 3000, 3500")*/]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public virtual ImageBoxZoomLevelCollection ZoomLevels
-        {
+        public virtual ImageBoxZoomLevelCollection ZoomLevels {
             get { return _zoomLevels; }
-            set
-            {
-                if (ZoomLevels != value)
-                {
+            set {
+                if (ZoomLevels != value) {
                     _zoomLevels = value;
 
                     OnZoomLevelsChanged(EventArgs.Empty);
@@ -1937,8 +1744,7 @@ namespace ImageGlass
         /// <value>
         ///   <c>true</c> if painting of the control is allowed; otherwise, <c>false</c>.
         /// </value>
-        protected virtual bool AllowPainting
-        {
+        protected virtual bool AllowPainting {
             get { return _updateCount == 0; }
         }
 
@@ -1952,8 +1758,7 @@ namespace ImageGlass
         ///   Gets the height of the scaled image.
         /// </summary>
         /// <value>The height of the scaled image.</value>
-        protected virtual int ScaledImageHeight
-        {
+        protected virtual int ScaledImageHeight {
             get { return Scale(ViewSize.Height); }
         }
 
@@ -1961,8 +1766,7 @@ namespace ImageGlass
         ///   Gets the width of the scaled image.
         /// </summary>
         /// <value>The width of the scaled image.</value>
-        protected virtual int ScaledImageWidth
-        {
+        protected virtual int ScaledImageWidth {
             get { return Scale(ViewSize.Width); }
         }
 
@@ -1971,8 +1775,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="value">The value to scale.</param>
         /// <returns>The specified value scaled by the current zoom factor.</returns>
-        protected int Scale(int value)
-        {
+        protected int Scale(int value) {
             return Convert.ToInt32(value * ZoomFactor);
         }
 
@@ -1980,8 +1783,7 @@ namespace ImageGlass
         /// Gets the size of the view.
         /// </summary>
         /// <value>The size of the view.</value>
-        protected virtual Size ViewSize
-        {
+        protected virtual Size ViewSize {
             get { return _viewSize; }
         }
 
@@ -2000,24 +1802,21 @@ namespace ImageGlass
         /// <summary>
         ///   Resets the zoom to 100%.
         /// </summary>
-        public virtual void ActualSize()
-        {
+        public virtual void ActualSize() {
             PerformActualSize(ImageBoxActionSources.Unknown);
         }
 
         /// <summary>
         ///   Disables any redrawing of the image box
         /// </summary>
-        public virtual void BeginUpdate()
-        {
+        public virtual void BeginUpdate() {
             _updateCount++;
         }
 
         /// <summary>
         /// Stop animating 
         /// </summary>
-        public void StopAnimating()
-        {
+        public void StopAnimating() {
             if (!IsAnimating)
                 return;
             Animator.StopAnimate(Image, OnFrameChangedHandler);
@@ -2027,13 +1826,11 @@ namespace ImageGlass
         /// <summary>
         /// Start animating
         /// </summary>
-        public void StartAnimating()
-        {
+        public void StartAnimating() {
             if (IsAnimating || !CanAnimate)
                 return;
 
-            try
-            {
+            try {
                 Animator.Animate(Image, OnFrameChangedHandler);
                 IsAnimating = true;
             }
@@ -2044,24 +1841,21 @@ namespace ImageGlass
         ///   Centers the given point in the image in the center of the control
         /// </summary>
         /// <param name="imageLocation">The point of the image to attempt to center.</param>
-        public virtual void CenterAt(Point imageLocation)
-        {
+        public virtual void CenterAt(Point imageLocation) {
             ScrollTo(imageLocation, RelativeCenterPoint);
         }
 
         /// <summary>
         /// Returns the point in the center of the control based on the current zoom level
         /// </summary>
-        private Point RelativeCenterPoint
-        { get { return new Point((ScaledImageWidth - ClientSize.Width) / 2, (ScaledImageHeight - ClientSize.Height) / 2); } }
+        private Point RelativeCenterPoint { get { return new Point((ScaledImageWidth - ClientSize.Width) / 2, (ScaledImageHeight - ClientSize.Height) / 2); } }
 
         /// <summary>
         ///   Centers the given point in the image in the center of the control
         /// </summary>
         /// <param name="x">The X co-ordinate of the point to center.</param>
         /// <param name="y">The Y co-ordinate of the point to center.</param>
-        public void CenterAt(int x, int y)
-        {
+        public void CenterAt(int x, int y) {
             CenterAt(new Point(x, y));
         }
 
@@ -2070,31 +1864,26 @@ namespace ImageGlass
         /// </summary>
         /// <param name="x">The X co-ordinate of the point to center.</param>
         /// <param name="y">The Y co-ordinate of the point to center.</param>
-        public void CenterAt(float x, float y)
-        {
+        public void CenterAt(float x, float y) {
             CenterAt(new Point((int)x, (int)y));
         }
 
         /// <summary>
         /// Resets the viewport to show the center of the image.
         /// </summary>
-        public virtual void CenterToImage()
-        {
+        public virtual void CenterToImage() {
             AutoScrollPosition = RelativeCenterPoint;
         }
 
         /// <summary>
         ///   Enables the redrawing of the image box
         /// </summary>
-        public virtual void EndUpdate()
-        {
-            if (_updateCount > 0)
-            {
+        public virtual void EndUpdate() {
+            if (_updateCount > 0) {
                 _updateCount--;
             }
 
-            if (AllowPainting)
-            {
+            if (AllowPainting) {
                 Invalidate();
             }
         }
@@ -2106,8 +1895,7 @@ namespace ImageGlass
         /// <returns>
         ///   A <see cref="T:System.Drawing.Rectangle" /> structure remapped to fit the image boundaries
         /// </returns>
-        public Rectangle FitRectangle(Rectangle rectangle)
-        {
+        public Rectangle FitRectangle(Rectangle rectangle) {
             int x;
             int y;
             int w;
@@ -2118,23 +1906,19 @@ namespace ImageGlass
             w = rectangle.Width;
             h = rectangle.Height;
 
-            if (x < 0)
-            {
+            if (x < 0) {
                 x = 0;
             }
 
-            if (y < 0)
-            {
+            if (y < 0) {
                 y = 0;
             }
 
-            if (x + w > ViewSize.Width)
-            {
+            if (x + w > ViewSize.Width) {
                 w = ViewSize.Width - x;
             }
 
-            if (y + h > ViewSize.Height)
-            {
+            if (y + h > ViewSize.Height) {
                 h = ViewSize.Height - y;
             }
 
@@ -2148,8 +1932,7 @@ namespace ImageGlass
         /// <returns>
         ///   A <see cref="T:System.Drawing.RectangleF" /> structure remapped to fit the image boundaries
         /// </returns>
-        public RectangleF FitRectangle(RectangleF rectangle)
-        {
+        public RectangleF FitRectangle(RectangleF rectangle) {
             float x;
             float y;
             float w;
@@ -2160,25 +1943,21 @@ namespace ImageGlass
             w = rectangle.Width;
             h = rectangle.Height;
 
-            if (x < 0)
-            {
+            if (x < 0) {
                 w -= -x;
                 x = 0;
             }
 
-            if (y < 0)
-            {
+            if (y < 0) {
                 h -= -y;
                 y = 0;
             }
 
-            if (x + w > ViewSize.Width)
-            {
+            if (x + w > ViewSize.Width) {
                 w = ViewSize.Width - x;
             }
 
-            if (y + h > ViewSize.Height)
-            {
+            if (y + h > ViewSize.Height) {
                 h = ViewSize.Height - y;
             }
 
@@ -2189,12 +1968,10 @@ namespace ImageGlass
         ///   Gets the image view port.
         /// </summary>
         /// <returns></returns>
-        public virtual Rectangle GetImageViewPort()
-        {
+        public virtual Rectangle GetImageViewPort() {
             Rectangle viewPort;
 
-            if (!ViewSize.IsEmpty)
-            {
+            if (!ViewSize.IsEmpty) {
                 Rectangle innerRectangle;
                 Point offset;
                 int width;
@@ -2212,10 +1989,8 @@ namespace ImageGlass
                     innerRectangle.Inflate(-GetImageBorderOffset(), -GetImageBorderOffset());
                 }
 
-                if (SizeMode != ImageBoxSizeMode.Stretch)
-                {
-                    if (AutoCenter)
-                    {
+                if (SizeMode != ImageBoxSizeMode.Stretch) {
+                    if (AutoCenter) {
                         int x;
                         int y;
 
@@ -2224,16 +1999,14 @@ namespace ImageGlass
 
                         offset = new Point(x, y);
                     }
-                    else
-                    {
+                    else {
                         offset = Point.Empty;
                     }
 
                     width = Math.Min(ScaledImageWidth - Math.Abs(AutoScrollPosition.X), innerRectangle.Width);
                     height = Math.Min(ScaledImageHeight - Math.Abs(AutoScrollPosition.Y), innerRectangle.Height);
                 }
-                else
-                {
+                else {
                     offset = Point.Empty;
                     width = innerRectangle.Width;
                     height = innerRectangle.Height;
@@ -2241,8 +2014,7 @@ namespace ImageGlass
 
                 viewPort = new Rectangle(offset.X + innerRectangle.Left, offset.Y + innerRectangle.Top, width, height);
             }
-            else
-            {
+            else {
                 viewPort = Rectangle.Empty;
             }
 
@@ -2253,8 +2025,7 @@ namespace ImageGlass
         ///   Gets the inside view port, excluding any padding.
         /// </summary>
         /// <returns></returns>
-        public Rectangle GetInsideViewPort()
-        {
+        public Rectangle GetInsideViewPort() {
             return GetInsideViewPort(false);
         }
 
@@ -2265,8 +2036,7 @@ namespace ImageGlass
         ///   if set to <c>true</c> [include padding].
         /// </param>
         /// <returns></returns>
-        public virtual Rectangle GetInsideViewPort(bool includePadding)
-        {
+        public virtual Rectangle GetInsideViewPort(bool includePadding) {
             int left;
             int top;
             int width;
@@ -2279,18 +2049,15 @@ namespace ImageGlass
             width = clientSize.Width;
             height = clientSize.Height;
 
-            if (VerticalScroll.Visible)
-            {
+            if (VerticalScroll.Visible) {
                 width -= _vScrollBar.Width;
             }
 
-            if (HorizontalScroll.Visible)
-            {
+            if (HorizontalScroll.Visible) {
                 height -= _hScrollBar.Height;
             }
 
-            if (includePadding)
-            {
+            if (includePadding) {
                 Padding padding;
 
                 padding = Padding;
@@ -2308,8 +2075,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="source">The source <see cref="Point"/> to offset.</param>
         /// <returns>A <see cref="Point"/> which has been repositioned to match the current zoom level and image offset</returns>
-        public virtual Point GetOffsetPoint(Point source)
-        {
+        public virtual Point GetOffsetPoint(Point source) {
             PointF offset;
 
             offset = GetOffsetPoint(new PointF(source.X, source.Y));
@@ -2323,8 +2089,7 @@ namespace ImageGlass
         /// <param name="x">The source X co-ordinate.</param>
         /// <param name="y">The source Y co-ordinate.</param>
         /// <returns>A <see cref="Point"/> which has been repositioned to match the current zoom level and image offset</returns>
-        public Point GetOffsetPoint(int x, int y)
-        {
+        public Point GetOffsetPoint(int x, int y) {
             return GetOffsetPoint(new Point(x, y));
         }
 
@@ -2334,8 +2099,7 @@ namespace ImageGlass
         /// <param name="x">The source X co-ordinate.</param>
         /// <param name="y">The source Y co-ordinate.</param>
         /// <returns>A <see cref="Point"/> which has been repositioned to match the current zoom level and image offset</returns>
-        public PointF GetOffsetPoint(float x, float y)
-        {
+        public PointF GetOffsetPoint(float x, float y) {
             return GetOffsetPoint(new PointF(x, y));
         }
 
@@ -2344,8 +2108,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="source">The source <see cref="PointF"/> to offset.</param>
         /// <returns>A <see cref="PointF"/> which has been repositioned to match the current zoom level and image offset</returns>
-        public virtual PointF GetOffsetPoint(PointF source)
-        {
+        public virtual PointF GetOffsetPoint(PointF source) {
             Rectangle viewport;
             PointF scaled;
             int offsetX;
@@ -2364,8 +2127,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="source">The source <see cref="RectangleF"/> to offset.</param>
         /// <returns>A <see cref="RectangleF"/> which has been resized and repositioned to match the current zoom level and image offset</returns>
-        public virtual RectangleF GetOffsetRectangle(RectangleF source)
-        {
+        public virtual RectangleF GetOffsetRectangle(RectangleF source) {
             RectangleF viewport;
             RectangleF scaled;
             float offsetX;
@@ -2387,8 +2149,7 @@ namespace ImageGlass
         /// <param name="width">The width of the rectangle.</param>
         /// <param name="height">The height of the rectangle.</param>
         /// <returns>A <see cref="Rectangle"/> which has been resized and repositioned to match the current zoom level and image offset</returns>
-        public Rectangle GetOffsetRectangle(int x, int y, int width, int height)
-        {
+        public Rectangle GetOffsetRectangle(int x, int y, int width, int height) {
             return GetOffsetRectangle(new Rectangle(x, y, width, height));
         }
 
@@ -2400,8 +2161,7 @@ namespace ImageGlass
         /// <param name="width">The width of the rectangle.</param>
         /// <param name="height">The height of the rectangle.</param>
         /// <returns>A <see cref="RectangleF"/> which has been resized and repositioned to match the current zoom level and image offset</returns>
-        public RectangleF GetOffsetRectangle(float x, float y, float width, float height)
-        {
+        public RectangleF GetOffsetRectangle(float x, float y, float width, float height) {
             return GetOffsetRectangle(new RectangleF(x, y, width, height));
         }
 
@@ -2410,8 +2170,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="source">The source <see cref="Rectangle"/> to offset.</param>
         /// <returns>A <see cref="Rectangle"/> which has been resized and repositioned to match the current zoom level and image offset</returns>
-        public virtual Rectangle GetOffsetRectangle(Rectangle source)
-        {
+        public virtual Rectangle GetOffsetRectangle(Rectangle source) {
             Rectangle viewport;
             Rectangle scaled;
             int offsetX;
@@ -2431,8 +2190,7 @@ namespace ImageGlass
         /// <param name="x">The X co-ordinate of the point to scale.</param>
         /// <param name="y">The Y co-ordinate of the point to scale.</param>
         /// <returns>A <see cref="Point"/> which has been scaled to match the current zoom level</returns>
-        public Point GetScaledPoint(int x, int y)
-        {
+        public Point GetScaledPoint(int x, int y) {
             return GetScaledPoint(new Point(x, y));
         }
 
@@ -2442,8 +2200,7 @@ namespace ImageGlass
         /// <param name="x">The X co-ordinate of the point to scale.</param>
         /// <param name="y">The Y co-ordinate of the point to scale.</param>
         /// <returns>A <see cref="Point"/> which has been scaled to match the current zoom level</returns>
-        public PointF GetScaledPoint(float x, float y)
-        {
+        public PointF GetScaledPoint(float x, float y) {
             return GetScaledPoint(new PointF(x, y));
         }
 
@@ -2452,8 +2209,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="source">The source <see cref="Point"/> to scale.</param>
         /// <returns>A <see cref="Point"/> which has been scaled to match the current zoom level</returns>
-        public virtual Point GetScaledPoint(Point source)
-        {
+        public virtual Point GetScaledPoint(Point source) {
             return new Point((int)(source.X * ZoomFactor), (int)(source.Y * ZoomFactor));
         }
 
@@ -2462,8 +2218,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="source">The source <see cref="PointF"/> to scale.</param>
         /// <returns>A <see cref="PointF"/> which has been scaled to match the current zoom level</returns>
-        public virtual PointF GetScaledPoint(PointF source)
-        {
+        public virtual PointF GetScaledPoint(PointF source) {
             return new PointF((float)(source.X * ZoomFactor), (float)(source.Y * ZoomFactor));
         }
 
@@ -2475,8 +2230,7 @@ namespace ImageGlass
         /// <param name="width">The width of the rectangle.</param>
         /// <param name="height">The height of the rectangle.</param>
         /// <returns>A <see cref="Rectangle"/> which has been scaled to match the current zoom level</returns>
-        public Rectangle GetScaledRectangle(int x, int y, int width, int height)
-        {
+        public Rectangle GetScaledRectangle(int x, int y, int width, int height) {
             return GetScaledRectangle(new Rectangle(x, y, width, height));
         }
 
@@ -2488,8 +2242,7 @@ namespace ImageGlass
         /// <param name="width">The width of the rectangle.</param>
         /// <param name="height">The height of the rectangle.</param>
         /// <returns>A <see cref="RectangleF"/> which has been scaled to match the current zoom level</returns>
-        public RectangleF GetScaledRectangle(float x, float y, float width, float height)
-        {
+        public RectangleF GetScaledRectangle(float x, float y, float width, float height) {
             return GetScaledRectangle(new RectangleF(x, y, width, height));
         }
 
@@ -2499,8 +2252,7 @@ namespace ImageGlass
         /// <param name="location">The location of the source rectangle.</param>
         /// <param name="size">The size of the source rectangle.</param>
         /// <returns>A <see cref="Rectangle"/> which has been scaled to match the current zoom level</returns>
-        public Rectangle GetScaledRectangle(Point location, Size size)
-        {
+        public Rectangle GetScaledRectangle(Point location, Size size) {
             return GetScaledRectangle(new Rectangle(location, size));
         }
 
@@ -2510,8 +2262,7 @@ namespace ImageGlass
         /// <param name="location">The location of the source rectangle.</param>
         /// <param name="size">The size of the source rectangle.</param>
         /// <returns>A <see cref="Rectangle"/> which has been scaled to match the current zoom level</returns>
-        public RectangleF GetScaledRectangle(PointF location, SizeF size)
-        {
+        public RectangleF GetScaledRectangle(PointF location, SizeF size) {
             return GetScaledRectangle(new RectangleF(location, size));
         }
 
@@ -2520,8 +2271,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="source">The source <see cref="Rectangle"/> to scale.</param>
         /// <returns>A <see cref="Rectangle"/> which has been scaled to match the current zoom level</returns>
-        public virtual Rectangle GetScaledRectangle(Rectangle source)
-        {
+        public virtual Rectangle GetScaledRectangle(Rectangle source) {
             return new Rectangle((int)(source.Left * ZoomFactor), (int)(source.Top * ZoomFactor), (int)(source.Width * ZoomFactor), (int)(source.Height * ZoomFactor));
         }
 
@@ -2530,8 +2280,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="source">The source <see cref="RectangleF"/> to scale.</param>
         /// <returns>A <see cref="RectangleF"/> which has been scaled to match the current zoom level</returns>
-        public virtual RectangleF GetScaledRectangle(RectangleF source)
-        {
+        public virtual RectangleF GetScaledRectangle(RectangleF source) {
             return new RectangleF((float)(source.Left * ZoomFactor), (float)(source.Top * ZoomFactor), (float)(source.Width * ZoomFactor), (float)(source.Height * ZoomFactor));
         }
 
@@ -2541,8 +2290,7 @@ namespace ImageGlass
         /// <param name="width">The width of the size to scale.</param>
         /// <param name="height">The height of the size to scale.</param>
         /// <returns>A <see cref="SizeF"/> which has been resized to match the current zoom level</returns>
-        public SizeF GetScaledSize(float width, float height)
-        {
+        public SizeF GetScaledSize(float width, float height) {
             return GetScaledSize(new SizeF(width, height));
         }
 
@@ -2552,8 +2300,7 @@ namespace ImageGlass
         /// <param name="width">The width of the size to scale.</param>
         /// <param name="height">The height of the size to scale.</param>
         /// <returns>A <see cref="Size"/> which has been resized to match the current zoom level</returns>
-        public Size GetScaledSize(int width, int height)
-        {
+        public Size GetScaledSize(int width, int height) {
             return GetScaledSize(new Size(width, height));
         }
 
@@ -2562,8 +2309,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="source">The source <see cref="SizeF"/> to scale.</param>
         /// <returns>A <see cref="SizeF"/> which has been resized to match the current zoom level</returns>
-        public virtual SizeF GetScaledSize(SizeF source)
-        {
+        public virtual SizeF GetScaledSize(SizeF source) {
             return new SizeF((float)(source.Width * ZoomFactor), (float)(source.Height * ZoomFactor));
         }
 
@@ -2572,8 +2318,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="source">The source <see cref="Size"/> to scale.</param>
         /// <returns>A <see cref="Size"/> which has been resized to match the current zoom level</returns>
-        public virtual Size GetScaledSize(Size source)
-        {
+        public virtual Size GetScaledSize(Size source) {
             return new Size((int)(source.Width * ZoomFactor), (int)(source.Height * ZoomFactor));
         }
 
@@ -2582,24 +2327,20 @@ namespace ImageGlass
         /// </summary>
         /// <returns>An image containing the selection contents if a selection if present, otherwise null</returns>
         /// <remarks>The caller is responsible for disposing of the returned image</remarks>
-        public Image GetSelectedImage()
-        {
+        public Image GetSelectedImage() {
             Image result;
 
             result = null;
 
-            if (!SelectionRegion.IsEmpty)
-            {
+            if (!SelectionRegion.IsEmpty) {
                 Rectangle rect;
 
                 rect = FitRectangle(new Rectangle((int)SelectionRegion.X, (int)SelectionRegion.Y, (int)SelectionRegion.Width, (int)SelectionRegion.Height));
 
-                if (rect.Width > 0 && rect.Height > 0)
-                {
+                if (rect.Width > 0 && rect.Height > 0) {
                     result = new Bitmap(rect.Width, rect.Height);
 
-                    using (Graphics g = Graphics.FromImage(result))
-                    {
+                    using (Graphics g = Graphics.FromImage(result)) {
                         g.DrawImage(Image, new Rectangle(Point.Empty, rect.Size), rect, GraphicsUnit.Pixel);
                     }
                 }
@@ -2612,14 +2353,11 @@ namespace ImageGlass
         ///   Gets the source image region.
         /// </summary>
         /// <returns></returns>
-        public virtual RectangleF GetSourceImageRegion()
-        {
+        public virtual RectangleF GetSourceImageRegion() {
             RectangleF region;
 
-            if (!ViewSize.IsEmpty)
-            {
-                if (SizeMode != ImageBoxSizeMode.Stretch)
-                {
+            if (!ViewSize.IsEmpty) {
+                if (SizeMode != ImageBoxSizeMode.Stretch) {
                     float sourceLeft;
                     float sourceTop;
                     float sourceWidth;
@@ -2634,13 +2372,11 @@ namespace ImageGlass
 
                     region = new RectangleF(sourceLeft, sourceTop, sourceWidth, sourceHeight);
                 }
-                else
-                {
+                else {
                     region = new RectangleF(PointF.Empty, ViewSize);
                 }
             }
-            else
-            {
+            else {
                 region = RectangleF.Empty;
             }
 
@@ -2654,8 +2390,7 @@ namespace ImageGlass
         /// <returns>
         ///   <c>true</c> if the specified point is located within the image view port; otherwise, <c>false</c>.
         /// </returns>
-        public virtual bool IsPointInImage(Point point)
-        {
+        public virtual bool IsPointInImage(Point point) {
             return GetImageViewPort().Contains(point);
         }
 
@@ -2667,8 +2402,7 @@ namespace ImageGlass
         /// <returns>
         ///   <c>true</c> if the specified point is located within the image view port; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsPointInImage(int x, int y)
-        {
+        public bool IsPointInImage(int x, int y) {
             return IsPointInImage(new Point(x, y));
         }
 
@@ -2680,8 +2414,7 @@ namespace ImageGlass
         /// <returns>
         ///   <c>true</c> if the specified point is located within the image view port; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsPointInImage(float x, float y)
-        {
+        public bool IsPointInImage(float x, float y) {
             return IsPointInImage(new Point((int)x, (int)y));
         }
 
@@ -2690,8 +2423,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="point">The source point.</param>
         /// <returns><c>Point.Empty</c> if the point could not be matched to the source image, otherwise the new translated point</returns>
-        public Point PointToImage(Point point)
-        {
+        public Point PointToImage(Point point) {
             return PointToImage(point, false);
         }
 
@@ -2701,8 +2433,7 @@ namespace ImageGlass
         /// <param name="x">The X co-ordinate of the point to convert.</param>
         /// <param name="y">The Y co-ordinate of the point to convert.</param>
         /// <returns><c>Point.Empty</c> if the point could not be matched to the source image, otherwise the new translated point</returns>
-        public Point PointToImage(float x, float y)
-        {
+        public Point PointToImage(float x, float y) {
             return PointToImage(x, y, false);
         }
 
@@ -2715,8 +2446,7 @@ namespace ImageGlass
         ///   if set to <c>true</c> and the point is outside the bounds of the source image, it will be mapped to the nearest edge.
         /// </param>
         /// <returns><c>Point.Empty</c> if the point could not be matched to the source image, otherwise the new translated point</returns>
-        public Point PointToImage(float x, float y, bool fitToBounds)
-        {
+        public Point PointToImage(float x, float y, bool fitToBounds) {
             return PointToImage(new Point((int)x, (int)y), fitToBounds);
         }
 
@@ -2726,8 +2456,7 @@ namespace ImageGlass
         /// <param name="x">The X co-ordinate of the point to convert.</param>
         /// <param name="y">The Y co-ordinate of the point to convert.</param>
         /// <returns><c>Point.Empty</c> if the point could not be matched to the source image, otherwise the new translated point</returns>
-        public Point PointToImage(int x, int y)
-        {
+        public Point PointToImage(int x, int y) {
             return PointToImage(x, y, false);
         }
 
@@ -2740,8 +2469,7 @@ namespace ImageGlass
         ///   if set to <c>true</c> and the point is outside the bounds of the source image, it will be mapped to the nearest edge.
         /// </param>
         /// <returns><c>Point.Empty</c> if the point could not be matched to the source image, otherwise the new translated point</returns>
-        public Point PointToImage(int x, int y, bool fitToBounds)
-        {
+        public Point PointToImage(int x, int y, bool fitToBounds) {
             return PointToImage(new Point(x, y), fitToBounds);
         }
 
@@ -2753,51 +2481,42 @@ namespace ImageGlass
         ///   if set to <c>true</c> and the point is outside the bounds of the source image, it will be mapped to the nearest edge.
         /// </param>
         /// <returns><c>Point.Empty</c> if the point could not be matched to the source image, otherwise the new translated point</returns>
-        public virtual Point PointToImage(Point point, bool fitToBounds)
-        {
+        public virtual Point PointToImage(Point point, bool fitToBounds) {
             Rectangle viewport;
             int x;
             int y;
 
             viewport = GetImageViewPort();
 
-            if (!fitToBounds || viewport.Contains(point))
-            {
-                if (AutoScrollPosition != Point.Empty)
-                {
+            if (!fitToBounds || viewport.Contains(point)) {
+                if (AutoScrollPosition != Point.Empty) {
                     point = new Point(point.X - AutoScrollPosition.X, point.Y - AutoScrollPosition.Y);
                 }
 
                 x = (int)((point.X - viewport.X) / ZoomFactor);
                 y = (int)((point.Y - viewport.Y) / ZoomFactor);
 
-                if (fitToBounds)
-                {
+                if (fitToBounds) {
                     Size viewSize;
 
                     viewSize = ViewSize;
 
-                    if (x < 0)
-                    {
+                    if (x < 0) {
                         x = 0;
                     }
-                    else if (x > viewSize.Width)
-                    {
+                    else if (x > viewSize.Width) {
                         x = viewSize.Width;
                     }
 
-                    if (y < 0)
-                    {
+                    if (y < 0) {
                         y = 0;
                     }
-                    else if (y > viewSize.Height)
-                    {
+                    else if (y > viewSize.Height) {
                         y = viewSize.Height;
                     }
                 }
             }
-            else
-            {
+            else {
                 x = 0; // Return Point.Empty if we couldn't match
                 y = 0;
             }
@@ -2812,8 +2531,7 @@ namespace ImageGlass
         /// <param name="y">The Y co-ordinate of the point to scroll to.</param>
         /// <param name="relativeX">The X co-ordinate relative to the <c>x</c> parameter.</param>
         /// <param name="relativeY">The Y co-ordinate relative to the <c>y</c> parameter.</param>
-        public void ScrollTo(int x, int y, int relativeX, int relativeY)
-        {
+        public void ScrollTo(int x, int y, int relativeX, int relativeY) {
             ScrollTo(new Point(x, y), new Point(relativeX, relativeY));
         }
 
@@ -2824,8 +2542,7 @@ namespace ImageGlass
         /// <param name="y">The Y co-ordinate of the point to scroll to.</param>
         /// <param name="relativeX">The X co-ordinate relative to the <c>x</c> parameter.</param>
         /// <param name="relativeY">The Y co-ordinate relative to the <c>y</c> parameter.</param>
-        public void ScrollTo(float x, float y, float relativeX, float relativeY)
-        {
+        public void ScrollTo(float x, float y, float relativeX, float relativeY) {
             ScrollTo(new Point((int)x, (int)y), new Point((int)relativeX, (int)relativeY));
         }
 
@@ -2834,8 +2551,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="imageLocation">The point of the image to attempt to scroll to.</param>
         /// <param name="relativeDisplayPoint">The relative display point to offset scrolling by.</param>
-        public virtual void ScrollTo(Point imageLocation, Point relativeDisplayPoint)
-        {
+        public virtual void ScrollTo(Point imageLocation, Point relativeDisplayPoint) {
             int x;
             int y;
 
@@ -2849,24 +2565,21 @@ namespace ImageGlass
         ///   Creates a selection region which encompasses the entire image
         /// </summary>
         /// <exception cref="System.InvalidOperationException">Thrown if no image is currently set</exception>
-        public virtual void SelectAll()
-        {
+        public virtual void SelectAll() {
             SelectionRegion = new RectangleF(PointF.Empty, ViewSize);
         }
 
         /// <summary>
         ///   Clears any existing selection region
         /// </summary>
-        public virtual void SelectNone()
-        {
+        public virtual void SelectNone() {
             SelectionRegion = RectangleF.Empty;
         }
 
         /// <summary>
         ///   Zooms into the image
         /// </summary>
-        public virtual void ZoomIn()
-        {
+        public virtual void ZoomIn() {
             ZoomIn(true);
         }
 
@@ -2874,16 +2587,14 @@ namespace ImageGlass
         ///   Zooms into the image
         /// </summary>
         /// <param name="preservePosition"><c>true</c> if the current scrolling position should be preserved relative to the new zoom level, <c>false</c> to reset.</param>
-        public virtual void ZoomIn(bool preservePosition)
-        {
+        public virtual void ZoomIn(bool preservePosition) {
             PerformZoomIn(ImageBoxActionSources.Unknown, preservePosition);
         }
 
         /// <summary>
         ///   Zooms out of the image
         /// </summary>
-        public virtual void ZoomOut()
-        {
+        public virtual void ZoomOut() {
             ZoomOut(true);
         }
 
@@ -2891,41 +2602,34 @@ namespace ImageGlass
         ///   Zooms out of the image
         /// </summary>
         /// <param name="preservePosition"><c>true</c> if the current scrolling position should be preserved relative to the new zoom level, <c>false</c> to reset.</param>
-        public virtual void ZoomOut(bool preservePosition)
-        {
+        public virtual void ZoomOut(bool preservePosition) {
             PerformZoomOut(ImageBoxActionSources.Unknown, preservePosition);
         }
         /// <summary>
         ///   Zooms to the maximum size for displaying the entire image within the bounds of the control.
         /// </summary>
-        public virtual void ZoomToFit()
-        {
-            if (!ViewSize.IsEmpty)
-            {
+        public virtual void ZoomToFit() {
+            if (!ViewSize.IsEmpty) {
                 Rectangle innerRectangle;
                 double zoom;
                 double aspectRatio;
 
                 innerRectangle = GetInsideViewPort(true);
 
-                if (ViewSize.Width > ViewSize.Height)
-                {
+                if (ViewSize.Width > ViewSize.Height) {
                     aspectRatio = (double)innerRectangle.Width / ViewSize.Width;
                     zoom = aspectRatio * 100.0;
 
-                    if (innerRectangle.Height < ((ViewSize.Height * zoom) / 100.0))
-                    {
+                    if (innerRectangle.Height < ((ViewSize.Height * zoom) / 100.0)) {
                         aspectRatio = (double)innerRectangle.Height / ViewSize.Height;
                         zoom = aspectRatio * 100.0;
                     }
                 }
-                else
-                {
+                else {
                     aspectRatio = (double)innerRectangle.Height / ViewSize.Height;
                     zoom = aspectRatio * 100.0;
 
-                    if (innerRectangle.Width < ((ViewSize.Width * zoom) / 100.0))
-                    {
+                    if (innerRectangle.Width < ((ViewSize.Width * zoom) / 100.0)) {
                         aspectRatio = (double)innerRectangle.Width / ViewSize.Width;
                         zoom = aspectRatio * 100.0;
                     }
@@ -2938,40 +2642,32 @@ namespace ImageGlass
         /// <summary>
         /// [IG_CHANGE] Zooms to the maximum size for displaying the entire image within the bounds of the control. If image size is smaller than viewer size, keep its original size.
         /// </summary>
-        public virtual void ZoomAuto()
-        {
-            if (!ViewSize.IsEmpty)
-            {
+        public virtual void ZoomAuto() {
+            if (!ViewSize.IsEmpty) {
                 Rectangle innerRectangle;
                 double zoom;
                 double aspectRatio;
 
                 innerRectangle = GetInsideViewPort(true);
-                
-                if (ViewSize.Width <= innerRectangle.Width && ViewSize.Height <= innerRectangle.Height)
-                {
+
+                if (ViewSize.Width <= innerRectangle.Width && ViewSize.Height <= innerRectangle.Height) {
                     zoom = 100.0;
                 }
-                else
-                {
-                    if (ViewSize.Width > ViewSize.Height)
-                    {
+                else {
+                    if (ViewSize.Width > ViewSize.Height) {
                         aspectRatio = (double)innerRectangle.Width / ViewSize.Width;
                         zoom = aspectRatio * 100.0;
 
-                        if (innerRectangle.Height < ((ViewSize.Height * zoom) / 100.0))
-                        {
+                        if (innerRectangle.Height < ((ViewSize.Height * zoom) / 100.0)) {
                             aspectRatio = (double)innerRectangle.Height / ViewSize.Height;
                             zoom = aspectRatio * 100.0;
                         }
                     }
-                    else
-                    {
+                    else {
                         aspectRatio = (double)innerRectangle.Height / ViewSize.Height;
                         zoom = aspectRatio * 100.0;
 
-                        if (innerRectangle.Width < ((ViewSize.Width * zoom) / 100.0))
-                        {
+                        if (innerRectangle.Width < ((ViewSize.Width * zoom) / 100.0)) {
                             aspectRatio = (double)innerRectangle.Width / ViewSize.Width;
                             zoom = aspectRatio * 100.0;
                         }
@@ -2991,8 +2687,7 @@ namespace ImageGlass
         /// <param name="y">The Y co-ordinate of the selection region.</param>
         /// <param name="width">The width of the selection region.</param>
         /// <param name="height">The height of the selection region.</param>
-        public void ZoomToRegion(float x, float y, float width, float height)
-        {
+        public void ZoomToRegion(float x, float y, float width, float height) {
             ZoomToRegion(new RectangleF(x, y, width, height));
         }
 
@@ -3003,8 +2698,7 @@ namespace ImageGlass
         /// <param name="y">The Y co-ordinate of the selection region.</param>
         /// <param name="width">The width of the selection region.</param>
         /// <param name="height">The height of the selection region.</param>
-        public void ZoomToRegion(int x, int y, int width, int height)
-        {
+        public void ZoomToRegion(int x, int y, int width, int height) {
             ZoomToRegion(new RectangleF(x, y, width, height));
         }
 
@@ -3012,8 +2706,7 @@ namespace ImageGlass
         ///   Adjusts the view port to fit the given region
         /// </summary>
         /// <param name="rectangle">The rectangle to fit the view port to.</param>
-        public virtual void ZoomToRegion(RectangleF rectangle)
-        {
+        public virtual void ZoomToRegion(RectangleF rectangle) {
             double ratioX;
             double ratioY;
             double zoomFactor;
@@ -3037,14 +2730,11 @@ namespace ImageGlass
         /// <param name="min">The minimum value allowed.</param>
         /// <param name="max">The maximum value allowed.</param>
         /// <returns></returns>
-        private int Clamp(int value, int min, int max)
-        {
-            if (value < min)
-            {
+        private int Clamp(int value, int min, int max) {
+            if (value < min) {
                 value = min;
             }
-            else if (value > max)
-            {
+            else if (value > max) {
                 value = max;
             }
 
@@ -3058,16 +2748,12 @@ namespace ImageGlass
         /// <summary>
         ///   Adjusts the layout.
         /// </summary>
-        protected virtual void AdjustLayout()
-        {
-            if (AllowPainting)
-            {
-                if (AutoSize)
-                {
+        protected virtual void AdjustLayout() {
+            if (AllowPainting) {
+                if (AutoSize) {
                     AdjustSize();
                 }
-                else if (SizeMode != ImageBoxSizeMode.Normal)
-                {
+                else if (SizeMode != ImageBoxSizeMode.Normal) {
                     ZoomToFit();
                 }
 
@@ -3084,8 +2770,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
-        protected virtual void AdjustScroll(int x, int y)
-        {
+        protected virtual void AdjustScroll(int x, int y) {
             Point scrollPosition;
 
             scrollPosition = new Point(HorizontalScroll.Value + x, VerticalScroll.Value + y);
@@ -3096,10 +2781,8 @@ namespace ImageGlass
         /// <summary>
         ///   Adjusts the size.
         /// </summary>
-        protected virtual void AdjustSize()
-        {
-            if (AutoSize && Dock == DockStyle.None)
-            {
+        protected virtual void AdjustSize() {
+            if (AutoSize && Dock == DockStyle.None) {
                 base.Size = base.PreferredSize;
             }
         }
@@ -3107,8 +2790,7 @@ namespace ImageGlass
         /// <summary>
         ///   Adjusts the view port.
         /// </summary>
-        protected virtual void AdjustViewPort()
-        {
+        protected virtual void AdjustViewPort() {
             Size viewSize;
             Size clientSize;
             int cw;
@@ -3119,8 +2801,7 @@ namespace ImageGlass
             viewSize = ViewSize;
             clientSize = ClientSize;
 
-            if (!viewSize.IsEmpty)
-            {
+            if (!viewSize.IsEmpty) {
                 Size size;
 
                 size = GetInsideViewPort(true).Size;
@@ -3128,8 +2809,7 @@ namespace ImageGlass
                 hScroll = ScaledImageWidth > size.Width;
                 vScroll = ScaledImageHeight > size.Height;
             }
-            else
-            {
+            else {
                 hScroll = false;
                 vScroll = false;
             }
@@ -3156,13 +2836,11 @@ namespace ImageGlass
         /// <param name="firstColor">The first color.</param>
         /// <param name="secondColor">Color of the second.</param>
         /// <returns></returns>
-        protected virtual Bitmap CreateGridTileImage(int cellSize, Color firstColor, Color secondColor)
-        {
+        protected virtual Bitmap CreateGridTileImage(int cellSize, Color firstColor, Color secondColor) {
             float scale;
 
             // rescale the cell size
-            switch (GridScale)
-            {
+            switch (GridScale) {
                 case ImageBoxGridScale.Medium:
                     scale = 1.5F;
                     break;
@@ -3189,21 +2867,17 @@ namespace ImageGlass
         /// Draws the background of the control.
         /// </summary>
         /// <param name="e">The <see cref="PaintEventArgs"/> instance containing the event data.</param>
-        protected virtual void DrawBackground(PaintEventArgs e)
-        {
+        protected virtual void DrawBackground(PaintEventArgs e) {
             Rectangle innerRectangle;
 
             innerRectangle = GetInsideViewPort();
 
-            using (SolidBrush brush = new SolidBrush(BackColor))
-            {
+            using (SolidBrush brush = new SolidBrush(BackColor)) {
                 e.Graphics.FillRectangle(brush, innerRectangle);
             }
 
-            if (_texture != null && GridDisplayMode != ImageBoxGridDisplayMode.None)
-            {
-                switch (GridDisplayMode)
-                {
+            if (_texture != null && GridDisplayMode != ImageBoxGridDisplayMode.None) {
+                switch (GridDisplayMode) {
                     case ImageBoxGridDisplayMode.Image:
                         Rectangle fillRectangle;
 
@@ -3223,16 +2897,14 @@ namespace ImageGlass
         /// </summary>
         /// <param name="g">The graphics. </param>
         /// <param name="viewPort"> The view port. </param>
-        protected virtual void DrawDropShadow(Graphics g, Rectangle viewPort)
-        {
+        protected virtual void DrawDropShadow(Graphics g, Rectangle viewPort) {
             Rectangle rightEdge;
             Rectangle bottomEdge;
 
             rightEdge = new Rectangle(viewPort.Right + 1, viewPort.Top + DropShadowSize, DropShadowSize, viewPort.Height);
             bottomEdge = new Rectangle(viewPort.Left + DropShadowSize, viewPort.Bottom + 1, viewPort.Width + 1, DropShadowSize);
 
-            using (Brush brush = new SolidBrush(ImageBorderColor))
-            {
+            using (Brush brush = new SolidBrush(ImageBorderColor)) {
                 g.FillRectangles(brush, new[]
                                 {
                                   rightEdge, bottomEdge
@@ -3245,14 +2917,12 @@ namespace ImageGlass
         /// </summary>
         /// <param name="g">The graphics.</param>
         /// <param name="viewPort">The view port.</param>
-        protected virtual void DrawGlowShadow(Graphics g, Rectangle viewPort)
-        {
+        protected virtual void DrawGlowShadow(Graphics g, Rectangle viewPort) {
             // Glow code adapted from http://www.codeproject.com/Articles/372743/gGlowBox-Create-a-glow-effect-around-a-focused-con
 
             g.SetClip(viewPort, CombineMode.Exclude); // make sure the inside glow doesn't appear
 
-            using (GraphicsPath path = new GraphicsPath())
-            {
+            using (GraphicsPath path = new GraphicsPath()) {
                 int glowSize;
                 int feather;
 
@@ -3260,17 +2930,14 @@ namespace ImageGlass
                 glowSize = DropShadowSize * 3;
                 feather = 50;
 
-                for (int i = 1; i <= glowSize; i += 2)
-                {
+                for (int i = 1; i <= glowSize; i += 2) {
                     int alpha;
 
                     alpha = feather - ((feather / glowSize) * i);
 
-                    using (Pen pen = new Pen(Color.FromArgb(alpha, ImageBorderColor), i)
-                                     {
-                                         LineJoin = LineJoin.Round
-                                     })
-                    {
+                    using (Pen pen = new Pen(Color.FromArgb(alpha, ImageBorderColor), i) {
+                        LineJoin = LineJoin.Round
+                    }) {
                         g.DrawPath(pen, path);
                     }
                 }
@@ -3281,8 +2948,7 @@ namespace ImageGlass
         ///   Draws the image.
         /// </summary>
         /// <param name="g">The g.</param>
-        protected virtual void DrawImage(Graphics g)
-        {
+        protected virtual void DrawImage(Graphics g) {
             InterpolationMode currentInterpolationMode;
             PixelOffsetMode currentPixelOffsetMode;
 
@@ -3295,32 +2961,26 @@ namespace ImageGlass
             // http://stackoverflow.com/questions/14070311/why-is-graphics-drawimage-cropping-part-of-my-image/14070372#14070372
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-            try
-            {
+            try {
                 // Animation. Thanks to teamalpha5441 for the contribution
-                if (IsAnimating && !DesignMode)
-                {
+                if (IsAnimating && !DesignMode) {
                     Animator.UpdateFrames(Image);
                 }
 
                 g.DrawImage(Image, GetImageViewPort(), GetSourceImageRegion(), GraphicsUnit.Pixel);
             }
-            catch (ArgumentException)
-            {
+            catch (ArgumentException) {
                 // ignore errors that occur due to the image being disposed
             }
-            catch (OutOfMemoryException)
-            {
+            catch (OutOfMemoryException) {
                 // also ignore errors that occur due to running out of memory
             }
-            catch (ExternalException)
-            {
+            catch (ExternalException) {
                 // stop the animation and reset to the first frame.
                 IsAnimating = false;
                 Animator.StopAnimate(Image, OnFrameChangedHandler);
             }
-            catch (InvalidOperationException)
-            {
+            catch (InvalidOperationException) {
                 // #issue #373: a race condition caused this exception: deleting the image from underneath us could
                 // cause a collision in HighResolutionGifAnimator. I've not been able to repro; hopefully this is
                 // the correct response.
@@ -3338,10 +2998,8 @@ namespace ImageGlass
         ///   Draws a border around the image.
         /// </summary>
         /// <param name="graphics"> The graphics. </param>
-        protected virtual void DrawImageBorder(Graphics graphics)
-        {
-            if (ImageBorderStyle != ImageBoxBorderStyle.None)
-            {
+        protected virtual void DrawImageBorder(Graphics graphics) {
+            if (ImageBorderStyle != ImageBoxBorderStyle.None) {
                 Rectangle viewPort;
 
                 graphics.SetClip(GetInsideViewPort()); // make sure the image border doesn't overwrite the control border
@@ -3349,13 +3007,11 @@ namespace ImageGlass
                 viewPort = GetImageViewPort();
                 viewPort = new Rectangle(viewPort.Left - 1, viewPort.Top - 1, viewPort.Width + 1, viewPort.Height + 1);
 
-                using (Pen borderPen = new Pen(ImageBorderColor))
-                {
+                using (Pen borderPen = new Pen(ImageBorderColor)) {
                     graphics.DrawRectangle(borderPen, viewPort);
                 }
 
-                switch (ImageBorderStyle)
-                {
+                switch (ImageBorderStyle) {
                     case ImageBoxBorderStyle.FixedSingleDropShadow:
                         DrawDropShadow(graphics, viewPort);
                         break;
@@ -3374,8 +3030,7 @@ namespace ImageGlass
         /// <param name="graphics">The device context in which to draw the text.</param>
         /// <param name="text">The text to draw.</param>
         /// <param name="bounds">The <see cref="Rectangle"/> that represents the bounds of the text.</param>
-        protected void DrawLabel(Graphics graphics, string text, Rectangle bounds)
-        {
+        protected void DrawLabel(Graphics graphics, string text, Rectangle bounds) {
             DrawLabel(graphics, text, Font, ForeColor, TextBackColor, TextAlign, bounds);
         }
 
@@ -3386,8 +3041,7 @@ namespace ImageGlass
         /// <param name="text">The text to draw.</param>
         /// <param name="font">The <see cref="Font"/> to apply to the drawn text.</param>
         /// <param name="bounds">The <see cref="Rectangle"/> that represents the bounds of the text.</param>
-        protected void DrawLabel(Graphics graphics, string text, Font font, Rectangle bounds)
-        {
+        protected void DrawLabel(Graphics graphics, string text, Font font, Rectangle bounds) {
             DrawLabel(graphics, text, font, ForeColor, TextBackColor, TextAlign, bounds);
         }
 
@@ -3399,8 +3053,7 @@ namespace ImageGlass
         /// <param name="font">The <see cref="Font"/> to apply to the drawn text.</param>
         /// <param name="foreColor">The <see cref="Color"/> to apply to the text.</param>
         /// <param name="bounds">The <see cref="Rectangle"/> that represents the bounds of the text.</param>
-        protected void DrawLabel(Graphics graphics, string text, Font font, Color foreColor, Rectangle bounds)
-        {
+        protected void DrawLabel(Graphics graphics, string text, Font font, Color foreColor, Rectangle bounds) {
             DrawLabel(graphics, text, font, foreColor, TextBackColor, TextAlign, bounds);
         }
 
@@ -3413,8 +3066,7 @@ namespace ImageGlass
         /// <param name="foreColor">The <see cref="Color"/> to apply to the text.</param>
         /// <param name="backColor">The <see cref="Color"/> to apply to the area represented by <c>bounds</c>.</param>
         /// <param name="bounds">The <see cref="Rectangle"/> that represents the bounds of the text.</param>
-        protected void DrawLabel(Graphics graphics, string text, Font font, Color foreColor, Color backColor, Rectangle bounds)
-        {
+        protected void DrawLabel(Graphics graphics, string text, Font font, Color foreColor, Color backColor, Rectangle bounds) {
             DrawLabel(graphics, text, font, foreColor, backColor, TextAlign, bounds);
         }
 
@@ -3428,8 +3080,7 @@ namespace ImageGlass
         /// <param name="backColor">The <see cref="Color"/> to apply to the area represented by <c>bounds</c>.</param>
         /// <param name="textAlign">The <see cref="ContentAlignment"/> to apply to the text.</param>
         /// <param name="bounds">The <see cref="Rectangle"/> that represents the bounds of the text.</param>
-        protected void DrawLabel(Graphics graphics, string text, Font font, Color foreColor, Color backColor, ContentAlignment textAlign, Rectangle bounds)
-        {
+        protected void DrawLabel(Graphics graphics, string text, Font font, Color foreColor, Color backColor, ContentAlignment textAlign, Rectangle bounds) {
             DrawLabel(graphics, text, font, foreColor, backColor, textAlign, bounds, ScaleText);
         }
 
@@ -3444,8 +3095,7 @@ namespace ImageGlass
         /// <param name="textAlign">The <see cref="ContentAlignment"/> to apply to the text.</param>
         /// <param name="bounds">The <see cref="Rectangle"/> that represents the bounds of the text.</param>
         /// <param name="scaleText">If set to <c>true</c> the font size is scaled according to the current zoom level.</param>
-        protected virtual void DrawLabel(Graphics graphics, string text, Font font, Color foreColor, Color backColor, ContentAlignment textAlign, Rectangle bounds, bool scaleText)
-        {
+        protected virtual void DrawLabel(Graphics graphics, string text, Font font, Color foreColor, Color backColor, ContentAlignment textAlign, Rectangle bounds, bool scaleText) {
             DrawLabel(graphics, text, font, foreColor, backColor, textAlign, bounds, scaleText, Padding.Empty);
         }
 
@@ -3461,19 +3111,16 @@ namespace ImageGlass
         /// <param name="bounds">The <see cref="Rectangle"/> that represents the bounds of the text.</param>
         /// <param name="scaleText">If set to <c>true</c> the font size is scaled according to the current zoom level.</param>
         /// <param name="padding">Padding to apply around the text</param>
-        protected virtual void DrawLabel(Graphics graphics, string text, Font font, Color foreColor, Color backColor, ContentAlignment textAlign, Rectangle bounds, bool scaleText, Padding padding)
-        {
+        protected virtual void DrawLabel(Graphics graphics, string text, Font font, Color foreColor, Color backColor, ContentAlignment textAlign, Rectangle bounds, bool scaleText, Padding padding) {
             TextFormatFlags flags;
 
-            if (scaleText)
-            {
+            if (scaleText) {
                 font = new Font(font.FontFamily, (float)(font.Size * ZoomFactor), font.Style);
             }
 
             flags = TextFormatFlags.NoPrefix | TextFormatFlags.WordEllipsis | TextFormatFlags.WordBreak | TextFormatFlags.NoPadding;
 
-            switch (textAlign)
-            {
+            switch (textAlign) {
                 case ContentAlignment.TopLeft:
                 case ContentAlignment.MiddleLeft:
                 case ContentAlignment.BottomLeft:
@@ -3489,8 +3136,7 @@ namespace ImageGlass
                     break;
             }
 
-            switch (textAlign)
-            {
+            switch (textAlign) {
                 case ContentAlignment.TopCenter:
                 case ContentAlignment.TopLeft:
                 case ContentAlignment.TopRight:
@@ -3506,8 +3152,7 @@ namespace ImageGlass
                     break;
             }
 
-            if (padding.Horizontal != 0 || padding.Vertical != 0)
-            {
+            if (padding.Horizontal != 0 || padding.Vertical != 0) {
                 Size size;
                 int x;
                 int y;
@@ -3518,8 +3163,7 @@ namespace ImageGlass
                 width = size.Width;
                 height = size.Height;
 
-                switch (textAlign)
-                {
+                switch (textAlign) {
                     case ContentAlignment.TopLeft:
                         x = bounds.Left + padding.Left;
                         y = bounds.Top + padding.Top;
@@ -3560,10 +3204,8 @@ namespace ImageGlass
                         throw new ArgumentOutOfRangeException("textAlign");
                 }
 
-                if (backColor != Color.Empty && backColor.A > 0)
-                {
-                    using (Brush brush = new SolidBrush(backColor))
-                    {
+                if (backColor != Color.Empty && backColor.A > 0) {
+                    using (Brush brush = new SolidBrush(backColor)) {
                         graphics.FillRectangle(brush, x - padding.Left, y - padding.Top, width + padding.Horizontal, height + padding.Vertical);
                     }
                 }
@@ -3575,8 +3217,7 @@ namespace ImageGlass
 
             TextRenderer.DrawText(graphics, text, font, bounds, foreColor, backColor, flags);
 
-            if (scaleText)
-            {
+            if (scaleText) {
                 font.Dispose();
             }
         }
@@ -3585,14 +3226,12 @@ namespace ImageGlass
         ///   Draws a pixel grid.
         /// </summary>
         /// <param name="g">The graphics to draw the grid to.</param>
-        protected virtual void DrawPixelGrid(Graphics g)
-        {
+        protected virtual void DrawPixelGrid(Graphics g) {
             float pixelSize;
 
             pixelSize = (float)ZoomFactor;
 
-            if (pixelSize > PixelGridThreshold)
-            {
+            if (pixelSize > PixelGridThreshold) {
                 Rectangle viewport;
                 float offsetX;
                 float offsetY;
@@ -3601,18 +3240,14 @@ namespace ImageGlass
                 offsetX = Math.Abs(AutoScrollPosition.X) % pixelSize;
                 offsetY = Math.Abs(AutoScrollPosition.Y) % pixelSize;
 
-                using (Pen pen = new Pen(PixelGridColor)
-                                 {
-                                     DashStyle = DashStyle.Dot
-                                 })
-                {
-                    for (float x = viewport.Left + pixelSize - offsetX; x < viewport.Right; x += pixelSize)
-                    {
+                using (Pen pen = new Pen(PixelGridColor) {
+                    DashStyle = DashStyle.Dot
+                }) {
+                    for (float x = viewport.Left + pixelSize - offsetX; x < viewport.Right; x += pixelSize) {
                         g.DrawLine(pen, x, viewport.Top, x, viewport.Bottom);
                     }
 
-                    for (float y = viewport.Top + pixelSize - offsetY; y < viewport.Bottom; y += pixelSize)
-                    {
+                    for (float y = viewport.Top + pixelSize - offsetY; y < viewport.Bottom; y += pixelSize) {
                         g.DrawLine(pen, viewport.Left, y, viewport.Right, y);
                     }
 
@@ -3628,8 +3263,7 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.Windows.Forms.PaintEventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void DrawSelection(PaintEventArgs e)
-        {
+        protected virtual void DrawSelection(PaintEventArgs e) {
             var drawableRegion = LimitSelectionToImage ? GetImageViewPort() : GetInsideViewPort(true);
             var selectionRec = GetOffsetRectangle(SelectionRegion);
 
@@ -3646,8 +3280,7 @@ namespace ImageGlass
             var brushColor = Color.FromArgb(alpha, SelectionColor);
 
             // draw dimmed background
-            using (Brush brush = new SolidBrush(brushColor))
-            {
+            using (Brush brush = new SolidBrush(brushColor)) {
                 e.Graphics.FillRectangle(brush, drawableRegion);
             }
             e.Graphics.ResetClip();
@@ -3658,23 +3291,20 @@ namespace ImageGlass
             e.Graphics.SetClip(drawableRegion);
 
             // draw border, ignore alpha value
-            using (var pen = new Pen(Color.FromArgb(255, SelectionColor)))
-            {
+            using (var pen = new Pen(Color.FromArgb(255, SelectionColor))) {
                 e.Graphics.DrawRectangle(pen, selectionRec.X, selectionRec.Y, selectionRec.Width - 1, selectionRec.Height - 1);
             }
 
             // draw grid, ignore alpha value
-            using (Pen pen = new Pen(Color.FromArgb(200, SelectionColor)))
-            {
+            using (Pen pen = new Pen(Color.FromArgb(200, SelectionColor))) {
                 var width3 = selectionRec.Width / 3;
                 var height3 = selectionRec.Height / 3;
 
-                for (int i = 1; i < 3; i++)
-                {
+                for (int i = 1; i < 3; i++) {
                     e.Graphics.DrawLine(pen,
-                        selectionRec.X + (i*width3),
+                        selectionRec.X + (i * width3),
                         selectionRec.Y,
-                        selectionRec.X + (i*width3),
+                        selectionRec.X + (i * width3),
                         selectionRec.Y + selectionRec.Height);
 
                     e.Graphics.DrawLine(pen,
@@ -3694,8 +3324,7 @@ namespace ImageGlass
         /// Draws the text.
         /// </summary>
         /// <param name="e">The <see cref="PaintEventArgs"/> instance containing the event data.</param>
-        protected virtual void DrawText(PaintEventArgs e)
-        {
+        protected virtual void DrawText(PaintEventArgs e) {
             Rectangle bounds;
 
             bounds = TextDisplayMode == ImageBoxGridDisplayMode.Client ? GetInsideViewPort() : GetImageViewPort();
@@ -3706,8 +3335,7 @@ namespace ImageGlass
         /// <summary>
         /// Completes an ongoing selection or drag operation.
         /// </summary>
-        protected virtual void EndDrag()
-        {
+        protected virtual void EndDrag() {
             IsSelecting = false;
             OnSelected(EventArgs.Empty);
         }
@@ -3716,12 +3344,10 @@ namespace ImageGlass
         ///   Gets an offset based on the current image border style.
         /// </summary>
         /// <returns></returns>
-        protected virtual int GetImageBorderOffset()
-        {
+        protected virtual int GetImageBorderOffset() {
             int offset;
 
-            switch (ImageBorderStyle)
-            {
+            switch (ImageBorderStyle) {
                 case ImageBoxBorderStyle.FixedSingle:
                     offset = 1;
                     break;
@@ -3741,22 +3367,18 @@ namespace ImageGlass
         /// Determines a suitable interpolation mode based in the value of the <see cref="InterpolationMode"/> and <see cref="Zoom"/> properties.
         /// </summary>
         /// <returns>A <see cref="InterpolationMode"/> for rendering the image.</returns>
-        protected virtual InterpolationMode GetInterpolationMode()
-        {
+        protected virtual InterpolationMode GetInterpolationMode() {
             InterpolationMode mode;
 
             mode = InterpolationMode;
 
-            if (mode == InterpolationMode.Default)
-            {
+            if (mode == InterpolationMode.Default) {
                 // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-                if (Zoom < 100)
-                {
+                if (Zoom < 100) {
                     // TODO: Check to see if we should cherry pick other modes depending on how much the image is actually zoomed
                     mode = InterpolationMode.HighQualityBicubic;
                 }
-                else
-                {
+                else {
                     mode = InterpolationMode.NearestNeighbor;
                 }
             }
@@ -3770,14 +3392,12 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnAllowClickZoomChanged(EventArgs e)
-        {
+        protected virtual void OnAllowClickZoomChanged(EventArgs e) {
             EventHandler handler;
 
             handler = AllowClickZoomChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -3788,16 +3408,14 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnAllowDoubleClickChanged(EventArgs e)
-        {
+        protected virtual void OnAllowDoubleClickChanged(EventArgs e) {
             EventHandler handler;
 
             SetStyle(ControlStyles.StandardDoubleClick, AllowDoubleClick);
 
             handler = AllowDoubleClickChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -3808,14 +3426,12 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnAllowZoomChanged(EventArgs e)
-        {
+        protected virtual void OnAllowZoomChanged(EventArgs e) {
             EventHandler handler;
 
             handler = AllowZoomChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -3826,16 +3442,14 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnAutoCenterChanged(EventArgs e)
-        {
+        protected virtual void OnAutoCenterChanged(EventArgs e) {
             EventHandler handler;
 
             Invalidate();
 
             handler = AutoCenterChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -3846,14 +3460,12 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnAutoPanChanged(EventArgs e)
-        {
+        protected virtual void OnAutoPanChanged(EventArgs e) {
             EventHandler handler;
 
             handler = AutoPanChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -3864,16 +3476,14 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnDropShadowSizeChanged(EventArgs e)
-        {
+        protected virtual void OnDropShadowSizeChanged(EventArgs e) {
             Invalidate();
 
             EventHandler handler;
 
             handler = DropShadowSizeChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -3884,16 +3494,14 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnGridCellSizeChanged(EventArgs e)
-        {
+        protected virtual void OnGridCellSizeChanged(EventArgs e) {
             EventHandler handler;
 
             InitializeGridTile();
 
             handler = GridCellSizeChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -3904,16 +3512,14 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnGridColorAlternateChanged(EventArgs e)
-        {
+        protected virtual void OnGridColorAlternateChanged(EventArgs e) {
             EventHandler handler;
 
             InitializeGridTile();
 
             handler = GridColorAlternateChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -3924,16 +3530,14 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnGridColorChanged(EventArgs e)
-        {
+        protected virtual void OnGridColorChanged(EventArgs e) {
             EventHandler handler;
 
             InitializeGridTile();
 
             handler = GridColorChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -3944,8 +3548,7 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnGridDisplayModeChanged(EventArgs e)
-        {
+        protected virtual void OnGridDisplayModeChanged(EventArgs e) {
             EventHandler handler;
 
             InitializeGridTile();
@@ -3953,8 +3556,7 @@ namespace ImageGlass
 
             handler = GridDisplayModeChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -3965,16 +3567,14 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnGridScaleChanged(EventArgs e)
-        {
+        protected virtual void OnGridScaleChanged(EventArgs e) {
             EventHandler handler;
 
             InitializeGridTile();
 
             handler = GridScaleChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -3985,16 +3585,14 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnImageBorderColorChanged(EventArgs e)
-        {
+        protected virtual void OnImageBorderColorChanged(EventArgs e) {
             EventHandler handler;
 
             Invalidate();
 
             handler = ImageBorderColorChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4005,20 +3603,18 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnImageBorderStyleChanged(EventArgs e)
-        {
+        protected virtual void OnImageBorderStyleChanged(EventArgs e) {
             EventHandler handler;
 
             Invalidate();
 
             handler = ImageBorderStyleChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
-        
+
 
         /// <summary>
         ///   Raises the <see cref="ImageChanged" /> event.
@@ -4026,15 +3622,13 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnImageChanged(EventArgs e)
-        {
+        protected virtual void OnImageChanged(EventArgs e) {
             EventHandler handler;
 
             DefineViewSize();
             IsAnimating = false;
 
-            if (Image != null)
-            {
+            if (Image != null) {
                 //try
                 //{
                 //    this.IsAnimating = Animator.CanAnimate(this.Image);
@@ -4055,8 +3649,7 @@ namespace ImageGlass
 
             handler = ImageChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4064,8 +3657,7 @@ namespace ImageGlass
         /// <summary>
         /// Defines the view sized based on the current image and if the control is operating in virtual mode or not
         /// </summary>
-        private void DefineViewSize()
-        {
+        private void DefineViewSize() {
             _viewSize = VirtualMode ? VirtualSize : GetImageSize();
 
             UpdateScrollbars();
@@ -4088,14 +3680,12 @@ namespace ImageGlass
         /// <summary>
         /// Updates all properties of the embedded scroll bar controls.
         /// </summary>
-        private void UpdateScrollbars()
-        {
+        private void UpdateScrollbars() {
             Size viewSize;
 
             viewSize = GetInsideViewPort(true).Size;
 
-            if (viewSize.Width > 0 && viewSize.Height > 0)
-            {
+            if (viewSize.Width > 0 && viewSize.Height > 0) {
                 ImageBoxScrollProperties horizontal;
                 ImageBoxScrollProperties vertical;
                 Point autoScrollPosition;
@@ -4132,12 +3722,10 @@ namespace ImageGlass
         /// <param name="style">The user defined style of the scroll bar.</param>
         /// <param name="visible">The visibility state for automatic styles.</param>
         /// <returns><c>true</c> if the scroll bar should be displayed, otherwise <c>false</c>.</returns>
-        private bool ShouldShowScrollbar(ImageBoxScrollBarStyle style, bool visible)
-        {
+        private bool ShouldShowScrollbar(ImageBoxScrollBarStyle style, bool visible) {
             bool result;
 
-            switch (style)
-            {
+            switch (style) {
                 case ImageBoxScrollBarStyle.Auto:
                     result = visible;
                     break;
@@ -4160,16 +3748,14 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnInterpolationModeChanged(EventArgs e)
-        {
+        protected virtual void OnInterpolationModeChanged(EventArgs e) {
             EventHandler handler;
 
             Invalidate();
 
             handler = InterpolationModeChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4180,14 +3766,12 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnInvertMouseChanged(EventArgs e)
-        {
+        protected virtual void OnInvertMouseChanged(EventArgs e) {
             EventHandler handler;
 
             handler = InvertMouseChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4198,14 +3782,12 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnLimitSelectionToImageChanged(EventArgs e)
-        {
+        protected virtual void OnLimitSelectionToImageChanged(EventArgs e) {
             EventHandler handler;
 
             handler = LimitSelectionToImageChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4216,14 +3798,12 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnPanEnd(EventArgs e)
-        {
+        protected virtual void OnPanEnd(EventArgs e) {
             EventHandler handler;
 
             handler = PanEnd;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4234,14 +3814,12 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.ComponentModel.CancelEventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnPanStart(CancelEventArgs e)
-        {
+        protected virtual void OnPanStart(CancelEventArgs e) {
             EventHandler handler;
 
             handler = PanStart;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4252,16 +3830,14 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnPixelGridColorChanged(EventArgs e)
-        {
+        protected virtual void OnPixelGridColorChanged(EventArgs e) {
             EventHandler handler;
 
             Invalidate();
 
             handler = PixelGridColorChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4270,14 +3846,12 @@ namespace ImageGlass
         /// Raises the <see cref="PixelGridThresholdChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnPixelGridThresholdChanged(EventArgs e)
-        {
+        protected virtual void OnPixelGridThresholdChanged(EventArgs e) {
             EventHandler handler;
 
             handler = PixelGridThresholdChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4286,16 +3860,14 @@ namespace ImageGlass
         /// Raises the <see cref="ScaleTextChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnScaleTextChanged(EventArgs e)
-        {
+        protected virtual void OnScaleTextChanged(EventArgs e) {
             EventHandler handler;
 
             Invalidate();
 
             handler = ScaleTextChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4306,15 +3878,12 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnSelected(EventArgs e)
-        {
+        protected virtual void OnSelected(EventArgs e) {
             EventHandler<EventArgs> handler;
 
-            switch (SelectionMode)
-            {
+            switch (SelectionMode) {
                 case ImageBoxSelectionMode.Zoom:
-                    if (SelectionRegion.Width > SelectionDeadZone && SelectionRegion.Height > SelectionDeadZone)
-                    {
+                    if (SelectionRegion.Width > SelectionDeadZone && SelectionRegion.Height > SelectionDeadZone) {
                         ZoomToRegion(SelectionRegion);
                         SelectNone();
                     }
@@ -4323,8 +3892,7 @@ namespace ImageGlass
 
             handler = Selected;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4335,14 +3903,12 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnSelecting(ImageBoxCancelEventArgs e)
-        {
+        protected virtual void OnSelecting(ImageBoxCancelEventArgs e) {
             EventHandler<ImageBoxCancelEventArgs> handler;
 
             handler = Selecting;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4353,14 +3919,12 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnSelectionColorChanged(EventArgs e)
-        {
+        protected virtual void OnSelectionColorChanged(EventArgs e) {
             EventHandler handler;
 
             handler = SelectionColorChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4371,8 +3935,7 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnSelectionModeChanged(EventArgs e)
-        {
+        protected virtual void OnSelectionModeChanged(EventArgs e) {
             // [IG_CHANGE] Update graphics
             this.Invalidate();
 
@@ -4386,16 +3949,14 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnSelectionRegionChanged(EventArgs e)
-        {
+        protected virtual void OnSelectionRegionChanged(EventArgs e) {
             EventHandler handler;
 
             Invalidate();
 
             handler = SelectionRegionChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4406,14 +3967,12 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnShortcutsEnabledChanged(EventArgs e)
-        {
+        protected virtual void OnShortcutsEnabledChanged(EventArgs e) {
             EventHandler handler;
 
             handler = ShortcutsEnabledChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4424,16 +3983,14 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnShowPixelGridChanged(EventArgs e)
-        {
+        protected virtual void OnShowPixelGridChanged(EventArgs e) {
             EventHandler handler;
 
             Invalidate();
 
             handler = ShowPixelGridChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4442,16 +3999,14 @@ namespace ImageGlass
         /// Raises the <see cref="SizeModeChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnSizeModeChanged(EventArgs e)
-        {
+        protected virtual void OnSizeModeChanged(EventArgs e) {
             EventHandler handler;
 
             AdjustLayout();
 
             handler = SizeModeChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4462,16 +4017,14 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnSizeToFitChanged(EventArgs e)
-        {
+        protected virtual void OnSizeToFitChanged(EventArgs e) {
             EventHandler handler;
 
             AdjustLayout();
 
             handler = SizeToFitChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4480,16 +4033,14 @@ namespace ImageGlass
         /// Raises the <see cref="TextAlignChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnTextAlignChanged(EventArgs e)
-        {
+        protected virtual void OnTextAlignChanged(EventArgs e) {
             EventHandler handler;
 
             Invalidate();
 
             handler = TextAlignChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4498,16 +4049,14 @@ namespace ImageGlass
         /// Raises the <see cref="TextBackColorChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnTextBackColorChanged(EventArgs e)
-        {
+        protected virtual void OnTextBackColorChanged(EventArgs e) {
             EventHandler handler;
 
             Invalidate();
 
             handler = TextBackColorChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4516,16 +4065,14 @@ namespace ImageGlass
         /// Raises the <see cref="TextDisplayModeChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnTextDisplayModeChanged(EventArgs e)
-        {
+        protected virtual void OnTextDisplayModeChanged(EventArgs e) {
             EventHandler handler;
 
             Invalidate();
 
             handler = TextDisplayModeChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4534,16 +4081,14 @@ namespace ImageGlass
         /// Raises the <see cref="TextPaddingChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnTextPaddingChanged(EventArgs e)
-        {
+        protected virtual void OnTextPaddingChanged(EventArgs e) {
             EventHandler handler;
 
             handler = TextPaddingChanged;
 
             Invalidate();
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4554,14 +4099,12 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="PaintEventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnVirtualDraw(PaintEventArgs e)
-        {
+        protected virtual void OnVirtualDraw(PaintEventArgs e) {
             PaintEventHandler handler;
 
             handler = VirtualDraw;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4572,8 +4115,7 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnVirtualModeChanged(EventArgs e)
-        {
+        protected virtual void OnVirtualModeChanged(EventArgs e) {
             EventHandler handler;
 
             DefineViewSize();
@@ -4581,8 +4123,7 @@ namespace ImageGlass
 
             handler = VirtualModeChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4593,16 +4134,14 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnVirtualSizeChanged(EventArgs e)
-        {
+        protected virtual void OnVirtualSizeChanged(EventArgs e) {
             EventHandler handler;
 
             AdjustLayout();
 
             handler = VirtualSizeChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4613,16 +4152,14 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="System.EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnZoomChanged(EventArgs e)
-        {
+        protected virtual void OnZoomChanged(EventArgs e) {
             EventHandler handler;
 
             AdjustLayout();
 
             handler = ZoomChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4633,14 +4170,12 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnZoomLevelsChanged(EventArgs e)
-        {
+        protected virtual void OnZoomLevelsChanged(EventArgs e) {
             EventHandler handler;
 
             handler = ZoomLevelsChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4649,14 +4184,12 @@ namespace ImageGlass
         /// Raises the <see cref="Zoomed" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnZoomed(ImageBoxZoomEventArgs e)
-        {
+        protected virtual void OnZoomed(ImageBoxZoomEventArgs e) {
             EventHandler<ImageBoxZoomEventArgs> handler;
 
             handler = Zoomed;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -4667,8 +4200,7 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="KeyEventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void ProcessImageShortcuts(KeyEventArgs e)
-        {
+        protected virtual void ProcessImageShortcuts(KeyEventArgs e) {
             Point currentPixel;
             Point relativePoint;
 
@@ -4676,8 +4208,7 @@ namespace ImageGlass
             currentPixel = PointToImage(relativePoint);
             var currentZoom = Zoom;
 
-            switch (e.KeyCode)
-            {
+            switch (e.KeyCode) {
                 //case Keys.Home:
                 //    if (this.AllowZoom)
                 //    {
@@ -4696,8 +4227,7 @@ namespace ImageGlass
                     break;
             }
 
-            if (Zoom != currentZoom)
-            {
+            if (Zoom != currentZoom) {
                 ScrollTo(currentPixel, relativePoint);
             }
         }
@@ -4710,8 +4240,7 @@ namespace ImageGlass
         /// </param>
         /// <param name="cursorPosition">The cursor position.</param>
         /// [IG_CHANGE] 20190816 Make this public so we can zoom in/out from a position via our event handlers
-        public virtual void ProcessMouseZoom(bool isZoomIn, Point cursorPosition)
-        {
+        public virtual void ProcessMouseZoom(bool isZoomIn, Point cursorPosition) {
             PerformZoom(isZoomIn ? ImageBoxZoomActions.ZoomIn : ImageBoxZoomActions.ZoomOut, ImageBoxActionSources.User, true, cursorPosition);
         }
 
@@ -4721,33 +4250,27 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="MouseEventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void ProcessPanning(MouseEventArgs e)
-        {
-            if (AutoPan && !ViewSize.IsEmpty && SelectionMode == ImageBoxSelectionMode.None)
-            {
+        protected virtual void ProcessPanning(MouseEventArgs e) {
+            if (AutoPan && !ViewSize.IsEmpty && SelectionMode == ImageBoxSelectionMode.None) {
                 Size clientSize;
 
                 clientSize = GetInsideViewPort(true).Size;
 
-                if (!IsPanning && (ScaledImageWidth > clientSize.Width || ScaledImageHeight > clientSize.Height))
-                {
+                if (!IsPanning && (ScaledImageWidth > clientSize.Width || ScaledImageHeight > clientSize.Height)) {
                     _startMousePosition = e.Location;
                     IsPanning = true;
                 }
 
-                if (IsPanning)
-                {
+                if (IsPanning) {
                     int x;
                     int y;
                     Point position;
 
-                    if (!InvertMouse)
-                    {
+                    if (!InvertMouse) {
                         x = -_startScrollPosition.X + (_startMousePosition.X - e.Location.X);
                         y = -_startScrollPosition.Y + (_startMousePosition.Y - e.Location.Y);
                     }
-                    else
-                    {
+                    else {
                         x = -(_startScrollPosition.X + (_startMousePosition.X - e.Location.X));
                         y = -(_startScrollPosition.Y + (_startMousePosition.Y - e.Location.Y));
                     }
@@ -4765,10 +4288,8 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="KeyEventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void ProcessScrollingShortcuts(KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
+        protected virtual void ProcessScrollingShortcuts(KeyEventArgs e) {
+            switch (e.KeyCode) {
                 case Keys.Left:
                     AdjustScroll(-(e.Modifiers == Keys.None ? HorizontalScroll.SmallChange : HorizontalScroll.LargeChange), 0);
                     break;
@@ -4807,17 +4328,13 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="MouseEventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void ProcessSelection(MouseEventArgs e)
-        {
-            if (SelectionMode != ImageBoxSelectionMode.None && e.Button == MouseButtons.Left && !WasDragCancelled)
-            {
-                if (!IsSelecting)
-                {
+        protected virtual void ProcessSelection(MouseEventArgs e) {
+            if (SelectionMode != ImageBoxSelectionMode.None && e.Button == MouseButtons.Left && !WasDragCancelled) {
+                if (!IsSelecting) {
                     StartDrag(e);
                 }
 
-                if (IsSelecting)
-                {
+                if (IsSelecting) {
                     float x;
                     float y;
                     float w;
@@ -4827,24 +4344,20 @@ namespace ImageGlass
 
                     imageOffset = GetImageViewPort().Location;
 
-                    if (e.X < _startMousePosition.X)
-                    {
+                    if (e.X < _startMousePosition.X) {
                         x = e.X;
                         w = _startMousePosition.X - e.X;
                     }
-                    else
-                    {
+                    else {
                         x = _startMousePosition.X;
                         w = e.X - _startMousePosition.X;
                     }
 
-                    if (e.Y < _startMousePosition.Y)
-                    {
+                    if (e.Y < _startMousePosition.Y) {
                         y = e.Y;
                         h = _startMousePosition.Y - e.Y;
                     }
-                    else
-                    {
+                    else {
                         y = _startMousePosition.Y;
                         h = e.Y - _startMousePosition.Y;
                     }
@@ -4858,8 +4371,7 @@ namespace ImageGlass
                     h = h / (float)ZoomFactor;
 
                     selection = new RectangleF(x, y, w, h);
-                    if (LimitSelectionToImage)
-                    {
+                    if (LimitSelectionToImage) {
                         selection = FitRectangle(selection);
                     }
 
@@ -4871,10 +4383,8 @@ namespace ImageGlass
         /// <summary>
         /// Resets the <see cref="SizeMode"/> property whilsts retaining the original <see cref="Zoom"/>.
         /// </summary>
-        protected void RestoreSizeMode()
-        {
-            if (SizeMode != ImageBoxSizeMode.Normal)
-            {
+        protected void RestoreSizeMode() {
+            if (SizeMode != ImageBoxSizeMode.Normal) {
                 var previousZoom = Zoom;
                 SizeMode = ImageBoxSizeMode.Normal;
                 Zoom = previousZoom; // Stop the zoom getting reset to 100% before calculating the new zoom
@@ -4885,8 +4395,7 @@ namespace ImageGlass
         /// Initializes a selection or drag operation.
         /// </summary>
         /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
-        protected virtual void StartDrag(MouseEventArgs e)
-        {
+        protected virtual void StartDrag(MouseEventArgs e) {
             ImageBoxCancelEventArgs args;
 
             args = new ImageBoxCancelEventArgs(e.Location);
@@ -4895,8 +4404,7 @@ namespace ImageGlass
 
             WasDragCancelled = args.Cancel;
             IsSelecting = !args.Cancel;
-            if (IsSelecting)
-            {
+            if (IsSelecting) {
                 SelectNone();
 
                 _startMousePosition = e.Location;
@@ -4907,8 +4415,7 @@ namespace ImageGlass
         ///   Updates the scroll position.
         /// </summary>
         /// <param name="position">The position.</param>
-        protected virtual void UpdateScrollPosition(Point position)
-        {
+        protected virtual void UpdateScrollPosition(Point position) {
             AutoScrollPosition = position;
 
             Invalidate();
@@ -4925,25 +4432,20 @@ namespace ImageGlass
         /// </summary>
         /// <remarks>If an error occurs, for example due to the image being disposed, an empty size is returned</remarks>
         /// <returns>Size.</returns>
-        private Size GetImageSize()
-        {
+        private Size GetImageSize() {
             Size result;
 
             // HACK: This whole thing stinks. Hey MS, how about an IsDisposed property for images?
 
-            if (Image != null)
-            {
-                try
-                {
+            if (Image != null) {
+                try {
                     result = Image.Size;
                 }
-                catch
-                {
+                catch {
                     result = Size.Empty;
                 }
             }
-            else
-            {
+            else {
                 result = Size.Empty;
             }
 
@@ -4953,27 +4455,21 @@ namespace ImageGlass
         /// <summary>
         ///   Initializes the grid tile.
         /// </summary>
-        private void InitializeGridTile()
-        {
-            if (_texture != null)
-            {
+        private void InitializeGridTile() {
+            if (_texture != null) {
                 _texture.Dispose();
             }
 
-            if (_gridTile != null)
-            {
+            if (_gridTile != null) {
                 _gridTile.Dispose();
             }
 
-            if (GridDisplayMode != ImageBoxGridDisplayMode.None && GridCellSize != 0)
-            {
-                if (GridScale != ImageBoxGridScale.None)
-                {
+            if (GridDisplayMode != ImageBoxGridDisplayMode.None && GridCellSize != 0) {
+                if (GridScale != ImageBoxGridScale.None) {
                     _gridTile = CreateGridTileImage(GridCellSize, GridColor, GridColorAlternate);
                     _texture = new TextureBrush(_gridTile);
                 }
-                else
-                {
+                else {
                     _texture = new SolidBrush(GridColor);
                 }
             }
@@ -4986,8 +4482,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="eventArgs">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void OnFrameChangedHandler(object sender, EventArgs eventArgs)
-        {
+        private void OnFrameChangedHandler(object sender, EventArgs eventArgs) {
             Invalidate();
         }
 
@@ -4995,8 +4490,7 @@ namespace ImageGlass
         /// Resets the zoom to 100%.
         /// </summary>
         /// <param name="source">The source that initiated the action.</param>
-        private void PerformActualSize(ImageBoxActionSources source)
-        {
+        private void PerformActualSize(ImageBoxActionSources source) {
             SizeMode = ImageBoxSizeMode.Normal;
             SetZoom(100, ImageBoxZoomActions.ActualSize | (Zoom < 100 ? ImageBoxZoomActions.ZoomIn : ImageBoxZoomActions.ZoomOut), source);
         }
@@ -5006,8 +4500,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="source">The source that initiated the action.</param>
         /// <param name="preservePosition"><c>true</c> if the current scrolling position should be preserved relative to the new zoom level, <c>false</c> to reset.</param>
-        private void PerformZoomIn(ImageBoxActionSources source, bool preservePosition)
-        {
+        private void PerformZoomIn(ImageBoxActionSources source, bool preservePosition) {
             PerformZoom(ImageBoxZoomActions.ZoomIn, source, preservePosition);
         }
 
@@ -5017,8 +4510,7 @@ namespace ImageGlass
         /// <param name="action">The action to perform.</param>
         /// <param name="source">The source that initiated the action.</param>
         /// <param name="preservePosition"><c>true</c> if the current scrolling position should be preserved relative to the new zoom level, <c>false</c> to reset.</param>
-        private void PerformZoom(ImageBoxZoomActions action, ImageBoxActionSources source, bool preservePosition)
-        {
+        private void PerformZoom(ImageBoxZoomActions action, ImageBoxActionSources source, bool preservePosition) {
             PerformZoom(action, source, preservePosition, CenterPoint);
         }
 
@@ -5029,8 +4521,7 @@ namespace ImageGlass
         /// <param name="source">The source that initiated the action.</param>
         /// <param name="preservePosition"><c>true</c> if the current scrolling position should be preserved relative to the new zoom level, <c>false</c> to reset.</param>
         /// <param name="relativePoint">A <see cref="Point"/> describing the current center of the control.</param>
-        private void PerformZoom(ImageBoxZoomActions action, ImageBoxActionSources source, bool preservePosition, Point relativePoint)
-        {
+        private void PerformZoom(ImageBoxZoomActions action, ImageBoxActionSources source, bool preservePosition, Point relativePoint) {
             var currentPixel = PointToImage(relativePoint);
             var currentZoom = Zoom;
             var newZoom = GetZoomLevel(action);
@@ -5038,8 +4529,7 @@ namespace ImageGlass
             RestoreSizeMode();
             SetZoom(newZoom, action, source);
 
-            if (preservePosition && Zoom != currentZoom)
-            {
+            if (preservePosition && Zoom != currentZoom) {
                 ScrollTo(currentPixel, relativePoint);
             }
         }
@@ -5049,12 +4539,10 @@ namespace ImageGlass
         /// </summary>
         /// <param name="action">The action to determine the zoom level.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">Thrown if an unsupported action is specified.</exception>
-        private int GetZoomLevel(ImageBoxZoomActions action)
-        {
+        private int GetZoomLevel(ImageBoxZoomActions action) {
             double result;
 
-            switch (action)
-            {
+            switch (action) {
                 case ImageBoxZoomActions.None:
                     result = Zoom;
                     break;
@@ -5079,8 +4567,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="source">The source that initiated the action.</param>
         /// <param name="preservePosition"><c>true</c> if the current scrolling position should be preserved relative to the new zoom level, <c>false</c> to reset.</param>
-        private void PerformZoomOut(ImageBoxActionSources source, bool preservePosition)
-        {
+        private void PerformZoomOut(ImageBoxActionSources source, bool preservePosition) {
             PerformZoom(ImageBoxZoomActions.ZoomOut, source, preservePosition);
         }
 
@@ -5090,21 +4577,17 @@ namespace ImageGlass
         /// <param name="value">The new zoom value.</param>
         /// <param name="actions">The zoom actions that caused the value to be updated.</param>
         /// <param name="source">The source of the zoom operation.</param>
-        private void SetZoom(double value, ImageBoxZoomActions actions, ImageBoxActionSources source)
-        {
+        private void SetZoom(double value, ImageBoxZoomActions actions, ImageBoxActionSources source) {
             var previousZoom = Zoom;
 
-            if (value < MinZoom)
-            {
+            if (value < MinZoom) {
                 value = MinZoom;
             }
-            else if (value > MaxZoom)
-            {
+            else if (value > MaxZoom) {
                 value = MaxZoom;
             }
 
-            if (_zoom != value)
-            {
+            if (_zoom != value) {
                 _zoom = value;
 
                 OnZoomChanged(EventArgs.Empty);
@@ -5121,13 +4604,10 @@ namespace ImageGlass
         /// Gets or sets a value indicating whether the control can respond to mouse wheel events regardless of if the control has focus or not.
         /// </summary>
         [Category("Behavior"), DefaultValue(false)]
-        public virtual bool AllowUnfocusedMouseWheel
-        {
+        public virtual bool AllowUnfocusedMouseWheel {
             get { return _allowUnfocusedMouseWheel; }
-            set
-            {
-                if (AllowUnfocusedMouseWheel != value)
-                {
+            set {
+                if (AllowUnfocusedMouseWheel != value) {
                     _allowUnfocusedMouseWheel = value;
 
                     OnAllowUnfocusedMouseWheelChanged(EventArgs.Empty);
@@ -5145,12 +4625,10 @@ namespace ImageGlass
         /// Raises the <see cref="AllowUnfocusedMouseWheelChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnAllowUnfocusedMouseWheelChanged(EventArgs e)
-        {
+        protected virtual void OnAllowUnfocusedMouseWheelChanged(EventArgs e) {
             EventHandler handler;
 
-            if (AllowUnfocusedMouseWheel)
-            {
+            if (AllowUnfocusedMouseWheel) {
                 // TODO: Not doing any reference counting so there's
                 // currently no way of disabling the message filter
                 // after the first time it has been enabled
@@ -5176,8 +4654,7 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="EventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnAutoScrollPositionChanged(EventArgs e)
-        {
+        protected virtual void OnAutoScrollPositionChanged(EventArgs e) {
             var handler = this.AutoScrollPositionChanged;
 
             handler?.Invoke(this, e);
@@ -5193,15 +4670,11 @@ namespace ImageGlass
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Category("Layout")]
-        public Point AutoScrollPosition
-        {
+        public Point AutoScrollPosition {
             get { return _autoScrollPosition; }
-            set
-            {
-                if (!_updatingPosition)
-                {
-                    try
-                    {
+            set {
+                if (!_updatingPosition) {
+                    try {
                         int maxH;
                         int maxW;
 
@@ -5212,8 +4685,7 @@ namespace ImageGlass
 
                         value = new Point(-Clamp(value.X, 0, maxW), -Clamp(value.Y, 0, maxH));
 
-                        if (_autoScrollPosition != value)
-                        {
+                        if (_autoScrollPosition != value) {
                             // Debug.WriteLine(value);
 
                             _autoScrollPosition = value;
@@ -5225,8 +4697,7 @@ namespace ImageGlass
                             this.OnAutoScrollPositionChanged(EventArgs.Empty);
                         }
                     }
-                    finally
-                    {
+                    finally {
                         _updatingPosition = false;
                     }
                 }
@@ -5238,8 +4709,7 @@ namespace ImageGlass
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="ScrollEventArgs"/> that contains the event data.</param>
-        private void ScrollBarScrollHandler(object sender, ScrollEventArgs e)
-        {
+        private void ScrollBarScrollHandler(object sender, ScrollEventArgs e) {
             UpdateScrollPosition(new Point(_hScrollBar.Value, _vScrollBar.Value));
         }
 
@@ -5256,14 +4726,12 @@ namespace ImageGlass
         /// <param name="e">
         ///   The <see cref="ScrollEventArgs" /> instance containing the event data.
         /// </param>
-        protected virtual void OnScroll(ScrollEventArgs e)
-        {
+        protected virtual void OnScroll(ScrollEventArgs e) {
             ScrollEventHandler handler;
 
             handler = Scroll;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -5274,13 +4742,10 @@ namespace ImageGlass
         /// Gets or sets the style of the horizontal scroll bar.
         /// </summary>
         [Category("Behavior"), DefaultValue(typeof(ImageBoxScrollBarStyle), "Auto")]
-        public virtual ImageBoxScrollBarStyle HorizontalScrollBarStyle
-        {
+        public virtual ImageBoxScrollBarStyle HorizontalScrollBarStyle {
             get { return _horizontalScrollBarStyle; }
-            set
-            {
-                if (HorizontalScrollBarStyle != value)
-                {
+            set {
+                if (HorizontalScrollBarStyle != value) {
                     _horizontalScrollBarStyle = value;
 
                     OnHorizontalScrollBarStyleChanged(EventArgs.Empty);
@@ -5298,8 +4763,7 @@ namespace ImageGlass
         /// Raises the <see cref="HorizontalScrollBarStyleChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnHorizontalScrollBarStyleChanged(EventArgs e)
-        {
+        protected virtual void OnHorizontalScrollBarStyleChanged(EventArgs e) {
             EventHandler handler;
 
             AdjustViewPort();
@@ -5307,8 +4771,7 @@ namespace ImageGlass
 
             handler = HorizontalScrollBarStyleChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }
@@ -5319,13 +4782,10 @@ namespace ImageGlass
         /// Gets or sets the style of the vertical scroll bar.
         /// </summary>
         [Category("Behavior"), DefaultValue(typeof(ImageBoxScrollBarStyle), "Auto")]
-        public virtual ImageBoxScrollBarStyle VerticalScrollBarStyle
-        {
+        public virtual ImageBoxScrollBarStyle VerticalScrollBarStyle {
             get { return _verticalScrollBarStyle; }
-            set
-            {
-                if (VerticalScrollBarStyle != value)
-                {
+            set {
+                if (VerticalScrollBarStyle != value) {
                     _verticalScrollBarStyle = value;
 
                     OnVerticalScrollBarStyleChanged(EventArgs.Empty);
@@ -5343,8 +4803,7 @@ namespace ImageGlass
         /// Raises the <see cref="VerticalScrollBarStyleChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
-        protected virtual void OnVerticalScrollBarStyleChanged(EventArgs e)
-        {
+        protected virtual void OnVerticalScrollBarStyleChanged(EventArgs e) {
             EventHandler handler;
 
             AdjustViewPort();
@@ -5352,8 +4811,7 @@ namespace ImageGlass
 
             handler = VerticalScrollBarStyleChanged;
 
-            if (handler != null)
-            {
+            if (handler != null) {
                 handler(this, e);
             }
         }

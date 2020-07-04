@@ -113,8 +113,7 @@ namespace ImageGlass.Services {
                 Info.Description = n.GetAttribute("description");
                 return true;
             }
-            catch (Exception)
-            {
+            catch (Exception) {
                 // access error; corrupted file
                 return false;
             }

@@ -7,7 +7,7 @@ namespace ImageGlass.Library.WinAPI {
     /// Ref: https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-setthreadexecutionstate
     /// </summary>
     public static class SysExecutionState {
-        
+
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern ExecutionState SetThreadExecutionState(ExecutionState esFlags);
 

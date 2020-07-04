@@ -186,10 +186,8 @@ namespace ImageGlass.Library.Image {
                         v = Math.Round((double)img.VerticalResolution, 2);
                     }
                 }
-                else
-                {
-                    using (var ico = new Icon(filename))
-                    {
+                else {
+                    using (var ico = new Icon(filename)) {
 
                         //get HorizontalResolution 
                         h = Math.Round(ico.ToBitmap().HorizontalResolution, 2);

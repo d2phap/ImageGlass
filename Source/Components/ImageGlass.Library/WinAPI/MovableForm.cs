@@ -139,7 +139,7 @@ namespace ImageGlass.Library.WinAPI {
 
         private void Event_MouseDown(object sender, MouseEventArgs e) {
             // check if 'sender' can move without keydown event
-            var control = (Control) sender;
+            var control = (Control)sender;
             var isFreeMove = this.FreeMoveControlNames.Count > 0
                 && this.FreeMoveControlNames.Contains(control.Name);
 

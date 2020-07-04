@@ -119,8 +119,7 @@ namespace ImageGlass.Library.Image {
         /// Converts the IntPtr buffer to a property item and then converts its 
         /// value to a Drawing.Image item
         /// </summary>
-        private static async Task<System.Drawing.Image> convertFromMemory(IntPtr thumbData)
-        {
+        private static async Task<System.Drawing.Image> convertFromMemory(IntPtr thumbData) {
             propertyItemInternal prop =
                 (propertyItemInternal)Marshal.PtrToStructure
                 (thumbData, typeof(propertyItemInternal));
@@ -128,8 +127,7 @@ namespace ImageGlass.Library.Image {
             // The image data is in the form of a byte array. Write all 
             // the bytes to a stream and create a new image from that stream
             byte[] imageBytes = prop.Value;
-            using (var stream = new MemoryStream(imageBytes.Length))
-            {
+            using (var stream = new MemoryStream(imageBytes.Length)) {
                 await stream.WriteAsync(imageBytes, 0, imageBytes.Length);
                 return System.Drawing.Image.FromStream(stream);
             }

@@ -53,8 +53,7 @@ namespace ImageGlass.Base {
         /// <summary>
         /// Number format to use for save/restore ImageGlass settings
         /// </summary>
-        public static NumberFormatInfo NumberFormat => new NumberFormatInfo
-        {
+        public static NumberFormatInfo NumberFormat => new NumberFormatInfo {
             NegativeSign = "-"
         };
 
@@ -79,14 +78,14 @@ namespace ImageGlass.Base {
             ToolbarButton.btnBack,
             ToolbarButton.btnNext,
             ToolbarButton.Separator,
-            
+
             ToolbarButton.btnRotateLeft,
             ToolbarButton.btnRotateRight,
             ToolbarButton.btnFlipHorz,
             ToolbarButton.btnFlipVert,
             ToolbarButton.btnCrop,
             ToolbarButton.Separator,
-            
+
             ToolbarButton.btnAutoZoom,
             ToolbarButton.btnZoomLock,
             ToolbarButton.btnScaletoWidth,

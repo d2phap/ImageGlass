@@ -89,14 +89,11 @@ namespace ImageGlass {
             UpdateCommandPreview();
         }
 
-        private void btnBrowse_Click(object sender, EventArgs e)
-        {
-            using (var o = new OpenFileDialog())
-            {
+        private void btnBrowse_Click(object sender, EventArgs e) {
+            using (var o = new OpenFileDialog()) {
                 o.CheckFileExists = true;
 
-                if (o.ShowDialog() == DialogResult.OK)
-                {
+                if (o.ShowDialog() == DialogResult.OK) {
                     txtAppPath.Text = o.FileName;
                 }
             }

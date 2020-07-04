@@ -438,7 +438,7 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.chkConfirmationDelete", "Display Delete confirmation dialog"); //v4.0
             Items.Add("frmSetting.chkCenterWindowFit", "Auto-center the window in Window Fit mode"); //v7.5
             Items.Add("frmSetting.chkShowToast", "Show toast message"); //v7.5
-            
+
             #endregion
             #endregion
 

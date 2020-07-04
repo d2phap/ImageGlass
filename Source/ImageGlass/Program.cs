@@ -134,15 +134,13 @@ namespace ImageGlass {
 
                 // single instance is required
                 using var singleInstance = new SingleInstance(guid);
-                if (singleInstance.IsFirstInstance)
-                {
+                if (singleInstance.IsFirstInstance) {
                     singleInstance.ArgumentsReceived += SingleInstance_ArgsReceived;
                     singleInstance.ListenForArgumentsFromSuccessiveInstances();
 
                     Application.Run(formMain = new frmMain());
                 }
-                else
-                {
+                else {
                     singleInstance.PassArgumentsToFirstInstance(Environment.GetCommandLineArgs());
                 }
             } //end check multi instances
@@ -155,8 +153,7 @@ namespace ImageGlass {
             if (formMain == null)
                 return;
 
-            Action<string[]> UpdateForm = arguments =>
-            {
+            Action<string[]> UpdateForm = arguments => {
                 formMain.WindowState = FormWindowState.Normal;
                 formMain.LoadFromParams(arguments);
             };

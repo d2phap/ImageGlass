@@ -113,17 +113,15 @@ namespace ImageGlass.Library.WinAPI {
 
 
         #region State
-        private static GESTURECONFIG TouchConfig = new GESTURECONFIG
-        {
+        private static GESTURECONFIG TouchConfig = new GESTURECONFIG {
             dwID = 0,
             dwWant = 1,
-            dwBlock=0
+            dwBlock = 0
         };
 
         private static readonly int ConfigSize = Marshal.SizeOf(new GESTURECONFIG());
 
-        private static GESTUREINFO gi = new GESTUREINFO()
-        {
+        private static GESTUREINFO gi = new GESTUREINFO() {
             cbSize = Marshal.SizeOf(new GESTUREINFO())
         };
 

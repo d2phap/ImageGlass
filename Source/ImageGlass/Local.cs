@@ -177,8 +177,7 @@ namespace ImageGlass {
         /// <summary>
         /// Form frmSetting
         /// </summary>
-        public static frmSetting FSetting
-        {
+        public static frmSetting FSetting {
             get => LazyInitializer.EnsureInitialized(ref _fSetting);
             set => _fSetting = value;
         }
@@ -187,8 +186,7 @@ namespace ImageGlass {
         /// <summary>
         /// The Page Navigation form
         /// </summary>
-        public static frmPageNav FPageNav
-        {
+        public static frmPageNav FPageNav {
             get => LazyInitializer.EnsureInitialized(ref _fPageNav);
             set => _fPageNav = value;
         }
@@ -197,8 +195,7 @@ namespace ImageGlass {
         /// <summary>
         /// Form frmColorPicker
         /// </summary>
-        public static frmColorPicker FColorPicker
-        {
+        public static frmColorPicker FColorPicker {
             get => LazyInitializer.EnsureInitialized(ref _fColorPicker);
             set => _fColorPicker = value;
         }
@@ -207,8 +204,7 @@ namespace ImageGlass {
         /// <summary>
         /// Form frmCrop
         /// </summary>
-        public static frmCrop FCrop
-        {
+        public static frmCrop FCrop {
             get => LazyInitializer.EnsureInitialized(ref _fCrop);
             set => _fCrop = value;
         }

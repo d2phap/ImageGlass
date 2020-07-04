@@ -26,7 +26,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace ImageGlass.Heart {
     public static class Photo {
@@ -119,7 +118,7 @@ namespace ImageGlass.Heart {
             (IExifProfile, IColorProfile) PreprocesMagickImage(MagickImage imgM, bool checkRotation = true) {
                 imgM.Quality = quality;
 
-                
+
                 IColorProfile imgColorProfile = null;
                 IExifProfile profile = null;
                 try {
@@ -130,7 +129,7 @@ namespace ImageGlass.Heart {
                     profile = imgM.GetExifProfile();
                 }
                 catch { }
-                
+
 
                 // Use embedded thumbnails if specified
                 if (profile != null && useEmbeddedThumbnails) {
@@ -214,7 +213,8 @@ namespace ImageGlass.Heart {
                     var allBytes = File.ReadAllBytes(newFilename);
 
                     imgM = new MagickImage(allBytes, settings);
-                } else {
+                }
+                else {
                     imgM = new MagickImage(filename, settings);
                 }
 
@@ -257,8 +257,7 @@ namespace ImageGlass.Heart {
         /// <param name="useEmbeddedThumbnail">Use embeded thumbnail if found</param>
         /// <returns></returns>
         public static async Task<ImgData> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, int channel = -1, bool useEmbeddedThumbnail = false) {
-            var data =  await Task.Run(() =>
-            {
+            var data = await Task.Run(() => {
                 return Load(
                     filename,
                     size,
@@ -301,8 +300,7 @@ namespace ImageGlass.Heart {
         /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
         /// <returns></returns>
         public static async Task<Bitmap> GetThumbnailAsync(string filename, Size size, bool useEmbeddedThumbnails = true) {
-            var data = await Task.Run(() =>
-            {
+            var data = await Task.Run(() => {
                 return Load(filename,
                     size: size,
                     quality: 75,
@@ -579,10 +577,10 @@ namespace ImageGlass.Heart {
 
             using (var ms = new MemoryStream()) {
                 srcBitmap.Save(ms, format);
-                
+
                 var header = $"data:{mimeType};base64,";
                 var base64 = Convert.ToBase64String(ms.ToArray());
-                
+
                 using (var sw = new StreamWriter(destFilename)) {
                     await sw.WriteAsync(header + base64);
                     await sw.FlushAsync();

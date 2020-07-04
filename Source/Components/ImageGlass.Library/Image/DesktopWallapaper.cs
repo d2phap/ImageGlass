@@ -97,7 +97,7 @@ namespace ImageGlass.Library.Image {
         }
 
         public enum Result {
-            Success=0, // Wallpaper successfully set
+            Success = 0, // Wallpaper successfully set
             PrivsFail, // Wallpaper failure due to privileges - can re-attempt with Admin privs.
             Fail       // Wallpaper failure - no point in re-attempting
         }

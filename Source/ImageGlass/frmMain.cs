@@ -445,8 +445,7 @@ namespace ImageGlass {
             // Get files from dir
             var fileList = DirectoryFinder.FindFiles(path,
                 Configs.IsRecursiveLoading,
-                new Predicate<FileInfo>(delegate (FileInfo fi)
-                {
+                new Predicate<FileInfo>(delegate (FileInfo fi) {
                     // KBR 20180607 Rework predicate to use a FileInfo instead of the filename.
                     // By doing so, can use the attribute data already loaded into memory, 
                     // instead of fetching it again (via File.GetAttributes). A re-fetch is
@@ -460,18 +459,15 @@ namespace ImageGlass {
                     extension = extension.ToLower(); // Path.GetExtension(f).ToLower() ?? ""; //remove blank extension
 
                     // checks if image is hidden and ignores it if so
-                    if (Configs.IsShowingHiddenImages == false)
-                    {
+                    if (Configs.IsShowingHiddenImages == false) {
                         var attributes = fi.Attributes; // File.GetAttributes(f);
                         var isHidden = attributes.HasFlag(FileAttributes.Hidden);
-                        if (isHidden)
-                        {
+                        if (isHidden) {
                             return false;
                         }
                     }
 
-                    if (extension.Length > 0 && Configs.AllFormats.Contains(extension))
-                    {
+                    if (extension.Length > 0 && Configs.AllFormats.Contains(extension)) {
                         return true;
                     }
 
@@ -580,8 +576,7 @@ namespace ImageGlass {
             thumbnailBar.ThumbnailSize = new Size((int)Configs.ThumbnailDimension, (int)Configs.ThumbnailDimension);
 
             for (int i = 0; i < Local.ImageList.Length; i++) {
-                var lvi = new ImageListView.ImageListViewItem(Local.ImageList.GetFileName(i))
-                {
+                var lvi = new ImageListView.ImageListViewItem(Local.ImageList.GetFileName(i)) {
                     Tag = Local.ImageList.GetFileName(i)
                 };
 
@@ -1762,8 +1757,7 @@ namespace ImageGlass {
                 return;
             }
 
-            var timToast = new Timer
-            {
+            var timToast = new Timer {
                 Enabled = false,
                 Interval = duration, // display in xxx miliseconds
             };
@@ -1843,15 +1837,12 @@ namespace ImageGlass {
         /// <summary>
         /// Cut multiple files
         /// </summary>
-        private async void CutMultiFiles()
-        {
+        private async void CutMultiFiles() {
             // get filename
             var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
 
-            try
-            {
-                if (Local.ImageError != null || !File.Exists(filename))
-                {
+            try {
+                if (Local.ImageError != null || !File.Exists(filename)) {
                     return;
                 }
             }
@@ -1862,26 +1853,22 @@ namespace ImageGlass {
             var fileList = new List<string>();
             fileList.AddRange(Local.StringClipboard);
 
-            for (int i = 0; i < fileList.Count; i++)
-            {
-                if (!File.Exists(fileList[i]))
-                {
+            for (int i = 0; i < fileList.Count; i++) {
+                if (!File.Exists(fileList[i])) {
                     Local.StringClipboard.Remove(fileList[i]);
                 }
             }
 
 
             // exit if duplicated filename
-            if (Local.StringClipboard.IndexOf(filename) == -1)
-            {
+            if (Local.StringClipboard.IndexOf(filename) == -1) {
                 // add filename to clipboard
                 Local.StringClipboard.Add(filename);
             }
 
 
             var moveEffect = new byte[] { 2, 0, 0, 0 };
-            using (var dropEffect = new MemoryStream())
-            {
+            using (var dropEffect = new MemoryStream()) {
                 await dropEffect.WriteAsync(moveEffect, 0, moveEffect.Length);
                 var fileDropList = new StringCollection();
                 fileDropList.AddRange(Local.StringClipboard.ToArray());
@@ -2005,8 +1992,7 @@ namespace ImageGlass {
             var channelArr = Enum.GetValues(typeof(ColorChannels));
             foreach (var channel in channelArr) {
                 var channelName = Enum.GetName(typeof(ColorChannels), channel);
-                var mnu = new ToolStripMenuItem()
-                {
+                var mnu = new ToolStripMenuItem() {
                     Text = Configs.Language.Items[$"{Name}.mnuMainChannels._{channelName}"],
                     Tag = channel,
                     CheckOnClick = true,
@@ -2168,8 +2154,8 @@ namespace ImageGlass {
             var bgY = picMain.Height - bgSize.Height - gap;
 
             // calculate text size
-            var fontX = bgX + bgSize.Width/2 - fontSize.Width/2;
-            var fontY = bgY + bgSize.Height/2 - fontSize.Height/2;
+            var fontX = bgX + bgSize.Width / 2 - fontSize.Width / 2;
+            var fontY = bgY + bgSize.Height / 2 - fontSize.Height / 2;
 
             // draw background
             using var bgBrush = new SolidBrush(Color.FromArgb(150, picMain.BackColor));
@@ -3072,8 +3058,7 @@ namespace ImageGlass {
             LoadFromParams(Environment.GetCommandLineArgs());
 
             // Start thread to watching deleted files
-            var thDeleteWorker = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadWatcherDeleteFiles))
-            {
+            var thDeleteWorker = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadWatcherDeleteFiles)) {
                 Priority = System.Threading.ThreadPriority.BelowNormal,
                 IsBackground = true
             };
@@ -3651,8 +3636,7 @@ namespace ImageGlass {
             Local.ImageList.Add(newFilename);
 
             //Add the new image to thumbnail bar
-            var lvi = new ImageListView.ImageListViewItem(newFilename)
-            {
+            var lvi = new ImageListView.ImageListViewItem(newFilename) {
                 Tag = newFilename
             };
 
@@ -4186,8 +4170,7 @@ namespace ImageGlass {
             var ext = Path.GetExtension(filename).Substring(1);
 
 
-            var saveDialog = new SaveFileDialog
-            {
+            var saveDialog = new SaveFileDialog {
                 Filter = "BMP|*.bmp|EMF|*.emf|EXIF|*.exif|GIF|*.gif|ICO|*.ico|JPG|*.jpg|PNG|*.png|TIFF|*.tiff|WMF|*.wmf|Base64String (*.b64)|*.b64|Base64String (*.txt)|*.txt",
                 FileName = Path.GetFileNameWithoutExtension(filename)
             };
@@ -5091,7 +5074,7 @@ namespace ImageGlass {
 
 
         private void mnuMainColorPicker_Click(object sender, EventArgs e) {
-            Configs.IsShowColorPickerOnStartup = 
+            Configs.IsShowColorPickerOnStartup =
                 btnColorPicker.Checked =
                 mnuMainColorPicker.Checked;
 
@@ -5277,6 +5260,6 @@ namespace ImageGlass {
         #endregion
 
 
-        
+
     }
 }

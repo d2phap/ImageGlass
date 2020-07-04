@@ -75,7 +75,7 @@ namespace ImageGlass.Base {
         /// <param name="distinct">whether repitition of values is allowed</param>
         /// <returns></returns>
         public static int[] StringToIntArray(string str, bool unsignedOnly = false, bool distinct = false) {
-            var args = str.Split(new [] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            var args = str.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             var numbers = new List<int>();
 
             foreach (var item in args) {

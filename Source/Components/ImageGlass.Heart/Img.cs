@@ -140,7 +140,7 @@ namespace ImageGlass.Heart {
                     var dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
                     this.PageCount = this.Image.GetFrameCount(dim);
                 }
-                
+
             }
             catch (Exception ex) {
                 // save the error

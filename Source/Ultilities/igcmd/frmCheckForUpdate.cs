@@ -98,8 +98,7 @@ namespace igcmd {
             Directory.CreateDirectory(App.ConfigDir(PathType.Dir, Dir.Temporary));
 
             picStatus.Image = igcmd.Properties.Resources.loading;
-            var t = new Thread(new ThreadStart(CheckForUpdate))
-            {
+            var t = new Thread(new ThreadStart(CheckForUpdate)) {
                 Priority = ThreadPriority.BelowNormal,
                 IsBackground = true
             };

@@ -652,8 +652,7 @@ namespace ImageGlass.UI {
                     z.Save();
                 };
             }
-            catch (Exception)
-            {
+            catch (Exception) {
                 // restore backup file
                 if (File.Exists(outputThemeFile + ".old")) {
                     File.Move(outputThemeFile + ".old", outputThemeFile);

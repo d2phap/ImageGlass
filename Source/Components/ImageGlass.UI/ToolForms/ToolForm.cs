@@ -118,8 +118,7 @@ namespace ImageGlass.UI.ToolForms {
                         var v = 2;
                         DwmSetWindowAttribute(Handle, 2, ref v, 4);
 
-                        var margins = new MARGINS()
-                        {
+                        var margins = new MARGINS() {
                             bottomHeight = 1,
                             leftWidth = 1,
                             rightWidth = 1,

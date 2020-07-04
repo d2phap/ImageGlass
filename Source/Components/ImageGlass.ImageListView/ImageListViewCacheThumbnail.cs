@@ -18,19 +18,17 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 
-namespace ImageGlass.ImageListView
-{
+namespace ImageGlass.ImageListView {
     /// <summary>
     /// Represents the cache manager responsible for asynchronously loading
     /// item thumbnails.
     /// </summary>
-    internal class ImageListViewCacheThumbnail : IDisposable
-    {
+    internal class ImageListViewCacheThumbnail: IDisposable {
         #region Member Variables
         private QueuedBackgroundWorker bw;
         private SynchronizationContext context;
@@ -53,8 +51,7 @@ namespace ImageGlass.ImageListView
         #endregion
 
         #region RequestType Enum
-        private enum RequestType
-        {
+        private enum RequestType {
             /// <summary>
             /// This is a thumbnail request.
             /// </summary>
@@ -74,8 +71,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Represents a cache request.
         /// </summary>
-        private class CacheRequest
-        {
+        private class CacheRequest {
             /// <summary>
             /// Gets the guid of the item.
             /// </summary>
@@ -121,8 +117,7 @@ namespace ImageGlass.ImageListView
             /// <param name="autoRotate">AutoRotate property of the owner control.</param>
             /// <param name="useWIC">Whether to use WIC.</param>
             /// <param name="requestType">Type of this request.</param>
-            public CacheRequest(Guid guid, ImageListView.ImageListViewItemAdaptor adaptor, object key, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC, RequestType requestType)
-            {
+            public CacheRequest(Guid guid, ImageListView.ImageListViewItemAdaptor adaptor, object key, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC, RequestType requestType) {
                 Guid = guid;
                 VirtualItemKey = key;
                 Adaptor = adaptor;
@@ -136,8 +131,7 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Returns a <see cref="System.String"/> that represents this instance.
             /// </summary>
-            public override string ToString()
-            {
+            public override string ToString() {
                 return "CacheRequest (" + VirtualItemKey.ToString() + ")";
             }
         }
@@ -147,8 +141,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Represents an item in the thumbnail cache.
         /// </summary>
-        private class CacheItem : IDisposable
-        {
+        private class CacheItem: IDisposable {
             private bool disposed;
 
             /// <summary>
@@ -191,8 +184,7 @@ namespace ImageGlass.ImageListView
             /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
             /// <param name="autoRotate">AutoRotate property of the owner control.</param>
             /// <param name="useWIC">Whether to use WIC.</param>
-            public CacheItem(Guid guid, Size size, Image image, CacheState state, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC)
-            {
+            public CacheItem(Guid guid, Size size, Image image, CacheState state, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC) {
                 Guid = guid;
                 Size = size;
                 Image = image;
@@ -207,12 +199,9 @@ namespace ImageGlass.ImageListView
             /// Performs application-defined tasks associated with 
             /// freeing, releasing, or resetting unmanaged resources.
             /// </summary>
-            public void Dispose()
-            {
-                if (!disposed)
-                {
-                    if (Image != null)
-                    {
+            public void Dispose() {
+                if (!disposed) {
+                    if (Image != null) {
                         Image.Dispose();
                         Image = null;
                     }
@@ -226,8 +215,7 @@ namespace ImageGlass.ImageListView
             /// Releases unmanaged resources and performs other cleanup operations before the
             /// class is reclaimed by garbage collection.
             /// </summary>
-            ~CacheItem()
-            {
+            ~CacheItem() {
                 if (Image != null)
                     System.Diagnostics.Debug.Print("Finalizer of {0} called for non-empty cache item.", GetType());
                 Dispose();
@@ -240,8 +228,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Represents the event arguments for the <see cref="CanContinueProcessing"/> callback.
         /// </summary>
-        private class CanContinueProcessingEventArgs : EventArgs
-        {
+        private class CanContinueProcessingEventArgs: EventArgs {
             /// <summary>
             /// Gets the request.
             /// </summary>
@@ -255,8 +242,7 @@ namespace ImageGlass.ImageListView
             /// Initializes a new instance of the <see cref="CanContinueProcessingEventArgs"/> class.
             /// </summary>
             /// <param name="request">The cache request.</param>
-            public CanContinueProcessingEventArgs(CacheRequest request)
-            {
+            public CanContinueProcessingEventArgs(CacheRequest request) {
                 Request = request;
                 ContinueProcessing = true;
             }
@@ -292,8 +278,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Returns the count of items in the cache.
         /// </summary>
-        public long CacheSize
-        {
+        public long CacheSize {
             get { return thumbCache.Count; }
         }
         #endregion
@@ -303,8 +288,7 @@ namespace ImageGlass.ImageListView
         /// Initializes a new instance of the <see cref="ImageListViewCacheThumbnail"/> class.
         /// </summary>
         /// <param name="owner">The owner control.</param>
-        public ImageListViewCacheThumbnail(ImageListView owner)
-        {
+        public ImageListViewCacheThumbnail(ImageListView owner) {
             context = null;
             bw = new QueuedBackgroundWorker();
             bw.ProcessingMode = ProcessingMode.LIFO;
@@ -344,8 +328,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="item">The <see cref="CacheItem"/> to check.</param>
         /// <returns>true if the item should be processed; otherwise false.</returns>
-        private bool OnCanContinueProcessing(CacheRequest item)
-        {
+        private bool OnCanContinueProcessing(CacheRequest item) {
             CanContinueProcessingEventArgs arg = new CanContinueProcessingEventArgs(item);
             context.Send(checkProcessingCallback, arg);
             return arg.ContinueProcessing;
@@ -355,8 +338,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="argument">The event argument.</param>
         /// <returns>true if the item should be processed; otherwise false.</returns>
-        private void CanContinueProcessing(object argument)
-        {
+        private void CanContinueProcessing(object argument) {
             CanContinueProcessingEventArgs arg = argument as CanContinueProcessingEventArgs;
             CacheRequest request = arg.Request;
             bool canProcess = true;
@@ -366,8 +348,7 @@ namespace ImageGlass.ImageListView
                 canProcess = false;
 
             // Is it already cached?
-            if (canProcess && (request.RequestType == RequestType.Thumbnail))
-            {
+            if (canProcess && (request.RequestType == RequestType.Thumbnail)) {
                 CacheItem existing = null;
                 thumbCache.TryGetValue(request.Guid, out existing);
                 if (existing != null && existing.Size == request.Size && existing.UseEmbeddedThumbnails == request.UseEmbeddedThumbnails && existing.AutoRotate == request.AutoRotate && existing.UseWIC == request.UseWIC)
@@ -377,14 +358,12 @@ namespace ImageGlass.ImageListView
                 if (canProcess && (CacheMode == CacheMode.OnDemand) && mImageListView != null && !mImageListView.IsItemVisible(request.Guid))
                     canProcess = false;
             }
-            else if (canProcess && (request.RequestType == RequestType.Gallery))
-            {
+            else if (canProcess && (request.RequestType == RequestType.Gallery)) {
                 CacheItem existing = galleryItem;
                 if (existing != null && existing.Guid == request.Guid && existing.Size == request.Size && existing.UseEmbeddedThumbnails == request.UseEmbeddedThumbnails && existing.AutoRotate == request.AutoRotate && existing.UseWIC == request.UseWIC)
                     canProcess = false;
             }
-            else if (canProcess && (request.RequestType == RequestType.Renderer))
-            {
+            else if (canProcess && (request.RequestType == RequestType.Renderer)) {
                 CacheItem existing = rendererItem;
                 if (existing != null && existing.Guid == request.Guid && existing.Size == request.Size && existing.UseEmbeddedThumbnails == request.UseEmbeddedThumbnails && existing.AutoRotate == request.AutoRotate && existing.UseWIC == request.UseWIC)
                     canProcess = false;
@@ -401,8 +380,7 @@ namespace ImageGlass.ImageListView
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="ImageGlass.ImageListView.QueuedWorkerCompletedEventArgs"/> 
         /// instance containing the event data.</param>
-        void bw_RunWorkerCompleted(object sender, QueuedWorkerCompletedEventArgs e)
-        {
+        void bw_RunWorkerCompleted(object sender, QueuedWorkerCompletedEventArgs e) {
             CacheRequest request = e.UserState as CacheRequest;
             CacheItem result = e.Result as CacheItem;
 
@@ -420,32 +398,27 @@ namespace ImageGlass.ImageListView
                 return;
 
             // Dispose old item and add to cache
-            if (request.RequestType == RequestType.Renderer)
-            {
+            if (request.RequestType == RequestType.Renderer) {
                 if (rendererItem != null)
                     rendererItem.Dispose();
 
                 rendererItem = result;
             }
-            else if (request.RequestType == RequestType.Gallery)
-            {
+            else if (request.RequestType == RequestType.Gallery) {
                 if (galleryItem != null)
                     galleryItem.Dispose();
 
                 galleryItem = result;
             }
-            else if (result != null)
-            {
+            else if (result != null) {
                 CacheItem existing = null;
-                if (thumbCache.TryGetValue(result.Guid, out existing))
-                {
+                if (thumbCache.TryGetValue(result.Guid, out existing)) {
                     existing.Dispose();
                     thumbCache.Remove(result.Guid);
                 }
                 thumbCache.Add(result.Guid, result);
 
-                if (result.Image != null)
-                {
+                if (result.Image != null) {
                     // Did the thumbnail size change while we were
                     // creating the thumbnail?
                     if (result.Size != mImageListView.ThumbnailSize)
@@ -459,8 +432,7 @@ namespace ImageGlass.ImageListView
             }
 
             //Refresh the control
-            if (mImageListView != null)
-            {
+            if (mImageListView != null) {
                 if (request.RequestType != RequestType.Thumbnail || mImageListView.IsItemVisible(request.Guid))
                     mImageListView.Refresh(false, true);
             }
@@ -479,8 +451,7 @@ namespace ImageGlass.ImageListView
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="ImageGlass.ImageListView.QueuedWorkerDoWorkEventArgs"/> instance 
         /// containing the event data.</param>
-        void bw_DoWork(object sender, QueuedWorkerDoWorkEventArgs e)
-        {
+        void bw_DoWork(object sender, QueuedWorkerDoWorkEventArgs e) {
             CacheRequest request = e.Argument as CacheRequest;
 
             // Should we continue processing this item?
@@ -488,8 +459,7 @@ namespace ImageGlass.ImageListView
             //   the item is already cached -OR-
             //   the item is in the edit cache -OR-
             //   the item is outside the visible area (only if the CacheMode is OnDemand).
-            if (!OnCanContinueProcessing(request))
-            {
+            if (!OnCanContinueProcessing(request)) {
                 e.Cancel = true;
                 return;
             }
@@ -498,23 +468,18 @@ namespace ImageGlass.ImageListView
             string diskCacheKey = GetKey(request.Guid, request.Size, request.UseEmbeddedThumbnails, request.AutoRotate, request.UseWIC);
 
             // Check the disk cache
-            using (MemoryStream stream = new MemoryStream())
-            {
-                if (diskCache.Read(diskCacheKey, stream))
-                {
+            using (MemoryStream stream = new MemoryStream()) {
+                if (diskCache.Read(diskCacheKey, stream)) {
                     thumb = new Bitmap(stream);
                 }
             }
 
             // Extract the thumbnail from the source image.
-            if (thumb == null)
-            {
+            if (thumb == null) {
                 thumb = request.Adaptor.GetThumbnail(request.VirtualItemKey, request.Size, request.UseEmbeddedThumbnails, request.AutoRotate, request.UseWIC);
                 // Save to disk cache
-                if (thumb != null)
-                {
-                    using (MemoryStream stream = new MemoryStream())
-                    {
+                if (thumb != null) {
+                    using (MemoryStream stream = new MemoryStream()) {
                         thumb.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
                         diskCache.Write(diskCacheKey, stream);
                     }
@@ -523,12 +488,10 @@ namespace ImageGlass.ImageListView
 
             // Return the thumbnail
             CacheItem result = null;
-            if (thumb == null && !RetryOnError)
-            {
+            if (thumb == null && !RetryOnError) {
                 result = new CacheItem(request.Guid, request.Size, null, CacheState.Error, request.UseEmbeddedThumbnails, request.AutoRotate, request.UseWIC);
             }
-            else
-            {
+            else {
                 result = new CacheItem(request.Guid, request.Size, thumb, CacheState.Cached, request.UseEmbeddedThumbnails, request.AutoRotate, request.UseWIC);
             }
 
@@ -540,15 +503,13 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Pauses the cache threads. 
         /// </summary>
-        public void Pause()
-        {
+        public void Pause() {
             bw.Pause();
         }
         /// <summary>
         /// Resumes the cache threads. 
         /// </summary>
-        public void Resume()
-        {
+        public void Resume() {
             bw.Resume();
         }
         /// <summary>
@@ -556,10 +517,8 @@ namespace ImageGlass.ImageListView
         /// the cache thread will not work on them to prevent collisions.
         /// </summary>
         /// <param name="guid">The guid representing the item</param>
-        public void BeginItemEdit(Guid guid)
-        {
-            if (!editCache.ContainsKey(guid))
-            {
+        public void BeginItemEdit(Guid guid) {
+            if (!editCache.ContainsKey(guid)) {
                 editCache.Add(guid, false);
             }
         }
@@ -568,8 +527,7 @@ namespace ImageGlass.ImageListView
         /// image will be continued to be fetched by the thread.
         /// </summary>
         /// <param name="guid">The guid representing the item.</param>
-        public void EndItemEdit(Guid guid)
-        {
+        public void EndItemEdit(Guid guid) {
             editCache.Remove(guid);
         }
         /// <summary>
@@ -577,24 +535,20 @@ namespace ImageGlass.ImageListView
         /// Old thumbnails will be kept until they are overwritten
         /// by new ones.
         /// </summary>
-        public void Rebuild()
-        {
+        public void Rebuild() {
             foreach (CacheItem item in thumbCache.Values)
                 item.State = CacheState.Unknown;
         }
         /// <summary>
         /// Clears the thumbnail cache.
         /// </summary>
-        public void Clear()
-        {
-            foreach (CacheItem item in thumbCache.Values)
-            {
-                if (item != null)
-                {
+        public void Clear() {
+            foreach (CacheItem item in thumbCache.Values) {
+                if (item != null) {
                     item.Dispose();
                 }
             }
-                
+
             thumbCache.Clear();
 
             if (rendererItem != null)
@@ -613,8 +567,7 @@ namespace ImageGlass.ImageListView
         /// Removes the given item from the cache.
         /// </summary>
         /// <param name="guid">The guid of the item to remove.</param>
-        public void Remove(Guid guid)
-        {
+        public void Remove(Guid guid) {
             Remove(guid, false);
         }
         /// <summary>
@@ -623,20 +576,17 @@ namespace ImageGlass.ImageListView
         /// <param name="guid">The guid of the item to remove.</param>
         /// <param name="removeNow">true to remove the item now; false to remove the
         /// item later when the cache is purged.</param>
-        public void Remove(Guid guid, bool removeNow)
-        {
+        public void Remove(Guid guid, bool removeNow) {
             CacheItem item = null;
             if (!thumbCache.TryGetValue(guid, out item))
                 return;
 
-            if (removeNow)
-            {
+            if (removeNow) {
                 MemoryUsed -= GetImageMemorySize(item.Size.Width, item.Size.Height);
                 item.Dispose();
                 thumbCache.Remove(guid);
             }
-            else
-            {
+            else {
                 MemoryUsedByRemoved += GetImageMemorySize(item.Size.Width, item.Size.Height);
                 removedItems.Add(guid);
 
@@ -649,16 +599,12 @@ namespace ImageGlass.ImageListView
         /// <param name="force">true to purge the cache now, regardless of
         /// memory usage; otherwise false to automatically purge the cache
         /// depending on memory usage.</param>
-        public void Purge(bool force)
-        {
+        public void Purge(bool force) {
             // Remove items now if we can free more than 25% of the cache limit
-            if (force || IsPurgeNeeded())
-            {
-                foreach (Guid guid in removedItems)
-                {
+            if (force || IsPurgeNeeded()) {
+                foreach (Guid guid in removedItems) {
                     CacheItem item = null;
-                    if (thumbCache.TryGetValue(guid, out item))
-                    {
+                    if (thumbCache.TryGetValue(guid, out item)) {
                         item.Dispose();
                         thumbCache.Remove(guid);
                     }
@@ -672,8 +618,7 @@ namespace ImageGlass.ImageListView
         /// Purges removed items from the cache automatically
         /// depending on memory usage.
         /// </summary>
-        public void Purge()
-        {
+        public void Purge() {
             Purge(false);
         }
         /// <summary>
@@ -682,8 +627,7 @@ namespace ImageGlass.ImageListView
         /// <param name="force">true to purge the cache now, regardless of
         /// memory usage; otherwise false to automatically purge the cache
         /// depending on memory usage.</param>
-        public void PurgeInvisible(bool force)
-        {
+        public void PurgeInvisible(bool force) {
             if (mImageListView == null)
                 return;
 
@@ -692,10 +636,8 @@ namespace ImageGlass.ImageListView
             if (visible.Count == 0)
                 return;
 
-            foreach (KeyValuePair<Guid, CacheItem> item in thumbCache)
-            {
-                if (!visible.ContainsKey(item.Key))
-                {
+            foreach (KeyValuePair<Guid, CacheItem> item in thumbCache) {
+                if (!visible.ContainsKey(item.Key)) {
                     removedItems.Add(item.Key);
                     MemoryUsedByRemoved += GetImageMemorySize(item.Value.Image);
                 }
@@ -708,16 +650,14 @@ namespace ImageGlass.ImageListView
         /// if they take up more than 25% of the cache limit.
         /// </summary>
         /// <returns>true if removed items need to be purged; otherwise false.</returns>
-        private bool IsPurgeNeeded()
-        {
+        private bool IsPurgeNeeded() {
             return ((CacheLimitAsMemory != 0 && MemoryUsedByRemoved > CacheLimitAsMemory / 4) || (CacheLimitAsItemCount != 0 && removedItems.Count > CacheLimitAsItemCount / 4));
         }
         /// <summary>
         /// Determines if the cache limit is exceeded.
         /// </summary>
         /// <returns>true if the cache limit is exceeded; otherwise false.</returns>
-        private bool IsCacheLimitExceeded()
-        {
+        private bool IsCacheLimitExceeded() {
             return ((CacheLimitAsMemory != 0 && MemoryUsedByRemoved > CacheLimitAsMemory) || (CacheLimitAsItemCount != 0 && removedItems.Count > CacheLimitAsItemCount));
         }
         /// <summary>
@@ -725,8 +665,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="image">A image.</param>
         /// <returns>Memory size of the image.</returns>
-        private int GetImageMemorySize(Image image)
-        {
+        private int GetImageMemorySize(Image image) {
             if (image != null)
                 return GetImageMemorySize(image.Width, image.Height);
             else
@@ -739,8 +678,7 @@ namespace ImageGlass.ImageListView
         /// <param name="width">Image width.</param>
         /// <param name="height">Image height.</param>
         /// <returns>Memory size of the image.</returns>
-        private int GetImageMemorySize(int width, int height)
-        {
+        private int GetImageMemorySize(int width, int height) {
             return width * height * 24 / 8;
         }
         /// <summary>
@@ -753,12 +691,10 @@ namespace ImageGlass.ImageListView
         /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
         /// <param name="autoRotate">AutoRotate property of the owner control.</param>
         /// <param name="useWIC">Whether to use WIC.</param>
-        public void Add(Guid guid, ImageListView.ImageListViewItemAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC)
-        {
+        public void Add(Guid guid, ImageListView.ImageListViewItemAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC) {
             // Already cached?
             CacheItem item = null;
-            if (thumbCache.TryGetValue(guid, out item))
-            {
+            if (thumbCache.TryGetValue(guid, out item)) {
                 if (item.Size == thumbSize && item.UseEmbeddedThumbnails == useEmbeddedThumbnails)
                     return;
             }
@@ -777,12 +713,10 @@ namespace ImageGlass.ImageListView
         /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
         /// <param name="autoRotate">AutoRotate property of the owner control.</param>
         /// <param name="useWIC">Whether to use WIC.</param>
-        public void Add(Guid guid, ImageListView.ImageListViewItemAdaptor adaptor, object key, Size thumbSize, Image thumb, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC)
-        {
+        public void Add(Guid guid, ImageListView.ImageListViewItemAdaptor adaptor, object key, Size thumbSize, Image thumb, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC) {
             // Already cached?
             CacheItem item = null;
-            if (thumbCache.TryGetValue(guid, out item))
-            {
+            if (thumbCache.TryGetValue(guid, out item)) {
                 if (item.Size == thumbSize && item.UseEmbeddedThumbnails == useEmbeddedThumbnails)
                     return;
             }
@@ -794,16 +728,14 @@ namespace ImageGlass.ImageListView
             thumbCache.Add(guid, new CacheItem(guid, thumbSize, thumb, CacheState.Cached, useEmbeddedThumbnails, autoRotate, useWIC));
 
             // Add to disk cache
-            using (MemoryStream stream = new MemoryStream())
-            {
+            using (MemoryStream stream = new MemoryStream()) {
                 string diskCacheKey = GetKey(guid, thumbSize, useEmbeddedThumbnails, autoRotate, useWIC);
                 thumb.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
                 diskCache.Write(diskCacheKey, stream);
             }
 
             // Raise the cache events
-            if (mImageListView != null)
-            {
+            if (mImageListView != null) {
                 mImageListView.OnThumbnailCachedInternal(guid, thumb, thumbSize, true);
                 mImageListView.Refresh();
             }
@@ -818,8 +750,7 @@ namespace ImageGlass.ImageListView
         /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
         /// <param name="autoRotate">AutoRotate property of the owner control.</param>
         /// <param name="useWIC">Whether to use WIC.</param>
-        public void AddToGalleryCache(Guid guid, ImageListView.ImageListViewItemAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC)
-        {
+        public void AddToGalleryCache(Guid guid, ImageListView.ImageListViewItemAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC) {
             // Already cached?
             if (galleryItem != null && galleryItem.Guid == guid && galleryItem.Image != null && galleryItem.Size == thumbSize && galleryItem.UseEmbeddedThumbnails == useEmbeddedThumbnails && galleryItem.AutoRotate == autoRotate && galleryItem.UseWIC == useWIC)
                 return;
@@ -837,8 +768,7 @@ namespace ImageGlass.ImageListView
         /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
         /// <param name="autoRotate">AutoRotate property of the owner control.</param>
         /// <param name="useWIC">Whether to use WIC.</param>
-        public void AddToRendererCache(Guid guid, ImageListView.ImageListViewItemAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC)
-        {
+        public void AddToRendererCache(Guid guid, ImageListView.ImageListViewItemAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC) {
             // Already cached?
             if (rendererItem != null && rendererItem.Guid == guid && rendererItem.Image != null && rendererItem.Size == thumbSize && rendererItem.UseEmbeddedThumbnails == useEmbeddedThumbnails && rendererItem.AutoRotate == autoRotate && rendererItem.UseWIC == useWIC)
                 return;
@@ -855,8 +785,7 @@ namespace ImageGlass.ImageListView
         /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
         /// <param name="autoRotate">AutoRotate property of the owner control.</param>
         /// <param name="useWIC">Whether to use WIC.</param>
-        public Image GetRendererImage(Guid guid, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC)
-        {
+        public Image GetRendererImage(Guid guid, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC) {
             if (rendererItem != null && rendererItem.Guid == guid && rendererItem.Image != null && rendererItem.Size == thumbSize && rendererItem.UseEmbeddedThumbnails == useEmbeddedThumbnails && rendererItem.AutoRotate == autoRotate && rendererItem.UseWIC == useWIC)
                 return rendererItem.Image;
             else
@@ -871,8 +800,7 @@ namespace ImageGlass.ImageListView
         /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
         /// <param name="autoRotate">AutoRotate property of the owner control.</param>
         /// <param name="useWIC">Whether to use WIC.</param>
-        public Image GetGalleryImage(Guid guid, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC)
-        {
+        public Image GetGalleryImage(Guid guid, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC) {
             if (galleryItem != null && galleryItem.Guid == guid && galleryItem.Image != null && galleryItem.Size == thumbSize && galleryItem.UseEmbeddedThumbnails == useEmbeddedThumbnails && galleryItem.AutoRotate == autoRotate && galleryItem.UseWIC == useWIC)
                 return galleryItem.Image;
             else
@@ -888,20 +816,15 @@ namespace ImageGlass.ImageListView
         /// <param name="autoRotate">AutoRotate property of the owner control.</param>
         /// <param name="useWIC">Whether to use WIC.</param>
         /// <param name="clone">true to return a clone of the cached image; otherwise false.</param>
-        public Image GetImage(Guid guid, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC, bool clone)
-        {
+        public Image GetImage(Guid guid, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC, bool clone) {
             CacheItem item = null;
             if (thumbCache.TryGetValue(guid, out item) && item != null && item.Image != null && item.Size == thumbSize && item.UseEmbeddedThumbnails == useEmbeddedThumbnails && item.AutoRotate == autoRotate && item.UseWIC == useWIC)
                 return clone ? (Image)item.Image.Clone() : item.Image;
-            else
-            {
+            else {
                 // Try the disk cache
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    if (diskCache.Read(GetKey(guid, thumbSize, useEmbeddedThumbnails, autoRotate, useWIC), stream))
-                    {
-                        using (Image sourceImage = Image.FromStream(stream))
-                        {
+                using (MemoryStream stream = new MemoryStream()) {
+                    if (diskCache.Read(GetKey(guid, thumbSize, useEmbeddedThumbnails, autoRotate, useWIC), stream)) {
+                        using (Image sourceImage = Image.FromStream(stream)) {
                             return new Bitmap(sourceImage);
                         }
                     }
@@ -917,8 +840,7 @@ namespace ImageGlass.ImageListView
         /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
         /// <param name="autoRotate">AutoRotate property of the owner control.</param>
         /// <param name="useWIC">Whether to use WIC.</param>
-        public CacheState GetCacheState(Guid guid, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC)
-        {
+        public CacheState GetCacheState(Guid guid, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC) {
             CacheItem item = null;
             if (thumbCache.TryGetValue(guid, out item) && item != null && item.Size == thumbSize && item.UseEmbeddedThumbnails == useEmbeddedThumbnails && item.AutoRotate == autoRotate && item.UseWIC == useWIC)
                 return item.State;
@@ -930,12 +852,9 @@ namespace ImageGlass.ImageListView
         /// properties.
         /// </summary>
         /// <returns>An string key of 32 characters.</returns>
-        private string GetKey(Guid guid, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC)
-        {
-            using (MemoryStream stream = new MemoryStream())
-            {
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                {
+        private string GetKey(Guid guid, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool useWIC) {
+            using (MemoryStream stream = new MemoryStream()) {
+                using (BinaryWriter writer = new BinaryWriter(stream)) {
                     writer.Write(guid.ToByteArray());
                     writer.Write(size.Width);
                     writer.Write(size.Height);
@@ -950,8 +869,7 @@ namespace ImageGlass.ImageListView
 
                     // Convert to hex string
                     StringBuilder sb = new StringBuilder();
-                    foreach (byte b in result)
-                    {
+                    foreach (byte b in result) {
                         sb.Append(b.ToString("x2"));
                     }
                     return sb.ToString();
@@ -968,36 +886,30 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="item">The item to add to the worker queue.</param>
         /// <param name="priority">Priority of the item in the queue.</param>
-        private void RunWorker(CacheRequest item, int priority)
-        {
+        private void RunWorker(CacheRequest item, int priority) {
             // Get the current synchronization context
             if (context == null)
                 context = SynchronizationContext.Current;
 
             // Already being processed?
-            if (item.RequestType == RequestType.Thumbnail)
-            {
+            if (item.RequestType == RequestType.Thumbnail) {
                 if (processing.ContainsKey(item.Guid))
                     return;
                 else
                     processing.Add(item.Guid, false);
             }
-            else if (item.RequestType == RequestType.Renderer)
-            {
+            else if (item.RequestType == RequestType.Renderer) {
                 if (processingRendererItem == item.Guid)
                     return;
-                else
-                {
+                else {
                     bw.CancelAsync(priority);
                     processingRendererItem = item.Guid;
                 }
             }
-            else if (item.RequestType == RequestType.Gallery)
-            {
+            else if (item.RequestType == RequestType.Gallery) {
                 if (processingGalleryItem == item.Guid)
                     return;
-                else
-                {
+                else {
                     bw.CancelAsync(priority);
                     processingGalleryItem = item.Guid;
                 }
@@ -1014,8 +926,7 @@ namespace ImageGlass.ImageListView
         /// Pushes the given item to the worker queue.
         /// </summary>
         /// <param name="item">The item to add to the worker queue.</param>
-        private void RunWorker(CacheRequest item)
-        {
+        private void RunWorker(CacheRequest item) {
             RunWorker(item, 0);
         }
         #endregion
@@ -1025,10 +936,8 @@ namespace ImageGlass.ImageListView
         /// Performs application-defined tasks associated with freeing,
         /// releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose()
-        {
-            if (!disposed)
-            {
+        public void Dispose() {
+            if (!disposed) {
                 bw.DoWork -= bw_DoWork;
                 bw.RunWorkerCompleted -= bw_RunWorkerCompleted;
 
@@ -1045,8 +954,7 @@ namespace ImageGlass.ImageListView
         /// Releases unmanaged resources and performs other cleanup operations before the
         /// ImageListViewCacheManager is reclaimed by garbage collection.
         /// </summary>
-        ~ImageListViewCacheThumbnail()
-        {
+        ~ImageListViewCacheThumbnail() {
             System.Diagnostics.Debug.Print("Finalizer of {0} called.", GetType());
             Dispose();
         }

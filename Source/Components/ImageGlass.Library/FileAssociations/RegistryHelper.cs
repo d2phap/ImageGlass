@@ -49,28 +49,22 @@ namespace ImageGlass.Library.FileAssociations {
         /// input: KeyName (string)
         /// output: value (string) 
         /// </summary>
-        public string Read(string KeyName)
-        {
+        public string Read(string KeyName) {
             // Opening the registry key
-            using (RegistryKey rk = BaseRegistryKey)
-            {
+            using (RegistryKey rk = BaseRegistryKey) {
                 // Open a subKey as read-only
                 RegistryKey sk1 = rk.OpenSubKey(SubKey);
                 // If the RegistrySubKey doesn't exist -> (null)
-                if (sk1 == null)
-                {
+                if (sk1 == null) {
                     return null;
                 }
-                else
-                {
-                    try
-                    {
+                else {
+                    try {
                         // If the RegistryKey exists I get its value
                         // or null is returned.
                         return (string)sk1.GetValue(KeyName);
                     }
-                    catch (Exception e)
-                    {
+                    catch (Exception e) {
                         // AAAAAAAAAAARGH, an error!
                         ShowErrorMessage(e, "Reading registry " + KeyName);
                         return null;

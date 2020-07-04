@@ -515,8 +515,7 @@ namespace ImageGlass {
 
 
         private void picBackgroundColor_Click(object sender, EventArgs e) {
-            var c = new ColorDialog()
-            {
+            var c = new ColorDialog() {
                 AllowFullOpen = true
             };
 
@@ -753,8 +752,7 @@ namespace ImageGlass {
 
 
         private void lnkColorProfileBrowse_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            var o = new OpenFileDialog()
-            {
+            var o = new OpenFileDialog() {
                 Filter = "Supported files|*.icc;*.icm;|All files|*.*",
                 CheckFileExists = true,
 
@@ -779,7 +777,7 @@ namespace ImageGlass {
             var keyval = e.KeyChar;
             bool accept = char.IsDigit(keyval) ||
                           keyval == ';' ||
-                          keyval == (char) Keys.Back ||
+                          keyval == (char)Keys.Back ||
                           keyval == (char)Keys.Space;
             if (!accept)
                 e.Handled = true;
@@ -818,8 +816,7 @@ namespace ImageGlass {
                 li.Text = ext;
 
                 // Build new list
-                var newEditingAssoc = new EditApp()
-                {
+                var newEditingAssoc = new EditApp() {
                     Extension = ext
                 };
 
@@ -1255,8 +1252,7 @@ namespace ImageGlass {
         /// <param name="buttonType"></param>
         /// <returns></returns>
         private ListViewItem BuildToolbarListItem(ToolbarButton buttonType) {
-            var lvi = new ListViewItem
-            {
+            var lvi = new ListViewItem {
                 ImageIndex = (int)buttonType,
                 Tag = buttonType
             };
@@ -1513,8 +1509,7 @@ namespace ImageGlass {
 
                 // add themes to the listview
                 foreach (var th in lstThemes) {
-                    var lvi = new ListViewItem(th.Name)
-                    {
+                    var lvi = new ListViewItem(th.Name) {
                         // folder name of the theme
                         Tag = Path.GetFileName(Path.GetDirectoryName(th.ConfigFilePath)),
                         ImageKey = "_blank"
@@ -1635,8 +1630,7 @@ namespace ImageGlass {
 
         private void btnThemeSaveAs_Click(object sender, EventArgs e) {
             if (lvTheme.SelectedItems.Count > 0) {
-                var s = new SaveFileDialog
-                {
+                var s = new SaveFileDialog {
                     Filter = "ImageGlass theme (*.igtheme)|*.igtheme"
                 };
 

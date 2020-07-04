@@ -937,8 +937,7 @@ namespace ImageGlass.Settings {
         /// </summary>
         /// <returns></returns>
         public static string GetRegisteredExtensions() {
-            var reg = new RegistryHelper()
-            {
+            var reg = new RegistryHelper() {
                 BaseRegistryKey = Registry.LocalMachine,
                 SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations"
             };
