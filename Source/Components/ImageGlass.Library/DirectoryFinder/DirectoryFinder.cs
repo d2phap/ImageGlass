@@ -16,11 +16,11 @@ namespace ImageGlass.Library {
         /// <returns></returns>
         public static ConcurrentBag<string> FindDirectories(string RootDirectory,
             bool SearchAllDirectories, Predicate<string> Filter) {
-            ConcurrentBag<string> retList = new ConcurrentBag<string>();
+            var retList = new ConcurrentBag<string>();
 
             try {
                 // create a directory info object 
-                DirectoryInfo di = new DirectoryInfo(RootDirectory);
+                var di = new DirectoryInfo(RootDirectory);
 
                 // loop through directories populating the list 
                 Parallel.ForEach(di.GetDirectories(), folder => {
@@ -77,11 +77,11 @@ namespace ImageGlass.Library {
         /// <returns></returns>
         public static ConcurrentBag<string> FindFiles(string RootDirectory,
             bool SearchAllDirectories, Predicate<FileInfo> Filter) {
-            ConcurrentBag<string> retList = new ConcurrentBag<string>();
+            var retList = new ConcurrentBag<string>();
 
             try {
                 // get the list of directories 
-                List<string> DirList = new List<string> { RootDirectory };
+                var DirList = new List<string> { RootDirectory };
 
                 // get sub directories if allowed 
                 if (SearchAllDirectories)
@@ -90,7 +90,7 @@ namespace ImageGlass.Library {
                 // loop through directories populating the list 
                 Parallel.ForEach(DirList, folder => {
                     // get a directory object 
-                    DirectoryInfo di = new DirectoryInfo(folder);
+                    var di = new DirectoryInfo(folder);
 
                     try {
                         // loop through the files in this directory 

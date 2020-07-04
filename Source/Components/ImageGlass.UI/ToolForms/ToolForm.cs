@@ -118,8 +118,7 @@ namespace ImageGlass.UI.ToolForms {
                         var v = 2;
                         DwmSetWindowAttribute(Handle, 2, ref v, 4);
 
-                        MARGINS margins = new MARGINS()
-                        {
+                        var margins = new MARGINS() {
                             bottomHeight = 1,
                             leftWidth = 1,
                             rightWidth = 1,
@@ -140,9 +139,7 @@ namespace ImageGlass.UI.ToolForms {
 
         #region Properties to make a tool window
 
-        protected override bool ShowWithoutActivation {
-            get { return true; }
-        }
+        protected override bool ShowWithoutActivation => true;
 
         protected override CreateParams CreateParams {
             get {

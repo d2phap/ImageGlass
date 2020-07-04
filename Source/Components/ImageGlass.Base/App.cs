@@ -29,17 +29,17 @@ namespace ImageGlass.Base {
     /// The base information of ImageGlass app
     /// </summary>
     public static class App {
-        
+
         /// <summary>
         /// Gets the application executable path
         /// </summary>
-        public static string IGExePath { get => StartUpDir("ImageGlass.exe"); }
+        public static string IGExePath => StartUpDir("ImageGlass.exe");
 
 
         /// <summary>
         /// Gets the application version
         /// </summary>
-        public static string Version { get => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion; }
+        public static string Version => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion;
 
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace ImageGlass.Base {
         /// Write log in DEBUG mode
         /// </summary>
         /// <param name="msg"></param>
-        public static void LogIt(string msg) {
+        public static async void LogIt(string msg) {
 #if DEBUG
             try {
                 var tempDir = App.ConfigDir(PathType.Dir, Dir.Log);
@@ -141,9 +141,9 @@ namespace ImageGlass.Base {
                 }
                 var path = Path.Combine(tempDir, "iglog.log");
 
-                using (TextWriter tw = new StreamWriter(path, append: true)) {
-                    tw.WriteLine(msg);
-                    tw.Flush();
+                using (var tw = new StreamWriter(path, append: true)) {
+                    await tw.WriteLineAsync(msg);
+                    await tw.FlushAsync();
                     tw.Close();
                 }
             }

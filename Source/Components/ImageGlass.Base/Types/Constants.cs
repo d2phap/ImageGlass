@@ -53,66 +53,60 @@ namespace ImageGlass.Base {
         /// <summary>
         /// Number format to use for save/restore ImageGlass settings
         /// </summary>
-        public static NumberFormatInfo NumberFormat {
-            get => new NumberFormatInfo {
-                NegativeSign = "-"
-            };
-        }
+        public static NumberFormatInfo NumberFormat => new NumberFormatInfo {
+            NegativeSign = "-"
+        };
 
 
         /// <summary>
         /// Gets the default set of keycombo actions
         /// </summary>
-        public static Dictionary<KeyCombos, AssignableActions> DefaultKeycomboActions {
-            get => new Dictionary<KeyCombos, AssignableActions>
-                {
-                    { KeyCombos.LeftRight, AssignableActions.PrevNextImage },
-                    { KeyCombos.PageUpDown, AssignableActions.PrevNextImage },
-                    { KeyCombos.SpaceBack, AssignableActions.PauseSlideshow },
-                    { KeyCombos.UpDown, AssignableActions.PauseSlideshow }
-                };
-        }
+        public static Dictionary<KeyCombos, AssignableActions> DefaultKeycomboActions => new Dictionary<KeyCombos, AssignableActions>
+        {
+            { KeyCombos.LeftRight, AssignableActions.PrevNextImage },
+            { KeyCombos.PageUpDown, AssignableActions.PrevNextImage },
+            { KeyCombos.SpaceBack, AssignableActions.PauseSlideshow },
+            { KeyCombos.UpDown, AssignableActions.PauseSlideshow }
+        };
 
 
         /// <summary>
         /// Gets the default set of toolbar buttons
         /// </summary>
-        public static List<ToolbarButton> DefaultToolbarButtons {
-            get => new List<ToolbarButton>
-            {
-                ToolbarButton.btnBack,
-                ToolbarButton.btnNext,
-                ToolbarButton.Separator,
+        public static List<ToolbarButton> DefaultToolbarButtons => new List<ToolbarButton>
+        {
+            ToolbarButton.btnBack,
+            ToolbarButton.btnNext,
+            ToolbarButton.Separator,
 
-                ToolbarButton.btnRotateLeft,
-                ToolbarButton.btnRotateRight,
-                ToolbarButton.btnFlipHorz,
-                ToolbarButton.btnFlipVert,
-                ToolbarButton.btnCrop,
-                ToolbarButton.Separator,
+            ToolbarButton.btnRotateLeft,
+            ToolbarButton.btnRotateRight,
+            ToolbarButton.btnFlipHorz,
+            ToolbarButton.btnFlipVert,
+            ToolbarButton.btnCrop,
+            ToolbarButton.Separator,
 
-                ToolbarButton.btnAutoZoom,
-                ToolbarButton.btnZoomLock,
-                ToolbarButton.btnScaletoWidth,
-                ToolbarButton.btnScaletoHeight,
-                ToolbarButton.btnScaleToFit,
-                ToolbarButton.btnScaleToFill,
-                ToolbarButton.Separator,
+            ToolbarButton.btnAutoZoom,
+            ToolbarButton.btnZoomLock,
+            ToolbarButton.btnScaletoWidth,
+            ToolbarButton.btnScaletoHeight,
+            ToolbarButton.btnScaleToFit,
+            ToolbarButton.btnScaleToFill,
+            ToolbarButton.Separator,
 
-                ToolbarButton.btnOpen,
-                ToolbarButton.btnRefresh,
-                ToolbarButton.btnGoto,
-                ToolbarButton.Separator,
+            ToolbarButton.btnOpen,
+            ToolbarButton.btnRefresh,
+            ToolbarButton.btnGoto,
+            ToolbarButton.Separator,
 
-                ToolbarButton.btnWindowFit,
-                ToolbarButton.btnFullScreen,
-                ToolbarButton.btnSlideShow,
-                ToolbarButton.Separator,
+            ToolbarButton.btnWindowFit,
+            ToolbarButton.btnFullScreen,
+            ToolbarButton.btnSlideShow,
+            ToolbarButton.Separator,
 
-                ToolbarButton.btnThumb,
-                ToolbarButton.btnCheckedBackground,
-                ToolbarButton.btnDelete,
-            };
-        }
+            ToolbarButton.btnThumb,
+            ToolbarButton.btnCheckedBackground,
+            ToolbarButton.btnDelete,
+        };
     }
 }

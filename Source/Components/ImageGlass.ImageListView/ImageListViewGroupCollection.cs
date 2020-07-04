@@ -16,19 +16,16 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Collections;
 
-namespace ImageGlass.ImageListView
-{
-    public partial class ImageListView
-    {
+namespace ImageGlass.ImageListView {
+    public partial class ImageListView {
         /// <summary>
         /// Represents the collection of groups in an ImageListView control.
         /// </summary>
-        internal class ImageListViewGroupCollection : IList<ImageListViewGroup>, ICollection, IList, IEnumerable
-        {
+        internal class ImageListViewGroupCollection: IList<ImageListViewGroup>, ICollection, IList, IEnumerable {
             #region Member Variables
             private ImageListView mImageListView;
             private List<ImageListViewGroup> mItems;
@@ -50,14 +47,11 @@ namespace ImageGlass.ImageListView
             /// Gets or sets the group at the specified index within the collection.
             /// </summary>
             [Category("Behavior"), Browsable(false), Description("Gets or sets the group at the specified index within the collection.")]
-            public ImageListViewGroup this[int index]
-            {
-                get
-                {
+            public ImageListViewGroup this[int index] {
+                get {
                     return mItems[index];
                 }
-                set
-                {
+                set {
                     mItems[index] = value;
                     collectionModified = true;
                 }
@@ -66,10 +60,8 @@ namespace ImageGlass.ImageListView
             /// Gets the group with the specified name within the collection.
             /// </summary>
             [Category("Behavior"), Browsable(false), Description("Gets the group with the specified name within the collection.")]
-            public ImageListViewGroup this[string name]
-            {
-                get
-                {
+            public ImageListViewGroup this[string name] {
+                get {
                     foreach (ImageListViewGroup group in this)
                         if (string.Compare(group.Name, name) == 0) return group;
                     throw new ArgumentException("Unknown group name.", "name");
@@ -79,8 +71,7 @@ namespace ImageGlass.ImageListView
             /// Gets a value indicating whether the Collection is read-only.
             /// </summary>
             [Category("Behavior"), Browsable(false), Description("Gets a value indicating whether the Collection is read-only.")]
-            public bool IsReadOnly
-            {
+            public bool IsReadOnly {
                 get { return false; }
             }
             #endregion
@@ -90,8 +81,7 @@ namespace ImageGlass.ImageListView
             /// Initializes a new instance of the ImageListViewGroup class.
             /// </summary>
             /// <param name="owner">The owner control.</param>
-            internal ImageListViewGroupCollection(ImageListView owner)
-            {
+            internal ImageListViewGroupCollection(ImageListView owner) {
                 mImageListView = owner;
                 mItems = new List<ImageListViewGroup>();
                 collectionModified = true;
@@ -103,8 +93,7 @@ namespace ImageGlass.ImageListView
             /// Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
             /// <param name="item">The object to add to the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param>
-            public void Add(ImageListViewGroup item)
-            {
+            public void Add(ImageListViewGroup item) {
                 if (mImageListView == null)
                     throw new InvalidOperationException("Owner control is null.");
 
@@ -121,16 +110,14 @@ namespace ImageGlass.ImageListView
             /// <param name="name">The name of the group.</param>
             /// <param name="firstItemIndex">The index of the first item.</param>
             /// <param name="lastItemIndex">The index of the last item.</param>
-            public void Add(string name, int firstItemIndex, int lastItemIndex)
-            {
+            public void Add(string name, int firstItemIndex, int lastItemIndex) {
                 Add(new ImageListViewGroup(name, firstItemIndex, lastItemIndex));
             }
 
             /// <summary>
             /// Removes all items from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </summary>
-            public void Clear()
-            {
+            public void Clear() {
                 mItems.Clear();
 
                 collectionModified = true;
@@ -142,16 +129,14 @@ namespace ImageGlass.ImageListView
             /// <returns>
             /// true if <paramref name="item"/> is found in the <see cref="T:System.Collections.Generic.ICollection`1"/>; otherwise, false.
             /// </returns>
-            public bool Contains(ImageListViewGroup item)
-            {
+            public bool Contains(ImageListViewGroup item) {
                 return mItems.Contains(item);
             }
             /// <summary>
             /// Returns an enumerator to use to iterate through columns.
             /// </summary>
             /// <returns>An IEnumerator&lt;ImageListViewColumn&gt; that represents the item collection.</returns>
-            public IEnumerator<ImageListViewGroup> GetEnumerator()
-            {
+            public IEnumerator<ImageListViewGroup> GetEnumerator() {
                 foreach (ImageListViewGroup group in mItems)
                     yield return group;
                 yield break;
@@ -163,8 +148,7 @@ namespace ImageGlass.ImageListView
             /// <returns>
             /// The index of <paramref name="item"/> if found in the list; otherwise, -1.
             /// </returns>
-            public int IndexOf(ImageListViewGroup item)
-            {
+            public int IndexOf(ImageListViewGroup item) {
                 return mItems.IndexOf(item);
             }
             /// <summary>
@@ -172,8 +156,7 @@ namespace ImageGlass.ImageListView
             /// </summary>
             /// <param name="index">The zero-based index at which <paramref name="item"/> should be inserted.</param>
             /// <param name="item">The object to insert into the <see cref="T:System.Collections.Generic.IList`1"/>.</param>
-            public void Insert(int index, ImageListViewGroup item)
-            {
+            public void Insert(int index, ImageListViewGroup item) {
                 if (mImageListView == null)
                     throw new InvalidOperationException("Owner control is null.");
 
@@ -191,8 +174,7 @@ namespace ImageGlass.ImageListView
             /// <returns>
             /// true if <paramref name="item"/> was successfully removed from the <see cref="T:System.Collections.Generic.ICollection`1"/>; otherwise, false. This method also returns false if <paramref name="item"/> is not found in the original <see cref="T:System.Collections.Generic.ICollection`1"/>.
             /// </returns>
-            public bool Remove(ImageListViewGroup item)
-            {
+            public bool Remove(ImageListViewGroup item) {
                 bool ret = mItems.Remove(item);
                 collectionModified = true;
                 return ret;
@@ -201,8 +183,7 @@ namespace ImageGlass.ImageListView
             /// Removes the <see cref="T:System.Collections.Generic.IList`1"/> item at the specified index.
             /// </summary>
             /// <param name="index">The zero-based index of the item to remove.</param>
-            public void RemoveAt(int index)
-            {
+            public void RemoveAt(int index) {
                 mItems.RemoveAt(index);
                 collectionModified = true;
             }
@@ -210,8 +191,7 @@ namespace ImageGlass.ImageListView
             /// Determines whether the collection has the group with the given name.
             /// </summary>
             /// <param name="name">The name of the group.</param>
-            internal bool HasName(string name)
-            {
+            internal bool HasName(string name) {
                 foreach (ImageListViewGroup group in this)
                     if (string.Compare(group.Name, name) == 0) return true;
 
@@ -220,11 +200,9 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Gets the list of visible groups.
             /// </summary>
-            internal List<ImageListViewGroup> GetDisplayedGroups()
-            {
+            internal List<ImageListViewGroup> GetDisplayedGroups() {
                 List<ImageListViewGroup> visible = new List<ImageListViewGroup>();
-                foreach (ImageListViewGroup group in this)
-                {
+                foreach (ImageListViewGroup group in this) {
                     if (group.isVisible)
                         visible.Add(group);
                 }
@@ -236,8 +214,7 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Returns an enumerator that iterates through a collection.
             /// </summary>
-            IEnumerator IEnumerable.GetEnumerator()
-            {
+            IEnumerator IEnumerable.GetEnumerator() {
                 return GetEnumerator();
             }
             /// <summary>
@@ -245,8 +222,7 @@ namespace ImageGlass.ImageListView
             /// </summary>
             /// <param name="array">The one-dimensional <see cref="T:System.Array"/> that is the destination of the elements copied from <see cref="T:System.Collections.ICollection"/>. The <see cref="T:System.Array"/> must have zero-based indexing.</param>
             /// <param name="index">The zero-based index in <paramref name="array"/> at which copying begins.</param>
-            void ICollection.CopyTo(Array array, int index)
-            {
+            void ICollection.CopyTo(Array array, int index) {
                 if (!(array is ImageListViewGroup[]))
                     throw new ArgumentException("An array of ImageListViewGroup is required.", "array");
                 mItems.CopyTo((ImageListViewGroup[])array, index);
@@ -256,29 +232,25 @@ namespace ImageGlass.ImageListView
             /// </summary>
             /// <param name="array">The one-dimensional <see cref="T:System.Array"/> that is the destination of the elements copied from <see cref="T:System.Collections.Generic.ICollection`1"/>. The <see cref="T:System.Array"/> must have zero-based indexing.</param>
             /// <param name="arrayIndex">The zero-based index in <paramref name="array"/> at which copying begins.</param>
-            void ICollection<ImageListViewGroup>.CopyTo(ImageListViewGroup[] array, int arrayIndex)
-            {
+            void ICollection<ImageListViewGroup>.CopyTo(ImageListViewGroup[] array, int arrayIndex) {
                 mItems.CopyTo(array, arrayIndex);
             }
             /// <summary>
             /// Gets a value indicating whether access to the <see cref="T:System.Collections.ICollection"/> is synchronized (thread safe).
             /// </summary>
-            bool ICollection.IsSynchronized
-            {
+            bool ICollection.IsSynchronized {
                 get { return false; }
             }
             /// <summary>
             /// Gets an object that can be used to synchronize access to the <see cref="T:System.Collections.ICollection"/>.
             /// </summary>
-            object ICollection.SyncRoot
-            {
+            object ICollection.SyncRoot {
                 get { throw new NotImplementedException(); }
             }
             /// <summary>
             /// Adds an item to the <see cref="T:System.Collections.IList"/>.
             /// </summary>
-            int IList.Add(object value)
-            {
+            int IList.Add(object value) {
                 if (!(value is ImageListViewGroup))
                     throw new ArgumentException("An object of type ImageListViewGroup is required.", "value");
                 ImageListViewGroup item = (ImageListViewGroup)value;
@@ -288,8 +260,7 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Determines whether the <see cref="T:System.Collections.IList"/> contains a specific value.
             /// </summary>
-            bool IList.Contains(object value)
-            {
+            bool IList.Contains(object value) {
                 if (!(value is ImageListViewGroup))
                     throw new ArgumentException("An object of type ImageListViewGroup is required.", "value");
                 return mItems.Contains((ImageListViewGroup)value);
@@ -297,8 +268,7 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Determines the index of a specific item in the <see cref="T:System.Collections.IList"/>.
             /// </summary>
-            int IList.IndexOf(object value)
-            {
+            int IList.IndexOf(object value) {
                 if (!(value is ImageListViewGroup))
                     throw new ArgumentException("An object of type ImageListViewGroup is required.", "value");
                 return IndexOf((ImageListViewGroup)value);
@@ -306,8 +276,7 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Inserts an item to the <see cref="T:System.Collections.IList"/> at the specified index.
             /// </summary>
-            void IList.Insert(int index, object value)
-            {
+            void IList.Insert(int index, object value) {
                 if (!(value is ImageListViewGroup))
                     throw new ArgumentException("An object of type ImageListViewGroup is required.", "value");
                 Insert(index, (ImageListViewGroup)value);
@@ -315,15 +284,13 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Gets a value indicating whether the <see cref="T:System.Collections.IList"/> has a fixed size.
             /// </summary>
-            bool IList.IsFixedSize
-            {
+            bool IList.IsFixedSize {
                 get { return false; }
             }
             /// <summary>
             /// Removes the first occurrence of a specific object from the <see cref="T:System.Collections.IList"/>.
             /// </summary>
-            void IList.Remove(object value)
-            {
+            void IList.Remove(object value) {
                 if (!(value is ImageListViewGroup))
                     throw new ArgumentException("An object of type ImageListViewGroup is required.", "value");
                 Remove((ImageListViewGroup)value);
@@ -331,14 +298,11 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Gets or sets the <see cref="System.Object"/> at the specified index.
             /// </summary>
-            object IList.this[int index]
-            {
-                get
-                {
+            object IList.this[int index] {
+                get {
                     return this[index];
                 }
-                set
-                {
+                set {
                     if (!(value is ImageListViewGroup))
                         throw new ArgumentException("An object of type ImageListViewGroup is required.", "value");
                     this[index] = (ImageListViewGroup)value;

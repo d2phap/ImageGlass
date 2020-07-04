@@ -151,7 +151,7 @@ namespace ImageGlass {
         }
 
         private void BtnClose_Click(object sender, EventArgs e) {
-            var frm = (frmMain) this._currentOwner;
+            var frm = (frmMain)this._currentOwner;
             frm.ShowCropTool(false);
         }
 

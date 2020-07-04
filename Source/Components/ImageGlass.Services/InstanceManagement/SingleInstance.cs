@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Pipes;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ImageGlass.Services.InstanceManagement {
     /// <summary>
@@ -29,7 +30,7 @@ namespace ImageGlass.Services.InstanceManagement {
     /// </summary>
     public class SingleInstance: IDisposable {
         private Mutex mutex = null;
-        private Boolean ownsMutex = false;
+        private readonly bool ownsMutex = false;
         private Guid identifier = Guid.Empty;
 
         /// <summary>
@@ -44,24 +45,23 @@ namespace ImageGlass.Services.InstanceManagement {
         /// <summary>
         /// Indicates whether this is the first instance of this application.
         /// </summary>
-        public Boolean IsFirstInstance { get { return ownsMutex; } }
+        public bool IsFirstInstance => ownsMutex;
 
         /// <summary>
         /// Passes the given arguments to the first running instance of the application.
         /// </summary>
         /// <param name="arguments">The arguments to pass.</param>
         /// <returns>Return true if the operation succeded, false otherwise.</returns>
-        public Boolean PassArgumentsToFirstInstance(String[] arguments) {
+        public async Task<bool> PassArgumentsToFirstInstance(String[] arguments) {
             if (IsFirstInstance)
                 throw new InvalidOperationException("This is the first instance.");
 
             try {
-                using (NamedPipeClientStream client = new NamedPipeClientStream(identifier.ToString()))
-                using (StreamWriter writer = new StreamWriter(client)) {
-                    client.Connect(200);
-
-                    foreach (String argument in arguments)
-                        writer.WriteLine(argument);
+                using (var client = new NamedPipeClientStream(identifier.ToString()))
+                using (var writer = new StreamWriter(client)) {
+                    await client.ConnectAsync(200);
+                    foreach (var argument in arguments)
+                        await writer.WriteLineAsync(argument);
                 }
                 return true;
             }
@@ -84,15 +84,15 @@ namespace ImageGlass.Services.InstanceManagement {
         /// Listens for arguments on a named pipe.
         /// </summary>
         /// <param name="state">State object required by WaitCallback delegate.</param>
-        private void ListenForArguments(Object state) {
+        private async void ListenForArguments(Object state) {
             try {
-                using (NamedPipeServerStream server = new NamedPipeServerStream(identifier.ToString()))
-                using (StreamReader reader = new StreamReader(server)) {
-                    server.WaitForConnection();
+                using (var server = new NamedPipeServerStream(identifier.ToString()))
+                using (var reader = new StreamReader(server)) {
+                    await server.WaitForConnectionAsync();
 
-                    List<String> arguments = new List<String>();
+                    var arguments = new List<String>();
                     while (server.IsConnected)
-                        arguments.Add(reader.ReadLine());
+                        arguments.Add(await reader.ReadLineAsync());
 
                     ThreadPool.QueueUserWorkItem(new WaitCallback(CallOnArgumentsReceived), arguments.ToArray());
                 }
@@ -124,13 +124,12 @@ namespace ImageGlass.Services.InstanceManagement {
         /// </summary>
         /// <param name="arguments">The arguments to pass with the ArgumentsReceivedEventArgs.</param>
         private void OnArgumentsReceived(String[] arguments) {
-            if (ArgumentsReceived != null)
-                ArgumentsReceived(this, new ArgumentsReceivedEventArgs() { Args = arguments });
+            ArgumentsReceived?.Invoke(this, new ArgumentsReceivedEventArgs() { Args = arguments });
         }
 
 
         #region IDisposable
-        private Boolean disposed = false;
+        private bool disposed = false;
 
         protected virtual void Dispose(bool disposing) {
             if (!disposed) {
@@ -142,9 +141,7 @@ namespace ImageGlass.Services.InstanceManagement {
             }
         }
 
-        ~SingleInstance() {
-            Dispose(false);
-        }
+        ~SingleInstance() => Dispose(false);
 
         public void Dispose() {
             Dispose(true);

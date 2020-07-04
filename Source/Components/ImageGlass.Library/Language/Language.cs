@@ -23,77 +23,43 @@ using System.Xml;
 
 namespace ImageGlass.Library {
     public class Language {
-        private string _langCode;
-        private string _langName;
-        private string _author;
-        private string _description;
-        private string _minVersion;
-        private string _fileName;
-        private RightToLeft _isRightToLeftLayout;
-        //private Dictionary<string, string> _Items;
-
-        private LanguageItem<string, string> _Items;
 
         #region Properties
         /// <summary>
         /// Get, set code of language
         /// </summary>
-        public string LangCode {
-            get { return _langCode; }
-            set { _langCode = value; }
-        }
+        public string LangCode { get; set; }
 
         //Get, set name of language
-        public string LangName {
-            get { return _langName; }
-            set { _langName = value; }
-        }
+        public string LangName { get; set; }
 
         //Get, set author
-        public string Author {
-            get { return _author; }
-            set { _author = value; }
-        }
+        public string Author { get; set; }
 
         /// <summary>
         /// Get, set description
         /// </summary>
-        public string Description {
-            get { return _description; }
-            set { _description = value; }
-        }
+        public string Description { get; set; }
 
         /// <summary>
         /// Get, set language file path
         /// </summary>
-        public string FileName {
-            get { return _fileName; }
-            set { _fileName = value; }
-        }
+        public string FileName { get; set; }
 
         /// <summary>
         /// Get, set list of language string
         /// </summary>
-        public LanguageItem<string, string> Items {
-            get { return _Items; }
-            set { _Items = value; }
-        }
+        public LanguageItem<string, string> Items { get; set; }
 
         /// <summary>
         /// Gets, sets minimum version of ImageGlass that compatible with.
         /// </summary>
-        public string MinVersion {
-            get { return _minVersion; }
-            set { _minVersion = value; }
-        }
+        public string MinVersion { get; set; }
 
         /// <summary>
         /// Gets, sets the value that indicates right-to-left layout style
         /// </summary>
-        public RightToLeft IsRightToLeftLayout {
-            get { return _isRightToLeftLayout; }
-            set { _isRightToLeftLayout = value; }
-        }
+        public RightToLeft IsRightToLeftLayout { get; set; }
         #endregion
 
 
@@ -101,15 +67,15 @@ namespace ImageGlass.Library {
         /// Set default values of Language
         /// </summary>
         public Language() {
-            _langCode = "en-US";
-            _langName = "Local name of the language";
-            _author = "ImageGlass community";
-            _description = "English name of language";
-            _minVersion = "7.6.4.30";
-            _fileName = "";
-            _isRightToLeftLayout = RightToLeft.No;
+            LangCode = "en-US";
+            LangName = "Local name of the language";
+            Author = "ImageGlass community";
+            Description = "English name of language";
+            MinVersion = "7.6.5.0";
+            FileName = "";
+            IsRightToLeftLayout = RightToLeft.No;
 
-            _Items = new LanguageItem<string, string>();
+            Items = new LanguageItem<string, string>();
             InitDefaultLanguageDictionary();
         }
 
@@ -121,12 +87,12 @@ namespace ImageGlass.Library {
         /// <param name="fileName">*.igLang path</param>
         /// <param name="dirPath">The directory path contains language file (for relative filename)</param>
         public Language(string fileName, string dirPath = "") {
-            _Items = new LanguageItem<string, string>();
+            Items = new LanguageItem<string, string>();
             InitDefaultLanguageDictionary();
 
-            _fileName = Path.Combine(dirPath, fileName);
+            FileName = Path.Combine(dirPath, fileName);
 
-            if (File.Exists(_fileName)) {
+            if (File.Exists(FileName)) {
                 ReadLanguageFile();
             }
         }
@@ -137,8 +103,8 @@ namespace ImageGlass.Library {
         /// Read language strings from file (new format)
         /// </summary>
         public void ReadLanguageFile() {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(_fileName);
+            var doc = new XmlDocument();
+            doc.Load(FileName);
             XmlElement root = (XmlElement)doc.DocumentElement;// <ImageGlass>
             XmlElement nType = (XmlElement)root.SelectNodes("Language")[0]; //<Language>
             XmlElement n = (XmlElement)nType.SelectNodes("Info")[0];//<Info>
@@ -178,7 +144,7 @@ namespace ImageGlass.Library {
         /// </summary>
         /// <param name="filename"></param>
         public void ExportLanguageToXML(string filename) {
-            XmlDocument doc = new XmlDocument();
+            var doc = new XmlDocument();
             XmlElement root = doc.CreateElement("ImageGlass");// <ImageGlass>
             XmlElement nType = doc.CreateElement("Language");// <Language>
 
@@ -472,7 +438,7 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.chkConfirmationDelete", "Display Delete confirmation dialog"); //v4.0
             Items.Add("frmSetting.chkCenterWindowFit", "Auto-center the window in Window Fit mode"); //v7.5
             Items.Add("frmSetting.chkShowToast", "Show toast message"); //v7.5
-            
+
             #endregion
             #endregion
 

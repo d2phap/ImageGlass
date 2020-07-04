@@ -83,9 +83,7 @@ namespace ImageGlass.Heart {
         /// The Img class contain image data
         /// </summary>
         /// <param name="filename">Image filename</param>
-        public Img(string filename) {
-            this.Filename = filename;
-        }
+        public Img(string filename) => this.Filename = filename;
 
 
         #region PUBLIC FUNCTIONS
@@ -142,7 +140,7 @@ namespace ImageGlass.Heart {
                     var dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
                     this.PageCount = this.Image.GetFrameCount(dim);
                 }
-                
+
             }
             catch (Exception ex) {
                 // save the error
@@ -184,7 +182,7 @@ namespace ImageGlass.Heart {
             this.ActivePageIndex = index;
 
             // Set active page index
-            FrameDimension dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
+            var dim = new FrameDimension(Image.FrameDimensionsList[0]);
             this.Image.SelectActiveFrame(dim, this.ActivePageIndex);
         }
 

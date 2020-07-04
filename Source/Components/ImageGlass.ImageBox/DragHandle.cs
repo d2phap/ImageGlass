@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 
-namespace ImageGlass
-{
+namespace ImageGlass {
     // Cyotek ImageBox
     // Copyright (c) 2010-2015 Cyotek Ltd.
     // http://cyotek.com
@@ -11,13 +10,11 @@ namespace ImageGlass
 
     // If you use this control in your applications, attribution, donations or contributions are welcome.
 
-    public class DragHandle
-    {
+    public class DragHandle {
         #region Public Constructors
 
         public DragHandle(DragHandleAnchor anchor)
-          : this()
-        {
+          : this() {
             this.Anchor = anchor;
         }
 
@@ -25,8 +22,7 @@ namespace ImageGlass
 
         #region Protected Constructors
 
-        protected DragHandle()
-        {
+        protected DragHandle() {
             this.Enabled = true;
             this.Visible = true;
         }

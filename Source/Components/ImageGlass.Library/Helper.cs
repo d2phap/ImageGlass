@@ -70,7 +70,7 @@ namespace ImageGlass.Library {
         /// <param name="length"></param>
         /// <returns></returns>
         public static string ShortenPath(string path, int length) {
-            StringBuilder sb = new StringBuilder(length);
+            var sb = new StringBuilder(length);
             PathCompactPathEx(sb, path, length, 0);
             return sb.ToString();
         }

@@ -16,17 +16,15 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
-using System.IO;
 using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 
-namespace ImageGlass.ImageListView
-{
+namespace ImageGlass.ImageListView {
     /// <summary>
     /// Reads shell icons and shell file types.
     /// </summary>
-    internal class ShellInfoExtractor
-    {
+    internal class ShellInfoExtractor {
         #region Platform Invoke
         // GetFileAttributesEx
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
@@ -35,14 +33,12 @@ namespace ImageGlass.ImageListView
             GET_FILEEX_INFO_LEVELS fInfoLevelId,
             out WIN32_FILE_ATTRIBUTE_DATA fileData);
 
-        private enum GET_FILEEX_INFO_LEVELS
-        {
+        private enum GET_FILEEX_INFO_LEVELS {
             GetFileExInfoStandard,
             GetFileExMaxInfoLevel
         }
         [StructLayout(LayoutKind.Sequential)]
-        private struct WIN32_FILE_ATTRIBUTE_DATA
-        {
+        private struct WIN32_FILE_ATTRIBUTE_DATA {
             public FileAttributes dwFileAttributes;
             public FILETIME ftCreationTime;
             public FILETIME ftLastAccessTime;
@@ -51,15 +47,12 @@ namespace ImageGlass.ImageListView
             public uint nFileSizeLow;
         }
         [StructLayout(LayoutKind.Sequential)]
-        private struct FILETIME
-        {
+        private struct FILETIME {
             public uint dwLowDateTime;
             public uint dwHighDateTime;
 
-            public DateTime Value
-            {
-                get
-                {
+            public DateTime Value {
+                get {
                     long longTime = (((long)dwHighDateTime) << 32) | ((uint)dwLowDateTime);
                     return DateTime.FromFileTimeUtc(longTime);
                 }
@@ -73,8 +66,7 @@ namespace ImageGlass.ImageListView
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr SHGetFileInfo(string pszPath, FileAttributes dwFileAttributes, out SHFILEINFO psfi, uint cbFileInfo, SHGFI uFlags);
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        private struct SHFILEINFO
-        {
+        private struct SHFILEINFO {
             public IntPtr hIcon;
             public int iIcon;
             public uint dwAttributes;
@@ -86,8 +78,7 @@ namespace ImageGlass.ImageListView
         private const int MAX_PATH = 260;
         private const int MAX_TYPE = 80;
         [Flags]
-        private enum SHGFI : uint
-        {
+        private enum SHGFI: uint {
             Icon = 0x000000100,
             DisplayName = 0x000000200,
             TypeName = 0x000000400,
@@ -132,8 +123,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Initializes a new instance of the ShellInfoExtractor class.
         /// </summary>
-        private ShellInfoExtractor()
-        {
+        private ShellInfoExtractor() {
             ;
         }
         #endregion
@@ -143,12 +133,10 @@ namespace ImageGlass.ImageListView
         /// Creates an instance of the ShellInfoExtractor class.
         /// </summary>
         /// <param name="path">Filepath of image</param>
-        public static ShellInfoExtractor FromFile(string path)
-        {
+        public static ShellInfoExtractor FromFile(string path) {
             ShellInfoExtractor info = new ShellInfoExtractor();
 
-            try
-            {
+            try {
                 SHFILEINFO shinfo = new SHFILEINFO();
                 uint structSize = (uint)Marshal.SizeOf(shinfo);
                 SHGFI flags = SHGFI.Icon | SHGFI.SmallIcon | SHGFI.TypeName | SHGFI.UseFileAttributes;
@@ -161,10 +149,8 @@ namespace ImageGlass.ImageListView
                 info.FileType = shinfo.szTypeName;
 
                 // Get small icon 
-                if (hImg != IntPtr.Zero && shinfo.hIcon != IntPtr.Zero)
-                {
-                    using (Icon newIcon = System.Drawing.Icon.FromHandle(shinfo.hIcon))
-                    {
+                if (hImg != IntPtr.Zero && shinfo.hIcon != IntPtr.Zero) {
+                    using (Icon newIcon = System.Drawing.Icon.FromHandle(shinfo.hIcon)) {
                         info.SmallIcon = newIcon.ToBitmap();
                     }
                     DestroyIcon(shinfo.hIcon);
@@ -176,10 +162,8 @@ namespace ImageGlass.ImageListView
                 hImg = SHGetFileInfo(path, FileAttributes.Normal, out shinfo,
                     structSize, SHGFI.Icon | SHGFI.LargeIcon | SHGFI.UseFileAttributes);
 
-                if (hImg != IntPtr.Zero && shinfo.hIcon != IntPtr.Zero)
-                {
-                    using (Icon newIcon = System.Drawing.Icon.FromHandle(shinfo.hIcon))
-                    {
+                if (hImg != IntPtr.Zero && shinfo.hIcon != IntPtr.Zero) {
+                    using (Icon newIcon = System.Drawing.Icon.FromHandle(shinfo.hIcon)) {
                         info.LargeIcon = newIcon.ToBitmap();
                     }
                     DestroyIcon(shinfo.hIcon);
@@ -187,8 +171,7 @@ namespace ImageGlass.ImageListView
                 else
                     info.Error = new Exception("Error reading shell icon");
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 info.Error = e;
             }
 

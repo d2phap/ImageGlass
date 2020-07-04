@@ -15,15 +15,12 @@
 //
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
-namespace ImageGlass.ImageListView
-{
-    public partial class ImageListView
-    {
+namespace ImageGlass.ImageListView {
+    public partial class ImageListView {
         /// <summary>
         /// Represents the details of a mouse hit test.
         /// </summary>
-        public class HitInfo
-        {
+        public class HitInfo {
             #region Properties
             /// <summary>
             /// Gets whether an item is under the hit point.
@@ -102,8 +99,7 @@ namespace ImageGlass.ImageListView
             /// <param name="inPaneArea">if set to true the mouse cursor is in the left-pane area.</param>
             private HitInfo(int itemIndex, bool checkBoxHit, ImageListViewGroup group, ImageListViewColumnHeader column,
                 ImageListViewColumnHeader columnSeparator, int subItemIndex,
-                bool paneBorder, bool inItemArea, bool inHeaderArea, bool inPaneArea)
-            {
+                bool paneBorder, bool inItemArea, bool inHeaderArea, bool inPaneArea) {
                 ItemIndex = itemIndex;
                 CheckBoxHit = checkBoxHit;
                 Group = group;
@@ -125,8 +121,7 @@ namespace ImageGlass.ImageListView
             /// <param name="subItemIndex">Index of the sub item.</param>
             /// <param name="checkBoxHit">if set to true the mouse cursor is over a checkbox.</param>
             internal HitInfo(int itemIndex, int subItemIndex, bool checkBoxHit)
-                : this(itemIndex, checkBoxHit, null, null, null, subItemIndex, false, true, false, false)
-            {
+                : this(itemIndex, checkBoxHit, null, null, null, subItemIndex, false, true, false, false) {
                 ;
             }
             /// <summary>
@@ -135,8 +130,7 @@ namespace ImageGlass.ImageListView
             /// </summary>
             /// <param name="group">The group header hit.</param>
             internal HitInfo(ImageListViewGroup group)
-                : this(-1, false, group, null, null, -1, false, false, true, false)
-            {
+                : this(-1, false, group, null, null, -1, false, false, true, false) {
                 ;
             }
             /// <summary>
@@ -146,8 +140,7 @@ namespace ImageGlass.ImageListView
             /// <param name="column">Type column hit.</param>
             /// <param name="columnSeparator">The column separator.</param>
             internal HitInfo(ImageListViewColumnHeader column, ImageListViewColumnHeader columnSeparator)
-                : this(-1, false, null, column, columnSeparator, -1, false, false, true, false)
-            {
+                : this(-1, false, null, column, columnSeparator, -1, false, false, true, false) {
                 ;
             }
             /// <summary>
@@ -157,8 +150,7 @@ namespace ImageGlass.ImageListView
             /// <param name="paneBorder">True if the hit point is over the left-pane 
             /// border, false otherwise.</param>
             internal HitInfo(bool paneBorder)
-                : this(-1, false, null, null, null, -1, paneBorder, false, false, true)
-            {
+                : this(-1, false, null, null, null, -1, paneBorder, false, false, true) {
                 ;
             }
             #endregion
