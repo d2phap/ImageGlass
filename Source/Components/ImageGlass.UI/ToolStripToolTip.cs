@@ -78,7 +78,7 @@ namespace ImageGlass.UI {
         #region Protected methods
         protected override void OnMouseMove(MouseEventArgs mea) {
             base.OnMouseMove(mea);
-            ToolStripItem newMouseOverItem = this.GetItemAt(mea.Location);
+            var newMouseOverItem = this.GetItemAt(mea.Location);
             if (mouseOverItem != newMouseOverItem ||
                 (Math.Abs(mouseOverPoint.X - mea.X) > SystemInformation.MouseHoverSize.Width || (Math.Abs(mouseOverPoint.Y - mea.Y) > SystemInformation.MouseHoverSize.Height))) {
                 mouseOverItem = newMouseOverItem;
@@ -91,7 +91,7 @@ namespace ImageGlass.UI {
 
         protected override void OnMouseClick(MouseEventArgs e) {
             base.OnMouseClick(e);
-            ToolStripItem newMouseOverItem = this.GetItemAt(e.Location);
+            var newMouseOverItem = this.GetItemAt(e.Location);
             if (newMouseOverItem != null) {
                 Tooltip.Hide(this);
             }
@@ -211,7 +211,7 @@ namespace ImageGlass.UI {
 
 
                     // get the gap of content width and toolbar width
-                    int gap = Math.Abs(this.Width - toolbarContentWidth);
+                    var gap = Math.Abs(this.Width - toolbarContentWidth);
 
                     // update the left margin value
                     margin.Left = gap / 2;

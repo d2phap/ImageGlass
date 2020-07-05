@@ -105,9 +105,9 @@ namespace ImageGlass.Library {
         public void ReadLanguageFile() {
             var doc = new XmlDocument();
             doc.Load(FileName);
-            XmlElement root = (XmlElement)doc.DocumentElement;// <ImageGlass>
-            XmlElement nType = (XmlElement)root.SelectNodes("Language")[0]; //<Language>
-            XmlElement n = (XmlElement)nType.SelectNodes("Info")[0];//<Info>
+            var root = (XmlElement)doc.DocumentElement;// <ImageGlass>
+            var nType = (XmlElement)root.SelectNodes("Language")[0]; //<Language>
+            var n = (XmlElement)nType.SelectNodes("Info")[0];//<Info>
 
             //Get <Info> Attributes
             LangCode = n.GetAttribute("langCode");
@@ -116,19 +116,19 @@ namespace ImageGlass.Library {
             Description = n.GetAttribute("description");
             MinVersion = n.GetAttribute("minVersion");
 
-            bool.TryParse(n.GetAttribute("isRightToLeftLayout"), out bool _isRightToLeftLayout);
+            bool.TryParse(n.GetAttribute("isRightToLeftLayout"), out var _isRightToLeftLayout);
             IsRightToLeftLayout = _isRightToLeftLayout ? RightToLeft.Yes : RightToLeft.No; //v3.2
 
             //Get <Content> element
-            XmlElement nContent = (XmlElement)nType.SelectNodes("Content")[0];//<Content>
+            var nContent = (XmlElement)nType.SelectNodes("Content")[0];//<Content>
 
             //Get all lang items
-            XmlNodeList nLangList = nContent.SelectNodes("Item");//<Item>
+            var nLangList = nContent.SelectNodes("Item");//<Item>
 
             foreach (var item in nLangList) {
-                XmlElement nItem = (XmlElement)item;
-                string _key = nItem.GetAttribute("key");
-                string _value = nItem.GetAttribute("value").Replace("\\n", "\n");
+                var nItem = (XmlElement)item;
+                var _key = nItem.GetAttribute("key");
+                var _value = nItem.GetAttribute("value").Replace("\\n", "\n");
 
                 try {
                     Items[_key] = _value;
@@ -145,10 +145,10 @@ namespace ImageGlass.Library {
         /// <param name="filename"></param>
         public void ExportLanguageToXML(string filename) {
             var doc = new XmlDocument();
-            XmlElement root = doc.CreateElement("ImageGlass");// <ImageGlass>
-            XmlElement nType = doc.CreateElement("Language");// <Language>
+            var root = doc.CreateElement("ImageGlass");// <ImageGlass>
+            var nType = doc.CreateElement("Language");// <Language>
 
-            XmlElement nInfo = doc.CreateElement("Info");// <Info>
+            var nInfo = doc.CreateElement("Info");// <Info>
             nInfo.SetAttribute("langCode", LangCode);
             nInfo.SetAttribute("langName", LangName);
             nInfo.SetAttribute("author", Author);
@@ -157,9 +157,9 @@ namespace ImageGlass.Library {
             nInfo.SetAttribute("isRightToLeftLayout", IsRightToLeftLayout.ToString());
             nType.AppendChild(nInfo);// <Info />
 
-            XmlElement nContent = doc.CreateElement("Content");// <Content>
+            var nContent = doc.CreateElement("Content");// <Content>
             foreach (var item in Items) {
-                XmlElement n = doc.CreateElement("Item"); // <Item>
+                var n = doc.CreateElement("Item"); // <Item>
                 n.SetAttribute("key", item.Key);
                 n.SetAttribute("value", item.Value);
                 nContent.AppendChild(n);// <Item />

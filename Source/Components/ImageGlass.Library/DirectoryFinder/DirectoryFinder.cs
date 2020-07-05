@@ -94,7 +94,7 @@ namespace ImageGlass.Library {
 
                     try {
                         // loop through the files in this directory 
-                        foreach (FileInfo file in di.GetFiles()) {
+                        foreach (var file in di.GetFiles()) {
                             try {
                                 // add the file if it passes the filter 
                                 if ((Filter == null) || (Filter(file)))

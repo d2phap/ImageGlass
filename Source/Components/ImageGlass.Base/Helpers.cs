@@ -135,7 +135,7 @@ namespace ImageGlass.Base {
         }
 
         public static bool IsVisibleOnAnyScreen(Rectangle rect) {
-            foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens) {
+            foreach (var screen in System.Windows.Forms.Screen.AllScreens) {
                 if (screen.WorkingArea.IntersectsWith(rect))
                     return true;
             }

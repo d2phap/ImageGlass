@@ -24,7 +24,7 @@ using System.Runtime.InteropServices;
 namespace ImageGlass.Library.Comparer {
     public class WindowsNaturalSort: IComparer<string> {
         [DllImport("shlwapi.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
-        static extern int StrCmpLogicalW(String x, String y);
+        static extern int StrCmpLogicalW(string x, string y);
 
         public int Compare(string filePath1, string filePath2) {
             var basename1 = Path.GetFileName(filePath1);
@@ -37,7 +37,7 @@ namespace ImageGlass.Library.Comparer {
 
     public class ReverseWindowsNaturalSort: IComparer<string> {
         [DllImport("shlwapi.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
-        static extern int StrCmpLogicalW(String x, String y);
+        static extern int StrCmpLogicalW(string x, string y);
 
         public int Compare(string filePath1, string filePath2) {
             var basename1 = Path.GetFileName(filePath2);

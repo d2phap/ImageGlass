@@ -105,7 +105,7 @@ namespace ImageGlass {
                     using var bmp = new Bitmap(_imgBox.Image);
                     _bmpBooster = new BitmapBooster(bmp);
 
-                    Color color = _bmpBooster.Get(_cursorPos.X, _cursorPos.Y);
+                    var color = _bmpBooster.Get(_cursorPos.X, _cursorPos.Y);
                     _DisplayColor(color);
 
                     _bmpBooster.Dispose();

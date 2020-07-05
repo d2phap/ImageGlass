@@ -105,7 +105,6 @@
   <ItemGroup>
     <Compile Include="BitmapBooster.cs" />
     <Compile Include="Factory.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Img.cs" />
     <Compile Include="ImgData.cs" />

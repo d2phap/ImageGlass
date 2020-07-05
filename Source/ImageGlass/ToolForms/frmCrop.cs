@@ -121,7 +121,7 @@ namespace ImageGlass {
             UpdateUI();
 
             // Windows Bound (Position + Size)-------------------------------------------
-            Rectangle rc = Helpers.StringToRect("0;0;300;160");
+            var rc = Helpers.StringToRect("0;0;300;160");
 
             if (rc.X == 0 && rc.Y == 0) {
                 _locationOffset = DefaultLocationOffset;

@@ -104,7 +104,7 @@ namespace ImageGlass.UI.ToolForms {
 
         protected static bool CheckAeroEnabled() {
             if (Environment.OSVersion.Version.Major >= 6) {
-                int enabled = 0;
+                var enabled = 0;
                 DwmIsCompositionEnabled(ref enabled);
                 return (enabled == 1);
             }
@@ -143,7 +143,7 @@ namespace ImageGlass.UI.ToolForms {
 
         protected override CreateParams CreateParams {
             get {
-                CreateParams baseParams = base.CreateParams;
+                var baseParams = base.CreateParams;
                 baseParams.ExStyle |= 0x8000000 // WS_EX_NOACTIVATE
                                       | 0x00000080;   // WS_EX_TOOLWINDOW
 
@@ -235,7 +235,7 @@ namespace ImageGlass.UI.ToolForms {
             }
 
             // set location based on the main form
-            Point ownerLocation = Owner.Location;
+            var ownerLocation = Owner.Location;
             ownerLocation.Offset(parentOffset);
 
             Location = ownerLocation;

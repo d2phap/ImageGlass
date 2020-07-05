@@ -108,12 +108,12 @@ namespace ImageGlass.Settings {
                 return list;
             }
 
-            XmlElement root = doc.DocumentElement;// <ImageGlass>
-            XmlElement nType = (XmlElement)root.SelectNodes("Configuration")[0]; // <Configuration>
+            var root = doc.DocumentElement;// <ImageGlass>
+            var nType = (XmlElement)root.SelectNodes("Configuration")[0]; // <Configuration>
 
             if (isUserConfigFile) {
                 // Get <Info> element
-                XmlElement nInfo = (XmlElement)nType.SelectNodes("Info")[0];// <Info>
+                var nInfo = (XmlElement)nType.SelectNodes("Info")[0];// <Info>
                 var version = nInfo.GetAttribute("version");
                 this.IsCompatible = version == this.Version;
                 this.Version = this.IsCompatible ? version : this.Version;
@@ -121,14 +121,14 @@ namespace ImageGlass.Settings {
 
 
             // Get <Content> element
-            XmlElement nContent = (XmlElement)nType.SelectNodes("Content")[0];// <Content>
+            var nContent = (XmlElement)nType.SelectNodes("Content")[0];// <Content>
 
             // Get all config items
-            XmlNodeList nItems = nContent.SelectNodes("Item");// <Item>
+            var nItems = nContent.SelectNodes("Item");// <Item>
 
             foreach (var item in nItems) {
                 var nItem = (XmlElement)item;
-                string key = nItem.GetAttribute("key");
+                var key = nItem.GetAttribute("key");
 
                 //Issue #567: this breaks LastSeenImagePath when "\n" is part of the path
                 var value = nItem.GetAttribute("value");
@@ -154,21 +154,21 @@ namespace ImageGlass.Settings {
         /// <param name="configs"></param>
         private void WriteConfigFile(Dictionary<string, string> configs, string filename) {
             var doc = new XmlDocument();
-            XmlElement root = doc.CreateElement("ImageGlass"); // <ImageGlass>
-            XmlElement nConfig = doc.CreateElement("Configuration"); // <Configuration>
+            var root = doc.CreateElement("ImageGlass"); // <ImageGlass>
+            var nConfig = doc.CreateElement("Configuration"); // <Configuration>
 
 
-            XmlElement nInfo = doc.CreateElement("Info"); // <Info>
+            var nInfo = doc.CreateElement("Info"); // <Info>
             nInfo.SetAttribute("description", this.Description);
             nInfo.SetAttribute("version", this.Version);
             nConfig.AppendChild(nInfo); // <Info />
 
 
             // Write config items
-            XmlElement nContent = doc.CreateElement("Content"); // <Content>
+            var nContent = doc.CreateElement("Content"); // <Content>
 
             foreach (var item in configs) {
-                XmlElement nItem = doc.CreateElement("Item"); // <Item>
+                var nItem = doc.CreateElement("Item"); // <Item>
                 nItem.SetAttribute("key", item.Key);
                 nItem.SetAttribute("value", item.Value);
                 nContent.AppendChild(nItem); // <Item />

@@ -88,15 +88,15 @@ namespace ImageGlass.Library.Net {
                 WebRequest wRemote = default;
                 byte[] bBuffer = null;
                 bBuffer = new byte[257];
-                int iBytesRead = 0;
-                int iTotalBytesRead = 0;
+                var iBytesRead = 0;
+                var iTotalBytesRead = 0;
 
                 fs = new FileStream(filename, FileMode.Create, FileAccess.Write);
                 wRemote = WebRequest.Create(URL);
-                WebResponse myWebResponse = await wRemote.GetResponseAsync();
+                var myWebResponse = await wRemote.GetResponseAsync();
 
                 FileDownloadSizeObtained?.Invoke(myWebResponse.ContentLength);
-                Stream sChunks = myWebResponse.GetResponseStream();
+                var sChunks = myWebResponse.GetResponseStream();
 
                 do {
                     iBytesRead = await sChunks.ReadAsync(bBuffer, 0, 256);
@@ -138,7 +138,7 @@ namespace ImageGlass.Library.Net {
         /// <returns></returns>
         public static string FormatFileSize(double size, ref string donVi) {
             try {
-                int KB = 1024;
+                var KB = 1024;
                 long MB = KB * KB;
 
                 // Return size of file in kilobytes.
@@ -147,7 +147,7 @@ namespace ImageGlass.Library.Net {
                     return size.ToString("D");
                 }
                 else {
-                    double fs = size / KB;
+                    var fs = size / KB;
 
                     if (fs < 1000) {
                         donVi = " KB";

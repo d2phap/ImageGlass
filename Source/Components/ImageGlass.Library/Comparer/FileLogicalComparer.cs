@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2013 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
@@ -34,7 +34,7 @@ namespace ImageGlass.Library.Comparer {
 
         public void AddFiles(string[] f) {
             if (f == null) return;
-            for (int i = 0; i < f.Length; i++) {
+            for (var i = 0; i < f.Length; i++) {
                 AddFile(f[i]);
             }
         }
@@ -58,11 +58,11 @@ namespace ImageGlass.Library.Comparer {
 
             var fc = new FileLogicalComparer();
             fc.AddFiles(stringArray);
-            ArrayList ds = fc.GetSorted();
+            var ds = fc.GetSorted();
 
             if (ds == null) return stringArray;
 
-            for (int i = 0; i < ds.Count; i++) {
+            for (var i = 0; i < ds.Count; i++) {
                 stringArray[i] = (string)((DictionaryEntry)ds[i]).Value;
             }
 

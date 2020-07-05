@@ -1125,7 +1125,7 @@ namespace ImageGlass.Settings {
         /// <returns></returns>
         public static List<ToolbarButton> GetToolbarButtons(string buttons) {
             var list = new List<ToolbarButton>();
-            string[] splitvals = buttons.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            var splitvals = buttons.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var item in splitvals) {
                 try {

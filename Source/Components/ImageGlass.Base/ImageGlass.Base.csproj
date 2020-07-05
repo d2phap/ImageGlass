@@ -94,7 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Types\Constants.cs" />
     <Compile Include="Types\Dir.cs" />
     <Compile Include="Types\Enums.cs" />

@@ -41,8 +41,8 @@ namespace ImageGlass.Heart {
 
         public Color Get(int x, int y) {
             unsafe {
-                byte* o = (byte*)dst;
-                int ofs = str * y + x * 4;
+                var o = (byte*)dst;
+                var ofs = str * y + x * 4;
 
                 return Color.FromArgb(
                     o[ofs + 3],
@@ -54,8 +54,8 @@ namespace ImageGlass.Heart {
 
         public void Set(int x, int y, Color c) {
             unsafe {
-                byte* o = (byte*)dst;
-                int ofs = str * y + x * 4;
+                var o = (byte*)dst;
+                var ofs = str * y + x * 4;
                 o[ofs + 3] = c.A;
                 o[ofs + 2] = c.R;
                 o[ofs + 1] = c.G;
@@ -70,15 +70,15 @@ namespace ImageGlass.Heart {
         }
 
         public static int Min(params int[] values) {
-            int ret = values[0];
-            for (int a = 1; a < values.Length; a++) {
+            var ret = values[0];
+            for (var a = 1; a < values.Length; a++) {
                 ret = Math.Min(ret, values[a]);
             }
             return ret;
         }
         public static int Max(params int[] values) {
-            int ret = values[0];
-            for (int a = 1; a < values.Length; a++) {
+            var ret = values[0];
+            for (var a = 1; a < values.Length; a++) {
                 ret = Math.Max(ret, values[a]);
             }
             return ret;

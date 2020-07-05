@@ -81,7 +81,7 @@ namespace ImageGlass.UI {
         /// </summary>
         /// <returns></returns>
         public static int GetSystemDpi() {
-            IntPtr hdc = GetDC(IntPtr.Zero);
+            var hdc = GetDC(IntPtr.Zero);
 
             var val = GetDeviceCaps(hdc, DeviceCaps.LOGPIXELSX);
 
@@ -126,7 +126,7 @@ namespace ImageGlass.UI {
             toolbar.Height = Transform(baseHeight);
 
             // Get new toolbar item height
-            int newBtnHeight = (int)Math.Floor(toolbar.Height * 0.8);
+            var newBtnHeight = (int)Math.Floor(toolbar.Height * 0.8);
 
             // Update toolbar items size of Tool bar buttons
             foreach (var item in toolbar.Items.OfType<ToolStripButton>()) {

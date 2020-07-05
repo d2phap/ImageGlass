@@ -163,7 +163,7 @@ namespace ImageGlass.Heart {
 
 
             // add index in the range in order: index -> right -> left -> ...
-            for (int i = 0; list.Count < maxCachedItems && list.Count < this.ImgList.Count; i++) {
+            for (var i = 0; list.Count < maxCachedItems && list.Count < this.ImgList.Count; i++) {
                 // if i is even number
                 if ((i & 1) == 0) {
                     // add right item: [index + 1; ...; to]

@@ -160,12 +160,12 @@ namespace ImageGlass {
 
             // KBR 20181009 Attempt to run a 2nd instance of IG when multi-instance turned off. Primary instance
             // will crash if no file provided (e.g. by double-clicking on .EXE in explorer).
-            int realcount = 0;
+            var realcount = 0;
             foreach (var arg in e.Args)
                 if (arg != null)
                     realcount++;
 
-            string[] realargs = new string[realcount];
+            var realargs = new string[realcount];
             Array.Copy(e.Args, realargs, realcount);
 
             // Execute our delegate on the forms thread!

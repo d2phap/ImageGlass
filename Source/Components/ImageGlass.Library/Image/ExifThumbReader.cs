@@ -1,4 +1,4 @@
-// Please do not remove :)
+﻿// Please do not remove :)
 // Written by Kourosh Derakshan
 //
 using System;
@@ -34,14 +34,14 @@ namespace ImageGlass.Library.Image {
         public static async Task<System.Drawing.Image> ReadThumb(string imagePath) {
             const int GDI_ERR_PROP_NOT_FOUND = 19;  // Property not found error
             const int GDI_ERR_OUT_OF_MEMORY = 3;
-            IntPtr buffer = IntPtr.Zero;    // Holds the thumbnail data
-            int ret = GdipLoadImageFromFile(imagePath, out IntPtr hImage);
+            var buffer = IntPtr.Zero;    // Holds the thumbnail data
+            var ret = GdipLoadImageFromFile(imagePath, out var hImage);
 
             try {
                 if (ret != 0)
                     throw createException(ret);
 
-                ret = GdipGetPropertyItemSize(hImage, THUMBNAIL_DATA, out int propSize);
+                ret = GdipGetPropertyItemSize(hImage, THUMBNAIL_DATA, out var propSize);
                 // Image has no thumbnail data in it. Return null
                 if (ret == GDI_ERR_PROP_NOT_FOUND)
                     return null;
@@ -118,13 +118,13 @@ namespace ImageGlass.Library.Image {
         /// value to a Drawing.Image item
         /// </summary>
         private static async Task<System.Drawing.Image> convertFromMemory(IntPtr thumbData) {
-            propertyItemInternal prop =
+            var prop =
                 (propertyItemInternal)Marshal.PtrToStructure
                 (thumbData, typeof(propertyItemInternal));
 
             // The image data is in the form of a byte array. Write all 
             // the bytes to a stream and create a new image from that stream
-            byte[] imageBytes = prop.Value;
+            var imageBytes = prop.Value;
             using (var stream = new MemoryStream(imageBytes.Length)) {
                 await stream.WriteAsync(imageBytes, 0, imageBytes.Length);
                 return System.Drawing.Image.FromStream(stream);
@@ -147,7 +147,7 @@ namespace ImageGlass.Library.Image {
 
             public byte[] Value {
                 get {
-                    byte[] bytes = new byte[(uint)len];
+                    var bytes = new byte[(uint)len];
                     Marshal.Copy(value, bytes, 0, len);
                     return bytes;
                 }

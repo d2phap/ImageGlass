@@ -100,7 +100,6 @@
   <ItemGroup>
     <Compile Include="Comparer\WindowsNaturalSort.cs" />
     <Compile Include="FileAssociations\RegistryHelper.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Language\LanguageItem.cs" />
     <Compile Include="Menu.cs" />

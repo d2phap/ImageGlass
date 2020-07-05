@@ -33,8 +33,8 @@ namespace ImageGlass.Library {
         /// <param name="location">The location of form to check</param>
         /// <returns></returns>
         public static bool IsOnScreen(Point location) {
-            Screen[] screens = Screen.AllScreens;
-            foreach (Screen screen in screens) {
+            var screens = Screen.AllScreens;
+            foreach (var screen in screens) {
                 if (screen.WorkingArea.Contains(location)) {
                     return true;
                 }
@@ -50,8 +50,8 @@ namespace ImageGlass.Library {
         /// <param name="bounds"></param>
         /// <returns></returns>
         public static bool IsAnyPartOnScreen(Rectangle bounds) {
-            Screen[] screens = Screen.AllScreens;
-            foreach (Screen screen in screens) {
+            var screens = Screen.AllScreens;
+            foreach (var screen in screens) {
                 if (screen.WorkingArea.IntersectsWith(bounds)) {
                     return true;
                 }

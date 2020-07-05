@@ -64,10 +64,10 @@ namespace ImageGlass.UI {
         protected override void WndProc(ref Message m) {
             base.WndProc(ref m);
 
-            int WM_NCHITTEST = 0x84;
+            var WM_NCHITTEST = 0x84;
             if (m.Msg == WM_NCHITTEST) {
-                int HTCLIENT = 1;
-                int HTCAPTION = 2;
+                var HTCLIENT = 1;
+                var HTCAPTION = 2;
                 if (m.Result.ToInt32() == HTCLIENT)
                     m.Result = (IntPtr)HTCAPTION;
             }
@@ -81,7 +81,7 @@ namespace ImageGlass.UI {
             if (Filter == null)
                 return;
 
-            bool accept = Filter(e.KeyChar);
+            var accept = Filter(e.KeyChar);
             if (!accept)
                 e.Handled = true;
         }

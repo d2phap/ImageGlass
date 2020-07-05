@@ -96,7 +96,6 @@
   <ItemGroup>
     <Compile Include="Configs.cs" />
     <Compile Include="ConfigSource.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

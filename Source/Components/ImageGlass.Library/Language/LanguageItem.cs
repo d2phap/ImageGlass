@@ -52,8 +52,7 @@ namespace ImageGlass.Library {
             Remarks = string.Empty;
         }
 
-        protected LanguageItem(System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext)
-        {
+        protected LanguageItem(System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext) {
             throw new NotImplementedException();
         }
     }

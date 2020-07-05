@@ -56,9 +56,9 @@ namespace ImageGlass.Library.Image {
         /// <param name="uri">Image filename</param>
         /// <param name="style">Style of wallpaper</param>
         public static void Set(Uri uri, Style style) {
-            Stream s = new System.Net.WebClient().OpenRead(uri.ToString());
+            var s = new System.Net.WebClient().OpenRead(uri.ToString());
 
-            System.Drawing.Image img = System.Drawing.Image.FromStream(s);
+            var img = System.Drawing.Image.FromStream(s);
             Set(img, style);
         }
 
@@ -69,10 +69,10 @@ namespace ImageGlass.Library.Image {
         /// <param name="style">Style of wallpaper</param>
         public static void Set(System.Drawing.Image img, Style style) {
             try {
-                string tempPath = Path.Combine(Path.GetTempPath(), "imageglass.jpg");
+                var tempPath = Path.Combine(Path.GetTempPath(), "imageglass.jpg");
                 img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Jpeg);
 
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
+                var key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
                 if (key == null)
                     return;
 
@@ -125,12 +125,12 @@ namespace ImageGlass.Library.Image {
             }
 
             try {
-                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true)) {
+                using (var key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true)) {
                     if (key == null)
                         return Result.Fail;
 
-                    string tileVal = "0"; // default not-tiled
-                    string winStyle = "1"; // default centered
+                    var tileVal = "0"; // default not-tiled
+                    var winStyle = "1"; // default centered
                     switch (style) {
                         case Style.Tiled:
                             tileVal = "1";

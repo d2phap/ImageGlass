@@ -69,12 +69,12 @@ namespace ImageGlass {
 
         #region MOUSE ENTER - HOVER - DOWN MENU
         private void lblMenu_MouseDown(object sender, MouseEventArgs e) {
-            Label lbl = (Label)sender;
+            var lbl = (Label)sender;
             lbl.BackColor = M_COLOR_MENU_ACTIVE;
         }
 
         private void lblMenu_MouseUp(object sender, MouseEventArgs e) {
-            Label lbl = (Label)sender;
+            var lbl = (Label)sender;
 
             if (int.Parse(lbl.Tag.ToString()) == 1) {
                 lbl.BackColor = M_COLOR_MENU_SELECTED;
@@ -85,7 +85,7 @@ namespace ImageGlass {
         }
 
         private void lblMenu_MouseEnter(object sender, EventArgs e) {
-            Label lbl = (Label)sender;
+            var lbl = (Label)sender;
 
             if (int.Parse(lbl.Tag.ToString()) == 1) {
                 lbl.BackColor = M_COLOR_MENU_SELECTED;
@@ -97,7 +97,7 @@ namespace ImageGlass {
         }
 
         private void lblMenu_MouseLeave(object sender, EventArgs e) {
-            Label lbl = (Label)sender;
+            var lbl = (Label)sender;
             if (int.Parse(lbl.Tag.ToString()) == 1) {
                 lbl.BackColor = M_COLOR_MENU_SELECTED;
             }
@@ -611,7 +611,7 @@ namespace ImageGlass {
                 // first item selected default
                 cmbColorProfile.SelectedIndex = 0;
 
-                for (int i = 0; i < cmbColorProfile.Items.Count; i++) {
+                for (var i = 0; i < cmbColorProfile.Items.Count; i++) {
                     if (cmbColorProfile.Items[i].ToString() == Configs.ColorProfile) {
                         cmbColorProfile.SelectedIndex = i;
                         break;
@@ -775,7 +775,7 @@ namespace ImageGlass {
         // Prevent the user from entering anything else!
         private void TxtZoomLevels_KeyPress(object sender, KeyPressEventArgs e) {
             var keyval = e.KeyChar;
-            bool accept = char.IsDigit(keyval) ||
+            var accept = char.IsDigit(keyval) ||
                           keyval == ';' ||
                           keyval == (char)Keys.Back ||
                           keyval == (char)Keys.Space;
@@ -865,8 +865,7 @@ namespace ImageGlass {
                 AppArguments = assoc.AppArguments,
                 TopMost = this.TopMost
             };
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
+            if (frm.ShowDialog() == DialogResult.OK) {
                 assoc.AppName = frm.AppName;
                 assoc.AppPath = frm.AppPath;
                 assoc.AppArguments = frm.AppArguments;
@@ -880,10 +879,8 @@ namespace ImageGlass {
                 FileExtension = $"<{string.Format(Configs.Language.Items[$"{Name}._allExtensions"])}>",
                 TopMost = this.TopMost
             };
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var assoc in Configs.EditApps)
-                {
+            if (frm.ShowDialog() == DialogResult.OK) {
+                foreach (var assoc in Configs.EditApps) {
                     assoc.AppName = frm.AppName;
                     assoc.AppPath = frm.AppPath;
                     assoc.AppArguments = frm.AppArguments;
@@ -913,8 +910,7 @@ namespace ImageGlass {
             p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
             p.StartInfo.Arguments = "iginstalllang";
 
-            try
-            {
+            try {
                 p.Start();
             }
             catch { }
@@ -925,8 +921,7 @@ namespace ImageGlass {
             p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
             p.StartInfo.Arguments = "ignewlang";
 
-            try
-            {
+            try {
                 p.Start();
             }
             catch { }
@@ -937,8 +932,7 @@ namespace ImageGlass {
             p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
             p.StartInfo.Arguments = "igeditlang \"" + Configs.Language.FileName + "\"";
 
-            try
-            {
+            try {
                 p.Start();
             }
             catch { }
@@ -965,7 +959,7 @@ namespace ImageGlass {
 
 
                 // start from 1, the first item is already hardcoded
-                for (int i = 1; i < lstLanguages.Count; i++) {
+                for (var i = 1; i < lstLanguages.Count; i++) {
                     var iLang = cmbLanguage.Items.Add(lstLanguages[i].LangName);
                     var curLang = Configs.Language.FileName;
 
@@ -1033,12 +1027,10 @@ namespace ImageGlass {
                 p.StartInfo.Arguments = $"regassociations {formats}";
                 p.Start();
 
-                try
-                {
+                try {
                     p.Start();
                 }
-                catch
-                {
+                catch {
                     // Clicking 'Cancel' in the "User Account Control" dialog throws a
                     // "User cancelled" exception. Just continue quietly in that case.
                     return;
@@ -1047,12 +1039,10 @@ namespace ImageGlass {
                 p.WaitForExit();
                 isError = p.ExitCode != 0;
 
-                if (isError)
-                {
+                if (isError) {
                     MessageBox.Show(Configs.Language.Items[$"{Name}._RegisterAppExtensions_Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                else
-                {
+                else {
                     MessageBox.Show(Configs.Language.Items[$"{Name}._RegisterAppExtensions_Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -1088,13 +1078,11 @@ namespace ImageGlass {
         }
 
         private void btnAddNewExt_Click(object sender, EventArgs e) {
-            using var frm = new frmAddNewFormat()
-            {
+            using var frm = new frmAddNewFormat() {
                 FileFormat = ".svg",
                 TopMost = this.TopMost
             };
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
+            if (frm.ShowDialog() == DialogResult.OK) {
                 // If the ext exist
                 if (Configs.AllFormats.Contains(frm.FileFormat))
                     return;
@@ -1188,7 +1176,7 @@ namespace ImageGlass {
 
 
             var mainType = typeof(frmMain);
-            for (int i = 0; i < (int)ToolbarButton.MAX; i++) {
+            for (var i = 0; i < (int)ToolbarButton.MAX; i++) {
                 var fieldName = ((ToolbarButton)i).ToString();
 
                 try {
@@ -1213,7 +1201,7 @@ namespace ImageGlass {
 
             _lstMasterUsed = new List<ListViewItem>(Configs.ToolbarButtons.Count);
 
-            for (int i = 0; i < Configs.ToolbarButtons.Count; i++) {
+            for (var i = 0; i < Configs.ToolbarButtons.Count; i++) {
                 ListViewItem lvi;
 
                 if (Configs.ToolbarButtons[i] == ToolbarButton.Separator) {
@@ -1239,7 +1227,7 @@ namespace ImageGlass {
 
             lvAvailButtons.Items.Clear();
 
-            for (int i = 0; i < (int)ToolbarButton.MAX; i++) {
+            for (var i = 0; i < (int)ToolbarButton.MAX; i++) {
                 if (!Configs.ToolbarButtons.Contains((ToolbarButton)i)) {
                     lvAvailButtons.Items.Add(BuildToolbarListItem((ToolbarButton)i));
                 }
@@ -1371,12 +1359,12 @@ namespace ImageGlass {
             // 'Move' the selected entry in the LEFT list to the bottom of the RIGHT list
             // An exception is 'separator' which always remains available in the left list.
 
-            for (int i = 0; i < lvAvailButtons.SelectedItems.Count; i++) {
+            for (var i = 0; i < lvAvailButtons.SelectedItems.Count; i++) {
                 var lvi = lvAvailButtons.SelectedItems[i];
                 _lstMasterUsed.Add(lvi.Clone() as ListViewItem);
             }
 
-            for (int i = lvAvailButtons.SelectedItems.Count - 1; i >= 0; i--) {
+            for (var i = lvAvailButtons.SelectedItems.Count - 1; i >= 0; i--) {
                 var lvi = lvAvailButtons.SelectedItems[i];
                 if ((ToolbarButton)lvi.Tag != ToolbarButton.Separator)
                     lvAvailButtons.Items.Remove(lvi);
@@ -1391,7 +1379,7 @@ namespace ImageGlass {
             // 'Move' the selected entry in the RIGHT list to the bottom of the LEFT list
             // An exception is 'separator' which always remains available in the left list.
 
-            for (int i = 0; i < lvUsedButtons.SelectedItems.Count; i++) {
+            for (var i = 0; i < lvUsedButtons.SelectedItems.Count; i++) {
                 var lvi = lvUsedButtons.SelectedItems[i];
                 if ((ToolbarButton)lvi.Tag != ToolbarButton.Separator)
                     lvAvailButtons.Items.Add(lvi.Clone() as ListViewItem);
@@ -1484,7 +1472,7 @@ namespace ImageGlass {
         }
 
         private async void RefreshThemeList() {
-            string themeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
+            var themeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
 
             lvTheme.Items.Clear();
             lvTheme.Items.Add("2017 (Dark)").Tag = "default";
@@ -1497,8 +1485,8 @@ namespace ImageGlass {
                 var lstThemes = new List<UI.Theme>();
 
                 await Task.Run(() => {
-                    foreach (string d in Directory.GetDirectories(themeFolder)) {
-                        string configFile = Path.Combine(d, "igtheme.xml");
+                    foreach (var d in Directory.GetDirectories(themeFolder)) {
+                        var configFile = Path.Combine(d, "igtheme.xml");
 
                         if (File.Exists(configFile)) {
                             var th = new Theme(d);
@@ -1557,7 +1545,7 @@ namespace ImageGlass {
                 btnThemeSaveAs.Enabled = true;
                 btnThemeUninstall.Enabled = true;
 
-                string themeName = lvTheme.SelectedItems[0].Tag.ToString();
+                var themeName = lvTheme.SelectedItems[0].Tag.ToString();
                 Theme th;
                 if (themeName == "default") {
                     //btnThemeSaveAs.Enabled = false;
@@ -1591,24 +1579,19 @@ namespace ImageGlass {
         }
 
 
-        private void btnThemeInstall_Click(object sender, EventArgs e)
-        {
-            using var o = new OpenFileDialog
-            {
+        private void btnThemeInstall_Click(object sender, EventArgs e) {
+            using var o = new OpenFileDialog {
                 Filter = "ImageGlass theme (*.igtheme)|*.igtheme|All files (*.*)|*.*"
             };
-            if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName))
-            {
+            if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName)) {
                 var result = UI.Theme.InstallTheme(o.FileName);
 
-                if (result == ThemeInstallingResult.SUCCESS)
-                {
+                if (result == ThemeInstallingResult.SUCCESS) {
                     RefreshThemeList();
 
                     MessageBox.Show(Configs.Language.Items[$"{Name}.btnThemeInstall._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                else
-                {
+                else {
                     MessageBox.Show(Configs.Language.Items[$"{Name}.btnThemeInstall._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -1617,7 +1600,7 @@ namespace ImageGlass {
 
         private void btnThemeUninstall_Click(object sender, EventArgs e) {
             if (lvTheme.SelectedItems.Count > 0) {
-                string themeName = lvTheme.SelectedItems[0].Tag.ToString();
+                var themeName = lvTheme.SelectedItems[0].Tag.ToString();
                 var result = UI.Theme.UninstallTheme(themeName);
 
                 if (result == ThemeUninstallingResult.SUCCESS) {
@@ -1668,15 +1651,15 @@ namespace ImageGlass {
 
 
         private void btnThemeFolderOpen_Click(object sender, EventArgs e) {
-            string themeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
+            var themeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
             Process.Start("explorer.exe", themeFolder);
         }
 
 
         private void btnThemeApply_Click(object sender, EventArgs e) {
             if (lvTheme.SelectedItems.Count > 0) {
-                string themeFolderName = lvTheme.SelectedItems[0].Tag.ToString();
-                string themeFolderPath = App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName);
+                var themeFolderName = lvTheme.SelectedItems[0].Tag.ToString();
+                var themeFolderPath = App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName);
 
                 var th = new Theme(themeFolderPath);
 
@@ -1793,9 +1776,9 @@ namespace ImageGlass {
             // match the text of the selected combobox item against
             // the language string for the available actions
             var actionList = Enum.GetNames(typeof(AssignableActions));
-            for (int i = 0; i < actionList.Length; i++) {
+            for (var i = 0; i < actionList.Length; i++) {
                 var lookup = $"{Name}.KeyActions._{actionList[i]}";
-                string val = lang[lookup];
+                var val = lang[lookup];
 
                 if (val == selected.ToString()) {
                     Configs.KeyComboActions[keyCombo] = (AssignableActions)i;

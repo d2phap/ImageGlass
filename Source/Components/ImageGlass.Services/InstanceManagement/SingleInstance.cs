@@ -52,7 +52,7 @@ namespace ImageGlass.Services.InstanceManagement {
         /// </summary>
         /// <param name="arguments">The arguments to pass.</param>
         /// <returns>Return true if the operation succeded, false otherwise.</returns>
-        public async Task<bool> PassArgumentsToFirstInstance(String[] arguments) {
+        public async Task<bool> PassArgumentsToFirstInstance(string[] arguments) {
             if (IsFirstInstance)
                 throw new InvalidOperationException("This is the first instance.");
 
@@ -84,13 +84,13 @@ namespace ImageGlass.Services.InstanceManagement {
         /// Listens for arguments on a named pipe.
         /// </summary>
         /// <param name="state">State object required by WaitCallback delegate.</param>
-        private async void ListenForArguments(Object state) {
+        private async void ListenForArguments(object state) {
             try {
                 using (var server = new NamedPipeServerStream(identifier.ToString()))
                 using (var reader = new StreamReader(server)) {
                     await server.WaitForConnectionAsync();
 
-                    var arguments = new List<String>();
+                    var arguments = new List<string>();
                     while (server.IsConnected)
                         arguments.Add(await reader.ReadLineAsync());
 
@@ -108,8 +108,8 @@ namespace ImageGlass.Services.InstanceManagement {
         /// Calls the OnArgumentsReceived method casting the state Object to String[].
         /// </summary>
         /// <param name="state">The arguments to pass.</param>
-        private void CallOnArgumentsReceived(Object state) {
-            OnArgumentsReceived((String[])state);
+        private void CallOnArgumentsReceived(object state) {
+            OnArgumentsReceived((string[])state);
         }
 
 
@@ -123,7 +123,7 @@ namespace ImageGlass.Services.InstanceManagement {
         /// Fires the ArgumentsReceived event.
         /// </summary>
         /// <param name="arguments">The arguments to pass with the ArgumentsReceivedEventArgs.</param>
-        private void OnArgumentsReceived(String[] arguments) {
+        private void OnArgumentsReceived(string[] arguments) {
             ArgumentsReceived?.Invoke(this, new ArgumentsReceivedEventArgs() { Args = arguments });
         }
 

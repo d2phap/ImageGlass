@@ -93,7 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExplorerSortOrder.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InstanceManagement\ArgumentsReceivedEventArgs.cs" />
     <Compile Include="InstanceManagement\NativeMethods.cs" />
     <Compile Include="InstanceManagement\SingleInstance.cs" />

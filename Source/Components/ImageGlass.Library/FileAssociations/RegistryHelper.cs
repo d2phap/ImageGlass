@@ -51,9 +51,9 @@ namespace ImageGlass.Library.FileAssociations {
         /// </summary>
         public string Read(string KeyName) {
             // Opening the registry key
-            using (RegistryKey rk = BaseRegistryKey) {
+            using (var rk = BaseRegistryKey) {
                 // Open a subKey as read-only
-                RegistryKey sk1 = rk.OpenSubKey(SubKey);
+                var sk1 = rk.OpenSubKey(SubKey);
                 // If the RegistrySubKey doesn't exist -> (null)
                 if (sk1 == null) {
                     return null;
@@ -82,11 +82,11 @@ namespace ImageGlass.Library.FileAssociations {
         public bool Write(string KeyName, object Value) {
             try {
                 // Setting
-                RegistryKey rk = BaseRegistryKey;
+                var rk = BaseRegistryKey;
                 // I have to use CreateSubKey 
                 // (create or open it if already exits), 
                 // 'cause OpenSubKey open a subKey as read-only
-                RegistryKey sk1 = rk.CreateSubKey(SubKey);
+                var sk1 = rk.CreateSubKey(SubKey);
                 // Save the value
                 sk1.SetValue(KeyName, Value);
 
@@ -108,8 +108,8 @@ namespace ImageGlass.Library.FileAssociations {
         public bool DeleteKey(string KeyName) {
             try {
                 // Setting
-                RegistryKey rk = BaseRegistryKey;
-                RegistryKey sk1 = rk.CreateSubKey(SubKey);
+                var rk = BaseRegistryKey;
+                var sk1 = rk.CreateSubKey(SubKey);
                 // If the RegistrySubKey doesn't exists -> (true)
                 if (sk1 == null)
                     return true;
@@ -134,8 +134,8 @@ namespace ImageGlass.Library.FileAssociations {
         public bool DeleteSubKeyTree() {
             try {
                 // Setting
-                RegistryKey rk = BaseRegistryKey;
-                RegistryKey sk1 = rk.OpenSubKey(SubKey);
+                var rk = BaseRegistryKey;
+                var sk1 = rk.OpenSubKey(SubKey);
                 // If the RegistryKey exists, I delete it
                 if (sk1 != null)
                     rk.DeleteSubKeyTree(SubKey);
@@ -158,8 +158,8 @@ namespace ImageGlass.Library.FileAssociations {
         public int SubKeyCount() {
             try {
                 // Setting
-                RegistryKey rk = BaseRegistryKey;
-                RegistryKey sk1 = rk.OpenSubKey(SubKey);
+                var rk = BaseRegistryKey;
+                var sk1 = rk.OpenSubKey(SubKey);
                 // If the RegistryKey exists...
                 if (sk1 != null)
                     return sk1.SubKeyCount;
@@ -182,8 +182,8 @@ namespace ImageGlass.Library.FileAssociations {
         public int ValueCount() {
             try {
                 // Setting
-                RegistryKey rk = BaseRegistryKey;
-                RegistryKey sk1 = rk.OpenSubKey(SubKey);
+                var rk = BaseRegistryKey;
+                var sk1 = rk.OpenSubKey(SubKey);
                 // If the RegistryKey exists...
                 if (sk1 != null)
                     return sk1.ValueCount;
@@ -204,8 +204,8 @@ namespace ImageGlass.Library.FileAssociations {
         public string[] GetValueNames() {
             try {
                 // Setting
-                RegistryKey rk = BaseRegistryKey;
-                RegistryKey sk1 = rk.OpenSubKey(SubKey);
+                var rk = BaseRegistryKey;
+                var sk1 = rk.OpenSubKey(SubKey);
                 // If the RegistryKey exists...
                 if (sk1 != null)
                     return sk1.GetValueNames();

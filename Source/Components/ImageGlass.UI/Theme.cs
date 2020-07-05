@@ -592,7 +592,7 @@ namespace ImageGlass.UI {
                 return ThemeInstallingResult.ERROR;
             }
 
-            string themeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
+            var themeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
             Directory.CreateDirectory(themeFolder);
 
             return ExtractTheme(themePath, themeFolder);
@@ -605,10 +605,10 @@ namespace ImageGlass.UI {
         /// <param name="themeFolderName">The theme folder name</param>
         /// <returns></returns>
         public static ThemeUninstallingResult UninstallTheme(string themeFolderName) {
-            string fullConfigPath = App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName, "igtheme.xml");
+            var fullConfigPath = App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName, "igtheme.xml");
 
             if (File.Exists(fullConfigPath)) {
-                string dir = Path.GetDirectoryName(fullConfigPath);
+                var dir = Path.GetDirectoryName(fullConfigPath);
 
                 try {
                     Directory.Delete(dir, true);
@@ -693,10 +693,10 @@ namespace ImageGlass.UI {
                 return new[] { 0, 0, 0, 1 };
             }
 
-            double black = Math.Min(1.0 - c.R / 255.0, Math.Min(1.0 - c.G / 255.0, 1.0 - c.B / 255.0));
-            double cyan = (1.0 - (c.R / 255.0) - black) / (1.0 - black);
-            double magenta = (1.0 - (c.G / 255.0) - black) / (1.0 - black);
-            double yellow = (1.0 - (c.B / 255.0) - black) / (1.0 - black);
+            var black = Math.Min(1.0 - c.R / 255.0, Math.Min(1.0 - c.G / 255.0, 1.0 - c.B / 255.0));
+            var cyan = (1.0 - (c.R / 255.0) - black) / (1.0 - black);
+            var magenta = (1.0 - (c.G / 255.0) - black) / (1.0 - black);
+            var yellow = (1.0 - (c.B / 255.0) - black) / (1.0 - black);
 
             return new[] {
                 (int) Math.Round(cyan*100),
@@ -713,10 +713,10 @@ namespace ImageGlass.UI {
         /// <param name="c"></param>
         /// <returns></returns>
         public static float[] ConvertColorToHSLA(Color c) {
-            float h = (float)Math.Round(c.GetHue());
-            float s = (float)Math.Round(c.GetSaturation() * 100);
-            float l = (float)Math.Round(c.GetBrightness() * 100);
-            float a = (float)Math.Round(c.A / 255.0, 3);
+            var h = (float)Math.Round(c.GetHue());
+            var s = (float)Math.Round(c.GetSaturation() * 100);
+            var l = (float)Math.Round(c.GetBrightness() * 100);
+            var a = (float)Math.Round(c.A / 255.0, 3);
 
             return new[] { h, s, l, a };
         }
@@ -746,10 +746,10 @@ namespace ImageGlass.UI {
             if (hex.IndexOf('#') != -1)
                 hex = hex.Replace("#", "");
 
-            int red = 0;
-            int green = 0;
-            int blue = 0;
-            int alpha = 255;
+            var red = 0;
+            var green = 0;
+            var blue = 0;
+            var alpha = 255;
 
             if (hex.Length == 8) {
                 //#RRGGBBAA
@@ -808,8 +808,8 @@ namespace ImageGlass.UI {
         /// <param name="factor">The factor to make the color lighter (0 = no change, 1 = white).</param>
         /// <returns>The lighter color.</returns>
         public static Color LightenColor(Color color, float factor) {
-            float min = 0.001f;
-            float max = 1.999f;
+            var min = 0.001f;
+            var max = 1.999f;
 
             return ControlPaint.Light(color, min + MinMax(factor, 0f, 1f) * (max - min));
         }
@@ -822,8 +822,8 @@ namespace ImageGlass.UI {
         /// <param name="factor">The factor to make the color darker (0 = no change, 1 = black).</param>
         /// <returns>The darker color.</returns>
         public static Color DarkenColor(Color color, float factor) {
-            float min = -0.5f;
-            float max = 1f;
+            var min = -0.5f;
+            var max = 1f;
 
             return ControlPaint.Dark(color, min + MinMax(factor, 0f, 1f) * (max - min));
         }

@@ -185,7 +185,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DiskCache.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ImageListViewGroupCollection.cs">
       <SubType>component</SubType>
     </Compile>

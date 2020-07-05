@@ -79,7 +79,7 @@ namespace ImageGlass.Library.Image {
         /// <param name="filename">file name</param>
         /// <returns></returns>
         public static string GetImageFileType(string filename) {
-            string ext = Path.GetExtension(filename).Replace(".", "").ToLower();
+            var ext = Path.GetExtension(filename).Replace(".", "").ToLower();
 
             switch (ext) {
                 case "bmp":
@@ -124,7 +124,7 @@ namespace ImageGlass.Library.Image {
         public static string GetFileSize(string filename) {
             try {
                 double mod = 1024;
-                string[] units = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
+                var units = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
 
                 var fi = new FileInfo(filename);
                 double sized = fi.Length * 1.0f;
@@ -149,7 +149,7 @@ namespace ImageGlass.Library.Image {
         public static string GetWxHSize(string filename) {
             try {
                 if (Path.GetExtension(filename).ToLower() != ".ico") {
-                    using (System.Drawing.Image img = System.Drawing.Image.FromFile(filename)) {
+                    using (var img = System.Drawing.Image.FromFile(filename)) {
                         //get Width x Height
                         return Convert.ToString(img.Width) + " x " + Convert.ToString(img.Height);
                     }
@@ -177,7 +177,7 @@ namespace ImageGlass.Library.Image {
                 double v = 0;
 
                 if (Path.GetExtension(filename).ToLower() != ".ico") {
-                    using (System.Drawing.Image img = System.Drawing.Image.FromFile(filename)) {
+                    using (var img = System.Drawing.Image.FromFile(filename)) {
 
                         //get HorizontalResolution 
                         h = Math.Round((double)img.HorizontalResolution, 2);

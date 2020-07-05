@@ -37,12 +37,12 @@ namespace ImageGlass {
 
         #region MOUSE ENTER - HOVER - DOWN MENU
         private void lblMenu_MouseDown(object sender, MouseEventArgs e) {
-            Label lbl = (Label)sender;
+            var lbl = (Label)sender;
             lbl.BackColor = M_COLOR_MENU_ACTIVE;
         }
 
         private void lblMenu_MouseUp(object sender, MouseEventArgs e) {
-            Label lbl = (Label)sender;
+            var lbl = (Label)sender;
 
             if (int.Parse(lbl.Tag.ToString()) == 1) {
                 lbl.BackColor = M_COLOR_MENU_SELECTED;
@@ -53,7 +53,7 @@ namespace ImageGlass {
         }
 
         private void lblMenu_MouseEnter(object sender, EventArgs e) {
-            Label lbl = (Label)sender;
+            var lbl = (Label)sender;
 
             if (int.Parse(lbl.Tag.ToString()) == 1) {
                 lbl.BackColor = M_COLOR_MENU_SELECTED;
@@ -65,7 +65,7 @@ namespace ImageGlass {
         }
 
         private void lblMenu_MouseLeave(object sender, EventArgs e) {
-            Label lbl = (Label)sender;
+            var lbl = (Label)sender;
             if (int.Parse(lbl.Tag.ToString()) == 1) {
                 lbl.BackColor = M_COLOR_MENU_SELECTED;
             }
@@ -77,7 +77,7 @@ namespace ImageGlass {
 
 
         private void lblMenu_Click(object sender, EventArgs e) {
-            Label lbl = (Label)sender;
+            var lbl = (Label)sender;
 
             if (lbl.Name == "lblInfo") {
                 tab1.SelectedTab = tpInfo;
@@ -103,7 +103,7 @@ namespace ImageGlass {
 
             // Load item component
             txtComponents.Text = "\r\n";
-            foreach (string f in Directory.GetFiles(Application.StartupPath)) {
+            foreach (var f in Directory.GetFiles(Application.StartupPath)) {
                 var ext = Path.GetExtension(f).ToLower();
 
                 if (ext == ".dll" || ext == ".exe") {
@@ -148,7 +148,7 @@ namespace ImageGlass {
 
         private void lnkIGHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             try {
-                string version = App.Version;
+                var version = App.Version;
 
                 Process.Start("https://imageglass.org?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_homepage");
             }
@@ -157,7 +157,7 @@ namespace ImageGlass {
 
         private void lnkProjectPage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             try {
-                string version = App.Version;
+                var version = App.Version;
 
                 Process.Start("https://imageglass.org/source?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_source");
             }
@@ -207,7 +207,7 @@ namespace ImageGlass {
 
         private void btnDonation_Click(object sender, EventArgs e) {
             try {
-                string version = App.Version;
+                var version = App.Version;
 
                 Process.Start("https://imageglass.org/source#donation?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_donation");
             }

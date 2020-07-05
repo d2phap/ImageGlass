@@ -105,7 +105,6 @@
     <Compile Include="frmDialogBox.Designer.cs">
       <DependentUpon>frmDialogBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="NakedTabControl.cs">
       <SubType>Component</SubType>
     </Compile>

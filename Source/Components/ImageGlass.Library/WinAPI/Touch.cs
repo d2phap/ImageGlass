@@ -98,7 +98,7 @@ namespace ImageGlass.Library.WinAPI {
             internal POINTS ptsLocation; // current location of this gesture
             public int dwInstanceID; // internally used
             public int dwSequenceID; // internally used
-            public Int64 ullArguments; // arguments for gestures whose
+            public long ullArguments; // arguments for gestures whose
 
             // arguments fit in 8 BYTES
             public int cbExtraArgs; // size, in bytes, of extra arguments,
@@ -136,7 +136,7 @@ namespace ImageGlass.Library.WinAPI {
 
 
         #region Constants
-        private const Int64 ULL_ARGUMENTS_BIT_MASK = 0x00000000FFFFFFFF;
+        private const long ULL_ARGUMENTS_BIT_MASK = 0x00000000FFFFFFFF;
 
         // Gesture message ids
         private const int GID_BEGIN = 1;
@@ -211,8 +211,8 @@ namespace ImageGlass.Library.WinAPI {
 
                         App.LogIt(string.Format("PANNING.END ({0},{1})", _ptSecond.X, _ptSecond.Y));
 
-                        int dVert = (_ptSecond.Y - _ptFirst.Y);
-                        int dHorz = (_ptSecond.X - _ptFirst.X);
+                        var dVert = (_ptSecond.Y - _ptFirst.Y);
+                        var dHorz = (_ptSecond.X - _ptFirst.X);
 
                         if (Math.Abs(dVert) > Math.Abs(dHorz)) {
                             if (dVert > 0)
@@ -234,7 +234,7 @@ namespace ImageGlass.Library.WinAPI {
                             App.LogIt("GID_ROTATE.GF_BEG");
                             break;
                         case GF_END:
-                            double rads = ArgToRadians(gi.ullArguments & ULL_ARGUMENTS_BIT_MASK);
+                            var rads = ArgToRadians(gi.ullArguments & ULL_ARGUMENTS_BIT_MASK);
                             App.LogIt(string.Format("GID_ROTATE.GF_END ({0})", rads));
 
                             if (rads > 0.0)

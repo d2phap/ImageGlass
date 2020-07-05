@@ -45,7 +45,7 @@ namespace ImageGlass.UI {
         /// <returns></returns>
         private static bool FilenameFilter(char keyval) {
             var badChars = Path.GetInvalidFileNameChars();
-            bool invalid = badChars.Contains(keyval);
+            var invalid = badChars.Contains(keyval);
             return !invalid || keyval == (char)Keys.Back;
         }
 
