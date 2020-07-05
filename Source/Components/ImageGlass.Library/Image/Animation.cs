@@ -39,7 +39,7 @@ namespace ImageGlass.Library.Image {
         /// </summary>
         /// <param name="animationFile">File name</param>
         /// <param name="destinationFolder">Output folder</param>
-        public void ExtractAllFrames(string animationFile, string destinationFolder, ExtractCallback callback) {
+        public async Task ExtractAllFrames(string animationFile, string destinationFolder, ExtractCallback callback) {
             //initiate class
 
             _isAnimating = false;
@@ -47,13 +47,13 @@ namespace ImageGlass.Library.Image {
             _desFolder = destinationFolder;
             _extractFinished = callback;
 
-            Task.Run(() => {
+            await Task.Run(() => {
                 _img = new Bitmap(animationFile);
                 _i = 1;
 
                 //begin extract
                 AnimateImage();
-            });
+            }).ConfigureAwait(true);
         }
 
         /// <summary>

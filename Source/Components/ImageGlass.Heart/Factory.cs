@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -118,7 +119,8 @@ namespace ImageGlass.Heart {
 
             // start background service worker
             IsRunWorker = true;
-            StartImageBooster();
+            var _bw = new BackgroundWorker();
+            _bw.RunWorkerAsync(StartImageBooster());
         }
 
         #region PRIVATE FUNCTIONS
@@ -191,7 +193,7 @@ namespace ImageGlass.Heart {
         /// <summary>
         /// Start ImageBooster thread
         /// </summary>
-        public async void StartImageBooster() {
+        public async Task StartImageBooster() {
             while (IsRunWorker) {
                 if (QueuedList.Count > 0) {
                     // pop out the first item

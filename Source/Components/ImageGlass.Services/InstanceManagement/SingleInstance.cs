@@ -29,8 +29,8 @@ namespace ImageGlass.Services.InstanceManagement {
     /// Enforces single instance for an application.
     /// </summary>
     public class SingleInstance: IDisposable {
-        private Mutex mutex = null;
-        private readonly bool ownsMutex = false;
+        private Mutex mutex;
+        private readonly bool ownsMutex;
         private Guid identifier = Guid.Empty;
 
         /// <summary>
@@ -84,15 +84,15 @@ namespace ImageGlass.Services.InstanceManagement {
         /// Listens for arguments on a named pipe.
         /// </summary>
         /// <param name="state">State object required by WaitCallback delegate.</param>
-        private async void ListenForArguments(object state) {
+        private void ListenForArguments(object state) {
             try {
                 using (var server = new NamedPipeServerStream(identifier.ToString()))
                 using (var reader = new StreamReader(server)) {
-                    await server.WaitForConnectionAsync().ConfigureAwait(true);
+                    server.WaitForConnectionAsync().ConfigureAwait(true);
 
                     var arguments = new List<string>();
                     while (server.IsConnected)
-                        arguments.Add(await reader.ReadLineAsync().ConfigureAwait(true));
+                        arguments.Add(reader.ReadLine());
 
                     ThreadPool.QueueUserWorkItem(new WaitCallback(CallOnArgumentsReceived), arguments.ToArray());
                 }
@@ -125,7 +125,7 @@ namespace ImageGlass.Services.InstanceManagement {
         }
 
         #region IDisposable
-        private bool disposed = false;
+        private bool disposed;
 
         protected virtual void Dispose(bool disposing) {
             if (!disposed) {
