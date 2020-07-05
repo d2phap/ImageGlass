@@ -21,10 +21,9 @@ using System;
 using System.Runtime.InteropServices;
 
 namespace ImageGlass.Services.InstanceManagement {
-    public class NativeMethods {
+    public static class NativeMethods {
         [DllImport("user32")]
         public static extern bool PostMessage(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam);
-
 
         [DllImport("user32", CharSet = CharSet.Unicode)]
         public static extern int RegisterWindowMessage(string message);

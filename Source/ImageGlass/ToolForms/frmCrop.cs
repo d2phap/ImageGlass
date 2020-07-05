@@ -54,7 +54,6 @@ namespace ImageGlass {
             btnSnapTo.Click += SnapButton_Click;
         }
 
-
         public void SetImageBox(ImageBoxEx imgBox) {
             if (_imgBox != null) {
                 _imgBox.SelectionRegionChanged -= this._imgBox_SelectionRegionChanged;
@@ -89,8 +88,6 @@ namespace ImageGlass {
             }
         }
 
-
-
         #region Private Methods
 
         /// <summary>
@@ -115,13 +112,12 @@ namespace ImageGlass {
         }
         #endregion
 
-
         #region Events
         private void frmCrop_Load(object sender, EventArgs e) {
             UpdateUI();
 
             // Windows Bound (Position + Size)-------------------------------------------
-            Rectangle rc = Helpers.StringToRect("0;0;300;160");
+            var rc = Helpers.StringToRect("0;0;300;160");
 
             if (rc.X == 0 && rc.Y == 0) {
                 _locationOffset = DefaultLocationOffset;
@@ -154,7 +150,6 @@ namespace ImageGlass {
             var frm = (frmMain)this._currentOwner;
             frm.ShowCropTool(false);
         }
-
 
         private void Numeric_Click(object sender, EventArgs e) {
             var num = (NumericUpDown)sender;
@@ -193,11 +188,12 @@ namespace ImageGlass {
                     CropEventHandler(CropActionEvent.SaveAs);
                 }
             }
-            else if (sender == btnSaveAs)
+            else if (sender == btnSaveAs) {
                 CropEventHandler(CropActionEvent.SaveAs);
-
-            else if (sender == btnCopy)
+            }
+            else if (sender == btnCopy) {
                 CropEventHandler(CropActionEvent.Copy);
+            }
         }
 
         private void btnClear_Click(object sender, EventArgs e) {
@@ -208,7 +204,6 @@ namespace ImageGlass {
         }
 
         #endregion
-
 
     }
 }

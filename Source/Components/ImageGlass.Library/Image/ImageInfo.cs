@@ -24,7 +24,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 
 namespace ImageGlass.Library.Image {
-    public class ImageInfo {
+    public static class ImageInfo {
         [StructLayout(LayoutKind.Sequential)]
         private struct SHELLEXECUTEINFO {
             public int cbSize;
@@ -72,14 +72,13 @@ namespace ImageGlass.Library.Image {
             ShellExecuteEx(ref shInfo);
         }
 
-
         /// <summary>
         /// Get image type name
         /// </summary>
         /// <param name="filename">file name</param>
         /// <returns></returns>
         public static string GetImageFileType(string filename) {
-            string ext = Path.GetExtension(filename).Replace(".", "").ToLower();
+            var ext = Path.GetExtension(filename).Replace(".", "").ToLower();
 
             switch (ext) {
                 case "bmp":
@@ -115,7 +114,6 @@ namespace ImageGlass.Library.Image {
             }
         }
 
-
         /// <summary>
         /// Get file size format
         /// </summary>
@@ -123,8 +121,8 @@ namespace ImageGlass.Library.Image {
         /// <returns></returns>
         public static string GetFileSize(string filename) {
             try {
-                double mod = 1024;
-                string[] units = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
+                const double mod = 1024;
+                var units = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
 
                 var fi = new FileInfo(filename);
                 double sized = fi.Length * 1.0f;
@@ -148,8 +146,8 @@ namespace ImageGlass.Library.Image {
         /// <returns></returns>
         public static string GetWxHSize(string filename) {
             try {
-                if (Path.GetExtension(filename).ToLower() != ".ico") {
-                    using (System.Drawing.Image img = System.Drawing.Image.FromFile(filename)) {
+                if (!string.Equals(Path.GetExtension(filename), ".ico", StringComparison.CurrentCultureIgnoreCase)) {
+                    using (var img = System.Drawing.Image.FromFile(filename)) {
                         //get Width x Height
                         return Convert.ToString(img.Width) + " x " + Convert.ToString(img.Height);
                     }
@@ -163,7 +161,6 @@ namespace ImageGlass.Library.Image {
             catch {
                 return string.Empty;
             }
-
         }
 
         /// <summary>
@@ -176,9 +173,8 @@ namespace ImageGlass.Library.Image {
                 double h = 0;
                 double v = 0;
 
-                if (Path.GetExtension(filename).ToLower() != ".ico") {
-                    using (System.Drawing.Image img = System.Drawing.Image.FromFile(filename)) {
-
+                if (!string.Equals(Path.GetExtension(filename), ".ico", StringComparison.CurrentCultureIgnoreCase)) {
+                    using (var img = System.Drawing.Image.FromFile(filename)) {
                         //get HorizontalResolution 
                         h = Math.Round((double)img.HorizontalResolution, 2);
 
@@ -188,7 +184,6 @@ namespace ImageGlass.Library.Image {
                 }
                 else {
                     using (var ico = new Icon(filename)) {
-
                         //get HorizontalResolution 
                         h = Math.Round(ico.ToBitmap().HorizontalResolution, 2);
 
@@ -203,7 +198,6 @@ namespace ImageGlass.Library.Image {
 
             return " ";
         }
-
 
         /// <summary>
         /// Get file creation time
@@ -246,7 +240,7 @@ namespace ImageGlass.Library.Image {
         /// <param name="newFileName">new file name</param>
         public static void RenameFile(string oldFileName, string newFileName) {
             // Issue 73: Windows ignores case-only changes
-            if (oldFileName.ToLowerInvariant() == newFileName.ToLowerInvariant()) {
+            if (string.Equals(oldFileName, newFileName, StringComparison.InvariantCultureIgnoreCase)) {
                 // user changing only the case of the filename. Need to perform a trick.
                 File.Move(oldFileName, oldFileName + "_imgglass_extra");
                 File.Move(oldFileName + "_imgglass_extra", newFileName);
@@ -255,7 +249,6 @@ namespace ImageGlass.Library.Image {
                 File.Move(oldFileName, newFileName);
             }
         }
-
 
         /// <summary>
         /// Delete file
@@ -268,8 +261,5 @@ namespace ImageGlass.Library.Image {
 
             FileSystem.DeleteFile(fileName, UIOption.OnlyErrorDialogs, option);
         }
-
-
-
     }
 }

@@ -22,14 +22,14 @@ using System.Threading.Tasks;
 /// <summary>
 /// Application to perform Windows 8/10 specific operations.
 /// These require using Windows 8/10 DLLs which aren't available
-/// on Windows 7. [... and would cause igcmd to crash on Win7 if 
+/// on Windows 7. [... and would cause igcmd to crash on Win7 if
 /// the references were added to that project]
 /// </summary>
 namespace igcmdWin10 {
-    class Program {
+    internal static class Program {
         [STAThread]
-        static int Main(string[] args) {
-            string topcmd = args[0].ToLower().Trim();
+        private static int Main(string[] args) {
+            var topcmd = args[0].ToLower().Trim();
 
             if (topcmd == "setlockimage") {
                 var task = SetLockScreenImageAsync(args);
@@ -41,18 +41,16 @@ namespace igcmdWin10 {
             return 0;
         }
 
-
         /// <summary>
         /// Set lock screen image
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
         internal static async Task<int> SetLockScreenImageAsync(string[] args) {
-            string imgPath = args[1];
-            var result = await LockScreenImage.SetAsync(imgPath);
+            var imgPath = args[1];
+            var result = await LockScreenImage.SetAsync(imgPath).ConfigureAwait(true);
 
             return result;
         }
-
     }
 }

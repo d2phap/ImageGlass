@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2013 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
@@ -26,27 +26,30 @@ namespace ImageGlass.Library.Comparer {
 
         #region Local Functions
         public void AddFile(string file) {
-            if (file == null) return;
-            if (Files == null) Files = new ArrayList();
-            Files.Add(new DictionaryEntry(Path.GetFileName(file), file));
+            if (file == null) {
+                return;
+            }
+
+#pragma warning disable IDE0074 // Use compound assignment
+            (Files ?? (Files = new ArrayList())).Add(new DictionaryEntry(Path.GetFileName(file), file));
+#pragma warning restore IDE0074 // Use compound assignment
         }
 
-
         public void AddFiles(string[] f) {
-            if (f == null) return;
-            for (int i = 0; i < f.Length; i++) {
+            if (f == null) {
+                return;
+            }
+
+            for (var i = 0; i < f.Length; i++) {
                 AddFile(f[i]);
             }
         }
 
         public ArrayList GetSorted() {
-            if (Files != null) {
-                Files.Sort(new DictionaryEntryComparer(new NumericComparer()));
-            }
+            Files?.Sort(new DictionaryEntryComparer(new NumericComparer()));
             return Files;
         }
         #endregion
-
 
         /// <summary>
         /// Sort an string array
@@ -54,25 +57,23 @@ namespace ImageGlass.Library.Comparer {
         /// <param name="stringArray">String array</param>
         /// <returns></returns>
         public static string[] Sort(string[] stringArray) {
-            if (stringArray == null) return null;
+            if (stringArray == null) {
+                return null;
+            }
 
             var fc = new FileLogicalComparer();
             fc.AddFiles(stringArray);
-            ArrayList ds = fc.GetSorted();
+            var ds = fc.GetSorted();
 
-            if (ds == null) return stringArray;
+            if (ds == null) {
+                return stringArray;
+            }
 
-            for (int i = 0; i < ds.Count; i++) {
+            for (var i = 0; i < ds.Count; i++) {
                 stringArray[i] = (string)((DictionaryEntry)ds[i]).Value;
             }
 
             return stringArray;
         }
-
     }
-
-
-
-
-
 }

@@ -34,9 +34,8 @@ namespace ImageGlass.UI {
         /// <param name="keyval"></param>
         /// <returns></returns>
         private static bool NumberFilter(char keyval) {
-            return (char.IsDigit(keyval) || keyval == (char)Keys.Back);
+            return char.IsDigit(keyval) || keyval == (char)Keys.Back;
         }
-
 
         /// <summary>
         /// Character filter for filenames: disallow invalid filename characters
@@ -45,7 +44,7 @@ namespace ImageGlass.UI {
         /// <returns></returns>
         private static bool FilenameFilter(char keyval) {
             var badChars = Path.GetInvalidFileNameChars();
-            bool invalid = badChars.Contains(keyval);
+            var invalid = badChars.Contains(keyval);
             return !invalid || keyval == (char)Keys.Back;
         }
 
@@ -83,8 +82,5 @@ namespace ImageGlass.UI {
 
             return frm.DialogResult;
         }
-
-
-
     }
 }

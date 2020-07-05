@@ -377,6 +377,10 @@
   <ItemGroup>
     <Content Include="icon256.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.6.13\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.6.13\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>"$(DevEnvDir)\devenv" "$(SolutionDir)\ImageGlass.sln" /Build $(ConfigurationName) /Project "$(SolutionDir)\Ultilities\igcmdWin10\igcmdWin10.csproj"</PreBuildEvent>
@@ -391,8 +395,10 @@
     <Error Condition="!Exists('..\packages\runtime.win10-x64.Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\runtime.win10-x64.microsoft.dotnet.framework.nativeimagecompiler.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\runtime.win10-x64.Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\runtime.win10-x64.microsoft.dotnet.framework.nativeimagecompiler.props'))" />
     <Error Condition="!Exists('..\packages\runtime.win10-x86.Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\runtime.win10-x86.microsoft.dotnet.framework.nativeimagecompiler.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\runtime.win10-x86.Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\runtime.win10-x86.microsoft.dotnet.framework.nativeimagecompiler.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\Microsoft.DotNet.Framework.NativeImageCompiler.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\Microsoft.DotNet.Framework.NativeImageCompiler.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.6.13\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.6.13\build\Microsoft.VisualStudio.Threading.Analyzers.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\Microsoft.DotNet.Framework.NativeImageCompiler.targets" Condition="Exists('..\packages\Microsoft.DotNet.Framework.NativeImageCompiler.1.0.0\build\net462\Microsoft.DotNet.Framework.NativeImageCompiler.targets')" />
+  <Import Project="..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.6.13\build\Microsoft.VisualStudio.Threading.Analyzers.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.Threading.Analyzers.16.6.13\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

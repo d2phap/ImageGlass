@@ -25,19 +25,23 @@ using System.Windows.Forms;
 namespace ImageGlass.UI {
     public static class DPIScaling {
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-        static extern bool SetWindowPos(HandleRef hWnd, HandleRef hWndInsertAfter, int x, int y, int cx, int cy, int flags);
+        private static extern bool SetWindowPos(HandleRef hWnd, HandleRef hWndInsertAfter, int x, int y, int cx, int cy, int flags);
 
         [DllImport("gdi32.dll")]
-        static extern int GetDeviceCaps(IntPtr hdc, DeviceCaps nIndex);
+        private static extern int GetDeviceCaps(IntPtr hdc, DeviceCaps nIndex);
 
         [DllImport("user32.dll")]
-        static extern IntPtr GetDC(IntPtr hWnd);
+        private static extern IntPtr GetDC(IntPtr hWnd);
 
         [DllImport("user32.dll")]
-        static extern void ReleaseDC(IntPtr hWnd);
-
+        private static extern void ReleaseDC(IntPtr hWnd);
 
         private enum DeviceCaps {
+            /// <summary>
+            /// Horizontal width in pixels
+            /// </summary>
+            HORZRES = 8,
+
             /// <summary>
             /// Logical pixels inch in X
             /// </summary>
@@ -49,27 +53,18 @@ namespace ImageGlass.UI {
             LOGPIXELSY = 90,
 
             /// <summary>
-            /// Horizontal width in pixels
-            /// </summary>
-            HORZRES = 8,
-
-            /// <summary>
             /// Horizontal width of entire desktop in pixels
             /// </summary>
             DESKTOPHORZRES = 118
         }
 
-
         public const int WM_DPICHANGED = 0x02E0;
         public const int DPI_DEFAULT = 96;
-
-
 
         /// <summary>
         /// Gets, sets current DPI scaling value
         /// </summary>
         public static int CurrentDPI { get; set; } = DPI_DEFAULT;
-
 
         public static short LOWORD(int number) {
             return (short)number;
@@ -81,7 +76,7 @@ namespace ImageGlass.UI {
         /// </summary>
         /// <returns></returns>
         public static int GetSystemDpi() {
-            IntPtr hdc = GetDC(IntPtr.Zero);
+            var hdc = GetDC(IntPtr.Zero);
 
             var val = GetDeviceCaps(hdc, DeviceCaps.LOGPIXELSX);
 
@@ -115,7 +110,6 @@ namespace ImageGlass.UI {
             return (int)Math.Round(num * GetDPIScaleFactor());
         }
 
-
         /// <summary>
         /// Apply DPI scale factor and transform toolbar
         /// </summary>
@@ -126,7 +120,7 @@ namespace ImageGlass.UI {
             toolbar.Height = Transform(baseHeight);
 
             // Get new toolbar item height
-            int newBtnHeight = (int)Math.Floor(toolbar.Height * 0.8);
+            var newBtnHeight = (int)Math.Floor(toolbar.Height * 0.8);
 
             // Update toolbar items size of Tool bar buttons
             foreach (var item in toolbar.Items.OfType<ToolStripButton>()) {

@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-
 using ImageMagick;
 using System;
 using System.Drawing;
@@ -29,7 +28,6 @@ using System.Threading.Tasks;
 
 namespace ImageGlass.Heart {
     public static class Photo {
-
         #region Load image / thumbnail
 
         /// <summary>
@@ -69,7 +67,6 @@ namespace ImageGlass.Heart {
                 settings.Height = size.Height;
             }
             #endregion
-
 
             #region Read image data
             switch (ext) {
@@ -111,13 +108,11 @@ namespace ImageGlass.Heart {
             }
             #endregion
 
-
             #region Internal Functions 
 
             // Preprocess magick image
             (IExifProfile, IColorProfile) PreprocesMagickImage(MagickImage imgM, bool checkRotation = true) {
                 imgM.Quality = quality;
-
 
                 IColorProfile imgColorProfile = null;
                 IExifProfile profile = null;
@@ -130,7 +125,6 @@ namespace ImageGlass.Heart {
                 }
                 catch { }
 
-
                 // Use embedded thumbnails if specified
                 if (profile != null && useEmbeddedThumbnails) {
                     // Fetch the embedded thumbnail
@@ -139,7 +133,6 @@ namespace ImageGlass.Heart {
                         bitmap = thumbM.ToBitmap();
                     }
                 }
-
 
                 // Revert to source image if an embedded thumbnail with required size was not found.
                 if (bitmap == null) {
@@ -157,7 +150,6 @@ namespace ImageGlass.Heart {
                             }
                         }
                     }
-
 
                     // if always apply color profile
                     // or only apply color profile if there is an embedded profile
@@ -180,10 +172,8 @@ namespace ImageGlass.Heart {
                     }
                 }
 
-
                 return (profile, imgColorProfile);
             }
-
 
             // Separate color channel
             MagickImage ApplyColorChannel(MagickImage imgM) {
@@ -203,7 +193,6 @@ namespace ImageGlass.Heart {
                 return imgM;
             }
 
-
             void ReadWithMagickImage() {
                 MagickImage imgM;
 
@@ -218,7 +207,6 @@ namespace ImageGlass.Heart {
                     imgM = new MagickImage(filename, settings);
                 }
 
-
                 // Issue #679: fix targa display with Magick.NET 7.15.x 
                 if (ext == ".TGA") {
                     imgM.AutoOrient();
@@ -231,11 +219,9 @@ namespace ImageGlass.Heart {
                     bitmap = channelImgM.ToBitmap();
                 }
 
-
                 imgM.Dispose();
             }
             #endregion
-
 
             return new ImgData() {
                 Image = bitmap,
@@ -243,7 +229,6 @@ namespace ImageGlass.Heart {
                 ColorProfile = colorProfile,
             };
         }
-
 
         /// <summary>
         /// Load image from file
@@ -267,13 +252,10 @@ namespace ImageGlass.Heart {
                     channel: channel,
                     useEmbeddedThumbnail
                 );
-            }).ConfigureAwait(false);
-
+            }).ConfigureAwait(true);
 
             return data;
         }
-
-
 
         /// <summary>
         /// Get thumbnail image
@@ -291,7 +273,6 @@ namespace ImageGlass.Heart {
             return data.Image;
         }
 
-
         /// <summary>
         /// Get thumbnail image
         /// </summary>
@@ -305,13 +286,10 @@ namespace ImageGlass.Heart {
                     size: size,
                     quality: 75,
                     useEmbeddedThumbnails: useEmbeddedThumbnails);
-
-            }).ConfigureAwait(false);
+            }).ConfigureAwait(true);
 
             return data.Image;
         }
-
-
 
         /// <summary>
         /// Converts file to Bitmap
@@ -328,7 +306,6 @@ namespace ImageGlass.Heart {
             }
         }
 
-
         /// <summary>
         /// Converts base64 string to byte array, returns MIME type and raw data in byte array.
         /// </summary>
@@ -342,20 +319,17 @@ namespace ImageGlass.Heart {
             // data:image/svg-xml;base64,xxxxxxxx
             var dataUriPattern = new Regex(@"^data\:(?<type>image\/[a-z\+\-]*);base64,(?<data>[a-zA-Z0-9\+\/\=]+)$", RegexOptions.Compiled | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
 
-
             var match = dataUriPattern.Match(content);
             if (!match.Success) {
                 throw new Exception("Base-64 file content is invalid.");
             }
             var base64Data = match.Groups["data"].Value;
 
-
             var mimeType = match.Groups["type"].Value.ToLower();
             var rawData = Convert.FromBase64String(base64Data);
 
             return (mimeType, rawData);
         }
-
 
         /// <summary>
         /// Converts base64 string to Bitmap.
@@ -365,7 +339,6 @@ namespace ImageGlass.Heart {
         public static Bitmap ConvertBase64ToBitmap(string content) {
             var (mimeType, rawData) = ConvertBase64ToBytes(content);
             if (string.IsNullOrEmpty(mimeType)) return null;
-
 
             #region Settings
             var settings = new MagickReadSettings();
@@ -416,7 +389,6 @@ namespace ImageGlass.Heart {
             }
             #endregion
 
-
             Bitmap bmp = null;
 
             switch (settings.Format) {
@@ -443,9 +415,7 @@ namespace ImageGlass.Heart {
             return bmp;
         }
 
-
         #endregion
-
 
         #region Save image as file
 
@@ -462,9 +432,8 @@ namespace ImageGlass.Heart {
                     imgM.Quality = quality;
                     imgM.Write(destFileName, format);
                 }
-            }).ConfigureAwait(false);
+            }).ConfigureAwait(true);
         }
-
 
         /// <summary>
         /// Save as image file
@@ -486,7 +455,6 @@ namespace ImageGlass.Heart {
                 }
             }
         }
-
 
         /// <summary>
         /// Save image pages to files
@@ -514,10 +482,8 @@ namespace ImageGlass.Heart {
                         catch { }
                     }
                 }
-            });
+            }).ConfigureAwait(true);
         }
-
-
 
         /// <summary>
         /// Saves source file as base64 file
@@ -537,7 +503,7 @@ namespace ImageGlass.Heart {
 
                 using (var fs = new FileStream(srcFilename, FileMode.Open, FileAccess.Read)) {
                     data = new byte[fs.Length];
-                    await fs.ReadAsync(data, 0, (int)fs.Length);
+                    await fs.ReadAsync(data, 0, (int)fs.Length).ConfigureAwait(true);
 
                     fs.Close();
                 }
@@ -546,8 +512,8 @@ namespace ImageGlass.Heart {
                 var base64 = Convert.ToBase64String(data);
 
                 using (var sw = new StreamWriter(destFilename)) {
-                    await sw.WriteAsync(header + base64);
-                    await sw.FlushAsync();
+                    await sw.WriteAsync(header + base64).ConfigureAwait(true);
+                    await sw.FlushAsync().ConfigureAwait(true);
                     sw.Close();
                 }
 
@@ -555,10 +521,9 @@ namespace ImageGlass.Heart {
             }
 
             // non-svg formats
-            var bmp = await LoadAsync(srcFilename);
-            await SaveAsBase64Async(bmp.Image, destFilename, format);
+            var bmp = await LoadAsync(srcFilename).ConfigureAwait(true);
+            await SaveAsBase64Async(bmp.Image, destFilename, format).ConfigureAwait(true);
         }
-
 
         /// <summary>
         /// Saves source bitmap image as base64 file
@@ -568,7 +533,6 @@ namespace ImageGlass.Heart {
         /// <param name="format">Image format</param>
         /// <returns></returns>
         public static async Task SaveAsBase64Async(Bitmap srcBitmap, string destFilename, ImageFormat format) {
-
             var mimeType = GetMIMETypeForWrite(format);
 
             if (mimeType == "image/png") {
@@ -582,16 +546,14 @@ namespace ImageGlass.Heart {
                 var base64 = Convert.ToBase64String(ms.ToArray());
 
                 using (var sw = new StreamWriter(destFilename)) {
-                    await sw.WriteAsync(header + base64);
-                    await sw.FlushAsync();
+                    await sw.WriteAsync(header + base64).ConfigureAwait(true);
+                    await sw.FlushAsync().ConfigureAwait(true);
                     sw.Close();
                 }
             }
         }
 
-
         #endregion
-
 
         #region Rotate image
 
@@ -611,7 +573,7 @@ namespace ImageGlass.Heart {
 
                     bitmap = imgM.ToBitmap();
                 }
-            });
+            }).ConfigureAwait(true);
 
             return bitmap;
         }
@@ -633,13 +595,12 @@ namespace ImageGlass.Heart {
 
                     bitmap = imgM.ToBitmap();
                 }
-            });
+            }).ConfigureAwait(true);
 
             return bitmap;
         }
 
         #endregion
-
 
         #region Flip / flop
 
@@ -656,11 +617,10 @@ namespace ImageGlass.Heart {
                 using (var imgM = new MagickImage(srcFileName)) {
                     bitmap = Flip(imgM, isHorzontal);
                 }
-            });
+            }).ConfigureAwait(true);
 
             return bitmap;
         }
-
 
         /// <summary>
         /// Flip / flop an image
@@ -676,17 +636,12 @@ namespace ImageGlass.Heart {
                     imgM.Read(srcBitmap);
                     bitmap = Flip(imgM, isHorzontal);
                 }
-            });
+            }).ConfigureAwait(true);
 
             return bitmap;
         }
 
         #endregion
-
-
-
-
-
 
         #region PRIVATE FUCTIONS
 
@@ -708,7 +663,6 @@ namespace ImageGlass.Heart {
 
             return imgM.ToBitmap();
         }
-
 
         /// <summary>
         /// Get image MIME type from extension
@@ -755,35 +709,30 @@ namespace ImageGlass.Heart {
             return mimeType;
         }
 
-
         /// <summary>
         /// Get image MIME type for writing file
         /// </summary>
         /// <param name="format">Image format</param>
         /// <returns></returns>
         private static string GetMIMETypeForWrite(ImageFormat format) {
-            var mimeType = "image/png";
-
             if (format.Equals(ImageFormat.Gif)) {
-                mimeType = "image/gif";
+                return "image/gif";
             }
             else if (format.Equals(ImageFormat.Bmp)) {
-                mimeType = "image/bmp";
+                return "image/bmp";
             }
             else if (format.Equals(ImageFormat.Jpeg)) {
-                mimeType = "image/jpeg";
+                return "image/jpeg";
             }
             else if (format.Equals(ImageFormat.Tiff)) {
-                mimeType = "image/tiff";
+                return "image/tiff";
             }
             else if (format.Equals(ImageFormat.Icon)) {
-                mimeType = "image/x-icon";
+                return "image/x-icon";
             }
-
-            return mimeType;
+            return "image/png";
         }
 
         #endregion
     }
-
 }

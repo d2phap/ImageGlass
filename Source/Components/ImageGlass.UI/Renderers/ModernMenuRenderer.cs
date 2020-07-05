@@ -48,7 +48,6 @@ namespace ImageGlass.UI.Renderers {
                     e.TextColor = Theme.LightenColor(this.ThemeBackgroundColor, 0.5f);
                 }
 
-
                 base.OnRenderItemText(e);
 
                 // KBR 20190615 this step appears to be unnecessary [and prevents the menu from auto-collapsing]
@@ -57,7 +56,7 @@ namespace ImageGlass.UI.Renderers {
         }
 
         protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e) {
-            if (e.Vertical || (e.Item as ToolStripSeparator) == null) {
+            if (e.Vertical || !(e.Item is ToolStripSeparator)) {
                 base.OnRenderSeparator(e);
             }
             else {
@@ -87,8 +86,9 @@ namespace ImageGlass.UI.Renderers {
             if (e.ToolStrip is ToolStripDropDown) {
                 // draw background
                 using (var brush = new SolidBrush(this.ThemeBackgroundColor)) // KBR 20181231 fix handle leak
+{
                     e.Graphics.FillRectangle(brush, e.AffectedBounds);
-
+                }
 
                 // draw border
                 using (var pen = new Pen(Color.Black)) // KBR 20181231 fix handle leak
@@ -130,9 +130,9 @@ namespace ImageGlass.UI.Renderers {
             using (var pen = new Pen(ThemeTextColor, 2)) // KBR 20181231 fix handle leak
             {
                 e.Graphics.DrawLine(pen,
-                    2 * e.Item.Height / 10 + 1,
+                    (2 * e.Item.Height / 10) + 1,
                     e.Item.Height / 2,
-                    4 * e.Item.Height / 10 + 1,
+                    (4 * e.Item.Height / 10) + 1,
                     7 * e.Item.Height / 10);
 
                 e.Graphics.DrawLine(pen,
@@ -142,10 +142,7 @@ namespace ImageGlass.UI.Renderers {
                     3 * e.Item.Height / 10);
             }
         }
-
     }
-
-
 
     public class ModernColors: ProfessionalColorTable {
         public override Color MenuItemSelected => Color.FromArgb(35, 0, 0, 0);

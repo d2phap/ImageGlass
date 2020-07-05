@@ -2762,8 +2762,8 @@ namespace ImageGlass {
             }
         }
 
-        private HScrollBar _hScrollBar;
-        private VScrollBar _vScrollBar;
+        private readonly HScrollBar _hScrollBar;
+        private readonly VScrollBar _vScrollBar;
 
         /// <summary>
         ///   Adjusts the scroll.

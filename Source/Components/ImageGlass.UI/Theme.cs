@@ -49,7 +49,6 @@ namespace ImageGlass.UI {
 
         #endregion
 
-
         #region THEME NODE PROPERTIES
 
         #region <INFO> node
@@ -95,7 +94,6 @@ namespace ImageGlass.UI {
         public string Compatibility { get; set; } = string.Empty;
         #endregion
 
-
         #region <MAIN> node
 
         /// <summary>
@@ -133,18 +131,15 @@ namespace ImageGlass.UI {
         /// </summary>
         public Color TextInfoColor { get; set; } = Color.Black;
 
-
         /// <summary>
         /// Menu background color
         /// </summary>
         public Color MenuBackgroundColor { get; set; } = Color.White;
 
-
         /// <summary>
         /// Menu text color
         /// </summary>
         public Color MenuTextColor { get; set; } = Color.Black;
-
 
         /// <summary>
         /// The multiplier which impacts the size of the navigation arrows.
@@ -153,7 +148,6 @@ namespace ImageGlass.UI {
 
         #endregion
 
-
         #region <TOOLBAR_ICON> node
 
         /// <summary>
@@ -161,7 +155,6 @@ namespace ImageGlass.UI {
         /// </summary>
         public ThemeIconCollection ToolbarIcons { get; set; } = new ThemeIconCollection();
         #endregion
-
 
         #region Navigation arrows
         /// <summary>
@@ -178,15 +171,11 @@ namespace ImageGlass.UI {
 
         #endregion
 
-
-
         /// <summary>
         /// Initiate theme object with configuration file (Version 1.5+)
         /// </summary>
         /// <param name="themeFolderPath">The absolute path of theme folder.</param>
         public Theme(string themeFolderPath = "") => this.IsValid = LoadTheme(themeFolderPath);
-
-
 
         #region PUBLIC CLASS FUNCS
 
@@ -198,15 +187,16 @@ namespace ImageGlass.UI {
         /// <param name="attribname">name of theme attribute</param>
         /// <param name="iconHeight">optional target height/width</param>
         /// <returns></returns>
-        private ThemeImage LoadThemeImage(string dir, XmlElement n, string attribname, int iconHeight = 0) {
+        private static ThemeImage LoadThemeImage(string dir, XmlElement n, string attribname, int iconHeight = 0) {
             try {
                 var attrib = n.GetAttribute(attribname);
 
                 if (string.IsNullOrEmpty(attrib)) // KBR 20180827 avoid throwing exception
+{
                     return new ThemeImage(""); // KBR 20180827 code in frmMain assumes not null
+                }
 
                 var imgFile = Path.Combine(dir, attrib);
-
 
                 if (iconHeight > 0) {
                     return new ThemeImage(imgFile, iconHeight);
@@ -218,7 +208,6 @@ namespace ImageGlass.UI {
                 return new ThemeImage(""); // KBR 20180827 code in frmMain assumes not null
             }
         }
-
 
         /// <summary>
         /// Reload the image icons to adapt DPI changes
@@ -259,7 +248,6 @@ namespace ImageGlass.UI {
             ToolbarIcons.ViewFirstImage.Refresh();
             ToolbarIcons.ViewLastImage.Refresh();
 
-
             #region Naviagtion arrows (derived from toolbar)
 
             var arrowHeight = (int)(DPIScaling.Transform(Constants.TOOLBAR_ICON_HEIGHT) * NavArrowMultiplier);
@@ -270,9 +258,8 @@ namespace ImageGlass.UI {
             #endregion
         }
 
-
         /// <summary>
-        /// Read theme data from theme configuration file (Version 1.5+). 
+        /// Read theme data from theme configuration file (Version 1.5+).
         /// Return TRUE if successful, FALSE if the theme format is invalid
         /// </summary>
         /// <param name="themeFolderPath">The absolute path of theme folder.</param>
@@ -305,26 +292,24 @@ namespace ImageGlass.UI {
                 this.IsValid = false;
             }
 
-
             #region Theme <Info>
             try { Name = n.GetAttribute("name"); }
-            catch { };
+            catch { }
             try { Version = n.GetAttribute("version"); }
-            catch { };
+            catch { }
             try { Author = n.GetAttribute("author"); }
-            catch { };
+            catch { }
             try { Email = n.GetAttribute("email"); }
-            catch { };
+            catch { }
             try { Website = n.GetAttribute("website"); }
-            catch { };
+            catch { }
             try { Description = n.GetAttribute("description"); }
-            catch { };
+            catch { }
             try { Type = n.GetAttribute("type"); }
-            catch { };
+            catch { }
             try { Compatibility = n.GetAttribute("compatibility"); }
-            catch { };
+            catch { }
             #endregion
-
 
             #region Theme <main>
             PreviewImage = LoadThemeImage(dir, n, "preview");
@@ -334,48 +319,54 @@ namespace ImageGlass.UI {
             ToolbarBackgroundImage = LoadThemeImage(dir, n, "topbar");
 
             var color = FetchColorAttribute(n, "topbarcolor");
-            if (color != Color.Transparent)
+            if (color != Color.Transparent) {
                 ToolbarBackgroundColor = color;
+            }
 
             ThumbnailBackgroundImage = LoadThemeImage(dir, n, "bottombar");
 
             color = FetchColorAttribute(n, "bottombarcolor");
-            if (color != Color.Transparent)
+            if (color != Color.Transparent) {
                 ThumbnailBackgroundColor = color;
+            }
 
             color = FetchColorAttribute(n, "backcolor");
-            if (color != Color.Transparent)
+            if (color != Color.Transparent) {
                 BackgroundColor = color;
+            }
 
             color = FetchColorAttribute(n, "statuscolor");
-            if (color != Color.Transparent)
+            if (color != Color.Transparent) {
                 TextInfoColor = color;
+            }
 
             color = FetchColorAttribute(n, "menubackgroundcolor");
-            if (color != Color.Transparent)
+            if (color != Color.Transparent) {
                 MenuBackgroundColor = color;
+            }
 
             color = FetchColorAttribute(n, "menutextcolor");
-            if (color != Color.Transparent)
+            if (color != Color.Transparent) {
                 MenuTextColor = color;
-
+            }
 
             // For 7.6: add ability to control the size of the navigation arrows
             // Minimum value is 1.0, default is 2.0.
             try {
                 var colorString = n.GetAttribute("navarrowsize");
                 if (!string.IsNullOrWhiteSpace(colorString)) {
-                    if (!double.TryParse(colorString, out var val))
+                    if (!double.TryParse(colorString, out var val)) {
                         val = 2.0;
+                    }
+
                     val = Math.Max(val, 1.0);
 
                     NavArrowMultiplier = val;
                 }
             }
-            catch (Exception) { };
+            catch { }
 
             #endregion
-
 
             #region Theme <toolbar_icon>
             n = (XmlElement)nType.SelectNodes("toolbar_icon")[0]; //<toolbar_icon>
@@ -416,7 +407,6 @@ namespace ImageGlass.UI {
             ToolbarIcons.ViewLastImage = LoadThemeImage(dir, n, "golast");
             #endregion
 
-
             #region Arrow cursors (derived from toolbar)
 
             var arrowHeight = (int)(DPIScaling.Transform(Constants.TOOLBAR_ICON_HEIGHT) * NavArrowMultiplier);
@@ -426,10 +416,8 @@ namespace ImageGlass.UI {
 
             #endregion
 
-
             this.IsValid = true;
             return this.IsValid;
-
 
             // Fetch a color attribute value from the theme config file.
             // Returns: a Color value if valid; Color.Transparent if an error
@@ -450,8 +438,6 @@ namespace ImageGlass.UI {
                 return Color.Transparent;
             }
         }
-
-
 
         /// <summary>
         /// Save as the new theme config file, compatible with v5.0+
@@ -538,10 +524,7 @@ namespace ImageGlass.UI {
             doc.Save(Path.Combine(dir, "igtheme.xml")); //save file
         }
 
-
         #endregion
-
-
 
         #region PRIVATE STATIC FUNCS
         private static ThemeInstallingResult _extractThemeResult = ThemeInstallingResult.UNKNOWN;
@@ -551,8 +534,8 @@ namespace ImageGlass.UI {
 
             try {
                 using (var z = new ZipFile(themePath, Encoding.UTF8)) {
-                    z.ExtractProgress += new EventHandler<ExtractProgressEventArgs>(z_ExtractProgress);
-                    z.ZipError += new EventHandler<ZipErrorEventArgs>(z_ZipError);
+                    z.ExtractProgress += z_ExtractProgress;
+                    z.ZipError += z_ZipError;
                     z.ExtractAll(dir, ExtractExistingFileAction.OverwriteSilently);
                 }
             }
@@ -578,8 +561,6 @@ namespace ImageGlass.UI {
         }
         #endregion
 
-
-
         #region PUBLIC STATIC FUNCS
 
         /// <summary>
@@ -592,12 +573,11 @@ namespace ImageGlass.UI {
                 return ThemeInstallingResult.ERROR;
             }
 
-            string themeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
+            var themeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
             Directory.CreateDirectory(themeFolder);
 
             return ExtractTheme(themePath, themeFolder);
         }
-
 
         /// <summary>
         /// Uninstall ImageGlass theme pack
@@ -605,10 +585,10 @@ namespace ImageGlass.UI {
         /// <param name="themeFolderName">The theme folder name</param>
         /// <returns></returns>
         public static ThemeUninstallingResult UninstallTheme(string themeFolderName) {
-            string fullConfigPath = App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName, "igtheme.xml");
+            var fullConfigPath = App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName, "igtheme.xml");
 
             if (File.Exists(fullConfigPath)) {
-                string dir = Path.GetDirectoryName(fullConfigPath);
+                var dir = Path.GetDirectoryName(fullConfigPath);
 
                 try {
                     Directory.Delete(dir, true);
@@ -623,7 +603,6 @@ namespace ImageGlass.UI {
 
             return ThemeUninstallingResult.SUCCESS;
         }
-
 
         /// <summary>
         /// Pack the theme folder to *.igtheme file
@@ -650,7 +629,7 @@ namespace ImageGlass.UI {
                 using (var z = new ZipFile(outputThemeFile, Encoding.UTF8)) {
                     z.AddDirectory(themeFolderPath, th.Name);
                     z.Save();
-                };
+                }
             }
             catch (Exception) {
                 // restore backup file
@@ -668,7 +647,6 @@ namespace ImageGlass.UI {
             return ThemePackingResult.SUCCESS;
         }
 
-
         /// <summary>
         /// Invert the color to black or white color
         /// </summary>
@@ -682,7 +660,6 @@ namespace ImageGlass.UI {
             return Color.White;
         }
 
-
         /// <summary>
         /// Convert Color to CMYK
         /// </summary>
@@ -693,10 +670,10 @@ namespace ImageGlass.UI {
                 return new[] { 0, 0, 0, 1 };
             }
 
-            double black = Math.Min(1.0 - c.R / 255.0, Math.Min(1.0 - c.G / 255.0, 1.0 - c.B / 255.0));
-            double cyan = (1.0 - (c.R / 255.0) - black) / (1.0 - black);
-            double magenta = (1.0 - (c.G / 255.0) - black) / (1.0 - black);
-            double yellow = (1.0 - (c.B / 255.0) - black) / (1.0 - black);
+            var black = Math.Min(1.0 - (c.R / 255.0), Math.Min(1.0 - (c.G / 255.0), 1.0 - (c.B / 255.0)));
+            var cyan = (1.0 - (c.R / 255.0) - black) / (1.0 - black);
+            var magenta = (1.0 - (c.G / 255.0) - black) / (1.0 - black);
+            var yellow = (1.0 - (c.B / 255.0) - black) / (1.0 - black);
 
             return new[] {
                 (int) Math.Round(cyan*100),
@@ -706,21 +683,19 @@ namespace ImageGlass.UI {
             };
         }
 
-
         /// <summary>
         /// Convert Color to HSLA
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
         public static float[] ConvertColorToHSLA(Color c) {
-            float h = (float)Math.Round(c.GetHue());
-            float s = (float)Math.Round(c.GetSaturation() * 100);
-            float l = (float)Math.Round(c.GetBrightness() * 100);
-            float a = (float)Math.Round(c.A / 255.0, 3);
+            var h = (float)Math.Round(c.GetHue());
+            var s = (float)Math.Round(c.GetSaturation() * 100);
+            var l = (float)Math.Round(c.GetBrightness() * 100);
+            var a = (float)Math.Round(c.A / 255.0, 3);
 
             return new[] { h, s, l, a };
         }
-
 
         /// <summary>
         /// Convert Color to HEX (with alpha)
@@ -743,13 +718,14 @@ namespace ImageGlass.UI {
         /// <returns></returns>
         public static Color ConvertHexStringToColor(string hex, bool @skipAlpha = false) {
             //Remove # if present
-            if (hex.IndexOf('#') != -1)
+            if (hex.IndexOf('#') != -1) {
                 hex = hex.Replace("#", "");
+            }
 
-            int red = 0;
-            int green = 0;
-            int blue = 0;
-            int alpha = 255;
+            var red = 0;
+            var green = 0;
+            var blue = 0;
+            var alpha = 255;
 
             if (hex.Length == 8) {
                 //#RRGGBBAA
@@ -785,7 +761,6 @@ namespace ImageGlass.UI {
             return Color.FromArgb(alpha, red, green, blue);
         }
 
-
         /// <summary>
         /// Validate if Hex string is a valid color
         /// </summary>
@@ -799,8 +774,6 @@ namespace ImageGlass.UI {
             return false;
         }
 
-
-
         /// <summary>
         /// Makes the color lighter by the given factor (0 = no change, 1 = white).
         /// </summary>
@@ -808,12 +781,11 @@ namespace ImageGlass.UI {
         /// <param name="factor">The factor to make the color lighter (0 = no change, 1 = white).</param>
         /// <returns>The lighter color.</returns>
         public static Color LightenColor(Color color, float factor) {
-            float min = 0.001f;
-            float max = 1.999f;
+            const float min = 0.001f;
+            const float max = 1.999f;
 
-            return ControlPaint.Light(color, min + MinMax(factor, 0f, 1f) * (max - min));
+            return ControlPaint.Light(color, min + (MinMax(factor, 0f, 1f) * (max - min)));
         }
-
 
         /// <summary>
         /// Makes the color darker by the given factor (0 = no change, 1 = black).
@@ -822,12 +794,11 @@ namespace ImageGlass.UI {
         /// <param name="factor">The factor to make the color darker (0 = no change, 1 = black).</param>
         /// <returns>The darker color.</returns>
         public static Color DarkenColor(Color color, float factor) {
-            float min = -0.5f;
-            float max = 1f;
+            const float min = -0.5f;
+            const float max = 1f;
 
-            return ControlPaint.Dark(color, min + MinMax(factor, 0f, 1f) * (max - min));
+            return ControlPaint.Dark(color, min + (MinMax(factor, 0f, 1f) * (max - min)));
         }
-
 
         /// <summary>
         /// Lightness of the color between black (-1) and white (+1).
@@ -840,12 +811,9 @@ namespace ImageGlass.UI {
             return factor < 0f ? DarkenColor(color, -factor) : LightenColor(color, factor);
         }
 
-
-
         private static float MinMax(float value, float min, float max) {
             return Math.Min(Math.Max(value, min), max);
         }
-
 
         #endregion
     }

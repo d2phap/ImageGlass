@@ -55,7 +55,6 @@ namespace ImageGlass.Base {
         ClearPixels = 2
     }
 
-
     /// <summary>
     /// The list of mousewheel actions.
     /// **If we need to rename, have to update the language string too.
@@ -88,7 +87,6 @@ namespace ImageGlass.Base {
         PAGE_NAV_MENU = 1024
     }
 
-
     /// <summary>
     /// The list of layout mode.
     /// **If we need to rename, have to update the language string too.
@@ -99,13 +97,13 @@ namespace ImageGlass.Base {
         Designer = 1
     }
 
-
     /// <summary>
-    /// All the supported toolbar buttons. NOTE: the names here MUST match the field 
+    /// <para>
+    /// All the supported toolbar buttons. NOTE: the names here MUST match the field
     /// name in frmMain! Reflection is used to fetch the image and string from the
     /// frmMain field.
-    ///
-    /// The integer value of the enum is used for storing the config info.
+    /// </para>
+    /// <para>The integer value of the enum is used for storing the config info.</para>
     /// </summary>
     public enum ToolbarButton {
         Separator = -1,
@@ -142,10 +140,10 @@ namespace ImageGlass.Base {
         MAX // DO NOT ADD ANYTHING AFTER THIS
     }
 
-
     /// <summary>
     /// Zooming modes.
     /// </summary>
+    [Flags]
     public enum ZoomMode {
         AutoZoom = 0,
         ScaleToFit = 1,
@@ -163,7 +161,6 @@ namespace ImageGlass.Base {
         Bottom = 1
     }
 
-
     /// <summary>
     /// Color channels of image, the value should be same as MagickImage.Channels enum
     /// </summary>
@@ -176,7 +173,6 @@ namespace ImageGlass.Base {
         Black = 8,
         Alpha = 16,
     }
-
 
     /// <summary>
     /// Actions the user can assign to keys
@@ -233,7 +229,6 @@ namespace ImageGlass.Base {
         Button5Dbl,
     }
 
-
     /// <summary>
     /// Types of path
     /// </summary>
@@ -241,5 +236,4 @@ namespace ImageGlass.Base {
         File,
         Dir,
     }
-
 }

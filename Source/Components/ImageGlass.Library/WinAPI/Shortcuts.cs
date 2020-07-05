@@ -34,7 +34,7 @@ namespace ImageGlass.Library.WinAPI {
             var shell = new IWshRuntimeLibrary.WshShell();
 
             try {
-                IWshRuntimeLibrary.IWshShortcut shortcut = (IWshRuntimeLibrary.IWshShortcut)shell.CreateShortcut(shortcutPath);
+                var shortcut = (IWshRuntimeLibrary.IWshShortcut)shell.CreateShortcut(shortcutPath);
                 return shortcut.TargetPath;
             }
             catch //(COMException)

@@ -20,10 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 
 namespace ImageGlass.Services {
-
-
     public class InfoUpdate {
-
         #region Properties
         public Version NewVersion { get; set; }
 
@@ -55,6 +52,5 @@ namespace ImageGlass.Services {
             PublishDate = DateTime.Now;
             Description = string.Empty;
         }
-
     }
 }

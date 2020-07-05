@@ -55,7 +55,6 @@ namespace ImageGlass.Services {
             Info = new InfoUpdate();
         }
 
-
         /// <summary>
         /// Get update data from server
         /// </summary>
@@ -99,9 +98,9 @@ namespace ImageGlass.Services {
                 using (Stream s = File.OpenRead(xmlFilename)) {
                     xmlDoc.Load(s);
                 }
-                XmlElement root = xmlDoc.DocumentElement;// <ImageGlass>
-                XmlElement nType = (XmlElement)root.SelectNodes("Update")[0]; //<Update>
-                XmlElement n = (XmlElement)nType.SelectNodes("Info")[0];//<Info>
+                var root = xmlDoc.DocumentElement;// <ImageGlass>
+                var nType = (XmlElement)root.SelectNodes("Update")[0]; //<Update>
+                var n = (XmlElement)nType.SelectNodes("Info")[0];//<Info>
 
                 //Get <Info> Attributes
                 Info.NewVersion = new Version(n.GetAttribute("newVersion"));
@@ -119,7 +118,6 @@ namespace ImageGlass.Services {
             }
         }
 
-
         /// <summary>
         /// Load current ImageGlass.exe file and compare to the latest version.
         /// Equal is TRUE, else FALSE
@@ -127,7 +125,7 @@ namespace ImageGlass.Services {
         /// <param name="exePath"></param>
         /// <returns></returns>
         public bool CheckForUpdate(string exePath) {
-            FileVersionInfo fv = FileVersionInfo.GetVersionInfo(exePath);
+            var fv = FileVersionInfo.GetVersionInfo(exePath);
             var currentVersion = new Version(fv.FileVersion);
 
             // Version = [Major.Minor.Build.Revision]
@@ -155,12 +153,8 @@ namespace ImageGlass.Services {
                 return true;
             }
 
-
             //default don't need to update
             return false;
         }
-
-
     }
-
 }

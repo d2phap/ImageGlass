@@ -24,7 +24,6 @@ using System.Threading.Tasks;
 
 namespace ImageGlass.Library.Net {
     public class FileDownloader {
-
         public event AmountDownloadedChangedEventHandler AmountDownloadedChanged;
         public delegate void AmountDownloadedChangedEventHandler(long iNewProgress);
         public event FileDownloadSizeObtainedEventHandler FileDownloadSizeObtained;
@@ -52,15 +51,11 @@ namespace ImageGlass.Library.Net {
                 _currentFile = GetFileName(URL);
                 var WC = new WebClient();
                 WC.DownloadFile(URL, filename);
-                if (FileDownloadComplete != null) {
-                    FileDownloadComplete();
-                }
+                FileDownloadComplete?.Invoke();
                 return true;
             }
             catch (Exception ex) {
-                if (FileDownloadFailed != null) {
-                    FileDownloadFailed(ex);
-                }
+                FileDownloadFailed?.Invoke(ex);
                 return false;
             }
         }
@@ -70,7 +65,7 @@ namespace ImageGlass.Library.Net {
         /// </summary>
         /// <param name="URL">Liên kết</param>
         /// <returns></returns>
-        private string GetFileName(string URL) {
+        private static string GetFileName(string URL) {
             try {
                 return URL.Substring(URL.LastIndexOf("/") + 1);
             }
@@ -86,63 +81,51 @@ namespace ImageGlass.Library.Net {
         /// <param name="filename">Đương dẫn lưu tập tin</param>
         /// <returns></returns>
         public async Task<bool> DownloadFileWithProgress(string URL, string filename) {
-            FileStream fs = default(FileStream);
+            FileStream fs = default;
             try {
                 _currentFile = GetFileName(URL);
-                WebRequest wRemote = default(WebRequest);
-                byte[] bBuffer = null;
-                bBuffer = new byte[257];
-                int iBytesRead = 0;
-                int iTotalBytesRead = 0;
+                WebRequest wRemote = default;
+                var bBuffer = new byte[257];
+                var iBytesRead = 0;
+                var iTotalBytesRead = 0;
 
                 fs = new FileStream(filename, FileMode.Create, FileAccess.Write);
                 wRemote = WebRequest.Create(URL);
-                WebResponse myWebResponse = await wRemote.GetResponseAsync();
+                var myWebResponse = await wRemote.GetResponseAsync().ConfigureAwait(true);
 
-                if (FileDownloadSizeObtained != null) {
-                    FileDownloadSizeObtained(myWebResponse.ContentLength);
-                }
-                Stream sChunks = myWebResponse.GetResponseStream();
+                FileDownloadSizeObtained?.Invoke(myWebResponse.ContentLength);
+                var sChunks = myWebResponse.GetResponseStream();
 
                 do {
-                    iBytesRead = await sChunks.ReadAsync(bBuffer, 0, 256);
-                    await fs.WriteAsync(bBuffer, 0, iBytesRead);
+                    iBytesRead = await sChunks.ReadAsync(bBuffer, 0, 256).ConfigureAwait(true);
+                    await fs.WriteAsync(bBuffer, 0, iBytesRead).ConfigureAwait(true);
                     iTotalBytesRead += iBytesRead;
 
                     if (myWebResponse.ContentLength < iTotalBytesRead) {
-                        if (AmountDownloadedChanged != null) {
-                            AmountDownloadedChanged(myWebResponse.ContentLength);
-                        }
+                        AmountDownloadedChanged?.Invoke(myWebResponse.ContentLength);
                     }
                     else {
-                        if (AmountDownloadedChanged != null) {
-                            AmountDownloadedChanged(iTotalBytesRead);
-                        }
+                        AmountDownloadedChanged?.Invoke(iTotalBytesRead);
                     }
-                } while (!(iBytesRead == 0));
+                } while (iBytesRead != 0);
 
                 sChunks.Close();
                 fs.Close();
 
-                if (FileDownloadComplete != null) {
-                    FileDownloadComplete();
-                }
+                FileDownloadComplete?.Invoke();
 
                 return true;
             }
             catch (Exception ex) {
-                if ((fs != null)) {
+                if (fs != null) {
                     fs.Close();
                     fs = null;
                 }
 
-                if (FileDownloadFailed != null) {
-                    FileDownloadFailed(ex);
-                }
+                FileDownloadFailed?.Invoke(ex);
                 return false;
             }
         }
-
 
         /// <summary>
         /// Định dạng đơn vị dung lượng tập tin
@@ -152,8 +135,8 @@ namespace ImageGlass.Library.Net {
         /// <returns></returns>
         public static string FormatFileSize(double size, ref string donVi) {
             try {
-                int KB = 1024;
-                long MB = KB * KB;
+                const int KB = 1024;
+                const long MB = KB * KB;
 
                 // Return size of file in kilobytes.
                 if (size < KB) {
@@ -161,7 +144,7 @@ namespace ImageGlass.Library.Net {
                     return size.ToString("D");
                 }
                 else {
-                    double fs = size / KB;
+                    var fs = size / KB;
 
                     if (fs < 1000) {
                         donVi = " KB";
@@ -183,7 +166,5 @@ namespace ImageGlass.Library.Net {
 
             return "";
         }
-
-
     }
 }

@@ -24,7 +24,7 @@ using System.Windows.Forms;
 
 namespace ImageGlass {
     public partial class frmEditApp: Form {
-        private bool _isAllowFormClosed = false;
+        private bool _isAllowFormClosed;
         public string FileExtension { get; set; }
         public string AppName { get; set; }
         public string AppPath { get; set; }
@@ -144,10 +144,8 @@ namespace ImageGlass {
             }
 
             // Something has changed; update the sample text
-            var cmd = $"{appPath} {txtAppArguments.Text.Replace(EditApp.FileMacro, fileSample)}";
-            txtCommandPreview.Text = cmd;
+            txtCommandPreview.Text = $"{appPath} {txtAppArguments.Text.Replace(EditApp.FileMacro, fileSample)}";
         }
-
 
         private void Option_LostFocus(object sender, EventArgs e) {
             // Focus was lost from a user-edit control. Make sure the preview is updated.

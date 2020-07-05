@@ -29,8 +29,8 @@ namespace ImageGlass.Services.InstanceManagement {
     /// Enforces single instance for an application.
     /// </summary>
     public class SingleInstance: IDisposable {
-        private Mutex mutex = null;
-        private readonly bool ownsMutex = false;
+        private Mutex mutex;
+        private readonly bool ownsMutex;
         private Guid identifier = Guid.Empty;
 
         /// <summary>
@@ -52,16 +52,16 @@ namespace ImageGlass.Services.InstanceManagement {
         /// </summary>
         /// <param name="arguments">The arguments to pass.</param>
         /// <returns>Return true if the operation succeded, false otherwise.</returns>
-        public async Task<bool> PassArgumentsToFirstInstance(String[] arguments) {
+        public async Task<bool> PassArgumentsToFirstInstance(string[] arguments) {
             if (IsFirstInstance)
                 throw new InvalidOperationException("This is the first instance.");
 
             try {
                 using (var client = new NamedPipeClientStream(identifier.ToString()))
                 using (var writer = new StreamWriter(client)) {
-                    await client.ConnectAsync(200);
+                    await client.ConnectAsync(200).ConfigureAwait(true);
                     foreach (var argument in arguments)
-                        await writer.WriteLineAsync(argument);
+                        await writer.WriteLineAsync(argument).ConfigureAwait(true);
                 }
                 return true;
             }
@@ -84,15 +84,15 @@ namespace ImageGlass.Services.InstanceManagement {
         /// Listens for arguments on a named pipe.
         /// </summary>
         /// <param name="state">State object required by WaitCallback delegate.</param>
-        private async void ListenForArguments(Object state) {
+        private void ListenForArguments(object state) {
             try {
                 using (var server = new NamedPipeServerStream(identifier.ToString()))
                 using (var reader = new StreamReader(server)) {
-                    await server.WaitForConnectionAsync();
+                    server.WaitForConnectionAsync().ConfigureAwait(true);
 
-                    var arguments = new List<String>();
+                    var arguments = new List<string>();
                     while (server.IsConnected)
-                        arguments.Add(await reader.ReadLineAsync());
+                        arguments.Add(reader.ReadLine());
 
                     ThreadPool.QueueUserWorkItem(new WaitCallback(CallOnArgumentsReceived), arguments.ToArray());
                 }
@@ -103,33 +103,29 @@ namespace ImageGlass.Services.InstanceManagement {
             }
         }
 
-
         /// <summary>
         /// Calls the OnArgumentsReceived method casting the state Object to String[].
         /// </summary>
         /// <param name="state">The arguments to pass.</param>
-        private void CallOnArgumentsReceived(Object state) {
-            OnArgumentsReceived((String[])state);
+        private void CallOnArgumentsReceived(object state) {
+            OnArgumentsReceived((string[])state);
         }
-
 
         /// <summary>
         /// Event raised when arguments are received from successive instances.
         /// </summary>
         public event EventHandler<ArgumentsReceivedEventArgs> ArgumentsReceived;
 
-
         /// <summary>
         /// Fires the ArgumentsReceived event.
         /// </summary>
         /// <param name="arguments">The arguments to pass with the ArgumentsReceivedEventArgs.</param>
-        private void OnArgumentsReceived(String[] arguments) {
+        private void OnArgumentsReceived(string[] arguments) {
             ArgumentsReceived?.Invoke(this, new ArgumentsReceivedEventArgs() { Args = arguments });
         }
 
-
         #region IDisposable
-        private bool disposed = false;
+        private bool disposed;
 
         protected virtual void Dispose(bool disposing) {
             if (!disposed) {

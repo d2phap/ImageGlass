@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System.Drawing;
 
 namespace ImageGlass.UI {
-
     public enum NavigationRegionType {
         Unknown,
         Left,

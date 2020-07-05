@@ -33,11 +33,9 @@ namespace igcmd {
         private Update up = new Update();
         private string UpdateInfoFile { get => App.ConfigDir(PathType.File, Dir.Temporary, "update.xml"); }
 
-
         public frmCheckForUpdate() {
             InitializeComponent();
         }
-
 
         private void CheckForUpdate() {
             up = new Update(new Uri("https://imageglass.org/checkforupdate"), UpdateInfoFile);
@@ -47,7 +45,7 @@ namespace igcmd {
                 File.Delete(UpdateInfoFile);
             }
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             if (up.IsError) {
                 sb.Append("Please visit https://imageglass.org/download to check for updates.");
@@ -57,16 +55,27 @@ namespace igcmd {
                 picStatus.Image = igcmd.Properties.Resources.warning;
             }
             else {
-                sb.AppendLine($"The latest ImageGlass information:\r\n" +
-                    $"------------------------------\r\n" +
-                    $"Version: {up.Info.NewVersion.ToString()}\r\n" +
-                    $"Version type: {up.Info.VersionType}\r\n" +
-                    $"Importance: {up.Info.Level}\r\n" +
-                    $"Size: {up.Info.Size}\r\n" +
-                    $"Publish date: {up.Info.PublishDate:MMM d, yyyy HH:mm:ss}");
+                sb
+                    .Append("The latest ImageGlass information:\r\n")
+                    .Append("------------------------------\r\n")
+                    .Append("Version: ")
+                    .Append(up.Info.NewVersion)
+                    .Append("\r\n")
+                    .Append("Version type: ")
+                    .Append(up.Info.VersionType)
+                    .Append("\r\n")
+                    .Append("Importance: ")
+                    .Append(up.Info.Level)
+                    .Append("\r\n")
+                    .Append("Size: ")
+                    .Append(up.Info.Size)
+                    .Append("\r\n")
+                    .Append("Publish date: ")
+                    .AppendFormat("{0:MMM d, yyyy HH:mm:ss}", up.Info.PublishDate)
+                    .AppendLine();
 
                 if (up.CheckForUpdate(App.StartUpDir("ImageGlass.exe"))) {
-                    if (up.Info.VersionType.ToLower() == "stable") {
+                    if (string.Equals(up.Info.VersionType, "stable", StringComparison.CurrentCultureIgnoreCase)) {
                         lblStatus.Text = "ImageGlass is out of date!";
                         lblStatus.ForeColor = Color.FromArgb(241, 89, 58);
                     }
@@ -85,13 +94,10 @@ namespace igcmd {
                     btnDownload.Enabled = false;
                     picStatus.Image = igcmd.Properties.Resources.ok;
                 }
-
             }
 
             txtUpdates.Text += sb.ToString();
         }
-
-
 
         #region Form events
         private void frmMain_Load(object sender, EventArgs e) {
@@ -114,7 +120,6 @@ namespace igcmd {
                 File.Delete(UpdateInfoFile);
         }
 
-
         private void lnkUpdateReadMore_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             try {
                 Process.Start(up.Info.Description + $"?utm_source=app_{App.Version}& utm_medium=app_click&utm_campaign=app_update_read_more");
@@ -124,7 +129,6 @@ namespace igcmd {
             }
         }
 
-
         private void btnDownload_Click(object sender, EventArgs e) {
             try {
                 Process.Start(up.Info.Link.ToString() + $"?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_update_read_more");
@@ -133,7 +137,6 @@ namespace igcmd {
                 MessageBox.Show("Check your Internet connection!");
             }
         }
-
 
         private void btnClose_Click(object sender, EventArgs e) {
             this.Close();

@@ -50,12 +50,15 @@ namespace ImageGlass.Services {
         private static extern int GetExplorerSortOrder64(string folderPath, ref StringBuilder columnName, int columnNameMaxLen, ref int isAscending);
 
         /// <summary>
+        /// <para>
         /// Determines the sorting order of a Windows Explorer window which matches
         /// the given file path.
-        ///
+        /// </para>
+        /// <para>
         /// "Failure" situations are:
         /// 1. unable to find an open Explorer window matching the file path
         /// 2. the Explorer sort order doesn't match one of our existing sort orders
+        /// </para>
         /// </summary>
         /// <param name="fullPath">full path to file/folder in question</param>
         /// <param name="loadOrder">the resulting sort order or null</param>
@@ -71,7 +74,7 @@ namespace ImageGlass.Services {
 
                 var sb = new StringBuilder(200); // arbitrary length should fit any
                 int explorerSortResult;
-                int ascend = -1;
+                var ascend = -1;
 
                 if (IntPtr.Size == 8) // 64 bit platform
                 {
@@ -98,13 +101,11 @@ namespace ImageGlass.Services {
                 return loadOrder != null; // will be false on not-yet-supported column
             }
 #pragma warning disable 168
-            catch (Exception e)
+            catch
 #pragma warning restore 168
             {
                 return false; // failure
             }
         }
-
-
     }
 }

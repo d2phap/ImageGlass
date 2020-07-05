@@ -43,12 +43,10 @@ namespace ImageGlass.Base {
         /// </summary>
         public string AppArguments { get; set; }
 
-
         /// <summary>
         /// Gets the macro string
         /// </summary>
         public static string FileMacro { get; } = "<file>";
-
 
         /// <summary>
         /// Initial Image Editing App

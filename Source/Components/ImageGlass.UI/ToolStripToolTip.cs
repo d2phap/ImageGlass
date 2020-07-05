@@ -41,15 +41,15 @@ using System.Windows.Forms;
 
 namespace ImageGlass.UI {
     public class ToolStripToolTip: ToolStrip {
-        ToolStripItem mouseOverItem = null;
-        Point mouseOverPoint;
-        Timer timer;
+        private ToolStripItem mouseOverItem;
+        private Point mouseOverPoint;
+        private readonly Timer timer;
         private ToolTip _tooltip;
         public int ToolTipInterval = 4000;
         public string ToolTipText;
         public bool ToolTipShowUp;
 
-        private ToolbarAlignment _alignment = ToolbarAlignment.LEFT;
+        private ToolbarAlignment _alignment;
 
         private ToolTip Tooltip {
             get {
@@ -74,11 +74,10 @@ namespace ImageGlass.UI {
             }
         }
 
-
         #region Protected methods
         protected override void OnMouseMove(MouseEventArgs mea) {
             base.OnMouseMove(mea);
-            ToolStripItem newMouseOverItem = this.GetItemAt(mea.Location);
+            var newMouseOverItem = this.GetItemAt(mea.Location);
             if (mouseOverItem != newMouseOverItem ||
                 (Math.Abs(mouseOverPoint.X - mea.X) > SystemInformation.MouseHoverSize.Width || (Math.Abs(mouseOverPoint.Y - mea.Y) > SystemInformation.MouseHoverSize.Height))) {
                 mouseOverItem = newMouseOverItem;
@@ -91,7 +90,7 @@ namespace ImageGlass.UI {
 
         protected override void OnMouseClick(MouseEventArgs e) {
             base.OnMouseClick(e);
-            ToolStripItem newMouseOverItem = this.GetItemAt(e.Location);
+            var newMouseOverItem = this.GetItemAt(e.Location);
             if (newMouseOverItem != null) {
                 Tooltip.Hide(this);
             }
@@ -99,7 +98,9 @@ namespace ImageGlass.UI {
 
         protected override void OnMouseUp(MouseEventArgs mea) {
             base.OnMouseUp(mea);
-            ToolStripItem newMouseOverItem = this.GetItemAt(mea.Location);
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
+            var newMouseOverItem = this.GetItemAt(mea.Location);
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
         }
 
         protected override void OnMouseLeave(EventArgs e) {
@@ -114,27 +115,37 @@ namespace ImageGlass.UI {
             timer.Stop();
             try {
                 Point currentMouseOverPoint;
-                if (ToolTipShowUp)
+                if (ToolTipShowUp) {
                     currentMouseOverPoint = this.PointToClient(new Point(Control.MousePosition.X, Control.MousePosition.Y - Cursor.Current.Size.Height + Cursor.Current.HotSpot.Y));
-                else
+                }
+                else {
                     currentMouseOverPoint = this.PointToClient(new Point(Control.MousePosition.X, Control.MousePosition.Y + Cursor.Current.Size.Height - Cursor.Current.HotSpot.Y));
+                }
 
                 if (mouseOverItem == null) {
-                    if (ToolTipText != null && ToolTipText.Length > 0) {
+                    if (!string.IsNullOrEmpty(ToolTipText)) {
                         Tooltip.Show(ToolTipText, this, currentMouseOverPoint, ToolTipInterval);
                     }
                 }
+                // TODO: revisit this; toolbar buttons like to disappear, if changed.
                 else if ((!(mouseOverItem is ToolStripDropDownButton) && !(mouseOverItem is ToolStripSplitButton)) ||
+#pragma warning disable IDE0038 // Use pattern matching
+#pragma warning disable RCS1220 // Use pattern matching instead of combination of 'is' operator and cast operator.
                     ((mouseOverItem is ToolStripDropDownButton) && !((ToolStripDropDownButton)mouseOverItem).DropDown.Visible) ||
-                    (((mouseOverItem is ToolStripSplitButton) && !((ToolStripSplitButton)mouseOverItem).DropDown.Visible))) {
-                    if (mouseOverItem.ToolTipText != null && mouseOverItem.ToolTipText.Length > 0 && Tooltip != null) {
+#pragma warning restore RCS1220 // Use pattern matching instead of combination of 'is' operator and cast operator.
+#pragma warning restore IDE0038 // Use pattern matching
+#pragma warning disable IDE0038 // Use pattern matching
+#pragma warning disable RCS1220 // Use pattern matching instead of combination of 'is' operator and cast operator.
+                    ((mouseOverItem is ToolStripSplitButton) && !((ToolStripSplitButton)mouseOverItem).DropDown.Visible)) {
+#pragma warning restore RCS1220 // Use pattern matching instead of combination of 'is' operator and cast operator.
+#pragma warning restore IDE0038 // Use pattern matching
+                    if (!string.IsNullOrEmpty(mouseOverItem.ToolTipText) && Tooltip != null) {
                         Tooltip.Show(mouseOverItem.ToolTipText, this, currentMouseOverPoint, ToolTipInterval);
                     }
                 }
             }
             catch { }
         }
-
 
         protected override void Dispose(bool disposing) {
             base.Dispose(disposing);
@@ -146,12 +157,10 @@ namespace ImageGlass.UI {
 
         #endregion
 
-
         protected override void OnSizeChanged(EventArgs e) {
             base.OnSizeChanged(e);
             this.UpdateAlignment();
         }
-
 
         public ToolStripToolTip() : base() {
             ShowItemToolTips = false;
@@ -159,24 +168,22 @@ namespace ImageGlass.UI {
                 Enabled = false,
                 Interval = 200 // KBR enforce long initial time SystemInformation.MouseHoverTime;
             };
-            timer.Tick += new EventHandler(timer_Tick);
+            timer.Tick += timer_Tick;
         }
-
 
         /// <summary>
         /// Update the alignment if toolstrip items
         /// </summary>
         public void UpdateAlignment() {
-            if (this.Items.Count == 0) return;
-
+            if (this.Items.Count == 0) {
+                return;
+            }
 
             var firstBtn = this.Items[0];
             var defaultMargin = new Padding(3, firstBtn.Margin.Top, firstBtn.Margin.Right, firstBtn.Margin.Bottom);
 
-
             // reset the alignment to left
             firstBtn.Margin = defaultMargin;
-
 
             if (this.Alignment == ToolbarAlignment.CENTER) {
                 // get the correct content width, excluding the sticky right items
@@ -203,9 +210,8 @@ namespace ImageGlass.UI {
                     // the default margin (left alignment)
                     var margin = defaultMargin;
 
-
                     // get the gap of content width and toolbar width
-                    int gap = Math.Abs(this.Width - toolbarContentWidth);
+                    var gap = Math.Abs(this.Width - toolbarContentWidth);
 
                     // update the left margin value
                     margin.Left = gap / 2;

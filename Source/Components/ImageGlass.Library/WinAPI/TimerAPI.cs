@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 /******************************************
 * THANKS [Meowski] FOR THIS CONTRIBUTION
 *******************************************/
@@ -27,7 +26,7 @@ using System.Runtime.InteropServices;
 
 namespace ImageGlass.Library.WinAPI {
     /// <summary>
-    /// Used to make requests for obtaining and setting timer resolution. 
+    /// Used to make requests for obtaining and setting timer resolution.
     /// This is a global request shared by all processes on the computer. All
     /// requests are revoked when this process ends.
     /// </summary>
@@ -72,14 +71,16 @@ namespace ImageGlass.Library.WinAPI {
         /// <returns> true if we succesfully acquired a clock of
         /// the given rate, otherwise returns false. </returns>
         public static bool TimeBeginPeriod(int timeInMilliseconds) {
-            if (timeInMilliseconds < ourMinPeriod || timeInMilliseconds > ourMaxPeriod)
+            if (timeInMilliseconds < ourMinPeriod || timeInMilliseconds > ourMaxPeriod) {
                 return false;
+            }
 
             bool successfullyRequestedPeriod;
             lock (ourLock) {
                 successfullyRequestedPeriod = timeBeginPeriod(timeInMilliseconds) == 0;
-                if (successfullyRequestedPeriod)
+                if (successfullyRequestedPeriod) {
                     ourCurRequests.Add(timeInMilliseconds);
+                }
             }
 
             return successfullyRequestedPeriod;

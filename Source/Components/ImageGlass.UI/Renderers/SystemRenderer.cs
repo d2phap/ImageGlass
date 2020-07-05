@@ -59,7 +59,6 @@ namespace ImageGlass.UI.Renderers {
             return 1;
         }
 
-
         /// <summary>
         /// Remove system theme
         /// </summary>

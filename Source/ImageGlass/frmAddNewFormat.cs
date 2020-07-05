@@ -23,7 +23,7 @@ using System.Windows.Forms;
 
 namespace ImageGlass {
     public partial class frmAddNewFormat: Form {
-        private bool _isAllowFormClosed = false;
+        private bool _isAllowFormClosed;
         public string FileFormat { get; set; }
 
         public frmAddNewFormat() {

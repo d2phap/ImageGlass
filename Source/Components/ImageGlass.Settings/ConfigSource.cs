@@ -28,44 +28,37 @@ namespace ImageGlass.Settings {
     /// </summary>
     [Serializable]
     public class ConfigSource: Dictionary<string, string> {
-
         #region Public properties
 
         /// <summary>
         /// User config file
         /// </summary>
-        public string Filename => App.ConfigDir(PathType.File, "igconfig.xml");
-
+        public static string Filename => App.ConfigDir(PathType.File, "igconfig.xml");
 
         /// <summary>
         /// The default config file located in StartUpDir, the default configs if it does not exist in user's configs
         /// </summary>
-        public string DefaultConfigFilename => App.StartUpDir("igconfig.default.xml");
-
+        public static string DefaultConfigFilename => App.StartUpDir("igconfig.default.xml");
 
         /// <summary>
         /// The admin config file located in StartUpDir. All configs here will override user's configs and default configs
         /// </summary>
-        public string AdminConfigFilename => App.StartUpDir("igconfig.admin.xml");
-
+        public static string AdminConfigFilename => App.StartUpDir("igconfig.admin.xml");
 
         /// <summary>
         /// Gets the admin configs
         /// </summary>
         public Dictionary<string, string> AdminConfigs { get; private set; } = new Dictionary<string, string>();
 
-
         /// <summary>
         /// Config file description
         /// </summary>
         public string Description { get; set; } = "ImageGlass Configuration file";
 
-
         /// <summary>
         /// Config file version
         /// </summary>
         public string Version { get; set; } = "7.5";
-
 
         /// <summary>
         /// Gets, sets value indicates that the config file is compatible with this ImageGlass version or not
@@ -74,13 +67,12 @@ namespace ImageGlass.Settings {
 
         #endregion
 
-
         #region Private methods
         /// <summary>
         /// Reads XML file and returns the Document object
         /// </summary>
         /// <returns></returns>
-        private XmlDocument ReadXMLFile(string filename) {
+        private static XmlDocument ReadXMLFile(string filename) {
             var doc = new XmlDocument();
 
             try {
@@ -92,7 +84,6 @@ namespace ImageGlass.Settings {
 
             return doc;
         }
-
 
         /// <summary>
         /// Loads the given filename, returns all configs
@@ -108,45 +99,37 @@ namespace ImageGlass.Settings {
                 return list;
             }
 
-            XmlElement root = doc.DocumentElement;// <ImageGlass>
-            XmlElement nType = (XmlElement)root.SelectNodes("Configuration")[0]; // <Configuration>
+            var root = doc.DocumentElement;// <ImageGlass>
+            var nType = (XmlElement)root.SelectNodes("Configuration")[0]; // <Configuration>
 
             if (isUserConfigFile) {
                 // Get <Info> element
-                XmlElement nInfo = (XmlElement)nType.SelectNodes("Info")[0];// <Info>
+                var nInfo = (XmlElement)nType.SelectNodes("Info")[0];// <Info>
                 var version = nInfo.GetAttribute("version");
                 this.IsCompatible = version == this.Version;
                 this.Version = this.IsCompatible ? version : this.Version;
             }
 
-
             // Get <Content> element
-            XmlElement nContent = (XmlElement)nType.SelectNodes("Content")[0];// <Content>
+            var nContent = (XmlElement)nType.SelectNodes("Content")[0];// <Content>
 
             // Get all config items
-            XmlNodeList nItems = nContent.SelectNodes("Item");// <Item>
+            var nItems = nContent.SelectNodes("Item");// <Item>
 
             foreach (var item in nItems) {
                 var nItem = (XmlElement)item;
-                string key = nItem.GetAttribute("key");
+                var key = nItem.GetAttribute("key");
 
                 //Issue #567: this breaks LastSeenImagePath when "\n" is part of the path
                 var value = nItem.GetAttribute("value");
                 if (key != "LastSeenImagePath")
                     value = value.Replace("\\n", "\n");
 
-                if (list.ContainsKey(key)) {
-                    // override the existing key
-                    list[key] = value;
-                }
-                else {
-                    list.Add(key, value);
-                }
+                list[key] = value;
             }
 
             return list;
         }
-
 
         /// <summary>
         /// Write configs to the given filename
@@ -154,21 +137,19 @@ namespace ImageGlass.Settings {
         /// <param name="configs"></param>
         private void WriteConfigFile(Dictionary<string, string> configs, string filename) {
             var doc = new XmlDocument();
-            XmlElement root = doc.CreateElement("ImageGlass"); // <ImageGlass>
-            XmlElement nConfig = doc.CreateElement("Configuration"); // <Configuration>
+            var root = doc.CreateElement("ImageGlass"); // <ImageGlass>
+            var nConfig = doc.CreateElement("Configuration"); // <Configuration>
 
-
-            XmlElement nInfo = doc.CreateElement("Info"); // <Info>
+            var nInfo = doc.CreateElement("Info"); // <Info>
             nInfo.SetAttribute("description", this.Description);
             nInfo.SetAttribute("version", this.Version);
             nConfig.AppendChild(nInfo); // <Info />
 
-
             // Write config items
-            XmlElement nContent = doc.CreateElement("Content"); // <Content>
+            var nContent = doc.CreateElement("Content"); // <Content>
 
             foreach (var item in configs) {
-                XmlElement nItem = doc.CreateElement("Item"); // <Item>
+                var nItem = doc.CreateElement("Item"); // <Item>
                 nItem.SetAttribute("key", item.Key);
                 nItem.SetAttribute("value", item.Value);
                 nContent.AppendChild(nItem); // <Item />
@@ -184,14 +165,11 @@ namespace ImageGlass.Settings {
             catch { }
         }
 
-
         #endregion
-
 
         #region Public methods
 
         public ConfigSource() { }
-
 
         /// <summary>
         /// Throws NotImplementedException exception. It's not used!
@@ -202,14 +180,13 @@ namespace ImageGlass.Settings {
             throw new NotImplementedException();
         }
 
-
         /// <summary>
         /// Loads all config files: user, default, admin, then unify configs for user
         /// </summary>
         public void LoadUserConfigs() {
-            var userConfigs = LoadConfigFile(this.Filename, true);
-            var defaultConfigs = LoadConfigFile(this.DefaultConfigFilename);
-            this.AdminConfigs = LoadConfigFile(this.AdminConfigFilename);
+            var userConfigs = LoadConfigFile(Filename, true);
+            var defaultConfigs = LoadConfigFile(DefaultConfigFilename);
+            this.AdminConfigs = LoadConfigFile(AdminConfigFilename);
 
             // take default config items if they don not exist in user configs
             foreach (var item in defaultConfigs) {
@@ -223,7 +200,6 @@ namespace ImageGlass.Settings {
                 userConfigs[item.Key] = item.Value;
             }
 
-
             // set user configs to the dictionary
             this.Clear();
             foreach (var item in userConfigs) {
@@ -231,14 +207,12 @@ namespace ImageGlass.Settings {
             }
         }
 
-
         /// <summary>
         /// Write user configs to file
         /// </summary>
         public void WriteUserConfigs() {
-            WriteConfigFile(this, this.Filename);
+            WriteConfigFile(this, Filename);
         }
-
 
         #endregion
 
