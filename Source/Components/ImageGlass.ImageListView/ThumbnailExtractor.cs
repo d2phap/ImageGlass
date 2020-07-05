@@ -22,7 +22,6 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Threading.Tasks;
 #if USEWIC
 using System.Runtime.ExceptionServices;
 using System.Windows.Media;
@@ -61,41 +60,44 @@ namespace ImageGlass.ImageListView {
 
             if (useWIC) {
 #if USEWIC
-                using (MemoryStream stream = null) {
-                    BitmapFrame frameWpf = null;
-                    try {
-                        image.Save(stream, ImageFormat.Bmp);
-                        // Performance vs image quality settings.
-                        // Selecting BitmapCacheOption.None speeds up thumbnail generation of large images tremendously
-                        // if the file contains no embedded thumbnail. The image quality is only slightly worse.
-                        stream.Seek(0, SeekOrigin.Begin);
-                        frameWpf = BitmapFrame.Create(stream,
-                            BitmapCreateOptions.IgnoreColorProfile,
-                            BitmapCacheOption.None);
-                    }
-                    catch {
-                        if (stream != null) {
-                            stream.Dispose();
-                        }
-                        frameWpf = null;
-                    }
+                MemoryStream stream = null;
+                BitmapFrame frameWpf = null;
+                try {
+                    stream = new MemoryStream();
 
-                    if (stream == null || frameWpf == null) {
-                        if (stream != null) {
-                            stream.Dispose();
-                        }
-
-                        // .Net 2.0 fallback
-                        Image img = GetThumbnailBmp(image, size,
-                            useExifOrientation ? GetRotation(image) : 0);
-                        return img;
-                    }
-
-                    Image thumb = GetThumbnail(frameWpf, size, useEmbeddedThumbnails,
-                        useExifOrientation ? GetRotation(frameWpf) : 0);
-                    stream.Dispose();
-                    return thumb;
+                    image.Save(stream, ImageFormat.Bmp);
+                    // Performance vs image quality settings.
+                    // Selecting BitmapCacheOption.None speeds up thumbnail generation of large images tremendously
+                    // if the file contains no embedded thumbnail. The image quality is only slightly worse.
+                    stream.Seek(0, SeekOrigin.Begin);
+                    frameWpf = BitmapFrame.Create(stream,
+                        BitmapCreateOptions.IgnoreColorProfile,
+                        BitmapCacheOption.None);
                 }
+                catch {
+                    if (stream != null) {
+                        stream.Dispose();
+                        stream = null;
+                    }
+                    frameWpf = null;
+                }
+
+                if (stream == null || frameWpf == null) {
+                    if (stream != null) {
+                        stream.Dispose();
+                        stream = null;
+                    }
+
+                    // .Net 2.0 fallback
+                    Image img = GetThumbnailBmp(image, size,
+                        useExifOrientation ? GetRotation(image) : 0);
+                    return img;
+                }
+
+                Image thumb = GetThumbnail(frameWpf, size, useEmbeddedThumbnails,
+                    useExifOrientation ? GetRotation(frameWpf) : 0);
+                stream.Dispose();
+                return thumb;
 #else
                 // .Net 2.0 fallback
                 return GetThumbnailBmp(image, size,
@@ -126,12 +128,12 @@ namespace ImageGlass.ImageListView {
         // as a corrupted state (and IG shutdown) _unless_ this decorator is added
         [HandleProcessCorruptedStateExceptions]
 #endif
-        public static async Task<Image> FromFile(string filename, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool useExifOrientation, bool useWIC) {
+        public static Image FromFile(string filename, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool useExifOrientation, bool useWIC) {
             if (string.IsNullOrEmpty(filename))
-                throw new ArgumentException("Filename cannot be empty", nameof(filename));
+                throw new ArgumentException("Filename cannot be empty", "filename");
 
             if (size.Width <= 0 || size.Height <= 0)
-                throw new ArgumentException("Thumbnail size cannot be empty.", nameof(size));
+                throw new ArgumentException("Thumbnail size cannot be empty.", "size");
 
             if (useWIC) {
 #if USEWIC
@@ -149,7 +151,7 @@ namespace ImageGlass.ImageListView {
                 }
                 catch {
                     // .Net 2.0 fallback
-                    return await GetThumbnailBmp(filename, size, useEmbeddedThumbnails,
+                    return GetThumbnailBmp(filename, size, useEmbeddedThumbnails,
                         useExifOrientation ? GetRotation(filename) : 0);
                 }
 #else
@@ -160,7 +162,7 @@ namespace ImageGlass.ImageListView {
             }
             else {
                 // .Net 2.0 fallback
-                return await GetThumbnailBmp(filename, size, useEmbeddedThumbnails,
+                return GetThumbnailBmp(filename, size, useEmbeddedThumbnails,
                     useExifOrientation ? GetRotation(filename) : 0);
             }
         }
@@ -208,11 +210,11 @@ namespace ImageGlass.ImageListView {
         /// <param name="useEmbeddedThumbnails">Embedded thumbnail usage.</param>
         /// <param name="rotate">Rotation angle.</param>
         /// <returns>The image from the given file or null if an error occurs.</returns>
-        internal static async Task<Image> GetThumbnailBmp(string filename, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, int rotate) {
+        internal static Image GetThumbnailBmp(string filename, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, int rotate) {
             if (size.Width <= 0 || size.Height <= 0)
                 throw new ArgumentException();
 
-            var source = await Heart.Photo.GetThumbnailAsync(filename, size, useEmbeddedThumbnails != UseEmbeddedThumbnails.Never);
+            var source = Heart.Photo.GetThumbnail(filename, size, useEmbeddedThumbnails != UseEmbeddedThumbnails.Never);
 
             // If all failed, return null.
             if (source == null)
@@ -238,7 +240,8 @@ namespace ImageGlass.ImageListView {
         /// </summary>
         /// <param name="frameWpf">Image source.</param>
         private static int GetRotation(BitmapFrame frameWpf) {
-            if (frameWpf.Metadata is BitmapMetadata data) {
+            BitmapMetadata data = frameWpf.Metadata as BitmapMetadata;
+            if (data != null) {
                 try {
                     // read orientation metadata
                     object obj = GetMetadataObject(data, WICPathOrientation);
@@ -398,7 +401,7 @@ namespace ImageGlass.ImageListView {
         /// <returns>Scaled and rotated Wpf bitmap</returns>
         private static BitmapSource ScaleDownRotateBitmap(BitmapSource sourceWpf, double scale, int angle) {
             if (angle % 90 != 0) {
-                throw new ArgumentException("Rotation angle should be a multiple of 90 degrees.", nameof(angle));
+                throw new ArgumentException("Rotation angle should be a multiple of 90 degrees.", "angle");
             }
 
             // Do not upscale and no rotation.
@@ -536,7 +539,7 @@ namespace ImageGlass.ImageListView {
         /// <returns>Scaled and rotated image</returns>
         private static Image ScaleDownRotateBitmap(Image source, double scale, int angle) {
             if (angle % 90 != 0) {
-                throw new ArgumentException("Rotation angle should be a multiple of 90 degrees.", nameof(angle));
+                throw new ArgumentException("Rotation angle should be a multiple of 90 degrees.", "angle");
             }
 
             // Do not upscale and no rotation.

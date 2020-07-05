@@ -12,9 +12,10 @@ namespace ImageGlass.ImageListView {
         /// <summary>
         /// Represents a file system adaptor.
         /// </summary>
-        internal class FileSystemAdaptor: ImageListView.ImageListViewItemAdaptor {
+        public class FileSystemAdaptor: ImageListView.ImageListViewItemAdaptor {
             // [IG_CHANGE] use a cache for commonly repeated strings
-            private static readonly StringCache _stringCache = new StringCache();
+            private static StringCache _stringCache = new StringCache();
+
             private bool disposed;
 
             /// <summary>
@@ -40,11 +41,8 @@ namespace ImageGlass.ImageListView {
                 // [IG_CHANGE]
                 // Issue #530: thumbnails not built if long file path
                 string filename = Heart.Helpers.PrefixLongPath((string)key);
-                if (File.Exists(filename)) {
-                    var task = ThumbnailExtractor.FromFile(filename, size, useEmbeddedThumbnails, useExifOrientation, useWIC);
-                    task.RunSynchronously();
-                    return task.Result;
-                }
+                if (File.Exists(filename))
+                    return ThumbnailExtractor.FromFile(filename, size, useEmbeddedThumbnails, useExifOrientation, useWIC);
                 else
                     return null;
             }
@@ -118,7 +116,7 @@ namespace ImageGlass.ImageListView {
         /// <summary>
         /// Represents a URI adaptor.
         /// </summary>
-        protected class URIAdaptor: ImageListView.ImageListViewItemAdaptor {
+        public class URIAdaptor: ImageListView.ImageListViewItemAdaptor {
             private bool disposed;
 
             /// <summary>
@@ -188,10 +186,9 @@ namespace ImageGlass.ImageListView {
                     return null;
 
                 string uri = (string)key;
-                List<Utility.Tuple<ColumnType, string, object>> details = new List<Utility.Tuple<ColumnType, string, object>>
-                {
-                    new Utility.Tuple<ColumnType, string, object>(ColumnType.Custom, "URL", uri)
-                };
+                List<Utility.Tuple<ColumnType, string, object>> details = new List<Utility.Tuple<ColumnType, string, object>>();
+
+                details.Add(new Utility.Tuple<ColumnType, string, object>(ColumnType.Custom, "URL", uri));
 
                 return details.ToArray();
             }
