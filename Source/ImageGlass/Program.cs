@@ -137,9 +137,7 @@ namespace ImageGlass {
                     Application.Run(formMain = new frmMain());
                 }
                 else {
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    singleInstance.PassArgumentsToFirstInstance(Environment.GetCommandLineArgs());
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                    _ = singleInstance.PassArgumentsToFirstInstance(Environment.GetCommandLineArgs());
                 }
             } //end check multi instances
             #endregion
@@ -179,7 +177,7 @@ namespace ImageGlass {
         /// </summary>
         /// <param name="useAutoCheck">If TRUE, use "igautoupdate"; else "igupdate" for argument</param>
         public static void CheckForUpdate(bool useAutoCheck = false) {
-            Task.Run(() => {
+            _ = Task.Run(() => {
                 using var p = new Process();
                 p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
                 p.StartInfo.Arguments = useAutoCheck ? "igautoupdate" : "igupdate";

@@ -530,7 +530,7 @@ namespace ImageGlass {
             else if (Local.ActiveImageLoadingOrder == ImageOrderBy.Random) {
                 // NOTE: ignoring the 'descending order' setting
                 list.AddRange(fileList
-                    .OrderBy(f => Guid.NewGuid()));
+                    .OrderBy(_ => Guid.NewGuid()));
             }
 
             return list;
@@ -4506,7 +4506,7 @@ namespace ImageGlass {
 
         // ReSharper disable once EmptyGeneralCatchClause
         private void mnuMainSetAsDesktop_Click(object sender, EventArgs e) {
-            Task.Run(() => {
+            _ = Task.Run(() => {
                 var isError = false;
 
                 try {
