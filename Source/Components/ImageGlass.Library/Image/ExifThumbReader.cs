@@ -24,7 +24,6 @@ namespace ImageGlass.Library.Image {
         [DllImport("gdiplus.dll", EntryPoint = "GdipDisposeImage", CharSet = CharSet.Unicode, ExactSpelling = true)]
         private static extern int GdipDisposeImage(IntPtr image);
 
-
         // EXIT tag value for thumbnail data. Value specified by EXIF standard
         private const int THUMBNAIL_DATA = 0x501B;
 
@@ -38,35 +37,41 @@ namespace ImageGlass.Library.Image {
             var ret = GdipLoadImageFromFile(imagePath, out var hImage);
 
             try {
-                if (ret != 0)
+                if (ret != 0) {
                     throw createException(ret);
+                }
 
                 ret = GdipGetPropertyItemSize(hImage, THUMBNAIL_DATA, out var propSize);
                 // Image has no thumbnail data in it. Return null
-                if (ret == GDI_ERR_PROP_NOT_FOUND)
+                if (ret == GDI_ERR_PROP_NOT_FOUND) {
                     return null;
-                if (ret != 0)
-                    throw createException(ret);
+                }
 
+                if (ret != 0) {
+                    throw createException(ret);
+                }
 
                 // Allocate a buffer in memory
                 buffer = Marshal.AllocHGlobal(propSize);
-                if (buffer == IntPtr.Zero)
+                if (buffer == IntPtr.Zero) {
                     throw createException(GDI_ERR_OUT_OF_MEMORY);
+                }
 
                 ret = GdipGetPropertyItem(hImage, THUMBNAIL_DATA, propSize, buffer);
-                if (ret != 0)
+                if (ret != 0) {
                     throw createException(ret);
+                }
 
                 // buffer has the thumbnail data. Now we have to convert it to
                 // an Image
-                return await convertFromMemory(buffer);
+                return await convertFromMemory(buffer).ConfigureAwait(true);
             }
 
             finally {
                 // Free the buffer
-                if (buffer != IntPtr.Zero)
+                if (buffer != IntPtr.Zero) {
                     Marshal.FreeHGlobal(buffer);
+                }
 
                 GdipDisposeImage(hImage);
             }
@@ -111,10 +116,8 @@ namespace ImageGlass.Library.Image {
             return new ExternalException("Gdiplus Unknown Error", -2147418113);
         }
 
-
-
         /// <summary>
-        /// Converts the IntPtr buffer to a property item and then converts its 
+        /// Converts the IntPtr buffer to a property item and then converts its
         /// value to a Drawing.Image item
         /// </summary>
         private static async Task<System.Drawing.Image> convertFromMemory(IntPtr thumbData) {
@@ -126,7 +129,7 @@ namespace ImageGlass.Library.Image {
             // the bytes to a stream and create a new image from that stream
             var imageBytes = prop.Value;
             using (var stream = new MemoryStream(imageBytes.Length)) {
-                await stream.WriteAsync(imageBytes, 0, imageBytes.Length);
+                await stream.WriteAsync(imageBytes, 0, imageBytes.Length).ConfigureAwait(true);
                 return System.Drawing.Image.FromStream(stream);
             }
         }

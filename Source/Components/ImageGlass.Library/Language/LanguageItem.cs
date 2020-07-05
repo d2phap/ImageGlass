@@ -56,5 +56,4 @@ namespace ImageGlass.Library {
             throw new NotImplementedException();
         }
     }
-
 }

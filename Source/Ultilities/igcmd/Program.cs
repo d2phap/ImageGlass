@@ -23,37 +23,34 @@ using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-
 namespace igcmd {
-    static class Program {
+    internal static class Program {
         [DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
 
-
         // Issue #360: IG periodically searching for dismounted device
         [DllImport("kernel32.dll")]
-        static extern ErrorModes SetErrorMode(ErrorModes uMode);
+        private static extern ErrorModes SetErrorMode(ErrorModes uMode);
 
         [Flags]
         public enum ErrorModes: uint {
             SYSTEM_DEFAULT = 0x0,
             SEM_FAILCRITICALERRORS = 0x0001,
-            SEM_NOALIGNMENTFAULTEXCEPT = 0x0004,
-            SEM_NOGPFAULTERRORBOX = 0x0002,
-            SEM_NOOPENFILEERRORBOX = 0x8000
+            SEM_NOGPFAULTERRORBOX = 1 << 1,
+            SEM_NOALIGNMENTFAULTEXCEPT = 1 << 2,
+            SEM_NOOPENFILEERRORBOX = 1 << 15
         }
-
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static int Main(string[] args) {
+        private static int Main(string[] args) {
             // Issue #360: IG periodically searching for dismounted device
             // This _must_ be executed first!
             SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
 
-            string topcmd = args[0].ToLower().Trim();
+            var topcmd = args[0].ToLower().Trim();
 
             // Windows Vista or later
             if (Environment.OSVersion.Version.Major >= 6)
@@ -65,12 +62,11 @@ namespace igcmd {
             // Load user configs
             Configs.Load();
 
-
             // Set desktop wallpaper
             #region setwallpaper <string imgPath> [int style]
             if (topcmd == "setwallpaper") {
                 // Get image's path
-                string imgPath = args[1];
+                var imgPath = args[1];
                 var style = DesktopWallapaper.Style.Current;
 
                 if (args.Length > 2) {
@@ -83,18 +79,15 @@ namespace igcmd {
             }
             #endregion
 
-
             // check for update
             else if (topcmd == "igupdate") {
                 return Core.CheckForUpdate() ? 1 : 0;
             }
 
-
             // auto check for update
             else if (topcmd == "igautoupdate") {
                 return Core.AutoUpdate() ? 1 : 0;
             }
-
 
             // run first launch configs
             else if (topcmd == "firstlaunch") {
@@ -103,7 +96,5 @@ namespace igcmd {
 
             return 0;
         }
-
-
     }
 }

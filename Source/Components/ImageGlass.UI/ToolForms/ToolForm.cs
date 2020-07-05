@@ -29,7 +29,6 @@ namespace ImageGlass.UI.ToolForms {
     public class ToolForm: Form {
         protected Form _currentOwner;
 
-
         #region Borderless form moving
 
         private bool mouseDown; // moving windows is taking place
@@ -37,16 +36,21 @@ namespace ImageGlass.UI.ToolForms {
         private bool moveSnapped; // move toolform windows together
 
         private void Form1_MouseDown(object sender, MouseEventArgs e) {
-            if (e.Clicks == 1)
+            if (e.Clicks == 1) {
                 mouseDown = true;
-            if (ModifierKeys == Keys.Control)
+            }
+
+            if (ModifierKeys == Keys.Control) {
                 moveSnapped = true;
+            }
 
             lastLocation = e.Location;
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e) {
-            if (!mouseDown) return; // not moving windows, ignore
+            if (!mouseDown) {
+                return; // not moving windows, ignore
+            }
 
             if (moveSnapped) {
                 _manager.MoveSnappedTools(lastLocation, e.Location);
@@ -65,7 +69,6 @@ namespace ImageGlass.UI.ToolForms {
         }
 
         #endregion
-
 
         #region Create shadow for borderless form
 
@@ -106,7 +109,7 @@ namespace ImageGlass.UI.ToolForms {
             if (Environment.OSVersion.Version.Major >= 6) {
                 var enabled = 0;
                 DwmIsCompositionEnabled(ref enabled);
-                return (enabled == 1);
+                return enabled == 1;
             }
             return false;
         }
@@ -136,7 +139,6 @@ namespace ImageGlass.UI.ToolForms {
         }
         #endregion
 
-
         #region Properties to make a tool window
 
         protected override bool ShowWithoutActivation => true;
@@ -147,14 +149,13 @@ namespace ImageGlass.UI.ToolForms {
                 baseParams.ExStyle |= 0x8000000 // WS_EX_NOACTIVATE
                                       | 0x00000080;   // WS_EX_TOOLWINDOW
 
-
                 #region Shadow for Borderless form
                 m_aeroEnabled = CheckAeroEnabled();
 
-                if (!m_aeroEnabled)
+                if (!m_aeroEnabled) {
                     baseParams.ClassStyle |= CS_DROPSHADOW;
+                }
                 #endregion
-
 
                 return baseParams;
             }
@@ -162,17 +163,16 @@ namespace ImageGlass.UI.ToolForms {
 
         #endregion
 
-
         #region Events to manage the form location relative to parent
 
         protected Point parentOffset = Point.Empty;
         private bool formOwnerMoving;
         protected Point _locationOffset;
 
-
         private void _AttachEventsToParent(Form frmOwner) {
-            if (frmOwner == null)
+            if (frmOwner == null) {
                 return;
+            }
 
             frmOwner.Move += Owner_Move;
             frmOwner.SizeChanged += Owner_Move;
@@ -180,15 +180,14 @@ namespace ImageGlass.UI.ToolForms {
             frmOwner.LocationChanged += FrmOwner_LocationChanged;
         }
 
-
         private void FrmOwner_LocationChanged(object sender, EventArgs e) {
             formOwnerMoving = false;
         }
 
-
         private void _DetachEventsFromParent(Form frmOwner) {
-            if (frmOwner == null)
+            if (frmOwner == null) {
                 return;
+            }
 
             frmOwner.Move -= Owner_Move;
             frmOwner.SizeChanged -= Owner_Move;
@@ -196,15 +195,15 @@ namespace ImageGlass.UI.ToolForms {
             frmOwner.LocationChanged -= FrmOwner_LocationChanged;
         }
 
-
         private void Owner_Move(object sender, EventArgs e) {
-            if (Owner == null) return;
+            if (Owner == null) {
+                return;
+            }
 
             formOwnerMoving = true;
 
             _SetLocationBasedOnParent();
         }
-
 
         // The tool windows itself has moved; track its location relative to parent
         private void ToolForm_Move(object sender, EventArgs e) {
@@ -224,10 +223,10 @@ namespace ImageGlass.UI.ToolForms {
             base.OnShown(e);
         }
 
-
         protected void _SetLocationBasedOnParent() {
-            if (Owner == null)
+            if (Owner == null) {
                 return;
+            }
 
             if (Owner.WindowState == FormWindowState.Minimized || !Owner.Visible) {
                 Visible = false;
@@ -242,7 +241,6 @@ namespace ImageGlass.UI.ToolForms {
         }
 
         #endregion
-
 
         /// <summary>
         /// Apply theme colors to controls
@@ -265,7 +263,6 @@ namespace ImageGlass.UI.ToolForms {
                     control.ForeColor = fontColor;
                 }
 
-
                 // container
                 if (control.HasChildren) {
                     foreach (Control childControl in control.Controls) {
@@ -283,7 +280,6 @@ namespace ImageGlass.UI.ToolForms {
             this.BackColor = bgColor;
         }
 
-
         #region ToolForm "Snap" support
         private ToolFormManager _manager;
         public void SetToolFormManager(ToolFormManager manager) {
@@ -291,12 +287,10 @@ namespace ImageGlass.UI.ToolForms {
             _manager.Add(this);
         }
 
-
         protected void SnapButton_Click(object sender, EventArgs e) {
             _manager.SnapToNearest(this);
         }
         #endregion
-
 
         /// <summary>
         /// Initialize all event handlers required to manage borderless window movement.
@@ -332,8 +326,6 @@ namespace ImageGlass.UI.ToolForms {
                 }
             }
         }
-
-
 
         public ToolForm() {
             Activated += this.ToolForm_Activated;

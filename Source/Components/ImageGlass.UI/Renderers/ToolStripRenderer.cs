@@ -29,20 +29,16 @@ namespace ImageGlass.UI.Renderers {
             this.ThemeTextColor = textColor;
         }
 
-
         protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e) {
             // Disable the base() method here to remove unwanted border of toolbar
             // base.OnRenderToolStripBorder(e);
         }
 
-
         protected override void OnRenderOverflowButtonBackground(ToolStripItemRenderEventArgs e) {
-
             #region Draw Background
-            var space = 0.12f;
+            const float space = 0.12f;
             var btn = (ToolStripOverflowButton)e.Item;
             var brushBg = new SolidBrush(Color.Black);
-
 
             // hover/selected state
             if (btn.Selected) {
@@ -52,8 +48,8 @@ namespace ImageGlass.UI.Renderers {
                     new RectangleF(
                         e.Item.Bounds.Width * space,
                         e.Item.Bounds.Height * space,
-                        e.Item.Bounds.Width * (1 - space * 2),
-                        e.Item.Bounds.Height * (1 - space * 2)
+                        e.Item.Bounds.Width * (1 - (space * 2)),
+                        e.Item.Bounds.Height * (1 - (space * 2))
                     )
                 );
             }
@@ -64,15 +60,14 @@ namespace ImageGlass.UI.Renderers {
                     new RectangleF(
                         e.Item.Bounds.Width * space,
                         e.Item.Bounds.Height * space,
-                        e.Item.Bounds.Width * (1 - space * 2),
-                        e.Item.Bounds.Height * (1 - space * 2)
+                        e.Item.Bounds.Width * (1 - (space * 2)),
+                        e.Item.Bounds.Height * (1 - (space * 2))
                     )
                 );
             }
 
             brushBg.Dispose();
             #endregion
-
 
             #region Draw "..."
             var brushFont = new SolidBrush(this.ThemeTextColor);
@@ -82,8 +77,8 @@ namespace ImageGlass.UI.Renderers {
             e.Graphics.DrawString("…",
                 font,
                 brushFont,
-                e.Item.Bounds.Width / 2 - fontSize.Width / 2,
-                e.Item.Bounds.Height / 2 - fontSize.Height / 2
+                (e.Item.Bounds.Width / 2) - (fontSize.Width / 2),
+                (e.Item.Bounds.Height / 2) - (fontSize.Height / 2)
             );
 
             font.Dispose();

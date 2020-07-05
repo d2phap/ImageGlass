@@ -8,7 +8,7 @@ namespace ImageGlass.Library {
     public static class DirectoryFinder {
         #region DirectoryList
         /// <summary>
-        /// Returns a list of directories under RootDirectory 
+        /// Returns a list of directories under RootDirectory
         /// </summary>
         /// <param name="RootDirectory">starting directory</param>
         /// <param name="SearchAllDirectories">when true, all sub directories will be searched as well</param>
@@ -32,19 +32,19 @@ namespace ImageGlass.Library {
 
                             // get its sub folders 
                             if (SearchAllDirectories) {
-                                foreach (var dir in FindDirectories(folder.FullName, true, Filter))
+                                foreach (var dir in FindDirectories(folder.FullName, true, Filter)) {
                                     retList.Add(dir);
+                                }
                             }
                         }
                     }
-
                     catch (UnauthorizedAccessException) {
                         // don't really need to do anything 
                         // user just doesn't have access 
                     }
 
 #pragma warning disable CS0168 // Variable is declared but never used
-                    catch (Exception ex)
+                    catch
 #pragma warning restore CS0168 // Variable is declared but never used
                     {
                         // TODO: log the exception 
@@ -53,7 +53,7 @@ namespace ImageGlass.Library {
             }
 
 #pragma warning disable CS0168 // Variable is declared but never used
-            catch (Exception ex)
+            catch
 #pragma warning restore CS0168 // Variable is declared but never used
             {
                 // TODO: save exception 
@@ -84,8 +84,9 @@ namespace ImageGlass.Library {
                 var DirList = new List<string> { RootDirectory };
 
                 // get sub directories if allowed 
-                if (SearchAllDirectories)
+                if (SearchAllDirectories) {
                     DirList.AddRange(FindDirectories(RootDirectory, true, null));
+                }
 
                 // loop through directories populating the list 
                 Parallel.ForEach(DirList, folder => {
@@ -97,26 +98,26 @@ namespace ImageGlass.Library {
                         foreach (var file in di.GetFiles()) {
                             try {
                                 // add the file if it passes the filter 
-                                if ((Filter == null) || (Filter(file)))
+                                if ((Filter == null) || (Filter(file))) {
                                     retList.Add(file.FullName);
+                                }
                             }
 
 #pragma warning disable CS0168 // Variable is declared but never used
-                            catch (Exception ex)
+                            catch
 #pragma warning restore CS0168 // Variable is declared but never used
                             {
                                 // TODO: log the exception 
                             }
                         }
                     }
-
                     catch (UnauthorizedAccessException) {
                         // don't really need to do anything 
                         // user just doesn't have access 
                     }
 
 #pragma warning disable CS0168 // Variable is declared but never used
-                    catch (Exception ex)
+                    catch
 #pragma warning restore CS0168 // Variable is declared but never used
                     {
                         // TODO: log the exception 
@@ -125,7 +126,7 @@ namespace ImageGlass.Library {
             }
 
 #pragma warning disable CS0168 // Variable is declared but never used
-            catch (Exception ex)
+            catch
 #pragma warning restore CS0168 // Variable is declared but never used
             {
                 // TODO: save exception 

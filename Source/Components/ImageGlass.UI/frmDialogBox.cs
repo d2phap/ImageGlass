@@ -33,7 +33,6 @@ namespace ImageGlass.UI {
             set => txtValue.MaxLength = value;
         }
 
-
         /// <summary>
         /// Provide a character filter. Used either to 1) prevent non-numeric characters;
         /// 2) prevent invalid filename characters. If not provided, any character will
@@ -43,7 +42,6 @@ namespace ImageGlass.UI {
         public delegate bool KeyFilter(char key);
 
         public KeyFilter Filter { get; set; } = null;
-
 
         public frmDialogBox(string title, string message, Theme theme) {
             InitializeComponent();
@@ -58,18 +56,18 @@ namespace ImageGlass.UI {
         }
 
         /// <summary>
-        /// Moving form 
+        /// Moving form
         /// </summary>
         /// <param name="m"></param>
         protected override void WndProc(ref Message m) {
             base.WndProc(ref m);
-
-            var WM_NCHITTEST = 0x84;
+            const int WM_NCHITTEST = 0x84;
             if (m.Msg == WM_NCHITTEST) {
-                var HTCLIENT = 1;
-                var HTCAPTION = 2;
-                if (m.Result.ToInt32() == HTCLIENT)
+                const int HTCLIENT = 1;
+                const int HTCAPTION = 2;
+                if (m.Result.ToInt32() == HTCLIENT) {
                     m.Result = (IntPtr)HTCAPTION;
+                }
             }
         }
 
@@ -78,12 +76,14 @@ namespace ImageGlass.UI {
         }
 
         private void txtValue_KeyPress(object sender, KeyPressEventArgs e) {
-            if (Filter == null)
+            if (Filter == null) {
                 return;
+            }
 
             var accept = Filter(e.KeyChar);
-            if (!accept)
+            if (!accept) {
                 e.Handled = true;
+            }
         }
 
         private void DialogBox_Load(object sender, EventArgs e) {

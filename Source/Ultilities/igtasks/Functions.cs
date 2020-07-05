@@ -31,7 +31,7 @@ namespace igtasks {
         /// Install new language packs
         /// </summary>
         public static void InstallLanguagePacks() {
-            OpenFileDialog o = new OpenFileDialog {
+            var o = new OpenFileDialog {
                 Filter = "ImageGlass language pack (*.iglang)|*.iglang",
                 Multiselect = true
             };
@@ -42,33 +42,31 @@ namespace igtasks {
                     Directory.CreateDirectory(App.StartUpDir(Dir.Languages));
                 }
 
-                foreach (string f in o.FileNames) {
+                foreach (var f in o.FileNames) {
                     try {
                         File.Copy(f, App.StartUpDir(Dir.Languages, Path.GetFileName(f)));
                     }
                     catch (Exception ex) {
                         MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-
                 }
             }
         }
-
 
         /// <summary>
         /// Create new language packs
         /// </summary>
         public static void CreateNewLanguagePacks() {
-            SaveFileDialog s = new SaveFileDialog {
+            var s = new SaveFileDialog {
                 Filter = "ImageGlass language pack (*.iglang)|*.iglang"
             };
 
             if (s.ShowDialog() == DialogResult.OK) {
-                Language l = new Language();
+                var l = new Language();
                 l.ExportLanguageToXML(s.FileName);
 
                 try {
-                    Process p = new Process();
+                    var p = new Process();
                     p.StartInfo.ErrorDialog = true;
                     p.StartInfo.FileName = "notepad.exe";
                     p.StartInfo.Arguments = "\"" + s.FileName + "\"";
@@ -80,13 +78,12 @@ namespace igtasks {
             }
         }
 
-
         /// <summary>
         /// Edit language packs
         /// </summary>
         public static void EditLanguagePacks(string filename) {
             try {
-                Process p = new Process();
+                var p = new Process();
                 p.StartInfo.ErrorDialog = true;
                 p.StartInfo.FileName = "notepad.exe";
                 p.StartInfo.Arguments = "\"" + filename + "\"";
@@ -97,7 +94,6 @@ namespace igtasks {
             }
         }
 
-
         /// <summary>
         /// Delete registry association of ImageGlass
         /// </summary>
@@ -105,7 +101,7 @@ namespace igtasks {
         /// <param name="deleteAllKeys">TRUE: delete all keys</param>
         /// <returns>0 = SUCCESS; 1 = ERROR</returns>
         public static int DeleteRegistryAssociations(string exts, bool deleteAllKeys = false) {
-            RegistryHelper reg = new RegistryHelper {
+            var reg = new RegistryHelper {
                 ShowError = true,
                 BaseRegistryKey = Registry.LocalMachine,
 
@@ -115,7 +111,6 @@ namespace igtasks {
 
             if (!reg.DeleteSubKeyTree()) return 1;
 
-
             if (deleteAllKeys) {
                 reg.SubKey = @"SOFTWARE\RegisteredApplications";
                 if (!reg.DeleteKey("ImageGlass")) return 1;
@@ -123,7 +118,6 @@ namespace igtasks {
                 reg.SubKey = @"SOFTWARE\PhapSoftware";
                 if (!reg.DeleteSubKeyTree()) return 1;
             }
-
 
             var extList = exts.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             foreach (var ext in extList) {
@@ -133,7 +127,6 @@ namespace igtasks {
 
             return 0;
         }
-
 
         /// <summary>
         /// Register file associations
@@ -210,20 +203,18 @@ namespace igtasks {
                 }
             }
 
-
             // Register Web-to-App linking
             return SetURIScheme();
         }
-
 
         /// <summary>
         /// Delete URI Scheme registry
         /// </summary>
         /// <returns></returns>
         public static int DeleteURIScheme() {
-            string baseKey = $@"SOFTWARE\Classes\{Constants.URI_SCHEME}";
+            var baseKey = $@"SOFTWARE\Classes\{Constants.URI_SCHEME}";
 
-            RegistryHelper reg = new RegistryHelper {
+            var reg = new RegistryHelper {
                 ShowError = true,
                 BaseRegistryKey = Registry.CurrentUser,
                 SubKey = baseKey
@@ -231,11 +222,8 @@ namespace igtasks {
 
             if (!reg.DeleteSubKeyTree()) return 1;
 
-
             return 0;
         }
-
-
 
         /// <summary>
         /// Register URI Scheme for Web-to-App linking
@@ -244,9 +232,8 @@ namespace igtasks {
         public static int SetURIScheme() {
             DeleteURIScheme();
 
-
-            string baseKey = $@"SOFTWARE\Classes\{Constants.URI_SCHEME}";
-            RegistryHelper reg = new RegistryHelper {
+            var baseKey = $@"SOFTWARE\Classes\{Constants.URI_SCHEME}";
+            var reg = new RegistryHelper {
                 ShowError = true,
                 BaseRegistryKey = Registry.CurrentUser,
                 SubKey = baseKey
@@ -260,13 +247,11 @@ namespace igtasks {
                 return 1;
             }
 
-
             // DefaultIcon
             reg.SubKey = $@"{baseKey}\DefaultIcon";
             if (!reg.Write("", $"\"{App.IGExePath}\", 0")) {
                 return 1;
             }
-
 
             // shell\open\command
             reg.SubKey = $@"{baseKey}\shell\open\command";

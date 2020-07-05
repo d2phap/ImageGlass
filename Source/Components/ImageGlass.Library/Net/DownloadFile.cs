@@ -24,7 +24,6 @@ using System.Threading.Tasks;
 
 namespace ImageGlass.Library.Net {
     public class FileDownloader {
-
         public event AmountDownloadedChangedEventHandler AmountDownloadedChanged;
         public delegate void AmountDownloadedChangedEventHandler(long iNewProgress);
         public event FileDownloadSizeObtainedEventHandler FileDownloadSizeObtained;
@@ -86,21 +85,20 @@ namespace ImageGlass.Library.Net {
             try {
                 _currentFile = GetFileName(URL);
                 WebRequest wRemote = default;
-                byte[] bBuffer = null;
-                bBuffer = new byte[257];
+                var bBuffer = new byte[257];
                 var iBytesRead = 0;
                 var iTotalBytesRead = 0;
 
                 fs = new FileStream(filename, FileMode.Create, FileAccess.Write);
                 wRemote = WebRequest.Create(URL);
-                var myWebResponse = await wRemote.GetResponseAsync();
+                var myWebResponse = await wRemote.GetResponseAsync().ConfigureAwait(true);
 
                 FileDownloadSizeObtained?.Invoke(myWebResponse.ContentLength);
                 var sChunks = myWebResponse.GetResponseStream();
 
                 do {
-                    iBytesRead = await sChunks.ReadAsync(bBuffer, 0, 256);
-                    await fs.WriteAsync(bBuffer, 0, iBytesRead);
+                    iBytesRead = await sChunks.ReadAsync(bBuffer, 0, 256).ConfigureAwait(true);
+                    await fs.WriteAsync(bBuffer, 0, iBytesRead).ConfigureAwait(true);
                     iTotalBytesRead += iBytesRead;
 
                     if (myWebResponse.ContentLength < iTotalBytesRead) {
@@ -109,7 +107,7 @@ namespace ImageGlass.Library.Net {
                     else {
                         AmountDownloadedChanged?.Invoke(iTotalBytesRead);
                     }
-                } while (!(iBytesRead == 0));
+                } while (iBytesRead != 0);
 
                 sChunks.Close();
                 fs.Close();
@@ -119,7 +117,7 @@ namespace ImageGlass.Library.Net {
                 return true;
             }
             catch (Exception ex) {
-                if ((fs != null)) {
+                if (fs != null) {
                     fs.Close();
                     fs = null;
                 }
@@ -129,7 +127,6 @@ namespace ImageGlass.Library.Net {
             }
         }
 
-
         /// <summary>
         /// Định dạng đơn vị dung lượng tập tin
         /// </summary>
@@ -138,8 +135,8 @@ namespace ImageGlass.Library.Net {
         /// <returns></returns>
         public static string FormatFileSize(double size, ref string donVi) {
             try {
-                var KB = 1024;
-                long MB = KB * KB;
+                const int KB = 1024;
+                const long MB = KB * KB;
 
                 // Return size of file in kilobytes.
                 if (size < KB) {
@@ -169,7 +166,5 @@ namespace ImageGlass.Library.Net {
 
             return "";
         }
-
-
     }
 }

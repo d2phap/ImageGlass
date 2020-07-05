@@ -35,16 +35,13 @@ namespace ImageGlass.Library.WinAPI {
             public int bottomHeight;
         }
 
-        const int DWMWA_NCRENDERING_POLICY = 2;
-
+        private const int DWMWA_NCRENDERING_POLICY = 2;
 
         [DllImport("dwmapi.dll")]
         private static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
 
         [DllImport("dwmapi.dll")]
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
-
-
 
         /// <summary>
         /// Set window border

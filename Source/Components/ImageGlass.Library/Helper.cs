@@ -63,7 +63,7 @@ namespace ImageGlass.Library {
 #pragma warning disable CA2101 // Specify marshaling for P/Invoke string arguments
         [DllImport("shlwapi.dll", CharSet = CharSet.Auto)]
 #pragma warning restore CA2101 // Specify marshaling for P/Invoke string arguments
-        static extern bool PathCompactPathEx([Out] StringBuilder pszOut, string szPath, int cchMax, int dwFlags);
+        private static extern bool PathCompactPathEx([Out] StringBuilder pszOut, string szPath, int cchMax, int dwFlags);
 
         /// <summary>
         /// Shorten and ellipsis the path
@@ -77,21 +77,22 @@ namespace ImageGlass.Library {
             return sb.ToString();
         }
 
-
         /// <summary>
         /// Get distinct directories list from paths list
         /// </summary>
         /// <param name="pathList">Paths list</param>
         /// <returns></returns>
         public static List<string> GetDistinctDirsFromPaths(IEnumerable<string> pathList) {
-            if (pathList.Count() == 0) return new List<string>();
+            if (!pathList.Any()) {
+                return new List<string>();
+            }
 
             var hashedDirsList = new HashSet<string>();
 
             foreach (var path in pathList) {
                 if (File.Exists(path)) {
                     string dir;
-                    if (Path.GetExtension(path).ToLower() == ".lnk") {
+                    if (string.Equals(Path.GetExtension(path), ".lnk", System.StringComparison.CurrentCultureIgnoreCase)) {
                         var shortcutPath = Shortcuts.GetTargetPathFromShortcut(path);
 
                         // get the DIR path of shortcut target

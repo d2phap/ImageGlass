@@ -29,7 +29,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ImageGlass {
-    static class Program {
+    internal static class Program {
         private const string appGuid = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
         private static frmMain formMain;
 
@@ -38,22 +38,22 @@ namespace ImageGlass {
 
         // Issue #360: IG periodically searching for dismounted device
         [DllImport("kernel32.dll")]
-        static extern ErrorModes SetErrorMode(ErrorModes uMode);
+        private static extern ErrorModes SetErrorMode(ErrorModes uMode);
 
         [Flags]
         public enum ErrorModes: uint {
             SYSTEM_DEFAULT = 0x0,
             SEM_FAILCRITICALERRORS = 0x0001,
-            SEM_NOALIGNMENTFAULTEXCEPT = 0x0004,
-            SEM_NOGPFAULTERRORBOX = 0x0002,
-            SEM_NOOPENFILEERRORBOX = 0x8000
+            SEM_NOGPFAULTERRORBOX = 1 << 1,
+            SEM_NOALIGNMENTFAULTEXCEPT = 1 << 2,
+            SEM_NOOPENFILEERRORBOX = 1 << 15
         }
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main() {
+        private static void Main() {
             // Issue #360: IG periodically searching for dismounted device
             // This _must_ be executed first!
             SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
@@ -71,7 +71,6 @@ namespace ImageGlass {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-
             #region Check config file compatibility
             if (!Configs.IsCompatible) {
                 var msg = string.Format(Configs.Language.Items["_IncompatibleConfigs"], App.Version);
@@ -87,7 +86,6 @@ namespace ImageGlass {
                 }
             }
             #endregion
-
 
             #region Check First-launch Configs
             if (Configs.FirstLaunchVersion < Constants.FIRST_LAUNCH_VERSION) {
@@ -106,7 +104,6 @@ namespace ImageGlass {
             }
             #endregion
 
-
             #region Auto check for update
             if (Configs.AutoUpdate != "0") {
                 var lastUpdate = DateTime.Now;
@@ -122,7 +119,6 @@ namespace ImageGlass {
                 }
             }
             #endregion
-
 
             #region Multi instances
             // check if allows multi instances
@@ -141,13 +137,14 @@ namespace ImageGlass {
                     Application.Run(formMain = new frmMain());
                 }
                 else {
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     singleInstance.PassArgumentsToFirstInstance(Environment.GetCommandLineArgs());
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 }
             } //end check multi instances
             #endregion
 
         }
-
 
         private static void SingleInstance_ArgsReceived(object sender, ArgumentsReceivedEventArgs e) {
             if (formMain == null)
@@ -161,9 +158,11 @@ namespace ImageGlass {
             // KBR 20181009 Attempt to run a 2nd instance of IG when multi-instance turned off. Primary instance
             // will crash if no file provided (e.g. by double-clicking on .EXE in explorer).
             var realcount = 0;
-            foreach (var arg in e.Args)
-                if (arg != null)
+            foreach (var arg in e.Args) {
+                if (arg != null) {
                     realcount++;
+                }
+            }
 
             var realargs = new string[realcount];
             Array.Copy(e.Args, realargs, realcount);
@@ -174,7 +173,6 @@ namespace ImageGlass {
             // send our Win32 message to bring ImageGlass dialog to top
             NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
         }
-
 
         /// <summary>
         /// Check for updatae
@@ -196,6 +194,5 @@ namespace ImageGlass {
                 Configs.AutoUpdate = DateTime.Now.ToString("M/d/yyyy HH:mm:ss");
             });
         }
-
     }
 }

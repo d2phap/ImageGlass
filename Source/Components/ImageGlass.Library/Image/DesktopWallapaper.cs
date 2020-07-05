@@ -24,12 +24,12 @@ using System.Runtime.InteropServices;
 
 namespace ImageGlass.Library.Image {
     public static class DesktopWallapaper {
-        const int SPI_SETDESKWALLPAPER = 20;
-        const int SPIF_UPDATEINIFILE = 0x01;
-        const int SPIF_SENDWININICHANGE = 0x02;
+        private const int SPI_SETDESKWALLPAPER = 20;
+        private const int SPIF_UPDATEINIFILE = 0x01;
+        private const int SPIF_SENDWININICHANGE = 0x02;
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+        private static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
 
         public enum Style: int {
             /// <summary>
@@ -73,27 +73,28 @@ namespace ImageGlass.Library.Image {
                 img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Jpeg);
 
                 var key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
-                if (key == null)
+                if (key == null) {
                     return;
+                }
 
                 if (style == Style.Stretched) {
-                    key.SetValue(@"WallpaperStyle", "2");
-                    key.SetValue(@"TileWallpaper", "0");
+                    key.SetValue("WallpaperStyle", "2");
+                    key.SetValue("TileWallpaper", "0");
                 }
 
                 if (style == Style.Centered) {
-                    key.SetValue(@"WallpaperStyle", "1");
-                    key.SetValue(@"TileWallpaper", "0");
+                    key.SetValue("WallpaperStyle", "1");
+                    key.SetValue("TileWallpaper", "0");
                 }
 
                 if (style == Style.Tiled) {
-                    key.SetValue(@"WallpaperStyle", "1");
-                    key.SetValue(@"TileWallpaper", "1");
+                    key.SetValue("WallpaperStyle", "1");
+                    key.SetValue("TileWallpaper", "1");
                 }
 
                 SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, tempPath, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
             }
-            catch (Exception) { }
+            catch { }
         }
 
         public enum Result {
@@ -126,8 +127,9 @@ namespace ImageGlass.Library.Image {
 
             try {
                 using (var key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true)) {
-                    if (key == null)
+                    if (key == null) {
                         return Result.Fail;
+                    }
 
                     var tileVal = "0"; // default not-tiled
                     var winStyle = "1"; // default centered
@@ -151,8 +153,10 @@ namespace ImageGlass.Library.Image {
             }
             catch (Exception ex) {
                 if (ex is System.Security.SecurityException ||
-                    ex is UnauthorizedAccessException)
+                    ex is UnauthorizedAccessException) {
                     return Result.PrivsFail;
+                }
+
                 return Result.Fail;
             }
             return Result.Success;

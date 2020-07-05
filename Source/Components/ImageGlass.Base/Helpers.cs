@@ -29,7 +29,7 @@ namespace ImageGlass.Base {
     /// </summary>
     public static class Helpers {
         /// <summary>
-        /// Check if the given path (file or directory) is writable. 
+        /// Check if the given path (file or directory) is writable.
         /// </summary>
         /// <param name="type">Indicates if the given path is either file or directory</param>
         /// <param name="path">Full path of file or directory</param>
@@ -58,14 +58,12 @@ namespace ImageGlass.Base {
                     }
                 }
 
-
                 return true;
             }
             catch {
                 return false;
             }
         }
-
 
         /// <summary>
         /// Convert string to int array, where numbers are separated by semicolons
@@ -97,7 +95,6 @@ namespace ImageGlass.Base {
             return numbers.ToArray();
         }
 
-
         /// <summary>
         /// Convert int array to semi-colon delimited string
         /// </summary>
@@ -106,7 +103,6 @@ namespace ImageGlass.Base {
         public static string IntArrayToString(int[] array) {
             return string.Join(";", array);
         }
-
 
         /// <summary>
         /// Convert string to Rectangle - input string must have four integer values
@@ -124,7 +120,6 @@ namespace ImageGlass.Base {
             return new Rectangle();
         }
 
-
         /// <summary>
         /// Convert Rectangle to String
         /// </summary>
@@ -141,6 +136,5 @@ namespace ImageGlass.Base {
             }
             return false;
         }
-
     }
 }

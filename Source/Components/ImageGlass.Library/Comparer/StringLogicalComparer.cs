@@ -23,26 +23,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 
 namespace ImageGlass.Library.Comparer {
-
     /// <summary>
     /// Emulates StrCmpLogicalW, but not fully
     /// </summary>
     public static class StringLogicalComparer {
         public static int Compare(string s1, string s2) {
             //get rid of special cases
-            if ((s1 == null) && (s2 == null)) return 0;
-            else if (s1 == null) return -1;
-            else if (s2 == null) return 1;
+            if ((s1 == null) && (s2 == null)) {
+                return 0;
+            }
+            else if (s1 == null) {
+                return -1;
+            }
+            else if (s2 == null) {
+                return 1;
+            }
 
-            if (s1.Length == 0 && s2.Length == 0) return 0;
-            else if (s1.Length == 0) return -1;
-            else if (s2.Length == 0) return -1;
+            if (s1.Length == 0 && s2.Length == 0) {
+                return 0;
+            }
+            else if (s1.Length == 0) {
+                return -1;
+            }
+            else if (s2.Length == 0) {
+                return -1;
+            }
 
             //WE style, special case
             var sp1 = char.IsLetterOrDigit(s1, 0);
             var sp2 = char.IsLetterOrDigit(s2, 0);
-            if (sp1 && !sp2) return 1;
-            if (!sp1 && sp2) return -1;
+            if (sp1 && !sp2) {
+                return 1;
+            }
+
+            if (!sp1 && sp2) {
+                return -1;
+            }
 
             int i1 = 0, i2 = 0; //current index
             while (true) {
@@ -59,14 +75,22 @@ namespace ImageGlass.Library.Comparer {
                         else {
                             r = s1[i1].CompareTo(s2[i2]);
                         }
-                        if (r != 0) return r;
+                        if (r != 0) {
+                            return r;
+                        }
                     }
-                    else if (!letter1 && letter2) return -1;
-                    else if (letter1 && !letter2) return 1;
+                    else if (!letter1 && letter2) {
+                        return -1;
+                    }
+                    else if (letter1 && !letter2) {
+                        return 1;
+                    }
                 }
                 else if (c1 && c2) {
                     r = CompareNum(s1, ref i1, s2, ref i2);
-                    if (r != 0) return r;
+                    if (r != 0) {
+                        return r;
+                    }
                 }
                 else if (c1) {
                     return -1;
@@ -88,7 +112,6 @@ namespace ImageGlass.Library.Comparer {
             }
         }
 
-
         private static int CompareNum(string s1, ref int i1, string s2, ref int i2) {
             int nzStart1 = i1, nzStart2 = i2; // nz = non zero
             int end1 = i1, end2 = i2;
@@ -101,18 +124,30 @@ namespace ImageGlass.Library.Comparer {
             var nzLength1 = end1 - nzStart1;
             var nzLength2 = end2 - nzStart2;
 
-            if (nzLength1 < nzLength2) return -1;
-            else if (nzLength1 > nzLength2) return 1;
+            if (nzLength1 < nzLength2) {
+                return -1;
+            }
+            else if (nzLength1 > nzLength2) {
+                return 1;
+            }
 
             for (int j1 = nzStart1, j2 = nzStart2; j1 <= i1; j1++, j2++) {
                 var r = s1[j1].CompareTo(s2[j2]);
-                if (r != 0) return r;
+                if (r != 0) {
+                    return r;
+                }
             }
             // the nz parts are equal
             var length1 = end1 - start1;
             var length2 = end2 - start2;
-            if (length1 == length2) return 0;
-            if (length1 > length2) return -1;
+            if (length1 == length2) {
+                return 0;
+            }
+
+            if (length1 > length2) {
+                return -1;
+            }
+
             return 1;
         }
 
@@ -125,11 +160,15 @@ namespace ImageGlass.Library.Comparer {
                 if (countZeros && s[end].Equals('0')) {
                     nzStart++;
                 }
-                else countZeros = false;
+                else {
+                    countZeros = false;
+                }
+
                 end++;
-                if (end >= s.Length) break;
+                if (end >= s.Length) {
+                    break;
+                }
             }
         }
-
     }//EOC
 }

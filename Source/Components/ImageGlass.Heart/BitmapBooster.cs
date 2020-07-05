@@ -23,10 +23,10 @@ using System.Drawing.Imaging;
 
 namespace ImageGlass.Heart {
     public class BitmapBooster {
-        readonly Bitmap src;
-        readonly BitmapData bd;
-        readonly IntPtr dst;
-        readonly int str;
+        private readonly Bitmap src;
+        private readonly BitmapData bd;
+        private readonly IntPtr dst;
+        private readonly int str;
 
         public BitmapBooster(Bitmap src) {
             this.src = src;
@@ -42,7 +42,7 @@ namespace ImageGlass.Heart {
         public Color Get(int x, int y) {
             unsafe {
                 var o = (byte*)dst;
-                var ofs = str * y + x * 4;
+                var ofs = (str * y) + (x * 4);
 
                 return Color.FromArgb(
                     o[ofs + 3],
@@ -55,7 +55,7 @@ namespace ImageGlass.Heart {
         public void Set(int x, int y, Color c) {
             unsafe {
                 var o = (byte*)dst;
-                var ofs = str * y + x * 4;
+                var ofs = (str * y) + (x * 4);
                 o[ofs + 3] = c.A;
                 o[ofs + 2] = c.R;
                 o[ofs + 1] = c.G;
@@ -65,7 +65,7 @@ namespace ImageGlass.Heart {
 
         public void Set(int x, int y, byte alpha) {
             unsafe {
-                ((byte*)dst)[str * y + x * 4 + 3] = alpha;
+                ((byte*)dst)[(str * y) + (x * 4) + 3] = alpha;
             }
         }
 
@@ -83,6 +83,5 @@ namespace ImageGlass.Heart {
             }
             return ret;
         }
-
     }
 }

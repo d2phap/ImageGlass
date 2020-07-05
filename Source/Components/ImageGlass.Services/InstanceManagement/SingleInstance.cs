@@ -59,9 +59,9 @@ namespace ImageGlass.Services.InstanceManagement {
             try {
                 using (var client = new NamedPipeClientStream(identifier.ToString()))
                 using (var writer = new StreamWriter(client)) {
-                    await client.ConnectAsync(200);
+                    await client.ConnectAsync(200).ConfigureAwait(true);
                     foreach (var argument in arguments)
-                        await writer.WriteLineAsync(argument);
+                        await writer.WriteLineAsync(argument).ConfigureAwait(true);
                 }
                 return true;
             }
@@ -88,11 +88,11 @@ namespace ImageGlass.Services.InstanceManagement {
             try {
                 using (var server = new NamedPipeServerStream(identifier.ToString()))
                 using (var reader = new StreamReader(server)) {
-                    await server.WaitForConnectionAsync();
+                    await server.WaitForConnectionAsync().ConfigureAwait(true);
 
                     var arguments = new List<string>();
                     while (server.IsConnected)
-                        arguments.Add(await reader.ReadLineAsync());
+                        arguments.Add(await reader.ReadLineAsync().ConfigureAwait(true));
 
                     ThreadPool.QueueUserWorkItem(new WaitCallback(CallOnArgumentsReceived), arguments.ToArray());
                 }
@@ -103,7 +103,6 @@ namespace ImageGlass.Services.InstanceManagement {
             }
         }
 
-
         /// <summary>
         /// Calls the OnArgumentsReceived method casting the state Object to String[].
         /// </summary>
@@ -112,12 +111,10 @@ namespace ImageGlass.Services.InstanceManagement {
             OnArgumentsReceived((string[])state);
         }
 
-
         /// <summary>
         /// Event raised when arguments are received from successive instances.
         /// </summary>
         public event EventHandler<ArgumentsReceivedEventArgs> ArgumentsReceived;
-
 
         /// <summary>
         /// Fires the ArgumentsReceived event.
@@ -126,7 +123,6 @@ namespace ImageGlass.Services.InstanceManagement {
         private void OnArgumentsReceived(string[] arguments) {
             ArgumentsReceived?.Invoke(this, new ArgumentsReceivedEventArgs() { Args = arguments });
         }
-
 
         #region IDisposable
         private bool disposed = false;

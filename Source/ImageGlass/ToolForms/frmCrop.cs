@@ -54,7 +54,6 @@ namespace ImageGlass {
             btnSnapTo.Click += SnapButton_Click;
         }
 
-
         public void SetImageBox(ImageBoxEx imgBox) {
             if (_imgBox != null) {
                 _imgBox.SelectionRegionChanged -= this._imgBox_SelectionRegionChanged;
@@ -89,8 +88,6 @@ namespace ImageGlass {
             }
         }
 
-
-
         #region Private Methods
 
         /// <summary>
@@ -114,7 +111,6 @@ namespace ImageGlass {
             btnClear.Text = Configs.Language.Items[$"{Name}.btnClear"];
         }
         #endregion
-
 
         #region Events
         private void frmCrop_Load(object sender, EventArgs e) {
@@ -155,7 +151,6 @@ namespace ImageGlass {
             frm.ShowCropTool(false);
         }
 
-
         private void Numeric_Click(object sender, EventArgs e) {
             var num = (NumericUpDown)sender;
             num.Select(0, num.Text.Length);
@@ -193,11 +188,12 @@ namespace ImageGlass {
                     CropEventHandler(CropActionEvent.SaveAs);
                 }
             }
-            else if (sender == btnSaveAs)
+            else if (sender == btnSaveAs) {
                 CropEventHandler(CropActionEvent.SaveAs);
-
-            else if (sender == btnCopy)
+            }
+            else if (sender == btnCopy) {
                 CropEventHandler(CropActionEvent.Copy);
+            }
         }
 
         private void btnClear_Click(object sender, EventArgs e) {
@@ -208,7 +204,6 @@ namespace ImageGlass {
         }
 
         #endregion
-
 
     }
 }

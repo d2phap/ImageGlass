@@ -23,7 +23,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System.Collections; // required for NumericComparer : IComparer only
 
 namespace ImageGlass.Library.Comparer {
-
     public class NumericComparer: IComparer {
         public NumericComparer() { }
 
@@ -34,5 +33,4 @@ namespace ImageGlass.Library.Comparer {
             return -1;
         }
     }//EOC
-
 }

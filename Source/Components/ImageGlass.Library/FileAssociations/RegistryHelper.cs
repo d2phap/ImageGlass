@@ -26,7 +26,7 @@ namespace ImageGlass.Library.FileAssociations {
     /// </summary>
     public class RegistryHelper {
         /// <summary>
-        /// A property to show or hide error messages 
+        /// A property to show or hide error messages
         /// (default = false)
         /// </summary>
         public bool ShowError { get; set; } = false;
@@ -43,11 +43,10 @@ namespace ImageGlass.Library.FileAssociations {
         /// </summary>
         public RegistryKey BaseRegistryKey { get; set; } = Registry.LocalMachine;
 
-
         /// <summary>
         /// To read a registry key.
         /// input: KeyName (string)
-        /// output: value (string) 
+        /// output: value (string)
         /// </summary>
         public string Read(string KeyName) {
             // Opening the registry key
@@ -73,11 +72,10 @@ namespace ImageGlass.Library.FileAssociations {
             }
         }
 
-
         /// <summary>
         /// To write into a registry key.
         /// input: KeyName (string) , Value (object)
-        /// output: true or false 
+        /// output: true or false
         /// </summary>
         public bool Write(string KeyName, object Value) {
             try {
@@ -99,11 +97,10 @@ namespace ImageGlass.Library.FileAssociations {
             }
         }
 
-
         /// <summary>
         /// To delete a registry key.
         /// input: KeyName (string)
-        /// output: true or false 
+        /// output: true or false
         /// </summary>
         public bool DeleteKey(string KeyName) {
             try {
@@ -111,10 +108,12 @@ namespace ImageGlass.Library.FileAssociations {
                 var rk = BaseRegistryKey;
                 var sk1 = rk.CreateSubKey(SubKey);
                 // If the RegistrySubKey doesn't exists -> (true)
-                if (sk1 == null)
+                if (sk1 == null) {
                     return true;
-                else
+                }
+                else {
                     sk1.DeleteValue(KeyName);
+                }
 
                 return true;
             }
@@ -125,11 +124,10 @@ namespace ImageGlass.Library.FileAssociations {
             }
         }
 
-
         /// <summary>
         /// To delete a sub key and any child.
         /// input: void
-        /// output: true or false 
+        /// output: true or false
         /// </summary>
         public bool DeleteSubKeyTree() {
             try {
@@ -137,8 +135,9 @@ namespace ImageGlass.Library.FileAssociations {
                 var rk = BaseRegistryKey;
                 var sk1 = rk.OpenSubKey(SubKey);
                 // If the RegistryKey exists, I delete it
-                if (sk1 != null)
+                if (sk1 != null) {
                     rk.DeleteSubKeyTree(SubKey);
+                }
 
                 return true;
             }
@@ -148,7 +147,6 @@ namespace ImageGlass.Library.FileAssociations {
                 return false;
             }
         }
-
 
         /// <summary>
         /// Retrieve the count of subkeys at the current key.
@@ -161,10 +159,12 @@ namespace ImageGlass.Library.FileAssociations {
                 var rk = BaseRegistryKey;
                 var sk1 = rk.OpenSubKey(SubKey);
                 // If the RegistryKey exists...
-                if (sk1 != null)
+                if (sk1 != null) {
                     return sk1.SubKeyCount;
-                else
+                }
+                else {
                     return 0;
+                }
             }
             catch (Exception e) {
                 // AAAAAAAAAAARGH, an error!
@@ -172,7 +172,6 @@ namespace ImageGlass.Library.FileAssociations {
                 return 0;
             }
         }
-
 
         /// <summary>
         /// Retrieve the count of values in the key.
@@ -185,10 +184,12 @@ namespace ImageGlass.Library.FileAssociations {
                 var rk = BaseRegistryKey;
                 var sk1 = rk.OpenSubKey(SubKey);
                 // If the RegistryKey exists...
-                if (sk1 != null)
+                if (sk1 != null) {
                     return sk1.ValueCount;
-                else
+                }
+                else {
                     return 0;
+                }
             }
             catch (Exception e) {
                 // AAAAAAAAAAARGH, an error!
@@ -207,10 +208,12 @@ namespace ImageGlass.Library.FileAssociations {
                 var rk = BaseRegistryKey;
                 var sk1 = rk.OpenSubKey(SubKey);
                 // If the RegistryKey exists...
-                if (sk1 != null)
+                if (sk1 != null) {
                     return sk1.GetValueNames();
-                else
+                }
+                else {
                     return Array.Empty<string>();
+                }
             }
             catch (Exception e) {
                 // AAAAAAAAAAARGH, an error!
@@ -219,10 +222,10 @@ namespace ImageGlass.Library.FileAssociations {
             }
         }
 
-
         private void ShowErrorMessage(Exception e, string Title) {
-            if (ShowError == true)
+            if (ShowError) {
                 MessageBox.Show(e.Message, Title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

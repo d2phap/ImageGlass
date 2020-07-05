@@ -34,7 +34,6 @@ namespace ImageGlass {
         private readonly Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 176, 181, 183);
         private readonly Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 160, 165, 168);
 
-
         #region MOUSE ENTER - HOVER - DOWN MENU
         private void lblMenu_MouseDown(object sender, MouseEventArgs e) {
             var lbl = (Label)sender;
@@ -61,7 +60,6 @@ namespace ImageGlass {
             else {
                 lbl.BackColor = M_COLOR_MENU_HOVER;
             }
-
         }
 
         private void lblMenu_MouseLeave(object sender, EventArgs e) {
@@ -74,7 +72,6 @@ namespace ImageGlass {
             }
         }
         #endregion
-
 
         private void lblMenu_Click(object sender, EventArgs e) {
             var lbl = (Label)sender;
@@ -90,7 +87,6 @@ namespace ImageGlass {
             }
         }
 
-
         private void frmAbout_Load(object sender, EventArgs e) {
             var lang = Configs.Language.Items;
 
@@ -99,7 +95,7 @@ namespace ImageGlass {
             lblVersion.Text = string.Format(lang["frmAbout.lblVersion"], App.Version)
                 + (App.IsPortable ? " " + lang["frmAbout._PortableText"] : "");
 
-            lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\n" + "All rights reserved.";
+            lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\nAll rights reserved.";
 
             // Load item component
             txtComponents.Text = "\r\n";
@@ -112,7 +108,7 @@ namespace ImageGlass {
                     txtComponents.Text += $"{Path.GetFileName(f)} - {fi.FileVersion}\r\n" +
                         $"{fi.LegalCopyright}\r\n" +
                         $"{f}\r\n" +
-                        $"-----------------------------------------\r\n\r\n";
+                        "-----------------------------------------\r\n\r\n";
                 }
             }
             txtComponents.Text += "\r\n";
@@ -126,9 +122,7 @@ namespace ImageGlass {
             lblInfoContact.Text = lang["frmAbout.lblInfoContact"];
             lblSoftwareUpdate.Text = lang["frmAbout.lblSoftwareUpdate"];
             lnkCheckUpdate.Text = lang["frmAbout.lnkCheckUpdate"];
-
         }
-
 
         #region IMAGEGLASS INFORMATION PANEL
         private void lnkEmail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -144,7 +138,6 @@ namespace ImageGlass {
             }
             catch { }
         }
-
 
         private void lnkIGHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             try {
@@ -176,7 +169,6 @@ namespace ImageGlass {
         }
         #endregion
 
-
         private void btnClose_Click(object sender, EventArgs e) {
             Close();
         }
@@ -193,7 +185,6 @@ namespace ImageGlass {
             if (tab1.SelectedTab == tpInfo) {
                 lblInfo.Tag = 1;
                 lblInfo.BackColor = M_COLOR_MENU_ACTIVE;
-
             }
             else if (tab1.SelectedTab == tpComponents) {
                 lblComponent.Tag = 1;
@@ -222,7 +213,6 @@ namespace ImageGlass {
         }
 
         private void tb1_Paint(object sender, PaintEventArgs e) {
-
         }
     }
 }

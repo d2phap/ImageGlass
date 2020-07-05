@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-
 using ImageMagick;
 using System;
 using System.IO;
@@ -25,7 +24,6 @@ using System.Linq;
 
 namespace ImageGlass.Heart {
     public static class Helpers {
-
         /// <summary>
         /// Get built-in color profiles
         /// </summary>
@@ -42,7 +40,6 @@ namespace ImageGlass.Heart {
             };
         }
 
-
         /// <summary>
         /// Get the correct color profile name
         /// </summary>
@@ -56,7 +53,7 @@ namespace ImageGlass.Heart {
             }
             else {
                 var builtInProfiles = GetBuiltInColorProfiles();
-                var result = builtInProfiles.FirstOrDefault(i => i.ToUpperInvariant() == name.ToUpperInvariant());
+                var result = Array.Find(builtInProfiles, i => string.Equals(i, name, StringComparison.InvariantCultureIgnoreCase));
 
                 if (result != null) {
                     profileName = result;
@@ -68,8 +65,6 @@ namespace ImageGlass.Heart {
 
             return profileName;
         }
-
-
 
         /// <summary>
         /// Get ColorProfile
@@ -83,7 +78,7 @@ namespace ImageGlass.Heart {
             else {
                 // get all profile names in Magick.NET
                 var profiles = typeof(ColorProfile).GetProperties();
-                var result = profiles.FirstOrDefault(i => i.Name.ToUpperInvariant() == name.ToUpperInvariant());
+                var result = Array.Find(profiles, i => string.Equals(i.Name, name, StringComparison.InvariantCultureIgnoreCase));
 
                 if (result != null) {
                     try {
@@ -98,10 +93,8 @@ namespace ImageGlass.Heart {
             return null;
         }
 
-
-
         /// <summary>
-        /// Returns Exif rotation in degrees. Returns 0 if the metadata 
+        /// Returns Exif rotation in degrees. Returns 0 if the metadata
         /// does not exist or could not be read. A negative value means
         /// the image needs to be mirrored about the vertical axis.
         /// </summary>
@@ -128,7 +121,6 @@ namespace ImageGlass.Heart {
             return 0;
         }
 
-
         private const string LONG_PATH_PREFIX = @"\\?\";
 
         /// <summary>
@@ -151,6 +143,5 @@ namespace ImageGlass.Heart {
                 return path.Substring(LONG_PATH_PREFIX.Length);
             return path;
         }
-
     }
 }

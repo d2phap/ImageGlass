@@ -60,7 +60,6 @@ namespace ImageGlass.Library.WinAPI {
         private static extern bool GetGestureInfo(IntPtr hGestureInfo, ref GESTUREINFO pGestureInfo);
         #endregion
 
-
         #region Windows Structures
         [StructLayout(LayoutKind.Sequential)]
         private struct GESTURECONFIG {
@@ -111,7 +110,6 @@ namespace ImageGlass.Library.WinAPI {
         }
         #endregion
 
-
         #region State
         private static GESTURECONFIG TouchConfig = new GESTURECONFIG {
             dwID = 0,
@@ -134,7 +132,6 @@ namespace ImageGlass.Library.WinAPI {
 
         #endregion
 
-
         #region Constants
         private const long ULL_ARGUMENTS_BIT_MASK = 0x00000000FFFFFFFF;
 
@@ -151,7 +148,6 @@ namespace ImageGlass.Library.WinAPI {
         private const int GF_END = 4;
         #endregion
 
-
         /// <summary>
         /// The point at which the Zoom action is taking place.
         /// NOTE: valid *only* when action is zoom/pinch
@@ -160,16 +156,14 @@ namespace ImageGlass.Library.WinAPI {
 
         /// <summary>
         /// The 'size' of the zoom/pinch action. Essentially,
-        /// the number of zoom steps to take. 
+        /// the number of zoom steps to take.
         /// NOTE: valid *only* when action is zoom/pinch
         /// </summary>
         public static int ZoomFactor { get; private set; }
 
         private static double ArgToRadians(long arg) {
-            return ((arg / 65535.0) * 4.0 * Math.PI) - 2.0 * Math.PI;
+            return ((arg / 65535.0) * 4.0 * Math.PI) - (2.0 * Math.PI);
         }
-
-
 
         /// <summary>
         /// Let Windows know we are accepting any and all WM_GESTURE
@@ -215,16 +209,20 @@ namespace ImageGlass.Library.WinAPI {
                         var dHorz = (_ptSecond.X - _ptFirst.X);
 
                         if (Math.Abs(dVert) > Math.Abs(dHorz)) {
-                            if (dVert > 0)
+                            if (dVert > 0) {
                                 act = Action.SwipeDown;
-                            else
+                            }
+                            else {
                                 act = Action.SwipeUp;
+                            }
                         }
                         else {
-                            if (dHorz > 0)
+                            if (dHorz > 0) {
                                 act = Action.SwipeRight;
-                            else
+                            }
+                            else {
                                 act = Action.SwipeLeft;
+                            }
                         }
                     }
                     break;
@@ -237,10 +235,13 @@ namespace ImageGlass.Library.WinAPI {
                             var rads = ArgToRadians(gi.ullArguments & ULL_ARGUMENTS_BIT_MASK);
                             App.LogIt(string.Format("GID_ROTATE.GF_END ({0})", rads));
 
-                            if (rads > 0.0)
+                            if (rads > 0.0) {
                                 act = Action.RotateCCW;
-                            else
+                            }
+                            else {
                                 act = Action.RotateCW;
+                            }
+
                             break;
                     }
                     break;
@@ -298,6 +299,5 @@ namespace ImageGlass.Library.WinAPI {
 
             return true;
         }
-
     }
 }

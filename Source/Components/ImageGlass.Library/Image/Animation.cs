@@ -65,7 +65,6 @@ namespace ImageGlass.Library.Image {
                 ImageAnimator.Animate(_img, new EventHandler(SaveFrames));
                 _isAnimating = true;
             }
-
         }
 
         /// <summary>
@@ -74,7 +73,9 @@ namespace ImageGlass.Library.Image {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SaveFrames(object sender, EventArgs e) {
-            if (!_isAnimating) return;
+            if (!_isAnimating) {
+                return;
+            }
 
             var frameCount = System.Drawing.Image.FromFile(_filename).GetFrameCount(FrameDimension.Time);
             var numberIndex = frameCount.ToString().Length;
@@ -107,12 +108,7 @@ namespace ImageGlass.Library.Image {
             );
 
             //go to next frame
-            _i += 1;
-
+            _i++;
         }
-
     }
-
-
-
 }

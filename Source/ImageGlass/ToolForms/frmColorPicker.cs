@@ -29,7 +29,6 @@ using System.Windows.Forms;
 
 namespace ImageGlass {
     public partial class frmColorPicker: ToolForm {
-
         // default location offset on the parent form
         private static Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(80));
 
@@ -37,14 +36,12 @@ namespace ImageGlass {
         private BitmapBooster _bmpBooster;
         private Point _cursorPos;
 
-
         public frmColorPicker() {
             InitializeComponent();
             RegisterToolFormEvents();
 
             btnSnapTo.Click += SnapButton_Click;
         }
-
 
         public void SetImageBox(ImageBoxEx imgBox) {
             if (_imgBox != null) {
@@ -57,7 +54,6 @@ namespace ImageGlass {
             _imgBox.MouseMove += _imgBox_MouseMove;
             _imgBox.Click += _imgBox_Click;
         }
-
 
         #region Events to manage ImageBox
 
@@ -93,15 +89,12 @@ namespace ImageGlass {
                 return;
             }
 
-
             //In case of opening a second image, 
             //there is a delay of loading image time which will cause error due to _imgBox is null.
             //Wrap try catch to skip this error
             try {
                 if (_cursorPos.X >= 0 && _cursorPos.Y >= 0 && _cursorPos.X < _imgBox.Image.Width && _cursorPos.Y < _imgBox.Image.Height) {
-                    if (_bmpBooster != null) {
-                        _bmpBooster.Dispose();
-                    }
+                    _bmpBooster?.Dispose();
                     using var bmp = new Bitmap(_imgBox.Image);
                     _bmpBooster = new BitmapBooster(bmp);
 
@@ -116,7 +109,6 @@ namespace ImageGlass {
         }
 
         #endregion
-
 
         #region Display data
 
@@ -160,7 +152,6 @@ namespace ImageGlass {
                 txtHSL.Text = string.Format("{0}, {1}%, {2}%", hsla[0], hsla[1], hsla[2]);
             }
 
-
             lblPixel.ForeColor = Theme.InvertBlackAndWhiteColor(color);
         }
 
@@ -171,7 +162,6 @@ namespace ImageGlass {
             txtHEX.Text = string.Empty;
         }
 
-
         private void ColorTextbox_Click(object sender, EventArgs e) {
             var txt = (TextBox)sender;
             txt.SelectAll();
@@ -181,7 +171,6 @@ namespace ImageGlass {
             this.Activate();
         }
 
-
         private void BtnClose_Click(object sender, EventArgs e) {
             Configs.IsShowColorPickerOnStartup = false;
             this.Close();
@@ -189,11 +178,9 @@ namespace ImageGlass {
 
         #endregion
 
-
         #region Other Form Events
         private void frmColorPicker_KeyDown(object sender, KeyEventArgs e) {
             // lblPixel.Text = e.KeyCode.ToString();
-
 
             #region ESC or CTRL + SHIFT + K
             // ESC or CTRL + SHIFT + K --------------------------------------------------------
@@ -206,13 +193,11 @@ namespace ImageGlass {
             #endregion
         }
 
-
         private void frmColorPicker_FormClosing(object sender, FormClosingEventArgs e) {
             Local.IsColorPickerToolOpening = false;
 
             Local.ForceUpdateActions |= ForceUpdateActions.COLOR_PICKER_MENU;
         }
-
 
         /// <summary>
         /// Apply theme
@@ -244,7 +229,6 @@ namespace ImageGlass {
 
             _ResetColor();
 
-
             lblRGB.Text = "RGB:";
             lblHEX.Text = "HEX:";
             lblHSL.Text = "HSL:";
@@ -258,7 +242,6 @@ namespace ImageGlass {
             if (Configs.IsColorPickerHSLA) {
                 lblHSL.Text = "HSLA:";
             }
-
         }
 
         #endregion

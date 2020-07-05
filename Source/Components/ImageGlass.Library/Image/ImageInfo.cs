@@ -72,7 +72,6 @@ namespace ImageGlass.Library.Image {
             ShellExecuteEx(ref shInfo);
         }
 
-
         /// <summary>
         /// Get image type name
         /// </summary>
@@ -115,7 +114,6 @@ namespace ImageGlass.Library.Image {
             }
         }
 
-
         /// <summary>
         /// Get file size format
         /// </summary>
@@ -123,7 +121,7 @@ namespace ImageGlass.Library.Image {
         /// <returns></returns>
         public static string GetFileSize(string filename) {
             try {
-                double mod = 1024;
+                const double mod = 1024;
                 var units = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
 
                 var fi = new FileInfo(filename);
@@ -148,7 +146,7 @@ namespace ImageGlass.Library.Image {
         /// <returns></returns>
         public static string GetWxHSize(string filename) {
             try {
-                if (Path.GetExtension(filename).ToLower() != ".ico") {
+                if (!string.Equals(Path.GetExtension(filename), ".ico", StringComparison.CurrentCultureIgnoreCase)) {
                     using (var img = System.Drawing.Image.FromFile(filename)) {
                         //get Width x Height
                         return Convert.ToString(img.Width) + " x " + Convert.ToString(img.Height);
@@ -163,7 +161,6 @@ namespace ImageGlass.Library.Image {
             catch {
                 return string.Empty;
             }
-
         }
 
         /// <summary>
@@ -176,9 +173,8 @@ namespace ImageGlass.Library.Image {
                 double h = 0;
                 double v = 0;
 
-                if (Path.GetExtension(filename).ToLower() != ".ico") {
+                if (!string.Equals(Path.GetExtension(filename), ".ico", StringComparison.CurrentCultureIgnoreCase)) {
                     using (var img = System.Drawing.Image.FromFile(filename)) {
-
                         //get HorizontalResolution 
                         h = Math.Round((double)img.HorizontalResolution, 2);
 
@@ -188,7 +184,6 @@ namespace ImageGlass.Library.Image {
                 }
                 else {
                     using (var ico = new Icon(filename)) {
-
                         //get HorizontalResolution 
                         h = Math.Round(ico.ToBitmap().HorizontalResolution, 2);
 
@@ -203,7 +198,6 @@ namespace ImageGlass.Library.Image {
 
             return " ";
         }
-
 
         /// <summary>
         /// Get file creation time
@@ -246,7 +240,7 @@ namespace ImageGlass.Library.Image {
         /// <param name="newFileName">new file name</param>
         public static void RenameFile(string oldFileName, string newFileName) {
             // Issue 73: Windows ignores case-only changes
-            if (oldFileName.ToLowerInvariant() == newFileName.ToLowerInvariant()) {
+            if (string.Equals(oldFileName, newFileName, StringComparison.InvariantCultureIgnoreCase)) {
                 // user changing only the case of the filename. Need to perform a trick.
                 File.Move(oldFileName, oldFileName + "_imgglass_extra");
                 File.Move(oldFileName + "_imgglass_extra", newFileName);
@@ -255,7 +249,6 @@ namespace ImageGlass.Library.Image {
                 File.Move(oldFileName, newFileName);
             }
         }
-
 
         /// <summary>
         /// Delete file
@@ -268,8 +261,5 @@ namespace ImageGlass.Library.Image {
 
             FileSystem.DeleteFile(fileName, UIOption.OnlyErrorDialogs, option);
         }
-
-
-
     }
 }

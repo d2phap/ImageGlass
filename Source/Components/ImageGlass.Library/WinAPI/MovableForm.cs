@@ -35,11 +35,8 @@ namespace ImageGlass.Library.WinAPI {
         [DllImport("user32.dll")]
         private static extern bool ReleaseCapture();
 
-
-
         private readonly Form _form;
         private bool _isKeyDown = true;
-
 
         #region Public props
 
@@ -65,14 +62,11 @@ namespace ImageGlass.Library.WinAPI {
 
         #endregion
 
-
-
         /// <summary>
         /// Initialize the MovableForm
         /// </summary>
         /// <param name="form">The form to make it movable</param>
         public MovableForm(Form form) => _form = form;
-
 
         #region Public methods
 
@@ -108,7 +102,6 @@ namespace ImageGlass.Library.WinAPI {
             _form.MouseDown -= Event_MouseDown;
         }
 
-
         /// <summary>
         /// Disable moving ability on the given controls
         /// </summary>
@@ -120,7 +113,6 @@ namespace ImageGlass.Library.WinAPI {
         }
 
         #endregion
-
 
         #region Events: Frameless form moving
 
@@ -143,7 +135,6 @@ namespace ImageGlass.Library.WinAPI {
             var isFreeMove = this.FreeMoveControlNames.Count > 0
                 && this.FreeMoveControlNames.Contains(control.Name);
 
-
             if (e.Clicks == 1
                 && e.Button == this.MouseButton
                 && this.IsAllowMoving
@@ -153,7 +144,6 @@ namespace ImageGlass.Library.WinAPI {
             }
         }
         #endregion
-
 
     }
 }
