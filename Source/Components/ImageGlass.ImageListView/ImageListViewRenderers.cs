@@ -2155,7 +2155,7 @@ namespace ImageGlass.ImageListView {
             }
 
             /// <summary>
-            /// [PHAP] Draws the specified item on the given graphics.
+            /// [IG_CHANGE] Draws the specified item on the given graphics.
             /// </summary>
             /// <param name="g">The System.Drawing.Graphics to draw on.</param>
             /// <param name="item">The ImageListViewItem to draw.</param>
@@ -2164,20 +2164,28 @@ namespace ImageGlass.ImageListView {
             public override void DrawItem(Graphics g, ImageListViewItem item, ItemState state, Rectangle bounds) {
                 VisualStyleRenderer rBack;
 
-                if (!ImageListView.Enabled)
+                if (!ImageListView.Enabled) {
                     rBack = rItemSelectedHidden;
-                if (((state & ItemState.Disabled) != ItemState.None))
+                }
+
+                if ((state & ItemState.Disabled) != ItemState.None) {
                     rBack = rItemDisabled;
-                else if (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None))
+                }
+                else if (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None)) {
                     rBack = rItemSelectedHidden;
-                else if (((state & ItemState.Selected) != ItemState.None) && ((state & ItemState.Hovered) != ItemState.None))
+                }
+                else if (((state & ItemState.Selected) != ItemState.None) && ((state & ItemState.Hovered) != ItemState.None)) {
                     rBack = rItemHoveredSelected;
-                else if ((state & ItemState.Selected) != ItemState.None)
+                }
+                else if ((state & ItemState.Selected) != ItemState.None) {
                     rBack = rItemSelected;
-                else if ((state & ItemState.Hovered) != ItemState.None)
+                }
+                else if ((state & ItemState.Hovered) != ItemState.None) {
                     rBack = rItemHovered;
-                else
+                }
+                else {
                     rBack = rItemNormal;
+                }
 
                 if (VisualStylesEnabled && rBack != null) {
                     // Do not draw the background of normal items
@@ -2185,20 +2193,20 @@ namespace ImageGlass.ImageListView {
                         rBack.DrawBackground(g, bounds, bounds);
 
                     // Size itemPadding = new Size(7, 7);
-                    Size itemPadding = new Size(5, 5);
+                    var itemPadding = new Size(5, 5);
 
                     // Draw the image
                     if (ImageListView.View != View.Details) {
-                        Image img = item.GetCachedImage(CachedImageType.Thumbnail);
+                        var img = item.GetCachedImage(CachedImageType.Thumbnail);
                         if (img != null) {
-                            //Rectangle pos = Utility.GetSizedImageBounds(img, new Rectangle(bounds.Location + itemPadding, ImageListView.ThumbnailSize));
+                            //var pos = Utility.GetSizedImageBounds(img, new Rectangle(bounds.Location + itemPadding, ImageListView.ThumbnailSize));
 
-                            Rectangle pos = Utility.GetSizedImageBounds(img,
+                            var pos = Utility.GetSizedImageBounds(img,
                                 new Rectangle(bounds.Location + itemPadding,
                                 new Size(bounds.Width - 2 * itemPadding.Width, bounds.Height - 2 * itemPadding.Width)));
 
                             // Image background
-                            Rectangle imgback = pos;
+                            var imgback = pos;
                             imgback.Inflate(3, 3);
 
                             //Fill background
@@ -2302,8 +2310,9 @@ namespace ImageGlass.ImageListView {
                     }
 
                 }
-                else
+                else {
                     base.DrawItem(g, item, state, bounds);
+                }
             }
             /// <summary>
             /// Draws the group headers.
@@ -2699,5 +2708,6 @@ namespace ImageGlass.ImageListView {
             }
         }
         #endregion
+
     }
 }

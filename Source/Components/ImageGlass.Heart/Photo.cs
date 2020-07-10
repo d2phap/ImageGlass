@@ -75,7 +75,6 @@ namespace ImageGlass.Heart {
                     var base64Content = string.Empty;
                     using (var fs = new StreamReader(filename)) {
                         base64Content = fs.ReadToEnd();
-                        fs.Close();
                     }
 
                     bitmap = ConvertBase64ToBitmap(base64Content);
@@ -317,16 +316,24 @@ namespace ImageGlass.Heart {
             }
 
             // data:image/svg-xml;base64,xxxxxxxx
-            var dataUriPattern = new Regex(@"^data\:(?<type>image\/[a-z\+\-]*);base64,(?<data>[a-zA-Z0-9\+\/\=]+)$", RegexOptions.Compiled | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
+            // type is optional
+            var base64DataUri = new Regex(@"(^data\:(?<type>image\/[a-z\+\-]*);base64,)?(?<data>[a-zA-Z0-9\+\/\=]+)$", RegexOptions.Compiled | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
 
-            var match = dataUriPattern.Match(content);
+
+            var match = base64DataUri.Match(content);
             if (!match.Success) {
                 throw new Exception("Base-64 file content is invalid.");
             }
-            var base64Data = match.Groups["data"].Value;
 
-            var mimeType = match.Groups["type"].Value.ToLower();
+
+            var base64Data = match.Groups["data"].Value;
             var rawData = Convert.FromBase64String(base64Data);
+            var mimeType = match.Groups["type"].Value.ToLower();
+
+            if (mimeType.Length == 0) {
+                // use default PNG MIME type
+                mimeType = "image/png";
+            }
 
             return (mimeType, rawData);
         }
@@ -382,9 +389,6 @@ namespace ImageGlass.Heart {
                     break;
                 case "image/x-cmu-raster":
                     settings.Format = MagickFormat.Ras;
-                    break;
-
-                default:
                     break;
             }
             #endregion

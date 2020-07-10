@@ -2422,7 +2422,8 @@ namespace ImageGlass {
             #region UI SETTINGS
             if (isLoadUI) {
                 // ThumbnailBar Renderer must be done BEFORE loading theme
-                thumbnailBar.SetRenderer(new ImageListView.ImageListViewRenderers.ThemeRenderer());
+                var thumbBarTheme = new ImageListView.ImageListViewRenderers.ThemeRenderer();
+                thumbnailBar.SetRenderer(thumbBarTheme);
                 ApplyTheme();
 
                 // Show checkerboard
@@ -3877,6 +3878,8 @@ namespace ImageGlass {
         }
 
         private void mnuMainOpenImageData_Click(object sender, EventArgs e) {
+            picMain.Text = string.Empty;
+
             // Is there a file in clipboard ?
             if (Clipboard.ContainsFileDropList()) {
                 var sFile = (string[])Clipboard.GetData(DataFormats.FileDrop);
@@ -3902,8 +3905,15 @@ namespace ImageGlass {
                 }
                 // get image from Base64string 
                 else {
-                    picMain.Image = Heart.Photo.ConvertBase64ToBitmap(text);
-                    Local.IsTempMemoryData = true;
+                    try {
+                        picMain.Image = Heart.Photo.ConvertBase64ToBitmap(text);
+                        Local.IsTempMemoryData = true;
+
+                        UpdateStatusBar();
+                    }
+                    catch (Exception ex) {
+                        ShowToastMsg(ex.Source + ": " + ex.Message, 3000);
+                    }
                 }
             }
         }
@@ -3999,7 +4009,7 @@ namespace ImageGlass {
                     case 9:
                         clonedPic.Save(saveDialog.FileName, ImageFormat.Wmf);
                         break;
-                    case 10:
+                    default:
                         using (var ms = new MemoryStream()) {
                             try {
                                 // temporary data or selected region
