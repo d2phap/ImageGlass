@@ -44,6 +44,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace ImageGlass {
     public partial class frmMain: Form {
@@ -3912,7 +3913,11 @@ namespace ImageGlass {
                 return;
             }
 
-            var filename = Local.ImageList.GetFileName(Local.CurrentIndex) ?? "untitled.png";
+            var filename = "untitled.png";
+            if (Local.CurrentIndex > 0) {
+                filename = Local.ImageList.GetFileName(Local.CurrentIndex);
+            }
+
             var ext = Path.GetExtension(filename).Substring(1);
 
             var saveDialog = new SaveFileDialog {
