@@ -1589,13 +1589,13 @@ namespace ImageGlass {
             // Show input box
             string str = null;
 
-            if (InputBox.ShowDialog(Configs.Theme,
-                Configs.Language.Items[$"{Name}._RenameDialogText"],
-                Configs.Language.Items[$"{Name}._RenameDialog"],
-                newName,
-                false,
-                this.TopMost,
-                true) == DialogResult.OK) {
+            if (InputBox.ShowDialog(
+                theme: Configs.Theme,
+                message: Configs.Language.Items[$"{Name}._RenameDialog"],
+                defaultValue: newName,
+                title: Configs.Language.Items[$"{Name}._RenameDialogText"],
+                topMost: this.TopMost,
+                isFilename: true) == DialogResult.OK) {
                 str = InputBox.Message;
             }
 
@@ -4132,23 +4132,28 @@ namespace ImageGlass {
         }
 
         private void mnuMainGoto_Click(object sender, EventArgs e) {
-            var n = Local.CurrentIndex;
-            // KBR 20190302 init to current index
-            var s = (n + 1).ToString();
+            var newIndex = Local.CurrentIndex;
+            var value = (newIndex + 1).ToString();
 
-            if (InputBox.ShowDialog(Configs.Theme, "", Configs.Language.Items[$"{Name}._GotoDialogText"], s, true, this.TopMost) == DialogResult.OK) {
-                s = InputBox.Message;
+            if (InputBox.ShowDialog(
+                theme: Configs.Theme,
+                message: Configs.Language.Items[$"{Name}._GotoDialogText"],
+                defaultValue: value,
+                isNumberOnly: true,
+                topMost: this.TopMost,
+                filterOnKeyPressed: true) == DialogResult.OK) {
+                value = InputBox.Message;
             }
 
-            if (int.TryParse(s, out n)) {
-                n--;
+            if (int.TryParse(value, out newIndex)) {
+                newIndex--;
                 // KBR 20190302 have out-of-range values go to beginning/end as appropriate
-                if (n < 1)
-                    n = 0;
-                else if (n >= Local.ImageList.Length)
-                    n = Local.ImageList.Length - 1;
+                if (newIndex < 1)
+                    newIndex = 0;
+                else if (newIndex >= Local.ImageList.Length)
+                    newIndex = Local.ImageList.Length - 1;
 
-                Local.CurrentIndex = n;
+                Local.CurrentIndex = newIndex;
                 NextPic(0);
             }
         }

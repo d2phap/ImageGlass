@@ -45,24 +45,28 @@ namespace ImageGlass.UI {
         private static bool FilenameFilter(char keyval) {
             var badChars = Path.GetInvalidFileNameChars();
             var invalid = badChars.Contains(keyval);
-            return !invalid || keyval == (char)Keys.Back;
+
+
+            return !invalid;
         }
 
         /// <summary>
         /// Show input dialog box
         /// </summary>
         /// <param name="theme">Theme</param>
-        /// <param name="title">Title</param>
         /// <param name="message">Message</param>
         /// <param name="defaultValue">Default value</param>
+        /// <param name="title">Title</param>
         /// <param name="isNumberOnly">Number input</param>
         /// <param name="topMost">Set the form to top most</param>
         /// <param name="isFilename">Filename input</param>
+        /// <param name="filterOnKeyPressed">Apply filter on key pressed</param>
         /// <returns></returns>
-        public static DialogResult ShowDialog(Theme theme, string title, string message, string defaultValue, bool isNumberOnly = false, bool topMost = false, bool isFilename = false) {
+        public static DialogResult ShowDialog(Theme theme, string message, string defaultValue, string title = "", bool isNumberOnly = false, bool topMost = false, bool isFilename = false, bool filterOnKeyPressed = false) {
             var frm = new frmDialogBox(title, message, theme) {
                 Content = defaultValue,
-                TopMost = topMost
+                TopMost = topMost,
+                FilterOnKeyPress = filterOnKeyPressed,
             };
 
             if (isNumberOnly) {

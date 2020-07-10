@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace ImageGlass.UI {
@@ -42,6 +43,11 @@ namespace ImageGlass.UI {
         public delegate bool KeyFilter(char key);
 
         public KeyFilter Filter { get; set; } = null;
+
+        /// <summary>
+        /// Apply Filter on key pressed event
+        /// </summary>
+        public bool FilterOnKeyPress { get; set; } = false;
 
         public frmDialogBox(string title, string message, Theme theme) {
             InitializeComponent();
@@ -72,11 +78,13 @@ namespace ImageGlass.UI {
         }
 
         private void btnOK_Click(object sender, EventArgs e) {
-            DialogResult = DialogResult.OK;
+            if (ValidateInput()) {
+                DialogResult = DialogResult.OK;
+            }
         }
 
         private void txtValue_KeyPress(object sender, KeyPressEventArgs e) {
-            if (Filter == null) {
+            if (!FilterOnKeyPress || Filter == null) {
                 return;
             }
 
@@ -85,6 +93,11 @@ namespace ImageGlass.UI {
                 e.Handled = true;
             }
         }
+
+        private void txtValue_TextChanged(object sender, EventArgs e) {
+            _ = ValidateInput();
+        }
+
 
         private void DialogBox_Load(object sender, EventArgs e) {
             txtValue.Focus();
@@ -101,5 +114,31 @@ namespace ImageGlass.UI {
                 DialogResult = DialogResult.Cancel;
             }
         }
+
+        private bool ValidateInput() {
+            var isValid = true;
+
+            if (Filter != null) {
+                foreach (var c in txtValue.Text) {
+                    if (!Filter(c)) {
+                        isValid = false;
+                        break;
+                    }
+                }
+
+                // invalid char
+                if (!isValid) {
+                    btnOK.Enabled = false;
+                    txtValue.BackColor = Color.FromArgb(255, 255, 183, 183);
+                }
+                else {
+                    btnOK.Enabled = true;
+                    txtValue.BackColor = Color.White;
+                }
+            }
+
+            return isValid;
+        }
+
     }
 }
