@@ -36,26 +36,18 @@ namespace ImageGlass.Base {
         /// <returns></returns>
         public static bool CheckPathWritable(PathType type, string path) {
             try {
+                // if path is directory
+                if (type == PathType.Dir) {
+                    TestDirWrittable(path);
+                }
                 // If path is file
-                if (type == PathType.File) {
+                else if (File.Exists(path)) {
                     using (File.OpenWrite(path)) { }
                 }
-                // if path is directory
-                else {
-                    var isDirExist = Directory.Exists(path);
-
-                    if (!isDirExist) {
-                        Directory.CreateDirectory(path);
-                    }
-
-                    var sampleFile = Path.Combine(path, "test_write_file.temp");
-
-                    using (File.Create(sampleFile)) { }
-                    File.Delete(sampleFile);
-
-                    if (!isDirExist) {
-                        Directory.Delete(path, true);
-                    }
+                // if path is non-exist file
+                else if (type == PathType.File) {
+                    var dir = Path.GetDirectoryName(path);
+                    TestDirWrittable(dir);
                 }
 
                 return true;
@@ -64,6 +56,7 @@ namespace ImageGlass.Base {
                 return false;
             }
         }
+
 
         /// <summary>
         /// Convert string to int array, where numbers are separated by semicolons
@@ -129,6 +122,12 @@ namespace ImageGlass.Base {
             return rc.Left + ";" + rc.Top + ";" + rc.Width + ";" + rc.Height;
         }
 
+
+        /// <summary>
+        /// Checks if the given rectangle is visible on any screen
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <returns></returns>
         public static bool IsVisibleOnAnyScreen(Rectangle rect) {
             foreach (var screen in System.Windows.Forms.Screen.AllScreens) {
                 if (screen.WorkingArea.IntersectsWith(rect))
@@ -136,5 +135,29 @@ namespace ImageGlass.Base {
             }
             return false;
         }
+
+
+        #region Private functions
+        /// <summary>
+        /// Tests if the given directory is writtable.
+        /// </summary>
+        /// <param name="dir"></param>
+        private static void TestDirWrittable(string dir) {
+            var isDirExist = Directory.Exists(dir);
+
+            if (!isDirExist) {
+                Directory.CreateDirectory(dir);
+            }
+
+            var sampleFile = Path.Combine(dir, "test_write_file.temp");
+
+            using (File.Create(sampleFile)) { }
+            File.Delete(sampleFile);
+
+            if (!isDirExist) {
+                Directory.Delete(dir, true);
+            }
+        }
+        #endregion
     }
 }

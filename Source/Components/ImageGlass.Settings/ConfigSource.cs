@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 
 namespace ImageGlass.Settings {
@@ -67,6 +68,7 @@ namespace ImageGlass.Settings {
 
         #endregion
 
+
         #region Private methods
         /// <summary>
         /// Reads XML file and returns the Document object
@@ -91,6 +93,12 @@ namespace ImageGlass.Settings {
         /// <returns></returns>
         private Dictionary<string, string> LoadConfigFile(string filename, bool isUserConfigFile = false) {
             var list = new Dictionary<string, string>();
+
+            // file does not exist
+            if (!File.Exists(filename)) {
+                return list;
+            }
+
             var doc = ReadXMLFile(filename);
 
             // config file is invalid
@@ -166,6 +174,7 @@ namespace ImageGlass.Settings {
         }
 
         #endregion
+
 
         #region Public methods
 
