@@ -24,9 +24,7 @@ namespace ImageGlass.Library.Comparer {
     public class DictionaryEntryComparer: IComparer {
         private readonly IComparer nc = null;
 
-        public DictionaryEntryComparer(IComparer nc) {
-            this.nc = nc ?? throw new Exception("Null IComparer");
-        }
+        public DictionaryEntryComparer(IComparer nc) => this.nc = nc ?? throw new Exception("Null IComparer");
 
         public int Compare(object x, object y) {
             if ((x is DictionaryEntry entry) && (y is DictionaryEntry entry1)) {

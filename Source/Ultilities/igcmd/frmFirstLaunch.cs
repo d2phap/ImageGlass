@@ -30,13 +30,9 @@ using System.Windows.Forms;
 
 namespace igcmd {
     public partial class frmFirstLaunch: Form {
-        public frmFirstLaunch() {
-            InitializeComponent();
-        }
-
+        public frmFirstLaunch() => InitializeComponent();
         private readonly List<Theme> _themeList = new List<Theme>();
         private List<Language> _langList = new List<Language>();
-
         private Language _lang = new Language();
         private Theme _theme = new Theme();
         private LayoutMode _layout = LayoutMode.Standard;
@@ -124,17 +120,16 @@ namespace igcmd {
 
         private void btnSetDefaultApp_Click(object sender, EventArgs e) {
             // Update extensions to registry
-            using (var p = new Process()) {
-                var formats = Configs.GetImageFormats(Configs.AllFormats);
+            using var p = new Process();
+            var formats = Configs.GetImageFormats(Configs.AllFormats);
 
-                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                p.StartInfo.Arguments = $"regassociations {formats}";
+            p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+            p.StartInfo.Arguments = $"regassociations {formats}";
 
-                try {
-                    p.Start();
-                }
-                catch { }
+            try {
+                p.Start();
             }
+            catch { }
         }
 
         private void cmbLanguage_SelectedIndexChanged(object sender, EventArgs e) {

@@ -82,38 +82,24 @@ namespace ImageGlass.Library.Image {
         /// codes)
         /// </summary>
         private static Exception createException(int gdipErrorCode) {
-            switch (gdipErrorCode) {
-                case 1:
-                    return new ExternalException("Gdiplus Generic Error", -2147467259);
-                case 2:
-                    return new ArgumentException("Gdiplus Invalid Parameter");
-                case 3:
-                    return new OutOfMemoryException("Gdiplus Out Of Memory");
-                case 4:
-                    return new InvalidOperationException("Gdiplus Object Busy");
-                case 5:
-                    return new OutOfMemoryException("Gdiplus Insufficient Buffer");
-                case 7:
-                    return new ExternalException("Gdiplus Generic Error", -2147467259);
-                case 8:
-                    return new InvalidOperationException("Gdiplus Wrong State");
-                case 9:
-                    return new ExternalException("Gdiplus Aborted", -2147467260);
-                case 10:
-                    return new FileNotFoundException("Gdiplus File Not Found");
-                case 11:
-                    return new OverflowException("Gdiplus Over flow");
-                case 12:
-                    return new ExternalException("Gdiplus Access Denied", -2147024891);
-                case 13:
-                    return new ArgumentException("Gdiplus Unknown Image Format");
-                case 18:
-                    return new ExternalException("Gdiplus Not Initialized", -2147467259);
-                case 20:
-                    return new ArgumentException("Gdiplus Property Not Supported Error");
-            }
-
-            return new ExternalException("Gdiplus Unknown Error", -2147418113);
+            return gdipErrorCode switch
+            {
+                1 => new ExternalException("Gdiplus Generic Error", -2147467259),
+                2 => new ArgumentException("Gdiplus Invalid Parameter"),
+                3 => new OutOfMemoryException("Gdiplus Out Of Memory"),
+                4 => new InvalidOperationException("Gdiplus Object Busy"),
+                5 => new OutOfMemoryException("Gdiplus Insufficient Buffer"),
+                7 => new ExternalException("Gdiplus Generic Error", -2147467259),
+                8 => new InvalidOperationException("Gdiplus Wrong State"),
+                9 => new ExternalException("Gdiplus Aborted", -2147467260),
+                10 => new FileNotFoundException("Gdiplus File Not Found"),
+                11 => new OverflowException("Gdiplus Over flow"),
+                12 => new ExternalException("Gdiplus Access Denied", -2147024891),
+                13 => new ArgumentException("Gdiplus Unknown Image Format"),
+                18 => new ExternalException("Gdiplus Not Initialized", -2147467259),
+                20 => new ArgumentException("Gdiplus Property Not Supported Error"),
+                _ => new ExternalException("Gdiplus Unknown Error", -2147418113),
+            };
         }
 
         /// <summary>
@@ -128,10 +114,9 @@ namespace ImageGlass.Library.Image {
             // The image data is in the form of a byte array. Write all 
             // the bytes to a stream and create a new image from that stream
             var imageBytes = prop.Value;
-            using (var stream = new MemoryStream(imageBytes.Length)) {
-                await stream.WriteAsync(imageBytes, 0, imageBytes.Length).ConfigureAwait(true);
-                return System.Drawing.Image.FromStream(stream);
-            }
+            using var stream = new MemoryStream(imageBytes.Length);
+            await stream.WriteAsync(imageBytes, 0, imageBytes.Length).ConfigureAwait(true);
+            return System.Drawing.Image.FromStream(stream);
         }
 
         /// <summary>

@@ -80,38 +80,24 @@ namespace ImageGlass.Library.Image {
         public static string GetImageFileType(string filename) {
             var ext = Path.GetExtension(filename).Replace(".", "").ToLower();
 
-            switch (ext) {
-                case "bmp":
-                    return "Bitmap Image File";
-                case "dib":
-                    return "Device Independent Bitmap File";
-                case "jpg":
-                    return "JPEG Image File";
-                case "jpeg":
-                    return "Joint Photographic Experts Group";
-                case "jfif":
-                    return "JPEG File Interchange Format";
-                case "jpe":
-                    return "JPEG Image File";
-                case "png":
-                    return "Portable Network Graphics";
-                case "gif":
-                    return "Graphics Interchange Format File";
-                case "ico":
-                    return "Icon File";
-                case "emf":
-                    return "Enhanced Windows Metafile";
-                case "exif":
-                    return "Exchangeable Image Information File";
-                case "wmf":
-                    return "Windows Metafile";
-                case "tif":
-                    return "Tagged Image File";
-                case "tiff":
-                    return "Tagged Image File Format";
-                default:
-                    return ext.ToUpper() + " File";
-            }
+            return ext switch
+            {
+                "bmp" => "Bitmap Image File",
+                "dib" => "Device Independent Bitmap File",
+                "jpg" => "JPEG Image File",
+                "jpeg" => "Joint Photographic Experts Group",
+                "jfif" => "JPEG File Interchange Format",
+                "jpe" => "JPEG Image File",
+                "png" => "Portable Network Graphics",
+                "gif" => "Graphics Interchange Format File",
+                "ico" => "Icon File",
+                "emf" => "Enhanced Windows Metafile",
+                "exif" => "Exchangeable Image Information File",
+                "wmf" => "Windows Metafile",
+                "tif" => "Tagged Image File",
+                "tiff" => "Tagged Image File Format",
+                _ => ext.ToUpper() + " File",
+            };
         }
 
         /// <summary>
@@ -147,10 +133,9 @@ namespace ImageGlass.Library.Image {
         public static string GetWxHSize(string filename) {
             try {
                 if (!string.Equals(Path.GetExtension(filename), ".ico", StringComparison.CurrentCultureIgnoreCase)) {
-                    using (var img = System.Drawing.Image.FromFile(filename)) {
-                        //get Width x Height
-                        return Convert.ToString(img.Width) + " x " + Convert.ToString(img.Height);
-                    }
+                    using var img = System.Drawing.Image.FromFile(filename);
+                    //get Width x Height
+                    return Convert.ToString(img.Width) + " x " + Convert.ToString(img.Height);
                 }
                 else {
                     var ico = new Icon(filename);
@@ -174,22 +159,20 @@ namespace ImageGlass.Library.Image {
                 double v = 0;
 
                 if (!string.Equals(Path.GetExtension(filename), ".ico", StringComparison.CurrentCultureIgnoreCase)) {
-                    using (var img = System.Drawing.Image.FromFile(filename)) {
-                        //get HorizontalResolution 
-                        h = Math.Round((double)img.HorizontalResolution, 2);
+                    using var img = System.Drawing.Image.FromFile(filename);
+                    //get HorizontalResolution 
+                    h = Math.Round((double)img.HorizontalResolution, 2);
 
-                        //get VerticalResolution
-                        v = Math.Round((double)img.VerticalResolution, 2);
-                    }
+                    //get VerticalResolution
+                    v = Math.Round((double)img.VerticalResolution, 2);
                 }
                 else {
-                    using (var ico = new Icon(filename)) {
-                        //get HorizontalResolution 
-                        h = Math.Round(ico.ToBitmap().HorizontalResolution, 2);
+                    using var ico = new Icon(filename);
+                    //get HorizontalResolution 
+                    h = Math.Round(ico.ToBitmap().HorizontalResolution, 2);
 
-                        //get VerticalResolution
-                        v = Math.Round(ico.ToBitmap().VerticalResolution, 2);
-                    }
+                    //get VerticalResolution
+                    v = Math.Round(ico.ToBitmap().VerticalResolution, 2);
                 }
 
                 return string.Format("{0} x {1}", h, v);

@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 /******************************************
 * THANKS [Meowski] FOR THIS CONTRIBUTION
 *******************************************/
@@ -29,10 +28,9 @@ using System.Drawing.Imaging;
 using System.Threading;
 
 namespace ImageGlass {
-
     /// <summary>
     /// <p> Implements GifAnimator with the potential to offer a timer resolution of 10ms,
-    /// the fastest a GIF can animate. </p>  
+    /// the fastest a GIF can animate. </p>
     /// <p> Each animated image is given its own thread
     /// which is torn down with a corresponding call to StopAnimate or when the spawning
     /// process dies. The default resolution is 20ms, as windows timers are by default limited
@@ -77,12 +75,11 @@ namespace ImageGlass {
         #endregion
 
         /// <summary>
-        /// Animates the given image. 
+        /// Animates the given image.
         /// </summary>
         /// <param name="image"></param>
         /// <param name="onFrameChangedHandler"></param>
         public void Animate(Image image, EventHandler onFrameChangedHandler) {
-
             if (!CanAnimate(image))
                 return;
 
@@ -141,7 +138,7 @@ namespace ImageGlass {
         }
 
         /// <summary>
-        /// Stops updating frames for the given image. 
+        /// Stops updating frames for the given image.
         /// </summary>
         /// <param name="image"></param>
         /// <param name="eventHandler"></param>

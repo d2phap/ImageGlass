@@ -1,21 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0C295FB8-C6C6-4A40-9F19-05A43F353A04}</ProjectGuid>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ImageGlass.ImageListView</RootNamespace>
-    <AssemblyName>ImageGlass.ImageListView</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
     <OldToolsVersion>3.5</OldToolsVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -32,81 +21,69 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;BONUSPACK;USEWIC;BENCHMARK</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\ImageGlass.ImageListView.xml</DocumentationFile>
-    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <DefineConstants>TRACE;DEBUG;BONUSPACK;USEWIC;BENCHMARK</DefineConstants>
+    <DocumentationFile>bin\Debug\ImageGlass.ImageListView.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE;USEWIC</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <DocumentationFile>bin\Release\ImageGlass.ImageListView.xml</DocumentationFile>
-    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <DefineConstants>TRACE;USEWIC</DefineConstants>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DocumentationFile>bin\Release\ImageGlass.ImageListView.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release without WIC|AnyCPU' ">
     <OutputPath>bin\Release without WIC\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <DebugType>none</DebugType>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release without WIC|x86'">
+    <OutputPath>bin\Release without WIC\</OutputPath>
+    <Optimize>true</Optimize>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DebugType>none</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug Designer|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\DesignerDebug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;BONUSPACK;USEWIC</DefineConstants>
     <DocumentationFile>bin\Debug\ImageListView.XML</DocumentationFile>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
-    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Designer|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DesignerDebug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;BONUSPACK;USEWIC</DefineConstants>
+    <DocumentationFile>bin\Debug\ImageListView.XML</DocumentationFile>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;BONUSPACK;USEWIC;BENCHMARK</DefineConstants>
     <DocumentationFile>bin\Debug\ImageGlass.ImageListView.xml</DocumentationFile>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
     <DefineConstants>TRACE;USEWIC</DefineConstants>
     <DocumentationFile>bin\Release\ImageGlass.ImageListView.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release without WIC|x86'">
     <OutputPath>bin\x86\Release without WIC\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <LangVersion>7.3</LangVersion>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Designer|x86'">
@@ -114,42 +91,26 @@
     <OutputPath>bin\x86\Debug Designer\</OutputPath>
     <DefineConstants>TRACE;DEBUG;BONUSPACK;USEWIC</DefineConstants>
     <DocumentationFile>bin\Debug\ImageListView.XML</DocumentationFile>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;BONUSPACK;USEWIC;BENCHMARK</DefineConstants>
     <DocumentationFile>bin\Debug\ImageGlass.ImageListView.xml</DocumentationFile>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
     <DefineConstants>TRACE;USEWIC</DefineConstants>
     <DocumentationFile>bin\Release\ImageGlass.ImageListView.xml</DocumentationFile>
-    <Optimize>true</Optimize>
     <DebugType>none</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release without WIC|x64'">
     <OutputPath>bin\x64\Release without WIC\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <PlatformTarget>x64</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <LangVersion>7.3</LangVersion>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Designer|x64'">
@@ -157,152 +118,43 @@
     <OutputPath>bin\x64\Debug Designer\</OutputPath>
     <DefineConstants>TRACE;DEBUG;BONUSPACK;USEWIC</DefineConstants>
     <DocumentationFile>bin\Debug\ImageListView.XML</DocumentationFile>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Design" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="DiskCache.cs" />
-    <Compile Include="ImageListViewGroupCollection.cs">
-      <SubType>component</SubType>
-    </Compile>
-    <Compile Include="ImageListViewGroup.cs">
-      <SubType>component</SubType>
-    </Compile>
-    <Compile Include="ImageListViewItemAdaptors.cs">
-    </Compile>
-    <Compile Include="ImageListViewCacheMetadata.cs" />
-    <Compile Include="ImageListViewCacheShellInfo.cs" />
-    <Compile Include="ImageListViewCacheThumbnail.cs" />
-    <Compile Include="ImageListViewItemAdaptor.cs">
-      <SubType>component</SubType>
-    </Compile>
-    <Compile Include="QueuedBackgroundWorkerEvents.cs">
-    </Compile>
-    <Compile Include="ImageListViewItemTypeConverter.cs" />
-    <Compile Include="OpenFileDialogEditor.cs" />
-    <Compile Include="ImageListViewColumnHeaderTypeConverter.cs" />
-    <Compile Include="QueuedBackgroundWorker.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ShellInfoExtractor.cs" />
-    <Compile Include="MetadataExtractor.cs" />
-    <Compile Include="ImageListViewColorTypeConverter.cs" />
-    <Compile Include="ImageListViewCheckedItemCollection.cs">
-      <SubType>component</SubType>
-    </Compile>
-    <Compile Include="ImageListViewColor.cs" />
-    <Compile Include="ImageListViewRenderers.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="Events.cs" />
-    <Compile Include="HitInfo.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ImageListView.cs" />
-    <Compile Include="ImageListViewColumnHeader.cs">
-      <SubType>component</SubType>
-    </Compile>
-    <Compile Include="ImageListViewColumnHeaderCollection.cs">
-      <SubType>component</SubType>
-    </Compile>
-    <Compile Include="ImageListViewDesigner.cs">
-    </Compile>
-    <Compile Include="ImageListViewItem.cs" />
-    <Compile Include="ImageListViewItemCollection.cs">
-      <SubType>component</SubType>
-    </Compile>
-    <Compile Include="ImageListViewLayoutManager.cs">
-    </Compile>
-    <Compile Include="ImageListViewRenderer.cs">
-      <SubType>component</SubType>
-    </Compile>
-    <Compile Include="ImageListViewSelectedItemCollection.cs">
-      <SubType>component</SubType>
-    </Compile>
-    <Compile Include="ImageListViewNavigationManager.cs">
-      <SubType>component</SubType>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ImageListViewResources.Designer.cs">
+    <Compile Update="ImageListViewGroupCollection.cs" />
+    <Compile Update="ImageListViewGroup.cs" />
+    <Compile Update="ImageListViewItemAdaptor.cs" />
+    <Compile Update="QueuedBackgroundWorker.cs" />
+    <Compile Update="ImageListViewCheckedItemCollection.cs" />
+    <Compile Update="HitInfo.cs" />
+    <Compile Update="ImageListViewColumnHeader.cs" />
+    <Compile Update="ImageListViewColumnHeaderCollection.cs" />
+    <Compile Update="ImageListViewItemCollection.cs" />
+    <Compile Update="ImageListViewRenderer.cs" />
+    <Compile Update="ImageListViewSelectedItemCollection.cs" />
+    <Compile Update="ImageListViewNavigationManager.cs" />
+    <Compile Update="ImageListViewResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ImageListViewResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="StringCache.cs" />
-    <Compile Include="ThumbnailExtractor.cs" />
-    <Compile Include="Utility.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ImageListView.bmp" />
-    <EmbeddedResource Include="ImageListViewResources.resx">
+    <EmbeddedResource Update="ImageListViewResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ImageListViewResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DefaultImage.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ErrorImage.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SortAscending.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SortDescending.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\RatingImage.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\EmptyRatingImage.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="QueuedBackgroundWorker.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="3.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ImageGlass.Heart\ImageGlass.Heart.csproj">
-      <Project>{51493b09-7a0e-461f-be18-a6cf629a8fab}</Project>
-      <Name>ImageGlass.Heart</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\ImageGlass.Heart\ImageGlass.Heart.csproj" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

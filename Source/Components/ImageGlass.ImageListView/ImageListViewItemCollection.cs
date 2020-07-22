@@ -152,7 +152,6 @@ namespace ImageGlass.ImageListView {
                     if (mImageListView.IsItemVisible(mItems.Count) != ItemVisibility.NotVisible) {
                         mImageListView.Refresh();
                     }
-
                 }
             }
             /// <summary>
@@ -239,7 +238,7 @@ namespace ImageGlass.ImageListView {
             /// <summary>
             /// Adds a range of items to the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
-            /// <param name="items">An array of <see cref="ImageListViewItem"/> 
+            /// <param name="items">An array of <see cref="ImageListViewItem"/>
             /// to add to the <see cref="ImageListViewItemCollection"/>.</param>
             /// <param name="adaptor">The adaptor associated with this item.</param>
             public void AddRange(ImageListViewItem[] items, ImageListView.ImageListViewItemAdaptor adaptor) {
@@ -257,7 +256,7 @@ namespace ImageGlass.ImageListView {
             /// <summary>
             /// Adds a range of items to the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
-            /// <param name="items">An array of <see cref="ImageListViewItem"/> 
+            /// <param name="items">An array of <see cref="ImageListViewItem"/>
             /// to add to the <see cref="ImageListViewItemCollection"/>.</param>
             public void AddRange(ImageListViewItem[] items) {
                 AddRange(items, mImageListView.defaultAdaptor);
@@ -304,13 +303,13 @@ namespace ImageGlass.ImageListView {
                 mImageListView.OnItemCollectionChanged(new ItemCollectionChangedEventArgs(CollectionChangeAction.Refresh, null));
             }
             /// <summary>
-            /// Determines whether the <see cref="ImageListViewItemCollection"/> 
+            /// Determines whether the <see cref="ImageListViewItemCollection"/>
             /// contains a specific value.
             /// </summary>
-            /// <param name="item">The object to locate in the 
+            /// <param name="item">The object to locate in the
             /// <see cref="ImageListViewItemCollection"/>.</param>
             /// <returns>
-            /// true if <paramref name="item"/> is found in the 
+            /// true if <paramref name="item"/> is found in the
             /// <see cref="ImageListViewItemCollection"/>; otherwise, false.
             /// </returns>
             public bool Contains(ImageListViewItem item) {
@@ -320,7 +319,7 @@ namespace ImageGlass.ImageListView {
             /// Returns an enumerator that iterates through the collection.
             /// </summary>
             /// <returns>
-            /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> 
+            /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/>
             /// that can be used to iterate through the collection.
             /// </returns>
             public IEnumerator<ImageListViewItem> GetEnumerator() {
@@ -330,7 +329,7 @@ namespace ImageGlass.ImageListView {
             /// Inserts an item to the <see cref="ImageListViewItemCollection"/> at the specified index.
             /// </summary>
             /// <param name="index">The zero-based index at which <paramref name="item"/> should be inserted.</param>
-            /// <param name="item">The <see cref="ImageListViewItem"/> to 
+            /// <param name="item">The <see cref="ImageListViewItem"/> to
             /// insert into the <see cref="ImageListViewItemCollection"/>.</param>
             /// <param name="adaptor">The adaptor associated with this item.</param>
             public void Insert(int index, ImageListViewItem item, ImageListView.ImageListViewItemAdaptor adaptor) {
@@ -346,7 +345,7 @@ namespace ImageGlass.ImageListView {
             /// Inserts an item to the <see cref="ImageListViewItemCollection"/> at the specified index.
             /// </summary>
             /// <param name="index">The zero-based index at which <paramref name="item"/> should be inserted.</param>
-            /// <param name="item">The <see cref="ImageListViewItem"/> to 
+            /// <param name="item">The <see cref="ImageListViewItem"/> to
             /// insert into the <see cref="ImageListViewItemCollection"/>.</param>
             public void Insert(int index, ImageListViewItem item) {
                 Insert(index, item, mImageListView.defaultAdaptor);
@@ -413,15 +412,15 @@ namespace ImageGlass.ImageListView {
                 Insert(index, key, text, initialThumbnail, mImageListView.defaultAdaptor);
             }
             /// <summary>
-            /// Removes the first occurrence of a specific object 
+            /// Removes the first occurrence of a specific object
             /// from the <see cref="ImageListViewItemCollection"/>.
             /// </summary>
-            /// <param name="item">The <see cref="ImageListViewItem"/> to remove 
+            /// <param name="item">The <see cref="ImageListViewItem"/> to remove
             /// from the <see cref="ImageListViewItemCollection"/>.</param>
             /// <returns>
-            /// true if <paramref name="item"/> was successfully removed from the 
-            /// <see cref="ImageListViewItemCollection"/>; otherwise, false. This method also 
-            /// returns false if <paramref name="item"/> is not found in the original 
+            /// true if <paramref name="item"/> was successfully removed from the
+            /// <see cref="ImageListViewItemCollection"/>; otherwise, false. This method also
+            /// returns false if <paramref name="item"/> is not found in the original
             /// <see cref="ImageListViewItemCollection"/>.
             /// </returns>
             public bool Remove(ImageListViewItem item) {
@@ -465,8 +464,8 @@ namespace ImageGlass.ImageListView {
             /// Gets the value associated with the specified key.
             /// </summary>
             /// <param name="guid">The key of the item.</param>
-            /// <param name="item">the value associated with the specified key, 
-            /// if the key is found; otherwise, the default value for the type 
+            /// <param name="item">the value associated with the specified key,
+            /// if the key is found; otherwise, the default value for the type
             /// of the value parameter. This parameter is passed uninitialized.</param>
             /// <returns>true if the collection contains the given key; otherwise false.</returns>
             internal bool TryGetValue(Guid guid, out ImageListViewItem item) {

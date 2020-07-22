@@ -91,56 +91,50 @@ namespace ImageGlass.UI.Renderers {
                 }
 
                 // draw border
-                using (var pen = new Pen(Color.Black)) // KBR 20181231 fix handle leak
+                using var pen = new Pen(Color.Black);
+                if (this.ThemeBackgroundColor.GetBrightness() > 0.5) //light background color
                 {
-                    if (this.ThemeBackgroundColor.GetBrightness() > 0.5) //light background color
-                    {
-                        pen.Color = Color.FromArgb(35, 0, 0, 0);
-                    }
-                    else //dark background color
-                    {
-                        pen.Color = Color.FromArgb(35, 255, 255, 255);
-                    }
-
-                    e.Graphics.DrawRectangle(pen, 0, 0, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1);
+                    pen.Color = Color.FromArgb(35, 0, 0, 0);
                 }
+                else //dark background color
+                {
+                    pen.Color = Color.FromArgb(35, 255, 255, 255);
+                }
+
+                e.Graphics.DrawRectangle(pen, 0, 0, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1);
             }
 
             base.OnRenderToolStripBackground(e);
         }
 
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e) {
-            using (var pen = new Pen(ThemeTextColor, 1)) // KBR 20181231 fix handle leak
-            {
-                e.Graphics.DrawLine(pen,
-                    e.Item.Width - (5 * e.Item.Height / 8),
-                    3 * e.Item.Height / 8,
-                    e.Item.Width - (4 * e.Item.Height / 8),
-                    e.Item.Height / 2);
+            using var pen = new Pen(ThemeTextColor, 1);
+            e.Graphics.DrawLine(pen,
+                e.Item.Width - (5 * e.Item.Height / 8),
+                3 * e.Item.Height / 8,
+                e.Item.Width - (4 * e.Item.Height / 8),
+                e.Item.Height / 2);
 
-                e.Graphics.DrawLine(pen,
-                    e.Item.Width - (4 * e.Item.Height / 8),
-                    e.Item.Height / 2,
-                    e.Item.Width - (5 * e.Item.Height / 8),
-                    5 * e.Item.Height / 8);
-            }
+            e.Graphics.DrawLine(pen,
+                e.Item.Width - (4 * e.Item.Height / 8),
+                e.Item.Height / 2,
+                e.Item.Width - (5 * e.Item.Height / 8),
+                5 * e.Item.Height / 8);
         }
 
         protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e) {
-            using (var pen = new Pen(ThemeTextColor, 2)) // KBR 20181231 fix handle leak
-            {
-                e.Graphics.DrawLine(pen,
-                    (2 * e.Item.Height / 10) + 1,
-                    e.Item.Height / 2,
-                    (4 * e.Item.Height / 10) + 1,
-                    7 * e.Item.Height / 10);
+            using var pen = new Pen(ThemeTextColor, 2);
+            e.Graphics.DrawLine(pen,
+                (2 * e.Item.Height / 10) + 1,
+                e.Item.Height / 2,
+                (4 * e.Item.Height / 10) + 1,
+                7 * e.Item.Height / 10);
 
-                e.Graphics.DrawLine(pen,
-                    4 * e.Item.Height / 10,
-                    7 * e.Item.Height / 10,
-                    8 * e.Item.Height / 10,
-                    3 * e.Item.Height / 10);
-            }
+            e.Graphics.DrawLine(pen,
+                4 * e.Item.Height / 10,
+                7 * e.Item.Height / 10,
+                8 * e.Item.Height / 10,
+                3 * e.Item.Height / 10);
         }
     }
 

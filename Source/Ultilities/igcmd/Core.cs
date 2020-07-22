@@ -44,9 +44,8 @@ namespace igcmd {
                 if (!up.IsError &&
                     up.CheckForUpdate(App.StartUpDir("ImageGlass.exe")) &&
                     string.Equals(up.Info.VersionType, "stable", StringComparison.CurrentCultureIgnoreCase)) {
-                    using (var f = new frmCheckForUpdate()) {
-                        f.ShowDialog();
-                    }
+                    using var f = new frmCheckForUpdate();
+                    f.ShowDialog();
                 }
             }
             catch { }

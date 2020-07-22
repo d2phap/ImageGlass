@@ -36,10 +36,8 @@ namespace igcmdWin10 {
             try {
                 var sf = await StorageFolder.GetFolderFromPathAsync(folder);
                 var imgFile = await sf.GetFileAsync(file);
-
-                using (var stream = await imgFile.OpenAsync(FileAccessMode.Read)) {
-                    await LockScreen.SetImageStreamAsync(stream);
-                }
+                using var stream = await imgFile.OpenAsync(FileAccessMode.Read);
+                await LockScreen.SetImageStreamAsync(stream);
             }
             catch (Exception) {
                 return 1;

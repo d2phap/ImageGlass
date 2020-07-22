@@ -156,7 +156,7 @@ namespace ImageGlass.ImageListView {
         [Category("Behavior"), Description("Gets or sets whether the user can drag items for drag-and-drop operations."), DefaultValue(false)]
         public bool AllowDrag { get; set; }
         /// <summary>
-        /// Gets or sets whether duplicate items (image files pointing to the same path 
+        /// Gets or sets whether duplicate items (image files pointing to the same path
         /// on the file system) are allowed.
         /// </summary>
         [Category("Behavior"), Description("Gets or sets whether duplicate items (image files pointing to the same path on the file system) are allowed."), DefaultValue(false)]
@@ -215,7 +215,9 @@ namespace ImageGlass.ImageListView {
             }
         }
 
-        // IG_CHANGE : provide the ability to control the metadata caching
+        /// <summary>
+        /// IG_CHANGE : provide the ability to control the metadata caching
+        /// </summary>
         [Category("Behavior"), Description("Controls metadata caching"), DefaultValue(false)]
         public bool MetadataCacheEnabled {
             set {
@@ -745,7 +747,6 @@ namespace ImageGlass.ImageListView {
             get { return showGroups; }
         }
 
-
         /// <summary>
         /// Gets or sets the scroll offset.
         /// </summary>
@@ -765,7 +766,7 @@ namespace ImageGlass.ImageListView {
         /// <summary>
         /// Determines if the header font should be serialized.
         /// </summary>
-        /// <returns>true if the designer should serialize 
+        /// <returns>true if the designer should serialize
         /// the property; otherwise false.</returns>
         public bool ShouldSerializeHeaderFont() {
             using (Font font = new Font("Microsoft Sans Serif", 8.25f)) {
@@ -782,7 +783,7 @@ namespace ImageGlass.ImageListView {
         /// <summary>
         /// Determines if the colors should be serialized.
         /// </summary>
-        /// <returns>true if the designer should serialize 
+        /// <returns>true if the designer should serialize
         /// the property; otherwise false.</returns>
         public bool ShouldSerializeColors() {
             ImageListViewColor defaultColors = ImageListViewColor.Default;
@@ -798,7 +799,7 @@ namespace ImageGlass.ImageListView {
         /// <summary>
         /// Determines if the default image should be serialized.
         /// </summary>
-        /// <returns>true if the designer should serialize 
+        /// <returns>true if the designer should serialize
         /// the property; otherwise false.</returns>
         public bool ShouldSerializeDefaultImage() {
             return mDefaultImageChanged;
@@ -814,7 +815,7 @@ namespace ImageGlass.ImageListView {
         /// <summary>
         /// Determines if the error image should be serialized.
         /// </summary>
-        /// <returns>true if the designer should serialize 
+        /// <returns>true if the designer should serialize
         /// the property; otherwise false.</returns>
         public bool ShouldSerializeErrorImage() {
             return mErrorImageChanged;
@@ -830,7 +831,7 @@ namespace ImageGlass.ImageListView {
         /// <summary>
         /// Determines if the rating image should be serialized.
         /// </summary>
-        /// <returns>true if the designer should serialize 
+        /// <returns>true if the designer should serialize
         /// the property; otherwise false.</returns>
         public bool ShouldSerializeRatingImage() {
             return mRatingImageChanged;
@@ -846,7 +847,7 @@ namespace ImageGlass.ImageListView {
         /// <summary>
         /// Determines if the empty rating image should be serialized.
         /// </summary>
-        /// <returns>true if the designer should serialize 
+        /// <returns>true if the designer should serialize
         /// the property; otherwise false.</returns>
         public bool ShouldSerializeEmptyRatingImage() {
             return mEmptyRatingImageChanged;
@@ -1282,7 +1283,6 @@ namespace ImageGlass.ImageListView {
             }
         }
 
-
         /// <summary>
         /// [IG_New] Scrolls horizontal scrollbar by delta. Checks that scrolling is within
         /// allowed range. Calls Refresh() if scrolling position was changed.
@@ -1308,7 +1308,6 @@ namespace ImageGlass.ImageListView {
 
             return true;
         }
-
 
         /// <summary>
         /// [IG_New] Scrolls vertical scrollbar by delta. Checks that scrolling is within
@@ -1336,9 +1335,8 @@ namespace ImageGlass.ImageListView {
             return true;
         }
 
-
         /// <summary>
-        /// [IG_Change] Scrolls the image list view to ensure that the item with the specified 
+        /// [IG_Change] Scrolls the image list view to ensure that the item with the specified
         /// index is visible on the screen.
         /// </summary>
         /// <param name="itemIndex">The index of the item to make visible.</param>
@@ -1364,13 +1362,12 @@ namespace ImageGlass.ImageListView {
             }
         }
 
-
         /// <summary>
         /// [IG_Change] Scrolls the image list view to place the item with the specified
         /// index as close to the center of the visible area as possible.
         /// </summary>
         /// <param name="itemIndex">The index of the item to scroll to.</param>
-        /// <returns>true if the scroll position was changed; otherwise false 
+        /// <returns>true if the scroll position was changed; otherwise false
         /// (item is already centered or the image list view is empty).</returns>
         public bool ScrollToIndex(int itemIndex) {
             if (Items.Count == 0 || itemIndex < 0 || itemIndex > Items.Count - 1)
@@ -1389,7 +1386,6 @@ namespace ImageGlass.ImageListView {
                 return ScrollVerticalDelta(delta);
             }
         }
-
 
         /// <summary>
         /// Determines whether the specified item is visible on the screen.
@@ -1413,7 +1409,7 @@ namespace ImageGlass.ImageListView {
         /// Finds the first item that starts with the specified string.
         /// </summary>
         /// <param name="s">The text to search for.</param>
-        /// <param name="startIndex">The zero-based index of the first 
+        /// <param name="startIndex">The zero-based index of the first
         /// item to be searched. Set to zero to search from the
         /// beginning of the control.</param>
         /// <returns>
@@ -1869,7 +1865,6 @@ namespace ImageGlass.ImageListView {
 
             ScrollToIndex(firstItemIndex);
             OnSelectionChangedInternal();
-
         }
         /// <summary>
         /// Raises the ColumnWidthChanged event.

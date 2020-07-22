@@ -129,11 +129,10 @@ namespace ImageGlass.Base {
                 }
                 var path = Path.Combine(tempDir, "iglog.log");
 
-                using (var tw = new StreamWriter(path, append: true)) {
-                    await tw.WriteLineAsync(msg).ConfigureAwait(true);
-                    await tw.FlushAsync().ConfigureAwait(true);
-                    tw.Close();
-                }
+                using var tw = new StreamWriter(path, append: true);
+                await tw.WriteLineAsync(msg).ConfigureAwait(true);
+                await tw.FlushAsync().ConfigureAwait(true);
+                tw.Close();
             }
             catch { }
 #endif

@@ -254,7 +254,7 @@ namespace ImageGlass.ImageListView {
             /// http://en.wikipedia.org/wiki/Koch_snowflake
             /// </summary>
             /// <param name="size">The size of the snow flake.</param>
-            /// <param name="iterations">Number of iterations. Higher values 
+            /// <param name="iterations">Number of iterations. Higher values
             /// produce more complex curves.</param>
             private GraphicsPath CreateFlake(int size, int iterations) {
                 Queue<PointF> segments = new Queue<PointF>();
@@ -2300,7 +2300,6 @@ namespace ImageGlass.ImageListView {
                         focusBounds.Inflate(-2, -2);
                         ControlPaint.DrawFocusRectangle(g, focusBounds);
                     }
-
                 }
                 else
                     base.DrawItem(g, item, state, bounds);
@@ -2508,7 +2507,6 @@ namespace ImageGlass.ImageListView {
                             }
                             x += column.Width;
                         }
-
                     }
 
                     // Separators 

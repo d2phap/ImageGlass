@@ -1062,7 +1062,6 @@ namespace ImageGlass {
             }
         }
 
-
         /// <summary>
         /// [IG_CHANGE] Handles animating gif images
         /// </summary>
@@ -1814,7 +1813,7 @@ namespace ImageGlass {
         }
 
         /// <summary>
-        /// Stop animating 
+        /// Stop animating
         /// </summary>
         public void StopAnimating() {
             if (!IsAnimating)
@@ -2678,8 +2677,6 @@ namespace ImageGlass {
             }
         }
 
-
-
         /// <summary>
         ///   Adjusts the view port to fit the given region
         /// </summary>
@@ -3256,7 +3253,6 @@ namespace ImageGlass {
             }
         }
 
-
         /// <summary>
         ///   [IG_CHANGE] Draws the selection region.
         /// </summary>
@@ -3266,7 +3262,6 @@ namespace ImageGlass {
         protected virtual void DrawSelection(PaintEventArgs e) {
             var drawableRegion = LimitSelectionToImage ? GetImageViewPort() : GetInsideViewPort(true);
             var selectionRec = GetOffsetRectangle(SelectionRegion);
-
 
             #region draw inverted selection region
             var clip = new Region(drawableRegion);
@@ -3285,7 +3280,6 @@ namespace ImageGlass {
             }
             e.Graphics.ResetClip();
             #endregion
-
 
             #region draw selection border and grid
             e.Graphics.SetClip(drawableRegion);
@@ -3614,7 +3608,6 @@ namespace ImageGlass {
                 handler(this, e);
             }
         }
-
 
         /// <summary>
         ///   Raises the <see cref="ImageChanged" /> event.
@@ -4641,7 +4634,6 @@ namespace ImageGlass {
                 handler(this, e);
         }
 
-
         /// <summary>
         ///   Occurs when the AutoScrollPosition property value changes. [IG_CHANGE] This is new event
         /// </summary>
@@ -4712,7 +4704,6 @@ namespace ImageGlass {
         private void ScrollBarScrollHandler(object sender, ScrollEventArgs e) {
             UpdateScrollPosition(new Point(_hScrollBar.Value, _vScrollBar.Value));
         }
-
 
         /// <summary>
         ///   Occurs when the user or code scrolls through the client area.
@@ -4815,7 +4806,5 @@ namespace ImageGlass {
                 handler(this, e);
             }
         }
-
-
     }
 }

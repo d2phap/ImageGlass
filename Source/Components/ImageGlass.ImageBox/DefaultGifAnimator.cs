@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 /******************************************
 * THANKS [Meowski] FOR THIS CONTRIBUTION
 *******************************************/
@@ -30,7 +29,6 @@ namespace ImageGlass {
     /// This is a wrapper for the original System.Drawing animator. See <see cref="ImageAnimator"/>.
     /// </summary>
     public class DefaultGifAnimator: GifAnimator {
-
         /// <summary>
         /// Updates the time frame for this image.
         /// </summary>
@@ -40,7 +38,7 @@ namespace ImageGlass {
         }
 
         /// <summary>
-        /// Stops updating frames for the given image. 
+        /// Stops updating frames for the given image.
         /// </summary>
         /// <param name="image"></param>
         /// <param name="eventHandler"></param>
@@ -49,7 +47,7 @@ namespace ImageGlass {
         }
 
         /// <summary>
-        /// Animates the given image. 
+        /// Animates the given image.
         /// </summary>
         /// <param name="image"></param>
         /// <param name="eventHandler"></param>

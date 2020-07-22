@@ -28,14 +28,12 @@ using System.Threading.Tasks;
 namespace igcmdWin10 {
     internal static class Program {
         [STAThread]
-        private static int Main(string[] args) {
+        private static async Task<int> Main(string[] args) {
             var topcmd = args[0].ToLower().Trim();
 
             if (topcmd == "setlockimage") {
                 var task = SetLockScreenImageAsync(args);
-                task.Wait();
-
-                return task.Result;
+                return await task.ConfigureAwait(true);
             }
 
             return 0;

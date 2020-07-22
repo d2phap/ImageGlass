@@ -77,7 +77,7 @@ namespace ImageGlass.Services.InstanceManagement {
         public void ListenForArgumentsFromSuccessiveInstances() {
             if (!IsFirstInstance)
                 throw new InvalidOperationException("This is not the first instance.");
-            ThreadPool.QueueUserWorkItem(new WaitCallback(ListenForArguments));
+            _ = ThreadPool.QueueUserWorkItem(new WaitCallback(ListenForArguments));
         }
 
         /// <summary>
@@ -86,16 +86,13 @@ namespace ImageGlass.Services.InstanceManagement {
         /// <param name="state">State object required by WaitCallback delegate.</param>
         private void ListenForArguments(object state) {
             try {
-                using (var server = new NamedPipeServerStream(identifier.ToString()))
-                using (var reader = new StreamReader(server)) {
-                    server.WaitForConnectionAsync().ConfigureAwait(true);
-
-                    var arguments = new List<string>();
-                    while (server.IsConnected)
-                        arguments.Add(reader.ReadLine());
-
-                    ThreadPool.QueueUserWorkItem(new WaitCallback(CallOnArgumentsReceived), arguments.ToArray());
-                }
+                using var server = new NamedPipeServerStream(identifier.ToString());
+                using var reader = new StreamReader(server);
+                _ = server.WaitForConnectionAsync().ConfigureAwait(true);
+                var arguments = new List<string>();
+                while (server.IsConnected)
+                    arguments.Add(reader.ReadLine());
+                _ = ThreadPool.QueueUserWorkItem(new WaitCallback(CallOnArgumentsReceived), arguments.ToArray());
             }
             catch (IOException) { } //Pipe was broken
             finally {

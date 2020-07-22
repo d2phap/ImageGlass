@@ -31,7 +31,7 @@ namespace igtasks {
         /// Install new language packs
         /// </summary>
         public static void InstallLanguagePacks() {
-            var o = new OpenFileDialog {
+            var o = new System.Windows.Forms.OpenFileDialog {
                 Filter = "ImageGlass language pack (*.iglang)|*.iglang",
                 Multiselect = true
             };
@@ -57,7 +57,7 @@ namespace igtasks {
         /// Create new language packs
         /// </summary>
         public static void CreateNewLanguagePacks() {
-            var s = new SaveFileDialog {
+            var s = new System.Windows.Forms.SaveFileDialog {
                 Filter = "ImageGlass language pack (*.iglang)|*.iglang"
             };
 

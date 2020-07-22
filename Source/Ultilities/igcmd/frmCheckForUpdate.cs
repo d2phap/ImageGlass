@@ -31,11 +31,9 @@ using System.Windows.Forms;
 namespace igcmd {
     public partial class frmCheckForUpdate: Form {
         private Update up = new Update();
-        private string UpdateInfoFile { get => App.ConfigDir(PathType.File, Dir.Temporary, "update.xml"); }
+        private string UpdateInfoFile => App.ConfigDir(PathType.File, Dir.Temporary, "update.xml");
 
-        public frmCheckForUpdate() {
-            InitializeComponent();
-        }
+        public frmCheckForUpdate() => InitializeComponent();
 
         private void CheckForUpdate() {
             up = new Update(new Uri("https://imageglass.org/checkforupdate"), UpdateInfoFile);

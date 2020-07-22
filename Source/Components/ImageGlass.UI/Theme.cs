@@ -421,7 +421,7 @@ namespace ImageGlass.UI {
 
             // Fetch a color attribute value from the theme config file.
             // Returns: a Color value if valid; Color.Transparent if an error
-            Color FetchColorAttribute(XmlElement xmlElement, string attribute) {
+            static Color FetchColorAttribute(XmlElement xmlElement, string attribute) {
                 try {
                     var colorString = xmlElement.GetAttribute(attribute);
 
@@ -533,11 +533,10 @@ namespace ImageGlass.UI {
             _extractThemeResult = ThemeInstallingResult.UNKNOWN;
 
             try {
-                using (var z = new ZipFile(themePath, Encoding.UTF8)) {
-                    z.ExtractProgress += z_ExtractProgress;
-                    z.ZipError += z_ZipError;
-                    z.ExtractAll(dir, ExtractExistingFileAction.OverwriteSilently);
-                }
+                using var z = new ZipFile(themePath, Encoding.UTF8);
+                z.ExtractProgress += z_ExtractProgress;
+                z.ZipError += z_ZipError;
+                z.ExtractAll(dir, ExtractExistingFileAction.OverwriteSilently);
             }
             catch {
                 _extractThemeResult = ThemeInstallingResult.ERROR;
@@ -626,10 +625,9 @@ namespace ImageGlass.UI {
             }
 
             try {
-                using (var z = new ZipFile(outputThemeFile, Encoding.UTF8)) {
-                    z.AddDirectory(themeFolderPath, th.Name);
-                    z.Save();
-                }
+                using var z = new ZipFile(outputThemeFile, Encoding.UTF8);
+                z.AddDirectory(themeFolderPath, th.Name);
+                z.Save();
             }
             catch (Exception) {
                 // restore backup file

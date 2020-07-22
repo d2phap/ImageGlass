@@ -176,9 +176,7 @@ namespace ImageGlass.Settings {
         /// </summary>
         /// <param name="serializationInfo"></param>
         /// <param name="streamingContext"></param>
-        protected ConfigSource(System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext) {
-            throw new NotImplementedException();
-        }
+        protected ConfigSource(System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext) => throw new NotImplementedException();
 
         /// <summary>
         /// Loads all config files: user, default, admin, then unify configs for user

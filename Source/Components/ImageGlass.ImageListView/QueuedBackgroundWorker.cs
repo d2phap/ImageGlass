@@ -158,7 +158,7 @@ namespace ImageGlass.ImageListView {
         /// Gets a pending operation from the work queue.
         /// This method must be called from inside a lock.
         /// </summary>
-        /// <returns>A 2-tuple whose first component is the the pending operation with 
+        /// <returns>A 2-tuple whose first component is the the pending operation with
         /// the highest priority from the work queue and the second component is the
         /// priority.</returns>
         private Utility.Tuple<AsyncOperation, int> GetWork() {
@@ -209,7 +209,7 @@ namespace ImageGlass.ImageListView {
         /// Clears the work queue with the given priority.
         /// This method must be called from inside a lock.
         /// </summary>
-        /// <param name="priority">A value between 0 and <see cref="PriorityQueues"/> 
+        /// <param name="priority">A value between 0 and <see cref="PriorityQueues"/>
         /// indicating the priority queue to cancel.</param>
         private void ClearWorkQueue(int priority) {
             AsyncOperation singleOp = singleItems[priority];
@@ -356,7 +356,7 @@ namespace ImageGlass.ImageListView {
         /// <summary>
         /// Cancels all pending operations in the given queue.
         /// </summary>
-        /// <param name="priority">A value between 0 and <see cref="PriorityQueues"/> 
+        /// <param name="priority">A value between 0 and <see cref="PriorityQueues"/>
         /// indicating the priority queue to cancel.</param>
         public void CancelAsync(int priority) {
             if (priority < 0 || priority >= priorityQueues)
@@ -403,7 +403,6 @@ namespace ImageGlass.ImageListView {
                     RunWorkerCompleted(this, e);
             }
             catch { } // [IG_CHANGE] not un-caught exceptions
-
         }
         /// <summary>
         /// Raises the DoWork event.
@@ -511,10 +510,10 @@ namespace ImageGlass.ImageListView {
 
         #region Dispose
         /// <summary>
-        /// Releases the unmanaged resources used by the <see cref="T:System.ComponentModel.Component"/> 
+        /// Releases the unmanaged resources used by the <see cref="T:System.ComponentModel.Component"/>
         /// and optionally releases the managed resources.
         /// </summary>
-        /// <param name="disposing">true to release both managed and unmanaged resources; 
+        /// <param name="disposing">true to release both managed and unmanaged resources;
         /// false to release only unmanaged resources.</param>
         protected override void Dispose(bool disposing) {
             base.Dispose(disposing);
