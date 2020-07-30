@@ -1,4 +1,4 @@
-ImageGlass - A lightweight, versatile image viewer.
+⛰ ImageGlass - A lightweight, versatile image viewer.
 ===
 
 
@@ -12,7 +12,7 @@ ImageGlass is a lightweight software application whose purpose is to help you vi
 It gives you the possibility to view over **70+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers to speed up their work.
 
 
-## Download & Screen shots
+## 📥 Download & Screen shots
 [![Total Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%233097B8&label=downloads&style=for-the-badge)](https://imageglass.org/download)
 [![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23E17206&label=v7.6.4.30%20downloads&style=for-the-badge)](https://imageglass.org/download)
 
@@ -22,7 +22,13 @@ It gives you the possibility to view over **70+** common image formats, includin
 </a><br/>
 
 
-## Development
+## 🛣 Roadmap
+Please find the roadmap and information about [🏔 ImageGlass Preview](https://github.com/d2phap/ImageGlass-Preview) at:
+
+https://www.patreon.com/posts/imageglass-and-39849218
+
+
+## 👨‍💻 Development
 ![Visual Studio 2019](https://img.shields.io/badge/IDE-Visual%20Studio%202019-964ad4.svg?maxAge=3600)
 ![.NET Framework 4.7.1](https://img.shields.io/badge/.NET-Framework%204.7.1-lightgrey.svg?maxAge=3600)
 ![Windows OS](https://img.shields.io/badge/OS-Windows%207+-00adef.svg?maxAge=3600)
@@ -33,7 +39,7 @@ It gives you the possibility to view over **70+** common image formats, includin
 
 
 
-## Docs
+## 📚 Docs
 
 [![Features](https://img.shields.io/badge/docs-Features-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/features)
 [![Supported formats](https://img.shields.io/badge/docs-Supported%20Formats-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/supported-formats)
@@ -49,7 +55,7 @@ For more information about ImageGlass, go to [Documentation](https://imageglass.
 
 
 
-## Donation
+## 💖 Donation
 ImageGlass is free and open source but developing it has taken thousands of hours of my time and a large part of my sanity. If you feel this little viewer useful to you, it would go a great way to ensuring that I can afford to take the time to continue to develop it.
 
 Thanks for your gratitude and finance help!
@@ -85,7 +91,7 @@ Thanks for your gratitude and finance help!
 
 
 
-## Contributors
+## 💪 Contributors
 
 This project exists thanks to all the people who contribute. [[Contribute]](CONTRIBUTING.md).
 <a href="https://github.com/d2phap/ImageGlass/graphs/contributors"><img src="https://opencollective.com/imageglass/contributors.svg?width=890" /></a>
