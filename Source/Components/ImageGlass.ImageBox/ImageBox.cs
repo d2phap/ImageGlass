@@ -221,7 +221,7 @@ namespace ImageGlass {
         /// [IG_CHANGE] Initializes a new instance of the <see cref="ImageBox" /> class.
         /// </summary>
         public ImageBox() {
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor, true);
 
             // [IG_CHANGE] double click event
             // Enable 
