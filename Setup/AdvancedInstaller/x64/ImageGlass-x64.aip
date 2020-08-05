@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="16.6.1" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
-  <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
-    <ROW Name="HiddenItems" Value="MsiThemeComponent;BackgroundImagesComponent;UpdaterComponent;SerValComponent;MsiInstExSeqComponent;DictionaryComponent;MsiAppSearchComponent;MsiOdbcDataSrcComponent;CPLAppletComponent;ActSyncAppComponent;PreReqComponent;WebApplicationsComponent;MsiJavaComponent;MsiDriverPackagesComponent;UserAccountsComponent;ScheduledTasksComponent;SqlConnectionComponent;AutorunComponent;FirewallExceptionComponent;GameUxComponent;MsiDirectEditorComponent;SharePointSlnComponent;SilverlightSlnComponent;MultipleInstancesComponent;SccmComponent;ActSyncAppComponent;AppXAppDetailsComponent;FixupComponent;AppXCapabilitiesComponent;AppXDependenciesComponent;AppXProductDetailsComponent;AppXVisualAssetsComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent"/>
-  </COMPONENT>
+<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="17.3" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_RUN_AS_ADMIN" Value="0"/>
@@ -43,7 +40,9 @@
     <ROW Directory="DefaultTheme_Dir" Directory_Parent="APPDIR" DefaultDir="DEFAUL~1|DefaultTheme"/>
     <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
     <ROW Directory="ExtIcons_Dir" Directory_Parent="APPDIR" DefaultDir="EXT-IC~1|Ext-Icons"/>
+    <ROW Directory="ImageGlass_Dir" Directory_Parent="ProgramMenuFolder" DefaultDir="IMAGEG~1|ImageGlass"/>
     <ROW Directory="Languages_Dir" Directory_Parent="APPDIR" DefaultDir="LANGUA~1|Languages"/>
+    <ROW Directory="ProgramMenuFolder" Directory_Parent="TARGETDIR" DefaultDir="PROGRA~1|ProgramMenuFolder" IsPseudoRoot="1"/>
     <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
   </COMPONENT>
@@ -54,6 +53,7 @@
     <ROW Component="ExplorerSortOrder64.dll" ComponentId="{0950B571-26A2-4777-B908-08E2D25D8ED4}" Directory_="APPDIR" Attributes="256" KeyPath="ExplorerSortOrder64.dll"/>
     <ROW Component="ExtIcons" ComponentId="{AD9FEE50-9291-406F-8FD9-37AF1B0E6345}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="FR.ico" Type="0"/>
     <ROW Component="FileWatcherEx.dll" ComponentId="{6E2E5A9D-A9EB-4820-837A-905A0C1B1B9C}" Directory_="APPDIR" Attributes="256" KeyPath="FileWatcherEx.dll"/>
+    <ROW Component="ImageGlass" ComponentId="{11796634-B050-449E-A628-A9EB328399D3}" Directory_="ImageGlass_Dir" Attributes="0"/>
     <ROW Component="ImageGlass.Base.dll" ComponentId="{C717066C-F741-4948-A27A-8C8CBD57E458}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.Base.dll"/>
     <ROW Component="ImageGlass.Heart.dll" ComponentId="{48671094-08DA-434F-A60B-ABAB6004FA2E}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.Heart.dll"/>
     <ROW Component="ImageGlass.ImageBox.dll" ComponentId="{B0AB5B3A-3097-42D7-B698-30BA7A4D9FC7}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.ImageBox.dll"/>
@@ -288,6 +288,7 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
     <ROW Directory_="SHORTCUTDIR" Component_="SHORTCUTDIR" ManualDelete="false"/>
+    <ROW Directory_="ImageGlass_Dir" Component_="ImageGlass" ManualDelete="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
     <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
@@ -331,6 +332,7 @@
     <ROW Feature_="MainFeature" Component_="Magick.NETQ16AnyCPU.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Runtime.WindowsRuntime.dll"/>
     <ROW Feature_="MainFeature" Component_="Windows.winmd"/>
+    <ROW Feature_="MainFeature" Component_="ImageGlass"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="ImageGlass_1.exe" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.exe" Index="0"/>
@@ -368,6 +370,8 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
     <ROW Shortcut="ImageGlass" Directory_="SHORTCUTDIR" Name="IMAGEG~1|ImageGlass" Component_="ImageGlass.exe" Target="[#ImageGlass.exe]" Description="ImageGlass" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
     <ROW Shortcut="ImageGlass_1" Directory_="DesktopFolder" Name="IMAGEG~1|ImageGlass" Component_="ImageGlass.exe" Target="[#ImageGlass.exe]" Description="ImageGlass" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="ImageGlass_2" Directory_="ImageGlass_Dir" Name="IMAGEG~1|ImageGlass" Component_="ImageGlass.exe" Target="[#ImageGlass.exe]" Description="ImageGlass" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="LICENSE" Directory_="ImageGlass_Dir" Name="LICENSE" Component_="default.jpg" Target="[#LICENSE.rtf]" Description="LICENSE" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
@@ -377,8 +381,8 @@
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.SynchronizedFolderComponent">
-    <ROW Directory_="Languages_Dir" SourcePath="..\..\Assets\Languages" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6"/>
-    <ROW Directory_="ExtIcons_Dir" SourcePath="..\..\Assets\Ext-Icons" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6"/>
-    <ROW Directory_="DefaultTheme_Dir" SourcePath="..\..\Assets\DefaultTheme" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6"/>
+    <ROW Directory_="Languages_Dir" SourcePath="..\..\Assets\Languages" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
+    <ROW Directory_="ExtIcons_Dir" SourcePath="..\..\Assets\Ext-Icons" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
+    <ROW Directory_="DefaultTheme_Dir" SourcePath="..\..\Assets\DefaultTheme" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
   </COMPONENT>
 </DOCUMENT>
