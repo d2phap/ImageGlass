@@ -91,8 +91,8 @@ Thanks for your gratitude and finance help!
 
 
 
-## 💪 Contributors
+## 💪 Top contributors
+Thanks for all your wonderful PRs, issues and ideas. You’re always welcome to [join](CONTRIBUTING.md)!
 
-This project exists thanks to all the people who contribute. [[Contribute]](CONTRIBUTING.md).
-<a href="https://github.com/d2phap/ImageGlass/graphs/contributors"><img src="https://opencollective.com/imageglass/contributors.svg?width=890" /></a>
+[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/0)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/0)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/1)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/1)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/2)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/2)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/3)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/3)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/4)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/4)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/5)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/5)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/6)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/6)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/7)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/7)
 
