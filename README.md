@@ -55,40 +55,36 @@ For more information about ImageGlass, go to [Documentation](https://imageglass.
 
 
 
-## 💖 Donation
+## 💖 Support this project
 ImageGlass is free and open source but developing it has taken thousands of hours of my time and a large part of my sanity. If you feel this little viewer useful to you, it would go a great way to ensuring that I can afford to take the time to continue to develop it.
 
 Thanks for your gratitude and finance help!
 
-<a href="https://www.paypal.me/d2phap" target="_blank" title="Buy me a beer?">
-<img src="https://img.shields.io/badge/PayPal-Donate%20$10%20-009be1.svg?maxAge=3600" height="30" alt="Buy me a beer?">
+<a href="https://www.patreon.com/d2phap" target="_blank" title="Become a patron">
+<img src="https://img.shields.io/badge/Patreon-@d2phap%20-e85b46.svg?maxAge=3600" height="30" alt="Buy me a beer?">
 </a>
 
+<a href="https://www.paypal.me/d2phap" target="_blank" title="Buy me a beer?">
+<img src="https://img.shields.io/badge/PayPal-Donate%20$10%20-0070ba.svg?maxAge=3600" height="30" alt="Buy me a beer?">
+</a>
 
 <a href="https://github.com/sponsors/d2phap" target="_blank" title="Become a sponsor">
-<img src="https://img.shields.io/badge/Github-github.com%2Fsponsor%2Fd2phap-E84646.svg?maxAge=3600" height="30" alt="Become a sponsor">
+<img src="https://img.shields.io/badge/Github-@d2phap-24292e.svg?maxAge=3600" height="30" alt="Become a sponsor">
 </a>
 
 
+### Cryptocurrency donation:
 
-<img src="https://img.shields.io/badge/Bitcoin-Donate-f7931a.svg?maxAge=3600" height="30" alt="Bitcoin">
+```bash
+# Chainlink
+0x4267Bd7c062f69fF233538Df83099C737f56094f
 
-```
+# Ethereum
+0xDc91F762C13b207eb1270fCBEdB464F1507B030C
+
+# Bitcoin
 3Hp7QLP9Fxpb1s4CAcZFYR7NUgN1bR93Hy
 ```
-
-
-
-
-<img src="https://img.shields.io/badge/Ethereum-Donate-131313.svg?maxAge=3600" height="30" alt="Ethereum">
-
-```
-0x6DDBd646586bebF7a97e022D615cbE789D39a965
-```
-
-
-
-
 
 
 ## 💪 Top contributors
