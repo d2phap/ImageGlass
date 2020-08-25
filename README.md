@@ -64,7 +64,7 @@ Thanks for your gratitude and finance help!
 <img src="https://img.shields.io/badge/Patreon-@d2phap%20-e85b46.svg?maxAge=3600" height="30" alt="Buy me a beer?">
 </a>
 
-<a href="https://www.paypal.me/d2phap" target="_blank" title="Buy me a beer?">
+<a href="https://www.paypal.me/ddphap" target="_blank" title="Buy me a beer?">
 <img src="https://img.shields.io/badge/PayPal-Donate%20$10%20-0070ba.svg?maxAge=3600" height="30" alt="Buy me a beer?">
 </a>
 
