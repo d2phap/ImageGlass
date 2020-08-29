@@ -22,6 +22,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ImageGlass.Base {
@@ -120,7 +121,7 @@ namespace ImageGlass.Base {
         /// Write log in DEBUG mode
         /// </summary>
         /// <param name="msg"></param>
-        public static async System.Threading.Tasks.Task LogIt(string msg) {
+        public static async Task LogIt(string msg) {
 #if DEBUG
             try {
                 var tempDir = App.ConfigDir(PathType.Dir, Dir.Log);

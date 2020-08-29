@@ -1734,7 +1734,7 @@ namespace ImageGlass {
         /// <summary>
         /// Cut multiple files
         /// </summary>
-        private async void CutMultiFiles() {
+        private async Task CutMultiFiles() {
             // get filename
             var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
 
@@ -1781,7 +1781,7 @@ namespace ImageGlass {
         /// <summary>
         /// Save all change of image
         /// </summary>
-        private async void SaveImageChange() {
+        private async Task SaveImageChange() {
             try {
                 var lastWriteTime = File.GetLastWriteTime(Local.ImageModifiedPath);
                 Bitmap newBitmap;

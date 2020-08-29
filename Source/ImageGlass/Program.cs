@@ -71,6 +71,7 @@ namespace ImageGlass {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+
             #region Check config file compatibility
             if (!Configs.IsCompatible) {
                 var msg = string.Format(Configs.Language.Items["_IncompatibleConfigs"], App.Version);
@@ -86,6 +87,7 @@ namespace ImageGlass {
                 }
             }
             #endregion
+
 
             #region Check First-launch Configs
             if (Configs.FirstLaunchVersion < Constants.FIRST_LAUNCH_VERSION) {
@@ -104,6 +106,7 @@ namespace ImageGlass {
             }
             #endregion
 
+
             #region Auto check for update
             if (Configs.AutoUpdate != "0") {
                 var lastUpdate = DateTime.Now;
@@ -119,6 +122,7 @@ namespace ImageGlass {
                 }
             }
             #endregion
+
 
             #region Multi instances
             // check if allows multi instances

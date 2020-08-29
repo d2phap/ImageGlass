@@ -88,7 +88,7 @@ namespace ImageGlass.Services.InstanceManagement {
             try {
                 using (var server = new NamedPipeServerStream(identifier.ToString()))
                 using (var reader = new StreamReader(server)) {
-                    server.WaitForConnectionAsync().ConfigureAwait(true);
+                    server.WaitForConnection();
 
                     var arguments = new List<string>();
                     while (server.IsConnected)
