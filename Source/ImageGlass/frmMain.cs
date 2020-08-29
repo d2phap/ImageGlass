@@ -2260,7 +2260,6 @@ namespace ImageGlass {
             if (navRegion == null || navRegion.Type == NavigationRegionType.Unknown) return;
 
             var region = navRegion.Region;
-            LinearGradientBrush brush;
             Image icon;
 
             // expand rectangle by 1px to fit the drawable region
@@ -2269,41 +2268,25 @@ namespace ImageGlass {
 
             if (navRegion.Type == NavigationRegionType.Left) {
                 icon = Configs.Theme.NavArrowLeft;
-                brush = new LinearGradientBrush(
-                    region,
-                    Configs.Theme.ToolbarBackgroundColor,
-                    Color.Transparent,
-                    LinearGradientMode.Horizontal);
             }
             else { // right
                 icon = Configs.Theme.NavArrowRight;
-                brush = new LinearGradientBrush(
-                    new Rectangle(
-                        new Point(region.X - 1, region.Y),
-                        new Size(region.Width + 1, region.Height)),
-                    Color.Transparent,
-                    Configs.Theme.ToolbarBackgroundColor,
-                    LinearGradientMode.Horizontal);
             }
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.SetClip(region);
 
-            // draw navigation background
-            e.Graphics.FillRectangle(brush, region);
-
             var iconPosX = region.X + (region.Width / 2) - (icon.Width / 2);
             var iconPosY = (region.Height / 2) - (icon.Width / 2);
 
             // draw circle background for icon
-            using var sBrush = new SolidBrush(Configs.Theme.ToolbarBackgroundColor);
+            using var sBrush = new SolidBrush(Color.FromArgb(180, Configs.Theme.ToolbarBackgroundColor));
             e.Graphics.FillEllipse(sBrush, new RectangleF(iconPosX, iconPosY, icon.Width, icon.Height));
 
             // draw arrow icon
             e.Graphics.DrawImage(icon, iconPosX, iconPosY);
 
             e.Graphics.ResetClip();
-            brush.Dispose();
         }
 
         #endregion
