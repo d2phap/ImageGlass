@@ -58,13 +58,13 @@ namespace ImageGlass {
             // This _must_ be executed first!
             SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
 
-            // Load user configs
-            Configs.Load();
-
             // Set up Startup Profile to improve launch performance
             // https://blogs.msdn.microsoft.com/dotnet/2012/10/18/an-easy-solution-for-improving-app-launch-performance/
             ProfileOptimization.SetProfileRoot(App.ConfigDir(PathType.Dir));
             ProfileOptimization.StartProfile("igstartup.profile");
+
+            // Load user configs
+            Configs.Load();
 
             SetProcessDPIAware();
 
