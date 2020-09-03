@@ -18,8 +18,8 @@
    </g>
    <ellipse stroke="#fff" ry="1.497717" rx="1.497717" id="svg_13" cy="4.77777" cx="15.684931" stroke-opacity="null" stroke-width="0.7" fill="none"/>
    <g id="svg_5">
-    <line stroke="#fff" stroke-linecap="null" stroke-linejoin="null" id="svg_26" y2="18.636744" x2="4.678466" y1="14.802258" x1="7.969769" fill-opacity="null" stroke-opacity="null" fill="none"/>
-    <line stroke="#fff" stroke-linecap="null" stroke-linejoin="null" id="svg_27" y2="18.693582" x2="15.321533" y1="14.874447" x1="12.01243" fill-opacity="null" stroke-opacity="null" fill="none"/>
+    <line stroke="#fff" id="svg_26" y2="18.636744" x2="4.678466" y1="14.802258" x1="7.969769" fill-opacity="null" stroke-opacity="null" fill="none"/>
+    <line stroke="#fff" id="svg_27" y2="18.693582" x2="15.321533" y1="14.874447" x1="12.01243" fill-opacity="null" stroke-opacity="null" fill="none"/>
    </g>
   </g>
  </g>
