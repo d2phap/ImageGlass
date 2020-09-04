@@ -107,8 +107,10 @@ namespace ImageGlass.UI {
             base.OnMouseLeave(e);
             timer.Stop();
             Tooltip.Hide(this);
-            mouseOverPoint = new Point(-50, -50);
-            mouseOverItem = null;
+            // KBR 20200903 See issues #836, #634. The tooltip may start flashing if near the edge of the screen.
+            // This change seems to fix this, although I've only been able to confirm in the context of issue #634.
+            //mouseOverPoint = new Point(-50, -50);
+            //mouseOverItem = null;
         }
 
         private void timer_Tick(object sender, EventArgs e) {

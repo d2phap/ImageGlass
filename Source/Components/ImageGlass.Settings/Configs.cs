@@ -253,6 +253,11 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool IsUseTouchGesture { get; set; } = true;
 
+        /// <summary>
+        /// Gets, sets value indicates that tooltips are to be hidden
+        /// </summary>
+        public static bool IsHideTooltips { get; set; } = false;
+
         #endregion
 
         #region Number items
@@ -525,6 +530,7 @@ namespace ImageGlass.Settings {
             IsCenterWindowFit = Get<bool>(nameof(IsCenterWindowFit), IsCenterWindowFit);
             IsShowToast = Get<bool>(nameof(IsShowToast), IsShowToast);
             IsUseTouchGesture = Get<bool>(nameof(IsUseTouchGesture), IsUseTouchGesture);
+            IsHideTooltips = Get<bool>(nameof(IsHideTooltips), IsHideTooltips);
 
             #endregion
 
@@ -732,6 +738,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsCenterWindowFit), IsCenterWindowFit);
             Set(nameof(IsShowToast), IsShowToast);
             Set(nameof(IsUseTouchGesture), IsUseTouchGesture);
+            Set(nameof(IsHideTooltips), IsHideTooltips);
 
             #endregion
 
