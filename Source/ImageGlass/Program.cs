@@ -153,7 +153,10 @@ namespace ImageGlass {
                 return;
 
             Action<string[]> UpdateForm = arguments => {
-                formMain.WindowState = FormWindowState.Normal;
+                if (formMain.WindowState != FormWindowState.Normal) {
+                    formMain.WindowState = FormWindowState.Normal;
+                }
+
                 formMain.LoadFromParams(arguments);
             };
 
