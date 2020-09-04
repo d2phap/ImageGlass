@@ -28,6 +28,9 @@ using System.Threading.Tasks;
 
 namespace ImageGlass.Heart {
     public static class Photo {
+
+        static MagickReadSettings _mrSettings = new MagickReadSettings();
+
         #region Load image / thumbnail
 
         /// <summary>
@@ -55,16 +58,17 @@ namespace ImageGlass.Heart {
             IColorProfile colorProfile = null;
 
             var ext = Path.GetExtension(filename).ToUpperInvariant();
-            var settings = new MagickReadSettings();
+            //var settings = new MagickReadSettings();
 
             #region Settings
+            _mrSettings.BackgroundColor = MagickColors.White;
             if (ext == ".SVG") {
-                settings.BackgroundColor = MagickColors.Transparent;
+                _mrSettings.BackgroundColor = MagickColors.Transparent;
             }
 
             if (size.Width > 0 && size.Height > 0) {
-                settings.Width = size.Width;
-                settings.Height = size.Height;
+                _mrSettings.Width = size.Width;
+                _mrSettings.Height = size.Height;
             }
             #endregion
 
@@ -95,7 +99,7 @@ namespace ImageGlass.Heart {
 
                 case ".ICO":
                 case ".WEBP":
-                    using (var imgColl = new MagickImageCollection(filename, settings)) {
+                    using (var imgColl = new MagickImageCollection(filename, _mrSettings)) {
                         bitmap = imgColl.ToBitmap();
                     }
                     break;
@@ -200,10 +204,10 @@ namespace ImageGlass.Heart {
                     var newFilename = Helpers.PrefixLongPath(filename);
                     var allBytes = File.ReadAllBytes(newFilename);
 
-                    imgM = new MagickImage(allBytes, settings);
+                    imgM = new MagickImage(allBytes, _mrSettings);
                 }
                 else {
-                    imgM = new MagickImage(filename, settings);
+                    imgM = new MagickImage(filename, _mrSettings);
                 }
 
                 // Issue #679: fix targa display with Magick.NET 7.15.x 

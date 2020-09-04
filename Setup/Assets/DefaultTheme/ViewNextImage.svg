@@ -11,8 +11,8 @@
  <g>
   <title>Layer 1</title>
   <g id="svg_8">
-   <line stroke-width="0.9" stroke="#fff" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_5" y2="10.327151" x2="13.859651" y1="2.607849" x1="6.140349" fill="none"/>
-   <line stroke-width="0.9" transform="rotate(-90 10.000000000000002,13.532499313354492) " stroke="#fff" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_6" y2="17.392151" x2="13.859651" y1="9.672849" x1="6.140349" fill="none"/>
+   <line stroke-width="0.9" stroke="#fff" id="svg_5" y2="10.327151" x2="13.859651" y1="2.607849" x1="6.140349" fill="none"/>
+   <line stroke-width="0.9" transform="rotate(-90 10.000000000000002,13.532499313354492) " stroke="#fff" id="svg_6" y2="17.392151" x2="13.859651" y1="9.672849" x1="6.140349" fill="none"/>
   </g>
  </g>
 </svg>
