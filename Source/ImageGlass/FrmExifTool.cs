@@ -24,8 +24,8 @@ using System.Windows.Forms;
 using ImageGlass.Settings;
 
 namespace ImageGlass {
-    public partial class FrmExif: Form {
-        public FrmExif() {
+    public partial class FrmExifTool: Form {
+        public FrmExifTool() {
             InitializeComponent();
         }
 
@@ -34,9 +34,12 @@ namespace ImageGlass {
         }
 
         private void FrmExif_Load(object sender, EventArgs e) {
-            this.TopMost =
-                chkExifToolTopMost.Checked =
-                Configs.IsExifToolAlwaysOnTop;
+            // Load config
+            // Windows Bound (Position + Size)
+            Bounds = Configs.FrmExifToolWindowBound;
+
+            // windows state
+            WindowState = Configs.FrmExifToolWindowState;
 
             if (File.Exists(Configs.ExifToolExePath)) {
                 this.Text = Path.GetFileName(Configs.ExifToolExePath);
@@ -44,10 +47,22 @@ namespace ImageGlass {
             }
         }
 
-        private void chkExifToolTopMost_CheckedChanged(object sender, EventArgs e) {
-            this.TopMost =
-                Configs.IsExifToolAlwaysOnTop =
-                chkExifToolTopMost.Checked;
+        private void FrmExif_FormClosing(object sender, FormClosingEventArgs e) {
+            // Save config
+            if (WindowState == FormWindowState.Normal) {
+                // Windows Bound
+                Configs.FrmExifToolWindowBound = Bounds;
+            }
+
+            Configs.FrmExifToolWindowState = WindowState;
         }
+
+        private void FrmExif_KeyDown(object sender, KeyEventArgs e) {
+            // close dialog
+            if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) {
+                Close();
+            }
+        }
+
     }
 }

@@ -31,6 +31,8 @@ namespace ImageGlass {
         private static frmColorPicker _fColorPicker;
         private static frmPageNav _fPageNav;
         private static frmCrop _fCrop;
+        private static FrmExifTool _fExifTool;
+
 
         #region Auto Properties
 
@@ -147,6 +149,7 @@ namespace ImageGlass {
 
         #endregion
 
+
         #region LazyInitializer Properties
         /// <summary>
         /// Form frmSetting
@@ -178,6 +181,14 @@ namespace ImageGlass {
         public static frmCrop FCrop {
             get => LazyInitializer.EnsureInitialized(ref _fCrop);
             set => _fCrop = value;
+        }
+
+        /// <summary>
+        /// Form FrmExif
+        /// </summary>
+        public static FrmExifTool FExifTool {
+            get => LazyInitializer.EnsureInitialized(ref _fExifTool);
+            set => _fExifTool = value;
         }
 
         #endregion

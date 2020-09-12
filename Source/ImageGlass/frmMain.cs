@@ -2441,11 +2441,11 @@ namespace ImageGlass {
                 // Need to load the Windows state here to fix the issue:
                 // https://github.com/d2phap/ImageGlass/issues/358
                 // And to IMPROVE the startup loading speed.
-                var testWindowBound = Configs.FrmMainWindowsBound;
+                var testWindowBound = Configs.FrmMainWindowBound;
                 testWindowBound.Inflate(-10, -10);
 
                 if (Helpers.IsVisibleOnAnyScreen(testWindowBound)) {
-                    this.Bounds = Configs.FrmMainWindowsBound;
+                    this.Bounds = Configs.FrmMainWindowBound;
                 }
                 else {
                     // The saved position no longer exists (e.g. 2d monitor removed).
@@ -2487,7 +2487,7 @@ namespace ImageGlass {
                 // the OnLoad event in order to 'take'.
 
                 // Windows Bound (Position + Size)
-                this.Bounds = Configs.FrmMainWindowsBound;
+                this.Bounds = Configs.FrmMainWindowBound;
 
                 // Load Toolbar buttons
                 // *** Need to trigger after 'this.Bounds'
@@ -2566,7 +2566,7 @@ namespace ImageGlass {
                 // don't save Bound if in Full screen and SlideShow mode
                 if (!Configs.IsFullScreen && !Configs.IsSlideshow) {
                     // Windows Bound-----------------------------------------------------------
-                    Configs.FrmMainWindowsBound = this.Bounds;
+                    Configs.FrmMainWindowBound = this.Bounds;
                 }
             }
 
@@ -2661,7 +2661,7 @@ namespace ImageGlass {
                     }
 
                     // Windows Bound (Position + Size)
-                    this.Bounds = Configs.FrmMainWindowsBound;
+                    this.Bounds = Configs.FrmMainWindowBound;
                 }
 
                 // restore frameless state
@@ -4847,8 +4847,15 @@ namespace ImageGlass {
         }
 
         private void mnuExifTool_Click(object sender, EventArgs e) {
-            var frm = new FrmExif();
-            frm.Show();
+            if (Local.FExifTool?.IsDisposed != false) {
+                Local.FExifTool = new FrmExifTool();
+            }
+
+            Local.FExifTool.Owner = this;
+
+            if (!Local.FExifTool.Visible) {
+                Local.FExifTool.Show(this);
+            }
         }
 
         private void mnuMainSettings_Click(object sender, EventArgs e) {

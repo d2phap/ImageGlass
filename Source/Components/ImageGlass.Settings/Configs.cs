@@ -258,11 +258,6 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool IsHideTooltips { get; set; } = false;
 
-        /// <summary>
-        /// Gets, sets value indicating that frmExif is always on top or not.
-        /// </summary>
-        public static bool IsExifToolAlwaysOnTop { get; set; } = true;
-
         #endregion
 
         #region Number items
@@ -370,6 +365,11 @@ namespace ImageGlass.Settings {
         public static FormWindowState FrmSettingsWindowState { get; set; } = FormWindowState.Normal;
 
         /// <summary>
+        /// Gets, sets state of exif tool window
+        /// </summary>
+        public static FormWindowState FrmExifToolWindowState { get; set; } = FormWindowState.Normal;
+
+        /// <summary>
         /// Gets, sets image loading order
         /// </summary>
         public static ImageOrderBy ImageLoadingOrder { get; set; } = ImageOrderBy.Name;
@@ -426,12 +426,17 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets window bound of main form
         /// </summary>
-        public static Rectangle FrmMainWindowsBound { get; set; } = new Rectangle(280, 125, 1300, 800);
+        public static Rectangle FrmMainWindowBound { get; set; } = new Rectangle(280, 125, 1300, 800);
 
         /// <summary>
         /// Gets, sets window bound of main form
         /// </summary>
-        public static Rectangle FrmSettingsWindowsBound { get; set; } = new Rectangle(280, 125, 1050, 750);
+        public static Rectangle FrmSettingsWindowBound { get; set; } = new Rectangle(280, 125, 1050, 750);
+
+        /// <summary>
+        /// Gets, sets window bound of exif tool form
+        /// </summary>
+        public static Rectangle FrmExifToolWindowBound { get; set; } = new Rectangle(280, 125, 800, 600);
 
         /// <summary>
         /// Gets, sets language pack
@@ -543,7 +548,6 @@ namespace ImageGlass.Settings {
             IsShowToast = Get<bool>(nameof(IsShowToast), IsShowToast);
             IsUseTouchGesture = Get<bool>(nameof(IsUseTouchGesture), IsUseTouchGesture);
             IsHideTooltips = Get<bool>(nameof(IsHideTooltips), IsHideTooltips);
-            IsExifToolAlwaysOnTop = Get<bool>(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
 
             #endregion
 
@@ -586,6 +590,7 @@ namespace ImageGlass.Settings {
 
             FrmMainWindowState = Get<FormWindowState>(nameof(FrmMainWindowState), FrmMainWindowState);
             FrmSettingsWindowState = Get<FormWindowState>(nameof(FrmSettingsWindowState), FrmSettingsWindowState);
+            FrmExifToolWindowState = Get<FormWindowState>(nameof(FrmExifToolWindowState), FrmExifToolWindowState);
             ImageLoadingOrder = Get<ImageOrderBy>(nameof(ImageLoadingOrder), ImageLoadingOrder);
             ImageLoadingOrderType = Get<ImageOrderType>(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
             MouseWheelAction = Get<MouseWheelActions>(nameof(MouseWheelAction), MouseWheelAction);
@@ -655,20 +660,20 @@ namespace ImageGlass.Settings {
 
             #region Other types items
 
-            #region FrmMainWindowsBound
-            var boundStr = Get<string>(nameof(FrmMainWindowsBound), "");
+            #region FrmMainWindowBound
+            var boundStr = Get<string>(nameof(FrmMainWindowBound), "");
             if (!string.IsNullOrEmpty(boundStr)) {
                 var rc = Helpers.StringToRect(boundStr);
                 if (!Helper.IsAnyPartOnScreen(rc)) {
                     rc = new Rectangle(280, 125, 1000, 800);
                 }
 
-                FrmMainWindowsBound = rc;
+                FrmMainWindowBound = rc;
             }
             #endregion
 
-            #region FrmSettingsWindowsBound
-            boundStr = Get<string>(nameof(FrmSettingsWindowsBound), "");
+            #region FrmSettingsWindowBound
+            boundStr = Get<string>(nameof(FrmSettingsWindowBound), "");
             if (!string.IsNullOrEmpty(boundStr)) {
                 var rc = Helpers.StringToRect(boundStr);
 
@@ -676,7 +681,20 @@ namespace ImageGlass.Settings {
                     rc.Location = new Point(280, 125);
                 }
 
-                FrmSettingsWindowsBound = rc;
+                FrmSettingsWindowBound = rc;
+            }
+            #endregion
+
+            #region FrmExifToolWindowBound
+            boundStr = Get<string>(nameof(FrmExifToolWindowBound), "");
+            if (!string.IsNullOrEmpty(boundStr)) {
+                var rc = Helpers.StringToRect(boundStr);
+
+                if (!Helper.IsOnScreen(rc.Location)) {
+                    rc.Location = new Point(280, 125);
+                }
+
+                FrmExifToolWindowBound = rc;
             }
             #endregion
 
@@ -753,7 +771,6 @@ namespace ImageGlass.Settings {
             Set(nameof(IsShowToast), IsShowToast);
             Set(nameof(IsUseTouchGesture), IsUseTouchGesture);
             Set(nameof(IsHideTooltips), IsHideTooltips);
-            Set(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
 
             #endregion
 
@@ -773,6 +790,7 @@ namespace ImageGlass.Settings {
 
             Set(nameof(FrmMainWindowState), FrmMainWindowState);
             Set(nameof(FrmSettingsWindowState), FrmSettingsWindowState);
+            Set(nameof(FrmExifToolWindowState), FrmExifToolWindowState);
             Set(nameof(ImageLoadingOrder), ImageLoadingOrder);
             Set(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
             Set(nameof(MouseWheelAction), MouseWheelAction);
@@ -808,8 +826,9 @@ namespace ImageGlass.Settings {
             #region Other types items
 
             Set(nameof(BackgroundColor), Theme.ConvertColorToHEX(BackgroundColor, true));
-            Set(nameof(FrmMainWindowsBound), Helpers.RectToString(FrmMainWindowsBound));
-            Set(nameof(FrmSettingsWindowsBound), Helpers.RectToString(FrmSettingsWindowsBound));
+            Set(nameof(FrmMainWindowBound), Helpers.RectToString(FrmMainWindowBound));
+            Set(nameof(FrmSettingsWindowBound), Helpers.RectToString(FrmSettingsWindowBound));
+            Set(nameof(FrmExifToolWindowBound), Helpers.RectToString(FrmExifToolWindowBound));
             Set(nameof(Language), Path.GetFileName(Language.FileName));
             Set(nameof(Theme), Theme.FolderName);
 

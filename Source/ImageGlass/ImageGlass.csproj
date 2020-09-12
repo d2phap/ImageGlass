@@ -197,11 +197,11 @@
     <Compile Include="frmAddNewFormat.Designer.cs">
       <DependentUpon>frmAddNewFormat.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmExif.cs">
+    <Compile Include="FrmExifTool.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmExif.Designer.cs">
-      <DependentUpon>FrmExif.cs</DependentUpon>
+    <Compile Include="FrmExifTool.Designer.cs">
+      <DependentUpon>FrmExifTool.cs</DependentUpon>
     </Compile>
     <Compile Include="ToolForms\frmColorPicker.cs">
       <SubType>Form</SubType>
@@ -249,8 +249,8 @@
     <EmbeddedResource Include="frmAddNewFormat.resx">
       <DependentUpon>frmAddNewFormat.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmExif.resx">
-      <DependentUpon>FrmExif.cs</DependentUpon>
+    <EmbeddedResource Include="FrmExifTool.resx">
+      <DependentUpon>FrmExifTool.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ToolForms\frmColorPicker.resx">
       <DependentUpon>frmColorPicker.cs</DependentUpon>

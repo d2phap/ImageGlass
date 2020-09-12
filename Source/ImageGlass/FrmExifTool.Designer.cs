@@ -1,5 +1,5 @@
 ﻿namespace ImageGlass {
-    partial class FrmExif {
+    partial class FrmExifTool {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -29,7 +29,6 @@
             this.gridExif = new System.Windows.Forms.DataGridView();
             this.clnProperty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clnValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chkExifToolTopMost = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridExif)).BeginInit();
             this.SuspendLayout();
@@ -37,7 +36,6 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(165)))), ((int)(((byte)(168)))));
-            this.panel1.Controls.Add(this.chkExifToolTopMost);
             this.panel1.Controls.Add(this.btnExport);
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -117,18 +115,7 @@
             this.clnValue.ReadOnly = true;
             this.clnValue.Width = 500;
             // 
-            // chkExifToolTopMost
-            // 
-            this.chkExifToolTopMost.AutoSize = true;
-            this.chkExifToolTopMost.Location = new System.Drawing.Point(24, 35);
-            this.chkExifToolTopMost.Name = "chkExifToolTopMost";
-            this.chkExifToolTopMost.Size = new System.Drawing.Size(199, 27);
-            this.chkExifToolTopMost.TabIndex = 21;
-            this.chkExifToolTopMost.Text = "[Keep window on top]";
-            this.chkExifToolTopMost.UseVisualStyleBackColor = true;
-            this.chkExifToolTopMost.CheckedChanged += new System.EventHandler(this.chkExifToolTopMost_CheckedChanged);
-            // 
-            // FrmExif
+            // FrmExifTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(134F, 134F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -138,11 +125,12 @@
             this.Controls.Add(this.gridExif);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Name = "FrmExif";
+            this.Name = "FrmExifTool";
             this.Text = "Exif tool";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmExif_FormClosing);
             this.Load += new System.EventHandler(this.FrmExif_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmExif_KeyDown);
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridExif)).EndInit();
             this.ResumeLayout(false);
 
@@ -155,6 +143,5 @@
         private System.Windows.Forms.DataGridView gridExif;
         private System.Windows.Forms.DataGridViewTextBoxColumn clnProperty;
         private System.Windows.Forms.DataGridViewTextBoxColumn clnValue;
-        private System.Windows.Forms.CheckBox chkExifToolTopMost;
     }
 }

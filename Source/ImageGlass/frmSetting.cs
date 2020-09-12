@@ -111,7 +111,7 @@ namespace ImageGlass {
 
             // Load config
             // Windows Bound (Position + Size)-------------------------------------------
-            Bounds = Configs.FrmSettingsWindowsBound;
+            Bounds = Configs.FrmSettingsWindowBound;
 
             // windows state--------------------------------------------------------------
             WindowState = Configs.FrmSettingsWindowState;
@@ -135,7 +135,7 @@ namespace ImageGlass {
             // Save config---------------------------------
             if (WindowState == FormWindowState.Normal) {
                 // Windows Bound---------------------------------------------------
-                Configs.FrmSettingsWindowsBound = Bounds;
+                Configs.FrmSettingsWindowBound = Bounds;
             }
 
             Configs.FrmSettingsWindowState = WindowState;
