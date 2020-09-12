@@ -3171,10 +3171,12 @@ namespace ImageGlass {
                 if (Configs.ToolbarPosition == ToolbarPosition.Top) {
                     toolMain.Anchor = AnchorStyles.Top | AnchorStyles.Left;
                     toolMain.Dock = DockStyle.Top;
+                    toolMain.ToolTipShowUp = false;
                 }
                 else if (Configs.ToolbarPosition == ToolbarPosition.Bottom) {
                     toolMain.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
                     toolMain.Dock = DockStyle.Bottom;
+                    toolMain.ToolTipShowUp = true;
                 }
 
                 // update toolbar items alignment
