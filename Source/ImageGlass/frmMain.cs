@@ -44,7 +44,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 
 namespace ImageGlass {
     public partial class frmMain: Form {
@@ -1268,6 +1267,12 @@ namespace ImageGlass {
                 // Toolbar
                 if (e.KeyCode == Keys.T) {
                     mnuMainToolbar.PerformClick();
+                    return;
+                }
+
+                // Toolbar
+                if (e.KeyCode == Keys.X) {
+                    mnuExifTool.PerformClick();
                     return;
                 }
 
@@ -4841,6 +4846,11 @@ namespace ImageGlass {
             ShowCropTool(mnuMainCrop.Checked);
         }
 
+        private void mnuExifTool_Click(object sender, EventArgs e) {
+            var frm = new FrmExif();
+            frm.Show();
+        }
+
         private void mnuMainSettings_Click(object sender, EventArgs e) {
             if (Local.FSetting.IsDisposed) {
                 Local.FSetting = new frmSetting();
@@ -4992,6 +5002,7 @@ namespace ImageGlass {
         }
 
         #endregion
+
 
     }
 }

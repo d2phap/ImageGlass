@@ -26,7 +26,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -45,9 +44,10 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool IsCompatible => Source.IsCompatible;
 
+
         #region Public configs
 
-        #region bool items
+        #region Boolean items
         /// <summary>
         /// Gets, sets value of slideshow state
         /// </summary>
@@ -258,6 +258,11 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool IsHideTooltips { get; set; } = false;
 
+        /// <summary>
+        /// Gets, sets value indicating that frmExif is always on top or not.
+        /// </summary>
+        public static bool IsExifToolAlwaysOnTop { get; set; } = true;
+
         #endregion
 
         #region Number items
@@ -315,6 +320,11 @@ namespace ImageGlass.Settings {
         /// Gets, sets the absolute file path of the last seen image
         /// </summary>
         public static string LastSeenImagePath { get; set; } = "";
+
+        /// <summary>
+        /// Gets, sets the absolute file path of the exiftool executable file
+        /// </summary>
+        public static string ExifToolExePath { get; set; } = "";
 
         #endregion
 
@@ -437,6 +447,7 @@ namespace ImageGlass.Settings {
 
         #endregion
 
+
         #region Private methods
 
         /// <summary>
@@ -476,6 +487,7 @@ namespace ImageGlass.Settings {
         }
 
         #endregion
+
 
         #region Public methods
 
@@ -531,6 +543,7 @@ namespace ImageGlass.Settings {
             IsShowToast = Get<bool>(nameof(IsShowToast), IsShowToast);
             IsUseTouchGesture = Get<bool>(nameof(IsUseTouchGesture), IsUseTouchGesture);
             IsHideTooltips = Get<bool>(nameof(IsHideTooltips), IsHideTooltips);
+            IsExifToolAlwaysOnTop = Get<bool>(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
 
             #endregion
 
@@ -592,6 +605,7 @@ namespace ImageGlass.Settings {
 
             AutoUpdate = Get<string>(nameof(AutoUpdate), AutoUpdate);
             LastSeenImagePath = Get<string>(nameof(LastSeenImagePath), LastSeenImagePath);
+            ExifToolExePath = Get<string>(nameof(ExifToolExePath), ExifToolExePath);
 
             #endregion
 
@@ -739,6 +753,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsShowToast), IsShowToast);
             Set(nameof(IsUseTouchGesture), IsUseTouchGesture);
             Set(nameof(IsHideTooltips), IsHideTooltips);
+            Set(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
 
             #endregion
 
@@ -776,6 +791,7 @@ namespace ImageGlass.Settings {
             Set(nameof(ToolbarButtons), ToolbarButtons);
             Set(nameof(AutoUpdate), AutoUpdate);
             Set(nameof(LastSeenImagePath), LastSeenImagePath);
+            Set(nameof(ExifToolExePath), ExifToolExePath);
 
             #endregion
 
@@ -798,6 +814,7 @@ namespace ImageGlass.Settings {
             Set(nameof(Theme), Theme.FolderName);
 
             #endregion
+
 
             // write user configs to file
             Source.WriteUserConfigs();
