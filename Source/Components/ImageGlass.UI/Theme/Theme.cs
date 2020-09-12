@@ -252,8 +252,13 @@ namespace ImageGlass.UI {
 
             var arrowHeight = (int)(DPIScaling.Transform(Constants.TOOLBAR_ICON_HEIGHT) * NavArrowMultiplier);
 
-            NavArrowLeft = new ThemeImage(ToolbarIcons.ViewPreviousImage.Filename, arrowHeight).Image;
-            NavArrowRight = new ThemeImage(ToolbarIcons.ViewNextImage.Filename, arrowHeight).Image;
+            var navArrowTemp = new ThemeImage(ToolbarIcons.ViewPreviousImage.Filename, arrowHeight);
+            navArrowTemp.Refresh();
+            NavArrowLeft = navArrowTemp.Image;
+
+            navArrowTemp = new ThemeImage(ToolbarIcons.ViewNextImage.Filename, arrowHeight);
+            navArrowTemp.Refresh();
+            NavArrowRight = navArrowTemp.Image;
 
             #endregion
         }
@@ -411,7 +416,10 @@ namespace ImageGlass.UI {
 
             var arrowHeight = (int)(DPIScaling.Transform(Constants.TOOLBAR_ICON_HEIGHT) * NavArrowMultiplier);
 
-            NavArrowLeft = new ThemeImage(ToolbarIcons.ViewPreviousImage.Filename, arrowHeight).Image;
+            var navArrowTemp = new ThemeImage(ToolbarIcons.ViewPreviousImage.Filename, arrowHeight);
+            navArrowTemp.Refresh();
+            NavArrowLeft = navArrowTemp.Image;
+
             NavArrowRight = new ThemeImage(ToolbarIcons.ViewNextImage.Filename, arrowHeight).Image;
 
             #endregion
