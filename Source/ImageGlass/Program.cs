@@ -49,6 +49,12 @@ namespace ImageGlass {
             SEM_NOOPENFILEERRORBOX = 1 << 15
         }
 
+        // Issues #774, #855 : using this method is the ONLY way to successfully restore from minimized state!
+        [DllImport("user32.dll")]
+        private static extern int ShowWindow(IntPtr hWnd, uint msg);
+
+        private const uint SW_RESTORE = 0x09;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -153,8 +159,11 @@ namespace ImageGlass {
                 return;
 
             Action<string[]> UpdateForm = arguments => {
-                if (formMain.WindowState != FormWindowState.Normal) {
-                    formMain.WindowState = FormWindowState.Normal;
+
+                // Issues #774, #855 : if IG is normal or maximized, do nothing. If IG is minimized,
+                // restore it to previous state.
+                if (formMain.WindowState == FormWindowState.Minimized) {
+                    ShowWindow(formMain.Handle, SW_RESTORE);
                 }
 
                 formMain.LoadFromParams(arguments);
