@@ -3394,7 +3394,8 @@ namespace ImageGlass {
             }
 
             if (imgIndex == Local.CurrentIndex) {
-                NextPic(0, true, true);
+                // Issue #778 : when the image is changed, do NOT keep the zoom level; it may be different for the new image
+                NextPic(0, false, true);
             }
 
             //update thumbnail
