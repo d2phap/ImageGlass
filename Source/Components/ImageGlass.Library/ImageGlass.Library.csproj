@@ -103,6 +103,7 @@
     <Compile Include="Comparer\WindowsNaturalSort.cs" />
     <Compile Include="FileAssociations\RegistryHelper.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="Image\ExifToolWrapper.cs" />
     <Compile Include="Language\LanguageItem.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Comparer\DictionaryEntryComparer.cs" />
