@@ -23,6 +23,7 @@ using ImageGlass.UI;
 using ImageMagick;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace ImageGlass {
@@ -32,6 +33,7 @@ namespace ImageGlass {
         private static frmPageNav _fPageNav;
         private static frmCrop _fCrop;
         private static FrmExifTool _fExifTool;
+        
 
 
         #region Auto Properties
@@ -147,6 +149,12 @@ namespace ImageGlass {
         /// </summary>
         public static List<NavigationRegion> NavRegions { get; set; } = new List<NavigationRegion>();
 
+
+        /// <summary>
+        /// Gets, sets image changed event handler
+        /// </summary>
+        public static event EventHandler OnImageChanged;
+
         #endregion
 
 
@@ -193,7 +201,19 @@ namespace ImageGlass {
 
         #endregion
 
+
+        /// <summary>
+        /// Raise an event when the viewing image changed
+        /// </summary>
+        public static void RaiseImageChangedEvent() {
+            var handler = OnImageChanged;
+
+            handler?.Invoke(null, EventArgs.Empty);
+        }
+
     }
+
+
 }
 
 

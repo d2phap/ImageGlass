@@ -581,7 +581,7 @@ namespace ImageGlass {
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 2000);
 
                 Application.DoEvents();
-                SaveImageChange();
+                _ = SaveImageChange();
 
                 // remove the old image data from cache
                 Local.ImageList.Unload(Local.CurrentIndex);
@@ -663,8 +663,8 @@ namespace ImageGlass {
                 Local.ImageList.IsApplyColorProfileForAll = Configs.IsApplyColorProfileForAll;
                 Local.ImageList.ColorProfileName = Configs.ColorProfile;
 
-                // put app in a 'busy' state around image load: allows us to prevent the user from 
-                // skipping past a slow-to-load image by processing too many arrow clicks
+                // put app in a 'busy' state around image load: allows us to prevent the user
+                // from skipping past a slow-to-load image by processing too many arrow clicks
                 SetAppBusy(true);
 
                 // Get image
@@ -726,6 +726,10 @@ namespace ImageGlass {
 
                 picMain.Text = Configs.Language.Items[$"{Name}.picMain._ErrorText"] + "\r\n" + Local.ImageError.Source + ": " + Local.ImageError.Message;
                 UpdateStatusBar();
+            }
+            else {
+                // Raise image changed event
+                Local.RaiseImageChangedEvent();
             }
 
             _isDraggingImage = false;
@@ -2858,6 +2862,7 @@ namespace ImageGlass {
             // Trigger Mouse Wheel event
             picMain.MouseWheel += picMain_MouseWheel;
 
+
             // Try to use a faster image clock for animating GIFs
             CheckAnimationClock(true);
 
@@ -2871,6 +2876,7 @@ namespace ImageGlass {
             };
             thDeleteWorker.Start();
         }
+
 
         public void LoadFromParams(string[] args) {
             // Load image from param
@@ -4856,6 +4862,8 @@ namespace ImageGlass {
             if (!Local.FExifTool.Visible) {
                 Local.FExifTool.Show(this);
             }
+
+            this.Activate();
         }
 
         private void mnuMainSettings_Click(object sender, EventArgs e) {

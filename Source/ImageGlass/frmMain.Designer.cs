@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -113,8 +113,8 @@
             this.mnuMainTools = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainColorPicker = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainPageNav = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuExifTool = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainCrop = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuExifTool = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainHelp = new System.Windows.Forms.ToolStripMenuItem();
@@ -1134,8 +1134,8 @@
             this.mnuMainTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuMainColorPicker,
             this.mnuMainPageNav,
-            this.mnuExifTool,
-            this.mnuMainCrop});
+            this.mnuMainCrop,
+            this.mnuExifTool});
             this.mnuMainTools.ForeColor = System.Drawing.Color.Black;
             this.mnuMainTools.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainTools.Name = "mnuMainTools";
@@ -1168,18 +1168,6 @@
             this.mnuMainPageNav.Text = "[Page navigation]";
             this.mnuMainPageNav.Click += new System.EventHandler(this.mnuMainPageNav_Click);
             // 
-            // mnuExifTool
-            // 
-            this.mnuExifTool.CheckOnClick = true;
-            this.mnuExifTool.ForeColor = System.Drawing.Color.Black;
-            this.mnuExifTool.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuExifTool.Name = "mnuExifTool";
-            this.mnuExifTool.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuExifTool.ShortcutKeyDisplayString = "X";
-            this.mnuExifTool.Size = new System.Drawing.Size(256, 31);
-            this.mnuExifTool.Text = "[Exif tool]";
-            this.mnuExifTool.Click += new System.EventHandler(this.mnuExifTool_Click);
-            // 
             // mnuMainCrop
             // 
             this.mnuMainCrop.CheckOnClick = true;
@@ -1191,6 +1179,17 @@
             this.mnuMainCrop.Size = new System.Drawing.Size(256, 31);
             this.mnuMainCrop.Text = "[Cropping]";
             this.mnuMainCrop.Click += new System.EventHandler(this.mnuMainCrop_Click);
+            // 
+            // mnuExifTool
+            // 
+            this.mnuExifTool.ForeColor = System.Drawing.Color.Black;
+            this.mnuExifTool.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuExifTool.Name = "mnuExifTool";
+            this.mnuExifTool.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuExifTool.ShortcutKeyDisplayString = "X";
+            this.mnuExifTool.Size = new System.Drawing.Size(256, 31);
+            this.mnuExifTool.Text = "[Exif tool]";
+            this.mnuExifTool.Click += new System.EventHandler(this.mnuExifTool_Click);
             // 
             // toolStripSeparator12
             // 
@@ -1336,7 +1335,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator2;
+            this.picMain.Animator = defaultGifAnimator1;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(60)))), ((int)(((byte)(61)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuContext;
@@ -1435,6 +1434,7 @@
             this.toolMain.ShowItemToolTips = false;
             this.toolMain.Size = new System.Drawing.Size(1022, 56);
             this.toolMain.TabIndex = 1;
+            this.toolMain.ToolTipShowUp = false;
             // 
             // btnBack
             // 
