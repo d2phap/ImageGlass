@@ -50,12 +50,6 @@ namespace ImageGlass {
             // windows state
             WindowState = Configs.FrmExifToolWindowState;
 
-            this.exifTool.ToolPath = Configs.ExifToolExePath;
-            if (this.exifTool.CheckExists()) {
-                this.Text = Path.GetFileName(Configs.ExifToolExePath);
-                this.Icon = Icon.ExtractAssociatedIcon(Configs.ExifToolExePath);
-            }
-
             Local.OnImageChanged += Local_OnImageChanged;
         }
 
@@ -88,6 +82,26 @@ namespace ImageGlass {
 
         private async void Local_OnImageChanged(object sender, EventArgs e) {
             SetFormState(false);
+
+            // check if exif tool exists
+            this.exifTool.ToolPath = Configs.ExifToolExePath;
+            if (!this.exifTool.CheckExists()) {
+                this.Icon = this.Owner.Icon;
+                lblNotFound.Text = string.Format(
+                    Configs.Language.Items[$"{Name}._ExifToolNotFound"],
+                    Configs.ExifToolExePath);
+
+                panNotFound.Visible = true;
+                listExif.Visible = false;
+
+                return;
+            }
+
+            panNotFound.Visible = false;
+            listExif.Visible = true;
+            this.Text = Path.GetFileName(Configs.ExifToolExePath);
+            this.Icon = Icon.ExtractAssociatedIcon(Configs.ExifToolExePath);
+
             var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
 
             if (Local.ImageError != null) {
@@ -133,9 +147,10 @@ namespace ImageGlass {
         }
 
         private void SetFormState(bool enabled = true) {
-            this.listExif.Enabled =
-                this.btnCopyValue.Enabled =
-                this.btnExport.Enabled = enabled;
+            listExif.Enabled =
+                btnCopyValue.Enabled =
+                btnExport.Enabled = 
+                lblNotFound.Enabled = enabled;
         }
     }
 }

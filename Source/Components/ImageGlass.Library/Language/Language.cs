@@ -648,6 +648,10 @@ namespace ImageGlass.Library {
             Items.Add("frmCrop.btnClear", "Clear"); //v7.6
 
             #endregion
+
+            #region FrmExifTool
+            Items.Add("FrmExifTool._ExifToolNotFound", "The Exif tool: \n{0}\ndoes not exist or invalid."); // v7.7
+            #endregion
         }
     }
 }

@@ -28,10 +28,14 @@
             this.btnExport = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.listExif = new System.Windows.Forms.ListView();
+            this.clnNo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clnProp = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clnValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clnNo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.panNotFound = new System.Windows.Forms.Panel();
+            this.lblNotFound = new System.Windows.Forms.Label();
+            this.lnkSelectExifTool = new System.Windows.Forms.LinkLabel();
             this.panel1.SuspendLayout();
+            this.panNotFound.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -43,7 +47,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 488);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(873, 90);
+            this.panel1.Size = new System.Drawing.Size(895, 90);
             this.panel1.TabIndex = 17;
             // 
             // btnCopyValue
@@ -66,7 +70,7 @@
             this.btnExport.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnExport.ForeColor = System.Drawing.Color.Black;
-            this.btnExport.Location = new System.Drawing.Point(531, 26);
+            this.btnExport.Location = new System.Drawing.Point(553, 26);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(155, 42);
             this.btnExport.TabIndex = 2;
@@ -79,7 +83,7 @@
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnClose.ForeColor = System.Drawing.Color.Black;
-            this.btnClose.Location = new System.Drawing.Point(692, 26);
+            this.btnClose.Location = new System.Drawing.Point(714, 26);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(155, 42);
             this.btnClose.TabIndex = 3;
@@ -104,10 +108,14 @@
             this.listExif.MultiSelect = false;
             this.listExif.Name = "listExif";
             this.listExif.ShowItemToolTips = true;
-            this.listExif.Size = new System.Drawing.Size(821, 430);
+            this.listExif.Size = new System.Drawing.Size(843, 430);
             this.listExif.TabIndex = 0;
             this.listExif.UseCompatibleStateImageBehavior = false;
             this.listExif.View = System.Windows.Forms.View.Details;
+            // 
+            // clnNo
+            // 
+            this.clnNo.Text = "";
             // 
             // clnProp
             // 
@@ -117,18 +125,46 @@
             // clnValue
             // 
             this.clnValue.Text = "Value";
-            this.clnValue.Width = 480;
+            this.clnValue.Width = 450;
             // 
-            // clnNo
+            // panNotFound
             // 
-            this.clnNo.Text = "";
+            this.panNotFound.Controls.Add(this.lnkSelectExifTool);
+            this.panNotFound.Controls.Add(this.lblNotFound);
+            this.panNotFound.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panNotFound.Location = new System.Drawing.Point(0, 0);
+            this.panNotFound.Name = "panNotFound";
+            this.panNotFound.Size = new System.Drawing.Size(895, 165);
+            this.panNotFound.TabIndex = 18;
+            // 
+            // lblNotFound
+            // 
+            this.lblNotFound.Location = new System.Drawing.Point(22, 30);
+            this.lblNotFound.Name = "lblNotFound";
+            this.lblNotFound.Size = new System.Drawing.Size(825, 84);
+            this.lblNotFound.TabIndex = 0;
+            this.lblNotFound.Text = "[The Exif tool:\r\nC:\\aaa\\bbb\\xxx.exe\r\ndoes not exist or invalid.]";
+            // 
+            // lnkSelectExifTool
+            // 
+            this.lnkSelectExifTool.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
+            this.lnkSelectExifTool.AutoSize = true;
+            this.lnkSelectExifTool.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
+            this.lnkSelectExifTool.Location = new System.Drawing.Point(22, 114);
+            this.lnkSelectExifTool.Name = "lnkSelectExifTool";
+            this.lnkSelectExifTool.Size = new System.Drawing.Size(148, 23);
+            this.lnkSelectExifTool.TabIndex = 1;
+            this.lnkSelectExifTool.TabStop = true;
+            this.lnkSelectExifTool.Text = "Select Exif tool file";
+            this.lnkSelectExifTool.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
             // 
             // FrmExifTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(134F, 134F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
-            this.ClientSize = new System.Drawing.Size(873, 578);
+            this.ClientSize = new System.Drawing.Size(895, 578);
+            this.Controls.Add(this.panNotFound);
             this.Controls.Add(this.listExif);
             this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
@@ -140,6 +176,8 @@
             this.Load += new System.EventHandler(this.FrmExif_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmExif_KeyDown);
             this.panel1.ResumeLayout(false);
+            this.panNotFound.ResumeLayout(false);
+            this.panNotFound.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -153,5 +191,8 @@
         private System.Windows.Forms.ColumnHeader clnValue;
         private System.Windows.Forms.Button btnCopyValue;
         private System.Windows.Forms.ColumnHeader clnNo;
+        private System.Windows.Forms.Panel panNotFound;
+        private System.Windows.Forms.Label lblNotFound;
+        private System.Windows.Forms.LinkLabel lnkSelectExifTool;
     }
 }
