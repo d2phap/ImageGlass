@@ -140,8 +140,8 @@ namespace ImageGlass.Library.Image {
         /// </summary>
         /// <param name="sourceImage">Source Image file path</param>
         /// <param name="destinationExifFile">Destination .exif file path</param>
-        /// <returns>True if no error</returns>
-        public bool SaveExifData(string sourceImage, string destinationExifFile) {
+        /// <returns>Empty string if no error</returns>
+        public string SaveExifData(string sourceImage, string destinationExifFile) {
             // exiftool command
             var toolPath = this.ToolPath + " ";
             toolPath += "-fast -m -q -q -tagsfromfile ";
@@ -150,10 +150,7 @@ namespace ImageGlass.Library.Image {
 
             var (_, stdErr) = Open(toolPath);
 
-            if (stdErr.Contains("Error"))
-                return false;
-
-            return true;
+            return stdErr;
         }
 
         /// <summary>
