@@ -149,6 +149,7 @@
             this.lnkSelectExifTool.TabStop = true;
             this.lnkSelectExifTool.Text = "Select Exif tool file";
             this.lnkSelectExifTool.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
+            this.lnkSelectExifTool.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSelectExifTool_LinkClicked);
             // 
             // lblNotFound
             // 
@@ -156,7 +157,7 @@
             this.lblNotFound.Name = "lblNotFound";
             this.lblNotFound.Size = new System.Drawing.Size(825, 84);
             this.lblNotFound.TabIndex = 0;
-            this.lblNotFound.Text = "[The Exif tool:\r\nC:\\aaa\\bbb\\xxx.exe\r\ndoes not exist or invalid.]";
+            this.lblNotFound.Text = "[The Exif tool does not exist or invalid\r\nC:\\aaa\\bbb\\xxx.exe]";
             // 
             // FrmExifTool
             // 
@@ -171,7 +172,8 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.KeyPreview = true;
             this.Name = "FrmExifTool";
-            this.Text = "Exif tool";
+            this.Text = "[Exif tool]";
+            this.Activated += new System.EventHandler(this.FrmExifTool_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmExif_FormClosing);
             this.Load += new System.EventHandler(this.FrmExif_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmExif_KeyDown);

@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageGlass.Base;
 using ImageGlass.Library;
+using ImageGlass.Library.Image;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.UI.Renderers;
@@ -309,6 +310,10 @@ namespace ImageGlass {
 
             lblPageNav.Text = lang[$"{nameof(frmMain)}.mnuMainPageNav"];
             chkShowPageNavAuto.Text = lang[$"{Name}.{nameof(chkShowPageNavAuto)}"];
+
+            lblExifTool.Text = lang[$"{nameof(frmMain)}.mnuExifTool"];
+            chkExifToolAlwaysOnTop.Text = lang[$"{Name}.{nameof(chkExifToolAlwaysOnTop)}"];
+            lnkSelectExifTool.Text = lang[$"{Name}.{nameof(lnkSelectExifTool)}"];
             #endregion
 
             #region THEME TAB
@@ -1374,6 +1379,33 @@ namespace ImageGlass {
             chkColorUseHSLA.Checked = Configs.IsColorPickerHSLA;
 
             chkShowPageNavAuto.Checked = Configs.IsShowPageNavAuto;
+
+            chkExifToolAlwaysOnTop.Checked = Configs.IsExifToolAlwaysOnTop;
+            lblExifToolPath.Text = Configs.ExifToolExePath;
+        }
+
+        private void lnkSelectExifTool_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            var ofd = new OpenFileDialog() {
+                CheckFileExists = true,
+                Filter = "exiftool.exe file|*.exe",
+            };
+
+            if (ofd.ShowDialog() == DialogResult.OK) {
+                var exif = new ExifToolWrapper(ofd.FileName);
+
+                if (!exif.CheckExists()) {
+                    var msg = string.Format(
+                        Configs.Language.Items[$"{Name}.{nameof(lnkSelectExifTool)}._NotFound"],
+                        ofd.FileName);
+
+                    MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else {
+                    Configs.ExifToolExePath =
+                        lblExifToolPath.Text =
+                        ofd.FileName;
+                }
+            }
         }
 
         #endregion
@@ -1986,6 +2018,7 @@ namespace ImageGlass {
             Configs.IsColorPickerHSLA = chkColorUseHSLA.Checked;
 
             Configs.IsShowPageNavAuto = chkShowPageNavAuto.Checked;
+            Configs.IsExifToolAlwaysOnTop = chkExifToolAlwaysOnTop.Checked;
             #endregion
 
             SaveKeyboardSettings();
@@ -1995,5 +2028,6 @@ namespace ImageGlass {
 
         #endregion
 
+        
     }
 }

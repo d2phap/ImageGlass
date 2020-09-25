@@ -42,7 +42,7 @@ namespace ImageGlass {
         private void FrmExif_Load(object sender, EventArgs e) {
             SystemRenderer.ApplyTheme(lvExifItems);
             Local_OnImageChanged(null, null);
-            LoadLanguage();
+            
 
             // Load config
             // Windows Bound (Position + Size)
@@ -66,6 +66,10 @@ namespace ImageGlass {
             Configs.FrmExifToolWindowState = WindowState;
         }
 
+        private void FrmExifTool_Activated(object sender, EventArgs e) {
+            LoadLanguage();
+        }
+
         private void FrmExif_KeyDown(object sender, KeyEventArgs e) {
             // close dialog
             if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) {
@@ -84,11 +88,11 @@ namespace ImageGlass {
         private void LoadLanguage() {
             var _lang = Configs.Language.Items;
 
-            lnkSelectExifTool.Text = _lang[$"{Name}.{nameof(lnkSelectExifTool)}"];
+            lnkSelectExifTool.Text = _lang[$"{nameof(frmSetting)}.lnkSelectExifTool"];
             lblNotFound.Text = string.Format(
-                    _lang[$"{Name}.{nameof(lblNotFound)}"],
+                    _lang[$"{nameof(frmSetting)}.lnkSelectExifTool._NotFound"],
                     Configs.ExifToolExePath);
-            
+
             clnProperty.Text = _lang[$"{Name}.{nameof(clnProperty)}"];
             clnValue.Text = _lang[$"{Name}.{nameof(clnValue)}"];
 
@@ -169,8 +173,29 @@ namespace ImageGlass {
 
         private void SetFormState(bool enabled = true) {
             btnCopyValue.Enabled =
-                btnExport.Enabled = 
+                btnExport.Enabled =
                 lblNotFound.Enabled = enabled;
+        }
+
+        private void lnkSelectExifTool_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            var ofd = new OpenFileDialog() {
+                CheckFileExists = true,
+                Filter = "exiftool.exe file|*.exe",
+            };
+
+            if (ofd.ShowDialog() == DialogResult.OK) {
+                var exif = new ExifToolWrapper(ofd.FileName);
+
+                if (!exif.CheckExists()) {
+                    lblNotFound.Text = string.Format(
+                        Configs.Language.Items[$"{nameof(frmSetting)}.lnkSelectExifTool._NotFound"],
+                        ofd.FileName);
+                }
+                else {
+                    Configs.ExifToolExePath = ofd.FileName;
+                    Local_OnImageChanged(null, null);
+                }
+            }
         }
     }
 }

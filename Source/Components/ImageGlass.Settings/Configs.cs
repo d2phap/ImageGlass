@@ -261,7 +261,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets value indicates that FrmExifTool always show on top
         /// </summary>
-        public static bool IsFrmExifToolAlwaysOnTop { get; set; } = true;
+        public static bool IsExifToolAlwaysOnTop { get; set; } = true;
 
         #endregion
 
@@ -553,7 +553,7 @@ namespace ImageGlass.Settings {
             IsShowToast = Get<bool>(nameof(IsShowToast), IsShowToast);
             IsUseTouchGesture = Get<bool>(nameof(IsUseTouchGesture), IsUseTouchGesture);
             IsHideTooltips = Get<bool>(nameof(IsHideTooltips), IsHideTooltips);
-            IsFrmExifToolAlwaysOnTop = Get<bool>(nameof(IsFrmExifToolAlwaysOnTop), IsFrmExifToolAlwaysOnTop);
+            IsExifToolAlwaysOnTop = Get<bool>(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
 
             #endregion
 
@@ -777,7 +777,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsShowToast), IsShowToast);
             Set(nameof(IsUseTouchGesture), IsUseTouchGesture);
             Set(nameof(IsHideTooltips), IsHideTooltips);
-            Set(nameof(IsFrmExifToolAlwaysOnTop), IsFrmExifToolAlwaysOnTop);
+            Set(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
 
             #endregion
 

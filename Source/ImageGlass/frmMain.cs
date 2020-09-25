@@ -4863,7 +4863,7 @@ namespace ImageGlass {
                 Local.FExifTool.Show();
             }
 
-            if (Configs.IsFrmExifToolAlwaysOnTop) {
+            if (Configs.IsExifToolAlwaysOnTop) {
                 Local.FExifTool.Owner = this;
                 this.Activate();
             }

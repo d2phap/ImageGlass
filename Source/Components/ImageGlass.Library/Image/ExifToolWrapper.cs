@@ -44,14 +44,14 @@ namespace ImageGlass.Library.Image {
             }
             else {
                 try {
-                    output = Open(toolPath);
+                    (output, stdErr) = Open(toolPath);
                 }
                 catch (Exception) {
                 }
             }
 
             // check the output
-            if (output.Length < 4)
+            if (output.Length < 4 || stdErr.Length > 0)
                 return false;
 
             // (could check version number here if you care)
@@ -73,7 +73,8 @@ namespace ImageGlass.Library.Image {
             toolPath += "-fast -G -t -m -q -q ";
             toolPath += "\"" + imageFilename + "\"";
 
-            var output = Open(toolPath);
+            var (output, _) = Open(toolPath);
+
 
             // parse the output into tags
             this.Clear();
@@ -147,9 +148,9 @@ namespace ImageGlass.Library.Image {
             toolPath += "\"" + sourceImage + "\" -exif ";
             toolPath += "\"" + destinationExifFile + "\"";
 
-            var output = Open(toolPath);
+            var (_, stdErr) = Open(toolPath);
 
-            if (output.Contains("Error"))
+            if (stdErr.Contains("Error"))
                 return false;
 
             return true;
@@ -169,9 +170,9 @@ namespace ImageGlass.Library.Image {
             toolPath += " -all:all ";
             toolPath += "\"" + destinationImage + "\"";
 
-            var output = Open(toolPath);
+            var (_, stdErr) = Open(toolPath);
 
-            if (output.Contains("Error"))
+            if (stdErr.Contains("Error"))
                 return false;
 
             return true;
@@ -198,7 +199,7 @@ namespace ImageGlass.Library.Image {
             }
         }
 
-        private string Open(string cmd) {
+        private (string, string) Open(string cmd) {
             var program = "\"%COMSPEC%\"";
             var args = "/c [command]";
 
@@ -227,9 +228,7 @@ namespace ImageGlass.Library.Image {
             thread_ReadStandardError.Join();
             thread_ReadStandardOut.Join();
 
-            var output = stdOut + stdErr;
-
-            return output;
+            return (stdOut, stdErr);
         }
 
         #endregion

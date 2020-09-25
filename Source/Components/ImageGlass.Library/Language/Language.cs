@@ -544,6 +544,10 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lblDefaultColorCode", "Default color code format when copying"); //v5.0
 
             Items.Add("frmSetting.chkShowPageNavAuto", "Auto-show Page navigation tool for multi-page image"); //v7.5
+
+            Items.Add("frmSetting.chkExifToolAlwaysOnTop", "Keep Exif tool always on top"); // v7.7
+            Items.Add("frmSetting.lnkSelectExifTool", "Select Exif tool file"); // v7.7
+            Items.Add("frmSetting.lnkSelectExifTool._NotFound", "The Exif tool does not exist or invalid: \n{0}"); // v7.7
             #endregion
 
             #region TAB Language
@@ -651,9 +655,6 @@ namespace ImageGlass.Library {
             #endregion
 
             #region FrmExifTool
-            Items.Add("FrmExifTool.lblNotFound", "The Exif tool: \n{0}\ndoes not exist or invalid."); // v7.7
-            Items.Add("FrmExifTool.lnkSelectExifTool", "Select Exif tool file"); // v7.7
-
             Items.Add("FrmExifTool.clnProperty", "Property"); // v7.7
             Items.Add("FrmExifTool.clnValue", "Value"); // v7.7
 
@@ -661,7 +662,6 @@ namespace ImageGlass.Library {
             Items.Add("FrmExifTool.btnExport", "Export…"); // v7.7
             Items.Add("FrmExifTool.btnClose", "Close"); // v7.7
 
-            
             #endregion
         }
     }
