@@ -4857,13 +4857,15 @@ namespace ImageGlass {
                 Local.FExifTool = new FrmExifTool();
             }
 
-            Local.FExifTool.Owner = this;
-
             if (!Local.FExifTool.Visible) {
-                Local.FExifTool.Show(this);
+                Local.FExifTool.TopMost = this.TopMost;
+                Local.FExifTool.Show();
             }
 
-            this.Activate();
+            if (Configs.IsFrmExifToolAlwaysOnTop) {
+                Local.FExifTool.Owner = this;
+                this.Activate();
+            }
         }
 
         private void mnuMainSettings_Click(object sender, EventArgs e) {

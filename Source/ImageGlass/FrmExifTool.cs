@@ -80,35 +80,40 @@ namespace ImageGlass {
         }
 
 
-        private async void Local_OnImageChanged(object sender, EventArgs e) {
-            SetFormState(false);
-
-            // check if exif tool exists
-            this.exifTool.ToolPath = Configs.ExifToolExePath;
-            if (!this.exifTool.CheckExists()) {
-                this.Icon = this.Owner.Icon;
+        private void SetUIVisibility(bool isNotFound) {
+            if (isNotFound) {
+                this.Icon = Icon.ExtractAssociatedIcon(Base.App.IGExePath);
                 lblNotFound.Text = string.Format(
                     Configs.Language.Items[$"{Name}._ExifToolNotFound"],
                     Configs.ExifToolExePath);
 
                 panNotFound.Visible = true;
                 listExif.Visible = false;
+            }
+            else {
+                this.Text = Path.GetFileName(Configs.ExifToolExePath);
+                this.Icon = Icon.ExtractAssociatedIcon(Configs.ExifToolExePath);
+
+                panNotFound.Visible = false;
+                listExif.Visible = true;
+            }
+        }
+
+
+        private async void Local_OnImageChanged(object sender, EventArgs e) {
+            SetFormState(false);
+
+            // check if exif tool exists
+            this.exifTool.ToolPath = Configs.ExifToolExePath;
+            if (!this.exifTool.CheckExists()) {
+                SetUIVisibility(true);
 
                 return;
             }
 
-            panNotFound.Visible = false;
-            listExif.Visible = true;
-            this.Text = Path.GetFileName(Configs.ExifToolExePath);
-            this.Icon = Icon.ExtractAssociatedIcon(Configs.ExifToolExePath);
-
-            var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
-
-            if (Local.ImageError != null) {
-                // todo
-            }
-
+            SetUIVisibility(false);
             await Task.Run(() => {
+                var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
                 this.exifTool.LoadExifData(filename);
             });
 
@@ -147,8 +152,7 @@ namespace ImageGlass {
         }
 
         private void SetFormState(bool enabled = true) {
-            listExif.Enabled =
-                btnCopyValue.Enabled =
+            btnCopyValue.Enabled =
                 btnExport.Enabled = 
                 lblNotFound.Enabled = enabled;
         }
