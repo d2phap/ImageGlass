@@ -3018,6 +3018,7 @@ namespace ImageGlass {
                 mnuMainColorPicker.Text = lang[$"{Name}.{nameof(mnuMainColorPicker)}"];
                 mnuMainPageNav.Text = lang[$"{Name}.{nameof(mnuMainPageNav)}"];
                 mnuMainCrop.Text = lang[$"{Name}.{nameof(mnuMainCrop)}"];
+                mnuExifTool.Text = lang[$"{Name}.{nameof(mnuExifTool)}"];
                 #endregion
 
                 #region Menu Help

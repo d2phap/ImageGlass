@@ -278,6 +278,7 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainColorPicker", "Color picker"); //v5.0
             Items.Add("frmMain.mnuMainPageNav", "Page navigation"); // v7.5
             Items.Add("frmMain.mnuMainCrop", "Cropping"); // v7.6
+            Items.Add("frmMain.mnuExifTool", "Exif tool"); // v7.7
             #endregion
 
             Items.Add("frmMain.mnuMainSettings", "Settings…"); //v3.0
@@ -650,7 +651,17 @@ namespace ImageGlass.Library {
             #endregion
 
             #region FrmExifTool
-            Items.Add("FrmExifTool._ExifToolNotFound", "The Exif tool: \n{0}\ndoes not exist or invalid."); // v7.7
+            Items.Add("FrmExifTool.lblNotFound", "The Exif tool: \n{0}\ndoes not exist or invalid."); // v7.7
+            Items.Add("FrmExifTool.lnkSelectExifTool", "Select Exif tool file"); // v7.7
+
+            Items.Add("FrmExifTool.clnProperty", "Property"); // v7.7
+            Items.Add("FrmExifTool.clnValue", "Value"); // v7.7
+
+            Items.Add("FrmExifTool.btnCopyValue", "Copy value"); // v7.7
+            Items.Add("FrmExifTool.btnExport", "Export…"); // v7.7
+            Items.Add("FrmExifTool.btnClose", "Close"); // v7.7
+
+            
             #endregion
         }
     }

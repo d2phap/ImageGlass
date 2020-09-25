@@ -40,8 +40,9 @@ namespace ImageGlass {
         }
 
         private void FrmExif_Load(object sender, EventArgs e) {
-            SystemRenderer.ApplyTheme(listExif);
+            SystemRenderer.ApplyTheme(lvExifItems);
             Local_OnImageChanged(null, null);
+            LoadLanguage();
 
             // Load config
             // Windows Bound (Position + Size)
@@ -80,22 +81,37 @@ namespace ImageGlass {
         }
 
 
+        private void LoadLanguage() {
+            var _lang = Configs.Language.Items;
+
+            lnkSelectExifTool.Text = _lang[$"{Name}.{nameof(lnkSelectExifTool)}"];
+            lblNotFound.Text = string.Format(
+                    _lang[$"{Name}.{nameof(lblNotFound)}"],
+                    Configs.ExifToolExePath);
+            
+            clnProperty.Text = _lang[$"{Name}.{nameof(clnProperty)}"];
+            clnValue.Text = _lang[$"{Name}.{nameof(clnValue)}"];
+
+            btnCopyValue.Text = _lang[$"{Name}.{nameof(btnCopyValue)}"];
+            btnExport.Text = _lang[$"{Name}.{nameof(btnExport)}"];
+            btnClose.Text = _lang[$"{Name}.{nameof(btnClose)}"];
+        }
+
+
         private void SetUIVisibility(bool isNotFound) {
             if (isNotFound) {
+                this.Text = Configs.Language.Items["frmMain.mnuExifTool"];
                 this.Icon = Icon.ExtractAssociatedIcon(Base.App.IGExePath);
-                lblNotFound.Text = string.Format(
-                    Configs.Language.Items[$"{Name}._ExifToolNotFound"],
-                    Configs.ExifToolExePath);
 
                 panNotFound.Visible = true;
-                listExif.Visible = false;
+                lvExifItems.Visible = false;
             }
             else {
                 this.Text = Path.GetFileName(Configs.ExifToolExePath);
                 this.Icon = Icon.ExtractAssociatedIcon(Configs.ExifToolExePath);
 
                 panNotFound.Visible = false;
-                listExif.Visible = true;
+                lvExifItems.Visible = true;
             }
         }
 
@@ -117,8 +133,8 @@ namespace ImageGlass {
                 this.exifTool.LoadExifData(filename);
             });
 
-            listExif.Items.Clear();
-            listExif.Groups.Clear();
+            lvExifItems.Items.Clear();
+            lvExifItems.Groups.Clear();
 
             // get groups
             var groups = this.exifTool.GroupBy(i => i.Group)
@@ -127,7 +143,7 @@ namespace ImageGlass {
                 .ToList();
 
             foreach (var item in groups) {
-                listExif.Groups.Add(item.Group, item.Group);
+                lvExifItems.Groups.Add(item.Group, item.Group);
             }
 
             // load items
@@ -137,17 +153,17 @@ namespace ImageGlass {
 
                 li.SubItems.Add(item.Name);
                 li.SubItems.Add(item.Value);
-                li.Group = listExif.Groups[item.Group];
+                li.Group = lvExifItems.Groups[item.Group];
 
-                listExif.Items.Add(li);
+                lvExifItems.Items.Add(li);
             }
 
             SetFormState(true);
         }
 
         private void btnCopyValue_Click(object sender, EventArgs e) {
-            if (listExif.SelectedItems.Count > 0) {
-                Clipboard.SetText(listExif.SelectedItems[0].SubItems[2].Text);
+            if (lvExifItems.SelectedItems.Count > 0) {
+                Clipboard.SetText(lvExifItems.SelectedItems[0].SubItems[2].Text);
             }
         }
 
