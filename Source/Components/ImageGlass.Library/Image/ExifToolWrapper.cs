@@ -70,7 +70,7 @@ namespace ImageGlass.Library.Image {
 
             if (removeWhiteSpaceInTagNames)
                 toolPath += "-s ";
-            toolPath += "-fast -G -t -m -q -q ";
+            toolPath += "-fast -G -t -m -q ";
             toolPath += "\"" + imageFilename + "\"";
 
             var (output, _) = Open(toolPath);

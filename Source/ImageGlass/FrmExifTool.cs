@@ -18,11 +18,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ImageGlass.Base;
 using ImageGlass.Library.Image;
 using ImageGlass.Settings;
 using ImageGlass.UI.Renderers;
@@ -35,6 +38,8 @@ namespace ImageGlass {
 
         private ExifToolWrapper exifTool = new ExifToolWrapper(Configs.ExifToolExePath);
 
+
+        #region Form events
         private void btnClose_Click(object sender, EventArgs e) {
             this.Close();
         }
@@ -42,7 +47,7 @@ namespace ImageGlass {
         private void FrmExif_Load(object sender, EventArgs e) {
             SystemRenderer.ApplyTheme(lvExifItems);
             Local_OnImageChanged(null, null);
-            
+
 
             // Load config
             // Windows Bound (Position + Size)
@@ -84,97 +89,10 @@ namespace ImageGlass {
             }
         }
 
-
-        private void LoadLanguage() {
-            var _lang = Configs.Language.Items;
-
-            lnkSelectExifTool.Text = _lang[$"{nameof(frmSetting)}.lnkSelectExifTool"];
-            lblNotFound.Text = string.Format(
-                    _lang[$"{nameof(frmSetting)}.lnkSelectExifTool._NotFound"],
-                    Configs.ExifToolExePath);
-
-            clnProperty.Text = _lang[$"{Name}.{nameof(clnProperty)}"];
-            clnValue.Text = _lang[$"{Name}.{nameof(clnValue)}"];
-
-            btnCopyValue.Text = _lang[$"{Name}.{nameof(btnCopyValue)}"];
-            btnExport.Text = _lang[$"{Name}.{nameof(btnExport)}"];
-            btnClose.Text = _lang[$"{Name}.{nameof(btnClose)}"];
-        }
-
-
-        private void SetUIVisibility(bool isNotFound) {
-            if (isNotFound) {
-                this.Text = Configs.Language.Items["frmMain.mnuExifTool"];
-                this.Icon = Icon.ExtractAssociatedIcon(Base.App.IGExePath);
-
-                panNotFound.Visible = true;
-                lvExifItems.Visible = false;
-            }
-            else {
-                this.Text = Path.GetFileName(Configs.ExifToolExePath);
-                this.Icon = Icon.ExtractAssociatedIcon(Configs.ExifToolExePath);
-
-                panNotFound.Visible = false;
-                lvExifItems.Visible = true;
-            }
-        }
-
-
-        private async void Local_OnImageChanged(object sender, EventArgs e) {
-            SetFormState(false);
-
-            // check if exif tool exists
-            this.exifTool.ToolPath = Configs.ExifToolExePath;
-            if (!this.exifTool.CheckExists()) {
-                SetUIVisibility(true);
-
-                return;
-            }
-
-            SetUIVisibility(false);
-            await Task.Run(() => {
-                var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
-                this.exifTool.LoadExifData(filename);
-            });
-
-            lvExifItems.Items.Clear();
-            lvExifItems.Groups.Clear();
-
-            // get groups
-            var groups = this.exifTool.GroupBy(i => i.Group)
-                .Select(group => new { Group = group.Key })
-                .Distinct()
-                .ToList();
-
-            foreach (var item in groups) {
-                lvExifItems.Groups.Add(item.Group, item.Group);
-            }
-
-            // load items
-            for (var i = 0; i < this.exifTool.Count; i++) {
-                var item = this.exifTool[i];
-                var li = new ListViewItem((i + 1).ToString());
-
-                li.SubItems.Add(item.Name);
-                li.SubItems.Add(item.Value);
-                li.Group = lvExifItems.Groups[item.Group];
-
-                lvExifItems.Items.Add(li);
-            }
-
-            SetFormState(true);
-        }
-
         private void btnCopyValue_Click(object sender, EventArgs e) {
             if (lvExifItems.SelectedItems.Count > 0) {
                 Clipboard.SetText(lvExifItems.SelectedItems[0].SubItems[2].Text);
             }
-        }
-
-        private void SetFormState(bool enabled = true) {
-            btnCopyValue.Enabled =
-                btnExport.Enabled =
-                lblNotFound.Enabled = enabled;
         }
 
         private void lnkSelectExifTool_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -212,5 +130,170 @@ namespace ImageGlass {
                 }
             }
         }
+
+        #endregion
+
+
+        #region Private functions
+
+        /// <summary>
+        /// Load language
+        /// </summary>
+        private void LoadLanguage() {
+            var _lang = Configs.Language.Items;
+
+            lnkSelectExifTool.Text = _lang[$"{nameof(frmSetting)}.lnkSelectExifTool"];
+            lblNotFound.Text = string.Format(
+                    _lang[$"{nameof(frmSetting)}.lnkSelectExifTool._NotFound"],
+                    Configs.ExifToolExePath);
+
+            clnProperty.Text = _lang[$"{Name}.{nameof(clnProperty)}"];
+            clnValue.Text = _lang[$"{Name}.{nameof(clnValue)}"];
+
+            btnCopyValue.Text = _lang[$"{Name}.{nameof(btnCopyValue)}"];
+            btnExport.Text = _lang[$"{Name}.{nameof(btnExport)}"];
+            btnClose.Text = _lang[$"{Name}.{nameof(btnClose)}"];
+        }
+
+        /// <summary>
+        /// Change UI according to existence of Exif tool
+        /// </summary>
+        /// <param name="isNotFound"></param>
+        private void SetUIVisibility(bool isNotFound) {
+            if (isNotFound) {
+                this.Text = Configs.Language.Items["frmMain.mnuExifTool"];
+                this.Icon = Icon.ExtractAssociatedIcon(Base.App.IGExePath);
+
+                panNotFound.Visible = true;
+                lvExifItems.Visible = false;
+            }
+            else {
+                this.Text = Path.GetFileName(Configs.ExifToolExePath);
+                this.Icon = Icon.ExtractAssociatedIcon(Configs.ExifToolExePath);
+
+                panNotFound.Visible = false;
+                lvExifItems.Visible = true;
+            }
+        }
+
+
+        private async void Local_OnImageChanged(object sender, EventArgs e) {
+            SetFormState(false);
+
+            // check if exif tool exists
+            this.exifTool.ToolPath = Configs.ExifToolExePath;
+            if (!this.exifTool.CheckExists()) {
+                SetUIVisibility(true);
+
+                return;
+            }
+
+            SetUIVisibility(false);
+            var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
+
+            // preprocess unicode filename and load exif data
+            await LoadAndProcessExifDataAsync(filename);
+
+            lvExifItems.Items.Clear();
+            lvExifItems.Groups.Clear();
+
+            // get groups
+            var groups = this.exifTool.GroupBy(i => i.Group)
+                .Select(group => new { Group = group.Key })
+                .Distinct()
+                .ToList();
+
+            foreach (var item in groups) {
+                lvExifItems.Groups.Add(item.Group, item.Group);
+            }
+
+            // count total items
+            clnNo.Text = $"({this.exifTool.Count})";
+
+
+            // load items
+            for (var i = 0; i < this.exifTool.Count; i++) {
+                var item = this.exifTool[i];
+                var li = new ListViewItem((i + 1).ToString()) {
+                    Group = lvExifItems.Groups[item.Group]
+                };
+
+                _ = li.SubItems.Add(item.Name);
+                _ = li.SubItems.Add(item.Value);
+                _ = lvExifItems.Items.Add(li);
+            }
+
+            SetFormState(true);
+        }
+
+
+        /// <summary>
+        /// Preprocess unicode filename and load exif data
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        private async Task LoadAndProcessExifDataAsync(string filename) {
+            const int MAX_ANSICODE = 255;
+            const string DATE_FORMAT = "yyyy:MM:dd hh:mm:sszzz";
+
+
+            await Task.Run(() => {
+                var nonUnicodeFilename = filename;
+                var containsUnicodeName = filename.Any(c => c > MAX_ANSICODE);
+
+                // if filename contains unicode char
+                if (containsUnicodeName) {
+                    // we need to rename it,
+                    // because exiftool does not support unicode filename
+                    var ext = Path.GetExtension(filename);
+                    var nonUnicodeDir = App.ConfigDir(PathType.Dir, Dir.Temporary);
+                    nonUnicodeFilename = Path.Combine(nonUnicodeDir, Guid.NewGuid().ToString("N") + ext);
+
+                    try {
+                        Directory.CreateDirectory(nonUnicodeDir);
+                        File.Copy(filename, nonUnicodeFilename, true);
+                    }
+                    catch (Exception) { }
+                }
+
+                // load exif data
+                this.exifTool.LoadExifData(nonUnicodeFilename);
+
+
+                if (containsUnicodeName) {
+                    // process exif data
+                    var replacements = new Dictionary<string, Func<string>> {
+                        { "File Name", () => Path.GetFileName(filename) },
+                        { "Directory", () => Path.GetDirectoryName(filename) },
+                        { "File Modification Date/Time", () => ImageInfo.GetWriteTime(filename).ToString(DATE_FORMAT) },
+                        { "File Access Date/Time", () => ImageInfo.GetLastAccess(filename).ToString(DATE_FORMAT) },
+                        { "File Creation Date/Time", () => ImageInfo.GetCreateTime(filename).ToString(DATE_FORMAT) },
+                    };
+
+                    for (var i = 0; i < this.exifTool.Count; i++) {
+                        var item = this.exifTool[i];
+
+                        if (replacements.ContainsKey(item.Name)) {
+                            item.Value = replacements[item.Name].Invoke();
+                            this.exifTool[i] = item;
+                        }
+                    }
+                }
+            });
+        }
+
+
+        /// <summary>
+        /// Set form state to disabled or enabled
+        /// </summary>
+        /// <param name="enabled"></param>
+        private void SetFormState(bool enabled = true) {
+            btnCopyValue.Enabled =
+                btnExport.Enabled =
+                lblNotFound.Enabled = enabled;
+        }
+
+        #endregion
+
     }
 }
