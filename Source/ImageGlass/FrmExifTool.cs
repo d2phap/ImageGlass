@@ -18,14 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using ImageGlass.Base;
 using ImageGlass.Library.Image;
 using ImageGlass.Settings;
 using ImageGlass.UI.Renderers;
@@ -155,6 +151,7 @@ namespace ImageGlass {
             btnClose.Text = _lang[$"{Name}.{nameof(btnClose)}"];
         }
 
+
         /// <summary>
         /// Change UI according to existence of Exif tool
         /// </summary>
@@ -192,7 +189,7 @@ namespace ImageGlass {
             var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
 
             // preprocess unicode filename and load exif data
-            await LoadAndProcessExifDataAsync(filename);
+            await this.exifTool.LoadAndProcessExifDataAsync(filename);
 
             lvExifItems.Items.Clear();
             lvExifItems.Groups.Clear();
@@ -227,60 +224,6 @@ namespace ImageGlass {
         }
 
 
-        /// <summary>
-        /// Preprocess unicode filename and load exif data
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <returns></returns>
-        private async Task LoadAndProcessExifDataAsync(string filename) {
-            const int MAX_ANSICODE = 255;
-            const string DATE_FORMAT = "yyyy:MM:dd hh:mm:sszzz";
-
-
-            await Task.Run(() => {
-                var nonUnicodeFilename = filename;
-                var containsUnicodeName = filename.Any(c => c > MAX_ANSICODE);
-
-                // if filename contains unicode char
-                if (containsUnicodeName) {
-                    // we need to rename it,
-                    // because exiftool does not support unicode filename
-                    var ext = Path.GetExtension(filename);
-                    var nonUnicodeDir = App.ConfigDir(PathType.Dir, Dir.Temporary);
-                    nonUnicodeFilename = Path.Combine(nonUnicodeDir, Guid.NewGuid().ToString("N") + ext);
-
-                    try {
-                        Directory.CreateDirectory(nonUnicodeDir);
-                        File.Copy(filename, nonUnicodeFilename, true);
-                    }
-                    catch (Exception) { }
-                }
-
-                // load exif data
-                this.exifTool.LoadExifData(nonUnicodeFilename);
-
-
-                if (containsUnicodeName) {
-                    // process exif data
-                    var replacements = new Dictionary<string, Func<string>> {
-                        { "File Name", () => Path.GetFileName(filename) },
-                        { "Directory", () => Path.GetDirectoryName(filename) },
-                        { "File Modification Date/Time", () => ImageInfo.GetWriteTime(filename).ToString(DATE_FORMAT) },
-                        { "File Access Date/Time", () => ImageInfo.GetLastAccess(filename).ToString(DATE_FORMAT) },
-                        { "File Creation Date/Time", () => ImageInfo.GetCreateTime(filename).ToString(DATE_FORMAT) },
-                    };
-
-                    for (var i = 0; i < this.exifTool.Count; i++) {
-                        var item = this.exifTool[i];
-
-                        if (replacements.ContainsKey(item.Name)) {
-                            item.Value = replacements[item.Name].Invoke();
-                            this.exifTool[i] = item;
-                        }
-                    }
-                }
-            });
-        }
 
 
         /// <summary>

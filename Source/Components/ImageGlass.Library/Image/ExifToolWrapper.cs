@@ -1,9 +1,30 @@
-﻿using System;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2020 DUONG DIEU PHAP
+Project homepage: http://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
+using ImageGlass.Base;
 
 namespace ImageGlass.Library.Image {
     public struct ExifTagItem {
@@ -60,11 +81,184 @@ namespace ImageGlass.Library.Image {
 
 
         /// <summary>
+        /// Checks if the image has exif data
+        /// </summary>
+        /// <returns></returns>
+        public bool HasExifData() {
+            return (this.Count > 0);
+        }
+
+
+        /// <summary>
+        /// Finds Exif tag
+        /// </summary>
+        /// <param name="tagName"></param>
+        /// <returns></returns>
+        public ExifTagItem Find(string tagName) {
+            var itemsQuery = from tagItem in this
+                             where tagItem.Name == tagName
+                             select tagItem;
+
+            return itemsQuery.First();
+        }
+
+
+        /// <summary>
+        /// This method saves EXIF data to an external file (<file>.exif). Only tags with group EXIF are saved.
+        /// </summary>
+        /// <param name="sourceImage">Source Image file path</param>
+        /// <param name="destinationExifFile">Destination .exif file path</param>
+        /// <returns>Empty string if no error</returns>
+        public string SaveExifData(string sourceImage, string destinationExifFile) {
+            // exiftool command
+            var toolPath = this.ToolPath + " ";
+            toolPath += "-fast -m -q -q -tagsfromfile ";
+            toolPath += "\"" + sourceImage + "\" -exif ";
+            toolPath += "\"" + destinationExifFile + "\"";
+
+            var (_, stdErr) = Open(toolPath);
+
+            return stdErr;
+        }
+
+
+
+        /// <summary>
+        /// Preprocess unicode filename and load exif data
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        public async Task LoadAndProcessExifDataAsync(string filename) {
+            const int MAX_ANSICODE = 255;
+            const string DATE_FORMAT = "yyyy:MM:dd hh:mm:sszzz";
+
+
+            await Task.Run(() => {
+                var nonUnicodeFilename = filename;
+                var containsUnicodeName = filename.Any(c => c > MAX_ANSICODE);
+
+                // if filename contains unicode char
+                if (containsUnicodeName) {
+                    nonUnicodeFilename = ProcessUnicodeFilename(filename);
+                }
+
+                // load exif data
+                LoadExifData(nonUnicodeFilename);
+
+
+                if (containsUnicodeName) {
+                    // process exif data
+                    var replacements = new Dictionary<string, Func<string>> {
+                        { "File Name", () => Path.GetFileName(filename) },
+                        { "Directory", () => Path.GetDirectoryName(filename) },
+                        { "File Modification Date/Time", () => ImageInfo.GetWriteTime(filename).ToString(DATE_FORMAT) },
+                        { "File Access Date/Time", () => ImageInfo.GetLastAccess(filename).ToString(DATE_FORMAT) },
+                        { "File Creation Date/Time", () => ImageInfo.GetCreateTime(filename).ToString(DATE_FORMAT) },
+                    };
+
+                    for (var i = 0; i < this.Count; i++) {
+                        var item = this[i];
+
+                        if (replacements.ContainsKey(item.Name)) {
+                            item.Value = replacements[item.Name].Invoke();
+                            this[i] = item;
+                        }
+                    }
+                }
+            });
+        }
+
+
+        #endregion
+
+
+
+
+        #region Private methods
+
+        private string stdOut = null;
+        private string stdErr = null;
+        private ProcessStartInfo psi = null;
+        private Process activeProcess = null;
+
+        private void Thread_ReadStandardError() {
+            if (activeProcess != null) {
+                stdErr = activeProcess.StandardError.ReadToEnd();
+            }
+        }
+
+        private void Thread_ReadStandardOut() {
+            if (activeProcess != null) {
+                stdOut = activeProcess.StandardOutput.ReadToEnd();
+            }
+        }
+
+
+        /// <summary>
+        /// Execute exif tool command line
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        private (string stdOut, string stdErr) Open(string cmd) {
+            var program = "\"%COMSPEC%\"";
+            var args = "/c [command]";
+
+            this.psi = new ProcessStartInfo(
+                Environment.ExpandEnvironmentVariables(program),
+                args.Replace("[command]", cmd)
+            ) {
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            };
+
+            var thread_ReadStandardError = new Thread(new ThreadStart(Thread_ReadStandardError));
+            var thread_ReadStandardOut = new Thread(new ThreadStart(Thread_ReadStandardOut));
+
+            activeProcess = Process.Start(psi);
+            if (psi.RedirectStandardError) {
+                thread_ReadStandardError.Start();
+            }
+            if (psi.RedirectStandardOutput) {
+                thread_ReadStandardOut.Start();
+            }
+            activeProcess.WaitForExit();
+
+            thread_ReadStandardError.Join();
+            thread_ReadStandardOut.Join();
+
+            return (stdOut, stdErr);
+        }
+
+
+        /// <summary>
+        /// Copy and rename unicode file path to non-unicode path
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        private string ProcessUnicodeFilename(string filename) {
+            // exiftool does not support unicode filename
+            var ext = Path.GetExtension(filename);
+            var nonUnicodeDir = App.ConfigDir(PathType.Dir, Dir.Temporary);
+            var nonUnicodeFilename = Path.Combine(nonUnicodeDir, Guid.NewGuid().ToString("N") + ext);
+
+            try {
+                Directory.CreateDirectory(nonUnicodeDir);
+                File.Copy(filename, nonUnicodeFilename, true);
+            }
+            catch (Exception) { }
+
+            return nonUnicodeFilename;
+        }
+
+
+        /// <summary>
         /// Execute Exif tool to retrieve data
         /// </summary>
         /// <param name="imageFilename"></param>
         /// <param name="removeWhiteSpaceInTagNames"></param>
-        public void LoadExifData(string imageFilename, bool removeWhiteSpaceInTagNames = false) {
+        private void LoadExifData(string imageFilename, bool removeWhiteSpaceInTagNames = false) {
             // exiftool command
             var toolPath = this.ToolPath + " ";
 
@@ -114,119 +308,6 @@ namespace ImageGlass.Library.Image {
             }
         }
 
-        /// <summary>
-        /// Checks if the image has exif data
-        /// </summary>
-        /// <returns></returns>
-        public bool HasExifData() {
-            return (this.Count > 0);
-        }
-
-        /// <summary>
-        /// Finds Exif tag
-        /// </summary>
-        /// <param name="tagName"></param>
-        /// <returns></returns>
-        public ExifTagItem Find(string tagName) {
-            var itemsQuery = from tagItem in this
-                             where tagItem.Name == tagName
-                             select tagItem;
-
-            return itemsQuery.First();
-        }
-
-        /// <summary>
-        /// This method saves EXIF data to an external file (<file>.exif). Only tags with group EXIF are saved.
-        /// </summary>
-        /// <param name="sourceImage">Source Image file path</param>
-        /// <param name="destinationExifFile">Destination .exif file path</param>
-        /// <returns>Empty string if no error</returns>
-        public string SaveExifData(string sourceImage, string destinationExifFile) {
-            // exiftool command
-            var toolPath = this.ToolPath + " ";
-            toolPath += "-fast -m -q -q -tagsfromfile ";
-            toolPath += "\"" + sourceImage + "\" -exif ";
-            toolPath += "\"" + destinationExifFile + "\"";
-
-            var (_, stdErr) = Open(toolPath);
-
-            return stdErr;
-        }
-
-        /// <summary>
-        /// This method writes EXIF data to the given destination image file (must exist beforehand).
-        /// </summary>
-        /// <param name="sourceExifFile">Source .exif file</param>
-        /// <param name="destinationImage">Destination image path (file must exist)</param>
-        /// <returns></returns>
-        public bool WriteExifData(string sourceExifFile, string destinationImage) {
-            // exiftool command
-            var toolPath = this.ToolPath + " ";
-            toolPath += "-fast -m -q -q -TagsFromFile ";
-            toolPath += "\"" + sourceExifFile + "\"";
-            toolPath += " -all:all ";
-            toolPath += "\"" + destinationImage + "\"";
-
-            var (_, stdErr) = Open(toolPath);
-
-            if (stdErr.Contains("Error"))
-                return false;
-
-            return true;
-        }
-        #endregion
-
-
-        #region Private methods
-
-        private string stdOut = null;
-        private string stdErr = null;
-        private ProcessStartInfo psi = null;
-        private Process activeProcess = null;
-
-        private void Thread_ReadStandardError() {
-            if (activeProcess != null) {
-                stdErr = activeProcess.StandardError.ReadToEnd();
-            }
-        }
-
-        private void Thread_ReadStandardOut() {
-            if (activeProcess != null) {
-                stdOut = activeProcess.StandardOutput.ReadToEnd();
-            }
-        }
-
-        private (string, string) Open(string cmd) {
-            var program = "\"%COMSPEC%\"";
-            var args = "/c [command]";
-
-            this.psi = new ProcessStartInfo(
-                Environment.ExpandEnvironmentVariables(program),
-                args.Replace("[command]", cmd)
-            ) {
-                CreateNoWindow = true,
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
-            };
-
-            var thread_ReadStandardError = new Thread(new ThreadStart(Thread_ReadStandardError));
-            var thread_ReadStandardOut = new Thread(new ThreadStart(Thread_ReadStandardOut));
-
-            activeProcess = Process.Start(psi);
-            if (psi.RedirectStandardError) {
-                thread_ReadStandardError.Start();
-            }
-            if (psi.RedirectStandardOutput) {
-                thread_ReadStandardOut.Start();
-            }
-            activeProcess.WaitForExit();
-
-            thread_ReadStandardError.Join();
-            thread_ReadStandardOut.Join();
-
-            return (stdOut, stdErr);
-        }
 
         #endregion
 
