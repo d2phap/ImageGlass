@@ -112,14 +112,18 @@ namespace ImageGlass {
             }
         }
 
-        private void btnExport_Click(object sender, EventArgs e) {
+        private async void btnExport_Click(object sender, EventArgs e) {
+            SetFormState(false);
+
             var sfd = new SaveFileDialog() {
                 Filter = "Text file (*.txt)|*.txt",
             };
 
             if (sfd.ShowDialog() == DialogResult.OK) {
-                _ = this.exifTool.ExportToFileAsync(sfd.FileName);
+                await this.exifTool.ExportToFileAsync(sfd.FileName);
             }
+
+            SetFormState(true);
         }
 
         #endregion
@@ -213,6 +217,7 @@ namespace ImageGlass {
                 _ = li.SubItems.Add(item.Name);
                 _ = li.SubItems.Add(item.Value);
                 _ = lvExifItems.Items.Add(li);
+
             }
 
             SetFormState(true);
