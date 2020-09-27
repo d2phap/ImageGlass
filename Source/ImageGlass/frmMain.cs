@@ -44,7 +44,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 
 namespace ImageGlass {
     public partial class frmMain: Form {
@@ -582,7 +581,7 @@ namespace ImageGlass {
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 2000);
 
                 Application.DoEvents();
-                SaveImageChange();
+                _ = SaveImageChange();
 
                 // remove the old image data from cache
                 Local.ImageList.Unload(Local.CurrentIndex);
@@ -656,6 +655,9 @@ namespace ImageGlass {
             // Update the basic info
             UpdateStatusBar();
 
+            // Raise image changed event
+            Local.RaiseImageChangedEvent();
+
             // The image data will load
             Bitmap im = null;
 
@@ -664,8 +666,8 @@ namespace ImageGlass {
                 Local.ImageList.IsApplyColorProfileForAll = Configs.IsApplyColorProfileForAll;
                 Local.ImageList.ColorProfileName = Configs.ColorProfile;
 
-                // put app in a 'busy' state around image load: allows us to prevent the user from 
-                // skipping past a slow-to-load image by processing too many arrow clicks
+                // put app in a 'busy' state around image load: allows us to prevent the user
+                // from skipping past a slow-to-load image by processing too many arrow clicks
                 SetAppBusy(true);
 
                 // Get image
@@ -1268,6 +1270,12 @@ namespace ImageGlass {
                 // Toolbar
                 if (e.KeyCode == Keys.T) {
                     mnuMainToolbar.PerformClick();
+                    return;
+                }
+
+                // Toolbar
+                if (e.KeyCode == Keys.X) {
+                    mnuExifTool.PerformClick();
                     return;
                 }
 
@@ -2436,11 +2444,11 @@ namespace ImageGlass {
                 // Need to load the Windows state here to fix the issue:
                 // https://github.com/d2phap/ImageGlass/issues/358
                 // And to IMPROVE the startup loading speed.
-                var testWindowBound = Configs.FrmMainWindowsBound;
+                var testWindowBound = Configs.FrmMainWindowBound;
                 testWindowBound.Inflate(-10, -10);
 
                 if (Helpers.IsVisibleOnAnyScreen(testWindowBound)) {
-                    this.Bounds = Configs.FrmMainWindowsBound;
+                    this.Bounds = Configs.FrmMainWindowBound;
                 }
                 else {
                     // The saved position no longer exists (e.g. 2d monitor removed).
@@ -2482,7 +2490,7 @@ namespace ImageGlass {
                 // the OnLoad event in order to 'take'.
 
                 // Windows Bound (Position + Size)
-                this.Bounds = Configs.FrmMainWindowsBound;
+                this.Bounds = Configs.FrmMainWindowBound;
 
                 // Load Toolbar buttons
                 // *** Need to trigger after 'this.Bounds'
@@ -2561,7 +2569,7 @@ namespace ImageGlass {
                 // don't save Bound if in Full screen and SlideShow mode
                 if (!Configs.IsFullScreen && !Configs.IsSlideshow) {
                     // Windows Bound-----------------------------------------------------------
-                    Configs.FrmMainWindowsBound = this.Bounds;
+                    Configs.FrmMainWindowBound = this.Bounds;
                 }
             }
 
@@ -2656,7 +2664,7 @@ namespace ImageGlass {
                     }
 
                     // Windows Bound (Position + Size)
-                    this.Bounds = Configs.FrmMainWindowsBound;
+                    this.Bounds = Configs.FrmMainWindowBound;
                 }
 
                 // restore frameless state
@@ -2853,6 +2861,7 @@ namespace ImageGlass {
             // Trigger Mouse Wheel event
             picMain.MouseWheel += picMain_MouseWheel;
 
+
             // Try to use a faster image clock for animating GIFs
             CheckAnimationClock(true);
 
@@ -2866,6 +2875,7 @@ namespace ImageGlass {
             };
             thDeleteWorker.Start();
         }
+
 
         public void LoadFromParams(string[] args) {
             // Load image from param
@@ -3007,6 +3017,7 @@ namespace ImageGlass {
                 mnuMainColorPicker.Text = lang[$"{Name}.{nameof(mnuMainColorPicker)}"];
                 mnuMainPageNav.Text = lang[$"{Name}.{nameof(mnuMainPageNav)}"];
                 mnuMainCrop.Text = lang[$"{Name}.{nameof(mnuMainCrop)}"];
+                mnuExifTool.Text = lang[$"{Name}.{nameof(mnuExifTool)}"];
                 #endregion
 
                 #region Menu Help
@@ -4841,6 +4852,22 @@ namespace ImageGlass {
             ShowCropTool(mnuMainCrop.Checked);
         }
 
+        private void mnuExifTool_Click(object sender, EventArgs e) {
+            if (Local.FExifTool?.IsDisposed != false) {
+                Local.FExifTool = new FrmExifTool();
+            }
+
+            if (!Local.FExifTool.Visible) {
+                Local.FExifTool.TopMost = this.TopMost;
+                Local.FExifTool.Show();
+            }
+
+            if (Configs.IsExifToolAlwaysOnTop) {
+                Local.FExifTool.Owner = this;
+                this.Activate();
+            }
+        }
+
         private void mnuMainSettings_Click(object sender, EventArgs e) {
             if (Local.FSetting.IsDisposed) {
                 Local.FSetting = new frmSetting();
@@ -4992,6 +5019,7 @@ namespace ImageGlass {
         }
 
         #endregion
+
 
     }
 }

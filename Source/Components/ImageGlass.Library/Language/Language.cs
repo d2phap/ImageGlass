@@ -278,6 +278,7 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainColorPicker", "Color picker"); //v5.0
             Items.Add("frmMain.mnuMainPageNav", "Page navigation"); // v7.5
             Items.Add("frmMain.mnuMainCrop", "Cropping"); // v7.6
+            Items.Add("frmMain.mnuExifTool", "Exif tool"); // v7.7
             #endregion
 
             Items.Add("frmMain.mnuMainSettings", "Settings…"); //v3.0
@@ -543,6 +544,10 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lblDefaultColorCode", "Default color code format when copying"); //v5.0
 
             Items.Add("frmSetting.chkShowPageNavAuto", "Auto-show Page navigation tool for multi-page image"); //v7.5
+
+            Items.Add("frmSetting.chkExifToolAlwaysOnTop", "Keep Exif tool always on top"); // v7.7
+            Items.Add("frmSetting.lnkSelectExifTool", "Select Exif tool file"); // v7.7
+            Items.Add("frmSetting.lnkSelectExifTool._NotFound", "The Exif tool does not exist or invalid: \n{0}"); // v7.7
             #endregion
 
             #region TAB Language
@@ -646,6 +651,16 @@ namespace ImageGlass.Library {
             Items.Add("frmCrop.btnSaveAs", "Save as…"); //v7.6
             Items.Add("frmCrop.btnCopy", "Copy"); //v7.6
             Items.Add("frmCrop.btnClear", "Clear"); //v7.6
+
+            #endregion
+
+            #region FrmExifTool
+            Items.Add("FrmExifTool.clnProperty", "Property"); // v7.7
+            Items.Add("FrmExifTool.clnValue", "Value"); // v7.7
+
+            Items.Add("FrmExifTool.btnCopyValue", "Copy value"); // v7.7
+            Items.Add("FrmExifTool.btnExport", "Export…"); // v7.7
+            Items.Add("FrmExifTool.btnClose", "Close"); // v7.7
 
             #endregion
         }

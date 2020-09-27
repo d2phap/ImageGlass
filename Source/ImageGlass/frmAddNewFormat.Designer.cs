@@ -42,9 +42,9 @@
             this.panel1.Controls.Add(this.btnOK);
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 123);
+            this.panel1.Location = new System.Drawing.Point(0, 115);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(457, 68);
+            this.panel1.Size = new System.Drawing.Size(425, 63);
             this.panel1.TabIndex = 15;
             // 
             // btnOK
@@ -53,9 +53,9 @@
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnOK.ForeColor = System.Drawing.Color.Black;
-            this.btnOK.Location = new System.Drawing.Point(231, 16);
+            this.btnOK.Location = new System.Drawing.Point(215, 15);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(100, 40);
+            this.btnOK.Size = new System.Drawing.Size(93, 37);
             this.btnOK.TabIndex = 2;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -67,9 +67,9 @@
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnClose.ForeColor = System.Drawing.Color.Black;
-            this.btnClose.Location = new System.Drawing.Point(337, 16);
+            this.btnClose.Location = new System.Drawing.Point(314, 15);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(100, 40);
+            this.btnClose.Size = new System.Drawing.Size(93, 37);
             this.btnClose.TabIndex = 3;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -78,9 +78,9 @@
             // lblFileExtension
             // 
             this.lblFileExtension.AutoSize = true;
-            this.lblFileExtension.Location = new System.Drawing.Point(13, 25);
+            this.lblFileExtension.Location = new System.Drawing.Point(12, 23);
             this.lblFileExtension.Name = "lblFileExtension";
-            this.lblFileExtension.Size = new System.Drawing.Size(118, 25);
+            this.lblFileExtension.Size = new System.Drawing.Size(113, 23);
             this.lblFileExtension.TabIndex = 16;
             this.lblFileExtension.Text = "File extension";
             // 
@@ -89,21 +89,21 @@
             this.txtFileExtension.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtFileExtension.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
-            this.txtFileExtension.Location = new System.Drawing.Point(18, 53);
+            this.txtFileExtension.Location = new System.Drawing.Point(17, 49);
             this.txtFileExtension.Name = "txtFileExtension";
-            this.txtFileExtension.Size = new System.Drawing.Size(419, 31);
+            this.txtFileExtension.Size = new System.Drawing.Size(390, 30);
             this.txtFileExtension.TabIndex = 0;
             this.txtFileExtension.Text = ".svg";
             // 
             // frmAddNewFormat
             // 
             this.AcceptButton = this.btnOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(134F, 134F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(457, 191);
+            this.ClientSize = new System.Drawing.Size(425, 178);
             this.Controls.Add(this.txtFileExtension);
             this.Controls.Add(this.lblFileExtension);
             this.Controls.Add(this.panel1);
@@ -112,7 +112,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmAddNewFormat";
-            this.RightToLeftLayout = true;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
