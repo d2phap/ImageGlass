@@ -121,7 +121,7 @@
             // clnProperty
             // 
             this.clnProperty.Text = "[Property]";
-            this.clnProperty.Width = 300;
+            this.clnProperty.Width = 250;
             // 
             // clnValue
             // 

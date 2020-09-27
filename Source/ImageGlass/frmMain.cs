@@ -655,6 +655,9 @@ namespace ImageGlass {
             // Update the basic info
             UpdateStatusBar();
 
+            // Raise image changed event
+            Local.RaiseImageChangedEvent();
+
             // The image data will load
             Bitmap im = null;
 
@@ -726,10 +729,6 @@ namespace ImageGlass {
 
                 picMain.Text = Configs.Language.Items[$"{Name}.picMain._ErrorText"] + "\r\n" + Local.ImageError.Source + ": " + Local.ImageError.Message;
                 UpdateStatusBar();
-            }
-            else {
-                // Raise image changed event
-                Local.RaiseImageChangedEvent();
             }
 
             _isDraggingImage = false;
