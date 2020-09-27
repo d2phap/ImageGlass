@@ -113,17 +113,12 @@ namespace ImageGlass {
         }
 
         private void btnExport_Click(object sender, EventArgs e) {
-            var sfd = new SaveFileDialog();
+            var sfd = new SaveFileDialog() {
+                Filter = "Text file (*.txt)|*.txt",
+            };
 
             if (sfd.ShowDialog() == DialogResult.OK) {
-                var imgFile = Local.ImageList.GetFileName(Local.CurrentIndex);
-                // todo:
-                // exiftool.exe "C:\Users\d2pha\Desktop\_photo\f.webp" -fast > aaaaa.txt
-                var errorMsg = exifTool.SaveExifData(imgFile, sfd.FileName);
-
-                if (errorMsg.Length > 0) {
-                    MessageBox.Show(errorMsg);
-                }
+                _ = this.exifTool.ExportToFileAsync(sfd.FileName);
             }
         }
 
@@ -222,8 +217,6 @@ namespace ImageGlass {
 
             SetFormState(true);
         }
-
-
 
 
         /// <summary>

@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ImageGlass.Base;
@@ -104,26 +105,6 @@ namespace ImageGlass.Library.Image {
 
 
         /// <summary>
-        /// This method saves EXIF data to an external file (<file>.exif). Only tags with group EXIF are saved.
-        /// </summary>
-        /// <param name="sourceImage">Source Image file path</param>
-        /// <param name="destinationExifFile">Destination .exif file path</param>
-        /// <returns>Empty string if no error</returns>
-        public string SaveExifData(string sourceImage, string destinationExifFile) {
-            // exiftool command
-            var toolPath = this.ToolPath + " ";
-            toolPath += "-fast -m -q -q -tagsfromfile ";
-            toolPath += "\"" + sourceImage + "\" -exif ";
-            toolPath += "\"" + destinationExifFile + "\"";
-
-            var (_, stdErr) = Open(toolPath);
-
-            return stdErr;
-        }
-
-
-
-        /// <summary>
         /// Preprocess unicode filename and load exif data
         /// </summary>
         /// <param name="filename"></param>
@@ -169,9 +150,42 @@ namespace ImageGlass.Library.Image {
         }
 
 
+        /// <summary>
+        /// Write exif data to file
+        /// </summary>
+        /// <param name="destFilename"></param>
+        /// <returns></returns>
+        public async Task ExportToFileAsync(string destFilename) {
+            using var sw = new StreamWriter(destFilename);
+
+            // find the longest Property in exif list
+            var propMaxLength = this.Max(item => item.Name.Length);
+            var currentGroup = "";
+
+            foreach (var item in this) {
+                var itemLine = item.Name.PadRight(propMaxLength + 5) + ":".PadRight(4) + item.Value;
+
+                // write group heading
+                if (item.Group != currentGroup) {
+                    var groupLine = item.Group.PadRight(propMaxLength + 5, '-') + ":";
+                    if (currentGroup.Length > 0) {
+                        groupLine = "\n" + groupLine;
+                    }
+
+                    await sw.WriteLineAsync(groupLine);
+
+                    currentGroup = item.Group;
+                }
+
+                // write exif item
+                await sw.WriteLineAsync(itemLine);
+            }
+
+            await sw.FlushAsync();
+            sw.Close();
+        }
+
         #endregion
-
-
 
 
         #region Private methods
