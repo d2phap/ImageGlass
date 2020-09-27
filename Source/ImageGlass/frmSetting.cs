@@ -311,7 +311,7 @@ namespace ImageGlass {
             lblPageNav.Text = lang[$"{nameof(frmMain)}.mnuMainPageNav"];
             chkShowPageNavAuto.Text = lang[$"{Name}.{nameof(chkShowPageNavAuto)}"];
 
-            lblExifTool.Text = lang[$"{nameof(frmMain)}.mnuExifTool"];
+            lblExifTool.Text = lang[$"{nameof(frmMain)}.mnuExifTool"] + " (https://exiftool.org)";
             chkExifToolAlwaysOnTop.Text = lang[$"{Name}.{nameof(chkExifToolAlwaysOnTop)}"];
             lnkSelectExifTool.Text = lang[$"{Name}.{nameof(lnkSelectExifTool)}"];
             #endregion
