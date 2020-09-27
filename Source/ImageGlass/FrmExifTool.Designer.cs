@@ -47,7 +47,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 488);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(841, 90);
+            this.panel1.Size = new System.Drawing.Size(852, 90);
             this.panel1.TabIndex = 17;
             // 
             // btnCopyValue
@@ -70,7 +70,7 @@
             this.btnExport.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnExport.ForeColor = System.Drawing.Color.Black;
-            this.btnExport.Location = new System.Drawing.Point(499, 26);
+            this.btnExport.Location = new System.Drawing.Point(510, 26);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(155, 42);
             this.btnExport.TabIndex = 2;
@@ -84,7 +84,7 @@
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnClose.ForeColor = System.Drawing.Color.Black;
-            this.btnClose.Location = new System.Drawing.Point(660, 26);
+            this.btnClose.Location = new System.Drawing.Point(671, 26);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(155, 42);
             this.btnClose.TabIndex = 3;
@@ -109,7 +109,7 @@
             this.lvExifItems.MultiSelect = false;
             this.lvExifItems.Name = "lvExifItems";
             this.lvExifItems.ShowItemToolTips = true;
-            this.lvExifItems.Size = new System.Drawing.Size(789, 430);
+            this.lvExifItems.Size = new System.Drawing.Size(800, 430);
             this.lvExifItems.TabIndex = 0;
             this.lvExifItems.UseCompatibleStateImageBehavior = false;
             this.lvExifItems.View = System.Windows.Forms.View.Details;
@@ -135,7 +135,7 @@
             this.panNotFound.Dock = System.Windows.Forms.DockStyle.Top;
             this.panNotFound.Location = new System.Drawing.Point(0, 0);
             this.panNotFound.Name = "panNotFound";
-            this.panNotFound.Size = new System.Drawing.Size(841, 165);
+            this.panNotFound.Size = new System.Drawing.Size(852, 165);
             this.panNotFound.TabIndex = 18;
             // 
             // lnkSelectExifTool
@@ -165,7 +165,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(134F, 134F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
-            this.ClientSize = new System.Drawing.Size(841, 578);
+            this.ClientSize = new System.Drawing.Size(852, 578);
             this.Controls.Add(this.panNotFound);
             this.Controls.Add(this.lvExifItems);
             this.Controls.Add(this.panel1);
