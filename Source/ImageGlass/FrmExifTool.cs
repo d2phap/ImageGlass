@@ -211,8 +211,13 @@ namespace ImageGlass {
             for (var i = 0; i < this.exifTool.Count; i++) {
                 var item = this.exifTool[i];
                 var li = new ListViewItem((i + 1).ToString()) {
-                    Group = lvExifItems.Groups[item.Group]
+                    Group = lvExifItems.Groups[item.Group],
                 };
+
+                // highlight File Name
+                if (item.Name == "File Name") {
+                    li.Font = new Font(this.Font, FontStyle.Bold);
+                }
 
                 _ = li.SubItems.Add(item.Name);
                 _ = li.SubItems.Add(item.Value);
