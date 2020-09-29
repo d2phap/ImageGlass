@@ -94,6 +94,11 @@ namespace ImageGlass.Settings {
         public static bool IsColorPickerHSLA { get; set; } = true;
 
         /// <summary>
+        /// Check if user wants to display HSV with Alpha color code for Color Picker tool
+        /// </summary>
+        public static bool IsColorPickerHSVA { get; set; } = true;
+
+        /// <summary>
         /// Gets, sets welcome picture value
         /// </summary>
         public static bool IsShowWelcome { get; set; } = true;
@@ -520,6 +525,7 @@ namespace ImageGlass.Settings {
             IsColorPickerRGBA = Get<bool>(nameof(IsColorPickerRGBA), IsColorPickerRGBA);
             IsColorPickerHEXA = Get<bool>(nameof(IsColorPickerHEXA), IsColorPickerHEXA);
             IsColorPickerHSLA = Get<bool>(nameof(IsColorPickerHSLA), IsColorPickerHSLA);
+            IsColorPickerHSVA = Get<bool>(nameof(IsColorPickerHSVA), IsColorPickerHSVA);
             IsShowWelcome = Get<bool>(nameof(IsShowWelcome), IsShowWelcome);
             IsShowToolBar = Get<bool>(nameof(IsShowToolBar), IsShowToolBar);
             IsShowThumbnailScrollbar = Get<bool>(nameof(IsShowThumbnailScrollbar), IsShowThumbnailScrollbar);
@@ -744,6 +750,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsColorPickerRGBA), IsColorPickerRGBA);
             Set(nameof(IsColorPickerHEXA), IsColorPickerHEXA);
             Set(nameof(IsColorPickerHSLA), IsColorPickerHSLA);
+            Set(nameof(IsColorPickerHSVA), IsColorPickerHSVA);
             Set(nameof(IsShowWelcome), IsShowWelcome);
             Set(nameof(IsShowToolBar), IsShowToolBar);
             Set(nameof(IsShowThumbnailScrollbar), IsShowThumbnailScrollbar);

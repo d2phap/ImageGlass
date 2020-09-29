@@ -706,6 +706,23 @@ namespace ImageGlass.UI {
         }
 
         /// <summary>
+        /// Convert Color to HSVA
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public static float[] ConvertColorToHSVA(Color c) {
+            int max = Math.Max(c.R, Math.Max(c.G, c.B));
+            int min = Math.Min(c.R, Math.Min(c.G, c.B));
+
+            var hue = (float)Math.Round(c.GetHue());
+            var saturation = (float)Math.Round(100 * ((max == 0) ? 0 : 1f - (1f * min / max)));
+            var value = (float)Math.Round(max * 100f / 255);
+            var alpha = (float)Math.Round(c.A / 255.0, 3);
+
+            return new[] { hue, saturation, value, alpha };
+        }
+
+        /// <summary>
         /// Convert Color to HEX (with alpha)
         /// </summary>
         /// <param name="c"></param>

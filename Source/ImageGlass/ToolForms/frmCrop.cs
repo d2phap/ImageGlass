@@ -29,7 +29,7 @@ using System.Windows.Forms;
 namespace ImageGlass {
     public partial class frmCrop: ToolForm {
         // default location offset on the parent form
-        private static readonly Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(420));
+        private static readonly Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(440));
         private ImageBoxEx _imgBox;
 
         /// <summary>

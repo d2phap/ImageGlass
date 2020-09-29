@@ -165,6 +165,7 @@ namespace ImageGlass
             this.lvUsedButtons = new System.Windows.Forms.ListView();
             this.btnMoveDown = new System.Windows.Forms.Button();
             this.tabTools = new System.Windows.Forms.TabPage();
+            this.chkColorUseHSVA = new System.Windows.Forms.CheckBox();
             this.lnkSelectExifTool = new System.Windows.Forms.LinkLabel();
             this.lblExifToolPath = new System.Windows.Forms.Label();
             this.lblExifTool = new System.Windows.Forms.Label();
@@ -2018,6 +2019,7 @@ namespace ImageGlass
             // 
             this.tabTools.AutoScroll = true;
             this.tabTools.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
+            this.tabTools.Controls.Add(this.chkColorUseHSVA);
             this.tabTools.Controls.Add(this.lnkSelectExifTool);
             this.tabTools.Controls.Add(this.lblExifToolPath);
             this.tabTools.Controls.Add(this.lblExifTool);
@@ -2035,12 +2037,24 @@ namespace ImageGlass
             this.tabTools.TabIndex = 5;
             this.tabTools.Text = "tools";
             // 
+            // chkColorUseHSVA
+            // 
+            this.chkColorUseHSVA.AutoSize = true;
+            this.chkColorUseHSVA.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkColorUseHSVA.Location = new System.Drawing.Point(42, 144);
+            this.chkColorUseHSVA.Margin = new System.Windows.Forms.Padding(2);
+            this.chkColorUseHSVA.Name = "chkColorUseHSVA";
+            this.chkColorUseHSVA.Size = new System.Drawing.Size(186, 28);
+            this.chkColorUseHSVA.TabIndex = 63;
+            this.chkColorUseHSVA.Text = "[Use HSVA format]";
+            this.chkColorUseHSVA.UseVisualStyleBackColor = true;
+            // 
             // lnkSelectExifTool
             // 
             this.lnkSelectExifTool.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
             this.lnkSelectExifTool.AutoSize = true;
             this.lnkSelectExifTool.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkSelectExifTool.Location = new System.Drawing.Point(38, 360);
+            this.lnkSelectExifTool.Location = new System.Drawing.Point(38, 381);
             this.lnkSelectExifTool.Name = "lnkSelectExifTool";
             this.lnkSelectExifTool.Size = new System.Drawing.Size(148, 23);
             this.lnkSelectExifTool.TabIndex = 62;
@@ -2053,7 +2067,7 @@ namespace ImageGlass
             // 
             this.lblExifToolPath.AutoSize = true;
             this.lblExifToolPath.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExifToolPath.Location = new System.Drawing.Point(38, 386);
+            this.lblExifToolPath.Location = new System.Drawing.Point(38, 407);
             this.lblExifToolPath.Name = "lblExifToolPath";
             this.lblExifToolPath.Size = new System.Drawing.Size(186, 23);
             this.lblExifToolPath.TabIndex = 61;
@@ -2063,7 +2077,7 @@ namespace ImageGlass
             // 
             this.lblExifTool.AutoSize = true;
             this.lblExifTool.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExifTool.Location = new System.Drawing.Point(23, 284);
+            this.lblExifTool.Location = new System.Drawing.Point(23, 305);
             this.lblExifTool.Name = "lblExifTool";
             this.lblExifTool.Size = new System.Drawing.Size(89, 23);
             this.lblExifTool.TabIndex = 59;
@@ -2073,7 +2087,7 @@ namespace ImageGlass
             // 
             this.chkExifToolAlwaysOnTop.AutoSize = true;
             this.chkExifToolAlwaysOnTop.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkExifToolAlwaysOnTop.Location = new System.Drawing.Point(42, 314);
+            this.chkExifToolAlwaysOnTop.Location = new System.Drawing.Point(42, 335);
             this.chkExifToolAlwaysOnTop.Margin = new System.Windows.Forms.Padding(2);
             this.chkExifToolAlwaysOnTop.Name = "chkExifToolAlwaysOnTop";
             this.chkExifToolAlwaysOnTop.Size = new System.Drawing.Size(269, 28);
@@ -2085,7 +2099,7 @@ namespace ImageGlass
             // 
             this.lblPageNav.AutoSize = true;
             this.lblPageNav.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPageNav.Location = new System.Drawing.Point(23, 186);
+            this.lblPageNav.Location = new System.Drawing.Point(23, 207);
             this.lblPageNav.Name = "lblPageNav";
             this.lblPageNav.Size = new System.Drawing.Size(151, 23);
             this.lblPageNav.TabIndex = 58;
@@ -2095,7 +2109,7 @@ namespace ImageGlass
             // 
             this.chkShowPageNavAuto.AutoSize = true;
             this.chkShowPageNavAuto.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkShowPageNavAuto.Location = new System.Drawing.Point(42, 216);
+            this.chkShowPageNavAuto.Location = new System.Drawing.Point(42, 237);
             this.chkShowPageNavAuto.Margin = new System.Windows.Forms.Padding(2);
             this.chkShowPageNavAuto.Name = "chkShowPageNavAuto";
             this.chkShowPageNavAuto.Size = new System.Drawing.Size(467, 28);
@@ -2940,5 +2954,6 @@ namespace ImageGlass
         private System.Windows.Forms.Label lblExifToolPath;
         private System.Windows.Forms.LinkLabel lnkSelectExifTool;
         private System.Windows.Forms.CheckBox chkHideTooltips;
+        private System.Windows.Forms.CheckBox chkColorUseHSVA;
     }
 }

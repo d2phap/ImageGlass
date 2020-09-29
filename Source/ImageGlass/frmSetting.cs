@@ -308,6 +308,7 @@ namespace ImageGlass {
             chkColorUseRGBA.Text = lang[$"{Name}.{nameof(chkColorUseRGBA)}"];
             chkColorUseHEXA.Text = lang[$"{Name}.{nameof(chkColorUseHEXA)}"];
             chkColorUseHSLA.Text = lang[$"{Name}.{nameof(chkColorUseHSLA)}"];
+            chkColorUseHSVA.Text = lang[$"{Name}.{nameof(chkColorUseHSVA)}"];
 
             lblPageNav.Text = lang[$"{nameof(frmMain)}.mnuMainPageNav"];
             chkShowPageNavAuto.Text = lang[$"{Name}.{nameof(chkShowPageNavAuto)}"];
@@ -1379,6 +1380,7 @@ namespace ImageGlass {
             chkColorUseRGBA.Checked = Configs.IsColorPickerRGBA;
             chkColorUseHEXA.Checked = Configs.IsColorPickerHEXA;
             chkColorUseHSLA.Checked = Configs.IsColorPickerHSLA;
+            chkColorUseHSVA.Checked = Configs.IsColorPickerHSVA;
 
             chkShowPageNavAuto.Checked = Configs.IsShowPageNavAuto;
 
@@ -2027,6 +2029,7 @@ namespace ImageGlass {
             Configs.IsColorPickerRGBA = chkColorUseRGBA.Checked;
             Configs.IsColorPickerHEXA = chkColorUseHEXA.Checked;
             Configs.IsColorPickerHSLA = chkColorUseHSLA.Checked;
+            Configs.IsColorPickerHSVA = chkColorUseHSVA.Checked;
 
             Configs.IsShowPageNavAuto = chkShowPageNavAuto.Checked;
             Configs.IsExifToolAlwaysOnTop = chkExifToolAlwaysOnTop.Checked;
@@ -2039,6 +2042,5 @@ namespace ImageGlass {
 
         #endregion
 
-        
     }
 }

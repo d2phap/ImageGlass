@@ -539,9 +539,10 @@ namespace ImageGlass.Library {
             #endregion
 
             #region TAB Tools
-            Items.Add("frmSetting.chkColorUseRGBA", "Use RGBA format"); //v5.0
-            Items.Add("frmSetting.chkColorUseHEXA", "Use HEX with alpha format"); //v5.0
-            Items.Add("frmSetting.chkColorUseHSLA", "Use HSLA format"); //v5.0
+            Items.Add("frmSetting.chkColorUseRGBA", "Use RGB format with Alpha value"); //v5.0
+            Items.Add("frmSetting.chkColorUseHEXA", "Use HEX format with Alpha value"); //v5.0
+            Items.Add("frmSetting.chkColorUseHSLA", "Use HSL format with Alpha value"); //v5.0
+            Items.Add("frmSetting.chkColorUseHSVA", "Use HSV format with Alpha value"); //v7.7
             Items.Add("frmSetting.lblDefaultColorCode", "Default color code format when copying"); //v5.0
 
             Items.Add("frmSetting.chkShowPageNavAuto", "Auto-show Page navigation tool for multi-page image"); //v7.5

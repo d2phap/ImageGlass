@@ -117,17 +117,17 @@ namespace ImageGlass {
             lblPixel.BackColor = Color.Transparent;
             panelColor.BackColor = color;
 
-            //RGBA color -----------------------------------------------
+            // RGBA color -----------------------------------------------
             if (Configs.IsColorPickerRGBA) {
                 lblRGB.Text = "RGBA:";
-                txtRGB.Text = string.Format("{0}, {1}, {2}, {3}", color.R, color.G, color.B, Math.Round(color.A / 255.0, 3));
+                txtRGB.Text = $"{color.R}, {color.G}, {color.B}, {Math.Round(color.A / 255.0, 3)}";
             }
             else {
                 lblRGB.Text = "RGB:";
-                txtRGB.Text = string.Format("{0}, {1}, {2}", color.R, color.G, color.B);
+                txtRGB.Text = $"{color.R}, {color.G}, {color.B}";
             }
 
-            //HEXA color -----------------------------------------------
+            // HEXA color -----------------------------------------------
             if (Configs.IsColorPickerHEXA) {
                 lblHEX.Text = "HEXA:";
                 txtHEX.Text = Theme.ConvertColorToHEX(color);
@@ -137,20 +137,32 @@ namespace ImageGlass {
                 txtHEX.Text = Theme.ConvertColorToHEX(color, true);
             }
 
-            //CMYK color -----------------------------------------------
+            // CMYK color -----------------------------------------------
             var cmyk = Theme.ConvertColorToCMYK(color);
-            txtCMYK.Text = string.Format("{0}%, {1}%, {2}%, {3}%", cmyk[0], cmyk[1], cmyk[2], cmyk[3]);
+            txtCMYK.Text = $"{cmyk[0]}%, {cmyk[1]}%, {cmyk[2]}%, {cmyk[3]}%";
 
-            //HSLA color -----------------------------------------------
+            // HSLA color -----------------------------------------------
             var hsla = Theme.ConvertColorToHSLA(color);
             if (Configs.IsColorPickerHSLA) {
                 lblHSL.Text = "HSLA:";
-                txtHSL.Text = string.Format("{0}, {1}%, {2}%, {3}", hsla[0], hsla[1], hsla[2], hsla[3]);
+                txtHSL.Text = $"{hsla[0]}, {hsla[1]}%, {hsla[2]}%, {hsla[3]}";
             }
             else {
                 lblHSL.Text = "HSL:";
-                txtHSL.Text = string.Format("{0}, {1}%, {2}%", hsla[0], hsla[1], hsla[2]);
+                txtHSL.Text = $"{hsla[0]}, {hsla[1]}%, {hsla[2]}%";
             }
+
+            // HSVA color -----------------------------------------------
+            var hsva = Theme.ConvertColorToHSVA(color);
+            if (Configs.IsColorPickerHSVA) {
+                lblHSV.Text = "HSVA:";
+                txtHSV.Text = $"{hsva[0]}, {hsva[1]}%, {hsva[2]}%, {hsva[3]}";
+            }
+            else {
+                lblHSV.Text = "HSV:";
+                txtHSV.Text = $"{hsva[0]}, {hsva[1]}%, {hsva[2]}%";
+            }
+
 
             lblPixel.ForeColor = Theme.InvertBlackAndWhiteColor(color);
         }
