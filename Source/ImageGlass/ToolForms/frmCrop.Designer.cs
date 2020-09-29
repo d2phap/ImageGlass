@@ -254,7 +254,7 @@
             // btnSave
             // 
             this.btnSave.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.Location = new System.Drawing.Point(19, 14);
             this.btnSave.Margin = new System.Windows.Forms.Padding(19, 14, 5, 5);
@@ -268,7 +268,7 @@
             // btnSaveAs
             // 
             this.btnSaveAs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSaveAs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveAs.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnSaveAs.ForeColor = System.Drawing.Color.White;
             this.btnSaveAs.Location = new System.Drawing.Point(162, 14);
             this.btnSaveAs.Margin = new System.Windows.Forms.Padding(5, 14, 19, 5);
@@ -282,7 +282,7 @@
             // btnCopy
             // 
             this.btnCopy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCopy.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCopy.ForeColor = System.Drawing.Color.White;
             this.btnCopy.Location = new System.Drawing.Point(19, 65);
             this.btnCopy.Margin = new System.Windows.Forms.Padding(19, 5, 5, 14);
@@ -293,14 +293,14 @@
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.CropActionButton_Click);
             // 
-            // btnClear
+            // btnReset
             // 
             this.btnReset.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReset.ForeColor = System.Drawing.Color.White;
             this.btnReset.Location = new System.Drawing.Point(162, 65);
             this.btnReset.Margin = new System.Windows.Forms.Padding(5, 5, 19, 14);
-            this.btnReset.Name = "btnClear";
+            this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(133, 42);
             this.btnReset.TabIndex = 25;
             this.btnReset.Text = "[Reset]";
