@@ -535,6 +535,7 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.btnMoveUp._Tooltip", "Move selected button up"); // tooltip
 
             Items.Add("frmSetting.chkHorzCenterToolbarBtns", "Center toolbar buttons horizontally in window"); // V6.0
+            Items.Add("frmSetting.chkHideTooltips", "Hide toolbar tooltips"); // v7.7
             #endregion
 
             #region TAB Tools

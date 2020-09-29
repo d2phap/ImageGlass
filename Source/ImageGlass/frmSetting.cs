@@ -117,7 +117,7 @@ namespace ImageGlass {
             // windows state--------------------------------------------------------------
             WindowState = Configs.FrmSettingsWindowState;
 
-            InitLanguagePack(); // Needs to be done before setting up the initial tab
+            LoadLanguagePack(); // Needs to be done before setting up the initial tab
 
             // Get the last view of tab --------------------------------------------------
             tab1.SelectedIndex = Local.SettingsTabLastView;
@@ -161,7 +161,7 @@ namespace ImageGlass {
         /// <summary>
         /// Load language pack
         /// </summary>
-        private void InitLanguagePack() {
+        private void LoadLanguagePack() {
             var lang = Configs.Language.Items;
 
             RightToLeft = Configs.Language.IsRightToLeftLayout;
@@ -290,6 +290,7 @@ namespace ImageGlass {
             #region TOOLBAR TAB
             lblToolbarPosition.Text = lang[$"{Name}.{nameof(lblToolbarPosition)}"];
             chkHorzCenterToolbarBtns.Text = lang[$"{Name}.{nameof(chkHorzCenterToolbarBtns)}"];
+            chkHideTooltips.Text = lang[$"{Name}.{nameof(chkHideTooltips)}"];
 
             _separatorText = lang[$"{Name}._separator"];
             lblUsedBtns.Text = lang[$"{Name}.{nameof(lblUsedBtns)}"];
@@ -1081,6 +1082,7 @@ namespace ImageGlass {
 
             cmbToolbarPosition.SelectedIndex = (int)Configs.ToolbarPosition;
             chkHorzCenterToolbarBtns.Checked = Configs.IsCenterToolbar;
+            chkHideTooltips.Checked = Configs.IsHideTooltips;
 
             // Apply Windows System theme to listview
             SystemRenderer.ApplyTheme(lvAvailButtons);
@@ -2006,6 +2008,15 @@ namespace ImageGlass {
             if (Configs.IsCenterToolbar != newBool) {
                 Configs.IsCenterToolbar = newBool;
                 Local.ForceUpdateActions |= ForceUpdateActions.TOOLBAR_POSITION;
+            }
+            #endregion
+
+            #region HideToolbarTooltips: MainFormForceUpdateAction.LANGUAGE
+            newBool = chkHideTooltips.Checked;
+
+            if (Configs.IsHideTooltips != newBool) {
+                Configs.IsHideTooltips = newBool;
+                Local.ForceUpdateActions |= ForceUpdateActions.LANGUAGE;
             }
             #endregion
 

@@ -151,6 +151,7 @@ namespace ImageGlass
             this.tabToolbar = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.chkHideTooltips = new System.Windows.Forms.CheckBox();
             this.lblToolbarPosition = new System.Windows.Forms.Label();
             this.chkHorzCenterToolbarBtns = new System.Windows.Forms.CheckBox();
             this.cmbToolbarPosition = new System.Windows.Forms.ComboBox();
@@ -164,6 +165,10 @@ namespace ImageGlass
             this.lvUsedButtons = new System.Windows.Forms.ListView();
             this.btnMoveDown = new System.Windows.Forms.Button();
             this.tabTools = new System.Windows.Forms.TabPage();
+            this.lnkSelectExifTool = new System.Windows.Forms.LinkLabel();
+            this.lblExifToolPath = new System.Windows.Forms.Label();
+            this.lblExifTool = new System.Windows.Forms.Label();
+            this.chkExifToolAlwaysOnTop = new System.Windows.Forms.CheckBox();
             this.lblPageNav = new System.Windows.Forms.Label();
             this.chkShowPageNavAuto = new System.Windows.Forms.CheckBox();
             this.chkColorUseHSLA = new System.Windows.Forms.CheckBox();
@@ -208,10 +213,6 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.lblExifTool = new System.Windows.Forms.Label();
-            this.chkExifToolAlwaysOnTop = new System.Windows.Forms.CheckBox();
-            this.lblExifToolPath = new System.Windows.Forms.Label();
-            this.lnkSelectExifTool = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
@@ -1814,13 +1815,14 @@ namespace ImageGlass
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 130F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 168F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(731, 492);
             this.tableLayoutPanel1.TabIndex = 50;
             // 
             // panel9
             // 
+            this.panel9.Controls.Add(this.chkHideTooltips);
             this.panel9.Controls.Add(this.lblToolbarPosition);
             this.panel9.Controls.Add(this.chkHorzCenterToolbarBtns);
             this.panel9.Controls.Add(this.cmbToolbarPosition);
@@ -1828,8 +1830,20 @@ namespace ImageGlass
             this.panel9.Location = new System.Drawing.Point(0, 3);
             this.panel9.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(728, 124);
+            this.panel9.Size = new System.Drawing.Size(728, 162);
             this.panel9.TabIndex = 49;
+            // 
+            // chkHideTooltips
+            // 
+            this.chkHideTooltips.AutoSize = true;
+            this.chkHideTooltips.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkHideTooltips.Location = new System.Drawing.Point(27, 116);
+            this.chkHideTooltips.Margin = new System.Windows.Forms.Padding(2);
+            this.chkHideTooltips.Name = "chkHideTooltips";
+            this.chkHideTooltips.Size = new System.Drawing.Size(212, 28);
+            this.chkHideTooltips.TabIndex = 49;
+            this.chkHideTooltips.Text = "[Hide toolbar tooltips]";
+            this.chkHideTooltips.UseVisualStyleBackColor = true;
             // 
             // lblToolbarPosition
             // 
@@ -1877,10 +1891,10 @@ namespace ImageGlass
             this.panel5.Controls.Add(this.lvUsedButtons);
             this.panel5.Controls.Add(this.btnMoveDown);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(0, 133);
+            this.panel5.Location = new System.Drawing.Point(0, 171);
             this.panel5.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(728, 356);
+            this.panel5.Size = new System.Drawing.Size(728, 318);
             this.panel5.TabIndex = 48;
             // 
             // lblAvailBtns
@@ -1900,7 +1914,7 @@ namespace ImageGlass
             this.btnMoveRight.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveRight.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveRight.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMoveRight.Location = new System.Drawing.Point(317, 221);
+            this.btnMoveRight.Location = new System.Drawing.Point(317, 202);
             this.btnMoveRight.Margin = new System.Windows.Forms.Padding(4);
             this.btnMoveRight.Name = "btnMoveRight";
             this.btnMoveRight.Size = new System.Drawing.Size(47, 47);
@@ -1914,7 +1928,7 @@ namespace ImageGlass
             this.btnMoveLeft.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveLeft.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveLeft.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMoveLeft.Location = new System.Drawing.Point(317, 156);
+            this.btnMoveLeft.Location = new System.Drawing.Point(317, 137);
             this.btnMoveLeft.Name = "btnMoveLeft";
             this.btnMoveLeft.Size = new System.Drawing.Size(47, 47);
             this.btnMoveLeft.TabIndex = 51;
@@ -1927,10 +1941,10 @@ namespace ImageGlass
             this.btnMoveUp.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveUp.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveUp.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMoveUp.Location = new System.Drawing.Point(668, 156);
+            this.btnMoveUp.Location = new System.Drawing.Point(668, 137);
             this.btnMoveUp.Name = "btnMoveUp";
             this.btnMoveUp.Size = new System.Drawing.Size(47, 47);
-            this.btnMoveUp.TabIndex = 53;
+            this.btnMoveUp.TabIndex = 54;
             this.btnMoveUp.Text = "▲";
             this.btnMoveUp.UseVisualStyleBackColor = true;
             this.btnMoveUp.Click += new System.EventHandler(this.btnMoveUp_Click);
@@ -1949,8 +1963,8 @@ namespace ImageGlass
             this.lvAvailButtons.Name = "lvAvailButtons";
             this.lvAvailButtons.ShowGroups = false;
             this.lvAvailButtons.ShowItemToolTips = true;
-            this.lvAvailButtons.Size = new System.Drawing.Size(277, 301);
-            this.lvAvailButtons.TabIndex = 49;
+            this.lvAvailButtons.Size = new System.Drawing.Size(277, 263);
+            this.lvAvailButtons.TabIndex = 50;
             this.lvAvailButtons.UseCompatibleStateImageBehavior = false;
             this.lvAvailButtons.SelectedIndexChanged += new System.EventHandler(this.lvAvailButtons_SelectedIndexChanged);
             this.lvAvailButtons.Resize += new System.EventHandler(this.ButtonsListView_Resize);
@@ -1980,8 +1994,8 @@ namespace ImageGlass
             this.lvUsedButtons.Name = "lvUsedButtons";
             this.lvUsedButtons.ShowGroups = false;
             this.lvUsedButtons.ShowItemToolTips = true;
-            this.lvUsedButtons.Size = new System.Drawing.Size(279, 301);
-            this.lvUsedButtons.TabIndex = 50;
+            this.lvUsedButtons.Size = new System.Drawing.Size(279, 263);
+            this.lvUsedButtons.TabIndex = 53;
             this.lvUsedButtons.UseCompatibleStateImageBehavior = false;
             this.lvUsedButtons.View = System.Windows.Forms.View.List;
             this.lvUsedButtons.SelectedIndexChanged += new System.EventHandler(this.lvUsedButtons_SelectedIndexChanged);
@@ -1992,10 +2006,10 @@ namespace ImageGlass
             this.btnMoveDown.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveDown.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMoveDown.Location = new System.Drawing.Point(668, 221);
+            this.btnMoveDown.Location = new System.Drawing.Point(668, 202);
             this.btnMoveDown.Name = "btnMoveDown";
             this.btnMoveDown.Size = new System.Drawing.Size(47, 47);
-            this.btnMoveDown.TabIndex = 54;
+            this.btnMoveDown.TabIndex = 55;
             this.btnMoveDown.Text = "▼";
             this.btnMoveDown.UseVisualStyleBackColor = true;
             this.btnMoveDown.Click += new System.EventHandler(this.btnMoveDown_Click);
@@ -2020,6 +2034,52 @@ namespace ImageGlass
             this.tabTools.Size = new System.Drawing.Size(731, 492);
             this.tabTools.TabIndex = 5;
             this.tabTools.Text = "tools";
+            // 
+            // lnkSelectExifTool
+            // 
+            this.lnkSelectExifTool.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
+            this.lnkSelectExifTool.AutoSize = true;
+            this.lnkSelectExifTool.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
+            this.lnkSelectExifTool.Location = new System.Drawing.Point(38, 360);
+            this.lnkSelectExifTool.Name = "lnkSelectExifTool";
+            this.lnkSelectExifTool.Size = new System.Drawing.Size(148, 23);
+            this.lnkSelectExifTool.TabIndex = 62;
+            this.lnkSelectExifTool.TabStop = true;
+            this.lnkSelectExifTool.Text = "Select Exif tool file";
+            this.lnkSelectExifTool.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
+            this.lnkSelectExifTool.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSelectExifTool_LinkClicked);
+            // 
+            // lblExifToolPath
+            // 
+            this.lblExifToolPath.AutoSize = true;
+            this.lblExifToolPath.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblExifToolPath.Location = new System.Drawing.Point(38, 386);
+            this.lblExifToolPath.Name = "lblExifToolPath";
+            this.lblExifToolPath.Size = new System.Drawing.Size(186, 23);
+            this.lblExifToolPath.TabIndex = 61;
+            this.lblExifToolPath.Text = "C:\\aaa\\bbb\\exiftool.exe";
+            // 
+            // lblExifTool
+            // 
+            this.lblExifTool.AutoSize = true;
+            this.lblExifTool.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblExifTool.Location = new System.Drawing.Point(23, 284);
+            this.lblExifTool.Name = "lblExifTool";
+            this.lblExifTool.Size = new System.Drawing.Size(89, 23);
+            this.lblExifTool.TabIndex = 59;
+            this.lblExifTool.Text = "[Exif tool]";
+            // 
+            // chkExifToolAlwaysOnTop
+            // 
+            this.chkExifToolAlwaysOnTop.AutoSize = true;
+            this.chkExifToolAlwaysOnTop.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkExifToolAlwaysOnTop.Location = new System.Drawing.Point(42, 314);
+            this.chkExifToolAlwaysOnTop.Margin = new System.Windows.Forms.Padding(2);
+            this.chkExifToolAlwaysOnTop.Name = "chkExifToolAlwaysOnTop";
+            this.chkExifToolAlwaysOnTop.Size = new System.Drawing.Size(269, 28);
+            this.chkExifToolAlwaysOnTop.TabIndex = 60;
+            this.chkExifToolAlwaysOnTop.Text = "[Keep Exif tool always on top]";
+            this.chkExifToolAlwaysOnTop.UseVisualStyleBackColor = true;
             // 
             // lblPageNav
             // 
@@ -2626,52 +2686,6 @@ namespace ImageGlass
             this.panel4.Size = new System.Drawing.Size(972, 67);
             this.panel4.TabIndex = 18;
             // 
-            // lblExifTool
-            // 
-            this.lblExifTool.AutoSize = true;
-            this.lblExifTool.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExifTool.Location = new System.Drawing.Point(23, 284);
-            this.lblExifTool.Name = "lblExifTool";
-            this.lblExifTool.Size = new System.Drawing.Size(89, 23);
-            this.lblExifTool.TabIndex = 59;
-            this.lblExifTool.Text = "[Exif tool]";
-            // 
-            // chkExifToolAlwaysOnTop
-            // 
-            this.chkExifToolAlwaysOnTop.AutoSize = true;
-            this.chkExifToolAlwaysOnTop.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkExifToolAlwaysOnTop.Location = new System.Drawing.Point(42, 314);
-            this.chkExifToolAlwaysOnTop.Margin = new System.Windows.Forms.Padding(2);
-            this.chkExifToolAlwaysOnTop.Name = "chkExifToolAlwaysOnTop";
-            this.chkExifToolAlwaysOnTop.Size = new System.Drawing.Size(269, 28);
-            this.chkExifToolAlwaysOnTop.TabIndex = 60;
-            this.chkExifToolAlwaysOnTop.Text = "[Keep Exif tool always on top]";
-            this.chkExifToolAlwaysOnTop.UseVisualStyleBackColor = true;
-            // 
-            // lblExifToolPath
-            // 
-            this.lblExifToolPath.AutoSize = true;
-            this.lblExifToolPath.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExifToolPath.Location = new System.Drawing.Point(38, 386);
-            this.lblExifToolPath.Name = "lblExifToolPath";
-            this.lblExifToolPath.Size = new System.Drawing.Size(186, 23);
-            this.lblExifToolPath.TabIndex = 61;
-            this.lblExifToolPath.Text = "C:\\aaa\\bbb\\exiftool.exe";
-            // 
-            // lnkSelectExifTool
-            // 
-            this.lnkSelectExifTool.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
-            this.lnkSelectExifTool.AutoSize = true;
-            this.lnkSelectExifTool.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkSelectExifTool.Location = new System.Drawing.Point(38, 360);
-            this.lnkSelectExifTool.Name = "lnkSelectExifTool";
-            this.lnkSelectExifTool.Size = new System.Drawing.Size(148, 23);
-            this.lnkSelectExifTool.TabIndex = 62;
-            this.lnkSelectExifTool.TabStop = true;
-            this.lnkSelectExifTool.Text = "Select Exif tool file";
-            this.lnkSelectExifTool.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkSelectExifTool.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSelectExifTool_LinkClicked);
-            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(134F, 134F);
@@ -2925,5 +2939,6 @@ namespace ImageGlass
         private System.Windows.Forms.CheckBox chkExifToolAlwaysOnTop;
         private System.Windows.Forms.Label lblExifToolPath;
         private System.Windows.Forms.LinkLabel lnkSelectExifTool;
+        private System.Windows.Forms.CheckBox chkHideTooltips;
     }
 }
