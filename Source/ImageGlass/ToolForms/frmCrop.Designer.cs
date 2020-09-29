@@ -64,7 +64,7 @@
             this.btnSnapTo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSnapTo.ForeColor = System.Drawing.Color.White;
             this.btnSnapTo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSnapTo.Location = new System.Drawing.Point(173, 2);
+            this.btnSnapTo.Location = new System.Drawing.Point(153, 2);
             this.btnSnapTo.Margin = new System.Windows.Forms.Padding(4);
             this.btnSnapTo.Name = "btnSnapTo";
             this.btnSnapTo.Size = new System.Drawing.Size(69, 37);
@@ -83,7 +83,7 @@
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.ForeColor = System.Drawing.Color.White;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(244, 2);
+            this.btnClose.Location = new System.Drawing.Point(224, 2);
             this.btnClose.Margin = new System.Windows.Forms.Padding(4);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(69, 37);
@@ -172,7 +172,7 @@
             this.tableFactors.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableFactors.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableFactors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
-            this.tableFactors.Size = new System.Drawing.Size(313, 154);
+            this.tableFactors.Size = new System.Drawing.Size(294, 154);
             this.tableFactors.TabIndex = 21;
             // 
             // numHeight
@@ -189,7 +189,7 @@
             0,
             0});
             this.numHeight.Name = "numHeight";
-            this.numHeight.Size = new System.Drawing.Size(200, 30);
+            this.numHeight.Size = new System.Drawing.Size(178, 30);
             this.numHeight.TabIndex = 4;
             this.numHeight.ValueChanged += new System.EventHandler(this.Numeric_ValueChanged);
             this.numHeight.Click += new System.EventHandler(this.Numeric_Click);
@@ -208,7 +208,7 @@
             0,
             0});
             this.numWidth.Name = "numWidth";
-            this.numWidth.Size = new System.Drawing.Size(200, 30);
+            this.numWidth.Size = new System.Drawing.Size(178, 30);
             this.numWidth.TabIndex = 3;
             this.numWidth.ValueChanged += new System.EventHandler(this.Numeric_ValueChanged);
             this.numWidth.Click += new System.EventHandler(this.Numeric_Click);
@@ -227,7 +227,7 @@
             0,
             0});
             this.numY.Name = "numY";
-            this.numY.Size = new System.Drawing.Size(200, 30);
+            this.numY.Size = new System.Drawing.Size(178, 30);
             this.numY.TabIndex = 2;
             this.numY.ValueChanged += new System.EventHandler(this.Numeric_ValueChanged);
             this.numY.Click += new System.EventHandler(this.Numeric_Click);
@@ -246,7 +246,7 @@
             0,
             0});
             this.numX.Name = "numX";
-            this.numX.Size = new System.Drawing.Size(200, 30);
+            this.numX.Size = new System.Drawing.Size(178, 30);
             this.numX.TabIndex = 1;
             this.numX.ValueChanged += new System.EventHandler(this.Numeric_ValueChanged);
             this.numX.Click += new System.EventHandler(this.Numeric_Click);
@@ -259,7 +259,7 @@
             this.btnSave.Location = new System.Drawing.Point(19, 14);
             this.btnSave.Margin = new System.Windows.Forms.Padding(19, 14, 5, 5);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(133, 41);
+            this.btnSave.Size = new System.Drawing.Size(123, 41);
             this.btnSave.TabIndex = 22;
             this.btnSave.Text = "[Save]";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -270,10 +270,10 @@
             this.btnSaveAs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSaveAs.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnSaveAs.ForeColor = System.Drawing.Color.White;
-            this.btnSaveAs.Location = new System.Drawing.Point(162, 14);
+            this.btnSaveAs.Location = new System.Drawing.Point(152, 14);
             this.btnSaveAs.Margin = new System.Windows.Forms.Padding(5, 14, 19, 5);
             this.btnSaveAs.Name = "btnSaveAs";
-            this.btnSaveAs.Size = new System.Drawing.Size(133, 41);
+            this.btnSaveAs.Size = new System.Drawing.Size(123, 41);
             this.btnSaveAs.TabIndex = 23;
             this.btnSaveAs.Text = "[Save as]";
             this.btnSaveAs.UseVisualStyleBackColor = true;
@@ -287,7 +287,7 @@
             this.btnCopy.Location = new System.Drawing.Point(19, 65);
             this.btnCopy.Margin = new System.Windows.Forms.Padding(19, 5, 5, 14);
             this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(133, 42);
+            this.btnCopy.Size = new System.Drawing.Size(123, 42);
             this.btnCopy.TabIndex = 24;
             this.btnCopy.Text = "[Copy]";
             this.btnCopy.UseVisualStyleBackColor = true;
@@ -298,10 +298,10 @@
             this.btnReset.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReset.ForeColor = System.Drawing.Color.White;
-            this.btnReset.Location = new System.Drawing.Point(162, 65);
+            this.btnReset.Location = new System.Drawing.Point(152, 65);
             this.btnReset.Margin = new System.Windows.Forms.Padding(5, 5, 19, 14);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(133, 42);
+            this.btnReset.Size = new System.Drawing.Size(123, 42);
             this.btnReset.TabIndex = 25;
             this.btnReset.Text = "[Reset]";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -324,7 +324,7 @@
             this.tableActions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableActions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableActions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
-            this.tableActions.Size = new System.Drawing.Size(314, 121);
+            this.tableActions.Size = new System.Drawing.Size(294, 121);
             this.tableActions.TabIndex = 26;
             // 
             // lblFormTitle
@@ -338,7 +338,7 @@
             this.lblFormTitle.Margin = new System.Windows.Forms.Padding(14, 0, 4, 0);
             this.lblFormTitle.Name = "lblFormTitle";
             this.lblFormTitle.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
-            this.lblFormTitle.Size = new System.Drawing.Size(165, 30);
+            this.lblFormTitle.Size = new System.Drawing.Size(145, 30);
             this.lblFormTitle.TabIndex = 28;
             this.lblFormTitle.Text = "[Cropping]";
             this.lblFormTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -348,7 +348,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(134F, 134F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
-            this.ClientSize = new System.Drawing.Size(314, 335);
+            this.ClientSize = new System.Drawing.Size(294, 335);
             this.Controls.Add(this.lblFormTitle);
             this.Controls.Add(this.tableActions);
             this.Controls.Add(this.tableFactors);
