@@ -652,7 +652,7 @@ namespace ImageGlass.Library {
             Items.Add("frmCrop.btnSave", "Save"); //v7.6
             Items.Add("frmCrop.btnSaveAs", "Save as…"); //v7.6
             Items.Add("frmCrop.btnCopy", "Copy"); //v7.6
-            Items.Add("frmCrop.btnClear", "Clear"); //v7.6
+            Items.Add("frmCrop.btnReset", "Reset"); //v7.7
 
             #endregion
 
