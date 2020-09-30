@@ -3945,7 +3945,8 @@ namespace ImageGlass {
                         UpdateStatusBar();
                     }
                     catch (Exception ex) {
-                        ShowToastMsg(ex.Source + ": " + ex.Message, 3000);
+                        var msg = Configs.Language.Items[$"{Name}._InvalidImageClipboardData"];
+                        ShowToastMsg($"{msg}\r\n{ex.Source}: {ex.Message}", 3000);
                     }
                 }
             }

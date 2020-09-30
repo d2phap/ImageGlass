@@ -335,6 +335,7 @@ namespace ImageGlass.Library {
 
             Items.Add("frmMain._PageExtractComplete", "Page extraction completed."); // v7.5
             Items.Add("frmMain._Frameless", "Hold SHIFT to move the window."); // v7.5
+            Items.Add("frmMain._InvalidImageClipboardData", "Clipboard does not contain image data."); // v7.7
             #endregion
 
             #endregion
