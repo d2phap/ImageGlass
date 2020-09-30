@@ -53,6 +53,12 @@ namespace ImageGlass.UI {
         /// </summary>
         public bool ToolTipShowUp { get; set; } = false;
 
+
+        /// <summary>
+        /// Gets, sets value indicates that the tooltip is shown
+        /// </summary>
+        public bool HideTooltips { get; set; } = true;
+
         private ToolbarAlignment _alignment;
 
         private ToolTip Tooltip {
@@ -81,6 +87,9 @@ namespace ImageGlass.UI {
         #region Protected methods
         protected override void OnMouseMove(MouseEventArgs mea) {
             base.OnMouseMove(mea);
+
+            if (HideTooltips) return;
+
             var newMouseOverItem = this.GetItemAt(mea.Location);
             if (mouseOverItem != newMouseOverItem ||
                 (Math.Abs(mouseOverPoint.X - mea.X) > SystemInformation.MouseHoverSize.Width || (Math.Abs(mouseOverPoint.Y - mea.Y) > SystemInformation.MouseHoverSize.Height))) {

@@ -2013,12 +2013,12 @@ namespace ImageGlass {
             }
             #endregion
 
-            #region HideToolbarTooltips: MainFormForceUpdateAction.LANGUAGE
+            #region HideToolbarTooltips: MainFormForceUpdateAction.TOOLBAR_POSITION
             newBool = chkHideTooltips.Checked;
 
             if (Configs.IsHideTooltips != newBool) {
                 Configs.IsHideTooltips = newBool;
-                Local.ForceUpdateActions |= ForceUpdateActions.LANGUAGE;
+                Local.ForceUpdateActions |= ForceUpdateActions.TOOLBAR_POSITION;
             }
             #endregion
 
