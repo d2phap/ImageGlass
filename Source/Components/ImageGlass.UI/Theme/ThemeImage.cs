@@ -51,9 +51,8 @@ namespace ImageGlass.UI {
             Height = height;
             Filename = filename;
 
-            // KBR 20200903 Don't actually load here - OnDpiChanged will automatically load all icons
             // load icon
-            // Refresh();
+            Refresh();
         }
 
         private static int GetCorrectHeight(int height) {
