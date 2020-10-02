@@ -240,6 +240,7 @@
       <Item key="frmSetting.lblToolbarPosition" value="Позиція панелі інструментів:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Вгорі"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Кнопка"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Toolbar icon size:"/>
       <Item key="frmSetting._separator" value="Розділювач"/>
       <Item key="frmSetting.lblToolbar._Tooltip" value="Налаштування панелі інструментів"/>
       <Item key="frmSetting.lblUsedBtns" value="Поточні кнопки:"/>

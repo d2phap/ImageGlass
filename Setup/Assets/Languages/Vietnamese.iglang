@@ -240,6 +240,7 @@
       <Item key="frmSetting.lblToolbarPosition" value="Vị trí của thanh công cụ:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Ở trên"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Ở dưới"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Toolbar icon size:"/>
       <Item key="frmSetting._separator" value="Phân cách"/>
       <Item key="frmSetting.lblToolbar._Tooltip" value="Cấu hình các nút trên thanh công cụ"/>
       <Item key="frmSetting.lblUsedBtns" value="Các nút hiện tại:"/>

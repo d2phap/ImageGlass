@@ -240,6 +240,7 @@
       <Item key="frmSetting.lblToolbarPosition" value="Pozycja paska narzędzi:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Góra"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Dół"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Toolbar icon size:"/>
       <Item key="frmSetting._separator" value="Separator"/>
       <Item key="frmSetting.lblToolbar._Tooltip" value="Konfiguracja przycisków paska narzędzi"/>
       <Item key="frmSetting.lblUsedBtns" value="Aktualne przyciski:"/>

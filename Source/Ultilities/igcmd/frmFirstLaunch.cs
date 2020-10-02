@@ -38,7 +38,7 @@ namespace igcmd {
         private List<Language> _langList = new List<Language>();
 
         private Language _lang = new Language();
-        private Theme _theme = new Theme();
+        private Theme _theme = new Theme((int)Configs.ToolbarIconHeight);
         private LayoutMode _layout = LayoutMode.Standard;
 
         #region Form events
@@ -149,7 +149,7 @@ namespace igcmd {
         }
 
         private void cmbTheme_SelectedIndexChanged(object sender, EventArgs e) {
-            var selectedTheme = new Theme();
+            var selectedTheme = new Theme((int)Configs.ToolbarIconHeight);
 
             try {
                 selectedTheme = this._themeList[cmbTheme.SelectedIndex];
@@ -238,7 +238,7 @@ namespace igcmd {
         /// </summary>
         private void LoadThemeList() {
             //add default theme
-            var defaultTheme = new Theme(App.StartUpDir(Dir.DefaultTheme));
+            var defaultTheme = new Theme((int)Configs.ToolbarIconHeight, App.StartUpDir(Dir.DefaultTheme));
             _themeList.Add(defaultTheme);
             cmbTheme.Items.Clear();
             cmbTheme.Items.Add(defaultTheme.Name);
@@ -251,7 +251,7 @@ namespace igcmd {
                     var configFile = Path.Combine(d, "igtheme.xml");
 
                     if (File.Exists(configFile)) {
-                        var th = new Theme(d);
+                        var th = new Theme((int)Configs.ToolbarIconHeight, d);
 
                         // invalid theme
                         if (!th.IsValid) {

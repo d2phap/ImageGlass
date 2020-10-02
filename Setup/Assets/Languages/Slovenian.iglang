@@ -240,6 +240,7 @@
       <Item key="frmSetting.lblToolbarPosition" value="Položaj orodne vrstice:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Zgoraj"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Spodaj"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Toolbar icon size:"/>
       <Item key="frmSetting._separator" value="Ločilo"/>
       <Item key="frmSetting.lblToolbar._Tooltip" value="Konfiguriraj gumbe orodne vrstice"/>
       <Item key="frmSetting.lblUsedBtns" value="Trenutni gumbi:"/>

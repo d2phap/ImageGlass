@@ -174,8 +174,9 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Initiate theme object with configuration file (Version 1.5+)
         /// </summary>
+        /// <param name="iconHeight">The height of toolbar icons</param>
         /// <param name="themeFolderPath">The absolute path of theme folder.</param>
-        public Theme(string themeFolderPath = "") => this.IsValid = LoadTheme(themeFolderPath);
+        public Theme(int iconHeight, string themeFolderPath = "") => IsValid = LoadTheme(iconHeight, themeFolderPath);
 
         #region PUBLIC CLASS FUNCS
 
@@ -212,52 +213,53 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Reload the image icons to adapt DPI changes
         /// </summary>
-        public void ReloadIcons() {
-            ToolbarIcons.ViewPreviousImage.Refresh();
-            ToolbarIcons.ViewNextImage.Refresh();
-            ToolbarIcons.RotateLeft.Refresh();
-            ToolbarIcons.RotateRight.Refresh();
-            ToolbarIcons.FlipHorz.Refresh();
-            ToolbarIcons.FlipVert.Refresh();
-            ToolbarIcons.Delete.Refresh();
-            ToolbarIcons.Edit.Refresh();
-            ToolbarIcons.Crop.Refresh();
-            ToolbarIcons.ColorPicker.Refresh();
-            ToolbarIcons.ZoomIn.Refresh();
-            ToolbarIcons.ZoomOut.Refresh();
-            ToolbarIcons.ScaleToFit.Refresh();
-            ToolbarIcons.ActualSize.Refresh();
-            ToolbarIcons.LockRatio.Refresh();
-            ToolbarIcons.AutoZoom.Refresh();
-            ToolbarIcons.ScaleToWidth.Refresh();
-            ToolbarIcons.ScaleToHeight.Refresh();
-            ToolbarIcons.ScaleToFill.Refresh();
-            ToolbarIcons.AdjustWindowSize.Refresh();
-            ToolbarIcons.OpenFile.Refresh();
-            ToolbarIcons.Refresh.Refresh();
-            ToolbarIcons.GoToImage.Refresh();
-            ToolbarIcons.ThumbnailBar.Refresh();
-            ToolbarIcons.Checkerboard.Refresh();
-            ToolbarIcons.FullScreen.Refresh();
-            ToolbarIcons.Slideshow.Refresh();
-            ToolbarIcons.Convert.Refresh();
-            ToolbarIcons.Print.Refresh();
-            ToolbarIcons.Settings.Refresh();
-            ToolbarIcons.About.Refresh();
-            ToolbarIcons.Menu.Refresh();
-            ToolbarIcons.ViewFirstImage.Refresh();
-            ToolbarIcons.ViewLastImage.Refresh();
+        /// <param name="iconHeight">The height of toolbar icons</param>
+        public void ReloadIcons(int iconHeight) {
+            ToolbarIcons.ViewPreviousImage.Refresh(iconHeight);
+            ToolbarIcons.ViewNextImage.Refresh(iconHeight);
+            ToolbarIcons.RotateLeft.Refresh(iconHeight);
+            ToolbarIcons.RotateRight.Refresh(iconHeight);
+            ToolbarIcons.FlipHorz.Refresh(iconHeight);
+            ToolbarIcons.FlipVert.Refresh(iconHeight);
+            ToolbarIcons.Delete.Refresh(iconHeight);
+            ToolbarIcons.Edit.Refresh(iconHeight);
+            ToolbarIcons.Crop.Refresh(iconHeight);
+            ToolbarIcons.ColorPicker.Refresh(iconHeight);
+            ToolbarIcons.ZoomIn.Refresh(iconHeight);
+            ToolbarIcons.ZoomOut.Refresh(iconHeight);
+            ToolbarIcons.ScaleToFit.Refresh(iconHeight);
+            ToolbarIcons.ActualSize.Refresh(iconHeight);
+            ToolbarIcons.LockRatio.Refresh(iconHeight);
+            ToolbarIcons.AutoZoom.Refresh(iconHeight);
+            ToolbarIcons.ScaleToWidth.Refresh(iconHeight);
+            ToolbarIcons.ScaleToHeight.Refresh(iconHeight);
+            ToolbarIcons.ScaleToFill.Refresh(iconHeight);
+            ToolbarIcons.AdjustWindowSize.Refresh(iconHeight);
+            ToolbarIcons.OpenFile.Refresh(iconHeight);
+            ToolbarIcons.Refresh.Refresh(iconHeight);
+            ToolbarIcons.GoToImage.Refresh(iconHeight);
+            ToolbarIcons.ThumbnailBar.Refresh(iconHeight);
+            ToolbarIcons.Checkerboard.Refresh(iconHeight);
+            ToolbarIcons.FullScreen.Refresh(iconHeight);
+            ToolbarIcons.Slideshow.Refresh(iconHeight);
+            ToolbarIcons.Convert.Refresh(iconHeight);
+            ToolbarIcons.Print.Refresh(iconHeight);
+            ToolbarIcons.Settings.Refresh(iconHeight);
+            ToolbarIcons.About.Refresh(iconHeight);
+            ToolbarIcons.Menu.Refresh(iconHeight);
+            ToolbarIcons.ViewFirstImage.Refresh(iconHeight);
+            ToolbarIcons.ViewLastImage.Refresh(iconHeight);
 
             #region Naviagtion arrows (derived from toolbar)
 
-            var arrowHeight = (int)(DPIScaling.Transform(Constants.TOOLBAR_ICON_HEIGHT) * NavArrowMultiplier);
+            var arrowHeight = (int)(DPIScaling.Transform(iconHeight) * NavArrowMultiplier);
 
             var navArrowTemp = new ThemeImage(ToolbarIcons.ViewPreviousImage.Filename, arrowHeight);
-            navArrowTemp.Refresh();
+            navArrowTemp.Refresh(arrowHeight);
             NavArrowLeft = navArrowTemp.Image;
 
             navArrowTemp = new ThemeImage(ToolbarIcons.ViewNextImage.Filename, arrowHeight);
-            navArrowTemp.Refresh();
+            navArrowTemp.Refresh(arrowHeight);
             NavArrowRight = navArrowTemp.Image;
 
             #endregion
@@ -267,10 +269,10 @@ namespace ImageGlass.UI {
         /// Read theme data from theme configuration file (Version 1.5+).
         /// Return TRUE if successful, FALSE if the theme format is invalid
         /// </summary>
+        /// <param name="iconHeight">The height of toolbar icons</param>
         /// <param name="themeFolderPath">The absolute path of theme folder.</param>
-        /// <param name="startUpDir">The absolute startup folder of ImageGlass</param>
         /// <returns></returns>
-        public bool LoadTheme(string themeFolderPath) {
+        public bool LoadTheme(int iconHeight, string themeFolderPath) {
             var configFilePath = Path.Combine(themeFolderPath, "igtheme.xml");
 
             if (!File.Exists(configFilePath)) {
@@ -317,18 +319,18 @@ namespace ImageGlass.UI {
             #endregion
 
             #region Theme <main>
-            PreviewImage = LoadThemeImage(dir, n, "preview");
+            PreviewImage = LoadThemeImage(dir, n, "preview", iconHeight);
 
             n = (XmlElement)nType.SelectNodes("main")[0]; //<main>
 
-            ToolbarBackgroundImage = LoadThemeImage(dir, n, "topbar");
+            ToolbarBackgroundImage = LoadThemeImage(dir, n, "topbar", iconHeight);
 
             var color = FetchColorAttribute(n, "topbarcolor");
             if (color != Color.Transparent) {
                 ToolbarBackgroundColor = color;
             }
 
-            ThumbnailBackgroundImage = LoadThemeImage(dir, n, "bottombar");
+            ThumbnailBackgroundImage = LoadThemeImage(dir, n, "bottombar", iconHeight);
 
             color = FetchColorAttribute(n, "bottombarcolor");
             if (color != Color.Transparent) {
@@ -376,48 +378,48 @@ namespace ImageGlass.UI {
             #region Theme <toolbar_icon>
             n = (XmlElement)nType.SelectNodes("toolbar_icon")[0]; //<toolbar_icon>
 
-            ToolbarIcons.ViewPreviousImage = LoadThemeImage(dir, n, "back");
-            ToolbarIcons.ViewNextImage = LoadThemeImage(dir, n, "next");
-            ToolbarIcons.RotateLeft = LoadThemeImage(dir, n, "leftrotate");
-            ToolbarIcons.RotateRight = LoadThemeImage(dir, n, "rightrotate");
-            ToolbarIcons.FlipHorz = LoadThemeImage(dir, n, "fliphorz");
-            ToolbarIcons.FlipVert = LoadThemeImage(dir, n, "flipvert");
-            ToolbarIcons.Delete = LoadThemeImage(dir, n, "delete");
-            ToolbarIcons.Edit = LoadThemeImage(dir, n, "edit");
-            ToolbarIcons.Crop = LoadThemeImage(dir, n, "crop");
-            ToolbarIcons.ColorPicker = LoadThemeImage(dir, n, "colorpicker");
-            ToolbarIcons.ZoomIn = LoadThemeImage(dir, n, "zoomin");
-            ToolbarIcons.ZoomOut = LoadThemeImage(dir, n, "zoomout");
-            ToolbarIcons.ScaleToFit = LoadThemeImage(dir, n, "zoomtofit");
-            ToolbarIcons.ActualSize = LoadThemeImage(dir, n, "scaletofit");
-            ToolbarIcons.LockRatio = LoadThemeImage(dir, n, "zoomlock");
-            ToolbarIcons.AutoZoom = LoadThemeImage(dir, n, "autozoom");
-            ToolbarIcons.ScaleToWidth = LoadThemeImage(dir, n, "scaletowidth");
-            ToolbarIcons.ScaleToHeight = LoadThemeImage(dir, n, "scaletoheight");
-            ToolbarIcons.ScaleToFill = LoadThemeImage(dir, n, "scaletofill");
-            ToolbarIcons.AdjustWindowSize = LoadThemeImage(dir, n, "autosizewindow");
-            ToolbarIcons.OpenFile = LoadThemeImage(dir, n, "open");
-            ToolbarIcons.Refresh = LoadThemeImage(dir, n, "refresh");
-            ToolbarIcons.GoToImage = LoadThemeImage(dir, n, "gotoimage");
-            ToolbarIcons.ThumbnailBar = LoadThemeImage(dir, n, "thumbnail");
-            ToolbarIcons.Checkerboard = LoadThemeImage(dir, n, "checkerboard");
-            ToolbarIcons.FullScreen = LoadThemeImage(dir, n, "fullscreen");
-            ToolbarIcons.Slideshow = LoadThemeImage(dir, n, "slideshow");
-            ToolbarIcons.Convert = LoadThemeImage(dir, n, "convert");
-            ToolbarIcons.Print = LoadThemeImage(dir, n, "print");
-            ToolbarIcons.Settings = LoadThemeImage(dir, n, "settings");
-            ToolbarIcons.About = LoadThemeImage(dir, n, "about");
-            ToolbarIcons.Menu = LoadThemeImage(dir, n, "menu");
-            ToolbarIcons.ViewFirstImage = LoadThemeImage(dir, n, "gofirst");
-            ToolbarIcons.ViewLastImage = LoadThemeImage(dir, n, "golast");
+            ToolbarIcons.ViewPreviousImage = LoadThemeImage(dir, n, "back", iconHeight);
+            ToolbarIcons.ViewNextImage = LoadThemeImage(dir, n, "next", iconHeight);
+            ToolbarIcons.RotateLeft = LoadThemeImage(dir, n, "leftrotate", iconHeight);
+            ToolbarIcons.RotateRight = LoadThemeImage(dir, n, "rightrotate", iconHeight);
+            ToolbarIcons.FlipHorz = LoadThemeImage(dir, n, "fliphorz", iconHeight);
+            ToolbarIcons.FlipVert = LoadThemeImage(dir, n, "flipvert", iconHeight);
+            ToolbarIcons.Delete = LoadThemeImage(dir, n, "delete", iconHeight);
+            ToolbarIcons.Edit = LoadThemeImage(dir, n, "edit", iconHeight);
+            ToolbarIcons.Crop = LoadThemeImage(dir, n, "crop", iconHeight);
+            ToolbarIcons.ColorPicker = LoadThemeImage(dir, n, "colorpicker", iconHeight);
+            ToolbarIcons.ZoomIn = LoadThemeImage(dir, n, "zoomin", iconHeight);
+            ToolbarIcons.ZoomOut = LoadThemeImage(dir, n, "zoomout", iconHeight);
+            ToolbarIcons.ScaleToFit = LoadThemeImage(dir, n, "zoomtofit", iconHeight);
+            ToolbarIcons.ActualSize = LoadThemeImage(dir, n, "scaletofit", iconHeight);
+            ToolbarIcons.LockRatio = LoadThemeImage(dir, n, "zoomlock", iconHeight);
+            ToolbarIcons.AutoZoom = LoadThemeImage(dir, n, "autozoom", iconHeight);
+            ToolbarIcons.ScaleToWidth = LoadThemeImage(dir, n, "scaletowidth", iconHeight);
+            ToolbarIcons.ScaleToHeight = LoadThemeImage(dir, n, "scaletoheight", iconHeight);
+            ToolbarIcons.ScaleToFill = LoadThemeImage(dir, n, "scaletofill", iconHeight);
+            ToolbarIcons.AdjustWindowSize = LoadThemeImage(dir, n, "autosizewindow", iconHeight);
+            ToolbarIcons.OpenFile = LoadThemeImage(dir, n, "open", iconHeight);
+            ToolbarIcons.Refresh = LoadThemeImage(dir, n, "refresh", iconHeight);
+            ToolbarIcons.GoToImage = LoadThemeImage(dir, n, "gotoimage", iconHeight);
+            ToolbarIcons.ThumbnailBar = LoadThemeImage(dir, n, "thumbnail", iconHeight);
+            ToolbarIcons.Checkerboard = LoadThemeImage(dir, n, "checkerboard", iconHeight);
+            ToolbarIcons.FullScreen = LoadThemeImage(dir, n, "fullscreen", iconHeight);
+            ToolbarIcons.Slideshow = LoadThemeImage(dir, n, "slideshow", iconHeight);
+            ToolbarIcons.Convert = LoadThemeImage(dir, n, "convert", iconHeight);
+            ToolbarIcons.Print = LoadThemeImage(dir, n, "print", iconHeight);
+            ToolbarIcons.Settings = LoadThemeImage(dir, n, "settings", iconHeight);
+            ToolbarIcons.About = LoadThemeImage(dir, n, "about", iconHeight);
+            ToolbarIcons.Menu = LoadThemeImage(dir, n, "menu", iconHeight);
+            ToolbarIcons.ViewFirstImage = LoadThemeImage(dir, n, "gofirst", iconHeight);
+            ToolbarIcons.ViewLastImage = LoadThemeImage(dir, n, "golast", iconHeight);
             #endregion
 
             #region Arrow cursors (derived from toolbar)
 
-            var arrowHeight = (int)(DPIScaling.Transform(Constants.TOOLBAR_ICON_HEIGHT) * NavArrowMultiplier);
+            var arrowHeight = (int)(DPIScaling.Transform(iconHeight) * NavArrowMultiplier);
 
             var navArrowTemp = new ThemeImage(ToolbarIcons.ViewPreviousImage.Filename, arrowHeight);
-            navArrowTemp.Refresh();
+            navArrowTemp.Refresh(arrowHeight);
             NavArrowLeft = navArrowTemp.Image;
 
             NavArrowRight = new ThemeImage(ToolbarIcons.ViewNextImage.Filename, arrowHeight).Image;
@@ -623,7 +625,7 @@ namespace ImageGlass.UI {
                 return ThemePackingResult.ERROR;
             }
 
-            var th = new Theme(themeFolderPath);
+            var th = new Theme(Constants.DEFAULT_TOOLBAR_ICON_HEIGHT, themeFolderPath);
 
             //updated theme config file
             th.SaveAsThemeConfigs(themeFolderPath);

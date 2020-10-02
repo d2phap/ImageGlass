@@ -126,7 +126,7 @@ namespace ImageGlass {
 
         private void OnDpiChanged() {
             // Update size of toolbar
-            DPIScaling.TransformToolbar(ref toolPageNav, Constants.TOOLBAR_HEIGHT);
+            DPIScaling.TransformToolbar(ref toolPageNav, (int)Configs.ToolbarIconHeight);
 
             // Update toolbar icon according to the new size
             LoadToolbarIcons(Configs.Theme);

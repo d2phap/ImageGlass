@@ -240,6 +240,7 @@
       <Item key="frmSetting.lblToolbarPosition" value="Poziție bară de instrumente:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Sus"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Jos"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Toolbar icon size:"/>
       <Item key="frmSetting._separator" value="Separator"/>
       <Item key="frmSetting.lblToolbar._Tooltip" value="Configurați butoanele din bara de instrumente"/>
       <Item key="frmSetting.lblUsedBtns" value="Butoane curente:"/>

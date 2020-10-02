@@ -240,6 +240,7 @@
       <Item key="frmSetting.lblToolbarPosition" value="Θέση εργαλειοθήκης:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Πάνω"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Κάτω"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Toolbar icon size:"/>
       <Item key="frmSetting._separator" value="Διαχωριστικό"/>
       <Item key="frmSetting.lblToolbar._Tooltip" value="Διαμόρφωση κουμπιών εργαλειοθήκης"/>
       <Item key="frmSetting.lblUsedBtns" value="Τρέχοντα κουμπιά:"/>

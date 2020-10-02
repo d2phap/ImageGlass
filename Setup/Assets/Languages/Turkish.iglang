@@ -240,6 +240,7 @@
       <Item key="frmSetting.lblToolbarPosition" value="Araç çubuğu konumu:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Üst"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Alt"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Toolbar icon size:"/>
       <Item key="frmSetting._separator" value="Ayraç"/>
       <Item key="frmSetting.lblToolbar._Tooltip" value="Araç çubuğu butonlarını düzenle"/>
       <Item key="frmSetting.lblUsedBtns" value="Mevcut Butonlar:"/>

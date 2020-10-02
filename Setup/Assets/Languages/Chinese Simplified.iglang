@@ -240,6 +240,7 @@
       <Item key="frmSetting.lblToolbarPosition" value="工具栏位置:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="顶部"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="底部"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Toolbar icon size:"/>
       <Item key="frmSetting._separator" value="分隔符"/>
       <Item key="frmSetting.lblToolbar._Tooltip" value="自定义工具栏"/>
       <Item key="frmSetting.lblUsedBtns" value="当前命令："/>

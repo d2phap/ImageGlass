@@ -240,6 +240,7 @@
       <Item key="frmSetting.lblToolbarPosition" value="Posisi Toolbar:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Atas"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Bawah"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Toolbar icon size:"/>
       <Item key="frmSetting._separator" value="Pemisah"/>
       <Item key="frmSetting.lblToolbar._Tooltip" value="Atur tombol bilah alat"/>
       <Item key="frmSetting.lblUsedBtns" value="Tombol Sekarang:"/>

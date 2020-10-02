@@ -81,10 +81,11 @@ namespace ImageGlass.Base {
         THUMBNAIL_ITEMS = 16,
         TOOLBAR = 32,
         TOOLBAR_POSITION = 64,
-        IMAGE_LIST = 128,
-        IMAGE_LIST_NO_RECURSIVE = 256,
-        COLOR_PICKER_MENU = 512,
-        PAGE_NAV_MENU = 1024
+        TOOLBAR_ICON_HEIGHT = 128,
+        IMAGE_LIST = 256,
+        IMAGE_LIST_NO_RECURSIVE = 512,
+        COLOR_PICKER_MENU = 1024,
+        PAGE_NAV_MENU = 2048
     }
 
     /// <summary>

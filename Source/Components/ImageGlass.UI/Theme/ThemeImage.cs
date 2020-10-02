@@ -23,7 +23,7 @@ using System.Drawing;
 
 namespace ImageGlass.UI {
     public class ThemeImage {
-        private int _height = Constants.TOOLBAR_ICON_HEIGHT;
+        private int _height = Constants.DEFAULT_TOOLBAR_ICON_HEIGHT;
 
         public Bitmap Image { get; set; } = null;
 
@@ -47,12 +47,11 @@ namespace ImageGlass.UI {
         /// </summary>
         /// <param name="filename">Filename</param>
         /// <param name="height">Height of the icon</param>
-        public ThemeImage(string filename, int height = Constants.TOOLBAR_ICON_HEIGHT) {
-            Height = height;
+        public ThemeImage(string filename, int height = Constants.DEFAULT_TOOLBAR_ICON_HEIGHT) {
             Filename = filename;
 
             // load icon
-            Refresh();
+            Refresh(height);
         }
 
         private static int GetCorrectHeight(int height) {
@@ -66,7 +65,10 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Reload theme image
         /// </summary>
-        public void Refresh() {
+        /// <param name="iconHeight">The height of toolbar icons</param>
+        public void Refresh(int iconHeight) {
+            Height = iconHeight;
+
             if (string.IsNullOrWhiteSpace(Filename)) {
                 return;
             }
@@ -80,11 +82,12 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Get the height of toolbar icon after applying DPI calculation
         /// </summary>
+        /// <param name="height">Height of the icon</param>
         /// <returns></returns>
-        public static int GetCorrectBaseIconHeight() {
+        public static int GetCorrectBaseIconHeight(int height) {
             // Get Scaling factor
             var scaleFactor = DPIScaling.GetDPIScaleFactor();
-            var iconHeight = (int)(Constants.TOOLBAR_ICON_HEIGHT * scaleFactor);
+            var iconHeight = (int)(height * scaleFactor);
 
             return iconHeight;
         }

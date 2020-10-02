@@ -240,6 +240,7 @@
       <Item key="frmSetting.lblToolbarPosition" value="Положај траке са алаткама:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="на врху"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="на дну"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Toolbar icon size:"/>
       <Item key="frmSetting._separator" value="Разделник"/>
       <Item key="frmSetting.lblToolbar._Tooltip" value="Подешавање траке са алаткама"/>
       <Item key="frmSetting.lblUsedBtns" value="Тренутна дугмад:"/>
