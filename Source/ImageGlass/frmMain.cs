@@ -3926,7 +3926,7 @@ namespace ImageGlass {
             }
 
             var filename = "untitled.png";
-            if (Local.CurrentIndex > 0) {
+            if (Local.CurrentIndex >= 0) {
                 filename = Local.ImageList.GetFileName(Local.CurrentIndex);
             }
 
