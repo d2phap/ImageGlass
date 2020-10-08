@@ -240,6 +240,7 @@
       <Item key="frmSetting.lblToolbarPosition" value="Posizione barra degli strumenti:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Sopra"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Sotto"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Toolbar icon size:"/>
       <Item key="frmSetting._separator" value="Separatore"/>
       <Item key="frmSetting.lblToolbar._Tooltip" value="Configura pulsanti barra degli strumenti"/>
       <Item key="frmSetting.lblUsedBtns" value="Pulsanti attuali:"/>

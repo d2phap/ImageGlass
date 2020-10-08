@@ -111,11 +111,14 @@ namespace ImageGlass.UI {
         }
 
         /// <summary>
-        /// Apply DPI scale factor and transform toolbar
+        /// Apply DPI scale factor, icon height and transform toolbar
         /// </summary>
         /// <param name="toolbar">The toolbar to update</param>
-        /// <param name="baseHeight">The base height of toolbar</param>
-        public static void TransformToolbar(ref ToolStripToolTip toolbar, int baseHeight) {
+        /// <param name="iconHeight">The height of toolbar icons</param>
+        public static void TransformToolbar(ref ToolStripToolTip toolbar, int iconHeight) {
+            // The base height of toolbar
+            var baseHeight = iconHeight * 2;
+
             // Update size of toolbar
             toolbar.Height = Transform(baseHeight);
 
@@ -133,7 +136,7 @@ namespace ImageGlass.UI {
             }
 
             // get correct icon height
-            var hIcon = ThemeImage.GetCorrectBaseIconHeight();
+            var hIcon = Transform(iconHeight);
 
             // Tool bar separators
             foreach (var item in toolbar.Items.OfType<ToolStripSeparator>()) {

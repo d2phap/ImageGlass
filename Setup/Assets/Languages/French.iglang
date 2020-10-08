@@ -240,6 +240,7 @@
       <Item key="frmSetting.lblToolbarPosition" value="Position de la barre d’outils :"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Haut"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Bas"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Toolbar icon size:"/>
       <Item key="frmSetting._separator" value="Séparateur"/>
       <Item key="frmSetting.lblToolbar._Tooltip" value="Configurer les boutons de la barre d'outils"/>
       <Item key="frmSetting.lblUsedBtns" value="Boutons actuels :"/>

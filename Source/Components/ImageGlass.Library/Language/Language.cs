@@ -522,6 +522,7 @@ namespace ImageGlass.Library {
 
             #region TAB Toolbar
             Items.Add("frmSetting.lblToolbarPosition", "Toolbar position:"); // v5.5
+            Items.Add("frmSetting.lblToolbarIconHeight", "Toolbar icon size:");
             Items.Add("frmSetting.cmbToolbarPosition._Top", "Top"); // v5.5
             Items.Add("frmSetting.cmbToolbarPosition._Bottom", "Bottom"); // v5.5
 

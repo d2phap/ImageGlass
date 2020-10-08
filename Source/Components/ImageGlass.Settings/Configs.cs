@@ -307,6 +307,11 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static double ZoomLockValue { get; set; } = 100f;
 
+        /// <summary>
+        /// Gets, sets toolbar icon height
+        /// </summary>
+        public static uint ToolbarIconHeight { get; set; } = Constants.DEFAULT_TOOLBAR_ICON_HEIGHT;
+
         #endregion
 
         #region String items
@@ -456,7 +461,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets theme
         /// </summary>
-        public static Theme Theme { get; set; } = new Theme();
+        public static Theme Theme { get; set; } = new Theme((int)ToolbarIconHeight);
 
         #endregion
 
@@ -596,6 +601,8 @@ namespace ImageGlass.Settings {
             ZoomLockValue = Get<double>(nameof(ZoomLockValue), ZoomLockValue);
             if (ZoomLockValue < 0) ZoomLockValue = 100f;
 
+            ToolbarIconHeight = Get<uint>(nameof(ToolbarIconHeight), ToolbarIconHeight);
+
             #endregion
 
             #region Enum items
@@ -717,7 +724,7 @@ namespace ImageGlass.Settings {
 
             #region Theme
             var themeFolderName = Get<string>(nameof(Theme), Dir.DefaultTheme);
-            var th = new Theme(App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
+            var th = new Theme((int)ToolbarIconHeight, App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
 
             if (th.IsValid) {
                 Theme = th;
@@ -797,6 +804,7 @@ namespace ImageGlass.Settings {
             Set(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
             Set(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
             Set(nameof(ZoomLockValue), ZoomLockValue);
+            Set(nameof(ToolbarIconHeight), ToolbarIconHeight);
 
             #endregion
 

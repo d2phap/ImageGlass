@@ -240,6 +240,7 @@
       <Item key="frmSetting.lblToolbarPosition" value="موضع شريط الأدوات:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="أعلى"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="أسفل"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Toolbar icon size:"/>
       <Item key="frmSetting._separator" value="فاصل"/>
       <Item key="frmSetting.lblToolbar._Tooltip" value="تهيئة أزرار شريط الأدوات"/>
       <Item key="frmSetting.lblUsedBtns" value="الأزرار الحالية:"/>

@@ -240,6 +240,7 @@
       <Item key="frmSetting.lblToolbarPosition" value="Symbolleistenposition:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Oben"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Unten"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Toolbar icon size:"/>
       <Item key="frmSetting._separator" value="Separator"/>
       <Item key="frmSetting.lblToolbar._Tooltip" value="Symbolleistenschaltflächen konfigurieren"/>
       <Item key="frmSetting.lblUsedBtns" value="Aktuelle Schaltflächen:"/>

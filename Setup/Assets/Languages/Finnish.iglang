@@ -240,6 +240,7 @@
       <Item key="frmSetting.lblToolbarPosition" value="Työkalupalkin sijainti:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Ylhäällä"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Alhaalla"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Toolbar icon size:"/>
       <Item key="frmSetting._separator" value="Erotin"/>
       <Item key="frmSetting.lblToolbar._Tooltip" value="Muokkaa työkalupalkin painikkeita"/>
       <Item key="frmSetting.lblUsedBtns" value="Nykyiset painikkeet:"/>

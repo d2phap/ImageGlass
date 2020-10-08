@@ -1378,7 +1378,7 @@ namespace ImageGlass {
 
             #region change size of toolbar
             // Update size of toolbar
-            DPIScaling.TransformToolbar(ref toolMain, Constants.TOOLBAR_HEIGHT);
+            DPIScaling.TransformToolbar(ref toolMain, (int)Configs.ToolbarIconHeight);
 
             // Update toolbar icon according to the new size
             LoadToolbarIcons(forceReloadIcon: true);
@@ -1936,14 +1936,13 @@ namespace ImageGlass {
             var newBtnHeight = (int)Math.Floor(toolMain.Height * 0.8);
 
             // get correct icon height
-            var hIcon = ThemeImage.GetCorrectBaseIconHeight();
+            var hIcon = DPIScaling.Transform(Configs.ToolbarIconHeight);
 
             foreach (var item in Configs.ToolbarButtons) {
                 if (item == ToolbarButton.Separator) {
                     toolMain.Items.Add(new ToolStripSeparator {
                         AutoSize = false,
-                        Margin = new Padding((int)(hIcon * 0.15), 0, (int)(hIcon * 0.15), 0),
-                        Height = (int)(hIcon * 1.2)
+                        Height = (int)(hIcon * 1.2),
                     });
                 }
                 else {
@@ -2346,7 +2345,7 @@ namespace ImageGlass {
         /// </summary>
         private void LoadToolbarIcons(bool forceReloadIcon = false) {
             if (forceReloadIcon) {
-                Configs.Theme.ReloadIcons();
+                Configs.Theme.ReloadIcons((int)Configs.ToolbarIconHeight);
             }
 
             var th = Configs.Theme;
@@ -3160,6 +3159,18 @@ namespace ImageGlass {
 
                 // Hide toolbar tooltips
                 toolMain.HideTooltips = Configs.IsHideTooltips;
+            }
+            #endregion
+
+            #region TOOLBAR_ICON_HEIGHT
+            if ((flags & ForceUpdateActions.TOOLBAR_ICON_HEIGHT) == ForceUpdateActions.TOOLBAR_ICON_HEIGHT) {
+                // Update size of toolbar
+                DPIScaling.TransformToolbar(ref toolMain, (int)Configs.ToolbarIconHeight);
+
+                // Update toolbar icon according to the new size
+                LoadToolbarIcons(forceReloadIcon: true);
+
+                toolMain.UpdateAlignment();
             }
             #endregion
 
