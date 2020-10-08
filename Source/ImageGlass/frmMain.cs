@@ -1936,14 +1936,13 @@ namespace ImageGlass {
             var newBtnHeight = (int)Math.Floor(toolMain.Height * 0.8);
 
             // get correct icon height
-            var hIcon = ThemeImage.GetCorrectBaseIconHeight((int)Configs.ToolbarIconHeight);
+            var hIcon = DPIScaling.Transform(Configs.ToolbarIconHeight);
 
             foreach (var item in Configs.ToolbarButtons) {
                 if (item == ToolbarButton.Separator) {
                     toolMain.Items.Add(new ToolStripSeparator {
                         AutoSize = false,
-                        Margin = new Padding((int)(hIcon * 0.15), 0, (int)(hIcon * 0.15), 0),
-                        Height = (int)(hIcon * 1.2)
+                        Height = (int)(hIcon * 1.2),
                     });
                 }
                 else {

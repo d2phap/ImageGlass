@@ -1110,7 +1110,7 @@ namespace ImageGlass {
             if (_lstToolbarImg != null)
                 return;
 
-            var iconHeight = ThemeImage.GetCorrectBaseIconHeight((int)Configs.ToolbarIconHeight);
+            var iconHeight = DPIScaling.Transform(Constants.DEFAULT_TOOLBAR_ICON_HEIGHT);
             _lstToolbarImg = new ImageList {
                 ColorDepth = ColorDepth.Depth32Bit, // max out image quality
                 ImageSize = new Size(iconHeight, iconHeight)
@@ -1268,7 +1268,7 @@ namespace ImageGlass {
         /// <param name="lv"></param>
         private void UpdateButtonsListViewItemSize(ListView lv) {
             var width = (int)(lv.Width * 0.85); // reserve right gap for multiple selection
-            var height = ThemeImage.GetCorrectBaseIconHeight((int)Configs.ToolbarIconHeight) * 2;
+            var height = DPIScaling.Transform(Constants.DEFAULT_TOOLBAR_ICON_HEIGHT * 2);
 
             lv.TileSize = new Size(width, height);
 

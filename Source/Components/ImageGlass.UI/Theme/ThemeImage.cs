@@ -33,7 +33,7 @@ namespace ImageGlass.UI {
         /// Sets the height of icon image. Gets the height with DPI correction.
         /// </summary>
         public int Height {
-            get => GetCorrectHeight(_height);
+            get => DPIScaling.Transform(_height);
             set => _height = value;
         }
 
@@ -54,13 +54,6 @@ namespace ImageGlass.UI {
             Refresh(height);
         }
 
-        private static int GetCorrectHeight(int height) {
-            // Get Scaling factor
-            var scaleFactor = DPIScaling.GetDPIScaleFactor();
-            var iconHeight = (int)(height * scaleFactor);
-
-            return iconHeight;
-        }
 
         /// <summary>
         /// Reload theme image
@@ -77,19 +70,6 @@ namespace ImageGlass.UI {
                 Image = (Photo.Load(Filename, new Size(Height, Height))).Image;
             }
             catch { }
-        }
-
-        /// <summary>
-        /// Get the height of toolbar icon after applying DPI calculation
-        /// </summary>
-        /// <param name="height">Height of the icon</param>
-        /// <returns></returns>
-        public static int GetCorrectBaseIconHeight(int height) {
-            // Get Scaling factor
-            var scaleFactor = DPIScaling.GetDPIScaleFactor();
-            var iconHeight = (int)(height * scaleFactor);
-
-            return iconHeight;
         }
     }
 }

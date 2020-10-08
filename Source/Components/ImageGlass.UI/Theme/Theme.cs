@@ -252,7 +252,7 @@ namespace ImageGlass.UI {
 
             #region Naviagtion arrows (derived from toolbar)
 
-            var arrowHeight = (int)(DPIScaling.Transform(iconHeight) * NavArrowMultiplier);
+            var arrowHeight = (int)(DPIScaling.Transform(Constants.DEFAULT_TOOLBAR_ICON_HEIGHT) * NavArrowMultiplier);
 
             var navArrowTemp = new ThemeImage(ToolbarIcons.ViewPreviousImage.Filename, arrowHeight);
             navArrowTemp.Refresh(arrowHeight);
@@ -428,6 +428,7 @@ namespace ImageGlass.UI {
 
             this.IsValid = true;
             return this.IsValid;
+
 
             // Fetch a color attribute value from the theme config file.
             // Returns: a Color value if valid; Color.Transparent if an error

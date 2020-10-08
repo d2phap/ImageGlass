@@ -136,7 +136,7 @@ namespace ImageGlass.UI {
             }
 
             // get correct icon height
-            var hIcon = ThemeImage.GetCorrectBaseIconHeight(iconHeight);
+            var hIcon = Transform(iconHeight);
 
             // Tool bar separators
             foreach (var item in toolbar.Items.OfType<ToolStripSeparator>()) {
