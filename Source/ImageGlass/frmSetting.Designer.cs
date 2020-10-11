@@ -216,6 +216,7 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.tb3 = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
@@ -250,6 +251,7 @@ namespace ImageGlass
             this.tabLanguage.SuspendLayout();
             this.tblayout.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.tb3.SuspendLayout();
             this.SuspendLayout();
             // 
             // imglTheme
@@ -359,8 +361,8 @@ namespace ImageGlass
             // 
             this.sp1.Panel2.BackColor = System.Drawing.Color.Transparent;
             this.sp1.Panel2.Controls.Add(this.tab1);
-            this.sp1.Size = new System.Drawing.Size(972, 565);
-            this.sp1.SplitterDistance = 227;
+            this.sp1.Size = new System.Drawing.Size(973, 668);
+            this.sp1.SplitterDistance = 226;
             this.sp1.TabIndex = 17;
             this.sp1.TabStop = false;
             // 
@@ -393,7 +395,7 @@ namespace ImageGlass
             this.tableTabHeaders.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableTabHeaders.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableTabHeaders.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableTabHeaders.Size = new System.Drawing.Size(227, 565);
+            this.tableTabHeaders.Size = new System.Drawing.Size(226, 668);
             this.tableTabHeaders.TabIndex = 5;
             // 
             // lblImage
@@ -529,7 +531,7 @@ namespace ImageGlass
             this.tab1.Name = "tab1";
             this.tab1.Padding = new System.Drawing.Point(0, 0);
             this.tab1.SelectedIndex = 0;
-            this.tab1.Size = new System.Drawing.Size(741, 565);
+            this.tab1.Size = new System.Drawing.Size(743, 668);
             this.tab1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tab1.TabIndex = 0;
             this.tab1.SelectedIndexChanged += new System.EventHandler(this.tab1_SelectedIndexChanged);
@@ -564,7 +566,7 @@ namespace ImageGlass
             this.tabGeneral.Location = new System.Drawing.Point(4, 69);
             this.tabGeneral.Margin = new System.Windows.Forms.Padding(0);
             this.tabGeneral.Name = "tabGeneral";
-            this.tabGeneral.Size = new System.Drawing.Size(733, 492);
+            this.tabGeneral.Size = new System.Drawing.Size(735, 565);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
             // 
@@ -737,7 +739,7 @@ namespace ImageGlass
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(362, 838);
+            this.panel1.Location = new System.Drawing.Point(362, 839);
             this.panel1.Margin = new System.Windows.Forms.Padding(1);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(102, 29);
@@ -875,7 +877,7 @@ namespace ImageGlass
             this.tabImage.Location = new System.Drawing.Point(4, 69);
             this.tabImage.Margin = new System.Windows.Forms.Padding(0);
             this.tabImage.Name = "tabImage";
-            this.tabImage.Size = new System.Drawing.Size(733, 492);
+            this.tabImage.Size = new System.Drawing.Size(735, 565);
             this.tabImage.TabIndex = 3;
             this.tabImage.Text = "Image";
             // 
@@ -1469,7 +1471,7 @@ namespace ImageGlass
             this.tabEdit.Location = new System.Drawing.Point(4, 69);
             this.tabEdit.Name = "tabEdit";
             this.tabEdit.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabEdit.Size = new System.Drawing.Size(733, 492);
+            this.tabEdit.Size = new System.Drawing.Size(735, 565);
             this.tabEdit.TabIndex = 7;
             this.tabEdit.Text = "Edit";
             // 
@@ -1486,7 +1488,7 @@ namespace ImageGlass
             this.tableEdit.RowCount = 2;
             this.tableEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableEdit.Size = new System.Drawing.Size(727, 486);
+            this.tableEdit.Size = new System.Drawing.Size(729, 559);
             this.tableEdit.TabIndex = 62;
             // 
             // panel6
@@ -1500,7 +1502,7 @@ namespace ImageGlass
             this.panel6.Location = new System.Drawing.Point(0, 0);
             this.panel6.Margin = new System.Windows.Forms.Padding(0);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(727, 416);
+            this.panel6.Size = new System.Drawing.Size(729, 489);
             this.panel6.TabIndex = 60;
             // 
             // chkSaveOnRotate
@@ -1551,7 +1553,7 @@ namespace ImageGlass
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(684, 271);
+            this.lvImageEditing.Size = new System.Drawing.Size(687, 345);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 37;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1597,10 +1599,10 @@ namespace ImageGlass
             this.panel7.Controls.Add(this.btnEditResetExt);
             this.panel7.Controls.Add(this.btnEditEditAllExt);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(0, 416);
+            this.panel7.Location = new System.Drawing.Point(0, 489);
             this.panel7.Margin = new System.Windows.Forms.Padding(0);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(727, 70);
+            this.panel7.Size = new System.Drawing.Size(729, 70);
             this.panel7.TabIndex = 61;
             // 
             // btnEditEditExt
@@ -1647,7 +1649,7 @@ namespace ImageGlass
             this.tabFileTypeAssoc.Location = new System.Drawing.Point(4, 69);
             this.tabFileTypeAssoc.Margin = new System.Windows.Forms.Padding(0);
             this.tabFileTypeAssoc.Name = "tabFileTypeAssoc";
-            this.tabFileTypeAssoc.Size = new System.Drawing.Size(733, 492);
+            this.tabFileTypeAssoc.Size = new System.Drawing.Size(735, 565);
             this.tabFileTypeAssoc.TabIndex = 1;
             this.tabFileTypeAssoc.Text = "file association";
             // 
@@ -1663,7 +1665,7 @@ namespace ImageGlass
             this.tableFileAssoc.RowCount = 2;
             this.tableFileAssoc.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableFileAssoc.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableFileAssoc.Size = new System.Drawing.Size(733, 492);
+            this.tableFileAssoc.Size = new System.Drawing.Size(735, 565);
             this.tableFileAssoc.TabIndex = 44;
             // 
             // panel2
@@ -1674,10 +1676,10 @@ namespace ImageGlass
             this.panel2.Controls.Add(this.btnAddNewExt);
             this.panel2.Controls.Add(this.btnDeleteExt);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 422);
+            this.panel2.Location = new System.Drawing.Point(0, 495);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(733, 70);
+            this.panel2.Size = new System.Drawing.Size(735, 70);
             this.panel2.TabIndex = 35;
             // 
             // btnRegisterExt
@@ -1739,7 +1741,7 @@ namespace ImageGlass
             this.panel8.Location = new System.Drawing.Point(0, 0);
             this.panel8.Margin = new System.Windows.Forms.Padding(0);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(733, 422);
+            this.panel8.Size = new System.Drawing.Size(735, 495);
             this.panel8.TabIndex = 43;
             // 
             // lblSupportedExtension
@@ -1766,7 +1768,7 @@ namespace ImageGlass
             this.lvExtension.HideSelection = false;
             this.lvExtension.Location = new System.Drawing.Point(28, 47);
             this.lvExtension.Name = "lvExtension";
-            this.lvExtension.Size = new System.Drawing.Size(682, 359);
+            this.lvExtension.Size = new System.Drawing.Size(685, 432);
             this.lvExtension.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvExtension.TabIndex = 42;
             this.lvExtension.TileSize = new System.Drawing.Size(100, 30);
@@ -1786,7 +1788,7 @@ namespace ImageGlass
             this.lnkOpenFileAssoc.BackColor = System.Drawing.Color.Transparent;
             this.lnkOpenFileAssoc.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkOpenFileAssoc.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkOpenFileAssoc.Location = new System.Drawing.Point(345, 14);
+            this.lnkOpenFileAssoc.Location = new System.Drawing.Point(347, 14);
             this.lnkOpenFileAssoc.Name = "lnkOpenFileAssoc";
             this.lnkOpenFileAssoc.Size = new System.Drawing.Size(364, 32);
             this.lnkOpenFileAssoc.TabIndex = 41;
@@ -1804,7 +1806,7 @@ namespace ImageGlass
             this.tabToolbar.Location = new System.Drawing.Point(4, 69);
             this.tabToolbar.Margin = new System.Windows.Forms.Padding(0);
             this.tabToolbar.Name = "tabToolbar";
-            this.tabToolbar.Size = new System.Drawing.Size(733, 492);
+            this.tabToolbar.Size = new System.Drawing.Size(735, 565);
             this.tabToolbar.TabIndex = 4;
             this.tabToolbar.Text = "toolbar";
             // 
@@ -1819,9 +1821,9 @@ namespace ImageGlass
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 168F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 169F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(733, 492);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(735, 565);
             this.tableLayoutPanel1.TabIndex = 50;
             // 
             // panel9
@@ -1836,7 +1838,7 @@ namespace ImageGlass
             this.panel9.Location = new System.Drawing.Point(0, 3);
             this.panel9.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(730, 162);
+            this.panel9.Size = new System.Drawing.Size(732, 163);
             this.panel9.TabIndex = 49;
             // 
             // lblToolbarIconHeight
@@ -1931,10 +1933,10 @@ namespace ImageGlass
             this.panel5.Controls.Add(this.lvUsedButtons);
             this.panel5.Controls.Add(this.btnMoveDown);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(0, 171);
+            this.panel5.Location = new System.Drawing.Point(0, 172);
             this.panel5.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(730, 318);
+            this.panel5.Size = new System.Drawing.Size(732, 390);
             this.panel5.TabIndex = 48;
             // 
             // lblAvailBtns
@@ -1954,7 +1956,7 @@ namespace ImageGlass
             this.btnMoveRight.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveRight.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveRight.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMoveRight.Location = new System.Drawing.Point(317, 203);
+            this.btnMoveRight.Location = new System.Drawing.Point(317, 239);
             this.btnMoveRight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnMoveRight.Name = "btnMoveRight";
             this.btnMoveRight.Size = new System.Drawing.Size(47, 47);
@@ -1968,7 +1970,7 @@ namespace ImageGlass
             this.btnMoveLeft.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveLeft.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveLeft.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMoveLeft.Location = new System.Drawing.Point(317, 137);
+            this.btnMoveLeft.Location = new System.Drawing.Point(317, 173);
             this.btnMoveLeft.Name = "btnMoveLeft";
             this.btnMoveLeft.Size = new System.Drawing.Size(47, 47);
             this.btnMoveLeft.TabIndex = 52;
@@ -1981,7 +1983,7 @@ namespace ImageGlass
             this.btnMoveUp.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveUp.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveUp.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMoveUp.Location = new System.Drawing.Point(669, 137);
+            this.btnMoveUp.Location = new System.Drawing.Point(669, 173);
             this.btnMoveUp.Name = "btnMoveUp";
             this.btnMoveUp.Size = new System.Drawing.Size(47, 47);
             this.btnMoveUp.TabIndex = 55;
@@ -2003,7 +2005,7 @@ namespace ImageGlass
             this.lvAvailButtons.Name = "lvAvailButtons";
             this.lvAvailButtons.ShowGroups = false;
             this.lvAvailButtons.ShowItemToolTips = true;
-            this.lvAvailButtons.Size = new System.Drawing.Size(276, 262);
+            this.lvAvailButtons.Size = new System.Drawing.Size(276, 334);
             this.lvAvailButtons.TabIndex = 51;
             this.lvAvailButtons.UseCompatibleStateImageBehavior = false;
             this.lvAvailButtons.SelectedIndexChanged += new System.EventHandler(this.lvAvailButtons_SelectedIndexChanged);
@@ -2034,7 +2036,7 @@ namespace ImageGlass
             this.lvUsedButtons.Name = "lvUsedButtons";
             this.lvUsedButtons.ShowGroups = false;
             this.lvUsedButtons.ShowItemToolTips = true;
-            this.lvUsedButtons.Size = new System.Drawing.Size(279, 262);
+            this.lvUsedButtons.Size = new System.Drawing.Size(279, 334);
             this.lvUsedButtons.TabIndex = 54;
             this.lvUsedButtons.UseCompatibleStateImageBehavior = false;
             this.lvUsedButtons.View = System.Windows.Forms.View.List;
@@ -2046,7 +2048,7 @@ namespace ImageGlass
             this.btnMoveDown.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnMoveDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnMoveDown.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMoveDown.Location = new System.Drawing.Point(669, 203);
+            this.btnMoveDown.Location = new System.Drawing.Point(669, 239);
             this.btnMoveDown.Name = "btnMoveDown";
             this.btnMoveDown.Size = new System.Drawing.Size(47, 47);
             this.btnMoveDown.TabIndex = 56;
@@ -2072,7 +2074,7 @@ namespace ImageGlass
             this.tabTools.Location = new System.Drawing.Point(4, 69);
             this.tabTools.Margin = new System.Windows.Forms.Padding(0);
             this.tabTools.Name = "tabTools";
-            this.tabTools.Size = new System.Drawing.Size(733, 492);
+            this.tabTools.Size = new System.Drawing.Size(735, 565);
             this.tabTools.TabIndex = 5;
             this.tabTools.Text = "tools";
             // 
@@ -2217,7 +2219,7 @@ namespace ImageGlass
             this.tabKeyboard.Location = new System.Drawing.Point(4, 69);
             this.tabKeyboard.Name = "tabKeyboard";
             this.tabKeyboard.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabKeyboard.Size = new System.Drawing.Size(733, 492);
+            this.tabKeyboard.Size = new System.Drawing.Size(735, 565);
             this.tabKeyboard.TabIndex = 8;
             this.tabKeyboard.Text = "keyboard";
             // 
@@ -2320,7 +2322,7 @@ namespace ImageGlass
             this.tabTheme.Margin = new System.Windows.Forms.Padding(0);
             this.tabTheme.Name = "tabTheme";
             this.tabTheme.Padding = new System.Windows.Forms.Padding(22, 20, 22, 20);
-            this.tabTheme.Size = new System.Drawing.Size(733, 492);
+            this.tabTheme.Size = new System.Drawing.Size(735, 595);
             this.tabTheme.TabIndex = 6;
             this.tabTheme.Text = "Theme";
             // 
@@ -2341,7 +2343,7 @@ namespace ImageGlass
             this.tableTheme.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableTheme.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableTheme.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableTheme.Size = new System.Drawing.Size(689, 452);
+            this.tableTheme.Size = new System.Drawing.Size(691, 555);
             this.tableTheme.TabIndex = 73;
             // 
             // lblInstalledThemes
@@ -2357,30 +2359,23 @@ namespace ImageGlass
             // panelThemeActions
             // 
             this.panelThemeActions.AutoScroll = true;
-            this.panelThemeActions.Controls.Add(this.picPreview);
-            this.panelThemeActions.Controls.Add(this.btnThemeFolderOpen);
-            this.panelThemeActions.Controls.Add(this.btnThemeSaveAs);
-            this.panelThemeActions.Controls.Add(this.txtThemeInfo);
-            this.panelThemeActions.Controls.Add(this.btnThemeRefresh);
-            this.panelThemeActions.Controls.Add(this.btnThemeInstall);
-            this.panelThemeActions.Controls.Add(this.btnThemeUninstall);
+            this.panelThemeActions.Controls.Add(this.tb3);
             this.panelThemeActions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelThemeActions.Location = new System.Drawing.Point(453, 29);
+            this.panelThemeActions.Location = new System.Drawing.Point(391, 29);
             this.panelThemeActions.Margin = new System.Windows.Forms.Padding(0);
             this.panelThemeActions.Name = "panelThemeActions";
-            this.panelThemeActions.Size = new System.Drawing.Size(236, 360);
+            this.panelThemeActions.Size = new System.Drawing.Size(300, 463);
             this.panelThemeActions.TabIndex = 29;
             // 
             // picPreview
             // 
-            this.picPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.picPreview.BackColor = System.Drawing.Color.Transparent;
-            this.picPreview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.picPreview.Location = new System.Drawing.Point(3, 3);
-            this.picPreview.Margin = new System.Windows.Forms.Padding(0);
+            this.picPreview.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(165)))), ((int)(((byte)(168)))));
+            this.picPreview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.picPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picPreview.Location = new System.Drawing.Point(0, 3);
+            this.picPreview.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
             this.picPreview.Name = "picPreview";
-            this.picPreview.Size = new System.Drawing.Size(230, 94);
+            this.picPreview.Size = new System.Drawing.Size(300, 150);
             this.picPreview.TabIndex = 34;
             this.picPreview.TabStop = false;
             // 
@@ -2390,10 +2385,10 @@ namespace ImageGlass
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnThemeFolderOpen.AutoSize = true;
             this.btnThemeFolderOpen.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnThemeFolderOpen.Location = new System.Drawing.Point(3, 285);
-            this.btnThemeFolderOpen.Margin = new System.Windows.Forms.Padding(0);
+            this.btnThemeFolderOpen.Location = new System.Drawing.Point(0, 353);
+            this.btnThemeFolderOpen.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
             this.btnThemeFolderOpen.Name = "btnThemeFolderOpen";
-            this.btnThemeFolderOpen.Size = new System.Drawing.Size(230, 40);
+            this.btnThemeFolderOpen.Size = new System.Drawing.Size(300, 40);
             this.btnThemeFolderOpen.TabIndex = 69;
             this.btnThemeFolderOpen.Text = "Open theme folder";
             this.btnThemeFolderOpen.UseVisualStyleBackColor = true;
@@ -2405,10 +2400,10 @@ namespace ImageGlass
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnThemeSaveAs.AutoSize = true;
             this.btnThemeSaveAs.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnThemeSaveAs.Location = new System.Drawing.Point(3, 241);
-            this.btnThemeSaveAs.Margin = new System.Windows.Forms.Padding(0);
+            this.btnThemeSaveAs.Location = new System.Drawing.Point(0, 308);
+            this.btnThemeSaveAs.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
             this.btnThemeSaveAs.Name = "btnThemeSaveAs";
-            this.btnThemeSaveAs.Size = new System.Drawing.Size(230, 40);
+            this.btnThemeSaveAs.Size = new System.Drawing.Size(300, 40);
             this.btnThemeSaveAs.TabIndex = 68;
             this.btnThemeSaveAs.Text = "Save As";
             this.btnThemeSaveAs.UseVisualStyleBackColor = true;
@@ -2416,18 +2411,15 @@ namespace ImageGlass
             // 
             // txtThemeInfo
             // 
-            this.txtThemeInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtThemeInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.txtThemeInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtThemeInfo.Location = new System.Drawing.Point(3, 338);
-            this.txtThemeInfo.Margin = new System.Windows.Forms.Padding(0);
+            this.txtThemeInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtThemeInfo.Location = new System.Drawing.Point(0, 413);
+            this.txtThemeInfo.Margin = new System.Windows.Forms.Padding(0, 20, 0, 0);
             this.txtThemeInfo.Multiline = true;
             this.txtThemeInfo.Name = "txtThemeInfo";
             this.txtThemeInfo.ReadOnly = true;
-            this.txtThemeInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtThemeInfo.Size = new System.Drawing.Size(230, 21);
+            this.txtThemeInfo.Size = new System.Drawing.Size(300, 50);
             this.txtThemeInfo.TabIndex = 70;
             // 
             // btnThemeRefresh
@@ -2436,10 +2428,10 @@ namespace ImageGlass
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnThemeRefresh.AutoSize = true;
             this.btnThemeRefresh.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnThemeRefresh.Location = new System.Drawing.Point(3, 112);
-            this.btnThemeRefresh.Margin = new System.Windows.Forms.Padding(0);
+            this.btnThemeRefresh.Location = new System.Drawing.Point(0, 173);
+            this.btnThemeRefresh.Margin = new System.Windows.Forms.Padding(0, 20, 0, 0);
             this.btnThemeRefresh.Name = "btnThemeRefresh";
-            this.btnThemeRefresh.Size = new System.Drawing.Size(230, 40);
+            this.btnThemeRefresh.Size = new System.Drawing.Size(300, 40);
             this.btnThemeRefresh.TabIndex = 65;
             this.btnThemeRefresh.Text = "Refresh";
             this.btnThemeRefresh.UseVisualStyleBackColor = true;
@@ -2451,10 +2443,10 @@ namespace ImageGlass
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnThemeInstall.AutoSize = true;
             this.btnThemeInstall.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnThemeInstall.Location = new System.Drawing.Point(3, 154);
-            this.btnThemeInstall.Margin = new System.Windows.Forms.Padding(0);
+            this.btnThemeInstall.Location = new System.Drawing.Point(0, 218);
+            this.btnThemeInstall.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
             this.btnThemeInstall.Name = "btnThemeInstall";
-            this.btnThemeInstall.Size = new System.Drawing.Size(230, 40);
+            this.btnThemeInstall.Size = new System.Drawing.Size(300, 40);
             this.btnThemeInstall.TabIndex = 66;
             this.btnThemeInstall.Text = "Install";
             this.btnThemeInstall.UseVisualStyleBackColor = true;
@@ -2467,10 +2459,10 @@ namespace ImageGlass
             this.btnThemeUninstall.AutoSize = true;
             this.btnThemeUninstall.Enabled = false;
             this.btnThemeUninstall.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnThemeUninstall.Location = new System.Drawing.Point(3, 197);
-            this.btnThemeUninstall.Margin = new System.Windows.Forms.Padding(0);
+            this.btnThemeUninstall.Location = new System.Drawing.Point(0, 263);
+            this.btnThemeUninstall.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
             this.btnThemeUninstall.Name = "btnThemeUninstall";
-            this.btnThemeUninstall.Size = new System.Drawing.Size(230, 40);
+            this.btnThemeUninstall.Size = new System.Drawing.Size(300, 40);
             this.btnThemeUninstall.TabIndex = 67;
             this.btnThemeUninstall.Text = "Uninstall";
             this.btnThemeUninstall.UseVisualStyleBackColor = true;
@@ -2484,7 +2476,7 @@ namespace ImageGlass
             this.lnkThemeDownload.BackColor = System.Drawing.Color.Transparent;
             this.lnkThemeDownload.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkThemeDownload.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkThemeDownload.Location = new System.Drawing.Point(3, 419);
+            this.lnkThemeDownload.Location = new System.Drawing.Point(3, 522);
             this.lnkThemeDownload.Margin = new System.Windows.Forms.Padding(3, 20, 3, 0);
             this.lnkThemeDownload.Name = "lnkThemeDownload";
             this.lnkThemeDownload.Size = new System.Drawing.Size(158, 23);
@@ -2506,9 +2498,10 @@ namespace ImageGlass
             this.lvTheme.HideSelection = false;
             this.lvTheme.LargeImageList = this.imglGeneral;
             this.lvTheme.Location = new System.Drawing.Point(3, 32);
+            this.lvTheme.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.lvTheme.MultiSelect = false;
             this.lvTheme.Name = "lvTheme";
-            this.lvTheme.Size = new System.Drawing.Size(447, 354);
+            this.lvTheme.Size = new System.Drawing.Size(378, 457);
             this.lvTheme.SmallImageList = this.imglGeneral;
             this.lvTheme.StateImageList = this.imglGeneral;
             this.lvTheme.TabIndex = 64;
@@ -2518,13 +2511,13 @@ namespace ImageGlass
             // 
             // btnThemeApply
             // 
-            this.btnThemeApply.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnThemeApply.AutoSize = true;
+            this.btnThemeApply.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnThemeApply.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnThemeApply.Location = new System.Drawing.Point(454, 409);
+            this.btnThemeApply.Location = new System.Drawing.Point(391, 512);
             this.btnThemeApply.Margin = new System.Windows.Forms.Padding(0, 20, 0, 3);
             this.btnThemeApply.Name = "btnThemeApply";
-            this.btnThemeApply.Size = new System.Drawing.Size(235, 40);
+            this.btnThemeApply.Size = new System.Drawing.Size(300, 40);
             this.btnThemeApply.TabIndex = 71;
             this.btnThemeApply.Text = "Apply Theme";
             this.btnThemeApply.UseVisualStyleBackColor = true;
@@ -2545,7 +2538,7 @@ namespace ImageGlass
             this.tabLanguage.Location = new System.Drawing.Point(4, 69);
             this.tabLanguage.Margin = new System.Windows.Forms.Padding(0);
             this.tabLanguage.Name = "tabLanguage";
-            this.tabLanguage.Size = new System.Drawing.Size(733, 492);
+            this.tabLanguage.Size = new System.Drawing.Size(735, 565);
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "Lang";
             // 
@@ -2723,7 +2716,7 @@ namespace ImageGlass
             this.tblayout.RowCount = 2;
             this.tblayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tblayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 67F));
-            this.tblayout.Size = new System.Drawing.Size(972, 632);
+            this.tblayout.Size = new System.Drawing.Size(973, 735);
             this.tblayout.TabIndex = 19;
             // 
             // panel4
@@ -2733,24 +2726,49 @@ namespace ImageGlass
             this.panel4.Controls.Add(this.btnSave);
             this.panel4.Controls.Add(this.btnCancel);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(0, 565);
+            this.panel4.Location = new System.Drawing.Point(0, 668);
             this.panel4.Margin = new System.Windows.Forms.Padding(0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(972, 67);
+            this.panel4.Size = new System.Drawing.Size(973, 67);
             this.panel4.TabIndex = 18;
+            // 
+            // tb3
+            // 
+            this.tb3.ColumnCount = 1;
+            this.tb3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tb3.Controls.Add(this.picPreview, 0, 0);
+            this.tb3.Controls.Add(this.txtThemeInfo, 0, 6);
+            this.tb3.Controls.Add(this.btnThemeFolderOpen, 0, 5);
+            this.tb3.Controls.Add(this.btnThemeRefresh, 0, 1);
+            this.tb3.Controls.Add(this.btnThemeSaveAs, 0, 4);
+            this.tb3.Controls.Add(this.btnThemeInstall, 0, 2);
+            this.tb3.Controls.Add(this.btnThemeUninstall, 0, 3);
+            this.tb3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tb3.Location = new System.Drawing.Point(0, 0);
+            this.tb3.Name = "tb3";
+            this.tb3.RowCount = 7;
+            this.tb3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tb3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tb3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tb3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tb3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tb3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tb3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tb3.Size = new System.Drawing.Size(300, 463);
+            this.tb3.TabIndex = 71;
             // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(134F, 134F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(165)))), ((int)(((byte)(168)))));
-            this.ClientSize = new System.Drawing.Size(972, 632);
+            this.ClientSize = new System.Drawing.Size(973, 735);
             this.Controls.Add(this.tblayout);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(1);
-            this.MinimumSize = new System.Drawing.Size(643, 478);
+            this.MinimumSize = new System.Drawing.Size(641, 471);
             this.Name = "frmSetting";
             this.RightToLeftLayout = true;
             this.Text = "Settings";
@@ -2800,13 +2818,14 @@ namespace ImageGlass
             this.tableTheme.ResumeLayout(false);
             this.tableTheme.PerformLayout();
             this.panelThemeActions.ResumeLayout(false);
-            this.panelThemeActions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).EndInit();
             this.tabLanguage.ResumeLayout(false);
             this.tabLanguage.PerformLayout();
             this.tblayout.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            this.tb3.ResumeLayout(false);
+            this.tb3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2997,5 +3016,6 @@ namespace ImageGlass
         private System.Windows.Forms.CheckBox chkColorUseHSVA;
         private System.Windows.Forms.Label lblToolbarIconHeight;
         private System.Windows.Forms.NumericUpDown numToolbarIconHeight;
+        private System.Windows.Forms.TableLayoutPanel tb3;
     }
 }
