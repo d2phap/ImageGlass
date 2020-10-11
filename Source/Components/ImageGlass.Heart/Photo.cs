@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageMagick;
+using ImageMagick.Formats.Bmp;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -58,7 +59,6 @@ namespace ImageGlass.Heart {
             IColorProfile colorProfile = null;
 
             var ext = Path.GetExtension(filename).ToUpperInvariant();
-            //var settings = new MagickReadSettings();
 
             #region Settings
             _mrSettings.BackgroundColor = MagickColors.White;
@@ -70,6 +70,13 @@ namespace ImageGlass.Heart {
                 _mrSettings.Width = size.Width;
                 _mrSettings.Height = size.Height;
             }
+
+
+            // Fixed #708: length and filesize do not match
+            _mrSettings.SetDefines(new BmpReadDefines {
+                IgnoreFileSize = true,
+            });
+
             #endregion
 
             #region Read image data
