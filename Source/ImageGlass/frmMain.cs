@@ -691,8 +691,9 @@ namespace ImageGlass {
                 Local.ImageError = bmpImg.Error;
 
                 if (im != null && !token.Token.IsCancellationRequested) {
-                    // Need to clone to display different image page
-                    picMain.Image = (Bitmap)im.Clone();
+                    // Refresh picMain to update the active page
+                    picMain.Image = im;
+                    picMain.Refresh();
 
                     im = null;
 
