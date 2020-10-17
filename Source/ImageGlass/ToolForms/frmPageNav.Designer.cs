@@ -53,10 +53,10 @@
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.ForeColor = System.Drawing.Color.White;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(241, 2);
+            this.btnClose.Location = new System.Drawing.Point(224, 2);
             this.btnClose.Margin = new System.Windows.Forms.Padding(4);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(74, 40);
+            this.btnClose.Size = new System.Drawing.Size(69, 37);
             this.btnClose.TabIndex = 6;
             this.btnClose.Text = "X";
             this.btnClose.UseVisualStyleBackColor = false;
@@ -77,10 +77,10 @@
             this.btnSnapTo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSnapTo.ForeColor = System.Drawing.Color.White;
             this.btnSnapTo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSnapTo.Location = new System.Drawing.Point(164, 2);
+            this.btnSnapTo.Location = new System.Drawing.Point(153, 2);
             this.btnSnapTo.Margin = new System.Windows.Forms.Padding(4);
             this.btnSnapTo.Name = "btnSnapTo";
-            this.btnSnapTo.Size = new System.Drawing.Size(74, 40);
+            this.btnSnapTo.Size = new System.Drawing.Size(69, 37);
             this.btnSnapTo.TabIndex = 6;
             this.btnSnapTo.Text = "^";
             this.btnSnapTo.UseVisualStyleBackColor = false;
@@ -93,18 +93,20 @@
             this.toolPageNav.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.toolPageNav.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolPageNav.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolPageNav.HideTooltips = false;
             this.toolPageNav.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolPageNav.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnFirstPage,
             this.btnPreviousPage,
             this.btnNextPage,
             this.btnLastPage});
-            this.toolPageNav.Location = new System.Drawing.Point(0, 125);
+            this.toolPageNav.Location = new System.Drawing.Point(0, 117);
             this.toolPageNav.Name = "toolPageNav";
             this.toolPageNav.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolPageNav.ShowItemToolTips = false;
-            this.toolPageNav.Size = new System.Drawing.Size(316, 65);
+            this.toolPageNav.Size = new System.Drawing.Size(294, 60);
             this.toolPageNav.TabIndex = 8;
+            this.toolPageNav.ToolTipShowUp = false;
             // 
             // btnFirstPage
             // 
@@ -162,9 +164,9 @@
             // 
             this.lblPageInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPageInfo.Font = new System.Drawing.Font("Segoe UI", 13F);
-            this.lblPageInfo.Location = new System.Drawing.Point(12, 61);
+            this.lblPageInfo.Location = new System.Drawing.Point(11, 57);
             this.lblPageInfo.Name = "lblPageInfo";
-            this.lblPageInfo.Size = new System.Drawing.Size(292, 47);
+            this.lblPageInfo.Size = new System.Drawing.Size(272, 44);
             this.lblPageInfo.TabIndex = 9;
             this.lblPageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -176,20 +178,20 @@
             this.lblFormTitle.BackColor = System.Drawing.Color.Transparent;
             this.lblFormTitle.ForeColor = System.Drawing.Color.White;
             this.lblFormTitle.Location = new System.Drawing.Point(0, 5);
-            this.lblFormTitle.Margin = new System.Windows.Forms.Padding(15, 0, 4, 0);
+            this.lblFormTitle.Margin = new System.Windows.Forms.Padding(14, 0, 4, 0);
             this.lblFormTitle.Name = "lblFormTitle";
-            this.lblFormTitle.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
-            this.lblFormTitle.Size = new System.Drawing.Size(156, 32);
+            this.lblFormTitle.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
+            this.lblFormTitle.Size = new System.Drawing.Size(145, 30);
             this.lblFormTitle.TabIndex = 28;
             this.lblFormTitle.Text = "[Page navigation]";
             this.lblFormTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // frmPageNav
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(134F, 134F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
-            this.ClientSize = new System.Drawing.Size(316, 190);
+            this.ClientSize = new System.Drawing.Size(294, 177);
             this.Controls.Add(this.lblFormTitle);
             this.Controls.Add(this.toolPageNav);
             this.Controls.Add(this.lblPageInfo);
@@ -201,13 +203,14 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(316, 120);
+            this.MinimumSize = new System.Drawing.Size(294, 112);
             this.Name = "frmPageNav";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Page Navigation";
+            this.Activated += new System.EventHandler(this.frmPageNav_Activated);
             this.Load += new System.EventHandler(this.frmPageNav_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmPageNav_KeyDown);
             this.toolPageNav.ResumeLayout(false);

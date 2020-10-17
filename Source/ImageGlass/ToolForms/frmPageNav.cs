@@ -106,6 +106,7 @@ namespace ImageGlass {
             toolPageNav.BackgroundImage = Configs.Theme.ToolbarBackgroundImage.Image;
             toolPageNav.BackColor = Configs.Theme.ToolbarBackgroundColor;
             toolPageNav.Alignment = ToolbarAlignment.CENTER;
+            toolPageNav.HideTooltips = Configs.IsHideTooltips;
 
             // Overflow button and Overflow dropdown
             toolPageNav.OverflowButton.DropDown.BackColor = Configs.Theme.ToolbarBackgroundColor;
@@ -165,6 +166,10 @@ namespace ImageGlass {
             }
         }
 
+        private void frmPageNav_Activated(object sender, EventArgs e) {
+            UpdateUI();
+        }
+
         private void frmPageNav_KeyDown(object sender, KeyEventArgs e) {
             // ESC or Ctrl+Shift+J --------------------------------------------------------
             if ((e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt) ||
@@ -187,5 +192,7 @@ namespace ImageGlass {
             this.Close();
         }
         #endregion
+
+        
     }
 }

@@ -57,7 +57,7 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Gets, sets value indicates that the tooltip is shown
         /// </summary>
-        public bool HideTooltips { get; set; } = true;
+        public bool HideTooltips { get; set; } = false;
 
         private ToolbarAlignment _alignment;
 
