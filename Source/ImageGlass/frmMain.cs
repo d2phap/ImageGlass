@@ -459,78 +459,100 @@ namespace ImageGlass {
                                         ? (IComparer<string>)new ReverseWindowsNaturalSort()
                                         : new WindowsNaturalSort();
 
+            // initiate directory sorter to a comparer that does nothing
+            // if user wants to group by directory, we initiate the real comparer
+            var directorySortComparer = (IComparer<string>)new IdentityComparer();
+            if (Configs.IsGroupImagesByDirectory) {
+                if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc) {
+                    directorySortComparer = new ReverseWindowsDirectoryNaturalSort();
+                } else {
+                    directorySortComparer = new WindowsDirectoryNaturalSort();
+                }
+            } 
+
             // KBR 20190605 Fix observed discrepancy: using UTC for create, but not for write/access times
 
             // Sort image file
             if (Local.ActiveImageLoadingOrder == ImageOrderBy.Name) {
-                var arr = fileList.ToArray();
-                Array.Sort(arr, naturalSortComparer);
-                list.AddRange(arr);
+                list.AddRange(fileList
+                    .OrderBy(f => f, directorySortComparer)
+                    .ThenBy(f => f, naturalSortComparer));
             }
             else if (Local.ActiveImageLoadingOrder == ImageOrderBy.Length) {
                 if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc) {
                     list.AddRange(fileList
-                        .OrderByDescending(f => new FileInfo(f).Length)
+                        .OrderBy(f => f, directorySortComparer)
+                        .ThenByDescending(f => new FileInfo(f).Length)
                         .ThenBy(f => f, naturalSortComparer));
                 }
                 else {
                     list.AddRange(fileList
-                        .OrderBy(f => new FileInfo(f).Length)
+                        .OrderBy(f => f, directorySortComparer)
+                        .ThenBy(f => new FileInfo(f).Length)
                         .ThenBy(f => f, naturalSortComparer));
                 }
             }
             else if (Local.ActiveImageLoadingOrder == ImageOrderBy.CreationTime) {
                 if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc) {
                     list.AddRange(fileList
-                        .OrderByDescending(f => new FileInfo(f).CreationTimeUtc)
+                        .OrderBy(f => f, directorySortComparer)
+                        .ThenByDescending(f => new FileInfo(f).CreationTimeUtc)
                         .ThenBy(f => f, naturalSortComparer));
                 }
                 else {
                     list.AddRange(fileList
-                        .OrderBy(f => new FileInfo(f).CreationTimeUtc)
+                        .OrderBy(f => f, directorySortComparer)
+                        .ThenBy(f => new FileInfo(f).CreationTimeUtc)
                         .ThenBy(f => f, naturalSortComparer));
                 }
             }
             else if (Local.ActiveImageLoadingOrder == ImageOrderBy.Extension) {
                 if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc) {
                     list.AddRange(fileList
-                        .OrderByDescending(f => new FileInfo(f).Extension)
+                        .OrderBy(f => f, directorySortComparer)
+                        .ThenByDescending(f => new FileInfo(f).Extension)
                         .ThenBy(f => f, naturalSortComparer));
                 }
                 else {
                     list.AddRange(fileList
-                        .OrderBy(f => new FileInfo(f).Extension)
+                        .OrderBy(f => f, directorySortComparer)
+                        .ThenBy(f => new FileInfo(f).Extension)
                         .ThenBy(f => f, naturalSortComparer));
                 }
             }
             else if (Local.ActiveImageLoadingOrder == ImageOrderBy.LastAccessTime) {
                 if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc) {
                     list.AddRange(fileList
-                        .OrderByDescending(f => new FileInfo(f).LastAccessTimeUtc)
+                        .OrderBy(f => f, directorySortComparer)
+                        .ThenByDescending(f => new FileInfo(f).LastAccessTimeUtc)
                         .ThenBy(f => f, naturalSortComparer));
                 }
                 else {
                     list.AddRange(fileList
-                        .OrderBy(f => new FileInfo(f).LastAccessTimeUtc)
+                        .OrderBy(f => f, directorySortComparer)
+                        .ThenBy(f => new FileInfo(f).LastAccessTimeUtc)
                         .ThenBy(f => f, naturalSortComparer));
                 }
             }
             else if (Local.ActiveImageLoadingOrder == ImageOrderBy.LastWriteTime) {
                 if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc) {
                     list.AddRange(fileList
-                        .OrderByDescending(f => new FileInfo(f).LastWriteTimeUtc)
+                        .OrderBy(f => f, directorySortComparer)
+                        .ThenByDescending(f => new FileInfo(f).LastWriteTimeUtc)
                         .ThenBy(f => f, naturalSortComparer));
                 }
                 else {
                     list.AddRange(fileList
-                        .OrderBy(f => new FileInfo(f).LastWriteTimeUtc)
+                        .OrderBy(f => f, directorySortComparer)
+                        .ThenBy(f => new FileInfo(f).LastWriteTimeUtc)
                         .ThenBy(f => f, naturalSortComparer));
                 }
             }
             else if (Local.ActiveImageLoadingOrder == ImageOrderBy.Random) {
                 // NOTE: ignoring the 'descending order' setting
                 list.AddRange(fileList
-                    .OrderBy(_ => Guid.NewGuid()));
+                    .OrderBy(f => f, directorySortComparer)
+                    .ThenBy(_ => Guid.NewGuid()));
             }
 
             return list;

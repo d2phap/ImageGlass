@@ -104,6 +104,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comparer\WindowsDirectoryNaturalSort.cs" />
+    <Compile Include="Comparer\IdentityComparer.cs" />
     <Compile Include="Comparer\WindowsNaturalSort.cs" />
     <Compile Include="FileAssociations\RegistryHelper.cs" />
     <Compile Include="Helper.cs" />

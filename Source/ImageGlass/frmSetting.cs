@@ -223,6 +223,7 @@ namespace ImageGlass {
             chkIsCenterImage.Text = lang[$"{Name}.{nameof(chkIsCenterImage)}"];
             lblImageLoadingOrder.Text = lang[$"{Name}.{nameof(lblImageLoadingOrder)}"];
             chkUseFileExplorerSortOrder.Text = lang[$"{Name}.{nameof(chkUseFileExplorerSortOrder)}"];
+            chkGroupByDirectory.Text = lang[$"{Name}.{nameof(chkGroupByDirectory)}"];
             lblImageBoosterCachedCount.Text = lang[$"{Name}.{nameof(lblImageBoosterCachedCount)}"];
 
             lblColorManagement.Text = lang[$"{Name}.{nameof(lblColorManagement)}"];//
@@ -531,6 +532,9 @@ namespace ImageGlass {
 
             // Set value of chkUseFileExplorerSortOrder
             chkUseFileExplorerSortOrder.Checked = Configs.IsUseFileExplorerSortOrder;
+
+            // Set value of chkGroupByDirectory
+            chkGroupByDirectory.Checked = Configs.IsGroupImagesByDirectory;
 
             #region Load items of cmbImageOrder
             var loadingOrderList = Enum.GetNames(typeof(ImageOrderBy));
@@ -1865,6 +1869,10 @@ namespace ImageGlass {
             }
 
             Configs.IsUseFileExplorerSortOrder = chkUseFileExplorerSortOrder.Checked;
+            if (Configs.IsGroupImagesByDirectory != chkGroupByDirectory.Checked) {
+                Configs.IsGroupImagesByDirectory = chkGroupByDirectory.Checked;
+                Local.ForceUpdateActions |= ForceUpdateActions.IMAGE_LIST;
+            }
 
             #endregion
 

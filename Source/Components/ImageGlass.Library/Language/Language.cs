@@ -434,6 +434,7 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.cmbImageOrderType._Asc", "Ascending");  // V7.0
             Items.Add("frmSetting.cmbImageOrderType._Desc", "Descending");  // V7.0
             Items.Add("frmSetting.chkUseFileExplorerSortOrder", "Use Windows File Explorer sort order if possible"); //v7.0
+            Items.Add("frmSetting.chkGroupByDirectory", "Group images by directory"); //v7.7
             Items.Add("frmSetting.lblImageBoosterCachedCount", "Number of images cached by ImageBooster (one direction)"); //v7.0
             #endregion
 
