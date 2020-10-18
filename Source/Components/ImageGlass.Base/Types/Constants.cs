@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2019 DUONG DIEU PHAP
+Copyright (C) 2020 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ namespace ImageGlass.Base {
     /// </summary>
     public static class Constants {
         public const int MENU_ICON_HEIGHT = 21;
-        public const int DEFAULT_TOOLBAR_ICON_HEIGHT = 20;
+        public const int DEFAULT_TOOLBAR_ICON_HEIGHT = 22;
         public const int VIEWER_GRID_SIZE = 8;
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace ImageGlass.Base {
         /// Number format to use for save/restore ImageGlass settings
         /// </summary>
         public static NumberFormatInfo NumberFormat => new NumberFormatInfo {
-            NegativeSign = "-"
+            NegativeSign = "-",
         };
 
         /// <summary>

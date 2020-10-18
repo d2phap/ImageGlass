@@ -714,8 +714,8 @@ namespace ImageGlass {
 
                 if (im != null && !token.Token.IsCancellationRequested) {
                     // Refresh picMain to update the active page
-                    picMain.Image = im;
                     picMain.Refresh();
+                    picMain.Image = im;
 
                     im = null;
 
