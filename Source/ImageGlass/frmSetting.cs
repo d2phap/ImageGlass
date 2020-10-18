@@ -532,6 +532,9 @@ namespace ImageGlass {
             // Set value of chkUseFileExplorerSortOrder
             chkUseFileExplorerSortOrder.Checked = Configs.IsUseFileExplorerSortOrder;
 
+            // Set value of chkGroupByDirectory
+            chkGroupByDirectory.Checked = Configs.IsGroupImagesByDirectory;
+
             #region Load items of cmbImageOrder
             var loadingOrderList = Enum.GetNames(typeof(ImageOrderBy));
             cmbImageOrder.Items.Clear();
@@ -1865,6 +1868,10 @@ namespace ImageGlass {
             }
 
             Configs.IsUseFileExplorerSortOrder = chkUseFileExplorerSortOrder.Checked;
+            if (Configs.IsGroupImagesByDirectory != chkGroupByDirectory.Checked) {
+                Configs.IsGroupImagesByDirectory = chkGroupByDirectory.Checked;
+                Local.ForceUpdateActions |= ForceUpdateActions.IMAGE_LIST;
+            }
 
             #endregion
 

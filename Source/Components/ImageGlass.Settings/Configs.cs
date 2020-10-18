@@ -219,6 +219,11 @@ namespace ImageGlass.Settings {
         public static bool IsUseFileExplorerSortOrder { get; set; } = true;
 
         /// <summary>
+        /// Gets, sets the value indicates that images order should be grouped by directory
+        /// </summary>
+        public static bool IsGroupImagesByDirectory { get; set; } = false;
+
+        /// <summary>
         /// Gets, sets showing/loading hidden images
         /// </summary>
         public static bool IsShowingHiddenImages { get; set; } = false;
@@ -555,6 +560,7 @@ namespace ImageGlass.Settings {
             IsShowCheckerboardOnlyImageRegion = Get<bool>(nameof(IsShowCheckerboardOnlyImageRegion), IsShowCheckerboardOnlyImageRegion);
             IsRecursiveLoading = Get<bool>(nameof(IsRecursiveLoading), IsRecursiveLoading);
             IsUseFileExplorerSortOrder = Get<bool>(nameof(IsUseFileExplorerSortOrder), IsUseFileExplorerSortOrder);
+            IsGroupImagesByDirectory = Get<bool>(nameof(IsGroupImagesByDirectory), IsGroupImagesByDirectory);
             IsShowingHiddenImages = Get<bool>(nameof(IsShowingHiddenImages), IsShowingHiddenImages);
             IsShowColorPickerOnStartup = Get<bool>(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
             IsShowPageNavOnStartup = Get<bool>(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
@@ -782,6 +788,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsShowCheckerboardOnlyImageRegion), IsShowCheckerboardOnlyImageRegion);
             Set(nameof(IsRecursiveLoading), IsRecursiveLoading);
             Set(nameof(IsUseFileExplorerSortOrder), IsUseFileExplorerSortOrder);
+            Set(nameof(IsGroupImagesByDirectory), IsGroupImagesByDirectory);
             Set(nameof(IsShowingHiddenImages), IsShowingHiddenImages);
             Set(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
             Set(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
