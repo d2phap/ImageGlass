@@ -1432,6 +1432,10 @@ namespace ImageGlass {
                 mnuMainChannels.DropDownItems[0].Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
             }
 
+            if (mnuLoadingOrder.DropDownItems.Count > 0) {
+                mnuLoadingOrder.DropDownItems[0].Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            }
+
             #endregion
 
         }
@@ -1911,7 +1915,7 @@ namespace ImageGlass {
             // add new items
             foreach (var channel in Enum.GetValues(typeof(ColorChannels))) {
                 var channelName = Enum.GetName(typeof(ColorChannels), channel);
-                var mnu = new ToolStripMenuItem() {
+                var mnu = new ToolStripRadioButtonMenuItem() {
                     Text = Configs.Language.Items[$"{Name}.mnuMainChannels._{channelName}"],
                     Tag = channel,
                     CheckOnClick = true,
@@ -1926,16 +1930,9 @@ namespace ImageGlass {
         }
 
         private void MnuViewChannelsItem_Click(object sender, EventArgs e) {
-            var mnu = (ToolStripMenuItem)sender;
+            var mnu = sender as ToolStripRadioButtonMenuItem;
             var selectedChannel = (ColorChannels)(int)mnu.Tag;
 
-            // uncheck all menu items
-            foreach (ToolStripMenuItem item in mnuMainChannels.DropDown.Items) {
-                item.Checked = false;
-            }
-
-            // select the clicked menu
-            mnu.Checked = true;
 
             if (selectedChannel != Local.Channels) {
                 Local.Channels = selectedChannel;
@@ -1946,6 +1943,46 @@ namespace ImageGlass {
 
                 // update cached images
                 Local.ImageList.UpdateCache();
+            }
+        }
+
+
+        /// <summary>
+        /// Load Loading order menu items
+        /// </summary>
+        private void LoadLoadingOrderMenuItems() {
+            // clear items
+            mnuLoadingOrder.DropDown.Items.Clear();
+
+            var newMenuIconHeight = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
+
+            // add new items
+            foreach (var order in Enum.GetValues(typeof(ImageOrderBy))) {
+                var orderName = Enum.GetName(typeof(ImageOrderBy), order);
+                var mnu = new ToolStripRadioButtonMenuItem() {
+                    Text = Configs.Language.Items[$"_.{nameof(ImageOrderBy)}._{orderName}"],
+                    Tag = order,
+                    CheckOnClick = true,
+                    Checked = (int)order == (int)Configs.ImageLoadingOrder,
+                    ImageScaling = ToolStripItemImageScaling.None,
+                    Image = new Bitmap(newMenuIconHeight, newMenuIconHeight)
+                };
+
+                mnu.Click += MnuLoadingOrderItem_Click;
+                mnuLoadingOrder.DropDown.Items.Add(mnu);
+            }
+        }
+
+
+        private void MnuLoadingOrderItem_Click(object sender, EventArgs e) {
+            var mnu = sender as ToolStripRadioButtonMenuItem;
+            var selectedOrder = (ImageOrderBy)(int)mnu.Tag;
+
+            if (selectedOrder != Configs.ImageLoadingOrder) {
+                Configs.ImageLoadingOrder = selectedOrder;
+
+                // reload iamge list
+                MnuMainReloadImageList_Click(null, null);
             }
         }
 
@@ -1960,6 +1997,7 @@ namespace ImageGlass {
 
             // get correct icon height
             var hIcon = DPIScaling.Transform(Configs.ToolbarIconHeight);
+
 
             foreach (var item in Configs.ToolbarButtons) {
                 if (item == ToolbarButton.Separator) {
@@ -2569,8 +2607,11 @@ namespace ImageGlass {
                 }
                 #endregion
 
-                // Load View Channels menu items
-                LoadViewChannelsMenuItems();
+                //// Load View Channels menu items
+                //LoadViewChannelsMenuItems();
+
+                //// Load loading order menu items
+                //LoadLoadingOrdersMenuItems();
 
                 // Load state of IsWindowAlwaysOnTop value 
                 this.TopMost = mnuMainAlwaysOnTop.Checked = Configs.IsWindowAlwaysOnTop;
@@ -3006,8 +3047,12 @@ namespace ImageGlass {
                 mnuMainSetAsLockImage.Text = lang[$"{Name}.{nameof(mnuMainSetAsLockImage)}"];
                 mnuMainImageLocation.Text = lang[$"{Name}.{nameof(mnuMainImageLocation)}"];
                 mnuMainImageProperties.Text = lang[$"{Name}.{nameof(mnuMainImageProperties)}"];
+
                 mnuMainChannels.Text = lang[$"{Name}.{nameof(mnuMainChannels)}"];
                 LoadViewChannelsMenuItems(); // update Channels menu items
+
+                mnuLoadingOrder.Text = lang[$"{Name}.{nameof(mnuLoadingOrder)}"];
+                LoadLoadingOrderMenuItems(); // update Loading order items
                 #endregion
 
                 #region Menu CLipboard
@@ -3199,6 +3244,9 @@ namespace ImageGlass {
 
             #region IMAGE_LIST
             if ((flags & ForceUpdateActions.IMAGE_LIST) == ForceUpdateActions.IMAGE_LIST) {
+                // update image loading order value
+                LoadLoadingOrderMenuItems();
+
                 // update image list
                 MnuMainReloadImageList_Click(null, null);
             }

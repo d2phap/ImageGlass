@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,6 +69,7 @@
             this.mnuMainScaleToFill = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainImage = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainChannels = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuLoadingOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainRotateLeft = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainRotateRight = new System.Windows.Forms.ToolStripMenuItem();
@@ -227,7 +228,7 @@
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(247, 468);
+            this.mnuMain.Size = new System.Drawing.Size(247, 499);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -659,6 +660,7 @@
             // 
             this.mnuMainImage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuMainChannels,
+            this.mnuLoadingOrder,
             this.toolStripSeparator7,
             this.mnuMainRotateLeft,
             this.mnuMainRotateRight,
@@ -694,6 +696,17 @@
             this.mnuMainChannels.Size = new System.Drawing.Size(418, 31);
             this.mnuMainChannels.Text = "[Channels]";
             this.mnuMainChannels.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
+            // 
+            // mnuLoadingOrders
+            // 
+            this.mnuLoadingOrder.ForeColor = System.Drawing.Color.Black;
+            this.mnuLoadingOrder.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuLoadingOrder.Name = "mnuLoadingOrders";
+            this.mnuLoadingOrder.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuLoadingOrder.ShortcutKeyDisplayString = "";
+            this.mnuLoadingOrder.Size = new System.Drawing.Size(418, 31);
+            this.mnuLoadingOrder.Text = "[Loading orders]";
+            this.mnuLoadingOrder.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
             // toolStripSeparator7
             // 
@@ -1335,7 +1348,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator2;
+            this.picMain.Animator = defaultGifAnimator1;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(60)))), ((int)(((byte)(61)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuContext;
@@ -1392,6 +1405,7 @@
             this.toolMain.AutoSize = false;
             this.toolMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(60)))), ((int)(((byte)(61)))));
             this.toolMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolMain.HideTooltips = false;
             this.toolMain.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnBack,
@@ -2090,6 +2104,7 @@
         private System.Windows.Forms.ToolStripButton btnColorPicker;
         private System.Windows.Forms.ToolStripButton btnCrop;
         private System.Windows.Forms.ToolStripMenuItem mnuExifTool;
+        private System.Windows.Forms.ToolStripMenuItem mnuLoadingOrder;
     }
 }
 

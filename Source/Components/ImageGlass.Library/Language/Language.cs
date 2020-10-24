@@ -170,6 +170,17 @@ namespace ImageGlass.Library {
         private void InitDefaultLanguageDictionary() {
             Items.Add("_IncompatibleConfigs", "Some settings are not compatible with your ImageGlass {0}. It's recommended to update them before continuing.\r\n\n- Click Yes to learn about the changes.\r\n- Click No to launch ImageGlass with default settings."); //v7.5
 
+            Items.Add("_.ImageOrderBy._Name", "Name (default)"); //v8.0
+            Items.Add("_.ImageOrderBy._Length", "Length"); //v8.0
+            Items.Add("_.ImageOrderBy._CreationTime", "Creation time"); //v8.0
+            Items.Add("_.ImageOrderBy._LastAccessTime", "Last access time"); //v8.0
+            Items.Add("_.ImageOrderBy._LastWriteTime", "Last write time"); //v8.0
+            Items.Add("_.ImageOrderBy._Extension", "Extension"); //v8.0
+            Items.Add("_.ImageOrderBy._Random", "Random"); //v8.0
+
+            Items.Add("_.ImageOrderType._Asc", "Ascending");  //v8.0
+            Items.Add("_.ImageOrderType._Desc", "Descending");  //v8.0
+
             #region frmMain
 
             #region Main menu
@@ -228,6 +239,9 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainChannels._Blue", "Blue"); //v7.0
             Items.Add("frmMain.mnuMainChannels._Black", "Black"); //v7.0
             Items.Add("frmMain.mnuMainChannels._Alpha", "Alpha"); //v7.0
+
+            Items.Add("frmMain.mnuLoadingOrder", "Loading order"); //v8.0
+
             Items.Add("frmMain.mnuMainRotateLeft", "Rotate left"); //v7.5
             Items.Add("frmMain.mnuMainRotateRight", "Rotate right"); //v7.5
             Items.Add("frmMain.mnuMainFlipHorz", "Flip Horizontal"); // V6.0
@@ -423,16 +437,6 @@ namespace ImageGlass.Library {
             // Items.Add("frmSetting.chkImageBoosterBack", "Turn on Image Booster when navigate back (need more ~20% RAM)"); //v2.0 final // removed 7.0
 
             Items.Add("frmSetting.lblImageLoadingOrder", "Image loading order");
-            Items.Add("frmSetting.cmbImageOrder._Name", "Name (default)");
-            Items.Add("frmSetting.cmbImageOrder._Length", "Length");
-            Items.Add("frmSetting.cmbImageOrder._CreationTime", "Creation time");
-            Items.Add("frmSetting.cmbImageOrder._LastAccessTime", "Last access time");
-            Items.Add("frmSetting.cmbImageOrder._LastWriteTime", "Last write time");
-            Items.Add("frmSetting.cmbImageOrder._Extension", "Extension");
-            Items.Add("frmSetting.cmbImageOrder._Random", "Random");
-
-            Items.Add("frmSetting.cmbImageOrderType._Asc", "Ascending");  // V7.0
-            Items.Add("frmSetting.cmbImageOrderType._Desc", "Descending");  // V7.0
             Items.Add("frmSetting.chkUseFileExplorerSortOrder", "Use Windows File Explorer sort order if possible"); //v7.0
             Items.Add("frmSetting.chkGroupByDirectory", "Group images by directory"); //v7.7
             Items.Add("frmSetting.lblImageBoosterCachedCount", "Number of images cached by ImageBooster (one direction)"); //v7.0

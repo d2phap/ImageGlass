@@ -132,6 +132,9 @@
     </Compile>
     <Compile Include="ToolForms\ToolFormManager.cs" />
     <Compile Include="Renderers\ToolStripRenderer.cs" />
+    <Compile Include="ToolStrip\ToolStripRadioButtonMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ToolStripToolTip\ToolStripToolTip.cs">
       <SubType>Component</SubType>
     </Compile>

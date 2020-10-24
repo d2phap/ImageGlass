@@ -28,7 +28,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -541,7 +540,7 @@ namespace ImageGlass {
             cmbImageOrder.Items.Clear();
 
             foreach (var item in loadingOrderList) {
-                cmbImageOrder.Items.Add(Configs.Language.Items[$"{this.Name}.cmbImageOrder._{item}"]);
+                cmbImageOrder.Items.Add(Configs.Language.Items[$"_.{nameof(ImageOrderBy)}._{item}"]);
             }
 
             //Get value of cmbImageOrder
@@ -553,7 +552,7 @@ namespace ImageGlass {
             cmbImageOrderType.Items.Clear();
 
             foreach (var item in orderTypesList) {
-                cmbImageOrderType.Items.Add(Configs.Language.Items[$"{this.Name}.cmbImageOrderType._{item}"]);
+                cmbImageOrderType.Items.Add(Configs.Language.Items[$"_.{nameof(ImageOrderType)}._{item}"]);
             }
 
             //Get value of cmbImageOrder
