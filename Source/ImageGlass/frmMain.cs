@@ -2624,17 +2624,37 @@ namespace ImageGlass {
         /// <summary>
         /// Save app configurations
         /// </summary>
-        private void SaveConfig() {
-            if (WindowState == FormWindowState.Normal) {
-                // don't save Bound if in Full screen and SlideShow mode
-                if (!Configs.IsFullScreen && !Configs.IsSlideshow) {
-                    // Windows Bound-----------------------------------------------------------
+        /// <param name="windowStateOnly">Only save window state</param>
+        private void SaveConfig(bool windowStateOnly = false) {
+            #region Window state and bounds
+            // Windows Bound---------------------------------------------
+            // don't save Bound if in Full screen and SlideShow mode
+            if (!Configs.IsFullScreen && !Configs.IsSlideshow) {
+                if (WindowState == FormWindowState.Normal) {
                     Configs.FrmMainWindowBound = this.Bounds;
+                }
+                else if (WindowState == FormWindowState.Maximized) {
+                    // if moving a maximized window from a screen to other screen
+                    // and keep its maximized state, we need to save the "Normal"
+                    // location so that it restores to correct screen in Normal state
+                    // in the next run.
+                    var newLocation = this.Location;
+                    newLocation.Offset(110, 110);
+
+                    Configs.FrmMainWindowBound = new Rectangle(
+                        newLocation,
+                        Configs.FrmMainWindowBound.Size);
                 }
             }
 
-            // Windows State-------------------------------------------------------------------
+            // Windows State----------------------------------------------
             Configs.FrmMainWindowState = this.WindowState != FormWindowState.Minimized ? this.WindowState : FormWindowState.Normal;
+
+            if (windowStateOnly) {
+                return;
+            }
+            #endregion
+
 
             // Save thumbnail bar width
             Configs.ThumbnailBarWidth = (uint)(sp1.Width - sp1.SplitterDistance);
@@ -2660,7 +2680,7 @@ namespace ImageGlass {
         private void FullScreenMode(bool enabled = true, bool changeWindowState = true, bool onlyShowViewer = false) {
             // full screen
             if (enabled) {
-                SaveConfig();
+                SaveConfig(windowStateOnly: true);
 
                 _isFrameless = Configs.IsWindowFrameless;
                 _isWindowFit = Configs.IsWindowFit;
@@ -3318,7 +3338,7 @@ namespace ImageGlass {
 
         private void frmMain_ResizeEnd(object sender, EventArgs e) {
             if (Size != _windowSize) {
-                SaveConfig();
+                SaveConfig(windowStateOnly: true);
             }
         }
 
