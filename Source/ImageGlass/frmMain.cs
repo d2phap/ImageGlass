@@ -2520,8 +2520,6 @@ namespace ImageGlass {
                 Local.ForceUpdateActions |= ForceUpdateActions.THUMBNAIL_BAR;
                 frmMain_Activated(null, EventArgs.Empty);
 
-                // Windows state must be loaded after Windows Bound!
-                this.WindowState = Configs.FrmMainWindowState;
 
                 #region Load Frameless mode
                 this._movableForm = new MovableForm(this) {
@@ -2551,6 +2549,10 @@ namespace ImageGlass {
 
                 // Windows Bound (Position + Size)
                 this.Bounds = Configs.FrmMainWindowBound;
+
+                // Windows state must be loaded after Windows Bound!
+                this.WindowState = Configs.FrmMainWindowState;
+
 
                 // Load Toolbar buttons
                 // *** Need to trigger after 'this.Bounds'
@@ -2607,11 +2609,6 @@ namespace ImageGlass {
                 }
                 #endregion
 
-                //// Load View Channels menu items
-                //LoadViewChannelsMenuItems();
-
-                //// Load loading order menu items
-                //LoadLoadingOrdersMenuItems();
 
                 // Load state of IsWindowAlwaysOnTop value 
                 this.TopMost = mnuMainAlwaysOnTop.Checked = Configs.IsWindowAlwaysOnTop;
