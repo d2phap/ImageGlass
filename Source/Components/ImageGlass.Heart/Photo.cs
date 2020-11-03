@@ -29,9 +29,6 @@ using System.Threading.Tasks;
 
 namespace ImageGlass.Heart {
     public static class Photo {
-
-        static MagickReadSettings _mrSettings = new MagickReadSettings();
-
         #region Load image / thumbnail
 
         /// <summary>
@@ -59,21 +56,21 @@ namespace ImageGlass.Heart {
             IColorProfile colorProfile = null;
 
             var ext = Path.GetExtension(filename).ToUpperInvariant();
+            var settings = new MagickReadSettings();
 
             #region Settings
-            _mrSettings.BackgroundColor = MagickColors.White;
             if (ext == ".SVG") {
-                _mrSettings.BackgroundColor = MagickColors.Transparent;
+                settings.BackgroundColor = MagickColors.Transparent;
             }
 
             if (size.Width > 0 && size.Height > 0) {
-                _mrSettings.Width = size.Width;
-                _mrSettings.Height = size.Height;
+                settings.Width = size.Width;
+                settings.Height = size.Height;
             }
 
 
             // Fixed #708: length and filesize do not match
-            _mrSettings.SetDefines(new BmpReadDefines {
+            settings.SetDefines(new BmpReadDefines {
                 IgnoreFileSize = true,
             });
 
@@ -107,7 +104,7 @@ namespace ImageGlass.Heart {
                 case ".ICO":
                 case ".WEBP":
                 case ".PDF":
-                    using (var imgColl = new MagickImageCollection(filename, _mrSettings)) {
+                    using (var imgColl = new MagickImageCollection(filename, settings)) {
                         bitmap = imgColl.ToBitmap();
                     }
                     break;
@@ -211,10 +208,10 @@ namespace ImageGlass.Heart {
                     var newFilename = Helpers.PrefixLongPath(filename);
                     var allBytes = File.ReadAllBytes(newFilename);
 
-                    imgM = new MagickImage(allBytes, _mrSettings);
+                    imgM = new MagickImage(allBytes, settings);
                 }
                 else {
-                    imgM = new MagickImage(filename, _mrSettings);
+                    imgM = new MagickImage(filename, settings);
                 }
 
 
