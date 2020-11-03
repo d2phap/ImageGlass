@@ -273,6 +273,11 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool IsExifToolAlwaysOnTop { get; set; } = true;
 
+        /// <summary>
+        /// Gets, sets value indicates that the app will close after clicking Edit menu
+        /// </summary>
+        public static bool IsCloseAppAfterEditing { get; set; } = false;
+
         #endregion
 
         #region Number items
@@ -571,6 +576,7 @@ namespace ImageGlass.Settings {
             IsUseTouchGesture = Get<bool>(nameof(IsUseTouchGesture), IsUseTouchGesture);
             IsHideTooltips = Get<bool>(nameof(IsHideTooltips), IsHideTooltips);
             IsExifToolAlwaysOnTop = Get<bool>(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
+            IsCloseAppAfterEditing = Get<bool>(nameof(IsCloseAppAfterEditing), IsCloseAppAfterEditing);
 
             #endregion
 
@@ -799,6 +805,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsUseTouchGesture), IsUseTouchGesture);
             Set(nameof(IsHideTooltips), IsHideTooltips);
             Set(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
+            Set(nameof(IsCloseAppAfterEditing), IsCloseAppAfterEditing);
 
             #endregion
 

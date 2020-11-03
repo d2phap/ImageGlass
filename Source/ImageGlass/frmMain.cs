@@ -4210,6 +4210,10 @@ namespace ImageGlass {
 
                     try {
                         p.Start();
+
+                        if (Configs.IsCloseAppAfterEditing) {
+                            Application.Exit();
+                        }
                     }
                     catch { }
                 }
@@ -4229,6 +4233,10 @@ namespace ImageGlass {
 
                 try {
                     p.Start();
+
+                    if (Configs.IsCloseAppAfterEditing) {
+                        Application.Exit();
+                    }
                 }
                 catch { }
             }

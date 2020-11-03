@@ -69,7 +69,7 @@ namespace ImageGlass.Library {
             LangName = "Local name of the language";
             Author = "ImageGlass community";
             Description = "English name of language";
-            MinVersion = "7.6.5.0";
+            MinVersion = "8.0.0.0";
             FileName = "";
             IsRightToLeftLayout = RightToLeft.No;
 
@@ -99,7 +99,8 @@ namespace ImageGlass.Library {
         public void ReadLanguageFile() {
             var doc = new XmlDocument();
             doc.Load(FileName);
-            var root = (XmlElement)doc.DocumentElement;// <ImageGlass>
+
+            var root = doc.DocumentElement;// <ImageGlass>
             var nType = (XmlElement)root.SelectNodes("Language")[0]; //<Language>
             var n = (XmlElement)nType.SelectNodes("Info")[0];//<Info>
 
@@ -292,7 +293,7 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainColorPicker", "Color picker"); //v5.0
             Items.Add("frmMain.mnuMainPageNav", "Page navigation"); // v7.5
             Items.Add("frmMain.mnuMainCrop", "Cropping"); // v7.6
-            Items.Add("frmMain.mnuExifTool", "Exif tool"); // v7.7
+            Items.Add("frmMain.mnuExifTool", "Exif tool"); // v8.0
             #endregion
 
             Items.Add("frmMain.mnuMainSettings", "Settings…"); //v3.0
@@ -349,7 +350,7 @@ namespace ImageGlass.Library {
 
             Items.Add("frmMain._PageExtractComplete", "Page extraction completed."); // v7.5
             Items.Add("frmMain._Frameless", "Hold SHIFT to move the window."); // v7.5
-            Items.Add("frmMain._InvalidImageClipboardData", "Clipboard does not contain image data."); // v7.7
+            Items.Add("frmMain._InvalidImageClipboardData", "Clipboard does not contain image data."); // v8.0
             #endregion
 
             #endregion
@@ -438,7 +439,7 @@ namespace ImageGlass.Library {
 
             Items.Add("frmSetting.lblImageLoadingOrder", "Image loading order");
             Items.Add("frmSetting.chkUseFileExplorerSortOrder", "Use Windows File Explorer sort order if possible"); //v7.0
-            Items.Add("frmSetting.chkGroupByDirectory", "Group images by directory"); //v7.7
+            Items.Add("frmSetting.chkGroupByDirectory", "Group images by directory"); //v8.0
             Items.Add("frmSetting.lblImageBoosterCachedCount", "Number of images cached by ImageBooster (one direction)"); //v7.0
             #endregion
 
@@ -500,6 +501,7 @@ namespace ImageGlass.Library {
             //Items.Add("frmSetting.lblHeadImageEditing", "Image editing"); //v4.0, removed v6.0
             Items.Add("frmSetting.chkSaveOnRotate", "Save the viewing image after rotating"); //v4.5
             Items.Add("frmSetting.lblSelectAppForEdit", "Select application for image editing"); //v4.5
+            Items.Add("frmSetting.chkCloseAfterEdit", "Close ImageGlass after opening editing app"); // v8.0
             Items.Add("frmSetting.btnEditEditExt", "Edit…"); //v4.0
             Items.Add("frmSetting.btnEditResetExt", "Reset to default"); //v4.0
             Items.Add("frmSetting.btnEditEditAllExt", "Edit all extensions…"); //v4.1
@@ -542,21 +544,21 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.btnMoveUp._Tooltip", "Move selected button up"); // tooltip
 
             Items.Add("frmSetting.chkHorzCenterToolbarBtns", "Center toolbar buttons horizontally in window"); // V6.0
-            Items.Add("frmSetting.chkHideTooltips", "Hide toolbar tooltips"); // v7.7
+            Items.Add("frmSetting.chkHideTooltips", "Hide toolbar tooltips"); // v8.0
             #endregion
 
             #region TAB Tools
             Items.Add("frmSetting.chkColorUseRGBA", "Use RGB format with Alpha value"); //v5.0
             Items.Add("frmSetting.chkColorUseHEXA", "Use HEX format with Alpha value"); //v5.0
             Items.Add("frmSetting.chkColorUseHSLA", "Use HSL format with Alpha value"); //v5.0
-            Items.Add("frmSetting.chkColorUseHSVA", "Use HSV format with Alpha value"); //v7.7
+            Items.Add("frmSetting.chkColorUseHSVA", "Use HSV format with Alpha value"); //v8.0
             Items.Add("frmSetting.lblDefaultColorCode", "Default color code format when copying"); //v5.0
 
             Items.Add("frmSetting.chkShowPageNavAuto", "Auto-show Page navigation tool for multi-page image"); //v7.5
 
-            Items.Add("frmSetting.chkExifToolAlwaysOnTop", "Keep Exif tool always on top"); // v7.7
-            Items.Add("frmSetting.lnkSelectExifTool", "Select Exif tool file"); // v7.7
-            Items.Add("frmSetting.lnkSelectExifTool._NotFound", "The Exif tool does not exist or invalid: \n{0}"); // v7.7
+            Items.Add("frmSetting.chkExifToolAlwaysOnTop", "Keep Exif tool always on top"); // v8.0
+            Items.Add("frmSetting.lnkSelectExifTool", "Select Exif tool file"); // v8.0
+            Items.Add("frmSetting.lnkSelectExifTool._NotFound", "The Exif tool does not exist or invalid: \n{0}"); // v8.0
             #endregion
 
             #region TAB Language
@@ -659,17 +661,17 @@ namespace ImageGlass.Library {
             Items.Add("frmCrop.btnSave", "Save"); //v7.6
             Items.Add("frmCrop.btnSaveAs", "Save as…"); //v7.6
             Items.Add("frmCrop.btnCopy", "Copy"); //v7.6
-            Items.Add("frmCrop.btnReset", "Reset"); //v7.7
+            Items.Add("frmCrop.btnReset", "Reset"); //v8.0
 
             #endregion
 
             #region FrmExifTool
-            Items.Add("FrmExifTool.clnProperty", "Property"); // v7.7
-            Items.Add("FrmExifTool.clnValue", "Value"); // v7.7
+            Items.Add("FrmExifTool.clnProperty", "Property"); // v8.0
+            Items.Add("FrmExifTool.clnValue", "Value"); // v8.0
 
-            Items.Add("FrmExifTool.btnCopyValue", "Copy value"); // v7.7
-            Items.Add("FrmExifTool.btnExport", "Export…"); // v7.7
-            Items.Add("FrmExifTool.btnClose", "Close"); // v7.7
+            Items.Add("FrmExifTool.btnCopyValue", "Copy value"); // v8.0
+            Items.Add("FrmExifTool.btnExport", "Export…"); // v8.0
+            Items.Add("FrmExifTool.btnClose", "Close"); // v8.0
 
             #endregion
         }
