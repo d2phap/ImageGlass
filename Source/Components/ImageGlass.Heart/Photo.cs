@@ -62,6 +62,7 @@ namespace ImageGlass.Heart {
             #region Settings
             if (ext == ".SVG") {
                 settings.BackgroundColor = MagickColors.Transparent;
+                settings.SetDefine("svg:xml-parse-huge", "true");
             }
 
             if (size.Width > 0 && size.Height > 0) {
