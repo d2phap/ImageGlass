@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageMagick;
 using ImageMagick.Formats.Bmp;
+using ImageMagick.Formats.Dng;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -74,7 +75,13 @@ namespace ImageGlass.Heart {
                 IgnoreFileSize = true,
             });
 
+            // Fix RAW color
+            settings.SetDefines(new DngReadDefines() {
+                UseCameraWhitebalance = true,
+            });
+
             #endregion
+
 
             #region Read image data
             switch (ext) {
@@ -115,6 +122,7 @@ namespace ImageGlass.Heart {
                     break;
             }
             #endregion
+
 
             #region Internal Functions 
 
@@ -220,6 +228,7 @@ namespace ImageGlass.Heart {
                     imgM.AutoOrient();
                 }
 
+
                 var checkRotation = ext != ".HEIC";
                 (exif, colorProfile) = PreprocesMagickImage(imgM, checkRotation);
 
@@ -306,13 +315,12 @@ namespace ImageGlass.Heart {
         /// <param name="filename">Full path of file</param>
         /// <returns></returns>
         public static Bitmap ConvertFileToBitmap(string filename) {
-            using (var fs = new FileStream(filename, FileMode.Open, FileAccess.Read)) {
-                var ms = new MemoryStream();
-                fs.CopyTo(ms);
-                ms.Position = 0;
+            using var fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
+            var ms = new MemoryStream();
+            fs.CopyTo(ms);
+            ms.Position = 0;
 
-                return new Bitmap(ms, true);
-            }
+            return new Bitmap(ms, true);
         }
 
         /// <summary>
@@ -442,10 +450,9 @@ namespace ImageGlass.Heart {
         /// <param name="quality">JPEG/MIFF/PNG compression level</param>
         public static async Task SaveAsync(string srcFileName, string destFileName, MagickFormat format = MagickFormat.Unknown, int quality = 100) {
             await Task.Run(() => {
-                using (var imgM = new MagickImage(srcFileName)) {
-                    imgM.Quality = quality;
-                    imgM.Write(destFileName, format);
-                }
+                using var imgM = new MagickImage(srcFileName);
+                imgM.Quality = quality;
+                imgM.Write(destFileName, format);
             }).ConfigureAwait(true);
         }
 
@@ -457,16 +464,15 @@ namespace ImageGlass.Heart {
         /// <param name="format">New image format</param>
         /// <param name="quality">JPEG/MIFF/PNG compression level</param>
         public static void Save(Bitmap srcBitmap, string destFileName, int format = (int)MagickFormat.Unknown, int quality = 100) {
-            using (var imgM = new MagickImage()) {
-                imgM.Read(srcBitmap);
-                imgM.Quality = quality;
+            using var imgM = new MagickImage();
+            imgM.Read(srcBitmap);
+            imgM.Quality = quality;
 
-                if (format != (int)MagickFormat.Unknown) {
-                    imgM.Write(destFileName, (MagickFormat)format);
-                }
-                else {
-                    imgM.Write(destFileName);
-                }
+            if (format != (int)MagickFormat.Unknown) {
+                imgM.Write(destFileName, (MagickFormat)format);
+            }
+            else {
+                imgM.Write(destFileName);
             }
         }
 
@@ -480,21 +486,20 @@ namespace ImageGlass.Heart {
                 // create dirs unless it does not exist
                 Directory.CreateDirectory(destFolder);
 
-                using (var imgColl = new MagickImageCollection(filename)) {
-                    var index = 0;
-                    foreach (var imgM in imgColl) {
-                        index++;
-                        imgM.Quality = 100;
+                using var imgColl = new MagickImageCollection(filename);
+                var index = 0;
+                foreach (var imgM in imgColl) {
+                    index++;
+                    imgM.Quality = 100;
 
-                        try {
-                            var newFilename = Path.GetFileNameWithoutExtension(filename) + " - " +
-                    index.ToString($"D{imgColl.Count.ToString().Length}") + ".png";
-                            var destFilePath = Path.Combine(destFolder, newFilename);
+                    try {
+                        var newFilename = Path.GetFileNameWithoutExtension(filename) + " - " +
+                index.ToString($"D{imgColl.Count.ToString().Length}") + ".png";
+                        var destFilePath = Path.Combine(destFolder, newFilename);
 
-                            imgM.Write(destFilePath, MagickFormat.Png);
-                        }
-                        catch { }
+                        imgM.Write(destFilePath, MagickFormat.Png);
                     }
+                    catch { }
                 }
             }).ConfigureAwait(true);
         }
