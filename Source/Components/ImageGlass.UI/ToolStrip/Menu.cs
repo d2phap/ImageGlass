@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2020 DUONG DIEU PHAP
+Copyright (C) 2021 DUONG DIEU PHAP
 Project homepage: http://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace ImageGlass.Library {
+namespace ImageGlass.UI {
     public static class Menu {
         /// <summary>
         /// Clone ToolStripMenu item
@@ -87,5 +87,6 @@ namespace ImageGlass.Library {
             }
             return m;
         }
+
     }
 }

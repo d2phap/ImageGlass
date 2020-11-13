@@ -1966,9 +1966,8 @@ namespace ImageGlass {
         }
 
         private void MnuViewChannelsItem_Click(object sender, EventArgs e) {
-            var mnu = sender as ToolStripRadioButtonMenuItem;
+            var mnu = sender as ToolStripMenuItem;
             var selectedChannel = (ColorChannels)(int)mnu.Tag;
-
 
             if (selectedChannel != Local.Channels) {
                 Local.Channels = selectedChannel;
@@ -1979,6 +1978,9 @@ namespace ImageGlass {
 
                 // update cached images
                 Local.ImageList.UpdateCache();
+
+                // reload state
+                LoadViewChannelsMenuItems();
             }
         }
 
@@ -2011,14 +2013,18 @@ namespace ImageGlass {
 
 
         private void MnuLoadingOrderItem_Click(object sender, EventArgs e) {
-            var mnu = sender as ToolStripRadioButtonMenuItem;
+            var mnu = sender as ToolStripMenuItem;
             var selectedOrder = (ImageOrderBy)(int)mnu.Tag;
+
 
             if (selectedOrder != Configs.ImageLoadingOrder) {
                 Configs.ImageLoadingOrder = selectedOrder;
 
-                // reload iamge list
+                // reload image list
                 MnuMainReloadImageList_Click(null, null);
+
+                // reload the state
+                LoadLoadingOrderMenuItems();
             }
         }
 
@@ -3898,12 +3904,14 @@ namespace ImageGlass {
         #region Context Menu
         private void OpenShortcutMenu(ToolStripMenuItem parentMenu) {
             mnuShortcut.Items.Clear();
-            foreach (ToolStripMenuItem item in parentMenu.DropDownItems) {
-                mnuShortcut.Items.Add(Library.Menu.Clone(item));
+
+            foreach (ToolStripRadioButtonMenuItem item in parentMenu.DropDownItems) {
+                mnuShortcut.Items.Add(UI.Menu.Clone(item));
             }
 
             mnuShortcut.Show(Cursor.Position);
         }
+
 
         private async void mnuContext_Opening(object sender, CancelEventArgs e) {
             var isImageError = false;
@@ -3919,40 +3927,40 @@ namespace ImageGlass {
             mnuContext.Items.Clear();
 
             if (Configs.IsSlideshow && !isImageError) {
-                mnuContext.Items.Add(Library.Menu.Clone(mnuMainSlideShowPause));
-                mnuContext.Items.Add(Library.Menu.Clone(mnuMainSlideShowExit));
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainSlideShowPause));
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainSlideShowExit));
                 mnuContext.Items.Add(new ToolStripSeparator());//---------------
             }
 
             // toolbar menu
-            mnuContext.Items.Add(Library.Menu.Clone(mnuMainToolbar));
-            mnuContext.Items.Add(Library.Menu.Clone(mnuMainAlwaysOnTop));
+            mnuContext.Items.Add(UI.Menu.Clone(mnuMainToolbar));
+            mnuContext.Items.Add(UI.Menu.Clone(mnuMainAlwaysOnTop));
 
             mnuContext.Items.Add(new ToolStripSeparator());//---------------
-            mnuContext.Items.Add(Library.Menu.Clone(mnuLoadingOrder));
+            mnuContext.Items.Add(UI.Menu.Clone(mnuLoadingOrder));
 
             // Get Edit App info
             if (!isImageError) {
                 if (!Local.IsTempMemoryData) {
-                    mnuContext.Items.Add(Library.Menu.Clone(mnuMainChannels));
+                    mnuContext.Items.Add(UI.Menu.Clone(mnuMainChannels));
                 }
 
                 mnuContext.Items.Add(new ToolStripSeparator());//---------------
-                mnuContext.Items.Add(Library.Menu.Clone(mnuOpenWith));
+                mnuContext.Items.Add(UI.Menu.Clone(mnuOpenWith));
 
                 UpdateEditAppInfoForMenu();
-                mnuContext.Items.Add(Library.Menu.Clone(mnuMainEditImage));
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainEditImage));
 
                 #region Check if image can animate (GIF)
                 try {
                     var imgData = await Local.ImageList.GetImgAsync(Local.CurrentIndex).ConfigureAwait(true);
 
                     if (imgData.PageCount > 1) {
-                        var mnu1 = Library.Menu.Clone(mnuMainExtractPages);
+                        var mnu1 = UI.Menu.Clone(mnuMainExtractPages);
                         mnu1.Text = string.Format(Configs.Language.Items[$"{Name}.mnuMainExtractPages"], imgData.PageCount);
                         mnu1.Enabled = true;
 
-                        var mnu2 = Library.Menu.Clone(mnuMainStartStopAnimating);
+                        var mnu2 = UI.Menu.Clone(mnuMainStartStopAnimating);
                         mnu2.Enabled = true;
 
                         mnuContext.Items.Add(mnu1);
@@ -3964,41 +3972,41 @@ namespace ImageGlass {
             }
 
             if (!isImageError || Local.IsTempMemoryData) {
-                mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsDesktop));
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainSetAsDesktop));
 
                 // check if igcmdWin10.exe exists!
                 if (_isWindows10 && File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
-                    mnuContext.Items.Add(Library.Menu.Clone(mnuMainSetAsLockImage));
+                    mnuContext.Items.Add(UI.Menu.Clone(mnuMainSetAsLockImage));
                 }
             }
 
             #region Menu group: CLIPBOARD
             mnuContext.Items.Add(new ToolStripSeparator());//------------
-            mnuContext.Items.Add(Library.Menu.Clone(mnuMainOpenImageData));
+            mnuContext.Items.Add(UI.Menu.Clone(mnuMainOpenImageData));
 
             if (!isImageError && !Local.IsTempMemoryData) {
-                mnuContext.Items.Add(Library.Menu.Clone(mnuMainClearClipboard));
-                mnuContext.Items.Add(Library.Menu.Clone(mnuMainCopy));
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainClearClipboard));
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainCopy));
             }
 
             if (picMain.Image != null) {
-                mnuContext.Items.Add(Library.Menu.Clone(mnuMainCopyImageData));
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainCopyImageData));
             }
 
             if (!isImageError && !Local.IsTempMemoryData) {
-                mnuContext.Items.Add(Library.Menu.Clone(mnuMainCut));
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainCut));
             }
             #endregion
 
             if (!isImageError && !Local.IsTempMemoryData) {
                 mnuContext.Items.Add(new ToolStripSeparator());//------------
-                mnuContext.Items.Add(Library.Menu.Clone(mnuMainRename));
-                mnuContext.Items.Add(Library.Menu.Clone(mnuMainMoveToRecycleBin));
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainRename));
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainMoveToRecycleBin));
 
                 mnuContext.Items.Add(new ToolStripSeparator());//------------
-                mnuContext.Items.Add(Library.Menu.Clone(mnuMainCopyImagePath));
-                mnuContext.Items.Add(Library.Menu.Clone(mnuMainImageLocation));
-                mnuContext.Items.Add(Library.Menu.Clone(mnuMainImageProperties));
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainCopyImagePath));
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainImageLocation));
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainImageProperties));
             }
         }
         #endregion
