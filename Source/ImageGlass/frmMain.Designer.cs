@@ -167,6 +167,8 @@
             this.btnScaleToFill = new System.Windows.Forms.ToolStripButton();
             this.tip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.mnuShortcut = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -177,6 +179,7 @@
             this.sp1.Panel2.SuspendLayout();
             this.sp1.SuspendLayout();
             this.toolMain.SuspendLayout();
+            this.mnuShortcut.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnuContext
@@ -692,18 +695,18 @@
             this.mnuMainChannels.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainChannels.Name = "mnuMainChannels";
             this.mnuMainChannels.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainChannels.ShortcutKeyDisplayString = "";
+            this.mnuMainChannels.ShortcutKeyDisplayString = "Alt+C";
             this.mnuMainChannels.Size = new System.Drawing.Size(418, 31);
             this.mnuMainChannels.Text = "[Channels]";
             this.mnuMainChannels.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
-            // mnuLoadingOrders
+            // mnuLoadingOrder
             // 
             this.mnuLoadingOrder.ForeColor = System.Drawing.Color.Black;
             this.mnuLoadingOrder.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuLoadingOrder.Name = "mnuLoadingOrders";
+            this.mnuLoadingOrder.Name = "mnuLoadingOrder";
             this.mnuLoadingOrder.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuLoadingOrder.ShortcutKeyDisplayString = "";
+            this.mnuLoadingOrder.ShortcutKeyDisplayString = "Alt+O";
             this.mnuLoadingOrder.Size = new System.Drawing.Size(418, 31);
             this.mnuLoadingOrder.Text = "[Loading orders]";
             this.mnuLoadingOrder.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
@@ -1922,6 +1925,22 @@
             this.btnScaleToFill.ToolTipText = "Zoom to fill";
             this.btnScaleToFill.Click += new System.EventHandler(this.btnScaleToFill_Click);
             // 
+            // mnuShortcut
+            // 
+            this.mnuShortcut.BackColor = System.Drawing.Color.White;
+            this.mnuShortcut.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.mnuShortcut.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1});
+            this.mnuShortcut.Name = "mnuContext";
+            this.mnuShortcut.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.mnuShortcut.Size = new System.Drawing.Size(223, 32);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(222, 28);
+            this.toolStripMenuItem1.Text = "sample menu item";
+            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -1958,6 +1977,7 @@
             this.sp1.ResumeLayout(false);
             this.toolMain.ResumeLayout(false);
             this.toolMain.PerformLayout();
+            this.mnuShortcut.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2105,6 +2125,8 @@
         private System.Windows.Forms.ToolStripButton btnCrop;
         private System.Windows.Forms.ToolStripMenuItem mnuExifTool;
         private System.Windows.Forms.ToolStripMenuItem mnuLoadingOrder;
+        private System.Windows.Forms.ContextMenuStrip mnuShortcut;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
     }
 }
 

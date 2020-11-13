@@ -95,10 +95,13 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Transform a number to a new number after applying DPI Scale Factor
         /// </summary>
-        /// <param name="num"></param>
+        /// <param name="num">A float number</param>
         /// <returns></returns>
-        public static double Transform(double num) {
-            return num * GetDPIScaleFactor();
+        public static T Transform<T>(float num) {
+            var type = typeof(T);
+            var value = num * GetDPIScaleFactor();
+
+            return (T)Convert.ChangeType(value, type);
         }
 
         /// <summary>

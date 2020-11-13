@@ -994,12 +994,14 @@ namespace ImageGlass {
             }
             #endregion
 
+
             #region Detect WIN logo key
             _isWindowsKeyPressed = false;
             if (e.KeyData == Keys.LWin || e.KeyData == Keys.RWin) {
                 _isWindowsKeyPressed = true;
             }
             #endregion
+
 
             // KBR 20191210 Fix observed issue: when using WIN+down-arrow to minimize in
             // frameless mode, the first key code after restore would be ignored. Moved
@@ -1017,6 +1019,7 @@ namespace ImageGlass {
             }
             #endregion
 
+
             // Rotate Clockwise
             #region Ctrl + .
             if (e.KeyValue == 190 && e.Control && !e.Shift && !e.Alt)//Ctrl + .
@@ -1025,6 +1028,7 @@ namespace ImageGlass {
                 return;
             }
             #endregion
+
 
             // Flip Horizontally
             #region Ctrl + ;
@@ -1035,6 +1039,7 @@ namespace ImageGlass {
             }
             #endregion
 
+
             // Flip Vertically
             #region Ctrl + '
             if (e.KeyValue == 222 && e.Control && !e.Shift && !e.Alt)//Ctrl + '
@@ -1043,6 +1048,7 @@ namespace ImageGlass {
                 return;
             }
             #endregion
+
 
             // Clear clipboard
             #region CTRL + `
@@ -1053,6 +1059,7 @@ namespace ImageGlass {
             }
             #endregion
 
+
             // Zoom in
             #region Ctrl + = / = / + (numPad)
             if ((e.KeyValue == 187 || (e.KeyValue == 107 && !e.Control)) && !e.Shift && !e.Alt)// Ctrl + =
@@ -1061,6 +1068,7 @@ namespace ImageGlass {
                 return;
             }
             #endregion
+
 
             // Zoom out
             #region Ctrl + - / - / - (numPad)
@@ -1071,6 +1079,7 @@ namespace ImageGlass {
             }
             #endregion
 
+
             // Actual size image
             #region Ctrl + 0 / Ctrl + Num0 / 0 / Num0
             if (!e.Shift && !e.Alt && (e.KeyValue == 48 || e.KeyValue == 96)) // 0 || Num0 || Ctrl + 0 || Ctrl + Num0
@@ -1079,6 +1088,7 @@ namespace ImageGlass {
                 return;
             }
             #endregion
+
 
             // ESC ultility
             #region ESC
@@ -1095,6 +1105,7 @@ namespace ImageGlass {
                 return;
             }
             #endregion
+
 
             // Previous Image
             #region LEFT ARROW / PAGE UP
@@ -1117,6 +1128,7 @@ namespace ImageGlass {
             }
             #endregion
 
+
             // Next Image
             #region RIGHT ARROW / PAGE DOWN
             if (!ignore && e.KeyValue == (int)Keys.Right && hasNoMods) {
@@ -1138,6 +1150,7 @@ namespace ImageGlass {
             }
             #endregion
 
+
             // Pan up
             #region UP ARROW
             if (!ignore && e.KeyValue == (int)Keys.Up && hasNoMods) {
@@ -1148,6 +1161,7 @@ namespace ImageGlass {
                 return; // fall-through lets pan happen
             }
             #endregion
+
 
             // Pan down
             #region DOWN ARROW
@@ -1160,6 +1174,7 @@ namespace ImageGlass {
             }
             #endregion
 
+
             //Goto the first Image
             #region HOME
             if (!_isWindowsKeyPressed && e.KeyValue == 36 &&
@@ -1169,6 +1184,7 @@ namespace ImageGlass {
             }
             #endregion
 
+
             // Goto the last Image
             #region END
             if (!_isWindowsKeyPressed && e.KeyValue == 35 &&
@@ -1177,6 +1193,7 @@ namespace ImageGlass {
                 return;
             }
             #endregion
+
 
             // Ctrl
             #region CTRL + ...
@@ -1226,6 +1243,25 @@ namespace ImageGlass {
                 return;
             }
             #endregion
+
+
+            // Alt
+            #region ALT + ...
+            if (e.Alt && !e.Control && !e.Shift) {
+                // Alt+O: Loading order dropdown menu
+                if (e.KeyCode == Keys.O) {
+                    OpenShortcutMenu(mnuLoadingOrder);
+                    return;
+                }
+
+                // Alt+C: Channels dropdown menu
+                if (e.KeyCode == Keys.C) {
+                    OpenShortcutMenu(mnuMainChannels);
+                    return;
+                }
+            }
+            #endregion
+
 
             // Without Modifiers keys 
             #region Without Modifiers keys
@@ -1296,7 +1332,7 @@ namespace ImageGlass {
                     return;
                 }
 
-                // Toolbar
+                // Exif tool
                 if (e.KeyCode == Keys.X) {
                     mnuExifTool.PerformClick();
                     return;
@@ -1996,7 +2032,7 @@ namespace ImageGlass {
             var newBtnHeight = (int)Math.Floor(toolMain.Height * 0.8);
 
             // get correct icon height
-            var hIcon = DPIScaling.Transform(Configs.ToolbarIconHeight);
+            var hIcon = DPIScaling.Transform<uint>(Configs.ToolbarIconHeight);
 
 
             foreach (var item in Configs.ToolbarButtons) {
@@ -2389,8 +2425,10 @@ namespace ImageGlass {
             lblInfo.ForeColor = th.TextInfoColor;
             picMain.ForeColor = Theme.InvertBlackAndWhiteColor(Configs.BackgroundColor);
 
-            //Modern UI menu renderer
-            mnuMain.Renderer = mnuContext.Renderer = new ModernMenuRenderer(th.MenuBackgroundColor, th.MenuTextColor);
+            // Modern UI menu renderer
+            mnuMain.Renderer =
+                mnuShortcut.Renderer =
+                mnuContext.Renderer = new ModernMenuRenderer(th.MenuBackgroundColor, th.MenuTextColor);
 
             // <toolbar_icon>
             LoadToolbarIcons();
@@ -3578,13 +3616,13 @@ namespace ImageGlass {
 
         // Use mouse wheel to navigate, scroll, or zoom images
         private void picMain_MouseWheel(object sender, MouseEventArgs e) {
-            var action = Control.ModifierKeys switch
-            {
+            var action = Control.ModifierKeys switch {
                 Keys.Control => Configs.MouseWheelCtrlAction,
                 Keys.Shift => Configs.MouseWheelShiftAction,
                 Keys.Alt => Configs.MouseWheelAltAction,
                 _ => Configs.MouseWheelAction,
             };
+
             switch (action) {
                 case MouseWheelActions.Zoom:
                     picMain.ZoomWithMouseWheel(e.Delta, e.Location);
@@ -3858,6 +3896,15 @@ namespace ImageGlass {
         #endregion
 
         #region Context Menu
+        private void OpenShortcutMenu(ToolStripMenuItem parentMenu) {
+            mnuShortcut.Items.Clear();
+            foreach (ToolStripMenuItem item in parentMenu.DropDownItems) {
+                mnuShortcut.Items.Add(Library.Menu.Clone(item));
+            }
+
+            mnuShortcut.Show(Cursor.Position);
+        }
+
         private async void mnuContext_Opening(object sender, CancelEventArgs e) {
             var isImageError = false;
 
@@ -3868,7 +3915,7 @@ namespace ImageGlass {
             }
             catch { e.Cancel = true; return; }
 
-            //clear current items
+            // clear current items
             mnuContext.Items.Clear();
 
             if (Configs.IsSlideshow && !isImageError) {
@@ -3877,14 +3924,16 @@ namespace ImageGlass {
                 mnuContext.Items.Add(new ToolStripSeparator());//---------------
             }
 
-            //toolbar menu
+            // toolbar menu
             mnuContext.Items.Add(Library.Menu.Clone(mnuMainToolbar));
             mnuContext.Items.Add(Library.Menu.Clone(mnuMainAlwaysOnTop));
+
+            mnuContext.Items.Add(new ToolStripSeparator());//---------------
+            mnuContext.Items.Add(Library.Menu.Clone(mnuLoadingOrder));
 
             // Get Edit App info
             if (!isImageError) {
                 if (!Local.IsTempMemoryData) {
-                    mnuContext.Items.Add(new ToolStripSeparator());//---------------
                     mnuContext.Items.Add(Library.Menu.Clone(mnuMainChannels));
                 }
 
@@ -3894,7 +3943,7 @@ namespace ImageGlass {
                 UpdateEditAppInfoForMenu();
                 mnuContext.Items.Add(Library.Menu.Clone(mnuMainEditImage));
 
-                //check if image can animate (GIF)
+                #region Check if image can animate (GIF)
                 try {
                     var imgData = await Local.ImageList.GetImgAsync(Local.CurrentIndex).ConfigureAwait(true);
 
@@ -3911,6 +3960,7 @@ namespace ImageGlass {
                     }
                 }
                 catch { }
+                #endregion
             }
 
             if (!isImageError || Local.IsTempMemoryData) {
