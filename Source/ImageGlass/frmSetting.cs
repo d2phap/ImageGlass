@@ -258,6 +258,8 @@ namespace ImageGlass {
             chkSaveOnRotate.Text = lang[$"{Name}.{nameof(chkSaveOnRotate)}"];
             chkSaveModifyDate.Text = lang[$"{Name}.{nameof(chkSaveModifyDate)}"];
             chkCloseAfterEdit.Text = lang[$"{Name}.{nameof(chkCloseAfterEdit)}"];
+            lblImageQuality.Text = lang[$"{Name}.{nameof(lblImageQuality)}"];
+
             lblSelectAppForEdit.Text = lang[$"{Name}.{nameof(lblSelectAppForEdit)}"];
             btnEditEditExt.Text = lang[$"{Name}.{nameof(btnEditEditExt)}"];
             btnEditResetExt.Text = lang[$"{Name}.{nameof(btnEditResetExt)}"];
@@ -757,6 +759,7 @@ namespace ImageGlass {
             chkSaveOnRotate.Checked = Configs.IsSaveAfterRotating;
             chkSaveModifyDate.Checked = Configs.IsPreserveModifiedDate;
             chkCloseAfterEdit.Checked = Configs.IsCloseAppAfterEditing;
+            numImageQuality.Value = Configs.ImageEditQuality;
 
             // Load image editing apps list
             LoadEditApps();
@@ -1983,6 +1986,7 @@ namespace ImageGlass {
             Configs.IsSaveAfterRotating = chkSaveOnRotate.Checked;
             Configs.IsPreserveModifiedDate = chkSaveModifyDate.Checked;
             Configs.IsCloseAppAfterEditing = chkCloseAfterEdit.Checked;
+            Configs.ImageEditQuality = (int)numImageQuality.Value;
             #endregion
 
             #region Language tab -------------------------------------------

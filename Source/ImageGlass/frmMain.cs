@@ -1867,7 +1867,7 @@ namespace ImageGlass {
                 }
 
                 // override the current image file
-                Heart.Photo.Save(newBitmap, Local.ImageModifiedPath);
+                Heart.Photo.Save(newBitmap, Local.ImageModifiedPath, quality: Configs.ImageEditQuality);
 
                 // Issue #307: option to preserve the modified date/time
                 if (Configs.IsPreserveModifiedDate) {
@@ -4153,7 +4153,7 @@ namespace ImageGlass {
                     case 4:
                     case 6:
                     case 7:
-                        Heart.Photo.Save(clonedPic, saveDialog.FileName);
+                        Heart.Photo.Save(clonedPic, saveDialog.FileName, quality: Configs.ImageEditQuality);
                         break;
                     case 2:
                         clonedPic.Save(saveDialog.FileName, ImageFormat.Emf);

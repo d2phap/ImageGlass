@@ -280,6 +280,7 @@ namespace ImageGlass.Settings {
 
         #endregion
 
+
         #region Number items
 
         /// <summary>
@@ -322,7 +323,13 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static uint ToolbarIconHeight { get; set; } = Constants.DEFAULT_TOOLBAR_ICON_HEIGHT;
 
+        /// <summary>
+        /// Gets, sets value of image quality for editting
+        /// </summary>
+        public static int ImageEditQuality { get; set; } = 100;
+
         #endregion
+
 
         #region String items
 
@@ -347,6 +354,7 @@ namespace ImageGlass.Settings {
         public static string ExifToolExePath { get; set; } = "";
 
         #endregion
+
 
         #region Array items
 
@@ -376,6 +384,7 @@ namespace ImageGlass.Settings {
         public static List<ToolbarButton> ToolbarButtons { get; set; } = Constants.DefaultToolbarButtons;
 
         #endregion
+
 
         #region Enum items
 
@@ -440,6 +449,7 @@ namespace ImageGlass.Settings {
         public static ToolbarPosition ToolbarPosition { get; set; } = ToolbarPosition.Top;
 
         #endregion
+
 
         #region Other types items
 
@@ -614,6 +624,7 @@ namespace ImageGlass.Settings {
             if (ZoomLockValue < 0) ZoomLockValue = 100f;
 
             ToolbarIconHeight = Get<uint>(nameof(ToolbarIconHeight), ToolbarIconHeight);
+            ImageEditQuality = Get<int>(nameof(ImageEditQuality), ImageEditQuality);
 
             #endregion
 
@@ -819,6 +830,7 @@ namespace ImageGlass.Settings {
             Set(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
             Set(nameof(ZoomLockValue), ZoomLockValue);
             Set(nameof(ToolbarIconHeight), ToolbarIconHeight);
+            Set(nameof(ImageEditQuality), ImageEditQuality);
 
             #endregion
 
@@ -875,6 +887,7 @@ namespace ImageGlass.Settings {
             Source.WriteUserConfigs();
         }
 
+
         #region Helper functions
 
         /// <summary>
@@ -929,6 +942,7 @@ namespace ImageGlass.Settings {
         }
 
         #endregion
+
 
         #region Config functions
 
@@ -1109,6 +1123,7 @@ namespace ImageGlass.Settings {
         #endregion
 
         #endregion
+
 
         #endregion
 

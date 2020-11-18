@@ -125,6 +125,7 @@ namespace ImageGlass
             this.tabEdit = new System.Windows.Forms.TabPage();
             this.tableEdit = new System.Windows.Forms.TableLayoutPanel();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.chkCloseAfterEdit = new System.Windows.Forms.CheckBox();
             this.chkSaveOnRotate = new System.Windows.Forms.CheckBox();
             this.lblSelectAppForEdit = new System.Windows.Forms.Label();
             this.lvImageEditing = new System.Windows.Forms.ListView();
@@ -218,7 +219,8 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.chkCloseAfterEdit = new System.Windows.Forms.CheckBox();
+            this.lblImageQuality = new System.Windows.Forms.Label();
+            this.numImageQuality = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
@@ -254,6 +256,7 @@ namespace ImageGlass
             this.tabLanguage.SuspendLayout();
             this.tblayout.SuspendLayout();
             this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numImageQuality)).BeginInit();
             this.SuspendLayout();
             // 
             // imglTheme
@@ -1509,6 +1512,8 @@ namespace ImageGlass
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.Color.Transparent;
+            this.panel6.Controls.Add(this.numImageQuality);
+            this.panel6.Controls.Add(this.lblImageQuality);
             this.panel6.Controls.Add(this.chkCloseAfterEdit);
             this.panel6.Controls.Add(this.chkSaveOnRotate);
             this.panel6.Controls.Add(this.lblSelectAppForEdit);
@@ -1520,6 +1525,18 @@ namespace ImageGlass
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(730, 519);
             this.panel6.TabIndex = 60;
+            // 
+            // chkCloseAfterEdit
+            // 
+            this.chkCloseAfterEdit.AutoSize = true;
+            this.chkCloseAfterEdit.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkCloseAfterEdit.Location = new System.Drawing.Point(22, 88);
+            this.chkCloseAfterEdit.Margin = new System.Windows.Forms.Padding(1);
+            this.chkCloseAfterEdit.Name = "chkCloseAfterEdit";
+            this.chkCloseAfterEdit.Size = new System.Drawing.Size(388, 28);
+            this.chkCloseAfterEdit.TabIndex = 60;
+            this.chkCloseAfterEdit.Text = "[Close ImageGlass after opening editing app]";
+            this.chkCloseAfterEdit.UseVisualStyleBackColor = true;
             // 
             // chkSaveOnRotate
             // 
@@ -1536,7 +1553,7 @@ namespace ImageGlass
             // lblSelectAppForEdit
             // 
             this.lblSelectAppForEdit.AutoSize = true;
-            this.lblSelectAppForEdit.Location = new System.Drawing.Point(18, 137);
+            this.lblSelectAppForEdit.Location = new System.Drawing.Point(18, 222);
             this.lblSelectAppForEdit.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lblSelectAppForEdit.Name = "lblSelectAppForEdit";
             this.lblSelectAppForEdit.Size = new System.Drawing.Size(284, 23);
@@ -1564,12 +1581,12 @@ namespace ImageGlass
             listViewItem1,
             listViewItem2,
             listViewItem3});
-            this.lvImageEditing.Location = new System.Drawing.Point(22, 163);
+            this.lvImageEditing.Location = new System.Drawing.Point(22, 248);
             this.lvImageEditing.MultiSelect = false;
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(689, 340);
+            this.lvImageEditing.Size = new System.Drawing.Size(689, 255);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 37;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -2773,17 +2790,33 @@ namespace ImageGlass
             this.panel4.Size = new System.Drawing.Size(973, 67);
             this.panel4.TabIndex = 18;
             // 
-            // chkCloseAfterEdit
+            // lblImageQuality
             // 
-            this.chkCloseAfterEdit.AutoSize = true;
-            this.chkCloseAfterEdit.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkCloseAfterEdit.Location = new System.Drawing.Point(22, 88);
-            this.chkCloseAfterEdit.Margin = new System.Windows.Forms.Padding(1);
-            this.chkCloseAfterEdit.Name = "chkCloseAfterEdit";
-            this.chkCloseAfterEdit.Size = new System.Drawing.Size(388, 28);
-            this.chkCloseAfterEdit.TabIndex = 60;
-            this.chkCloseAfterEdit.Text = "[Close ImageGlass after opening editing app]";
-            this.chkCloseAfterEdit.UseVisualStyleBackColor = true;
+            this.lblImageQuality.AutoSize = true;
+            this.lblImageQuality.Location = new System.Drawing.Point(18, 140);
+            this.lblImageQuality.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lblImageQuality.Name = "lblImageQuality";
+            this.lblImageQuality.Size = new System.Drawing.Size(128, 23);
+            this.lblImageQuality.TabIndex = 61;
+            this.lblImageQuality.Text = "[Image quality:]";
+            // 
+            // numImageQuality
+            // 
+            this.numImageQuality.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
+            this.numImageQuality.Location = new System.Drawing.Point(22, 168);
+            this.numImageQuality.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numImageQuality.Name = "numImageQuality";
+            this.numImageQuality.Size = new System.Drawing.Size(107, 30);
+            this.numImageQuality.TabIndex = 62;
+            this.numImageQuality.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // frmSetting
             // 
@@ -2854,6 +2887,7 @@ namespace ImageGlass
             this.tblayout.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numImageQuality)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -3047,5 +3081,7 @@ namespace ImageGlass
         private System.Windows.Forms.TableLayoutPanel tb3;
         private System.Windows.Forms.CheckBox chkGroupByDirectory;
         private System.Windows.Forms.CheckBox chkCloseAfterEdit;
+        private System.Windows.Forms.Label lblImageQuality;
+        private System.Windows.Forms.NumericUpDown numImageQuality;
     }
 }

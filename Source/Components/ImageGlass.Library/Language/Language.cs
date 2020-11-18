@@ -498,10 +498,11 @@ namespace ImageGlass.Library {
             #endregion
 
             #region TAB Edit
-            //Items.Add("frmSetting.lblHeadImageEditing", "Image editing"); //v4.0, removed v6.0
             Items.Add("frmSetting.chkSaveOnRotate", "Save the viewing image after rotating"); //v4.5
             Items.Add("frmSetting.lblSelectAppForEdit", "Select application for image editing"); //v4.5
             Items.Add("frmSetting.chkCloseAfterEdit", "Close ImageGlass after opening editing app"); // v8.0
+            Items.Add("frmSetting.lblImageQuality", "Image quality:"); // v8.0
+
             Items.Add("frmSetting.btnEditEditExt", "Edit…"); //v4.0
             Items.Add("frmSetting.btnEditResetExt", "Reset to default"); //v4.0
             Items.Add("frmSetting.btnEditEditAllExt", "Edit all extensions…"); //v4.1
