@@ -2401,6 +2401,20 @@ namespace ImageGlass {
             e.Graphics.ResetClip();
         }
 
+        /// <summary>
+        /// Invoke action after opening editing app
+        /// </summary>
+        private void RunActionAfterEditing() {
+            if (Configs.AfterEditingAction == AfterOpeningEditAppAction.Minimize) {
+                foreach (var frm in Application.OpenForms) {
+                    (frm as Form).WindowState = FormWindowState.Minimized;
+                }
+            }
+            else if (Configs.AfterEditingAction == AfterOpeningEditAppAction.Close) {
+                Application.Exit();
+            }
+        }
+
         #endregion
 
         #region Configurations
@@ -4271,9 +4285,7 @@ namespace ImageGlass {
                     try {
                         p.Start();
 
-                        if (Configs.IsCloseAppAfterEditing) {
-                            Application.Exit();
-                        }
+                        RunActionAfterEditing();
                     }
                     catch { }
                 }
@@ -4294,13 +4306,12 @@ namespace ImageGlass {
                 try {
                     p.Start();
 
-                    if (Configs.IsCloseAppAfterEditing) {
-                        Application.Exit();
-                    }
+                    RunActionAfterEditing();
                 }
                 catch { }
             }
         }
+
 
         private void mnuMainViewNext_Click(object sender, EventArgs e) {
             NextPic(1);

@@ -237,4 +237,13 @@ namespace ImageGlass.Base {
         File,
         Dir,
     }
+
+    /// <summary>
+    /// Actions after opening editing app
+    /// </summary>
+    public enum AfterOpeningEditAppAction {
+        Nothing = 0,
+        Minimize = 1,
+        Close = 2,
+    }
 }

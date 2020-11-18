@@ -182,6 +182,10 @@ namespace ImageGlass.Library {
             Items.Add("_.ImageOrderType._Asc", "Ascending");  //v8.0
             Items.Add("_.ImageOrderType._Desc", "Descending");  //v8.0
 
+            Items.Add("_.AfterOpeningEditAppAction._Nothing", "Nothing"); //v8.0
+            Items.Add("_.AfterOpeningEditAppAction._Minimize", "Minimize"); //v8.0
+            Items.Add("_.AfterOpeningEditAppAction._Close", "Close"); //v8.0
+
             #region frmMain
 
             #region Main menu
@@ -500,7 +504,7 @@ namespace ImageGlass.Library {
             #region TAB Edit
             Items.Add("frmSetting.chkSaveOnRotate", "Save the viewing image after rotating"); //v4.5
             Items.Add("frmSetting.lblSelectAppForEdit", "Select application for image editing"); //v4.5
-            Items.Add("frmSetting.chkCloseAfterEdit", "Close ImageGlass after opening editing app"); // v8.0
+            Items.Add("frmSetting.lblAfterEditingApp", "After opening editing app:"); // v8.0
             Items.Add("frmSetting.lblImageQuality", "Image quality:"); // v8.0
 
             Items.Add("frmSetting.btnEditEditExt", "Edit…"); //v4.0

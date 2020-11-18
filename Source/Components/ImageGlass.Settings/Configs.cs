@@ -273,10 +273,6 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool IsExifToolAlwaysOnTop { get; set; } = true;
 
-        /// <summary>
-        /// Gets, sets value indicates that the app will close after clicking Edit menu
-        /// </summary>
-        public static bool IsCloseAppAfterEditing { get; set; } = false;
 
         #endregion
 
@@ -448,6 +444,11 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static ToolbarPosition ToolbarPosition { get; set; } = ToolbarPosition.Top;
 
+        /// <summary>
+        /// Gets, sets value indicates what happens after clicking Edit menu
+        /// </summary>
+        public static AfterOpeningEditAppAction AfterEditingAction { get; set; } = AfterOpeningEditAppAction.Nothing;
+
         #endregion
 
 
@@ -586,7 +587,6 @@ namespace ImageGlass.Settings {
             IsUseTouchGesture = Get<bool>(nameof(IsUseTouchGesture), IsUseTouchGesture);
             IsHideTooltips = Get<bool>(nameof(IsHideTooltips), IsHideTooltips);
             IsExifToolAlwaysOnTop = Get<bool>(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
-            IsCloseAppAfterEditing = Get<bool>(nameof(IsCloseAppAfterEditing), IsCloseAppAfterEditing);
 
             #endregion
 
@@ -642,12 +642,14 @@ namespace ImageGlass.Settings {
             ZoomMode = Get<ZoomMode>(nameof(ZoomMode), ZoomMode);
             ZoomOptimizationMethod = Get<ZoomOptimizationMethods>(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod);
             ToolbarPosition = Get<ToolbarPosition>(nameof(ToolbarPosition), ToolbarPosition);
+            AfterEditingAction = Get<AfterOpeningEditAppAction>(nameof(AfterEditingAction), AfterEditingAction);
+
 
             #endregion
 
             #region String items
 
-            ColorProfile = Get<string>(nameof(ColorProfile), ColorProfile);
+        ColorProfile = Get<string>(nameof(ColorProfile), ColorProfile);
             ColorProfile = Heart.Helpers.GetCorrectColorProfileName(ColorProfile);
 
             AutoUpdate = Get<string>(nameof(AutoUpdate), AutoUpdate);
@@ -816,7 +818,6 @@ namespace ImageGlass.Settings {
             Set(nameof(IsUseTouchGesture), IsUseTouchGesture);
             Set(nameof(IsHideTooltips), IsHideTooltips);
             Set(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
-            Set(nameof(IsCloseAppAfterEditing), IsCloseAppAfterEditing);
 
             #endregion
 
@@ -848,6 +849,7 @@ namespace ImageGlass.Settings {
             Set(nameof(ZoomMode), ZoomMode);
             Set(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod);
             Set(nameof(ToolbarPosition), ToolbarPosition);
+            Set(nameof(AfterEditingAction), AfterEditingAction);
 
             #endregion
 

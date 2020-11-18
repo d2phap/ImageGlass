@@ -257,7 +257,7 @@ namespace ImageGlass {
             #region EDIT TAB
             chkSaveOnRotate.Text = lang[$"{Name}.{nameof(chkSaveOnRotate)}"];
             chkSaveModifyDate.Text = lang[$"{Name}.{nameof(chkSaveModifyDate)}"];
-            chkCloseAfterEdit.Text = lang[$"{Name}.{nameof(chkCloseAfterEdit)}"];
+            lblAfterEditingApp.Text = lang[$"{Name}.{nameof(lblAfterEditingApp)}"];
             lblImageQuality.Text = lang[$"{Name}.{nameof(lblImageQuality)}"];
 
             lblSelectAppForEdit.Text = lang[$"{Name}.{nameof(lblSelectAppForEdit)}"];
@@ -758,8 +758,20 @@ namespace ImageGlass {
         private void LoadTabEditConfig() {
             chkSaveOnRotate.Checked = Configs.IsSaveAfterRotating;
             chkSaveModifyDate.Checked = Configs.IsPreserveModifiedDate;
-            chkCloseAfterEdit.Checked = Configs.IsCloseAppAfterEditing;
             numImageQuality.Value = Configs.ImageEditQuality;
+
+            #region Load items of cmbAfterEditingApp
+            var actionsList = Enum.GetNames(typeof(AfterOpeningEditAppAction));
+            cmbAfterEditingApp.Items.Clear();
+
+            foreach (var item in actionsList) {
+                cmbAfterEditingApp.Items.Add(Configs.Language.Items[$"_.{nameof(AfterOpeningEditAppAction)}._{item}"]);
+            }
+
+            // Get value of cmbAfterEditingApp
+            cmbAfterEditingApp.SelectedIndex = (int)Configs.AfterEditingAction;
+            #endregion
+
 
             // Load image editing apps list
             LoadEditApps();
@@ -1985,8 +1997,13 @@ namespace ImageGlass {
             #region Edit tab -----------------------------------------------
             Configs.IsSaveAfterRotating = chkSaveOnRotate.Checked;
             Configs.IsPreserveModifiedDate = chkSaveModifyDate.Checked;
-            Configs.IsCloseAppAfterEditing = chkCloseAfterEdit.Checked;
             Configs.ImageEditQuality = (int)numImageQuality.Value;
+
+            // AfterEditingAction
+            if (Enum.TryParse(cmbAfterEditingApp.SelectedIndex.ToString(), out AfterOpeningEditAppAction newAction)) {
+                Configs.AfterEditingAction = newAction;
+            }
+
             #endregion
 
             #region Language tab -------------------------------------------
