@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -879,8 +879,8 @@
             // mnuMainClipboard
             // 
             this.mnuMainClipboard.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuMainCopy,
             this.mnuMainCopyImageData,
+            this.mnuMainCopy,
             this.mnuMainCut,
             this.toolStripMenuItem28,
             this.mnuMainCopyImagePath,
@@ -900,9 +900,10 @@
             this.mnuMainCopy.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainCopy.Name = "mnuMainCopy";
             this.mnuMainCopy.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainCopy.ShortcutKeyDisplayString = "Ctrl+C";
-            this.mnuMainCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.mnuMainCopy.Size = new System.Drawing.Size(348, 31);
+            this.mnuMainCopy.ShortcutKeyDisplayString = "Ctrl+Shift+C";
+            this.mnuMainCopy.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.C)));
+            this.mnuMainCopy.Size = new System.Drawing.Size(302, 31);
             this.mnuMainCopy.Text = "&Copy";
             this.mnuMainCopy.Click += new System.EventHandler(this.mnuMainCopy_Click);
             // 
@@ -912,10 +913,9 @@
             this.mnuMainCopyImageData.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainCopyImageData.Name = "mnuMainCopyImageData";
             this.mnuMainCopyImageData.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainCopyImageData.ShortcutKeyDisplayString = "Ctrl+Shift+C";
-            this.mnuMainCopyImageData.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.C)));
-            this.mnuMainCopyImageData.Size = new System.Drawing.Size(348, 31);
+            this.mnuMainCopyImageData.ShortcutKeyDisplayString = "Ctrl+C";
+            this.mnuMainCopyImageData.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.mnuMainCopyImageData.Size = new System.Drawing.Size(302, 31);
             this.mnuMainCopyImageData.Text = "Copy &image pixels";
             this.mnuMainCopyImageData.Click += new System.EventHandler(this.mnuMainCopyImageData_Click);
             // 
@@ -927,14 +927,14 @@
             this.mnuMainCut.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainCut.ShortcutKeyDisplayString = "Ctrl+X";
             this.mnuMainCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.mnuMainCut.Size = new System.Drawing.Size(348, 31);
+            this.mnuMainCut.Size = new System.Drawing.Size(302, 31);
             this.mnuMainCut.Text = "Cu&t";
             this.mnuMainCut.Click += new System.EventHandler(this.mnuMainCut_Click);
             // 
             // toolStripMenuItem28
             // 
             this.toolStripMenuItem28.Name = "toolStripMenuItem28";
-            this.toolStripMenuItem28.Size = new System.Drawing.Size(345, 6);
+            this.toolStripMenuItem28.Size = new System.Drawing.Size(299, 6);
             // 
             // mnuMainCopyImagePath
             // 
@@ -942,14 +942,14 @@
             this.mnuMainCopyImagePath.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainCopyImagePath.Name = "mnuMainCopyImagePath";
             this.mnuMainCopyImagePath.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainCopyImagePath.Size = new System.Drawing.Size(348, 31);
+            this.mnuMainCopyImagePath.Size = new System.Drawing.Size(302, 31);
             this.mnuMainCopyImagePath.Text = "Copy image path";
             this.mnuMainCopyImagePath.Click += new System.EventHandler(this.mnuMainCopyImagePath_Click);
             // 
             // toolStripMenuItem14
             // 
             this.toolStripMenuItem14.Name = "toolStripMenuItem14";
-            this.toolStripMenuItem14.Size = new System.Drawing.Size(345, 6);
+            this.toolStripMenuItem14.Size = new System.Drawing.Size(299, 6);
             // 
             // mnuMainClearClipboard
             // 
@@ -958,7 +958,7 @@
             this.mnuMainClearClipboard.Name = "mnuMainClearClipboard";
             this.mnuMainClearClipboard.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainClearClipboard.ShortcutKeyDisplayString = "Ctrl+`";
-            this.mnuMainClearClipboard.Size = new System.Drawing.Size(348, 31);
+            this.mnuMainClearClipboard.Size = new System.Drawing.Size(302, 31);
             this.mnuMainClearClipboard.Text = "Clear clipboard";
             this.mnuMainClearClipboard.Click += new System.EventHandler(this.mnuMainClearClipboard_Click);
             // 
@@ -1351,7 +1351,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator1;
+            this.picMain.Animator = defaultGifAnimator2;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(60)))), ((int)(((byte)(61)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuContext;

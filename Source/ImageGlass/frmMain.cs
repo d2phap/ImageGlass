@@ -1412,6 +1412,7 @@ namespace ImageGlass {
             }
             #endregion
 
+
             #region Backspace
             if (e.KeyCode == Keys.Back && no_mods) {
                 if (Configs.KeyComboActions[KeyCombos.SpaceBack] == AssignableActions.PrevNextImage) {
@@ -1422,6 +1423,7 @@ namespace ImageGlass {
             #endregion
         }
         #endregion
+
 
         #region Private functions
 
@@ -3982,19 +3984,19 @@ namespace ImageGlass {
 
             #region Menu group: CLIPBOARD
             mnuContext.Items.Add(new ToolStripSeparator());//------------
-            mnuContext.Items.Add(UI.Menu.Clone(mnuMainOpenImageData));
-
-            if (!isImageError && !Local.IsTempMemoryData) {
-                mnuContext.Items.Add(UI.Menu.Clone(mnuMainClearClipboard));
-                mnuContext.Items.Add(UI.Menu.Clone(mnuMainCopy));
-            }
 
             if (picMain.Image != null) {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainCopyImageData));
             }
 
             if (!isImageError && !Local.IsTempMemoryData) {
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainCopy));
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainCut));
+            }
+
+            mnuContext.Items.Add(UI.Menu.Clone(mnuMainOpenImageData));
+            if (!isImageError && !Local.IsTempMemoryData) {
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainClearClipboard));
             }
             #endregion
 
