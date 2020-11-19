@@ -451,8 +451,9 @@ namespace ImageGlass.Heart {
         /// <param name="quality">JPEG/MIFF/PNG compression level</param>
         public static async Task SaveAsync(string srcFileName, string destFileName, MagickFormat format = MagickFormat.Unknown, int quality = 100) {
             await Task.Run(() => {
-                using var imgM = new MagickImage(srcFileName);
-                imgM.Quality = quality;
+                using var imgM = new MagickImage(srcFileName) {
+                    Quality = quality
+                };
                 imgM.Write(destFileName, format);
             }).ConfigureAwait(true);
         }
