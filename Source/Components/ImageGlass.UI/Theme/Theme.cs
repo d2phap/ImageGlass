@@ -30,6 +30,7 @@ using System.Xml;
 
 namespace ImageGlass.UI {
     public class Theme {
+
         #region PUBLIC PROPERTIES
 
         /// <summary>
@@ -48,6 +49,7 @@ namespace ImageGlass.UI {
         public bool IsValid { get; internal set; }
 
         #endregion
+
 
         #region THEME NODE PROPERTIES
 
@@ -93,6 +95,7 @@ namespace ImageGlass.UI {
         /// </summary>
         public string Compatibility { get; set; } = string.Empty;
         #endregion
+
 
         #region <MAIN> node
 
@@ -146,7 +149,29 @@ namespace ImageGlass.UI {
         /// </summary>
         public double NavArrowMultiplier { get; set; } = 2.0;
 
+
+        /// <summary>
+        /// The accent color
+        /// </summary>
+        public Color AccentColor { get; set; } = Color.FromArgb(255, 176, 58, 102);
+
+        /// <summary>
+        /// The lighter accent color
+        /// </summary>
+        public Color AccentDarkColor { get; set; } = Color.FromArgb(255, 93, 25, 50);
+
+        /// <summary>
+        /// The darker accent color
+        /// </summary>
+        public Color AccentLightColor { get; set; } = Color.FromArgb(255, 201, 71, 119);
+
+        /// <summary>
+        /// The app logo
+        /// </summary>
+        public ThemeImage Logo { get; set; } = new ThemeImage();
+
         #endregion
+
 
         #region <TOOLBAR_ICON> node
 
@@ -155,6 +180,7 @@ namespace ImageGlass.UI {
         /// </summary>
         public ThemeIconCollection ToolbarIcons { get; set; } = new ThemeIconCollection();
         #endregion
+
 
         #region Navigation arrows
         /// <summary>
@@ -169,7 +195,9 @@ namespace ImageGlass.UI {
 
         #endregion
 
+
         #endregion
+
 
         /// <summary>
         /// Initiate theme object with configuration file (Version 1.5+)
@@ -177,6 +205,7 @@ namespace ImageGlass.UI {
         /// <param name="iconHeight">The height of toolbar icons</param>
         /// <param name="themeFolderPath">The absolute path of theme folder.</param>
         public Theme(int iconHeight, string themeFolderPath = "") => IsValid = LoadTheme(iconHeight, themeFolderPath);
+
 
         #region PUBLIC CLASS FUNCS
 
@@ -250,7 +279,7 @@ namespace ImageGlass.UI {
             ToolbarIcons.ViewFirstImage.Refresh(iconHeight);
             ToolbarIcons.ViewLastImage.Refresh(iconHeight);
 
-            #region Naviagtion arrows (derived from toolbar)
+            #region Navigation arrows (derived from toolbar)
 
             var arrowHeight = (int)(DPIScaling.Transform(Constants.DEFAULT_TOOLBAR_ICON_HEIGHT) * NavArrowMultiplier);
 
@@ -373,7 +402,26 @@ namespace ImageGlass.UI {
             }
             catch { }
 
+
+            color = FetchColorAttribute(n, "accentcolor");
+            if (color != Color.Transparent) {
+                AccentColor = color;
+            }
+
+            color = FetchColorAttribute(n, "accentlightcolor");
+            if (color != Color.Transparent) {
+                AccentLightColor = color;
+            }
+
+            color = FetchColorAttribute(n, "accentdarkcolor");
+            if (color != Color.Transparent) {
+                AccentDarkColor = color;
+            }
+
+            Logo = LoadThemeImage(dir, n, "logo", 128);
+
             #endregion
+
 
             #region Theme <toolbar_icon>
             n = (XmlElement)nType.SelectNodes("toolbar_icon")[0]; //<toolbar_icon>
@@ -414,6 +462,7 @@ namespace ImageGlass.UI {
             ToolbarIcons.ViewLastImage = LoadThemeImage(dir, n, "golast", iconHeight);
             #endregion
 
+
             #region Arrow cursors (derived from toolbar)
 
             var arrowHeight = (int)(DPIScaling.Transform(iconHeight) * NavArrowMultiplier);
@@ -426,13 +475,14 @@ namespace ImageGlass.UI {
 
             #endregion
 
+
             this.IsValid = true;
             return this.IsValid;
 
 
             // Fetch a color attribute value from the theme config file.
             // Returns: a Color value if valid; Color.Transparent if an error
-            Color FetchColorAttribute(XmlElement xmlElement, string attribute) {
+            static Color FetchColorAttribute(XmlElement xmlElement, string attribute) {
                 try {
                     var colorString = xmlElement.GetAttribute(attribute);
 
@@ -482,6 +532,11 @@ namespace ImageGlass.UI {
             n.SetAttribute("statuscolor", ConvertColorToHEX(TextInfoColor, true));
             n.SetAttribute("menubackgroundcolor", ConvertColorToHEX(this.MenuBackgroundColor, true));
             n.SetAttribute("menutextcolor", ConvertColorToHEX(this.MenuTextColor, true));
+
+            n.SetAttribute("accentcolor", ConvertColorToHEX(this.AccentColor, true));
+            n.SetAttribute("accentlightcolor", ConvertColorToHEX(this.AccentLightColor, true));
+            n.SetAttribute("accentdarkcolor", ConvertColorToHEX(this.AccentDarkColor, true));
+            n.SetAttribute("logo", Path.GetFileName(Logo.Filename));
             nType.AppendChild(n);
 
             n = doc.CreateElement("toolbar_icon");// <toolbar_icon>
@@ -537,6 +592,7 @@ namespace ImageGlass.UI {
 
         #endregion
 
+
         #region PRIVATE STATIC FUNCS
         private static ThemeInstallingResult _extractThemeResult = ThemeInstallingResult.UNKNOWN;
 
@@ -571,6 +627,7 @@ namespace ImageGlass.UI {
             }
         }
         #endregion
+
 
         #region PUBLIC STATIC FUNCS
 
@@ -844,5 +901,6 @@ namespace ImageGlass.UI {
         }
 
         #endregion
+
     }
 }
