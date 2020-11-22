@@ -153,17 +153,17 @@ namespace ImageGlass.UI {
         /// <summary>
         /// The accent color
         /// </summary>
-        public Color AccentColor { get; set; } = Color.FromArgb(255, 176, 58, 102);
+        public Color AccentColor { get; set; } = Color.FromArgb(255, 117, 15, 64);
 
         /// <summary>
-        /// The lighter accent color
+        /// The light accent color
         /// </summary>
-        public Color AccentDarkColor { get; set; } = Color.FromArgb(255, 93, 25, 50);
+        public Color AccentLightColor { get; set; } = Color.FromArgb(255, 138, 43, 90);
 
         /// <summary>
-        /// The darker accent color
+        /// The dark accent color
         /// </summary>
-        public Color AccentLightColor { get; set; } = Color.FromArgb(255, 201, 71, 119);
+        public Color AccentDarkColor { get; set; } = Color.FromArgb(255, 91, 12, 50);
 
         /// <summary>
         /// The app logo
@@ -204,7 +204,7 @@ namespace ImageGlass.UI {
         /// </summary>
         /// <param name="iconHeight">The height of toolbar icons</param>
         /// <param name="themeFolderPath">The absolute path of theme folder.</param>
-        public Theme(int iconHeight, string themeFolderPath = "") => IsValid = LoadTheme(iconHeight, themeFolderPath);
+        public Theme(int iconHeight = Constants.DEFAULT_TOOLBAR_ICON_HEIGHT, string themeFolderPath = "") => IsValid = LoadTheme(iconHeight, themeFolderPath);
 
 
         #region PUBLIC CLASS FUNCS
@@ -600,11 +600,10 @@ namespace ImageGlass.UI {
             _extractThemeResult = ThemeInstallingResult.UNKNOWN;
 
             try {
-                using (var z = new ZipFile(themePath, Encoding.UTF8)) {
-                    z.ExtractProgress += z_ExtractProgress;
-                    z.ZipError += z_ZipError;
-                    z.ExtractAll(dir, ExtractExistingFileAction.OverwriteSilently);
-                }
+                using var z = new ZipFile(themePath, Encoding.UTF8);
+                z.ExtractProgress += z_ExtractProgress;
+                z.ZipError += z_ZipError;
+                z.ExtractAll(dir, ExtractExistingFileAction.OverwriteSilently);
             }
             catch {
                 _extractThemeResult = ThemeInstallingResult.ERROR;
@@ -694,10 +693,9 @@ namespace ImageGlass.UI {
             }
 
             try {
-                using (var z = new ZipFile(outputThemeFile, Encoding.UTF8)) {
-                    z.AddDirectory(themeFolderPath, th.Name);
-                    z.Save();
-                }
+                using var z = new ZipFile(outputThemeFile, Encoding.UTF8);
+                z.AddDirectory(themeFolderPath, th.Name);
+                z.Save();
             }
             catch (Exception) {
                 // restore backup file

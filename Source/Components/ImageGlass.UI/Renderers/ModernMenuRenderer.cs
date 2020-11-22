@@ -22,30 +22,28 @@ using System.Windows.Forms;
 
 namespace ImageGlass.UI.Renderers {
     public class ModernMenuRenderer: ToolStripProfessionalRenderer {
-        public Color ThemeBackgroundColor { get; set; } = Color.White;
-        public Color ThemeTextColor { get; set; } = Color.White;
+        private Theme theme { get; set; } = new Theme();
 
-        public ModernMenuRenderer(Color backgroundColor, Color textColor) : base(new ModernColors()) {
-            this.ThemeBackgroundColor = backgroundColor;
-            this.ThemeTextColor = textColor;
+        public ModernMenuRenderer(Theme theme) : base(new ModernColors(theme)) {
+            this.theme = theme;
         }
 
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e) {
             if (e.Item.Enabled) {
-                e.TextColor = this.ThemeTextColor;
+                e.TextColor = theme.TextInfoColor;
                 base.OnRenderItemText(e);
             }
             else {
                 // KBR 20190615 this step appears to be unnecessary [and prevents the menu from auto-collapsing]
                 //e.Item.Enabled = true;
 
-                if (this.ThemeBackgroundColor.GetBrightness() > 0.5) //light background color
+                if (theme.MenuBackgroundColor.GetBrightness() > 0.5) //light background color
                 {
-                    e.TextColor = Theme.DarkenColor(this.ThemeBackgroundColor, 0.5f);
+                    e.TextColor = Theme.DarkenColor(theme.MenuBackgroundColor, 0.5f);
                 }
                 else //dark background color
                 {
-                    e.TextColor = Theme.LightenColor(this.ThemeBackgroundColor, 0.5f);
+                    e.TextColor = Theme.LightenColor(theme.MenuBackgroundColor, 0.5f);
                 }
 
                 base.OnRenderItemText(e);
@@ -67,7 +65,7 @@ namespace ImageGlass.UI.Renderers {
                 var lineRight = tsBounds.Right;
 
                 using (var pen = new Pen(Color.Black)) {
-                    if (this.ThemeBackgroundColor.GetBrightness() > 0.5) //light background color
+                    if (theme.MenuBackgroundColor.GetBrightness() > 0.5) //light background color
                     {
                         pen.Color = Color.FromArgb(35, 0, 0, 0);
                     }
@@ -85,13 +83,13 @@ namespace ImageGlass.UI.Renderers {
         protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e) {
             if (e.ToolStrip is ToolStripDropDown) {
                 // draw background
-                using (var brush = new SolidBrush(this.ThemeBackgroundColor)) {
+                using (var brush = new SolidBrush(theme.MenuBackgroundColor)) {
                     e.Graphics.FillRectangle(brush, e.AffectedBounds);
                 }
 
                 // draw border
                 using var pen = new Pen(Color.Black);
-                if (this.ThemeBackgroundColor.GetBrightness() > 0.5) //light background color
+                if (theme.MenuBackgroundColor.GetBrightness() > 0.5) //light background color
                 {
                     pen.Color = Color.FromArgb(35, 0, 0, 0);
                 }
@@ -106,8 +104,9 @@ namespace ImageGlass.UI.Renderers {
             base.OnRenderToolStripBackground(e);
         }
 
+
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e) {
-            using var pen = new Pen(ThemeTextColor, DPIScaling.Transform<float>(1));
+            using var pen = new Pen(theme.TextInfoColor, DPIScaling.Transform<float>(1));
             e.Graphics.DrawLine(pen,
                 e.Item.Width - (5 * e.Item.Height / 8),
                 3 * e.Item.Height / 8,
@@ -134,14 +133,14 @@ namespace ImageGlass.UI.Renderers {
 
                     e.Graphics.DrawString(mnu.ShortcutKeyDisplayString,
                         e.Item.Font,
-                        new SolidBrush(ThemeTextColor),
+                        new SolidBrush(theme.TextInfoColor),
                         shortcutRect);
                 }
             }
         }
 
         protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e) {
-            using var pen = new Pen(ThemeTextColor, DPIScaling.Transform<float>(2));
+            using var pen = new Pen(theme.TextInfoColor, DPIScaling.Transform<float>(2));
             e.Graphics.DrawLine(pen,
                 (2 * e.Item.Height / 10) + 1,
                 e.Item.Height / 2,
@@ -157,7 +156,7 @@ namespace ImageGlass.UI.Renderers {
     }
 
     public class ModernColors: ProfessionalColorTable {
-        public override Color MenuItemSelected => Color.FromArgb(35, 0, 0, 0);
+        public override Color MenuItemSelected => theme.AccentColor;
         public override Color MenuBorder => Color.Transparent;
         public override Color MenuItemBorder => Color.Transparent;
 
@@ -171,5 +170,11 @@ namespace ImageGlass.UI.Renderers {
         public override Color CheckSelectedBackground => Color.Transparent;
         public override Color ButtonSelectedBorder => Color.Transparent;
         public override Color ToolStripDropDownBackground => base.ToolStripDropDownBackground;
+
+        private Theme theme { get; set; } = new Theme();
+
+        public ModernColors(Theme theme) {
+            this.theme = theme;
+        }
     }
 }

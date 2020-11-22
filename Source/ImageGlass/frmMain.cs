@@ -2438,7 +2438,7 @@ namespace ImageGlass {
             // Modern UI menu renderer
             mnuMain.Renderer =
                 mnuShortcut.Renderer =
-                mnuContext.Renderer = new ModernMenuRenderer(th.MenuBackgroundColor, th.MenuTextColor);
+                mnuContext.Renderer = new ModernMenuRenderer(th);
 
             // <toolbar_icon>
             LoadToolbarIcons();
