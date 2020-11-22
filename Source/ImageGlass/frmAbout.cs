@@ -39,7 +39,7 @@ namespace ImageGlass {
             lblAppName.ForeColor = Configs.Theme.AccentDarkColor;
             lblCodeName.ForeColor = Configs.Theme.AccentColor;
 
-            foreach (var ctr in tpInfo.Controls) {
+            foreach (var ctr in Helpers.GetAllControls(this, typeof(LinkLabel))) {
                 if (ctr is LinkLabel lnk) {
                     lnk.LinkColor = lnk.VisitedLinkColor = Configs.Theme.AccentColor;
                 }
