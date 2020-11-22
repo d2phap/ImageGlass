@@ -2413,6 +2413,15 @@ namespace ImageGlass {
         private void ApplyTheme(bool changeBackground = false) {
             var th = Configs.Theme;
 
+            // Icon theming
+            if (!th.IsShowTitlebarLogo) {
+                this.Icon = Icon.FromHandle(new Bitmap(48, 48).GetHicon());
+                FormIcon.SetTaskbarIcon(this, Configs.Theme.Logo.Image.GetHicon());
+            }
+            else {
+                this.Icon = Icon.FromHandle(Configs.Theme.Logo.Image.GetHicon());
+            }
+
             // Remove white line under tool strip
             toolMain.Renderer = new UI.Renderers.ToolStripRenderer(th.ToolbarBackgroundColor, th.TextInfoColor);
 

@@ -158,7 +158,7 @@ namespace ImageGlass.UI {
         /// <summary>
         /// The light accent color
         /// </summary>
-        public Color AccentLightColor { get; set; } = Color.FromArgb(255, 138, 43, 90);
+        public Color AccentLightColor { get; set; } = Color.FromArgb(255, 171, 85, 114);
 
         /// <summary>
         /// The dark accent color
@@ -169,6 +169,12 @@ namespace ImageGlass.UI {
         /// The app logo
         /// </summary>
         public ThemeImage Logo { get; set; } = new ThemeImage();
+
+
+        /// <summary>
+        /// Show or hide logo on title bar of window
+        /// </summary>
+        public bool IsShowTitlebarLogo { get; set; } = true;
 
         #endregion
 
@@ -221,9 +227,8 @@ namespace ImageGlass.UI {
             try {
                 var attrib = n.GetAttribute(attribname);
 
-                if (string.IsNullOrEmpty(attrib)) // KBR 20180827 avoid throwing exception
-{
-                    return new ThemeImage(""); // KBR 20180827 code in frmMain assumes not null
+                if (string.IsNullOrEmpty(attrib)) {
+                    return new ThemeImage("");
                 }
 
                 var imgFile = Path.Combine(dir, attrib);
@@ -235,7 +240,7 @@ namespace ImageGlass.UI {
                 return new ThemeImage(imgFile);
             }
             catch {
-                return new ThemeImage(""); // KBR 20180827 code in frmMain assumes not null
+                return new ThemeImage("");
             }
         }
 
@@ -418,7 +423,16 @@ namespace ImageGlass.UI {
                 AccentDarkColor = color;
             }
 
+            // Form icon
             Logo = LoadThemeImage(dir, n, "logo", 128);
+            if (Logo.Image is null) {
+                Logo.Image = Icon.ExtractAssociatedIcon(App.IGExePath).ToBitmap();
+            }
+
+            // Show icon on title bar
+            if (bool.TryParse(n.GetAttribute("isshowtitlebarlogo"), out var showLogo)) {
+                IsShowTitlebarLogo = showLogo;
+            }
 
             #endregion
 

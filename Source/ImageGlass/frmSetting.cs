@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Library;
 using ImageGlass.Library.Image;
+using ImageGlass.Library.WinAPI;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.UI.Renderers;
@@ -57,8 +58,14 @@ namespace ImageGlass {
                 }
             }
 
-            // Logo
-            this.Icon = Icon.FromHandle(Configs.Theme.Logo.Image.GetHicon());
+            // Icon theming
+            if (!Configs.Theme.IsShowTitlebarLogo) {
+                this.Icon = Icon.FromHandle(new Bitmap(48, 48).GetHicon());
+                FormIcon.SetTaskbarIcon(this, Configs.Theme.Logo.Image.GetHicon());
+            }
+            else {
+                this.Icon = Icon.FromHandle(Configs.Theme.Logo.Image.GetHicon());
+            }
         }
 
         #region PROPERTIES
