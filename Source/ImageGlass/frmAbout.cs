@@ -27,7 +27,29 @@ using System.Windows.Forms;
 
 namespace ImageGlass {
     public partial class frmAbout: Form {
-        public frmAbout() => InitializeComponent();
+        public frmAbout() {
+            InitializeComponent();
+
+            // Apply theme
+            LoadTheme();
+        }
+
+        private void LoadTheme() {
+            // load theme colors
+            lblAppName.ForeColor = Configs.Theme.AccentDarkColor;
+            lblCodeName.ForeColor = Configs.Theme.AccentColor;
+
+            foreach (var ctr in tpInfo.Controls) {
+                if (ctr is LinkLabel lnk) {
+                    lnk.LinkColor = lnk.VisitedLinkColor = Configs.Theme.AccentColor;
+                }
+            }
+
+            // Logo
+            picLogo.Image = Configs.Theme.Logo.Image;
+            this.Icon = Icon.FromHandle(Configs.Theme.Logo.Image.GetHicon());
+        }
+
 
         private readonly Color M_COLOR_MENU_SELECTED = Color.FromArgb(255, 198, 203, 204);
         private readonly Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 145, 150, 153);
@@ -134,7 +156,7 @@ namespace ImageGlass {
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             try {
-                Process.Start("skype:d2phap");
+                Process.Start("https://twitter.com/duongdieuphap");
             }
             catch { }
         }
@@ -212,7 +234,12 @@ namespace ImageGlass {
             catch { }
         }
 
-        private void tb1_Paint(object sender, PaintEventArgs e) {
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            try {
+                Process.Start("https://www.patreon.com/d2phap");
+            }
+            catch { }
         }
     }
 }
