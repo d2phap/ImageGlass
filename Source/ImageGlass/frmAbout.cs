@@ -158,7 +158,7 @@ namespace ImageGlass {
         #region IMAGEGLASS INFORMATION PANEL
         private void lnkEmail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             try {
-                Process.Start("mailto:d2phap@gmail.com");
+                Process.Start("mailto:phap@imageglass.org");
             }
             catch { }
         }
@@ -229,9 +229,7 @@ namespace ImageGlass {
 
         private void btnDonation_Click(object sender, EventArgs e) {
             try {
-                var version = App.Version;
-
-                Process.Start("https://imageglass.org/source#donation?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_donation");
+                Process.Start("https://imageglass.org/source#donation?utm_source=app_" + App.Version + "&utm_medium=app_click&utm_campaign=app_donation");
             }
             catch { }
         }
@@ -246,7 +244,7 @@ namespace ImageGlass {
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             try {
-                Process.Start("https://www.patreon.com/d2phap");
+                Process.Start("https://www.patreon.com/d2phap?utm_source=app_" + App.Version + "&utm_medium=app_click&utm_campaign=app_patreon");
             }
             catch { }
         }

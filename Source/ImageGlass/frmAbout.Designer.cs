@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAbout));
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.lblAppName = new System.Windows.Forms.Label();
@@ -42,6 +43,7 @@
             this.lblComponent = new System.Windows.Forms.Label();
             this.tab1 = new ImageGlass.UI.NakedTabControl();
             this.tpInfo = new System.Windows.Forms.TabPage();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lnkCollaborator = new System.Windows.Forms.LinkLabel();
             this.lnkLogoDesigner = new System.Windows.Forms.Label();
@@ -64,6 +66,7 @@
             this.panHeader = new System.Windows.Forms.Panel();
             this.lblCodeName = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
@@ -280,6 +283,7 @@
             // 
             this.tpInfo.AutoScroll = true;
             this.tpInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
+            this.tpInfo.Controls.Add(this.linkLabel1);
             this.tpInfo.Controls.Add(this.panel2);
             this.tpInfo.Controls.Add(this.lnkCollaborator);
             this.tpInfo.Controls.Add(this.lnkLogoDesigner);
@@ -302,9 +306,29 @@
             this.tpInfo.TabIndex = 0;
             this.tpInfo.Text = "tpInfo";
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.linkLabel1.ForeColor = System.Drawing.Color.Black;
+            this.linkLabel1.LinkArea = new System.Windows.Forms.LinkArea(9, 99);
+            this.linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.linkLabel1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
+            this.linkLabel1.Location = new System.Drawing.Point(54, 394);
+            this.linkLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(291, 28);
+            this.linkLabel1.TabIndex = 8;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Patreon: https://patreon.com/d2phap";
+            this.linkLabel1.UseCompatibleTextRendering = true;
+            this.linkLabel1.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // panel2
             // 
-            this.panel2.Location = new System.Drawing.Point(365, 519);
+            this.panel2.Location = new System.Drawing.Point(365, 636);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(103, 35);
             this.panel2.TabIndex = 17;
@@ -361,11 +385,11 @@
             this.lnkCheckUpdate.LinkArea = new System.Windows.Forms.LinkArea(0, 99);
             this.lnkCheckUpdate.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkCheckUpdate.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkCheckUpdate.Location = new System.Drawing.Point(54, 496);
+            this.lnkCheckUpdate.Location = new System.Drawing.Point(54, 563);
             this.lnkCheckUpdate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkCheckUpdate.Name = "lnkCheckUpdate";
             this.lnkCheckUpdate.Size = new System.Drawing.Size(150, 28);
-            this.lnkCheckUpdate.TabIndex = 10;
+            this.lnkCheckUpdate.TabIndex = 11;
             this.lnkCheckUpdate.TabStop = true;
             this.lnkCheckUpdate.Text = "» Check for update";
             this.lnkCheckUpdate.UseCompatibleTextRendering = true;
@@ -389,7 +413,7 @@
             this.lblUpdate.AutoSize = true;
             this.lblUpdate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblUpdate.ForeColor = System.Drawing.Color.Black;
-            this.lblUpdate.Location = new System.Drawing.Point(24, 457);
+            this.lblUpdate.Location = new System.Drawing.Point(24, 524);
             this.lblUpdate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUpdate.Name = "lblUpdate";
             this.lblUpdate.Size = new System.Drawing.Size(157, 23);
@@ -417,11 +441,11 @@
             this.lnkFacebook.LinkArea = new System.Windows.Forms.LinkArea(10, 99);
             this.lnkFacebook.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkFacebook.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkFacebook.Location = new System.Drawing.Point(54, 419);
+            this.lnkFacebook.Location = new System.Drawing.Point(54, 464);
             this.lnkFacebook.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkFacebook.Name = "lnkFacebook";
             this.lnkFacebook.Size = new System.Drawing.Size(385, 28);
-            this.lnkFacebook.TabIndex = 9;
+            this.lnkFacebook.TabIndex = 10;
             this.lnkFacebook.TabStop = true;
             this.lnkFacebook.Text = "Facebook: https://www.facebook.com/ImageGlass";
             this.lnkFacebook.UseCompatibleTextRendering = true;
@@ -440,10 +464,10 @@
             this.lnkEmail.Location = new System.Drawing.Point(54, 244);
             this.lnkEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkEmail.Name = "lnkEmail";
-            this.lnkEmail.Size = new System.Drawing.Size(209, 28);
+            this.lnkEmail.Size = new System.Drawing.Size(225, 28);
             this.lnkEmail.TabIndex = 5;
             this.lnkEmail.TabStop = true;
-            this.lnkEmail.Text = "Email: d2phap@gmail.com";
+            this.lnkEmail.Text = "Email: phap@imageglass.org";
             this.lnkEmail.UseCompatibleTextRendering = true;
             this.lnkEmail.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
             this.lnkEmail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkEmail_LinkClicked);
@@ -457,11 +481,11 @@
             this.lnkProjectPage.LinkArea = new System.Windows.Forms.LinkArea(8, 99);
             this.lnkProjectPage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkProjectPage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkProjectPage.Location = new System.Drawing.Point(54, 387);
+            this.lnkProjectPage.Location = new System.Drawing.Point(54, 431);
             this.lnkProjectPage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkProjectPage.Name = "lnkProjectPage";
             this.lnkProjectPage.Size = new System.Drawing.Size(294, 28);
-            this.lnkProjectPage.TabIndex = 8;
+            this.lnkProjectPage.TabIndex = 9;
             this.lnkProjectPage.TabStop = true;
             this.lnkProjectPage.Text = "Source: https://imageglass.org/source";
             this.lnkProjectPage.UseCompatibleTextRendering = true;
@@ -497,7 +521,7 @@
             this.lnkIGHomepage.LinkArea = new System.Windows.Forms.LinkArea(10, 99);
             this.lnkIGHomepage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkIGHomepage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkIGHomepage.Location = new System.Drawing.Point(54, 355);
+            this.lnkIGHomepage.Location = new System.Drawing.Point(54, 361);
             this.lnkIGHomepage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkIGHomepage.Name = "lnkIGHomepage";
             this.lnkIGHomepage.Size = new System.Drawing.Size(274, 28);
@@ -513,7 +537,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(24, 316);
+            this.label2.Location = new System.Drawing.Point(24, 322);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 23);
@@ -622,6 +646,7 @@
             this.lblCodeName.Size = new System.Drawing.Size(59, 30);
             this.lblCodeName.TabIndex = 21;
             this.lblCodeName.Text = "Kobe";
+            this.toolTip1.SetToolTip(this.lblCodeName, "Kobe likes maroon!");
             // 
             // tableLayoutPanel2
             // 
@@ -714,5 +739,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label lblCodeName;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
