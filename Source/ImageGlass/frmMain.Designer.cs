@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,8 +88,8 @@
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainImageProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainClipboard = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainCopyImageData = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainCut = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem28 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainCopyImagePath = new System.Windows.Forms.ToolStripMenuItem();
@@ -894,6 +894,18 @@
             this.mnuMainClipboard.Text = "&Clipboard";
             this.mnuMainClipboard.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
             // 
+            // mnuMainCopyImageData
+            // 
+            this.mnuMainCopyImageData.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainCopyImageData.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainCopyImageData.Name = "mnuMainCopyImageData";
+            this.mnuMainCopyImageData.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainCopyImageData.ShortcutKeyDisplayString = "Ctrl+C";
+            this.mnuMainCopyImageData.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.mnuMainCopyImageData.Size = new System.Drawing.Size(302, 31);
+            this.mnuMainCopyImageData.Text = "Copy &image pixels";
+            this.mnuMainCopyImageData.Click += new System.EventHandler(this.mnuMainCopyImageData_Click);
+            // 
             // mnuMainCopy
             // 
             this.mnuMainCopy.ForeColor = System.Drawing.Color.Black;
@@ -906,18 +918,6 @@
             this.mnuMainCopy.Size = new System.Drawing.Size(302, 31);
             this.mnuMainCopy.Text = "&Copy";
             this.mnuMainCopy.Click += new System.EventHandler(this.mnuMainCopy_Click);
-            // 
-            // mnuMainCopyImageData
-            // 
-            this.mnuMainCopyImageData.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainCopyImageData.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainCopyImageData.Name = "mnuMainCopyImageData";
-            this.mnuMainCopyImageData.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainCopyImageData.ShortcutKeyDisplayString = "Ctrl+C";
-            this.mnuMainCopyImageData.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.mnuMainCopyImageData.Size = new System.Drawing.Size(302, 31);
-            this.mnuMainCopyImageData.Text = "Copy &image pixels";
-            this.mnuMainCopyImageData.Click += new System.EventHandler(this.mnuMainCopyImageData_Click);
             // 
             // mnuMainCut
             // 
@@ -1000,7 +1000,8 @@
             this.mnuMainFullScreen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainFullScreen.Name = "mnuMainFullScreen";
             this.mnuMainFullScreen.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainFullScreen.ShortcutKeyDisplayString = "Alt+Enter";
+            this.mnuMainFullScreen.ShortcutKeyDisplayString = "F11";
+            this.mnuMainFullScreen.ShortcutKeys = System.Windows.Forms.Keys.F11;
             this.mnuMainFullScreen.Size = new System.Drawing.Size(246, 29);
             this.mnuMainFullScreen.Text = "&Full screen";
             this.mnuMainFullScreen.Click += new System.EventHandler(this.mnuMainFullScreen_Click);
@@ -1026,8 +1027,8 @@
             this.mnuMainSlideShowStart.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainSlideShowStart.Name = "mnuMainSlideShowStart";
             this.mnuMainSlideShowStart.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainSlideShowStart.ShortcutKeyDisplayString = "F11";
-            this.mnuMainSlideShowStart.ShortcutKeys = System.Windows.Forms.Keys.F11;
+            this.mnuMainSlideShowStart.ShortcutKeyDisplayString = "F12";
+            this.mnuMainSlideShowStart.ShortcutKeys = System.Windows.Forms.Keys.F12;
             this.mnuMainSlideShowStart.Size = new System.Drawing.Size(358, 31);
             this.mnuMainSlideShowStart.Text = "&Start slideshow";
             this.mnuMainSlideShowStart.Click += new System.EventHandler(this.mnuMainSlideShowStart_Click);
@@ -1351,7 +1352,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator2;
+            this.picMain.Animator = defaultGifAnimator1;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(60)))), ((int)(((byte)(61)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuContext;

@@ -4389,8 +4389,11 @@ namespace ImageGlass {
 
                 FullScreenMode(enabled: true);
 
-                ShowToastMsg(Configs.Language.Items[$"{Name}._FullScreenMessage"]
-                    , 2000);
+                ShowToastMsg(
+                    string.Format(
+                        Configs.Language.Items[$"{Name}._FullScreenMessage"],
+                        mnuMainFullScreen.ShortcutKeyDisplayString),
+                    2000);
             }
             // exit full screen
             else {
