@@ -1150,8 +1150,8 @@
             // 
             this.mnuMainTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuMainColorPicker,
-            this.mnuMainPageNav,
             this.mnuMainCrop,
+            this.mnuMainPageNav,
             this.mnuExifTool});
             this.mnuMainTools.ForeColor = System.Drawing.Color.Black;
             this.mnuMainTools.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;

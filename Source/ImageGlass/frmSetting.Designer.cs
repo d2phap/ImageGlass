@@ -585,7 +585,7 @@ namespace ImageGlass
             this.chkUseTouchGesture.Margin = new System.Windows.Forms.Padding(1);
             this.chkUseTouchGesture.Name = "chkUseTouchGesture";
             this.chkUseTouchGesture.Size = new System.Drawing.Size(281, 28);
-            this.chkUseTouchGesture.TabIndex = 48;
+            this.chkUseTouchGesture.TabIndex = 11;
             this.chkUseTouchGesture.Text = "[Enable touch gesture support]";
             this.chkUseTouchGesture.UseVisualStyleBackColor = false;
             // 
@@ -607,7 +607,7 @@ namespace ImageGlass
             this.chkShowToast.Margin = new System.Windows.Forms.Padding(1);
             this.chkShowToast.Name = "chkShowToast";
             this.chkShowToast.Size = new System.Drawing.Size(210, 28);
-            this.chkShowToast.TabIndex = 17;
+            this.chkShowToast.TabIndex = 18;
             this.chkShowToast.Text = "[Show toast message]";
             this.chkShowToast.UseVisualStyleBackColor = true;
             // 
@@ -619,7 +619,7 @@ namespace ImageGlass
             this.chkCenterWindowFit.Margin = new System.Windows.Forms.Padding(1);
             this.chkCenterWindowFit.Name = "chkCenterWindowFit";
             this.chkCenterWindowFit.Size = new System.Drawing.Size(396, 28);
-            this.chkCenterWindowFit.TabIndex = 16;
+            this.chkCenterWindowFit.TabIndex = 17;
             this.chkCenterWindowFit.Text = "[Auto center the window in Window Fit mode]";
             this.chkCenterWindowFit.UseVisualStyleBackColor = true;
             // 
@@ -631,7 +631,7 @@ namespace ImageGlass
             this.chkShowCheckerboardOnlyImage.Margin = new System.Windows.Forms.Padding(1);
             this.chkShowCheckerboardOnlyImage.Name = "chkShowCheckerboardOnlyImage";
             this.chkShowCheckerboardOnlyImage.Size = new System.Drawing.Size(409, 28);
-            this.chkShowCheckerboardOnlyImage.TabIndex = 0;
+            this.chkShowCheckerboardOnlyImage.TabIndex = 10;
             this.chkShowCheckerboardOnlyImage.Text = "[Display checkerboard only in the image region]";
             this.chkShowCheckerboardOnlyImage.UseVisualStyleBackColor = true;
             // 
@@ -707,7 +707,7 @@ namespace ImageGlass
             this.lnkResetBackgroundColor.Location = new System.Drawing.Point(140, 533);
             this.lnkResetBackgroundColor.Name = "lnkResetBackgroundColor";
             this.lnkResetBackgroundColor.Size = new System.Drawing.Size(51, 23);
-            this.lnkResetBackgroundColor.TabIndex = 11;
+            this.lnkResetBackgroundColor.TabIndex = 12;
             this.lnkResetBackgroundColor.TabStop = true;
             this.lnkResetBackgroundColor.Text = "Reset";
             this.lnkResetBackgroundColor.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
@@ -759,7 +759,7 @@ namespace ImageGlass
             this.chkConfirmationDelete.Margin = new System.Windows.Forms.Padding(1);
             this.chkConfirmationDelete.Name = "chkConfirmationDelete";
             this.chkConfirmationDelete.Size = new System.Drawing.Size(312, 28);
-            this.chkConfirmationDelete.TabIndex = 15;
+            this.chkConfirmationDelete.TabIndex = 16;
             this.chkConfirmationDelete.Text = "Display Delete confirmation dialog ";
             this.chkConfirmationDelete.UseVisualStyleBackColor = true;
             // 
@@ -771,7 +771,7 @@ namespace ImageGlass
             this.chkAllowMultiInstances.Margin = new System.Windows.Forms.Padding(1);
             this.chkAllowMultiInstances.Name = "chkAllowMultiInstances";
             this.chkAllowMultiInstances.Size = new System.Drawing.Size(349, 28);
-            this.chkAllowMultiInstances.TabIndex = 13;
+            this.chkAllowMultiInstances.TabIndex = 14;
             this.chkAllowMultiInstances.Text = "Allow multiple instances of the program";
             this.chkAllowMultiInstances.UseVisualStyleBackColor = true;
             // 
@@ -783,7 +783,7 @@ namespace ImageGlass
             this.chkESCToQuit.Margin = new System.Windows.Forms.Padding(1);
             this.chkESCToQuit.Name = "chkESCToQuit";
             this.chkESCToQuit.Size = new System.Drawing.Size(330, 28);
-            this.chkESCToQuit.TabIndex = 14;
+            this.chkESCToQuit.TabIndex = 15;
             this.chkESCToQuit.Text = "Allow to press ESC to quit application";
             this.chkESCToQuit.UseVisualStyleBackColor = true;
             // 
@@ -829,7 +829,7 @@ namespace ImageGlass
             this.chkAutoUpdate.Margin = new System.Windows.Forms.Padding(1);
             this.chkAutoUpdate.Name = "chkAutoUpdate";
             this.chkAutoUpdate.Size = new System.Drawing.Size(283, 28);
-            this.chkAutoUpdate.TabIndex = 12;
+            this.chkAutoUpdate.TabIndex = 13;
             this.chkAutoUpdate.Text = "Check for update automatically";
             this.chkAutoUpdate.UseVisualStyleBackColor = true;
             // 
@@ -1050,18 +1050,18 @@ namespace ImageGlass
             // txtZoomLevels
             // 
             this.txtZoomLevels.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
-            this.txtZoomLevels.Location = new System.Drawing.Point(42, 1183);
+            this.txtZoomLevels.Location = new System.Drawing.Point(42, 1172);
             this.txtZoomLevels.Multiline = true;
             this.txtZoomLevels.Name = "txtZoomLevels";
             this.txtZoomLevels.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtZoomLevels.Size = new System.Drawing.Size(529, 67);
+            this.txtZoomLevels.Size = new System.Drawing.Size(529, 81);
             this.txtZoomLevels.TabIndex = 34;
             // 
             // lblZoomLevels
             // 
             this.lblZoomLevels.AutoSize = true;
             this.lblZoomLevels.BackColor = System.Drawing.Color.Transparent;
-            this.lblZoomLevels.Location = new System.Drawing.Point(38, 1156);
+            this.lblZoomLevels.Location = new System.Drawing.Point(38, 1145);
             this.lblZoomLevels.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lblZoomLevels.Name = "lblZoomLevels";
             this.lblZoomLevels.Size = new System.Drawing.Size(111, 23);
@@ -1541,7 +1541,7 @@ namespace ImageGlass
             this.cmbAfterEditingApp.Margin = new System.Windows.Forms.Padding(1);
             this.cmbAfterEditingApp.Name = "cmbAfterEditingApp";
             this.cmbAfterEditingApp.Size = new System.Drawing.Size(259, 31);
-            this.cmbAfterEditingApp.TabIndex = 64;
+            this.cmbAfterEditingApp.TabIndex = 7;
             // 
             // lblAfterEditingApp
             // 
@@ -1564,7 +1564,7 @@ namespace ImageGlass
             0});
             this.numImageQuality.Name = "numImageQuality";
             this.numImageQuality.Size = new System.Drawing.Size(107, 30);
-            this.numImageQuality.TabIndex = 62;
+            this.numImageQuality.TabIndex = 8;
             this.numImageQuality.Value = new decimal(new int[] {
             1,
             0,
@@ -1589,7 +1589,7 @@ namespace ImageGlass
             this.chkSaveOnRotate.Margin = new System.Windows.Forms.Padding(1);
             this.chkSaveOnRotate.Name = "chkSaveOnRotate";
             this.chkSaveOnRotate.Size = new System.Drawing.Size(330, 28);
-            this.chkSaveOnRotate.TabIndex = 35;
+            this.chkSaveOnRotate.TabIndex = 5;
             this.chkSaveOnRotate.Text = "Save the viewing image after rotating";
             this.chkSaveOnRotate.UseVisualStyleBackColor = true;
             // 
@@ -1631,7 +1631,7 @@ namespace ImageGlass
             this.lvImageEditing.ShowItemToolTips = true;
             this.lvImageEditing.Size = new System.Drawing.Size(689, 297);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.lvImageEditing.TabIndex = 37;
+            this.lvImageEditing.TabIndex = 9;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
             this.lvImageEditing.View = System.Windows.Forms.View.Details;
             this.lvImageEditing.SelectedIndexChanged += new System.EventHandler(this.lvlvImageEditing_SelectedIndexChanged);
@@ -1664,7 +1664,7 @@ namespace ImageGlass
             this.chkSaveModifyDate.Margin = new System.Windows.Forms.Padding(1);
             this.chkSaveModifyDate.Name = "chkSaveModifyDate";
             this.chkSaveModifyDate.Size = new System.Drawing.Size(341, 28);
-            this.chkSaveModifyDate.TabIndex = 36;
+            this.chkSaveModifyDate.TabIndex = 6;
             this.chkSaveModifyDate.Text = "Preserve the modification date on save";
             this.chkSaveModifyDate.UseVisualStyleBackColor = true;
             // 
@@ -1688,8 +1688,8 @@ namespace ImageGlass
             this.btnEditEditExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnEditEditExt.Location = new System.Drawing.Point(22, 3);
             this.btnEditEditExt.Name = "btnEditEditExt";
-            this.btnEditEditExt.Size = new System.Drawing.Size(126, 42);
-            this.btnEditEditExt.TabIndex = 38;
+            this.btnEditEditExt.Size = new System.Drawing.Size(183, 42);
+            this.btnEditEditExt.TabIndex = 10;
             this.btnEditEditExt.Text = "Edit";
             this.btnEditEditExt.UseVisualStyleBackColor = true;
             this.btnEditEditExt.Click += new System.EventHandler(this.btnEditEditExt_Click);
@@ -1698,10 +1698,10 @@ namespace ImageGlass
             // 
             this.btnEditResetExt.AutoSize = true;
             this.btnEditResetExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnEditResetExt.Location = new System.Drawing.Point(408, 3);
+            this.btnEditResetExt.Location = new System.Drawing.Point(465, 3);
             this.btnEditResetExt.Name = "btnEditResetExt";
-            this.btnEditResetExt.Size = new System.Drawing.Size(228, 42);
-            this.btnEditResetExt.TabIndex = 40;
+            this.btnEditResetExt.Size = new System.Drawing.Size(246, 42);
+            this.btnEditResetExt.TabIndex = 12;
             this.btnEditResetExt.Text = "Reset to default";
             this.btnEditResetExt.UseVisualStyleBackColor = true;
             this.btnEditResetExt.Click += new System.EventHandler(this.btnEditResetExt_Click);
@@ -1710,10 +1710,10 @@ namespace ImageGlass
             // 
             this.btnEditEditAllExt.AutoSize = true;
             this.btnEditEditAllExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnEditEditAllExt.Location = new System.Drawing.Point(154, 3);
+            this.btnEditEditAllExt.Location = new System.Drawing.Point(211, 3);
             this.btnEditEditAllExt.Name = "btnEditEditAllExt";
             this.btnEditEditAllExt.Size = new System.Drawing.Size(248, 42);
-            this.btnEditEditAllExt.TabIndex = 39;
+            this.btnEditEditAllExt.TabIndex = 11;
             this.btnEditEditAllExt.Text = "Edit all extensions";
             this.btnEditEditAllExt.UseVisualStyleBackColor = true;
             this.btnEditEditAllExt.Click += new System.EventHandler(this.btnEditEditAllExt_Click);
@@ -2162,7 +2162,7 @@ namespace ImageGlass
             this.chkColorUseHSVA.Margin = new System.Windows.Forms.Padding(1);
             this.chkColorUseHSVA.Name = "chkColorUseHSVA";
             this.chkColorUseHSVA.Size = new System.Drawing.Size(186, 28);
-            this.chkColorUseHSVA.TabIndex = 63;
+            this.chkColorUseHSVA.TabIndex = 58;
             this.chkColorUseHSVA.Text = "[Use HSVA format]";
             this.chkColorUseHSVA.UseVisualStyleBackColor = true;
             // 
@@ -2174,7 +2174,7 @@ namespace ImageGlass
             this.lnkSelectExifTool.Location = new System.Drawing.Point(38, 386);
             this.lnkSelectExifTool.Name = "lnkSelectExifTool";
             this.lnkSelectExifTool.Size = new System.Drawing.Size(148, 23);
-            this.lnkSelectExifTool.TabIndex = 62;
+            this.lnkSelectExifTool.TabIndex = 61;
             this.lnkSelectExifTool.TabStop = true;
             this.lnkSelectExifTool.Text = "Select Exif tool file";
             this.lnkSelectExifTool.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
@@ -2230,7 +2230,7 @@ namespace ImageGlass
             this.chkShowPageNavAuto.Margin = new System.Windows.Forms.Padding(1);
             this.chkShowPageNavAuto.Name = "chkShowPageNavAuto";
             this.chkShowPageNavAuto.Size = new System.Drawing.Size(467, 28);
-            this.chkShowPageNavAuto.TabIndex = 58;
+            this.chkShowPageNavAuto.TabIndex = 59;
             this.chkShowPageNavAuto.Text = "[Auto-show Page navigation tool for multi-page image]";
             this.chkShowPageNavAuto.UseVisualStyleBackColor = true;
             // 
