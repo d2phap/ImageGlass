@@ -106,7 +106,7 @@ namespace igtasks {
                 BaseRegistryKey = Registry.LocalMachine,
 
                 // delete current registry settings
-                SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations"
+                SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations",
             };
 
             if (!reg.DeleteSubKeyTree()) return 1;

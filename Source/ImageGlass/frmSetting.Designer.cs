@@ -151,7 +151,7 @@ namespace ImageGlass
             this.panel8 = new System.Windows.Forms.Panel();
             this.lblSupportedExtension = new System.Windows.Forms.Label();
             this.lvExtension = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clnExt = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lnkOpenFileAssoc = new System.Windows.Forms.LinkLabel();
             this.tabToolbar = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -222,6 +222,8 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.btnUnregisterExt = new System.Windows.Forms.Button();
+            this.clnDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
@@ -1740,33 +1742,35 @@ namespace ImageGlass
             this.tableFileAssoc.Name = "tableFileAssoc";
             this.tableFileAssoc.RowCount = 2;
             this.tableFileAssoc.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableFileAssoc.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.tableFileAssoc.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableFileAssoc.Size = new System.Drawing.Size(736, 595);
             this.tableFileAssoc.TabIndex = 44;
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.Transparent;
+            this.panel2.Controls.Add(this.btnUnregisterExt);
             this.panel2.Controls.Add(this.btnRegisterExt);
             this.panel2.Controls.Add(this.btnResetExt);
             this.panel2.Controls.Add(this.btnAddNewExt);
             this.panel2.Controls.Add(this.btnDeleteExt);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 525);
+            this.panel2.Location = new System.Drawing.Point(0, 475);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(736, 70);
+            this.panel2.Size = new System.Drawing.Size(736, 120);
             this.panel2.TabIndex = 35;
             // 
             // btnRegisterExt
             // 
+            this.btnRegisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRegisterExt.AutoSize = true;
             this.btnRegisterExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnRegisterExt.Location = new System.Drawing.Point(491, 3);
+            this.btnRegisterExt.Location = new System.Drawing.Point(336, 3);
             this.btnRegisterExt.Name = "btnRegisterExt";
-            this.btnRegisterExt.Size = new System.Drawing.Size(315, 42);
+            this.btnRegisterExt.Size = new System.Drawing.Size(378, 42);
             this.btnRegisterExt.TabIndex = 46;
-            this.btnRegisterExt.Text = "Set as Default photo viewer_";
+            this.btnRegisterExt.Text = "[Set as Default photo viewer...]";
             this.btnRegisterExt.UseVisualStyleBackColor = true;
             this.btnRegisterExt.Click += new System.EventHandler(this.btnRegisterExt_Click);
             // 
@@ -1774,9 +1778,9 @@ namespace ImageGlass
             // 
             this.btnResetExt.AutoSize = true;
             this.btnResetExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnResetExt.Location = new System.Drawing.Point(281, 3);
+            this.btnResetExt.Location = new System.Drawing.Point(28, 51);
             this.btnResetExt.Name = "btnResetExt";
-            this.btnResetExt.Size = new System.Drawing.Size(205, 42);
+            this.btnResetExt.Size = new System.Drawing.Size(302, 42);
             this.btnResetExt.TabIndex = 45;
             this.btnResetExt.Text = "Reset to default";
             this.btnResetExt.UseVisualStyleBackColor = true;
@@ -1788,7 +1792,7 @@ namespace ImageGlass
             this.btnAddNewExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnAddNewExt.Location = new System.Drawing.Point(28, 3);
             this.btnAddNewExt.Name = "btnAddNewExt";
-            this.btnAddNewExt.Size = new System.Drawing.Size(121, 42);
+            this.btnAddNewExt.Size = new System.Drawing.Size(148, 42);
             this.btnAddNewExt.TabIndex = 43;
             this.btnAddNewExt.Text = "Add";
             this.btnAddNewExt.UseVisualStyleBackColor = true;
@@ -1799,9 +1803,9 @@ namespace ImageGlass
             this.btnDeleteExt.AutoSize = true;
             this.btnDeleteExt.Enabled = false;
             this.btnDeleteExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnDeleteExt.Location = new System.Drawing.Point(155, 3);
+            this.btnDeleteExt.Location = new System.Drawing.Point(182, 3);
             this.btnDeleteExt.Name = "btnDeleteExt";
-            this.btnDeleteExt.Size = new System.Drawing.Size(121, 42);
+            this.btnDeleteExt.Size = new System.Drawing.Size(148, 42);
             this.btnDeleteExt.TabIndex = 44;
             this.btnDeleteExt.Text = "Delete";
             this.btnDeleteExt.UseVisualStyleBackColor = true;
@@ -1817,7 +1821,7 @@ namespace ImageGlass
             this.panel8.Location = new System.Drawing.Point(0, 0);
             this.panel8.Margin = new System.Windows.Forms.Padding(0);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(736, 525);
+            this.panel8.Size = new System.Drawing.Size(736, 475);
             this.panel8.TabIndex = 43;
             // 
             // lblSupportedExtension
@@ -1837,25 +1841,26 @@ namespace ImageGlass
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lvExtension.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
             this.lvExtension.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
+            this.clnExt,
+            this.clnDescription});
             this.lvExtension.FullRowSelect = true;
-            this.lvExtension.GridLines = true;
             this.lvExtension.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lvExtension.HideSelection = false;
             this.lvExtension.Location = new System.Drawing.Point(28, 47);
             this.lvExtension.Name = "lvExtension";
-            this.lvExtension.Size = new System.Drawing.Size(686, 462);
+            this.lvExtension.ShowItemToolTips = true;
+            this.lvExtension.Size = new System.Drawing.Size(686, 412);
             this.lvExtension.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvExtension.TabIndex = 42;
             this.lvExtension.TileSize = new System.Drawing.Size(100, 30);
             this.lvExtension.UseCompatibleStateImageBehavior = false;
-            this.lvExtension.View = System.Windows.Forms.View.Tile;
+            this.lvExtension.View = System.Windows.Forms.View.Details;
             this.lvExtension.SelectedIndexChanged += new System.EventHandler(this.lvExtension_SelectedIndexChanged);
             // 
-            // columnHeader1
+            // clnExt
             // 
-            this.columnHeader1.Text = "Extensions";
-            this.columnHeader1.Width = 150;
+            this.clnExt.Text = "Extension";
+            this.clnExt.Width = 150;
             // 
             // lnkOpenFileAssoc
             // 
@@ -2766,10 +2771,10 @@ namespace ImageGlass
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.AutoSize = true;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnSave.Location = new System.Drawing.Point(583, 13);
+            this.btnSave.Location = new System.Drawing.Point(541, 12);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(114, 42);
+            this.btnSave.Size = new System.Drawing.Size(130, 42);
             this.btnSave.TabIndex = 0;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -2780,10 +2785,10 @@ namespace ImageGlass
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.AutoSize = true;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnCancel.Location = new System.Drawing.Point(706, 13);
+            this.btnCancel.Location = new System.Drawing.Point(679, 12);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(114, 42);
+            this.btnCancel.Size = new System.Drawing.Size(130, 42);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -2794,10 +2799,10 @@ namespace ImageGlass
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.AutoSize = true;
             this.btnApply.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnApply.Location = new System.Drawing.Point(829, 13);
+            this.btnApply.Location = new System.Drawing.Point(817, 12);
             this.btnApply.Margin = new System.Windows.Forms.Padding(4);
             this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(114, 42);
+            this.btnApply.Size = new System.Drawing.Size(130, 42);
             this.btnApply.TabIndex = 2;
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyleBackColor = true;
@@ -2832,6 +2837,24 @@ namespace ImageGlass
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(973, 67);
             this.panel4.TabIndex = 18;
+            // 
+            // btnUnregisteredExt
+            // 
+            this.btnUnregisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUnregisterExt.AutoSize = true;
+            this.btnUnregisterExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnUnregisterExt.Location = new System.Drawing.Point(336, 51);
+            this.btnUnregisterExt.Name = "btnUnregisteredExt";
+            this.btnUnregisterExt.Size = new System.Drawing.Size(378, 42);
+            this.btnUnregisterExt.TabIndex = 47;
+            this.btnUnregisterExt.Text = "[Unregister extensions]";
+            this.btnUnregisterExt.UseVisualStyleBackColor = true;
+            this.btnUnregisterExt.Click += new System.EventHandler(this.BtnUnregisteredExt_Click);
+            // 
+            // clnDescription
+            // 
+            this.clnDescription.Text = "Description";
+            this.clnDescription.Width = 350;
             // 
             // frmSetting
             // 
@@ -2940,7 +2963,7 @@ namespace ImageGlass
         private System.Windows.Forms.CheckBox chkConfirmationDelete;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ListView lvExtension;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader clnExt;
         private System.Windows.Forms.LinkLabel lnkOpenFileAssoc;
         private System.Windows.Forms.Button btnResetExt;
         private System.Windows.Forms.Button btnDeleteExt;
@@ -3099,5 +3122,7 @@ namespace ImageGlass
         private System.Windows.Forms.NumericUpDown numImageQuality;
         private System.Windows.Forms.Label lblAfterEditingApp;
         private System.Windows.Forms.ComboBox cmbAfterEditingApp;
+        private System.Windows.Forms.Button btnUnregisterExt;
+        private System.Windows.Forms.ColumnHeader clnDescription;
     }
 }

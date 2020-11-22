@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2020 DUONG DIEU PHAP
+Copyright (C) 2021 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -276,8 +276,9 @@ namespace ImageGlass {
             lnkOpenFileAssoc.Text = lang[$"{Name}.{nameof(lnkOpenFileAssoc)}"];
             btnAddNewExt.Text = lang[$"{Name}.{nameof(btnAddNewExt)}"];
             btnDeleteExt.Text = lang[$"{Name}.{nameof(btnDeleteExt)}"];
-            btnRegisterExt.Text = lang[$"{Name}.{nameof(btnRegisterExt)}"];
             btnResetExt.Text = lang[$"{Name}.{nameof(btnResetExt)}"];
+            btnRegisterExt.Text = lang[$"{Name}.{nameof(btnRegisterExt)}"];
+            btnUnregisterExt.Text = lang[$"{Name}.{nameof(btnUnregisterExt)}"];
             #endregion
 
             #region LANGUAGE TAB
@@ -973,7 +974,9 @@ namespace ImageGlass {
             }
 
             foreach (var ext in Configs.AllFormats) {
+                var extDisplay = ext.Substring(1).ToUpper();
                 var li = new ListViewItem(ext);
+                _ = li.SubItems.Add($"ImageGlass {extDisplay} File");
 
                 lvExtension.Items.Add(li);
             }
@@ -1069,6 +1072,38 @@ namespace ImageGlass {
 
         private void btnRegisterExt_Click(object sender, EventArgs e) {
             RegisterFileAssociations();
+        }
+
+        private void BtnUnregisteredExt_Click(object sender, EventArgs e) {
+            try {
+                using var p = new Process();
+                var isError = true;
+
+                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+                p.StartInfo.Arguments = $"delassociations";
+                p.Start();
+
+                try {
+                    p.Start();
+                }
+                catch {
+                    // Clicking 'Cancel' in the "User Account Control" dialog throws a
+                    // "User cancelled" exception. Just continue quietly in that case.
+                    return;
+                }
+
+                p.WaitForExit();
+                isError = p.ExitCode != 0;
+
+                if (isError) {
+                    MessageBox.Show(Configs.Language.Items[$"{Name}._UnregisterAppExtensions_Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else {
+                    MessageBox.Show(Configs.Language.Items[$"{Name}._UnregisterAppExtensions_Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch { }
+
         }
 
         private void lvExtension_SelectedIndexChanged(object sender, EventArgs e) {
@@ -2084,5 +2119,6 @@ namespace ImageGlass {
 
         #endregion
 
+        
     }
 }
