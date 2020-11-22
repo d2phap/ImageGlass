@@ -41,7 +41,24 @@ namespace ImageGlass {
             imglGeneral.ImageSize = new Size(10, DPIScaling.Transform(30));
             imglGeneral.Images.Add("_blank", new Bitmap(10, DPIScaling.Transform(30)));
 
-            txtZoomLevels.KeyPress += TxtZoomLevels_KeyPress; // Filter user input for zoom levels
+            // Filter user input for zoom levels
+            txtZoomLevels.KeyPress += TxtZoomLevels_KeyPress;
+
+
+            // Apply theme
+            LoadTheme();
+        }
+
+        private void LoadTheme() {
+            // load theme colors
+            foreach (var ctr in Helpers.GetAllControls(this, typeof(LinkLabel))) {
+                if (ctr is LinkLabel lnk) {
+                    lnk.LinkColor = lnk.VisitedLinkColor = Configs.Theme.AccentColor;
+                }
+            }
+
+            // Logo
+            this.Icon = Icon.FromHandle(Configs.Theme.Logo.Image.GetHicon());
         }
 
         #region PROPERTIES
@@ -2119,6 +2136,5 @@ namespace ImageGlass {
 
         #endregion
 
-        
     }
 }
