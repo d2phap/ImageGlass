@@ -156,17 +156,17 @@ namespace ImageGlass.UI {
         /// <summary>
         /// The accent color
         /// </summary>
-        public Color AccentColor { get; set; } = Color.FromArgb(255, 117, 15, 64);
+        public Color AccentColor { get; set; } = Color.FromArgb(255, 0, 125, 208);
 
         /// <summary>
         /// The light accent color
         /// </summary>
-        public Color AccentLightColor { get; set; } = Color.FromArgb(255, 171, 85, 114);
+        public Color AccentLightColor { get; set; } = Color.FromArgb(255, 0, 161, 225);
 
         /// <summary>
         /// The dark accent color
         /// </summary>
-        public Color AccentDarkColor { get; set; } = Color.FromArgb(255, 91, 12, 50);
+        public Color AccentDarkColor { get; set; } = Color.FromArgb(255, 0, 75, 150);
 
         /// <summary>
         /// The app logo
@@ -655,7 +655,10 @@ namespace ImageGlass.UI {
             return await Task.Run(GetAllThemePacks).ConfigureAwait(false);
         }
 
-
+        /// <summary>
+        /// Get all theme packs from default folder and user folder
+        /// </summary>
+        /// <returns></returns>
         public static List<Theme> GetAllThemePacks() {
             var defaultThemeFolder = App.StartUpDir(Dir.Themes);
             var userThemeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);

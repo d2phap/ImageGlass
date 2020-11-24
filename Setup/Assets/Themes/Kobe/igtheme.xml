@@ -10,6 +10,9 @@
       statuscolor="#f0f0f0"
       menubackgroundcolor="#484b4c"
       menutextcolor="#f0f0f0"
+      accentcolor="#750f40"
+      accentlightcolor="#ab5572"
+      accentdarkcolor="#5b0c32"
       logo="logo.svg"
       isshowtitlebarlogo="false" />
     <toolbar_icon 
