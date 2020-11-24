@@ -148,6 +148,11 @@ namespace ImageGlass.UI {
         public Color MenuTextColor { get; set; } = Color.Black;
 
         /// <summary>
+        /// Menu text color on hover
+        /// </summary>
+        public Color MenuTextHoverColor { get; set; } = Color.White;
+
+        /// <summary>
         /// The multiplier which impacts the size of the navigation arrows.
         /// </summary>
         public double NavArrowMultiplier { get; set; } = 2.0;
@@ -392,6 +397,11 @@ namespace ImageGlass.UI {
             color = FetchColorAttribute(n, "menutextcolor");
             if (color != Color.Transparent) {
                 MenuTextColor = color;
+            }
+
+            color = FetchColorAttribute(n, "menutexthovercolor");
+            if (color != Color.Transparent) {
+                MenuTextHoverColor = color;
             }
 
             // For 7.6: add ability to control the size of the navigation arrows

@@ -30,7 +30,14 @@ namespace ImageGlass.UI.Renderers {
 
         protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e) {
             if (e.Item.Enabled) {
-                e.TextColor = theme.TextInfoColor;
+                // on hover
+                if (e.Item.Selected) {
+                    e.TextColor = theme.MenuTextHoverColor;
+                }
+                else {
+                    e.TextColor = theme.MenuTextColor;
+                }
+
                 base.OnRenderItemText(e);
             }
             else {
@@ -106,7 +113,9 @@ namespace ImageGlass.UI.Renderers {
 
 
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e) {
-            using var pen = new Pen(theme.TextInfoColor, DPIScaling.Transform<float>(1));
+            var textColor = e.Item.Selected ? theme.MenuTextHoverColor : theme.MenuTextColor;
+            using var pen = new Pen(textColor, DPIScaling.Transform<float>(1));
+
             e.Graphics.DrawLine(pen,
                 e.Item.Width - (5 * e.Item.Height / 8),
                 3 * e.Item.Height / 8,
@@ -133,14 +142,16 @@ namespace ImageGlass.UI.Renderers {
 
                     e.Graphics.DrawString(mnu.ShortcutKeyDisplayString,
                         e.Item.Font,
-                        new SolidBrush(theme.TextInfoColor),
+                        new SolidBrush(textColor),
                         shortcutRect);
                 }
             }
         }
 
         protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e) {
-            using var pen = new Pen(theme.TextInfoColor, DPIScaling.Transform<float>(2));
+            var textColor = e.Item.Selected ? theme.MenuTextHoverColor : theme.MenuTextColor;
+            using var pen = new Pen(textColor, DPIScaling.Transform<float>(2));
+
             e.Graphics.DrawLine(pen,
                 (2 * e.Item.Height / 10) + 1,
                 e.Item.Height / 2,
