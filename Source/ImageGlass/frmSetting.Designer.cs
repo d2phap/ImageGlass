@@ -144,6 +144,7 @@ namespace ImageGlass
             this.tabFileTypeAssoc = new System.Windows.Forms.TabPage();
             this.tableFileAssoc = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnUnregisterExt = new System.Windows.Forms.Button();
             this.btnRegisterExt = new System.Windows.Forms.Button();
             this.btnResetExt = new System.Windows.Forms.Button();
             this.btnAddNewExt = new System.Windows.Forms.Button();
@@ -152,6 +153,7 @@ namespace ImageGlass
             this.lblSupportedExtension = new System.Windows.Forms.Label();
             this.lvExtension = new System.Windows.Forms.ListView();
             this.clnExt = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clnDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lnkOpenFileAssoc = new System.Windows.Forms.LinkLabel();
             this.tabToolbar = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -222,8 +224,6 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.btnUnregisterExt = new System.Windows.Forms.Button();
-            this.clnDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
@@ -1761,6 +1761,19 @@ namespace ImageGlass
             this.panel2.Size = new System.Drawing.Size(736, 120);
             this.panel2.TabIndex = 35;
             // 
+            // btnUnregisterExt
+            // 
+            this.btnUnregisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUnregisterExt.AutoSize = true;
+            this.btnUnregisterExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnUnregisterExt.Location = new System.Drawing.Point(336, 51);
+            this.btnUnregisterExt.Name = "btnUnregisterExt";
+            this.btnUnregisterExt.Size = new System.Drawing.Size(378, 42);
+            this.btnUnregisterExt.TabIndex = 47;
+            this.btnUnregisterExt.Text = "[Unregister extensions]";
+            this.btnUnregisterExt.UseVisualStyleBackColor = true;
+            this.btnUnregisterExt.Click += new System.EventHandler(this.BtnUnregisteredExt_Click);
+            // 
             // btnRegisterExt
             // 
             this.btnRegisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -1861,6 +1874,11 @@ namespace ImageGlass
             // 
             this.clnExt.Text = "Extension";
             this.clnExt.Width = 150;
+            // 
+            // clnDescription
+            // 
+            this.clnDescription.Text = "Description";
+            this.clnDescription.Width = 350;
             // 
             // lnkOpenFileAssoc
             // 
@@ -2607,6 +2625,7 @@ namespace ImageGlass
             this.lvTheme.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.lvTheme.MultiSelect = false;
             this.lvTheme.Name = "lvTheme";
+            this.lvTheme.ShowItemToolTips = true;
             this.lvTheme.Size = new System.Drawing.Size(379, 457);
             this.lvTheme.SmallImageList = this.imglGeneral;
             this.lvTheme.StateImageList = this.imglGeneral;
@@ -2837,24 +2856,6 @@ namespace ImageGlass
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(973, 67);
             this.panel4.TabIndex = 18;
-            // 
-            // btnUnregisteredExt
-            // 
-            this.btnUnregisterExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUnregisterExt.AutoSize = true;
-            this.btnUnregisterExt.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnUnregisterExt.Location = new System.Drawing.Point(336, 51);
-            this.btnUnregisterExt.Name = "btnUnregisteredExt";
-            this.btnUnregisterExt.Size = new System.Drawing.Size(378, 42);
-            this.btnUnregisterExt.TabIndex = 47;
-            this.btnUnregisterExt.Text = "[Unregister extensions]";
-            this.btnUnregisterExt.UseVisualStyleBackColor = true;
-            this.btnUnregisterExt.Click += new System.EventHandler(this.BtnUnregisteredExt_Click);
-            // 
-            // clnDescription
-            // 
-            this.clnDescription.Text = "Description";
-            this.clnDescription.Width = 350;
             // 
             // frmSetting
             // 

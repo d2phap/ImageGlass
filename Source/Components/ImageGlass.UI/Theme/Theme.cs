@@ -20,11 +20,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using Ionic.Zip;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -310,7 +313,7 @@ namespace ImageGlass.UI {
             var configFilePath = Path.Combine(themeFolderPath, "igtheme.xml");
 
             if (!File.Exists(configFilePath)) {
-                configFilePath = App.StartUpDir(Dir.DefaultTheme, "igtheme.xml");
+                configFilePath = App.StartUpDir(Dir.Themes, Constants.DEFAULT_THEME, "igtheme.xml");
             }
 
             this.ConfigFilePath = configFilePath;
@@ -407,7 +410,7 @@ namespace ImageGlass.UI {
             }
             catch { }
 
-
+            // v8.0: Accent colors
             color = FetchColorAttribute(n, "accentcolor");
             if (color != Color.Transparent) {
                 AccentColor = color;
@@ -423,13 +426,13 @@ namespace ImageGlass.UI {
                 AccentDarkColor = color;
             }
 
-            // Form icon
+            // v8.0: Form icon
             Logo = LoadThemeImage(dir, n, "logo", 128);
             if (Logo.Image is null) {
                 Logo.Image = Icon.ExtractAssociatedIcon(App.IGExePath).ToBitmap();
             }
 
-            // Show icon on title bar
+            // v8.0: Show icon on title bar
             if (bool.TryParse(n.GetAttribute("isshowtitlebarlogo"), out var showLogo)) {
                 IsShowTitlebarLogo = showLogo;
             }
@@ -643,6 +646,50 @@ namespace ImageGlass.UI {
 
 
         #region PUBLIC STATIC FUNCS
+
+        /// <summary>
+        /// Get all theme packs from default folder and user folder
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<List<Theme>> GetAllThemePacksAsync() {
+            return await Task.Run(GetAllThemePacks).ConfigureAwait(false);
+        }
+
+
+        public static List<Theme> GetAllThemePacks() {
+            var defaultThemeFolder = App.StartUpDir(Dir.Themes);
+            var userThemeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
+
+            // Create theme folder if not exist
+            Directory.CreateDirectory(userThemeFolder);
+
+            var userThemes = Directory.GetDirectories(userThemeFolder);
+            var defaultThemes = Directory.GetDirectories(defaultThemeFolder);
+
+            // merge and distinct all themes
+            var allThemePaths = defaultThemes.ToList();
+            allThemePaths.AddRange(userThemes);
+            allThemePaths = allThemePaths.Distinct().ToList();
+
+            var allThemes = new List<Theme>(allThemePaths.Count);
+
+            foreach (var dir in allThemePaths) {
+                var configFile = Path.Combine(dir, "igtheme.xml");
+
+                if (File.Exists(configFile)) {
+                    var th = new Theme(themeFolderPath: dir);
+
+                    // invalid theme
+                    if (!th.IsValid) {
+                        continue;
+                    }
+
+                    allThemes.Add(th);
+                }
+            }
+
+            return allThemes;
+        }
 
         /// <summary>
         /// Install ImageGlass theme

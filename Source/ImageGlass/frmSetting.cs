@@ -1500,64 +1500,37 @@ namespace ImageGlass {
             if (lvTheme.Items.Count == 0) {
                 SystemRenderer.ApplyTheme(lvTheme);
 
-                RefreshThemeList();
+                _ = RefreshThemeListAsync();
             }
         }
 
-        private async void RefreshThemeList() {
-            var themeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
-
+        private async Task RefreshThemeListAsync() {
             lvTheme.Items.Clear();
-            lvTheme.Items.Add("2017 (Dark)").Tag = "default";
             lvTheme.Enabled = false;
             this.Cursor = Cursors.WaitCursor;
 
-            SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
+            // load all theme packs
+            var lstThemes = await Theme.GetAllThemePacksAsync();
 
-            if (Directory.Exists(themeFolder)) {
-                var lstThemes = new List<UI.Theme>();
+            // add themes to the listview
+            foreach (var th in lstThemes) {
+                var themePath = Path.GetDirectoryName(th.ConfigFilePath);
 
-                await Task.Run(() => {
-                    foreach (var d in Directory.GetDirectories(themeFolder)) {
-                        var configFile = Path.Combine(d, "igtheme.xml");
+                var lvi = new ListViewItem(th.Name) {
+                    // get name of the theme folder
+                    Tag = Path.GetFileName(themePath),
+                    ImageKey = "_blank",
+                    ToolTipText = themePath,
+                };
 
-                        if (File.Exists(configFile)) {
-                            var th = new Theme((int)Configs.ToolbarIconHeight, d);
-
-                            //invalid theme
-                            if (!th.IsValid) {
-                                continue;
-                            }
-
-                            lstThemes.Add(th);
-                        }
-                    }
-                }).ConfigureAwait(true);
-
-                // add themes to the listview
-                foreach (var th in lstThemes) {
-                    var lvi = new ListViewItem(th.Name) {
-                        // folder name of the theme
-                        Tag = Path.GetFileName(Path.GetDirectoryName(th.ConfigFilePath)),
-                        ImageKey = "_blank"
-                    };
-
-                    if (Configs.Theme.ConfigFilePath == th.ConfigFilePath) {
-                        lvi.Selected = true;
-                        lvi.Checked = true;
-                    }
-
-                    lvTheme.Items.Add(lvi);
+                if (Configs.Theme.ConfigFilePath == th.ConfigFilePath) {
+                    lvi.Selected = true;
+                    lvi.Checked = true;
                 }
 
-                //select the default theme
-                if (lvTheme.Items.Count > 0 && lvTheme.SelectedItems.Count == 0) {
-                    lvTheme.Items[0].Selected = true;
-                }
+                lvTheme.Items.Add(lvi);
             }
-            else {
-                Directory.CreateDirectory(themeFolder);
-            }
+
 
             lvTheme.Enabled = true;
             this.Cursor = Cursors.Default;
@@ -1566,7 +1539,7 @@ namespace ImageGlass {
         }
 
         private void btnThemeRefresh_Click(object sender, EventArgs e) {
-            RefreshThemeList();
+            _ = RefreshThemeListAsync();
         }
 
         private void lvTheme_SelectedIndexChanged(object sender, EventArgs e) {
@@ -1577,15 +1550,7 @@ namespace ImageGlass {
                 btnThemeUninstall.Enabled = true;
 
                 var themeName = lvTheme.SelectedItems[0].Tag.ToString();
-                Theme th;
-                if (themeName == "default") {
-                    //btnThemeSaveAs.Enabled = false;
-                    btnThemeUninstall.Enabled = false;
-                    th = new Theme((int)Configs.ToolbarIconHeight);
-                }
-                else {
-                    th = new Theme((int)Configs.ToolbarIconHeight, App.ConfigDir(PathType.Dir, Dir.Themes, themeName));
-                }
+                var th = new Theme((int)Configs.ToolbarIconHeight, App.ConfigDir(PathType.Dir, Dir.Themes, themeName));
 
                 picPreview.BackgroundImage = th.PreviewImage.Image;
 
@@ -1614,10 +1579,10 @@ namespace ImageGlass {
                 Filter = "ImageGlass theme (*.igtheme)|*.igtheme|All files (*.*)|*.*"
             };
             if (o.ShowDialog() == DialogResult.OK && File.Exists(o.FileName)) {
-                var result = UI.Theme.InstallTheme(o.FileName);
+                var result = Theme.InstallTheme(o.FileName);
 
                 if (result == ThemeInstallingResult.SUCCESS) {
-                    RefreshThemeList();
+                    _ = RefreshThemeListAsync();
 
                     MessageBox.Show(Configs.Language.Items[$"{Name}.btnThemeInstall._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -1630,10 +1595,10 @@ namespace ImageGlass {
         private void btnThemeUninstall_Click(object sender, EventArgs e) {
             if (lvTheme.SelectedItems.Count > 0) {
                 var themeName = lvTheme.SelectedItems[0].Tag.ToString();
-                var result = UI.Theme.UninstallTheme(themeName);
+                var result = Theme.UninstallTheme(themeName);
 
                 if (result == ThemeUninstallingResult.SUCCESS) {
-                    RefreshThemeList();
+                    _ = RefreshThemeListAsync();
                 }
                 else if (result == ThemeUninstallingResult.ERROR) {
                     MessageBox.Show(Configs.Language.Items[$"{Name}.btnThemeUninstall._Error"], "", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1658,12 +1623,8 @@ namespace ImageGlass {
                     var themeName = lvTheme.SelectedItems[0].Tag.ToString();
                     var configFilePath = App.ConfigDir(PathType.File, Dir.Themes, themeName, "igtheme.xml");
 
-                    if (!File.Exists(configFilePath)) {
-                        configFilePath = App.StartUpDir(@"DefaultTheme\igtheme.xml");
-                    }
-
                     var themeDir = Path.GetDirectoryName(configFilePath);
-                    var result = UI.Theme.PackTheme(themeDir, s.FileName);
+                    var result = Theme.PackTheme(themeDir, s.FileName);
 
                     if (result == ThemePackingResult.SUCCESS) {
                         MessageBox.Show(string.Format(Configs.Language.Items[$"{Name}.btnThemeSaveAs._Success"], s.FileName), "", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -748,7 +748,7 @@ namespace ImageGlass.Settings {
             #endregion
 
             #region Theme
-            var themeFolderName = Get<string>(nameof(Theme), Dir.DefaultTheme);
+            var themeFolderName = Get<string>(nameof(Theme), Constants.DEFAULT_THEME);
             var th = new Theme((int)ToolbarIconHeight, App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
 
             if (th.IsValid) {
