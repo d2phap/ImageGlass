@@ -19,11 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using ImageGlass.Base;
 using ImageGlass.Library;
+using ImageGlass.Library.WinAPI;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -32,6 +34,8 @@ namespace igcmd {
     public partial class frmFirstLaunch: Form {
         public frmFirstLaunch() {
             InitializeComponent();
+
+            LoadTheme();
         }
 
         private readonly List<Theme> _themeList = new List<Theme>();
@@ -167,6 +171,28 @@ namespace igcmd {
         #endregion
 
         #region Private Functions
+
+        private void LoadTheme() {
+            // load theme colors
+            foreach (var ctr in Helpers.GetAllControls(this, typeof(LinkLabel))) {
+                if (ctr is LinkLabel lnk) {
+                    lnk.LinkColor = lnk.VisitedLinkColor = Configs.Theme.AccentColor;
+                }
+            }
+
+            picLogo.Image = Configs.Theme.Logo.Image;
+
+            // Icon theming
+            if (!Configs.Theme.IsShowTitlebarLogo) {
+                this.Icon = Icon.FromHandle(new Bitmap(48, 48).GetHicon());
+                FormIcon.SetTaskbarIcon(this, Configs.Theme.Logo.Image.GetHicon());
+            }
+            else {
+                this.Icon = Icon.FromHandle(Configs.Theme.Logo.Image.GetHicon());
+            }
+        }
+
+
         /// <summary>
         /// Load language list
         /// </summary>
