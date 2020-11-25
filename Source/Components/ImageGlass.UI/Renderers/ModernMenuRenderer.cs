@@ -167,7 +167,7 @@ namespace ImageGlass.UI.Renderers {
     }
 
     public class ModernColors: ProfessionalColorTable {
-        public override Color MenuItemSelected => theme.AccentColor;
+        public override Color MenuItemSelected => theme.MenuBackgroundHoverColor;
         public override Color MenuBorder => Color.Transparent;
         public override Color MenuItemBorder => Color.Transparent;
 

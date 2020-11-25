@@ -32,7 +32,8 @@ using System.Windows.Forms;
 using System.Xml;
 
 namespace ImageGlass.UI {
-    public class Theme {
+    public partial class Theme {
+
 
         #region PUBLIC PROPERTIES
 
@@ -143,6 +144,11 @@ namespace ImageGlass.UI {
         public Color MenuBackgroundColor { get; set; } = Color.White;
 
         /// <summary>
+        /// Menu background hover color
+        /// </summary>
+        public Color MenuBackgroundHoverColor { get; set; } = Color.FromArgb(35, 0, 0, 0);
+
+        /// <summary>
         /// Menu text color
         /// </summary>
         public Color MenuTextColor { get; set; } = Color.Black;
@@ -150,7 +156,7 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Menu text color on hover
         /// </summary>
-        public Color MenuTextHoverColor { get; set; } = Color.White;
+        public Color MenuTextHoverColor { get; set; } = Color.Black;
 
         /// <summary>
         /// The multiplier which impacts the size of the navigation arrows.
@@ -341,6 +347,7 @@ namespace ImageGlass.UI {
                 this.IsValid = false;
             }
 
+
             #region Theme <Info>
             try { Name = n.GetAttribute("name"); }
             catch { }
@@ -359,6 +366,7 @@ namespace ImageGlass.UI {
             try { Compatibility = n.GetAttribute("compatibility"); }
             catch { }
             #endregion
+
 
             #region Theme <main>
             PreviewImage = LoadThemeImage(dir, n, "preview", iconHeight);
@@ -392,6 +400,11 @@ namespace ImageGlass.UI {
             color = FetchColorAttribute(n, "menubackgroundcolor");
             if (color != Color.Transparent) {
                 MenuBackgroundColor = color;
+            }
+
+            color = FetchColorAttribute(n, "menubackgroundhovercolor");
+            if (color != Color.Transparent) {
+                MenuBackgroundHoverColor = color;
             }
 
             color = FetchColorAttribute(n, "menutextcolor");
@@ -439,7 +452,7 @@ namespace ImageGlass.UI {
             // v8.0: Form icon
             Logo = LoadThemeImage(dir, n, "logo", 128);
             if (Logo.Image is null) {
-                Logo.Image = Icon.ExtractAssociatedIcon(App.IGExePath).ToBitmap();
+                Logo.Image = Properties.Resources.DefaultLogo;
             }
 
             // v8.0: Show icon on title bar
@@ -558,7 +571,9 @@ namespace ImageGlass.UI {
             n.SetAttribute("backcolor", ConvertColorToHEX(BackgroundColor, true));
             n.SetAttribute("statuscolor", ConvertColorToHEX(TextInfoColor, true));
             n.SetAttribute("menubackgroundcolor", ConvertColorToHEX(this.MenuBackgroundColor, true));
+            n.SetAttribute("menubackgroundhovercolor", ConvertColorToHEX(this.MenuBackgroundHoverColor, true));
             n.SetAttribute("menutextcolor", ConvertColorToHEX(this.MenuTextColor, true));
+            n.SetAttribute("menutexthovercolor", ConvertColorToHEX(this.MenuTextHoverColor, true));
 
             n.SetAttribute("accentcolor", ConvertColorToHEX(this.AccentColor, true));
             n.SetAttribute("accentlightcolor", ConvertColorToHEX(this.AccentLightColor, true));
