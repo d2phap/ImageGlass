@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
-using ImageGlass.Library.WinAPI;
 using ImageGlass.Settings;
 using System;
 using System.Diagnostics;
@@ -40,23 +39,11 @@ namespace ImageGlass {
             lblAppName.ForeColor = Configs.Theme.AccentDarkColor;
             lblCodeName.ForeColor = Configs.Theme.AccentColor;
 
-            foreach (var ctr in Helpers.GetAllControls(this, typeof(LinkLabel))) {
-                if (ctr is LinkLabel lnk) {
-                    lnk.LinkColor = lnk.VisitedLinkColor = Configs.Theme.AccentColor;
-                }
-            }
-
             // Logo
             picLogo.Image = Configs.Theme.Logo.Image;
 
-            // Icon theming
-            if (!Configs.Theme.IsShowTitlebarLogo) {
-                this.Icon = Icon.FromHandle(new Bitmap(48, 48).GetHicon());
-                FormIcon.SetTaskbarIcon(this, Configs.Theme.Logo.Image.GetHicon());
-            }
-            else {
-                this.Icon = Icon.FromHandle(Configs.Theme.Logo.Image.GetHicon());
-            }
+            // Apply theme
+            Configs.ApplyFormTheme(this, Configs.Theme);
         }
 
 

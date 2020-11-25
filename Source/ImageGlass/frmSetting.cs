@@ -20,7 +20,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Library;
 using ImageGlass.Library.Image;
-using ImageGlass.Library.WinAPI;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.UI.Renderers;
@@ -30,7 +29,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -45,28 +43,10 @@ namespace ImageGlass {
             // Filter user input for zoom levels
             txtZoomLevels.KeyPress += TxtZoomLevels_KeyPress;
 
-
             // Apply theme
-            LoadTheme();
+            Configs.ApplyFormTheme(this, Configs.Theme);
         }
 
-        private void LoadTheme() {
-            // load theme colors
-            foreach (var ctr in Helpers.GetAllControls(this, typeof(LinkLabel))) {
-                if (ctr is LinkLabel lnk) {
-                    lnk.LinkColor = lnk.VisitedLinkColor = Configs.Theme.AccentColor;
-                }
-            }
-
-            // Icon theming
-            if (!Configs.Theme.IsShowTitlebarLogo) {
-                this.Icon = Icon.FromHandle(new Bitmap(48, 48).GetHicon());
-                FormIcon.SetTaskbarIcon(this, Configs.Theme.Logo.Image.GetHicon());
-            }
-            else {
-                this.Icon = Icon.FromHandle(Configs.Theme.Logo.Image.GetHicon());
-            }
-        }
 
         #region PROPERTIES
         private readonly Color M_COLOR_MENU_SELECTED = Color.FromArgb(255, 198, 203, 204);
@@ -1655,6 +1635,9 @@ namespace ImageGlass {
                         Configs.Theme.BackgroundColor;
 
                     Local.ForceUpdateActions |= ForceUpdateActions.THEME;
+
+                    // Apply theme
+                    Configs.ApplyFormTheme(this, Configs.Theme);
 
                     MessageBox.Show(Configs.Language.Items[$"{Name}.btnThemeApply._Success"], "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

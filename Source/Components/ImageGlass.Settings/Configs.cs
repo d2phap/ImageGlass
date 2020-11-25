@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Library;
 using ImageGlass.Library.FileAssociations;
+using ImageGlass.Library.WinAPI;
 using ImageGlass.UI;
 using Microsoft.Win32;
 using System;
@@ -1123,6 +1124,30 @@ namespace ImageGlass.Settings {
         }
 
         #endregion
+
+
+        /// <summary>
+        /// Apply theme colors and logo to form
+        /// </summary>
+        /// <param name="frm"></param>
+        /// <param name="th"></param>
+        public static void ApplyFormTheme(Form frm, Theme th) {
+            // load theme colors
+            foreach (var ctr in Helpers.GetAllControls(frm, typeof(LinkLabel))) {
+                if (ctr is LinkLabel lnk) {
+                    lnk.LinkColor = lnk.VisitedLinkColor = th.AccentColor;
+                }
+            }
+
+            // Icon theming
+            if (!th.IsShowTitlebarLogo) {
+                frm.Icon = Icon.FromHandle(new Bitmap(64, 64).GetHicon());
+                FormIcon.SetTaskbarIcon(frm, th.Logo.Image.GetHicon());
+            }
+            else {
+                frm.Icon = Icon.FromHandle(th.Logo.Image.GetHicon());
+            }
+        }
 
         #endregion
 

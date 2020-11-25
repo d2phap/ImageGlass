@@ -39,7 +39,8 @@ namespace igcmd {
             InstallThemePacks();
             LoadThemeList();
 
-            LoadTheme();
+            // first apply current theme
+            ApplyTheme(Configs.Theme);
         }
 
         private readonly List<Theme> _themeList = new List<Theme>();
@@ -151,7 +152,7 @@ namespace igcmd {
         }
 
         private void cmbTheme_SelectedIndexChanged(object sender, EventArgs e) {
-            var selectedTheme = new Theme((int)Configs.ToolbarIconHeight);
+            var selectedTheme = new Theme();
 
             try {
                 selectedTheme = this._themeList[cmbTheme.SelectedIndex];
@@ -169,27 +170,6 @@ namespace igcmd {
         #endregion
 
         #region Private Functions
-
-        private void LoadTheme() {
-            // load theme colors
-            foreach (var ctr in Helpers.GetAllControls(this, typeof(LinkLabel))) {
-                if (ctr is LinkLabel lnk) {
-                    lnk.LinkColor = lnk.VisitedLinkColor = Configs.Theme.AccentColor;
-                }
-            }
-
-            picLogo.Image = Configs.Theme.Logo.Image;
-
-            // Icon theming
-            if (!Configs.Theme.IsShowTitlebarLogo) {
-                this.Icon = Icon.FromHandle(new Bitmap(48, 48).GetHicon());
-                FormIcon.SetTaskbarIcon(this, Configs.Theme.Logo.Image.GetHicon());
-            }
-            else {
-                this.Icon = Icon.FromHandle(Configs.Theme.Logo.Image.GetHicon());
-            }
-        }
-
 
         /// <summary>
         /// Load language list
@@ -263,9 +243,10 @@ namespace igcmd {
         private void LoadThemeList() {
             cmbTheme.Items.Clear();
 
-            var allThemes = Theme.GetAllThemePacks();
+            _themeList.Clear();
+            _themeList.AddRange(Theme.GetAllThemePacks());
 
-            foreach (var th in allThemes) {
+            foreach (var th in _themeList) {
                 cmbTheme.Items.Add(th.Name);
 
                 if (Configs.Theme.FolderName.ToUpper().CompareTo(th.FolderName.ToUpper()) == 0) {
@@ -293,6 +274,12 @@ namespace igcmd {
                 this.lblTheme.ForeColor =
                 this.lblDefaultApp.ForeColor =
                 Theme.InvertBlackAndWhiteColor(th.BackgroundColor);
+
+            // Logo
+            picLogo.Image = th.Logo.Image;
+
+            // apply form theme
+            Configs.ApplyFormTheme(this, th);
         }
 
         /// <summary>

@@ -22,7 +22,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using ImageGlass.Base;
 using ImageGlass.Library.Image;
 using ImageGlass.Settings;
 using ImageGlass.UI.Renderers;
@@ -32,20 +31,8 @@ namespace ImageGlass {
         public FrmExifTool() {
             InitializeComponent();
 
-            // Load theme
-            LoadTheme();
-        }
-
-        private void LoadTheme() {
-            // load theme colors
-            foreach (var ctr in Helpers.GetAllControls(this, typeof(LinkLabel))) {
-                if (ctr is LinkLabel lnk) {
-                    lnk.LinkColor = lnk.VisitedLinkColor = Configs.Theme.AccentColor;
-                }
-            }
-
-            // Logo
-            this.Icon = Icon.FromHandle(Configs.Theme.Logo.Image.GetHicon());
+            // Apply theme
+            Configs.ApplyFormTheme(this, Configs.Theme);
         }
 
 
