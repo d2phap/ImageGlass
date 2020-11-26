@@ -19,11 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using ImageGlass.Base;
 using ImageGlass.Library;
+using ImageGlass.Library.WinAPI;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -32,6 +34,13 @@ namespace igcmd {
     public partial class frmFirstLaunch: Form {
         public frmFirstLaunch() {
             InitializeComponent();
+
+            // Extract & install Theme packs
+            InstallThemePacks();
+            LoadThemeList();
+
+            // first apply current theme
+            ApplyTheme(Configs.Theme);
         }
 
         private readonly List<Theme> _themeList = new List<Theme>();
@@ -48,24 +57,18 @@ namespace igcmd {
             LoadLanguageList();
             ApplyLanguage(_lang);
 
-            // Extract & install Theme packs
-            InstallThemePacks();
-
-            // Load theme list
-            LoadThemeList();
-
             // Don't run again
             Configs.FirstLaunchVersion = Constants.FIRST_LAUNCH_VERSION;
         }
 
         private void tab1_SelectedIndexChanged(object sender, EventArgs e) {
-            lblStepNumber.Text = string.Format(this._lang.Items[$"{this.Name}.lblStepNumber"], tab1.SelectedIndex + 1, tab1.TabCount);
+            lblStepNumber.Text = string.Format(this._lang.Items[$"{Name}.lblStepNumber"], tab1.SelectedIndex + 1, tab1.TabCount);
 
             if (tab1.SelectedIndex == tab1.TabCount - 1) {
-                btnNextStep.Text = this._lang.Items[$"{this.Name}.btnNextStep._Done"];
+                btnNextStep.Text = _lang.Items[$"{Name}.btnNextStep._Done"];
             }
             else {
-                btnNextStep.Text = this._lang.Items[$"{this.Name}.btnNextStep"];
+                btnNextStep.Text = _lang.Items[$"{Name}.btnNextStep"];
             }
         }
 
@@ -149,7 +152,7 @@ namespace igcmd {
         }
 
         private void cmbTheme_SelectedIndexChanged(object sender, EventArgs e) {
-            var selectedTheme = new Theme((int)Configs.ToolbarIconHeight);
+            var selectedTheme = new Theme();
 
             try {
                 selectedTheme = this._themeList[cmbTheme.SelectedIndex];
@@ -167,6 +170,7 @@ namespace igcmd {
         #endregion
 
         #region Private Functions
+
         /// <summary>
         /// Load language list
         /// </summary>
@@ -237,38 +241,17 @@ namespace igcmd {
         /// Load theme list
         /// </summary>
         private void LoadThemeList() {
-            //add default theme
-            var defaultTheme = new Theme((int)Configs.ToolbarIconHeight, App.StartUpDir(Dir.DefaultTheme));
-            _themeList.Add(defaultTheme);
             cmbTheme.Items.Clear();
-            cmbTheme.Items.Add(defaultTheme.Name);
-            cmbTheme.SelectedIndex = 0;
 
-            var themeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
+            _themeList.Clear();
+            _themeList.AddRange(Theme.GetAllThemePacks());
 
-            if (Directory.Exists(themeFolder)) {
-                foreach (var d in Directory.GetDirectories(themeFolder)) {
-                    var configFile = Path.Combine(d, "igtheme.xml");
+            foreach (var th in _themeList) {
+                cmbTheme.Items.Add(th.Name);
 
-                    if (File.Exists(configFile)) {
-                        var th = new Theme((int)Configs.ToolbarIconHeight, d);
-
-                        // invalid theme
-                        if (!th.IsValid) {
-                            continue;
-                        }
-
-                        _themeList.Add(th);
-                        cmbTheme.Items.Add(th.Name);
-
-                        if (Configs.Theme.FolderName.ToLower().CompareTo(th.FolderName.ToLower()) == 0) {
-                            cmbTheme.SelectedIndex = cmbTheme.Items.Count - 1;
-                        }
-                    }
+                if (Configs.Theme.FolderName.ToUpper().CompareTo(th.FolderName.ToUpper()) == 0) {
+                    cmbTheme.SelectedIndex = cmbTheme.Items.Count - 1;
                 }
-            }
-            else {
-                Directory.CreateDirectory(themeFolder);
             }
         }
 
@@ -291,13 +274,19 @@ namespace igcmd {
                 this.lblTheme.ForeColor =
                 this.lblDefaultApp.ForeColor =
                 Theme.InvertBlackAndWhiteColor(th.BackgroundColor);
+
+            // Logo
+            picLogo.Image = th.Logo.Image;
+
+            // apply form theme
+            Configs.ApplyFormTheme(this, th);
         }
 
         /// <summary>
         /// Extract and install theme packs
         /// </summary>
         private void InstallThemePacks() {
-            var themeFiles = Directory.GetFiles(App.StartUpDir(Dir.DefaultTheme), "*.igtheme");
+            var themeFiles = Directory.GetFiles(App.StartUpDir(Dir.Themes), "*.igtheme");
 
             foreach (var file in themeFiles) {
                 Theme.InstallTheme(file);

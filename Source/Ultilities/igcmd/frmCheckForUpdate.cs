@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
+using ImageGlass.Library.WinAPI;
 using ImageGlass.Services;
 using ImageGlass.Settings;
 using System;
@@ -35,6 +36,24 @@ namespace igcmd {
 
         public frmCheckForUpdate() {
             InitializeComponent();
+
+            LoadTheme();
+        }
+
+        private void LoadTheme() {
+            // load theme colors
+            lblStatus.ForeColor =
+                lnkUpdateReadMore.LinkColor =
+                lnkUpdateReadMore.VisitedLinkColor = Configs.Theme.AccentColor;
+
+            // Icon theming
+            if (!Configs.Theme.IsShowTitlebarLogo) {
+                this.Icon = Icon.FromHandle(new Bitmap(48, 48).GetHicon());
+                FormIcon.SetTaskbarIcon(this, Configs.Theme.Logo.Image.GetHicon());
+            }
+            else {
+                this.Icon = Icon.FromHandle(Configs.Theme.Logo.Image.GetHicon());
+            }
         }
 
         private void CheckForUpdate() {
@@ -81,7 +100,7 @@ namespace igcmd {
                     }
                     else {
                         lblStatus.Text = "ImageGlass is up to date!";
-                        lblStatus.ForeColor = Color.FromArgb(23, 131, 238);
+                        lblStatus.ForeColor = Configs.Theme.AccentColor;
                     }
                     picStatus.Image = igcmd.Properties.Resources.warning;
                     btnDownload.Enabled = true;
@@ -90,7 +109,7 @@ namespace igcmd {
                 }
                 else {
                     lblStatus.Text = "ImageGlass is up to date!";
-                    lblStatus.ForeColor = Color.FromArgb(23, 131, 238);
+                    lblStatus.ForeColor = Configs.Theme.AccentColor;
                     btnDownload.Enabled = false;
                     picStatus.Image = igcmd.Properties.Resources.ok;
                 }

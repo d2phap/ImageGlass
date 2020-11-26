@@ -27,7 +27,25 @@ using System.Windows.Forms;
 
 namespace ImageGlass {
     public partial class frmAbout: Form {
-        public frmAbout() => InitializeComponent();
+        public frmAbout() {
+            InitializeComponent();
+
+            // Apply theme
+            LoadTheme();
+        }
+
+        private void LoadTheme() {
+            // load theme colors
+            lblAppName.ForeColor = Configs.Theme.AccentDarkColor;
+            lblCodeName.ForeColor = Configs.Theme.AccentColor;
+
+            // Logo
+            picLogo.Image = Configs.Theme.Logo.Image;
+
+            // Apply theme
+            Configs.ApplyFormTheme(this, Configs.Theme);
+        }
+
 
         private readonly Color M_COLOR_MENU_SELECTED = Color.FromArgb(255, 198, 203, 204);
         private readonly Color M_COLOR_MENU_ACTIVE = Color.FromArgb(255, 145, 150, 153);
@@ -127,14 +145,14 @@ namespace ImageGlass {
         #region IMAGEGLASS INFORMATION PANEL
         private void lnkEmail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             try {
-                Process.Start("mailto:d2phap@gmail.com");
+                Process.Start("mailto:phap@imageglass.org");
             }
             catch { }
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             try {
-                Process.Start("skype:d2phap");
+                Process.Start("https://twitter.com/duongdieuphap");
             }
             catch { }
         }
@@ -198,9 +216,7 @@ namespace ImageGlass {
 
         private void btnDonation_Click(object sender, EventArgs e) {
             try {
-                var version = App.Version;
-
-                Process.Start("https://imageglass.org/source#donation?utm_source=app_" + version + "&utm_medium=app_click&utm_campaign=app_donation");
+                Process.Start("https://imageglass.org/source#donation?utm_source=app_" + App.Version + "&utm_medium=app_click&utm_campaign=app_donation");
             }
             catch { }
         }
@@ -212,7 +228,12 @@ namespace ImageGlass {
             catch { }
         }
 
-        private void tb1_Paint(object sender, PaintEventArgs e) {
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            try {
+                Process.Start("https://www.patreon.com/d2phap?utm_source=app_" + App.Version + "&utm_medium=app_click&utm_campaign=app_patreon");
+            }
+            catch { }
         }
     }
 }

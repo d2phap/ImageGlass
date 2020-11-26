@@ -113,8 +113,8 @@
             this.mnuMainAlwaysOnTop = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainTools = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainColorPicker = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainPageNav = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainCrop = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainPageNav = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExifTool = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -695,7 +695,7 @@
             this.mnuMainChannels.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainChannels.Name = "mnuMainChannels";
             this.mnuMainChannels.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainChannels.ShortcutKeyDisplayString = "Alt+C";
+            this.mnuMainChannels.ShortcutKeyDisplayString = "Shift+C";
             this.mnuMainChannels.Size = new System.Drawing.Size(418, 31);
             this.mnuMainChannels.Text = "[Channels]";
             this.mnuMainChannels.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
@@ -706,7 +706,7 @@
             this.mnuLoadingOrder.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuLoadingOrder.Name = "mnuLoadingOrder";
             this.mnuLoadingOrder.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuLoadingOrder.ShortcutKeyDisplayString = "Alt+O";
+            this.mnuLoadingOrder.ShortcutKeyDisplayString = "Shift+O";
             this.mnuLoadingOrder.Size = new System.Drawing.Size(418, 31);
             this.mnuLoadingOrder.Text = "[Loading orders]";
             this.mnuLoadingOrder.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
@@ -1173,18 +1173,6 @@
             this.mnuMainColorPicker.Text = "[Color picker]";
             this.mnuMainColorPicker.Click += new System.EventHandler(this.mnuMainColorPicker_Click);
             // 
-            // mnuMainPageNav
-            // 
-            this.mnuMainPageNav.CheckOnClick = true;
-            this.mnuMainPageNav.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainPageNav.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainPageNav.Name = "mnuMainPageNav";
-            this.mnuMainPageNav.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainPageNav.ShortcutKeyDisplayString = "P";
-            this.mnuMainPageNav.Size = new System.Drawing.Size(256, 31);
-            this.mnuMainPageNav.Text = "[Page navigation]";
-            this.mnuMainPageNav.Click += new System.EventHandler(this.mnuMainPageNav_Click);
-            // 
             // mnuMainCrop
             // 
             this.mnuMainCrop.CheckOnClick = true;
@@ -1196,6 +1184,18 @@
             this.mnuMainCrop.Size = new System.Drawing.Size(256, 31);
             this.mnuMainCrop.Text = "[Cropping]";
             this.mnuMainCrop.Click += new System.EventHandler(this.mnuMainCrop_Click);
+            // 
+            // mnuMainPageNav
+            // 
+            this.mnuMainPageNav.CheckOnClick = true;
+            this.mnuMainPageNav.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainPageNav.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainPageNav.Name = "mnuMainPageNav";
+            this.mnuMainPageNav.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainPageNav.ShortcutKeyDisplayString = "P";
+            this.mnuMainPageNav.Size = new System.Drawing.Size(256, 31);
+            this.mnuMainPageNav.Text = "[Page navigation]";
+            this.mnuMainPageNav.Click += new System.EventHandler(this.mnuMainPageNav_Click);
             // 
             // mnuExifTool
             // 

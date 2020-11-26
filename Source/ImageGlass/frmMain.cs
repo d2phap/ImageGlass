@@ -2413,6 +2413,9 @@ namespace ImageGlass {
         private void ApplyTheme(bool changeBackground = false) {
             var th = Configs.Theme;
 
+            // Apply theme
+            Configs.ApplyFormTheme(this, Configs.Theme);
+
             // Remove white line under tool strip
             toolMain.Renderer = new UI.Renderers.ToolStripRenderer(th.ToolbarBackgroundColor, th.TextInfoColor);
 
@@ -2438,7 +2441,7 @@ namespace ImageGlass {
             // Modern UI menu renderer
             mnuMain.Renderer =
                 mnuShortcut.Renderer =
-                mnuContext.Renderer = new ModernMenuRenderer(th.MenuBackgroundColor, th.MenuTextColor);
+                mnuContext.Renderer = new ModernMenuRenderer(th);
 
             // <toolbar_icon>
             LoadToolbarIcons();

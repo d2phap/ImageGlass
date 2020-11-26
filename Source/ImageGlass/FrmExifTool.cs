@@ -30,9 +30,13 @@ namespace ImageGlass {
     public partial class FrmExifTool: Form {
         public FrmExifTool() {
             InitializeComponent();
+
+            // Apply theme
+            Configs.ApplyFormTheme(this, Configs.Theme);
         }
 
-        private ExifToolWrapper exifTool = new ExifToolWrapper(Configs.ExifToolExePath);
+
+        private readonly ExifToolWrapper exifTool = new ExifToolWrapper(Configs.ExifToolExePath);
 
 
         #region Form events

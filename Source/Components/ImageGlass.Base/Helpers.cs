@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace ImageGlass.Base {
     /// <summary>
@@ -134,6 +135,21 @@ namespace ImageGlass.Base {
                     return true;
             }
             return false;
+        }
+
+
+        /// <summary>
+        /// Get all controls by type
+        /// </summary>
+        /// <param name="control"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static IEnumerable<Control> GetAllControls(Control control, Type type) {
+            var controls = control.Controls.Cast<Control>();
+
+            return controls.SelectMany(ctrl => GetAllControls(ctrl, type))
+                                      .Concat(controls)
+                                      .Where(c => c.GetType() == type);
         }
 
 

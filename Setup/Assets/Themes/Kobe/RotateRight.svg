@@ -17,8 +17,8 @@
     <path stroke="#fff" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" d="m-0.926086,11.071304c0,9.17458 9.18571,9.18571 9.25057,9.12783" id="svg_21"/>
    </g>
    <g stroke="null" transform="matrix(-0.941285494665065,0.12339636126420357,0.12464880894965683,0.9318276358288837,18.752060126106485,-1.0093617917575222) " id="svg_3">
-    <line stroke="#fff" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" x1="2.755373" y1="6.427297" x2="7.13894" y2="6.427297" id="svg_23"/>
-    <line stroke="#fff" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" x1="3.094862" y1="6.748917" x2="3.094862" y2="2.365351" id="svg_26"/>
+    <line stroke="#fff" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" x1="2.755373" y1="6.427297" x2="7.13894" y2="6.427297" id="svg_23" stroke-linejoin="null" stroke-linecap="null"/>
+    <line stroke="#fff" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" x1="3.094862" y1="6.748917" x2="3.094862" y2="2.365351" id="svg_26" stroke-linejoin="null" stroke-linecap="null"/>
    </g>
   </g>
  </g>

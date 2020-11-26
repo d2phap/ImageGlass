@@ -20,16 +20,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using Ionic.Zip;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
 namespace ImageGlass.UI {
-    public class Theme {
+    public partial class Theme {
+
+
         #region PUBLIC PROPERTIES
 
         /// <summary>
@@ -48,6 +53,7 @@ namespace ImageGlass.UI {
         public bool IsValid { get; internal set; }
 
         #endregion
+
 
         #region THEME NODE PROPERTIES
 
@@ -94,6 +100,7 @@ namespace ImageGlass.UI {
         public string Compatibility { get; set; } = string.Empty;
         #endregion
 
+
         #region <MAIN> node
 
         /// <summary>
@@ -137,16 +144,54 @@ namespace ImageGlass.UI {
         public Color MenuBackgroundColor { get; set; } = Color.White;
 
         /// <summary>
+        /// Menu background hover color
+        /// </summary>
+        public Color MenuBackgroundHoverColor { get; set; } = Color.FromArgb(35, 0, 0, 0);
+
+        /// <summary>
         /// Menu text color
         /// </summary>
         public Color MenuTextColor { get; set; } = Color.Black;
+
+        /// <summary>
+        /// Menu text color on hover
+        /// </summary>
+        public Color MenuTextHoverColor { get; set; } = Color.Black;
 
         /// <summary>
         /// The multiplier which impacts the size of the navigation arrows.
         /// </summary>
         public double NavArrowMultiplier { get; set; } = 2.0;
 
+
+        /// <summary>
+        /// The accent color
+        /// </summary>
+        public Color AccentColor { get; set; } = Color.FromArgb(255, 0, 125, 208);
+
+        /// <summary>
+        /// The light accent color
+        /// </summary>
+        public Color AccentLightColor { get; set; } = Color.FromArgb(255, 0, 161, 225);
+
+        /// <summary>
+        /// The dark accent color
+        /// </summary>
+        public Color AccentDarkColor { get; set; } = Color.FromArgb(255, 0, 75, 150);
+
+        /// <summary>
+        /// The app logo
+        /// </summary>
+        public ThemeImage Logo { get; set; } = new ThemeImage();
+
+
+        /// <summary>
+        /// Show or hide logo on title bar of window
+        /// </summary>
+        public bool IsShowTitlebarLogo { get; set; } = true;
+
         #endregion
+
 
         #region <TOOLBAR_ICON> node
 
@@ -155,6 +200,7 @@ namespace ImageGlass.UI {
         /// </summary>
         public ThemeIconCollection ToolbarIcons { get; set; } = new ThemeIconCollection();
         #endregion
+
 
         #region Navigation arrows
         /// <summary>
@@ -169,14 +215,17 @@ namespace ImageGlass.UI {
 
         #endregion
 
+
         #endregion
+
 
         /// <summary>
         /// Initiate theme object with configuration file (Version 1.5+)
         /// </summary>
         /// <param name="iconHeight">The height of toolbar icons</param>
         /// <param name="themeFolderPath">The absolute path of theme folder.</param>
-        public Theme(int iconHeight, string themeFolderPath = "") => IsValid = LoadTheme(iconHeight, themeFolderPath);
+        public Theme(int iconHeight = Constants.DEFAULT_TOOLBAR_ICON_HEIGHT, string themeFolderPath = "") => IsValid = LoadTheme(iconHeight, themeFolderPath);
+
 
         #region PUBLIC CLASS FUNCS
 
@@ -192,9 +241,8 @@ namespace ImageGlass.UI {
             try {
                 var attrib = n.GetAttribute(attribname);
 
-                if (string.IsNullOrEmpty(attrib)) // KBR 20180827 avoid throwing exception
-{
-                    return new ThemeImage(""); // KBR 20180827 code in frmMain assumes not null
+                if (string.IsNullOrEmpty(attrib)) {
+                    return new ThemeImage("");
                 }
 
                 var imgFile = Path.Combine(dir, attrib);
@@ -206,7 +254,7 @@ namespace ImageGlass.UI {
                 return new ThemeImage(imgFile);
             }
             catch {
-                return new ThemeImage(""); // KBR 20180827 code in frmMain assumes not null
+                return new ThemeImage("");
             }
         }
 
@@ -250,7 +298,7 @@ namespace ImageGlass.UI {
             ToolbarIcons.ViewFirstImage.Refresh(iconHeight);
             ToolbarIcons.ViewLastImage.Refresh(iconHeight);
 
-            #region Naviagtion arrows (derived from toolbar)
+            #region Navigation arrows (derived from toolbar)
 
             var arrowHeight = (int)(DPIScaling.Transform(Constants.DEFAULT_TOOLBAR_ICON_HEIGHT) * NavArrowMultiplier);
 
@@ -276,7 +324,7 @@ namespace ImageGlass.UI {
             var configFilePath = Path.Combine(themeFolderPath, "igtheme.xml");
 
             if (!File.Exists(configFilePath)) {
-                configFilePath = App.StartUpDir(Dir.DefaultTheme, "igtheme.xml");
+                configFilePath = App.StartUpDir(Dir.Themes, Constants.DEFAULT_THEME, "igtheme.xml");
             }
 
             this.ConfigFilePath = configFilePath;
@@ -299,6 +347,7 @@ namespace ImageGlass.UI {
                 this.IsValid = false;
             }
 
+
             #region Theme <Info>
             try { Name = n.GetAttribute("name"); }
             catch { }
@@ -317,6 +366,7 @@ namespace ImageGlass.UI {
             try { Compatibility = n.GetAttribute("compatibility"); }
             catch { }
             #endregion
+
 
             #region Theme <main>
             PreviewImage = LoadThemeImage(dir, n, "preview", iconHeight);
@@ -352,9 +402,19 @@ namespace ImageGlass.UI {
                 MenuBackgroundColor = color;
             }
 
+            color = FetchColorAttribute(n, "menubackgroundhovercolor");
+            if (color != Color.Transparent) {
+                MenuBackgroundHoverColor = color;
+            }
+
             color = FetchColorAttribute(n, "menutextcolor");
             if (color != Color.Transparent) {
                 MenuTextColor = color;
+            }
+
+            color = FetchColorAttribute(n, "menutexthovercolor");
+            if (color != Color.Transparent) {
+                MenuTextHoverColor = color;
             }
 
             // For 7.6: add ability to control the size of the navigation arrows
@@ -373,7 +433,35 @@ namespace ImageGlass.UI {
             }
             catch { }
 
+            // v8.0: Accent colors
+            color = FetchColorAttribute(n, "accentcolor");
+            if (color != Color.Transparent) {
+                AccentColor = color;
+            }
+
+            color = FetchColorAttribute(n, "accentlightcolor");
+            if (color != Color.Transparent) {
+                AccentLightColor = color;
+            }
+
+            color = FetchColorAttribute(n, "accentdarkcolor");
+            if (color != Color.Transparent) {
+                AccentDarkColor = color;
+            }
+
+            // v8.0: Form icon
+            Logo = LoadThemeImage(dir, n, "logo", 128);
+            if (Logo.Image is null) {
+                Logo.Image = Properties.Resources.DefaultLogo;
+            }
+
+            // v8.0: Show icon on title bar
+            if (bool.TryParse(n.GetAttribute("isshowtitlebarlogo"), out var showLogo)) {
+                IsShowTitlebarLogo = showLogo;
+            }
+
             #endregion
+
 
             #region Theme <toolbar_icon>
             n = (XmlElement)nType.SelectNodes("toolbar_icon")[0]; //<toolbar_icon>
@@ -414,6 +502,7 @@ namespace ImageGlass.UI {
             ToolbarIcons.ViewLastImage = LoadThemeImage(dir, n, "golast", iconHeight);
             #endregion
 
+
             #region Arrow cursors (derived from toolbar)
 
             var arrowHeight = (int)(DPIScaling.Transform(iconHeight) * NavArrowMultiplier);
@@ -426,13 +515,14 @@ namespace ImageGlass.UI {
 
             #endregion
 
+
             this.IsValid = true;
             return this.IsValid;
 
 
             // Fetch a color attribute value from the theme config file.
             // Returns: a Color value if valid; Color.Transparent if an error
-            Color FetchColorAttribute(XmlElement xmlElement, string attribute) {
+            static Color FetchColorAttribute(XmlElement xmlElement, string attribute) {
                 try {
                     var colorString = xmlElement.GetAttribute(attribute);
 
@@ -481,7 +571,14 @@ namespace ImageGlass.UI {
             n.SetAttribute("backcolor", ConvertColorToHEX(BackgroundColor, true));
             n.SetAttribute("statuscolor", ConvertColorToHEX(TextInfoColor, true));
             n.SetAttribute("menubackgroundcolor", ConvertColorToHEX(this.MenuBackgroundColor, true));
+            n.SetAttribute("menubackgroundhovercolor", ConvertColorToHEX(this.MenuBackgroundHoverColor, true));
             n.SetAttribute("menutextcolor", ConvertColorToHEX(this.MenuTextColor, true));
+            n.SetAttribute("menutexthovercolor", ConvertColorToHEX(this.MenuTextHoverColor, true));
+
+            n.SetAttribute("accentcolor", ConvertColorToHEX(this.AccentColor, true));
+            n.SetAttribute("accentlightcolor", ConvertColorToHEX(this.AccentLightColor, true));
+            n.SetAttribute("accentdarkcolor", ConvertColorToHEX(this.AccentDarkColor, true));
+            n.SetAttribute("logo", Path.GetFileName(Logo.Filename));
             nType.AppendChild(n);
 
             n = doc.CreateElement("toolbar_icon");// <toolbar_icon>
@@ -537,6 +634,7 @@ namespace ImageGlass.UI {
 
         #endregion
 
+
         #region PRIVATE STATIC FUNCS
         private static ThemeInstallingResult _extractThemeResult = ThemeInstallingResult.UNKNOWN;
 
@@ -544,11 +642,10 @@ namespace ImageGlass.UI {
             _extractThemeResult = ThemeInstallingResult.UNKNOWN;
 
             try {
-                using (var z = new ZipFile(themePath, Encoding.UTF8)) {
-                    z.ExtractProgress += z_ExtractProgress;
-                    z.ZipError += z_ZipError;
-                    z.ExtractAll(dir, ExtractExistingFileAction.OverwriteSilently);
-                }
+                using var z = new ZipFile(themePath, Encoding.UTF8);
+                z.ExtractProgress += z_ExtractProgress;
+                z.ZipError += z_ZipError;
+                z.ExtractAll(dir, ExtractExistingFileAction.OverwriteSilently);
             }
             catch {
                 _extractThemeResult = ThemeInstallingResult.ERROR;
@@ -572,7 +669,55 @@ namespace ImageGlass.UI {
         }
         #endregion
 
+
         #region PUBLIC STATIC FUNCS
+
+        /// <summary>
+        /// Get all theme packs from default folder and user folder
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<List<Theme>> GetAllThemePacksAsync() {
+            return await Task.Run(GetAllThemePacks).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get all theme packs from default folder and user folder
+        /// </summary>
+        /// <returns></returns>
+        public static List<Theme> GetAllThemePacks() {
+            var defaultThemeFolder = App.StartUpDir(Dir.Themes);
+            var userThemeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
+
+            // Create theme folder if not exist
+            Directory.CreateDirectory(userThemeFolder);
+
+            var userThemes = Directory.GetDirectories(userThemeFolder);
+            var defaultThemes = Directory.GetDirectories(defaultThemeFolder);
+
+            // merge and distinct all themes
+            var allThemePaths = defaultThemes.ToList();
+            allThemePaths.AddRange(userThemes);
+            allThemePaths = allThemePaths.Distinct().ToList();
+
+            var allThemes = new List<Theme>(allThemePaths.Count);
+
+            foreach (var dir in allThemePaths) {
+                var configFile = Path.Combine(dir, "igtheme.xml");
+
+                if (File.Exists(configFile)) {
+                    var th = new Theme(themeFolderPath: dir);
+
+                    // invalid theme
+                    if (!th.IsValid) {
+                        continue;
+                    }
+
+                    allThemes.Add(th);
+                }
+            }
+
+            return allThemes;
+        }
 
         /// <summary>
         /// Install ImageGlass theme
@@ -637,10 +782,9 @@ namespace ImageGlass.UI {
             }
 
             try {
-                using (var z = new ZipFile(outputThemeFile, Encoding.UTF8)) {
-                    z.AddDirectory(themeFolderPath, th.Name);
-                    z.Save();
-                }
+                using var z = new ZipFile(outputThemeFile, Encoding.UTF8);
+                z.AddDirectory(themeFolderPath, th.Name);
+                z.Save();
             }
             catch (Exception) {
                 // restore backup file
@@ -844,5 +988,6 @@ namespace ImageGlass.UI {
         }
 
         #endregion
+
     }
 }

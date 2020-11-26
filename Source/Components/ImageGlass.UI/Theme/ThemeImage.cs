@@ -67,7 +67,7 @@ namespace ImageGlass.UI {
             }
 
             try {
-                Image = (Photo.Load(Filename, new Size(Height, Height))).Image;
+                Image = Photo.Load(Filename, new Size(Height, Height)).Image;
             }
             catch { }
         }
