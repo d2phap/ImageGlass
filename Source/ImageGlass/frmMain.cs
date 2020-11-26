@@ -3383,6 +3383,7 @@ namespace ImageGlass {
             Local.ForceUpdateActions = ForceUpdateActions.NONE;
         }
 
+
         private void frmMain_ResizeBegin(object sender, EventArgs e) {
             _windowSize = Size;
         }
@@ -4931,7 +4932,7 @@ namespace ImageGlass {
 
         private void mnuFrameless_Click(object sender, EventArgs e) {
             Configs.IsWindowFrameless = !Configs.IsWindowFrameless;
-            Control[] frameLessMovers = { picMain, toolMain, thumbnailBar };
+            Control[] frameLessMovers = { picMain, toolMain };
 
             if (Configs.IsWindowFrameless) {
                 // Note: No idea why the form icon disposed when toggling from Frameless to Sizable
@@ -4939,10 +4940,10 @@ namespace ImageGlass {
                 this._formIcon = (Icon)this.Icon.Clone();
                 this.FormBorderStyle = FormBorderStyle.None;
 
-                this.Padding = new Padding(2);
+                this.Padding = new Padding(1);
 
                 // Draw client border for movable
-                FormBorder.Set(this.Handle, 2);
+                FormBorder.Set(this.Handle, 1);
 
                 // Enable frameless movable
                 this._movableForm.Enable();
@@ -5159,8 +5160,7 @@ namespace ImageGlass {
             }
         }
 
+
         #endregion
-
-
     }
 }
