@@ -17,9 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base;
-using ImageGlass.Services.InstanceManagement;
-using ImageGlass.Settings;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -27,6 +24,9 @@ using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ImageGlass.Base;
+using ImageGlass.Services.InstanceManagement;
+using ImageGlass.Settings;
 
 namespace ImageGlass {
     internal static class Program {

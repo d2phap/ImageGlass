@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base;
-using ImageGlass.Settings;
-using ImageGlass.UI;
-using ImageGlass.UI.ToolForms;
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using ImageGlass.Base;
+using ImageGlass.Settings;
+using ImageGlass.UI;
+using ImageGlass.UI.ToolForms;
 
 namespace ImageGlass {
     public partial class frmCrop: ToolForm {

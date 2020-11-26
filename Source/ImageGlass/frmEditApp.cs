@@ -16,11 +16,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-using ImageGlass.Base;
-using ImageGlass.Settings;
 using System;
 using System.IO;
 using System.Windows.Forms;
+using ImageGlass.Base;
+using ImageGlass.Settings;
 
 namespace ImageGlass {
     public partial class frmEditApp: Form {

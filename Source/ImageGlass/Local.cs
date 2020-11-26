@@ -17,14 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System;
+using System.Collections.Generic;
+using System.Threading;
 using ImageGlass.Base;
 using ImageGlass.Heart;
 using ImageGlass.UI;
 using ImageMagick;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 
 namespace ImageGlass {
     public static class Local {
@@ -33,7 +32,7 @@ namespace ImageGlass {
         private static frmPageNav _fPageNav;
         private static frmCrop _fCrop;
         private static FrmExifTool _fExifTool;
-        
+
 
 
         #region Auto Properties

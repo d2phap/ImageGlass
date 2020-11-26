@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using ImageGlass.Base;
 
 namespace ImageGlass.Settings {
     /// <summary>

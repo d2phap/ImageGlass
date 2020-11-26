@@ -17,19 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using FileWatcherEx;
-using ImageGlass.Base;
-using ImageGlass.Library;
-using ImageGlass.Library.Comparer;
-using ImageGlass.Library.Image;
-using ImageGlass.Library.WinAPI;
-using ImageGlass.Services;
-using ImageGlass.Services.InstanceManagement;
-using ImageGlass.Settings;
-using ImageGlass.UI;
-using ImageGlass.UI.Renderers;
-using ImageGlass.UI.ToolForms;
-using ImageMagick;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -44,6 +31,19 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FileWatcherEx;
+using ImageGlass.Base;
+using ImageGlass.Library;
+using ImageGlass.Library.Comparer;
+using ImageGlass.Library.Image;
+using ImageGlass.Library.WinAPI;
+using ImageGlass.Services;
+using ImageGlass.Services.InstanceManagement;
+using ImageGlass.Settings;
+using ImageGlass.UI;
+using ImageGlass.UI.Renderers;
+using ImageGlass.UI.ToolForms;
+using ImageMagick;
 
 namespace ImageGlass {
     public partial class frmMain: Form {
@@ -465,10 +465,11 @@ namespace ImageGlass {
             if (Configs.IsGroupImagesByDirectory) {
                 if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc) {
                     directorySortComparer = new ReverseWindowsDirectoryNaturalSort();
-                } else {
+                }
+                else {
                     directorySortComparer = new WindowsDirectoryNaturalSort();
                 }
-            } 
+            }
 
             // KBR 20190605 Fix observed discrepancy: using UTC for create, but not for write/access times
 

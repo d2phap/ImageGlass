@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Settings;
 using System;
 using System.Windows.Forms;
+using ImageGlass.Settings;
 
 namespace ImageGlass {
     public partial class frmAddNewFormat: Form {

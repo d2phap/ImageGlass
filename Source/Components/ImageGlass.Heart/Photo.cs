@@ -17,9 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageMagick;
-using ImageMagick.Formats.Bmp;
-using ImageMagick.Formats.Dng;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -27,6 +24,9 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ImageMagick;
+using ImageMagick.Formats.Bmp;
+using ImageMagick.Formats.Dng;
 
 namespace ImageGlass.Heart {
     public static class Photo {

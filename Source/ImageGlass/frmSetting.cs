@@ -17,12 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base;
-using ImageGlass.Library;
-using ImageGlass.Library.Image;
-using ImageGlass.Settings;
-using ImageGlass.UI;
-using ImageGlass.UI.Renderers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -31,6 +25,12 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ImageGlass.Base;
+using ImageGlass.Library;
+using ImageGlass.Library.Image;
+using ImageGlass.Settings;
+using ImageGlass.UI;
+using ImageGlass.UI.Renderers;
 
 namespace ImageGlass {
     public partial class frmSetting: Form {

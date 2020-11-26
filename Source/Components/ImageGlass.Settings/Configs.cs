@@ -17,18 +17,18 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base;
-using ImageGlass.Library;
-using ImageGlass.Library.FileAssociations;
-using ImageGlass.Library.WinAPI;
-using ImageGlass.UI;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using ImageGlass.Base;
+using ImageGlass.Library;
+using ImageGlass.Library.FileAssociations;
+using ImageGlass.Library.WinAPI;
+using ImageGlass.UI;
+using Microsoft.Win32;
 
 namespace ImageGlass.Settings {
     /// <summary>
@@ -650,7 +650,7 @@ namespace ImageGlass.Settings {
 
             #region String items
 
-        ColorProfile = Get<string>(nameof(ColorProfile), ColorProfile);
+            ColorProfile = Get<string>(nameof(ColorProfile), ColorProfile);
             ColorProfile = Heart.Helpers.GetCorrectColorProfileName(ColorProfile);
 
             AutoUpdate = Get<string>(nameof(AutoUpdate), AutoUpdate);

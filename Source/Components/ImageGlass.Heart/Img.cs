@@ -17,11 +17,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageMagick;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
+using ImageMagick;
 
 namespace ImageGlass.Heart {
     public sealed class Img: IDisposable {
