@@ -355,7 +355,7 @@ namespace ImageGlass {
             if (Local.CurrentIndex == -1) {
                 // Mark as Image Error
                 Local.ImageError = new Exception("File not found.");
-                this.Text = $"{Application.ProductName} - {Path.GetFileName(filePath)} - {ImageInfo.GetFileSize(filePath)}";
+                SetStatusBar($"{Application.ProductName} - {Path.GetFileName(filePath)} - {ImageInfo.GetFileSize(filePath)}");
 
                 picMain.Text = Configs.Language.Items[$"{Name}.picMain._ErrorText"];
                 picMain.Image = null;
@@ -676,7 +676,7 @@ namespace ImageGlass {
             SelectCurrentThumbnail();
 
             // Update the basic info
-            UpdateStatusBar();
+            SetStatusBar();
 
             // Raise image changed event
             Local.RaiseImageChangedEvent();
@@ -752,7 +752,7 @@ namespace ImageGlass {
                 }
 
                 picMain.Text = Configs.Language.Items[$"{Name}.picMain._ErrorText"] + "\r\n" + Local.ImageError.Source + ": " + Local.ImageError.Message;
-                UpdateStatusBar();
+                SetStatusBar();
             }
 
             _isDraggingImage = false;
@@ -804,10 +804,16 @@ namespace ImageGlass {
             }
         }
 
+
         /// <summary>
         /// Update image information on status bar
         /// </summary>
-        private void UpdateStatusBar() {
+        private void SetStatusBar(string text = "") {
+            if (Configs.IsUseEmptyTitleBar) {
+                this.Text = "";
+                return;
+            }
+
             var appName = Application.ProductName;
             const string SEP = "  |  ";
             var imgSize = string.Empty;
@@ -1604,7 +1610,7 @@ namespace ImageGlass {
             _isManuallyZoomed = false;
 
             // Get image file information
-            UpdateStatusBar();
+            SetStatusBar();
         }
 
         /// <summary>
@@ -1883,7 +1889,7 @@ namespace ImageGlass {
             picMain.Text = "";
             Local.IsTempMemoryData = true;
 
-            UpdateStatusBar();
+            SetStatusBar();
         }
 
         /// <summary>
@@ -2245,7 +2251,7 @@ namespace ImageGlass {
 
                 if (!Local.FPageNav.Visible) {
                     Local.FPageNav.Show(this);
-                    UpdateStatusBar();
+                    SetStatusBar();
                 }
 
                 this.Activate();
@@ -3490,7 +3496,7 @@ namespace ImageGlass {
                 Local.ImageList.SetFileName(imgIndex, newFilename);
 
                 //Update status bar title
-                UpdateStatusBar();
+                SetStatusBar();
 
                 try {
                     //Rename image in thumbnail bar
@@ -3568,7 +3574,7 @@ namespace ImageGlass {
             thumbnailBar.Items.Add(lvi);
             thumbnailBar.Refresh();
 
-            UpdateStatusBar(); // File count has changed - update title bar
+            SetStatusBar(); // File count has changed - update title bar
         }
 
         /// <summary>
@@ -3676,7 +3682,7 @@ namespace ImageGlass {
             ZoomOptimization();
 
             // Update zoom info
-            UpdateStatusBar();
+            SetStatusBar();
         }
 
         private void picMain_MouseClick(object sender, MouseEventArgs e) {
@@ -4070,7 +4076,7 @@ namespace ImageGlass {
                         picMain.Image = Heart.Photo.ConvertBase64ToBitmap(text);
                         Local.IsTempMemoryData = true;
 
-                        UpdateStatusBar();
+                        SetStatusBar();
                     }
                     catch (Exception ex) {
                         var msg = Configs.Language.Items[$"{Name}._InvalidImageClipboardData"];

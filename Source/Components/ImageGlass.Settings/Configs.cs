@@ -274,6 +274,10 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool IsExifToolAlwaysOnTop { get; set; } = true;
 
+        /// <summary>
+        /// Gets, sets value indicates that to keep the title bar of frmMain empty
+        /// </summary>
+        public static bool IsUseEmptyTitleBar { get; set; } = false;
 
         #endregion
 
@@ -588,6 +592,7 @@ namespace ImageGlass.Settings {
             IsUseTouchGesture = Get<bool>(nameof(IsUseTouchGesture), IsUseTouchGesture);
             IsHideTooltips = Get<bool>(nameof(IsHideTooltips), IsHideTooltips);
             IsExifToolAlwaysOnTop = Get<bool>(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
+            IsUseEmptyTitleBar = Get<bool>(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
 
             #endregion
 
@@ -819,6 +824,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsUseTouchGesture), IsUseTouchGesture);
             Set(nameof(IsHideTooltips), IsHideTooltips);
             Set(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
+            Set(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
 
             #endregion
 
@@ -1140,9 +1146,13 @@ namespace ImageGlass.Settings {
             }
 
             // Icon theming
-            if (!th.IsShowTitlebarLogo) {
+            if (!th.IsShowTitlebarLogo || IsUseEmptyTitleBar) {
                 frm.Icon = Icon.FromHandle(new Bitmap(64, 64).GetHicon());
                 FormIcon.SetTaskbarIcon(frm, th.Logo.Image.GetHicon());
+
+                if (IsUseEmptyTitleBar) {
+                    frm.Text = "";
+                }
             }
             else {
                 frm.Icon = Icon.FromHandle(th.Logo.Image.GetHicon());
