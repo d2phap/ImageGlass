@@ -3923,19 +3923,13 @@ namespace ImageGlass {
 
 
         private async void mnuContext_Opening(object sender, CancelEventArgs e) {
-            var isImageError = false;
-
-            try {
-                if (!File.Exists(Local.ImageList.GetFileName(Local.CurrentIndex)) || Local.ImageError != null) {
-                    isImageError = true;
-                }
-            }
-            catch { e.Cancel = true; return; }
+            var imageNotFound = !File.Exists(Local.ImageList.GetFileName(Local.CurrentIndex));
+            var imageError = Local.ImageError != null;
 
             // clear current items
             mnuContext.Items.Clear();
 
-            if (Configs.IsSlideshow && !isImageError) {
+            if (Configs.IsSlideshow && !imageNotFound) {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainSlideShowPause));
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainSlideShowExit));
                 mnuContext.Items.Add(new ToolStripSeparator());//---------------
@@ -3949,8 +3943,8 @@ namespace ImageGlass {
             mnuContext.Items.Add(UI.Menu.Clone(mnuLoadingOrder));
 
             // Get Edit App info
-            if (!isImageError) {
-                if (!Local.IsTempMemoryData) {
+            if (!imageNotFound) {
+                if (!imageError && !Local.IsTempMemoryData) {
                     mnuContext.Items.Add(UI.Menu.Clone(mnuMainChannels));
                 }
 
@@ -3964,7 +3958,7 @@ namespace ImageGlass {
                 try {
                     var imgData = await Local.ImageList.GetImgAsync(Local.CurrentIndex).ConfigureAwait(true);
 
-                    if (imgData.PageCount > 1) {
+                    if (!imageError && imgData.PageCount > 1) {
                         var mnu1 = UI.Menu.Clone(mnuMainExtractPages);
                         mnu1.Text = string.Format(Configs.Language.Items[$"{Name}.mnuMainExtractPages"], imgData.PageCount);
                         mnu1.Enabled = true;
@@ -3980,7 +3974,7 @@ namespace ImageGlass {
                 #endregion
             }
 
-            if (!isImageError || Local.IsTempMemoryData) {
+            if (!imageNotFound && !imageError || Local.IsTempMemoryData) {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainSetAsDesktop));
 
                 // check if igcmdWin10.exe exists!
@@ -3996,18 +3990,18 @@ namespace ImageGlass {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainCopyImageData));
             }
 
-            if (!isImageError && !Local.IsTempMemoryData) {
+            if (!imageNotFound && !Local.IsTempMemoryData) {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainCopy));
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainCut));
             }
 
             mnuContext.Items.Add(UI.Menu.Clone(mnuMainOpenImageData));
-            if (!isImageError && !Local.IsTempMemoryData) {
+            if (!imageNotFound && !Local.IsTempMemoryData) {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainClearClipboard));
             }
             #endregion
 
-            if (!isImageError && !Local.IsTempMemoryData) {
+            if (!imageNotFound && !Local.IsTempMemoryData) {
                 mnuContext.Items.Add(new ToolStripSeparator());//------------
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainRename));
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainMoveToRecycleBin));
