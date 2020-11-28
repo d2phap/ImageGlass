@@ -4215,10 +4215,6 @@ namespace ImageGlass {
         }
 
         private void mnuOpenWith_Click(object sender, EventArgs e) {
-            if (Local.ImageError != null) {
-                return;
-            }
-
             using var p = new Process();
             p.StartInfo.FileName = "openwith";
 
@@ -4236,10 +4232,6 @@ namespace ImageGlass {
         }
 
         private void mnuMainEditImage_Click(object sender, EventArgs e) {
-            if (Local.ImageError != null) {
-                return;
-            }
-
             // Viewing image filename
             var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
 
