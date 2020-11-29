@@ -106,8 +106,6 @@ namespace ImageGlass {
 
         private MovableForm _movableForm;
 
-        private Icon _formIcon;
-
         // gets, sets the CancellationTokenSource of synchronious image loading task
         private System.Threading.CancellationTokenSource _cancelToken = new System.Threading.CancellationTokenSource();
 
@@ -4932,15 +4930,7 @@ namespace ImageGlass {
             Control[] frameLessMovers = { picMain, toolMain };
 
             if (Configs.IsWindowFrameless) {
-                // Note: No idea why the form icon disposed when toggling from Frameless to Sizable
-                // Hence, I need to backup it and restore later.
-                this._formIcon = (Icon)this.Icon.Clone();
                 this.FormBorderStyle = FormBorderStyle.None;
-
-                this.Padding = new Padding(1);
-
-                // Draw client border for movable
-                FormBorder.Set(this.Handle, 1);
 
                 // Enable frameless movable
                 this._movableForm.Enable();
@@ -4953,17 +4943,7 @@ namespace ImageGlass {
                 this._movableForm.Disable();
                 this._movableForm.Disable(frameLessMovers);
 
-                // Remove custom client border
-                FormBorder.Set(this.Handle, 0);
-
-                this.Padding = new Padding(0);
                 this.FormBorderStyle = FormBorderStyle.Sizable;
-
-                // restore form icon
-                if (_formIcon != null) {
-                    this.Icon = (Icon)_formIcon.Clone();
-                    _formIcon.Dispose();
-                }
             }
         }
 
