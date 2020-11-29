@@ -44,7 +44,7 @@ namespace ImageGlass.Services {
         /// Provides information of element 'Info> in 'Update>
         /// </summary>
         public InfoUpdate() {
-            NewVersion = new System.Version("1.0.0.0");
+            NewVersion = new Version("1.0.0.0");
             VersionType = "Stable";
             Level = "Recommended";
             Link = new Uri("https://imageglass.org");

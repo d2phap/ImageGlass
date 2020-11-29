@@ -157,7 +157,7 @@ namespace ImageGlass {
             var filepaths = ((string[])e.Data.GetData(DataFormats.FileDrop, false));
 
             if (filepaths.Length > 1) {
-                PrepareLoading(filepaths, Local.ImageList.GetFileName(Local.CurrentIndex));
+                _ = PrepareLoadingAsync(filepaths, Local.ImageList.GetFileName(Local.CurrentIndex));
                 return;
             }
 
@@ -209,7 +209,7 @@ namespace ImageGlass {
                 CheckFileExists = true,
             };
             if (o.ShowDialog() == DialogResult.OK) {
-                PrepareLoading(o.FileNames, o.FileNames[0]);
+                _ = PrepareLoadingAsync(o.FileNames, o.FileNames[0]);
             }
         }
 
@@ -223,7 +223,7 @@ namespace ImageGlass {
             var currentFileName = File.Exists(path) ? path : "";
 
             // Start loading path
-            PrepareLoading(new string[] { inputPath }, currentFileName);
+            _ = PrepareLoadingAsync(new string[] { inputPath }, currentFileName);
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace ImageGlass {
         /// </summary>
         /// <param name="inputPaths">Paths of image files or folders. It can be relative/absolute paths or URI Scheme</param>
         /// <param name="currentFileName">Current viewing filename</param>
-        private async void PrepareLoading(IEnumerable<string> inputPaths, string currentFileName = "") {
+        private async Task PrepareLoadingAsync(IEnumerable<string> inputPaths, string currentFileName = "") {
             System.Threading.SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
             if (!inputPaths.Any()) return;
 
@@ -3332,7 +3332,7 @@ namespace ImageGlass {
             #region IMAGE_LIST_NO_RECURSIVE
             if ((flags & ForceUpdateActions.IMAGE_LIST_NO_RECURSIVE) == ForceUpdateActions.IMAGE_LIST_NO_RECURSIVE) {
                 // update image list with the initial input path
-                PrepareLoading(new string[] { Local.InitialInputPath }, Local.ImageList.GetFileName(Local.CurrentIndex));
+                _ = PrepareLoadingAsync(new string[] { Local.InitialInputPath }, Local.ImageList.GetFileName(Local.CurrentIndex));
             }
             #endregion
 
@@ -4219,7 +4219,7 @@ namespace ImageGlass {
 
         private void MnuMainReloadImageList_Click(object sender, EventArgs e) {
             // update image list
-            PrepareLoading(Local.ImageList.FileNames, Local.ImageList.GetFileName(Local.CurrentIndex));
+            _ = PrepareLoadingAsync(Local.ImageList.FileNames, Local.ImageList.GetFileName(Local.CurrentIndex));
         }
 
         private void mnuOpenWith_Click(object sender, EventArgs e) {

@@ -38,6 +38,6 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Rectangle of navigation region
         /// </summary>
-        public Rectangle Region { get; set; } = new Rectangle();
+        public Rectangle Region { get; set; } = new();
     }
 }

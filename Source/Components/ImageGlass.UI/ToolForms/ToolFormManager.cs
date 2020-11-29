@@ -29,7 +29,7 @@ namespace ImageGlass.UI.ToolForms {
         /// <summary>
         /// The list of ToolForms to manage
         /// </summary>
-        private readonly List<ToolForm> _formList = new List<ToolForm>();
+        private readonly List<ToolForm> _formList = new();
 
         /// <summary>
         /// Add a new ToolForm to the manager

@@ -30,17 +30,17 @@ namespace ImageGlass.Services {
         /// <summary>
         /// Convert an Explorer column name to one of our currently available sorting orders.
         /// </summary>
-        private static readonly Dictionary<string, ImageOrderBy> SortTranslation = new Dictionary<string, ImageOrderBy>()
+        private static readonly Dictionary<string, ImageOrderBy> SortTranslation = new()
         {
             { "System.DateModified", ImageOrderBy.LastWriteTime },
             { "System.ItemDate", ImageOrderBy.LastWriteTime },
-            { "System.ItemTypeText", ImageOrderBy.Extension},
-            { "System.FileExtension", ImageOrderBy.Extension},
-            { "System.FileName", ImageOrderBy.Name},
-            { "System.ItemNameDisplay", ImageOrderBy.Name},
+            { "System.ItemTypeText", ImageOrderBy.Extension },
+            { "System.FileExtension", ImageOrderBy.Extension },
+            { "System.FileName", ImageOrderBy.Name },
+            { "System.ItemNameDisplay", ImageOrderBy.Name },
             { "System.Size", ImageOrderBy.Length },
-            { "System.DateCreated", ImageOrderBy.CreationTime},
-            { "System.DateAccessed", ImageOrderBy.LastAccessTime},
+            { "System.DateCreated", ImageOrderBy.CreationTime },
+            { "System.DateAccessed", ImageOrderBy.LastAccessTime },
         };
 
         [DllImport("ExplorerSortOrder32.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]

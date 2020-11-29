@@ -38,7 +38,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Configuration Source file
         /// </summary>
-        private static ConfigSource Source { get; } = new ConfigSource();
+        private static ConfigSource Source { get; } = new();
 
         /// <summary>
         /// Check if the config file is compatible with this ImageGlass version or not.
@@ -367,12 +367,12 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets the list of Image Editing Association
         /// </summary>
-        public static List<EditApp> EditApps { get; set; } = new List<EditApp>();
+        public static List<EditApp> EditApps { get; set; } = new();
 
         /// <summary>
         /// Gets, sets the list of supported image formats
         /// </summary>
-        public static HashSet<string> AllFormats { get; set; } = new HashSet<string>();
+        public static HashSet<string> AllFormats { get; set; } = new();
 
         /// <summary>
         /// Gets, sets the list of keycombo actions
@@ -467,27 +467,27 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets window bound of main form
         /// </summary>
-        public static Rectangle FrmMainWindowBound { get; set; } = new Rectangle(280, 125, 1300, 800);
+        public static Rectangle FrmMainWindowBound { get; set; } = new(280, 125, 1300, 800);
 
         /// <summary>
         /// Gets, sets window bound of main form
         /// </summary>
-        public static Rectangle FrmSettingsWindowBound { get; set; } = new Rectangle(280, 125, 1050, 750);
+        public static Rectangle FrmSettingsWindowBound { get; set; } = new(280, 125, 1050, 750);
 
         /// <summary>
         /// Gets, sets window bound of exif tool form
         /// </summary>
-        public static Rectangle FrmExifToolWindowBound { get; set; } = new Rectangle(280, 125, 800, 600);
+        public static Rectangle FrmExifToolWindowBound { get; set; } = new(280, 125, 800, 600);
 
         /// <summary>
         /// Gets, sets language pack
         /// </summary>
-        public static Language Language { get; set; } = new Language();
+        public static Language Language { get; set; } = new();
 
         /// <summary>
         /// Gets, sets theme
         /// </summary>
-        public static Theme Theme { get; set; } = new Theme((int)ToolbarIconHeight);
+        public static Theme Theme { get; set; } = new((int)ToolbarIconHeight);
 
         #endregion
 

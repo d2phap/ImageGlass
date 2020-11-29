@@ -49,7 +49,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets the admin configs
         /// </summary>
-        public Dictionary<string, string> AdminConfigs { get; private set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> AdminConfigs { get; private set; } = new();
 
         /// <summary>
         /// Config file description
