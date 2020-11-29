@@ -162,7 +162,6 @@ namespace ImageGlass {
         private void SetUIVisibility(bool isNotFound) {
             if (isNotFound) {
                 this.Text = Configs.Language.Items["frmMain.mnuExifTool"];
-                this.Icon = Icon.ExtractAssociatedIcon(Base.App.IGExePath);
 
                 panNotFound.Visible = true;
                 lvExifItems.Visible = false;
