@@ -120,7 +120,7 @@ namespace ImageGlass.Heart {
             // start background service worker
             IsRunWorker = true;
             var _bw = new BackgroundWorker();
-            _bw.RunWorkerAsync(StartImageBooster());
+            _bw.RunWorkerAsync(StartImageBoosterAsync());
         }
 
         #region PRIVATE FUNCTIONS
@@ -193,7 +193,7 @@ namespace ImageGlass.Heart {
         /// <summary>
         /// Start ImageBooster thread
         /// </summary>
-        public async Task StartImageBooster() {
+        public async Task StartImageBoosterAsync() {
             while (IsRunWorker) {
                 if (QueuedList.Count > 0) {
                     // pop out the first item

@@ -147,7 +147,7 @@ namespace ImageGlass {
                     Application.Run(formMain = new frmMain());
                 }
                 else {
-                    _ = singleInstance.PassArgumentsToFirstInstance(Environment.GetCommandLineArgs());
+                    _ = singleInstance.PassArgumentsToFirstInstanceAsync(Environment.GetCommandLineArgs());
                 }
             } //end check multi instances
             #endregion

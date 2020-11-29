@@ -39,7 +39,7 @@ namespace ImageGlass.Library.Image {
         /// </summary>
         /// <param name="animationFile">File name</param>
         /// <param name="destinationFolder">Output folder</param>
-        public async Task ExtractAllFrames(string animationFile, string destinationFolder, ExtractCallback callback) {
+        public async Task ExtractFramesAsync(string animationFile, string destinationFolder, ExtractCallback callback) {
             //initiate class
 
             _isAnimating = false;

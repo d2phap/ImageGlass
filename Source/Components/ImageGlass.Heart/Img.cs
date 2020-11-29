@@ -173,7 +173,7 @@ namespace ImageGlass.Heart {
         /// </summary>
         /// <param name="destFolder">The destination folder to save to</param>
         /// <returns></returns>
-        public async Task SaveImagePages(string destFolder) {
+        public async Task SaveImagePagesAsync(string destFolder) {
             await Photo.SavePagesAsync(Filename, destFolder).ConfigureAwait(true);
         }
 

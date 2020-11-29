@@ -52,7 +52,7 @@ namespace ImageGlass.Services.InstanceManagement {
         /// </summary>
         /// <param name="arguments">The arguments to pass.</param>
         /// <returns>Return true if the operation succeded, false otherwise.</returns>
-        public async Task<bool> PassArgumentsToFirstInstance(string[] arguments) {
+        public async Task<bool> PassArgumentsToFirstInstanceAsync(string[] arguments) {
             if (IsFirstInstance)
                 throw new InvalidOperationException("This is the first instance.");
 
@@ -86,16 +86,15 @@ namespace ImageGlass.Services.InstanceManagement {
         /// <param name="state">State object required by WaitCallback delegate.</param>
         private void ListenForArguments(object state) {
             try {
-                using (var server = new NamedPipeServerStream(identifier.ToString()))
-                using (var reader = new StreamReader(server)) {
-                    server.WaitForConnection();
+                using var server = new NamedPipeServerStream(identifier.ToString());
+                using var reader = new StreamReader(server);
+                server.WaitForConnection();
 
-                    var arguments = new List<string>();
-                    while (server.IsConnected)
-                        arguments.Add(reader.ReadLine());
+                var arguments = new List<string>();
+                while (server.IsConnected)
+                    arguments.Add(reader.ReadLine());
 
-                    ThreadPool.QueueUserWorkItem(new WaitCallback(CallOnArgumentsReceived), arguments.ToArray());
-                }
+                ThreadPool.QueueUserWorkItem(new WaitCallback(CallOnArgumentsReceived), arguments.ToArray());
             }
             catch (IOException) { } //Pipe was broken
             finally {

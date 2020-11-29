@@ -580,7 +580,7 @@ namespace ImageGlass.Heart {
         /// <param name="srcFileName">Source filename</param>
         /// <param name="degrees">Degrees to rotate</param>
         /// <returns></returns>
-        public static async Task<Bitmap> RotateImage(string srcFileName, int degrees) {
+        public static async Task<Bitmap> RotateImageAsync(string srcFileName, int degrees) {
             Bitmap bitmap = null;
 
             await Task.Run(() => {
@@ -600,7 +600,7 @@ namespace ImageGlass.Heart {
         /// <param name="srcBitmap">Source bitmap</param>
         /// <param name="degrees">Degrees to rotate</param>
         /// <returns></returns>
-        public static async Task<Bitmap> RotateImage(Bitmap srcBitmap, int degrees) {
+        public static async Task<Bitmap> RotateImageAsync(Bitmap srcBitmap, int degrees) {
             Bitmap bitmap = null;
 
             await Task.Run(() => {
@@ -625,7 +625,7 @@ namespace ImageGlass.Heart {
         /// <param name="srcFileName">Source filename</param>
         /// <param name="isHorzontal">Reflect each scanline in the horizontal/vertical direction</param>
         /// <returns></returns>
-        public static async Task<Bitmap> Flip(string srcFileName, bool isHorzontal) {
+        public static async Task<Bitmap> FlipAsync(string srcFileName, bool isHorzontal) {
             Bitmap bitmap = null;
 
             await Task.Run(() => {
@@ -642,7 +642,7 @@ namespace ImageGlass.Heart {
         /// <param name="srcBitmap">Source bitmap</param>
         /// <param name="isHorzontal">Reflect each scanline in the horizontal/vertical direction</param>
         /// <returns></returns>
-        public static async Task<Bitmap> Flip(Bitmap srcBitmap, bool isHorzontal) {
+        public static async Task<Bitmap> FlipAsync(Bitmap srcBitmap, bool isHorzontal) {
             Bitmap bitmap = null;
 
             await Task.Run(() => {

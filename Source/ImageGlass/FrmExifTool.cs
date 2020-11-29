@@ -116,7 +116,7 @@ namespace ImageGlass {
             }
         }
 
-        private async void btnExport_Click(object sender, EventArgs e) {
+        private async void BtnExport_Click(object sender, EventArgs e) {
             SetFormState(false);
 
             var sfd = new SaveFileDialog() {

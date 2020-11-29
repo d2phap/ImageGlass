@@ -80,7 +80,7 @@ namespace ImageGlass.Library.Net {
         /// <param name="URL">Liên kết của tập tin</param>
         /// <param name="filename">Đương dẫn lưu tập tin</param>
         /// <returns></returns>
-        public async Task<bool> DownloadFileWithProgress(string URL, string filename) {
+        public async Task<bool> DownloadFileWithProgressAsync(string URL, string filename) {
             FileStream fs = default;
             try {
                 _currentFile = GetFileName(URL);
@@ -131,31 +131,31 @@ namespace ImageGlass.Library.Net {
         /// Định dạng đơn vị dung lượng tập tin
         /// </summary>
         /// <param name="size">Kích thước tập tin dạng số</param>
-        /// <param name="donVi">Chuỗi đơn vị xuất ra</param>
+        /// <param name="unit">Chuỗi đơn vị xuất ra</param>
         /// <returns></returns>
-        public static string FormatFileSize(double size, ref string donVi) {
+        public static string FormatFileSize(double size, ref string unit) {
             try {
                 const int KB = 1024;
                 const long MB = KB * KB;
 
                 // Return size of file in kilobytes.
                 if (size < KB) {
-                    donVi = " bytes";
+                    unit = " bytes";
                     return size.ToString("D");
                 }
                 else {
                     var fs = size / KB;
 
                     if (fs < 1000) {
-                        donVi = " KB";
+                        unit = " KB";
                         return fs.ToString("N");
                     }
                     else if (fs < 1000000) {
-                        donVi = " MB";
+                        unit = " MB";
                         return (size / MB).ToString("N");
                     }
                     else if (fs < 10000000) {
-                        donVi = " GB";
+                        unit = " GB";
                         return (size / MB / KB).ToString("N");
                     }
                 }

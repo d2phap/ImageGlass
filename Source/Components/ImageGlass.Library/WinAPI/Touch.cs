@@ -174,7 +174,7 @@ namespace ImageGlass.Library.WinAPI {
         /// <param name="form">the main form</param>
         /// <returns>false if something failed</returns>
         public static bool AcceptTouch(Form form) {
-            App.LogIt("WM_GESTURENOTIFY").RunSynchronously();
+            App.LogItAsync("WM_GESTURENOTIFY").RunSynchronously();
             _touchForm = form;
             return SetGestureConfig(form.Handle, 0, 1, ref TouchConfig, ConfigSize);
         }
@@ -205,7 +205,7 @@ namespace ImageGlass.Library.WinAPI {
                         _ptSecond.Y = gi.ptsLocation.y;
                         _ptSecond = _touchForm.PointToClient(_ptSecond);
 
-                        App.LogIt(string.Format("PANNING.END ({0},{1})", _ptSecond.X, _ptSecond.Y)).RunSynchronously();
+                        App.LogItAsync(string.Format("PANNING.END ({0},{1})", _ptSecond.X, _ptSecond.Y)).RunSynchronously();
 
                         var dVert = (_ptSecond.Y - _ptFirst.Y);
                         var dHorz = (_ptSecond.X - _ptFirst.X);
@@ -231,11 +231,11 @@ namespace ImageGlass.Library.WinAPI {
                 case GID_ROTATE:
                     switch (gi.dwFlags) {
                         case GF_BEGIN:
-                            App.LogIt("GID_ROTATE.GF_BEG").RunSynchronously();
+                            App.LogItAsync("GID_ROTATE.GF_BEG").RunSynchronously();
                             break;
                         case GF_END:
                             var rads = ArgToRadians(gi.ullArguments & ULL_ARGUMENTS_BIT_MASK);
-                            App.LogIt(string.Format("GID_ROTATE.GF_END ({0})", rads)).RunSynchronously();
+                            App.LogItAsync(string.Format("GID_ROTATE.GF_END ({0})", rads)).RunSynchronously();
 
                             if (rads > 0.0) {
                                 act = Action.RotateCCW;
@@ -252,7 +252,7 @@ namespace ImageGlass.Library.WinAPI {
                         _ptFirst.X = gi.ptsLocation.x;
                         _ptFirst.Y = gi.ptsLocation.y;
                         _ptFirst = _touchForm.PointToClient(_ptFirst);
-                        App.LogIt(string.Format("GID_PAN.GF_BEGIN ({0},{1})", _ptFirst.X, _ptFirst.Y)).RunSynchronously();
+                        App.LogItAsync(string.Format("GID_PAN.GF_BEGIN ({0},{1})", _ptFirst.X, _ptFirst.Y)).RunSynchronously();
                         _isSwipe = true;
                     }
                     break;
@@ -264,7 +264,7 @@ namespace ImageGlass.Library.WinAPI {
                         _ptFirst = _touchForm.PointToClient(_ptFirst);
                         _iArgs = (int)(gi.ullArguments & ULL_ARGUMENTS_BIT_MASK);
 
-                        App.LogIt(string.Format("GID_ZOOM.GF_BEGIN ({0},{1})", _ptFirst.X, _ptFirst.Y)).RunSynchronously();
+                        App.LogItAsync(string.Format("GID_ZOOM.GF_BEGIN ({0},{1})", _ptFirst.X, _ptFirst.Y)).RunSynchronously();
                     }
                     if (gi.dwFlags == GF_END) {
                         _ptSecond.X = gi.ptsLocation.x;
@@ -291,11 +291,11 @@ namespace ImageGlass.Library.WinAPI {
                             ZoomFactor = (int)factor;
                         }
 
-                        App.LogIt($"GID_ZOOM.GF_END ({factor}:{ZoomFactor})").RunSynchronously();
+                        App.LogItAsync($"GID_ZOOM.GF_END ({factor}:{ZoomFactor})").RunSynchronously();
                     }
                     break;
                 default:
-                    App.LogIt("GID_?").RunSynchronously();
+                    App.LogItAsync("GID_?").RunSynchronously();
                     break;
             }
 

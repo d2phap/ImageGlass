@@ -121,7 +121,7 @@ namespace ImageGlass.Base {
         /// Write log in DEBUG mode
         /// </summary>
         /// <param name="msg"></param>
-        public static async Task LogIt(string msg) {
+        public static async Task LogItAsync(string msg) {
 #if DEBUG
             try {
                 var tempDir = App.ConfigDir(PathType.Dir, Dir.Log);

@@ -181,7 +181,7 @@ namespace ImageGlass {
             // The file is in current folder AND it is NOT the viewing image
             else {
                 Local.CurrentIndex = imageIndex;
-                NextPic(0);
+                _ = NextPicAsync(0);
             }
         }
 
@@ -364,7 +364,7 @@ namespace ImageGlass {
             }
 
             // Start loading image
-            NextPic(0);
+            _ = NextPicAsync(0);
         }
 
         /// <summary>
@@ -584,7 +584,7 @@ namespace ImageGlass {
         /// <param name="isKeepZoomRatio"></param>
         /// <param name="isSkipCache"></param>
         /// <param name="pageIndex"></param>
-        public async void NextPic(int step, bool isKeepZoomRatio = false, bool isSkipCache = false, int pageIndex = 0) {
+        public async Task NextPicAsync(int step, bool isKeepZoomRatio = false, bool isSkipCache = false, int pageIndex = 0) {
             Timer _loadingTimer = null; // busy state timer
 
             System.Threading.SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
@@ -604,7 +604,7 @@ namespace ImageGlass {
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 2000);
 
                 Application.DoEvents();
-                _ = SaveImageChange();
+                _ = SaveImageChangeAsync();
 
                 // remove the old image data from cache
                 Local.ImageList.Unload(Local.CurrentIndex);
@@ -1106,14 +1106,14 @@ namespace ImageGlass {
             #region LEFT ARROW / PAGE UP
             if (!ignore && e.KeyValue == (int)Keys.Left && hasNoMods) {
                 if (Configs.KeyComboActions[KeyCombos.LeftRight] == AssignableActions.PrevNextImage) {
-                    NextPic(-1);
+                    _ = NextPicAsync(-1);
                 }
                 return; // fall-through lets pan happen
             }
             if (!ignore && e.KeyValue == (int)Keys.PageUp && hasNoMods) {
                 var action = Configs.KeyComboActions[KeyCombos.PageUpDown];
                 if (action == AssignableActions.PrevNextImage) {
-                    NextPic(-1);
+                    _ = NextPicAsync(-1);
                 }
                 else if (action == AssignableActions.ZoomInOut) {
                     mnuMainZoomIn_Click(null, null);
@@ -1128,14 +1128,14 @@ namespace ImageGlass {
             #region RIGHT ARROW / PAGE DOWN
             if (!ignore && e.KeyValue == (int)Keys.Right && hasNoMods) {
                 if (Configs.KeyComboActions[KeyCombos.LeftRight] == AssignableActions.PrevNextImage) {
-                    NextPic(1);
+                    _ = NextPicAsync(1);
                 }
                 return; // fall-through lets pan happen
             }
             if (!ignore && e.KeyValue == (int)Keys.PageDown && hasNoMods) {
                 var action = Configs.KeyComboActions[KeyCombos.PageUpDown];
                 if (action == AssignableActions.PrevNextImage) {
-                    NextPic(1);
+                    _ = NextPicAsync(1);
                 }
                 else if (action == AssignableActions.ZoomInOut) {
                     mnuMainZoomOut_Click(null, null);
@@ -1401,7 +1401,7 @@ namespace ImageGlass {
                     mnuMainSlideShowPause_Click(null, null);
                 }
                 else if (Configs.KeyComboActions[KeyCombos.SpaceBack] == AssignableActions.PrevNextImage) {
-                    NextPic(1);
+                    _ = NextPicAsync(1);
                 }
                 return;
             }
@@ -1411,7 +1411,7 @@ namespace ImageGlass {
             #region Backspace
             if (e.KeyCode == Keys.Back && no_mods) {
                 if (Configs.KeyComboActions[KeyCombos.SpaceBack] == AssignableActions.PrevNextImage) {
-                    NextPic(-1);
+                    _ = NextPicAsync(-1);
                 }
                 return;
             }
@@ -1802,7 +1802,7 @@ namespace ImageGlass {
         /// <summary>
         /// Cut multiple files
         /// </summary>
-        private async Task CutMultiFiles() {
+        private async Task CutMultiFilesAsync() {
             // get filename
             var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
 
@@ -1849,7 +1849,7 @@ namespace ImageGlass {
         /// <summary>
         /// Save all change of image
         /// </summary>
-        private async Task SaveImageChange() {
+        private async Task SaveImageChangeAsync() {
             try {
                 var lastWriteTime = File.GetLastWriteTime(Local.ImageModifiedPath);
                 Bitmap newBitmap;
@@ -1971,7 +1971,7 @@ namespace ImageGlass {
                 Local.ImageList.Channels = (int)selectedChannel;
 
                 // update the viewing image
-                NextPic(0, true, true);
+                _ = NextPicAsync(0, true, true);
 
                 // update cached images
                 Local.ImageList.UpdateCache();
@@ -2181,7 +2181,7 @@ namespace ImageGlass {
         private void CropActionEvent(frmCrop.CropActionEvent actionEvent) {
             switch (actionEvent) {
                 case frmCrop.CropActionEvent.Save:
-                    SaveImageChange();
+                    _ = SaveImageChangeAsync();
                     break;
                 case frmCrop.CropActionEvent.SaveAs:
                     mnuMainSaveAs_Click(null, null);
@@ -2722,7 +2722,7 @@ namespace ImageGlass {
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 1000);
 
                 Application.DoEvents();
-                SaveImageChange();
+                _ = SaveImageChangeAsync();
             }
 
             // Save last seen image path
@@ -2912,10 +2912,10 @@ namespace ImageGlass {
 
                 switch (act) {
                     case Touch.Action.SwipeLeft:
-                        NextPic(1);
+                        _ = NextPicAsync(1);
                         break;
                     case Touch.Action.SwipeRight:
-                        NextPic(-1);
+                        _ = NextPicAsync(-1);
                         break;
                     case Touch.Action.RotateCCW:
                         mnuMainRotateCounterclockwise_Click(null, null);
@@ -3410,7 +3410,7 @@ namespace ImageGlass {
         private void thumbnailBar_ItemClick(object sender, ImageListView.ItemClickEventArgs e) {
             if (e.Buttons == MouseButtons.Left) {
                 Local.CurrentIndex = e.Item.Index;
-                NextPic(0);
+                _ = NextPicAsync(0);
             }
         }
 
@@ -3428,7 +3428,7 @@ namespace ImageGlass {
                     }
                 }
 
-                NextPic(1);
+                _ = NextPicAsync(1);
             }
 
             // update the countdown text
@@ -3531,7 +3531,7 @@ namespace ImageGlass {
             }
 
             if (imgIndex == Local.CurrentIndex) {
-                NextPic(0, true, true);
+                _ = NextPicAsync(0, true, true);
             }
 
             //update thumbnail
@@ -3622,7 +3622,7 @@ namespace ImageGlass {
                     ShowToastMsg(Configs.Language.Items[$"{Name}._ImageNotExist"], 1300);
 
                     if (_queueListForDeleting.Count == 0) {
-                        NextPic(0);
+                        _ = NextPicAsync(0);
                     }
                 }
 
@@ -3729,10 +3729,10 @@ namespace ImageGlass {
                     // check double-click in Navigation regions
                     var navRegion = TestCursorHitNavRegions(e.Location);
                     if (navRegion?.Type == NavigationRegionType.Left) {
-                        NextPic(-1);
+                        _ = NextPicAsync(-1);
                     }
                     else if (navRegion?.Type == NavigationRegionType.Right) {
-                        NextPic(1);
+                        _ = NextPicAsync(1);
                     }
                     else {
                         if (picMain.Zoom < 100) {
@@ -4212,7 +4212,7 @@ namespace ImageGlass {
 
         private void mnuMainReloadImage_Click(object sender, EventArgs e) {
             //Reload the viewing image
-            NextPic(step: 0, isKeepZoomRatio: false, isSkipCache: true);
+            _ = NextPicAsync(step: 0, isKeepZoomRatio: false, isSkipCache: true);
         }
 
         private void MnuMainReloadImageList_Click(object sender, EventArgs e) {
@@ -4299,11 +4299,11 @@ namespace ImageGlass {
 
 
         private void mnuMainViewNext_Click(object sender, EventArgs e) {
-            NextPic(1);
+            _ = NextPicAsync(1);
         }
 
         private void mnuMainViewPrevious_Click(object sender, EventArgs e) {
-            NextPic(-1);
+            _ = NextPicAsync(-1);
         }
 
         private void mnuMainGoto_Click(object sender, EventArgs e) {
@@ -4329,40 +4329,40 @@ namespace ImageGlass {
                     newIndex = Local.ImageList.Length - 1;
 
                 Local.CurrentIndex = newIndex;
-                NextPic(0);
+                _ = NextPicAsync(0);
             }
         }
 
         private void mnuMainGotoFirst_Click(object sender, EventArgs e) {
             Local.CurrentIndex = 0;
-            NextPic(0);
+            _ = NextPicAsync(0);
         }
 
         private void mnuMainGotoLast_Click(object sender, EventArgs e) {
             Local.CurrentIndex = Local.ImageList.Length - 1;
-            NextPic(0);
+            _ = NextPicAsync(0);
         }
 
         private void mnuMainPrevPage_Click(object sender, EventArgs e) {
             Local.CurrentPageIndex--;
-            NextPic(0, pageIndex: Local.CurrentPageIndex);
+            _ = NextPicAsync(0, pageIndex: Local.CurrentPageIndex);
         }
 
         private void mnuMainNextPage_Click(object sender, EventArgs e) {
             Local.CurrentPageIndex++;
-            NextPic(0, pageIndex: Local.CurrentPageIndex);
+            _ = NextPicAsync(0, pageIndex: Local.CurrentPageIndex);
         }
 
         private void mnuMainFirstPage_Click(object sender, EventArgs e) {
             Local.CurrentPageIndex = 0;
-            NextPic(0, pageIndex: Local.CurrentPageIndex);
+            _ = NextPicAsync(0, pageIndex: Local.CurrentPageIndex);
         }
 
         private async void mnuMainLastPage_Click(object sender, EventArgs e) {
             var img = await Local.ImageList.GetImgAsync(Local.CurrentIndex).ConfigureAwait(true);
 
             Local.CurrentPageIndex = img.PageCount - 1;
-            NextPic(0, pageIndex: Local.CurrentPageIndex);
+            _ = NextPicAsync(0, pageIndex: Local.CurrentPageIndex);
         }
 
         private void mnuMainFullScreen_Click(object sender, EventArgs e) {
@@ -4471,7 +4471,7 @@ namespace ImageGlass {
                 return;
             }
 
-            picMain.Image = await Heart.Photo.RotateImage(new Bitmap(picMain.Image), 270).ConfigureAwait(true);
+            picMain.Image = await Heart.Photo.RotateImageAsync(new Bitmap(picMain.Image), 270).ConfigureAwait(true);
 
             if (!Local.IsTempMemoryData) {
                 // Save the image path for saving
@@ -4489,7 +4489,7 @@ namespace ImageGlass {
                 return;
             }
 
-            picMain.Image = await Heart.Photo.RotateImage(new Bitmap(picMain.Image), 90).ConfigureAwait(true);
+            picMain.Image = await Heart.Photo.RotateImageAsync(new Bitmap(picMain.Image), 90).ConfigureAwait(true);
 
             if (!Local.IsTempMemoryData) {
                 // Save the image path for saving
@@ -4507,7 +4507,7 @@ namespace ImageGlass {
                 return;
             }
 
-            picMain.Image = await Heart.Photo.Flip(new Bitmap(picMain.Image), isHorzontal: true).ConfigureAwait(true);
+            picMain.Image = await Heart.Photo.FlipAsync(new Bitmap(picMain.Image), isHorzontal: true).ConfigureAwait(true);
 
             if (!Local.IsTempMemoryData) {
                 // Save the image path for saving
@@ -4523,7 +4523,7 @@ namespace ImageGlass {
                 return;
             }
 
-            picMain.Image = await Heart.Photo.Flip(new Bitmap(picMain.Image), isHorzontal: false).ConfigureAwait(true);
+            picMain.Image = await Heart.Photo.FlipAsync(new Bitmap(picMain.Image), isHorzontal: false).ConfigureAwait(true);
 
             if (!Local.IsTempMemoryData) {
                 // Save the image path for saving
@@ -4686,7 +4686,7 @@ namespace ImageGlass {
 
             if (result == DialogResult.OK && Directory.Exists(fb.SelectedPath)) {
                 var img = await Local.ImageList.GetImgAsync(Local.CurrentIndex).ConfigureAwait(true);
-                await img.SaveImagePages(fb.SelectedPath).ConfigureAwait(true);
+                await img.SaveImagePagesAsync(fb.SelectedPath).ConfigureAwait(true);
 
                 ShowToastMsg(Configs.Language.Items[$"{Name}._PageExtractComplete"], 2000);
             }
@@ -4797,7 +4797,7 @@ namespace ImageGlass {
         }
 
         private void mnuMainCut_Click(object sender, EventArgs e) {
-            CutMultiFiles();
+            _ = CutMultiFilesAsync();
         }
 
         private void mnuMainCopyImageData_Click(object sender, EventArgs e) {
