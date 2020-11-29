@@ -813,6 +813,10 @@ namespace ImageGlass {
                 this.Text = "";
                 return;
             }
+            else if (!string.IsNullOrWhiteSpace(text)) {
+                this.Text = text;
+                return;
+            }
 
             var appName = Application.ProductName;
             const string SEP = "  |  ";

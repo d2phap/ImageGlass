@@ -54,15 +54,14 @@ namespace ImageGlass.Base {
         /// <summary>
         /// Number format to use for save/restore ImageGlass settings
         /// </summary>
-        public static NumberFormatInfo NumberFormat => new NumberFormatInfo {
+        public static NumberFormatInfo NumberFormat => new() {
             NegativeSign = "-",
         };
 
         /// <summary>
         /// Gets the default set of keycombo actions
         /// </summary>
-        public static Dictionary<KeyCombos, AssignableActions> DefaultKeycomboActions => new Dictionary<KeyCombos, AssignableActions>
-        {
+        public static Dictionary<KeyCombos, AssignableActions> DefaultKeycomboActions => new() {
             { KeyCombos.LeftRight, AssignableActions.PrevNextImage },
             { KeyCombos.PageUpDown, AssignableActions.PrevNextImage },
             { KeyCombos.SpaceBack, AssignableActions.PauseSlideshow },
@@ -72,8 +71,7 @@ namespace ImageGlass.Base {
         /// <summary>
         /// Gets the default set of toolbar buttons
         /// </summary>
-        public static List<ToolbarButton> DefaultToolbarButtons => new List<ToolbarButton>
-        {
+        public static List<ToolbarButton> DefaultToolbarButtons => new() {
             ToolbarButton.btnBack,
             ToolbarButton.btnNext,
             ToolbarButton.Separator,

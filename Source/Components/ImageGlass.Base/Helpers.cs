@@ -29,6 +29,9 @@ namespace ImageGlass.Base {
     /// The helper functions used globally
     /// </summary>
     public static class Helpers {
+
+        #region Public functions
+
         /// <summary>
         /// Check if the given path (file or directory) is writable.
         /// </summary>
@@ -130,7 +133,7 @@ namespace ImageGlass.Base {
         /// <param name="rect"></param>
         /// <returns></returns>
         public static bool IsVisibleOnAnyScreen(Rectangle rect) {
-            foreach (var screen in System.Windows.Forms.Screen.AllScreens) {
+            foreach (var screen in Screen.AllScreens) {
                 if (screen.WorkingArea.IntersectsWith(rect))
                     return true;
             }
@@ -151,6 +154,8 @@ namespace ImageGlass.Base {
                                       .Concat(controls)
                                       .Where(c => c.GetType() == type);
         }
+
+        #endregion
 
 
         #region Private functions

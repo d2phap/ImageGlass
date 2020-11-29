@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2019 DUONG DIEU PHAP
+Copyright (C) 2021 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -48,40 +48,16 @@ namespace ImageGlass.Base {
         public ThumbnailItemInfo(uint dimension, bool isHorizontalView) {
             if (isHorizontalView) {
                 Dimension = dimension;
-                //ExtraSpace = 58;
             }
             else {
-                switch (dimension) {
-                    case 32:
-                        Dimension = 32;
-                        //ExtraSpace = 48;
-                        break;
-
-                    case 48:
-                        Dimension = 48;
-                        //ExtraSpace = 52;
-                        break;
-
-                    case 64:
-                        Dimension = 64;
-                        //ExtraSpace = 57;
-                        break;
-
-                    case 96:
-                        Dimension = 96;
-                        //ExtraSpace = 69;
-                        break;
-
-                    case 128:
-                        Dimension = 128;
-                        //ExtraSpace = 79;
-                        break;
-
-                    default:
-                        Dimension = 48;
-                        //ExtraSpace = 57;
-                        break;
-                }
+                Dimension = dimension switch {
+                    32 => 32,
+                    48 => 48,
+                    64 => 64,
+                    96 => 96,
+                    128 => 128,
+                    _ => 48,
+                };
             }
             ExtraSpace = 0;
         }
