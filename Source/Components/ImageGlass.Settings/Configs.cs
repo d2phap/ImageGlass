@@ -1146,13 +1146,9 @@ namespace ImageGlass.Settings {
             }
 
             // Icon theming
-            if (!th.IsShowTitlebarLogo || IsUseEmptyTitleBar) {
+            if (!th.IsShowTitlebarLogo) {
                 frm.Icon = Icon.FromHandle(new Bitmap(64, 64).GetHicon());
                 FormIcon.SetTaskbarIcon(frm, th.Logo.Image.GetHicon());
-
-                if (IsUseEmptyTitleBar) {
-                    frm.Text = "";
-                }
             }
             else {
                 frm.Icon = Icon.FromHandle(th.Logo.Image.GetHicon());

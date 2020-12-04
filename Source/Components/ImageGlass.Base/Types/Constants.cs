@@ -93,7 +93,6 @@ namespace ImageGlass.Base {
 
             ToolbarButton.btnOpen,
             ToolbarButton.btnRefresh,
-            ToolbarButton.btnGoto,
             ToolbarButton.Separator,
 
             ToolbarButton.btnWindowFit,
