@@ -1601,7 +1601,7 @@ namespace ImageGlass {
 
                 if (s.ShowDialog() == DialogResult.OK) {
                     var themeName = lvTheme.SelectedItems[0].Tag.ToString();
-                    var configFilePath = App.ConfigDir(PathType.File, Dir.Themes, themeName, "igtheme.xml");
+                    var configFilePath = App.ConfigDir(PathType.File, Dir.Themes, themeName, Theme.CONFIG_FILE);
 
                     var themeDir = Path.GetDirectoryName(configFilePath);
                     var result = Theme.PackTheme(themeDir, s.FileName);

@@ -34,6 +34,16 @@ using System.Xml;
 namespace ImageGlass.UI {
     public partial class Theme {
 
+        /// <summary>
+        /// Filename of theme configuration since v8.0
+        /// </summary>
+        public static string CONFIG_FILE { get; } = "igtheme.xml";
+
+        /// <summary>
+        /// Legacy filename of theme configuration
+        /// </summary>
+        private const string LEGACY_CONFIG_FILE = "config.xml";
+
 
         #region PUBLIC PROPERTIES
 
@@ -43,7 +53,7 @@ namespace ImageGlass.UI {
         public string FolderName { get; internal set; }
 
         /// <summary>
-        /// Get theme config file path (igtheme.xml)
+        /// Get theme config file path (<see cref="CONFIG_FILE"/>)
         /// </summary>
         public string ConfigFilePath { get; internal set; }
 
@@ -97,7 +107,7 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Minimum version of this theme work with
         /// </summary>
-        public string Compatibility { get; set; } = string.Empty;
+        public string Compatibility { get; set; } = "8.0";
         #endregion
 
 
@@ -313,6 +323,37 @@ namespace ImageGlass.UI {
             #endregion
         }
 
+
+        /// <summary>
+        /// Check and process legacy configuration file
+        /// </summary>
+        /// <param name="themeFolderPath"></param>
+        /// <param name="useDefaultIfNotFound">Returns default theme configuration file (<see cref="CONFIG_FILE"/>) if not found</param>
+        /// <returns></returns>
+        private static string ProcessLegacyTheme(string themeFolderPath, bool useDefaultIfNotFound = true) {
+            var configFilePath = Path.Combine(themeFolderPath, CONFIG_FILE);
+
+            if (!File.Exists(configFilePath)) {
+                var legacyConfigFilePath = Path.Combine(themeFolderPath, LEGACY_CONFIG_FILE);
+
+                if (File.Exists(legacyConfigFilePath)) {
+                    configFilePath = legacyConfigFilePath;
+                }
+                else {
+                    // use default theme
+                    if (useDefaultIfNotFound) {
+                        configFilePath = App.StartUpDir(Dir.Themes, Constants.DEFAULT_THEME, CONFIG_FILE);
+                    }
+                    else {
+                        configFilePath = "";
+                    }
+                }
+            }
+
+            return configFilePath;
+        }
+
+
         /// <summary>
         /// Read theme data from theme configuration file (Version 1.5+).
         /// Return TRUE if successful, FALSE if the theme format is invalid
@@ -321,18 +362,13 @@ namespace ImageGlass.UI {
         /// <param name="themeFolderPath">The absolute path of theme folder.</param>
         /// <returns></returns>
         public bool LoadTheme(int iconHeight, string themeFolderPath) {
-            var configFilePath = Path.Combine(themeFolderPath, "igtheme.xml");
-
-            if (!File.Exists(configFilePath)) {
-                configFilePath = App.StartUpDir(Dir.Themes, Constants.DEFAULT_THEME, "igtheme.xml");
-            }
-
-            this.ConfigFilePath = configFilePath;
+            // check and process legacy config filename
+            this.ConfigFilePath = ProcessLegacyTheme(themeFolderPath);
             this.FolderName = Path.GetFileName(themeFolderPath); // get folder name
 
-            var dir = Path.GetDirectoryName(configFilePath);
+            var dir = Path.GetDirectoryName(this.ConfigFilePath);
             var doc = new XmlDocument();
-            doc.Load(configFilePath);
+            doc.Load(this.ConfigFilePath);
 
             var root = doc.DocumentElement;
             XmlElement nType = null;
@@ -624,12 +660,12 @@ namespace ImageGlass.UI {
             root.AppendChild(nType);
             doc.AppendChild(root);
 
-            //create temp directory of theme
+            // create temp directory of theme
             if (Directory.Exists(dir)) {
                 Directory.CreateDirectory(dir);
             }
 
-            doc.Save(Path.Combine(dir, "igtheme.xml")); //save file
+            doc.Save(Path.Combine(dir, Theme.CONFIG_FILE)); //save file
         }
 
         #endregion
@@ -667,6 +703,7 @@ namespace ImageGlass.UI {
                 _extractThemeResult = ThemeInstallingResult.SUCCESS;
             }
         }
+
         #endregion
 
 
@@ -702,7 +739,7 @@ namespace ImageGlass.UI {
             var allThemes = new List<Theme>(allThemePaths.Count);
 
             foreach (var dir in allThemePaths) {
-                var configFile = Path.Combine(dir, "igtheme.xml");
+                var configFile = ProcessLegacyTheme(dir, false);
 
                 if (File.Exists(configFile)) {
                     var th = new Theme(themeFolderPath: dir);
@@ -741,7 +778,7 @@ namespace ImageGlass.UI {
         /// <param name="themeFolderName">The theme folder name</param>
         /// <returns></returns>
         public static ThemeUninstallingResult UninstallTheme(string themeFolderName) {
-            var fullConfigPath = App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName, "igtheme.xml");
+            var fullConfigPath = App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName, Theme.CONFIG_FILE);
 
             if (File.Exists(fullConfigPath)) {
                 var dir = Path.GetDirectoryName(fullConfigPath);
@@ -773,10 +810,10 @@ namespace ImageGlass.UI {
 
             var th = new Theme(Constants.DEFAULT_TOOLBAR_ICON_HEIGHT, themeFolderPath);
 
-            //updated theme config file
+            // updated theme config file
             th.SaveAsThemeConfigs(themeFolderPath);
 
-            //if file exist, rename & backup
+            // if file exist, rename & backup
             if (File.Exists(outputThemeFile)) {
                 File.Move(outputThemeFile, outputThemeFile + ".old");
             }
