@@ -487,7 +487,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets theme
         /// </summary>
-        public static Theme Theme { get; set; } = new((int)ToolbarIconHeight);
+        public static Theme Theme { get; set; }
 
         #endregion
 

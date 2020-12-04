@@ -22,7 +22,7 @@ using System.Windows.Forms;
 
 namespace ImageGlass.UI.Renderers {
     public class ModernMenuRenderer: ToolStripProfessionalRenderer {
-        private Theme theme { get; set; } = new Theme();
+        private Theme theme { get; set; }
 
         public ModernMenuRenderer(Theme theme) : base(new ModernColors(theme)) {
             this.theme = theme;
@@ -182,7 +182,7 @@ namespace ImageGlass.UI.Renderers {
         public override Color ButtonSelectedBorder => Color.Transparent;
         public override Color ToolStripDropDownBackground => base.ToolStripDropDownBackground;
 
-        private Theme theme { get; set; } = new Theme();
+        private Theme theme { get; set; }
 
         public ModernColors(Theme theme) {
             this.theme = theme;
