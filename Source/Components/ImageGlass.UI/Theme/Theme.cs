@@ -35,6 +35,11 @@ namespace ImageGlass.UI {
     public partial class Theme {
 
         /// <summary>
+        /// Theme API version, to check compatibility
+        /// </summary>
+        public string CONFIG_VERSION { get; } = "8";
+
+        /// <summary>
         /// Filename of theme configuration since v8.0
         /// </summary>
         public static string CONFIG_FILE { get; } = "igtheme.xml";
@@ -105,9 +110,9 @@ namespace ImageGlass.UI {
         public string Type { get; set; } = string.Empty;
 
         /// <summary>
-        /// Minimum version of this theme work with
+        /// Config version of this theme to work with
         /// </summary>
-        public string Compatibility { get; set; } = "8.0";
+        public string ConfigVersion { get; set; } = "";
         #endregion
 
 
@@ -399,7 +404,10 @@ namespace ImageGlass.UI {
             catch { }
             try { Type = n.GetAttribute("type"); }
             catch { }
-            try { Compatibility = n.GetAttribute("compatibility"); }
+            try {
+                ConfigVersion = n.GetAttribute("configversion");
+                ConfigVersion = string.IsNullOrWhiteSpace(ConfigVersion) ? CONFIG_VERSION : ConfigVersion;
+            }
             catch { }
             #endregion
 
@@ -581,8 +589,6 @@ namespace ImageGlass.UI {
         /// </summary>
         /// <param name="dir"></param>
         public void SaveAsThemeConfigs(string dir) {
-            Compatibility = "5.0";
-
             var doc = new XmlDocument();
             var root = doc.CreateElement("ImageGlass");//<ImageGlass>
             var nType = doc.CreateElement("Theme");//<Theme>
@@ -595,7 +601,7 @@ namespace ImageGlass.UI {
             n.SetAttribute("website", Website);
             n.SetAttribute("description", Description);
             n.SetAttribute("type", "ImageGlass Theme Configuration");
-            n.SetAttribute("compatibility", Compatibility);
+            n.SetAttribute("configversion", CONFIG_VERSION);
             n.SetAttribute("preview", Path.GetFileName(PreviewImage.Filename));
             nType.AppendChild(n);
 

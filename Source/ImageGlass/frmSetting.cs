@@ -1540,7 +1540,7 @@ namespace ImageGlass {
                     $"{lang[$"{this.Name}.txtThemeInfo._Author"]}: {th.Author}\r\n" +
                     $"{lang[$"{this.Name}.txtThemeInfo._Email"]}: {th.Email}\r\n" +
                     $"{lang[$"{this.Name}.txtThemeInfo._Website"]}: {th.Website}\r\n" +
-                    $"{lang[$"{this.Name}.txtThemeInfo._Compatibility"]}: {th.Compatibility}\r\n" +
+                    $"{lang[$"{this.Name}.txtThemeInfo._Compatibility"]}: {th.ConfigVersion}\r\n" +
                     $"{lang[$"{this.Name}.txtThemeInfo._Description"]}: {th.Description}";
 
                 txtThemeInfo.Visible = true;
