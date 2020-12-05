@@ -781,24 +781,19 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Uninstall ImageGlass theme pack
         /// </summary>
-        /// <param name="themeFolderName">The theme folder name</param>
+        /// <param name="themeFolderPath">The theme folder path</param>
         /// <returns></returns>
-        public static ThemeUninstallingResult UninstallTheme(string themeFolderName) {
-            var fullConfigPath = App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName, Theme.CONFIG_FILE);
-
-            if (File.Exists(fullConfigPath)) {
-                var dir = Path.GetDirectoryName(fullConfigPath);
-
-                try {
-                    Directory.Delete(dir, true);
-                }
-                catch {
-                    return ThemeUninstallingResult.ERROR;
-                }
+        public static ThemeUninstallingResult UninstallTheme(string themeFolderPath) {
+            try {
+                Directory.Delete(themeFolderPath, true);
             }
-            else {
+            catch (DirectoryNotFoundException) {
                 return ThemeUninstallingResult.ERROR_THEME_NOT_FOUND;
             }
+            catch {
+                return ThemeUninstallingResult.ERROR;
+            }
+
 
             return ThemeUninstallingResult.SUCCESS;
         }

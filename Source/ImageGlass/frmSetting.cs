@@ -1583,8 +1583,8 @@ namespace ImageGlass {
 
         private void btnThemeUninstall_Click(object sender, EventArgs e) {
             if (lvTheme.SelectedItems.Count > 0) {
-                var themeName = lvTheme.SelectedItems[0].Tag.ToString();
-                var result = Theme.UninstallTheme(themeName);
+                var themeDir = lvTheme.SelectedItems[0].Tag.ToString();
+                var result = Theme.UninstallTheme(themeDir);
 
                 if (result == ThemeUninstallingResult.SUCCESS) {
                     _ = RefreshThemeListAsync();
@@ -1609,10 +1609,7 @@ namespace ImageGlass {
                 };
 
                 if (s.ShowDialog() == DialogResult.OK) {
-                    var themeName = lvTheme.SelectedItems[0].Tag.ToString();
-                    var configFilePath = App.ConfigDir(PathType.File, Dir.Themes, themeName, Theme.CONFIG_FILE);
-
-                    var themeDir = Path.GetDirectoryName(configFilePath);
+                    var themeDir = lvTheme.SelectedItems[0].Tag.ToString();
                     var result = Theme.PackTheme(themeDir, s.FileName);
 
                     if (result == ThemePackingResult.SUCCESS) {
@@ -1632,10 +1629,9 @@ namespace ImageGlass {
 
         private void btnThemeApply_Click(object sender, EventArgs e) {
             if (lvTheme.SelectedItems.Count > 0) {
-                var themeFolderName = lvTheme.SelectedItems[0].Tag.ToString();
-                var themeFolderPath = App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName);
+                var themeDir = lvTheme.SelectedItems[0].Tag.ToString();
 
-                var th = new Theme((int)Configs.ToolbarIconHeight, themeFolderPath);
+                var th = new Theme((int)Configs.ToolbarIconHeight, themeDir);
 
                 if (th.IsValid) {
                     Configs.Theme = th;
