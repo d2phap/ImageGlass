@@ -55,7 +55,7 @@ namespace ImageGlass {
         private readonly Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 176, 181, 183);
         private readonly Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 160, 165, 168);
 
-        private List<Language> lstLanguages = new List<Language>();
+        private List<Language> lstLanguages = new();
 
         #region Toolbar
         private string _separatorText; // Text used in lists to represent separator bar

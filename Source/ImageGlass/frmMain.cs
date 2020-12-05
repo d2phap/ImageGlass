@@ -73,7 +73,7 @@ namespace ImageGlass {
         #region Local variables
 
         // window size value before resizing
-        private Size _windowSize = new Size(1300, 800);
+        private Size _windowSize = new(1300, 800);
 
         // determine if the image is zoomed
         private bool _isManuallyZoomed;
@@ -102,21 +102,21 @@ namespace ImageGlass {
         // slideshow countdown interval
         private uint _slideshowCountdown = 5;
 
-        private readonly ToolFormManager _toolManager = new ToolFormManager();
+        private readonly ToolFormManager _toolManager = new();
 
         private MovableForm _movableForm;
 
         // gets, sets the CancellationTokenSource of synchronious image loading task
-        private System.Threading.CancellationTokenSource _cancelToken = new System.Threading.CancellationTokenSource();
+        private System.Threading.CancellationTokenSource _cancelToken = new();
 
         /***********************************
          * Variables for FileWatcherEx
          ***********************************/
         // the list of local deleted files, need to be deleted in the memory list
-        private readonly List<string> _queueListForDeleting = new List<string>();
+        private readonly List<string> _queueListForDeleting = new();
 
         // File system watcher
-        private FileWatcherEx.FileWatcherEx _fileWatcher = new FileWatcherEx.FileWatcherEx();
+        private FileWatcherEx.FileWatcherEx _fileWatcher = new();
 
         private readonly bool _isWindows10;
 
@@ -374,8 +374,8 @@ namespace ImageGlass {
             var pathToWatch = Heart.Helpers.DePrefixLongPath(dirPath);
 
             //Watch all changes of current path
-            this._fileWatcher.Stop();
-            this._fileWatcher = new FileWatcherEx.FileWatcherEx() {
+            _fileWatcher.Stop();
+            _fileWatcher = new FileWatcherEx.FileWatcherEx() {
                 FolderPath = pathToWatch,
                 IncludeSubdirectories = Configs.IsRecursiveLoading,
 
@@ -383,12 +383,12 @@ namespace ImageGlass {
                 SynchronizingObject = this
             };
 
-            this._fileWatcher.OnCreated += FileWatcher_OnCreated;
-            this._fileWatcher.OnDeleted += FileWatcher_OnDeleted;
-            this._fileWatcher.OnChanged += FileWatcher_OnChanged;
-            this._fileWatcher.OnRenamed += FileWatcher_OnRenamed;
+            _fileWatcher.OnCreated += FileWatcher_OnCreated;
+            _fileWatcher.OnDeleted += FileWatcher_OnDeleted;
+            _fileWatcher.OnChanged += FileWatcher_OnChanged;
+            _fileWatcher.OnRenamed += FileWatcher_OnRenamed;
 
-            this._fileWatcher.Start();
+            _fileWatcher.Start();
         }
 
         private void ImageList_OnFinishLoadingImage(object sender, EventArgs e) {
@@ -2582,7 +2582,7 @@ namespace ImageGlass {
 
 
                 #region Load Frameless mode
-                this._movableForm = new MovableForm(this) {
+                _movableForm = new MovableForm(this) {
                     Key = Keys.ShiftKey | Keys.Shift,
                     FreeMoveControlNames = new HashSet<string>()
                     {

@@ -36,7 +36,7 @@ namespace ImageGlass {
         }
 
 
-        private readonly ExifToolWrapper exifTool = new ExifToolWrapper(Configs.ExifToolExePath);
+        private readonly ExifToolWrapper exifTool = new(Configs.ExifToolExePath);
 
 
         #region Form events

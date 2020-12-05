@@ -97,15 +97,14 @@ namespace ImageGlass {
 
             #region Check First-launch Configs
             if (Configs.FirstLaunchVersion < Constants.FIRST_LAUNCH_VERSION) {
-                using (var p = new Process()) {
-                    p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
-                    p.StartInfo.Arguments = "firstlaunch";
+                using var p = new Process();
+                p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
+                p.StartInfo.Arguments = "firstlaunch";
 
-                    try {
-                        p.Start();
-                    }
-                    catch { }
+                try {
+                    p.Start();
                 }
+                catch { }
 
                 Application.Exit();
                 return;
@@ -171,18 +170,18 @@ namespace ImageGlass {
 
             // KBR 20181009 Attempt to run a 2nd instance of IG when multi-instance turned off. Primary instance
             // will crash if no file provided (e.g. by double-clicking on .EXE in explorer).
-            var realcount = 0;
+            var realCount = 0;
             foreach (var arg in e.Args) {
                 if (arg != null) {
-                    realcount++;
+                    realCount++;
                 }
             }
 
-            var realargs = new string[realcount];
-            Array.Copy(e.Args, realargs, realcount);
+            var realArgs = new string[realCount];
+            Array.Copy(e.Args, realArgs, realCount);
 
             // Execute our delegate on the forms thread!
-            formMain.Invoke(UpdateForm, (object)realargs);
+            formMain.Invoke(UpdateForm, (object)realArgs);
 
             // send our Win32 message to bring ImageGlass dialog to top
             NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);

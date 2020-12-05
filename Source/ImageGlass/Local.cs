@@ -45,7 +45,7 @@ namespace ImageGlass {
         /// <summary>
         /// Gets, sets image list
         /// </summary>
-        public static Factory ImageList { get; set; } = new Factory();
+        public static Factory ImageList { get; set; } = new();
 
         /// <summary>
         /// Gets, sets image error value
@@ -82,7 +82,7 @@ namespace ImageGlass {
         /// <summary>
         /// Gets, sets copied filename collection (multi-copy)
         /// </summary>
-        public static List<string> StringClipboard { get; set; } = new List<string>();
+        public static List<string> StringClipboard { get; set; } = new();
 
         /// <summary>
         /// Gets, sets value indicating that the image we are processing is memory data (clipboard / screenshot,...) or not
@@ -146,7 +146,7 @@ namespace ImageGlass {
         /// <summary>
         /// Gets, sets the list of navigation regions
         /// </summary>
-        public static List<NavigationRegion> NavRegions { get; set; } = new List<NavigationRegion>();
+        public static List<NavigationRegion> NavRegions { get; set; } = new();
 
 
         /// <summary>
