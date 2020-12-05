@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -1489,16 +1490,24 @@ namespace ImageGlass {
             lvTheme.Enabled = false;
             this.Cursor = Cursors.WaitCursor;
 
-            // load all theme packs
-            var lstThemes = await Theme.GetAllThemePacksAsync();
+            // get default theme dir
+            var defaultThemePath = App.StartUpDir(Dir.Themes, Constants.DEFAULT_THEME, Theme.CONFIG_FILE);
+
+            // load all theme packs, sorted the default theme first
+            var lstThemes = (await Theme.GetAllThemePacksAsync())
+                .OrderBy(i => i.ConfigFilePath != defaultThemePath)
+                .ToList();
 
             // add themes to the listview
-            foreach (var th in lstThemes) {
+            for (var i = 0; i < lstThemes.Count(); i++) {
+                var isDefault = i == 0;
+                var th = lstThemes[i];
                 var themePath = Path.GetDirectoryName(th.ConfigFilePath);
+                var themeName = th.Name + (isDefault ? " ⭐⭐⭐" : "");
 
-                var lvi = new ListViewItem(th.Name) {
-                    // get name of the theme folder
-                    Tag = Path.GetFileName(themePath),
+                var lvi = new ListViewItem(themeName) {
+                    // store full path of theme
+                    Tag = themePath,
                     ImageKey = "_blank",
                     ToolTipText = themePath,
                 };
@@ -1515,7 +1524,7 @@ namespace ImageGlass {
             lvTheme.Enabled = true;
             this.Cursor = Cursors.Default;
 
-            lblInstalledThemes.Text = string.Format(Configs.Language.Items[$"{this.Name}.lblInstalledThemes"], lvTheme.Items.Count.ToString());
+            lblInstalledThemes.Text = string.Format(Configs.Language.Items[$"{Name}.lblInstalledThemes"], lvTheme.Items.Count.ToString());
         }
 
         private void btnThemeRefresh_Click(object sender, EventArgs e) {
@@ -1526,22 +1535,22 @@ namespace ImageGlass {
             var lang = Configs.Language.Items;
 
             if (lvTheme.SelectedIndices.Count > 0) {
+                var defaultThemeDir = App.StartUpDir(Dir.Themes, Constants.DEFAULT_THEME);
+                var themeDir = lvTheme.SelectedItems[0].Tag.ToString();
+                var th = new Theme((int)Configs.ToolbarIconHeight, themeDir);
+
                 btnThemeSaveAs.Enabled = true;
-                btnThemeUninstall.Enabled = true;
-
-                var themeName = lvTheme.SelectedItems[0].Tag.ToString();
-                var th = new Theme((int)Configs.ToolbarIconHeight, App.ConfigDir(PathType.Dir, Dir.Themes, themeName));
-
+                btnThemeUninstall.Enabled = defaultThemeDir.CompareTo(themeDir) != 0;
                 picPreview.BackgroundImage = th.PreviewImage.Image;
 
                 txtThemeInfo.Text =
-                    $"{lang[$"{this.Name}.txtThemeInfo._Name"]}: {th.Name}\r\n" +
-                    $"{lang[$"{this.Name}.txtThemeInfo._Version"]}: {th.Version}\r\n" +
-                    $"{lang[$"{this.Name}.txtThemeInfo._Author"]}: {th.Author}\r\n" +
-                    $"{lang[$"{this.Name}.txtThemeInfo._Email"]}: {th.Email}\r\n" +
-                    $"{lang[$"{this.Name}.txtThemeInfo._Website"]}: {th.Website}\r\n" +
-                    $"{lang[$"{this.Name}.txtThemeInfo._Compatibility"]}: {th.ConfigVersion}\r\n" +
-                    $"{lang[$"{this.Name}.txtThemeInfo._Description"]}: {th.Description}";
+                    $"{lang[$"{Name}.txtThemeInfo._Name"]}: {th.Name}\r\n" +
+                    $"{lang[$"{Name}.txtThemeInfo._Version"]}: {th.Version}\r\n" +
+                    $"{lang[$"{Name}.txtThemeInfo._Author"]}: {th.Author}\r\n" +
+                    $"{lang[$"{Name}.txtThemeInfo._Email"]}: {th.Email}\r\n" +
+                    $"{lang[$"{Name}.txtThemeInfo._Website"]}: {th.Website}\r\n" +
+                    $"{lang[$"{Name}.txtThemeInfo._Compatibility"]}: {th.ConfigVersion}\r\n" +
+                    $"{lang[$"{Name}.txtThemeInfo._Description"]}: {th.Description}";
 
                 txtThemeInfo.Visible = true;
             }
