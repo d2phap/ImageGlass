@@ -4093,9 +4093,9 @@ namespace ImageGlass {
                 return;
             }
 
-            var filename = "untitled.png";
-            if (Local.CurrentIndex >= 0) {
-                filename = Local.ImageList.GetFileName(Local.CurrentIndex);
+            var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
+            if (string.IsNullOrEmpty(filename)) {
+                filename = "untitled.png";
             }
 
             var ext = Path.GetExtension(filename).Substring(1);
