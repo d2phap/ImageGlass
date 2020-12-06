@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="sr-CS" langName="Srpski" author="Đorđe Vasiljević" description="Serbian (Latin)" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="Neka podešavanja nisu kompatibilna sa ImageGlassom {0}. Ažurirajte ih pre nego što nastavite.&#10;&#10;— Pritisnite „Da” da biste pogledali izmene.&#10;— Pritisnite „Ne” da biste pokrenuli ImageGlass sa podrazumevanim podešavanjima."/>
+      <Item key="_.ImageOrderBy._Name" value="Ime (podrazumevano)"/>
+      <Item key="_.ImageOrderBy._Length" value="Veličina"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Datum kreiranja"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Vreme poslednjeg pristupa"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Vreme poslednjeg upisa"/>
+      <Item key="_.ImageOrderBy._Extension" value="Ekstenzija"/>
+      <Item key="_.ImageOrderBy._Random" value="Nasumično"/>
+      <Item key="_.ImageOrderType._Asc" value="rastuće"/>
+      <Item key="_.ImageOrderType._Desc" value="opadajuće"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="ne radi ništa"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="umanji"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Zatvori"/>
+      <Item key="frmMain.mnuMainFile" value="Datoteka"/>
+      <Item key="frmMain.mnuMainOpenFile" value="Otvori datoteku…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Otvori sliku iz privremene memorije"/>
+      <Item key="frmMain.mnuMainNewWindow" value="Otvori novi prozor"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Nije moguće otvoriti novi prozor jer je dozvoljena samo jedna instanca programa"/>
+      <Item key="frmMain.mnuMainSaveAs" value="Sačuvaj kao…"/>
+      <Item key="frmMain.mnuMainRefresh" value="Osveži"/>
+      <Item key="frmMain.mnuMainReloadImage" value="Ponovo učitaj sliku"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="Ponovo učitaj listu slika"/>
+      <Item key="frmMain.mnuOpenWith" value="Otvori pomoću…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Uredi sliku {0}…"/>
+      <Item key="frmMain.mnuMainPrint" value="Odštampaj…"/>
+      <Item key="frmMain.mnuMainNavigation" value="Navigacija"/>
+      <Item key="frmMain.mnuMainViewNext" value="Sledeća slika"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="strelica udesno / Page Down"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="Prethodna slika"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="strelica ulevo / Page Up"/>
+      <Item key="frmMain.mnuMainGoto" value="Idi na…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="Prva slika"/>
+      <Item key="frmMain.mnuMainGotoLast" value="Poslednja slika"/>
+      <Item key="frmMain.mnuMainNextPage" value="Sledeća stranica"/>
+      <Item key="frmMain.mnuMainPrevPage" value="Prethodna stranica"/>
+      <Item key="frmMain.mnuMainFirstPage" value="Prva stranica"/>
+      <Item key="frmMain.mnuMainLastPage" value="Poslednja stranica"/>
+      <Item key="frmMain.mnuMainZoom" value="zumiranje"/>
+      <Item key="frmMain.mnuMainZoomIn" value="Uvećaj"/>
+      <Item key="frmMain.mnuMainZoomOut" value="Umanji"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="Razmera prema prozoru"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="Popuni prozor"/>
+      <Item key="frmMain.mnuMainActualSize" value="Originalna veličina"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Zaključaj faktor zumiranja"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="Automatsko zumiranje"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="Razmera prema širini"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="Razmera prema visini"/>
+      <Item key="frmMain.mnuMainImage" value="Slika"/>
+      <Item key="frmMain.mnuMainChannels" value="Prikaz kanala"/>
+      <Item key="frmMain.mnuMainChannels._All" value="svi"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="crveni"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="zeleni"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="plavi"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="crni"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="alfa"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Redosled učitavanja"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="Rotiraj ulevo"/>
+      <Item key="frmMain.mnuMainRotateRight" value="Rotiraj udesno"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="Obrni horizontalno"/>
+      <Item key="frmMain.mnuMainFlipVert" value="Obrni vertikalno"/>
+      <Item key="frmMain.mnuMainRename" value="Preimenuj sliku…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Premesti u korpu za otpatke"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Izbriši sa hard-diska"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Izdvoj kadrove iz slike ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="Pokreni/zaustavi animaciju slike"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Postavi kao pozadinu radne površine"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="Postavi kao pozadinu zaključanog ekrana"/>
+      <Item key="frmMain.mnuMainImageLocation" value="Otvori lokaciju slike"/>
+      <Item key="frmMain.mnuMainImageProperties" value="Svojstva slike"/>
+      <Item key="frmMain.mnuMainClipboard" value="Privremena memorija"/>
+      <Item key="frmMain.mnuMainCopy" value="Kopiraj"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="Kopiraj sliku"/>
+      <Item key="frmMain.mnuMainCut" value="Iseci"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="Kopiraj putanju slike"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="Obriši privremenu memoriju"/>
+      <Item key="frmMain.mnuWindowFit" value="Prilagodi prozor slici"/>
+      <Item key="frmMain.mnuMainFullScreen" value="Preko celog ekrana"/>
+      <Item key="frmMain.mnuFrameless" value="Bez okvira prozora"/>
+      <Item key="frmMain.mnuMainSlideShow" value="Projekcija slajdova"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="Pokreni projekciju slajdova"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="Pauziraj/nastavi projekciju slajdova"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="Izađi iz projekcije slajdova"/>
+      <Item key="frmMain.mnuMainShare" value="Deli…"/>
+      <Item key="frmMain.mnuMainLayout" value="Raspored"/>
+      <Item key="frmMain.mnuMainToolbar" value="Traka sa alatkama"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="Panel sa sličicama"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="Pozadina prozirnosti"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Pričvrsti iznad svih prozora"/>
+      <Item key="frmMain.mnuMainTools" value="Alatke"/>
+      <Item key="frmMain.mnuMainColorPicker" value="Birač boja"/>
+      <Item key="frmMain.mnuMainPageNav" value="Navigacija po stranicama"/>
+      <Item key="frmMain.mnuMainCrop" value="Opsecanje"/>
+      <Item key="frmMain.mnuExifTool" value="ExifTool"/>
+      <Item key="frmMain.mnuMainSettings" value="Podešavanja"/>
+      <Item key="frmMain.mnuMainHelp" value="Pomoć"/>
+      <Item key="frmMain.mnuMainAbout" value="O programu"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="Početna konfiguracija…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Proveri da li postoji ažuriranje"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Dostupna je nova verzija."/>
+      <Item key="frmMain.mnuMainReportIssue" value="Prijavi problem"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Izađi iz ImageGlassa"/>
+      <Item key="frmMain.picMain._ErrorText" value="Nije moguće otvoriti ovu datoteku. Verovatno je oštećena ili je u formatu koji nije podržan."/>
+      <Item key="frmMain._ImageNotExist" value="Prikazana slika ne postoji."/>
+      <Item key="frmMain.btnMenu" value="Meni (taster `)"/>
+      <Item key="frmMain._OpenFileDialog" value="Sve podržane datoteke"/>
+      <Item key="frmMain._Files" value="datot."/>
+      <Item key="frmMain._Pages" value="str."/>
+      <Item key="frmMain._ImageData" value="Slika"/>
+      <Item key="frmMain._RenameDialogText" value="Preimenovanje"/>
+      <Item key="frmMain._RenameDialog" value="Unesite novo ime datoteke:"/>
+      <Item key="frmMain._GotoDialogText" value="Unesite indeks željene slike pa pritisnite Enter."/>
+      <Item key="frmMain._DeleteDialogText" value="Izbrisati datoteku „{0}”?"/>
+      <Item key="frmMain._DeleteDialogTitle" value="Potvrdi"/>
+      <Item key="frmMain._ExtractPageText" value="Izdvajanje kadrova iz slike. Izaberite odredišnu fasciklu."/>
+      <Item key="frmMain._FullScreenMessage" value="Pritisnite {0} da biste izašli iz režima celog ekrana."/>
+      <Item key="frmMain._SlideshowMessage" value="Pritisnite Esc da biste izašli iz projekcije slajdova.&#10; Desnim klikom otvarate kontekstualni meni."/>
+      <Item key="frmMain._SlideshowMessagePause" value="Projekcija slajdova je pauzirana"/>
+      <Item key="frmMain._SlideshowMessageResume" value="Projekcija slajdova je nastavljena"/>
+      <Item key="frmMain._CopyFileText" value="Kopirano datoteka: {0}"/>
+      <Item key="frmMain._CutFileText" value="Isečeno datoteka: {0}"/>
+      <Item key="frmMain._CopyImageData" value="Slika je kopirana u privremenu memoriju"/>
+      <Item key="frmMain._ClearClipboard" value="Privremena memorija je obrisana"/>
+      <Item key="frmMain._SaveChanges" value="Čuvanje izmena…"/>
+      <Item key="frmMain._SaveImage" value="Slika je sačuvana u&#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="Čuvanje slike…&#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="Nije moguće sačuvati sliku u&#10;{0}."/>
+      <Item key="frmMain._Loading" value="Učitavanje…"/>
+      <Item key="frmMain._FirstItemOfList" value="Dostignuta je prva slika"/>
+      <Item key="frmMain._LastItemOfList" value="Dostignuta je poslednja slika"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="Izmena animiranih slika nije podržana"/>
+      <Item key="frmMain._SetLockImage_Error" value="Došlo je do greške pri postavljanju pozadine zaključanog ekrana"/>
+      <Item key="frmMain._SetLockImage_Success" value="Pozadina zaključanog ekrana je uspešno postavljena"/>
+      <Item key="frmMain._SetBackground_Error" value="Došlo je do greške pri postavljanju pozadine radne površine"/>
+      <Item key="frmMain._SetBackground_Success" value="Pozadina radne površine je uspešno postavljena"/>
+      <Item key="frmMain._PageExtractComplete" value="Izdvajanje kadrova je završeno."/>
+      <Item key="frmMain._Frameless" value="Držite Shift da biste pomerili prozor."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Privremena memorija ne sadrži sliku."/>
+      <Item key="frmAbout.lblSlogant" value="Jednostavan i univerzalan prikazivač slika"/>
+      <Item key="frmAbout.lblInfo" value="Informacije"/>
+      <Item key="frmAbout.lblComponent" value="Komponente"/>
+      <Item key="frmAbout.lblReferences" value="Reference"/>
+      <Item key="frmAbout.lblVersion" value="Verzija: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="Kontakt"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="Ažuriranja softvera"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="Proveri da li postoji ažuriranje…"/>
+      <Item key="frmAbout._Text" value="O programu"/>
+      <Item key="frmAbout._PortableText" value="(Portable)"/>
+      <Item key="frmSetting._Text" value="Podešavanja"/>
+      <Item key="frmSetting.btnSave" value="Sačuvaj"/>
+      <Item key="frmSetting.btnCancel" value="Otkaži"/>
+      <Item key="frmSetting.btnApply" value="Primeni"/>
+      <Item key="frmSetting.lblGeneral" value="Opšte"/>
+      <Item key="frmSetting.lblImage" value="Slika"/>
+      <Item key="frmSetting.lblEdit" value="Uređivanje"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="Povezanosti datoteka"/>
+      <Item key="frmSetting.lblToolbar" value="Traka sa alatkama"/>
+      <Item key="frmSetting.lblLanguage" value="Jezik"/>
+      <Item key="frmSetting.lblTheme" value="Tema"/>
+      <Item key="frmSetting.lblKeyboard" value="Tastatura"/>
+      <Item key="frmSetting.lblHeadStartup" value="Pokretanje"/>
+      <Item key="frmSetting.chkWelcomePicture" value="Prikaži sliku dobrodošlice"/>
+      <Item key="frmSetting.chkLastSeenImage" value="Otvori poslednju prikazanu sliku"/>
+      <Item key="frmSetting.chkShowToolBar" value="Prikaži traku sa alatkama"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="Fascikla sa podešavanjima"/>
+      <Item key="frmSetting.lblHeadViewer" value="Prikazivač"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Trake za pomeranje"/>
+      <Item key="frmSetting.chkShowNavButtons" value="Navigacija pomoću strelica na ivicama prozora"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Izuzmi putanju datoteke iz naslovne trake"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Pozadina prozirnosti samo u području slike"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="Podrška za pokrete dodirom"/>
+      <Item key="frmSetting.lblBackGroundColor" value="Boja pozadine"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Resetuj"/>
+      <Item key="frmSetting.lblHeadOthers" value="Drugo"/>
+      <Item key="frmSetting.chkAutoUpdate" value="Automatski proveravaj da li postoji ažuriranje"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="Više instanci programa"/>
+      <Item key="frmSetting.chkESCToQuit" value="Izlazak iz programa pomoću tastera Esc"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="Dijalog za potvrdu brisanja"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="Centriraj prozor u režimu „Prilagodi prozor slici”"/>
+      <Item key="frmSetting.chkShowToast" value="Iskačuća obaveštenja"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="Učitavanje slika"/>
+      <Item key="frmSetting.chkFindChildFolder" value="Traži slike u potfasciklama"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="Prikaži skrivene slike"/>
+      <Item key="frmSetting.chkLoopViewer" value="Vrati na prvu sliku nakon dostizanja kraja"/>
+      <Item key="frmSetting.chkIsCenterImage" value="Centriraj sliku u prikazivaču"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="Redosled učitavanja slika:"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Redosled sortiranja prema Windowsovom istraživaču datoteka"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Grupiši slike prema fasciklama"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="Broj slika keširanih ImageBoosterom (u jednom smeru)"/>
+      <Item key="frmSetting.lblColorManagement" value="Upravljanje bojama"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="Primeni i na slike bez ugrađenog profila boja"/>
+      <Item key="frmSetting.lblColorProfile" value="Profil boja:"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="Potraži…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="nijedan"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="prilagođeno…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="Radnje pri okretanju točkića miša"/>
+      <Item key="frmSetting.lblMouseWheel" value="Točkić miša:"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="Alt + točkić miša:"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Ctrl + točkić miša:"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="Shift + točkić miša:"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="nijedna"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="zumiranje"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="vertikalno pomeranje"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="horizontalno pomeranje"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="prethodna/sledeća slika"/>
+      <Item key="frmSetting.lblHeadZooming" value="Zumiranje"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Optimizacija zumiranja"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Automatski"/>
+      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="pikseli sa umekšanim ivicama"/>
+      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="pikseli sa jasnim ivicama"/>
+      <Item key="frmSetting.lblZoomLevels" value="Nivoi zumiranja"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="Došlo je do greške pri ažuriranju nivoa zumiranja. Poruka:&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Panel sa sličicama"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="Na desnoj strani"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Traka za pomeranje"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Dimenzije sličica (u pikselima):"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="Projekcija slajdova"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="Vrati na prvu sliku nakon dostizanja kraja"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="Odbrojavanje"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="Nasumični interval"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="Interval za promenu slajdova: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="do"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="Sačuvaj sliku nakon rotiranja"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="Izaberite program za uređivanje slika"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="Nakon otvaranja u uređivaču:"/>
+      <Item key="frmSetting.lblImageQuality" value="Kvalitet slike:"/>
+      <Item key="frmSetting.btnEditEditExt" value="Uredi…"/>
+      <Item key="frmSetting.btnEditResetExt" value="Resetuj"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="Uredi sve ekstenzije…"/>
+      <Item key="frmSetting._allExtensions" value="sve ekstenzije"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Ekstenzija datoteke:"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="Ime programa:"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="Putanja:"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Parametri:"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Ne menjaj datum izmene pri čuvanju slike"/>
+      <Item key="frmSetting.lblSupportedExtension" value="Podržano formata: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Podrazumevani programi"/>
+      <Item key="frmSetting.btnAddNewExt" value="Dodaj…"/>
+      <Item key="frmSetting.btnRegisterExt" value="Registruj sve navedene formate"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Opozovi registraciju ekstenzija"/>
+      <Item key="frmSetting.btnDeleteExt" value="Izbriši"/>
+      <Item key="frmSetting.btnResetExt" value="Resetuj"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="Nije moguće registrovati vezu veb → aplikacija"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="Nije moguće registrovati ekstenzije datoteka za ImageGlass"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="Sve ekstenzije datoteka su uspešno registrovane. Da biste postavili ImageGlass kao podrazumevani prikazivač fotografija, idite u „Postavke → Aplikacije → Podrazumevane aplikacije”, pa u odeljku „Prikazivač fotografija” izaberite ImageGlass."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Nije moguće ukloniti registrovane ekstenzije datoteka"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Registracija svih ekstenzija datoteka je opozvana"/>
+      <Item key="frmSetting.lblToolbarPosition" value="Položaj trake sa alatkama:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Veličina ikona:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="na vrhu"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="na dnu"/>
+      <Item key="frmSetting._separator" value="Razdelnik"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="Podešavanje trake sa alatkama"/>
+      <Item key="frmSetting.lblUsedBtns" value="Trenutna dugmad:"/>
+      <Item key="frmSetting.lblAvailBtns" value="Dostupna dugmad:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="Pomeri nadole"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="Ukloni sa trake sa alatkama"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="Dodaj na traku sa alatkama"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="Pomeri nagore"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Centriraj dugmad po horizontali"/>
+      <Item key="frmSetting.chkHideTooltips" value="Sakrij opise alatki"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="RGB format sa alfa kanalom"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="HEX format sa alfa kanalom"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="HSL format sa alfa kanalom"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="HSV format sa alfa kanalom"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="Podrazumevani format boja pri kopiranju"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="Automatski prikaži alatku „Navigacija po stranicama” za slike sa više stranica"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Fiksiraj iznad svih prozora"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Izaberi izvršnu datoteku ExifToola…"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="ExifTool ne postoji ili je nevažeći: &#10;{0}"/>
+      <Item key="frmSetting.lblLanguageText" value="Instalirani jezici"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; Osveži"/>
+      <Item key="frmSetting.lblLanguageWarning" value="Ovaj jezički paket možda nije kompatibilan sa {0}"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Instaliraj novi jezički paket…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Napravi novi jezički paket…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; Uredi izabrani jezički paket…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Preuzmite još jezičkih paketa"/>
+      <Item key="frmSetting.lblInstalledThemes" value="Instalirano tema: {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="Preuzmite još tema"/>
+      <Item key="frmSetting.btnThemeRefresh" value="Osveži"/>
+      <Item key="frmSetting.btnThemeInstall" value="Instaliraj…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="Deinstaliraj"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="Sačuvaj kao…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="Otvori fasciklu"/>
+      <Item key="frmSetting.btnThemeApply" value="Primeni temu"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="Ime"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="Verzija"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="Autor"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="Imejl-adresa"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="Veb-sajt"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="Kompatibilnost"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="Opis"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="Tema je uspešno instalirana."/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="Nije moguće instalirati temu."/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="Nije moguće deinstalirati temu."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="Tema je sačuvana u {0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="Nije moguće sačuvati temu."/>
+      <Item key="frmSetting.btnThemeApply._Success" value="Tema je uspešno primenjena."/>
+      <Item key="frmSetting.btnThemeApply._Error" value="Nije moguće primeniti temu."/>
+      <Item key="frmSetting.btnKeyReset" value="Resetuj"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="Space/Backspace:"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="Page Up/Page Down:"/>
+      <Item key="frmSetting.lblKeysUpDown" value="Strelica nagore/nadole:"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="Strelica ulevo/udesno:"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="prethodna/sledeća slika"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="pomeri ulevo/udesno"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="pomeri nagore/nadole"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="uvećaj/umanji"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="pauziraj projekciju slajdova"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="nijedna"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="Ekstenzija datoteke:"/>
+      <Item key="frmAddNewFormat.btnOK" value="U redu"/>
+      <Item key="frmAddNewFormat.btnClose" value="Zatvori"/>
+      <Item key="frmEditApp.lblFileExtension" value="Ekstenzija datoteke:"/>
+      <Item key="frmEditApp.lblAppName" value="Ime programa:"/>
+      <Item key="frmEditApp.lblAppPath" value="Putanja:"/>
+      <Item key="frmEditApp.lblAppArguments" value="Parametri:"/>
+      <Item key="frmEditApp.btnReset" value="Resetuj"/>
+      <Item key="frmEditApp.btnOK" value="U redu"/>
+      <Item key="frmEditApp.btnClose" value="Zatvori"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="Pregled:"/>
+      <Item key="frmFirstLaunch._Text" value="Početna konfiguracija"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="Potrebno je okončati sve procese ImageGlassa kako bi izmene stupile na snagu. Želite li da nastavite?"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="Korak {0} od {1}"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="Sledeće"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="Gotovo!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="Preskoči i pokreni ImageGlass"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="Izaberite jezik:"/>
+      <Item key="frmFirstLaunch.lblLayout" value="Izaberite raspored:"/>
+      <Item key="frmFirstLaunch.cmbLayout._Standard" value="standardni"/>
+      <Item key="frmFirstLaunch.cmbLayout._Designer" value="dizajnerski"/>
+      <Item key="frmFirstLaunch.lblTheme" value="Izaberite temu:"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="Postaviti ImageGlass kao podrazumevani prikazivač fotografija?"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="Da"/>
+      <Item key="frmCrop.lblWidth" value="Širina:"/>
+      <Item key="frmCrop.lblHeight" value="Visina:"/>
+      <Item key="frmCrop.btnSave" value="Sačuvaj"/>
+      <Item key="frmCrop.btnSaveAs" value="Sačuvaj kao…"/>
+      <Item key="frmCrop.btnCopy" value="Kopiraj"/>
+      <Item key="frmCrop.btnReset" value="Resetuj"/>
+      <Item key="FrmExifTool.clnProperty" value="Svojstvo"/>
+      <Item key="FrmExifTool.clnValue" value="Vrednost"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Kopiraj vrednost"/>
+      <Item key="FrmExifTool.btnExport" value="Izvezi…"/>
+      <Item key="FrmExifTool.btnClose" value="Zatvori"/>
+    </Content>
+  </Language>
+</ImageGlass>
