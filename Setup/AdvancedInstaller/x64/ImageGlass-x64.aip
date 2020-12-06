@@ -7,7 +7,6 @@
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPCONTACT" Value="phap@imageglass.org"/>
     <ROW Property="ARPHELPLINK" Value="https://imageglass.org/support"/>
-    <ROW Property="ARPNOMODIFY" MultiBuildValue="MsiBuild:1"/>
     <ROW Property="ARPPRODUCTICON" Value="ImageGlass_1.exe" Type="8"/>
     <ROW Property="ARPURLINFOABOUT" Value="https://imageglass.org/support"/>
     <ROW Property="ARPURLUPDATEINFO" Value="https://imageglass.org/download"/>
@@ -388,7 +387,7 @@
     <ROW Name="ImageGlass_1.exe" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.exe" Index="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIniFileComponent">
-    <ROW IniFile="URL" FileName="VISITI~1.URL|Visit ImageGlass website.url" DirProperty="SHORTCUTDIR" Section="InternetShortcut" Key="URL" Value="https://imageglass.org/?utm_source=app_7.5.1.1&amp;utm_medium=url_shortcut&amp;utm_campaign=app_homepage" Action="0" Component_="ImageGlass.exe"/>
+    <ROW IniFile="URL" FileName="VISITI~1.URL|Visit ImageGlass website.url" DirProperty="SHORTCUTDIR" Section="InternetShortcut" Key="URL" Value="https://imageglass.org/?utm_source=app_8.0.12.8&amp;utm_medium=url_shortcut&amp;utm_campaign=app_homepage" Action="0" Component_="ImageGlass.exe"/>
     <ROW IniFile="WorkingDirectory" FileName="VISITI~1.URL|Visit ImageGlass website.url" DirProperty="SHORTCUTDIR" Section="InternetShortcut" Key="WorkingDirectory" Value="[SHORTCUTDIR]" Action="0" Component_="ImageGlass.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
