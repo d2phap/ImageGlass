@@ -1,4 +1,4 @@
-⛰ ImageGlass - A lightweight, versatile image viewer.
+⛰ ImageGlass - A lightweight, versatile image viewer
 ===
 
 
@@ -12,13 +12,13 @@ ImageGlass is a lightweight software application whose purpose is to help you vi
 It gives you the possibility to view over **70+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers to speed up their work.
 
 
-## 📥 Download & Screen shots
+## 📥 Download
 [![Total Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%233097B8&label=downloads&style=for-the-badge)](https://imageglass.org/download)
-[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23E17206&label=v7.6.4.30%20downloads&style=for-the-badge)](https://imageglass.org/download)
+[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23932043&label=v8.0.12.8%20downloads&style=for-the-badge)](https://imageglass.org/download)
 
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://imageglass.org/upload/photo/release/7.6_1.jpg" alt="ImageGlass 7.6.4.301" width="640">
+<img src="https://imageglass.org/upload/photo/release/8.0_1.jpg" alt="ImageGlass 8.0.12.8" width="640">
 </a><br/>
 
 
@@ -30,7 +30,7 @@ https://www.patreon.com/posts/imageglass-and-39849218
 
 ## 👨‍💻 Development
 ![Visual Studio 2019](https://img.shields.io/badge/IDE-Visual%20Studio%202019-964ad4.svg?maxAge=3600)
-![.NET Framework 4.7.1](https://img.shields.io/badge/.NET-Framework%204.7.1-lightgrey.svg?maxAge=3600)
+![.NET Framework 4.8](https://img.shields.io/badge/.NET-Framework%204.8-lightgrey.svg?maxAge=3600)
 ![Windows OS](https://img.shields.io/badge/OS-Windows%207+-00adef.svg?maxAge=3600)
 
 ```develop``` branch contains the lastest commits while ```master``` branch is for the final stable release.
