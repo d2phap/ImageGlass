@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="th-TH" langName="ภาษาไทย" author="Jiraroj Leelarattanawong" description="Thai" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="การตั้งค่าบางส่วนไม่สามารถเข้ากันได้กับ ImageGlass {0} แนะนำให้อัพเดทก่อนเพื่อใช้งานต่อเนื่อง&#10;&#10;- คลิก ใช่ เพื่อดูข้อมูลการเปลี่ยนแปลงเพิ่มเติม&#10;- คลิก ไม่ เพิ่มเริ่มใช้งาน ImageGlass พร้อมค่าเริ่มต้น"/>
+      <Item key="_.ImageOrderBy._Name" value="ชื่อ (ค่าเริ่มต้น)"/>
+      <Item key="_.ImageOrderBy._Length" value="ความยาว"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="เวลาสร้าง"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="เปิดใช้ล่าสุด"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="เขียนล่าสุด"/>
+      <Item key="_.ImageOrderBy._Extension" value="นามสกุลไฟล์"/>
+      <Item key="_.ImageOrderBy._Random" value="สุ่ม"/>
+      <Item key="_.ImageOrderType._Asc" value="น้อยไปมาก"/>
+      <Item key="_.ImageOrderType._Desc" value="มากไปน้อย"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="ไม่เปลี่ยนแปลง"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="ย่อหน้าลง"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="ปิด"/>
+      <Item key="frmMain.mnuMainFile" value="ไฟล์"/>
+      <Item key="frmMain.mnuMainOpenFile" value="เปิดไฟล์..."/>
+      <Item key="frmMain.mnuMainOpenImageData" value="เปิดข้อมูลรูปภาพจากคลิปบอร์ด"/>
+      <Item key="frmMain.mnuMainNewWindow" value="เปิดหน้าต่างใหม่"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="ไม่สามารถเปิดหน้าต่างใหม่ได้เพราะสามารถเปิดได้ทีละหนึ่งเท่านั้น"/>
+      <Item key="frmMain.mnuMainSaveAs" value="บันทึกรูปภาพเป็น..."/>
+      <Item key="frmMain.mnuMainRefresh" value="รีเฟรช"/>
+      <Item key="frmMain.mnuMainReloadImage" value="โหลดรูปภาพอีกครั้ง"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="โหลดรายการรูปภาพอีกครั้ง"/>
+      <Item key="frmMain.mnuOpenWith" value="เปิดด้วย..."/>
+      <Item key="frmMain.mnuMainEditImage" value="แก้ไขรูปภาพ {0}"/>
+      <Item key="frmMain.mnuMainPrint" value="พิมพ์..."/>
+      <Item key="frmMain.mnuMainNavigation" value="นำไปยัง"/>
+      <Item key="frmMain.mnuMainViewNext" value="ดูรูปภาพถัดไป"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="→ / PageDown"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="ดูรูปภาพก่อนหน้า"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="← / PageUp"/>
+      <Item key="frmMain.mnuMainGoto" value="ไปยัง..."/>
+      <Item key="frmMain.mnuMainGotoFirst" value="ไปยังรูปภาพแรก"/>
+      <Item key="frmMain.mnuMainGotoLast" value="ไปยังรูปภาพสุดท้าย"/>
+      <Item key="frmMain.mnuMainNextPage" value="ดูหน้าถัดไป"/>
+      <Item key="frmMain.mnuMainPrevPage" value="ดูหน้าก่อนหน้า"/>
+      <Item key="frmMain.mnuMainFirstPage" value="ดูหน้าแรก"/>
+      <Item key="frmMain.mnuMainLastPage" value="ดูหน้าสุดท้าย"/>
+      <Item key="frmMain.mnuMainZoom" value="ซูม"/>
+      <Item key="frmMain.mnuMainZoomIn" value="ซูมเข้า"/>
+      <Item key="frmMain.mnuMainZoomOut" value="ซูมออก"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="ปรับให้พอดี"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="ปรับให้เต็ม"/>
+      <Item key="frmMain.mnuMainActualSize" value="ขนาดจริง"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="ล็อกขนาดซูม"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="ซูมอัตโนมัติ"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="ปรับพอดีความกว้าง"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="ปรับพอดีความสูง"/>
+      <Item key="frmMain.mnuMainImage" value="รูปภาพ"/>
+      <Item key="frmMain.mnuMainChannels" value="ดูโหมดสี"/>
+      <Item key="frmMain.mnuMainChannels._All" value="ทั้งหมด"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="แดง"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="เขียว"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="น้ำเงิน"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="ดำ"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="Alpha"/>
+      <Item key="frmMain.mnuLoadingOrder" value="กำลังโหลดคำสั่ง"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="หมุนซ้าย"/>
+      <Item key="frmMain.mnuMainRotateRight" value="หมุนขวา"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="พลิกตามแนวนอน"/>
+      <Item key="frmMain.mnuMainFlipVert" value="พลิกตามแนวตั้ง"/>
+      <Item key="frmMain.mnuMainRename" value="เปลี่ยนชื่อรูปภาพ..."/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="ย้ายไปถังขยะ"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="ลบออกจากฮาร์ดดิสก์"/>
+      <Item key="frmMain.mnuMainExtractPages" value="คัดรูปออกจากหน้า ({0})..."/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="เริ่ม / หยุด แสดงภาพเคลื่อนไหว"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="ตั้งเป็นภาพพื้นหลังเดสก์ท็อป"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="ตั้งเป็นภาพล็อกหน้าจอ"/>
+      <Item key="frmMain.mnuMainImageLocation" value="เปิดตำแหน่งที่อยู่รูปภาพ"/>
+      <Item key="frmMain.mnuMainImageProperties" value="คุณสมบัติรูปภาพ"/>
+      <Item key="frmMain.mnuMainClipboard" value="คลิปบอร์ด"/>
+      <Item key="frmMain.mnuMainCopy" value="คัดลอก"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="คัดลอกข้อมูลรูปภาพ"/>
+      <Item key="frmMain.mnuMainCut" value="ตัด"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="คัดลอกที่อยู่รูปภาพ"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="ล้างคลิปบอร์ด"/>
+      <Item key="frmMain.mnuWindowFit" value="พอดีหน้าต่าง"/>
+      <Item key="frmMain.mnuMainFullScreen" value="เต็มหน้าจอ"/>
+      <Item key="frmMain.mnuFrameless" value="ไร้กรอบ"/>
+      <Item key="frmMain.mnuMainSlideShow" value="สไลด์โชว์"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="เริ่มสไลด์โชว์"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="หยุดชั่วคราว / เล่นต่อ สไลด์โชว์"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="ออกจากสไลด์โชว์"/>
+      <Item key="frmMain.mnuMainShare" value="แชร์..."/>
+      <Item key="frmMain.mnuMainLayout" value="แผนผัง"/>
+      <Item key="frmMain.mnuMainToolbar" value="แถบเครื่องมือ"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="แผงรูปย่อ"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="พื้นหลังลายกระดานหมากรุก"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="หน้าต่างอยู่บนสุดเสมอ"/>
+      <Item key="frmMain.mnuMainTools" value="เครื่องมือ"/>
+      <Item key="frmMain.mnuMainColorPicker" value="ตัวดูดสี"/>
+      <Item key="frmMain.mnuMainPageNav" value="หน้าการนำทาง"/>
+      <Item key="frmMain.mnuMainCrop" value="ตัดรูป"/>
+      <Item key="frmMain.mnuExifTool" value="เครื่องมือ Exif"/>
+      <Item key="frmMain.mnuMainSettings" value="การตั้งค่า..."/>
+      <Item key="frmMain.mnuMainHelp" value="ช่วยเหลือ"/>
+      <Item key="frmMain.mnuMainAbout" value="เกี่ยวกับ"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="การตั้งค่าเริ่มต้นใช้งานครั้งแรก..."/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="ตรวจสอบการอัพเดท..."/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="พบเวอร์ชั่นใหม่!"/>
+      <Item key="frmMain.mnuMainReportIssue" value="รายงานปัญหา..."/>
+      <Item key="frmMain.mnuMainExitApplication" value="ปิดโปรแกรม ImageGlass"/>
+      <Item key="frmMain.picMain._ErrorText" value="ImageGlass ไม่สามารถแสดงรูปภาพนี้ได้ เพราะไฟล์อาจมีความเสียหาย, ไม่สมบูรณ์ หรือไม่รองรับ"/>
+      <Item key="frmMain._ImageNotExist" value="รูปภาพที่ต้องการแสดงไม่มีอยู่จริง"/>
+      <Item key="frmMain.btnMenu" value="เมนู (ปุ่มลัด: `)"/>
+      <Item key="frmMain._OpenFileDialog" value="ไฟล์ที่รองรับทั้งหมด"/>
+      <Item key="frmMain._Files" value="ไฟล์(s)"/>
+      <Item key="frmMain._Pages" value="หน้า"/>
+      <Item key="frmMain._ImageData" value="ข้อมูลรูปภาพ"/>
+      <Item key="frmMain._RenameDialogText" value="เปลี่ยนชื่อ"/>
+      <Item key="frmMain._RenameDialog" value="ระบุชื่อไฟล์ใหม่"/>
+      <Item key="frmMain._GotoDialogText" value="ระบุเลขลำดับรูปภาพเพื่อแสดง แล้วกดปุ่ม ENTER"/>
+      <Item key="frmMain._DeleteDialogText" value="ลบไฟล์ '{0}' ?"/>
+      <Item key="frmMain._DeleteDialogTitle" value="ยืนยัน"/>
+      <Item key="frmMain._ExtractPageText" value="คัดรูปภาพจากหน้า กรุณาเลือกแฟ้มปลายทาง"/>
+      <Item key="frmMain._FullScreenMessage" value="กด {0} เพื่อออกจากโหมดเต็มหน้าจอ"/>
+      <Item key="frmMain._SlideshowMessage" value="กดปุ่ม ESC เพื่อออกจากสไลด์โชว์&#10; คลิกเม้าส์ด้านขวาเพื่อแสดงเมนูย่อย"/>
+      <Item key="frmMain._SlideshowMessagePause" value="สไลด์โชว์หยุดชั่วคราว"/>
+      <Item key="frmMain._SlideshowMessageResume" value="สไลด์โชว์เล่นต่อ"/>
+      <Item key="frmMain._CopyFileText" value="คัดลอก {0} ไฟล์(s) แล้ว"/>
+      <Item key="frmMain._CutFileText" value="ตัด {0} ไฟล์(s) แล้ว"/>
+      <Item key="frmMain._CopyImageData" value="คัดลอกรูปภาพไว้ในคลิปบอร์ดแล้ว"/>
+      <Item key="frmMain._ClearClipboard" value="คลิปบอร์ดล้างแล้ว"/>
+      <Item key="frmMain._SaveChanges" value="กำลังบันทึก..."/>
+      <Item key="frmMain._SaveImage" value="รูปภาพถูกบันทึกไว้ที่ &#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="กำลังบันทึกรูปภาพ... &#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="ไม่สามารถบันทึกรูปภาพได้ &#10;{0}"/>
+      <Item key="frmMain._Loading" value="กำลังโหลด..."/>
+      <Item key="frmMain._FirstItemOfList" value="ถึงรูปภาพแรกแล้ว"/>
+      <Item key="frmMain._LastItemOfList" value="ถึงรูปภาพสุดท้ายแล้ว"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="ไม่รองรับการปรับแต่งรูปภาพเคลื่อนไหว"/>
+      <Item key="frmMain._SetLockImage_Error" value="เกิดข้อผิดพลาดขณะตั้งค่ารูปภาพล็อกหน้าจอ"/>
+      <Item key="frmMain._SetLockImage_Success" value="ตั้งค่ารูปภาพล็อกหน้าจอเรียบร้อยแล้ว"/>
+      <Item key="frmMain._SetBackground_Error" value="เกิดข้อผิดพลาดขณะตั้งค่าภาพพื้นหลังเดสก์ท็อป"/>
+      <Item key="frmMain._SetBackground_Success" value="ตั้งค่าภาพพื้นหลังเดสก์ท็อปเรียบร้อยแล้ว"/>
+      <Item key="frmMain._PageExtractComplete" value="คัดภาพเสร็จสมบูรณ์แล้ว"/>
+      <Item key="frmMain._Frameless" value="กดปุ่ม SHIFT ค้างไว้เพื่อย้ายหน้าต่าง"/>
+      <Item key="frmMain._InvalidImageClipboardData" value="คลิปบอร์ดไม่มีข้อมูลรูปภาพอยู่"/>
+      <Item key="frmAbout.lblSlogant" value="โปรแกรมดูภาพขนาดเบา และอเนกประสงค์"/>
+      <Item key="frmAbout.lblInfo" value="ข้อมูล"/>
+      <Item key="frmAbout.lblComponent" value="องค์ประกอบ"/>
+      <Item key="frmAbout.lblReferences" value="อ้างอิง"/>
+      <Item key="frmAbout.lblVersion" value="เวอร์ชั่น: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="ติดต่อ"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="อัพเดทซอฟต์แวร์"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» ตรวจสอบการอัพเดท…"/>
+      <Item key="frmAbout._Text" value="เกี่ยวกับ"/>
+      <Item key="frmAbout._PortableText" value="[Portable]"/>
+      <Item key="frmSetting._Text" value="การตั้งค่า"/>
+      <Item key="frmSetting.btnSave" value="บันทึก"/>
+      <Item key="frmSetting.btnCancel" value="ยกเลิก"/>
+      <Item key="frmSetting.btnApply" value="นำไปใช้"/>
+      <Item key="frmSetting.lblGeneral" value="ทั่วไป"/>
+      <Item key="frmSetting.lblImage" value="รูปภาพ"/>
+      <Item key="frmSetting.lblEdit" value="แก้ไข"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="ประเภทไฟล์ที่ใช้ร่วมกัน"/>
+      <Item key="frmSetting.lblToolbar" value="แถบเครื่องมือ"/>
+      <Item key="frmSetting.lblLanguage" value="ภาษา"/>
+      <Item key="frmSetting.lblTheme" value="ธีม"/>
+      <Item key="frmSetting.lblKeyboard" value="คีย์บอร์ด"/>
+      <Item key="frmSetting.lblHeadStartup" value="เริ่มโปรแกรม"/>
+      <Item key="frmSetting.chkWelcomePicture" value="แสดงภาพต้อนรับ"/>
+      <Item key="frmSetting.chkLastSeenImage" value="แสดงรูปภาพครั้งก่อน"/>
+      <Item key="frmSetting.chkShowToolBar" value="แสดงแถบเครื่องมือเมื่อเริ่มโปรแกรม"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="แฟ้มเก็บการกำหนดค่า"/>
+      <Item key="frmSetting.lblHeadViewer" value="ตัวแสดงภาพ"/>
+      <Item key="frmSetting.chkShowScrollbar" value="แสดงแถบเลื่อน"/>
+      <Item key="frmSetting.chkShowNavButtons" value="แสดงปุ่มลูกศรนำทาง"/>
+      <Item key="frmSetting.chkDisplayBasename" value="แสดงชื่อจริงของรูปภาพที่แสดงบนไตเติ้ลบาร์"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="แสดงลายตารางหมากรุกเฉพาะพื้นที่บนรูปภาพเท่านั้น"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="เปิดการใช้รูปแบบการสัมผัส"/>
+      <Item key="frmSetting.lblBackGroundColor" value="สีพื้นหลัง"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="รีเซ็ต"/>
+      <Item key="frmSetting.lblHeadOthers" value="อื่น ๆ"/>
+      <Item key="frmSetting.chkAutoUpdate" value="ตรวจหาอัพเดทอัตโนมัติ"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="อนุญาตให้เปิดโปรแกรมหลายหน้าต่าง"/>
+      <Item key="frmSetting.chkESCToQuit" value="อนุญาตให้กดปุ่ม ESC เพื่อออกจากโปรแกรม"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="แสดงหน้าต่างยืนยันการลบ"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="จัดกึ่งกลางหน้าต่างอัตโนมัติในโหมดพอดีหน้าต่าง"/>
+      <Item key="frmSetting.chkShowToast" value="แสดงข้อความแสดงความยินดี"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="กำลังโหลดรูปภาพ"/>
+      <Item key="frmSetting.chkFindChildFolder" value="ค้นหารูปภาพในแฟ้มลึกลงไป"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="แสดงรูปภาพที่ซ่อนไว้"/>
+      <Item key="frmSetting.chkLoopViewer" value="วนไปที่รูปภาพแรกเมื่อโชว์สไลด์จนจบรายการ"/>
+      <Item key="frmSetting.chkIsCenterImage" value="จัดกึ่งกลางรูปภาพในหน้าแสดง"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="ลำดับการโหลดรูปภาพ"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="หากทำได้ให้ใช้ Windows File Explorer เรียงลำดับ"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="จัดกลุ่มรูปภาพตามแฟ้มที่เก็บ"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="จำนวนรูปภาพที่เก็บไว้โดย ImageBooster (ทิศทางเดียว)"/>
+      <Item key="frmSetting.lblColorManagement" value="การจัดการสี"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="นำไปใช้กับรูปภาพโดยไม่ต้องฝังโปรไฟล์สี"/>
+      <Item key="frmSetting.lblColorProfile" value="โปรไฟล์สี:"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="ค้นหา..."/>
+      <Item key="frmSetting.cmbColorProfile._None" value="ไม่มี"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="ปรับแต่ง..."/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="การเคลื่อนไหวลูกล้อเม้าส์"/>
+      <Item key="frmSetting.lblMouseWheel" value="ลูกล้อเม้าส์"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="ลูกล้อเม้าส์ + Alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="ลูกล้อเม้าส์ + Ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="ลูกล้อเม้าส์ + Shift"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="ไม่ต้องทำอะไร"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="ซูม"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="เลื่อนในแนวตั้ง"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="เลื่อนในแนวนอน"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="รูปภาพ ก่อนหน้า/ถัดไป"/>
+      <Item key="frmSetting.lblHeadZooming" value="การซูม"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="การเพิ่มประสิทธิภาพการซูม"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="อัตโนมัติ"/>
+      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="ทำพิกเซลให้เนียนเรียบ"/>
+      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="ล้างพิกเซล"/>
+      <Item key="frmSetting.lblZoomLevels" value="ระดับการซูม"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="การอัพเดทระดับการซูมเกิดข้อผิดพลาด ข้อความ:&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="แถบรูปย่อ"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="แสดงรูปย่อทางด้านขวา"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="แสดงแถบเลื่อนรูปย่อ"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="ขนาดรูปย่อ (พิกเซล)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="สไลด์โชว์"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="วนไปที่รูปภาพแรกเมื่อโชว์สไลด์จนจบรายการ"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="แสดงเวลาคงเหลือสไลด์โชว์"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="หน่วงเวลาแบบสุ่ม"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="หน่วงเวลาสไลด์โชว์: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="ถึง"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="บันทึกรูปภาพที่แสดงหลังจากหมุนภาพ"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="เลือกโปรแกรมเพื่อปรับแต่งรูปภาพ"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="หลังจากเปิดโปรแกรมปรับแต่งรูปภาพ:"/>
+      <Item key="frmSetting.lblImageQuality" value="คุณภาพของรูปภาพ:"/>
+      <Item key="frmSetting.btnEditEditExt" value="แก้ไข…"/>
+      <Item key="frmSetting.btnEditResetExt" value="กลับสู่ค่าเริ่มต้น"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="แก้ไขนามสกุลไฟล์ทั้งหมด…"/>
+      <Item key="frmSetting._allExtensions" value="ไฟล์ทุกประเภท"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="นามสกุลไฟล์"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="ชื่อแอป"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="ที่อยู่แอป"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="ค่าเพิ่มเติมแอป"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="คงรักษาวันที่ของรูปภาพที่แก้ไขเมื่อบันทึก"/>
+      <Item key="frmSetting.lblSupportedExtension" value="ประเภทที่รองรับ: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="เปิดประเภทไฟล์ที่ใช้ร่วมกัน"/>
+      <Item key="frmSetting.btnAddNewExt" value="เพิ่ม…"/>
+      <Item key="frmSetting.btnRegisterExt" value="ตั้งค่าเป็นโปรแกรมดูรูปภาพเริ่มต้น…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="ยกเลิกนามสกุลไฟล์"/>
+      <Item key="frmSetting.btnDeleteExt" value="ลบ"/>
+      <Item key="frmSetting.btnResetExt" value="กลับสู่ค่าเริ่มต้น"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="ไม่สามารถลงทะเบียนเชื่อมต่อ Web-to-App"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="ไม่สามารถลงทะเบียนประเภทไฟล์สำหรับแอป ImageGlass ได้"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="ลงทะเบียนไฟล์ทุกประเภทเรียบร้อยแล้ว! ในการตั้งค่า ImageGlass เป็นโปรแกรมดูภาพเริ่มต้น, กรุณาไปที่ Windows Settings &gt; Default Apps แล้วเลือกโปรแกรม ImageGlass ในกล่อง Photo Viewer"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="ไม่สามารถลบประเภทไฟล์ที่ลงทะเบียนไว้ในแอป ImageGlass ได้"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="ยกเลิกการลงทะเบียนไฟล์ทุกประเภทเรียบร้อยแล้ว!"/>
+      <Item key="frmSetting.lblToolbarPosition" value="ตำแหน่งแถบเครื่องมือ:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="ขนาดไอคอนแถบเครื่องมือ:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="บน"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="ล่าง"/>
+      <Item key="frmSetting._separator" value="ตัวแบ่ง"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="ตั้งค่าปุ่มบนแถบเครื่องมือ"/>
+      <Item key="frmSetting.lblUsedBtns" value="ปุ่มปัจจุบัน:"/>
+      <Item key="frmSetting.lblAvailBtns" value="ปุ่มที่มี:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="ย้ายปุ่มที่เลือกลงมา"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="ลบปุ่มที่เลือกไว้(s) ออกไปจากแถบเครื่องมือ"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="เพิ่มปุ่มที่เลือก(s) ไว้บนแถบเครื่องมือ"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="ย้ายปุ่มที่เลือกขึ้นบน"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="จัดกึ่งกลางปุ่มบนแถบเครื่องมือตามแนวนอนของหน้าต่าง"/>
+      <Item key="frmSetting.chkHideTooltips" value="ซ่อนคำแนะนำแถบเครื่องมือ"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="ใช้รูปแบบ RGB กับค่า Alpha"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="ใช้รูปแบบ HEX กับค่า Alpha"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="ใช้รูปแบบ HSL กับค่า Alpha"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="ใช้รูปแบบ HSV กับค่า Alpha"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="ตั้งรหัสสีเป็นค่าเริ่มต้นเมื่อคัดลอก"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="แสดงเครื่องมือนำทางแสดงหน้าอัตโนมัติสำหรับรูปภาพหลายหน้า"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="ให้เครื่องมือ Exif อยู่บนสุดเสมอ"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="เลือกไฟล์เครื่องมือ Exif"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="เครื่องมือ Exif ไม่มีอยู่จริง หรือเกิดข้อผิดพลาด: &#10;{0}"/>
+      <Item key="frmSetting.lblLanguageText" value="ภาษาที่ติดตั้งแล้ว"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; รีเฟรช"/>
+      <Item key="frmSetting.lblLanguageWarning" value="ชุดภาษานี้ไม่สามารถใช้ได้กับ {0}"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; ติดตั้งชุดภาษาใหม่ (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; สร้างชุดภาษาใหม่…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; แก้ไขชุดภาษาที่เลือก…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; รับชุดภาษาเพิ่มเติม…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="ธีมที่ติดตั้ง: {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="ดาวน์โหลดธีม…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="รีเฟรช"/>
+      <Item key="frmSetting.btnThemeInstall" value="ติดตั้ง…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="ถอนการติดตั้ง…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="บันทึกเป็น…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="เปิดแฟ้มธีม"/>
+      <Item key="frmSetting.btnThemeApply" value="ใช้ธีม"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="ชื่อ"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="เวอร์ชั่น"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="ผู้สร้าง"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="อีเมล"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="เว็บไซต์"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="รุ่นที่ใช้ได้"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="รายละเอียด"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="ธีมของคุณติดตั้งเรียบร้อยแล้ว!"/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="ไม่สามารถติดตั้งธีมของคุณได้"/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="ไม่สามารถถอนการติดตั้งธีมที่เลือกไว้"/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="ธีมที่คุณเลือกได้ถูกบันทึกไว้ใน {0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="ไม่สามารถบันทึกธีมที่คุณเลือกไว้ได้"/>
+      <Item key="frmSetting.btnThemeApply._Success" value="นำธีมที่เลือกไว้ไปใช้เรียบร้อยแล้ว!"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="ไม่สามารถนำธีมที่เลือกไปใช้ได้"/>
+      <Item key="frmSetting.btnKeyReset" value="กลับสู่ค่าเริ่มต้น"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="Space / Backspace"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="PageUp / PageDown"/>
+      <Item key="frmSetting.lblKeysUpDown" value="Up / Down arrows"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="Left / Right arrows"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="รูปภาพ ก่อนหน้า / ถัดไป"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="แพนภาพไปทาง ซ้าย / ขวา"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="แพนภาพไป บน / ล่าง"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="ซูม เข้า / ออก"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="หยุดชั่วคราว สไลด์โชว์"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="ไม่ต้องทำอะไร"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="นามสกุลไฟล์"/>
+      <Item key="frmAddNewFormat.btnOK" value="ตกลง"/>
+      <Item key="frmAddNewFormat.btnClose" value="ปิด"/>
+      <Item key="frmEditApp.lblFileExtension" value="นามสกุลไฟล์"/>
+      <Item key="frmEditApp.lblAppName" value="ชื่อแอป"/>
+      <Item key="frmEditApp.lblAppPath" value="ที่อยู่แอป"/>
+      <Item key="frmEditApp.lblAppArguments" value="ค่าเพิ่มเติมแอป"/>
+      <Item key="frmEditApp.btnReset" value="รีเซ็ต"/>
+      <Item key="frmEditApp.btnOK" value="ตกลง"/>
+      <Item key="frmEditApp.btnClose" value="ปิด"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="แสดงตัวอย่าง"/>
+      <Item key="frmFirstLaunch._Text" value="การกำหนดค่าการใช้งานครั้งแรก"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ImageGlass จำเป็นต้องปิดโปรแกรมที่เกี่ยวข้องทั้งหมดเพื่อการตั้งค่าใหม่นี้ คุณต้องการดำเนินการต่อหรือไม่?"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="ขั้นตอน {0}/{1}"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="ถัดไป"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="เรียบร้อย!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="ข้ามขั้นตอนนี้แล้วเริ่ม ImageGlass"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="เลือกภาษา"/>
+      <Item key="frmFirstLaunch.lblLayout" value="เลือกลักษณะโปรแกรม"/>
+      <Item key="frmFirstLaunch.cmbLayout._Standard" value="มาตรฐาน"/>
+      <Item key="frmFirstLaunch.cmbLayout._Designer" value="นักออกแบบ"/>
+      <Item key="frmFirstLaunch.lblTheme" value="เลือกธีม"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="กำหนดให้ ImageGlass เป็นโปรแกรมแสดงภาพเริ่มต้น?"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="ใช่"/>
+      <Item key="frmCrop.lblWidth" value="ความกว้าง:"/>
+      <Item key="frmCrop.lblHeight" value="ความสูง:"/>
+      <Item key="frmCrop.btnSave" value="บันทึก"/>
+      <Item key="frmCrop.btnSaveAs" value="บันทึกเป็น…"/>
+      <Item key="frmCrop.btnCopy" value="คัดลอก"/>
+      <Item key="frmCrop.btnReset" value="รีเซ็ต"/>
+      <Item key="FrmExifTool.clnProperty" value="คุณสมบัติ"/>
+      <Item key="FrmExifTool.clnValue" value="ค่า"/>
+      <Item key="FrmExifTool.btnCopyValue" value="คัดลอกค่า"/>
+      <Item key="FrmExifTool.btnExport" value="ส่งออก..."/>
+      <Item key="FrmExifTool.btnClose" value="ปิด"/>
+    </Content>
+  </Language>
+</ImageGlass>

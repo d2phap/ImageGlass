@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="vi-VN" langName="Tiếng Việt" author="ImageGlass community" description="Vietnamese" minVersion="7.6.4.30" isRightToLeftLayout="No"/>
+    <Info langCode="vi-VN" langName="Tiếng Việt" author="Dương Diệu Pháp" description="Vietnamese" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Một số cài đặt không tương thích với ImageGlass {0}. Bạn nên tự cập nhật trước khi tiếp tục.&#10;&#10;- Nhấn Yes để xem các thay đổi.&#10;- Nhấn No để mở ImageGlass với những cài đặt mặc định."/>
+      <Item key="_.ImageOrderBy._Name" value="Tên (mặc định)"/>
+      <Item key="_.ImageOrderBy._Length" value="Kích thước"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Thời gian tạo"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Lần truy cập cuối cùng"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Lần chỉnh sửa cuối cùng"/>
+      <Item key="_.ImageOrderBy._Extension" value="Phần mở rộng"/>
+      <Item key="_.ImageOrderBy._Random" value="Ngẫu nhiên"/>
+      <Item key="_.ImageOrderType._Asc" value="Tăng dần"/>
+      <Item key="_.ImageOrderType._Desc" value="Giảm dần"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Không làm gì"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Thu nhỏ cửa sổ"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Đóng"/>
       <Item key="frmMain.mnuMainFile" value="Tập tin"/>
       <Item key="frmMain.mnuMainOpenFile" value="Mở tập tin…"/>
       <Item key="frmMain.mnuMainOpenImageData" value="Mở hình ảnh từ vùng nhớ đệm"/>
@@ -46,6 +58,7 @@
       <Item key="frmMain.mnuMainChannels._Blue" value="Xanh dương"/>
       <Item key="frmMain.mnuMainChannels._Black" value="Đen"/>
       <Item key="frmMain.mnuMainChannels._Alpha" value="Trong suốt"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Thứ tự tải hình ảnh"/>
       <Item key="frmMain.mnuMainRotateLeft" value="Xoay trái"/>
       <Item key="frmMain.mnuMainRotateRight" value="Xoay phải"/>
       <Item key="frmMain.mnuMainFlipHorz" value="Lật theo chiều ngang"/>
@@ -82,6 +95,7 @@
       <Item key="frmMain.mnuMainColorPicker" value="Công cụ chọn màu"/>
       <Item key="frmMain.mnuMainPageNav" value="Điều hướng trang"/>
       <Item key="frmMain.mnuMainCrop" value="Cắt ảnh"/>
+      <Item key="frmMain.mnuExifTool" value="Công cụ Exif"/>
       <Item key="frmMain.mnuMainSettings" value="Cài đặt…"/>
       <Item key="frmMain.mnuMainHelp" value="Trợ giúp"/>
       <Item key="frmMain.mnuMainAbout" value="Thông tin phần mềm"/>
@@ -103,7 +117,7 @@
       <Item key="frmMain._DeleteDialogText" value="Xóa tập tin '{0}'?"/>
       <Item key="frmMain._DeleteDialogTitle" value="Xác nhận"/>
       <Item key="frmMain._ExtractPageText" value="Đang trích xuất các trang ảnh. Vui lòng chọn thư mục đầu ra."/>
-      <Item key="frmMain._FullScreenMessage" value="Nhấn ALT+ENTER để thoát chế độ Toàn màn hình."/>
+      <Item key="frmMain._FullScreenMessage" value="Nhấn {0} để thoát khỏi chế độ toàn màn hình."/>
       <Item key="frmMain._SlideshowMessage" value="Nhấn ESC để thoát khỏi chế độ Trình chiếu.&#10;Nhấn chuột phải để mở menu."/>
       <Item key="frmMain._SlideshowMessagePause" value="Trình chiếu ảnh được tạm dừng"/>
       <Item key="frmMain._SlideshowMessageResume" value="Trình chiếu ảnh được tiếp tục"/>
@@ -125,6 +139,7 @@
       <Item key="frmMain._SetBackground_Success" value="Cài đặt ảnh nền thành công"/>
       <Item key="frmMain._PageExtractComplete" value="Đã hoàn thành trích xuất trang ảnh."/>
       <Item key="frmMain._Frameless" value="Giữ phím SHIFT để di chuyển cửa sổ."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Bộ nhớ tạm không có dữ liệu hình ảnh."/>
       <Item key="frmAbout.lblSlogant" value="Phần mềm xem ảnh gọn nhẹ, tiện dụng"/>
       <Item key="frmAbout.lblInfo" value="Thông tin"/>
       <Item key="frmAbout.lblComponent" value="Các thành phần"/>
@@ -173,16 +188,8 @@
       <Item key="frmSetting.chkLoopViewer" value="Xem lại hình ảnh đầu tiên khi kết thúc danh sách"/>
       <Item key="frmSetting.chkIsCenterImage" value="Canh giữa ảnh trong cửa sổ"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Thứ tự tải hình ảnh"/>
-      <Item key="frmSetting.cmbImageOrder._Name" value="Tên (mặc định)"/>
-      <Item key="frmSetting.cmbImageOrder._Length" value="Kích thước"/>
-      <Item key="frmSetting.cmbImageOrder._CreationTime" value="Thời gian tạo"/>
-      <Item key="frmSetting.cmbImageOrder._LastAccessTime" value="Lần truy cập cuối cùng"/>
-      <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="Lần chỉnh sửa cuối cùng"/>
-      <Item key="frmSetting.cmbImageOrder._Extension" value="Phần mở rộng"/>
-      <Item key="frmSetting.cmbImageOrder._Random" value="Ngẫu nhiên"/>
-      <Item key="frmSetting.cmbImageOrderType._Asc" value="Tăng dần"/>
-      <Item key="frmSetting.cmbImageOrderType._Desc" value="Giảm dần"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Sử dụng thứ tự sắp xếp của Windows File Explorer khi có thể"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Nhóm hình ảnh theo thư mục"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Số lượng ảnh được nạp trước vào bộ nhớ bằng ImageBooster (theo một chiều)"/>
       <Item key="frmSetting.lblColorManagement" value="Quản lý màu sắc"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Áp dụng luôn cho ảnh không chứa Color profile"/>
@@ -219,6 +226,8 @@
       <Item key="frmSetting.lblSlideshowIntervalTo" value="đến"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Tự động lưu sau khi xoay ảnh"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Chọn ứng dụng chỉnh sửa hình ảnh"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="Hành động sau khi mở ứng dụng chỉnh sửa:"/>
+      <Item key="frmSetting.lblImageQuality" value="Chất lượng hình ảnh:"/>
       <Item key="frmSetting.btnEditEditExt" value="Chỉnh sửa…"/>
       <Item key="frmSetting.btnEditResetExt" value="Đặt lại về mặc định"/>
       <Item key="frmSetting.btnEditEditAllExt" value="Chỉnh sửa tất cả…"/>
@@ -227,17 +236,21 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Tên ứng dụng"/>
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Đường dẫn ứng dụng"/>
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Tham số cho ứng dụng"/>
-      <Item key="frmSetting.chkSaveModifyDate" value="Không cập nhật thuộc tính Ngày Sửa đổi của hình ảnh khi lưu"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Giữ nguyên Ngày sửa đổi của hình ảnh khi lưu"/>
       <Item key="frmSetting.lblSupportedExtension" value="Định dạng hỗ trợ: {0}"/>
       <Item key="frmSetting.lnkOpenFileAssoc" value="Mở File Type Associations"/>
       <Item key="frmSetting.btnAddNewExt" value="Thêm…"/>
       <Item key="frmSetting.btnRegisterExt" value="Đặt làm trình xem ảnh mặc định…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Huỷ đăng ký định dạng ảnh"/>
       <Item key="frmSetting.btnDeleteExt" value="Xoá"/>
       <Item key="frmSetting.btnResetExt" value="Đặt lại về mặc định"/>
       <Item key="frmSetting._RegisterWebToApp_Error" value="Không thể đăng ký liên kết Web-to-App"/>
       <Item key="frmSetting._RegisterAppExtensions_Error" value="Không thể đăng ký tập tin cho ứng dụng ImageGlass"/>
       <Item key="frmSetting._RegisterAppExtensions_Success" value="Tất cả các phần mở rộng tập tin được đăng ký thành công! Để cài đặt ImageGlass làm Trình xem ảnh mặc định, vui lòng mở Cài đặt Windows &gt; Ứng dụng mặc định và chọn ImageGlass trong phần Trình xem ảnh."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Không thể huỷ đăng ký các định dạng của ImageGlass"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Tất cả định dạng đều được huỷ đăng ký thành công!"/>
       <Item key="frmSetting.lblToolbarPosition" value="Vị trí của thanh công cụ:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Kích thước biểu tượng thanh công cụ:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Ở trên"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Ở dưới"/>
       <Item key="frmSetting._separator" value="Phân cách"/>
@@ -249,11 +262,16 @@
       <Item key="frmSetting.btnMoveRight._Tooltip" value="Thêm nút được chọn vào thanh công cụ"/>
       <Item key="frmSetting.btnMoveUp._Tooltip" value="Di chuyển lên"/>
       <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Canh giữa các nút trên thanh công cụ theo chiều ngang"/>
-      <Item key="frmSetting.chkColorUseRGBA" value="Sử dụng định dạng RGBA"/>
-      <Item key="frmSetting.chkColorUseHEXA" value="Sử dụng định dạng HEX với thuộc tính alpha"/>
-      <Item key="frmSetting.chkColorUseHSLA" value="Sử dụng định dạng HSLA"/>
+      <Item key="frmSetting.chkHideTooltips" value="Ẩn tooltip thanh công cụ"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="Sử dụng định dạng RGB với giá trị Alpha"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="Sử dụng định dạng HEX với giá trị Alpha"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="Sử dụng định dạng HSL với giá trị Alpha"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="Sử dụng định dạng HSV với giá trị Alpha"/>
       <Item key="frmSetting.lblDefaultColorCode" value="Mã màu mặc định khi sao chép"/>
       <Item key="frmSetting.chkShowPageNavAuto" value="Tự động hiển thị Công cụ điều hướng trang cho ảnh chứa nhiều trang"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Luôn giữ cho Công cụ Exif ở trên cùng"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Tìm tập tin của Công cụ Exif"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Công cụ Exif không tìm thấy hoặc không hợp lệ: &#10;{0}"/>
       <Item key="frmSetting.lblLanguageText" value="Ngôn ngữ đã cài đặt"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Làm mới"/>
       <Item key="frmSetting.lblLanguageWarning" value="Gói ngôn ngữ này có thể không tương thích với {0}"/>
@@ -323,7 +341,12 @@
       <Item key="frmCrop.btnSave" value="Lưu"/>
       <Item key="frmCrop.btnSaveAs" value="Lưu thành…"/>
       <Item key="frmCrop.btnCopy" value="Sao chép"/>
-      <Item key="frmCrop.btnClear" value="Xoá"/>
+      <Item key="frmCrop.btnReset" value="Thiết lập lại"/>
+      <Item key="FrmExifTool.clnProperty" value="Thuộc tính"/>
+      <Item key="FrmExifTool.clnValue" value="Giá trị"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Sao chép giá trị"/>
+      <Item key="FrmExifTool.btnExport" value="Xuất…"/>
+      <Item key="FrmExifTool.btnClose" value="Đóng"/>
     </Content>
   </Language>
 </ImageGlass>

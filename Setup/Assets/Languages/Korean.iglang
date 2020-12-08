@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="ko-KR" langName="한국어" author="JaeHyung Lee (kolanp)" description="Korean" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="일부 설정이 ImageGlass {0} 버전과 호환되지 않습니다. 계속하기 전 업데이트를 권장합니다.&#10;&#10;- 변경 사항에 대해 알아 보려면 예를 누릅니다.&#10;- 기본 설정으로 ImageGlass를 시작하려면 아니오를 누릅니다."/>
+      <Item key="_.ImageOrderBy._Name" value="이름 (기본값)"/>
+      <Item key="_.ImageOrderBy._Length" value="파일 크기"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="만들어진 시간"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="마지막 연결 시간"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="마지막 수정 시간"/>
+      <Item key="_.ImageOrderBy._Extension" value="확장자"/>
+      <Item key="_.ImageOrderBy._Random" value="무작위"/>
+      <Item key="_.ImageOrderType._Asc" value="오름차순"/>
+      <Item key="_.ImageOrderType._Desc" value="내림차순"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="동작 없음"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="최소화"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="닫기"/>
+      <Item key="frmMain.mnuMainFile" value="파일"/>
+      <Item key="frmMain.mnuMainOpenFile" value="파일 열기…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="클립보드 데이터에서 이미지 불러오기"/>
+      <Item key="frmMain.mnuMainNewWindow" value="새 창 열기"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="한 개의 인스턴스만 허용되었기 때문에 새 창을 열 수 없습니다."/>
+      <Item key="frmMain.mnuMainSaveAs" value="다른 이름이로 이미지 저장…"/>
+      <Item key="frmMain.mnuMainRefresh" value="새로 고침"/>
+      <Item key="frmMain.mnuMainReloadImage" value="이미지 다시 불러오기"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="이미지 목록 다시 불러오기"/>
+      <Item key="frmMain.mnuOpenWith" value="다른 프로그램으로 열기…"/>
+      <Item key="frmMain.mnuMainEditImage" value="이미지 편집 {0}…"/>
+      <Item key="frmMain.mnuMainPrint" value="인쇄…"/>
+      <Item key="frmMain.mnuMainNavigation" value="내비게이션"/>
+      <Item key="frmMain.mnuMainViewNext" value="다음 이미지 보기"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="→ / PageDown"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="이전 이미지 보기"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="← / PageUp"/>
+      <Item key="frmMain.mnuMainGoto" value="이동…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="처음 이미지로"/>
+      <Item key="frmMain.mnuMainGotoLast" value="마지막 이미지로"/>
+      <Item key="frmMain.mnuMainNextPage" value="다음 이미지 보기"/>
+      <Item key="frmMain.mnuMainPrevPage" value="이전 이미지 보기"/>
+      <Item key="frmMain.mnuMainFirstPage" value="첫번째 이미지 보기"/>
+      <Item key="frmMain.mnuMainLastPage" value="마지막 이미지 보기"/>
+      <Item key="frmMain.mnuMainZoom" value="확대"/>
+      <Item key="frmMain.mnuMainZoomIn" value="확대"/>
+      <Item key="frmMain.mnuMainZoomOut" value="축소"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="비율 맞춤"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="비율 채우기"/>
+      <Item key="frmMain.mnuMainActualSize" value="실제 크기"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="확대 비율 고정"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="배율 자동 조정"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="창의 가로 크기에 맞춤"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="창의 세로 크기에 맞춤"/>
+      <Item key="frmMain.mnuMainImage" value="이미지"/>
+      <Item key="frmMain.mnuMainChannels" value="채널 보기"/>
+      <Item key="frmMain.mnuMainChannels._All" value="모두"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="빨강"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="녹색"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="파랑"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="검정"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="알파"/>
+      <Item key="frmMain.mnuLoadingOrder" value="불러오기 순서"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="왼쪽으로 회전"/>
+      <Item key="frmMain.mnuMainRotateRight" value="오른쪽으로 회전"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="가로 뒤집기"/>
+      <Item key="frmMain.mnuMainFlipVert" value="세로 뒤집기"/>
+      <Item key="frmMain.mnuMainRename" value="이미지 이름 바꾸기…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="휴지통으로 보내기"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="디스크에서 파일 삭제"/>
+      <Item key="frmMain.mnuMainExtractPages" value="애니메이션 이미지에서 이미지 추출 ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="애니메이션 이미지 재생 / 정지"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="바탕화면 배경으로 설정"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="잠금 화면 이미지로 설정"/>
+      <Item key="frmMain.mnuMainImageLocation" value="이미지 경로 열기"/>
+      <Item key="frmMain.mnuMainImageProperties" value="이미지 속성"/>
+      <Item key="frmMain.mnuMainClipboard" value="클립보드"/>
+      <Item key="frmMain.mnuMainCopy" value="복사"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="이미지 데이터 복사"/>
+      <Item key="frmMain.mnuMainCut" value="잘라내기"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="이미지 경로 복사"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="클립보드 비우기"/>
+      <Item key="frmMain.mnuWindowFit" value="창 맞춤"/>
+      <Item key="frmMain.mnuMainFullScreen" value="전체 화면"/>
+      <Item key="frmMain.mnuFrameless" value="제목 표시줄 숨기기"/>
+      <Item key="frmMain.mnuMainSlideShow" value="슬라이드쇼"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="슬라이드쇼 시작"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="슬라이드쇼 일시 중지 / 재시작"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="슬라이드쇼 종료"/>
+      <Item key="frmMain.mnuMainShare" value="공유…"/>
+      <Item key="frmMain.mnuMainLayout" value="레이아웃"/>
+      <Item key="frmMain.mnuMainToolbar" value="도구 모음"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="썸네일 패널"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="바둑판 배경"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="항상 위에 표시"/>
+      <Item key="frmMain.mnuMainTools" value="도구"/>
+      <Item key="frmMain.mnuMainColorPicker" value="색상 선택기"/>
+      <Item key="frmMain.mnuMainPageNav" value="페이지 탐색"/>
+      <Item key="frmMain.mnuMainCrop" value="잘라내기"/>
+      <Item key="frmMain.mnuExifTool" value="Exif 도구"/>
+      <Item key="frmMain.mnuMainSettings" value="설정…"/>
+      <Item key="frmMain.mnuMainHelp" value="도움말"/>
+      <Item key="frmMain.mnuMainAbout" value="프로그램 소개"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="초기 구성 실행…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="프로그램 업데이트 확인…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="새로운 버전을 사용할 수 있습니다."/>
+      <Item key="frmMain.mnuMainReportIssue" value="발생한 문제 신고…"/>
+      <Item key="frmMain.mnuMainExitApplication" value="ImageGlass 끝내기"/>
+      <Item key="frmMain.picMain._ErrorText" value="이 파일은 손상되었거나 지원되지 않는 형식이므로 ImageGlass에서 열 수 없습니다."/>
+      <Item key="frmMain._ImageNotExist" value="이미지가 존재하지 않습니다."/>
+      <Item key="frmMain.btnMenu" value="메뉴 (단축키: `)"/>
+      <Item key="frmMain._OpenFileDialog" value="지원되는 모든 파일"/>
+      <Item key="frmMain._Files" value="파일"/>
+      <Item key="frmMain._Pages" value="페이지"/>
+      <Item key="frmMain._ImageData" value="이미지 데이터"/>
+      <Item key="frmMain._RenameDialogText" value="이름 바꾸기"/>
+      <Item key="frmMain._RenameDialog" value="새로운 이름을 입력해주세요."/>
+      <Item key="frmMain._GotoDialogText" value="보실 이미지 인덱스를 입력하신 후 '엔터'를 누르세요."/>
+      <Item key="frmMain._DeleteDialogText" value="'{0}' 파일을 삭제하시겠습니까?"/>
+      <Item key="frmMain._DeleteDialogTitle" value="확인"/>
+      <Item key="frmMain._ExtractPageText" value="추출한 이미지를 저장할 폴더를 선택하세요."/>
+      <Item key="frmMain._FullScreenMessage" value="전체 화면 모드를 종료하려면 {0} 키를 누르세요."/>
+      <Item key="frmMain._SlideshowMessage" value="슬라이드쇼를 종료하려면 ESC 키를 누르세요.&#10; 마우스 오른쪽 버튼을 클릭하면 하위 메뉴를 열 수 있습니다."/>
+      <Item key="frmMain._SlideshowMessagePause" value="슬라이드쇼가 일시 중지되었습니다."/>
+      <Item key="frmMain._SlideshowMessageResume" value="슬라이드쇼가 재시작되었습니다."/>
+      <Item key="frmMain._CopyFileText" value="{0} 파일 복사됨"/>
+      <Item key="frmMain._CutFileText" value="{0} 파일 잘라냄"/>
+      <Item key="frmMain._CopyImageData" value="클립보드에 이미지가 복사되었습니다."/>
+      <Item key="frmMain._ClearClipboard" value="클립보드를 비웠습니다"/>
+      <Item key="frmMain._SaveChanges" value="변경 사항 저장 중..."/>
+      <Item key="frmMain._SaveImage" value="이미지 저장 위치&#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="이미지 저장 중...&#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="이미지 저장 실패.&#10;{0}"/>
+      <Item key="frmMain._Loading" value="불러오는 중..."/>
+      <Item key="frmMain._FirstItemOfList" value="첫 번째 이미지입니다."/>
+      <Item key="frmMain._LastItemOfList" value="마지막 이미지입니다."/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="애니메이션 형식의 수정은 지원되지 않습니다."/>
+      <Item key="frmMain._SetLockImage_Error" value="잠금 화면 이미지를 설정하는 동안 동안 오류가 발생했습니다."/>
+      <Item key="frmMain._SetLockImage_Success" value="잠금 화면이 성공적으로 설정되었습니다."/>
+      <Item key="frmMain._SetBackground_Error" value="바탕 화면 배경을 설정하는 동안 오류가 발생했습니다."/>
+      <Item key="frmMain._SetBackground_Success" value="바탕 화면 배경이 성공적으로 설정되었습니다."/>
+      <Item key="frmMain._PageExtractComplete" value="페이지 추출 완료."/>
+      <Item key="frmMain._Frameless" value="창을 이동하려면 SHIFT 키를 누른 채 마우스로 이동하세요."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="클립보드에 이미지 데이터가 포함되어 있지 않습니다."/>
+      <Item key="frmAbout.lblSlogant" value="가볍고 유연한 이미지 뷰어"/>
+      <Item key="frmAbout.lblInfo" value="정보"/>
+      <Item key="frmAbout.lblComponent" value="사용된 컴포넌트"/>
+      <Item key="frmAbout.lblReferences" value="참고한 라이브러리"/>
+      <Item key="frmAbout.lblVersion" value="버전: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="연락"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="소프트웨어 업데이트"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» 업데이트 확인…"/>
+      <Item key="frmAbout._Text" value="프로그램 소개"/>
+      <Item key="frmAbout._PortableText" value="[포터블 모드]"/>
+      <Item key="frmSetting._Text" value="설정"/>
+      <Item key="frmSetting.btnSave" value="저장"/>
+      <Item key="frmSetting.btnCancel" value="취소"/>
+      <Item key="frmSetting.btnApply" value="적용"/>
+      <Item key="frmSetting.lblGeneral" value="일반"/>
+      <Item key="frmSetting.lblImage" value="이미지"/>
+      <Item key="frmSetting.lblEdit" value="편집"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="파일 형식 연결"/>
+      <Item key="frmSetting.lblToolbar" value="도구 모음"/>
+      <Item key="frmSetting.lblLanguage" value="언어"/>
+      <Item key="frmSetting.lblTheme" value="테마"/>
+      <Item key="frmSetting.lblKeyboard" value="키보드"/>
+      <Item key="frmSetting.lblHeadStartup" value="시작"/>
+      <Item key="frmSetting.chkWelcomePicture" value="환영 사진 표시"/>
+      <Item key="frmSetting.chkLastSeenImage" value="마지막으로 본 이미지 열기"/>
+      <Item key="frmSetting.chkShowToolBar" value="시작 시 도구 모음 표시"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="구성 디렉터리"/>
+      <Item key="frmSetting.lblHeadViewer" value="뷰어"/>
+      <Item key="frmSetting.chkShowScrollbar" value="뷰어 스크롤 바 표시"/>
+      <Item key="frmSetting.chkShowNavButtons" value="탐색 화살표 버튼 표시"/>
+      <Item key="frmSetting.chkDisplayBasename" value="제목 표시줄에 현재 이미지의 기본 이름 표시"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="이미지 영역에만 체크보드 표시"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="터치 제스처 지원 허용"/>
+      <Item key="frmSetting.lblBackGroundColor" value="배경 색상"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="초기화"/>
+      <Item key="frmSetting.lblHeadOthers" value="기타"/>
+      <Item key="frmSetting.chkAutoUpdate" value="자동으로 업데이트 확인"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="프로그램의 다중 인스턴스 허용"/>
+      <Item key="frmSetting.chkESCToQuit" value="ESC 키를 눌러 프로그램 종료"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="삭제 확인 창 표시"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="창 맞춤 모드에서 자동으로 창을 화면 가운데 맞추기"/>
+      <Item key="frmSetting.chkShowToast" value="팝업 메시지 표시"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="이미지 불러오기"/>
+      <Item key="frmSetting.chkFindChildFolder" value="하위 폴더에서도 이미지 찾기"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="숨김 이미지 표시"/>
+      <Item key="frmSetting.chkLoopViewer" value="이미지 목록의 마지막에 도달하면 처음으로 되돌아가기"/>
+      <Item key="frmSetting.chkIsCenterImage" value="뷰어의 가운데 이미지"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="이미지 정렬 기준"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="가능한 경우 Windows 파일 탐색기 정렬 순서 사용"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="디렉터리별 이미지 그룹화"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="ImageBooster에서 캐시된 이미지 수 (한 방향)"/>
+      <Item key="frmSetting.lblColorManagement" value="색상 관리"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="색상 프로필이 포함되지 않은 이미지에도 적용"/>
+      <Item key="frmSetting.lblColorProfile" value="색상 프로필"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="찾아보기…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="없음"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="사용자 맞춤설정…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="마우스 휠 동작"/>
+      <Item key="frmSetting.lblMouseWheel" value="마우스 휠"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="마우스 휠 + Alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="마우스 휠 + Ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="마우스 휠 + Shift"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="동작 없음"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="확대"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="세로 스크롤"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="가로 스크롤"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="이전/다음 이미지"/>
+      <Item key="frmSetting.lblHeadZooming" value="확대"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="확대 최적화"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="자동"/>
+      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="부드러운 픽셀"/>
+      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="또렷한 픽셀"/>
+      <Item key="frmSetting.lblZoomLevels" value="확대 수준"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="확대 수준을 업데이트하는 중 오류가 발생했습니다. 오류 메세지:&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="썸네일 표시줄"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="오른쪽에 썸네일 표시줄 표시"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="스크롤 바에 썸네일 표시"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="썸네일 크기 (픽셀)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="슬라이드쇼"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="목록 끝에서 첫 번째 이미로 돌아가기"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="슬라이드쇼 카운트다운 표시"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="슬라이드 이미지 사이에 무작위 간격 사용"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="이미지 사이 간격: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="~"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="회전 후 현재 이미지 저장"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="이미지 편집용 프로그램 선택"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="편집 앱을 연 후:"/>
+      <Item key="frmSetting.lblImageQuality" value="이미지 품질:"/>
+      <Item key="frmSetting.btnEditEditExt" value="선택 항목 편집…"/>
+      <Item key="frmSetting.btnEditResetExt" value="기본값으로 재설정"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="모든 항목 편집…"/>
+      <Item key="frmSetting._allExtensions" value="모든 확장자"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="파일 확장자"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="프로그램 이름"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="프로그램 경로"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="프로그램 매개 변수"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="저장 시 이미지의 수정된 날짜 유지"/>
+      <Item key="frmSetting.lblSupportedExtension" value="지원되는 형식: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Windows 기본 앱 선택 창 열기"/>
+      <Item key="frmSetting.btnAddNewExt" value="추가…"/>
+      <Item key="frmSetting.btnRegisterExt" value="기본 이미지 뷰어로 설정…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="확장자 등록 해제"/>
+      <Item key="frmSetting.btnDeleteExt" value="삭제"/>
+      <Item key="frmSetting.btnResetExt" value="기본값으로 재설정"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="웹-프로그램 연동 등록 불가"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="ImageGlass 앱의 파일 확장자를 등록할 수 없습니다."/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="모든 파일 확장자 등록 성공! ImageGlass를 기본 사진 뷰어로 설정하려면, PC 설정 -&gt; 앱 -&gt; 기본 앱에 있는 사진 뷰어 항목에서 ImageGlass를 직접 선택해 주세요."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="ImageGlass 앱의 등록된 파일 확장자를 삭제할 수 없습니다."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="모든 파일 확장자가 등록 해제되었습니다!"/>
+      <Item key="frmSetting.lblToolbarPosition" value="도구 모음 위치"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="도구 모음 아이콘 크기:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="위쪽"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="아래쪽"/>
+      <Item key="frmSetting._separator" value="구분자"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="도구 모음 버튼 구성"/>
+      <Item key="frmSetting.lblUsedBtns" value="현재 버튼:"/>
+      <Item key="frmSetting.lblAvailBtns" value="사용 가능한 버튼:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="선택한 버튼 아래로 이동"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="도구 모음에서 선택한 버튼 제거"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="도구 모음에 선택한 버튼 추가"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="선택한 버튼 위로 이동"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="도구 모음 버튼을 창의 가로 가운데 배치"/>
+      <Item key="frmSetting.chkHideTooltips" value="도구 모음 툴팁 숨김"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="알파 값의 RGB 형식 사용"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="알파 값의 HEX 형식 사용"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="알파 값의 HSL 사용"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="알파 값의 HSV 형식 사용"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="복사 시 기본 색상 코드 형식"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="다중 페이지 이미지를 위한 페이지 탐색 도구 자동 표시"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Exif 도구 항상 위에 표시"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Exif 도구 파일 선택"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Exif 도구가 없거나 무료함: &#10;{0}"/>
+      <Item key="frmSetting.lblLanguageText" value="설치된 언어"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; 새로 고침"/>
+      <Item key="frmSetting.lblLanguageWarning" value="이 언어 팩은 {0}와(과) 호환되지 않을 수 있습니다."/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; 새 언어팩 설치 (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; 새 언어팩 생성…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; 선택한 언어팩 편집…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; 더 많은 언어팩 받기…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="설치된 테마: {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="테마 다운로드…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="새로 고침"/>
+      <Item key="frmSetting.btnThemeInstall" value="설치…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="삭제…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="따로 저장…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="테마 폴더 열기"/>
+      <Item key="frmSetting.btnThemeApply" value="테마 적용"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="이름"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="버전"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="저작자"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="이메일"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="웹사이트"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="호환성"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="설명"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="테마가 성공적으로 설치되었습니다."/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="테마를 설치할 수 없습니다."/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="선택한 테마를 제거할 수 없습니다."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="선택한 테마가 {0}에 저장되었습니다."/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="선택한 테마를 저장할 수 없습니다."/>
+      <Item key="frmSetting.btnThemeApply._Success" value="선택한 테마가 성공적으로 적용되었습니다!"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="선택한 테마를 적용할 수 없습니다."/>
+      <Item key="frmSetting.btnKeyReset" value="기본값으로 재설정"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="공백 / 백스페이스"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="PageUp / PageDown"/>
+      <Item key="frmSetting.lblKeysUpDown" value="상/하 화살표"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="왼쪽 / 오른쪽 화살표"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="이전 / 다음 이미지"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="창 왼쪽 / 오른쪽"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="상/하 이동"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="확대/축소"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="슬라이드쇼 일시 중지"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="동작 없음"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="파일 확장자"/>
+      <Item key="frmAddNewFormat.btnOK" value="확인"/>
+      <Item key="frmAddNewFormat.btnClose" value="닫기"/>
+      <Item key="frmEditApp.lblFileExtension" value="파일 확장자"/>
+      <Item key="frmEditApp.lblAppName" value="프로그램 이름"/>
+      <Item key="frmEditApp.lblAppPath" value="프로그램 경로"/>
+      <Item key="frmEditApp.lblAppArguments" value="프로그램 매개 변수"/>
+      <Item key="frmEditApp.btnReset" value="초기화"/>
+      <Item key="frmEditApp.btnOK" value="확인"/>
+      <Item key="frmEditApp.btnClose" value="닫기"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="미리보기"/>
+      <Item key="frmFirstLaunch._Text" value="시작 실행 구성"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="새로운 설정을 적용하기 위해 ImageGlass 를 종료해야 합니다. 계속하시겠습니까?"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="{0}/{1} 단계"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="다음"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="완료!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="건너뛰기 및 ImageGlass 실행"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="언어 선택"/>
+      <Item key="frmFirstLaunch.lblLayout" value="레이아웃 선택"/>
+      <Item key="frmFirstLaunch.cmbLayout._Standard" value="기본"/>
+      <Item key="frmFirstLaunch.cmbLayout._Designer" value="디자이너"/>
+      <Item key="frmFirstLaunch.lblTheme" value="테마 선택"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="ImageGlass를 기본 이미지 뷰어로 설정하시겠습니까?"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="예"/>
+      <Item key="frmCrop.lblWidth" value="가로:"/>
+      <Item key="frmCrop.lblHeight" value="세로:"/>
+      <Item key="frmCrop.btnSave" value="저장"/>
+      <Item key="frmCrop.btnSaveAs" value="따로 저장..."/>
+      <Item key="frmCrop.btnCopy" value="복사"/>
+      <Item key="frmCrop.btnReset" value="초기화"/>
+      <Item key="FrmExifTool.clnProperty" value="속성"/>
+      <Item key="FrmExifTool.clnValue" value="값"/>
+      <Item key="FrmExifTool.btnCopyValue" value="값 복사"/>
+      <Item key="FrmExifTool.btnExport" value="내보내기…"/>
+      <Item key="FrmExifTool.btnClose" value="닫기"/>
+    </Content>
+  </Language>
+</ImageGlass>

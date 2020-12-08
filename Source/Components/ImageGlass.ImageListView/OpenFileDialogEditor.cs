@@ -16,25 +16,22 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
+using System.ComponentModel;
 using System.Drawing.Design;
 using System.Windows.Forms;
-using System.ComponentModel;
 
-namespace ImageGlass.ImageListView
-{
+namespace ImageGlass.ImageListView {
     /// <summary>
     /// Displays a open file dialog box on the property grid.
     /// </summary>
-    internal class OpenFileDialogEditor : UITypeEditor
-    {
+    internal class OpenFileDialogEditor: UITypeEditor {
         #region UITypeEditor Overrides
         /// <summary>
         /// Gets the edit style.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns>The edit style.</returns>
-        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
-        {
+        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context) {
             if (context != null && context.Instance != null)
                 return UITypeEditorEditStyle.Modal;
 
@@ -49,12 +46,9 @@ namespace ImageGlass.ImageListView
         /// <param name="provider">The provider.</param>
         /// <param name="value">The value.</param>
         /// <returns>New value.</returns>
-        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
-        {
-            if (provider != null && context != null && context.Instance != null)
-            {
-                using (OpenFileDialog dlg = new OpenFileDialog())
-                {
+        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value) {
+            if (provider != null && context != null && context.Instance != null) {
+                using (OpenFileDialog dlg = new OpenFileDialog()) {
                     string filename = (value != null) ? (string)value : "";
 
                     dlg.FileName = filename;

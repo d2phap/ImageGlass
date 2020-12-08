@@ -1,4 +1,4 @@
-ImageGlass - A lightweight, versatile image viewer.
+⛰ ImageGlass - A lightweight, versatile image viewer
 ===
 
 
@@ -12,19 +12,25 @@ ImageGlass is a lightweight software application whose purpose is to help you vi
 It gives you the possibility to view over **70+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers to speed up their work.
 
 
-## Download & Screen shots
+## 📥 Download
 [![Total Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%233097B8&label=downloads&style=for-the-badge)](https://imageglass.org/download)
-[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23E17206&label=v7.6.4.30%20downloads&style=for-the-badge)](https://imageglass.org/download)
+[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23932043&label=v8.0.12.8%20downloads&style=for-the-badge)](https://imageglass.org/download)
 
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://imageglass.org/upload/photo/release/7.6_1.jpg" alt="ImageGlass 7.6.4.301" width="640">
+<img src="https://imageglass.org/upload/photo/release/8.0_1.jpg" alt="ImageGlass 8.0.12.8" width="640">
 </a><br/>
 
 
-## Development
+## 🛣 Roadmap
+Please find the roadmap and information about [🏔 ImageGlass Preview](https://github.com/d2phap/ImageGlass-Preview) at:
+
+https://www.patreon.com/posts/imageglass-and-39849218
+
+
+## 👨‍💻 Development
 ![Visual Studio 2019](https://img.shields.io/badge/IDE-Visual%20Studio%202019-964ad4.svg?maxAge=3600)
-![.NET Framework 4.7.1](https://img.shields.io/badge/.NET-Framework%204.7.1-lightgrey.svg?maxAge=3600)
+![.NET Framework 4.8](https://img.shields.io/badge/.NET-Framework%204.8-lightgrey.svg?maxAge=3600)
 ![Windows OS](https://img.shields.io/badge/OS-Windows%207+-00adef.svg?maxAge=3600)
 
 ```develop``` branch contains the lastest commits while ```master``` branch is for the final stable release.
@@ -33,7 +39,7 @@ It gives you the possibility to view over **70+** common image formats, includin
 
 
 
-## Docs
+## 📚 Docs
 
 [![Features](https://img.shields.io/badge/docs-Features-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/features)
 [![Supported formats](https://img.shields.io/badge/docs-Supported%20Formats-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/supported-formats)
@@ -49,44 +55,40 @@ For more information about ImageGlass, go to [Documentation](https://imageglass.
 
 
 
-## Donation
+## 💖 Support this project
 ImageGlass is free and open source but developing it has taken thousands of hours of my time and a large part of my sanity. If you feel this little viewer useful to you, it would go a great way to ensuring that I can afford to take the time to continue to develop it.
 
 Thanks for your gratitude and finance help!
 
-<a href="https://www.paypal.me/d2phap" target="_blank" title="Buy me a beer?">
-<img src="https://img.shields.io/badge/PayPal-Donate%20$10%20-009be1.svg?maxAge=3600" height="30" alt="Buy me a beer?">
+<a href="https://www.patreon.com/d2phap" target="_blank" title="Become a patron">
+<img src="https://img.shields.io/badge/Patreon-@d2phap%20-e85b46.svg?maxAge=3600" height="30" alt="Buy me a beer?">
 </a>
 
+<a href="https://www.paypal.me/ddphap" target="_blank" title="Buy me a beer?">
+<img src="https://img.shields.io/badge/PayPal-Donate%20$10%20-0070ba.svg?maxAge=3600" height="30" alt="Buy me a beer?">
+</a>
 
 <a href="https://github.com/sponsors/d2phap" target="_blank" title="Become a sponsor">
-<img src="https://img.shields.io/badge/Github-github.com%2Fsponsor%2Fd2phap-E84646.svg?maxAge=3600" height="30" alt="Become a sponsor">
+<img src="https://img.shields.io/badge/Github-@d2phap-24292e.svg?maxAge=3600" height="30" alt="Become a sponsor">
 </a>
 
 
+### Cryptocurrency donation:
 
-<img src="https://img.shields.io/badge/Bitcoin-Donate-f7931a.svg?maxAge=3600" height="30" alt="Bitcoin">
+```bash
+# Chainlink
+0x4267Bd7c062f69fF233538Df83099C737f56094f
 
-```
+# Ethereum
+0xDc91F762C13b207eb1270fCBEdB464F1507B030C
+
+# Bitcoin
 3Hp7QLP9Fxpb1s4CAcZFYR7NUgN1bR93Hy
 ```
 
 
+## 💪 Top contributors
+Thanks for all your wonderful PRs, issues and ideas. You’re always welcome to [join](CONTRIBUTING.md)!
 
-
-<img src="https://img.shields.io/badge/Ethereum-Donate-131313.svg?maxAge=3600" height="30" alt="Ethereum">
-
-```
-0x6DDBd646586bebF7a97e022D615cbE789D39a965
-```
-
-
-
-
-
-
-## Contributors
-
-This project exists thanks to all the people who contribute. [[Contribute]](CONTRIBUTING.md).
-<a href="https://github.com/d2phap/ImageGlass/graphs/contributors"><img src="https://opencollective.com/imageglass/contributors.svg?width=890" /></a>
+[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/0)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/0)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/1)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/1)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/2)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/2)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/3)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/3)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/4)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/4)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/5)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/5)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/6)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/6)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/7)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/7)
 

@@ -16,18 +16,16 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
-using System.Globalization;
 using System.ComponentModel;
-using System.Reflection;
 using System.ComponentModel.Design.Serialization;
+using System.Globalization;
+using System.Reflection;
 
-namespace ImageGlass.ImageListView
-{
+namespace ImageGlass.ImageListView {
     /// <summary>
     /// Represents type converter for the color palette of the image list view.
     /// </summary>
-    internal class ImageListViewColorTypeConverter : ExpandableObjectConverter
-    {
+    internal class ImageListViewColorTypeConverter: ExpandableObjectConverter {
         #region TypeConverter Overrides
         /// <summary>
         /// Returns whether this converter can convert the 
@@ -36,8 +34,7 @@ namespace ImageGlass.ImageListView
         /// <param name="context">Format context.</param>
         /// <param name="destinationType">The type you want to convert to.</param>
         /// <returns>true if this converter can perform the conversion; otherwise, false.</returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
-        {
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
             if (destinationType == typeof(string))
                 return true;
             else if (destinationType == typeof(InstanceDescriptor))
@@ -52,8 +49,7 @@ namespace ImageGlass.ImageListView
         /// <param name="context">Format context.</param>
         /// <param name="sourceType">The type you want to convert from.</param>
         /// <returns>true if this converter can perform the conversion; otherwise, false.</returns>
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-        {
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) {
             if (sourceType == typeof(string))
                 return true;
 
@@ -68,18 +64,14 @@ namespace ImageGlass.ImageListView
         /// <param name="value">The objct to convert.</param>
         /// <param name="destinationType">The type to convert to.</param>
         /// <returns>An object that represents the converted value.</returns>
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
-        {
-            if (value != null && value is ImageListViewColor)
-            {
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType) {
+            if (value != null && value is ImageListViewColor) {
                 ImageListViewColor colors = (ImageListViewColor)value;
 
-                if (destinationType == typeof(string))
-                {
+                if (destinationType == typeof(string)) {
                     return colors.ToString();
                 }
-                else if (destinationType == typeof(InstanceDescriptor))
-                {
+                else if (destinationType == typeof(InstanceDescriptor)) {
                     // Used by the designer serializer
                     ConstructorInfo consInfo = typeof(ImageListViewColor).GetConstructor(new Type[] { typeof(string) });
                     return new InstanceDescriptor(consInfo, new object[] { colors.ToString() });
@@ -96,10 +88,8 @@ namespace ImageGlass.ImageListView
         /// <param name="culture">The culture info to use as the current culture.</param>
         /// <param name="value">The object to convert.</param>
         /// <returns>An object that represents the converted value.</returns>
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
-        {
-            if (value != null && value is string)
-            {
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value) {
+            if (value != null && value is string) {
                 return new ImageListViewColor((string)value);
             }
 

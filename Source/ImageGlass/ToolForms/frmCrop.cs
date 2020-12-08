@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2020 DUONG DIEU PHAP
+Copyright (C) 2021 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -17,19 +17,19 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base;
-using ImageGlass.Settings;
-using ImageGlass.UI;
-using ImageGlass.UI.ToolForms;
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using ImageGlass.Base;
+using ImageGlass.Settings;
+using ImageGlass.UI;
+using ImageGlass.UI.ToolForms;
 
 namespace ImageGlass {
     public partial class frmCrop: ToolForm {
         // default location offset on the parent form
-        private static readonly Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(420));
+        private static readonly Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(440));
         private ImageBoxEx _imgBox;
 
         /// <summary>
@@ -54,7 +54,6 @@ namespace ImageGlass {
             btnSnapTo.Click += SnapButton_Click;
         }
 
-
         public void SetImageBox(ImageBoxEx imgBox) {
             if (_imgBox != null) {
                 _imgBox.SelectionRegionChanged -= this._imgBox_SelectionRegionChanged;
@@ -67,7 +66,7 @@ namespace ImageGlass {
         }
 
         private void _imgBox_ImageChanged(object sender, EventArgs e) {
-            btnClear_Click(null, null);
+            btnReset_Click(null, null);
         }
 
         private void _imgBox_SelectionRegionChanged(object sender, EventArgs e) {
@@ -89,8 +88,6 @@ namespace ImageGlass {
             }
         }
 
-
-
         #region Private Methods
 
         /// <summary>
@@ -106,22 +103,21 @@ namespace ImageGlass {
 
             // Upate language
             lblFormTitle.Text = Configs.Language.Items[$"{nameof(frmMain)}.mnuMainCrop"];
-            lblWidth.Text = Configs.Language.Items[$"{Name}.lblWidth"];
-            lblHeight.Text = Configs.Language.Items[$"{Name}.lblHeight"];
-            btnSave.Text = Configs.Language.Items[$"{Name}.btnSave"];
-            btnSaveAs.Text = Configs.Language.Items[$"{Name}.btnSaveAs"];
-            btnCopy.Text = Configs.Language.Items[$"{Name}.btnCopy"];
-            btnClear.Text = Configs.Language.Items[$"{Name}.btnClear"];
+            lblWidth.Text = Configs.Language.Items[$"{Name}.{nameof(lblWidth)}"];
+            lblHeight.Text = Configs.Language.Items[$"{Name}.{nameof(lblHeight)}"];
+            btnSave.Text = Configs.Language.Items[$"{Name}.{nameof(btnSave)}"];
+            btnSaveAs.Text = Configs.Language.Items[$"{Name}.{nameof(btnSaveAs)}"];
+            btnCopy.Text = Configs.Language.Items[$"{Name}.{nameof(btnCopy)}"];
+            btnReset.Text = Configs.Language.Items[$"{Name}.{nameof(btnReset)}"];
         }
         #endregion
-
 
         #region Events
         private void frmCrop_Load(object sender, EventArgs e) {
             UpdateUI();
 
             // Windows Bound (Position + Size)-------------------------------------------
-            Rectangle rc = Helpers.StringToRect("0;0;300;160");
+            var rc = Helpers.StringToRect("0;0;300;160");
 
             if (rc.X == 0 && rc.Y == 0) {
                 _locationOffset = DefaultLocationOffset;
@@ -145,16 +141,15 @@ namespace ImageGlass {
         }
 
         private void frmCrop_FormClosing(object sender, FormClosingEventArgs e) {
-            btnClear_Click(null, null);
+            btnReset_Click(null, null);
 
             CropEventHandler = null;
         }
 
         private void BtnClose_Click(object sender, EventArgs e) {
-            var frm = (frmMain) this._currentOwner;
+            var frm = (frmMain)this._currentOwner;
             frm.ShowCropTool(false);
         }
-
 
         private void Numeric_Click(object sender, EventArgs e) {
             var num = (NumericUpDown)sender;
@@ -193,14 +188,15 @@ namespace ImageGlass {
                     CropEventHandler(CropActionEvent.SaveAs);
                 }
             }
-            else if (sender == btnSaveAs)
+            else if (sender == btnSaveAs) {
                 CropEventHandler(CropActionEvent.SaveAs);
-
-            else if (sender == btnCopy)
+            }
+            else if (sender == btnCopy) {
                 CropEventHandler(CropActionEvent.Copy);
+            }
         }
 
-        private void btnClear_Click(object sender, EventArgs e) {
+        private void btnReset_Click(object sender, EventArgs e) {
             numX.Value = 0;
             numY.Value = 0;
             numWidth.Value = 0;
@@ -208,7 +204,6 @@ namespace ImageGlass {
         }
 
         #endregion
-
 
     }
 }

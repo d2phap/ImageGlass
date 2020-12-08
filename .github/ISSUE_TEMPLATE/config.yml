@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask question
+    url: https://github.com/d2phap/ImageGlass/discussions/category_choices
+    about: Ask a question about this project.

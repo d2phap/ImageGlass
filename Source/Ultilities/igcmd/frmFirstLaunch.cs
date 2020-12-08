@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2020 DUONG DIEU PHAP
+Copyright (C) 2021 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -19,11 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using ImageGlass.Base;
 using ImageGlass.Library;
+using ImageGlass.Library.WinAPI;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -32,15 +34,21 @@ namespace igcmd {
     public partial class frmFirstLaunch: Form {
         public frmFirstLaunch() {
             InitializeComponent();
+
+            // Extract & install Theme packs
+            InstallThemePacks();
+            LoadThemeList();
+
+            // first apply current theme
+            ApplyTheme(Configs.Theme);
         }
 
-        private List<Theme> _themeList = new List<Theme>();
+        private readonly List<Theme> _themeList = new List<Theme>();
         private List<Language> _langList = new List<Language>();
 
         private Language _lang = new Language();
-        private Theme _theme = new Theme();
+        private Theme _theme = new Theme((int)Configs.ToolbarIconHeight);
         private LayoutMode _layout = LayoutMode.Standard;
-
 
         #region Form events
 
@@ -49,30 +57,20 @@ namespace igcmd {
             LoadLanguageList();
             ApplyLanguage(_lang);
 
-            // Extract & install Theme packs
-            InstallThemePacks();
-
-            // Load theme list
-            LoadThemeList();
-
-
             // Don't run again
             Configs.FirstLaunchVersion = Constants.FIRST_LAUNCH_VERSION;
         }
 
-
         private void tab1_SelectedIndexChanged(object sender, EventArgs e) {
-            lblStepNumber.Text = string.Format(this._lang.Items[$"{this.Name}.lblStepNumber"], tab1.SelectedIndex + 1, tab1.TabCount);
-
+            lblStepNumber.Text = string.Format(this._lang.Items[$"{Name}.lblStepNumber"], tab1.SelectedIndex + 1, tab1.TabCount);
 
             if (tab1.SelectedIndex == tab1.TabCount - 1) {
-                btnNextStep.Text = this._lang.Items[$"{this.Name}.btnNextStep._Done"];
+                btnNextStep.Text = _lang.Items[$"{Name}.btnNextStep._Done"];
             }
             else {
-                btnNextStep.Text = this._lang.Items[$"{this.Name}.btnNextStep"];
+                btnNextStep.Text = _lang.Items[$"{Name}.btnNextStep"];
             }
         }
-
 
         private void btnNextStep_Click(object sender, EventArgs e) {
             // Done all configs, apply settings and launch ImageGlass
@@ -86,7 +84,6 @@ namespace igcmd {
                         p.ProcessName.Contains("ImageGlass")
                     )
                     .ToList();
-
 
                 if (igProcesses.Count > 0) {
                     var result = MessageBox.Show(this._lang.Items[$"{Name}._ConfirmCloseProcess"], "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -107,7 +104,6 @@ namespace igcmd {
                 return;
             }
 
-
             tab1.SelectedIndex++;
             lblStepNumber.Text = string.Format(this._lang.Items[$"{this.Name}.lblStepNumber"], tab1.SelectedIndex + 1, tab1.TabCount);
 
@@ -121,7 +117,6 @@ namespace igcmd {
             }
         }
 
-
         private void lnkSkip_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             // Save configs to file
             Configs.Write();
@@ -129,7 +124,6 @@ namespace igcmd {
             LaunchImageGlass();
             this.Close();
         }
-
 
         private void btnSetDefaultApp_Click(object sender, EventArgs e) {
             // Update extensions to registry
@@ -146,7 +140,6 @@ namespace igcmd {
             }
         }
 
-
         private void cmbLanguage_SelectedIndexChanged(object sender, EventArgs e) {
             try {
                 this._lang = _langList[cmbLanguage.SelectedIndex];
@@ -157,7 +150,6 @@ namespace igcmd {
 
             ApplyLanguage(this._lang);
         }
-
 
         private void cmbTheme_SelectedIndexChanged(object sender, EventArgs e) {
             var selectedTheme = new Theme();
@@ -171,16 +163,14 @@ namespace igcmd {
             _theme = selectedTheme;
         }
 
-
         private void cmbLayout_SelectedIndexChanged(object sender, EventArgs e) {
             _layout = (LayoutMode)cmbLayout.SelectedIndex;
         }
 
         #endregion
 
-
-
         #region Private Functions
+
         /// <summary>
         /// Load language list
         /// </summary>
@@ -188,17 +178,16 @@ namespace igcmd {
             cmbLanguage.Items.Clear();
             cmbLanguage.Items.Add("English");
 
-
             _langList = new List<Language>
             {
                 new Language()
             };
 
-            string langPath = App.StartUpDir(Dir.Languages);
+            var langPath = App.StartUpDir(Dir.Languages);
 
             if (Directory.Exists(langPath)) {
-                foreach (string f in Directory.GetFiles(langPath)) {
-                    if (Path.GetExtension(f).ToLower() == ".iglang") {
+                foreach (var f in Directory.GetFiles(langPath)) {
+                    if (string.Equals(Path.GetExtension(f), ".iglang", StringComparison.CurrentCultureIgnoreCase)) {
                         var lang = new Language(f);
                         _langList.Add(lang);
 
@@ -217,7 +206,6 @@ namespace igcmd {
                 cmbLanguage.SelectedIndex = 0;
             }
         }
-
 
         /// <summary>
         /// Apply language
@@ -240,58 +228,32 @@ namespace igcmd {
             LoadLayoutList();
         }
 
-
         /// <summary>
         /// Launch ImageGlass app
         /// </summary>
         private void LaunchImageGlass() {
-            Process p = new Process();
+            var p = new Process();
             p.StartInfo.FileName = Path.Combine(App.IGExePath);
             p.Start();
         }
-
 
         /// <summary>
         /// Load theme list
         /// </summary>
         private void LoadThemeList() {
-            //add default theme
-            var defaultTheme = new Theme(App.StartUpDir(Dir.DefaultTheme));
-            _themeList.Add(defaultTheme);
             cmbTheme.Items.Clear();
-            cmbTheme.Items.Add(defaultTheme.Name);
-            cmbTheme.SelectedIndex = 0;
 
+            _themeList.Clear();
+            _themeList.AddRange(Theme.GetAllThemePacks());
 
-            string themeFolder = App.ConfigDir(PathType.Dir, Dir.Themes);
+            foreach (var th in _themeList) {
+                cmbTheme.Items.Add(th.Name);
 
-
-            if (Directory.Exists(themeFolder)) {
-                foreach (string d in Directory.GetDirectories(themeFolder)) {
-                    string configFile = Path.Combine(d, "config.xml");
-
-                    if (File.Exists(configFile)) {
-                        var th = new Theme(d);
-
-                        // invalid theme
-                        if (!th.IsValid) {
-                            continue;
-                        }
-
-                        _themeList.Add(th);
-                        cmbTheme.Items.Add(th.Name);
-
-                        if (Configs.Theme.FolderName.ToLower().CompareTo(th.FolderName.ToLower()) == 0) {
-                            cmbTheme.SelectedIndex = cmbTheme.Items.Count - 1;
-                        }
-                    }
+                if (Configs.Theme.FolderName.ToUpper().CompareTo(th.FolderName.ToUpper()) == 0) {
+                    cmbTheme.SelectedIndex = cmbTheme.Items.Count - 1;
                 }
             }
-            else {
-                Directory.CreateDirectory(themeFolder);
-            }
         }
-
 
         /// <summary>
         /// Apply theme
@@ -313,20 +275,23 @@ namespace igcmd {
                 this.lblDefaultApp.ForeColor =
                 Theme.InvertBlackAndWhiteColor(th.BackgroundColor);
 
-        }
+            // Logo
+            picLogo.Image = th.Logo.Image;
 
+            // apply form theme
+            Configs.ApplyFormTheme(this, th);
+        }
 
         /// <summary>
         /// Extract and install theme packs
         /// </summary>
         private void InstallThemePacks() {
-            var themeFiles = Directory.GetFiles(App.StartUpDir(Dir.DefaultTheme), "*.igtheme");
+            var themeFiles = Directory.GetFiles(App.StartUpDir(Dir.Themes), "*.igtheme");
 
             foreach (var file in themeFiles) {
                 Theme.InstallTheme(file);
             }
         }
-
 
         /// <summary>
         /// Load layout list
@@ -342,7 +307,6 @@ namespace igcmd {
             cmbLayout.SelectedIndex = 0;
         }
 
-
         /// <summary>
         /// Save and apply settings
         /// </summary>
@@ -351,13 +315,11 @@ namespace igcmd {
             Configs.Theme = this._theme;
             Configs.BackgroundColor = this._theme.BackgroundColor;
 
-
             if (_layout == LayoutMode.Designer) {
                 Configs.MouseWheelAction = MouseWheelActions.ScrollVertically;
                 Configs.MouseWheelCtrlAction = MouseWheelActions.Zoom;
                 Configs.MouseWheelShiftAction = MouseWheelActions.ScrollHorizontally;
                 Configs.MouseWheelAltAction = MouseWheelActions.DoNothing;
-
 
                 Configs.ZoomLockValue = 100f;
                 Configs.IsShowColorPickerOnStartup = true;
@@ -371,15 +333,11 @@ namespace igcmd {
                 Configs.ZoomLockValue = -1f;
             }
 
-
             // Save configs to file
             Configs.Write();
         }
 
-
-
         #endregion
-
 
     }
 }

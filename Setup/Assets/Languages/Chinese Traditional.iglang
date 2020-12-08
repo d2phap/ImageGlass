@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="zh-TW" langName="正體中文" author="ImageGlass community" description="Traditional Chinese" minVersion="7.6.4.30" isRightToLeftLayout="No"/>
+    <Info langCode="zh-TW" langName="正體中文" author="Jeff Huang" description="Traditional Chinese" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="某些設定與您的 ImageGlass {0} 不相容。建議您在繼續前先更新它們。&#10;&#10;- 點擊是以取得更多關於變更的資訊。&#10;- 點擊否以使用預設的設定啟動 ImageGlass。"/>
+      <Item key="_.ImageOrderBy._Name" value="名稱（預設）"/>
+      <Item key="_.ImageOrderBy._Length" value="長度"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="建立時間"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="上次存取時間"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="最後寫入時間"/>
+      <Item key="_.ImageOrderBy._Extension" value="副檔名"/>
+      <Item key="_.ImageOrderBy._Random" value="隨機"/>
+      <Item key="_.ImageOrderType._Asc" value="昇冪排序"/>
+      <Item key="_.ImageOrderType._Desc" value="降冪排序"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="沒動作"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="最小化"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="關閉"/>
       <Item key="frmMain.mnuMainFile" value="檔案"/>
       <Item key="frmMain.mnuMainOpenFile" value="開啟檔案…"/>
       <Item key="frmMain.mnuMainOpenImageData" value="從剪貼簿開啟圖片資料"/>
@@ -46,6 +58,7 @@
       <Item key="frmMain.mnuMainChannels._Blue" value="藍"/>
       <Item key="frmMain.mnuMainChannels._Black" value="黑"/>
       <Item key="frmMain.mnuMainChannels._Alpha" value="Alpha"/>
+      <Item key="frmMain.mnuLoadingOrder" value="載入順序"/>
       <Item key="frmMain.mnuMainRotateLeft" value="向左旋轉"/>
       <Item key="frmMain.mnuMainRotateRight" value="向右旋轉"/>
       <Item key="frmMain.mnuMainFlipHorz" value="水平翻轉"/>
@@ -82,6 +95,7 @@
       <Item key="frmMain.mnuMainColorPicker" value="顏色選擇器"/>
       <Item key="frmMain.mnuMainPageNav" value="頁面導覽"/>
       <Item key="frmMain.mnuMainCrop" value="進行裁剪..."/>
+      <Item key="frmMain.mnuExifTool" value="Exif 工具"/>
       <Item key="frmMain.mnuMainSettings" value="設定…"/>
       <Item key="frmMain.mnuMainHelp" value="說明"/>
       <Item key="frmMain.mnuMainAbout" value="關於"/>
@@ -103,7 +117,7 @@
       <Item key="frmMain._DeleteDialogText" value="刪除檔案 '{0}' ？"/>
       <Item key="frmMain._DeleteDialogTitle" value="確定"/>
       <Item key="frmMain._ExtractPageText" value="解壓縮影像頁面。請選取輸出資料夾。"/>
-      <Item key="frmMain._FullScreenMessage" value="按下 ALT+ENTER 以離開全螢幕模式。"/>
+      <Item key="frmMain._FullScreenMessage" value="按下 {0} 以離開全螢幕模式。"/>
       <Item key="frmMain._SlideshowMessage" value="按下 ESC 以離開幻燈片。&#10; 右鍵點擊以開啟右鍵選單。"/>
       <Item key="frmMain._SlideshowMessagePause" value="幻燈片已暫停"/>
       <Item key="frmMain._SlideshowMessageResume" value="幻燈片已繼續"/>
@@ -125,6 +139,7 @@
       <Item key="frmMain._SetBackground_Success" value="桌面背景設定成功"/>
       <Item key="frmMain._PageExtractComplete" value="影片解壓縮完成。"/>
       <Item key="frmMain._Frameless" value="按住 SHIFT 以移動視窗。"/>
+      <Item key="frmMain._InvalidImageClipboardData" value="剪貼簿沒有圖片資料"/>
       <Item key="frmAbout.lblSlogant" value="輕巧快速且多功能的圖片檢視器"/>
       <Item key="frmAbout.lblInfo" value="資訊"/>
       <Item key="frmAbout.lblComponent" value="元件"/>
@@ -173,16 +188,8 @@
       <Item key="frmSetting.chkLoopViewer" value="當到達清單結尾時，再回到第一張圖片繼續檢視"/>
       <Item key="frmSetting.chkIsCenterImage" value="將圖片置於檢視器中間"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="圖片載入順序"/>
-      <Item key="frmSetting.cmbImageOrder._Name" value="名稱（預設）"/>
-      <Item key="frmSetting.cmbImageOrder._Length" value="長度"/>
-      <Item key="frmSetting.cmbImageOrder._CreationTime" value="建立時間"/>
-      <Item key="frmSetting.cmbImageOrder._LastAccessTime" value="上次存取時間"/>
-      <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="最後寫入時間"/>
-      <Item key="frmSetting.cmbImageOrder._Extension" value="副檔名"/>
-      <Item key="frmSetting.cmbImageOrder._Random" value="隨機"/>
-      <Item key="frmSetting.cmbImageOrderType._Asc" value="昇冪排序"/>
-      <Item key="frmSetting.cmbImageOrderType._Desc" value="降冪排序"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="如果可以的話，使用 Windows 檔案總管排序"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="按目錄將圖片分組"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="由 ImageBooster 快取的圖片數量（單向）"/>
       <Item key="frmSetting.lblColorManagement" value="色彩管理"/>
       <Item key="frmSetting.chkApplyColorProfile" value="也會套用至沒有內嵌色彩描述檔的圖片"/>
@@ -219,6 +226,8 @@
       <Item key="frmSetting.lblSlideshowIntervalTo" value="至"/>
       <Item key="frmSetting.chkSaveOnRotate" value="旋轉後保存查看圖像"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="選擇用於圖像編輯的應用程式"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="在開啟編輯應用程式後"/>
+      <Item key="frmSetting.lblImageQuality" value="圖片品質："/>
       <Item key="frmSetting.btnEditEditExt" value="編輯…"/>
       <Item key="frmSetting.btnEditResetExt" value="重設為預設值"/>
       <Item key="frmSetting.btnEditEditAllExt" value="編輯所有副檔名…"/>
@@ -227,17 +236,21 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="應用程式名稱"/>
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="應用程式路徑"/>
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="應用程式參數"/>
-      <Item key="frmSetting.chkSaveModifyDate" value="保存圖像的修改日期"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="儲存圖片的修改日期"/>
       <Item key="frmSetting.lblSupportedExtension" value="支援的格式：{0}"/>
       <Item key="frmSetting.lnkOpenFileAssoc" value="開啟檔案類型關聯"/>
       <Item key="frmSetting.btnAddNewExt" value="新增…"/>
       <Item key="frmSetting.btnRegisterExt" value="設定為預設照片檢視器…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="取消註冊副檔名"/>
       <Item key="frmSetting.btnDeleteExt" value="刪除"/>
       <Item key="frmSetting.btnResetExt" value="重設為預設值"/>
       <Item key="frmSetting._RegisterWebToApp_Error" value="無法註冊 Web-to-App 連結"/>
       <Item key="frmSetting._RegisterAppExtensions_Error" value="無法為 ImageGlass 應用程式註冊副檔名"/>
       <Item key="frmSetting._RegisterAppExtensions_Success" value="所有副檔名皆已註冊成功！要將 ImageGlass 設定為預設的圖片檢視器，請開啟 Windows 設定 &gt; 預設應用程式，並在圖片檢視器下手動選取 ImageGlass 應用程式。"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="無法刪除 ImageGlass 應用程式已註冊的副檔名"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="所有副檔名都已成功取消註冊！"/>
       <Item key="frmSetting.lblToolbarPosition" value="工具列的方位："/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="工具列圖示大小："/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="頂部"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="底部"/>
       <Item key="frmSetting._separator" value="分隔符號"/>
@@ -249,11 +262,16 @@
       <Item key="frmSetting.btnMoveRight._Tooltip" value="新增選定的按鈕到工具列上"/>
       <Item key="frmSetting.btnMoveUp._Tooltip" value="往上移動選定的按鈕"/>
       <Item key="frmSetting.chkHorzCenterToolbarBtns" value="將視窗中水平置中工具列按鈕"/>
-      <Item key="frmSetting.chkColorUseRGBA" value="使用 RGBA 格式"/>
-      <Item key="frmSetting.chkColorUseHEXA" value="使用十六進位的 Alpha 格式"/>
-      <Item key="frmSetting.chkColorUseHSLA" value="使用 HSLA 格式"/>
+      <Item key="frmSetting.chkHideTooltips" value="隱藏工具列工具提示"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="使用帶有 Alpha 值的 RGB 格式"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="使用帶有 Alpha 值的 HEX 格式"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="使用帶有 Alpha 值的 HSL 格式"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="使用帶有 Alpha 值的 HSV 格式"/>
       <Item key="frmSetting.lblDefaultColorCode" value="當複製時使用預設的顏色代碼格式"/>
       <Item key="frmSetting.chkShowPageNavAuto" value="在多頁面影像中自動顯示頁面導覽"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="一直將 Exif 工具放在最前面"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="選取 Exif 工具檔案"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Exif 工具不存在或無效： &#10;{0}"/>
       <Item key="frmSetting.lblLanguageText" value="已安裝的語言"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; 重新整理"/>
       <Item key="frmSetting.lblLanguageWarning" value="這個語言包可能與 {0} 不相容"/>
@@ -323,7 +341,12 @@
       <Item key="frmCrop.btnSave" value="儲存"/>
       <Item key="frmCrop.btnSaveAs" value="另存為…"/>
       <Item key="frmCrop.btnCopy" value="複製"/>
-      <Item key="frmCrop.btnClear" value="清空"/>
+      <Item key="frmCrop.btnReset" value="重設"/>
+      <Item key="FrmExifTool.clnProperty" value="屬性"/>
+      <Item key="FrmExifTool.clnValue" value="值"/>
+      <Item key="FrmExifTool.btnCopyValue" value="複製值"/>
+      <Item key="FrmExifTool.btnExport" value="匯出……"/>
+      <Item key="FrmExifTool.btnClose" value="關閉"/>
     </Content>
   </Language>
 </ImageGlass>

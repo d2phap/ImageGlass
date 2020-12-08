@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2020 DUONG DIEU PHAP
+Copyright (C) 2021 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base;
-using ImageGlass.Services.InstanceManagement;
-using ImageGlass.Settings;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -27,10 +24,13 @@ using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ImageGlass.Base;
+using ImageGlass.Services.InstanceManagement;
+using ImageGlass.Settings;
 
 namespace ImageGlass {
-    static class Program {
-        private static readonly string appGuid = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
+    internal static class Program {
+        private const string appGuid = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
         private static frmMain formMain;
 
         [DllImport("user32.dll")]
@@ -38,33 +38,39 @@ namespace ImageGlass {
 
         // Issue #360: IG periodically searching for dismounted device
         [DllImport("kernel32.dll")]
-        static extern ErrorModes SetErrorMode(ErrorModes uMode);
+        private static extern ErrorModes SetErrorMode(ErrorModes uMode);
 
         [Flags]
         public enum ErrorModes: uint {
             SYSTEM_DEFAULT = 0x0,
             SEM_FAILCRITICALERRORS = 0x0001,
-            SEM_NOALIGNMENTFAULTEXCEPT = 0x0004,
-            SEM_NOGPFAULTERRORBOX = 0x0002,
-            SEM_NOOPENFILEERRORBOX = 0x8000
+            SEM_NOGPFAULTERRORBOX = 1 << 1,
+            SEM_NOALIGNMENTFAULTEXCEPT = 1 << 2,
+            SEM_NOOPENFILEERRORBOX = 1 << 15
         }
+
+        // Issues #774, #855 : using this method is the ONLY way to successfully restore from minimized state!
+        [DllImport("user32.dll")]
+        private static extern int ShowWindow(IntPtr hWnd, uint msg);
+
+        private const uint SW_RESTORE = 0x09;
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main() {
+        private static void Main() {
             // Issue #360: IG periodically searching for dismounted device
             // This _must_ be executed first!
             SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
-
-            // Load user configs
-            Configs.Load();
 
             // Set up Startup Profile to improve launch performance
             // https://blogs.msdn.microsoft.com/dotnet/2012/10/18/an-easy-solution-for-improving-app-launch-performance/
             ProfileOptimization.SetProfileRoot(App.ConfigDir(PathType.Dir));
             ProfileOptimization.StartProfile("igstartup.profile");
+
+            // Load user configs
+            Configs.Load();
 
             SetProcessDPIAware();
 
@@ -91,15 +97,14 @@ namespace ImageGlass {
 
             #region Check First-launch Configs
             if (Configs.FirstLaunchVersion < Constants.FIRST_LAUNCH_VERSION) {
-                using (var p = new Process()) {
-                    p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
-                    p.StartInfo.Arguments = "firstlaunch";
+                using var p = new Process();
+                p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
+                p.StartInfo.Arguments = "firstlaunch";
 
-                    try {
-                        p.Start();
-                    }
-                    catch { }
+                try {
+                    p.Start();
                 }
+                catch { }
 
                 Application.Exit();
                 return;
@@ -133,57 +138,61 @@ namespace ImageGlass {
                 var guid = new Guid(appGuid);
 
                 // single instance is required
-                using (SingleInstance singleInstance = new SingleInstance(guid)) {
-                    if (singleInstance.IsFirstInstance) {
-                        singleInstance.ArgumentsReceived += SingleInstance_ArgsReceived;
-                        singleInstance.ListenForArgumentsFromSuccessiveInstances();
+                using var singleInstance = new SingleInstance(guid);
+                if (singleInstance.IsFirstInstance) {
+                    singleInstance.ArgumentsReceived += SingleInstance_ArgsReceived;
+                    singleInstance.ListenForArgumentsFromSuccessiveInstances();
 
-                        Application.Run(formMain = new frmMain());
-                    }
-                    else {
-                        singleInstance.PassArgumentsToFirstInstance(Environment.GetCommandLineArgs());
-                    }
+                    Application.Run(formMain = new frmMain());
+                }
+                else {
+                    _ = singleInstance.PassArgumentsToFirstInstanceAsync(Environment.GetCommandLineArgs());
                 }
             } //end check multi instances
             #endregion
 
         }
 
-
         private static void SingleInstance_ArgsReceived(object sender, ArgumentsReceivedEventArgs e) {
             if (formMain == null)
                 return;
 
-            Action<string[]> UpdateForm = arguments =>
-            {
-                formMain.WindowState = FormWindowState.Normal;
+            Action<string[]> UpdateForm = arguments => {
+
+                // Issues #774, #855 : if IG is normal or maximized, do nothing. If IG is minimized,
+                // restore it to previous state.
+                if (formMain.WindowState == FormWindowState.Minimized) {
+                    ShowWindow(formMain.Handle, SW_RESTORE);
+                }
+
                 formMain.LoadFromParams(arguments);
             };
 
             // KBR 20181009 Attempt to run a 2nd instance of IG when multi-instance turned off. Primary instance
             // will crash if no file provided (e.g. by double-clicking on .EXE in explorer).
-            int realcount = 0;
-            foreach (var arg in e.Args)
-                if (arg != null)
-                    realcount++;
+            var realCount = 0;
+            foreach (var arg in e.Args) {
+                if (arg != null) {
+                    realCount++;
+                }
+            }
 
-            string[] realargs = new string[realcount];
-            Array.Copy(e.Args, realargs, realcount);
+            var realArgs = new string[realCount];
+            Array.Copy(e.Args, realArgs, realCount);
 
             // Execute our delegate on the forms thread!
-            formMain.Invoke(UpdateForm, (object)realargs);
+            formMain.Invoke(UpdateForm, (object)realArgs);
 
             // send our Win32 message to bring ImageGlass dialog to top
             NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
         }
-
 
         /// <summary>
         /// Check for updatae
         /// </summary>
         /// <param name="useAutoCheck">If TRUE, use "igautoupdate"; else "igupdate" for argument</param>
         public static void CheckForUpdate(bool useAutoCheck = false) {
-            Task.Run(() => {
+            _ = Task.Run(() => {
                 using var p = new Process();
                 p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
                 p.StartInfo.Arguments = useAutoCheck ? "igautoupdate" : "igupdate";
@@ -198,6 +207,5 @@ namespace ImageGlass {
                 Configs.AutoUpdate = DateTime.Now.ToString("M/d/yyyy HH:mm:ss");
             });
         }
-
     }
 }

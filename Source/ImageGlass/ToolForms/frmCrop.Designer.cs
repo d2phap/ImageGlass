@@ -42,7 +42,7 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnSaveAs = new System.Windows.Forms.Button();
             this.btnCopy = new System.Windows.Forms.Button();
-            this.btnClear = new System.Windows.Forms.Button();
+            this.btnReset = new System.Windows.Forms.Button();
             this.tableActions = new System.Windows.Forms.TableLayoutPanel();
             this.lblFormTitle = new System.Windows.Forms.Label();
             this.tableFactors.SuspendLayout();
@@ -64,10 +64,10 @@
             this.btnSnapTo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSnapTo.ForeColor = System.Drawing.Color.White;
             this.btnSnapTo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSnapTo.Location = new System.Drawing.Point(164, 2);
+            this.btnSnapTo.Location = new System.Drawing.Point(153, 2);
             this.btnSnapTo.Margin = new System.Windows.Forms.Padding(4);
             this.btnSnapTo.Name = "btnSnapTo";
-            this.btnSnapTo.Size = new System.Drawing.Size(74, 40);
+            this.btnSnapTo.Size = new System.Drawing.Size(69, 37);
             this.btnSnapTo.TabIndex = 5;
             this.btnSnapTo.Text = "^";
             this.btnSnapTo.UseVisualStyleBackColor = false;
@@ -83,10 +83,10 @@
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.ForeColor = System.Drawing.Color.White;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(241, 2);
+            this.btnClose.Location = new System.Drawing.Point(224, 2);
             this.btnClose.Margin = new System.Windows.Forms.Padding(4);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(74, 40);
+            this.btnClose.Size = new System.Drawing.Size(69, 37);
             this.btnClose.TabIndex = 6;
             this.btnClose.Text = "X";
             this.btnClose.UseVisualStyleBackColor = false;
@@ -98,10 +98,10 @@
             this.lblY.BackColor = System.Drawing.Color.Transparent;
             this.lblY.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblY.ForeColor = System.Drawing.Color.White;
-            this.lblY.Location = new System.Drawing.Point(15, 37);
-            this.lblY.Margin = new System.Windows.Forms.Padding(15, 0, 4, 0);
+            this.lblY.Location = new System.Drawing.Point(14, 36);
+            this.lblY.Margin = new System.Windows.Forms.Padding(14, 0, 4, 0);
             this.lblY.Name = "lblY";
-            this.lblY.Size = new System.Drawing.Size(79, 37);
+            this.lblY.Size = new System.Drawing.Size(75, 36);
             this.lblY.TabIndex = 17;
             this.lblY.Text = "Y:";
             this.lblY.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -112,10 +112,10 @@
             this.lblHeight.BackColor = System.Drawing.Color.Transparent;
             this.lblHeight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblHeight.ForeColor = System.Drawing.Color.White;
-            this.lblHeight.Location = new System.Drawing.Point(15, 111);
-            this.lblHeight.Margin = new System.Windows.Forms.Padding(15, 0, 4, 0);
+            this.lblHeight.Location = new System.Drawing.Point(14, 108);
+            this.lblHeight.Margin = new System.Windows.Forms.Padding(14, 0, 4, 0);
             this.lblHeight.Name = "lblHeight";
-            this.lblHeight.Size = new System.Drawing.Size(79, 37);
+            this.lblHeight.Size = new System.Drawing.Size(75, 36);
             this.lblHeight.TabIndex = 16;
             this.lblHeight.Text = "[Height:]";
             this.lblHeight.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -126,10 +126,10 @@
             this.lblWidth.BackColor = System.Drawing.Color.Transparent;
             this.lblWidth.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblWidth.ForeColor = System.Drawing.Color.White;
-            this.lblWidth.Location = new System.Drawing.Point(15, 74);
-            this.lblWidth.Margin = new System.Windows.Forms.Padding(15, 0, 4, 0);
+            this.lblWidth.Location = new System.Drawing.Point(14, 72);
+            this.lblWidth.Margin = new System.Windows.Forms.Padding(14, 0, 4, 0);
             this.lblWidth.Name = "lblWidth";
-            this.lblWidth.Size = new System.Drawing.Size(79, 37);
+            this.lblWidth.Size = new System.Drawing.Size(75, 36);
             this.lblWidth.TabIndex = 14;
             this.lblWidth.Text = "[Width:]";
             this.lblWidth.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -140,10 +140,10 @@
             this.lblX.BackColor = System.Drawing.Color.Transparent;
             this.lblX.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblX.ForeColor = System.Drawing.Color.White;
-            this.lblX.Location = new System.Drawing.Point(15, 0);
-            this.lblX.Margin = new System.Windows.Forms.Padding(15, 0, 4, 0);
+            this.lblX.Location = new System.Drawing.Point(14, 0);
+            this.lblX.Margin = new System.Windows.Forms.Padding(14, 0, 4, 0);
             this.lblX.Name = "lblX";
-            this.lblX.Size = new System.Drawing.Size(79, 37);
+            this.lblX.Size = new System.Drawing.Size(75, 36);
             this.lblX.TabIndex = 19;
             this.lblX.Text = "X:";
             this.lblX.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -164,15 +164,15 @@
             this.tableFactors.Controls.Add(this.lblWidth, 0, 2);
             this.tableFactors.Controls.Add(this.lblHeight, 0, 3);
             this.tableFactors.Controls.Add(this.numX, 1, 0);
-            this.tableFactors.Location = new System.Drawing.Point(0, 64);
+            this.tableFactors.Location = new System.Drawing.Point(0, 60);
             this.tableFactors.Name = "tableFactors";
             this.tableFactors.RowCount = 5;
             this.tableFactors.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableFactors.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableFactors.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableFactors.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableFactors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableFactors.Size = new System.Drawing.Size(315, 165);
+            this.tableFactors.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
+            this.tableFactors.Size = new System.Drawing.Size(294, 154);
             this.tableFactors.TabIndex = 21;
             // 
             // numHeight
@@ -181,15 +181,15 @@
             this.numHeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numHeight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numHeight.ForeColor = System.Drawing.Color.White;
-            this.numHeight.Location = new System.Drawing.Point(101, 114);
-            this.numHeight.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
+            this.numHeight.Location = new System.Drawing.Point(96, 111);
+            this.numHeight.Margin = new System.Windows.Forms.Padding(3, 3, 19, 3);
             this.numHeight.Maximum = new decimal(new int[] {
             1000000,
             0,
             0,
             0});
             this.numHeight.Name = "numHeight";
-            this.numHeight.Size = new System.Drawing.Size(194, 31);
+            this.numHeight.Size = new System.Drawing.Size(178, 30);
             this.numHeight.TabIndex = 4;
             this.numHeight.ValueChanged += new System.EventHandler(this.Numeric_ValueChanged);
             this.numHeight.Click += new System.EventHandler(this.Numeric_Click);
@@ -200,15 +200,15 @@
             this.numWidth.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numWidth.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numWidth.ForeColor = System.Drawing.Color.White;
-            this.numWidth.Location = new System.Drawing.Point(101, 77);
-            this.numWidth.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
+            this.numWidth.Location = new System.Drawing.Point(96, 75);
+            this.numWidth.Margin = new System.Windows.Forms.Padding(3, 3, 19, 3);
             this.numWidth.Maximum = new decimal(new int[] {
             1000000,
             0,
             0,
             0});
             this.numWidth.Name = "numWidth";
-            this.numWidth.Size = new System.Drawing.Size(194, 31);
+            this.numWidth.Size = new System.Drawing.Size(178, 30);
             this.numWidth.TabIndex = 3;
             this.numWidth.ValueChanged += new System.EventHandler(this.Numeric_ValueChanged);
             this.numWidth.Click += new System.EventHandler(this.Numeric_Click);
@@ -219,15 +219,15 @@
             this.numY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numY.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numY.ForeColor = System.Drawing.Color.White;
-            this.numY.Location = new System.Drawing.Point(101, 40);
-            this.numY.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
+            this.numY.Location = new System.Drawing.Point(96, 39);
+            this.numY.Margin = new System.Windows.Forms.Padding(3, 3, 19, 3);
             this.numY.Maximum = new decimal(new int[] {
             1000000,
             0,
             0,
             0});
             this.numY.Name = "numY";
-            this.numY.Size = new System.Drawing.Size(194, 31);
+            this.numY.Size = new System.Drawing.Size(178, 30);
             this.numY.TabIndex = 2;
             this.numY.ValueChanged += new System.EventHandler(this.Numeric_ValueChanged);
             this.numY.Click += new System.EventHandler(this.Numeric_Click);
@@ -238,15 +238,15 @@
             this.numX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numX.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numX.ForeColor = System.Drawing.Color.White;
-            this.numX.Location = new System.Drawing.Point(101, 3);
-            this.numX.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
+            this.numX.Location = new System.Drawing.Point(96, 3);
+            this.numX.Margin = new System.Windows.Forms.Padding(3, 3, 19, 3);
             this.numX.Maximum = new decimal(new int[] {
             1000000,
             0,
             0,
             0});
             this.numX.Name = "numX";
-            this.numX.Size = new System.Drawing.Size(194, 31);
+            this.numX.Size = new System.Drawing.Size(178, 30);
             this.numX.TabIndex = 1;
             this.numX.ValueChanged += new System.EventHandler(this.Numeric_ValueChanged);
             this.numX.Click += new System.EventHandler(this.Numeric_Click);
@@ -254,12 +254,12 @@
             // btnSave
             // 
             this.btnSave.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(20, 15);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(20, 15, 5, 5);
+            this.btnSave.Location = new System.Drawing.Point(19, 14);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(19, 14, 5, 5);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(133, 45);
+            this.btnSave.Size = new System.Drawing.Size(123, 41);
             this.btnSave.TabIndex = 22;
             this.btnSave.Text = "[Save]";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -268,12 +268,12 @@
             // btnSaveAs
             // 
             this.btnSaveAs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSaveAs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveAs.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnSaveAs.ForeColor = System.Drawing.Color.White;
-            this.btnSaveAs.Location = new System.Drawing.Point(163, 15);
-            this.btnSaveAs.Margin = new System.Windows.Forms.Padding(5, 15, 20, 5);
+            this.btnSaveAs.Location = new System.Drawing.Point(152, 14);
+            this.btnSaveAs.Margin = new System.Windows.Forms.Padding(5, 14, 19, 5);
             this.btnSaveAs.Name = "btnSaveAs";
-            this.btnSaveAs.Size = new System.Drawing.Size(133, 45);
+            this.btnSaveAs.Size = new System.Drawing.Size(123, 41);
             this.btnSaveAs.TabIndex = 23;
             this.btnSaveAs.Text = "[Save as]";
             this.btnSaveAs.UseVisualStyleBackColor = true;
@@ -282,30 +282,30 @@
             // btnCopy
             // 
             this.btnCopy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCopy.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCopy.ForeColor = System.Drawing.Color.White;
-            this.btnCopy.Location = new System.Drawing.Point(20, 70);
-            this.btnCopy.Margin = new System.Windows.Forms.Padding(20, 5, 5, 15);
+            this.btnCopy.Location = new System.Drawing.Point(19, 65);
+            this.btnCopy.Margin = new System.Windows.Forms.Padding(19, 5, 5, 14);
             this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(133, 45);
+            this.btnCopy.Size = new System.Drawing.Size(123, 42);
             this.btnCopy.TabIndex = 24;
             this.btnCopy.Text = "[Copy]";
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.CropActionButton_Click);
             // 
-            // btnClear
+            // btnReset
             // 
-            this.btnClear.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClear.ForeColor = System.Drawing.Color.White;
-            this.btnClear.Location = new System.Drawing.Point(163, 70);
-            this.btnClear.Margin = new System.Windows.Forms.Padding(5, 5, 20, 15);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(133, 45);
-            this.btnClear.TabIndex = 25;
-            this.btnClear.Text = "[Clear]";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.btnReset.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReset.ForeColor = System.Drawing.Color.White;
+            this.btnReset.Location = new System.Drawing.Point(152, 65);
+            this.btnReset.Margin = new System.Windows.Forms.Padding(5, 5, 19, 14);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(123, 42);
+            this.btnReset.TabIndex = 25;
+            this.btnReset.Text = "[Reset]";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // tableActions
             // 
@@ -314,17 +314,17 @@
             this.tableActions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableActions.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableActions.Controls.Add(this.btnSave, 0, 0);
-            this.tableActions.Controls.Add(this.btnClear, 1, 1);
+            this.tableActions.Controls.Add(this.btnReset, 1, 1);
             this.tableActions.Controls.Add(this.btnSaveAs, 1, 0);
             this.tableActions.Controls.Add(this.btnCopy, 0, 1);
             this.tableActions.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableActions.Location = new System.Drawing.Point(0, 230);
+            this.tableActions.Location = new System.Drawing.Point(0, 214);
             this.tableActions.Name = "tableActions";
             this.tableActions.RowCount = 2;
             this.tableActions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableActions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableActions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableActions.Size = new System.Drawing.Size(316, 130);
+            this.tableActions.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
+            this.tableActions.Size = new System.Drawing.Size(294, 121);
             this.tableActions.TabIndex = 26;
             // 
             // lblFormTitle
@@ -335,20 +335,20 @@
             this.lblFormTitle.BackColor = System.Drawing.Color.Transparent;
             this.lblFormTitle.ForeColor = System.Drawing.Color.White;
             this.lblFormTitle.Location = new System.Drawing.Point(0, 5);
-            this.lblFormTitle.Margin = new System.Windows.Forms.Padding(15, 0, 4, 0);
+            this.lblFormTitle.Margin = new System.Windows.Forms.Padding(14, 0, 4, 0);
             this.lblFormTitle.Name = "lblFormTitle";
-            this.lblFormTitle.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
-            this.lblFormTitle.Size = new System.Drawing.Size(156, 32);
+            this.lblFormTitle.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
+            this.lblFormTitle.Size = new System.Drawing.Size(145, 30);
             this.lblFormTitle.TabIndex = 28;
             this.lblFormTitle.Text = "[Cropping]";
             this.lblFormTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // frmCrop
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(134F, 134F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
-            this.ClientSize = new System.Drawing.Size(316, 360);
+            this.ClientSize = new System.Drawing.Size(294, 335);
             this.Controls.Add(this.lblFormTitle);
             this.Controls.Add(this.tableActions);
             this.Controls.Add(this.tableFactors);
@@ -359,7 +359,7 @@
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(316, 360);
+            this.MinimumSize = new System.Drawing.Size(294, 335);
             this.Name = "frmCrop";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -396,7 +396,7 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnSaveAs;
         private System.Windows.Forms.Button btnCopy;
-        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.TableLayoutPanel tableActions;
         private System.Windows.Forms.Label lblFormTitle;
     }

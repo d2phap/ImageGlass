@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace ImageGlass.ImageListView
-{
+namespace ImageGlass.ImageListView {
     #region Event Delegates
     /// <summary>
     /// Represents the method that will handle the RunWorkerCompleted event.
@@ -24,8 +23,7 @@ namespace ImageGlass.ImageListView
     /// <summary>
     /// Represents the event arguments of the RunWorkerCompleted event.
     /// </summary>
-    public class QueuedWorkerCompletedEventArgs : AsyncCompletedEventArgs
-    {
+    public class QueuedWorkerCompletedEventArgs: AsyncCompletedEventArgs {
         /// <summary>
         /// Gets a value that represents the result of an asynchronous operation.
         /// </summary>
@@ -44,8 +42,7 @@ namespace ImageGlass.ImageListView
         /// <param name="error">The error that occurred while loading the image.</param>
         /// <param name="cancelled">A value indicating whether the asynchronous operation was canceled.</param>
         public QueuedWorkerCompletedEventArgs(object argument, object result, int priority, Exception error, bool cancelled)
-            : base(error, cancelled, argument)
-        {
+            : base(error, cancelled, argument) {
             Result = result;
             Priority = priority;
         }
@@ -53,8 +50,7 @@ namespace ImageGlass.ImageListView
     /// <summary>
     /// Represents the event arguments of the RunWorkerCompleted event.
     /// </summary>
-    public class QueuedWorkerDoWorkEventArgs : DoWorkEventArgs
-    {
+    public class QueuedWorkerDoWorkEventArgs: DoWorkEventArgs {
         /// <summary>
         /// Gets the priority of this item.
         /// </summary>
@@ -66,8 +62,7 @@ namespace ImageGlass.ImageListView
         /// <param name="argument">The argument of an asynchronous operation.</param>
         /// <param name="priority">A value between 0 and 5 indicating the priority of this item.</param>
         public QueuedWorkerDoWorkEventArgs(object argument, int priority)
-            : base(argument)
-        {
+            : base(argument) {
             Priority = priority;
         }
     }

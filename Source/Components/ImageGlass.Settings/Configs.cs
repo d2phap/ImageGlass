@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2020 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Copyright (C) 2021 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,18 +17,18 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base;
-using ImageGlass.Library;
-using ImageGlass.Library.FileAssociations;
-using ImageGlass.UI;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ImageGlass.Base;
+using ImageGlass.Library;
+using ImageGlass.Library.FileAssociations;
+using ImageGlass.Library.WinAPI;
+using ImageGlass.UI;
+using Microsoft.Win32;
 
 namespace ImageGlass.Settings {
     /// <summary>
@@ -38,14 +38,12 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Configuration Source file
         /// </summary>
-        private static ConfigSource Source { get; set; } = new ConfigSource();
-
+        private static ConfigSource Source { get; } = new();
 
         /// <summary>
         /// Check if the config file is compatible with this ImageGlass version or not.
         /// </summary>
-        public static bool IsCompatible { get => Source.IsCompatible; }
-
+        public static bool IsCompatible => Source.IsCompatible;
 
 
         #region Public configs
@@ -56,246 +54,230 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool IsSlideshow { get; set; } = false;
 
-
         /// <summary>
         /// Gets, sets value if the countdown timer is shown or not
         /// </summary>
         public static bool IsShowSlideshowCountdown { get; set; } = true;
-
 
         /// <summary>
         /// Gets, sets value indicating whether the slide show interval is random
         /// </summary>
         public static bool IsRandomSlideshowInterval { get; set; } = false;
 
-
         /// <summary>
         /// Gets, sets value indicating whether the window is full screen or not
         /// </summary>
         public static bool IsFullScreen { get; set; } = false;
-
 
         /// <summary>
         /// Gets, sets value of thumbnail visibility
         /// </summary>
         public static bool IsShowThumbnail { get; set; } = false;
 
-
         /// <summary>
         /// Gets, sets the value that indicates if the default position of image in the viewer is center or top left
         /// </summary>
         public static bool IsCenterImage { get; set; } = true;
-
 
         /// <summary>
         /// Check if user wants to display RGBA color code for Color Picker tool
         /// </summary>
         public static bool IsColorPickerRGBA { get; set; } = true;
 
-
         /// <summary>
         /// Check if user wants to display HEX with Alpha color code for Color Picker tool
         /// </summary>
         public static bool IsColorPickerHEXA { get; set; } = true;
-
 
         /// <summary>
         /// Check if user wants to display HSL with Alpha color code for Color Picker tool
         /// </summary>
         public static bool IsColorPickerHSLA { get; set; } = true;
 
+        /// <summary>
+        /// Check if user wants to display HSV with Alpha color code for Color Picker tool
+        /// </summary>
+        public static bool IsColorPickerHSVA { get; set; } = true;
 
         /// <summary>
         /// Gets, sets welcome picture value
         /// </summary>
         public static bool IsShowWelcome { get; set; } = true;
 
-
         /// <summary>
         /// Gets, sets value of visibility of toolbar when start up
         /// </summary>
         public static bool IsShowToolBar { get; set; } = true;
-
 
         /// <summary>
         /// Gets, sets value whether thumbnail scrollbars visible
         /// </summary>
         public static bool IsShowThumbnailScrollbar { get; set; } = false;
 
-
         /// <summary>
         /// Gets, sets value that allows user to loop back to the first image when reaching the end of list
         /// </summary>
         public static bool IsLoopBackSlideshow { get; set; } = true;
-
 
         /// <summary>
         /// Gets, sets value indicating that ImageGlass will loop back viewer to the first image when reaching the end of the list.
         /// </summary>
         public static bool IsLoopBackViewer { get; set; } = true;
 
-
         /// <summary>
         /// Gets, sets value indicating that allow quit application by ESC
         /// </summary>
         public static bool IsPressESCToQuit { get; set; } = true;
-
 
         /// <summary>
         /// Gets, sets value indicating that checker board is shown or not
         /// </summary>
         public static bool IsShowCheckerBoard { get; set; } = false;
 
-
         /// <summary>
         /// Gets, sets value indicating that multi instances is allowed or not
         /// </summary>
         public static bool IsAllowMultiInstances { get; set; } = true;
-
 
         /// <summary>
         /// Gets, sets value indicating that frmMain is always on top or not.
         /// </summary>
         public static bool IsWindowAlwaysOnTop { get; set; } = false;
 
-
         /// <summary>
         /// Gets, sets value of frmMain's frameless mode.
         /// </summary>
         public static bool IsWindowFrameless { get; set; } = false;
-
 
         /// <summary>
         /// Gets, sets the direction of thumbnail bar
         /// </summary>
         public static bool IsThumbnailHorizontal { get; set; } = true;
 
-
         /// <summary>
         /// Gets, sets value indicating that Confirmation dialog is displayed when deleting image
         /// </summary>
         public static bool IsConfirmationDelete { get; set; } = false;
-
 
         /// <summary>
         /// Gets, sets the value indicates that viewer scrollbars are visible
         /// </summary>
         public static bool IsScrollbarsVisible { get; set; } = false;
 
-
         /// <summary>
         /// Gets, sets the value indicates that the viewing image is auto-saved after rotating
         /// </summary>
         public static bool IsSaveAfterRotating { get; set; } = false;
-
 
         /// <summary>
         /// Gets, sets the setting to control whether the image's original modified date value is preserved on save
         /// </summary>
         public static bool IsPreserveModifiedDate { get; set; } = true;
 
-
         /// <summary>
         /// Gets, sets the value indicates that there is a new version
         /// </summary>
         public static bool IsNewVersionAvailable { get; set; } = false;
-
 
         /// <summary>
         /// Gets, sets the value indicates that to show full image path or only base name
         /// </summary>
         public static bool IsDisplayBasenameOfImage { get; set; } = false;
 
-
         /// <summary>
         /// Gets, sets the value indicates that to toolbar buttons to be centered horizontally
         /// </summary>
         public static bool IsCenterToolbar { get; set; } = true;
-
 
         /// <summary>
         /// Gets, sets the value indicates that to show last seen image on startup
         /// </summary>
         public static bool IsOpenLastSeenImage { get; set; } = false;
 
-
         /// <summary>
         /// Gets, sets the value indicates that the ColorProfile will be applied for all or only the images with embedded profile
         /// </summary>
         public static bool IsApplyColorProfileForAll { get; set; } = false;
-
 
         /// <summary>
         /// Gets, sets the value indicates whether to show or hide the Navigation Buttons on viewer
         /// </summary>
         public static bool IsShowNavigationButtons { get; set; } = false;
 
-
         /// <summary>
         /// Gets, sets the value indicates whether to show checkerboard in the image region only
         /// </summary>
         public static bool IsShowCheckerboardOnlyImageRegion { get; set; } = false;
-
 
         /// <summary>
         /// Gets, sets recursive value
         /// </summary>
         public static bool IsRecursiveLoading { get; set; } = false;
 
-
         /// <summary>
         /// Gets, sets the value indicates that Windows File Explorer sort order is used if possible
         /// </summary>
         public static bool IsUseFileExplorerSortOrder { get; set; } = true;
 
+        /// <summary>
+        /// Gets, sets the value indicates that images order should be grouped by directory
+        /// </summary>
+        public static bool IsGroupImagesByDirectory { get; set; } = false;
 
         /// <summary>
         /// Gets, sets showing/loading hidden images
         /// </summary>
         public static bool IsShowingHiddenImages { get; set; } = false;
 
-
         /// <summary>
         /// Gets, sets value that indicates frmColorPicker tool will be open on startup
         /// </summary>
         public static bool IsShowColorPickerOnStartup { get; set; } = false;
-
 
         /// <summary>
         /// Gets, sets value that indicates frmPageNav tool will be open on startup
         /// </summary>
         public static bool IsShowPageNavOnStartup { get; set; } = false;
 
-
         /// <summary>
         /// Gets, sets value that indicates page navigation tool auto-show on the multiple pages image
         /// </summary>
         public static bool IsShowPageNavAuto { get; set; } = false;
-
 
         /// <summary>
         /// Gets, sets value specifying that Window Fit mode is on
         /// </summary>
         public static bool IsWindowFit { get; set; } = false;
 
-
         /// <summary>
         /// Gets, sets value indicates the window should be always center in Window Fit mode
         /// </summary>
         public static bool IsCenterWindowFit { get; set; } = true;
-
 
         /// <summary>
         /// Gets, sets value indicates that toast messages will show
         /// </summary>
         public static bool IsShowToast { get; set; } = true;
 
-
         /// <summary>
         /// Gets, sets value indicates that touch gesture support enabled
         /// </summary>
         public static bool IsUseTouchGesture { get; set; } = true;
 
+        /// <summary>
+        /// Gets, sets value indicates that tooltips are to be hidden
+        /// </summary>
+        public static bool IsHideTooltips { get; set; } = false;
+
+        /// <summary>
+        /// Gets, sets value indicates that FrmExifTool always show on top
+        /// </summary>
+        public static bool IsExifToolAlwaysOnTop { get; set; } = true;
+
+        /// <summary>
+        /// Gets, sets value indicates that to keep the title bar of frmMain empty
+        /// </summary>
+        public static bool IsUseEmptyTitleBar { get; set; } = false;
 
         #endregion
 
@@ -307,42 +289,45 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static int FirstLaunchVersion { get; set; } = 0;
 
-
         /// <summary>
         /// Gets, sets slide show interval (minimum value if it's random)
         /// </summary>
         public static uint SlideShowInterval { get; set; } = 5;
-
 
         /// <summary>
         /// Gets, sets the maximum slide show interval value
         /// </summary>
         public static uint SlideShowIntervalTo { get; set; } = 5;
 
-
         /// <summary>
         /// Gets, sets value of thumbnail dimension in pixel
         /// </summary>
         public static uint ThumbnailDimension { get; set; } = 96;
-
 
         /// <summary>
         /// Gets, sets width of horizontal thumbnail bar
         /// </summary>
         public static uint ThumbnailBarWidth { get; set; } = new ThumbnailItemInfo(ThumbnailDimension, true).GetTotalDimension();
 
-
         /// <summary>
         /// Gets, sets the number of images cached by Image
         /// </summary>
         public static uint ImageBoosterCachedCount { get; set; } = 1;
-
 
         /// <summary>
         /// Gets, sets fixed width on zooming
         /// </summary>
         public static double ZoomLockValue { get; set; } = 100f;
 
+        /// <summary>
+        /// Gets, sets toolbar icon height
+        /// </summary>
+        public static uint ToolbarIconHeight { get; set; } = Constants.DEFAULT_TOOLBAR_ICON_HEIGHT;
+
+        /// <summary>
+        /// Gets, sets value of image quality for editting
+        /// </summary>
+        public static int ImageEditQuality { get; set; } = 100;
 
         #endregion
 
@@ -354,18 +339,20 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static string ColorProfile { get; set; } = "sRGB";
 
-
         /// <summary>
         /// Gets, sets the last time to check for update. Set it to "0" to disable auto-update.
         /// </summary>
         public static string AutoUpdate { get; set; } = "7/26/1991 12:13:08";
-
 
         /// <summary>
         /// Gets, sets the absolute file path of the last seen image
         /// </summary>
         public static string LastSeenImagePath { get; set; } = "";
 
+        /// <summary>
+        /// Gets, sets the absolute file path of the exiftool executable file
+        /// </summary>
+        public static string ExifToolExePath { get; set; } = "";
 
         #endregion
 
@@ -377,24 +364,20 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static int[] ZoomLevels { get; set; } = new int[] { 5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100, 125, 150, 175, 200, 250, 300, 350, 400, 500, 600, 700, 800, 1000, 1200, 1500, 1800, 2100, 2500, 3000, 3500 };
 
-
         /// <summary>
         /// Gets, sets the list of Image Editing Association
         /// </summary>
-        public static List<EditApp> EditApps { get; set; } = new List<EditApp>();
-
+        public static List<EditApp> EditApps { get; set; } = new();
 
         /// <summary>
         /// Gets, sets the list of supported image formats
         /// </summary>
-        public static HashSet<string> AllFormats { get; set; } = new HashSet<string>();
-
+        public static HashSet<string> AllFormats { get; set; } = new();
 
         /// <summary>
         /// Gets, sets the list of keycombo actions
         /// </summary>
         public static Dictionary<KeyCombos, AssignableActions> KeyComboActions = Constants.DefaultKeycomboActions;
-
 
         /// <summary>
         /// Gets, sets the list of toolbar buttons
@@ -411,67 +394,65 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static FormWindowState FrmMainWindowState { get; set; } = FormWindowState.Normal;
 
-
         /// <summary>
         /// Gets, sets state of settings window
         /// </summary>
         public static FormWindowState FrmSettingsWindowState { get; set; } = FormWindowState.Normal;
 
+        /// <summary>
+        /// Gets, sets state of exif tool window
+        /// </summary>
+        public static FormWindowState FrmExifToolWindowState { get; set; } = FormWindowState.Normal;
 
         /// <summary>
         /// Gets, sets image loading order
         /// </summary>
         public static ImageOrderBy ImageLoadingOrder { get; set; } = ImageOrderBy.Name;
 
-
         /// <summary>
         /// Gets, sets image loading order type
         /// </summary>
         public static ImageOrderType ImageLoadingOrderType { get; set; } = ImageOrderType.Asc;
-
 
         /// <summary>
         /// Gets, sets action to be performed when user spins the mouse wheel
         /// </summary>
         public static MouseWheelActions MouseWheelAction { get; set; } = MouseWheelActions.Zoom;
 
-
         /// <summary>
         /// Gets, sets action to be performed when user spins the mouse wheel while holding Ctrl key
         /// </summary>
         public static MouseWheelActions MouseWheelCtrlAction { get; set; } = MouseWheelActions.ScrollVertically;
-
 
         /// <summary>
         /// Gets, sets action to be performed when user spins the mouse wheel while holding Shift key
         /// </summary>
         public static MouseWheelActions MouseWheelShiftAction { get; set; } = MouseWheelActions.ScrollHorizontally;
 
-
         /// <summary>
         /// Gets, sets action to be performed when user spins the mouse wheel while holding Alt key
         /// </summary>
         public static MouseWheelActions MouseWheelAltAction { get; set; } = MouseWheelActions.BrowseImages;
-
 
         /// <summary>
         /// Gets, sets zoom mode value
         /// </summary>
         public static ZoomMode ZoomMode { get; set; } = ZoomMode.AutoZoom;
 
-
         /// <summary>
         /// Gets, sets zoom optimization value
         /// </summary>
         public static ZoomOptimizationMethods ZoomOptimizationMethod { get; set; } = ZoomOptimizationMethods.Auto;
-
 
         /// <summary>
         /// Gets, sets toolbar position
         /// </summary>
         public static ToolbarPosition ToolbarPosition { get; set; } = ToolbarPosition.Top;
 
-
+        /// <summary>
+        /// Gets, sets value indicates what happens after clicking Edit menu
+        /// </summary>
+        public static AfterOpeningEditAppAction AfterEditingAction { get; set; } = AfterOpeningEditAppAction.Nothing;
 
         #endregion
 
@@ -483,36 +464,34 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static Color BackgroundColor { get; set; } = Color.Black;
 
+        /// <summary>
+        /// Gets, sets window bound of main form
+        /// </summary>
+        public static Rectangle FrmMainWindowBound { get; set; } = new(280, 125, 1300, 800);
 
         /// <summary>
         /// Gets, sets window bound of main form
         /// </summary>
-        public static Rectangle FrmMainWindowsBound { get; set; } = new Rectangle(280, 125, 1300, 800);
-
+        public static Rectangle FrmSettingsWindowBound { get; set; } = new(280, 125, 1050, 750);
 
         /// <summary>
-        /// Gets, sets window bound of main form
+        /// Gets, sets window bound of exif tool form
         /// </summary>
-        public static Rectangle FrmSettingsWindowsBound { get; set; } = new Rectangle(280, 125, 1050, 750);
-
-
+        public static Rectangle FrmExifToolWindowBound { get; set; } = new(280, 125, 800, 600);
 
         /// <summary>
         /// Gets, sets language pack
         /// </summary>
-        public static Language Language { get; set; } = new Language();
-
+        public static Language Language { get; set; } = new();
 
         /// <summary>
         /// Gets, sets theme
         /// </summary>
-        public static Theme Theme { get; set; } = new Theme();
-
-
-        #endregion
+        public static Theme Theme { get; set; }
 
         #endregion
 
+        #endregion
 
 
         #region Private methods
@@ -526,7 +505,6 @@ namespace ImageGlass.Settings {
         private static T ParseEnum<T>(object value) {
             return (T)Enum.Parse(typeof(T), value.ToString(), true);
         }
-
 
         /// <summary>
         /// Gets config item from ConfigSource
@@ -545,23 +523,16 @@ namespace ImageGlass.Settings {
             return ConvertType<T>(defaultValue);
         }
 
-
         /// <summary>
         /// Set the given config to ConfigSource
         /// </summary>
         /// <param name="key">Key of the config</param>
         /// <param name="value">Value</param>
         private static void Set(string key, object value) {
-            if (Source.ContainsKey(key)) {
-                Source[key] = value.ToString();
-            }
-            else {
-                Source.Add(key, value.ToString());
-            }
+            Source[key] = value.ToString();
         }
 
         #endregion
-
 
 
         #region Public methods
@@ -573,9 +544,8 @@ namespace ImageGlass.Settings {
             // load user configs from file
             Source.LoadUserConfigs();
 
-
             // load configs to public properties
-            #region Boolean items
+            #region bool items
 
             IsSlideshow = Get<bool>(nameof(IsSlideshow), IsSlideshow);
             IsShowSlideshowCountdown = Get<bool>(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
@@ -586,6 +556,7 @@ namespace ImageGlass.Settings {
             IsColorPickerRGBA = Get<bool>(nameof(IsColorPickerRGBA), IsColorPickerRGBA);
             IsColorPickerHEXA = Get<bool>(nameof(IsColorPickerHEXA), IsColorPickerHEXA);
             IsColorPickerHSLA = Get<bool>(nameof(IsColorPickerHSLA), IsColorPickerHSLA);
+            IsColorPickerHSVA = Get<bool>(nameof(IsColorPickerHSVA), IsColorPickerHSVA);
             IsShowWelcome = Get<bool>(nameof(IsShowWelcome), IsShowWelcome);
             IsShowToolBar = Get<bool>(nameof(IsShowToolBar), IsShowToolBar);
             IsShowThumbnailScrollbar = Get<bool>(nameof(IsShowThumbnailScrollbar), IsShowThumbnailScrollbar);
@@ -610,6 +581,7 @@ namespace ImageGlass.Settings {
             IsShowCheckerboardOnlyImageRegion = Get<bool>(nameof(IsShowCheckerboardOnlyImageRegion), IsShowCheckerboardOnlyImageRegion);
             IsRecursiveLoading = Get<bool>(nameof(IsRecursiveLoading), IsRecursiveLoading);
             IsUseFileExplorerSortOrder = Get<bool>(nameof(IsUseFileExplorerSortOrder), IsUseFileExplorerSortOrder);
+            IsGroupImagesByDirectory = Get<bool>(nameof(IsGroupImagesByDirectory), IsGroupImagesByDirectory);
             IsShowingHiddenImages = Get<bool>(nameof(IsShowingHiddenImages), IsShowingHiddenImages);
             IsShowColorPickerOnStartup = Get<bool>(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
             IsShowPageNavOnStartup = Get<bool>(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
@@ -618,9 +590,11 @@ namespace ImageGlass.Settings {
             IsCenterWindowFit = Get<bool>(nameof(IsCenterWindowFit), IsCenterWindowFit);
             IsShowToast = Get<bool>(nameof(IsShowToast), IsShowToast);
             IsUseTouchGesture = Get<bool>(nameof(IsUseTouchGesture), IsUseTouchGesture);
+            IsHideTooltips = Get<bool>(nameof(IsHideTooltips), IsHideTooltips);
+            IsExifToolAlwaysOnTop = Get<bool>(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
+            IsUseEmptyTitleBar = Get<bool>(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
 
             #endregion
-
 
             #region Number items
 
@@ -655,13 +629,16 @@ namespace ImageGlass.Settings {
             ZoomLockValue = Get<double>(nameof(ZoomLockValue), ZoomLockValue);
             if (ZoomLockValue < 0) ZoomLockValue = 100f;
 
-            #endregion
+            ToolbarIconHeight = Get<uint>(nameof(ToolbarIconHeight), ToolbarIconHeight);
+            ImageEditQuality = Get<int>(nameof(ImageEditQuality), ImageEditQuality);
 
+            #endregion
 
             #region Enum items
 
             FrmMainWindowState = Get<FormWindowState>(nameof(FrmMainWindowState), FrmMainWindowState);
             FrmSettingsWindowState = Get<FormWindowState>(nameof(FrmSettingsWindowState), FrmSettingsWindowState);
+            FrmExifToolWindowState = Get<FormWindowState>(nameof(FrmExifToolWindowState), FrmExifToolWindowState);
             ImageLoadingOrder = Get<ImageOrderBy>(nameof(ImageLoadingOrder), ImageLoadingOrder);
             ImageLoadingOrderType = Get<ImageOrderType>(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
             MouseWheelAction = Get<MouseWheelActions>(nameof(MouseWheelAction), MouseWheelAction);
@@ -671,9 +648,10 @@ namespace ImageGlass.Settings {
             ZoomMode = Get<ZoomMode>(nameof(ZoomMode), ZoomMode);
             ZoomOptimizationMethod = Get<ZoomOptimizationMethods>(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod);
             ToolbarPosition = Get<ToolbarPosition>(nameof(ToolbarPosition), ToolbarPosition);
+            AfterEditingAction = Get<AfterOpeningEditAppAction>(nameof(AfterEditingAction), AfterEditingAction);
+
 
             #endregion
-
 
             #region String items
 
@@ -682,9 +660,9 @@ namespace ImageGlass.Settings {
 
             AutoUpdate = Get<string>(nameof(AutoUpdate), AutoUpdate);
             LastSeenImagePath = Get<string>(nameof(LastSeenImagePath), LastSeenImagePath);
+            ExifToolExePath = Get<string>(nameof(ExifToolExePath), ExifToolExePath);
 
             #endregion
-
 
             #region Array items
 
@@ -697,14 +675,12 @@ namespace ImageGlass.Settings {
 
             #endregion
 
-
             #region EditApps
 
-            var appStr = Get<String>(nameof(EditApps), "");
+            var appStr = Get<string>(nameof(EditApps), "");
             EditApps = GetEditApps(appStr);
 
             #endregion
-
 
             #region ImageFormats
 
@@ -712,7 +688,6 @@ namespace ImageGlass.Settings {
             AllFormats = GetImageFormats(formats);
 
             #endregion
-
 
             #region KeyComboActions
 
@@ -722,7 +697,6 @@ namespace ImageGlass.Settings {
             }
 
             #endregion
-
 
             #region ToolbarButtons
 
@@ -734,24 +708,22 @@ namespace ImageGlass.Settings {
 
             #endregion
 
-
             #region Other types items
 
-            #region FrmMainWindowsBound
-            var boundStr = Get<string>(nameof(FrmMainWindowsBound), "");
+            #region FrmMainWindowBound
+            var boundStr = Get<string>(nameof(FrmMainWindowBound), "");
             if (!string.IsNullOrEmpty(boundStr)) {
                 var rc = Helpers.StringToRect(boundStr);
                 if (!Helper.IsAnyPartOnScreen(rc)) {
                     rc = new Rectangle(280, 125, 1000, 800);
                 }
 
-                FrmMainWindowsBound = rc;
+                FrmMainWindowBound = rc;
             }
             #endregion
 
-
-            #region FrmSettingsWindowsBound
-            boundStr = Get<string>(nameof(FrmSettingsWindowsBound), "");
+            #region FrmSettingsWindowBound
+            boundStr = Get<string>(nameof(FrmSettingsWindowBound), "");
             if (!string.IsNullOrEmpty(boundStr)) {
                 var rc = Helpers.StringToRect(boundStr);
 
@@ -759,26 +731,36 @@ namespace ImageGlass.Settings {
                     rc.Location = new Point(280, 125);
                 }
 
-                FrmSettingsWindowsBound = rc;
+                FrmSettingsWindowBound = rc;
             }
             #endregion
 
+            #region FrmExifToolWindowBound
+            boundStr = Get<string>(nameof(FrmExifToolWindowBound), "");
+            if (!string.IsNullOrEmpty(boundStr)) {
+                var rc = Helpers.StringToRect(boundStr);
+
+                if (!Helper.IsOnScreen(rc.Location)) {
+                    rc.Location = new Point(280, 125);
+                }
+
+                FrmExifToolWindowBound = rc;
+            }
+            #endregion
 
             #region Lang
             var langPath = Get<string>(nameof(Language), "English");
             Language = new Language(langPath, App.StartUpDir(Dir.Languages));
             #endregion
 
-
             #region Theme
-            var themeFolderName = Get<string>(nameof(Theme), Dir.DefaultTheme);
-            var th = new Theme(App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
+            var themeFolderName = Get<string>(nameof(Theme), Constants.DEFAULT_THEME);
+            var th = new Theme((int)ToolbarIconHeight, App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
 
             if (th.IsValid) {
                 Theme = th;
             }
             #endregion
-
 
             #region BackgroundColor
             // must load after Theme
@@ -790,13 +772,12 @@ namespace ImageGlass.Settings {
 
         }
 
-
         /// <summary>
         /// Parse and write configs to file
         /// </summary>
         public static void Write() {
             // save public properties to configs
-            #region Boolean items
+            #region bool items
 
             Set(nameof(IsSlideshow), IsSlideshow);
             Set(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
@@ -807,6 +788,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsColorPickerRGBA), IsColorPickerRGBA);
             Set(nameof(IsColorPickerHEXA), IsColorPickerHEXA);
             Set(nameof(IsColorPickerHSLA), IsColorPickerHSLA);
+            Set(nameof(IsColorPickerHSVA), IsColorPickerHSVA);
             Set(nameof(IsShowWelcome), IsShowWelcome);
             Set(nameof(IsShowToolBar), IsShowToolBar);
             Set(nameof(IsShowThumbnailScrollbar), IsShowThumbnailScrollbar);
@@ -831,6 +813,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsShowCheckerboardOnlyImageRegion), IsShowCheckerboardOnlyImageRegion);
             Set(nameof(IsRecursiveLoading), IsRecursiveLoading);
             Set(nameof(IsUseFileExplorerSortOrder), IsUseFileExplorerSortOrder);
+            Set(nameof(IsGroupImagesByDirectory), IsGroupImagesByDirectory);
             Set(nameof(IsShowingHiddenImages), IsShowingHiddenImages);
             Set(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
             Set(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
@@ -839,9 +822,11 @@ namespace ImageGlass.Settings {
             Set(nameof(IsCenterWindowFit), IsCenterWindowFit);
             Set(nameof(IsShowToast), IsShowToast);
             Set(nameof(IsUseTouchGesture), IsUseTouchGesture);
+            Set(nameof(IsHideTooltips), IsHideTooltips);
+            Set(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
+            Set(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
 
             #endregion
-
 
             #region Number items
 
@@ -852,14 +837,16 @@ namespace ImageGlass.Settings {
             Set(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
             Set(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
             Set(nameof(ZoomLockValue), ZoomLockValue);
+            Set(nameof(ToolbarIconHeight), ToolbarIconHeight);
+            Set(nameof(ImageEditQuality), ImageEditQuality);
 
             #endregion
-
 
             #region Enum items
 
             Set(nameof(FrmMainWindowState), FrmMainWindowState);
             Set(nameof(FrmSettingsWindowState), FrmSettingsWindowState);
+            Set(nameof(FrmExifToolWindowState), FrmExifToolWindowState);
             Set(nameof(ImageLoadingOrder), ImageLoadingOrder);
             Set(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
             Set(nameof(MouseWheelAction), MouseWheelAction);
@@ -869,9 +856,9 @@ namespace ImageGlass.Settings {
             Set(nameof(ZoomMode), ZoomMode);
             Set(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod);
             Set(nameof(ToolbarPosition), ToolbarPosition);
+            Set(nameof(AfterEditingAction), AfterEditingAction);
 
             #endregion
-
 
             #region String items
 
@@ -879,9 +866,9 @@ namespace ImageGlass.Settings {
             Set(nameof(ToolbarButtons), ToolbarButtons);
             Set(nameof(AutoUpdate), AutoUpdate);
             Set(nameof(LastSeenImagePath), LastSeenImagePath);
+            Set(nameof(ExifToolExePath), ExifToolExePath);
 
             #endregion
-
 
             #region Array items
 
@@ -893,12 +880,12 @@ namespace ImageGlass.Settings {
 
             #endregion
 
-
             #region Other types items
 
             Set(nameof(BackgroundColor), Theme.ConvertColorToHEX(BackgroundColor, true));
-            Set(nameof(FrmMainWindowsBound), Helpers.RectToString(FrmMainWindowsBound));
-            Set(nameof(FrmSettingsWindowsBound), Helpers.RectToString(FrmSettingsWindowsBound));
+            Set(nameof(FrmMainWindowBound), Helpers.RectToString(FrmMainWindowBound));
+            Set(nameof(FrmSettingsWindowBound), Helpers.RectToString(FrmSettingsWindowBound));
+            Set(nameof(FrmExifToolWindowBound), Helpers.RectToString(FrmExifToolWindowBound));
             Set(nameof(Language), Path.GetFileName(Language.FileName));
             Set(nameof(Theme), Theme.FolderName);
 
@@ -908,7 +895,6 @@ namespace ImageGlass.Settings {
             // write user configs to file
             Source.WriteUserConfigs();
         }
-
 
 
         #region Helper functions
@@ -930,15 +916,13 @@ namespace ImageGlass.Settings {
             }
         }
 
-
         /// <summary>
         /// Get the registered file extensions from registry
         /// Ex: *.svg;*.png;
         /// </summary>
         /// <returns></returns>
         public static string GetRegisteredExtensions() {
-            var reg = new RegistryHelper()
-            {
+            var reg = new RegistryHelper() {
                 BaseRegistryKey = Registry.LocalMachine,
                 SubKey = @"SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations"
             };
@@ -947,12 +931,11 @@ namespace ImageGlass.Settings {
             var exts = new StringBuilder();
 
             foreach (var ext in extList) {
-                exts.Append($"*{ext};");
+                exts.Append('*').Append(ext).Append(';');
             }
 
             return exts.ToString();
         }
-
 
         /// <summary>
         /// Randomize slideshow interval in seconds
@@ -966,7 +949,6 @@ namespace ImageGlass.Settings {
 
             return interval;
         }
-
 
         #endregion
 
@@ -982,12 +964,11 @@ namespace ImageGlass.Settings {
         /// <returns></returns>
         public static EditApp GetEditApp(string ext) {
             if (EditApps.Count > 0) {
-                return EditApps.FirstOrDefault(v => v.Extension.CompareTo(ext) == 0);
+                return EditApps.Find(v => v.Extension.CompareTo(ext) == 0);
             }
 
             return null;
         }
-
 
         /// <summary>
         /// Returns string from the given apps
@@ -1011,7 +992,6 @@ namespace ImageGlass.Settings {
             return list;
         }
 
-
         /// <summary>
         /// Returns string from the given apps
         /// </summary>
@@ -1020,14 +1000,13 @@ namespace ImageGlass.Settings {
         public static string GetEditApps(List<EditApp> apps) {
             var appStr = new StringBuilder();
             foreach (var item in apps) {
-                appStr.Append($"[{item.ToString()}]");
+                appStr.Append('[').Append(item).Append(']');
             }
 
             return appStr.ToString();
         }
 
         #endregion
-
 
         #region ImageFormats
 
@@ -1048,7 +1027,6 @@ namespace ImageGlass.Settings {
             return list;
         }
 
-
         /// <summary>
         /// Returns the image formats string
         /// </summary>
@@ -1057,14 +1035,13 @@ namespace ImageGlass.Settings {
         public static string GetImageFormats(HashSet<string> list) {
             var sb = new StringBuilder(list.Count);
             foreach (var item in list) {
-                sb.Append($"*{item.ToString()};");
+                sb.Append('*').Append(item).Append(';');
             }
 
             return sb.ToString();
         }
 
         #endregion
-
 
         #region KeyComboActions
 
@@ -1095,7 +1072,6 @@ namespace ImageGlass.Settings {
             return dic;
         }
 
-
         /// <summary>
         /// Returns the string from keycombo actions
         /// </summary>
@@ -1116,7 +1092,6 @@ namespace ImageGlass.Settings {
 
         #endregion
 
-
         #region ToolbarButtons
 
         /// <summary>
@@ -1126,7 +1101,7 @@ namespace ImageGlass.Settings {
         /// <returns></returns>
         public static List<ToolbarButton> GetToolbarButtons(string buttons) {
             var list = new List<ToolbarButton>();
-            string[] splitvals = buttons.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            var splitvals = buttons.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var item in splitvals) {
                 try {
@@ -1140,7 +1115,6 @@ namespace ImageGlass.Settings {
             return list;
         }
 
-
         /// <summary>
         /// Returns string from toolbar buttons list
         /// </summary>
@@ -1149,15 +1123,37 @@ namespace ImageGlass.Settings {
         public static string GetToolbarButtons(List<ToolbarButton> list) {
             var sb = new StringBuilder(list.Count);
             foreach (var item in list) {
-                sb.Append($"{item.ToString()};");
+                sb.Append(item).Append(';');
             }
 
             return sb.ToString();
         }
 
-
         #endregion
 
+
+        /// <summary>
+        /// Apply theme colors and logo to form
+        /// </summary>
+        /// <param name="frm"></param>
+        /// <param name="th"></param>
+        public static void ApplyFormTheme(Form frm, Theme th) {
+            // load theme colors
+            foreach (var ctr in Helpers.GetAllControls(frm, typeof(LinkLabel))) {
+                if (ctr is LinkLabel lnk) {
+                    lnk.LinkColor = lnk.VisitedLinkColor = th.AccentColor;
+                }
+            }
+
+            // Icon theming
+            if (!th.IsShowTitlebarLogo) {
+                frm.Icon = Icon.FromHandle(new Bitmap(64, 64).GetHicon());
+                FormIcon.SetTaskbarIcon(frm, th.Logo.Image.GetHicon());
+            }
+            else {
+                frm.Icon = Icon.FromHandle(th.Logo.Image.GetHicon());
+            }
+        }
 
         #endregion
 

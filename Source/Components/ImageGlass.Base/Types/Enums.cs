@@ -55,7 +55,6 @@ namespace ImageGlass.Base {
         ClearPixels = 2
     }
 
-
     /// <summary>
     /// The list of mousewheel actions.
     /// **If we need to rename, have to update the language string too.
@@ -82,12 +81,12 @@ namespace ImageGlass.Base {
         THUMBNAIL_ITEMS = 16,
         TOOLBAR = 32,
         TOOLBAR_POSITION = 64,
-        IMAGE_LIST = 128,
-        IMAGE_LIST_NO_RECURSIVE = 256,
-        COLOR_PICKER_MENU = 512,
-        PAGE_NAV_MENU = 1024
+        TOOLBAR_ICON_HEIGHT = 128,
+        IMAGE_LIST = 256,
+        IMAGE_LIST_NO_RECURSIVE = 512,
+        COLOR_PICKER_MENU = 1024,
+        PAGE_NAV_MENU = 2048
     }
-
 
     /// <summary>
     /// The list of layout mode.
@@ -99,13 +98,13 @@ namespace ImageGlass.Base {
         Designer = 1
     }
 
-
     /// <summary>
-    /// All the supported toolbar buttons. NOTE: the names here MUST match the field 
+    /// <para>
+    /// All the supported toolbar buttons. NOTE: the names here MUST match the field
     /// name in frmMain! Reflection is used to fetch the image and string from the
     /// frmMain field.
-    ///
-    /// The integer value of the enum is used for storing the config info.
+    /// </para>
+    /// <para>The integer value of the enum is used for storing the config info.</para>
     /// </summary>
     public enum ToolbarButton {
         Separator = -1,
@@ -142,10 +141,10 @@ namespace ImageGlass.Base {
         MAX // DO NOT ADD ANYTHING AFTER THIS
     }
 
-
     /// <summary>
     /// Zooming modes.
     /// </summary>
+    [Flags]
     public enum ZoomMode {
         AutoZoom = 0,
         ScaleToFit = 1,
@@ -163,7 +162,6 @@ namespace ImageGlass.Base {
         Bottom = 1
     }
 
-
     /// <summary>
     /// Color channels of image, the value should be same as MagickImage.Channels enum
     /// </summary>
@@ -176,7 +174,6 @@ namespace ImageGlass.Base {
         Black = 8,
         Alpha = 16,
     }
-
 
     /// <summary>
     /// Actions the user can assign to keys
@@ -233,7 +230,6 @@ namespace ImageGlass.Base {
         Button5Dbl,
     }
 
-
     /// <summary>
     /// Types of path
     /// </summary>
@@ -242,4 +238,12 @@ namespace ImageGlass.Base {
         Dir,
     }
 
+    /// <summary>
+    /// Actions after opening editing app
+    /// </summary>
+    public enum AfterOpeningEditAppAction {
+        Nothing = 0,
+        Minimize = 1,
+        Close = 2,
+    }
 }

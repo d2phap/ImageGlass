@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2014 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 
 namespace ImageGlass.Library.Image {
-    public class ImageInfo {
+    public static class ImageInfo {
         [StructLayout(LayoutKind.Sequential)]
         private struct SHELLEXECUTEINFO {
             public int cbSize;
@@ -59,7 +59,7 @@ namespace ImageGlass.Library.Image {
         public static void DisplayFileProperties(string fileName, IntPtr hwnd) {
             const int SEE_MASK_INVOKEIDLIST = 0xc;
             const int SW_SHOW = 5;
-            SHELLEXECUTEINFO shInfo = new SHELLEXECUTEINFO();
+            var shInfo = new SHELLEXECUTEINFO();
 
             shInfo.cbSize = Marshal.SizeOf(shInfo);
             shInfo.lpFile = fileName;
@@ -72,14 +72,13 @@ namespace ImageGlass.Library.Image {
             ShellExecuteEx(ref shInfo);
         }
 
-
         /// <summary>
         /// Get image type name
         /// </summary>
         /// <param name="filename">file name</param>
         /// <returns></returns>
         public static string GetImageFileType(string filename) {
-            string ext = Path.GetExtension(filename).Replace(".", "").ToLower();
+            var ext = Path.GetExtension(filename).Replace(".", "").ToLower();
 
             switch (ext) {
                 case "bmp":
@@ -115,7 +114,6 @@ namespace ImageGlass.Library.Image {
             }
         }
 
-
         /// <summary>
         /// Get file size format
         /// </summary>
@@ -123,10 +121,10 @@ namespace ImageGlass.Library.Image {
         /// <returns></returns>
         public static string GetFileSize(string filename) {
             try {
-                double mod = 1024;
-                string[] units = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
+                const double mod = 1024;
+                var units = new string[] { "B", "KB", "MB", "GB", "TB", "PB" };
 
-                FileInfo fi = new FileInfo(filename);
+                var fi = new FileInfo(filename);
                 double sized = fi.Length * 1.0f;
                 int i;
 
@@ -148,14 +146,14 @@ namespace ImageGlass.Library.Image {
         /// <returns></returns>
         public static string GetWxHSize(string filename) {
             try {
-                if (Path.GetExtension(filename).ToLower() != ".ico") {
-                    using (System.Drawing.Image img = System.Drawing.Image.FromFile(filename)) {
+                if (!string.Equals(Path.GetExtension(filename), ".ico", StringComparison.CurrentCultureIgnoreCase)) {
+                    using (var img = System.Drawing.Image.FromFile(filename)) {
                         //get Width x Height
                         return Convert.ToString(img.Width) + " x " + Convert.ToString(img.Height);
                     }
                 }
                 else {
-                    Icon ico = new Icon(filename);
+                    var ico = new Icon(filename);
                     //get Width x Height
                     return Convert.ToString(ico.Width) + " x " + Convert.ToString(ico.Height);
                 }
@@ -163,7 +161,6 @@ namespace ImageGlass.Library.Image {
             catch {
                 return string.Empty;
             }
-
         }
 
         /// <summary>
@@ -176,9 +173,8 @@ namespace ImageGlass.Library.Image {
                 double h = 0;
                 double v = 0;
 
-                if (Path.GetExtension(filename).ToLower() != ".ico") {
-                    using (System.Drawing.Image img = System.Drawing.Image.FromFile(filename)) {
-
+                if (!string.Equals(Path.GetExtension(filename), ".ico", StringComparison.CurrentCultureIgnoreCase)) {
+                    using (var img = System.Drawing.Image.FromFile(filename)) {
                         //get HorizontalResolution 
                         h = Math.Round((double)img.HorizontalResolution, 2);
 
@@ -187,13 +183,13 @@ namespace ImageGlass.Library.Image {
                     }
                 }
                 else {
-                    Icon ico = new Icon(filename);
+                    using (var ico = new Icon(filename)) {
+                        //get HorizontalResolution 
+                        h = Math.Round(ico.ToBitmap().HorizontalResolution, 2);
 
-                    //get HorizontalResolution 
-                    h = Math.Round(ico.ToBitmap().HorizontalResolution, 2);
-
-                    //get VerticalResolution
-                    v = Math.Round(ico.ToBitmap().VerticalResolution, 2);
+                        //get VerticalResolution
+                        v = Math.Round(ico.ToBitmap().VerticalResolution, 2);
+                    }
                 }
 
                 return string.Format("{0} x {1}", h, v);
@@ -203,14 +199,13 @@ namespace ImageGlass.Library.Image {
             return " ";
         }
 
-
         /// <summary>
         /// Get file creation time
         /// </summary>
         /// <param name="filename">file name</param>
         /// <returns></returns>
         public static DateTime GetCreateTime(string filename) {
-            FileInfo fi = new FileInfo(filename);
+            var fi = new FileInfo(filename);
 
             //get Create Time
             return fi.CreationTime;
@@ -222,7 +217,7 @@ namespace ImageGlass.Library.Image {
         /// <param name="filename">file name</param>
         /// <returns></returns>
         public static DateTime GetLastAccess(string filename) {
-            FileInfo fi = new FileInfo(filename);
+            var fi = new FileInfo(filename);
             //get Create Time
             return fi.LastAccessTime;
         }
@@ -233,7 +228,7 @@ namespace ImageGlass.Library.Image {
         /// <param name="filename">file name</param>
         /// <returns></returns>
         public static DateTime GetWriteTime(string filename) {
-            FileInfo fi = new FileInfo(filename);
+            var fi = new FileInfo(filename);
 
             return fi.LastWriteTime;
         }
@@ -245,7 +240,7 @@ namespace ImageGlass.Library.Image {
         /// <param name="newFileName">new file name</param>
         public static void RenameFile(string oldFileName, string newFileName) {
             // Issue 73: Windows ignores case-only changes
-            if (oldFileName.ToLowerInvariant() == newFileName.ToLowerInvariant()) {
+            if (string.Equals(oldFileName, newFileName, StringComparison.InvariantCultureIgnoreCase)) {
                 // user changing only the case of the filename. Need to perform a trick.
                 File.Move(oldFileName, oldFileName + "_imgglass_extra");
                 File.Move(oldFileName + "_imgglass_extra", newFileName);
@@ -254,7 +249,6 @@ namespace ImageGlass.Library.Image {
                 File.Move(oldFileName, newFileName);
             }
         }
-
 
         /// <summary>
         /// Delete file
@@ -267,8 +261,5 @@ namespace ImageGlass.Library.Image {
 
             FileSystem.DeleteFile(fileName, UIOption.OnlyErrorDialogs, option);
         }
-
-
-
     }
 }

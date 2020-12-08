@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="de-DE" langName="Deutsch" author="ImageGlass community" description="German" minVersion="7.6.4.30" isRightToLeftLayout="Nein"/>
+    <Info langCode="de-DE" langName="Deutsch" author="bYemma, Marcel Veronetzki (DasOni), Tobias Ell tell1970, uDEV" description="German" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Einige Einstellungen sind nicht mit ImageGlass {0} kompatibel. Es wird empfohlen, sie vor dem nächsten Schritt anzupassen.&#10;&#10;- Drücke auf &quot;Ja&quot;, um mehr über die Änderungen zu erfahren.&#10;- Drücke auf &quot;Nein&quot;, um ImageGlass mit den Standard-Einstellungen zu starten."/>
+      <Item key="_.ImageOrderBy._Name" value="Name (Standard)"/>
+      <Item key="_.ImageOrderBy._Length" value="Dateigröße"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Erstellungszeit"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Letzter Lesezugriff"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Letzter Schreibzugriff"/>
+      <Item key="_.ImageOrderBy._Extension" value="Erweiterung"/>
+      <Item key="_.ImageOrderBy._Random" value="Zufällig"/>
+      <Item key="_.ImageOrderType._Asc" value="Aufsteigend"/>
+      <Item key="_.ImageOrderType._Desc" value="Absteigend"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Nichts"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Minimieren"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Schließen"/>
       <Item key="frmMain.mnuMainFile" value="Datei"/>
       <Item key="frmMain.mnuMainOpenFile" value="Datei öffnen…"/>
       <Item key="frmMain.mnuMainOpenImageData" value="Bild aus Zwischenablage einfügen"/>
@@ -46,6 +58,7 @@
       <Item key="frmMain.mnuMainChannels._Blue" value="Blau"/>
       <Item key="frmMain.mnuMainChannels._Black" value="Schwarz"/>
       <Item key="frmMain.mnuMainChannels._Alpha" value="Transparent"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Ladereihenfolge"/>
       <Item key="frmMain.mnuMainRotateLeft" value="Nach links drehen"/>
       <Item key="frmMain.mnuMainRotateRight" value="Nach rechts drehen"/>
       <Item key="frmMain.mnuMainFlipHorz" value="Horizontal spiegeln"/>
@@ -82,6 +95,7 @@
       <Item key="frmMain.mnuMainColorPicker" value="Farbpipette"/>
       <Item key="frmMain.mnuMainPageNav" value="Seiten-Navigation"/>
       <Item key="frmMain.mnuMainCrop" value="Zuschneiden"/>
+      <Item key="frmMain.mnuExifTool" value="ExifTool"/>
       <Item key="frmMain.mnuMainSettings" value="Einstellungen…"/>
       <Item key="frmMain.mnuMainHelp" value="Hilfe"/>
       <Item key="frmMain.mnuMainAbout" value="Über"/>
@@ -103,7 +117,7 @@
       <Item key="frmMain._DeleteDialogText" value="Datei '{0}' löschen ?"/>
       <Item key="frmMain._DeleteDialogTitle" value="Bestätigen"/>
       <Item key="frmMain._ExtractPageText" value="Extrahiere Bilder Seiten. Bitte wähle einen Ausgabeordner."/>
-      <Item key="frmMain._FullScreenMessage" value="Drücke ALT+ENTER um den Vollbildmodus zu beenden."/>
+      <Item key="frmMain._FullScreenMessage" value="{0} drücken, um den Vollbildmodus zu verlassen."/>
       <Item key="frmMain._SlideshowMessage" value="Drücke ESC um die Slideshow zu schließen.&#10;Rechtsklick, um das Kontextmenü zu öffnen."/>
       <Item key="frmMain._SlideshowMessagePause" value="Diashow ist pausiert"/>
       <Item key="frmMain._SlideshowMessageResume" value="Diashow wird fortgesetzt"/>
@@ -125,6 +139,7 @@
       <Item key="frmMain._SetBackground_Success" value="Das Hintergrundbild wurde erfolgreich gesetzt"/>
       <Item key="frmMain._PageExtractComplete" value="Seitenextrahierung abgeschlossen."/>
       <Item key="frmMain._Frameless" value="Halte die Shift-Taste gedrückt, um das Fenster zu bewegen."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Zwischenablage enthält keine Bilddaten."/>
       <Item key="frmAbout.lblSlogant" value="Ein schlanker, vielseitiger Bildbetrachter"/>
       <Item key="frmAbout.lblInfo" value="Informationen"/>
       <Item key="frmAbout.lblComponent" value="Komponenten"/>
@@ -173,16 +188,8 @@
       <Item key="frmSetting.chkLoopViewer" value="Starte die Diashow wieder mit dem ersten Bild, wenn das Ende der Liste erreicht wurde"/>
       <Item key="frmSetting.chkIsCenterImage" value="Bild im Betrachter zentrieren"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Bildersortierung beim Laden"/>
-      <Item key="frmSetting.cmbImageOrder._Name" value="Name (Standard)"/>
-      <Item key="frmSetting.cmbImageOrder._Length" value="Dateigröße"/>
-      <Item key="frmSetting.cmbImageOrder._CreationTime" value="Erstellungszeit"/>
-      <Item key="frmSetting.cmbImageOrder._LastAccessTime" value="Letzter Lesezugriff"/>
-      <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="Letzter Schreibzugriff"/>
-      <Item key="frmSetting.cmbImageOrder._Extension" value="Erweiterung"/>
-      <Item key="frmSetting.cmbImageOrder._Random" value="Zufällig"/>
-      <Item key="frmSetting.cmbImageOrderType._Asc" value="Aufsteigend"/>
-      <Item key="frmSetting.cmbImageOrderType._Desc" value="Absteigend"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Wenn möglich, Sortierreihenfolge im Windows Explorer verwenden"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Bilder nach Verzeichnis gruppieren"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Anzahl der Bilder im ImageBooster-Cache (eine Richtung)"/>
       <Item key="frmSetting.lblColorManagement" value="Farbmanagement"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Auch für Bilder ohne eingebettetes Farbprofil anwenden"/>
@@ -219,6 +226,8 @@
       <Item key="frmSetting.lblSlideshowIntervalTo" value="bis"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Speichern des angezeigten Bildes nach dem Drehen"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Auswählen einer Anwendung zur Bildbearbeitung"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="Nach dem Öffnen der App:"/>
+      <Item key="frmSetting.lblImageQuality" value="Bildqualität:"/>
       <Item key="frmSetting.btnEditEditExt" value="Bearbeiten…"/>
       <Item key="frmSetting.btnEditResetExt" value="Auf Standard zurücksetzen"/>
       <Item key="frmSetting.btnEditEditAllExt" value="Alle Erweiterungen bearbeiten…"/>
@@ -227,17 +236,21 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Programmname"/>
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Programmpfad"/>
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Programm Argumente"/>
-      <Item key="frmSetting.chkSaveModifyDate" value="Das Änderungsdatum des Bildes beim Speichern beibehalten"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Das geänderte Datum des Bildes beim Speichern beibehalten"/>
       <Item key="frmSetting.lblSupportedExtension" value="Unterstützte Formate: {0}"/>
       <Item key="frmSetting.lnkOpenFileAssoc" value="Dateityp-Zuordnungen öffnen"/>
       <Item key="frmSetting.btnAddNewExt" value="Hinzufügen…"/>
       <Item key="frmSetting.btnRegisterExt" value="Als Standard-App für die Bildanzeige festlegen…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Registrierte Erweiterungen entfernen"/>
       <Item key="frmSetting.btnDeleteExt" value="Löschen"/>
       <Item key="frmSetting.btnResetExt" value="Auf Standard zurücksetzen"/>
       <Item key="frmSetting._RegisterWebToApp_Error" value="Web-to-App Verlinkung nicht möglich"/>
       <Item key="frmSetting._RegisterAppExtensions_Error" value="Die Dateierweiterungen für ImageGlass konnten nicht registriert werden"/>
       <Item key="frmSetting._RegisterAppExtensions_Success" value="Alle Dateitypen wurden erfolgreich registriert! Um ImageGlass als Standard-Bildbetrachter einzustellen, öffne bitte die Windows Einstellungen &gt; Standard-Apps und setze ImageGlass manuell als Anwendung für die Bildanzeige."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Registrierte Dateierweiterungen der ImageGlass App konnten nicht gelöscht werden"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Alle Dateierweiterungen wurden erfolgreich entfernt!"/>
       <Item key="frmSetting.lblToolbarPosition" value="Symbolleistenposition:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Symbolleiste Symbolgröße:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Oben"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Unten"/>
       <Item key="frmSetting._separator" value="Separator"/>
@@ -249,11 +262,16 @@
       <Item key="frmSetting.btnMoveRight._Tooltip" value="Füge ausgewählte Schaltfläche(n) zur Symbolleiste hinzu"/>
       <Item key="frmSetting.btnMoveUp._Tooltip" value="Bewege ausgewählte Schaltfläche nach oben"/>
       <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Schaltflächen der Symbolleiste zentrieren"/>
-      <Item key="frmSetting.chkColorUseRGBA" value="Verwende RGBA-Format"/>
-      <Item key="frmSetting.chkColorUseHEXA" value="Verwende HEX mit Alpha-Format"/>
-      <Item key="frmSetting.chkColorUseHSLA" value="Verwende HSLA-Format"/>
+      <Item key="frmSetting.chkHideTooltips" value="Toolbar Tooltips ausblenden"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="RGB-Format mit Alpha-Wert verwenden"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="HEX-Format mit Alpha-Wert verwenden"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="HSL-Format mit Alpha-Wert verwenden"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="HSV-Format mit Alpha-Wert verwenden"/>
       <Item key="frmSetting.lblDefaultColorCode" value="Standard-Farbcodeformat beim Kopieren"/>
       <Item key="frmSetting.chkShowPageNavAuto" value="Zeige das Seiten-Navigations-Tool automatisch bei mehrseitigen Bildern"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="ExifTool immer im Vordergrund"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="ExifTool Datei auswählen"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="ExifTool existiert nicht oder ist ungültig: &#10;{0}"/>
       <Item key="frmSetting.lblLanguageText" value="Installierte Sprachen"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Aktualisieren"/>
       <Item key="frmSetting.lblLanguageWarning" value="Dieses Sprachpaket ist evtl. nicht kompatibel mit Version {0}"/>
@@ -323,7 +341,12 @@
       <Item key="frmCrop.btnSave" value="Speichern"/>
       <Item key="frmCrop.btnSaveAs" value="Speichern als…"/>
       <Item key="frmCrop.btnCopy" value="Kopieren"/>
-      <Item key="frmCrop.btnClear" value="Leeren"/>
+      <Item key="frmCrop.btnReset" value="Zurücksetzen"/>
+      <Item key="FrmExifTool.clnProperty" value="Eigenschaft"/>
+      <Item key="FrmExifTool.clnValue" value="Wert"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Wert kopieren"/>
+      <Item key="FrmExifTool.btnExport" value="Exportieren…"/>
+      <Item key="FrmExifTool.btnClose" value="Schließen"/>
     </Content>
   </Language>
 </ImageGlass>

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2020 DUONG DIEU PHAP
+Copyright (C) 2021 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -17,19 +17,18 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
 using ImageGlass.Base;
 using ImageGlass.Heart;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.UI.ToolForms;
-using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Windows.Forms;
 
 namespace ImageGlass {
     public partial class frmColorPicker: ToolForm {
-
         // default location offset on the parent form
         private static Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(80));
 
@@ -37,14 +36,12 @@ namespace ImageGlass {
         private BitmapBooster _bmpBooster;
         private Point _cursorPos;
 
-
         public frmColorPicker() {
             InitializeComponent();
             RegisterToolFormEvents();
 
             btnSnapTo.Click += SnapButton_Click;
         }
-
 
         public void SetImageBox(ImageBoxEx imgBox) {
             if (_imgBox != null) {
@@ -57,7 +54,6 @@ namespace ImageGlass {
             _imgBox.MouseMove += _imgBox_MouseMove;
             _imgBox.Click += _imgBox_Click;
         }
-
 
         #region Events to manage ImageBox
 
@@ -93,31 +89,26 @@ namespace ImageGlass {
                 return;
             }
 
-
             //In case of opening a second image, 
             //there is a delay of loading image time which will cause error due to _imgBox is null.
             //Wrap try catch to skip this error
             try {
                 if (_cursorPos.X >= 0 && _cursorPos.Y >= 0 && _cursorPos.X < _imgBox.Image.Width && _cursorPos.Y < _imgBox.Image.Height) {
-                    if (_bmpBooster != null) {
-                        _bmpBooster.Dispose();
-                    }
-                    using (Bitmap bmp = new Bitmap(_imgBox.Image)) {
-                        _bmpBooster = new BitmapBooster(bmp);
+                    _bmpBooster?.Dispose();
+                    using var bmp = new Bitmap(_imgBox.Image);
+                    _bmpBooster = new BitmapBooster(bmp);
 
-                        Color color = _bmpBooster.Get(_cursorPos.X, _cursorPos.Y);
-                        _DisplayColor(color);
+                    var color = _bmpBooster.Get(_cursorPos.X, _cursorPos.Y);
+                    _DisplayColor(color);
 
-                        _bmpBooster.Dispose();
-                        _bmpBooster = null;
-                    }
+                    _bmpBooster.Dispose();
+                    _bmpBooster = null;
                 }
             }
             catch { }
         }
 
         #endregion
-
 
         #region Display data
 
@@ -126,17 +117,17 @@ namespace ImageGlass {
             lblPixel.BackColor = Color.Transparent;
             panelColor.BackColor = color;
 
-            //RGBA color -----------------------------------------------
+            // RGBA color -----------------------------------------------
             if (Configs.IsColorPickerRGBA) {
                 lblRGB.Text = "RGBA:";
-                txtRGB.Text = string.Format("{0}, {1}, {2}, {3}", color.R, color.G, color.B, Math.Round(color.A / 255.0, 3));
+                txtRGB.Text = $"{color.R}, {color.G}, {color.B}, {Math.Round(color.A / 255.0, 3)}";
             }
             else {
                 lblRGB.Text = "RGB:";
-                txtRGB.Text = string.Format("{0}, {1}, {2}", color.R, color.G, color.B);
+                txtRGB.Text = $"{color.R}, {color.G}, {color.B}";
             }
 
-            //HEXA color -----------------------------------------------
+            // HEXA color -----------------------------------------------
             if (Configs.IsColorPickerHEXA) {
                 lblHEX.Text = "HEXA:";
                 txtHEX.Text = Theme.ConvertColorToHEX(color);
@@ -146,19 +137,30 @@ namespace ImageGlass {
                 txtHEX.Text = Theme.ConvertColorToHEX(color, true);
             }
 
-            //CMYK color -----------------------------------------------
+            // CMYK color -----------------------------------------------
             var cmyk = Theme.ConvertColorToCMYK(color);
-            txtCMYK.Text = string.Format("{0}%, {1}%, {2}%, {3}%", cmyk[0], cmyk[1], cmyk[2], cmyk[3]);
+            txtCMYK.Text = $"{cmyk[0]}%, {cmyk[1]}%, {cmyk[2]}%, {cmyk[3]}%";
 
-            //HSLA color -----------------------------------------------
+            // HSLA color -----------------------------------------------
             var hsla = Theme.ConvertColorToHSLA(color);
             if (Configs.IsColorPickerHSLA) {
                 lblHSL.Text = "HSLA:";
-                txtHSL.Text = string.Format("{0}, {1}%, {2}%, {3}", hsla[0], hsla[1], hsla[2], hsla[3]);
+                txtHSL.Text = $"{hsla[0]}, {hsla[1]}%, {hsla[2]}%, {hsla[3]}";
             }
             else {
                 lblHSL.Text = "HSL:";
-                txtHSL.Text = string.Format("{0}, {1}%, {2}%", hsla[0], hsla[1], hsla[2]);
+                txtHSL.Text = $"{hsla[0]}, {hsla[1]}%, {hsla[2]}%";
+            }
+
+            // HSVA color -----------------------------------------------
+            var hsva = Theme.ConvertColorToHSVA(color);
+            if (Configs.IsColorPickerHSVA) {
+                lblHSV.Text = "HSVA:";
+                txtHSV.Text = $"{hsva[0]}, {hsva[1]}%, {hsva[2]}%, {hsva[3]}";
+            }
+            else {
+                lblHSV.Text = "HSV:";
+                txtHSV.Text = $"{hsva[0]}, {hsva[1]}%, {hsva[2]}%";
             }
 
 
@@ -172,7 +174,6 @@ namespace ImageGlass {
             txtHEX.Text = string.Empty;
         }
 
-
         private void ColorTextbox_Click(object sender, EventArgs e) {
             var txt = (TextBox)sender;
             txt.SelectAll();
@@ -182,7 +183,6 @@ namespace ImageGlass {
             this.Activate();
         }
 
-
         private void BtnClose_Click(object sender, EventArgs e) {
             Configs.IsShowColorPickerOnStartup = false;
             this.Close();
@@ -190,11 +190,9 @@ namespace ImageGlass {
 
         #endregion
 
-
         #region Other Form Events
         private void frmColorPicker_KeyDown(object sender, KeyEventArgs e) {
             // lblPixel.Text = e.KeyCode.ToString();
-
 
             #region ESC or CTRL + SHIFT + K
             // ESC or CTRL + SHIFT + K --------------------------------------------------------
@@ -207,13 +205,11 @@ namespace ImageGlass {
             #endregion
         }
 
-
         private void frmColorPicker_FormClosing(object sender, FormClosingEventArgs e) {
             Local.IsColorPickerToolOpening = false;
 
             Local.ForceUpdateActions |= ForceUpdateActions.COLOR_PICKER_MENU;
         }
-
 
         /// <summary>
         /// Apply theme
@@ -245,7 +241,6 @@ namespace ImageGlass {
 
             _ResetColor();
 
-
             lblRGB.Text = "RGB:";
             lblHEX.Text = "HEX:";
             lblHSL.Text = "HSL:";
@@ -259,7 +254,6 @@ namespace ImageGlass {
             if (Configs.IsColorPickerHSLA) {
                 lblHSL.Text = "HSLA:";
             }
-
         }
 
         #endregion

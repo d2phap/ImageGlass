@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2020 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Copyright (C) 2021 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,8 +33,8 @@ namespace ImageGlass.Library {
         /// <param name="location">The location of form to check</param>
         /// <returns></returns>
         public static bool IsOnScreen(Point location) {
-            Screen[] screens = Screen.AllScreens;
-            foreach (Screen screen in screens) {
+            var screens = Screen.AllScreens;
+            foreach (var screen in screens) {
                 if (screen.WorkingArea.Contains(location)) {
                     return true;
                 }
@@ -50,8 +50,8 @@ namespace ImageGlass.Library {
         /// <param name="bounds"></param>
         /// <returns></returns>
         public static bool IsAnyPartOnScreen(Rectangle bounds) {
-            Screen[] screens = Screen.AllScreens;
-            foreach (Screen screen in screens) {
+            var screens = Screen.AllScreens;
+            foreach (var screen in screens) {
                 if (screen.WorkingArea.IntersectsWith(bounds)) {
                     return true;
                 }
@@ -61,7 +61,7 @@ namespace ImageGlass.Library {
         }
 
         [DllImport("shlwapi.dll", CharSet = CharSet.Auto)]
-        static extern bool PathCompactPathEx([Out] StringBuilder pszOut, string szPath, int cchMax, int dwFlags);
+        private static extern bool PathCompactPathEx([Out] StringBuilder pszOut, string szPath, int cchMax, int dwFlags);
 
         /// <summary>
         /// Shorten and ellipsis the path
@@ -70,11 +70,10 @@ namespace ImageGlass.Library {
         /// <param name="length"></param>
         /// <returns></returns>
         public static string ShortenPath(string path, int length) {
-            StringBuilder sb = new StringBuilder(length);
+            var sb = new StringBuilder(length);
             PathCompactPathEx(sb, path, length, 0);
             return sb.ToString();
         }
-
 
         /// <summary>
         /// Get distinct directories list from paths list
@@ -82,14 +81,16 @@ namespace ImageGlass.Library {
         /// <param name="pathList">Paths list</param>
         /// <returns></returns>
         public static List<string> GetDistinctDirsFromPaths(IEnumerable<string> pathList) {
-            if (pathList.Count() == 0) return new List<string>();
+            if (!pathList.Any()) {
+                return new List<string>();
+            }
 
             var hashedDirsList = new HashSet<string>();
 
             foreach (var path in pathList) {
                 if (File.Exists(path)) {
                     string dir;
-                    if (Path.GetExtension(path).ToLower() == ".lnk") {
+                    if (string.Equals(Path.GetExtension(path), ".lnk", System.StringComparison.CurrentCultureIgnoreCase)) {
                         var shortcutPath = Shortcuts.GetTargetPathFromShortcut(path);
 
                         // get the DIR path of shortcut target

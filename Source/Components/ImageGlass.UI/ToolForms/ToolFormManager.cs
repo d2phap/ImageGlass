@@ -29,8 +29,7 @@ namespace ImageGlass.UI.ToolForms {
         /// <summary>
         /// The list of ToolForms to manage
         /// </summary>
-        private static List<ToolForm> _formList = new List<ToolForm>();
-
+        private readonly List<ToolForm> _formList = new();
 
         /// <summary>
         /// Add a new ToolForm to the manager
@@ -40,12 +39,10 @@ namespace ImageGlass.UI.ToolForms {
             _formList.Add(client);
         }
 
-
         /// <summary>
         /// How many pixels to leave between snapped forms (top/bottom)
         /// </summary>
-        const int MARGIN = 10;
-
+        private const int MARGIN = 10;
 
         /// <summary>
         /// Snap the provided ToolForm to the "nearest" Toolform in the list
@@ -54,9 +51,10 @@ namespace ImageGlass.UI.ToolForms {
         public void SnapToNearest(ToolForm formToSnap) {
             // NOTE: merely finds the "other" form
             // TODO: when more than 2 toolforms possible, this needs to find the "nearest"
-            var destForm = _formList.FirstOrDefault(x => x != formToSnap);
-            if (destForm == null)
+            var destForm = _formList.Find(x => x != formToSnap);
+            if (destForm == null) {
                 return;
+            }
 
             // snap to top/bottom as appropriate
             if (destForm.Top > formToSnap.Bottom - MARGIN) {
@@ -66,8 +64,9 @@ namespace ImageGlass.UI.ToolForms {
             else {
                 // snapping form BELOW or OVERLAP other form
                 if (destForm.Bottom + MARGIN < formToSnap.Top ||
-                    formToSnap.Top < destForm.Bottom + MARGIN)
+                    formToSnap.Top < destForm.Bottom + MARGIN) {
                     formToSnap.Top = destForm.Bottom + MARGIN;
+                }
             }
 
             // snap to left/right edge as appropriate
@@ -81,7 +80,6 @@ namespace ImageGlass.UI.ToolForms {
             }
         }
 
-
         /// <summary>
         /// Move all ToolForms together (preserving relative positions)
         /// </summary>
@@ -91,7 +89,7 @@ namespace ImageGlass.UI.ToolForms {
             // TODO: if more than 2 toolforms possible, may wish to mark a set as 'snapped' instead of ALL
 
             foreach (var toolForm in _formList) {
-                Point delta = new Point(toolForm.Location.X - lastLoc.X, toolForm.Location.Y - lastLoc.Y);
+                var delta = new Point(toolForm.Location.X - lastLoc.X, toolForm.Location.Y - lastLoc.Y);
                 toolForm.Location = new Point(delta.X + currLoc.X,
                     delta.Y + currLoc.Y);
                 toolForm.Update();
