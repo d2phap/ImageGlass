@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="id-ID" langName="Bahasa Indonesia" author="ImageGlass community" description="Indonesian" minVersion="7.6.4.30" isRightToLeftLayout="No"/>
+    <Info langCode="id-ID" langName="Bahasa Indonesia" author="Nicedward (dayat219onlyme)" description="Indonesian" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Beberapa pengaturan tidak kompatibel dengan ImageGlass anda {0}. Sangat dianjurkan untuk memperbaruinya sebelum melanjutkan.&#10;&#10;- Klik Ya untuk mempelajari catatan perubahan.&#10;- Klik Tidak untuk menjalankan ImageGlass dengan pengaturan standar."/>
+      <Item key="_.ImageOrderBy._Name" value="Nama (default)"/>
+      <Item key="_.ImageOrderBy._Length" value="Panjangnya"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Waktu penciptaan"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Waktu akses terakhir"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Waktu menulis terakhir"/>
+      <Item key="_.ImageOrderBy._Extension" value="Ekstensi"/>
+      <Item key="_.ImageOrderBy._Random" value="Acak"/>
+      <Item key="_.ImageOrderType._Asc" value="Sortir naik"/>
+      <Item key="_.ImageOrderType._Desc" value="Sortir turun"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Tidak ada"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Minimalkan"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Tutup"/>
       <Item key="frmMain.mnuMainFile" value="Berkas"/>
       <Item key="frmMain.mnuMainOpenFile" value="Buka file…"/>
       <Item key="frmMain.mnuMainOpenImageData" value="Buka data gambar dari clipboard"/>
@@ -46,6 +58,7 @@
       <Item key="frmMain.mnuMainChannels._Blue" value="Biru"/>
       <Item key="frmMain.mnuMainChannels._Black" value="Hitam"/>
       <Item key="frmMain.mnuMainChannels._Alpha" value="Alfa"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Memuat urutan"/>
       <Item key="frmMain.mnuMainRotateLeft" value="Putar ke kiri"/>
       <Item key="frmMain.mnuMainRotateRight" value="Putar ke kanan"/>
       <Item key="frmMain.mnuMainFlipHorz" value="Berbalik Horizontal"/>
@@ -82,6 +95,7 @@
       <Item key="frmMain.mnuMainColorPicker" value="Pemilih warna"/>
       <Item key="frmMain.mnuMainPageNav" value="Navigasi halaman"/>
       <Item key="frmMain.mnuMainCrop" value="Memangkas"/>
+      <Item key="frmMain.mnuExifTool" value="Alat Exif"/>
       <Item key="frmMain.mnuMainSettings" value="Pengaturan…"/>
       <Item key="frmMain.mnuMainHelp" value="Bantuan"/>
       <Item key="frmMain.mnuMainAbout" value="Tentang"/>
@@ -103,7 +117,7 @@
       <Item key="frmMain._DeleteDialogText" value="Hapus file '{0}' ?"/>
       <Item key="frmMain._DeleteDialogTitle" value="Konfirmasi"/>
       <Item key="frmMain._ExtractPageText" value="Mengekstrak gambar halaman. Silakan pilih folder keluaran."/>
-      <Item key="frmMain._FullScreenMessage" value="Tekan ALT+ENTER untuk keluar mode layar penuh."/>
+      <Item key="frmMain._FullScreenMessage" value="Tekan {0} untuk keluar mode layar penuh."/>
       <Item key="frmMain._SlideshowMessage" value="Tekan ESC untuk keluar slideshow.&#10; Klik kanan untuk.membuka menu konteks."/>
       <Item key="frmMain._SlideshowMessagePause" value="Slideshow dijeda"/>
       <Item key="frmMain._SlideshowMessageResume" value="Slideshow dilanjutkan"/>
@@ -125,6 +139,7 @@
       <Item key="frmMain._SetBackground_Success" value="Gambar latar belakang berhasil ditetapkan"/>
       <Item key="frmMain._PageExtractComplete" value="Ekstraksi halaman selesai."/>
       <Item key="frmMain._Frameless" value="Tekan SHIFT untuk memindahkan jendela."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Papan klip tidak berisi data gambar."/>
       <Item key="frmAbout.lblSlogant" value="Penampil gambar yang ringan dan serbaguna"/>
       <Item key="frmAbout.lblInfo" value="Informasi"/>
       <Item key="frmAbout.lblComponent" value="Komponen"/>
@@ -173,16 +188,8 @@
       <Item key="frmSetting.chkLoopViewer" value="LIhatlah kembali penampil ke gambar pertama saat mencapai akhir daftar"/>
       <Item key="frmSetting.chkIsCenterImage" value="Pusatkan gambar tampilan"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Urutan pemuatan gambar"/>
-      <Item key="frmSetting.cmbImageOrder._Name" value="Nama (default)"/>
-      <Item key="frmSetting.cmbImageOrder._Length" value="Panjangnya"/>
-      <Item key="frmSetting.cmbImageOrder._CreationTime" value="Waktu penciptaan"/>
-      <Item key="frmSetting.cmbImageOrder._LastAccessTime" value="Waktu akses terakhir"/>
-      <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="Waktu menulis terakhir"/>
-      <Item key="frmSetting.cmbImageOrder._Extension" value="Ekstensi"/>
-      <Item key="frmSetting.cmbImageOrder._Random" value="Acak"/>
-      <Item key="frmSetting.cmbImageOrderType._Asc" value="Sortir naik"/>
-      <Item key="frmSetting.cmbImageOrderType._Desc" value="Sortir turun"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Pakai sortir Windows File Explorer bila memungkinkan"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Kelompokkan gambar berdasarkan direktori"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Jumlah gambar yang di-cache oleh ImageBooster (dalam satu arah)"/>
       <Item key="frmSetting.lblColorManagement" value="Manajemen warna"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Terpakan juga untuk gambar tanpa profil warna tersendiri"/>
@@ -219,6 +226,8 @@
       <Item key="frmSetting.lblSlideshowIntervalTo" value="ke"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Simpan gambar tampilan setelah diputar"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Pilih aplikasi untuk mengedit gambar"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="Setelah membuka aplikasi pengeditan:"/>
+      <Item key="frmSetting.lblImageQuality" value="Kualitas gambar:"/>
       <Item key="frmSetting.btnEditEditExt" value="Sunting…"/>
       <Item key="frmSetting.btnEditResetExt" value="Atur ulang ke standar"/>
       <Item key="frmSetting.btnEditEditAllExt" value="Sunting semua ekstensi…"/>
@@ -227,17 +236,21 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Nama aplikasi"/>
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Jalur aplikasi"/>
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Argumen aplikasi"/>
-      <Item key="frmSetting.chkSaveModifyDate" value="Pertahankan Tanggal Perubahan gambar pada penyimpanan"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Pertahankan tanggal modifikasi gambar saat disimpan"/>
       <Item key="frmSetting.lblSupportedExtension" value="Format yang disediakan: {0}"/>
       <Item key="frmSetting.lnkOpenFileAssoc" value="Buka Asosiasi Tipe File"/>
       <Item key="frmSetting.btnAddNewExt" value="Tambah…"/>
       <Item key="frmSetting.btnRegisterExt" value="Atur sebagai penampil foto utama…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Batalkan pendaftaran ekstensi"/>
       <Item key="frmSetting.btnDeleteExt" value="Hapus"/>
       <Item key="frmSetting.btnResetExt" value="Atur ulang ke standar"/>
       <Item key="frmSetting._RegisterWebToApp_Error" value="Tidak dapat mendaftarkan penautan Web-ke-Aplikasi"/>
       <Item key="frmSetting._RegisterAppExtensions_Error" value="Tidak bisa mendaftarkan ekstensi file pada aplikasi ImageGlass"/>
       <Item key="frmSetting._RegisterAppExtensions_Success" value="Semua ekstensi file berhasil terdaftar! Untuk mengatur ImageGlass sebagai penampil foto standar, silakan buka Windows Settings &gt; Default Apps, dan pilih aplikasi ImageGlass di bawah bagian Photo Viewer."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Tidak dapat menghapus ekstensi file terdaftar dari aplikasi ImageGlass"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Semua ekstensi file berhasil dibatalkan pendaftarannya!"/>
       <Item key="frmSetting.lblToolbarPosition" value="Posisi Toolbar:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Ukuran ikon bilah alat:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Atas"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Bawah"/>
       <Item key="frmSetting._separator" value="Pemisah"/>
@@ -249,11 +262,16 @@
       <Item key="frmSetting.btnMoveRight._Tooltip" value="Tambah tombol terpilih ke bilah alat"/>
       <Item key="frmSetting.btnMoveUp._Tooltip" value="Pindahkan tombol terpilih ke atas"/>
       <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Tengahkan tombol bilah alat secara horizontal pada jendela"/>
-      <Item key="frmSetting.chkColorUseRGBA" value="Gunakan format RGBA"/>
-      <Item key="frmSetting.chkColorUseHEXA" value="Gunakan format HEX dengan alpha"/>
-      <Item key="frmSetting.chkColorUseHSLA" value="Gunakan format HSLA"/>
+      <Item key="frmSetting.chkHideTooltips" value="Sembunyikan keterangan bilah alat"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="Gunakan format RGB dengan nilai Alfa"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="Gunakan format HEX dengan nilai Alfa"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="Gunakan format HSL dengan nilai Alfa"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="Gunakan format HSV dengan nilai Alfa"/>
       <Item key="frmSetting.lblDefaultColorCode" value="Format kode warna standar saat menyalin"/>
       <Item key="frmSetting.chkShowPageNavAuto" value="Otomatis tampilkan alat navigasi halaman untuk gambar multi-halaman"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Jaga agar alat Exif selalu di atas"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Pilih berkas alat Exif"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Alat Exif tidak ada atau tidak valid: &#10;{0}"/>
       <Item key="frmSetting.lblLanguageText" value="Bahasa terpasang"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Segarkan"/>
       <Item key="frmSetting.lblLanguageWarning" value="Paket bahasa ini mungkin tidak sesuai {0}"/>
@@ -323,7 +341,12 @@
       <Item key="frmCrop.btnSave" value="Simpan"/>
       <Item key="frmCrop.btnSaveAs" value="Simpan sebagai…"/>
       <Item key="frmCrop.btnCopy" value="Salin"/>
-      <Item key="frmCrop.btnClear" value="Bersihkan"/>
+      <Item key="frmCrop.btnReset" value="Setel ulang"/>
+      <Item key="FrmExifTool.clnProperty" value="Properti"/>
+      <Item key="FrmExifTool.clnValue" value="Nilai"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Salin nilai"/>
+      <Item key="FrmExifTool.btnExport" value="Ekspor…"/>
+      <Item key="FrmExifTool.btnClose" value="Tutup"/>
     </Content>
   </Language>
 </ImageGlass>

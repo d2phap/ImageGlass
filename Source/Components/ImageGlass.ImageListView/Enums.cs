@@ -17,14 +17,12 @@
 
 using System;
 
-namespace ImageGlass.ImageListView
-{
+namespace ImageGlass.ImageListView {
     #region QueuedBackgroundWorker Public Enums
     /// <summary>
     /// Represents the mode in which the work items of <see cref="QueuedBackgroundWorker"/> are processed.
     /// </summary>
-    public enum ProcessingMode
-    {
+    public enum ProcessingMode {
         /// <summary>
         /// Items are processed in the order they are received.
         /// </summary>
@@ -40,8 +38,7 @@ namespace ImageGlass.ImageListView
     /// <summary>
     /// Represents the cache mode.
     /// </summary>
-    public enum CacheMode
-    {
+    public enum CacheMode {
         /// <summary>
         /// Item thumbnails will be generated only when requested.
         /// </summary>
@@ -55,8 +52,7 @@ namespace ImageGlass.ImageListView
     /// <summary>
     /// Represents the cache state of a thumbnail image.
     /// </summary>
-    public enum CacheState
-    {
+    public enum CacheState {
         /// <summary>
         /// The item is either not cached or it is in the cache queue.
         /// </summary>
@@ -73,8 +69,7 @@ namespace ImageGlass.ImageListView
     /// <summary>
     /// Represents the cache thread.
     /// </summary>
-    public enum CacheThread
-    {
+    public enum CacheThread {
         /// <summary>
         /// The cache thread responsible for generating item image thumbnails.
         /// </summary>
@@ -88,8 +83,7 @@ namespace ImageGlass.ImageListView
     /// Represents the visual state of an image list column.
     /// </summary>
     [Flags]
-    public enum ColumnState
-    {
+    public enum ColumnState {
         /// <summary>
         /// The column is not hovered.
         /// </summary>
@@ -114,8 +108,7 @@ namespace ImageGlass.ImageListView
     /// <summary>
     /// Represents the type of information displayed in an image list view column.
     /// </summary>
-    public enum ColumnType
-    {
+    public enum ColumnType {
         /// <summary>
         /// A custom text column.
         /// </summary>
@@ -213,8 +206,7 @@ namespace ImageGlass.ImageListView
     /// <summary>
     /// Represents the order by which items are drawn.
     /// </summary>
-    public enum ItemDrawOrder
-    {
+    public enum ItemDrawOrder {
         /// <summary>
         /// Draw order is determined by item insertion index.
         /// </summary>
@@ -252,8 +244,7 @@ namespace ImageGlass.ImageListView
     /// Represents the visual state of an image list view item.
     /// </summary>
     [Flags]
-    public enum ItemState
-    {
+    public enum ItemState {
         /// <summary>
         /// The item is neither selected nor hovered.
         /// </summary>
@@ -278,8 +269,7 @@ namespace ImageGlass.ImageListView
     /// <summary>
     /// Determines the visibility of an item.
     /// </summary>
-    public enum ItemVisibility
-    {
+    public enum ItemVisibility {
         /// <summary>
         /// The item is not visible.
         /// </summary>
@@ -296,8 +286,7 @@ namespace ImageGlass.ImageListView
     /// <summary>
     /// Represents the embedded thumbnail extraction behavior.
     /// </summary>
-    public enum UseEmbeddedThumbnails
-    {
+    public enum UseEmbeddedThumbnails {
         /// <summary>
         /// Always creates the thumbnail from the embedded thumbnail.
         /// </summary>
@@ -315,8 +304,7 @@ namespace ImageGlass.ImageListView
     /// <summary>
     /// Represents Windows Imaging Component usage option.
     /// </summary>
-    public enum UseWIC
-    {
+    public enum UseWIC {
         /// <summary>
         /// Uses WIC if when possible.
         /// </summary>
@@ -337,8 +325,7 @@ namespace ImageGlass.ImageListView
     /// <summary>
     /// Represents the view mode of the image list view.
     /// </summary>
-    public enum View
-    {
+    public enum View {
         /// <summary>
         /// Displays columns with image details. Thumbnail images
         /// are not displayed. The view can be scrolled vertically.
@@ -363,8 +350,7 @@ namespace ImageGlass.ImageListView
     /// <summary>
     /// Specifies how items in a list are sorted.
     /// </summary>
-    public enum SortOrder
-    {
+    public enum SortOrder {
         /// <summary>
         /// The items are not sorted.
         /// </summary>
@@ -392,8 +378,7 @@ namespace ImageGlass.ImageListView
     /// <summary>
     /// Represents the type of image in the cache manager.
     /// </summary>
-    internal enum CachedImageType
-    {
+    internal enum CachedImageType {
         /// <summary>
         /// Thumbnail image.
         /// </summary>
@@ -410,8 +395,7 @@ namespace ImageGlass.ImageListView
     /// <summary>
     /// Represents the item highlight state during mouse selection.
     /// </summary>
-    internal enum ItemHighlightState
-    {
+    internal enum ItemHighlightState {
         /// <summary>
         /// Item is not highlighted.
         /// </summary>

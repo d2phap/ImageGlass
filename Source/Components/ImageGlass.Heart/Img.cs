@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2020 DUONG DIEU PHAP
+Copyright (C) 2021 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -17,15 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageMagick;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading.Tasks;
+using ImageMagick;
 
 namespace ImageGlass.Heart {
-    public class Img: IDisposable {
-
+    public sealed class Img: IDisposable {
         #region PUBLIC PROPERTIES
 
         /// <summary>
@@ -33,60 +32,48 @@ namespace ImageGlass.Heart {
         /// </summary>
         public Exception Error { get; private set; } = null;
 
-
         /// <summary>
         /// Gets the value indicates that image loading is done
         /// </summary>
-        public bool IsDone { get; private set; } = false;
-
+        public bool IsDone { get; set; } = false;
 
         /// <summary>
         /// Gets, sets filename of Img
         /// </summary>
         public string Filename { get; set; } = string.Empty;
 
-
         /// <summary>
         /// Gets, sets Bitmap data
         /// </summary>
         public Bitmap Image { get; set; } = null;
 
-
         /// <summary>
         /// Gets, sets number of image pages
         /// </summary>
-        public int PageCount { get; private set; } = 0;
-
+        public int PageCount { get; set; } = 0;
 
         /// <summary>
         /// Gets, sets the active page index
         /// </summary>
-        public int ActivePageIndex { get; private set; } = 0;
-
+        public int ActivePageIndex { get; set; } = 0;
 
         /// <summary>
         /// Gets the Exif profile of image
         /// </summary>
-        public IExifProfile Exif { get; protected set; } = null;
-
+        public IExifProfile Exif { get; set; } = null;
 
         /// <summary>
         /// Gets the color profile of image
         /// </summary>
-        public IColorProfile ColorProfile { get; protected set; } = null;
+        public IColorProfile ColorProfile { get; set; } = null;
 
         #endregion
-
-
 
         /// <summary>
         /// The Img class contain image data
         /// </summary>
         /// <param name="filename">Image filename</param>
-        public Img(string filename) {
-            this.Filename = filename;
-        }
-
+        public Img(string filename) => Filename = filename;
 
         #region PUBLIC FUNCTIONS
 
@@ -94,18 +81,15 @@ namespace ImageGlass.Heart {
         /// Release all resources of Img
         /// </summary>
         public void Dispose() {
-            this.IsDone = false;
-            this.Error = null;
-            this.PageCount = 0;
+            IsDone = false;
+            Error = null;
+            PageCount = 0;
 
-            this.Exif = null;
-            this.ColorProfile = null;
+            Exif = null;
+            ColorProfile = null;
 
-            if (this.Image != null) {
-                this.Image.Dispose();
-            }
+            Image?.Dispose();
         }
-
 
         /// <summary>
         /// Load the image
@@ -117,43 +101,40 @@ namespace ImageGlass.Heart {
         /// <param name="useEmbeddedThumbnail">Use the embeded thumbnail if found</param>
         public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false, int channel = -1, bool useEmbeddedThumbnail = false) {
             // reset done status
-            this.IsDone = false;
+            IsDone = false;
 
             // reset error
-            this.Error = null;
+            Error = null;
 
             try {
                 // load image data
                 var data = await Photo.LoadAsync(
-                    filename: this.Filename,
+                    filename: Filename,
                     size: size,
                     colorProfileName: colorProfileName,
                     isApplyColorProfileForAll: isApplyColorProfileForAll,
                     channel: channel,
                     useEmbeddedThumbnail: useEmbeddedThumbnail
-                );
+                ).ConfigureAwait(true);
 
-                this.Image = data.Image;
-                this.Exif = data.Exif;
-                this.ColorProfile = data.ColorProfile;
+                Image = data.Image;
+                Exif = data.Exif;
+                ColorProfile = data.ColorProfile;
 
-                if (this.Image != null) {
+                if (Image != null) {
                     // Get page count
-                    var dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
-                    this.PageCount = this.Image.GetFrameCount(dim);
+                    var dim = new FrameDimension(Image.FrameDimensionsList[0]);
+                    PageCount = Image.GetFrameCount(dim);
                 }
-                
             }
             catch (Exception ex) {
                 // save the error
-                this.Error = ex;
+                Error = ex;
             }
 
-
             // done loading
-            this.IsDone = true;
+            IsDone = true;
         }
-
 
         /// <summary>
         /// Get thumbnail
@@ -162,40 +143,38 @@ namespace ImageGlass.Heart {
         /// <param name="useEmbeddedThumbnail">Return the embedded thumbnail if required size was not found.</param>
         /// <returns></returns>
         public async Task<Bitmap> GetThumbnailAsync(Size size, bool useEmbeddedThumbnail = true) {
-            return await Photo.GetThumbnailAsync(this.Filename, size, useEmbeddedThumbnail);
+            return await Photo.GetThumbnailAsync(Filename, size, useEmbeddedThumbnail).ConfigureAwait(true);
         }
-
 
         /// <summary>
         /// Sets active page index
         /// </summary>
         /// <param name="index">Page index</param>
         public void SetActivePage(int index) {
-            if (this.Image == null) return;
+            if (Image == null) return;
 
             // Check if page index is greater than upper limit
-            if (index >= this.PageCount)
+            if (index >= PageCount)
                 index = 0;
 
             // Check if page index is less than lower limit
             if (index < 0)
-                index = this.PageCount - 1;
+                index = PageCount - 1;
 
-            this.ActivePageIndex = index;
+            ActivePageIndex = index;
 
             // Set active page index
-            FrameDimension dim = new FrameDimension(this.Image.FrameDimensionsList[0]);
-            this.Image.SelectActiveFrame(dim, this.ActivePageIndex);
+            var dim = new FrameDimension(Image.FrameDimensionsList[0]);
+            Image.SelectActiveFrame(dim, ActivePageIndex);
         }
-
 
         /// <summary>
         /// Save image pages to files
         /// </summary>
         /// <param name="destFolder">The destination folder to save to</param>
         /// <returns></returns>
-        public async Task SaveImagePages(string destFolder) {
-            await Photo.SavePagesAsync(this.Filename, destFolder);
+        public async Task SaveImagePagesAsync(string destFolder) {
+            await Photo.SavePagesAsync(Filename, destFolder).ConfigureAwait(true);
         }
 
         #endregion

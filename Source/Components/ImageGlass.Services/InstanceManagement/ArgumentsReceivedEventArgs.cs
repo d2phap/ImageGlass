@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2020 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Copyright (C) 2021 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,6 +24,6 @@ namespace ImageGlass.Services.InstanceManagement {
     /// Holds a list of arguments given to an application at startup.
     /// </summary>
     public class ArgumentsReceivedEventArgs: EventArgs {
-        public String[] Args { get; set; }
+        public string[] Args { get; set; }
     }
 }

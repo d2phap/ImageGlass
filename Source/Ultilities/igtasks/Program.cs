@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2020 DUONG DIEU PHAP
+Copyright (C) 2021 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ using System;
 using System.Windows.Forms;
 
 namespace adtasks {
-    static class Program {
+    internal static class Program {
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
 
@@ -50,14 +50,13 @@ namespace adtasks {
             Configs.Load();
 
             // Command
-            string topcmd = args[0].ToLower().Trim();
-
+            var topcmd = args[0].ToLower().Trim();
 
             // Set desktop wallpaper
             #region setwallpaper <string imgPath> [int style]
             if (topcmd == "setwallpaper") {
                 //Get image's path
-                string imgPath = args[1];
+                var imgPath = args[1];
                 var style = DesktopWallapaper.Style.Current;
 
                 if (args.Length > 2) {
@@ -70,17 +69,15 @@ namespace adtasks {
             }
             #endregion
 
-
             // Register file associations
             #region regassociations <string exts>
             else if (topcmd == "regassociations") {
                 //get Extensions
-                string exts = args[1];
+                var exts = args[1];
 
                 return Functions.SetRegistryAssociations(exts);
             }
             #endregion
-
 
             // Delete all file associations
             #region delassociations
@@ -90,14 +87,12 @@ namespace adtasks {
             }
             #endregion
 
-
             // Install new language packs
             #region iginstalllang
             else if (topcmd == "iginstalllang") {
                 Functions.InstallLanguagePacks();
             }
             #endregion
-
 
             // Create new language packs
             #region ignewlang
@@ -106,17 +101,15 @@ namespace adtasks {
             }
             #endregion
 
-
             // Edit language packs
             #region igeditlang <string filename>
             else if (topcmd == "igeditlang") {
                 //get Executable file
-                string filename = args[1];
+                var filename = args[1];
 
                 Functions.EditLanguagePacks(filename);
             }
             #endregion
-
 
             // Register URI Scheme for Web-to-App linking
             #region reg-uri-scheme
@@ -125,7 +118,6 @@ namespace adtasks {
             }
             #endregion
 
-
             // Delete URI Scheme registry
             #region del-uri-scheme
             else if (topcmd == "del-uri-scheme") {
@@ -133,11 +125,7 @@ namespace adtasks {
             }
             #endregion
 
-
             return 0;
         }
-
-
-
     }
 }

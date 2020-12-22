@@ -18,20 +18,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
-namespace ImageGlass.ImageListView
-{
-    public partial class ImageListView
-    {
+namespace ImageGlass.ImageListView {
+    public partial class ImageListView {
         /// <summary>
         /// Represents an overridable class for image list view renderers.
         /// </summary>
-        public class ImageListViewRenderer : IDisposable
-        {
+        public class ImageListViewRenderer: IDisposable {
             #region Constants
             /// <summary>
             /// Represents the time in milliseconds after which the control deems to be needing a refresh.
@@ -94,8 +91,7 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Initializes a new instance of the ImageListViewRenderer class.
             /// </summary>
-            public ImageListViewRenderer()
-            {
+            public ImageListViewRenderer() {
                 creatingGraphics = false;
                 disposed = false;
                 Clip = true;
@@ -109,14 +105,12 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Represents the paramaters required to draw an item.
             /// </summary>
-            private struct DrawItemParams
-            {
+            private struct DrawItemParams {
                 public ImageListViewItem Item;
                 public ItemState State;
                 public Rectangle Bounds;
 
-                public DrawItemParams(ImageListViewItem item, ItemState state, Rectangle bounds)
-                {
+                public DrawItemParams(ImageListViewItem item, ItemState state, Rectangle bounds) {
                     Item = item;
                     State = state;
                     Bounds = bounds;
@@ -128,12 +122,10 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Compares items by the draw order.
             /// </summary>
-            private class ItemDrawOrderComparer : IComparer<DrawItemParams>
-            {
+            private class ItemDrawOrderComparer: IComparer<DrawItemParams> {
                 private ItemDrawOrder mDrawOrder;
 
-                public ItemDrawOrderComparer(ItemDrawOrder drawOrder)
-                {
+                public ItemDrawOrderComparer(ItemDrawOrder drawOrder) {
                     mDrawOrder = drawOrder;
                 }
 
@@ -145,8 +137,7 @@ namespace ImageGlass.ImageListView
                 /// <returns>1 if the first item should be drawn first, 
                 /// -1 if the second item should be drawn first,
                 /// 0 if the two items can be drawn in any order.</returns>
-                public int Compare(DrawItemParams param1, DrawItemParams param2)
-                {
+                public int Compare(DrawItemParams param1, DrawItemParams param2) {
                     if (ReferenceEquals(param1, param2))
                         return 0;
                     if (ReferenceEquals(param1.Item, param2.Item))
@@ -154,16 +145,13 @@ namespace ImageGlass.ImageListView
 
                     int comparison = 0;
 
-                    if (mDrawOrder == ItemDrawOrder.ItemIndex)
-                    {
+                    if (mDrawOrder == ItemDrawOrder.ItemIndex) {
                         return CompareByIndex(param1, param2);
                     }
-                    else if (mDrawOrder == ItemDrawOrder.ZOrder)
-                    {
+                    else if (mDrawOrder == ItemDrawOrder.ZOrder) {
                         return CompareByZOrder(param1, param2);
                     }
-                    else if (mDrawOrder == ItemDrawOrder.NormalSelectedHovered)
-                    {
+                    else if (mDrawOrder == ItemDrawOrder.NormalSelectedHovered) {
                         comparison = -CompareByHovered(param1, param2);
                         if (comparison != 0) return comparison;
                         comparison = -CompareBySelected(param1, param2);
@@ -171,8 +159,7 @@ namespace ImageGlass.ImageListView
                         comparison = -CompareByNormal(param1, param2);
                         if (comparison != 0) return comparison;
                     }
-                    else if (mDrawOrder == ItemDrawOrder.NormalHoveredSelected)
-                    {
+                    else if (mDrawOrder == ItemDrawOrder.NormalHoveredSelected) {
                         comparison = -CompareBySelected(param1, param2);
                         if (comparison != 0) return comparison;
                         comparison = -CompareByHovered(param1, param2);
@@ -180,8 +167,7 @@ namespace ImageGlass.ImageListView
                         comparison = -CompareByNormal(param1, param2);
                         if (comparison != 0) return comparison;
                     }
-                    else if (mDrawOrder == ItemDrawOrder.SelectedNormalHovered)
-                    {
+                    else if (mDrawOrder == ItemDrawOrder.SelectedNormalHovered) {
                         comparison = -CompareByHovered(param1, param2);
                         if (comparison != 0) return comparison;
                         comparison = -CompareByNormal(param1, param2);
@@ -189,8 +175,7 @@ namespace ImageGlass.ImageListView
                         comparison = -CompareBySelected(param1, param2);
                         if (comparison != 0) return comparison;
                     }
-                    else if (mDrawOrder == ItemDrawOrder.SelectedHoveredNormal)
-                    {
+                    else if (mDrawOrder == ItemDrawOrder.SelectedHoveredNormal) {
                         comparison = -CompareByNormal(param1, param2);
                         if (comparison != 0) return comparison;
                         comparison = -CompareByHovered(param1, param2);
@@ -198,8 +183,7 @@ namespace ImageGlass.ImageListView
                         comparison = -CompareBySelected(param1, param2);
                         if (comparison != 0) return comparison;
                     }
-                    else if (mDrawOrder == ItemDrawOrder.HoveredNormalSelected)
-                    {
+                    else if (mDrawOrder == ItemDrawOrder.HoveredNormalSelected) {
                         comparison = -CompareBySelected(param1, param2);
                         if (comparison != 0) return comparison;
                         comparison = -CompareByNormal(param1, param2);
@@ -207,8 +191,7 @@ namespace ImageGlass.ImageListView
                         comparison = -CompareByHovered(param1, param2);
                         if (comparison != 0) return comparison;
                     }
-                    else if (mDrawOrder == ItemDrawOrder.HoveredSelectedNormal)
-                    {
+                    else if (mDrawOrder == ItemDrawOrder.HoveredSelectedNormal) {
                         comparison = -CompareByNormal(param1, param2);
                         if (comparison != 0) return comparison;
                         comparison = -CompareBySelected(param1, param2);
@@ -229,8 +212,7 @@ namespace ImageGlass.ImageListView
                 /// <summary>
                 /// Compares items by their index property.
                 /// </summary>
-                private int CompareByIndex(DrawItemParams param1, DrawItemParams param2)
-                {
+                private int CompareByIndex(DrawItemParams param1, DrawItemParams param2) {
                     if (param1.Item.Index < param2.Item.Index)
                         return -1;
                     else if (param1.Item.Index > param2.Item.Index)
@@ -241,8 +223,7 @@ namespace ImageGlass.ImageListView
                 /// <summary>
                 /// Compares items by their zorder property.
                 /// </summary>
-                private int CompareByZOrder(DrawItemParams param1, DrawItemParams param2)
-                {
+                private int CompareByZOrder(DrawItemParams param1, DrawItemParams param2) {
                     if (param1.Item.ZOrder < param2.Item.ZOrder)
                         return -1;
                     else if (param1.Item.ZOrder > param2.Item.ZOrder)
@@ -253,8 +234,7 @@ namespace ImageGlass.ImageListView
                 /// <summary>
                 /// Compares items by their neutral state.
                 /// </summary>
-                private int CompareByNormal(DrawItemParams param1, DrawItemParams param2)
-                {
+                private int CompareByNormal(DrawItemParams param1, DrawItemParams param2) {
                     if (param1.State == ItemState.None && param2.State != ItemState.None)
                         return -1;
                     else if (param1.State != ItemState.None && param2.State == ItemState.None)
@@ -265,8 +245,7 @@ namespace ImageGlass.ImageListView
                 /// <summary>
                 /// Compares items by their selected state.
                 /// </summary>
-                private int CompareBySelected(DrawItemParams param1, DrawItemParams param2)
-                {
+                private int CompareBySelected(DrawItemParams param1, DrawItemParams param2) {
                     if ((param1.State & ItemState.Selected) == ItemState.Selected &&
                         (param2.State & ItemState.Selected) != ItemState.Selected)
                         return -1;
@@ -279,8 +258,7 @@ namespace ImageGlass.ImageListView
                 /// <summary>
                 /// Compares items by their hovered state.
                 /// </summary>
-                private int CompareByHovered(DrawItemParams param1, DrawItemParams param2)
-                {
+                private int CompareByHovered(DrawItemParams param1, DrawItemParams param2) {
                     if ((param1.State & ItemState.Hovered) == ItemState.Hovered)
                         return -1;
                     else if ((param2.State & ItemState.Hovered) == ItemState.Hovered)
@@ -291,8 +269,7 @@ namespace ImageGlass.ImageListView
                 /// <summary>
                 /// Compares items by their focused state.
                 /// </summary>
-                private int CompareByFocused(DrawItemParams param1, DrawItemParams param2)
-                {
+                private int CompareByFocused(DrawItemParams param1, DrawItemParams param2) {
                     if ((param1.State & ItemState.Focused) == ItemState.Focused)
                         return -1;
                     else if ((param2.State & ItemState.Focused) == ItemState.Focused)
@@ -310,13 +287,11 @@ namespace ImageGlass.ImageListView
             /// <param name="item">The item to read.</param>
             /// <param name="size">The size of the requested image..</param>
             /// <returns>Item thumbnail of requested size.</returns>
-            public Image GetImageAsync(ImageListViewItem item, Size size)
-            {
+            public Image GetImageAsync(ImageListViewItem item, Size size) {
                 Image img = ImageListView.thumbnailCache.GetRendererImage(item.Guid, size, ImageListView.UseEmbeddedThumbnails,
                     ImageListView.AutoRotateThumbnails, ImageListView.UseWIC == UseWIC.Auto || ImageListView.UseWIC == UseWIC.ThumbnailsOnly);
 
-                if (img == null)
-                {
+                if (img == null) {
                     ImageListView.thumbnailCache.AddToRendererCache(item.Guid, item.mAdaptor, item.VirtualItemKey,
                         size, ImageListView.UseEmbeddedThumbnails, ImageListView.AutoRotateThumbnails,
                         (ImageListView.UseWIC == UseWIC.Auto || ImageListView.UseWIC == UseWIC.ThumbnailsOnly));
@@ -331,8 +306,7 @@ namespace ImageGlass.ImageListView
             /// Renders the border of the control.
             /// </summary>
             /// <param name="g">The graphics to draw on.</param>
-            private void RenderBorder(Graphics g)
-            {
+            private void RenderBorder(Graphics g) {
                 // Background
                 g.ResetClip();
                 DrawBorder(g, new Rectangle(0, 0, ImageListView.Width, ImageListView.Height));
@@ -341,8 +315,7 @@ namespace ImageGlass.ImageListView
             /// Renders the background of the control.
             /// </summary>
             /// <param name="g">The graphics to draw on.</param>
-            private void RenderBackground(Graphics g)
-            {
+            private void RenderBackground(Graphics g) {
                 // Background
                 g.SetClip(ImageListView.layoutManager.ClientArea);
                 DrawBackground(g, ImageListView.layoutManager.ClientArea);
@@ -351,23 +324,19 @@ namespace ImageGlass.ImageListView
             /// Renders the group header.
             /// </summary>
             /// <param name="g">The graphics to draw on.</param>
-            private void RenderGroupHeaders(Graphics g)
-            {
+            private void RenderGroupHeaders(Graphics g) {
                 if (!ImageListView.showGroups)
                     return;
 
-                foreach (ImageListViewGroup group in ImageListView.groups.GetDisplayedGroups())
-                {
-                    if (Clip)
-                    {
+                foreach (ImageListViewGroup group in ImageListView.groups.GetDisplayedGroups()) {
+                    if (Clip) {
                         Rectangle clip = Rectangle.Intersect(group.headerBounds, ImageListView.layoutManager.ItemAreaBounds);
                         g.SetClip(clip);
                     }
                     else
                         g.SetClip(ImageListView.layoutManager.ClientArea);
 
-                    if (ImageListView.View == View.Gallery)
-                    {
+                    if (ImageListView.View == View.Gallery) {
                         g.TranslateTransform(group.headerBounds.Left, group.headerBounds.Bottom);
                         g.RotateTransform(270);
                         DrawGroupHeader(g, group.Name, new Rectangle(0, 0, group.headerBounds.Height, group.headerBounds.Width));
@@ -381,8 +350,7 @@ namespace ImageGlass.ImageListView
             /// Renders the column header.
             /// </summary>
             /// <param name="g">The graphics to draw on.</param>
-            private void RenderColumnHeaders(Graphics g)
-            {
+            private void RenderColumnHeaders(Graphics g) {
                 if (ImageListView.View != View.Details)
                     return;
 
@@ -390,8 +358,7 @@ namespace ImageGlass.ImageListView
                 int y = ImageListView.layoutManager.ColumnHeaderBounds.Top;
                 int h = MeasureColumnHeaderHeight();
                 int lastX = 0;
-                foreach (ImageListViewColumnHeader column in ImageListView.Columns.GetDisplayedColumns())
-                {
+                foreach (ImageListViewColumnHeader column in ImageListView.Columns.GetDisplayedColumns()) {
                     ColumnState state = ColumnState.None;
                     if (ReferenceEquals(ImageListView.navigationManager.HoveredColumn, column))
                         state |= ColumnState.Hovered;
@@ -404,8 +371,7 @@ namespace ImageGlass.ImageListView
                         state |= ColumnState.SortColumn;
 
                     Rectangle bounds = new Rectangle(x, y, column.Width, h);
-                    if (Clip)
-                    {
+                    if (Clip) {
                         Rectangle clip = Rectangle.Intersect(bounds, ImageListView.layoutManager.ClientArea);
                         g.SetClip(clip);
                     }
@@ -419,10 +385,8 @@ namespace ImageGlass.ImageListView
                 }
 
                 // Extender column
-                if (ImageListView.Columns.Count != 0)
-                {
-                    if (lastX < ImageListView.layoutManager.ClientArea.Right)
-                    {
+                if (ImageListView.Columns.Count != 0) {
+                    if (lastX < ImageListView.layoutManager.ClientArea.Right) {
                         Rectangle extender = new Rectangle(
                             lastX,
                             ImageListView.layoutManager.ColumnHeaderBounds.Top,
@@ -435,8 +399,7 @@ namespace ImageGlass.ImageListView
                         DrawColumnExtender(g, extender);
                     }
                 }
-                else
-                {
+                else {
                     Rectangle extender = ImageListView.layoutManager.ColumnHeaderBounds;
                     if (Clip)
                         g.SetClip(extender);
@@ -449,8 +412,7 @@ namespace ImageGlass.ImageListView
             /// Renders the large gallery image.
             /// </summary>
             /// <param name="g">The graphics to draw on.</param>
-            private void RenderGalleryImage(Graphics g)
-            {
+            private void RenderGalleryImage(Graphics g) {
                 if (ImageListView.View != View.Gallery)
                     return;
 
@@ -466,8 +428,7 @@ namespace ImageGlass.ImageListView
                     item = ImageListView.Items[0];
 
                 Image image = null;
-                if (item != null && bounds.Width > 4 && bounds.Height > 4)
-                {
+                if (item != null && bounds.Width > 4 && bounds.Height > 4) {
                     image = GetGalleryImageAsync(item, bounds.Size);
                     if (image == null) image = item.GetCachedImage(CachedImageType.Thumbnail);
                 }
@@ -483,8 +444,7 @@ namespace ImageGlass.ImageListView
             /// Renders the pane.
             /// </summary>
             /// <param name="g">The graphics to draw on.</param>
-            private void RenderPane(Graphics g)
-            {
+            private void RenderPane(Graphics g) {
                 if (ImageListView.View != View.Pane)
                     return;
 
@@ -500,8 +460,7 @@ namespace ImageGlass.ImageListView
                     item = ImageListView.Items[0];
 
                 Image image = null;
-                if (item != null && bounds.Width > 4 && bounds.Height > 4)
-                {
+                if (item != null && bounds.Width > 4 && bounds.Height > 4) {
                     image = GetGalleryImageAsync(item, new Size(bounds.Width, 65535));
                     if (image == null) image = item.GetCachedImage(CachedImageType.Thumbnail);
                 }
@@ -517,8 +476,7 @@ namespace ImageGlass.ImageListView
             /// Renders the items.
             /// </summary>
             /// <param name="g">The graphics to draw on.</param>
-            private void RenderItems(Graphics g)
-            {
+            private void RenderItems(Graphics g) {
                 // Is the control empty?
                 if (ImageListView.Items.Count == 0)
                     return;
@@ -531,8 +489,7 @@ namespace ImageGlass.ImageListView
                     return;
 
                 List<DrawItemParams> drawItemParams = new List<DrawItemParams>();
-                for (int i = ImageListView.layoutManager.FirstPartiallyVisible; i <= ImageListView.layoutManager.LastPartiallyVisible; i++)
-                {
+                for (int i = ImageListView.layoutManager.FirstPartiallyVisible; i <= ImageListView.layoutManager.LastPartiallyVisible; i++) {
                     ImageListViewItem item = ImageListView.Items[i];
 
                     // Determine item state
@@ -563,10 +520,8 @@ namespace ImageGlass.ImageListView
                 drawItemParams.Sort(new ItemDrawOrderComparer(ItemDrawOrder));
 
                 // Draw items
-                foreach (DrawItemParams param in drawItemParams)
-                {
-                    if (Clip)
-                    {
+                foreach (DrawItemParams param in drawItemParams) {
+                    if (Clip) {
                         Rectangle clip = Rectangle.Intersect(param.Bounds, ImageListView.layoutManager.ItemAreaBounds);
                         g.SetClip(clip);
                     }
@@ -577,15 +532,12 @@ namespace ImageGlass.ImageListView
                     DrawItem(g, param.Item, param.State, param.Bounds);
 
                     // Draw sub item overlays
-                    if (ImageListView.View == View.Details)
-                    {
+                    if (ImageListView.View == View.Details) {
                         int xc1 = ImageListView.layoutManager.ColumnHeaderBounds.Left;
                         int colIndex = 0;
-                        foreach (ImageListViewColumnHeader column in ImageListView.Columns.GetDisplayedColumns())
-                        {
+                        foreach (ImageListViewColumnHeader column in ImageListView.Columns.GetDisplayedColumns()) {
                             Rectangle subBounds = new Rectangle(xc1, param.Bounds.Y, column.Width, param.Bounds.Height);
-                            if (Clip)
-                            {
+                            if (Clip) {
                                 Rectangle clip = Rectangle.Intersect(subBounds, ImageListView.layoutManager.ItemAreaBounds);
                                 g.SetClip(clip);
                             }
@@ -602,11 +554,9 @@ namespace ImageGlass.ImageListView
                     }
 
                     // Draw the checkbox and file icon
-                    if (ImageListView.ShowCheckBoxes)
-                    {
+                    if (ImageListView.ShowCheckBoxes) {
                         Rectangle cBounds = ImageListView.layoutManager.GetCheckBoxBounds(param.Item.Index);
-                        if (Clip)
-                        {
+                        if (Clip) {
                             Rectangle clip = Rectangle.Intersect(cBounds, ImageListView.layoutManager.ItemAreaBounds);
                             g.SetClip(clip);
                         }
@@ -615,11 +565,9 @@ namespace ImageGlass.ImageListView
 
                         DrawCheckBox(g, param.Item, cBounds);
                     }
-                    if (ImageListView.ShowFileIcons)
-                    {
+                    if (ImageListView.ShowFileIcons) {
                         Rectangle cBounds = ImageListView.layoutManager.GetIconBounds(param.Item.Index);
-                        if (Clip)
-                        {
+                        if (Clip) {
                             Rectangle clip = Rectangle.Intersect(cBounds, ImageListView.layoutManager.ItemAreaBounds);
                             g.SetClip(clip);
                         }
@@ -634,8 +582,7 @@ namespace ImageGlass.ImageListView
             /// Renders the overlay.
             /// </summary>
             /// <param name="g">The graphics to draw on.</param>
-            private void RenderOverlay(Graphics g)
-            {
+            private void RenderOverlay(Graphics g) {
                 g.SetClip(ImageListView.layoutManager.ClientArea);
                 DrawOverlay(g, ImageListView.layoutManager.ClientArea);
             }
@@ -643,21 +590,18 @@ namespace ImageGlass.ImageListView
             /// Renders the drag-drop insertion caret.
             /// </summary>
             /// <param name="g">The graphics to draw on.</param>
-            private void RenderInsertionCaret(Graphics g)
-            {
+            private void RenderInsertionCaret(Graphics g) {
                 if (ImageListView.navigationManager.DropTarget == null)
                     return;
 
                 Rectangle bounds = ImageListView.layoutManager.GetItemBounds(ImageListView.navigationManager.DropTarget.Index);
-                if (ImageListView.View == View.Details)
-                {
+                if (ImageListView.View == View.Details) {
                     if (ImageListView.navigationManager.DropToRight)
                         bounds.Offset(0, ImageListView.layoutManager.ItemSizeWithMargin.Height);
                     bounds.Offset(0, -1);
                     bounds.Height = 2;
                 }
-                else
-                {
+                else {
                     if (ImageListView.navigationManager.DropToRight)
                         bounds.Offset(ImageListView.layoutManager.ItemSizeWithMargin.Width, 0);
                     Size itemMargin = MeasureItemMargin(ImageListView.View);
@@ -674,16 +618,13 @@ namespace ImageGlass.ImageListView
             /// Renders the selection rectangle.
             /// </summary>
             /// <param name="g">The graphics to draw on.</param>
-            private void RenderSelectionRectangle(Graphics g)
-            {
+            private void RenderSelectionRectangle(Graphics g) {
                 if (!ImageListView.navigationManager.MouseSelecting)
                     return;
 
                 Rectangle sel = ImageListView.navigationManager.SelectionRectangle;
-                if (sel.Height > 0 && sel.Width > 0)
-                {
-                    if (Clip)
-                    {
+                if (sel.Height > 0 && sel.Width > 0) {
+                    if (Clip) {
                         Rectangle selclip = new Rectangle(sel.Left, sel.Top, sel.Width + 1, sel.Height + 1);
                         g.SetClip(selclip);
                     }
@@ -697,8 +638,7 @@ namespace ImageGlass.ImageListView
             /// Renders the area between scrollbars.
             /// </summary>
             /// <param name="g">The graphics to draw on.</param>
-            private void RenderScrollbarFiller(Graphics g)
-            {
+            private void RenderScrollbarFiller(Graphics g) {
                 if (!ImageListView.hScrollBar.Visible || !ImageListView.vScrollBar.Visible)
                     return;
 
@@ -711,12 +651,10 @@ namespace ImageGlass.ImageListView
             /// Renders the control.
             /// </summary>
             /// <param name="graphics">The graphics to draw on.</param>
-            internal void Render(Graphics graphics)
-            {
+            internal void Render(Graphics graphics) {
                 if (disposed) return;
 
-                if (bufferGraphics == null)
-                {
+                if (bufferGraphics == null) {
                     if (!RecreateBuffer(graphics)) return;
                 }
 
@@ -741,8 +679,7 @@ namespace ImageGlass.ImageListView
 
                 // Draw items if they should be drawn first
                 bool itemsDrawn = false;
-                if (ItemsDrawnFirst)
-                {
+                if (ItemsDrawnFirst) {
                     RenderItems(g);
                     itemsDrawn = true;
                 }
@@ -778,13 +715,11 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Loads and returns the large gallery image for the given item.
             /// </summary>
-            private Image GetGalleryImageAsync(ImageListViewItem item, Size size)
-            {
+            private Image GetGalleryImageAsync(ImageListViewItem item, Size size) {
                 Image img = ImageListView.thumbnailCache.GetGalleryImage(item.Guid, size, ImageListView.UseEmbeddedThumbnails,
                     ImageListView.AutoRotateThumbnails, ImageListView.UseWIC == UseWIC.Auto || ImageListView.UseWIC == UseWIC.ThumbnailsOnly);
 
-                if (img == null)
-                {
+                if (img == null) {
                     ImageListView.thumbnailCache.AddToGalleryCache(item.Guid, item.mAdaptor, item.VirtualItemKey,
                         size, ImageListView.UseEmbeddedThumbnails, ImageListView.AutoRotateThumbnails,
                         (ImageListView.UseWIC == UseWIC.Auto || ImageListView.UseWIC == UseWIC.ThumbnailsOnly));
@@ -795,8 +730,7 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Clears the graphics buffer objects.
             /// </summary>
-            internal void ClearBuffer()
-            {
+            internal void ClearBuffer() {
                 if (bufferGraphics != null)
                     bufferGraphics.Dispose();
                 bufferGraphics = null;
@@ -806,8 +740,7 @@ namespace ImageGlass.ImageListView
             /// sized to the client area of the owner control.
             /// </summary>
             /// <param name="graphics">The Graphics to match the pixel format to.</param>
-            internal bool RecreateBuffer(Graphics graphics)
-            {
+            internal bool RecreateBuffer(Graphics graphics) {
                 if (creatingGraphics) return false;
 
                 creatingGraphics = true;
@@ -835,10 +768,8 @@ namespace ImageGlass.ImageListView
             /// <summary>
             /// Releases buffered graphics objects.
             /// </summary>
-            void IDisposable.Dispose()
-            {
-                if (!disposed)
-                {
+            void IDisposable.Dispose() {
+                if (!disposed) {
                     ClearBuffer();
 
                     disposed = true;
@@ -850,8 +781,7 @@ namespace ImageGlass.ImageListView
             /// Releases unmanaged resources and performs other cleanup operations before the
             /// ImageListViewRenderer is reclaimed by garbage collection.
             /// </summary>
-            ~ImageListViewRenderer()
-            {
+            ~ImageListViewRenderer() {
                 System.Diagnostics.Debug.Print("Finalizer of {0} called.", GetType());
                 Dispose();
             }
@@ -864,16 +794,14 @@ namespace ImageGlass.ImageListView
             /// control elements.
             /// </summary>
             /// <param name="g">The System.Drawing.Graphics to draw on.</param>
-            public virtual void InitializeGraphics(Graphics g)
-            {
+            public virtual void InitializeGraphics(Graphics g) {
                 g.PixelOffsetMode = PixelOffsetMode.None;
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             }
             /// <summary>
             /// Returns the height of group headers.
             /// </summary>
-            public virtual int MeasureGroupHeaderHeight()
-            {
+            public virtual int MeasureGroupHeaderHeight() {
                 if (ImageListView.disposed || ImageListView.GroupHeaderFont == null)
                     return 24;
                 else
@@ -883,8 +811,7 @@ namespace ImageGlass.ImageListView
             /// Returns the height of column headers.
             /// </summary>
             /// <returns>The height of column headers.</returns>
-            public virtual int MeasureColumnHeaderHeight()
-            {
+            public virtual int MeasureColumnHeaderHeight() {
                 if (ImageListView.disposed || ImageListView.ColumnHeaderFont == null)
                     return 24;
                 else
@@ -895,8 +822,7 @@ namespace ImageGlass.ImageListView
             /// </summary>
             /// <param name="view">The view mode for which the measurement should be made.</param>
             /// <returns>The spacing between items.</returns>
-            public virtual Size MeasureItemMargin(View view)
-            {
+            public virtual Size MeasureItemMargin(View view) {
                 if (view == View.Details)
                     return new Size(2, 0);
                 else
@@ -907,15 +833,13 @@ namespace ImageGlass.ImageListView
             /// </summary>
             /// <param name="view">The view mode for which the measurement should be made.</param>
             /// <returns>The item size.</returns>
-            public virtual Size MeasureItem(View view)
-            {
+            public virtual Size MeasureItem(View view) {
                 Size itemSize = new Size();
 
                 // Reference text height
                 int textHeight = ImageListView.Font.Height;
 
-                if (view == View.Details)
-                {
+                if (view == View.Details) {
                     // Calculate total column width
                     int colWidth = 0;
                     foreach (ImageListViewColumnHeader column in ImageListView.Columns)
@@ -923,8 +847,7 @@ namespace ImageGlass.ImageListView
 
                     itemSize = new Size(colWidth, textHeight + 2 * textHeight / 6); // textHeight / 6 = vertical space between item border and text
                 }
-                else
-                {
+                else {
                     Size itemPadding = new Size(4, 4);
                     itemSize = ImageListView.ThumbnailSize + itemPadding + itemPadding;
                     itemSize.Height += textHeight + System.Math.Max(4, textHeight / 3); // textHeight / 3 = vertical space between thumbnail and text
@@ -937,10 +860,8 @@ namespace ImageGlass.ImageListView
             /// </summary>
             /// <param name="g">The System.Drawing.Graphics to draw on.</param>
             /// <param name="bounds">The coordinates of the border.</param>
-            public virtual void DrawBorder(Graphics g, Rectangle bounds)
-            {
-                if (ImageListView.BorderStyle != BorderStyle.None)
-                {
+            public virtual void DrawBorder(Graphics g, Rectangle bounds) {
+                if (ImageListView.BorderStyle != BorderStyle.None) {
                     Border3DStyle style = (ImageListView.BorderStyle == BorderStyle.FixedSingle) ? Border3DStyle.Flat : Border3DStyle.SunkenInner;
                     ControlPaint.DrawBorder3D(g, bounds, style);
                 }
@@ -950,8 +871,7 @@ namespace ImageGlass.ImageListView
             /// </summary>
             /// <param name="g">The System.Drawing.Graphics to draw on.</param>
             /// <param name="bounds">The client coordinates of the item area.</param>
-            public virtual void DrawBackground(Graphics g, Rectangle bounds)
-            {
+            public virtual void DrawBackground(Graphics g, Rectangle bounds) {
                 // Clear the background
                 if (ImageListView.Enabled)
                     g.Clear(ImageListView.Colors.ControlBackColor);
@@ -959,33 +879,26 @@ namespace ImageGlass.ImageListView
                     g.Clear(ImageListView.Colors.DisabledBackColor);
 
                 // Draw the background image
-                if (ImageListView.BackgroundImage != null)
-                {
+                if (ImageListView.BackgroundImage != null) {
                     Image img = ImageListView.BackgroundImage;
 
-                    if (ImageListView.BackgroundImageLayout == ImageLayout.None)
-                    {
+                    if (ImageListView.BackgroundImageLayout == ImageLayout.None) {
                         g.DrawImageUnscaled(img, ImageListView.layoutManager.ItemAreaBounds.Location);
                     }
-                    else if (ImageListView.BackgroundImageLayout == ImageLayout.Center)
-                    {
+                    else if (ImageListView.BackgroundImageLayout == ImageLayout.Center) {
                         int x = bounds.Left + (bounds.Width - img.Width) / 2;
                         int y = bounds.Top + (bounds.Height - img.Height) / 2;
                         g.DrawImageUnscaled(img, x, y);
                     }
-                    else if (ImageListView.BackgroundImageLayout == ImageLayout.Stretch)
-                    {
+                    else if (ImageListView.BackgroundImageLayout == ImageLayout.Stretch) {
                         g.DrawImage(img, bounds);
                     }
-                    else if (ImageListView.BackgroundImageLayout == ImageLayout.Tile)
-                    {
-                        using (Brush imgBrush = new TextureBrush(img, WrapMode.Tile))
-                        {
+                    else if (ImageListView.BackgroundImageLayout == ImageLayout.Tile) {
+                        using (Brush imgBrush = new TextureBrush(img, WrapMode.Tile)) {
                             g.FillRectangle(imgBrush, bounds);
                         }
                     }
-                    else if (ImageListView.BackgroundImageLayout == ImageLayout.Zoom)
-                    {
+                    else if (ImageListView.BackgroundImageLayout == ImageLayout.Zoom) {
                         float xscale = (float)bounds.Width / (float)img.Width;
                         float yscale = (float)bounds.Height / (float)img.Height;
                         float scale = Math.Min(xscale, yscale);
@@ -1002,11 +915,9 @@ namespace ImageGlass.ImageListView
             /// </summary>
             /// <param name="g">The System.Drawing.Graphics to draw on.</param>
             /// <param name="selection">The client coordinates of the selection rectangle.</param>
-            public virtual void DrawSelectionRectangle(Graphics g, Rectangle selection)
-            {
+            public virtual void DrawSelectionRectangle(Graphics g, Rectangle selection) {
                 using (SolidBrush brush = new SolidBrush(ImageListView.Colors.SelectionRectangleColor1))
-                using (Pen pen = new Pen(ImageListView.Colors.SelectionRectangleBorderColor))
-                {
+                using (Pen pen = new Pen(ImageListView.Colors.SelectionRectangleBorderColor)) {
                     g.FillRectangle(brush, selection);
                     g.DrawRectangle(pen, selection);
                 }
@@ -1018,84 +929,65 @@ namespace ImageGlass.ImageListView
             /// <param name="item">The ImageListViewItem to draw.</param>
             /// <param name="state">The current view state of item.</param>
             /// <param name="bounds">The bounding rectangle of item in client coordinates.</param>
-            public virtual void DrawItem(Graphics g, ImageListViewItem item, ItemState state, Rectangle bounds)
-            {
+            public virtual void DrawItem(Graphics g, ImageListViewItem item, ItemState state, Rectangle bounds) {
                 Size itemPadding = new Size(4, 4);
                 bool alternate = (item.Index % 2 == 1);
 
                 // Paint background
-                if (ImageListView.Enabled)
-                {
+                if (ImageListView.Enabled) {
                     using (Brush bItemBack = new SolidBrush(alternate && ImageListView.View == View.Details ?
-                        ImageListView.Colors.AlternateBackColor : ImageListView.Colors.BackColor))
-                    {
+                        ImageListView.Colors.AlternateBackColor : ImageListView.Colors.BackColor)) {
                         g.FillRectangle(bItemBack, bounds);
                     }
                 }
-                else
-                {
-                    using (Brush bItemBack = new SolidBrush(ImageListView.Colors.DisabledBackColor))
-                    {
+                else {
+                    using (Brush bItemBack = new SolidBrush(ImageListView.Colors.DisabledBackColor)) {
                         g.FillRectangle(bItemBack, bounds);
                     }
                 }
 
                 // Paint background Disabled
-                if ((state & ItemState.Disabled) != ItemState.None)
-                {
-                    using (Brush bDisabled = new LinearGradientBrush(bounds, ImageListView.Colors.DisabledColor1, ImageListView.Colors.DisabledColor2, LinearGradientMode.Vertical))
-                    {
+                if ((state & ItemState.Disabled) != ItemState.None) {
+                    using (Brush bDisabled = new LinearGradientBrush(bounds, ImageListView.Colors.DisabledColor1, ImageListView.Colors.DisabledColor2, LinearGradientMode.Vertical)) {
                         Utility.FillRoundedRectangle(g, bDisabled, bounds, (ImageListView.View == View.Details ? 2 : 4));
                     }
                 }
 
                 // Paint background Selected
                 else if ((ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None)) ||
-                    (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None) && ((state & ItemState.Hovered) != ItemState.None)))
-                {
-                    using (Brush bSelected = new LinearGradientBrush(bounds, ImageListView.Colors.SelectedColor1, ImageListView.Colors.SelectedColor2, LinearGradientMode.Vertical))
-                    {
+                    (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None) && ((state & ItemState.Hovered) != ItemState.None))) {
+                    using (Brush bSelected = new LinearGradientBrush(bounds, ImageListView.Colors.SelectedColor1, ImageListView.Colors.SelectedColor2, LinearGradientMode.Vertical)) {
                         Utility.FillRoundedRectangle(g, bSelected, bounds, (ImageListView.View == View.Details ? 2 : 4));
                     }
                 }
 
                 // Paint background unfocused
-                else if (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None))
-                {
-                    using (Brush bGray64 = new LinearGradientBrush(bounds, ImageListView.Colors.UnFocusedColor1, ImageListView.Colors.UnFocusedColor2, LinearGradientMode.Vertical))
-                    {
+                else if (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None)) {
+                    using (Brush bGray64 = new LinearGradientBrush(bounds, ImageListView.Colors.UnFocusedColor1, ImageListView.Colors.UnFocusedColor2, LinearGradientMode.Vertical)) {
                         Utility.FillRoundedRectangle(g, bGray64, bounds, (ImageListView.View == View.Details ? 2 : 4));
                     }
                 }
 
                 // Paint background Hovered
-                if ((state & ItemState.Hovered) != ItemState.None)
-                {
-                    using (Brush bHovered = new LinearGradientBrush(bounds, ImageListView.Colors.HoverColor1, ImageListView.Colors.HoverColor2, LinearGradientMode.Vertical))
-                    {
+                if ((state & ItemState.Hovered) != ItemState.None) {
+                    using (Brush bHovered = new LinearGradientBrush(bounds, ImageListView.Colors.HoverColor1, ImageListView.Colors.HoverColor2, LinearGradientMode.Vertical)) {
                         Utility.FillRoundedRectangle(g, bHovered, bounds, (ImageListView.View == View.Details ? 2 : 4));
                     }
                 }
 
-                if (ImageListView.View != View.Details)
-                {
+                if (ImageListView.View != View.Details) {
                     // Draw the image
                     Image img = item.GetCachedImage(CachedImageType.Thumbnail);
-                    if (img != null)
-                    {
+                    if (img != null) {
                         Rectangle pos = Utility.GetSizedImageBounds(img, new Rectangle(bounds.Location + itemPadding, ImageListView.ThumbnailSize));
                         g.DrawImage(img, pos);
                         // Draw image border
-                        if (Math.Min(pos.Width, pos.Height) > 32)
-                        {
-                            using (Pen pOuterBorder = new Pen(ImageListView.Colors.ImageOuterBorderColor))
-                            {
+                        if (Math.Min(pos.Width, pos.Height) > 32) {
+                            using (Pen pOuterBorder = new Pen(ImageListView.Colors.ImageOuterBorderColor)) {
                                 g.DrawRectangle(pOuterBorder, pos);
                             }
-                            if (System.Math.Min(ImageListView.ThumbnailSize.Width, ImageListView.ThumbnailSize.Height) > 32)
-                            {
-                                using (Pen pInnerBorder = new Pen(ImageListView.Colors.ImageInnerBorderColor))
-                                {
+                            if (System.Math.Min(ImageListView.ThumbnailSize.Width, ImageListView.ThumbnailSize.Height) > 32) {
+                                using (Pen pInnerBorder = new Pen(ImageListView.Colors.ImageInnerBorderColor)) {
                                     g.DrawRectangle(pInnerBorder, Rectangle.Inflate(pos, -1, -1));
                                 }
                             }
@@ -1104,12 +996,10 @@ namespace ImageGlass.ImageListView
 
                     // Draw item text
                     Color foreColor = ImageListView.Colors.ForeColor;
-                    if ((state & ItemState.Disabled) != ItemState.None)
-                    {
+                    if ((state & ItemState.Disabled) != ItemState.None) {
                         foreColor = ImageListView.Colors.DisabledForeColor;
                     }
-                    else if ((state & ItemState.Selected) != ItemState.None)
-                    {
+                    else if ((state & ItemState.Selected) != ItemState.None) {
                         if (ImageListView.Focused)
                             foreColor = ImageListView.Colors.SelectedForeColor;
                         else
@@ -1126,18 +1016,15 @@ namespace ImageGlass.ImageListView
 
                     // Shade sort column
                     int x = bounds.Left - 1;
-                    foreach (ImageListViewColumnHeader column in uicolumns)
-                    {
+                    foreach (ImageListViewColumnHeader column in uicolumns) {
                         if (ImageListView.SortOrder != SortOrder.None &&
                             ImageListView.SortColumn >= 0 && ImageListView.SortColumn < ImageListView.Columns.Count &&
                             (state & ItemState.Hovered) == ItemState.None && (state & ItemState.Selected) == ItemState.None &&
-                            ImageListView.Columns[ImageListView.SortColumn].Guid == column.Guid)
-                        {
+                            ImageListView.Columns[ImageListView.SortColumn].Guid == column.Guid) {
                             Rectangle subItemBounds = bounds;
                             subItemBounds.X = x;
                             subItemBounds.Width = column.Width;
-                            using (Brush bGray16 = new SolidBrush(ImageListView.Colors.ColumnSelectColor))
-                            {
+                            using (Brush bGray16 = new SolidBrush(ImageListView.Colors.ColumnSelectColor)) {
                                 g.FillRectangle(bGray16, subItemBounds);
                             }
                             break;
@@ -1146,16 +1033,12 @@ namespace ImageGlass.ImageListView
                     }
 
                     // Separators 
-                    if (!ImageListView.GroupsVisible)
-                    {
+                    if (!ImageListView.GroupsVisible) {
                         x = bounds.Left - 1;
-                        foreach (ImageListViewColumnHeader column in uicolumns)
-                        {
+                        foreach (ImageListViewColumnHeader column in uicolumns) {
                             x += column.Width;
-                            if (!ReferenceEquals(column, uicolumns[uicolumns.Count - 1]))
-                            {
-                                using (Pen pGray32 = new Pen(ImageListView.Colors.ColumnSeparatorColor))
-                                {
+                            if (!ReferenceEquals(column, uicolumns[uicolumns.Count - 1])) {
+                                using (Pen pGray32 = new Pen(ImageListView.Colors.ColumnSeparatorColor)) {
                                     g.DrawLine(pGray32, x, bounds.Top, x, bounds.Bottom);
                                 }
                             }
@@ -1163,8 +1046,7 @@ namespace ImageGlass.ImageListView
                     }
 
                     Size offset = new Size(2, (bounds.Height - ImageListView.Font.Height) / 2);
-                    using (StringFormat sf = new StringFormat())
-                    {
+                    using (StringFormat sf = new StringFormat()) {
                         sf.FormatFlags = StringFormatFlags.NoWrap;
                         sf.Alignment = StringAlignment.Near;
                         sf.LineAlignment = StringAlignment.Center;
@@ -1174,16 +1056,13 @@ namespace ImageGlass.ImageListView
                         if (uicolumns.Count > 0)
                             firstWidth = uicolumns[0].Width;
                         RectangleF rt = new RectangleF(bounds.Left + offset.Width, bounds.Top + offset.Height, firstWidth - 2 * offset.Width, bounds.Height - 2 * offset.Height);
-                        foreach (ImageListViewColumnHeader column in uicolumns)
-                        {
+                        foreach (ImageListViewColumnHeader column in uicolumns) {
                             rt.Width = column.Width - 2 * offset.Width;
                             Color foreColor = ImageListView.Colors.CellForeColor;
-                            if ((state & ItemState.Disabled) != ItemState.None)
-                            {
+                            if ((state & ItemState.Disabled) != ItemState.None) {
                                 foreColor = ImageListView.Colors.DisabledForeColor;
                             }
-                            else if ((state & ItemState.Selected) != ItemState.None)
-                            {
+                            else if ((state & ItemState.Selected) != ItemState.None) {
                                 if (ImageListView.Focused)
                                     foreColor = ImageListView.Colors.SelectedForeColor;
                                 else
@@ -1191,11 +1070,9 @@ namespace ImageGlass.ImageListView
                             }
                             else if (alternate)
                                 foreColor = ImageListView.Colors.AlternateCellForeColor;
-                            using (Brush bItemFore = new SolidBrush(foreColor))
-                            {
+                            using (Brush bItemFore = new SolidBrush(foreColor)) {
                                 int iconOffset = 0;
-                                if (column.Type == ColumnType.Name)
-                                {
+                                if (column.Type == ColumnType.Name) {
                                     // Allocate space for checkbox and file icon
                                     if (ImageListView.ShowCheckBoxes && ImageListView.ShowFileIcons)
                                         iconOffset += 2 * 16 + 3 * 2;
@@ -1207,16 +1084,13 @@ namespace ImageGlass.ImageListView
                                 rt.X += iconOffset;
                                 rt.Width -= iconOffset;
                                 // Rating stars
-                                if (column.Type == ColumnType.Rating && ImageListView.RatingImage != null && ImageListView.EmptyRatingImage != null)
-                                {
+                                if (column.Type == ColumnType.Rating && ImageListView.RatingImage != null && ImageListView.EmptyRatingImage != null) {
                                     int rating = item.GetSimpleRating();
-                                    if (rating > 0)
-                                    {
+                                    if (rating > 0) {
                                         int w = ImageListView.RatingImage.Width;
                                         int y = (int)(rt.Top + (rt.Height - ImageListView.RatingImage.Height) / 2.0f);
 
-                                        for (int i = 1; i <= 5; i++)
-                                        {
+                                        for (int i = 1; i <= 5; i++) {
                                             if (rating >= i)
                                                 g.DrawImage(ImageListView.RatingImage, rt.Left + (i - 1) * w, y);
                                             else
@@ -1237,53 +1111,40 @@ namespace ImageGlass.ImageListView
                 }
 
                 // Item border
-                if (ImageListView.View != View.Details)
-                {
-                    using (Pen pWhite128 = new Pen(Color.FromArgb(128, ImageListView.Colors.ControlBackColor)))
-                    {
+                if (ImageListView.View != View.Details) {
+                    using (Pen pWhite128 = new Pen(Color.FromArgb(128, ImageListView.Colors.ControlBackColor))) {
                         Utility.DrawRoundedRectangle(g, pWhite128, bounds.Left + 1, bounds.Top + 1, bounds.Width - 3, bounds.Height - 3, (ImageListView.View == View.Details ? 2 : 4));
                     }
                 }
-                if (((state & ItemState.Disabled) != ItemState.None))
-                {
-                    using (Pen pHighlight128 = new Pen(ImageListView.Colors.DisabledBorderColor))
-                    {
+                if (((state & ItemState.Disabled) != ItemState.None)) {
+                    using (Pen pHighlight128 = new Pen(ImageListView.Colors.DisabledBorderColor)) {
                         Utility.DrawRoundedRectangle(g, pHighlight128, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, (ImageListView.View == View.Details ? 2 : 4));
                     }
                 }
-                else if (ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None))
-                {
-                    using (Pen pHighlight128 = new Pen(ImageListView.Colors.SelectedBorderColor))
-                    {
+                else if (ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None)) {
+                    using (Pen pHighlight128 = new Pen(ImageListView.Colors.SelectedBorderColor)) {
                         Utility.DrawRoundedRectangle(g, pHighlight128, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, (ImageListView.View == View.Details ? 2 : 4));
                     }
                 }
-                else if (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None))
-                {
-                    using (Pen pGray128 = new Pen(ImageListView.Colors.UnFocusedBorderColor))
-                    {
+                else if (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None)) {
+                    using (Pen pGray128 = new Pen(ImageListView.Colors.UnFocusedBorderColor)) {
                         Utility.DrawRoundedRectangle(g, pGray128, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, (ImageListView.View == View.Details ? 2 : 4));
                     }
                 }
-                else if (ImageListView.View != View.Details && (state & ItemState.Selected) == ItemState.None)
-                {
-                    using (Pen pGray64 = new Pen(ImageListView.Colors.BorderColor))
-                    {
+                else if (ImageListView.View != View.Details && (state & ItemState.Selected) == ItemState.None) {
+                    using (Pen pGray64 = new Pen(ImageListView.Colors.BorderColor)) {
                         Utility.DrawRoundedRectangle(g, pGray64, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, (ImageListView.View == View.Details ? 2 : 4));
                     }
                 }
 
-                if (ImageListView.Focused && ((state & ItemState.Hovered) != ItemState.None))
-                {
-                    using (Pen pHighlight64 = new Pen(ImageListView.Colors.HoverBorderColor))
-                    {
+                if (ImageListView.Focused && ((state & ItemState.Hovered) != ItemState.None)) {
+                    using (Pen pHighlight64 = new Pen(ImageListView.Colors.HoverBorderColor)) {
                         Utility.DrawRoundedRectangle(g, pHighlight64, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, (ImageListView.View == View.Details ? 2 : 4));
                     }
                 }
 
                 // Focus rectangle
-                if (ImageListView.Focused && ((state & ItemState.Focused) != ItemState.None))
-                {
+                if (ImageListView.Focused && ((state & ItemState.Focused) != ItemState.None)) {
                     ControlPaint.DrawFocusRectangle(g, bounds);
                 }
             }
@@ -1298,8 +1159,7 @@ namespace ImageGlass.ImageListView
             /// Returns -1 if the hit point is not over a sub item.</param>
             /// <param name="subItemHovered">true if the mouse cursor is over the sub item; otherwise false.</param>
             /// <param name="bounds">The bounding rectangle of the sub item in client coordinates.</param>
-            public virtual void DrawSubItemItemOverlay(Graphics g, ImageListViewItem item, ItemState state, int subItemIndex, bool subItemHovered, Rectangle bounds)
-            {
+            public virtual void DrawSubItemItemOverlay(Graphics g, ImageListViewItem item, ItemState state, int subItemIndex, bool subItemHovered, Rectangle bounds) {
                 ;
             }
             /// <summary>
@@ -1308,8 +1168,7 @@ namespace ImageGlass.ImageListView
             /// <param name="g">The System.Drawing.Graphics to draw on.</param>
             /// <param name="item">The ImageListViewItem to draw.</param>
             /// <param name="bounds">The bounding rectangle of the checkbox in client coordinates.</param>
-            public virtual void DrawCheckBox(Graphics g, ImageListViewItem item, Rectangle bounds)
-            {
+            public virtual void DrawCheckBox(Graphics g, ImageListViewItem item, Rectangle bounds) {
                 Size size = CheckBoxRenderer.GetGlyphSize(g, CheckBoxState.CheckedNormal);
                 PointF pt = new PointF((float)bounds.X + ((float)bounds.Width - (float)size.Width) / 2.0f,
                     (float)bounds.Y + ((float)bounds.Height - (float)size.Height) / 2.0f);
@@ -1326,11 +1185,9 @@ namespace ImageGlass.ImageListView
             /// <param name="g">The System.Drawing.Graphics to draw on.</param>
             /// <param name="item">The ImageListViewItem to draw.</param>
             /// <param name="bounds">The bounding rectangle of the file icon in client coordinates.</param>
-            public virtual void DrawFileIcon(Graphics g, ImageListViewItem item, Rectangle bounds)
-            {
+            public virtual void DrawFileIcon(Graphics g, ImageListViewItem item, Rectangle bounds) {
                 Image icon = item.GetCachedImage(CachedImageType.SmallIcon);
-                if (icon != null)
-                {
+                if (icon != null) {
                     Size size = icon.Size;
                     PointF ptf = new PointF((float)bounds.X + ((float)bounds.Width - (float)size.Width) / 2.0f,
                         (float)bounds.Y + ((float)bounds.Height - (float)size.Height) / 2.0f);
@@ -1344,26 +1201,21 @@ namespace ImageGlass.ImageListView
             /// <param name="g">The System.Drawing.Graphics to draw on.</param>
             /// <param name="name">The name of the group to draw.</param>
             /// <param name="bounds">The bounding rectangle of group in client coordinates.</param>
-            public virtual void DrawGroupHeader(Graphics g, string name, Rectangle bounds)
-            {
+            public virtual void DrawGroupHeader(Graphics g, string name, Rectangle bounds) {
                 // Bottom border
                 bounds.Inflate(0, -4);
-                using (Pen pSpep = new Pen(new LinearGradientBrush(bounds, ImageListView.Colors.ColumnSeparatorColor, Color.Transparent, LinearGradientMode.Horizontal)))
-                {
+                using (Pen pSpep = new Pen(new LinearGradientBrush(bounds, ImageListView.Colors.ColumnSeparatorColor, Color.Transparent, LinearGradientMode.Horizontal))) {
                     g.DrawLine(pSpep, bounds.Left + 1, bounds.Bottom - 1, bounds.Right - 1, bounds.Bottom - 1);
                 }
 
                 // Text
-                if (bounds.Width > 4)
-                {
-                    using (StringFormat sf = new StringFormat())
-                    {
+                if (bounds.Width > 4) {
+                    using (StringFormat sf = new StringFormat()) {
                         sf.FormatFlags = StringFormatFlags.NoWrap;
                         sf.Alignment = StringAlignment.Near;
                         sf.LineAlignment = StringAlignment.Center;
                         sf.Trimming = StringTrimming.EllipsisCharacter;
-                        using (SolidBrush bText = new SolidBrush(ImageListView.Colors.ColumnHeaderForeColor))
-                        {
+                        using (SolidBrush bText = new SolidBrush(ImageListView.Colors.ColumnHeaderForeColor)) {
                             g.DrawString(name, (ImageListView.GroupHeaderFont == null ? ImageListView.Font : ImageListView.GroupHeaderFont), bText, bounds, sf);
                         }
                     }
@@ -1376,46 +1228,37 @@ namespace ImageGlass.ImageListView
             /// <param name="column">The ImageListViewColumnHeader to draw.</param>
             /// <param name="state">The current view state of column.</param>
             /// <param name="bounds">The bounding rectangle of column in client coordinates.</param>
-            public virtual void DrawColumnHeader(Graphics g, ImageListViewColumnHeader column, ColumnState state, Rectangle bounds)
-            {
+            public virtual void DrawColumnHeader(Graphics g, ImageListViewColumnHeader column, ColumnState state, Rectangle bounds) {
                 // Paint background
-                if ((state & ColumnState.Hovered) != ColumnState.None)
-                {
-                    using (Brush bHovered = new LinearGradientBrush(bounds, ImageListView.Colors.ColumnHeaderHoverColor1, ImageListView.Colors.ColumnHeaderHoverColor2, LinearGradientMode.Vertical))
-                    {
+                if ((state & ColumnState.Hovered) != ColumnState.None) {
+                    using (Brush bHovered = new LinearGradientBrush(bounds, ImageListView.Colors.ColumnHeaderHoverColor1, ImageListView.Colors.ColumnHeaderHoverColor2, LinearGradientMode.Vertical)) {
                         g.FillRectangle(bHovered, bounds);
                     }
                 }
-                else
-                {
-                    using (Brush bNormal = new LinearGradientBrush(bounds, ImageListView.Colors.ColumnHeaderBackColor1, ImageListView.Colors.ColumnHeaderBackColor2, LinearGradientMode.Vertical))
-                    {
+                else {
+                    using (Brush bNormal = new LinearGradientBrush(bounds, ImageListView.Colors.ColumnHeaderBackColor1, ImageListView.Colors.ColumnHeaderBackColor2, LinearGradientMode.Vertical)) {
                         g.FillRectangle(bNormal, bounds);
                     }
                 }
                 using (Brush bBorder = new LinearGradientBrush(bounds, ImageListView.Colors.ColumnHeaderBackColor2, ImageListView.Colors.ColumnHeaderBackColor1, LinearGradientMode.Vertical))
-                using (Pen pBorder = new Pen(bBorder))
-                {
+                using (Pen pBorder = new Pen(bBorder)) {
                     g.DrawLine(pBorder, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom);
                     g.DrawLine(pBorder, bounds.Left, bounds.Bottom - 1, bounds.Right, bounds.Bottom - 1);
                 }
-                using (Pen pSpep = new Pen(ImageListView.Colors.ColumnHeaderBackColor1))
-                {
+                using (Pen pSpep = new Pen(ImageListView.Colors.ColumnHeaderBackColor1)) {
                     g.DrawLine(pSpep, bounds.Left + 1, bounds.Top + 1, bounds.Left + 1, bounds.Bottom - 2);
                     g.DrawLine(pSpep, bounds.Right - 1, bounds.Top + 1, bounds.Right - 1, bounds.Bottom - 2);
                 }
 
                 // Draw the sort arrow
                 int textOffset = 4;
-                if (ImageListView.SortOrder != SortOrder.None && ((state & ColumnState.SortColumn) != ColumnState.None))
-                {
+                if (ImageListView.SortOrder != SortOrder.None && ((state & ColumnState.SortColumn) != ColumnState.None)) {
                     Image img = null;
                     if (ImageListView.SortOrder == SortOrder.Ascending || ImageListView.SortOrder == SortOrder.AscendingNatural)
                         img = ImageListViewResources.SortAscending;
                     else if (ImageListView.SortOrder == SortOrder.Descending || ImageListView.SortOrder == SortOrder.DescendingNatural)
                         img = ImageListViewResources.SortDescending;
-                    if (img != null)
-                    {
+                    if (img != null) {
                         g.DrawImageUnscaled(img, bounds.X + 4, bounds.Top + (bounds.Height - img.Height) / 2);
                         textOffset += img.Width;
                     }
@@ -1424,16 +1267,13 @@ namespace ImageGlass.ImageListView
                 // Text
                 bounds.X += textOffset;
                 bounds.Width -= textOffset;
-                if (bounds.Width > 4)
-                {
-                    using (StringFormat sf = new StringFormat())
-                    {
+                if (bounds.Width > 4) {
+                    using (StringFormat sf = new StringFormat()) {
                         sf.FormatFlags = StringFormatFlags.NoWrap;
                         sf.Alignment = StringAlignment.Near;
                         sf.LineAlignment = StringAlignment.Center;
                         sf.Trimming = StringTrimming.EllipsisCharacter;
-                        using (SolidBrush bText = new SolidBrush(ImageListView.Colors.ColumnHeaderForeColor))
-                        {
+                        using (SolidBrush bText = new SolidBrush(ImageListView.Colors.ColumnHeaderForeColor)) {
                             g.DrawString(column.Text, (ImageListView.ColumnHeaderFont == null ? ImageListView.Font : ImageListView.ColumnHeaderFont), bText, bounds, sf);
                         }
                     }
@@ -1446,35 +1286,28 @@ namespace ImageGlass.ImageListView
             /// <param name="item">The ImageListViewItem to draw.</param>
             /// <param name="image">The image to draw.</param>
             /// <param name="bounds">The bounding rectangle of the pane.</param>
-            public virtual void DrawPane(Graphics g, ImageListViewItem item, Image image, Rectangle bounds)
-            {
+            public virtual void DrawPane(Graphics g, ImageListViewItem item, Image image, Rectangle bounds) {
                 // Draw pane background
-                using (Brush bGray16 = new SolidBrush(ImageListView.Colors.PaneBackColor))
-                {
+                using (Brush bGray16 = new SolidBrush(ImageListView.Colors.PaneBackColor)) {
                     g.FillRectangle(bGray16, bounds);
                 }
-                using (Brush bBorder = new SolidBrush(ImageListView.Colors.PaneSeparatorColor))
-                {
+                using (Brush bBorder = new SolidBrush(ImageListView.Colors.PaneSeparatorColor)) {
                     g.FillRectangle(bBorder, bounds.Right - 2, bounds.Top, 2, bounds.Height);
                 }
                 bounds.Width -= 2;
 
-                if (item != null && image != null)
-                {
+                if (item != null && image != null) {
                     // Calculate image bounds
                     Size itemMargin = MeasureItemMargin(ImageListView.View);
                     Rectangle pos = Utility.GetSizedImageBounds(image, new Rectangle(bounds.Location + itemMargin, bounds.Size - itemMargin - itemMargin), 50.0f, 0.0f);
                     // Draw image
                     g.DrawImage(image, pos);
                     // Draw image border
-                    if (Math.Min(pos.Width, pos.Height) > 32)
-                    {
-                        using (Pen pGray128 = new Pen(ImageListView.Colors.ImageOuterBorderColor))
-                        {
+                    if (Math.Min(pos.Width, pos.Height) > 32) {
+                        using (Pen pGray128 = new Pen(ImageListView.Colors.ImageOuterBorderColor)) {
                             g.DrawRectangle(pGray128, pos);
                         }
-                        using (Pen pWhite128 = new Pen(ImageListView.Colors.ImageInnerBorderColor))
-                        {
+                        using (Pen pWhite128 = new Pen(ImageListView.Colors.ImageInnerBorderColor)) {
                             g.DrawRectangle(pWhite128, Rectangle.Inflate(pos, -1, -1));
                         }
                     }
@@ -1484,12 +1317,10 @@ namespace ImageGlass.ImageListView
                     bounds.Height -= pos.Height + 16;
 
                     // Item text
-                    if (ImageListView.Columns.HasType(ColumnType.Name) && ImageListView.Columns[ColumnType.Name].Visible && bounds.Height > 0)
-                    {
+                    if (ImageListView.Columns.HasType(ColumnType.Name) && ImageListView.Columns[ColumnType.Name].Visible && bounds.Height > 0) {
                         string itemText = item.GetSubItemText(ColumnType.Name);
                         using (SolidBrush bLabel = new SolidBrush(ImageListView.Colors.PaneLabelColor))
-                        using (SolidBrush bText = new SolidBrush(ImageListView.Colors.ForeColor))
-                        {
+                        using (SolidBrush bText = new SolidBrush(ImageListView.Colors.ForeColor)) {
                             int y = Utility.DrawStringPair(g, bounds, "", itemText, ImageListView.Font, bLabel, bText);
                             bounds.Y += 2 * y;
                             bounds.Height -= 2 * y;
@@ -1498,11 +1329,9 @@ namespace ImageGlass.ImageListView
 
                     // File type
                     string fileType = item.GetSubItemText(ColumnType.FileType);
-                    if (ImageListView.Columns.HasType(ColumnType.FileType) && ImageListView.Columns[ColumnType.FileType].Visible && bounds.Height > 0 && !string.IsNullOrEmpty(fileType))
-                    {
+                    if (ImageListView.Columns.HasType(ColumnType.FileType) && ImageListView.Columns[ColumnType.FileType].Visible && bounds.Height > 0 && !string.IsNullOrEmpty(fileType)) {
                         using (SolidBrush bLabel = new SolidBrush(ImageListView.Colors.PaneLabelColor))
-                        using (SolidBrush bText = new SolidBrush(ImageListView.Colors.ForeColor))
-                        {
+                        using (SolidBrush bText = new SolidBrush(ImageListView.Colors.ForeColor)) {
                             int y = Utility.DrawStringPair(g, bounds, ImageListView.Columns[ColumnType.FileType].Text + ": ",
                                 fileType, ImageListView.Font, bLabel, bText);
                             bounds.Y += y;
@@ -1511,10 +1340,8 @@ namespace ImageGlass.ImageListView
                     }
 
                     // Metatada
-                    foreach (ImageListView.ImageListViewColumnHeader column in ImageListView.Columns)
-                    {
-                        if (column.Type == ColumnType.ImageDescription)
-                        {
+                    foreach (ImageListView.ImageListViewColumnHeader column in ImageListView.Columns) {
+                        if (column.Type == ColumnType.ImageDescription) {
                             bounds.Y += 8;
                             bounds.Height -= 8;
                         }
@@ -1527,15 +1354,12 @@ namespace ImageGlass.ImageListView
                             column.Type != ColumnType.DateAccessed &&
                             column.Type != ColumnType.FileName &&
                             column.Type != ColumnType.FilePath &&
-                            column.Type != ColumnType.Name)
-                        {
+                            column.Type != ColumnType.Name) {
                             string caption = column.Text;
                             string text = item.GetSubItemText(column.Type);
-                            if (!string.IsNullOrEmpty(text))
-                            {
+                            if (!string.IsNullOrEmpty(text)) {
                                 using (SolidBrush bLabel = new SolidBrush(ImageListView.Colors.PaneLabelColor))
-                                using (SolidBrush bText = new SolidBrush(ImageListView.Colors.ForeColor))
-                                {
+                                using (SolidBrush bText = new SolidBrush(ImageListView.Colors.ForeColor)) {
                                     int y = Utility.DrawStringPair(g, bounds, caption + ": ", text,
                                         ImageListView.Font, bLabel, bText);
                                     bounds.Y += y;
@@ -1553,8 +1377,7 @@ namespace ImageGlass.ImageListView
             /// <param name="item">The ImageListViewItem to draw.</param>
             /// <param name="image">The image to draw.</param>
             /// <param name="bounds">The bounding rectangle of the preview area.</param>
-            public virtual void DrawGalleryImage(Graphics g, ImageListViewItem item, Image image, Rectangle bounds)
-            {
+            public virtual void DrawGalleryImage(Graphics g, ImageListViewItem item, Image image, Rectangle bounds) {
                 //if (item != null && image != null)
                 //{
                 //    // Calculate image bounds
@@ -1579,21 +1402,17 @@ namespace ImageGlass.ImageListView
             /// </summary>
             /// <param name="g">The System.Drawing.Graphics to draw on.</param>
             /// <param name="bounds">The bounding rectangle of extender column in client coordinates.</param>
-            public virtual void DrawColumnExtender(Graphics g, Rectangle bounds)
-            {
+            public virtual void DrawColumnExtender(Graphics g, Rectangle bounds) {
                 // Paint background
-                using (Brush bBack = new LinearGradientBrush(bounds, ImageListView.Colors.ColumnHeaderBackColor1, ImageListView.Colors.ColumnHeaderBackColor2, LinearGradientMode.Vertical))
-                {
+                using (Brush bBack = new LinearGradientBrush(bounds, ImageListView.Colors.ColumnHeaderBackColor1, ImageListView.Colors.ColumnHeaderBackColor2, LinearGradientMode.Vertical)) {
                     g.FillRectangle(bBack, bounds);
                 }
                 using (Brush bBorder = new LinearGradientBrush(bounds, ImageListView.Colors.ColumnHeaderBackColor2, ImageListView.Colors.ColumnHeaderBackColor1, LinearGradientMode.Vertical))
-                using (Pen pBorder = new Pen(bBorder))
-                {
+                using (Pen pBorder = new Pen(bBorder)) {
                     g.DrawLine(pBorder, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom);
                     g.DrawLine(pBorder, bounds.Left, bounds.Bottom - 1, bounds.Right, bounds.Bottom - 1);
                 }
-                using (Pen pSpep = new Pen(ImageListView.Colors.ColumnHeaderBackColor1))
-                {
+                using (Pen pSpep = new Pen(ImageListView.Colors.ColumnHeaderBackColor1)) {
                     g.DrawLine(pSpep, bounds.Left + 1, bounds.Top + 1, bounds.Left + 1, bounds.Bottom - 2);
                 }
             }
@@ -1602,10 +1421,8 @@ namespace ImageGlass.ImageListView
             /// </summary>
             /// <param name="g">The System.Drawing.Graphics to draw on.</param>
             /// <param name="bounds">The bounding rectangle of the insertion caret.</param>
-            public virtual void DrawInsertionCaret(Graphics g, Rectangle bounds)
-            {
-                using (Brush b = new SolidBrush(ImageListView.Colors.InsertionCaretColor))
-                {
+            public virtual void DrawInsertionCaret(Graphics g, Rectangle bounds) {
+                using (Brush b = new SolidBrush(ImageListView.Colors.InsertionCaretColor)) {
                     g.FillRectangle(b, bounds);
                 }
             }
@@ -1614,23 +1431,20 @@ namespace ImageGlass.ImageListView
             /// </summary>
             /// <param name="g">The System.Drawing.Graphics to draw on.</param>
             /// <param name="bounds">The bounding rectangle of the client area.</param>
-            public virtual void DrawOverlay(Graphics g, Rectangle bounds)
-            {
+            public virtual void DrawOverlay(Graphics g, Rectangle bounds) {
                 ;
             }
             /// <summary>
             /// Releases managed resources.
             /// </summary>
-            public virtual void Dispose()
-            {
+            public virtual void Dispose() {
                 ((IDisposable)this).Dispose();
             }
             /// <summary>
             /// Sets the layout of the control.
             /// </summary>
             /// <param name="e">A LayoutEventArgs that contains event data.</param>
-            public virtual void OnLayout(LayoutEventArgs e)
-            {
+            public virtual void OnLayout(LayoutEventArgs e) {
                 ;
             }
             #endregion

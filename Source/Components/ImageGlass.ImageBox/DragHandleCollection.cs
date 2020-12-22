@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace ImageGlass
-{
+namespace ImageGlass {
     // Cyotek ImageBox
     // Copyright (c) 2010-2015 Cyotek Ltd.
     // http://cyotek.com
@@ -13,8 +12,7 @@ namespace ImageGlass
 
     // If you use this control in your applications, attribution, donations or contributions are welcome.
 
-    public class DragHandleCollection : IEnumerable<DragHandle>
-    {
+    public class DragHandleCollection: IEnumerable<DragHandle> {
         #region Instance Fields
 
         private readonly IDictionary<DragHandleAnchor, DragHandle> _items;
@@ -23,8 +21,7 @@ namespace ImageGlass
 
         #region Public Constructors
 
-        public DragHandleCollection()
-        {
+        public DragHandleCollection() {
             _items = new Dictionary<DragHandleAnchor, DragHandle>();
             _items.Add(DragHandleAnchor.TopLeft, new DragHandle(DragHandleAnchor.TopLeft));
             _items.Add(DragHandleAnchor.TopCenter, new DragHandle(DragHandleAnchor.TopCenter));
@@ -40,13 +37,11 @@ namespace ImageGlass
 
         #region Public Properties
 
-        public int Count
-        {
+        public int Count {
             get { return _items.Count; }
         }
 
-        public DragHandle this[DragHandleAnchor index]
-        {
+        public DragHandle this[DragHandleAnchor index] {
             get { return _items[index]; }
         }
 
@@ -60,21 +55,17 @@ namespace ImageGlass
         /// <returns>
         /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
         /// </returns>
-        public IEnumerator<DragHandle> GetEnumerator()
-        {
+        public IEnumerator<DragHandle> GetEnumerator() {
             return _items.Values.GetEnumerator();
         }
 
-        public DragHandleAnchor HitTest(Point point)
-        {
+        public DragHandleAnchor HitTest(Point point) {
             DragHandleAnchor result;
 
             result = DragHandleAnchor.None;
 
-            foreach (DragHandle handle in this)
-            {
-                if (handle.Visible && handle.Bounds.Contains(point))
-                {
+            foreach (DragHandle handle in this) {
+                if (handle.Visible && handle.Bounds.Contains(point)) {
                     result = handle.Anchor;
                     break;
                 }
@@ -93,8 +84,7 @@ namespace ImageGlass
         /// <returns>
         /// An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
         /// </returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
+        IEnumerator IEnumerable.GetEnumerator() {
             return this.GetEnumerator();
         }
 

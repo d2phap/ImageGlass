@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2019 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Copyright (C) 2021 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -35,16 +35,13 @@ namespace ImageGlass.Library.WinAPI {
             public int bottomHeight;
         }
 
-        const int DWMWA_NCRENDERING_POLICY = 2;
-
+        private const int DWMWA_NCRENDERING_POLICY = 2;
 
         [DllImport("dwmapi.dll")]
         private static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
 
         [DllImport("dwmapi.dll")]
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
-
-
 
         /// <summary>
         /// Set window border
@@ -55,8 +52,7 @@ namespace ImageGlass.Library.WinAPI {
             var attrValue = DWMWA_NCRENDERING_POLICY;
             DwmSetWindowAttribute(handle, DWMWA_NCRENDERING_POLICY, ref attrValue, 4);
 
-            var margins = new MARGINS()
-            {
+            var margins = new MARGINS() {
                 bottomHeight = borderWidth,
                 leftWidth = borderWidth,
                 rightWidth = borderWidth,

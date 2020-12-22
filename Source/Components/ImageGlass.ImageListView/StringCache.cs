@@ -25,19 +25,15 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace ImageGlass.ImageListView
-{
+namespace ImageGlass.ImageListView {
     /// <summary>
     /// A string cache.
     /// </summary>
-    public class StringCache
-    {
+    public class StringCache {
         // A comparator is necessary because just using vanilla char[] will result in
         // a different hash for each *instance*. This comparator works on the contents.
-        private class TagComparer : IEqualityComparer<char[]>
-        {
-            public bool Equals(char[] x, char[] y)
-            {
+        private class TagComparer: IEqualityComparer<char[]> {
+            public bool Equals(char[] x, char[] y) {
                 if (x == null && y == null)
                     return true;
                 if (x == null || y == null) // One but not both?
@@ -50,13 +46,11 @@ namespace ImageGlass.ImageListView
                 return true;
             }
 
-            public int GetHashCode(char[] obj)
-            {
+            public int GetHashCode(char[] obj) {
                 if (obj.Length == 0)
                     return 0;
                 var hashCode = 0;
-                for (var i = 0; i < obj.Length; i++)
-                {
+                for (var i = 0; i < obj.Length; i++) {
                     var bytes = BitConverter.GetBytes(obj[i]);
 
                     // Rotate by 3 bits and XOR the new value.
@@ -73,8 +67,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Create a basic string cache.
         /// </summary>
-        public StringCache()
-        {
+        public StringCache() {
             //int numProcs = Environment.ProcessorCount; 
             _stringCache = new ConcurrentDictionary<char[], string>(new TagComparer());
         }
@@ -84,15 +77,12 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="inval">input string to be cached</param>
         /// <returns>the string from the cache</returns>
-        public string GetFromCache(string inval)
-        {
+        public string GetFromCache(string inval) {
             return GetFromCache(inval.ToCharArray());
         }
 
-        private string GetFromCache(char[] inval)
-        {
-            if (!_stringCache.TryGetValue(inval, out var outval))
-            {
+        private string GetFromCache(char[] inval) {
+            if (!_stringCache.TryGetValue(inval, out var outval)) {
                 outval = new string(inval);
                 _stringCache.TryAdd(inval, outval);
             }

@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="da-DK" langName="Dansk" author="Kevin Neergaard" description="Danish" minVersion="8.0.0.0" isRightToLeftLayout="Yes"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="Nogle indstillinger er ikke kompatibel med din version af ImageGlass{0}. Det anbefales at opdatere, før du forsætter&#10;&#10;-Klik Ja for at læse mere om ændringerne.&#10;-Klik Nej for at åbne ImageGlass med standard indstillinger."/>
+      <Item key="_.ImageOrderBy._Name" value="Navn (standard)"/>
+      <Item key="_.ImageOrderBy._Length" value="Længde"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Tid oprettet"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Senest anvendt"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Sidst ændret"/>
+      <Item key="_.ImageOrderBy._Extension" value="Tilføjelser"/>
+      <Item key="_.ImageOrderBy._Random" value="Tilfældig"/>
+      <Item key="_.ImageOrderType._Asc" value="Stigende"/>
+      <Item key="_.ImageOrderType._Desc" value="Faldende"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Ingen"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Minimer"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Luk"/>
+      <Item key="frmMain.mnuMainFile" value="Fil"/>
+      <Item key="frmMain.mnuMainOpenFile" value="Åbn fil…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Åben billede data fra klipholder"/>
+      <Item key="frmMain.mnuMainNewWindow" value="Åben nyt vindue"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Det er ikke muligt at åbne flere vinduer, da kun en instans er tilladt"/>
+      <Item key="frmMain.mnuMainSaveAs" value="Gem billede som…"/>
+      <Item key="frmMain.mnuMainRefresh" value="Opdater"/>
+      <Item key="frmMain.mnuMainReloadImage" value="Opdater billede"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="Opdater billedliste"/>
+      <Item key="frmMain.mnuOpenWith" value="Åbn med…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Rediger billede {0}…"/>
+      <Item key="frmMain.mnuMainPrint" value="Udskriv…"/>
+      <Item key="frmMain.mnuMainNavigation" value="Navigation"/>
+      <Item key="frmMain.mnuMainViewNext" value="Vis næste billede"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Højre pil / PageDown"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="Vis forrige billede"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Ventre pil /PageUp"/>
+      <Item key="frmMain.mnuMainGoto" value="Gå til…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="Gå til første billede"/>
+      <Item key="frmMain.mnuMainGotoLast" value="Gå til sidste billede"/>
+      <Item key="frmMain.mnuMainNextPage" value="Vis næste side"/>
+      <Item key="frmMain.mnuMainPrevPage" value="Vis tidligere side"/>
+      <Item key="frmMain.mnuMainFirstPage" value="Vis første side"/>
+      <Item key="frmMain.mnuMainLastPage" value="Vis sidste side"/>
+      <Item key="frmMain.mnuMainZoom" value="Zoom"/>
+      <Item key="frmMain.mnuMainZoomIn" value="Zoom ind"/>
+      <Item key="frmMain.mnuMainZoomOut" value="Zoom ud"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="Tilpas størrelse"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="Tilpas fuld størrelse"/>
+      <Item key="frmMain.mnuMainActualSize" value="Akutelle størrelse"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Lås Zoom ratio"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="Auto zoom"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="Scalér til bredde"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="Scalér til højde"/>
+      <Item key="frmMain.mnuMainImage" value="Billede"/>
+      <Item key="frmMain.mnuMainChannels" value="Vis kanaler"/>
+      <Item key="frmMain.mnuMainChannels._All" value="Alle"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="Rød"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="Grøn"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="Blå"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="Sort"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="Alfa"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Indlæser ordre"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="Rotér venstre om"/>
+      <Item key="frmMain.mnuMainRotateRight" value="Rotér højre om"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="Vend Vandret"/>
+      <Item key="frmMain.mnuMainFlipVert" value="Vend Lodret"/>
+      <Item key="frmMain.mnuMainRename" value="Omdøb billede…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Flyt til papirkurv"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Slet fra harddisk"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Udpak billedsider ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="Start / Stop animationsbillede"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Anvend som skrivebordsbaggrund"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="Anvend som låseskærmsbillede"/>
+      <Item key="frmMain.mnuMainImageLocation" value="Åben billedplacering"/>
+      <Item key="frmMain.mnuMainImageProperties" value="Billede engenskaber"/>
+      <Item key="frmMain.mnuMainClipboard" value="Udklip holder"/>
+      <Item key="frmMain.mnuMainCopy" value="Kopier"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="Kopier billede data"/>
+      <Item key="frmMain.mnuMainCut" value="Klip"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="Kopier filsti"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="Fjern udklip"/>
+      <Item key="frmMain.mnuWindowFit" value="Vindue tilpas"/>
+      <Item key="frmMain.mnuMainFullScreen" value="Fuldskærm"/>
+      <Item key="frmMain.mnuFrameless" value="Uden ramme"/>
+      <Item key="frmMain.mnuMainSlideShow" value="Slideshow"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="Start Slideshow"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="Pause / Afspil slideshow"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="Exit slideshow"/>
+      <Item key="frmMain.mnuMainShare" value="Del…"/>
+      <Item key="frmMain.mnuMainLayout" value="Layout"/>
+      <Item key="frmMain.mnuMainToolbar" value="Værktøjslinje"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="Miniature panel"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="Ternet baggrund"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Vis altid vindue øverst"/>
+      <Item key="frmMain.mnuMainTools" value="Værktøj"/>
+      <Item key="frmMain.mnuMainColorPicker" value="Pipette"/>
+      <Item key="frmMain.mnuMainPageNav" value="Sidenavigation"/>
+      <Item key="frmMain.mnuMainCrop" value="Beskæring"/>
+      <Item key="frmMain.mnuExifTool" value="Exif- værktøj"/>
+      <Item key="frmMain.mnuMainSettings" value="Indstillinger…"/>
+      <Item key="frmMain.mnuMainHelp" value="Hjælp"/>
+      <Item key="frmMain.mnuMainAbout" value="Om"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="Opstart konfigurationer…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Søg efter opdateringer…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Opdatering tilgængelig!"/>
+      <Item key="frmMain.mnuMainReportIssue" value="Rapportér et problem…"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Luk ImageGlass"/>
+      <Item key="frmMain.picMain._ErrorText" value="ImageGlass er ikke i stand til at åbne billedet, da filen ser ud til at være beskadet eller ikke understøttet."/>
+      <Item key="frmMain._ImageNotExist" value="Det valgte billede eksistere ikke."/>
+      <Item key="frmMain.btnMenu" value="Menu (Hotkey: `)"/>
+      <Item key="frmMain._OpenFileDialog" value="Alle understøttede filer"/>
+      <Item key="frmMain._Files" value="fil(er)"/>
+      <Item key="frmMain._Pages" value="sider"/>
+      <Item key="frmMain._ImageData" value="Billede data"/>
+      <Item key="frmMain._RenameDialogText" value="Omdøb"/>
+      <Item key="frmMain._RenameDialog" value="Indtast nyt filnavn"/>
+      <Item key="frmMain._GotoDialogText" value="Indtast billedindekset for at se det. Tryk på ENTER"/>
+      <Item key="frmMain._DeleteDialogText" value="Slet fil ¨{0}'?"/>
+      <Item key="frmMain._DeleteDialogTitle" value="Bekræft"/>
+      <Item key="frmMain._ExtractPageText" value="Udpakker billedsider. Vælg venligst udpakningssti."/>
+      <Item key="frmMain._FullScreenMessage" value="Tryk på {0} for at afslutte fuldskærmstilstand."/>
+      <Item key="frmMain._SlideshowMessage" value="Tryk på ESC for at afslutte diasshow.&#10; Højreklik for at åbne kontekstmenuen."/>
+      <Item key="frmMain._SlideshowMessagePause" value="Slideshow er paused"/>
+      <Item key="frmMain._SlideshowMessageResume" value="Slideshow forsætter"/>
+      <Item key="frmMain._CopyFileText" value="Kopieret {0} fil(er)"/>
+      <Item key="frmMain._CutFileText" value="Klip {0} fil(er)"/>
+      <Item key="frmMain._CopyImageData" value="Billede er kopieret til udklipsholder"/>
+      <Item key="frmMain._ClearClipboard" value="Udklipsholder ryddet"/>
+      <Item key="frmMain._SaveChanges" value="Gemmer ændringer..."/>
+      <Item key="frmMain._SaveImage" value="Billedet blev gemt til&#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="Gemmer billede...&#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="Billedet kan ikke gemmes&#10;{0}."/>
+      <Item key="frmMain._Loading" value="Indlæser..."/>
+      <Item key="frmMain._FirstItemOfList" value="Nået det første billede"/>
+      <Item key="frmMain._LastItemOfList" value="Nået det sidste billede"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="Modifikation for animeret format er ikke understøttet"/>
+      <Item key="frmMain._SetLockImage_Error" value="Fejl ved indstilling af låseskærmbillede"/>
+      <Item key="frmMain._SetLockImage_Success" value="Låseskærmbillede gemt"/>
+      <Item key="frmMain._SetBackground_Error" value="Fejl ved indstilling af baggrundsbillede"/>
+      <Item key="frmMain._SetBackground_Success" value="Baggrundsbillede gemt"/>
+      <Item key="frmMain._PageExtractComplete" value="Side udpakning gennemført."/>
+      <Item key="frmMain._Frameless" value="Hold SHIFT for at flytte vinduet."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Udklipsholder indeholder ikke billeddata."/>
+      <Item key="frmAbout.lblSlogant" value="En let, alsidig billedfremviser"/>
+      <Item key="frmAbout.lblInfo" value="Information"/>
+      <Item key="frmAbout.lblComponent" value="Komponenter"/>
+      <Item key="frmAbout.lblReferences" value="Referencer"/>
+      <Item key="frmAbout.lblVersion" value="Version: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="Kontakt"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="Software opdateringer"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» Søg efter opdatering…"/>
+      <Item key="frmAbout._Text" value="Om"/>
+      <Item key="frmAbout._PortableText" value="[Portable]"/>
+      <Item key="frmSetting._Text" value="Indstillinger"/>
+      <Item key="frmSetting.btnSave" value="Gem"/>
+      <Item key="frmSetting.btnCancel" value="Annuller"/>
+      <Item key="frmSetting.btnApply" value="Anvend"/>
+      <Item key="frmSetting.lblGeneral" value="Generelt"/>
+      <Item key="frmSetting.lblImage" value="Billede"/>
+      <Item key="frmSetting.lblEdit" value="Rediger"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="Tilknytninger Af Filtype"/>
+      <Item key="frmSetting.lblToolbar" value="Værktøjslinje"/>
+      <Item key="frmSetting.lblLanguage" value="Sprog"/>
+      <Item key="frmSetting.lblTheme" value="Tema"/>
+      <Item key="frmSetting.lblKeyboard" value="Tastatur"/>
+      <Item key="frmSetting.lblHeadStartup" value="Opstart"/>
+      <Item key="frmSetting.chkWelcomePicture" value="Vis Velkomstbillede"/>
+      <Item key="frmSetting.chkLastSeenImage" value="Åben sidst set billede"/>
+      <Item key="frmSetting.chkShowToolBar" value="Vis værktøjslinje ved opstart"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="Konfigurationskatalog"/>
+      <Item key="frmSetting.lblHeadViewer" value="Fremviser"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Vis scrollbar"/>
+      <Item key="frmSetting.chkShowNavButtons" value="Vis navigation pile"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Vis billedbanen i titellinjen"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Vis Netmønster kun i billedområdet"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="Aktiver understøttelse af berøringsbevægelse"/>
+      <Item key="frmSetting.lblBackGroundColor" value="Baggrundsfarve"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Nulstil"/>
+      <Item key="frmSetting.lblHeadOthers" value="Andet"/>
+      <Item key="frmSetting.chkAutoUpdate" value="Tjek for opdatering automatisk"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="Tillad flere instanser af programmet"/>
+      <Item key="frmSetting.chkESCToQuit" value="Tillad ESC for at afslutte program"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="Vis bekræftelseboks ved sletning"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="Auto-center vinduet i vinduet Tilpas tilstand"/>
+      <Item key="frmSetting.chkShowToast" value="Vis toast besked"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="Indlæser billede"/>
+      <Item key="frmSetting.chkFindChildFolder" value="Find billeder i undermapper"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="Vis skjulte billeder"/>
+      <Item key="frmSetting.chkLoopViewer" value="Vis første billede når sidste billede er vist"/>
+      <Item key="frmSetting.chkIsCenterImage" value="Centrer billede"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="Indlæsningsfejl af billede"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Sorter med Windows Stifinder hvis muligt"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Gruppér billeder efter mappe"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="Antal billeder cachelagret af ImageBooster (en retning)"/>
+      <Item key="frmSetting.lblColorManagement" value="Farvestyring"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="Anvend også til billeder uden indlejret farveprofil"/>
+      <Item key="frmSetting.lblColorProfile" value="Billede profil:"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="Gennemse…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="Ingen"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Brugerdefineret…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="Musehjul handling"/>
+      <Item key="frmSetting.lblMouseWheel" value="Mushjul"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="Mushjul + Alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Mushjul + Ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="Mushjul + Shift"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="Gør ingenting"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="Zoom"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Rul lodret"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Rul Vandret"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Forangående/næste bilelde"/>
+      <Item key="frmSetting.lblHeadZooming" value="Zooming"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Zoom optimering"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Auto"/>
+      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Blød forstørrelse"/>
+      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Skarp forstørrelse"/>
+      <Item key="frmSetting.lblZoomLevels" value="Zoom niveau"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="Der opstod fejl under opdatering af Zoom niveauer. Fejlmeddelelse:&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Værktøjslinje"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="Vis værktøj på højre side"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Vis rullebjælke"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Miniature-størrelse (pixels)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="Slideshow"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="Vis første billede når sidste billede er vist i slideshow"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="Vis nedtælling af diasshow"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="Brug tilfældigt interval"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="Diasshow interval: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="til"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="Gem viste billede efter rotering"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="Vælg program for billedredigering"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="Efter åbning redigering app:"/>
+      <Item key="frmSetting.lblImageQuality" value="Billede kvalitet:"/>
+      <Item key="frmSetting.btnEditEditExt" value="Rediger…"/>
+      <Item key="frmSetting.btnEditResetExt" value="Nulstil til standard"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="Rediger alle udvidelser…"/>
+      <Item key="frmSetting._allExtensions" value="alle udvigelser"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Filtypenavn"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="App navn"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="Program sti"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Programvariabler"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Bevar billedets ændrede dato ved gemning"/>
+      <Item key="frmSetting.lblSupportedExtension" value="Support formater: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Open tilknytninger af filtype"/>
+      <Item key="frmSetting.btnAddNewExt" value="Tilføj…"/>
+      <Item key="frmSetting.btnRegisterExt" value="Sæt som standard billedfremviser…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Fjern udvidelser"/>
+      <Item key="frmSetting.btnDeleteExt" value="Slet"/>
+      <Item key="frmSetting.btnResetExt" value="Nulstil til standard"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="Web-til-App link ikke muligt at registrer"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="Kan ikke registrere filtypenavne til appen ImageGlass"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="Alle fil tilføjelser er registreret korrekt! For at indstille ImageGlass som standard billedfremviser, skal du åbne Windows-indstillinger &gt; Standardapps, og manuelt vælge ImageGlass app under Billedfremviser sektion."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Registrerede udvidelser ikke mulige at fjerne fra ImageGlass app"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Alle udvidelser er afregistrereret korrekt!"/>
+      <Item key="frmSetting.lblToolbarPosition" value="Værktøjslinje placering:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Værktøjslinjens ikonstørrelse:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Top"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Bund"/>
+      <Item key="frmSetting._separator" value="Mellemrum"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="Tilpas knapperne på værktøjslinjen"/>
+      <Item key="frmSetting.lblUsedBtns" value="Nuværende knapper:"/>
+      <Item key="frmSetting.lblAvailBtns" value="Tilgængelige knapper:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="Flyt valgte knapper ned"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="Fjern valgte knap(per) fra værktøjslinjen"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="Tilføj valgte knap(per) til værktøjslinjen"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="Flyt valgte knapper op"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Centrer værktøjslinjens knapper lodret i vinduet"/>
+      <Item key="frmSetting.chkHideTooltips" value="Skjul værktøjstips i værktøjslinjen"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="Brug RGB format med Alpha værdi"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="Brug HEX format med Alpha værdi"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="Brug HSL format med Alpha værdi"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="Brug HSV format med Alpha værdi"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="Standard farvekode format ved kopiering"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="Auto-vis Page navigation værktøj til flersidet billede"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Behold altid Exif værktøj øverst"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Vælg Exif- værktøjs fil"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Exif- værktøjet eksisterer ikke eller er ugyldig: &#10;{0}"/>
+      <Item key="frmSetting.lblLanguageText" value="Installeret sprog"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; Opdater"/>
+      <Item key="frmSetting.lblLanguageWarning" value="Denne sprogpakke er muligvis ikke kompatibel med {0}"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Installer ny sprogpakke (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Opret ny sprogpakke…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; Rediger valgte sprogpakke…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Få flere sprogpakker…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="Installeret temaer: {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="Download temaer…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="Opdater"/>
+      <Item key="frmSetting.btnThemeInstall" value="Installer…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="Afinstaller…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="Gem som…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="Åbn temamappe"/>
+      <Item key="frmSetting.btnThemeApply" value="Anvend tema"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="Navn"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="Version"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="Udvikler"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="Email"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="Hjemmeside"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="Kompatibel"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="Beskrivelse"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="Dit tema er installeret!"/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="Ikke istand til at installere dit tema."/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="Ikke istand til at afinstallere valgte tema."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="Dit valgte tema er gemt i {0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="Ikke istand til at gemme dit valgte tema."/>
+      <Item key="frmSetting.btnThemeApply._Success" value="Det valgte tema er anvendt!"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="Ikke istand til at anvende valgte tema."/>
+      <Item key="frmSetting.btnKeyReset" value="Nulstil til standard"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="Mellemrum / Slet"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="PageUp / PageDown"/>
+      <Item key="frmSetting.lblKeysUpDown" value="Op / Ned piletast"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="Venstre / Højre piletast"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="Forrige / Næste Billede"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="Panorering til venstre / højre"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="Panorering Op / Ned"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="Zoom Ind / Ud"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="Pause slideshow"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="Gør ingenting"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="Filtypenavn"/>
+      <Item key="frmAddNewFormat.btnOK" value="OK"/>
+      <Item key="frmAddNewFormat.btnClose" value="Luk"/>
+      <Item key="frmEditApp.lblFileExtension" value="Filtypenavn"/>
+      <Item key="frmEditApp.lblAppName" value="App navn"/>
+      <Item key="frmEditApp.lblAppPath" value="Program sti"/>
+      <Item key="frmEditApp.lblAppArguments" value="Programvariabler"/>
+      <Item key="frmEditApp.btnReset" value="Nulstil"/>
+      <Item key="frmEditApp.btnOK" value="OK"/>
+      <Item key="frmEditApp.btnClose" value="Luk"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="Forhåndvisning"/>
+      <Item key="frmFirstLaunch._Text" value="Konfigurering først gang"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ImageGlass skal lukke alle sine vinduer for at anvende de nye indstillinger, vil du fortsætte?"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="Step {0}/{1}"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="Næste"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="Færdig!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="Spring over og åben ImageGlass"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="Vælg sprog"/>
+      <Item key="frmFirstLaunch.lblLayout" value="Vælg layout"/>
+      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Standard"/>
+      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Designer"/>
+      <Item key="frmFirstLaunch.lblTheme" value="Vælg Tema"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="Set ImageGlass som standard billedefremviser?"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="Ja"/>
+      <Item key="frmCrop.lblWidth" value="Bredde:"/>
+      <Item key="frmCrop.lblHeight" value="Højde:"/>
+      <Item key="frmCrop.btnSave" value="Gem"/>
+      <Item key="frmCrop.btnSaveAs" value="Gem som…"/>
+      <Item key="frmCrop.btnCopy" value="Kopier"/>
+      <Item key="frmCrop.btnReset" value="Nulstil"/>
+      <Item key="FrmExifTool.clnProperty" value="Egenskaber"/>
+      <Item key="FrmExifTool.clnValue" value="Værdi"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Kopiér værdi"/>
+      <Item key="FrmExifTool.btnExport" value="Eksporter…"/>
+      <Item key="FrmExifTool.btnClose" value="Luk"/>
+    </Content>
+  </Language>
+</ImageGlass>

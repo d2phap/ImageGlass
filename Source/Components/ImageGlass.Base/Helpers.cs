@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2020 DUONG DIEU PHAP
+Copyright (C) 2021 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -22,42 +22,37 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace ImageGlass.Base {
     /// <summary>
     /// The helper functions used globally
     /// </summary>
     public static class Helpers {
+
+        #region Public functions
+
         /// <summary>
-        /// Check if the given path (file or directory) is writable. 
+        /// Check if the given path (file or directory) is writable.
         /// </summary>
         /// <param name="type">Indicates if the given path is either file or directory</param>
         /// <param name="path">Full path of file or directory</param>
         /// <returns></returns>
         public static bool CheckPathWritable(PathType type, string path) {
             try {
+                // if path is directory
+                if (type == PathType.Dir) {
+                    TestDirWrittable(path);
+                }
                 // If path is file
-                if (type == PathType.File) {
+                else if (File.Exists(path)) {
                     using (File.OpenWrite(path)) { }
                 }
-                // if path is directory
-                else {
-                    var isDirExist = Directory.Exists(path);
-
-                    if (!isDirExist) {
-                        Directory.CreateDirectory(path);
-                    }
-
-                    var sampleFile = Path.Combine(path, "test_write_file.temp");
-
-                    using (File.Create(sampleFile)) { }
-                    File.Delete(sampleFile);
-
-                    if (!isDirExist) {
-                        Directory.Delete(path, true);
-                    }
+                // if path is non-exist file
+                else if (type == PathType.File) {
+                    var dir = Path.GetDirectoryName(path);
+                    TestDirWrittable(dir);
                 }
-
 
                 return true;
             }
@@ -75,7 +70,7 @@ namespace ImageGlass.Base {
         /// <param name="distinct">whether repitition of values is allowed</param>
         /// <returns></returns>
         public static int[] StringToIntArray(string str, bool unsignedOnly = false, bool distinct = false) {
-            var args = str.Split(new [] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            var args = str.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             var numbers = new List<int>();
 
             foreach (var item in args) {
@@ -97,7 +92,6 @@ namespace ImageGlass.Base {
             return numbers.ToArray();
         }
 
-
         /// <summary>
         /// Convert int array to semi-colon delimited string
         /// </summary>
@@ -106,7 +100,6 @@ namespace ImageGlass.Base {
         public static string IntArrayToString(int[] array) {
             return string.Join(";", array);
         }
-
 
         /// <summary>
         /// Convert string to Rectangle - input string must have four integer values
@@ -124,7 +117,6 @@ namespace ImageGlass.Base {
             return new Rectangle();
         }
 
-
         /// <summary>
         /// Convert Rectangle to String
         /// </summary>
@@ -134,13 +126,59 @@ namespace ImageGlass.Base {
             return rc.Left + ";" + rc.Top + ";" + rc.Width + ";" + rc.Height;
         }
 
+
+        /// <summary>
+        /// Checks if the given rectangle is visible on any screen
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <returns></returns>
         public static bool IsVisibleOnAnyScreen(Rectangle rect) {
-            foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens) {
+            foreach (var screen in Screen.AllScreens) {
                 if (screen.WorkingArea.IntersectsWith(rect))
                     return true;
             }
             return false;
         }
 
+
+        /// <summary>
+        /// Get all controls by type
+        /// </summary>
+        /// <param name="control"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static IEnumerable<Control> GetAllControls(Control control, Type type) {
+            var controls = control.Controls.Cast<Control>();
+
+            return controls.SelectMany(ctrl => GetAllControls(ctrl, type))
+                                      .Concat(controls)
+                                      .Where(c => c.GetType() == type);
+        }
+
+        #endregion
+
+
+        #region Private functions
+        /// <summary>
+        /// Tests if the given directory is writtable.
+        /// </summary>
+        /// <param name="dir"></param>
+        private static void TestDirWrittable(string dir) {
+            var isDirExist = Directory.Exists(dir);
+
+            if (!isDirExist) {
+                Directory.CreateDirectory(dir);
+            }
+
+            var sampleFile = Path.Combine(dir, "test_write_file.temp");
+
+            using (File.Create(sampleFile)) { }
+            File.Delete(sampleFile);
+
+            if (!isDirExist) {
+                Directory.Delete(dir, true);
+            }
+        }
+        #endregion
     }
 }

@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2017 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ namespace ImageGlass {
     /// <summary>
     /// This is a wrapper for the original System.Drawing animator. See <see cref="ImageAnimator"/>.
     /// </summary>
-    public class DefaultGifAnimator : GifAnimator {
+    public class DefaultGifAnimator: GifAnimator {
 
         /// <summary>
         /// Updates the time frame for this image.

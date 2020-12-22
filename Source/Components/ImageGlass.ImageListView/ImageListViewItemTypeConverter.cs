@@ -16,18 +16,16 @@
 // Ozgur Ozcitak (ozcitak@yahoo.com)
 
 using System;
-using System.Globalization;
 using System.ComponentModel;
-using System.Reflection;
 using System.ComponentModel.Design.Serialization;
+using System.Globalization;
+using System.Reflection;
 
-namespace ImageGlass.ImageListView
-{
+namespace ImageGlass.ImageListView {
     /// <summary>
     /// Represents the type converter for the items of the image list view.
     /// </summary>
-    internal class ImageListViewItemTypeConverter : TypeConverter
-    {
+    internal class ImageListViewItemTypeConverter: TypeConverter {
         #region TypeConverter Overrides
         /// <summary>
         /// Returns whether this converter can convert the 
@@ -36,8 +34,7 @@ namespace ImageGlass.ImageListView
         /// <param name="context">Format context.</param>
         /// <param name="destinationType">The type you want to convert to.</param>
         /// <returns>true if this converter can perform the conversion; otherwise, false.</returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
-        {
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
             if (destinationType == typeof(InstanceDescriptor))
                 return true;
 
@@ -52,18 +49,15 @@ namespace ImageGlass.ImageListView
         /// <param name="value">The objct to convert.</param>
         /// <param name="destinationType">The type to convert to.</param>
         /// <returns>An object that represents the converted value.</returns>
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
-        {
-            if (value != null && value is ImageListViewItem)
-            {
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType) {
+            if (value != null && value is ImageListViewItem) {
                 ImageListViewItem item = (ImageListViewItem)value;
 
-                if (destinationType == typeof(InstanceDescriptor))
-                {
-                    ConstructorInfo consInfo = typeof(ImageListViewItem).GetConstructor(new Type[] { 
+                if (destinationType == typeof(InstanceDescriptor)) {
+                    ConstructorInfo consInfo = typeof(ImageListViewItem).GetConstructor(new Type[] {
                             typeof(string), typeof(string), typeof(object)
                         });
-                    return new InstanceDescriptor(consInfo, new object[] { 
+                    return new InstanceDescriptor(consInfo, new object[] {
                         item.FileName, item.Text, item.Tag
                     });
                 }

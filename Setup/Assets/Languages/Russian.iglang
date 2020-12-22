@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="ru-RU" langName="Русский" author="ImageGlass community" description="Russian" minVersion="7.6.4.30" isRightToLeftLayout="No"/>
+    <Info langCode="ru-RU" langName="Русский" author="inkrimit (Вынгилев Алексей), DenisK_2017 (Denis Velicanov), Zelyc81 (Гапоненко Евгений)" description="Russian" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Некоторые настройки несовместимы с вашим ImageGlass {0}. Рекомендуется обновить их, прежде чем продолжить.&#10;&#10;— Нажмите &quot;Да&quot;, чтобы узнать об изменениях.&#10;— Нажмите &quot;Нет&quot;, чтобы запустить ImageGlass с настройками по умолчанию."/>
+      <Item key="_.ImageOrderBy._Name" value="Имя (по умолчанию)"/>
+      <Item key="_.ImageOrderBy._Length" value="Размер"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Время создания"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Время последнего доступа"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Время последней записи"/>
+      <Item key="_.ImageOrderBy._Extension" value="Тип"/>
+      <Item key="_.ImageOrderBy._Random" value="Случайный"/>
+      <Item key="_.ImageOrderType._Asc" value="По возрастанию"/>
+      <Item key="_.ImageOrderType._Desc" value="По убыванию"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Оставить ImageGlass"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Свернуть ImageGlass"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Закрыть"/>
       <Item key="frmMain.mnuMainFile" value="Файл"/>
       <Item key="frmMain.mnuMainOpenFile" value="Открыть файл ..."/>
       <Item key="frmMain.mnuMainOpenImageData" value="Открыть изображение из буфера обмена"/>
@@ -46,6 +58,7 @@
       <Item key="frmMain.mnuMainChannels._Blue" value="Синий"/>
       <Item key="frmMain.mnuMainChannels._Black" value="Чёрный"/>
       <Item key="frmMain.mnuMainChannels._Alpha" value="Альфа (прозрачность)"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Порядок просмотра"/>
       <Item key="frmMain.mnuMainRotateLeft" value="Повернуть ПРОТИВ ЧАСОВОЙ стрелки"/>
       <Item key="frmMain.mnuMainRotateRight" value="Повернуть ПО ЧАСОВОЙ стрелке"/>
       <Item key="frmMain.mnuMainFlipHorz" value="Отразить по горизонтали"/>
@@ -82,6 +95,7 @@
       <Item key="frmMain.mnuMainColorPicker" value="Пипетка"/>
       <Item key="frmMain.mnuMainPageNav" value="Страницы"/>
       <Item key="frmMain.mnuMainCrop" value="Обрезка"/>
+      <Item key="frmMain.mnuExifTool" value="ExifTool"/>
       <Item key="frmMain.mnuMainSettings" value="Настройки ..."/>
       <Item key="frmMain.mnuMainHelp" value="Помощь"/>
       <Item key="frmMain.mnuMainAbout" value="О программе"/>
@@ -103,7 +117,7 @@
       <Item key="frmMain._DeleteDialogText" value="Удалить файл &quot;{0}&quot; ?"/>
       <Item key="frmMain._DeleteDialogTitle" value="Подтвердить"/>
       <Item key="frmMain._ExtractPageText" value="Извлечение кадров изображения.&#10;Пожалуйста, выберите папку для извлечения:"/>
-      <Item key="frmMain._FullScreenMessage" value="Нажмите &quot;Alt&quot; + &quot;Enter&quot; для выхода из полноэкранного режима."/>
+      <Item key="frmMain._FullScreenMessage" value="Нажмите {0} для выхода из полноэкранного режима."/>
       <Item key="frmMain._SlideshowMessage" value="Нажмите &quot;Esc&quot; чтобы выйти из режима презентации.&#10;Правая кнопка мыши, чтобы открыть контекстное меню."/>
       <Item key="frmMain._SlideshowMessagePause" value="Приостановить показ"/>
       <Item key="frmMain._SlideshowMessageResume" value="Возобновить показ"/>
@@ -125,6 +139,7 @@
       <Item key="frmMain._SetBackground_Success" value="Фон рабочего стола был успешно установлен"/>
       <Item key="frmMain._PageExtractComplete" value="Извлечение кадров завершено"/>
       <Item key="frmMain._Frameless" value="Удерживайте &quot;Shift&quot;, чтобы переместить окно."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="В буфере обмена нет изображений."/>
       <Item key="frmAbout.lblSlogant" value="Лёгкое, универсальное средство просмотра изображений"/>
       <Item key="frmAbout.lblInfo" value="Информация"/>
       <Item key="frmAbout.lblComponent" value="Компоненты"/>
@@ -173,16 +188,8 @@
       <Item key="frmSetting.chkLoopViewer" value="Повторять презентацию с первого файла при достижении конца"/>
       <Item key="frmSetting.chkIsCenterImage" value="Центрировать изображение в средстве просмотра"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Порядок чтения файлов:"/>
-      <Item key="frmSetting.cmbImageOrder._Name" value="Имя (по умолчанию)"/>
-      <Item key="frmSetting.cmbImageOrder._Length" value="Размер"/>
-      <Item key="frmSetting.cmbImageOrder._CreationTime" value="Время создания"/>
-      <Item key="frmSetting.cmbImageOrder._LastAccessTime" value="Время последнего доступа"/>
-      <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="Время последней записи"/>
-      <Item key="frmSetting.cmbImageOrder._Extension" value="Тип"/>
-      <Item key="frmSetting.cmbImageOrder._Random" value="Случайный"/>
-      <Item key="frmSetting.cmbImageOrderType._Asc" value="По возрастанию"/>
-      <Item key="frmSetting.cmbImageOrderType._Desc" value="По убыванию"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Использовать порядок сортировки такой же, как и в проводнике, если это возможно"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Группировать изображения по папкам"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Количество файлов, кэшированных ImageBooster (в одной директории):"/>
       <Item key="frmSetting.lblColorManagement" value="Управление цветом"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Применять и для изображений без внедрённого цветового профиля"/>
@@ -219,6 +226,8 @@
       <Item key="frmSetting.lblSlideshowIntervalTo" value="до"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Перезаписывать файл после редактирования"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Укажите свои приложения для редактирования изображений"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="После открытия в редакторе:"/>
+      <Item key="frmSetting.lblImageQuality" value="Качество изображения:"/>
       <Item key="frmSetting.btnEditEditExt" value="Изменить ..."/>
       <Item key="frmSetting.btnEditResetExt" value="Вернуть настройки"/>
       <Item key="frmSetting.btnEditEditAllExt" value="Изменить всё ..."/>
@@ -227,17 +236,21 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Имя приложения"/>
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Путь к приложению"/>
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Параметры приложения"/>
-      <Item key="frmSetting.chkSaveModifyDate" value="Фиксировать время изменения файла при его перезаписи"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Сохранить дату изменения при сохранении изображения"/>
       <Item key="frmSetting.lblSupportedExtension" value="Поддерживаемые форматы: {0}"/>
       <Item key="frmSetting.lnkOpenFileAssoc" value="Программы по умолчанию"/>
       <Item key="frmSetting.btnAddNewExt" value="Добавить ..."/>
       <Item key="frmSetting.btnRegisterExt" value="Использовать по умолчанию"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Отменить регистрацию расширений"/>
       <Item key="frmSetting.btnDeleteExt" value="Удалить"/>
       <Item key="frmSetting.btnResetExt" value="Вернуть настройки"/>
       <Item key="frmSetting._RegisterWebToApp_Error" value="При регистрации функции привязки к веб-приложению произошла ошибка."/>
       <Item key="frmSetting._RegisterAppExtensions_Error" value="Не удаётся зарегистрировать расширения файлов для приложения ImageGlass"/>
       <Item key="frmSetting._RegisterAppExtensions_Success" value="Все расширения файлов успешно зарегистрированы!&#10;&#10;Чтобы установить ImageGlass в качестве программы просмотра фотографий по умолчанию, пожалуйста откройте &quot;Параметры Windows → Приложения по умолчанию&quot;, и вручную выберите приложение ImageGlass в разделе &quot;Просмотр фотографий&quot;."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Не удается удалить зарегистрированные расширения файлов из ImageGlass"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Все расширения файлов успешно зарегистрированы!"/>
       <Item key="frmSetting.lblToolbarPosition" value="Положение панели инструментов:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Размер иконок панели инструментов:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Вверху"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Внизу"/>
       <Item key="frmSetting._separator" value="Разделитель"/>
@@ -249,11 +262,16 @@
       <Item key="frmSetting.btnMoveRight._Tooltip" value="Добавить выбранные кнопки на панель инструментов"/>
       <Item key="frmSetting.btnMoveUp._Tooltip" value="Переместить вверх"/>
       <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Горизонтально центрировать панель инструментов относительно окна"/>
-      <Item key="frmSetting.chkColorUseRGBA" value="&quot;RGBA&quot; формат"/>
-      <Item key="frmSetting.chkColorUseHEXA" value="&quot;HEX&quot; + альфа-канал"/>
-      <Item key="frmSetting.chkColorUseHSLA" value="&quot;HSLA&quot; формат"/>
+      <Item key="frmSetting.chkHideTooltips" value="Не отображать подсказки панели инструментов"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="Использовать RGB формат для Альфа канала"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="Использовать HEX формат для Альфа канала"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="Использовать HSL формат для Альфа канала"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="Использовать HSV формат для Альфа канала"/>
       <Item key="frmSetting.lblDefaultColorCode" value="Формат цветового кода по умолчанию при копировании"/>
       <Item key="frmSetting.chkShowPageNavAuto" value="   Автоматически показывать инструмент &quot;Страницы&quot;&#10;   (отдельно для многостраничных изображений)"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Окно ExifTool всегда сверху"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Выбрать файл ExifTool"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="ExifTool не найден: &#10;{0}"/>
       <Item key="frmSetting.lblLanguageText" value="Установленные языки:"/>
       <Item key="frmSetting.lnkRefresh" value="Обновить список"/>
       <Item key="frmSetting.lblLanguageWarning" value="Этот языковой пакет может быть несовместим с версией {0}"/>
@@ -321,9 +339,14 @@
       <Item key="frmCrop.lblWidth" value="Ширина:"/>
       <Item key="frmCrop.lblHeight" value="Высота:"/>
       <Item key="frmCrop.btnSave" value="Сохранить"/>
-      <Item key="frmCrop.btnSaveAs" value="Сохранить ..."/>
-      <Item key="frmCrop.btnCopy" value="Копировать"/>
-      <Item key="frmCrop.btnClear" value="Очистить"/>
+      <Item key="frmCrop.btnSaveAs" value="Сохранить как ..."/>
+      <Item key="frmCrop.btnCopy" value="Копировать файл"/>
+      <Item key="frmCrop.btnReset" value="Сброс"/>
+      <Item key="FrmExifTool.clnProperty" value="Свойства"/>
+      <Item key="FrmExifTool.clnValue" value="Значение"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Копир. значение"/>
+      <Item key="FrmExifTool.btnExport" value="Экспорт…"/>
+      <Item key="FrmExifTool.btnClose" value="Закрыть"/>
     </Content>
   </Language>
 </ImageGlass>

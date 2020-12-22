@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="sv-SE" langName="Svenska" author="Esciro" description="Swedish" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="Vissa inställningar är inte kompatibla med din version av ImageGlass {0}. Det är rekommenderat att uppdatera dessa innan du fortsätter.&#10;&#10;- Klicka Ja för att läsa mer om ändringarna.&#10;- Klicka Nej för att starta ImageGlass med standardinställningar."/>
+      <Item key="_.ImageOrderBy._Name" value="Namn (standard)"/>
+      <Item key="_.ImageOrderBy._Length" value="Längd"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Skapad den"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Senast använd"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Senast ändrad"/>
+      <Item key="_.ImageOrderBy._Extension" value="Tillägg"/>
+      <Item key="_.ImageOrderBy._Random" value="Slumpvald ordning"/>
+      <Item key="_.ImageOrderType._Asc" value="Stigande"/>
+      <Item key="_.ImageOrderType._Desc" value="Fallande"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Ingenting"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Minimera"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Stäng"/>
+      <Item key="frmMain.mnuMainFile" value="Arkiv"/>
+      <Item key="frmMain.mnuMainOpenFile" value="Öppna fil…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Öppna bildegenskaper från urklipp"/>
+      <Item key="frmMain.mnuMainNewWindow" value="Öppna nytt fönster"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Det går inte att öppna fler fönster då endast en instans tillåts"/>
+      <Item key="frmMain.mnuMainSaveAs" value="Spara bild som…"/>
+      <Item key="frmMain.mnuMainRefresh" value="Uppdatera"/>
+      <Item key="frmMain.mnuMainReloadImage" value="Uppdatera bild"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="Uppdatera bildlistan"/>
+      <Item key="frmMain.mnuOpenWith" value="Öppna med…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Redigera bild {0}…"/>
+      <Item key="frmMain.mnuMainPrint" value="Skriv ut…"/>
+      <Item key="frmMain.mnuMainNavigation" value="Navigera"/>
+      <Item key="frmMain.mnuMainViewNext" value="Visa nästa bild"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Högerpil / Page down"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="Visa föregående bild"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Vänsterpil / Page up"/>
+      <Item key="frmMain.mnuMainGoto" value="Gå till…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="Gå till första bilden"/>
+      <Item key="frmMain.mnuMainGotoLast" value="Gå till sista bilden"/>
+      <Item key="frmMain.mnuMainNextPage" value="Visa nästa sida"/>
+      <Item key="frmMain.mnuMainPrevPage" value="Visa föregående sida"/>
+      <Item key="frmMain.mnuMainFirstPage" value="Visa första sidan"/>
+      <Item key="frmMain.mnuMainLastPage" value="Visa sista sidan"/>
+      <Item key="frmMain.mnuMainZoom" value="Zooma"/>
+      <Item key="frmMain.mnuMainZoomIn" value="Förstora"/>
+      <Item key="frmMain.mnuMainZoomOut" value="Förminska"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="Anpassa till fönster"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="Fyll skärmen"/>
+      <Item key="frmMain.mnuMainActualSize" value="Originalstorlek"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Lås proportioner vid storleksändring"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="Autozoom"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="Anpassa till bredd"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="Anpassa till höjd"/>
+      <Item key="frmMain.mnuMainImage" value="Bild"/>
+      <Item key="frmMain.mnuMainChannels" value="Visa kanaler"/>
+      <Item key="frmMain.mnuMainChannels._All" value="Alla"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="Röd"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="Grön"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="Blå"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="Svart"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="Alfa"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Inläsningsordning"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="Rotera åt vänster"/>
+      <Item key="frmMain.mnuMainRotateRight" value="Rotera åt höger"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="Vänd horisontellt"/>
+      <Item key="frmMain.mnuMainFlipVert" value="Vänd vertikalt"/>
+      <Item key="frmMain.mnuMainRename" value="Byt namn på bild…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Flytta till papperskorg"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Radera"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Extrahera bildsidor ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="Starta / stoppa animerad bild"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Använd som skrivbordsbakgrund"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="Använd som låsskärmsbild"/>
+      <Item key="frmMain.mnuMainImageLocation" value="Öppna filsökväg"/>
+      <Item key="frmMain.mnuMainImageProperties" value="Egenskaper"/>
+      <Item key="frmMain.mnuMainClipboard" value="Urklipp"/>
+      <Item key="frmMain.mnuMainCopy" value="Kopiera"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="Kopiera bilddata"/>
+      <Item key="frmMain.mnuMainCut" value="Klipp ut"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="Kopiera filsökväg"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="Rensa urklipp"/>
+      <Item key="frmMain.mnuWindowFit" value="Anpassa till skärmen"/>
+      <Item key="frmMain.mnuMainFullScreen" value="Helskärm"/>
+      <Item key="frmMain.mnuFrameless" value="Utan ram"/>
+      <Item key="frmMain.mnuMainSlideShow" value="Bildspel"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="Starta bildspel"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="Pausa / fortsätt bildspel"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="Avsluta bildspelet"/>
+      <Item key="frmMain.mnuMainShare" value="Dela…"/>
+      <Item key="frmMain.mnuMainLayout" value="Layout"/>
+      <Item key="frmMain.mnuMainToolbar" value="Verktygsfält"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="Miniatyrpanel"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="Rutig bakgrund"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Visa alltid fönstret överst"/>
+      <Item key="frmMain.mnuMainTools" value="Verktyg"/>
+      <Item key="frmMain.mnuMainColorPicker" value="Pipett"/>
+      <Item key="frmMain.mnuMainPageNav" value="Sidnavigering"/>
+      <Item key="frmMain.mnuMainCrop" value="Beskärning"/>
+      <Item key="frmMain.mnuExifTool" value="ExifTool"/>
+      <Item key="frmMain.mnuMainSettings" value="Inställningar…"/>
+      <Item key="frmMain.mnuMainHelp" value="Hjälp"/>
+      <Item key="frmMain.mnuMainAbout" value="Om"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="Förstagångsinstallation…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Sök efter uppdateringar…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="En ny version finns tillgänglig!"/>
+      <Item key="frmMain.mnuMainReportIssue" value="Rapportera ett fel…"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Avsluta ImageGlass"/>
+      <Item key="frmMain.picMain._ErrorText" value="ImageGlass kan inte öppna denna bild då den verkar vara skadad, korrupt eller inte stöds."/>
+      <Item key="frmMain._ImageNotExist" value="Visningsbilden kan inte hittas."/>
+      <Item key="frmMain.btnMenu" value="Meny (Snabbkommando: `)"/>
+      <Item key="frmMain._OpenFileDialog" value="Stödda bildformat"/>
+      <Item key="frmMain._Files" value="fil(er)"/>
+      <Item key="frmMain._Pages" value="sidor"/>
+      <Item key="frmMain._ImageData" value="Bilddata"/>
+      <Item key="frmMain._RenameDialogText" value="Byt namn"/>
+      <Item key="frmMain._RenameDialog" value="Ange nytt filnamn"/>
+      <Item key="frmMain._GotoDialogText" value="Ange indexnummer och tryck Enter för att visa bild."/>
+      <Item key="frmMain._DeleteDialogText" value="Radera fil '{0}' ?"/>
+      <Item key="frmMain._DeleteDialogTitle" value="Bekräfta"/>
+      <Item key="frmMain._ExtractPageText" value="Extraherar bildsidor. Vänligen välj utdatamapp."/>
+      <Item key="frmMain._FullScreenMessage" value="Tryck {0} för att avsluta helskärmsläget."/>
+      <Item key="frmMain._SlideshowMessage" value="Tryck ESC för att avsluta bildspelet.&#10; Högerklicka för att öppna snabbmenyn."/>
+      <Item key="frmMain._SlideshowMessagePause" value="Bildspelet har pausats"/>
+      <Item key="frmMain._SlideshowMessageResume" value="Bildspelet fortsätter"/>
+      <Item key="frmMain._CopyFileText" value="Kopierade {0} fil(er)"/>
+      <Item key="frmMain._CutFileText" value="Klippte ut {0} fil(er)"/>
+      <Item key="frmMain._CopyImageData" value="Bild kopierad till urklipp"/>
+      <Item key="frmMain._ClearClipboard" value="Urklipp rensat"/>
+      <Item key="frmMain._SaveChanges" value="Spara ändringar..."/>
+      <Item key="frmMain._SaveImage" value="Bilden sparades till&#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="Sparar bild…&#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="Kunde inte spara bilden&#10;{0}."/>
+      <Item key="frmMain._Loading" value="Laddar..."/>
+      <Item key="frmMain._FirstItemOfList" value="Aktuell bild är första bilden i listan"/>
+      <Item key="frmMain._LastItemOfList" value="Aktuell bild är sista bilden i listan"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="Modifikation för animerat format stöds inte"/>
+      <Item key="frmMain._SetLockImage_Error" value="Ett fel inträffade när låsskärmsbilden ändrades"/>
+      <Item key="frmMain._SetLockImage_Success" value="Låsskärmsbilden ändrad"/>
+      <Item key="frmMain._SetBackground_Error" value="Det uppstod ett fel när bakgrundsbilden ställdes in"/>
+      <Item key="frmMain._SetBackground_Success" value="Bakgrundsbild ändrad"/>
+      <Item key="frmMain._PageExtractComplete" value="Sidextrahering slutförd."/>
+      <Item key="frmMain._Frameless" value="Håll ned SKIFT för att flytta fönstret."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Urklipp innehåller ingen bilddata."/>
+      <Item key="frmAbout.lblSlogant" value="En lättviktig och mångsidig bildvisare"/>
+      <Item key="frmAbout.lblInfo" value="Information"/>
+      <Item key="frmAbout.lblComponent" value="Komponenter"/>
+      <Item key="frmAbout.lblReferences" value="Referenser"/>
+      <Item key="frmAbout.lblVersion" value="Version: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="Kontakt"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="Programuppdateringar"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» Sök efter uppdateringar…"/>
+      <Item key="frmAbout._Text" value="Om"/>
+      <Item key="frmAbout._PortableText" value="[Portable]"/>
+      <Item key="frmSetting._Text" value="Inställningar"/>
+      <Item key="frmSetting.btnSave" value="Spara"/>
+      <Item key="frmSetting.btnCancel" value="Avbryt"/>
+      <Item key="frmSetting.btnApply" value="Verkställ"/>
+      <Item key="frmSetting.lblGeneral" value="Allmänt"/>
+      <Item key="frmSetting.lblImage" value="Bild"/>
+      <Item key="frmSetting.lblEdit" value="Redigera"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="Filassociationer"/>
+      <Item key="frmSetting.lblToolbar" value="Verktygsfält"/>
+      <Item key="frmSetting.lblLanguage" value="Språk"/>
+      <Item key="frmSetting.lblTheme" value="Tema"/>
+      <Item key="frmSetting.lblKeyboard" value="Tangentbord"/>
+      <Item key="frmSetting.lblHeadStartup" value="Uppstart"/>
+      <Item key="frmSetting.chkWelcomePicture" value="Visa välkomstbild"/>
+      <Item key="frmSetting.chkLastSeenImage" value="Öppna senast visade bilden"/>
+      <Item key="frmSetting.chkShowToolBar" value="Visa verktygsfältet när programmet startas"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="Konfigurationskatalog"/>
+      <Item key="frmSetting.lblHeadViewer" value="Bildvy"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Visa rullningslister i bildvyn"/>
+      <Item key="frmSetting.chkShowNavButtons" value="Visa navigationspilar"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Visa bildens sökväg i namnlisten"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Visa rutmönster endast i bildområdet"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="Aktivera stöd för pekgester"/>
+      <Item key="frmSetting.lblBackGroundColor" value="Bakgrundsfärg"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Återställ"/>
+      <Item key="frmSetting.lblHeadOthers" value="Annat"/>
+      <Item key="frmSetting.chkAutoUpdate" value="Sök efter uppdateringar automatiskt"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="Tillåt flera instanser av applikationen"/>
+      <Item key="frmSetting.chkESCToQuit" value="Avsluta applikationen med ESC"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="Visa bekräftelseruta vid borttagning"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="Automatisk centrering av fönstret i läget anpassa till skärmen"/>
+      <Item key="frmSetting.chkShowToast" value="Visa hjälptext"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="Bildvisning"/>
+      <Item key="frmSetting.chkFindChildFolder" value="Hitta bilder i underliggande mappar"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="Visa dolda bilder"/>
+      <Item key="frmSetting.chkLoopViewer" value="Läs in första bilden i en lista efter att sista bilden har visats"/>
+      <Item key="frmSetting.chkIsCenterImage" value="Centrera bilden i visaren"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="Sortera bilder efter"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Sortera som Windows-utforskaren om möjligt"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Gruppera bilder efter mapp"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="Antal bilder som cachas av ImageBooster (en riktning)"/>
+      <Item key="frmSetting.lblColorManagement" value="Färghantering"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="Tillämpa även för bilder utan inbäddad färgprofil"/>
+      <Item key="frmSetting.lblColorProfile" value="Färgprofil:"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="Bläddra…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="Ingen"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Anpassad…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="Mushjulsfunktioner"/>
+      <Item key="frmSetting.lblMouseWheel" value="Mushjul"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="Mushjul + alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Mushjul + ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="Mushjul + skift"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="Gör ingenting"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="Zooma"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Rulla lodrätt"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Rulla horisontellt"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Föregående/nästa bild"/>
+      <Item key="frmSetting.lblHeadZooming" value="Zoomning"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Zoomoptimering"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Auto"/>
+      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Mjuk förstoring"/>
+      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Skarp förstoring"/>
+      <Item key="frmSetting.lblZoomLevels" value="Zoomnivåer"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="Ett fel uppstod när zoomnivåerna ändrades. Felmeddelande:&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Miniatyrfält"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="Visa miniatyrer på höger sida"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Visa rullningslist för miniatyrer"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Miniatyrernas storlek (pixlar)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="Bildspel"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="Starta om bildspel efter sista bilden"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="Visa nedräkning för bildspel"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="Använd slumpmässigt intervall"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="Bildspelsintervall: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="till"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="Spara visningsbilden efter att den har roterats"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="Välj program för bildredigering"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="Efter att redigeringsappen har öppnats:"/>
+      <Item key="frmSetting.lblImageQuality" value="Bildkvalitet:"/>
+      <Item key="frmSetting.btnEditEditExt" value="Redigera…"/>
+      <Item key="frmSetting.btnEditResetExt" value="Återställ till standard"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="Redigera alla tillägg…"/>
+      <Item key="frmSetting._allExtensions" value="alla filändelser"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Filändelse"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="Appnamn"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="Programmets sökväg"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Programvariabler"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Bevara bildens ursprungliga ändringsdatum vid sparning"/>
+      <Item key="frmSetting.lblSupportedExtension" value="Format som stöds: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Öppna standardappar efter filtyp"/>
+      <Item key="frmSetting.btnAddNewExt" value="Lägg till…"/>
+      <Item key="frmSetting.btnRegisterExt" value="Ange som standardprogram för fotovisning…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Återställ filassociationer"/>
+      <Item key="frmSetting.btnDeleteExt" value="Radera"/>
+      <Item key="frmSetting.btnResetExt" value="Återställ till standard"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="Det gick inte att registrera en webb-till-app-länkning"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="Kunde inte registrera filändelserna till ImageGlass"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="Alla filassociationer har registrerats! För att ange ImageGlass som standardprogram för foton, vänligen öppna Windows-inställningar &gt; Appar &gt; Standardappar och välj ImageGlass manuellt under fotovisning."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Det gick inte att återställa de filtyper som är associerade med ImageGlass"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Alla filtypers associationer har återställts!"/>
+      <Item key="frmSetting.lblToolbarPosition" value="Verktygsfältets position:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Ikonstorlek för verktygsfältet:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Överst"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Nederst"/>
+      <Item key="frmSetting._separator" value="Avskiljare"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="Anpassa knapparna i verktygsfältet"/>
+      <Item key="frmSetting.lblUsedBtns" value="Nuvarande knappar:"/>
+      <Item key="frmSetting.lblAvailBtns" value="Tillgängliga knappar:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="Flytta vald knapp nedåt"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="Ta bort vald(a) knappar från verktygsfältet"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="Lägg till vald(a) knappar till verktygsfältet"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="Flytta vald knapp uppåt"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Centrera verktygsfältet horisontellt i fönstret"/>
+      <Item key="frmSetting.chkHideTooltips" value="Dölj verktygstips i verktygsfältet"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="Använd RGB-format med alfavärde"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="Använd HEX-format med alfavärde"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="Använd HSL-format med alfavärde"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="Använd HSV-format med alfavärde"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="Färgsystemsstandard vid kopiering"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="Automatisk visning av sidnavigeringsverktyget för bilder med flera sidor"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Behåll ExifTool överst"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Välj Exif-fil"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="ExifTool saknas eller är felaktig: &#10;{0}"/>
+      <Item key="frmSetting.lblLanguageText" value="Installerade språk"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; Uppdatera"/>
+      <Item key="frmSetting.lblLanguageWarning" value="Detta språkpaket kanske inte är kompatibelt med {0}"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Installera nytt språkpaket (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Skapa nytt språkpaket…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; Redigera valt språkpaket…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Skaffa fler språkpaket…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="Installerade teman: {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="Ladda ner teman…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="Uppdatera"/>
+      <Item key="frmSetting.btnThemeInstall" value="Installera…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="Avinstallera…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="Spara som…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="Öppna temamapp"/>
+      <Item key="frmSetting.btnThemeApply" value="Tillämpa tema"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="Namn"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="Version"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="Skapare"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="E-post"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="Webbplats"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="Kompatibilitet"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="Beskrivning"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="Temat installerades utan problem!"/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="Det gick inte att installera temat."/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="Det gick inte att avinstallera det valda temat."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="Ditt valda tema har sparats i {0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="Det gick inte att spara det valda temat."/>
+      <Item key="frmSetting.btnThemeApply._Success" value="Det valda temat är nu tillämpat!"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="Det gick inte att tillämpa det valda temat."/>
+      <Item key="frmSetting.btnKeyReset" value="Återställ till standard"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="Mellanslag / backsteg"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="Page up / Page down"/>
+      <Item key="frmSetting.lblKeysUpDown" value="Uppåtpil / nedåtpil"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="Vänsterpil / högerpil"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="Föregående / nästa bild"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="Panorera vänster / höger"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="Panorera uppåt / nedåt"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="Zooma in / ut"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="Pausa bildspel"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="Gör ingenting"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="Filändelse"/>
+      <Item key="frmAddNewFormat.btnOK" value="OK"/>
+      <Item key="frmAddNewFormat.btnClose" value="Stäng"/>
+      <Item key="frmEditApp.lblFileExtension" value="Filändelse"/>
+      <Item key="frmEditApp.lblAppName" value="Appnamn"/>
+      <Item key="frmEditApp.lblAppPath" value="Programmets sökväg"/>
+      <Item key="frmEditApp.lblAppArguments" value="Programvariabler"/>
+      <Item key="frmEditApp.btnReset" value="Återställ"/>
+      <Item key="frmEditApp.btnOK" value="OK"/>
+      <Item key="frmEditApp.btnClose" value="Stäng"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="Förhandsgranska"/>
+      <Item key="frmFirstLaunch._Text" value="Förstagångsinstallation"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="För att tillämpa de nya inställningarna behöver alla ImageGlass-processer stängas. Vill du fortsätta?"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="Steg {0}/{1}"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="Nästa"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="Klart!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="Hoppa över detta och starta ImageGlass"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="Välj språk"/>
+      <Item key="frmFirstLaunch.lblLayout" value="Välj utseende"/>
+      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Standard"/>
+      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Designer"/>
+      <Item key="frmFirstLaunch.lblTheme" value="Välj tema"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="Ange ImageGlass som standardprogram för att visa foton?"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="Ja"/>
+      <Item key="frmCrop.lblWidth" value="Bredd:"/>
+      <Item key="frmCrop.lblHeight" value="Höjd:"/>
+      <Item key="frmCrop.btnSave" value="Spara"/>
+      <Item key="frmCrop.btnSaveAs" value="Spara som…"/>
+      <Item key="frmCrop.btnCopy" value="Kopiera"/>
+      <Item key="frmCrop.btnReset" value="Återställ"/>
+      <Item key="FrmExifTool.clnProperty" value="Egenskap"/>
+      <Item key="FrmExifTool.clnValue" value="Värde"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Kopiera värde"/>
+      <Item key="FrmExifTool.btnExport" value="Exportera…"/>
+      <Item key="FrmExifTool.btnClose" value="Stäng"/>
+    </Content>
+  </Language>
+</ImageGlass>

@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using System.Text;
+using System.Threading;
 
-namespace ImageGlass.ImageListView
-{
+namespace ImageGlass.ImageListView {
     /// <summary>
     /// Represents a collection of items on disk that can be read 
     /// and written by multiple threads.
     /// </summary>
-    internal class DiskCache : IDisposable
-    {
+    internal class DiskCache: IDisposable {
         #region Enums
         /// <summary>
         /// Represents the synchronization behaviour.
         /// </summary>
         [Flags]
-        public enum SyncBehavior
-        {
+        public enum SyncBehavior {
             /// <summary>
             /// A minimal number of locking is performed.
             /// Both reads and writes may result in cache misses.
@@ -56,17 +53,14 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Gets or sets the cache file name.
         /// </summary>
-        public string FileName
-        {
+        public string FileName {
             get { return mFileName; }
-            set
-            {
+            set {
                 mFileName = value;
                 if (stream != null)
                     stream.Close();
 
-                if (!string.IsNullOrEmpty(mFileName))
-                {
+                if (!string.IsNullOrEmpty(mFileName)) {
                     stream = new FileStream(mFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
                     BuildIndex();
                 }
@@ -82,8 +76,7 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Represents an item in the cache.
         /// </summary>
-        private struct CacheItem
-        {
+        private struct CacheItem {
             /// <summary>
             /// Gets the item identifier.
             /// </summary>
@@ -104,8 +97,7 @@ namespace ImageGlass.ImageListView
             /// <param name="offset">Offset to the item in the cache file.</param>
             /// <param name="length">Size of item data in bytes.</param>
             public CacheItem(string id, long offset, long length)
-                : this()
-            {
+                : this() {
                 ID = id;
                 Offset = offset;
                 Length = length;
@@ -116,8 +108,7 @@ namespace ImageGlass.ImageListView
             /// </summary>
             /// <param name="id">Item identifier.</param>
             public CacheItem(string id)
-                : this(id, -1, -1)
-            {
+                : this(id, -1, -1) {
                 ;
             }
         }
@@ -132,8 +123,7 @@ namespace ImageGlass.ImageListView
         /// old items will be overwritten.</param>
         /// <param name="syncBehavior">The synchronization behaviour.</param>
         /// <param name="keySize">Byte length of keys.</param>
-        public DiskCache(string filename, long size, SyncBehavior syncBehavior, int keySize)
-        {
+        public DiskCache(string filename, long size, SyncBehavior syncBehavior, int keySize) {
             lockObject = new object();
             writeOffset = 0;
 
@@ -144,8 +134,7 @@ namespace ImageGlass.ImageListView
             mFileName = filename;
             mSize = size;
 
-            if (!string.IsNullOrEmpty(mFileName))
-            {
+            if (!string.IsNullOrEmpty(mFileName)) {
                 stream = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite);
                 BuildIndex();
             }
@@ -158,8 +147,7 @@ namespace ImageGlass.ImageListView
         /// <param name="size">Maximum cache size in bytes. When this size is exceeded,
         /// old items will be overwritten.</param>
         public DiskCache(string filename, long size)
-            : this(filename, size, SyncBehavior.SnycAll, 32)
-        {
+            : this(filename, size, SyncBehavior.SnycAll, 32) {
             ;
         }
 
@@ -169,8 +157,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="filename">The path to the cache file.</param>
         public DiskCache(string filename)
-            : this(filename, 100 * 1024 * 1024, SyncBehavior.SnycAll, 32)
-        {
+            : this(filename, 100 * 1024 * 1024, SyncBehavior.SnycAll, 32) {
             ;
         }
 
@@ -178,8 +165,7 @@ namespace ImageGlass.ImageListView
         /// Initializes a new instance of the <see cref="DiskCache"/> class.
         /// </summary>
         public DiskCache()
-            : this(string.Empty, 100 * 1024 * 1024, SyncBehavior.SnycAll, 32)
-        {
+            : this(string.Empty, 100 * 1024 * 1024, SyncBehavior.SnycAll, 32) {
             ;
         }
         #endregion
@@ -189,8 +175,7 @@ namespace ImageGlass.ImageListView
         /// Performs application-defined tasks associated with 
         /// freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose()
-        {
+        public void Dispose() {
             if (stream != null)
                 stream.Close();
         }
@@ -198,18 +183,15 @@ namespace ImageGlass.ImageListView
         /// <summary>
         /// Rebuilds the index of items in the cache.
         /// </summary>
-        private void BuildIndex()
-        {
+        private void BuildIndex() {
             if (stream == null)
                 throw new InvalidOperationException();
 
             Monitor.Enter(lockObject);
-            try
-            {
+            try {
                 writeOffset = 0;
                 stream.Seek(0, SeekOrigin.Begin);
-                while (stream.Position < stream.Length)
-                {
+                while (stream.Position < stream.Length) {
                     int read;
                     byte[] buffer;
 
@@ -235,8 +217,7 @@ namespace ImageGlass.ImageListView
                     writeOffset += 24 + length;
                 }
             }
-            finally
-            {
+            finally {
                 Monitor.Exit(lockObject);
             }
         }
@@ -248,24 +229,20 @@ namespace ImageGlass.ImageListView
         /// <param name="data">When this function returns, <paramref name="data"/> 
         /// will hold item data.</param>
         /// <returns>True if the item was read; otherwise false.</returns>
-        public bool Read(string id, Stream data)
-        {
+        public bool Read(string id, Stream data) {
             if (stream == null)
                 return false;
             id = MakeKey(id);
 
-            if ((mSyncBehavior & SyncBehavior.SyncReads) == SyncBehavior.SyncNone)
-            {
+            if ((mSyncBehavior & SyncBehavior.SyncReads) == SyncBehavior.SyncNone) {
                 if (!Monitor.TryEnter(lockObject))
                     return false;
             }
-            else
-            {
+            else {
                 Monitor.Enter(lockObject);
             }
 
-            try
-            {
+            try {
                 CacheItem item;
                 if (!index.TryGetValue(id, out item))
                     return false;
@@ -277,34 +254,29 @@ namespace ImageGlass.ImageListView
 
                 buffer = new byte[mKeySize];
                 read = stream.Read(buffer, 0, mKeySize);
-                if (read != mKeySize)
-                {
+                if (read != mKeySize) {
                     index.Remove(id);
                     return false;
                 }
                 string checkid = Encoding.ASCII.GetString(buffer);
-                if (checkid != item.ID)
-                {
+                if (checkid != item.ID) {
                     index.Remove(id);
                     return false;
                 }
 
                 buffer = new byte[8];
                 read = stream.Read(buffer, 0, 8);
-                if (read != 8)
-                {
+                if (read != 8) {
                     index.Remove(id);
                     return false;
                 }
                 long length = BitConverter.ToInt64(buffer, 0);
-                if (length != item.Length)
-                {
+                if (length != item.Length) {
                     index.Remove(id);
                     return false;
                 }
 
-                if (stream.Position + length > stream.Length)
-                {
+                if (stream.Position + length > stream.Length) {
                     index.Remove(id);
                     return false;
                 }
@@ -313,15 +285,13 @@ namespace ImageGlass.ImageListView
                 data.SetLength(length);
                 long totalRead = 0;
                 buffer = new byte[4096];
-                while (totalRead < length)
-                {
+                while (totalRead < length) {
                     read = stream.Read(buffer, 0, 4096);
                     data.Write(buffer, 0, read);
                     totalRead += read;
                 }
             }
-            finally
-            {
+            finally {
                 Monitor.Exit(lockObject);
             }
 
@@ -335,13 +305,11 @@ namespace ImageGlass.ImageListView
         /// <param name="data">When this function returns, <paramref name="data"/> 
         /// will hold item data.</param>
         /// <returns>True if the item was read; otherwise false.</returns>
-        public bool Read(string id, byte[] data)
-        {
+        public bool Read(string id, byte[] data) {
             if (stream == null)
                 return false;
 
-            using (MemoryStream dataStream = new MemoryStream(data))
-            {
+            using (MemoryStream dataStream = new MemoryStream(data)) {
                 return Read(id, dataStream);
             }
         }
@@ -353,24 +321,20 @@ namespace ImageGlass.ImageListView
         /// exists, it will be overwritten.</param>
         /// <param name="data">Item data.</param>
         /// <returns>True if the item was written; otherwise false.</returns>
-        public bool Write(string id, Stream data)
-        {
+        public bool Write(string id, Stream data) {
             if (stream == null)
                 return false;
             id = MakeKey(id);
 
-            if ((mSyncBehavior & SyncBehavior.SyncWrites) == SyncBehavior.SyncNone)
-            {
+            if ((mSyncBehavior & SyncBehavior.SyncWrites) == SyncBehavior.SyncNone) {
                 if (!Monitor.TryEnter(lockObject))
                     return false;
             }
-            else
-            {
+            else {
                 Monitor.Enter(lockObject);
             }
 
-            try
-            {
+            try {
                 stream.Seek(writeOffset, SeekOrigin.Begin);
                 data.Seek(0, SeekOrigin.Begin);
 
@@ -382,8 +346,7 @@ namespace ImageGlass.ImageListView
                 int totalRead = 0;
                 buffer = new byte[4096];
 
-                while (data.Position < data.Length)
-                {
+                while (data.Position < data.Length) {
                     int read = data.Read(buffer, 0, 4096);
                     stream.Write(buffer, 0, read);
                     totalRead += read;
@@ -399,8 +362,7 @@ namespace ImageGlass.ImageListView
                 if (writeOffset > mSize)
                     writeOffset = 0;
             }
-            finally
-            {
+            finally {
                 Monitor.Exit(lockObject);
             }
 
@@ -414,13 +376,11 @@ namespace ImageGlass.ImageListView
         /// exists, it will be overwritten.</param>
         /// <param name="data">Item data.</param>
         /// <returns>True if the item was written; otherwise false.</returns>
-        public bool Write(string id, byte[] data)
-        {
+        public bool Write(string id, byte[] data) {
             if (stream == null)
                 return false;
 
-            using (MemoryStream dataStream = new MemoryStream(data))
-            {
+            using (MemoryStream dataStream = new MemoryStream(data)) {
                 return Write(id, dataStream);
             }
         }
@@ -429,8 +389,7 @@ namespace ImageGlass.ImageListView
         /// </summary>
         /// <param name="key">Input string.</param>
         /// <returns>Item key.</returns>
-        private string MakeKey(string key)
-        {
+        private string MakeKey(string key) {
             if (key.Length > mKeySize)
                 key = key.Substring(0, mKeySize);
             if (key.Length < mKeySize)

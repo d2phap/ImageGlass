@@ -168,3 +168,4 @@ Setup/AdvancedInstaller/x64/ImageGlass-x64-cache
 Source/.vs/ImageGlass.sqlite
 Source/ImageGlass/obj/Debug/DesignTimeResolveAssemblyReferences.cache
 
+/.vs/ProjectSettings.json

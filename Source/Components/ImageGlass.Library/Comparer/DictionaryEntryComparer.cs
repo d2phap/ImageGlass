@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2013 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,16 +22,15 @@ using System.Collections;
 
 namespace ImageGlass.Library.Comparer {
     public class DictionaryEntryComparer: IComparer {
-        private IComparer nc = null;
+        private readonly IComparer nc = null;
 
         public DictionaryEntryComparer(IComparer nc) {
-            if (nc == null) throw new Exception("Null IComparer");
-            this.nc = nc;
+            this.nc = nc ?? throw new Exception("Null IComparer");
         }
 
         public int Compare(object x, object y) {
-            if ((x is DictionaryEntry) && (y is DictionaryEntry)) {
-                return nc.Compare(((DictionaryEntry)x).Key, ((DictionaryEntry)y).Key);
+            if ((x is DictionaryEntry entry) && (y is DictionaryEntry entry1)) {
+                return nc.Compare(entry.Key, entry1.Key);
             }
             return -1;
         }

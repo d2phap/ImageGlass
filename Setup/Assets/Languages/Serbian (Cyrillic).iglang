@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="sr-RS" langName="Српски" author="ImageGlass community" description="Serbian (Cyrillic)" minVersion="7.6.4.30" isRightToLeftLayout="No"/>
+    <Info langCode="sr-RS" langName="Српски" author="Ђорђе Васиљевић" description="Serbian (Cyrillic)" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Нека подешавања нису компатибилна са ImageGlass-ом {0}. Ажурирајте их пре него што наставите.&#10;&#10;— Притисните „Да” да бисте погледали измене.&#10;— Притисните „Не” да бисте покренули ImageGlass са подразумеваним подешавањима."/>
+      <Item key="_.ImageOrderBy._Name" value="Име (подразумевано)"/>
+      <Item key="_.ImageOrderBy._Length" value="Величина"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Датум креирања"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Време последњег приступа"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Време последњег уписа"/>
+      <Item key="_.ImageOrderBy._Extension" value="Екстензија"/>
+      <Item key="_.ImageOrderBy._Random" value="Насумично"/>
+      <Item key="_.ImageOrderType._Asc" value="растуће"/>
+      <Item key="_.ImageOrderType._Desc" value="опадајуће"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="не ради ништа"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="умањи"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Затвори"/>
       <Item key="frmMain.mnuMainFile" value="Датотека"/>
       <Item key="frmMain.mnuMainOpenFile" value="Отвори датотеку…"/>
       <Item key="frmMain.mnuMainOpenImageData" value="Отвори слику из привремене меморије"/>
@@ -46,6 +58,7 @@
       <Item key="frmMain.mnuMainChannels._Blue" value="плави"/>
       <Item key="frmMain.mnuMainChannels._Black" value="црни"/>
       <Item key="frmMain.mnuMainChannels._Alpha" value="алфа"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Редослед учитавања"/>
       <Item key="frmMain.mnuMainRotateLeft" value="Ротирај улево"/>
       <Item key="frmMain.mnuMainRotateRight" value="Ротирај удесно"/>
       <Item key="frmMain.mnuMainFlipHorz" value="Обрни хоризонтално"/>
@@ -82,13 +95,14 @@
       <Item key="frmMain.mnuMainColorPicker" value="Бирач боја"/>
       <Item key="frmMain.mnuMainPageNav" value="Навигација по страницама"/>
       <Item key="frmMain.mnuMainCrop" value="Опсецање"/>
-      <Item key="frmMain.mnuMainSettings" value="Подешавања…"/>
+      <Item key="frmMain.mnuExifTool" value="ExifTool"/>
+      <Item key="frmMain.mnuMainSettings" value="Подешавања"/>
       <Item key="frmMain.mnuMainHelp" value="Помоћ"/>
       <Item key="frmMain.mnuMainAbout" value="О програму"/>
       <Item key="frmMain.mnuMainFirstLaunch" value="Почетна конфигурација…"/>
-      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Провери да ли постоји ажурирање…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Провери да ли постоји ажурирање"/>
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Доступна је нова верзија."/>
-      <Item key="frmMain.mnuMainReportIssue" value="Пријави грешку…"/>
+      <Item key="frmMain.mnuMainReportIssue" value="Пријави проблем"/>
       <Item key="frmMain.mnuMainExitApplication" value="Изађи из ImageGlass-а"/>
       <Item key="frmMain.picMain._ErrorText" value="Није могуће отворити ову датотеку. Вероватно је оштећена или је у формату који није подржан."/>
       <Item key="frmMain._ImageNotExist" value="Приказана слика не постоји."/>
@@ -97,13 +111,13 @@
       <Item key="frmMain._Files" value="датот."/>
       <Item key="frmMain._Pages" value="стр."/>
       <Item key="frmMain._ImageData" value="Слика"/>
-      <Item key="frmMain._RenameDialogText" value="Преименуј"/>
-      <Item key="frmMain._RenameDialog" value="Унесите ново име датотеке"/>
+      <Item key="frmMain._RenameDialogText" value="Преименовање"/>
+      <Item key="frmMain._RenameDialog" value="Унесите ново име датотеке:"/>
       <Item key="frmMain._GotoDialogText" value="Унесите индекс жељене слике па притисните Enter."/>
       <Item key="frmMain._DeleteDialogText" value="Избрисати датотеку „{0}”?"/>
       <Item key="frmMain._DeleteDialogTitle" value="Потврди"/>
       <Item key="frmMain._ExtractPageText" value="Издвајање кадрова из слике. Изаберите одредишну фасциклу."/>
-      <Item key="frmMain._FullScreenMessage" value="Притисните Alt + Enter да бисте изашли из режима целог екрана."/>
+      <Item key="frmMain._FullScreenMessage" value="Притисните {0} да бисте изашли из режима целог екрана."/>
       <Item key="frmMain._SlideshowMessage" value="Притисните Esc да бисте изашли из пројекције слајдова.&#10; Десним кликом отварате контекстуални мени."/>
       <Item key="frmMain._SlideshowMessagePause" value="Пројекција слајдова је паузирана"/>
       <Item key="frmMain._SlideshowMessageResume" value="Пројекција слајдова је настављена"/>
@@ -125,6 +139,7 @@
       <Item key="frmMain._SetBackground_Success" value="Позадина радне површине је успешно постављена"/>
       <Item key="frmMain._PageExtractComplete" value="Издвајање кадрова је завршено."/>
       <Item key="frmMain._Frameless" value="Држите Shift да бисте померили прозор."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Привремена меморија не садржи слику."/>
       <Item key="frmAbout.lblSlogant" value="Једноставан и универзалан приказивач слика"/>
       <Item key="frmAbout.lblInfo" value="Информације"/>
       <Item key="frmAbout.lblComponent" value="Компоненте"/>
@@ -151,7 +166,7 @@
       <Item key="frmSetting.chkWelcomePicture" value="Прикажи слику добродошлице"/>
       <Item key="frmSetting.chkLastSeenImage" value="Отвори последњу приказану слику"/>
       <Item key="frmSetting.chkShowToolBar" value="Прикажи траку са алаткама"/>
-      <Item key="frmSetting.lblHeadConfigDir" value="Директоријум са подешавањима"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="Фасцикла са подешавањима"/>
       <Item key="frmSetting.lblHeadViewer" value="Приказивач"/>
       <Item key="frmSetting.chkShowScrollbar" value="Траке за померање"/>
       <Item key="frmSetting.chkShowNavButtons" value="Навигација помоћу стрелица на ивицама прозора"/>
@@ -173,16 +188,8 @@
       <Item key="frmSetting.chkLoopViewer" value="Врати на прву слику након достизања краја"/>
       <Item key="frmSetting.chkIsCenterImage" value="Центрирај слику у приказивачу"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Редослед учитавања слика:"/>
-      <Item key="frmSetting.cmbImageOrder._Name" value="Име (подразумевано)"/>
-      <Item key="frmSetting.cmbImageOrder._Length" value="Величина"/>
-      <Item key="frmSetting.cmbImageOrder._CreationTime" value="Датум креирања"/>
-      <Item key="frmSetting.cmbImageOrder._LastAccessTime" value="Време последњег приступа"/>
-      <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="Време последњег уписа"/>
-      <Item key="frmSetting.cmbImageOrder._Extension" value="Екстензија"/>
-      <Item key="frmSetting.cmbImageOrder._Random" value="Насумично"/>
-      <Item key="frmSetting.cmbImageOrderType._Asc" value="растуће"/>
-      <Item key="frmSetting.cmbImageOrderType._Desc" value="опадајуће"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Редослед сортирања према Windows-овом истраживачу датотека"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Групиши слике према фасциклама"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Број слика кешираних ImageBooster-ом (у једном смеру)"/>
       <Item key="frmSetting.lblColorManagement" value="Управљање бојама"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Примени и на слике без уграђеног профила боја"/>
@@ -219,6 +226,8 @@
       <Item key="frmSetting.lblSlideshowIntervalTo" value="до"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Сачувај слику након ротирања"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Изаберите програм за уређивање слика"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="Након отварања у уређивачу:"/>
+      <Item key="frmSetting.lblImageQuality" value="Квалитет слике:"/>
       <Item key="frmSetting.btnEditEditExt" value="Уреди…"/>
       <Item key="frmSetting.btnEditResetExt" value="Ресетуј"/>
       <Item key="frmSetting.btnEditEditAllExt" value="Уреди све екстензије…"/>
@@ -227,17 +236,21 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Име програма:"/>
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Путања:"/>
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Параметри:"/>
-      <Item key="frmSetting.chkSaveModifyDate" value="Задржи датум измене слике при чувању"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Не мењај датум измене при чувању слике"/>
       <Item key="frmSetting.lblSupportedExtension" value="Подржано формата: {0}"/>
       <Item key="frmSetting.lnkOpenFileAssoc" value="Подразумевани програми"/>
       <Item key="frmSetting.btnAddNewExt" value="Додај…"/>
       <Item key="frmSetting.btnRegisterExt" value="Региструј све наведене формате"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Опозови регистрацију екстензија"/>
       <Item key="frmSetting.btnDeleteExt" value="Избриши"/>
-      <Item key="frmSetting.btnResetExt" value="Врати на подразумевано"/>
+      <Item key="frmSetting.btnResetExt" value="Ресетуј"/>
       <Item key="frmSetting._RegisterWebToApp_Error" value="Није могуће регистровати везу веб → апликација"/>
       <Item key="frmSetting._RegisterAppExtensions_Error" value="Није могуће регистровати екстензије датотека за ImageGlass"/>
       <Item key="frmSetting._RegisterAppExtensions_Success" value="Све екстензије датотека су успешно регистроване. Да бисте поставили ImageGlass као подразумевани приказивач фотографија, идите у „Поставке → Апликације → Подразумеване апликације”, па у одељку „Приказивач фотографија” изаберите ImageGlass."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Није могуће уклонити регистроване екстензије датотека"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Регистрација свих екстензија датотека је опозвана"/>
       <Item key="frmSetting.lblToolbarPosition" value="Положај траке са алаткама:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Величина икона:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="на врху"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="на дну"/>
       <Item key="frmSetting._separator" value="Разделник"/>
@@ -249,11 +262,16 @@
       <Item key="frmSetting.btnMoveRight._Tooltip" value="Додај на траку са алаткама"/>
       <Item key="frmSetting.btnMoveUp._Tooltip" value="Помери нагоре"/>
       <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Центрирај дугмад по хоризонтали"/>
-      <Item key="frmSetting.chkColorUseRGBA" value="RGBA формат"/>
-      <Item key="frmSetting.chkColorUseHEXA" value="HEX са алфа каналом"/>
-      <Item key="frmSetting.chkColorUseHSLA" value="HSLA формат"/>
+      <Item key="frmSetting.chkHideTooltips" value="Сакриј описе алатки"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="RGB формат са алфа каналом"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="HEX формат са алфа каналом"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="HSL формат са алфа каналом"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="HSV формат са алфа каналом"/>
       <Item key="frmSetting.lblDefaultColorCode" value="Подразумевани формат боја при копирању"/>
       <Item key="frmSetting.chkShowPageNavAuto" value="Аутоматски прикажи алатку „Навигација по страницама” за слике са више страница"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Причврсти изнад свих прозора"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Изабери извршну датотеку ExifTool-а…"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="ExifTool не постоји или је неважећи: &#10;{0}"/>
       <Item key="frmSetting.lblLanguageText" value="Инсталирани језици"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Освежи"/>
       <Item key="frmSetting.lblLanguageWarning" value="Овај језички пакет можда није компатибилан са {0}"/>
@@ -283,7 +301,7 @@
       <Item key="frmSetting.btnThemeSaveAs._Error" value="Није могуће сачувати тему."/>
       <Item key="frmSetting.btnThemeApply._Success" value="Тема је успешно примењена."/>
       <Item key="frmSetting.btnThemeApply._Error" value="Није могуће применити тему."/>
-      <Item key="frmSetting.btnKeyReset" value="Врати на подразумевано"/>
+      <Item key="frmSetting.btnKeyReset" value="Ресетуј"/>
       <Item key="frmSetting.lblKeysSpaceBack" value="Space/Backspace:"/>
       <Item key="frmSetting.lblKeysPageUpDown" value="Page Up/Page Down:"/>
       <Item key="frmSetting.lblKeysUpDown" value="Стрелица нагоре/надоле:"/>
@@ -306,7 +324,7 @@
       <Item key="frmEditApp.btnClose" value="Затвори"/>
       <Item key="frmEditApp.lblPreviewLabel" value="Преглед:"/>
       <Item key="frmFirstLaunch._Text" value="Почетна конфигурација"/>
-      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="Примена нових подешавања захтева окончавање свих процеса ImageGlass-а. Желите ли да наставите?"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="Потребно је окончати све процесе ImageGlass-а како би измене ступиле на снагу. Желите ли да наставите?"/>
       <Item key="frmFirstLaunch.lblStepNumber" value="Корак {0} од {1}"/>
       <Item key="frmFirstLaunch.btnNextStep" value="Следеће"/>
       <Item key="frmFirstLaunch.btnNextStep._Done" value="Готово!"/>
@@ -323,7 +341,12 @@
       <Item key="frmCrop.btnSave" value="Сачувај"/>
       <Item key="frmCrop.btnSaveAs" value="Сачувај као…"/>
       <Item key="frmCrop.btnCopy" value="Копирај"/>
-      <Item key="frmCrop.btnClear" value="Обриши"/>
+      <Item key="frmCrop.btnReset" value="Ресетуј"/>
+      <Item key="FrmExifTool.clnProperty" value="Својство"/>
+      <Item key="FrmExifTool.clnValue" value="Вредност"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Копирај вредност"/>
+      <Item key="FrmExifTool.btnExport" value="Извези…"/>
+      <Item key="FrmExifTool.btnClose" value="Затвори"/>
     </Content>
   </Language>
 </ImageGlass>

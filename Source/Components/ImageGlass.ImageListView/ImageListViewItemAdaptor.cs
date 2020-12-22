@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Drawing;
 
-namespace ImageGlass.ImageListView
-{
-    public partial class ImageListView
-    {
+namespace ImageGlass.ImageListView {
+    public partial class ImageListView {
         /// <summary>
         /// Represents the abstract case class for adaptors.
         /// </summary>
-        public abstract class ImageListViewItemAdaptor : IDisposable
-        {
+        public abstract class ImageListViewItemAdaptor: IDisposable {
             #region Abstract Methods
             /// <summary>
             /// Returns the thumbnail image for the given item.

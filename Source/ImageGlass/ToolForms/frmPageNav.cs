@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2020 DUONG DIEU PHAP
+Copyright (C) 2021 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 using ImageGlass.Base;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.UI.ToolForms;
-using System;
-using System.Drawing;
-using System.Windows.Forms;
 
 namespace ImageGlass {
     /// <summary>
@@ -48,7 +48,7 @@ namespace ImageGlass {
 
 
         // default location offset on the parent form
-        private static readonly Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(300));
+        private static readonly Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(320));
 
 
 
@@ -106,6 +106,7 @@ namespace ImageGlass {
             toolPageNav.BackgroundImage = Configs.Theme.ToolbarBackgroundImage.Image;
             toolPageNav.BackColor = Configs.Theme.ToolbarBackgroundColor;
             toolPageNav.Alignment = ToolbarAlignment.CENTER;
+            toolPageNav.HideTooltips = Configs.IsHideTooltips;
 
             // Overflow button and Overflow dropdown
             toolPageNav.OverflowButton.DropDown.BackColor = Configs.Theme.ToolbarBackgroundColor;
@@ -126,7 +127,7 @@ namespace ImageGlass {
 
         private void OnDpiChanged() {
             // Update size of toolbar
-            DPIScaling.TransformToolbar(ref toolPageNav, Constants.TOOLBAR_HEIGHT);
+            DPIScaling.TransformToolbar(ref toolPageNav, (int)Configs.ToolbarIconHeight);
 
             // Update toolbar icon according to the new size
             LoadToolbarIcons(Configs.Theme);
@@ -152,7 +153,7 @@ namespace ImageGlass {
 
             //Windows Bound (Position + Size)-------------------------------------------
             // TODO must be different from Color Picker
-            Rectangle rc = Helpers.StringToRect("0;0;300;160");
+            var rc = Helpers.StringToRect("0;0;300;160");
 
             if (rc.X == 0 && rc.Y == 0) {
                 _locationOffset = DefaultLocationOffset;
@@ -163,6 +164,10 @@ namespace ImageGlass {
             else {
                 Location = rc.Location;
             }
+        }
+
+        private void frmPageNav_Activated(object sender, EventArgs e) {
+            UpdateUI();
         }
 
         private void frmPageNav_KeyDown(object sender, KeyEventArgs e) {
@@ -187,5 +192,7 @@ namespace ImageGlass {
             this.Close();
         }
         #endregion
+
+
     }
 }

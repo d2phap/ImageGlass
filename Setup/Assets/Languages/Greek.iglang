@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="el-GR" langName="Ελληνικά" author="ImageGlass community" description="Greek" minVersion="7.6.4.30" isRightToLeftLayout="No"/>
+    <Info langCode="el-GR" langName="Ελληνικά" author="Nikolas Spiridakis" description="Greek" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Κάποιες μεταφράσεις δεν ειναι συμβατές με το ImageGlass {0}. Σας συστήνουμε να τις ενημερώσετε πριν συνεχίσετε.&#10;&#10;- Πατήστε Ναι για να μάθετε περισσότερα για τις αλλαγές.&#10;- Πατήστε Όχι για να ανοίξετε το ImageGlass με τις προεπιλεγμένες ρυθμίσεις."/>
+      <Item key="_.ImageOrderBy._Name" value="Όνομα (προεπιλογή)"/>
+      <Item key="_.ImageOrderBy._Length" value="Διάρκεια"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Ημερομηνία δημιουργίας"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Πρόσφατο άνοιγμα αρχείου"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Τελευταία τροποποίηση αρχείου"/>
+      <Item key="_.ImageOrderBy._Extension" value="Επέκταση"/>
+      <Item key="_.ImageOrderBy._Random" value="Τυχαίο"/>
+      <Item key="_.ImageOrderType._Asc" value="Αύξουσα"/>
+      <Item key="_.ImageOrderType._Desc" value="Φθίνουσα"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Τίποτα"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Ελαχιστοποίηση"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Κλείσιμο"/>
       <Item key="frmMain.mnuMainFile" value="Αρχείο"/>
       <Item key="frmMain.mnuMainOpenFile" value="Άνοιγμα αρχείου…"/>
       <Item key="frmMain.mnuMainOpenImageData" value="Άνοιγμα εικόνας από το πρόχειρο"/>
@@ -46,6 +58,7 @@
       <Item key="frmMain.mnuMainChannels._Blue" value="Μπλε"/>
       <Item key="frmMain.mnuMainChannels._Black" value="Μαύρο"/>
       <Item key="frmMain.mnuMainChannels._Alpha" value="Διαφάνεια"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Σειρά φόρτωσης"/>
       <Item key="frmMain.mnuMainRotateLeft" value="Περιστροφή αριστερά"/>
       <Item key="frmMain.mnuMainRotateRight" value="Περιστροφή δεξιά"/>
       <Item key="frmMain.mnuMainFlipHorz" value="Οριζόντια αναστροφή"/>
@@ -82,6 +95,7 @@
       <Item key="frmMain.mnuMainColorPicker" value="Επιλογέας χρώματος"/>
       <Item key="frmMain.mnuMainPageNav" value="Πλοήγηση με σελίδες"/>
       <Item key="frmMain.mnuMainCrop" value="Περικοπή"/>
+      <Item key="frmMain.mnuExifTool" value="Εργαλείο Exif"/>
       <Item key="frmMain.mnuMainSettings" value="Ρυθμίσεις…"/>
       <Item key="frmMain.mnuMainHelp" value="Βοήθεια"/>
       <Item key="frmMain.mnuMainAbout" value="Σχετικά Με"/>
@@ -103,7 +117,7 @@
       <Item key="frmMain._DeleteDialogText" value="Διαγραφή αρχείου {0};"/>
       <Item key="frmMain._DeleteDialogTitle" value="Επιβεβαίωση"/>
       <Item key="frmMain._ExtractPageText" value="Εξαγωγή σελίδων εικόνας. Παρακαλώ επιλέξτε φάκελο αποθήκευσης."/>
-      <Item key="frmMain._FullScreenMessage" value="Πατήστε ALT+ENTER για να βγείτε από την πλήρη οθόνη."/>
+      <Item key="frmMain._FullScreenMessage" value="Πατήστε {0} για να βγείτε από τη πλήρη οθόνη."/>
       <Item key="frmMain._SlideshowMessage" value="Πατήστε ESC για να βγείτε από την προβολή διαφανειών.&#10; Κάντε δεξί κλικ για να ανοίξετε το μενού."/>
       <Item key="frmMain._SlideshowMessagePause" value="Η προβολή διαφανειών είναι σε παύση"/>
       <Item key="frmMain._SlideshowMessageResume" value="Η προβολή διαφανειών συνεχίστηκε"/>
@@ -125,6 +139,7 @@
       <Item key="frmMain._SetBackground_Success" value="Το φόντο επιφάνειας εργασίας ορίστηκε με επιτυχία"/>
       <Item key="frmMain._PageExtractComplete" value="Η εξαγωγή σελίδων ολοκληρώθηκε."/>
       <Item key="frmMain._Frameless" value="Πατήστε παρατεταμένα το SHIFT για να μετακινήσετε το παράθυρο."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Το πρόχειρο δεν έχει δεδομένα εικόνας."/>
       <Item key="frmAbout.lblSlogant" value="Ένας ελαφρύς και ευέλικτος προβολέας εικόνων"/>
       <Item key="frmAbout.lblInfo" value="Πληροφορίες"/>
       <Item key="frmAbout.lblComponent" value="Στοιχεία"/>
@@ -173,16 +188,8 @@
       <Item key="frmSetting.chkLoopViewer" value="Άρχισε από την αρχή στο τέλος της λίστας της προβολής διαφανειών (slideshow)"/>
       <Item key="frmSetting.chkIsCenterImage" value="Κεντράρισμα εικόνας"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Σειρά φόρτωσης εικόνων"/>
-      <Item key="frmSetting.cmbImageOrder._Name" value="Όνομα (προεπιλογή)"/>
-      <Item key="frmSetting.cmbImageOrder._Length" value="Διάρκεια"/>
-      <Item key="frmSetting.cmbImageOrder._CreationTime" value="Ημερομηνία δημιουργίας"/>
-      <Item key="frmSetting.cmbImageOrder._LastAccessTime" value="Πρόσφατο άνοιγμα αρχείου"/>
-      <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="Τελευταία τροποποίηση αρχείου"/>
-      <Item key="frmSetting.cmbImageOrder._Extension" value="Επέκταση"/>
-      <Item key="frmSetting.cmbImageOrder._Random" value="Τυχαίο"/>
-      <Item key="frmSetting.cmbImageOrderType._Asc" value="Αύξουσα"/>
-      <Item key="frmSetting.cmbImageOrderType._Desc" value="Φθίνουσα"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Χρήση της σειράς ταξινόμησης των Windows αν ειναι δυνατό"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Ομαδοποίηση εικόνων ανά φάκελο"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Αριθμός προσωρινά αποθηκευμένων εικόνων απο το ImageBooster (προς μια κατεύθυνση)"/>
       <Item key="frmSetting.lblColorManagement" value="Διαχείριση χρωμάτων"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Εφαρμογή και για τις εικόνες με ενσωματωμένο προφίλ χρώματος"/>
@@ -219,6 +226,8 @@
       <Item key="frmSetting.lblSlideshowIntervalTo" value="με"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Αποθήκευση εικόνας μετα την περιστροφή"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Επιλογή προγράμματος επεξεργασίας εικόνων"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="Μέτα το άνοιγμα προγράμματος επεξεργασίας:"/>
+      <Item key="frmSetting.lblImageQuality" value="Ποιότητα εικόνας:"/>
       <Item key="frmSetting.btnEditEditExt" value="Επεξεργασία…"/>
       <Item key="frmSetting.btnEditResetExt" value="Επαναφορά στις προεπιλογές"/>
       <Item key="frmSetting.btnEditEditAllExt" value="Επεξεργασία όλων των επεκτάσεων…"/>
@@ -227,17 +236,21 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="Όνομα εφαρμογής"/>
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="Τοποθεσία εφαρμογής"/>
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Εντολές εφαρμογής"/>
-      <Item key="frmSetting.chkSaveModifyDate" value="Διατήρηση της ημερομηνίας τροποποίησης της εικόνας στην αποθήκευση"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Διατήρηση ημερομηνίας τροποποίησης κατά την αποθήκευση"/>
       <Item key="frmSetting.lblSupportedExtension" value="Υποστηριζόμενες μορφές: {0}"/>
       <Item key="frmSetting.lnkOpenFileAssoc" value="Άνοιγμα συσχετίσεων τύπων αρχείων"/>
       <Item key="frmSetting.btnAddNewExt" value="Προσθήκη…"/>
       <Item key="frmSetting.btnRegisterExt" value="Ορισμός ως προεπιλεγμένου προγράμματος προβολής φωτογραφιών…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Απεγγραφή επεκτάσεων"/>
       <Item key="frmSetting.btnDeleteExt" value="Διαγραφή"/>
       <Item key="frmSetting.btnResetExt" value="Επαναφορά στις προεπιλογές"/>
       <Item key="frmSetting._RegisterWebToApp_Error" value="Δεν ήταν δυνατή η εγγραφή ενώσεων Web-to-App"/>
       <Item key="frmSetting._RegisterAppExtensions_Error" value="Αποτυχία ορισμού επέκτασης αρχείων για την εφαρμογή ImageGlass"/>
       <Item key="frmSetting._RegisterAppExtensions_Success" value="Όλες οι επεκτάσεις αρχείων ορίστηκαν με επιτυχία! Για να ορίσετε το ImageGlass ως προεπιλεγμένο προβολέα εικόνων, ανοιξτε τις ρυθμίσεις των Windows &gt; Προεπιλεγμένες εφαρμογές, και επιλέξτε χειροκίνητα το ImageGlass ως προεπιλεγμένη εφαρμογή προβολής εικόνων."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Δεν ήταν δυνατή η διαγραφή εγγεγραμμένων επεκτάσεων αρχείων του ImageGlass"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Όλες οι επεκτάσεις αρχείων απεγγράφηκαν με επιτυχία!"/>
       <Item key="frmSetting.lblToolbarPosition" value="Θέση εργαλειοθήκης:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Μέγεθος εικόνων εργαλειοθήκης:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Πάνω"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Κάτω"/>
       <Item key="frmSetting._separator" value="Διαχωριστικό"/>
@@ -249,11 +262,16 @@
       <Item key="frmSetting.btnMoveRight._Tooltip" value="Προσθήκη επιλεγμένου κουμπιού(ών) απο την εργαλειοθήκη"/>
       <Item key="frmSetting.btnMoveUp._Tooltip" value="Μετακίνηση επιλεγμένου κουμπιού πάνω"/>
       <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Στοίχιση κουμπιών στο κέντρο του παραθύρου"/>
-      <Item key="frmSetting.chkColorUseRGBA" value="Χρησιμοποίησε RGBA"/>
-      <Item key="frmSetting.chkColorUseHEXA" value="Χρησιμοποίησε HEX με alpha"/>
-      <Item key="frmSetting.chkColorUseHSLA" value="Χρησιμοποίησε HSLA"/>
+      <Item key="frmSetting.chkHideTooltips" value="Απόκρυψη συμβουλών εργαλειοθήκης"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="Χρήση μορφής RGB με την τιμή Alpha"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="Χρήση μορφής HEX με την τιμή Alpha"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="Χρήση μορφής HSL με την τιμή Alpha"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="Χρήση μορφής HSV με την τιμή Alpha"/>
       <Item key="frmSetting.lblDefaultColorCode" value="Προεπιλεγμένος τρόπος επιλογής χρώματος κατα την αντιγραφή"/>
       <Item key="frmSetting.chkShowPageNavAuto" value="Αυτόματη εμφάνιση εργαλείου πλοήγησης σελίδων για εικόνες πολλαπλών σελίδων"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Διατήρηση εργαλείου Exif πάντα σε πρώτο πλάνο"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Επιλογή αρχείου εργαλείου Exif"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Το εργαλείο Exif δεν υπάρχει ή είναι μη έγκυρο: &#10;{0}"/>
       <Item key="frmSetting.lblLanguageText" value="Εγκατεστημένες γλώσσες"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Ανανέωση"/>
       <Item key="frmSetting.lblLanguageWarning" value="Αυτό το πακέτο γλώσσας δεν είναι συμβατό με {0}"/>
@@ -323,7 +341,12 @@
       <Item key="frmCrop.btnSave" value="Αποθήκευση"/>
       <Item key="frmCrop.btnSaveAs" value="Αποθήκευση ως…"/>
       <Item key="frmCrop.btnCopy" value="Αντιγραφή"/>
-      <Item key="frmCrop.btnClear" value="Εκκαθάριση"/>
+      <Item key="frmCrop.btnReset" value="Επαναφορά"/>
+      <Item key="FrmExifTool.clnProperty" value="Ιδιότητα"/>
+      <Item key="FrmExifTool.clnValue" value="Τιμή"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Αντιγραφή τιμής"/>
+      <Item key="FrmExifTool.btnExport" value="Εξαγωγή…"/>
+      <Item key="FrmExifTool.btnClose" value="Κλείσιμο"/>
     </Content>
   </Language>
 </ImageGlass>

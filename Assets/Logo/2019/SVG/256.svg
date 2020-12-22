@@ -1,4 +1,4 @@
-<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="1.5" y="1.5" width="253" height="253" rx="48.5" fill="url(#paint0_linear)" stroke="url(#paint1_linear)" stroke-width="3"/>
 <g filter="url(#filter0_d)">
 <path d="M81.5142 60.7461C76.6343 60.7461 72.6787 64.7022 72.6787 69.5815C72.6787 74.4609 76.6348 78.417 81.5142 78.417C86.3935 78.417 90.3496 74.4609 90.3496 69.5815C90.3496 64.7022 86.3946 60.7461 81.5142 60.7461Z" fill="white"/>

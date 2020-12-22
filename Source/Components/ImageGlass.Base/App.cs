@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2020 DUONG DIEU PHAP
+Copyright (C) 2021 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ImageGlass.Base {
@@ -29,24 +30,20 @@ namespace ImageGlass.Base {
     /// The base information of ImageGlass app
     /// </summary>
     public static class App {
-        
         /// <summary>
         /// Gets the application executable path
         /// </summary>
-        public static string IGExePath { get => StartUpDir("ImageGlass.exe"); }
-
+        public static string IGExePath => StartUpDir("ImageGlass.exe");
 
         /// <summary>
         /// Gets the application version
         /// </summary>
-        public static string Version { get => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion; }
-
+        public static string Version => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion;
 
         /// <summary>
         /// Gets value of Portable mode if the startup dir is writable
         /// </summary>
         public static bool IsPortable => Helpers.CheckPathWritable(PathType.Dir, StartUpDir());
-
 
         /// <summary>
         /// Get the path based on the startup folder of ImageGlass.
@@ -61,7 +58,6 @@ namespace ImageGlass.Base {
 
             return Path.Combine(newPaths.ToArray());
         }
-
 
         /// <summary>
         /// Returns the path based on the configuration folder of ImageGlass.
@@ -79,15 +75,12 @@ namespace ImageGlass.Base {
             }
 
             // else, use AppData dir
-            var igAppDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass");
+            var igAppDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ImageGlass");
 
             var newPaths = paths.ToList();
             newPaths.Insert(0, igAppDataDir);
-            igAppDataDir = Path.Combine(newPaths.ToArray());
-
-            return igAppDataDir;
+            return Path.Combine(newPaths.ToArray());
         }
-
 
         /// <summary>
         /// Parse string to absolute path
@@ -96,7 +89,7 @@ namespace ImageGlass.Base {
         /// <returns></returns>
         public static string ToAbsolutePath(string inputPath) {
             var path = inputPath;
-            var protocol = Constants.URI_SCHEME + ":";
+            const string protocol = Constants.URI_SCHEME + ":";
 
             // If inputPath is URI Scheme
             if (path.StartsWith(protocol)) {
@@ -105,15 +98,12 @@ namespace ImageGlass.Base {
             }
 
             // Parse environment vars to absolute path
-            path = Environment.ExpandEnvironmentVariables(path);
-
-            return path;
+            return Environment.ExpandEnvironmentVariables(path);
         }
-
 
         /// <summary>
         /// Center the given form to the current screen.
-        /// Note***: The method Form.CenterToScreen() contains a bug: 
+        /// Note***: The method Form.CenterToScreen() contains a bug:
         /// https://stackoverflow.com/a/6837499/2856887
         /// </summary>
         /// <param name="form">The form to center</param>
@@ -122,17 +112,16 @@ namespace ImageGlass.Base {
 
             var workingArea = screen.WorkingArea;
             form.Location = new Point() {
-                X = Math.Max(workingArea.X, workingArea.X + (workingArea.Width - form.Width) / 2),
-                Y = Math.Max(workingArea.Y, workingArea.Y + (workingArea.Height - form.Height) / 2)
+                X = Math.Max(workingArea.X, workingArea.X + ((workingArea.Width - form.Width) / 2)),
+                Y = Math.Max(workingArea.Y, workingArea.Y + ((workingArea.Height - form.Height) / 2))
             };
         }
-
 
         /// <summary>
         /// Write log in DEBUG mode
         /// </summary>
         /// <param name="msg"></param>
-        public static void LogIt(string msg) {
+        public static async Task LogItAsync(string msg) {
 #if DEBUG
             try {
                 var tempDir = App.ConfigDir(PathType.Dir, Dir.Log);
@@ -141,15 +130,13 @@ namespace ImageGlass.Base {
                 }
                 var path = Path.Combine(tempDir, "iglog.log");
 
-                using (TextWriter tw = new StreamWriter(path, append: true)) {
-                    tw.WriteLine(msg);
-                    tw.Flush();
-                    tw.Close();
-                }
+                using var tw = new StreamWriter(path, append: true);
+                await tw.WriteLineAsync(msg).ConfigureAwait(true);
+                await tw.FlushAsync().ConfigureAwait(true);
+                tw.Close();
             }
             catch { }
 #endif
         }
-
     }
 }

@@ -1,42 +1,40 @@
-﻿namespace ImageGlass
-{
-  // Cyotek ImageBox
-  // Copyright (c) 2010-2015 Cyotek Ltd.
-  // http://cyotek.com
-  // http://cyotek.com/blog/tag/imagebox
+﻿namespace ImageGlass {
+    // Cyotek ImageBox
+    // Copyright (c) 2010-2015 Cyotek Ltd.
+    // http://cyotek.com
+    // http://cyotek.com/blog/tag/imagebox
 
-  // Licensed under the MIT License. See license.txt for the full text.
+    // Licensed under the MIT License. See license.txt for the full text.
 
-  // If you use this control in your applications, attribution, donations or contributions are welcome.
-
-  /// <summary>
-  ///   Specifies the size of the background texture grid.
-  /// </summary>
-  public enum ImageBoxGridScale
-  {
-    /// <summary>
-    ///   Displays a solid color
-    /// </summary>
-    None,
+    // If you use this control in your applications, attribution, donations or contributions are welcome.
 
     /// <summary>
-    ///   Half of the default size.
+    ///   Specifies the size of the background texture grid.
     /// </summary>
-    Tiny,
+    public enum ImageBoxGridScale {
+        /// <summary>
+        ///   Displays a solid color
+        /// </summary>
+        None,
 
-    /// <summary>
-    ///   Default size.
-    /// </summary>
-    Small,
+        /// <summary>
+        ///   Half of the default size.
+        /// </summary>
+        Tiny,
 
-    /// <summary>
-    ///   50% increase of default size.
-    /// </summary>
-    Medium,
+        /// <summary>
+        ///   Default size.
+        /// </summary>
+        Small,
 
-    /// <summary>
-    ///   100% increase of default size.
-    /// </summary>
-    Large
-  }
+        /// <summary>
+        ///   50% increase of default size.
+        /// </summary>
+        Medium,
+
+        /// <summary>
+        ///   100% increase of default size.
+        /// </summary>
+        Large
+    }
 }

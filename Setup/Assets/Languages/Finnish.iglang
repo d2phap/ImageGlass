@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="fi-FI" langName="Suomi" author="ImageGlass community" description="Finnish" minVersion="7.6.4.30" isRightToLeftLayout="No"/>
+    <Info langCode="fi-FI" langName="Suomi" author="Teemu Paavola ja 1 nimetön" description="Finnish" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Jotkin asetukset eivät ole käytettävissäsi ImageGlassissa{0}. On suotavaa päivittää ne ennen jatkamista.&#10;&#10;- Klikkaa kyllä, jos haluat tietoa muutoksista&#10;- Klikkaa ei, jos haluat suorittaa ImageGlassin oletusasetuksin."/>
+      <Item key="_.ImageOrderBy._Name" value="Nimi (Oletus)"/>
+      <Item key="_.ImageOrderBy._Length" value="Tiedoston koko"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Luontiaika"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Viimeksi käytetty"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Viimeisin kirjoitusaika"/>
+      <Item key="_.ImageOrderBy._Extension" value="Tunniste"/>
+      <Item key="_.ImageOrderBy._Random" value="Satunnainen"/>
+      <Item key="_.ImageOrderType._Asc" value="Nouseva"/>
+      <Item key="_.ImageOrderType._Desc" value="Laskeva"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Ei mitään"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Pienennä"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Sulje"/>
       <Item key="frmMain.mnuMainFile" value="Tiedosto"/>
       <Item key="frmMain.mnuMainOpenFile" value="Avaa tiedosto…"/>
       <Item key="frmMain.mnuMainOpenImageData" value="Avaa kuva leikepöydältä"/>
@@ -46,6 +58,7 @@
       <Item key="frmMain.mnuMainChannels._Blue" value="Sininen"/>
       <Item key="frmMain.mnuMainChannels._Black" value="Musta"/>
       <Item key="frmMain.mnuMainChannels._Alpha" value="Läpinäkyvä"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Latausjärjestys"/>
       <Item key="frmMain.mnuMainRotateLeft" value="Kierrä vasemmalle"/>
       <Item key="frmMain.mnuMainRotateRight" value="Kierrä oikealle"/>
       <Item key="frmMain.mnuMainFlipHorz" value="Peilaa vaakatasossa"/>
@@ -82,6 +95,7 @@
       <Item key="frmMain.mnuMainColorPicker" value="Värin valinta"/>
       <Item key="frmMain.mnuMainPageNav" value="Navigaatioikkuna sivun vasempaan laitaan"/>
       <Item key="frmMain.mnuMainCrop" value="Rajaa"/>
+      <Item key="frmMain.mnuExifTool" value="EXIF-työkalu"/>
       <Item key="frmMain.mnuMainSettings" value="Asetukset…"/>
       <Item key="frmMain.mnuMainHelp" value="Apua"/>
       <Item key="frmMain.mnuMainAbout" value="Tietoja"/>
@@ -103,7 +117,7 @@
       <Item key="frmMain._DeleteDialogText" value="Poista tiedosto '{0}' ?"/>
       <Item key="frmMain._DeleteDialogTitle" value="Vahvista"/>
       <Item key="frmMain._ExtractPageText" value="Puretaan kuvasivuja. Valitse tallennuskansio."/>
-      <Item key="frmMain._FullScreenMessage" value="Paina ALT+ENTER siirtyäksesi kokoruututilaan."/>
+      <Item key="frmMain._FullScreenMessage" value="Paina {0} poistuaksesi kokoruututilasta."/>
       <Item key="frmMain._SlideshowMessage" value="Paina ESC, jotta voit lopettaa diaesityksen. Hiiren oikeanpuoleista nappia painaessa, tulee kontekstivalikko esiin."/>
       <Item key="frmMain._SlideshowMessagePause" value="Diaesitys tauotettu"/>
       <Item key="frmMain._SlideshowMessageResume" value="Diaesitys jatkuu"/>
@@ -125,6 +139,7 @@
       <Item key="frmMain._SetBackground_Success" value="Työpöydän taustakuva asetettu onnistuneesti"/>
       <Item key="frmMain._PageExtractComplete" value="Sivun purku valmistui."/>
       <Item key="frmMain._Frameless" value="Pidä SHIFT pohjassa, jotta voit siirtää ikkunaa."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Leikepöydällä ei ole kuvaa."/>
       <Item key="frmAbout.lblSlogant" value="Kevyt ja monipuolinen kuvankatselusovellus"/>
       <Item key="frmAbout.lblInfo" value="Tietoa"/>
       <Item key="frmAbout.lblComponent" value="Komponentit"/>
@@ -133,7 +148,7 @@
       <Item key="frmAbout.lblInfoContact" value="Ota yhteyttä tekijään"/>
       <Item key="frmAbout.lblSoftwareUpdate" value="Ohjelmistopäivitykset"/>
       <Item key="frmAbout.lnkCheckUpdate" value="» Tarkistetaan päivitykset…"/>
-      <Item key="frmAbout._Text" value="Tietoa"/>
+      <Item key="frmAbout._Text" value="Tietoja"/>
       <Item key="frmAbout._PortableText" value="[Kannettava]"/>
       <Item key="frmSetting._Text" value="Asetukset"/>
       <Item key="frmSetting.btnSave" value="Tallenna"/>
@@ -173,16 +188,8 @@
       <Item key="frmSetting.chkLoopViewer" value="Palaa takaisin ensimmäiseen kuvaan, kun viimeinen kuva on katsottu"/>
       <Item key="frmSetting.chkIsCenterImage" value="Keskitä kuva katselimessa"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Kuvien latausjärjestys"/>
-      <Item key="frmSetting.cmbImageOrder._Name" value="Nimi (Oletus)"/>
-      <Item key="frmSetting.cmbImageOrder._Length" value="Tiedoston koko"/>
-      <Item key="frmSetting.cmbImageOrder._CreationTime" value="Luontiaika"/>
-      <Item key="frmSetting.cmbImageOrder._LastAccessTime" value="Viimeksi käytetty"/>
-      <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="Viimeisin kirjoitusaika"/>
-      <Item key="frmSetting.cmbImageOrder._Extension" value="Tunniste"/>
-      <Item key="frmSetting.cmbImageOrder._Random" value="Satunnainen"/>
-      <Item key="frmSetting.cmbImageOrderType._Asc" value="Nouseva"/>
-      <Item key="frmSetting.cmbImageOrderType._Desc" value="Laskeva"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Käytä Windowsin Resurssienhallinnan järjestystä, jos vain mahdollista"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Ryhmitä kuvat kansion mukaan"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="ImageBoosterin välimuistiin tallennettujen kuvien määrä (yksi suunta)"/>
       <Item key="frmSetting.lblColorManagement" value="Värihallinta"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Hyväksy myös kuviin ilman upotettua väriprofiilia"/>
@@ -219,6 +226,8 @@
       <Item key="frmSetting.lblSlideshowIntervalTo" value=" "/>
       <Item key="frmSetting.chkSaveOnRotate" value="Tallenna katsottu kuva kääntämisen jälkeen"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Valitsen kuvien muokkausohjelma"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="Muokkausohjelman avaamisen jälkeen:"/>
+      <Item key="frmSetting.lblImageQuality" value="Kuvanlaatu:"/>
       <Item key="frmSetting.btnEditEditExt" value="Muokkaa…"/>
       <Item key="frmSetting.btnEditResetExt" value="Palauta oletukseksi"/>
       <Item key="frmSetting.btnEditEditAllExt" value="Muokkaa kaikkia tiedostotunnisteita…"/>
@@ -232,12 +241,16 @@
       <Item key="frmSetting.lnkOpenFileAssoc" value="Avoimet tiedostotyyppikytkökset"/>
       <Item key="frmSetting.btnAddNewExt" value="Lisää…"/>
       <Item key="frmSetting.btnRegisterExt" value="Aseta oletuskuvankatselimeksi…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Poista tiedostopäätteiden kytkennät"/>
       <Item key="frmSetting.btnDeleteExt" value="Poista"/>
       <Item key="frmSetting.btnResetExt" value="Palauta oletukseksi"/>
       <Item key="frmSetting._RegisterWebToApp_Error" value="Web-to-App-linkkauksen rekisteröinti ei onnistu"/>
       <Item key="frmSetting._RegisterAppExtensions_Error" value="Tiedostokytkösten rekisteröinti ImageGlass-sovellukseen ei onnistu"/>
       <Item key="frmSetting._RegisterAppExtensions_Success" value="Kaikki kytkökset rekisteröity onnistuneesti! Asettaaksesi ImageGlassin oletuskuvankatselimeksi, avaa Windowsin Asetukset &gt; Oletusohjelmat ja valitse manuaalisesti ImageGlass kuvankatselusovellusten kohdalta."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Tiedostokytkösten poistaminen ImageGlass-sovellukselta ei onnistu"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Kaikki tiedostopäätteiden kytkennät poistettu onnistuneesti!"/>
       <Item key="frmSetting.lblToolbarPosition" value="Työkalupalkin sijainti:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Työkalupalkin kuvakkeen koko:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="Ylhäällä"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Alhaalla"/>
       <Item key="frmSetting._separator" value="Erotin"/>
@@ -249,11 +262,16 @@
       <Item key="frmSetting.btnMoveRight._Tooltip" value="Lisää valitut painikkeet työkalupalkkiin"/>
       <Item key="frmSetting.btnMoveUp._Tooltip" value="Siirrä valittu painike ylös"/>
       <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Keskitä työkalupalkin painikkeet vaakatasossa ikkunassa"/>
-      <Item key="frmSetting.chkColorUseRGBA" value="Käytä RGBA-formaattia"/>
-      <Item key="frmSetting.chkColorUseHEXA" value="Käytä HEX with alpha-formaattia"/>
-      <Item key="frmSetting.chkColorUseHSLA" value="Käytä HSLA-formaattia"/>
+      <Item key="frmSetting.chkHideTooltips" value="Piilota työkalupalkin vihjeet"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="Käytä RGB-muotoa alfa-arvoilla"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="Käytä heksamuotoa alfa-arvoilla"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="Käytä HSL-muotoa alfa-arvoilla"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="Käytä HSV-muotoa alfa-arvoilla"/>
       <Item key="frmSetting.lblDefaultColorCode" value="Oletusvärikoodin muoto kopioidessa"/>
       <Item key="frmSetting.chkShowPageNavAuto" value="Näytä automaattisesti sivunavigaatiotyökalut monisivukuvissa"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Pidä EXIF-työkalu aina päällimmäisenä"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Valitse tiedosto EXIF-työkalulle"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="EXIF-työkalua ei ole olemassa tai on virheellinen: &#10;{0}"/>
       <Item key="frmSetting.lblLanguageText" value="Asennetut kielet"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Päivitä"/>
       <Item key="frmSetting.lblLanguageWarning" value="Tämä kielipaketti ei mahdollisesti toimi {0}"/>
@@ -297,7 +315,7 @@
       <Item key="frmAddNewFormat.lblFileExtension" value="Tiedostotunnisteet"/>
       <Item key="frmAddNewFormat.btnOK" value="OK"/>
       <Item key="frmAddNewFormat.btnClose" value="Sulje"/>
-      <Item key="frmEditApp.lblFileExtension" value="Tiedostotunniste"/>
+      <Item key="frmEditApp.lblFileExtension" value="Tiedostotunnisteet"/>
       <Item key="frmEditApp.lblAppName" value="Sovelluksen nimi"/>
       <Item key="frmEditApp.lblAppPath" value="Sovelluksen polku"/>
       <Item key="frmEditApp.lblAppArguments" value="Sovellusargumentit"/>
@@ -323,7 +341,12 @@
       <Item key="frmCrop.btnSave" value="Tallenna"/>
       <Item key="frmCrop.btnSaveAs" value="Tallenna nimellä…"/>
       <Item key="frmCrop.btnCopy" value="Kopioi"/>
-      <Item key="frmCrop.btnClear" value="Tyhjennä"/>
+      <Item key="frmCrop.btnReset" value="Palauta"/>
+      <Item key="FrmExifTool.clnProperty" value="Ominaisuus"/>
+      <Item key="FrmExifTool.clnValue" value="Arvo"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Kopioi arvo"/>
+      <Item key="FrmExifTool.btnExport" value="Vie…"/>
+      <Item key="FrmExifTool.btnClose" value="Sulje"/>
     </Content>
   </Language>
 </ImageGlass>

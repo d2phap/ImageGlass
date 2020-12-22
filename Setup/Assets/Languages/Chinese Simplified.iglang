@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="zh-CN" langName="简体中文" author="ImageGlass community" description="Chinese Simplified" minVersion="7.6.4.30" isRightToLeftLayout="No"/>
+    <Info langCode="zh-CN" langName="简体中文" author="星野みなと, Chenry Lee, 小恐龙, 0xLC, Infinity_X, Yi Fan, gapore, 7YHong, arlen.cn" description="Chinese Simplified" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
     <Content>
-      <Item key="_IncompatibleConfigs" value="某些设置和您当前的 ImageGlass 版本 {0} 不兼容。我们推荐您在继续使用之前先检查这些设置。&#10;&#10;- 点击“是”，来了解这些变化；&#10;- 点击“否”，则以默认设置启动 ImageGlass。"/>
+      <Item key="_IncompatibleConfigs" value="某些设置和您当前的 ImageGlass 版本 {0} 不兼容。我们推荐您在继续使用之前先更新这些设置。&#10;&#10;- 点击“是”，来了解这些变化；&#10;- 点击“否”，则以默认设置启动 ImageGlass。"/>
+      <Item key="_.ImageOrderBy._Name" value="文件名（默认）"/>
+      <Item key="_.ImageOrderBy._Length" value="文件大小"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="创建时间"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="上次访问时间"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="最后修改时间"/>
+      <Item key="_.ImageOrderBy._Extension" value="扩展名"/>
+      <Item key="_.ImageOrderBy._Random" value="随机"/>
+      <Item key="_.ImageOrderType._Asc" value="顺序"/>
+      <Item key="_.ImageOrderType._Desc" value="倒序"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="无"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="最小化"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="关闭"/>
       <Item key="frmMain.mnuMainFile" value="文件"/>
       <Item key="frmMain.mnuMainOpenFile" value="打开图像..."/>
       <Item key="frmMain.mnuMainOpenImageData" value="从剪贴板打开"/>
@@ -13,31 +25,31 @@
       <Item key="frmMain.mnuMainRefresh" value="刷新"/>
       <Item key="frmMain.mnuMainReloadImage" value="重新加载图像"/>
       <Item key="frmMain.mnuMainReloadImageList" value="重新加载图像列表"/>
-      <Item key="frmMain.mnuOpenWith" value="使用其他软件打开"/>
+      <Item key="frmMain.mnuOpenWith" value="打开方式..."/>
       <Item key="frmMain.mnuMainEditImage" value="编辑图像 {0}"/>
-      <Item key="frmMain.mnuMainPrint" value="打印"/>
+      <Item key="frmMain.mnuMainPrint" value="打印..."/>
       <Item key="frmMain.mnuMainNavigation" value="导航"/>
       <Item key="frmMain.mnuMainViewNext" value="查看下一张图像"/>
       <Item key="frmMain.mnuMainViewNext.Shortcut" value="→ / PageDown"/>
       <Item key="frmMain.mnuMainViewPrevious" value="查看上一张图像"/>
       <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="← / PageUp"/>
       <Item key="frmMain.mnuMainGoto" value="跳转到..."/>
-      <Item key="frmMain.mnuMainGotoFirst" value="前往第一张图像"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="跳转到第一张图像"/>
       <Item key="frmMain.mnuMainGotoLast" value="转到最后一张图像"/>
       <Item key="frmMain.mnuMainNextPage" value="查看下一页"/>
       <Item key="frmMain.mnuMainPrevPage" value="查看上一页"/>
-      <Item key="frmMain.mnuMainFirstPage" value="转到首页"/>
-      <Item key="frmMain.mnuMainLastPage" value="转到末页"/>
+      <Item key="frmMain.mnuMainFirstPage" value="查看首页"/>
+      <Item key="frmMain.mnuMainLastPage" value="查看末页"/>
       <Item key="frmMain.mnuMainZoom" value="缩放"/>
       <Item key="frmMain.mnuMainZoomIn" value="放大"/>
       <Item key="frmMain.mnuMainZoomOut" value="缩小"/>
-      <Item key="frmMain.mnuMainScaleToFit" value="缩放至匹配窗口大小"/>
-      <Item key="frmMain.mnuMainScaleToFill" value="缩放至填满窗口"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="适配窗口"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="填满窗口"/>
       <Item key="frmMain.mnuMainActualSize" value="实际大小"/>
       <Item key="frmMain.mnuMainLockZoomRatio" value="锁定缩放比例"/>
       <Item key="frmMain.mnuMainAutoZoom" value="自动缩放"/>
-      <Item key="frmMain.mnuMainScaleToWidth" value="缩放至匹配窗口宽度"/>
-      <Item key="frmMain.mnuMainScaleToHeight" value="缩放至匹配窗口高度"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="适配宽度"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="适配高度"/>
       <Item key="frmMain.mnuMainImage" value="图像"/>
       <Item key="frmMain.mnuMainChannels" value="查看图像通道"/>
       <Item key="frmMain.mnuMainChannels._All" value="全部通道"/>
@@ -46,6 +58,7 @@
       <Item key="frmMain.mnuMainChannels._Blue" value="蓝"/>
       <Item key="frmMain.mnuMainChannels._Black" value="黑"/>
       <Item key="frmMain.mnuMainChannels._Alpha" value="透明"/>
+      <Item key="frmMain.mnuLoadingOrder" value="加载顺序"/>
       <Item key="frmMain.mnuMainRotateLeft" value="向左旋转"/>
       <Item key="frmMain.mnuMainRotateRight" value="向右旋转"/>
       <Item key="frmMain.mnuMainFlipHorz" value="水平翻转"/>
@@ -59,7 +72,7 @@
       <Item key="frmMain.mnuMainSetAsLockImage" value="设置为锁屏图像"/>
       <Item key="frmMain.mnuMainImageLocation" value="打开图片所在位置"/>
       <Item key="frmMain.mnuMainImageProperties" value="图像属性"/>
-      <Item key="frmMain.mnuMainClipboard" value="剪切板"/>
+      <Item key="frmMain.mnuMainClipboard" value="剪贴板"/>
       <Item key="frmMain.mnuMainCopy" value="复制"/>
       <Item key="frmMain.mnuMainCopyImageData" value="复制到剪贴板"/>
       <Item key="frmMain.mnuMainCut" value="剪切"/>
@@ -82,6 +95,7 @@
       <Item key="frmMain.mnuMainColorPicker" value="取色工具"/>
       <Item key="frmMain.mnuMainPageNav" value="页面导航器"/>
       <Item key="frmMain.mnuMainCrop" value="裁剪"/>
+      <Item key="frmMain.mnuExifTool" value="Exif 工具"/>
       <Item key="frmMain.mnuMainSettings" value="设置"/>
       <Item key="frmMain.mnuMainHelp" value="帮助"/>
       <Item key="frmMain.mnuMainAbout" value="关于"/>
@@ -103,7 +117,7 @@
       <Item key="frmMain._DeleteDialogText" value="删除这 {0} 张图像？"/>
       <Item key="frmMain._DeleteDialogTitle" value="确认"/>
       <Item key="frmMain._ExtractPageText" value="正在导出这个图像的各分页。请选择输出文件夹："/>
-      <Item key="frmMain._FullScreenMessage" value="按下 Alt + Enter 来退出全屏模式。"/>
+      <Item key="frmMain._FullScreenMessage" value="按 {0} 退出全屏模式。"/>
       <Item key="frmMain._SlideshowMessage" value="按下 ESC 来退出幻灯片播放。&#10; 右键单击来打开菜单。"/>
       <Item key="frmMain._SlideshowMessagePause" value="幻灯片放映已暂停"/>
       <Item key="frmMain._SlideshowMessageResume" value="幻灯片放映已恢复"/>
@@ -125,6 +139,7 @@
       <Item key="frmMain._SetBackground_Success" value="桌面背景设置成功"/>
       <Item key="frmMain._PageExtractComplete" value="分页导出完成。"/>
       <Item key="frmMain._Frameless" value="按住 Shift 来移动窗口。"/>
+      <Item key="frmMain._InvalidImageClipboardData" value="剪贴板不包含图像数据。"/>
       <Item key="frmAbout.lblSlogant" value="一个轻量的、通用的图像查看器"/>
       <Item key="frmAbout.lblInfo" value="动态"/>
       <Item key="frmAbout.lblComponent" value="组件"/>
@@ -173,16 +188,8 @@
       <Item key="frmSetting.chkLoopViewer" value="当到达列表最后时，再从头开始查看"/>
       <Item key="frmSetting.chkIsCenterImage" value="图像居中显示"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="图像加载顺序"/>
-      <Item key="frmSetting.cmbImageOrder._Name" value="文件名（默认）"/>
-      <Item key="frmSetting.cmbImageOrder._Length" value="文件大小"/>
-      <Item key="frmSetting.cmbImageOrder._CreationTime" value="创建时间"/>
-      <Item key="frmSetting.cmbImageOrder._LastAccessTime" value="上次访问时间"/>
-      <Item key="frmSetting.cmbImageOrder._LastWriteTime" value="最后修改时间"/>
-      <Item key="frmSetting.cmbImageOrder._Extension" value="扩展名"/>
-      <Item key="frmSetting.cmbImageOrder._Random" value="随机"/>
-      <Item key="frmSetting.cmbImageOrderType._Asc" value="顺序"/>
-      <Item key="frmSetting.cmbImageOrderType._Desc" value="倒序"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="使用 Windows 资源管理器的默认排序"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="按目录分组图像"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="图像加速器的缓存数量（单个目录）"/>
       <Item key="frmSetting.lblColorManagement" value="色彩管理"/>
       <Item key="frmSetting.chkApplyColorProfile" value="对无内嵌颜色配置文件的图像启用"/>
@@ -219,6 +226,8 @@
       <Item key="frmSetting.lblSlideshowIntervalTo" value="到"/>
       <Item key="frmSetting.chkSaveOnRotate" value="旋转后保存查看图像"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="选择用于图像编辑的应用程序"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="打开编辑应用程序后："/>
+      <Item key="frmSetting.lblImageQuality" value="图像质量："/>
       <Item key="frmSetting.btnEditEditExt" value="编辑..."/>
       <Item key="frmSetting.btnEditResetExt" value="重置为默认"/>
       <Item key="frmSetting.btnEditEditAllExt" value="编辑所有扩展名..."/>
@@ -227,17 +236,21 @@
       <Item key="frmSetting.lvImageEditing.clnAppName" value="应用程序名称"/>
       <Item key="frmSetting.lvImageEditing.clnAppPath" value="应用程序路径"/>
       <Item key="frmSetting.lvImageEditing.clnAppArguments" value="应用程序参数"/>
-      <Item key="frmSetting.chkSaveModifyDate" value="保存图像的修改日期"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="保存时保留图像原始修改日期"/>
       <Item key="frmSetting.lblSupportedExtension" value="支持的格式：{0}"/>
       <Item key="frmSetting.lnkOpenFileAssoc" value="打开文件类型关联的设置界面"/>
       <Item key="frmSetting.btnAddNewExt" value="添加..."/>
       <Item key="frmSetting.btnRegisterExt" value="设为默认照片查看器..."/>
+      <Item key="frmSetting.btnUnregisterExt" value="取消文件类型关联"/>
       <Item key="frmSetting.btnDeleteExt" value="删除"/>
       <Item key="frmSetting.btnResetExt" value="重置为默认"/>
       <Item key="frmSetting._RegisterWebToApp_Error" value="无法注册链接到 ImageGlass 的 URI"/>
       <Item key="frmSetting._RegisterAppExtensions_Error" value="无法为 ImageGlass 注册文件扩展名"/>
       <Item key="frmSetting._RegisterAppExtensions_Success" value="所有文件格式都已经成功注册！要让 ImageGalss 成为默认的图片查看器，请打开 Windows 设置 &gt; 默认应用，并手动在“照片查看器”类目下选择 ImageGlass。"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="无法删除已为 ImageGlass 注册的文件扩展名"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="所有文件扩展名均已成功取消关联！"/>
       <Item key="frmSetting.lblToolbarPosition" value="工具栏位置:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="工具栏图标大小:"/>
       <Item key="frmSetting.cmbToolbarPosition._Top" value="顶部"/>
       <Item key="frmSetting.cmbToolbarPosition._Bottom" value="底部"/>
       <Item key="frmSetting._separator" value="分隔符"/>
@@ -249,11 +262,16 @@
       <Item key="frmSetting.btnMoveRight._Tooltip" value="添加选定命令"/>
       <Item key="frmSetting.btnMoveUp._Tooltip" value="上移"/>
       <Item key="frmSetting.chkHorzCenterToolbarBtns" value="水平居中工具栏按钮"/>
-      <Item key="frmSetting.chkColorUseRGBA" value="使用 RGBA 格式"/>
-      <Item key="frmSetting.chkColorUseHEXA" value="使用十六进制的 Alpha 格式"/>
-      <Item key="frmSetting.chkColorUseHSLA" value="使用 HSLA 格式"/>
+      <Item key="frmSetting.chkHideTooltips" value="隐藏工具栏提示"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="使用含 Alpha 值的 RGB 格式"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="使用含 Alpha 值的 HEX 格式"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="使用含 Alpha 值的 HSL 格式"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="使用含 Alpha 值的 HSV 格式"/>
       <Item key="frmSetting.lblDefaultColorCode" value="复制时的默认颜色代码格式"/>
       <Item key="frmSetting.chkShowPageNavAuto" value="查看多页图像时，自动显示页面导航器"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="保留“Exif 工具”在顶端"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="选择 Exif 工具文件"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Exif 工具不存在或无效： &#10;{0}"/>
       <Item key="frmSetting.lblLanguageText" value="已安装的语言"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; 刷新"/>
       <Item key="frmSetting.lblLanguageWarning" value="这个语言包可能与 {0} 不兼容"/>
@@ -284,10 +302,10 @@
       <Item key="frmSetting.btnThemeApply._Success" value="皮肤应用成功！"/>
       <Item key="frmSetting.btnThemeApply._Error" value="无法应用所选皮肤"/>
       <Item key="frmSetting.btnKeyReset" value="重置为默认"/>
-      <Item key="frmSetting.lblKeysSpaceBack" value="Space / Backspace"/>
-      <Item key="frmSetting.lblKeysPageUpDown" value="PageUp / PageDown"/>
-      <Item key="frmSetting.lblKeysUpDown" value="Up / Down 键"/>
-      <Item key="frmSetting.lblKeysLeftRight" value="Left / Right 键"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="空格 / 退格"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="上一页 / 下一页"/>
+      <Item key="frmSetting.lblKeysUpDown" value="上 / 下方向键"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="左 / 右方向键"/>
       <Item key="frmSetting.KeyActions._PrevNextImage" value="上/下切换图像"/>
       <Item key="frmSetting.KeyActions._PanLeftRight" value="左/右移动图像"/>
       <Item key="frmSetting.KeyActions._PanUpDown" value="上/下移动图像"/>
@@ -306,7 +324,7 @@
       <Item key="frmEditApp.btnClose" value="关闭"/>
       <Item key="frmEditApp.lblPreviewLabel" value="预览"/>
       <Item key="frmFirstLaunch._Text" value="首次启动设置"/>
-      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ImageGlass 需要关闭它的所有进程来应用新的设置，继续吗？"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ImageGlass 需要关闭其所有进程来应用新的设置，继续吗？"/>
       <Item key="frmFirstLaunch.lblStepNumber" value="步骤 {0}/{1}"/>
       <Item key="frmFirstLaunch.btnNextStep" value="下一步"/>
       <Item key="frmFirstLaunch.btnNextStep._Done" value="完成!"/>
@@ -323,7 +341,12 @@
       <Item key="frmCrop.btnSave" value="保存"/>
       <Item key="frmCrop.btnSaveAs" value="另存为..."/>
       <Item key="frmCrop.btnCopy" value="复制"/>
-      <Item key="frmCrop.btnClear" value="清除"/>
+      <Item key="frmCrop.btnReset" value="重置"/>
+      <Item key="FrmExifTool.clnProperty" value="属性"/>
+      <Item key="FrmExifTool.clnValue" value="值"/>
+      <Item key="FrmExifTool.btnCopyValue" value="复制值"/>
+      <Item key="FrmExifTool.btnExport" value="导出..."/>
+      <Item key="FrmExifTool.btnClose" value="关闭"/>
     </Content>
   </Language>
 </ImageGlass>

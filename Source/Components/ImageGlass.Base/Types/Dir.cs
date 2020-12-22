@@ -28,11 +28,6 @@ namespace ImageGlass.Base {
         public static string Themes { get; } = "Themes";
 
         /// <summary>
-        /// Gets the default theme folder name
-        /// </summary>
-        public static string DefaultTheme { get; } = "DefaultTheme";
-
-        /// <summary>
         /// Gets the Languages folder name
         /// </summary>
         public static string Languages { get; } = "Languages";

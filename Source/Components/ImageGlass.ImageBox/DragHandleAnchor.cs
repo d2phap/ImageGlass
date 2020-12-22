@@ -1,5 +1,4 @@
-﻿namespace ImageGlass
-{
+﻿namespace ImageGlass {
     // Cyotek ImageBox
     // Copyright (c) 2010-2015 Cyotek Ltd.
     // http://cyotek.com
@@ -9,8 +8,7 @@
 
     // If you use this control in your applications, attribution, donations or contributions are welcome.
 
-    public enum DragHandleAnchor
-    {
+    public enum DragHandleAnchor {
         None,
         TopLeft,
         TopCenter,

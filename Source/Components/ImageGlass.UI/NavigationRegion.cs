@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2020 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Copyright (C) 2021 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System.Drawing;
 
 namespace ImageGlass.UI {
-
     public enum NavigationRegionType {
         Unknown,
         Left,
@@ -39,6 +38,6 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Rectangle of navigation region
         /// </summary>
-        public Rectangle Region { get; set; } = new Rectangle();
+        public Rectangle Region { get; set; } = new();
     }
 }

@@ -1,7 +1,7 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2019 DUONG DIEU PHAP
-Project homepage: http://imageglass.org
+Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -35,11 +35,8 @@ namespace ImageGlass.Library.WinAPI {
         [DllImport("user32.dll")]
         private static extern bool ReleaseCapture();
 
-
-
-        private Form _form;
+        private readonly Form _form;
         private bool _isKeyDown = true;
-
 
         #region Public props
 
@@ -65,16 +62,11 @@ namespace ImageGlass.Library.WinAPI {
 
         #endregion
 
-
-
         /// <summary>
         /// Initialize the MovableForm
         /// </summary>
         /// <param name="form">The form to make it movable</param>
-        public MovableForm(Form form) {
-            _form = form;
-        }
-
+        public MovableForm(Form form) => _form = form;
 
         #region Public methods
 
@@ -110,7 +102,6 @@ namespace ImageGlass.Library.WinAPI {
             _form.MouseDown -= Event_MouseDown;
         }
 
-
         /// <summary>
         /// Disable moving ability on the given controls
         /// </summary>
@@ -122,7 +113,6 @@ namespace ImageGlass.Library.WinAPI {
         }
 
         #endregion
-
 
         #region Events: Frameless form moving
 
@@ -141,10 +131,9 @@ namespace ImageGlass.Library.WinAPI {
 
         private void Event_MouseDown(object sender, MouseEventArgs e) {
             // check if 'sender' can move without keydown event
-            var control = (Control) sender;
+            var control = (Control)sender;
             var isFreeMove = this.FreeMoveControlNames.Count > 0
                 && this.FreeMoveControlNames.Contains(control.Name);
-
 
             if (e.Clicks == 1
                 && e.Button == this.MouseButton
@@ -155,7 +144,6 @@ namespace ImageGlass.Library.WinAPI {
             }
         }
         #endregion
-
 
     }
 }
