@@ -59,7 +59,7 @@ namespace ImageGlass.Library.Image {
         /// <returns></returns>
         public bool CheckExists() {
             var output = "";
-            var toolPath = this.ToolPath + " -ver";
+            var toolPath = $"\"{this.ToolPath}\" -ver";
 
             if (!File.Exists(this.ToolPath)) {
                 return false;
@@ -274,15 +274,7 @@ namespace ImageGlass.Library.Image {
         /// <param name="removeWhiteSpaceInTagNames"></param>
         private void LoadExifData(string imageFilename, bool removeWhiteSpaceInTagNames = false) {
             // exiftool command
-            var toolPath = this.ToolPath + " ";
-
-            if (removeWhiteSpaceInTagNames)
-                toolPath += "-s ";
-            toolPath += "-fast -G -t -m -q ";
-            toolPath += "\"" + imageFilename + "\"";
-
-            var (output, _) = Open(toolPath);
-
+            var (output, _) = Open($"\"\"{this.ToolPath}\" {(removeWhiteSpaceInTagNames ? "-s" : "")} -fast -G -t -m -q \"{imageFilename}\"\"");
 
             // parse the output into tags
             this.Clear();
