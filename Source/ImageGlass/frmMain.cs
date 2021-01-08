@@ -2838,6 +2838,11 @@ namespace ImageGlass {
 
                 Application.DoEvents();
 
+                // Update toolbar icon according to the new size
+                LoadToolbarIcons(forceReloadIcon: true);
+
+                toolMain.UpdateAlignment();
+                
                 // realign image
                 if (!_isManuallyZoomed) {
                     ApplyZoomMode(Configs.ZoomMode);
