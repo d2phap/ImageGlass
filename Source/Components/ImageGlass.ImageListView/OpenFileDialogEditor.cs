@@ -55,7 +55,7 @@ namespace ImageGlass.ImageListView {
                     dlg.Title = "Select " + context.PropertyDescriptor.DisplayName;
                     dlg.Filter = "All image files (*.bmp, *.gif, *.jpg, *.jpeg, *.jpe, *.jif, *.png, *.tif, *.tiff, *.tga)|" +
                         "*.bmp;*.gif;*.jpg;*.jpeg;*.jpe;*.jif;*.png;*.tif;*.tiff;*.tga|" +
-                        "BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|JPEG (*.jpg, *.jpeg, *.jpe, *.jif)|*.jpg;*.jpeg;*.jpe;*.jif|" +
+                        "BMP (*.bmp)|*.bmp|GIF (*.gif)|*.gif|JPEG (*.jpg, *.jpeg, *.jpe, *.jif, *.jxl)|*.jpg;*.jpeg;*.jpe;*.jif;*.jxl|" +
                         "PNG (*.png)|*.png|TIFF (*.tif, *.tiff)|*.tif;*.tiff|TGA (*.tga)|*.tga|All files (*.*)|*.*";
 
                     if (dlg.ShowDialog() == DialogResult.OK)
