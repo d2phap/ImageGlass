@@ -1106,8 +1106,12 @@ namespace ImageGlass {
 
             // Previous Image
             #region LEFT ARROW / PAGE UP
-            if (!ignore && e.KeyValue == (int)Keys.Left && hasNoMods) {
+            if (e.KeyValue == (int)Keys.Left && hasNoMods) {
+                if (ignore) {
+                    e.Handled = true; // Issue #963: leaning on the key will pan the image if IG is busy!
+                }
                 if (Configs.KeyComboActions[KeyCombos.LeftRight] == AssignableActions.PrevNextImage) {
+                    e.Handled = true; // Issue #963: don't let ImageBox see the keystroke!
                     _ = NextPicAsync(-1);
                 }
                 return; // fall-through lets pan happen
@@ -1128,8 +1132,12 @@ namespace ImageGlass {
 
             // Next Image
             #region RIGHT ARROW / PAGE DOWN
-            if (!ignore && e.KeyValue == (int)Keys.Right && hasNoMods) {
+            if (e.KeyValue == (int)Keys.Right && hasNoMods) {
+                if (ignore) {
+                    e.Handled = true; // Issue #963: leaning on the key will pan the image if IG is busy!
+                }
                 if (Configs.KeyComboActions[KeyCombos.LeftRight] == AssignableActions.PrevNextImage) {
+                    e.Handled = true; // Issue #963: don't let ImageBox see the keystroke!
                     _ = NextPicAsync(1);
                 }
                 return; // fall-through lets pan happen
