@@ -707,6 +707,9 @@ namespace ImageGlass.Heart {
                 case ".JP2":
                     mimeType = "image/jpeg";
                     break;
+                case ".JXL":
+                    mimeType = "image/jxl";
+                    break;
                 case ".TIF":
                 case ".TIFF":
                     mimeType = "image/tiff";

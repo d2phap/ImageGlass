@@ -4114,7 +4114,7 @@ namespace ImageGlass {
             var ext = Path.GetExtension(filename).Substring(1);
 
             var saveDialog = new SaveFileDialog {
-                Filter = "BMP|*.bmp|EMF|*.emf|EXIF|*.exif|GIF|*.gif|ICO|*.ico|JPG|*.jpg|PNG|*.png|TIFF|*.tiff|WMF|*.wmf|Base64String (*.b64)|*.b64|Base64String (*.txt)|*.txt",
+                Filter = "BMP|*.bmp|EMF|*.emf|EXIF|*.exif|GIF|*.gif|ICO|*.ico|JPG|*.jpg|PNG|*.png|JPEG-XL|*.jxl|TIFF|*.tiff|WMF|*.wmf|Base64String (*.b64)|*.b64|Base64String (*.txt)|*.txt",
                 FileName = Path.GetFileNameWithoutExtension(filename)
             };
 
@@ -4147,11 +4147,14 @@ namespace ImageGlass {
                     case "png":
                         saveDialog.FilterIndex = 7;
                         break;
-                    case "tiff":
+                    case "jxl":
                         saveDialog.FilterIndex = 8;
                         break;
-                    case "wmf":
+                    case "tiff":
                         saveDialog.FilterIndex = 9;
+                        break;
+                    case "wmf":
+                        saveDialog.FilterIndex = 10;
                         break;
                 }
             }
@@ -4187,9 +4190,12 @@ namespace ImageGlass {
                         clonedPic.Save(saveDialog.FileName, ImageFormat.Icon);
                         break;
                     case 8:
-                        clonedPic.Save(saveDialog.FileName, ImageFormat.Tiff);
+                        Heart.Photo.Save(clonedPic, saveDialog.FileName, (int)MagickFormat.Jxl, quality: Configs.ImageEditQuality);
                         break;
                     case 9:
+                        clonedPic.Save(saveDialog.FileName, ImageFormat.Tiff);
+                        break;
+                    case 10:
                         clonedPic.Save(saveDialog.FileName, ImageFormat.Wmf);
                         break;
                     default:
