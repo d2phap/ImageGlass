@@ -4819,8 +4819,13 @@ namespace ImageGlass {
 
         private void mnuMainImageLocation_Click(object sender, EventArgs e) {
             if (Local.ImageList.Length > 0) {
-                Process.Start("explorer.exe", "/select,\"" +
-                    Local.ImageList.GetFileName(Local.CurrentIndex) + "\"");
+                try {
+                    Explorer.OpenFolderAndSelectItem(Local.ImageList.GetFileName(Local.CurrentIndex));
+                }
+                catch {
+                    Process.Start("explorer.exe", "/select,\"" +
+                        Local.ImageList.GetFileName(Local.CurrentIndex) + "\"");
+                }
             }
         }
 
