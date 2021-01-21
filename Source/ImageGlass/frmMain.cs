@@ -77,7 +77,7 @@ namespace ImageGlass {
 
         // window state value before resizing
         private FormWindowState _windowState = FormWindowState.Minimized;
-        
+
         // determine if the image is zoomed
         private bool _isManuallyZoomed;
 
@@ -2853,7 +2853,7 @@ namespace ImageGlass {
                 LoadToolbarIcons(forceReloadIcon: true);
 
                 toolMain.UpdateAlignment();
-                
+
                 // realign image
                 if (!_isManuallyZoomed) {
                     ApplyZoomMode(Configs.ZoomMode);
@@ -3422,7 +3422,7 @@ namespace ImageGlass {
                 }
             }
         }
-        
+
         private void frmMain_ResizeBegin(object sender, EventArgs e) {
             _windowSize = Size;
         }
