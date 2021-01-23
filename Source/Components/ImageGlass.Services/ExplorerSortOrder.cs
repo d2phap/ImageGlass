@@ -71,6 +71,8 @@ namespace ImageGlass.Services {
 
             try {
                 var folderPath = Path.GetDirectoryName(fullPath);
+                if (folderPath == null) // if fullPath is a drive root (e.g. "L:\") then Path.GetDirectoryName returns null
+                    folderPath = fullPath;
 
                 var sb = new StringBuilder(200); // arbitrary length should fit any
                 int explorerSortResult;
