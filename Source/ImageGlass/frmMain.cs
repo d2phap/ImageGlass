@@ -241,6 +241,8 @@ namespace ImageGlass {
             var allFilesToLoad = new HashSet<string>();
             var currentFile = currentFileName;
 
+            // Display currentFile while loading the full directory
+            // TODO: Would be nice if the titlebar reflected the fact file details are being loaded in the background
             LoadImages(new List<string>() { currentFile }, currentFile);
 
             // Parse string to absolute path
