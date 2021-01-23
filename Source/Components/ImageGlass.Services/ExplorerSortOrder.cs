@@ -70,23 +70,22 @@ namespace ImageGlass.Services {
             isAscending = null;
 
             try {
-                var folderPath = Path.GetDirectoryName(fullPath);
-                if (folderPath == null) // if fullPath is a drive root (e.g. "L:\") then Path.GetDirectoryName returns null
-                    folderPath = fullPath;
+                // if fullPath is a drive root (e.g. "L:\") then Path.GetDirectoryName returns null
+                var folderPath = Path.GetDirectoryName(fullPath) ?? fullPath;
 
                 var sb = new StringBuilder(200); // arbitrary length should fit any
-                int explorerSortResult;
+                int sortResult;
                 var ascend = -1;
 
                 if (IntPtr.Size == 8) // 64 bit platform
                 {
-                    explorerSortResult = GetExplorerSortOrder64(folderPath, ref sb, sb.Capacity, ref ascend);
+                    sortResult = GetExplorerSortOrder64(folderPath, ref sb, sb.Capacity, ref ascend);
                 }
                 else {
-                    explorerSortResult = GetExplorerSortOrder32(folderPath, ref sb, sb.Capacity, ref ascend);
+                    sortResult = GetExplorerSortOrder32(folderPath, ref sb, sb.Capacity, ref ascend);
                 }
 
-                if (explorerSortResult != 0) // failure
+                if (sortResult != 0) // failure
                 {
                     return false;
                 }
