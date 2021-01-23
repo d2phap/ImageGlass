@@ -241,6 +241,8 @@ namespace ImageGlass {
             var allFilesToLoad = new HashSet<string>();
             var currentFile = currentFileName;
 
+            LoadImages(new List<string>() { currentFile }, currentFile);
+
             // Parse string to absolute path
             var paths = inputPaths.Select(item => App.ToAbsolutePath(item));
 
@@ -250,6 +252,8 @@ namespace ImageGlass {
             // track paths loaded to prevent duplicates
             var pathsLoaded = new HashSet<string>();
             var firstPath = true;
+
+            var sortedFilesList = new List<string>();
 
             await Task.Run(() => {
                 foreach (var apath in distinctDirsList) {
@@ -297,10 +301,10 @@ namespace ImageGlass {
                 }
 
                 Local.InitialInputPath = string.IsNullOrEmpty(currentFile) ? (distinctDirsList.Count > 0 ? distinctDirsList[0] : "") : currentFile;
-            }).ConfigureAwait(true);
 
-            // sort list
-            var sortedFilesList = SortImageList(allFilesToLoad);
+                // sort list
+                sortedFilesList = SortImageList(allFilesToLoad);
+            }).ConfigureAwait(true);
 
             LoadImages(sortedFilesList, currentFile);
         }
