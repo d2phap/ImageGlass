@@ -586,9 +586,9 @@ namespace ImageGlass {
 
                 thumbnailBar.Items.Add(lvi);
             }
+            thumbnailBar.ResumeLayout();
 
             SelectCurrentThumbnail();
-            thumbnailBar.ResumeLayout();
         }
 
         /// <summary>
