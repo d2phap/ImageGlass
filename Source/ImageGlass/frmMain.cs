@@ -370,6 +370,8 @@ namespace ImageGlass {
                 // Start loading image
                 _ = NextPicAsync(0);
             }
+
+            SetStatusBar();
         }
 
         /// <summary>
@@ -632,7 +634,7 @@ namespace ImageGlass {
                 Local.ImageModifiedPath = "";
             }
 
-            SetStatusBar("");
+            SetStatusBar();
             picMain.Text = "";
             Local.IsTempMemoryData = false;
 
