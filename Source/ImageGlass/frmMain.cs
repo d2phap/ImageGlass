@@ -54,6 +54,7 @@ namespace ImageGlass {
             // NOTE: the this.DeviceDpi property is not accurate
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
 
+
             // Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
 
@@ -69,6 +70,7 @@ namespace ImageGlass {
 
             _isWindows10 = Environment.OSVersion.Version.Major >= 10;
         }
+
 
         #region Local variables
 
@@ -124,6 +126,7 @@ namespace ImageGlass {
         private readonly bool _isWindows10;
 
         #endregion
+
 
         #region Drag - drop
         private void picMain_DragOver(object sender, DragEventArgs e) {
@@ -200,6 +203,7 @@ namespace ImageGlass {
 
         #endregion
 
+
         #region Preparing image
         /// <summary>
         /// Open an image
@@ -240,10 +244,12 @@ namespace ImageGlass {
 
             var allFilesToLoad = new HashSet<string>();
             var currentFile = currentFileName;
+            var hasInitFile = !string.IsNullOrEmpty(currentFile);
 
             // Display currentFile while loading the full directory
-            // TODO: Would be nice if the titlebar reflected the fact file details are being loaded in the background
-            LoadImages(new List<string>() { currentFile }, currentFile);
+            if (hasInitFile) {
+                _ = NextPicAsync(0, filename: currentFile);
+            }
 
             // Parse string to absolute path
             var paths = inputPaths.Select(item => App.ToAbsolutePath(item));
@@ -302,13 +308,14 @@ namespace ImageGlass {
                     allFilesToLoad.UnionWith(imageFilenameList);
                 }
 
-                Local.InitialInputPath = string.IsNullOrEmpty(currentFile) ? (distinctDirsList.Count > 0 ? distinctDirsList[0] : "") : currentFile;
+                Local.InitialInputPath = hasInitFile ? (distinctDirsList.Count > 0 ? distinctDirsList[0] : "") : currentFile;
 
                 // sort list
                 sortedFilesList = SortImageList(allFilesToLoad);
+
             }).ConfigureAwait(true);
 
-            LoadImages(sortedFilesList, currentFile);
+            LoadImages(sortedFilesList, currentFile, skipLoadingImage: hasInitFile);
         }
 
         /// <summary>
@@ -316,14 +323,14 @@ namespace ImageGlass {
         /// </summary>
         /// <param name="imageFilenameList">The list of files to load</param>
         /// <param name="filePath">The image file path to view first</param>
-        private void LoadImages(List<string> imageFilenameList, string filePath) {
+        private void LoadImages(List<string> imageFilenameList, string filePath, bool skipLoadingImage = false) {
             // Dispose all garbage
             Local.ImageList.Dispose();
 
             // Set filename to image list
             Local.ImageList = new Heart.Factory(imageFilenameList) {
                 MaxQueue = Configs.ImageBoosterCachedCount,
-                Channels = (int)Local.Channels
+                Channels = (int)Local.Channels,
             };
 
             // Track image loading progress
@@ -358,20 +365,11 @@ namespace ImageGlass {
             // Load thumnbnail
             LoadThumbnails();
 
-            // Cannot find the index
-            if (Local.CurrentIndex == -1) {
-                // Mark as Image Error
-                Local.ImageError = new Exception("File not found.");
-                SetStatusBar($"{Application.ProductName} - {Path.GetFileName(filePath)} - {ImageInfo.GetFileSize(filePath)}");
 
-                picMain.Text = Configs.Language.Items[$"{Name}.picMain._ErrorText"];
-                picMain.Image = null;
-
-                return;
+            if (!skipLoadingImage) {
+                // Start loading image
+                _ = NextPicAsync(0);
             }
-
-            // Start loading image
-            _ = NextPicAsync(0);
         }
 
         /// <summary>
@@ -455,6 +453,11 @@ namespace ImageGlass {
                 }));
         }
 
+        /// <summary>
+        /// Sort image list
+        /// </summary>
+        /// <param name="fileList"></param>
+        /// <returns></returns>
         private static List<string> SortImageList(IEnumerable<string> fileList) {
             // NOTE: relies on LocalSetting.ActiveImageLoadingOrder been updated first!
 
@@ -581,6 +584,8 @@ namespace ImageGlass {
 
                 thumbnailBar.Items.Add(lvi);
             }
+
+            SelectCurrentThumbnail();
             thumbnailBar.ResumeLayout();
         }
 
@@ -591,8 +596,7 @@ namespace ImageGlass {
         /// <param name="isKeepZoomRatio"></param>
         /// <param name="isSkipCache"></param>
         /// <param name="pageIndex"></param>
-        public async Task NextPicAsync(int step, bool isKeepZoomRatio = false, bool isSkipCache = false, int pageIndex = 0) {
-            Timer _loadingTimer = null; // busy state timer
+        public async Task NextPicAsync(int step, bool isKeepZoomRatio = false, bool isSkipCache = false, int pageIndex = 0, string filename = "") {
 
             System.Threading.SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
 
@@ -628,18 +632,18 @@ namespace ImageGlass {
                 Local.ImageModifiedPath = "";
             }
 
+            SetStatusBar("");
             picMain.Text = "";
             Local.IsTempMemoryData = false;
 
-            if (Local.ImageList.Length == 0) {
-                Text = Application.ProductName;
-
+            if (filename.Length == 0 && Local.ImageList.Length == 0) {
                 Local.ImageError = new Exception("File not found.");
                 picMain.Image = null;
                 Local.ImageModifiedPath = "";
 
                 return;
             }
+
 
             #region Validate image index
 
@@ -679,11 +683,9 @@ namespace ImageGlass {
 
             #endregion
 
+
             // Select thumbnail item
             SelectCurrentThumbnail();
-
-            // Update the basic info
-            SetStatusBar();
 
             // Raise image changed event
             Local.RaiseImageChangedEvent();
@@ -700,12 +702,25 @@ namespace ImageGlass {
                 // from skipping past a slow-to-load image by processing too many arrow clicks
                 SetAppBusy(true);
 
-                // Get image
-                var bmpImg = await Local.ImageList.GetImgAsync(
-                    Local.CurrentIndex,
-                    isSkipCache: isSkipCache,
-                    pageIndex: pageIndex
-                   ).ConfigureAwait(true);
+
+                Heart.Img bmpImg;
+
+                // directly load the image file, skip image list
+                if (filename.Length > 0) {
+                    bmpImg = new Heart.Img(filename);
+                    await bmpImg.LoadAsync(
+                        colorProfileName: Configs.ColorProfile,
+                        isApplyColorProfileForAll: Configs.IsApplyColorProfileForAll,
+                        channel: (int)Local.Channels);
+                }
+                else {
+                    bmpImg = await Local.ImageList.GetImgAsync(
+                        Local.CurrentIndex,
+                        isSkipCache: isSkipCache,
+                        pageIndex: pageIndex
+                       ).ConfigureAwait(true);
+                }
+
                 im = bmpImg.Image;
 
                 // Update current frame index
@@ -784,7 +799,10 @@ namespace ImageGlass {
             GC.WaitForPendingFinalizers();
             GC.Collect();
 
+
             void SetAppBusy(bool isbusy) {
+                Timer _loadingTimer = null;
+
                 _isAppBusy = isbusy;
                 // fire-eggs 20190902 fix observed issue: cursor switched to
                 // arrow when it maybe should be cross or nav-arrow
