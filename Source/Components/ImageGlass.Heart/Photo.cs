@@ -25,8 +25,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ImageMagick;
-using ImageMagick.Formats.Bmp;
-using ImageMagick.Formats.Dng;
+using ImageMagick.Formats;
 
 namespace ImageGlass.Heart {
     public static class Photo {
