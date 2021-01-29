@@ -214,6 +214,7 @@ namespace ImageGlass {
                 Filter = Configs.Language.Items[$"{Name}._OpenFileDialog"] + "|" +
                         formats,
                 CheckFileExists = true,
+                RestoreDirectory = true,
             };
             if (o.ShowDialog() == DialogResult.OK) {
                 _ = PrepareLoadingAsync(o.FileNames, o.FileNames[0]);
@@ -4149,17 +4150,18 @@ namespace ImageGlass {
                 return;
             }
 
-            var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
-            if (string.IsNullOrEmpty(filename)) {
-                filename = "untitled.png";
-            }
+            var currentFile = Local.ImageList.GetFileName(Local.CurrentIndex);
+            if (string.IsNullOrEmpty(currentFile)) currentFile = "untitled.png";
 
-            var ext = Path.GetExtension(filename).Substring(1);
+            var ext = Path.GetExtension(currentFile).Substring(1);
 
             var saveDialog = new SaveFileDialog {
                 Filter = "BMP|*.bmp|EMF|*.emf|EXIF|*.exif|GIF|*.gif|ICO|*.ico|JPG|*.jpg|PNG|*.png|JPEG-XL|*.jxl|TIFF|*.tiff|WMF|*.wmf|Base64String (*.b64)|*.b64|Base64String (*.txt)|*.txt",
-                FileName = Path.GetFileNameWithoutExtension(filename)
+                FileName = Path.GetFileNameWithoutExtension(currentFile),
+                RestoreDirectory = true,
             };
+            saveDialog.CustomPlaces.Add(Path.GetDirectoryName(currentFile));
+
 
             // Use the last-selected file extension, if available.
             if (Local.SaveAsFilterIndex != 0) {
@@ -4187,9 +4189,6 @@ namespace ImageGlass {
                     case "jpe":
                         saveDialog.FilterIndex = 6;
                         break;
-                    case "png":
-                        saveDialog.FilterIndex = 7;
-                        break;
                     case "jxl":
                         saveDialog.FilterIndex = 8;
                         break;
@@ -4198,6 +4197,10 @@ namespace ImageGlass {
                         break;
                     case "wmf":
                         saveDialog.FilterIndex = 10;
+                        break;
+                    case "png":
+                    default:
+                        saveDialog.FilterIndex = 7;
                         break;
                 }
             }
@@ -4250,7 +4253,7 @@ namespace ImageGlass {
                                 }
                                 else {
                                     await Heart.Photo.SaveAsBase64Async(
-                                        Local.ImageList.GetFileName(Local.CurrentIndex),
+                                        currentFile,
                                         saveDialog.FileName,
                                         clonedPic.RawFormat).ConfigureAwait(true);
                                 }
