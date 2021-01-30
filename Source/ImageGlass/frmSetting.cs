@@ -1979,7 +1979,7 @@ namespace ImageGlass {
             #region ThumbnailDimension: MainFormForceUpdateAction.THUMBNAIL_ITEMS
 
             // ThumbnailDimension
-            newUInt = (cmbThumbnailDimension.SelectedItem.ToString().Length == 0)
+            newUInt = (cmbThumbnailDimension.SelectedItem == null)
                 ? Configs.ThumbnailDimension
                 : uint.Parse(cmbThumbnailDimension.SelectedItem.ToString(), Constants.NumberFormat);
 
