@@ -89,6 +89,7 @@ namespace ImageGlass.Heart {
             ColorProfile = null;
 
             Image?.Dispose();
+            Image = null;
         }
 
         /// <summary>
