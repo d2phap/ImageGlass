@@ -1365,7 +1365,7 @@ namespace ImageGlass
             this.cmbZoomOptimization.Location = new System.Drawing.Point(42, 1102);
             this.cmbZoomOptimization.Margin = new System.Windows.Forms.Padding(1);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
-            this.cmbZoomOptimization.Size = new System.Drawing.Size(259, 31);
+            this.cmbZoomOptimization.Size = new System.Drawing.Size(529, 31);
             this.cmbZoomOptimization.TabIndex = 33;
             // 
             // chkThumbnailVertical

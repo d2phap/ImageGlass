@@ -472,11 +472,15 @@ namespace ImageGlass.Library {
 
             #region Zooming
             Items.Add("frmSetting.lblHeadZooming", "Zooming"); //v4.0
-            //Items.Add("frmSetting.chkMouseNavigation", "Use the mouse wheel to browse images, hold CTRL for zooming"); //+3.5
             Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization"); //-3.0, +3.5
-            Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto"); //-3.2, +3.5
-            Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels"); //-3.2, +3.5
-            Items.Add("frmSetting.cmbZoomOptimization._ClearPixels", "Clear pixels"); //-3.2, +3.5
+            Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto (Low quality/Nearest-neighbor)"); // v8.1
+            Items.Add("frmSetting.cmbZoomOptimization._Low", "Low quality"); // v8.1
+            Items.Add("frmSetting.cmbZoomOptimization._High", "High quality"); // v8.1
+            Items.Add("frmSetting.cmbZoomOptimization._Bilinear", "Bilinear"); // v8.1
+            Items.Add("frmSetting.cmbZoomOptimization._Bicubic", "Bicubic"); // v8.1
+            Items.Add("frmSetting.cmbZoomOptimization._NearestNeighbor", "Nearest-neighbor"); // v8.1
+            Items.Add("frmSetting.cmbZoomOptimization._HighQualityBilinear", "High-quality, bilinear"); // v8.1
+            Items.Add("frmSetting.cmbZoomOptimization._HighQualityBicubic", "High-quality, bicubic"); // v8.1
 
             Items.Add("frmSetting.lblZoomLevels", "Zoom levels"); //v7.0
             Items.Add("frmSetting.txtZoomLevels._Error", "There was error updating Zoom levels. Error message:\r\n\n{0}"); //v7.0

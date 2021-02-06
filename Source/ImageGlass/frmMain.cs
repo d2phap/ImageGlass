@@ -1659,17 +1659,14 @@ namespace ImageGlass {
         private void ZoomOptimization() {
             if (Configs.ZoomOptimizationMethod == ZoomOptimizationMethods.Auto) {
                 if (picMain.Zoom > 100) {
-                    picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                    picMain.InterpolationMode = InterpolationMode.NearestNeighbor;
                 }
                 else if (picMain.Zoom < 100) {
-                    picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
+                    picMain.InterpolationMode = InterpolationMode.Low;
                 }
             }
-            else if (Configs.ZoomOptimizationMethod == ZoomOptimizationMethods.ClearPixels) {
-                picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            }
-            else if (Configs.ZoomOptimizationMethod == ZoomOptimizationMethods.SmoothPixels) {
-                picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
+            else {
+                picMain.InterpolationMode = (InterpolationMode)Configs.ZoomOptimizationMethod;
             }
         }
 
