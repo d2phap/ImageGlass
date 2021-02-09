@@ -77,13 +77,13 @@ Thanks for your gratitude and finance help!
 
 ```bash
 # Chainlink
-0x4267Bd7c062f69fF233538Df83099C737f56094f
+0xc19be8972809b6b989f3e4ba16595712ba8e0de4
 
 # Ethereum
-0xDc91F762C13b207eb1270fCBEdB464F1507B030C
+0xc19be8972809b6b989f3e4ba16595712ba8e0de4
 
 # Bitcoin
-3Hp7QLP9Fxpb1s4CAcZFYR7NUgN1bR93Hy
+1PcCezBmM3ahTzfBBi5KVWnnd3bCHbas8Z
 ```
 
 
