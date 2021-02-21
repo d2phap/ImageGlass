@@ -4163,41 +4163,18 @@ namespace ImageGlass {
                 saveDialog.FilterIndex = Local.SaveAsFilterIndex;
             }
             else {
-                switch (ext.ToLower()) {
-                    case "bmp":
-                        saveDialog.FilterIndex = 1;
-                        break;
-                    case "emf":
-                        saveDialog.FilterIndex = 2;
-                        break;
-                    case "exif":
-                        saveDialog.FilterIndex = 3;
-                        break;
-                    case "gif":
-                        saveDialog.FilterIndex = 4;
-                        break;
-                    case "ico":
-                        saveDialog.FilterIndex = 5;
-                        break;
-                    case "jpg":
-                    case "jpeg":
-                    case "jpe":
-                        saveDialog.FilterIndex = 6;
-                        break;
-                    case "jxl":
-                        saveDialog.FilterIndex = 8;
-                        break;
-                    case "tiff":
-                        saveDialog.FilterIndex = 9;
-                        break;
-                    case "wmf":
-                        saveDialog.FilterIndex = 10;
-                        break;
-                    case "png":
-                    default:
-                        saveDialog.FilterIndex = 7;
-                        break;
-                }
+                saveDialog.FilterIndex = ext.ToLower() switch {
+                    "bmp" => 1,
+                    "emf" => 2,
+                    "exif" => 3,
+                    "gif" => 4,
+                    "ico" => 5,
+                    "jpg" or "jpeg" or "jpe" => 6,
+                    "jxl" => 8,
+                    "tiff" => 9,
+                    "wmf" => 10,
+                    _ => 7,
+                };
             }
 
             if (saveDialog.ShowDialog() == DialogResult.OK) {
