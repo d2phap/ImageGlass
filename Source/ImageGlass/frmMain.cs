@@ -2139,9 +2139,7 @@ namespace ImageGlass {
                             Height += newH - picMain.Height);
 
             // center window to screen
-            if (Configs.IsCenterWindowFit
-                || fullW > screen.WorkingArea.Width
-                || fullH > screen.WorkingArea.Height) {
+            if (Configs.IsCenterWindowFit) {
                 App.CenterFormToScreen(this);
             }
 
