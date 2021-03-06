@@ -1448,6 +1448,15 @@ namespace ImageGlass {
 
             chkExifToolAlwaysOnTop.Checked = Configs.IsExifToolAlwaysOnTop;
             lblExifToolPath.Text = Configs.ExifToolExePath;
+
+            txtExifToolCommandArgs.Text = Configs.ExifToolCommandArgs;
+            txtExifToolCommandArgs.LostFocus -= TxtExifToolCommandArgs_LostFocus;
+            txtExifToolCommandArgs.LostFocus += TxtExifToolCommandArgs_LostFocus;
+            UpdateExifToolCommandPreview();
+        }
+
+        private void TxtExifToolCommandArgs_LostFocus(object sender, EventArgs e) {
+            UpdateExifToolCommandPreview();
         }
 
         private void lnkSelectExifTool_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -1473,6 +1482,21 @@ namespace ImageGlass {
                 }
             }
         }
+
+        private void UpdateExifToolCommandPreview() {
+            var toolPath = Configs.ExifToolExePath;
+            if (!File.Exists(toolPath)) {
+                toolPath = @"C:\fake dir\exiftool.exe";
+            }
+
+            var fileSample = Local.ImageList.GetFileName(Local.CurrentIndex);
+            if (!File.Exists(fileSample)) {
+                fileSample = @"C:\fake dir\sample photo.jpg";
+            }
+
+            txtExifToolCommandPreview.Text = $"\"{toolPath}\" -fast -G -t -m -q {txtExifToolCommandArgs.Text.Trim()} \"{fileSample}\"";
+        }
+
 
         #endregion
 
@@ -2083,6 +2107,7 @@ namespace ImageGlass {
 
             Configs.IsShowPageNavAuto = chkShowPageNavAuto.Checked;
             Configs.IsExifToolAlwaysOnTop = chkExifToolAlwaysOnTop.Checked;
+            Configs.ExifToolCommandArgs = txtExifToolCommandArgs.Text;
             #endregion
 
             SaveKeyboardSettings();
@@ -2092,5 +2117,6 @@ namespace ImageGlass {
 
         #endregion
 
+        
     }
 }

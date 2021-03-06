@@ -354,6 +354,11 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static string ExifToolExePath { get; set; } = "";
 
+        /// <summary>
+        /// Gets, sets the custom arguments for Exif tool command
+        /// </summary>
+        public static string ExifToolCommandArgs { get; set; } = "";
+
         #endregion
 
 
@@ -661,6 +666,7 @@ namespace ImageGlass.Settings {
             AutoUpdate = Get<string>(nameof(AutoUpdate), AutoUpdate);
             LastSeenImagePath = Get<string>(nameof(LastSeenImagePath), LastSeenImagePath);
             ExifToolExePath = Get<string>(nameof(ExifToolExePath), ExifToolExePath);
+            ExifToolCommandArgs = Get<string>(nameof(ExifToolCommandArgs), ExifToolCommandArgs);
 
             #endregion
 
@@ -867,6 +873,7 @@ namespace ImageGlass.Settings {
             Set(nameof(AutoUpdate), AutoUpdate);
             Set(nameof(LastSeenImagePath), LastSeenImagePath);
             Set(nameof(ExifToolExePath), ExifToolExePath);
+            Set(nameof(ExifToolCommandArgs), ExifToolCommandArgs);
 
             #endregion
 

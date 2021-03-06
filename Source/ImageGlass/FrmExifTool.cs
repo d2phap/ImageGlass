@@ -191,7 +191,7 @@ namespace ImageGlass {
             var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
 
             // preprocess unicode filename and load exif data
-            await this.exifTool.LoadAndProcessExifDataAsync(filename);
+            await this.exifTool.LoadAndProcessExifDataAsync(filename, Configs.ExifToolCommandArgs);
 
             lvExifItems.Items.Clear();
             lvExifItems.Groups.Clear();
