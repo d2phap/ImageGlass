@@ -1497,7 +1497,7 @@ namespace ImageGlass {
                 fileSample = @"C:\fake dir\sample photo.jpg";
             }
 
-            txtExifToolCommandPreview.Text = $"\"{toolPath}\" -fast -G -t -m -q {txtExifToolCommandArgs.Text.Trim()} \"{fileSample}\"";
+            txtExifToolCommandPreview.Text = $"\"{toolPath}\" -fast -G -t -m -q {txtExifToolCommandArgs.Text.Trim().Replace("\n", "")} \"{fileSample}\"";
         }
 
 
@@ -2110,7 +2110,7 @@ namespace ImageGlass {
 
             Configs.IsShowPageNavAuto = chkShowPageNavAuto.Checked;
             Configs.IsExifToolAlwaysOnTop = chkExifToolAlwaysOnTop.Checked;
-            Configs.ExifToolCommandArgs = txtExifToolCommandArgs.Text;
+            Configs.ExifToolCommandArgs = txtExifToolCommandArgs.Text.Trim().Replace("\n", "");
             #endregion
 
             SaveKeyboardSettings();
@@ -2119,7 +2119,5 @@ namespace ImageGlass {
         }
 
         #endregion
-
-        
     }
 }
