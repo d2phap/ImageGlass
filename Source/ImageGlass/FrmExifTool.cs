@@ -165,6 +165,7 @@ namespace ImageGlass {
 
                 panNotFound.Visible = true;
                 lvExifItems.Visible = false;
+                txtExifToolCommandPreview.Visible = false;
             }
             else {
                 this.Text = Path.GetFileName(Configs.ExifToolExePath);
@@ -172,6 +173,7 @@ namespace ImageGlass {
 
                 panNotFound.Visible = false;
                 lvExifItems.Visible = true;
+                txtExifToolCommandPreview.Visible = true;
             }
         }
 
@@ -188,6 +190,7 @@ namespace ImageGlass {
             }
 
             SetUIVisibility(false);
+            UpdateExifToolCommandPreview();
             var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
 
             // preprocess unicode filename and load exif data
@@ -229,6 +232,20 @@ namespace ImageGlass {
             }
 
             SetFormState(true);
+        }
+
+        private void UpdateExifToolCommandPreview() {
+            var toolPath = Configs.ExifToolExePath;
+            if (!File.Exists(toolPath)) {
+                toolPath = @"C:\fake dir\exiftool.exe";
+            }
+
+            var fileSample = Local.ImageList.GetFileName(Local.CurrentIndex);
+            if (!File.Exists(fileSample)) {
+                fileSample = @"C:\fake dir\sample photo.jpg";
+            }
+
+            txtExifToolCommandPreview.Text = $"\"{toolPath}\" -fast -G -t -m -q {Configs.ExifToolCommandArgs} \"{fileSample}\"";
         }
 
 

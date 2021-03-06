@@ -572,6 +572,9 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.chkExifToolAlwaysOnTop", "Keep Exif tool always on top"); // v8.0
             Items.Add("frmSetting.lnkSelectExifTool", "Select Exif tool file"); // v8.0
             Items.Add("frmSetting.lnkSelectExifTool._NotFound", "The Exif tool does not exist or invalid: \n{0}"); // v8.0
+
+            Items.Add("frmSetting.lblExifToolCommandArgs", "Command arguments:"); // v8.1
+            Items.Add("frmSetting.lblExifToolCommandPreview", "Command preview:"); // v8.1
             #endregion
 
             #region TAB Language

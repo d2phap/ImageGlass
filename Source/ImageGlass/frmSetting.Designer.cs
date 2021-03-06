@@ -2189,10 +2189,7 @@ namespace ImageGlass
             // 
             // txtExifToolCommandPreview
             // 
-            this.txtExifToolCommandPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtExifToolCommandPreview.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
-            this.txtExifToolCommandPreview.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtExifToolCommandPreview.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtExifToolCommandPreview.Location = new System.Drawing.Point(42, 606);
             this.txtExifToolCommandPreview.Margin = new System.Windows.Forms.Padding(0, 20, 0, 0);
@@ -2200,7 +2197,7 @@ namespace ImageGlass
             this.txtExifToolCommandPreview.Name = "txtExifToolCommandPreview";
             this.txtExifToolCommandPreview.ReadOnly = true;
             this.txtExifToolCommandPreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtExifToolCommandPreview.Size = new System.Drawing.Size(529, 79);
+            this.txtExifToolCommandPreview.Size = new System.Drawing.Size(529, 99);
             this.txtExifToolCommandPreview.TabIndex = 71;
             this.txtExifToolCommandPreview.Text = "exiftool.exe -fast -G -t -m -q \"C:\\my\\photo.jpg\"";
             // 

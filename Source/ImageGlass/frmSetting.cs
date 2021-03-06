@@ -326,6 +326,9 @@ namespace ImageGlass {
             lblExifTool.Text = lang[$"{nameof(frmMain)}.mnuExifTool"] + " (https://exiftool.org)";
             chkExifToolAlwaysOnTop.Text = lang[$"{Name}.{nameof(chkExifToolAlwaysOnTop)}"];
             lnkSelectExifTool.Text = lang[$"{Name}.{nameof(lnkSelectExifTool)}"];
+
+            lblExifToolCommandArgs.Text = lang[$"{Name}.{nameof(lblExifToolCommandArgs)}"];
+            lblExifToolCommandPreview.Text = lang[$"{Name}.{nameof(lblExifToolCommandPreview)}"];
             #endregion
 
             #region THEME TAB
