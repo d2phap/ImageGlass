@@ -1306,6 +1306,7 @@ namespace ImageGlass {
                 if (e.KeyValue == 192) // `
                 {
                     mnuMain.Show(toolMain, toolMain.Width - mnuMain.Width, toolMain.Height);
+
                     return;
                 }
 
@@ -1366,6 +1367,7 @@ namespace ImageGlass {
                 // Toolbar
                 if (e.KeyCode == Keys.T) {
                     mnuMainToolbar.PerformClick();
+
                     return;
                 }
 
@@ -3988,7 +3990,7 @@ namespace ImageGlass {
         }
 
 
-        private async void mnuContext_Opening(object sender, CancelEventArgs e) {
+        private void mnuContext_Opening(object sender, CancelEventArgs e) {
             var imageNotFound = !File.Exists(Local.ImageList.GetFileName(Local.CurrentIndex));
             var imageError = Local.ImageError != null;
 
@@ -4022,11 +4024,9 @@ namespace ImageGlass {
 
                 #region Check if image can animate (GIF)
                 try {
-                    var imgData = await Local.ImageList.GetImgAsync(Local.CurrentIndex).ConfigureAwait(true);
-
-                    if (!imageError && imgData.PageCount > 1) {
+                    if (!imageError && Local.CurrentPageCount > 1) {
                         var mnu1 = UI.Menu.Clone(mnuMainExtractPages);
-                        mnu1.Text = string.Format(Configs.Language.Items[$"{Name}.mnuMainExtractPages"], imgData.PageCount);
+                        mnu1.Text = string.Format(Configs.Language.Items[$"{Name}.mnuMainExtractPages"], Local.CurrentPageCount);
                         mnu1.Enabled = true;
 
                         var mnu2 = UI.Menu.Clone(mnuMainStartStopAnimating);
@@ -4404,10 +4404,8 @@ namespace ImageGlass {
             _ = NextPicAsync(0, pageIndex: Local.CurrentPageIndex);
         }
 
-        private async void mnuMainLastPage_Click(object sender, EventArgs e) {
-            var img = await Local.ImageList.GetImgAsync(Local.CurrentIndex).ConfigureAwait(true);
-
-            Local.CurrentPageIndex = img.PageCount - 1;
+        private void mnuMainLastPage_Click(object sender, EventArgs e) {
+            Local.CurrentPageIndex = Local.CurrentPageCount - 1;
             _ = NextPicAsync(0, pageIndex: Local.CurrentPageIndex);
         }
 
@@ -5113,13 +5111,7 @@ namespace ImageGlass {
 
                 mnuMainSetAsLockImage.Enabled = true;
 
-                var frameCount = 0;
-                if (Local.CurrentIndex >= 0) {
-                    var imgData = await Local.ImageList.GetImgAsync(Local.CurrentIndex).ConfigureAwait(true);
-                    frameCount = imgData?.PageCount ?? 0;
-                }
-
-                if (frameCount > 1) {
+                if (Local.CurrentPageCount > 1) {
                     mnuMainExtractPages.Enabled =
                         mnuMainStartStopAnimating.Enabled =
                         mnuMainPrevPage.Enabled =
@@ -5128,7 +5120,7 @@ namespace ImageGlass {
                         mnuMainLastPage.Enabled = true;
                 }
 
-                mnuMainExtractPages.Text = string.Format(Configs.Language.Items[$"{Name}.mnuMainExtractPages"], frameCount);
+                mnuMainExtractPages.Text = string.Format(Configs.Language.Items[$"{Name}.mnuMainExtractPages"], Local.CurrentPageCount);
 
                 // check if igcmdWin10.exe exists!
                 if (!_isWindows10 || !File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
