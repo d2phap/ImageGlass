@@ -95,7 +95,7 @@ namespace igcmd {
 
                 if (up.CheckForUpdate(App.StartUpDir("ImageGlass.exe"))) {
                     if (string.Equals(up.Info.VersionType, "stable", StringComparison.CurrentCultureIgnoreCase)) {
-                        lblStatus.Text = "ImageGlass is out of date!";
+                        lblStatus.Text = "A new update is available!";
                         lblStatus.ForeColor = Color.FromArgb(241, 89, 58);
                     }
                     else {

@@ -990,6 +990,7 @@ namespace ImageGlass {
 
         #endregion
 
+
         #region Key event
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e) {
@@ -1305,6 +1306,7 @@ namespace ImageGlass {
                 if (e.KeyValue == 192) // `
                 {
                     mnuMain.Show(toolMain, toolMain.Width - mnuMain.Width, toolMain.Height);
+                    return;
                 }
 
                 // Checkerboard background
@@ -2447,6 +2449,7 @@ namespace ImageGlass {
 
         #endregion
 
+
         #region Configurations
 
         /// <summary>
@@ -2884,6 +2887,7 @@ namespace ImageGlass {
         }
 
         #endregion
+
 
         #region Form events
 
@@ -3847,6 +3851,7 @@ namespace ImageGlass {
 
         #endregion
 
+
         #region Toolbar Buttons Events
 
         private void btnNext_Click(object sender, EventArgs e) {
@@ -3970,6 +3975,7 @@ namespace ImageGlass {
         }
         #endregion
 
+
         #region Context Menu
         private void OpenShortcutMenu(ToolStripMenuItem parentMenu) {
             mnuShortcut.Items.Clear();
@@ -4073,6 +4079,7 @@ namespace ImageGlass {
             }
         }
         #endregion
+
 
         #region Main Menu (Main functions)
 
@@ -5181,5 +5188,6 @@ namespace ImageGlass {
 
 
         #endregion
+
     }
 }
