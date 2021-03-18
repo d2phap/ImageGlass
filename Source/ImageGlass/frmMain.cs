@@ -1890,8 +1890,14 @@ namespace ImageGlass {
         /// Save all change of image
         /// </summary>
         private async Task SaveImageChangeAsync() {
+            // use backup name to avoid variable conflict
+            var filename = Local.ImageModifiedPath;
+
             try {
-                var lastWriteTime = File.GetLastWriteTime(Local.ImageModifiedPath);
+                // display saving msg
+                ShowToastMsg(string.Format(Configs.Language.Items[$"{Name}._SavingImage"], filename), 2000);
+
+                var lastWriteTime = File.GetLastWriteTime(filename);
                 Bitmap newBitmap;
 
                 if (!picMain.SelectionRegion.IsEmpty) {
@@ -1901,20 +1907,22 @@ namespace ImageGlass {
                     newBitmap = new Bitmap(picMain.Image);
                 }
 
-                // override the current image file
-                Heart.Photo.Save(newBitmap, Local.ImageModifiedPath, quality: Configs.ImageEditQuality);
+                await Task.Run(() => {
+                    // override the current image file
+                    Heart.Photo.Save(newBitmap, filename, quality: Configs.ImageEditQuality);
 
-                // Issue #307: option to preserve the modified date/time
-                if (Configs.IsPreserveModifiedDate) {
-                    File.SetLastWriteTime(Local.ImageModifiedPath, lastWriteTime);
-                }
+                    // Issue #307: option to preserve the modified date/time
+                    if (Configs.IsPreserveModifiedDate) {
+                        File.SetLastWriteTime(filename, lastWriteTime);
+                    }
+                });
 
                 // update cache of the modified item
                 var img = await Local.ImageList.GetImgAsync(Local.CurrentIndex).ConfigureAwait(true);
                 img.Image = newBitmap;
             }
             catch (Exception) {
-                MessageBox.Show(string.Format(Configs.Language.Items[$"{this.Name}._SaveImageError"], Local.ImageModifiedPath), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(Configs.Language.Items[$"{this.Name}._SaveImageError"], filename), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             Local.ImageModifiedPath = "";
@@ -4148,7 +4156,14 @@ namespace ImageGlass {
             }
         }
 
-        private async void mnuMainSaveAs_Click(object sender, EventArgs e) {
+
+        /// <summary>
+        /// Save image to file
+        /// </summary>
+        /// <param name="destFilename">Destination file</param>
+        /// <param name="ext">File extension. E.g. "png"</param>
+        /// <returns></returns>
+        private async Task SaveImageAsAsync(string destFilename, string ext) {
             if (picMain.Image == null) {
                 return;
             }
@@ -4156,6 +4171,87 @@ namespace ImageGlass {
             var currentFile = Local.ImageList.GetFileName(Local.CurrentIndex);
             if (string.IsNullOrEmpty(currentFile)) currentFile = "untitled.png";
 
+
+            Bitmap clonedPic;
+
+            if (!picMain.SelectionRegion.IsEmpty) {
+                clonedPic = (Bitmap)picMain.GetSelectedImage();
+            }
+            else {
+                clonedPic = (Bitmap)picMain.Image;
+            }
+
+            // display saving msg
+            ShowToastMsg(string.Format(Configs.Language.Items[$"{Name}._SavingImage"], destFilename), 2000);
+
+            switch (ext) {
+                case "bmp":
+                case "gif":
+                case "jpg" or "jpeg" or "jpe":
+                    Heart.Photo.Save(clonedPic, destFilename, quality: Configs.ImageEditQuality);
+                    break;
+                case "emf":
+                    clonedPic.Save(destFilename, ImageFormat.Emf);
+                    break;
+                case "exif":
+                    clonedPic.Save(destFilename, ImageFormat.Exif);
+                    break;
+                case "ico":
+                    clonedPic.Save(destFilename, ImageFormat.Icon);
+                    break;
+                case "jxl":
+                    Heart.Photo.Save(clonedPic, destFilename, (int)MagickFormat.Jxl, quality: Configs.ImageEditQuality);
+                    break;
+                case "tiff":
+                    clonedPic.Save(destFilename, ImageFormat.Tiff);
+                    break;
+                case "wmf":
+                    clonedPic.Save(destFilename, ImageFormat.Wmf);
+                    break;
+                default:
+                    using (var ms = new MemoryStream()) {
+                        try {
+                            // temporary data or selected region
+                            if (Local.IsTempMemoryData || !picMain.SelectionRegion.IsEmpty) {
+                                await Heart.Photo.SaveAsBase64Async(clonedPic, destFilename, ImageFormat.Png).ConfigureAwait(true);
+                            }
+                            else {
+                                await Heart.Photo.SaveAsBase64Async(
+                                    currentFile,
+                                    destFilename,
+                                    clonedPic.RawFormat).ConfigureAwait(true);
+                            }
+                        }
+                        catch (Exception ex) {
+                            MessageBox.Show(Configs.Language.Items[$"{Name}._SaveImageError"] + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+
+                    break;
+            }
+
+            // display successful msg
+            if (File.Exists(destFilename)) {
+                ShowToastMsg(string.Format(Configs.Language.Items[$"{Name}._SaveImage"], destFilename), 2000);
+            }
+        }
+
+
+        private void mnuSaveImage_Click(object sender, EventArgs e) {
+            var currentFile = Local.ImageList.GetFileName(Local.CurrentIndex);
+
+            // trigger "Save image as"
+            if (Local.IsTempMemoryData || !picMain.SelectionRegion.IsEmpty || string.IsNullOrEmpty(currentFile)) {
+                mnuMainSaveAs_Click(null, null);
+                return;
+            }
+
+            Local.ImageModifiedPath = currentFile;
+            _ = SaveImageChangeAsync();
+        }
+
+        private void mnuMainSaveAs_Click(object sender, EventArgs e) {
+            var currentFile = Local.ImageList.GetFileName(Local.CurrentIndex);
             var ext = Path.GetExtension(currentFile).Substring(1);
 
             var saveDialog = new SaveFileDialog {
@@ -4186,70 +4282,9 @@ namespace ImageGlass {
             }
 
             if (saveDialog.ShowDialog() == DialogResult.OK) {
-                Bitmap clonedPic;
-
-                if (!picMain.SelectionRegion.IsEmpty) {
-                    clonedPic = (Bitmap)picMain.GetSelectedImage();
-                }
-                else {
-                    clonedPic = (Bitmap)picMain.Image;
-                }
-
-                // display saving msg
-                ShowToastMsg(string.Format(Configs.Language.Items[$"{Name}._SavingImage"], saveDialog.FileName), 2000);
-
                 Local.SaveAsFilterIndex = saveDialog.FilterIndex;
-                switch (saveDialog.FilterIndex) {
-                    case 1:
-                    case 4:
-                    case 6:
-                    case 7:
-                        Heart.Photo.Save(clonedPic, saveDialog.FileName, quality: Configs.ImageEditQuality);
-                        break;
-                    case 2:
-                        clonedPic.Save(saveDialog.FileName, ImageFormat.Emf);
-                        break;
-                    case 3:
-                        clonedPic.Save(saveDialog.FileName, ImageFormat.Exif);
-                        break;
-                    case 5:
-                        clonedPic.Save(saveDialog.FileName, ImageFormat.Icon);
-                        break;
-                    case 8:
-                        Heart.Photo.Save(clonedPic, saveDialog.FileName, (int)MagickFormat.Jxl, quality: Configs.ImageEditQuality);
-                        break;
-                    case 9:
-                        clonedPic.Save(saveDialog.FileName, ImageFormat.Tiff);
-                        break;
-                    case 10:
-                        clonedPic.Save(saveDialog.FileName, ImageFormat.Wmf);
-                        break;
-                    default:
-                        using (var ms = new MemoryStream()) {
-                            try {
-                                // temporary data or selected region
-                                if (Local.IsTempMemoryData || !picMain.SelectionRegion.IsEmpty) {
-                                    await Heart.Photo.SaveAsBase64Async(clonedPic, saveDialog.FileName, ImageFormat.Png).ConfigureAwait(true);
-                                }
-                                else {
-                                    await Heart.Photo.SaveAsBase64Async(
-                                        currentFile,
-                                        saveDialog.FileName,
-                                        clonedPic.RawFormat).ConfigureAwait(true);
-                                }
-                            }
-                            catch (Exception ex) {
-                                MessageBox.Show(Configs.Language.Items[$"{Name}._SaveImageError"] + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
 
-                        break;
-                }
-
-                // display successful msg
-                if (File.Exists(saveDialog.FileName)) {
-                    ShowToastMsg(string.Format(Configs.Language.Items[$"{Name}._SaveImage"], saveDialog.FileName), 2000);
-                }
+                _ = SaveImageAsAsync(saveDialog.FileName, ext);
             }
         }
 
@@ -5186,5 +5221,6 @@ namespace ImageGlass {
 
         #endregion
 
+        
     }
 }

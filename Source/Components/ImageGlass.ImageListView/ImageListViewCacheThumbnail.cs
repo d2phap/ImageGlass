@@ -437,13 +437,15 @@ namespace ImageGlass.ImageListView {
                     mImageListView.Refresh(false, true);
             }
 
-            // Raise the ThumbnailCached event
-            if (mImageListView != null)
-                mImageListView.OnThumbnailCachedInternal(result.Guid, result.Image, result.Size, request.RequestType == RequestType.Thumbnail);
+            if (result != null) {
+                // Raise the ThumbnailCached event
+                if (mImageListView != null)
+                    mImageListView.OnThumbnailCachedInternal(result.Guid, result.Image, result.Size, request.RequestType == RequestType.Thumbnail);
 
-            // Raise the CacheError event
-            if (e.Error != null && mImageListView != null)
-                mImageListView.OnCacheErrorInternal(result.Guid, e.Error, CacheThread.Thumbnail);
+                // Raise the CacheError event
+                if (e.Error != null && mImageListView != null)
+                    mImageListView.OnCacheErrorInternal(result.Guid, e.Error, CacheThread.Thumbnail);
+            }
         }
         /// <summary>
         /// Handles the DoWork event of the queued background worker.
