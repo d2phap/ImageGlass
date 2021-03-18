@@ -29,6 +29,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FileWatcherEx;
@@ -68,7 +69,6 @@ namespace ImageGlass {
             // Fix disk thrashing
             thumbnailBar.MetadataCacheEnabled = false;
 
-            _isWindows10 = Environment.OSVersion.Version.Major >= 10;
         }
 
 
@@ -123,7 +123,6 @@ namespace ImageGlass {
         // File system watcher
         private FileWatcherEx.FileWatcherEx _fileWatcher = new();
 
-        private readonly bool _isWindows10;
 
         #endregion
 
@@ -4000,14 +3999,14 @@ namespace ImageGlass {
             if (Configs.IsSlideshow && !imageNotFound) {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainSlideShowPause));
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainSlideShowExit));
-                mnuContext.Items.Add(new ToolStripSeparator());//---------------
+                mnuContext.Items.Add(new ToolStripSeparator());
             }
 
             // toolbar menu
             mnuContext.Items.Add(UI.Menu.Clone(mnuMainToolbar));
             mnuContext.Items.Add(UI.Menu.Clone(mnuMainAlwaysOnTop));
 
-            mnuContext.Items.Add(new ToolStripSeparator());//---------------
+            mnuContext.Items.Add(new ToolStripSeparator());
             mnuContext.Items.Add(UI.Menu.Clone(mnuLoadingOrder));
 
             // Get Edit App info
@@ -4016,8 +4015,10 @@ namespace ImageGlass {
                     mnuContext.Items.Add(UI.Menu.Clone(mnuMainChannels));
                 }
 
-                mnuContext.Items.Add(new ToolStripSeparator());//---------------
-                mnuContext.Items.Add(UI.Menu.Clone(mnuOpenWith));
+                mnuContext.Items.Add(new ToolStripSeparator());
+                if (!Local.IsWindows7) {
+                    mnuContext.Items.Add(UI.Menu.Clone(mnuOpenWith));
+                }
 
                 UpdateEditAppInfoForMenu();
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainEditImage));
@@ -4044,7 +4045,7 @@ namespace ImageGlass {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainSetAsDesktop));
 
                 // check if igcmdWin10.exe exists!
-                if (_isWindows10 && File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
+                if (Local.IsWindows10 && File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
                     mnuContext.Items.Add(UI.Menu.Clone(mnuMainSetAsLockImage));
                 }
             }
@@ -4786,7 +4787,7 @@ namespace ImageGlass {
         }
 
         private async void mnuMainSetAsLockImage_Click(object sender, EventArgs e) {
-            if (!_isWindows10)
+            if (!Local.IsWindows10)
                 return; // Do nothing - running Windows 8 or earlier
 
             var isError = false;
@@ -5088,7 +5089,7 @@ namespace ImageGlass {
             }
         }
 
-        private async void mnuMain_Opening(object sender, CancelEventArgs e) {
+        private void mnuMain_Opening(object sender, CancelEventArgs e) {
             btnMenu.Checked = true;
 
             try {
@@ -5123,8 +5124,12 @@ namespace ImageGlass {
                 mnuMainExtractPages.Text = string.Format(Configs.Language.Items[$"{Name}.mnuMainExtractPages"], Local.CurrentPageCount);
 
                 // check if igcmdWin10.exe exists!
-                if (!_isWindows10 || !File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
+                if (!Local.IsWindows10 || !File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
                     mnuMainSetAsLockImage.Enabled = false;
+                }
+
+                if (Local.IsWindows7) {
+                    mnuOpenWith.Enabled = false;
                 }
 
                 // add hotkey to Exit menu
