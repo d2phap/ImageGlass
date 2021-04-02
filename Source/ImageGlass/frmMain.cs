@@ -3119,6 +3119,7 @@ namespace ImageGlass {
                 mnuMainOpenFile.Text = lang[$"{Name}.{nameof(mnuMainOpenFile)}"];
                 mnuMainOpenImageData.Text = lang[$"{Name}.{nameof(mnuMainOpenImageData)}"];
                 mnuMainNewWindow.Text = lang[$"{Name}.{nameof(mnuMainNewWindow)}"];
+                mnuSaveImage.Text = lang[$"{Name}.{nameof(mnuSaveImage)}"];
                 mnuMainSaveAs.Text = lang[$"{Name}.{nameof(mnuMainSaveAs)}"];
                 mnuMainRefresh.Text = lang[$"{Name}.{nameof(mnuMainRefresh)}"];
                 mnuMainReloadImage.Text = lang[$"{Name}.{nameof(mnuMainReloadImage)}"];

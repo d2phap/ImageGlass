@@ -69,7 +69,7 @@ namespace ImageGlass.Library {
             LangName = "Local name of the language";
             Author = "ImageGlass community";
             Description = "English name of language";
-            MinVersion = "8.0.0.0";
+            MinVersion = "8.1.0.0";
             FileName = "";
             IsRightToLeftLayout = RightToLeft.No;
 
@@ -196,6 +196,7 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v3.0
             Items.Add("frmMain.mnuMainNewWindow", "Open new window"); //v7.0
             Items.Add("frmMain.mnuMainNewWindow._Error", "Cannot open new window because only one instance allowed"); //v7.0
+            Items.Add("frmMain.mnuSaveImage", "Save image"); //v8.1
             Items.Add("frmMain.mnuMainSaveAs", "Save image as…"); //v3.0
             Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v3.0
             Items.Add("frmMain.mnuMainReloadImage", "Reload image"); //v5.5

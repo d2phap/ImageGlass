@@ -34,6 +34,7 @@
             this.mnuMainOpenFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainOpenImageData = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainNewWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuSaveImage = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuOpenWith = new System.Windows.Forms.ToolStripMenuItem();
@@ -169,7 +170,6 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.mnuShortcut = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuSaveImage = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -301,6 +301,18 @@
             this.mnuMainNewWindow.Text = "[Open new window]";
             this.mnuMainNewWindow.Click += new System.EventHandler(this.MnuMainNewWindow_Click);
             // 
+            // mnuSaveImage
+            // 
+            this.mnuSaveImage.ForeColor = System.Drawing.Color.Black;
+            this.mnuSaveImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuSaveImage.Name = "mnuSaveImage";
+            this.mnuSaveImage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuSaveImage.ShortcutKeyDisplayString = "Ctrl+S";
+            this.mnuSaveImage.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.mnuSaveImage.Size = new System.Drawing.Size(414, 31);
+            this.mnuSaveImage.Text = "[Save image]";
+            this.mnuSaveImage.Click += new System.EventHandler(this.mnuSaveImage_Click);
+            // 
             // mnuMainSaveAs
             // 
             this.mnuMainSaveAs.ForeColor = System.Drawing.Color.Black;
@@ -311,7 +323,7 @@
             this.mnuMainSaveAs.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
             this.mnuMainSaveAs.Size = new System.Drawing.Size(414, 31);
-            this.mnuMainSaveAs.Text = "&Save image as...";
+            this.mnuMainSaveAs.Text = "[Save image as...]";
             this.mnuMainSaveAs.Click += new System.EventHandler(this.mnuMainSaveAs_Click);
             // 
             // toolStripSeparator10
@@ -558,7 +570,7 @@
             this.mnuMainZoomIn.Name = "mnuMainZoomIn";
             this.mnuMainZoomIn.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainZoomIn.ShortcutKeyDisplayString = "+";
-            this.mnuMainZoomIn.Size = new System.Drawing.Size(252, 31);
+            this.mnuMainZoomIn.Size = new System.Drawing.Size(245, 31);
             this.mnuMainZoomIn.Text = "&Zoom in";
             this.mnuMainZoomIn.Click += new System.EventHandler(this.mnuMainZoomIn_Click);
             // 
@@ -569,7 +581,7 @@
             this.mnuMainZoomOut.Name = "mnuMainZoomOut";
             this.mnuMainZoomOut.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainZoomOut.ShortcutKeyDisplayString = "-";
-            this.mnuMainZoomOut.Size = new System.Drawing.Size(252, 31);
+            this.mnuMainZoomOut.Size = new System.Drawing.Size(245, 31);
             this.mnuMainZoomOut.Text = "Zoo&m out";
             this.mnuMainZoomOut.Click += new System.EventHandler(this.mnuMainZoomOut_Click);
             // 
@@ -580,14 +592,14 @@
             this.mnuMainActualSize.Name = "mnuMainActualSize";
             this.mnuMainActualSize.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainActualSize.ShortcutKeyDisplayString = "0";
-            this.mnuMainActualSize.Size = new System.Drawing.Size(252, 31);
+            this.mnuMainActualSize.Size = new System.Drawing.Size(245, 31);
             this.mnuMainActualSize.Text = "&Actual size";
             this.mnuMainActualSize.Click += new System.EventHandler(this.mnuMainActualSize_Click);
             // 
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(249, 6);
+            this.toolStripSeparator13.Size = new System.Drawing.Size(242, 6);
             // 
             // mnuMainAutoZoom
             // 
@@ -599,7 +611,7 @@
             this.mnuMainAutoZoom.Name = "mnuMainAutoZoom";
             this.mnuMainAutoZoom.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainAutoZoom.ShortcutKeyDisplayString = "1";
-            this.mnuMainAutoZoom.Size = new System.Drawing.Size(252, 31);
+            this.mnuMainAutoZoom.Size = new System.Drawing.Size(245, 31);
             this.mnuMainAutoZoom.Text = "[Auto Zoom]";
             this.mnuMainAutoZoom.Click += new System.EventHandler(this.mnuMainAutoZoom_Click);
             // 
@@ -610,7 +622,7 @@
             this.mnuMainLockZoomRatio.Name = "mnuMainLockZoomRatio";
             this.mnuMainLockZoomRatio.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainLockZoomRatio.ShortcutKeyDisplayString = "2";
-            this.mnuMainLockZoomRatio.Size = new System.Drawing.Size(252, 31);
+            this.mnuMainLockZoomRatio.Size = new System.Drawing.Size(245, 31);
             this.mnuMainLockZoomRatio.Text = "&Lock zoom ratio";
             this.mnuMainLockZoomRatio.Click += new System.EventHandler(this.mnuMainLockZoomRatio_Click);
             // 
@@ -622,7 +634,7 @@
             this.mnuMainScaleToWidth.Name = "mnuMainScaleToWidth";
             this.mnuMainScaleToWidth.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainScaleToWidth.ShortcutKeyDisplayString = "3";
-            this.mnuMainScaleToWidth.Size = new System.Drawing.Size(252, 31);
+            this.mnuMainScaleToWidth.Size = new System.Drawing.Size(245, 31);
             this.mnuMainScaleToWidth.Text = "Scale to &Width";
             this.mnuMainScaleToWidth.Click += new System.EventHandler(this.mnuMainScaleToWidth_Click);
             // 
@@ -634,7 +646,7 @@
             this.mnuMainScaleToHeight.Name = "mnuMainScaleToHeight";
             this.mnuMainScaleToHeight.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainScaleToHeight.ShortcutKeyDisplayString = "4";
-            this.mnuMainScaleToHeight.Size = new System.Drawing.Size(252, 31);
+            this.mnuMainScaleToHeight.Size = new System.Drawing.Size(245, 31);
             this.mnuMainScaleToHeight.Text = "Scale to &Height";
             this.mnuMainScaleToHeight.Click += new System.EventHandler(this.mnuMainScaleToHeight_Click);
             // 
@@ -646,7 +658,7 @@
             this.mnuMainScaleToFit.Name = "mnuMainScaleToFit";
             this.mnuMainScaleToFit.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainScaleToFit.ShortcutKeyDisplayString = "5";
-            this.mnuMainScaleToFit.Size = new System.Drawing.Size(252, 31);
+            this.mnuMainScaleToFit.Size = new System.Drawing.Size(245, 31);
             this.mnuMainScaleToFit.Text = "Scale to &fit";
             this.mnuMainScaleToFit.Click += new System.EventHandler(this.mnuMainScaleToFit_Click);
             // 
@@ -658,7 +670,7 @@
             this.mnuMainScaleToFill.Name = "mnuMainScaleToFill";
             this.mnuMainScaleToFill.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
             this.mnuMainScaleToFill.ShortcutKeyDisplayString = "6";
-            this.mnuMainScaleToFill.Size = new System.Drawing.Size(252, 31);
+            this.mnuMainScaleToFill.Size = new System.Drawing.Size(245, 31);
             this.mnuMainScaleToFill.Text = "Scale to fill";
             this.mnuMainScaleToFill.Click += new System.EventHandler(this.mnuMainScaleToFill_Click);
             // 
@@ -1387,7 +1399,6 @@
             this.thumbnailBar.AllowDuplicateFileNames = true;
             this.thumbnailBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.thumbnailBar.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.thumbnailBar.Colors = new ImageGlass.ImageListView.ImageListViewColor(resources.GetString("thumbnailBar.Colors"));
             this.thumbnailBar.ColumnHeaderFont = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.thumbnailBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.thumbnailBar.EnableKeyNavigation = false;
@@ -1944,18 +1955,6 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(222, 28);
             this.toolStripMenuItem1.Text = "sample menu item";
-            // 
-            // mnuSaveImage
-            // 
-            this.mnuSaveImage.ForeColor = System.Drawing.Color.Black;
-            this.mnuSaveImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuSaveImage.Name = "mnuSaveImage";
-            this.mnuSaveImage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuSaveImage.ShortcutKeyDisplayString = "Ctrl+S";
-            this.mnuSaveImage.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.mnuSaveImage.Size = new System.Drawing.Size(414, 31);
-            this.mnuSaveImage.Text = "Save image";
-            this.mnuSaveImage.Click += new System.EventHandler(this.mnuSaveImage_Click);
             // 
             // frmMain
             // 
