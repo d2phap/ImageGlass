@@ -4020,7 +4020,7 @@ namespace ImageGlass {
 
             // Get Edit App info
             if (!imageNotFound) {
-                if (!imageError && !Local.IsTempMemoryData) {
+                if (!imageError && !Local.IsTempMemoryData && Local.CurrentPageCount <= 1) {
                     mnuContext.Items.Add(UI.Menu.Clone(mnuMainChannels));
                 }
 
@@ -5139,6 +5139,7 @@ namespace ImageGlass {
                     mnuMainHelp.BackColor = mnuMainCheckForUpdate.BackColor = Color.Transparent;
                 }
 
+                mnuMainChannels.Enabled = true;
                 mnuMainExtractPages.Enabled =
                     mnuMainStartStopAnimating.Enabled =
                     mnuMainPrevPage.Enabled =
@@ -5149,6 +5150,8 @@ namespace ImageGlass {
                 mnuMainSetAsLockImage.Enabled = true;
 
                 if (Local.CurrentPageCount > 1) {
+                    mnuMainChannels.Enabled = false;
+
                     mnuMainExtractPages.Enabled =
                         mnuMainStartStopAnimating.Enabled =
                         mnuMainPrevPage.Enabled =
