@@ -1351,6 +1351,12 @@ namespace ImageGlass {
                     return;
                 }
 
+                // Open image location
+                if (e.KeyCode == Keys.L) {
+                    mnuMainImageLocation_Click(null, null);
+                    return;
+                }
+
                 // Page naviagtion tool
                 if (e.KeyCode == Keys.P) {
                     mnuMainPageNav.PerformClick();
