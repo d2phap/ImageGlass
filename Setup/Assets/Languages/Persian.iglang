@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="fa-IR" langName="فارسی" author="(MSKF (mskf1383" description="Persian" minVersion="8.0.0.0" isRightToLeftLayout="Yes"/>
+    <Info langCode="fa-IR" langName="فارسی" author="(MSKF (mskf1383" description="Persian" minVersion="8.1.0.0" isRightToLeftLayout="Yes"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="برخی از تنظیمات با ImageGlass سازگاری ندارند {0}. پیشنهاد میشود این تنظیمات را قبل از استفاده بروزرسانی کنید.&#10;&#10;-برای اطلاعات بیشتر بروی بله کلیک کنید.&#10;-برای اجرا با تنظیمات پیشفرض بروی خیر کلیک کنید."/>
       <Item key="_.ImageOrderBy._Name" value="نام (پیش‌فرض)"/>
@@ -21,6 +21,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="بازنمایی تصویر از کلیپ بورد"/>
       <Item key="frmMain.mnuMainNewWindow" value="بازنمایی پنجره جدید"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="پنجره جدید باز نمی شود زیرا فقط یک نمونه مجاز است"/>
+      <Item key="frmMain.mnuSaveImage" value="ذخیره تصویر"/>
       <Item key="frmMain.mnuMainSaveAs" value="ذخیره تصویر به عنوان…"/>
       <Item key="frmMain.mnuMainRefresh" value="تازه سازی"/>
       <Item key="frmMain.mnuMainReloadImage" value="بارگذاری مجدد تصویر"/>
@@ -209,9 +210,14 @@
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="تصویر قبلی/بعدی"/>
       <Item key="frmSetting.lblHeadZooming" value="در حال بزرگنمایی"/>
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="بهینه‌سازی بزرگنمایی"/>
-      <Item key="frmSetting.cmbZoomOptimization._Auto" value="خودکار"/>
-      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="هموارسازی پیکسل ها"/>
-      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="پاکسازی پیکسل ها"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="خودکار (کیفیت پایین/نزدیک‌ترین همسایگی)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="کیفیت پایین"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="کیفیت بالا"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="دوسویه"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="دومکعبی"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="نزدیک‌ترین همسایگی"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="کیفیت بالا، دوسویه"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="کیفیت بالا، دومکعبی"/>
       <Item key="frmSetting.lblZoomLevels" value="سطح‌های بزرگنمایی"/>
       <Item key="frmSetting.txtZoomLevels._Error" value="در بروزرسانی سطوح بزرگنمایی خطایی روی داد. پیغام خطا:&#10;&#10;{0}"/>
       <Item key="frmSetting.lblHeadThumbnailBar" value="نوار ریزعکس"/>
@@ -272,6 +278,8 @@
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="ابزار Exif را همیشه روی پنجره‌های دیگر نگه دار"/>
       <Item key="frmSetting.lnkSelectExifTool" value="فایل ابزار Exif را انتخاب کنید"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="ابزار Exif وجود ندارد یا نامعتبر است: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="استدلال های فرمان:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="پیشنمایش فرمان:"/>
       <Item key="frmSetting.lblLanguageText" value="زبان‌های نصب شده"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; تازه‌سازی"/>
       <Item key="frmSetting.lblLanguageWarning" value="این بسته زبان با {0} سازگار نیست"/>
@@ -312,10 +320,10 @@
       <Item key="frmSetting.KeyActions._ZoomInOut" value="بزرگ / کوچک نمایی"/>
       <Item key="frmSetting.KeyActions._PauseSlideshow" value="مکث اسلاید"/>
       <Item key="frmSetting.KeyActions._DoNothing" value="کاری انجام نشود"/>
-      <Item key="frmAddNewFormat.lblFileExtension" value="افزونه‌ی فایل"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="پسوند فایل"/>
       <Item key="frmAddNewFormat.btnOK" value="تاييد"/>
       <Item key="frmAddNewFormat.btnClose" value="بستن"/>
-      <Item key="frmEditApp.lblFileExtension" value="افزونه‌ی فایل"/>
+      <Item key="frmEditApp.lblFileExtension" value="پسوند فایل"/>
       <Item key="frmEditApp.lblAppName" value="نام برنامه"/>
       <Item key="frmEditApp.lblAppPath" value="مسیر برنامه"/>
       <Item key="frmEditApp.lblAppArguments" value="استدلال های برنامه"/>

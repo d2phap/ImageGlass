@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="pt-BR" langName="Português Brasileiro" author="Cláudio Mantovani Vieira" description="Brazilian Portuguese" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="pt-BR" langName="Português Brasileiro" author="Cláudio Mantovani Vieira" description="Brazilian Portuguese" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Algumas configurações são incompatíveis com seu ImageGlass {0}. É recomendado atualizar antes de continuar.&#10;&#10;- Clique em Sim para saber mais sobre as mudanças.&#10;- Clique em Não para abrir o ImageGlass com as configurações padrão."/>
       <Item key="_.ImageOrderBy._Name" value="Nome (padrão)"/>
@@ -21,6 +21,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="Abrir dados da imagem da área de transferência"/>
       <Item key="frmMain.mnuMainNewWindow" value="Abrir nova janela"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="Não é possível abrir uma nova janela porque apenas uma instância é permitida"/>
+      <Item key="frmMain.mnuSaveImage" value="Salvar Imagem"/>
       <Item key="frmMain.mnuMainSaveAs" value="Salvar imagem como…"/>
       <Item key="frmMain.mnuMainRefresh" value="Atualizar"/>
       <Item key="frmMain.mnuMainReloadImage" value="Recarregar imagem"/>
@@ -158,7 +159,7 @@
       <Item key="frmSetting.lblImage" value="Imagem"/>
       <Item key="frmSetting.lblEdit" value="Editar"/>
       <Item key="frmSetting.lblFileTypeAssoc" value="Associações de Tipo de Arquivo"/>
-      <Item key="frmSetting.lblToolbar" value="Barra de Ferramentas"/>
+      <Item key="frmSetting.lblToolbar" value="Barra de ferramentas"/>
       <Item key="frmSetting.lblLanguage" value="Idioma"/>
       <Item key="frmSetting.lblTheme" value="Tema"/>
       <Item key="frmSetting.lblKeyboard" value="Teclado"/>
@@ -209,9 +210,14 @@
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Imagem anterior/próxima"/>
       <Item key="frmSetting.lblHeadZooming" value="Ampliação"/>
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Otimização de ampliação"/>
-      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Auto"/>
-      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Pixels suaves"/>
-      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Limpar pixels"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Automático (Baixa qualidade/Vizinho mais próximo)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Baixa qualidade"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Alta qualidade"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Bilinear"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Bicúbico"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Vizinho mais próximo"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Alta qualidade, bilinear"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Alta qualidade, bicúbico"/>
       <Item key="frmSetting.lblZoomLevels" value="Níveis de ampliação"/>
       <Item key="frmSetting.txtZoomLevels._Error" value="Houve um erro ao atualizar níveis de Ampliação. Mensagem de erro:&#10;&#10;{0}"/>
       <Item key="frmSetting.lblHeadThumbnailBar" value="Barra de miniaturas"/>
@@ -272,6 +278,8 @@
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Manter a ferramenta Exif sempre no topo"/>
       <Item key="frmSetting.lnkSelectExifTool" value="Selecionar arquivo de ferramenta Exif"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="A ferramenta Exif não existe ou é inválida: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Argumentos da linha de comando:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Pré-visualização do comando:"/>
       <Item key="frmSetting.lblLanguageText" value="Idiomas instalados"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Atualizar"/>
       <Item key="frmSetting.lblLanguageWarning" value="Este pacote de idioma pode não ser compatível com {0}"/>

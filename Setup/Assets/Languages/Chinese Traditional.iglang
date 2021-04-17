@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="zh-TW" langName="正體中文" author="Jeff Huang" description="Traditional Chinese" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="zh-TW" langName="正體中文" author="Jeff Huang" description="Traditional Chinese" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="某些設定與您的 ImageGlass {0} 不相容。建議您在繼續前先更新它們。&#10;&#10;- 點擊是以取得更多關於變更的資訊。&#10;- 點擊否以使用預設的設定啟動 ImageGlass。"/>
       <Item key="_.ImageOrderBy._Name" value="名稱（預設）"/>
@@ -21,6 +21,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="從剪貼簿開啟圖片資料"/>
       <Item key="frmMain.mnuMainNewWindow" value="開啟新視窗"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="因為僅允許一個實體，所以無法開啟新視窗"/>
+      <Item key="frmMain.mnuSaveImage" value="儲存圖片"/>
       <Item key="frmMain.mnuMainSaveAs" value="另存圖片為…"/>
       <Item key="frmMain.mnuMainRefresh" value="重新整理"/>
       <Item key="frmMain.mnuMainReloadImage" value="重新載入圖像"/>
@@ -209,9 +210,14 @@
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="上一個／下一個圖片"/>
       <Item key="frmSetting.lblHeadZooming" value="縮放"/>
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="縮放最佳化"/>
-      <Item key="frmSetting.cmbZoomOptimization._Auto" value="自動"/>
-      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="平滑像素"/>
-      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="清晰像素"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="自動（低品質／鄰近演算法）"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="低品質"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="高品質"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="雙線性"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="雙三次"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="鄰近演算法"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="高品質，雙線性"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="高品質，雙三次"/>
       <Item key="frmSetting.lblZoomLevels" value="縮放等級"/>
       <Item key="frmSetting.txtZoomLevels._Error" value="更新縮放等級時發生錯誤。錯誤訊息：&#10;&#10;{0}"/>
       <Item key="frmSetting.lblHeadThumbnailBar" value="縮圖列"/>
@@ -272,6 +278,8 @@
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="一直將 Exif 工具放在最前面"/>
       <Item key="frmSetting.lnkSelectExifTool" value="選取 Exif 工具檔案"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Exif 工具不存在或無效： &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="指令引數："/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="指令預覽："/>
       <Item key="frmSetting.lblLanguageText" value="已安裝的語言"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; 重新整理"/>
       <Item key="frmSetting.lblLanguageWarning" value="這個語言包可能與 {0} 不相容"/>

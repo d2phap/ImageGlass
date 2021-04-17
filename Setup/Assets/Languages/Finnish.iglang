@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="fi-FI" langName="Suomi" author="Teemu Paavola ja 1 nimetön" description="Finnish" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="fi-FI" langName="Suomi" author="Teemu Paavola ja 1 nimetön" description="Finnish" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Jotkin asetukset eivät ole käytettävissäsi ImageGlassissa{0}. On suotavaa päivittää ne ennen jatkamista.&#10;&#10;- Klikkaa kyllä, jos haluat tietoa muutoksista&#10;- Klikkaa ei, jos haluat suorittaa ImageGlassin oletusasetuksin."/>
       <Item key="_.ImageOrderBy._Name" value="Nimi (Oletus)"/>
@@ -21,6 +21,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="Avaa kuva leikepöydältä"/>
       <Item key="frmMain.mnuMainNewWindow" value="Avaa uusi ikkuna"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="Ei voida aukaista ikkunaa, koska yksi sallitaan kerrallaan"/>
+      <Item key="frmMain.mnuSaveImage" value="Tallenna kuva"/>
       <Item key="frmMain.mnuMainSaveAs" value="Tallenna kuva nimellä…"/>
       <Item key="frmMain.mnuMainRefresh" value="Päivitä"/>
       <Item key="frmMain.mnuMainReloadImage" value="Lataa kuva"/>
@@ -209,9 +210,14 @@
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Edellinen/seuraava kuva"/>
       <Item key="frmSetting.lblHeadZooming" value="Zoomataan"/>
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Zoomauksen optimointi"/>
-      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Automaattinen"/>
-      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Pehmennä pikselit"/>
-      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Tyhjennä pikselit"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Automaattinen (heikko laatu lähin naapuri)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Heikko laatu"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Korkea laatu"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Bilineaarinen"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Bicubic (3. aste)"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Lähin naapuri"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Korkea laatu, bilineaarinen"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Korkea laatu, bicubic"/>
       <Item key="frmSetting.lblZoomLevels" value="Zoomaustasot"/>
       <Item key="frmSetting.txtZoomLevels._Error" value="Zoomaustasoja päivittäessa tapahtui virhe. Virheilmoitus: {0}"/>
       <Item key="frmSetting.lblHeadThumbnailBar" value="Esikatselukuvapalkki"/>
@@ -272,6 +278,8 @@
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Pidä EXIF-työkalu aina päällimmäisenä"/>
       <Item key="frmSetting.lnkSelectExifTool" value="Valitse tiedosto EXIF-työkalulle"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="EXIF-työkalua ei ole olemassa tai on virheellinen: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Komentoriviargumentit:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Komennon esikatselu:"/>
       <Item key="frmSetting.lblLanguageText" value="Asennetut kielet"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Päivitä"/>
       <Item key="frmSetting.lblLanguageWarning" value="Tämä kielipaketti ei mahdollisesti toimi {0}"/>

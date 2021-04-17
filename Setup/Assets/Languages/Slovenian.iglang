@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="sl-SI" langName="Slovenščina" author="Jadran Rudec" description="Slovenian" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="sl-SI" langName="Slovenščina" author="Jadran Rudec" description="Slovenian" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Nekatere nastavitve niso združljive z vašim ImageGlassom {0}. Priporočamo, da jih posodobite preden nadaljujete.&#10;&#10;- Kliknite Da, če želite izvedeti več o spremembah.&#10;- Kliknite Ne, če želite zagnati ImageGlass s privzetimi nastavitvami."/>
       <Item key="_.ImageOrderBy._Name" value="Ime (privzeto)"/>
@@ -21,6 +21,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="Odpri slikovne podatke iz odložišča"/>
       <Item key="frmMain.mnuMainNewWindow" value="Odpri novo okno"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="Ni mogoče odpreti novega okna, ker je dovoljeno le eno okno"/>
+      <Item key="frmMain.mnuSaveImage" value="Shrani sliko"/>
       <Item key="frmMain.mnuMainSaveAs" value="Shrani sliko kot…"/>
       <Item key="frmMain.mnuMainRefresh" value="Osveži"/>
       <Item key="frmMain.mnuMainReloadImage" value="Ponovno naloži sliko"/>
@@ -209,9 +210,14 @@
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Prejšnja/naslednja slika"/>
       <Item key="frmSetting.lblHeadZooming" value="Povečava"/>
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Optimiranje povečave"/>
-      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Samodejno"/>
-      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Glajenje zaslonskih pik"/>
-      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Počisti zaslonske pike"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Samodejno (nizka kakovost/najbližji sosed)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Nizka kakovost"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Visoka kakovost"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Dvovrstno"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Dvokubično"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Najbližji sosed"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Visoko kakovostno, dvovrstno"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Visoko kakovostno, dvokubično"/>
       <Item key="frmSetting.lblZoomLevels" value="Stopnje povečave"/>
       <Item key="frmSetting.txtZoomLevels._Error" value="Pri posodabljanju stopnje povečave je prišlo do napake. Obvestilo o napaki:&#10;&#10;{0}"/>
       <Item key="frmSetting.lblHeadThumbnailBar" value="Vrstica sličic"/>
@@ -272,6 +278,8 @@
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Orodje Exif naj bo vedno na vrhu"/>
       <Item key="frmSetting.lnkSelectExifTool" value="Izberi datoteko orodja Exif"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Orodje Exif ne obstaja ali je neveljavno: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Argumenti ukaza:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Predogled ukaza:"/>
       <Item key="frmSetting.lblLanguageText" value="Nameščeni jeziki"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Osveži"/>
       <Item key="frmSetting.lblLanguageWarning" value="Ta jezikovni paket morda ni združljiv z {0}"/>

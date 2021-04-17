@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="ms-MY" langName="Bahasa Melayu" author="Abuyop" description="Malay Malaysia" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="ms-MY" langName="Bahasa Melayu" author="Abuyop" description="Malay Malaysia" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Sesetengah tetapan tidak serasi dengan ImageGlass {0} anda. Adalah disarankan anda mengemas kini dahulu sebelum diteruskan.&#10;&#10;- Klik Ya untuk ketahui perubahan-perubahan tersebut.&#10;- Klik Tidak untuk lancarkan ImageGlass dengan tetapan lalai."/>
       <Item key="_.ImageOrderBy._Name" value="Nama (lalai)"/>
@@ -21,6 +21,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="Buka data imej daripada papan keratan"/>
       <Item key="frmMain.mnuMainNewWindow" value="Buka tetingkap baharu"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="Tidak dapat buka tetingkap baharu kerana hanya satu kejadian dibenarkan"/>
+      <Item key="frmMain.mnuSaveImage" value="Simpan imej"/>
       <Item key="frmMain.mnuMainSaveAs" value="Simpan imej sebagai…"/>
       <Item key="frmMain.mnuMainRefresh" value="Segar semula"/>
       <Item key="frmMain.mnuMainReloadImage" value="Muat semula imej"/>
@@ -209,9 +210,14 @@
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Imej terdahulu/berikutnya"/>
       <Item key="frmSetting.lblHeadZooming" value="Pengezuman"/>
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Pengoptimuman zum"/>
-      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Auto"/>
-      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Piksel lancar"/>
-      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Piksel jelas"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Auto (Kualiti rendah/Kejiranan-terhampir)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Kualiti rendah"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Kualiti tinggi"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Dwilinear"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Dwikiub"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Kejiranan-terhampir"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Kualiti tinggi, dwilinear"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Kualiti tinggi, dwikuib"/>
       <Item key="frmSetting.lblZoomLevels" value="Aras zum"/>
       <Item key="frmSetting.txtZoomLevels._Error" value="Terdapat ralat ketika mengemas kini aras Zum. Mesej ralat:&#10;&#10;{0}"/>
       <Item key="frmSetting.lblHeadThumbnailBar" value="Palang lakaran kenit"/>
@@ -272,6 +278,8 @@
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Biar alat Exif sentiasa di atas"/>
       <Item key="frmSetting.lnkSelectExifTool" value="Pilih fail alat Exif"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Alat Exif tidak wujud atau tidak sah: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Argumen perintah:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Pratonton perintah:"/>
       <Item key="frmSetting.lblLanguageText" value="Bahasa dipasang"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Segar Semula"/>
       <Item key="frmSetting.lblLanguageWarning" value="Pek bahasa ini mungkin tidak serasi dengan {0}"/>
