@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="ru-RU" langName="Русский" author="inkrimit (Вынгилев Алексей), DenisK_2017 (Denis Velicanov), Zelyc81 (Гапоненко Евгений)" description="Russian" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="ru-RU" langName="Русский" author="inkrimit (Вынгилев Алексей), DenisK_2017 (Denis Velicanov), Zelyc81 (Гапоненко Евгений)" description="Russian" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Некоторые настройки несовместимы с вашим ImageGlass {0}. Рекомендуется обновить их, прежде чем продолжить.&#10;&#10;— Нажмите &quot;Да&quot;, чтобы узнать об изменениях.&#10;— Нажмите &quot;Нет&quot;, чтобы запустить ImageGlass с настройками по умолчанию."/>
       <Item key="_.ImageOrderBy._Name" value="Имя (по умолчанию)"/>
@@ -21,6 +21,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="Открыть изображение из буфера обмена"/>
       <Item key="frmMain.mnuMainNewWindow" value="Открыть новое окно"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="Невозможно открыть новое окно, потому что разрешён только один экземпляр программы"/>
+      <Item key="frmMain.mnuSaveImage" value="Сохранить изображение"/>
       <Item key="frmMain.mnuMainSaveAs" value="Сохранить изображение как ..."/>
       <Item key="frmMain.mnuMainRefresh" value="Обновить"/>
       <Item key="frmMain.mnuMainReloadImage" value="Обновить изображение"/>
@@ -209,9 +210,14 @@
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Предыдущее / следующее"/>
       <Item key="frmSetting.lblHeadZooming" value="Масштабирование"/>
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Оптимизация масштаба:"/>
-      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Автоматически"/>
-      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Размыто"/>
-      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Чётко"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Авто (низкое качество по соседнему пикселю)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Низкое качество"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Высокое качество"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Билинейное"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Бикубическое"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="По соседнему пикселю"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Билинейное (высокое качество)"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Бикубическое (высокое качество)"/>
       <Item key="frmSetting.lblZoomLevels" value="Уровни масштабирования:"/>
       <Item key="frmSetting.txtZoomLevels._Error" value="Произошла ошибка при обновлении уровней масштабирования. Сообщение об ошибке:&#10;&#10;{0}"/>
       <Item key="frmSetting.lblHeadThumbnailBar" value="Панель эскизов"/>
@@ -272,6 +278,8 @@
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Окно ExifTool всегда сверху"/>
       <Item key="frmSetting.lnkSelectExifTool" value="Выбрать файл ExifTool"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="ExifTool не найден: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Аргументы команды:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Предпросмотр команды:"/>
       <Item key="frmSetting.lblLanguageText" value="Установленные языки:"/>
       <Item key="frmSetting.lnkRefresh" value="Обновить список"/>
       <Item key="frmSetting.lblLanguageWarning" value="Этот языковой пакет может быть несовместим с версией {0}"/>

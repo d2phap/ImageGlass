@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="de-DE" langName="Deutsch" author="bYemma, Marcel Veronetzki (DasOni), Tobias Ell tell1970, uDEV" description="German" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="de-DE" langName="Deutsch" author="bYemma, Marcel Veronetzki (DasOni), Tobias Ell tell1970, uDEV" description="German" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Einige Einstellungen sind nicht mit ImageGlass {0} kompatibel. Es wird empfohlen, sie vor dem nächsten Schritt anzupassen.&#10;&#10;- Drücke auf &quot;Ja&quot;, um mehr über die Änderungen zu erfahren.&#10;- Drücke auf &quot;Nein&quot;, um ImageGlass mit den Standard-Einstellungen zu starten."/>
       <Item key="_.ImageOrderBy._Name" value="Name (Standard)"/>
@@ -18,9 +18,10 @@
       <Item key="_.AfterOpeningEditAppAction._Close" value="Schließen"/>
       <Item key="frmMain.mnuMainFile" value="Datei"/>
       <Item key="frmMain.mnuMainOpenFile" value="Datei öffnen…"/>
-      <Item key="frmMain.mnuMainOpenImageData" value="Bild aus Zwischenablage einfügen"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Bild aus Zwischenablage einfügen"/>
       <Item key="frmMain.mnuMainNewWindow" value="Neues Fenster öffnen"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="Neues Fenster kann nicht geöffnet werden, da nur eine Instanz erlaubt ist"/>
+      <Item key="frmMain.mnuSaveImage" value="Bild speichern"/>
       <Item key="frmMain.mnuMainSaveAs" value="Bild speichern als…"/>
       <Item key="frmMain.mnuMainRefresh" value="Aktualisieren"/>
       <Item key="frmMain.mnuMainReloadImage" value="Bild neu laden"/>
@@ -65,7 +66,7 @@
       <Item key="frmMain.mnuMainFlipVert" value="Vertikal spiegeln"/>
       <Item key="frmMain.mnuMainRename" value="Bild umbenennen…"/>
       <Item key="frmMain.mnuMainMoveToRecycleBin" value="In den Papierkorb verschieben"/>
-      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Bild endgültig löschen"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Bild endgültig löschen"/>
       <Item key="frmMain.mnuMainExtractPages" value="Extrahiere Bilder Seiten ({0})…"/>
       <Item key="frmMain.mnuMainStartStopAnimating" value="Bildanimation starten / stoppen"/>
       <Item key="frmMain.mnuMainSetAsDesktop" value="Als Hintergrundbild festlegen"/>
@@ -78,7 +79,7 @@
       <Item key="frmMain.mnuMainCut" value="Ausschneiden"/>
       <Item key="frmMain.mnuMainCopyImagePath" value="Bildpfad kopieren"/>
       <Item key="frmMain.mnuMainClearClipboard" value="Zwischenablage leeren"/>
-      <Item key="frmMain.mnuWindowFit" value="Fensteranpassung"/>
+      <Item key="frmMain.mnuWindowFit" value="Fenster Anpassung"/>
       <Item key="frmMain.mnuMainFullScreen" value="Vollbild"/>
       <Item key="frmMain.mnuFrameless" value="Rahmenlos"/>
       <Item key="frmMain.mnuMainSlideShow" value="Diashow"/>
@@ -209,9 +210,14 @@
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Vorheriges / Nächstes Bild"/>
       <Item key="frmSetting.lblHeadZooming" value="Vergrößern"/>
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Zoom Optimierung"/>
-      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Automatisch"/>
-      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Glatte Pixel"/>
-      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Klare Pixel"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Auto (niedrige Qualität / nächster Nachbar)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Niedrige Qualität"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Hohe Qualität"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Bilinear"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Bikubisch"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Nächster Nachbar"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Höchste Qualität, bilinear"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Höchste Qualität, bikubisch"/>
       <Item key="frmSetting.lblZoomLevels" value="Zoomstufe"/>
       <Item key="frmSetting.txtZoomLevels._Error" value="Beim Aktualisieren der Zoomstufen ist ein Fehler aufgetreten. Fehlermeldung:&#10;&#10;{0}"/>
       <Item key="frmSetting.lblHeadThumbnailBar" value="Vorschaubildleiste"/>
@@ -267,11 +273,13 @@
       <Item key="frmSetting.chkColorUseHEXA" value="HEX-Format mit Alpha-Wert verwenden"/>
       <Item key="frmSetting.chkColorUseHSLA" value="HSL-Format mit Alpha-Wert verwenden"/>
       <Item key="frmSetting.chkColorUseHSVA" value="HSV-Format mit Alpha-Wert verwenden"/>
-      <Item key="frmSetting.lblDefaultColorCode" value="Standard-Farbcodeformat beim Kopieren"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="Standardfarbcode-Format beim Kopieren"/>
       <Item key="frmSetting.chkShowPageNavAuto" value="Zeige das Seiten-Navigations-Tool automatisch bei mehrseitigen Bildern"/>
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="ExifTool immer im Vordergrund"/>
       <Item key="frmSetting.lnkSelectExifTool" value="ExifTool Datei auswählen"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="ExifTool existiert nicht oder ist ungültig: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Befehlsargumente:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Befehlsvorschau:"/>
       <Item key="frmSetting.lblLanguageText" value="Installierte Sprachen"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Aktualisieren"/>
       <Item key="frmSetting.lblLanguageWarning" value="Dieses Sprachpaket ist evtl. nicht kompatibel mit Version {0}"/>

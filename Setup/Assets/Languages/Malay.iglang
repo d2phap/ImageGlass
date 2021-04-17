@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="ms-MY" langName="Bahasa Melayu" author="Abuyop" description="Malay Malaysia" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="Sesetengah tetapan tidak serasi dengan ImageGlass {0} anda. Adalah disarankan anda mengemas kini dahulu sebelum diteruskan.&#10;&#10;- Klik Ya untuk ketahui perubahan-perubahan tersebut.&#10;- Klik Tidak untuk lancarkan ImageGlass dengan tetapan lalai."/>
+      <Item key="_.ImageOrderBy._Name" value="Nama (lalai)"/>
+      <Item key="_.ImageOrderBy._Length" value="Panjang"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Masa penciptaan"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Masa capaian terakhir"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Masa tulis terakhir"/>
+      <Item key="_.ImageOrderBy._Extension" value="Sambungan"/>
+      <Item key="_.ImageOrderBy._Random" value="Rawak"/>
+      <Item key="_.ImageOrderType._Asc" value="Menaik"/>
+      <Item key="_.ImageOrderType._Desc" value="Menurun"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Tiada apa-apa"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Minimumkan"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Tutup"/>
+      <Item key="frmMain.mnuMainFile" value="Fail"/>
+      <Item key="frmMain.mnuMainOpenFile" value="Buka fail…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Buka data imej daripada papan keratan"/>
+      <Item key="frmMain.mnuMainNewWindow" value="Buka tetingkap baharu"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Tidak dapat buka tetingkap baharu kerana hanya satu kejadian dibenarkan"/>
+      <Item key="frmMain.mnuSaveImage" value="Simpan imej"/>
+      <Item key="frmMain.mnuMainSaveAs" value="Simpan imej sebagai…"/>
+      <Item key="frmMain.mnuMainRefresh" value="Segar semula"/>
+      <Item key="frmMain.mnuMainReloadImage" value="Muat semula imej"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="Muat semula senarai imej"/>
+      <Item key="frmMain.mnuOpenWith" value="Buka dengan…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Sunting imej {0}…"/>
+      <Item key="frmMain.mnuMainPrint" value="Cetak…"/>
+      <Item key="frmMain.mnuMainNavigation" value="Pengemudian"/>
+      <Item key="frmMain.mnuMainViewNext" value="Lihat imej berikutnya"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Anak Panah Kanan / PageDown"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="Lihat imej terdahulu"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Anak Panah Kiri / PageUp"/>
+      <Item key="frmMain.mnuMainGoto" value="Pergi ke…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="Pergi ke imej pertama"/>
+      <Item key="frmMain.mnuMainGotoLast" value="Pergi ke imej terakhir"/>
+      <Item key="frmMain.mnuMainNextPage" value="Lihat halaman berikutnya"/>
+      <Item key="frmMain.mnuMainPrevPage" value="Lihat halaman terdahulu"/>
+      <Item key="frmMain.mnuMainFirstPage" value="Lihat halaman pertama"/>
+      <Item key="frmMain.mnuMainLastPage" value="Lihat halaman terakhir"/>
+      <Item key="frmMain.mnuMainZoom" value="Zum"/>
+      <Item key="frmMain.mnuMainZoomIn" value="Zum masuk"/>
+      <Item key="frmMain.mnuMainZoomOut" value="Zum keluar"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="Skala suai muat"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="Skala dipenuhi"/>
+      <Item key="frmMain.mnuMainActualSize" value="Saiz sebenar"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Kunci nisbah zum"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="Auto zum"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="Skala ikut lebar"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="Skala ikut tinggi"/>
+      <Item key="frmMain.mnuMainImage" value="Imej"/>
+      <Item key="frmMain.mnuMainChannels" value="Lihat saluran"/>
+      <Item key="frmMain.mnuMainChannels._All" value="Semua"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="Merah"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="Hjiau"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="Biru"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="Hitam"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="Alfa"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Memuatkan tertib"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="Putar kiri"/>
+      <Item key="frmMain.mnuMainRotateRight" value="Putar kanan"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="Kalih Mengufuk"/>
+      <Item key="frmMain.mnuMainFlipVert" value="Kalih Menegak"/>
+      <Item key="frmMain.mnuMainRename" value="Nama semula imej…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Alih ke dalam tong sampah"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Padam daripada cakera keras"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Ekstrak halaman imej ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="Mula / Henti imej beranimasi"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Tetapkan sebagai latar belakang Atas Meja"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="Tetapkan sebagai imej skrin kunci"/>
+      <Item key="frmMain.mnuMainImageLocation" value="Buka lokasi imej"/>
+      <Item key="frmMain.mnuMainImageProperties" value="Sifat imej"/>
+      <Item key="frmMain.mnuMainClipboard" value="Papan keratan"/>
+      <Item key="frmMain.mnuMainCopy" value="Salin"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="Salin data imej"/>
+      <Item key="frmMain.mnuMainCut" value="Potong"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="Salin laluan imej"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="Kosongkan papan keratan"/>
+      <Item key="frmMain.mnuWindowFit" value="Suai muat tetingkap"/>
+      <Item key="frmMain.mnuMainFullScreen" value="Skrin penuh"/>
+      <Item key="frmMain.mnuFrameless" value="Tanpa bingkai"/>
+      <Item key="frmMain.mnuMainSlideShow" value="Tayangan Slaid"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="Mula tayangan slaid"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="Jeda / Sambung semula tayangan slaid"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="Keluar dari tayangan slaid"/>
+      <Item key="frmMain.mnuMainShare" value="Kongsi…"/>
+      <Item key="frmMain.mnuMainLayout" value="Bentangan"/>
+      <Item key="frmMain.mnuMainToolbar" value="Palang Alat"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="Panel lakaran kenit"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="Latar belakang papan dam"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Kekal tetingkap sentiasa di atas"/>
+      <Item key="frmMain.mnuMainTools" value="Alatan"/>
+      <Item key="frmMain.mnuMainColorPicker" value="Pemilih warna"/>
+      <Item key="frmMain.mnuMainPageNav" value="Pengemudian halaman"/>
+      <Item key="frmMain.mnuMainCrop" value="Pengeratan"/>
+      <Item key="frmMain.mnuExifTool" value="Alat Exif"/>
+      <Item key="frmMain.mnuMainSettings" value="Tetapan…"/>
+      <Item key="frmMain.mnuMainHelp" value="Bantuan"/>
+      <Item key="frmMain.mnuMainAbout" value="Perihal"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="Konfigurasi pelancaran-pertama-kali…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Periksa kemas kini…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Satu versi baharu sudah tersedia!"/>
+      <Item key="frmMain.mnuMainReportIssue" value="Lapor sebagai isu…"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Keluar dari ImageGlass"/>
+      <Item key="frmMain.picMain._ErrorText" value="ImageGlass tidak dapat membuka gambar ini kerana fail berkemungkinan sudah rosak atau tidak disokong."/>
+      <Item key="frmMain._ImageNotExist" value="Imej yang ingin dilihat tidak wujud."/>
+      <Item key="frmMain.btnMenu" value="Menu (Kekunci Panas: `)"/>
+      <Item key="frmMain._OpenFileDialog" value="Semua fail disokong"/>
+      <Item key="frmMain._Files" value="fail(s)"/>
+      <Item key="frmMain._Pages" value="halaman"/>
+      <Item key="frmMain._ImageData" value="Data imej"/>
+      <Item key="frmMain._RenameDialogText" value="Nama semula"/>
+      <Item key="frmMain._RenameDialog" value="Masukkan nama fail baharu"/>
+      <Item key="frmMain._GotoDialogText" value="Masukkan indeks imej untuk melihatnya. Tekan ENTER"/>
+      <Item key="frmMain._DeleteDialogText" value="Padam fail '{0}' ?"/>
+      <Item key="frmMain._DeleteDialogTitle" value="Sahkan"/>
+      <Item key="frmMain._ExtractPageText" value="Mengekstrak halaman imej. Sila pilih folder output."/>
+      <Item key="frmMain._FullScreenMessage" value="Tekan {0} untuk keluar dari mod skrin penuh."/>
+      <Item key="frmMain._SlideshowMessage" value="Tekan ESC untuk keluar dari tayang slaid."/>
+      <Item key="frmMain._SlideshowMessagePause" value="Tayangan slaid dijeda"/>
+      <Item key="frmMain._SlideshowMessageResume" value="Tayangan slaid disambung semula"/>
+      <Item key="frmMain._CopyFileText" value="Salin {0} fail(s)"/>
+      <Item key="frmMain._CutFileText" value="Potong {0} fail(s)"/>
+      <Item key="frmMain._CopyImageData" value="Imej telah disalin ke dalam papan keratan"/>
+      <Item key="frmMain._ClearClipboard" value="Paparan keratan dikosongkan"/>
+      <Item key="frmMain._SaveChanges" value="Menyimpan perubahan..."/>
+      <Item key="frmMain._SaveImage" value="Imej telah disimpan ke dalam&#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="Menyimpan imej...&#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="Tidak boleh menyimpan imej&#10;{0}."/>
+      <Item key="frmMain._Loading" value="Memuatkan..."/>
+      <Item key="frmMain._FirstItemOfList" value="Pada imej pertama"/>
+      <Item key="frmMain._LastItemOfList" value="Pada imej terakhir"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="Pengubahsuaian untuk format beranimasi tidak disokong"/>
+      <Item key="frmMain._SetLockImage_Error" value="Terdapat satu ralat ketika menetapkan imej skrin kunci"/>
+      <Item key="frmMain._SetLockImage_Success" value="Imej skrin kunci telah berjaya ditetapkan"/>
+      <Item key="frmMain._SetBackground_Error" value="Terdapat satu ralat ketika menetapkan latar belakang atas meja"/>
+      <Item key="frmMain._SetBackground_Success" value="Latar belakang atas meja berjaya ditetapkan"/>
+      <Item key="frmMain._PageExtractComplete" value="Pengekstrakan halaman selesai."/>
+      <Item key="frmMain._Frameless" value="Tahan SHIFT untuk menggerakkan tetingkap."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Papan keratan tidak mengandungi data imej."/>
+      <Item key="frmAbout.lblSlogant" value="Sebuah pelihat imej yang ringan, pantas, dan serba-boleh"/>
+      <Item key="frmAbout.lblInfo" value="Maklumat"/>
+      <Item key="frmAbout.lblComponent" value="Komponen"/>
+      <Item key="frmAbout.lblReferences" value="Rujukan"/>
+      <Item key="frmAbout.lblVersion" value="Versi: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="Hubungan"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="Kemas kini perisian"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» Periksa kemas kini…"/>
+      <Item key="frmAbout._Text" value="Perihal"/>
+      <Item key="frmAbout._PortableText" value="[Portable]"/>
+      <Item key="frmSetting._Text" value="Tetapan"/>
+      <Item key="frmSetting.btnSave" value="Simpan"/>
+      <Item key="frmSetting.btnCancel" value="Batal"/>
+      <Item key="frmSetting.btnApply" value="Terap"/>
+      <Item key="frmSetting.lblGeneral" value="Am"/>
+      <Item key="frmSetting.lblImage" value="Imej"/>
+      <Item key="frmSetting.lblEdit" value="Sunting"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="Perkaitan Jenis Fail"/>
+      <Item key="frmSetting.lblToolbar" value="Palang Alat"/>
+      <Item key="frmSetting.lblLanguage" value="Bahasa"/>
+      <Item key="frmSetting.lblTheme" value="Tema"/>
+      <Item key="frmSetting.lblKeyboard" value="Papan Kekunci"/>
+      <Item key="frmSetting.lblHeadStartup" value="Permulaan"/>
+      <Item key="frmSetting.chkWelcomePicture" value="Tunjuk gambar aluan"/>
+      <Item key="frmSetting.chkLastSeenImage" value="Buka imej terakhir yang dilihat"/>
+      <Item key="frmSetting.chkShowToolBar" value="Tunjuk palang alat ketika permulaan"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="Direktori konfigurasi"/>
+      <Item key="frmSetting.lblHeadViewer" value="Pelihat"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Papar palang tatal pelihat"/>
+      <Item key="frmSetting.chkShowNavButtons" value="Papar butang anak panah pengemudian"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Papar nama dasar imej yang dilihat dalam palang alat"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Papar papan dam sahaja dalam kawasan imej"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="Benarkan sokongan gerak isyarat sentuh"/>
+      <Item key="frmSetting.lblBackGroundColor" value="Warna latar belakang"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Tetap semula"/>
+      <Item key="frmSetting.lblHeadOthers" value="Lain-lain"/>
+      <Item key="frmSetting.chkAutoUpdate" value="Periksa kemas kini secara automatik"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="Benarkan kejadian berbilang program"/>
+      <Item key="frmSetting.chkESCToQuit" value="Benarkan ESC ditekan untuk keluar dari aplikasi"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="Papar dialog pengesahan Padam"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="Auto-tengahkan tetingkap dalam mod Suai Muat Tetingkap"/>
+      <Item key="frmSetting.chkShowToast" value="Tunjuk mesej ucapan selamat"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="Imej dimuatkan"/>
+      <Item key="frmSetting.chkFindChildFolder" value="Cari imej dalam folder anak"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="Tunjuk imej tersembunyi"/>
+      <Item key="frmSetting.chkLoopViewer" value="Ulang balik pelihat ke imej pertama sekiranya telah mencapai penghujung senarai"/>
+      <Item key="frmSetting.chkIsCenterImage" value="Tengahkan imej dalam pelihat"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="Tertib memuatkan imej"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Guna tertib isih Pelayar Fail Windows jika boleh"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Kelompok imej mengikut direktori"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="Bilangan imej dicache oleh ImageBooter (satu arah)"/>
+      <Item key="frmSetting.lblColorManagement" value="Pengurusan warna"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="Terap juga imej tanpa profil warna terbenam"/>
+      <Item key="frmSetting.lblColorProfile" value="Profil warna:"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="Layar…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="Tiada"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Suai…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="Tindakan roda tetikus"/>
+      <Item key="frmSetting.lblMouseWheel" value="Roda tetikus"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="Roda tetikus + Alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Roda tetikus + Ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="Roda tetikus + Shift"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="Jangan buat apa-apa"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="Zum"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Tatal secara menegak"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Tatal secara mengufuk"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Imej terdahulu/berikutnya"/>
+      <Item key="frmSetting.lblHeadZooming" value="Pengezuman"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Pengoptimuman zum"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Auto (Kualiti rendah/Kejiranan-terhampir)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Kualiti rendah"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Kualiti tinggi"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Dwilinear"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Dwikiub"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Kejiranan-terhampir"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Kualiti tinggi, dwilinear"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Kualiti tinggi, dwikuib"/>
+      <Item key="frmSetting.lblZoomLevels" value="Aras zum"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="Terdapat ralat ketika mengemas kini aras Zum. Mesej ralat:&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Palang lakaran kenit"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="Tunjuk lakaran kenit di sebelah sisi kanan"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Tunjuk palang tatal lakaran kenit"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Dimensi lakaran kenit (piksel)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="Tayangan Slaid"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="Ulang balik tayangan slaid ke imej pertama sekiranya berada di penghujung senarai"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="Tunjuk kiraan mengundur tayangan slaid"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="Guna sela rawak"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="Sela tayangan slaid: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="hingga"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="Simpan imej yang dilihat selepas diputarkan"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="Pilih aplikasi untuk penyuntingan imej"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="Selepas membuka apl penyuntingan:"/>
+      <Item key="frmSetting.lblImageQuality" value="Kualiti imej:"/>
+      <Item key="frmSetting.btnEditEditExt" value="Sunting…"/>
+      <Item key="frmSetting.btnEditResetExt" value="Tetap semula ke lalai"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="Sunting semua sambungan…"/>
+      <Item key="frmSetting._allExtensions" value="semua sambungan"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Sambungan fail"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="Nama apl"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="Laluan apl"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Argumen apl"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Kekalkan tarikh ubah suai imej ketika menyimpan"/>
+      <Item key="frmSetting.lblSupportedExtension" value="Format disokong: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Buka Perkaitan Jenis Fail"/>
+      <Item key="frmSetting.btnAddNewExt" value="Tambah…"/>
+      <Item key="frmSetting.btnRegisterExt" value="Tetapkan sebagai pelihat foto Lalai…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Nyahdaftar sambungan"/>
+      <Item key="frmSetting.btnDeleteExt" value="Padam"/>
+      <Item key="frmSetting.btnResetExt" value="Tetap semula ke lalai"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="Tidak boleh mendaftar pemautan Sesawang-ke-Apl"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="Tidak boleh mendaftar sambungan fail bagi apl ImageGlass"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="Semua sambungan fail telah berjaya didaftarkan! Untuk menetapkan ImageGlass sebagai pelihat foto Lalai, sila buka Tetapan Windows &gt; Apl Lalai, dan pilih apl ImageGlass secara manual di bawah seksyen Pelihat Foto."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Tidak boleh memadam sambungan fail berdaftar bagi apl ImageGlass"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Semua sambungan fail telah berjaya dinyahdaftarkan!"/>
+      <Item key="frmSetting.lblToolbarPosition" value="Kedudukan palang alat:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Saiz ikon palang alat:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Atas"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Bawah"/>
+      <Item key="frmSetting._separator" value="Pemisah"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="Konfigur butang palang alat"/>
+      <Item key="frmSetting.lblUsedBtns" value="Butang Semasa:"/>
+      <Item key="frmSetting.lblAvailBtns" value="Butang Tersedia:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="Alih butang terpilih ke bawah"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="Buang butang(s) terpilih dari palang alat"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="Tambah butang(s) terpilih masuk ke dalam palang alat"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="Alih butang terpilih ke atas"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Tengahkan butang alat secara mengufuk dalam tetingkap"/>
+      <Item key="frmSetting.chkHideTooltips" value="Sembunyi tip alat palang alat"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="Guna format RGB dengan nilai Alfa"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="Guna format HEX dengan nilai Alfa"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="Guna format HSL dengan nilai Alfa"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="Guna format HSV dengan nilai Alfa"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="Format kod warna lalai ketika menyalin"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="Auto-tunjuk alat pengemudian Halaman untuk imej halaman-berbilang"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Biar alat Exif sentiasa di atas"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Pilih fail alat Exif"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Alat Exif tidak wujud atau tidak sah: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Argumen perintah:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Pratonton perintah:"/>
+      <Item key="frmSetting.lblLanguageText" value="Bahasa dipasang"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; Segar Semula"/>
+      <Item key="frmSetting.lblLanguageWarning" value="Pek bahasa ini mungkin tidak serasi dengan {0}"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Pasang pek bahasa baharu (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Cipta pek bahasa baharu…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; Sunting pek bahasa terpilih…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Dapatkan lagi banyak pek bahasa…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="Tema dipasang: {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="Muat turun tema…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="Segar semula"/>
+      <Item key="frmSetting.btnThemeInstall" value="Pasang…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="Nyahpasang…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="Simpan sebagai…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="Buka folder tema"/>
+      <Item key="frmSetting.btnThemeApply" value="Terap tema"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="Nama"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="Versi"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="Pengarang"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="Emel"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="Tapak Sesawang"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="Keserasian"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="Keterangan"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="Tema anda berjaya dipasangkan!"/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="Tidak boleh memasang tema anda."/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="Tidak boleh menyahpasang tema terpilih."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="Tema terpilih anda telah disimpan di dalam {0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="Tidak boleh menyimpan tema terpilih anda."/>
+      <Item key="frmSetting.btnThemeApply._Success" value="Tema terpilih telah berjaya diterapkan!"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="Tidak boleh menerapkan tema terpilih."/>
+      <Item key="frmSetting.btnKeyReset" value="Tetap semula ke lalai"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="Space / Backspace"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="PageUp / PageDown"/>
+      <Item key="frmSetting.lblKeysUpDown" value="Anak Panah Atas / Bawah"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="Anak Panah Kiri / Kanan"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="Imej Terdahulu / Berikutnya"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="Lata Kiri / Kanan"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="Lata Atas / Bawah"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="Zum Masuk / Keluar"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="Jeda tayangan slaid"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="Jangan buat apa-apa"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="Sambungan fail"/>
+      <Item key="frmAddNewFormat.btnOK" value="OK"/>
+      <Item key="frmAddNewFormat.btnClose" value="Tutup"/>
+      <Item key="frmEditApp.lblFileExtension" value="Sambungan fail"/>
+      <Item key="frmEditApp.lblAppName" value="Nama apl"/>
+      <Item key="frmEditApp.lblAppPath" value="Laluan apl"/>
+      <Item key="frmEditApp.lblAppArguments" value="Argumen apl"/>
+      <Item key="frmEditApp.btnReset" value="Tetap semula"/>
+      <Item key="frmEditApp.btnOK" value="OK"/>
+      <Item key="frmEditApp.btnClose" value="Tutup"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="Pratonton"/>
+      <Item key="frmFirstLaunch._Text" value="Konfigurasi Pelancaran-Pertama-Kali"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ImageGlass perlu menutup semua prosesnya supaya dapat menerap tetapan baharu, anda mahu teruskan?"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="Langkah {0}/{1}"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="Berikutnya"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="Selesai!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="Langkau ini dan Lancarkan ImageGlass"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="Pilih Bahasa"/>
+      <Item key="frmFirstLaunch.lblLayout" value="Pilih Bentangan"/>
+      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Piawai"/>
+      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Pereka"/>
+      <Item key="frmFirstLaunch.lblTheme" value="Pilih Tema"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="Tetapkan ImageGlass sebagai Pelihat Foto Lalai?"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="Ya"/>
+      <Item key="frmCrop.lblWidth" value="Lebar:"/>
+      <Item key="frmCrop.lblHeight" value="Tinggi:"/>
+      <Item key="frmCrop.btnSave" value="Simpan"/>
+      <Item key="frmCrop.btnSaveAs" value="Simpan sebagai…"/>
+      <Item key="frmCrop.btnCopy" value="Salin"/>
+      <Item key="frmCrop.btnReset" value="Tetap semula"/>
+      <Item key="FrmExifTool.clnProperty" value="Sifat"/>
+      <Item key="FrmExifTool.clnValue" value="Nilai"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Salin nilai"/>
+      <Item key="FrmExifTool.btnExport" value="Eksport…"/>
+      <Item key="FrmExifTool.btnClose" value="Tutup"/>
+    </Content>
+  </Language>
+</ImageGlass>

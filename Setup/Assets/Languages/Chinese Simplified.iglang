@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="zh-CN" langName="简体中文" author="星野みなと, Chenry Lee, 小恐龙, 0xLC, Infinity_X, Yi Fan, gapore, 7YHong, arlen.cn" description="Chinese Simplified" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="zh-CN" langName="简体中文" author="星野みなと, Chenry Lee, 小恐龙, 0xLC, Infinity_X, Yi Fan, gapore, 7YHong, arlen.cn" description="Chinese Simplified" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="某些设置和您当前的 ImageGlass 版本 {0} 不兼容。我们推荐您在继续使用之前先更新这些设置。&#10;&#10;- 点击“是”，来了解这些变化；&#10;- 点击“否”，则以默认设置启动 ImageGlass。"/>
       <Item key="_.ImageOrderBy._Name" value="文件名（默认）"/>
@@ -21,6 +21,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="从剪贴板打开"/>
       <Item key="frmMain.mnuMainNewWindow" value="新建窗口"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="新建窗口失败，只允许单实例运行"/>
+      <Item key="frmMain.mnuSaveImage" value="保存图像"/>
       <Item key="frmMain.mnuMainSaveAs" value="图像另存为..."/>
       <Item key="frmMain.mnuMainRefresh" value="刷新"/>
       <Item key="frmMain.mnuMainReloadImage" value="重新加载图像"/>
@@ -209,9 +210,14 @@
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="切换图片"/>
       <Item key="frmSetting.lblHeadZooming" value="缩放"/>
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="缩放优化"/>
-      <Item key="frmSetting.cmbZoomOptimization._Auto" value="自动"/>
-      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="平滑像素"/>
-      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="锐利像素"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="自动（低质量 / 临近）"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="低质量"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="高质量"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="双线性"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="双立方"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="临近"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="高质量，双线性"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="高质量，双立方"/>
       <Item key="frmSetting.lblZoomLevels" value="缩放等级"/>
       <Item key="frmSetting.txtZoomLevels._Error" value="改变缩放等级时出错，错误消息如下：&#10;&#10;{0}"/>
       <Item key="frmSetting.lblHeadThumbnailBar" value="缩略图栏"/>
@@ -272,6 +278,8 @@
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="保留“Exif 工具”在顶端"/>
       <Item key="frmSetting.lnkSelectExifTool" value="选择 Exif 工具文件"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Exif 工具不存在或无效： &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="命令行参数："/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="命令预览："/>
       <Item key="frmSetting.lblLanguageText" value="已安装的语言"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; 刷新"/>
       <Item key="frmSetting.lblLanguageWarning" value="这个语言包可能与 {0} 不兼容"/>

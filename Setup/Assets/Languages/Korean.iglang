@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="ko-KR" langName="한국어" author="JaeHyung Lee (kolanp)" description="Korean" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="ko-KR" langName="한국어" author="JaeHyung Lee (kolanp)" description="Korean" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="일부 설정이 ImageGlass {0} 버전과 호환되지 않습니다. 계속하기 전 업데이트를 권장합니다.&#10;&#10;- 변경 사항에 대해 알아 보려면 예를 누릅니다.&#10;- 기본 설정으로 ImageGlass를 시작하려면 아니오를 누릅니다."/>
       <Item key="_.ImageOrderBy._Name" value="이름 (기본값)"/>
@@ -21,6 +21,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="클립보드 데이터에서 이미지 불러오기"/>
       <Item key="frmMain.mnuMainNewWindow" value="새 창 열기"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="한 개의 인스턴스만 허용되었기 때문에 새 창을 열 수 없습니다."/>
+      <Item key="frmMain.mnuSaveImage" value="이미지 저장"/>
       <Item key="frmMain.mnuMainSaveAs" value="다른 이름이로 이미지 저장…"/>
       <Item key="frmMain.mnuMainRefresh" value="새로 고침"/>
       <Item key="frmMain.mnuMainReloadImage" value="이미지 다시 불러오기"/>
@@ -209,9 +210,14 @@
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="이전/다음 이미지"/>
       <Item key="frmSetting.lblHeadZooming" value="확대"/>
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="확대 최적화"/>
-      <Item key="frmSetting.cmbZoomOptimization._Auto" value="자동"/>
-      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="부드러운 픽셀"/>
-      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="또렷한 픽셀"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="자동 (저화질/최단입점)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="저화질"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="고화질"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="쌍선형"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="쌍입방"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="최단입점"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="고화질, 쌍선형"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="고화질, 쌍입방"/>
       <Item key="frmSetting.lblZoomLevels" value="확대 수준"/>
       <Item key="frmSetting.txtZoomLevels._Error" value="확대 수준을 업데이트하는 중 오류가 발생했습니다. 오류 메세지:&#10;&#10;{0}"/>
       <Item key="frmSetting.lblHeadThumbnailBar" value="썸네일 표시줄"/>
@@ -272,6 +278,8 @@
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Exif 도구 항상 위에 표시"/>
       <Item key="frmSetting.lnkSelectExifTool" value="Exif 도구 파일 선택"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Exif 도구가 없거나 무료함: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="명령 인수:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="명령 미리보기:"/>
       <Item key="frmSetting.lblLanguageText" value="설치된 언어"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; 새로 고침"/>
       <Item key="frmSetting.lblLanguageWarning" value="이 언어 팩은 {0}와(과) 호환되지 않을 수 있습니다."/>
@@ -339,7 +347,7 @@
       <Item key="frmCrop.lblWidth" value="가로:"/>
       <Item key="frmCrop.lblHeight" value="세로:"/>
       <Item key="frmCrop.btnSave" value="저장"/>
-      <Item key="frmCrop.btnSaveAs" value="따로 저장..."/>
+      <Item key="frmCrop.btnSaveAs" value="따로 저장…"/>
       <Item key="frmCrop.btnCopy" value="복사"/>
       <Item key="frmCrop.btnReset" value="초기화"/>
       <Item key="FrmExifTool.clnProperty" value="속성"/>

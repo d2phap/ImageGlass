@@ -326,6 +326,9 @@ namespace ImageGlass {
             lblExifTool.Text = lang[$"{nameof(frmMain)}.mnuExifTool"] + " (https://exiftool.org)";
             chkExifToolAlwaysOnTop.Text = lang[$"{Name}.{nameof(chkExifToolAlwaysOnTop)}"];
             lnkSelectExifTool.Text = lang[$"{Name}.{nameof(lnkSelectExifTool)}"];
+
+            lblExifToolCommandArgs.Text = lang[$"{Name}.{nameof(lblExifToolCommandArgs)}"];
+            lblExifToolCommandPreview.Text = lang[$"{Name}.{nameof(lblExifToolCommandPreview)}"];
             #endregion
 
             #region THEME TAB
@@ -1448,6 +1451,15 @@ namespace ImageGlass {
 
             chkExifToolAlwaysOnTop.Checked = Configs.IsExifToolAlwaysOnTop;
             lblExifToolPath.Text = Configs.ExifToolExePath;
+
+            txtExifToolCommandArgs.Text = Configs.ExifToolCommandArgs;
+            txtExifToolCommandArgs.LostFocus -= TxtExifToolCommandArgs_LostFocus;
+            txtExifToolCommandArgs.LostFocus += TxtExifToolCommandArgs_LostFocus;
+            UpdateExifToolCommandPreview();
+        }
+
+        private void TxtExifToolCommandArgs_LostFocus(object sender, EventArgs e) {
+            UpdateExifToolCommandPreview();
         }
 
         private void lnkSelectExifTool_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -1473,6 +1485,21 @@ namespace ImageGlass {
                 }
             }
         }
+
+        private void UpdateExifToolCommandPreview() {
+            var toolPath = Configs.ExifToolExePath;
+            if (!File.Exists(toolPath)) {
+                toolPath = @"C:\fake dir\exiftool.exe";
+            }
+
+            var fileSample = Local.ImageList.GetFileName(Local.CurrentIndex);
+            if (!File.Exists(fileSample)) {
+                fileSample = @"C:\fake dir\sample photo.jpg";
+            }
+
+            txtExifToolCommandPreview.Text = $"\"{toolPath}\" -fast -G -t -m -q {txtExifToolCommandArgs.Text.Trim().Replace("\n", "")} \"{fileSample}\"";
+        }
+
 
         #endregion
 
@@ -1979,7 +2006,7 @@ namespace ImageGlass {
             #region ThumbnailDimension: MainFormForceUpdateAction.THUMBNAIL_ITEMS
 
             // ThumbnailDimension
-            newUInt = (cmbThumbnailDimension.SelectedItem.ToString().Length == 0)
+            newUInt = (cmbThumbnailDimension.SelectedItem == null)
                 ? Configs.ThumbnailDimension
                 : uint.Parse(cmbThumbnailDimension.SelectedItem.ToString(), Constants.NumberFormat);
 
@@ -2083,6 +2110,7 @@ namespace ImageGlass {
 
             Configs.IsShowPageNavAuto = chkShowPageNavAuto.Checked;
             Configs.IsExifToolAlwaysOnTop = chkExifToolAlwaysOnTop.Checked;
+            Configs.ExifToolCommandArgs = txtExifToolCommandArgs.Text.Trim().Replace("\n", "");
             #endregion
 
             SaveKeyboardSettings();
@@ -2091,6 +2119,5 @@ namespace ImageGlass {
         }
 
         #endregion
-
     }
 }

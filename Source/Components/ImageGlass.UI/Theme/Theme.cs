@@ -811,9 +811,6 @@ namespace ImageGlass.UI {
 
             var th = new Theme(Constants.DEFAULT_TOOLBAR_ICON_HEIGHT, themeFolderPath);
 
-            // updated theme config file
-            th.SaveAsThemeConfigs(themeFolderPath);
-
             // if file exist, rename & backup
             if (File.Exists(outputThemeFile)) {
                 File.Move(outputThemeFile, outputThemeFile + ".old");

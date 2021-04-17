@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="es-ES" langName="Español" author="JSJ" description="Spanish" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="es-ES" langName="Español" author="JSJ" description="Spanish" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Algunos ajustes no son compatibles con ImageGlass {0}. Se recomienda actualizarlos antes de continuar.&#10;&#10;- Haga click en Sí para aprender sobre los cambios.&#10;- Haga click en No para iniciar ImageGlass con la configuración predeterminada."/>
       <Item key="_.ImageOrderBy._Name" value="Nombre (por defecto)"/>
@@ -21,6 +21,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="Abrir imagen desde el portapapeles"/>
       <Item key="frmMain.mnuMainNewWindow" value="Abrir en una nueva ventana"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="No se puede abrir una nueva ventana porque sólo se permite una instancia"/>
+      <Item key="frmMain.mnuSaveImage" value="Guardar imagen"/>
       <Item key="frmMain.mnuMainSaveAs" value="Guardar imagen como…"/>
       <Item key="frmMain.mnuMainRefresh" value="Refrescar"/>
       <Item key="frmMain.mnuMainReloadImage" value="Volver a cargar la imagen"/>
@@ -209,9 +210,14 @@
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Anterior/siguiente imagen"/>
       <Item key="frmSetting.lblHeadZooming" value="Zooming"/>
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Optimización de zoom"/>
-      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Automático"/>
-      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Píxeles suaves"/>
-      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Píxeles definidos"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Auto (Baja calidad/Nearest-neighbor)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Baja calidad"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Alta calidad"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Bilineal"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Bicúbico"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Nearest-neighbor"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Alta calidad, bilineal"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Alta calidad, bicúbico"/>
       <Item key="frmSetting.lblZoomLevels" value="Niveles de zoom"/>
       <Item key="frmSetting.txtZoomLevels._Error" value="Se produjo un error actualizando niveles de zoom. Mensaje de error:&#10;&#10;{0}"/>
       <Item key="frmSetting.lblHeadThumbnailBar" value="Barra en miniatura"/>
@@ -272,6 +278,8 @@
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Mantener visible herramienta Exif"/>
       <Item key="frmSetting.lnkSelectExifTool" value="Seleccionar fichero herramienta Exif"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="La herramienta Exif no exist o no es válida: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Argumentos del comando:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Previsualización del comando:"/>
       <Item key="frmSetting.lblLanguageText" value="Idiomas instalados"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Refrescar"/>
       <Item key="frmSetting.lblLanguageWarning" value="Este paquete de idioma puede no ser compatible con {0}"/>

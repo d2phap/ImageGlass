@@ -643,10 +643,10 @@
             this.lblCodeName.Location = new System.Drawing.Point(313, 29);
             this.lblCodeName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCodeName.Name = "lblCodeName";
-            this.lblCodeName.Size = new System.Drawing.Size(59, 30);
+            this.lblCodeName.Size = new System.Drawing.Size(69, 30);
             this.lblCodeName.TabIndex = 21;
-            this.lblCodeName.Text = "Kobe";
-            this.toolTip1.SetToolTip(this.lblCodeName, "Kobe likes maroon!");
+            this.lblCodeName.Text = "Home";
+            this.toolTip1.SetToolTip(this.lblCodeName, "Home is where our story begins...");
             // 
             // tableLayoutPanel2
             // 

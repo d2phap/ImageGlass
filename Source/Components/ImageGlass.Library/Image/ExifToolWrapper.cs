@@ -59,7 +59,7 @@ namespace ImageGlass.Library.Image {
         /// <returns></returns>
         public bool CheckExists() {
             var output = "";
-            var toolPath = this.ToolPath + " -ver";
+            var toolPath = $"\"{this.ToolPath}\" -ver";
 
             if (!File.Exists(this.ToolPath)) {
                 return false;
@@ -109,7 +109,7 @@ namespace ImageGlass.Library.Image {
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public async Task LoadAndProcessExifDataAsync(string filename) {
+        public async Task LoadAndProcessExifDataAsync(string filename, string arguments = "") {
             const int MAX_ANSICODE = 255;
             const string DATE_FORMAT = "yyyy:MM:dd hh:mm:sszzz";
 
@@ -124,7 +124,7 @@ namespace ImageGlass.Library.Image {
                 }
 
                 // load exif data
-                LoadExifData(nonUnicodeFilename);
+                LoadExifData(nonUnicodeFilename, arguments);
 
 
                 if (containsUnicodeName) {
@@ -272,17 +272,9 @@ namespace ImageGlass.Library.Image {
         /// </summary>
         /// <param name="imageFilename"></param>
         /// <param name="removeWhiteSpaceInTagNames"></param>
-        private void LoadExifData(string imageFilename, bool removeWhiteSpaceInTagNames = false) {
+        private void LoadExifData(string imageFilename, string commands = "") {
             // exiftool command
-            var toolPath = this.ToolPath + " ";
-
-            if (removeWhiteSpaceInTagNames)
-                toolPath += "-s ";
-            toolPath += "-fast -G -t -m -q ";
-            toolPath += "\"" + imageFilename + "\"";
-
-            var (output, _) = Open(toolPath);
-
+            var (output, _) = Open($"\"\"{this.ToolPath}\" -fast -G -t -m -q {commands} \"{imageFilename}\"\"");
 
             // parse the output into tags
             this.Clear();

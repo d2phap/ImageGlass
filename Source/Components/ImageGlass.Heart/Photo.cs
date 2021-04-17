@@ -25,8 +25,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ImageMagick;
-using ImageMagick.Formats.Bmp;
-using ImageMagick.Formats.Dng;
+using ImageMagick.Formats;
 
 namespace ImageGlass.Heart {
     public static class Photo {
@@ -111,6 +110,7 @@ namespace ImageGlass.Heart {
 
                 case ".ICO":
                 case ".WEBP":
+                case ".AVIF":
                 case ".PDF":
                     using (var imgColl = new MagickImageCollection(filename, settings)) {
                         bitmap = imgColl.ToBitmap();
@@ -706,6 +706,9 @@ namespace ImageGlass.Heart {
                 case ".JFIF":
                 case ".JP2":
                     mimeType = "image/jpeg";
+                    break;
+                case ".JXL":
+                    mimeType = "image/jxl";
                     break;
                 case ".TIF":
                 case ".TIFF":

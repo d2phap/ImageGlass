@@ -34,6 +34,7 @@
             this.mnuMainOpenFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainOpenImageData = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainNewWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuSaveImage = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuOpenWith = new System.Windows.Forms.ToolStripMenuItem();
@@ -231,7 +232,7 @@
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(247, 468);
+            this.mnuMain.Size = new System.Drawing.Size(247, 499);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -241,6 +242,7 @@
             this.mnuMainOpenFile,
             this.mnuMainOpenImageData,
             this.mnuMainNewWindow,
+            this.mnuSaveImage,
             this.mnuMainSaveAs,
             this.toolStripSeparator10,
             this.mnuOpenWith,
@@ -299,16 +301,29 @@
             this.mnuMainNewWindow.Text = "[Open new window]";
             this.mnuMainNewWindow.Click += new System.EventHandler(this.MnuMainNewWindow_Click);
             // 
+            // mnuSaveImage
+            // 
+            this.mnuSaveImage.ForeColor = System.Drawing.Color.Black;
+            this.mnuSaveImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuSaveImage.Name = "mnuSaveImage";
+            this.mnuSaveImage.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuSaveImage.ShortcutKeyDisplayString = "Ctrl+S";
+            this.mnuSaveImage.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.mnuSaveImage.Size = new System.Drawing.Size(414, 31);
+            this.mnuSaveImage.Text = "[Save image]";
+            this.mnuSaveImage.Click += new System.EventHandler(this.mnuSaveImage_Click);
+            // 
             // mnuMainSaveAs
             // 
             this.mnuMainSaveAs.ForeColor = System.Drawing.Color.Black;
             this.mnuMainSaveAs.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainSaveAs.Name = "mnuMainSaveAs";
             this.mnuMainSaveAs.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainSaveAs.ShortcutKeyDisplayString = "Ctrl+S";
-            this.mnuMainSaveAs.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.mnuMainSaveAs.ShortcutKeyDisplayString = "Ctrl+Shift+S";
+            this.mnuMainSaveAs.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
             this.mnuMainSaveAs.Size = new System.Drawing.Size(414, 31);
-            this.mnuMainSaveAs.Text = "&Save image as...";
+            this.mnuMainSaveAs.Text = "[Save image as...]";
             this.mnuMainSaveAs.Click += new System.EventHandler(this.mnuMainSaveAs_Click);
             // 
             // toolStripSeparator10
@@ -853,9 +868,7 @@
             this.mnuMainImageLocation.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainImageLocation.Name = "mnuMainImageLocation";
             this.mnuMainImageLocation.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainImageLocation.ShortcutKeyDisplayString = "Ctrl+Shift+L";
-            this.mnuMainImageLocation.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.L)));
+            this.mnuMainImageLocation.ShortcutKeyDisplayString = "L";
             this.mnuMainImageLocation.Size = new System.Drawing.Size(418, 31);
             this.mnuMainImageLocation.Text = "Open image &location";
             this.mnuMainImageLocation.Click += new System.EventHandler(this.mnuMainImageLocation_Click);
@@ -1967,6 +1980,7 @@
             this.SizeChanged += new System.EventHandler(this.frmMain_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyUp);
+            this.Resize += new System.EventHandler(this.frmMain_Resize);
             this.mnuContext.ResumeLayout(false);
             this.mnuMain.ResumeLayout(false);
             this.sp0.Panel1.ResumeLayout(false);
@@ -2128,6 +2142,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuLoadingOrder;
         private System.Windows.Forms.ContextMenuStrip mnuShortcut;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem mnuSaveImage;
     }
 }
 

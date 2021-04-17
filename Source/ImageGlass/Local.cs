@@ -33,6 +33,9 @@ namespace ImageGlass {
         private static frmCrop _fCrop;
         private static FrmExifTool _fExifTool;
 
+        public static bool IsWindows10 => Environment.OSVersion.Version.Major >= 10;
+        public static bool IsWindows7 => Environment.OSVersion.Version.Major == 6
+            && Environment.OSVersion.Version.Minor == 1;
 
 
         #region Auto Properties

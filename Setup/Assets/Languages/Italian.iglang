@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="it-IT" langName="Italiano" author="Tiwi90" description="Italian" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="it-IT" langName="Italiano" author="Tiwi90" description="Italian" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Alcune impostazioni non sono compatibili con ImageGlass {0}. Si consiglia di aggiornarle prima di continuare.&#10;&#10;- Clicca Sì per conoscere i cambiamenti.&#10;- Clicca No per avviare ImageGlass con le impostazioni predefinite."/>
       <Item key="_.ImageOrderBy._Name" value="Nome (impostazione predefinita)"/>
@@ -21,6 +21,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="Apri immagine dagli Appunti"/>
       <Item key="frmMain.mnuMainNewWindow" value="Apri nuova finestra"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="Impossibile aprire una nuova finestra perché è consentita solo un'istanza"/>
+      <Item key="frmMain.mnuSaveImage" value="Salva immagine"/>
       <Item key="frmMain.mnuMainSaveAs" value="Salva immagine come…"/>
       <Item key="frmMain.mnuMainRefresh" value="Aggiorna"/>
       <Item key="frmMain.mnuMainReloadImage" value="Aggiorna immagine"/>
@@ -209,9 +210,14 @@
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Immagine precedente/successiva"/>
       <Item key="frmSetting.lblHeadZooming" value="Ingrandendo"/>
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Ottimizzazione zoom"/>
-      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Automatico"/>
-      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Ammorbidisci pixel"/>
-      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Pulisci pixel"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Auto (Qualità bassa/Nearest-neighbor)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Bassa qualità"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Alta qualità"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Bilineare"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Bicubico"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Nearest-neighbor"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Alta qualità, bilineare"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Alta qualità, bicubica"/>
       <Item key="frmSetting.lblZoomLevels" value="Livelli di zoom"/>
       <Item key="frmSetting.txtZoomLevels._Error" value="Si è verificato un errore aggiornando i livelli di Zoom. Messaggio di errore:&#10;&#10;{0}"/>
       <Item key="frmSetting.lblHeadThumbnailBar" value="Barra miniature"/>
@@ -272,6 +278,8 @@
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Mantieni sempre lo strumento Exif in alto"/>
       <Item key="frmSetting.lnkSelectExifTool" value="Seleziona il file dello strumento Exif"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Lo strumento Exif non esiste o non è valido: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Argomenti dei comandi:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Anteprima del comando:"/>
       <Item key="frmSetting.lblLanguageText" value="Lingue installate"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Aggiorna"/>
       <Item key="frmSetting.lblLanguageWarning" value="Questo pacchetto lingua potrebbe non essere compatibile con {0}"/>

@@ -121,7 +121,7 @@ namespace ImageGlass.Base {
         /// Write log in DEBUG mode
         /// </summary>
         /// <param name="msg"></param>
-        public static async Task LogItAsync(string msg) {
+        public static void LogIt(string msg) {
 #if DEBUG
             try {
                 var tempDir = App.ConfigDir(PathType.Dir, Dir.Log);
@@ -131,8 +131,8 @@ namespace ImageGlass.Base {
                 var path = Path.Combine(tempDir, "iglog.log");
 
                 using var tw = new StreamWriter(path, append: true);
-                await tw.WriteLineAsync(msg).ConfigureAwait(true);
-                await tw.FlushAsync().ConfigureAwait(true);
+                tw.WriteLine(msg);
+                tw.Flush();
                 tw.Close();
             }
             catch { }

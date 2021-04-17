@@ -41,9 +41,6 @@ namespace ImageGlass.UI.Renderers {
                 base.OnRenderItemText(e);
             }
             else {
-                // KBR 20190615 this step appears to be unnecessary [and prevents the menu from auto-collapsing]
-                //e.Item.Enabled = true;
-
                 if (theme.MenuBackgroundColor.GetBrightness() > 0.5) //light background color
                 {
                     e.TextColor = Theme.DarkenColor(theme.MenuBackgroundColor, 0.5f);
@@ -54,9 +51,6 @@ namespace ImageGlass.UI.Renderers {
                 }
 
                 base.OnRenderItemText(e);
-
-                // KBR 20190615 this step appears to be unnecessary [and prevents the menu from auto-collapsing]
-                //e.Item.Enabled = false;
             }
         }
 
@@ -114,6 +108,19 @@ namespace ImageGlass.UI.Renderers {
 
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e) {
             var textColor = e.Item.Selected ? theme.MenuTextHoverColor : theme.MenuTextColor;
+
+            if (!e.Item.Enabled) {
+                if (theme.MenuBackgroundColor.GetBrightness() > 0.5) //light background color
+                {
+                    textColor = Theme.DarkenColor(theme.MenuBackgroundColor, 0.5f);
+                }
+                else //dark background color
+                {
+                    textColor = Theme.LightenColor(theme.MenuBackgroundColor, 0.5f);
+                }
+            }
+
+
             using var pen = new Pen(textColor, DPIScaling.Transform<float>(1));
 
             e.Graphics.DrawLine(pen,

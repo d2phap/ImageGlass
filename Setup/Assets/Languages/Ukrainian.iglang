@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="uk-UA" langName="Українська" author="Artem Moskalchuk" description="Ukrainian" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="uk-UA" langName="Українська" author="Artem Moskalchuk" description="Ukrainian" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Деякі налаштування не сумісні з ImageGlass {0}. Рекомендовано оновити їх, перш ніж продовжити&#10;&#10;- Натисніть Так, щоб дізнатися про зміни.&#10;- Натисніть Ні, щоб запустити ImageGlass з типовими налаштуваннями."/>
       <Item key="_.ImageOrderBy._Name" value="Назва файлу (за замовчуванням)"/>
@@ -21,6 +21,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="Відкрити зображення з буфера обміну"/>
       <Item key="frmMain.mnuMainNewWindow" value="Відкрити нове вікно"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="Неможливо відкрити нове вікно, тому що дозволено лише один примірник"/>
+      <Item key="frmMain.mnuSaveImage" value="Зберегти зображення"/>
       <Item key="frmMain.mnuMainSaveAs" value="Зберегти як…"/>
       <Item key="frmMain.mnuMainRefresh" value="Оновити"/>
       <Item key="frmMain.mnuMainReloadImage" value="Перезавантажити зображення"/>
@@ -209,9 +210,14 @@
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Попереднє/наступне зображення"/>
       <Item key="frmSetting.lblHeadZooming" value="Масштабування"/>
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Оптимізація масштабу"/>
-      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Автоматично"/>
-      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Пом'якшені пікселі"/>
-      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Чіткі пікселі"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Авто (Низька якість/Метод сусідніх пікселів)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Низька якість"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Висока якість"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Білінійна"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Бікубічна"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Метод сусідніх пікселів"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Висока якість, білінійна"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Висока якість, бікубічна"/>
       <Item key="frmSetting.lblZoomLevels" value="Рівні масштабування"/>
       <Item key="frmSetting.txtZoomLevels._Error" value="Сталась помилка оновлення масштабування. Повідомлення про помилку:&#10;&#10;{0}"/>
       <Item key="frmSetting.lblHeadThumbnailBar" value="Панель мініатюр"/>
@@ -272,6 +278,8 @@
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Тримати інструмент Exif завжди зверху"/>
       <Item key="frmSetting.lnkSelectExifTool" value="Виберіть файл інструменту Exif"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Інструмент Exif не існує або недійсний: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Аргументи команди:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Попередній перегляд:"/>
       <Item key="frmSetting.lblLanguageText" value="Встановлені мови"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Оновити"/>
       <Item key="frmSetting.lblLanguageWarning" value="Цей мовний пакет може бути не сумісний з версією {0}"/>

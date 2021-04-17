@@ -69,7 +69,7 @@ namespace ImageGlass.Library {
             LangName = "Local name of the language";
             Author = "ImageGlass community";
             Description = "English name of language";
-            MinVersion = "8.0.0.0";
+            MinVersion = "8.1.0.0";
             FileName = "";
             IsRightToLeftLayout = RightToLeft.No;
 
@@ -196,6 +196,7 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v3.0
             Items.Add("frmMain.mnuMainNewWindow", "Open new window"); //v7.0
             Items.Add("frmMain.mnuMainNewWindow._Error", "Cannot open new window because only one instance allowed"); //v7.0
+            Items.Add("frmMain.mnuSaveImage", "Save image"); //v8.1
             Items.Add("frmMain.mnuMainSaveAs", "Save image as…"); //v3.0
             Items.Add("frmMain.mnuMainRefresh", "Refresh"); //v3.0
             Items.Add("frmMain.mnuMainReloadImage", "Reload image"); //v5.5
@@ -472,11 +473,15 @@ namespace ImageGlass.Library {
 
             #region Zooming
             Items.Add("frmSetting.lblHeadZooming", "Zooming"); //v4.0
-            //Items.Add("frmSetting.chkMouseNavigation", "Use the mouse wheel to browse images, hold CTRL for zooming"); //+3.5
             Items.Add("frmSetting.lblGeneral_ZoomOptimization", "Zoom optimization"); //-3.0, +3.5
-            Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto"); //-3.2, +3.5
-            Items.Add("frmSetting.cmbZoomOptimization._SmoothPixels", "Smooth pixels"); //-3.2, +3.5
-            Items.Add("frmSetting.cmbZoomOptimization._ClearPixels", "Clear pixels"); //-3.2, +3.5
+            Items.Add("frmSetting.cmbZoomOptimization._Auto", "Auto (Low quality/Nearest-neighbor)"); // v8.1
+            Items.Add("frmSetting.cmbZoomOptimization._Low", "Low quality"); // v8.1
+            Items.Add("frmSetting.cmbZoomOptimization._High", "High quality"); // v8.1
+            Items.Add("frmSetting.cmbZoomOptimization._Bilinear", "Bilinear"); // v8.1
+            Items.Add("frmSetting.cmbZoomOptimization._Bicubic", "Bicubic"); // v8.1
+            Items.Add("frmSetting.cmbZoomOptimization._NearestNeighbor", "Nearest-neighbor"); // v8.1
+            Items.Add("frmSetting.cmbZoomOptimization._HighQualityBilinear", "High-quality, bilinear"); // v8.1
+            Items.Add("frmSetting.cmbZoomOptimization._HighQualityBicubic", "High-quality, bicubic"); // v8.1
 
             Items.Add("frmSetting.lblZoomLevels", "Zoom levels"); //v7.0
             Items.Add("frmSetting.txtZoomLevels._Error", "There was error updating Zoom levels. Error message:\r\n\n{0}"); //v7.0
@@ -568,6 +573,9 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.chkExifToolAlwaysOnTop", "Keep Exif tool always on top"); // v8.0
             Items.Add("frmSetting.lnkSelectExifTool", "Select Exif tool file"); // v8.0
             Items.Add("frmSetting.lnkSelectExifTool._NotFound", "The Exif tool does not exist or invalid: \n{0}"); // v8.0
+
+            Items.Add("frmSetting.lblExifToolCommandArgs", "Command arguments:"); // v8.1
+            Items.Add("frmSetting.lblExifToolCommandPreview", "Command preview:"); // v8.1
             #endregion
 
             #region TAB Language

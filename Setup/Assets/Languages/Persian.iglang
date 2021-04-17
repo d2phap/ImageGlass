@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="fa-IR" langName="فارسی" author="(MSKF (mskf1383" description="Persian" minVersion="8.1.0.0" isRightToLeftLayout="Yes"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="برخی از تنظیمات با ImageGlass سازگاری ندارند {0}. پیشنهاد میشود این تنظیمات را قبل از استفاده بروزرسانی کنید.&#10;&#10;-برای اطلاعات بیشتر بروی بله کلیک کنید.&#10;-برای اجرا با تنظیمات پیشفرض بروی خیر کلیک کنید."/>
+      <Item key="_.ImageOrderBy._Name" value="نام (پیش‌فرض)"/>
+      <Item key="_.ImageOrderBy._Length" value="طول"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="زمان ایجاد"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="زمان آخرين دسترسی"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="زمان آخرین نگارش"/>
+      <Item key="_.ImageOrderBy._Extension" value="افزونه"/>
+      <Item key="_.ImageOrderBy._Random" value="تصادفی"/>
+      <Item key="_.ImageOrderType._Asc" value="صعودی"/>
+      <Item key="_.ImageOrderType._Desc" value="نزولی"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="هیچ"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="کمینه سازی"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="بستن"/>
+      <Item key="frmMain.mnuMainFile" value="فایل"/>
+      <Item key="frmMain.mnuMainOpenFile" value="بازنمایی فایل…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="بازنمایی تصویر از کلیپ بورد"/>
+      <Item key="frmMain.mnuMainNewWindow" value="بازنمایی پنجره جدید"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="پنجره جدید باز نمی شود زیرا فقط یک نمونه مجاز است"/>
+      <Item key="frmMain.mnuSaveImage" value="ذخیره تصویر"/>
+      <Item key="frmMain.mnuMainSaveAs" value="ذخیره تصویر به عنوان…"/>
+      <Item key="frmMain.mnuMainRefresh" value="تازه سازی"/>
+      <Item key="frmMain.mnuMainReloadImage" value="بارگذاری مجدد تصویر"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="بارگذاری مجدد لیست تصویر"/>
+      <Item key="frmMain.mnuOpenWith" value="بازنمایی با…"/>
+      <Item key="frmMain.mnuMainEditImage" value="ویرایش تصویر {0}…"/>
+      <Item key="frmMain.mnuMainPrint" value="چاپ…"/>
+      <Item key="frmMain.mnuMainNavigation" value="ناوبری"/>
+      <Item key="frmMain.mnuMainViewNext" value="نمایش تصویر بعدی"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="پیکان راست / صفحه پایین"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="نمایش تصویر پیشین"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="پیکان چپ / صفحه بالا"/>
+      <Item key="frmMain.mnuMainGoto" value="برو به…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="برو به تصویر نخست"/>
+      <Item key="frmMain.mnuMainGotoLast" value="برو به تصویر آخر"/>
+      <Item key="frmMain.mnuMainNextPage" value="نمایش صفحه بعدی"/>
+      <Item key="frmMain.mnuMainPrevPage" value="نمایش صفحه پیشین"/>
+      <Item key="frmMain.mnuMainFirstPage" value="نمایش صفحه نخست"/>
+      <Item key="frmMain.mnuMainLastPage" value="نمایش صفحه آخر"/>
+      <Item key="frmMain.mnuMainZoom" value="بزرگنمايی"/>
+      <Item key="frmMain.mnuMainZoomIn" value="افزایش بزرگنمایی"/>
+      <Item key="frmMain.mnuMainZoomOut" value="کاهش بزرگنمایی"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="به نسبت ابعاد"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="به نسبت صفحه"/>
+      <Item key="frmMain.mnuMainActualSize" value="اندازه واقعی"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="قفل کردن نسبت بزرگنمایی"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="بزرگنمایی خودکار"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="به نسبت پهنا"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="به نسبت ارتفاع"/>
+      <Item key="frmMain.mnuMainImage" value="عکس"/>
+      <Item key="frmMain.mnuMainChannels" value="مشاهده کانال ها"/>
+      <Item key="frmMain.mnuMainChannels._All" value="همه"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="قرمز"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="سبز"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="آبی"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="سیاه"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="آلفا"/>
+      <Item key="frmMain.mnuLoadingOrder" value="بارگذاری سفارش"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="چرخش به چپ"/>
+      <Item key="frmMain.mnuMainRotateRight" value="چرخش به راست"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="چرخش افقی"/>
+      <Item key="frmMain.mnuMainFlipVert" value="چرخش عمودی"/>
+      <Item key="frmMain.mnuMainRename" value="تغییر نام تصویر…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="انتقال به سطل بازیافت"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="حذف از دیسک سخت"/>
+      <Item key="frmMain.mnuMainExtractPages" value="استخراج صفحات تصویر ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="شروع / توقف تصویر متحرک"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="استفاده به عنوان تصویر پس زمینه"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="تنظیم به عنوان تصویر قفل صفحه"/>
+      <Item key="frmMain.mnuMainImageLocation" value="بازنمایی مکان تصویر"/>
+      <Item key="frmMain.mnuMainImageProperties" value="مشخصات تصویر"/>
+      <Item key="frmMain.mnuMainClipboard" value="کلیپ بورد"/>
+      <Item key="frmMain.mnuMainCopy" value="روگرفت"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="روگرفت داده تصویر"/>
+      <Item key="frmMain.mnuMainCut" value="برش"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="روگرفت مسیر تصویر"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="پاک‌سازی کلیپ‌ برد"/>
+      <Item key="frmMain.mnuWindowFit" value="متناسب پنچره"/>
+      <Item key="frmMain.mnuMainFullScreen" value="تمام صفحه"/>
+      <Item key="frmMain.mnuFrameless" value="بدون فریم"/>
+      <Item key="frmMain.mnuMainSlideShow" value="اسلاید شو"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="آغاز نمایش اسلاید"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="مکث / از سرگیری اسلاید"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="خروج از نمایش اسلاید"/>
+      <Item key="frmMain.mnuMainShare" value="اشتراک گذاری…"/>
+      <Item key="frmMain.mnuMainLayout" value="چیدمان"/>
+      <Item key="frmMain.mnuMainToolbar" value="نوار ابزار"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="پنل ریزعکس"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="پس زمینه شطرنجی"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="نمایش پنجره برنامه بروی پنجره های دیگر"/>
+      <Item key="frmMain.mnuMainTools" value="ابزارها"/>
+      <Item key="frmMain.mnuMainColorPicker" value="انتخابگر رنگ"/>
+      <Item key="frmMain.mnuMainPageNav" value="صفحه ناوبری"/>
+      <Item key="frmMain.mnuMainCrop" value="برش تصویر"/>
+      <Item key="frmMain.mnuExifTool" value="ابزار Exif"/>
+      <Item key="frmMain.mnuMainSettings" value="تنظیمات…"/>
+      <Item key="frmMain.mnuMainHelp" value="راهنما"/>
+      <Item key="frmMain.mnuMainAbout" value="درباره"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="تنظیمات اولین راه اندازی…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="بررسی بروزرسانی…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="نسخه جدید در دسترس است!"/>
+      <Item key="frmMain.mnuMainReportIssue" value="گزارش مشکل…"/>
+      <Item key="frmMain.mnuMainExitApplication" value="خروج"/>
+      <Item key="frmMain.picMain._ErrorText" value="ImageGlass نمی تواند این تصویر را باز کند زیرا به نظر می رسد فایل آسیب دیده ، خراب است یا پشتیبانی نمی شود."/>
+      <Item key="frmMain._ImageNotExist" value="تصویر وجود ندارد."/>
+      <Item key="frmMain.btnMenu" value="منو (کلید میانبر: `)"/>
+      <Item key="frmMain._OpenFileDialog" value="فایل های پشتیبانی شده"/>
+      <Item key="frmMain._Files" value="فایل(ها)"/>
+      <Item key="frmMain._Pages" value="صفحات"/>
+      <Item key="frmMain._ImageData" value="داده تصویر"/>
+      <Item key="frmMain._RenameDialogText" value="تغییر نام"/>
+      <Item key="frmMain._RenameDialog" value="نام جدید را وارد کنید"/>
+      <Item key="frmMain._GotoDialogText" value="برای مشاهده آن ، نمایه تصویر را وارد کنید. ENTER را فشار دهید"/>
+      <Item key="frmMain._DeleteDialogText" value="فایل '{0}' حذف شود؟"/>
+      <Item key="frmMain._DeleteDialogTitle" value="تایید"/>
+      <Item key="frmMain._ExtractPageText" value="در حال استخراج صفحات تصویر. لطفا پوشه خروجی را انتخاب کنید."/>
+      <Item key="frmMain._FullScreenMessage" value="برای خروج از حالت تمام صفحه {0} را فشار دهید."/>
+      <Item key="frmMain._SlideshowMessage" value="برای خروخ از نمایش اسلاید ESC را فشار دهید.&#10; برای باز کردن منو راست کلیک کنید."/>
+      <Item key="frmMain._SlideshowMessagePause" value="نمایش اسلاید متوقف است"/>
+      <Item key="frmMain._SlideshowMessageResume" value="نمایش اسلاید از سر گرفته شد"/>
+      <Item key="frmMain._CopyFileText" value="{0} فایل کپی شد"/>
+      <Item key="frmMain._CutFileText" value="{0} فایل بریده شد"/>
+      <Item key="frmMain._CopyImageData" value="تصویر در کلیپ بورد روگرفت شد"/>
+      <Item key="frmMain._ClearClipboard" value="کلیپ بورد پاک شد"/>
+      <Item key="frmMain._SaveChanges" value="در حال ذخیره تغییرات..."/>
+      <Item key="frmMain._SaveImage" value="تصویر در این آدرس ذخیره شد&#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="در حال ذخیره تصویر...&#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="موفق به ذخیره تصویر نشدیم&#10;{0}."/>
+      <Item key="frmMain._Loading" value="درحال بارگذاری..."/>
+      <Item key="frmMain._FirstItemOfList" value="به اولین تصویر رسید"/>
+      <Item key="frmMain._LastItemOfList" value="به آخرین تصویر رسید"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="اصلاح قالب متحرک پشتیبانی نمی شود"/>
+      <Item key="frmMain._SetLockImage_Error" value="هنگام تنظیم تصویر قفل صفحه خطایی روی داد"/>
+      <Item key="frmMain._SetLockImage_Success" value="تصویر قفل صفحه با موفقیت تنظیم شد"/>
+      <Item key="frmMain._SetBackground_Error" value="هنگام تنظیم تصویر پس زمینه دسکتاپ مشکلی پیش آمد"/>
+      <Item key="frmMain._SetBackground_Success" value="تصویر پس زمینه دسکتاپ با موفقیت تنظیم شد"/>
+      <Item key="frmMain._PageExtractComplete" value="استخراج صفحه تکمیل شد."/>
+      <Item key="frmMain._Frameless" value="برای جابجایی پنجره SHIFT را نگه دارید."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="کلیپ بورد حاوی داده های تصویری نیست."/>
+      <Item key="frmAbout.lblSlogant" value="یک نمایش گر تصویر سبک و روان"/>
+      <Item key="frmAbout.lblInfo" value="اطلاعات"/>
+      <Item key="frmAbout.lblComponent" value="اجزاء"/>
+      <Item key="frmAbout.lblReferences" value="منابع"/>
+      <Item key="frmAbout.lblVersion" value="نسخه: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="تماس"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="بروزرسانی‌های نرم‌افزار"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» بررسی جهت بروزرسانی…"/>
+      <Item key="frmAbout._Text" value="درباره"/>
+      <Item key="frmAbout._PortableText" value="[پرتابل]"/>
+      <Item key="frmSetting._Text" value="تنظیمات"/>
+      <Item key="frmSetting.btnSave" value="ذخیره"/>
+      <Item key="frmSetting.btnCancel" value="لغو"/>
+      <Item key="frmSetting.btnApply" value="اعمال"/>
+      <Item key="frmSetting.lblGeneral" value="عمومی"/>
+      <Item key="frmSetting.lblImage" value="عکس"/>
+      <Item key="frmSetting.lblEdit" value="ویرایش"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="پیوستگی های نوع فایل"/>
+      <Item key="frmSetting.lblToolbar" value="نوار ابزار"/>
+      <Item key="frmSetting.lblLanguage" value="زبان"/>
+      <Item key="frmSetting.lblTheme" value="پوسته"/>
+      <Item key="frmSetting.lblKeyboard" value="صفحه کلید"/>
+      <Item key="frmSetting.lblHeadStartup" value="راه اندازی"/>
+      <Item key="frmSetting.chkWelcomePicture" value="نمایش تصویر خوش آمد گویی"/>
+      <Item key="frmSetting.chkLastSeenImage" value="بازنمایی آخرین تصویر دیده شده"/>
+      <Item key="frmSetting.chkShowToolBar" value="نمایش نوار ابزار هنگام راه اندازی"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="فهرست پیکربندی"/>
+      <Item key="frmSetting.lblHeadViewer" value="نمایش گر"/>
+      <Item key="frmSetting.chkShowScrollbar" value="نمایش نوارهای پیمایشی نمایشگر"/>
+      <Item key="frmSetting.chkShowNavButtons" value="نمایش دکمه های پیکان ناوبری"/>
+      <Item key="frmSetting.chkDisplayBasename" value="نمایش نام اصلی تصویر مشاهده شده در نوار عنوان"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="نمایش صفحه شطرنجی فقط در منطقه تصویر"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="فعال سازی پشتیبانی از حرکت لمسی"/>
+      <Item key="frmSetting.lblBackGroundColor" value="رنگ پس زمینه"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="بازنشانی"/>
+      <Item key="frmSetting.lblHeadOthers" value="سایر"/>
+      <Item key="frmSetting.chkAutoUpdate" value="بررسی خودکار به‌روزرسانی‌ها"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="اجازه چند نمونه از برنامه"/>
+      <Item key="frmSetting.chkESCToQuit" value="اجازه خروج از برنامه با فشردن ESC"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="نمایش پیام تائید حذف"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="میانه خودکار پنجره در حالت متناسب پنچره"/>
+      <Item key="frmSetting.chkShowToast" value="نمایش پیام بازخورد"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="بارگیری تصویر"/>
+      <Item key="frmSetting.chkFindChildFolder" value="پیدا کردن تصاویر در پوشه‌های زیرمجموعه"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="نمایش تصاویر پنهان"/>
+      <Item key="frmSetting.chkLoopViewer" value="بازگشت مشاهده‌گر به تصویر اول هنگام رسیدن به آخر فهرست"/>
+      <Item key="frmSetting.chkIsCenterImage" value="تصویر مرکزی در نمایشگر"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="دستور بارگیری تصویر"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="استفاده از ترتیب مرتب سازی فایل اکسپلورر در صورت امکان"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="گروه بندی تصاویر بر اساس فهرست راهنما"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="تعداد تصاویری که توسط ImageBooster در حافظه موقت ذخیره می‌شوند (یک جهت)"/>
+      <Item key="frmSetting.lblColorManagement" value="مدیریت رنگ"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="برای تصاویر بدون نمایه رنگ داخلی هم اعمال شود"/>
+      <Item key="frmSetting.lblColorProfile" value="نمایه رنگ:"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="مرور…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="هیچ کدام"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="دلخواه…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="کارکردهای چرخ موشواره"/>
+      <Item key="frmSetting.lblMouseWheel" value="چرخ موشواره"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="چرخ موشواره + Alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="چرخ موشواره + Ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="چرخ موشواره + Shift"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="کاری انجام نشود"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="بزرگنمايی"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="پیمایش عمودی"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="پیمایش افقی"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="تصویر قبلی/بعدی"/>
+      <Item key="frmSetting.lblHeadZooming" value="در حال بزرگنمایی"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="بهینه‌سازی بزرگنمایی"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="خودکار (کیفیت پایین/نزدیک‌ترین همسایگی)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="کیفیت پایین"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="کیفیت بالا"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="دوسویه"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="دومکعبی"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="نزدیک‌ترین همسایگی"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="کیفیت بالا، دوسویه"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="کیفیت بالا، دومکعبی"/>
+      <Item key="frmSetting.lblZoomLevels" value="سطح‌های بزرگنمایی"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="در بروزرسانی سطوح بزرگنمایی خطایی روی داد. پیغام خطا:&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="نوار ریزعکس"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="نمایش ریزعکس ها در سمت راست"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="نمایش نوار پیمایش ریزعکس ها"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="ابعاد ریزعکس (پیکسل)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="اسلاید شو"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="بازگشت اسلاید به تصویر اول هنگام رسیدن به آخر فهرست"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="نمایش شمارش معکوس اسلاید"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="استفاده از فاصله تصادفی"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="وقفه اسلاید: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="به"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="ذخیره تصویر مشاهده شده پس از چرخش"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="انتخاب برنامه جهت ویرایش تصویر"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="بعد از بازنمایی اپ ویرایش:"/>
+      <Item key="frmSetting.lblImageQuality" value="کیفیت تصویر:"/>
+      <Item key="frmSetting.btnEditEditExt" value="ویرایش…"/>
+      <Item key="frmSetting.btnEditResetExt" value="بازگشت به تنظیمات پیشفرض"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="ویرایش همه پسوند‌ها…"/>
+      <Item key="frmSetting._allExtensions" value="همه پسوند‌ها"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="پسوند فایل"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="نام برنامه"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="مسیر برنامه"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="استدلال های برنامه"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="حفظ تاریخ اصلاح تصویر هنگام ذخیره سازی"/>
+      <Item key="frmSetting.lblSupportedExtension" value="فرمت‌های پشتیبانی‌شده: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="بازنمایی پیوستگی های نوع فایل"/>
+      <Item key="frmSetting.btnAddNewExt" value="افزودن…"/>
+      <Item key="frmSetting.btnRegisterExt" value="تنظیم بعنوان مشاهده‌گر تصویر پیشفرض…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="پسوندهای ثبت نشده"/>
+      <Item key="frmSetting.btnDeleteExt" value="حذف"/>
+      <Item key="frmSetting.btnResetExt" value="بازگشت به تنظیمات پیشفرض"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="ثبت پیوند وب به برنامه امکان پذیر نیست"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="ثبت افزونه های فایل به برنامه ImageGlass امکان پذیر نیست"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="همه افزونه های فایل با موفقیت ثبت شدند! برای تنظیم ImageGlass به عنوان نمایشگر پیش فرض عکس ، لطفاً تنظیمات ویندوز &gt; برنامه های پیش فرض را باز کرده و به صورت دستی برنامه ImageGlass را در پایین Photo Viewer انتخاب کنید."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="حذف افزونه های فایل ثبت شده از برنامه ImageGlass امکان پذیر نیست"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="همه‌ی پسوندهای فایل با موفقیت عدم ثبت شدند!"/>
+      <Item key="frmSetting.lblToolbarPosition" value="موقعیت نوار ابزار:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="اندازه آیکون نوار ابزار:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="بالا"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="پایین"/>
+      <Item key="frmSetting._separator" value="جدا کننده"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="پیکربندی دکمه‌های نوار ابزار"/>
+      <Item key="frmSetting.lblUsedBtns" value="دکمه‌های فعلی:"/>
+      <Item key="frmSetting.lblAvailBtns" value="دکمه‌های موجود:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="دکمه انتخاب شده را به پایین انتقال بده"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="حذف دکمه(ها)ی انتخاب شده از نوار ابزار"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="افزودن دکمه(ها)ی انتخاب شده به نوار ابزار"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="دکمه انتخاب شده را به بالا انتقال بده"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="در مرکز قرارگیری دکمه های نوار ابزار بصورت افقی در پنجره"/>
+      <Item key="frmSetting.chkHideTooltips" value="پنهان سازی نوار ابزار راهنماهای شناور"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="استفاده از فرمت RGB همراه با مقدار آلفا"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="استفاده از فرمت HEX همراه با مقدار آلفا"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="استفاده از فرمت HSL همراه با مقدار آلفا"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="استفاده از فرمت HSV همراه با مقدار آلفا"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="قالب کد رنگ پیش فرض هنگام روگرفت"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="نمایش خودکار صفحه ابزار ناوبری برای تصویر چند صفحه ای"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="ابزار Exif را همیشه روی پنجره‌های دیگر نگه دار"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="فایل ابزار Exif را انتخاب کنید"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="ابزار Exif وجود ندارد یا نامعتبر است: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="استدلال های فرمان:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="پیشنمایش فرمان:"/>
+      <Item key="frmSetting.lblLanguageText" value="زبان‌های نصب شده"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; تازه‌سازی"/>
+      <Item key="frmSetting.lblLanguageWarning" value="این بسته زبان با {0} سازگار نیست"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; نصب بسته زبان جدید (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; ساخت بسته زبان جدید…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; ویرایش بسته زبان انتخابی…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; دریافت بسته‌های زبان بیشتر…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="پوسته های نصب شده: {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="دانلود پوسته‌ها…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="تازه سازی"/>
+      <Item key="frmSetting.btnThemeInstall" value="نصب…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="حذف نصب…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="ذخیره به عنوان…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="بازکردن پوشه پوسته"/>
+      <Item key="frmSetting.btnThemeApply" value="اعمال پوسته"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="نام"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="نسخه"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="سازنده"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="رایانامه"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="تارنما"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="سازگاری"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="توضیحات"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="پوسته مورد نظر شما با موفقیت نصب شد!"/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="موفق به نصب پوسته شما نشدیم."/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="موفق به حذف نصب پوسته انتخابی نشدیم."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="پوسته انتخابی شما در {0} ذخیره شده است"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="موفق به ذخیره پوسته انتخابی شما نشدیم."/>
+      <Item key="frmSetting.btnThemeApply._Success" value="پوسته انتخابی با موفقیت اعمال شد!"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="موفق به اعمال پوستی انتخابی نشدیم."/>
+      <Item key="frmSetting.btnKeyReset" value="بازگشت به تنظیمات پیشفرض"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="Space / Backspace"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="PageUp / PageDown"/>
+      <Item key="frmSetting.lblKeysUpDown" value="پیکان‌های بالا / پایین"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="پیکان‌های چپ / راست"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="تصویر قبلی / بعدی"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="پنل Left / Right"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="پنل Up / Down"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="بزرگ / کوچک نمایی"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="مکث اسلاید"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="کاری انجام نشود"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="پسوند فایل"/>
+      <Item key="frmAddNewFormat.btnOK" value="تاييد"/>
+      <Item key="frmAddNewFormat.btnClose" value="بستن"/>
+      <Item key="frmEditApp.lblFileExtension" value="پسوند فایل"/>
+      <Item key="frmEditApp.lblAppName" value="نام برنامه"/>
+      <Item key="frmEditApp.lblAppPath" value="مسیر برنامه"/>
+      <Item key="frmEditApp.lblAppArguments" value="استدلال های برنامه"/>
+      <Item key="frmEditApp.btnReset" value="بازنشانی"/>
+      <Item key="frmEditApp.btnOK" value="تاييد"/>
+      <Item key="frmEditApp.btnClose" value="بستن"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="پیش نمایش"/>
+      <Item key="frmFirstLaunch._Text" value="پیکربندی اولین اجرا"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ImageGlass برای اعمال تنظیمات جدید باید تمام پردازش های خود را ببندد ، آیا می خواهید ادامه دهید؟"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="گام {0}/{1}"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="بعدی"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="انجام شد!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="گذر از این و اجرای ImageGlass"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="یک زبان را انتخاب کنید"/>
+      <Item key="frmFirstLaunch.lblLayout" value="انتخاب چیدمان"/>
+      <Item key="frmFirstLaunch.cmbLayout._Standard" value="استاندارد"/>
+      <Item key="frmFirstLaunch.cmbLayout._Designer" value="طراح"/>
+      <Item key="frmFirstLaunch.lblTheme" value="انتخاب پوسته"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="ImageGlass بعنوان نمایش گر تصویر پیشفرض تنظیم شود؟"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="بلی"/>
+      <Item key="frmCrop.lblWidth" value="پهنا:"/>
+      <Item key="frmCrop.lblHeight" value="ارتفاع:"/>
+      <Item key="frmCrop.btnSave" value="ذخیره"/>
+      <Item key="frmCrop.btnSaveAs" value="ذخیره به عنوان…"/>
+      <Item key="frmCrop.btnCopy" value="روگرفت"/>
+      <Item key="frmCrop.btnReset" value="بازنشانی"/>
+      <Item key="FrmExifTool.clnProperty" value="ویژگی"/>
+      <Item key="FrmExifTool.clnValue" value="مقدار"/>
+      <Item key="FrmExifTool.btnCopyValue" value="روگرفت مقدار"/>
+      <Item key="FrmExifTool.btnExport" value="گرفتن خروجی…"/>
+      <Item key="FrmExifTool.btnClose" value="بستن"/>
+    </Content>
+  </Language>
+</ImageGlass>

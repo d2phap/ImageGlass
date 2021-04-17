@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="vi-VN" langName="Tiếng Việt" author="Dương Diệu Pháp" description="Vietnamese" minVersion="8.0.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="vi-VN" langName="Tiếng Việt" author="Dương Diệu Pháp" description="Vietnamese" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Một số cài đặt không tương thích với ImageGlass {0}. Bạn nên tự cập nhật trước khi tiếp tục.&#10;&#10;- Nhấn Yes để xem các thay đổi.&#10;- Nhấn No để mở ImageGlass với những cài đặt mặc định."/>
       <Item key="_.ImageOrderBy._Name" value="Tên (mặc định)"/>
@@ -21,6 +21,7 @@
       <Item key="frmMain.mnuMainOpenImageData" value="Mở hình ảnh từ vùng nhớ đệm"/>
       <Item key="frmMain.mnuMainNewWindow" value="Mở cửa sổ mới"/>
       <Item key="frmMain.mnuMainNewWindow._Error" value="Không thể mở cửa sổ mới vì chỉ một cửa sổ chính được cấu hình trong cài đặt"/>
+      <Item key="frmMain.mnuSaveImage" value="Lưu ảnh"/>
       <Item key="frmMain.mnuMainSaveAs" value="Lưu ảnh thành…"/>
       <Item key="frmMain.mnuMainRefresh" value="Cập nhật lại"/>
       <Item key="frmMain.mnuMainReloadImage" value="Tải lại ảnh"/>
@@ -209,9 +210,14 @@
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Xem ảnh trước / tiếp theo"/>
       <Item key="frmSetting.lblHeadZooming" value="Phóng to / thu nhỏ"/>
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Tối ưu hóa phóng to / thu nhỏ"/>
-      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Tự động"/>
-      <Item key="frmSetting.cmbZoomOptimization._SmoothPixels" value="Làm mịn điểm ảnh"/>
-      <Item key="frmSetting.cmbZoomOptimization._ClearPixels" value="Làm rõ điểm ảnh"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Tự động (Chất lượng thấp/Nearest-neighbor)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Chất lượng thấp"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Chất lượng cao"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Bilinear"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Bicubic"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Nearest-neighbor"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Bilinear chất lượng cao"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Bicubic chất lượng cao"/>
       <Item key="frmSetting.lblZoomLevels" value="Cấp độ phóng to thu nhỏ"/>
       <Item key="frmSetting.txtZoomLevels._Error" value="Đã xảy ra lỗi khi cập nhật Cấp độ phóng to thu nhỏ. Chi tiết lỗi:&#10;&#10;{0}"/>
       <Item key="frmSetting.lblHeadThumbnailBar" value="Thanh Ảnh thu nhỏ"/>
@@ -272,6 +278,8 @@
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Luôn giữ cho Công cụ Exif ở trên cùng"/>
       <Item key="frmSetting.lnkSelectExifTool" value="Tìm tập tin của Công cụ Exif"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Công cụ Exif không tìm thấy hoặc không hợp lệ: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Tham số của dòng lệnh:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Xem trước:"/>
       <Item key="frmSetting.lblLanguageText" value="Ngôn ngữ đã cài đặt"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Làm mới"/>
       <Item key="frmSetting.lblLanguageWarning" value="Gói ngôn ngữ này có thể không tương thích với {0}"/>

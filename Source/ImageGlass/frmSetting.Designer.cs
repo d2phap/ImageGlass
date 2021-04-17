@@ -174,6 +174,11 @@ namespace ImageGlass
             this.lvUsedButtons = new System.Windows.Forms.ListView();
             this.btnMoveDown = new System.Windows.Forms.Button();
             this.tabTools = new System.Windows.Forms.TabPage();
+            this.txtExifToolCommandPreview = new System.Windows.Forms.TextBox();
+            this.lblExifToolCommandPreview = new System.Windows.Forms.Label();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.txtExifToolCommandArgs = new System.Windows.Forms.TextBox();
+            this.lblExifToolCommandArgs = new System.Windows.Forms.Label();
             this.chkColorUseHSVA = new System.Windows.Forms.CheckBox();
             this.lnkSelectExifTool = new System.Windows.Forms.LinkLabel();
             this.lblExifToolPath = new System.Windows.Forms.Label();
@@ -1365,7 +1370,7 @@ namespace ImageGlass
             this.cmbZoomOptimization.Location = new System.Drawing.Point(42, 1102);
             this.cmbZoomOptimization.Margin = new System.Windows.Forms.Padding(1);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
-            this.cmbZoomOptimization.Size = new System.Drawing.Size(259, 31);
+            this.cmbZoomOptimization.Size = new System.Drawing.Size(529, 31);
             this.cmbZoomOptimization.TabIndex = 33;
             // 
             // chkThumbnailVertical
@@ -2159,6 +2164,11 @@ namespace ImageGlass
             // 
             this.tabTools.AutoScroll = true;
             this.tabTools.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
+            this.tabTools.Controls.Add(this.txtExifToolCommandPreview);
+            this.tabTools.Controls.Add(this.lblExifToolCommandPreview);
+            this.tabTools.Controls.Add(this.panel10);
+            this.tabTools.Controls.Add(this.txtExifToolCommandArgs);
+            this.tabTools.Controls.Add(this.lblExifToolCommandArgs);
             this.tabTools.Controls.Add(this.chkColorUseHSVA);
             this.tabTools.Controls.Add(this.lnkSelectExifTool);
             this.tabTools.Controls.Add(this.lblExifToolPath);
@@ -2176,6 +2186,58 @@ namespace ImageGlass
             this.tabTools.Size = new System.Drawing.Size(736, 595);
             this.tabTools.TabIndex = 5;
             this.tabTools.Text = "tools";
+            // 
+            // txtExifToolCommandPreview
+            // 
+            this.txtExifToolCommandPreview.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
+            this.txtExifToolCommandPreview.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtExifToolCommandPreview.Location = new System.Drawing.Point(42, 606);
+            this.txtExifToolCommandPreview.Margin = new System.Windows.Forms.Padding(0, 20, 0, 0);
+            this.txtExifToolCommandPreview.Multiline = true;
+            this.txtExifToolCommandPreview.Name = "txtExifToolCommandPreview";
+            this.txtExifToolCommandPreview.ReadOnly = true;
+            this.txtExifToolCommandPreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtExifToolCommandPreview.Size = new System.Drawing.Size(529, 112);
+            this.txtExifToolCommandPreview.TabIndex = 71;
+            this.txtExifToolCommandPreview.Text = "exiftool.exe -fast -G -t -m -q \"C:\\my\\photo.jpg\"";
+            // 
+            // lblExifToolCommandPreview
+            // 
+            this.lblExifToolCommandPreview.AutoSize = true;
+            this.lblExifToolCommandPreview.Location = new System.Drawing.Point(38, 577);
+            this.lblExifToolCommandPreview.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lblExifToolCommandPreview.Name = "lblExifToolCommandPreview";
+            this.lblExifToolCommandPreview.Size = new System.Drawing.Size(157, 23);
+            this.lblExifToolCommandPreview.TabIndex = 65;
+            this.lblExifToolCommandPreview.Text = "Command preview:";
+            // 
+            // panel10
+            // 
+            this.panel10.Location = new System.Drawing.Point(84, 719);
+            this.panel10.Margin = new System.Windows.Forms.Padding(1);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(102, 29);
+            this.panel10.TabIndex = 64;
+            // 
+            // txtExifToolCommandArgs
+            // 
+            this.txtExifToolCommandArgs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
+            this.txtExifToolCommandArgs.Location = new System.Drawing.Point(42, 491);
+            this.txtExifToolCommandArgs.Multiline = true;
+            this.txtExifToolCommandArgs.Name = "txtExifToolCommandArgs";
+            this.txtExifToolCommandArgs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtExifToolCommandArgs.Size = new System.Drawing.Size(529, 65);
+            this.txtExifToolCommandArgs.TabIndex = 63;
+            // 
+            // lblExifToolCommandArgs
+            // 
+            this.lblExifToolCommandArgs.AutoSize = true;
+            this.lblExifToolCommandArgs.Location = new System.Drawing.Point(38, 465);
+            this.lblExifToolCommandArgs.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lblExifToolCommandArgs.Name = "lblExifToolCommandArgs";
+            this.lblExifToolCommandArgs.Size = new System.Drawing.Size(181, 23);
+            this.lblExifToolCommandArgs.TabIndex = 62;
+            this.lblExifToolCommandArgs.Text = "Command arguments:";
             // 
             // chkColorUseHSVA
             // 
@@ -3125,5 +3187,10 @@ namespace ImageGlass
         private System.Windows.Forms.ComboBox cmbAfterEditingApp;
         private System.Windows.Forms.Button btnUnregisterExt;
         private System.Windows.Forms.ColumnHeader clnDescription;
+        private System.Windows.Forms.TextBox txtExifToolCommandArgs;
+        private System.Windows.Forms.Label lblExifToolCommandArgs;
+        private System.Windows.Forms.TextBox txtExifToolCommandPreview;
+        private System.Windows.Forms.Label lblExifToolCommandPreview;
+        private System.Windows.Forms.Panel panel10;
     }
 }
