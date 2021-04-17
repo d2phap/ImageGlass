@@ -8,17 +8,18 @@
 
 
 
-ImageGlass is a lightweight software application whose purpose is to help you view images in a clean and intuitive working environment. 
+ImageGlass is a lightweight software application whose purpose is to help you view images in a clean and intuitive working environment.
+
 It gives you the possibility to view over **70+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers to speed up their work.
 
 
 ## 📥 Download
 [![Total Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%233097B8&label=downloads&style=for-the-badge)](https://imageglass.org/download)
-[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23932043&label=v8.0.12.8%20downloads&style=for-the-badge)](https://imageglass.org/download)
+[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23932043&label=v8.1.4.18%20downloads&style=for-the-badge)](https://imageglass.org/download)
 
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://imageglass.org/upload/photo/release/8.0_1.jpg" alt="ImageGlass 8.0.12.8" width="640">
+<img src="https://imageglass.org/upload/photo/release/8.1_1.jpg" alt="ImageGlass 8.1.4.18" width="640">
 </a><br/>
 
 
@@ -40,12 +41,11 @@ https://www.patreon.com/posts/imageglass-and-39849218
 
 
 ## 📚 Docs
-
-[![Features](https://img.shields.io/badge/docs-Features-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/features)
-[![Supported formats](https://img.shields.io/badge/docs-Supported%20Formats-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/supported-formats)
-[![UI Shortcuts](https://img.shields.io/badge/docs-UI%20Shortcuts-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/ui-shortcuts-reference)
-[![App configuration](https://img.shields.io/badge/docs-App%20configuration-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/app-configs)
-[![Command line utilities](https://img.shields.io/badge/docs-Command%20lines%20Utils-brightgreen.svg?maxAge=3600)](https://imageglass.org/docs/command-line-utilities)
+- [Features](https://imageglass.org/docs/features)
+- [Supported formats](https://imageglass.org/docs/supported-formats)
+- [Shortcuts](https://imageglass.org/docs/ui-shortcuts-reference)
+- [App configs](https://imageglass.org/docs/app-configs)
+- [Command lines](https://imageglass.org/docs/command-line-utilities)
 
 
 For information of the future developments, please visit [Wiki](https://github.com/d2phap/ImageGlass/wiki) and [Project](https://github.com/d2phap/ImageGlass/projects) page. 
@@ -53,9 +53,13 @@ For information of the future developments, please visit [Wiki](https://github.c
 For more information about ImageGlass, go to [Documentation](https://imageglass.org/docs)
 
 
+## 🤼 COmmunity and Support
+- [Google forum](https://imageglass.org/docs/features)
+- [GitHub issues](https://imageglass.org/docs/supported-formats)
+- [ImageGlass Discord](https://imageglass.org/docs/ui-shortcuts-reference)
 
 
-## 💖 Support this project
+## 💖 This project needs your help!
 ImageGlass is free and open source but developing it has taken thousands of hours of my time and a large part of my sanity. If you feel this little viewer useful to you, it would go a great way to ensuring that I can afford to take the time to continue to develop it.
 
 Thanks for your gratitude and finance help!
@@ -64,7 +68,7 @@ Thanks for your gratitude and finance help!
 <img src="https://img.shields.io/badge/Patreon-@d2phap%20-e85b46.svg?maxAge=3600" height="30" alt="Buy me a beer?">
 </a>
 
-<a href="https://www.paypal.me/ddphap" target="_blank" title="Buy me a beer?">
+<a href="https://www.paypal.me/d2phap" target="_blank" title="Buy me a beer?">
 <img src="https://img.shields.io/badge/PayPal-Donate%20$10%20-0070ba.svg?maxAge=3600" height="30" alt="Buy me a beer?">
 </a>
 
@@ -76,9 +80,6 @@ Thanks for your gratitude and finance help!
 ### Cryptocurrency donation:
 
 ```bash
-# Chainlink
-0xc19be8972809b6b989f3e4ba16595712ba8e0de4
-
 # Ethereum
 0xc19be8972809b6b989f3e4ba16595712ba8e0de4
 
@@ -86,9 +87,12 @@ Thanks for your gratitude and finance help!
 1PcCezBmM3ahTzfBBi5KVWnnd3bCHbas8Z
 ```
 
+## 👑 Hall of fame (v8.1)
+To honor those people who spent their time to contribute to the development of ImageGlass v8.1:
+- 1️⃣ [@cocoon](https://github.com/cocoon)
+- 2️⃣ [@dixonte](https://github.com/dixonte)
+- 3️⃣ [@Norgerman](https://github.com/Norgerman)
+- 4️⃣ [@flyxyz123](https://github.com/flyxyz123)
+- 5️⃣ [@fire-eggs](https://github.com/fire-eggs)
 
-## 💪 Top contributors
-Thanks for all your wonderful PRs, issues and ideas. You’re always welcome to [join](CONTRIBUTING.md)!
-
-[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/0)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/0)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/1)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/1)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/2)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/2)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/3)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/3)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/4)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/4)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/5)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/5)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/6)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/6)[![](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/images/7)](https://sourcerer.io/fame/d2phap/d2phap/ImageGlass/links/7)
-
+Thank you!
