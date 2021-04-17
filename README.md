@@ -53,7 +53,7 @@ For information of the future developments, please visit [Wiki](https://github.c
 For more information about ImageGlass, go to [Documentation](https://imageglass.org/docs)
 
 
-## 🤼 COmmunity and Support
+## 🤼 Community and Support
 - [Google forum](https://imageglass.org/docs/features)
 - [GitHub issues](https://imageglass.org/docs/supported-formats)
 - [ImageGlass Discord](https://imageglass.org/docs/ui-shortcuts-reference)
