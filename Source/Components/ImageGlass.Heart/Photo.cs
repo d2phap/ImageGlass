@@ -110,6 +110,7 @@ namespace ImageGlass.Heart {
 
                 case ".ICO":
                 case ".WEBP":
+                case ".AVIF":
                 case ".PDF":
                     using (var imgColl = new MagickImageCollection(filename, settings)) {
                         bitmap = imgColl.ToBitmap();

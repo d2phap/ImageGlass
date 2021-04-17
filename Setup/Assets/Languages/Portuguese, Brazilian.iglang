@@ -243,7 +243,7 @@
       <Item key="frmSetting.btnRegisterExt" value="Definir como visualizador de fotos padrão…"/>
       <Item key="frmSetting.btnUnregisterExt" value="Cancelar registro de extensões"/>
       <Item key="frmSetting.btnDeleteExt" value="Apagar"/>
-      <Item key="frmSetting.btnResetExt" value="Restaurar ao padrão"/>
+      <Item key="frmSetting.btnResetExt" value="Redefinir ao padrão"/>
       <Item key="frmSetting._RegisterWebToApp_Error" value="Não é possível registrar ligação web-para-app"/>
       <Item key="frmSetting._RegisterAppExtensions_Error" value="Não é possível registrar extensões de arquivo para o aplicativo ImageGlass"/>
       <Item key="frmSetting._RegisterAppExtensions_Success" value="Todas extensões de arquivo foram registradas com êxito! Para definir o ImageGlass como visualizador de fotos padrão, abra as configurações do Windows &gt; Apps Padrão e selecione manualmente o app ImageGlass na seção Visualizador de Fotos."/>

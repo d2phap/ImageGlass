@@ -2197,7 +2197,7 @@ namespace ImageGlass
             this.txtExifToolCommandPreview.Name = "txtExifToolCommandPreview";
             this.txtExifToolCommandPreview.ReadOnly = true;
             this.txtExifToolCommandPreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtExifToolCommandPreview.Size = new System.Drawing.Size(529, 99);
+            this.txtExifToolCommandPreview.Size = new System.Drawing.Size(529, 112);
             this.txtExifToolCommandPreview.TabIndex = 71;
             this.txtExifToolCommandPreview.Text = "exiftool.exe -fast -G -t -m -q \"C:\\my\\photo.jpg\"";
             // 
