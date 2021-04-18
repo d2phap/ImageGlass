@@ -34,7 +34,7 @@ https://www.patreon.com/posts/imageglass-and-39849218
 ![.NET Framework 4.8](https://img.shields.io/badge/.NET-Framework%204.8-lightgrey.svg?maxAge=3600)
 ![Windows OS](https://img.shields.io/badge/OS-Windows%207+-00adef.svg?maxAge=3600)
 
-```develop``` branch contains the lastest commits while ```master``` branch is for the final stable release.
+```develop``` branch contains the latest commits while ```master``` branch is for the final stable release.
 
 **``Pull Request``** is most welcome!
 
