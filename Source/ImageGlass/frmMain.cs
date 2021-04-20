@@ -4168,9 +4168,9 @@ namespace ImageGlass {
         /// Save image to file
         /// </summary>
         /// <param name="destFilename">Destination file</param>
-        /// <param name="ext">File extension. E.g. "png"</param>
+        /// <param name="destExt">Destination file extension. E.g. "png"</param>
         /// <returns></returns>
-        private async Task SaveImageAsAsync(string destFilename, string ext) {
+        private async Task SaveImageAsAsync(string destFilename, string destExt) {
             if (picMain.Image == null) {
                 return;
             }
@@ -4191,9 +4191,10 @@ namespace ImageGlass {
             // display saving msg
             ShowToastMsg(string.Format(Configs.Language.Items[$"{Name}._SavingImage"], destFilename), 2000);
 
-            switch (ext) {
+            switch (destExt) {
                 case "bmp":
                 case "gif":
+                case "png":
                 case "jpg" or "jpeg" or "jpe":
                     Heart.Photo.Save(clonedPic, destFilename, quality: Configs.ImageEditQuality);
                     break;
@@ -4284,14 +4285,16 @@ namespace ImageGlass {
                     "jxl" => 8,
                     "tiff" => 9,
                     "wmf" => 10,
-                    _ => 7,
+                    _ => 7, // png
                 };
             }
 
             if (saveDialog.ShowDialog() == DialogResult.OK) {
                 Local.SaveAsFilterIndex = saveDialog.FilterIndex;
 
-                _ = SaveImageAsAsync(saveDialog.FileName, ext);
+                var destExt = Path.GetExtension(saveDialog.FileName).Substring(1);
+
+                _ = SaveImageAsAsync(saveDialog.FileName, destExt);
             }
         }
 
