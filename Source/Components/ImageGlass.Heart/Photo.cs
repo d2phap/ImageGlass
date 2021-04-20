@@ -113,6 +113,11 @@ namespace ImageGlass.Heart {
                 case ".AVIF":
                 case ".PDF":
                     using (var imgColl = new MagickImageCollection(filename, settings)) {
+                        foreach (var imgM in imgColl)
+                        {
+                            (exif, colorProfile) = PreprocesMagickImage((MagickImage)imgM, true); // For extensions other than HEIC, checkRotation is always true
+                        }
+
                         bitmap = imgColl.ToBitmap();
                     }
                     break;
