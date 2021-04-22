@@ -3,3 +3,7 @@ contact_links:
   - name: Ask question
     url: https://github.com/d2phap/ImageGlass/discussions/category_choices
     about: Ask a question about this project.
+    
+  - name: Ask Discord community
+    url: http://discord.io/imageglass
+    about: Join in ImageGlass official Discord server.
