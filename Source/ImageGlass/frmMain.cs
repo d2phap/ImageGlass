@@ -607,11 +607,6 @@ namespace ImageGlass {
             var token = new System.Threading.CancellationTokenSource();
             _cancelToken = token;
 
-            // stop the animation
-            if (picMain.IsAnimating) {
-                picMain.StopAnimating();
-            }
-
             // Save previous image if it was modified
             if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating) {
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 2000);
@@ -658,7 +653,8 @@ namespace ImageGlass {
                 timSlideShow.Enabled = true;
             }
 
-            if (!Configs.IsSlideshow && !Configs.IsLoopBackViewer) {
+            // Issue #1019 : When showing the initial image, the ImageList is empty; don't show toast messages
+            if (!Configs.IsSlideshow && !Configs.IsLoopBackViewer && Local.ImageList.Length > 0) {
                 //Reach end of list
                 if (tempIndex >= Local.ImageList.Length) {
                     ShowToastMsg(Configs.Language.Items[$"{Name}._LastItemOfList"], 1000);
@@ -684,6 +680,12 @@ namespace ImageGlass {
             Local.CurrentIndex = tempIndex;
 
             #endregion
+
+            // Issue #1020 : don't stop existing animation unless we're actually switching images
+            // stop the animation
+            if (picMain.IsAnimating) {
+                picMain.StopAnimating();
+            }
 
 
             // Select thumbnail item
