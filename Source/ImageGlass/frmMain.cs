@@ -32,6 +32,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using FileWatcherEx;
 using ImageGlass.Base;
 using ImageGlass.Library;
@@ -4534,25 +4535,38 @@ namespace ImageGlass {
         }
 
         private void mnuMainPrint_Click(object sender, EventArgs e) {
-            //image error
+            // image error
             if (picMain.Image == null) {
                 return;
             }
 
-            // save image to temp file
-            var temFile = SaveTemporaryMemoryData();
+            var currentFile = Local.ImageList.GetFileName(Local.CurrentIndex);
+            var fileToPrint = currentFile;
 
-            using var p = new Process();
-            p.StartInfo.FileName = temFile;
-            p.StartInfo.Verb = "print";
+            if (Local.IsTempMemoryData || Local.CurrentPageCount == 1) {
+                // save image to temp file
+                fileToPrint = SaveTemporaryMemoryData();
+            }
 
-            // show error dialog
-            p.StartInfo.ErrorDialog = true;
+            void PrintImage(string filename) {
+                using var p = new Process();
+                p.StartInfo.FileName = filename;
+                p.StartInfo.Verb = "print";
+                p.StartInfo.UseShellExecute = true;
 
-            try {
+                // show error dialog
+                p.StartInfo.ErrorDialog = false;
+
                 p.Start();
             }
-            catch { }
+
+            try {
+                PrintImage(fileToPrint);
+            }
+            catch {
+                fileToPrint = SaveTemporaryMemoryData();
+                PrintImage(fileToPrint);
+            }
         }
 
         private async void mnuMainRotateCounterclockwise_Click(object sender, EventArgs e) {
