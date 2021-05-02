@@ -168,6 +168,9 @@ namespace ImageGlass.Settings {
             doc.AppendChild(root); // </ImageGlass>
 
             try {
+                var dir = Path.GetDirectoryName(filename);
+                Directory.CreateDirectory(dir);
+
                 doc.Save(filename);
             }
             catch { }
