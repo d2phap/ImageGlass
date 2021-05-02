@@ -1544,14 +1544,17 @@ namespace ImageGlass {
                 var app = Configs.GetEditApp(ext);
 
                 // Get EditApp info
-                if (app != null && File.Exists(app.AppPath)) {
+                if (app != null) {
                     appName = $"({app.AppName})";
 
-                    // Update icon
-                    var ico = Icon.ExtractAssociatedIcon(app.AppPath);
-                    var iconWidth = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
+                    try {
+                        // Update icon
+                        var ico = Icon.ExtractAssociatedIcon(app.AppPath);
+                        var iconWidth = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
 
-                    mnuMainEditImage.Image = new Bitmap(ico.ToBitmap(), iconWidth, iconWidth);
+                        mnuMainEditImage.Image = new Bitmap(ico.ToBitmap(), iconWidth, iconWidth);
+                    }
+                    catch { }
                 }
             }
 
@@ -4363,10 +4366,10 @@ namespace ImageGlass {
                 // Get EditApp for editing
                 var app = Configs.GetEditApp(ext);
 
-                if (app != null && File.Exists(app.AppPath)) {
+                if (app != null) {
                     // Open configured app for editing
                     using var p = new Process();
-                    p.StartInfo.FileName = app.AppPath;
+                    p.StartInfo.FileName = Environment.ExpandEnvironmentVariables(app.AppPath);
 
                     // Build the arguments
                     var args = app.AppArguments.Replace(EditApp.FileMacro, filename);
