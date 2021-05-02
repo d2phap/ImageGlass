@@ -136,11 +136,11 @@ namespace ImageGlass {
         /// Update command preview
         /// </summary>
         private void UpdateCommandPreview() {
-            var appPath = txtAppPath.Text.Trim().Length > 0 ? $"\"{txtAppPath.Text.Trim()}\"" : "";
+            var appPath = $"\"{Environment.ExpandEnvironmentVariables(txtAppPath.Text.Trim())}\"";
 
             var fileSample = Local.ImageList.GetFileName(Local.CurrentIndex);
             if (!File.Exists(fileSample)) {
-                fileSample = @"C:\fake dir\sample photo.jpg";
+                fileSample = @"C:\Fake Dir\Sample photo.jpg";
             }
 
             // Something has changed; update the sample text
