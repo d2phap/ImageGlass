@@ -481,6 +481,8 @@ namespace ImageGlass.Heart {
             else {
                 imgM.Write(destFileName);
             }
+
+            imgM.Dispose();
         }
 
         /// <summary>

@@ -102,9 +102,6 @@ namespace ImageGlass {
         // determine if user is dragging an image file
         private bool _isDraggingImage;
 
-        // gets, sets wheather the app is busy or not
-        private bool _isAppBusy;
-
         // slideshow countdown interval
         private uint _slideshowCountdown = 5;
 
@@ -608,6 +605,10 @@ namespace ImageGlass {
             var token = new System.Threading.CancellationTokenSource();
             _cancelToken = token;
 
+            if (Local.IsBusy) {
+                return;
+            }
+
             // Save previous image if it was modified
             if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating) {
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 2000);
@@ -808,7 +809,7 @@ namespace ImageGlass {
             void SetAppBusy(bool isbusy) {
                 Timer _loadingTimer = null;
 
-                _isAppBusy = isbusy;
+                Local.IsBusy = isbusy;
                 // fire-eggs 20190902 fix observed issue: cursor switched to
                 // arrow when it maybe should be cross or nav-arrow
                 if (isbusy)
@@ -998,6 +999,10 @@ namespace ImageGlass {
         private void frmMain_KeyDown(object sender, KeyEventArgs e) {
             //this.Text = e.KeyValue.ToString();
 
+            if (Local.IsBusy) {
+                return;
+            }
+
             #region Register MAIN MENU shortcuts
             bool checkMenuShortcut(ToolStripMenuItem mnu) {
                 var pressed = e.KeyCode;
@@ -1037,7 +1042,7 @@ namespace ImageGlass {
             // frameless mode, the first key code after restore would be ignored. Moved
             // these lines to _after_ WIN logo key check is complete.
             var hasNoMods = !e.Control && !e.Shift && !e.Alt;
-            var ignore = _isAppBusy || _isWindowsKeyPressed;
+            var ignore = Local.IsBusy || _isWindowsKeyPressed;
             _isDraggingImage = false;
 
             // Rotation Counterclockwise
@@ -1748,7 +1753,7 @@ namespace ImageGlass {
             timer.Stop();
             timer.Tick -= LoadingMessageTimer_Tick;
 
-            if (_isAppBusy) {
+            if (Local.IsBusy) {
                 ShowToastMsg(Configs.Language.Items[$"{this.Name}._Loading"], 10000);
             }
 
@@ -1898,7 +1903,9 @@ namespace ImageGlass {
         /// <summary>
         /// Save all change of image
         /// </summary>
-        private async Task SaveImageChangeAsync() {
+        /// <param name="showError"></param>
+        /// <returns></returns>
+        private async Task SaveImageChangeAsync(bool showError = false) {
             // use backup name to avoid variable conflict
             var filename = Local.ImageModifiedPath;
 
@@ -1930,8 +1937,10 @@ namespace ImageGlass {
                 var img = await Local.ImageList.GetImgAsync(Local.CurrentIndex).ConfigureAwait(true);
                 img.Image = newBitmap;
             }
-            catch (Exception) {
-                MessageBox.Show(string.Format(Configs.Language.Items[$"{this.Name}._SaveImageError"], filename), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            catch (Exception ex) {
+                if (showError) {
+                    MessageBox.Show(string.Format(Configs.Language.Items[$"{this.Name}._SaveImageError"], filename) + "\r\n\r\n" + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
 
             Local.ImageModifiedPath = "";
@@ -2778,7 +2787,7 @@ namespace ImageGlass {
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 1000);
 
                 Application.DoEvents();
-                _ = SaveImageChangeAsync();
+                _ = SaveImageChangeAsync(true);
             }
 
             // Save last seen image path
@@ -3589,6 +3598,10 @@ namespace ImageGlass {
         }
 
         private void FileWatcher_OnChanged(object sender, FileChangedEvent e) {
+            if (Local.IsBusy) {
+                return;
+            }
+
             // Only watch the supported file types
             var ext = Path.GetExtension(e.FullPath).ToLower();
             if (!Configs.AllFormats.Contains(ext)) {
@@ -3607,7 +3620,7 @@ namespace ImageGlass {
                 return;
             }
 
-            if (imgIndex == Local.CurrentIndex) {
+            if (imgIndex == Local.CurrentIndex && string.IsNullOrEmpty(Local.ImageModifiedPath)) {
                 _ = NextPicAsync(0, true, true);
             }
 
@@ -4258,7 +4271,7 @@ namespace ImageGlass {
             }
 
             Local.ImageModifiedPath = currentFile;
-            _ = SaveImageChangeAsync();
+            _ = SaveImageChangeAsync(true);
         }
 
         private void mnuMainSaveAs_Click(object sender, EventArgs e) {
