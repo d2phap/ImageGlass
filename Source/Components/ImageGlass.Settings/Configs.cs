@@ -965,7 +965,7 @@ namespace ImageGlass.Settings {
         #region EditApp
 
         /// <summary>
-        /// Get ImageEditingAssociation from ImageEditingAssociationList
+        /// Gets an EditApp from an extension
         /// </summary>
         /// <param name="ext">An extension to search. Ex: .png</param>
         /// <returns></returns>
@@ -975,6 +975,21 @@ namespace ImageGlass.Settings {
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Gets list of EditApps from a list of extensions
+        /// </summary>
+        /// <param name="exts">List() {".png", ".jpg"}</param>
+        /// <returns></returns>
+        public static List<EditApp> GetEditApps(List<string> exts) {
+            var list = new List<EditApp>();
+
+            if (EditApps.Count > 0) {
+                list = EditApps.FindAll(v => exts.Contains(v.Extension));
+            }
+
+            return list;
         }
 
         /// <summary>

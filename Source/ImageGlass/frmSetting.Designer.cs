@@ -1632,7 +1632,6 @@ namespace ImageGlass
             listViewItem2,
             listViewItem3});
             this.lvImageEditing.Location = new System.Drawing.Point(22, 206);
-            this.lvImageEditing.MultiSelect = false;
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
@@ -1642,6 +1641,7 @@ namespace ImageGlass
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
             this.lvImageEditing.View = System.Windows.Forms.View.Details;
             this.lvImageEditing.SelectedIndexChanged += new System.EventHandler(this.lvlvImageEditing_SelectedIndexChanged);
+            this.lvImageEditing.DoubleClick += new System.EventHandler(this.lvImageEditing_DoubleClick);
             // 
             // clnFileExtension
             // 
