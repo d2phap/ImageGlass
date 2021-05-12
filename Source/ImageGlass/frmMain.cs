@@ -4279,7 +4279,14 @@ namespace ImageGlass {
 
         private void mnuMainSaveAs_Click(object sender, EventArgs e) {
             var currentFile = Local.ImageList.GetFileName(Local.CurrentIndex);
-            var ext = Path.GetExtension(currentFile).Substring(1);
+            var ext = Path.GetExtension(currentFile);
+
+            // Report at Google groups - no extension or problem getting extension, take reasonable default
+            // Otherwise, crashes when ext is null or empty.
+            if (ext == null || ext.Length < 2)
+                ext = "jpg";
+            else
+                ext = ext.Substring(1);
 
             var saveDialog = new SaveFileDialog {
                 Filter = "BMP|*.bmp|EMF|*.emf|EXIF|*.exif|GIF|*.gif|ICO|*.ico|JPG|*.jpg|PNG|*.png|JPEG-XL|*.jxl|TIFF|*.tiff|WMF|*.wmf|Base64String (*.b64)|*.b64|Base64String (*.txt)|*.txt",
