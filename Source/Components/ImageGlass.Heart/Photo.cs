@@ -176,19 +176,13 @@ namespace ImageGlass.Heart {
                     // if always apply color profile
                     // or only apply color profile if there is an embedded profile
                     if (isApplyColorProfileForAll || imgColorProfile != null) {
-                        if (imgColorProfile != null) {
-                            // correct the image color space
-                            imgM.ColorSpace = imgColorProfile.ColorSpace;
-                        }
-                        else {
-                            // set default color profile and color space
-                            imgM.SetProfile(ColorProfile.SRGB);
-                            imgM.ColorSpace = ColorProfile.SRGB.ColorSpace;
-                        }
-
                         var imgColor = Helpers.GetColorProfile(colorProfileName);
+
                         if (imgColor != null) {
-                            imgM.TransformColorSpace(imgColor);
+                            imgM.TransformColorSpace(
+                                //set default color profile to sRGB
+                                imgColorProfile ?? ColorProfile.SRGB,
+                                imgColor);
                         }
                     }
                 }
