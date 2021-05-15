@@ -188,8 +188,7 @@ namespace ImageGlass.Heart {
 
                         var imgColor = Helpers.GetColorProfile(colorProfileName);
                         if (imgColor != null) {
-                            imgM.SetProfile(imgColor);
-                            imgM.ColorSpace = imgColor.ColorSpace;
+                            imgM.TransformColorSpace(imgColor);
                         }
                     }
                 }
