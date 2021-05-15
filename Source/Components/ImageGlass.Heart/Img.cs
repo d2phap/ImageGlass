@@ -25,6 +25,7 @@ using ImageMagick;
 
 namespace ImageGlass.Heart {
     public sealed class Img: IDisposable {
+
         #region PUBLIC PROPERTIES
 
         /// <summary>
@@ -69,11 +70,13 @@ namespace ImageGlass.Heart {
 
         #endregion
 
+
         /// <summary>
         /// The Img class contain image data
         /// </summary>
         /// <param name="filename">Image filename</param>
         public Img(string filename) => Filename = filename;
+
 
         #region PUBLIC FUNCTIONS
 
@@ -126,6 +129,8 @@ namespace ImageGlass.Heart {
                     // Get page count
                     var dim = new FrameDimension(Image.FrameDimensionsList[0]);
                     PageCount = Image.GetFrameCount(dim);
+
+                    ActivePageIndex = SetActivePage(Image, filename: Filename);
                 }
             }
             catch (Exception ex) {
@@ -147,27 +152,6 @@ namespace ImageGlass.Heart {
             return await Photo.GetThumbnailAsync(Filename, size, useEmbeddedThumbnail).ConfigureAwait(true);
         }
 
-        /// <summary>
-        /// Sets active page index
-        /// </summary>
-        /// <param name="index">Page index</param>
-        public void SetActivePage(int index) {
-            if (Image == null) return;
-
-            // Check if page index is greater than upper limit
-            if (index >= PageCount)
-                index = 0;
-
-            // Check if page index is less than lower limit
-            if (index < 0)
-                index = PageCount - 1;
-
-            ActivePageIndex = index;
-
-            // Set active page index
-            var dim = new FrameDimension(Image.FrameDimensionsList[0]);
-            Image.SelectActiveFrame(dim, ActivePageIndex);
-        }
 
         /// <summary>
         /// Save image pages to files
@@ -178,6 +162,76 @@ namespace ImageGlass.Heart {
             await Photo.SavePagesAsync(Filename, destFolder).ConfigureAwait(true);
         }
 
+        #endregion
+
+
+        #region STATIC FUNCTIONS
+
+        /// <summary>
+        /// Gets the largest page info
+        /// </summary>
+        /// <param name="bmp"></param>
+        /// <returns></returns>
+        public static (int index, int width) GetLargestPageInfo(Bitmap bmp) {
+            var maxWidth = 0;
+            var maxSizeIndex = 0;
+            var dim = new FrameDimension(bmp.FrameDimensionsList[0]);
+            var pageCount = bmp.GetFrameCount(dim);
+
+            for (var i = 0; i < pageCount; i++) {
+                bmp.SelectActiveFrame(dim, i);
+
+                if (bmp.Width > maxWidth) {
+                    maxWidth = bmp.Width;
+                    maxSizeIndex = i;
+                }
+            }
+
+            // reset active page
+            bmp.SelectActiveFrame(dim, 0);
+
+            return (maxSizeIndex, maxWidth);
+        }
+
+        /// <summary>
+        /// Sets active page index
+        /// </summary>
+        /// <param name="bmp"></param>
+        /// <param name="index">Page index. Set index = int.MinValue to use default recommended page</param>
+        /// <param name="filename"></param>
+        /// <returns>Current active page index</returns>
+        public static int SetActivePage(Bitmap bmp, int index = int.MinValue, string filename = "") {
+            if (bmp == null) return 0;
+
+            // use default recommended page index
+            if (index == int.MinValue) {
+                // select largest frame of ICO file
+                if (filename.ToLower().EndsWith(".ico")) {
+                    var (largestIndex, _) = GetLargestPageInfo(bmp);
+                    index = largestIndex;
+                }
+                else {
+                    index = 0;
+                }
+            }
+
+            var dim = new FrameDimension(bmp.FrameDimensionsList[0]);
+            var pageCount = bmp.GetFrameCount(dim);
+
+            // Check if page index is greater than upper limit
+            if (index >= pageCount)
+                index = 0;
+
+            // Check if page index is less than lower limit
+            else if (index < 0)
+                index = pageCount - 1;
+
+
+            // Set active page index
+            bmp.SelectActiveFrame(dim, index);
+
+            return index;
+        }
         #endregion
 
     }

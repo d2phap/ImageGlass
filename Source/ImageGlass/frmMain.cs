@@ -595,8 +595,8 @@ namespace ImageGlass {
         /// <param name="step">Image step to change. Zero is reload the current image.</param>
         /// <param name="isKeepZoomRatio"></param>
         /// <param name="isSkipCache"></param>
-        /// <param name="pageIndex"></param>
-        public async Task NextPicAsync(int step, bool isKeepZoomRatio = false, bool isSkipCache = false, int pageIndex = 0, string filename = "") {
+        /// <param name="pageIndex">Set pageIndex = int.MinValue to use default page index</param>
+        public async Task NextPicAsync(int step, bool isKeepZoomRatio = false, bool isSkipCache = false, int pageIndex = int.MinValue, string filename = "") {
 
             System.Threading.SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
 
@@ -696,8 +696,6 @@ namespace ImageGlass {
             // Raise image changed event
             Local.RaiseImageChangedEvent();
 
-            // The image data will load
-            Bitmap im = null;
 
             try {
                 // apply Color Management settings
@@ -708,54 +706,50 @@ namespace ImageGlass {
                 // from skipping past a slow-to-load image by processing too many arrow clicks
                 SetAppBusy(true);
 
-
-                Heart.Img bmpImg;
-
-                // directly load the image file, skip image list
-                if (filename.Length > 0) {
-                    bmpImg = new Heart.Img(filename);
-                    await bmpImg.LoadAsync(
-                        colorProfileName: Configs.ColorProfile,
-                        isApplyColorProfileForAll: Configs.IsApplyColorProfileForAll,
-                        channel: (int)Local.Channels);
+                if (pageIndex != int.MinValue) {
+                    UpdateActivePage();
                 }
                 else {
-                    bmpImg = await Local.ImageList.GetImgAsync(
-                        Local.CurrentIndex,
-                        isSkipCache: isSkipCache,
-                        pageIndex: pageIndex
-                       ).ConfigureAwait(true);
-                }
+                    Heart.Img bmpImg;
 
-                im = bmpImg.Image;
+                    // directly load the image file, skip image list
+                    if (filename.Length > 0) {
+                        bmpImg = new Heart.Img(filename);
+                        await bmpImg.LoadAsync(
+                            colorProfileName: Configs.ColorProfile,
+                            isApplyColorProfileForAll: Configs.IsApplyColorProfileForAll,
+                            channel: (int)Local.Channels);
+                    }
+                    else {
+                        bmpImg = await Local.ImageList.GetImgAsync(
+                            Local.CurrentIndex,
+                            isSkipCache: isSkipCache,
+                            pageIndex: pageIndex
+                           ).ConfigureAwait(true);
+                    }
 
-                // Update current frame index
-                Local.CurrentPageIndex = bmpImg.ActivePageIndex;
-                Local.CurrentPageCount = bmpImg.PageCount;
+                    // Update current frame index
+                    Local.CurrentPageIndex = bmpImg.ActivePageIndex;
+                    Local.CurrentPageCount = bmpImg.PageCount;
 
-                Local.CurrentExif = bmpImg.Exif;
-                Local.CurrentColor = bmpImg.ColorProfile;
+                    Local.CurrentExif = bmpImg.Exif;
+                    Local.CurrentColor = bmpImg.ColorProfile;
 
-                // clear busy state
-                SetAppBusy(false);
+                    Local.ImageError = bmpImg.Error;
 
-                Local.ImageError = bmpImg.Error;
 
-                if (im != null && !token.Token.IsCancellationRequested) {
-                    // Refresh picMain to update the active page
-                    picMain.Refresh();
-                    picMain.Image = im;
+                    if (bmpImg.Image != null && !token.Token.IsCancellationRequested) {
+                        picMain.Image = bmpImg.Image;
 
-                    im = null;
-
-                    // Reset the zoom mode if isKeepZoomRatio = FALSE
-                    if (!isKeepZoomRatio) {
-                        if (Configs.IsWindowFit) {
-                            WindowFitMode();
-                        }
-                        else {
-                            // reset zoom mode
-                            ApplyZoomMode(Configs.ZoomMode);
+                        // Reset the zoom mode if isKeepZoomRatio = FALSE
+                        if (!isKeepZoomRatio) {
+                            if (Configs.IsWindowFit) {
+                                WindowFitMode();
+                            }
+                            else {
+                                // reset zoom mode
+                                ApplyZoomMode(Configs.ZoomMode);
+                            }
                         }
                     }
                 }
@@ -766,8 +760,6 @@ namespace ImageGlass {
 
             // image error
             if (Local.ImageError != null) {
-                SetAppBusy(false); // make sure busy state is off if exception during image load
-
                 picMain.Image = null;
                 Local.ImageModifiedPath = "";
                 Local.CurrentPageIndex = 0;
@@ -782,6 +774,9 @@ namespace ImageGlass {
                 picMain.Text = Configs.Language.Items[$"{Name}.picMain._ErrorText"] + "\r\n" + Local.ImageError.Source + ": " + Local.ImageError.Message;
                 SetStatusBar();
             }
+
+            // clear busy state
+            SetAppBusy(false);
 
             _isDraggingImage = false;
 
@@ -805,6 +800,14 @@ namespace ImageGlass {
             GC.WaitForPendingFinalizers();
             GC.Collect();
 
+
+            void UpdateActivePage() {
+                var currentFile = Local.ImageList.GetFileName(Local.CurrentIndex);
+                Local.CurrentPageIndex = Heart.Img.SetActivePage((Bitmap)picMain.Image, pageIndex, currentFile);
+
+                // Refresh picMain to update the active page
+                picMain.Invalidate();
+            }
 
             void SetAppBusy(bool isbusy) {
                 Timer _loadingTimer = null;
