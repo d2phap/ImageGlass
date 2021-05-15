@@ -2137,6 +2137,22 @@ namespace ImageGlass {
             if (!Configs.IsWindowFit || picMain.Image == null)
                 return; // Nothing to do
 
+            #region Set minimum size for window
+            var minH = DPIScaling.Transform(100);
+            if (Configs.IsShowToolBar) {
+                minH += toolMain.Height;
+            }
+
+            if (Configs.IsShowThumbnail) {
+                minH += (int)Configs.ThumbnailBarWidth;
+            }
+
+            MinimumSize = new() {
+                Width = DPIScaling.Transform(200),
+                Height = minH,
+            };
+            #endregion
+
             // If the user selects "Display view scrollbars" setting, the imageviewer will
             // try to take them into account [especially for tall images]. Override said
             // setting in this mode.
@@ -2161,6 +2177,7 @@ namespace ImageGlass {
             // Let the image viewer control figure out the zoom value for
             // the full-size window
             ApplyZoomMode(Configs.ZoomMode);
+
 
             // Now that we have the new zoom value, adjust our main window
             // to fit the *zoomed* image size
@@ -4700,10 +4717,13 @@ namespace ImageGlass {
                 return;
             }
 
-            if (Configs.IsWindowFit)
+            if (Configs.IsWindowFit) {
                 WindowFitMode();
-            else
+            }
+            else {
+                MinimumSize = new(0, 0);
                 ApplyZoomMode(Configs.ZoomMode);
+            }
         }
 
         private void mnuMainAutoZoom_Click(object sender, EventArgs e) {
