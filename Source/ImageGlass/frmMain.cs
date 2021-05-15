@@ -772,11 +772,11 @@ namespace ImageGlass {
                 }
 
                 picMain.Text = Configs.Language.Items[$"{Name}.picMain._ErrorText"] + "\r\n" + Local.ImageError.Source + ": " + Local.ImageError.Message;
-                SetStatusBar();
             }
 
             // clear busy state
             SetAppBusy(false);
+            SetStatusBar();
 
             _isDraggingImage = false;
 
