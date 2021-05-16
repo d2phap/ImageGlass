@@ -117,8 +117,8 @@ namespace ImageGlass {
                 var lastUpdate = DateTime.Now;
 
                 if (DateTime.TryParseExact(Configs.AutoUpdate, "M/d/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out lastUpdate)) {
-                    // Check for update every 3 days
-                    if (DateTime.Now.Subtract(lastUpdate).TotalDays > 3) {
+                    // Check for update every 5 days
+                    if (DateTime.Now.Subtract(lastUpdate).TotalDays > 5) {
                         CheckForUpdate(useAutoCheck: true);
                     }
                 }
