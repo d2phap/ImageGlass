@@ -53,10 +53,10 @@
             this.panel1.Controls.Add(this.btnOK);
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 494);
+            this.panel1.Location = new System.Drawing.Point(0, 460);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(510, 80);
+            this.panel1.Size = new System.Drawing.Size(475, 74);
             this.panel1.TabIndex = 21;
             // 
             // btnReset
@@ -64,10 +64,10 @@
             this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnReset.ForeColor = System.Drawing.Color.Black;
-            this.btnReset.Location = new System.Drawing.Point(18, 20);
+            this.btnReset.Location = new System.Drawing.Point(17, 19);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(132, 40);
-            this.btnReset.TabIndex = 6;
+            this.btnReset.Size = new System.Drawing.Size(123, 37);
+            this.btnReset.TabIndex = 5;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
@@ -78,10 +78,10 @@
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnOK.ForeColor = System.Drawing.Color.Black;
-            this.btnOK.Location = new System.Drawing.Point(261, 20);
+            this.btnOK.Location = new System.Drawing.Point(243, 19);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(112, 40);
-            this.btnOK.TabIndex = 7;
+            this.btnOK.Size = new System.Drawing.Size(104, 37);
+            this.btnOK.TabIndex = 6;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -92,10 +92,10 @@
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnClose.ForeColor = System.Drawing.Color.Black;
-            this.btnClose.Location = new System.Drawing.Point(380, 20);
+            this.btnClose.Location = new System.Drawing.Point(354, 19);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(112, 40);
-            this.btnClose.TabIndex = 8;
+            this.btnClose.Size = new System.Drawing.Size(104, 37);
+            this.btnClose.TabIndex = 7;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -103,10 +103,10 @@
             // lblAppName
             // 
             this.lblAppName.AutoSize = true;
-            this.lblAppName.Location = new System.Drawing.Point(14, 106);
+            this.lblAppName.Location = new System.Drawing.Point(13, 99);
             this.lblAppName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAppName.Name = "lblAppName";
-            this.lblAppName.Size = new System.Drawing.Size(95, 25);
+            this.lblAppName.Size = new System.Drawing.Size(89, 23);
             this.lblAppName.TabIndex = 23;
             this.lblAppName.Text = "App name";
             // 
@@ -115,20 +115,20 @@
             this.txtFileExtension.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtFileExtension.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
-            this.txtFileExtension.Location = new System.Drawing.Point(18, 52);
+            this.txtFileExtension.Location = new System.Drawing.Point(17, 48);
             this.txtFileExtension.Margin = new System.Windows.Forms.Padding(4);
             this.txtFileExtension.Name = "txtFileExtension";
             this.txtFileExtension.ReadOnly = true;
-            this.txtFileExtension.Size = new System.Drawing.Size(472, 31);
-            this.txtFileExtension.TabIndex = 0;
+            this.txtFileExtension.Size = new System.Drawing.Size(440, 30);
+            this.txtFileExtension.TabIndex = 8;
             // 
             // lblFileExtension
             // 
             this.lblFileExtension.AutoSize = true;
-            this.lblFileExtension.Location = new System.Drawing.Point(14, 26);
+            this.lblFileExtension.Location = new System.Drawing.Point(13, 24);
             this.lblFileExtension.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFileExtension.Name = "lblFileExtension";
-            this.lblFileExtension.Size = new System.Drawing.Size(118, 25);
+            this.lblFileExtension.Size = new System.Drawing.Size(113, 23);
             this.lblFileExtension.TabIndex = 22;
             this.lblFileExtension.Text = "File extension";
             // 
@@ -137,30 +137,30 @@
             this.txtAppName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAppName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
-            this.txtAppName.Location = new System.Drawing.Point(18, 134);
+            this.txtAppName.Location = new System.Drawing.Point(17, 125);
             this.txtAppName.Margin = new System.Windows.Forms.Padding(4);
             this.txtAppName.Name = "txtAppName";
-            this.txtAppName.Size = new System.Drawing.Size(472, 31);
-            this.txtAppName.TabIndex = 1;
+            this.txtAppName.Size = new System.Drawing.Size(440, 30);
+            this.txtAppName.TabIndex = 0;
             // 
             // txtAppPath
             // 
             this.txtAppPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAppPath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
-            this.txtAppPath.Location = new System.Drawing.Point(18, 214);
+            this.txtAppPath.Location = new System.Drawing.Point(17, 199);
             this.txtAppPath.Margin = new System.Windows.Forms.Padding(4);
             this.txtAppPath.Name = "txtAppPath";
-            this.txtAppPath.Size = new System.Drawing.Size(380, 31);
-            this.txtAppPath.TabIndex = 2;
+            this.txtAppPath.Size = new System.Drawing.Size(354, 30);
+            this.txtAppPath.TabIndex = 1;
             // 
             // lblAppPath
             // 
             this.lblAppPath.AutoSize = true;
-            this.lblAppPath.Location = new System.Drawing.Point(14, 188);
+            this.lblAppPath.Location = new System.Drawing.Point(13, 175);
             this.lblAppPath.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAppPath.Name = "lblAppPath";
-            this.lblAppPath.Size = new System.Drawing.Size(87, 25);
+            this.lblAppPath.Size = new System.Drawing.Size(81, 23);
             this.lblAppPath.TabIndex = 25;
             this.lblAppPath.Text = "App path";
             // 
@@ -169,19 +169,19 @@
             this.txtAppArguments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAppArguments.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
-            this.txtAppArguments.Location = new System.Drawing.Point(18, 296);
+            this.txtAppArguments.Location = new System.Drawing.Point(17, 275);
             this.txtAppArguments.Margin = new System.Windows.Forms.Padding(4);
             this.txtAppArguments.Name = "txtAppArguments";
-            this.txtAppArguments.Size = new System.Drawing.Size(472, 31);
-            this.txtAppArguments.TabIndex = 4;
+            this.txtAppArguments.Size = new System.Drawing.Size(440, 30);
+            this.txtAppArguments.TabIndex = 3;
             // 
             // lblAppArguments
             // 
             this.lblAppArguments.AutoSize = true;
-            this.lblAppArguments.Location = new System.Drawing.Point(14, 268);
+            this.lblAppArguments.Location = new System.Drawing.Point(13, 249);
             this.lblAppArguments.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAppArguments.Name = "lblAppArguments";
-            this.lblAppArguments.Size = new System.Drawing.Size(136, 25);
+            this.lblAppArguments.Size = new System.Drawing.Size(128, 23);
             this.lblAppArguments.TabIndex = 27;
             this.lblAppArguments.Text = "App arguments";
             // 
@@ -192,11 +192,11 @@
             this.btnBrowse.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnBrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnBrowse.ForeColor = System.Drawing.Color.Black;
-            this.btnBrowse.Location = new System.Drawing.Point(410, 212);
+            this.btnBrowse.Location = new System.Drawing.Point(382, 197);
             this.btnBrowse.Margin = new System.Windows.Forms.Padding(4);
             this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(82, 38);
-            this.btnBrowse.TabIndex = 3;
+            this.btnBrowse.Size = new System.Drawing.Size(76, 35);
+            this.btnBrowse.TabIndex = 2;
             this.btnBrowse.Text = "...";
             this.btnBrowse.UseVisualStyleBackColor = true;
             this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
@@ -204,9 +204,9 @@
             // lblPreviewLabel
             // 
             this.lblPreviewLabel.AutoSize = true;
-            this.lblPreviewLabel.Location = new System.Drawing.Point(14, 352);
+            this.lblPreviewLabel.Location = new System.Drawing.Point(13, 328);
             this.lblPreviewLabel.Name = "lblPreviewLabel";
-            this.lblPreviewLabel.Size = new System.Drawing.Size(72, 25);
+            this.lblPreviewLabel.Size = new System.Drawing.Size(68, 23);
             this.lblPreviewLabel.TabIndex = 29;
             this.lblPreviewLabel.Text = "Preview";
             // 
@@ -215,21 +215,22 @@
             this.txtCommandPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtCommandPreview.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
-            this.txtCommandPreview.Location = new System.Drawing.Point(18, 381);
+            this.txtCommandPreview.Location = new System.Drawing.Point(17, 355);
             this.txtCommandPreview.Margin = new System.Windows.Forms.Padding(4);
             this.txtCommandPreview.Multiline = true;
             this.txtCommandPreview.Name = "txtCommandPreview";
             this.txtCommandPreview.ReadOnly = true;
-            this.txtCommandPreview.Size = new System.Drawing.Size(472, 93);
-            this.txtCommandPreview.TabIndex = 5;
+            this.txtCommandPreview.Size = new System.Drawing.Size(440, 87);
+            this.txtCommandPreview.TabIndex = 4;
             // 
             // frmEditApp
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AcceptButton = this.btnOK;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(134F, 134F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(510, 574);
+            this.ClientSize = new System.Drawing.Size(475, 534);
             this.Controls.Add(this.txtCommandPreview);
             this.Controls.Add(this.lblPreviewLabel);
             this.Controls.Add(this.btnBrowse);
@@ -246,6 +247,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(495, 586);
             this.Name = "frmEditApp";
             this.RightToLeftLayout = true;
             this.ShowIcon = false;

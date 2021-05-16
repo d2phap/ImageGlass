@@ -41,6 +41,11 @@ namespace ImageGlass {
         #region Auto Properties
 
         /// <summary>
+        /// Gets, sets app state
+        /// </summary>
+        public static bool IsBusy { get; set; } = false;
+
+        /// <summary>
         /// Gets, sets index of the viewing image
         /// </summary>
         public static int CurrentIndex { get; set; } = -1;

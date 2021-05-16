@@ -645,8 +645,8 @@
             this.lblCodeName.Name = "lblCodeName";
             this.lblCodeName.Size = new System.Drawing.Size(69, 30);
             this.lblCodeName.TabIndex = 21;
-            this.lblCodeName.Text = "Home";
-            this.toolTip1.SetToolTip(this.lblCodeName, "Home is where our story begins...");
+            this.lblCodeName.Text = "June";
+            this.toolTip1.SetToolTip(this.lblCodeName, "In early June, every sunset is different.");
             // 
             // tableLayoutPanel2
             // 

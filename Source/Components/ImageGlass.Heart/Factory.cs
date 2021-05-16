@@ -241,9 +241,9 @@ namespace ImageGlass.Heart {
         /// </summary>
         /// <param name="index">image index</param>
         /// <param name="isSkipCache"></param>
-        /// <param name="pageIndex">The index of image page to display (if it's multi-page)</param>
+        /// <param name="pageIndex">The index of image page to display (if it's multi-page). Set pageIndex = int.MinValue to use defaut page index</param>
         /// <returns></returns>
-        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false, int pageIndex = 0) {
+        public async Task<Img> GetImgAsync(int index, bool isSkipCache = false, int pageIndex = int.MinValue) {
             // reload fresh new image data
             if (isSkipCache) {
                 await ImgList[index].LoadAsync(
@@ -273,7 +273,7 @@ namespace ImageGlass.Heart {
             // if there is no error
             if (ImgList.Count > 0) {
                 if (ImgList[index].Error == null) {
-                    ImgList[index].SetActivePage(pageIndex);
+                    ImgList[index].ActivePageIndex = Img.SetActivePage(ImgList[index].Image, pageIndex, ImgList[index].Filename);
                 }
 
                 return ImgList[index];

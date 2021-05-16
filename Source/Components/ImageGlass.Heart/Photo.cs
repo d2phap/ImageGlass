@@ -113,6 +113,11 @@ namespace ImageGlass.Heart {
                 case ".AVIF":
                 case ".PDF":
                     using (var imgColl = new MagickImageCollection(filename, settings)) {
+                        foreach (var imgM in imgColl) {
+                            // For extensions other than HEIC, checkRotation is always true
+                            (exif, colorProfile) = PreprocesMagickImage((MagickImage)imgM, true);
+                        }
+
                         bitmap = imgColl.ToBitmap();
                     }
                     break;
@@ -171,20 +176,13 @@ namespace ImageGlass.Heart {
                     // if always apply color profile
                     // or only apply color profile if there is an embedded profile
                     if (isApplyColorProfileForAll || imgColorProfile != null) {
-                        if (imgColorProfile != null) {
-                            // correct the image color space
-                            imgM.ColorSpace = imgColorProfile.ColorSpace;
-                        }
-                        else {
-                            // set default color profile and color space
-                            imgM.SetProfile(ColorProfile.SRGB);
-                            imgM.ColorSpace = ColorProfile.SRGB.ColorSpace;
-                        }
-
                         var imgColor = Helpers.GetColorProfile(colorProfileName);
+
                         if (imgColor != null) {
-                            imgM.SetProfile(imgColor);
-                            imgM.ColorSpace = imgColor.ColorSpace;
+                            imgM.TransformColorSpace(
+                                //set default color profile to sRGB
+                                imgColorProfile ?? ColorProfile.SRGB,
+                                imgColor);
                         }
                     }
                 }

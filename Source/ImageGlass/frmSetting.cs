@@ -837,22 +837,30 @@ namespace ImageGlass {
                 return;
 
             // Get select Association item
-            var assoc = Configs.GetEditApp(lvImageEditing.SelectedItems[0].Text);
+            var exts = new List<string>(lvImageEditing.SelectedItems.Count);
+            foreach (ListViewItem row in lvImageEditing.SelectedItems) {
+                exts.Add(row.Text);
+            }
 
-            if (assoc == null)
+            var apps = Configs.GetEditApps(exts);
+
+            if (apps.Count == 0)
                 return;
 
             using var frm = new frmEditApp() {
-                FileExtension = assoc.Extension,
-                AppName = assoc.AppName,
-                AppPath = assoc.AppPath,
-                AppArguments = assoc.AppArguments,
+                FileExtension = string.Join(";", exts),
+                AppName = apps[0].AppName,
+                AppPath = apps[0].AppPath,
+                AppArguments = apps[0].AppArguments,
                 TopMost = this.TopMost
             };
+
             if (frm.ShowDialog() == DialogResult.OK) {
-                assoc.AppName = frm.AppName;
-                assoc.AppPath = frm.AppPath;
-                assoc.AppArguments = frm.AppArguments;
+                foreach (var item in apps) {
+                    item.AppName = frm.AppName;
+                    item.AppPath = frm.AppPath;
+                    item.AppArguments = frm.AppArguments;
+                }
 
                 LoadEditApps();
             }
@@ -876,6 +884,10 @@ namespace ImageGlass {
 
         private void lvlvImageEditing_SelectedIndexChanged(object sender, EventArgs e) {
             btnEditEditExt.Enabled = lvImageEditing.SelectedItems.Count > 0;
+        }
+
+        private void lvImageEditing_DoubleClick(object sender, EventArgs e) {
+            btnEditEditExt_Click(null, null);
         }
 
         #endregion
@@ -2119,5 +2131,6 @@ namespace ImageGlass {
         }
 
         #endregion
+
     }
 }

@@ -111,6 +111,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(445, 230);
             this.Name = "frmAddNewFormat";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

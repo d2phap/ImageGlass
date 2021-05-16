@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="ga-IE" langName="Gaeilge" author="Seanán Ó Coistín (seananoc)" description="Irish" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="Ní roinnt de na socruithe comhoiriúnach le do ImageGlass {0}. Moltar iad a nuashonrú sula leantar ar aghaidh.&#10;&#10;- Brúigh Tá chun eolas a chur ar na hathruithe.&#10;- Brúigh Níl chun ImageGlass a thosú leis na réamhshocruithe."/>
+      <Item key="_.ImageOrderBy._Name" value="Ainm (an réamhshocrú)"/>
+      <Item key="_.ImageOrderBy._Length" value="Fad"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="An t-am nuair a cruthaíodh í"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="An uair dheireanach a rinneadh í a rochtain"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="An uair dheireanach a rinneadh í a scríobh"/>
+      <Item key="_.ImageOrderBy._Extension" value="Iarmhír"/>
+      <Item key="_.ImageOrderBy._Random" value="Go fánach"/>
+      <Item key="_.ImageOrderType._Asc" value="Ag éirí"/>
+      <Item key="_.ImageOrderType._Desc" value="Ag titim"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Dada"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Íoslaghdaigh"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Dún"/>
+      <Item key="frmMain.mnuMainFile" value="Comhad"/>
+      <Item key="frmMain.mnuMainOpenFile" value="Oscail comhad…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Oscail sonraí íomhá ón ngearrthaisce"/>
+      <Item key="frmMain.mnuMainNewWindow" value="Oscail fuinneog nua"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Ní féidir fuinneog nua a oscailt mar ní cheadaítear ach aon cheann amháin"/>
+      <Item key="frmMain.mnuSaveImage" value="Cuir an íomhá i dtaisce"/>
+      <Item key="frmMain.mnuMainSaveAs" value="Cuir an íomhá i dtaisce mar…"/>
+      <Item key="frmMain.mnuMainRefresh" value="Athnuaigh é"/>
+      <Item key="frmMain.mnuMainReloadImage" value="Athluchtaigh an íomhá"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="Athluchtaigh liosta na n-íomhánna"/>
+      <Item key="frmMain.mnuOpenWith" value="Oscail le…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Cuir an íomhá {0} in eagar…"/>
+      <Item key="frmMain.mnuMainPrint" value="Clóbhuail…"/>
+      <Item key="frmMain.mnuMainNavigation" value="Nascleanúint"/>
+      <Item key="frmMain.mnuMainViewNext" value="Féach ar an gcéad íomhá eile"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Saighead Ar Dheis / PageDown"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="Féach ar an íomhá roimhe"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Saighead Ar Chlé / PageUp"/>
+      <Item key="frmMain.mnuMainGoto" value="Téigh chuig…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="Téigh chuig an chéad íomhá"/>
+      <Item key="frmMain.mnuMainGotoLast" value="Téigh chuig an íomhá dheiridh"/>
+      <Item key="frmMain.mnuMainNextPage" value="Féach ar an gcéad leathanach eile"/>
+      <Item key="frmMain.mnuMainPrevPage" value="Féach ar an leathanach roimhe"/>
+      <Item key="frmMain.mnuMainFirstPage" value="Féach ar an chéad leathanach"/>
+      <Item key="frmMain.mnuMainLastPage" value="Féach ar an leathanach deiridh"/>
+      <Item key="frmMain.mnuMainZoom" value="Gluais"/>
+      <Item key="frmMain.mnuMainZoomIn" value="Gluais isteach"/>
+      <Item key="frmMain.mnuMainZoomOut" value="Gluais amach"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="Athraigh an scála chun é a chur in oiriúint don lch"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="Athraigh an scála chun an leathanach an líonadh"/>
+      <Item key="frmMain.mnuMainActualSize" value="Méid iarbhír"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Cuir glas ar chóimheas na gluaise"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="Gluais uathoibríoch"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="Athraigh an scála chun é a chur in oiriúint don leithead"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="Athraigh an scála chun é a chur in oiriúint don airde"/>
+      <Item key="frmMain.mnuMainImage" value="Íomhá"/>
+      <Item key="frmMain.mnuMainChannels" value="Féach ar na bealaí"/>
+      <Item key="frmMain.mnuMainChannels._All" value="Uile"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="Dearg"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="Uaine"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="Gorm"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="Dubh"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="Alpha"/>
+      <Item key="frmMain.mnuLoadingOrder" value="An t-ord ina luchtaítear íomhánna"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="Rothlaigh tuathalach í"/>
+      <Item key="frmMain.mnuMainRotateRight" value="Rothlaigh deiseal í"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="Smeach go cothrománach í"/>
+      <Item key="frmMain.mnuMainFlipVert" value="Smeach go hingearach í"/>
+      <Item key="frmMain.mnuMainRename" value="Athainmnigh an íomhá…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Bog chuig an mbosca bruscair í"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Scrios ón ndiosca crua í"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Bain amach leathanaigh na n-íomhánna ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="Tosaigh / Stad an bheochan"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Socraigh mar chúlra"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="Socraigh mar íomhá do ghlasáil an scáileáin í"/>
+      <Item key="frmMain.mnuMainImageLocation" value="Oscail mar a bhfuil an íomhá lonnaithe"/>
+      <Item key="frmMain.mnuMainImageProperties" value="Airíonna na híomhá"/>
+      <Item key="frmMain.mnuMainClipboard" value="An Ghearrthaisce"/>
+      <Item key="frmMain.mnuMainCopy" value="Cóipeáil"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="Cóipeáil sonraí na híomhá"/>
+      <Item key="frmMain.mnuMainCut" value="Gearr"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="Cóipeáil conair na híomhá"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="Glan an ghearrthaisce"/>
+      <Item key="frmMain.mnuWindowFit" value="Oiriúnaigh don fhuinneog"/>
+      <Item key="frmMain.mnuMainFullScreen" value="Lánscáileán"/>
+      <Item key="frmMain.mnuFrameless" value="Gan fráma"/>
+      <Item key="frmMain.mnuMainSlideShow" value="Taispeántas sleamhnáin"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="Tosaigh an taispeántas sleamhnáin"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="Cur ar sos / Atosaigh an taispeántas sleamhnáin"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="Scoir ón taispeántas sleamhnáin"/>
+      <Item key="frmMain.mnuMainShare" value="Comhroinn…"/>
+      <Item key="frmMain.mnuMainLayout" value="Leagan amach"/>
+      <Item key="frmMain.mnuMainToolbar" value="Barra uirlisí"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="Stiall na mionsamhail"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="Cúlra ar nós clár táiplise"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Coinnigh an fhuinneog ar barr i gcónaí"/>
+      <Item key="frmMain.mnuMainTools" value="Uirlisí"/>
+      <Item key="frmMain.mnuMainColorPicker" value="Roghnóir dathanna"/>
+      <Item key="frmMain.mnuMainPageNav" value="Nascleanúint an leathanaigh"/>
+      <Item key="frmMain.mnuMainCrop" value="Bearradh"/>
+      <Item key="frmMain.mnuExifTool" value="Uirlis Exif"/>
+      <Item key="frmMain.mnuMainSettings" value="Socruithe…"/>
+      <Item key="frmMain.mnuMainHelp" value="Cabhair"/>
+      <Item key="frmMain.mnuMainAbout" value="Maidir leis"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="Cumraíocht nuair a thosaíotear den chéad uair é…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Lorg nuashonrú…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Tá leagan nua de ar fáil!"/>
+      <Item key="frmMain.mnuMainReportIssue" value="Tuairiscigh fadhb…"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Scoir ó ImageGlass"/>
+      <Item key="frmMain.picMain._ErrorText" value="Ní féidir le ImageGlass an pictiúr sin a oscailt mar tá an dealramh ar an gcomhad go bhfuil dochar déanta don chomhad, go bhfuil sé truaillithe nó ní thugtar tacaíocht dó."/>
+      <Item key="frmMain._ImageNotExist" value="Ní ann don íomhá sin."/>
+      <Item key="frmMain.btnMenu" value="Roghchlár (Hotkey: `)"/>
+      <Item key="frmMain._OpenFileDialog" value="Gach comhad a dtugtar tacaíocht dóibh"/>
+      <Item key="frmMain._Files" value="comha(i)d"/>
+      <Item key="frmMain._Pages" value="leathanaigh"/>
+      <Item key="frmMain._ImageData" value="Sonraí na híomhá"/>
+      <Item key="frmMain._RenameDialogText" value="Athainmnigh"/>
+      <Item key="frmMain._RenameDialog" value="Cuir isteach ainm nua an chomhaid"/>
+      <Item key="frmMain._GotoDialogText" value="Cuir isteach an íomhá treoráin chun breathnú uirthi. Brúigh ENTER"/>
+      <Item key="frmMain._DeleteDialogText" value="Scrios an comhad '{0}' ?"/>
+      <Item key="frmMain._DeleteDialogTitle" value="Deimhnigh sin"/>
+      <Item key="frmMain._ExtractPageText" value="Tá leathanaigh na n-íomhánna á mbaint amach. Roghnaigh fillteán aschuir."/>
+      <Item key="frmMain._FullScreenMessage" value="Brúigh {0} chun an lánscáileán a fhágáil."/>
+      <Item key="frmMain._SlideshowMessage" value="Brúigh ESC chun an taispeántas sleamhnáin a fhágáil.&#10; Brúigh an luchóg ar dheis chun an roghchlár comhthéacs a oscailt."/>
+      <Item key="frmMain._SlideshowMessagePause" value="Tá an taispeántas sleamhnáin curtha ar sos"/>
+      <Item key="frmMain._SlideshowMessageResume" value="Atosaíodh an taispeántas sleamhnáin"/>
+      <Item key="frmMain._CopyFileText" value="Cóipeáladh {0} gcomha(i)d"/>
+      <Item key="frmMain._CutFileText" value="Gearradh {0} chomhad"/>
+      <Item key="frmMain._CopyImageData" value="Cóipeáladh an íomhá chuig an ngearrthaisce"/>
+      <Item key="frmMain._ClearClipboard" value="Glanadh an ghearrthaisce"/>
+      <Item key="frmMain._SaveChanges" value="Tá an t-athrú á chur i dtaisce..."/>
+      <Item key="frmMain._SaveImage" value="Cuireadh an íomhá i dtaisce in&#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="Tá an íomhá {0} á cur i dtaisce"/>
+      <Item key="frmMain._SaveImageError" value="Ní féidir an íomhá {0} a chur i dtaisce."/>
+      <Item key="frmMain._Loading" value="Ag luchtú..."/>
+      <Item key="frmMain._FirstItemOfList" value="Sroicheadh an chéad íomhá"/>
+      <Item key="frmMain._LastItemOfList" value="Sroicheadh an íomhá dheiridh"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="Ní thugtar tacaíocht chun beochan a athrú"/>
+      <Item key="frmMain._SetLockImage_Error" value="Tharla botún fad agus a bhí íomhá á socrú mar ghlas don scáileán"/>
+      <Item key="frmMain._SetLockImage_Success" value="Socraíodh íomhá mar ghlas don scáileán"/>
+      <Item key="frmMain._SetBackground_Error" value="Tharla botún fad agus a bhí íomhá á socrú mar chúlra don deasc"/>
+      <Item key="frmMain._SetBackground_Success" value="Rinneadh cúlra an deasca a shocrú"/>
+      <Item key="frmMain._PageExtractComplete" value="Críochnaíodh asbhaint an leathanaigh."/>
+      <Item key="frmMain._Frameless" value="Coinnigh IOMLAOID síos chun an fhuinneog a bhogadh."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Níl sonraí na híomhá sa ghearrthaisce."/>
+      <Item key="frmAbout.lblSlogant" value="Amharcóir íomhánna atá éadrom agus ilchumasach"/>
+      <Item key="frmAbout.lblInfo" value="Faisnéis"/>
+      <Item key="frmAbout.lblComponent" value="Comhpháirteanna"/>
+      <Item key="frmAbout.lblReferences" value="Tagairtí"/>
+      <Item key="frmAbout.lblVersion" value="Leagan: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="Teagmháil"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="Nuashonrú ar bhogearraí"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» Lorg nuashonrú…"/>
+      <Item key="frmAbout._Text" value="Maidir leis"/>
+      <Item key="frmAbout._PortableText" value="[Portable]"/>
+      <Item key="frmSetting._Text" value="Socruithe"/>
+      <Item key="frmSetting.btnSave" value="Cuir i dtaisce é"/>
+      <Item key="frmSetting.btnCancel" value="Cealaigh"/>
+      <Item key="frmSetting.btnApply" value="Cuir i bhFeidhm"/>
+      <Item key="frmSetting.lblGeneral" value="Coiteann"/>
+      <Item key="frmSetting.lblImage" value="Íomhá"/>
+      <Item key="frmSetting.lblEdit" value="Eagar"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="Comhtháthú Cineálacha Comhaid"/>
+      <Item key="frmSetting.lblToolbar" value="Barra uirlisí"/>
+      <Item key="frmSetting.lblLanguage" value="Teanga"/>
+      <Item key="frmSetting.lblTheme" value="Téama"/>
+      <Item key="frmSetting.lblKeyboard" value="Méarchlár"/>
+      <Item key="frmSetting.lblHeadStartup" value="Um an tosú"/>
+      <Item key="frmSetting.chkWelcomePicture" value="Taispeáin íomhá na fáilte"/>
+      <Item key="frmSetting.chkLastSeenImage" value="Oscail an íomhá dheireanach a d'fhéach tú air"/>
+      <Item key="frmSetting.chkShowToolBar" value="Taispeáin an barra uirlisí nuair a thosaítear"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="Comhadlann chumraíochta"/>
+      <Item key="frmSetting.lblHeadViewer" value="Amharcóir"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Taispeáin rollaí scrollála an amharcóra"/>
+      <Item key="frmSetting.chkShowNavButtons" value="Taispeáin cnaipí saighid nascleanúna"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Taispeáin ainm bunúsach na híomhá sa bharra teidil"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Taispeáin an clár táiplise i limistéar na híomhá amháin"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="Cumasaigh tacaíocht do ghothaí tadhaill"/>
+      <Item key="frmSetting.lblBackGroundColor" value="Dath an chúlra"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Athshocraigh"/>
+      <Item key="frmSetting.lblHeadOthers" value="Eile"/>
+      <Item key="frmSetting.chkAutoUpdate" value="Lorg nuashonruithe go huathoibríoch"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="Ceadaigh iliomad áisc den ríomhchlár"/>
+      <Item key="frmSetting.chkESCToQuit" value="Ceadaigh ESC a bhrúigh chun scoir ón ríomhchlár"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="Taispeáin dialóg deimhnithe an scriosta"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="Cuir an fhuinneog go huathoibríoch sa lár sa mhód Oiriúnaigh don Fhuinneog"/>
+      <Item key="frmSetting.chkShowToast" value="Taispeáin an teachtaireacht sláinte"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="Tá an íomhá ag luchtú"/>
+      <Item key="frmSetting.chkFindChildFolder" value="Aimsigh íomhánna sa mhacfhillteán"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="Taispeáin íomhánna atá i bhfolach"/>
+      <Item key="frmSetting.chkLoopViewer" value="Lúb an t-amharcóir ar ais chuig an gcéad íomhá nuair a shroichtear deireadh an liosta"/>
+      <Item key="frmSetting.chkIsCenterImage" value="Cuir an íomhá i lár an amharcóra"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="An t-ord ina dhéantar íomhánna a luchtú"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Bain feidhm as ord sórtála Thaiscéalaí Comhaid Windows más féidir"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Cruinnigh íomhánna de réir comhadlainne"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="Líon na n-íomhánna arna taiscthe ag ImageBooster (aon treo)"/>
+      <Item key="frmSetting.lblColorManagement" value="Bainistíocht na ndathanna"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="Cuir i bhfeidhm é i gcomhair íomhánna gan phróifíl leabaithe dhathanna"/>
+      <Item key="frmSetting.lblColorProfile" value="Próifíl dhathanna:"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="Siortaigh…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="Faic"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Saincheaptha…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="Gníomhartha an rotha luchóige"/>
+      <Item key="frmSetting.lblMouseWheel" value="Roth na luchóige"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="Roth luchóige + Alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Roth luchóige + Ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="Roth luchóige + Iomlaoid"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="Ná déan faic"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="Gluais"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Scrollaigh go hingearach"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Scrollaigh go cothrománach"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Íomhá roimhe / ar aghaidh"/>
+      <Item key="frmSetting.lblHeadZooming" value="Ag gluaiseacht"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Barrfheabhsú na gluaiseachta"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Uathoibríoch (Cáilíocht íseal/An comharsa is giorra)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Ísealchaighdeán"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Ardchaighdeán"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Délíneach"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Déchiúbach"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="An comharsa is giorra"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Ardchaighdeán, délíneach"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Ardchaighdeán, déchiúbach"/>
+      <Item key="frmSetting.lblZoomLevels" value="Leibhéil ghluaise"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="Tharla earráid fad agus a bhí na leibhéil Ghluaise á nuashonrú. Teachtaireacht earráide:&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Barra na mionsamhail"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="Taispeáin mionsamhlacha ar thaobh na láimhe deise"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Taispeáin barra scrolláilte na mionsamhail"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Toise na mionsamhla (picteilín)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="Taispeántas sleamhnáin"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="Lúb an taispeántas sleamhnáin ar ais chuig an gcéad íomhá nuair a shroichtear deireadh an liosta"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="Taispeáin comhaireamh anuas an taispeántais sleamhnáin"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="Bain feidhm as eatramh fánach"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="Eatramh an taispeántais sleamhnáin: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="go"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="Cuir an íomhá i dtaisce tar éis í a rothlú"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="Roghnaigh feidhmchlár chun eagarthóireacht a dhéanamh ar íomhánna"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="Tar éis an feidhmchlár eagarthóireachta a oscailt:"/>
+      <Item key="frmSetting.lblImageQuality" value="Cáilíocht na híomhá:"/>
+      <Item key="frmSetting.btnEditEditExt" value="Eagar…"/>
+      <Item key="frmSetting.btnEditResetExt" value="Athshocraigh chuig an réamhshocrú é"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="Cuir gach iarmhír in eagar…"/>
+      <Item key="frmSetting._allExtensions" value="gach iarmhír"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Iarmhír an chomhaid"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="Ainm na haipe"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="Conair na haipe"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Argóintí an fheidhmchláir"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Coimeád sonraí mionathraithe na híomhá nuair a dhéantar í a thaisceadh"/>
+      <Item key="frmSetting.lblSupportedExtension" value="Formáidí a dtugtar tacaíocht dóibh: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Oscail comhthiomsaithe cineálacha comhaid"/>
+      <Item key="frmSetting.btnAddNewExt" value="Cuir leis…"/>
+      <Item key="frmSetting.btnRegisterExt" value="Socraigh mar an t-amharcóir réamhshocraithe d'íomhánna…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Díchláraigh iarmhíreanna"/>
+      <Item key="frmSetting.btnDeleteExt" value="Scrios"/>
+      <Item key="frmSetting.btnResetExt" value="Athshocraigh chuig an réamhshocrú é"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="Ní féidir nascadh Gréasán-go-Feidhmchlár a chlárú"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="Ní féidir iarmhíreanna comhaid don bhfeidhmchlár ImageGlass a chlárú"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="Cláraíodh go rathúil gach iarmhír chomhaid! Chun ImageGlass a shocrú mar an t-amharcóir réamhshocraithe grianghraif, oscail Socruithe Windows &gt; Feidhmchláir Réamhshocraithe, agus roghnaigh an feidhmchlár ImageGlass de láimh faoin rannóg Amharcóir Grianghraif."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Ní féidir na hiarmhíreanna comhaid cláraithe don bhfeidhmchlár ImageGlass a scriosadh"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Díchláraíodh go rathúil gach iarmhír chomhaid!"/>
+      <Item key="frmSetting.lblToolbarPosition" value="Suíomh an bharra uirlisí:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Méid na gcnaipí sa bharra uirlisí:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Barr"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Bun"/>
+      <Item key="frmSetting._separator" value="Deighilteoir"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="Cumraigh cnaipí an bharra uirlisí"/>
+      <Item key="frmSetting.lblUsedBtns" value="Na Cnaipí Reatha:"/>
+      <Item key="frmSetting.lblAvailBtns" value="Cnaipí atá ar fáil:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="Bog síos an cnaipe roghnaithe"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="Bain na cnaipí roghnaithe ón mbarra uirlisí"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="Cuir na cnaipí roghnaithe leis an mbarra uirlisí"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="Bog suas an cnaipe roghnaithe"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Lonnaigh na cnaipí go cothrománach i lár an bharra uirlisí san fhuinneog"/>
+      <Item key="frmSetting.chkHideTooltips" value="Cuir na leideanna uirlisí ar an mbarra uirlisí i bhfolach"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="Bain feidhm as formáid RGB le luach Alpha"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="Bain feidhm as formáid HEX le luach Alpha"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="Bain feidhm as formáid HSL le luach Alpha"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="Bain feidhm as formáid HSV le luach Alpha"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="Formáid réamhshocraithe na tagartha datha fad agus atá cóipeáil ar siúl"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="I gcomhair íomhá le hiliomad leathanach, taispeáin go huathoibríoch an uirlis nascleanúna leathanaigh"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Coinnigh an uirlis Exif ar barr i gcónaí"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Roghnaigh comhad uirlis Exif"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Ní ann don uirlis Exif nó tá sé neamhbhailí: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Argóintí an ordaithe:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Réamhamharc an ordaithe:"/>
+      <Item key="frmSetting.lblLanguageText" value="Teangacha suiteáilte"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; Athnuaigh"/>
+      <Item key="frmSetting.lblLanguageWarning" value="B'fhéidir nach mbeidh an bearta teanga sin comhoiriúnach le {0}"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Suiteáil an beart nua teanga (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Cruthaigh beart nua teanga…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; Cuir an beart teanga roghnaithe in eagar…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Faigh tuilleadh bearta teanga…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="Téamaí suiteáilte: {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="Íosluchtaigh téamaí…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="Athnuaigh é"/>
+      <Item key="frmSetting.btnThemeInstall" value="Suiteáil é…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="Díshuiteáil é…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="Cuir é i dtaisce mar…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="Oscail fillteán an téama"/>
+      <Item key="frmSetting.btnThemeApply" value="Cuir an téama i bhfeidhm"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="Ainm"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="Leagan"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="Údar"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="Seoladh ríomhphoist"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="Suíomh Gréasáin"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="Comhoiriúnacht"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="Cur síos"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="D'éirigh le díshuiteáil do théama!"/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="Ní féidir do théama a shuiteáil."/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="Ní féidir an téama roghnaithe a dhíshuiteáil."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="Cuireadh do théama roghnaithe i dtaisce i {0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="Ní féidir do théama roghnaithe a chur i dtaisce."/>
+      <Item key="frmSetting.btnThemeApply._Success" value="D'éirigh le cur i bhfeidhm an téama roghnaithe!"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="Ní féidir an téama roghnaithe a chur i bhfeidhm."/>
+      <Item key="frmSetting.btnKeyReset" value="Athshocraigh chuig an réamhshocrú é"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="Bearna / Cúlspás"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="PageUp / PageDown"/>
+      <Item key="frmSetting.lblKeysUpDown" value="Saigheada Suas / Síos"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="Na saigheada Clé / Deas"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="Íomhá Roimhe / Ar Aghaidh"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="Féach go mall Clé / Deas"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="Féach go mall Suas / Síos"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="Gluais isteach / amach"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="Cuir an taispeántas sleamhnáin ar sos"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="Ná déan faic"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="Iarmhír an chomhaid"/>
+      <Item key="frmAddNewFormat.btnOK" value="Tá go maith"/>
+      <Item key="frmAddNewFormat.btnClose" value="Dún"/>
+      <Item key="frmEditApp.lblFileExtension" value="Iarmhír an chomhaid"/>
+      <Item key="frmEditApp.lblAppName" value="Ainm na haipe"/>
+      <Item key="frmEditApp.lblAppPath" value="Conair na haipe"/>
+      <Item key="frmEditApp.lblAppArguments" value="Argóintí an fheidhmchláir"/>
+      <Item key="frmEditApp.btnReset" value="Athshocraigh"/>
+      <Item key="frmEditApp.btnOK" value="Tá go maith"/>
+      <Item key="frmEditApp.btnClose" value="Dún"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="Réamhamharc"/>
+      <Item key="frmFirstLaunch._Text" value="Cumraíocht nuair a thosaítear den chéad uair é"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="Is gá do ImageGlass gach rud atá á rith aige a dhúnadh chun na socruithe nua a chur i bhfeidhm. An mian leat leanúint ar aghaidh?"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="Céim {0}/{1}"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="Ar Aghaidh"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="Déanta!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="Léim thar seo agus tosaigh ImageGlass"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="Roghnaigh teanga"/>
+      <Item key="frmFirstLaunch.lblLayout" value="Roghnaigh leagan amach"/>
+      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Caighdeánach"/>
+      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Dearthóir"/>
+      <Item key="frmFirstLaunch.lblTheme" value="Roghnaigh Téama"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="Socraigh ImageGlass mar an Amharcóir Grianghraif réamhshocraithe?"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="Socraigh"/>
+      <Item key="frmCrop.lblWidth" value="Leithead:"/>
+      <Item key="frmCrop.lblHeight" value="Airde:"/>
+      <Item key="frmCrop.btnSave" value="Cuir i dtaisce é"/>
+      <Item key="frmCrop.btnSaveAs" value="Cuir é i dtaisce mar…"/>
+      <Item key="frmCrop.btnCopy" value="Cóipeáil"/>
+      <Item key="frmCrop.btnReset" value="Athshocraigh"/>
+      <Item key="FrmExifTool.clnProperty" value="Airí"/>
+      <Item key="FrmExifTool.clnValue" value="Luach"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Cóipeáil an luach"/>
+      <Item key="FrmExifTool.btnExport" value="Tabhair amach…"/>
+      <Item key="FrmExifTool.btnClose" value="Dún"/>
+    </Content>
+  </Language>
+</ImageGlass>

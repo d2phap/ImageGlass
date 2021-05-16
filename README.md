@@ -14,12 +14,12 @@ It gives you the possibility to view over **70+** common image formats, includin
 
 
 ## 📥 Download
-[![Total Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%233097B8&label=downloads&style=for-the-badge)](https://imageglass.org/download)
-[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23932043&label=v8.1.4.18%20downloads&style=for-the-badge)](https://imageglass.org/download)
+[![Total Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%233097B8&label=total%20downloads&style=for-the-badge)](https://imageglass.org/download)
+[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23932043&label=latest%20version&style=for-the-badge)](https://imageglass.org/download)
 
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://imageglass.org/upload/photo/release/8.1_1.jpg" alt="ImageGlass 8.1.4.18" width="640">
+<img src="https://imageglass.org/upload/photo/release/8.2_1.jpg" alt="ImageGlass 8.2.5.16" width="640">
 </a><br/>
 
 
@@ -34,7 +34,7 @@ https://www.patreon.com/posts/imageglass-and-39849218
 ![.NET Framework 4.8](https://img.shields.io/badge/.NET-Framework%204.8-lightgrey.svg?maxAge=3600)
 ![Windows OS](https://img.shields.io/badge/OS-Windows%207+-00adef.svg?maxAge=3600)
 
-```develop``` branch contains the lastest commits while ```master``` branch is for the final stable release.
+```develop``` branch contains the latest commits while ```prod``` branch is for the final stable release.
 
 **``Pull Request``** is most welcome!
 
@@ -54,9 +54,9 @@ For more information about ImageGlass, go to [Documentation](https://imageglass.
 
 
 ## 🤼 Community and Support
-- [Google forum](https://imageglass.org/docs/features)
-- [GitHub issues](https://imageglass.org/docs/supported-formats)
-- [ImageGlass Discord](https://imageglass.org/docs/ui-shortcuts-reference)
+- [Google forum](https://groups.google.com/forum/#!forum/imageglass)
+- [GitHub issues](https://github.com/d2phap/ImageGlass/issues)
+- [ImageGlass Discord](https://discord.io/imageglass)
 
 
 ## 💖 This project needs your help!
@@ -64,8 +64,12 @@ ImageGlass is free and open source but developing it has taken thousands of hour
 
 Thanks for your gratitude and finance help!
 
+<a href="https://donorbox.org/imageglass" target="_blank" title="Wire transfer">
+<img src="https://img.shields.io/badge/DonorBox-@imageglass%20-005384.svg?maxAge=3600" height="30" alt="Wire transfer">
+</a>
+
 <a href="https://www.patreon.com/d2phap" target="_blank" title="Become a patron">
-<img src="https://img.shields.io/badge/Patreon-@d2phap%20-e85b46.svg?maxAge=3600" height="30" alt="Buy me a beer?">
+<img src="https://img.shields.io/badge/Patreon-@d2phap%20-e85b46.svg?maxAge=3600" height="30" alt="Become a patron">
 </a>
 
 <a href="https://www.paypal.me/d2phap" target="_blank" title="Buy me a beer?">
@@ -87,12 +91,13 @@ Thanks for your gratitude and finance help!
 1PcCezBmM3ahTzfBBi5KVWnnd3bCHbas8Z
 ```
 
-## 👑 Hall of fame (v8.1)
-To honor those people who spent their time to contribute to the development of ImageGlass v8.1:
-- 1️⃣ [@cocoon](https://github.com/cocoon)
-- 2️⃣ [@dixonte](https://github.com/dixonte)
-- 3️⃣ [@Norgerman](https://github.com/Norgerman)
-- 4️⃣ [@flyxyz123](https://github.com/flyxyz123)
-- 5️⃣ [@fire-eggs](https://github.com/fire-eggs)
+## 👑 Hall of fame (v8.x)
+To honor those people who spent their time to contribute to the development of ImageGlass v8:
+- 1️⃣ [@datasone](https://github.com/datasone)
+- 2️⃣ [@fire-eggs](https://github.com/fire-eggs)
+- 3️⃣ [@cocoon](https://github.com/cocoon)
+- 4️⃣ [@dixonte](https://github.com/dixonte)
+- 5️⃣ [@Norgerman](https://github.com/Norgerman)
+- 6️⃣ [@flyxyz123](https://github.com/flyxyz123)
 
 Thank you!
