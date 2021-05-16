@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="hy-AM" langName="Հայերեն" author="emesiz" description="Armenian" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="Որոշ կարգավորումներ համատեղելի չեն Ձեր ImageGlass հավելվածի հետ՝ {0}։ Մինչև շարունակելը՝ խորհուրդ է տրվում թարմացնել դրանք։&#10;&#10;- Սեղմեք Այո՝ փոփոխությունների մասին իմանալու համար։&#10;- Սեղմեք Ոչ՝ ImageGlass-ը լռելյայն կարգավորումներով բացելու համար։"/>
+      <Item key="_.ImageOrderBy._Name" value="Անուն (լռելյայն)"/>
+      <Item key="_.ImageOrderBy._Length" value="Երկարություն"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Ստեղծման պահը"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Նախկին միացման ժամը"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Նախկին գրառման ժամը"/>
+      <Item key="_.ImageOrderBy._Extension" value="Կցորդ"/>
+      <Item key="_.ImageOrderBy._Random" value="Պատահական"/>
+      <Item key="_.ImageOrderType._Asc" value="Աճման կարգով"/>
+      <Item key="_.ImageOrderType._Desc" value="Նվազման կարգով"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Ոչինչ"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Փոքրացնել"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Փակել"/>
+      <Item key="frmMain.mnuMainFile" value="Նիշք"/>
+      <Item key="frmMain.mnuMainOpenFile" value="Բացել նիշքը…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Բացել պատկերի տվյալները հիշողության միջից"/>
+      <Item key="frmMain.mnuMainNewWindow" value="Բացել նոր պատուհան"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Չի հաջողվում բացել նոր պատուհան, քանի որ թույլալտրված է միայն մեկը"/>
+      <Item key="frmMain.mnuSaveImage" value="Պահպանել պատկերը"/>
+      <Item key="frmMain.mnuMainSaveAs" value="Պահպանել պատկերը որպես…"/>
+      <Item key="frmMain.mnuMainRefresh" value="Թարմացնել"/>
+      <Item key="frmMain.mnuMainReloadImage" value="Վերաբեռնել պատկերը"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="Վերաբերռնել պատկերների ցանկը"/>
+      <Item key="frmMain.mnuOpenWith" value="Բացել հետևյալով…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Խմբագրել պատկերը {0}…"/>
+      <Item key="frmMain.mnuMainPrint" value="Տպել…"/>
+      <Item key="frmMain.mnuMainNavigation" value="Նավիգացիա"/>
+      <Item key="frmMain.mnuMainViewNext" value="Դիտել հաջորդ պատկերը"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Աջ սլաք / PageDown"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="Դիտել նախորդ պատկերը"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Ձախ սլաք / PageUp"/>
+      <Item key="frmMain.mnuMainGoto" value="Անցնել…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="Անցնել առաջին պատկերին"/>
+      <Item key="frmMain.mnuMainGotoLast" value="Անցնել վերջին պատկերին"/>
+      <Item key="frmMain.mnuMainNextPage" value="Դիտել հաջորդ էջը"/>
+      <Item key="frmMain.mnuMainPrevPage" value="Դիտել նախորդ էջը"/>
+      <Item key="frmMain.mnuMainFirstPage" value="Դիտել առաջին էջը"/>
+      <Item key="frmMain.mnuMainLastPage" value="Դիտել վերջին էջը"/>
+      <Item key="frmMain.mnuMainZoom" value="Մասշտաբ"/>
+      <Item key="frmMain.mnuMainZoomIn" value="Մոտեցնել"/>
+      <Item key="frmMain.mnuMainZoomOut" value="Հեռացնել"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="Համապատասխանեցնել չափսը"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="Խոշորացնելով համապատասխանեցնել"/>
+      <Item key="frmMain.mnuMainActualSize" value="Իրական չափս"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Ֆիքսել խոշորացման մակարդակը"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="Մոտեցնել ինքնաշխատորեն"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="Համապատասխանեցնել լայնությամբ"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="Համապատասխանեցնել բարձրությամբ"/>
+      <Item key="frmMain.mnuMainImage" value="Պատկեր"/>
+      <Item key="frmMain.mnuMainChannels" value="Դիտել ալիքները"/>
+      <Item key="frmMain.mnuMainChannels._All" value="Բոլորը"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="Կարմիր"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="Կանաչ"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="Կապույտ"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="Սև"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="Ալֆա"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Ներբեռնման հետթականությունը"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="Շրջել ձախ"/>
+      <Item key="frmMain.mnuMainRotateRight" value="Շրջել աջ"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="Պտտել հորիզոնապես"/>
+      <Item key="frmMain.mnuMainFlipVert" value="Պտտել ուղղահայաց"/>
+      <Item key="frmMain.mnuMainRename" value="Անվանափոխել պատկերը…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Տեղափոխել աղբաման"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Ջնջել կոշտ սկավառակից"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Ստեղծել պատկերների էջեր ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="Սկսել / Դադարեցնել պատկերի անիմացիան"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Տեղադրել որպես աշխատասեղանի պատկեր"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="Տեղադրել որպես կողպված էկրանի պատկեր"/>
+      <Item key="frmMain.mnuMainImageLocation" value="Բացել պատկերի գտնվելու վայրը"/>
+      <Item key="frmMain.mnuMainImageProperties" value="Պատկերի կարգավորումներ"/>
+      <Item key="frmMain.mnuMainClipboard" value="Ժամանակավոր հիշողություն"/>
+      <Item key="frmMain.mnuMainCopy" value="Պատճենել"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="Պատճենել պատկերի տվյալները"/>
+      <Item key="frmMain.mnuMainCut" value="Կտրել"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="Պատճենել պատկերի գտնվելու ուղին"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="Դատարկել ժամանակավոր հիշողությունը"/>
+      <Item key="frmMain.mnuWindowFit" value="Պատուհանը պատկերի չափսով"/>
+      <Item key="frmMain.mnuMainFullScreen" value="Լիաէկրան պատուհան"/>
+      <Item key="frmMain.mnuFrameless" value="Առանց շրջանակ"/>
+      <Item key="frmMain.mnuMainSlideShow" value="Սլայդերի ցուցադրում"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="Սկսել սլայդերի ցուցադրումը"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="Ընդմիջել / Շարունակել սլայդերի ցուցադրումը"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="Դադարեցնել սլայդերի ցուցադրումը"/>
+      <Item key="frmMain.mnuMainShare" value="Կիսվել…"/>
+      <Item key="frmMain.mnuMainLayout" value="Դասավորություն"/>
+      <Item key="frmMain.mnuMainToolbar" value="Գործիքների վահանակ"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="Նախադիտման վահանակ"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="Ֆոն (լիարժեք / թափանցիկ)"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Միշտ ցուցադրել այլ պատուհանների առջևից"/>
+      <Item key="frmMain.mnuMainTools" value="Գործիքներ"/>
+      <Item key="frmMain.mnuMainColorPicker" value="Գույնի ընտրիչ"/>
+      <Item key="frmMain.mnuMainPageNav" value="Էջային նավիգացիա"/>
+      <Item key="frmMain.mnuMainCrop" value="Պատկերի կտրում"/>
+      <Item key="frmMain.mnuExifTool" value="EXIF գործիք"/>
+      <Item key="frmMain.mnuMainSettings" value="Կարգավորումներ…"/>
+      <Item key="frmMain.mnuMainHelp" value="Օգնություն"/>
+      <Item key="frmMain.mnuMainAbout" value="Ծրագրի մասին"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="Առաջին գործարկման կարգավորումներ…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Ստուգել թարմացումները…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Հասանելի է՜ նոր թարմացում։"/>
+      <Item key="frmMain.mnuMainReportIssue" value="Տեղեկացնել խնդրի մասին…"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Լքել ImageGlass-ը"/>
+      <Item key="frmMain.picMain._ErrorText" value="ImageGlass-ին չի հաջողվում բացել այս նկարը, քանի որ նիշքը վնասված է, պարունակում է սխալներ կամ չի սպասարկվում։"/>
+      <Item key="frmMain._ImageNotExist" value="Ցուցադրվող պատկերը գոյություն չունի։"/>
+      <Item key="frmMain.btnMenu" value="Մենյու (կոճակ ՝)"/>
+      <Item key="frmMain._OpenFileDialog" value="Բոլոր սպասարկվող նիշքերը"/>
+      <Item key="frmMain._Files" value="նիշք(եր)"/>
+      <Item key="frmMain._Pages" value="էջեր"/>
+      <Item key="frmMain._ImageData" value="Պատկերի տվյալներ"/>
+      <Item key="frmMain._RenameDialogText" value="Անվանափոխել"/>
+      <Item key="frmMain._RenameDialog" value="Մուտքագրել նոր անվանում"/>
+      <Item key="frmMain._GotoDialogText" value="Մուտքագրել պատկերի թիվը՝ այն դիտելու համար։ Սեղմել ENTER"/>
+      <Item key="frmMain._DeleteDialogText" value="Ջնջե՞լ '{0}' նիշքը։"/>
+      <Item key="frmMain._DeleteDialogTitle" value="Հաստատել"/>
+      <Item key="frmMain._ExtractPageText" value="Պատկերի էջերը պահպանում։ Խնդրում ենք նշել պահպանման պանակը։"/>
+      <Item key="frmMain._FullScreenMessage" value="Սեղմել '{0}'՝ լիաէկրան ռեժիմից դուրս գալու համար։"/>
+      <Item key="frmMain._SlideshowMessage" value="Սեղմել ESC՝ սլայդերի ցուցադրումից դուրս գալու համար։&#10;Սեղմել աջ սեղմակը՝բացելու համապատասխան մենյուն։"/>
+      <Item key="frmMain._SlideshowMessagePause" value="Սլայդերի ցուցադրումը ընդմիջված է"/>
+      <Item key="frmMain._SlideshowMessageResume" value="Սլայդերի ցուցադրումը շարունակվում է"/>
+      <Item key="frmMain._CopyFileText" value="{0} նիշք պատճենված է"/>
+      <Item key="frmMain._CutFileText" value="Տեղափոխել {0} նիշք"/>
+      <Item key="frmMain._CopyImageData" value="Պատկերը պատճենված է ժամանակավոր հիշողություն"/>
+      <Item key="frmMain._ClearClipboard" value="Ժամանակավոր հիշողությունը դատարկված է"/>
+      <Item key="frmMain._SaveChanges" value="Փոփոխությունը պահպանվում է..."/>
+      <Item key="frmMain._SaveImage" value="Պատկերը պահպանվել է հետևյալ հասցեով՝ {0}"/>
+      <Item key="frmMain._SavingImage" value="Պատկերը պահպանվում է...&#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="Պատկերը պահպանել չի հաջողվել&#10;{0}"/>
+      <Item key="frmMain._Loading" value="Բեռնում..."/>
+      <Item key="frmMain._FirstItemOfList" value="Հասել ենք առաջին պատկերին"/>
+      <Item key="frmMain._LastItemOfList" value="Հասել ենք վերջին պատկերին"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="Անիմացված ձևաչափի խմբագրումը չի սպասարկվում"/>
+      <Item key="frmMain._SetLockImage_Error" value="Կողպված էկրանի պատկերի տեղադրման ընթացքում տեղի է ունեցել սխալ"/>
+      <Item key="frmMain._SetLockImage_Success" value="Կողպված էկրանի պատկերի տեղադրումը հաջողությամբ ավարտվել է"/>
+      <Item key="frmMain._SetBackground_Error" value="Աշխատասեղանի պատկերի տեղադրման ընթացքում տեղի է ունեցել սխալ"/>
+      <Item key="frmMain._SetBackground_Success" value="Աշխատասեղանի պատկերի տեղադրումը հաջողությամբ ավարտվել է"/>
+      <Item key="frmMain._PageExtractComplete" value="Էջի արտահանումը ավարտվել է։"/>
+      <Item key="frmMain._Frameless" value="Պահեք SHIFT կոճակը՝ պատուհանը շարժելու համար։"/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Ժամանակավոր հիշողությունը չի պարունակում պատկերի տվյալներ։"/>
+      <Item key="frmAbout.lblSlogant" value="Պատկեր դիտելու թեթև, ճկուն հավելված"/>
+      <Item key="frmAbout.lblInfo" value="Տեղեկատվություն"/>
+      <Item key="frmAbout.lblComponent" value="Բաղադրիչներ"/>
+      <Item key="frmAbout.lblReferences" value="Հղումներ"/>
+      <Item key="frmAbout.lblVersion" value="Տարբերակ՝ {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="Հետադարձ կապ"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="Ծրագրային թարմացում"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» Ստուգել թարմացումները…"/>
+      <Item key="frmAbout._Text" value="Ծրագրի մասին"/>
+      <Item key="frmAbout._PortableText" value="[Շարժական]"/>
+      <Item key="frmSetting._Text" value="Կարգավորումներ"/>
+      <Item key="frmSetting.btnSave" value="Պահպանել"/>
+      <Item key="frmSetting.btnCancel" value="Չեղարկել"/>
+      <Item key="frmSetting.btnApply" value="Կիրառել"/>
+      <Item key="frmSetting.lblGeneral" value="Գլխավոր"/>
+      <Item key="frmSetting.lblImage" value="Պատկեր"/>
+      <Item key="frmSetting.lblEdit" value="Խմբագրել"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="Նիշքերի ասոցիացիաներ"/>
+      <Item key="frmSetting.lblToolbar" value="Գործիքների վահանակ"/>
+      <Item key="frmSetting.lblLanguage" value="Լեզու"/>
+      <Item key="frmSetting.lblTheme" value="Ոճ"/>
+      <Item key="frmSetting.lblKeyboard" value="Ստեղնաշար"/>
+      <Item key="frmSetting.lblHeadStartup" value="Սկսել"/>
+      <Item key="frmSetting.chkWelcomePicture" value="Ցուցադրել ողջունող նկար"/>
+      <Item key="frmSetting.chkLastSeenImage" value="Բացել վերջին ցուցադրած պատկերը"/>
+      <Item key="frmSetting.chkShowToolBar" value="Մեկնարկելիս ցուցադրել գործիքների վահանակը"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="Կարգավորման պանակ"/>
+      <Item key="frmSetting.lblHeadViewer" value="Դիտման պատուհան"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Ցուցադրել ոլորման տողերը"/>
+      <Item key="frmSetting.chkShowNavButtons" value="Ցուցադրել նավիգացիայի սլաքները"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Ցուցադրել պատկերի անվանումը վերնագրային պանելի վրա"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Ցուցադրել տախտակը միայն պատկերի հատվածում"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="Թույլատրել հպումներով օգտագործման հնարավորությունը"/>
+      <Item key="frmSetting.lblBackGroundColor" value="Հետնաշերտի գույնը"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Զրոյացնել"/>
+      <Item key="frmSetting.lblHeadOthers" value="Այլ"/>
+      <Item key="frmSetting.chkAutoUpdate" value="Ավտոմատ ստուգել թարմացումները"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="Թույլատրել հավելվածի մի քանի տարբերակ"/>
+      <Item key="frmSetting.chkESCToQuit" value="Թույլատրել փակելու հավելվածը՝ սեղմելով ESC"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="Ցուցադրել ջնջման հաստատման պատուհանը"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="Ավտոմատ բերել կենտրոն՝ պատկերի չափսով պատուհանի ռեժիմում"/>
+      <Item key="frmSetting.chkShowToast" value="Ցուցադրել օգնող հաղորդագրություններ"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="Պատկերի բեռնում"/>
+      <Item key="frmSetting.chkFindChildFolder" value="Գտնել պատկերներ դուստր պանակում"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="Ցուցադրել թաքնված պատկերները"/>
+      <Item key="frmSetting.chkLoopViewer" value="Վերադառնալ առաջին պատկերին՝ վերջին պատկերն անցնելուց հետո"/>
+      <Item key="frmSetting.chkIsCenterImage" value="Դիտման ռեժիմում բերել պատկերը կենտրոն"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="Պատկերների բեռնման հերթականություն"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Հնարավորության դեպքում կիրառել Windows ֆայլային հերթականությունը"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Խմբավորել պատկերները ըստ պանակների"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="ImageBooster-ի միջոցով պահված պատկերների քանակը (միակողմանի)"/>
+      <Item key="frmSetting.lblColorManagement" value="Գունային կարգավորումներ"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="Կիրառել նաև ներառված գունային պրոֆիլ չունեցող պատկերների դեպքում"/>
+      <Item key="frmSetting.lblColorProfile" value="Գունային պրոֆիլ."/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="Դիտարկել…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="Բացակայում է"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Անհատական…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="Մկնիկի ոլորման գործողություններ"/>
+      <Item key="frmSetting.lblMouseWheel" value="Մկնիկի ոլորակ"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="Մկնիկի ոլորակ + Alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Մկնիկի ոլորակ + Ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="Մկնիկի ոլորակ + Shift"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="Ոչինչ չանել"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="Մասշտաբ"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Ոլորել ուղղահայաց ուղղությամբ"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Ոլորել հորիզոնական ուղղությամբ"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Նախորդ/հաջորդ պատկերը"/>
+      <Item key="frmSetting.lblHeadZooming" value="Մոտեցնել"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Մոտեցնելու օպտիմիզացիա"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Ավտո (ցածր որակ/մոտակա նմանակ)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Ցածր որակ"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Բարձր որակ"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Երկկողմանի"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Երկբևեռ"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Մոտակա նմանակ"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Բարձր որակ, երկկողմանի"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Բարձր որակ, երկբևեռ"/>
+      <Item key="frmSetting.lblZoomLevels" value="Մոտեցման աստիճաններ"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="Մոտեցման աստիճանները բեռնելու ընթացքում սխալ է տեղի ունեցել։ Մանրամասները՝&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Նախադիտման վահանակ"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="Ցուցադրել նախադիտումը աջ կողմում"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Ցուցադրել նախադիտման ոլորման սյունակը"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Նախադիտման պատկերի չափս (պիքսել)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="Սլայդերի ցուցադրում"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="Վերադառնալ առաջին պատկերին՝ վերջին պատկերն անցնելուց հետո"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="Սլայդերի ցուցադրման հետհաշվարկ"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="Կիրառել կամայական ժամանակահատված"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="Սլայդերի փոփոխման ժամանակահատված՝ {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="մինչև"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="Պահպանել պտտած պատկերը դիտելուց հետո"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="Ընտրել հավելված՝ պատկերի խմբագրման համար"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="Խմբագրման հավելվածը բացելուց հետո՝"/>
+      <Item key="frmSetting.lblImageQuality" value="Պատկերի որակը՝"/>
+      <Item key="frmSetting.btnEditEditExt" value="Խմբագրել…"/>
+      <Item key="frmSetting.btnEditResetExt" value="Վերակագնել լռելյայնը"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="Խմբագրել նիշքերի բոլոր տիպերը…"/>
+      <Item key="frmSetting._allExtensions" value="բոլոր նիշքերի տիպերը"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Նիշքի տիպը"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="Հավելվածի անվանումը"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="Հավելվածի հասցեն"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Հավելվածի փաստարկները"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Պահել պատկերի խմբագրման ամսաթիվը՝ պատկերի պահպանման ընթացքում"/>
+      <Item key="frmSetting.lblSupportedExtension" value="Սպասարկվող նիշքերի տիպերը՝ {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Բացել նիշքերի տիպերի ասոցիացիաները"/>
+      <Item key="frmSetting.btnAddNewExt" value="Ավելացնել…"/>
+      <Item key="frmSetting.btnRegisterExt" value="Սահմանել լռելյայն պատկերների դիտման հավելվածը…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Հեռացնել նիշքերի տիպերը"/>
+      <Item key="frmSetting.btnDeleteExt" value="Ջնջել"/>
+      <Item key="frmSetting.btnResetExt" value="Վերակագնել լռելյայնը"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="Հնարավոր չէ գրանցել Համացանցից-Հավելված կապը"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="Հնարավոր չէ գրանցել նիշքերի տիպերը ImageGlass հավելվածի համար"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="Նիշքերի տիպերը հաջողությամբ գրանցվե՜լ են։ ImageGlass-ը որպեսպատկերները դիտելու լռելյայն հավելված սահմանելու համար խնդրում ենք բացել Windows Settings &gt; Default Apps ու ընտրեք ImageGlass-ը Photo Viewer բաժնում։"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Հնարավոր չէ ջնջել գրանցված նիշքերի տիպերը ImageGlass հավելվածից"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Նիշքերի բոլոր տիպերը հաջողությամբ հեռացվել են։"/>
+      <Item key="frmSetting.lblToolbarPosition" value="Գործիքների վահանակի դիրքը՝"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Գործիքների վահանակի պատկերակների չափսը՝"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Վերև"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Ներքև"/>
+      <Item key="frmSetting._separator" value="Բաժանարար"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="Խմբագրել գործիքների կոճակները"/>
+      <Item key="frmSetting.lblUsedBtns" value="Ներկա կոճակները՝"/>
+      <Item key="frmSetting.lblAvailBtns" value="Հասանելի կոճակներ՝"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="Տեղաշարժել ընտրված կոճակը ներքև"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="Հեռացնել ընտրված կոճակ(ներ)ը գործիքների վահանակից"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="Ավելացնել ընտրված կոճակ(ներ)ը գործիքների վահանակին"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="Տեղափոխել ընտրված կոճակները վերև"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Բերել գործիքների վահանակի կոճակները պատուհանի կենտրոն"/>
+      <Item key="frmSetting.chkHideTooltips" value="Անջատել գործիքների վահանակի հուշումները"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="Կիրառել RGB ձևաչափը Alpha տվյալների հետ միասին"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="Կիրառել HEX ձևաչափը Alpha տվյալների հետ միասին"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="Կիրառել HSL ձևաչափը Alpha տվյալների հետ միասին"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="Կիրառել HSV ձևաչափը Alpha տվյալների հետ միասին"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="Պատճենելու ընթացքում լռելյայն գունային ձևաչափը"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="Ցուցադրել էջի նավիգացիայի գործիքները բազմէջ պատկերների դեպքում"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Պահել Exif գործիքը բոլորի առջևից"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Ընտրել Exif գործիքի նիշքը"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Exif գործիքը գոյություն չունի կամ վնասված է՝&#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Հրամանների փաստարկներ՝"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Հրամանի նախադիտում՝"/>
+      <Item key="frmSetting.lblLanguageText" value="Տեղադրված լեզուները"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; Թարմացնել"/>
+      <Item key="frmSetting.lblLanguageWarning" value="Լեզվային փաթեթը կարող է համադրելի չլինել հետևյալի հետ՝ {0}"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Տեղադրել նոր լեզվային փաթեթ (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Ստեղծել լեզվային նոր փաթեթ…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; Խմբագրել ընտրվծ լեզվային փաթեթը…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Ավելացնել նոր լեզվային փաթեթներ…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="Տեղադրված ոճեր՝ {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="Ներբեռնել ոճեր…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="Թարմացնել"/>
+      <Item key="frmSetting.btnThemeInstall" value="Տեղադրել…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="Հեռացնել…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="Պահպանել որպես…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="Բացել ոճերի պանակը"/>
+      <Item key="frmSetting.btnThemeApply" value="Կիրառել ոճը"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="Անվանում"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="Տարբերակ"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="Հեղինակ"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="Էլ. հասցե"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="Կայք"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="Համատեղելիություն"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="Նկարագրություն"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="Ձեր ոճը հաջողությամբ տեղադրվե՜լ է։"/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="Հնարավոր չէ տեղադրել ոճը։"/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="Հնարավոր չէ հեռացնել ընտրված ոճը։"/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="Ձեր ընտրած ոճը պահպանվել է այստեղ՝ {0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="Հնարավոր չէ պահպանել Ձեր ընտրած ոճը։"/>
+      <Item key="frmSetting.btnThemeApply._Success" value="Ընտրված ոճը հաջողությամբ կիրառվե՜լ է։"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="Հնարավոր չէ կիրառել ընտրված ոճը։"/>
+      <Item key="frmSetting.btnKeyReset" value="Վերակագնել լռելյայնը"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="Space / Backspace"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="PageUp / PageDown"/>
+      <Item key="frmSetting.lblKeysUpDown" value="Վերև / Ներքև սլաքներ"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="Ձախ / Աջ սլաքներ"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="Նախորդ / Հաջորդ Պատկեր"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="Շրջել Ձախ / Աջ"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="Շրջել Վերև / Ներքև"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="Մոտեցնել / Հեռացնել"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="Ընդհատել սլայդերի ցուցադրումը"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="Ոչինչ չանել"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="Նիշքի տիպը"/>
+      <Item key="frmAddNewFormat.btnOK" value="Լավ"/>
+      <Item key="frmAddNewFormat.btnClose" value="Փակել"/>
+      <Item key="frmEditApp.lblFileExtension" value="Նիշքի տիպը"/>
+      <Item key="frmEditApp.lblAppName" value="Հավելվածի անվանումը"/>
+      <Item key="frmEditApp.lblAppPath" value="Հավելվածի հասցեն"/>
+      <Item key="frmEditApp.lblAppArguments" value="Հավելվածի փաստարկները"/>
+      <Item key="frmEditApp.btnReset" value="Զրոյացնել"/>
+      <Item key="frmEditApp.btnOK" value="Լավ"/>
+      <Item key="frmEditApp.btnClose" value="Փակել"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="Նախադիտում"/>
+      <Item key="frmFirstLaunch._Text" value="Առաջին գործարկման կարգավորումներ"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ImageGlass-ը պետք է փակի բոլոր գործընթացները՝ նոր կարգավորումները կիրառելու համար։ Ցանկանու՞մ եք շարունակել։"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="Քայլ {0}/{1}"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="Հաջորդը"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="Կատարված է"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="Բաց թողնել սա ու բացել ImageGlass-ը"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="Ընտրել լեզուն"/>
+      <Item key="frmFirstLaunch.lblLayout" value="Ընտրել դասավորություն"/>
+      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Ստանդարտ"/>
+      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Ձևավորող"/>
+      <Item key="frmFirstLaunch.lblTheme" value="Ընտրել ոճը"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="Հաստատե՞լ ImageGlass-ը որպես պատկերների դիտման լռելյայն հավելված։"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="Այո"/>
+      <Item key="frmCrop.lblWidth" value="Լայնություն՝"/>
+      <Item key="frmCrop.lblHeight" value="Բարձրություն՝"/>
+      <Item key="frmCrop.btnSave" value="Պահպանել"/>
+      <Item key="frmCrop.btnSaveAs" value="Պահպանել որպես…"/>
+      <Item key="frmCrop.btnCopy" value="Պատճենել"/>
+      <Item key="frmCrop.btnReset" value="Զրոյացնել"/>
+      <Item key="FrmExifTool.clnProperty" value="Հատկանիշ"/>
+      <Item key="FrmExifTool.clnValue" value="Արժեք"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Պատճենել արժեքը"/>
+      <Item key="FrmExifTool.btnExport" value="Արտահանել…"/>
+      <Item key="FrmExifTool.btnClose" value="Փակել"/>
+    </Content>
+  </Language>
+</ImageGlass>

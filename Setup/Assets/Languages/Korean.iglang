@@ -277,7 +277,7 @@
       <Item key="frmSetting.chkShowPageNavAuto" value="다중 페이지 이미지를 위한 페이지 탐색 도구 자동 표시"/>
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Exif 도구 항상 위에 표시"/>
       <Item key="frmSetting.lnkSelectExifTool" value="Exif 도구 파일 선택"/>
-      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Exif 도구가 없거나 무료함: &#10;{0}"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Exif 도구가 없거나 무효함: &#10;{0}"/>
       <Item key="frmSetting.lblExifToolCommandArgs" value="명령 인수:"/>
       <Item key="frmSetting.lblExifToolCommandPreview" value="명령 미리보기:"/>
       <Item key="frmSetting.lblLanguageText" value="설치된 언어"/>

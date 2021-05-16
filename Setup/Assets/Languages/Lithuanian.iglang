@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="lt-lt" langName="Lietuvių" author="Džiugas Jan" description="Lietuvių kalba" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="Kai kurie nustatymai, yra nepalaikomi su jūsų „ImageGlass“ {0}. Yra rekomenduojama, jas atnaujinti prieš tęsiant.&#10;&#10;- Spauskite „Taip“ norint sužinoti apie pakeitimus.&#10;- Spauskite „Ne“, kad atidarytumėt „ImageGlass“ su numatytais nustatymais."/>
+      <Item key="_.ImageOrderBy._Name" value="Pavadinimas (default)"/>
+      <Item key="_.ImageOrderBy._Length" value="Ilgis"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Sukurimo Laikas"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Paskutinis pasiekimo (atidarymo) laikas"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Paskutinis įrašymo laikas"/>
+      <Item key="_.ImageOrderBy._Extension" value="Papildinys/Plėtinys"/>
+      <Item key="_.ImageOrderBy._Random" value="Atsitiktinai"/>
+      <Item key="_.ImageOrderType._Asc" value="Didėjančia tvarka"/>
+      <Item key="_.ImageOrderType._Desc" value="Mažėjančia tvarka"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Niekas"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Minimizuoti"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Uždaryti"/>
+      <Item key="frmMain.mnuMainFile" value="Failas"/>
+      <Item key="frmMain.mnuMainOpenFile" value="Atidaryti Failą…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Atidaryti nuotraukos informacija iš iškarpinės"/>
+      <Item key="frmMain.mnuMainNewWindow" value="Atidaryti nauja langą"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Negalima atidaryti naujo lango, nes yra leidžiama, tik vieną yra leidžiama"/>
+      <Item key="frmMain.mnuSaveImage" value="Išsaugoti nuotrauką"/>
+      <Item key="frmMain.mnuMainSaveAs" value="Išsaugoti paveikslą kaip…"/>
+      <Item key="frmMain.mnuMainRefresh" value="Įkelti iš naujo"/>
+      <Item key="frmMain.mnuMainReloadImage" value="Perleisti iš naujo nuotrauką"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="Atnaujinti nuotraukų sąrašą"/>
+      <Item key="frmMain.mnuOpenWith" value="Atidaryti naudojant…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Redaguoti nuotrauką {0}…"/>
+      <Item key="frmMain.mnuMainPrint" value="Spausdinti…"/>
+      <Item key="frmMain.mnuMainNavigation" value="Navigacija"/>
+      <Item key="frmMain.mnuMainViewNext" value="Rodyti kitą paveikslą"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Dešininė Rodyklė / „PageDown“"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="Rodyti praeitą paveikslą"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Kairinė Rodyklė / „PageUp“"/>
+      <Item key="frmMain.mnuMainGoto" value="Eiti į…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="Eiti į pirmąjį paveikslą"/>
+      <Item key="frmMain.mnuMainGotoLast" value="Eiti į paskutinį paveikslą"/>
+      <Item key="frmMain.mnuMainNextPage" value="Rodyti kitą puslapį"/>
+      <Item key="frmMain.mnuMainPrevPage" value="Rodyti paskutinį puslapį"/>
+      <Item key="frmMain.mnuMainFirstPage" value="Rodyti pirmąjį puslapį"/>
+      <Item key="frmMain.mnuMainLastPage" value="Rodyti paskutinį puslapį"/>
+      <Item key="frmMain.mnuMainZoom" value="Didinimas"/>
+      <Item key="frmMain.mnuMainZoomIn" value="Priartinti"/>
+      <Item key="frmMain.mnuMainZoomOut" value="Nutolinti"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="Keisti mastelį, kad tilptų"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="Keisti mastelį, kad užpildytų"/>
+      <Item key="frmMain.mnuMainActualSize" value="Tikras dydis"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Užrakinti didinimą"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="Automatiškai didinti"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="Didinti iki storio"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="Dididinti iki aukščio"/>
+      <Item key="frmMain.mnuMainImage" value="Vaizdas"/>
+      <Item key="frmMain.mnuMainChannels" value="Rodyti kanalus"/>
+      <Item key="frmMain.mnuMainChannels._All" value="Visi"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="Raudonas"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="Žalias"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="Mėlynas"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="Juodas"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="„Alpha“"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Kraunama tvarka"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="Pasukti kairėn"/>
+      <Item key="frmMain.mnuMainRotateRight" value="Pasukti dešinėn"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="Pasukti Horizontaliai"/>
+      <Item key="frmMain.mnuMainFlipVert" value="Pasukti Vertikaliai"/>
+      <Item key="frmMain.mnuMainRename" value="Pervadinti vaizdą…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Perkelti į šiukšlinę"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Ištrinti visai"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Ištraukti nuotraukos puslapius ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="Pradėti / Sustabdyti animuoti nuotrauką"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Nustatyti kaip darbalaukio fona"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="Nustatyti kaip „Windows“ įjungimo vaizdą"/>
+      <Item key="frmMain.mnuMainImageLocation" value="Atidaryti failo vietovę"/>
+      <Item key="frmMain.mnuMainImageProperties" value="Paveikslo ypatybės"/>
+      <Item key="frmMain.mnuMainClipboard" value="Iškarpinė"/>
+      <Item key="frmMain.mnuMainCopy" value="Kopijuoti"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="Kopijuoti paveikslėlio informacija"/>
+      <Item key="frmMain.mnuMainCut" value="Iškirpti"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="Kopijuoti paveikslo vietovę"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="Ištuštinti iškarpinę"/>
+      <Item key="frmMain.mnuWindowFit" value="„Lango“ talpinti"/>
+      <Item key="frmMain.mnuMainFullScreen" value="Per visą ekraną"/>
+      <Item key="frmMain.mnuFrameless" value="Be rėmų „Frameless“"/>
+      <Item key="frmMain.mnuMainSlideShow" value="Skaidrių demonstracija"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="Pradėti skaidrių rodymą"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="Pauzė / Tęsti skaidrių demonstracija"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="Išeiti iš skaidrių demonstravimo"/>
+      <Item key="frmMain.mnuMainShare" value="Bendrinti…"/>
+      <Item key="frmMain.mnuMainLayout" value="Išvaizda"/>
+      <Item key="frmMain.mnuMainToolbar" value="Įrankių juosta"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="Miniatiūrų skydas"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="Šaškinis fonas"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Laikyti visada virš kitų programų"/>
+      <Item key="frmMain.mnuMainTools" value="Įrankiai"/>
+      <Item key="frmMain.mnuMainColorPicker" value="Spalvų rinkiklis"/>
+      <Item key="frmMain.mnuMainPageNav" value="Puslapio navigacija"/>
+      <Item key="frmMain.mnuMainCrop" value="Apkirpimas"/>
+      <Item key="frmMain.mnuExifTool" value="Išeiti iš įrankio"/>
+      <Item key="frmMain.mnuMainSettings" value="Nustatymai…"/>
+      <Item key="frmMain.mnuMainHelp" value="Pagalba"/>
+      <Item key="frmMain.mnuMainAbout" value="Apie"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="Pirmo-paleidimo konfigūracijos…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Tikrinti ar yra atnaujinimų…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Naują versiją aptikta!"/>
+      <Item key="frmMain.mnuMainReportIssue" value="Pranešti apie problemą…"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Išeiti iš „ImageGlass“"/>
+      <Item key="frmMain.picMain._ErrorText" value="„ImageGlass“ negali atidaryti šito paveikslo, nes failas atrodo pažeistas, korumpuotas, arba nepalaikomas."/>
+      <Item key="frmMain._ImageNotExist" value="Rodoma nuotrauką, neegzistuoją."/>
+      <Item key="frmMain.btnMenu" value="Meniu (Hotkey: `)"/>
+      <Item key="frmMain._OpenFileDialog" value="Visi palaikomi failo formatai"/>
+      <Item key="frmMain._Files" value="failas(-ai)"/>
+      <Item key="frmMain._Pages" value="puslapiai"/>
+      <Item key="frmMain._ImageData" value="Paveikslėlio informacija"/>
+      <Item key="frmMain._RenameDialogText" value="Pervadinti"/>
+      <Item key="frmMain._RenameDialog" value="Naujas failo pavadinimas"/>
+      <Item key="frmMain._GotoDialogText" value="Įveskite nuotraukos indeksą, kad peržiūrėtumėte jį. Spauskite „Enter“"/>
+      <Item key="frmMain._DeleteDialogText" value="Ištrinti failą '{0}' ?"/>
+      <Item key="frmMain._DeleteDialogTitle" value="Patvirtinti"/>
+      <Item key="frmMain._ExtractPageText" value="Ištraukiama nuotraukos puslapiai. Prašome pasirinkti išgavos aplankalą."/>
+      <Item key="frmMain._FullScreenMessage" value="Spauskite {0}, kad išeitumėte iš pilno ekrano režimo."/>
+      <Item key="frmMain._SlideshowMessage" value="Spauskite „ESC“, kad išeitumėte iš skaidrių demonstracija.&#10;Spauskite dešininį pelės mygtuką, norint atidaryti konteksto meniu."/>
+      <Item key="frmMain._SlideshowMessagePause" value="Skaidrių demonstravimas yra pristabdytas"/>
+      <Item key="frmMain._SlideshowMessageResume" value="Skaidrių demonstravimas yra tęsiamas"/>
+      <Item key="frmMain._CopyFileText" value="Nukopijuota {0} failas(-ų)"/>
+      <Item key="frmMain._CutFileText" value="Iškirpta {0} failas(-ų)"/>
+      <Item key="frmMain._CopyImageData" value="Paveikslas buvo nukopijuotas į iškarpinę"/>
+      <Item key="frmMain._ClearClipboard" value="Iškarpinė buvo išvalyta"/>
+      <Item key="frmMain._SaveChanges" value="Išsaugoma..."/>
+      <Item key="frmMain._SaveImage" value="Failas buvo išsaugotas į {0}"/>
+      <Item key="frmMain._SavingImage" value="Išsaugoma... {0}"/>
+      <Item key="frmMain._SaveImageError" value="Nepavyko išsaugoti {0}."/>
+      <Item key="frmMain._Loading" value="Kraunama..."/>
+      <Item key="frmMain._FirstItemOfList" value="Pasiekta pirmoji nuotrauką"/>
+      <Item key="frmMain._LastItemOfList" value="Pasiekta paskutinė nuotrauką"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="Modifikacija, animuotam formatui yra nepalaikoma"/>
+      <Item key="frmMain._SetLockImage_Error" value="Įvyko klaida, bandant nustatyti užrakto ekrano nuotrauką"/>
+      <Item key="frmMain._SetLockImage_Success" value="Užrakto ekrano nuotrauka, buvo nustatytą sėkmingai"/>
+      <Item key="frmMain._SetBackground_Error" value="Įvyko klaida, bandant nustatyti jūsų darbalaukio foną"/>
+      <Item key="frmMain._SetBackground_Success" value="Darbalaukio fonas, buvo nustatytas sėkmingai"/>
+      <Item key="frmMain._PageExtractComplete" value="Puslapio ištraukimas atliktas."/>
+      <Item key="frmMain._Frameless" value="Laikykite „SHIFT“, kad pajudintumėt programą."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Iškarpinė nelaiko paveikslo informacijos."/>
+      <Item key="frmAbout.lblSlogant" value="„Lengva, universali nuotraukų/paveikslų žiūrovas/-ę“"/>
+      <Item key="frmAbout.lblInfo" value="Informacija"/>
+      <Item key="frmAbout.lblComponent" value="Komponentai"/>
+      <Item key="frmAbout.lblReferences" value="Nuorodos"/>
+      <Item key="frmAbout.lblVersion" value="Versija: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="Kontaktai"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="Programinis atnaujinimas"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» Tikrinti ar yra atnaujinimų…"/>
+      <Item key="frmAbout._Text" value="Apie"/>
+      <Item key="frmAbout._PortableText" value="[Portable]"/>
+      <Item key="frmSetting._Text" value="Nustatymai"/>
+      <Item key="frmSetting.btnSave" value="Išsaugoti"/>
+      <Item key="frmSetting.btnCancel" value="Atšaukti"/>
+      <Item key="frmSetting.btnApply" value="Patvirtinti"/>
+      <Item key="frmSetting.lblGeneral" value="Bendra"/>
+      <Item key="frmSetting.lblImage" value="Vaizdas"/>
+      <Item key="frmSetting.lblEdit" value="Pakeisti"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="Failo tipo asociacija"/>
+      <Item key="frmSetting.lblToolbar" value="Įrankių juosta"/>
+      <Item key="frmSetting.lblLanguage" value="Kalba"/>
+      <Item key="frmSetting.lblTheme" value="Tema"/>
+      <Item key="frmSetting.lblKeyboard" value="Klaviatūra"/>
+      <Item key="frmSetting.lblHeadStartup" value="Įjungimas"/>
+      <Item key="frmSetting.chkWelcomePicture" value="Rodyti „Sveiki!“ ekraną, pajungime"/>
+      <Item key="frmSetting.chkLastSeenImage" value="Atidaryti paskutinį matytą paveikslą"/>
+      <Item key="frmSetting.chkShowToolBar" value="Rodyti įrankių juostą, kai pajungiame programą"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="Konfigūracijos vietovė"/>
+      <Item key="frmSetting.lblHeadViewer" value="Žiūrovas"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Rodyti žiūrovo slinkties juostą/-as"/>
+      <Item key="frmSetting.chkShowNavButtons" value="Rodyti navigacijos „rodyklių“ mygtukus"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Parodyti bazini vardą rodomos nuotraukos, ant pavadinimo juostos"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Rodyti šaškių lentos, tik ant nuotraukos regiono"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="Įjungti lietimo pritaikymą"/>
+      <Item key="frmSetting.lblBackGroundColor" value="Fono spalva"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Atstatyti"/>
+      <Item key="frmSetting.lblHeadOthers" value="Kiti"/>
+      <Item key="frmSetting.chkAutoUpdate" value="Savaime/Automatiškai tikrinti, ar yra naujinių"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="Leisti daugumai programos procesų"/>
+      <Item key="frmSetting.chkESCToQuit" value="Leisti paspaudus „ESC“, kad išeitų iš programos"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="Rodyti „Ar jūs esate tikras, kad norite ištrinti?“ Patvirtinimo dialogą"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="Automatiškai centruoti langą, naudojant „Talpinti“ režime"/>
+      <Item key="frmSetting.chkShowToast" value="Rodyti tosto pranešima"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="Paveikslas kraunasi"/>
+      <Item key="frmSetting.chkFindChildFolder" value="Rasti nuotraukų visuose sub-aplankuose pasirinktame aplankę"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="Rodyti paslėptus paveikslus"/>
+      <Item key="frmSetting.chkLoopViewer" value="Grįžti į pirmąją nuotrauką, kai per žiūrovą pasiektą pabaigą"/>
+      <Item key="frmSetting.chkIsCenterImage" value="Centruoti paveikslą paleidus"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="Paveikslo kraunama tvarka"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Naudoti „Windows“ failų ieškyklės išdėstymą, jei įmanoma"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Grupuoti paveikslus, pagal vietovę"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="Numeris nuotraukų, kurie yra talpykloje „ImageBooster“ (Vien pusinė)"/>
+      <Item key="frmSetting.lblColorManagement" value="Spalvų tvarkymas"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="Pritaikyti irgi, nuotraukom kuriuos neturi įrašytos spalvų profilio"/>
+      <Item key="frmSetting.lblColorProfile" value="Spalvų profilis:"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="Naršyti…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="Nėra"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Pasirinktinis…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="Slinkimas pelės veiksmas"/>
+      <Item key="frmSetting.lblMouseWheel" value="Pelės ratukas"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="Pelės ratukas + „Alt“"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Pelės ratukas + „Ctrl“"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="Pelės ratukas + „Shift“"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="Daryti nieko"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="Didinimas"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Slinkti vertikaliai"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Slinkti horizontaliai"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Praeita/kita nuotrauką"/>
+      <Item key="frmSetting.lblHeadZooming" value="Priartinimas/Nutolinimas"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Priartinimo/Nutolimo optimizaciją"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Automatiškai (Mažiausia kokybė/„Arčiausias-kaimynas“)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Maža kokybė"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Aukšta kokybė"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Bilinijinė"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Bikubinis"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="„Arčiausio-kaimyno“"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Aukštos kokybės, bilinijinis"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Aukštos kokybės, bikubinis"/>
+      <Item key="frmSetting.lblZoomLevels" value="Priartinimo/Nutolinimo lygiai"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="Įvyko klaida, atnaujinant Priartinimo/Nutolinimo lygius. Klaidos pranešimas:&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Miniatiūrų juostą"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="Rodyti miniatiūras dešinėję pusėje"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Rodyti miniatiūrų slinkties juostą"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Miniatiūros dimensija (Pikseliais)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="Skaidrių demonstracija"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="Grįžti į pirmąją nuotrauką, kai per skaidrių demonstravimą pasiektą pabaigą"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="Rodyti skaidrių demonstravimo laikmatį"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="Naudoti belekokį intervalą"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="Skaidrių demonstravimo intervalas: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="į"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="Išsaugoti rodoma paveikslą po pasukimo"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="Pasirinkti programą, kuri redaguoją nuotraukas"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="Po atidarant redagavimo programą:"/>
+      <Item key="frmSetting.lblImageQuality" value="Paveikslo kokybė:"/>
+      <Item key="frmSetting.btnEditEditExt" value="Pakeisti…"/>
+      <Item key="frmSetting.btnEditResetExt" value="Atkurti į numatytuosius"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="Keisti visus priedinius…"/>
+      <Item key="frmSetting._allExtensions" value="visi priediniai"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Failo plėtinys"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="Programos pavadinimas"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="Programos vietovė"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Programos argumentai"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Išlaikyti nuotraukos modifikacijos data, po išsaugojimo"/>
+      <Item key="frmSetting.lblSupportedExtension" value="Palaikomi formatai: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Atidaryti failų tipų asociaciją"/>
+      <Item key="frmSetting.btnAddNewExt" value="Pridėti…"/>
+      <Item key="frmSetting.btnRegisterExt" value="Nustatyti, kaip numatytąjį nuotraukų žiūrovą…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Neregistruoti plėtiniai"/>
+      <Item key="frmSetting.btnDeleteExt" value="Ištrinti"/>
+      <Item key="frmSetting.btnResetExt" value="Atkurti į numatytuosius"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="Nepavyko registruoti „Web-to-App“ sujungimą"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="Nepavyko registruoti failų priedinius „ImageGlass“ programai"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="Visi failo priediniai yra registruoti sėkmingai! Kad nustatytumėte „ImageGlass“, kaip numatytąjį nuotraukų žiūrovą, prašome atidaryti „Windows“ parametrus &gt; Programėlės, Numatytosios programos, ir nustatyti „ImageGlass“ kaip numatytąją „Nuotraukų peržiūros priemonė“."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Nepavyko ištrinti registruotus failų priedinius „ImageGlass“ programos"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Visi failo priediniai yra neberegistruoti sėkmingai!"/>
+      <Item key="frmSetting.lblToolbarPosition" value="Įrankių juostos vietovė:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Įrankių juostos piktogramos dydis:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Viršus"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Apačia"/>
+      <Item key="frmSetting._separator" value="Skirtukas"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="Konfiguriuoti įrankių juostos myktukus"/>
+      <Item key="frmSetting.lblUsedBtns" value="Dabartiniai mygtukai:"/>
+      <Item key="frmSetting.lblAvailBtns" value="Galimi Mygtukai:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="Pakelti pasirinktą mygtuką į apačią"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="Išimti pasirinktą/-us mygtuką/-us iš įrankių juostos"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="Pridėti pasirinkta/-us mygtuką/-us į įrankių juostą"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="Pakelti pasirinktą mygtuką į viršų"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Centruoti įrankių juostos mygtukus horizontaliai lange"/>
+      <Item key="frmSetting.chkHideTooltips" value="Slėpti įrankių juostos patarimus"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="Naudoti „RGB“ formatą su „Alpha“ skaitmenų"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="Naudoti „HEX“ formatą su „Alpha“ skaitmenų"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="Naudoti „HSL“ formatą su „Alpha“ skaitmenų"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="Naudoti „HSV“ formatą su „Alpha“ skaitmenų"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="Numatytas spalvų kodo formatas, kai kopijuojamą"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="Automatiškai rodyti, Puslapio navigacijos įrankį daugumai puslapių nuotraukom"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Laikyti „Exif“ įrankį visą laiką, ant viršaus"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Pasirinkti „Exif“ įrankio faila"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="„Exif“ įrankis neegzistuoją, arba yra klaidingas: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Komandos argumentai:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Komandų peržiūra:"/>
+      <Item key="frmSetting.lblLanguageText" value="Įdiegtos kalbos"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; Atnaujinti iš naujo"/>
+      <Item key="frmSetting.lblLanguageWarning" value="Šitas kalbos paketas negali būti suderintas su {0}"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Įdiegti naują kalbos paketą (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Sukurti naują kalbos paketą…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; Redaguoti dabartinį kalbos paketą…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Gauti daugiau kalbos paketų…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="Įdiegtos temos: {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="Atsisiųsti temas…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="Įkelti iš naujo"/>
+      <Item key="frmSetting.btnThemeInstall" value="Įdiegti…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="Išdiegti…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="Išsaugoti kaip…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="Atidaryti temų aplankala"/>
+      <Item key="frmSetting.btnThemeApply" value="Pritaikyti tema"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="Vardas"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="Versija"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="Autorius"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="El. paštas"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="Tinklapis"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="Suderinimas"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="Apibūdinimas"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="Jūsų tema, buvo sėkmingai įdiegta!"/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="Nepavyko įdiegti jūsų temos."/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="Nepavyko išdiegti pasirinktos temos."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="Jūsų pasirinkta tema, buvo išsaugota {0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="Nepavyko išsaugoti jūsų pasirinktos temos."/>
+      <Item key="frmSetting.btnThemeApply._Success" value="Pasirinkta tema, buvo pritaikytą sėkmingai!"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="Nepavyko pritaikyti pasirinktos temos."/>
+      <Item key="frmSetting.btnKeyReset" value="Atkurti į numatytuosius"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="Tarpas / Ištrinti"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="„PageUp“ / „PageDown“"/>
+      <Item key="frmSetting.lblKeysUpDown" value="Į viršų / Į apačia rodyklės"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="Kairė / Dešinė rodyklės"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="Praeita / Kita Nuotrauka"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="Pasukti į Kaire / Dešine"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="Pasukti į Viršų / Apačią"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="Priartinti / Nutolinti"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="Sustabdyti skaidrių demonstraciją"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="Daryti nieko"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="Failo plėtinys"/>
+      <Item key="frmAddNewFormat.btnOK" value="Gerai"/>
+      <Item key="frmAddNewFormat.btnClose" value="Uždaryti"/>
+      <Item key="frmEditApp.lblFileExtension" value="Failo plėtinys"/>
+      <Item key="frmEditApp.lblAppName" value="Programos pavadinimas"/>
+      <Item key="frmEditApp.lblAppPath" value="Programos vietovė"/>
+      <Item key="frmEditApp.lblAppArguments" value="Programos argumentai"/>
+      <Item key="frmEditApp.btnReset" value="Atstatyti"/>
+      <Item key="frmEditApp.btnOK" value="Gerai"/>
+      <Item key="frmEditApp.btnClose" value="Uždaryti"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="Peržiūra"/>
+      <Item key="frmFirstLaunch._Text" value="Pirmo-paleidimo konfigūracijos"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="„ImageGlass“ reikalauja, kad išjungtų visas savo procesus, norint pritaikyti naujus nustatymus. Ar norite tęsti?"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="Žingsnis {0}/{1}"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="Kitas"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="Atlikta!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="Praleisti šitą, ir paleisti „ImageGlass“"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="Pasirinkti kalbą"/>
+      <Item key="frmFirstLaunch.lblLayout" value="Pasirinkti Išdėstimą"/>
+      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Standartinis"/>
+      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Dizaineris"/>
+      <Item key="frmFirstLaunch.lblTheme" value="Pasirinkti temą"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="Nustatyti „ImageGlass“ kaip Numatytąjį Nuotraukų Žiūrovą?"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="Taip"/>
+      <Item key="frmCrop.lblWidth" value="Plotis:"/>
+      <Item key="frmCrop.lblHeight" value="Aukštis:"/>
+      <Item key="frmCrop.btnSave" value="Išsaugoti"/>
+      <Item key="frmCrop.btnSaveAs" value="Išsaugoti kaip…"/>
+      <Item key="frmCrop.btnCopy" value="Kopijuoti"/>
+      <Item key="frmCrop.btnReset" value="Atstatyti"/>
+      <Item key="FrmExifTool.clnProperty" value="Savybė"/>
+      <Item key="FrmExifTool.clnValue" value="Reikšmė"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Kopijuoti reikšme"/>
+      <Item key="FrmExifTool.btnExport" value="Eksportuoti…"/>
+      <Item key="FrmExifTool.btnClose" value="Uždaryti"/>
+    </Content>
+  </Language>
+</ImageGlass>

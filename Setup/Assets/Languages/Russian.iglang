@@ -269,15 +269,15 @@
       <Item key="frmSetting.btnMoveUp._Tooltip" value="Переместить вверх"/>
       <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Горизонтально центрировать панель инструментов относительно окна"/>
       <Item key="frmSetting.chkHideTooltips" value="Не отображать подсказки панели инструментов"/>
-      <Item key="frmSetting.chkColorUseRGBA" value="Использовать RGB формат для Альфа канала"/>
-      <Item key="frmSetting.chkColorUseHEXA" value="Использовать HEX формат для Альфа канала"/>
-      <Item key="frmSetting.chkColorUseHSLA" value="Использовать HSL формат для Альфа канала"/>
-      <Item key="frmSetting.chkColorUseHSVA" value="Использовать HSV формат для Альфа канала"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="&quot;RGB&quot; формат + альфа-канал"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="&quot;HEX&quot; формат + альфа-канал"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="&quot;HSL&quot; формат + альфа-канал"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="&quot;HSV&quot; формат + альфа-канал"/>
       <Item key="frmSetting.lblDefaultColorCode" value="Формат цветового кода по умолчанию при копировании"/>
       <Item key="frmSetting.chkShowPageNavAuto" value="   Автоматически показывать инструмент &quot;Страницы&quot;&#10;   (отдельно для многостраничных изображений)"/>
-      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Окно ExifTool всегда сверху"/>
-      <Item key="frmSetting.lnkSelectExifTool" value="Выбрать файл ExifTool"/>
-      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="ExifTool не найден: &#10;{0}"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Окно &quot;ExifTool&quot; всегда сверху"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Выбрать файл &quot;ExifTool&quot;"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="&quot;ExifTool&quot; не найден:&#10;{0}"/>
       <Item key="frmSetting.lblExifToolCommandArgs" value="Аргументы команды:"/>
       <Item key="frmSetting.lblExifToolCommandPreview" value="Предпросмотр команды:"/>
       <Item key="frmSetting.lblLanguageText" value="Установленные языки:"/>
@@ -347,13 +347,13 @@
       <Item key="frmCrop.lblWidth" value="Ширина:"/>
       <Item key="frmCrop.lblHeight" value="Высота:"/>
       <Item key="frmCrop.btnSave" value="Сохранить"/>
-      <Item key="frmCrop.btnSaveAs" value="Сохранить как ..."/>
-      <Item key="frmCrop.btnCopy" value="Копировать файл"/>
+      <Item key="frmCrop.btnSaveAs" value="Сохранить ..."/>
+      <Item key="frmCrop.btnCopy" value="Копировать"/>
       <Item key="frmCrop.btnReset" value="Сброс"/>
       <Item key="FrmExifTool.clnProperty" value="Свойства"/>
       <Item key="FrmExifTool.clnValue" value="Значение"/>
-      <Item key="FrmExifTool.btnCopyValue" value="Копир. значение"/>
-      <Item key="FrmExifTool.btnExport" value="Экспорт…"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Копировать"/>
+      <Item key="FrmExifTool.btnExport" value="Экспорт ..."/>
       <Item key="FrmExifTool.btnClose" value="Закрыть"/>
     </Content>
   </Language>

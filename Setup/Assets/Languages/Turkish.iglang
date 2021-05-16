@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="tr-TR" langName="Türkçe" author="Burak Sümer" description="Turkish" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="Bazı ayarlar ImageGlass {0} ile uyumlu değil. Devam etmeden önce bunları güncellemeniz önerilir.&#10;&#10;- Değişiklikler hakkında bilgi edinmek için Evet'i tıklayın.&#10;- ImageGlass'ı varsayılan ayarlarla başlatmak için Hayır'ı tıklayın."/>
+      <Item key="_.ImageOrderBy._Name" value="Adı (varsayılan)"/>
+      <Item key="_.ImageOrderBy._Length" value="Uzunluk"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Oluşturulma zamanı"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Son erişim zamanı"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Son yazma süresi"/>
+      <Item key="_.ImageOrderBy._Extension" value="Eklenti"/>
+      <Item key="_.ImageOrderBy._Random" value="Rasgele"/>
+      <Item key="_.ImageOrderType._Asc" value="Artan"/>
+      <Item key="_.ImageOrderType._Desc" value="Azalan"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Hiçbir şey"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Küçült"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Çıkış"/>
+      <Item key="frmMain.mnuMainFile" value="Dosya"/>
+      <Item key="frmMain.mnuMainOpenFile" value="Dosya aç…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Açık görüntü verilerini Pano'dan"/>
+      <Item key="frmMain.mnuMainNewWindow" value="Yeni bir pencere aç"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Yalnızca bir örneğe izin verildiğinden yeni pencere açılamıyor"/>
+      <Item key="frmMain.mnuSaveImage" value="Resmi Kaydet"/>
+      <Item key="frmMain.mnuMainSaveAs" value="Resmi farklı kaydet…"/>
+      <Item key="frmMain.mnuMainRefresh" value="Yenile"/>
+      <Item key="frmMain.mnuMainReloadImage" value="Resmi yenile"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="Görüntü listesini yenile"/>
+      <Item key="frmMain.mnuOpenWith" value="Birlikte aç…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Resmi düzenle {0}…"/>
+      <Item key="frmMain.mnuMainPrint" value="Yazdır…"/>
+      <Item key="frmMain.mnuMainNavigation" value="Gezinti Tuşları"/>
+      <Item key="frmMain.mnuMainViewNext" value="Görünümü sonraki resim"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Sağ Ok / PageDown"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="Görünümü önceki görüntü"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Sol Ok / PageUp"/>
+      <Item key="frmMain.mnuMainGoto" value="Git…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="İlk resim gidin"/>
+      <Item key="frmMain.mnuMainGotoLast" value="Son görüntü gitmek"/>
+      <Item key="frmMain.mnuMainNextPage" value="Sonraki sayfa"/>
+      <Item key="frmMain.mnuMainPrevPage" value="Önceki sayfa"/>
+      <Item key="frmMain.mnuMainFirstPage" value="İlk sayfayı görüntüleyin"/>
+      <Item key="frmMain.mnuMainLastPage" value="Son sayfayı görüntüleyin"/>
+      <Item key="frmMain.mnuMainZoom" value="Yakınlaştırma"/>
+      <Item key="frmMain.mnuMainZoomIn" value="Yakınlaş"/>
+      <Item key="frmMain.mnuMainZoomOut" value="Uzaklaş"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="Oturtmak için ölçeklendirin"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="Doldurmak için ölçeklendirin"/>
+      <Item key="frmMain.mnuMainActualSize" value="Gerçek boyut"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Yakınlaştırma oranını kilitle"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="Oto-yakınlaştırma"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="Genişlik için ölçek"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="Yükseklik için ölçek"/>
+      <Item key="frmMain.mnuMainImage" value="Resim"/>
+      <Item key="frmMain.mnuMainChannels" value="Kanalları göster"/>
+      <Item key="frmMain.mnuMainChannels._All" value="Hepsi"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="Kırmızı"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="Yeşil"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="Mavi"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="Siyah"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="Alfa"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Yüklenme sırası"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="Sola döndür"/>
+      <Item key="frmMain.mnuMainRotateRight" value="Sağa döndür"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="Yatay Çevir"/>
+      <Item key="frmMain.mnuMainFlipVert" value="Dikey Çevir"/>
+      <Item key="frmMain.mnuMainRename" value="Resmi yeniden adlandır…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Geri Dönüşüm Kutusu'na taşıma"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Sabit diskten silin"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Resim sayfalarını çıkart ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="Start / Stop görüntü hareketlendirme"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Masaüstü arka planı olarak ayarla"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="Kilit ekran görüntüsü olarak ayarla"/>
+      <Item key="frmMain.mnuMainImageLocation" value="Açık görüntü konumu"/>
+      <Item key="frmMain.mnuMainImageProperties" value="Resim Özellikleri"/>
+      <Item key="frmMain.mnuMainClipboard" value="Pano"/>
+      <Item key="frmMain.mnuMainCopy" value="Kopyalayın"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="Görüntü verisini kopyala"/>
+      <Item key="frmMain.mnuMainCut" value="Kes"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="Kopya resim yolu"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="Panoyu Temizle"/>
+      <Item key="frmMain.mnuWindowFit" value="Pencereye Sığdır"/>
+      <Item key="frmMain.mnuMainFullScreen" value="Tam ekran"/>
+      <Item key="frmMain.mnuFrameless" value="Çerçevesiz"/>
+      <Item key="frmMain.mnuMainSlideShow" value="Slayt Gösterisi"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="Slayt Gösterisini Başlat"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="Duraklat / devam slayt gösterisi"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="Slayt Gösterisinden Çık"/>
+      <Item key="frmMain.mnuMainShare" value="Paylaş…"/>
+      <Item key="frmMain.mnuMainLayout" value="Görünüm"/>
+      <Item key="frmMain.mnuMainToolbar" value="Araç çubuğu"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="Küçük resim Masası"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="Renk tahtası arkaplanı"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Pencere her zaman üstte tut"/>
+      <Item key="frmMain.mnuMainTools" value="Aletler"/>
+      <Item key="frmMain.mnuMainColorPicker" value="Renk seçici"/>
+      <Item key="frmMain.mnuMainPageNav" value="Sayfada gezinme"/>
+      <Item key="frmMain.mnuMainCrop" value="Kırpma"/>
+      <Item key="frmMain.mnuExifTool" value="Exif aracı"/>
+      <Item key="frmMain.mnuMainSettings" value="Ayarlar…"/>
+      <Item key="frmMain.mnuMainHelp" value="Yardım"/>
+      <Item key="frmMain.mnuMainAbout" value="Hakkında"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="İlk-başlatma yapılandırmaları…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Güncellemeleri kontrol et…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Yeni sürüm indirilebilir!"/>
+      <Item key="frmMain.mnuMainReportIssue" value="Sorun bildir…"/>
+      <Item key="frmMain.mnuMainExitApplication" value="ImageGlass'tan Çık"/>
+      <Item key="frmMain.picMain._ErrorText" value="ImageGlass bu resmi açamıyor çünkü dosya bozuk, hatalı veya desteklenmiyor olabilir."/>
+      <Item key="frmMain._ImageNotExist" value="Görüntüleme resmi mevcut değil."/>
+      <Item key="frmMain.btnMenu" value="Menü (kısayol tuşu: ')"/>
+      <Item key="frmMain._OpenFileDialog" value="Desteklenen tüm dosyaları"/>
+      <Item key="frmMain._Files" value="dosya (lar)"/>
+      <Item key="frmMain._Pages" value="sayfalar"/>
+      <Item key="frmMain._ImageData" value="Resim verisi"/>
+      <Item key="frmMain._RenameDialogText" value="Yeni isim ver"/>
+      <Item key="frmMain._RenameDialog" value="Yeni dosya adı girin"/>
+      <Item key="frmMain._GotoDialogText" value="Görüntülemek için resim dizinini girin. ENTER tuşuna basın"/>
+      <Item key="frmMain._DeleteDialogText" value="Dosya '{0}' silinsin mi?"/>
+      <Item key="frmMain._DeleteDialogTitle" value="Onay"/>
+      <Item key="frmMain._ExtractPageText" value="Resim sayfaları çıkartılıyor. Lütfen çıktı klasörü seçiniz."/>
+      <Item key="frmMain._FullScreenMessage" value="Tam ekrandan çıkmak için {0}'a basın."/>
+      <Item key="frmMain._SlideshowMessage" value="Slayttan çıkmak için ESC'ye basınız. Durum menüsünü açmak için sağ tıklayın."/>
+      <Item key="frmMain._SlideshowMessagePause" value="Slayt gösterisi duraklatıldı"/>
+      <Item key="frmMain._SlideshowMessageResume" value="Slay gösterisi devam ettirildi"/>
+      <Item key="frmMain._CopyFileText" value="Kopyalanan {0} dosya"/>
+      <Item key="frmMain._CutFileText" value="{0} dosyayı kes"/>
+      <Item key="frmMain._CopyImageData" value="Görüntü panoya kopyalandı"/>
+      <Item key="frmMain._ClearClipboard" value="Pano temizlendi."/>
+      <Item key="frmMain._SaveChanges" value="Değişiklikler kaydediliyor..."/>
+      <Item key="frmMain._SaveImage" value="Resim şuraya kaydedildi&#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="Resim kaydediliyor...&#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="Resim kaydedilemedi&#10;{0}."/>
+      <Item key="frmMain._Loading" value="Yükleniyor…..."/>
+      <Item key="frmMain._FirstItemOfList" value="İlk resme ulaşıldı"/>
+      <Item key="frmMain._LastItemOfList" value="Son resme ulaşıldı"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="Hareketli format için döndürme desteklenmiyor"/>
+      <Item key="frmMain._SetLockImage_Error" value="Görüntüyü yeniden boyutlandırmaya çalışırken tanımlanamayan bir hata oluştu"/>
+      <Item key="frmMain._SetLockImage_Success" value="Kilit ekran görüntüsü başarıyla ayarlandı"/>
+      <Item key="frmMain._SetBackground_Error" value="Arkaplan görüntüsünü ayarlarken bir hata oluştu"/>
+      <Item key="frmMain._SetBackground_Success" value="Arkaplan görüntüsü başarıyla ayarlandı"/>
+      <Item key="frmMain._PageExtractComplete" value="Sayfa çıkartma işlemi tamamlandı."/>
+      <Item key="frmMain._Frameless" value="Pencereyi taşımak için SHIFT tuşunu basılı tutun."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Pano görsel verisi içermiyor."/>
+      <Item key="frmAbout.lblSlogant" value="Hafif ve çok yönlü bir resim görüntüleyici"/>
+      <Item key="frmAbout.lblInfo" value="Bilgilendirme"/>
+      <Item key="frmAbout.lblComponent" value="Bileşenler"/>
+      <Item key="frmAbout.lblReferences" value="Kaynaklar"/>
+      <Item key="frmAbout.lblVersion" value="Sürüm: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="İletişim"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="Yazılım güncellemeleri"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» Güncellemeleri kontrol et…"/>
+      <Item key="frmAbout._Text" value="Hakkında"/>
+      <Item key="frmAbout._PortableText" value="[Portable]"/>
+      <Item key="frmSetting._Text" value="Ayarlar"/>
+      <Item key="frmSetting.btnSave" value="Kaydet"/>
+      <Item key="frmSetting.btnCancel" value="Hayır"/>
+      <Item key="frmSetting.btnApply" value="Uygula"/>
+      <Item key="frmSetting.lblGeneral" value="Genel"/>
+      <Item key="frmSetting.lblImage" value="Resim"/>
+      <Item key="frmSetting.lblEdit" value="Düzenle"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="Dosya Türü İlişkileri"/>
+      <Item key="frmSetting.lblToolbar" value="Araç çubuğu"/>
+      <Item key="frmSetting.lblLanguage" value="Dil Seç"/>
+      <Item key="frmSetting.lblTheme" value="Tema"/>
+      <Item key="frmSetting.lblKeyboard" value="Klavye"/>
+      <Item key="frmSetting.lblHeadStartup" value="Başlat"/>
+      <Item key="frmSetting.chkWelcomePicture" value="Hoş geldiniz resmi göster"/>
+      <Item key="frmSetting.chkLastSeenImage" value="Son görüntülenen resmi aç"/>
+      <Item key="frmSetting.chkShowToolBar" value="Başlarken araç çubuğunu göster"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="Yapılandırma dizini"/>
+      <Item key="frmSetting.lblHeadViewer" value="Görüntüleyici"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Görüntüleyici kaydırma çubuklarını görüntüle"/>
+      <Item key="frmSetting.chkShowNavButtons" value="Gezinti yön tuşlarını göster"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Görüntülenen imajın adını başlık çubuğunda göster"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Dama tahtasını sadece resim bölgesinde görüntüle"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="Dokunma hareketi desteğini etkinleştir"/>
+      <Item key="frmSetting.lblBackGroundColor" value="Arka plan rengi"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Ön değerler"/>
+      <Item key="frmSetting.lblHeadOthers" value="Diğerleri"/>
+      <Item key="frmSetting.chkAutoUpdate" value="Güncellemeler otomatik olarak kontrol edilsin mi"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="Çoklu pencelere izin ver."/>
+      <Item key="frmSetting.chkESCToQuit" value="ESC tuşuyla uygulamadan çık"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="Silme işleminden önce onay iste."/>
+      <Item key="frmSetting.chkCenterWindowFit" value="Pencereyi Pencere Sığdır modunda otomatik-ortala"/>
+      <Item key="frmSetting.chkShowToast" value="Toast mesajını göster"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="Resim yükleniyor"/>
+      <Item key="frmSetting.chkFindChildFolder" value="Alt klasördeki görüntüleri bulmak"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="Gizli resimleri göster"/>
+      <Item key="frmSetting.chkLoopViewer" value="Listenin sonuna ulaşıldığında görüntüleyiciyi ilk resme geri döndür"/>
+      <Item key="frmSetting.chkIsCenterImage" value="Görüntüleyicide resmi ortala"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="Resim yükleme sıralaması"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Mümkünse Windows Dosya Gezgini sıralamasını kullan"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Görselleri dizine göre grupla"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="ImageBooster tarafından önbelleğe alınan görüntülerin sayısı (tek yönlü)"/>
+      <Item key="frmSetting.lblColorManagement" value="Renk yöneticisi"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="Dahili renk profili olmayan resimlere de uygula"/>
+      <Item key="frmSetting.lblColorProfile" value="Renk profili:"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="Göz at…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="Hiçbiri"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Özel…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="Fare tekerlek işlemleri"/>
+      <Item key="frmSetting.lblMouseWheel" value="Fare tekerleği"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="Fare tekerleği + Alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Fare tekerleği + Ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="Fare tekerleği + Shift"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="Hiçbir şey yapma"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="Yakınlaştırma"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Dikey kaydırma"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Yatay kaydırma"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Önceki/sonraki görüntü"/>
+      <Item key="frmSetting.lblHeadZooming" value="Büyütme"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Büyütme optimizasyonu"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Otamatik (Düşük kalite/Nearest-neighbor)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Düşük Kalite"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Yüksek Kalite"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Çift Doğrusal"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Çift Kübik"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Nearest-neighbor"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Yüksek kalite, çift doğrusal"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Yüksek kalite, çift kübik"/>
+      <Item key="frmSetting.lblZoomLevels" value="Yakınlaştırma düzeyi"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="Yakınlaştırma seviyeleri güncellenirken hata oluştu. Hata mesajı:&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Ön izleme barı"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="Sağ tarafta minik resimleri göster"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Önizlemeleri kaydırma çubuğunda göster"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Ön izleme ölçüsü (pixel)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="Slayt Gösterisi"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="Listenin sonuna ulaşıldığında slayt gösterisini ilk resme geri döndür"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="Slayt gösterisi geri sayımını göster"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="Rastgele aralık kullan"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="Slayt gösterisi aralığı: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="ila"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="Döndürdükten sonra görüntüyü Kaydet"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="Resim düzenleme için uygulama seçin"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="Düzenleme uygulamasını açtıktan sonra:"/>
+      <Item key="frmSetting.lblImageQuality" value="Görsel kalitesi:"/>
+      <Item key="frmSetting.btnEditEditExt" value="Düzenle…"/>
+      <Item key="frmSetting.btnEditResetExt" value="Ön değerleri geri döndür"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="Tüm eklentileri düzenle…"/>
+      <Item key="frmSetting._allExtensions" value="tüm eklentiler"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Dosya uzantıları"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="App ismi"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="App yolu"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="App değerleri"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Kayıtta görselin düzenlenme tarihini koru"/>
+      <Item key="frmSetting.lblSupportedExtension" value="Desteklenen formatlar: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Dosya Açma Türü İlişkileri"/>
+      <Item key="frmSetting.btnAddNewExt" value="Ekle…"/>
+      <Item key="frmSetting.btnRegisterExt" value="Varsayılan fotoğraf görüntüleyici olarak ayarla…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Uzantıları temizle"/>
+      <Item key="frmSetting.btnDeleteExt" value="Sil"/>
+      <Item key="frmSetting.btnResetExt" value="Ön değerleri geri döndür"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="Web'den-Uygulamaya bağlantı kaydedilemiyor"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="Dosya uzantıları ImageGlass'e bağlanamadı"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="Tüm dosya uzantıları başarıyla kaydedildi! ImageGlass'ı Varsayılan fotoğraf görüntüleyici olarak ayarlamak için lütfen Windows Ayarları &gt; Varsayılan Uygulamalar'ı açın ve Fotoğraf Görüntüleyici bölümünün altında ImageGlass uygulamasını elle seçin."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="ImageGlass uygulamasının kayıtlı dosya uzantıları silinemiyor"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Bütün uzantılar başarı ile temizlendi!"/>
+      <Item key="frmSetting.lblToolbarPosition" value="Araç çubuğu konumu:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Araç çubuğu ikon boyutu:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Üst"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Alt"/>
+      <Item key="frmSetting._separator" value="Ayraç"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="Araç çubuğu butonlarını düzenle"/>
+      <Item key="frmSetting.lblUsedBtns" value="Mevcut Butonlar:"/>
+      <Item key="frmSetting.lblAvailBtns" value="Kullanılabilir Butonlar:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="Seçilen butonu aşağı taşı"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="Seçilen buton(ları) araç çubuğundan kaldır"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="Seçilen buton(ları) araç çubuğuna ekle"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="Seçilen butonu yukarı taşı"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Araç çubuğu tuşlarını pencerede yatay olarak ortala"/>
+      <Item key="frmSetting.chkHideTooltips" value="Araç çubuğu ipuçlarını gizle"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="Alfa değeriyle RGB biçimini kullan"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="Alfa değeriyle HEX biçimini kullan"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="Alfa değeriyle HSL biçimini kullan"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="Alfa değeriyle HSV biçimini kullan"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="Kopyalarken varsayılan renk kod formatı"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="Çok sayfalı resim için Sayfa gezinme aracını otomatik göster"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Exif aracını hep en üstte tut"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Exif araç dosyasını seç"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Exif aracı mevut değil veya kullanılamıyor: {0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Komut argümanları:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Komut önizlemesi:"/>
+      <Item key="frmSetting.lblLanguageText" value="Yüklü diller"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; Yenile"/>
+      <Item key="frmSetting.lblLanguageWarning" value="Bu dil paketini {0} ile uyumlu olmayabilir"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Yeni dil paketi yükle (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Yeni dil paketi oluştur…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; Seçili dil paketini düzenle…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Daha fazla dil paketi edinin…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="Yüklü temalar: {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="Tema indir…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="Yenile"/>
+      <Item key="frmSetting.btnThemeInstall" value="Yükle…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="Kaldır…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="Farklı kaydet…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="Tema klasörünü aç"/>
+      <Item key="frmSetting.btnThemeApply" value="Temayı uygula"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="Adı"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="Sürüm"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="Yazar"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="E-posta"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="Website"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="Uyumluluk"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="Açıklama"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="Temanız başarıyla yüklendi!"/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="Temanız yüklenemedi."/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="Seçilen tema yüklenemedi."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="Seçilen temanız şuraya kaydedildi {0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="Seçilen temanız kaydedilemedi."/>
+      <Item key="frmSetting.btnThemeApply._Success" value="Seçilen tema başarıyla uygulandı!"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="Seçilen tema uygulanamadı."/>
+      <Item key="frmSetting.btnKeyReset" value="Ön değerleri geri döndür"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="Boşluk / Geri Alma"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="PageUp / PageDown"/>
+      <Item key="frmSetting.lblKeysUpDown" value="Yukarı / Aşağı oklar"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="Sol / Sağ oklar"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="Önceki / Sonraki Resim"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="Sola / Sağa Kaydır"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="Yukarı / Aşağı Kaydır"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="Yakınlaştır / Uzaklaştır"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="Slayt gösterisini duraklat"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="Hiçbir şey yapma"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="Dosya uzantıları"/>
+      <Item key="frmAddNewFormat.btnOK" value="TAMAM"/>
+      <Item key="frmAddNewFormat.btnClose" value="Çıkış"/>
+      <Item key="frmEditApp.lblFileExtension" value="Dosya uzantıları"/>
+      <Item key="frmEditApp.lblAppName" value="App ismi"/>
+      <Item key="frmEditApp.lblAppPath" value="App yolu"/>
+      <Item key="frmEditApp.lblAppArguments" value="App değerleri"/>
+      <Item key="frmEditApp.btnReset" value="Ön değerler"/>
+      <Item key="frmEditApp.btnOK" value="TAMAM"/>
+      <Item key="frmEditApp.btnClose" value="Çıkış"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="Ön İzleme"/>
+      <Item key="frmFirstLaunch._Text" value="İlk-Çalıştırma Ayarları"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ImageGlass'ın yeni ayarlarının uygulanması için tüm işlemlerinin kapatılması gerekiyor, devam etmek istiyor musunuz?"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="Adım {0}/{1}"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="İleri"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="Bitir!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="Bunu geç ve ImageGlass'ı çalıştır"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="Dil Seçiniz"/>
+      <Item key="frmFirstLaunch.lblLayout" value="Düzen Seçiniz"/>
+      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Standart"/>
+      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Tasarımcı"/>
+      <Item key="frmFirstLaunch.lblTheme" value="Tema Seçiniz"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="ImageGlass varsayılan fotoğraf görüntüleyici olarak tanımlansın mı?"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="Evet"/>
+      <Item key="frmCrop.lblWidth" value="Genişlik:"/>
+      <Item key="frmCrop.lblHeight" value="Yükseklik:"/>
+      <Item key="frmCrop.btnSave" value="Kaydet"/>
+      <Item key="frmCrop.btnSaveAs" value="Farklı kaydet…"/>
+      <Item key="frmCrop.btnCopy" value="Kopyalayın"/>
+      <Item key="frmCrop.btnReset" value="Ön değerler"/>
+      <Item key="FrmExifTool.clnProperty" value="Özellik"/>
+      <Item key="FrmExifTool.clnValue" value="Değer"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Değeri kopyala"/>
+      <Item key="FrmExifTool.btnExport" value="Dışa aktar…"/>
+      <Item key="FrmExifTool.btnClose" value="Çıkış"/>
+    </Content>
+  </Language>
+</ImageGlass>
