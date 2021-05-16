@@ -15,10 +15,10 @@
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="MsiBuild:1"/>
     <ROW Property="Manufacturer" Value="Duong Dieu Phap"/>
     <ROW Property="MsiLogging" MultiBuildValue="MsiBuild:vp"/>
-    <ROW Property="ProductCode" Value="1033:{613C75BA-9A2D-49E5-A660-8B72554942EE} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{22231BA8-76D0-4B3D-B512-FA0A7FA2C687} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="ImageGlass"/>
-    <ROW Property="ProductVersion" Value="8.1.4.18" Type="32" TargetFile="ImageGlass.exe"/>
+    <ROW Property="ProductVersion" Value="8.2.5.16" Type="32" TargetFile="ImageGlass.exe"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{877DB994-AB03-4025-B99D-41CE565E810B}"/>
@@ -64,9 +64,8 @@
     <ROW Component="ImageGlass.Services.dll" ComponentId="{EEDBCC07-EF51-4087-8C07-CD86A8B3FE99}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.Services.dll"/>
     <ROW Component="ImageGlass.Settings.dll" ComponentId="{9513E6E8-7469-49CD-938C-AD5E12442496}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.Settings.dll"/>
     <ROW Component="ImageGlass.UI.dll" ComponentId="{C78B44B1-DB34-449D-8453-56C3CD9BA524}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.UI.dll"/>
-    <ROW Component="ImageGlass.VisualElementsManifest.xml" ComponentId="{784064B7-AEA0-4257-B7A6-CA596EEBF2E4}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.VisualElementsManifest.xml"/>
     <ROW Component="ImageGlass.exe" ComponentId="{72CA36B0-774B-46F6-9203-43DDE7E4542B}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.exe"/>
-    <ROW Component="LightGray.igtheme" ComponentId="{4E88768D-0B1E-4FD4-ABFC-C3A1DD6CAA4D}" Directory_="Themes_Dir" Attributes="0" KeyPath="LightGray.igtheme" Type="0"/>
+    <ROW Component="LightGray.igtheme" ComponentId="{4E88768D-0B1E-4FD4-ABFC-C3A1DD6CAA4D}" Directory_="Themes_Dir" Attributes="0" KeyPath="LightGray.DuongDieuPhap.igtheme" Type="0"/>
     <ROW Component="Magick.NET.Core.dll" ComponentId="{E5C404AC-C747-4405-9807-20FDCC9067B1}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NET.Core.dll"/>
     <ROW Component="Magick.NET.SystemDrawing.dll" ComponentId="{CD5E7C9A-47F6-4DE4-A79E-344483CFDC27}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NET.SystemDrawing.dll"/>
     <ROW Component="Magick.NETQ16OpenMPx64.dll" ComponentId="{C0489429-6F96-4F3F-AEC3-E879BFF78EBC}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NETQ16OpenMPx64.dll"/>
@@ -82,7 +81,6 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
-    <ROW Feature="TileAssets_MsiBuild" Title="TileAssets_MsiBuild" Description="Description" Display="0" Level="1" Directory_="APPDIR" Attributes="0" Options="271" Builds="MsiBuild"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
@@ -158,7 +156,6 @@
     <ROW File="XBM.ico" Component_="ExtIcons" FileName="XBM.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\XBM.ico" SelfReg="false"/>
     <ROW File="XPM.ico" Component_="ExtIcons" FileName="XPM.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\XPM.ico" SelfReg="false"/>
     <ROW File="LICENSE.rtf" Component_="default.jpg" FileName="LICENSE.rtf" Attributes="0" SourcePath="..\..\Assets\LICENSE.rtf" SelfReg="false"/>
-    <ROW File="LightGray.igtheme" Component_="LightGray.igtheme" FileName="2017(L~1.IGT|2017 (Light Gray).igtheme" Attributes="0" SourcePath="..\..\Assets\Themes\2017 (Light Gray).igtheme" SelfReg="false"/>
     <ROW File="ActualSize.svg" Component_="ActualSize.svg" FileName="ACTUAL~1.SVG|ActualSize.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\ActualSize.svg" SelfReg="false"/>
     <ROW File="AdjustWindowSize.svg" Component_="ActualSize.svg" FileName="ADJUST~1.SVG|AdjustWindowSize.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\AdjustWindowSize.svg" SelfReg="false"/>
     <ROW File="AutoZoom.svg" Component_="ActualSize.svg" FileName="AutoZoom.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\AutoZoom.svg" SelfReg="false"/>
@@ -217,7 +214,6 @@
     <ROW File="vcomp140.dll" Component_="vcomp140.dll" FileName="vcomp140.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\vcomp140.dll" SelfReg="false"/>
     <ROW File="igstartup.profile" Component_="default.jpg" FileName="IGSTAR~1.PRO|igstartup.profile" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\igstartup.profile" SelfReg="false"/>
     <ROW File="Windows.winmd" Component_="default.jpg" FileName="WINDOW~1.WIN|Windows.winmd" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\Windows.winmd" SelfReg="false"/>
-    <ROW File="ImageGlass.VisualElementsManifest.xml" Component_="ImageGlass.VisualElementsManifest.xml" FileName="IMAGEG~1.XML|ImageGlass.VisualElementsManifest.xml" Attributes="0" SourcePath="&lt;AI_RES&gt;app.VisualElementsManifest.xml" SelfReg="false"/>
     <ROW File="ChineseSimplified.iglang" Component_="ChineseSimplified.iglang" FileName="CHINES~1.IGL|Chinese Simplified.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Chinese Simplified.iglang" SelfReg="false"/>
     <ROW File="ChineseTraditional.iglang" Component_="ChineseSimplified.iglang" FileName="CHINES~2.IGL|Chinese Traditional.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Chinese Traditional.iglang" SelfReg="false"/>
     <ROW File="Finnish.iglang" Component_="ChineseSimplified.iglang" FileName="FINNIS~1.IGL|Finnish.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Finnish.iglang" SelfReg="false"/>
@@ -235,12 +231,21 @@
     <ROW File="Spanish.iglang" Component_="ChineseSimplified.iglang" FileName="SPANIS~1.IGL|Spanish.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Spanish.iglang" SelfReg="false"/>
     <ROW File="Ukrainian.iglang" Component_="ChineseSimplified.iglang" FileName="UKRAIN~1.IGL|Ukrainian.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Ukrainian.iglang" SelfReg="false"/>
     <ROW File="Vietnamese.iglang" Component_="ChineseSimplified.iglang" FileName="VIETNA~1.IGL|Vietnamese.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Vietnamese.iglang" SelfReg="false"/>
+    <ROW File="Armenian.iglang" Component_="ChineseSimplified.iglang" FileName="ARMENI~1.IGL|Armenian.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Armenian.iglang" SelfReg="false"/>
+    <ROW File="Czech.iglang" Component_="ChineseSimplified.iglang" FileName="CZECH~1.IGL|Czech.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Czech.iglang" SelfReg="false"/>
+    <ROW File="Greek.iglang" Component_="ChineseSimplified.iglang" FileName="GREEK~1.IGL|Greek.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Greek.iglang" SelfReg="false"/>
+    <ROW File="Indonesian.iglang" Component_="ChineseSimplified.iglang" FileName="INDONE~1.IGL|Indonesian.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Indonesian.iglang" SelfReg="false"/>
+    <ROW File="Irish.iglang" Component_="ChineseSimplified.iglang" FileName="IRISH~1.IGL|Irish.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Irish.iglang" SelfReg="false"/>
+    <ROW File="Lithuanian.iglang" Component_="ChineseSimplified.iglang" FileName="LITHUA~1.IGL|Lithuanian.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Lithuanian.iglang" SelfReg="false"/>
+    <ROW File="Swedish.iglang" Component_="ChineseSimplified.iglang" FileName="SWEDIS~1.IGL|Swedish.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Swedish.iglang" SelfReg="false"/>
+    <ROW File="Turkish.iglang" Component_="ChineseSimplified.iglang" FileName="TURKIS~1.IGL|Turkish.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Turkish.iglang" SelfReg="false"/>
+    <ROW File="LightGray.DuongDieuPhap.igtheme" Component_="LightGray.igtheme" FileName="2017-L~1.IGT|2017-Light-Gray.Duong-Dieu-Phap.igtheme" Attributes="0" SourcePath="..\..\Assets\Themes\2017-Light-Gray.Duong-Dieu-Phap.igtheme" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="MsiBuild" BuildName="MsiBuild" BuildOrder="1" BuildType="0" PackageFolder="..\Bin" PackageFileName="ImageGlass_8.1.4.18_x64" Languages="en" InstallationType="4" UseLargeSchema="true" MsiPackageType="x64"/>
+    <ROW BuildKey="MsiBuild" BuildName="MsiBuild" BuildOrder="1" BuildType="0" PackageFolder="..\Bin" PackageFileName="ImageGlass_8.2.5.16_x64" Languages="en" InstallationType="4" UseLargeSchema="true" MsiPackageType="x64"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
     <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
@@ -261,26 +266,8 @@
     <ROW Fragment="VerifyRepairDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRepairDlg.aip"/>
     <ROW Fragment="WelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\WelcomeDlg.aip"/>
   </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlAttributeComponent">
-    <ROW XmlAttribute="BackgroundColor" XmlElement="VisualElements" Name="BackgroundColor" Flags="0" Order="0" Value="System default"/>
-    <ROW XmlAttribute="Executable" XmlElement="VisualElements" Name="Executable" Flags="0" Order="0" FileId="ImageGlass.exe"/>
-    <ROW XmlAttribute="ForegroundText" XmlElement="VisualElements" Name="ForegroundText" Flags="0" Order="0" Value="light"/>
-    <ROW XmlAttribute="ShowNameOnSquare150x150Logo" XmlElement="VisualElements" Name="ShowNameOnSquare150x150Logo" Flags="0" Order="0" Value="on"/>
-    <ROW XmlAttribute="xmlnsxsi" XmlElement="Application" Name="xmlns:xsi" Flags="0" Order="0" Value="http://www.w3.org/2001/XMLSchema-instance"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlElementComponent">
-    <ROW XmlElement="Application" Name="Application" Order="0" Flags="0" Type="53"/>
-    <ROW XmlElement="VisualElements" ParentElement="Application" Name="VisualElements" Order="0" Flags="0" Type="0"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlFileComponent">
-    <ROW XmlFile="ImageGlass.VisualElementsManifest.x" FileName="ImageGlass.VisualElementsManifest.xml" RootElement="Application" Flags="89" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
-  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
-    <ROW Name="ShortcutFlags.dll" SourcePath="&lt;AI_CUSTACTS&gt;ShortcutFlags.dll"/>
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.MsiConditionComponent">
-    <ROW Feature_="TileAssets_MsiBuild" Level="4" Condition="VersionNT &lt; 603"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlComponent">
     <ROW Dialog_="LicenseAgreementDlg" Control="AgreementText" Type="ScrollableText" X="20" Y="60" Width="330" Height="120" Attributes="7" Text="..\..\Assets\LICENSE.rtf" Order="400" TextLocId="Control.Text.LicenseAgreementDlg#AgreementText_2" MsiKey="LicenseAgreementDlg#AgreementText"/>
@@ -317,25 +304,17 @@
     <ROW Directory_="ImageGlass_Dir" Component_="ImageGlass" ManualDelete="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
-    <ROW Action="AI_ApplyShortcutFlags" Type="3073" Source="ShortcutFlags.dll" Target="UpdateShortcutFlags" WithoutSeq="true"/>
     <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
     <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
     <ROW Action="AI_EnableDebugLog" Type="321" Source="aicustact.dll" Target="EnableDebugLog"/>
     <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
     <ROW Action="AI_LaunchApp" Type="1" Source="aicustact.dll" Target="[#ImageGlass.exe]"/>
     <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
-    <ROW Action="AI_PinShortcuts" Type="1" Source="ShortcutFlags.dll" Target="PinShortcuts"/>
-    <ROW Action="AI_PinToStartScreen" Type="1025" Source="ShortcutFlags.dll" Target="PinToStartScreen" WithoutSeq="true"/>
-    <ROW Action="AI_PinToTaskbar" Type="1025" Source="ShortcutFlags.dll" Target="PinToTaskbar" WithoutSeq="true"/>
-    <ROW Action="AI_PrepareShortcutFlags" Type="1" Source="ShortcutFlags.dll" Target="PrepareActionData"/>
     <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
     <ROW Action="AI_SetArpReadmeFile" Type="51" Source="ARPREADME" Target="[#LICENSE.rtf]"/>
-    <ROW Action="AI_UnpinFromStartScreen" Type="1025" Source="ShortcutFlags.dll" Target="UnpinFromStartScreen" WithoutSeq="true"/>
-    <ROW Action="AI_UnpinFromTaskbar" Type="1025" Source="ShortcutFlags.dll" Target="UnpinFromTaskbar" WithoutSeq="true"/>
-    <ROW Action="AI_UnpinShortcuts" Type="1" Source="ShortcutFlags.dll" Target="UnpinShortcuts"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="MsiBuild:[ProgramFiles64Folder]\[ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]" MultiBuildTarget="MsiBuild:[ProgramFiles64Folder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
@@ -370,7 +349,6 @@
     <ROW Feature_="MainFeature" Component_="Magick.NETQ16OpenMPx64.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Runtime.WindowsRuntime.dll"/>
     <ROW Feature_="MainFeature" Component_="vcomp140.dll"/>
-    <ROW Feature_="TileAssets_MsiBuild" Component_="ImageGlass.VisualElementsManifest.xml"/>
     <ROW Feature_="MainFeature" Component_="ChineseSimplified.iglang"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
@@ -388,9 +366,6 @@
     <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
     <ROW Action="AI_SetArpReadmeFile" Condition="NOT Installed" Sequence="1001"/>
-    <ROW Action="AI_PrepareShortcutFlags" Condition="(VersionNT &gt; 501) AND ((NOT Installed) OR (Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;)))" Sequence="4501"/>
-    <ROW Action="AI_PinShortcuts" Condition="(VersionNT &gt; 600) AND ((NOT Installed) OR (Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;)))" Sequence="6499"/>
-    <ROW Action="AI_UnpinShortcuts" Condition="(VersionNT &gt; 600) AND (REMOVE = &quot;ALL&quot;)" Sequence="3199"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
@@ -410,7 +385,7 @@
     <ROW Registry="ProductName" Root="-1" Key="Software\[ProductName]" Name="+" Component_="Registry"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="ImageGlass" Directory_="SHORTCUTDIR" Name="IMAGEG~1|ImageGlass" Component_="ImageGlass.exe" Target="[#ImageGlass.exe]" Description="ImageGlass" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR" CustomFlags="4"/>
+    <ROW Shortcut="ImageGlass" Directory_="SHORTCUTDIR" Name="IMAGEG~1|ImageGlass" Component_="ImageGlass.exe" Target="[#ImageGlass.exe]" Description="ImageGlass" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
     <ROW Shortcut="ImageGlass_1" Directory_="DesktopFolder" Name="IMAGEG~1|ImageGlass" Component_="ImageGlass.exe" Target="[#ImageGlass.exe]" Description="ImageGlass" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
     <ROW Shortcut="ImageGlass_2" Directory_="ImageGlass_Dir" Name="IMAGEG~1|ImageGlass" Component_="ImageGlass.exe" Target="[#ImageGlass.exe]" Description="ImageGlass" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
     <ROW Shortcut="LICENSE" Directory_="ImageGlass_Dir" Name="LICENSE" Component_="default.jpg" Target="[#LICENSE.rtf]" Description="LICENSE" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
