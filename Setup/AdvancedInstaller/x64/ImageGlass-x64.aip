@@ -15,10 +15,10 @@
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="MsiBuild:1"/>
     <ROW Property="Manufacturer" Value="Duong Dieu Phap"/>
     <ROW Property="MsiLogging" MultiBuildValue="MsiBuild:vp"/>
-    <ROW Property="ProductCode" Value="1033:{22231BA8-76D0-4B3D-B512-FA0A7FA2C687} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{599251C9-761B-44BC-BB7E-3F383760C563} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="ImageGlass"/>
-    <ROW Property="ProductVersion" Value="8.2.5.16" Type="32" TargetFile="ImageGlass.exe"/>
+    <ROW Property="ProductVersion" Value="8.2.6.6" Type="32" TargetFile="ImageGlass.exe"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{877DB994-AB03-4025-B99D-41CE565E810B}"/>

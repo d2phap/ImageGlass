@@ -19,7 +19,7 @@ It gives you the possibility to view over **70+** common image formats, includin
 
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://imageglass.org/upload/photo/release/8.2_1.jpg" alt="ImageGlass 8.2.5.16" width="640">
+<img src="https://imageglass.org/upload/photo/release/8.2_1.jpg" alt="ImageGlass 8.2.6.6" width="640">
 </a><br/>
 
 
