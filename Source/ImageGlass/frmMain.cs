@@ -4313,7 +4313,11 @@ namespace ImageGlass {
                 FileName = Path.GetFileNameWithoutExtension(currentFile),
                 RestoreDirectory = true,
             };
-            saveDialog.CustomPlaces.Add(Path.GetDirectoryName(currentFile));
+
+            // When saving image from clipboard, there is no path (issue #1075)
+            // In the window of time while IG is populating the image list, there is no path (issue #1055)
+            var path2 = string.IsNullOrEmpty(currentFile) ? currentFile : Path.GetDirectoryName(currentFile);
+            saveDialog.CustomPlaces.Add(path2);
 
 
             // Use the last-selected file extension, if available.
