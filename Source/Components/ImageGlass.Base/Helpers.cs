@@ -155,6 +155,34 @@ namespace ImageGlass.Base {
                                       .Where(c => c.GetType() == type);
         }
 
+
+        /// <summary>
+        /// Checks if the given Windows version is matched
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsOS(WindowsOS ver) {
+            if (ver == WindowsOS.Win11) {
+                return Environment.OSVersion.Version.Major >= 10
+                    && Environment.OSVersion.Version.Build >= 22000;
+            }
+
+            if (ver == WindowsOS.Win10) {
+                return Environment.OSVersion.Version.Major == 10
+                    && Environment.OSVersion.Version.Build < 22000;
+            }
+
+            if (ver == WindowsOS.Win10OrLater) {
+                return Environment.OSVersion.Version.Major >= 10;
+            }
+
+            if (ver == WindowsOS.Win7) {
+                return Environment.OSVersion.Version.Major == 6
+                    && Environment.OSVersion.Version.Minor == 1;
+            }
+
+            return false;
+        }
+
         #endregion
 
 
