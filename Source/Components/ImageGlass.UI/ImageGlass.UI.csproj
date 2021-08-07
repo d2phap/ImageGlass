@@ -120,6 +120,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Renderers\ModernThumbnailRenderer.cs" />
     <Compile Include="Theme\ThemeImage.cs" />
     <Compile Include="Theme\ThemeIconCollection.cs" />
     <Compile Include="InputBox\InputBox.cs" />
@@ -131,12 +132,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ToolForms\ToolFormManager.cs" />
-    <Compile Include="Renderers\ToolStripRenderer.cs" />
+    <Compile Include="Renderers\ModernToolStripRenderer.cs" />
     <Compile Include="ToolStrip\Menu.cs" />
     <Compile Include="ToolStrip\ToolStripRadioButtonMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ToolStripToolTip\ToolStripToolTip.cs">
+    <Compile Include="Toolbar\ModernToolbar.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
@@ -148,6 +149,14 @@
     <ProjectReference Include="..\ImageGlass.Heart\ImageGlass.Heart.csproj">
       <Project>{51493b09-7a0e-461f-be18-a6cf629a8fab}</Project>
       <Name>ImageGlass.Heart</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageGlass.ImageListView\ImageGlass.ImageListView.csproj">
+      <Project>{0C295FB8-C6C6-4A40-9F19-05A43F353A04}</Project>
+      <Name>ImageGlass.ImageListView</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageGlass.Library\ImageGlass.Library.csproj">
+      <Project>{4BB719ED-B68B-4CB1-AAAF-BA0E3BC5FE81}</Project>
+      <Name>ImageGlass.Library</Name>
     </ProjectReference>
     <ProjectReference Include="..\ImageGlass.Services\ImageGlass.Services.csproj">
       <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>

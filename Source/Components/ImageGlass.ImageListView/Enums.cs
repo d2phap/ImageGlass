@@ -378,7 +378,7 @@ namespace ImageGlass.ImageListView {
     /// <summary>
     /// Represents the type of image in the cache manager.
     /// </summary>
-    internal enum CachedImageType {
+    public enum CachedImageType {
         /// <summary>
         /// Thumbnail image.
         /// </summary>

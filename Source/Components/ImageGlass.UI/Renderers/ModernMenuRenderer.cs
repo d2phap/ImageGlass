@@ -18,7 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using ImageGlass.Base;
 
 namespace ImageGlass.UI.Renderers {
     public class ModernMenuRenderer: ToolStripProfessionalRenderer {
@@ -41,11 +43,11 @@ namespace ImageGlass.UI.Renderers {
                 base.OnRenderItemText(e);
             }
             else {
-                if (theme.MenuBackgroundColor.GetBrightness() > 0.5) //light background color
+                if (theme.MenuBackgroundColor.GetBrightness() > 0.5) // light background color
                 {
                     e.TextColor = Theme.DarkenColor(theme.MenuBackgroundColor, 0.5f);
                 }
-                else //dark background color
+                else // dark background color
                 {
                     e.TextColor = Theme.LightenColor(theme.MenuBackgroundColor, 0.5f);
                 }
@@ -65,36 +67,38 @@ namespace ImageGlass.UI.Renderers {
                 var lineLeft = tsBounds.Left;
                 var lineRight = tsBounds.Right;
 
-                using (var pen = new Pen(Color.Black)) {
-                    if (theme.MenuBackgroundColor.GetBrightness() > 0.5) //light background color
-                    {
-                        pen.Color = Color.FromArgb(35, 0, 0, 0);
-                    }
-                    else //dark background color
-                    {
-                        pen.Color = Color.FromArgb(35, 255, 255, 255);
-                    }
-
-                    e.Graphics.DrawLine(pen, lineLeft, lineY, lineRight, lineY);
+                using var pen = new Pen(Color.Black);
+                if (theme.MenuBackgroundColor.GetBrightness() > 0.5) // light background color
+                {
+                    pen.Color = Color.FromArgb(35, 0, 0, 0);
                 }
+                else // dark background color
+                {
+                    pen.Color = Color.FromArgb(35, 255, 255, 255);
+                }
+
+                e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+                e.Graphics.DrawLine(pen, lineLeft, lineY, lineRight, lineY);
+
                 base.OnRenderSeparator(e);
             }
         }
 
         protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e) {
             if (e.ToolStrip is ToolStripDropDown) {
+                e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+
                 // draw background
-                using (var brush = new SolidBrush(theme.MenuBackgroundColor)) {
-                    e.Graphics.FillRectangle(brush, e.AffectedBounds);
-                }
+                using var brush = new SolidBrush(theme.MenuBackgroundColor);
+                e.Graphics.FillRectangle(brush, e.AffectedBounds);
 
                 // draw border
                 using var pen = new Pen(Color.Black);
-                if (theme.MenuBackgroundColor.GetBrightness() > 0.5) //light background color
+                if (theme.MenuBackgroundColor.GetBrightness() > 0.5) // light background color
                 {
                     pen.Color = Color.FromArgb(35, 0, 0, 0);
                 }
-                else //dark background color
+                else // dark background color
                 {
                     pen.Color = Color.FromArgb(35, 255, 255, 255);
                 }
@@ -122,6 +126,7 @@ namespace ImageGlass.UI.Renderers {
 
 
             using var pen = new Pen(textColor, DPIScaling.Transform<float>(1));
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
             e.Graphics.DrawLine(pen,
                 e.Item.Width - (5 * e.Item.Height / 8),
@@ -158,6 +163,7 @@ namespace ImageGlass.UI.Renderers {
         protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e) {
             var textColor = e.Item.Selected ? theme.MenuTextHoverColor : theme.MenuTextColor;
             using var pen = new Pen(textColor, DPIScaling.Transform<float>(2));
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
             e.Graphics.DrawLine(pen,
                 (2 * e.Item.Height / 10) + 1,
@@ -171,10 +177,37 @@ namespace ImageGlass.UI.Renderers {
                 8 * e.Item.Height / 10,
                 3 * e.Item.Height / 10);
         }
+
+
+        protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e) {
+            // hover on enable item
+            if (e.Item.Selected && e.Item.Enabled) {
+                e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+
+                // Windows 11 style
+                var borderRadius = 5;
+                var rect = new Rectangle(3, 1, e.Item.Bounds.Width - 6, e.Item.Bounds.Height - 2);
+                using var brush = new SolidBrush(theme.MenuBackgroundHoverColor);
+
+                // Windows 10 style
+                if (!Helpers.IsOS(WindowsOS.Win11)) {
+                    borderRadius = 1;
+                    rect = new Rectangle(0, 0, e.Item.Bounds.Width, e.Item.Bounds.Height);
+                }
+
+                using var path = Theme.GetRoundRectanglePath(rect, borderRadius);
+                e.Graphics.FillPath(brush, path);
+
+                return;
+            }
+
+            base.OnRenderMenuItemBackground(e);
+        }
+
     }
 
     public class ModernColors: ProfessionalColorTable {
-        public override Color MenuItemSelected => theme.MenuBackgroundHoverColor;
+        public override Color MenuItemSelected => Color.Transparent;
         public override Color MenuBorder => Color.Transparent;
         public override Color MenuItemBorder => Color.Transparent;
 

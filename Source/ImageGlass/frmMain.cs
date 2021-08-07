@@ -29,10 +29,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using FileWatcherEx;
 using ImageGlass.Base;
 using ImageGlass.Library;
@@ -49,6 +47,7 @@ using ImageMagick;
 
 namespace ImageGlass {
     public partial class frmMain: Form {
+
         public frmMain() {
             InitializeComponent();
 
@@ -70,6 +69,10 @@ namespace ImageGlass {
             // Fix disk thrashing
             thumbnailBar.MetadataCacheEnabled = false;
 
+            // apply Windows 11 Corner API
+            CornerApi.ApplyCorner(mnuMain.Handle);
+            CornerApi.ApplyCorner(mnuContext.Handle);
+            CornerApi.ApplyCorner(mnuShortcut.Handle);
         }
 
 
@@ -1502,7 +1505,7 @@ namespace ImageGlass {
             #endregion
 
             #region change size of menu items
-            var newMenuIconHeight = DPIScaling.Transform((int)Constants.MENU_ICON_HEIGHT);
+            var newMenuIconHeight = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
 
             mnuMainOpenFile.Image =
                 mnuMainZoomIn.Image =
@@ -2215,6 +2218,7 @@ namespace ImageGlass {
             var gap = DPIScaling.Transform(20);
             var text = TimeSpan.FromSeconds(_slideshowCountdown).ToString("mm':'ss");
 
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             using var textBrush = new SolidBrush(Color.FromArgb(150, Theme.InvertBlackAndWhiteColor(picMain.BackColor)));
             var font = new Font(this.Font.FontFamily, 30f);
@@ -2230,8 +2234,10 @@ namespace ImageGlass {
             var fontY = bgY + (bgSize.Height / 2) - (fontSize.Height / 2);
 
             // draw background
+            var borderRadius = Helpers.IsOS(WindowsOS.Win11) ? 10 : 1;
             using var bgBrush = new SolidBrush(Color.FromArgb(150, picMain.BackColor));
-            e.Graphics.FillRectangle(bgBrush, bgX, bgY, bgSize.Width, bgSize.Height);
+            using var path = Theme.GetRoundRectanglePath(new RectangleF(bgX, bgY, bgSize.Width, bgSize.Height), borderRadius);
+            e.Graphics.FillPath(bgBrush, path);
 
             // draw countdown text
             e.Graphics.DrawString(text, font, textBrush, fontX, fontY);
@@ -2508,11 +2514,15 @@ namespace ImageGlass {
         private void ApplyTheme(bool changeBackground = false) {
             var th = Configs.Theme;
 
+            // ThumbnailBar Renderer must be done BEFORE loading theme
+            var thumbBarTheme = new ModernThumbnailRenderer(th);
+            thumbnailBar.SetRenderer(thumbBarTheme);
+
             // Apply theme
             Configs.ApplyFormTheme(this, Configs.Theme);
 
             // Remove white line under tool strip
-            toolMain.Renderer = new UI.Renderers.ToolStripRenderer(th.ToolbarBackgroundColor, th.TextInfoColor);
+            toolMain.Renderer = new ModernToolStripRenderer(th);
 
             if (changeBackground) {
                 // User is changing theme. Override BackgroundColor setting.
@@ -2537,6 +2547,7 @@ namespace ImageGlass {
             mnuMain.Renderer =
                 mnuShortcut.Renderer =
                 mnuContext.Renderer = new ModernMenuRenderer(th);
+
 
             // <toolbar_icon>
             LoadToolbarIcons();
@@ -2618,9 +2629,6 @@ namespace ImageGlass {
         private void LoadConfig(bool @isLoadUI = false, bool @isLoadOthers = true) {
             #region UI SETTINGS
             if (isLoadUI) {
-                // ThumbnailBar Renderer must be done BEFORE loading theme
-                var thumbBarTheme = new ImageListView.ImageListViewRenderers.ThemeRenderer();
-                thumbnailBar.SetRenderer(thumbBarTheme);
                 ApplyTheme();
 
                 // Show checkerboard
@@ -4070,7 +4078,7 @@ namespace ImageGlass {
                 }
 
                 mnuContext.Items.Add(new ToolStripSeparator());
-                if (!Local.IsWindows7) {
+                if (!Helpers.IsOS(WindowsOS.Win7)) {
                     mnuContext.Items.Add(UI.Menu.Clone(mnuOpenWith));
                 }
 
@@ -4099,7 +4107,7 @@ namespace ImageGlass {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainSetAsDesktop));
 
                 // check if igcmdWin10.exe exists!
-                if (Local.IsWindows10 && File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
+                if (Helpers.IsOS(WindowsOS.Win10OrLater) && File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
                     mnuContext.Items.Add(UI.Menu.Clone(mnuMainSetAsLockImage));
                 }
             }
@@ -4898,7 +4906,7 @@ namespace ImageGlass {
         }
 
         private async void mnuMainSetAsLockImage_Click(object sender, EventArgs e) {
-            if (!Local.IsWindows10)
+            if (!Helpers.IsOS(WindowsOS.Win10OrLater))
                 return; // Do nothing - running Windows 8 or earlier
 
             var isError = false;
@@ -5238,11 +5246,11 @@ namespace ImageGlass {
                 mnuMainExtractPages.Text = string.Format(Configs.Language.Items[$"{Name}.mnuMainExtractPages"], Local.CurrentPageCount);
 
                 // check if igcmdWin10.exe exists!
-                if (!Local.IsWindows10 || !File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
+                if (!Helpers.IsOS(WindowsOS.Win10OrLater) || !File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
                     mnuMainSetAsLockImage.Enabled = false;
                 }
 
-                if (Local.IsWindows7) {
+                if (Helpers.IsOS(WindowsOS.Win7)) {
                     mnuOpenWith.Enabled = false;
                 }
 
@@ -5264,6 +5272,9 @@ namespace ImageGlass {
             if (!mnuItem.HasDropDownItems) {
                 return; // not a drop down item
             }
+
+            // apply corner
+            CornerApi.ApplyCorner(mnuItem.DropDown.Handle);
 
             mnuItem.DropDown.BackColor = Configs.Theme.MenuBackgroundColor;
 
@@ -5300,6 +5311,6 @@ namespace ImageGlass {
 
         #endregion
 
-        
+
     }
 }

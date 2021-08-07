@@ -2137,7 +2137,7 @@ namespace ImageGlass.ImageListView {
             }
 
             /// <summary>
-            /// [PHAP] Returns item size for the given view mode.
+            /// [IG_CHANGE] Returns item size for the given view mode.
             /// </summary>
             /// <param name="view">The view mode for which the measurement should be made.</param>
             /// <returns>The item size.</returns>

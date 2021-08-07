@@ -279,4 +279,14 @@ namespace ImageGlass.Base {
         Minimize = 1,
         Close = 2,
     }
+
+    /// <summary>
+    /// Determines Windows OS requirement
+    /// </summary>
+    public enum WindowsOS {
+        Win11,
+        Win10,
+        Win10OrLater,
+        Win7,
+    }
 }
