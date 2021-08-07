@@ -41,7 +41,7 @@ using System.Windows.Forms;
 using ImageGlass.Library.WinAPI;
 
 namespace ImageGlass.UI {
-    public class ToolStripToolTip: ToolStrip {
+    public class ModernToolbar: ToolStrip {
         private ToolStripItem mouseOverItem;
         private Point mouseOverPoint;
         private readonly Timer timer;
@@ -167,7 +167,7 @@ namespace ImageGlass.UI {
             this.UpdateAlignment();
         }
 
-        public ToolStripToolTip() : base() {
+        public ModernToolbar() : base() {
             ShowItemToolTips = false;
             timer = new Timer {
                 Enabled = false,

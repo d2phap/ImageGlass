@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2015 DUONG DIEU PHAP
+Copyright (C) 2021 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -16,17 +16,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using ImageGlass.Base;
 
 namespace ImageGlass.UI.Renderers {
-    public class ToolStripRenderer: ToolStripSystemRenderer {
+    public class ModernToolStripRenderer: ToolStripSystemRenderer {
         private Theme theme { get; set; }
 
-        public ToolStripRenderer(Theme theme) {
+        public ModernToolStripRenderer(Theme theme) {
             this.theme = theme;
         }
 

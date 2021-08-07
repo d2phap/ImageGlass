@@ -101,7 +101,7 @@ namespace ImageGlass {
             SetColors(Configs.Theme);
 
             // Remove white line under tool strip
-            toolPageNav.Renderer = new UI.Renderers.ToolStripRenderer(Configs.Theme);
+            toolPageNav.Renderer = new UI.Renderers.ModernToolStripRenderer(Configs.Theme);
 
             toolPageNav.BackgroundImage = Configs.Theme.ToolbarBackgroundImage.Image;
             toolPageNav.BackColor = Configs.Theme.ToolbarBackgroundColor;

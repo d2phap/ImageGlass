@@ -131,12 +131,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ToolForms\ToolFormManager.cs" />
-    <Compile Include="Renderers\ToolStripRenderer.cs" />
+    <Compile Include="Renderers\ModernToolStripRenderer.cs" />
     <Compile Include="ToolStrip\Menu.cs" />
     <Compile Include="ToolStrip\ToolStripRadioButtonMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ToolStripToolTip\ToolStripToolTip.cs">
+    <Compile Include="Toolbar\ModernToolbar.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>

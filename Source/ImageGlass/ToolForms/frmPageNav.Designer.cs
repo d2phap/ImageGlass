@@ -32,7 +32,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnSnapTo = new System.Windows.Forms.Button();
-            this.toolPageNav = new ImageGlass.UI.ToolStripToolTip();
+            this.toolPageNav = new ImageGlass.UI.ModernToolbar();
             this.btnFirstPage = new System.Windows.Forms.ToolStripButton();
             this.btnPreviousPage = new System.Windows.Forms.ToolStripButton();
             this.btnNextPage = new System.Windows.Forms.ToolStripButton();
@@ -224,7 +224,7 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnSnapTo;
-        private ImageGlass.UI.ToolStripToolTip toolPageNav;
+        private ImageGlass.UI.ModernToolbar toolPageNav;
         private System.Windows.Forms.ToolStripButton btnFirstPage;
         private System.Windows.Forms.ToolStripButton btnPreviousPage;
         private System.Windows.Forms.ToolStripButton btnNextPage;

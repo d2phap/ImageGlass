@@ -135,7 +135,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.mnuShortcut = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolMain = new ImageGlass.UI.ToolStripToolTip();
+            this.toolMain = new ImageGlass.UI.ModernToolbar();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.btnNext = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -1999,7 +1999,7 @@
 
         #endregion
 
-        private ImageGlass.UI.ToolStripToolTip toolMain;
+        private ImageGlass.UI.ModernToolbar toolMain;
         private System.Windows.Forms.Timer timSlideShow;
         private System.Windows.Forms.ToolStripButton btnNext;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
