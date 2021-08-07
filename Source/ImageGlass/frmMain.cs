@@ -1505,7 +1505,7 @@ namespace ImageGlass {
             #endregion
 
             #region change size of menu items
-            var newMenuIconHeight = DPIScaling.Transform((int)Constants.MENU_ICON_HEIGHT);
+            var newMenuIconHeight = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
 
             mnuMainOpenFile.Image =
                 mnuMainZoomIn.Image =
@@ -2218,6 +2218,7 @@ namespace ImageGlass {
             var gap = DPIScaling.Transform(20);
             var text = TimeSpan.FromSeconds(_slideshowCountdown).ToString("mm':'ss");
 
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             using var textBrush = new SolidBrush(Color.FromArgb(150, Theme.InvertBlackAndWhiteColor(picMain.BackColor)));
             var font = new Font(this.Font.FontFamily, 30f);
@@ -2233,8 +2234,10 @@ namespace ImageGlass {
             var fontY = bgY + (bgSize.Height / 2) - (fontSize.Height / 2);
 
             // draw background
+            var borderRadius = Helpers.IsOS(WindowsOS.Win11) ? 10 : 0;
             using var bgBrush = new SolidBrush(Color.FromArgb(150, picMain.BackColor));
-            e.Graphics.FillRectangle(bgBrush, bgX, bgY, bgSize.Width, bgSize.Height);
+            using var path = Theme.GetRoundRectanglePath(new RectangleF(bgX, bgY, bgSize.Width, bgSize.Height), borderRadius);
+            e.Graphics.FillPath(bgBrush, path);
 
             // draw countdown text
             e.Graphics.DrawString(text, font, textBrush, fontX, fontY);
@@ -2515,7 +2518,7 @@ namespace ImageGlass {
             Configs.ApplyFormTheme(this, Configs.Theme);
 
             // Remove white line under tool strip
-            toolMain.Renderer = new UI.Renderers.ModernToolStripRenderer(th);
+            toolMain.Renderer = new ModernToolStripRenderer(th);
 
             if (changeBackground) {
                 // User is changing theme. Override BackgroundColor setting.
@@ -2540,6 +2543,7 @@ namespace ImageGlass {
             mnuMain.Renderer =
                 mnuShortcut.Renderer =
                 mnuContext.Renderer = new ModernMenuRenderer(th);
+
 
             // <toolbar_icon>
             LoadToolbarIcons();
@@ -5306,6 +5310,6 @@ namespace ImageGlass {
 
         #endregion
 
-        
+
     }
 }

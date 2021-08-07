@@ -48,7 +48,7 @@ namespace ImageGlass {
 
 
         // default location offset on the parent form
-        private static readonly Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(320));
+        private static readonly Point DefaultLocationOffset = new(DPIScaling.Transform(20), DPIScaling.Transform(320));
 
 
 
