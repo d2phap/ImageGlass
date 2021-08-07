@@ -21,12 +21,10 @@ using System.Windows.Forms;
 
 namespace ImageGlass.UI.Renderers {
     public class ToolStripRenderer: ToolStripSystemRenderer {
-        public Color ThemeBackgroundColor { get; set; } = Color.White;
-        public Color ThemeTextColor { get; set; } = Color.Black;
+        private Theme theme { get; set; }
 
-        public ToolStripRenderer(Color backgroundColor, Color textColor) {
-            this.ThemeBackgroundColor = backgroundColor;
-            this.ThemeTextColor = textColor;
+        public ToolStripRenderer(Theme theme) {
+            this.theme = theme;
         }
 
         protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e) {
@@ -42,7 +40,7 @@ namespace ImageGlass.UI.Renderers {
 
             // hover/selected state
             if (btn.Selected) {
-                brushBg = new SolidBrush(Theme.LightenColor(this.ThemeBackgroundColor, 0.15f));
+                brushBg = new SolidBrush(Theme.LightenColor(theme.BackgroundColor, 0.15f));
 
                 e.Graphics.FillRectangle(brushBg,
                     new RectangleF(
@@ -54,7 +52,7 @@ namespace ImageGlass.UI.Renderers {
                 );
             }
             else if (btn.DropDown.Visible) {
-                brushBg = new SolidBrush(Theme.DarkenColor(this.ThemeBackgroundColor, 0.15f));
+                brushBg = new SolidBrush(Theme.DarkenColor(theme.BackgroundColor, 0.15f));
 
                 e.Graphics.FillRectangle(brushBg,
                     new RectangleF(
@@ -70,7 +68,7 @@ namespace ImageGlass.UI.Renderers {
             #endregion
 
             #region Draw "..."
-            var brushFont = new SolidBrush(this.ThemeTextColor);
+            var brushFont = new SolidBrush(theme.TextInfoColor);
             var font = new Font(FontFamily.GenericSerif, 10, FontStyle.Bold);
             var fontSize = e.Graphics.MeasureString("…", font);
 
@@ -85,6 +83,11 @@ namespace ImageGlass.UI.Renderers {
             brushFont.Dispose();
             #endregion
 
+        }
+
+        protected override void OnRenderButtonBackground(ToolStripItemRenderEventArgs e) {
+            e.Graphics.FillRectangle(Brushes.Red, e.Item.ContentRectangle);
+            //base.OnRenderButtonBackground(e);
         }
     }
 }

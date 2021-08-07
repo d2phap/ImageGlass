@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.DefaultGifAnimator defaultGifAnimator1 = new ImageGlass.DefaultGifAnimator();
+            ImageGlass.DefaultGifAnimator defaultGifAnimator2 = new ImageGlass.DefaultGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sampleMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -130,6 +130,11 @@
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.picMain = new ImageGlass.ImageBoxEx();
             this.thumbnailBar = new ImageGlass.ImageListView.ImageListView();
+            this.btnScaleToFill = new System.Windows.Forms.ToolStripButton();
+            this.tip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.mnuShortcut = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolMain = new ImageGlass.UI.ToolStripToolTip();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.btnNext = new System.Windows.Forms.ToolStripButton();
@@ -165,11 +170,6 @@
             this.btnColorPicker = new System.Windows.Forms.ToolStripButton();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblInfo = new System.Windows.Forms.ToolStripLabel();
-            this.btnScaleToFill = new System.Windows.Forms.ToolStripButton();
-            this.tip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.mnuShortcut = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -179,8 +179,8 @@
             this.sp1.Panel1.SuspendLayout();
             this.sp1.Panel2.SuspendLayout();
             this.sp1.SuspendLayout();
-            this.toolMain.SuspendLayout();
             this.mnuShortcut.SuspendLayout();
+            this.toolMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnuContext
@@ -232,7 +232,7 @@
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
             this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(247, 499);
+            this.mnuMain.Size = new System.Drawing.Size(247, 468);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -1365,7 +1365,7 @@
             // picMain
             // 
             this.picMain.AllowDrop = true;
-            this.picMain.Animator = defaultGifAnimator1;
+            this.picMain.Animator = defaultGifAnimator2;
             this.picMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(60)))), ((int)(((byte)(61)))));
             this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.picMain.ContextMenuStrip = this.mnuContext;
@@ -1414,6 +1414,38 @@
             this.thumbnailBar.ItemClick += new ImageGlass.ImageListView.ItemClickEventHandler(this.thumbnailBar_ItemClick);
             this.thumbnailBar.DragDrop += new System.Windows.Forms.DragEventHandler(this.picMain_DragDrop);
             this.thumbnailBar.DragOver += new System.Windows.Forms.DragEventHandler(this.picMain_DragOver);
+            // 
+            // btnScaleToFill
+            // 
+            this.btnScaleToFill.AutoSize = false;
+            this.btnScaleToFill.BackColor = System.Drawing.Color.Transparent;
+            this.btnScaleToFill.CheckOnClick = true;
+            this.btnScaleToFill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnScaleToFill.Image = global::ImageGlass.Properties.Resources.info;
+            this.btnScaleToFill.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnScaleToFill.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnScaleToFill.Margin = new System.Windows.Forms.Padding(0);
+            this.btnScaleToFill.Name = "btnScaleToFill";
+            this.btnScaleToFill.Size = new System.Drawing.Size(33, 33);
+            this.btnScaleToFill.Tag = "";
+            this.btnScaleToFill.ToolTipText = "Zoom to fill";
+            this.btnScaleToFill.Click += new System.EventHandler(this.btnScaleToFill_Click);
+            // 
+            // mnuShortcut
+            // 
+            this.mnuShortcut.BackColor = System.Drawing.Color.White;
+            this.mnuShortcut.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.mnuShortcut.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1});
+            this.mnuShortcut.Name = "mnuContext";
+            this.mnuShortcut.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.mnuShortcut.Size = new System.Drawing.Size(223, 32);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(222, 28);
+            this.toolStripMenuItem1.Text = "sample menu item";
             // 
             // toolMain
             // 
@@ -1923,38 +1955,6 @@
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Size = new System.Drawing.Size(0, 53);
             // 
-            // btnScaleToFill
-            // 
-            this.btnScaleToFill.AutoSize = false;
-            this.btnScaleToFill.BackColor = System.Drawing.Color.Transparent;
-            this.btnScaleToFill.CheckOnClick = true;
-            this.btnScaleToFill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnScaleToFill.Image = global::ImageGlass.Properties.Resources.info;
-            this.btnScaleToFill.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnScaleToFill.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnScaleToFill.Margin = new System.Windows.Forms.Padding(0);
-            this.btnScaleToFill.Name = "btnScaleToFill";
-            this.btnScaleToFill.Size = new System.Drawing.Size(33, 33);
-            this.btnScaleToFill.Tag = "";
-            this.btnScaleToFill.ToolTipText = "Zoom to fill";
-            this.btnScaleToFill.Click += new System.EventHandler(this.btnScaleToFill_Click);
-            // 
-            // mnuShortcut
-            // 
-            this.mnuShortcut.BackColor = System.Drawing.Color.White;
-            this.mnuShortcut.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.mnuShortcut.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1});
-            this.mnuShortcut.Name = "mnuContext";
-            this.mnuShortcut.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuShortcut.Size = new System.Drawing.Size(223, 32);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(222, 28);
-            this.toolStripMenuItem1.Text = "sample menu item";
-            // 
             // frmMain
             // 
             this.AllowDrop = true;
@@ -1990,9 +1990,9 @@
             this.sp1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).EndInit();
             this.sp1.ResumeLayout(false);
+            this.mnuShortcut.ResumeLayout(false);
             this.toolMain.ResumeLayout(false);
             this.toolMain.PerformLayout();
-            this.mnuShortcut.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

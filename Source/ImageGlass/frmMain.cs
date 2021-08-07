@@ -2515,7 +2515,7 @@ namespace ImageGlass {
             Configs.ApplyFormTheme(this, Configs.Theme);
 
             // Remove white line under tool strip
-            toolMain.Renderer = new UI.Renderers.ToolStripRenderer(th.ToolbarBackgroundColor, th.TextInfoColor);
+            toolMain.Renderer = new UI.Renderers.ToolStripRenderer(th);
 
             if (changeBackground) {
                 // User is changing theme. Override BackgroundColor setting.
