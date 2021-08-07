@@ -38,6 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ImageGlass.Library.WinAPI;
 
 namespace ImageGlass.UI {
     public class ToolStripToolTip: ToolStrip {
@@ -173,7 +174,11 @@ namespace ImageGlass.UI {
                 Interval = 200 // KBR enforce long initial time SystemInformation.MouseHoverTime;
             };
             timer.Tick += timer_Tick;
+
+            // Apply Windows 11 corner API
+            CornerApi.ApplyCorner(this.OverflowButton.DropDown.Handle);
         }
+
 
         /// <summary>
         /// Update the alignment if toolstrip items
