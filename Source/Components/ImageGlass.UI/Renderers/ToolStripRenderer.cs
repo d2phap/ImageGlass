@@ -16,8 +16,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using ImageGlass.Base;
 
 namespace ImageGlass.UI.Renderers {
     public class ToolStripRenderer: ToolStripSystemRenderer {
@@ -33,39 +36,35 @@ namespace ImageGlass.UI.Renderers {
         }
 
         protected override void OnRenderOverflowButtonBackground(ToolStripItemRenderEventArgs e) {
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+
             #region Draw Background
             const float space = 0.12f;
             var btn = (ToolStripOverflowButton)e.Item;
             var brushBg = new SolidBrush(Color.Black);
+            var borderRadius = Helpers.IsOS(WindowsOS.Win11) ? 5 : 0;
+            var rect = new RectangleF(
+                e.Item.Bounds.Width * space,
+                e.Item.Bounds.Height * space,
+                e.Item.Bounds.Width * (1 - (space * 2)),
+                e.Item.Bounds.Height * (1 - (space * 2))
+            );
+            using var path = Theme.GetRoundRectanglePath(rect, borderRadius);
 
-            // hover/selected state
-            if (btn.Selected) {
-                brushBg = new SolidBrush(Theme.LightenColor(theme.BackgroundColor, 0.15f));
-
-                e.Graphics.FillRectangle(brushBg,
-                    new RectangleF(
-                        e.Item.Bounds.Width * space,
-                        e.Item.Bounds.Height * space,
-                        e.Item.Bounds.Width * (1 - (space * 2)),
-                        e.Item.Bounds.Height * (1 - (space * 2))
-                    )
-                );
+            // on pressed
+            if (btn.Pressed) {
+                brushBg = new SolidBrush(theme.AccentDarkColor);
+                e.Graphics.FillPath(brushBg, path);
             }
-            else if (btn.DropDown.Visible) {
-                brushBg = new SolidBrush(Theme.DarkenColor(theme.BackgroundColor, 0.15f));
-
-                e.Graphics.FillRectangle(brushBg,
-                    new RectangleF(
-                        e.Item.Bounds.Width * space,
-                        e.Item.Bounds.Height * space,
-                        e.Item.Bounds.Width * (1 - (space * 2)),
-                        e.Item.Bounds.Height * (1 - (space * 2))
-                    )
-                );
+            // on hover
+            else if (btn.Selected) {
+                brushBg = new SolidBrush(theme.AccentLightColor);
+                e.Graphics.FillPath(brushBg, path);
             }
 
             brushBg.Dispose();
             #endregion
+
 
             #region Draw "..."
             var brushFont = new SolidBrush(theme.TextInfoColor);
@@ -85,9 +84,40 @@ namespace ImageGlass.UI.Renderers {
 
         }
 
+
         protected override void OnRenderButtonBackground(ToolStripItemRenderEventArgs e) {
-            e.Graphics.FillRectangle(Brushes.Red, e.Item.ContentRectangle);
-            //base.OnRenderButtonBackground(e);
+            var isBtn = e.Item.GetType().Name == nameof(ToolStripButton);
+
+            if (isBtn && e.Item.Enabled) {
+                e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+
+                var btn = e.Item as ToolStripButton;
+                var borderRadius = Helpers.IsOS(WindowsOS.Win11) ? 5 : 0;
+                using var path = Theme.GetRoundRectanglePath(btn.ContentRectangle, borderRadius);
+
+                // on pressed
+                if (btn.Pressed) {
+                    using var brush = new SolidBrush(theme.AccentDarkColor);
+                    e.Graphics.FillPath(brush, path);
+                }
+                // on hover
+                else if (btn.Selected) {
+                    using var brush = new SolidBrush(theme.AccentLightColor);
+                    e.Graphics.FillPath(brush, path);
+                }
+                else {
+                    if (btn.Checked) {
+                        using var brush = new SolidBrush(theme.AccentColor);
+                        e.Graphics.FillPath(brush, path);
+                    }
+                }
+
+                return;
+            }
+
+
+            base.OnRenderButtonBackground(e);
         }
+
     }
 }

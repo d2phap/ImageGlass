@@ -1026,10 +1026,10 @@ namespace ImageGlass.UI {
         /// <param name="bounds">Input rectangle</param>
         /// <param name="radius">Border radius</param>
         /// <returns></returns>
-        public static GraphicsPath GetRoundRectanglePath(Rectangle bounds, int radius) {
+        public static GraphicsPath GetRoundRectanglePath(RectangleF bounds, int radius) {
             var diameter = radius * 2;
             var size = new Size(diameter, diameter);
-            var arc = new Rectangle(bounds.Location, size);
+            var arc = new RectangleF(bounds.Location, size);
             var path = new GraphicsPath();
 
             if (radius == 0) {
@@ -1054,6 +1054,17 @@ namespace ImageGlass.UI {
 
             path.CloseFigure();
             return path;
+        }
+
+
+        /// <summary>
+        /// Gets rounded rectangle graphic path
+        /// </summary>
+        /// <param name="bounds">Input rectangle</param>
+        /// <param name="radius">Border radius</param>
+        /// <returns></returns>
+        public static GraphicsPath GetRoundRectanglePath(Rectangle bounds, int radius) {
+            return GetRoundRectanglePath(new RectangleF(bounds.Location, bounds.Size), radius);
         }
 
         private static float MinMax(float value, float min, float max) {

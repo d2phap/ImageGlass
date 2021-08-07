@@ -149,6 +149,10 @@
       <Project>{51493b09-7a0e-461f-be18-a6cf629a8fab}</Project>
       <Name>ImageGlass.Heart</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ImageGlass.Library\ImageGlass.Library.csproj">
+      <Project>{4BB719ED-B68B-4CB1-AAAF-BA0E3BC5FE81}</Project>
+      <Name>ImageGlass.Library</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ImageGlass.Services\ImageGlass.Services.csproj">
       <Project>{886dc568-c83e-443e-89fa-84cf420b2c68}</Project>
       <Name>ImageGlass.Services</Name>
