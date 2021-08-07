@@ -2514,6 +2514,10 @@ namespace ImageGlass {
         private void ApplyTheme(bool changeBackground = false) {
             var th = Configs.Theme;
 
+            // ThumbnailBar Renderer must be done BEFORE loading theme
+            var thumbBarTheme = new ModernThumbnailRenderer(th);
+            thumbnailBar.SetRenderer(thumbBarTheme);
+
             // Apply theme
             Configs.ApplyFormTheme(this, Configs.Theme);
 
@@ -2625,9 +2629,6 @@ namespace ImageGlass {
         private void LoadConfig(bool @isLoadUI = false, bool @isLoadOthers = true) {
             #region UI SETTINGS
             if (isLoadUI) {
-                // ThumbnailBar Renderer must be done BEFORE loading theme
-                var thumbBarTheme = new ImageListView.ImageListViewRenderers.ThemeRenderer();
-                thumbnailBar.SetRenderer(thumbBarTheme);
                 ApplyTheme();
 
                 // Show checkerboard
