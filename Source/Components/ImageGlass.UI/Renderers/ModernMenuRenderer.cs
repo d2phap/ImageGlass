@@ -191,7 +191,7 @@ namespace ImageGlass.UI.Renderers {
 
                 // Windows 10 style
                 if (!Helpers.IsOS(WindowsOS.Win11)) {
-                    borderRadius = 0;
+                    borderRadius = 1;
                     rect = new Rectangle(0, 0, e.Item.Bounds.Width, e.Item.Bounds.Height);
                 }
 

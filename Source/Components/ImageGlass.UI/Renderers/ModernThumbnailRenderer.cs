@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using ImageGlass.Base;
 using ImageGlass.ImageListView;
 
 namespace ImageGlass.UI.Renderers {
@@ -70,6 +71,7 @@ namespace ImageGlass.UI.Renderers {
             }
 
             g.SmoothingMode = SmoothingMode.HighQuality;
+            var borderRadius = Helpers.IsOS(WindowsOS.Win11) ? 5 : 1;
             var itemPadding = new Size(5, 5);
             var itemMargin = new Size(5, 5);
             var itemBounds = new Rectangle(new(
@@ -80,13 +82,13 @@ namespace ImageGlass.UI.Renderers {
             // on selected
             if ((state & ItemState.Selected) != ItemState.None) {
                 using var brush = new SolidBrush(theme.AccentColor);
-                Utility.FillRoundedRectangle(g, brush, itemBounds, 5);
+                Utility.FillRoundedRectangle(g, brush, itemBounds, borderRadius);
             }
 
             // on hover
             if ((state & ItemState.Hovered) != ItemState.None) {
                 using var brush = new SolidBrush(theme.AccentLightColor);
-                Utility.FillRoundedRectangle(g, brush, itemBounds, 5);
+                Utility.FillRoundedRectangle(g, brush, itemBounds, borderRadius);
             }
 
             // Draw the image
