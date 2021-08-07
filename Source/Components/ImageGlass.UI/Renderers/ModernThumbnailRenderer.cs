@@ -1,7 +1,23 @@
-﻿using System;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2021 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
 using ImageGlass.ImageListView;
 
 namespace ImageGlass.UI.Renderers {
@@ -9,58 +25,28 @@ namespace ImageGlass.UI.Renderers {
     /// Displays items with large tiles.
     /// </summary>
     public class ModernThumbnailRenderer: ImageListView.ImageListView.ImageListViewRenderer {
-        private Font mCaptionFont;
-        private int mTileWidth;
-        private int mTextHeight;
         private Theme theme { get; set; }
 
-        /// <summary>
-        /// Gets or sets the width of the tile.
-        /// </summary>
-        public int TileWidth { get { return mTileWidth; } set { mTileWidth = value; } }
 
-        private Font CaptionFont {
-            get {
-                if (mCaptionFont == null)
-                    mCaptionFont = new Font(ImageListView.Font, FontStyle.Bold);
-                return mCaptionFont;
-            }
-        }
 
         /// <summary>
         /// Initializes a new instance of the ModernThumbnailRenderer class.
         /// </summary>
         /// <param name="theme"></param>
-        public ModernThumbnailRenderer(Theme theme) : this(150) {
+        public ModernThumbnailRenderer(Theme theme) {
             this.theme = theme;
         }
 
 
         /// <summary>
-        /// Initializes a new instance of the ModernThumbnailRenderer class.
-        /// </summary>
-        /// <param name="tileWidth">Width of tiles in pixels.</param>
-        public ModernThumbnailRenderer(int tileWidth) {
-            mTileWidth = tileWidth;
-        }
-
-        /// <summary>
-        /// Releases managed resources.
-        /// </summary>
-        public override void Dispose() {
-            if (mCaptionFont != null)
-                mCaptionFont.Dispose();
-
-            base.Dispose();
-        }
-        /// <summary>
         /// Returns item size for the given view mode.
         /// </summary>
         /// <param name="view">The view mode for which the item measurement should be made.</param>
         /// <returns>The item size.</returns>
-        public override Size MeasureItem(ImageListView.View view) {
+        public override Size MeasureItem(View view) {
             var sz = base.MeasureItem(view);
-            if (view != ImageGlass.ImageListView.View.Details) {
+
+            if (view != View.Details) {
                 var textHeight = ImageListView.Font.Height;
 
                 sz.Width += textHeight * 2 / 5;
@@ -78,35 +64,40 @@ namespace ImageGlass.UI.Renderers {
         /// <param name="state">The current view state of item.</param>
         /// <param name="bounds">The bounding rectangle of item in client coordinates.</param>
         public override void DrawItem(Graphics g, ImageListViewItem item, ItemState state, Rectangle bounds) {
-            if (ImageListView.View != ImageGlass.ImageListView.View.Details) {
-                g.SmoothingMode = SmoothingMode.HighQuality;
-                var itemPadding = new Size(5, 5);
-
-                // on selected
-                if ((state & ItemState.Selected) != ItemState.None) {
-                    using var brush = new SolidBrush(theme.AccentColor);
-                    Utility.FillRoundedRectangle(g, brush, bounds, 5);
-                }
-
-                // on hover
-                if ((state & ItemState.Hovered) != ItemState.None) {
-                    using var brush = new SolidBrush(theme.AccentLightColor);
-                    Utility.FillRoundedRectangle(g, brush, bounds, 5);
-                }
-
-                // Draw the image
-                var img = item.GetCachedImage(CachedImageType.Thumbnail);
-                if (img != null) {
-                    var pos = Utility.GetSizedImageBounds(img, new Rectangle(
-                        bounds.Location + itemPadding, new Size(
-                            bounds.Width - 2 * itemPadding.Width,
-                            bounds.Height - 2 * itemPadding.Width)));
-
-                    g.DrawImage(img, pos);
-                }
-            }
-            else {
+            if (ImageListView.View == View.Details) {
                 base.DrawItem(g, item, state, bounds);
+                return;
+            }
+
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            var itemPadding = new Size(5, 5);
+            var itemMargin = new Size(5, 5);
+            var itemBounds = new Rectangle(new(
+                bounds.X,
+                bounds.Y + itemMargin.Height),
+                new(bounds.Width - itemMargin.Width, bounds.Height - 2 * itemMargin.Width));
+
+            // on selected
+            if ((state & ItemState.Selected) != ItemState.None) {
+                using var brush = new SolidBrush(theme.AccentColor);
+                Utility.FillRoundedRectangle(g, brush, itemBounds, 5);
+            }
+
+            // on hover
+            if ((state & ItemState.Hovered) != ItemState.None) {
+                using var brush = new SolidBrush(theme.AccentLightColor);
+                Utility.FillRoundedRectangle(g, brush, itemBounds, 5);
+            }
+
+            // Draw the image
+            var img = item.GetCachedImage(CachedImageType.Thumbnail);
+            if (img != null) {
+                var pos = Utility.GetSizedImageBounds(img, new Rectangle(
+                    itemBounds.Location + itemPadding, new Size(
+                        itemBounds.Width - 2 * itemPadding.Width,
+                        itemBounds.Height - 2 * itemPadding.Width)));
+
+                g.DrawImage(img, pos);
             }
         }
     }
