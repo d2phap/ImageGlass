@@ -97,6 +97,8 @@ namespace ImageGlass.Heart {
 
                 case ".GIF":
                 case ".TIF":
+                case ".TIFF":
+                case ".FAX":
                     // Note: Using FileStream is much faster than using MagickImageCollection
 
                     try {
