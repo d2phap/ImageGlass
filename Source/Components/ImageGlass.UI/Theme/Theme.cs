@@ -421,44 +421,44 @@ namespace ImageGlass.UI {
             ToolbarBackgroundImage = LoadThemeImage(dir, n, "topbar", iconHeight);
 
             var color = FetchColorAttribute(n, "topbarcolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 ToolbarBackgroundColor = color;
             }
 
             ThumbnailBackgroundImage = LoadThemeImage(dir, n, "bottombar", iconHeight);
 
             color = FetchColorAttribute(n, "bottombarcolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 ThumbnailBackgroundColor = color;
             }
 
             color = FetchColorAttribute(n, "backcolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 BackgroundColor = color;
             }
 
             color = FetchColorAttribute(n, "statuscolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 TextInfoColor = color;
             }
 
             color = FetchColorAttribute(n, "menubackgroundcolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 MenuBackgroundColor = color;
             }
 
             color = FetchColorAttribute(n, "menubackgroundhovercolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 MenuBackgroundHoverColor = color;
             }
 
-            color = FetchColorAttribute(n, "menutextcolor");
-            if (color != Color.Transparent) {
+            color = FetchColorAttribute(n, "menutextcolor", Color.Black);
+            if (color != default) {
                 MenuTextColor = color;
             }
 
-            color = FetchColorAttribute(n, "menutexthovercolor");
-            if (color != Color.Transparent) {
+            color = FetchColorAttribute(n, "menutexthovercolor", Color.White);
+            if (color != default) {
                 MenuTextHoverColor = color;
             }
 
@@ -480,17 +480,17 @@ namespace ImageGlass.UI {
 
             // v8.0: Accent colors
             color = FetchColorAttribute(n, "accentcolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 AccentColor = color;
             }
 
             color = FetchColorAttribute(n, "accentlightcolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 AccentLightColor = color;
             }
 
             color = FetchColorAttribute(n, "accentdarkcolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 AccentDarkColor = color;
             }
 
@@ -567,7 +567,7 @@ namespace ImageGlass.UI {
 
             // Fetch a color attribute value from the theme config file.
             // Returns: a Color value if valid; Color.Transparent if an error
-            static Color FetchColorAttribute(XmlElement xmlElement, string attribute) {
+            static Color FetchColorAttribute(XmlElement xmlElement, string attribute, Color defaultValue = default) {
                 try {
                     var colorString = xmlElement.GetAttribute(attribute);
 
@@ -581,7 +581,7 @@ namespace ImageGlass.UI {
                     // ignored
                 }
 
-                return Color.Transparent;
+                return defaultValue; // Color.Transparent;
             }
         }
 
