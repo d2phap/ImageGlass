@@ -66,7 +66,7 @@ namespace ImageGlass.Services {
             try {
                 if (File.Exists(savedPath)) { File.Delete(savedPath); }
 
-                var w = new WebClient();
+                using var w = new WebClient();
                 w.DownloadFile(link, savedPath);
             }
             catch (Exception) { return false; }

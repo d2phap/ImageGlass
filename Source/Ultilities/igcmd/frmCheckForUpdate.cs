@@ -46,13 +46,17 @@ namespace igcmd {
                 lnkUpdateReadMore.LinkColor =
                 lnkUpdateReadMore.VisitedLinkColor = Configs.Theme.AccentColor;
 
+            var iconPtr = Configs.Theme.Logo.Image.GetHicon();
+
             // Icon theming
             if (!Configs.Theme.IsShowTitlebarLogo) {
-                this.Icon = Icon.FromHandle(new Bitmap(48, 48).GetHicon());
-                FormIcon.SetTaskbarIcon(this, Configs.Theme.Logo.Image.GetHicon());
+                using var icon = Icon.FromHandle(new Bitmap(48, 48).GetHicon());
+                this.Icon = icon;
+                FormIcon.SetTaskbarIcon(this, iconPtr);
             }
             else {
-                this.Icon = Icon.FromHandle(Configs.Theme.Logo.Image.GetHicon());
+                using var icon = Icon.FromHandle(iconPtr);
+                this.Icon = icon;
             }
         }
 
