@@ -279,6 +279,11 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool IsUseEmptyTitleBar { get; set; } = false;
 
+        /// <summary>
+        /// Gets, sets value indicates that RAW thumbnail will be use if found
+        /// </summary>
+        public static bool IsUseRawThumbnail { get; set; } = false;
+
         #endregion
 
 
@@ -598,6 +603,7 @@ namespace ImageGlass.Settings {
             IsHideTooltips = Get<bool>(nameof(IsHideTooltips), IsHideTooltips);
             IsExifToolAlwaysOnTop = Get<bool>(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
             IsUseEmptyTitleBar = Get<bool>(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
+            IsUseRawThumbnail = Get<bool>(nameof(IsUseRawThumbnail), IsUseRawThumbnail);
 
             #endregion
 
@@ -831,6 +837,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsHideTooltips), IsHideTooltips);
             Set(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
             Set(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
+            Set(nameof(IsUseRawThumbnail), IsUseRawThumbnail);
 
             #endregion
 

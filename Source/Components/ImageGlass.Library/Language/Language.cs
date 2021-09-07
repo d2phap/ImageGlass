@@ -69,7 +69,7 @@ namespace ImageGlass.Library {
             LangName = "Local name of the language";
             Author = "ImageGlass community";
             Description = "English name of language";
-            MinVersion = "8.1.0.0";
+            MinVersion = "8.3.0.0";
             FileName = "";
             IsRightToLeftLayout = RightToLeft.No;
 
@@ -440,7 +440,7 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.chkShowHiddenImages", "Show hidden images"); //v4.5
             Items.Add("frmSetting.chkLoopViewer", "Loop back viewer to the first image when reaching the end of the list"); //v4.0
             Items.Add("frmSetting.chkIsCenterImage", "Center image on viewer"); //v7.0
-            // Items.Add("frmSetting.chkImageBoosterBack", "Turn on Image Booster when navigate back (need more ~20% RAM)"); //v2.0 final // removed 7.0
+            Items.Add("frmSetting.chkIsUseRawThumbnail", "Use embedded thumbnail for RAW formats"); //v8.3
 
             Items.Add("frmSetting.lblImageLoadingOrder", "Image loading order");
             Items.Add("frmSetting.chkUseFileExplorerSortOrder", "Use Windows File Explorer sort order if possible"); //v7.0
