@@ -100,6 +100,11 @@ namespace ImageGlass.Heart {
         /// </summary>
         public bool UseEmbeddedThumbnail { get; set; } = false;
 
+        /// <summary>
+        /// Gets, sets the value indicates that returns the RAW embedded thumbnail if found.
+        /// </summary>
+        public bool UseRawThumbnail { get; set; } = true;
+
         public delegate void FinishLoadingImageHandler(object sender, EventArgs e);
         public event EventHandler<EventArgs> OnFinishLoadingImage;
 
@@ -208,7 +213,8 @@ namespace ImageGlass.Heart {
                             colorProfileName: ColorProfileName,
                             isApplyColorProfileForAll: IsApplyColorProfileForAll,
                             channel: Channels,
-                            useEmbeddedThumbnail: UseEmbeddedThumbnail
+                            useEmbeddedThumbnail: UseEmbeddedThumbnail,
+                            useRawThumbnail: UseRawThumbnail
                         ).ConfigureAwait(true);
                     }
                 }
@@ -251,7 +257,8 @@ namespace ImageGlass.Heart {
                     colorProfileName: ColorProfileName,
                     isApplyColorProfileForAll: IsApplyColorProfileForAll,
                     channel: Channels,
-                    useEmbeddedThumbnail: UseEmbeddedThumbnail
+                    useEmbeddedThumbnail: UseEmbeddedThumbnail,
+                    useRawThumbnail: UseRawThumbnail
                 ).ConfigureAwait(true);
             }
             // get image data from cache

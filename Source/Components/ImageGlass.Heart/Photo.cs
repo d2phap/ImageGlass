@@ -31,6 +31,7 @@ namespace ImageGlass.Heart {
     public static class Photo {
         #region Load image / thumbnail
 
+
         /// <summary>
         /// Load image from file
         /// </summary>
@@ -40,7 +41,8 @@ namespace ImageGlass.Heart {
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="quality">Image quality</param>
         /// <param name="channel">MagickImage.Channel value</param>
-        /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
+        /// <param name="useEmbeddedThumbnail">Return the embedded thumbnail if required size was not found.</param>
+        /// <param name="useRawThumbnail">Return the RAW embedded thumbnail if found.</param>
         /// <returns>Bitmap</returns>
         public static ImgData Load(
             string filename,
@@ -49,7 +51,8 @@ namespace ImageGlass.Heart {
             bool isApplyColorProfileForAll = false,
             int quality = 100,
             int channel = -1,
-            bool useEmbeddedThumbnails = false
+            bool useEmbeddedThumbnail = false,
+            bool useRawThumbnail = true
         ) {
             Bitmap bitmap = null;
             IExifProfile exif = null;
@@ -78,6 +81,8 @@ namespace ImageGlass.Heart {
             // Fix RAW color
             settings.SetDefines(new DngReadDefines() {
                 UseCameraWhitebalance = true,
+                OutputColor = DngOutputColor.AdobeRGB,
+                ReadThumbnail = true,
             });
 
             #endregion
@@ -150,7 +155,7 @@ namespace ImageGlass.Heart {
                 catch { }
 
                 // Use embedded thumbnails if specified
-                if (profile != null && useEmbeddedThumbnails) {
+                if (profile != null && useEmbeddedThumbnail) {
                     // Fetch the embedded thumbnail
                     var thumbM = profile.CreateThumbnail();
                     if (thumbM != null) {
@@ -192,6 +197,7 @@ namespace ImageGlass.Heart {
                 return (profile, imgColorProfile);
             }
 
+
             // Separate color channel
             MagickImage ApplyColorChannel(MagickImage imgM) {
                 if (channel != -1) {
@@ -209,6 +215,7 @@ namespace ImageGlass.Heart {
                 return imgM;
             }
 
+
             void ReadWithMagickImage() {
                 MagickImage imgM;
 
@@ -219,8 +226,34 @@ namespace ImageGlass.Heart {
 
                     imgM = new MagickImage(allBytes, settings);
                 }
-                else {
+                else if (useRawThumbnail is false) {
                     imgM = new MagickImage(filename, settings);
+                }
+                else {
+                    var tempM = new MagickImage();
+
+                    // Fixed #708: length and filesize do not match
+                    tempM.Settings.SetDefines(new BmpReadDefines {
+                        IgnoreFileSize = true,
+                    });
+
+                    // Fix RAW color
+                    tempM.Settings.SetDefines(new DngReadDefines() {
+                        UseCameraWhitebalance = true,
+                        OutputColor = DngOutputColor.AdobeRGB,
+                        ReadThumbnail = true,
+                    });
+
+                    tempM.Ping(filename);
+                    var profile = tempM.GetProfile("dng:thumbnail");
+
+                    try {
+                        // try to get thumbnail
+                        imgM = new MagickImage(profile?.GetData());
+                    }
+                    catch {
+                        imgM = new MagickImage(filename, settings);
+                    }
                 }
 
 
@@ -259,8 +292,9 @@ namespace ImageGlass.Heart {
         /// <param name="quality">Image quality</param>
         /// <param name="channel">MagickImage.Channel value</param>
         /// <param name="useEmbeddedThumbnail">Use embeded thumbnail if found</param>
+        /// <param name="useRawThumbnail">Use embeded thumbnail if found</param>
         /// <returns></returns>
-        public static async Task<ImgData> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, int channel = -1, bool useEmbeddedThumbnail = false) {
+        public static async Task<ImgData> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, int channel = -1, bool useEmbeddedThumbnail = false, bool useRawThumbnail = true) {
             var data = await Task.Run(() => {
                 return Load(
                     filename,
@@ -268,8 +302,9 @@ namespace ImageGlass.Heart {
                     colorProfileName,
                     isApplyColorProfileForAll,
                     quality,
-                    channel: channel,
-                    useEmbeddedThumbnail
+                    channel,
+                    useEmbeddedThumbnail,
+                    useRawThumbnail
                 );
             }).ConfigureAwait(true);
 
@@ -281,13 +316,13 @@ namespace ImageGlass.Heart {
         /// </summary>
         /// <param name="filename">Full path of image file</param>
         /// <param name="size">A custom size of thumbnail</param>
-        /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
+        /// <param name="useEmbeddedThumbnail">Return the embedded thumbnail if required size was not found.</param>
         /// <returns></returns>
-        public static Bitmap GetThumbnail(string filename, Size size, bool useEmbeddedThumbnails = true) {
+        public static Bitmap GetThumbnail(string filename, Size size, bool useEmbeddedThumbnail = true) {
             var data = Load(filename,
                     size: size,
                     quality: 75,
-                    useEmbeddedThumbnails: useEmbeddedThumbnails);
+                    useEmbeddedThumbnail: useEmbeddedThumbnail);
 
             return data.Image;
         }
@@ -297,14 +332,14 @@ namespace ImageGlass.Heart {
         /// </summary>
         /// <param name="filename">Full path of image file</param>
         /// <param name="size">A custom size of thumbnail</param>
-        /// <param name="useEmbeddedThumbnails">Return the embedded thumbnail if required size was not found.</param>
+        /// <param name="useEmbeddedThumbnail">Return the embedded thumbnail if required size was not found.</param>
         /// <returns></returns>
-        public static async Task<Bitmap> GetThumbnailAsync(string filename, Size size, bool useEmbeddedThumbnails = true) {
+        public static async Task<Bitmap> GetThumbnailAsync(string filename, Size size, bool useEmbeddedThumbnail = true) {
             var data = await Task.Run(() => {
                 return Load(filename,
                     size: size,
                     quality: 75,
-                    useEmbeddedThumbnails: useEmbeddedThumbnails);
+                    useEmbeddedThumbnail: useEmbeddedThumbnail);
             }).ConfigureAwait(true);
 
             return data.Image;

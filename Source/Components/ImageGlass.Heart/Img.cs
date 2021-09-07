@@ -103,7 +103,13 @@ namespace ImageGlass.Heart {
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="channel">MagickImage.Channel value</param>
         /// <param name="useEmbeddedThumbnail">Use the embeded thumbnail if found</param>
-        public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false, int channel = -1, bool useEmbeddedThumbnail = false) {
+        public async Task LoadAsync(
+            Size size = new Size(),
+            string colorProfileName = "",
+            bool isApplyColorProfileForAll = false,
+            int channel = -1,
+            bool useEmbeddedThumbnail = false,
+            bool useRawThumbnail = true) {
             // reset done status
             IsDone = false;
 
@@ -118,7 +124,8 @@ namespace ImageGlass.Heart {
                     colorProfileName: colorProfileName,
                     isApplyColorProfileForAll: isApplyColorProfileForAll,
                     channel: channel,
-                    useEmbeddedThumbnail: useEmbeddedThumbnail
+                    useEmbeddedThumbnail: useEmbeddedThumbnail,
+                    useRawThumbnail: useRawThumbnail
                 ).ConfigureAwait(true);
 
                 Image = data.Image;
