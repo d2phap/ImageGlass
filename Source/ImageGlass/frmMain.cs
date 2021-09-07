@@ -701,9 +701,10 @@ namespace ImageGlass {
 
 
             try {
-                // apply Color Management settings
+                // apply image list settings
                 Local.ImageList.IsApplyColorProfileForAll = Configs.IsApplyColorProfileForAll;
                 Local.ImageList.ColorProfileName = Configs.ColorProfile;
+                Local.ImageList.UseRawThumbnail = Configs.IsUseRawThumbnail;
 
                 // put app in a 'busy' state around image load: allows us to prevent the user
                 // from skipping past a slow-to-load image by processing too many arrow clicks
@@ -721,7 +722,8 @@ namespace ImageGlass {
                         await bmpImg.LoadAsync(
                             colorProfileName: Configs.ColorProfile,
                             isApplyColorProfileForAll: Configs.IsApplyColorProfileForAll,
-                            channel: (int)Local.Channels);
+                            channel: (int)Local.Channels,
+                            useRawThumbnail: Local.ImageList.UseRawThumbnail);
                     }
                     else {
                         bmpImg = await Local.ImageList.GetImgAsync(

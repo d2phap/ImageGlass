@@ -225,6 +225,7 @@ namespace ImageGlass {
             chkShowHiddenImages.Text = lang[$"{Name}.{nameof(chkShowHiddenImages)}"];
             chkLoopViewer.Text = lang[$"{Name}.{nameof(chkLoopViewer)}"];
             chkIsCenterImage.Text = lang[$"{Name}.{nameof(chkIsCenterImage)}"];
+            chkIsUseRawThumbnail.Text = lang[$"{Name}.{nameof(chkIsUseRawThumbnail)}"];
             lblImageLoadingOrder.Text = lang[$"{Name}.{nameof(lblImageLoadingOrder)}"];
             chkUseFileExplorerSortOrder.Text = lang[$"{Name}.{nameof(chkUseFileExplorerSortOrder)}"];
             chkGroupByDirectory.Text = lang[$"{Name}.{nameof(chkGroupByDirectory)}"];
@@ -540,6 +541,9 @@ namespace ImageGlass {
 
             // Set value of chkIsCenterImage
             chkIsCenterImage.Checked = Configs.IsCenterImage;
+
+            // Set value of IsUseRawThumbnail
+            chkIsUseRawThumbnail.Checked = Configs.IsUseRawThumbnail;
 
             // Set value of chkUseFileExplorerSortOrder
             chkUseFileExplorerSortOrder.Checked = Configs.IsUseFileExplorerSortOrder;
@@ -1910,6 +1914,9 @@ namespace ImageGlass {
                 Configs.IsCenterImage = newBool;
                 Local.ForceUpdateActions |= ForceUpdateActions.OTHER_SETTINGS;
             }
+
+            Configs.IsUseRawThumbnail =
+                Local.ImageList.UseRawThumbnail = chkIsUseRawThumbnail.Checked;
 
             #region ImageLoadingOrder: MainFormForceUpdateAction.IMAGE_LIST
             newInt = cmbImageOrder.SelectedIndex;
