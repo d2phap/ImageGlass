@@ -87,7 +87,7 @@ namespace ImageGlass.UI.Renderers {
         protected override void OnRenderButtonBackground(ToolStripItemRenderEventArgs e) {
             var isBtn = e.Item.GetType().Name == nameof(ToolStripButton);
 
-            if (isBtn && e.Item.Enabled) {
+            if (isBtn) {
                 e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
                 var btn = e.Item as ToolStripButton;
@@ -104,9 +104,15 @@ namespace ImageGlass.UI.Renderers {
                     using var brush = new SolidBrush(theme.AccentLightColor);
                     e.Graphics.FillPath(brush, path);
                 }
-                else {
-                    if (btn.Checked) {
+                // on checked
+                else if (btn.Checked) {
+                    if (e.Item.Enabled) {
                         using var brush = new SolidBrush(theme.AccentColor);
+                        e.Graphics.FillPath(brush, path);
+                    }
+                    // on checked + disabled
+                    else {
+                        using var brush = new SolidBrush(Color.FromArgb(80, theme.AccentColor));
                         e.Graphics.FillPath(brush, path);
                     }
                 }

@@ -76,10 +76,10 @@
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.AutoSize = true;
-            this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(15)))), ((int)(((byte)(29)))));
+            this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(196)))), ((int)(((byte)(43)))), ((int)(((byte)(28)))));
             this.btnClose.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(74)))), ((int)(((byte)(72)))));
             this.btnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(62)))), ((int)(((byte)(74)))));
-            this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(17)))), ((int)(((byte)(35)))));
+            this.btnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(196)))), ((int)(((byte)(43)))), ((int)(((byte)(28)))));
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.ForeColor = System.Drawing.Color.White;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -189,7 +189,7 @@
             0,
             0});
             this.numHeight.Name = "numHeight";
-            this.numHeight.Size = new System.Drawing.Size(178, 30);
+            this.numHeight.Size = new System.Drawing.Size(179, 30);
             this.numHeight.TabIndex = 4;
             this.numHeight.ValueChanged += new System.EventHandler(this.Numeric_ValueChanged);
             this.numHeight.Click += new System.EventHandler(this.Numeric_Click);
@@ -208,7 +208,7 @@
             0,
             0});
             this.numWidth.Name = "numWidth";
-            this.numWidth.Size = new System.Drawing.Size(178, 30);
+            this.numWidth.Size = new System.Drawing.Size(179, 30);
             this.numWidth.TabIndex = 3;
             this.numWidth.ValueChanged += new System.EventHandler(this.Numeric_ValueChanged);
             this.numWidth.Click += new System.EventHandler(this.Numeric_Click);
@@ -227,7 +227,7 @@
             0,
             0});
             this.numY.Name = "numY";
-            this.numY.Size = new System.Drawing.Size(178, 30);
+            this.numY.Size = new System.Drawing.Size(179, 30);
             this.numY.TabIndex = 2;
             this.numY.ValueChanged += new System.EventHandler(this.Numeric_ValueChanged);
             this.numY.Click += new System.EventHandler(this.Numeric_Click);
@@ -246,7 +246,7 @@
             0,
             0});
             this.numX.Name = "numX";
-            this.numX.Size = new System.Drawing.Size(178, 30);
+            this.numX.Size = new System.Drawing.Size(179, 30);
             this.numX.TabIndex = 1;
             this.numX.ValueChanged += new System.EventHandler(this.Numeric_ValueChanged);
             this.numX.Click += new System.EventHandler(this.Numeric_Click);
