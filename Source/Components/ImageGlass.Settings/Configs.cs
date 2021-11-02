@@ -385,6 +385,11 @@ namespace ImageGlass.Settings {
         public static HashSet<string> AllFormats { get; set; } = new();
 
         /// <summary>
+        /// Gets, sets the list of formats that only load the first page forcefully
+        /// </summary>
+        public static HashSet<string> SinglePageFormats { get; set; } = new() { "*.psd;" };
+
+        /// <summary>
         /// Gets, sets the list of keycombo actions
         /// </summary>
         public static Dictionary<KeyCombos, AssignableActions> KeyComboActions = Constants.DefaultKeycomboActions;
@@ -393,6 +398,7 @@ namespace ImageGlass.Settings {
         /// Gets, sets the list of toolbar buttons
         /// </summary>
         public static List<ToolbarButton> ToolbarButtons { get; set; } = Constants.DefaultToolbarButtons;
+
 
         #endregion
 
@@ -699,6 +705,9 @@ namespace ImageGlass.Settings {
             var formats = Get<string>(nameof(AllFormats), Constants.IMAGE_FORMATS);
             AllFormats = GetImageFormats(formats);
 
+            formats = Get<string>(nameof(SinglePageFormats), string.Join(";", SinglePageFormats));
+            SinglePageFormats = GetImageFormats(formats);
+
             #endregion
 
             #region KeyComboActions
@@ -889,6 +898,7 @@ namespace ImageGlass.Settings {
             Set(nameof(ZoomLevels), Helpers.IntArrayToString(ZoomLevels));
             Set(nameof(EditApps), GetEditApps(EditApps));
             Set(nameof(AllFormats), GetImageFormats(AllFormats));
+            Set(nameof(SinglePageFormats), GetImageFormats(SinglePageFormats));
             Set(nameof(KeyComboActions), GetKeyComboActions(KeyComboActions));
             Set(nameof(ToolbarButtons), GetToolbarButtons(ToolbarButtons));
 

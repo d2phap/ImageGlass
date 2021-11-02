@@ -43,6 +43,7 @@ namespace ImageGlass.Heart {
         /// <param name="channel">MagickImage.Channel value</param>
         /// <param name="useEmbeddedThumbnail">Return the embedded thumbnail if required size was not found.</param>
         /// <param name="useRawThumbnail">Return the RAW embedded thumbnail if found.</param>
+        /// <param name="forceLoadFirstPage">Only load first page of the image</param>
         /// <returns>Bitmap</returns>
         public static ImgData Load(
             string filename,
@@ -52,7 +53,8 @@ namespace ImageGlass.Heart {
             int quality = 100,
             int channel = -1,
             bool useEmbeddedThumbnail = false,
-            bool useRawThumbnail = true
+            bool useRawThumbnail = true,
+            bool forceLoadFirstPage = false
         ) {
             Bitmap bitmap = null;
             IExifProfile exif = null;
@@ -100,9 +102,8 @@ namespace ImageGlass.Heart {
                     bitmap = ConvertBase64ToBitmap(base64Content);
                     break;
 
+
                 case ".GIF":
-                case ".TIF":
-                case ".TIFF":
                 case ".FAX":
                     // Note: Using FileStream is much faster than using MagickImageCollection
 
@@ -115,19 +116,6 @@ namespace ImageGlass.Heart {
                     }
                     break;
 
-                case ".ICO":
-                case ".WEBP":
-                case ".AVIF":
-                case ".PDF":
-                    using (var imgColl = new MagickImageCollection(filename, settings)) {
-                        foreach (var imgM in imgColl) {
-                            // For extensions other than HEIC, checkRotation is always true
-                            (exif, colorProfile) = PreprocesMagickImage((MagickImage)imgM, true);
-                        }
-
-                        bitmap = imgColl.ToBitmap();
-                    }
-                    break;
 
                 default:
                     ReadWithMagickImage();
@@ -157,7 +145,7 @@ namespace ImageGlass.Heart {
                 // Use embedded thumbnails if specified
                 if (profile != null && useEmbeddedThumbnail) {
                     // Fetch the embedded thumbnail
-                    var thumbM = profile.CreateThumbnail();
+                    using var thumbM = profile.CreateThumbnail();
                     if (thumbM != null) {
                         bitmap = thumbM.ToBitmap();
                     }
@@ -198,62 +186,48 @@ namespace ImageGlass.Heart {
             }
 
 
-            // Separate color channel
-            MagickImage ApplyColorChannel(MagickImage imgM) {
-                if (channel != -1) {
-                    var magickChannel = (Channels)channel;
-                    var channelImgM = (MagickImage)imgM.Separate(magickChannel).First();
-
-                    if (imgM.HasAlpha && magickChannel != Channels.Alpha) {
-                        using var alpha = imgM.Separate(Channels.Alpha).First();
-                        channelImgM.Composite(alpha, CompositeOperator.CopyAlpha);
-                    }
-
-                    return channelImgM;
-                }
-
-                return imgM;
-            }
-
 
             void ReadWithMagickImage() {
-                MagickImage imgM;
+                var checkRotation = ext != ".HEIC";
+                using var imgColl = new MagickImageCollection();
 
                 // Issue #530: ImageMagick falls over if the file path is longer than the (old) windows limit of 260 characters. Workaround is to read the file bytes, but that requires using the "long path name" prefix to succeed.
                 if (filename.Length > 260) {
                     var newFilename = Helpers.PrefixLongPath(filename);
                     var allBytes = File.ReadAllBytes(newFilename);
 
-                    imgM = new MagickImage(allBytes, settings);
-                }
-                else if (useRawThumbnail is false) {
-                    imgM = new MagickImage(filename, settings);
+                    imgColl.Ping(allBytes, settings);
                 }
                 else {
-                    var tempM = new MagickImage();
+                    imgColl.Ping(filename, settings);
+                }
 
-                    // Fixed #708: length and filesize do not match
-                    tempM.Settings.SetDefines(new BmpReadDefines {
-                        IgnoreFileSize = true,
-                    });
 
-                    // Fix RAW color
-                    tempM.Settings.SetDefines(new DngReadDefines() {
-                        UseCameraWhitebalance = true,
-                        OutputColor = DngOutputColor.AdobeRGB,
-                        ReadThumbnail = true,
-                    });
+                if (imgColl.Count > 1 && forceLoadFirstPage is false) {
+                    imgColl.Read(filename, settings);
+                    foreach (var imgPageM in imgColl) {
+                        (exif, colorProfile) = PreprocesMagickImage((MagickImage)imgPageM, checkRotation);
+                    }
 
-                    tempM.Ping(filename);
-                    var profile = tempM.GetProfile("dng:thumbnail");
+                    bitmap = imgColl.ToBitmap();
+                    return;
+                }
+
+
+                using var imgM = new MagickImage();
+                if (useRawThumbnail is true) {
+                    var profile = imgColl[0].GetProfile("dng:thumbnail");
 
                     try {
                         // try to get thumbnail
-                        imgM = new MagickImage(profile?.GetData());
+                        imgM.Read(profile?.GetData(), settings);
                     }
                     catch {
-                        imgM = new MagickImage(filename, settings);
+                        imgM.Read(filename, settings);
                     }
+                }
+                else {
+                    imgM.Read(filename, settings);
                 }
 
 
@@ -263,14 +237,11 @@ namespace ImageGlass.Heart {
                 }
 
 
-                var checkRotation = ext != ".HEIC";
+                imgM.Quality = quality;
                 (exif, colorProfile) = PreprocesMagickImage(imgM, checkRotation);
 
-                using (var channelImgM = ApplyColorChannel(imgM)) {
-                    bitmap = channelImgM.ToBitmap();
-                }
-
-                imgM.Dispose();
+                using var channelImgM = ApplyColorChannel(imgM, channel);
+                bitmap = channelImgM.ToBitmap();
             }
             #endregion
 
@@ -281,6 +252,23 @@ namespace ImageGlass.Heart {
                 ColorProfile = colorProfile,
             };
         }
+
+        private static MagickImage ApplyColorChannel(MagickImage imgM, int channel) {
+            if (channel != -1) {
+                var magickChannel = (Channels)channel;
+                using var channelImgM = (MagickImage)imgM.Separate(magickChannel).First();
+
+                if (imgM.HasAlpha && magickChannel != Channels.Alpha) {
+                    using var alpha = imgM.Separate(Channels.Alpha).First();
+                    channelImgM.Composite(alpha, CompositeOperator.CopyAlpha);
+                }
+
+                return channelImgM;
+            }
+
+            return imgM;
+        }
+
 
         /// <summary>
         /// Load image from file
@@ -293,8 +281,19 @@ namespace ImageGlass.Heart {
         /// <param name="channel">MagickImage.Channel value</param>
         /// <param name="useEmbeddedThumbnail">Use embeded thumbnail if found</param>
         /// <param name="useRawThumbnail">Use embeded thumbnail if found</param>
+        /// <param name="forceLoadFirstPage">Only load first page of the image</param>
         /// <returns></returns>
-        public static async Task<ImgData> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, int channel = -1, bool useEmbeddedThumbnail = false, bool useRawThumbnail = true) {
+        public static async Task<ImgData> LoadAsync(
+            string filename,
+            Size size = new Size(),
+            string colorProfileName = "sRGB",
+            bool isApplyColorProfileForAll = false,
+            int quality = 100,
+            int channel = -1,
+            bool useEmbeddedThumbnail = false,
+            bool useRawThumbnail = true,
+            bool forceLoadFirstPage = false
+        ) {
             var data = await Task.Run(() => {
                 return Load(
                     filename,
@@ -304,7 +303,8 @@ namespace ImageGlass.Heart {
                     quality,
                     channel,
                     useEmbeddedThumbnail,
-                    useRawThumbnail
+                    useRawThumbnail,
+                    forceLoadFirstPage
                 );
             }).ConfigureAwait(true);
 
@@ -321,8 +321,9 @@ namespace ImageGlass.Heart {
         public static Bitmap GetThumbnail(string filename, Size size, bool useEmbeddedThumbnail = true) {
             var data = Load(filename,
                     size: size,
-                    quality: 75,
-                    useEmbeddedThumbnail: useEmbeddedThumbnail);
+                    quality: 70,
+                    useEmbeddedThumbnail: useEmbeddedThumbnail,
+                    forceLoadFirstPage: true);
 
             return data.Image;
         }
@@ -338,8 +339,9 @@ namespace ImageGlass.Heart {
             var data = await Task.Run(() => {
                 return Load(filename,
                     size: size,
-                    quality: 75,
-                    useEmbeddedThumbnail: useEmbeddedThumbnail);
+                    quality: 70,
+                    useEmbeddedThumbnail: useEmbeddedThumbnail,
+                    forceLoadFirstPage: true);
             }).ConfigureAwait(true);
 
             return data.Image;

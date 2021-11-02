@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Threading.Tasks;
 using ImageMagick;
 
@@ -42,6 +43,11 @@ namespace ImageGlass.Heart {
         /// Gets, sets filename of Img
         /// </summary>
         public string Filename { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets file extension. Ex: .jpg
+        /// </summary>
+        public string Extension => Path.GetExtension(this.Filename);
 
         /// <summary>
         /// Gets, sets Bitmap data
@@ -109,7 +115,8 @@ namespace ImageGlass.Heart {
             bool isApplyColorProfileForAll = false,
             int channel = -1,
             bool useEmbeddedThumbnail = false,
-            bool useRawThumbnail = true) {
+            bool useRawThumbnail = true,
+            bool forceLoadFirstPage = false) {
             // reset done status
             IsDone = false;
 
@@ -125,7 +132,8 @@ namespace ImageGlass.Heart {
                     isApplyColorProfileForAll: isApplyColorProfileForAll,
                     channel: channel,
                     useEmbeddedThumbnail: useEmbeddedThumbnail,
-                    useRawThumbnail: useRawThumbnail
+                    useRawThumbnail: useRawThumbnail,
+                    forceLoadFirstPage: forceLoadFirstPage
                 ).ConfigureAwait(true);
 
                 Image = data.Image;

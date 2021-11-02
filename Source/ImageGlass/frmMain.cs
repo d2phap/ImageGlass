@@ -29,7 +29,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FileWatcherEx;
@@ -706,6 +705,7 @@ namespace ImageGlass {
                 Local.ImageList.IsApplyColorProfileForAll = Configs.IsApplyColorProfileForAll;
                 Local.ImageList.ColorProfileName = Configs.ColorProfile;
                 Local.ImageList.UseRawThumbnail = Configs.IsUseRawThumbnail;
+                Local.ImageList.SinglePageFormats = Configs.SinglePageFormats;
 
                 // put app in a 'busy' state around image load: allows us to prevent the user
                 // from skipping past a slow-to-load image by processing too many arrow clicks
@@ -724,7 +724,9 @@ namespace ImageGlass {
                             colorProfileName: Configs.ColorProfile,
                             isApplyColorProfileForAll: Configs.IsApplyColorProfileForAll,
                             channel: (int)Local.Channels,
-                            useRawThumbnail: Local.ImageList.UseRawThumbnail);
+                            useRawThumbnail: Local.ImageList.UseRawThumbnail,
+                            forceLoadFirstPage: Configs.SinglePageFormats.Contains(bmpImg.Extension)
+                            );
                     }
                     else {
                         bmpImg = await Local.ImageList.GetImgAsync(

@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 
 namespace ImageGlass.Heart {
     public sealed class Factory: IDisposable {
+
         #region PRIVATE PROPERTIES
 
         /// <summary>
@@ -88,6 +89,11 @@ namespace ImageGlass.Heart {
                 return list;
             }
         }
+
+        /// <summary>
+        /// Gets, sets the list of formats that only load the first page forcefully
+        /// </summary>
+        public HashSet<string> SinglePageFormats { get; set; } = new();
 
         /// <summary>
         /// Gets, sets the number of maximum items in queue list for 1 direction (Next or Back navigation).
@@ -214,7 +220,8 @@ namespace ImageGlass.Heart {
                             isApplyColorProfileForAll: IsApplyColorProfileForAll,
                             channel: Channels,
                             useEmbeddedThumbnail: UseEmbeddedThumbnail,
-                            useRawThumbnail: UseRawThumbnail
+                            useRawThumbnail: UseRawThumbnail,
+                            forceLoadFirstPage: SinglePageFormats.Contains(img.Extension)
                         ).ConfigureAwait(true);
                     }
                 }
@@ -258,7 +265,8 @@ namespace ImageGlass.Heart {
                     isApplyColorProfileForAll: IsApplyColorProfileForAll,
                     channel: Channels,
                     useEmbeddedThumbnail: UseEmbeddedThumbnail,
-                    useRawThumbnail: UseRawThumbnail
+                    useRawThumbnail: UseRawThumbnail,
+                    forceLoadFirstPage: SinglePageFormats.Contains(ImgList[index].Extension)
                 ).ConfigureAwait(true);
             }
             // get image data from cache
@@ -317,6 +325,17 @@ namespace ImageGlass.Heart {
             if (ImgList[index] != null) {
                 ImgList[index].Filename = filename;
             }
+        }
+
+        /// <summary>
+        /// Gets file extension. Ex: .jpg
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public string GetFileExtension(int index) {
+            var filename = GetFileName(index);
+
+            return Path.GetExtension(filename);
         }
 
         /// <summary>
