@@ -643,10 +643,9 @@
             this.lblCodeName.Location = new System.Drawing.Point(313, 29);
             this.lblCodeName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCodeName.Name = "lblCodeName";
-            this.lblCodeName.Size = new System.Drawing.Size(69, 30);
+            this.lblCodeName.Size = new System.Drawing.Size(59, 30);
             this.lblCodeName.TabIndex = 21;
-            this.lblCodeName.Text = "June";
-            this.toolTip1.SetToolTip(this.lblCodeName, "In early June, every sunset is different.");
+            this.lblCodeName.Text = "Kobe";
             // 
             // tableLayoutPanel2
             // 

@@ -29,6 +29,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FileWatcherEx;
@@ -4605,24 +4606,13 @@ namespace ImageGlass {
                 fileToPrint = SaveTemporaryMemoryData();
             }
 
-            void PrintImage(string filename) {
-                using var p = new Process();
-                p.StartInfo.FileName = filename;
-                p.StartInfo.Verb = "print";
-                p.StartInfo.UseShellExecute = true;
-
-                // show error dialog
-                p.StartInfo.ErrorDialog = false;
-
-                p.Start();
-            }
 
             try {
-                PrintImage(fileToPrint);
+                PrintService.OpenPrintPictures(fileToPrint);
             }
             catch {
                 fileToPrint = SaveTemporaryMemoryData();
-                PrintImage(fileToPrint);
+                PrintService.OpenPrintPictures(fileToPrint);
             }
         }
 
@@ -5315,4 +5305,6 @@ namespace ImageGlass {
 
 
     }
+
+
 }
