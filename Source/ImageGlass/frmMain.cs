@@ -1399,6 +1399,12 @@ namespace ImageGlass {
                     return;
                 }
 
+                // Custom zoom
+                if (e.KeyCode == Keys.Z) {
+                    mnuCustomZoom_Click(null, null);
+                    return;
+                }
+
                 // Auto zoom
                 if (e.KeyValue == 49 || e.KeyCode == Keys.NumPad1) // Num1 / NumPad1
                 {
@@ -3236,6 +3242,7 @@ namespace ImageGlass {
                 mnuMainZoom.Text = lang[$"{Name}.{nameof(mnuMainZoom)}"];
                 mnuMainZoomIn.Text = lang[$"{Name}.{nameof(mnuMainZoomIn)}"];
                 mnuMainZoomOut.Text = lang[$"{Name}.{nameof(mnuMainZoomOut)}"];
+                mnuCustomZoom.Text = lang[$"{Name}.{nameof(mnuCustomZoom)}"];
                 mnuMainScaleToFit.Text = lang[$"{Name}.{nameof(mnuMainScaleToFit)}"];
                 mnuMainScaleToFill.Text = lang[$"{Name}.{nameof(mnuMainScaleToFill)}"];
                 mnuMainActualSize.Text = lang[$"{Name}.{nameof(mnuMainActualSize)}"];
@@ -4739,6 +4746,24 @@ namespace ImageGlass {
             picMain.ZoomOut();
         }
 
+        private void mnuCustomZoom_Click(object sender, EventArgs e) {
+            if (picMain.Image == null) {
+                return;
+            }
+
+            if (InputBox.ShowDialog(
+                theme: Configs.Theme,
+                title: Configs.Language.Items[$"{Name}.{nameof(mnuCustomZoom)}"],
+                message: Configs.Language.Items[$"{Name}.{nameof(mnuCustomZoom)}._Text"],
+                defaultValue: picMain.Zoom.ToString(),
+                isNumberOnly: true,
+                topMost: this.TopMost,
+                filterOnKeyPressed: true) == DialogResult.OK) {
+                picMain.Zoom = Convert.ToSingle(InputBox.Message);
+                picMain.CenterToImage();
+            }
+        }
+
         private void mnuMainActualSize_Click(object sender, EventArgs e) {
             if (picMain.Image == null) {
                 return;
@@ -5340,9 +5365,10 @@ namespace ImageGlass {
         }
 
 
+
         #endregion
 
-
+        
     }
 
 

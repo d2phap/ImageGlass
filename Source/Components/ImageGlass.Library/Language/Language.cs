@@ -227,6 +227,8 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainZoom", "Zoom"); //v7.0
             Items.Add("frmMain.mnuMainZoomIn", "Zoom in"); //v3.0
             Items.Add("frmMain.mnuMainZoomOut", "Zoom out"); //v3.0
+            Items.Add("frmMain.mnuCustomZoom", "Custom zoom…"); // v8.3
+            Items.Add("frmMain.mnuCustomZoom._Text", "Enter a new zoom value"); // v8.3
             Items.Add("frmMain.mnuMainScaleToFit", "Scale to fit"); //v3.5
             Items.Add("frmMain.mnuMainScaleToFill", "Scale to fill"); //v7.5
             Items.Add("frmMain.mnuMainActualSize", "Actual size"); //v3.0
@@ -356,6 +358,7 @@ namespace ImageGlass.Library {
             Items.Add("frmMain._PageExtractComplete", "Page extraction completed."); // v7.5
             Items.Add("frmMain._Frameless", "Hold SHIFT to move the window."); // v7.5
             Items.Add("frmMain._InvalidImageClipboardData", "Clipboard does not contain image data."); // v8.0
+            
             #endregion
 
             #endregion

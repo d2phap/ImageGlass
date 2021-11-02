@@ -31,10 +31,10 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Character filter for numbers: disallow non-numeric characters
         /// </summary>
-        /// <param name="keyval"></param>
+        /// <param name="key"></param>
         /// <returns></returns>
-        private static bool NumberFilter(char keyval) {
-            return char.IsDigit(keyval) || keyval == (char)Keys.Back;
+        private static bool NumberFilter(char key) {
+            return char.IsDigit(key) || key == '.' || key == (char)Keys.Back;
         }
 
         /// <summary>
