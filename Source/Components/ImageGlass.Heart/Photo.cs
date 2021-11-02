@@ -226,6 +226,9 @@ namespace ImageGlass.Heart {
                         imgM.Read(filename, settings);
                     }
                 }
+                else {
+                    imgM.Read(filename, settings);
+                }
 
 
                 // Issue #679: fix targa display with Magick.NET 7.15.x 
@@ -280,7 +283,17 @@ namespace ImageGlass.Heart {
         /// <param name="useRawThumbnail">Use embeded thumbnail if found</param>
         /// <param name="forceLoadFirstPage">Only load first page of the image</param>
         /// <returns></returns>
-        public static async Task<ImgData> LoadAsync(string filename, Size size = new Size(), string colorProfileName = "sRGB", bool isApplyColorProfileForAll = false, int quality = 100, int channel = -1, bool useEmbeddedThumbnail = false, bool useRawThumbnail = true, bool forceLoadFirstPage = false) {
+        public static async Task<ImgData> LoadAsync(
+            string filename,
+            Size size = new Size(),
+            string colorProfileName = "sRGB",
+            bool isApplyColorProfileForAll = false,
+            int quality = 100,
+            int channel = -1,
+            bool useEmbeddedThumbnail = false,
+            bool useRawThumbnail = true,
+            bool forceLoadFirstPage = false
+        ) {
             var data = await Task.Run(() => {
                 return Load(
                     filename,
@@ -308,7 +321,7 @@ namespace ImageGlass.Heart {
         public static Bitmap GetThumbnail(string filename, Size size, bool useEmbeddedThumbnail = true) {
             var data = Load(filename,
                     size: size,
-                    quality: 75,
+                    quality: 70,
                     useEmbeddedThumbnail: useEmbeddedThumbnail,
                     forceLoadFirstPage: true);
 
@@ -326,7 +339,7 @@ namespace ImageGlass.Heart {
             var data = await Task.Run(() => {
                 return Load(filename,
                     size: size,
-                    quality: 75,
+                    quality: 70,
                     useEmbeddedThumbnail: useEmbeddedThumbnail,
                     forceLoadFirstPage: true);
             }).ConfigureAwait(true);
