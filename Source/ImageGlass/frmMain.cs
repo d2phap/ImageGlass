@@ -2069,7 +2069,7 @@ namespace ImageGlass {
 
             var newMenuIconHeight = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
 
-            // add new items
+            // add ImageOrderBy items
             foreach (var order in Enum.GetValues(typeof(ImageOrderBy))) {
                 var orderName = Enum.GetName(typeof(ImageOrderBy), order);
                 var mnu = new ToolStripRadioButtonMenuItem() {
@@ -2084,8 +2084,25 @@ namespace ImageGlass {
                 mnu.Click += MnuLoadingOrderItem_Click;
                 mnuLoadingOrder.DropDown.Items.Add(mnu);
             }
-        }
 
+            mnuLoadingOrder.DropDown.Items.Add(new ToolStripSeparator());
+
+            // add ImageOrderType items
+            foreach (var orderType in Enum.GetValues(typeof(ImageOrderType))) {
+                var typeName = Enum.GetName(typeof(ImageOrderType), orderType);
+                var mnu = new ToolStripRadioButtonMenuItem() {
+                    Text = Configs.Language.Items[$"_.{nameof(ImageOrderType)}._{typeName}"],
+                    Tag = orderType,
+                    CheckOnClick = true,
+                    Checked = (int)orderType == (int)Configs.ImageLoadingOrderType,
+                    ImageScaling = ToolStripItemImageScaling.None,
+                    Image = new Bitmap(newMenuIconHeight, newMenuIconHeight)
+                };
+
+                mnu.Click += MnuLoadingOrderTypeItem_Click;
+                mnuLoadingOrder.DropDown.Items.Add(mnu);
+            }
+        }
 
         private void MnuLoadingOrderItem_Click(object sender, EventArgs e) {
             var mnu = sender as ToolStripMenuItem;
@@ -2102,6 +2119,23 @@ namespace ImageGlass {
                 LoadLoadingOrderMenuItems();
             }
         }
+
+        private void MnuLoadingOrderTypeItem_Click(object sender, EventArgs e) {
+            var mnu = sender as ToolStripMenuItem;
+            var selectedType = (ImageOrderType)(int)mnu.Tag;
+
+
+            if (selectedType != Configs.ImageLoadingOrderType) {
+                Configs.ImageLoadingOrderType = selectedType;
+
+                // reload image list
+                MnuMainReloadImageList_Click(null, null);
+
+                // reload the state
+                LoadLoadingOrderMenuItems();
+            }
+        }
+
 
         /// <summary>
         /// Load toolbar configs and update the buttons
@@ -4046,8 +4080,13 @@ namespace ImageGlass {
         private void OpenShortcutMenu(ToolStripMenuItem parentMenu) {
             mnuShortcut.Items.Clear();
 
-            foreach (ToolStripRadioButtonMenuItem item in parentMenu.DropDownItems) {
-                mnuShortcut.Items.Add(UI.Menu.Clone(item));
+            foreach (ToolStripItem item in parentMenu.DropDownItems) {
+                if (item.GetType() == typeof(ToolStripSeparator)) {
+                    mnuShortcut.Items.Add(new ToolStripSeparator());
+                }
+                else {
+                    mnuShortcut.Items.Add(UI.Menu.Clone(item as ToolStripMenuItem));
+                }
             }
 
             mnuShortcut.Show(Cursor.Position);
