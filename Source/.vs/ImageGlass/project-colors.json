@@ -1,0 +1,46 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "51493b09-7a0e-461f-be18-a6cf629a8fab": {
+      "ProjectGuid": "51493b09-7a0e-461f-be18-a6cf629a8fab",
+      "DisplayName": "ImageGlass.Heart",
+      "ColorIndex": 0
+    },
+    "97f81263-4825-4c06-a7b6-2e999765fa28": {
+      "ProjectGuid": "97f81263-4825-4c06-a7b6-2e999765fa28",
+      "DisplayName": "ImageGlass",
+      "ColorIndex": 1
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "4bb719ed-b68b-4cb1-aaaf-ba0e3bc5fe81": {
+      "ProjectGuid": "4bb719ed-b68b-4cb1-aaaf-ba0e3bc5fe81",
+      "DisplayName": "ImageGlass.Library",
+      "ColorIndex": 2
+    },
+    "4bad780f-8071-4034-9020-ecc9f4352422": {
+      "ProjectGuid": "4bad780f-8071-4034-9020-ecc9f4352422",
+      "DisplayName": "ImageGlass.Settings",
+      "ColorIndex": 3
+    },
+    "76486f88-aa16-4d7d-bbf6-0f1c604d5853": {
+      "ProjectGuid": "76486f88-aa16-4d7d-bbf6-0f1c604d5853",
+      "DisplayName": "ImageGlass.UI",
+      "ColorIndex": 4
+    },
+    "4159c8d3-c18d-4bed-8be6-9bad1b0ca4f6": {
+      "ProjectGuid": "4159c8d3-c18d-4bed-8be6-9bad1b0ca4f6",
+      "DisplayName": "ImageGlass.ImageBox",
+      "ColorIndex": 5
+    },
+    "6cc96a70-6773-41b5-9fca-4f0ab6fad8ca": {
+      "ProjectGuid": "6cc96a70-6773-41b5-9fca-4f0ab6fad8ca",
+      "DisplayName": "ImageGlass.Base",
+      "ColorIndex": 6
+    }
+  },
+  "NextColorIndex": 7
+}
