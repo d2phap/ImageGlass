@@ -1975,6 +1975,8 @@ namespace ImageGlass {
             picMain.Text = "";
             Local.IsTempMemoryData = true;
 
+            ApplyZoomMode(Configs.ZoomMode);
+
             SetStatusBar();
         }
 
@@ -4248,10 +4250,8 @@ namespace ImageGlass {
                 // get image from Base64string 
                 else {
                     try {
-                        picMain.Image = Heart.Photo.ConvertBase64ToBitmap(text);
-                        Local.IsTempMemoryData = true;
-
-                        SetStatusBar();
+                        var img = Heart.Photo.ConvertBase64ToBitmap(text);
+                        LoadImageData(img);
                     }
                     catch (Exception ex) {
                         var msg = Configs.Language.Items[$"{Name}._InvalidImageClipboardData"];
