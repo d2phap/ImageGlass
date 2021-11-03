@@ -40,7 +40,12 @@
       "ProjectGuid": "6cc96a70-6773-41b5-9fca-4f0ab6fad8ca",
       "DisplayName": "ImageGlass.Base",
       "ColorIndex": 6
+    },
+    "0c295fb8-c6c6-4a40-9f19-05a43f353a04": {
+      "ProjectGuid": "0c295fb8-c6c6-4a40-9f19-05a43f353a04",
+      "DisplayName": "ImageGlass.ImageListView",
+      "ColorIndex": 7
     }
   },
-  "NextColorIndex": 7
+  "NextColorIndex": 8
 }

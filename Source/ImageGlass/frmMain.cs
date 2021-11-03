@@ -1229,7 +1229,7 @@ namespace ImageGlass {
             #endregion
 
 
-            //Goto the first Image
+            // Goto the first Image
             #region HOME
             if (!_isWindowsKeyPressed && e.KeyValue == 36 &&
                 !e.Control && !e.Shift && !e.Alt) {
@@ -1317,14 +1317,27 @@ namespace ImageGlass {
             #endregion
 
 
+            // Alt
+            #region Alt + ...
+            if (e.Alt && !e.Shift && !e.Control) {
+
+                // Alt+F: Open main menu
+                if (e.KeyCode == Keys.F) {
+                    mnuMain.Show(toolMain, toolMain.Width - mnuMain.Width, toolMain.Height);
+
+                    return;
+                }
+            }
+            #endregion
+
+
             // Without Modifiers keys 
             #region Without Modifiers keys
             if (hasNoMods) {
-                // Show main menu
+                // Toggle Window on Top
                 if (e.KeyValue == 192) // `
                 {
-                    mnuMain.Show(toolMain, toolMain.Width - mnuMain.Width, toolMain.Height);
-
+                    mnuMainAlwaysOnTop.PerformClick();
                     return;
                 }
 
@@ -3372,7 +3385,7 @@ namespace ImageGlass {
                 btnCheckedBackground.ToolTipText = mnuMainCheckBackground.Text + $" ({mnuMainCheckBackground.ShortcutKeyDisplayString})";
                 btnConvert.ToolTipText = mnuMainSaveAs.Text + $" ({mnuMainSaveAs.ShortcutKeyDisplayString})";
                 btnPrintImage.ToolTipText = mnuMainPrint.Text + $" ({mnuMainPrint.ShortcutKeyDisplayString})";
-                btnMenu.ToolTipText = lang[$"{Name}.{nameof(btnMenu)}"];
+                btnMenu.ToolTipText = lang[$"{Name}.{nameof(btnMenu)}"] + " (Alt+F)";
 
 
                 #endregion

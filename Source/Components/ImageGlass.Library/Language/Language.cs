@@ -285,7 +285,7 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainSlideShowExit", "Exit slideshow"); //v3.0
             #endregion
 
-            Items.Add("frmMain.mnuMainShare", "Share…"); //v3.0
+            Items.Add("frmMain.mnuMainShare", "Share…"); // v3.0
 
             #region Layout
             Items.Add("frmMain.mnuMainLayout", "Layout"); //v3.0
@@ -303,7 +303,7 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuExifTool", "Exif tool"); // v8.0
             #endregion
 
-            Items.Add("frmMain.mnuMainSettings", "Settings…"); //v3.0
+            Items.Add("frmMain.mnuMainSettings", "Settings…"); // v3.0
 
             #region Help
             Items.Add("frmMain.mnuMainHelp", "Help"); //v7.0
@@ -319,9 +319,9 @@ namespace ImageGlass.Library {
             #endregion
 
             #region Form message texts
-            Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, corrupted or not supported.");// v2.0 beta, updated 4.0
-            Items.Add("frmMain._ImageNotExist", "The viewing image doesn't exist.");// v4.5
-            Items.Add("frmMain.btnMenu", "Menu (Hotkey: `)"); // v3.0
+            Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, corrupted or not supported."); // v2.0 beta, updated 4.0
+            Items.Add("frmMain._ImageNotExist", "The viewing image doesn't exist."); // v4.5
+            Items.Add("frmMain.btnMenu", "Main menu"); // v3.0
 
             Items.Add("frmMain._OpenFileDialog", "All supported files");
             Items.Add("frmMain._Files", "file(s)"); // v7.5
