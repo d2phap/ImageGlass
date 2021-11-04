@@ -258,6 +258,10 @@ namespace ImageGlass {
             lblSlideshowIntervalTo.Text = lang[$"{Name}.{nameof(lblSlideshowIntervalTo)}"];
             numSlideShowInterval_ValueChanged(null, null); // format interval value
 
+            lblHeadFullScreen.Text = lang[$"{Name}.{nameof(lblHeadFullScreen)}"];
+            chkHideToolbarInFullScreen.Text = lang[$"{Name}.{nameof(chkHideToolbarInFullScreen)}"];
+            chkHideThumbnailBarInFullScreen.Text = lang[$"{Name}.{nameof(chkHideThumbnailBarInFullScreen)}"];
+
             #endregion
 
             #region EDIT TAB
@@ -683,6 +687,10 @@ namespace ImageGlass {
             numSlideShowInterval.Value = Configs.SlideShowInterval;
             numSlideshowIntervalTo.Value = Configs.SlideShowIntervalTo;
             numSlideShowInterval_ValueChanged(null, null); // format interval value
+
+            // Full screen configs 
+            chkHideToolbarInFullScreen.Checked = Configs.IsHideToolbarInFullscreen;
+            chkHideThumbnailBarInFullScreen.Checked = Configs.IsHideThumbnailBarInFullscreen;
         }
 
         private void chkRandomSlideshowInterval_CheckedChanged(object sender, EventArgs e) {
@@ -2045,6 +2053,10 @@ namespace ImageGlass {
 
             Configs.SlideShowInterval = (uint)numSlideShowInterval.Value;
             Configs.SlideShowIntervalTo = (uint)numSlideshowIntervalTo.Value;
+
+            // Full screen
+            Configs.IsHideToolbarInFullscreen = chkHideToolbarInFullScreen.Checked;
+            Configs.IsHideThumbnailBarInFullscreen = chkHideThumbnailBarInFullScreen.Checked;
 
             #endregion
 

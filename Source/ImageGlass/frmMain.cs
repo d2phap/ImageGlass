@@ -2890,8 +2890,9 @@ namespace ImageGlass {
         /// </summary>
         /// <param name="enabled"></param>
         /// <param name="changeWindowState"></param>
-        /// <param name="onlyShowViewer">Hide all layouts except main viewer</param>
-        private void FullScreenMode(bool enabled = true, bool changeWindowState = true, bool onlyShowViewer = false) {
+        /// <param name="hideToolbar">Hide Toolbar</param>
+        /// <param name="hideThumbnailBar">Hide Thumbnail bar</param>
+        private void SetFullScreenMode(bool enabled = true, bool changeWindowState = true, bool hideToolbar = false, bool hideThumbnailBar = false) {
             // full screen
             if (enabled) {
                 SaveConfig(windowStateOnly: true);
@@ -2908,8 +2909,10 @@ namespace ImageGlass {
                 mnuFrameless_Click(null, null);
 
                 // save last state of layout
-                if (onlyShowViewer) {
+                if (hideToolbar) {
                     _isShowToolbar = Configs.IsShowToolBar;
+                }
+                if (hideThumbnailBar) {
                     _isShowThumbnail = Configs.IsShowThumbnail;
                 }
 
@@ -2920,12 +2923,13 @@ namespace ImageGlass {
                 }
 
                 // Hide toolbar
-                if (onlyShowViewer) {
+                if (hideToolbar) {
                     toolMain.Visible = false;
                     Configs.IsShowToolBar = false;
                     mnuMainToolbar.Checked = false;
-
-                    // hide thumbnail
+                }
+                // hide thumbnail
+                if (hideThumbnailBar) {
                     Configs.IsShowThumbnail = true;
                     mnuMainThumbnailBar_Click(null, null);
                 }
@@ -2941,8 +2945,10 @@ namespace ImageGlass {
             // exit full screen
             else {
                 // restore last state of toolbar
-                if (onlyShowViewer) {
+                if (hideToolbar) {
                     Configs.IsShowToolBar = _isShowToolbar;
+                }
+                if (hideThumbnailBar) {
                     Configs.IsShowThumbnail = _isShowThumbnail;
                 }
 
@@ -2969,18 +2975,15 @@ namespace ImageGlass {
                     mnuFrameless_Click(null, null);
                 }
 
-                if (onlyShowViewer) {
-                    if (Configs.IsShowToolBar) {
-                        //Show toolbar
-                        toolMain.Visible = true;
-                        mnuMainToolbar.Checked = true;
-                    }
-
-                    if (Configs.IsShowThumbnail) {
-                        //Show thumbnail
-                        Configs.IsShowThumbnail = false;
-                        mnuMainThumbnailBar_Click(null, null);
-                    }
+                if (hideToolbar && Configs.IsShowToolBar) {
+                    // Show toolbar
+                    toolMain.Visible = true;
+                    mnuMainToolbar.Checked = true;
+                }
+                if (hideThumbnailBar && Configs.IsShowThumbnail) {
+                    // Show thumbnail
+                    Configs.IsShowThumbnail = false;
+                    mnuMainThumbnailBar_Click(null, null);
                 }
 
                 // restore WindowFit mode state
@@ -4584,7 +4587,10 @@ namespace ImageGlass {
                     btnFullScreen.Checked =
                     Configs.IsFullScreen = true;
 
-                FullScreenMode(enabled: true);
+                SetFullScreenMode(
+                    enabled: true,
+                    hideToolbar: Configs.IsHideToolbarInFullscreen,
+                    hideThumbnailBar: Configs.IsHideThumbnailBarInFullscreen);
 
                 ShowToastMsg(
                     string.Format(
@@ -4598,7 +4604,10 @@ namespace ImageGlass {
                     btnFullScreen.Checked =
                     Configs.IsFullScreen = false;
 
-                FullScreenMode(enabled: false);
+                SetFullScreenMode(
+                    enabled: false,
+                    hideToolbar: Configs.IsHideToolbarInFullscreen,
+                    hideThumbnailBar: Configs.IsHideThumbnailBarInFullscreen);
             }
         }
 
@@ -4612,7 +4621,11 @@ namespace ImageGlass {
                 picMain.BackColor = Color.Black;
 
                 // enter full screen
-                FullScreenMode(enabled: true, changeWindowState: !Configs.IsFullScreen, onlyShowViewer: true);
+                SetFullScreenMode(
+                    enabled: true,
+                    changeWindowState: !Configs.IsFullScreen,
+                    hideToolbar: true,
+                    hideThumbnailBar: true);
 
                 //perform slideshow
                 timSlideShow.Enabled = true;
@@ -4650,7 +4663,11 @@ namespace ImageGlass {
             picMain.BackColor = Configs.BackgroundColor;
 
             // exit full screen
-            FullScreenMode(enabled: false, changeWindowState: !Configs.IsFullScreen, onlyShowViewer: true);
+            SetFullScreenMode(
+                enabled: false,
+                changeWindowState: !Configs.IsFullScreen,
+                hideToolbar: true,
+                hideThumbnailBar: true);
         }
 
         private void mnuMainPrint_Click(object sender, EventArgs e) {

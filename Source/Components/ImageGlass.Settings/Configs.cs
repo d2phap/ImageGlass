@@ -284,6 +284,16 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool IsUseRawThumbnail { get; set; } = false;
 
+        /// <summary>
+        /// Gets, sets value indicates that the toolbar should be hidden in Full screen mode
+        /// </summary>
+        public static bool IsHideToolbarInFullscreen { get; set; } = false;
+
+        /// <summary>
+        /// Gets, sets value indicates that the thumbnail bar should be hidden in Full screen mode
+        /// </summary>
+        public static bool IsHideThumbnailBarInFullscreen { get; set; } = false;
+
         #endregion
 
 
@@ -610,6 +620,8 @@ namespace ImageGlass.Settings {
             IsExifToolAlwaysOnTop = Get<bool>(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
             IsUseEmptyTitleBar = Get<bool>(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
             IsUseRawThumbnail = Get<bool>(nameof(IsUseRawThumbnail), IsUseRawThumbnail);
+            IsHideToolbarInFullscreen = Get<bool>(nameof(IsHideToolbarInFullscreen), IsHideToolbarInFullscreen);
+            IsHideThumbnailBarInFullscreen = Get<bool>(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
 
             #endregion
 
@@ -847,6 +859,8 @@ namespace ImageGlass.Settings {
             Set(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
             Set(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
             Set(nameof(IsUseRawThumbnail), IsUseRawThumbnail);
+            Set(nameof(IsHideToolbarInFullscreen), IsHideToolbarInFullscreen);
+            Set(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
 
             #endregion
 

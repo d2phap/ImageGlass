@@ -507,6 +507,12 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lblSlideshowIntervalTo", "to"); // v7.6
             #endregion
 
+            #region Full screen
+            Items.Add("frmSetting.lblHeadFullScreen", "Full screen"); // v8.3
+            Items.Add("frmSetting.chkHideToolbarInFullScreen", "Hide toolbar"); // v8.3
+            Items.Add("frmSetting.chkHideThumbnailBarInFullScreen", "Hide thumbnail bar"); // v8.3
+            #endregion
+
             #endregion
 
             #region TAB Edit
