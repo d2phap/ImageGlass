@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Duong Dieu Phap")]
 [assembly: AssemblyProduct("igcmd - ImageGlass commands")]
-[assembly: AssemblyCopyright("Copyright © 2013-2021 Duong Dieu Phap")]
+[assembly: AssemblyCopyright("Copyright © 2013-2022 Duong Dieu Phap")]
 [assembly: AssemblyTrademark("ImageGlass")]
 [assembly: AssemblyCulture("")]
 
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("8.2.*")]
+[assembly: AssemblyVersion("8.3.*")]
 //[assembly: AssemblyFileVersion("4.0.0.0")]
