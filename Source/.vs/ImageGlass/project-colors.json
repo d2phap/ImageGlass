@@ -45,7 +45,37 @@
       "ProjectGuid": "0c295fb8-c6c6-4a40-9f19-05a43f353a04",
       "DisplayName": "ImageGlass.ImageListView",
       "ColorIndex": 7
+    },
+    "886dc568-c83e-443e-89fa-84cf420b2c68": {
+      "ProjectGuid": "886dc568-c83e-443e-89fa-84cf420b2c68",
+      "DisplayName": "ImageGlass.Services",
+      "ColorIndex": 8
+    },
+    "cc391e3e-9137-4857-85dc-c4cf6df37584": {
+      "ProjectGuid": "cc391e3e-9137-4857-85dc-c4cf6df37584",
+      "DisplayName": "igcmd",
+      "ColorIndex": 9
+    },
+    "63e3171f-d36e-4100-9c55-21d277b8530c": {
+      "ProjectGuid": "63e3171f-d36e-4100-9c55-21d277b8530c",
+      "DisplayName": "igtasks",
+      "ColorIndex": 10
+    },
+    "e1b466b0-8ece-4d5c-807a-600aae97bec7": {
+      "ProjectGuid": "e1b466b0-8ece-4d5c-807a-600aae97bec7",
+      "DisplayName": "igcmdWin10",
+      "ColorIndex": 11
+    },
+    "f5248b7e-8b93-4926-9a60-7208f759cafc": {
+      "ProjectGuid": "f5248b7e-8b93-4926-9a60-7208f759cafc",
+      "DisplayName": "Components",
+      "ColorIndex": 12
+    },
+    "ca86d298-03ca-4a54-a796-b3ebaf2cf841": {
+      "ProjectGuid": "ca86d298-03ca-4a54-a796-b3ebaf2cf841",
+      "DisplayName": "Utilities",
+      "ColorIndex": 13
     }
   },
-  "NextColorIndex": 8
+  "NextColorIndex": 14
 }

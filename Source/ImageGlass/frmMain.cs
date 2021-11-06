@@ -4683,6 +4683,11 @@ namespace ImageGlass {
                 // save image to temp file
                 fileToPrint = SaveTemporaryMemoryData();
             }
+            // rename ext FAX -> TIFF to multipage printing
+            else if (Path.GetExtension(currentFile).ToUpperInvariant() == ".FAX") {
+                fileToPrint = App.ConfigDir(PathType.File, Dir.Temporary, Path.GetFileNameWithoutExtension(currentFile) + ".tiff");
+                File.Copy(currentFile, fileToPrint, true);
+            }
 
 
             try {
