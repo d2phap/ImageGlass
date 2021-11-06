@@ -35,10 +35,6 @@ namespace ImageGlass {
         }
 
         private void LoadTheme() {
-            // load theme colors
-            lblAppName.ForeColor = Configs.Theme.AccentDarkColor;
-            lblCodeName.ForeColor = Configs.Theme.AccentColor;
-
             // Logo
             picLogo.Image = Configs.Theme.Logo.Image;
 

@@ -100,7 +100,7 @@
             this.lblAppName.AutoSize = true;
             this.lblAppName.BackColor = System.Drawing.Color.Transparent;
             this.lblAppName.Font = new System.Drawing.Font("Segoe UI", 20F);
-            this.lblAppName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(111)))), ((int)(((byte)(185)))));
+            this.lblAppName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(212)))));
             this.lblAppName.Location = new System.Drawing.Point(115, 22);
             this.lblAppName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAppName.Name = "lblAppName";
@@ -639,7 +639,7 @@
             this.lblCodeName.AutoSize = true;
             this.lblCodeName.BackColor = System.Drawing.Color.Transparent;
             this.lblCodeName.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblCodeName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.lblCodeName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(105)))), ((int)(((byte)(183)))));
             this.lblCodeName.Location = new System.Drawing.Point(313, 29);
             this.lblCodeName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCodeName.Name = "lblCodeName";

@@ -93,7 +93,7 @@ namespace igcmd {
                     .Append("Size: ")
                     .Append(up.Info.Size)
                     .Append("\r\n")
-                    .Append("Publish date: ")
+                    .Append("Published date: ")
                     .AppendFormat("{0:MMM d, yyyy HH:mm:ss}", up.Info.PublishDate)
                     .AppendLine();
 

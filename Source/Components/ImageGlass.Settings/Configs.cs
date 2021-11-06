@@ -1196,7 +1196,7 @@ namespace ImageGlass.Settings {
             // load theme colors
             foreach (var ctr in Helpers.GetAllControls(frm, typeof(LinkLabel))) {
                 if (ctr is LinkLabel lnk) {
-                    lnk.LinkColor = lnk.VisitedLinkColor = th.AccentColor;
+                    lnk.LinkColor = lnk.VisitedLinkColor = Theme.ConvertHexStringToColor("#0078D4");
                 }
             }
 

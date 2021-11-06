@@ -121,7 +121,7 @@
   <data name="picLogo.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EgAACxIB0t1+/AAA/7JJREFUeF7s/Xe0Z+dV349/zrVjEgJEIsHM3OG3vhL//BJXmRoICVIghI5tbMCS
+        EAAACxABrSO9dQAA/7JJREFUeF7s/Xe0Z+dV349/zrVjEgJEIsHM3OG3vhL//BJXmRoICVIghI5tbMCS
         bM9IsnoZ9S6PepdGvVoaS7IlW73ZllVGtmQ5oQlCEjpyGiSBRKmkfNc65/sue+/nOZ87ChhdE4y5a+31
         nFumyJ7Xfr93Oecsvtw+dtvj7btt+Js/s8eGN+2/94Y3v3czY/Ut79u26S3vvXLTW99/O2N1r/c/uGmv
         9+/ciMD1i6tve/9Lq2/bvBRbXtr0rVumPlZ5ftsBitVvw+ffjjNi03ccqFjl+Z04EZu+8yCff/sgxAem
@@ -1472,7 +1472,7 @@ ImageGlass.ImageListView based on ImageListView v11.0.0 by Özgür Özçitak.
 License: Apache 2.0
 
 -----------------------------------------
-Magick.NET: Copyright © 2013-2019 Dirk Lemstra
+Magick.NET: Copyright © 2013-2021 Dirk Lemstra
 License: Apache 2.0
 
 -----------------------------------------
@@ -1483,7 +1483,7 @@ License: MIT
   <data name="btnDonation.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAD
-        dQAAA3UB0GyjoQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAA/MSURBVHhe7d0H
+        dAAAA3QBAitBRQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAA/MSURBVHhe7d0H
         eBVVFgdwQxoJkEAiTRAI0quiQRDUiFRpgiBVRQWxUUQUhXUpSpUFFVHaqit8KFKVpiKg0sGGK6wFlLqs
         gq5r72fPmX3J3pn5T968eSWT5J7v+32ay7ybueeevDdv5s57ZxFRocNRkw1iE9gz7HV2hP3ETrF32Aa2
         kF3HyqN+NM4lavQjjkTWm73K/mDS6NbvbBcbx85G/RdXsNFPOM5hM9gXTJ1Ur75hE1ka+n3FDWz0C46e
