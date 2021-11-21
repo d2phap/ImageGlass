@@ -1,4 +1,4 @@
-⛰ ImageGlass - A lightweight, versatile image viewer
+🏞 ImageGlass - A lightweight, versatile image viewer
 ===
 
 
@@ -13,7 +13,7 @@
 
 ImageGlass is a lightweight software application whose purpose is to help you view images in a clean and intuitive working environment.
 
-It gives you the possibility to view over **70+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers to speed up their work.
+It gives you the possibility to view over **80+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers to speed up their work.
 
 
 ## 📥 Download
@@ -22,14 +22,14 @@ It gives you the possibility to view over **70+** common image formats, includin
 
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://imageglass.org/upload/photo/release/8.2_1.jpg" alt="ImageGlass 8.2.6.6" width="640">
+<img src="https://imageglass.org/upload/photo/release/8.3_1.jpg" alt="ImageGlass 8.3.11.21" width="640">
 </a><br/>
 
 
 ## 🛣 Roadmap
-Please find the roadmap and information about [🏔 ImageGlass Preview](https://github.com/d2phap/ImageGlass-Preview) at:
+<img src="https://kontext.tech/api/flex/medias/obj-2290" alt="ImageGlass on .NET 6" height="50">
 
-https://www.patreon.com/posts/imageglass-and-39849218
+We are planning to migrate ImageGlass to [.NET 6](https://devblogs.microsoft.com/dotnet/announcing-net-6/) from version 9 which is scheduled some time in 2022. If you are unable to install .NET 6, you can stay with ImageGlass 8.
 
 
 ## 👨‍💻 Development
@@ -96,10 +96,10 @@ Thanks for your gratitude and finance help!
 
 ## 👑 Hall of fame (v8.x)
 To honor those people who spent their time to contribute to the development of ImageGlass v8:
-- 1️⃣ [@datasone](https://github.com/datasone)
-- 2️⃣ [@fire-eggs](https://github.com/fire-eggs)
-- 3️⃣ [@cocoon](https://github.com/cocoon)
-- 4️⃣ [@dixonte](https://github.com/dixonte)
+- 1️⃣ [@fire-eggs](https://github.com/fire-eggs)
+- 2️⃣ [@datasone](https://github.com/datasone)
+- 3️⃣ [@dixonte](https://github.com/dixonte)
+- 4️⃣ [@cocoon](https://github.com/cocoon)
 - 5️⃣ [@Norgerman](https://github.com/Norgerman)
 - 6️⃣ [@flyxyz123](https://github.com/flyxyz123)
 
