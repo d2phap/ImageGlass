@@ -1004,7 +1004,7 @@ namespace ImageGlass.Settings {
             if (EditApps.Count > 0) {
                 return EditApps.Find(v =>
                     v.Extension.CompareTo(ext) == 0
-                    && v.AppPath.Length > 0);
+                    && v.AppPath?.Length > 0);
             }
 
             return null;
