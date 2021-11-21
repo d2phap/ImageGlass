@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="pl-PL" langName="Polski" author="Skiff, Markuspl" description="Polish" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="pl-PL" langName="Polski" author="Skiff, Markuspl, BestiaPL" description="Polish" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Niektóre ustawienia są niekompatybilne z ImageGlass {0}. Zaleca się ich zaktualizowanie przed kontynuowaniem.&#10;&#10;- Kliknij Tak, aby wyświetlić informacje o zmianach.&#10;- Kliknij Nie, aby uruchomić ImageGlass z ustawieniami domyślnymi."/>
       <Item key="_.ImageOrderBy._Name" value="Nazwa (domyślna)"/>
@@ -9,7 +9,7 @@
       <Item key="_.ImageOrderBy._CreationTime" value="Czas utworzenia"/>
       <Item key="_.ImageOrderBy._LastAccessTime" value="Ostatni czas dostępu"/>
       <Item key="_.ImageOrderBy._LastWriteTime" value="Czas ostatniego zapisu"/>
-      <Item key="_.ImageOrderBy._Extension" value="Rozszerzenia"/>
+      <Item key="_.ImageOrderBy._Extension" value="Rozszerzenie"/>
       <Item key="_.ImageOrderBy._Random" value="Losowo"/>
       <Item key="_.ImageOrderType._Asc" value="Rosnąco"/>
       <Item key="_.ImageOrderType._Desc" value="Malejąco"/>
@@ -44,6 +44,8 @@
       <Item key="frmMain.mnuMainZoom" value="Powiększenie"/>
       <Item key="frmMain.mnuMainZoomIn" value="Powiększ"/>
       <Item key="frmMain.mnuMainZoomOut" value="Zmniejsz"/>
+      <Item key="frmMain.mnuCustomZoom" value="Powiększenie…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="Podaj nową wartość powiększenia"/>
       <Item key="frmMain.mnuMainScaleToFit" value="Dopasuj"/>
       <Item key="frmMain.mnuMainScaleToFill" value="Wypełnij"/>
       <Item key="frmMain.mnuMainActualSize" value="Rozmiar rzeczywisty"/>
@@ -107,7 +109,7 @@
       <Item key="frmMain.mnuMainExitApplication" value="Wyjdź z ImageGlass"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass nie może otworzyć tego obrazu, ponieważ wygląda na to, że plik jest uszkodzony lub jego format jest nieobsługiwany."/>
       <Item key="frmMain._ImageNotExist" value="Wybrany plik obrazu nie istnieje."/>
-      <Item key="frmMain.btnMenu" value="Menu (skrót klawiaturowy: `)"/>
+      <Item key="frmMain.btnMenu" value="Menu główne"/>
       <Item key="frmMain._OpenFileDialog" value="Wszystkie obsługiwane formaty"/>
       <Item key="frmMain._Files" value="plików"/>
       <Item key="frmMain._Pages" value="strony"/>
@@ -188,6 +190,7 @@
       <Item key="frmSetting.chkShowHiddenImages" value="Pokazuj ukryte obrazy"/>
       <Item key="frmSetting.chkLoopViewer" value="Wróć do pierwszego obrazu po osiągnięciu końca listy przeglądanych obrazów"/>
       <Item key="frmSetting.chkIsCenterImage" value="Wyśrodkuj obraz w przeglądarce"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="Użyj wbudowanych miniatur dla formatów RAW"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Porządek wczytywania obrazów"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Użyj sortowania jak w Eksploratorze Windows"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Grupuj obrazy według folderu"/>
@@ -230,6 +233,9 @@
       <Item key="frmSetting.chkRandomSlideshowInterval" value="Użyj losowego czasu zmiany slajdu"/>
       <Item key="frmSetting.lblSlideshowInterval" value="Interwał pokazu slajdów: {0}"/>
       <Item key="frmSetting.lblSlideshowIntervalTo" value="do"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="Pełny ekran"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Ukryj pasek narzędzi"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Ukryj pasek miniatur"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Zapisz wyświetlany obraz po obróceniu"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Wybierz aplikację do edycji obrazu"/>
       <Item key="frmSetting.lblAfterEditingApp" value="Po otworzeniu aplikacji do edycji:"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="sl-SI" langName="Slovenščina" author="Jadran Rudec" description="Slovenian" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="sl-SI" langName="Slovenščina" author="Jadran Rudec" description="Slovenian" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Nekatere nastavitve niso združljive z vašim ImageGlassom {0}. Priporočamo, da jih posodobite preden nadaljujete.&#10;&#10;- Kliknite Da, če želite izvedeti več o spremembah.&#10;- Kliknite Ne, če želite zagnati ImageGlass s privzetimi nastavitvami."/>
       <Item key="_.ImageOrderBy._Name" value="Ime (privzeto)"/>
@@ -44,6 +44,8 @@
       <Item key="frmMain.mnuMainZoom" value="Povečava"/>
       <Item key="frmMain.mnuMainZoomIn" value="Povečaj"/>
       <Item key="frmMain.mnuMainZoomOut" value="Pomanjšaj"/>
+      <Item key="frmMain.mnuCustomZoom" value="Povečava po meri…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="Vnesite novo vrednost povečave"/>
       <Item key="frmMain.mnuMainScaleToFit" value="Prilagodi na merilo"/>
       <Item key="frmMain.mnuMainScaleToFill" value="Prilagodi na zapolnitev"/>
       <Item key="frmMain.mnuMainActualSize" value="Dejanska velikost"/>
@@ -107,7 +109,7 @@
       <Item key="frmMain.mnuMainExitApplication" value="Izhod iz programa"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass ne more odpreti te slike, ker je videti, da je ta poškodovana, okvarjena ali ni podprta."/>
       <Item key="frmMain._ImageNotExist" value="Prikazana slika ne obstaja."/>
-      <Item key="frmMain.btnMenu" value="Meni (Vroča tipka: `)"/>
+      <Item key="frmMain.btnMenu" value="Glavni meni"/>
       <Item key="frmMain._OpenFileDialog" value="Vse podprte datoteke"/>
       <Item key="frmMain._Files" value="datotek"/>
       <Item key="frmMain._Pages" value="strani"/>
@@ -188,6 +190,7 @@
       <Item key="frmSetting.chkShowHiddenImages" value="Prikaži skrite slike"/>
       <Item key="frmSetting.chkLoopViewer" value="Postavi pregledovalnik na ponovni začetek po dosegu konca seznama"/>
       <Item key="frmSetting.chkIsCenterImage" value="Sredina slike v pregledovalniku"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="Uporabi vdelano sličico za formate RAW"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Zaporedje nalaganja slike"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Če je mogoče, uporabi vrstni red razvrščanja datotek programa Raziskovalec datotek Windows"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Združi slike po mapah"/>
@@ -230,6 +233,9 @@
       <Item key="frmSetting.chkRandomSlideshowInterval" value="Uporabi naključni interval"/>
       <Item key="frmSetting.lblSlideshowInterval" value="Interval predstavitve: {0}"/>
       <Item key="frmSetting.lblSlideshowIntervalTo" value="na"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="Celoten zaslon"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Skrij orodno vrstico"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Skrij vrstico s sličicami"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Shrani pogled slike po obračanju"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Izberi aplikacijo za urejanje slike"/>
       <Item key="frmSetting.lblAfterEditingApp" value="Po odprtju aplikacije za urejanje:"/>

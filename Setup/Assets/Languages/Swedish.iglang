@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="sv-SE" langName="Svenska" author="Esciro" description="Swedish" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="sv-SE" langName="Svenska" author="Esciro" description="Swedish" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Vissa inställningar är inte kompatibla med din version av ImageGlass {0}. Det är rekommenderat att uppdatera dessa innan du fortsätter.&#10;&#10;- Klicka Ja för att läsa mer om ändringarna.&#10;- Klicka Nej för att starta ImageGlass med standardinställningar."/>
       <Item key="_.ImageOrderBy._Name" value="Namn (standard)"/>
@@ -44,6 +44,8 @@
       <Item key="frmMain.mnuMainZoom" value="Zooma"/>
       <Item key="frmMain.mnuMainZoomIn" value="Förstora"/>
       <Item key="frmMain.mnuMainZoomOut" value="Förminska"/>
+      <Item key="frmMain.mnuCustomZoom" value="Anpassad zoom…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="Ange ett nytt zoomvärde"/>
       <Item key="frmMain.mnuMainScaleToFit" value="Anpassa till fönster"/>
       <Item key="frmMain.mnuMainScaleToFill" value="Fyll skärmen"/>
       <Item key="frmMain.mnuMainActualSize" value="Originalstorlek"/>
@@ -107,7 +109,7 @@
       <Item key="frmMain.mnuMainExitApplication" value="Avsluta ImageGlass"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass kan inte öppna denna bild då den verkar vara skadad, korrupt eller inte stöds."/>
       <Item key="frmMain._ImageNotExist" value="Visningsbilden kan inte hittas."/>
-      <Item key="frmMain.btnMenu" value="Meny (Snabbkommando: `)"/>
+      <Item key="frmMain.btnMenu" value="Huvudmeny"/>
       <Item key="frmMain._OpenFileDialog" value="Stödda bildformat"/>
       <Item key="frmMain._Files" value="fil(er)"/>
       <Item key="frmMain._Pages" value="sidor"/>
@@ -188,6 +190,7 @@
       <Item key="frmSetting.chkShowHiddenImages" value="Visa dolda bilder"/>
       <Item key="frmSetting.chkLoopViewer" value="Läs in första bilden i en lista efter att sista bilden har visats"/>
       <Item key="frmSetting.chkIsCenterImage" value="Centrera bilden i visaren"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="Använd inbäddade miniatyrbilder för RAW-format"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Sortera bilder efter"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Sortera som Windows-utforskaren om möjligt"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Gruppera bilder efter mapp"/>
@@ -230,6 +233,9 @@
       <Item key="frmSetting.chkRandomSlideshowInterval" value="Använd slumpmässigt intervall"/>
       <Item key="frmSetting.lblSlideshowInterval" value="Bildspelsintervall: {0}"/>
       <Item key="frmSetting.lblSlideshowIntervalTo" value="till"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="Helskärm"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Dölj verktygsfältet"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Dölj miniatyrfältet"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Spara visningsbilden efter att den har roterats"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Välj program för bildredigering"/>
       <Item key="frmSetting.lblAfterEditingApp" value="Efter att redigeringsappen har öppnats:"/>

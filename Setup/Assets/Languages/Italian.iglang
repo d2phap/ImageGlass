@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="it-IT" langName="Italiano" author="Tiwi90" description="Italian" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="it-IT" langName="Italiano" author="Tiwi90" description="Italian" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Alcune impostazioni non sono compatibili con ImageGlass {0}. Si consiglia di aggiornarle prima di continuare.&#10;&#10;- Clicca Sì per conoscere i cambiamenti.&#10;- Clicca No per avviare ImageGlass con le impostazioni predefinite."/>
       <Item key="_.ImageOrderBy._Name" value="Nome (impostazione predefinita)"/>
@@ -44,6 +44,8 @@
       <Item key="frmMain.mnuMainZoom" value="Ridimensiona"/>
       <Item key="frmMain.mnuMainZoomIn" value="Ingrandisci"/>
       <Item key="frmMain.mnuMainZoomOut" value="Riduci"/>
+      <Item key="frmMain.mnuCustomZoom" value="Zoom personalizzato…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="Inserisci un nuovo valore di zoom"/>
       <Item key="frmMain.mnuMainScaleToFit" value="Allarga fino a riempire"/>
       <Item key="frmMain.mnuMainScaleToFill" value="Allarga fino a riempire"/>
       <Item key="frmMain.mnuMainActualSize" value="Dimensione effettiva"/>
@@ -107,7 +109,7 @@
       <Item key="frmMain.mnuMainExitApplication" value="Esci da ImageGlass"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass non può aprire questa immagine perché il file sembra essere danneggiato, corrotto o non supportato."/>
       <Item key="frmMain._ImageNotExist" value="L'immagine visualizzata non esiste."/>
-      <Item key="frmMain.btnMenu" value="Menu (tasto di scelta rapida: ')"/>
+      <Item key="frmMain.btnMenu" value="Menu principale"/>
       <Item key="frmMain._OpenFileDialog" value="Tutti i formati di file supportati"/>
       <Item key="frmMain._Files" value="file (s)"/>
       <Item key="frmMain._Pages" value="pagine"/>
@@ -188,6 +190,7 @@
       <Item key="frmSetting.chkShowHiddenImages" value="Mostra elementi nascosti"/>
       <Item key="frmSetting.chkLoopViewer" value="Riprendi visualizzazione dall'inizio quando si raggiunge la fine dell'elenco"/>
       <Item key="frmSetting.chkIsCenterImage" value="Centra l'immagine sul visualizzatore"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="Usa miniatura incorporata per formati RAW"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Ordine caricamento immagine"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Usa l'ordine di Windows File Explorer se possibile"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Raggruppa le immagini per directory"/>
@@ -230,6 +233,9 @@
       <Item key="frmSetting.chkRandomSlideshowInterval" value="Usa intervallo casuale"/>
       <Item key="frmSetting.lblSlideshowInterval" value="Intervallo presentazione: {0}"/>
       <Item key="frmSetting.lblSlideshowIntervalTo" value="a"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="Schermo intero"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Nascondi barra strumenti"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Nascondi barra miniature"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Salva l'immagine dopo la rotazione"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Seleziona l'applicazione per l'editing di immagini"/>
       <Item key="frmSetting.lblAfterEditingApp" value="Dopo aver aperto l'app di modifica:"/>

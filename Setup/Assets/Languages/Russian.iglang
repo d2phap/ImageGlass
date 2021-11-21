@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="ru-RU" langName="Русский" author="inkrimit (Вынгилев Алексей), DenisK_2017 (Denis Velicanov), Zelyc81 (Гапоненко Евгений)" description="Russian" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="ru-RU" langName="Русский" author="inkrimit (Вынгилев Алексей), DenisK_2017 (Denis Velicanov), Zelyc81 (Гапоненко Евгений)" description="Russian" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Некоторые настройки несовместимы с вашим ImageGlass {0}. Рекомендуется обновить их, прежде чем продолжить.&#10;&#10;— Нажмите &quot;Да&quot;, чтобы узнать об изменениях.&#10;— Нажмите &quot;Нет&quot;, чтобы запустить ImageGlass с настройками по умолчанию."/>
       <Item key="_.ImageOrderBy._Name" value="Имя (по умолчанию)"/>
@@ -44,6 +44,8 @@
       <Item key="frmMain.mnuMainZoom" value="Масштабирование"/>
       <Item key="frmMain.mnuMainZoomIn" value="Увеличить"/>
       <Item key="frmMain.mnuMainZoomOut" value="Уменьшить"/>
+      <Item key="frmMain.mnuCustomZoom" value="Пользовательский масштаб ..."/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="Введите новое значение масштабирования"/>
       <Item key="frmMain.mnuMainScaleToFit" value="Изображение по размеру окна"/>
       <Item key="frmMain.mnuMainScaleToFill" value="Заполнить окно"/>
       <Item key="frmMain.mnuMainActualSize" value="Масштаб 100%"/>
@@ -60,13 +62,13 @@
       <Item key="frmMain.mnuMainChannels._Black" value="Чёрный"/>
       <Item key="frmMain.mnuMainChannels._Alpha" value="Альфа (прозрачность)"/>
       <Item key="frmMain.mnuLoadingOrder" value="Порядок просмотра"/>
-      <Item key="frmMain.mnuMainRotateLeft" value="Повернуть ПРОТИВ ЧАСОВОЙ стрелки"/>
-      <Item key="frmMain.mnuMainRotateRight" value="Повернуть ПО ЧАСОВОЙ стрелке"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="Повернуть против часовой стрелки"/>
+      <Item key="frmMain.mnuMainRotateRight" value="Повернуть по часовой стрелке"/>
       <Item key="frmMain.mnuMainFlipHorz" value="Отразить по горизонтали"/>
       <Item key="frmMain.mnuMainFlipVert" value="Отразить по вертикали"/>
       <Item key="frmMain.mnuMainRename" value="Переименовать изображение ..."/>
-      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Удалить В КОРЗИНУ"/>
-      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Удалить НАВСЕГДА"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Удалить в корзину"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Удалить навсегда"/>
       <Item key="frmMain.mnuMainExtractPages" value="Извлечь кадры из изображения ({0} шт.) ..."/>
       <Item key="frmMain.mnuMainStartStopAnimating" value="НАЧАТЬ / ОСТАНОВИТЬ анимацию изображения"/>
       <Item key="frmMain.mnuMainSetAsDesktop" value="Сделать фоновым изображением рабочего стола"/>
@@ -107,18 +109,18 @@
       <Item key="frmMain.mnuMainExitApplication" value="Выйти из ImageGlass"/>
       <Item key="frmMain.picMain._ErrorText" value="Программа не может открыть это изображение,&#10;так как файл повреждён или не поддерживается формат"/>
       <Item key="frmMain._ImageNotExist" value="Программа не может найти изображение"/>
-      <Item key="frmMain.btnMenu" value="Меню (клавиша 'Ё')"/>
+      <Item key="frmMain.btnMenu" value="Главное меню"/>
       <Item key="frmMain._OpenFileDialog" value="Все поддерживаемые форматы"/>
       <Item key="frmMain._Files" value="ф."/>
       <Item key="frmMain._Pages" value="стр."/>
       <Item key="frmMain._ImageData" value="Данные изображения"/>
       <Item key="frmMain._RenameDialogText" value="Переименовать"/>
       <Item key="frmMain._RenameDialog" value="Введите новое имя файла:"/>
-      <Item key="frmMain._GotoDialogText" value="Введите индекс изображения, чтобы просмотреть его,&#10;и нажмите 'ENTER'"/>
+      <Item key="frmMain._GotoDialogText" value="Введите индекс изображения, чтобы просмотреть его,&#10;и нажмите &quot;ENTER&quot;"/>
       <Item key="frmMain._DeleteDialogText" value="Удалить файл &quot;{0}&quot; ?"/>
       <Item key="frmMain._DeleteDialogTitle" value="Подтвердить"/>
       <Item key="frmMain._ExtractPageText" value="Извлечение кадров изображения.&#10;Пожалуйста, выберите папку для извлечения:"/>
-      <Item key="frmMain._FullScreenMessage" value="Нажмите {0} для выхода из полноэкранного режима."/>
+      <Item key="frmMain._FullScreenMessage" value="Нажмите &quot;{0}&quot; для выхода из полноэкранного режима."/>
       <Item key="frmMain._SlideshowMessage" value="Нажмите &quot;Esc&quot; чтобы выйти из режима презентации.&#10;Правая кнопка мыши, чтобы открыть контекстное меню."/>
       <Item key="frmMain._SlideshowMessagePause" value="Приостановить показ"/>
       <Item key="frmMain._SlideshowMessageResume" value="Возобновить показ"/>
@@ -141,7 +143,7 @@
       <Item key="frmMain._PageExtractComplete" value="Извлечение кадров завершено"/>
       <Item key="frmMain._Frameless" value="Удерживайте &quot;Shift&quot;, чтобы переместить окно."/>
       <Item key="frmMain._InvalidImageClipboardData" value="В буфере обмена нет изображений."/>
-      <Item key="frmAbout.lblSlogant" value="Лёгкое, универсальное средство просмотра изображений"/>
+      <Item key="frmAbout.lblSlogant" value="Лёгкое универсальное средство просмотра изображений"/>
       <Item key="frmAbout.lblInfo" value="Информация"/>
       <Item key="frmAbout.lblComponent" value="Компоненты"/>
       <Item key="frmAbout.lblReferences" value="Дополнительные материалы"/>
@@ -172,7 +174,7 @@
       <Item key="frmSetting.chkShowScrollbar" value="Отображать полосы прокрутки"/>
       <Item key="frmSetting.chkShowNavButtons" value="Отображать вторые стрелки навигации влево / вправо"/>
       <Item key="frmSetting.chkDisplayBasename" value="Не показывать в строке заголовка путь к файлу"/>
-      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Отображать фон прозрачности (альфа-канал) только в области изображения"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Отображать фон прозрачности (α-канал) только в области изображения"/>
       <Item key="frmSetting.chkUseTouchGesture" value="Включить поддержку сенсорных жестов"/>
       <Item key="frmSetting.lblBackGroundColor" value="Цвет фона  в области изображения:"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="Сброс"/>
@@ -188,6 +190,7 @@
       <Item key="frmSetting.chkShowHiddenImages" value="Показывать скрытые файлы"/>
       <Item key="frmSetting.chkLoopViewer" value="Повторять презентацию с первого файла при достижении конца"/>
       <Item key="frmSetting.chkIsCenterImage" value="Центрировать изображение в средстве просмотра"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="Использовать встроенные эскизы (JPEG-превью) для RAW файлов"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Порядок чтения файлов:"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Использовать порядок сортировки такой же, как и в проводнике, если это возможно"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Группировать изображения по папкам"/>
@@ -230,6 +233,9 @@
       <Item key="frmSetting.chkRandomSlideshowInterval" value="Использовать случайный интервал"/>
       <Item key="frmSetting.lblSlideshowInterval" value="Временной интервал показа изображений: {0}"/>
       <Item key="frmSetting.lblSlideshowIntervalTo" value="до"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="Полноэкранный режим"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Скрыть панель инструментов"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Скрыть панель эскизов"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Перезаписывать файл после редактирования"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Укажите свои приложения для редактирования изображений"/>
       <Item key="frmSetting.lblAfterEditingApp" value="После открытия в редакторе:"/>
@@ -269,10 +275,10 @@
       <Item key="frmSetting.btnMoveUp._Tooltip" value="Переместить вверх"/>
       <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Горизонтально центрировать панель инструментов относительно окна"/>
       <Item key="frmSetting.chkHideTooltips" value="Не отображать подсказки панели инструментов"/>
-      <Item key="frmSetting.chkColorUseRGBA" value="&quot;RGB&quot; формат + альфа-канал"/>
-      <Item key="frmSetting.chkColorUseHEXA" value="&quot;HEX&quot; формат + альфа-канал"/>
-      <Item key="frmSetting.chkColorUseHSLA" value="&quot;HSL&quot; формат + альфа-канал"/>
-      <Item key="frmSetting.chkColorUseHSVA" value="&quot;HSV&quot; формат + альфа-канал"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="&quot;RGB&quot; формат + α-канал"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="&quot;HEX&quot; формат + α-канал"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="&quot;HSL&quot; формат + α-канал"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="&quot;HSV&quot; формат + α-канал"/>
       <Item key="frmSetting.lblDefaultColorCode" value="Формат цветового кода по умолчанию при копировании"/>
       <Item key="frmSetting.chkShowPageNavAuto" value="   Автоматически показывать инструмент &quot;Страницы&quot;&#10;   (отдельно для многостраничных изображений)"/>
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Окно &quot;ExifTool&quot; всегда сверху"/>

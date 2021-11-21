@@ -38,6 +38,9 @@ namespace ImageGlass {
             // Logo
             picLogo.Image = Configs.Theme.Logo.Image;
 
+            lblAppName.ForeColor = Configs.Theme.AccentColor;
+            lblCodeName.ForeColor = Configs.Theme.AccentDarkColor;
+
             // Apply theme
             Configs.ApplyFormTheme(this, Configs.Theme);
         }

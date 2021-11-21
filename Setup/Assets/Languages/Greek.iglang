@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="el-GR" langName="Ελληνικά" author="Nikolas Spiridakis" description="Greek" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="el-GR" langName="Ελληνικά" author="Nikolas Spiridakis" description="Greek" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Κάποιες μεταφράσεις δεν ειναι συμβατές με το ImageGlass {0}. Σας συστήνουμε να τις ενημερώσετε πριν συνεχίσετε.&#10;&#10;- Πατήστε Ναι για να μάθετε περισσότερα για τις αλλαγές.&#10;- Πατήστε Όχι για να ανοίξετε το ImageGlass με τις προεπιλεγμένες ρυθμίσεις."/>
       <Item key="_.ImageOrderBy._Name" value="Όνομα (προεπιλογή)"/>
@@ -41,9 +41,11 @@
       <Item key="frmMain.mnuMainPrevPage" value="Προηγούμενη σελίδα"/>
       <Item key="frmMain.mnuMainFirstPage" value="Πρώτη σελίδα"/>
       <Item key="frmMain.mnuMainLastPage" value="Τελευταία σελίδα"/>
-      <Item key="frmMain.mnuMainZoom" value="Μεγένθυση"/>
+      <Item key="frmMain.mnuMainZoom" value="Μεγέθυνση"/>
       <Item key="frmMain.mnuMainZoomIn" value="Μεγέθυνση"/>
       <Item key="frmMain.mnuMainZoomOut" value="Σμίκρυνση"/>
+      <Item key="frmMain.mnuCustomZoom" value="Προσαρμοσμένη μεγέθυνση…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="Εισάγετε μια νέα τιμή μεγέθυνσης"/>
       <Item key="frmMain.mnuMainScaleToFit" value="Προσαρμογή στο παράθυρο"/>
       <Item key="frmMain.mnuMainScaleToFill" value="Προσαρμογή με γέμισμα"/>
       <Item key="frmMain.mnuMainActualSize" value="Πραγματικό Μέγεθος"/>
@@ -88,7 +90,7 @@
       <Item key="frmMain.mnuMainSlideShowExit" value="Έξοδος προβολής διαφανειών (slideshow)"/>
       <Item key="frmMain.mnuMainShare" value="Κοινοποίηση…"/>
       <Item key="frmMain.mnuMainLayout" value="Διάταξη"/>
-      <Item key="frmMain.mnuMainToolbar" value="Γραμμή εργαλειών"/>
+      <Item key="frmMain.mnuMainToolbar" value="Γραμμή εργαλείων"/>
       <Item key="frmMain.mnuMainThumbnailBar" value="Πάνελ μικρογραφιών"/>
       <Item key="frmMain.mnuMainCheckBackground" value="Διαφανές φόντο"/>
       <Item key="frmMain.mnuMainAlwaysOnTop" value="Κράτησε το παράθυρο πάντα σε πρώτο πλάνο"/>
@@ -107,7 +109,7 @@
       <Item key="frmMain.mnuMainExitApplication" value="Έξοδος από το ImageGlass"/>
       <Item key="frmMain.picMain._ErrorText" value="Το ImageGlass δεν μπορεί να ανοίξει αυτή την εικόνα επειδή το αρχείο φαίνεται να είναι κατεστραμμένο ή μη συμβατό."/>
       <Item key="frmMain._ImageNotExist" value="Δεν υπάρχει τέτοια εικόνα."/>
-      <Item key="frmMain.btnMenu" value="Μενού (Hotkey: ')"/>
+      <Item key="frmMain.btnMenu" value="Κεντρικό μενού"/>
       <Item key="frmMain._OpenFileDialog" value="Όλα τα υποστηριζόμενα αρχεία"/>
       <Item key="frmMain._Files" value="αρχείο (α)"/>
       <Item key="frmMain._Pages" value="σελίδες"/>
@@ -159,7 +161,7 @@
       <Item key="frmSetting.lblImage" value="Εικόνα"/>
       <Item key="frmSetting.lblEdit" value="Επεξεργασία"/>
       <Item key="frmSetting.lblFileTypeAssoc" value="Συσχετίσεις τύπων αρχείων"/>
-      <Item key="frmSetting.lblToolbar" value="Γραμμή εργαλειών"/>
+      <Item key="frmSetting.lblToolbar" value="Γραμμή εργαλείων"/>
       <Item key="frmSetting.lblLanguage" value="Γλώσσα"/>
       <Item key="frmSetting.lblTheme" value="Θέμα"/>
       <Item key="frmSetting.lblKeyboard" value="Πληκτρολόγιο"/>
@@ -188,6 +190,7 @@
       <Item key="frmSetting.chkShowHiddenImages" value="Εμφάνιση κρυφών εικόνων"/>
       <Item key="frmSetting.chkLoopViewer" value="Άρχισε από την αρχή στο τέλος της λίστας της προβολής διαφανειών (slideshow)"/>
       <Item key="frmSetting.chkIsCenterImage" value="Κεντράρισμα εικόνας"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="Χρήση ενσωματωμένης μικρογραφίας για μορφές RAW"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Σειρά φόρτωσης εικόνων"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Χρήση της σειράς ταξινόμησης των Windows αν ειναι δυνατό"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Ομαδοποίηση εικόνων ανά φάκελο"/>
@@ -230,6 +233,9 @@
       <Item key="frmSetting.chkRandomSlideshowInterval" value="Προσαρμοσμένο διάστημα"/>
       <Item key="frmSetting.lblSlideshowInterval" value="Διάστημα προβολής διαφανειών: {0}"/>
       <Item key="frmSetting.lblSlideshowIntervalTo" value="με"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="Πλήρης οθόνη"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Απόκρυψη γραμμής εργαλείων"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Απόκρυψη πάνελ μικρογραφιών"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Αποθήκευση εικόνας μετα την περιστροφή"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Επιλογή προγράμματος επεξεργασίας εικόνων"/>
       <Item key="frmSetting.lblAfterEditingApp" value="Μέτα το άνοιγμα προγράμματος επεξεργασίας:"/>

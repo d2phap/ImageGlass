@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="zh-CN" langName="简体中文" author="星野みなと, Chenry Lee, 小恐龙, 0xLC, Infinity_X, Yi Fan, gapore, 7YHong, arlen.cn" description="Chinese Simplified" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="zh-CN" langName="简体中文" author="星野みなと, Chenry Lee, 小恐龙, 0xLC, Infinity_X, Yi Fan, gapore, 7YHong, arlen.cn" description="Chinese Simplified" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="某些设置和您当前的 ImageGlass 版本 {0} 不兼容。我们推荐您在继续使用之前先更新这些设置。&#10;&#10;- 点击“是”，来了解这些变化；&#10;- 点击“否”，则以默认设置启动 ImageGlass。"/>
       <Item key="_.ImageOrderBy._Name" value="文件名（默认）"/>
@@ -44,6 +44,8 @@
       <Item key="frmMain.mnuMainZoom" value="缩放"/>
       <Item key="frmMain.mnuMainZoomIn" value="放大"/>
       <Item key="frmMain.mnuMainZoomOut" value="缩小"/>
+      <Item key="frmMain.mnuCustomZoom" value="自定义缩放..."/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="输入一个新的缩放值"/>
       <Item key="frmMain.mnuMainScaleToFit" value="适配窗口"/>
       <Item key="frmMain.mnuMainScaleToFill" value="填满窗口"/>
       <Item key="frmMain.mnuMainActualSize" value="实际大小"/>
@@ -107,7 +109,7 @@
       <Item key="frmMain.mnuMainExitApplication" value="关闭 ImageGlass"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass 无法打开该图片，因为该文件貌似已经损坏或不支持。"/>
       <Item key="frmMain._ImageNotExist" value="查看图像不存在。"/>
-      <Item key="frmMain.btnMenu" value="菜单 (快捷键：` )"/>
+      <Item key="frmMain.btnMenu" value="主菜单"/>
       <Item key="frmMain._OpenFileDialog" value="格式支持"/>
       <Item key="frmMain._Files" value="文件"/>
       <Item key="frmMain._Pages" value="页"/>
@@ -188,6 +190,7 @@
       <Item key="frmSetting.chkShowHiddenImages" value="显示隐藏图像"/>
       <Item key="frmSetting.chkLoopViewer" value="当到达列表最后时，再从头开始查看"/>
       <Item key="frmSetting.chkIsCenterImage" value="图像居中显示"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="使用 RAW 格式内嵌缩略图"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="图像加载顺序"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="使用 Windows 资源管理器的默认排序"/>
       <Item key="frmSetting.chkGroupByDirectory" value="按目录分组图像"/>
@@ -230,6 +233,9 @@
       <Item key="frmSetting.chkRandomSlideshowInterval" value="使用随机切换间隔"/>
       <Item key="frmSetting.lblSlideshowInterval" value="幻灯片放映切换间隔： {0}"/>
       <Item key="frmSetting.lblSlideshowIntervalTo" value="到"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="全屏"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="隐藏工具栏"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="隐藏缩略图栏"/>
       <Item key="frmSetting.chkSaveOnRotate" value="旋转后保存查看图像"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="选择用于图像编辑的应用程序"/>
       <Item key="frmSetting.lblAfterEditingApp" value="打开编辑应用程序后："/>

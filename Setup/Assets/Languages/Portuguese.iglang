@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="pt-PT" langName="Português" author="Sérgio Marques" description="Portuguese" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="pt-PT" langName="Português" author="Sérgio Marques" description="Portuguese" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Algumas definições não são compatíveis com ImageGlass {0}. Recomendamos a atualização para poder continuar.&#10;&#10;- Clique Sim para saber mais sobre as alterações.&#10;- Clique Não para iniciar ImageGlass com as definições padrão."/>
       <Item key="_.ImageOrderBy._Name" value="Nome (padrão)"/>
@@ -44,6 +44,8 @@
       <Item key="frmMain.mnuMainZoom" value="Ampliação"/>
       <Item key="frmMain.mnuMainZoomIn" value="Ampliar"/>
       <Item key="frmMain.mnuMainZoomOut" value="Reduzir"/>
+      <Item key="frmMain.mnuCustomZoom" value="Zoom personalizado…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="Introduza um novo valor"/>
       <Item key="frmMain.mnuMainScaleToFit" value="Ajustar para caber"/>
       <Item key="frmMain.mnuMainScaleToFill" value="Ajustar para preencher"/>
       <Item key="frmMain.mnuMainActualSize" value="Tamanho real"/>
@@ -107,7 +109,7 @@
       <Item key="frmMain.mnuMainExitApplication" value="Sair"/>
       <Item key="frmMain.picMain._ErrorText" value="O ImageGlass não consegue abrir esta imagem porque o ficheiro não é suportado ou então porque está danificado."/>
       <Item key="frmMain._ImageNotExist" value="A imagem não existe."/>
-      <Item key="frmMain.btnMenu" value="Menu (Atalho: `)"/>
+      <Item key="frmMain.btnMenu" value="Menu principal"/>
       <Item key="frmMain._OpenFileDialog" value="Todos os formatos suportados"/>
       <Item key="frmMain._Files" value="ficheiro(s)"/>
       <Item key="frmMain._Pages" value="páginas"/>
@@ -188,6 +190,7 @@
       <Item key="frmSetting.chkShowHiddenImages" value="Mostrar imagens ocultas"/>
       <Item key="frmSetting.chkLoopViewer" value="Mostrar a primeira imagem ao atingir a última da lista"/>
       <Item key="frmSetting.chkIsCenterImage" value="Centrar imagem"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="Utilizar miniatura incorporada para ficheiros RAW"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Ordem de carregamento"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Se possível, utilizar a ordenação do explorador de ficheiros Windows"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Agrupar imagens por diretório"/>
@@ -230,6 +233,9 @@
       <Item key="frmSetting.chkRandomSlideshowInterval" value="Intervalo aleatório"/>
       <Item key="frmSetting.lblSlideshowInterval" value="Tempo entre imagens: {0}"/>
       <Item key="frmSetting.lblSlideshowIntervalTo" value="até"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="Ecrã completo"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Ocultar barra de ferramentas"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Ocultar barra de miniaturas"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Guardar a imagem depois de rodar"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Selecione a aplicação para edição de imagens"/>
       <Item key="frmSetting.lblAfterEditingApp" value="Depois de abrir a aplicação de dição:"/>

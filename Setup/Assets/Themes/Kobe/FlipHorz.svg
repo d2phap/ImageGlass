@@ -11,8 +11,8 @@
  <g>
   <title>Layer 1</title>
   <g id="svg_7">
-   <path stroke="#fff" id="svg_1" d="m11.732368,18.226338l0,-17.360655l7.667634,17.360655l-7.667634,0z" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-   <path stroke="#fff" id="svg_4" d="m8.339956,18.226338l0,-17.360655l-7.739957,17.360655l7.739957,0z" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+   <path stroke="#dedede" id="svg_1" d="m11.732368,18.226338l0,-17.360655l7.667634,17.360655l-7.667634,0z" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+   <path stroke="#dedede" id="svg_4" d="m8.339956,18.226338l0,-17.360655l-7.739957,17.360655l7.739957,0z" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
   </g>
  </g>
 </svg>

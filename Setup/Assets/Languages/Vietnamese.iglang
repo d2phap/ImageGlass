@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="vi-VN" langName="Tiếng Việt" author="Dương Diệu Pháp" description="Vietnamese" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="vi-VN" langName="Tiếng Việt" author="Dương Diệu Pháp" description="Vietnamese" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Một số cài đặt không tương thích với ImageGlass {0}. Bạn nên tự cập nhật trước khi tiếp tục.&#10;&#10;- Nhấn Yes để xem các thay đổi.&#10;- Nhấn No để mở ImageGlass với những cài đặt mặc định."/>
       <Item key="_.ImageOrderBy._Name" value="Tên (mặc định)"/>
@@ -44,6 +44,8 @@
       <Item key="frmMain.mnuMainZoom" value="Phóng to / Thu nhỏ"/>
       <Item key="frmMain.mnuMainZoomIn" value="Phóng to"/>
       <Item key="frmMain.mnuMainZoomOut" value="Thu nhỏ"/>
+      <Item key="frmMain.mnuCustomZoom" value="Tuỳ chỉnh phóng to / thu nhỏ"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="Nhập một giá trị mới"/>
       <Item key="frmMain.mnuMainScaleToFit" value="Co dãn hình ảnh vừa khít"/>
       <Item key="frmMain.mnuMainScaleToFill" value="Co dãn hình ảnh lấp đầy"/>
       <Item key="frmMain.mnuMainActualSize" value="Kích thước thực tế"/>
@@ -107,7 +109,7 @@
       <Item key="frmMain.mnuMainExitApplication" value="Thoát ImageGlass"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass không thể mở ảnh này vì các tập tin dường như bị hỏng hoặc định dạng không hỗ trợ."/>
       <Item key="frmMain._ImageNotExist" value="Ảnh đang xem không tồn tại."/>
-      <Item key="frmMain.btnMenu" value="Menu (Phím tắt: `)"/>
+      <Item key="frmMain.btnMenu" value="Menu chính"/>
       <Item key="frmMain._OpenFileDialog" value="Tất cả các tập tin hỗ trợ"/>
       <Item key="frmMain._Files" value="tập tin"/>
       <Item key="frmMain._Pages" value="trang"/>
@@ -188,6 +190,7 @@
       <Item key="frmSetting.chkShowHiddenImages" value="Hiển thị tập tin hình ảnh ẩn"/>
       <Item key="frmSetting.chkLoopViewer" value="Xem lại hình ảnh đầu tiên khi kết thúc danh sách"/>
       <Item key="frmSetting.chkIsCenterImage" value="Canh giữa ảnh trong cửa sổ"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="Sử dụng ảnh thu nhỏ nhúng trong định dạng RAW để hiển thị"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Thứ tự tải hình ảnh"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Sử dụng thứ tự sắp xếp của Windows File Explorer khi có thể"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Nhóm hình ảnh theo thư mục"/>
@@ -230,6 +233,9 @@
       <Item key="frmSetting.chkRandomSlideshowInterval" value="Sử dụng thời gian trình chiếu ngẫu nhiên"/>
       <Item key="frmSetting.lblSlideshowInterval" value="Thời gian trình chiếu: {0}"/>
       <Item key="frmSetting.lblSlideshowIntervalTo" value="đến"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="Toàn màn hình"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Ẩn thanh công cụ"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Ẩn thanh ảnh thu nhỏ"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Tự động lưu sau khi xoay ảnh"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Chọn ứng dụng chỉnh sửa hình ảnh"/>
       <Item key="frmSetting.lblAfterEditingApp" value="Hành động sau khi mở ứng dụng chỉnh sửa:"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="zh-TW" langName="正體中文" author="Jeff Huang" description="Traditional Chinese" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="zh-TW" langName="正體中文" author="Jeff Huang" description="Traditional Chinese" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="某些設定與您的 ImageGlass {0} 不相容。建議您在繼續前先更新它們。&#10;&#10;- 點擊是以取得更多關於變更的資訊。&#10;- 點擊否以使用預設的設定啟動 ImageGlass。"/>
       <Item key="_.ImageOrderBy._Name" value="名稱（預設）"/>
@@ -24,11 +24,11 @@
       <Item key="frmMain.mnuSaveImage" value="儲存圖片"/>
       <Item key="frmMain.mnuMainSaveAs" value="另存圖片為…"/>
       <Item key="frmMain.mnuMainRefresh" value="重新整理"/>
-      <Item key="frmMain.mnuMainReloadImage" value="重新載入圖像"/>
+      <Item key="frmMain.mnuMainReloadImage" value="重新載入圖片"/>
       <Item key="frmMain.mnuMainReloadImageList" value="重新載入圖片清單"/>
       <Item key="frmMain.mnuOpenWith" value="開啟用…"/>
       <Item key="frmMain.mnuMainEditImage" value="編輯圖片 {0}…"/>
-      <Item key="frmMain.mnuMainPrint" value="打印…"/>
+      <Item key="frmMain.mnuMainPrint" value="列印…"/>
       <Item key="frmMain.mnuMainNavigation" value="導航"/>
       <Item key="frmMain.mnuMainViewNext" value="檢視下一張圖片"/>
       <Item key="frmMain.mnuMainViewNext.Shortcut" value="右方向鍵／PageDown"/>
@@ -44,6 +44,8 @@
       <Item key="frmMain.mnuMainZoom" value="縮放"/>
       <Item key="frmMain.mnuMainZoomIn" value="放大"/>
       <Item key="frmMain.mnuMainZoomOut" value="縮小"/>
+      <Item key="frmMain.mnuCustomZoom" value="自訂縮放…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="輸入新的縮放值"/>
       <Item key="frmMain.mnuMainScaleToFit" value="縮放到適合的大小"/>
       <Item key="frmMain.mnuMainScaleToFill" value="縮放到填滿"/>
       <Item key="frmMain.mnuMainActualSize" value="實際大小"/>
@@ -107,7 +109,7 @@
       <Item key="frmMain.mnuMainExitApplication" value="離開 ImageGlass"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass 無法開啟這張圖片，因為檔案似乎已損毀或不支援。"/>
       <Item key="frmMain._ImageNotExist" value="找不到圖片檔案。"/>
-      <Item key="frmMain.btnMenu" value="選單 (快捷鍵：`)"/>
+      <Item key="frmMain.btnMenu" value="主選單"/>
       <Item key="frmMain._OpenFileDialog" value="所有支援的檔案"/>
       <Item key="frmMain._Files" value="檔案"/>
       <Item key="frmMain._Pages" value="頁面"/>
@@ -188,6 +190,7 @@
       <Item key="frmSetting.chkShowHiddenImages" value="顯示隱藏圖像"/>
       <Item key="frmSetting.chkLoopViewer" value="當到達清單結尾時，再回到第一張圖片繼續檢視"/>
       <Item key="frmSetting.chkIsCenterImage" value="將圖片置於檢視器中間"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="RAW 格式使用內嵌縮圖"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="圖片載入順序"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="如果可以的話，使用 Windows 檔案總管排序"/>
       <Item key="frmSetting.chkGroupByDirectory" value="按目錄將圖片分組"/>
@@ -230,6 +233,9 @@
       <Item key="frmSetting.chkRandomSlideshowInterval" value="使用隨機間隔"/>
       <Item key="frmSetting.lblSlideshowInterval" value="幻燈片間隔：{0}"/>
       <Item key="frmSetting.lblSlideshowIntervalTo" value="至"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="全螢幕"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="隱藏工具列"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="隱藏縮圖列"/>
       <Item key="frmSetting.chkSaveOnRotate" value="旋轉後保存查看圖像"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="選擇用於圖像編輯的應用程式"/>
       <Item key="frmSetting.lblAfterEditingApp" value="在開啟編輯應用程式後"/>

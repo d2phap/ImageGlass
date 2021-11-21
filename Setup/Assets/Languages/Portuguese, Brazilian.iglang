@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="pt-BR" langName="Português Brasileiro" author="Cláudio Mantovani Vieira" description="Brazilian Portuguese" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="pt-BR" langName="Português Brasileiro" author="Cláudio Mantovani Vieira" description="Brazilian Portuguese" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Algumas configurações são incompatíveis com seu ImageGlass {0}. É recomendado atualizar antes de continuar.&#10;&#10;- Clique em Sim para saber mais sobre as mudanças.&#10;- Clique em Não para abrir o ImageGlass com as configurações padrão."/>
       <Item key="_.ImageOrderBy._Name" value="Nome (padrão)"/>
@@ -44,6 +44,8 @@
       <Item key="frmMain.mnuMainZoom" value="Ampliação"/>
       <Item key="frmMain.mnuMainZoomIn" value="Ampliar"/>
       <Item key="frmMain.mnuMainZoomOut" value="Reduzir"/>
+      <Item key="frmMain.mnuCustomZoom" value="Zoom personalizado…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="Insira um novo valor de zoom"/>
       <Item key="frmMain.mnuMainScaleToFit" value="Redimensionar para caber"/>
       <Item key="frmMain.mnuMainScaleToFill" value="Redimensionar para preencher"/>
       <Item key="frmMain.mnuMainActualSize" value="Tamanho atual"/>
@@ -107,7 +109,7 @@
       <Item key="frmMain.mnuMainExitApplication" value="Sair do ImageGlass"/>
       <Item key="frmMain.picMain._ErrorText" value="O ImageGlass não pode abrir esta imagem porque o arquivo parece estar danificado, corrompido ou é incompatível."/>
       <Item key="frmMain._ImageNotExist" value="A imagem de visualização não existe."/>
-      <Item key="frmMain.btnMenu" value="Menu (Atalho: `)"/>
+      <Item key="frmMain.btnMenu" value="Menu principal"/>
       <Item key="frmMain._OpenFileDialog" value="Todos arquivos suportados"/>
       <Item key="frmMain._Files" value="arquivo(s)"/>
       <Item key="frmMain._Pages" value="páginas"/>
@@ -188,6 +190,7 @@
       <Item key="frmSetting.chkShowHiddenImages" value="Mostrar imagens ocultas"/>
       <Item key="frmSetting.chkLoopViewer" value="Retornar visualizador à primeira imagem ao atingir final da lista"/>
       <Item key="frmSetting.chkIsCenterImage" value="Centralizar imagem no visualizador"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="Usar miniatura incorporada para formatos RAW"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Ordem de carregamento da imagem"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Usar ordem de classificação do Explorador de Arquivos do Windows se possível"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Agrupar imagens por diretório"/>
@@ -230,6 +233,9 @@
       <Item key="frmSetting.chkRandomSlideshowInterval" value="Usar intervalo aleatório"/>
       <Item key="frmSetting.lblSlideshowInterval" value="Intervalo da apresentação: {0}"/>
       <Item key="frmSetting.lblSlideshowIntervalTo" value="até"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="Tela inteira"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Ocultar barra de ferramentas"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Ocultar barra de miniaturas"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Salvar imagem de visualização após girar"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Selecionar aplicativo para edição de imagens"/>
       <Item key="frmSetting.lblAfterEditingApp" value="Após abrir o aplicativo de edição:"/>
