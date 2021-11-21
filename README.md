@@ -27,7 +27,9 @@ It gives you the possibility to view over **80+** common image formats, includin
 
 
 ## 🛣 Roadmap
-<img src="https://kontext.tech/api/flex/medias/obj-2290" alt="ImageGlass on .NET 6" height="50">
+<a href="https://devblogs.microsoft.com/dotnet/announcing-net-6/" target="_blank" rel="noreferrer noopener">
+  <img src="https://kontext.tech/api/flex/medias/obj-2290" alt="ImageGlass on .NET 6" style="height:50px" />
+</a>
 
 We are planning to migrate ImageGlass to [.NET 6](https://devblogs.microsoft.com/dotnet/announcing-net-6/) from version 9 which is scheduled some time in 2022. If you are unable to install .NET 6, you can stay with ImageGlass 8.
 
