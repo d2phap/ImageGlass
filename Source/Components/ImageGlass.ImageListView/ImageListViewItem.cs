@@ -768,7 +768,7 @@ namespace ImageGlass.ImageListView {
         /// </summary>
         /// <param name="imageType">Type of cached image to return.</param>
         /// <returns>Requested thumbnail or icon.</returns>
-        internal Image GetCachedImage(CachedImageType imageType) {
+        public Image GetCachedImage(CachedImageType imageType) {
             if (mImageListView == null)
                 throw new InvalidOperationException("Owner control is null.");
 

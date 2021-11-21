@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="ms-MY" langName="Bahasa Melayu" author="Abuyop" description="Malay Malaysia" minVersion="8.1.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="ms-MY" langName="Bahasa Melayu" author="Abuyop" description="Malay Malaysia" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Sesetengah tetapan tidak serasi dengan ImageGlass {0} anda. Adalah disarankan anda mengemas kini dahulu sebelum diteruskan.&#10;&#10;- Klik Ya untuk ketahui perubahan-perubahan tersebut.&#10;- Klik Tidak untuk lancarkan ImageGlass dengan tetapan lalai."/>
       <Item key="_.ImageOrderBy._Name" value="Nama (lalai)"/>
@@ -44,6 +44,8 @@
       <Item key="frmMain.mnuMainZoom" value="Zum"/>
       <Item key="frmMain.mnuMainZoomIn" value="Zum masuk"/>
       <Item key="frmMain.mnuMainZoomOut" value="Zum keluar"/>
+      <Item key="frmMain.mnuCustomZoom" value="Zum suai…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="Masukkan satu nilai zum baharu"/>
       <Item key="frmMain.mnuMainScaleToFit" value="Skala suai muat"/>
       <Item key="frmMain.mnuMainScaleToFill" value="Skala dipenuhi"/>
       <Item key="frmMain.mnuMainActualSize" value="Saiz sebenar"/>
@@ -107,7 +109,7 @@
       <Item key="frmMain.mnuMainExitApplication" value="Keluar dari ImageGlass"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass tidak dapat membuka gambar ini kerana fail berkemungkinan sudah rosak atau tidak disokong."/>
       <Item key="frmMain._ImageNotExist" value="Imej yang ingin dilihat tidak wujud."/>
-      <Item key="frmMain.btnMenu" value="Menu (Kekunci Panas: `)"/>
+      <Item key="frmMain.btnMenu" value="Menu utama"/>
       <Item key="frmMain._OpenFileDialog" value="Semua fail disokong"/>
       <Item key="frmMain._Files" value="fail(s)"/>
       <Item key="frmMain._Pages" value="halaman"/>
@@ -188,6 +190,7 @@
       <Item key="frmSetting.chkShowHiddenImages" value="Tunjuk imej tersembunyi"/>
       <Item key="frmSetting.chkLoopViewer" value="Ulang balik pelihat ke imej pertama sekiranya telah mencapai penghujung senarai"/>
       <Item key="frmSetting.chkIsCenterImage" value="Tengahkan imej dalam pelihat"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="Guna lakaran kenit terbenam untuk format RAW"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Tertib memuatkan imej"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Guna tertib isih Pelayar Fail Windows jika boleh"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Kelompok imej mengikut direktori"/>
@@ -230,6 +233,9 @@
       <Item key="frmSetting.chkRandomSlideshowInterval" value="Guna sela rawak"/>
       <Item key="frmSetting.lblSlideshowInterval" value="Sela tayangan slaid: {0}"/>
       <Item key="frmSetting.lblSlideshowIntervalTo" value="hingga"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="Skrin penuh"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Sembunyi palang alat"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Sembunyi palang lakaran kenit"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Simpan imej yang dilihat selepas diputarkan"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Pilih aplikasi untuk penyuntingan imej"/>
       <Item key="frmSetting.lblAfterEditingApp" value="Selepas membuka apl penyuntingan:"/>

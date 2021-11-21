@@ -49,8 +49,8 @@ namespace ImageGlass.Library.Net {
         public bool DownloadFile(string URL, string filename) {
             try {
                 _currentFile = GetFileName(URL);
-                var WC = new WebClient();
-                WC.DownloadFile(URL, filename);
+                using var wc = new WebClient();
+                wc.DownloadFile(URL, filename);
                 FileDownloadComplete?.Invoke();
                 return true;
             }

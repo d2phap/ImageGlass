@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2021 DUONG DIEU PHAP
+Copyright (C) 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -153,6 +153,34 @@ namespace ImageGlass.Base {
             return controls.SelectMany(ctrl => GetAllControls(ctrl, type))
                                       .Concat(controls)
                                       .Where(c => c.GetType() == type);
+        }
+
+
+        /// <summary>
+        /// Checks if the given Windows version is matched
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsOS(WindowsOS ver) {
+            if (ver == WindowsOS.Win11) {
+                return Environment.OSVersion.Version.Major >= 10
+                    && Environment.OSVersion.Version.Build >= 22000;
+            }
+
+            if (ver == WindowsOS.Win10) {
+                return Environment.OSVersion.Version.Major == 10
+                    && Environment.OSVersion.Version.Build < 22000;
+            }
+
+            if (ver == WindowsOS.Win10OrLater) {
+                return Environment.OSVersion.Version.Major >= 10;
+            }
+
+            if (ver == WindowsOS.Win7) {
+                return Environment.OSVersion.Version.Major == 6
+                    && Environment.OSVersion.Version.Minor == 1;
+            }
+
+            return false;
         }
 
         #endregion

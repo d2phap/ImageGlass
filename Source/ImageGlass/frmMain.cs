@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2021 DUONG DIEU PHAP
+Copyright (C) 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -29,10 +29,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using FileWatcherEx;
 using ImageGlass.Base;
 using ImageGlass.Library;
@@ -49,6 +47,7 @@ using ImageMagick;
 
 namespace ImageGlass {
     public partial class frmMain: Form {
+
         public frmMain() {
             InitializeComponent();
 
@@ -70,6 +69,10 @@ namespace ImageGlass {
             // Fix disk thrashing
             thumbnailBar.MetadataCacheEnabled = false;
 
+            // apply Windows 11 Corner API
+            CornerApi.ApplyCorner(mnuMain.Handle);
+            CornerApi.ApplyCorner(mnuContext.Handle);
+            CornerApi.ApplyCorner(mnuShortcut.Handle);
         }
 
 
@@ -698,9 +701,11 @@ namespace ImageGlass {
 
 
             try {
-                // apply Color Management settings
+                // apply image list settings
                 Local.ImageList.IsApplyColorProfileForAll = Configs.IsApplyColorProfileForAll;
                 Local.ImageList.ColorProfileName = Configs.ColorProfile;
+                Local.ImageList.UseRawThumbnail = Configs.IsUseRawThumbnail;
+                Local.ImageList.SinglePageFormats = Configs.SinglePageFormats;
 
                 // put app in a 'busy' state around image load: allows us to prevent the user
                 // from skipping past a slow-to-load image by processing too many arrow clicks
@@ -718,7 +723,10 @@ namespace ImageGlass {
                         await bmpImg.LoadAsync(
                             colorProfileName: Configs.ColorProfile,
                             isApplyColorProfileForAll: Configs.IsApplyColorProfileForAll,
-                            channel: (int)Local.Channels);
+                            channel: (int)Local.Channels,
+                            useRawThumbnail: Local.ImageList.UseRawThumbnail,
+                            forceLoadFirstPage: Configs.SinglePageFormats.Contains(bmpImg.Extension)
+                            );
                     }
                     else {
                         bmpImg = await Local.ImageList.GetImgAsync(
@@ -1221,7 +1229,7 @@ namespace ImageGlass {
             #endregion
 
 
-            //Goto the first Image
+            // Goto the first Image
             #region HOME
             if (!_isWindowsKeyPressed && e.KeyValue == 36 &&
                 !e.Control && !e.Shift && !e.Alt) {
@@ -1309,14 +1317,27 @@ namespace ImageGlass {
             #endregion
 
 
+            // Alt
+            #region Alt + ...
+            if (e.Alt && !e.Shift && !e.Control) {
+
+                // Alt+F: Open main menu
+                if (e.KeyCode == Keys.F) {
+                    mnuMain.Show(toolMain, toolMain.Width - mnuMain.Width, toolMain.Height);
+
+                    return;
+                }
+            }
+            #endregion
+
+
             // Without Modifiers keys 
             #region Without Modifiers keys
             if (hasNoMods) {
-                // Show main menu
+                // Toggle Window on Top
                 if (e.KeyValue == 192) // `
                 {
-                    mnuMain.Show(toolMain, toolMain.Width - mnuMain.Width, toolMain.Height);
-
+                    mnuMainAlwaysOnTop.PerformClick();
                     return;
                 }
 
@@ -1390,6 +1411,12 @@ namespace ImageGlass {
                 // Exif tool
                 if (e.KeyCode == Keys.X) {
                     mnuExifTool.PerformClick();
+                    return;
+                }
+
+                // Custom zoom
+                if (e.KeyCode == Keys.Z) {
+                    mnuCustomZoom_Click(null, null);
                     return;
                 }
 
@@ -1502,7 +1529,7 @@ namespace ImageGlass {
             #endregion
 
             #region change size of menu items
-            var newMenuIconHeight = DPIScaling.Transform((int)Constants.MENU_ICON_HEIGHT);
+            var newMenuIconHeight = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
 
             mnuMainOpenFile.Image =
                 mnuMainZoomIn.Image =
@@ -1961,6 +1988,8 @@ namespace ImageGlass {
             picMain.Text = "";
             Local.IsTempMemoryData = true;
 
+            ApplyZoomMode(Configs.ZoomMode);
+
             SetStatusBar();
         }
 
@@ -2063,7 +2092,7 @@ namespace ImageGlass {
 
             var newMenuIconHeight = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
 
-            // add new items
+            // add ImageOrderBy items
             foreach (var order in Enum.GetValues(typeof(ImageOrderBy))) {
                 var orderName = Enum.GetName(typeof(ImageOrderBy), order);
                 var mnu = new ToolStripRadioButtonMenuItem() {
@@ -2078,8 +2107,25 @@ namespace ImageGlass {
                 mnu.Click += MnuLoadingOrderItem_Click;
                 mnuLoadingOrder.DropDown.Items.Add(mnu);
             }
-        }
 
+            mnuLoadingOrder.DropDown.Items.Add(new ToolStripSeparator());
+
+            // add ImageOrderType items
+            foreach (var orderType in Enum.GetValues(typeof(ImageOrderType))) {
+                var typeName = Enum.GetName(typeof(ImageOrderType), orderType);
+                var mnu = new ToolStripRadioButtonMenuItem() {
+                    Text = Configs.Language.Items[$"_.{nameof(ImageOrderType)}._{typeName}"],
+                    Tag = orderType,
+                    CheckOnClick = true,
+                    Checked = (int)orderType == (int)Configs.ImageLoadingOrderType,
+                    ImageScaling = ToolStripItemImageScaling.None,
+                    Image = new Bitmap(newMenuIconHeight, newMenuIconHeight)
+                };
+
+                mnu.Click += MnuLoadingOrderTypeItem_Click;
+                mnuLoadingOrder.DropDown.Items.Add(mnu);
+            }
+        }
 
         private void MnuLoadingOrderItem_Click(object sender, EventArgs e) {
             var mnu = sender as ToolStripMenuItem;
@@ -2096,6 +2142,23 @@ namespace ImageGlass {
                 LoadLoadingOrderMenuItems();
             }
         }
+
+        private void MnuLoadingOrderTypeItem_Click(object sender, EventArgs e) {
+            var mnu = sender as ToolStripMenuItem;
+            var selectedType = (ImageOrderType)(int)mnu.Tag;
+
+
+            if (selectedType != Configs.ImageLoadingOrderType) {
+                Configs.ImageLoadingOrderType = selectedType;
+
+                // reload image list
+                MnuMainReloadImageList_Click(null, null);
+
+                // reload the state
+                LoadLoadingOrderMenuItems();
+            }
+        }
+
 
         /// <summary>
         /// Load toolbar configs and update the buttons
@@ -2215,6 +2278,7 @@ namespace ImageGlass {
             var gap = DPIScaling.Transform(20);
             var text = TimeSpan.FromSeconds(_slideshowCountdown).ToString("mm':'ss");
 
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             using var textBrush = new SolidBrush(Color.FromArgb(150, Theme.InvertBlackAndWhiteColor(picMain.BackColor)));
             var font = new Font(this.Font.FontFamily, 30f);
@@ -2230,8 +2294,10 @@ namespace ImageGlass {
             var fontY = bgY + (bgSize.Height / 2) - (fontSize.Height / 2);
 
             // draw background
+            var borderRadius = Helpers.IsOS(WindowsOS.Win11) ? 10 : 1;
             using var bgBrush = new SolidBrush(Color.FromArgb(150, picMain.BackColor));
-            e.Graphics.FillRectangle(bgBrush, bgX, bgY, bgSize.Width, bgSize.Height);
+            using var path = Theme.GetRoundRectanglePath(new RectangleF(bgX, bgY, bgSize.Width, bgSize.Height), borderRadius);
+            e.Graphics.FillPath(bgBrush, path);
 
             // draw countdown text
             e.Graphics.DrawString(text, font, textBrush, fontX, fontY);
@@ -2508,11 +2574,15 @@ namespace ImageGlass {
         private void ApplyTheme(bool changeBackground = false) {
             var th = Configs.Theme;
 
+            // ThumbnailBar Renderer must be done BEFORE loading theme
+            var thumbBarTheme = new ModernThumbnailRenderer(th);
+            thumbnailBar.SetRenderer(thumbBarTheme);
+
             // Apply theme
             Configs.ApplyFormTheme(this, Configs.Theme);
 
             // Remove white line under tool strip
-            toolMain.Renderer = new UI.Renderers.ToolStripRenderer(th.ToolbarBackgroundColor, th.TextInfoColor);
+            toolMain.Renderer = new ModernToolStripRenderer(th);
 
             if (changeBackground) {
                 // User is changing theme. Override BackgroundColor setting.
@@ -2537,6 +2607,7 @@ namespace ImageGlass {
             mnuMain.Renderer =
                 mnuShortcut.Renderer =
                 mnuContext.Renderer = new ModernMenuRenderer(th);
+
 
             // <toolbar_icon>
             LoadToolbarIcons();
@@ -2618,9 +2689,6 @@ namespace ImageGlass {
         private void LoadConfig(bool @isLoadUI = false, bool @isLoadOthers = true) {
             #region UI SETTINGS
             if (isLoadUI) {
-                // ThumbnailBar Renderer must be done BEFORE loading theme
-                var thumbBarTheme = new ImageListView.ImageListViewRenderers.ThemeRenderer();
-                thumbnailBar.SetRenderer(thumbBarTheme);
                 ApplyTheme();
 
                 // Show checkerboard
@@ -2822,8 +2890,9 @@ namespace ImageGlass {
         /// </summary>
         /// <param name="enabled"></param>
         /// <param name="changeWindowState"></param>
-        /// <param name="onlyShowViewer">Hide all layouts except main viewer</param>
-        private void FullScreenMode(bool enabled = true, bool changeWindowState = true, bool onlyShowViewer = false) {
+        /// <param name="hideToolbar">Hide Toolbar</param>
+        /// <param name="hideThumbnailBar">Hide Thumbnail bar</param>
+        private void SetFullScreenMode(bool enabled = true, bool changeWindowState = true, bool hideToolbar = false, bool hideThumbnailBar = false) {
             // full screen
             if (enabled) {
                 SaveConfig(windowStateOnly: true);
@@ -2840,8 +2909,10 @@ namespace ImageGlass {
                 mnuFrameless_Click(null, null);
 
                 // save last state of layout
-                if (onlyShowViewer) {
+                if (hideToolbar) {
                     _isShowToolbar = Configs.IsShowToolBar;
+                }
+                if (hideThumbnailBar) {
                     _isShowThumbnail = Configs.IsShowThumbnail;
                 }
 
@@ -2852,12 +2923,13 @@ namespace ImageGlass {
                 }
 
                 // Hide toolbar
-                if (onlyShowViewer) {
+                if (hideToolbar) {
                     toolMain.Visible = false;
                     Configs.IsShowToolBar = false;
                     mnuMainToolbar.Checked = false;
-
-                    // hide thumbnail
+                }
+                // hide thumbnail
+                if (hideThumbnailBar) {
                     Configs.IsShowThumbnail = true;
                     mnuMainThumbnailBar_Click(null, null);
                 }
@@ -2873,8 +2945,10 @@ namespace ImageGlass {
             // exit full screen
             else {
                 // restore last state of toolbar
-                if (onlyShowViewer) {
+                if (hideToolbar) {
                     Configs.IsShowToolBar = _isShowToolbar;
+                }
+                if (hideThumbnailBar) {
                     Configs.IsShowThumbnail = _isShowThumbnail;
                 }
 
@@ -2901,18 +2975,15 @@ namespace ImageGlass {
                     mnuFrameless_Click(null, null);
                 }
 
-                if (onlyShowViewer) {
-                    if (Configs.IsShowToolBar) {
-                        //Show toolbar
-                        toolMain.Visible = true;
-                        mnuMainToolbar.Checked = true;
-                    }
-
-                    if (Configs.IsShowThumbnail) {
-                        //Show thumbnail
-                        Configs.IsShowThumbnail = false;
-                        mnuMainThumbnailBar_Click(null, null);
-                    }
+                if (hideToolbar && Configs.IsShowToolBar) {
+                    // Show toolbar
+                    toolMain.Visible = true;
+                    mnuMainToolbar.Checked = true;
+                }
+                if (hideThumbnailBar && Configs.IsShowThumbnail) {
+                    // Show thumbnail
+                    Configs.IsShowThumbnail = false;
+                    mnuMainThumbnailBar_Click(null, null);
                 }
 
                 // restore WindowFit mode state
@@ -3191,6 +3262,7 @@ namespace ImageGlass {
                 mnuMainZoom.Text = lang[$"{Name}.{nameof(mnuMainZoom)}"];
                 mnuMainZoomIn.Text = lang[$"{Name}.{nameof(mnuMainZoomIn)}"];
                 mnuMainZoomOut.Text = lang[$"{Name}.{nameof(mnuMainZoomOut)}"];
+                mnuCustomZoom.Text = lang[$"{Name}.{nameof(mnuCustomZoom)}"];
                 mnuMainScaleToFit.Text = lang[$"{Name}.{nameof(mnuMainScaleToFit)}"];
                 mnuMainScaleToFill.Text = lang[$"{Name}.{nameof(mnuMainScaleToFill)}"];
                 mnuMainActualSize.Text = lang[$"{Name}.{nameof(mnuMainActualSize)}"];
@@ -3316,7 +3388,7 @@ namespace ImageGlass {
                 btnCheckedBackground.ToolTipText = mnuMainCheckBackground.Text + $" ({mnuMainCheckBackground.ShortcutKeyDisplayString})";
                 btnConvert.ToolTipText = mnuMainSaveAs.Text + $" ({mnuMainSaveAs.ShortcutKeyDisplayString})";
                 btnPrintImage.ToolTipText = mnuMainPrint.Text + $" ({mnuMainPrint.ShortcutKeyDisplayString})";
-                btnMenu.ToolTipText = lang[$"{Name}.{nameof(btnMenu)}"];
+                btnMenu.ToolTipText = lang[$"{Name}.{nameof(btnMenu)}"] + " (Alt+F)";
 
 
                 #endregion
@@ -4035,8 +4107,13 @@ namespace ImageGlass {
         private void OpenShortcutMenu(ToolStripMenuItem parentMenu) {
             mnuShortcut.Items.Clear();
 
-            foreach (ToolStripRadioButtonMenuItem item in parentMenu.DropDownItems) {
-                mnuShortcut.Items.Add(UI.Menu.Clone(item));
+            foreach (ToolStripItem item in parentMenu.DropDownItems) {
+                if (item.GetType() == typeof(ToolStripSeparator)) {
+                    mnuShortcut.Items.Add(new ToolStripSeparator());
+                }
+                else {
+                    mnuShortcut.Items.Add(UI.Menu.Clone(item as ToolStripMenuItem));
+                }
             }
 
             mnuShortcut.Show(Cursor.Position);
@@ -4070,7 +4147,7 @@ namespace ImageGlass {
                 }
 
                 mnuContext.Items.Add(new ToolStripSeparator());
-                if (!Local.IsWindows7) {
+                if (!Helpers.IsOS(WindowsOS.Win7)) {
                     mnuContext.Items.Add(UI.Menu.Clone(mnuOpenWith));
                 }
 
@@ -4099,7 +4176,7 @@ namespace ImageGlass {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainSetAsDesktop));
 
                 // check if igcmdWin10.exe exists!
-                if (Local.IsWindows10 && File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
+                if (Helpers.IsOS(WindowsOS.Win10OrLater) && File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
                     mnuContext.Items.Add(UI.Menu.Clone(mnuMainSetAsLockImage));
                 }
             }
@@ -4189,10 +4266,8 @@ namespace ImageGlass {
                 // get image from Base64string 
                 else {
                     try {
-                        picMain.Image = Heart.Photo.ConvertBase64ToBitmap(text);
-                        Local.IsTempMemoryData = true;
-
-                        SetStatusBar();
+                        var img = Heart.Photo.ConvertBase64ToBitmap(text);
+                        LoadImageData(img);
                     }
                     catch (Exception ex) {
                         var msg = Configs.Language.Items[$"{Name}._InvalidImageClipboardData"];
@@ -4313,7 +4388,11 @@ namespace ImageGlass {
                 FileName = Path.GetFileNameWithoutExtension(currentFile),
                 RestoreDirectory = true,
             };
-            saveDialog.CustomPlaces.Add(Path.GetDirectoryName(currentFile));
+
+            // When saving image from clipboard, there is no path (issue #1075)
+            // In the window of time while IG is populating the image list, there is no path (issue #1055)
+            var path2 = string.IsNullOrEmpty(currentFile) ? currentFile : Path.GetDirectoryName(currentFile);
+            saveDialog.CustomPlaces.Add(path2);
 
 
             // Use the last-selected file extension, if available.
@@ -4508,7 +4587,10 @@ namespace ImageGlass {
                     btnFullScreen.Checked =
                     Configs.IsFullScreen = true;
 
-                FullScreenMode(enabled: true);
+                SetFullScreenMode(
+                    enabled: true,
+                    hideToolbar: Configs.IsHideToolbarInFullscreen,
+                    hideThumbnailBar: Configs.IsHideThumbnailBarInFullscreen);
 
                 ShowToastMsg(
                     string.Format(
@@ -4522,7 +4604,10 @@ namespace ImageGlass {
                     btnFullScreen.Checked =
                     Configs.IsFullScreen = false;
 
-                FullScreenMode(enabled: false);
+                SetFullScreenMode(
+                    enabled: false,
+                    hideToolbar: Configs.IsHideToolbarInFullscreen,
+                    hideThumbnailBar: Configs.IsHideThumbnailBarInFullscreen);
             }
         }
 
@@ -4536,7 +4621,11 @@ namespace ImageGlass {
                 picMain.BackColor = Color.Black;
 
                 // enter full screen
-                FullScreenMode(enabled: true, changeWindowState: !Configs.IsFullScreen, onlyShowViewer: true);
+                SetFullScreenMode(
+                    enabled: true,
+                    changeWindowState: !Configs.IsFullScreen,
+                    hideToolbar: true,
+                    hideThumbnailBar: true);
 
                 //perform slideshow
                 timSlideShow.Enabled = true;
@@ -4574,7 +4663,11 @@ namespace ImageGlass {
             picMain.BackColor = Configs.BackgroundColor;
 
             // exit full screen
-            FullScreenMode(enabled: false, changeWindowState: !Configs.IsFullScreen, onlyShowViewer: true);
+            SetFullScreenMode(
+                enabled: false,
+                changeWindowState: !Configs.IsFullScreen,
+                hideToolbar: true,
+                hideThumbnailBar: true);
         }
 
         private void mnuMainPrint_Click(object sender, EventArgs e) {
@@ -4590,25 +4683,19 @@ namespace ImageGlass {
                 // save image to temp file
                 fileToPrint = SaveTemporaryMemoryData();
             }
-
-            void PrintImage(string filename) {
-                using var p = new Process();
-                p.StartInfo.FileName = filename;
-                p.StartInfo.Verb = "print";
-                p.StartInfo.UseShellExecute = true;
-
-                // show error dialog
-                p.StartInfo.ErrorDialog = false;
-
-                p.Start();
+            // rename ext FAX -> TIFF to multipage printing
+            else if (Path.GetExtension(currentFile).ToUpperInvariant() == ".FAX") {
+                fileToPrint = App.ConfigDir(PathType.File, Dir.Temporary, Path.GetFileNameWithoutExtension(currentFile) + ".tiff");
+                File.Copy(currentFile, fileToPrint, true);
             }
 
+
             try {
-                PrintImage(fileToPrint);
+                PrintService.OpenPrintPictures(fileToPrint);
             }
             catch {
                 fileToPrint = SaveTemporaryMemoryData();
-                PrintImage(fileToPrint);
+                PrintService.OpenPrintPictures(fileToPrint);
             }
         }
 
@@ -4694,6 +4781,24 @@ namespace ImageGlass {
             }
 
             picMain.ZoomOut();
+        }
+
+        private void mnuCustomZoom_Click(object sender, EventArgs e) {
+            if (picMain.Image == null) {
+                return;
+            }
+
+            if (InputBox.ShowDialog(
+                theme: Configs.Theme,
+                title: Configs.Language.Items[$"{Name}.{nameof(mnuCustomZoom)}"],
+                message: Configs.Language.Items[$"{Name}.{nameof(mnuCustomZoom)}._Text"],
+                defaultValue: picMain.Zoom.ToString(),
+                isNumberOnly: true,
+                topMost: this.TopMost,
+                filterOnKeyPressed: true) == DialogResult.OK) {
+                picMain.Zoom = Convert.ToSingle(InputBox.Message);
+                picMain.CenterToImage();
+            }
         }
 
         private void mnuMainActualSize_Click(object sender, EventArgs e) {
@@ -4894,7 +4999,7 @@ namespace ImageGlass {
         }
 
         private async void mnuMainSetAsLockImage_Click(object sender, EventArgs e) {
-            if (!Local.IsWindows10)
+            if (!Helpers.IsOS(WindowsOS.Win10OrLater))
                 return; // Do nothing - running Windows 8 or earlier
 
             var isError = false;
@@ -5234,11 +5339,11 @@ namespace ImageGlass {
                 mnuMainExtractPages.Text = string.Format(Configs.Language.Items[$"{Name}.mnuMainExtractPages"], Local.CurrentPageCount);
 
                 // check if igcmdWin10.exe exists!
-                if (!Local.IsWindows10 || !File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
+                if (!Helpers.IsOS(WindowsOS.Win10OrLater) || !File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
                     mnuMainSetAsLockImage.Enabled = false;
                 }
 
-                if (Local.IsWindows7) {
+                if (Helpers.IsOS(WindowsOS.Win7)) {
                     mnuOpenWith.Enabled = false;
                 }
 
@@ -5260,6 +5365,9 @@ namespace ImageGlass {
             if (!mnuItem.HasDropDownItems) {
                 return; // not a drop down item
             }
+
+            // apply corner
+            CornerApi.ApplyCorner(mnuItem.DropDown.Handle);
 
             mnuItem.DropDown.BackColor = Configs.Theme.MenuBackgroundColor;
 
@@ -5294,8 +5402,11 @@ namespace ImageGlass {
         }
 
 
+
         #endregion
 
         
     }
+
+
 }

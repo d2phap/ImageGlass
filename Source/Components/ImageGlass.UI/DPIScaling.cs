@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2021 DUONG DIEU PHAP
+Copyright (C) 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -118,7 +118,7 @@ namespace ImageGlass.UI {
         /// </summary>
         /// <param name="toolbar">The toolbar to update</param>
         /// <param name="iconHeight">The height of toolbar icons</param>
-        public static void TransformToolbar(ref ToolStripToolTip toolbar, int iconHeight) {
+        public static void TransformToolbar(ref ModernToolbar toolbar, int iconHeight) {
             // The base height of toolbar
             var baseHeight = iconHeight * 2;
 

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2021 DUONG DIEU PHAP
+Copyright (C) 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -48,7 +48,7 @@ namespace ImageGlass {
 
 
         // default location offset on the parent form
-        private static readonly Point DefaultLocationOffset = new Point(DPIScaling.Transform(20), DPIScaling.Transform(320));
+        private static readonly Point DefaultLocationOffset = new(DPIScaling.Transform(20), DPIScaling.Transform(320));
 
 
 
@@ -101,7 +101,7 @@ namespace ImageGlass {
             SetColors(Configs.Theme);
 
             // Remove white line under tool strip
-            toolPageNav.Renderer = new UI.Renderers.ToolStripRenderer(Configs.Theme.ToolbarBackgroundColor, Configs.Theme.TextInfoColor);
+            toolPageNav.Renderer = new UI.Renderers.ModernToolStripRenderer(Configs.Theme);
 
             toolPageNav.BackgroundImage = Configs.Theme.ToolbarBackgroundImage.Image;
             toolPageNav.BackColor = Configs.Theme.ToolbarBackgroundColor;

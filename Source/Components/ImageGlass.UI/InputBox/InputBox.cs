@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2021 DUONG DIEU PHAP
+Copyright (C) 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -31,10 +31,10 @@ namespace ImageGlass.UI {
         /// <summary>
         /// Character filter for numbers: disallow non-numeric characters
         /// </summary>
-        /// <param name="keyval"></param>
+        /// <param name="key"></param>
         /// <returns></returns>
-        private static bool NumberFilter(char keyval) {
-            return char.IsDigit(keyval) || keyval == (char)Keys.Back;
+        private static bool NumberFilter(char key) {
+            return char.IsDigit(key) || key == '.' || key == (char)Keys.Back;
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2021 DUONG DIEU PHAP
+Copyright (C) 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -67,7 +67,10 @@ namespace ImageGlass.UI {
             }
 
             try {
-                Image = Photo.Load(Filename, new Size(Height, Height)).Image;
+                Image = Photo.Load(Filename,
+                    size: new(Height, Height),
+                    forceLoadFirstPage: true)
+                    .Image;
             }
             catch { }
         }

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2021 DUONG DIEU PHAP
+Copyright (C) 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@ using Ionic.Zip;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -420,44 +421,44 @@ namespace ImageGlass.UI {
             ToolbarBackgroundImage = LoadThemeImage(dir, n, "topbar", iconHeight);
 
             var color = FetchColorAttribute(n, "topbarcolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 ToolbarBackgroundColor = color;
             }
 
             ThumbnailBackgroundImage = LoadThemeImage(dir, n, "bottombar", iconHeight);
 
             color = FetchColorAttribute(n, "bottombarcolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 ThumbnailBackgroundColor = color;
             }
 
             color = FetchColorAttribute(n, "backcolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 BackgroundColor = color;
             }
 
             color = FetchColorAttribute(n, "statuscolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 TextInfoColor = color;
             }
 
             color = FetchColorAttribute(n, "menubackgroundcolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 MenuBackgroundColor = color;
             }
 
             color = FetchColorAttribute(n, "menubackgroundhovercolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 MenuBackgroundHoverColor = color;
             }
 
-            color = FetchColorAttribute(n, "menutextcolor");
-            if (color != Color.Transparent) {
+            color = FetchColorAttribute(n, "menutextcolor", Color.Black);
+            if (color != default) {
                 MenuTextColor = color;
             }
 
-            color = FetchColorAttribute(n, "menutexthovercolor");
-            if (color != Color.Transparent) {
+            color = FetchColorAttribute(n, "menutexthovercolor", Color.White);
+            if (color != default) {
                 MenuTextHoverColor = color;
             }
 
@@ -479,17 +480,17 @@ namespace ImageGlass.UI {
 
             // v8.0: Accent colors
             color = FetchColorAttribute(n, "accentcolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 AccentColor = color;
             }
 
             color = FetchColorAttribute(n, "accentlightcolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 AccentLightColor = color;
             }
 
             color = FetchColorAttribute(n, "accentdarkcolor");
-            if (color != Color.Transparent) {
+            if (color != default) {
                 AccentDarkColor = color;
             }
 
@@ -566,7 +567,7 @@ namespace ImageGlass.UI {
 
             // Fetch a color attribute value from the theme config file.
             // Returns: a Color value if valid; Color.Transparent if an error
-            static Color FetchColorAttribute(XmlElement xmlElement, string attribute) {
+            static Color FetchColorAttribute(XmlElement xmlElement, string attribute, Color defaultValue = default) {
                 try {
                     var colorString = xmlElement.GetAttribute(attribute);
 
@@ -580,7 +581,7 @@ namespace ImageGlass.UI {
                     // ignored
                 }
 
-                return Color.Transparent;
+                return defaultValue; // Color.Transparent;
             }
         }
 
@@ -1016,6 +1017,54 @@ namespace ImageGlass.UI {
         public static Color LightnessColor(Color color, float factor) {
             factor = MinMax(factor, -1f, 1f);
             return factor < 0f ? DarkenColor(color, -factor) : LightenColor(color, factor);
+        }
+
+
+        /// <summary>
+        /// Gets rounded rectangle graphic path
+        /// </summary>
+        /// <param name="bounds">Input rectangle</param>
+        /// <param name="radius">Border radius</param>
+        /// <returns></returns>
+        public static GraphicsPath GetRoundRectanglePath(RectangleF bounds, int radius) {
+            var diameter = radius * 2;
+            var size = new Size(diameter, diameter);
+            var arc = new RectangleF(bounds.Location, size);
+            var path = new GraphicsPath();
+
+            if (radius == 0) {
+                path.AddRectangle(bounds);
+                return path;
+            }
+
+            // top left arc  
+            path.AddArc(arc, 180, 90);
+
+            // top right arc  
+            arc.X = bounds.Right - diameter;
+            path.AddArc(arc, 270, 90);
+
+            // bottom right arc  
+            arc.Y = bounds.Bottom - diameter;
+            path.AddArc(arc, 0, 90);
+
+            // bottom left arc 
+            arc.X = bounds.Left;
+            path.AddArc(arc, 90, 90);
+
+            path.CloseFigure();
+            return path;
+        }
+
+
+        /// <summary>
+        /// Gets rounded rectangle graphic path
+        /// </summary>
+        /// <param name="bounds">Input rectangle</param>
+        /// <param name="radius">Border radius</param>
+        /// <returns></returns>
+        public static GraphicsPath GetRoundRectanglePath(Rectangle bounds, int radius) {
+            return GetRoundRectanglePath(new RectangleF(bounds.Location, bounds.Size), radius);
         }
 
         private static float MinMax(float value, float min, float max) {

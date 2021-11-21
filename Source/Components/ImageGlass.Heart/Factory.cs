@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2021 DUONG DIEU PHAP
+Copyright (C) 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 
 namespace ImageGlass.Heart {
     public sealed class Factory: IDisposable {
+
         #region PRIVATE PROPERTIES
 
         /// <summary>
@@ -90,6 +91,11 @@ namespace ImageGlass.Heart {
         }
 
         /// <summary>
+        /// Gets, sets the list of formats that only load the first page forcefully
+        /// </summary>
+        public HashSet<string> SinglePageFormats { get; set; } = new();
+
+        /// <summary>
         /// Gets, sets the number of maximum items in queue list for 1 direction (Next or Back navigation).
         /// The maximum number of items in queue list is 2x + 1.
         /// </summary>
@@ -99,6 +105,11 @@ namespace ImageGlass.Heart {
         /// Gets, sests the value indicates that returns the embedded thumbnail if found.
         /// </summary>
         public bool UseEmbeddedThumbnail { get; set; } = false;
+
+        /// <summary>
+        /// Gets, sets the value indicates that returns the RAW embedded thumbnail if found.
+        /// </summary>
+        public bool UseRawThumbnail { get; set; } = true;
 
         public delegate void FinishLoadingImageHandler(object sender, EventArgs e);
         public event EventHandler<EventArgs> OnFinishLoadingImage;
@@ -208,7 +219,9 @@ namespace ImageGlass.Heart {
                             colorProfileName: ColorProfileName,
                             isApplyColorProfileForAll: IsApplyColorProfileForAll,
                             channel: Channels,
-                            useEmbeddedThumbnail: UseEmbeddedThumbnail
+                            useEmbeddedThumbnail: UseEmbeddedThumbnail,
+                            useRawThumbnail: UseRawThumbnail,
+                            forceLoadFirstPage: SinglePageFormats.Contains(img.Extension)
                         ).ConfigureAwait(true);
                     }
                 }
@@ -251,7 +264,9 @@ namespace ImageGlass.Heart {
                     colorProfileName: ColorProfileName,
                     isApplyColorProfileForAll: IsApplyColorProfileForAll,
                     channel: Channels,
-                    useEmbeddedThumbnail: UseEmbeddedThumbnail
+                    useEmbeddedThumbnail: UseEmbeddedThumbnail,
+                    useRawThumbnail: UseRawThumbnail,
+                    forceLoadFirstPage: SinglePageFormats.Contains(ImgList[index].Extension)
                 ).ConfigureAwait(true);
             }
             // get image data from cache
@@ -310,6 +325,17 @@ namespace ImageGlass.Heart {
             if (ImgList[index] != null) {
                 ImgList[index].Filename = filename;
             }
+        }
+
+        /// <summary>
+        /// Gets file extension. Ex: .jpg
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public string GetFileExtension(int index) {
+            var filename = GetFileName(index);
+
+            return Path.GetExtension(filename);
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2021 DUONG DIEU PHAP
+Copyright (C) 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Threading.Tasks;
 using ImageMagick;
 
@@ -42,6 +43,11 @@ namespace ImageGlass.Heart {
         /// Gets, sets filename of Img
         /// </summary>
         public string Filename { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets file extension. Ex: .jpg
+        /// </summary>
+        public string Extension => Path.GetExtension(this.Filename);
 
         /// <summary>
         /// Gets, sets Bitmap data
@@ -103,7 +109,14 @@ namespace ImageGlass.Heart {
         /// <param name="isApplyColorProfileForAll">If FALSE, only the images with embedded profile will be applied</param>
         /// <param name="channel">MagickImage.Channel value</param>
         /// <param name="useEmbeddedThumbnail">Use the embeded thumbnail if found</param>
-        public async Task LoadAsync(Size size = new Size(), string colorProfileName = "", bool isApplyColorProfileForAll = false, int channel = -1, bool useEmbeddedThumbnail = false) {
+        public async Task LoadAsync(
+            Size size = new Size(),
+            string colorProfileName = "",
+            bool isApplyColorProfileForAll = false,
+            int channel = -1,
+            bool useEmbeddedThumbnail = false,
+            bool useRawThumbnail = true,
+            bool forceLoadFirstPage = false) {
             // reset done status
             IsDone = false;
 
@@ -118,7 +131,9 @@ namespace ImageGlass.Heart {
                     colorProfileName: colorProfileName,
                     isApplyColorProfileForAll: isApplyColorProfileForAll,
                     channel: channel,
-                    useEmbeddedThumbnail: useEmbeddedThumbnail
+                    useEmbeddedThumbnail: useEmbeddedThumbnail,
+                    useRawThumbnail: useRawThumbnail,
+                    forceLoadFirstPage: forceLoadFirstPage
                 ).ConfigureAwait(true);
 
                 Image = data.Image;

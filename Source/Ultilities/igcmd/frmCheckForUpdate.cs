@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2021 DUONG DIEU PHAP
+Copyright (C) 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -46,13 +46,17 @@ namespace igcmd {
                 lnkUpdateReadMore.LinkColor =
                 lnkUpdateReadMore.VisitedLinkColor = Configs.Theme.AccentColor;
 
+            var iconPtr = Configs.Theme.Logo.Image.GetHicon();
+
             // Icon theming
             if (!Configs.Theme.IsShowTitlebarLogo) {
-                this.Icon = Icon.FromHandle(new Bitmap(48, 48).GetHicon());
-                FormIcon.SetTaskbarIcon(this, Configs.Theme.Logo.Image.GetHicon());
+                using var icon = Icon.FromHandle(new Bitmap(48, 48).GetHicon());
+                this.Icon = icon;
+                FormIcon.SetTaskbarIcon(this, iconPtr);
             }
             else {
-                this.Icon = Icon.FromHandle(Configs.Theme.Logo.Image.GetHicon());
+                using var icon = Icon.FromHandle(iconPtr);
+                this.Icon = icon;
             }
         }
 
@@ -89,7 +93,7 @@ namespace igcmd {
                     .Append("Size: ")
                     .Append(up.Info.Size)
                     .Append("\r\n")
-                    .Append("Publish date: ")
+                    .Append("Published date: ")
                     .AppendFormat("{0:MMM d, yyyy HH:mm:ss}", up.Info.PublishDate)
                     .AppendLine();
 

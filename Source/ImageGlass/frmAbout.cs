@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2021 DUONG DIEU PHAP
+Copyright (C) 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -35,12 +35,11 @@ namespace ImageGlass {
         }
 
         private void LoadTheme() {
-            // load theme colors
-            lblAppName.ForeColor = Configs.Theme.AccentDarkColor;
-            lblCodeName.ForeColor = Configs.Theme.AccentColor;
-
             // Logo
             picLogo.Image = Configs.Theme.Logo.Image;
+
+            lblAppName.ForeColor = Configs.Theme.AccentColor;
+            lblCodeName.ForeColor = Configs.Theme.AccentDarkColor;
 
             // Apply theme
             Configs.ApplyFormTheme(this, Configs.Theme);

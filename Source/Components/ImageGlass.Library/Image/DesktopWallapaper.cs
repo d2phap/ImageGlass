@@ -56,9 +56,9 @@ namespace ImageGlass.Library.Image {
         /// <param name="uri">Image filename</param>
         /// <param name="style">Style of wallpaper</param>
         public static void Set(Uri uri, Style style) {
-            var s = new System.Net.WebClient().OpenRead(uri.ToString());
+            using var s = new System.Net.WebClient().OpenRead(uri.ToString());
 
-            var img = System.Drawing.Image.FromStream(s);
+            using var img = System.Drawing.Image.FromStream(s);
             Set(img, style);
         }
 
@@ -115,10 +115,9 @@ namespace ImageGlass.Library.Image {
             // TODO use ImageMagick to load image
             var tempPath = Path.Combine(Path.GetTempPath(), "imageglass.bmp");
             try {
-                using (var img = System.Drawing.Image.FromFile(path)) {
-                    // SPI_SETDESKWALLPAPER will *only* work consistently if image is a Bitmap! (Issue #327)
-                    img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Bmp);
-                }
+                using var img = System.Drawing.Image.FromFile(path);
+                // SPI_SETDESKWALLPAPER will *only* work consistently if image is a Bitmap! (Issue #327)
+                img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Bmp);
             }
             catch {
                 // Couldn't open/save image file: Fail, and don't re-try

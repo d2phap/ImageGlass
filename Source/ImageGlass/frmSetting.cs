@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2021 DUONG DIEU PHAP
+Copyright (C) 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -225,6 +225,7 @@ namespace ImageGlass {
             chkShowHiddenImages.Text = lang[$"{Name}.{nameof(chkShowHiddenImages)}"];
             chkLoopViewer.Text = lang[$"{Name}.{nameof(chkLoopViewer)}"];
             chkIsCenterImage.Text = lang[$"{Name}.{nameof(chkIsCenterImage)}"];
+            chkIsUseRawThumbnail.Text = lang[$"{Name}.{nameof(chkIsUseRawThumbnail)}"];
             lblImageLoadingOrder.Text = lang[$"{Name}.{nameof(lblImageLoadingOrder)}"];
             chkUseFileExplorerSortOrder.Text = lang[$"{Name}.{nameof(chkUseFileExplorerSortOrder)}"];
             chkGroupByDirectory.Text = lang[$"{Name}.{nameof(chkGroupByDirectory)}"];
@@ -256,6 +257,10 @@ namespace ImageGlass {
             chkShowSlideshowCountdown.Text = lang[$"{Name}.{nameof(chkShowSlideshowCountdown)}"];
             lblSlideshowIntervalTo.Text = lang[$"{Name}.{nameof(lblSlideshowIntervalTo)}"];
             numSlideShowInterval_ValueChanged(null, null); // format interval value
+
+            lblHeadFullScreen.Text = lang[$"{Name}.{nameof(lblHeadFullScreen)}"];
+            chkHideToolbarInFullScreen.Text = lang[$"{Name}.{nameof(chkHideToolbarInFullScreen)}"];
+            chkHideThumbnailBarInFullScreen.Text = lang[$"{Name}.{nameof(chkHideThumbnailBarInFullScreen)}"];
 
             #endregion
 
@@ -541,6 +546,9 @@ namespace ImageGlass {
             // Set value of chkIsCenterImage
             chkIsCenterImage.Checked = Configs.IsCenterImage;
 
+            // Set value of IsUseRawThumbnail
+            chkIsUseRawThumbnail.Checked = Configs.IsUseRawThumbnail;
+
             // Set value of chkUseFileExplorerSortOrder
             chkUseFileExplorerSortOrder.Checked = Configs.IsUseFileExplorerSortOrder;
 
@@ -679,6 +687,10 @@ namespace ImageGlass {
             numSlideShowInterval.Value = Configs.SlideShowInterval;
             numSlideshowIntervalTo.Value = Configs.SlideShowIntervalTo;
             numSlideShowInterval_ValueChanged(null, null); // format interval value
+
+            // Full screen configs 
+            chkHideToolbarInFullScreen.Checked = Configs.IsHideToolbarInFullscreen;
+            chkHideThumbnailBarInFullScreen.Checked = Configs.IsHideThumbnailBarInFullscreen;
         }
 
         private void chkRandomSlideshowInterval_CheckedChanged(object sender, EventArgs e) {
@@ -1911,6 +1923,9 @@ namespace ImageGlass {
                 Local.ForceUpdateActions |= ForceUpdateActions.OTHER_SETTINGS;
             }
 
+            Configs.IsUseRawThumbnail =
+                Local.ImageList.UseRawThumbnail = chkIsUseRawThumbnail.Checked;
+
             #region ImageLoadingOrder: MainFormForceUpdateAction.IMAGE_LIST
             newInt = cmbImageOrder.SelectedIndex;
 
@@ -2038,6 +2053,10 @@ namespace ImageGlass {
 
             Configs.SlideShowInterval = (uint)numSlideShowInterval.Value;
             Configs.SlideShowIntervalTo = (uint)numSlideshowIntervalTo.Value;
+
+            // Full screen
+            Configs.IsHideToolbarInFullscreen = chkHideToolbarInFullScreen.Checked;
+            Configs.IsHideThumbnailBarInFullscreen = chkHideThumbnailBarInFullScreen.Checked;
 
             #endregion
 

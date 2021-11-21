@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2021 DUONG DIEU PHAP
+Copyright (C) 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -69,7 +69,7 @@ namespace ImageGlass.Library {
             LangName = "Local name of the language";
             Author = "ImageGlass community";
             Description = "English name of language";
-            MinVersion = "8.1.0.0";
+            MinVersion = "8.3.0.0";
             FileName = "";
             IsRightToLeftLayout = RightToLeft.No;
 
@@ -227,6 +227,8 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainZoom", "Zoom"); //v7.0
             Items.Add("frmMain.mnuMainZoomIn", "Zoom in"); //v3.0
             Items.Add("frmMain.mnuMainZoomOut", "Zoom out"); //v3.0
+            Items.Add("frmMain.mnuCustomZoom", "Custom zoom…"); // v8.3
+            Items.Add("frmMain.mnuCustomZoom._Text", "Enter a new zoom value"); // v8.3
             Items.Add("frmMain.mnuMainScaleToFit", "Scale to fit"); //v3.5
             Items.Add("frmMain.mnuMainScaleToFill", "Scale to fill"); //v7.5
             Items.Add("frmMain.mnuMainActualSize", "Actual size"); //v3.0
@@ -283,7 +285,7 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainSlideShowExit", "Exit slideshow"); //v3.0
             #endregion
 
-            Items.Add("frmMain.mnuMainShare", "Share…"); //v3.0
+            Items.Add("frmMain.mnuMainShare", "Share…"); // v3.0
 
             #region Layout
             Items.Add("frmMain.mnuMainLayout", "Layout"); //v3.0
@@ -301,7 +303,7 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuExifTool", "Exif tool"); // v8.0
             #endregion
 
-            Items.Add("frmMain.mnuMainSettings", "Settings…"); //v3.0
+            Items.Add("frmMain.mnuMainSettings", "Settings…"); // v3.0
 
             #region Help
             Items.Add("frmMain.mnuMainHelp", "Help"); //v7.0
@@ -317,9 +319,9 @@ namespace ImageGlass.Library {
             #endregion
 
             #region Form message texts
-            Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, corrupted or not supported.");// v2.0 beta, updated 4.0
-            Items.Add("frmMain._ImageNotExist", "The viewing image doesn't exist.");// v4.5
-            Items.Add("frmMain.btnMenu", "Menu (Hotkey: `)"); // v3.0
+            Items.Add("frmMain.picMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, corrupted or not supported."); // v2.0 beta, updated 4.0
+            Items.Add("frmMain._ImageNotExist", "The viewing image doesn't exist."); // v4.5
+            Items.Add("frmMain.btnMenu", "Main menu"); // v3.0
 
             Items.Add("frmMain._OpenFileDialog", "All supported files");
             Items.Add("frmMain._Files", "file(s)"); // v7.5
@@ -356,6 +358,7 @@ namespace ImageGlass.Library {
             Items.Add("frmMain._PageExtractComplete", "Page extraction completed."); // v7.5
             Items.Add("frmMain._Frameless", "Hold SHIFT to move the window."); // v7.5
             Items.Add("frmMain._InvalidImageClipboardData", "Clipboard does not contain image data."); // v8.0
+            
             #endregion
 
             #endregion
@@ -440,7 +443,7 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.chkShowHiddenImages", "Show hidden images"); //v4.5
             Items.Add("frmSetting.chkLoopViewer", "Loop back viewer to the first image when reaching the end of the list"); //v4.0
             Items.Add("frmSetting.chkIsCenterImage", "Center image on viewer"); //v7.0
-            // Items.Add("frmSetting.chkImageBoosterBack", "Turn on Image Booster when navigate back (need more ~20% RAM)"); //v2.0 final // removed 7.0
+            Items.Add("frmSetting.chkIsUseRawThumbnail", "Use embedded thumbnail for RAW formats"); //v8.3
 
             Items.Add("frmSetting.lblImageLoadingOrder", "Image loading order");
             Items.Add("frmSetting.chkUseFileExplorerSortOrder", "Use Windows File Explorer sort order if possible"); //v7.0
@@ -502,6 +505,12 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.chkRandomSlideshowInterval", "Use random interval"); // v7.6
             Items.Add("frmSetting.lblSlideshowInterval", "Slideshow interval: {0}");
             Items.Add("frmSetting.lblSlideshowIntervalTo", "to"); // v7.6
+            #endregion
+
+            #region Full screen
+            Items.Add("frmSetting.lblHeadFullScreen", "Full screen"); // v8.3
+            Items.Add("frmSetting.chkHideToolbarInFullScreen", "Hide toolbar"); // v8.3
+            Items.Add("frmSetting.chkHideThumbnailBarInFullScreen", "Hide thumbnail bar"); // v8.3
             #endregion
 
             #endregion

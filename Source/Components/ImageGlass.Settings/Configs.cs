@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2021 DUONG DIEU PHAP
+Copyright (C) 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -279,6 +279,21 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool IsUseEmptyTitleBar { get; set; } = false;
 
+        /// <summary>
+        /// Gets, sets value indicates that RAW thumbnail will be use if found
+        /// </summary>
+        public static bool IsUseRawThumbnail { get; set; } = false;
+
+        /// <summary>
+        /// Gets, sets value indicates that the toolbar should be hidden in Full screen mode
+        /// </summary>
+        public static bool IsHideToolbarInFullscreen { get; set; } = false;
+
+        /// <summary>
+        /// Gets, sets value indicates that the thumbnail bar should be hidden in Full screen mode
+        /// </summary>
+        public static bool IsHideThumbnailBarInFullscreen { get; set; } = false;
+
         #endregion
 
 
@@ -380,6 +395,11 @@ namespace ImageGlass.Settings {
         public static HashSet<string> AllFormats { get; set; } = new();
 
         /// <summary>
+        /// Gets, sets the list of formats that only load the first page forcefully
+        /// </summary>
+        public static HashSet<string> SinglePageFormats { get; set; } = new() { "*.heic;*.heif;*.psd;" };
+
+        /// <summary>
         /// Gets, sets the list of keycombo actions
         /// </summary>
         public static Dictionary<KeyCombos, AssignableActions> KeyComboActions = Constants.DefaultKeycomboActions;
@@ -388,6 +408,7 @@ namespace ImageGlass.Settings {
         /// Gets, sets the list of toolbar buttons
         /// </summary>
         public static List<ToolbarButton> ToolbarButtons { get; set; } = Constants.DefaultToolbarButtons;
+
 
         #endregion
 
@@ -598,6 +619,9 @@ namespace ImageGlass.Settings {
             IsHideTooltips = Get<bool>(nameof(IsHideTooltips), IsHideTooltips);
             IsExifToolAlwaysOnTop = Get<bool>(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
             IsUseEmptyTitleBar = Get<bool>(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
+            IsUseRawThumbnail = Get<bool>(nameof(IsUseRawThumbnail), IsUseRawThumbnail);
+            IsHideToolbarInFullscreen = Get<bool>(nameof(IsHideToolbarInFullscreen), IsHideToolbarInFullscreen);
+            IsHideThumbnailBarInFullscreen = Get<bool>(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
 
             #endregion
 
@@ -692,6 +716,9 @@ namespace ImageGlass.Settings {
 
             var formats = Get<string>(nameof(AllFormats), Constants.IMAGE_FORMATS);
             AllFormats = GetImageFormats(formats);
+
+            formats = Get<string>(nameof(SinglePageFormats), string.Join(";", SinglePageFormats));
+            SinglePageFormats = GetImageFormats(formats);
 
             #endregion
 
@@ -831,6 +858,9 @@ namespace ImageGlass.Settings {
             Set(nameof(IsHideTooltips), IsHideTooltips);
             Set(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
             Set(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
+            Set(nameof(IsUseRawThumbnail), IsUseRawThumbnail);
+            Set(nameof(IsHideToolbarInFullscreen), IsHideToolbarInFullscreen);
+            Set(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
 
             #endregion
 
@@ -882,6 +912,7 @@ namespace ImageGlass.Settings {
             Set(nameof(ZoomLevels), Helpers.IntArrayToString(ZoomLevels));
             Set(nameof(EditApps), GetEditApps(EditApps));
             Set(nameof(AllFormats), GetImageFormats(AllFormats));
+            Set(nameof(SinglePageFormats), GetImageFormats(SinglePageFormats));
             Set(nameof(KeyComboActions), GetKeyComboActions(KeyComboActions));
             Set(nameof(ToolbarButtons), GetToolbarButtons(ToolbarButtons));
 
@@ -973,7 +1004,7 @@ namespace ImageGlass.Settings {
             if (EditApps.Count > 0) {
                 return EditApps.Find(v =>
                     v.Extension.CompareTo(ext) == 0
-                    && v.AppPath.Length > 0);
+                    && v.AppPath?.Length > 0);
             }
 
             return null;
@@ -1165,7 +1196,7 @@ namespace ImageGlass.Settings {
             // load theme colors
             foreach (var ctr in Helpers.GetAllControls(frm, typeof(LinkLabel))) {
                 if (ctr is LinkLabel lnk) {
-                    lnk.LinkColor = lnk.VisitedLinkColor = th.AccentColor;
+                    lnk.LinkColor = lnk.VisitedLinkColor = Theme.AccentColor;
                 }
             }
 

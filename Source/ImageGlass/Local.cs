@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2021 DUONG DIEU PHAP
+Copyright (C) 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -32,10 +32,6 @@ namespace ImageGlass {
         private static frmPageNav _fPageNav;
         private static frmCrop _fCrop;
         private static FrmExifTool _fExifTool;
-
-        public static bool IsWindows10 => Environment.OSVersion.Version.Major >= 10;
-        public static bool IsWindows7 => Environment.OSVersion.Version.Major == 6
-            && Environment.OSVersion.Version.Minor == 1;
 
 
         #region Auto Properties

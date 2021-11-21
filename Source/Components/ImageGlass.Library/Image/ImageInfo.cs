@@ -147,13 +147,12 @@ namespace ImageGlass.Library.Image {
         public static string GetWxHSize(string filename) {
             try {
                 if (!string.Equals(Path.GetExtension(filename), ".ico", StringComparison.CurrentCultureIgnoreCase)) {
-                    using (var img = System.Drawing.Image.FromFile(filename)) {
-                        //get Width x Height
-                        return Convert.ToString(img.Width) + " x " + Convert.ToString(img.Height);
-                    }
+                    using var img = System.Drawing.Image.FromFile(filename);
+                    // get Width x Height
+                    return Convert.ToString(img.Width) + " x " + Convert.ToString(img.Height);
                 }
                 else {
-                    var ico = new Icon(filename);
+                    using var ico = new Icon(filename);
                     //get Width x Height
                     return Convert.ToString(ico.Width) + " x " + Convert.ToString(ico.Height);
                 }
@@ -174,22 +173,20 @@ namespace ImageGlass.Library.Image {
                 double v = 0;
 
                 if (!string.Equals(Path.GetExtension(filename), ".ico", StringComparison.CurrentCultureIgnoreCase)) {
-                    using (var img = System.Drawing.Image.FromFile(filename)) {
-                        //get HorizontalResolution 
-                        h = Math.Round((double)img.HorizontalResolution, 2);
+                    using var img = System.Drawing.Image.FromFile(filename);
+                    //get HorizontalResolution 
+                    h = Math.Round(img.HorizontalResolution, 2);
 
-                        //get VerticalResolution
-                        v = Math.Round((double)img.VerticalResolution, 2);
-                    }
+                    //get VerticalResolution
+                    v = Math.Round(img.VerticalResolution, 2);
                 }
                 else {
-                    using (var ico = new Icon(filename)) {
-                        //get HorizontalResolution 
-                        h = Math.Round(ico.ToBitmap().HorizontalResolution, 2);
+                    using var ico = new Icon(filename).ToBitmap();
+                    //get HorizontalResolution 
+                    h = Math.Round(ico.HorizontalResolution, 2);
 
-                        //get VerticalResolution
-                        v = Math.Round(ico.ToBitmap().VerticalResolution, 2);
-                    }
+                    //get VerticalResolution
+                    v = Math.Round(ico.VerticalResolution, 2);
                 }
 
                 return string.Format("{0} x {1}", h, v);
