@@ -1,5 +1,5 @@
 ﻿
-namespace ImageGlass;
+namespace ImageGlass.UI;
 
 public class Theme
 {
