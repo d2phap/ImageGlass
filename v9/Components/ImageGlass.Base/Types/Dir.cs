@@ -7,27 +7,30 @@ namespace ImageGlass.Base;
 public static class Dir
 {
     /// <summary>
-    /// Gets folder name of theme packs
-    /// </summary>
-    public static string Themes { get; } = "themes";
-
-    /// <summary>
-    /// Gets folder name of assets
-    /// </summary>
-    public static string Assets { get; } = "assets";
-
-    /// <summary>
     /// Gets folder name of language
     /// </summary>
-    public static string Langs { get; } = "langs";
+    public static string Codecs { get; } = "Codecs";
 
     /// <summary>
-    /// Gets folder name of language
+    /// Gets the Themes folder name
     /// </summary>
-    public static string Codecs { get; } = "codecs";
+    public static string Themes { get; } = "Themes";
 
     /// <summary>
-    /// Gets folder name of temporary
+    /// Gets the Languages folder name
     /// </summary>
-    public static string Temp { get; } = "temp";
+    public static string Languages { get; } = "Languages";
+
+    /// <summary>
+    /// Gets the temporary folder name
+    /// </summary>
+    public static string Temporary { get; } = "Temp";
+
+#if DEBUG
+    /// <summary>
+    /// Logging should not be to the temporary folder, as it is deleted on shutdown
+    /// </summary>
+    public static string Log { get; } = "Log";
+#endif
+
 }

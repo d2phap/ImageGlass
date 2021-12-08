@@ -21,7 +21,7 @@ public partial class FrmMain
 
     private void FrmMainConfig_Load(object? sender, EventArgs e)
     {
-        this.TopMost = Config.IsAlwaysOnTop;
+        this.TopMost = Config.IsWindowAlwaysOnTop;
 
         // load window placement from settings
         WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());

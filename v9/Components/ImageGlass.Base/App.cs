@@ -8,13 +8,13 @@ public class App
     /// <summary>
     /// Gets the application executable path
     /// </summary>
-    public static string ExePath { get => StartUpDir("HapplaBox.exe"); }
+    public static string IGExePath { get => StartUpDir("ImageGlass.exe"); }
 
 
     /// <summary>
     /// Gets the application version
     /// </summary>
-    public static string Version { get => FileVersionInfo.GetVersionInfo(ExePath).FileVersion; }
+    public static string Version { get => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion ?? ""; }
 
 
     /// <summary>
@@ -53,12 +53,79 @@ public class App
         }
 
         // else, use AppData dir
-        var appDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"HapplaBox");
+        var appDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass");
 
         var newPaths = paths.ToList();
         newPaths.Insert(0, appDataDir);
         appDataDir = Path.Combine(newPaths.ToArray());
 
         return appDataDir;
+    }
+
+
+    /// <summary>
+    /// Parse string to absolute path
+    /// </summary>
+    /// <param name="inputPath">The relative/absolute path of file/folder; or a URI Scheme</param>
+    /// <returns></returns>
+    public static string ToAbsolutePath(string inputPath)
+    {
+        var path = inputPath;
+        const string protocol = Constants.URI_SCHEME + ":";
+
+        // If inputPath is URI Scheme
+        if (path.StartsWith(protocol))
+        {
+            // Retrieve the real path
+            path = Uri.UnescapeDataString(path).Remove(0, protocol.Length);
+        }
+
+        // Parse environment vars to absolute path
+        return Environment.ExpandEnvironmentVariables(path);
+    }
+
+
+    /// <summary>
+    /// Center the given form to the current screen.
+    /// Note***: The method Form.CenterToScreen() contains a bug:
+    /// https://stackoverflow.com/a/6837499/2856887
+    /// </summary>
+    /// <param name="form">The form to center</param>
+    public static void CenterFormToScreen(Form form)
+    {
+        var screen = Screen.FromControl(form);
+
+        var workingArea = screen.WorkingArea;
+        form.Location = new Point()
+        {
+            X = Math.Max(workingArea.X, workingArea.X + ((workingArea.Width - form.Width) / 2)),
+            Y = Math.Max(workingArea.Y, workingArea.Y + ((workingArea.Height - form.Height) / 2))
+        };
+    }
+
+
+    /// <summary>
+    /// Write log in DEBUG mode
+    /// </summary>
+    /// <param name="msg"></param>
+    public static void LogIt(string msg)
+    {
+#if DEBUG
+        try
+        {
+            var tempDir = ConfigDir(PathType.Dir, Dir.Log);
+            if (!Directory.Exists(tempDir))
+            {
+                Directory.CreateDirectory(tempDir);
+            }
+            var path = Path.Combine(tempDir, "iglog.log");
+
+            using var tw = new StreamWriter(path, append: true);
+            tw.WriteLine(msg);
+            tw.Flush();
+            tw.Close();
+        }
+        catch { }
+#endif
     }
 }
