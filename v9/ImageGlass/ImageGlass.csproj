@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Platforms>AnyCPU;x64;x86;ARM32;ARM64</Platforms>
+    <ApplicationIcon>icon256.ico</ApplicationIcon>
+    <PlatformTarget>x64</PlatformTarget>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <Description>A lightweight, versatile image viewer</Description>
+    <Copyright>Copyright © 2010 - 2022 Duong Dieu Phap</Copyright>
+    <PackageProjectUrl>https://imageglass.org</PackageProjectUrl>
+    <RepositoryUrl>https://imageglass.org/source</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="icon256.ico" />
+  </ItemGroup>
+
+</Project>
