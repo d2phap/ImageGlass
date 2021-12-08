@@ -1,439 +1,1228 @@
 ﻿using ImageGlass.Base;
+using ImageGlass.UI;
 using Microsoft.Extensions.Configuration;
 using System.Dynamic;
+using System.Text;
 
+namespace ImageGlass.Settings;
 
-namespace ImageGlass.Settings
+/// <summary>
+/// Provides app configuration
+/// </summary>
+public class Config
 {
-    /// <summary>
-    /// Provides app configuration
-    /// </summary>
-    public class Config
-    {
 
-        #region Internal properties
-        private static readonly Source _source = new();
+    #region Internal properties
+    private static readonly Source _source = new();
+
+
+    #endregion
+
+
+    #region Setting items
+
+    #region Boolean items
+    /// <summary>
+    /// Gets, sets value of slideshow state
+    /// </summary>
+    public static bool IsSlideshow { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value if the countdown timer is shown or not
+    /// </summary>
+    public static bool IsShowSlideshowCountdown { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets value indicating whether the slide show interval is random
+    /// </summary>
+    public static bool IsRandomSlideshowInterval { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value indicating whether the window is full screen or not
+    /// </summary>
+    public static bool IsFullScreen { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value of thumbnail visibility
+    /// </summary>
+    public static bool IsShowThumbnail { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets the value that indicates if the default position of image in the viewer is center or top left
+    /// </summary>
+    public static bool IsCenterImage { get; set; } = true;
+
+    /// <summary>
+    /// Check if user wants to display RGBA color code for Color Picker tool
+    /// </summary>
+    public static bool IsColorPickerRGBA { get; set; } = true;
+
+    /// <summary>
+    /// Check if user wants to display HEX with Alpha color code for Color Picker tool
+    /// </summary>
+    public static bool IsColorPickerHEXA { get; set; } = true;
+
+    /// <summary>
+    /// Check if user wants to display HSL with Alpha color code for Color Picker tool
+    /// </summary>
+    public static bool IsColorPickerHSLA { get; set; } = true;
+
+    /// <summary>
+    /// Check if user wants to display HSV with Alpha color code for Color Picker tool
+    /// </summary>
+    public static bool IsColorPickerHSVA { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets welcome picture value
+    /// </summary>
+    public static bool IsShowWelcome { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets value of visibility of toolbar when start up
+    /// </summary>
+    public static bool IsShowToolBar { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets value whether thumbnail scrollbars visible
+    /// </summary>
+    public static bool IsShowThumbnailScrollbar { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value that allows user to loop back to the first image when reaching the end of list
+    /// </summary>
+    public static bool IsLoopBackSlideshow { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets value indicating that ImageGlass will loop back viewer to the first image when reaching the end of the list.
+    /// </summary>
+    public static bool IsLoopBackViewer { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets value indicating that allow quit application by ESC
+    /// </summary>
+    public static bool IsPressESCToQuit { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets value indicating that checker board is shown or not
+    /// </summary>
+    public static bool IsShowCheckerBoard { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value indicating that multi instances is allowed or not
+    /// </summary>
+    public static bool IsAllowMultiInstances { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets value indicating that FrmMain is always on top or not.
+    /// </summary>
+    public static bool IsWindowAlwaysOnTop { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value of FrmMain's frameless mode.
+    /// </summary>
+    public static bool IsWindowFrameless { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets the direction of thumbnail bar
+    /// </summary>
+    public static bool IsThumbnailHorizontal { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets value indicating that Confirmation dialog is displayed when deleting image
+    /// </summary>
+    public static bool IsConfirmationDelete { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets the value indicates that viewer scrollbars are visible
+    /// </summary>
+    public static bool IsScrollbarsVisible { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets the value indicates that the viewing image is auto-saved after rotating
+    /// </summary>
+    public static bool IsSaveAfterRotating { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets the setting to control whether the image's original modified date value is preserved on save
+    /// </summary>
+    public static bool IsPreserveModifiedDate { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets the value indicates that there is a new version
+    /// </summary>
+    public static bool IsNewVersionAvailable { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets the value indicates that to show full image path or only base name
+    /// </summary>
+    public static bool IsDisplayBasenameOfImage { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets the value indicates that to toolbar buttons to be centered horizontally
+    /// </summary>
+    public static bool IsCenterToolbar { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets the value indicates that to show last seen image on startup
+    /// </summary>
+    public static bool IsOpenLastSeenImage { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets the value indicates that the ColorProfile will be applied for all or only the images with embedded profile
+    /// </summary>
+    public static bool IsApplyColorProfileForAll { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets the value indicates whether to show or hide the Navigation Buttons on viewer
+    /// </summary>
+    public static bool IsShowNavigationButtons { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets the value indicates whether to show checkerboard in the image region only
+    /// </summary>
+    public static bool IsShowCheckerboardOnlyImageRegion { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets recursive value
+    /// </summary>
+    public static bool IsRecursiveLoading { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets the value indicates that Windows File Explorer sort order is used if possible
+    /// </summary>
+    public static bool IsUseFileExplorerSortOrder { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets the value indicates that images order should be grouped by directory
+    /// </summary>
+    public static bool IsGroupImagesByDirectory { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets showing/loading hidden images
+    /// </summary>
+    public static bool IsShowingHiddenImages { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value that indicates frmColorPicker tool will be open on startup
+    /// </summary>
+    public static bool IsShowColorPickerOnStartup { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value that indicates frmPageNav tool will be open on startup
+    /// </summary>
+    public static bool IsShowPageNavOnStartup { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value that indicates page navigation tool auto-show on the multiple pages image
+    /// </summary>
+    public static bool IsShowPageNavAuto { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value specifying that Window Fit mode is on
+    /// </summary>
+    public static bool IsWindowFit { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value indicates the window should be always center in Window Fit mode
+    /// </summary>
+    public static bool IsCenterWindowFit { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets value indicates that toast messages will show
+    /// </summary>
+    public static bool IsShowToast { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets value indicates that touch gesture support enabled
+    /// </summary>
+    public static bool IsUseTouchGesture { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets value indicates that tooltips are to be hidden
+    /// </summary>
+    public static bool IsHideTooltips { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value indicates that FrmExifTool always show on top
+    /// </summary>
+    public static bool IsExifToolAlwaysOnTop { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets value indicates that to keep the title bar of FrmMain empty
+    /// </summary>
+    public static bool IsUseEmptyTitleBar { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value indicates that RAW thumbnail will be use if found
+    /// </summary>
+    public static bool IsUseRawThumbnail { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value indicates that the toolbar should be hidden in Full screen mode
+    /// </summary>
+    public static bool IsHideToolbarInFullscreen { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value indicates that the thumbnail bar should be hidden in Full screen mode
+    /// </summary>
+    public static bool IsHideThumbnailBarInFullscreen { get; set; } = false;
+
+    #endregion
+
+
+    #region Number items
+
+    /// <summary>
+    /// Gets, sets 'Left' position of main window
+    /// </summary>
+    public static int FrmMainPositionX { get; set; } = 200;
+
+    /// <summary>
+    /// Gets, sets 'Top' position of main window
+    /// </summary>
+    public static int FrmMainPositionY { get; set; } = 200;
+
+    /// <summary>
+    /// Gets, sets width of main window
+    /// </summary>
+    public static int FrmMainWidth { get; set; } = 1200;
+
+    /// <summary>
+    /// Gets, sets height of main window
+    /// </summary>
+    public static int FrmMainHeight { get; set; } = 800;
+
+
+    /// <summary>
+    /// Gets, sets 'Left' position of settings window
+    /// </summary>
+    public static int FrmSettingsPositionX { get; set; } = 200;
+
+    /// <summary>
+    /// Gets, sets 'Top' position of settings window
+    /// </summary>
+    public static int FrmSettingsPositionY { get; set; } = 200;
+
+    /// <summary>
+    /// Gets, sets width of settings window
+    /// </summary>
+    public static int FrmSettingsWidth { get; set; } = 1050;
+
+    /// <summary>
+    /// Gets, sets height of settings window
+    /// </summary>
+    public static int FrmSettingsHeight { get; set; } = 750;
+
+
+    /// <summary>
+    /// Gets, sets 'Left' position of ExifTool window
+    /// </summary>
+    public static int FrmExifToolPositionX { get; set; } = 200;
+
+    /// <summary>
+    /// Gets, sets 'Top' position of ExifTool window
+    /// </summary>
+    public static int FrmExifToolPositionY { get; set; } = 200;
+
+    /// <summary>
+    /// Gets, sets width of ExifTool window
+    /// </summary>
+    public static int FrmExifToolWidth { get; set; } = 800;
+
+    /// <summary>
+    /// Gets, sets height of ExifTool window
+    /// </summary>
+    public static int FrmExifToolHeight { get; set; } = 600;
+
+
+    /// <summary>
+    /// Gets, sets the version that requires to launch First-Launch Configs screen
+    /// </summary>
+    public static int FirstLaunchVersion { get; set; } = 0;
+
+    /// <summary>
+    /// Gets, sets slide show interval (minimum value if it's random)
+    /// </summary>
+    public static uint SlideShowInterval { get; set; } = 5;
+
+    /// <summary>
+    /// Gets, sets the maximum slide show interval value
+    /// </summary>
+    public static uint SlideShowIntervalTo { get; set; } = 5;
+
+    /// <summary>
+    /// Gets, sets value of thumbnail dimension in pixel
+    /// </summary>
+    public static uint ThumbnailDimension { get; set; } = 96;
+
+    /// <summary>
+    /// Gets, sets width of horizontal thumbnail bar
+    /// </summary>
+    public static uint ThumbnailBarWidth { get; set; } = new ThumbnailItemInfo(ThumbnailDimension, true).GetTotalDimension();
+
+    /// <summary>
+    /// Gets, sets the number of images cached by Image
+    /// </summary>
+    public static uint ImageBoosterCachedCount { get; set; } = 1;
+
+    /// <summary>
+    /// Gets, sets fixed width on zooming
+    /// </summary>
+    public static double ZoomLockValue { get; set; } = 100f;
+
+    /// <summary>
+    /// Gets, sets toolbar icon height
+    /// </summary>
+    public static uint ToolbarIconHeight { get; set; } = Constants.DEFAULT_TOOLBAR_ICON_HEIGHT;
+
+    /// <summary>
+    /// Gets, sets value of image quality for editting
+    /// </summary>
+    public static int ImageEditQuality { get; set; } = 100;
+
+    #endregion
+
+
+    #region String items
+
+    /// <summary>
+    /// Gets, sets color profile string. It can be a defined name or ICC/ICM file path
+    /// </summary>
+    public static string ColorProfile { get; set; } = "sRGB";
+
+    /// <summary>
+    /// Gets, sets the last time to check for update. Set it to "0" to disable auto-update.
+    /// </summary>
+    public static string AutoUpdate { get; set; } = "7/20/2010 12:13:08";
+
+    /// <summary>
+    /// Gets, sets the absolute file path of the last seen image
+    /// </summary>
+    public static string LastSeenImagePath { get; set; } = "";
+
+    /// <summary>
+    /// Gets, sets the absolute file path of the exiftool executable file
+    /// </summary>
+    public static string ExifToolExePath { get; set; } = "";
+
+    /// <summary>
+    /// Gets, sets the custom arguments for Exif tool command
+    /// </summary>
+    public static string ExifToolCommandArgs { get; set; } = "";
+
+    #endregion
+
+
+    #region Array items
+
+    /// <summary>
+    /// Gets, sets zoom levels of the viewer
+    /// </summary>
+    public static int[] ZoomLevels { get; set; } = new int[] { 5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100, 125, 150, 175, 200, 250, 300, 350, 400, 500, 600, 700, 800, 1000, 1200, 1500, 1800, 2100, 2500, 3000, 3500 };
+
+    /// <summary>
+    /// Gets, sets the list of Image Editing Association
+    /// </summary>
+    public static List<EditApp> EditApps { get; set; } = new();
+
+    /// <summary>
+    /// Gets, sets the list of supported image formats
+    /// </summary>
+    public static HashSet<string> AllFormats { get; set; } = new();
+
+    /// <summary>
+    /// Gets, sets the list of formats that only load the first page forcefully
+    /// </summary>
+    public static HashSet<string> SinglePageFormats { get; set; } = new() { "*.heic;*.heif;*.psd;" };
+
+    /// <summary>
+    /// Gets, sets the list of keycombo actions
+    /// </summary>
+    public static Dictionary<KeyCombos, AssignableActions> KeyComboActions = Constants.DefaultKeycomboActions;
+
+    /// <summary>
+    /// Gets, sets the list of toolbar buttons
+    /// </summary>
+    public static List<ToolbarButton> ToolbarButtons { get; set; } = Constants.DefaultToolbarButtons;
+
+    #endregion
+
+
+    #region Enum items
+
+    /// <summary>
+    /// Gets, sets state of main window
+    /// </summary>
+    public static WindowState FrmMainState { get; set; } = WindowState.Normal;
+
+
+    /// <summary>
+    /// Gets, sets state of settings window
+    /// </summary>
+    public static WindowState FrmSettingsState { get; set; } = WindowState.Normal;
+
+
+    /// <summary>
+    /// Gets, sets state of exif tool window
+    /// </summary>
+    public static WindowState FrmExifToolState { get; set; } = WindowState.Normal;
+
+    /// <summary>
+    /// Gets, sets image loading order
+    /// </summary>
+    public static ImageOrderBy ImageLoadingOrder { get; set; } = ImageOrderBy.Name;
+
+    /// <summary>
+    /// Gets, sets image loading order type
+    /// </summary>
+    public static ImageOrderType ImageLoadingOrderType { get; set; } = ImageOrderType.Asc;
+
+    /// <summary>
+    /// Gets, sets action to be performed when user spins the mouse wheel
+    /// </summary>
+    public static MouseWheelActions MouseWheelAction { get; set; } = MouseWheelActions.Zoom;
+
+    /// <summary>
+    /// Gets, sets action to be performed when user spins the mouse wheel
+    /// while holding Ctrl key
+    /// </summary>
+    public static MouseWheelActions MouseWheelCtrlAction { get; set; } = MouseWheelActions.ScrollVertically;
+
+    /// <summary>
+    /// Gets, sets action to be performed when user spins the mouse wheel
+    /// while holding Shift key
+    /// </summary>
+    public static MouseWheelActions MouseWheelShiftAction { get; set; } = MouseWheelActions.ScrollHorizontally;
+
+    /// <summary>
+    /// Gets, sets action to be performed when user spins the mouse wheel
+    /// while holding Alt key
+    /// </summary>
+    public static MouseWheelActions MouseWheelAltAction { get; set; } = MouseWheelActions.BrowseImages;
+
+    /// <summary>
+    /// Gets, sets zoom mode value
+    /// </summary>
+    public static ZoomMode ZoomMode { get; set; } = ZoomMode.AutoZoom;
+
+    /// <summary>
+    /// Gets, sets zoom optimization value
+    /// </summary>
+    public static ZoomOptimizationMethods ZoomOptimizationMethod { get; set; } = ZoomOptimizationMethods.Auto;
+
+    /// <summary>
+    /// Gets, sets toolbar position
+    /// </summary>
+    public static ToolbarPosition ToolbarPosition { get; set; } = ToolbarPosition.Top;
+
+    /// <summary>
+    /// Gets, sets value indicates what happens after clicking Edit menu
+    /// </summary>
+    public static AfterOpeningEditAppAction AfterEditingAction { get; set; } = AfterOpeningEditAppAction.Nothing;
+
+    #endregion
+
+
+    #region Other types items
+
+    /// <summary>
+    /// Gets, sets background color
+    /// </summary>
+    public static Color BackgroundColor { get; set; } = Color.Black;
+
+    /// <summary>
+    /// TODO: Gets, sets language pack
+    /// </summary>
+    //public static Language Language { get; set; } = new();
+
+    /// <summary>
+    /// TODO: Gets, sets theme
+    /// </summary>
+    //public static Theme Theme { get; set; }
+
+    #endregion
+
+    #endregion
+
+
+
+
+    #region Public functions
+
+    /// <summary>
+    /// Loads and parsse configs from file
+    /// </summary>
+    public static void Load()
+    {
+        var items = _source.LoadUserConfigs();
+
+
+        // Boolean values
+        #region Boolean items
+
+        IsSlideshow = items.GetValue(nameof(IsSlideshow), IsSlideshow);
+        IsShowSlideshowCountdown = items.GetValue(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
+        IsRandomSlideshowInterval = items.GetValue(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
+        IsFullScreen = items.GetValue(nameof(IsFullScreen), IsFullScreen);
+        IsShowThumbnail = items.GetValue(nameof(IsShowThumbnail), IsShowThumbnail);
+        IsCenterImage = items.GetValue(nameof(IsCenterImage), IsCenterImage);
+        IsColorPickerRGBA = items.GetValue(nameof(IsColorPickerRGBA), IsColorPickerRGBA);
+        IsColorPickerHEXA = items.GetValue(nameof(IsColorPickerHEXA), IsColorPickerHEXA);
+        IsColorPickerHSLA = items.GetValue(nameof(IsColorPickerHSLA), IsColorPickerHSLA);
+        IsColorPickerHSVA = items.GetValue(nameof(IsColorPickerHSVA), IsColorPickerHSVA);
+        IsShowWelcome = items.GetValue(nameof(IsShowWelcome), IsShowWelcome);
+        IsShowToolBar = items.GetValue(nameof(IsShowToolBar), IsShowToolBar);
+        IsShowThumbnailScrollbar = items.GetValue(nameof(IsShowThumbnailScrollbar), IsShowThumbnailScrollbar);
+        IsLoopBackSlideshow = items.GetValue(nameof(IsLoopBackSlideshow), IsLoopBackSlideshow);
+        IsLoopBackViewer = items.GetValue(nameof(IsLoopBackViewer), IsLoopBackViewer);
+        IsPressESCToQuit = items.GetValue(nameof(IsPressESCToQuit), IsPressESCToQuit);
+        IsShowCheckerBoard = items.GetValue(nameof(IsShowCheckerBoard), IsShowCheckerBoard);
+        IsAllowMultiInstances = items.GetValue(nameof(IsAllowMultiInstances), IsAllowMultiInstances);
+        IsWindowAlwaysOnTop = items.GetValue(nameof(IsWindowAlwaysOnTop), IsWindowAlwaysOnTop);
+        IsWindowFrameless = items.GetValue(nameof(IsWindowFrameless), IsWindowFrameless);
+        IsThumbnailHorizontal = items.GetValue(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
+        IsConfirmationDelete = items.GetValue(nameof(IsConfirmationDelete), IsConfirmationDelete);
+        IsScrollbarsVisible = items.GetValue(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
+        IsSaveAfterRotating = items.GetValue(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
+        IsPreserveModifiedDate = items.GetValue(nameof(IsPreserveModifiedDate), IsPreserveModifiedDate);
+        IsNewVersionAvailable = items.GetValue(nameof(IsNewVersionAvailable), IsNewVersionAvailable);
+        IsDisplayBasenameOfImage = items.GetValue(nameof(IsDisplayBasenameOfImage), IsDisplayBasenameOfImage);
+        IsCenterToolbar = items.GetValue(nameof(IsCenterToolbar), IsCenterToolbar);
+        IsOpenLastSeenImage = items.GetValue(nameof(IsOpenLastSeenImage), IsOpenLastSeenImage);
+        IsApplyColorProfileForAll = items.GetValue(nameof(IsApplyColorProfileForAll), IsApplyColorProfileForAll);
+        IsShowNavigationButtons = items.GetValue(nameof(IsShowNavigationButtons), IsShowNavigationButtons);
+        IsShowCheckerboardOnlyImageRegion = items.GetValue(nameof(IsShowCheckerboardOnlyImageRegion), IsShowCheckerboardOnlyImageRegion);
+        IsRecursiveLoading = items.GetValue(nameof(IsRecursiveLoading), IsRecursiveLoading);
+        IsUseFileExplorerSortOrder = items.GetValue(nameof(IsUseFileExplorerSortOrder), IsUseFileExplorerSortOrder);
+        IsGroupImagesByDirectory = items.GetValue(nameof(IsGroupImagesByDirectory), IsGroupImagesByDirectory);
+        IsShowingHiddenImages = items.GetValue(nameof(IsShowingHiddenImages), IsShowingHiddenImages);
+        IsShowColorPickerOnStartup = items.GetValue(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
+        IsShowPageNavOnStartup = items.GetValue(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
+        IsShowPageNavAuto = items.GetValue(nameof(IsShowPageNavAuto), IsShowPageNavAuto);
+        IsWindowFit = items.GetValue(nameof(IsWindowFit), IsWindowFit);
+        IsCenterWindowFit = items.GetValue(nameof(IsCenterWindowFit), IsCenterWindowFit);
+        IsShowToast = items.GetValue(nameof(IsShowToast), IsShowToast);
+        IsUseTouchGesture = items.GetValue(nameof(IsUseTouchGesture), IsUseTouchGesture);
+        IsHideTooltips = items.GetValue(nameof(IsHideTooltips), IsHideTooltips);
+        IsExifToolAlwaysOnTop = items.GetValue(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
+        IsUseEmptyTitleBar = items.GetValue(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
+        IsUseRawThumbnail = items.GetValue(nameof(IsUseRawThumbnail), IsUseRawThumbnail);
+        IsHideToolbarInFullscreen = items.GetValue(nameof(IsHideToolbarInFullscreen), IsHideToolbarInFullscreen);
+        IsHideThumbnailBarInFullscreen = items.GetValue(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
+
+        #endregion
+
+
+        // Number values
+        #region Number items
+
+        // FrmMain
+        FrmMainPositionX = items.GetValue(nameof(FrmMainPositionX), FrmMainPositionX);
+        FrmMainPositionY = items.GetValue(nameof(FrmMainPositionY), FrmMainPositionY);
+        FrmMainWidth = items.GetValue(nameof(FrmMainWidth), FrmMainWidth);
+        FrmMainHeight = items.GetValue(nameof(FrmMainHeight), FrmMainHeight);
+
+        // FrmSettings
+        FrmSettingsPositionX = items.GetValue(nameof(FrmSettingsPositionX), FrmSettingsPositionX);
+        FrmSettingsPositionY = items.GetValue(nameof(FrmSettingsPositionY), FrmSettingsPositionY);
+        FrmSettingsWidth = items.GetValue(nameof(FrmSettingsWidth), FrmSettingsWidth);
+        FrmSettingsHeight = items.GetValue(nameof(FrmSettingsHeight), FrmSettingsHeight);
+
+        // FrmExifTool
+        FrmExifToolPositionX = items.GetValue(nameof(FrmExifToolPositionX), FrmExifToolPositionX);
+        FrmExifToolPositionY = items.GetValue(nameof(FrmExifToolPositionY), FrmExifToolPositionY);
+        FrmExifToolWidth = items.GetValue(nameof(FrmExifToolWidth), FrmExifToolWidth);
+        FrmExifToolHeight = items.GetValue(nameof(FrmExifToolHeight), FrmExifToolHeight);
+
+
+        FirstLaunchVersion = items.GetValue(nameof(FirstLaunchVersion), FirstLaunchVersion);
+
+        #region Slide show
+        SlideShowInterval = items.GetValue(nameof(SlideShowInterval), SlideShowInterval);
+        if (SlideShowInterval < 1) SlideShowInterval = 5;
+
+        SlideShowIntervalTo = items.GetValue(nameof(SlideShowIntervalTo), SlideShowIntervalTo);
+        SlideShowIntervalTo = Math.Max(SlideShowIntervalTo, SlideShowInterval);
+        #endregion
+
+        #region Load thumbnail bar width & position
+        ThumbnailDimension = items.GetValue(nameof(ThumbnailDimension), ThumbnailDimension);
+
+        if (IsThumbnailHorizontal)
+        {
+            // Get minimum width needed for thumbnail dimension
+            var tbMinWidth = new ThumbnailItemInfo(ThumbnailDimension, true).GetTotalDimension();
+
+            // Get the greater width value
+            ThumbnailBarWidth = Math.Max(ThumbnailBarWidth, tbMinWidth);
+        }
+        else
+        {
+            ThumbnailBarWidth = items.GetValue(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
+        }
+        #endregion
+
+        ImageBoosterCachedCount = items.GetValue(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
+        ImageBoosterCachedCount = Math.Max(0, Math.Min(ImageBoosterCachedCount, 10));
+
+        ZoomLockValue = items.GetValue(nameof(ZoomLockValue), ZoomLockValue);
+        if (ZoomLockValue < 0) ZoomLockValue = 100f;
+
+        ToolbarIconHeight = items.GetValue(nameof(ToolbarIconHeight), ToolbarIconHeight);
+        ImageEditQuality = items.GetValue(nameof(ImageEditQuality), ImageEditQuality);
+
+        #endregion
+
+
+        // Enum values
+        #region Enum items
+
+        FrmMainState = items.GetValue(nameof(FrmMainState), FrmMainState);
+        FrmSettingsState = items.GetValue(nameof(FrmSettingsState), FrmSettingsState);
+        FrmExifToolState = items.GetValue(nameof(FrmExifToolState), FrmExifToolState);
+        ImageLoadingOrder = items.GetValue(nameof(ImageLoadingOrder), ImageLoadingOrder);
+        ImageLoadingOrderType = items.GetValue(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
+        MouseWheelAction = items.GetValue(nameof(MouseWheelAction), MouseWheelAction);
+        MouseWheelCtrlAction = items.GetValue(nameof(MouseWheelCtrlAction), MouseWheelCtrlAction);
+        MouseWheelShiftAction = items.GetValue(nameof(MouseWheelShiftAction), MouseWheelShiftAction);
+        MouseWheelAltAction = items.GetValue(nameof(MouseWheelAltAction), MouseWheelAltAction);
+        ZoomMode = items.GetValue(nameof(ZoomMode), ZoomMode);
+        ZoomOptimizationMethod = items.GetValue(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod);
+        ToolbarPosition = items.GetValue(nameof(ToolbarPosition), ToolbarPosition);
+        AfterEditingAction = items.GetValue(nameof(AfterEditingAction), AfterEditingAction);
 
 
         #endregion
 
 
-        #region Setting items
+        // String values
+        #region String items
+
+        ColorProfile = items.GetValue(nameof(ColorProfile), ColorProfile);
+        // TODO
+        //ColorProfile = Heart.Helpers.GetCorrectColorProfileName(ColorProfile);
+
+        AutoUpdate = items.GetValue(nameof(AutoUpdate), AutoUpdate);
+        LastSeenImagePath = items.GetValue(nameof(LastSeenImagePath), LastSeenImagePath);
+        ExifToolExePath = items.GetValue(nameof(ExifToolExePath), ExifToolExePath);
+        ExifToolCommandArgs = items.GetValue(nameof(ExifToolCommandArgs), ExifToolCommandArgs);
+
+        #endregion
+
+
+        // Array values
+        #region Array items
+
+        #region ZoomLevels
+
+        var zoomLevelStr = items.GetValue(nameof(ZoomLevels), "");
+        var zoomLevels = Helpers.StringToIntArray(zoomLevelStr, unsignedOnly: true, distinct: true);
+
+        if (zoomLevels.Length > 0) ZoomLevels = zoomLevels;
+
+        #endregion
+
+        #region EditApps
+
+        var appStr = items.GetValue(nameof(EditApps), "");
+        EditApps = GetEditApps(appStr);
+
+        #endregion
+
+        #region ImageFormats
+
+        var formats = items.GetValue(nameof(AllFormats), Constants.IMAGE_FORMATS);
+        AllFormats = GetImageFormats(formats);
+
+        formats = items.GetValue(nameof(SinglePageFormats), string.Join(";", SinglePageFormats));
+        SinglePageFormats = GetImageFormats(formats);
+
+        #endregion
+
+        #region KeyComboActions
+
+        var keyActionStr = items.GetValue(nameof(KeyComboActions), "");
+        if (!string.IsNullOrEmpty(keyActionStr))
+        {
+            KeyComboActions = GetKeyComboActions(keyActionStr);
+        }
+
+        #endregion
+
+        #region ToolbarButtons
+
+        var buttonStr = items.GetValue(nameof(ToolbarButtons), "");
+        var btnList = GetToolbarButtons(buttonStr);
+        if (btnList.Count > 0) ToolbarButtons = btnList;
+
+        #endregion
+
+        #endregion
+
+
+        // Other types values
+        #region Other types items
+        // TODO
+
+        //#region Lang
+        //var langPath = items.GetValue(nameof(Language), "English");
+        //Language = new Language(langPath, App.StartUpDir(Dir.Languages));
+        //#endregion
+
+        //#region Theme
+        //var themeFolderName = items.GetValue(nameof(Theme), Constants.DEFAULT_THEME);
+        //var th = new Theme((int)ToolbarIconHeight, App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
+
+        //if (th.IsValid)
+        //{
+        //    Theme = th;
+        //}
+        //#endregion
+
+        //#region BackgroundColor
+        //// must load after Theme
+        //var bgValue = items.GetValue(nameof(BackgroundColor), ThemeUtils.ConvertColorToHEX(Theme.BackgroundColor, true));
+        //BackgroundColor = ThemeUtils.ConvertHexStringToColor(bgValue, true);
+        //#endregion
+
+        #endregion
+
+    }
+
+
+    /// <summary>
+    /// Parses and writes configs to file
+    /// </summary>
+    public static void Write()
+    {
+        var jsonFile = App.ConfigDir(PathType.File, Source.UserFilename);
+        Helpers.WriteJson(jsonFile, GetSettingObjects());
+    }
+
+    #endregion
+
+
+    #region Private functions
+
+    /// <summary>
+    /// Converts all settings to ExpandoObject for parsing JSON
+    /// </summary>
+    /// <returns></returns>
+    private static dynamic GetSettingObjects()
+    {
+        var settings = new ExpandoObject();
+
+        var infoJson = new
+        {
+            _source.Description,
+            _source.Version
+        };
+
+        settings.TryAdd("Info", infoJson);
+
 
         #region Boolean items
-        /// <summary>
-        /// Gets, sets value of slideshow state
-        /// </summary>
-        public static bool IsSlideshow { get; set; } = false;
 
-        /// <summary>
-        /// Gets, sets value if the countdown timer is shown or not
-        /// </summary>
-        public static bool IsShowSlideshowCountdown { get; set; } = true;
-
-        /// <summary>
-        /// Gets, sets value indicating whether the slide show interval is random
-        /// </summary>
-        public static bool IsRandomSlideshowInterval { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets value indicating whether the window is full screen or not
-        /// </summary>
-        public static bool IsFullScreen { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets value of thumbnail visibility
-        /// </summary>
-        public static bool IsShowThumbnail { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets the value that indicates if the default position of image in the viewer is center or top left
-        /// </summary>
-        public static bool IsCenterImage { get; set; } = true;
-
-        /// <summary>
-        /// Check if user wants to display RGBA color code for Color Picker tool
-        /// </summary>
-        public static bool IsColorPickerRGBA { get; set; } = true;
-
-        /// <summary>
-        /// Check if user wants to display HEX with Alpha color code for Color Picker tool
-        /// </summary>
-        public static bool IsColorPickerHEXA { get; set; } = true;
-
-        /// <summary>
-        /// Check if user wants to display HSL with Alpha color code for Color Picker tool
-        /// </summary>
-        public static bool IsColorPickerHSLA { get; set; } = true;
-
-        /// <summary>
-        /// Check if user wants to display HSV with Alpha color code for Color Picker tool
-        /// </summary>
-        public static bool IsColorPickerHSVA { get; set; } = true;
-
-        /// <summary>
-        /// Gets, sets welcome picture value
-        /// </summary>
-        public static bool IsShowWelcome { get; set; } = true;
-
-        /// <summary>
-        /// Gets, sets value of visibility of toolbar when start up
-        /// </summary>
-        public static bool IsShowToolBar { get; set; } = true;
-
-        /// <summary>
-        /// Gets, sets value whether thumbnail scrollbars visible
-        /// </summary>
-        public static bool IsShowThumbnailScrollbar { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets value that allows user to loop back to the first image when reaching the end of list
-        /// </summary>
-        public static bool IsLoopBackSlideshow { get; set; } = true;
-
-        /// <summary>
-        /// Gets, sets value indicating that ImageGlass will loop back viewer to the first image when reaching the end of the list.
-        /// </summary>
-        public static bool IsLoopBackViewer { get; set; } = true;
-
-        /// <summary>
-        /// Gets, sets value indicating that allow quit application by ESC
-        /// </summary>
-        public static bool IsPressESCToQuit { get; set; } = true;
-
-        /// <summary>
-        /// Gets, sets value indicating that checker board is shown or not
-        /// </summary>
-        public static bool IsShowCheckerBoard { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets value indicating that multi instances is allowed or not
-        /// </summary>
-        public static bool IsAllowMultiInstances { get; set; } = true;
-
-        /// <summary>
-        /// Gets, sets value indicating that FrmMain is always on top or not.
-        /// </summary>
-        public static bool IsWindowAlwaysOnTop { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets value of FrmMain's frameless mode.
-        /// </summary>
-        public static bool IsWindowFrameless { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets the direction of thumbnail bar
-        /// </summary>
-        public static bool IsThumbnailHorizontal { get; set; } = true;
-
-        /// <summary>
-        /// Gets, sets value indicating that Confirmation dialog is displayed when deleting image
-        /// </summary>
-        public static bool IsConfirmationDelete { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets the value indicates that viewer scrollbars are visible
-        /// </summary>
-        public static bool IsScrollbarsVisible { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets the value indicates that the viewing image is auto-saved after rotating
-        /// </summary>
-        public static bool IsSaveAfterRotating { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets the setting to control whether the image's original modified date value is preserved on save
-        /// </summary>
-        public static bool IsPreserveModifiedDate { get; set; } = true;
-
-        /// <summary>
-        /// Gets, sets the value indicates that there is a new version
-        /// </summary>
-        public static bool IsNewVersionAvailable { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets the value indicates that to show full image path or only base name
-        /// </summary>
-        public static bool IsDisplayBasenameOfImage { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets the value indicates that to toolbar buttons to be centered horizontally
-        /// </summary>
-        public static bool IsCenterToolbar { get; set; } = true;
-
-        /// <summary>
-        /// Gets, sets the value indicates that to show last seen image on startup
-        /// </summary>
-        public static bool IsOpenLastSeenImage { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets the value indicates that the ColorProfile will be applied for all or only the images with embedded profile
-        /// </summary>
-        public static bool IsApplyColorProfileForAll { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets the value indicates whether to show or hide the Navigation Buttons on viewer
-        /// </summary>
-        public static bool IsShowNavigationButtons { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets the value indicates whether to show checkerboard in the image region only
-        /// </summary>
-        public static bool IsShowCheckerboardOnlyImageRegion { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets recursive value
-        /// </summary>
-        public static bool IsRecursiveLoading { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets the value indicates that Windows File Explorer sort order is used if possible
-        /// </summary>
-        public static bool IsUseFileExplorerSortOrder { get; set; } = true;
-
-        /// <summary>
-        /// Gets, sets the value indicates that images order should be grouped by directory
-        /// </summary>
-        public static bool IsGroupImagesByDirectory { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets showing/loading hidden images
-        /// </summary>
-        public static bool IsShowingHiddenImages { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets value that indicates frmColorPicker tool will be open on startup
-        /// </summary>
-        public static bool IsShowColorPickerOnStartup { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets value that indicates frmPageNav tool will be open on startup
-        /// </summary>
-        public static bool IsShowPageNavOnStartup { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets value that indicates page navigation tool auto-show on the multiple pages image
-        /// </summary>
-        public static bool IsShowPageNavAuto { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets value specifying that Window Fit mode is on
-        /// </summary>
-        public static bool IsWindowFit { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets value indicates the window should be always center in Window Fit mode
-        /// </summary>
-        public static bool IsCenterWindowFit { get; set; } = true;
-
-        /// <summary>
-        /// Gets, sets value indicates that toast messages will show
-        /// </summary>
-        public static bool IsShowToast { get; set; } = true;
-
-        /// <summary>
-        /// Gets, sets value indicates that touch gesture support enabled
-        /// </summary>
-        public static bool IsUseTouchGesture { get; set; } = true;
-
-        /// <summary>
-        /// Gets, sets value indicates that tooltips are to be hidden
-        /// </summary>
-        public static bool IsHideTooltips { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets value indicates that FrmExifTool always show on top
-        /// </summary>
-        public static bool IsExifToolAlwaysOnTop { get; set; } = true;
-
-        /// <summary>
-        /// Gets, sets value indicates that to keep the title bar of FrmMain empty
-        /// </summary>
-        public static bool IsUseEmptyTitleBar { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets value indicates that RAW thumbnail will be use if found
-        /// </summary>
-        public static bool IsUseRawThumbnail { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets value indicates that the toolbar should be hidden in Full screen mode
-        /// </summary>
-        public static bool IsHideToolbarInFullscreen { get; set; } = false;
-
-        /// <summary>
-        /// Gets, sets value indicates that the thumbnail bar should be hidden in Full screen mode
-        /// </summary>
-        public static bool IsHideThumbnailBarInFullscreen { get; set; } = false;
+        settings.TryAdd(nameof(IsSlideshow), IsSlideshow);
+        settings.TryAdd(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
+        settings.TryAdd(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
+        settings.TryAdd(nameof(IsFullScreen), IsFullScreen);
+        settings.TryAdd(nameof(IsShowThumbnail), IsShowThumbnail);
+        settings.TryAdd(nameof(IsCenterImage), IsCenterImage);
+        settings.TryAdd(nameof(IsColorPickerRGBA), IsColorPickerRGBA);
+        settings.TryAdd(nameof(IsColorPickerHEXA), IsColorPickerHEXA);
+        settings.TryAdd(nameof(IsColorPickerHSLA), IsColorPickerHSLA);
+        settings.TryAdd(nameof(IsColorPickerHSVA), IsColorPickerHSVA);
+        settings.TryAdd(nameof(IsShowWelcome), IsShowWelcome);
+        settings.TryAdd(nameof(IsShowToolBar), IsShowToolBar);
+        settings.TryAdd(nameof(IsShowThumbnailScrollbar), IsShowThumbnailScrollbar);
+        settings.TryAdd(nameof(IsLoopBackSlideshow), IsLoopBackSlideshow);
+        settings.TryAdd(nameof(IsLoopBackViewer), IsLoopBackViewer);
+        settings.TryAdd(nameof(IsPressESCToQuit), IsPressESCToQuit);
+        settings.TryAdd(nameof(IsShowCheckerBoard), IsShowCheckerBoard);
+        settings.TryAdd(nameof(IsAllowMultiInstances), IsAllowMultiInstances);
+        settings.TryAdd(nameof(IsWindowAlwaysOnTop), IsWindowAlwaysOnTop);
+        settings.TryAdd(nameof(IsWindowFrameless), IsWindowFrameless);
+        settings.TryAdd(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
+        settings.TryAdd(nameof(IsConfirmationDelete), IsConfirmationDelete);
+        settings.TryAdd(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
+        settings.TryAdd(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
+        settings.TryAdd(nameof(IsPreserveModifiedDate), IsPreserveModifiedDate);
+        settings.TryAdd(nameof(IsNewVersionAvailable), IsNewVersionAvailable);
+        settings.TryAdd(nameof(IsDisplayBasenameOfImage), IsDisplayBasenameOfImage);
+        settings.TryAdd(nameof(IsCenterToolbar), IsCenterToolbar);
+        settings.TryAdd(nameof(IsOpenLastSeenImage), IsOpenLastSeenImage);
+        settings.TryAdd(nameof(IsApplyColorProfileForAll), IsApplyColorProfileForAll);
+        settings.TryAdd(nameof(IsShowNavigationButtons), IsShowNavigationButtons);
+        settings.TryAdd(nameof(IsShowCheckerboardOnlyImageRegion), IsShowCheckerboardOnlyImageRegion);
+        settings.TryAdd(nameof(IsRecursiveLoading), IsRecursiveLoading);
+        settings.TryAdd(nameof(IsUseFileExplorerSortOrder), IsUseFileExplorerSortOrder);
+        settings.TryAdd(nameof(IsGroupImagesByDirectory), IsGroupImagesByDirectory);
+        settings.TryAdd(nameof(IsShowingHiddenImages), IsShowingHiddenImages);
+        settings.TryAdd(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
+        settings.TryAdd(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
+        settings.TryAdd(nameof(IsShowPageNavAuto), IsShowPageNavAuto);
+        settings.TryAdd(nameof(IsWindowFit), IsWindowFit);
+        settings.TryAdd(nameof(IsCenterWindowFit), IsCenterWindowFit);
+        settings.TryAdd(nameof(IsShowToast), IsShowToast);
+        settings.TryAdd(nameof(IsUseTouchGesture), IsUseTouchGesture);
+        settings.TryAdd(nameof(IsHideTooltips), IsHideTooltips);
+        settings.TryAdd(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
+        settings.TryAdd(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
+        settings.TryAdd(nameof(IsUseRawThumbnail), IsUseRawThumbnail);
+        settings.TryAdd(nameof(IsHideToolbarInFullscreen), IsHideToolbarInFullscreen);
+        settings.TryAdd(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
 
         #endregion
-
 
 
         #region Number items
 
-        /// <summary>
-        /// Gets, sets the version that requires to launch First-Launch Configs screen
-        /// </summary>
-        public static int FirstLaunchVersion { get; set; } = 0;
+        // FrmMain
+        settings.TryAdd(nameof(FrmMainPositionX), FrmMainPositionX);
+        settings.TryAdd(nameof(FrmMainPositionY), FrmMainPositionY);
+        settings.TryAdd(nameof(FrmMainWidth), FrmMainWidth);
+        settings.TryAdd(nameof(FrmMainHeight), FrmMainHeight);
 
-        /// <summary>
-        /// Gets, sets slide show interval (minimum value if it's random)
-        /// </summary>
-        public static uint SlideShowInterval { get; set; } = 5;
+        // FrmSettings
+        settings.TryAdd(nameof(FrmSettingsPositionX), FrmSettingsPositionX);
+        settings.TryAdd(nameof(FrmSettingsPositionY), FrmSettingsPositionY);
+        settings.TryAdd(nameof(FrmSettingsWidth), FrmSettingsWidth);
+        settings.TryAdd(nameof(FrmSettingsHeight), FrmSettingsHeight);
 
-        /// <summary>
-        /// Gets, sets the maximum slide show interval value
-        /// </summary>
-        public static uint SlideShowIntervalTo { get; set; } = 5;
+        // FrmExifTool
+        settings.TryAdd(nameof(FrmExifToolPositionX), FrmExifToolPositionX);
+        settings.TryAdd(nameof(FrmExifToolPositionY), FrmExifToolPositionY);
+        settings.TryAdd(nameof(FrmExifToolWidth), FrmExifToolWidth);
+        settings.TryAdd(nameof(FrmExifToolHeight), FrmExifToolHeight);
 
-        /// <summary>
-        /// Gets, sets value of thumbnail dimension in pixel
-        /// </summary>
-        public static uint ThumbnailDimension { get; set; } = 96;
-
-        /// <summary>
-        /// Gets, sets width of horizontal thumbnail bar
-        /// </summary>
-        public static uint ThumbnailBarWidth { get; set; } = new ThumbnailItemInfo(ThumbnailDimension, true).GetTotalDimension();
-
-        /// <summary>
-        /// Gets, sets the number of images cached by Image
-        /// </summary>
-        public static uint ImageBoosterCachedCount { get; set; } = 1;
-
-        /// <summary>
-        /// Gets, sets fixed width on zooming
-        /// </summary>
-        public static double ZoomLockValue { get; set; } = 100f;
-
-        /// <summary>
-        /// Gets, sets toolbar icon height
-        /// </summary>
-        public static uint ToolbarIconHeight { get; set; } = Constants.DEFAULT_TOOLBAR_ICON_HEIGHT;
-
-        /// <summary>
-        /// Gets, sets value of image quality for editting
-        /// </summary>
-        public static int ImageEditQuality { get; set; } = 100;
+        settings.TryAdd(nameof(FirstLaunchVersion), FirstLaunchVersion);
+        settings.TryAdd(nameof(SlideShowInterval), SlideShowInterval);
+        settings.TryAdd(nameof(SlideShowIntervalTo), SlideShowIntervalTo);
+        settings.TryAdd(nameof(ThumbnailDimension), ThumbnailDimension);
+        settings.TryAdd(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
+        settings.TryAdd(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
+        settings.TryAdd(nameof(ZoomLockValue), ZoomLockValue);
+        settings.TryAdd(nameof(ToolbarIconHeight), ToolbarIconHeight);
+        settings.TryAdd(nameof(ImageEditQuality), ImageEditQuality);
 
         #endregion
 
 
+        #region Enum items
 
-
-
-        /// <summary>
-        /// Gets, sets 'Left' position of WinMain
-        /// </summary>
-        public static int FrmMainPositionX { get; set; } = 200;
-
-        /// <summary>
-        /// Gets, sets 'Top' position of WinMain
-        /// </summary>
-        public static int FrmMainPositionY { get; set; } = 200;
-
-        /// <summary>
-        /// Gets, sets width of WinMain
-        /// </summary>
-        public static int FrmMainWidth { get; set; } = 1200;
-
-        /// <summary>
-        /// Gets, sets height of WinMain
-        /// </summary>
-        public static int FrmMainHeight { get; set; } = 800;
-
-        /// <summary>
-        /// Gets, sets window state of WinMain
-        /// </summary>
-        public static WindowState FrmMainState { get; set; } = WindowState.Normal;
-
+        settings.TryAdd(nameof(FrmMainState), FrmMainState.ToString());
+        settings.TryAdd(nameof(FrmSettingsState), FrmSettingsState.ToString());
+        settings.TryAdd(nameof(FrmExifToolState), FrmExifToolState.ToString());
+        settings.TryAdd(nameof(ImageLoadingOrder), ImageLoadingOrder.ToString());
+        settings.TryAdd(nameof(ImageLoadingOrderType), ImageLoadingOrderType.ToString());
+        settings.TryAdd(nameof(MouseWheelAction), MouseWheelAction.ToString());
+        settings.TryAdd(nameof(MouseWheelCtrlAction), MouseWheelCtrlAction.ToString());
+        settings.TryAdd(nameof(MouseWheelShiftAction), MouseWheelShiftAction.ToString());
+        settings.TryAdd(nameof(MouseWheelAltAction), MouseWheelAltAction.ToString());
+        settings.TryAdd(nameof(ZoomMode), ZoomMode.ToString());
+        settings.TryAdd(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod.ToString());
+        settings.TryAdd(nameof(ToolbarPosition), ToolbarPosition.ToString());
+        settings.TryAdd(nameof(AfterEditingAction), AfterEditingAction.ToString());
 
         #endregion
 
 
+        #region String items
 
-
-        #region Public functions
-
-        /// <summary>
-        /// Loads and parsse configs from file
-        /// </summary>
-        public static void Load()
-        {
-            var items = _source.LoadUserConfigs();
-
-            // Number values
-            FrmMainPositionX = items.GetValue(nameof(FrmMainPositionX), FrmMainPositionX);
-            FrmMainPositionY = items.GetValue(nameof(FrmMainPositionY), FrmMainPositionY);
-            FrmMainWidth = items.GetValue(nameof(FrmMainWidth), FrmMainWidth);
-            FrmMainHeight = items.GetValue(nameof(FrmMainHeight), FrmMainHeight);
-
-            // Boolean values
-            IsFullScreen = items.GetValue(nameof(IsFullScreen), IsFullScreen);
-
-            // String values
-
-
-            // Enum values
-            FrmMainState = items.GetValue(nameof(FrmMainState), FrmMainState);
-
-        }
-
-
-        /// <summary>
-        /// Parses and writes configs to file
-        /// </summary>
-        public static void Write()
-        {
-            var jsonFile = App.ConfigDir(PathType.File, Source.UserFilename);
-            Helpers.WriteJson(jsonFile, GetSettingObjects());
-        }
+        settings.TryAdd(nameof(ColorProfile), ColorProfile);
+        settings.TryAdd(nameof(AutoUpdate), AutoUpdate);
+        settings.TryAdd(nameof(LastSeenImagePath), LastSeenImagePath);
+        settings.TryAdd(nameof(ExifToolExePath), ExifToolExePath);
+        settings.TryAdd(nameof(ExifToolCommandArgs), ExifToolCommandArgs);
 
         #endregion
 
 
-        #region Private functions
+        #region Array items
 
-        /// <summary>
-        /// Converts all settings to ExpandoObject for Json parsing
-        /// </summary>
-        /// <returns></returns>
-        private static dynamic GetSettingObjects()
-        {
-            var settings = new ExpandoObject();
-
-            var infoJson = new
-            {
-                _source.Description,
-                _source.Version
-            };
-
-            settings.TryAdd("Info", infoJson);
-
-
-            // Number values
-            settings.TryAdd(nameof(FrmMainPositionX), FrmMainPositionX);
-            settings.TryAdd(nameof(FrmMainPositionY), FrmMainPositionY);
-            settings.TryAdd(nameof(FrmMainWidth), FrmMainWidth);
-            settings.TryAdd(nameof(FrmMainHeight), FrmMainHeight);
-
-            // Enum values
-            settings.TryAdd(nameof(FrmMainState), FrmMainState.ToString());
-
-            // String values
-
-            // Boolean values
-            settings.TryAdd(nameof(IsWindowAlwaysOnTop), IsWindowAlwaysOnTop.ToString());
-            settings.TryAdd(nameof(IsFullScreen), IsFullScreen.ToString());
-
-
-            return settings;
-        }
+        settings.TryAdd(nameof(ZoomLevels), Helpers.IntArrayToString(ZoomLevels));
+        settings.TryAdd(nameof(EditApps), GetEditApps(EditApps));
+        settings.TryAdd(nameof(AllFormats), GetImageFormats(AllFormats));
+        settings.TryAdd(nameof(SinglePageFormats), GetImageFormats(SinglePageFormats));
+        settings.TryAdd(nameof(KeyComboActions), GetKeyComboActions(KeyComboActions));
+        settings.TryAdd(nameof(ToolbarButtons), GetToolbarButtons(ToolbarButtons));
 
         #endregion
 
 
+        #region Other types items
+        // TODO
+
+        //settings.TryAdd(nameof(BackgroundColor), Theme.ConvertColorToHEX(BackgroundColor, true));
+        //settings.TryAdd(nameof(Language), Path.GetFileName(Language.FileName));
+        //settings.TryAdd(nameof(Theme), Theme.FolderName);
+
+        #endregion
+
+
+        return settings;
     }
-}
 
+
+
+    #region EditApp
+
+    /// <summary>
+    /// Gets an EditApp from an extension
+    /// </summary>
+    /// <param name="ext">An extension to search. Ex: .png</param>
+    /// <returns></returns>
+    public static EditApp GetEditApp(string ext)
+    {
+        if (EditApps.Count > 0)
+        {
+            return EditApps.Find(v =>
+                v.Extension.CompareTo(ext) == 0
+                && v.AppPath?.Length > 0);
+        }
+
+        return null;
+    }
+
+
+    /// <summary>
+    /// Gets list of EditApps from a list of extensions
+    /// </summary>
+    /// <param name="exts">List() {".png", ".jpg"}</param>
+    /// <returns></returns>
+    public static List<EditApp> GetEditApps(List<string> exts)
+    {
+        var list = new List<EditApp>();
+
+        if (EditApps.Count > 0)
+        {
+            list = EditApps.FindAll(v => exts.Contains(v.Extension));
+        }
+
+        return list;
+    }
+
+
+    /// <summary>
+    /// Returns string from the given apps
+    /// </summary>
+    /// <param name="apps"></param>
+    /// <returns></returns>
+    public static List<EditApp> GetEditApps(string apps)
+    {
+        var appStr = apps.Split("[]".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+        var list = new List<EditApp>();
+
+        if (appStr.Length > 0)
+        {
+            foreach (var item in appStr)
+            {
+                try
+                {
+                    var extAssoc = new EditApp(item);
+                    list.Add(extAssoc);
+                }
+                catch (InvalidCastException) { }
+            }
+        }
+
+        return list;
+    }
+
+
+    /// <summary>
+    /// Returns string from the given apps
+    /// </summary>
+    /// <param name="apps"></param>
+    /// <returns></returns>
+    public static string GetEditApps(List<EditApp> apps)
+    {
+        var appStr = new StringBuilder();
+        foreach (var item in apps)
+        {
+            appStr.Append('[').Append(item).Append(']');
+        }
+
+        return appStr.ToString();
+    }
+
+    #endregion
+
+
+    #region ImageFormats
+
+    /// <summary>
+    /// Returns distinc list of image formats
+    /// </summary>
+    /// <param name="formats">The format string. E.g: *.bpm;*.jpg;</param>
+    /// <returns></returns>
+    public static HashSet<string> GetImageFormats(string formats)
+    {
+        var list = new HashSet<string>();
+        var formatList = formats.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+        char[] wildTrim = { '*' };
+
+        foreach (var ext in formatList)
+        {
+            list.Add(ext.Trim(wildTrim));
+        }
+
+        return list;
+    }
+
+    /// <summary>
+    /// Returns the image formats string
+    /// </summary>
+    /// <param name="list">The input HashSet</param>
+    /// <returns></returns>
+    public static string GetImageFormats(HashSet<string> list)
+    {
+        var sb = new StringBuilder(list.Count);
+        foreach (var item in list)
+        {
+            sb.Append('*').Append(item).Append(';');
+        }
+
+        return sb.ToString();
+    }
+
+    #endregion
+
+
+    #region KeyComboActions
+
+    /// <summary>
+    /// Returns the keycombo actions from string
+    /// </summary>
+    /// <param name="keyActions">The input string. E.g. "combo1:action1;combo2:action2"</param>
+    /// <returns></returns>
+    public static Dictionary<KeyCombos, AssignableActions> GetKeyComboActions(string keyActions)
+    {
+        var pairs = keyActions.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+        var dic = new Dictionary<KeyCombos, AssignableActions>();
+
+        try
+        {
+            foreach (var pair in pairs)
+            {
+                var parts = pair.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+
+                var keyCombo = Helpers.ParseEnum<KeyCombos>(parts[0]);
+                var action = Helpers.ParseEnum<AssignableActions>(parts[1]);
+
+                dic.Add(keyCombo, action);
+            }
+        }
+        catch
+        {
+            // reset to default set on error
+            dic = Constants.DefaultKeycomboActions;
+        }
+
+        return dic;
+    }
+
+    /// <summary>
+    /// Returns the string from keycombo actions
+    /// </summary>
+    /// <param name="keyActions">The input keycombo actions</param>
+    /// <returns></returns>
+    public static string GetKeyComboActions(Dictionary<KeyCombos, AssignableActions> keyActions)
+    {
+        var sb = new StringBuilder();
+
+        foreach (var key in keyActions.Keys)
+        {
+            sb.Append(key.ToString());
+            sb.Append(':');
+            sb.Append(keyActions[key].ToString());
+            sb.Append(';');
+        }
+
+        return sb.ToString();
+    }
+
+    #endregion
+
+
+    #region ToolbarButtons
+
+    /// <summary>
+    /// Returns list of toolbar buttons from string
+    /// </summary>
+    /// <param name="buttons">The input string</param>
+    /// <returns></returns>
+    public static List<ToolbarButton> GetToolbarButtons(string buttons)
+    {
+        var list = new List<ToolbarButton>();
+        var splitvals = buttons.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (var item in splitvals)
+        {
+            try
+            {
+                var btn = Helpers.ParseEnum<ToolbarButton>(item);
+                list.Add(btn);
+            }
+            // ignore invalid values
+            catch { }
+        }
+
+        return list;
+    }
+
+    /// <summary>
+    /// Returns string from toolbar buttons list
+    /// </summary>
+    /// <param name="list">The input toolbar buttons</param>
+    /// <returns></returns>
+    public static string GetToolbarButtons(List<ToolbarButton> list)
+    {
+        var sb = new StringBuilder(list.Count);
+        foreach (var item in list)
+        {
+            sb.Append(item).Append(';');
+        }
+
+        return sb.ToString();
+    }
+
+    #endregion
+
+
+
+    /// <summary>
+    /// Apply theme colors and logo to form
+    /// </summary>
+    /// <param name="frm"></param>
+    /// <param name="th"></param>
+    public static void ApplyFormTheme(Form frm, Theme th)
+    {
+        // TODO
+
+        //// load theme colors
+        //foreach (var ctr in Helpers.GetAllControls(frm, typeof(LinkLabel)))
+        //{
+        //    if (ctr is LinkLabel lnk)
+        //    {
+        //        lnk.LinkColor = lnk.VisitedLinkColor = Theme.AccentColor;
+        //    }
+        //}
+
+        //// Icon theming
+        //if (!th.IsShowTitlebarLogo)
+        //{
+        //    frm.Icon = Icon.FromHandle(new Bitmap(64, 64).GetHicon());
+        //    FormIcon.SetTaskbarIcon(frm, th.Logo.Image.GetHicon());
+        //}
+        //else
+        //{
+        //    frm.Icon = Icon.FromHandle(th.Logo.Image.GetHicon());
+        //}
+    }
+
+    #endregion
+
+
+}

@@ -15,6 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\ImageGlass.UI\ImageGlass.UI.csproj" />
         <ProjectReference Include="..\ImageGlass.Base\ImageGlass.Base.csproj" />
     </ItemGroup>
 

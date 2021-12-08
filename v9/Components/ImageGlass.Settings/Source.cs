@@ -10,7 +10,7 @@ public class Source
     /// <summary>
     /// Gets the user config file name.
     /// </summary>
-    public static string UserFilename => "igconfig.user.json";
+    public static string UserFilename => "igconfig.json";
 
 
     /// <summary>
