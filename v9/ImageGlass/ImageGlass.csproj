@@ -15,6 +15,9 @@
     <PackageProjectUrl>https://imageglass.org</PackageProjectUrl>
     <RepositoryUrl>https://imageglass.org/source</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <FileVersion>$(Version)</FileVersion>
+    <VersionPrefix>9.0.0</VersionPrefix>
+    <VersionSuffix>moon</VersionSuffix>
   </PropertyGroup>
 
   <ItemGroup>

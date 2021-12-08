@@ -6,5 +6,6 @@ public partial class FrmMain : Form
     {
         InitializeComponent();
         SetUpFrmMainConfigs();
+        SetUpFrmMainTheme();
     }
 }
