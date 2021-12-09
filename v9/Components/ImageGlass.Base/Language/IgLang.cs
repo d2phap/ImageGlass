@@ -85,12 +85,12 @@ public class IgLang : Dictionary<string, string>
     /// <summary>
     /// Saves current language to JSON file
     /// </summary>
-    /// <param name="fileName"></param>
-    public void SaveAsFile(string fileName)
+    /// <param name="filePath"></param>
+    public void SaveAsFile(string filePath)
     {
         var model = new IgLangJsonModel(Info, this);
 
-        Helpers.WriteJson(fileName, model);
+        Helpers.WriteJson(filePath, model);
     }
 
 

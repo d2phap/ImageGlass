@@ -7,4 +7,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Components\ImageGlass.Base\ImageGlass.Base.csproj" />
+  </ItemGroup>
+
 </Project>

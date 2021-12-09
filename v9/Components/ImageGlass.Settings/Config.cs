@@ -1218,7 +1218,7 @@ public class Config
     /// </summary>
     /// <param name="frm"></param>
     /// <param name="th"></param>
-    public static void ApplyFormTheme(Form frm, Theme th)
+    public static void ApplyFormTheme(Form frm, IgTheme th)
     {
         // TODO
 

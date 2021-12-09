@@ -1,0 +1,131 @@
+﻿
+namespace ImageGlass.UI;
+
+
+/// <summary>
+/// Theme information
+/// </summary>
+public record IgThemeInfo
+{
+    public string Name { get; set; } = string.Empty;
+    public string Version { get; set; } = string.Empty;
+    public string Author { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Website { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public bool IsDark { get; set; } = true;
+
+    /// <summary>
+    /// Config version of this theme to work with
+    /// </summary>
+    public string ConfigVersion { get; set; } = "9";
+}
+
+
+/// <summary>
+/// Theme colors and others
+/// </summary>
+public record IgThemeSettings
+{
+    public Color AccentColor { get; set; } = Color.Blue;
+    public Color AccentHoverColor { get; set; } = Color.Yellow;
+    public Color AccentSelectedColor { get; set; } = Color.Pink;
+
+    public Color TextColor { get; set; } = Color.White;
+    public Color BgColor { get; set; } = Color.Black;
+    public Color ToolbarBgColor { get; set; } = Color.FromArgb(234, 234, 242);
+    public Color ThumbnailBgColor { get; set; } = Color.FromArgb(234, 234, 242);
+
+
+    // Menu
+    public Color MenuBgColor { get; set; } = Color.Black;
+    public Color MenuBgHoverColor { get; set; } = Color.White;
+    public Color MenuTextColor { get; set; } = Color.White;
+    public Color MenuTextHoverColor { get; set; } = Color.Black;
+
+
+
+    /// <summary>
+    /// The multiplier which impacts the size of the navigation arrows.
+    /// </summary>
+    public double NavArrowMultiplier { get; set; } = 2.0;
+
+    /// <summary>
+    /// Gets, sets the navigation left arrow
+    /// </summary>
+    public Bitmap? NavArrowLeft { get; set; }
+
+    /// <summary>
+    /// Gets, sets the navigation right arrow
+    /// </summary>
+    public Bitmap? NavArrowRight { get; set; }
+
+    /// <summary>
+    /// Sets, sets app logo
+    /// </summary>
+    public Bitmap? AppLogo { get; set; }
+
+    /// <summary>
+    /// Show or hide logo on title bar of window
+    /// </summary>
+    public bool IsShowTitlebarLogo { get; set; } = true;
+
+    /// <summary>
+    /// The preview image of the theme
+    /// </summary>
+    public Bitmap? PreviewImage { get; set; }
+}
+
+
+/// <summary>
+/// Theme toolbar icons
+/// </summary>
+public class IgThemeToolbarIcons
+{
+    public Bitmap? ActualSize { get; set; }
+    public Bitmap? AutoZoom { get; set; }
+    public Bitmap? Checkerboard { get; set; }
+    public Bitmap? ColorPicker { get; set; }
+    public Bitmap? Crop { get; set; }
+    public Bitmap? Delete { get; set; }
+    public Bitmap? Edit { get; set; }
+    public Bitmap? Exit { get; set; }
+    public Bitmap? FlipHorz { get; set; }
+    public Bitmap? FlipVert { get; set; }
+    public Bitmap? FullScreen { get; set; }
+    public Bitmap? GoToImage { get; set; }
+    public Bitmap? LockZoom { get; set; }
+    public Bitmap? MainMenu { get; set; }
+    public Bitmap? OpenFile { get; set; }
+    public Bitmap? Print { get; set; }
+    public Bitmap? Refresh { get; set; }
+    public Bitmap? RotateLeft { get; set; }
+    public Bitmap? RotateRight { get; set; }
+    public Bitmap? SaveAs { get; set; }
+    public Bitmap? ScaleToFill { get; set; }
+    public Bitmap? ScaleToFit { get; set; }
+    public Bitmap? ScaleToHeight { get; set; }
+    public Bitmap? ScaleToWidth { get; set; }
+    public Bitmap? Slideshow { get; set; }
+    public Bitmap? ThumbnailBar { get; set; }
+    public Bitmap? ViewFirstImage { get; set; }
+    public Bitmap? ViewLastImage { get; set; }
+    public Bitmap? ViewNextImage { get; set; }
+    public Bitmap? ViewPreviousImage { get; set; }
+    public Bitmap? WindowFit { get; set; }
+    public Bitmap? ZoomIn { get; set; }
+    public Bitmap? ZoomOut { get; set; }
+}
+
+
+/// <summary>
+/// JSON model for theme file
+/// </summary>
+/// <param name="Info"></param>
+/// <param name="Settings"></param>
+/// <param name="ToolbarIcons"></param>
+public record IgThemeJsonModel(
+    IgThemeInfo Info,
+    Dictionary<string, string> Settings,
+    Dictionary<string, string> ToolbarIcons)
+{ }
