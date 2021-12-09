@@ -142,7 +142,8 @@ public class IgTheme
             return IsValid;
         }
 
-        // import theme colors
+
+        #region import theme colors
         foreach (var item in JsonModel.Settings)
         {
             var value = (item.Value ?? "")?.ToString()?.Trim();
@@ -178,7 +179,14 @@ public class IgTheme
             catch { }
         }
 
-        // import toolbar icons
+        if (Settings.AppLogo is null)
+        {
+            Settings.AppLogo = Properties.Resources.DefaultLogo;
+        }
+        #endregion
+
+
+        #region import toolbar icons
         foreach (var item in JsonModel.ToolbarIcons)
         {
             var value = (item.Value ?? "")?.ToString()?.Trim();
@@ -193,6 +201,7 @@ public class IgTheme
             }
             catch { }
         }
+        #endregion
 
 
         IsValid = true;

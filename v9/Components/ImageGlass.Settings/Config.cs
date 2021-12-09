@@ -809,12 +809,21 @@ public class Config
 
         #endregion
 
-        // TODO
-        //#region BackgroundColor
-        //// must load after Theme
-        //var bgValue = items.GetValue(nameof(BackgroundColor), ThemeUtils.ConvertColorToHEX(Theme.BackgroundColor, true));
-        //BackgroundColor = ThemeUtils.ConvertHexStringToColor(bgValue, true);
-        //#endregion
+
+        #region BackgroundColor
+
+        // must load after Theme
+        var bgValue = items.GetValue(nameof(BackgroundColor), string.Empty);
+
+        if (string.IsNullOrEmpty(bgValue))
+        {
+            BackgroundColor = Theme.Settings.BgColor;
+        }
+        else
+        {
+            BackgroundColor = ThemeUtils.ConvertHexStringToColor(bgValue, true);
+        }
+        #endregion
 
         #endregion
 
@@ -983,9 +992,8 @@ public class Config
 
 
         #region Other types items
-        // TODO
 
-        //settings.TryAdd(nameof(BackgroundColor), Theme.ConvertColorToHEX(BackgroundColor, true));
+        settings.TryAdd(nameof(BackgroundColor), ThemeUtils.ConvertColorToHEX(BackgroundColor));
         settings.TryAdd(nameof(Language), Path.GetFileName(Language.FileName));
         settings.TryAdd(nameof(Theme), Theme.FolderName);
 
@@ -1230,27 +1238,25 @@ public class Config
     /// <param name="th"></param>
     public static void ApplyFormTheme(Form frm, IgTheme th)
     {
-        // TODO
+        // load theme colors
+        foreach (var ctr in Helpers.GetAllControls(frm, typeof(LinkLabel)))
+        {
+            if (ctr is LinkLabel lnk)
+            {
+                lnk.LinkColor = lnk.VisitedLinkColor = Theme.Settings.AccentColor;
+            }
+        }
 
-        //// load theme colors
-        //foreach (var ctr in Helpers.GetAllControls(frm, typeof(LinkLabel)))
-        //{
-        //    if (ctr is LinkLabel lnk)
-        //    {
-        //        lnk.LinkColor = lnk.VisitedLinkColor = Theme.AccentColor;
-        //    }
-        //}
-
-        //// Icon theming
-        //if (!th.IsShowTitlebarLogo)
-        //{
-        //    frm.Icon = Icon.FromHandle(new Bitmap(64, 64).GetHicon());
-        //    FormIcon.SetTaskbarIcon(frm, th.Logo.Image.GetHicon());
-        //}
-        //else
-        //{
-        //    frm.Icon = Icon.FromHandle(th.Logo.Image.GetHicon());
-        //}
+        // Icon theming
+        if (!th.Settings.IsShowTitlebarLogo)
+        {
+            frm.Icon = Icon.FromHandle(new Bitmap(64, 64).GetHicon());
+            FormIcon.SetTaskbarIcon(frm, th.Settings.AppLogo.GetHicon());
+        }
+        else
+        {
+            frm.Icon = Icon.FromHandle(th.Settings.AppLogo.GetHicon());
+        }
     }
 
     #endregion

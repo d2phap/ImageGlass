@@ -86,7 +86,7 @@ public record IgThemeSettings
     /// <summary>
     /// Sets, sets app logo
     /// </summary>
-    public Bitmap? AppLogo { get; set; }
+    public Bitmap AppLogo { get; set; } = Properties.Resources.DefaultLogo;
 
     /// <summary>
     /// Show or hide logo on title bar of window
