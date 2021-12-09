@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ImageGlass.Base;
 
@@ -51,11 +52,11 @@ public partial class Helpers
     /// <typeparam name="T"></typeparam>
     /// <param name="jsonFilePath"></param>
     /// <returns></returns>
-    public static async Task<T?> ReadJson<T>(string jsonFilePath)
+    public static T? ReadJson<T>(string jsonFilePath)
     {
         using var stream = File.OpenRead(jsonFilePath);
 
-        return await JsonSerializer.DeserializeAsync<T>(stream, JsonOptions);
+        return JsonSerializer.Deserialize<T>(stream, JsonOptions);
     }
 
 

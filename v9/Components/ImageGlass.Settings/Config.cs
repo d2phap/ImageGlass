@@ -552,12 +552,12 @@ public class Config
     /// <summary>
     /// Gets, sets language pack
     /// </summary>
-    public static IgLang Language { get; set; } = new();
+    public static IgLang Language { get; set; }
 
     /// <summary>
-    /// TODO: Gets, sets theme
+    /// Gets, sets theme
     /// </summary>
-    //public static Theme Theme { get; set; }
+    public static IgTheme Theme { get; set; }
 
     #endregion
 
@@ -782,22 +782,32 @@ public class Config
         // Other types values
         #region Other types items
 
-
         #region Language
         var langPath = items.GetValue(nameof(Language), "English");
         Language = new IgLang(langPath, App.StartUpDir(Dir.Languages));
         #endregion
 
-        // TODO
-        //#region Theme
-        //var themeFolderName = items.GetValue(nameof(Theme), Constants.DEFAULT_THEME);
-        //var th = new Theme((int)ToolbarIconHeight, App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
+        #region Theme
+        var themeFolderName = items.GetValue(nameof(Theme), Constants.DEFAULT_THEME);
+        var th = new IgTheme(App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName), ToolbarIconHeight);
 
-        //if (th.IsValid)
-        //{
-        //    Theme = th;
-        //}
-        //#endregion
+        if (th.IsValid)
+        {
+            Theme = th;
+        }
+        else
+        {
+            // load default theme
+            Theme = new(App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME), ToolbarIconHeight);
+        }
+
+        if (!Theme.IsValid)
+        {
+            throw new InvalidDataException($"Unable to load '{th.FolderName}' theme pack. " +
+                $"Please make sure '{th.FolderName}\\{IgTheme.CONFIG_FILE}' file is valid.");
+        }
+
+        #endregion
 
         // TODO
         //#region BackgroundColor
@@ -977,7 +987,7 @@ public class Config
 
         //settings.TryAdd(nameof(BackgroundColor), Theme.ConvertColorToHEX(BackgroundColor, true));
         settings.TryAdd(nameof(Language), Path.GetFileName(Language.FileName));
-        //settings.TryAdd(nameof(Theme), Theme.FolderName);
+        settings.TryAdd(nameof(Theme), Theme.FolderName);
 
         #endregion
 

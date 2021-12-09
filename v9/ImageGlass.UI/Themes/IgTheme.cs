@@ -1,4 +1,22 @@
-﻿using ImageGlass.Base;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+using ImageGlass.Base;
 using ImageGlass.UI.WinApi;
 
 namespace ImageGlass.UI;
@@ -84,7 +102,7 @@ public class IgTheme
     /// </summary>
     /// <param name="themeFolderPath"></param>
     /// <returns></returns>
-    public async Task<bool> LoadTheme(string themeFolderPath)
+    public bool LoadTheme(string themeFolderPath)
     {
         // get full path of config file
         ConfigFilePath = Path.Combine(themeFolderPath, CONFIG_FILE);
@@ -102,8 +120,8 @@ public class IgTheme
 
         try
         {
-            // parse theme config file
-            JsonModel = await Helpers.ReadJson<IgThemeJsonModel>(ConfigFilePath);
+            //parse theme config file
+            JsonModel = Helpers.ReadJson<IgThemeJsonModel>(ConfigFilePath);
         }
         catch { }
 
@@ -116,19 +134,27 @@ public class IgTheme
         // import theme info
         Info = JsonModel.Info;
 
+        // check required fields
+        if (string.IsNullOrEmpty(Info.Name)
+            || string.IsNullOrEmpty(Info.ConfigVersion))
+        {
+            IsValid = false;
+            return IsValid;
+        }
+
         // import theme colors
         foreach (var item in JsonModel.Settings)
         {
-            if (string.IsNullOrEmpty(item.Value))
+            var value = (item.Value ?? "")?.ToString()?.Trim();
+            if (string.IsNullOrEmpty(value))
                 continue;
-
-            var value = item.Value.Trim();
+            
             var prop = Settings.GetType().GetProperty(item.Key);
 
             try
             {
                 // property is Color
-                if (prop?.GetType() == typeof(Color))
+                if (prop?.PropertyType == typeof(Color))
                 {
                     var colorItem = ThemeUtils.ConvertHexStringToColor(value);
                     prop.SetValue(Settings, colorItem);
@@ -136,7 +162,7 @@ public class IgTheme
                 }
 
                 // property is Bitmap
-                if (prop?.GetType() == typeof(Bitmap))
+                if (prop?.PropertyType == typeof(Bitmap))
                 {
                     // TODO: load image file
                     var bmp = new Bitmap(Path.Combine(FolderPath, value));
@@ -144,8 +170,10 @@ public class IgTheme
                     continue;
                 }
 
+
                 // property is other types
-                prop?.SetValue(Settings, value);
+                var typedValue = Convert.ChangeType(value, prop?.PropertyType ?? typeof(string));
+                prop?.SetValue(Settings, typedValue);
             }
             catch { }
         }
@@ -153,10 +181,14 @@ public class IgTheme
         // import toolbar icons
         foreach (var item in JsonModel.ToolbarIcons)
         {
+            var value = (item.Value ?? "")?.ToString()?.Trim();
+            if (string.IsNullOrEmpty(value))
+                continue;
+
             try
             {
                 // TODO: load image file
-                var icon = new Bitmap(item.Value);
+                var icon = new Bitmap(Path.Combine(FolderPath, value));
                 ToolbarIcons.GetType().GetProperty(item.Key)?.SetValue(ToolbarIcons, icon);
             }
             catch { }
@@ -173,14 +205,14 @@ public class IgTheme
     /// </summary>
     /// <param name="iconHeight"></param>
     /// <returns></returns>
-    public async Task<bool> ReloadTheme(float? iconHeight = null)
+    public bool ReloadTheme(float? iconHeight = null)
     {
         if (iconHeight is not null)
         {
             _iconHeight = iconHeight.Value;
         }
 
-        return await LoadTheme(FolderPath);
+        return LoadTheme(FolderPath);
     }
 
 

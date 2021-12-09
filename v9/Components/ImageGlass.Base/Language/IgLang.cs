@@ -64,9 +64,9 @@ public class IgLang : Dictionary<string, string>
     /// <summary>
     /// Loads language strings from JSON file
     /// </summary>
-    public async void ReadFromFile()
+    public void ReadFromFile()
     {
-        var model = await Helpers.ReadJson<IgLangJsonModel>(FileName);
+        var model = Helpers.ReadJson<IgLangJsonModel>(FileName);
         if (model == null) return;
 
         Info = model.Info;
