@@ -1,4 +1,23 @@
-﻿using ImageGlass.Base;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+using ImageGlass.Base;
 using ImageGlass.UI;
 using Microsoft.Extensions.Configuration;
 using System.Dynamic;
@@ -531,9 +550,9 @@ public class Config
     public static Color BackgroundColor { get; set; } = Color.Black;
 
     /// <summary>
-    /// TODO: Gets, sets language pack
+    /// Gets, sets language pack
     /// </summary>
-    //public static Language Language { get; set; } = new();
+    public static IgLang Language { get; set; } = new();
 
     /// <summary>
     /// TODO: Gets, sets theme
@@ -762,13 +781,14 @@ public class Config
 
         // Other types values
         #region Other types items
+
+
+        #region Language
+        var langPath = items.GetValue(nameof(Language), "English");
+        Language = new IgLang(langPath, App.StartUpDir(Dir.Languages));
+        #endregion
+
         // TODO
-
-        //#region Lang
-        //var langPath = items.GetValue(nameof(Language), "English");
-        //Language = new Language(langPath, App.StartUpDir(Dir.Languages));
-        //#endregion
-
         //#region Theme
         //var themeFolderName = items.GetValue(nameof(Theme), Constants.DEFAULT_THEME);
         //var th = new Theme((int)ToolbarIconHeight, App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
@@ -779,6 +799,7 @@ public class Config
         //}
         //#endregion
 
+        // TODO
         //#region BackgroundColor
         //// must load after Theme
         //var bgValue = items.GetValue(nameof(BackgroundColor), ThemeUtils.ConvertColorToHEX(Theme.BackgroundColor, true));
@@ -955,7 +976,7 @@ public class Config
         // TODO
 
         //settings.TryAdd(nameof(BackgroundColor), Theme.ConvertColorToHEX(BackgroundColor, true));
-        //settings.TryAdd(nameof(Language), Path.GetFileName(Language.FileName));
+        settings.TryAdd(nameof(Language), Path.GetFileName(Language.FileName));
         //settings.TryAdd(nameof(Theme), Theme.FolderName);
 
         #endregion

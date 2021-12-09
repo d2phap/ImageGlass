@@ -42,7 +42,7 @@ internal static class Program
             osInfo + "\r\n" +
             "\r\n" +
             ex.ToString()
-        ); ;
+        );
         btnQuit.Click += (object? sender, EventArgs e) => Application.Exit();
 
 
@@ -53,10 +53,10 @@ internal static class Program
 
             Heading = ex.Message,
             Text = "Unhandled exception has occurred.\r\n" +
-                "You can click" + "\r\n" +
-                "- Continue to ignore this error," + "\r\n" +
-                "- Copy to copy the error details for bug report, or " + "\r\n" +
-                "- Quit to exit the application.\r\n\r\n" +
+                "Click" + "\r\n" +
+                "- 'Continue' to ignore this error," + "\r\n" +
+                "- 'Copy' to copy the error details for bug report, or " + "\r\n" +
+                "- 'Quit' to exit the application.\r\n\r\n" +
                 appInfo + "\r\n" +
                 osInfo,
 
