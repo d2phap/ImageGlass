@@ -21,6 +21,15 @@ It gives you the possibility to view over **80+** common image formats, includin
 [![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23932043&label=latest%20version&style=for-the-badge)](https://imageglass.org/download)
 
 
+
+### ImageGlass comes to Microsoft Store!
+If you buy ImageGlass in the Microsoft Store, you'll be supporting its development directly. You will get the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes. 😊
+
+<a href="https://www.microsoft.com/store/productId/9N33VZK3C7TH">
+  <img height="75" src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Get_it_from_Microsoft_Badge.svg" />
+</a><br/><br/>
+
+
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
 <img src="https://imageglass.org/upload/photo/release/8.3_1.jpg" alt="ImageGlass 8.3.11.21" width="640">
 </a><br/>
