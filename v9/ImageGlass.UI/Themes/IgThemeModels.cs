@@ -50,14 +50,14 @@ public record IgThemeInfo
 /// </summary>
 public record IgThemeSettings
 {
-    public Color AccentColor { get; set; } = Color.Blue;
-    public Color AccentHoverColor { get; set; } = Color.Yellow;
-    public Color AccentSelectedColor { get; set; } = Color.Pink;
-
+    public Color AccentColor { get; set; } = ThemeUtils.ConvertHexStringToColor("#0078D7");
+    public Color AccentHoverColor { get; set; } = ThemeUtils.ConvertHexStringToColor("#0d92ff");
+    public Color AccentSelectedColor { get; set; } = ThemeUtils.ConvertHexStringToColor("#0060ae");
+    
     public Color TextColor { get; set; } = Color.White;
     public Color BgColor { get; set; } = Color.Black;
-    public Color ToolbarBgColor { get; set; } = Color.FromArgb(234, 234, 242);
-    public Color ThumbnailBgColor { get; set; } = Color.FromArgb(234, 234, 242);
+    public Color ToolbarBgColor { get; set; } = ThemeUtils.ConvertHexStringToColor("#242b31");
+    public Color ThumbnailBgColor { get; set; } = ThemeUtils.ConvertHexStringToColor("#242b31");
 
 
     // Menu

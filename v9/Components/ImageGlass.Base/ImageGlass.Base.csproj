@@ -7,8 +7,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="WinApi\" />
-  </ItemGroup>
-
 </Project>

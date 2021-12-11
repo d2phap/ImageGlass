@@ -169,5 +169,5 @@ Source/.vs/ImageGlass.sqlite
 Source/ImageGlass/obj/Debug/DesignTimeResolveAssemblyReferences.cache
 
 /.vs/ProjectSettings.json
-v9/.vs/ImageGlass/DesignTimeBuild/.dtbcache.v2
-v9/.vs/ImageGlass/v17/.futdcache.v1
+.dtbcache.*
+.futdcache.*

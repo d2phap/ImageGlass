@@ -1,4 +1,6 @@
-﻿using ImageGlass.UI;
+﻿using ImageGlass.Settings;
+using ImageGlass.UI;
+using ImageGlass.UI.Toolbar;
 
 namespace ImageGlass;
 
@@ -6,12 +8,20 @@ public partial class FrmMain
 {
     public void SetUpFrmMainTheme()
     {
-        this.Load += FrmMainTheme_Load;
+        Load += FrmMainTheme_Load;
     }
 
 
     private void FrmMainTheme_Load(object? sender, EventArgs e)
     {
+        toolBar.Renderer = new ModernToolbarRenderer(Config.Theme);
+        toolBar.BackColor = Config.Theme.Settings.ToolbarBgColor;
+
+        // Overflow button and Overflow dropdown
+        toolBar.OverflowButton.DropDown.BackColor = toolBar.BackColor;
+        toolBar.OverflowButton.AutoSize = false;
+        toolBar.OverflowButton.Padding = new Padding(10);
+
         UpdateTheme();
     }
 
@@ -26,11 +36,11 @@ public partial class FrmMain
 
         if (newTheme == SystemTheme.Light)
         {
-            this.BackColor = Color.FromArgb(255, 255, 255, 255);
+            BackColor = Color.FromArgb(255, 255, 255, 255);
         }
         else
         {
-            this.BackColor = Color.FromArgb(255, 26, 34, 39);
+            BackColor = Color.FromArgb(255, 26, 34, 39);
         }
     }
 
