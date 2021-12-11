@@ -9,58 +9,28 @@ public partial class FrmMain : Form
         SetUpFrmMainTheme();
     }
 
-    private void button1_Click(object sender, EventArgs e)
+    private void FrmMain_Resize(object sender, EventArgs e)
     {
-        //button2.Visible = !button2.Visible;
-        //button2.Height += 10;
+
     }
 
-    bool resizing;
-    int rowindex = -1;
-    int nextHeight;
-
-    private void tb1_MouseDown(object sender, MouseEventArgs e)
+    protected override void WndProc(ref Message m)
     {
-        if (e.Button == MouseButtons.Left)
+        // WM_SYSCOMMAND
+        if (m.Msg == 0x0112)
         {
-            resizing = true;
-        }
-    }
-
-    private void tb1_MouseMove(object sender, MouseEventArgs e)
-    {
-        Control c = (Control)sender;
-        if (!resizing)
-        {
-            rowindex = -1;
-            tb1.Cursor = Cursors.Default;
-
-            if (e.Y <= 3)
+            // When user clicks on MAXIMIZE button on title bar
+            if (m.WParam == new IntPtr(0xF030)) // SC_MAXIMIZE
             {
-                rowindex = tb1.GetPositionFromControl(c).Row - 1;
-                if (rowindex >= 0)
-                    tb1.Cursor = Cursors.HSplit;
+                // The window is being maximized
             }
-            if (c.Height - e.Y <= 3)
+            // When user clicks on the RESTORE button on title bar
+            else if (m.WParam == new IntPtr(0xF120)) // SC_RESTORE
             {
-                rowindex = tb1.GetPositionFromControl(c).Row;
-                if (rowindex < tb1.RowStyles.Count)
-                    tb1.Cursor = Cursors.HSplit;
+                // The window is being restored
             }
         }
-        if (resizing && rowindex > -1)
-        {
-            nextHeight = e.Y;
-        }
-    }
 
-    private void tb1_MouseUp(object sender, MouseEventArgs e)
-    {
-        if (e.Button == MouseButtons.Left)
-        {
-            if (nextHeight > 0)
-                tb1.RowStyles[rowindex].Height = nextHeight;
-            resizing = false;
-        }
+        base.WndProc(ref m);
     }
 }

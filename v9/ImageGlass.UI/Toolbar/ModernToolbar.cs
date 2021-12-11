@@ -1,4 +1,21 @@
-﻿
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 using ImageGlass.Base.WinApi;
 
 namespace ImageGlass.UI.Toolbar;
@@ -155,7 +172,9 @@ public class ModernToolbar : ToolStrip
 
     protected override void OnSizeChanged(EventArgs e)
     {
+        UpdateAlignment();
         base.OnSizeChanged(e);
+
         UpdateAlignment();
     }
 
@@ -183,13 +202,23 @@ public class ModernToolbar : ToolStrip
     /// </summary>
     public void UpdateAlignment()
     {
-        if (Items.Count == 0)
+        if (Items.Count < 1) return;
+
+        // find the first left-aligned button
+        ToolStripItem? firstBtn = null;
+        foreach (ToolStripItem item in Items)
         {
-            return;
+            if (item.Alignment == ToolStripItemAlignment.Left)
+            {
+                firstBtn = item;
+                break;
+            }
         }
 
-        var firstBtn = Items[0];
-        var defaultMargin = new Padding(3, firstBtn.Margin.Top, firstBtn.Margin.Right, firstBtn.Margin.Bottom);
+        if (firstBtn == null) return;
+
+
+        var defaultMargin = new Padding(0, firstBtn.Margin.Top, firstBtn.Margin.Right, firstBtn.Margin.Bottom);
 
         // reset the alignment to left
         firstBtn.Margin = defaultMargin;
@@ -206,15 +235,16 @@ public class ModernToolbar : ToolStrip
                 }
                 else
                 {
-                    toolbarContentWidth += (item.Width + 0);// item.Margin.Right);
+                    toolbarContentWidth += item.Width;
                 }
 
                 // reset margin
                 item.Margin = defaultMargin;
             }
 
+
             // if the content cannot fit the toolbar size:
-            // (toolbarContentWidth > toolMain.Size.Width)
+            //if (toolbarContentWidth > Width)
             if (OverflowButton.Visible)
             {
                 // align left
