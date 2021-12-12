@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace ImageGlass.UI.Toolbar;
 
@@ -24,6 +25,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
 {
     private IgTheme Theme { get; set; }
     private const int BORDER_RADIUS = 5;
+    System.Windows.Forms.Timer _paintTimer = new();
 
     public ModernToolbarRenderer(IgTheme theme)
     {
@@ -41,7 +43,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
         #region Draw Background
-        var brushBg = new SolidBrush(Color.Black);
+        using var brushBg = new SolidBrush(Color.Black);
         var rect = new Rectangle(
             e.Item.Margin.Left + 1,
             e.Item.Margin.Top + 1,
@@ -55,34 +57,35 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         // on pressed
         if (e.Item.Pressed)
         {
-            brushBg = new SolidBrush(Theme.Settings.ToolbarItemActiveColor);
+            brushBg.Color = Theme.Settings.ToolbarItemActiveColor;
             e.Graphics.FillPath(brushBg, path);
         }
         // on hover
         else if (e.Item.Selected)
         {
-            brushBg = new SolidBrush(Theme.Settings.ToolbarItemHoverColor);
+            brushBg.Color = Theme.Settings.ToolbarItemHoverColor;
             e.Graphics.FillPath(brushBg, path);
         }
 
-        brushBg.Dispose();
         #endregion
+
 
         #region Draw "..."
         const string ELLIPSIS = "...";
-        var font = new Font(FontFamily.GenericSerif, e.Item.Height / 6, FontStyle.Bold);
+        using var font = new Font(FontFamily.GenericSerif, e.Item.Height / 6, FontStyle.Bold);
         var fontSize = e.Graphics.MeasureString(ELLIPSIS, font);
-        var brushFont = new SolidBrush(Theme.Settings.TextColor);
+        using var brushFont = new SolidBrush(Color.FromArgb(180, Theme.Settings.TextColor));
 
-        e.Graphics.DrawString(ELLIPSIS,
-            font,
-            brushFont,
-            (e.Item.Width / 2) - (fontSize.Width / 2) - e.Item.Margin.Right,
-            (e.Item.Height / 2) - (fontSize.Height / 2) + e.Item.Margin.Top
-        );
+        var posX = (e.Item.Width / 2) - (fontSize.Width / 2) - e.Item.Margin.Right;
+        var posY = (e.Item.Height / 2) - (fontSize.Height / 2) + e.Item.Margin.Top;
+        
+        // on pressed
+        if (e.Item.Pressed)
+        {
+            posY += 1;
+        }
 
-        font.Dispose();
-        brushFont.Dispose();
+        e.Graphics.DrawString(ELLIPSIS, font, brushFont, posX, posY);
         #endregion
 
     }
@@ -92,50 +95,93 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
     {
         var isBtn = e.Item.GetType().Name == nameof(ToolStripButton);
 
-        if (isBtn)
+        if (!isBtn)
         {
-            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-
-            var btn = e.Item as ToolStripButton;
-            var rect = btn.ContentRectangle;
-            rect.Inflate(-btn.Padding.All, -btn.Padding.All);
-            rect.Location = new(1, 1);
-
-            using var path = ThemeUtils.GetRoundRectanglePath(rect, BORDER_RADIUS);
-
-            // on pressed
-            if (btn.Pressed)
-            {
-                using var brush = new SolidBrush(Theme.Settings.ToolbarItemActiveColor);
-                e.Graphics.FillPath(brush, path);
-            }
-            // on hover
-            else if (btn.Selected)
-            {
-                using var brush = new SolidBrush(Theme.Settings.ToolbarItemHoverColor);
-                e.Graphics.FillPath(brush, path);
-            }
-            // on checked
-            else if (btn.Checked)
-            {
-                if (e.Item.Enabled)
-                {
-                    using var brush = new SolidBrush(Theme.Settings.ToolbarItemSelectedColor);
-                    e.Graphics.FillPath(brush, path);
-                }
-                // on checked + disabled
-                else
-                {
-                    using var brush = new SolidBrush(Color.FromArgb(80, Theme.Settings.ToolbarItemSelectedColor));
-                    e.Graphics.FillPath(brush, path);
-                }
-            }
-
+            base.OnRenderButtonBackground(e);
             return;
         }
 
 
-        base.OnRenderButtonBackground(e);
+        e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+
+        var btn = e.Item as ToolStripButton;
+        var rect = btn.ContentRectangle;
+        rect.Inflate(-btn.Padding.All, -btn.Padding.All);
+        rect.Location = new(1, 1);
+
+        using var brush = new SolidBrush(Color.Transparent);
+        using var path = ThemeUtils.GetRoundRectanglePath(rect, BORDER_RADIUS);
+
+
+        // on pressed
+        if (btn.Pressed)
+        {
+            brush.Color = Theme.Settings.ToolbarItemActiveColor;
+        }
+        // on hover
+        else if (btn.Selected)
+        {
+            brush.Color = Theme.Settings.ToolbarItemHoverColor;
+        }
+        // on checked
+        else if (btn.Checked)
+        {
+            if (e.Item.Enabled)
+            {
+                brush.Color = Theme.Settings.ToolbarItemSelectedColor;
+            }
+            // on checked + disabled
+            else
+            {
+                brush.Color = Color.FromArgb(80, Theme.Settings.ToolbarItemSelectedColor);
+            }
+        }
+        else
+        {
+            return;
+        }
+
+
+        // draw
+        e.Graphics.FillPath(brush, path);
+    }
+
+
+    protected override void OnRenderItemImage(ToolStripItemImageRenderEventArgs e)
+    {
+        // Disabled state
+        if (!e.Item.Enabled)
+        {
+            var grayedImg = CreateDisabledImage(e.Image);
+
+            // change opacity of the image
+            var cMatrix = new ColorMatrix { Matrix33 = 0.7f };
+            var imgAttrs = new ImageAttributes();
+            imgAttrs.SetColorMatrix(cMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+
+            e.Graphics.DrawImage(grayedImg, e.ImageRectangle,
+                0, 0, e.Image.Width, e.Image.Height,
+                GraphicsUnit.Pixel, imgAttrs);
+
+            return;
+        }
+
+        // on pressed state
+        if (e.Item.Pressed)
+        {
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+            using var brush = new SolidBrush(Color.Cyan);
+
+            // move the image down 1px for "pressed" effect
+            var rect = e.ImageRectangle;
+            rect.Y += 1;
+
+            e.Graphics.DrawImage(e.Image, rect);
+            return;
+        }
+
+
+        base.OnRenderItemImage(e);
     }
 
 }

@@ -95,6 +95,14 @@ public partial class FrmMain
 
             toolBar.Items.Add(item);
         }
+
+        toolBar.Items[2].Enabled = false;
+        toolBar.Items.Insert(5, new ToolStripSeparator()
+        {
+            AutoSize = false,
+            Height = (int)(toolBar.ImageScalingSize.Height * 1.25),
+            Width = 8,
+        }); ;
     }
 }
 
