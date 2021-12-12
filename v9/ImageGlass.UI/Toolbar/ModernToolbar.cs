@@ -16,7 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
+using System.ComponentModel;
 
 namespace ImageGlass.UI.Toolbar;
 
@@ -163,12 +165,17 @@ public class ModernToolbar : ToolStrip
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
+
         if (disposing)
         {
+            OverflowButton.DropDown.Opening -= OverflowDropDown_Opening;
             timer.Dispose();
             Tooltip.Dispose();
         }
     }
+
+    #endregion
+
 
     protected override void OnSizeChanged(EventArgs e)
     {
@@ -177,9 +184,6 @@ public class ModernToolbar : ToolStrip
 
         UpdateAlignment();
     }
-
-    #endregion
-
 
 
     public ModernToolbar() : base()
@@ -194,6 +198,62 @@ public class ModernToolbar : ToolStrip
 
         // Apply Windows 11 corner API
         CornerApi.ApplyCorner(OverflowButton.DropDown.Handle);
+
+
+        // Set default style for overflow button and dropdown
+        OverflowButton.DropDown.AutoSize = false;
+        OverflowButton.Margin = Constants.TOOLBAR_BTN_MARGIN;
+        OverflowButton.Padding = new(
+            OverflowButton.Height / 2,
+            0,
+            OverflowButton.Height / 2,
+            0);
+
+        OverflowButton.DropDown.Padding = new(
+            Constants.TOOLBAR_BTN_MARGIN.Top,
+            0,
+            Constants.TOOLBAR_BTN_MARGIN.Bottom,
+            0);
+
+        // fix the size of overflow dropdown
+        OverflowButton.DropDown.Opening += OverflowDropDown_Opening;
+    }
+
+    private void OverflowDropDown_Opening(object? sender, CancelEventArgs e)
+    {
+        UpdateOverflowDropdownSize();
+    }
+
+
+
+    /// <summary>
+    /// Update overflow dropdown size
+    /// </summary>
+    public void UpdateOverflowDropdownSize()
+    {
+        var maxItemHeight = 0;
+        var fullDropdownWidth = OverflowButton.DropDown.Padding.Left + OverflowButton.DropDown.Padding.Right;
+
+        foreach (ToolStripItem item in Items)
+        {
+            if (!item.IsOnDropDown) continue;
+
+            fullDropdownWidth += item.Width
+                + item.Margin.Left
+                + item.Margin.Right;
+
+            maxItemHeight = Math.Max(maxItemHeight, item.Height + item.Margin.Top + item.Margin.Bottom);
+        }
+
+        var maxDropdownWidth = Screen.FromControl(this).WorkingArea.Width / 2;
+        var dropdownWidth = Math.Min(fullDropdownWidth, maxDropdownWidth);
+        var dropdownHeight = (int)(Math.Ceiling(fullDropdownWidth * 1f / dropdownWidth)
+            * maxItemHeight
+            + OverflowButton.DropDown.Padding.Top
+            + OverflowButton.DropDown.Padding.Bottom);
+
+        OverflowButton.DropDown.Width = dropdownWidth;
+        OverflowButton.DropDown.Height = dropdownHeight;
     }
 
 

@@ -50,14 +50,27 @@ public record IgThemeInfo
 /// </summary>
 public record IgThemeSettings
 {
-    public Color AccentColor { get; set; } = ThemeUtils.ConvertHexStringToColor("#0078D7");
-    public Color AccentHoverColor { get; set; } = ThemeUtils.ConvertHexStringToColor("#0d92ff");
-    public Color AccentSelectedColor { get; set; } = ThemeUtils.ConvertHexStringToColor("#0060ae");
-    
+    public Color AccentColor { get; set; } = ThemeUtils.ColorFromHex("#0078D7");
+    public Color AccentHoverColor { get; set; } = ThemeUtils.ColorFromHex("#0d92ff");
+    public Color AccentSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#0060ae");
     public Color TextColor { get; set; } = Color.White;
-    public Color BgColor { get; set; } = Color.Black;
-    public Color ToolbarBgColor { get; set; } = ThemeUtils.ConvertHexStringToColor("#242b31");
-    public Color ThumbnailBgColor { get; set; } = ThemeUtils.ConvertHexStringToColor("#242b31");
+    public Color BgColor { get; set; } = ThemeUtils.ColorFromHex("#151b1f");
+
+
+    // Toolbar
+    public Color ToolbarBgColor { get; set; } = ThemeUtils.ColorFromHex("#242b31");
+    public Color ToolbarTextColor { get; set; } = Color.White;
+    public Color ToolbarItemHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
+    public Color ToolbarItemActiveColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff66");
+    public Color ToolbarItemSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff44");
+
+
+    // Thumbnail bar
+    public Color ThumbnailBarBgColor { get; set; } = ThemeUtils.ColorFromHex("#242b31");
+    public Color ThumbnailBarTextColor { get; set; } = Color.White;
+    public Color ThumbnailItemHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
+    public Color ThumbnailItemActiveColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff66");
+    public Color ThumbnailItemSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff44");
 
 
     // Menu

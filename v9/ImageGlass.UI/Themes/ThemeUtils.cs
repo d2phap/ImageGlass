@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace ImageGlass.UI;
 
-public enum SystemTheme
+public enum SystemThemeMode
 {
     Unknown,
     Light,
@@ -21,14 +21,14 @@ public partial class ThemeUtils
     /// Gets system theme (Dark or Light)
     /// </summary>
     /// <returns></returns>
-    public static SystemTheme GetSystemTheme()
+    public static SystemThemeMode GetSystemThemeMode()
     {
         const string regPath = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
         const string regKeyAppTheme = "AppsUseLightTheme";
 
         using var key = Registry.CurrentUser.OpenSubKey(regPath);
         var regValue = key?.GetValue(regKeyAppTheme);
-        var themeMode = SystemTheme.Dark;
+        var themeMode = SystemThemeMode.Dark;
 
         if (regValue != null)
         {
@@ -36,7 +36,7 @@ public partial class ThemeUtils
 
             if (themeValue > 0)
             {
-                themeMode = SystemTheme.Light;
+                themeMode = SystemThemeMode.Light;
             }
         }
 
@@ -128,7 +128,7 @@ public partial class ThemeUtils
     /// <param name="c"></param>
     /// <param name="skipAlpha"></param>
     /// <returns></returns>
-    public static string ConvertColorToHEX(Color c, bool @skipAlpha = false)
+    public static string ColorToHex(Color c, bool @skipAlpha = false)
     {
         if (skipAlpha)
         {
@@ -144,7 +144,7 @@ public partial class ThemeUtils
     /// </summary>
     /// <param name="hex"></param>
     /// <returns></returns>
-    public static Color ConvertHexStringToColor(string hex, bool @skipAlpha = false)
+    public static Color ColorFromHex(string hex, bool @skipAlpha = false)
     {
         // Remove # if present
         if (hex.IndexOf('#') != -1)

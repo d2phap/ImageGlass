@@ -28,8 +28,11 @@ namespace ImageGlass.Base;
 public static class Constants
 {
     public const int MENU_ICON_HEIGHT = 21;
-    public const int DEFAULT_TOOLBAR_ICON_HEIGHT = 22;
     public const int VIEWER_GRID_SIZE = 8;
+
+    public const int DEFAULT_TOOLBAR_ICON_HEIGHT = 22;
+    public static Padding TOOLBAR_BTN_MARGIN = new(0, 8, 2, 8);
+    public static Padding TOOLBAR_BTN_PADDING = new(12);
 
     /// <summary>
     /// First launch version constant.

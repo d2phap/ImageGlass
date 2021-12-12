@@ -1,4 +1,5 @@
-﻿using ImageGlass.Settings;
+﻿using ImageGlass.Base;
+using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.UI.Toolbar;
 
@@ -16,34 +17,35 @@ public partial class FrmMain
 
     private void FrmMainTheme_Load(object? sender, EventArgs e)
     {
+        BackColor = Config.Theme.Settings.BgColor;
+
         toolBar.Renderer = new ModernToolbarRenderer(Config.Theme);
         toolBar.BackColor = Config.Theme.Settings.ToolbarBgColor;
 
         // Overflow button and Overflow dropdown
         toolBar.OverflowButton.DropDown.BackColor = toolBar.BackColor;
-        toolBar.OverflowButton.AutoSize = false;
-        toolBar.OverflowButton.Padding = new Padding(10);
+        toolBar.OverflowButton.ForeColor = Config.Theme.Settings.TextColor;
 
         UpdateTheme();
     }
 
 
-    private void UpdateTheme(SystemTheme theme = SystemTheme.Unknown)
+    private void UpdateTheme(SystemThemeMode theme = SystemThemeMode.Unknown)
     {
-        var newTheme = theme;
-        if (theme == SystemTheme.Unknown)
-        {
-            newTheme = ThemeUtils.GetSystemTheme();
-        }
+        //var newTheme = theme;
+        //if (theme == SystemThemeMode.Unknown)
+        //{
+        //    newTheme = ThemeUtils.GetSystemThemeMode();
+        //}
 
-        if (newTheme == SystemTheme.Light)
-        {
-            BackColor = Color.FromArgb(255, 255, 255, 255);
-        }
-        else
-        {
-            BackColor = Color.FromArgb(255, 26, 34, 39);
-        }
+        //if (newTheme == SystemThemeMode.Light)
+        //{
+        //    BackColor = Color.FromArgb(255, 255, 255, 255);
+        //}
+        //else
+        //{
+        //    BackColor = Color.FromArgb(255, 26, 34, 39);
+        //}
     }
 
 
@@ -55,7 +57,6 @@ public partial class FrmMain
         }
 
         var th = Config.Theme.ToolbarIcons;
-        var DEFAULT_MARGIN = new Padding(0, 8, 2, 8);
         toolBar.Items.Clear();
 
         var mainMenuItem = new ToolStripButton()
@@ -65,10 +66,10 @@ public partial class FrmMain
             TextImageRelation = TextImageRelation.ImageBeforeText,
             Text = "Main menu",
             ToolTipText = "Main menu (Alf+F)",
-            Padding = new Padding(12),
             CheckOnClick = true,
             ForeColor = Config.Theme.Settings.TextColor,
-            Margin = DEFAULT_MARGIN,
+            Padding = Constants.TOOLBAR_BTN_PADDING,
+            Margin = Constants.TOOLBAR_BTN_MARGIN,
 
             Alignment = ToolStripItemAlignment.Right,
             Overflow = ToolStripItemOverflow.Never,
@@ -86,16 +87,14 @@ public partial class FrmMain
                 Text = "Button " + i.ToString(),
                 ToolTipText = "Button " + i.ToString(),
                 Alignment = ToolStripItemAlignment.Left,
-                Padding = new Padding(12),
                 CheckOnClick = true,
+                Padding = Constants.TOOLBAR_BTN_PADDING,
+                Margin = Constants.TOOLBAR_BTN_MARGIN,
                 ForeColor = Config.Theme.Settings.TextColor,
-                Margin = DEFAULT_MARGIN,
             };
 
             toolBar.Items.Add(item);
         }
-
-        
     }
 }
 

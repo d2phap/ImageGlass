@@ -39,47 +39,46 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
     protected override void OnRenderOverflowButtonBackground(ToolStripItemRenderEventArgs e)
     {
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-        var font = new Font(FontFamily.GenericSerif, 10, FontStyle.Bold);
-        var fontSize = e.Graphics.MeasureString("…", font);
 
         #region Draw Background
         var brushBg = new SolidBrush(Color.Black);
-
-        var rect = new RectangleF(
-            0,
-            e.Item.Padding.All - 1,
-            fontSize.Width + e.Item.Padding.All / 2,
-            e.Item.ContentRectangle.Height - (e.Item.Padding.All * 4)
+        var rect = new Rectangle(
+            e.Item.Margin.Left + 1,
+            e.Item.Margin.Top + 1,
+            e.Item.Width - e.Item.Margin.Top,
+            e.Item.Height - e.Item.Margin.Top - (int)(e.Item.Margin.Bottom * 1.5)
         );
 
-
         using var path = ThemeUtils.GetRoundRectanglePath(rect, BORDER_RADIUS);
+
 
         // on pressed
         if (e.Item.Pressed)
         {
-            brushBg = new SolidBrush(Theme.Settings.AccentSelectedColor);
+            brushBg = new SolidBrush(Theme.Settings.ToolbarItemActiveColor);
             e.Graphics.FillPath(brushBg, path);
         }
         // on hover
         else if (e.Item.Selected)
         {
-            brushBg = new SolidBrush(Theme.Settings.AccentHoverColor);
+            brushBg = new SolidBrush(Theme.Settings.ToolbarItemHoverColor);
             e.Graphics.FillPath(brushBg, path);
         }
 
         brushBg.Dispose();
         #endregion
 
-
         #region Draw "..."
+        const string ELLIPSIS = "...";
+        var font = new Font(FontFamily.GenericSerif, e.Item.Height / 6, FontStyle.Bold);
+        var fontSize = e.Graphics.MeasureString(ELLIPSIS, font);
         var brushFont = new SolidBrush(Theme.Settings.TextColor);
 
-        e.Graphics.DrawString("…",
+        e.Graphics.DrawString(ELLIPSIS,
             font,
             brushFont,
-            (e.Item.Bounds.Width / 2) - (fontSize.Width / 2) - (e.Item.Padding.All / 2),
-            (e.Item.Bounds.Height / 2) - (fontSize.Height / 2)
+            (e.Item.Width / 2) - (fontSize.Width / 2) - e.Item.Margin.Right,
+            (e.Item.Height / 2) - (fontSize.Height / 2) + e.Item.Margin.Top
         );
 
         font.Dispose();
@@ -107,13 +106,13 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
             // on pressed
             if (btn.Pressed)
             {
-                using var brush = new SolidBrush(Theme.Settings.AccentSelectedColor);
+                using var brush = new SolidBrush(Theme.Settings.ToolbarItemActiveColor);
                 e.Graphics.FillPath(brush, path);
             }
             // on hover
             else if (btn.Selected)
             {
-                using var brush = new SolidBrush(Theme.Settings.AccentHoverColor);
+                using var brush = new SolidBrush(Theme.Settings.ToolbarItemHoverColor);
                 e.Graphics.FillPath(brush, path);
             }
             // on checked
@@ -121,13 +120,13 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
             {
                 if (e.Item.Enabled)
                 {
-                    using var brush = new SolidBrush(Theme.Settings.AccentColor);
+                    using var brush = new SolidBrush(Theme.Settings.ToolbarItemSelectedColor);
                     e.Graphics.FillPath(brush, path);
                 }
                 // on checked + disabled
                 else
                 {
-                    using var brush = new SolidBrush(Color.FromArgb(80, Theme.Settings.AccentColor));
+                    using var brush = new SolidBrush(Color.FromArgb(80, Theme.Settings.ToolbarItemSelectedColor));
                     e.Graphics.FillPath(brush, path);
                 }
             }

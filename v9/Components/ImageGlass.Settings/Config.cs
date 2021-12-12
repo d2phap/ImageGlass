@@ -821,7 +821,7 @@ public class Config
         }
         else
         {
-            BackgroundColor = ThemeUtils.ConvertHexStringToColor(bgValue, true);
+            BackgroundColor = ThemeUtils.ColorFromHex(bgValue, true);
         }
         #endregion
 
@@ -993,7 +993,7 @@ public class Config
 
         #region Other types items
 
-        settings.TryAdd(nameof(BackgroundColor), ThemeUtils.ConvertColorToHEX(BackgroundColor));
+        settings.TryAdd(nameof(BackgroundColor), ThemeUtils.ColorToHex(BackgroundColor));
         settings.TryAdd(nameof(Language), Path.GetFileName(Language.FileName));
         settings.TryAdd(nameof(Theme), Theme.FolderName);
 

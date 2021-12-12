@@ -85,20 +85,20 @@
             // 
             this.panel3.BackColor = System.Drawing.Color.Transparent;
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(914, 74);
+            this.panel3.Location = new System.Drawing.Point(914, 94);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(100, 233);
+            this.panel3.Size = new System.Drawing.Size(100, 213);
             this.panel3.TabIndex = 4;
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.Transparent;
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(113, 74);
+            this.panel2.Location = new System.Drawing.Point(113, 94);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(801, 233);
+            this.panel2.Size = new System.Drawing.Size(801, 213);
             this.panel2.TabIndex = 3;
             // 
             // toolBar
@@ -124,7 +124,7 @@
             this.toolBar.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.toolBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolBar.ShowItemToolTips = false;
-            this.toolBar.Size = new System.Drawing.Size(1014, 74);
+            this.toolBar.Size = new System.Drawing.Size(1014, 94);
             this.toolBar.TabIndex = 1;
             this.toolBar.ToolTipShowUp = false;
             // 
@@ -134,10 +134,10 @@
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Margin = new System.Windows.Forms.Padding(137, 0, 2, 0);
+            this.toolStripButton1.Margin = new System.Windows.Forms.Padding(37, 0, 2, 0);
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Padding = new System.Windows.Forms.Padding(10);
-            this.toolStripButton1.Size = new System.Drawing.Size(74, 74);
+            this.toolStripButton1.Size = new System.Drawing.Size(94, 94);
             this.toolStripButton1.Text = "toolStripButton1";
             // 
             // toolStripButton2
@@ -149,7 +149,7 @@
             this.toolStripButton2.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Padding = new System.Windows.Forms.Padding(10);
-            this.toolStripButton2.Size = new System.Drawing.Size(74, 74);
+            this.toolStripButton2.Size = new System.Drawing.Size(94, 94);
             this.toolStripButton2.Text = "toolStripButton2";
             // 
             // toolStripButton3
@@ -161,7 +161,7 @@
             this.toolStripButton3.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStripButton3.Name = "toolStripButton3";
             this.toolStripButton3.Padding = new System.Windows.Forms.Padding(10);
-            this.toolStripButton3.Size = new System.Drawing.Size(74, 74);
+            this.toolStripButton3.Size = new System.Drawing.Size(94, 94);
             this.toolStripButton3.Text = "toolStripButton3";
             // 
             // toolStripButton4
@@ -174,7 +174,7 @@
             this.toolStripButton4.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStripButton4.Name = "toolStripButton4";
             this.toolStripButton4.Padding = new System.Windows.Forms.Padding(10);
-            this.toolStripButton4.Size = new System.Drawing.Size(74, 74);
+            this.toolStripButton4.Size = new System.Drawing.Size(94, 94);
             this.toolStripButton4.Text = "toolStripButton4";
             // 
             // toolStripButton5
@@ -186,7 +186,7 @@
             this.toolStripButton5.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStripButton5.Name = "toolStripButton5";
             this.toolStripButton5.Padding = new System.Windows.Forms.Padding(10);
-            this.toolStripButton5.Size = new System.Drawing.Size(74, 74);
+            this.toolStripButton5.Size = new System.Drawing.Size(94, 94);
             this.toolStripButton5.Text = "toolStripButton5";
             // 
             // toolStripButton6
@@ -198,7 +198,7 @@
             this.toolStripButton6.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStripButton6.Name = "toolStripButton6";
             this.toolStripButton6.Padding = new System.Windows.Forms.Padding(10);
-            this.toolStripButton6.Size = new System.Drawing.Size(74, 74);
+            this.toolStripButton6.Size = new System.Drawing.Size(94, 94);
             this.toolStripButton6.Text = "toolStripButton6";
             // 
             // toolStripButton7
@@ -210,7 +210,7 @@
             this.toolStripButton7.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStripButton7.Name = "toolStripButton7";
             this.toolStripButton7.Padding = new System.Windows.Forms.Padding(10);
-            this.toolStripButton7.Size = new System.Drawing.Size(74, 74);
+            this.toolStripButton7.Size = new System.Drawing.Size(94, 94);
             this.toolStripButton7.Text = "toolStripButton7";
             // 
             // toolStripButton8
@@ -222,7 +222,7 @@
             this.toolStripButton8.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStripButton8.Name = "toolStripButton8";
             this.toolStripButton8.Padding = new System.Windows.Forms.Padding(10);
-            this.toolStripButton8.Size = new System.Drawing.Size(74, 74);
+            this.toolStripButton8.Size = new System.Drawing.Size(94, 94);
             this.toolStripButton8.Text = "toolStripButton8";
             // 
             // btnMenu
@@ -235,17 +235,17 @@
             this.btnMenu.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Padding = new System.Windows.Forms.Padding(10);
-            this.btnMenu.Size = new System.Drawing.Size(74, 74);
+            this.btnMenu.Size = new System.Drawing.Size(94, 94);
             this.btnMenu.Text = "Main menu";
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 74);
+            this.panel1.Location = new System.Drawing.Point(0, 94);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(113, 233);
+            this.panel1.Size = new System.Drawing.Size(113, 213);
             this.panel1.TabIndex = 2;
             // 
             // FrmMain

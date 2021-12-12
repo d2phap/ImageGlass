@@ -157,7 +157,7 @@ public class IgTheme
                 // property is Color
                 if (prop?.PropertyType == typeof(Color))
                 {
-                    var colorItem = ThemeUtils.ConvertHexStringToColor(value);
+                    var colorItem = ThemeUtils.ColorFromHex(value);
                     prop.SetValue(Settings, colorItem);
                     continue;
                 }
