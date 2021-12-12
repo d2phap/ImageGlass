@@ -149,6 +149,8 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
 
     protected override void OnRenderItemImage(ToolStripItemImageRenderEventArgs e)
     {
+        if (e.Image is null) return;
+
         // Disabled state
         if (!e.Item.Enabled)
         {
@@ -179,7 +181,6 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
             e.Graphics.DrawImage(e.Image, rect);
             return;
         }
-
 
         base.OnRenderItemImage(e);
     }

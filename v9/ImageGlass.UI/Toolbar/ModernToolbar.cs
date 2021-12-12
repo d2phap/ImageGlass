@@ -34,6 +34,8 @@ public class ModernToolbar : ToolStrip
     private Point mouseOverPoint;
     private readonly System.Windows.Forms.Timer timer;
     private ToolTip _tooltip;
+    private IgTheme _theme;
+
     public int ToolTipInterval = 4000;
     public string ToolTipText;
 
@@ -75,6 +77,16 @@ public class ModernToolbar : ToolStrip
             _alignment = value;
 
             UpdateAlignment();
+        }
+    }
+
+    public IgTheme Theme
+    {
+        get => _theme;
+        set
+        {
+            _theme = value;
+            UpdateTheme();
         }
     }
 
@@ -199,7 +211,12 @@ public class ModernToolbar : ToolStrip
         // Apply Windows 11 corner API
         CornerApi.ApplyCorner(OverflowButton.DropDown.Handle);
 
+        // Set default style for Overflow button & panel
+        InitOverflow();
+    }
 
+    private void InitOverflow()
+    {
         // Set default style for overflow button and dropdown
         OverflowButton.DropDown.AutoSize = false;
         OverflowButton.Margin = Constants.TOOLBAR_BTN_MARGIN;
@@ -325,5 +342,21 @@ public class ModernToolbar : ToolStrip
                 firstBtn.Margin = margin;
             }
         }
+    }
+
+    
+    /// <summary>
+    /// Update toolbar theme
+    /// </summary>
+    public void UpdateTheme()
+    {
+        if (Theme == null) return;
+
+        Renderer = new ModernToolbarRenderer(Theme);
+        BackColor = Theme.Settings.ToolbarBgColor;
+
+        // Overflow button and Overflow dropdown
+        OverflowButton.DropDown.BackColor = BackColor;
+        OverflowButton.ForeColor = Theme.Settings.TextColor;
     }
 }

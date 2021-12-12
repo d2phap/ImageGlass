@@ -28,18 +28,18 @@ public class ThumbnailItemInfo
     /// <summary>
     /// Gets actual thumbnail dimension
     /// </summary>
-    public uint Dimension { get; }
+    public int Dimension { get; }
 
     /// <summary>
     /// Gets extra space to adapt minimum width / height of thumbnail bar
     /// </summary>
-    public uint ExtraSpace { get; }
+    public int ExtraSpace { get; }
 
     /// <summary>
     /// Get total dimension
     /// </summary>
     /// <returns></returns>
-    public uint GetTotalDimension()
+    public int GetTotalDimension()
     {
         return Dimension + ExtraSpace;
     }
@@ -49,7 +49,7 @@ public class ThumbnailItemInfo
     /// </summary>
     /// <param name="dimension">Thumbnail size</param>
     /// <param name="isHorizontalView">Horizontal or Verticle view</param>
-    public ThumbnailItemInfo(uint dimension, bool isHorizontalView)
+    public ThumbnailItemInfo(int dimension, bool isHorizontalView)
     {
         if (isHorizontalView)
         {

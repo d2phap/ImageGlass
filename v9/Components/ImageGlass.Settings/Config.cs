@@ -362,27 +362,27 @@ public class Config
     /// <summary>
     /// Gets, sets slide show interval (minimum value if it's random)
     /// </summary>
-    public static uint SlideShowInterval { get; set; } = 5;
+    public static int SlideShowInterval { get; set; } = 5;
 
     /// <summary>
     /// Gets, sets the maximum slide show interval value
     /// </summary>
-    public static uint SlideShowIntervalTo { get; set; } = 5;
+    public static int SlideShowIntervalTo { get; set; } = 5;
 
     /// <summary>
     /// Gets, sets value of thumbnail dimension in pixel
     /// </summary>
-    public static uint ThumbnailDimension { get; set; } = 96;
+    public static int ThumbnailDimension { get; set; } = 96;
 
     /// <summary>
     /// Gets, sets width of horizontal thumbnail bar
     /// </summary>
-    public static uint ThumbnailBarWidth { get; set; } = new ThumbnailItemInfo(ThumbnailDimension, true).GetTotalDimension();
+    public static int ThumbnailBarWidth { get; set; } = new ThumbnailItemInfo(ThumbnailDimension, true).GetTotalDimension();
 
     /// <summary>
     /// Gets, sets the number of images cached by Image
     /// </summary>
-    public static uint ImageBoosterCachedCount { get; set; } = 1;
+    public static int ImageBoosterCachedCount { get; set; } = 1;
 
     /// <summary>
     /// Gets, sets fixed width on zooming
@@ -392,7 +392,7 @@ public class Config
     /// <summary>
     /// Gets, sets toolbar icon height
     /// </summary>
-    public static uint ToolbarIconHeight { get; set; } = Constants.DEFAULT_TOOLBAR_ICON_HEIGHT;
+    public static int ToolbarIconHeight { get; set; } = Constants.DEFAULT_TOOLBAR_ICON_HEIGHT;
 
     /// <summary>
     /// Gets, sets value of image quality for editting
