@@ -23,7 +23,7 @@ It gives you the possibility to view over **80+** common image formats, includin
 
 
 ### ImageGlass comes to Microsoft Store!
-If you buy ImageGlass in the Microsoft Store, you'll be supporting its development directly. You will get the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes. 😊
+If you buy ImageGlass on the Microsoft Store, you'll be supporting its development directly. You will get the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes. 😊
 
 <a href="https://www.microsoft.com/store/productId/9N33VZK3C7TH">
   <img height="75" src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Get_it_from_Microsoft_Badge.svg" />
