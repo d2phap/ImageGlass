@@ -75,7 +75,7 @@ public class WindowSettings
     /// <returns></returns>
     public static WindowPlacement GetFrmMainPlacementFromConfig()
     {
-        return new WindowPlacement(new Rect(
+        return new WindowPlacement(new WpRect(
             Config.FrmMainPositionX,
             Config.FrmMainPositionY,
             Config.FrmMainPositionX + Config.FrmMainWidth,

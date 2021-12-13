@@ -7,9 +7,14 @@ public partial class FrmMain
 {
     private void SetUpFrmMainConfigs()
     {
-        // toolbar size
-        toolBar.ImageScalingSize = new(Config.ToolbarIconHeight, Config.ToolbarIconHeight);
+        // Toolbar
+        Toolbar.Visible = Config.IsShowToolbar;
+        Toolbar.ImageScalingSize = new(Config.ToolbarIconHeight, Config.ToolbarIconHeight);
         LoadToolbarIcons();
+
+        // Thumbnail bar
+        //PanBottom.Visible = Config.IsShowThumbnail;
+
 
         Load += FrmMainConfig_Load;
         FormClosing += FrmMainConfig_FormClosing;
@@ -52,7 +57,7 @@ public partial class FrmMain
         }
 
         var th = Config.Theme.ToolbarIcons;
-        toolBar.Items.Clear();
+        Toolbar.Items.Clear();
 
         var mainMenuItem = new ToolStripButton()
         {
@@ -70,10 +75,10 @@ public partial class FrmMain
             Overflow = ToolStripItemOverflow.Never,
         };
 
-        toolBar.Items.Add(mainMenuItem);
+        Toolbar.Items.Add(mainMenuItem);
 
 
-        toolBar.Items.Add(new ToolStripButton()
+        Toolbar.Items.Add(new ToolStripButton()
         {
             Image = th.OpenFile,
             DisplayStyle = ToolStripItemDisplayStyle.Image,
@@ -86,13 +91,13 @@ public partial class FrmMain
             Margin = Constants.TOOLBAR_BTN_MARGIN,
             ForeColor = Config.Theme.Settings.TextColor,
         });
-        toolBar.Items.Add(new ToolStripSeparator()
+        Toolbar.Items.Add(new ToolStripSeparator()
         {
             AutoSize = false,
-            Height = (int)(toolBar.Height * 0.55),
+            Height = (int)(Toolbar.Height * 0.55),
             Width = 8,
         });
-        toolBar.Items.Add(new ToolStripButton()
+        Toolbar.Items.Add(new ToolStripButton()
         {
             Image = th.LockZoom,
             DisplayStyle = ToolStripItemDisplayStyle.Image,
@@ -105,7 +110,7 @@ public partial class FrmMain
             Margin = Constants.TOOLBAR_BTN_MARGIN,
             ForeColor = Config.Theme.Settings.TextColor,
         });
-        toolBar.Items.Add(new ToolStripButton()
+        Toolbar.Items.Add(new ToolStripButton()
         {
             Image = th.Print,
             DisplayStyle = ToolStripItemDisplayStyle.Image,
@@ -118,7 +123,7 @@ public partial class FrmMain
             Margin = Constants.TOOLBAR_BTN_MARGIN,
             ForeColor = Config.Theme.Settings.TextColor,
         });
-        toolBar.Items.Add(new ToolStripButton()
+        Toolbar.Items.Add(new ToolStripButton()
         {
             Image = th.Delete,
             DisplayStyle = ToolStripItemDisplayStyle.Image,

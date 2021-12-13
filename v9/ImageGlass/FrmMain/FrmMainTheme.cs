@@ -6,15 +6,26 @@ namespace ImageGlass;
 
 public partial class FrmMain
 {
+
     public void SetUpFrmMainTheme()
     {
         Load += FrmMainTheme_Load;
 
 
         // set toolbar theme
-        toolBar.Theme = Config.Theme;
+        Toolbar.Theme = Config.Theme;
 
         BackColor = Config.Theme.Settings.BgColor;
+
+        // Thumbnail bar
+        Sp1.SplitterBackColor =
+            PanBot.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
+
+        // Side panels
+        Sp2.SplitterBackColor =
+            Sp3.SplitterBackColor =
+            PanLeft.BackColor =
+            PanRight.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
     }
 
 

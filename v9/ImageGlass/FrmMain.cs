@@ -10,6 +10,8 @@ public partial class FrmMain : Form
         SetUpFrmMainTheme();
     }
 
+    
+
     private void FrmMain_Resize(object sender, EventArgs e)
     {
 
@@ -33,5 +35,10 @@ public partial class FrmMain : Form
         }
 
         base.WndProc(ref m);
+    }
+
+    private void toolStripContainer1_TopToolStripPanel_Click(object sender, EventArgs e)
+    {
+
     }
 }

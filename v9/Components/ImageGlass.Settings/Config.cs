@@ -99,7 +99,7 @@ public class Config
     /// <summary>
     /// Gets, sets value of visibility of toolbar when start up
     /// </summary>
-    public static bool IsShowToolBar { get; set; } = true;
+    public static bool IsShowToolbar { get; set; } = true;
 
     /// <summary>
     /// Gets, sets value whether thumbnail scrollbars visible
@@ -590,7 +590,7 @@ public class Config
         IsColorPickerHSLA = items.GetValue(nameof(IsColorPickerHSLA), IsColorPickerHSLA);
         IsColorPickerHSVA = items.GetValue(nameof(IsColorPickerHSVA), IsColorPickerHSVA);
         IsShowWelcome = items.GetValue(nameof(IsShowWelcome), IsShowWelcome);
-        IsShowToolBar = items.GetValue(nameof(IsShowToolBar), IsShowToolBar);
+        IsShowToolbar = items.GetValue(nameof(IsShowToolbar), IsShowToolbar);
         IsShowThumbnailScrollbar = items.GetValue(nameof(IsShowThumbnailScrollbar), IsShowThumbnailScrollbar);
         IsLoopBackSlideshow = items.GetValue(nameof(IsLoopBackSlideshow), IsLoopBackSlideshow);
         IsLoopBackViewer = items.GetValue(nameof(IsLoopBackViewer), IsLoopBackViewer);
@@ -874,7 +874,7 @@ public class Config
         settings.TryAdd(nameof(IsColorPickerHSLA), IsColorPickerHSLA);
         settings.TryAdd(nameof(IsColorPickerHSVA), IsColorPickerHSVA);
         settings.TryAdd(nameof(IsShowWelcome), IsShowWelcome);
-        settings.TryAdd(nameof(IsShowToolBar), IsShowToolBar);
+        settings.TryAdd(nameof(IsShowToolbar), IsShowToolbar);
         settings.TryAdd(nameof(IsShowThumbnailScrollbar), IsShowThumbnailScrollbar);
         settings.TryAdd(nameof(IsLoopBackSlideshow), IsLoopBackSlideshow);
         settings.TryAdd(nameof(IsLoopBackViewer), IsLoopBackViewer);

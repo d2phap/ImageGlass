@@ -18,31 +18,31 @@ public struct WindowPlacement
     public int length;
     public int flags;
     public WindowState showCmd;
-    public Point minPosition;
-    public Point maxPosition;
-    public Rect normalPosition;
+    public WpPoint minPosition;
+    public WpPoint maxPosition;
+    public WpRect normalPosition;
 
-    public WindowPlacement(Rect normalPos, WindowState state = WindowState.Normal)
+    public WindowPlacement(WpRect normalPos, WindowState state = WindowState.Normal)
     {
-        this.length = Marshal.SizeOf(typeof(WindowPlacement));
-        this.flags = 0;
-        this.showCmd = state;
-        this.minPosition = new Point(-1, -1);
-        this.maxPosition = new Point(-1, -1);
+        length = Marshal.SizeOf(typeof(WindowPlacement));
+        flags = 0;
+        showCmd = state;
+        minPosition = new WpPoint(-1, -1);
+        maxPosition = new WpPoint(-1, -1);
 
-        this.normalPosition = normalPos;
+        normalPosition = normalPos;
     }
 }
 
 
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public struct Point
+public struct WpPoint
 {
     public int X;
     public int Y;
 
-    public Point(int x, int y)
+    public WpPoint(int x, int y)
     {
         X = x;
         Y = y;
@@ -56,14 +56,14 @@ public struct Point
 // RECT structure required by WINDOWPLACEMENT structure
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
-public struct Rect
+public struct WpRect
 {
     public int Left;
     public int Top;
     public int Right;
     public int Bottom;
 
-    public Rect(int left, int top, int right, int bottom)
+    public WpRect(int left, int top, int right, int bottom)
     {
         Left = left;
         Top = top;

@@ -20,7 +20,7 @@ using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using System.ComponentModel;
 
-namespace ImageGlass.UI.Toolbar;
+namespace ImageGlass.UI;
 
 public enum ToolbarAlignment
 {

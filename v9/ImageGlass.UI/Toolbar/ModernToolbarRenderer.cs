@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
-namespace ImageGlass.UI.Toolbar;
+namespace ImageGlass.UI;
 
 public class ModernToolbarRenderer : ToolStripSystemRenderer
 {
