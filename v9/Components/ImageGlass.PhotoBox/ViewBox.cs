@@ -42,6 +42,9 @@ public class ViewBox
         Host.MouseDown += Host_MouseDown;
         Host.MouseUp += Host_MouseUp;
         Host.MouseMove += Host_MouseMove;
+        Host.MouseWheel += Host_MouseWheel;
+
+
         Host.Paint += Host_Paint;
         Host.Resize += Host_Resize;
 
@@ -50,6 +53,32 @@ public class ViewBox
         HostLoadComplete = true;
     }
 
+    private void Host_MouseWheel(object? sender, MouseEventArgs e)
+    {
+        if (srcBitmap is null) return;
+
+        var speed = e.Delta / 500f;
+
+        // zoom in
+        if (e.Delta > 0)
+        {
+            if (Zfactor > MaxZ)
+                return;
+            oldZfactor = Zfactor;
+            Zfactor *= 1f + speed;
+            DrawPic(e.X, e.Y);
+        }
+        // zoom out
+        else if (e.Delta < 0)
+        {
+            if (Zfactor < MinZ)
+                return;
+            oldZfactor = Zfactor;
+            Zfactor /= 1f - speed;
+            DrawPic(e.X, e.Y);
+        }
+        ZoomChanged?.Invoke(Zfactor);
+    }
 
     public void Dispose()
     {
@@ -91,7 +120,7 @@ public class ViewBox
             return;
 
         DownPress = false;
-        Host.Cursor = Cursors.Arrow;
+        var speed = e.Delta / 200f;
 
         if (CS.X == e.X & CS.Y == e.Y)
         {
@@ -100,7 +129,7 @@ public class ViewBox
                 if (Zfactor > MaxZ)
                     return;
                 oldZfactor = Zfactor;
-                Zfactor *= 1.3f;
+                Zfactor *= 1f + speed;
                 DrawPic(e.X, e.Y);
             }
             else if (e.Button == MouseButtons.Right)
@@ -108,7 +137,7 @@ public class ViewBox
                 if (Zfactor < MinZ)
                     return;
                 oldZfactor = Zfactor;
-                Zfactor = Zfactor / 1.3f;
+                Zfactor /= 1f - speed;
                 DrawPic(e.X, e.Y);
             }
             ZoomChanged?.Invoke(Zfactor);
