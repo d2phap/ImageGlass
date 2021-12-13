@@ -221,7 +221,7 @@
             // Sp1
             // 
             this.Sp1.BackColor = System.Drawing.Color.Transparent;
-            this.Sp1.Cursor = System.Windows.Forms.Cursors.HSplit;
+            this.Sp1.Cursor = System.Windows.Forms.Cursors.SizeNS;
             this.Sp1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Sp1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.Sp1.Location = new System.Drawing.Point(0, 54);
@@ -239,6 +239,7 @@
             // 
             this.Sp1.Panel2.Controls.Add(this.PanBot);
             this.Sp1.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.Sp1.Panel2Collapsed = true;
             this.Sp1.Panel2MinSize = 0;
             this.Sp1.Size = new System.Drawing.Size(1155, 634);
             this.Sp1.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
@@ -268,7 +269,7 @@
             this.Sp2.Panel2.Controls.Add(this.Sp3);
             this.Sp2.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp2.Panel2MinSize = 10;
-            this.Sp2.Size = new System.Drawing.Size(1155, 528);
+            this.Sp2.Size = new System.Drawing.Size(1155, 634);
             this.Sp2.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.Sp2.SplitterDistance = 164;
             this.Sp2.SplitterWidth = 10;
@@ -305,7 +306,7 @@
             this.Sp3.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp3.Panel2Collapsed = true;
             this.Sp3.Panel2MinSize = 0;
-            this.Sp3.Size = new System.Drawing.Size(1155, 528);
+            this.Sp3.Size = new System.Drawing.Size(1155, 634);
             this.Sp3.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.Sp3.SplitterDistance = 950;
             this.Sp3.SplitterWidth = 10;
@@ -317,7 +318,7 @@
             this.PanCenter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanCenter.Location = new System.Drawing.Point(0, 0);
             this.PanCenter.Name = "PanCenter";
-            this.PanCenter.Size = new System.Drawing.Size(1155, 528);
+            this.PanCenter.Size = new System.Drawing.Size(1155, 634);
             this.PanCenter.TabIndex = 1;
             // 
             // PanRight

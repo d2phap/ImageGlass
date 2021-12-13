@@ -16,10 +16,27 @@ public partial class FrmMain : Form
         _viewer = new(PanCenter, null)
         {
             MinZoom = 0.01f,
-            MaxZoom = 50,
+            MaxZoom = 3500,
         };
         _viewer.MoveOver += Viewer_MoveOver;
         _viewer.ZoomChanged += Viewer_ZoomChanged;
+
+        Prepare();
+    }
+
+    private void Prepare()
+    {
+        Task.Run(() =>
+        {
+            var args = Environment.GetCommandLineArgs()
+            .Where(cmd => !cmd.StartsWith('-'))
+            .ToArray();
+
+            if (args.Length > 1)
+            {
+                _viewer.Image = new(args[1], true);
+            }
+        });
     }
 
     private void Viewer_ZoomChanged(float CurZoom)
@@ -29,10 +46,9 @@ public partial class FrmMain : Form
 
     private void Viewer_MoveOver(float Px, float Py)
     {
-        Text = $"X={Px}, Y={Py}";
+        //Text = $"X={Px}, Y={Py}";
     }
 
-    Bitmap _img;
 
     private void OpenFile()
     {
@@ -45,8 +61,7 @@ public partial class FrmMain : Form
 
         if (of.ShowDialog() == DialogResult.OK)
         {
-            _img = new(of.FileName, true);
-            _viewer.Image = _img;
+            _viewer.Image = new(of.OpenFile(), true);
         }
     }
 

@@ -62,7 +62,7 @@ public class ViewBox
         // zoom in
         if (e.Delta > 0)
         {
-            if (Zfactor > MaxZ)
+            if (Zfactor > MaxZoom)
                 return;
             oldZfactor = Zfactor;
             Zfactor *= 1f + speed;
@@ -71,7 +71,7 @@ public class ViewBox
         // zoom out
         else if (e.Delta < 0)
         {
-            if (Zfactor < MinZ)
+            if (Zfactor < MinZoom)
                 return;
             oldZfactor = Zfactor;
             Zfactor /= 1f - speed;
@@ -126,7 +126,7 @@ public class ViewBox
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (Zfactor > MaxZ)
+                if (Zfactor > MaxZoom)
                     return;
                 oldZfactor = Zfactor;
                 Zfactor *= 1f + speed;
@@ -134,7 +134,7 @@ public class ViewBox
             }
             else if (e.Button == MouseButtons.Right)
             {
-                if (Zfactor < MinZ)
+                if (Zfactor < MinZoom)
                     return;
                 oldZfactor = Zfactor;
                 Zfactor /= 1f - speed;
@@ -165,8 +165,6 @@ public class ViewBox
 
         if (DownPress == true)
         {
-            Host.Cursor = Cursors.SizeAll;
-
             // accelerated scrolling when right click drag ----------------
             if (e.Button == MouseButtons.Right)
             {
