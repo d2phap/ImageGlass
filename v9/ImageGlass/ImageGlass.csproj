@@ -27,7 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Components\ImageGlass.Base\ImageGlass.Base.csproj" />
     <ProjectReference Include="..\Components\ImageGlass.Settings\ImageGlass.Settings.csproj" />
-    <ProjectReference Include="..\ImageGlass.UI\ImageGlass.UI.csproj" />
+    <ProjectReference Include="..\Components\ImageGlass.UI\ImageGlass.UI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

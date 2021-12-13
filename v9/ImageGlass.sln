@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.Base", "Componen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.Settings", "Components\ImageGlass.Settings\ImageGlass.Settings.csproj", "{F55FA499-EC7D-4BB5-AB0D-72F600EF4D03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.UI", "ImageGlass.UI\ImageGlass.UI.csproj", "{658F690D-CA98-455D-BBCE-F5BFEF0FA689}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.UI", "Components\ImageGlass.UI\ImageGlass.UI.csproj", "{658F690D-CA98-455D-BBCE-F5BFEF0FA689}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.Heart", "Components\ImageGlass.Heart\ImageGlass.Heart.csproj", "{C5B44BEA-C3A9-44E3-8520-CB16598EC0C3}"
 EndProject
