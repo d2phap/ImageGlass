@@ -1,16 +1,54 @@
+using ImageGlass.PhotoBox;
+
 namespace ImageGlass;
 
 public partial class FrmMain : Form
 {
+    private ViewBox _viewer;
+
     public FrmMain()
     {
         InitializeComponent();
 
         SetUpFrmMainConfigs();
         SetUpFrmMainTheme();
+
+        _viewer = new(PanCenter, null)
+        {
+            MinZoom = 0.01f,
+            MaxZoom = 50,
+        };
+        _viewer.MoveOver += Viewer_MoveOver;
+        _viewer.ZoomChanged += Viewer_ZoomChanged;
     }
 
-    
+    private void Viewer_ZoomChanged(float CurZoom)
+    {
+        Text = $"{CurZoom * 100}%";
+    }
+
+    private void Viewer_MoveOver(float Px, float Py)
+    {
+        Text = $"X={Px}, Y={Py}";
+    }
+
+    Bitmap _img;
+
+    private void OpenFile()
+    {
+        var of = new OpenFileDialog()
+        {
+            Multiselect = false,
+            CheckFileExists = true,
+        };
+
+
+        if (of.ShowDialog() == DialogResult.OK)
+        {
+            _img = new(of.FileName, true);
+            _viewer.Image = _img;
+        }
+    }
 
     private void FrmMain_Resize(object sender, EventArgs e)
     {
@@ -37,8 +75,4 @@ public partial class FrmMain : Form
         base.WndProc(ref m);
     }
 
-    private void toolStripContainer1_TopToolStripPanel_Click(object sender, EventArgs e)
-    {
-
-    }
 }

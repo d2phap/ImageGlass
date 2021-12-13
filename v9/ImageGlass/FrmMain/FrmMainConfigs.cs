@@ -61,6 +61,7 @@ public partial class FrmMain
 
         var mainMenuItem = new ToolStripButton()
         {
+            Name = "_mainMenu",
             Image = th.ThumbnailBar,
             DisplayStyle = ToolStripItemDisplayStyle.Image,
             TextImageRelation = TextImageRelation.ImageBeforeText,
@@ -78,8 +79,9 @@ public partial class FrmMain
         Toolbar.Items.Add(mainMenuItem);
 
 
-        Toolbar.Items.Add(new ToolStripButton()
+        var openBtnIndex = Toolbar.Items.Add(new ToolStripButton()
         {
+            Name = "_openFile",
             Image = th.OpenFile,
             DisplayStyle = ToolStripItemDisplayStyle.Image,
             TextImageRelation = TextImageRelation.ImageBeforeText,
@@ -139,6 +141,13 @@ public partial class FrmMain
             Enabled = false,
         });
 
+
+        Toolbar.Items["_openFile"].Click += FrmMain_Click;
+    }
+
+    private void FrmMain_Click(object? sender, EventArgs e)
+    {
+        OpenFile();
     }
 }
 
