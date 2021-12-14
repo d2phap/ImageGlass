@@ -13,7 +13,7 @@ public partial class FrmMain
         LoadToolbarIcons();
 
         // Thumbnail bar
-        //PanBottom.Visible = Config.IsShowThumbnail;
+        Sp1.Panel2Collapsed = !Config.IsShowThumbnail;
 
 
         Load += FrmMainConfig_Load;

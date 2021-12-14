@@ -2,6 +2,7 @@
 
 namespace ImageGlass.PhotoBox;
 
+
 internal enum TernaryRasterOperations : int
 {
     SRCCOPY = 0xCC0020,
@@ -29,8 +30,38 @@ internal enum StretchBltMode : int
     STRETCH_HALFTONE = 4,
 }
 
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+internal struct BLENDFUNCTION
+{
+    public byte BlendOp;
+    public byte BlendFlags;
+    public byte SourceConstantAlpha;
+    public byte AlphaFormat;
+
+
+    private const byte AC_SRC_OVER = 0x00;
+    private const byte AC_SRC_ALPHA = 0x01;
+
+    public BLENDFUNCTION()
+    {
+        BlendOp = AC_SRC_OVER;
+        BlendFlags = 0;
+        SourceConstantAlpha = 255;
+        AlphaFormat = AC_SRC_ALPHA;
+    }
+
+    public BLENDFUNCTION(byte alpha)
+    {
+        BlendOp = AC_SRC_OVER;
+        BlendFlags = 0;
+        SourceConstantAlpha = alpha;
+        AlphaFormat = AC_SRC_ALPHA;
+    }
+}
+
 internal class WinApi
 {
+
     /// <summary>
     /// Creates a memory device context (DC) compatible with the specified device.
     /// </summary>
@@ -108,8 +139,7 @@ internal class WinApi
     ///  <para>When a pattern brush is deleted, the bitmap associated with the brush is not deleted. The bitmap must be deleted independently.</para>
     /// </remarks>
     [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    internal static extern bool DeleteObject([In] IntPtr hObject);
+    internal static extern int DeleteObject([In] IntPtr hObject);
 
 
 
@@ -128,7 +158,7 @@ internal class WinApi
     /// <param name="nYSrc">The topmost y-coordinate of the source rectangle (in pixels).</param>
     /// <param name="dwRop">A raster-operation code.</param>
     /// <returns>
-    ///    <c>true</c> if the operation succeedes, <c>false</c> otherwise. To get extended error information, call <see cref="System.Runtime.InteropServices.Marshal.GetLastWin32Error"/>.
+    ///    <c>true</c> if the operation succeedes, <c>false</c> otherwise. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
     /// </returns>
     [DllImport("gdi32.dll", EntryPoint = "BitBlt", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
@@ -155,8 +185,37 @@ internal class WinApi
     ///   <para>If the function fails, the return value is zero.</para>
     /// </returns>
     [DllImport("gdi32.dll")]
-    internal static extern bool StretchBlt(IntPtr hdcDest, int nXOriginDest, int nYOriginDest,
-    int nWidthDest, int nHeightDest, IntPtr hdcSrc, int nXOriginSrc, int nYOriginSrc, int nWidthSrc, int nHeightSrc, TernaryRasterOperations dwRop);
+    internal static extern bool StretchBlt(
+        IntPtr hdcDest,
+        int nXOriginDest,
+        int nYOriginDest,
+        int nWidthDest,
+        int nHeightDest,
+        IntPtr hdcSrc,
+        int nXOriginSrc,
+        int nYOriginSrc,
+        int nWidthSrc,
+        int nHeightSrc,
+        TernaryRasterOperations dwRop);
 
 
+
+    [DllImport("gdi32.dll", EntryPoint = "GdiAlphaBlend")]
+    public static extern bool AlphaBlend(
+        IntPtr hdcDest,
+        int nXOriginDest,
+        int nYOriginDest,
+        int nWidthDest,
+        int nHeightDest,
+        IntPtr hdcSrc,
+        int nXOriginSrc,
+        int nYOriginSrc,
+        int nWidthSrc,
+        int nHeightSrc,
+        BLENDFUNCTION blendFunction);
+
+
+    
+    [DllImport("gdi32.dll", EntryPoint = "FillRect")]
+    public static extern int FillRect(IntPtr hdc, int mode);
 }

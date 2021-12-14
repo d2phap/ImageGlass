@@ -336,7 +336,7 @@
             this.PanBot.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanBot.Location = new System.Drawing.Point(0, 0);
             this.PanBot.Name = "PanBot";
-            this.PanBot.Size = new System.Drawing.Size(1155, 96);
+            this.PanBot.Size = new System.Drawing.Size(150, 40);
             this.PanBot.TabIndex = 0;
             // 
             // FrmMain

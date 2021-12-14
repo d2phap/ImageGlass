@@ -29,19 +29,20 @@ public partial class FrmMain : Form
     }
 
 
-    private void Prepare()
+    private void Prepare(string filename = @"C:\Users\d2pha\Desktop\logo.png")
     {
-        Task.Run(() =>
-        {
-            var args = Environment.GetCommandLineArgs()
+        var args = Environment.GetCommandLineArgs()
             .Where(cmd => !cmd.StartsWith('-'))
             .ToArray();
 
-            if (args.Length > 1)
-            {
-                _viewer.Image = new(args[1], true);
-            }
-        });
+        if (args.Length > 1)
+        {
+            _viewer.Image = new(args[1], true);
+        }
+        else
+        {
+            _viewer.Image = new(filename, true);
+        }
     }
 
 
@@ -57,7 +58,7 @@ public partial class FrmMain : Form
 
         if (of.ShowDialog() == DialogResult.OK)
         {
-            _viewer.Image = new(of.OpenFile(), true);
+            _viewer.Image = new(of.FileName, true);
         }
     }
 
