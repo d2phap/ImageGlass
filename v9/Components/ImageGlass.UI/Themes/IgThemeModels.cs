@@ -74,10 +74,10 @@ public record IgThemeSettings
 
 
     // Menu
-    public Color MenuBgColor { get; set; } = Color.Black;
-    public Color MenuBgHoverColor { get; set; } = Color.White;
+    public Color MenuBgColor { get; set; } = ThemeUtils.ColorFromHex("#242b31");
+    public Color MenuBgHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
     public Color MenuTextColor { get; set; } = Color.White;
-    public Color MenuTextHoverColor { get; set; } = Color.Black;
+    public Color MenuTextHoverColor { get; set; } = Color.White;
 
 
 

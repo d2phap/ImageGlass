@@ -1,6 +1,8 @@
 ﻿
+using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.UI;
+using ImageGlass.UI.Menu;
 
 namespace ImageGlass;
 
@@ -26,6 +28,15 @@ public partial class FrmMain
             Sp3.SplitterBackColor =
             PanLeft.BackColor =
             PanRight.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
+
+        // Menu
+        MnuMain.Renderer = 
+            MnuContext.Renderer = new ModernMenuRenderer(Config.Theme);
+
+        // apply Windows 11 Corner API
+        CornerApi.ApplyCorner(MnuMain.Handle);
+        CornerApi.ApplyCorner(MnuContext.Handle);
+
     }
 
 

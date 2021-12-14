@@ -59,24 +59,10 @@ public partial class FrmMain
         var th = Config.Theme.ToolbarIcons;
         Toolbar.Items.Clear();
 
-        var mainMenuItem = new ToolStripButton()
-        {
-            Name = "_mainMenu",
-            Image = th.ThumbnailBar,
-            DisplayStyle = ToolStripItemDisplayStyle.Image,
-            TextImageRelation = TextImageRelation.ImageBeforeText,
-            Text = "Main menu",
-            ToolTipText = "Main menu (Alf+F)",
-            CheckOnClick = true,
-            ForeColor = Config.Theme.Settings.TextColor,
-            Padding = Constants.TOOLBAR_BTN_PADDING,
-            Margin = Constants.TOOLBAR_BTN_MARGIN,
-
-            Alignment = ToolStripItemAlignment.Right,
-            Overflow = ToolStripItemOverflow.Never,
-        };
-
-        Toolbar.Items.Add(mainMenuItem);
+        // add Main Menu
+        Local.BtnMainMenu.Click -= BtnMainMenu_Click;
+        Local.BtnMainMenu.Click += BtnMainMenu_Click;
+        Toolbar.Items.Add(Local.BtnMainMenu);
 
 
         var openBtnIndex = Toolbar.Items.Add(new ToolStripButton()
@@ -143,6 +129,11 @@ public partial class FrmMain
 
 
         Toolbar.Items["_openFile"].Click += FrmMain_Click;
+    }
+
+    private void BtnMainMenu_Click(object? sender, EventArgs e)
+    {
+        MnuMain.Show(Toolbar, Toolbar.Width - MnuMain.Width, Toolbar.Height);
     }
 
     private void FrmMain_Click(object? sender, EventArgs e)
