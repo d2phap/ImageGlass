@@ -74,7 +74,6 @@ public class ViewBox
         {
             Dispose();
             _srcBitmap = value;
-            _zoomFactor = 1;
 
             DrawPic(0, 0);
         }
@@ -260,6 +259,8 @@ public class ViewBox
         _isMouseDown = true;
     }
 
+
+
     private void Host_MouseMove(object? sender, MouseEventArgs e)
     {
         if (_srcBitmap is null)
@@ -336,9 +337,11 @@ public class ViewBox
             _displayBounds.X = (_host.Width - _srcBitmap.Width * _zoomFactor) / 2.0f;
             _displayBounds.Width = _srcBitmap.Width * _zoomFactor;
 
-            //_ = WinApi.BitBlt(_desDcHandle, 0, 0, (int)_displayBounds.X, _host.Height, _srcDcHandle, 0, 0, TernaryRasterOperations.BLACKNESS);
+            // clear left side
+            _ = WinApi.BitBlt(_desDcHandle, 0, 0, (int)_displayBounds.X, _host.Height, _srcDcHandle, 0, 0, TernaryRasterOperations.BLACKNESS);
 
-            //_ = WinApi.BitBlt(_desDcHandle, (int)_displayBounds.Right, 0, (int)_displayBounds.X, _host.Height, _srcDcHandle, 0, 0, TernaryRasterOperations.BLACKNESS);
+            // clear right side
+            _ = WinApi.BitBlt(_desDcHandle, (int)_displayBounds.Right, 0, (int)_displayBounds.X, _host.Height, _srcDcHandle, 0, 0, TernaryRasterOperations.BLACKNESS);
         }
         else
         {
@@ -355,9 +358,11 @@ public class ViewBox
             _displayBounds.Y = (_host.Height - _srcBitmap.Height * _zoomFactor) / 2f;
             _displayBounds.Height = _srcBitmap.Height * _zoomFactor;
 
-            //WinApi.BitBlt(_desDcHandle, 0, 0, _host.Width, (int)_displayBounds.Y, _srcDcHandle, 0, 0, TernaryRasterOperations.BLACKNESS);
+            // clear top
+            WinApi.BitBlt(_desDcHandle, 0, 0, _host.Width, (int)_displayBounds.Y, _srcDcHandle, 0, 0, TernaryRasterOperations.BLACKNESS);
 
-            //WinApi.BitBlt(_desDcHandle, 0, (int)_displayBounds.Bottom, _host.Width, (int)_displayBounds.Y, _srcDcHandle, 0, 0, TernaryRasterOperations.BLACKNESS);
+            // clear bottom
+            WinApi.BitBlt(_desDcHandle, 0, (int)_displayBounds.Bottom, _host.Width, (int)_displayBounds.Y, _srcDcHandle, 0, 0, TernaryRasterOperations.BLACKNESS);
         }
         else
         {
@@ -367,8 +372,8 @@ public class ViewBox
             _displayBounds.Height = _host.Height;
         }
 
-        // clear background
-        _ = WinApi.BitBlt(_desDcHandle, 0, 0, _host.Width, _host.Height, _srcDcHandle, 0, 0, TernaryRasterOperations.BLACKNESS);
+        //// clear center
+        //WinApi.BitBlt(_desDcHandle, (int)_displayBounds.X, (int)_displayBounds.Y, (int)_displayBounds.Width, (int)_displayBounds.Height, _srcDcHandle, 0, 0, TernaryRasterOperations.BLACKNESS);
 
         _oldZoomFactor = _zoomFactor;
         // -----------------------------------
@@ -398,9 +403,10 @@ public class ViewBox
         }
 
         // start drawing
-        _ = WinApi.StretchBlt(_desDcHandle, (int)_displayBounds.X, (int)_displayBounds.Y, (int)_displayBounds.Width, (int)_displayBounds.Height, _srcDcHandle, (int)_imageViewPort.X, (int)_imageViewPort.Y, (int)_imageViewPort.Width, (int)_imageViewPort.Height, TernaryRasterOperations.SRCCOPY);
+        //_ = WinApi.StretchBlt(_desDcHandle, (int)_displayBounds.X, (int)_displayBounds.Y, (int)_displayBounds.Width, (int)_displayBounds.Height, _srcDcHandle, (int)_imageViewPort.X, (int)_imageViewPort.Y, (int)_imageViewPort.Width, (int)_imageViewPort.Height, TernaryRasterOperations.SRCCOPY);
 
-        //_ = WinApi.AlphaBlend(_desDcHandle, (int)_displayBounds.X, (int)_displayBounds.Y, (int)_displayBounds.Width, (int)_displayBounds.Height, _srcDcHandle, (int)_imageViewPort.X, (int)_imageViewPort.Y, (int)_imageViewPort.Width, (int)_imageViewPort.Height, new(100));
+        _ = WinApi.AlphaBlend(_desDcHandle, (int)_displayBounds.X, (int)_displayBounds.Y, (int)_displayBounds.Width, (int)_displayBounds.Height, _srcDcHandle, (int)_imageViewPort.X, (int)_imageViewPort.Y, (int)_imageViewPort.Width, (int)_imageViewPort.Height, new(255));
+
 
         _graphics?.ReleaseHdc(_desDcHandle);
         

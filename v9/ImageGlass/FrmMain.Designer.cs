@@ -314,7 +314,7 @@
             // 
             // PanCenter
             // 
-            this.PanCenter.BackColor = System.Drawing.Color.Transparent;
+            this.PanCenter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.PanCenter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanCenter.Location = new System.Drawing.Point(0, 0);
             this.PanCenter.Name = "PanCenter";

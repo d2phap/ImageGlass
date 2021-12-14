@@ -59,6 +59,35 @@ internal struct BLENDFUNCTION
     }
 }
 
+
+[StructLayout(LayoutKind.Sequential)]
+public struct RECT
+{
+    public int Left, Top, Right, Bottom;
+
+    public RECT(int left, int top, int right, int bottom)
+    {
+        Left = left;
+        Top = top;
+        Right = right;
+        Bottom = bottom;
+    }
+
+    public RECT(Rectangle r) : this(r.Left, r.Top, r.Right, r.Bottom) { }
+}
+
+
+[StructLayout(LayoutKind.Sequential)]
+struct PAINTSTRUCT
+{
+    public IntPtr hdc;
+    public bool fErase;
+    public RECT rcPaint;
+    public bool fRestore;
+    public bool fIncUpdate;
+    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)] public byte[] rgbReserved;
+}
+
 internal class WinApi
 {
 
@@ -217,5 +246,24 @@ internal class WinApi
 
     
     [DllImport("gdi32.dll", EntryPoint = "FillRect")]
-    public static extern int FillRect(IntPtr hdc, int mode);
+    internal static extern int FillRect(IntPtr hdc, int mode);
+
+
+
+    [DllImport("user32.dll")]
+    internal static extern int FillRect(IntPtr hDC, [In] ref RECT lprc, IntPtr hbr);
+
+    [DllImport("gdi32.dll")]
+    internal static extern uint GetBkColor(IntPtr hdc);
+
+    [DllImport("gdi32.dll")]
+    internal static extern IntPtr CreateSolidBrush(uint crColor);
+
+
+    [DllImport("user32.dll")]
+    internal static extern IntPtr BeginPaint(IntPtr hwnd, out PAINTSTRUCT lpPaint);
+
+
+    [DllImport("user32.dll")]
+    internal static extern bool EndPaint(IntPtr hWnd, [In] ref PAINTSTRUCT lpPaint);
 }

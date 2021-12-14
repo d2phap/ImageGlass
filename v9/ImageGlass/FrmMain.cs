@@ -18,14 +18,14 @@ public partial class FrmMain : Form
             MinZoom = 0.01f,
             MaxZoom = 35,
         };
-        _viewer.OnPanning += _viewer_OnPanning;
+        _viewer.OnZoomChanged += _viewer_OnZoomChanged;
 
         Prepare();
     }
 
-    private void _viewer_OnPanning(PanningEventArgs e)
+    private void _viewer_OnZoomChanged(ZoomEventArgs e)
     {
-        Text = $"X={e.HostStartLocation.X}, Y={e.HostStartLocation.Y}";
+        Text = $"{e.ZoomFactor * 100}%";
     }
 
 
@@ -59,6 +59,7 @@ public partial class FrmMain : Form
         if (of.ShowDialog() == DialogResult.OK)
         {
             _viewer.Image = new(of.FileName, true);
+            _viewer.CurrentZoom = 0.5f;
         }
     }
 
