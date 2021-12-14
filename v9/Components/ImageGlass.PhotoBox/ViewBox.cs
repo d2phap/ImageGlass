@@ -3,104 +3,200 @@ namespace ImageGlass.PhotoBox;
 
 public class ViewBox
 {
+    #region Private properties
+
     // Host control , host control graphics , and source bitmap
-    private Control Host = new();
-    private Graphics Gr;
-    private Bitmap? srcBitmap;
+    private Control _host = new();
+    private Graphics? _graphics;
+    private Bitmap? _srcBitmap;
 
     // Source bitmap Handle
-    private IntPtr HBitmapSrc;
+    private IntPtr _srcBitmapHandle;
 
     // Source DC handle , Destination DC handle
-    private IntPtr srcHDC;
-    private IntPtr desHDC;
+    private IntPtr _srcDcHandle;
+    private IntPtr _desDcHandle;
 
-    private PointF P;
-    private PointF CP;
-    private PointF CS;
+    // Viewport and display boundary
+    private RectangleF _imageViewPort = new();
+    private RectangleF _displayBounds = new();
 
-    // Main rectangle , Boundary rectangle
-    private RectangleF Mrec;
-    private RectangleF Brec;
+    private PointF _panHostPoint;
+    private PointF _panSpeed;
+    private PointF _panHostStartPoint;
 
     // current zoom, minimum zoom, maximum zoom, previous zoom (bigger means zoom in)
-    private float Zfactor = 1f;
-    private float MinZ = 0.05f;
-    private float MaxZ = 20f;
-    private float oldZfactor = 1f;
+    private float _zoomFactor = 1f;
+    private float _oldZoomFactor = 1f;
 
-    private bool Xout = false;
-    private bool Yout = false;
-    private bool HostLoadComplete = false;
-    private bool DownPress = false;
+    private bool _xOut = false;
+    private bool _yOut = false;
+    private bool _isHostLoadComplete = false;
+    private bool _isMouseDown = false;
 
-    public ViewBox(Control hostControl, Bitmap? srcImage)
+    #endregion
+
+
+    #region Public properties
+    /// <summary>
+    /// Gets, sets the minimum zoom factor (100% = 1.0f)
+    /// </summary>
+    public float MinZoom { get; set; } = 0.01f;
+
+    /// <summary>
+    /// Gets, sets the maximum zoom factor (100% = 1.0f)
+    /// </summary>
+    public float MaxZoom { get; set; } = 35f;
+
+    /// <summary>
+    /// Gets, sets current zoom factor (100% = 1.0f)
+    /// </summary>
+    public float CurrentZoom
     {
-        Host = hostControl;
-        srcBitmap = srcImage;
-
-        Host.MouseDown += Host_MouseDown;
-        Host.MouseUp += Host_MouseUp;
-        Host.MouseMove += Host_MouseMove;
-        Host.MouseWheel += Host_MouseWheel;
-
-
-        Host.Paint += Host_Paint;
-        Host.Resize += Host_Resize;
-
-        srcHDC = default;
-        desHDC = default;
-        HostLoadComplete = true;
+        get => _zoomFactor;
+        set
+        {
+            _zoomFactor = value;
+            DrawPic(_host.Width / 2f, _host.Height / 2f);
+        }
     }
+
+    /// <summary>
+    /// Gets sets the bitmap image
+    /// </summary>
+    public Bitmap? Image
+    {
+        get
+        {
+            return _srcBitmap;
+        }
+        set
+        {
+            Dispose();
+            _srcBitmap = value;
+            _zoomFactor = 1;
+            DrawPic(0, 0);
+        }
+    }
+
+    /// <summary>
+    /// Gets the source device context (DC) handle
+    /// </summary>
+    public IntPtr SrcDcHandle => _srcDcHandle;
+
+    /// <summary>
+    /// Gets the source bitmap handle
+    /// </summary>
+    public IntPtr SrcBitmapHandle => _srcBitmapHandle;
+
+    /// <summary>
+    /// Gets the area of the image content to draw
+    /// </summary>
+    public RectangleF ImageViewPort => _imageViewPort;
+
+    /// <summary>
+    /// Gets the boundary of the displaying image content
+    /// </summary>
+    public RectangleF DisplayBounds => _displayBounds;
+
+
+    /// <summary>
+    /// Occurs when the host is being panned
+    /// </summary>
+    public event PanningEventHandler? OnPanning = null;
+    public delegate void PanningEventHandler(PanningEventArgs e);
+
+
+    /// <summary>
+    /// Occurs when the mouse pointer is moved over the control
+    /// </summary>
+    public event MouseMoveEventHandler? OnMouseMove = null;
+    public delegate void MouseMoveEventHandler(MouseMoveEventArgs e);
+
+
+    /// <summary>
+    /// Occurs when <see cref="CurrentZoom"/> value changes
+    /// </summary>
+    public event ZoomChangedEventHandler? OnZoomChanged = null;
+    public delegate void ZoomChangedEventHandler(ZoomEventArgs e);
+
+    #endregion
+
+
+    /// <summary>
+    /// Initializes ViewBox instance
+    /// </summary>
+    /// <param name="host">Control to host</param>
+    /// <param name="bmp">Bitmap image to display</param>
+    public ViewBox(Control host, Bitmap? bmp = null)
+    {
+        _host = host;
+        _srcBitmap = bmp;
+
+        _host.MouseDown += Host_MouseDown;
+        _host.MouseUp += Host_MouseUp;
+        _host.MouseMove += Host_MouseMove;
+        _host.MouseWheel += Host_MouseWheel;
+
+        _host.Paint += Host_Paint;
+        _host.Resize += Host_Resize;
+
+        _srcDcHandle = default;
+        _desDcHandle = default;
+        _isHostLoadComplete = true;
+    }
+
+
+    public void Dispose()
+    {
+        if (_srcBitmap is not null)
+        {
+            _srcBitmap.Dispose();
+            _srcBitmap = null;
+        }
+
+        if (!_srcDcHandle.Equals(IntPtr.Zero))
+        {
+            WinApi.DeleteDC(_srcDcHandle);
+            _srcDcHandle = default;
+        }
+
+        if (_graphics is not null)
+        {
+            _graphics.Dispose();
+            _graphics = null;
+        }
+
+        GC.Collect();
+    }
+
 
     private void Host_MouseWheel(object? sender, MouseEventArgs e)
     {
-        if (srcBitmap is null) return;
+        if (_srcBitmap is null) return;
 
         var speed = e.Delta / 500f;
 
         // zoom in
         if (e.Delta > 0)
         {
-            if (Zfactor > MaxZoom)
+            if (_zoomFactor > MaxZoom)
                 return;
-            oldZfactor = Zfactor;
-            Zfactor *= 1f + speed;
+            _oldZoomFactor = _zoomFactor;
+            _zoomFactor *= 1f + speed;
             DrawPic(e.X, e.Y);
         }
         // zoom out
         else if (e.Delta < 0)
         {
-            if (Zfactor < MinZoom)
+            if (_zoomFactor < MinZoom)
                 return;
-            oldZfactor = Zfactor;
-            Zfactor /= 1f - speed;
+            _oldZoomFactor = _zoomFactor;
+            _zoomFactor /= 1f - speed;
             DrawPic(e.X, e.Y);
         }
-        ZoomChanged?.Invoke(Zfactor);
-    }
 
-    public void Dispose()
-    {
-        if (srcBitmap is not null)
-        {
-            srcBitmap.Dispose();
-            srcBitmap = null;
-        }
-
-        if (!srcHDC.Equals(IntPtr.Zero))
-        {
-            WinApi.DeleteDC(srcHDC);
-            srcHDC = default;
-        }
-
-        if (Gr is not null)
-        {
-            Gr.Dispose();
-            Gr = null;
-        }
-
-        GC.Collect();
+        OnZoomChanged?.Invoke(new(_zoomFactor));
     }
 
     private void Host_Paint(object? sender, PaintEventArgs e)
@@ -110,252 +206,194 @@ public class ViewBox
 
     private void Host_Resize(object? sender, EventArgs e)
     {
-        if (HostLoadComplete == true)
+        if (_isHostLoadComplete == true)
+        {
             DrawPic(0, 0);
+        } 
     }
 
     private void Host_MouseUp(object? sender, MouseEventArgs e)
     {
-        if (srcBitmap is null)
+        if (_srcBitmap is null)
             return;
 
-        DownPress = false;
+        _isMouseDown = false;
         var speed = e.Delta / 200f;
 
-        if (CS.X == e.X & CS.Y == e.Y)
+        if (_panHostStartPoint.X == e.X & _panHostStartPoint.Y == e.Y)
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (Zfactor > MaxZoom)
+                if (_zoomFactor > MaxZoom)
                     return;
-                oldZfactor = Zfactor;
-                Zfactor *= 1f + speed;
+                _oldZoomFactor = _zoomFactor;
+                _zoomFactor *= 1f + speed;
                 DrawPic(e.X, e.Y);
             }
             else if (e.Button == MouseButtons.Right)
             {
-                if (Zfactor < MinZoom)
+                if (_zoomFactor < MinZoom)
                     return;
-                oldZfactor = Zfactor;
-                Zfactor /= 1f - speed;
+                _oldZoomFactor = _zoomFactor;
+                _zoomFactor /= 1f - speed;
                 DrawPic(e.X, e.Y);
             }
-            ZoomChanged?.Invoke(Zfactor);
+
+            OnZoomChanged?.Invoke(new(_zoomFactor));
         }
     }
 
     private void Host_MouseDown(object? sender, MouseEventArgs e)
     {
-        if (srcBitmap is null)
+        if (_srcBitmap is null)
             return;
 
-        P.X = e.X;
-        P.Y = e.Y;
-        CP.X = 0;
-        CP.Y = 0;
-        CS.X = e.X;
-        CS.Y = e.Y;
-        DownPress = true;
+        _panHostPoint.X = e.X;
+        _panHostPoint.Y = e.Y;
+        _panSpeed.X = 0;
+        _panSpeed.Y = 0;
+        _panHostStartPoint.X = e.X;
+        _panHostStartPoint.Y = e.Y;
+        _isMouseDown = true;
     }
 
     private void Host_MouseMove(object? sender, MouseEventArgs e)
     {
-        if (srcBitmap is null)
+        if (_srcBitmap is null)
             return;
 
-        if (DownPress == true)
+        if (_isMouseDown == true)
         {
             // accelerated scrolling when right click drag ----------------
             if (e.Button == MouseButtons.Right)
             {
-                CP.X = (P.X - e.X) * (srcBitmap.Width / 2000f);
-                CP.Y = (P.Y - e.Y) * (srcBitmap.Height / 2000f);
+                _panSpeed.X = (_panHostPoint.X - e.X) * (_srcBitmap.Width / 2000f);
+                _panSpeed.Y = (_panHostPoint.Y - e.Y) * (_srcBitmap.Height / 2000f);
             }
 
+            _imageViewPort.X = ((_panHostPoint.X - e.X) / _zoomFactor)
+                + _imageViewPort.X
+                + _panSpeed.X;
 
-            Mrec.X = ((P.X - e.X) / Zfactor) + Mrec.X + CP.X;
-            Mrec.Y = ((P.Y - e.Y) / Zfactor) + Mrec.Y + CP.Y;
+            _imageViewPort.Y = ((_panHostPoint.Y - e.Y) / _zoomFactor)
+                + _imageViewPort.Y
+                + _panSpeed.Y;
+
             DrawPic(0, 0);
-            if (Xout == false)
-                P.X = e.X;
-            if (Yout == false)
-                P.Y = e.Y;
+
+            if (_xOut == false)
+            {
+                _panHostPoint.X = e.X;
+            }
+                
+            if (_yOut == false)
+            {
+                _panHostPoint.Y = e.Y;
+            }
+
+            OnPanning?.Invoke(new(_panHostPoint, _panHostStartPoint));
         }
 
-        MoveOver?.Invoke((e.X - Brec.X) / Zfactor + Mrec.X, (e.Y - Brec.Y) / Zfactor + Mrec.Y);
+        var imgX = (e.X - _displayBounds.X) / _zoomFactor + _imageViewPort.X;
+        var imgY = (e.Y - _displayBounds.Y) / _zoomFactor + _imageViewPort.Y;
+
+        OnMouseMove?.Invoke(new(imgX, imgY, e.Button));
     }
 
-    private void DrawPic(float ZoomX, float ZoomY)
+    private void DrawPic(float zoomX, float zoomY)
     {
-        if (srcBitmap is null)
+        if (_srcBitmap is null)
             return;
 
-        if (srcHDC.Equals(IntPtr.Zero))
+        if (_srcDcHandle.Equals(IntPtr.Zero))
         {
-            srcHDC = WinApi.CreateCompatibleDC(IntPtr.Zero);
-            HBitmapSrc = srcBitmap.GetHbitmap();
-            _ = WinApi.SelectObject(srcHDC, HBitmapSrc);
+            _srcDcHandle = WinApi.CreateCompatibleDC(IntPtr.Zero);
+            _srcBitmapHandle = _srcBitmap.GetHbitmap();
+            _ = WinApi.SelectObject(_srcDcHandle, _srcBitmapHandle);
         }
 
-        if (desHDC.Equals(IntPtr.Zero))
+        if (_desDcHandle.Equals(IntPtr.Zero))
         {
-            if (Gr is null)
-                Gr = Host.CreateGraphics();
-            desHDC = Gr.GetHdc();
-            _ = WinApi.SetStretchBltMode(desHDC, StretchBltMode.STRETCH_DELETESCANS);
+            if (_graphics is null)
+                _graphics = _host.CreateGraphics();
+            _desDcHandle = _graphics.GetHdc();
+            _ = WinApi.SetStretchBltMode(_desDcHandle, StretchBltMode.STRETCH_DELETESCANS);
         }
 
 
+        _xOut = false;
+        _yOut = false;
 
-        Xout = false;
-        Yout = false;
-
-        if (Host.Width > srcBitmap.Width * Zfactor)
+        if (_host.Width > _srcBitmap.Width * _zoomFactor)
         {
-            Mrec.X = 0;
-            Mrec.Width = srcBitmap.Width;
-            Brec.X = (Host.Width - srcBitmap.Width * Zfactor) / 2.0f;
-            Brec.Width = srcBitmap.Width * Zfactor;
+            _imageViewPort.X = 0;
+            _imageViewPort.Width = _srcBitmap.Width;
+            _displayBounds.X = (_host.Width - _srcBitmap.Width * _zoomFactor) / 2.0f;
+            _displayBounds.Width = _srcBitmap.Width * _zoomFactor;
 
-            _ = WinApi.BitBlt(desHDC, 0, 0, (int)Brec.X, Host.Height, srcHDC, 0, 0, TernaryRasterOperations.BLACKNESS);
-            _ = WinApi.BitBlt(desHDC, (int)Brec.Right, 0, (int)Brec.X, Host.Height, srcHDC, 0, 0, TernaryRasterOperations.BLACKNESS);
-        }
-        else
-        {
-            Mrec.X += (Host.Width / oldZfactor - Host.Width / Zfactor) / ((Host.Width + 0.001f) / ZoomX);
-            Mrec.Width = Host.Width / Zfactor;
-            Brec.X = 0;
-            Brec.Width = Host.Width;
-        }
+            _ = WinApi.BitBlt(_desDcHandle, 0, 0, (int)_displayBounds.X, _host.Height, _srcDcHandle, 0, 0, TernaryRasterOperations.BLACKNESS);
 
-        if (Host.Height > srcBitmap.Height * Zfactor)
-        {
-            Mrec.Y = 0;
-            Mrec.Height = srcBitmap.Height;
-            Brec.Y = (Host.Height - srcBitmap.Height * Zfactor) / 2f;
-            Brec.Height = srcBitmap.Height * Zfactor;
-
-            WinApi.BitBlt(desHDC, 0, 0, Host.Width, (int)Brec.Y, srcHDC, 0, 0, TernaryRasterOperations.BLACKNESS);
-            WinApi.BitBlt(desHDC, 0, (int)Brec.Bottom, Host.Width, (int)Brec.Y, srcHDC, 0, 0, TernaryRasterOperations.BLACKNESS);
+            _ = WinApi.BitBlt(_desDcHandle, (int)_displayBounds.Right, 0, (int)_displayBounds.X, _host.Height, _srcDcHandle, 0, 0, TernaryRasterOperations.BLACKNESS);
         }
         else
         {
-            Mrec.Y += (Host.Height / oldZfactor - Host.Height / Zfactor) / ((Host.Height + 0.001f) / ZoomY);
-            Mrec.Height = Host.Height / Zfactor;
-            Brec.Y = 0;
-            Brec.Height = Host.Height;
+            _imageViewPort.X += (_host.Width / _oldZoomFactor - _host.Width / _zoomFactor) / ((_host.Width + 0.001f) / zoomX);
+            _imageViewPort.Width = _host.Width / _zoomFactor;
+            _displayBounds.X = 0;
+            _displayBounds.Width = _host.Width;
         }
 
-        oldZfactor = Zfactor;
+        if (_host.Height > _srcBitmap.Height * _zoomFactor)
+        {
+            _imageViewPort.Y = 0;
+            _imageViewPort.Height = _srcBitmap.Height;
+            _displayBounds.Y = (_host.Height - _srcBitmap.Height * _zoomFactor) / 2f;
+            _displayBounds.Height = _srcBitmap.Height * _zoomFactor;
+
+            WinApi.BitBlt(_desDcHandle, 0, 0, _host.Width, (int)_displayBounds.Y, _srcDcHandle, 0, 0, TernaryRasterOperations.BLACKNESS);
+            WinApi.BitBlt(_desDcHandle, 0, (int)_displayBounds.Bottom, _host.Width, (int)_displayBounds.Y, _srcDcHandle, 0, 0, TernaryRasterOperations.BLACKNESS);
+        }
+        else
+        {
+            _imageViewPort.Y += (_host.Height / _oldZoomFactor - _host.Height / _zoomFactor) / ((_host.Height + 0.001f) / zoomY);
+            _imageViewPort.Height = _host.Height / _zoomFactor;
+            _displayBounds.Y = 0;
+            _displayBounds.Height = _host.Height;
+        }
+
+        _oldZoomFactor = _zoomFactor;
         // -----------------------------------
 
-        if (Mrec.Right > srcBitmap.Width)
+        if (_imageViewPort.Right > _srcBitmap.Width)
         {
-            Xout = true;
-            Mrec.X = (srcBitmap.Width - Mrec.Width);
+            _xOut = true;
+            _imageViewPort.X = _srcBitmap.Width - _imageViewPort.Width;
         }
 
-        if (Mrec.X < 0)
+        if (_imageViewPort.X < 0)
         {
-            Xout = true;
-            Mrec.X = 0;
+            _xOut = true;
+            _imageViewPort.X = 0;
         }
 
-        if (Mrec.Bottom > srcBitmap.Height)
+        if (_imageViewPort.Bottom > _srcBitmap.Height)
         {
-            Yout = true;
-            Mrec.Y = srcBitmap.Height - Mrec.Height;
+            _yOut = true;
+            _imageViewPort.Y = _srcBitmap.Height - _imageViewPort.Height;
         }
 
-        if (Mrec.Y < 0)
+        if (_imageViewPort.Y < 0)
         {
-            Yout = true;
-            Mrec.Y = 0;
+            _yOut = true;
+            _imageViewPort.Y = 0;
         }
 
-        _ = WinApi.StretchBlt(desHDC, (int)Brec.X, (int)Brec.Y, (int)Brec.Width, (int)Brec.Height, srcHDC, (int)Mrec.X, (int)Mrec.Y, (int)Mrec.Width, (int)Mrec.Height, TernaryRasterOperations.SRCCOPY);
+        _ = WinApi.StretchBlt(_desDcHandle, (int)_displayBounds.X, (int)_displayBounds.Y, (int)_displayBounds.Width, (int)_displayBounds.Height, _srcDcHandle, (int)_imageViewPort.X, (int)_imageViewPort.Y, (int)_imageViewPort.Width, (int)_imageViewPort.Height, TernaryRasterOperations.SRCCOPY);
 
-        Gr.ReleaseHdc(desHDC);
-        desHDC = default;
+        _graphics?.ReleaseHdc(_desDcHandle);
+        _desDcHandle = default;
     }
 
-    public Bitmap? Image
-    {
-        get
-        {
-            return srcBitmap;
-        }
-        set
-        {
-            Dispose();
-            srcBitmap = value;
-            Zfactor = 1;
-            DrawPic(0, 0);
-        }
-    }
-
-    public IntPtr SourceHDC
-    {
-        get
-        {
-            return srcHDC;
-        }
-    }
-
-    public IntPtr srcBitmapHande
-    {
-        get
-        {
-            return HBitmapSrc;
-        }
-    }
-
-    public float MinZoom
-    {
-        get
-        {
-            return MinZ;
-        }
-        set
-        {
-            MinZ = MinZoom;
-        }
-    }
-
-
-    public float MaxZoom
-    {
-        get
-        {
-            return MaxZ;
-        }
-        set
-        {
-            MaxZ = MaxZoom;
-        }
-    }
-
-    public float CurZoom
-    {
-        get
-        {
-            return Zfactor;
-        }
-        set
-        {
-            Zfactor = CurZoom;
-            DrawPic(Host.Width / 2f, Host.Height / 2f);
-        }
-    }
-
-
-
-    public event MoveOverEventHandler MoveOver;
-
-    public delegate void MoveOverEventHandler(float Px, float Py);
-
-    public event ZoomChangedEventHandler ZoomChanged;
-
-    public delegate void ZoomChangedEventHandler(float CurZoom);
+    
 }
 

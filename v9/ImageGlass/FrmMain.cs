@@ -16,13 +16,18 @@ public partial class FrmMain : Form
         _viewer = new(PanCenter, null)
         {
             MinZoom = 0.01f,
-            MaxZoom = 3500,
+            MaxZoom = 35,
         };
-        _viewer.MoveOver += Viewer_MoveOver;
-        _viewer.ZoomChanged += Viewer_ZoomChanged;
+        _viewer.OnPanning += _viewer_OnPanning;
 
         Prepare();
     }
+
+    private void _viewer_OnPanning(PanningEventArgs e)
+    {
+        Text = $"X={e.HostStartLocation.X}, Y={e.HostStartLocation.Y}";
+    }
+
 
     private void Prepare()
     {
@@ -39,15 +44,6 @@ public partial class FrmMain : Form
         });
     }
 
-    private void Viewer_ZoomChanged(float CurZoom)
-    {
-        Text = $"{CurZoom * 100}%";
-    }
-
-    private void Viewer_MoveOver(float Px, float Py)
-    {
-        //Text = $"X={Px}, Y={Py}";
-    }
 
 
     private void OpenFile()
