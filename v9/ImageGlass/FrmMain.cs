@@ -1,5 +1,5 @@
+using ImageGlass.Base.WinApi;
 using ImageGlass.PhotoBox;
-using ImageGlass.UI.WinApi;
 
 namespace ImageGlass;
 
@@ -87,11 +87,11 @@ public partial class FrmMain : Form
                 // The window is being restored
             }
         }
-        else if (m.Msg == DPIScaling.WM_DPICHANGED)
+        else if (m.Msg == DpiApi.WM_DPICHANGED)
         {
-            DPIScaling.CurrentDpi = (short)m.WParam;
+            DpiApi.CurrentDpi = (short)m.WParam;
             
-            Text = DPIScaling.CurrentDpi.ToString();
+            Text = DpiApi.CurrentDpi.ToString();
         }
 
         base.WndProc(ref m);

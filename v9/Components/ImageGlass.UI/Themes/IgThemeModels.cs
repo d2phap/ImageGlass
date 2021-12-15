@@ -76,8 +76,8 @@ public record IgThemeSettings
     // Menu
     public Color MenuBgColor { get; set; } = ThemeUtils.ColorFromHex("#242b31");
     public Color MenuBgHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
-    public Color MenuTextColor { get; set; } = Color.White;
-    public Color MenuTextHoverColor { get; set; } = Color.White;
+    public Color MenuTextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
+    public Color MenuTextHoverColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
 
 
 

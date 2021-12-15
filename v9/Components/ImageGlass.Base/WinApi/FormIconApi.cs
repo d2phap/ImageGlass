@@ -19,9 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Runtime.InteropServices;
 
-namespace ImageGlass.UI;
+namespace ImageGlass.Base.WinApi;
 
-public static class FormIcon
+public static class FormIconApi
 {
     [DllImport("user32.dll", CharSet = CharSet.Auto)]
     private static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, int wParam, IntPtr lParam);

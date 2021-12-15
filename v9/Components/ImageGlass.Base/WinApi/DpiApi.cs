@@ -18,9 +18,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using System.Runtime.InteropServices;
 
-namespace ImageGlass.UI.WinApi;
+namespace ImageGlass.Base.WinApi;
 
-public static class DPIScaling
+public static class DpiApi
 {
     [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
     private static extern bool SetWindowPos(HandleRef hWnd, HandleRef hWndInsertAfter, int x, int y, int cx, int cy, int flags);

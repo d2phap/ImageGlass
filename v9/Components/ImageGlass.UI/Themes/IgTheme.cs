@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
-using ImageGlass.UI.WinApi;
+using ImageGlass.Base.WinApi;
 
 namespace ImageGlass.UI;
 
@@ -35,7 +35,7 @@ public class IgTheme
     /// <summary>
     /// Gets the height of toolbar icons
     /// </summary>
-    public float ToolbarIconHeight => DPIScaling.Transform<float>(_iconHeight);
+    public float ToolbarIconHeight => DpiApi.Transform<float>(_iconHeight);
 
     /// <summary>
     /// Theme API version, to check compatibility

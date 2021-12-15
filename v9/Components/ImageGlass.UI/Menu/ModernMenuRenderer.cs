@@ -1,6 +1,6 @@
 ﻿
 
-using ImageGlass.UI.WinApi;
+using ImageGlass.Base.WinApi;
 using System.Drawing.Drawing2D;
 
 namespace ImageGlass.UI;
@@ -125,7 +125,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         }
 
 
-        using var pen = new Pen(textColor, DPIScaling.Transform<float>(1));
+        using var pen = new Pen(textColor, DpiApi.Transform<float>(1));
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
         e.Graphics.DrawLine(pen,
@@ -149,7 +149,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             if (!string.IsNullOrWhiteSpace(mnu.ShortcutKeyDisplayString))
             {
                 var shortcutSize = e.Graphics.MeasureString(mnu.ShortcutKeyDisplayString, mnu.Font);
-                var shortcutRect = new RectangleF(e.ArrowRectangle.X - shortcutSize.Width - DPIScaling.Transform<float>(13),
+                var shortcutRect = new RectangleF(e.ArrowRectangle.X - shortcutSize.Width - DpiApi.Transform<float>(13),
                     e.Item.Height / 2 - shortcutSize.Height / 2,
                     shortcutSize.Width,
                     shortcutSize.Height);
@@ -165,7 +165,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
     protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e)
     {
         var textColor = e.Item.Selected ? _theme.Settings.MenuTextHoverColor : _theme.Settings.MenuTextColor;
-        using var pen = new Pen(textColor, DPIScaling.Transform<float>(2));
+        using var pen = new Pen(textColor, DpiApi.Transform<float>(2));
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
         e.Graphics.DrawLine(pen,

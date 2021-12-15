@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
+using ImageGlass.Base.WinApi;
 using ImageGlass.UI;
 using Microsoft.Extensions.Configuration;
 using System.Dynamic;
@@ -836,7 +837,7 @@ public class Config
     public static void Write()
     {
         var jsonFile = App.ConfigDir(PathType.File, Source.UserFilename);
-        Helpers.WriteJson(jsonFile, GetSettingObjects());
+        Helpers.WriteJson(jsonFile, PrepareJsonSettingObjects());
     }
 
     #endregion
@@ -848,7 +849,7 @@ public class Config
     /// Converts all settings to ExpandoObject for parsing JSON
     /// </summary>
     /// <returns></returns>
-    private static dynamic GetSettingObjects()
+    private static dynamic PrepareJsonSettingObjects()
     {
         var settings = new ExpandoObject();
 
@@ -1251,7 +1252,7 @@ public class Config
         if (!th.Settings.IsShowTitlebarLogo)
         {
             frm.Icon = Icon.FromHandle(new Bitmap(64, 64).GetHicon());
-            FormIcon.SetTaskbarIcon(frm, th.Settings.AppLogo.GetHicon());
+            FormIconApi.SetTaskbarIcon(frm, th.Settings.AppLogo.GetHicon());
         }
         else
         {

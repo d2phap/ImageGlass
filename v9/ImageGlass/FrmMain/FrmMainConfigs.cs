@@ -1,6 +1,6 @@
 ﻿using ImageGlass.Base;
+using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
-using ImageGlass.UI.WinApi;
 
 namespace ImageGlass;
 
@@ -9,7 +9,7 @@ public partial class FrmMain
     private void SetUpFrmMainConfigs()
     {
         // Get the DPI of the current display
-        DPIScaling.CurrentDpi = DeviceDpi;
+        DpiApi.CurrentDpi = DeviceDpi;
 
 
         // Toolbar

@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
-using ImageGlass.UI.WinApi;
 using System.ComponentModel;
 
 namespace ImageGlass.UI;
@@ -138,7 +137,7 @@ public class ModernMenu : ContextMenuStrip
         if (items.Count() == 0) return;
 
         // standard icon size
-        var iconH = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
+        var iconH = DpiApi.Transform(Constants.MENU_ICON_HEIGHT);
         var standardIcon = new Bitmap(iconH, iconH);
 
         foreach (ToolStripMenuItem item in items)
