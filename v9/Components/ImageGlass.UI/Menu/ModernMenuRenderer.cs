@@ -1,10 +1,9 @@
 ﻿
 
-using ImageGlass.Base;
 using ImageGlass.UI.WinApi;
 using System.Drawing.Drawing2D;
 
-namespace ImageGlass.UI.Menu;
+namespace ImageGlass.UI;
 
 
 public class ModernMenuRenderer : ToolStripProfessionalRenderer
@@ -12,7 +11,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
     private const int BORDER_RADIUS = 5;
     private IgTheme _theme { get; set; }
 
-    public ModernMenuRenderer(IgTheme theme) : base(new ModernColors(theme))
+    public ModernMenuRenderer(IgTheme theme) : base(new ModernMenuColors(theme))
     {
         this._theme = theme;
     }
@@ -205,29 +204,4 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         
     }
 
-}
-
-public class ModernColors : ProfessionalColorTable
-{
-    public override Color MenuItemSelected => Color.Transparent;
-    public override Color MenuBorder => Color.Transparent;
-    public override Color MenuItemBorder => Color.Transparent;
-
-    public override Color ImageMarginGradientBegin => Color.Transparent;
-    public override Color ImageMarginGradientMiddle => Color.Transparent;
-    public override Color ImageMarginGradientEnd => Color.Transparent;
-    public override Color SeparatorDark => Color.Transparent;
-    public override Color SeparatorLight => Color.Transparent;
-    public override Color CheckBackground => Color.Transparent;
-    public override Color CheckPressedBackground => Color.Transparent;
-    public override Color CheckSelectedBackground => Color.Transparent;
-    public override Color ButtonSelectedBorder => Color.Transparent;
-    public override Color ToolStripDropDownBackground => base.ToolStripDropDownBackground;
-
-    private IgTheme theme { get; set; }
-
-    public ModernColors(IgTheme theme)
-    {
-        this.theme = theme;
-    }
 }
