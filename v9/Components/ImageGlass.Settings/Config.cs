@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
+using ImageGlass.Heart;
 using ImageGlass.UI;
 using Microsoft.Extensions.Configuration;
 using System.Dynamic;
@@ -393,7 +394,7 @@ public class Config
     /// <summary>
     /// Gets, sets toolbar icon height
     /// </summary>
-    public static int ToolbarIconHeight { get; set; } = Constants.DEFAULT_TOOLBAR_ICON_HEIGHT;
+    public static int ToolbarIconHeight { get; set; } = Constants.TOOLBAR_ICON_HEIGHT;
 
     /// <summary>
     /// Gets, sets value of image quality for editting
@@ -559,6 +560,11 @@ public class Config
     /// Gets, sets theme
     /// </summary>
     public static IgTheme Theme { get; set; }
+
+    /// <summary>
+    /// Gets, sets default codec to use.
+    /// </summary>
+    public static IIgCodec Codec { get; set; }
 
     #endregion
 
@@ -788,9 +794,28 @@ public class Config
         Language = new IgLang(langPath, App.StartUpDir(Dir.Languages));
         #endregion
 
+
+        #region Codec
+        var dllName = items.GetValue(nameof(Codec), string.Empty);
+
+        var codecMnger = new CodecManager();
+        codecMnger.LoadAllCodecs(App.StartUpDir(Dir.Codecs));
+        var codec = codecMnger.Get(dllName);
+
+        if (codecMnger.Items.Count > 0 || codec is not null)
+        {
+            Codec = codec ?? codecMnger.Items[0];
+        }
+        else
+        {
+            throw new FileNotFoundException("Image codec is not found.");
+        }
+        #endregion
+
+
         #region Theme
         var themeFolderName = items.GetValue(nameof(Theme), Constants.DEFAULT_THEME);
-        var th = new IgTheme(App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName), ToolbarIconHeight);
+        var th = new IgTheme(Codec, App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName), ToolbarIconHeight);
 
         if (th.IsValid)
         {
@@ -799,7 +824,7 @@ public class Config
         else
         {
             // load default theme
-            Theme = new(App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME), ToolbarIconHeight);
+            Theme = new(Codec, App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME), ToolbarIconHeight);
         }
 
         if (!Theme.IsValid)
@@ -997,6 +1022,7 @@ public class Config
         settings.TryAdd(nameof(BackgroundColor), ThemeUtils.ColorToHex(BackgroundColor));
         settings.TryAdd(nameof(Language), Path.GetFileName(Language.FileName));
         settings.TryAdd(nameof(Theme), Theme.FolderName);
+        settings.TryAdd(nameof(Codec), Codec.Filename);
 
         #endregion
 
