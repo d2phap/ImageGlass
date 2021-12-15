@@ -119,6 +119,11 @@ public class IgTheme
             return IsValid;
         }
 
+        if (Codec is null)
+        {
+            throw new NullReferenceException(nameof(Codec));
+        }
+
         // get theme folder name
         FolderName = Path.GetFileName(themeFolderPath);
 
@@ -172,7 +177,7 @@ public class IgTheme
                 // property is Bitmap
                 if (prop?.PropertyType == typeof(Bitmap))
                 {
-                    var bmp = Codec.Load(Path.Combine(FolderPath, value), new());
+                    var bmp = Codec?.Load(Path.Combine(FolderPath, value));
                     prop.SetValue(Settings, bmp);
                     continue;
                 }
@@ -201,7 +206,7 @@ public class IgTheme
 
             try
             {
-                var icon = Codec.Load(Path.Combine(FolderPath, value), new()
+                var icon = Codec?.Load(Path.Combine(FolderPath, value), new()
                 {
                     Width = ToolbarIconHeight,
                     Height = ToolbarIconHeight,

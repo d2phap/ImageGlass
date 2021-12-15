@@ -83,7 +83,7 @@ public interface IIgCodec
     /// <param name="filename">Full path of the file</param>
     /// <param name="settings">Loading settings</param>
     /// <returns></returns>
-    public Bitmap Load(string filename, CodecReadSettings settings);
+    public Bitmap Load(string filename, CodecReadSettings settings = default);
 
 
     /// <summary>

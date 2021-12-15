@@ -1,5 +1,6 @@
 using ImageGlass.Base.WinApi;
 using ImageGlass.PhotoBox;
+using ImageGlass.Settings;
 
 namespace ImageGlass;
 
@@ -7,7 +8,6 @@ public partial class FrmMain : Form
 {
     private ViewBox _viewer;
 
-    public object Configs { get; private set; }
 
     public FrmMain()
     {
@@ -40,11 +40,11 @@ public partial class FrmMain : Form
 
         if (args.Length > 1)
         {
-            _viewer.Image = new(args[1], true);
+            _viewer.Image = Config.Codec.Load(args[1]);
         }
         else
         {
-            _viewer.Image = new(filename, true);
+            _viewer.Image = Config.Codec.Load(filename);
         }
     }
 
@@ -61,8 +61,8 @@ public partial class FrmMain : Form
 
         if (of.ShowDialog() == DialogResult.OK)
         {
-            _viewer.Image = new(of.FileName, true);
-            _viewer.CurrentZoom = 0.5f;
+            _viewer.Image = Config.Codec.Load(of.FileName);
+            _viewer.CurrentZoom = 1f;
         }
     }
 
