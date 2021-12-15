@@ -11,12 +11,13 @@ public class DllLoadContext : AssemblyLoadContext
 
     public DllLoadContext(string pluginPath)
     {
-        _resolver = new AssemblyDependencyResolver(pluginPath);
+        _resolver = new(pluginPath);
     }
 
     protected override Assembly? Load(AssemblyName assemblyName)
     {
         var assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
+
         if (!string.IsNullOrEmpty(assemblyPath))
         {
             return LoadFromAssemblyPath(assemblyPath);

@@ -18,15 +18,31 @@ public struct CodecReadSettings
 /// </summary>
 public interface IIgCodec
 {
+
+    #region Default properties
+    /// <summary>
+    /// Gets codec full file path. Example: <c>C:\my folder\MyCodec.dll</c>
+    /// </summary>
+    public string FullFilename => GetType().Assembly.Location;
+
+    /// <summary>
+    /// Gets codec filename. Example: <c>MyCodec.dll</c>
+    /// </summary>
+    public string Filename => Path.GetFileName(FullFilename);
+
     /// <summary>
     /// Full name of assembly type of this codec
     /// </summary>
-    public string CodecId => GetType().FullName ?? string.Empty;
+    public virtual string Id => GetType().FullName ?? string.Empty;
+
+    #endregion
+
+
 
     /// <summary>
     /// Name of the codec
     /// </summary>
-    public string Name { get; }
+    public string DisplayName { get; }
 
     /// <summary>
     /// Short description of the codec

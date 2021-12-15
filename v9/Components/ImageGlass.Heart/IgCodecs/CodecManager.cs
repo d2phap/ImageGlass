@@ -8,26 +8,26 @@ public class CodecManager
 
 
     /// <summary>
-    /// Gets a codec
+    /// Gets a codec from the list
     /// </summary>
-    /// <param name="codecId">Codec type fullname</param>
+    /// <param name="filename">Filename of codec. Example: MyCodec.dll</param>
     /// <returns></returns>
-    public IIgCodec? Get(string codecId)
+    public IIgCodec? Get(string filename)
     {
-        var codec = Items.Find(item => item.GetType().FullName == codecId);
+        var codec = Items.Find(item => string.Compare(item.Filename, filename, true) == 0);
 
         return codec;
     }
 
 
     /// <summary>
-    /// Loads all *.dll files and all codecs inside.
+    /// Loads all *.IgCodec.dll files and all codecs inside.
     /// </summary>
     /// <param name="codecDir"></param>
     public void LoadAllCodecs(string codecDir)
     {
         Directory.CreateDirectory(codecDir);
-        var files = Directory.GetFiles(codecDir, "*.dll", SearchOption.TopDirectoryOnly);
+        var files = Directory.GetFiles(codecDir, "*.IgCodec.dll", SearchOption.TopDirectoryOnly);
 
 
         Items = files.SelectMany(path =>
