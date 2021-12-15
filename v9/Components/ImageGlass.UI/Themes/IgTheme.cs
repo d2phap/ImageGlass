@@ -18,12 +18,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
+using ImageGlass.Heart;
 
 namespace ImageGlass.UI;
 
 public class IgTheme
 {
-    private float _iconHeight = Constants.DEFAULT_TOOLBAR_ICON_HEIGHT;
+    private int _iconHeight = Constants.TOOLBAR_ICON_HEIGHT;
 
     /// <summary>
     /// Filename of theme configuration since v9.0
@@ -35,7 +36,7 @@ public class IgTheme
     /// <summary>
     /// Gets the height of toolbar icons
     /// </summary>
-    public float ToolbarIconHeight => DpiApi.Transform<float>(_iconHeight);
+    public int ToolbarIconHeight => DpiApi.Transform(_iconHeight);
 
     /// <summary>
     /// Theme API version, to check compatibility
@@ -67,6 +68,11 @@ public class IgTheme
     /// </summary>
     public bool IsValid { get; internal set; } = true;
 
+    /// <summary>
+    /// Gets, sets codec to load theme icons
+    /// </summary>
+    public IIgCodec? Codec { get; set; }
+
 
 
     /// <summary>
@@ -90,8 +96,9 @@ public class IgTheme
     /// Initialize theme pack
     /// </summary>
     /// <param name="themeFolderPath"></param>
-    public IgTheme(string themeFolderPath = "", float iconHeight = Constants.DEFAULT_TOOLBAR_ICON_HEIGHT)
+    public IgTheme(IIgCodec? codec = null, string themeFolderPath = "", int iconHeight = Constants.TOOLBAR_ICON_HEIGHT)
     {
+        Codec = codec;
         _iconHeight = iconHeight;
         _ = LoadTheme(themeFolderPath);
     }
@@ -165,8 +172,7 @@ public class IgTheme
                 // property is Bitmap
                 if (prop?.PropertyType == typeof(Bitmap))
                 {
-                    // TODO: load image file
-                    var bmp = new Bitmap(Path.Combine(FolderPath, value));
+                    var bmp = Codec.Load(Path.Combine(FolderPath, value), new());
                     prop.SetValue(Settings, bmp);
                     continue;
                 }
@@ -195,8 +201,12 @@ public class IgTheme
 
             try
             {
-                // TODO: load image file
-                var icon = new Bitmap(Path.Combine(FolderPath, value));
+                var icon = Codec.Load(Path.Combine(FolderPath, value), new()
+                {
+                    Width = ToolbarIconHeight,
+                    Height = ToolbarIconHeight,
+                });
+
                 ToolbarIcons.GetType().GetProperty(item.Key)?.SetValue(ToolbarIcons, icon);
             }
             catch { }
@@ -214,7 +224,7 @@ public class IgTheme
     /// </summary>
     /// <param name="iconHeight"></param>
     /// <returns></returns>
-    public bool ReloadTheme(float? iconHeight = null)
+    public bool ReloadTheme(int? iconHeight = null)
     {
         if (iconHeight is not null)
         {

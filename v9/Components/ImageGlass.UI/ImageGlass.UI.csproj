@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\IgCodecs\ImageMagickIgCodec\ImageMagick.IgCodec.csproj" />
     <ProjectReference Include="..\ImageGlass.Base\ImageGlass.Base.csproj" />
   </ItemGroup>
 
