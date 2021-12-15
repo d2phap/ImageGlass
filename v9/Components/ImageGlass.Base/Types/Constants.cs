@@ -27,7 +27,7 @@ namespace ImageGlass.Base;
 /// </summary>
 public static class Constants
 {
-    public const int MENU_ICON_HEIGHT = 21;
+    public const int MENU_ICON_HEIGHT = 23;
     public const int VIEWER_GRID_SIZE = 8;
 
     public const int DEFAULT_TOOLBAR_ICON_HEIGHT = 30;

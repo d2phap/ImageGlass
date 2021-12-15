@@ -18,6 +18,7 @@
     <FileVersion>$(Version)</FileVersion>
     <VersionPrefix>9.0.0</VersionPrefix>
     <VersionSuffix>moon</VersionSuffix>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,8 +1,7 @@
 ﻿
-using ImageGlass.Base.WinApi;
+
 using ImageGlass.Settings;
 using ImageGlass.UI;
-using ImageGlass.UI.Menu;
 
 namespace ImageGlass;
 
@@ -30,12 +29,8 @@ public partial class FrmMain
             PanRight.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
 
         // Menu
-        MnuMain.Renderer = 
-            MnuContext.Renderer = new ModernMenuRenderer(Config.Theme);
+        MnuMain.Theme = Config.Theme;
 
-        // apply Windows 11 Corner API
-        CornerApi.ApplyCorner(MnuMain.Handle);
-        CornerApi.ApplyCorner(MnuContext.Handle);
 
     }
 

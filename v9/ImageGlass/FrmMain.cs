@@ -1,7 +1,4 @@
-using ImageGlass.Base;
-using ImageGlass.Base.WinApi;
 using ImageGlass.PhotoBox;
-using ImageGlass.Settings;
 using ImageGlass.UI.WinApi;
 
 namespace ImageGlass;
@@ -90,6 +87,12 @@ public partial class FrmMain : Form
                 // The window is being restored
             }
         }
+        else if (m.Msg == DPIScaling.WM_DPICHANGED)
+        {
+            DPIScaling.CurrentDpi = (short)m.WParam;
+            
+            Text = DPIScaling.CurrentDpi.ToString();
+        }
 
         base.WndProc(ref m);
     }
@@ -102,70 +105,5 @@ public partial class FrmMain : Form
     private void MnuMain_Closing(object sender, ToolStripDropDownClosingEventArgs e)
     {
         Local.BtnMainMenu.Checked = false;
-    }
-
-    private void subMenu_DropDownOpening(object sender, EventArgs e)
-    {
-        var mnuItem = sender as ToolStripMenuItem;
-        if (!mnuItem.HasDropDownItems)
-        {
-            return; // not a drop down item
-        }
-
-        // apply corner
-        CornerApi.ApplyCorner(mnuItem.DropDown.Handle);
-
-        mnuItem.DropDown.BackColor = Config.Theme.Settings.MenuBgColor;
-
-        //get position of current menu item
-        var pos = new Point(mnuItem.GetCurrentParent().Left, mnuItem.GetCurrentParent().Top);
-
-        // Current bounds of the current monitor
-        var currentScreen = Screen.FromPoint(pos);
-
-        // Find the width of sub-menu
-        var maxWidth = 0;
-        foreach (var subItem in mnuItem.DropDownItems)
-        {
-            if (subItem is ToolStripMenuItem mnu)
-            {
-                maxWidth = Math.Max(mnu.Width, maxWidth);
-            }
-        }
-        maxWidth += 10; // Add a little wiggle room
-
-        var farRight = pos.X + MnuMain.Width + maxWidth;
-        var farLeft = pos.X - maxWidth;
-
-        // get left and right distance to compare
-        var leftGap = farLeft - currentScreen.Bounds.Left;
-        var rightGap = currentScreen.Bounds.Right - farRight;
-
-        if (leftGap >= rightGap)
-        {
-            mnuItem.DropDownDirection = ToolStripDropDownDirection.Left;
-        }
-        else
-        {
-            mnuItem.DropDownDirection = ToolStripDropDownDirection.Right;
-        }
-    }
-
-    private void MnuMain_DpiChangedBeforeParent(object sender, EventArgs e)
-    {
-        var iconHeight = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
-
-        MnuExit.Image = 
-            new Bitmap(iconHeight, iconHeight);
-
-        //if (mnuMainChannels.DropDownItems.Count > 0)
-        //{
-        //    mnuMainChannels.DropDownItems[0].Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-        //}
-
-        //if (mnuLoadingOrder.DropDownItems.Count > 0)
-        //{
-        //    mnuLoadingOrder.DropDownItems[0].Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
-        //}
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ImageGlass.Base;
 using ImageGlass.Settings;
+using ImageGlass.UI.WinApi;
 
 namespace ImageGlass;
 
@@ -7,6 +8,10 @@ public partial class FrmMain
 {
     private void SetUpFrmMainConfigs()
     {
+        // Get the DPI of the current display
+        DPIScaling.CurrentDpi = DeviceDpi;
+
+
         // Toolbar
         Toolbar.Visible = Config.IsShowToolbar;
         Toolbar.ImageScalingSize = new(Config.ToolbarIconHeight, Config.ToolbarIconHeight);
@@ -19,6 +24,7 @@ public partial class FrmMain
         Load += FrmMainConfig_Load;
         FormClosing += FrmMainConfig_FormClosing;
         SizeChanged += FrmMainConfig_SizeChanged;
+
     }
 
     private void FrmMainConfig_SizeChanged(object? sender, EventArgs e)
@@ -133,7 +139,9 @@ public partial class FrmMain
 
     private void BtnMainMenu_Click(object? sender, EventArgs e)
     {
-        MnuMain.Show(Toolbar, Toolbar.Width - MnuMain.Width, Toolbar.Height);
+        MnuMain.Show(Toolbar,
+            Local.BtnMainMenu.Bounds.Left + Local.BtnMainMenu.Bounds.Width - MnuMain.Width,
+            Toolbar.Height);
     }
 
     private void FrmMain_Click(object? sender, EventArgs e)
