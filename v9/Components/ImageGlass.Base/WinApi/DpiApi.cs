@@ -57,15 +57,29 @@ public static class DpiApi
         /// </summary>
         DESKTOPHORZRES = 118
     }
+    private static int _currentDpi = DPI_DEFAULT;
 
     public const int WM_DPICHANGED = 0x02E0;
     public const int DPI_DEFAULT = 96;
+
+    /// <summary>
+    /// Occurs when <see cref="CurrentZoom"/> value changes
+    /// </summary>
+    public static event DpiChanged? OnDpiChanged = null;
+    public delegate void DpiChanged();
 
 
     /// <summary>
     /// Gets, sets current DPI scaling value
     /// </summary>
-    public static int CurrentDpi { get; set; } = DPI_DEFAULT;
+    public static int CurrentDpi {
+        get => _currentDpi;
+        set
+        {
+            _currentDpi = value;
+            OnDpiChanged?.Invoke();
+        }
+    }
 
     /// <summary>
     /// Get DPI Scale factor
@@ -75,7 +89,7 @@ public static class DpiApi
 
 
     /// <summary>
-    /// Transform a number to a new number after applying DPI Scale Factor
+    /// Transform a number after applying <see cref="DpiScale"/>
     /// </summary>
     /// <param name="num">A float number</param>
     /// <returns></returns>
@@ -88,7 +102,7 @@ public static class DpiApi
     }
 
     /// <summary>
-    /// Transform a number to a new number after applying DPI Scale Factor
+    /// Transform a number after applying <see cref="DpiScale"/>
     /// </summary>
     /// <param name="num"></param>
     /// <returns></returns>
@@ -97,5 +111,19 @@ public static class DpiApi
         return (int)Math.Round(num * DpiScale);
     }
 
+
+    /// <summary>
+    /// Transform padding after applying <see cref="DpiScale"/>
+    /// </summary>
+    /// <param name="padding"></param>
+    /// <returns></returns>
+    public static Padding Transform(Padding padding)
+    {
+        return new Padding(
+            Transform(padding.Left),
+            Transform(padding.Top),
+            Transform(padding.Right),
+            Transform(padding.Bottom));
+    }
 }
 
