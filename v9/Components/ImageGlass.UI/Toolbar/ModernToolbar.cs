@@ -30,27 +30,15 @@ public enum ToolbarAlignment
 
 public class ModernToolbar : ToolStrip
 {
-    private ToolStripItem mouseOverItem;
-    private Point mouseOverPoint;
-    private readonly System.Windows.Forms.Timer timer;
-    private ToolTip _tooltip;
-    private IgTheme _theme;
+    private ToolStripItem? _mouseOverItem;
+    private Point _mouseOverPoint = new();
+    private readonly System.Windows.Forms.Timer _timer;
+    private ToolTip? _tooltip;
+    private ToolbarAlignment _alignment;
+    private int _iconHeight = Constants.TOOLBAR_ICON_HEIGHT;
 
     public int ToolTipInterval = 4000;
-    public string ToolTipText;
-
-    /// <summary>
-    /// Gets, sets value indicates that the tooltip direction is top or bottom
-    /// </summary>
-    public bool ToolTipShowUp { get; set; } = false;
-
-
-    /// <summary>
-    /// Gets, sets value indicates that the tooltip is shown
-    /// </summary>
-    public bool HideTooltips { get; set; } = false;
-
-    private ToolbarAlignment _alignment;
+    public string ToolTipText = string.Empty;
 
     private ToolTip Tooltip
     {
@@ -66,6 +54,19 @@ public class ModernToolbar : ToolStrip
         }
     }
 
+
+    /// <summary>
+    /// Gets, sets value indicates that the tooltip direction is top or bottom
+    /// </summary>
+    public bool ToolTipShowUp { get; set; } = false;
+
+
+    /// <summary>
+    /// Gets, sets value indicates that the tooltip is shown
+    /// </summary>
+    public bool HideTooltips { get; set; } = false;
+
+
     /// <summary>
     /// Gets, sets items alignment
     /// </summary>
@@ -80,13 +81,15 @@ public class ModernToolbar : ToolStrip
         }
     }
 
-    public IgTheme Theme
+    public IgTheme? Theme { get; set; }
+
+    public int IconHeight
     {
-        get => _theme;
+        get => _iconHeight;
         set
         {
-            _theme = value;
-            UpdateTheme();
+            _iconHeight = value;
+            ImageScalingSize = new(_iconHeight, _iconHeight);
         }
     }
 
@@ -99,14 +102,14 @@ public class ModernToolbar : ToolStrip
         if (HideTooltips) return;
 
         var newMouseOverItem = GetItemAt(mea.Location);
-        if (mouseOverItem != newMouseOverItem ||
-            (Math.Abs(mouseOverPoint.X - mea.X) > SystemInformation.MouseHoverSize.Width || (Math.Abs(mouseOverPoint.Y - mea.Y) > SystemInformation.MouseHoverSize.Height)))
+        if (_mouseOverItem != newMouseOverItem ||
+            (Math.Abs(_mouseOverPoint.X - mea.X) > SystemInformation.MouseHoverSize.Width || (Math.Abs(_mouseOverPoint.Y - mea.Y) > SystemInformation.MouseHoverSize.Height)))
         {
-            mouseOverItem = newMouseOverItem;
-            mouseOverPoint = mea.Location;
+            _mouseOverItem = newMouseOverItem;
+            _mouseOverPoint = mea.Location;
             Tooltip.Hide(this);
-            timer.Stop();
-            timer.Start();
+            _timer.Stop();
+            _timer.Start();
         }
     }
 
@@ -131,13 +134,13 @@ public class ModernToolbar : ToolStrip
     protected override void OnMouseLeave(EventArgs e)
     {
         base.OnMouseLeave(e);
-        timer.Stop();
+        _timer.Stop();
         Tooltip.Hide(this);
     }
 
-    private void Timer_Tick(object sender, EventArgs e)
+    private void Timer_Tick(object? sender, EventArgs e)
     {
-        timer.Stop();
+        _timer.Stop();
         try
         {
             Point currentMouseOverPoint;
@@ -150,7 +153,7 @@ public class ModernToolbar : ToolStrip
                 currentMouseOverPoint = PointToClient(new(MousePosition.X, MousePosition.Y + Cursor.Current.Size.Height - Cursor.Current.HotSpot.Y));
             }
 
-            if (mouseOverItem == null)
+            if (_mouseOverItem == null)
             {
                 if (!string.IsNullOrEmpty(ToolTipText))
                 {
@@ -159,16 +162,16 @@ public class ModernToolbar : ToolStrip
             }
             // TODO: revisit this; toolbar buttons like to disappear, if changed.
             else if (
-                ((mouseOverItem is not ToolStripDropDownButton
-                    && mouseOverItem is not ToolStripSplitButton)
-                || (mouseOverItem is ToolStripDropDownButton
-                    && !((ToolStripDropDownButton)mouseOverItem).DropDown.Visible)
-                || (mouseOverItem is ToolStripSplitButton
-                    && !((ToolStripSplitButton)mouseOverItem).DropDown.Visible))
-                && !string.IsNullOrEmpty(mouseOverItem.ToolTipText)
+                ((_mouseOverItem is not ToolStripDropDownButton
+                    && _mouseOverItem is not ToolStripSplitButton)
+                || (_mouseOverItem is ToolStripDropDownButton
+                    && !((ToolStripDropDownButton)_mouseOverItem).DropDown.Visible)
+                || (_mouseOverItem is ToolStripSplitButton
+                    && !((ToolStripSplitButton)_mouseOverItem).DropDown.Visible))
+                && !string.IsNullOrEmpty(_mouseOverItem.ToolTipText)
                 && Tooltip != null)
             {
-                Tooltip.Show(mouseOverItem.ToolTipText, this, currentMouseOverPoint, ToolTipInterval);
+                Tooltip.Show(_mouseOverItem.ToolTipText, this, currentMouseOverPoint, ToolTipInterval);
             }
         }
         catch { }
@@ -181,13 +184,10 @@ public class ModernToolbar : ToolStrip
         if (disposing)
         {
             OverflowButton.DropDown.Opening -= OverflowDropDown_Opening;
-            timer.Dispose();
+            _timer.Dispose();
             Tooltip.Dispose();
         }
     }
-
-    #endregion
-
 
     protected override void OnSizeChanged(EventArgs e)
     {
@@ -197,16 +197,19 @@ public class ModernToolbar : ToolStrip
         UpdateAlignment();
     }
 
+    #endregion
+
+
 
     public ModernToolbar() : base()
     {
         ShowItemToolTips = false;
-        timer = new()
+        _timer = new()
         {
             Enabled = false,
             Interval = 200 // KBR enforce long initial time SystemInformation.MouseHoverTime;
         };
-        timer.Tick += Timer_Tick;
+        _timer.Tick += Timer_Tick;
 
         // Apply Windows 11 corner API
         CornerApi.ApplyCorner(OverflowButton.DropDown.Handle);
@@ -348,9 +351,14 @@ public class ModernToolbar : ToolStrip
     /// <summary>
     /// Update toolbar theme
     /// </summary>
-    public void UpdateTheme()
+    public void UpdateTheme(int? iconHeight = null)
     {
-        if (Theme == null) return;
+        if (iconHeight is not null)
+        {
+            IconHeight = iconHeight.Value;
+        }
+
+        if (Theme is null || Theme.Codec is null) return;
 
         Renderer = new ModernToolbarRenderer(Theme);
         BackColor = Theme.Settings.ToolbarBgColor;
@@ -358,5 +366,35 @@ public class ModernToolbar : ToolStrip
         // Overflow button and Overflow dropdown
         OverflowButton.DropDown.BackColor = BackColor;
         OverflowButton.ForeColor = Theme.Settings.TextColor;
+
+        foreach (var item in Items)
+        {
+            if (item.GetType() == typeof(ToolStripSeparator))
+            {
+                var tItem = item as ToolStripSeparator;
+                if (tItem is null) continue;
+
+                tItem.AutoSize = false;
+                tItem.Height = IconHeight;
+                tItem.Width = IconHeight / 2;
+            }
+
+            if (item.GetType() == typeof(ToolStripButton))
+            {
+                var tItem = item as ToolStripButton;
+                if (tItem is null) continue;
+
+                // update item icon
+                tItem.Image = Theme.GetToolbarIcon(tItem.Tag.ToString());
+
+                tItem.ForeColor = Theme.Settings.TextColor;
+
+                tItem.Padding = DpiApi.Transform(Constants.TOOLBAR_BTN_PADDING);
+                tItem.Margin = DpiApi.Transform(Constants.TOOLBAR_BTN_MARGIN);
+            }
+        }
     }
+
+
+    
 }

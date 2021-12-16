@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using ImageGlass.Base;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
@@ -24,12 +25,21 @@ namespace ImageGlass.UI;
 public class ModernToolbarRenderer : ToolStripSystemRenderer
 {
     private IgTheme Theme { get; set; }
-    private const int BORDER_RADIUS = 5;
     System.Windows.Forms.Timer _paintTimer = new();
+
+    
 
     public ModernToolbarRenderer(IgTheme theme)
     {
         Theme = theme;
+    }
+
+    private int BorderRadius(int itemHeight)
+    {
+        var radius = (int)(itemHeight * 1.0f / Constants.TOOLBAR_ICON_HEIGHT) * 3;
+
+        // min border radius = 5
+        return Math.Max(radius, 5);
     }
 
     protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
@@ -51,7 +61,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
             e.Item.Height - e.Item.Margin.Top - (int)(e.Item.Margin.Bottom * 1.5)
         );
 
-        using var path = ThemeUtils.GetRoundRectanglePath(rect, BORDER_RADIUS);
+        using var path = ThemeUtils.GetRoundRectanglePath(rect, BorderRadius(rect.Height));
 
 
         // on pressed
@@ -110,7 +120,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         rect.Location = new(1, 1);
 
         using var brush = new SolidBrush(Color.Transparent);
-        using var path = ThemeUtils.GetRoundRectanglePath(rect, BORDER_RADIUS);
+        using var path = ThemeUtils.GetRoundRectanglePath(rect, BorderRadius(rect.Height));
 
 
         // on pressed
@@ -185,4 +195,21 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         base.OnRenderItemImage(e);
     }
 
+
+    protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
+    {
+        e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+
+        var x = e.Item.Width / 2 - 1;
+
+        using var penDark = new Pen(Color.FromArgb(100, 0, 0, 0));
+        using var penLight = new Pen(Color.FromArgb(100, 255, 255, 255));
+
+        // dark line
+        e.Graphics.DrawLine(penDark, x, 0, x, e.Item.Height);
+
+        // light line
+        e.Graphics.DrawLine(penLight, x + 1, 0, x + 1, e.Item.Height);
+
+    }
 }

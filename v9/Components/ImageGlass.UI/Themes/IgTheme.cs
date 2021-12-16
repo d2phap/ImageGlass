@@ -34,9 +34,14 @@ public class IgTheme
 
 
     /// <summary>
-    /// Gets the height of toolbar icons
+    /// Gets, sets the height of toolbar icons.
+    /// You need to manually call <see cref="LoadTheme"/> to update toolbar icons.
     /// </summary>
-    public int ToolbarIconHeight => DpiApi.Transform(_iconHeight);
+    public int ToolbarActualIconHeight
+    {
+        get => DpiApi.Transform(_iconHeight);
+        set => _iconHeight = value;
+    }
 
     /// <summary>
     /// Theme API version, to check compatibility
@@ -64,31 +69,31 @@ public class IgTheme
     public IgThemeJsonModel? JsonModel { get; internal set; }
 
     /// <summary>
-    /// Checks if this theme is valid
-    /// </summary>
-    public bool IsValid { get; internal set; } = true;
-
-    /// <summary>
     /// Gets, sets codec to load theme icons
     /// </summary>
     public IIgCodec? Codec { get; set; }
 
+    /// <summary>
+    /// Checks if this theme is valid
+    /// </summary>
+    public bool IsValid { get; internal set; } = false;
 
+    
 
     /// <summary>
     /// Theme information
     /// </summary>
-    public IgThemeInfo Info { get; set; } = new();
+    public IgThemeInfo Info { get; internal set; } = new();
 
     /// <summary>
     /// Theme colors
     /// </summary>
-    public IgThemeSettings Settings { get; set; } = new();
+    public IgThemeSettings Settings { get; internal set; } = new();
 
     /// <summary>
     /// Theme toolbar icons
     /// </summary>
-    public IgThemeToolbarIcons ToolbarIcons { get; set; } = new();
+    public IgThemeToolbarIcons ToolbarIcons { get; internal set; } = new();
 
 
 
@@ -96,32 +101,33 @@ public class IgTheme
     /// Initialize theme pack
     /// </summary>
     /// <param name="themeFolderPath"></param>
-    public IgTheme(IIgCodec? codec = null, string themeFolderPath = "", int iconHeight = Constants.TOOLBAR_ICON_HEIGHT)
+    public IgTheme(
+        string themeFolderPath = "",
+        int iconHeight = Constants.TOOLBAR_ICON_HEIGHT,
+        IIgCodec? codec = null)
     {
+        ToolbarActualIconHeight = iconHeight;
         Codec = codec;
-        _iconHeight = iconHeight;
-        _ = LoadTheme(themeFolderPath);
+
+        // read theme config
+        _ = ReadTheme(themeFolderPath);
     }
 
 
     /// <summary>
-    /// Loads theme
+    /// Loads theme config file into <see cref="JsonModel"/>, and validates it.
     /// </summary>
     /// <param name="themeFolderPath"></param>
     /// <returns></returns>
-    public bool LoadTheme(string themeFolderPath)
+    public bool ReadTheme(string themeFolderPath)
     {
         // get full path of config file
         ConfigFilePath = Path.Combine(themeFolderPath, CONFIG_FILE);
+
         if (!File.Exists(ConfigFilePath))
         {
             IsValid = false;
             return IsValid;
-        }
-
-        if (Codec is null)
-        {
-            throw new NullReferenceException(nameof(Codec));
         }
 
         // get theme folder name
@@ -143,17 +149,35 @@ public class IgTheme
             return IsValid;
         }
 
-        // import theme info
-        Info = JsonModel.Info;
-
         // check required fields
-        if (string.IsNullOrEmpty(Info.Name)
-            || string.IsNullOrEmpty(Info.ConfigVersion))
+        if (string.IsNullOrEmpty(JsonModel.Info.Name)
+            || string.IsNullOrEmpty(JsonModel.Info.ConfigVersion))
         {
             IsValid = false;
             return IsValid;
         }
 
+        IsValid = true;
+        return IsValid;
+    }
+
+
+    /// <summary>
+    /// Loads theme from <see cref="JsonModel"/>
+    /// </summary>
+    /// <param name="iconHeight">Toolbar icon height</param>
+    public void LoadTheme(int? iconHeight = null)
+    {
+        if (iconHeight is not null)
+        {
+            _iconHeight = iconHeight.Value;
+        }
+
+        if (IsValid is false || JsonModel is null) return;
+
+        // import theme info
+        Info = JsonModel.Info;
+        
 
         #region import theme colors
         foreach (var item in JsonModel.Settings)
@@ -175,9 +199,9 @@ public class IgTheme
                 }
 
                 // property is Bitmap
-                if (prop?.PropertyType == typeof(Bitmap))
+                if (prop?.PropertyType == typeof(Bitmap) && Codec is not null)
                 {
-                    var bmp = Codec?.Load(Path.Combine(FolderPath, value));
+                    var bmp = Codec.Load(Path.Combine(FolderPath, value));
                     prop.SetValue(Settings, bmp);
                     continue;
                 }
@@ -198,45 +222,28 @@ public class IgTheme
 
 
         #region import toolbar icons
-        foreach (var item in JsonModel.ToolbarIcons)
+        if (Codec is not null)
         {
-            var value = (item.Value ?? "")?.ToString()?.Trim();
-            if (string.IsNullOrEmpty(value))
-                continue;
-
-            try
+            foreach (var item in JsonModel.ToolbarIcons)
             {
-                var icon = Codec?.Load(Path.Combine(FolderPath, value), new()
-                {
-                    Width = ToolbarIconHeight,
-                    Height = ToolbarIconHeight,
-                });
+                var value = (item.Value ?? "")?.ToString()?.Trim();
+                if (string.IsNullOrEmpty(value))
+                    continue;
 
-                ToolbarIcons.GetType().GetProperty(item.Key)?.SetValue(ToolbarIcons, icon);
+                try
+                {
+                    var icon = Codec.Load(Path.Combine(FolderPath, value), new()
+                    {
+                        Width = ToolbarActualIconHeight,
+                        Height = ToolbarActualIconHeight,
+                    });
+
+                    ToolbarIcons.GetType().GetProperty(item.Key)?.SetValue(ToolbarIcons, icon);
+                }
+                catch { }
             }
-            catch { }
         }
         #endregion
-
-
-        IsValid = true;
-        return IsValid;
-    }
-
-
-    /// <summary>
-    /// Reloads the theme with new icon size
-    /// </summary>
-    /// <param name="iconHeight"></param>
-    /// <returns></returns>
-    public bool ReloadTheme(int? iconHeight = null)
-    {
-        if (iconHeight is not null)
-        {
-            _iconHeight = iconHeight.Value;
-        }
-
-        return LoadTheme(FolderPath);
     }
 
 
@@ -247,5 +254,18 @@ public class IgTheme
     public void SaveConfigAsFile(string filePath)
     {
         Helpers.WriteJson(filePath, JsonModel);
+    }
+
+
+    /// <summary>
+    /// Gets toolbar icon from property name
+    /// </summary>
+    /// <param name="propName">Property name. Example: OpenFile</param>
+    /// <returns></returns>
+    public Bitmap? GetToolbarIcon(string? propName)
+    {
+        var icon = ToolbarIcons.GetType().GetProperty(propName ?? string.Empty)?.GetValue(ToolbarIcons);
+
+        return icon as Bitmap;
     }
 }
