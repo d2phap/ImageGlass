@@ -61,7 +61,7 @@ public record IgThemeSettings
     public Color ToolbarBgColor { get; set; } = ThemeUtils.ColorFromHex("#242b31");
     public Color ToolbarTextColor { get; set; } = Color.White;
     public Color ToolbarItemHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
-    public Color ToolbarItemActiveColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff66");
+    public Color ToolbarItemActiveColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff22");
     public Color ToolbarItemSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff44");
 
 

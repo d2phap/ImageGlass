@@ -287,7 +287,7 @@ public class ModernToolbar : ToolStrip
         if (Theme is not null)
         {
             OverflowButton.DropDown.BackColor = Theme.Settings.ToolbarBgColor;
-            OverflowButton.ForeColor = Theme.Settings.TextColor;
+            OverflowButton.ForeColor = Theme.Settings.ToolbarTextColor;
         }
     }
 
@@ -442,7 +442,7 @@ public class ModernToolbar : ToolStrip
                 // update item icon
                 tItem.Image = Theme.GetToolbarIcon(tItem.Tag.ToString());
 
-                tItem.ForeColor = Theme.Settings.TextColor;
+                tItem.ForeColor = Theme.Settings.ToolbarTextColor;
 
                 tItem.Padding = new(DefaultGap);
                 tItem.Margin = new(0, DefaultGap, DefaultGap / 2, DefaultGap);

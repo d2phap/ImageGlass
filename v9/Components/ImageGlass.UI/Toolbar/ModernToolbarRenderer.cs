@@ -38,6 +38,11 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
 
     private int BorderRadius(int itemHeight)
     {
+        if (Helpers.IsOS(WindowsOS.Win10))
+        {
+            return 0;
+        }
+
         var radius = (int)(itemHeight * 1.0f / Constants.TOOLBAR_ICON_HEIGHT * 3);
 
         // min border radius = 5
@@ -57,7 +62,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
         #region Draw Background
-        using var brushBg = new SolidBrush(Color.Black);
+        using var brushBg = new SolidBrush(Color.Transparent);
         var rect = new Rectangle(
             0,
             Toolbar.DefaultGap,
@@ -66,20 +71,23 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         );
 
         using var path = ThemeUtils.GetRoundRectanglePath(rect, BorderRadius(rect.Width));
-
-
+        
         // on pressed
         if (e.Item.Pressed)
         {
             brushBg.Color = Theme.Settings.ToolbarItemActiveColor;
-            e.Graphics.FillPath(brushBg, path);
         }
         // on hover
         else if (e.Item.Selected)
         {
             brushBg.Color = Theme.Settings.ToolbarItemHoverColor;
-            e.Graphics.FillPath(brushBg, path);
         }
+
+        using var penBorder = new Pen(Color.FromArgb(brushBg.Color.A, brushBg.Color));
+
+        // draw
+        e.Graphics.FillPath(brushBg, path);
+        e.Graphics.DrawPath(penBorder, path);
 
         #endregion
 
@@ -88,7 +96,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         const string ELLIPSIS = "...";
         using var font = new Font(FontFamily.GenericSerif, Toolbar.IconHeight / 3, FontStyle.Bold);
         var fontSize = e.Graphics.MeasureString(ELLIPSIS, font);
-        using var brushFont = new SolidBrush(Color.FromArgb(180, Theme.Settings.TextColor));
+        using var brushFont = new SolidBrush(Color.FromArgb(180, Theme.Settings.ToolbarTextColor));
 
         var posX = (e.Item.Width / 2) - (fontSize.Width / 2) - 1;
         var posY = (e.Item.Height / 2) - (fontSize.Height / 2);
@@ -97,7 +105,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         if (e.Item.Pressed)
         {
             posY += 1;
-            brushFont.Color = Color.FromArgb(140, Theme.Settings.TextColor);
+            brushFont.Color = Color.FromArgb(140, Theme.Settings.ToolbarTextColor);
         }
 
         e.Graphics.DrawString(ELLIPSIS, font, brushFont, posX, posY);
@@ -155,9 +163,11 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
             return;
         }
 
+        using var penBorder = new Pen(Color.FromArgb(brush.Color.A, brush.Color));
 
         // draw
         e.Graphics.FillPath(brush, path);
+        e.Graphics.DrawPath(penBorder, path);
     }
 
 

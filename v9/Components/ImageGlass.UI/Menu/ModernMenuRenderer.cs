@@ -20,7 +20,12 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
 
     private int BorderRadius(int itemHeight)
     {
-        var radius = (int)(itemHeight * 1.0f / Constants.TOOLBAR_ICON_HEIGHT) * 3;
+        if (Helpers.IsOS(WindowsOS.Win10))
+        {
+            return 0;
+        }
+
+        var radius = (int)(itemHeight * 1.0f / Constants.MENU_ICON_HEIGHT * 3);
 
         // min border radius = 5
         return Math.Max(radius, 5);
@@ -59,7 +64,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
 
     protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
     {
-        if (e.Vertical || !(e.Item is ToolStripSeparator))
+        if (e.Vertical || e.Item is not ToolStripSeparator)
         {
             base.OnRenderSeparator(e);
         }
@@ -117,7 +122,6 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         }
     }
 
-
     protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
     {
         var textColor = e.Item.Selected ? _theme.Settings.MenuTextHoverColor : _theme.Settings.MenuTextColor;
@@ -135,20 +139,23 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         }
 
 
-        using var pen = new Pen(textColor, DpiApi.Transform<float>(1));
+        using var pen = new Pen(textColor, DpiApi.Transform<float>(1.15f));
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-        e.Graphics.DrawLine(pen,
+        var point1 = new PointF(
             e.Item.Width - (5 * e.Item.Height / 8),
-            3 * e.Item.Height / 8,
+            3 * e.Item.Height / 8);
+        var point2 = new PointF(
             e.Item.Width - (4 * e.Item.Height / 8),
             e.Item.Height / 2);
-
-        e.Graphics.DrawLine(pen,
-            e.Item.Width - (4 * e.Item.Height / 8),
-            e.Item.Height / 2,
+        var point3 = new PointF(
             e.Item.Width - (5 * e.Item.Height / 8),
             5 * e.Item.Height / 8);
+
+        var path = new GraphicsPath();
+        path.AddLines(new PointF[] { point1, point2, point3 });
+
+        e.Graphics.DrawPath(pen, path);
 
 
         // Render ShortcutKeyDisplayString for menu item with dropdown
@@ -156,7 +163,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         {
             var mnu = e.Item as ToolStripMenuItem;
 
-            if (!string.IsNullOrWhiteSpace(mnu.ShortcutKeyDisplayString))
+            if (!string.IsNullOrWhiteSpace(mnu?.ShortcutKeyDisplayString))
             {
                 var shortcutSize = e.Graphics.MeasureString(mnu.ShortcutKeyDisplayString, mnu.Font);
                 var shortcutRect = new RectangleF(e.ArrowRectangle.X - shortcutSize.Width - DpiApi.Transform<float>(13),
@@ -174,23 +181,29 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
 
     protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e)
     {
-        var textColor = e.Item.Selected ? _theme.Settings.MenuTextHoverColor : _theme.Settings.MenuTextColor;
-        using var pen = new Pen(textColor, DpiApi.Transform<float>(2));
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-        e.Graphics.DrawLine(pen,
-            (2 * e.Item.Height / 10) + 1,
-            e.Item.Height / 2,
-            (4 * e.Item.Height / 10) + 1,
+        var textColor = e.Item.Selected ? _theme.Settings.MenuTextHoverColor : _theme.Settings.MenuTextColor;
+        using var pen = new Pen(textColor, DpiApi.Transform<float>(1.5f));
+        
+        // left margin
+        var left = 5;
+
+        var point1 = new PointF(
+            (2 * e.Item.Height / 10) + left,
+            e.Item.Height / 2);
+        var point2 = new PointF(
+            (4 * e.Item.Height / 10) + left,
             7 * e.Item.Height / 10);
-
-        e.Graphics.DrawLine(pen,
-            4 * e.Item.Height / 10,
-            7 * e.Item.Height / 10,
-            8 * e.Item.Height / 10,
+        var point3 = new PointF(
+            8 * e.Item.Height / 10 + left,
             3 * e.Item.Height / 10);
-    }
 
+        var path = new GraphicsPath();
+        path.AddLines(new PointF[] { point1, point2, point3 });
+
+        e.Graphics.DrawPath(pen, path);
+    }
 
     protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
     {
@@ -199,11 +212,19 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-            // Windows 11 style
-            var rect = new Rectangle(3, 1, e.Item.Bounds.Width - 6, e.Item.Bounds.Height - 2);
+            // boundary
+            var rect = new Rectangle(
+                5, 2,
+                e.Item.Bounds.Width - 9,
+                e.Item.Bounds.Height - 5);
+
             using var brush = new SolidBrush(_theme.Settings.MenuBgHoverColor);
             using var path = ThemeUtils.GetRoundRectanglePath(rect, BorderRadius(rect.Height));
+            using var penBorder = new Pen(Color.FromArgb(brush.Color.A, brush.Color));
+
+            // draw
             e.Graphics.FillPath(brush, path);
+            e.Graphics.DrawPath(penBorder, path);
 
             return;
         }
