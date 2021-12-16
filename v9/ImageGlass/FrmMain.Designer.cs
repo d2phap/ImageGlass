@@ -178,19 +178,19 @@
             // 
             // Toolbar
             // 
-            this.Toolbar.Alignment = ImageGlass.UI.ToolbarAlignment.CENTER;
+            this.Toolbar.Alignment = ImageGlass.UI.ToolbarAlignment.Center;
             this.Toolbar.BackColor = System.Drawing.Color.Transparent;
             this.Tb0.SetColumnSpan(this.Toolbar, 3);
             this.Toolbar.GripMargin = new System.Windows.Forms.Padding(0);
             this.Toolbar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.Toolbar.HideTooltips = false;
+            this.Toolbar.IconHeight = 22;
             this.Toolbar.ImageScalingSize = new System.Drawing.Size(30, 30);
             this.Toolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
             this.btnMenu});
             this.Toolbar.Location = new System.Drawing.Point(0, 0);
             this.Toolbar.Name = "Toolbar";
-            this.Toolbar.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.Toolbar.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.Toolbar.ShowItemToolTips = false;
             this.Toolbar.Size = new System.Drawing.Size(1191, 54);
@@ -202,14 +202,14 @@
             // toolStripButton1
             // 
             this.toolStripButton1.CheckOnClick = true;
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Margin = new System.Windows.Forms.Padding(491, 0, 2, 0);
+            this.toolStripButton1.Margin = new System.Windows.Forms.Padding(443, 0, 2, 0);
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Padding = new System.Windows.Forms.Padding(10);
-            this.toolStripButton1.Size = new System.Drawing.Size(54, 54);
+            this.toolStripButton1.Size = new System.Drawing.Size(197, 54);
             this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnMenu
             // 

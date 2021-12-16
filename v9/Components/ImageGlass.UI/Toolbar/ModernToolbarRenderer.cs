@@ -24,29 +24,33 @@ namespace ImageGlass.UI;
 
 public class ModernToolbarRenderer : ToolStripSystemRenderer
 {
-    private IgTheme Theme { get; set; }
+    private ModernToolbar Toolbar { get; set; }
     System.Windows.Forms.Timer _paintTimer = new();
 
-    
+    private IgTheme Theme => Toolbar.Theme ?? new();
 
-    public ModernToolbarRenderer(IgTheme theme)
+
+    public ModernToolbarRenderer(ModernToolbar control)
     {
-        Theme = theme;
+        Toolbar = control;
     }
+
 
     private int BorderRadius(int itemHeight)
     {
-        var radius = (int)(itemHeight * 1.0f / Constants.TOOLBAR_ICON_HEIGHT) * 3;
+        var radius = (int)(itemHeight * 1.0f / Constants.TOOLBAR_ICON_HEIGHT * 3);
 
         // min border radius = 5
         return Math.Max(radius, 5);
     }
+
 
     protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
     {
         // Disable the base() method here to remove unwanted border of toolbar
         // base.OnRenderToolStripBorder(e);
     }
+
 
     protected override void OnRenderOverflowButtonBackground(ToolStripItemRenderEventArgs e)
     {
@@ -55,13 +59,13 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         #region Draw Background
         using var brushBg = new SolidBrush(Color.Black);
         var rect = new Rectangle(
-            e.Item.Margin.Left + 1,
-            e.Item.Margin.Top + 1,
-            e.Item.Width - e.Item.Margin.Top,
-            e.Item.Height - e.Item.Margin.Top - (int)(e.Item.Margin.Bottom * 1.5)
+            0,
+            Toolbar.DefaultGap,
+            e.Item.Width - 2,
+            e.Item.Height - 2 - Toolbar.DefaultGap * 2
         );
 
-        using var path = ThemeUtils.GetRoundRectanglePath(rect, BorderRadius(rect.Height));
+        using var path = ThemeUtils.GetRoundRectanglePath(rect, BorderRadius(rect.Width));
 
 
         // on pressed
@@ -82,22 +86,22 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
 
         #region Draw "..."
         const string ELLIPSIS = "...";
-        using var font = new Font(FontFamily.GenericSerif, e.Item.Height / 6, FontStyle.Bold);
+        using var font = new Font(FontFamily.GenericSerif, Toolbar.IconHeight / 3, FontStyle.Bold);
         var fontSize = e.Graphics.MeasureString(ELLIPSIS, font);
         using var brushFont = new SolidBrush(Color.FromArgb(180, Theme.Settings.TextColor));
 
-        var posX = (e.Item.Width / 2) - (fontSize.Width / 2) - e.Item.Margin.Right;
-        var posY = (e.Item.Height / 2) - (fontSize.Height / 2) + e.Item.Margin.Top;
-        
+        var posX = (e.Item.Width / 2) - (fontSize.Width / 2) - 1;
+        var posY = (e.Item.Height / 2) - (fontSize.Height / 2);
+
         // on pressed
         if (e.Item.Pressed)
         {
             posY += 1;
+            brushFont.Color = Color.FromArgb(140, Theme.Settings.TextColor);
         }
 
         e.Graphics.DrawString(ELLIPSIS, font, brushFont, posX, posY);
         #endregion
-
     }
 
 
@@ -161,15 +165,16 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
     {
         if (e.Image is null) return;
 
+        // change opacity of the image
+        var cMatrix = new ColorMatrix { Matrix33 = 0.7f };
+        var imgAttrs = new ImageAttributes();
+        imgAttrs.SetColorMatrix(cMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+
+
         // Disabled state
         if (!e.Item.Enabled)
         {
             var grayedImg = CreateDisabledImage(e.Image);
-
-            // change opacity of the image
-            var cMatrix = new ColorMatrix { Matrix33 = 0.7f };
-            var imgAttrs = new ImageAttributes();
-            imgAttrs.SetColorMatrix(cMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
             e.Graphics.DrawImage(grayedImg, e.ImageRectangle,
                 0, 0, e.Image.Width, e.Image.Height,
@@ -188,7 +193,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
             var rect = e.ImageRectangle;
             rect.Y += 1;
 
-            e.Graphics.DrawImage(e.Image, rect);
+            e.Graphics.DrawImage(e.Image, rect, 0, 0, e.Image.Width, e.Image.Height, GraphicsUnit.Pixel, imgAttrs);
             return;
         }
 
@@ -212,4 +217,40 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         e.Graphics.DrawLine(penLight, x + 1, 0, x + 1, e.Item.Height);
 
     }
+
+
+    protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
+    {
+        e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+
+        using var brush = new SolidBrush(Theme.Settings.ToolbarBgColor);
+        var rect = new Rectangle(0, 0, e.ToolStrip.Width, e.ToolStrip.Height);
+        rect.Inflate(10, 10);
+        rect.Location = new Point(-5, -5);
+
+        // draw
+        e.Graphics.FillRectangle(brush, rect);
+
+        base.OnRenderToolStripBackground(e);
+    }
+
+
+    protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
+    {
+        e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+
+        // on pressed
+        if (e.Item.Pressed && e.Item.TextImageRelation == TextImageRelation.ImageBeforeText)
+        {
+            using var brush = new SolidBrush(Color.FromArgb(180, e.TextColor));
+            var loc = new Point(e.TextRectangle.X + 2, e.TextRectangle.Y + 1);
+
+            e.Graphics.DrawString(e.Text, e.TextFont, brush, loc);
+        }
+        else
+        {
+            base.OnRenderItemText(e);
+        }
+    }
+
 }

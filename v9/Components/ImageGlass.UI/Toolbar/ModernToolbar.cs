@@ -22,23 +22,28 @@ using System.ComponentModel;
 
 namespace ImageGlass.UI;
 
+
+/// <summary>
+/// Toolbar items alignment
+/// </summary>
 public enum ToolbarAlignment
 {
-    LEFT = 0,
-    CENTER = 1,
+    Left = 0,
+    Center = 1,
 }
 
+
+/// <summary>
+/// Modern toolbar
+/// </summary>
 public class ModernToolbar : ToolStrip
 {
     private ToolStripItem? _mouseOverItem;
     private Point _mouseOverPoint = new();
     private readonly System.Windows.Forms.Timer _timer;
     private ToolTip? _tooltip;
-    private ToolbarAlignment _alignment;
+    private ToolbarAlignment _alignment = ToolbarAlignment.Center;
     private int _iconHeight = Constants.TOOLBAR_ICON_HEIGHT;
-
-    public int ToolTipInterval = 4000;
-    public string ToolTipText = string.Empty;
 
     private ToolTip Tooltip
     {
@@ -55,17 +60,32 @@ public class ModernToolbar : ToolStrip
     }
 
 
+    #region Public properties
+
+    /// <summary>
+    /// Duration for tooltip auto-disappear
+    /// </summary>
+    public int ToolTipInterval { get; set; } = 4000;
+
+    /// <summary>
+    /// Tooltip display text
+    /// </summary>
+    public string ToolTipText { get; set; } = string.Empty;
+
     /// <summary>
     /// Gets, sets value indicates that the tooltip direction is top or bottom
     /// </summary>
     public bool ToolTipShowUp { get; set; } = false;
-
 
     /// <summary>
     /// Gets, sets value indicates that the tooltip is shown
     /// </summary>
     public bool HideTooltips { get; set; } = false;
 
+    /// <summary>
+    /// Gets default gap for sizing calculation
+    /// </summary>
+    public int DefaultGap => ImageScalingSize.Height / 4;
 
     /// <summary>
     /// Gets, sets items alignment
@@ -81,8 +101,14 @@ public class ModernToolbar : ToolStrip
         }
     }
 
+    /// <summary>
+    /// Gets, sets theme
+    /// </summary>
     public IgTheme? Theme { get; set; }
 
+    /// <summary>
+    /// Gets, sets icons height
+    /// </summary>
     public int IconHeight
     {
         get => _iconHeight;
@@ -92,6 +118,8 @@ public class ModernToolbar : ToolStrip
             ImageScalingSize = new(_iconHeight, _iconHeight);
         }
     }
+
+    #endregion
 
 
     #region Protected methods
@@ -192,9 +220,34 @@ public class ModernToolbar : ToolStrip
     protected override void OnSizeChanged(EventArgs e)
     {
         UpdateAlignment();
+
         base.OnSizeChanged(e);
 
         UpdateAlignment();
+    }
+
+    protected override Padding DefaultPadding
+    {
+        get
+        {
+            return new Padding(DefaultGap, 0, DefaultGap, 0);
+        }
+    }
+
+    protected override void OnRightToLeftChanged(EventArgs e)
+    {
+        base.OnRightToLeftChanged(e);
+
+        foreach (ToolStripItem item in Items)
+        {
+            if (item.DisplayStyle == ToolStripItemDisplayStyle.ImageAndText
+                && item.TextImageRelation == TextImageRelation.ImageBeforeText)
+            {
+                item.TextAlign = ContentAlignment.MiddleCenter;
+                item.ImageAlign = ContentAlignment.MiddleRight;
+            }
+        }
+
     }
 
     #endregion
@@ -213,31 +266,31 @@ public class ModernToolbar : ToolStrip
 
         // Apply Windows 11 corner API
         CornerApi.ApplyCorner(OverflowButton.DropDown.Handle);
-
-        // Set default style for Overflow button & panel
-        InitOverflow();
     }
 
-    private void InitOverflow()
-    {
-        // Set default style for overflow button and dropdown
-        OverflowButton.DropDown.AutoSize = false;
-        OverflowButton.Margin = Constants.TOOLBAR_BTN_MARGIN;
-        OverflowButton.Padding = new(
-            OverflowButton.Height / 2,
-            0,
-            OverflowButton.Height / 2,
-            0);
 
-        OverflowButton.DropDown.Padding = new(
-            Constants.TOOLBAR_BTN_MARGIN.Top,
-            0,
-            Constants.TOOLBAR_BTN_MARGIN.Bottom,
-            0);
+    #region Private functions
+    private void UpdateOverflow()
+    {
+        // overflow size
+        OverflowButton.Margin = new(0, 0, DefaultGap, 0);
+        OverflowButton.Padding = new(DefaultGap);
+
+        // dropdown size
+        OverflowButton.DropDown.AutoSize = false;
+        OverflowButton.DropDown.Padding = new(DefaultGap, 0, DefaultGap, 0);
 
         // fix the size of overflow dropdown
+        OverflowButton.DropDown.Opening -= OverflowDropDown_Opening;
         OverflowButton.DropDown.Opening += OverflowDropDown_Opening;
+
+        if (Theme is not null)
+        {
+            OverflowButton.DropDown.BackColor = Theme.Settings.ToolbarBgColor;
+            OverflowButton.ForeColor = Theme.Settings.TextColor;
+        }
     }
+
 
     private void OverflowDropDown_Opening(object? sender, CancelEventArgs e)
     {
@@ -245,11 +298,10 @@ public class ModernToolbar : ToolStrip
     }
 
 
-
     /// <summary>
     /// Update overflow dropdown size
     /// </summary>
-    public void UpdateOverflowDropdownSize()
+    private void UpdateOverflowDropdownSize()
     {
         var maxItemHeight = 0;
         var fullDropdownWidth = OverflowButton.DropDown.Padding.Left + OverflowButton.DropDown.Padding.Right;
@@ -276,6 +328,10 @@ public class ModernToolbar : ToolStrip
         OverflowButton.DropDown.Height = dropdownHeight;
     }
 
+    #endregion
+
+
+    #region Public functions
 
     /// <summary>
     /// Update the alignment if toolstrip items
@@ -303,7 +359,7 @@ public class ModernToolbar : ToolStrip
         // reset the alignment to left
         firstBtn.Margin = defaultMargin;
 
-        if (Alignment == ToolbarAlignment.CENTER)
+        if (Alignment == ToolbarAlignment.Center)
         {
             // get the correct content width, excluding the sticky right items
             var toolbarContentWidth = 0;
@@ -324,7 +380,7 @@ public class ModernToolbar : ToolStrip
 
 
             // if the content cannot fit the toolbar size:
-            //if (toolbarContentWidth > Width)
+            // if (toolbarContentWidth > Width)
             if (OverflowButton.Visible)
             {
                 // align left
@@ -360,13 +416,12 @@ public class ModernToolbar : ToolStrip
 
         if (Theme is null || Theme.Codec is null) return;
 
-        Renderer = new ModernToolbarRenderer(Theme);
-        BackColor = Theme.Settings.ToolbarBgColor;
+        Renderer = new ModernToolbarRenderer(this);
 
         // Overflow button and Overflow dropdown
-        OverflowButton.DropDown.BackColor = BackColor;
-        OverflowButton.ForeColor = Theme.Settings.TextColor;
+        UpdateOverflow();
 
+        // Toolbar itoms
         foreach (var item in Items)
         {
             if (item.GetType() == typeof(ToolStripSeparator))
@@ -389,12 +444,12 @@ public class ModernToolbar : ToolStrip
 
                 tItem.ForeColor = Theme.Settings.TextColor;
 
-                tItem.Padding = DpiApi.Transform(Constants.TOOLBAR_BTN_PADDING);
-                tItem.Margin = DpiApi.Transform(Constants.TOOLBAR_BTN_MARGIN);
+                tItem.Padding = new(DefaultGap);
+                tItem.Margin = new(0, DefaultGap, DefaultGap / 2, DefaultGap);
             }
         }
     }
 
+    #endregion
 
-    
 }

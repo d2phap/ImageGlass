@@ -58,6 +58,7 @@ public partial class FrmMain
         }
 
         var th = Config.Theme.ToolbarIcons;
+        Toolbar.SuspendLayout();
         Toolbar.Items.Clear();
 
         // add Main Menu
@@ -71,7 +72,9 @@ public partial class FrmMain
             Name = "Btn_OpenFile",
             DisplayStyle = ToolStripItemDisplayStyle.ImageAndText,
             TextImageRelation = TextImageRelation.ImageBeforeText,
-            Text = "Open file...",
+            TextAlign = ContentAlignment.MiddleRight,
+
+            Text = "Open file",
             ToolTipText = "Open file...",
             Alignment = ToolStripItemAlignment.Left,
             CheckOnClick = true,
@@ -82,10 +85,11 @@ public partial class FrmMain
         {
             Name = "Btn_LockZoom",
             Tag = nameof(th.LockZoom),
-            DisplayStyle = ToolStripItemDisplayStyle.Image,
+            DisplayStyle = ToolStripItemDisplayStyle.ImageAndText,
             TextImageRelation = TextImageRelation.ImageBeforeText,
-            Text = "Lock file",
-            ToolTipText = "Lock file",
+
+            Text = "Lock zoom",
+            ToolTipText = "Lock zoom",
             Alignment = ToolStripItemAlignment.Left,
             CheckOnClick = true,
         });
@@ -112,15 +116,17 @@ public partial class FrmMain
 
             Alignment = ToolStripItemAlignment.Right,
         });
-
+        Toolbar.ResumeLayout();
 
         Toolbar.Items["Btn_OpenFile"].Click += FrmMain_Click;
+
     }
 
     private void BtnMainMenu_Click(object? sender, EventArgs e)
     {
-        MnuMain.Show(Toolbar,
-            Local.BtnMainMenu.Bounds.Left + Local.BtnMainMenu.Bounds.Width - MnuMain.Width,
+        MnuMain.Show(Toolbar, Local.BtnMainMenu.Bounds.Left
+            + Local.BtnMainMenu.Bounds.Width
+            - MnuMain.Width,
             Toolbar.Height);
     }
 

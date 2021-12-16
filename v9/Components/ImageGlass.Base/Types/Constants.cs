@@ -31,15 +31,13 @@ public static class Constants
     public const int VIEWER_GRID_SIZE = 8;
 
     public const int TOOLBAR_ICON_HEIGHT = 22;
-    public static Padding TOOLBAR_BTN_MARGIN = new(0, 5, 1, 5);
-    public static Padding TOOLBAR_BTN_PADDING = new(8);
 
     /// <summary>
     /// First launch version constant.
     /// If the value read from config file is less than this value,
     /// the First-Launch Configs screen will be launched.
     /// </summary>
-    public const int FIRST_LAUNCH_VERSION = 5;
+    public const int FIRST_LAUNCH_VERSION = 9;
 
     /// <summary>
     /// The URI Scheme to register web-to-app linking

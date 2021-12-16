@@ -12,10 +12,7 @@ internal class Local
         TextImageRelation = TextImageRelation.ImageBeforeText,
         Text = "Main menu",
         ToolTipText = "Main menu (Alf+F)",
-        ForeColor = Config.Theme.Settings.TextColor,
         CheckOnClick = true,
-        Padding = Constants.TOOLBAR_BTN_PADDING,
-        Margin = Constants.TOOLBAR_BTN_MARGIN,
 
         // save icon name to load later
         Tag = nameof(Config.Theme.ToolbarIcons.MainMenu),
