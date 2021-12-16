@@ -13,8 +13,15 @@ public partial class FrmMain : Form
     {
         InitializeComponent();
 
+        // Get the DPI of the current display
+        DpiApi.OnDpiChanged += OnDpiChanged;
+        DpiApi.CurrentDpi = DeviceDpi;
+
         SetUpFrmMainConfigs();
         SetUpFrmMainTheme();
+
+        // apply DPI changes
+        OnDpiChanged();
 
         _viewer = new(PanCenter, null)
         {
@@ -24,6 +31,45 @@ public partial class FrmMain : Form
         _viewer.OnZoomChanged += _viewer_OnZoomChanged;
 
         Prepare();
+    }
+
+    protected override void WndProc(ref Message m)
+    {
+        // WM_SYSCOMMAND
+        if (m.Msg == 0x0112)
+        {
+            // When user clicks on MAXIMIZE button on title bar
+            if (m.WParam == new IntPtr(0xF030)) // SC_MAXIMIZE
+            {
+                // The window is being maximized
+            }
+            // When user clicks on the RESTORE button on title bar
+            else if (m.WParam == new IntPtr(0xF120)) // SC_RESTORE
+            {
+                // The window is being restored
+            }
+        }
+        else if (m.Msg == DpiApi.WM_DPICHANGED)
+        {
+            // get new dpi value
+            DpiApi.CurrentDpi = (short)m.WParam;
+        }
+
+        base.WndProc(ref m);
+    }
+
+    private void OnDpiChanged()
+    {
+        Text = DpiApi.CurrentDpi.ToString();
+
+        // scale toolbar icons corresponding to DPI
+        var newIconHeight = DpiApi.Transform(Config.ToolbarIconHeight);
+
+        // reload theme
+        Config.Theme.LoadTheme(newIconHeight);
+
+        // update toolbar theme
+        Toolbar.UpdateTheme(newIconHeight);
     }
 
     private void _viewer_OnZoomChanged(ZoomEventArgs e)
@@ -71,31 +117,7 @@ public partial class FrmMain : Form
 
     }
 
-    protected override void WndProc(ref Message m)
-    {
-        // WM_SYSCOMMAND
-        if (m.Msg == 0x0112)
-        {
-            // When user clicks on MAXIMIZE button on title bar
-            if (m.WParam == new IntPtr(0xF030)) // SC_MAXIMIZE
-            {
-                // The window is being maximized
-            }
-            // When user clicks on the RESTORE button on title bar
-            else if (m.WParam == new IntPtr(0xF120)) // SC_RESTORE
-            {
-                // The window is being restored
-            }
-        }
-        else if (m.Msg == DpiApi.WM_DPICHANGED)
-        {
-            DpiApi.CurrentDpi = (short)m.WParam;
-            
-            Text = DpiApi.CurrentDpi.ToString();
-        }
-
-        base.WndProc(ref m);
-    }
+    
 
     private void MnuMain_Opening(object sender, System.ComponentModel.CancelEventArgs e)
     {

@@ -1,5 +1,6 @@
 ﻿
 
+using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using System.Drawing.Drawing2D;
 
@@ -8,12 +9,21 @@ namespace ImageGlass.UI;
 
 public class ModernMenuRenderer : ToolStripProfessionalRenderer
 {
-    private const int BORDER_RADIUS = 5;
     private IgTheme _theme { get; set; }
+
+
 
     public ModernMenuRenderer(IgTheme theme) : base(new ModernMenuColors(theme))
     {
-        this._theme = theme;
+        _theme = theme;
+    }
+
+    private int BorderRadius(int itemHeight)
+    {
+        var radius = (int)(itemHeight * 1.0f / Constants.TOOLBAR_ICON_HEIGHT) * 3;
+
+        // min border radius = 5
+        return Math.Max(radius, 5);
     }
 
     protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
@@ -192,7 +202,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             // Windows 11 style
             var rect = new Rectangle(3, 1, e.Item.Bounds.Width - 6, e.Item.Bounds.Height - 2);
             using var brush = new SolidBrush(_theme.Settings.MenuBgHoverColor);
-            using var path = ThemeUtils.GetRoundRectanglePath(rect, BORDER_RADIUS);
+            using var path = ThemeUtils.GetRoundRectanglePath(rect, BorderRadius(rect.Height));
             e.Graphics.FillPath(brush, path);
 
             return;
@@ -201,7 +211,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         {
             base.OnRenderMenuItemBackground(e);
         }
-        
+
     }
 
 }

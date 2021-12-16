@@ -7,8 +7,7 @@ internal class Local
 {
     public static ToolStripButton BtnMainMenu = new()
     {
-        Name = "_mainMenu",
-        Image = Config.Theme.ToolbarIcons.ThumbnailBar,
+        Name = "Btn_MainMenu",
         DisplayStyle = ToolStripItemDisplayStyle.Image,
         TextImageRelation = TextImageRelation.ImageBeforeText,
         Text = "Main menu",
@@ -17,6 +16,9 @@ internal class Local
         CheckOnClick = true,
         Padding = Constants.TOOLBAR_BTN_PADDING,
         Margin = Constants.TOOLBAR_BTN_MARGIN,
+
+        // save icon name to load later
+        Tag = nameof(Config.Theme.ToolbarIcons.MainMenu),
 
         Alignment = ToolStripItemAlignment.Right,
         Overflow = ToolStripItemOverflow.Never,

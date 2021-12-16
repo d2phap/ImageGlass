@@ -1,5 +1,4 @@
 ﻿using ImageGlass.Base;
-using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 
 namespace ImageGlass;
@@ -8,13 +7,9 @@ public partial class FrmMain
 {
     private void SetUpFrmMainConfigs()
     {
-        // Get the DPI of the current display
-        DpiApi.CurrentDpi = DeviceDpi;
-
-
         // Toolbar
         Toolbar.Visible = Config.IsShowToolbar;
-        Toolbar.ImageScalingSize = new(Config.ToolbarIconHeight, Config.ToolbarIconHeight);
+        Toolbar.IconHeight = Config.ToolbarIconHeight;
         LoadToolbarIcons();
 
         // Thumbnail bar
@@ -73,68 +68,53 @@ public partial class FrmMain
 
         var openBtnIndex = Toolbar.Items.Add(new ToolStripButton()
         {
-            Name = "_openFile",
-            Image = th.OpenFile,
-            DisplayStyle = ToolStripItemDisplayStyle.Image,
+            Name = "Btn_OpenFile",
+            DisplayStyle = ToolStripItemDisplayStyle.ImageAndText,
             TextImageRelation = TextImageRelation.ImageBeforeText,
             Text = "Open file...",
             ToolTipText = "Open file...",
             Alignment = ToolStripItemAlignment.Left,
             CheckOnClick = true,
-            Padding = Constants.TOOLBAR_BTN_PADDING,
-            Margin = Constants.TOOLBAR_BTN_MARGIN,
-            ForeColor = Config.Theme.Settings.TextColor,
+            Tag = nameof(th.OpenFile), // save icon name to load later
         });
-        Toolbar.Items.Add(new ToolStripSeparator()
-        {
-            AutoSize = false,
-            Height = (int)(Toolbar.Height * 0.55),
-            Width = 8,
-        });
+        Toolbar.Items.Add(new ToolStripSeparator());
         Toolbar.Items.Add(new ToolStripButton()
         {
-            Image = th.LockZoom,
+            Name = "Btn_LockZoom",
+            Tag = nameof(th.LockZoom),
             DisplayStyle = ToolStripItemDisplayStyle.Image,
             TextImageRelation = TextImageRelation.ImageBeforeText,
             Text = "Lock file",
             ToolTipText = "Lock file",
             Alignment = ToolStripItemAlignment.Left,
             CheckOnClick = true,
-            Padding = Constants.TOOLBAR_BTN_PADDING,
-            Margin = Constants.TOOLBAR_BTN_MARGIN,
-            ForeColor = Config.Theme.Settings.TextColor,
         });
         Toolbar.Items.Add(new ToolStripButton()
         {
-            Image = th.Print,
+            Name = "Btn_Print",
+            Tag = nameof(th.Print),
             DisplayStyle = ToolStripItemDisplayStyle.Image,
             TextImageRelation = TextImageRelation.ImageBeforeText,
             Text = "Print image...",
             ToolTipText = "Print image...",
             Alignment = ToolStripItemAlignment.Left,
             CheckOnClick = true,
-            Padding = Constants.TOOLBAR_BTN_PADDING,
-            Margin = Constants.TOOLBAR_BTN_MARGIN,
-            ForeColor = Config.Theme.Settings.TextColor,
         });
         Toolbar.Items.Add(new ToolStripButton()
         {
-            Image = th.Delete,
+            Name = "Btn_Delete",
+            Tag = nameof(th.Delete),
             DisplayStyle = ToolStripItemDisplayStyle.Image,
             TextImageRelation = TextImageRelation.ImageBeforeText,
             Text = "Delete image...",
             ToolTipText = "Delete image...",
-            Alignment = ToolStripItemAlignment.Left,
             CheckOnClick = true,
-            Padding = Constants.TOOLBAR_BTN_PADDING,
-            Margin = Constants.TOOLBAR_BTN_MARGIN,
-            ForeColor = Config.Theme.Settings.TextColor,
 
-            Enabled = false,
+            Alignment = ToolStripItemAlignment.Right,
         });
 
 
-        Toolbar.Items["_openFile"].Click += FrmMain_Click;
+        Toolbar.Items["Btn_OpenFile"].Click += FrmMain_Click;
     }
 
     private void BtnMainMenu_Click(object? sender, EventArgs e)

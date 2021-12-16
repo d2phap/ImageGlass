@@ -815,7 +815,7 @@ public class Config
 
         #region Theme
         var themeFolderName = items.GetValue(nameof(Theme), Constants.DEFAULT_THEME);
-        var th = new IgTheme(Codec, App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName), ToolbarIconHeight);
+        var th = new IgTheme(App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
 
         if (th.IsValid)
         {
@@ -824,7 +824,7 @@ public class Config
         else
         {
             // load default theme
-            Theme = new(Codec, App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME), ToolbarIconHeight);
+            Theme = new(App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME));
         }
 
         if (!Theme.IsValid)
@@ -833,6 +833,7 @@ public class Config
                 $"Please make sure '{th.FolderName}\\{IgTheme.CONFIG_FILE}' file is valid.");
         }
 
+        Theme.Codec = Codec;
         #endregion
 
 
