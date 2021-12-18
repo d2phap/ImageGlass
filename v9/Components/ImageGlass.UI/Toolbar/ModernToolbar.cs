@@ -450,6 +450,37 @@ public class ModernToolbar : ToolStrip
         }
     }
 
+
+    /// <summary>
+    /// Gets item by name
+    /// </summary>
+    /// <typeparam name="T">Type of ToolstripItem to convert</typeparam>
+    /// <param name="name">Name of item</param>
+    /// <returns></returns>
+    public T? GetItem<T>(string name)
+    {
+        var item = Items[name];
+
+        if (item is null || item.GetType() != typeof (T))
+        {
+            return default;
+        }
+
+        return (T)Convert.ChangeType(item, typeof (T));
+    }
+
+
+    /// <summary>
+    /// Gets ToolStripButton by name
+    /// </summary>
+    /// <param name="name">Name of item</param>
+    /// <returns></returns>
+    public ToolStripButton? GetItem(string name)
+    {
+        return GetItem<ToolStripButton>(name);
+    }
+
+
     #endregion
 
 }
