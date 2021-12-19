@@ -10,7 +10,7 @@ public partial class FrmMain
         // Toolbar
         Toolbar.Visible = Config.IsShowToolbar;
         Toolbar.IconHeight = Config.ToolbarIconHeight;
-        LoadToolbarIcons();
+        LoadToolbarItems();
 
         // Thumbnail bar
         Sp1.Panel2Collapsed = !Config.IsShowThumbnail;
@@ -50,76 +50,19 @@ public partial class FrmMain
 
 
 
-    private void LoadToolbarIcons(bool forceReloadIcon = false)
+    private void LoadToolbarItems()
     {
-        if (forceReloadIcon)
-        {
-            //
-        }
-
         var th = Config.Theme.ToolbarIcons;
-        Toolbar.SuspendLayout();
         Toolbar.Items.Clear();
+
 
         // add Main Menu
         Local.BtnMainMenu.Click -= BtnMainMenu_Click;
         Local.BtnMainMenu.Click += BtnMainMenu_Click;
         Toolbar.Items.Add(Local.BtnMainMenu);
 
-
-        var openBtnIndex = Toolbar.Items.Add(new ToolStripButton()
-        {
-            Name = "Btn_OpenFile",
-            DisplayStyle = ToolStripItemDisplayStyle.ImageAndText,
-            TextImageRelation = TextImageRelation.ImageBeforeText,
-            TextAlign = ContentAlignment.MiddleRight,
-
-            Text = "Open file",
-            ToolTipText = "Open file...",
-            Alignment = ToolStripItemAlignment.Left,
-            CheckOnClick = true,
-            Tag = nameof(th.OpenFile), // save icon name to load later
-        });
-        Toolbar.Items.Add(new ToolStripSeparator());
-        Toolbar.Items.Add(new ToolStripButton()
-        {
-            Name = "Btn_LockZoom",
-            Tag = nameof(th.LockZoom),
-            DisplayStyle = ToolStripItemDisplayStyle.ImageAndText,
-            TextImageRelation = TextImageRelation.ImageBeforeText,
-
-            Text = "Lock zoom",
-            ToolTipText = "Lock zoom",
-            Alignment = ToolStripItemAlignment.Left,
-            CheckOnClick = true,
-        });
-        Toolbar.Items.Add(new ToolStripButton()
-        {
-            Name = "Btn_Print",
-            Tag = nameof(th.Print),
-            DisplayStyle = ToolStripItemDisplayStyle.Image,
-            TextImageRelation = TextImageRelation.ImageBeforeText,
-            Text = "Print image...",
-            ToolTipText = "Print image...",
-            Alignment = ToolStripItemAlignment.Left,
-            CheckOnClick = true,
-        });
-        Toolbar.Items.Add(new ToolStripButton()
-        {
-            Name = "Btn_Delete",
-            Tag = nameof(th.Delete),
-            DisplayStyle = ToolStripItemDisplayStyle.Image,
-            TextImageRelation = TextImageRelation.ImageBeforeText,
-            Text = "Delete image...",
-            ToolTipText = "Delete image...",
-            CheckOnClick = true,
-
-            Alignment = ToolStripItemAlignment.Right,
-        });
-        Toolbar.ResumeLayout();
-
-        Toolbar.Items["Btn_OpenFile"].Click += FrmMain_Click;
-
+        // add other items
+        Toolbar.AddItems(Config.ToolbarItems);
     }
 
     private void BtnMainMenu_Click(object? sender, EventArgs e)
@@ -130,9 +73,5 @@ public partial class FrmMain
             Toolbar.Height);
     }
 
-    private void FrmMain_Click(object? sender, EventArgs e)
-    {
-        OpenFile();
-    }
 }
 

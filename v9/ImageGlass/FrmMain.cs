@@ -1,6 +1,8 @@
+using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.PhotoBox;
 using ImageGlass.Settings;
+using System.Reflection;
 
 namespace ImageGlass;
 
@@ -96,7 +98,7 @@ public partial class FrmMain : Form
 
 
 
-    private void OpenFile()
+    private bool OpenFile()
     {
         var of = new OpenFileDialog()
         {
@@ -109,7 +111,12 @@ public partial class FrmMain : Form
         {
             _viewer.Image = Config.Codec.Load(of.FileName);
             _viewer.CurrentZoom = 1f;
+
+
+            return true;
         }
+
+        return false;
     }
 
     private void FrmMain_Resize(object sender, EventArgs e)
@@ -127,5 +134,28 @@ public partial class FrmMain : Form
     private void MnuMain_Closing(object sender, ToolStripDropDownClosingEventArgs e)
     {
         Local.BtnMainMenu.Checked = false;
+    }
+
+    private void Toolbar_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+    {
+        if (e.ClickedItem.Name == Local.BtnMainMenu.Name) return;
+
+        var tagModel = e.ClickedItem.Tag as ToolbarItemTagModel;
+        if (tagModel is null) return;
+
+        // Find the private method in FrmMain
+        var method = GetType().GetMethod(
+            tagModel.OnClick,
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+        // method must be bool/void()
+        var result = (bool?)method?.Invoke(this, null);
+
+        var btn = e.ClickedItem as ToolStripButton;
+        if (btn is not null)
+        {
+            btn.Checked = btn.CheckOnClick && result == true;
+        }
+
     }
 }
