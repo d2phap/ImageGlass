@@ -138,49 +138,6 @@ public enum LayoutMode
     Designer = 1
 }
 
-/// <summary>
-/// <para>
-/// All the supported toolbar buttons. NOTE: the names here MUST match the field
-/// name in frmMain! Reflection is used to fetch the image and string from the
-/// frmMain field.
-/// </para>
-/// <para>The integer value of the enum is used for storing the config info.</para>
-/// </summary>
-public enum ToolbarButton
-{
-    Separator = -1,
-    btnBack = 0,
-    btnNext = 1,
-    btnRotateLeft = 2,
-    btnRotateRight = 3,
-    btnZoomIn = 4,
-    btnZoomOut = 5,
-    btnScaleToFit = 6,
-    btnActualSize = 7,
-    btnZoomLock = 8,
-    btnScaletoWidth = 9,
-    btnScaletoHeight = 10,
-    btnWindowFit = 11,
-    btnOpen = 12,
-    btnRefresh = 13,
-    btnGoto = 14,
-    btnThumb = 15,
-    btnCheckedBackground = 16,
-    btnFullScreen = 17,
-    btnSlideShow = 18,
-    btnConvert = 19,
-    btnPrintImage = 20,
-    btnDelete = 21,
-    btnAutoZoom = 22,
-    btnFlipHorz = 23,
-    btnFlipVert = 24,
-    btnScaleToFill = 25,
-    btnEdit = 26,
-    btnCrop = 27,
-    btnColorPicker = 28,
-
-    MAX // DO NOT ADD ANYTHING AFTER THIS
-}
 
 /// <summary>
 /// Zooming modes.
@@ -202,7 +159,7 @@ public enum ZoomMode
 public enum ToolbarPosition
 {
     Top = 0,
-    Bottom = 1
+    Bottom = 1,
 }
 
 /// <summary>

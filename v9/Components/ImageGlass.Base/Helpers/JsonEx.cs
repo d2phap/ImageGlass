@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -31,6 +32,17 @@ public partial class Helpers
         AllowTrailingCommas = true,
         WriteIndented = true,
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+
+        Converters =
+        {
+            // Write enum value as string
+            new JsonStringEnumConverter(),
+        },
+
+        // ignoring policy
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault | JsonIgnoreCondition.WhenWritingNull,
+        IgnoreReadOnlyProperties = true,
+        IgnoreReadOnlyFields = true,
     };
 
 
@@ -65,17 +77,10 @@ public partial class Helpers
     /// </summary>
     /// <param name="jsonFilePath"></param>
     /// <param name="value"></param>
-    public static void WriteJson(string jsonFilePath, object? value)
+    public static async void WriteJson(string jsonFilePath, object? value, CancellationToken token = default)
     {
-        using var fs = File.Create(jsonFilePath);
+        var json = JsonSerializer.Serialize(value, JsonOptions);
 
-        using var writter = new Utf8JsonWriter(fs, new JsonWriterOptions()
-        {
-            Indented = true,
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-        });
-
-
-        JsonSerializer.Serialize(writter, value, JsonOptions);
+        await File.WriteAllTextAsync(jsonFilePath, json, Encoding.UTF8, token);
     }
 }

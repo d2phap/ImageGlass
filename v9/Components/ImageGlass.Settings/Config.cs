@@ -464,7 +464,7 @@ public class Config
     /// <summary>
     /// Gets, sets the list of toolbar buttons
     /// </summary>
-    public static List<ToolbarButton> ToolbarButtons { get; set; } = Constants.DefaultToolbarButtons;
+    public static List<ToolbarItemModel> ToolbarItems { get; set; } = Constants.DefaultToolbarItems;
 
     #endregion
 
@@ -739,14 +739,7 @@ public class Config
         // Array values
         #region Array items
 
-        #region ZoomLevels
-
-        var zoomLevelStr = items.GetValue(nameof(ZoomLevels), "");
-        var zoomLevels = Helpers.StringToIntArray(zoomLevelStr, unsignedOnly: true, distinct: true);
-
-        if (zoomLevels.Length > 0) ZoomLevels = zoomLevels;
-
-        #endregion
+        ZoomLevels = items.GetValue(nameof(ZoomLevels), ZoomLevels);
 
         #region EditApps
 
@@ -775,13 +768,11 @@ public class Config
 
         #endregion
 
-        #region ToolbarButtons
 
-        var buttonStr = items.GetValue(nameof(ToolbarButtons), "");
-        var btnList = GetToolbarButtons(buttonStr);
-        if (btnList.Count > 0) ToolbarButtons = btnList;
-
-        #endregion
+        ToolbarItems = items.GetSection(nameof(ToolbarItems))
+            .GetChildren()
+            .Select(i => i.Get<ToolbarItemModel>())
+            .ToList();
 
         #endregion
 
@@ -863,7 +854,9 @@ public class Config
     public static void Write()
     {
         var jsonFile = App.ConfigDir(PathType.File, Source.UserFilename);
-        Helpers.WriteJson(jsonFile, PrepareJsonSettingObjects());
+        var jsonObj = PrepareJsonSettingObjects();
+
+        Helpers.WriteJson(jsonFile, jsonObj);
     }
 
     #endregion
@@ -1008,13 +1001,12 @@ public class Config
 
         #region Array items
 
-        settings.TryAdd(nameof(ZoomLevels), Helpers.IntArrayToString(ZoomLevels));
+        settings.TryAdd(nameof(ZoomLevels), ZoomLevels);
         settings.TryAdd(nameof(EditApps), GetEditApps(EditApps));
         settings.TryAdd(nameof(AllFormats), GetImageFormats(AllFormats));
         settings.TryAdd(nameof(SinglePageFormats), GetImageFormats(SinglePageFormats));
         settings.TryAdd(nameof(KeyComboActions), GetKeyComboActions(KeyComboActions));
-        settings.TryAdd(nameof(ToolbarButtons), GetToolbarButtons(ToolbarButtons));
-
+        settings.TryAdd(nameof(ToolbarItems), ToolbarItems);
         #endregion
 
 
@@ -1205,51 +1197,6 @@ public class Config
             sb.Append(':');
             sb.Append(keyActions[key].ToString());
             sb.Append(';');
-        }
-
-        return sb.ToString();
-    }
-
-    #endregion
-
-
-    #region ToolbarButtons
-
-    /// <summary>
-    /// Returns list of toolbar buttons from string
-    /// </summary>
-    /// <param name="buttons">The input string</param>
-    /// <returns></returns>
-    public static List<ToolbarButton> GetToolbarButtons(string buttons)
-    {
-        var list = new List<ToolbarButton>();
-        var splitvals = buttons.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-
-        foreach (var item in splitvals)
-        {
-            try
-            {
-                var btn = Helpers.ParseEnum<ToolbarButton>(item);
-                list.Add(btn);
-            }
-            // ignore invalid values
-            catch { }
-        }
-
-        return list;
-    }
-
-    /// <summary>
-    /// Returns string from toolbar buttons list
-    /// </summary>
-    /// <param name="list">The input toolbar buttons</param>
-    /// <returns></returns>
-    public static string GetToolbarButtons(List<ToolbarButton> list)
-    {
-        var sb = new StringBuilder(list.Count);
-        foreach (var item in list)
-        {
-            sb.Append(item).Append(';');
         }
 
         return sb.ToString();

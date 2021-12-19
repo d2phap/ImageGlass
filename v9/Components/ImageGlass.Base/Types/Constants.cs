@@ -76,38 +76,32 @@ public static class Constants
     /// <summary>
     /// Gets the default set of toolbar buttons
     /// </summary>
-    public static List<ToolbarButton> DefaultToolbarButtons => new()
+    public static List<ToolbarItemModel> DefaultToolbarItems => new()
     {
-        ToolbarButton.btnBack,
-        ToolbarButton.btnNext,
-        ToolbarButton.Separator,
-
-        ToolbarButton.btnRotateLeft,
-        ToolbarButton.btnRotateRight,
-        ToolbarButton.btnFlipHorz,
-        ToolbarButton.btnFlipVert,
-        ToolbarButton.btnCrop,
-        ToolbarButton.Separator,
-
-        ToolbarButton.btnAutoZoom,
-        ToolbarButton.btnZoomLock,
-        ToolbarButton.btnScaletoWidth,
-        ToolbarButton.btnScaletoHeight,
-        ToolbarButton.btnScaleToFit,
-        ToolbarButton.btnScaleToFill,
-        ToolbarButton.Separator,
-
-        ToolbarButton.btnOpen,
-        ToolbarButton.btnRefresh,
-        ToolbarButton.Separator,
-
-        ToolbarButton.btnWindowFit,
-        ToolbarButton.btnFullScreen,
-        ToolbarButton.btnSlideShow,
-        ToolbarButton.Separator,
-
-        ToolbarButton.btnThumb,
-        ToolbarButton.btnCheckedBackground,
-        ToolbarButton.btnDelete,
+        new()
+        {
+            Id = "btn_openFile",
+            Text = "Open file...",
+            Image = "OpenFile",
+            OnClick = "OpenFile",
+            DisplayStyle = ToolStripItemDisplayStyle.ImageAndText,
+        },
+        new() { Type = ToolbarItemModelType.Separator },
+        new()
+        {
+            Id = "btn_print",
+            Text = "Print...",
+            Image = "Print",
+            OnClick = "PrintImage",
+        },
+        new()
+        {
+            Id = "btn_delete",
+            Text = "Delete...",
+            Image = "Delete",
+            OnClick = "DeleteImage",
+            CheckOnClick = true,
+            Alignment = ToolStripItemAlignment.Right,
+        },
     };
 }
