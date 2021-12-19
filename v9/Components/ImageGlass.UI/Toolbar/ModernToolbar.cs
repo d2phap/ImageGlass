@@ -439,13 +439,14 @@ public class ModernToolbar : ToolStrip
                 var tItem = item as ToolStripButton;
                 if (tItem is null) continue;
 
-                // update item icon
-                tItem.Image = Theme.GetToolbarIcon(tItem.Tag.ToString());
-
+                // update font and alignment
                 tItem.ForeColor = Theme.Settings.ToolbarTextColor;
-
                 tItem.Padding = new(DefaultGap);
                 tItem.Margin = new(0, DefaultGap, DefaultGap / 2, DefaultGap);
+
+                // update item from metadata
+                var tagModel = tItem.Tag as ToolbarItemTagModel;
+                tItem.Image = Theme.GetToolbarIcon(tagModel?.Image);
             }
         }
     }
@@ -480,6 +481,66 @@ public class ModernToolbar : ToolStrip
         return GetItem<ToolStripButton>(name);
     }
 
+
+    /// <summary>
+    /// Adds new toolbar item
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    public ToolbarAddItemResult AddItem(ToolbarItemModel model)
+    {
+        // separator
+        if (model.Type == ToolbarItemModelType.Separator)
+        {
+            Items.Add(new ToolStripSeparator());
+            return ToolbarAddItemResult.Success;
+        }
+
+
+        if (GetItem<ToolStripItem>(model.Id) is not null)
+            return ToolbarAddItemResult.ItemExists;
+
+
+        // button
+        var item = new ToolStripButton()
+        {
+            Name = model.Id,
+            DisplayStyle = model.DisplayStyle,
+            Text = model.Text,
+            ToolTipText = model.Text,
+            Alignment = model.Alignment,
+            CheckOnClick = model.CheckOnClick,
+
+            TextImageRelation = TextImageRelation.ImageBeforeText,
+            TextAlign = ContentAlignment.MiddleRight,
+
+            // save metadata
+            Tag = new ToolbarItemTagModel()
+            {
+                Image = model.Image,
+                OnClick = model.OnClick,
+            },
+
+            Image = Theme?.GetToolbarIcon(model.Image),
+        };
+
+        Items.Add(item);
+
+        return ToolbarAddItemResult.Success;
+    }
+
+
+    /// <summary>
+    /// Adds list of toolbar items
+    /// </summary>
+    /// <param name="list"></param>
+    public void AddItems(IEnumerable<ToolbarItemModel> list)
+    {
+        foreach (var item in list)
+        {
+            _ = AddItem(item);
+        }
+    }
 
     #endregion
 

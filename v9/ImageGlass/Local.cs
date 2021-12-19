@@ -15,7 +15,10 @@ internal class Local
         CheckOnClick = true,
 
         // save icon name to load later
-        Tag = nameof(Config.Theme.ToolbarIcons.MainMenu),
+        Tag = new ToolbarItemTagModel()
+        {
+            Image = nameof(Config.Theme.ToolbarIcons.MainMenu),
+        },
 
         Alignment = ToolStripItemAlignment.Right,
         Overflow = ToolStripItemOverflow.Never,
