@@ -2,6 +2,7 @@ using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.PhotoBox;
 using ImageGlass.Settings;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace ImageGlass;
@@ -104,23 +105,54 @@ public partial class FrmMain : Form
     }
 
 
-    private void Toolbar_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+    private async void Toolbar_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
     {
         var tagModel = e.ClickedItem.Tag as ToolbarItemTagModel;
-        if (tagModel is null) return;
+        if (tagModel is null || string.IsNullOrEmpty(tagModel.OnClick.Executable)) return;
+
 
         // Find the private method in FrmMain
         var method = GetType().GetMethod(
-            tagModel.OnClick,
+            tagModel.OnClick.Executable,
             BindingFlags.Instance | BindingFlags.NonPublic);
 
-        // method must be bool/void()
-        var result = (bool?)method?.Invoke(this, null);
 
-        var btn = e.ClickedItem as ToolStripButton;
-        if (btn is not null)
+        // run built-in method
+        if (method is not null)
         {
-            btn.Checked = btn.CheckOnClick && result == true;
+            // method must be bool/void()
+            var result = (bool?)method?.Invoke(this, null);
+
+            var btn = e.ClickedItem as ToolStripButton;
+            if (btn is not null)
+            {
+                btn.Checked = btn.CheckOnClick && result == true;
+            }
+
+            return;
         }
+
+
+        // TODO: test file macro <file>
+        var currentFilename = @"E:\WALLPAPER\NEW\dark2\horizon_by_t1na_den4yvj-fullview.jpg";
+
+
+        // run external command line
+        var proc = new Process
+        {
+            StartInfo = new(tagModel.OnClick.Executable)
+            {
+                Arguments = tagModel.OnClick.Arguments.Replace(Constants.FILE_MACRO, currentFilename),
+                UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                ErrorDialog = true,
+            },
+        };
+
+        try
+        {
+            proc.Start();
+        }
+        catch { }
     }
 }

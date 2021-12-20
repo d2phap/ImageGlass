@@ -29,8 +29,8 @@ public static class Constants
 {
     public const int MENU_ICON_HEIGHT = 22;
     public const int VIEWER_GRID_SIZE = 8;
-
     public const int TOOLBAR_ICON_HEIGHT = 22;
+    public const string FILE_MACRO = "<file>";
 
     /// <summary>
     /// First launch version constant.
@@ -85,7 +85,7 @@ public static class Constants
             DisplayStyle = ToolStripItemDisplayStyle.ImageAndText,
             Alignment = ToolStripItemAlignment.Right,
             Image = "OpenFile",
-            OnClick = "IG_OpenFile",
+            OnClick = new("IG_OpenFile"),
         },
         new()
         {

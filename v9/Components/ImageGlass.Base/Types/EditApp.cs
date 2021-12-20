@@ -47,7 +47,7 @@ public class EditApp
     /// <summary>
     /// Gets the macro string
     /// </summary>
-    public static string FileMacro { get; } = "<file>";
+    public static string FileMacro { get; } = Constants.FILE_MACRO;
 
     /// <summary>
     /// Initial Image Editing App
