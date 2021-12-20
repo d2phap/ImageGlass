@@ -5,6 +5,11 @@ using ImageGlass.UI;
 
 namespace ImageGlass;
 
+
+/* ****************************************************** *
+ * FrmMain.Theme contains methods for dynamic binding     *
+ * ****************************************************** */
+
 public partial class FrmMain
 {
 

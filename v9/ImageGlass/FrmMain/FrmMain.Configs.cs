@@ -1,7 +1,11 @@
-﻿using ImageGlass.Base;
-using ImageGlass.Settings;
+﻿using ImageGlass.Settings;
 
 namespace ImageGlass;
+
+
+/* ****************************************************** *
+ * FrmMain.Configs contains methods for dynamic binding   *
+ * ****************************************************** */
 
 public partial class FrmMain
 {
