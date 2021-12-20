@@ -80,7 +80,7 @@ public partial class FrmMain : Form
     }
 
 
-    private void Prepare(string filename = @"C:\Users\d2pha\Desktop\logo.png")
+    private void Prepare(string filename = @"E:\WALLPAPER\NEW\dark2\horizon_by_t1na_den4yvj-fullview.jpg")
     {
         var args = Environment.GetCommandLineArgs()
             .Where(cmd => !cmd.StartsWith('-'))
@@ -98,48 +98,14 @@ public partial class FrmMain : Form
 
 
 
-    private bool IG_OpenFile()
-    {
-        var of = new OpenFileDialog()
-        {
-            Multiselect = false,
-            CheckFileExists = true,
-        };
-
-
-        if (of.ShowDialog() == DialogResult.OK)
-        {
-            _viewer.Image = Config.Codec.Load(of.FileName);
-            _viewer.CurrentZoom = 1f;
-
-
-            return true;
-        }
-
-        return false;
-    }
-
     private void FrmMain_Resize(object sender, EventArgs e)
     {
 
     }
 
 
-
-    private void MnuMain_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-    {
-        Local.BtnMainMenu.Checked = true;
-    }
-
-    private void MnuMain_Closing(object sender, ToolStripDropDownClosingEventArgs e)
-    {
-        Local.BtnMainMenu.Checked = false;
-    }
-
     private void Toolbar_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
     {
-        if (e.ClickedItem.Name == Local.BtnMainMenu.Name) return;
-
         var tagModel = e.ClickedItem.Tag as ToolbarItemTagModel;
         if (tagModel is null) return;
 

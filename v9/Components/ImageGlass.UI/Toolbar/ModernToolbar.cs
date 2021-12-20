@@ -63,6 +63,39 @@ public class ModernToolbar : ToolStrip
     #region Public properties
 
     /// <summary>
+    /// Show or hide main menu button of toolbar
+    /// </summary>
+    public bool ShowMainMenuButton { get; set; } = true;
+
+    /// <summary>
+    /// Gets main menu button
+    /// </summary>
+    public ToolStripButton MainMenuButton => new()
+    {
+        Name = "btn_MainMenu",
+        DisplayStyle = ToolStripItemDisplayStyle.Image,
+        TextImageRelation = TextImageRelation.ImageBeforeText,
+        Text = "Main menu",
+        ToolTipText = "Main menu (Alf+F)",
+        CheckOnClick = true,
+
+        // save icon name to load later
+        Tag = new ToolbarItemTagModel()
+        {
+            Image = nameof(Theme.ToolbarIcons.MainMenu),
+        },
+
+        Alignment = ToolStripItemAlignment.Right,
+        Overflow = ToolStripItemOverflow.Never,
+    };
+
+    /// <summary>
+    /// Gets, sets main menu
+    /// </summary>
+    public ContextMenuStrip MainMenu { get; set; } = new();
+
+
+    /// <summary>
     /// Duration for tooltip auto-disappear
     /// </summary>
     public int ToolTipInterval { get; set; } = 4000;
@@ -247,11 +280,25 @@ public class ModernToolbar : ToolStrip
                 item.ImageAlign = ContentAlignment.MiddleRight;
             }
         }
+    }
 
+    protected override void OnItemClicked(ToolStripItemClickedEventArgs e)
+    {
+        // filter out BtnMainMenu
+        if (e.ClickedItem.Name != MainMenuButton.Name)
+        {
+            base.OnItemClicked(e);
+        }
+        else
+        {
+            // on main menu button clicked
+            MainMenu.Show(this,
+                e.ClickedItem.Bounds.Left + e.ClickedItem.Bounds.Width - MainMenu.Width,
+                Height);
+        }
     }
 
     #endregion
-
 
 
     public ModernToolbar() : base()
@@ -328,6 +375,18 @@ public class ModernToolbar : ToolStrip
         OverflowButton.DropDown.Height = dropdownHeight;
     }
 
+
+    private void MainMenu_Opening(object? sender, CancelEventArgs e)
+    {
+        MainMenuButton.Checked = true;
+    }
+
+    private void MainMenu_Closing(object? sender, ToolStripDropDownClosingEventArgs e)
+    {
+        MainMenuButton.Checked = false;
+    }
+
+
     #endregion
 
 
@@ -362,17 +421,10 @@ public class ModernToolbar : ToolStrip
         if (Alignment == ToolbarAlignment.Center)
         {
             // get the correct content width, excluding the sticky right items
-            var toolbarContentWidth = 0;
+            var toolbarContentWidth = ShowMainMenuButton ? MainMenuButton.Width : 0;
             foreach (ToolStripItem item in Items)
             {
-                if (item.Alignment == ToolStripItemAlignment.Right)
-                {
-                    toolbarContentWidth += item.Width;
-                }
-                else
-                {
-                    toolbarContentWidth += item.Width;
-                }
+                toolbarContentWidth += item.Width;
 
                 // reset margin
                 item.Margin = defaultMargin;
@@ -403,6 +455,29 @@ public class ModernToolbar : ToolStrip
         }
     }
 
+
+    /// <summary>
+    /// Update main menu button and the menu
+    /// </summary>
+    public void UpdateMainMenuButton()
+    {
+        var btn = GetItem(MainMenuButton.Name);
+        if (btn is null && ShowMainMenuButton)
+        {
+            Items.Insert(0, MainMenuButton);
+        }
+        else
+        {
+            Items.RemoveByKey(MainMenuButton.Name);
+        }
+
+        MainMenu.Opening -= MainMenu_Opening;
+        MainMenu.Opening += MainMenu_Opening;
+
+        MainMenu.Closing -= MainMenu_Closing;
+        MainMenu.Closing += MainMenu_Closing;
+    }
+
     
     /// <summary>
     /// Update toolbar theme
@@ -417,6 +492,9 @@ public class ModernToolbar : ToolStrip
         if (Theme is null || Theme.Codec is null) return;
 
         Renderer = new ModernToolbarRenderer(this);
+
+        // Show / hide main menu button
+        UpdateMainMenuButton();
 
         // Overflow button and Overflow dropdown
         UpdateOverflow();

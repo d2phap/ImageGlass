@@ -52,26 +52,12 @@ public partial class FrmMain
 
     private void LoadToolbarItems()
     {
-        var th = Config.Theme.ToolbarIcons;
         Toolbar.Items.Clear();
-
-
-        // add Main Menu
-        Local.BtnMainMenu.Click -= BtnMainMenu_Click;
-        Local.BtnMainMenu.Click += BtnMainMenu_Click;
-        Toolbar.Items.Add(Local.BtnMainMenu);
 
         // add other items
         Toolbar.AddItems(Config.ToolbarItems);
     }
 
-    private void BtnMainMenu_Click(object? sender, EventArgs e)
-    {
-        MnuMain.Show(Toolbar, Local.BtnMainMenu.Bounds.Left
-            + Local.BtnMainMenu.Bounds.Width
-            - MnuMain.Width,
-            Toolbar.Height);
-    }
 
 }
 
