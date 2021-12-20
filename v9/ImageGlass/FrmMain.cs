@@ -98,7 +98,7 @@ public partial class FrmMain : Form
 
 
 
-    private bool OpenFile()
+    private bool IG_OpenFile()
     {
         var of = new OpenFileDialog()
         {
@@ -124,7 +124,7 @@ public partial class FrmMain : Form
 
     }
 
-    
+
 
     private void MnuMain_Opening(object sender, System.ComponentModel.CancelEventArgs e)
     {
@@ -156,6 +156,5 @@ public partial class FrmMain : Form
         {
             btn.Checked = btn.CheckOnClick && result == true;
         }
-
     }
 }

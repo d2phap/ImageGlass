@@ -367,7 +367,7 @@ public class ModernToolbar : ToolStrip
             {
                 if (item.Alignment == ToolStripItemAlignment.Right)
                 {
-                    toolbarContentWidth += item.Width * 2;
+                    toolbarContentWidth += item.Width;
                 }
                 else
                 {

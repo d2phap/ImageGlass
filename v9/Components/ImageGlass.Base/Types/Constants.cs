@@ -80,28 +80,107 @@ public static class Constants
     {
         new()
         {
-            Id = "btn_openFile",
-            Text = "Open file...",
-            Image = "OpenFile",
-            OnClick = "OpenFile",
+            Id = "btn_OpenFile",
+            Text = "Open...",
             DisplayStyle = ToolStripItemDisplayStyle.ImageAndText,
+            Alignment = ToolStripItemAlignment.Right,
+            Image = "OpenFile",
+            OnClick = "IG_OpenFile",
+        },
+        new()
+        {
+            Id = "btn_ViewPrevious",
+            Text = "Previous image",
+            Image = "ViewPreviousImage",
+        },
+        new()
+        {
+            Id = "btn_ViewNext",
+            Text = "Next image",
+            Image = "ViewNextImage",
         },
         new() { Type = ToolbarItemModelType.Separator },
         new()
         {
-            Id = "btn_print",
-            Text = "Print...",
-            Image = "Print",
-            OnClick = "PrintImage",
+            Id = "btn_AutoZoom",
+            Text = "Auto zoom",
+            Image = "AutoZoom",
+            CheckOnClick = true,
         },
         new()
         {
-            Id = "btn_delete",
+            Id = "btn_LockZoom",
+            Text = "Lock zoom",
+            Image = "LockZoom",
+            CheckOnClick = true,
+        },
+        new()
+        {
+            Id = "btn_ScaleToWidth",
+            Text = "Scale to width",
+            Image = "ScaleToWidth",
+            CheckOnClick = true,
+        },
+        new()
+        {
+            Id = "btn_ScaleToHeight",
+            Text = "Scale to height",
+            Image = "ScaleToHeight",
+            CheckOnClick = true,
+        },
+        new()
+        {
+            Id = "btn_ScaleToFit",
+            Text = "Scale to fit",
+            Image = "ScaleToFit",
+            CheckOnClick = true,
+        },
+        new()
+        {
+            Id = "btn_ScaleToFill",
+            Text = "Scale to fill",
+            Image = "ScaleToFill",
+            CheckOnClick = true,
+        },
+        new() { Type = ToolbarItemModelType.Separator },
+        new()
+        {
+            Id = "btn_Slideshow",
+            Text = "Slideshow",
+            Image = "Slideshow",
+        },
+        new()
+        {
+            Id = "btn_Thumbnail",
+            Text = "Thumbnail bar",
+            Image = "ThumbnailBar",
+            CheckOnClick = true,
+        },
+        new()
+        {
+            Id = "btn_Checkerboard",
+            Text = "Checkerboard",
+            Image = "Checkerboard",
+            CheckOnClick = true,
+        },
+        new() { Type = ToolbarItemModelType.Separator },
+        new()
+        {
+            Id = "btn_Edit",
+            Text = "Edit...",
+            Image = "Edit",
+        },
+        new()
+        {
+            Id = "btn_Print",
+            Text = "Print...",
+            Image = "Print",
+        },
+        new()
+        {
+            Id = "btn_Delete",
             Text = "Delete...",
             Image = "Delete",
-            OnClick = "DeleteImage",
-            CheckOnClick = true,
-            Alignment = ToolStripItemAlignment.Right,
-        },
+        }
     };
 }
