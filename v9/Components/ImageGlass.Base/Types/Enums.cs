@@ -140,17 +140,16 @@ public enum LayoutMode
 
 
 /// <summary>
-/// Zooming modes.
+/// Zoom modes
 /// </summary>
-[Flags]
 public enum ZoomMode
 {
-    AutoZoom = 0,
-    ScaleToFit = 1,
-    ScaleToWidth = 2,
-    ScaleToHeight = 4,
-    LockZoomRatio = 8,
-    ScaleToFill = 16,
+    AutoZoom = 1,
+    LockZoom = 2,
+    ScaleToFit = 3,
+    ScaleToWidth = 4,
+    ScaleToHeight = 5,
+    ScaleToFill = 6,
 }
 
 /// <summary>

@@ -51,6 +51,11 @@ public partial class FrmMain : Form
         base.WndProc(ref m);
     }
 
+    private void FrmMain_Load(object sender, EventArgs e)
+    {
+        Text = $"{PicBox.Width}x{PicBox.Height}";
+    }
+
     private void OnDpiChanged()
     {
         Text = DpiApi.CurrentDpi.ToString();
@@ -91,7 +96,7 @@ public partial class FrmMain : Form
 
     private void FrmMain_Resize(object sender, EventArgs e)
     {
-
+        Text = $"{PicBox.Width}x{PicBox.Height}";
     }
 
 
@@ -99,7 +104,6 @@ public partial class FrmMain : Form
     {
         var tagModel = e.ClickedItem.Tag as ToolbarItemTagModel;
         if (tagModel is null || string.IsNullOrEmpty(tagModel.OnClick.Executable)) return;
-
 
         // Find the private method in FrmMain
         var method = GetType().GetMethod(
@@ -145,4 +149,6 @@ public partial class FrmMain : Form
         }
         catch { }
     }
+
+    
 }

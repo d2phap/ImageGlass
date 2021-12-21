@@ -23,6 +23,10 @@ public partial class FrmMain
         Sp3.Panel2Collapsed = true;
 
 
+        // PicBox
+        PicBox.ZoomMode = Config.ZoomMode;
+
+
         Load += FrmMainConfig_Load;
         FormClosing += FrmMainConfig_FormClosing;
         SizeChanged += FrmMainConfig_SizeChanged;

@@ -43,7 +43,6 @@ public partial class FrmMain
         if (of.ShowDialog() == DialogResult.OK)
         {
             PicBox.LoadImage(of.FileName); // Config.Codec.Load(of.FileName);
-            PicBox.CurrentZoom = 1f;
 
             return true;
         }

@@ -1,5 +1,6 @@
 ﻿
 
+using ImageGlass.Base;
 using System.Numerics;
 using unvell.D2DLib;
 
@@ -8,6 +9,7 @@ namespace ImageGlass.PhotoBox;
 public partial class ViewBox : D2DControl
 {
     private D2DBitmap? _image;
+    private bool _isControlLoaded = false;
 
     /// <summary>
     /// Gets the area of the image content to draw
@@ -23,17 +25,25 @@ public partial class ViewBox : D2DControl
     private Vector2 _panSpeed;
     private Vector2 _panHostStartPoint;
 
-    // current zoom, minimum zoom, maximum zoom, previous zoom (bigger means zoom in)
-    private float _zoomFactor = 1f;
-    private float _oldZoomFactor = 1f;
-
     private bool _xOut = false;
     private bool _yOut = false;
     private bool _isMouseDown = false;
     private Vector2 _drawPoint = new();
 
+    // current zoom, minimum zoom, maximum zoom, previous zoom (bigger means zoom in)
+    private float _zoomFactor = 1f;
+    private float _oldZoomFactor = 1f;
+    private ZoomMode _zoomMode = ZoomMode.AutoZoom;
+    private InterpolationMode _interpolationMode = InterpolationMode.NearestNeighbor;
+
+
 
     #region Public properties
+
+    /// <summary>
+    /// Gets the value indicates if control is fully loaded
+    /// </summary>
+    public bool IsReady => !DesignMode && _isControlLoaded;
 
     /// <summary>
     /// Gets, sets the minimum zoom factor (<c>100% = 1.0f</c>)
@@ -48,7 +58,7 @@ public partial class ViewBox : D2DControl
     /// <summary>
     /// Gets, sets current zoom factor (<c>100% = 1.0f</c>)
     /// </summary>
-    public float CurrentZoom
+    public float ZoomFactor
     {
         get => _zoomFactor;
         set
@@ -57,6 +67,33 @@ public partial class ViewBox : D2DControl
             Invalidate();
         }
     }
+
+    /// <summary>
+    /// Gets, sets zoom mode
+    /// </summary>
+    public ZoomMode ZoomMode
+    {
+        get => _zoomMode;
+        set
+        {
+            _zoomMode = value;
+            Refresh();
+        }
+    }
+
+    /// <summary>
+    /// Gets, sets interpolation mode
+    /// </summary>
+    public InterpolationMode InterpolationMode
+    {
+        get => _interpolationMode;
+        set
+        {
+            _interpolationMode = value;
+            Invalidate();
+        }
+    }
+
 
     /// <summary>
     /// Occurs when the host is being panned
@@ -73,7 +110,7 @@ public partial class ViewBox : D2DControl
 
 
     /// <summary>
-    /// Occurs when <see cref="CurrentZoom"/> value changes
+    /// Occurs when <see cref="ZoomFactor"/> value changes
     /// </summary>
     public event ZoomChangedEventHandler? OnZoomChanged = null;
     public delegate void ZoomChangedEventHandler(ZoomEventArgs e);
@@ -95,7 +132,10 @@ public partial class ViewBox : D2DControl
         _image?.Dispose();
         _image = Device.LoadBitmap(filename);
 
-        Invalidate();
+        if (IsReady)
+        {
+            Refresh();
+        }
     }
 
 
@@ -103,7 +143,7 @@ public partial class ViewBox : D2DControl
     {
         base.OnMouseDown(e);
 
-        if (_image is null) return;
+        if (!IsReady || _image is null) return;
 
         _panHostPoint.X = e.Location.X;
         _panHostPoint.Y = e.Location.Y;
@@ -118,6 +158,8 @@ public partial class ViewBox : D2DControl
     {
         base.OnMouseUp(e);
 
+        if (!IsReady) return;
+
         _isMouseDown = false;
     }
 
@@ -125,7 +167,7 @@ public partial class ViewBox : D2DControl
     {
         base.OnMouseMove(e);
 
-        if (_image is null || _isMouseDown is false) return;
+        if (!IsReady || _image is null || _isMouseDown is false) return;
 
         _srcRect.X += ((_panHostPoint.X - e.Location.X) / _zoomFactor)
             + _panSpeed.X;
@@ -153,7 +195,7 @@ public partial class ViewBox : D2DControl
     {
         base.OnMouseWheel(e);
 
-        if (_image is null || e.Delta == 0) return;
+        if (!IsReady || _image is null || e.Delta == 0) return;
 
         var speed = e.Delta / 500f;
 
@@ -184,10 +226,9 @@ public partial class ViewBox : D2DControl
         OnZoomChanged?.Invoke(new(_zoomFactor));
     }
 
-
     protected override void OnInvalidated(InvalidateEventArgs e)
     {
-        if (Parent != null && !DesignMode)
+        if (IsReady)
         {
             // fix the incorrect scale
             Width = Parent.Width;
@@ -197,19 +238,32 @@ public partial class ViewBox : D2DControl
         base.OnInvalidated(e);
     }
 
-    protected override void OnResize(EventArgs e)
+    protected override void OnSizeChanged(EventArgs e)
     {
-        base.OnResize(e);
+        base.OnSizeChanged(e);
 
-        // update the control once size/windows state changed
-        ResizeRedraw = true;
+        // detect if control is loaded
+        if (!DesignMode && Created)
+        {
+            // update the control once size/windows state changed
+            ResizeRedraw = true;
+
+            // control is loaded
+            if (!_isControlLoaded)
+            {
+                _isControlLoaded = true;
+
+                // draw the control
+                Refresh();
+            }
+        }
     }
 
     protected override void OnRender(D2DGraphics g)
     {
         base.OnRender(g);
 
-        if (DesignMode || _image is null) return;
+        if (!IsReady || _image is null) return;
 
         
         g.SetDPI(96, 96);
@@ -222,7 +276,6 @@ public partial class ViewBox : D2DControl
 
         var clientW = Width;
         var clientH = Height;
-
 
         if (clientW > _image.Width * _zoomFactor)
         {
@@ -282,10 +335,72 @@ public partial class ViewBox : D2DControl
             _srcRect.Y = 0;
         }
 
-        g.DrawBitmap(_image,
-            _destRect,
-            _srcRect,
-            1f,
-            D2DBitmapInterpolationMode.NearestNeighbor);
+        g.DrawBitmap(_image, _destRect, _srcRect, 1f, (D2DBitmapInterpolationMode)InterpolationMode);
     }
+
+
+    private void UpdateZoomMode(ZoomMode? mode = null)
+    {
+        if (!IsReady || _image is null) return;
+
+        var viewportW = Width;
+        var viewportH = Height;
+        var imgFullW = _image.Width;
+        var imgFullH = _image.Height;
+
+        var horizontalPadding = Padding.Left + Padding.Right;
+        var verticalPadding = Padding.Top + Padding.Bottom;
+        var widthScale = (viewportW - horizontalPadding) / imgFullW;
+        var heightScale = (viewportH - verticalPadding) / imgFullH;
+
+        float zoomFactor;
+        var zoomMode = mode ?? _zoomMode;
+
+        if (zoomMode  == ZoomMode.ScaleToWidth)
+        {
+            zoomFactor = widthScale;
+        }
+        else if (zoomMode == ZoomMode.ScaleToHeight)
+        {
+            zoomFactor = heightScale;
+        }
+        else if (zoomMode == ZoomMode.ScaleToFit)
+        {
+            zoomFactor = Math.Min(widthScale, heightScale);
+        }
+        else if (zoomMode == ZoomMode.ScaleToFill)
+        {
+            zoomFactor = Math.Max(widthScale, heightScale);
+        }
+        else if (zoomMode == ZoomMode.LockZoom)
+        {
+            zoomFactor = ZoomFactor;
+        }
+        // AutoZoom
+        else
+        {
+            // viewbox size >= image size
+            if (widthScale >= 1 && heightScale >= 1)
+            {
+                zoomFactor = 1; // show original size
+            }
+            else
+            {
+                zoomFactor = Math.Min(widthScale, heightScale);
+            }
+        }
+
+        _zoomFactor = zoomFactor;
+    }
+
+
+    /// <summary>
+    /// Force the control to update zoom mode and invalidate itself
+    /// </summary>
+    public new void Refresh()
+    {
+        UpdateZoomMode();
+        Invalidate();
+    }
+
 }
