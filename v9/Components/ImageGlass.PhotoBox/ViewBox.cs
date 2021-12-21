@@ -33,6 +33,7 @@ public partial class ViewBox : D2DControl
     // current zoom, minimum zoom, maximum zoom, previous zoom (bigger means zoom in)
     private float _zoomFactor = 1f;
     private float _oldZoomFactor = 1f;
+    private bool _isManualZoom = false;
     private ZoomMode _zoomMode = ZoomMode.AutoZoom;
     private InterpolationMode _interpolationMode = InterpolationMode.NearestNeighbor;
 
@@ -64,6 +65,8 @@ public partial class ViewBox : D2DControl
         set
         {
             _zoomFactor = value;
+            _isManualZoom = true;
+
             Invalidate();
         }
     }
@@ -207,8 +210,6 @@ public partial class ViewBox : D2DControl
 
             _oldZoomFactor = _zoomFactor;
             _zoomFactor *= 1f + speed;
-
-            
         }
         // zoom out
         else if (e.Delta < 0)
@@ -220,34 +221,29 @@ public partial class ViewBox : D2DControl
             _zoomFactor /= 1f - speed;
         }
 
+        _isManualZoom = true;
         _drawPoint = new(e.Location.X, e.Location.Y);
         Invalidate();
 
         OnZoomChanged?.Invoke(new(_zoomFactor));
     }
 
-    protected override void OnInvalidated(InvalidateEventArgs e)
+    protected override void OnResize(EventArgs e)
     {
-        if (IsReady)
+        // redraw the control on resizing if it's not manual zoom
+        if (IsReady && _image is not null && !_isManualZoom)
         {
-            // fix the incorrect scale
-            Width = Parent.Width;
-            Height = Parent.Height;
+            Refresh();
         }
 
-        base.OnInvalidated(e);
+        base.OnResize(e);
     }
 
     protected override void OnSizeChanged(EventArgs e)
     {
-        base.OnSizeChanged(e);
-
         // detect if control is loaded
         if (!DesignMode && Created)
         {
-            // update the control once size/windows state changed
-            ResizeRedraw = true;
-
             // control is loaded
             if (!_isControlLoaded)
             {
@@ -256,6 +252,11 @@ public partial class ViewBox : D2DControl
                 // draw the control
                 Refresh();
             }
+
+            // update the control once size/windows state changed
+            ResizeRedraw = true;
+
+            base.OnSizeChanged(e);
         }
     }
 
@@ -265,7 +266,7 @@ public partial class ViewBox : D2DControl
 
         if (!IsReady || _image is null) return;
 
-        
+        // only support the base DPI
         g.SetDPI(96, 96);
 
         var zoomX = _drawPoint.X;
@@ -391,6 +392,7 @@ public partial class ViewBox : D2DControl
         }
 
         _zoomFactor = zoomFactor;
+        _isManualZoom = false;
     }
 
 

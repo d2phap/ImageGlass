@@ -50,7 +50,6 @@ public partial class FrmMain
             PanLeft.BackColor =
             PanRight.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
 
-
     }
 
 }
