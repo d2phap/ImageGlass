@@ -77,8 +77,7 @@ public class ModernToolbar : ToolStrip
         TextImageRelation = TextImageRelation.ImageBeforeText,
         Text = "Main menu",
         ToolTipText = "Main menu (Alf+F)",
-        CheckOnClick = true,
-
+        
         // save icon name to load later
         Tag = new ToolbarItemTagModel()
         {
@@ -375,18 +374,6 @@ public class ModernToolbar : ToolStrip
         OverflowButton.DropDown.Height = dropdownHeight;
     }
 
-
-    private void MainMenu_Opening(object? sender, CancelEventArgs e)
-    {
-        MainMenuButton.Checked = true;
-    }
-
-    private void MainMenu_Closing(object? sender, ToolStripDropDownClosingEventArgs e)
-    {
-        MainMenuButton.Checked = false;
-    }
-
-
     #endregion
 
 
@@ -470,15 +457,9 @@ public class ModernToolbar : ToolStrip
         {
             Items.RemoveByKey(MainMenuButton.Name);
         }
-
-        MainMenu.Opening -= MainMenu_Opening;
-        MainMenu.Opening += MainMenu_Opening;
-
-        MainMenu.Closing -= MainMenu_Closing;
-        MainMenu.Closing += MainMenu_Closing;
     }
 
-    
+
     /// <summary>
     /// Update toolbar theme
     /// </summary>

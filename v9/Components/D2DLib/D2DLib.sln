@@ -1,0 +1,94 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "d2dlib", "d2dlib\d2dlib.vcxproj", "{E0A71FCE-69DD-40A6-87FB-2D63AB5D25C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D2DLibExport", "D2DLibExport\D2DLibExport.csproj", "{81DD53D8-FCF0-4384-A931-9370FA8E8E67}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E0A71FCE-69DD-40A6-87FB-2D63AB5D25C9} = {E0A71FCE-69DD-40A6-87FB-2D63AB5D25C9}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "Examples\Examples.csproj", "{D653531B-D30C-4A20-8AE5-D46A6F03E274}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E0A71FCE-69DD-40A6-87FB-2D63AB5D25C9} = {E0A71FCE-69DD-40A6-87FB-2D63AB5D25C9}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EF3FC267-D558-4556-8E8E-16BA7C52BDA3}"
+	ProjectSection(SolutionItems) = preProject
+		..\.editorconfig = ..\.editorconfig
+		..\.gitignore = ..\.gitignore
+		Directory.Build.props = Directory.Build.props
+		..\INSTALL.md = ..\INSTALL.md
+		..\LICENSE.md = ..\LICENSE.md
+		..\package\logo_d2dlib.png = ..\package\logo_d2dlib.png
+		NativeLibraries.props = NativeLibraries.props
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "snapshots", "snapshots", "{F362F889-0287-4377-A211-440C9871FDA6}"
+	ProjectSection(SolutionItems) = preProject
+		..\snapshots\bitmap_rendering.png = ..\snapshots\bitmap_rendering.png
+		..\snapshots\imagetest.png = ..\snapshots\imagetest.png
+		..\snapshots\starspace.png = ..\snapshots\starspace.png
+		..\snapshots\subtitle.png = ..\snapshots\subtitle.png
+		..\snapshots\whiteboard.png = ..\snapshots\whiteboard.png
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D2DWinForm", "D2DWinForm\D2DWinForm.csproj", "{40ED2809-ABA2-4655-82DD-E38AD12138BB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E0A71FCE-69DD-40A6-87FB-2D63AB5D25C9} = {E0A71FCE-69DD-40A6-87FB-2D63AB5D25C9}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E0A71FCE-69DD-40A6-87FB-2D63AB5D25C9}.Debug|x64.ActiveCfg = Debug|x64
+		{E0A71FCE-69DD-40A6-87FB-2D63AB5D25C9}.Debug|x64.Build.0 = Debug|x64
+		{E0A71FCE-69DD-40A6-87FB-2D63AB5D25C9}.Debug|x86.ActiveCfg = Debug|Win32
+		{E0A71FCE-69DD-40A6-87FB-2D63AB5D25C9}.Debug|x86.Build.0 = Debug|Win32
+		{E0A71FCE-69DD-40A6-87FB-2D63AB5D25C9}.Release|x64.ActiveCfg = Release|x64
+		{E0A71FCE-69DD-40A6-87FB-2D63AB5D25C9}.Release|x64.Build.0 = Release|x64
+		{E0A71FCE-69DD-40A6-87FB-2D63AB5D25C9}.Release|x86.ActiveCfg = Release|Win32
+		{E0A71FCE-69DD-40A6-87FB-2D63AB5D25C9}.Release|x86.Build.0 = Release|Win32
+		{81DD53D8-FCF0-4384-A931-9370FA8E8E67}.Debug|x64.ActiveCfg = Debug|x64
+		{81DD53D8-FCF0-4384-A931-9370FA8E8E67}.Debug|x64.Build.0 = Debug|x64
+		{81DD53D8-FCF0-4384-A931-9370FA8E8E67}.Debug|x86.ActiveCfg = Debug|x86
+		{81DD53D8-FCF0-4384-A931-9370FA8E8E67}.Debug|x86.Build.0 = Debug|x86
+		{81DD53D8-FCF0-4384-A931-9370FA8E8E67}.Release|x64.ActiveCfg = Release|x64
+		{81DD53D8-FCF0-4384-A931-9370FA8E8E67}.Release|x64.Build.0 = Release|x64
+		{81DD53D8-FCF0-4384-A931-9370FA8E8E67}.Release|x86.ActiveCfg = Release|x86
+		{81DD53D8-FCF0-4384-A931-9370FA8E8E67}.Release|x86.Build.0 = Release|x86
+		{D653531B-D30C-4A20-8AE5-D46A6F03E274}.Debug|x64.ActiveCfg = Debug|x64
+		{D653531B-D30C-4A20-8AE5-D46A6F03E274}.Debug|x64.Build.0 = Debug|x64
+		{D653531B-D30C-4A20-8AE5-D46A6F03E274}.Debug|x86.ActiveCfg = Debug|x86
+		{D653531B-D30C-4A20-8AE5-D46A6F03E274}.Debug|x86.Build.0 = Debug|x86
+		{D653531B-D30C-4A20-8AE5-D46A6F03E274}.Release|x64.ActiveCfg = Release|x64
+		{D653531B-D30C-4A20-8AE5-D46A6F03E274}.Release|x64.Build.0 = Release|x64
+		{D653531B-D30C-4A20-8AE5-D46A6F03E274}.Release|x86.ActiveCfg = Release|x86
+		{D653531B-D30C-4A20-8AE5-D46A6F03E274}.Release|x86.Build.0 = Release|x86
+		{40ED2809-ABA2-4655-82DD-E38AD12138BB}.Debug|x64.ActiveCfg = Debug|x64
+		{40ED2809-ABA2-4655-82DD-E38AD12138BB}.Debug|x64.Build.0 = Debug|x64
+		{40ED2809-ABA2-4655-82DD-E38AD12138BB}.Debug|x86.ActiveCfg = Debug|x86
+		{40ED2809-ABA2-4655-82DD-E38AD12138BB}.Debug|x86.Build.0 = Debug|x86
+		{40ED2809-ABA2-4655-82DD-E38AD12138BB}.Release|x64.ActiveCfg = Release|x64
+		{40ED2809-ABA2-4655-82DD-E38AD12138BB}.Release|x64.Build.0 = Release|x64
+		{40ED2809-ABA2-4655-82DD-E38AD12138BB}.Release|x86.ActiveCfg = Release|x86
+		{40ED2809-ABA2-4655-82DD-E38AD12138BB}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F362F889-0287-4377-A211-440C9871FDA6} = {EF3FC267-D558-4556-8E8E-16BA7C52BDA3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7BAB2A3D-55C4-4645-8E81-459E60AAC2CD}
+	EndGlobalSection
+EndGlobal

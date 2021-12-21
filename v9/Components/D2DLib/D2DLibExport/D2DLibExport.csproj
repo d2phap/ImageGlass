@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'" Include="..\d2dlib\Debug\Win32\d2dlib32d.dll" PackagePath="runtimes\win-x86\native" CopyToOutputDirectory="PreserveNewest" PackageCopyToOutput="true" Pack="true" Visible="False" />
+      
+    <Content Condition="'$(Configuration)|$(Platform)' == 'Release|x86'" Include="..\d2dlib\Release\Win32\d2dlib32.dll" PackagePath="runtimes\win-x86\native" CopyToOutputDirectory="PreserveNewest" PackageCopyToOutput="true" Pack="true" Visible="False" />
+    
+      <Content Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Include="..\d2dlib\Debug\x64\d2dlib64d.dll" PackagePath="runtimes\win-x64\native" CopyToOutputDirectory="PreserveNewest" PackageCopyToOutput="true" Pack="true" Visible="False" />
+      
+    <Content Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Include="..\d2dlib\Release\x64\d2dlib64.dll" PackagePath="runtimes\win-x64\native" CopyToOutputDirectory="PreserveNewest" PackageCopyToOutput="true" Pack="true" Visible="False" />
+      
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="D2DControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+
+</Project>
