@@ -81,8 +81,7 @@ public static class Constants
         new()
         {
             Id = "btn_OpenFile",
-            Text = "Open...",
-            DisplayStyle = ToolStripItemDisplayStyle.ImageAndText,
+            Text = "Open file",
             Alignment = ToolStripItemAlignment.Right,
             Image = "OpenFile",
             OnClick = new("IG_OpenFile"),

@@ -131,7 +131,7 @@
             this.Sp2 = new ImageGlass.UI.ModernSplitContainer();
             this.PanLeft = new System.Windows.Forms.FlowLayoutPanel();
             this.Sp3 = new ImageGlass.UI.ModernSplitContainer();
-            this.PanCenter = new System.Windows.Forms.FlowLayoutPanel();
+            this.PicBox = new ImageGlass.PhotoBox.ViewBox();
             this.PanRight = new System.Windows.Forms.FlowLayoutPanel();
             this.PanBot = new System.Windows.Forms.FlowLayoutPanel();
             this.MnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -189,7 +189,7 @@
             this.Toolbar.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.Toolbar.ShowItemToolTips = false;
             this.Toolbar.ShowMainMenuButton = true;
-            this.Toolbar.Size = new System.Drawing.Size(1108, 27);
+            this.Toolbar.Size = new System.Drawing.Size(1108, 25);
             this.Toolbar.TabIndex = 1;
             this.Toolbar.TabStop = true;
             this.Toolbar.Theme = null;
@@ -913,7 +913,7 @@
             this.Sp1.Cursor = System.Windows.Forms.Cursors.SizeNS;
             this.Sp1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Sp1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.Sp1.Location = new System.Drawing.Point(0, 27);
+            this.Sp1.Location = new System.Drawing.Point(0, 25);
             this.Sp1.Margin = new System.Windows.Forms.Padding(0);
             this.Sp1.Name = "Sp1";
             this.Sp1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -928,9 +928,8 @@
             // 
             this.Sp1.Panel2.Controls.Add(this.PanBot);
             this.Sp1.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.Sp1.Panel2Collapsed = true;
             this.Sp1.Panel2MinSize = 0;
-            this.Sp1.Size = new System.Drawing.Size(1108, 567);
+            this.Sp1.Size = new System.Drawing.Size(1108, 569);
             this.Sp1.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.Sp1.SplitterDistance = 388;
             this.Sp1.SplitterWidth = 9;
@@ -950,7 +949,6 @@
             // 
             this.Sp2.Panel1.Controls.Add(this.PanLeft);
             this.Sp2.Panel1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.Sp2.Panel1Collapsed = true;
             this.Sp2.Panel1MinSize = 0;
             // 
             // Sp2.Panel2
@@ -958,7 +956,7 @@
             this.Sp2.Panel2.Controls.Add(this.Sp3);
             this.Sp2.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp2.Panel2MinSize = 10;
-            this.Sp2.Size = new System.Drawing.Size(1108, 567);
+            this.Sp2.Size = new System.Drawing.Size(1108, 388);
             this.Sp2.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.Sp2.SplitterDistance = 164;
             this.Sp2.SplitterWidth = 11;
@@ -971,7 +969,7 @@
             this.PanLeft.Location = new System.Drawing.Point(0, 0);
             this.PanLeft.Margin = new System.Windows.Forms.Padding(2);
             this.PanLeft.Name = "PanLeft";
-            this.PanLeft.Size = new System.Drawing.Size(164, 100);
+            this.PanLeft.Size = new System.Drawing.Size(164, 388);
             this.PanLeft.TabIndex = 1;
             // 
             // Sp3
@@ -986,7 +984,7 @@
             // 
             // Sp3.Panel1
             // 
-            this.Sp3.Panel1.Controls.Add(this.PanCenter);
+            this.Sp3.Panel1.Controls.Add(this.PicBox);
             this.Sp3.Panel1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp3.Panel1MinSize = 10;
             // 
@@ -994,22 +992,27 @@
             // 
             this.Sp3.Panel2.Controls.Add(this.PanRight);
             this.Sp3.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.Sp3.Panel2Collapsed = true;
             this.Sp3.Panel2MinSize = 0;
-            this.Sp3.Size = new System.Drawing.Size(1108, 567);
+            this.Sp3.Size = new System.Drawing.Size(933, 388);
             this.Sp3.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.Sp3.SplitterDistance = 910;
+            this.Sp3.SplitterDistance = 717;
             this.Sp3.SplitterWidth = 11;
             this.Sp3.TabIndex = 3;
             // 
-            // PanCenter
+            // PicBox
             // 
-            this.PanCenter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PanCenter.Location = new System.Drawing.Point(0, 0);
-            this.PanCenter.Margin = new System.Windows.Forms.Padding(2);
-            this.PanCenter.Name = "PanCenter";
-            this.PanCenter.Size = new System.Drawing.Size(1108, 567);
-            this.PanCenter.TabIndex = 1;
+            this.PicBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.PicBox.BackgroundImage = null;
+            this.PicBox.CurrentZoom = 1F;
+            this.PicBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PicBox.Location = new System.Drawing.Point(0, 0);
+            this.PicBox.MaxZoom = 40F;
+            this.PicBox.MinZoom = 0.01F;
+            this.PicBox.Name = "PicBox";
+            this.PicBox.ShowFPS = false;
+            this.PicBox.Size = new System.Drawing.Size(717, 388);
+            this.PicBox.TabIndex = 0;
+            this.PicBox.OnZoomChanged += new ImageGlass.PhotoBox.ViewBox.ZoomChangedEventHandler(this.PicBox_OnZoomChanged);
             // 
             // PanRight
             // 
@@ -1018,7 +1021,7 @@
             this.PanRight.Location = new System.Drawing.Point(0, 0);
             this.PanRight.Margin = new System.Windows.Forms.Padding(2);
             this.PanRight.Name = "PanRight";
-            this.PanRight.Size = new System.Drawing.Size(90, 100);
+            this.PanRight.Size = new System.Drawing.Size(205, 388);
             this.PanRight.TabIndex = 1;
             // 
             // PanBot
@@ -1028,7 +1031,7 @@
             this.PanBot.Location = new System.Drawing.Point(0, 0);
             this.PanBot.Margin = new System.Windows.Forms.Padding(2);
             this.PanBot.Name = "PanBot";
-            this.PanBot.Size = new System.Drawing.Size(150, 40);
+            this.PanBot.Size = new System.Drawing.Size(1108, 172);
             this.PanBot.TabIndex = 0;
             // 
             // MnuContext
@@ -1245,7 +1248,6 @@
         private UI.ModernSplitContainer Sp2;
         private UI.ModernSplitContainer Sp3;
         private FlowLayoutPanel PanLeft;
-        private FlowLayoutPanel PanCenter;
         private FlowLayoutPanel PanRight;
         private FlowLayoutPanel PanBot;
         private ContextMenuStrip MnuContext;
@@ -1365,5 +1367,6 @@
         private ToolStripMenuItem aNewVersionIsAvailableToolStripMenuItem;
         private ToolStripMenuItem reportAnIssueToolStripMenuItem;
         private ToolStripMenuItem firstlaunchConfigurationsToolStripMenuItem;
+        private PhotoBox.ViewBox PicBox;
     }
 }

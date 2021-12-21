@@ -20,9 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="D2DControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="D2DControl.cs" />
   </ItemGroup>
 
 </Project>

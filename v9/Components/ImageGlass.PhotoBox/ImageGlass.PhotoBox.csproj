@@ -7,4 +7,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\D2DLib\D2DLibExport\D2DLibExport.csproj" />
+  </ItemGroup>
+
 </Project>

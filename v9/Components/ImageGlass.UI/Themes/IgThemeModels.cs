@@ -54,7 +54,7 @@ public record IgThemeSettings
     public Color AccentHoverColor { get; set; } = ThemeUtils.ColorFromHex("#0d92ff");
     public Color AccentSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#0060ae");
     public Color TextColor { get; set; } = Color.White;
-    public Color BgColor { get; set; } = ThemeUtils.ColorFromHex("#ccc"); // ("#151b1f");
+    public Color BgColor { get; set; } = ThemeUtils.ColorFromHex("#151b1f");
 
 
     // Toolbar

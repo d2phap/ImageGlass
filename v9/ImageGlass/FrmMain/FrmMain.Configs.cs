@@ -19,6 +19,9 @@ public partial class FrmMain
         // Thumbnail bar
         Sp1.Panel2Collapsed = !Config.IsShowThumbnail;
 
+        Sp2.Panel1Collapsed = true;
+        Sp3.Panel2Collapsed = true;
+
 
         Load += FrmMainConfig_Load;
         FormClosing += FrmMainConfig_FormClosing;

@@ -9,9 +9,6 @@ namespace ImageGlass;
 
 public partial class FrmMain : Form
 {
-    private ViewBox _viewer;
-
-
     public FrmMain()
     {
         InitializeComponent();
@@ -25,13 +22,6 @@ public partial class FrmMain : Form
 
         // apply DPI changes
         OnDpiChanged();
-
-        _viewer = new(PanCenter, null)
-        {
-            MinZoom = 0.01f,
-            MaxZoom = 35,
-        };
-        _viewer.OnZoomChanged += _viewer_OnZoomChanged;
 
         Prepare();
     }
@@ -75,7 +65,7 @@ public partial class FrmMain : Form
         Toolbar.UpdateTheme(newIconHeight);
     }
 
-    private void _viewer_OnZoomChanged(ZoomEventArgs e)
+    private void PicBox_OnZoomChanged(ZoomEventArgs e)
     {
         Text = $"{e.ZoomFactor * 100}%";
     }
@@ -89,11 +79,11 @@ public partial class FrmMain : Form
 
         if (args.Length > 1)
         {
-            _viewer.Image = Config.Codec.Load(args[1]);
+            PicBox.LoadImage(args[1]); // Config.Codec.Load(args[1]);
         }
         else
         {
-            _viewer.Image = Config.Codec.Load(filename);
+            PicBox.LoadImage(filename); // Config.Codec.Load(filename);
         }
     }
 

@@ -22,17 +22,16 @@
 * SOFTWARE.
 */
 
-using unvell.D2DLib;
+namespace unvell.D2DLib;
 
-namespace D2DLibExport;
 
 /// <summary>
 /// Direct2D control for WinForms
 /// </summary>
 public class D2DControl : Control
 {
-    private const int WM_ERASEBKGND = 0x0014;
     private const int WM_SIZE = 0x0005;
+    private const int WM_ERASEBKGND = 0x0014;
 
     private D2DDevice? _device;
     private D2DGraphics? _graphics;
@@ -45,19 +44,29 @@ public class D2DControl : Control
 
     #region Public properties
 
+    /// <summary>
+    /// Gets Direct2D device
+    /// </summary>
     public D2DDevice Device
     {
         get
         {
+            var hwnd = Handle;
+
             if (_device == null)
             {
-                _device = D2DDevice.FromHwnd(Handle);
+                // Note: do not pass 'Handle' directly here
+                _device = D2DDevice.FromHwnd(hwnd);
             }
 
             return _device;
         }
     }
 
+
+    /// <summary>
+    /// Gets, sets background image
+    /// </summary>
     public new D2DBitmap? BackgroundImage
     {
         get => _backgroundImage;
@@ -76,11 +85,13 @@ public class D2DControl : Control
         }
     }
 
-    public bool DrawFps { get; set; } = false;
+    /// <summary>
+    /// Shows or hides Frame per second info
+    /// </summary>
+    public bool ShowFPS { get; set; } = false;
 
 
     #endregion
-
 
 
     #region Protected/Override functions
@@ -119,7 +130,7 @@ public class D2DControl : Control
 
         OnRender(_graphics);
 
-        if (DrawFps)
+        if (ShowFPS)
         {
             if (lastFpsUpdate.Second != DateTime.UtcNow.Second)
             {
@@ -132,7 +143,7 @@ public class D2DControl : Control
                 currentFps++;
             }
 
-            var info = string.Format("{0} fps", lastFps);
+            var info = string.Format("{0} FPS", lastFps);
             var size = e.Graphics.MeasureString(info, Font, Width);
 
             e.Graphics.DrawString(info, Font, Brushes.Black, ClientRectangle.Right - size.Width - 10, 5);
@@ -183,3 +194,5 @@ public class D2DControl : Control
     #endregion
 
 }
+
+

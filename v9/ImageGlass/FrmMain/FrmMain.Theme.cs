@@ -37,7 +37,8 @@ public partial class FrmMain
             MnuMain.Theme = Config.Theme;
 
         // background
-        BackColor = Config.Theme.Settings.BgColor;
+        BackColor = Config.BackgroundColor;
+        PicBox.BackColor = Config.BackgroundColor;
 
         // Thumbnail bar
         Sp1.SplitterBackColor =
