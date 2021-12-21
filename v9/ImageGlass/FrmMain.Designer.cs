@@ -1006,7 +1006,7 @@ namespace ImageGlass
             this.PicBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.PicBox.BackgroundImage = null;
             this.PicBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PicBox.InterpolationMode = ImageGlass.PhotoBox.InterpolationMode.NearestNeighbor;
+            this.PicBox.InterpolationMode = InterpolationMode.NearestNeighbor;
             this.PicBox.Location = new System.Drawing.Point(0, 0);
             this.PicBox.MaxZoom = 40F;
             this.PicBox.MinZoom = 0.01F;

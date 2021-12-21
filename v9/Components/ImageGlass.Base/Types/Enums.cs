@@ -140,7 +140,7 @@ public enum LayoutMode
 
 
 /// <summary>
-/// Zoom modes
+/// Zoom modes for PhotoBox
 /// </summary>
 public enum ZoomMode
 {
@@ -150,6 +150,16 @@ public enum ZoomMode
     ScaleToWidth = 4,
     ScaleToHeight = 5,
     ScaleToFill = 6,
+}
+
+/// <summary>
+/// Interpolation modes for PhotoBox.
+/// These values are based on <b>D2DBitmapInterpolationMode</b> of <b>D2DLib</b>.
+/// </summary>
+public enum InterpolationMode : int
+{
+    NearestNeighbor = 0,
+    Linear = 1,
 }
 
 /// <summary>
