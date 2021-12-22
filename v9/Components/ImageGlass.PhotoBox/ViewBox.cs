@@ -58,7 +58,7 @@ public partial class ViewBox : D2DControl
     private ZoomMode _zoomMode = ZoomMode.AutoZoom;
     private InterpolationMode _interpolationMode = InterpolationMode.NearestNeighbor;
 
-    private CheckerboardMode _checkerboardMode = CheckerboardMode.Image;
+    private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
 
     // Navigation buttons
     private const float NAV_PADDING = 20f;
@@ -212,39 +212,29 @@ public partial class ViewBox : D2DControl
     [DefaultValue(50f)]
     public float NavButtonRadius { get; set; } = 50f;
 
+    [Category("NavigationButtons")]
+    [DefaultValue(typeof(Color), "Transparent")]
+    public Color NavBackColor { get; set; } = Color.Transparent;
+
+    [Category("NavigationButtons")]
+    [DefaultValue(typeof(Color), "150, 0, 0, 0")]
+    public Color NavHoveredColor { get; set; } = Color.FromArgb(150, Color.Black);
+
+    [Category("NavigationButtons")]
+    [DefaultValue(typeof(Color), "120, 0, 0, 0")]
+    public Color NavPressedColor { get; set; } = Color.FromArgb(120, Color.Black);
+
     // Left button
     [Category("NavigationButtons")]
     [DefaultValue(typeof(Bitmap))]
     public Bitmap? NavLeftImage { get; set; }
 
-    [Category("NavigationButtons")]
-    [DefaultValue(typeof(Color), "Transparent")]
-    public Color NavLeftColor { get; set; } = Color.Transparent;
-
-    [Category("NavigationButtons")]
-    [DefaultValue(typeof(Color), "150, 0, 0, 0")]
-    public Color NavLeftHoveredColor { get; set; } = Color.FromArgb(150, Color.Black);
-
-    [Category("NavigationButtons")]
-    [DefaultValue(typeof(Color), "120, 0, 0, 0")]
-    public Color NavLeftPressedColor { get; set; } = Color.FromArgb(120, Color.Black);
+    
 
     // Right button
     [Category("NavigationButtons")]
     [DefaultValue(typeof(Bitmap))]
     public Bitmap? NavRightImage { get; set; }
-
-    [Category("NavigationButtons")]
-    [DefaultValue(typeof(Color), "Transparent")]
-    public Color NavRightColor { get; set; } = Color.Transparent;
-
-    [Category("NavigationButtons")]
-    [DefaultValue(typeof(Color), "150, 0, 0, 0")]
-    public Color NavRightHoveredColor { get; set; } = Color.FromArgb(150, Color.Black);
-
-    [Category("NavigationButtons")]
-    [DefaultValue(typeof(Color), "120, 0, 0, 0")]
-    public Color NavRightPressedColor { get; set; } = Color.FromArgb(120, Color.Black);
 
 
     /// <summary>
@@ -720,17 +710,17 @@ public partial class ViewBox : D2DControl
         {
             var iconOpacity = 1f;
             var iconY = 0;
-            var leftColor = NavLeftColor;
+            var leftColor = NavBackColor;
 
             if (_isNavLeftPressed)
             {
-                leftColor = NavLeftPressedColor;
+                leftColor = NavPressedColor;
                 iconOpacity = 0.7f;
                 iconY = 1;
             }
             else if (_isNavLeftHovered)
             {
-                leftColor = NavLeftHoveredColor;
+                leftColor = NavHoveredColor;
             }
 
             // draw button
@@ -766,17 +756,17 @@ public partial class ViewBox : D2DControl
         {
             var iconOpacity = 1f;
             var iconY = 0;
-            var rightColor = NavRightColor;
+            var rightColor = NavBackColor;
 
             if (_isNavRightPressed)
             {
-                rightColor = NavRightPressedColor;
+                rightColor = NavPressedColor;
                 iconOpacity = 0.7f;
                 iconY = 1;
             }
             else if (_isNavRightHovered)
             {
-                rightColor = NavRightHoveredColor;
+                rightColor = NavHoveredColor;
             }
 
             // draw button
