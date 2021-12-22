@@ -31,7 +31,6 @@ namespace ImageGlass.PhotoBox;
 public partial class ViewBox : D2DControl
 {
     private D2DBitmap? _image;
-    private bool _isControlLoaded = false;
 
     /// <summary>
     /// Gets the area of the image content to draw
@@ -63,13 +62,6 @@ public partial class ViewBox : D2DControl
 
 
     #region Public properties
-
-    /// <summary>
-    /// Gets the value indicates if control is fully loaded
-    /// </summary>
-    [Browsable(false)]
-    public bool IsReady => !DesignMode && _isControlLoaded;
-
 
     /// <summary>
     /// Gets, sets the minimum zoom factor (<c>100% = 1.0f</c>)
@@ -298,25 +290,12 @@ public partial class ViewBox : D2DControl
         base.OnResize(e);
     }
 
-    protected override void OnSizeChanged(EventArgs e)
+    protected override void OnLoaded()
     {
-        // detect if control is loaded
-        if (!DesignMode && Created)
-        {
-            // control is loaded
-            if (!_isControlLoaded)
-            {
-                _isControlLoaded = true;
+        base.OnLoaded();
 
-                // draw the control
-                Refresh();
-            }
-
-            // update the control once size/windows state changed
-            ResizeRedraw = true;
-
-            base.OnSizeChanged(e);
-        }
+        // draw the control
+        Refresh();
     }
 
     protected override void OnRender(D2DGraphics g)
@@ -332,6 +311,7 @@ public partial class ViewBox : D2DControl
 
         DrawBitmap(g);
     }
+
 
     private void DrawBitmap(D2DGraphics g)
     {

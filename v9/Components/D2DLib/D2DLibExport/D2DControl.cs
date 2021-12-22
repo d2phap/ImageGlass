@@ -1,25 +1,20 @@
 ﻿/*
-* MIT License
-*
-* Copyright (c) 2009-2021 Jingwood, unvell.com. All right reserved.
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-* SOFTWARE.
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using System.ComponentModel;
@@ -35,6 +30,7 @@ public class D2DControl : Control
     private const int WM_SIZE = 0x0005;
     private const int WM_ERASEBKGND = 0x0014;
 
+    private bool _isControlLoaded = false;
     private D2DDevice? _device;
     private D2DBitmap? _backgroundImage;
     private D2DGraphics? _graphics;
@@ -45,6 +41,12 @@ public class D2DControl : Control
 
 
     #region Public properties
+
+    /// <summary>
+    /// Gets the value indicates if control is fully loaded
+    /// </summary>
+    [Browsable(false)]
+    public bool IsReady => !DesignMode && _isControlLoaded;
 
     /// <summary>
     /// Gets Direct2D device
@@ -65,7 +67,6 @@ public class D2DControl : Control
             return _device;
         }
     }
-
 
     /// <summary>
     /// Gets, sets background image
@@ -95,17 +96,29 @@ public class D2DControl : Control
     [DefaultValue(false)]
     public bool ShowFPS { get; set; } = false;
 
+    /// <summary>
+    /// <b>Do not</b> use this property.
+    /// Sets <c>DoubleBuffered = false</c> by default.
+    /// </summary>
+    [Browsable(false)]
+    [Obsolete("This property does not work.")]
+    protected override bool DoubleBuffered
+    {
+        get => base.DoubleBuffered;
+        set => base.DoubleBuffered = false;
+    }
 
     #endregion
 
 
-    #region Protected/Override functions
+    #region Override functions
 
     protected override void CreateHandle()
     {
         base.CreateHandle();
+        base.DoubleBuffered = false;
 
-        DoubleBuffered = false;
+        if (DesignMode) return;
 
         if (_device == null)
         {
@@ -114,6 +127,59 @@ public class D2DControl : Control
 
         _graphics = new D2DGraphics(_device);
     }
+
+    protected override void DestroyHandle()
+    {
+        base.DestroyHandle();
+        _device?.Dispose();
+    }
+
+    protected override void WndProc(ref Message m)
+    {
+        if (DesignMode) return;
+
+        switch (m.Msg)
+        {
+            case WM_ERASEBKGND:
+                break;
+
+            case WM_SIZE:
+                base.WndProc(ref m);
+                if (_device != null) _device.Resize();
+                break;
+
+            default:
+                base.WndProc(ref m);
+                break;
+        }
+    }
+
+
+    protected override void OnSizeChanged(EventArgs e)
+    {
+        // detect if control is loaded
+        if (!DesignMode && Created)
+        {
+            // control is loaded
+            if (!_isControlLoaded)
+            {
+                _isControlLoaded = true;
+
+                OnLoaded();
+            }
+
+            // update the control once size/windows state changed
+            ResizeRedraw = true;
+
+            base.OnSizeChanged(e);
+        }
+    }
+
+    /// <summary>
+    /// <b>Do use</b> <see cref="OnRender(D2DGraphics)"/> if you want to draw on the control.
+    /// </summary>
+    /// <param name="e"></param>
+    protected override void OnPaintBackground(PaintEventArgs e) { }
 
 
     /// <summary>
@@ -160,40 +226,31 @@ public class D2DControl : Control
         _graphics.EndRender();
     }
 
-    protected override void DestroyHandle()
-    {
-        base.DestroyHandle();
-        _device?.Dispose();
-    }
+    #endregion
 
-    protected override void OnPaintBackground(PaintEventArgs e) { }
 
+    #region New / Virtual functions
 
     /// <summary>
     /// Main method to draw graphics on the control.
     /// <b>Do not</b> use <see cref="OnPaint(PaintEventArgs)"/>
     /// </summary>
     /// <param name="g"></param>
-    protected virtual void OnRender(D2DGraphics g) { }
-
-    protected override void WndProc(ref Message m)
-    {
-        switch (m.Msg)
-        {
-            case WM_ERASEBKGND:
-                break;
-
-            case WM_SIZE:
-                base.WndProc(ref m);
-                if (_device != null) _device.Resize();
-                break;
-
-            default:
-                base.WndProc(ref m);
-                break;
-        }
+    protected virtual void OnRender(D2DGraphics g) {
+        if (!IsReady) return;
     }
 
+
+    /// <summary>
+    /// Happens when control is ready.
+    /// </summary>
+    protected virtual void OnLoaded() { }
+
+
+    /// <summary>
+    /// Invalidates client retangle of the control and causes a paint message to the control.
+    /// This does not apply to child controls.
+    /// </summary>
     public new void Invalidate()
     {
         Invalidate(false);
