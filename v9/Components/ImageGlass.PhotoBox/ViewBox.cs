@@ -18,11 +18,16 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
+using System.ComponentModel;
 using System.Numerics;
 using unvell.D2DLib;
 
 namespace ImageGlass.PhotoBox;
 
+
+/// <summary>
+/// Modern photo view box with hardware-accelerated
+/// </summary>
 public partial class ViewBox : D2DControl
 {
     private D2DBitmap? _image;
@@ -54,6 +59,7 @@ public partial class ViewBox : D2DControl
     private ZoomMode _zoomMode = ZoomMode.AutoZoom;
     private InterpolationMode _interpolationMode = InterpolationMode.NearestNeighbor;
 
+    private bool _showCheckerboard = false;
 
 
     #region Public properties
@@ -61,58 +67,109 @@ public partial class ViewBox : D2DControl
     /// <summary>
     /// Gets the value indicates if control is fully loaded
     /// </summary>
+    [Browsable(false)]
     public bool IsReady => !DesignMode && _isControlLoaded;
+
 
     /// <summary>
     /// Gets, sets the minimum zoom factor (<c>100% = 1.0f</c>)
     /// </summary>
+    [Category("Zooming")]
+    [DefaultValue(0.01f)]
     public float MinZoom { get; set; } = 0.01f;
 
     /// <summary>
     /// Gets, sets the maximum zoom factor (<c>100% = 1.0f</c>)
     /// </summary>
+    [Category("Zooming")]
+    [DefaultValue(40.0f)]
     public float MaxZoom { get; set; } = 40f;
 
     /// <summary>
     /// Gets, sets current zoom factor (<c>100% = 1.0f</c>)
     /// </summary>
+    [Category("Zooming")]
+    [DefaultValue(1.0f)]
     public float ZoomFactor
     {
         get => _zoomFactor;
         set
         {
-            _zoomFactor = value;
-            _isManualZoom = true;
+            if (_zoomFactor != value)
+            {
+                _zoomFactor = value;
+                _isManualZoom = true;
 
-            Invalidate();
+                Invalidate();
+            }
         }
     }
 
     /// <summary>
     /// Gets, sets zoom mode
     /// </summary>
+    [Category("Zooming")]
+    [DefaultValue(ZoomMode.AutoZoom)]
     public ZoomMode ZoomMode
     {
         get => _zoomMode;
         set
         {
-            _zoomMode = value;
-            Refresh();
+            if (_zoomMode != value)
+            {
+                _zoomMode = value;
+                Refresh();
+            }
         }
     }
 
     /// <summary>
     /// Gets, sets interpolation mode
     /// </summary>
+    [Category("Drawing")]
+    [DefaultValue(InterpolationMode.NearestNeighbor)]
     public InterpolationMode InterpolationMode
     {
         get => _interpolationMode;
         set
         {
-            _interpolationMode = value;
-            Invalidate();
+            if (_interpolationMode != value)
+            {
+                _interpolationMode = value;
+                Invalidate();
+            }
         }
     }
+
+    /// <summary>
+    /// Shows or hides checkerboard
+    /// </summary>
+    [Category("Appearence")]
+    [DefaultValue(false)]
+    public bool ShowCheckerboard
+    {
+        get => _showCheckerboard;
+        set
+        {
+            if (_showCheckerboard != value)
+            {
+                _showCheckerboard = value;
+                Invalidate();
+            }
+        }
+    }
+
+    [Category("Appearence")]
+    [DefaultValue(typeof(SizeF), "12, 12")]
+    public SizeF CheckerboardCellSize { get; set; } = new(12, 12);
+
+    [Category("Appearence")]
+    [DefaultValue(typeof(Color), "25, 0, 0, 0")]
+    public Color CheckerboardColor1 { get; set; } = Color.FromArgb(25, Color.Black);
+
+    [Category("Appearence")]
+    [DefaultValue(typeof(Color), "25, 255, 255, 255")]
+    public Color CheckerboardColor2 { get; set; } = Color.FromArgb(25, Color.White);
 
 
     /// <summary>
@@ -141,21 +198,6 @@ public partial class ViewBox : D2DControl
     public ViewBox()
     {
 
-    }
-
-
-
-    public void LoadImage(string filename)
-    {
-        if (string.IsNullOrEmpty(filename)) return;
-
-        _image?.Dispose();
-        _image = Device.LoadBitmap(filename);
-
-        if (IsReady)
-        {
-            Refresh();
-        }
     }
 
 
@@ -281,10 +323,19 @@ public partial class ViewBox : D2DControl
     {
         base.OnRender(g);
 
-        if (!IsReady || _image is null) return;
+        if (!IsReady) return;
 
-        // only support the base DPI
-        g.SetDPI(96, 96);
+        if (ShowCheckerboard)
+        {
+            DrawCheckerboard(g);
+        }
+
+        DrawBitmap(g);
+    }
+
+    private void DrawBitmap(D2DGraphics g)
+    {
+        if (_image is null) return;
 
         var zoomX = _drawPoint.X;
         var zoomY = _drawPoint.Y;
@@ -353,7 +404,41 @@ public partial class ViewBox : D2DControl
             _srcRect.Y = 0;
         }
 
+        // draw bitmap
         g.DrawBitmap(_image, _destRect, _srcRect, 1f, (D2DBitmapInterpolationMode)InterpolationMode);
+    }
+
+
+    private void DrawCheckerboard(D2DGraphics g)
+    {
+        // grid size.
+        int rows = (int)Math.Ceiling(Width / CheckerboardCellSize.Width);
+        int cols = (int)Math.Ceiling(Height / CheckerboardCellSize.Height);
+
+        // Print Board.
+        for (int row = 0; row < rows; row++)
+        {
+            for (int col = 0; col < cols; col++)
+            {
+                D2DColor color;
+                var rect = new D2DRect(
+                    row * CheckerboardCellSize.Height,
+                    col * CheckerboardCellSize.Width,
+                    CheckerboardCellSize.Width,
+                    CheckerboardCellSize.Height);
+
+                if ((row + col) % 2 == 0)
+                {
+                    color = D2DColor.FromGDIColor(CheckerboardColor1);
+                }
+                else
+                {
+                    color = D2DColor.FromGDIColor(CheckerboardColor2);
+                }
+
+                g.FillRectangle(rect, color);
+            }
+        }
     }
 
 
@@ -420,6 +505,24 @@ public partial class ViewBox : D2DControl
     {
         UpdateZoomMode();
         Invalidate();
+    }
+
+
+    /// <summary>
+    /// Load image from file path
+    /// </summary>
+    /// <param name="filename">Full path of file</param>
+    public void LoadImage(string filename)
+    {
+        if (string.IsNullOrEmpty(filename)) return;
+
+        _image?.Dispose();
+        _image = Device.LoadBitmap(filename);
+
+        if (IsReady)
+        {
+            Refresh();
+        }
     }
 
 }

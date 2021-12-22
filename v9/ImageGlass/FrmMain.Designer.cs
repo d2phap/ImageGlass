@@ -933,7 +933,7 @@ namespace ImageGlass
             this.Sp1.Panel2MinSize = 0;
             this.Sp1.Size = new System.Drawing.Size(1108, 569);
             this.Sp1.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.Sp1.SplitterDistance = 389;
+            this.Sp1.SplitterDistance = 394;
             this.Sp1.SplitterWidth = 9;
             this.Sp1.TabIndex = 2;
             // 
@@ -958,7 +958,7 @@ namespace ImageGlass
             this.Sp2.Panel2.Controls.Add(this.Sp3);
             this.Sp2.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp2.Panel2MinSize = 10;
-            this.Sp2.Size = new System.Drawing.Size(1108, 389);
+            this.Sp2.Size = new System.Drawing.Size(1108, 394);
             this.Sp2.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.Sp2.SplitterDistance = 164;
             this.Sp2.SplitterWidth = 11;
@@ -971,7 +971,7 @@ namespace ImageGlass
             this.PanLeft.Location = new System.Drawing.Point(0, 0);
             this.PanLeft.Margin = new System.Windows.Forms.Padding(2);
             this.PanLeft.Name = "PanLeft";
-            this.PanLeft.Size = new System.Drawing.Size(164, 389);
+            this.PanLeft.Size = new System.Drawing.Size(164, 394);
             this.PanLeft.TabIndex = 1;
             // 
             // Sp3
@@ -995,9 +995,9 @@ namespace ImageGlass
             this.Sp3.Panel2.Controls.Add(this.PanRight);
             this.Sp3.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp3.Panel2MinSize = 0;
-            this.Sp3.Size = new System.Drawing.Size(933, 389);
+            this.Sp3.Size = new System.Drawing.Size(933, 394);
             this.Sp3.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.Sp3.SplitterDistance = 716;
+            this.Sp3.SplitterDistance = 711;
             this.Sp3.SplitterWidth = 11;
             this.Sp3.TabIndex = 3;
             // 
@@ -1006,16 +1006,11 @@ namespace ImageGlass
             this.PicBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.PicBox.BackgroundImage = null;
             this.PicBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PicBox.InterpolationMode = InterpolationMode.NearestNeighbor;
             this.PicBox.Location = new System.Drawing.Point(0, 0);
-            this.PicBox.MaxZoom = 40F;
-            this.PicBox.MinZoom = 0.01F;
             this.PicBox.Name = "PicBox";
             this.PicBox.ShowFPS = false;
-            this.PicBox.Size = new System.Drawing.Size(716, 389);
+            this.PicBox.Size = new System.Drawing.Size(711, 394);
             this.PicBox.TabIndex = 0;
-            this.PicBox.ZoomFactor = 1F;
-            this.PicBox.ZoomMode = ZoomMode.AutoZoom;
             this.PicBox.OnZoomChanged += new ImageGlass.PhotoBox.ViewBox.ZoomChangedEventHandler(this.PicBox_OnZoomChanged);
             // 
             // PanRight
@@ -1025,7 +1020,7 @@ namespace ImageGlass
             this.PanRight.Location = new System.Drawing.Point(0, 0);
             this.PanRight.Margin = new System.Windows.Forms.Padding(2);
             this.PanRight.Name = "PanRight";
-            this.PanRight.Size = new System.Drawing.Size(206, 389);
+            this.PanRight.Size = new System.Drawing.Size(211, 394);
             this.PanRight.TabIndex = 1;
             // 
             // PanBot
@@ -1035,7 +1030,7 @@ namespace ImageGlass
             this.PanBot.Location = new System.Drawing.Point(0, 0);
             this.PanBot.Margin = new System.Windows.Forms.Padding(2);
             this.PanBot.Name = "PanBot";
-            this.PanBot.Size = new System.Drawing.Size(1108, 171);
+            this.PanBot.Size = new System.Drawing.Size(1108, 166);
             this.PanBot.TabIndex = 0;
             // 
             // MnuContext

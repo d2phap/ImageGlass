@@ -22,6 +22,8 @@
 * SOFTWARE.
 */
 
+using System.ComponentModel;
+
 namespace unvell.D2DLib;
 
 
@@ -34,8 +36,8 @@ public class D2DControl : Control
     private const int WM_ERASEBKGND = 0x0014;
 
     private D2DDevice? _device;
+    private D2DBitmap? _backgroundImage;
     private D2DGraphics? _graphics;
-    private D2DBitmap? _backgroundImage = null;
 
     private int currentFps = 0;
     private int lastFps = 0;
@@ -47,6 +49,7 @@ public class D2DControl : Control
     /// <summary>
     /// Gets Direct2D device
     /// </summary>
+    [Browsable(false)]
     public D2DDevice Device
     {
         get
@@ -67,6 +70,7 @@ public class D2DControl : Control
     /// <summary>
     /// Gets, sets background image
     /// </summary>
+    [Browsable(false)]
     public new D2DBitmap? BackgroundImage
     {
         get => _backgroundImage;
@@ -88,6 +92,7 @@ public class D2DControl : Control
     /// <summary>
     /// Shows or hides Frame per second info
     /// </summary>
+    [DefaultValue(false)]
     public bool ShowFPS { get; set; } = false;
 
 
@@ -127,6 +132,9 @@ public class D2DControl : Control
         {
             _graphics.BeginRender(D2DColor.FromGDIColor(BackColor));
         }
+
+        // only support the base DPI
+        _graphics.SetDPI(96, 96);
 
         OnRender(_graphics);
 
