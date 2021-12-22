@@ -68,7 +68,7 @@ public partial class ViewBox : D2DControl
     private bool _isRightNavPressed = false;
     private PointF LeftNavPosition => new(NavButtonRadius + NAV_PADDING, Height / 2);
     private PointF RightNavPosition => new(Width - NavButtonRadius - NAV_PADDING, Height / 2);
-
+    private NavButtonDisplay _navButtonDisplay = NavButtonDisplay.Both;
 
 
     #region Public properties
@@ -150,6 +150,7 @@ public partial class ViewBox : D2DControl
     /// <summary>
     /// Occurs when <see cref="ZoomFactor"/> value changes.
     /// </summary>
+    [Category("NavigationButtons")]
     public event ZoomChangedEventHandler? OnZoomChanged = null;
     public delegate void ZoomChangedEventHandler(ZoomEventArgs e);
 
@@ -193,6 +194,21 @@ public partial class ViewBox : D2DControl
     #region Navigation Buttons
 
     [Category("NavigationButtons")]
+    [DefaultValue(NavButtonDisplay.None)]
+    public NavButtonDisplay NavButtonDisplay
+    {
+        get => _navButtonDisplay;
+        set
+        {
+            if (_navButtonDisplay != value)
+            {
+                _navButtonDisplay = value;
+                Invalidate();
+            }
+        }
+    }
+
+    [Category("NavigationButtons")]
     [DefaultValue(50f)]
     public float NavButtonRadius { get; set; } = 50f;
 
@@ -201,29 +217,30 @@ public partial class ViewBox : D2DControl
     public Color LeftNavButtonColor { get; set; } = Color.Transparent;
 
     [Category("NavigationButtons")]
-    [DefaultValue(typeof(Color), "120, 255, 255, 255")]
-    public Color LeftNavButtonHoveredColor { get; set; } = Color.FromArgb(120, Color.White);
+    [DefaultValue(typeof(Color), "150, 0, 0, 0")]
+    public Color LeftNavButtonHoveredColor { get; set; } = Color.FromArgb(150, Color.Black);
 
     [Category("NavigationButtons")]
-    [DefaultValue(typeof(Color), "80, 255, 255, 255")]
-    public Color LeftNavButtonPressedColor { get; set; } = Color.FromArgb(80, Color.White);
+    [DefaultValue(typeof(Color), "120, 0, 0, 0")]
+    public Color LeftNavButtonPressedColor { get; set; } = Color.FromArgb(120, Color.Black);
 
     [Category("NavigationButtons")]
     [DefaultValue(typeof(Color), "Transparent")]
     public Color RightNavButtonColor { get; set; } = Color.Transparent;
 
     [Category("NavigationButtons")]
-    [DefaultValue(typeof(Color), "120, 255, 255, 255")]
-    public Color RightNavButtonHoveredColor { get; set; } = Color.FromArgb(120, Color.White);
+    [DefaultValue(typeof(Color), "150, 0, 0, 0")]
+    public Color RightNavButtonHoveredColor { get; set; } = Color.FromArgb(150, Color.Black);
 
     [Category("NavigationButtons")]
-    [DefaultValue(typeof(Color), "80, 255, 255, 255")]
-    public Color RightNavButtonPressedColor { get; set; } = Color.FromArgb(80, Color.White);
+    [DefaultValue(typeof(Color), "120, 0, 0, 0")]
+    public Color RightNavButtonPressedColor { get; set; } = Color.FromArgb(120, Color.Black);
 
 
     /// <summary>
     /// Occurs when the left navigation button clicked.
     /// </summary>
+    [Category("NavigationButtons")]
     public event LeftNavClickedEventHandler? OnLeftNavClicked = null;
     public delegate void LeftNavClickedEventHandler(MouseEventArgs e);
 
@@ -231,6 +248,7 @@ public partial class ViewBox : D2DControl
     /// <summary>
     /// Occurs when the right navigation button clicked.
     /// </summary>
+    [Category("NavigationButtons")]
     public event RightNavClickedEventHandler? OnRightNavClicked = null;
     public delegate void RightNavClickedEventHandler(MouseEventArgs e);
 
@@ -270,30 +288,42 @@ public partial class ViewBox : D2DControl
         base.OnMouseDown(e);
         if (!IsReady) return;
 
+        var requestRerender = false;
+
         // Navigation clickable check
         #region Navigation clickable check
         if (e.Button == MouseButtons.Left)
         {
-            // left clickable region
-            var leftClickable = new RectangleF(
+            if (NavButtonDisplay == NavButtonDisplay.Left
+                || NavButtonDisplay == NavButtonDisplay.Both)
+            {
+                // left clickable region
+                var leftClickable = new RectangleF(
                 LeftNavPosition.X - NavButtonRadius,
                 LeftNavPosition.Y - NavButtonRadius,
                 NavButtonRadius * 2,
                 NavButtonRadius * 2);
 
-            // right clickable region
-            var rightClickable = new RectangleF(
+                // calculate whether the point inside the rect
+                _isLeftNavPressed = leftClickable.Contains(e.Location);
+                requestRerender = true;
+            }
+
+
+            if (NavButtonDisplay == NavButtonDisplay.Right
+                || NavButtonDisplay == NavButtonDisplay.Both)
+            {
+                // right clickable region
+                var rightClickable = new RectangleF(
                 RightNavPosition.X - NavButtonRadius,
                 RightNavPosition.Y - NavButtonRadius,
                 NavButtonRadius * 2,
                 NavButtonRadius * 2);
 
-
-            // calculate whether the point inside the rect
-            _isLeftNavPressed = leftClickable.Contains(e.Location);
-            _isRightNavPressed = rightClickable.Contains(e.Location);
-
-            Invalidate();
+                // calculate whether the point inside the rect
+                _isRightNavPressed = rightClickable.Contains(e.Location);
+                requestRerender = true;
+            }
         }
         #endregion
 
@@ -313,6 +343,10 @@ public partial class ViewBox : D2DControl
 
 
         _isMouseDown = true;
+        if (requestRerender)
+        {
+            Invalidate();
+        }
     }
 
     protected override void OnMouseUp(MouseEventArgs e)
@@ -379,25 +413,34 @@ public partial class ViewBox : D2DControl
         if (e.Button == MouseButtons.None)
         {
             // left hoverable region
-            var leftHoverable = new RectangleF(
+            if (NavButtonDisplay == NavButtonDisplay.Left
+                || NavButtonDisplay == NavButtonDisplay.Both)
+            {
+                var leftHoverable = new RectangleF(
                 LeftNavPosition.X - NavButtonRadius - NAV_PADDING,
                 LeftNavPosition.Y - NavButtonRadius * 3,
                 NavButtonRadius * 2 + NAV_PADDING,
                 NavButtonRadius * 6);
 
+                // calculate whether the point inside the rect
+                _isLeftNavHovered = leftHoverable.Contains(e.Location);
+                requestRerender = true;
+            }
+
             // right hoverable region
-            var rightHoverable = new RectangleF(
+            if (NavButtonDisplay == NavButtonDisplay.Right
+                || NavButtonDisplay == NavButtonDisplay.Both)
+            {
+                var rightHoverable = new RectangleF(
                 RightNavPosition.X - NavButtonRadius,
                 RightNavPosition.Y - NavButtonRadius * 3,
                 NavButtonRadius * 2 + NAV_PADDING,
                 NavButtonRadius * 6);
 
-
-            // calculate whether the point inside the rect
-            _isLeftNavHovered = leftHoverable.Contains(e.Location);
-            _isRightNavHovered = rightHoverable.Contains(e.Location);
-
-            requestRerender = true;
+                // calculate whether the point inside the rect
+                _isRightNavHovered = rightHoverable.Contains(e.Location);
+                requestRerender = true;
+            }
         }
         #endregion
 
@@ -658,43 +701,54 @@ public partial class ViewBox : D2DControl
 
     private void DrawNavigationLayer(D2DGraphics g)
     {
+        if (NavButtonDisplay == NavButtonDisplay.None) return;
+
+
         // left navigation
-        var leftColor = LeftNavButtonColor;
-        if (_isLeftNavPressed)
+        if (NavButtonDisplay == NavButtonDisplay.Left
+            || NavButtonDisplay == NavButtonDisplay.Both)
         {
-            leftColor = LeftNavButtonPressedColor;
-        }
-        else if (_isLeftNavHovered)
-        {
-            leftColor = LeftNavButtonHoveredColor;
-        }
+            var leftColor = LeftNavButtonColor;
+            if (_isLeftNavPressed)
+            {
+                leftColor = LeftNavButtonPressedColor;
+            }
+            else if (_isLeftNavHovered)
+            {
+                leftColor = LeftNavButtonHoveredColor;
+            }
 
-        if (leftColor != Color.Transparent)
-        {
-            var leftCircle = new D2DEllipse(LeftNavPosition.X, LeftNavPosition.Y, NavButtonRadius, NavButtonRadius);
+            if (leftColor != Color.Transparent)
+            {
+                var leftCircle = new D2DEllipse(LeftNavPosition.X, LeftNavPosition.Y, NavButtonRadius, NavButtonRadius);
 
-            g.FillEllipse(leftCircle, D2DColor.FromGDIColor(leftColor));
-            g.DrawEllipse(leftCircle, D2DColor.FromGDIColor(leftColor));
+                g.FillEllipse(leftCircle, D2DColor.FromGDIColor(leftColor));
+                g.DrawEllipse(leftCircle, D2DColor.FromGDIColor(leftColor));
+            }
         }
 
 
         // right navigation
-        var rightColor = RightNavButtonColor;
-        if (_isRightNavPressed)
+        if (NavButtonDisplay == NavButtonDisplay.Right
+            || NavButtonDisplay == NavButtonDisplay.Both)
         {
-            rightColor = RightNavButtonPressedColor;
-        }
-        else if (_isRightNavHovered)
-        {
-            rightColor = RightNavButtonHoveredColor;
-        }
+            var rightColor = RightNavButtonColor;
+            if (_isRightNavPressed)
+            {
+                rightColor = RightNavButtonPressedColor;
+            }
+            else if (_isRightNavHovered)
+            {
+                rightColor = RightNavButtonHoveredColor;
+            }
 
-        if (rightColor != Color.Transparent)
-        {
-            var rightCircle = new D2DEllipse(RightNavPosition.X, RightNavPosition.Y, NavButtonRadius, NavButtonRadius);
+            if (rightColor != Color.Transparent)
+            {
+                var rightCircle = new D2DEllipse(RightNavPosition.X, RightNavPosition.Y, NavButtonRadius, NavButtonRadius);
 
-            g.FillEllipse(rightCircle, D2DColor.FromGDIColor(rightColor));
-            g.DrawEllipse(rightCircle, D2DColor.FromGDIColor(rightColor));
+                g.FillEllipse(rightCircle, D2DColor.FromGDIColor(rightColor));
+                g.DrawEllipse(rightCircle, D2DColor.FromGDIColor(rightColor));
+            }
         }
     }
 

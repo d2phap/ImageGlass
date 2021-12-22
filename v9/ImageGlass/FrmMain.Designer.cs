@@ -933,7 +933,7 @@ namespace ImageGlass
             this.Sp1.Panel2MinSize = 0;
             this.Sp1.Size = new System.Drawing.Size(1108, 569);
             this.Sp1.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.Sp1.SplitterDistance = 395;
+            this.Sp1.SplitterDistance = 396;
             this.Sp1.SplitterWidth = 9;
             this.Sp1.TabIndex = 2;
             // 
@@ -958,7 +958,7 @@ namespace ImageGlass
             this.Sp2.Panel2.Controls.Add(this.Sp3);
             this.Sp2.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp2.Panel2MinSize = 10;
-            this.Sp2.Size = new System.Drawing.Size(1108, 395);
+            this.Sp2.Size = new System.Drawing.Size(1108, 396);
             this.Sp2.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.Sp2.SplitterDistance = 164;
             this.Sp2.SplitterWidth = 11;
@@ -971,7 +971,7 @@ namespace ImageGlass
             this.PanLeft.Location = new System.Drawing.Point(0, 0);
             this.PanLeft.Margin = new System.Windows.Forms.Padding(2);
             this.PanLeft.Name = "PanLeft";
-            this.PanLeft.Size = new System.Drawing.Size(164, 395);
+            this.PanLeft.Size = new System.Drawing.Size(164, 396);
             this.PanLeft.TabIndex = 1;
             // 
             // Sp3
@@ -995,9 +995,9 @@ namespace ImageGlass
             this.Sp3.Panel2.Controls.Add(this.PanRight);
             this.Sp3.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp3.Panel2MinSize = 0;
-            this.Sp3.Size = new System.Drawing.Size(933, 395);
+            this.Sp3.Size = new System.Drawing.Size(933, 396);
             this.Sp3.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.Sp3.SplitterDistance = 710;
+            this.Sp3.SplitterDistance = 709;
             this.Sp3.SplitterWidth = 11;
             this.Sp3.TabIndex = 3;
             // 
@@ -1009,11 +1009,8 @@ namespace ImageGlass
             this.PicBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PicBox.Location = new System.Drawing.Point(0, 0);
             this.PicBox.Name = "PicBox";
-            this.PicBox.Size = new System.Drawing.Size(710, 395);
+            this.PicBox.Size = new System.Drawing.Size(709, 396);
             this.PicBox.TabIndex = 0;
-            this.PicBox.OnZoomChanged += new ImageGlass.PhotoBox.ViewBox.ZoomChangedEventHandler(this.PicBox_OnZoomChanged);
-            this.PicBox.OnLeftNavClicked += new ImageGlass.PhotoBox.ViewBox.LeftNavClickedEventHandler(this.PicBox_OnLeftNavClicked);
-            this.PicBox.OnRightNavClicked += new ImageGlass.PhotoBox.ViewBox.RightNavClickedEventHandler(this.PicBox_OnRightNavClicked);
             // 
             // PanRight
             // 
@@ -1022,7 +1019,7 @@ namespace ImageGlass
             this.PanRight.Location = new System.Drawing.Point(0, 0);
             this.PanRight.Margin = new System.Windows.Forms.Padding(2);
             this.PanRight.Name = "PanRight";
-            this.PanRight.Size = new System.Drawing.Size(212, 395);
+            this.PanRight.Size = new System.Drawing.Size(213, 396);
             this.PanRight.TabIndex = 1;
             // 
             // PanBot
@@ -1032,7 +1029,7 @@ namespace ImageGlass
             this.PanBot.Location = new System.Drawing.Point(0, 0);
             this.PanBot.Margin = new System.Windows.Forms.Padding(2);
             this.PanBot.Name = "PanBot";
-            this.PanBot.Size = new System.Drawing.Size(1108, 165);
+            this.PanBot.Size = new System.Drawing.Size(1108, 164);
             this.PanBot.TabIndex = 0;
             // 
             // MnuContext

@@ -64,3 +64,14 @@ public enum CheckerboardMode
     /// </summary>
     Image = 2,
 }
+
+
+/// <summary>
+/// Specifies the display styles for navigation button
+/// </summary>
+public enum NavButtonDisplay {
+    None = 0,
+    Both = 1,
+    Left = 2,
+    Right = 3,
+}

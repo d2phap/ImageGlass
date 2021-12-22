@@ -72,7 +72,7 @@ public partial class FrmMain : Form
 
     private void PicBox_OnZoomChanged(ZoomEventArgs e)
     {
-        Text = $"{e.ZoomFactor * 100}%";
+
     }
 
 
@@ -150,13 +150,4 @@ public partial class FrmMain : Form
         catch { }
     }
 
-    private void PicBox_OnLeftNavClicked(MouseEventArgs e)
-    {
-        MessageBox.Show("left clicked");
-    }
-
-    private void PicBox_OnRightNavClicked(MouseEventArgs e)
-    {
-        MessageBox.Show("right clicked");
-    }
 }
