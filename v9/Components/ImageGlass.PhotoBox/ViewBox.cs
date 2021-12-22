@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
+using ImageGlass.Base.PhotoBox;
 using System.ComponentModel;
 using System.Numerics;
 using unvell.D2DLib;
@@ -58,7 +59,7 @@ public partial class ViewBox : D2DControl
     private ZoomMode _zoomMode = ZoomMode.AutoZoom;
     private InterpolationMode _interpolationMode = InterpolationMode.NearestNeighbor;
 
-    private bool _showCheckerboard = false;
+    private CheckerboardMode _checkerboardMode = CheckerboardMode.Image;
 
 
     #region Public properties
@@ -137,15 +138,15 @@ public partial class ViewBox : D2DControl
     /// Shows or hides checkerboard
     /// </summary>
     [Category("Appearence")]
-    [DefaultValue(false)]
-    public bool ShowCheckerboard
+    [DefaultValue(CheckerboardMode.None)]
+    public CheckerboardMode CheckerboardMode
     {
-        get => _showCheckerboard;
+        get => _checkerboardMode;
         set
         {
-            if (_showCheckerboard != value)
+            if (_checkerboardMode != value)
             {
-                _showCheckerboard = value;
+                _checkerboardMode = value;
                 Invalidate();
             }
         }
@@ -304,11 +305,7 @@ public partial class ViewBox : D2DControl
 
         if (!IsReady) return;
 
-        if (ShowCheckerboard)
-        {
-            DrawCheckerboard(g);
-        }
-
+        // draw image
         DrawBitmap(g);
     }
 
@@ -384,6 +381,9 @@ public partial class ViewBox : D2DControl
             _srcRect.Y = 0;
         }
 
+        // draw checkerboard background
+        DrawCheckerboard(g);
+
         // draw bitmap
         g.DrawBitmap(_image, _destRect, _srcRect, 1f, (D2DBitmapInterpolationMode)InterpolationMode);
     }
@@ -391,22 +391,27 @@ public partial class ViewBox : D2DControl
 
     private void DrawCheckerboard(D2DGraphics g)
     {
-        // grid size.
-        int rows = (int)Math.Ceiling(Width / CheckerboardCellSize.Width);
-        int cols = (int)Math.Ceiling(Height / CheckerboardCellSize.Height);
+        if (CheckerboardMode == CheckerboardMode.None) return;
 
-        // Print Board.
+        // region to draw
+        var region = ClientRectangle;
+
+        if (CheckerboardMode == CheckerboardMode.Image)
+        {
+            region = (Rectangle)_destRect;
+        }
+
+        // grid size
+        int rows = (int)Math.Ceiling(region.Width / CheckerboardCellSize.Width);
+        int cols = (int)Math.Ceiling(region.Height / CheckerboardCellSize.Height);
+
+
+        // draw grid
         for (int row = 0; row < rows; row++)
         {
             for (int col = 0; col < cols; col++)
             {
                 D2DColor color;
-                var rect = new D2DRect(
-                    row * CheckerboardCellSize.Height,
-                    col * CheckerboardCellSize.Width,
-                    CheckerboardCellSize.Width,
-                    CheckerboardCellSize.Height);
-
                 if ((row + col) % 2 == 0)
                 {
                     color = D2DColor.FromGDIColor(CheckerboardColor1);
@@ -416,7 +421,16 @@ public partial class ViewBox : D2DControl
                     color = D2DColor.FromGDIColor(CheckerboardColor2);
                 }
 
-                g.FillRectangle(rect, color);
+                var drawnW = row * CheckerboardCellSize.Width;
+                var drawnH = col * CheckerboardCellSize.Height;
+
+                var x = drawnW + region.X;
+                var y = drawnH + region.Y;
+
+                var w = Math.Min(region.Width - drawnW, CheckerboardCellSize.Width);
+                var h = Math.Min(region.Height - drawnH, CheckerboardCellSize.Height);
+
+                g.FillRectangle(new(x, y, w, h), color);
             }
         }
     }

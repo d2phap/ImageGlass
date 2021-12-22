@@ -136,8 +136,6 @@ public class D2DControl : Control
 
     protected override void WndProc(ref Message m)
     {
-        if (DesignMode) return;
-
         switch (m.Msg)
         {
             case WM_ERASEBKGND:
