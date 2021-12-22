@@ -201,7 +201,12 @@ public class IgTheme
                 // property is Bitmap
                 if (prop?.PropertyType == typeof(Bitmap) && Codec is not null)
                 {
-                    var bmp = Codec.Load(Path.Combine(FolderPath, value));
+                    var bmp = Codec.Load(Path.Combine(FolderPath, value), new()
+                    {
+                        Width = ToolbarActualIconHeight * 2,
+                        Height = ToolbarActualIconHeight * 2,
+                    });
+
                     prop.SetValue(Settings, bmp);
                     continue;
                 }

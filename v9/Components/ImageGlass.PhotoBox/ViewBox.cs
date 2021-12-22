@@ -66,8 +66,8 @@ public partial class ViewBox : D2DControl
     private bool _isLeftNavPressed = false;
     private bool _isRightNavHovered = false;
     private bool _isRightNavPressed = false;
-    private PointF LeftNavPosition => new(NavButtonRadius + NAV_PADDING, Height / 2);
-    private PointF RightNavPosition => new(Width - NavButtonRadius - NAV_PADDING, Height / 2);
+    private PointF LeftNavPos => new(NavButtonRadius + NAV_PADDING, Height / 2);
+    private PointF RightNavPos => new(Width - NavButtonRadius - NAV_PADDING, Height / 2);
     private NavButtonDisplay _navButtonDisplay = NavButtonDisplay.Both;
 
 
@@ -212,6 +212,11 @@ public partial class ViewBox : D2DControl
     [DefaultValue(50f)]
     public float NavButtonRadius { get; set; } = 50f;
 
+    // Left button
+    [Category("NavigationButtons")]
+    [DefaultValue(typeof(Bitmap))]
+    public Bitmap? LeftNavButtonImage { get; set; }
+
     [Category("NavigationButtons")]
     [DefaultValue(typeof(Color), "Transparent")]
     public Color LeftNavButtonColor { get; set; } = Color.Transparent;
@@ -223,6 +228,11 @@ public partial class ViewBox : D2DControl
     [Category("NavigationButtons")]
     [DefaultValue(typeof(Color), "120, 0, 0, 0")]
     public Color LeftNavButtonPressedColor { get; set; } = Color.FromArgb(120, Color.Black);
+
+    // Right button
+    [Category("NavigationButtons")]
+    [DefaultValue(typeof(Bitmap))]
+    public Bitmap? RightNavButtonImage { get; set; }
 
     [Category("NavigationButtons")]
     [DefaultValue(typeof(Color), "Transparent")]
@@ -299,8 +309,8 @@ public partial class ViewBox : D2DControl
             {
                 // left clickable region
                 var leftClickable = new RectangleF(
-                LeftNavPosition.X - NavButtonRadius,
-                LeftNavPosition.Y - NavButtonRadius,
+                LeftNavPos.X - NavButtonRadius,
+                LeftNavPos.Y - NavButtonRadius,
                 NavButtonRadius * 2,
                 NavButtonRadius * 2);
 
@@ -315,8 +325,8 @@ public partial class ViewBox : D2DControl
             {
                 // right clickable region
                 var rightClickable = new RectangleF(
-                RightNavPosition.X - NavButtonRadius,
-                RightNavPosition.Y - NavButtonRadius,
+                RightNavPos.X - NavButtonRadius,
+                RightNavPos.Y - NavButtonRadius,
                 NavButtonRadius * 2,
                 NavButtonRadius * 2);
 
@@ -363,8 +373,8 @@ public partial class ViewBox : D2DControl
             {
                 // left clickable region
                 var leftClickable = new RectangleF(
-                    LeftNavPosition.X - NavButtonRadius,
-                    LeftNavPosition.Y - NavButtonRadius,
+                    LeftNavPos.X - NavButtonRadius,
+                    LeftNavPos.Y - NavButtonRadius,
                     NavButtonRadius * 2,
                     NavButtonRadius * 2);
 
@@ -378,8 +388,8 @@ public partial class ViewBox : D2DControl
             {
                 // right clickable region
                 var rightClickable = new RectangleF(
-                    RightNavPosition.X - NavButtonRadius,
-                    RightNavPosition.Y - NavButtonRadius,
+                    RightNavPos.X - NavButtonRadius,
+                    RightNavPos.Y - NavButtonRadius,
                     NavButtonRadius * 2,
                     NavButtonRadius * 2);
 
@@ -417,8 +427,8 @@ public partial class ViewBox : D2DControl
                 || NavButtonDisplay == NavButtonDisplay.Both)
             {
                 var leftHoverable = new RectangleF(
-                LeftNavPosition.X - NavButtonRadius - NAV_PADDING,
-                LeftNavPosition.Y - NavButtonRadius * 3,
+                LeftNavPos.X - NavButtonRadius - NAV_PADDING,
+                LeftNavPos.Y - NavButtonRadius * 3,
                 NavButtonRadius * 2 + NAV_PADDING,
                 NavButtonRadius * 6);
 
@@ -432,8 +442,8 @@ public partial class ViewBox : D2DControl
                 || NavButtonDisplay == NavButtonDisplay.Both)
             {
                 var rightHoverable = new RectangleF(
-                RightNavPosition.X - NavButtonRadius,
-                RightNavPosition.Y - NavButtonRadius * 3,
+                RightNavPos.X - NavButtonRadius,
+                RightNavPos.Y - NavButtonRadius * 3,
                 NavButtonRadius * 2 + NAV_PADDING,
                 NavButtonRadius * 6);
 
@@ -708,22 +718,44 @@ public partial class ViewBox : D2DControl
         if (NavButtonDisplay == NavButtonDisplay.Left
             || NavButtonDisplay == NavButtonDisplay.Both)
         {
+            var iconOpacity = 1f;
+            var iconY = 0;
             var leftColor = LeftNavButtonColor;
+
             if (_isLeftNavPressed)
             {
                 leftColor = LeftNavButtonPressedColor;
+                iconOpacity = 0.7f;
+                iconY = 1;
             }
             else if (_isLeftNavHovered)
             {
                 leftColor = LeftNavButtonHoveredColor;
             }
 
+            // draw button
             if (leftColor != Color.Transparent)
             {
-                var leftCircle = new D2DEllipse(LeftNavPosition.X, LeftNavPosition.Y, NavButtonRadius, NavButtonRadius);
+                var leftCircle = new D2DEllipse(LeftNavPos.X, LeftNavPos.Y, NavButtonRadius, NavButtonRadius);
 
                 g.FillEllipse(leftCircle, D2DColor.FromGDIColor(leftColor));
-                g.DrawEllipse(leftCircle, D2DColor.FromGDIColor(leftColor));
+                g.DrawEllipse(leftCircle, D2DColor.FromGDIColor(leftColor), 1.25f);
+            }
+
+            // draw icon
+            if (LeftNavButtonImage is not null
+                && (_isLeftNavHovered || _isLeftNavPressed))
+            {
+                using var icon = Device.CreateBitmapFromGDIBitmap(LeftNavButtonImage);
+                g.DrawBitmap(icon,
+                    new D2DRect(
+                        LeftNavPos.X - NavButtonRadius / 2,
+                        LeftNavPos.Y - NavButtonRadius / 2 + iconY,
+                        NavButtonRadius,
+                        NavButtonRadius),
+                    new D2DRect(0, 0, icon.Width, icon.Height),
+                    iconOpacity);
+                icon.Dispose();
             }
         }
 
@@ -732,22 +764,44 @@ public partial class ViewBox : D2DControl
         if (NavButtonDisplay == NavButtonDisplay.Right
             || NavButtonDisplay == NavButtonDisplay.Both)
         {
+            var iconOpacity = 1f;
+            var iconY = 0;
             var rightColor = RightNavButtonColor;
+
             if (_isRightNavPressed)
             {
                 rightColor = RightNavButtonPressedColor;
+                iconOpacity = 0.7f;
+                iconY = 1;
             }
             else if (_isRightNavHovered)
             {
                 rightColor = RightNavButtonHoveredColor;
             }
 
+            // draw button
             if (rightColor != Color.Transparent)
             {
-                var rightCircle = new D2DEllipse(RightNavPosition.X, RightNavPosition.Y, NavButtonRadius, NavButtonRadius);
+                var rightCircle = new D2DEllipse(RightNavPos.X, RightNavPos.Y, NavButtonRadius, NavButtonRadius);
 
                 g.FillEllipse(rightCircle, D2DColor.FromGDIColor(rightColor));
-                g.DrawEllipse(rightCircle, D2DColor.FromGDIColor(rightColor));
+                g.DrawEllipse(rightCircle, D2DColor.FromGDIColor(rightColor), 1.25f);
+            }
+
+            // draw icon
+            if (RightNavButtonImage is not null
+                && (_isRightNavHovered || _isRightNavPressed))
+            {
+                using var icon = Device.CreateBitmapFromGDIBitmap(RightNavButtonImage);
+                g.DrawBitmap(icon,
+                    new D2DRect(
+                        RightNavPos.X - NavButtonRadius / 2,
+                        RightNavPos.Y - NavButtonRadius / 2 + iconY,
+                        NavButtonRadius,
+                        NavButtonRadius),
+                    new D2DRect(0, 0, icon.Width, icon.Height),
+                    iconOpacity);
+                icon.Dispose();
             }
         }
     }

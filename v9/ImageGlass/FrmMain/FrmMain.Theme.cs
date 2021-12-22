@@ -40,6 +40,10 @@ public partial class FrmMain
         BackColor = Config.BackgroundColor;
         PicBox.BackColor = Config.BackgroundColor;
 
+        // navigation buttons
+        PicBox.LeftNavButtonImage = Config.Theme.Settings.NavButtonLeft;
+        PicBox.RightNavButtonImage = Config.Theme.Settings.NavButtonRight;
+
         // Thumbnail bar
         Sp1.SplitterBackColor =
             PanBot.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;

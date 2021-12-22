@@ -89,12 +89,12 @@ public record IgThemeSettings
     /// <summary>
     /// Gets, sets the navigation left arrow
     /// </summary>
-    public Bitmap? NavArrowLeft { get; set; }
+    public Bitmap? NavButtonLeft { get; set; }
 
     /// <summary>
     /// Gets, sets the navigation right arrow
     /// </summary>
-    public Bitmap? NavArrowRight { get; set; }
+    public Bitmap? NavButtonRight { get; set; }
 
     /// <summary>
     /// Sets, sets app logo
