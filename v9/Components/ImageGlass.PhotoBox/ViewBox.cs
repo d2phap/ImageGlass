@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base;
 using ImageGlass.Base.PhotoBox;
 using System.ComponentModel;
 using System.Numerics;
@@ -61,8 +60,21 @@ public partial class ViewBox : D2DControl
 
     private CheckerboardMode _checkerboardMode = CheckerboardMode.Image;
 
+    // Navigation buttons
+    private const float NAV_PADDING = 20f;
+    private bool _isLeftNavHovered = false;
+    private bool _isLeftNavPressed = false;
+    private bool _isRightNavHovered = false;
+    private bool _isRightNavPressed = false;
+    private PointF LeftNavPosition => new(NavButtonRadius + NAV_PADDING, Height / 2);
+    private PointF RightNavPosition => new(Width - NavButtonRadius - NAV_PADDING, Height / 2);
+
+
 
     #region Public properties
+
+    // Zooming
+    #region Zooming
 
     /// <summary>
     /// Gets, sets the minimum zoom factor (<c>100% = 1.0f</c>)
@@ -119,7 +131,7 @@ public partial class ViewBox : D2DControl
     /// <summary>
     /// Gets, sets interpolation mode
     /// </summary>
-    [Category("Drawing")]
+    [Category("Zooming")]
     [DefaultValue(InterpolationMode.NearestNeighbor)]
     public InterpolationMode InterpolationMode
     {
@@ -134,10 +146,20 @@ public partial class ViewBox : D2DControl
         }
     }
 
+
     /// <summary>
-    /// Shows or hides checkerboard
+    /// Occurs when <see cref="ZoomFactor"/> value changes.
     /// </summary>
-    [Category("Appearence")]
+    public event ZoomChangedEventHandler? OnZoomChanged = null;
+    public delegate void ZoomChangedEventHandler(ZoomEventArgs e);
+
+    #endregion
+
+
+    // Checkerboard
+    #region Checkerboard
+
+    [Category("Checkerboard")]
     [DefaultValue(CheckerboardMode.None)]
     public CheckerboardMode CheckerboardMode
     {
@@ -152,18 +174,71 @@ public partial class ViewBox : D2DControl
         }
     }
 
-    [Category("Appearence")]
+    [Category("Checkerboard")]
     [DefaultValue(typeof(SizeF), "12, 12")]
     public SizeF CheckerboardCellSize { get; set; } = new(12, 12);
 
-    [Category("Appearence")]
+    [Category("Checkerboard")]
     [DefaultValue(typeof(Color), "25, 0, 0, 0")]
     public Color CheckerboardColor1 { get; set; } = Color.FromArgb(25, Color.Black);
 
-    [Category("Appearence")]
+    [Category("Checkerboard")]
     [DefaultValue(typeof(Color), "25, 255, 255, 255")]
     public Color CheckerboardColor2 { get; set; } = Color.FromArgb(25, Color.White);
 
+    #endregion
+
+
+    // Navigation Buttons
+    #region Navigation Buttons
+
+    [Category("NavigationButtons")]
+    [DefaultValue(50f)]
+    public float NavButtonRadius { get; set; } = 50f;
+
+    [Category("NavigationButtons")]
+    [DefaultValue(typeof(Color), "Transparent")]
+    public Color LeftNavButtonColor { get; set; } = Color.Transparent;
+
+    [Category("NavigationButtons")]
+    [DefaultValue(typeof(Color), "120, 255, 255, 255")]
+    public Color LeftNavButtonHoveredColor { get; set; } = Color.FromArgb(120, Color.White);
+
+    [Category("NavigationButtons")]
+    [DefaultValue(typeof(Color), "80, 255, 255, 255")]
+    public Color LeftNavButtonPressedColor { get; set; } = Color.FromArgb(80, Color.White);
+
+    [Category("NavigationButtons")]
+    [DefaultValue(typeof(Color), "Transparent")]
+    public Color RightNavButtonColor { get; set; } = Color.Transparent;
+
+    [Category("NavigationButtons")]
+    [DefaultValue(typeof(Color), "120, 255, 255, 255")]
+    public Color RightNavButtonHoveredColor { get; set; } = Color.FromArgb(120, Color.White);
+
+    [Category("NavigationButtons")]
+    [DefaultValue(typeof(Color), "80, 255, 255, 255")]
+    public Color RightNavButtonPressedColor { get; set; } = Color.FromArgb(80, Color.White);
+
+
+    /// <summary>
+    /// Occurs when the left navigation button clicked.
+    /// </summary>
+    public event LeftNavClickedEventHandler? OnLeftNavClicked = null;
+    public delegate void LeftNavClickedEventHandler(MouseEventArgs e);
+
+
+    /// <summary>
+    /// Occurs when the right navigation button clicked.
+    /// </summary>
+    public event RightNavClickedEventHandler? OnRightNavClicked = null;
+    public delegate void RightNavClickedEventHandler(MouseEventArgs e);
+
+    #endregion
+
+
+    // Events
+    #region Events
 
     /// <summary>
     /// Occurs when the host is being panned
@@ -179,11 +254,7 @@ public partial class ViewBox : D2DControl
     public delegate void MouseMoveEventHandler(MouseMoveEventArgs e);
 
 
-    /// <summary>
-    /// Occurs when <see cref="ZoomFactor"/> value changes
-    /// </summary>
-    public event ZoomChangedEventHandler? OnZoomChanged = null;
-    public delegate void ZoomChangedEventHandler(ZoomEventArgs e);
+    #endregion
 
     #endregion
 
@@ -197,23 +268,99 @@ public partial class ViewBox : D2DControl
     protected override void OnMouseDown(MouseEventArgs e)
     {
         base.OnMouseDown(e);
+        if (!IsReady) return;
 
-        if (!IsReady || _image is null) return;
+        // Navigation clickable check
+        #region Navigation clickable check
+        if (e.Button == MouseButtons.Left)
+        {
+            // left clickable region
+            var leftClickable = new RectangleF(
+                LeftNavPosition.X - NavButtonRadius,
+                LeftNavPosition.Y - NavButtonRadius,
+                NavButtonRadius * 2,
+                NavButtonRadius * 2);
 
-        _panHostPoint.X = e.Location.X;
-        _panHostPoint.Y = e.Location.Y;
-        _panSpeed.X = 0;
-        _panSpeed.Y = 0;
-        _panHostStartPoint.X = e.Location.X;
-        _panHostStartPoint.Y = e.Location.Y;
+            // right clickable region
+            var rightClickable = new RectangleF(
+                RightNavPosition.X - NavButtonRadius,
+                RightNavPosition.Y - NavButtonRadius,
+                NavButtonRadius * 2,
+                NavButtonRadius * 2);
+
+
+            // calculate whether the point inside the rect
+            _isLeftNavPressed = leftClickable.Contains(e.Location);
+            _isRightNavPressed = rightClickable.Contains(e.Location);
+
+            Invalidate();
+        }
+        #endregion
+
+
+        // Image panning check
+        #region Image panning check
+        if (_image is not null)
+        {
+            _panHostPoint.X = e.Location.X;
+            _panHostPoint.Y = e.Location.Y;
+            _panSpeed.X = 0;
+            _panSpeed.Y = 0;
+            _panHostStartPoint.X = e.Location.X;
+            _panHostStartPoint.Y = e.Location.Y;
+        }
+        #endregion
+
+
         _isMouseDown = true;
     }
 
     protected override void OnMouseUp(MouseEventArgs e)
     {
         base.OnMouseUp(e);
-
         if (!IsReady) return;
+
+
+        // Navigation clickable check
+        #region Navigation clickable check
+        if (e.Button == MouseButtons.Left)
+        {
+            if (_isLeftNavPressed)
+            {
+                // left clickable region
+                var leftClickable = new RectangleF(
+                    LeftNavPosition.X - NavButtonRadius,
+                    LeftNavPosition.Y - NavButtonRadius,
+                    NavButtonRadius * 2,
+                    NavButtonRadius * 2);
+
+                // calculate whether the point inside the rect
+                _isLeftNavPressed = leftClickable.Contains(e.Location);
+
+                // emit nav button event
+                if (_isLeftNavPressed) OnLeftNavClicked?.Invoke(e);
+            }
+            else if (_isRightNavPressed)
+            {
+                // right clickable region
+                var rightClickable = new RectangleF(
+                    RightNavPosition.X - NavButtonRadius,
+                    RightNavPosition.Y - NavButtonRadius,
+                    NavButtonRadius * 2,
+                    NavButtonRadius * 2);
+
+                // calculate whether the point inside the rect
+                _isRightNavPressed = rightClickable.Contains(e.Location);
+
+                // emit nav button event
+                if (_isRightNavPressed) OnRightNavClicked?.Invoke(e);
+            }
+        }
+
+        _isLeftNavPressed = false;
+        _isRightNavPressed = false;
+        #endregion
+
 
         _isMouseDown = false;
     }
@@ -221,29 +368,89 @@ public partial class ViewBox : D2DControl
     protected override void OnMouseMove(MouseEventArgs e)
     {
         base.OnMouseMove(e);
+        if (!IsReady) return;
 
-        if (!IsReady || _image is null || _isMouseDown is false) return;
-
-        _srcRect.X += ((_panHostPoint.X - e.Location.X) / _zoomFactor)
-            + _panSpeed.X;
-
-        _srcRect.Y += ((_panHostPoint.Y - e.Location.Y) / _zoomFactor)
-            + _panSpeed.Y;
+        var requestRerender = false;
 
 
-        _drawPoint = new();
-        Invalidate();
-
-
-        if (_xOut == false)
+        // Navigation hoverable check
+        #region Navigation hoverable check
+        // no button pressed
+        if (e.Button == MouseButtons.None)
         {
-            _panHostPoint.X = e.Location.X;
+            // left hoverable region
+            var leftHoverable = new RectangleF(
+                LeftNavPosition.X - NavButtonRadius - NAV_PADDING,
+                LeftNavPosition.Y - NavButtonRadius * 3,
+                NavButtonRadius * 2 + NAV_PADDING,
+                NavButtonRadius * 6);
+
+            // right hoverable region
+            var rightHoverable = new RectangleF(
+                RightNavPosition.X - NavButtonRadius,
+                RightNavPosition.Y - NavButtonRadius * 3,
+                NavButtonRadius * 2 + NAV_PADDING,
+                NavButtonRadius * 6);
+
+
+            // calculate whether the point inside the rect
+            _isLeftNavHovered = leftHoverable.Contains(e.Location);
+            _isRightNavHovered = rightHoverable.Contains(e.Location);
+
+            requestRerender = true;
+        }
+        #endregion
+
+
+        // Image panning check
+        #region Image panning check
+        if (_isMouseDown && _image is not null)
+        {
+            _srcRect.X += ((_panHostPoint.X - e.Location.X) / _zoomFactor)
+                + _panSpeed.X;
+
+            _srcRect.Y += ((_panHostPoint.Y - e.Location.Y) / _zoomFactor)
+                + _panSpeed.Y;
+
+
+            _drawPoint = new();
+            requestRerender = true;
+
+
+            if (_xOut == false)
+            {
+                _panHostPoint.X = e.Location.X;
+            }
+
+            if (_yOut == false)
+            {
+                _panHostPoint.Y = e.Location.Y;
+            }
+        }
+        #endregion
+
+
+        if (requestRerender)
+        {
+            Invalidate();
+        }
+    }
+
+    protected override void OnMouseLeave(EventArgs e)
+    {
+        base.OnMouseLeave(e);
+
+
+        // Navigation hoverable check
+        var isNavHovered = _isLeftNavHovered || _isRightNavHovered;
+
+        if (isNavHovered)
+        {
+            Invalidate();
         }
 
-        if (_yOut == false)
-        {
-            _panHostPoint.Y = e.Location.Y;
-        }
+        _isLeftNavHovered = false;
+        _isRightNavHovered = false;
     }
 
     protected override void OnMouseWheel(MouseEventArgs e)
@@ -277,6 +484,7 @@ public partial class ViewBox : D2DControl
         _drawPoint = new(e.Location.X, e.Location.Y);
         Invalidate();
 
+        // emit OnZoomChanged event
         OnZoomChanged?.Invoke(new(_zoomFactor));
     }
 
@@ -305,12 +513,21 @@ public partial class ViewBox : D2DControl
 
         if (!IsReady) return;
 
-        // draw image
-        DrawBitmap(g);
+        // update drawing regions
+        UpdateDrawingRegion();
+
+        // checkerboard background
+        DrawCheckerboardLayer(g);
+
+        // image layer
+        DrawImageLayer(g);
+
+        // navigation layer
+        DrawNavigationLayer(g);
     }
 
 
-    private void DrawBitmap(D2DGraphics g)
+    private void UpdateDrawingRegion()
     {
         if (_image is null) return;
 
@@ -380,16 +597,19 @@ public partial class ViewBox : D2DControl
             _yOut = true;
             _srcRect.Y = 0;
         }
+    }
 
-        // draw checkerboard background
-        DrawCheckerboard(g);
+
+    private void DrawImageLayer(D2DGraphics g)
+    {
+        if (_image is null) return;
 
         // draw bitmap
         g.DrawBitmap(_image, _destRect, _srcRect, 1f, (D2DBitmapInterpolationMode)InterpolationMode);
     }
 
 
-    private void DrawCheckerboard(D2DGraphics g)
+    private void DrawCheckerboardLayer(D2DGraphics g)
     {
         if (CheckerboardMode == CheckerboardMode.None) return;
 
@@ -436,6 +656,49 @@ public partial class ViewBox : D2DControl
     }
 
 
+    private void DrawNavigationLayer(D2DGraphics g)
+    {
+        // left navigation
+        var leftColor = LeftNavButtonColor;
+        if (_isLeftNavPressed)
+        {
+            leftColor = LeftNavButtonPressedColor;
+        }
+        else if (_isLeftNavHovered)
+        {
+            leftColor = LeftNavButtonHoveredColor;
+        }
+
+        if (leftColor != Color.Transparent)
+        {
+            var leftCircle = new D2DEllipse(LeftNavPosition.X, LeftNavPosition.Y, NavButtonRadius, NavButtonRadius);
+
+            g.FillEllipse(leftCircle, D2DColor.FromGDIColor(leftColor));
+            g.DrawEllipse(leftCircle, D2DColor.FromGDIColor(leftColor));
+        }
+
+
+        // right navigation
+        var rightColor = RightNavButtonColor;
+        if (_isRightNavPressed)
+        {
+            rightColor = RightNavButtonPressedColor;
+        }
+        else if (_isRightNavHovered)
+        {
+            rightColor = RightNavButtonHoveredColor;
+        }
+
+        if (rightColor != Color.Transparent)
+        {
+            var rightCircle = new D2DEllipse(RightNavPosition.X, RightNavPosition.Y, NavButtonRadius, NavButtonRadius);
+
+            g.FillEllipse(rightCircle, D2DColor.FromGDIColor(rightColor));
+            g.DrawEllipse(rightCircle, D2DColor.FromGDIColor(rightColor));
+        }
+    }
+
+
     private void UpdateZoomMode(ZoomMode? mode = null)
     {
         if (!IsReady || _image is null) return;
@@ -453,7 +716,7 @@ public partial class ViewBox : D2DControl
         float zoomFactor;
         var zoomMode = mode ?? _zoomMode;
 
-        if (zoomMode  == ZoomMode.ScaleToWidth)
+        if (zoomMode == ZoomMode.ScaleToWidth)
         {
             zoomFactor = widthScale;
         }

@@ -150,5 +150,13 @@ public partial class FrmMain : Form
         catch { }
     }
 
-    
+    private void PicBox_OnLeftNavClicked(MouseEventArgs e)
+    {
+        MessageBox.Show("left clicked");
+    }
+
+    private void PicBox_OnRightNavClicked(MouseEventArgs e)
+    {
+        MessageBox.Show("right clicked");
+    }
 }
