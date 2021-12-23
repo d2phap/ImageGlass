@@ -35,9 +35,23 @@ public class D2DControl : Control
     private D2DBitmap? _backgroundImage;
     private D2DGraphics? _graphics;
 
-    private int currentFps = 0;
-    private int lastFps = 0;
-    private DateTime lastFpsUpdate = DateTime.UtcNow;
+    private bool _enableAnimation;
+    private int _currentFps = 0;
+    private int _lastFps = 0;
+    private DateTime _lastFpsUpdate = DateTime.UtcNow;
+    private System.Windows.Forms.Timer _animationTimer = new();
+
+
+    /// <summary>
+    /// Request to update frame by <see cref="OnFrame"/> event.
+    /// </summary>
+    protected bool IsSceneChanged { get; set; } = false;
+    public int AnimationInterval
+    {
+        get => _animationTimer.Interval;
+        set => _animationTimer.Interval = value;
+    }
+
 
 
     #region Public properties
@@ -91,12 +105,6 @@ public class D2DControl : Control
     }
 
     /// <summary>
-    /// Shows or hides Frame per second info
-    /// </summary>
-    [DefaultValue(false)]
-    public bool ShowFPS { get; set; } = false;
-
-    /// <summary>
     /// <b>Do not</b> use this property.
     /// Sets <c>DoubleBuffered = false</c> by default.
     /// </summary>
@@ -106,6 +114,36 @@ public class D2DControl : Control
     {
         get => base.DoubleBuffered;
         set => base.DoubleBuffered = false;
+    }
+
+    /// <summary>
+    /// Shows or hides Frame per second info
+    /// </summary>
+    [Category("Animation")]
+    [DefaultValue(false)]
+    public bool ShowFPS { get; set; } = false;
+
+    /// <summary>
+    /// Enables animation support for the control.
+    /// </summary>
+    [Category("Animation")]
+    [DefaultValue(false)]
+    public bool EnableAnimation
+    {
+        get => _enableAnimation;
+        set
+        {
+            _enableAnimation = value;
+
+            if (!_enableAnimation)
+            {
+                if (_animationTimer.Enabled) _animationTimer.Stop();
+            }
+            else
+            {
+                if (!_animationTimer.Enabled) _animationTimer.Start();
+            }
+        }
     }
 
     #endregion
@@ -126,6 +164,20 @@ public class D2DControl : Control
         }
 
         _graphics = new D2DGraphics(_device);
+
+        // only support the base DPI
+        _graphics.SetDPI(96, 96);
+
+        _animationTimer.Interval = AnimationInterval;
+        _animationTimer.Tick += (ss, ee) =>
+        {
+            if (EnableAnimation || IsSceneChanged)
+            {
+                OnFrame();
+                Invalidate();
+                IsSceneChanged = false;
+            }
+        };
     }
 
     protected override void DestroyHandle()
@@ -177,7 +229,10 @@ public class D2DControl : Control
     /// <b>Do use</b> <see cref="OnRender(D2DGraphics)"/> if you want to draw on the control.
     /// </summary>
     /// <param name="e"></param>
-    protected override void OnPaintBackground(PaintEventArgs e) { }
+    protected override void OnPaintBackground(PaintEventArgs e)
+    {
+        // prevent the .NET control to paint the original background
+    }
 
 
     /// <summary>
@@ -186,6 +241,15 @@ public class D2DControl : Control
     /// <param name="e"></param>
     protected override void OnPaint(PaintEventArgs e)
     {
+        if (DesignMode)
+        {
+            using var brush = new SolidBrush(ForeColor);
+            e.Graphics.Clear(BackColor);
+            e.Graphics.DrawString("This control does not support rendering in design mode.", Font, brush, 10, 10);
+
+            return;
+        }
+
         if (_graphics is null) return;
 
         if (_backgroundImage != null)
@@ -197,31 +261,35 @@ public class D2DControl : Control
             _graphics.BeginRender(D2DColor.FromGDIColor(BackColor));
         }
 
-        // only support the base DPI
-        _graphics.SetDPI(96, 96);
-
+        // emit OnRender event
         OnRender(_graphics);
 
         if (ShowFPS)
         {
-            if (lastFpsUpdate.Second != DateTime.UtcNow.Second)
+            if (_lastFpsUpdate.Second != DateTime.UtcNow.Second)
             {
-                lastFps = currentFps;
-                currentFps = 0;
-                lastFpsUpdate = DateTime.UtcNow;
+                _lastFps = _currentFps;
+                _currentFps = 0;
+                _lastFpsUpdate = DateTime.UtcNow;
             }
             else
             {
-                currentFps++;
+                _currentFps++;
             }
 
-            var info = string.Format("{0} FPS", lastFps);
+            var info = string.Format("{0} FPS", _lastFps);
             var size = e.Graphics.MeasureString(info, Font, Width);
 
             e.Graphics.DrawString(info, Font, Brushes.Black, ClientRectangle.Right - size.Width - 10, 5);
         }
 
         _graphics.EndRender();
+
+        // Start animation
+        if (_enableAnimation && !_animationTimer.Enabled)
+        {
+            _animationTimer.Start();
+        }
     }
 
     #endregion
@@ -234,7 +302,17 @@ public class D2DControl : Control
     /// <b>Do not</b> use <see cref="OnPaint(PaintEventArgs)"/>
     /// </summary>
     /// <param name="g"></param>
-    protected virtual void OnRender(D2DGraphics g) {
+    protected virtual void OnRender(D2DGraphics g)
+    {
+        if (!IsReady) return;
+    }
+
+
+    /// <summary>
+    /// Process animation logic when frame changes
+    /// </summary>
+    protected virtual void OnFrame()
+    {
         if (!IsReady) return;
     }
 
