@@ -259,7 +259,6 @@ public partial class ViewBox : D2DControl
     #endregion
 
 
-
     public Bitmap? Photo
     {
         get => _photo;
@@ -280,8 +279,6 @@ public partial class ViewBox : D2DControl
             }
         }
     }
-
-
 
 
     // Events
@@ -600,7 +597,8 @@ public partial class ViewBox : D2DControl
         // image layer
         DrawImageLayer(g);
 
-        DrawText(g);
+        // text message
+        DrawTextLayer(g);
 
         // navigation layer
         DrawNavigationLayer(g);
@@ -736,7 +734,7 @@ public partial class ViewBox : D2DControl
     }
 
 
-    private void DrawText(D2DGraphics g)
+    private void DrawTextLayer(D2DGraphics g)
     {
         if (Text.Trim().Length == 0) return;
 
@@ -745,11 +743,10 @@ public partial class ViewBox : D2DControl
         var textPaddingY = textMargin;
 
         var drawableArea = new Rectangle(
-            Padding.Left + textMargin,
-            Padding.Top + textMargin,
-            Width - Padding.Left - Padding.Right - textPaddingX,
-            Height - Padding.Top - Padding.Bottom - textPaddingY);
-
+            textMargin,
+            textMargin,
+            Width - textPaddingX,
+            Height - textPaddingY);
 
         // calculate text region
         var fontSize = DpiApi.Transform<float>(Font.Size * (float)DpiApi.DpiScale);
@@ -775,6 +772,7 @@ public partial class ViewBox : D2DControl
         // draw text
         g.DrawTextCenter(Text, D2DColor.FromGDIColor(ForeColor), Font.Name, fontSize, region);
     }
+
 
     private void DrawNavigationLayer(D2DGraphics g)
     {
