@@ -103,6 +103,7 @@ public partial class FrmMain : Form
         }
 
         Local.Metadata = Config.Codec.LoadMetadata(inputPath);
+
         PicBox.Photo = await Config.Codec.LoadAsync(inputPath, new(Local.Metadata));
     }
 

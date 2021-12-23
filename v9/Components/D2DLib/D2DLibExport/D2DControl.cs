@@ -35,6 +35,7 @@ public class D2DControl : Control
     private D2DBitmap? _backgroundImage;
     private D2DGraphics? _graphics;
 
+    private bool _firstPaintBackground = true;
     private bool _enableAnimation;
     private int _currentFps = 0;
     private int _lastFps = 0;
@@ -167,6 +168,7 @@ public class D2DControl : Control
 
         // only support the base DPI
         _graphics.SetDPI(96, 96);
+        
 
         _animationTimer.Interval = AnimationInterval;
         _animationTimer.Tick += (ss, ee) =>
@@ -191,6 +193,13 @@ public class D2DControl : Control
         switch (m.Msg)
         {
             case WM_ERASEBKGND:
+                // to fix background is delayed to paint on launch
+                if (_firstPaintBackground)
+                {
+                    _graphics?.BeginRender(D2DColor.FromGDIColor(BackColor));
+                    _graphics?.EndRender();
+                    _firstPaintBackground = false;
+                }
                 break;
 
             case WM_SIZE:
@@ -243,8 +252,9 @@ public class D2DControl : Control
     {
         if (DesignMode)
         {
-            using var brush = new SolidBrush(ForeColor);
             e.Graphics.Clear(BackColor);
+
+            using var brush = new SolidBrush(ForeColor);
             e.Graphics.DrawString("This control does not support rendering in design mode.", Font, brush, 10, 10);
 
             return;
@@ -260,6 +270,7 @@ public class D2DControl : Control
         {
             _graphics.BeginRender(D2DColor.FromGDIColor(BackColor));
         }
+
 
         // emit OnRender event
         OnRender(_graphics);

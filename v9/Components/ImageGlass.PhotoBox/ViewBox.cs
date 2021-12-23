@@ -590,8 +590,6 @@ public partial class ViewBox : D2DControl
     {
         base.OnRender(g);
 
-        if (!IsReady) return;
-
         // update drawing regions
         UpdateDrawingRegion();
 
