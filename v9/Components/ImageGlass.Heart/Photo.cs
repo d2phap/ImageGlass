@@ -64,28 +64,11 @@ public class Photo : IDisposable
     /// <param name="filename">Image file name</param>
     /// <param name="settings">Image loading settings</param>
     /// <returns></returns>
-    public Bitmap? Load(string filename, CodecReadSettings settings = default)
+    public async Task<IgPhoto> LoadAsync(string filename,
+        CodecReadOptions settings = default,
+        CancellationToken token = default)
     {
-        var bmp = Codec.Load(filename, settings);
-
-        return bmp;
-    }
-
-
-    /// <summary>
-    /// Load an image file
-    /// </summary>
-    /// <param name="filename">Image file name</param>
-    /// <param name="settings">Image loading settings</param>
-    /// <returns></returns>
-    public Task<Bitmap?> LoadAsync(string filename, CodecReadSettings settings = default)
-    {
-        return Task.Run(() =>
-        {
-            var bmp = Load(filename, settings);
-
-            return bmp;
-        });
+        return await Codec.LoadAsync(filename, settings, token);
     }
 
 }

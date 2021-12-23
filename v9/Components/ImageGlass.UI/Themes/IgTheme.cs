@@ -207,7 +207,7 @@ public class IgTheme
                         Height = ToolbarActualIconHeight * 2,
                     });
 
-                    prop.SetValue(Settings, bmp);
+                    prop.SetValue(Settings, bmp.FirstFrame);
                     continue;
                 }
 
@@ -243,7 +243,7 @@ public class IgTheme
                         Height = ToolbarActualIconHeight,
                     });
 
-                    ToolbarIcons.GetType().GetProperty(item.Key)?.SetValue(ToolbarIcons, icon);
+                    ToolbarIcons.GetType().GetProperty(item.Key)?.SetValue(ToolbarIcons, icon.FirstFrame);
                 }
                 catch { }
             }

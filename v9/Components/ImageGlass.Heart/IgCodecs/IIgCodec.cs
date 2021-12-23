@@ -2,14 +2,15 @@
 namespace ImageGlass.Heart;
 
 
-    /// <summary>
-    /// Settings for loading image
-    /// </summary>
-public struct CodecReadSettings
+/// <summary>
+/// Settings for loading image
+/// </summary>
+public struct CodecReadOptions
 {
-    public int Width;
-    public int Height;
-    public bool IgnoreColorProfile;
+    public int Width = 0;
+    public int Height = 0;
+    public bool IgnoreColorProfile = false;
+    public bool LoadAllFrames = false;
 }
 
 
@@ -38,6 +39,7 @@ public interface IIgCodec
     #endregion
 
 
+    #region Public properties
 
     /// <summary>
     /// Name of the codec
@@ -76,14 +78,36 @@ public interface IIgCodec
     /// </summary>
     public Version ApiVersion { get; }
 
+    #endregion
+
 
     /// <summary>
-    /// Loads image file and returns BitmapSource
+    /// Loads metadata from file
     /// </summary>
     /// <param name="filename">Full path of the file</param>
-    /// <param name="settings">Loading settings</param>
     /// <returns></returns>
-    public Bitmap Load(string filename, CodecReadSettings settings = default);
+    IgMetadata LoadMetadata(string filename, CodecReadOptions options = default);
+
+
+    /// <summary>
+    /// Loads image file and returns a <see cref="Bitmap"/>.
+    /// </summary>
+    /// <param name="filename">Full path of the file</param>
+    /// <param name="options">Loading options</param>
+    /// <returns></returns>
+    Task<IgPhoto> LoadAsync(string filename,
+        CodecReadOptions options = default,
+        CancellationToken token = default);
+
+
+    /// <summary>
+    /// Loads image file and returns a <see cref="Bitmap"/>.
+    /// </summary>
+    /// <param name="filename">Full path of the file</param>
+    /// <param name="options">Loading options</param>
+    /// <returns></returns>
+    IgPhoto Load(string filename,
+        CodecReadOptions options = default);
 
 
     /// <summary>
@@ -93,7 +117,7 @@ public interface IIgCodec
     /// <param name="width"></param>
     /// <param name="height"></param>
     /// <returns></returns>
-    public byte[] GetThumbnail(string filename, int width, int height);
+    byte[] GetThumbnail(string filename, int width, int height);
 
 
     /// <summary>
@@ -101,6 +125,6 @@ public interface IIgCodec
     /// </summary>
     /// <param name="bytes"></param>
     /// <returns></returns>
-    public string GetThumbnailBase64(string filename, int width, int height);
+    string GetThumbnailBase64(string filename, int width, int height);
 }
 

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Heart;
+using ImageMagick.Formats;
 
 namespace ImageMagick.IgCodec;
 
@@ -112,29 +113,124 @@ public class Main : IIgCodec
     };
 
 
-    public Bitmap Load(string filename, CodecReadSettings settings)
+    private MagickReadSettings ParseSettings(CodecReadOptions options, string filename = "")
     {
         var ext = Path.GetExtension(filename).ToUpperInvariant();
-        var imgMSettings = new MagickReadSettings();
-
+        var settings = new MagickReadSettings();
 
         if (ext == ".SVG")
         {
-            imgMSettings.BackgroundColor = MagickColors.Transparent;
+            settings.BackgroundColor = MagickColors.Transparent;
+            settings.SetDefine("svg:xml-parse-huge", "true");
         }
 
-        if (settings.Width > 0 && settings.Height > 0)
+        if (options.Width > 0 && options.Height > 0)
         {
-            imgMSettings.Width = settings.Width;
-            imgMSettings.Height = settings.Height;
+            settings.Width = options.Width;
+            settings.Height = options.Height;
         }
 
+        // Fixed #708: length and filesize do not match
+        settings.SetDefines(new BmpReadDefines
+        {
+            IgnoreFileSize = true,
+        });
 
-        using var imgM = new MagickImage(filename, imgMSettings);
+        // Fix RAW color
+        settings.SetDefines(new DngReadDefines()
+        {
+            UseCameraWhitebalance = true,
+            OutputColor = DngOutputColor.AdobeRGB,
+            ReadThumbnail = true,
+        });
 
 
-        return imgM.ToBitmap();
+        return settings;
     }
+
+
+    public IgMetadata LoadMetadata(string filename, CodecReadOptions options = default)
+    {
+        var settings = ParseSettings(options, filename);
+
+        using var imgC = new MagickImageCollection();
+        imgC.Ping(filename, settings);
+
+        using var imgM = new MagickImage();
+        imgM.Ping(filename, settings);
+
+        return new()
+        {
+            Width = imgM.Width,
+            Height = imgM.Height,
+            FrameCount = imgC.Count,
+            ActiveFrame = 0,
+            AnimationDelay = imgM.AnimationDelay,
+            AnimationIterations = imgM.AnimationIterations,
+            AnimationTicksPerSecond = imgM.AnimationTicksPerSecond,
+            CanAnimate = imgM.AnimationTicksPerSecond > 0,
+        };
+    }
+
+
+    public IgPhoto Load(string filename, CodecReadOptions options = default)
+    {
+        var settings = ParseSettings(options, filename);
+        var photo = new IgPhoto();
+
+        if (options.LoadAllFrames)
+        {
+            using var imgC = new MagickImageCollection();
+            imgC.Read(filename, settings);
+
+            foreach (var imgM in imgC)
+            {
+                photo.AllFrames.Add(imgM.ToBitmap());
+            }
+
+            return photo;
+        }
+        else
+        {
+            using var imgM = new MagickImage();
+            imgM.Read(filename, settings);
+
+            photo.FirstFrame = imgM.ToBitmap();
+
+            return photo;
+        }
+    }
+
+    public async Task<IgPhoto> LoadAsync(string filename,
+        CodecReadOptions options = default,
+        CancellationToken token = default)
+    {
+        var settings = ParseSettings(options, filename);
+        var photo = new IgPhoto();
+
+        if (options.LoadAllFrames)
+        {
+            using var imgC = new MagickImageCollection();
+            await imgC.ReadAsync(filename, settings, token);
+
+            foreach (var imgM in imgC)
+            {
+                photo.AllFrames.Add(imgM.ToBitmap());
+            }
+
+            return photo;
+        }
+        else
+        {
+            using var imgM = new MagickImage();
+            await imgM.ReadAsync(filename, settings, token);
+
+            photo.FirstFrame = imgM.ToBitmap();
+
+            return photo;
+        }
+    }
+
 
 
     public byte[] GetThumbnail(string filename, int width, int height)
@@ -202,7 +298,6 @@ public class Main : IIgCodec
             result = imgM.ToByteArray(MagickFormat.WebP);
         }
 
-
         return result;
     }
 
@@ -220,4 +315,6 @@ public class Main : IIgCodec
 
         return string.Empty;
     }
+
+    
 }
