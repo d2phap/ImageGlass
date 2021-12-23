@@ -1,5 +1,6 @@
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
+using ImageGlass.Heart;
 using ImageGlass.PhotoBox;
 using ImageGlass.Settings;
 using System.Diagnostics;
@@ -76,20 +77,33 @@ public partial class FrmMain : Form
     }
 
 
-    private void Prepare(string filename = @"E:\WALLPAPER\NEW\dark2\horizon_by_t1na_den4yvj-fullview.jpg")
+    private async void Prepare(string path = "")
     {
-        var args = Environment.GetCommandLineArgs()
-            .Where(cmd => !cmd.StartsWith('-'))
-            .ToArray();
+        var inputPath = path.Trim();
 
-        if (args.Length > 1)
+        if (string.IsNullOrEmpty(inputPath))
         {
-            PicBox.LoadImage(args[1]); // Config.Codec.Load(args[1]);
+            var args = Environment.GetCommandLineArgs()
+                .Where(cmd => !cmd.StartsWith('-'))
+                .ToArray();
+
+            if (args.Length > 1)
+            {
+                inputPath = args[1];
+            }
+            else
+            {
+                inputPath = @"D:\_GITHUB\sample-images\Samples\GIF\unicorn.gif";
+            }
         }
-        else
+
+        if (string.IsNullOrEmpty(inputPath))
         {
-            PicBox.LoadImage(filename); // Config.Codec.Load(filename);
+            return;
         }
+
+        Local.Metadata = Config.Codec.LoadMetadata(inputPath);
+        PicBox.Photo = await Config.Codec.LoadAsync(inputPath, new(Local.Metadata));
     }
 
 
@@ -100,7 +114,7 @@ public partial class FrmMain : Form
     }
 
 
-    private async void Toolbar_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+    private void Toolbar_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
     {
         var tagModel = e.ClickedItem.Tag as ToolbarItemTagModel;
         if (tagModel is null || string.IsNullOrEmpty(tagModel.OnClick.Executable)) return;

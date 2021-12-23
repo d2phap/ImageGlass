@@ -10,16 +10,20 @@ public struct CodecReadOptions
     public int Width = 0;
     public int Height = 0;
     public bool IgnoreColorProfile = false;
-    public bool LoadAllFrames = false;
+    public IgMetadata? Metadata = null;
+
+    public CodecReadOptions(IgMetadata? meta = null)
+    {
+        Metadata = meta;
+    }
 }
 
 
 /// <summary>
 /// Provides interface of image codec
 /// </summary>
-public interface IIgCodec
+public interface IIgCodec : IDisposable
 {
-
     #region Default properties
     /// <summary>
     /// Gets codec full file path. Example: <c>C:\my folder\MyCodec.dll</c>
@@ -81,43 +85,49 @@ public interface IIgCodec
     #endregion
 
 
+
     /// <summary>
-    /// Loads metadata from file
+    /// Initialize the codec
+    /// </summary>
+    void Initialize() { }
+
+
+    /// <summary>
+    /// Loads metadata from file.
     /// </summary>
     /// <param name="filename">Full path of the file</param>
     /// <returns></returns>
-    IgMetadata LoadMetadata(string filename, CodecReadOptions options = default);
+    IgMetadata? LoadMetadata(string filename, CodecReadOptions options = default);
 
 
     /// <summary>
-    /// Loads image file and returns a <see cref="Bitmap"/>.
+    /// Loads image file async.
     /// </summary>
     /// <param name="filename">Full path of the file</param>
     /// <param name="options">Loading options</param>
-    /// <returns></returns>
-    Task<IgPhoto> LoadAsync(string filename,
+    /// <param name="token">Cancellation token</param>
+    Task<Bitmap?> LoadAsync(string filename,
         CodecReadOptions options = default,
         CancellationToken token = default);
 
 
     /// <summary>
-    /// Loads image file and returns a <see cref="Bitmap"/>.
+    /// Loads image file.
     /// </summary>
     /// <param name="filename">Full path of the file</param>
     /// <param name="options">Loading options</param>
     /// <returns></returns>
-    IgPhoto Load(string filename,
-        CodecReadOptions options = default);
+    Bitmap? Load(string filename, CodecReadOptions options = default);
 
 
     /// <summary>
-    /// Gets thumbnail from image
+    /// Gets thumbnail from image.
     /// </summary>
     /// <param name="filename"></param>
     /// <param name="width"></param>
     /// <param name="height"></param>
     /// <returns></returns>
-    byte[] GetThumbnail(string filename, int width, int height);
+    Bitmap? GetThumbnail(string filename, int width, int height);
 
 
     /// <summary>
@@ -126,5 +136,6 @@ public interface IIgCodec
     /// <param name="bytes"></param>
     /// <returns></returns>
     string GetThumbnailBase64(string filename, int width, int height);
+
 }
 

@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Heart;
 using ImageMagick.Formats;
+using System.Diagnostics;
 
 namespace ImageMagick.IgCodec;
 
@@ -112,6 +113,7 @@ public class Main : IIgCodec
         ".xpm",
     };
 
+    public void Dispose() { }
 
     private MagickReadSettings ParseSettings(CodecReadOptions options, string filename = "")
     {
@@ -149,93 +151,86 @@ public class Main : IIgCodec
     }
 
 
-    public IgMetadata LoadMetadata(string filename, CodecReadOptions options = default)
+    public IgMetadata? LoadMetadata(string filename, CodecReadOptions options = default)
     {
-        var settings = ParseSettings(options, filename);
+        IgMetadata? meta = null;
 
-        using var imgC = new MagickImageCollection();
-        imgC.Ping(filename, settings);
-
-        using var imgM = new MagickImage();
-        imgM.Ping(filename, settings);
-
-        return new()
+        try
         {
-            Width = imgM.Width,
-            Height = imgM.Height,
-            FrameCount = imgC.Count,
-            ActiveFrame = 0,
-            AnimationDelay = imgM.AnimationDelay,
-            AnimationIterations = imgM.AnimationIterations,
-            AnimationTicksPerSecond = imgM.AnimationTicksPerSecond,
-            CanAnimate = imgM.AnimationTicksPerSecond > 0,
-        };
+            var settings = ParseSettings(options, filename);
+
+            using var imgC = new MagickImageCollection();
+            imgC.Ping(filename, settings);
+
+            using var imgM = new MagickImage();
+            imgM.Ping(filename, settings);
+
+            meta = new()
+            {
+                Width = imgM.Width,
+                Height = imgM.Height,
+                FrameCount = imgC.Count,
+            };
+        }
+        catch { }
+
+        return meta;
     }
 
 
-    public IgPhoto Load(string filename, CodecReadOptions options = default)
+    public Bitmap? Load(string filename, CodecReadOptions options = default)
     {
         var settings = ParseSettings(options, filename);
-        var photo = new IgPhoto();
+        Bitmap? output;
 
-        if (options.LoadAllFrames)
+        if (options.Metadata?.FrameCount > 0)
         {
             using var imgC = new MagickImageCollection();
             imgC.Read(filename, settings);
 
-            foreach (var imgM in imgC)
-            {
-                photo.AllFrames.Add(imgM.ToBitmap());
-            }
-
-            return photo;
+            output = imgC.ToBitmap();
         }
         else
         {
             using var imgM = new MagickImage();
             imgM.Read(filename, settings);
 
-            photo.FirstFrame = imgM.ToBitmap();
-
-            return photo;
+            output = imgM.ToBitmap();
         }
+
+        return output;
     }
 
-    public async Task<IgPhoto> LoadAsync(string filename,
+    public async Task<Bitmap?> LoadAsync(string filename,
         CodecReadOptions options = default,
         CancellationToken token = default)
     {
         var settings = ParseSettings(options, filename);
-        var photo = new IgPhoto();
+        Bitmap? output;
 
-        if (options.LoadAllFrames)
+        if (options.Metadata?.FrameCount > 0)
         {
             using var imgC = new MagickImageCollection();
             await imgC.ReadAsync(filename, settings, token);
 
-            foreach (var imgM in imgC)
-            {
-                photo.AllFrames.Add(imgM.ToBitmap());
-            }
-
-            return photo;
+            output = imgC.ToBitmap();
         }
         else
         {
             using var imgM = new MagickImage();
             await imgM.ReadAsync(filename, settings, token);
 
-            photo.FirstFrame = imgM.ToBitmap();
-
-            return photo;
+            output = imgM.ToBitmap();
         }
+
+        return output;
     }
 
 
 
-    public byte[] GetThumbnail(string filename, int width, int height)
+    public Bitmap? GetThumbnail(string filename, int width, int height)
     {
-        byte[] result = Array.Empty<byte>();
+        Bitmap? result = null;
         using var imgM = new MagickImage();
 
 
@@ -261,14 +256,14 @@ public class Main : IIgCodec
                 if (imgM.BaseWidth > width || imgM.BaseHeight > height)
                 {
                     rawImgM.Thumbnail(width, height);
-                    result = rawImgM.ToByteArray(MagickFormat.WebP);
+                    result = rawImgM.ToBitmap();
                 }
             }
         }
 
 
         // cannot find raw thumbnail, try to create a thumbnail
-        if (result.Length == 0)
+        if (result is null)
         {
             // read entire file content
             imgM.Read(filename);
@@ -280,7 +275,7 @@ public class Main : IIgCodec
 
                 if (thumbM is not null)
                 {
-                    result = thumbM.ToByteArray(MagickFormat.WebP);
+                    result = thumbM.ToBitmap();
                 }
             }
             catch { }
@@ -288,14 +283,14 @@ public class Main : IIgCodec
 
 
         // cannot create thumbnail, resize the image file
-        if (result.Length == 0)
+        if (result is null)
         {
             if (imgM.BaseWidth > width || imgM.BaseHeight > height)
             {
                 imgM.Thumbnail(width, height);
             }
 
-            result = imgM.ToByteArray(MagickFormat.WebP);
+            result = imgM.ToBitmap();
         }
 
         return result;
@@ -304,17 +299,19 @@ public class Main : IIgCodec
 
     public string GetThumbnailBase64(string filename, int width, int height)
     {
-        var bytes = GetThumbnail(filename, width, height);
+        var thumbnail = GetThumbnail(filename, width, height);
 
-        if (bytes.Length > 0)
+        if (thumbnail is not null)
         {
-            using var imgM = new MagickImage(bytes);
+            using var imgM = new MagickImage();
+            imgM.Read(thumbnail);
 
-            return "data:image/webp;base64," + imgM.ToBase64(MagickFormat.WebP);
+            return "data:image/png;base64," + imgM.ToBase64(MagickFormat.Png);
         }
 
         return string.Empty;
     }
+
 
     
 }

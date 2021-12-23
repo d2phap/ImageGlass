@@ -31,7 +31,7 @@ public partial class FrmMain
     /// Open an image from file picker
     /// </summary>
     /// <returns></returns>
-    private bool IG_OpenFile()
+    private void IG_OpenFile()
     {
         var of = new OpenFileDialog()
         {
@@ -42,12 +42,8 @@ public partial class FrmMain
 
         if (of.ShowDialog() == DialogResult.OK)
         {
-            PicBox.LoadImage(of.FileName); // Config.Codec.Load(of.FileName);
-
-            return true;
+            Prepare(of.FileName);
         }
-
-        return false;
     }
 }
 

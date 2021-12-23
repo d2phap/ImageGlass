@@ -30,7 +30,10 @@ namespace ImageGlass.PhotoBox;
 /// </summary>
 public partial class ViewBox : D2DControl
 {
+    private Bitmap? _photo;
     private D2DBitmap? _image;
+
+
 
     /// <summary>
     /// Gets the area of the image content to draw
@@ -229,7 +232,7 @@ public partial class ViewBox : D2DControl
     [DefaultValue(typeof(Bitmap))]
     public Bitmap? NavLeftImage { get; set; }
 
-    
+
 
     // Right button
     [Category("NavigationButtons")]
@@ -253,6 +256,31 @@ public partial class ViewBox : D2DControl
     public delegate void NavRightClickedEventHandler(MouseEventArgs e);
 
     #endregion
+
+
+
+    public Bitmap? Photo
+    {
+        get => _photo;
+        set
+        {
+            _image?.Dispose();
+            _photo?.Dispose();
+
+            _photo = value;
+
+            if (_photo is null) return;
+
+            _image = Device.CreateBitmapFromGDIBitmap(_photo);
+
+            if (IsReady)
+            {
+                Refresh();
+            }
+        }
+    }
+
+
 
 
     // Events
@@ -282,6 +310,16 @@ public partial class ViewBox : D2DControl
 
     }
 
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        _image?.Dispose();
+        _photo?.Dispose();
+
+        NavLeftImage?.Dispose();
+        NavRightImage?.Dispose();
+    }
 
     protected override void OnMouseDown(MouseEventArgs e)
     {
@@ -305,8 +343,7 @@ public partial class ViewBox : D2DControl
                 NavButtonRadius * 2);
 
                 // calculate whether the point inside the rect
-                _isNavLeftPressed = leftClickable.Contains(e.Location);
-                requestRerender = true;
+                requestRerender = _isNavLeftPressed = leftClickable.Contains(e.Location);
             }
 
 
@@ -321,8 +358,7 @@ public partial class ViewBox : D2DControl
                 NavButtonRadius * 2);
 
                 // calculate whether the point inside the rect
-                _isNavRightPressed = rightClickable.Contains(e.Location);
-                requestRerender = true;
+                requestRerender = _isNavRightPressed = rightClickable.Contains(e.Location);
             }
         }
         #endregion
@@ -423,8 +459,7 @@ public partial class ViewBox : D2DControl
                 NavButtonRadius * 6);
 
                 // calculate whether the point inside the rect
-                _isNavLeftHovered = leftHoverable.Contains(e.Location);
-                requestRerender = true;
+                requestRerender = _isNavLeftHovered = leftHoverable.Contains(e.Location);
             }
 
             // right hoverable region
@@ -438,8 +473,7 @@ public partial class ViewBox : D2DControl
                 NavButtonRadius * 6);
 
                 // calculate whether the point inside the rect
-                _isNavRightHovered = rightHoverable.Contains(e.Location);
-                requestRerender = true;
+                requestRerender = _isNavRightHovered = rightHoverable.Contains(e.Location);
             }
         }
         #endregion
@@ -469,6 +503,9 @@ public partial class ViewBox : D2DControl
             {
                 _panHostPoint.Y = e.Location.Y;
             }
+
+            // emit event
+            OnPanning?.Invoke(new(e.Location, new(_panHostPoint)));
         }
         #endregion
 
@@ -482,15 +519,6 @@ public partial class ViewBox : D2DControl
     protected override void OnMouseLeave(EventArgs e)
     {
         base.OnMouseLeave(e);
-
-
-        // Navigation hoverable check
-        var isNavHovered = _isNavLeftHovered || _isNavRightHovered;
-
-        if (isNavHovered)
-        {
-            Invalidate();
-        }
 
         _isNavLeftHovered = false;
         _isNavRightHovered = false;
@@ -548,6 +576,14 @@ public partial class ViewBox : D2DControl
 
         // draw the control
         Refresh();
+    }
+
+
+    protected override void OnFrame()
+    {
+        base.OnFrame();
+
+        // do something
     }
 
     protected override void OnRender(D2DGraphics g)
@@ -874,10 +910,12 @@ public partial class ViewBox : D2DControl
         _image?.Dispose();
         _image = Device.LoadBitmap(filename);
 
+
         if (IsReady)
         {
             Refresh();
         }
     }
+
 
 }

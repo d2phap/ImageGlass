@@ -114,12 +114,11 @@ public class Img : IDisposable
         try
         {
             // load image data
-            var pt = await photo.LoadAsync(Filename, new CodecReadOptions()
+            Image = await photo.LoadAsync(Filename, new CodecReadOptions()
             {
                 Width = width,
                 Height = height,
             });
-            Image = pt.FirstFrame;
         }
         catch (Exception ex)
         {

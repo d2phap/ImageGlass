@@ -23,6 +23,7 @@ using ImageGlass.Base.WinApi;
 using ImageGlass.Heart;
 using ImageGlass.UI;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 using System.Dynamic;
 using System.Text;
 
@@ -36,7 +37,6 @@ public class Config
 
     #region Internal properties
     private static readonly Source _source = new();
-
 
     #endregion
 
@@ -797,6 +797,7 @@ public class Config
         if (codecMnger.Items.Count > 0 || codec is not null)
         {
             Codec = codec ?? codecMnger.Items[0];
+            Codec.Initialize();
         }
         else
         {

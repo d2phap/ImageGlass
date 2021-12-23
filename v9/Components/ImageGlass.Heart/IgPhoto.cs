@@ -40,11 +40,11 @@ public class IgPhoto : IDisposable
     #endregion
 
 
-    public IgMetadata Metadata { get; private set; } = new();
+    public IgMetadata? Metadata { get; set; }
 
     public Bitmap? FirstFrame { get; set; }
 
-    public IList<Bitmap> AllFrames { get; set; } = Array.Empty<Bitmap>();
+    public List<Bitmap> AllFrames { get; set; } = new(0);
 
 }
 
@@ -54,12 +54,4 @@ public class IgMetadata
     public int Height { get; set; } = 0;
 
     public int FrameCount { get; set; } = 0;
-    public int ActiveFrame { get; set; } = 0;
-    
-
-    public int AnimationDelay { get;set; } = 0;
-    public int AnimationIterations { get; set; } = 0;
-    public int AnimationTicksPerSecond { get; set; } = 0;
-    public bool CanAnimate { get; set; } = false;
-
 }
