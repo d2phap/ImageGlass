@@ -39,6 +39,7 @@ public partial class FrmMain
         // background
         BackColor = Config.BackgroundColor;
         PicBox.BackColor = Config.BackgroundColor;
+        PicBox.ForeColor = Config.Theme.Settings.TextColor;
 
         // navigation buttons
         PicBox.NavHoveredColor = Color.FromArgb(200, Config.Theme.Settings.ToolbarBgColor);

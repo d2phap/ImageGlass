@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base.PhotoBox;
+using ImageGlass.Base.WinApi;
 using System.ComponentModel;
 using System.Numerics;
 using unvell.D2DLib;
@@ -599,6 +600,8 @@ public partial class ViewBox : D2DControl
         // image layer
         DrawImageLayer(g);
 
+        DrawText(g);
+
         // navigation layer
         DrawNavigationLayer(g);
     }
@@ -732,6 +735,46 @@ public partial class ViewBox : D2DControl
         }
     }
 
+
+    private void DrawText(D2DGraphics g)
+    {
+        if (Text.Trim().Length == 0) return;
+
+        var textMargin = 20;
+        var textPaddingX = textMargin * 2;
+        var textPaddingY = textMargin;
+
+        var drawableArea = new Rectangle(
+            Padding.Left + textMargin,
+            Padding.Top + textMargin,
+            Width - Padding.Left - Padding.Right - textPaddingX,
+            Height - Padding.Top - Padding.Bottom - textPaddingY);
+
+
+        // calculate text region
+        var fontSize = DpiApi.Transform<float>(Font.Size * (float)DpiApi.DpiScale);
+        var textSize = g.MeasureText(Text, Font.Name, fontSize, drawableArea.Size);
+        var region = new RectangleF(
+            drawableArea.Width / 2 - textSize.width / 2,
+            drawableArea.Height / 2 - textSize.height / 2,
+            textSize.width + textPaddingX,
+            textSize.height + textPaddingY);
+
+        // draw text background
+        var bgRect = new D2DRoundedRect()
+        {
+            radiusX = 5,
+            radiusY = 5,
+            rect = region,
+        };
+        using var bgBrush = Device.CreateSolidColorBrush(D2DColor.FromGDIColor(Color.FromArgb(170, BackColor)));
+        using var bgPen = Device.CreatePen(D2DColor.FromGDIColor(Color.FromArgb(170, BackColor)));
+        g.DrawRoundedRectangle(bgRect, bgPen, bgBrush);
+
+
+        // draw text
+        g.DrawTextCenter(Text, D2DColor.FromGDIColor(ForeColor), Font.Name, fontSize, region);
+    }
 
     private void DrawNavigationLayer(D2DGraphics g)
     {
