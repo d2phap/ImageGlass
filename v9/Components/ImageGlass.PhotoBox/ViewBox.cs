@@ -33,7 +33,7 @@ public partial class ViewBox : D2DControl
 {
     private Bitmap? _photo;
     private D2DBitmap? _image;
-
+    private CancellationTokenSource? _msgTokenSrc;
 
 
     /// <summary>
@@ -929,12 +929,57 @@ public partial class ViewBox : D2DControl
 
 
     /// <summary>
-    /// Force the control to update zoom mode and invalidate itself
+    /// Force the control to update zoom mode and invalidate itself.
     /// </summary>
     public new void Refresh()
     {
         UpdateZoomMode();
         Invalidate();
+    }
+
+
+    /// <summary>
+    /// Shows text message.
+    /// </summary>
+    /// <param name="text">Message to show</param>
+    /// <param name="durationMs">Display duration in millisecond.
+    /// Set it <b>greater than 0</b> to disable auto clear.</param>
+    /// <param name="delayMs">Duration to delay before displaying the message.</param>
+    public async void ShowMessage(string text, int durationMs = 0, int delayMs = 0)
+    {
+        _msgTokenSrc?.Cancel();
+        _msgTokenSrc = new();
+
+        try
+        {
+            if (delayMs > 0)
+            {
+                await Task.Delay(delayMs, _msgTokenSrc.Token);
+            }
+
+            Text = text;
+
+            if (durationMs > 0)
+            {
+                await Task.Delay(durationMs, _msgTokenSrc.Token);
+            }
+        }
+        catch { }
+
+        if (durationMs > 0)
+        {
+            Text = string.Empty;
+        }
+    }
+
+
+    /// <summary>
+    /// Immediately clears text message.
+    /// </summary>
+    public void ClearMessage()
+    {
+        _msgTokenSrc?.Cancel();
+        Text = string.Empty;
     }
 
 
