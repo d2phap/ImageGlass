@@ -137,8 +137,7 @@ public class GifAnimator : IAnimator
         if (image == null)
             return;
 
-        GifImageData outData;
-        if (!ourImageState.TryGetValue(image, out outData))
+        if (!ourImageState.TryGetValue(image, out GifImageData? outData))
             return;
 
         if (!outData.myIsDirty)

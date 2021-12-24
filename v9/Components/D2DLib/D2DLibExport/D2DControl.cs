@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using D2DLibExport;
 using System.ComponentModel;
 
 namespace unvell.D2DLib;
@@ -33,7 +34,11 @@ public class D2DControl : Control
     private bool _isControlLoaded = false;
     private D2DDevice? _device;
     private D2DBitmap? _backgroundImage;
-    private D2DGraphics? _graphics;
+
+    private D2DGraphics graphics;
+    private Direct2DGraphics? d2dGraphics;
+    private GDIGraphics gdiGraphics;
+    private bool hardwardAcceleration = true;
 
     private bool _firstPaintBackground = true;
     private bool _enableAnimation;
@@ -51,6 +56,18 @@ public class D2DControl : Control
     {
         get => _animationTimer.Interval;
         set => _animationTimer.Interval = value;
+    }
+
+    
+
+    public bool HardwardAcceleration
+    {
+        get { return this.hardwardAcceleration; }
+        set
+        {
+            this.hardwardAcceleration = value;
+            this.DoubleBuffered = !this.hardwardAcceleration;
+        }
     }
 
 
@@ -105,17 +122,17 @@ public class D2DControl : Control
         }
     }
 
-    /// <summary>
-    /// <b>Do not</b> use this property.
-    /// Sets <c>DoubleBuffered = false</c> by default.
-    /// </summary>
-    [Browsable(false)]
-    [Obsolete("This property does not work.")]
-    protected override bool DoubleBuffered
-    {
-        get => base.DoubleBuffered;
-        set => base.DoubleBuffered = false;
-    }
+    ///// <summary>
+    ///// <b>Do not</b> use this property.
+    ///// Sets <c>DoubleBuffered = false</c> by default.
+    ///// </summary>
+    //[Browsable(false)]
+    //[Obsolete("This property does not work.")]
+    //protected override bool DoubleBuffered
+    //{
+    //    get => base.DoubleBuffered;
+    //    set => base.DoubleBuffered = false;
+    //}
 
     /// <summary>
     /// Shows or hides Frame per second info
@@ -150,25 +167,31 @@ public class D2DControl : Control
     #endregion
 
 
+    public D2DControl()
+    {
+        SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+    }
+
+
     #region Override functions
 
     protected override void CreateHandle()
     {
         base.CreateHandle();
-        base.DoubleBuffered = false;
-
         if (DesignMode) return;
 
-        if (_device == null)
+        this.DoubleBuffered = false;
+
+        if (this._device == null)
         {
-            _device = D2DDevice.FromHwnd(Handle);
+            this._device = D2DDevice.FromHwnd(this.Handle);
         }
 
-        _graphics = new D2DGraphics(_device);
+        this.graphics = new D2DGraphics(this._device);
 
         // only support the base DPI
-        _graphics.SetDPI(96, 96);
-        
+        graphics.SetDPI(96, 96);
+
 
         _animationTimer.Interval = AnimationInterval;
         _animationTimer.Tick += (ss, ee) =>
@@ -193,18 +216,30 @@ public class D2DControl : Control
         switch (m.Msg)
         {
             case WM_ERASEBKGND:
-                // to fix background is delayed to paint on launch
-                if (_firstPaintBackground)
+                if (!this.hardwardAcceleration)
                 {
-                    _graphics?.BeginRender(D2DColor.FromGDIColor(BackColor));
-                    _graphics?.EndRender();
-                    _firstPaintBackground = false;
+                    base.WndProc(ref m);
+                }
+                else
+                {
+                    // to fix background is delayed to paint on launch
+                    if (_firstPaintBackground)
+                    {
+                        d2dGraphics?.g?.BeginRender(D2DColor.FromGDIColor(BackColor));
+                        d2dGraphics?.g?.EndRender();
+                        _firstPaintBackground = false;
+                    }
                 }
                 break;
 
             case WM_SIZE:
                 base.WndProc(ref m);
                 if (_device != null) _device.Resize();
+                break;
+
+            case 0x0002 /* WM_DESTROY */:
+                if (_device != null) _device.Dispose();
+                base.WndProc(ref m);
                 break;
 
             default:
@@ -240,7 +275,10 @@ public class D2DControl : Control
     /// <param name="e"></param>
     protected override void OnPaintBackground(PaintEventArgs e)
     {
-        // prevent the .NET control to paint the original background
+        if (!this.hardwardAcceleration)
+        {
+            base.OnPaintBackground(e);
+        }
     }
 
 
@@ -260,20 +298,41 @@ public class D2DControl : Control
             return;
         }
 
-        if (_graphics is null) return;
 
-        if (_backgroundImage != null)
+        if (HardwardAcceleration)
         {
-            _graphics.BeginRender(_backgroundImage);
+            this.DoubleBuffered = false;
+
+            if (this.d2dGraphics == null)
+            {
+                this.d2dGraphics = new Direct2DGraphics(this.graphics);
+            }
+            else
+            {
+                this.d2dGraphics.g = this.graphics;
+            }
+
+            this.graphics.BeginRender(D2DColor.FromGDIColor(this.BackColor));
+
+            this.OnRender(this.d2dGraphics);
+
+            this.graphics.EndRender();
         }
         else
         {
-            _graphics.BeginRender(D2DColor.FromGDIColor(BackColor));
+            this.DoubleBuffered = true;
+
+            if (this.gdiGraphics == null)
+            {
+                this.gdiGraphics = new GDIGraphics(e.Graphics);
+            }
+            else
+            {
+                this.gdiGraphics.g = e.Graphics;
+            }
+
+            this.OnRender(this.gdiGraphics);
         }
-
-
-        // emit OnRender event
-        OnRender(_graphics);
 
         if (ShowFPS)
         {
@@ -294,8 +353,6 @@ public class D2DControl : Control
             e.Graphics.DrawString(info, Font, Brushes.Black, ClientRectangle.Right - size.Width - 10, 5);
         }
 
-        _graphics.EndRender();
-
         // Start animation
         if (_enableAnimation && !_animationTimer.Enabled)
         {
@@ -306,14 +363,14 @@ public class D2DControl : Control
     #endregion
 
 
+
     #region New / Virtual functions
 
     /// <summary>
-    /// Main method to draw graphics on the control.
-    /// <b>Do not</b> use <see cref="OnPaint(PaintEventArgs)"/>
+    /// User drawing method. Override this method to draw anything on your form.
     /// </summary>
-    /// <param name="g"></param>
-    protected virtual void OnRender(D2DGraphics g)
+    /// <param name="g">Graphics context supports both GDI+ and Direct2D rendering.</param>
+    protected virtual void OnRender(IHybridGraphics g)
     {
         if (!IsReady) return;
     }
@@ -346,5 +403,4 @@ public class D2DControl : Control
     #endregion
 
 }
-
 

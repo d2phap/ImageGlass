@@ -17,10 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using D2DLibExport;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.WinApi;
+using ImageGlass.PhotoBox.Animator;
 using System.ComponentModel;
+using System.Drawing.Drawing2D;
 using System.Numerics;
+using System.Runtime.InteropServices;
 using unvell.D2DLib;
 
 namespace ImageGlass.PhotoBox;
@@ -31,8 +35,8 @@ namespace ImageGlass.PhotoBox;
 /// </summary>
 public partial class ViewBox : D2DControl
 {
-    private Bitmap? _photo;
-    private D2DBitmap? _image;
+    private Bitmap? _bitmap;
+    private D2DBitmap? _d2dBitmap;
     private CancellationTokenSource? _msgTokenSrc;
 
 
@@ -60,7 +64,7 @@ public partial class ViewBox : D2DControl
     private float _oldZoomFactor = 1f;
     private bool _isManualZoom = false;
     private ZoomMode _zoomMode = ZoomMode.AutoZoom;
-    private InterpolationMode _interpolationMode = InterpolationMode.NearestNeighbor;
+    private Base.PhotoBox.InterpolationMode _interpolationMode = Base.PhotoBox.InterpolationMode.NearestNeighbor;
 
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
 
@@ -136,8 +140,8 @@ public partial class ViewBox : D2DControl
     /// Gets, sets interpolation mode
     /// </summary>
     [Category("Zooming")]
-    [DefaultValue(InterpolationMode.NearestNeighbor)]
-    public InterpolationMode InterpolationMode
+    [DefaultValue(Base.PhotoBox.InterpolationMode.NearestNeighbor)]
+    public Base.PhotoBox.InterpolationMode InterpolationMode
     {
         get => _interpolationMode;
         set
@@ -261,17 +265,24 @@ public partial class ViewBox : D2DControl
 
     public Bitmap? Photo
     {
-        get => _photo;
+        get => _bitmap;
         set
         {
-            _image?.Dispose();
-            _photo?.Dispose();
+            // disable animations
+            if (IsAnimating)
+            {
+                Animator.StopAnimate(_bitmap, OnFrameChangedHandler);
+            }
 
-            _photo = value;
+            _d2dBitmap?.Dispose();
+            _bitmap?.Dispose();
 
-            if (_photo is null) return;
+            _bitmap = value;
+            if (_bitmap is null) return;
 
-            _image = Device.CreateBitmapFromGDIBitmap(_photo);
+            _d2dBitmap = Device.CreateBitmapFromGDIBitmap(_bitmap);
+            OnImageChanged(EventArgs.Empty);
+
 
             if (IsReady)
             {
@@ -305,15 +316,17 @@ public partial class ViewBox : D2DControl
 
     public ViewBox()
     {
+        //CheckAnimationClock();
 
+        
     }
 
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
 
-        _image?.Dispose();
-        _photo?.Dispose();
+        _d2dBitmap?.Dispose();
+        _bitmap?.Dispose();
 
         NavLeftImage?.Dispose();
         NavRightImage?.Dispose();
@@ -364,7 +377,7 @@ public partial class ViewBox : D2DControl
 
         // Image panning check
         #region Image panning check
-        if (_image is not null)
+        if (_d2dBitmap is not null)
         {
             _panHostPoint.X = e.Location.X;
             _panHostPoint.Y = e.Location.Y;
@@ -479,7 +492,7 @@ public partial class ViewBox : D2DControl
 
         // Image panning check
         #region Image panning check
-        if (_isMouseDown && _image is not null)
+        if (_isMouseDown && _d2dBitmap is not null)
         {
             _srcRect.X += ((_panHostPoint.X - e.Location.X) / _zoomFactor)
                 + _panSpeed.X;
@@ -526,7 +539,7 @@ public partial class ViewBox : D2DControl
     {
         base.OnMouseWheel(e);
 
-        if (!IsReady || _image is null || e.Delta == 0) return;
+        if (!IsReady || _d2dBitmap is null || e.Delta == 0) return;
 
         var speed = e.Delta / 500f;
 
@@ -560,7 +573,7 @@ public partial class ViewBox : D2DControl
     protected override void OnResize(EventArgs e)
     {
         // redraw the control on resizing if it's not manual zoom
-        if (IsReady && _image is not null && !_isManualZoom)
+        if (IsReady && _d2dBitmap is not null && !_isManualZoom)
         {
             Refresh();
         }
@@ -584,9 +597,10 @@ public partial class ViewBox : D2DControl
         // do something
     }
 
-    protected override void OnRender(D2DGraphics g)
+    protected override void OnRender(IHybridGraphics g)
     {
         base.OnRender(g);
+
 
         // update drawing regions
         UpdateDrawingRegion();
@@ -605,9 +619,56 @@ public partial class ViewBox : D2DControl
     }
 
 
+    public void OnPaintGDI(Graphics g)
+    {
+        if (_bitmap is null) return;
+
+        g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+        g.CompositingQuality = CompositingQuality.HighSpeed;
+        g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+        try
+        {
+            // Animation. Thanks to teamalpha5441 for the contribution
+            if (IsAnimating && !DesignMode)
+            {
+                Animator.UpdateFrames(_bitmap);
+            }
+
+            g.DrawImage(_bitmap, _destRect, _srcRect, GraphicsUnit.Pixel);
+        }
+        catch (ArgumentException)
+        {
+            // ignore errors that occur due to the image being disposed
+        }
+        catch (OutOfMemoryException)
+        {
+            // also ignore errors that occur due to running out of memory
+        }
+        catch (ExternalException)
+        {
+            // stop the animation and reset to the first frame.
+            IsAnimating = false;
+            Animator.StopAnimate(_bitmap, OnFrameChangedHandler);
+        }
+        catch (InvalidOperationException)
+        {
+            // #issue #373: a race condition caused this exception: deleting the image from underneath us could
+            // cause a collision in HighResolutionGifAnimator. I've not been able to repro; hopefully this is
+            // the correct response.
+
+            // stop the animation and reset to the first frame.
+            IsAnimating = false;
+            Animator.StopAnimate(_bitmap, OnFrameChangedHandler);
+        }
+
+        g.PixelOffsetMode = PixelOffsetMode.Half;
+    }
+
+
     private void UpdateDrawingRegion()
     {
-        if (_image is null) return;
+        if (_d2dBitmap is null) return;
 
         var zoomX = _drawPoint.X;
         var zoomY = _drawPoint.Y;
@@ -618,12 +679,12 @@ public partial class ViewBox : D2DControl
         var clientW = Width;
         var clientH = Height;
 
-        if (clientW > _image.Width * _zoomFactor)
+        if (clientW > _d2dBitmap.Width * _zoomFactor)
         {
             _srcRect.X = 0;
-            _srcRect.Width = _image.Width;
-            _destRect.X = (clientW - _image.Width * _zoomFactor) / 2.0f;
-            _destRect.Width = _image.Width * _zoomFactor;
+            _srcRect.Width = _d2dBitmap.Width;
+            _destRect.X = (clientW - _d2dBitmap.Width * _zoomFactor) / 2.0f;
+            _destRect.Width = _d2dBitmap.Width * _zoomFactor;
         }
         else
         {
@@ -634,12 +695,12 @@ public partial class ViewBox : D2DControl
         }
 
 
-        if (clientH > _image.Height * _zoomFactor)
+        if (clientH > _d2dBitmap.Height * _zoomFactor)
         {
             _srcRect.Y = 0;
-            _srcRect.Height = _image.Height;
-            _destRect.Y = (clientH - _image.Height * _zoomFactor) / 2f;
-            _destRect.Height = _image.Height * _zoomFactor;
+            _srcRect.Height = _d2dBitmap.Height;
+            _destRect.Y = (clientH - _d2dBitmap.Height * _zoomFactor) / 2f;
+            _destRect.Height = _d2dBitmap.Height * _zoomFactor;
         }
         else
         {
@@ -652,10 +713,10 @@ public partial class ViewBox : D2DControl
         _oldZoomFactor = _zoomFactor;
         //------------------------
 
-        if (_srcRect.X + _srcRect.Width > _image.Width)
+        if (_srcRect.X + _srcRect.Width > _d2dBitmap.Width)
         {
             _xOut = true;
-            _srcRect.X = _image.Width - _srcRect.Width;
+            _srcRect.X = _d2dBitmap.Width - _srcRect.Width;
         }
 
         if (_srcRect.X < 0)
@@ -664,10 +725,10 @@ public partial class ViewBox : D2DControl
             _srcRect.X = 0;
         }
 
-        if (_srcRect.Y + _srcRect.Height > _image.Height)
+        if (_srcRect.Y + _srcRect.Height > _d2dBitmap.Height)
         {
             _yOut = true;
-            _srcRect.Y = _image.Height - _srcRect.Height;
+            _srcRect.Y = _d2dBitmap.Height - _srcRect.Height;
         }
 
         if (_srcRect.Y < 0)
@@ -678,16 +739,21 @@ public partial class ViewBox : D2DControl
     }
 
 
-    private void DrawImageLayer(D2DGraphics g)
+    private void DrawImageLayer(IHybridGraphics g)
     {
-        if (_image is null) return;
-
-        // draw bitmap
-        g.DrawBitmap(_image, _destRect, _srcRect, 1f, (D2DBitmapInterpolationMode)InterpolationMode);
+        if (_d2dBitmap is not null && HardwardAcceleration)
+        {
+            var d2dg = g as Direct2DGraphics;
+            d2dg?.DrawImage(_d2dBitmap, _destRect, _srcRect, 1f, (int)_interpolationMode);
+        }
+        else if (_bitmap is not null)
+        {
+            g.DrawImage(_bitmap, _destRect, _srcRect, 1f, (int)_interpolationMode);
+        }
     }
 
 
-    private void DrawCheckerboardLayer(D2DGraphics g)
+    private void DrawCheckerboardLayer(IHybridGraphics g)
     {
         if (CheckerboardMode == CheckerboardMode.None) return;
 
@@ -709,14 +775,14 @@ public partial class ViewBox : D2DControl
         {
             for (int col = 0; col < cols; col++)
             {
-                D2DColor color;
+                Color color;
                 if ((row + col) % 2 == 0)
                 {
-                    color = D2DColor.FromGDIColor(CheckerboardColor1);
+                    color = CheckerboardColor1;
                 }
                 else
                 {
-                    color = D2DColor.FromGDIColor(CheckerboardColor2);
+                    color = CheckerboardColor2;
                 }
 
                 var drawnW = row * CheckerboardCellSize.Width;
@@ -734,7 +800,7 @@ public partial class ViewBox : D2DControl
     }
 
 
-    private void DrawTextLayer(D2DGraphics g)
+    private void DrawTextLayer(IHybridGraphics g)
     {
         if (Text.Trim().Length == 0) return;
 
@@ -750,31 +816,24 @@ public partial class ViewBox : D2DControl
 
         // calculate text region
         var fontSize = DpiApi.Transform<float>(Font.Size * (float)DpiApi.DpiScale);
-        var textSize = g.MeasureText(Text, Font.Name, fontSize, drawableArea.Size);
+        var textSize = g.MeasureText(Text, Font, fontSize, drawableArea.Size);
         var region = new RectangleF(
-            drawableArea.Width / 2 - textSize.width / 2,
-            drawableArea.Height / 2 - textSize.height / 2,
-            textSize.width + textPaddingX,
-            textSize.height + textPaddingY);
+            drawableArea.Width / 2 - textSize.Width / 2,
+            drawableArea.Height / 2 - textSize.Height / 2,
+            textSize.Width + textPaddingX,
+            textSize.Height + textPaddingY);
 
         // draw text background
-        var bgRect = new D2DRoundedRect()
-        {
-            radiusX = 5,
-            radiusY = 5,
-            rect = region,
-        };
-        using var bgBrush = Device.CreateSolidColorBrush(D2DColor.FromGDIColor(Color.FromArgb(170, BackColor)));
-        using var bgPen = Device.CreatePen(D2DColor.FromGDIColor(Color.FromArgb(170, BackColor)));
-        g.DrawRoundedRectangle(bgRect, bgPen, bgBrush);
-
+        var color = Color.FromArgb(170, BackColor);
+        g.DrawRoundedRectangle(region, color, color, new(5, 5));
+        
 
         // draw text
-        g.DrawTextCenter(Text, D2DColor.FromGDIColor(ForeColor), Font.Name, fontSize, region);
+        g.DrawText(Text, Font, fontSize, ForeColor, region);
     }
 
 
-    private void DrawNavigationLayer(D2DGraphics g)
+    private void DrawNavigationLayer(IHybridGraphics g)
     {
         if (NavDisplay == NavButtonDisplay.None) return;
 
@@ -801,26 +860,28 @@ public partial class ViewBox : D2DControl
             // draw button
             if (leftColor != Color.Transparent)
             {
-                var leftCircle = new D2DEllipse(_navLeftPos.X, _navLeftPos.Y, NavButtonRadius, NavButtonRadius);
+                var leftCircle = new RectangleF(
+                    _navLeftPos.X - NavButtonRadius,
+                    _navLeftPos.Y - NavButtonRadius,
+                    NavButtonRadius * 2,
+                    NavButtonRadius * 2);
 
-                g.FillEllipse(leftCircle, D2DColor.FromGDIColor(leftColor));
-                g.DrawEllipse(leftCircle, D2DColor.FromGDIColor(leftColor), 1.25f);
+                g.FillEllipse(leftCircle, leftColor);
+                g.DrawEllipse(leftCircle, leftColor, 1.25f);
             }
 
             // draw icon
             if (NavLeftImage is not null
                 && (_isNavLeftHovered || _isNavLeftPressed))
             {
-                using var icon = Device.CreateBitmapFromGDIBitmap(NavLeftImage);
-                g.DrawBitmap(icon,
-                    new D2DRect(
+                g.DrawImage(NavLeftImage,
+                    new RectangleF(
                         _navLeftPos.X - NavButtonRadius / 2,
                         _navLeftPos.Y - NavButtonRadius / 2 + iconY,
                         NavButtonRadius,
                         NavButtonRadius),
-                    new D2DRect(0, 0, icon.Width, icon.Height),
+                    new RectangleF(0, 0, NavLeftImage.Width, NavLeftImage.Height),
                     iconOpacity);
-                icon.Dispose();
             }
         }
 
@@ -847,26 +908,28 @@ public partial class ViewBox : D2DControl
             // draw button
             if (rightColor != Color.Transparent)
             {
-                var rightCircle = new D2DEllipse(_navRightPos.X, _navRightPos.Y, NavButtonRadius, NavButtonRadius);
+                var rightCircle = new RectangleF(
+                    _navRightPos.X - NavButtonRadius,
+                    _navRightPos.Y - NavButtonRadius,
+                    NavButtonRadius * 2,
+                    NavButtonRadius * 2);
 
-                g.FillEllipse(rightCircle, D2DColor.FromGDIColor(rightColor));
-                g.DrawEllipse(rightCircle, D2DColor.FromGDIColor(rightColor), 1.25f);
+                g.FillEllipse(rightCircle, rightColor);
+                g.DrawEllipse(rightCircle, rightColor, 1.25f);
             }
 
             // draw icon
             if (NavRightImage is not null
                 && (_isNavRightHovered || _isNavRightPressed))
             {
-                using var icon = Device.CreateBitmapFromGDIBitmap(NavRightImage);
-                g.DrawBitmap(icon,
-                    new D2DRect(
+                g.DrawImage(NavRightImage,
+                    new RectangleF(
                         _navRightPos.X - NavButtonRadius / 2,
                         _navRightPos.Y - NavButtonRadius / 2 + iconY,
                         NavButtonRadius,
                         NavButtonRadius),
-                    new D2DRect(0, 0, icon.Width, icon.Height),
+                    new RectangleF(0, 0, NavRightImage.Width, NavRightImage.Height),
                     iconOpacity);
-                icon.Dispose();
             }
         }
     }
@@ -874,12 +937,12 @@ public partial class ViewBox : D2DControl
 
     private void UpdateZoomMode(ZoomMode? mode = null)
     {
-        if (!IsReady || _image is null) return;
+        if (!IsReady || _d2dBitmap is null) return;
 
         var viewportW = Width;
         var viewportH = Height;
-        var imgFullW = _image.Width;
-        var imgFullH = _image.Height;
+        var imgFullW = _d2dBitmap.Width;
+        var imgFullH = _d2dBitmap.Height;
 
         var horizontalPadding = Padding.Left + Padding.Right;
         var verticalPadding = Padding.Top + Padding.Bottom;
@@ -991,8 +1054,15 @@ public partial class ViewBox : D2DControl
     {
         if (string.IsNullOrEmpty(filename)) return;
 
-        _image?.Dispose();
-        _image = Device.LoadBitmap(filename);
+        _bitmap?.Dispose();
+        try
+        {
+            _bitmap = new Bitmap(filename);
+        }
+        catch { }
+
+        _d2dBitmap?.Dispose();
+        _d2dBitmap = Device.LoadBitmap(filename);
 
 
         if (IsReady)
@@ -1002,4 +1072,83 @@ public partial class ViewBox : D2DControl
     }
 
 
+
+    public bool IsAnimating { get; protected set; }
+    public bool CanAnimate
+    {
+        get {
+            if (_bitmap is null) return false;
+
+            return Animator.CanAnimate(_bitmap);
+        }
+    }
+
+    private IAnimator _animator = new DefaultAnimator();
+    public IAnimator Animator
+    {
+        set
+        {
+            if (_bitmap != null && IsAnimating)
+            {
+                StopAnimating();
+            }
+            _animator = value;
+            // Mimick Image property behavior
+            OnImageChanged(EventArgs.Empty);
+        }
+
+        get { return _animator; }
+    }
+
+    protected virtual void OnImageChanged(EventArgs e)
+    {
+        IsAnimating = false;
+
+        if (_bitmap != null)
+        {
+            //StartAnimating();
+        }
+    }
+
+    public void StartAnimating()
+    {
+        if (IsAnimating || !CanAnimate || _bitmap is null)
+            return;
+
+        try
+        {
+            Animator.Animate(_bitmap, OnFrameChangedHandler);
+            IsAnimating = true;
+        }
+        catch (Exception) { }
+    }
+
+    public void StopAnimating()
+    {
+        if (!IsAnimating || _bitmap is null)
+            return;
+        Animator.StopAnimate(_bitmap, OnFrameChangedHandler);
+        IsAnimating = false;
+    }
+
+    private void OnFrameChangedHandler(object? sender, EventArgs eventArgs)
+    {
+        Invalidate();
+    }
+
+    private void CheckAnimationClock(bool isUsingFasterClock = true)
+    {
+        if (isUsingFasterClock)
+        {
+            if (!TimerApi.HasRequestedRateAtLeastAsFastAs(10) && TimerApi.TimeBeginPeriod(10))
+                GifAnimator.SetTickTimeInMilliseconds(10);
+            Animator = new GifAnimator();
+        }
+        else
+        {
+            if (TimerApi.HasRequestedRateAlready(10))
+                TimerApi.TimeEndPeriod(10);
+            Animator = new DefaultAnimator();
+        }
+    }
 }
