@@ -741,7 +741,7 @@ public partial class ViewBox : D2DControl
 
     private void DrawImageLayer(IHybridGraphics g)
     {
-        if (_d2dBitmap is not null && HardwardAcceleration)
+        if (_d2dBitmap is not null && UseHardwardAcceleration)
         {
             var d2dg = g as Direct2DGraphics;
             d2dg?.DrawImage(_d2dBitmap, _destRect, _srcRect, 1f, (int)_interpolationMode);

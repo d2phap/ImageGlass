@@ -30,15 +30,16 @@ public class D2DControl : Control
 {
     private const int WM_SIZE = 0x0005;
     private const int WM_ERASEBKGND = 0x0014;
+    private const int WM_DESTROY = 0x0002;
 
     private bool _isControlLoaded = false;
     private D2DDevice? _device;
+    private D2DGraphics? _graphics;
     private D2DBitmap? _backgroundImage;
 
-    private D2DGraphics graphics;
-    private Direct2DGraphics? d2dGraphics;
-    private GDIGraphics gdiGraphics;
-    private bool hardwardAcceleration = true;
+    private bool _useHardwardAcceleration = true;
+    private Direct2DGraphics? _graphicsD2D;
+    private GDIGraphics? _graphicsGdi;
 
     private bool _firstPaintBackground = true;
     private bool _enableAnimation;
@@ -52,24 +53,7 @@ public class D2DControl : Control
     /// Request to update frame by <see cref="OnFrame"/> event.
     /// </summary>
     protected bool IsSceneChanged { get; set; } = false;
-    public int AnimationInterval
-    {
-        get => _animationTimer.Interval;
-        set => _animationTimer.Interval = value;
-    }
-
     
-
-    public bool HardwardAcceleration
-    {
-        get { return this.hardwardAcceleration; }
-        set
-        {
-            this.hardwardAcceleration = value;
-            this.DoubleBuffered = !this.hardwardAcceleration;
-        }
-    }
-
 
 
     #region Public properties
@@ -101,43 +85,25 @@ public class D2DControl : Control
     }
 
     /// <summary>
-    /// Gets, sets background image
+    /// Gets, sets a value indicating whether this control should draw its surface
+    /// using Direct2D or GDI+.
     /// </summary>
-    [Browsable(false)]
-    public new D2DBitmap? BackgroundImage
+    [Category("Graphics")]
+    [DefaultValue(true)]
+    public bool UseHardwardAcceleration
     {
-        get => _backgroundImage;
+        get { return _useHardwardAcceleration; }
         set
         {
-            if (_backgroundImage != value)
-            {
-                if (_backgroundImage != null)
-                {
-                    _backgroundImage.Dispose();
-                }
-
-                _backgroundImage = value;
-                Invalidate();
-            }
+            _useHardwardAcceleration = value;
+            DoubleBuffered = !_useHardwardAcceleration;
         }
     }
-
-    ///// <summary>
-    ///// <b>Do not</b> use this property.
-    ///// Sets <c>DoubleBuffered = false</c> by default.
-    ///// </summary>
-    //[Browsable(false)]
-    //[Obsolete("This property does not work.")]
-    //protected override bool DoubleBuffered
-    //{
-    //    get => base.DoubleBuffered;
-    //    set => base.DoubleBuffered = false;
-    //}
 
     /// <summary>
     /// Shows or hides Frame per second info
     /// </summary>
-    [Category("Animation")]
+    [Category("Graphics")]
     [DefaultValue(false)]
     public bool ShowFPS { get; set; } = false;
 
@@ -164,6 +130,40 @@ public class D2DControl : Control
         }
     }
 
+    /// <summary>
+    /// Gets, sets animation timer interval.
+    /// </summary>
+    [Category("Animation")]
+    [DefaultValue(false)]
+    public int AnimationInterval
+    {
+        get => _animationTimer.Interval;
+        set => _animationTimer.Interval = value;
+    }
+
+    /// <summary>
+    /// Gets, sets background image
+    /// </summary>
+    [Browsable(false)]
+    public new D2DBitmap? BackgroundImage
+    {
+        get => _backgroundImage;
+        set
+        {
+            if (_backgroundImage != value)
+            {
+                if (_backgroundImage != null)
+                {
+                    _backgroundImage.Dispose();
+                }
+
+                _backgroundImage = value;
+                Invalidate();
+            }
+        }
+    }
+
+
     #endregion
 
 
@@ -180,19 +180,19 @@ public class D2DControl : Control
         base.CreateHandle();
         if (DesignMode) return;
 
-        this.DoubleBuffered = false;
+        DoubleBuffered = false;
 
-        if (this._device == null)
+        if (_device == null)
         {
-            this._device = D2DDevice.FromHwnd(this.Handle);
+            _device = D2DDevice.FromHwnd(Handle);
         }
 
-        this.graphics = new D2DGraphics(this._device);
+        _graphics = new D2DGraphics(_device);
 
         // only support the base DPI
-        graphics.SetDPI(96, 96);
+        _graphics.SetDPI(96, 96);
 
-
+        // animation initiation
         _animationTimer.Interval = AnimationInterval;
         _animationTimer.Tick += (ss, ee) =>
         {
@@ -211,6 +211,18 @@ public class D2DControl : Control
         _device?.Dispose();
     }
 
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        _backgroundImage?.Dispose();
+        _animationTimer?.Dispose();
+        _graphicsGdi?.Dispose();
+        _graphicsD2D?.Dispose();
+
+        // '_device' must be disposed in DestroyHandle()
+    }
+
     protected override void WndProc(ref Message m)
     {
         switch (m.Msg)
@@ -221,14 +233,14 @@ public class D2DControl : Control
                 if (_firstPaintBackground)
                 {
                     _firstPaintBackground = false;
-                    if (!this.hardwardAcceleration)
+                    if (!_useHardwardAcceleration)
                     {
                         base.WndProc(ref m);
                     }
                     else
                     {
-                        graphics?.BeginRender(D2DColor.FromGDIColor(BackColor));
-                        graphics?.EndRender();
+                        _graphics?.BeginRender(D2DColor.FromGDIColor(BackColor));
+                        _graphics?.EndRender();
                     }
                 }
                 break;
@@ -238,7 +250,7 @@ public class D2DControl : Control
                 if (_device != null) _device.Resize();
                 break;
 
-            case 0x0002 /* WM_DESTROY */:
+            case WM_DESTROY:
                 if (_device != null) _device.Dispose();
                 base.WndProc(ref m);
                 break;
@@ -270,15 +282,16 @@ public class D2DControl : Control
         }
     }
 
-    /// <summary>
-    /// <b>Do use</b> <see cref="OnRender(D2DGraphics)"/> if you want to draw on the control.
-    /// </summary>
-    /// <param name="e"></param>
+
     protected override void OnPaintBackground(PaintEventArgs e)
     {
-        if (!this.hardwardAcceleration)
+        if (!_useHardwardAcceleration)
         {
             base.OnPaintBackground(e);
+        }
+        else
+        {
+            // handled in OnPaint event
         }
     }
 
@@ -294,47 +307,50 @@ public class D2DControl : Control
             e.Graphics.Clear(BackColor);
 
             using var brush = new SolidBrush(ForeColor);
-            e.Graphics.DrawString("This control does not support rendering in design mode.", Font, brush, 10, 10);
+            e.Graphics.DrawString("This control does not support rendering in design mode.",
+                Font, brush, 10, 10);
 
             return;
         }
 
 
-        if (HardwardAcceleration)
+        // use hardware acceleration
+        if (UseHardwardAcceleration && _graphics is not null)
         {
-            this.DoubleBuffered = false;
+            DoubleBuffered = false;
 
-            if (this.d2dGraphics == null)
+            if (_graphicsD2D == null)
             {
-                this.d2dGraphics = new Direct2DGraphics(this.graphics);
+                _graphicsD2D = new Direct2DGraphics(_graphics);
             }
             else
             {
-                this.d2dGraphics.g = this.graphics;
+                _graphicsD2D.g = _graphics;
             }
 
-            this.graphics.BeginRender(D2DColor.FromGDIColor(this.BackColor));
-
-            this.OnRender(this.d2dGraphics);
-
-            this.graphics.EndRender();
+            _graphics.BeginRender(D2DColor.FromGDIColor(BackColor));
+            OnRender(_graphicsD2D);
+            _graphics.EndRender();
         }
+        // use GDI+ graphics
         else
         {
-            this.DoubleBuffered = true;
+            DoubleBuffered = true;
 
-            if (this.gdiGraphics == null)
+            if (_graphicsGdi == null)
             {
-                this.gdiGraphics = new GDIGraphics(e.Graphics);
+                _graphicsGdi = new GDIGraphics(e.Graphics);
             }
             else
             {
-                this.gdiGraphics.g = e.Graphics;
+                _graphicsGdi.g = e.Graphics;
             }
 
-            this.OnRender(this.gdiGraphics);
+            OnRender(_graphicsGdi);
         }
 
+
+        // FPS info
         if (ShowFPS)
         {
             if (_lastFpsUpdate.Second != DateTime.UtcNow.Second)
@@ -353,6 +369,7 @@ public class D2DControl : Control
 
             e.Graphics.DrawString(info, Font, Brushes.Black, ClientRectangle.Right - size.Width - 10, 5);
         }
+
 
         // Start animation
         if (_enableAnimation && !_animationTimer.Enabled)
