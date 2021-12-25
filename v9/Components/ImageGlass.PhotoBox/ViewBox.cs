@@ -35,7 +35,7 @@ namespace ImageGlass.PhotoBox;
 /// </summary>
 public partial class ViewBox : HybridControl
 {
-    private Bitmap? _bitmap;
+    private Bitmap? _gdiBitmap;
     private D2DBitmap? _d2dBitmap;
     private CancellationTokenSource? _msgTokenSrc;
 
@@ -67,6 +67,8 @@ public partial class ViewBox : HybridControl
     private Base.PhotoBox.InterpolationMode _interpolationMode = Base.PhotoBox.InterpolationMode.NearestNeighbor;
 
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
+    private IAnimator _animator = new DefaultGifAnimator();
+    private bool _useHardwardAccelerationBackup = true;
 
     // Navigation buttons
     private const float NAV_PADDING = 20f;
@@ -78,8 +80,55 @@ public partial class ViewBox : HybridControl
     private PointF _navRightPos => new(Width - NavButtonRadius - NAV_PADDING, Height / 2);
     private NavButtonDisplay _navDisplay = NavButtonDisplay.Both;
 
+    
 
     #region Public properties
+
+    // Animation
+    #region Animation
+
+    /// <summary>
+    /// Gets, sets the value indicates whether it's animating
+    /// </summary>
+    [Browsable(false)]
+    public bool IsAnimating { get; protected set; } = false;
+
+    /// <summary>
+    /// Gets, sets the value indicates whether the image can animate
+    /// </summary>
+    [Browsable(false)]
+    public bool CanAnimate
+    {
+        get
+        {
+            if (_gdiBitmap is null) return false;
+
+            return Animator.CanAnimate(_gdiBitmap);
+        }
+    }
+
+    /// <summary>
+    /// Gets, sets the animator which handle image animation
+    /// </summary>
+    [Browsable(false)]
+    public IAnimator Animator
+    {
+        get => _animator;
+        set
+        {
+            if (_gdiBitmap != null && IsAnimating)
+            {
+                StopAnimating();
+            }
+            _animator = value;
+
+            // Mimick Image property behavior
+            OnImageChanged(EventArgs.Empty);
+        }
+    }
+
+    #endregion
+
 
     // Zooming
     #region Zooming
@@ -263,35 +312,6 @@ public partial class ViewBox : HybridControl
     #endregion
 
 
-    public Bitmap? Photo
-    {
-        get => _bitmap;
-        set
-        {
-            // disable animations
-            if (IsAnimating)
-            {
-                Animator.StopAnimate(_bitmap, OnFrameChangedHandler);
-            }
-
-            _d2dBitmap?.Dispose();
-            _bitmap?.Dispose();
-
-            _bitmap = value;
-            if (_bitmap is null) return;
-
-            _d2dBitmap = Device.CreateBitmapFromGDIBitmap(_bitmap);
-            OnImageChanged(EventArgs.Empty);
-
-
-            if (IsReady)
-            {
-                Refresh();
-            }
-        }
-    }
-
-
     // Events
     #region Events
 
@@ -311,14 +331,15 @@ public partial class ViewBox : HybridControl
 
     #endregion
 
+
+
     #endregion
 
 
     public ViewBox()
     {
-        //CheckAnimationClock();
-
         UseHardwardAcceleration = true;
+        CheckAnimationClock();
     }
 
     protected override void Dispose(bool disposing)
@@ -326,7 +347,7 @@ public partial class ViewBox : HybridControl
         base.Dispose(disposing);
 
         _d2dBitmap?.Dispose();
-        _bitmap?.Dispose();
+        _gdiBitmap?.Dispose();
 
         NavLeftImage?.Dispose();
         NavRightImage?.Dispose();
@@ -608,34 +629,45 @@ public partial class ViewBox : HybridControl
         // checkerboard background
         DrawCheckerboardLayer(g);
 
-        // image layer
-        DrawImageLayer(g);
+
+        if (CanAnimate)
+        {
+            DrawGifFrame(g);
+        }
+        else
+        {
+            // image layer
+            DrawImageLayer(g);
+        }
 
         // text message
         DrawTextLayer(g);
 
         // navigation layer
         DrawNavigationLayer(g);
+
     }
 
 
-    public void OnPaintGDI(Graphics g)
+    private void DrawGifFrame(IHybridGraphics hg)
     {
-        if (_bitmap is null) return;
+        if (_gdiBitmap is null) return;
 
-        g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-        g.CompositingQuality = CompositingQuality.HighSpeed;
-        g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+        // use GDI+ to handle GIF animation
+        var g = hg as GDIGraphics;
+        if (g is null) return;
+
+        g.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
+        g.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
         try
         {
-            // Animation. Thanks to teamalpha5441 for the contribution
             if (IsAnimating && !DesignMode)
             {
-                Animator.UpdateFrames(_bitmap);
+                Animator.UpdateFrames(_gdiBitmap);
             }
 
-            g.DrawImage(_bitmap, _destRect, _srcRect, GraphicsUnit.Pixel);
+            g.DrawImage(_gdiBitmap, _destRect, _srcRect, 1, (int)_interpolationMode);
         }
         catch (ArgumentException)
         {
@@ -649,20 +681,20 @@ public partial class ViewBox : HybridControl
         {
             // stop the animation and reset to the first frame.
             IsAnimating = false;
-            Animator.StopAnimate(_bitmap, OnFrameChangedHandler);
+            Animator.StopAnimate(_gdiBitmap, OnFrameChangedHandler);
         }
         catch (InvalidOperationException)
         {
-            // #issue #373: a race condition caused this exception: deleting the image from underneath us could
+            // issue #373: a race condition caused this exception: deleting the image from underneath us could
             // cause a collision in HighResolutionGifAnimator. I've not been able to repro; hopefully this is
             // the correct response.
 
             // stop the animation and reset to the first frame.
             IsAnimating = false;
-            Animator.StopAnimate(_bitmap, OnFrameChangedHandler);
+            Animator.StopAnimate(_gdiBitmap, OnFrameChangedHandler);
         }
 
-        g.PixelOffsetMode = PixelOffsetMode.Half;
+        g.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
     }
 
 
@@ -746,9 +778,9 @@ public partial class ViewBox : HybridControl
             var d2dg = g as Direct2DGraphics;
             d2dg?.DrawImage(_d2dBitmap, _destRect, _srcRect, 1f, (int)_interpolationMode);
         }
-        else if (_bitmap is not null)
+        else if (_gdiBitmap is not null)
         {
-            g.DrawImage(_bitmap, _destRect, _srcRect, 1f, (int)_interpolationMode);
+            g.DrawImage(_gdiBitmap, _destRect, _srcRect, 1f, (int)_interpolationMode);
         }
     }
 
@@ -1054,83 +1086,42 @@ public partial class ViewBox : HybridControl
     {
         if (string.IsNullOrEmpty(filename)) return;
 
-        _bitmap?.Dispose();
+        // disable animations
+        StopAnimating();
+
+        _gdiBitmap?.Dispose();
         try
         {
-            _bitmap = new Bitmap(filename);
+            _gdiBitmap = new Bitmap(filename);
         }
         catch { }
 
         _d2dBitmap?.Dispose();
         _d2dBitmap = Device.LoadBitmap(filename);
 
-
-        if (IsReady)
-        {
-            Refresh();
-        }
+        OnImageChanged(EventArgs.Empty);
     }
 
 
-
-    public bool IsAnimating { get; protected set; }
-    public bool CanAnimate
+    /// <summary>
+    /// Load image
+    /// </summary>
+    /// <param name="bmp"></param>
+    public void LoadImage(Bitmap? bmp)
     {
-        get
-        {
-            if (_bitmap is null) return false;
+        // disable animations
+        StopAnimating();
 
-            return Animator.CanAnimate(_bitmap);
-        }
+        _d2dBitmap?.Dispose();
+        _gdiBitmap?.Dispose();
+
+        _gdiBitmap = bmp;
+        if (_gdiBitmap is null) return;
+
+        _d2dBitmap = Device.CreateBitmapFromGDIBitmap(_gdiBitmap);
+        OnImageChanged(EventArgs.Empty);
     }
 
-    private IAnimator _animator = new DefaultGifAnimator();
-    public IAnimator Animator
-    {
-        set
-        {
-            if (_bitmap != null && IsAnimating)
-            {
-                StopAnimating();
-            }
-            _animator = value;
-            // Mimick Image property behavior
-            OnImageChanged(EventArgs.Empty);
-        }
-
-        get { return _animator; }
-    }
-
-    protected virtual void OnImageChanged(EventArgs e)
-    {
-        IsAnimating = false;
-
-        if (_bitmap != null)
-        {
-            //StartAnimating();
-        }
-    }
-
-    public void StartAnimating()
-    {
-        if (IsAnimating || !CanAnimate || _bitmap is null)
-            return;
-
-        try
-        {
-            Animator.Animate(_bitmap, OnFrameChangedHandler);
-            IsAnimating = true;
-        }
-        catch (Exception) { }
-    }
-
-    public void StopAnimating()
-    {
-        if (!IsAnimating || _bitmap is null)
-            return;
-        Animator.StopAnimate(_bitmap, OnFrameChangedHandler);
-        IsAnimating = false;
-    }
 
     private void OnFrameChangedHandler(object? sender, EventArgs eventArgs)
     {
@@ -1152,4 +1143,58 @@ public partial class ViewBox : HybridControl
             Animator = new DefaultGifAnimator();
         }
     }
+
+    protected virtual void OnImageChanged(EventArgs e)
+    {
+        if (CanAnimate && _gdiBitmap is not null)
+        {
+            UpdateZoomMode();
+            StartAnimating();
+        }
+        else
+        {
+            Refresh();
+        }
+    }
+
+
+    /// <summary>
+    /// Start animating the image if it can animate, using GDI+.
+    /// </summary>
+    public void StartAnimating()
+    {
+        if (IsAnimating || !CanAnimate || _gdiBitmap is null)
+            return;
+
+        try
+        {
+            // backup current UseHardwardAcceleration value
+            _useHardwardAccelerationBackup = UseHardwardAcceleration;
+
+            // force using GDI+ to animate GIF
+            UseHardwardAcceleration = false;
+
+            Animator.Animate(_gdiBitmap, OnFrameChangedHandler);
+            IsAnimating = true;
+        }
+        catch (Exception) { }
+    }
+
+    /// <summary>
+    /// Stop animating the image
+    /// </summary>
+    public void StopAnimating()
+    {
+        if (_gdiBitmap is not null)
+        {
+            Animator.StopAnimate(_gdiBitmap, OnFrameChangedHandler);
+        }
+
+        IsAnimating = false;
+
+        // restore the UseHardwardAcceleration value
+        UseHardwardAcceleration = _useHardwardAccelerationBackup;
+    }
+
+    
 }

@@ -107,6 +107,7 @@ public partial class FrmMain : Form
         PicBox.ShowMessage("Loading image... \n" + inputPath, 0, 1500);
         PicBox.Photo = await Config.Codec.LoadAsync(inputPath, new(Local.Metadata));
         PicBox.ClearMessage();
+        PicBox.LoadImage(new Bitmap(inputPath));
     }
 
 
