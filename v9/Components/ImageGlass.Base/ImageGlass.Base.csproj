@@ -5,6 +5,17 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\D2DLib\D2DLibExport\D2DLibExport.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="HybridGraphics\HybridControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
 
 </Project>

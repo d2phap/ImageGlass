@@ -20,8 +20,4 @@
       
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="D2DControl.cs" />
-  </ItemGroup>
-
 </Project>

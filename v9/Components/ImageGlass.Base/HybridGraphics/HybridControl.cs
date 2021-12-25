@@ -17,16 +17,17 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using D2DLibExport;
-using System.ComponentModel;
 
-namespace unvell.D2DLib;
+using System.ComponentModel;
+using unvell.D2DLib;
+
+namespace ImageGlass.Base.HybridGraphics;
 
 
 /// <summary>
 /// Direct2D control for WinForms
 /// </summary>
-public class D2DControl : Control
+public class HybridControl : Control
 {
     private const int WM_SIZE = 0x0005;
     private const int WM_ERASEBKGND = 0x0014;
@@ -167,7 +168,7 @@ public class D2DControl : Control
     #endregion
 
 
-    public D2DControl()
+    public HybridControl()
     {
         SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
     }

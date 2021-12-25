@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using unvell.D2DLib;
 
-namespace D2DLibExport;
+namespace ImageGlass.Base.HybridGraphics;
 
 /// <summary>
 /// An object that contains Direct2D graphics

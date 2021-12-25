@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
-namespace D2DLibExport;
+namespace ImageGlass.Base.HybridGraphics;
 
 /// <summary>
 /// An object that contains GDI+ graphics

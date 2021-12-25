@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\D2DLib\D2DLibExport\D2DLibExport.csproj" />
     <ProjectReference Include="..\ImageGlass.Base\ImageGlass.Base.csproj" />
     <ProjectReference Include="..\ImageGlass.Heart\ImageGlass.Heart.csproj" />
   </ItemGroup>

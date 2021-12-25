@@ -37,7 +37,7 @@ namespace ImageGlass.PhotoBox.Animator;
 /// to a resolution of 15ms.  Call setTickInMilliseconds to ask for a different rate, which
 /// sets the fastest tick allowed for all HighResolutionAnimators. </p>
 /// </summary>
-public class GifAnimator : IAnimator
+public class HighResolutionGifAnimator : IAnimator
 {
     #region STATIC 
     private static int ourMinTickTimeInMilliseconds;
@@ -72,7 +72,7 @@ public class GifAnimator : IAnimator
         return Math.Max(ourMinTickTimeInMilliseconds, delayInMilliseconds);
     }
 
-    static GifAnimator()
+    static HighResolutionGifAnimator()
     {
         ourMinTickTimeInMilliseconds = 20;
         ourImageState = new ConcurrentDictionary<Image, GifImageData>();

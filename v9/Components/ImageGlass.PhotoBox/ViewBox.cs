@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using D2DLibExport;
+using ImageGlass.Base.HybridGraphics;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.WinApi;
 using ImageGlass.PhotoBox.Animator;
@@ -33,7 +33,7 @@ namespace ImageGlass.PhotoBox;
 /// <summary>
 /// Modern photo view box with hardware-accelerated
 /// </summary>
-public partial class ViewBox : D2DControl
+public partial class ViewBox : HybridControl
 {
     private Bitmap? _bitmap;
     private D2DBitmap? _d2dBitmap;
@@ -318,7 +318,7 @@ public partial class ViewBox : D2DControl
     {
         //CheckAnimationClock();
 
-        
+        UseHardwardAcceleration = true;
     }
 
     protected override void Dispose(bool disposing)
@@ -826,7 +826,7 @@ public partial class ViewBox : D2DControl
         // draw text background
         var color = Color.FromArgb(170, BackColor);
         g.DrawRoundedRectangle(region, color, color, new(5, 5));
-        
+
 
         // draw text
         g.DrawText(Text, Font, fontSize, ForeColor, region);
@@ -1076,14 +1076,15 @@ public partial class ViewBox : D2DControl
     public bool IsAnimating { get; protected set; }
     public bool CanAnimate
     {
-        get {
+        get
+        {
             if (_bitmap is null) return false;
 
             return Animator.CanAnimate(_bitmap);
         }
     }
 
-    private IAnimator _animator = new DefaultAnimator();
+    private IAnimator _animator = new DefaultGifAnimator();
     public IAnimator Animator
     {
         set
@@ -1141,14 +1142,14 @@ public partial class ViewBox : D2DControl
         if (isUsingFasterClock)
         {
             if (!TimerApi.HasRequestedRateAtLeastAsFastAs(10) && TimerApi.TimeBeginPeriod(10))
-                GifAnimator.SetTickTimeInMilliseconds(10);
-            Animator = new GifAnimator();
+                HighResolutionGifAnimator.SetTickTimeInMilliseconds(10);
+            Animator = new HighResolutionGifAnimator();
         }
         else
         {
             if (TimerApi.HasRequestedRateAlready(10))
                 TimerApi.TimeEndPeriod(10);
-            Animator = new DefaultAnimator();
+            Animator = new DefaultGifAnimator();
         }
     }
 }
