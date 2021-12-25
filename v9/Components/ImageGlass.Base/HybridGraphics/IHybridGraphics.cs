@@ -25,6 +25,10 @@ namespace ImageGlass.Base.HybridGraphics;
 /// </summary>
 public interface IHybridGraphics : IDisposable
 {
+    /// <summary>
+    /// Gets, sets the value specifies whether smoothing (antialiasing) is applied
+    /// to lines and curves and the edges of filled areas.
+    /// </summary>
     bool UseAntialias { get; set; }
 
 

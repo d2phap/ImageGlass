@@ -91,9 +91,9 @@ public class HybridControl : Control
     /// </summary>
     [Category("Graphics")]
     [DefaultValue(true)]
-    public bool UseHardwardAcceleration
+    public virtual bool UseHardwardAcceleration
     {
-        get { return _useHardwardAcceleration; }
+        get => _useHardwardAcceleration;
         set
         {
             _useHardwardAcceleration = value;
@@ -326,7 +326,7 @@ public class HybridControl : Control
             }
             else
             {
-                _graphicsD2D.g = _graphics;
+                _graphicsD2D.Graphics = _graphics;
             }
 
             _graphics.BeginRender(D2DColor.FromGDIColor(BackColor));
@@ -344,7 +344,7 @@ public class HybridControl : Control
             }
             else
             {
-                _graphicsGdi.g = e.Graphics;
+                _graphicsGdi.Graphics = e.Graphics;
             }
 
             OnRender(_graphicsGdi);

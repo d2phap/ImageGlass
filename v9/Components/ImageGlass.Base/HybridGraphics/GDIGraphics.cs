@@ -27,18 +27,39 @@ namespace ImageGlass.Base.HybridGraphics;
 /// </summary>
 public class GDIGraphics : IHybridGraphics
 {
-    public Graphics g;
+    private Graphics _g;
+    private bool _useAntialias = true;
 
-    public bool UseAntialias
+    /// <summary>
+    /// Gets, sets original GDI+ graphics object
+    /// </summary>
+    public Graphics Graphics
     {
-        get => g.SmoothingMode == SmoothingMode.AntiAlias;
-        set => g.SmoothingMode = value ? SmoothingMode.AntiAlias : SmoothingMode.Default;
+        get => _g;
+        set
+        {
+            _g = value;
+
+            // update _g.SmoothingMode
+            UseAntialias = _useAntialias;
+        }
     }
 
 
-    public GDIGraphics(Graphics g)
+    public bool UseAntialias
     {
-        this.g = g;
+        get => _useAntialias;
+        set {
+            _useAntialias = value;
+            _g.SmoothingMode = value ? SmoothingMode.AntiAlias : SmoothingMode.Default;
+        }
+    }
+
+
+    public GDIGraphics(Graphics graphics)
+    {
+        _g = graphics;
+        UseAntialias = true;
     }
 
 
@@ -58,7 +79,7 @@ public class GDIGraphics : IHybridGraphics
     public void DrawLine(float x1, float y1, float x2, float y2, Color c, float weight = 1)
     {
         using var p = new Pen(c, weight);
-        g.DrawLine(p, x1, y1, x2, y2);
+        Graphics.DrawLine(p, x1, y1, x2, y2);
     }
 
     #endregion
@@ -70,13 +91,13 @@ public class GDIGraphics : IHybridGraphics
     public void DrawEllipse(RectangleF rect, Color c, float weight = 1f)
     {
         using var p = new Pen(c, weight);
-        g.DrawEllipse(p, rect);
+        Graphics.DrawEllipse(p, rect);
     }
 
     public void FillEllipse(RectangleF rect, Color c)
     {
         using var b = new SolidBrush(c);
-        g.FillEllipse(b, rect);
+        Graphics.FillEllipse(b, rect);
     }
 
     public void DrawPolygon(PointF[] ps, Color strokeColor, float weight, Color fillColor)
@@ -94,26 +115,26 @@ public class GDIGraphics : IHybridGraphics
         if (fillColor.A > 0)
         {
             using var b = new SolidBrush(fillColor);
-            g.FillPath(b, path);
+            Graphics.FillPath(b, path);
         }
 
         if (strokeColor.A > 0 && weight > 0)
         {
             using var p = new Pen(strokeColor, weight);
-            g.DrawPath(p, path);
+            Graphics.DrawPath(p, path);
         }
     }
 
     public void DrawRectangle(float x, float y, float w, float h, Color c, float weight = 1f)
     {
         using var p = new Pen(c, weight);
-        g.DrawRectangle(p, x, y, w, h);
+        Graphics.DrawRectangle(p, x, y, w, h);
     }
 
     public void FillRectangle(RectangleF rect, Color c)
     {
         using var b = new SolidBrush(c);
-        g.FillRectangle(b, rect);
+        Graphics.FillRectangle(b, rect);
     }
 
     public void DrawRoundedRectangle(RectangleF rect, Color bgColor, Color borderColor, PointF radius = new(), float strokeWidth = 1f)
@@ -122,8 +143,8 @@ public class GDIGraphics : IHybridGraphics
         using var bgBrush = new SolidBrush(bgColor);
         using var borderPen = new Pen(borderColor, strokeWidth);
 
-        g.FillPath(bgBrush, path);
-        g.DrawPath(borderPen, path);
+        Graphics.FillPath(bgBrush, path);
+        Graphics.DrawPath(borderPen, path);
     }
 
     #endregion
@@ -134,13 +155,21 @@ public class GDIGraphics : IHybridGraphics
 
     public void DrawText(string text, Font font, float fontSize, Color color, RectangleF region)
     {
+        // Create a StringFormat object with the each line of text, and the block
+        // of text centered on the page.
+        var stringFormat = new StringFormat
+        {
+            Alignment = StringAlignment.Center,
+            LineAlignment = StringAlignment.Center
+        };
+
         using var brush = new SolidBrush(color);
-        g.DrawString(text, font, brush, region);
+        Graphics.DrawString(text, font, brush, region, stringFormat);
     }
 
     public SizeF MeasureText(string text, Font font, float fontSize, SizeF layoutArea)
     {
-        return g.MeasureString(text, font, layoutArea);
+        return Graphics.MeasureString(text, font, layoutArea);
     }
 
     #endregion
@@ -154,10 +183,10 @@ public class GDIGraphics : IHybridGraphics
     {
         if (interpolationMode == 0)
         {
-            g.InterpolationMode = InterpolationMode.NearestNeighbor;
+            Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
         }
 
-        g.DrawImage(bmp, destRect, srcRect, GraphicsUnit.Pixel);
+        Graphics.DrawImage(bmp, destRect, srcRect, GraphicsUnit.Pixel);
     }
 
     public void DrawMemoryBitmap(MemoryBitmap mb, int x, int y)
@@ -168,7 +197,7 @@ public class GDIGraphics : IHybridGraphics
     public void DrawMemoryBitmap(int x, int y, int w, int h, int stride, IntPtr buf, int offset, int length)
     {
         using var bmp = new Bitmap(w, h, stride, PixelFormat.Format32bppArgb, buf);
-        g.DrawImage(bmp, x, y);
+        Graphics.DrawImage(bmp, x, y);
     }
 
     #endregion
@@ -231,7 +260,7 @@ public class GDIGraphics : IHybridGraphics
     {
         if (disposing)
         {
-            g?.Dispose();
+            Graphics?.Dispose();
         }
     }
 

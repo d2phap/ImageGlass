@@ -26,17 +26,37 @@ namespace ImageGlass.Base.HybridGraphics;
 /// </summary>
 public class Direct2DGraphics : IHybridGraphics
 {
-    public D2DGraphics g;
+    private D2DGraphics _g;
+    private bool _useAntialias = true;
+
+    public D2DGraphics Graphics
+    {
+        get => _g;
+        set
+        {
+            _g = value;
+
+            // update _g.Antialias
+            UseAntialias = _useAntialias;
+        }
+    }
 
     public bool UseAntialias
     {
-        get => g.Antialias;
-        set => g.Antialias = value;
+        get => _useAntialias;
+        set
+        {
+            _useAntialias = value;
+            _g.Antialias = value;
+        }
     }
 
-    public Direct2DGraphics(D2DGraphics g)
+
+
+    public Direct2DGraphics(D2DGraphics graphics)
     {
-        this.g = g;
+        _g = graphics;
+        UseAntialias = true;
     }
 
 
@@ -45,7 +65,7 @@ public class Direct2DGraphics : IHybridGraphics
 
     public void DrawLine(float x1, float y1, float x2, float y2, Color c, float weight = 1f)
     {
-        g.DrawLine(x1, y1, x2, y2, D2DColor.FromGDIColor(c), weight);
+        Graphics.DrawLine(x1, y1, x2, y2, D2DColor.FromGDIColor(c), weight);
     }
 
     public void DrawLine(Point p1, Point p2, Color c, float weight = 1)
@@ -67,12 +87,12 @@ public class Direct2DGraphics : IHybridGraphics
 
     public void DrawEllipse(RectangleF rect, Color c, float weight = 1f)
     {
-        g.DrawEllipse(rect.X, rect.Y, rect.Width, rect.Height, D2DColor.FromGDIColor(c), weight);
+        Graphics.DrawEllipse(rect.X, rect.Y, rect.Width, rect.Height, D2DColor.FromGDIColor(c), weight);
     }
 
     public void FillEllipse(RectangleF rect, Color c)
     {
-        g.FillEllipse(rect.X, rect.Y, rect.Width, rect.Height, D2DColor.FromGDIColor(c));
+        Graphics.FillEllipse(rect.X, rect.Y, rect.Width, rect.Height, D2DColor.FromGDIColor(c));
     }
 
     public void DrawPolygon(PointF[] ps, Color strokeColor, float weight, Color fillColor)
@@ -84,18 +104,18 @@ public class Direct2DGraphics : IHybridGraphics
             pt[i] = new D2DPoint(ps[i].X, ps[i].Y);
         }
 
-        g.DrawPolygon(pt, D2DColor.FromGDIColor(strokeColor), weight, D2DDashStyle.Solid, D2DColor.FromGDIColor(fillColor));
+        Graphics.DrawPolygon(pt, D2DColor.FromGDIColor(strokeColor), weight, D2DDashStyle.Solid, D2DColor.FromGDIColor(fillColor));
     }
 
 
     public void DrawRectangle(float x, float y, float w, float h, Color c, float weight = 1f)
     {
-        g.DrawRectangle(x, y, w, h, D2DColor.FromGDIColor(c), weight);
+        Graphics.DrawRectangle(x, y, w, h, D2DColor.FromGDIColor(c), weight);
     }
 
     public void FillRectangle(RectangleF rect, Color c)
     {
-        g.FillRectangle(rect, D2DColor.FromGDIColor(c));
+        Graphics.FillRectangle(rect, D2DColor.FromGDIColor(c));
     }
 
     public void DrawRoundedRectangle(RectangleF rect, Color bgColor, Color borderColor, PointF radius = new(), float strokeWidth = 1f)
@@ -107,7 +127,7 @@ public class Direct2DGraphics : IHybridGraphics
             rect = rect,
         };
 
-        g.DrawRoundedRectangle(bgRect, D2DColor.FromGDIColor(borderColor), D2DColor.FromGDIColor(bgColor), strokeWidth);
+        Graphics.DrawRoundedRectangle(bgRect, D2DColor.FromGDIColor(borderColor), D2DColor.FromGDIColor(bgColor), strokeWidth);
     }
 
     #endregion
@@ -118,12 +138,12 @@ public class Direct2DGraphics : IHybridGraphics
 
     public void DrawText(string text, Font font, float fontSize, Color c, RectangleF region)
     {
-        g.DrawTextCenter(text, D2DColor.FromGDIColor(c), font.Name, fontSize, region);
+        Graphics.DrawTextCenter(text, D2DColor.FromGDIColor(c), font.Name, fontSize, region);
     }
 
     public SizeF MeasureText(string text, Font font, float fontSize, SizeF layoutArea)
     {
-        return g.MeasureText(text, font.Name, fontSize, layoutArea);
+        return Graphics.MeasureText(text, font.Name, fontSize, layoutArea);
     }
 
     #endregion
@@ -135,7 +155,7 @@ public class Direct2DGraphics : IHybridGraphics
     /// <param name="interpolationMode">0 = NearestNeighbor; 1 = Linear</param>
     public void DrawImage(Bitmap bmp, RectangleF destRect, RectangleF srcRect, float opacity = 1f, int interpolationMode = 0)
     {
-        g.DrawGDIBitmap(bmp.GetHbitmap(), destRect, srcRect, opacity, true, (D2DBitmapInterpolationMode)interpolationMode);
+        Graphics.DrawGDIBitmap(bmp.GetHbitmap(), destRect, srcRect, opacity, true, (D2DBitmapInterpolationMode)interpolationMode);
     }
 
     /// <summary>
@@ -144,7 +164,7 @@ public class Direct2DGraphics : IHybridGraphics
     /// <param name="interpolationMode">0 = NearestNeighbor; 1 = Linear</param>
     public void DrawImage(D2DBitmap d2dBmp, RectangleF destRect, RectangleF srcRect, float opacity = 1f, int interpolationMode = 0)
     {
-        g.DrawBitmap(d2dBmp, destRect, srcRect, opacity, (D2DBitmapInterpolationMode)interpolationMode);
+        Graphics.DrawBitmap(d2dBmp, destRect, srcRect, opacity, (D2DBitmapInterpolationMode)interpolationMode);
     }
 
     public void DrawMemoryBitmap(MemoryBitmap bmp, int x, int y)
@@ -154,8 +174,8 @@ public class Direct2DGraphics : IHybridGraphics
 
     public void DrawMemoryBitmap(int x, int y, int w, int h, int stride, IntPtr buf, int offset, int length)
     {
-        using var bmp = g.Device.CreateBitmapFromMemory((uint)w, (uint)h, (uint)stride, buf, (uint)offset, (uint)length);
-        g.DrawBitmap(bmp, new D2DRect(x, y, w, h));
+        using var bmp = Graphics.Device.CreateBitmapFromMemory((uint)w, (uint)h, (uint)stride, buf, (uint)offset, (uint)length);
+        Graphics.DrawBitmap(bmp, new D2DRect(x, y, w, h));
     }
 
     #endregion
@@ -166,7 +186,7 @@ public class Direct2DGraphics : IHybridGraphics
 
     public void Flush()
     {
-        g.Flush();
+        Graphics.Flush();
     }
 
     public void Dispose()
