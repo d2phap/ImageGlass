@@ -216,18 +216,19 @@ public class D2DControl : Control
         switch (m.Msg)
         {
             case WM_ERASEBKGND:
-                if (!this.hardwardAcceleration)
+
+                // to fix background is delayed to paint on launch
+                if (_firstPaintBackground)
                 {
-                    base.WndProc(ref m);
-                }
-                else
-                {
-                    // to fix background is delayed to paint on launch
-                    if (_firstPaintBackground)
+                    _firstPaintBackground = false;
+                    if (!this.hardwardAcceleration)
                     {
-                        d2dGraphics?.g?.BeginRender(D2DColor.FromGDIColor(BackColor));
-                        d2dGraphics?.g?.EndRender();
-                        _firstPaintBackground = false;
+                        base.WndProc(ref m);
+                    }
+                    else
+                    {
+                        graphics?.BeginRender(D2DColor.FromGDIColor(BackColor));
+                        graphics?.EndRender();
                     }
                 }
                 break;
