@@ -65,6 +65,11 @@ namespace ImageGlass.Settings {
         public static bool IsRandomSlideshowInterval { get; set; } = false;
 
         /// <summary>
+        /// Gets, sets value of alert in Slideshow state
+        /// </summary>
+        public static bool IsImgChangeAlert { get; set; } = false;
+
+        /// <summary>
         /// Gets, sets value indicating whether the window is full screen or not
         /// </summary>
         public static bool IsFullScreen { get; set; } = false;
@@ -313,6 +318,14 @@ namespace ImageGlass.Settings {
         /// Gets, sets the maximum slide show interval value
         /// </summary>
         public static uint SlideShowIntervalTo { get; set; } = 5;
+
+        /// <summary>
+        /// Gets, sets the number of Images after which alert is played
+        /// </summary>
+        public static uint numImgChangeAlert { get; set; } = 5;
+
+
+
 
         /// <summary>
         /// Gets, sets value of thumbnail dimension in pixel

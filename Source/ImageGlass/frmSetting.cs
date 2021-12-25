@@ -257,7 +257,8 @@ namespace ImageGlass {
             chkShowSlideshowCountdown.Text = lang[$"{Name}.{nameof(chkShowSlideshowCountdown)}"];
             lblSlideshowIntervalTo.Text = lang[$"{Name}.{nameof(lblSlideshowIntervalTo)}"];
             numSlideShowInterval_ValueChanged(null, null); // format interval value
-
+           // chkImgSound.Text = lang[$"{Name}.{nameof(chkImgSound)}"];
+            
             lblHeadFullScreen.Text = lang[$"{Name}.{nameof(lblHeadFullScreen)}"];
             chkHideToolbarInFullScreen.Text = lang[$"{Name}.{nameof(chkHideToolbarInFullScreen)}"];
             chkHideThumbnailBarInFullScreen.Text = lang[$"{Name}.{nameof(chkHideThumbnailBarInFullScreen)}"];
@@ -688,11 +689,17 @@ namespace ImageGlass {
             numSlideshowIntervalTo.Value = Configs.SlideShowIntervalTo;
             numSlideShowInterval_ValueChanged(null, null); // format interval value
 
+            //Set value of Sound in Slide Show
+            chkImgAlert.Checked = Configs.IsImgChangeAlert;
+
+            //Set number of Images after which sound is played
+            numImgSound.Value = Configs.numImgChangeAlert;
+
+
             // Full screen configs 
             chkHideToolbarInFullScreen.Checked = Configs.IsHideToolbarInFullscreen;
             chkHideThumbnailBarInFullScreen.Checked = Configs.IsHideThumbnailBarInFullscreen;
         }
-
         private void chkRandomSlideshowInterval_CheckedChanged(object sender, EventArgs e) {
             lblSlideshowIntervalTo.Visible =
                 numSlideshowIntervalTo.Visible =
@@ -2054,6 +2061,10 @@ namespace ImageGlass {
             Configs.SlideShowInterval = (uint)numSlideShowInterval.Value;
             Configs.SlideShowIntervalTo = (uint)numSlideshowIntervalTo.Value;
 
+            //Sound In Slideshow
+
+            Configs.IsImgChangeAlert=chkImgAlert.Checked;
+            Configs.numImgChangeAlert=(uint)numImgSound.Value;
             // Full screen
             Configs.IsHideToolbarInFullscreen = chkHideToolbarInFullScreen.Checked;
             Configs.IsHideThumbnailBarInFullscreen = chkHideThumbnailBarInFullScreen.Checked;
@@ -2149,7 +2160,12 @@ namespace ImageGlass {
             return isSuccessful;
         }
 
+
+
         #endregion
 
+        private void label1_Click(object sender, EventArgs e) {
+
+        }
     }
 }

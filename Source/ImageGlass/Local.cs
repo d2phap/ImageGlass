@@ -132,6 +132,7 @@ namespace ImageGlass {
         /// </summary>
         public static int CurrentPageCount { get; set; } = 0;
 
+
         /// <summary>
         /// Gets, sets Exif tags of current image
         /// </summary>
@@ -208,15 +209,22 @@ namespace ImageGlass {
         /// <summary>
         /// Raise an event when the viewing image changed
         /// </summary>
+
         public static void RaiseImageChangedEvent() {
             var handler = OnImageChanged;
-
             handler?.Invoke(null, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Play Sound
+        /// </summary>
+
+        public static void PlaySound() {
+            System.Media.SystemSounds.Asterisk.Play();
+            
+        }
+
     }
-
-
 }
 
 

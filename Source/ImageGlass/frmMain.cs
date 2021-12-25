@@ -47,8 +47,8 @@ using ImageMagick;
 
 namespace ImageGlass {
     public partial class frmMain: Form {
-
         public frmMain() {
+            Local.OnImageChanged += Local_OnImageChanged; //Listening To Image change Event
             InitializeComponent();
 
             // Get DPI Scaling ratio
@@ -74,6 +74,7 @@ namespace ImageGlass {
             CornerApi.ApplyCorner(mnuContext.Handle);
             CornerApi.ApplyCorner(mnuShortcut.Handle);
         }
+
 
 
         #region Local variables
@@ -107,6 +108,10 @@ namespace ImageGlass {
 
         // slideshow countdown interval
         private uint _slideshowCountdown = 5;
+
+        // slideshow image alert counter
+
+        private uint _imgChangeAlertCounter = Configs.numImgChangeAlert;
 
         private readonly ToolFormManager _toolManager = new();
 
@@ -404,6 +409,7 @@ namespace ImageGlass {
         private void ImageList_OnFinishLoadingImage(object sender, EventArgs e) {
             // clear text when finishing
             ShowToastMsg("", 0);
+            
         }
 
         /// <summary>
@@ -698,8 +704,6 @@ namespace ImageGlass {
 
             // Raise image changed event
             Local.RaiseImageChangedEvent();
-
-
             try {
                 // apply image list settings
                 Local.ImageList.IsApplyColorProfileForAll = Configs.IsApplyColorProfileForAll;
@@ -844,6 +848,18 @@ namespace ImageGlass {
                     _loadingTimer.Enabled = true;
                 }
             }
+        }
+
+        /// <summary>
+        /// Play sound on Image change
+        /// </summary>
+        private void Local_OnImageChanged(object sender, EventArgs e) {
+            if (_imgChangeAlertCounter == 0) {
+                Local.PlaySound();
+                _imgChangeAlertCounter = Configs.numImgChangeAlert;
+                return;
+            }
+            else { _imgChangeAlertCounter -= 1; return; }
         }
 
 
@@ -2330,7 +2346,7 @@ namespace ImageGlass {
         /// <summary>
         /// Handle cropping tool event
         /// </summary>
-        /// <param name="actionEvent"></param>
+        /// <param name="actionEvent"></param> 
         private void CropActionEvent(frmCrop.CropActionEvent actionEvent) {
             switch (actionEvent) {
                 case frmCrop.CropActionEvent.Save:
@@ -5403,9 +5419,10 @@ namespace ImageGlass {
 
 
 
+
         #endregion
 
-        
+
     }
 
 

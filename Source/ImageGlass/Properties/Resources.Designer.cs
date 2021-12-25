@@ -69,5 +69,15 @@ namespace ImageGlass.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        /// <summary>
+        ///   Sound for slideshow.
+        /// </summary>
+        internal static System.Media.SoundPlayer  bell {
+            get {
+                object obj = ResourceManager.GetObject("bell");
+                System.Diagnostics.Debug.Write(obj.ToString());
+                return ((System.Media.SoundPlayer)(obj));
+            }
+        }
     }
 }
