@@ -387,7 +387,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon256.ico" />
-    <EmbeddedResource Include="Resources\bell" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.0.63\analyzers\cs\Microsoft.VisualStudio.Threading.Analyzers.CodeFixes.dll" />

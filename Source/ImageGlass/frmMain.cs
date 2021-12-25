@@ -113,6 +113,8 @@ namespace ImageGlass {
 
         private uint _imgChangeAlertCounter = Configs.numImgChangeAlert;
 
+        private bool _chkimgChangeAlert = Configs.IsImgChangeAlert;
+
         private readonly ToolFormManager _toolManager = new();
 
         private MovableForm _movableForm;
@@ -854,12 +856,17 @@ namespace ImageGlass {
         /// Play sound on Image change
         /// </summary>
         private void Local_OnImageChanged(object sender, EventArgs e) {
-            if (_imgChangeAlertCounter == 0) {
-                Local.PlaySound();
-                _imgChangeAlertCounter = Configs.numImgChangeAlert;
-                return;
+            if (_chkimgChangeAlert == true) {
+                if (_imgChangeAlertCounter == 0) {
+                    Local.PlaySound();
+                    _imgChangeAlertCounter = Configs.numImgChangeAlert;
+                    return;
+                }
+                else { _imgChangeAlertCounter -= 1; return; }
             }
-            else { _imgChangeAlertCounter -= 1; return; }
+            else {
+                _chkimgChangeAlert = Configs.IsImgChangeAlert;
+            }
         }
 
 
