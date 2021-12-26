@@ -342,6 +342,14 @@ public partial class ViewBox : HybridControl
         _animator = new HighResolutionGifAnimator();
     }
 
+    protected override void OnLoaded()
+    {
+        base.OnLoaded();
+
+        // draw the control
+        Refresh();
+    }
+
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
@@ -524,35 +532,13 @@ public partial class ViewBox : HybridControl
 
 
         // Image panning check
-        #region Image panning check
-        if (_isMouseDown && _d2dBitmap is not null)
+        if (_isMouseDown)
         {
-            _srcRect.X += ((_panHostPoint.X - e.Location.X) / _zoomFactor)
-                + _panSpeed.X;
-
-            _srcRect.Y += ((_panHostPoint.Y - e.Location.Y) / _zoomFactor)
-                + _panSpeed.Y;
-
-
-            _drawPoint = new();
-            requestRerender = true;
-            _shouldRecalculateDrawingRegion = true;
-
-
-            if (_xOut == false)
-            {
-                _panHostPoint.X = e.Location.X;
-            }
-
-            if (_yOut == false)
-            {
-                _panHostPoint.Y = e.Location.Y;
-            }
-
-            // emit event
-            OnPanning?.Invoke(new(e.Location, new(_panHostPoint)));
+            requestRerender = PanTo(
+                _panHostPoint.X - e.Location.X,
+                _panHostPoint.Y - e.Location.Y,
+                false);
         }
-        #endregion
 
 
         // emit event OnImageMouseMove
@@ -633,14 +619,27 @@ public partial class ViewBox : HybridControl
         base.OnResize(e);
     }
 
-    protected override void OnLoaded()
+    protected override void OnPreviewKeyDown(PreviewKeyDownEventArgs e)
     {
-        base.OnLoaded();
+        base.OnPreviewKeyDown(e);
 
-        // draw the control
-        Refresh();
+        if (e.KeyCode == Keys.Right)
+        {
+            PanTo(30, 0);
+        }
+        else if (e.KeyCode == Keys.Left)
+        {
+            PanTo(-30, 0);
+        }
+        else if (e.KeyCode == Keys.Up)
+        {
+            PanTo(0, -30);
+        }
+        else if (e.KeyCode == Keys.Down)
+        {
+            PanTo(0, 30);
+        }
     }
-
 
     protected override void OnFrame()
     {
@@ -648,6 +647,7 @@ public partial class ViewBox : HybridControl
 
         // do something
     }
+
 
     protected override void OnRender(IHybridGraphics g)
     {
@@ -1066,6 +1066,63 @@ public partial class ViewBox : HybridControl
     {
         UpdateZoomMode();
         Invalidate();
+    }
+
+
+    /// <summary>
+    /// Pan the current viewport to a distance
+    /// </summary>
+    /// <param name="hDistance">Horizontal distance</param>
+    /// <param name="vDistance">Vertical distance</param>
+    /// <param name="requestRerender"><c>true</c> to request the control invalidates.</param>
+    /// <returns>
+    /// <list type="table">
+    /// <item><c>true</c> if the viewport is changed.</item>
+    /// <item><c>false</c> if the viewport is unchanged.</item>
+    /// </list>
+    /// </returns>
+    public bool PanTo(float hDistance, float vDistance, bool requestRerender = true)
+    {
+        if (_d2dBitmap is null) return false;
+
+        var loc = PointToClient(Cursor.Position);
+
+
+        // horizontal
+        if (hDistance != 0)
+        {
+            _srcRect.X += (hDistance / _zoomFactor) + _panSpeed.X;
+        }
+
+        // vertical 
+        if (vDistance != 0)
+        {
+            _srcRect.Y += (vDistance / _zoomFactor) + _panSpeed.Y;
+        }
+
+        _drawPoint = new();
+        _shouldRecalculateDrawingRegion = true;
+
+
+        if (_xOut == false)
+        {
+            _panHostPoint.X = loc.X;
+        }
+
+        if (_yOut == false)
+        {
+            _panHostPoint.Y = loc.Y;
+        }
+
+        // emit event
+        OnPanning?.Invoke(new(loc, new(_panHostPoint)));
+
+        if (requestRerender)
+        {
+            Invalidate();
+        }
+
+        return true;
     }
 
 
