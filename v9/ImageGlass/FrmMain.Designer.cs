@@ -31,7 +31,6 @@ namespace ImageGlass
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            ImageGlass.PhotoBox.Animator.HighResolutionGifAnimator highResolutionGifAnimator1 = new ImageGlass.PhotoBox.Animator.HighResolutionGifAnimator();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.Toolbar = new ImageGlass.UI.ModernToolbar();
             this.MnuMain = new ImageGlass.UI.ModernMenu(this.components);
@@ -1005,7 +1004,6 @@ namespace ImageGlass
             // PicBox
             // 
             this.PicBox.AnimationInterval = 100;
-            this.PicBox.Animator = highResolutionGifAnimator1;
             this.PicBox.BackgroundImage = null;
             this.PicBox.CheckerboardMode = ImageGlass.Base.PhotoBox.CheckerboardMode.Image;
             this.PicBox.Dock = System.Windows.Forms.DockStyle.Fill;

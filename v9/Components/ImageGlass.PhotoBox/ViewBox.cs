@@ -68,7 +68,7 @@ public partial class ViewBox : HybridControl
     private Base.PhotoBox.InterpolationMode _interpolationMode = Base.PhotoBox.InterpolationMode.NearestNeighbor;
 
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
-    private IAnimator _animator = new DefaultGifAnimator();
+    private IAnimator _animator;
     private bool _useHardwardAccelerationBackup = true;
     private bool _shouldRecalculateDrawingRegion = true;
 
@@ -113,27 +113,7 @@ public partial class ViewBox : HybridControl
         {
             if (_gdiBitmap is null) return false;
 
-            return Animator.CanAnimate(_gdiBitmap);
-        }
-    }
-
-    /// <summary>
-    /// Gets, sets the animator which handle image animation
-    /// </summary>
-    [Browsable(false)]
-    public IAnimator Animator
-    {
-        get => _animator;
-        set
-        {
-            if (_gdiBitmap != null && IsAnimating)
-            {
-                StopAnimating();
-            }
-            _animator = value;
-
-            // Mimick Image property behavior
-            OnImageChanged(EventArgs.Empty);
+            return _animator.CanAnimate(_gdiBitmap);
         }
     }
 
@@ -329,10 +309,17 @@ public partial class ViewBox : HybridControl
 
 
     /// <summary>
+    /// Occurs when the image is changed
+    /// </summary>
+    public event ImageChangedEventHandler? OnImageChanged;
+    public delegate void ImageChangedEventHandler(EventArgs e);
+
+
+    /// <summary>
     /// Occurs when the mouse pointer is moved over the control
     /// </summary>
-    public event MouseMoveEventHandler? OnMouseMoveEx;
-    public delegate void MouseMoveEventHandler(MouseMoveEventArgs e);
+    public event ImageMouseMoveEventHandler? OnImageMouseMove;
+    public delegate void ImageMouseMoveEventHandler(ImageMouseMoveEventArgs e);
 
 
     #endregion
@@ -345,7 +332,14 @@ public partial class ViewBox : HybridControl
     public ViewBox()
     {
         UseHardwardAcceleration = true;
-        CheckAnimationClock();
+
+        // request for high resolution gif animation
+        if (!TimerApi.HasRequestedRateAtLeastAsFastAs(10) && TimerApi.TimeBeginPeriod(10))
+        {
+            HighResolutionGifAnimator.SetTickTimeInMilliseconds(10);
+        }
+
+        _animator = new HighResolutionGifAnimator();
     }
 
     protected override void Dispose(bool disposing)
@@ -561,6 +555,13 @@ public partial class ViewBox : HybridControl
         #endregion
 
 
+        // emit event OnImageMouseMove
+        var imgX = (e.X - _destRect.X) / _zoomFactor + _srcRect.X;
+        var imgY = (e.Y - _destRect.Y) / _zoomFactor + _srcRect.Y;
+        OnImageMouseMove?.Invoke(new(imgX, imgY, e.Button));
+
+
+        // request re-render control
         if (requestRerender)
         {
             Invalidate();
@@ -693,7 +694,7 @@ public partial class ViewBox : HybridControl
         {
             if (IsAnimating && !DesignMode)
             {
-                Animator.UpdateFrames(_gdiBitmap);
+                _animator.UpdateFrames(_gdiBitmap);
             }
 
             g.DrawImage(_gdiBitmap, _destRect, _srcRect, 1, (int)_interpolationMode);
@@ -710,17 +711,17 @@ public partial class ViewBox : HybridControl
         {
             // stop the animation and reset to the first frame.
             IsAnimating = false;
-            Animator.StopAnimate(_gdiBitmap, OnFrameChangedHandler);
+            _animator.StopAnimate(_gdiBitmap, OnFrameChangedHandler);
         }
         catch (InvalidOperationException)
         {
             // issue #373: a race condition caused this exception: deleting the image from underneath us could
-            // cause a collision in HighResolutionGifAnimator. I've not been able to repro; hopefully this is
+            // cause a collision in HighResolutionGif_animator. I've not been able to repro; hopefully this is
             // the correct response.
 
             // stop the animation and reset to the first frame.
             IsAnimating = false;
-            Animator.StopAnimate(_gdiBitmap, OnFrameChangedHandler);
+            _animator.StopAnimate(_gdiBitmap, OnFrameChangedHandler);
         }
 
         g.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
@@ -1134,7 +1135,7 @@ public partial class ViewBox : HybridControl
         _d2dBitmap?.Dispose();
         _d2dBitmap = Device.LoadBitmap(filename);
 
-        OnImageChanged(EventArgs.Empty);
+        PrepareImage();
     }
 
 
@@ -1154,33 +1155,14 @@ public partial class ViewBox : HybridControl
         if (_gdiBitmap is null) return;
 
         _d2dBitmap = Device.CreateBitmapFromGDIBitmap(_gdiBitmap);
-        OnImageChanged(EventArgs.Empty);
+        PrepareImage();
     }
 
-
-    private void OnFrameChangedHandler(object? sender, EventArgs eventArgs)
+    private void PrepareImage()
     {
-        Invalidate();
-    }
+        // emit OnImageChanged event
+        OnImageChanged?.Invoke(EventArgs.Empty);
 
-    private void CheckAnimationClock(bool isUsingFasterClock = true)
-    {
-        if (isUsingFasterClock)
-        {
-            if (!TimerApi.HasRequestedRateAtLeastAsFastAs(10) && TimerApi.TimeBeginPeriod(10))
-                HighResolutionGifAnimator.SetTickTimeInMilliseconds(10);
-            Animator = new HighResolutionGifAnimator();
-        }
-        else
-        {
-            if (TimerApi.HasRequestedRateAlready(10))
-                TimerApi.TimeEndPeriod(10);
-            Animator = new DefaultGifAnimator();
-        }
-    }
-
-    protected virtual void OnImageChanged(EventArgs e)
-    {
         if (CanAnimate && _gdiBitmap is not null)
         {
             UpdateZoomMode();
@@ -1191,6 +1173,13 @@ public partial class ViewBox : HybridControl
             Refresh();
         }
     }
+
+
+    private void OnFrameChangedHandler(object? sender, EventArgs eventArgs)
+    {
+        Invalidate();
+    }
+
 
 
     /// <summary>
@@ -1209,7 +1198,7 @@ public partial class ViewBox : HybridControl
             // force using GDI+ to animate GIF
             UseHardwardAcceleration = false;
 
-            Animator.Animate(_gdiBitmap, OnFrameChangedHandler);
+            _animator.Animate(_gdiBitmap, OnFrameChangedHandler);
             IsAnimating = true;
         }
         catch (Exception) { }
@@ -1222,7 +1211,7 @@ public partial class ViewBox : HybridControl
     {
         if (_gdiBitmap is not null)
         {
-            Animator.StopAnimate(_gdiBitmap, OnFrameChangedHandler);
+            _animator.StopAnimate(_gdiBitmap, OnFrameChangedHandler);
         }
 
         IsAnimating = false;

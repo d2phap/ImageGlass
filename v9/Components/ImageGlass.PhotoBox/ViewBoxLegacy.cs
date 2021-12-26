@@ -111,7 +111,7 @@ public class ViewBoxLegacy
     /// Occurs when the mouse pointer is moved over the control
     /// </summary>
     public event MouseMoveEventHandler? OnMouseMove = null;
-    public delegate void MouseMoveEventHandler(MouseMoveEventArgs e);
+    public delegate void MouseMoveEventHandler(ImageMouseMoveEventArgs e);
 
 
     /// <summary>
