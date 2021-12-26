@@ -23,6 +23,7 @@ using ImageGlass.Base.WinApi;
 using ImageGlass.PhotoBox.Animator;
 using System.ComponentModel;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using unvell.D2DLib;
@@ -69,6 +70,7 @@ public partial class ViewBox : HybridControl
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
     private IAnimator _animator = new DefaultGifAnimator();
     private bool _useHardwardAccelerationBackup = true;
+    private bool _shouldRecalculateDrawingRegion = true;
 
     // Navigation buttons
     private const float NAV_PADDING = 20f;
@@ -78,11 +80,19 @@ public partial class ViewBox : HybridControl
     private bool _isNavRightPressed = false;
     private PointF _navLeftPos => new(NavButtonRadius + NAV_PADDING, Height / 2);
     private PointF _navRightPos => new(Width - NavButtonRadius - NAV_PADDING, Height / 2);
-    private NavButtonDisplay _navDisplay = NavButtonDisplay.Both;
+    private NavButtonDisplay _navDisplay = NavButtonDisplay.None;
+    private bool _isNavVisible = false; // to reduce drawing Nav when the cursor is out of nav regions
 
-    
+
 
     #region Public properties
+
+    /// <summary>
+    /// Checks if the bitmap image has alpha pixels
+    /// </summary>
+    [Browsable(false)]
+    public bool HasAlphaPixels => _gdiBitmap is not null && _gdiBitmap.PixelFormat.HasFlag(PixelFormat.Alpha);
+
 
     // Animation
     #region Animation
@@ -270,10 +280,6 @@ public partial class ViewBox : HybridControl
     public float NavButtonRadius { get; set; } = 50f;
 
     [Category("NavigationButtons")]
-    [DefaultValue(typeof(Color), "Transparent")]
-    public Color NavBackColor { get; set; } = Color.Transparent;
-
-    [Category("NavigationButtons")]
     [DefaultValue(typeof(Color), "150, 0, 0, 0")]
     public Color NavHoveredColor { get; set; } = Color.FromArgb(150, Color.Black);
 
@@ -375,7 +381,7 @@ public partial class ViewBox : HybridControl
                 NavButtonRadius * 2);
 
                 // calculate whether the point inside the rect
-                requestRerender = _isNavLeftPressed = leftClickable.Contains(e.Location);
+                _isNavLeftPressed = leftClickable.Contains(e.Location);
             }
 
 
@@ -390,8 +396,10 @@ public partial class ViewBox : HybridControl
                 NavButtonRadius * 2);
 
                 // calculate whether the point inside the rect
-                requestRerender = _isNavRightPressed = rightClickable.Contains(e.Location);
+                _isNavRightPressed = rightClickable.Contains(e.Location);
             }
+
+            requestRerender = _isNavLeftPressed || _isNavRightPressed;
         }
         #endregion
 
@@ -436,11 +444,11 @@ public partial class ViewBox : HybridControl
                     NavButtonRadius * 2,
                     NavButtonRadius * 2);
 
-                // calculate whether the point inside the rect
-                _isNavLeftPressed = leftClickable.Contains(e.Location);
-
-                // emit nav button event
-                if (_isNavLeftPressed) OnNavLeftClicked?.Invoke(e);
+                // emit nav button event if the point inside the rect
+                if (leftClickable.Contains(e.Location))
+                {
+                    OnNavLeftClicked?.Invoke(e);
+                }
             }
             else if (_isNavRightPressed)
             {
@@ -451,11 +459,11 @@ public partial class ViewBox : HybridControl
                     NavButtonRadius * 2,
                     NavButtonRadius * 2);
 
-                // calculate whether the point inside the rect
-                _isNavRightPressed = rightClickable.Contains(e.Location);
-
-                // emit nav button event
-                if (_isNavRightPressed) OnNavRightClicked?.Invoke(e);
+                // emit nav button event if the point inside the rect
+                if (rightClickable.Contains(e.Location))
+                {
+                    OnNavRightClicked?.Invoke(e);
+                }
             }
         }
 
@@ -491,7 +499,7 @@ public partial class ViewBox : HybridControl
                 NavButtonRadius * 6);
 
                 // calculate whether the point inside the rect
-                requestRerender = _isNavLeftHovered = leftHoverable.Contains(e.Location);
+                _isNavLeftHovered = leftHoverable.Contains(e.Location);
             }
 
             // right hoverable region
@@ -505,7 +513,17 @@ public partial class ViewBox : HybridControl
                 NavButtonRadius * 6);
 
                 // calculate whether the point inside the rect
-                requestRerender = _isNavRightHovered = rightHoverable.Contains(e.Location);
+                _isNavRightHovered = rightHoverable.Contains(e.Location);
+            }
+
+            if (!_isNavLeftHovered && !_isNavRightHovered && _isNavVisible)
+            {
+                requestRerender = true;
+                _isNavVisible = false;
+            }
+            else
+            {
+                requestRerender = _isNavVisible = _isNavLeftHovered || _isNavRightHovered;
             }
         }
         #endregion
@@ -524,6 +542,7 @@ public partial class ViewBox : HybridControl
 
             _drawPoint = new();
             requestRerender = true;
+            _shouldRecalculateDrawingRegion = true;
 
 
             if (_xOut == false)
@@ -554,6 +573,13 @@ public partial class ViewBox : HybridControl
 
         _isNavLeftHovered = false;
         _isNavRightHovered = false;
+
+
+        if (_isNavVisible)
+        {
+            _isNavVisible = false;
+            Invalidate();
+        }
     }
 
     protected override void OnMouseWheel(MouseEventArgs e)
@@ -572,6 +598,7 @@ public partial class ViewBox : HybridControl
 
             _oldZoomFactor = _zoomFactor;
             _zoomFactor *= 1f + speed;
+            _shouldRecalculateDrawingRegion = true;
         }
         // zoom out
         else if (e.Delta < 0)
@@ -581,6 +608,7 @@ public partial class ViewBox : HybridControl
 
             _oldZoomFactor = _zoomFactor;
             _zoomFactor /= 1f - speed;
+            _shouldRecalculateDrawingRegion = true;
         }
 
         _isManualZoom = true;
@@ -593,6 +621,8 @@ public partial class ViewBox : HybridControl
 
     protected override void OnResize(EventArgs e)
     {
+        _shouldRecalculateDrawingRegion = true;
+
         // redraw the control on resizing if it's not manual zoom
         if (IsReady && _d2dBitmap is not null && !_isManualZoom)
         {
@@ -624,7 +654,7 @@ public partial class ViewBox : HybridControl
 
 
         // update drawing regions
-        UpdateDrawingRegion();
+        CalculateDrawingRegion();
 
         // checkerboard background
         DrawCheckerboardLayer(g);
@@ -645,7 +675,6 @@ public partial class ViewBox : HybridControl
 
         // navigation layer
         DrawNavigationLayer(g);
-
     }
 
 
@@ -698,9 +727,9 @@ public partial class ViewBox : HybridControl
     }
 
 
-    private void UpdateDrawingRegion()
+    private void CalculateDrawingRegion()
     {
-        if (_d2dBitmap is null) return;
+        if (_d2dBitmap is null || _shouldRecalculateDrawingRegion is false) return;
 
         var zoomX = _drawPoint.X;
         var zoomY = _drawPoint.Y;
@@ -768,6 +797,8 @@ public partial class ViewBox : HybridControl
             _yOut = true;
             _srcRect.Y = 0;
         }
+
+        _shouldRecalculateDrawingRegion = false;
     }
 
 
@@ -790,11 +821,18 @@ public partial class ViewBox : HybridControl
         if (CheckerboardMode == CheckerboardMode.None) return;
 
         // region to draw
-        var region = ClientRectangle;
+        Rectangle region;
 
         if (CheckerboardMode == CheckerboardMode.Image)
         {
+            // no need to draw checkerboard if image does not has alpha pixels
+            if (!HasAlphaPixels) return;
+
             region = (Rectangle)_destRect;
+        }
+        else
+        {
+            region = ClientRectangle;
         }
 
         // grid size
@@ -871,12 +909,11 @@ public partial class ViewBox : HybridControl
 
 
         // left navigation
-        if (NavDisplay == NavButtonDisplay.Left
-            || NavDisplay == NavButtonDisplay.Both)
+        if (NavDisplay == NavButtonDisplay.Left || NavDisplay == NavButtonDisplay.Both)
         {
             var iconOpacity = 1f;
             var iconY = 0;
-            var leftColor = NavBackColor;
+            var leftColor = Color.Transparent;
 
             if (_isNavLeftPressed)
             {
@@ -903,8 +940,7 @@ public partial class ViewBox : HybridControl
             }
 
             // draw icon
-            if (NavLeftImage is not null
-                && (_isNavLeftHovered || _isNavLeftPressed))
+            if (NavLeftImage is not null && (_isNavLeftHovered || _isNavLeftPressed))
             {
                 g.DrawImage(NavLeftImage,
                     new RectangleF(
@@ -919,12 +955,11 @@ public partial class ViewBox : HybridControl
 
 
         // right navigation
-        if (NavDisplay == NavButtonDisplay.Right
-            || NavDisplay == NavButtonDisplay.Both)
+        if (NavDisplay == NavButtonDisplay.Right || NavDisplay == NavButtonDisplay.Both)
         {
             var iconOpacity = 1f;
             var iconY = 0;
-            var rightColor = NavBackColor;
+            var rightColor = Color.Transparent;
 
             if (_isNavRightPressed)
             {
@@ -951,8 +986,7 @@ public partial class ViewBox : HybridControl
             }
 
             // draw icon
-            if (NavRightImage is not null
-                && (_isNavRightHovered || _isNavRightPressed))
+            if (NavRightImage is not null && (_isNavRightHovered || _isNavRightPressed))
             {
                 g.DrawImage(NavRightImage,
                     new RectangleF(
@@ -1020,6 +1054,7 @@ public partial class ViewBox : HybridControl
 
         _zoomFactor = zoomFactor;
         _isManualZoom = false;
+        _shouldRecalculateDrawingRegion = true;
     }
 
 

@@ -43,7 +43,7 @@ public class HybridControl : Control
     private GDIGraphics? _graphicsGdi;
 
     private bool _firstPaintBackground = true;
-    private bool _enableAnimation;
+    private bool _enableAnimation = false;
     private int _currentFps = 0;
     private int _lastFps = 0;
     private DateTime _lastFpsUpdate = DateTime.UtcNow;

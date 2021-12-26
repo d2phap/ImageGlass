@@ -180,8 +180,14 @@ public class Main : IIgCodec
 
     public Bitmap? Load(string filename, CodecReadOptions options = default)
     {
+        var ext = Path.GetExtension(filename).ToUpperInvariant();
         var settings = ParseSettings(options, filename);
         Bitmap? output;
+
+        if (ext == ".GIF")
+        {
+            return new Bitmap(filename);
+        }
 
         if (options.Metadata?.FrameCount > 0)
         {
@@ -205,8 +211,14 @@ public class Main : IIgCodec
         CodecReadOptions options = default,
         CancellationToken token = default)
     {
+        var ext = Path.GetExtension(filename).ToUpperInvariant();
         var settings = ParseSettings(options, filename);
         Bitmap? output;
+
+        if (ext == ".GIF")
+        {
+            return new Bitmap(filename);
+        }
 
         if (options.Metadata?.FrameCount > 0)
         {
