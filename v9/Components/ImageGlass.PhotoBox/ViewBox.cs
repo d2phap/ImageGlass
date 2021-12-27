@@ -69,6 +69,7 @@ public partial class ViewBox : HybridControl
 
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
     private IAnimator _animator;
+    private AnimationSource _animationSource = AnimationSource.Default;
     private bool _useHardwareAccelerationBackup = true;
     private bool _shouldRecalculateDrawingRegion = true;
 
@@ -591,7 +592,7 @@ public partial class ViewBox : HybridControl
 
         if (!IsReady || _d2dBitmap is null || e.Delta == 0) return;
 
-        ZoomToPoint(e.Delta, e.Location);
+        _ = ZoomToPoint(e.Delta, e.Location);
     }
 
     protected override void OnResize(EventArgs e)
@@ -607,35 +608,44 @@ public partial class ViewBox : HybridControl
         base.OnResize(e);
     }
 
-
     protected override void OnPreviewKeyDown(PreviewKeyDownEventArgs e)
     {
         base.OnPreviewKeyDown(e);
 
+        
         if (e.KeyCode == Keys.Right)
         {
-            PanTo(30, 0);
+            _animationSource = AnimationSource.PanRight;
         }
         else if (e.KeyCode == Keys.Left)
         {
-            PanTo(-30, 0);
+            _animationSource = AnimationSource.PanLeft;
         }
         else if (e.KeyCode == Keys.Up)
         {
-            PanTo(0, -30);
+            _animationSource = AnimationSource.PanUp;
         }
         else if (e.KeyCode == Keys.Down)
         {
-            PanTo(0, 30);
+            _animationSource = AnimationSource.PanDown;
         }
         else if (e.KeyCode == Keys.Oemplus)
         {
-            ZoomIn();
+            _animationSource = AnimationSource.ZoomIn;
         }
         else if (e.KeyCode == Keys.OemMinus)
         {
-            ZoomOut();
+            _animationSource = AnimationSource.ZoomOut;
         }
+
+        EnableAnimation = true;
+    }
+
+    protected override void OnKeyUp(KeyEventArgs e)
+    {
+        base.OnKeyUp(e);
+
+        EnableAnimation = false;
     }
 
 
@@ -643,7 +653,36 @@ public partial class ViewBox : HybridControl
     {
         base.OnFrame();
 
-        // do something
+
+        // Panning
+        if (_animationSource.HasFlag(AnimationSource.PanLeft))
+        {
+            _ = PanTo(-20, 0, requestRerender: false);
+        }
+        else if (_animationSource.HasFlag(AnimationSource.PanRight))
+        {
+            _ = PanTo(20, 0, requestRerender: false);
+        }
+
+        if (_animationSource.HasFlag(AnimationSource.PanUp))
+        {
+            _ = PanTo(0, -20, requestRerender: false);
+        }
+        else if (_animationSource.HasFlag(AnimationSource.PanDown))
+        {
+            _ = PanTo(0, 20, requestRerender: false);
+        }
+
+        // Zooming
+        if (_animationSource.HasFlag(AnimationSource.ZoomIn))
+        {
+            _ = ZoomToPoint(20, requestRerender: false);
+        }
+        else if (_animationSource.HasFlag(AnimationSource.ZoomOut))
+        {
+            _ = ZoomToPoint(-20, requestRerender: false);
+        }
+
     }
 
 
@@ -881,29 +920,6 @@ public partial class ViewBox : HybridControl
         }
     }
 
-    public static Bitmap CreateCheckerBoxTile(float cellSize, Color cellColor1, Color cellColor2)
-    {
-        // draw the tile
-        var width = cellSize * 2;
-        var height = cellSize * 2;
-        var result = new Bitmap((int)width, (int)height);
-
-        using var g = Graphics.FromImage(result);
-        using (Brush brush = new SolidBrush(cellColor1))
-        {
-            g.FillRectangle(brush, new RectangleF(cellSize, 0, cellSize, cellSize));
-            g.FillRectangle(brush, new RectangleF(0, cellSize, cellSize, cellSize));
-        }
-
-        using (Brush brush = new SolidBrush(cellColor2))
-        {
-            g.FillRectangle(brush, new RectangleF(0, 0, cellSize, cellSize));
-            g.FillRectangle(brush, new RectangleF(cellSize, cellSize, cellSize, cellSize));
-        }
-
-        return result;
-    }
-
 
     protected virtual void DrawTextLayer(IHybridGraphics g)
     {
@@ -1093,6 +1109,30 @@ public partial class ViewBox : HybridControl
     }
 
 
+    private static Bitmap CreateCheckerBoxTile(float cellSize, Color cellColor1, Color cellColor2)
+    {
+        // draw the tile
+        var width = cellSize * 2;
+        var height = cellSize * 2;
+        var result = new Bitmap((int)width, (int)height);
+
+        using var g = Graphics.FromImage(result);
+        using (Brush brush = new SolidBrush(cellColor1))
+        {
+            g.FillRectangle(brush, new RectangleF(cellSize, 0, cellSize, cellSize));
+            g.FillRectangle(brush, new RectangleF(0, cellSize, cellSize, cellSize));
+        }
+
+        using (Brush brush = new SolidBrush(cellColor2))
+        {
+            g.FillRectangle(brush, new RectangleF(0, 0, cellSize, cellSize));
+            g.FillRectangle(brush, new RectangleF(cellSize, cellSize, cellSize, cellSize));
+        }
+
+        return result;
+    }
+
+
     /// <summary>
     /// Force the control to update zoom mode and invalidate itself.
     /// </summary>
@@ -1110,10 +1150,17 @@ public partial class ViewBox : HybridControl
     /// Client's cursor location to zoom into.
     /// <c><see cref="ImageViewportCenterPoint"/></c> is the default value.
     /// </param>
-    public void ZoomIn(PointF? point = null)
+    /// <returns>
+    ///   <list type="table">
+    ///     <item><c>true</c> if the viewport is changed.</item>
+    ///     <item><c>false</c> if the viewport is unchanged.</item>
+    ///   </list>
+    /// </returns>
+    public bool ZoomIn(PointF? point = null, bool requestRerender = true)
     {
-        ZoomToPoint(SystemInformation.MouseWheelScrollDelta, point);
+        return ZoomToPoint(SystemInformation.MouseWheelScrollDelta, point, requestRerender);
     }
+
 
     /// <summary>
     /// Zooms out of the image.
@@ -1122,10 +1169,17 @@ public partial class ViewBox : HybridControl
     /// Client's cursor location to zoom out.
     /// <c><see cref="ImageViewportCenterPoint"/></c> is the default value.
     /// </param>
-    public void ZoomOut(PointF? point = null)
+    /// <returns>
+    ///   <list type="table">
+    ///     <item><c>true</c> if the viewport is changed.</item>
+    ///     <item><c>false</c> if the viewport is unchanged.</item>
+    ///   </list>
+    /// </returns>
+    public bool ZoomOut(PointF? point = null, bool requestRerender = true)
     {
-        ZoomToPoint(-SystemInformation.MouseWheelScrollDelta, point);
+        return ZoomToPoint(-SystemInformation.MouseWheelScrollDelta, point, requestRerender);
     }
+
 
     /// <summary>
     /// Scales the image using delta value.
@@ -1140,7 +1194,13 @@ public partial class ViewBox : HybridControl
     /// Client's cursor location to zoom out.
     /// <c><see cref="ImageViewportCenterPoint"/></c> is the default value.
     /// </param>
-    public void ZoomToPoint(float delta, PointF? point = null)
+    /// <returns>
+    ///   <list type="table">
+    ///     <item><c>true</c> if the viewport is changed.</item>
+    ///     <item><c>false</c> if the viewport is unchanged.</item>
+    ///   </list>
+    /// </returns>
+    public bool ZoomToPoint(float delta, PointF? point = null, bool requestRerender = true)
     {
         var speed = delta / 500f;
         var location = new PointF()
@@ -1153,7 +1213,7 @@ public partial class ViewBox : HybridControl
         if (delta > 0)
         {
             if (_zoomFactor > MaxZoom)
-                return;
+                return false;
 
             _oldZoomFactor = _zoomFactor;
             _zoomFactor *= 1f + speed;
@@ -1163,7 +1223,7 @@ public partial class ViewBox : HybridControl
         else if (delta < 0)
         {
             if (_zoomFactor < MinZoom)
-                return;
+                return false;
 
             _oldZoomFactor = _zoomFactor;
             _zoomFactor /= 1f - speed;
@@ -1172,10 +1232,16 @@ public partial class ViewBox : HybridControl
 
         _isManualZoom = true;
         _drawPoint = location.ToVector2();
-        Invalidate();
+
+        if (requestRerender)
+        {
+            Invalidate();
+        }
 
         // emit OnZoomChanged event
         OnZoomChanged?.Invoke(new(_zoomFactor));
+
+        return true;
     }
 
 
