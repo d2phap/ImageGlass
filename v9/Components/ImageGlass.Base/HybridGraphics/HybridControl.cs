@@ -47,7 +47,7 @@ public class HybridControl : Control
     private int _currentFps = 0;
     private int _lastFps = 0;
     private DateTime _lastFpsUpdate = DateTime.UtcNow;
-    private System.Windows.Forms.Timer _animationTimer = new();
+    private System.Windows.Forms.Timer _animationTimer = new() { Interval = 10 };
 
 
     /// <summary>
@@ -135,7 +135,7 @@ public class HybridControl : Control
     /// Gets, sets animation timer interval.
     /// </summary>
     [Category("Animation")]
-    [DefaultValue(false)]
+    [DefaultValue(10)]
     public int AnimationInterval
     {
         get => _animationTimer.Interval;

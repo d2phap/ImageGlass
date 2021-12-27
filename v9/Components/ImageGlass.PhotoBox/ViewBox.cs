@@ -111,6 +111,7 @@ public partial class ViewBox : HybridControl
         Y = ImageViewport.Y + ImageViewport.Height / 2,
     };
 
+
     // Animation
     #region Animation
 
@@ -240,8 +241,8 @@ public partial class ViewBox : HybridControl
     }
 
     [Category("Checkerboard")]
-    [DefaultValue(typeof(SizeF), "12, 12")]
-    public SizeF CheckerboardCellSize { get; set; } = new(12, 12);
+    [DefaultValue(typeof(float), "12")]
+    public float CheckerboardCellSize { get; set; } = 12f;
 
     [Category("Checkerboard")]
     [DefaultValue(typeof(Color), "25, 0, 0, 0")]
@@ -286,14 +287,12 @@ public partial class ViewBox : HybridControl
 
     // Left button
     [Category("NavigationButtons")]
-    [DefaultValue(typeof(Bitmap))]
+    [DefaultValue(typeof(Bitmap), null)]
     public Bitmap? NavLeftImage { get; set; }
-
-
 
     // Right button
     [Category("NavigationButtons")]
-    [DefaultValue(typeof(Bitmap))]
+    [DefaultValue(typeof(Bitmap), null)]
     public Bitmap? NavRightImage { get; set; }
 
 
@@ -608,6 +607,7 @@ public partial class ViewBox : HybridControl
         base.OnResize(e);
     }
 
+
     protected override void OnPreviewKeyDown(PreviewKeyDownEventArgs e)
     {
         base.OnPreviewKeyDown(e);
@@ -637,6 +637,7 @@ public partial class ViewBox : HybridControl
             ZoomOut();
         }
     }
+
 
     protected override void OnFrame()
     {
@@ -676,7 +677,7 @@ public partial class ViewBox : HybridControl
     }
 
 
-    private void DrawGifFrame(IHybridGraphics hg)
+    protected virtual void DrawGifFrame(IHybridGraphics hg)
     {
         if (_gdiBitmap is null) return;
 
@@ -725,7 +726,7 @@ public partial class ViewBox : HybridControl
     }
 
 
-    private void CalculateDrawingRegion()
+    protected virtual void CalculateDrawingRegion()
     {
         if (_d2dBitmap is null || _shouldRecalculateDrawingRegion is false) return;
 
@@ -800,7 +801,7 @@ public partial class ViewBox : HybridControl
     }
 
 
-    private void DrawImageLayer(IHybridGraphics g)
+    protected virtual void DrawImageLayer(IHybridGraphics g)
     {
         if (_d2dBitmap is not null && UseHardwareAcceleration)
         {
@@ -814,7 +815,7 @@ public partial class ViewBox : HybridControl
     }
 
 
-    private void DrawCheckerboardLayer(IHybridGraphics g)
+    protected virtual void DrawCheckerboardLayer(IHybridGraphics g)
     {
         if (CheckerboardMode == CheckerboardMode.None) return;
 
@@ -833,42 +834,78 @@ public partial class ViewBox : HybridControl
             region = ClientRectangle;
         }
 
-        // grid size
-        int rows = (int)Math.Ceiling(region.Width / CheckerboardCellSize.Width);
-        int cols = (int)Math.Ceiling(region.Height / CheckerboardCellSize.Height);
-
-
-        // draw grid
-        for (int row = 0; row < rows; row++)
+        
+        if (UseHardwareAcceleration)
         {
-            for (int col = 0; col < cols; col++)
+            // grid size
+            int rows = (int)Math.Ceiling(region.Width / CheckerboardCellSize);
+            int cols = (int)Math.Ceiling(region.Height / CheckerboardCellSize);
+
+            // draw grid
+            for (int row = 0; row < rows; row++)
             {
-                Color color;
-                if ((row + col) % 2 == 0)
+                for (int col = 0; col < cols; col++)
                 {
-                    color = CheckerboardColor1;
+                    Color color;
+                    if ((row + col) % 2 == 0)
+                    {
+                        color = CheckerboardColor1;
+                    }
+                    else
+                    {
+                        color = CheckerboardColor2;
+                    }
+
+                    var drawnW = row * CheckerboardCellSize;
+                    var drawnH = col * CheckerboardCellSize;
+
+                    var x = drawnW + region.X;
+                    var y = drawnH + region.Y;
+
+                    var w = Math.Min(region.Width - drawnW, CheckerboardCellSize);
+                    var h = Math.Min(region.Height - drawnH, CheckerboardCellSize);
+
+                    g.FillRectangle(new(x, y, w, h), color);
                 }
-                else
-                {
-                    color = CheckerboardColor2;
-                }
-
-                var drawnW = row * CheckerboardCellSize.Width;
-                var drawnH = col * CheckerboardCellSize.Height;
-
-                var x = drawnW + region.X;
-                var y = drawnH + region.Y;
-
-                var w = Math.Min(region.Width - drawnW, CheckerboardCellSize.Width);
-                var h = Math.Min(region.Height - drawnH, CheckerboardCellSize.Height);
-
-                g.FillRectangle(new(x, y, w, h), color);
             }
+        }
+        else
+        {
+            // use GDI+ Texture
+            var gdiG = g as GDIGraphics;
+
+            using var checkerTile = CreateCheckerBoxTile(CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
+            using var texture = new TextureBrush(checkerTile);
+
+            gdiG?.Graphics.FillRectangle(texture, region);
         }
     }
 
+    public static Bitmap CreateCheckerBoxTile(float cellSize, Color cellColor1, Color cellColor2)
+    {
+        // draw the tile
+        var width = cellSize * 2;
+        var height = cellSize * 2;
+        var result = new Bitmap((int)width, (int)height);
 
-    private void DrawTextLayer(IHybridGraphics g)
+        using var g = Graphics.FromImage(result);
+        using (Brush brush = new SolidBrush(cellColor1))
+        {
+            g.FillRectangle(brush, new RectangleF(cellSize, 0, cellSize, cellSize));
+            g.FillRectangle(brush, new RectangleF(0, cellSize, cellSize, cellSize));
+        }
+
+        using (Brush brush = new SolidBrush(cellColor2))
+        {
+            g.FillRectangle(brush, new RectangleF(0, 0, cellSize, cellSize));
+            g.FillRectangle(brush, new RectangleF(cellSize, cellSize, cellSize, cellSize));
+        }
+
+        return result;
+    }
+
+
+    protected virtual void DrawTextLayer(IHybridGraphics g)
     {
         if (Text.Trim().Length == 0) return;
 
@@ -901,7 +938,7 @@ public partial class ViewBox : HybridControl
     }
 
 
-    private void DrawNavigationLayer(IHybridGraphics g)
+    protected virtual void DrawNavigationLayer(IHybridGraphics g)
     {
         if (NavDisplay == NavButtonDisplay.None) return;
 
@@ -999,7 +1036,7 @@ public partial class ViewBox : HybridControl
     }
 
 
-    private void UpdateZoomMode(ZoomMode? mode = null)
+    protected virtual void UpdateZoomMode(ZoomMode? mode = null)
     {
         if (!IsReady || _d2dBitmap is null) return;
 
@@ -1350,5 +1387,5 @@ public partial class ViewBox : HybridControl
         UseHardwareAcceleration = _useHardwareAccelerationBackup;
     }
 
-    
+
 }
