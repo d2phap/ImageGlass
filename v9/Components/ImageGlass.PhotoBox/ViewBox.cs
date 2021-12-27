@@ -47,7 +47,7 @@ public partial class ViewBox : HybridControl
     private D2DRect _srcRect = new(0, 0, 0, 0);
 
     /// <summary>
-    /// Gets the boundary of the displaying image content
+    /// Image viewport
     /// </summary>
     private D2DRect _destRect = new(0, 0, 0, 0);
 
@@ -69,7 +69,7 @@ public partial class ViewBox : HybridControl
 
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
     private IAnimator _animator;
-    private bool _useHardwardAccelerationBackup = true;
+    private bool _useHardwareAccelerationBackup = true;
     private bool _shouldRecalculateDrawingRegion = true;
 
     // Navigation buttons
@@ -93,6 +93,23 @@ public partial class ViewBox : HybridControl
     [Browsable(false)]
     public bool HasAlphaPixels => _gdiBitmap is not null && _gdiBitmap.PixelFormat.HasFlag(PixelFormat.Alpha);
 
+
+    /// <summary>
+    /// Gets image viewport
+    /// </summary>
+    [Browsable(false)]
+    public RectangleF ImageViewport => new(_destRect.Location, _destRect.Size);
+
+
+    /// <summary>
+    /// Gets the center point of image viewport
+    /// </summary>
+    [Browsable(false)]
+    public PointF ImageViewportCenterPoint => new()
+    {
+        X = ImageViewport.X + ImageViewport.Width / 2,
+        Y = ImageViewport.Y + ImageViewport.Height / 2,
+    };
 
     // Animation
     #region Animation
@@ -325,14 +342,11 @@ public partial class ViewBox : HybridControl
     #endregion
 
 
-
     #endregion
 
 
     public ViewBox()
     {
-        UseHardwardAcceleration = true;
-
         // request for high resolution gif animation
         if (!TimerApi.HasRequestedRateAtLeastAsFastAs(10) && TimerApi.TimeBeginPeriod(10))
         {
@@ -345,6 +359,9 @@ public partial class ViewBox : HybridControl
     protected override void OnLoaded()
     {
         base.OnLoaded();
+
+        // back up value
+        _useHardwareAccelerationBackup = UseHardwareAcceleration;
 
         // draw the control
         Refresh();
@@ -575,35 +592,7 @@ public partial class ViewBox : HybridControl
 
         if (!IsReady || _d2dBitmap is null || e.Delta == 0) return;
 
-        var speed = e.Delta / 500f;
-
-        // zoom in
-        if (e.Delta > 0)
-        {
-            if (_zoomFactor > MaxZoom)
-                return;
-
-            _oldZoomFactor = _zoomFactor;
-            _zoomFactor *= 1f + speed;
-            _shouldRecalculateDrawingRegion = true;
-        }
-        // zoom out
-        else if (e.Delta < 0)
-        {
-            if (_zoomFactor < MinZoom)
-                return;
-
-            _oldZoomFactor = _zoomFactor;
-            _zoomFactor /= 1f - speed;
-            _shouldRecalculateDrawingRegion = true;
-        }
-
-        _isManualZoom = true;
-        _drawPoint = new(e.Location.X, e.Location.Y);
-        Invalidate();
-
-        // emit OnZoomChanged event
-        OnZoomChanged?.Invoke(new(_zoomFactor));
+        ZoomToPoint(e.Delta, e.Location);
     }
 
     protected override void OnResize(EventArgs e)
@@ -638,6 +627,14 @@ public partial class ViewBox : HybridControl
         else if (e.KeyCode == Keys.Down)
         {
             PanTo(0, 30);
+        }
+        else if (e.KeyCode == Keys.Oemplus)
+        {
+            ZoomIn();
+        }
+        else if (e.KeyCode == Keys.OemMinus)
+        {
+            ZoomOut();
         }
     }
 
@@ -805,7 +802,7 @@ public partial class ViewBox : HybridControl
 
     private void DrawImageLayer(IHybridGraphics g)
     {
-        if (_d2dBitmap is not null && UseHardwardAcceleration)
+        if (_d2dBitmap is not null && UseHardwareAcceleration)
         {
             var d2dg = g as Direct2DGraphics;
             d2dg?.DrawImage(_d2dBitmap, _destRect, _srcRect, 1f, (int)_interpolationMode);
@@ -1070,6 +1067,82 @@ public partial class ViewBox : HybridControl
 
 
     /// <summary>
+    /// Zooms into the image.
+    /// </summary>
+    /// <param name="point">
+    /// Client's cursor location to zoom into.
+    /// <c><see cref="ImageViewportCenterPoint"/></c> is the default value.
+    /// </param>
+    public void ZoomIn(PointF? point = null)
+    {
+        ZoomToPoint(SystemInformation.MouseWheelScrollDelta, point);
+    }
+
+    /// <summary>
+    /// Zooms out of the image.
+    /// </summary>
+    /// <param name="point">
+    /// Client's cursor location to zoom out.
+    /// <c><see cref="ImageViewportCenterPoint"/></c> is the default value.
+    /// </param>
+    public void ZoomOut(PointF? point = null)
+    {
+        ZoomToPoint(-SystemInformation.MouseWheelScrollDelta, point);
+    }
+
+    /// <summary>
+    /// Scales the image using delta value.
+    /// </summary>
+    /// <param name="delta">Delta value.
+    ///   <list type="table">
+    ///     <item><c>delta<![CDATA[>]]>0</c>: Zoom in.</item>
+    ///     <item><c>delta<![CDATA[<]]>0</c>: Zoom out.</item>
+    ///   </list>
+    /// </param>
+    /// <param name="point">
+    /// Client's cursor location to zoom out.
+    /// <c><see cref="ImageViewportCenterPoint"/></c> is the default value.
+    /// </param>
+    public void ZoomToPoint(float delta, PointF? point = null)
+    {
+        var speed = delta / 500f;
+        var location = new PointF()
+        {
+            X = point?.X ?? ImageViewportCenterPoint.X,
+            Y = point?.Y ?? ImageViewportCenterPoint.Y,
+        };
+
+        // zoom in
+        if (delta > 0)
+        {
+            if (_zoomFactor > MaxZoom)
+                return;
+
+            _oldZoomFactor = _zoomFactor;
+            _zoomFactor *= 1f + speed;
+            _shouldRecalculateDrawingRegion = true;
+        }
+        // zoom out
+        else if (delta < 0)
+        {
+            if (_zoomFactor < MinZoom)
+                return;
+
+            _oldZoomFactor = _zoomFactor;
+            _zoomFactor /= 1f - speed;
+            _shouldRecalculateDrawingRegion = true;
+        }
+
+        _isManualZoom = true;
+        _drawPoint = location.ToVector2();
+        Invalidate();
+
+        // emit OnZoomChanged event
+        OnZoomChanged?.Invoke(new(_zoomFactor));
+    }
+
+
+    /// <summary>
     /// Pan the current viewport to a distance
     /// </summary>
     /// <param name="hDistance">Horizontal distance</param>
@@ -1250,10 +1323,10 @@ public partial class ViewBox : HybridControl
         try
         {
             // backup current UseHardwardAcceleration value
-            _useHardwardAccelerationBackup = UseHardwardAcceleration;
+            _useHardwareAccelerationBackup = UseHardwareAcceleration;
 
             // force using GDI+ to animate GIF
-            UseHardwardAcceleration = false;
+            UseHardwareAcceleration = false;
 
             _animator.Animate(_gdiBitmap, OnFrameChangedHandler);
             IsAnimating = true;
@@ -1274,7 +1347,7 @@ public partial class ViewBox : HybridControl
         IsAnimating = false;
 
         // restore the UseHardwardAcceleration value
-        UseHardwardAcceleration = _useHardwardAccelerationBackup;
+        UseHardwareAcceleration = _useHardwareAccelerationBackup;
     }
 
     

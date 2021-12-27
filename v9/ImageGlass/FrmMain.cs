@@ -93,7 +93,7 @@ public partial class FrmMain : Form
             }
             else
             {
-                inputPath = @"D:\_GITHUB\sample-images\Samples\GIF\unicorn.gif";
+                inputPath = @"C:\Users\d2pha\Desktop\map50.jpg";
             }
         }
 

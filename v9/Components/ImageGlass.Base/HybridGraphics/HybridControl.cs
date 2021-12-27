@@ -91,7 +91,7 @@ public class HybridControl : Control
     /// </summary>
     [Category("Graphics")]
     [DefaultValue(true)]
-    public virtual bool UseHardwardAcceleration
+    public virtual bool UseHardwareAcceleration
     {
         get => _useHardwardAcceleration;
         set
@@ -316,7 +316,7 @@ public class HybridControl : Control
 
 
         // use hardware acceleration
-        if (UseHardwardAcceleration && _graphics is not null)
+        if (UseHardwareAcceleration && _graphics is not null)
         {
             DoubleBuffered = false;
 
