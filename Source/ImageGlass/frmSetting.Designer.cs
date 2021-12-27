@@ -75,7 +75,8 @@ namespace ImageGlass
             this.chkWelcomePicture = new System.Windows.Forms.CheckBox();
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tabImage = new System.Windows.Forms.TabPage();
-            this.numImgSound = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numImageSound = new System.Windows.Forms.NumericUpDown();
             this.chkImgAlert = new System.Windows.Forms.CheckBox();
             this.chkHideThumbnailBarInFullScreen = new System.Windows.Forms.CheckBox();
             this.lblHeadFullScreen = new System.Windows.Forms.Label();
@@ -235,7 +236,6 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
@@ -245,7 +245,7 @@ namespace ImageGlass
             this.tab1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabImage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numImgSound)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numImageSound)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSlideShowInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSlideshowIntervalTo)).BeginInit();
@@ -860,7 +860,7 @@ namespace ImageGlass
             this.tabImage.AutoScroll = true;
             this.tabImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.tabImage.Controls.Add(this.label1);
-            this.tabImage.Controls.Add(this.numImgSound);
+            this.tabImage.Controls.Add(this.numImageSound);
             this.tabImage.Controls.Add(this.chkImgAlert);
             this.tabImage.Controls.Add(this.chkHideThumbnailBarInFullScreen);
             this.tabImage.Controls.Add(this.lblHeadFullScreen);
@@ -917,12 +917,21 @@ namespace ImageGlass
             this.tabImage.TabIndex = 3;
             this.tabImage.Text = "Image";
             // 
-            // numImgSound
+            // label1
             // 
-            this.numImgSound.Location = new System.Drawing.Point(50, 1306);
-            this.numImgSound.Name = "numImgSound";
-            this.numImgSound.Size = new System.Drawing.Size(120, 23);
-            this.numImgSound.TabIndex = 74;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(50, 1287);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(179, 15);
+            this.label1.TabIndex = 75;
+            this.label1.Text = "[Number of Images before Alert]";
+            // 
+            // numImageSound
+            // 
+            this.numImageSound.Location = new System.Drawing.Point(50, 1306);
+            this.numImageSound.Name = "numImageSound";
+            this.numImageSound.Size = new System.Drawing.Size(120, 23);
+            this.numImageSound.TabIndex = 74;
             // 
             // chkImgAlert
             // 
@@ -3036,16 +3045,6 @@ namespace ImageGlass
             this.panel4.Size = new System.Drawing.Size(697, 48);
             this.panel4.TabIndex = 18;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(50, 1287);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(179, 15);
-            this.label1.TabIndex = 75;
-            this.label1.Text = "[Number of Images before Alert]";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -3076,7 +3075,7 @@ namespace ImageGlass
             this.tabGeneral.PerformLayout();
             this.tabImage.ResumeLayout(false);
             this.tabImage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numImgSound)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numImageSound)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSlideShowInterval)).EndInit();
@@ -3325,7 +3324,7 @@ namespace ImageGlass
         private System.Windows.Forms.Label lblHeadFullScreen;
         private System.Windows.Forms.CheckBox chkHideToolbarInFullScreen;
         private System.Windows.Forms.CheckBox chkImgAlert;
-        private System.Windows.Forms.NumericUpDown numImgSound;
+        private System.Windows.Forms.NumericUpDown numImageSound;
         private System.Windows.Forms.Label label1;
     }
 }

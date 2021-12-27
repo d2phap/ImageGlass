@@ -111,9 +111,9 @@ namespace ImageGlass {
 
         // slideshow image alert counter
 
-        private uint _imgChangeAlertCounter = Configs.numImgChangeAlert;
+        private uint _imgChangeAlertCounter = Configs.NumerImageChangeAlert;
 
-        private bool _chkimgChangeAlert = Configs.IsImgChangeAlert;
+        private bool _checkimgChangeAlert = Configs.IsImageChangeAlert;
 
         private readonly ToolFormManager _toolManager = new();
 
@@ -856,16 +856,16 @@ namespace ImageGlass {
         /// Play sound on Image change
         /// </summary>
         private void Local_OnImageChanged(object sender, EventArgs e) {
-            if (_chkimgChangeAlert == true) {
+            if (_checkimgChangeAlert == true) {
                 if (_imgChangeAlertCounter == 0) {
                     Local.PlaySound();
-                    _imgChangeAlertCounter = Configs.numImgChangeAlert;
+                    _imgChangeAlertCounter = Configs.NumerImageChangeAlert;
                     return;
                 }
                 else { _imgChangeAlertCounter -= 1; return; }
             }
             else {
-                _chkimgChangeAlert = Configs.IsImgChangeAlert;
+                _checkimgChangeAlert = Configs.IsImageChangeAlert;
             }
         }
 

@@ -67,7 +67,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets value of alert in Slideshow state
         /// </summary>
-        public static bool IsImgChangeAlert { get; set; } = false;
+        public static bool IsImageChangeAlert { get; set; } = false;
 
         /// <summary>
         /// Gets, sets value indicating whether the window is full screen or not
@@ -322,7 +322,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets the number of Images after which alert is played
         /// </summary>
-        public static uint numImgChangeAlert { get; set; } = 5;
+        public static uint NumerImageChangeAlert { get; set; } = 5;
 
 
 

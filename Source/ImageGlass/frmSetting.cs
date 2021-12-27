@@ -690,10 +690,10 @@ namespace ImageGlass {
             numSlideShowInterval_ValueChanged(null, null); // format interval value
 
             //Set value of Sound in Slide Show
-            chkImgAlert.Checked = Configs.IsImgChangeAlert;
+            chkImgAlert.Checked = Configs.IsImageChangeAlert;
 
             //Set number of Images after which sound is played
-            numImgSound.Value = Configs.numImgChangeAlert;
+            numImageSound.Value = Configs.NumerImageChangeAlert;
 
 
             // Full screen configs 
@@ -2063,8 +2063,8 @@ namespace ImageGlass {
 
             //Sound In Slideshow
 
-            Configs.IsImgChangeAlert=chkImgAlert.Checked;
-            Configs.numImgChangeAlert=(uint)numImgSound.Value;
+            Configs.IsImageChangeAlert=chkImgAlert.Checked;
+            Configs.NumerImageChangeAlert=(uint)numImageSound.Value;
             // Full screen
             Configs.IsHideToolbarInFullscreen = chkHideToolbarInFullScreen.Checked;
             Configs.IsHideThumbnailBarInFullscreen = chkHideThumbnailBarInFullScreen.Checked;
@@ -2164,8 +2164,5 @@ namespace ImageGlass {
 
         #endregion
 
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
     }
 }
