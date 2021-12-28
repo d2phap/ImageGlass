@@ -79,10 +79,11 @@ public partial class ViewBox : HybridControl
     private bool _isNavLeftPressed = false;
     private bool _isNavRightHovered = false;
     private bool _isNavRightPressed = false;
-    private PointF _navLeftPos => new(NavButtonRadius + NAV_PADDING, Height / 2);
-    private PointF _navRightPos => new(Width - NavButtonRadius - NAV_PADDING, Height / 2);
+    private PointF _navLeftPos => new(NavButtonSize.Width / 2 + NAV_PADDING, Height / 2);
+    private PointF _navRightPos => new(Width - NavButtonSize.Width / 2 - NAV_PADDING, Height / 2);
     private NavButtonDisplay _navDisplay = NavButtonDisplay.None;
     private bool _isNavVisible = false;
+    public float _navBorderRadius = 1f;
 
 
 
@@ -279,16 +280,27 @@ public partial class ViewBox : HybridControl
     }
 
     [Category("NavigationButtons")]
-    [DefaultValue(50f)]
-    public float NavButtonRadius { get; set; } = 50f;
+    [DefaultValue(90f)]
+    public SizeF NavButtonSize { get; set; } = new(90f, 90f);
+
+    [Category("NavigationButtons")]
+    [DefaultValue(1f)]
+    public float NavBorderRadius
+    {
+        get => _navBorderRadius;
+        set
+        {
+            _navBorderRadius = Math.Min(Math.Abs(value), NavButtonSize.Width / 2);
+        }
+    }
 
     [Category("NavigationButtons")]
     [DefaultValue(typeof(Color), "150, 0, 0, 0")]
     public Color NavHoveredColor { get; set; } = Color.FromArgb(150, Color.Black);
 
     [Category("NavigationButtons")]
-    [DefaultValue(typeof(Color), "120, 0, 0, 0")]
-    public Color NavPressedColor { get; set; } = Color.FromArgb(120, Color.Black);
+    [DefaultValue(typeof(Color), "200, 0, 0, 0")]
+    public Color NavPressedColor { get; set; } = Color.FromArgb(200, Color.Black);
 
     // Left button
     [Category("NavigationButtons")]
@@ -315,6 +327,18 @@ public partial class ViewBox : HybridControl
     [Category("NavigationButtons")]
     public event NavRightClickedEventHandler? OnNavRightClicked = null;
     public delegate void NavRightClickedEventHandler(MouseEventArgs e);
+
+    #endregion
+
+
+    // Misc
+    #region Misc
+
+    /// <summary>
+    /// Gets, sets border radius of message box
+    /// </summary>
+    [DefaultValue(1f)]
+    public float MessageBorderRadius { get; set; } = 1f;
 
     #endregion
 
@@ -398,10 +422,10 @@ public partial class ViewBox : HybridControl
             {
                 // left clickable region
                 var leftClickable = new RectangleF(
-                _navLeftPos.X - NavButtonRadius,
-                _navLeftPos.Y - NavButtonRadius,
-                NavButtonRadius * 2,
-                NavButtonRadius * 2);
+                _navLeftPos.X - NavButtonSize.Width / 2,
+                _navLeftPos.Y - NavButtonSize.Height / 2,
+                NavButtonSize.Width,
+                NavButtonSize.Height);
 
                 // calculate whether the point inside the rect
                 _isNavLeftPressed = leftClickable.Contains(e.Location);
@@ -413,10 +437,10 @@ public partial class ViewBox : HybridControl
             {
                 // right clickable region
                 var rightClickable = new RectangleF(
-                _navRightPos.X - NavButtonRadius,
-                _navRightPos.Y - NavButtonRadius,
-                NavButtonRadius * 2,
-                NavButtonRadius * 2);
+                _navRightPos.X - NavButtonSize.Width / 2,
+                _navRightPos.Y - NavButtonSize.Height / 2,
+                NavButtonSize.Width,
+                NavButtonSize.Height);
 
                 // calculate whether the point inside the rect
                 _isNavRightPressed = rightClickable.Contains(e.Location);
@@ -462,10 +486,10 @@ public partial class ViewBox : HybridControl
             {
                 // left clickable region
                 var leftClickable = new RectangleF(
-                    _navLeftPos.X - NavButtonRadius,
-                    _navLeftPos.Y - NavButtonRadius,
-                    NavButtonRadius * 2,
-                    NavButtonRadius * 2);
+                    _navLeftPos.X - NavButtonSize.Width / 2,
+                    _navLeftPos.Y - NavButtonSize.Height / 2,
+                    NavButtonSize.Width,
+                    NavButtonSize.Height);
 
                 // emit nav button event if the point inside the rect
                 if (leftClickable.Contains(e.Location))
@@ -477,10 +501,10 @@ public partial class ViewBox : HybridControl
             {
                 // right clickable region
                 var rightClickable = new RectangleF(
-                    _navRightPos.X - NavButtonRadius,
-                    _navRightPos.Y - NavButtonRadius,
-                    NavButtonRadius * 2,
-                    NavButtonRadius * 2);
+                    _navRightPos.X - NavButtonSize.Width / 2,
+                    _navRightPos.Y - NavButtonSize.Height / 2,
+                    NavButtonSize.Width,
+                    NavButtonSize.Height);
 
                 // emit nav button event if the point inside the rect
                 if (rightClickable.Contains(e.Location))
@@ -516,10 +540,10 @@ public partial class ViewBox : HybridControl
                 || NavDisplay == NavButtonDisplay.Both)
             {
                 var leftHoverable = new RectangleF(
-                _navLeftPos.X - NavButtonRadius - NAV_PADDING,
-                _navLeftPos.Y - NavButtonRadius * 3,
-                NavButtonRadius * 2 + NAV_PADDING,
-                NavButtonRadius * 6);
+                _navLeftPos.X - NavButtonSize.Width / 2 - NAV_PADDING,
+                _navLeftPos.Y - NavButtonSize.Height / 2 * 3,
+                NavButtonSize.Width + NAV_PADDING,
+                NavButtonSize.Height * 3);
 
                 // calculate whether the point inside the rect
                 _isNavLeftHovered = leftHoverable.Contains(e.Location);
@@ -530,10 +554,10 @@ public partial class ViewBox : HybridControl
                 || NavDisplay == NavButtonDisplay.Both)
             {
                 var rightHoverable = new RectangleF(
-                _navRightPos.X - NavButtonRadius,
-                _navRightPos.Y - NavButtonRadius * 3,
-                NavButtonRadius * 2 + NAV_PADDING,
-                NavButtonRadius * 6);
+                _navRightPos.X - NavButtonSize.Width / 2,
+                _navRightPos.Y - NavButtonSize.Height / 2 * 3,
+                NavButtonSize.Width + NAV_PADDING,
+                NavButtonSize.Height * 3);
 
                 // calculate whether the point inside the rect
                 _isNavRightHovered = rightHoverable.Contains(e.Location);
@@ -736,7 +760,7 @@ public partial class ViewBox : HybridControl
         }
 
         // text message
-        DrawTextLayer(g);
+        DrawMessageLayer(g);
 
         // navigation layer
         DrawNavigationLayer(g);
@@ -948,7 +972,7 @@ public partial class ViewBox : HybridControl
     }
 
 
-    protected virtual void DrawTextLayer(IHybridGraphics g)
+    protected virtual void DrawMessageLayer(IHybridGraphics g)
     {
         if (Text.Trim().Length == 0) return;
 
@@ -973,7 +997,7 @@ public partial class ViewBox : HybridControl
 
         // draw text background
         var color = Color.FromArgb(170, BackColor);
-        g.DrawRoundedRectangle(region, color, color, new(5, 5));
+        g.DrawRoundedRectangle(region, color, color, new(MessageBorderRadius, MessageBorderRadius));
 
 
         // draw text
@@ -1004,28 +1028,29 @@ public partial class ViewBox : HybridControl
                 leftColor = NavHoveredColor;
             }
 
-            // draw button
+            // draw background
             if (leftColor != Color.Transparent)
             {
-                var leftCircle = new RectangleF(
-                    _navLeftPos.X - NavButtonRadius,
-                    _navLeftPos.Y - NavButtonRadius,
-                    NavButtonRadius * 2,
-                    NavButtonRadius * 2);
+                var leftBg = new RectangleF(
+                    _navLeftPos.X - NavButtonSize.Width / 2,
+                    _navLeftPos.Y - NavButtonSize.Height / 2,
+                    NavButtonSize.Width,
+                    NavButtonSize.Height);
 
-                g.FillEllipse(leftCircle, leftColor);
-                g.DrawEllipse(leftCircle, leftColor, 1.25f);
+                g.DrawRoundedRectangle(leftBg, leftColor, leftColor, new PointF(NavBorderRadius, NavBorderRadius), 1.25f);
             }
 
             // draw icon
             if (NavLeftImage is not null && (_isNavLeftHovered || _isNavLeftPressed))
             {
+                var iconSize = Math.Min(NavButtonSize.Width, NavButtonSize.Height) / 2;
+
                 g.DrawImage(NavLeftImage,
                     new RectangleF(
-                        _navLeftPos.X - NavButtonRadius / 2,
-                        _navLeftPos.Y - NavButtonRadius / 2 + iconY,
-                        NavButtonRadius,
-                        NavButtonRadius),
+                        _navLeftPos.X - iconSize / 2,
+                        _navLeftPos.Y - iconSize / 2 + iconY,
+                        iconSize,
+                        iconSize),
                     new RectangleF(0, 0, NavLeftImage.Width, NavLeftImage.Height),
                     iconOpacity);
             }
@@ -1050,28 +1075,29 @@ public partial class ViewBox : HybridControl
                 rightColor = NavHoveredColor;
             }
 
-            // draw button
+            // draw background
             if (rightColor != Color.Transparent)
             {
-                var rightCircle = new RectangleF(
-                    _navRightPos.X - NavButtonRadius,
-                    _navRightPos.Y - NavButtonRadius,
-                    NavButtonRadius * 2,
-                    NavButtonRadius * 2);
+                var rightBg = new RectangleF(
+                    _navRightPos.X - NavButtonSize.Width / 2,
+                    _navRightPos.Y - NavButtonSize.Height / 2,
+                    NavButtonSize.Width,
+                    NavButtonSize.Height);
 
-                g.FillEllipse(rightCircle, rightColor);
-                g.DrawEllipse(rightCircle, rightColor, 1.25f);
+                g.DrawRoundedRectangle(rightBg, rightColor, rightColor, new PointF(NavBorderRadius, NavBorderRadius), 1.25f);
             }
 
             // draw icon
             if (NavRightImage is not null && (_isNavRightHovered || _isNavRightPressed))
             {
+                var iconSize = Math.Min(NavButtonSize.Width, NavButtonSize.Height) / 2;
+
                 g.DrawImage(NavRightImage,
                     new RectangleF(
-                        _navRightPos.X - NavButtonRadius / 2,
-                        _navRightPos.Y - NavButtonRadius / 2 + iconY,
-                        NavButtonRadius,
-                        NavButtonRadius),
+                        _navRightPos.X - iconSize / 2,
+                        _navRightPos.Y - iconSize / 2 + iconY,
+                        iconSize,
+                        iconSize),
                     new RectangleF(0, 0, NavRightImage.Width, NavRightImage.Height),
                     iconOpacity);
             }

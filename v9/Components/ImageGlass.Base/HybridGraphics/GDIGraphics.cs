@@ -219,7 +219,7 @@ public class GDIGraphics : IHybridGraphics
     /// <returns></returns>
     private static GraphicsPath GetRoundRectanglePath(RectangleF bounds, float radius)
     {
-        var diameter = radius * 2;
+        var diameter = Math.Abs(radius * 2);
         var size = new SizeF(diameter, diameter);
         var arc = new RectangleF(bounds.Location, size);
         var path = new GraphicsPath();

@@ -43,7 +43,7 @@ public partial class FrmMain
 
         // navigation buttons
         PicBox.NavHoveredColor = Color.FromArgb(200, Config.Theme.Settings.ToolbarBgColor);
-        PicBox.NavPressedColor = Color.FromArgb(170, Config.Theme.Settings.ToolbarBgColor);
+        PicBox.NavPressedColor = Color.FromArgb(240, Config.Theme.Settings.ToolbarBgColor);
         PicBox.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicBox.NavRightImage = Config.Theme.Settings.NavButtonRight;
 
