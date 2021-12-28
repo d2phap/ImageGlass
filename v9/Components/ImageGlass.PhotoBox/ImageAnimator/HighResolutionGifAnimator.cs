@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System.Collections.Concurrent;
 using System.Drawing.Imaging;
 
-namespace ImageGlass.PhotoBox.Animator;
+namespace ImageGlass.PhotoBox.ImageAnimator;
 
 
 /// <summary>
@@ -37,7 +37,7 @@ namespace ImageGlass.PhotoBox.Animator;
 /// to a resolution of 15ms.  Call setTickInMilliseconds to ask for a different rate, which
 /// sets the fastest tick allowed for all HighResolutionAnimators. </p>
 /// </summary>
-public class HighResolutionGifAnimator : IAnimator
+public class HighResolutionGifAnimator : IImageAnimator
 {
     #region STATIC 
     private static int ourMinTickTimeInMilliseconds;

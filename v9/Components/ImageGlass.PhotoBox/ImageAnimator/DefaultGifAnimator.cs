@@ -22,13 +22,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 * THANKS [Meowski] FOR THIS CONTRIBUTION
 *******************************************/
 
-namespace ImageGlass.PhotoBox.Animator;
+namespace ImageGlass.PhotoBox.ImageAnimator;
 
 /// <summary>
 /// This is a wrapper for the original System.Drawing animator.
-/// See <see cref="ImageAnimator"/>.
+/// See <see cref="System.Drawing.ImageAnimator"/>.
 /// </summary>
-public class DefaultGifAnimator : IAnimator
+public class DefaultGifAnimator : IImageAnimator
 {
 
     /// <summary>
@@ -37,7 +37,7 @@ public class DefaultGifAnimator : IAnimator
     /// <param name="image"></param>
     public void UpdateFrames(Image image)
     {
-        ImageAnimator.UpdateFrames(image);
+        System.Drawing.ImageAnimator.UpdateFrames(image);
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ public class DefaultGifAnimator : IAnimator
     /// <param name="eventHandler"></param>
     public void StopAnimate(Image image, EventHandler eventHandler)
     {
-        ImageAnimator.StopAnimate(image, eventHandler);
+        System.Drawing.ImageAnimator.StopAnimate(image, eventHandler);
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public class DefaultGifAnimator : IAnimator
     /// <param name="eventHandler"></param>
     public void Animate(Image image, EventHandler eventHandler)
     {
-        ImageAnimator.Animate(image, eventHandler);
+        System.Drawing.ImageAnimator.Animate(image, eventHandler);
     }
 
     /// <summary>
@@ -67,6 +67,6 @@ public class DefaultGifAnimator : IAnimator
     /// <returns></returns>
     public bool CanAnimate(Image image)
     {
-        return ImageAnimator.CanAnimate(image);
+        return System.Drawing.ImageAnimator.CanAnimate(image);
     }
 }

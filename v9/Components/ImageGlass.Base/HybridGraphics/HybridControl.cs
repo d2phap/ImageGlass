@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-
 using System.ComponentModel;
 using unvell.D2DLib;
 
@@ -43,7 +42,7 @@ public class HybridControl : Control
     private GDIGraphics? _graphicsGdi;
 
     private bool _firstPaintBackground = true;
-    private bool _enableAnimation = false;
+    private bool _enableAnimation = true;
     private int _currentFps = 0;
     private int _lastFps = 0;
     private DateTime _lastFpsUpdate = DateTime.UtcNow;
@@ -112,7 +111,7 @@ public class HybridControl : Control
     /// Enables animation support for the control.
     /// </summary>
     [Category("Animation")]
-    [DefaultValue(false)]
+    [DefaultValue(true)]
     public bool EnableAnimation
     {
         get => _enableAnimation;

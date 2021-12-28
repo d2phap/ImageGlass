@@ -22,12 +22,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 * THANKS [Meowski] FOR THIS CONTRIBUTION
 *******************************************/
 
-namespace ImageGlass.PhotoBox.Animator;
+namespace ImageGlass.PhotoBox.ImageAnimator;
 
 /// <summary>
 /// Used to animate gifs. 
 /// </summary>
-public interface IAnimator
+public interface IImageAnimator
 {
     /// <summary>
     /// Updates the time frame for this image.

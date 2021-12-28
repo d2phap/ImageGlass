@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base.HybridGraphics;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.WinApi;
-using ImageGlass.PhotoBox.Animator;
+using ImageGlass.PhotoBox.ImageAnimator;
 using System.ComponentModel;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -68,8 +68,8 @@ public partial class ViewBox : HybridControl
     private Base.PhotoBox.InterpolationMode _interpolationMode = Base.PhotoBox.InterpolationMode.NearestNeighbor;
 
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
-    private IAnimator _animator;
-    private AnimationSource _animationSource = AnimationSource.Default;
+    private IImageAnimator _imageAnimator;
+    private AnimationSource _animationSource = AnimationSource.None;
     private bool _useHardwareAccelerationBackup = true;
     private bool _shouldRecalculateDrawingRegion = true;
 
@@ -82,18 +82,15 @@ public partial class ViewBox : HybridControl
     private PointF _navLeftPos => new(NavButtonRadius + NAV_PADDING, Height / 2);
     private PointF _navRightPos => new(Width - NavButtonRadius - NAV_PADDING, Height / 2);
     private NavButtonDisplay _navDisplay = NavButtonDisplay.None;
-    private bool _isNavVisible = false; // to reduce drawing Nav when the cursor is out of nav regions
+    private bool _isNavVisible = false;
 
 
 
     #region Public properties
 
-    /// <summary>
-    /// Checks if the bitmap image has alpha pixels
-    /// </summary>
-    [Browsable(false)]
-    public bool HasAlphaPixels => _gdiBitmap is not null && _gdiBitmap.PixelFormat.HasFlag(PixelFormat.Alpha);
 
+    // Viewport
+    #region Viewport
 
     /// <summary>
     /// Gets image viewport
@@ -112,27 +109,35 @@ public partial class ViewBox : HybridControl
         Y = ImageViewport.Y + ImageViewport.Height / 2,
     };
 
+    #endregion
 
-    // Animation
-    #region Animation
+
+    // Image information
+    #region Image information
+
+    /// <summary>
+    /// Checks if the bitmap image has alpha pixels
+    /// </summary>
+    [Browsable(false)]
+    public bool HasAlphaPixels => _gdiBitmap is not null && _gdiBitmap.PixelFormat.HasFlag(PixelFormat.Alpha);
 
     /// <summary>
     /// Gets, sets the value indicates whether it's animating
     /// </summary>
     [Browsable(false)]
-    public bool IsAnimating { get; protected set; } = false;
+    public bool IsAnimatingImage { get; protected set; } = false;
 
     /// <summary>
     /// Gets, sets the value indicates whether the image can animate
     /// </summary>
     [Browsable(false)]
-    public bool CanAnimate
+    public bool CanImageAnimate
     {
         get
         {
             if (_gdiBitmap is null) return false;
 
-            return _animator.CanAnimate(_gdiBitmap);
+            return _imageAnimator.CanAnimate(_gdiBitmap);
         }
     }
 
@@ -216,7 +221,6 @@ public partial class ViewBox : HybridControl
     /// <summary>
     /// Occurs when <see cref="ZoomFactor"/> value changes.
     /// </summary>
-    [Category("NavigationButtons")]
     public event ZoomChangedEventHandler? OnZoomChanged = null;
     public delegate void ZoomChangedEventHandler(ZoomEventArgs e);
 
@@ -353,7 +357,7 @@ public partial class ViewBox : HybridControl
             HighResolutionGifAnimator.SetTickTimeInMilliseconds(10);
         }
 
-        _animator = new HighResolutionGifAnimator();
+        _imageAnimator = new HighResolutionGifAnimator();
     }
 
     protected override void OnLoaded()
@@ -615,37 +619,61 @@ public partial class ViewBox : HybridControl
         
         if (e.KeyCode == Keys.Right)
         {
-            _animationSource = AnimationSource.PanRight;
+            StartAnimation(AnimationSource.PanRight);
         }
         else if (e.KeyCode == Keys.Left)
         {
-            _animationSource = AnimationSource.PanLeft;
+            StartAnimation(AnimationSource.PanLeft);
         }
         else if (e.KeyCode == Keys.Up)
         {
-            _animationSource = AnimationSource.PanUp;
+            StartAnimation(AnimationSource.PanUp);
         }
         else if (e.KeyCode == Keys.Down)
         {
-            _animationSource = AnimationSource.PanDown;
+            StartAnimation(AnimationSource.PanDown);
         }
         else if (e.KeyCode == Keys.Oemplus)
         {
-            _animationSource = AnimationSource.ZoomIn;
+            StartAnimation(AnimationSource.ZoomIn);
         }
         else if (e.KeyCode == Keys.OemMinus)
         {
-            _animationSource = AnimationSource.ZoomOut;
+            StartAnimation(AnimationSource.ZoomOut);
         }
-
-        EnableAnimation = true;
     }
 
     protected override void OnKeyUp(KeyEventArgs e)
     {
         base.OnKeyUp(e);
 
-        EnableAnimation = false;
+        // Panning
+        if (_animationSource.HasFlag(AnimationSource.PanLeft))
+        {
+            StopAnimation(AnimationSource.PanLeft);
+        }
+        if (_animationSource.HasFlag(AnimationSource.PanRight))
+        {
+            StopAnimation(AnimationSource.PanRight);
+        }
+        if (_animationSource.HasFlag(AnimationSource.PanUp))
+        {
+            StopAnimation(AnimationSource.PanUp);
+        }
+        if (_animationSource.HasFlag(AnimationSource.PanDown))
+        {
+            StopAnimation(AnimationSource.PanDown);
+        }
+
+        // Zooming
+        if (_animationSource.HasFlag(AnimationSource.ZoomIn))
+        {
+            StopAnimation(AnimationSource.ZoomIn);
+        }
+        if (_animationSource.HasFlag(AnimationSource.ZoomOut))
+        {
+            StopAnimation(AnimationSource.ZoomOut);
+        }
     }
 
 
@@ -682,7 +710,6 @@ public partial class ViewBox : HybridControl
         {
             _ = ZoomToPoint(-20, requestRerender: false);
         }
-
     }
 
 
@@ -698,7 +725,7 @@ public partial class ViewBox : HybridControl
         DrawCheckerboardLayer(g);
 
 
-        if (CanAnimate)
+        if (CanImageAnimate)
         {
             DrawGifFrame(g);
         }
@@ -729,9 +756,9 @@ public partial class ViewBox : HybridControl
 
         try
         {
-            if (IsAnimating && !DesignMode)
+            if (IsAnimatingImage && !DesignMode)
             {
-                _animator.UpdateFrames(_gdiBitmap);
+                _imageAnimator.UpdateFrames(_gdiBitmap);
             }
 
             g.DrawImage(_gdiBitmap, _destRect, _srcRect, 1, (int)_interpolationMode);
@@ -747,8 +774,8 @@ public partial class ViewBox : HybridControl
         catch (ExternalException)
         {
             // stop the animation and reset to the first frame.
-            IsAnimating = false;
-            _animator.StopAnimate(_gdiBitmap, OnFrameChangedHandler);
+            IsAnimatingImage = false;
+            _imageAnimator.StopAnimate(_gdiBitmap, OnImageFrameChanged);
         }
         catch (InvalidOperationException)
         {
@@ -757,8 +784,8 @@ public partial class ViewBox : HybridControl
             // the correct response.
 
             // stop the animation and reset to the first frame.
-            IsAnimating = false;
-            _animator.StopAnimate(_gdiBitmap, OnFrameChangedHandler);
+            IsAnimatingImage = false;
+            _imageAnimator.StopAnimate(_gdiBitmap, OnImageFrameChanged);
         }
 
         g.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
@@ -1144,6 +1171,26 @@ public partial class ViewBox : HybridControl
 
 
     /// <summary>
+    /// Starts a built-in animation.
+    /// </summary>
+    /// <param name="sources">Source of animation</param>
+    public void StartAnimation(AnimationSource sources)
+    {
+        _animationSource = sources;
+    }
+
+
+    /// <summary>
+    /// Stops a built-in animation.
+    /// </summary>
+    /// <param name="sources">Source of animation</param>
+    public void StopAnimation(AnimationSource sources)
+    {
+        _animationSource ^= sources;
+    }
+
+
+    /// <summary>
     /// Zooms into the image.
     /// </summary>
     /// <param name="point">
@@ -1356,7 +1403,7 @@ public partial class ViewBox : HybridControl
         if (string.IsNullOrEmpty(filename)) return;
 
         // disable animations
-        StopAnimating();
+        StopAnimatingImage();
 
         _gdiBitmap?.Dispose();
         try
@@ -1379,7 +1426,7 @@ public partial class ViewBox : HybridControl
     public void LoadImage(Bitmap? bmp)
     {
         // disable animations
-        StopAnimating();
+        StopAnimatingImage();
 
         _d2dBitmap?.Dispose();
         _gdiBitmap?.Dispose();
@@ -1396,10 +1443,10 @@ public partial class ViewBox : HybridControl
         // emit OnImageChanged event
         OnImageChanged?.Invoke(EventArgs.Empty);
 
-        if (CanAnimate && _gdiBitmap is not null)
+        if (CanImageAnimate && _gdiBitmap is not null)
         {
             UpdateZoomMode();
-            StartAnimating();
+            StartAnimatingImage();
         }
         else
         {
@@ -1408,7 +1455,7 @@ public partial class ViewBox : HybridControl
     }
 
 
-    private void OnFrameChangedHandler(object? sender, EventArgs eventArgs)
+    private void OnImageFrameChanged(object? sender, EventArgs eventArgs)
     {
         Invalidate();
     }
@@ -1418,9 +1465,9 @@ public partial class ViewBox : HybridControl
     /// <summary>
     /// Start animating the image if it can animate, using GDI+.
     /// </summary>
-    public void StartAnimating()
+    public void StartAnimatingImage()
     {
-        if (IsAnimating || !CanAnimate || _gdiBitmap is null)
+        if (IsAnimatingImage || !CanImageAnimate || _gdiBitmap is null)
             return;
 
         try
@@ -1431,8 +1478,8 @@ public partial class ViewBox : HybridControl
             // force using GDI+ to animate GIF
             UseHardwareAcceleration = false;
 
-            _animator.Animate(_gdiBitmap, OnFrameChangedHandler);
-            IsAnimating = true;
+            _imageAnimator.Animate(_gdiBitmap, OnImageFrameChanged);
+            IsAnimatingImage = true;
         }
         catch (Exception) { }
     }
@@ -1440,14 +1487,14 @@ public partial class ViewBox : HybridControl
     /// <summary>
     /// Stop animating the image
     /// </summary>
-    public void StopAnimating()
+    public void StopAnimatingImage()
     {
         if (_gdiBitmap is not null)
         {
-            _animator.StopAnimate(_gdiBitmap, OnFrameChangedHandler);
+            _imageAnimator.StopAnimate(_gdiBitmap, OnImageFrameChanged);
         }
 
-        IsAnimating = false;
+        IsAnimatingImage = false;
 
         // restore the UseHardwardAcceleration value
         UseHardwareAcceleration = _useHardwareAccelerationBackup;
