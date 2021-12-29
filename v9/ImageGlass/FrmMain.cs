@@ -94,7 +94,7 @@ public partial class FrmMain : Form
             }
             else
             {
-                inputPath = @"C:\Users\d2pha\Desktop\map50.jpg";
+                inputPath = @"C:\Users\d2pha\Desktop\New folder\a.tif";
             }
         }
 
@@ -105,17 +105,16 @@ public partial class FrmMain : Form
 
         Local.Metadata = Config.Codec.LoadMetadata(inputPath);
 
+
         PicBox.ShowMessage("Loading image... \n" + inputPath, 0, 1500);
         var bmp = await Config.Codec.LoadAsync(inputPath, new(Local.Metadata));
         PicBox.LoadImage(bmp);
-        PicBox.ClearMessage();
-
-
+        
 
 
         var files = Directory.GetFiles(Path.GetDirectoryName(inputPath) ?? "");
 
-        Gallery.SetRenderer(new ThemeRenderer());
+        
         Gallery.Items.Clear();
         Gallery.SuspendLayout();
 
@@ -133,6 +132,12 @@ public partial class FrmMain : Form
     private void FrmMain_Resize(object sender, EventArgs e)
     {
         Text = $"{PicBox.Width}x{PicBox.Height}";
+    }
+
+
+    private void PicBox_OnImageChanged(EventArgs e)
+    {
+        PicBox.ClearMessage();
     }
 
 
@@ -186,4 +191,5 @@ public partial class FrmMain : Form
         catch { }
     }
 
+    
 }

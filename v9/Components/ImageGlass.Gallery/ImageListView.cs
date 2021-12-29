@@ -159,7 +159,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets the border style of the control.
     /// </summary>
-    [Category("Appearance"), Description("Gets or sets the border style of the control."), DefaultValue(typeof(BorderStyle), "Fixed3D")]
+    [Category("Appearance"), Description("Gets or sets the border style of the control."), DefaultValue(typeof(BorderStyle), "None")]
     public BorderStyle BorderStyle
     {
         get { return mBorderStyle; }
@@ -988,7 +988,7 @@ public partial class ImageListView : Control, IComponent
         AllowItemReorder = true;
         AllowDuplicateFileNames = false;
         AllowPaneResize = true;
-        mBorderStyle = BorderStyle.Fixed3D;
+        mBorderStyle = BorderStyle.None;
         mCacheMode = CacheMode.OnDemand;
         mCacheLimitAsItemCount = 0;
         mCacheLimitAsMemory = 20 * 1024 * 1024;

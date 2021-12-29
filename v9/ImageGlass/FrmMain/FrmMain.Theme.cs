@@ -1,5 +1,6 @@
 ﻿
 
+using ImageGlass.Gallery;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 
@@ -32,7 +33,7 @@ public partial class FrmMain
         var isDarkMode = themMode != SystemThemeMode.Light;
 
 
-        // set theme
+        // toolbar
         Toolbar.Theme =
             MnuMain.Theme = Config.Theme;
 
@@ -41,13 +42,8 @@ public partial class FrmMain
         PicBox.BackColor = Config.BackgroundColor;
         PicBox.ForeColor = Config.Theme.Settings.TextColor;
 
-        // navigation buttons
-        PicBox.NavHoveredColor = Color.FromArgb(200, Config.Theme.Settings.ToolbarBgColor);
-        PicBox.NavPressedColor = Color.FromArgb(240, Config.Theme.Settings.ToolbarBgColor);
-        PicBox.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
-        PicBox.NavRightImage = Config.Theme.Settings.NavButtonRight;
-
         // Thumbnail bar
+        Gallery.SetRenderer(new ThemeRenderer());
         Sp1.SplitterBackColor =
             Gallery.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
 
@@ -56,6 +52,12 @@ public partial class FrmMain
             Sp3.SplitterBackColor =
             PanLeft.BackColor =
             PanRight.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
+
+        // navigation buttons
+        PicBox.NavHoveredColor = Color.FromArgb(200, Config.Theme.Settings.ToolbarBgColor);
+        PicBox.NavPressedColor = Color.FromArgb(240, Config.Theme.Settings.ToolbarBgColor);
+        PicBox.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
+        PicBox.NavRightImage = Config.Theme.Settings.NavButtonRight;
 
     }
 
