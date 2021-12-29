@@ -1,5 +1,6 @@
 ﻿
 using ImageGlass.Base;
+using ImageGlass.Base.Cache;
 using System.ComponentModel;
 using static ImageGlass.Gallery.ImageListView;
 
@@ -12,6 +13,9 @@ namespace ImageGlass.Gallery;
 public class ImageListViewItem : ICloneable
 {
     #region Member Variables
+    // [IG_CHANGE] Cache often repeated strings, e.g. extensions, directory path
+    private static readonly StringCache _stringCache = new StringCache();
+
     // Property backing fields
     internal int mIndex;
     private Guid mGuid;
@@ -47,12 +51,12 @@ public class ImageListViewItem : ICloneable
     private string mSoftware;
     private float mFocalLength;
     // Adaptor
-    internal object mVirtualItemKey;
+    internal object? mVirtualItemKey;
     internal ImageListViewItemAdaptor mAdaptor;
     // Used for custom columns
     private ImageListViewSubItemCollection mSubItems;
     // Used for cloned items
-    internal Image clonedThumbnail;
+    internal Image? clonedThumbnail;
     // Group info
     internal string group;
     internal int groupOrder;
@@ -126,11 +130,11 @@ public class ImageListViewItem : ICloneable
     [Category("Behavior"), Browsable(false), Description("Gets the adaptor of this item.")]
     public ImageListViewItemAdaptor Adaptor { get { return mAdaptor; } }
     /// <summary>
-    /// Gets the virtual item key associated with this item.
+    /// [IG_CHANGE] Gets the virtual item key associated with this item.
     /// Returns null if the item is not a virtual item.
     /// </summary>
     [Category("Behavior"), Browsable(false), Description("Gets the virtual item key associated with this item.")]
-    public object VirtualItemKey { get { return mVirtualItemKey; } }
+    public object VirtualItemKey { get { return mVirtualItemKey ?? mFileName; } }
     /// <summary>
     /// Gets the ImageListView owning this item.
     /// </summary>
@@ -214,21 +218,16 @@ public class ImageListViewItem : ICloneable
     [Category("Appearance"), Browsable(true), Description("Gets the collection of sub items.")]
     public ImageListViewSubItemCollection SubItems
     {
-        get
-        {
-            return mSubItems;
-        }
+        get => mSubItems;
     }
+
     /// <summary>
     /// Gets or sets the name of the image file represented by this item.
     /// </summary>        
     [Category("File Properties"), Browsable(true), Description("Gets or sets the name of the image file represented by this item.")]
     public string FileName
     {
-        get
-        {
-            return mFileName;
-        }
+        get => mFileName;
         set
         {
             if (string.IsNullOrEmpty(value))
@@ -237,11 +236,16 @@ public class ImageListViewItem : ICloneable
             if (mFileName != value)
             {
                 mFileName = value;
-                mVirtualItemKey = mFileName;
+                mVirtualItemKey = null; // mFileName; [IG_CHANGE] don't duplicate the filename
 
-                if (string.IsNullOrEmpty(mText))
-                    mText = Path.GetFileName(mFileName);
-                extension = Path.GetExtension(mFileName);
+                //if (string.IsNullOrEmpty(mText))
+                //{
+                //    mText = Path.GetFileName(mFileName);
+                //}
+                //extension = Path.GetExtension(mFileName);
+
+                // [IG_CHANGE] use string cache
+                extension = _stringCache.GetFromCache(Path.GetExtension(mFileName));
 
                 isDirty = true;
                 if (mImageListView != null)
@@ -521,7 +525,8 @@ public class ImageListViewItem : ICloneable
 
         Tag = null;
 
-        mSubItems = new ImageListViewSubItemCollection(this);
+        // [IG_CHANGE] we don't use sub-items, don't alloc memory for 'em
+        // mSubItems = new ImageListViewSubItemCollection(this);
 
         groupOrder = 0;
         group = string.Empty;
@@ -537,12 +542,16 @@ public class ImageListViewItem : ICloneable
         if (File.Exists(filename))
         {
             mFileName = filename;
-            extension = Path.GetExtension(filename);
+
+            // [IG_CHANGE] use string cache
+            extension = _stringCache.GetFromCache(Path.GetExtension(filename));
+
             // if text parameter is empty then get file name for item text
             if (string.IsNullOrEmpty(text))
-                mText = Path.GetFileName(filename);
-            else // else use text parameter
+            {
+                // [IG_CHANGE] don't duplicate filename text = Path.GetFileName(filename);
                 mText = text;
+            }
         }
         else if (string.IsNullOrEmpty(text))
         {
@@ -554,14 +563,15 @@ public class ImageListViewItem : ICloneable
             mFileName = filename;
             mText = text;
         }
+
         mVirtualItemKey = mFileName;
     }
+
     /// <summary>
     /// Initializes a new instance of the <see cref="ImageListViewItem"/> class.
     /// </summary>
     /// <param name="filename">The image filename representing the item.</param>
-    public ImageListViewItem(string filename)
-        : this(filename, string.Empty)
+    public ImageListViewItem(string filename) : this(filename, string.Empty)
     {
         ;
     }

@@ -11,7 +11,7 @@ internal class ImageListViewCacheShellInfo : IDisposable
 {
     #region Member Variables
     private QueuedBackgroundWorker bw;
-    private SynchronizationContext context;
+    private SynchronizationContext? context;
     private readonly SendOrPostCallback checkProcessingCallback;
 
     private ImageListView mImageListView;
@@ -185,7 +185,7 @@ internal class ImageListViewCacheShellInfo : IDisposable
     /// </summary>
     /// <param name="argument">The event argument.</param>
     /// <returns>true if the item should be processed; otherwise false.</returns>
-    private void CanContinueProcessing(object argument)
+    private void CanContinueProcessing(object? argument)
     {
         CanContinueProcessingEventArgs arg = argument as CanContinueProcessingEventArgs;
         bool canProcess = true;
@@ -210,15 +210,15 @@ internal class ImageListViewCacheShellInfo : IDisposable
     /// instance containing the event data.</param>
     private void bw_RunWorkerCompleted(object sender, QueuedWorkerCompletedEventArgs e)
     {
-        CacheItem result = e.Result as CacheItem;
-
-        // We are done processing
-        processing.Remove(result.Extension);
+        CacheItem? result = e.Result as CacheItem;
 
         // Add to cache
         if (result != null)
         {
-            if (shellCache.TryGetValue(result.Extension, out CacheItem existing))
+            // We are done processing
+            processing.Remove(result.Extension);
+
+            if (shellCache.TryGetValue(result.Extension, out CacheItem? existing))
             {
                 existing.Dispose();
                 shellCache.Remove(result.Extension);

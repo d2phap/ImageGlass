@@ -16,7 +16,7 @@ public partial class ImageListView
         #region Member Variables
         private List<ImageListViewItem> mItems;
         internal ImageListView mImageListView;
-        private ImageListViewItem mFocused;
+        private ImageListViewItem? mFocused;
         private Dictionary<Guid, ImageListViewItem> lookUp;
         internal bool collectionModified;
         #endregion
@@ -37,24 +37,21 @@ public partial class ImageListView
         #endregion
 
         #region Properties
+
         /// <summary>
         /// Gets the number of elements contained in the <see cref="ImageListViewItemCollection"/>.
         /// </summary>
-        public int Count
-        {
-            get { return mItems.Count; }
-        }
+        public int Count => mItems.Count;
+
         /// <summary>
         /// Gets a value indicating whether the <see cref="ImageListViewItemCollection"/> is read-only.
         /// </summary>
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
+        public bool IsReadOnly => false;
+
         /// <summary>
         /// Gets or sets the focused item.
         /// </summary>
-        public ImageListViewItem FocusedItem
+        public ImageListViewItem? FocusedItem
         {
             get
             {
@@ -62,8 +59,9 @@ public partial class ImageListView
             }
             set
             {
-                ImageListViewItem oldFocusedItem = mFocused;
+                var oldFocusedItem = mFocused;
                 mFocused = value;
+
                 // Refresh items
                 if (oldFocusedItem != mFocused && mImageListView != null)
                     mImageListView.Refresh();
@@ -188,13 +186,17 @@ public partial class ImageListView
         /// </summary>
         /// <param name="filename">The name of the image file.</param>
         /// <param name="initialThumbnail">The initial thumbnail image for the item.</param>
-        public void Add(string filename, Image initialThumbnail)
+        public void Add(string filename, Image? initialThumbnail)
         {
-            ImageListViewItem item = new ImageListViewItem(filename);
-            item.mAdaptor = mImageListView.defaultAdaptor;
-            item.clonedThumbnail = initialThumbnail;
+            var item = new ImageListViewItem(filename)
+            {
+                mAdaptor = mImageListView.defaultAdaptor,
+                clonedThumbnail = initialThumbnail
+            };
+
             Add(item);
         }
+
         /// <summary>
         /// Adds a virtual item to the <see cref="ImageListViewItemCollection"/>.
         /// </summary>
@@ -205,6 +207,7 @@ public partial class ImageListView
         {
             Add(key, text, null, adaptor);
         }
+
         /// <summary>
         /// Adds a virtual item to the <see cref="ImageListViewItemCollection"/>.
         /// </summary>
@@ -214,6 +217,7 @@ public partial class ImageListView
         {
             Add(key, text, mImageListView.defaultAdaptor);
         }
+
         /// <summary>
         /// Adds a virtual item to the <see cref="ImageListViewItemCollection"/>.
         /// </summary>
@@ -221,12 +225,16 @@ public partial class ImageListView
         /// <param name="text">Text of the item.</param>
         /// <param name="initialThumbnail">The initial thumbnail image for the item.</param>
         /// <param name="adaptor">The adaptor associated with this item.</param>
-        public void Add(object key, string text, Image initialThumbnail, ImageListViewItemAdaptor adaptor)
+        public void Add(object key, string text, Image? initialThumbnail, ImageListViewItemAdaptor adaptor)
         {
-            ImageListViewItem item = new ImageListViewItem(key, text);
-            item.clonedThumbnail = initialThumbnail;
+            var item = new ImageListViewItem(key, text)
+            {
+                clonedThumbnail = initialThumbnail,
+            };
+
             Add(item, adaptor);
         }
+
         /// <summary>
         /// Adds a virtual item to the <see cref="ImageListViewItemCollection"/>.
         /// </summary>
@@ -287,9 +295,11 @@ public partial class ImageListView
         public void Clear()
         {
             mItems.Clear();
-
             mFocused = null;
-            lookUp.Clear();
+
+            // [IG_CHANGE] lookUp.Clear() does not deallocate memory
+            lookUp = new();
+
             collectionModified = true;
 
             if (mImageListView != null)
@@ -302,10 +312,10 @@ public partial class ImageListView
                     Sort();
 
                 mImageListView.Refresh();
-            }
 
-            // Raise the clear event
-            mImageListView.OnItemCollectionChanged(new ItemCollectionChangedEventArgs(CollectionChangeAction.Refresh, null));
+                // Raise the clear event
+                mImageListView.OnItemCollectionChanged(new ItemCollectionChangedEventArgs(CollectionChangeAction.Refresh, null));
+            }
         }
         /// <summary>
         /// Determines whether the <see cref="ImageListViewItemCollection"/> 
@@ -646,15 +656,17 @@ public partial class ImageListView
             mImageListView.Cursor = Cursors.WaitCursor;
 
             // Sort and group items
-            ImageListViewColumnHeader sortColumn = null;
-            ImageListViewColumnHeader groupColumn = null;
+            ImageListViewColumnHeader? sortColumn = null;
+            ImageListViewColumnHeader? groupColumn = null;
             if (mImageListView.GroupColumn >= 0 && mImageListView.GroupColumn < mImageListView.Columns.Count)
                 groupColumn = mImageListView.Columns[mImageListView.GroupColumn];
             if (mImageListView.SortColumn >= 0 || mImageListView.SortColumn < mImageListView.Columns.Count)
                 sortColumn = mImageListView.Columns[mImageListView.SortColumn];
             if (mItems.Count == 1 && groupColumn != null)
                 mItems[0].UpdateGroup(groupColumn);
+
             mItems.Sort(new ImageListViewItemComparer(groupColumn, mImageListView.GroupOrder, sortColumn, mImageListView.SortOrder));
+
             if (mImageListView.GroupOrder != SortOrder.None && groupColumn != null)
                 mImageListView.showGroups = true;
 
@@ -779,8 +791,8 @@ public partial class ImageListView
                 string[] yparts = Regex.Split(y.Replace(" ", ""), "([0-9]+)");
                 for (int i = 0; i < Math.Max(xparts.Length, yparts.Length); i++)
                 {
-                    bool hasx = (i < xparts.Length);
-                    bool hasy = (i < yparts.Length);
+                    bool hasx = i < xparts.Length;
+                    bool hasy = i < yparts.Length;
 
                     if (!(hasx || hasy)) return 0;
 
@@ -813,11 +825,11 @@ public partial class ImageListView
                 if (mGroupOrder != SortOrder.None)
                 {
                     result = 0;
-                    sign = ((mGroupOrder == SortOrder.Ascending || mGroupOrder == SortOrder.AscendingNatural) ? 1 : -1);
+                    sign = (mGroupOrder == SortOrder.Ascending || mGroupOrder == SortOrder.AscendingNatural) ? 1 : -1;
 
                     x.UpdateGroup(mGroupColumn);
                     y.UpdateGroup(mGroupColumn);
-                    result = (x.groupOrder < y.groupOrder ? -1 : (x.groupOrder > y.groupOrder ? 1 : 0));
+                    result = x.groupOrder < y.groupOrder ? -1 : (x.groupOrder > y.groupOrder ? 1 : 0);
                     if (result != 0)
                         return sign * result;
                 }
@@ -863,7 +875,7 @@ public partial class ImageListView
                             case ColumnType.Resolution:
                                 float rx = x.Resolution.Width * x.Resolution.Height;
                                 float ry = y.Resolution.Width * y.Resolution.Height;
-                                result = (rx < ry ? -1 : (rx > ry ? 1 : 0));
+                                result = rx < ry ? -1 : (rx > ry ? 1 : 0);
                                 break;
                             case ColumnType.ImageDescription:
                                 result = CompareStrings(x.ImageDescription, y.ImageDescription, natural);

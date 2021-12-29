@@ -3,6 +3,9 @@ namespace ImageGlass.Base;
 
 public partial class Helpers
 {
+    private const string LONG_PATH_PREFIX = @"\\?\";
+
+
     /// <summary>
     /// Check if the given path (file or directory) is writable. 
     /// </summary>
@@ -48,4 +51,32 @@ public partial class Helpers
             return false;
         }
     }
+
+
+    /// <summary>
+    /// Fallout from Issue #530. To handle a long path name (i.e. a file path
+    /// longer than MAX_PATH), a magic prefix is sometimes necessary.
+    /// </summary>
+    public static string PrefixLongPath(string path)
+    {
+        if (string.IsNullOrEmpty(path)) return string.Empty;
+
+        if (path.Length > 255 && !path.StartsWith(LONG_PATH_PREFIX))
+            return LONG_PATH_PREFIX + path;
+
+        return path;
+    }
+
+    /// <summary>
+    /// Fallout from Issue #530. Specific functions (currently FileWatch)
+    /// fail if provided a prefixed file path. In this case, strip the prefix
+    /// (see PrefixLongPath above).
+    /// </summary>
+    public static string DePrefixLongPath(string path)
+    {
+        if (path.StartsWith(LONG_PATH_PREFIX))
+            return path[LONG_PATH_PREFIX.Length..];
+        return path;
+    }
+
 }

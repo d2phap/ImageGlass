@@ -22,8 +22,8 @@ internal class ImageListViewCacheThumbnail : IDisposable
     private Guid processingRendererItem;
     private Guid processingGalleryItem;
     private Dictionary<Guid, bool> editCache;
-    private CacheItem rendererItem;
-    private CacheItem galleryItem;
+    private CacheItem? rendererItem;
+    private CacheItem? galleryItem;
 
     private List<Guid> removedItems;
 
@@ -106,7 +106,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// Returns a <see cref="string"/> that represents this instance.
         /// </summary>
         public override string ToString()
         {
@@ -134,7 +134,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
         /// <summary>
         /// Gets the cached image.
         /// </summary>
-        public Image Image { get; private set; }
+        public Image? Image { get; private set; }
         /// <summary>
         /// Gets or sets the state of the cache item.
         /// </summary>
@@ -272,10 +272,12 @@ internal class ImageListViewCacheThumbnail : IDisposable
     public ImageListViewCacheThumbnail(ImageListView owner)
     {
         context = null;
-        bw = new QueuedBackgroundWorker();
-        bw.ProcessingMode = ProcessingMode.LIFO;
-        bw.IsBackground = true;
-        bw.ThreadName = "Thumbnail Cache Worker Thread";
+        bw = new QueuedBackgroundWorker
+        {
+            ProcessingMode = ProcessingMode.LIFO,
+            IsBackground = true,
+            ThreadName = "Thumbnail Cache Worker Thread"
+        };
         bw.DoWork += bw_DoWork;
         bw.RunWorkerCompleted += bw_RunWorkerCompleted;
 
@@ -307,6 +309,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
     #endregion
 
     #region Context Callbacks
+
     /// <summary>
     /// Determines if the item should be processed.
     /// </summary>
@@ -318,15 +321,16 @@ internal class ImageListViewCacheThumbnail : IDisposable
         context.Send(checkProcessingCallback, arg);
         return arg.ContinueProcessing;
     }
+
     /// <summary>
     /// Determines if the item should be processed.
     /// </summary>
     /// <param name="argument">The event argument.</param>
     /// <returns>true if the item should be processed; otherwise false.</returns>
-    private void CanContinueProcessing(object argument)
+    private void CanContinueProcessing(object? argument)
     {
-        CanContinueProcessingEventArgs arg = argument as CanContinueProcessingEventArgs;
-        CacheRequest request = arg.Request;
+        CanContinueProcessingEventArgs? arg = argument as CanContinueProcessingEventArgs;
+        CacheRequest? request = arg?.Request;
         bool canProcess = true;
 
         // Is it in the edit cache?
@@ -334,10 +338,9 @@ internal class ImageListViewCacheThumbnail : IDisposable
             canProcess = false;
 
         // Is it already cached?
-        if (canProcess && (request.RequestType == RequestType.Thumbnail))
+        if (canProcess && (request?.RequestType == RequestType.Thumbnail))
         {
-            CacheItem existing = null;
-            thumbCache.TryGetValue(request.Guid, out existing);
+            thumbCache.TryGetValue(request.Guid, out CacheItem? existing);
             if (existing != null && existing.Size == request.Size && existing.UseEmbeddedThumbnails == request.UseEmbeddedThumbnails && existing.AutoRotate == request.AutoRotate)
                 canProcess = false;
 
@@ -345,13 +348,13 @@ internal class ImageListViewCacheThumbnail : IDisposable
             if (canProcess && (CacheMode == CacheMode.OnDemand) && mImageListView != null && !mImageListView.IsItemVisible(request.Guid))
                 canProcess = false;
         }
-        else if (canProcess && (request.RequestType == RequestType.Gallery))
+        else if (canProcess && (request?.RequestType == RequestType.Gallery))
         {
             CacheItem existing = galleryItem;
             if (existing != null && existing.Guid == request.Guid && existing.Size == request.Size && existing.UseEmbeddedThumbnails == request.UseEmbeddedThumbnails && existing.AutoRotate == request.AutoRotate)
                 canProcess = false;
         }
-        else if (canProcess && (request.RequestType == RequestType.Renderer))
+        else if (canProcess && (request?.RequestType == RequestType.Renderer))
         {
             CacheItem existing = rendererItem;
             if (existing != null && existing.Guid == request.Guid && existing.Size == request.Size && existing.UseEmbeddedThumbnails == request.UseEmbeddedThumbnails && existing.AutoRotate == request.AutoRotate)
@@ -478,19 +481,18 @@ internal class ImageListViewCacheThumbnail : IDisposable
         if (thumb == null)
         {
             thumb = request.Adaptor.GetThumbnail(request.VirtualItemKey, request.Size, request.UseEmbeddedThumbnails, request.AutoRotate);
+
             // Save to disk cache
             if (thumb != null)
             {
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    thumb.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                    diskCache.Write(diskCacheKey, stream);
-                }
+                using var stream = new MemoryStream();
+                thumb.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                diskCache.Write(diskCacheKey, stream);
             }
         }
 
         // Return the thumbnail
-        CacheItem result = null;
+        CacheItem? result = null;
         if (thumb == null && !RetryOnError)
         {
             result = new CacheItem(request.Guid, request.Size, null, CacheState.Error, request.UseEmbeddedThumbnails, request.AutoRotate);

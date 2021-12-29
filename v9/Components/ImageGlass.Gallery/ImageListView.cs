@@ -43,7 +43,7 @@ public partial class ImageListView : Control, IComponent
     private ImageListViewColor mColors;
     private ImageListViewColumnHeaderCollection mColumns;
     private Image mDefaultImage;
-    private Image mErrorImage;
+    private Image? mErrorImage;
     private Image mRatingImage;
     private Image mEmptyRatingImage;
     private Font mGroupHeaderFont;
@@ -201,6 +201,24 @@ public partial class ImageListView : Control, IComponent
             }
         }
     }
+
+
+    /// <summary>
+    /// [IG_CHANGE] Provides the ability to control the metadata caching
+    /// </summary>
+    [Category("Behavior"), Description("Controls metadata caching"), DefaultValue(false)]
+    public bool MetadataCacheEnabled
+    {
+        set
+        {
+            if (value)
+                metadataCache.Resume();
+            else
+                metadataCache.Pause();
+        }
+    }
+
+
     /// <summary>
     /// Gets or sets the cache limit as either the count of thumbnail images or the memory allocated for cache (e.g. 10MB).
     /// </summary>
@@ -373,11 +391,18 @@ public partial class ImageListView : Control, IComponent
             }
         }
     }
+
+    /// <summary>
+    /// [IG_CHANGE: new] Gets or sets whether Key Navigation is enabled.
+    /// </summary>
+    [Category("Behavior"), Description("Gets or sets whether Key Navigation is enabled.")]
+    public bool EnableKeyNavigation { get; set; } = true;
+
     /// <summary>
     /// Gets or sets the error image.
     /// </summary>
     [Category("Appearance"), Description("Gets or sets the error image.")]
-    public Image ErrorImage
+    public Image? ErrorImage
     {
         get
         {
@@ -788,7 +813,7 @@ public partial class ImageListView : Control, IComponent
                 int current = layoutManager.FirstPartiallyVisible;
                 mView = value;
                 Refresh();
-                EnsureVisible(current);
+                ScrollToIndex(current);
             }
         }
     }
@@ -1334,6 +1359,7 @@ public partial class ImageListView : Control, IComponent
         mItems.Sort();
         Refresh();
     }
+
     /// <summary>
     /// Determines the image list view element under the specified coordinates.
     /// </summary>
@@ -1506,56 +1532,90 @@ public partial class ImageListView : Control, IComponent
             hitInfo = new HitInfo(itemIndex, subItemIndex, checkBoxHit, fileIconHit);
         }
     }
+
+    
     /// <summary>
-    /// Scrolls the image list view to ensure that the item with the specified 
-    /// index is visible on the screen.
+    /// [IG_Change] Scrolls the image list view to place the item with the specified
+    /// index as close to the center of the visible area as possible.
     /// </summary>
-    /// <param name="itemIndex">The index of the item to make visible.</param>
-    /// <returns>true if the item was made visible; otherwise false (item is already visible or the image list view is empty).</returns>
-    public bool EnsureVisible(int itemIndex)
+    /// <param name="itemIndex">The index of the item to scroll to.</param>
+    /// <returns>true if the scroll position was changed; otherwise false 
+    /// (item is already centered or the image list view is empty).</returns>
+    public bool ScrollToIndex(int itemIndex)
     {
         if (Items.Count == 0 || itemIndex < 0 || itemIndex > Items.Count - 1)
             return false;
 
-        // Already visible?
         Rectangle bounds = layoutManager.ItemAreaBounds;
         Rectangle itemBounds = layoutManager.GetItemBounds(itemIndex);
-        if (bounds.Contains(itemBounds))
-            return false;
 
-        // Scroll to item
+        // Align center of the element with center of visible area.
         if (ScrollOrientation == ScrollOrientation.HorizontalScroll)
         {
-            int delta = 0;
-            delta = bounds.Left - itemBounds.Left;
-            int newXOffset = mViewOffset.X - delta;
-            if (newXOffset > hScrollBar.Maximum - hScrollBar.LargeChange + 1)
-                newXOffset = hScrollBar.Maximum - hScrollBar.LargeChange + 1;
-            if (newXOffset < hScrollBar.Minimum)
-                newXOffset = hScrollBar.Minimum;
-            mViewOffset.X = newXOffset;
-            mViewOffset.Y = 0;
-            hScrollBar.Value = newXOffset;
-            vScrollBar.Value = 0;
+            int delta = (bounds.Left + bounds.Right) / 2 - (itemBounds.Left + itemBounds.Right) / 2;
+            return ScrollHorizontalDelta(delta);
         }
         else
         {
-            int delta = 0;
-            delta = bounds.Top - itemBounds.Top;
-            int newYOffset = mViewOffset.Y - delta;
-            if (newYOffset > vScrollBar.Maximum - vScrollBar.LargeChange + 1)
-                newYOffset = vScrollBar.Maximum - vScrollBar.LargeChange + 1;
-            if (newYOffset < vScrollBar.Minimum)
-                newYOffset = vScrollBar.Minimum;
-            mViewOffset.X = 0;
-            mViewOffset.Y = newYOffset;
-            hScrollBar.Value = 0;
-            vScrollBar.Value = newYOffset;
+            int delta = (bounds.Bottom + bounds.Top) / 2 - (itemBounds.Bottom + itemBounds.Top) / 2;
+            return ScrollVerticalDelta(delta);
         }
+    }
+
+    /// <summary>
+    /// [IG_CHANGE: new] Scrolls horizontal scrollbar by delta. Checks that scrolling is within
+    /// allowed range. Calls Refresh() if scrolling position was changed.
+    /// </summary>
+    /// <param name="delta">Delta to move scrolling.</param>
+    /// <returns>true if scroll position was changed; false otherwise</returns>
+    private bool ScrollHorizontalDelta(int delta)
+    {
+        int newXOffset = mViewOffset.X - delta;
+
+        if (newXOffset > hScrollBar.Maximum - hScrollBar.LargeChange + 1)
+            newXOffset = hScrollBar.Maximum - hScrollBar.LargeChange + 1;
+        if (newXOffset < hScrollBar.Minimum)
+            newXOffset = hScrollBar.Minimum;
+        if (newXOffset == mViewOffset.X)
+            return false;
+
+        mViewOffset.X = newXOffset;
+        mViewOffset.Y = 0;
+        hScrollBar.Value = newXOffset;
+        vScrollBar.Value = 0;
 
         Refresh();
+
         return true;
     }
+
+    /// <summary>
+    /// [IG_CHANGE: new] Scrolls vertical scrollbar by delta. Checks that scrolling is within
+    /// allowed range. Calls Refresh() if scrolling position was changed.
+    /// </summary>
+    /// <param name="delta">Delta to move scrolling.</param>
+    /// <returns>true if scroll position was changed; false otherwise</returns>
+    private bool ScrollVerticalDelta(int delta)
+    {
+        int newYOffset = mViewOffset.Y - delta;
+
+        if (newYOffset > vScrollBar.Maximum - vScrollBar.LargeChange + 1)
+            newYOffset = vScrollBar.Maximum - vScrollBar.LargeChange + 1;
+        if (newYOffset < vScrollBar.Minimum)
+            newYOffset = vScrollBar.Minimum;
+        if (newYOffset == mViewOffset.Y)
+            return false;
+
+        mViewOffset.X = 0;
+        mViewOffset.Y = newYOffset;
+        hScrollBar.Value = 0;
+        vScrollBar.Value = newYOffset;
+
+        Refresh();
+
+        return true;
+    }
+
     /// <summary>
     /// Determines whether the specified item is visible on the screen.
     /// </summary>
@@ -1565,6 +1625,7 @@ public partial class ImageListView : Control, IComponent
     {
         return IsItemVisible(item.Index);
     }
+
     /// <summary>
     /// Finds the first item that starts with the specified string.
     /// </summary>
@@ -1576,6 +1637,7 @@ public partial class ImageListView : Control, IComponent
     {
         return FindString(s, 0);
     }
+
     /// <summary>
     /// Finds the first item that starts with the specified string.
     /// </summary>
@@ -1599,6 +1661,7 @@ public partial class ImageListView : Control, IComponent
 
         return -1;
     }
+
     #endregion
 
     #region Rendering Methods
@@ -2043,8 +2106,9 @@ public partial class ImageListView : Control, IComponent
     {
         CacheError?.Invoke(this, e);
     }
+
     /// <summary>
-    /// Raises the DropFiles event.
+    /// [IG_CHANGE] Raises the DropFiles event.
     /// </summary>
     /// <param name="e">A DropFileEventArgs that contains event data.</param>
     protected virtual void OnDropFiles(DropFileEventArgs e)
@@ -2080,11 +2144,12 @@ public partial class ImageListView : Control, IComponent
             }
         }
 
-        EnsureVisible(firstItemIndex);
+        ScrollToIndex(firstItemIndex);
         OnSelectionChangedInternal();
 
         OnDropComplete(new DropCompleteEventArgs(items.ToArray(), false));
     }
+
     /// <summary>
     /// Raises the DropItems event.
     /// </summary>
@@ -2129,6 +2194,7 @@ public partial class ImageListView : Control, IComponent
 
         OnDropComplete(new DropCompleteEventArgs(items.ToArray(), true));
     }
+
     /// <summary>
     /// Raises the DropComplete event.
     /// </summary>
@@ -2137,6 +2203,7 @@ public partial class ImageListView : Control, IComponent
     {
         DropComplete?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the ColumnWidthChanged event.
     /// </summary>
@@ -2145,6 +2212,7 @@ public partial class ImageListView : Control, IComponent
     {
         ColumnWidthChanged?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the ColumnClick event.
     /// </summary>
@@ -2153,6 +2221,7 @@ public partial class ImageListView : Control, IComponent
     {
         ColumnClick?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the ColumnHover event.
     /// </summary>
@@ -2161,6 +2230,7 @@ public partial class ImageListView : Control, IComponent
     {
         ColumnHover?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the ItemClick event.
     /// </summary>
@@ -2169,6 +2239,7 @@ public partial class ImageListView : Control, IComponent
     {
         ItemClick?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the ItemCheckBoxClick event.
     /// </summary>
@@ -2177,6 +2248,7 @@ public partial class ImageListView : Control, IComponent
     {
         ItemCheckBoxClick?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the ItemCheckBoxClick event.
     /// </summary>
@@ -2185,6 +2257,7 @@ public partial class ImageListView : Control, IComponent
     {
         OnItemCheckBoxClick(new ItemEventArgs(item));
     }
+
     /// <summary>
     /// Raises the ItemHover event.
     /// </summary>
@@ -2193,6 +2266,7 @@ public partial class ImageListView : Control, IComponent
     {
         ItemHover?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the ItemDoubleClick event.
     /// </summary>
@@ -2209,6 +2283,7 @@ public partial class ImageListView : Control, IComponent
     {
         SelectionChanged?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the SelectionChanged event.
     /// </summary>
@@ -2216,6 +2291,7 @@ public partial class ImageListView : Control, IComponent
     {
         OnSelectionChanged(new EventArgs());
     }
+
     /// <summary>
     /// Raises the ThumbnailCached event.
     /// </summary>
@@ -2224,6 +2300,7 @@ public partial class ImageListView : Control, IComponent
     {
         ThumbnailCached?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the PaneReszied event.
     /// </summary>
@@ -2232,6 +2309,7 @@ public partial class ImageListView : Control, IComponent
     {
         PaneResized?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the PaneResizing event.
     /// </summary>
@@ -2240,6 +2318,7 @@ public partial class ImageListView : Control, IComponent
     {
         PaneResizing?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the DetailsCaching event.
     /// </summary>
@@ -2248,6 +2327,7 @@ public partial class ImageListView : Control, IComponent
     {
         DetailsCaching?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the DetailsCached event.
     /// </summary>
@@ -2256,6 +2336,7 @@ public partial class ImageListView : Control, IComponent
     {
         DetailsCached?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the DetailsCaching event.
     /// This method is invoked from the thumbnail thread.
@@ -2265,6 +2346,7 @@ public partial class ImageListView : Control, IComponent
         if (mItems.TryGetValue(guid, out ImageListViewItem item))
             OnDetailsCaching(new ItemEventArgs(item));
     }
+
     /// <summary>
     /// Raises the DetailsCached event.
     /// This method is invoked from the thumbnail thread.
@@ -2274,6 +2356,7 @@ public partial class ImageListView : Control, IComponent
         if (mItems.TryGetValue(guid, out ImageListViewItem item))
             OnDetailsCached(new ItemEventArgs(item));
     }
+
     /// <summary>
     /// Raises the ShellInfoCaching event.
     /// </summary>

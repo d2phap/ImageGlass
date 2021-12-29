@@ -720,6 +720,11 @@ public partial class ImageListView
         /// </summary>
         public void KeyDown(KeyEventArgs e)
         {
+            if (!mImageListView.EnableKeyNavigation)
+            {
+                return;
+            }
+
             ShiftKey = (e.Modifiers & Keys.Shift) == Keys.Shift;
             ControlKey = (e.Modifiers & Keys.Control) == Keys.Control;
 
@@ -788,7 +793,7 @@ public partial class ImageListView
                         mImageListView.OnSelectionChangedInternal();
                     }
                     mImageListView.Items.FocusedItem = mImageListView.Items[newindex];
-                    mImageListView.EnsureVisible(newindex);
+                    mImageListView.ScrollToIndex(newindex);
                     mImageListView.Refresh();
                 }
             }

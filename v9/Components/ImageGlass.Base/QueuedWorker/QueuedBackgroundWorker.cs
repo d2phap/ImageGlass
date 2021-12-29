@@ -174,7 +174,7 @@ public class QueuedBackgroundWorker : Component
     /// <returns>A 2-tuple whose first component is the the pending operation with 
     /// the highest priority from the work queue and the second component is the
     /// priority.</returns>
-    private (AsyncOperation, int) GetWork()
+    private Tuple<AsyncOperation, int> GetWork()
     {
         AsyncOperation request = null;
         int priority = 0;
@@ -204,7 +204,7 @@ public class QueuedBackgroundWorker : Component
             }
         }
 
-        return (request, priority);
+        return Tuple.Create<AsyncOperation, int>(request, priority);
     }
     /// <summary>
     /// Rebuilds the work queue.
@@ -461,15 +461,22 @@ public class QueuedBackgroundWorker : Component
     }
     #endregion
 
+
     #region Virtual Methods
+
     /// <summary>
-    /// Raises the RunWorkerCompleted event.
+    /// [IG_CHANGE] Raises the RunWorkerCompleted event.
     /// </summary>
     /// <param name="e">A <see cref="QueuedWorkerCompletedEventArgs"/> that contains event data.</param>
     protected virtual void OnRunWorkerCompleted(QueuedWorkerCompletedEventArgs e)
     {
-        RunWorkerCompleted?.Invoke(this, e);
+        try
+        {
+            RunWorkerCompleted?.Invoke(this, e);
+        }
+        catch { }
     }
+
     /// <summary>
     /// Raises the DoWork event.
     /// </summary>
@@ -478,6 +485,7 @@ public class QueuedBackgroundWorker : Component
     {
         DoWork?.Invoke(this, e);
     }
+
     #endregion
 
     #region Get/Set Apartment State
@@ -541,9 +549,10 @@ public class QueuedBackgroundWorker : Component
                 lock (lockObject)
                 {
                     // Check queues
-                    (AsyncOperation, int) work = GetWork();
+                    var work = GetWork();
                     asyncOp = work.Item1;
                     priority = work.Item2;
+
                     if (asyncOp != null)
                         request = asyncOp.UserSuppliedState;
 
@@ -561,7 +570,7 @@ public class QueuedBackgroundWorker : Component
                     try
                     {
                         // Raise the do work event
-                        QueuedWorkerDoWorkEventArgs doWorkArg = new QueuedWorkerDoWorkEventArgs(request, priority);
+                        var doWorkArg = new QueuedWorkerDoWorkEventArgs(request, priority);
                         OnDoWork(doWorkArg);
                         result = doWorkArg.Result;
                         cancel = doWorkArg.Cancel;
@@ -572,7 +581,7 @@ public class QueuedBackgroundWorker : Component
                     }
 
                     // Raise the work complete event
-                    QueuedWorkerCompletedEventArgs workCompletedArg = new QueuedWorkerCompletedEventArgs(request, result, priority, error, cancel);
+                    var workCompletedArg = new QueuedWorkerCompletedEventArgs(request, result, priority, error, cancel);
                     if (!Stopping)
                         asyncOp.PostOperationCompleted(workCompletedCallback, workCompletedArg);
                 }

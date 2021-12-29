@@ -12,7 +12,7 @@ internal class ImageListViewCacheMetadata : IDisposable
 
     #region Member Variables
     private QueuedBackgroundWorker bw;
-    private SynchronizationContext context;
+    private SynchronizationContext? context;
     private readonly SendOrPostCallback checkProcessingCallback;
 
     private ImageListView mImageListView;
@@ -206,7 +206,7 @@ internal class ImageListViewCacheMetadata : IDisposable
     }
 
     /// <summary>
-    /// Handles the DoWork event of the queued background worker.
+    /// [IG_CHANGE] Handles the DoWork event of the queued background worker.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="QueuedWorkerDoWorkEventArgs"/> instance 
@@ -280,7 +280,7 @@ internal class ImageListViewCacheMetadata : IDisposable
     public void Clear()
     {
         bw.CancelAsync();
-        processing.Clear();
+        processing = new();
     }
     /// <summary>
     /// Adds the item to the cache queue.

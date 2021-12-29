@@ -691,7 +691,7 @@ public class ItemCollectionChangedEventArgs : EventArgs
     /// <summary>
     /// Gets the ImageListViewItem that is the target of the event.
     /// </summary>
-    public ImageListViewItem Item { get; private set; }
+    public ImageListViewItem? Item { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the ItemCollectionChangedEventArgs class.
@@ -699,7 +699,7 @@ public class ItemCollectionChangedEventArgs : EventArgs
     /// <param name="action">The type of action causing the change.</param>
     /// <param name="item">The item that is the target of this event. This parameter will be null
     /// if the collection is cleared.</param>
-    public ItemCollectionChangedEventArgs(CollectionChangeAction action, ImageListViewItem item)
+    public ItemCollectionChangedEventArgs(CollectionChangeAction action, ImageListViewItem? item)
     {
         Action = action;
         Item = item;

@@ -27,7 +27,7 @@ public class URIAdaptor : ImageListViewItemAdaptor
     /// <param name="useEmbeddedThumbnails">Embedded thumbnail usage.</param>
     /// <param name="useExifOrientation">true to automatically rotate images based on Exif orientation; otherwise false.</param>
     /// <returns>The thumbnail image from the given item or null if an error occurs.</returns>
-    public override Image GetThumbnail(object key, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool useExifOrientation)
+    public override Image? GetThumbnail(object key, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool useExifOrientation)
     {
         if (disposed)
             return null;
@@ -35,17 +35,12 @@ public class URIAdaptor : ImageListViewItemAdaptor
         string uri = (string)key;
         try
         {
-            using (WebClient client = new WebClient())
-            {
-                byte[] imageData = client.DownloadData(uri);
-                using (MemoryStream stream = new MemoryStream(imageData))
-                {
-                    using (Image sourceImage = Image.FromStream(stream))
-                    {
-                        return Extractor.Instance.GetThumbnail(sourceImage, size, useEmbeddedThumbnails, useExifOrientation);
-                    }
-                }
-            }
+            using var client = new WebClient();
+            byte[] imageData = client.DownloadData(uri);
+            using var stream = new MemoryStream(imageData);
+            using var sourceImage = Image.FromStream(stream);
+
+            return Extractor.Instance.GetThumbnail(sourceImage, size, useEmbeddedThumbnails, useExifOrientation);
         }
         catch
         {

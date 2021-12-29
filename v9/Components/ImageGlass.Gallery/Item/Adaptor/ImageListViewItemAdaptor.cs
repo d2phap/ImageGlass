@@ -16,7 +16,7 @@ public abstract class ImageListViewItemAdaptor : IDisposable
     /// <param name="useEmbeddedThumbnails">Embedded thumbnail usage.</param>
     /// <param name="useExifOrientation">true to automatically rotate images based on Exif orientation; otherwise false.</param>
     /// <returns>The thumbnail image from the given item or null if an error occurs.</returns>
-    public abstract Image GetThumbnail(object key, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool useExifOrientation);
+    public abstract Image? GetThumbnail(object key, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool useExifOrientation);
 
     /// <summary>
     /// Returns a unique identifier for this thumbnail to be used in persistent
