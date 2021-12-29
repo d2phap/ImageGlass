@@ -1203,6 +1203,7 @@ public partial class ViewBox : HybridControl
     public void StartAnimation(AnimationSource sources)
     {
         _animationSource = sources;
+        RequestUpdateFrame = true;
     }
 
 
@@ -1213,6 +1214,7 @@ public partial class ViewBox : HybridControl
     public void StopAnimation(AnimationSource sources)
     {
         _animationSource ^= sources;
+        RequestUpdateFrame = false;
     }
 
 
@@ -1403,7 +1405,7 @@ public partial class ViewBox : HybridControl
         }
         catch { }
 
-        if (durationMs > 0)
+        if (durationMs > 0 || _msgTokenSrc.IsCancellationRequested)
         {
             Text = string.Empty;
         }

@@ -52,7 +52,7 @@ public class HybridControl : Control
     /// <summary>
     /// Request to update frame by <see cref="OnFrame"/> event.
     /// </summary>
-    protected bool IsSceneChanged { get; set; } = false;
+    protected bool RequestUpdateFrame { get; set; } = false;
     
 
 
@@ -196,11 +196,10 @@ public class HybridControl : Control
         _animationTimer.Interval = AnimationInterval;
         _animationTimer.Tick += (ss, ee) =>
         {
-            if (EnableAnimation || IsSceneChanged)
+            if (EnableAnimation && RequestUpdateFrame)
             {
                 OnFrame();
                 Invalidate();
-                IsSceneChanged = false;
             }
         };
     }
