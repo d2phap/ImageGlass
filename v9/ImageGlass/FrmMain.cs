@@ -1,5 +1,6 @@
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
+using ImageGlass.Gallery;
 using ImageGlass.Heart;
 using ImageGlass.PhotoBox;
 using ImageGlass.Settings;
@@ -108,6 +109,23 @@ public partial class FrmMain : Form
         var bmp = await Config.Codec.LoadAsync(inputPath, new(Local.Metadata));
         PicBox.LoadImage(bmp);
         PicBox.ClearMessage();
+
+
+
+
+        var files = Directory.GetFiles(Path.GetDirectoryName(inputPath) ?? "");
+
+        Gallery.SetRenderer(new ThemeRenderer());
+        Gallery.Items.Clear();
+        Gallery.SuspendLayout();
+
+        foreach (var file in files)
+        {
+            var item = new ImageListViewItem(file);
+            Gallery.Items.Add(item);
+        }
+
+        Gallery.ResumeLayout();
     }
 
 

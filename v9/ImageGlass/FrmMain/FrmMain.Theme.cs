@@ -49,7 +49,7 @@ public partial class FrmMain
 
         // Thumbnail bar
         Sp1.SplitterBackColor =
-            PanBot.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
+            Gallery.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
 
         // Side panels
         Sp2.SplitterBackColor =
