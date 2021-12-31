@@ -647,8 +647,8 @@ public partial class ImageListView
             mImageListView.showGroups = false;
             mImageListView.groups.Clear();
 
-            if ((mImageListView.GroupOrder == SortOrder.None || mImageListView.GroupColumn < 0 || mImageListView.GroupColumn >= mImageListView.Columns.Count) &&
-               (mImageListView.SortOrder == SortOrder.None || mImageListView.SortColumn < 0 || mImageListView.SortColumn >= mImageListView.Columns.Count))
+            if ((mImageListView.GroupOrder == SortOrder.None) &&
+               (mImageListView.SortOrder == SortOrder.None))
                 return;
 
             // Display wait cursor while sorting
@@ -656,38 +656,9 @@ public partial class ImageListView
             mImageListView.Cursor = Cursors.WaitCursor;
 
             // Sort and group items
-            ImageListViewColumnHeader? sortColumn = null;
-            ImageListViewColumnHeader? groupColumn = null;
-            if (mImageListView.GroupColumn >= 0 && mImageListView.GroupColumn < mImageListView.Columns.Count)
-                groupColumn = mImageListView.Columns[mImageListView.GroupColumn];
-            if (mImageListView.SortColumn >= 0 || mImageListView.SortColumn < mImageListView.Columns.Count)
-                sortColumn = mImageListView.Columns[mImageListView.SortColumn];
-            if (mItems.Count == 1 && groupColumn != null)
-                mItems[0].UpdateGroup(groupColumn);
-
-            mItems.Sort(new ImageListViewItemComparer(groupColumn, mImageListView.GroupOrder, sortColumn, mImageListView.SortOrder));
-
-            if (mImageListView.GroupOrder != SortOrder.None && groupColumn != null)
+            if (mImageListView.GroupOrder != SortOrder.None)
                 mImageListView.showGroups = true;
 
-            // Update item indices and create groups
-            string lastGroup = string.Empty;
-            for (int i = 0; i < mItems.Count; i++)
-            {
-                ImageListViewItem item = mItems[i];
-                item.mIndex = i;
-                string group = item.group;
-
-                if (string.Compare(lastGroup, group, StringComparison.InvariantCultureIgnoreCase) != 0)
-                {
-                    lastGroup = group;
-                    mImageListView.groups.Add(group, i, i);
-                }
-                else if (mImageListView.groups.HasName(lastGroup))
-                {
-                    mImageListView.groups[lastGroup].LastItemIndex = i;
-                }
-            }
 
             // Restore previous cursor
             mImageListView.Cursor = cursor;
@@ -764,16 +735,11 @@ public partial class ImageListView
         /// </summary>
         private class ImageListViewItemComparer : IComparer<ImageListViewItem>
         {
-            private readonly ImageListViewColumnHeader mGroupColumn;
-            private ImageListViewColumnHeader mSortColumn;
             private readonly SortOrder mGroupOrder;
             private readonly SortOrder mSortOrder;
 
-            public ImageListViewItemComparer(ImageListViewColumnHeader groupColumn, SortOrder groupOrder, ImageListViewColumnHeader sortColumn, SortOrder sortOrder)
+            public ImageListViewItemComparer(SortOrder sortOrder)
             {
-                mGroupColumn = groupColumn;
-                mSortColumn = sortColumn;
-                mGroupOrder = groupOrder;
                 mSortOrder = sortOrder;
             }
 
@@ -822,108 +788,11 @@ public partial class ImageListView
                 int sign = 0;
                 bool natural = false;
 
-                if (mGroupOrder != SortOrder.None)
-                {
-                    result = 0;
-                    sign = (mGroupOrder == SortOrder.Ascending || mGroupOrder == SortOrder.AscendingNatural) ? 1 : -1;
-
-                    x.UpdateGroup(mGroupColumn);
-                    y.UpdateGroup(mGroupColumn);
-                    result = x.groupOrder < y.groupOrder ? -1 : (x.groupOrder > y.groupOrder ? 1 : 0);
-                    if (result != 0)
-                        return sign * result;
-                }
 
                 if (mSortOrder != SortOrder.None)
                 {
                     result = 0;
                     sign = (mSortOrder == SortOrder.Ascending || mSortOrder == SortOrder.AscendingNatural) ? 1 : -1;
-                    natural = mSortOrder == SortOrder.AscendingNatural || mSortOrder == SortOrder.DescendingNatural;
-                    if (mSortColumn != null)
-                    {
-                        switch (mSortColumn.Type)
-                        {
-                            case ColumnType.DateAccessed:
-                                result = DateTime.Compare(x.DateAccessed, y.DateAccessed);
-                                break;
-                            case ColumnType.DateCreated:
-                                result = DateTime.Compare(x.DateCreated, y.DateCreated);
-                                break;
-                            case ColumnType.DateModified:
-                                result = DateTime.Compare(x.DateModified, y.DateModified);
-                                break;
-                            case ColumnType.Dimensions:
-                                long ax = x.Dimensions.Width * x.Dimensions.Height;
-                                long ay = y.Dimensions.Width * y.Dimensions.Height;
-                                result = ax < ay ? -1 : (ax > ay ? 1 : 0);
-                                break;
-                            case ColumnType.FileName:
-                                result = CompareStrings(x.FileName, y.FileName, natural);
-                                break;
-                            case ColumnType.FilePath:
-                                result = CompareStrings(x.FilePath, y.FilePath, natural);
-                                break;
-                            case ColumnType.FileSize:
-                                result = x.FileSize < y.FileSize ? -1 : (x.FileSize > y.FileSize ? 1 : 0);
-                                break;
-                            case ColumnType.FileType:
-                                result = CompareStrings(x.FileType, y.FileType, natural);
-                                break;
-                            case ColumnType.Name:
-                                result = CompareStrings(x.Text, y.Text, natural);
-                                break;
-                            case ColumnType.Resolution:
-                                float rx = x.Resolution.Width * x.Resolution.Height;
-                                float ry = y.Resolution.Width * y.Resolution.Height;
-                                result = rx < ry ? -1 : (rx > ry ? 1 : 0);
-                                break;
-                            case ColumnType.ImageDescription:
-                                result = CompareStrings(x.ImageDescription, y.ImageDescription, natural);
-                                break;
-                            case ColumnType.EquipmentModel:
-                                result = CompareStrings(x.EquipmentModel, y.EquipmentModel, natural);
-                                break;
-                            case ColumnType.DateTaken:
-                                result = DateTime.Compare(x.DateTaken, y.DateTaken);
-                                break;
-                            case ColumnType.Artist:
-                                result = CompareStrings(x.Artist, y.Artist, natural);
-                                break;
-                            case ColumnType.Copyright:
-                                result = CompareStrings(x.Copyright, y.Copyright, natural);
-                                break;
-                            case ColumnType.ExposureTime:
-                                result = x.ExposureTime < y.ExposureTime ? -1 : (x.ExposureTime > y.ExposureTime ? 1 : 0);
-                                break;
-                            case ColumnType.FNumber:
-                                result = x.FNumber < y.FNumber ? -1 : (x.FNumber > y.FNumber ? 1 : 0);
-                                break;
-                            case ColumnType.ISOSpeed:
-                                result = x.ISOSpeed < y.ISOSpeed ? -1 : (x.ISOSpeed > y.ISOSpeed ? 1 : 0);
-                                break;
-                            case ColumnType.UserComment:
-                                result = CompareStrings(x.UserComment, y.UserComment, natural);
-                                break;
-                            case ColumnType.Rating:
-                                result = x.Rating < y.Rating ? -1 : (x.Rating > y.Rating ? 1 : 0);
-                                break;
-                            case ColumnType.Software:
-                                result = CompareStrings(x.Software, y.Software, natural);
-                                break;
-                            case ColumnType.FocalLength:
-                                result = x.FocalLength < y.FocalLength ? -1 : (x.FocalLength > y.FocalLength ? 1 : 0);
-                                break;
-                            case ColumnType.Custom:
-                                if (mSortColumn.Comparer != null)
-                                    result = mSortColumn.Comparer.Compare(x, y);
-                                else
-                                    result = CompareStrings(x.SubItems[mSortColumn].Text, y.SubItems[mSortColumn].Text, natural);
-                                break;
-                            default:
-                                result = 0;
-                                break;
-                        }
-                    }
                 }
 
                 return sign * result;

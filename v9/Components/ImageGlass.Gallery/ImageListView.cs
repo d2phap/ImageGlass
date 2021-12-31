@@ -16,14 +16,6 @@ public partial class ImageListView : Control, IComponent
 {
     #region Constants
     /// <summary>
-    /// Default width of column headers in pixels.
-    /// </summary>
-    internal const int DefaultColumnWidth = 100;
-    /// <summary>
-    /// Selection tolerance for column separators.
-    /// </summary>
-    internal const int SeparatorSize = 12;
-    /// <summary>
     /// Selection tolerance for left-pane border.
     /// </summary>
     internal const int PaneBorderSize = 4;
@@ -41,21 +33,17 @@ public partial class ImageListView : Control, IComponent
     private int mCacheLimitAsItemCount;
     private long mCacheLimitAsMemory;
     private ImageListViewColor mColors;
-    private ImageListViewColumnHeaderCollection mColumns;
     private Image mDefaultImage;
     private Image? mErrorImage;
     private Image mRatingImage;
     private Image mEmptyRatingImage;
     private Font mGroupHeaderFont;
-    private Font mColumnHeaderFont;
     private bool mIntegralScroll;
     private ImageListViewItemCollection mItems;
     private int mPaneWidth;
     private bool mRetryOnError;
     internal ImageListViewSelectedItemCollection mSelectedItems;
     internal ImageListViewCheckedItemCollection mCheckedItems;
-    private int mSortColumn;
-    private int mGroupColumn;
     private SortOrder mSortOrder;
     private SortOrder mGroupOrder;
     private bool mShowFileIcons;
@@ -112,16 +100,6 @@ public partial class ImageListView : Control, IComponent
     /// </summary>
     [Category("Behavior"), Description("Gets or sets whether checkboxes respond to mouse clicks."), DefaultValue(true)]
     public bool AllowCheckBoxClick { get; set; }
-    /// <summary>
-    /// Gets or sets whether column headers respond to mouse clicks.
-    /// </summary>
-    [Category("Behavior"), Description("Gets or sets whether column headers respond to mouse clicks."), DefaultValue(true)]
-    public bool AllowColumnClick { get; set; }
-    /// <summary>
-    /// Gets or sets whether column headers can be resized with the mouse.
-    /// </summary>
-    [Category("Behavior"), Description("Gets or sets whether column headers can be resized with the mouse."), DefaultValue(true)]
-    public bool AllowColumnResize { get; set; }
     /// <summary>
     /// Gets or sets whether the user can reorder items by moving them.
     /// </summary>
@@ -318,20 +296,6 @@ public partial class ImageListView : Control, IComponent
     }
 
     /// <summary>
-    /// Gets or sets the collection of columns of the image list view.
-    /// </summary>
-    [Category("Appearance"), Description("Gets the collection of columns of the image list view.")]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-    public ImageListViewColumnHeaderCollection Columns
-    {
-        get { return mColumns; }
-        internal set
-        {
-            mColumns = value;
-            Refresh();
-        }
-    }
-    /// <summary>
     /// Gets or sets the placeholder image.
     /// </summary>
     [Category("Appearance"), Description("Gets or sets the placeholder image.")]
@@ -442,30 +406,7 @@ public partial class ImageListView : Control, IComponent
             Refresh();
         }
     }
-    /// <summary>
-    /// Gets or sets the font of the column headers.
-    /// </summary>
-    [Category("Appearance"), Description("Gets or sets the font of the column headers."), DefaultValue(typeof(Font), "Microsoft Sans Serif, 8.25pt")]
-    public Font ColumnHeaderFont
-    {
-        get
-        {
-            if (mColumnHeaderFont == null)
-            {
-                if (Font != null)
-                    mColumnHeaderFont = (Font)Font.Clone();
-                else
-                    mColumnHeaderFont = (Font)DefaultFont.Clone();
-            }
 
-            return mColumnHeaderFont;
-        }
-        set
-        {
-            mColumnHeaderFont = value;
-            Refresh();
-        }
-    }
     /// <summary>
     /// Gets or sets whether scrollbars scroll by an amount which is a multiple of item height.
     /// </summary>
@@ -697,22 +638,7 @@ public partial class ImageListView : Control, IComponent
             Refresh();
         }
     }
-    /// <summary>
-    /// Gets or sets the index of the sort column.
-    /// </summary>
-    [Category("Appearance"), DefaultValue(0), Description("Gets or sets the index of the sort column.")]
-    public int SortColumn
-    {
-        get { return mSortColumn; }
-        set
-        {
-            if (value != mSortColumn)
-            {
-                mSortColumn = value;
-                Sort();
-            }
-        }
-    }
+
     /// <summary>
     /// Gets or sets the sort order.
     /// </summary>
@@ -729,22 +655,7 @@ public partial class ImageListView : Control, IComponent
             }
         }
     }
-    /// <summary>
-    /// Gets or sets the index of the group column.
-    /// </summary>
-    [Category("Appearance"), DefaultValue(0), Description("Gets or sets the index of the group column.")]
-    public int GroupColumn
-    {
-        get { return mGroupColumn; }
-        set
-        {
-            if (value != mGroupColumn)
-            {
-                mGroupColumn = value;
-                Sort();
-            }
-        }
-    }
+
     /// <summary>
     /// Gets or sets the group order.
     /// </summary>
@@ -855,26 +766,6 @@ public partial class ImageListView : Control, IComponent
 
     #region Custom Property Serializers
     /// <summary>
-    /// Determines if the header font should be serialized.
-    /// </summary>
-    /// <returns>true if the designer should serialize 
-    /// the property; otherwise false.</returns>
-    public bool ShouldSerializeHeaderFont()
-    {
-        using (Font font = new Font("Microsoft Sans Serif", 8.25f))
-        {
-            return !mColumnHeaderFont.Equals(font);
-        }
-    }
-    /// <summary>
-    /// Resets the header font to its default value.
-    /// </summary>
-    public void ResetHeaderFont()
-    {
-        ColumnHeaderFont = new Font("Microsoft Sans Serif", 8.25f);
-    }
-
-    /// <summary>
     /// Determines if the colors should be serialized.
     /// </summary>
     /// <returns>true if the designer should serialize 
@@ -982,8 +873,6 @@ public partial class ImageListView : Control, IComponent
         // Property defaults
         AutoRotateThumbnails = true;
         AllowCheckBoxClick = true;
-        AllowColumnClick = true;
-        AllowColumnResize = true;
         AllowDrag = false;
         AllowItemReorder = true;
         AllowDuplicateFileNames = false;
@@ -992,14 +881,12 @@ public partial class ImageListView : Control, IComponent
         mCacheMode = CacheMode.OnDemand;
         mCacheLimitAsItemCount = 0;
         mCacheLimitAsMemory = 20 * 1024 * 1024;
-        mColumns = new ImageListViewColumnHeaderCollection(this);
         resources = new ResourceManager("ImageGlass.Gallery.ImageListViewResources", typeof(ImageListView).Assembly);
         mDefaultImage = resources.GetObject("DefaultImage") as Image;
         mErrorImage = resources.GetObject("ErrorImage") as Image;
         mRatingImage = resources.GetObject("RatingImage") as Image;
         mEmptyRatingImage = resources.GetObject("EmptyRatingImage") as Image;
         GroupHeaderFont = new Font(Font, FontStyle.Bold);
-        ColumnHeaderFont = Font;
         mIntegralScroll = false;
         mItems = new ImageListViewItemCollection(this);
         MultiSelect = true;
@@ -1007,8 +894,6 @@ public partial class ImageListView : Control, IComponent
         mRetryOnError = true;
         mSelectedItems = new ImageListViewSelectedItemCollection(this);
         mCheckedItems = new ImageListViewCheckedItemCollection(this);
-        mSortColumn = 0;
-        mGroupColumn = 0;
         mSortOrder = SortOrder.None;
         mGroupOrder = SortOrder.None;
         SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.Opaque | ControlStyles.Selectable | ControlStyles.UserMouse | ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer, true);
@@ -1367,18 +1252,6 @@ public partial class ImageListView : Control, IComponent
     /// <param name="hitInfo">Details of the hit test.</param>
     public void HitTest(Point pt, out HitInfo hitInfo)
     {
-        if (showGroups)
-        {
-            foreach (ImageListViewGroup @group in groups)
-            {
-                if (@group.headerBounds.Contains(pt))
-                {
-                    hitInfo = new HitInfo(@group);
-                    return;
-                }
-            }
-        }
-
         int itemIndex = -1;
         bool checkBoxHit = false;
         bool fileIconHit = false;
@@ -1464,7 +1337,6 @@ public partial class ImageListView : Control, IComponent
 
     }
 
-    
     /// <summary>
     /// [IG_Change] Scrolls the image list view to place the item with the specified
     /// index as close to the center of the visible area as possible.
@@ -2136,33 +2008,6 @@ public partial class ImageListView : Control, IComponent
     }
 
     /// <summary>
-    /// Raises the ColumnWidthChanged event.
-    /// </summary>
-    /// <param name="e">A ColumnEventArgs that contains event data.</param>
-    protected virtual void OnColumnWidthChanged(ColumnEventArgs e)
-    {
-        ColumnWidthChanged?.Invoke(this, e);
-    }
-
-    /// <summary>
-    /// Raises the ColumnClick event.
-    /// </summary>
-    /// <param name="e">A ColumnClickEventArgs that contains event data.</param>
-    protected virtual void OnColumnClick(ColumnClickEventArgs e)
-    {
-        ColumnClick?.Invoke(this, e);
-    }
-
-    /// <summary>
-    /// Raises the ColumnHover event.
-    /// </summary>
-    /// <param name="e">A ColumnClickEventArgs that contains event data.</param>
-    protected virtual void OnColumnHover(ColumnHoverEventArgs e)
-    {
-        ColumnHover?.Invoke(this, e);
-    }
-
-    /// <summary>
     /// Raises the ItemClick event.
     /// </summary>
     /// <param name="e">A ItemClickEventArgs that contains event data.</param>
@@ -2341,17 +2186,7 @@ public partial class ImageListView : Control, IComponent
         if (mItems.TryGetValue(guid, out ImageListViewItem item))
             OnThumbnailCached(new ThumbnailCachedEventArgs(item, thumbnail, size, thumbnailImage));
     }
-    /// <summary>
-    /// Updates item details.
-    /// This method is invoked from the item cache thread.
-    /// </summary>
-    /// <param name="guid">Item guid.</param>
-    /// <param name="details">Array of item details.</param>
-    internal void UpdateItemDetailsInternal(Guid guid, Tuple<ColumnType, string, object>[] details)
-    {
-        if (mItems.TryGetValue(guid, out ImageListViewItem item))
-            item.UpdateDetailsInternal(details);
-    }
+
     /// <summary>
     /// Raises the ThumbnailCaching event.
     /// This method is invoked from the thumbnail thread.
@@ -2402,21 +2237,6 @@ public partial class ImageListView : Control, IComponent
     /// </summary>
     [Category("Drag Drop"), Browsable(true), Description("Occurs after items are dropped successfully.")]
     public event DropCompleteEventHandler DropComplete;
-    /// <summary>
-    /// Occurs after the user successfully resized a column header.
-    /// </summary>
-    [Category("Action"), Browsable(true), Description("Occurs after the user successfully resized a column header.")]
-    public event ColumnWidthChangedEventHandler ColumnWidthChanged;
-    /// <summary>
-    /// Occurs when the user clicks a column header.
-    /// </summary>
-    [Category("Action"), Browsable(true), Description("Occurs when the user clicks a column header.")]
-    public event ColumnClickEventHandler ColumnClick;
-    /// <summary>
-    /// Occurs when the user moves the mouse over (and out of) a column header.
-    /// </summary>
-    [Category("Action"), Browsable(true), Description("Occurs when the user moves the mouse over (and out of) a column header.")]
-    public event ColumnHoverEventHandler ColumnHover;
     /// <summary>
     /// Occurs when the user clicks an item.
     /// </summary>

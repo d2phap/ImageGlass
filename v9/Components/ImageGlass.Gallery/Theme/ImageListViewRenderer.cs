@@ -707,29 +707,6 @@ public class ImageListViewRenderer : IDisposable
     }
 
     /// <summary>
-    /// Returns the height of group headers.
-    /// </summary>
-    public virtual int MeasureGroupHeaderHeight()
-    {
-        if (ImageListView.IsDisposed || ImageListView.GroupHeaderFont == null)
-            return 24;
-        else
-            return Math.Max(ImageListView.GroupHeaderFont.Height + 8, 24);
-    }
-
-    /// <summary>
-    /// Returns the height of column headers.
-    /// </summary>
-    /// <returns>The height of column headers.</returns>
-    public virtual int MeasureColumnHeaderHeight()
-    {
-        if (ImageListView.IsDisposed || ImageListView.ColumnHeaderFont == null)
-            return 24;
-        else
-            return Math.Max(ImageListView.ColumnHeaderFont.Height + 4, 24);
-    }
-
-    /// <summary>
     /// Returns the spacing between items for the given view mode.
     /// </summary>
     /// <param name="view">The view mode for which the measurement should be made.</param>

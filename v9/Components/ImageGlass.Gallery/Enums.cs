@@ -117,21 +117,7 @@ public enum ColumnType
     /// the text is not provided.
     /// </summary>
     Name,
-    /// <summary>
-    /// The last access date.
-    /// </summary>
-    DateAccessed,
-    /// <summary>
-    /// The creation date.
-    /// </summary>
-    DateCreated,
-    /// <summary>
-    /// The last modification date.
-    /// </summary>
-    DateModified,
-    /// <summary>
-    /// Mime type of the file.
-    /// </summary>
+    
     FileType,
     /// <summary>
     /// The full path to the file.
@@ -148,63 +134,6 @@ public enum ColumnType
     /// <summary>
     /// The size of the file.
     /// </summary>
-    FileSize,
-    /// <summary>
-    /// Image dimensions in pixels.
-    /// </summary>
-    Dimensions,
-    /// <summary>
-    /// Image resolution if dpi.
-    /// </summary>
-    Resolution,
-    /// <summary>
-    /// Image description (Exif tag).
-    /// </summary>
-    ImageDescription,
-    /// <summary>
-    /// The equipment model (Exif tag).
-    /// </summary>
-    EquipmentModel,
-    /// <summary>
-    /// The date image was taken (Exif tag).
-    /// </summary>
-    DateTaken,
-    /// <summary>
-    /// The artist taking the image (Exif tag).
-    /// </summary>
-    Artist,
-    /// <summary>
-    /// Image copyright information (Exif tag).
-    /// </summary>
-    Copyright,
-    /// <summary>
-    /// Exposure time in seconds (Exif tag).
-    /// </summary>
-    ExposureTime,
-    /// <summary>
-    /// The F number (Exif tag).
-    /// </summary>
-    FNumber,
-    /// <summary>
-    /// ISO speed (Exif tag).
-    /// </summary>
-    ISOSpeed,
-    /// <summary>
-    /// User comment (Exif tag).
-    /// </summary>
-    UserComment,
-    /// <summary>
-    /// Rating (Windows Exif tag).
-    /// </summary>
-    Rating,
-    /// <summary>
-    /// Software (Exif tag).
-    /// </summary>
-    Software,
-    /// <summary>
-    /// Focal length (Exif tag).
-    /// </summary>
-    FocalLength,
 }
 /// <summary>
 /// Represents the order by which items are drawn.

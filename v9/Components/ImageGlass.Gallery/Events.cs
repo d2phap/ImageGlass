@@ -13,6 +13,7 @@ namespace ImageGlass.Gallery;
 /// <param name="e">A CacheErrorEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void CacheErrorEventHandler(object sender, CacheErrorEventArgs e);
+
 /// <summary>
 /// Represents the method that will handle the DropFiles event. 
 /// </summary>
@@ -20,6 +21,7 @@ public delegate void CacheErrorEventHandler(object sender, CacheErrorEventArgs e
 /// <param name="e">A DropFileEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void DropFilesEventHandler(object sender, DropFileEventArgs e);
+
 /// <summary>
 /// Represents the method that will handle the DropItems event. 
 /// </summary>
@@ -27,6 +29,7 @@ public delegate void DropFilesEventHandler(object sender, DropFileEventArgs e);
 /// <param name="e">A DropItemEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void DropItemsEventHandler(object sender, DropItemEventArgs e);
+
 /// <summary>
 /// Represents the method that will handle the DropComplete event. 
 /// </summary>
@@ -34,6 +37,7 @@ public delegate void DropItemsEventHandler(object sender, DropItemEventArgs e);
 /// <param name="e">A DropCompleteEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void DropCompleteEventHandler(object sender, DropCompleteEventArgs e);
+
 /// <summary>
 /// Represents the method that will handle the ColumnClick event. 
 /// </summary>
@@ -41,20 +45,7 @@ public delegate void DropCompleteEventHandler(object sender, DropCompleteEventAr
 /// <param name="e">A ColumnClickEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ColumnClickEventHandler(object sender, ColumnClickEventArgs e);
-/// <summary>
-/// Represents the method that will handle the ColumnHover event. 
-/// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
-/// <param name="e">A ColumnHoverEventArgs that contains event data.</param>
-[EditorBrowsable(EditorBrowsableState.Never)]
-public delegate void ColumnHoverEventHandler(object sender, ColumnHoverEventArgs e);
-/// <summary>
-/// Represents the method that will handle the ColumnWidthChanged event. 
-/// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
-/// <param name="e">A ColumnEventArgs that contains event data.</param>
-[EditorBrowsable(EditorBrowsableState.Never)]
-public delegate void ColumnWidthChangedEventHandler(object sender, ColumnEventArgs e);
+
 /// <summary>
 /// Represents the method that will handle the ItemClick event. 
 /// </summary>
@@ -62,6 +53,7 @@ public delegate void ColumnWidthChangedEventHandler(object sender, ColumnEventAr
 /// <param name="e">A ItemClickEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ItemClickEventHandler(object sender, ItemClickEventArgs e);
+
 /// <summary>
 /// Represents the method that will handle the ItemCheckBoxClick event. 
 /// </summary>
@@ -69,6 +61,7 @@ public delegate void ItemClickEventHandler(object sender, ItemClickEventArgs e);
 /// <param name="e">A ItemEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ItemCheckBoxClickEventHandler(object sender, ItemEventArgs e);
+
 /// <summary>
 /// Represents the method that will handle the ItemHover event. 
 /// </summary>
@@ -76,6 +69,7 @@ public delegate void ItemCheckBoxClickEventHandler(object sender, ItemEventArgs 
 /// <param name="e">A ItemHoverEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ItemHoverEventHandler(object sender, ItemHoverEventArgs e);
+
 /// <summary>
 /// Represents the method that will handle the ItemDoubleClick event. 
 /// </summary>
@@ -83,6 +77,7 @@ public delegate void ItemHoverEventHandler(object sender, ItemHoverEventArgs e);
 /// <param name="e">An ItemClickEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ItemDoubleClickEventHandler(object sender, ItemClickEventArgs e);
+
 /// <summary>
 /// Represents the method that will handle the ThumbnailCaching event. 
 /// </summary>
@@ -90,6 +85,7 @@ public delegate void ItemDoubleClickEventHandler(object sender, ItemClickEventAr
 /// <param name="e">A ThumbnailCachingEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ThumbnailCachingEventHandler(object sender, ThumbnailCachingEventArgs e);
+
 /// <summary>
 /// Represents the method that will handle the ThumbnailCached event. 
 /// </summary>
@@ -97,6 +93,7 @@ public delegate void ThumbnailCachingEventHandler(object sender, ThumbnailCachin
 /// <param name="e">A ThumbnailCachedEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ThumbnailCachedEventHandler(object sender, ThumbnailCachedEventArgs e);
+
 /// <summary>
 /// Represents the method that will handle the DetailsCaching event. 
 /// </summary>
@@ -104,6 +101,7 @@ public delegate void ThumbnailCachedEventHandler(object sender, ThumbnailCachedE
 /// <param name="e">An ItemEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void DetailsCachingEventHandler(object sender, ItemEventArgs e);
+
 /// <summary>
 /// Represents the method that will handle the DetailsCached event. 
 /// </summary>
@@ -111,6 +109,7 @@ public delegate void DetailsCachingEventHandler(object sender, ItemEventArgs e);
 /// <param name="e">An ItemEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void DetailsCachedEventHandler(object sender, ItemEventArgs e);
+
 /// <summary>
 /// Represents the method that will handle the ShellInfoCachingEventHandler event. 
 /// </summary>
@@ -118,6 +117,7 @@ public delegate void DetailsCachedEventHandler(object sender, ItemEventArgs e);
 /// <param name="e">A ShellInfoCachingEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ShellInfoCachingEventHandler(object sender, ShellInfoCachingEventArgs e);
+
 /// <summary>
 /// Represents the method that will handle the ShellInfoCachedEventHandler event. 
 /// </summary>
@@ -125,11 +125,13 @@ public delegate void ShellInfoCachingEventHandler(object sender, ShellInfoCachin
 /// <param name="e">A ShellInfoCachedEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ShellInfoCachedEventHandler(object sender, ShellInfoCachedEventArgs e);
+
 /// <summary>
 /// Refreshes the owner control.
 /// </summary>
 [EditorBrowsable(EditorBrowsableState.Never)]
 internal delegate void RefreshDelegateInternal();
+
 /// <summary>
 /// Represents the method that will handle the ItemCollectionChanged event. 
 /// </summary>
@@ -137,6 +139,7 @@ internal delegate void RefreshDelegateInternal();
 /// <param name="e">A ItemCollectionChangedEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ItemCollectionChangedEventHandler(object sender, ItemCollectionChangedEventArgs e);
+
 /// <summary>
 /// Represents the method that will handle the PaneResized event. 
 /// </summary>
@@ -144,6 +147,7 @@ public delegate void ItemCollectionChangedEventHandler(object sender, ItemCollec
 /// <param name="e">A PaneResizedEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void PaneResizedEventHandler(object sender, PaneResizedEventArgs e);
+
 /// <summary>
 /// Represents the method that will handle the PaneResizing event. 
 /// </summary>
@@ -151,6 +155,7 @@ public delegate void PaneResizedEventHandler(object sender, PaneResizedEventArgs
 /// <param name="e">A PaneResizingEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void PaneResizingEventHandler(object sender, PaneResizingEventArgs e);
+
 #endregion
 
 
@@ -256,6 +261,7 @@ public class DropItemEventArgs : EventArgs
         Items = items;
     }
 }
+
 /// <summary>
 /// Represents the event arguments for drag drop event completion.
 /// </summary>
@@ -284,95 +290,7 @@ public class DropCompleteEventArgs : EventArgs
         InternalDrag = internalDrag;
     }
 }
-/// <summary>
-/// Represents the event arguments for column related events.
-/// </summary>
-[Serializable, ComVisible(true)]
-public class ColumnEventArgs : EventArgs
-{
-    /// <summary>
-    /// Gets the ImageListViewColumnHeader that is the target of the event.
-    /// </summary>
-    public ImageListViewColumnHeader Column { get; private set; }
 
-    /// <summary>
-    /// Initializes a new instance of the ColumnEventArgs class.
-    /// </summary>
-    /// <param name="column">The column that is the target of this event.</param>
-    public ColumnEventArgs(ImageListViewColumnHeader column)
-    {
-        Column = column;
-    }
-}
-/// <summary>
-/// Represents the event arguments for column click related events.
-/// </summary>
-[Serializable, ComVisible(true)]
-public class ColumnClickEventArgs : EventArgs
-{
-    /// <summary>
-    /// Gets the ImageListViewColumnHeader that is the target of the event.
-    /// </summary>
-    public ImageListViewColumnHeader Column { get; private set; }
-    /// <summary>
-    /// Gets the coordinates of the cursor.
-    /// </summary>
-    public Point Location { get; private set; }
-    /// <summary>
-    /// Gets the x-coordinates of the cursor.
-    /// </summary>
-    public int X { get { return Location.X; } }
-    /// <summary>
-    /// Gets the y-coordinates of the cursor.
-    /// </summary>
-    public int Y { get { return Location.Y; } }
-    /// <summary>
-    /// Gets the state of the mouse buttons.
-    /// </summary>
-    public MouseButtons Buttons { get; private set; }
-
-    /// <summary>
-    /// Initializes a new instance of the ColumnClickEventArgs class.
-    /// </summary>
-    /// <param name="column">The column that is the target of this event.</param>
-    /// <param name="location">The location of the mouse.</param>
-    /// <param name="buttons">One of the System.Windows.Forms.MouseButtons values 
-    /// indicating which mouse button was pressed.</param>
-    public ColumnClickEventArgs(ImageListViewColumnHeader column, Point location, MouseButtons buttons)
-    {
-        Column = column;
-        Location = location;
-        Buttons = buttons;
-    }
-}
-/// <summary>
-/// Represents the event arguments for column hover related events.
-/// </summary>
-[Serializable, ComVisible(true)]
-public class ColumnHoverEventArgs : EventArgs
-{
-    /// <summary>
-    /// Gets the ImageListViewColumnHeader that was previously hovered.
-    /// Returns null if there was no previously hovered column.
-    /// </summary>
-    public ImageListViewColumnHeader PreviousColumn { get; private set; }
-    /// <summary>
-    /// Gets the currently hovered ImageListViewColumnHeader.
-    /// Returns null if there is no hovered column.
-    /// </summary>
-    public ImageListViewColumnHeader Column { get; private set; }
-
-    /// <summary>
-    /// Initializes a new instance of the ColumnHoverEventArgs class.
-    /// </summary>
-    /// <param name="column">The currently hovered column.</param>
-    /// <param name="previousColumn">The previously hovered column.</param>
-    public ColumnHoverEventArgs(ImageListViewColumnHeader column, ImageListViewColumnHeader previousColumn)
-    {
-        Column = column;
-        PreviousColumn = previousColumn;
-    }
-}
 /// <summary>
 /// Represents the event arguments for item related events.
 /// </summary>
@@ -393,6 +311,7 @@ public class ItemEventArgs : EventArgs
         Item = item;
     }
 }
+
 /// <summary>
 /// Represents the event arguments for item click related events.
 /// </summary>
@@ -403,14 +322,6 @@ public class ItemClickEventArgs : EventArgs
     /// Gets the ImageListViewItem that is the target of the event.
     /// </summary>
     public ImageListViewItem Item { get; private set; }
-    /// <summary>
-    /// Gets the index of the sub item under the hit point.
-    /// The index returned is the 0-based index of the column
-    /// as displayed on the screen, considering column visibility
-    /// and display indices.
-    /// Returns -1 if the hit point is not over a sub item.
-    /// </summary>
-    public int SubItemIndex { get; private set; }
     /// <summary>
     /// Gets the coordinates of the cursor.
     /// </summary>
@@ -432,14 +343,12 @@ public class ItemClickEventArgs : EventArgs
     /// Initializes a new instance of the ItemClickEventArgs class.
     /// </summary>
     /// <param name="item">The item that is the target of this event.</param>
-    /// <param name="subItemIndex">Gets the index of the sub item under the hit point.</param>
     /// <param name="location">The location of the mouse.</param>
     /// <param name="buttons">One of the System.Windows.Forms.MouseButtons values 
     /// indicating which mouse button was pressed.</param>
-    public ItemClickEventArgs(ImageListViewItem item, int subItemIndex, Point location, MouseButtons buttons)
+    public ItemClickEventArgs(ImageListViewItem item, Point location, MouseButtons buttons)
     {
         Item = item;
-        SubItemIndex = subItemIndex;
         Location = location;
         Buttons = buttons;
     }
@@ -454,43 +363,22 @@ public class ItemHoverEventArgs : EventArgs
     /// Gets the ImageListViewItem that was previously hovered.
     /// Returns null if there was no previously hovered item.
     /// </summary>
-    public ImageListViewItem PreviousItem { get; private set; }
+    public ImageListViewItem? PreviousItem { get; private set; }
     /// <summary>
     /// Gets the currently hovered ImageListViewItem.
     /// Returns null if there is no hovered item.
     /// </summary>
-    public ImageListViewItem Item { get; private set; }
-    /// <summary>
-    /// Gets the index of the sub item that was previously hovered.
-    /// The index returned is the 0-based index of the column
-    /// as displayed on the screen, considering column visibility
-    /// and display indices.
-    /// Returns -1 if the hit point is not over a sub item.
-    /// </summary>
-    public int PreviousSubItemIndex { get; private set; }
-    /// <summary>
-    /// Gets the index of the hovered sub item.
-    /// The index returned is the 0-based index of the column
-    /// as displayed on the screen, considering column visibility
-    /// and display indices.
-    /// Returns -1 if the hit point is not over a sub item.
-    /// </summary>
-    public int SubItemIndex { get; private set; }
+    public ImageListViewItem? Item { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the ItemEventArgs class.
     /// </summary>
     /// <param name="item">The currently hovered item.</param>
-    /// <param name="subItemIndex">The index of the hovered sub item.</param>
     /// <param name="previousItem">The previously hovered item.</param>
-    /// <param name="previousSubItemIndex">The index of the sub item that was previously hovered.</param>
-    public ItemHoverEventArgs(ImageListViewItem item, int subItemIndex, ImageListViewItem previousItem, int previousSubItemIndex)
+    public ItemHoverEventArgs(ImageListViewItem? item, ImageListViewItem? previousItem)
     {
         Item = item;
-        SubItemIndex = subItemIndex;
-
         PreviousItem = previousItem;
-        PreviousSubItemIndex = previousSubItemIndex;
     }
 }
 /// <summary>

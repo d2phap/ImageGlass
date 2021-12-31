@@ -98,37 +98,12 @@ public class FileSystemAdaptor : ImageListViewItemAdaptor
         // Get file info
         if (File.Exists(filename))
         {
-            FileInfo info = new FileInfo(filename);
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.DateCreated, string.Empty, info.CreationTime));
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.DateAccessed, string.Empty, info.LastAccessTime));
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.DateModified, string.Empty, info.LastWriteTime));
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.FileSize, string.Empty, info.Length));
+            var info = new FileInfo(filename);
 
             // [IG_CHANGE] use string cache
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.FilePath, string.Empty, _stringCache.GetFromCache(info.DirectoryName) ?? ""));
+            details.Add(new(ColumnType.FilePath, string.Empty, _stringCache.GetFromCache(info.DirectoryName) ?? ""));
 
-       
             details.Add(new Tuple<ColumnType, string, object>(ColumnType.FolderName, string.Empty, info.Directory?.Name ?? ""));
-
-            // Get metadata
-            Metadata metadata = Extractor.Instance.GetMetadata(filename);
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.Dimensions, string.Empty, new Size(metadata.Width, metadata.Height)));
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.Resolution, string.Empty, new SizeF((float)metadata.DPIX, (float)metadata.DPIY)));
-
-            // [IG_CHANGE] use string cache
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.ImageDescription, string.Empty, metadata.ImageDescription == null ? "" : _stringCache.GetFromCache(metadata.ImageDescription)));
-
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.EquipmentModel, string.Empty, metadata.EquipmentModel ?? ""));
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.DateTaken, string.Empty, metadata.DateTaken));
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.Artist, string.Empty, metadata.Artist ?? ""));
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.Copyright, string.Empty, metadata.Copyright ?? ""));
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.ExposureTime, string.Empty, (float)metadata.ExposureTime));
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.FNumber, string.Empty, (float)metadata.FNumber));
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.ISOSpeed, string.Empty, (ushort)metadata.ISOSpeed));
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.UserComment, string.Empty, metadata.Comment ?? ""));
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.Rating, string.Empty, (ushort)metadata.Rating));
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.Software, string.Empty, metadata.Software ?? ""));
-            details.Add(new Tuple<ColumnType, string, object>(ColumnType.FocalLength, string.Empty, (float)metadata.FocalLength));
         }
 
         return details.ToArray();

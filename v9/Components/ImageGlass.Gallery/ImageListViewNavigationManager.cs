@@ -19,26 +19,15 @@ public partial class ImageListView
 
         private bool inItemArea;
         private bool overCheckBox;
-        private bool inHeaderArea;
-        private bool inPaneArea;
 
         private Point lastViewOffset;
-        private Point lastSeparatorDragLocation;
-        private Point lastPaneResizeLocation;
         private Point lastMouseDownLocation;
-        private Point lastMouseMoveLocation;
         private Dictionary<ImageListViewItem, bool> highlightedItems;
-        private bool suppressClick;
 
         private bool lastMouseDownInItemArea;
-        private bool lastMouseDownInColumnHeaderArea;
-        private bool lastMouseDownInPaneArea;
 
         private bool lastMouseDownOverItem;
         private bool lastMouseDownOverCheckBox;
-        private bool lastMouseDownOverColumn;
-        private bool lastMouseDownOverSeparator;
-        private bool lastMouseDownOverPaneBorder;
 
         private bool selfDragging;
 
@@ -66,27 +55,7 @@ public partial class ImageListView
         /// <summary>
         /// Gets the item under the mouse.
         /// </summary>
-        public ImageListViewItem HoveredItem { get; private set; }
-        /// <summary>
-        /// Gets the sub item under the mouse.
-        /// </summary>
-        public int HoveredSubItem { get; private set; }
-        /// <summary>
-        /// Gets the column under the mouse.
-        /// </summary>
-        public ImageListViewColumnHeader HoveredColumn { get; private set; }
-        /// <summary>
-        /// Gets the column whose separator is under the mouse.
-        /// </summary>
-        public ImageListViewColumnHeader HoveredSeparator { get; private set; }
-        /// <summary>
-        /// Gets the column whose separator is being dragged.
-        /// </summary>
-        public ImageListViewColumnHeader SelectedSeparator { get; private set; }
-        /// <summary>
-        /// Gets whether the mouse is over the pane border.
-        /// </summary>
-        public bool HoveredPaneBorder { get; private set; }
+        public ImageListViewItem? HoveredItem { get; private set; }
 
         /// <summary>
         /// Gets whether a mouse selection is in progress.
@@ -104,7 +73,7 @@ public partial class ImageListView
         /// <summary>
         /// Gets the target item for a drop operation.
         /// </summary>
-        public ImageListViewItem DropTarget { get; private set; }
+        public ImageListViewItem? DropTarget { get; private set; }
         /// <summary>
         /// Gets whether drop target is to the right of the item.
         /// </summary>
@@ -134,12 +103,6 @@ public partial class ImageListView
             ControlKey = false;
 
             HoveredItem = null;
-            HoveredSubItem = -1;
-            HoveredColumn = null;
-            HoveredSeparator = null;
-            SelectedSeparator = null;
-            HoveredPaneBorder = false;
-
             MouseSelecting = false;
 
             DropTarget = null;
@@ -153,7 +116,6 @@ public partial class ImageListView
             scrollTimer.Enabled = false;
             scrollTimer.Tick += new EventHandler(scrollTimer_Tick);
 
-            suppressClick = false;
         }
         #endregion
 
@@ -195,13 +157,8 @@ public partial class ImageListView
 
             DoHitTest(e.Location);
             lastMouseDownInItemArea = inItemArea;
-            lastMouseDownInColumnHeaderArea = inHeaderArea;
-            lastMouseDownInPaneArea = inPaneArea;
             lastMouseDownOverItem = (HoveredItem != null);
             lastMouseDownOverCheckBox = overCheckBox;
-            lastMouseDownOverColumn = (HoveredColumn != null);
-            lastMouseDownOverSeparator = (HoveredSeparator != null);
-            lastMouseDownOverPaneBorder = HoveredPaneBorder;
 
             lastViewOffset = mImageListView.ViewOffset;
             lastMouseDownLocation = e.Location;
@@ -211,10 +168,7 @@ public partial class ImageListView
         /// </summary>
         public void MouseMove(MouseEventArgs e)
         {
-            ImageListViewItem oldHoveredItem = HoveredItem;
-            int oldHoveredSubItem = HoveredSubItem;
-            ImageListViewColumnHeader oldHoveredColumn = HoveredColumn;
-            ImageListViewColumnHeader oldHoveredSeparator = HoveredSeparator;
+            var oldHoveredItem = HoveredItem;
 
             DoHitTest(e.Location);
 
@@ -252,54 +206,17 @@ public partial class ImageListView
                 scrollTimer.Enabled = false;
             }
 
-            if (DraggingSeperator)
-            {
-                int delta = e.Location.X - lastSeparatorDragLocation.X;
-                int colwidth = SelectedSeparator.Width + delta;
-                if (colwidth > 16)
-                    lastSeparatorDragLocation = e.Location;
-                else
-                {
-                    lastSeparatorDragLocation = new Point(e.Location.X - colwidth + 16, e.Location.Y);
-                    colwidth = 16;
-                }
-                SelectedSeparator.Width = colwidth;
-
-                HoveredItem = null;
-                HoveredColumn = SelectedSeparator;
-                HoveredSeparator = SelectedSeparator;
-                mImageListView.Refresh();
-            }
-            else if (ResizingPane)
-            {
-                int delta = e.Location.X - lastPaneResizeLocation.X;
-                int width = mImageListView.mPaneWidth + delta;
-                if (width > 2)
-                    lastPaneResizeLocation = e.Location;
-                else
-                {
-                    lastPaneResizeLocation = new Point(e.Location.X - width + 2, e.Location.Y);
-                    width = 2;
-                }
-                mImageListView.mPaneWidth = width;
-
-                HoveredItem = null;
-                HoveredColumn = null;
-                HoveredSeparator = null;
-                mImageListView.Refresh();
-
-                mImageListView.OnPaneResizing(new PaneResizingEventArgs(width));
-            }
-            else if (MouseSelecting)
+            if (MouseSelecting)
             {
                 if (!ShiftKey && !ControlKey)
                     mImageListView.SelectedItems.Clear(false);
 
                 // Create the selection rectangle
-                Point viewOffset = mImageListView.ViewOffset;
-                Point pt1 = new Point(lastMouseDownLocation.X - (viewOffset.X - lastViewOffset.X),
+                var viewOffset = mImageListView.ViewOffset;
+                var pt1 = new Point(
+                    lastMouseDownLocation.X - (viewOffset.X - lastViewOffset.X),
                     lastMouseDownLocation.Y - (viewOffset.Y - lastViewOffset.Y));
-                Point pt2 = new Point(e.Location.X, e.Location.Y);
+                var pt2 = new Point(e.Location.X, e.Location.Y);
                 SelectionRectangle = new Rectangle(Math.Min(pt1.X, pt2.X), Math.Min(pt1.Y, pt2.Y), Math.Abs(pt1.X - pt2.X), Math.Abs(pt1.Y - pt2.Y));
 
                 // Determine which items are highlighted
@@ -308,7 +225,7 @@ public partial class ImageListView
                 {
                     foreach (ImageListViewGroup group in mImageListView.groups)
                     {
-                        List<int> indices = group.ItemIndicesInRectangle(SelectionRectangle, mImageListView.ScrollOrientation, mImageListView.layoutManager.ItemSizeWithMargin);
+                        var indices = group.ItemIndicesInRectangle(SelectionRectangle, mImageListView.ScrollOrientation, mImageListView.layoutManager.ItemSizeWithMargin);
 
                         foreach (int i in indices)
                         {
@@ -325,7 +242,8 @@ public partial class ImageListView
                     // Normalize to item area coordinates
                     pt1 = new Point(SelectionRectangle.Left, SelectionRectangle.Top);
                     pt2 = new Point(SelectionRectangle.Right, SelectionRectangle.Bottom);
-                    Point itemAreaOffset = new Point(-mImageListView.layoutManager.ItemAreaBounds.Left,
+                    var itemAreaOffset = new Point(
+                        -mImageListView.layoutManager.ItemAreaBounds.Left,
                         -mImageListView.layoutManager.ItemAreaBounds.Top);
                     pt1.Offset(itemAreaOffset);
                     pt2.Offset(itemAreaOffset);
@@ -371,17 +289,13 @@ public partial class ImageListView
                     }
                 }
 
-                HoveredColumn = null;
-                HoveredSeparator = null;
-                SelectedSeparator = null;
-
                 mImageListView.Refresh();
             }
             else if (!MouseSelecting && !DraggingSeperator && !ResizingPane &&
                 inItemArea && lastMouseDownInItemArea &&
                 (LeftButton || RightButton) &&
-                ((Math.Abs(e.Location.X - lastMouseDownLocation.X) > SystemInformation.DragSize.Width ||
-                Math.Abs(e.Location.Y - lastMouseDownLocation.Y) > SystemInformation.DragSize.Height)))
+                (Math.Abs(e.Location.X - lastMouseDownLocation.X) > SystemInformation.DragSize.Width ||
+                Math.Abs(e.Location.Y - lastMouseDownLocation.Y) > SystemInformation.DragSize.Height))
             {
                 if (mImageListView.MultiSelect && !lastMouseDownOverItem && HoveredItem == null)
                 {
@@ -410,15 +324,15 @@ public partial class ImageListView
                     if (mImageListView.AllowDrag)
                     {
                         // Set drag data
-                        List<string> filenames = new List<string>();
-                        foreach (ImageListViewItem item in mImageListView.SelectedItems)
+                        var filenames = new List<string>();
+                        foreach (var item in mImageListView.SelectedItems)
                         {
                             // Get the source image
-                            string sourceFile = item.Adaptor.GetSourceImage(item.VirtualItemKey);
+                            var sourceFile = item.Adaptor.GetSourceImage(item.VirtualItemKey);
                             if (!string.IsNullOrEmpty(sourceFile))
                                 filenames.Add(sourceFile);
                         }
-                        DataObject data = new DataObject(DataFormats.FileDrop, filenames.ToArray());
+                        var data = new DataObject(DataFormats.FileDrop, filenames.ToArray());
                         mImageListView.DoDragDrop(data, DragDropEffects.All);
                     }
                     else
@@ -431,61 +345,23 @@ public partial class ImageListView
                     // Since the MouseUp event will be eaten by DoDragDrop we will not receive
                     // the MouseUp event. We need to manually update mouse button flags after
                     // the drop.
-                    if ((Control.MouseButtons & MouseButtons.Left) == MouseButtons.None)
+                    if ((MouseButtons & MouseButtons.Left) == MouseButtons.None)
                         LeftButton = false;
-                    if ((Control.MouseButtons & MouseButtons.Right) == MouseButtons.None)
+                    if ((MouseButtons & MouseButtons.Right) == MouseButtons.None)
                         RightButton = false;
                 }
             }
-            else if (!MouseSelecting && !DraggingSeperator && !ResizingPane &&
-                inHeaderArea && lastMouseDownInColumnHeaderArea && lastMouseDownOverSeparator && LeftButton &&
-                mImageListView.AllowColumnResize && HoveredSeparator != null)
-            {
-                // Start dragging a separator
-                DraggingSeperator = true;
-                SelectedSeparator = HoveredSeparator;
-                lastSeparatorDragLocation = e.Location;
-            }
-            else if (!MouseSelecting && !DraggingSeperator && !ResizingPane &&
-                inPaneArea && lastMouseDownInPaneArea && lastMouseDownOverPaneBorder && LeftButton &&
-                mImageListView.AllowPaneResize && HoveredPaneBorder != false)
-            {
-                // Start dragging the pane
-                ResizingPane = true;
-                lastPaneResizeLocation = e.Location;
-            }
-            else if (!ReferenceEquals(HoveredItem, oldHoveredItem) ||
-                (HoveredSubItem != oldHoveredSubItem) ||
-                !ReferenceEquals(HoveredColumn, oldHoveredColumn) ||
-                !ReferenceEquals(HoveredSeparator, oldHoveredSeparator))
+
+            else if (!ReferenceEquals(HoveredItem, oldHoveredItem))
             {
                 // Hovered item changed
-                if (!ReferenceEquals(HoveredItem, oldHoveredItem) || (HoveredSubItem != oldHoveredSubItem))
-                    mImageListView.OnItemHover(new ItemHoverEventArgs(HoveredItem, HoveredSubItem, oldHoveredItem, oldHoveredSubItem));
-
-                if (!ReferenceEquals(HoveredColumn, oldHoveredColumn))
-                    mImageListView.OnColumnHover(new ColumnHoverEventArgs(HoveredColumn, oldHoveredColumn));
+                if (!ReferenceEquals(HoveredItem, oldHoveredItem))
+                    mImageListView.OnItemHover(new ItemHoverEventArgs(HoveredItem, oldHoveredItem));
 
                 mImageListView.Refresh();
             }
 
             mImageListView.ResumePaint();
-
-            // Change to size cursor if mouse is over a column separator or pane border
-            if (mImageListView.Cursor != Cursors.VSplit && !MouseSelecting)
-            {
-                if ((mImageListView.AllowColumnResize && HoveredSeparator != null) ||
-                    (mImageListView.AllowPaneResize && HoveredPaneBorder != false))
-                    mImageListView.Cursor = Cursors.VSplit;
-            }
-            else if (mImageListView.Cursor == Cursors.VSplit)
-            {
-                if (!((inHeaderArea && (DraggingSeperator || HoveredSeparator != null)) ||
-                    (inPaneArea && (ResizingPane || HoveredPaneBorder != false))))
-                    mImageListView.Cursor = Cursors.Default;
-            }
-
-            lastMouseMoveLocation = e.Location;
         }
         /// <summary>
         /// Handles control's MouseUp event.
@@ -500,18 +376,7 @@ public partial class ImageListView
             if (scrollTimer.Enabled)
                 scrollTimer.Enabled = false;
 
-            if (DraggingSeperator)
-            {
-                mImageListView.OnColumnWidthChanged(new ColumnEventArgs(SelectedSeparator));
-                SelectedSeparator = null;
-                DraggingSeperator = false;
-            }
-            else if (ResizingPane)
-            {
-                ResizingPane = false;
-                mImageListView.OnPaneResized(new PaneResizedEventArgs(mImageListView.mPaneWidth));
-            }
-            else if (MouseSelecting)
+            if (MouseSelecting)
             {
                 // Apply highlighted items
                 if (highlightedItems.Count != 0)
@@ -610,7 +475,7 @@ public partial class ImageListView
 
                 // Raise the selection change event
                 mImageListView.OnSelectionChangedInternal();
-                mImageListView.OnItemClick(new ItemClickEventArgs(HoveredItem, HoveredSubItem, e.Location, e.Button));
+                mImageListView.OnItemClick(new ItemClickEventArgs(HoveredItem, e.Location, e.Button));
 
                 // Set the item as the focused item
                 mImageListView.Items.FocusedItem = HoveredItem;
@@ -627,7 +492,7 @@ public partial class ImageListView
                     mImageListView.OnSelectionChangedInternal();
                 }
 
-                mImageListView.OnItemClick(new ItemClickEventArgs(HoveredItem, HoveredSubItem, e.Location, e.Button));
+                mImageListView.OnItemClick(new ItemClickEventArgs(HoveredItem, e.Location, e.Button));
                 mImageListView.Items.FocusedItem = HoveredItem;
             }
             else if (lastMouseDownInItemArea && inItemArea && HoveredItem == null && (LeftButton || RightButton))
@@ -635,38 +500,6 @@ public partial class ImageListView
                 // Clear selection if clicked in empty space
                 mImageListView.SelectedItems.Clear();
                 mImageListView.Refresh();
-            }
-            else if (lastMouseDownInColumnHeaderArea && lastMouseDownOverColumn &&
-                mImageListView.AllowColumnClick && HoveredColumn != null && HoveredSeparator == null)
-            {
-                if (!suppressClick)
-                {
-                    if (LeftButton)
-                    {
-                        // Change the sort column
-                        if (mImageListView.Columns[mImageListView.SortColumn].Guid == HoveredColumn.Guid)
-                        {
-                            if (mImageListView.SortOrder == SortOrder.Descending)
-                                mImageListView.SortOrder = SortOrder.Ascending;
-                            else if (mImageListView.SortOrder == SortOrder.Ascending)
-                                mImageListView.SortOrder = SortOrder.Descending;
-                            else if (mImageListView.SortOrder == SortOrder.DescendingNatural)
-                                mImageListView.SortOrder = SortOrder.AscendingNatural;
-                            else
-                                mImageListView.SortOrder = SortOrder.DescendingNatural;
-                        }
-                        else
-                        {
-                            mImageListView.mSortColumn = mImageListView.Columns.IndexOf(HoveredColumn);
-                            mImageListView.mSortOrder = SortOrder.Ascending;
-                            mImageListView.Sort();
-                        }
-                    }
-
-                    mImageListView.OnColumnClick(new ColumnClickEventArgs(HoveredColumn, e.Location, e.Button));
-                }
-                else
-                    suppressClick = false;
             }
 
             if ((e.Button & MouseButtons.Left) != MouseButtons.None)
@@ -683,14 +516,7 @@ public partial class ImageListView
         {
             if (lastMouseDownInItemArea && lastMouseDownOverItem && HoveredItem != null)
             {
-                mImageListView.OnItemDoubleClick(new ItemClickEventArgs(HoveredItem, HoveredSubItem, e.Location, e.Button));
-            }
-            else if (lastMouseDownInColumnHeaderArea && lastMouseDownOverSeparator &&
-                mImageListView.AllowColumnClick && HoveredSeparator != null)
-            {
-                HoveredSeparator.AutoFit();
-                mImageListView.Refresh();
-                suppressClick = true;
+                mImageListView.OnItemDoubleClick(new ItemClickEventArgs(HoveredItem, e.Location, e.Button));
             }
         }
         /// <summary>
@@ -698,17 +524,12 @@ public partial class ImageListView
         /// </summary>
         public void MouseLeave()
         {
-            if (HoveredItem != null || HoveredColumn != null || HoveredSeparator != null || HoveredPaneBorder != false)
+            if (HoveredItem != null)
             {
                 if (HoveredItem != null)
-                    mImageListView.OnItemHover(new ItemHoverEventArgs(null, -1, HoveredItem, HoveredSubItem));
-                if (HoveredColumn != null)
-                    mImageListView.OnColumnHover(new ColumnHoverEventArgs(null, HoveredColumn));
+                    mImageListView.OnItemHover(new ItemHoverEventArgs(null, HoveredItem));
 
                 HoveredItem = null;
-                HoveredColumn = null;
-                HoveredSeparator = null;
-                HoveredPaneBorder = false;
                 mImageListView.Refresh();
             }
         }
@@ -893,7 +714,7 @@ public partial class ImageListView
                 else if (mImageListView.AllowItemReorder)
                 {
                     // Calculate the location of the insertion cursor
-                    Point pt = new Point(e.X, e.Y);
+                    var pt = new Point(e.X, e.Y);
                     pt = mImageListView.PointToClient(pt);
 
                     // Do we need to scroll the view?
@@ -955,7 +776,7 @@ public partial class ImageListView
                         dragCaretOnRight = true;
                     }
 
-                    ImageListViewItem dragDropTarget = mImageListView.Items[index];
+                    ImageListViewItem? dragDropTarget = mImageListView.Items[index];
 
                     if (selfDragging && (dragDropTarget.Selected ||
                         (!dragCaretOnRight && index > 0 && mImageListView.Items[index - 1].Selected) ||
@@ -1009,33 +830,14 @@ public partial class ImageListView
             if (h.ItemHit && mImageListView.Items[h.ItemIndex].Enabled)
             {
                 HoveredItem = mImageListView.Items[h.ItemIndex];
-                HoveredSubItem = h.SubItemIndex;
             }
             else
             {
                 HoveredItem = null;
-                HoveredSubItem = -1;
             }
-
-            if (h.ColumnHit)
-                HoveredColumn = h.Column;
-            else
-                HoveredColumn = null;
-
-            if (h.ColumnSeparatorHit)
-                HoveredSeparator = h.ColumnSeparator;
-            else
-                HoveredSeparator = null;
-
-            if (h.PaneBorder)
-                HoveredPaneBorder = true;
-            else
-                HoveredPaneBorder = false;
 
             inItemArea = h.InItemArea;
             overCheckBox = h.CheckBoxHit;
-            inHeaderArea = h.InHeaderArea;
-            inPaneArea = h.InPaneArea;
         }
         /// <summary>
         /// Returns the item index after applying the given navigation key.

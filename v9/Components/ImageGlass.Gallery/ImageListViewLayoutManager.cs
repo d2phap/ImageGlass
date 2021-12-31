@@ -109,10 +109,6 @@ internal class ImageListViewLayoutManager
                 return true;
             else if (mImageListView.mRenderer.MeasureItem(mImageListView.View) != cachedItemSize)
                 return true;
-            else if (mImageListView.mRenderer.MeasureGroupHeaderHeight() != cachedGroupHeaderHeight)
-                return true;
-            else if (mImageListView.mRenderer.MeasureColumnHeaderHeight() != cachedColumnHeaderHeight)
-                return true;
             else if (mImageListView.mRenderer.MeasureItemMargin(mImageListView.View) != cachedItemMargin)
                 return true;
             else if (mImageListView.PaneWidth != cachedPaneWidth)
@@ -327,8 +323,6 @@ internal class ImageListViewLayoutManager
         cachedItemCount = mImageListView.Items.Count;
         cachedIntegralScroll = mImageListView.IntegralScroll;
         cachedItemSize = mItemSize;
-        cachedGroupHeaderHeight = mImageListView.mRenderer.MeasureGroupHeaderHeight();
-        cachedColumnHeaderHeight = mImageListView.mRenderer.MeasureColumnHeaderHeight();
         cachedPaneWidth = mImageListView.PaneWidth;
         cachedScrollBars = mImageListView.ScrollBars;
         mImageListView.Items.collectionModified = false;

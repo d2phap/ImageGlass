@@ -164,29 +164,6 @@ public class DebugRenderer : ImageListViewRenderer
             g.DrawString("InItemArea (" + h.ItemIndex.ToString() + ")", ImageListView.Font, b, r.Location);
         }
         r.Offset(0, 12);
-
-        // Display hit test details for column header area
-        tColor = Color.Gray;
-        if (h.InHeaderArea)
-            tColor = Color.Black;
-        using (Brush b = new SolidBrush(tColor))
-        {
-            if (h.Column != null)
-            {
-                g.DrawString("InHeaderArea (" + h.Column.ToString() + ")", ImageListView.Font, b, r.Location);
-            }
-        }
-        r.Offset(0, 12);
-
-        // Display hit test details for pane area
-        tColor = Color.Gray;
-        if (h.InPaneArea)
-            tColor = Color.Black;
-        using (Brush b = new SolidBrush(tColor))
-        {
-            g.DrawString("InPaneArea " + (h.PaneBorder ? " (Border)" : ""), ImageListView.Font, b, r.Location);
-        }
-        r.Offset(0, 12);
     }
 }
 #endif
@@ -1021,39 +998,6 @@ public class TilesRenderer : ImageListViewRenderer
                 {
                     g.DrawString(item.Text, CaptionFont, bItemFore, rt, sf);
                 }
-                using (Brush bItemDetails = new SolidBrush(ImageListView.Colors.PaneLabelColor))
-                {
-                    rt.Offset(0, 1.5f * lineHeight);
-                    string fileType = item.GetSubItemText(ColumnType.FileType);
-                    if (!string.IsNullOrEmpty(fileType))
-                    {
-                        g.DrawString(fileType, ImageListView.Font, bItemDetails, rt, sf);
-                        rt.Offset(0, 1.1f * lineHeight);
-                    }
-                    string dimensions = item.GetSubItemText(ColumnType.Dimensions);
-                    string resolution = item.GetSubItemText(ColumnType.Resolution);
-                    if (!string.IsNullOrEmpty(dimensions) || !string.IsNullOrEmpty(resolution))
-                    {
-                        string text = "";
-                        if (!string.IsNullOrEmpty(dimensions))
-                            text += dimensions + " pixels ";
-                        if (!string.IsNullOrEmpty(resolution))
-                            text += resolution.Split(new char[] { ' ', 'x' }, StringSplitOptions.RemoveEmptyEntries)[0] + " dpi";
-                        g.DrawString(text, ImageListView.Font, bItemDetails, rt, sf);
-                        rt.Offset(0, 1.1f * lineHeight);
-                    }
-                    string fileSize = item.GetSubItemText(ColumnType.FileSize);
-                    if (!string.IsNullOrEmpty(fileSize))
-                    {
-                        g.DrawString(fileSize, ImageListView.Font, bItemDetails, rt, sf);
-                        rt.Offset(0, 1.1f * lineHeight);
-                    }
-                    string dateModified = item.GetSubItemText(ColumnType.DateModified);
-                    if (!string.IsNullOrEmpty(dateModified))
-                    {
-                        g.DrawString(dateModified, ImageListView.Font, bItemDetails, rt, sf);
-                    }
-                }
             }
 
             // Item border
@@ -1507,19 +1451,6 @@ public class ZoomingRenderer : ImageListViewRenderer
             {
                 g.DrawString(item.Text, ImageListView.Font, bItemFore, rt, sf);
             }
-            rt.Y = bounds.Bottom - (bounds.Height - imageHeight) / 2 + 4;
-            string details = "";
-            string dimensions = item.GetSubItemText(ColumnType.Dimensions);
-
-            if (!string.IsNullOrEmpty(dimensions))
-                details += dimensions + " pixels ";
-
-            string fileSize = item.GetSubItemText(ColumnType.FileSize);
-            if (!string.IsNullOrEmpty(fileSize))
-                details += item.GetSubItemText(ColumnType.FileSize);
-
-            using Brush bGrayText = new SolidBrush(ImageListView.Colors.PaneLabelColor);
-            g.DrawString(details, ImageListView.Font, bGrayText, rt, sf);
         }
 
         // Item border

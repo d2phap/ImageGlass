@@ -53,13 +53,8 @@ public class ImageListViewItem : ICloneable
     // Adaptor
     internal object? mVirtualItemKey;
     internal ImageListViewItemAdaptor mAdaptor;
-    // Used for custom columns
-    private ImageListViewSubItemCollection mSubItems;
     // Used for cloned items
     internal Image? clonedThumbnail;
-    // Group info
-    internal string group;
-    internal int groupOrder;
 
     internal ImageListViewItemCollection owner;
     internal bool isDirty;
@@ -212,14 +207,6 @@ public class ImageListViewItem : ICloneable
                 mImageListView.Refresh();
         }
     }
-    /// <summary>
-    /// Gets the collection of sub items.
-    /// </summary>
-    [Category("Appearance"), Browsable(true), Description("Gets the collection of sub items.")]
-    public ImageListViewSubItemCollection SubItems
-    {
-        get => mSubItems;
-    }
 
     /// <summary>
     /// Gets or sets the name of the image file represented by this item.
@@ -358,21 +345,7 @@ public class ImageListViewItem : ICloneable
             }
         }
     }
-    /// <summary>
-    /// Gets the last access date of the image file represented by this item.
-    /// </summary>
-    [Category("File Properties"), Browsable(true), Description("Gets the last access date of the image file represented by this item.")]
-    public DateTime DateAccessed { get { UpdateFileInfo(); return mDateAccessed; } }
-    /// <summary>
-    /// Gets the creation date of the image file represented by this item.
-    /// </summary>
-    [Category("File Properties"), Browsable(true), Description("Gets the creation date of the image file represented by this item.")]
-    public DateTime DateCreated { get { UpdateFileInfo(); return mDateCreated; } }
-    /// <summary>
-    /// Gets the modification date of the image file represented by this item.
-    /// </summary>
-    [Category("File Properties"), Browsable(true), Description("Gets the modification date of the image file represented by this item.")]
-    public DateTime DateModified { get { UpdateFileInfo(); return mDateModified; } }
+    
     /// <summary>
     /// Gets the shell type of the image file represented by this item.
     /// </summary>
@@ -406,100 +379,9 @@ public class ImageListViewItem : ICloneable
             }
         }
     }
-    /// <summary>
-    /// Gets the path of the image file represented by this item.
-    /// </summary>        
-    [Category("File Properties"), Browsable(true), Description("Gets the path of the image file represented by this item.")]
-    public string FilePath { get { UpdateFileInfo(); return mFilePath; } }
-    /// <summary>
-    /// Gets the name of the folder represented by this item.
-    /// </summary>        
-    [Category("File Properties"), Browsable(true), Description(" Gets the name of the folder represented by this item.")]
-    public string FolderName { get { UpdateFileInfo(); return mFolderName; } }
-    /// <summary>
-    /// Gets file size in bytes.
-    /// </summary>
-    [Category("File Properties"), Browsable(true), Description("Gets file size in bytes.")]
-    public long FileSize { get { UpdateFileInfo(); return mFileSize; } }
+    
     #endregion
 
-    #region Exif Properties
-    /// <summary>
-    /// Gets image dimensions.
-    /// </summary>
-    [Category("Image Properties"), Browsable(true), Description("Gets image dimensions.")]
-    public Size Dimensions { get { UpdateFileInfo(); return mDimensions; } }
-    /// <summary>
-    /// Gets image resolution in pixels per inch.
-    /// </summary>
-    [Category("Image Properties"), Browsable(true), Description("Gets image resolution in pixels per inch.")]
-    public SizeF Resolution { get { UpdateFileInfo(); return mResolution; } }
-    /// <summary>
-    /// Gets image description.
-    /// </summary>
-    [Category("Image Properties"), Browsable(true), Description("Gets image description.")]
-    public string ImageDescription { get { UpdateFileInfo(); return mImageDescription; } }
-    /// <summary>
-    /// Gets the camera model.
-    /// </summary>
-    [Category("Camera Properties"), Browsable(true), Description("Gets the camera model.")]
-    public string EquipmentModel { get { UpdateFileInfo(); return mEquipmentModel; } }
-    /// <summary>
-    /// Gets the date and time the image was taken.
-    /// </summary>
-    [Category("Image Properties"), Browsable(true), Description("Gets the date and time the image was taken.")]
-    public DateTime DateTaken { get { UpdateFileInfo(); return mDateTaken; } }
-    /// <summary>
-    /// Gets the name of the artist.
-    /// </summary>
-    [Category("Image Properties"), Browsable(true), Description("Gets the name of the artist.")]
-    public string Artist { get { UpdateFileInfo(); return mArtist; } }
-    /// <summary>
-    /// Gets image copyright information.
-    /// </summary>
-    [Category("Image Properties"), Browsable(true), Description("Gets image copyright information.")]
-    public string Copyright { get { UpdateFileInfo(); return mCopyright; } }
-    /// <summary>
-    /// Gets the exposure time in seconds.
-    /// </summary>
-    [Category("Camera Properties"), Browsable(true), Description("Gets the exposure time in seconds.")]
-    public float ExposureTime { get { UpdateFileInfo(); return mExposureTime; } }
-    /// <summary>
-    /// Gets the F number.
-    /// </summary>
-    [Category("Camera Properties"), Browsable(true), Description("Gets the F number.")]
-    public float FNumber { get { UpdateFileInfo(); return mFNumber; } }
-    /// <summary>
-    /// Gets the ISO speed.
-    /// </summary>
-    [Category("Camera Properties"), Browsable(true), Description("Gets the ISO speed.")]
-    public ushort ISOSpeed { get { UpdateFileInfo(); return mISOSpeed; } }
-    /// <summary>
-    /// Gets user comments.
-    /// </summary>
-    [Category("Image Properties"), Browsable(true), Description("Gets user comments.")]
-    public string UserComment { get { UpdateFileInfo(); return mUserComment; } }
-    /// <summary>
-    /// Gets rating in percent between 0-99 (Windows specific).
-    /// </summary>
-    [Category("Image Properties"), Browsable(true), Description("Gets rating in percent between 0-99.")]
-    public ushort Rating { get { UpdateFileInfo(); return mRating; } }
-    /// <summary>
-    /// Gets the star rating between 0-5 (Windows specific).
-    /// </summary>
-    [Category("Image Properties"), Browsable(true), Description("Gets the star rating between 0-5.")]
-    public ushort StarRating { get { UpdateFileInfo(); return mStarRating; } }
-    /// <summary>
-    /// Gets the name of the application that created this file.
-    /// </summary>
-    [Category("Image Properties"), Browsable(true), Description("Gets the name of the application that created this file.")]
-    public string Software { get { UpdateFileInfo(); return mSoftware; } }
-    /// <summary>
-    /// Gets focal length of the lens in millimeters.
-    /// </summary>
-    [Category("Camera Properties"), Browsable(true), Description("Gets focal length of the lens in millimeters.")]
-    public float FocalLength { get { UpdateFileInfo(); return mFocalLength; } }
-    #endregion
 
     #region Constructors
     /// <summary>
@@ -524,12 +406,6 @@ public class ImageListViewItem : ICloneable
         mVirtualItemKey = null;
 
         Tag = null;
-
-        // [IG_CHANGE] we don't use sub-items, don't alloc memory for 'em
-        // mSubItems = new ImageListViewSubItemCollection(this);
-
-        groupOrder = 0;
-        group = string.Empty;
     }
     /// <summary>
     /// Initializes a new instance of the <see cref="ImageListViewItem"/> class.
@@ -655,101 +531,7 @@ public class ImageListViewItem : ICloneable
             mImageListView.Refresh();
         }
     }
-    /// <summary>
-    /// Returns the sub item item text corresponding to the specified column type.
-    /// </summary>
-    /// <param name="type">The type of information to return.</param>
-    /// <returns>Formatted text for the given column type.</returns>
-    public string GetSubItemText(ColumnType type)
-    {
-        switch (type)
-        {
-            case ColumnType.Custom:
-                throw new ArgumentException("Column type is ambiguous. You must access custom columns by key.", "type");
-            case ColumnType.Name:
-                return Text;
-            case ColumnType.FileName:
-                return FileName;
-            case ColumnType.DateAccessed:
-                if (mDateAccessed == DateTime.MinValue)
-                    return "";
-                else
-                    return mDateAccessed.ToString("g");
-            case ColumnType.DateCreated:
-                if (mDateCreated == DateTime.MinValue)
-                    return "";
-                else
-                    return mDateCreated.ToString("g");
-            case ColumnType.DateModified:
-                if (mDateModified == DateTime.MinValue)
-                    return "";
-                else
-                    return mDateModified.ToString("g");
-            case ColumnType.FilePath:
-                return mFilePath;
-            case ColumnType.FolderName:
-                return mFolderName;
-            case ColumnType.FileSize:
-                return Helpers.FormatSize(mFileSize);
-            case ColumnType.FileType:
-                return FileType;
-            case ColumnType.Dimensions:
-                if (mDimensions == Size.Empty)
-                    return "";
-                else
-                    return string.Format("{0} x {1}", mDimensions.Width, mDimensions.Height);
-            case ColumnType.Resolution:
-                if (mResolution == SizeF.Empty)
-                    return "";
-                else
-                    return string.Format("{0} x {1}", mResolution.Width, mResolution.Height);
-            case ColumnType.ImageDescription:
-                return mImageDescription;
-            case ColumnType.EquipmentModel:
-                return mEquipmentModel;
-            case ColumnType.DateTaken:
-                if (mDateTaken == DateTime.MinValue)
-                    return "";
-                else
-                    return mDateTaken.ToString("g");
-            case ColumnType.Artist:
-                return mArtist;
-            case ColumnType.Copyright:
-                return mCopyright;
-            case ColumnType.ExposureTime:
-                if (mExposureTime < double.Epsilon)
-                    return "";
-                else if (mExposureTime >= 1.0f)
-                    return mExposureTime.ToString("f1");
-                else
-                    return string.Format("1/{0:f0}", (1.0f / mExposureTime));
-            case ColumnType.FNumber:
-                if (mFNumber < double.Epsilon)
-                    return "";
-                else
-                    return mFNumber.ToString("f1");
-            case ColumnType.ISOSpeed:
-                if (mISOSpeed == 0)
-                    return "";
-                else
-                    return mISOSpeed.ToString();
-            case ColumnType.UserComment:
-                return mUserComment;
-            case ColumnType.Rating:
-                if (mRating == 0)
-                    return "";
-                else return mRating.ToString();
-            case ColumnType.Software:
-                return mSoftware;
-            case ColumnType.FocalLength:
-                if (mFocalLength < double.Epsilon)
-                    return "";
-                else
-                    return mFocalLength.ToString("f1");
-            default:
-                throw new ArgumentException("Unknown column type", "type");
-        }
-    }
+
     /// <summary>
     /// Returns a <see cref="System.String"/> that represents this instance.
     /// </summary>
@@ -896,211 +678,7 @@ public class ImageListViewItem : ICloneable
             return img;
         }
     }
-    /// <summary>
-    /// Updates file info for the image file represented by this item.
-    /// Item details will be updated synchronously without waiting for the
-    /// cache thread.
-    /// </summary>
-    private void UpdateFileInfo()
-    {
-        if (!isDirty) return;
 
-        if (mImageListView != null)
-        {
-            UpdateDetailsInternal(Adaptor.GetDetails(mVirtualItemKey));
-        }
-    }
-    /// <summary>
-    /// Invoked by the worker thread to update item details.
-    /// </summary>
-    /// <param name="info">Item details.</param>
-    internal void UpdateDetailsInternal(Tuple<ColumnType, string, object>[] info)
-    {
-        if (!isDirty) return;
-
-        // File info
-        foreach (Tuple<ColumnType, string, object> item in info)
-        {
-            switch (item.Item1)
-            {
-                case ColumnType.DateAccessed:
-                    mDateAccessed = (DateTime)item.Item3;
-                    break;
-                case ColumnType.DateCreated:
-                    mDateCreated = (DateTime)item.Item3;
-                    break;
-                case ColumnType.DateModified:
-                    mDateModified = (DateTime)item.Item3;
-                    break;
-                case ColumnType.FileSize:
-                    mFileSize = (long)item.Item3;
-                    break;
-                case ColumnType.FilePath:
-                    mFilePath = (string)item.Item3;
-                    break;
-                case ColumnType.FolderName:
-                    mFolderName = (string)item.Item3;
-                    break;
-                case ColumnType.Dimensions:
-                    mDimensions = (Size)item.Item3;
-                    break;
-                case ColumnType.Resolution:
-                    mResolution = (SizeF)item.Item3;
-                    break;
-                case ColumnType.ImageDescription:
-                    mImageDescription = (string)item.Item3;
-                    break;
-                case ColumnType.EquipmentModel:
-                    mEquipmentModel = (string)item.Item3;
-                    break;
-                case ColumnType.DateTaken:
-                    mDateTaken = (DateTime)item.Item3;
-                    break;
-                case ColumnType.Artist:
-                    mArtist = (string)item.Item3;
-                    break;
-                case ColumnType.Copyright:
-                    mCopyright = (string)item.Item3;
-                    break;
-                case ColumnType.ExposureTime:
-                    mExposureTime = (float)item.Item3;
-                    break;
-                case ColumnType.FNumber:
-                    mFNumber = (float)item.Item3;
-                    break;
-                case ColumnType.ISOSpeed:
-                    mISOSpeed = (ushort)item.Item3;
-                    break;
-                case ColumnType.UserComment:
-                    mUserComment = (string)item.Item3;
-                    break;
-                case ColumnType.Rating:
-                    mRating = (ushort)item.Item3;
-                    break;
-                case ColumnType.Software:
-                    mSoftware = (string)item.Item3;
-                    break;
-                case ColumnType.FocalLength:
-                    mFocalLength = (float)item.Item3;
-                    break;
-                case ColumnType.Custom:
-                    string key = item.Item2;
-                    string value = (string)item.Item3;
-                    mSubItems[key] = new ImageListViewSubItem(this, value);
-                    break;
-                default:
-                    throw new Exception("Unknown column type.");
-            }
-        }
-
-        UpdateRating();
-
-        isDirty = false;
-    }
-    /// <summary>
-    /// Updates group order and name of the item.
-    /// </summary>
-    /// <param name="column">The group column.</param>
-    internal void UpdateGroup(ImageListViewColumnHeader column)
-    {
-        if (column == null)
-        {
-            groupOrder = 0;
-            group = string.Empty;
-            return;
-        }
-        else if (column.Grouper != null)
-        {
-            GroupInfo info = column.Grouper.GetGroupInfo(this);
-            groupOrder = info.Order;
-            group = info.Name;
-            return;
-        }
-
-        Tuple<int, string> groupInfo = new Tuple<int, string>(0, string.Empty);
-
-        switch (column.Type)
-        {
-            case ColumnType.DateAccessed:
-                groupInfo = Helpers.GroupTextDate(DateAccessed);
-                break;
-            case ColumnType.DateCreated:
-                groupInfo = Helpers.GroupTextDate(DateCreated);
-                break;
-            case ColumnType.DateModified:
-                groupInfo = Helpers.GroupTextDate(DateModified);
-                break;
-            case ColumnType.Dimensions:
-                groupInfo = Helpers.GroupTextDimension(Dimensions);
-                break;
-            case ColumnType.FileName:
-                groupInfo = Helpers.GroupTextAlpha(FileName);
-                break;
-            case ColumnType.FilePath:
-                groupInfo = Helpers.GroupTextAlpha(FilePath);
-                break;
-            case ColumnType.FolderName:
-                groupInfo = Helpers.GroupTextAlpha(FolderName);
-                break;
-            case ColumnType.FileSize:
-                groupInfo = Helpers.GroupTextFileSize(FileSize);
-                break;
-            case ColumnType.FileType:
-                groupInfo = Helpers.GroupTextAlpha(FileType);
-                break;
-            case ColumnType.Name:
-                groupInfo = Helpers.GroupTextAlpha(Text);
-                break;
-            case ColumnType.ImageDescription:
-                groupInfo = Helpers.GroupTextAlpha(ImageDescription);
-                break;
-            case ColumnType.EquipmentModel:
-                groupInfo = Helpers.GroupTextAlpha(EquipmentModel);
-                break;
-            case ColumnType.DateTaken:
-                groupInfo = Helpers.GroupTextDate(DateTaken);
-                break;
-            case ColumnType.Artist:
-                groupInfo = Helpers.GroupTextAlpha(Artist);
-                break;
-            case ColumnType.Copyright:
-                groupInfo = Helpers.GroupTextAlpha(Copyright);
-                break;
-            case ColumnType.UserComment:
-                groupInfo = Helpers.GroupTextAlpha(UserComment);
-                break;
-            case ColumnType.Software:
-                groupInfo = Helpers.GroupTextAlpha(Software);
-                break;
-            case ColumnType.Custom:
-                groupInfo = Helpers.GroupTextAlpha(SubItems[column].Text);
-                break;
-            case ColumnType.ISOSpeed:
-                groupInfo = new Tuple<int, string>(ISOSpeed, ISOSpeed.ToString());
-                break;
-            case ColumnType.Rating:
-                groupInfo = new Tuple<int, string>(Rating / 5, (Rating / 5).ToString());
-                break;
-            case ColumnType.FocalLength:
-                groupInfo = new Tuple<int, string>((int)FocalLength, FocalLength.ToString());
-                break;
-            case ColumnType.ExposureTime:
-                groupInfo = new Tuple<int, string>((int)ExposureTime, ExposureTime.ToString());
-                break;
-            case ColumnType.FNumber:
-                groupInfo = new Tuple<int, string>((int)FNumber, FNumber.ToString());
-                break;
-            case ColumnType.Resolution:
-                groupInfo = new Tuple<int, string>((int)Resolution.Width, Resolution.Width.ToString());
-                break;
-            default:
-                groupInfo = new Tuple<int, string>(0, "Unknown");
-                break;
-        }
-
-        groupOrder = groupInfo.Item1;
-        group = groupInfo.Item2;
-    }
     /// <summary>
     /// Returns a path string to be used for extracting the shell icon
     /// of the item. Returns the filename for icon files and executables,
@@ -1125,7 +703,7 @@ public class ImageListViewItem : ICloneable
     /// </returns>
     public object Clone()
     {
-        ImageListViewItem item = new ImageListViewItem();
+        var item = new ImageListViewItem();
 
         item.mText = mText;
 
@@ -1160,10 +738,6 @@ public class ImageListViewItem : ICloneable
         // Virtual item properties
         item.mAdaptor = mAdaptor;
         item.mVirtualItemKey = mVirtualItemKey;
-
-        // Sub items
-        foreach (KeyValuePair<string, ImageListViewSubItem> kv in mSubItems)
-            ((IDictionary<string, ImageListViewSubItem>)item.mSubItems).Add(kv.Key, kv.Value);
 
         // Current thumbnail
         if (mImageListView != null)

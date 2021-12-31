@@ -186,11 +186,7 @@ internal class ImageListViewCacheMetadata : IDisposable
             return;
 
         // Get result
-        Tuple<ColumnType, string, object>[] details = (Tuple<ColumnType, string, object>[])e.Result;
-        if (details != null && mImageListView != null)
-        {
-            mImageListView.UpdateItemDetailsInternal(request.Guid, details);
-        }
+        var details = (Tuple<string, object>[])e.Result;
 
         // Refresh the control lazily
         if (mImageListView != null && mImageListView.IsItemVisible(request.Guid))
