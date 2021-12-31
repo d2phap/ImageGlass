@@ -314,11 +314,6 @@ public enum UseEmbeddedThumbnails
 public enum View
 {
     /// <summary>
-    /// Displays columns with image details. Thumbnail images
-    /// are not displayed. The view can be scrolled vertically.
-    /// </summary>
-    Details,
-    /// <summary>
     /// Displays thumbnails laid out in a grid. The view can be 
     /// scrolled vertically.
     /// </summary>

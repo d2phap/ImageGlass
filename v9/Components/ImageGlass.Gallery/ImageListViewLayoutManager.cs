@@ -224,8 +224,7 @@ internal class ImageListViewLayoutManager
 
         // If the checkbox and the icon have the same alignment,
         // move the checkbox horizontally away from the icon
-        if (mImageListView.View != View.Details && mImageListView.CheckBoxAlignment == mImageListView.IconAlignment &&
-            mImageListView.ShowCheckBoxes && mImageListView.ShowFileIcons)
+        if (mImageListView.CheckBoxAlignment == mImageListView.IconAlignment &&  mImageListView.ShowCheckBoxes && mImageListView.ShowFileIcons)
         {
             ContentAlignment alignment = mImageListView.CheckBoxAlignment;
             if (alignment == ContentAlignment.BottomCenter || alignment == ContentAlignment.MiddleCenter || alignment == ContentAlignment.TopCenter)
@@ -247,7 +246,7 @@ internal class ImageListViewLayoutManager
 
         // If the checkbox and the icon have the same alignment,
         // or in details view move the icon horizontally away from the checkbox
-        if (mImageListView.View == View.Details && mImageListView.ShowCheckBoxes && mImageListView.ShowFileIcons)
+        if (mImageListView.ShowCheckBoxes && mImageListView.ShowFileIcons)
             bounds.X += 16 + 2;
         else if (mImageListView.CheckBoxAlignment == mImageListView.IconAlignment &&
             mImageListView.ShowCheckBoxes && mImageListView.ShowFileIcons)
@@ -268,15 +267,10 @@ internal class ImageListViewLayoutManager
     private Rectangle GetWidgetBounds(Rectangle bounds, Size size, Size padding, ContentAlignment alignment)
     {
         // Apply padding
-        if (mImageListView.View == View.Details)
-            bounds.Inflate(-2, -2);
-        else
-            bounds.Inflate(-padding.Width, -padding.Height);
+        bounds.Inflate(-padding.Width, -padding.Height);
 
         int x = 0;
-        if (mImageListView.View == View.Details)
-            x = bounds.Left;
-        else if (alignment == ContentAlignment.BottomLeft || alignment == ContentAlignment.MiddleLeft || alignment == ContentAlignment.TopLeft)
+        if (alignment == ContentAlignment.BottomLeft || alignment == ContentAlignment.MiddleLeft || alignment == ContentAlignment.TopLeft)
             x = bounds.Left;
         else if (alignment == ContentAlignment.BottomCenter || alignment == ContentAlignment.MiddleCenter || alignment == ContentAlignment.TopCenter)
             x = bounds.Left + bounds.Width / 2 - size.Width / 2;
@@ -284,9 +278,7 @@ internal class ImageListViewLayoutManager
             x = bounds.Right - size.Width;
 
         int y = 0;
-        if (mImageListView.View == View.Details)
-            y = bounds.Top + bounds.Height / 2 - size.Height / 2;
-        else if (alignment == ContentAlignment.BottomLeft || alignment == ContentAlignment.BottomCenter || alignment == ContentAlignment.BottomRight)
+        if (alignment == ContentAlignment.BottomLeft || alignment == ContentAlignment.BottomCenter || alignment == ContentAlignment.BottomRight)
             y = bounds.Bottom - size.Height;
         else if (alignment == ContentAlignment.MiddleLeft || alignment == ContentAlignment.MiddleCenter || alignment == ContentAlignment.MiddleRight)
             y = bounds.Top + bounds.Height / 2 - size.Height / 2;
@@ -388,7 +380,7 @@ internal class ImageListViewLayoutManager
         mDisplayedCols = (int)
             Math.Floor(mItemAreaBounds.Width / (float)mItemSizeWithMargin.Width);
 
-        if (mImageListView.View == View.Details || mImageListView.View == View.VerticalStrip) mDisplayedCols = 1;
+        if (mImageListView.View == View.VerticalStrip) mDisplayedCols = 1;
         if (mImageListView.View == View.HorizontalStrip) mDisplayedRows = 1;
         if (mDisplayedCols < 1) mDisplayedCols = 1;
         if (mDisplayedRows < 1) mDisplayedRows = 1;
@@ -434,25 +426,9 @@ internal class ImageListViewLayoutManager
         }
 
         // Allocate space for column headers
-        if (mImageListView.View == View.Details)
-        {
-            int headerHeight = cachedColumnHeaderHeight;
+        mColumnHeaderBounds = Rectangle.Empty;
 
-            // Location of the column headers
-            mColumnHeaderBounds.X = mClientArea.Left - mImageListView.ViewOffset.X;
-            mColumnHeaderBounds.Y = mClientArea.Top;
-            mColumnHeaderBounds.Height = headerHeight;
-            mColumnHeaderBounds.Width = mClientArea.Width + mImageListView.ViewOffset.X;
-
-            mItemAreaBounds.Y += headerHeight;
-            mItemAreaBounds.Height -= headerHeight;
-        }
-        else
-        {
-            mColumnHeaderBounds = Rectangle.Empty;
-        }
-
-        return (mItemAreaBounds.Width > 0 && mItemAreaBounds.Height > 0);
+        return mItemAreaBounds.Width > 0 && mItemAreaBounds.Height > 0;
     }
     /// <summary>
     /// Shows or hides the scroll bars.
@@ -681,10 +657,6 @@ internal class ImageListViewLayoutManager
             totalWidth = 0;
             totalHeight = mItemAreaBounds.Height;
         }
-        else if (mImageListView.View == View.Details)
-        {
-            totalHeight = 0;
-        }
         else
         {
             totalHeight = 0;
@@ -718,7 +690,7 @@ internal class ImageListViewLayoutManager
             {
                 // Number of rows and columns to enclose all items
                 group.itemCols = mDisplayedCols;
-                group.itemRows = (int)System.Math.Ceiling(group.ItemCount / (float)mDisplayedCols);
+                group.itemRows = (int)Math.Ceiling(group.ItemCount / (float)mDisplayedCols);
 
                 // Header area
                 group.headerBounds = new Rectangle(x, y, mClientArea.Width + mImageListView.ViewOffset.X, cachedGroupHeaderHeight);

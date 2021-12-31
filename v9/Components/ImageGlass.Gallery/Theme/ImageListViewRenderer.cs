@@ -373,75 +373,6 @@ public class ImageListViewRenderer : IDisposable
         }
     }
 
-    /// <summary>
-    /// Renders the column header.
-    /// </summary>
-    /// <param name="g">The graphics to draw on.</param>
-    private void RenderColumnHeaders(Graphics g)
-    {
-        if (ImageListView.View != View.Details)
-            return;
-
-        int x = ImageListView.layoutManager.ColumnHeaderBounds.Left;
-        int y = ImageListView.layoutManager.ColumnHeaderBounds.Top;
-        int h = MeasureColumnHeaderHeight();
-        int lastX = 0;
-        foreach (ImageListViewColumnHeader column in ImageListView.Columns.GetDisplayedColumns())
-        {
-            ColumnState state = ColumnState.None;
-            if (ReferenceEquals(ImageListView.navigationManager.HoveredColumn, column))
-                state |= ColumnState.Hovered;
-            if (ReferenceEquals(ImageListView.navigationManager.HoveredSeparator, column))
-                state |= ColumnState.SeparatorHovered;
-            if (ReferenceEquals(ImageListView.navigationManager.SelectedSeparator, column))
-                state |= ColumnState.SeparatorSelected;
-            if (ImageListView.SortColumn >= 0 && ImageListView.SortColumn < ImageListView.Columns.Count &&
-                ImageListView.Columns[ImageListView.SortColumn].Guid == column.Guid)
-                state |= ColumnState.SortColumn;
-
-            Rectangle bounds = new Rectangle(x, y, column.Width, h);
-            if (Clip)
-            {
-                Rectangle clip = Rectangle.Intersect(bounds, ImageListView.layoutManager.ClientArea);
-                g.SetClip(clip);
-            }
-            else
-                g.SetClip(ImageListView.layoutManager.ClientArea);
-
-            DrawColumnHeader(g, column, state, bounds);
-
-            x += column.Width;
-            lastX = bounds.Right;
-        }
-
-        // Extender column
-        if (ImageListView.Columns.Count != 0)
-        {
-            if (lastX < ImageListView.layoutManager.ClientArea.Right)
-            {
-                Rectangle extender = new Rectangle(
-                    lastX,
-                    ImageListView.layoutManager.ColumnHeaderBounds.Top,
-                    ImageListView.layoutManager.ClientArea.Right - lastX,
-                    ImageListView.layoutManager.ColumnHeaderBounds.Height);
-                if (Clip)
-                    g.SetClip(extender);
-                else
-                    g.SetClip(ImageListView.layoutManager.ClientArea);
-                DrawColumnExtender(g, extender);
-            }
-        }
-        else
-        {
-            Rectangle extender = ImageListView.layoutManager.ColumnHeaderBounds;
-            if (Clip)
-                g.SetClip(extender);
-            else
-                g.SetClip(ImageListView.layoutManager.ClientArea);
-            DrawColumnExtender(g, extender);
-        }
-    }
-
 
     /// <summary>
     /// Renders the items.
@@ -456,14 +387,11 @@ public class ImageListViewRenderer : IDisposable
         if (ImageListView.layoutManager.FirstPartiallyVisible == -1 ||
             ImageListView.layoutManager.LastPartiallyVisible == -1)
             return;
-        // No columns displayed?
-        if (ImageListView.View == View.Details && ImageListView.Columns.GetDisplayedColumns().Count == 0)
-            return;
 
-        List<DrawItemParams> drawItemParams = new List<DrawItemParams>();
+        var drawItemParams = new List<DrawItemParams>();
         for (int i = ImageListView.layoutManager.FirstPartiallyVisible; i <= ImageListView.layoutManager.LastPartiallyVisible; i++)
         {
-            ImageListViewItem item = ImageListView.Items[i];
+            var item = ImageListView.Items[i];
 
             // Determine item state
             ItemState state = ItemState.None;
@@ -506,30 +434,6 @@ public class ImageListViewRenderer : IDisposable
             // Draw the item
             DrawItem(g, param.Item, param.State, param.Bounds);
 
-            // Draw sub item overlays
-            if (ImageListView.View == View.Details)
-            {
-                int xc1 = ImageListView.layoutManager.ColumnHeaderBounds.Left;
-                int colIndex = 0;
-                foreach (ImageListViewColumnHeader column in ImageListView.Columns.GetDisplayedColumns())
-                {
-                    Rectangle subBounds = new Rectangle(xc1, param.Bounds.Y, column.Width, param.Bounds.Height);
-                    if (Clip)
-                    {
-                        Rectangle clip = Rectangle.Intersect(subBounds, ImageListView.layoutManager.ItemAreaBounds);
-                        g.SetClip(clip);
-                    }
-
-                    // Check if the mouse is over the sub item
-                    bool subItemHovered = ((param.State & ItemState.Hovered) != ItemState.None) &&
-                        (ImageListView.navigationManager.HoveredSubItem == colIndex);
-
-                    DrawSubItemItemOverlay(g, param.Item, param.State, colIndex, subItemHovered, subBounds);
-
-                    colIndex++;
-                    xc1 += column.Width;
-                }
-            }
 
             // Draw the checkbox and file icon
             if (ImageListView.ShowCheckBoxes)
@@ -580,15 +484,8 @@ public class ImageListViewRenderer : IDisposable
         if (ImageListView.navigationManager.DropTarget == null)
             return;
 
-        Rectangle bounds = ImageListView.layoutManager.GetItemBounds(ImageListView.navigationManager.DropTarget.Index);
-        if (ImageListView.View == View.Details)
-        {
-            if (ImageListView.navigationManager.DropToRight)
-                bounds.Offset(0, ImageListView.layoutManager.ItemSizeWithMargin.Height);
-            bounds.Offset(0, -1);
-            bounds.Height = 2;
-        }
-        else if (ImageListView.View == View.VerticalStrip)
+        var bounds = ImageListView.layoutManager.GetItemBounds(ImageListView.navigationManager.DropTarget.Index);
+        if (ImageListView.View == View.VerticalStrip)
         {
             if (ImageListView.navigationManager.DropToRight)
                 bounds.Offset(0, ImageListView.layoutManager.ItemSizeWithMargin.Height);
@@ -688,9 +585,6 @@ public class ImageListViewRenderer : IDisposable
             RenderItems(g);
             itemsDrawn = true;
         }
-
-        // Draw column headers
-        RenderColumnHeaders(g);
 
         // Draw items if they should be drawn last.
         if (!itemsDrawn)
@@ -842,10 +736,7 @@ public class ImageListViewRenderer : IDisposable
     /// <returns>The spacing between items.</returns>
     public virtual Size MeasureItemMargin(View view)
     {
-        if (view == View.Details)
-            return new Size(2, 0);
-        else
-            return new Size(4, 4);
+        return new Size(4, 4);
     }
 
     /// <summary>
@@ -855,26 +746,12 @@ public class ImageListViewRenderer : IDisposable
     /// <returns>The item size.</returns>
     public virtual Size MeasureItem(View view)
     {
-        Size itemSize = new Size();
-
         // Reference text height
         int textHeight = ImageListView.Font.Height;
 
-        if (view == View.Details)
-        {
-            // Calculate total column width
-            int colWidth = 0;
-            foreach (ImageListViewColumnHeader column in ImageListView.Columns)
-                if (column.Visible) colWidth += column.Width;
-
-            itemSize = new Size(colWidth, textHeight + 2 * textHeight / 6); // textHeight / 6 = vertical space between item border and text
-        }
-        else
-        {
-            Size itemPadding = new Size(4, 4);
-            itemSize = ImageListView.ThumbnailSize + itemPadding + itemPadding;
-            itemSize.Height += textHeight + System.Math.Max(4, textHeight / 3); // textHeight / 3 = vertical space between thumbnail and text
-        }
+        var itemPadding = new Size(4, 4);
+        var itemSize = ImageListView.ThumbnailSize + itemPadding + itemPadding;
+        itemSize.Height += textHeight + Math.Max(4, textHeight / 3); // textHeight / 3 = vertical space between thumbnail and text
 
         return itemSize;
     }
@@ -974,63 +851,42 @@ public class ImageListViewRenderer : IDisposable
         bool alternate = (item.Index % 2 == 1);
 
         // Paint background
-        if (ImageListView.Enabled)
-        {
-            using (Brush bItemBack = new SolidBrush(alternate && ImageListView.View == View.Details ?
-                ImageListView.Colors.AlternateBackColor : ImageListView.Colors.BackColor))
-            {
-                g.FillRectangle(bItemBack, bounds);
-            }
-        }
-        else
-        {
-            using (Brush bItemBack = new SolidBrush(ImageListView.Colors.DisabledBackColor))
-            {
-                g.FillRectangle(bItemBack, bounds);
-            }
-        }
+        using var bItemBack = new SolidBrush(ImageListView.Colors.DisabledBackColor);
+        g.FillRectangle(bItemBack, bounds);
+
 
         // Paint background Disabled
         if ((state & ItemState.Disabled) != ItemState.None)
         {
-            using (Brush bDisabled = new LinearGradientBrush(bounds, ImageListView.Colors.DisabledColor1, ImageListView.Colors.DisabledColor2, LinearGradientMode.Vertical))
-            {
-                Utility.FillRoundedRectangle(g, bDisabled, bounds, (ImageListView.View == View.Details ? 2 : 4));
-            }
+            using var bDisabled = new LinearGradientBrush(bounds, ImageListView.Colors.DisabledColor1, ImageListView.Colors.DisabledColor2, LinearGradientMode.Vertical);
+            Utility.FillRoundedRectangle(g, bDisabled, bounds, 4);
         }
 
         // Paint background Selected
         else if ((ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None)) ||
             (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None) && ((state & ItemState.Hovered) != ItemState.None)))
         {
-            using (Brush bSelected = new LinearGradientBrush(bounds, ImageListView.Colors.SelectedColor1, ImageListView.Colors.SelectedColor2, LinearGradientMode.Vertical))
-            {
-                Utility.FillRoundedRectangle(g, bSelected, bounds, (ImageListView.View == View.Details ? 2 : 4));
-            }
+            using var bSelected = new LinearGradientBrush(bounds, ImageListView.Colors.SelectedColor1, ImageListView.Colors.SelectedColor2, LinearGradientMode.Vertical);
+            Utility.FillRoundedRectangle(g, bSelected, bounds, 4);
         }
 
         // Paint background unfocused
         else if (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None))
         {
-            using (Brush bGray64 = new LinearGradientBrush(bounds, ImageListView.Colors.UnFocusedColor1, ImageListView.Colors.UnFocusedColor2, LinearGradientMode.Vertical))
-            {
-                Utility.FillRoundedRectangle(g, bGray64, bounds, (ImageListView.View == View.Details ? 2 : 4));
-            }
+            using var bGray64 = new LinearGradientBrush(bounds, ImageListView.Colors.UnFocusedColor1, ImageListView.Colors.UnFocusedColor2, LinearGradientMode.Vertical);
+            Utility.FillRoundedRectangle(g, bGray64, bounds, 4);
         }
 
         // Paint background Hovered
         if ((state & ItemState.Hovered) != ItemState.None)
         {
-            using (Brush bHovered = new LinearGradientBrush(bounds, ImageListView.Colors.HoverColor1, ImageListView.Colors.HoverColor2, LinearGradientMode.Vertical))
-            {
-                Utility.FillRoundedRectangle(g, bHovered, bounds, (ImageListView.View == View.Details ? 2 : 4));
-            }
+            using var bHovered = new LinearGradientBrush(bounds, ImageListView.Colors.HoverColor1, ImageListView.Colors.HoverColor2, LinearGradientMode.Vertical);
+            Utility.FillRoundedRectangle(g, bHovered, bounds, 4);
         }
 
-        if (ImageListView.View != View.Details)
-        {
+        
             // Draw the image
-            Image img = item.GetCachedImage(CachedImageType.Thumbnail);
+            var img = item.GetCachedImage(CachedImageType.Thumbnail);
             if (img != null)
             {
                 Rectangle pos = Utility.GetSizedImageBounds(img, new Rectangle(bounds.Location + itemPadding, ImageListView.ThumbnailSize));
@@ -1053,7 +909,7 @@ public class ImageListViewRenderer : IDisposable
             }
 
             // Draw item text
-            Color foreColor = ImageListView.Colors.ForeColor;
+            var foreColor = ImageListView.Colors.ForeColor;
             if ((state & ItemState.Disabled) != ItemState.None)
             {
                 foreColor = ImageListView.Colors.DisabledForeColor;
@@ -1065,168 +921,41 @@ public class ImageListViewRenderer : IDisposable
                 else
                     foreColor = ImageListView.Colors.UnFocusedForeColor;
             }
-            Size szt = TextRenderer.MeasureText(item.Text, ImageListView.Font);
-            Rectangle rt = new Rectangle(bounds.Left + itemPadding.Width, bounds.Top + 2 * itemPadding.Height + ImageListView.ThumbnailSize.Height, ImageListView.ThumbnailSize.Width, szt.Height);
+            var szt = TextRenderer.MeasureText(item.Text, ImageListView.Font);
+            var rt = new Rectangle(bounds.Left + itemPadding.Width, bounds.Top + 2 * itemPadding.Height + ImageListView.ThumbnailSize.Height, ImageListView.ThumbnailSize.Width, szt.Height);
             TextRenderer.DrawText(g, item.Text, ImageListView.Font, rt, foreColor,
                 TextFormatFlags.EndEllipsis | TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix);
-        }
-        else // if (ImageListView.View == View.Details)
-        {
-            List<ImageListViewColumnHeader> uicolumns = ImageListView.Columns.GetDisplayedColumns();
 
-            // Shade sort column
-            int x = bounds.Left - 1;
-            foreach (ImageListViewColumnHeader column in uicolumns)
-            {
-                if (ImageListView.SortOrder != SortOrder.None &&
-                    ImageListView.SortColumn >= 0 && ImageListView.SortColumn < ImageListView.Columns.Count &&
-                    (state & ItemState.Hovered) == ItemState.None && (state & ItemState.Selected) == ItemState.None &&
-                    ImageListView.Columns[ImageListView.SortColumn].Guid == column.Guid)
-                {
-                    Rectangle subItemBounds = bounds;
-                    subItemBounds.X = x;
-                    subItemBounds.Width = column.Width;
-                    using (Brush bGray16 = new SolidBrush(ImageListView.Colors.ColumnSelectColor))
-                    {
-                        g.FillRectangle(bGray16, subItemBounds);
-                    }
-                    break;
-                }
-                x += column.Width;
-            }
-
-            // Separators 
-            if (!ImageListView.GroupsVisible)
-            {
-                x = bounds.Left - 1;
-                foreach (ImageListViewColumnHeader column in uicolumns)
-                {
-                    x += column.Width;
-                    if (!ReferenceEquals(column, uicolumns[uicolumns.Count - 1]))
-                    {
-                        using (Pen pGray32 = new Pen(ImageListView.Colors.ColumnSeparatorColor))
-                        {
-                            g.DrawLine(pGray32, x, bounds.Top, x, bounds.Bottom);
-                        }
-                    }
-                }
-            }
-
-            Size offset = new Size(2, (bounds.Height - ImageListView.Font.Height) / 2);
-            using (StringFormat sf = new StringFormat())
-            {
-                sf.FormatFlags = StringFormatFlags.NoWrap;
-                sf.Alignment = StringAlignment.Near;
-                sf.LineAlignment = StringAlignment.Center;
-                sf.Trimming = StringTrimming.EllipsisCharacter;
-                // Sub text
-                int firstWidth = 0;
-                if (uicolumns.Count > 0)
-                    firstWidth = uicolumns[0].Width;
-                RectangleF rt = new RectangleF(bounds.Left + offset.Width, bounds.Top + offset.Height, firstWidth - 2 * offset.Width, bounds.Height - 2 * offset.Height);
-                foreach (ImageListViewColumnHeader column in uicolumns)
-                {
-                    rt.Width = column.Width - 2 * offset.Width;
-                    Color foreColor = ImageListView.Colors.CellForeColor;
-                    if ((state & ItemState.Disabled) != ItemState.None)
-                    {
-                        foreColor = ImageListView.Colors.DisabledForeColor;
-                    }
-                    else if ((state & ItemState.Selected) != ItemState.None)
-                    {
-                        if (ImageListView.Focused)
-                            foreColor = ImageListView.Colors.SelectedForeColor;
-                        else
-                            foreColor = ImageListView.Colors.UnFocusedForeColor;
-                    }
-                    else if (alternate)
-                        foreColor = ImageListView.Colors.AlternateCellForeColor;
-                    using (Brush bItemFore = new SolidBrush(foreColor))
-                    {
-                        int iconOffset = 0;
-                        if (column.Type == ColumnType.Name)
-                        {
-                            // Allocate space for checkbox and file icon
-                            if (ImageListView.ShowCheckBoxes && ImageListView.ShowFileIcons)
-                                iconOffset += 2 * 16 + 3 * 2;
-                            else if (ImageListView.ShowCheckBoxes)
-                                iconOffset += 16 + 2 * 2;
-                            else if (ImageListView.ShowFileIcons)
-                                iconOffset += 16 + 2 * 2;
-                        }
-                        rt.X += iconOffset;
-                        rt.Width -= iconOffset;
-                        // Rating stars
-                        if (column.Type == ColumnType.Rating && ImageListView.RatingImage != null && ImageListView.EmptyRatingImage != null)
-                        {
-                            int rating = item.GetSimpleRating();
-                            if (rating > 0)
-                            {
-                                int w = ImageListView.RatingImage.Width;
-                                int y = (int)(rt.Top + (rt.Height - ImageListView.RatingImage.Height) / 2.0f);
-
-                                for (int i = 1; i <= 5; i++)
-                                {
-                                    if (rating >= i)
-                                        g.DrawImage(ImageListView.RatingImage, rt.Left + (i - 1) * w, y);
-                                    else
-                                        g.DrawImage(ImageListView.EmptyRatingImage, rt.Left + (i - 1) * w, y);
-                                }
-                            }
-                        }
-                        else
-                            g.DrawString(item.SubItems[column].Text, ImageListView.Font, bItemFore, rt, sf);
-
-                        rt.X -= iconOffset;
-                    }
-                    rt.X += column.Width;
-                }
-            }
-        }
 
         // Item border
-        if (ImageListView.View != View.Details)
+        using var pWhite128 = new Pen(Color.FromArgb(128, ImageListView.Colors.ControlBackColor));
+        Utility.DrawRoundedRectangle(g, pWhite128, bounds.Left + 1, bounds.Top + 1, bounds.Width - 3, bounds.Height - 3, 4);
+
+        if ((state & ItemState.Disabled) != ItemState.None)
         {
-            using (Pen pWhite128 = new Pen(Color.FromArgb(128, ImageListView.Colors.ControlBackColor)))
-            {
-                Utility.DrawRoundedRectangle(g, pWhite128, bounds.Left + 1, bounds.Top + 1, bounds.Width - 3, bounds.Height - 3, (ImageListView.View == View.Details ? 2 : 4));
-            }
-        }
-        if (((state & ItemState.Disabled) != ItemState.None))
-        {
-            using (Pen pHighlight128 = new Pen(ImageListView.Colors.DisabledBorderColor))
-            {
-                Utility.DrawRoundedRectangle(g, pHighlight128, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, (ImageListView.View == View.Details ? 2 : 4));
-            }
+            using var pHighlight128 = new Pen(ImageListView.Colors.DisabledBorderColor);
+            Utility.DrawRoundedRectangle(g, pHighlight128, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
         }
         else if (ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None))
         {
-            using (Pen pHighlight128 = new Pen(ImageListView.Colors.SelectedBorderColor))
-            {
-                Utility.DrawRoundedRectangle(g, pHighlight128, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, (ImageListView.View == View.Details ? 2 : 4));
-            }
+            using var pHighlight128 = new Pen(ImageListView.Colors.SelectedBorderColor);
+            Utility.DrawRoundedRectangle(g, pHighlight128, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
         }
         else if (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None))
         {
-            using (Pen pGray128 = new Pen(ImageListView.Colors.UnFocusedBorderColor))
-            {
-                Utility.DrawRoundedRectangle(g, pGray128, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, (ImageListView.View == View.Details ? 2 : 4));
-            }
+            using var pGray128 = new Pen(ImageListView.Colors.UnFocusedBorderColor);
+            Utility.DrawRoundedRectangle(g, pGray128, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
         }
-        else if (ImageListView.View != View.Details && (state & ItemState.Selected) == ItemState.None)
+        else if ((state & ItemState.Selected) == ItemState.None)
         {
-            using (Pen pGray64 = new Pen(ImageListView.Colors.BorderColor))
-            {
-                Utility.DrawRoundedRectangle(g, pGray64, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, (ImageListView.View == View.Details ? 2 : 4));
-            }
+            using var pGray64 = new Pen(ImageListView.Colors.BorderColor);
+            Utility.DrawRoundedRectangle(g, pGray64, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
         }
 
         if (ImageListView.Focused && ((state & ItemState.Hovered) != ItemState.None))
         {
-            using (Pen pHighlight64 = new Pen(ImageListView.Colors.HoverBorderColor))
-            {
-                Utility.DrawRoundedRectangle(g, pHighlight64, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, (ImageListView.View == View.Details ? 2 : 4));
-            }
+            using var pHighlight64 = new Pen(ImageListView.Colors.HoverBorderColor);
+            Utility.DrawRoundedRectangle(g, pHighlight64, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
         }
 
         // Focus rectangle
@@ -1322,109 +1051,6 @@ public class ImageListViewRenderer : IDisposable
         }
     }
 
-    /// <summary>
-    /// Draws the column headers.
-    /// </summary>
-    /// <param name="g">The System.Drawing.Graphics to draw on.</param>
-    /// <param name="column">The ImageListViewColumnHeader to draw.</param>
-    /// <param name="state">The current view state of column.</param>
-    /// <param name="bounds">The bounding rectangle of column in client coordinates.</param>
-    public virtual void DrawColumnHeader(Graphics g, ImageListViewColumnHeader column, ColumnState state, Rectangle bounds)
-    {
-        // Paint background
-        if ((state & ColumnState.Hovered) != ColumnState.None)
-        {
-            using (Brush bHovered = new LinearGradientBrush(bounds, ImageListView.Colors.ColumnHeaderHoverColor1, ImageListView.Colors.ColumnHeaderHoverColor2, LinearGradientMode.Vertical))
-            {
-                g.FillRectangle(bHovered, bounds);
-            }
-        }
-        else
-        {
-            using (Brush bNormal = new LinearGradientBrush(bounds, ImageListView.Colors.ColumnHeaderBackColor1, ImageListView.Colors.ColumnHeaderBackColor2, LinearGradientMode.Vertical))
-            {
-                g.FillRectangle(bNormal, bounds);
-            }
-        }
-        using (Brush bBorder = new LinearGradientBrush(bounds, ImageListView.Colors.ColumnHeaderBackColor2, ImageListView.Colors.ColumnHeaderBackColor1, LinearGradientMode.Vertical))
-        using (Pen pBorder = new Pen(bBorder))
-        {
-            g.DrawLine(pBorder, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom);
-            g.DrawLine(pBorder, bounds.Left, bounds.Bottom - 1, bounds.Right, bounds.Bottom - 1);
-        }
-        using (Pen pSpep = new Pen(ImageListView.Colors.ColumnHeaderBackColor1))
-        {
-            g.DrawLine(pSpep, bounds.Left + 1, bounds.Top + 1, bounds.Left + 1, bounds.Bottom - 2);
-            g.DrawLine(pSpep, bounds.Right - 1, bounds.Top + 1, bounds.Right - 1, bounds.Bottom - 2);
-        }
-
-        // Draw the sort arrow
-        int textOffset = 4;
-        if (ImageListView.SortOrder != SortOrder.None && ((state & ColumnState.SortColumn) != ColumnState.None))
-        {
-            Image img = null;
-            if (ImageListView.SortOrder == SortOrder.Ascending || ImageListView.SortOrder == SortOrder.AscendingNatural)
-            {
-                // TODO:
-                //img = ImageListViewResources.SortAscending;
-            }
-
-            else if (ImageListView.SortOrder == SortOrder.Descending || ImageListView.SortOrder == SortOrder.DescendingNatural)
-            {
-                // TODO:
-                //img = ImageListViewResources.SortDescending;
-            }
-
-            if (img != null)
-            {
-                g.DrawImageUnscaled(img, bounds.X + 4, bounds.Top + (bounds.Height - img.Height) / 2);
-                textOffset += img.Width;
-            }
-        }
-
-        // Text
-        bounds.X += textOffset;
-        bounds.Width -= textOffset;
-        if (bounds.Width > 4)
-        {
-            using (StringFormat sf = new StringFormat())
-            {
-                sf.FormatFlags = StringFormatFlags.NoWrap;
-                sf.Alignment = StringAlignment.Near;
-                sf.LineAlignment = StringAlignment.Center;
-                sf.Trimming = StringTrimming.EllipsisCharacter;
-                using (SolidBrush bText = new SolidBrush(ImageListView.Colors.ColumnHeaderForeColor))
-                {
-                    g.DrawString(column.Text, (ImageListView.ColumnHeaderFont == null ? ImageListView.Font : ImageListView.ColumnHeaderFont), bText, bounds, sf);
-                }
-            }
-        }
-    }
-    
-
-    /// <summary>
-    /// Draws the extender after the last column.
-    /// </summary>
-    /// <param name="g">The System.Drawing.Graphics to draw on.</param>
-    /// <param name="bounds">The bounding rectangle of extender column in client coordinates.</param>
-    public virtual void DrawColumnExtender(Graphics g, Rectangle bounds)
-    {
-        // Paint background
-        using (Brush bBack = new LinearGradientBrush(bounds, ImageListView.Colors.ColumnHeaderBackColor1, ImageListView.Colors.ColumnHeaderBackColor2, LinearGradientMode.Vertical))
-        {
-            g.FillRectangle(bBack, bounds);
-        }
-        using (Brush bBorder = new LinearGradientBrush(bounds, ImageListView.Colors.ColumnHeaderBackColor2, ImageListView.Colors.ColumnHeaderBackColor1, LinearGradientMode.Vertical))
-        using (Pen pBorder = new Pen(bBorder))
-        {
-            g.DrawLine(pBorder, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom);
-            g.DrawLine(pBorder, bounds.Left, bounds.Bottom - 1, bounds.Right, bounds.Bottom - 1);
-        }
-        using (Pen pSpep = new Pen(ImageListView.Colors.ColumnHeaderBackColor1))
-        {
-            g.DrawLine(pSpep, bounds.Left + 1, bounds.Top + 1, bounds.Left + 1, bounds.Bottom - 2);
-        }
-    }
 
     /// <summary>
     /// Draws the insertion caret for drag and drop operations.

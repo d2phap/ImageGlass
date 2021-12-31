@@ -1367,132 +1367,48 @@ public partial class ImageListView : Control, IComponent
     /// <param name="hitInfo">Details of the hit test.</param>
     public void HitTest(Point pt, out HitInfo hitInfo)
     {
-        if (View == View.Details && pt.Y <= mRenderer.MeasureColumnHeaderHeight())
+        if (showGroups)
         {
-            int i = 0;
-            int x = layoutManager.ColumnHeaderBounds.Left;
-            ImageListViewColumnHeader colIndex = null;
-            ImageListViewColumnHeader sepIndex = null;
-            if (AllowColumnClick || AllowColumnResize)
+            foreach (ImageListViewGroup @group in groups)
             {
-                foreach (ImageListViewColumnHeader col in Columns.GetDisplayedColumns())
+                if (@group.headerBounds.Contains(pt))
                 {
-                    // Over a column?
-                    if (pt.X >= x && pt.X < x + col.Width + SeparatorSize / 2)
-                        colIndex = col;
-
-                    // Over a colummn separator?
-                    if (pt.X > x + col.Width - SeparatorSize / 2 && pt.X < x + col.Width + SeparatorSize / 2)
-                        sepIndex = col;
-
-                    if (colIndex != null)
-                        break;
-                    x += col.Width;
-                    i++;
+                    hitInfo = new HitInfo(@group);
+                    return;
                 }
             }
-            hitInfo = new HitInfo(colIndex, sepIndex);
         }
-        else
+
+        int itemIndex = -1;
+        bool checkBoxHit = false;
+        bool fileIconHit = false;
+        int subItemIndex = -1;
+
+        if (showGroups)
         {
-            if (showGroups)
+            foreach (ImageListViewGroup @group in groups)
             {
-                foreach (ImageListViewGroup @group in groups)
+                if (@group.itemBounds.Contains(pt))
                 {
-                    if (@group.headerBounds.Contains(pt))
+                    // Normalize to group item area coordinates
+                    pt.X -= @group.itemBounds.Left;
+                    pt.Y -= @group.itemBounds.Top;
+
+                    if (pt.X > 0 && pt.Y > 0)
                     {
-                        hitInfo = new HitInfo(@group);
-                        return;
-                    }
-                }
-            }
+                        int col = pt.X / layoutManager.ItemSizeWithMargin.Width;
+                        int row = pt.Y / layoutManager.ItemSizeWithMargin.Height;
 
-            int itemIndex = -1;
-            bool checkBoxHit = false;
-            bool fileIconHit = false;
-            int subItemIndex = -1;
-
-            if (showGroups)
-            {
-                foreach (ImageListViewGroup @group in groups)
-                {
-                    if (@group.itemBounds.Contains(pt))
-                    {
-                        // Normalize to group item area coordinates
-                        pt.X -= @group.itemBounds.Left;
-                        pt.Y -= @group.itemBounds.Top;
-
-                        if (pt.X > 0 && pt.Y > 0)
-                        {
-                            int col = pt.X / layoutManager.ItemSizeWithMargin.Width;
-                            int row = pt.Y / layoutManager.ItemSizeWithMargin.Height;
-
-                            int index = @group.FirstItemIndex + row * @group.itemCols + col;
-                            if (index >= 0 && index <= Items.Count - 1)
-                            {
-                                Rectangle bounds = layoutManager.GetItemBounds(index);
-                                if (bounds.Contains(pt.X + @group.itemBounds.Left, pt.Y + @group.itemBounds.Top))
-                                    itemIndex = index;
-                                if (ShowCheckBoxes)
-                                {
-                                    Rectangle checkBoxBounds = layoutManager.GetCheckBoxBounds(index);
-                                    if (checkBoxBounds.Contains(pt.X + @group.itemBounds.Left, pt.Y + @group.itemBounds.Top))
-                                        checkBoxHit = true;
-                                }
-                                if (ShowFileIcons)
-                                {
-                                    Rectangle fileIconBounds = layoutManager.GetIconBounds(index);
-                                    if (fileIconBounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
-                                        fileIconHit = true;
-                                }
-                            }
-
-                            // Calculate sub item index
-                            if (itemIndex != -1 && View == View.Details)
-                            {
-                                int xc1 = layoutManager.ColumnHeaderBounds.Left;
-                                int colIndex = 0;
-                                foreach (ImageListViewColumnHeader column in mColumns.GetDisplayedColumns())
-                                {
-                                    int xc2 = xc1 + column.Width;
-                                    if (pt.X >= xc1 && pt.X < xc2)
-                                    {
-                                        subItemIndex = colIndex;
-                                        break;
-                                    }
-                                    colIndex++;
-                                    xc1 = xc2;
-                                }
-                            }
-                        }
-
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                // Normalize to item area coordinates
-                pt.X -= layoutManager.ItemAreaBounds.Left;
-                pt.Y -= layoutManager.ItemAreaBounds.Top;
-
-                if (pt.X > 0 && pt.Y > 0)
-                {
-                    int col = (pt.X + mViewOffset.X) / layoutManager.ItemSizeWithMargin.Width;
-                    int row = (pt.Y + mViewOffset.Y) / layoutManager.ItemSizeWithMargin.Height;
-
-                    if (ScrollOrientation == ScrollOrientation.HorizontalScroll || (ScrollOrientation == ScrollOrientation.VerticalScroll && col <= layoutManager.Cols))
-                    {
-                        int index = row * layoutManager.Cols + col;
+                        int index = @group.FirstItemIndex + row * @group.itemCols + col;
                         if (index >= 0 && index <= Items.Count - 1)
                         {
                             Rectangle bounds = layoutManager.GetItemBounds(index);
-                            if (bounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
+                            if (bounds.Contains(pt.X + @group.itemBounds.Left, pt.Y + @group.itemBounds.Top))
                                 itemIndex = index;
                             if (ShowCheckBoxes)
                             {
                                 Rectangle checkBoxBounds = layoutManager.GetCheckBoxBounds(index);
-                                if (checkBoxBounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
+                                if (checkBoxBounds.Contains(pt.X + @group.itemBounds.Left, pt.Y + @group.itemBounds.Top))
                                     checkBoxHit = true;
                             }
                             if (ShowFileIcons)
@@ -1504,28 +1420,48 @@ public partial class ImageListView : Control, IComponent
                         }
                     }
 
-                    // Calculate sub item index
-                    if (itemIndex != -1 && View == View.Details)
+                    break;
+                }
+            }
+        }
+        else
+        {
+            // Normalize to item area coordinates
+            pt.X -= layoutManager.ItemAreaBounds.Left;
+            pt.Y -= layoutManager.ItemAreaBounds.Top;
+
+            if (pt.X > 0 && pt.Y > 0)
+            {
+                int col = (pt.X + mViewOffset.X) / layoutManager.ItemSizeWithMargin.Width;
+                int row = (pt.Y + mViewOffset.Y) / layoutManager.ItemSizeWithMargin.Height;
+
+                if (ScrollOrientation == ScrollOrientation.HorizontalScroll || (ScrollOrientation == ScrollOrientation.VerticalScroll && col <= layoutManager.Cols))
+                {
+                    int index = row * layoutManager.Cols + col;
+                    if (index >= 0 && index <= Items.Count - 1)
                     {
-                        int xc1 = layoutManager.ColumnHeaderBounds.Left;
-                        int colIndex = 0;
-                        foreach (ImageListViewColumnHeader column in mColumns.GetDisplayedColumns())
+                        Rectangle bounds = layoutManager.GetItemBounds(index);
+                        if (bounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
+                            itemIndex = index;
+                        if (ShowCheckBoxes)
                         {
-                            int xc2 = xc1 + column.Width;
-                            if (pt.X >= xc1 && pt.X < xc2)
-                            {
-                                subItemIndex = colIndex;
-                                break;
-                            }
-                            colIndex++;
-                            xc1 = xc2;
+                            Rectangle checkBoxBounds = layoutManager.GetCheckBoxBounds(index);
+                            if (checkBoxBounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
+                                checkBoxHit = true;
+                        }
+                        if (ShowFileIcons)
+                        {
+                            Rectangle fileIconBounds = layoutManager.GetIconBounds(index);
+                            if (fileIconBounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
+                                fileIconHit = true;
                         }
                     }
                 }
             }
-
-            hitInfo = new HitInfo(itemIndex, subItemIndex, checkBoxHit, fileIconHit);
         }
+
+        hitInfo = new HitInfo(itemIndex, subItemIndex, checkBoxHit, fileIconHit);
+
     }
 
     
