@@ -75,33 +75,6 @@ public enum CacheThread
     ShellInfo,
 }
 
-/// <summary>
-/// Represents the visual state of an image list column.
-/// </summary>
-[Flags]
-public enum ColumnState
-{
-    /// <summary>
-    /// The column is not hovered.
-    /// </summary>
-    None = 0,
-    /// <summary>
-    /// Mouse cursor is over the column.
-    /// </summary>
-    Hovered = 1,
-    /// <summary>
-    /// Mouse cursor is over the column separator.
-    /// </summary>
-    SeparatorHovered = 2,
-    /// <summary>
-    /// Column separator is being dragged.
-    /// </summary>
-    SeparatorSelected = 4,
-    /// <summary>
-    /// The column is the sort column.
-    /// </summary>
-    SortColumn = 8,
-}
 
 /// <summary>
 /// Represents the type of information displayed in an image list view column.
