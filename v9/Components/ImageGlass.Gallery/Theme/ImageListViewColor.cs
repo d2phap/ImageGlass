@@ -52,11 +52,6 @@ public class ImageListViewColor
     Color mAlternateBackColor;
     Color mAlternateCellForeColor;
 
-    // pane
-    Color mPaneBackColor;
-    Color mPaneSeparatorColor;
-    Color mPaneLabelColor;
-
     // selection rectangle
     Color mSelectionRectangleColor1;
     Color mSelectionRectangleColor2;
@@ -375,36 +370,7 @@ public class ImageListViewColor
         get { return mAlternateCellForeColor; }
         set { mAlternateCellForeColor = value; }
     }
-    /// <summary>
-    /// Gets or sets the background color of the image pane.
-    /// </summary>
-    [Category("Appearance Pane View"), Description("Gets or sets the background color of the image pane.")]
-    [DefaultValue(typeof(Color), "16, 128, 128, 128")]
-    public Color PaneBackColor
-    {
-        get { return mPaneBackColor; }
-        set { mPaneBackColor = value; }
-    }
-    /// <summary>
-    /// Gets or sets the separator line color between image pane and thumbnail view.
-    /// </summary>
-    [Category("Appearance Pane View"), Description("Gets or sets the separator line color between image pane and thumbnail view.")]
-    [DefaultValue(typeof(Color), "128, 128, 128, 128")]
-    public Color PaneSeparatorColor
-    {
-        get { return mPaneSeparatorColor; }
-        set { mPaneSeparatorColor = value; }
-    }
-    /// <summary>
-    /// Gets or sets the color of labels in pane view.
-    /// </summary>
-    [Category("Appearance Pane View"), Description("Gets or sets the color of labels in pane view.")]
-    [DefaultValue(typeof(Color), "196, 0, 0, 0")]
-    public Color PaneLabelColor
-    {
-        get { return mPaneLabelColor; }
-        set { mPaneLabelColor = value; }
-    }
+
     /// <summary>
     /// Gets or sets the image inner border color for thumbnails and pane.
     /// </summary>
@@ -510,11 +476,6 @@ public class ImageListViewColor
         mCellForeColor = SystemColors.ControlText;
         mAlternateBackColor = SystemColors.Window;
         mAlternateCellForeColor = SystemColors.ControlText;
-
-        // image pane
-        mPaneBackColor = Color.FromArgb(16, SystemColors.GrayText);
-        mPaneSeparatorColor = Color.FromArgb(128, SystemColors.GrayText);
-        mPaneLabelColor = Color.FromArgb(196, Color.Black);
 
         // selection rectangle
         mSelectionRectangleColor1 = Color.FromArgb(128, SystemColors.Highlight);
@@ -667,11 +628,6 @@ public class ImageListViewColor
         c.mAlternateBackColor = Color.FromArgb(234, 234, 234);
         c.mAlternateCellForeColor = Color.FromArgb(40, 40, 40);
 
-        // image pane
-        c.PaneBackColor = Color.White;
-        c.PaneSeparatorColor = Color.FromArgb(216, 216, 216);
-        c.PaneLabelColor = Color.FromArgb(156, 156, 156);
-
         // selection rectangle
         c.SelectionRectangleColor1 = Color.FromArgb(64, 240, 116, 68);
         c.SelectionRectangleColor2 = Color.FromArgb(64, 240, 116, 68);
@@ -732,11 +688,6 @@ public class ImageListViewColor
         c.ColumnSeparatorColor = Color.Gold;
         c.AlternateBackColor = Color.FromArgb(0x31, 0x31, 0x31);
         c.AlternateCellForeColor = Color.WhiteSmoke;
-
-        // image pane
-        c.PaneBackColor = Color.FromArgb(0x31, 0x31, 0x31);
-        c.PaneSeparatorColor = Color.Gold;
-        c.PaneLabelColor = SystemColors.GrayText;
 
         // selection rectangke
         c.SelectionRectangleColor1 = Color.FromArgb(160, 96, 144, 240);

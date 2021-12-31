@@ -140,22 +140,6 @@ internal delegate void RefreshDelegateInternal();
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ItemCollectionChangedEventHandler(object sender, ItemCollectionChangedEventArgs e);
 
-/// <summary>
-/// Represents the method that will handle the PaneResized event. 
-/// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
-/// <param name="e">A PaneResizedEventArgs that contains event data.</param>
-[EditorBrowsable(EditorBrowsableState.Never)]
-public delegate void PaneResizedEventHandler(object sender, PaneResizedEventArgs e);
-
-/// <summary>
-/// Represents the method that will handle the PaneResizing event. 
-/// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
-/// <param name="e">A PaneResizingEventArgs that contains event data.</param>
-[EditorBrowsable(EditorBrowsableState.Never)]
-public delegate void PaneResizingEventHandler(object sender, PaneResizingEventArgs e);
-
 #endregion
 
 
@@ -525,47 +509,7 @@ public class ShellInfoCachedEventArgs : EventArgs
         FileType = filetype;
     }
 }
-/// <summary>
-/// Represents the event arguments for the pane resized event.
-/// </summary>
-[Serializable, ComVisible(true)]
-public class PaneResizedEventArgs : EventArgs
-{
-    /// <summary>
-    /// Gets the width of the pane.
-    /// </summary>
-    public int PaneWidth { get; private set; }
 
-    /// <summary>
-    /// Initializes a new instance of the PaneResizedEventArgs class.
-    /// </summary>
-    /// <param name="paneWidth">The width of the pane.</param>
-    public PaneResizedEventArgs(int paneWidth)
-    {
-        PaneWidth = paneWidth;
-    }
-}
-
-/// <summary>
-/// Represents the event arguments for the pane resizing event.
-/// </summary>
-[Serializable, ComVisible(true)]
-public class PaneResizingEventArgs : EventArgs
-{
-    /// <summary>
-    /// Gets the width of the pane.
-    /// </summary>
-    public int PaneWidth { get; private set; }
-
-    /// <summary>
-    /// Initializes a new instance of the PaneResizingEventArgs class.
-    /// </summary>
-    /// <param name="paneWidth">The width of the pane.</param>
-    public PaneResizingEventArgs(int paneWidth)
-    {
-        PaneWidth = paneWidth;
-    }
-}
 /// <summary>
 /// Represents the event arguments for item collection related events.
 /// </summary>

@@ -14,13 +14,6 @@ namespace ImageGlass.Gallery;
 [Docking(DockingBehavior.Ask)]
 public partial class ImageListView : Control, IComponent
 {
-    #region Constants
-    /// <summary>
-    /// Selection tolerance for left-pane border.
-    /// </summary>
-    internal const int PaneBorderSize = 4;
-    #endregion
-
     #region Member Variables
     // Set when properties change
     private bool mDefaultImageChanged = false;
@@ -39,11 +32,9 @@ public partial class ImageListView : Control, IComponent
     private Image mEmptyRatingImage;
     private bool mIntegralScroll;
     private ImageListViewItemCollection mItems;
-    private int mPaneWidth;
     private bool mRetryOnError;
     internal ImageListViewSelectedItemCollection mSelectedItems;
     internal ImageListViewCheckedItemCollection mCheckedItems;
-    private SortOrder mSortOrder;
     private bool mShowFileIcons;
     private bool mShowCheckBoxes;
     private ContentAlignment mIconAlignment;
@@ -110,11 +101,7 @@ public partial class ImageListView : Control, IComponent
     /// </summary>
     [Category("Behavior"), Description("Gets or sets whether duplicate items (image files pointing to the same path on the file system) are allowed."), DefaultValue(false)]
     public bool AllowDuplicateFileNames { get; set; }
-    /// <summary>
-    /// Gets or sets whether the left-pane can be resized with the mouse.
-    /// </summary>
-    [Category("Behavior"), Description("Gets or sets whether the left-pane can be resized with the mouse."), DefaultValue(true)]
-    public bool AllowPaneResize { get; set; }
+
     /// <summary>
     /// Gets or sets the background color of the control.
     /// </summary>
@@ -412,24 +399,7 @@ public partial class ImageListView : Control, IComponent
     /// </summary>
     [Category("Behavior"), Description("Gets or sets whether multiple items can be selected."), DefaultValue(true)]
     public bool MultiSelect { get; set; }
-    /// <summary>
-    /// Gets or sets the width of the left pane.
-    /// </summary>
-    [Category("Appearance"), Description("Gets or sets the width of the left pane."), DefaultValue(240)]
-    public int PaneWidth
-    {
-        get { return mPaneWidth; }
-        set
-        {
-            if (mPaneWidth != value)
-            {
-                if (mPaneWidth < 2)
-                    mPaneWidth = 2;
-                mPaneWidth = value;
-                Refresh();
-            }
-        }
-    }
+
     /// <summary>
     /// Gets or sets the rating image.
     /// </summary>
@@ -806,7 +776,6 @@ public partial class ImageListView : Control, IComponent
         AllowDrag = false;
         AllowItemReorder = true;
         AllowDuplicateFileNames = false;
-        AllowPaneResize = true;
         mBorderStyle = BorderStyle.None;
         mCacheMode = CacheMode.OnDemand;
         mCacheLimitAsItemCount = 0;
@@ -819,11 +788,9 @@ public partial class ImageListView : Control, IComponent
         mIntegralScroll = false;
         mItems = new ImageListViewItemCollection(this);
         MultiSelect = true;
-        mPaneWidth = 240;
         mRetryOnError = true;
         mSelectedItems = new ImageListViewSelectedItemCollection(this);
         mCheckedItems = new ImageListViewCheckedItemCollection(this);
-        mSortOrder = SortOrder.None;
         SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.Opaque | ControlStyles.Selectable | ControlStyles.UserMouse | ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer, true);
         ScrollBars = true;
         ShellIconFallback = true;
@@ -1952,24 +1919,6 @@ public partial class ImageListView : Control, IComponent
     }
 
     /// <summary>
-    /// Raises the PaneReszied event.
-    /// </summary>
-    /// <param name="e">A PaneResizedEventArgs that contains event data.</param>
-    protected virtual void OnPaneResized(PaneResizedEventArgs e)
-    {
-        PaneResized?.Invoke(this, e);
-    }
-
-    /// <summary>
-    /// Raises the PaneResizing event.
-    /// </summary>
-    /// <param name="e">A PaneResizingEventArgs that contains event data.</param>
-    protected virtual void OnPaneResizing(PaneResizingEventArgs e)
-    {
-        PaneResizing?.Invoke(this, e);
-    }
-
-    /// <summary>
     /// Raises the DetailsCaching event.
     /// </summary>
     /// <param name="e">An ItemEventArgs that contains event data.</param>
@@ -2151,16 +2100,6 @@ public partial class ImageListView : Control, IComponent
     /// </summary>
     [Category("Behavior"), Browsable(true), Description("Occurs after the item collection is changed.")]
     public event ItemCollectionChangedEventHandler ItemCollectionChanged;
-    /// <summary>
-    /// Occurs after the pane is resized.
-    /// </summary>
-    [Category("Action"), Browsable(true), Description("Occurs after the pane is resized.")]
-    public event PaneResizedEventHandler PaneResized;
-    /// <summary>
-    /// Occurs while the pane is being resized.
-    /// </summary>
-    [Category("Action"), Browsable(true), Description("Occurs while the pane is being resized.")]
-    public event PaneResizingEventHandler PaneResizing;
     /// <summary>
     /// Occurs before an item details is cached.
     /// </summary>

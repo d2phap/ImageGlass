@@ -37,10 +37,12 @@ internal class ImageListViewCacheThumbnail : IDisposable
         /// This is a thumbnail request.
         /// </summary>
         Thumbnail,
+
         /// <summary>
-        /// This is a large image request for use in Gallery or Pane view modes.
+        /// [TODO] This is a large image request for use in Gallery or Pane view modes.
         /// </summary>
         Gallery,
+
         /// <summary>
         /// This is a renderer request.
         /// </summary>

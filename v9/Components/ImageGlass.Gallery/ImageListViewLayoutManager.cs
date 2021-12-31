@@ -31,7 +31,6 @@ internal class ImageListViewLayoutManager
     private int cachedColumnHeaderHeight;
     private bool cachedIntegralScroll;
     private Size cachedItemMargin;
-    private int cachedPaneWidth;
     private bool cachedScrollBars;
     private Dictionary<Guid, bool> cachedVisibleItems;
 
@@ -110,8 +109,6 @@ internal class ImageListViewLayoutManager
             else if (mImageListView.mRenderer.MeasureItem(mImageListView.View) != cachedItemSize)
                 return true;
             else if (mImageListView.mRenderer.MeasureItemMargin(mImageListView.View) != cachedItemMargin)
-                return true;
-            else if (mImageListView.PaneWidth != cachedPaneWidth)
                 return true;
             else if (mImageListView.ScrollBars != cachedScrollBars)
                 return true;
@@ -294,7 +291,6 @@ internal class ImageListViewLayoutManager
         cachedItemCount = mImageListView.Items.Count;
         cachedIntegralScroll = mImageListView.IntegralScroll;
         cachedItemSize = mItemSize;
-        cachedPaneWidth = mImageListView.PaneWidth;
         cachedScrollBars = mImageListView.ScrollBars;
         mImageListView.Items.collectionModified = false;
 

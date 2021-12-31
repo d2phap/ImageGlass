@@ -61,19 +61,12 @@ public partial class ImageListView
         /// Gets whether a mouse selection is in progress.
         /// </summary>
         public bool MouseSelecting { get; private set; }
-        /// <summary>
-        /// Gets whether a separator is being dragged with the mouse.
-        /// </summary>
-        public bool DraggingSeperator { get; private set; }
-        /// <summary>
-        /// Gets whether the left-pane is being resized with the mouse.
-        /// </summary>
-        public bool ResizingPane { get; private set; }
 
         /// <summary>
         /// Gets the target item for a drop operation.
         /// </summary>
         public ImageListViewItem? DropTarget { get; private set; }
+
         /// <summary>
         /// Gets whether drop target is to the right of the item.
         /// </summary>
@@ -94,9 +87,6 @@ public partial class ImageListView
         {
             mImageListView = owner;
 
-            DraggingSeperator = false;
-            ResizingPane = false;
-
             LeftButton = false;
             RightButton = false;
             ShiftKey = false;
@@ -111,9 +101,11 @@ public partial class ImageListView
 
             highlightedItems = new Dictionary<ImageListViewItem, bool>();
 
-            scrollTimer = new System.Windows.Forms.Timer();
-            scrollTimer.Interval = 100;
-            scrollTimer.Enabled = false;
+            scrollTimer = new System.Windows.Forms.Timer
+            {
+                Interval = 100,
+                Enabled = false
+            };
             scrollTimer.Tick += new EventHandler(scrollTimer_Tick);
 
         }
@@ -274,8 +266,7 @@ public partial class ImageListView
 
                 mImageListView.Refresh();
             }
-            else if (!MouseSelecting && !DraggingSeperator && !ResizingPane &&
-                inItemArea && lastMouseDownInItemArea &&
+            else if (!MouseSelecting && inItemArea && lastMouseDownInItemArea &&
                 (LeftButton || RightButton) &&
                 (Math.Abs(e.Location.X - lastMouseDownLocation.X) > SystemInformation.DragSize.Width ||
                 Math.Abs(e.Location.Y - lastMouseDownLocation.Y) > SystemInformation.DragSize.Height))
@@ -875,11 +866,11 @@ public partial class ImageListView
         /// <summary>
         /// Handles the Tick event of the scrollTimer control.
         /// </summary>
-        private void scrollTimer_Tick(object sender, EventArgs e)
+        private void scrollTimer_Tick(object? sender, EventArgs e)
         {
             int delta = (int)scrollTimer.Tag;
-            Point location = mImageListView.PointToClient(Control.MousePosition);
-            mImageListView.OnMouseMove(new MouseEventArgs(Control.MouseButtons, 0, location.X, location.Y, 0));
+            Point location = mImageListView.PointToClient(MousePosition);
+            mImageListView.OnMouseMove(new MouseEventArgs(MouseButtons, 0, location.X, location.Y, 0));
             mImageListView.OnMouseWheel(new MouseEventArgs(MouseButtons.None, 0, location.X, location.Y, delta));
         }
         #endregion
