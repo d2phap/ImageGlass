@@ -740,37 +740,7 @@ public class NoirRenderer : ImageListViewRenderer
             g.FillRectangle(b, bounds);
         }
     }
-    /// <summary>
-    /// Draws the group headers.
-    /// </summary>
-    /// <param name="g">The System.Drawing.Graphics to draw on.</param>
-    /// <param name="name">The name of the group to draw.</param>
-    /// <param name="bounds">The bounding rectangle of group in client coordinates.</param>
-    public override void DrawGroupHeader(Graphics g, string name, Rectangle bounds)
-    {
-        // Bottom border
-        bounds.Inflate(0, -4);
-        using (Pen pSpep = new Pen(Color.FromArgb(64, 64, 64)))
-        {
-            g.DrawLine(pSpep, bounds.Left + 1, bounds.Bottom - 1, bounds.Right - 1, bounds.Bottom - 1);
-        }
-
-        // Text
-        if (bounds.Width > 4)
-        {
-            using (StringFormat sf = new StringFormat())
-            {
-                sf.FormatFlags = StringFormatFlags.NoWrap;
-                sf.Alignment = StringAlignment.Near;
-                sf.LineAlignment = StringAlignment.Center;
-                sf.Trimming = StringTrimming.EllipsisCharacter;
-                using (SolidBrush bText = new SolidBrush(Color.White))
-                {
-                    g.DrawString(name, (ImageListView.GroupHeaderFont == null ? ImageListView.Font : ImageListView.GroupHeaderFont), bText, bounds, sf);
-                }
-            }
-        }
-    }
+    
 
     /// <summary>
     /// Draws an image with a reflection effect at the bottom.
@@ -1210,35 +1180,7 @@ public class XPRenderer : ImageListViewRenderer
     {
         g.FillRectangle(SystemBrushes.Highlight, bounds);
     }
-    /// <summary>
-    /// Draws the group headers.
-    /// </summary>
-    /// <param name="g">The System.Drawing.Graphics to draw on.</param>
-    /// <param name="name">The name of the group to draw.</param>
-    /// <param name="bounds">The bounding rectangle of group in client coordinates.</param>
-    public override void DrawGroupHeader(Graphics g, string name, Rectangle bounds)
-    {
-        // Bottom border
-        bounds.Inflate(0, -4);
-        using (Pen pSpep = new Pen(Color.FromArgb(128, SystemColors.GrayText)))
-        {
-            g.DrawLine(pSpep, bounds.Left + 1, bounds.Bottom - 1, bounds.Right - 1, bounds.Bottom - 1);
-        }
-
-        // Text
-        if (bounds.Width > 4)
-        {
-            using (StringFormat sf = new StringFormat())
-            {
-                sf.FormatFlags = StringFormatFlags.NoWrap;
-                sf.Alignment = StringAlignment.Near;
-                sf.LineAlignment = StringAlignment.Center;
-                sf.Trimming = StringTrimming.EllipsisCharacter;
-                g.DrawString(name, (ImageListView.GroupHeaderFont == null ? ImageListView.Font : ImageListView.GroupHeaderFont),
-                    SystemBrushes.WindowText, bounds, sf);
-            }
-        }
-    }
+    
 }
 #endregion
 
@@ -1882,33 +1824,7 @@ public class ThemeRenderer : ImageListViewRenderer
         //else
         //    base.DrawItem(g, item, state, bounds);
     }
-    /// <summary>
-    /// Draws the group headers.
-    /// </summary>
-    /// <param name="g">The System.Drawing.Graphics to draw on.</param>
-    /// <param name="name">The name of the group to draw.</param>
-    /// <param name="bounds">The bounding rectangle of group in client coordinates.</param>
-    public override void DrawGroupHeader(Graphics g, string name, Rectangle bounds)
-    {
-        if (VisualStylesEnabled && rGroupNormal != null && rGroupLine != null)
-        {
-            bounds.Inflate(-3, 0);
-
-            // Background
-            rGroupNormal.DrawBackground(g, bounds, bounds);
-
-            // Text
-            TextRenderer.DrawText(g, name,
-                SystemFonts.MenuFont, bounds, SystemColors.ControlText,
-                TextFormatFlags.EndEllipsis | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.PreserveGraphicsClipping);
-
-            // Border
-            Rectangle lineBounds = new Rectangle(bounds.Left, bounds.Bottom - 1, bounds.Width, 1);
-            rGroupLine.DrawBackground(g, lineBounds, lineBounds);
-        }
-        else
-            base.DrawGroupHeader(g, name, bounds);
-    }
+    
 }
 #endregion
 

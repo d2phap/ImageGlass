@@ -308,9 +308,6 @@ public partial class ImageListView
                 mImageListView.thumbnailCache.Clear();
                 mImageListView.SelectedItems.Clear();
 
-                if (mImageListView.showGroups)
-                    Sort();
-
                 mImageListView.Refresh();
 
                 // Raise the clear event
@@ -573,10 +570,6 @@ public partial class ImageListView
                     mImageListView.shellInfoCache.Add(extension);
             }
 
-            // Update groups
-            if (mImageListView.showGroups)
-                AddRemoveGroupItem(item.Index, true);
-
             // Raise the add event
             mImageListView.OnItemCollectionChanged(new ItemCollectionChangedEventArgs(CollectionChangeAction.Add, item));
 
@@ -613,9 +606,6 @@ public partial class ImageListView
             {
                 // Raise the remove event
                 mImageListView.OnItemCollectionChanged(new ItemCollectionChangedEventArgs(CollectionChangeAction.Remove, item));
-
-                if (mImageListView.showGroups)
-                    AddRemoveGroupItem(item.Index, false);
             }
 
             return ret;
@@ -632,172 +622,11 @@ public partial class ImageListView
         /// </summary>
         internal int IndexOf(Guid guid)
         {
-            if (lookUp.TryGetValue(guid, out ImageListViewItem item))
+            if (lookUp.TryGetValue(guid, out ImageListViewItem? item))
                 return item.Index;
             return -1;
         }
-        /// <summary>
-        /// Sorts the items by the sort order and sort column of the owner.
-        /// </summary>
-        internal void Sort()
-        {
-            if (mImageListView == null)
-                return;
 
-            mImageListView.showGroups = false;
-            mImageListView.groups.Clear();
-
-            if ((mImageListView.GroupOrder == SortOrder.None) &&
-               (mImageListView.SortOrder == SortOrder.None))
-                return;
-
-            // Display wait cursor while sorting
-            Cursor cursor = mImageListView.Cursor;
-            mImageListView.Cursor = Cursors.WaitCursor;
-
-            // Sort and group items
-            if (mImageListView.GroupOrder != SortOrder.None)
-                mImageListView.showGroups = true;
-
-
-            // Restore previous cursor
-            mImageListView.Cursor = cursor;
-            collectionModified = true;
-        }
-        /// <summary>
-        /// Updates groups after adding or removing an item. This just updates
-        /// the count of items in groups, it DOES NOT re-sort the items.
-        /// </summary>
-        /// <param name="index">The index of the new or removed item.</param>
-        /// <param name="add">true to add an item; false to remove a item.</param>
-        private void AddRemoveGroupItem(int index, bool add)
-        {
-            if (mImageListView == null || !mImageListView.showGroups)
-                return;
-            if (mImageListView.groups.Count == 0)
-            {
-                Sort();
-                return;
-            }
-
-            // Special case of adding an item to the end
-            ImageListViewGroup lastGroup = mImageListView.groups[mImageListView.groups.Count - 1];
-            if (add && index == lastGroup.LastItemIndex + 1)
-            {
-                lastGroup.LastItemIndex++;
-                return;
-            }
-
-            // Insert into a group
-            List<ImageListViewGroup> emptyGroups = new List<ImageListViewGroup>();
-            foreach (ImageListViewGroup group in mImageListView.groups)
-            {
-                if (group.LastItemIndex < index)
-                    continue;
-                else if (group.FirstItemIndex <= index && group.LastItemIndex >= index)
-                {
-                    if (add)
-                    {
-                        group.LastItemIndex++;
-                    }
-                    else
-                    {
-                        group.LastItemIndex--;
-                    }
-                }
-                else // if (group.FirstItemIndex > index)
-                {
-                    if (add)
-                    {
-                        group.FirstItemIndex++;
-                        group.LastItemIndex++;
-                    }
-                    else
-                    {
-                        group.FirstItemIndex--;
-                        group.LastItemIndex--;
-                    }
-                }
-
-                if (group.ItemCount == 0)
-                    emptyGroups.Add(group);
-            }
-
-            // Purge empty groups
-            foreach (ImageListViewGroup group in emptyGroups)
-                mImageListView.groups.Remove(group);
-        }
-        #endregion
-
-        #region ImageListViewItemComparer
-        /// <summary>
-        /// Compares items by the sort order and sort column of the owner.
-        /// </summary>
-        private class ImageListViewItemComparer : IComparer<ImageListViewItem>
-        {
-            private readonly SortOrder mGroupOrder;
-            private readonly SortOrder mSortOrder;
-
-            public ImageListViewItemComparer(SortOrder sortOrder)
-            {
-                mSortOrder = sortOrder;
-            }
-
-            /// <summary>
-            /// Compares two strings and returns a value indicating whether one is less than, equal to, or greater than the other.
-            /// </summary>
-            private int CompareStrings(string x, string y, bool natural)
-            {
-                if (!natural)
-                    return string.Compare(x, y, StringComparison.InvariantCultureIgnoreCase);
-
-                // Following natural sort algorithm is taken from:
-                // http://www.interact-sw.co.uk/iangblog/2007/12/13/natural-sorting
-                string[] xparts = Regex.Split(x.Replace(" ", ""), "([0-9]+)");
-                string[] yparts = Regex.Split(y.Replace(" ", ""), "([0-9]+)");
-                for (int i = 0; i < Math.Max(xparts.Length, yparts.Length); i++)
-                {
-                    bool hasx = i < xparts.Length;
-                    bool hasy = i < yparts.Length;
-
-                    if (!(hasx || hasy)) return 0;
-
-                    if (!hasx) return -1;
-                    if (!hasy) return 1;
-
-                    string xpart = xparts[i];
-                    string ypart = yparts[i];
-                    int res = 0;
-
-                    if (int.TryParse(xpart, out int xi) && int.TryParse(ypart, out int yi))
-                        res = (xi < yi ? -1 : (xi > yi ? 1 : 0));
-                    else
-                        res = string.Compare(xpart, ypart, StringComparison.InvariantCultureIgnoreCase);
-
-                    if (res != 0) return res;
-                }
-                return 0;
-            }
-
-            /// <summary>
-            /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
-            /// </summary>
-            public int Compare(ImageListViewItem x, ImageListViewItem y)
-            {
-                int result = 0;
-                int sign = 0;
-                bool natural = false;
-
-
-                if (mSortOrder != SortOrder.None)
-                {
-                    result = 0;
-                    sign = (mSortOrder == SortOrder.Ascending || mSortOrder == SortOrder.AscendingNatural) ? 1 : -1;
-                }
-
-                return sign * result;
-            }
-        }
         #endregion
 
         #region Unsupported Interface

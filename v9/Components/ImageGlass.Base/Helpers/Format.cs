@@ -1,4 +1,6 @@
-﻿namespace ImageGlass.Base;
+﻿using System.Text.RegularExpressions;
+
+namespace ImageGlass.Base;
 
 public partial class Helpers
 {
@@ -204,5 +206,42 @@ public partial class Helpers
         string txt = text.Substring(0, 1).ToUpperInvariant();
         int order = txt[0];
         return Tuple.Create(order, txt);
+    }
+
+
+    /// <summary>
+    /// Compares two strings and returns a value indicating whether one is less than, equal to, or greater than the other.
+    /// </summary>
+    public int CompareStrings(string x, string y, bool natural)
+    {
+        if (!natural)
+            return string.Compare(x, y, StringComparison.InvariantCultureIgnoreCase);
+
+        // Following natural sort algorithm is taken from:
+        // http://www.interact-sw.co.uk/iangblog/2007/12/13/natural-sorting
+        string[] xparts = Regex.Split(x.Replace(" ", ""), "([0-9]+)");
+        string[] yparts = Regex.Split(y.Replace(" ", ""), "([0-9]+)");
+        for (int i = 0; i < Math.Max(xparts.Length, yparts.Length); i++)
+        {
+            bool hasx = i < xparts.Length;
+            bool hasy = i < yparts.Length;
+
+            if (!(hasx || hasy)) return 0;
+
+            if (!hasx) return -1;
+            if (!hasy) return 1;
+
+            string xpart = xparts[i];
+            string ypart = yparts[i];
+            int res = 0;
+
+            if (int.TryParse(xpart, out int xi) && int.TryParse(ypart, out int yi))
+                res = (xi < yi ? -1 : (xi > yi ? 1 : 0));
+            else
+                res = string.Compare(xpart, ypart, StringComparison.InvariantCultureIgnoreCase);
+
+            if (res != 0) return res;
+        }
+        return 0;
     }
 }

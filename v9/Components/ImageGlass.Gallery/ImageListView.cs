@@ -37,7 +37,6 @@ public partial class ImageListView : Control, IComponent
     private Image? mErrorImage;
     private Image mRatingImage;
     private Image mEmptyRatingImage;
-    private Font mGroupHeaderFont;
     private bool mIntegralScroll;
     private ImageListViewItemCollection mItems;
     private int mPaneWidth;
@@ -45,7 +44,6 @@ public partial class ImageListView : Control, IComponent
     internal ImageListViewSelectedItemCollection mSelectedItems;
     internal ImageListViewCheckedItemCollection mCheckedItems;
     private SortOrder mSortOrder;
-    private SortOrder mGroupOrder;
     private bool mShowFileIcons;
     private bool mShowCheckBoxes;
     private ContentAlignment mIconAlignment;
@@ -57,10 +55,6 @@ public partial class ImageListView : Control, IComponent
     private View mView;
     private Point mViewOffset;
     private bool mShowScrollBars;
-
-    // Groups
-    internal ImageListViewGroupCollection groups;
-    internal bool showGroups;
 
     // Renderer variables
     internal ImageListViewRenderer mRenderer;
@@ -382,30 +376,6 @@ public partial class ImageListView : Control, IComponent
             Refresh();
         }
     }
-    /// <summary>
-    /// Gets or sets the font of the group headers.
-    /// </summary>
-    [Category("Appearance"), Description("Gets or sets the font of the group headers."), DefaultValue(typeof(Font), "Microsoft Sans Serif, 8.25pt, style=Bold")]
-    public Font GroupHeaderFont
-    {
-        get
-        {
-            if (mGroupHeaderFont == null)
-            {
-                if (Font != null)
-                    mGroupHeaderFont = (Font)Font.Clone();
-                else
-                    mGroupHeaderFont = (Font)DefaultFont.Clone();
-            }
-
-            return mGroupHeaderFont;
-        }
-        set
-        {
-            mGroupHeaderFont = value;
-            Refresh();
-        }
-    }
 
     /// <summary>
     /// Gets or sets whether scrollbars scroll by an amount which is a multiple of item height.
@@ -640,39 +610,6 @@ public partial class ImageListView : Control, IComponent
     }
 
     /// <summary>
-    /// Gets or sets the sort order.
-    /// </summary>
-    [Category("Appearance"), DefaultValue(typeof(SortOrder), "None"), Description("Gets or sets the sort order.")]
-    public SortOrder SortOrder
-    {
-        get { return mSortOrder; }
-        set
-        {
-            if (value != mSortOrder)
-            {
-                mSortOrder = value;
-                Sort();
-            }
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets the group order.
-    /// </summary>
-    [Category("Appearance"), DefaultValue(typeof(SortOrder), "None"), Description("Gets or sets the group order.")]
-    public SortOrder GroupOrder
-    {
-        get { return mGroupOrder; }
-        set
-        {
-            if (value != mGroupOrder)
-            {
-                mGroupOrder = value;
-                Sort();
-            }
-        }
-    }
-    /// <summary>
     /// This property is not relevant for this class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never), Browsable(false), Bindable(false), DefaultValue(null), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -728,14 +665,7 @@ public partial class ImageListView : Control, IComponent
             }
         }
     }
-    /// <summary>
-    /// Gets whether groups are displayed.
-    /// </summary>
-    [Browsable(false), Category("Appearance"), Description("Gets whether groups are displayed.")]
-    public bool GroupsVisible
-    {
-        get { return showGroups; }
-    }
+
     /// <summary>
     /// Gets or sets the scroll offset.
     /// </summary>
@@ -886,7 +816,6 @@ public partial class ImageListView : Control, IComponent
         mErrorImage = resources.GetObject("ErrorImage") as Image;
         mRatingImage = resources.GetObject("RatingImage") as Image;
         mEmptyRatingImage = resources.GetObject("EmptyRatingImage") as Image;
-        GroupHeaderFont = new Font(Font, FontStyle.Bold);
         mIntegralScroll = false;
         mItems = new ImageListViewItemCollection(this);
         MultiSelect = true;
@@ -895,7 +824,6 @@ public partial class ImageListView : Control, IComponent
         mSelectedItems = new ImageListViewSelectedItemCollection(this);
         mCheckedItems = new ImageListViewCheckedItemCollection(this);
         mSortOrder = SortOrder.None;
-        mGroupOrder = SortOrder.None;
         SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.Opaque | ControlStyles.Selectable | ControlStyles.UserMouse | ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer, true);
         ScrollBars = true;
         ShellIconFallback = true;
@@ -923,10 +851,6 @@ public partial class ImageListView : Control, IComponent
         vScrollBar.Scroll += vScrollBar_Scroll;
         Controls.Add(hScrollBar);
         Controls.Add(vScrollBar);
-
-        // Groups
-        groups = new ImageListViewGroupCollection(this);
-        showGroups = false;
 
         // Lazy refresh timer
         lazyRefreshTimer = new System.Timers.Timer();
@@ -1228,6 +1152,7 @@ public partial class ImageListView : Control, IComponent
 
         Refresh();
     }
+
     /// <summary>
     /// Sets the renderer for this instance.
     /// </summary>
@@ -1235,14 +1160,6 @@ public partial class ImageListView : Control, IComponent
     public void SetRenderer(ImageListViewRenderer renderer)
     {
         SetRenderer(renderer, false);
-    }
-    /// <summary>
-    /// Sorts the items.
-    /// </summary>
-    public void Sort()
-    {
-        mItems.Sort();
-        Refresh();
     }
 
     /// <summary>
@@ -1257,84 +1174,41 @@ public partial class ImageListView : Control, IComponent
         bool fileIconHit = false;
         int subItemIndex = -1;
 
-        if (showGroups)
+        // Normalize to item area coordinates
+        pt.X -= layoutManager.ItemAreaBounds.Left;
+        pt.Y -= layoutManager.ItemAreaBounds.Top;
+
+        if (pt.X > 0 && pt.Y > 0)
         {
-            foreach (ImageListViewGroup @group in groups)
+            int col = (pt.X + mViewOffset.X) / layoutManager.ItemSizeWithMargin.Width;
+            int row = (pt.Y + mViewOffset.Y) / layoutManager.ItemSizeWithMargin.Height;
+
+            if (ScrollOrientation == ScrollOrientation.HorizontalScroll || (ScrollOrientation == ScrollOrientation.VerticalScroll && col <= layoutManager.Cols))
             {
-                if (@group.itemBounds.Contains(pt))
+                int index = row * layoutManager.Cols + col;
+                if (index >= 0 && index <= Items.Count - 1)
                 {
-                    // Normalize to group item area coordinates
-                    pt.X -= @group.itemBounds.Left;
-                    pt.Y -= @group.itemBounds.Top;
-
-                    if (pt.X > 0 && pt.Y > 0)
+                    Rectangle bounds = layoutManager.GetItemBounds(index);
+                    if (bounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
+                        itemIndex = index;
+                    if (ShowCheckBoxes)
                     {
-                        int col = pt.X / layoutManager.ItemSizeWithMargin.Width;
-                        int row = pt.Y / layoutManager.ItemSizeWithMargin.Height;
-
-                        int index = @group.FirstItemIndex + row * @group.itemCols + col;
-                        if (index >= 0 && index <= Items.Count - 1)
-                        {
-                            Rectangle bounds = layoutManager.GetItemBounds(index);
-                            if (bounds.Contains(pt.X + @group.itemBounds.Left, pt.Y + @group.itemBounds.Top))
-                                itemIndex = index;
-                            if (ShowCheckBoxes)
-                            {
-                                Rectangle checkBoxBounds = layoutManager.GetCheckBoxBounds(index);
-                                if (checkBoxBounds.Contains(pt.X + @group.itemBounds.Left, pt.Y + @group.itemBounds.Top))
-                                    checkBoxHit = true;
-                            }
-                            if (ShowFileIcons)
-                            {
-                                Rectangle fileIconBounds = layoutManager.GetIconBounds(index);
-                                if (fileIconBounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
-                                    fileIconHit = true;
-                            }
-                        }
+                        Rectangle checkBoxBounds = layoutManager.GetCheckBoxBounds(index);
+                        if (checkBoxBounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
+                            checkBoxHit = true;
                     }
-
-                    break;
-                }
-            }
-        }
-        else
-        {
-            // Normalize to item area coordinates
-            pt.X -= layoutManager.ItemAreaBounds.Left;
-            pt.Y -= layoutManager.ItemAreaBounds.Top;
-
-            if (pt.X > 0 && pt.Y > 0)
-            {
-                int col = (pt.X + mViewOffset.X) / layoutManager.ItemSizeWithMargin.Width;
-                int row = (pt.Y + mViewOffset.Y) / layoutManager.ItemSizeWithMargin.Height;
-
-                if (ScrollOrientation == ScrollOrientation.HorizontalScroll || (ScrollOrientation == ScrollOrientation.VerticalScroll && col <= layoutManager.Cols))
-                {
-                    int index = row * layoutManager.Cols + col;
-                    if (index >= 0 && index <= Items.Count - 1)
+                    if (ShowFileIcons)
                     {
-                        Rectangle bounds = layoutManager.GetItemBounds(index);
-                        if (bounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
-                            itemIndex = index;
-                        if (ShowCheckBoxes)
-                        {
-                            Rectangle checkBoxBounds = layoutManager.GetCheckBoxBounds(index);
-                            if (checkBoxBounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
-                                checkBoxHit = true;
-                        }
-                        if (ShowFileIcons)
-                        {
-                            Rectangle fileIconBounds = layoutManager.GetIconBounds(index);
-                            if (fileIconBounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
-                                fileIconHit = true;
-                        }
+                        Rectangle fileIconBounds = layoutManager.GetIconBounds(index);
+                        if (fileIconBounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
+                            fileIconHit = true;
                     }
                 }
             }
         }
+
 
         hitInfo = new HitInfo(itemIndex, subItemIndex, checkBoxHit, fileIconHit);
-
     }
 
     /// <summary>

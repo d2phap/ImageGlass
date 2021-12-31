@@ -221,14 +221,47 @@ public partial class ImageListView
 
                 // Determine which items are highlighted
                 highlightedItems.Clear();
-                if (mImageListView.showGroups)
-                {
-                    foreach (ImageListViewGroup group in mImageListView.groups)
-                    {
-                        var indices = group.ItemIndicesInRectangle(SelectionRectangle, mImageListView.ScrollOrientation, mImageListView.layoutManager.ItemSizeWithMargin);
 
-                        foreach (int i in indices)
+                // Normalize to item area coordinates
+                pt1 = new Point(SelectionRectangle.Left, SelectionRectangle.Top);
+                pt2 = new Point(SelectionRectangle.Right, SelectionRectangle.Bottom);
+                var itemAreaOffset = new Point(
+                    -mImageListView.layoutManager.ItemAreaBounds.Left,
+                    -mImageListView.layoutManager.ItemAreaBounds.Top);
+                pt1.Offset(itemAreaOffset);
+                pt2.Offset(itemAreaOffset);
+
+                int startRow = (int)Math.Floor((Math.Min(pt1.Y, pt2.Y) + viewOffset.Y) /
+                    (float)mImageListView.layoutManager.ItemSizeWithMargin.Height);
+                int endRow = (int)Math.Floor((Math.Max(pt1.Y, pt2.Y) + viewOffset.Y) /
+                    (float)mImageListView.layoutManager.ItemSizeWithMargin.Height);
+                int startCol = (int)Math.Floor((Math.Min(pt1.X, pt2.X) + viewOffset.X) /
+                    (float)mImageListView.layoutManager.ItemSizeWithMargin.Width);
+                int endCol = (int)Math.Floor((Math.Max(pt1.X, pt2.X) + viewOffset.X) /
+                    (float)mImageListView.layoutManager.ItemSizeWithMargin.Width);
+                if (mImageListView.ScrollOrientation == ScrollOrientation.HorizontalScroll &&
+                    (startRow >= 0 || endRow >= 0))
+                {
+                    for (int i = startCol; i <= endCol; i++)
+                    {
+                        if (i >= 0 && i <= mImageListView.Items.Count - 1 &&
+                            !highlightedItems.ContainsKey(mImageListView.Items[i]) &&
+                            mImageListView.Items[i].Enabled)
+                            highlightedItems.Add(mImageListView.Items[i],
+                                (ControlKey ? !mImageListView.Items[i].Selected : true));
+                    }
+                }
+                else if (mImageListView.ScrollOrientation == ScrollOrientation.VerticalScroll &&
+                    (startCol >= 0 || endCol >= 0) && (startRow >= 0 || endRow >= 0) &&
+                    (startCol <= mImageListView.layoutManager.Cols - 1 || endCol <= mImageListView.layoutManager.Cols - 1))
+                {
+                    startCol = Math.Min(mImageListView.layoutManager.Cols - 1, Math.Max(0, startCol));
+                    endCol = Math.Min(mImageListView.layoutManager.Cols - 1, Math.Max(0, endCol));
+                    for (int row = startRow; row <= endRow; row++)
+                    {
+                        for (int col = startCol; col <= endCol; col++)
                         {
+                            int i = row * mImageListView.layoutManager.Cols + col;
                             if (i >= 0 && i <= mImageListView.Items.Count - 1 &&
                                 !highlightedItems.ContainsKey(mImageListView.Items[i]) &&
                                 mImageListView.Items[i].Enabled)
@@ -237,57 +270,7 @@ public partial class ImageListView
                         }
                     }
                 }
-                else
-                {
-                    // Normalize to item area coordinates
-                    pt1 = new Point(SelectionRectangle.Left, SelectionRectangle.Top);
-                    pt2 = new Point(SelectionRectangle.Right, SelectionRectangle.Bottom);
-                    var itemAreaOffset = new Point(
-                        -mImageListView.layoutManager.ItemAreaBounds.Left,
-                        -mImageListView.layoutManager.ItemAreaBounds.Top);
-                    pt1.Offset(itemAreaOffset);
-                    pt2.Offset(itemAreaOffset);
 
-                    int startRow = (int)Math.Floor((Math.Min(pt1.Y, pt2.Y) + viewOffset.Y) /
-                        (float)mImageListView.layoutManager.ItemSizeWithMargin.Height);
-                    int endRow = (int)Math.Floor((Math.Max(pt1.Y, pt2.Y) + viewOffset.Y) /
-                        (float)mImageListView.layoutManager.ItemSizeWithMargin.Height);
-                    int startCol = (int)Math.Floor((Math.Min(pt1.X, pt2.X) + viewOffset.X) /
-                        (float)mImageListView.layoutManager.ItemSizeWithMargin.Width);
-                    int endCol = (int)Math.Floor((Math.Max(pt1.X, pt2.X) + viewOffset.X) /
-                        (float)mImageListView.layoutManager.ItemSizeWithMargin.Width);
-                    if (mImageListView.ScrollOrientation == ScrollOrientation.HorizontalScroll &&
-                        (startRow >= 0 || endRow >= 0))
-                    {
-                        for (int i = startCol; i <= endCol; i++)
-                        {
-                            if (i >= 0 && i <= mImageListView.Items.Count - 1 &&
-                                !highlightedItems.ContainsKey(mImageListView.Items[i]) &&
-                                mImageListView.Items[i].Enabled)
-                                highlightedItems.Add(mImageListView.Items[i],
-                                    (ControlKey ? !mImageListView.Items[i].Selected : true));
-                        }
-                    }
-                    else if (mImageListView.ScrollOrientation == ScrollOrientation.VerticalScroll &&
-                        (startCol >= 0 || endCol >= 0) && (startRow >= 0 || endRow >= 0) &&
-                        (startCol <= mImageListView.layoutManager.Cols - 1 || endCol <= mImageListView.layoutManager.Cols - 1))
-                    {
-                        startCol = Math.Min(mImageListView.layoutManager.Cols - 1, Math.Max(0, startCol));
-                        endCol = Math.Min(mImageListView.layoutManager.Cols - 1, Math.Max(0, endCol));
-                        for (int row = startRow; row <= endRow; row++)
-                        {
-                            for (int col = startCol; col <= endCol; col++)
-                            {
-                                int i = row * mImageListView.layoutManager.Cols + col;
-                                if (i >= 0 && i <= mImageListView.Items.Count - 1 &&
-                                    !highlightedItems.ContainsKey(mImageListView.Items[i]) &&
-                                    mImageListView.Items[i].Enabled)
-                                    highlightedItems.Add(mImageListView.Items[i],
-                                        (ControlKey ? !mImageListView.Items[i].Selected : true));
-                            }
-                        }
-                    }
-                }
 
                 mImageListView.Refresh();
             }

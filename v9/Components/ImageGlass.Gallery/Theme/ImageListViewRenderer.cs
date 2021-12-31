@@ -343,38 +343,6 @@ public class ImageListViewRenderer : IDisposable
     }
 
     /// <summary>
-    /// Renders the group header.
-    /// </summary>
-    /// <param name="g">The graphics to draw on.</param>
-    private void RenderGroupHeaders(Graphics g)
-    {
-        if (!ImageListView.showGroups)
-            return;
-
-        foreach (ImageListViewGroup group in ImageListView.groups.GetDisplayedGroups())
-        {
-            if (Clip)
-            {
-                Rectangle clip = Rectangle.Intersect(group.headerBounds, ImageListView.layoutManager.ItemAreaBounds);
-                g.SetClip(clip);
-            }
-            else
-                g.SetClip(ImageListView.layoutManager.ClientArea);
-
-            if (ImageListView.View == View.HorizontalStrip)
-            {
-                g.TranslateTransform(group.headerBounds.Left, group.headerBounds.Bottom);
-                g.RotateTransform(270);
-                DrawGroupHeader(g, group.Name, new Rectangle(0, 0, group.headerBounds.Height, group.headerBounds.Width));
-                g.ResetTransform();
-            }
-            else
-                DrawGroupHeader(g, group.Name, group.headerBounds);
-        }
-    }
-
-
-    /// <summary>
     /// Renders the items.
     /// </summary>
     /// <param name="g">The graphics to draw on.</param>
@@ -575,8 +543,6 @@ public class ImageListViewRenderer : IDisposable
         // Draw background
         RenderBackground(g);
 
-        // Draw group headers if visible
-        RenderGroupHeaders(g);
 
         // Draw items if they should be drawn first
         bool itemsDrawn = false;
@@ -993,38 +959,6 @@ public class ImageListViewRenderer : IDisposable
                 bounds.Y + (bounds.Height - (float)size.Height) / 2.0f);
             Point pt = Point.Round(ptf);
             g.DrawImage(icon, pt.X, pt.Y);
-        }
-    }
-
-    /// <summary>
-    /// Draws the group headers.
-    /// </summary>
-    /// <param name="g">The System.Drawing.Graphics to draw on.</param>
-    /// <param name="name">The name of the group to draw.</param>
-    /// <param name="bounds">The bounding rectangle of group in client coordinates.</param>
-    public virtual void DrawGroupHeader(Graphics g, string name, Rectangle bounds)
-    {
-        // Bottom border
-        bounds.Inflate(0, -4);
-        using (Pen pSpep = new Pen(new LinearGradientBrush(bounds, ImageListView.Colors.ColumnSeparatorColor, Color.Transparent, LinearGradientMode.Horizontal)))
-        {
-            g.DrawLine(pSpep, bounds.Left + 1, bounds.Bottom - 1, bounds.Right - 1, bounds.Bottom - 1);
-        }
-
-        // Text
-        if (bounds.Width > 4)
-        {
-            using (StringFormat sf = new StringFormat())
-            {
-                sf.FormatFlags = StringFormatFlags.NoWrap;
-                sf.Alignment = StringAlignment.Near;
-                sf.LineAlignment = StringAlignment.Center;
-                sf.Trimming = StringTrimming.EllipsisCharacter;
-                using (SolidBrush bText = new SolidBrush(ImageListView.Colors.ColumnHeaderForeColor))
-                {
-                    g.DrawString(name, (ImageListView.GroupHeaderFont == null ? ImageListView.Font : ImageListView.GroupHeaderFont), bText, bounds, sf);
-                }
-            }
         }
     }
 
