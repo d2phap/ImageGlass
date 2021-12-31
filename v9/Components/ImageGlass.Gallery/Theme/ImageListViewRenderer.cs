@@ -361,7 +361,7 @@ public class ImageListViewRenderer : IDisposable
             else
                 g.SetClip(ImageListView.layoutManager.ClientArea);
 
-            if (ImageListView.View == View.Gallery || ImageListView.View == View.HorizontalStrip)
+            if (ImageListView.View == View.HorizontalStrip)
             {
                 g.TranslateTransform(group.headerBounds.Left, group.headerBounds.Bottom);
                 g.RotateTransform(270);
@@ -448,9 +448,6 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="g">The graphics to draw on.</param>
     private void RenderGalleryImage(Graphics g)
     {
-        if (ImageListView.View != View.Gallery)
-            return;
-
         Rectangle bounds = ImageListView.layoutManager.ClientArea;
         bounds.Height -= ImageListView.layoutManager.ItemAreaBounds.Height;
 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ImageGlass.Gallery;
+﻿namespace ImageGlass.Gallery;
 
 
 /// <summary>
@@ -181,7 +175,7 @@ internal class ImageListViewLayoutManager
                     location.X += cachedItemMargin.Width / 2;
                     location.Y += cachedItemMargin.Height / 2;
 
-                    if (mImageListView.View == View.Gallery || ImageListView.View == View.HorizontalStrip)
+                    if (ImageListView.View == View.HorizontalStrip)
                         location.X += (itemIndex - group.FirstItemIndex) * mItemSizeWithMargin.Width;
                     else
                     {
@@ -198,7 +192,7 @@ internal class ImageListViewLayoutManager
             location.X += cachedItemMargin.Width / 2 - mImageListView.ViewOffset.X;
             location.Y += cachedItemMargin.Height / 2 - mImageListView.ViewOffset.Y;
 
-            if (mImageListView.View == View.Gallery || ImageListView.View == View.HorizontalStrip)
+            if (ImageListView.View == View.HorizontalStrip)
                 location.X += itemIndex * mItemSizeWithMargin.Width;
             else
             {
@@ -390,24 +384,25 @@ internal class ImageListViewLayoutManager
     private void CalculateGrid()
     {
         // Number of rows and columns shown on screen
-        mDisplayedRows = (int)System.Math.Floor(mItemAreaBounds.Height / (float)mItemSizeWithMargin.Height);
-        mDisplayedCols = (int)System.Math.Floor(mItemAreaBounds.Width / (float)mItemSizeWithMargin.Width);
+        mDisplayedRows = (int)Math.Floor(mItemAreaBounds.Height / (float)mItemSizeWithMargin.Height);
+        mDisplayedCols = (int)
+            Math.Floor(mItemAreaBounds.Width / (float)mItemSizeWithMargin.Width);
 
         if (mImageListView.View == View.Details || mImageListView.View == View.VerticalStrip) mDisplayedCols = 1;
-        if (mImageListView.View == View.Gallery || mImageListView.View == View.HorizontalStrip) mDisplayedRows = 1;
+        if (mImageListView.View == View.HorizontalStrip) mDisplayedRows = 1;
         if (mDisplayedCols < 1) mDisplayedCols = 1;
         if (mDisplayedRows < 1) mDisplayedRows = 1;
 
         // Number of rows and columns to enclose all items
-        if (mImageListView.View == View.Gallery || mImageListView.View == View.HorizontalStrip)
+        if (mImageListView.View == View.HorizontalStrip)
         {
             mItemRows = mDisplayedRows;
-            mItemCols = (int)System.Math.Ceiling(mImageListView.Items.Count / (float)mDisplayedRows);
+            mItemCols = (int)Math.Ceiling(mImageListView.Items.Count / (float)mDisplayedRows);
         }
         else
         {
             mItemCols = mDisplayedCols;
-            mItemRows = (int)System.Math.Ceiling(mImageListView.Items.Count / (float)mDisplayedCols);
+            mItemRows = (int)Math.Ceiling(mImageListView.Items.Count / (float)mDisplayedCols);
         }
 
         totalWidth = mItemCols * mItemSizeWithMargin.Width;
@@ -457,13 +452,7 @@ internal class ImageListViewLayoutManager
             mColumnHeaderBounds = Rectangle.Empty;
         }
 
-        if (mImageListView.View == View.Gallery)
-        {
-            // Modify item area for the gallery view mode
-            mItemAreaBounds.Height = mItemSizeWithMargin.Height;
-            mItemAreaBounds.Y = mClientArea.Bottom - mItemSizeWithMargin.Height;
-        }
-        else if (mImageListView.View == View.Pane)
+        if (mImageListView.View == View.Pane)
         {
             // Modify item area for the pane view mode
             mItemAreaBounds.Width -= cachedPaneWidth;
@@ -605,56 +594,56 @@ internal class ImageListViewLayoutManager
             foreach (ImageListViewGroup group in mImageListView.groups)
             {
                 // Break out if we moved outside the item area
-                if (((mImageListView.View == View.Gallery || mImageListView.View == View.HorizontalStrip) && group.itemBounds.Left > ItemAreaBounds.Right) ||
-                    (mImageListView.View != View.Gallery && mImageListView.View != View.HorizontalStrip && group.itemBounds.Top > ItemAreaBounds.Bottom))
+                if ((mImageListView.View == View.HorizontalStrip && group.itemBounds.Left > ItemAreaBounds.Right) ||
+                    (mImageListView.View != View.HorizontalStrip && group.itemBounds.Top > ItemAreaBounds.Bottom))
                     break;
 
                 // Skip groups above (or to the left of in gallery mode) item area
-                if (((mImageListView.View == View.Gallery || mImageListView.View == View.HorizontalStrip) && group.itemBounds.Right < ItemAreaBounds.Left) ||
-                    (mImageListView.View != View.Gallery && mImageListView.View != View.HorizontalStrip && group.itemBounds.Bottom < ItemAreaBounds.Top))
+                if ((mImageListView.View == View.HorizontalStrip && group.itemBounds.Right < ItemAreaBounds.Left) ||
+                    (mImageListView.View != View.HorizontalStrip && group.itemBounds.Bottom < ItemAreaBounds.Top))
                     continue;
 
                 if (mFirstPartiallyVisible < 0)
                 {
-                    if (mImageListView.View == View.Gallery || mImageListView.View == View.HorizontalStrip)
+                    if (mImageListView.View == View.HorizontalStrip)
                     {
-                        mFirstPartiallyVisible = group.FirstItemIndex + (int)System.Math.Floor((ItemAreaBounds.Left - group.itemBounds.Left) / (float)mItemSizeWithMargin.Width) * group.itemRows;
-                        mFirstVisible = group.FirstItemIndex + (int)System.Math.Ceiling((ItemAreaBounds.Left - group.itemBounds.Left) / (float)mItemSizeWithMargin.Width) * group.itemRows;
+                        mFirstPartiallyVisible = group.FirstItemIndex + (int)Math.Floor((ItemAreaBounds.Left - group.itemBounds.Left) / (float)mItemSizeWithMargin.Width) * group.itemRows;
+                        mFirstVisible = group.FirstItemIndex + (int)Math.Ceiling((ItemAreaBounds.Left - group.itemBounds.Left) / (float)mItemSizeWithMargin.Width) * group.itemRows;
                     }
                     else
                     {
-                        mFirstPartiallyVisible = group.FirstItemIndex + (int)System.Math.Floor((ItemAreaBounds.Top - group.itemBounds.Top) / (float)mItemSizeWithMargin.Height) * group.itemCols;
-                        mFirstVisible = group.FirstItemIndex + (int)System.Math.Ceiling((ItemAreaBounds.Top - group.itemBounds.Top) / (float)mItemSizeWithMargin.Height) * group.itemCols;
+                        mFirstPartiallyVisible = group.FirstItemIndex + (int)Math.Floor((ItemAreaBounds.Top - group.itemBounds.Top) / (float)mItemSizeWithMargin.Height) * group.itemCols;
+                        mFirstVisible = group.FirstItemIndex + (int)Math.Ceiling((ItemAreaBounds.Top - group.itemBounds.Top) / (float)mItemSizeWithMargin.Height) * group.itemCols;
                     }
                 }
 
-                if (mImageListView.View == View.Gallery || mImageListView.View == View.HorizontalStrip)
+                if (mImageListView.View == View.HorizontalStrip)
                 {
-                    mLastPartiallyVisible = group.FirstItemIndex + (int)System.Math.Ceiling(((ItemAreaBounds.Left - group.itemBounds.Left) + mItemAreaBounds.Width) / (float)mItemSizeWithMargin.Width) * group.itemRows - 1;
-                    mLastVisible = group.FirstItemIndex + (int)System.Math.Floor(((ItemAreaBounds.Left - group.itemBounds.Left) + mItemAreaBounds.Width) / (float)mItemSizeWithMargin.Width) * group.itemRows - 1;
+                    mLastPartiallyVisible = group.FirstItemIndex + (int)Math.Ceiling(((ItemAreaBounds.Left - group.itemBounds.Left) + mItemAreaBounds.Width) / (float)mItemSizeWithMargin.Width) * group.itemRows - 1;
+                    mLastVisible = group.FirstItemIndex + (int)Math.Floor(((ItemAreaBounds.Left - group.itemBounds.Left) + mItemAreaBounds.Width) / (float)mItemSizeWithMargin.Width) * group.itemRows - 1;
                 }
                 else
                 {
-                    mLastPartiallyVisible = group.FirstItemIndex + (int)System.Math.Ceiling(((ItemAreaBounds.Top - group.itemBounds.Top) + mItemAreaBounds.Height) / (float)mItemSizeWithMargin.Height) * group.itemCols - 1;
-                    mLastVisible = group.FirstItemIndex + (int)System.Math.Floor(((ItemAreaBounds.Top - group.itemBounds.Top) + mItemAreaBounds.Height) / (float)mItemSizeWithMargin.Height) * group.itemCols - 1;
+                    mLastPartiallyVisible = group.FirstItemIndex + (int)Math.Ceiling(((ItemAreaBounds.Top - group.itemBounds.Top) + mItemAreaBounds.Height) / (float)mItemSizeWithMargin.Height) * group.itemCols - 1;
+                    mLastVisible = group.FirstItemIndex + (int)Math.Floor(((ItemAreaBounds.Top - group.itemBounds.Top) + mItemAreaBounds.Height) / (float)mItemSizeWithMargin.Height) * group.itemCols - 1;
                 }
             }
         }
         else
         {
-            if (mImageListView.View == View.Gallery || mImageListView.View == View.HorizontalStrip)
+            if (mImageListView.View == View.HorizontalStrip)
             {
-                mFirstPartiallyVisible = (int)System.Math.Floor(mImageListView.ViewOffset.X / (float)mItemSizeWithMargin.Width) * mDisplayedRows;
-                mLastPartiallyVisible = (int)System.Math.Ceiling((mImageListView.ViewOffset.X + mItemAreaBounds.Width) / (float)mItemSizeWithMargin.Width) * mDisplayedRows - 1;
-                mFirstVisible = (int)System.Math.Ceiling(mImageListView.ViewOffset.X / (float)mItemSizeWithMargin.Width) * mDisplayedRows;
-                mLastVisible = (int)System.Math.Floor((mImageListView.ViewOffset.X + mItemAreaBounds.Width) / (float)mItemSizeWithMargin.Width) * mDisplayedRows - 1;
+                mFirstPartiallyVisible = (int)Math.Floor(mImageListView.ViewOffset.X / (float)mItemSizeWithMargin.Width) * mDisplayedRows;
+                mLastPartiallyVisible = (int)Math.Ceiling((mImageListView.ViewOffset.X + mItemAreaBounds.Width) / (float)mItemSizeWithMargin.Width) * mDisplayedRows - 1;
+                mFirstVisible = (int)Math.Ceiling(mImageListView.ViewOffset.X / (float)mItemSizeWithMargin.Width) * mDisplayedRows;
+                mLastVisible = (int)Math.Floor((mImageListView.ViewOffset.X + mItemAreaBounds.Width) / (float)mItemSizeWithMargin.Width) * mDisplayedRows - 1;
             }
             else
             {
-                mFirstPartiallyVisible = (int)System.Math.Floor(mImageListView.ViewOffset.Y / (float)mItemSizeWithMargin.Height) * mDisplayedCols;
-                mLastPartiallyVisible = (int)System.Math.Ceiling((mImageListView.ViewOffset.Y + mItemAreaBounds.Height) / (float)mItemSizeWithMargin.Height) * mDisplayedCols - 1;
-                mFirstVisible = (int)System.Math.Ceiling(mImageListView.ViewOffset.Y / (float)mItemSizeWithMargin.Height) * mDisplayedCols;
-                mLastVisible = (int)System.Math.Floor((mImageListView.ViewOffset.Y + mItemAreaBounds.Height) / (float)mItemSizeWithMargin.Height) * mDisplayedCols - 1;
+                mFirstPartiallyVisible = (int)Math.Floor(mImageListView.ViewOffset.Y / (float)mItemSizeWithMargin.Height) * mDisplayedCols;
+                mLastPartiallyVisible = (int)Math.Ceiling((mImageListView.ViewOffset.Y + mItemAreaBounds.Height) / (float)mItemSizeWithMargin.Height) * mDisplayedCols - 1;
+                mFirstVisible = (int)Math.Ceiling(mImageListView.ViewOffset.Y / (float)mItemSizeWithMargin.Height) * mDisplayedCols;
+                mLastVisible = (int)Math.Floor((mImageListView.ViewOffset.Y + mItemAreaBounds.Height) / (float)mItemSizeWithMargin.Height) * mDisplayedCols - 1;
             }
         }
 
@@ -694,7 +683,7 @@ internal class ImageListViewLayoutManager
         int x = mItemAreaBounds.Left - mImageListView.ViewOffset.X;
         int y = mItemAreaBounds.Top - mImageListView.ViewOffset.Y;
 
-        if (mImageListView.View == View.Gallery || mImageListView.View == View.HorizontalStrip)
+        if (mImageListView.View == View.HorizontalStrip)
         {
             totalWidth = 0;
             totalHeight = mItemAreaBounds.Height;
@@ -711,7 +700,7 @@ internal class ImageListViewLayoutManager
 
         foreach (ImageListViewGroup group in mImageListView.groups)
         {
-            if (mImageListView.View == View.Gallery || mImageListView.View == View.HorizontalStrip)
+            if (mImageListView.View == View.HorizontalStrip)
             {
                 // Number of rows and columns to enclose all items
                 group.itemRows = mDisplayedRows;

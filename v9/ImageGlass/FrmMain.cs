@@ -94,7 +94,7 @@ public partial class FrmMain : Form
             }
             else
             {
-                inputPath = @"C:\Users\d2pha\Desktop\New folder\a.tif";
+                inputPath = @"C:\Users\d2pha\Desktop\map50.jpg";
             }
         }
 

@@ -318,12 +318,7 @@ public enum View
     /// are not displayed. The view can be scrolled vertically.
     /// </summary>
     Details,
-    /// <summary>
-    /// Displays a large preview image of the focused item together with
-    /// a single row of thumbnails at the bottom.
-    /// The view can be scrolled horizontally.
-    /// </summary>
-    Gallery,
+
     /// <summary>
     /// Displays a pane with item details.The view can be 
     /// scrolled vertically.
