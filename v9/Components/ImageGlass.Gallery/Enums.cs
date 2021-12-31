@@ -318,12 +318,6 @@ public enum View
     /// are not displayed. The view can be scrolled vertically.
     /// </summary>
     Details,
-
-    /// <summary>
-    /// Displays a pane with item details.The view can be 
-    /// scrolled vertically.
-    /// </summary>
-    Pane,
     /// <summary>
     /// Displays thumbnails laid out in a grid. The view can be 
     /// scrolled vertically.

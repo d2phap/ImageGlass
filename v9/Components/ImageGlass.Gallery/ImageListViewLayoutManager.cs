@@ -452,13 +452,6 @@ internal class ImageListViewLayoutManager
             mColumnHeaderBounds = Rectangle.Empty;
         }
 
-        if (mImageListView.View == View.Pane)
-        {
-            // Modify item area for the pane view mode
-            mItemAreaBounds.Width -= cachedPaneWidth;
-            mItemAreaBounds.X += cachedPaneWidth;
-        }
-
         return (mItemAreaBounds.Width > 0 && mItemAreaBounds.Height > 0);
     }
     /// <summary>

@@ -1393,11 +1393,6 @@ public partial class ImageListView : Control, IComponent
             }
             hitInfo = new HitInfo(colIndex, sepIndex);
         }
-        else if (View == View.Pane && pt.X <= mPaneWidth)
-        {
-            bool overBorder = (pt.X >= mPaneWidth - PaneBorderSize);
-            hitInfo = new HitInfo(overBorder);
-        }
         else
         {
             if (showGroups)
