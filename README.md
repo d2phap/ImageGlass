@@ -106,6 +106,8 @@ Thanks for your gratitude and finance help!
 ```
 
 ## 👑 Hall of fame (v8.x)
+![Analytics image](https://repobeats.axiom.co/api/embed/4a2781a2a149dd21826309275304696ec75b21fd.svg)
+
 To honor those people who spent their time to contribute to the development of ImageGlass v8:
 - 1️⃣ [@fire-eggs](https://github.com/fire-eggs)
 - 2️⃣ [@datasone](https://github.com/datasone)
@@ -115,3 +117,5 @@ To honor those people who spent their time to contribute to the development of I
 - 6️⃣ [@flyxyz123](https://github.com/flyxyz123)
 
 Thank you!
+
+
