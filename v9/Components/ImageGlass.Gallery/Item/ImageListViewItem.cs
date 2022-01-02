@@ -21,6 +21,7 @@ public class ImageListViewItem : ICloneable
     internal ImageListView? mImageListView;
     internal bool mChecked;
     internal bool mSelected;
+    internal bool mPressed;
     internal bool mEnabled;
     private string mText;
     private int mZOrder;
@@ -62,6 +63,7 @@ public class ImageListViewItem : ICloneable
     internal bool isDirty;
     private bool editing;
     #endregion
+
 
     #region Properties
     /// <summary>
@@ -202,6 +204,26 @@ public class ImageListViewItem : ICloneable
     }
 
     /// <summary>
+    /// Gets or sets a value determining if the item is pressed.
+    /// </summary>
+    public bool Pressed
+    {
+        get => mPressed;
+        set
+        {
+            if (value != mPressed && mEnabled)
+            {
+                mPressed = value;
+                if (mImageListView != null)
+                {
+                    if (mImageListView.IsItemVisible(mGuid))
+                        mImageListView.Refresh();
+                }
+            }
+        }
+    }
+
+    /// <summary>
     /// Gets or sets the user-defined data associated with the item.
     /// </summary>
     [Category("Data"), Browsable(true), Description("Gets or sets the user-defined data associated with the item."), TypeConverter(typeof(StringConverter))]
@@ -293,6 +315,7 @@ public class ImageListViewItem : ICloneable
     }
 
     #endregion
+
 
     #region Shell Properties
     /// <summary>
@@ -492,6 +515,7 @@ public class ImageListViewItem : ICloneable
     }
     #endregion
 
+
     #region Instance Methods
     /// <summary>
     /// Begins editing the item.
@@ -511,6 +535,7 @@ public class ImageListViewItem : ICloneable
 
         editing = true;
     }
+
     /// <summary>
     /// Ends editing and updates the item.
     /// </summary>
@@ -529,6 +554,7 @@ public class ImageListViewItem : ICloneable
         editing = false;
         if (update) Update();
     }
+
     /// <summary>
     /// Ends editing and updates the item.
     /// </summary>
@@ -536,6 +562,7 @@ public class ImageListViewItem : ICloneable
     {
         EndEdit(true);
     }
+
     /// <summary>
     /// Updates item thumbnail and item details.
     /// </summary>
@@ -566,7 +593,9 @@ public class ImageListViewItem : ICloneable
         else
             return string.Format("Item {0}", mIndex);
     }
+
     #endregion
+
 
     #region Helper Methods
 
@@ -717,6 +746,7 @@ public class ImageListViewItem : ICloneable
 
     #endregion
 
+
     #region ICloneable Members
     /// <summary>
     /// Creates a new object that is a copy of the current instance.
@@ -773,6 +803,7 @@ public class ImageListViewItem : ICloneable
         return item;
     }
     #endregion
+
 }
 
 

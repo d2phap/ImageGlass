@@ -39,14 +39,17 @@ public partial class ImageListView
         /// Gets whether the left mouse button is down.
         /// </summary>
         public bool LeftButton { get; private set; }
+        
         /// <summary>
         /// Gets whether the right mouse button is down.
         /// </summary>
         public bool RightButton { get; private set; }
+        
         /// <summary>
         /// Gets whether the shift key is down.
         /// </summary>
         public bool ShiftKey { get; private set; }
+        
         /// <summary>
         /// Gets whether the control key is down.
         /// </summary>
@@ -126,6 +129,7 @@ public partial class ImageListView
             }
             return ItemHighlightState.NotHighlighted;
         }
+
         /// <summary>
         /// Performs application-defined tasks associated with freeing, 
         /// releasing, or resetting unmanaged resources.
@@ -134,7 +138,9 @@ public partial class ImageListView
         {
             scrollTimer.Dispose();
         }
+
         #endregion
+
 
         #region Mouse Event Handlers
         /// <summary>
@@ -149,12 +155,18 @@ public partial class ImageListView
 
             DoHitTest(e.Location);
             lastMouseDownInItemArea = inItemArea;
-            lastMouseDownOverItem = (HoveredItem != null);
+            lastMouseDownOverItem = HoveredItem != null;
             lastMouseDownOverCheckBox = overCheckBox;
 
             lastViewOffset = mImageListView.ViewOffset;
             lastMouseDownLocation = e.Location;
+
+            if (HoveredItem is not null)
+            {
+                HoveredItem.Pressed = true;
+            }
         }
+
         /// <summary>
         /// Handles control's MouseMove event.
         /// </summary>
@@ -198,6 +210,7 @@ public partial class ImageListView
                 scrollTimer.Enabled = false;
             }
 
+
             if (MouseSelecting)
             {
                 if (!ShiftKey && !ControlKey)
@@ -231,6 +244,7 @@ public partial class ImageListView
                     (float)mImageListView.layoutManager.ItemSizeWithMargin.Width);
                 int endCol = (int)Math.Floor((Math.Max(pt1.X, pt2.X) + viewOffset.X) /
                     (float)mImageListView.layoutManager.ItemSizeWithMargin.Width);
+
                 if (mImageListView.ScrollOrientation == ScrollOrientation.HorizontalScroll &&
                     (startRow >= 0 || endRow >= 0))
                 {
@@ -337,6 +351,7 @@ public partial class ImageListView
 
             mImageListView.ResumePaint();
         }
+
         /// <summary>
         /// Handles control's MouseUp event.
         /// </summary>
@@ -476,6 +491,11 @@ public partial class ImageListView
                 mImageListView.Refresh();
             }
 
+            if (HoveredItem is not null)
+            {
+                HoveredItem.Pressed = false;
+            }
+
             if ((e.Button & MouseButtons.Left) != MouseButtons.None)
                 LeftButton = false;
             if ((e.Button & MouseButtons.Right) != MouseButtons.None)
@@ -483,6 +503,7 @@ public partial class ImageListView
 
             mImageListView.ResumePaint();
         }
+
         /// <summary>
         /// Handles control's MouseDoubleClick event.
         /// </summary>
@@ -493,6 +514,7 @@ public partial class ImageListView
                 mImageListView.OnItemDoubleClick(new ItemClickEventArgs(HoveredItem, e.Location, e.Button));
             }
         }
+
         /// <summary>
         /// Handles control's MouseLeave event.
         /// </summary>
@@ -501,12 +523,16 @@ public partial class ImageListView
             if (HoveredItem != null)
             {
                 if (HoveredItem != null)
+                {
                     mImageListView.OnItemHover(new ItemHoverEventArgs(null, HoveredItem));
+                    HoveredItem.Pressed = false;
+                } 
 
                 HoveredItem = null;
                 mImageListView.Refresh();
             }
         }
+
         #endregion
 
         #region Key Event Handlers
@@ -595,6 +621,7 @@ public partial class ImageListView
 
             mImageListView.ResumePaint();
         }
+
         /// <summary>
         /// Handles control's KeyUp event.
         /// </summary>
@@ -603,6 +630,7 @@ public partial class ImageListView
             ShiftKey = (e.Modifiers & Keys.Shift) == Keys.Shift;
             ControlKey = (e.Modifiers & Keys.Control) == Keys.Control;
         }
+
         #endregion
 
         #region Drag and Drop Event Handlers

@@ -26,6 +26,10 @@ public class ImageListViewColor
     Color mHoverColor2;
     Color mHoverBorderColor;
     Color mInsertionCaretColor;
+    Color mPressedColor1;
+    Color mPressedColor2;
+    Color mPressedBorderColor;
+    Color mPressedForeColor;
     Color mSelectedColor1;
     Color mSelectedColor2;
     Color mSelectedBorderColor;
@@ -211,6 +215,50 @@ public class ImageListViewColor
     {
         get => mInsertionCaretColor;
         set { mInsertionCaretColor = value; }
+    }
+
+    /// <summary>
+    /// Gets or sets the background gradient color1 if the ImageListViewItem is hovered.
+    /// </summary>
+    [Category("Appearance"), Description("Gets or sets the background gradient color1 if the ImageListViewItem is pressed.")]
+    [DefaultValue(typeof(Color), "8, 10, 36, 106")]
+    public Color PressedColor1
+    {
+        get => mPressedColor1;
+        set { mPressedColor1 = value; }
+    }
+
+    /// <summary>
+    /// Gets or sets the background gradient color2 if the ImageListViewItem is hovered.
+    /// </summary>
+    [Category("Appearance"), Description("Gets or sets the background gradient color2 if the ImageListViewItem is pressed.")]
+    [DefaultValue(typeof(Color), "40, 10, 36, 106")]
+    public Color PressedColor2
+    {
+        get => mPressedColor2;
+        set { mPressedColor2 = value; }
+    }
+
+    /// <summary>
+    /// Gets or sets the fore color of the ImageListViewItem if the item is selected.
+    /// </summary>
+    [Category("Appearance"), Description("Gets or sets the fore color of the ImageListViewItem if the item is pressed.")]
+    [DefaultValue(typeof(Color), "ControlText")]
+    public Color PressedForeColor
+    {
+        get => mPressedForeColor;
+        set { mPressedForeColor = value; }
+    }
+
+    /// <summary>
+    /// Gets or sets the border color of the ImageListViewItem if the item is hovered.
+    /// </summary>
+    [Category("Appearance"), Description("Gets or sets the border color of the ImageListViewItem if the item is pressed.")]
+    [DefaultValue(typeof(Color), "40, 10, 36, 106")]
+    public Color PressedBorderColor
+    {
+        get => mPressedBorderColor;
+        set { mPressedBorderColor = value; }
     }
 
     /// <summary>

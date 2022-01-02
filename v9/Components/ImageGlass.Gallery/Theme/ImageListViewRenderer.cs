@@ -383,6 +383,9 @@ public class ImageListViewRenderer : IDisposable
                 ImageListView.navigationManager.MouseSelecting == false)
                 state |= ItemState.Hovered;
 
+            if (item.Pressed)
+                state |= ItemState.Pressed;
+
             if (item.Focused)
                 state |= ItemState.Focused;
 
@@ -839,8 +842,14 @@ public class ImageListViewRenderer : IDisposable
             Utility.FillRoundedRectangle(g, bGray64, bounds, 4);
         }
 
-        // Paint background Hovered
-        if ((state & ItemState.Hovered) != ItemState.None)
+        // Paint background Pressed
+        if ((state & ItemState.Pressed) != ItemState.None)
+        {
+            using var bHovered = new LinearGradientBrush(bounds, ImageListView.Colors.PressedColor2, ImageListView.Colors.PressedColor2, LinearGradientMode.Vertical);
+            Utility.FillRoundedRectangle(g, bHovered, bounds, 4);
+        }
+        // Paint background Hover
+        else if ((state & ItemState.Hovered) != ItemState.None)
         {
             using var bHovered = new LinearGradientBrush(bounds, ImageListView.Colors.HoverColor1, ImageListView.Colors.HoverColor2, LinearGradientMode.Vertical);
             Utility.FillRoundedRectangle(g, bHovered, bounds, 4);
@@ -873,6 +882,10 @@ public class ImageListViewRenderer : IDisposable
         if ((state & ItemState.Disabled) != ItemState.None)
         {
             foreColor = ImageListView.Colors.DisabledForeColor;
+        }
+        else if ((state & ItemState.Pressed) != ItemState.None)
+        {
+            foreColor = ImageListView.Colors.PressedForeColor;
         }
         else if ((state & ItemState.Selected) != ItemState.None)
         {
@@ -907,6 +920,11 @@ public class ImageListViewRenderer : IDisposable
         {
             using var pGray128 = new Pen(ImageListView.Colors.UnFocusedBorderColor);
             Utility.DrawRoundedRectangle(g, pGray128, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
+        }
+        else if ((state & ItemState.Pressed) == ItemState.None)
+        {
+            using var pGray64 = new Pen(ImageListView.Colors.PressedBorderColor);
+            Utility.DrawRoundedRectangle(g, pGray64, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
         }
         else if ((state & ItemState.Selected) == ItemState.None)
         {

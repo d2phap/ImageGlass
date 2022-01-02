@@ -1453,6 +1453,7 @@ public class ThemeRenderer : ImageListViewRenderer
     // Items
     private readonly VisualStyleRenderer rItemNormal = null;
     private readonly VisualStyleRenderer rItemHovered = null;
+    private readonly VisualStyleRenderer rItemPressed = null;
     private readonly VisualStyleRenderer rItemSelected = null;
     private readonly VisualStyleRenderer rItemHoveredSelected = null;
     private readonly VisualStyleRenderer rItemSelectedHidden = null;
@@ -1502,6 +1503,7 @@ public class ThemeRenderer : ImageListViewRenderer
             // Items
             rItemNormal = GetRenderer("Explorer::ListView", 1, 1);
             rItemHovered = GetRenderer("Explorer::ListView", 1, 2);
+            rItemPressed = GetRenderer("Explorer::ListView", 1, 3);
             rItemSelected = GetRenderer("Explorer::ListView", 1, 3);
             rItemHoveredSelected = GetRenderer("Explorer::ListView", 1, 6);
             rItemSelectedHidden = GetRenderer("Explorer::ListView", 1, 5);
@@ -1632,6 +1634,10 @@ public class ThemeRenderer : ImageListViewRenderer
         else if ((state & ItemState.Selected) != ItemState.None)
         {
             rBack = rItemSelected;
+        }
+        else if ((state & ItemState.Pressed) != ItemState.None)
+        {
+            rBack = rItemPressed;
         }
         else if ((state & ItemState.Hovered) != ItemState.None)
         {
