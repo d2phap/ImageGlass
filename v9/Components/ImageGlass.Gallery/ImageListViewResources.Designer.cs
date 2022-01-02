@@ -182,16 +182,6 @@ namespace ImageGlass.Gallery {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap EmptyRatingImage {
-            get {
-                object obj = ResourceManager.GetObject("EmptyRatingImage", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Camera.
         /// </summary>
         internal static string EquipmentModel {
@@ -319,16 +309,6 @@ namespace ImageGlass.Gallery {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap RatingImage {
-            get {
-                object obj = ResourceManager.GetObject("RatingImage", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Resolution.
         /// </summary>
         internal static string Resolution {
@@ -352,26 +332,6 @@ namespace ImageGlass.Gallery {
         internal static string Software {
             get {
                 return ResourceManager.GetString("Software", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap SortAscending {
-            get {
-                object obj = ResourceManager.GetObject("SortAscending", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap SortDescending {
-            get {
-                object obj = ResourceManager.GetObject("SortDescending", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

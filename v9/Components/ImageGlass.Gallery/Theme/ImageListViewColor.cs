@@ -7,7 +7,6 @@ namespace ImageGlass.Gallery;
 /// <summary>
 /// Represents the color palette of the image list view.
 /// </summary>
-[TypeConverter(typeof(ImageListViewColorTypeConverter))]
 public class ImageListViewColor
 {
     #region Member Variables
