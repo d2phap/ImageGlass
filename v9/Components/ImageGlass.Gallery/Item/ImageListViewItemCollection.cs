@@ -52,10 +52,7 @@ public partial class ImageListView
         /// </summary>
         public ImageListViewItem? FocusedItem
         {
-            get
-            {
-                return mFocused;
-            }
+            get => mFocused;
             set
             {
                 var oldFocusedItem = mFocused;
@@ -66,21 +63,20 @@ public partial class ImageListView
                     mImageListView.Refresh();
             }
         }
+
         /// <summary>
         /// Gets the <see cref="ImageListView"/> owning this collection.
         /// </summary>
         [Category("Behavior"), Browsable(false), Description("Gets the ImageListView owning this collection.")]
-        public ImageListView ImageListView { get { return mImageListView; } }
+        public ImageListView ImageListView => mImageListView;
+
         /// <summary>
         /// Gets or sets the <see cref="ImageListViewItem"/> at the specified index.
         /// </summary>
         [Category("Behavior"), Browsable(false), Description("Gets or sets the item at the specified index.")]
         public ImageListViewItem this[int index]
         {
-            get
-            {
-                return mItems[index];
-            }
+            get => mItems[index];
             set
             {
                 ImageListViewItem item = value;
@@ -114,18 +110,15 @@ public partial class ImageListView
                 }
             }
         }
+
         /// <summary>
         /// Gets the <see cref="ImageListViewItem"/> with the specified Guid.
         /// </summary>
         [Category("Behavior"), Browsable(false), Description("Gets or sets the item with the specified Guid.")]
-        internal ImageListViewItem this[Guid guid]
-        {
-            get
-            {
-                return lookUp[guid];
-            }
-        }
+        internal ImageListViewItem this[Guid guid] => lookUp[guid];
+
         #endregion
+
 
         #region Instance Methods
         /// <summary>
@@ -144,6 +137,7 @@ public partial class ImageListView
                 mImageListView.Refresh();
             }
         }
+
         /// <summary>
         /// Adds an item to the <see cref="ImageListViewItemCollection"/>.
         /// </summary>
@@ -152,6 +146,7 @@ public partial class ImageListView
         {
             Add(item, mImageListView.defaultAdaptor);
         }
+
         /// <summary>
         /// Adds an item to the <see cref="ImageListViewItemCollection"/>.
         /// </summary>
@@ -163,6 +158,7 @@ public partial class ImageListView
             item.clonedThumbnail = initialThumbnail;
             Add(item, adaptor);
         }
+
         /// <summary>
         /// Adds an item to the <see cref="ImageListViewItemCollection"/>.
         /// </summary>
@@ -172,6 +168,7 @@ public partial class ImageListView
         {
             Add(item, initialThumbnail, mImageListView.defaultAdaptor);
         }
+
         /// <summary>
         /// Adds an item to the <see cref="ImageListViewItemCollection"/>.
         /// </summary>
@@ -180,6 +177,7 @@ public partial class ImageListView
         {
             Add(filename, null);
         }
+
         /// <summary>
         /// Adds an item to the <see cref="ImageListViewItemCollection"/>.
         /// </summary>
@@ -244,6 +242,7 @@ public partial class ImageListView
         {
             Add(key, text, initialThumbnail, mImageListView.defaultAdaptor);
         }
+
         /// <summary>
         /// Adds a range of items to the <see cref="ImageListViewItemCollection"/>.
         /// </summary>
@@ -264,6 +263,7 @@ public partial class ImageListView
                 mImageListView.ResumePaint();
             }
         }
+
         /// <summary>
         /// Adds a range of items to the <see cref="ImageListViewItemCollection"/>.
         /// </summary>
@@ -273,6 +273,7 @@ public partial class ImageListView
         {
             AddRange(items, mImageListView.defaultAdaptor);
         }
+
         /// <summary>
         /// Adds a range of items to the <see cref="ImageListViewItemCollection"/>.
         /// </summary>
@@ -288,6 +289,7 @@ public partial class ImageListView
 
             AddRange(items);
         }
+
         /// <summary>
         /// Removes all items from the <see cref="ImageListViewItemCollection"/>.
         /// </summary>
@@ -313,6 +315,7 @@ public partial class ImageListView
                 mImageListView.OnItemCollectionChanged(new ItemCollectionChangedEventArgs(CollectionChangeAction.Refresh, null));
             }
         }
+
         /// <summary>
         /// Determines whether the <see cref="ImageListViewItemCollection"/> 
         /// contains a specific value.
@@ -327,6 +330,7 @@ public partial class ImageListView
         {
             return mItems.Contains(item);
         }
+
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
@@ -338,6 +342,7 @@ public partial class ImageListView
         {
             return mItems.GetEnumerator();
         }
+
         /// <summary>
         /// Inserts an item to the <see cref="ImageListViewItemCollection"/> at the specified index.
         /// </summary>
@@ -356,6 +361,7 @@ public partial class ImageListView
                 mImageListView.Refresh();
             }
         }
+
         /// <summary>
         /// Inserts an item to the <see cref="ImageListViewItemCollection"/> at the specified index.
         /// </summary>
@@ -366,6 +372,7 @@ public partial class ImageListView
         {
             Insert(index, item, mImageListView.defaultAdaptor);
         }
+
         /// <summary>
         /// Inserts an item to the <see cref="ImageListViewItemCollection"/> at the specified index.
         /// </summary>
@@ -375,6 +382,7 @@ public partial class ImageListView
         {
             Insert(index, new ImageListViewItem(filename));
         }
+
         /// <summary>
         /// Inserts an item to the <see cref="ImageListViewItemCollection"/> at the specified index.
         /// </summary>
@@ -383,10 +391,14 @@ public partial class ImageListView
         /// <param name="initialThumbnail">The initial thumbnail image for the item.</param>
         public void Insert(int index, string filename, Image initialThumbnail)
         {
-            ImageListViewItem item = new ImageListViewItem(filename);
-            item.clonedThumbnail = initialThumbnail;
+            var item = new ImageListViewItem(filename)
+            {
+                clonedThumbnail = initialThumbnail
+            };
+
             Insert(index, item);
         }
+
         /// <summary>
         /// Inserts a virtual item to the <see cref="ImageListViewItemCollection"/> at the specified index.
         /// </summary>
@@ -398,6 +410,7 @@ public partial class ImageListView
         {
             Insert(index, key, text, null, adaptor);
         }
+
         /// <summary>
         /// Inserts a virtual item to the <see cref="ImageListViewItemCollection"/> at the specified index.
         /// </summary>
@@ -408,6 +421,7 @@ public partial class ImageListView
         {
             Insert(index, key, text, mImageListView.defaultAdaptor);
         }
+
         /// <summary>
         /// Inserts a virtual item to the <see cref="ImageListViewItemCollection"/> at the specified index.
         /// </summary>
@@ -418,10 +432,14 @@ public partial class ImageListView
         /// <param name="adaptor">The adaptor associated with this item.</param>
         public void Insert(int index, object key, string text, Image initialThumbnail, ImageListViewItemAdaptor adaptor)
         {
-            ImageListViewItem item = new ImageListViewItem(key, text);
-            item.clonedThumbnail = initialThumbnail;
+            var item = new ImageListViewItem(key, text)
+            {
+                clonedThumbnail = initialThumbnail
+            };
+
             Insert(index, item, adaptor);
         }
+
         /// <summary>
         /// Inserts a virtual item to the <see cref="ImageListViewItemCollection"/> at the specified index.
         /// </summary>
@@ -433,6 +451,7 @@ public partial class ImageListView
         {
             Insert(index, key, text, initialThumbnail, mImageListView.defaultAdaptor);
         }
+
         /// <summary>
         /// Removes the first occurrence of a specific object 
         /// from the <see cref="ImageListViewItemCollection"/>.
@@ -458,6 +477,7 @@ public partial class ImageListView
 
             return ret;
         }
+
         /// <summary>
         /// Removes the <see cref="ImageListViewItem"/> at the specified index.
         /// </summary>
@@ -466,6 +486,7 @@ public partial class ImageListView
         {
             Remove(mItems[index]);
         }
+
         #endregion
 
         #region Helper Methods
@@ -478,6 +499,7 @@ public partial class ImageListView
         {
             return lookUp.ContainsKey(guid);
         }
+
         /// <summary>
         /// Gets the value associated with the specified key.
         /// </summary>
@@ -490,6 +512,7 @@ public partial class ImageListView
         {
             return lookUp.TryGetValue(guid, out item);
         }
+
         /// <summary>
         /// Adds the given item without raising a selection changed event.
         /// </summary>
@@ -500,6 +523,7 @@ public partial class ImageListView
         {
             return InsertInternal(-1, item, adaptor);
         }
+
         /// <summary>
         /// Inserts the given item without raising a selection changed event.
         /// </summary>
@@ -518,8 +542,10 @@ public partial class ImageListView
                 if (mItems.Exists(a => string.Compare(a.FileName, item.FileName, StringComparison.OrdinalIgnoreCase) == 0))
                     return false;
             }
+
             item.owner = this;
             item.mAdaptor = adaptor;
+
             if (index == -1)
             {
                 item.mIndex = mItems.Count;
@@ -532,6 +558,7 @@ public partial class ImageListView
                     mItems[i].mIndex++;
                 mItems.Insert(index, item);
             }
+
             lookUp.Add(item.Guid, item);
             collectionModified = true;
 
@@ -556,10 +583,10 @@ public partial class ImageListView
             mImageListView.metadataCache.Add(item.Guid, item.Adaptor, item.VirtualItemKey);
 
             // Add to shell info cache
-            string extension = item.extension;
+            var extension = item.extension;
             if (!string.IsNullOrEmpty(extension))
             {
-                CacheState state = mImageListView.shellInfoCache.GetCacheState(extension);
+                var state = mImageListView.shellInfoCache.GetCacheState(extension);
                 if (state == CacheState.Error && mImageListView.RetryOnError == true)
                 {
                     mImageListView.shellInfoCache.Remove(extension);
@@ -574,6 +601,7 @@ public partial class ImageListView
 
             return true;
         }
+
         /// <summary>
         /// Removes the given item without raising a selection changed event.
         /// </summary>
@@ -582,6 +610,7 @@ public partial class ImageListView
         {
             RemoveInternal(item, true);
         }
+
         /// <summary>
         /// Removes the given item without raising a selection changed event.
         /// </summary>
@@ -597,7 +626,8 @@ public partial class ImageListView
                 mImageListView.thumbnailCache.Remove(item.Guid);
                 mImageListView.metadataCache.Remove(item.Guid);
             }
-            bool ret = mItems.Remove(item);
+
+            var ret = mItems.Remove(item);
             lookUp.Remove(item.Guid);
             collectionModified = true;
 
@@ -609,6 +639,7 @@ public partial class ImageListView
 
             return ret;
         }
+
         /// <summary>
         /// Returns the index of the specified item.
         /// </summary>
@@ -616,6 +647,7 @@ public partial class ImageListView
         {
             return item.Index;
         }
+
         /// <summary>
         /// Returns the index of the item with the specified Guid.
         /// </summary>

@@ -27,6 +27,7 @@ public partial class ImageListView
         #endregion
 
         #region Properties
+
         /// <summary>
         /// Gets the number of elements contained in the <see cref="ImageListViewCheckedItemCollection"/>.
         /// </summary>
@@ -44,12 +45,14 @@ public partial class ImageListView
                      /// Gets a value indicating whether the <see cref="ImageListViewCheckedItemCollection"/> is read-only.
                      /// </summary>
         [Category("Behavior"), Browsable(false), Description("Gets a value indicating whether the collection is read-only.")]
-        public bool IsReadOnly { get { return true; } }
+        public bool IsReadOnly => true;
+
         /// <summary>
         /// Gets the <see cref="ImageListView"/> owning this collection.
         /// </summary>
         [Category("Behavior"), Browsable(false), Description("Gets the ImageListView owning this collection.")]
-        public ImageListView ImageListView { get { return mImageListView; } }
+        public ImageListView ImageListView => mImageListView;
+
         /// <summary>
         /// Gets or sets the <see cref="ImageListViewItem"/> at the specified index.
         /// </summary>
@@ -65,12 +68,14 @@ public partial class ImageListView
                         return item;
                     i++;
                 }
-                throw new ArgumentException("No item with the given index exists.", "index");
+                throw new ArgumentException("No item with the given index exists.", nameof(index));
             }
         }
+
         #endregion
 
         #region Instance Methods
+
         /// <summary>
         /// Determines whether the <see cref="ImageListViewCheckedItemCollection"/> contains a specific value.
         /// </summary>
@@ -82,8 +87,9 @@ public partial class ImageListView
         /// </returns>
         public bool Contains(ImageListViewItem item)
         {
-            return (item.Checked && mImageListView.Items.Contains(item));
+            return item.Checked && mImageListView.Items.Contains(item);
         }
+
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
@@ -94,6 +100,7 @@ public partial class ImageListView
         {
             return new ImageListViewCheckedItemEnumerator(mImageListView.Items);
         }
+
         #endregion
 
         #region Helper Methods
@@ -104,6 +111,7 @@ public partial class ImageListView
         {
             Clear(true);
         }
+
         /// <summary>
         /// Removes all items from the collection.
         /// </summary>
@@ -116,7 +124,9 @@ public partial class ImageListView
                     mImageListView.OnItemCheckBoxClickInternal(item);
             }
         }
+
         #endregion
+
 
         #region Unsupported Interface
         /// <summary>
@@ -212,6 +222,7 @@ public partial class ImageListView
         }
         #endregion
 
+
         #region Internal Classes
         /// <summary>
         /// Represents an enumerator to walk though the checked items.
@@ -225,6 +236,7 @@ public partial class ImageListView
             #endregion
 
             #region Constructor
+
             public ImageListViewCheckedItemEnumerator(ImageListViewItemCollection collection)
             {
                 owner = collection;
@@ -234,6 +246,7 @@ public partial class ImageListView
             #endregion
 
             #region Properties
+
             /// <summary>
             /// Gets the element in the collection at the current position of the enumerator.
             /// </summary>
@@ -246,6 +259,7 @@ public partial class ImageListView
                     return owner[current];
                 }
             }
+
             /// <summary>
             /// Gets the element in the collection at the current position of the enumerator.
             /// </summary>
@@ -253,6 +267,7 @@ public partial class ImageListView
             {
                 get { return Current; }
             }
+
             #endregion
 
             #region Instance Methods
@@ -263,6 +278,7 @@ public partial class ImageListView
             {
                 ;
             }
+
             /// <summary>
             /// Advances the enumerator to the next element of the collection.
             /// </summary>
@@ -297,6 +313,7 @@ public partial class ImageListView
                 lastItem = owner[current].Guid;
                 return true;
             }
+
             /// <summary>
             /// Sets the enumerator to its initial position, which is before the first element in the collection.
             /// </summary>
@@ -305,6 +322,7 @@ public partial class ImageListView
                 current = -1;
                 lastItem = Guid.Empty;
             }
+
             #endregion
         }
         #endregion

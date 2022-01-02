@@ -35,14 +35,16 @@ internal class ImageListViewCacheMetadata : IDisposable
         /// Gets the item guid.
         /// </summary>
         public Guid Guid { get; private set; }
+
         /// <summary>
         /// Gets the adaptor of this item.
         /// </summary>
         public ImageListViewItemAdaptor Adaptor { get; private set; }
+
         /// <summary>
         /// Gets the virtual item key.
         /// </summary>
-        public object VirtualItemKey { get; private set; }
+        public object? VirtualItemKey { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CacheRequest"/> class.
@@ -50,12 +52,13 @@ internal class ImageListViewCacheMetadata : IDisposable
         /// <param name="guid">The guid of the item.</param>
         /// <param name="adaptor">The adaptor of this item.</param>
         /// <param name="virtualItemKey">The virtual item key of this item.</param>
-        public CacheRequest(Guid guid, ImageListViewItemAdaptor adaptor, object virtualItemKey)
+        public CacheRequest(Guid guid, ImageListViewItemAdaptor adaptor, object? virtualItemKey)
         {
             Guid = guid;
             Adaptor = adaptor;
             VirtualItemKey = virtualItemKey;
         }
+
     }
     #endregion
 
@@ -70,6 +73,7 @@ internal class ImageListViewCacheMetadata : IDisposable
         /// Gets the cache request.
         /// </summary>
         public CacheRequest Request { get; private set; }
+
         /// <summary>
         /// Gets whether this item should be processed.
         /// </summary>
@@ -93,6 +97,7 @@ internal class ImageListViewCacheMetadata : IDisposable
     /// Determines whether the cache manager retries loading items on errors.
     /// </summary>
     public bool RetryOnError { get; internal set; }
+
     #endregion
 
 
@@ -104,11 +109,13 @@ internal class ImageListViewCacheMetadata : IDisposable
     public ImageListViewCacheMetadata(ImageListView owner)
     {
         context = null;
-        bw = new QueuedBackgroundWorker();
-        bw.IsBackground = true;
-        bw.ThreadName = "Metadata Cache Worker Thread";
-        bw.DoWork += bw_DoWork;
-        bw.RunWorkerCompleted += bw_RunWorkerCompleted;
+        bw = new QueuedBackgroundWorker
+        {
+            IsBackground = true,
+            ThreadName = "Metadata Cache Worker Thread"
+        };
+        bw.DoWork += Bw_DoWork;
+        bw.RunWorkerCompleted += Bw_RunWorkerCompleted;
 
         checkProcessingCallback = new SendOrPostCallback(CanContinueProcessing);
 
@@ -132,20 +139,26 @@ internal class ImageListViewCacheMetadata : IDisposable
     /// <returns>true if the item should be processed; otherwise false.</returns>
     private bool OnCanContinueProcessing(CacheRequest item)
     {
-        CanContinueProcessingEventArgs arg = new CanContinueProcessingEventArgs(item);
-        context.Send(checkProcessingCallback, arg);
+        var arg = new CanContinueProcessingEventArgs(item);
+        context?.Send(checkProcessingCallback, arg);
+
         return arg.ContinueProcessing;
     }
+
     /// <summary>
     /// Determines if the item should be processed.
     /// </summary>
     /// <param name="argument">The event argument.</param>
     /// <returns>true if the item should be processed; otherwise false.</returns>
-    private void CanContinueProcessing(object argument)
+    private void CanContinueProcessing(object? argument)
     {
-        CanContinueProcessingEventArgs arg = argument as CanContinueProcessingEventArgs;
-        CacheRequest request = arg.Request;
+        var arg = argument as CanContinueProcessingEventArgs;
+        if (arg is null) return;
+
+        var request = arg.Request;
         bool canProcess = true;
+
+        if (request is null) return;
 
         // Is it in the edit cache?
         if (canProcess)
@@ -173,9 +186,10 @@ internal class ImageListViewCacheMetadata : IDisposable
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="QueuedWorkerCompletedEventArgs"/> 
     /// instance containing the event data.</param>
-    private void bw_RunWorkerCompleted(object sender, QueuedWorkerCompletedEventArgs e)
+    private void Bw_RunWorkerCompleted(object sender, QueuedWorkerCompletedEventArgs e)
     {
-        CacheRequest request = e.UserState as CacheRequest;
+        var request = e.UserState as CacheRequest;
+        if (request is null) return;
 
         // We are done processing
         processing.Remove(request.Guid);
@@ -207,9 +221,10 @@ internal class ImageListViewCacheMetadata : IDisposable
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="QueuedWorkerDoWorkEventArgs"/> instance 
     /// containing the event data.</param>
-    private void bw_DoWork(object sender, QueuedWorkerDoWorkEventArgs e)
+    private void Bw_DoWork(object sender, QueuedWorkerDoWorkEventArgs e)
     {
-        CacheRequest request = e.Argument as CacheRequest;
+        var request = e.Argument as CacheRequest;
+        if (request is null) return;
 
         // Should we continue processing this item?
         // The callback checks the following and returns false if
@@ -235,6 +250,7 @@ internal class ImageListViewCacheMetadata : IDisposable
     {
         bw.Pause();
     }
+
     /// <summary>
     /// Resumes the cache threads. 
     /// </summary>
@@ -242,6 +258,7 @@ internal class ImageListViewCacheMetadata : IDisposable
     {
         bw.Resume();
     }
+
     /// <summary>
     /// Starts editing an item. While items are edited,
     /// the cache thread will not work on them to prevent collisions.
@@ -252,6 +269,7 @@ internal class ImageListViewCacheMetadata : IDisposable
         if (!editCache.ContainsKey(guid))
             editCache.Add(guid, false);
     }
+
     /// <summary>
     /// Ends editing an item. After this call, item
     /// image will be continued to be fetched by the thread.
@@ -261,6 +279,7 @@ internal class ImageListViewCacheMetadata : IDisposable
     {
         editCache.Remove(guid);
     }
+
     /// <summary>
     /// Removes the given item from the cache.
     /// </summary>
@@ -270,6 +289,7 @@ internal class ImageListViewCacheMetadata : IDisposable
         if (!removedItems.ContainsKey(guid))
             removedItems.Add(guid, false);
     }
+
     /// <summary>
     /// Clears the cache.
     /// </summary>
@@ -278,17 +298,19 @@ internal class ImageListViewCacheMetadata : IDisposable
         bw.CancelAsync();
         processing = new();
     }
+
     /// <summary>
     /// Adds the item to the cache queue.
     /// </summary>
     /// <param name="guid">Item guid.</param>
     /// <param name="adaptor">The adaptor for this item.</param>
     /// <param name="virtualItemKey">The virtual item key.</param>
-    public void Add(Guid guid, ImageListViewItemAdaptor adaptor, object virtualItemKey)
+    public void Add(Guid guid, ImageListViewItemAdaptor adaptor, object? virtualItemKey)
     {
         // Add to cache queue
         RunWorker(new CacheRequest(guid, adaptor, virtualItemKey));
     }
+
     #endregion
 
 
@@ -328,8 +350,8 @@ internal class ImageListViewCacheMetadata : IDisposable
     {
         if (!disposed)
         {
-            bw.DoWork -= bw_DoWork;
-            bw.RunWorkerCompleted -= bw_RunWorkerCompleted;
+            bw.DoWork -= Bw_DoWork;
+            bw.RunWorkerCompleted -= Bw_RunWorkerCompleted;
 
             bw.Dispose();
 
@@ -338,6 +360,7 @@ internal class ImageListViewCacheMetadata : IDisposable
             GC.SuppressFinalize(this);
         }
     }
+
 #if DEBUG
     /// <summary>
     /// Releases unmanaged resources and performs other cleanup operations before the
@@ -348,7 +371,9 @@ internal class ImageListViewCacheMetadata : IDisposable
         System.Diagnostics.Debug.Print("Finalizer of {0} called.", GetType());
         Dispose();
     }
+
 #endif
+
     #endregion
 
 }

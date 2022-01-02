@@ -24,6 +24,7 @@ public partial class ImageListView
         {
             mImageListView = owner;
         }
+
         #endregion
 
         #region Properties
@@ -40,16 +41,20 @@ public partial class ImageListView
                     if (item.Selected && item.Enabled) count++;
                 return count;
             }
-        }            /// <summary>
-                     /// Gets a value indicating whether the <see cref="ImageListViewSelectedItemCollection"/> is read-only.
-                     /// </summary>
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the <see cref="ImageListViewSelectedItemCollection"/> is read-only.
+        /// </summary>
         [Category("Behavior"), Browsable(false), Description("Gets a value indicating whether the collection is read-only.")]
-        public bool IsReadOnly { get { return true; } }
+        public bool IsReadOnly => true;
+
         /// <summary>
         /// Gets the <see cref="ImageListView"/> owning this collection.
         /// </summary>
         [Category("Behavior"), Browsable(false), Description("Gets the ImageListView owning this collection.")]
-        public ImageListView ImageListView { get { return mImageListView; } }
+        public ImageListView ImageListView => mImageListView;
+
         /// <summary>
         /// Gets or sets the <see cref="ImageListViewItem"/> at the specified index.
         /// </summary>
@@ -65,9 +70,10 @@ public partial class ImageListView
                         return item;
                     i++;
                 }
-                throw new ArgumentException("No item with the given index exists.", "index");
+                throw new ArgumentException("No item with the given index exists.", nameof(index));
             }
         }
+
         #endregion
 
         #region Instance Methods
@@ -80,8 +86,9 @@ public partial class ImageListView
         /// </returns>
         public bool Contains(ImageListViewItem item)
         {
-            return (item.Selected && item.Enabled && mImageListView.Items.Contains(item));
+            return item.Selected && item.Enabled && mImageListView.Items.Contains(item);
         }
+
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
@@ -92,6 +99,7 @@ public partial class ImageListView
         {
             return new ImageListViewSelectedItemEnumerator(mImageListView.Items);
         }
+
         #endregion
 
         #region Helper Methods
@@ -102,6 +110,7 @@ public partial class ImageListView
         {
             Clear(true);
         }
+
         /// <summary>
         /// Removes all items from the collection.
         /// </summary>
@@ -112,7 +121,9 @@ public partial class ImageListView
             if (raiseEvent && mImageListView != null)
                 mImageListView.OnSelectionChangedInternal();
         }
+
         #endregion
+
 
         #region Unsupported Interface
         /// <summary>
@@ -205,6 +216,7 @@ public partial class ImageListView
         }
         #endregion
 
+
         #region Internal Classes
         /// <summary>
         /// Represents an enumerator to walk though the selected items.
@@ -239,6 +251,7 @@ public partial class ImageListView
                     return owner[current];
                 }
             }
+
             /// <summary>
             /// Gets the element in the collection at the current position of the enumerator.
             /// </summary>
@@ -246,6 +259,7 @@ public partial class ImageListView
             {
                 get { return Current; }
             }
+
             #endregion
 
             #region Instance Methods
@@ -256,6 +270,7 @@ public partial class ImageListView
             {
                 ;
             }
+
             /// <summary>
             /// Advances the enumerator to the next element of the collection.
             /// </summary>
@@ -292,6 +307,7 @@ public partial class ImageListView
                 lastItem = owner[current].Guid;
                 return true;
             }
+
             /// <summary>
             /// Sets the enumerator to its initial position, which is before the first element in the collection.
             /// </summary>
@@ -300,6 +316,7 @@ public partial class ImageListView
                 current = -1;
                 lastItem = Guid.Empty;
             }
+
             #endregion
         }
         #endregion

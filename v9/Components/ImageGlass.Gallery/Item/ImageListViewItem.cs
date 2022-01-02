@@ -1,5 +1,4 @@
 ﻿
-using ImageGlass.Base;
 using ImageGlass.Base.Cache;
 using System.ComponentModel;
 using static ImageGlass.Gallery.ImageListView;
@@ -14,17 +13,18 @@ public class ImageListViewItem : ICloneable
 {
     #region Member Variables
     // [IG_CHANGE] Cache often repeated strings, e.g. extensions, directory path
-    private static readonly StringCache _stringCache = new StringCache();
+    private static readonly StringCache _stringCache = new();
 
     // Property backing fields
     internal int mIndex;
     private Guid mGuid;
-    internal ImageListView mImageListView;
+    internal ImageListView? mImageListView;
     internal bool mChecked;
     internal bool mSelected;
     internal bool mEnabled;
     private string mText;
     private int mZOrder;
+
     // File info
     internal string extension;
     private DateTime mDateAccessed;
@@ -32,10 +32,10 @@ public class ImageListViewItem : ICloneable
     private DateTime mDateModified;
     private string mFileName;
     private string mFilePath;
-    private string mFolderName;
     private long mFileSize;
     private Size mDimensions;
     private SizeF mResolution;
+
     // Exif tags
     private string mImageDescription;
     private string mEquipmentModel;
@@ -50,13 +50,15 @@ public class ImageListViewItem : ICloneable
     private ushort mStarRating;
     private string mSoftware;
     private float mFocalLength;
+
     // Adaptor
     internal object? mVirtualItemKey;
     internal ImageListViewItemAdaptor mAdaptor;
+
     // Used for cloned items
     internal Image? clonedThumbnail;
 
-    internal ImageListViewItemCollection owner;
+    internal ImageListViewItemCollection? owner;
     internal bool isDirty;
     private bool editing;
     #endregion
@@ -114,42 +116,58 @@ public class ImageListViewItem : ICloneable
                 mImageListView.Refresh();
         }
     }
+
     /// <summary>
     /// Gets the unique identifier for this item.
     /// </summary>
     [Category("Behavior"), Browsable(false), Description("Gets the unique identifier for this item.")]
-    internal Guid Guid { get { return mGuid; } private set { mGuid = value; } }
+    internal Guid Guid
+    {
+        get => mGuid; private set
+        {
+            mGuid = value;
+        }
+    }
+
     /// <summary>
     /// Gets the adaptor of this item.
     /// </summary>
     [Category("Behavior"), Browsable(false), Description("Gets the adaptor of this item.")]
-    public ImageListViewItemAdaptor Adaptor { get { return mAdaptor; } }
+    public ImageListViewItemAdaptor Adaptor => mAdaptor;
+
     /// <summary>
     /// [IG_CHANGE] Gets the virtual item key associated with this item.
     /// Returns null if the item is not a virtual item.
     /// </summary>
     [Category("Behavior"), Browsable(false), Description("Gets the virtual item key associated with this item.")]
-    public object VirtualItemKey { get { return mVirtualItemKey ?? mFileName; } }
+    public object VirtualItemKey => mVirtualItemKey ?? mFileName;
+
     /// <summary>
     /// Gets the ImageListView owning this item.
     /// </summary>
     [Category("Behavior"), Browsable(false), Description("Gets the ImageListView owning this item.")]
-    public ImageListView ImageListView { get { return mImageListView; } private set { mImageListView = value; } }
+    public ImageListView? ImageListView
+    {
+        get => mImageListView;
+        private set
+        {
+            mImageListView = value;
+        }
+    }
+
     /// <summary>
     /// Gets the index of the item.
     /// </summary>
     [Category("Behavior"), Browsable(false), Description("Gets the index of the item."), EditorBrowsable(EditorBrowsableState.Advanced)]
-    public int Index { get { return mIndex; } }
+    public int Index => mIndex;
+
     /// <summary>
     /// Gets or sets a value determining if the item is checked.
     /// </summary>
     [Category("Appearance"), Browsable(true), Description("Gets or sets a value determining if the item is checked."), DefaultValue(false)]
     public bool Checked
     {
-        get
-        {
-            return mChecked;
-        }
+        get => mChecked;
         set
         {
             if (value != mChecked)
@@ -160,16 +178,14 @@ public class ImageListViewItem : ICloneable
             }
         }
     }
+
     /// <summary>
     /// Gets or sets a value determining if the item is selected.
     /// </summary>
     [Category("Appearance"), Browsable(false), Description("Gets or sets a value determining if the item is selected."), DefaultValue(false)]
     public bool Selected
     {
-        get
-        {
-            return mSelected;
-        }
+        get => mSelected;
         set
         {
             if (value != mSelected && mEnabled)
@@ -184,11 +200,13 @@ public class ImageListViewItem : ICloneable
             }
         }
     }
+
     /// <summary>
     /// Gets or sets the user-defined data associated with the item.
     /// </summary>
     [Category("Data"), Browsable(true), Description("Gets or sets the user-defined data associated with the item."), TypeConverter(typeof(StringConverter))]
     public object Tag { get; set; }
+
     /// <summary>
     /// Gets or sets the text associated with this item. If left blank, item Text 
     /// reverts to the name of the image file.
@@ -196,10 +214,7 @@ public class ImageListViewItem : ICloneable
     [Category("Appearance"), Browsable(true), Description("Gets or sets the text associated with this item. If left blank, item Text reverts to the name of the image file.")]
     public string Text
     {
-        get
-        {
-            return mText;
-        }
+        get => mText;
         set
         {
             mText = value;
@@ -225,12 +240,6 @@ public class ImageListViewItem : ICloneable
                 mFileName = value;
                 mVirtualItemKey = null; // mFileName; [IG_CHANGE] don't duplicate the filename
 
-                //if (string.IsNullOrEmpty(mText))
-                //{
-                //    mText = Path.GetFileName(mFileName);
-                //}
-                //extension = Path.GetExtension(mFileName);
-
                 // [IG_CHANGE] use string cache
                 extension = _stringCache.GetFromCache(Path.GetExtension(mFileName));
 
@@ -246,6 +255,7 @@ public class ImageListViewItem : ICloneable
             }
         }
     }
+
     /// <summary>
     /// Gets the thumbnail image. If the thumbnail image is not cached, it will be 
     /// added to the cache queue and null will be returned. The returned image needs
@@ -269,11 +279,19 @@ public class ImageListViewItem : ICloneable
                 mImageListView.AutoRotateThumbnails, true);
         }
     }
+
     /// <summary>
     /// Gets or sets the draw order of the item.
     /// </summary>
     [Category("Appearance"), Browsable(true), Description("Gets or sets the draw order of the item."), DefaultValue(0)]
-    public int ZOrder { get { return mZOrder; } set { mZOrder = value; } }
+    public int ZOrder
+    {
+        get => mZOrder; set
+        {
+            mZOrder = value;
+        }
+    }
+
     #endregion
 
     #region Shell Properties
@@ -282,15 +300,15 @@ public class ImageListViewItem : ICloneable
     /// If the icon image is not cached, it will be added to the cache queue and null will be returned.
     /// </summary>
     [Category("Appearance"), Browsable(false), Description("Gets the small shell icon of the image file represented by this item.")]
-    public Image SmallIcon
+    public Image? SmallIcon
     {
         get
         {
             if (mImageListView == null)
                 throw new InvalidOperationException("Owner control is null.");
 
-            string iconPath = PathForShellIcon();
-            CacheState state = mImageListView.shellInfoCache.GetCacheState(iconPath);
+            var iconPath = PathForShellIcon();
+            var state = mImageListView.shellInfoCache.GetCacheState(iconPath);
             if (state == CacheState.Cached)
             {
                 return mImageListView.shellInfoCache.GetSmallIcon(iconPath);
@@ -311,20 +329,21 @@ public class ImageListViewItem : ICloneable
             }
         }
     }
+
     /// <summary>
     /// Gets the large shell icon of the image file represented by this item.
     /// If the icon image is not cached, it will be added to the cache queue and null will be returned.
     /// </summary>
     [Category("Appearance"), Browsable(false), Description("Gets the large shell icon of the image file represented by this item.")]
-    public Image LargeIcon
+    public Image? LargeIcon
     {
         get
         {
             if (mImageListView == null)
                 throw new InvalidOperationException("Owner control is null.");
 
-            string iconPath = PathForShellIcon();
-            CacheState state = mImageListView.shellInfoCache.GetCacheState(iconPath);
+            var iconPath = PathForShellIcon();
+            var state = mImageListView.shellInfoCache.GetCacheState(iconPath);
             if (state == CacheState.Cached)
             {
                 return mImageListView.shellInfoCache.GetLargeIcon(iconPath);
@@ -357,8 +376,8 @@ public class ImageListViewItem : ICloneable
             if (mImageListView == null)
                 throw new InvalidOperationException("Owner control is null.");
 
-            string iconPath = PathForShellIcon();
-            CacheState state = mImageListView.shellInfoCache.GetCacheState(iconPath);
+            var iconPath = PathForShellIcon();
+            var state = mImageListView.shellInfoCache.GetCacheState(iconPath);
             if (state == CacheState.Cached)
             {
                 return mImageListView.shellInfoCache.GetFileType(iconPath);
@@ -370,12 +389,12 @@ public class ImageListViewItem : ICloneable
                     mImageListView.shellInfoCache.Remove(iconPath);
                     mImageListView.shellInfoCache.Add(iconPath);
                 }
-                return null;
+                return string.Empty;
             }
             else
             {
                 mImageListView.shellInfoCache.Add(iconPath);
-                return null;
+                return string.Empty;
             }
         }
     }
@@ -533,10 +552,10 @@ public class ImageListViewItem : ICloneable
     }
 
     /// <summary>
-    /// Returns a <see cref="System.String"/> that represents this instance.
+    /// Returns a <see cref="string"/> that represents this instance.
     /// </summary>
     /// <returns>
-    /// A <see cref="System.String"/> that represents this instance.
+    /// A <see cref="string"/> that represents this instance.
     /// </returns>
     public override string ToString()
     {
@@ -550,6 +569,7 @@ public class ImageListViewItem : ICloneable
     #endregion
 
     #region Helper Methods
+
     /// <summary>
     /// Gets the simpel rating (0-5)
     /// </summary>
@@ -558,6 +578,7 @@ public class ImageListViewItem : ICloneable
     {
         return mStarRating;
     }
+
     /// <summary>
     /// Sets the simple rating (0-5) from rating (0-99).
     /// </summary>
@@ -576,6 +597,7 @@ public class ImageListViewItem : ICloneable
         else
             mStarRating = 0;
     }
+
     /// <summary>
     /// Gets an image from the cache manager.
     /// If the thumbnail image is not cached, it will be 
@@ -585,7 +607,7 @@ public class ImageListViewItem : ICloneable
     /// </summary>
     /// <param name="imageType">Type of cached image to return.</param>
     /// <returns>Requested thumbnail or icon.</returns>
-    public Image GetCachedImage(CachedImageType imageType)
+    public Image? GetCachedImage(CachedImageType imageType)
     {
         if (mImageListView == null)
             throw new InvalidOperationException("Owner control is null.");
@@ -622,7 +644,7 @@ public class ImageListViewItem : ICloneable
         }
         else
         {
-            Image img = null;
+            Image? img = null;
             CacheState state = ThumbnailCacheState;
 
             if (state == CacheState.Error)
@@ -692,6 +714,7 @@ public class ImageListViewItem : ICloneable
         else
             return extension;
     }
+
     #endregion
 
     #region ICloneable Members
@@ -703,41 +726,42 @@ public class ImageListViewItem : ICloneable
     /// </returns>
     public object Clone()
     {
-        var item = new ImageListViewItem();
+        var item = new ImageListViewItem
+        {
+            mText = mText,
 
-        item.mText = mText;
+            // File info
+            extension = extension,
+            mDateAccessed = mDateAccessed,
+            mDateCreated = mDateCreated,
+            mDateModified = mDateModified,
+            mFileName = mFileName,
+            mFilePath = mFilePath,
+            mFileSize = mFileSize,
 
-        // File info
-        item.extension = extension;
-        item.mDateAccessed = mDateAccessed;
-        item.mDateCreated = mDateCreated;
-        item.mDateModified = mDateModified;
-        item.mFileName = mFileName;
-        item.mFilePath = mFilePath;
-        item.mFileSize = mFileSize;
+            // Image info
+            mDimensions = mDimensions,
+            mResolution = mResolution,
 
-        // Image info
-        item.mDimensions = mDimensions;
-        item.mResolution = mResolution;
+            // Exif tags
+            mImageDescription = mImageDescription,
+            mEquipmentModel = mEquipmentModel,
+            mDateTaken = mDateTaken,
+            mArtist = mArtist,
+            mCopyright = mCopyright,
+            mExposureTime = mExposureTime,
+            mFNumber = mFNumber,
+            mISOSpeed = mISOSpeed,
+            mUserComment = mUserComment,
+            mRating = mRating,
+            mStarRating = mStarRating,
+            mSoftware = mSoftware,
+            mFocalLength = mFocalLength,
 
-        // Exif tags
-        item.mImageDescription = mImageDescription;
-        item.mEquipmentModel = mEquipmentModel;
-        item.mDateTaken = mDateTaken;
-        item.mArtist = mArtist;
-        item.mCopyright = mCopyright;
-        item.mExposureTime = mExposureTime;
-        item.mFNumber = mFNumber;
-        item.mISOSpeed = mISOSpeed;
-        item.mUserComment = mUserComment;
-        item.mRating = mRating;
-        item.mStarRating = mStarRating;
-        item.mSoftware = mSoftware;
-        item.mFocalLength = mFocalLength;
-
-        // Virtual item properties
-        item.mAdaptor = mAdaptor;
-        item.mVirtualItemKey = mVirtualItemKey;
+            // Virtual item properties
+            mAdaptor = mAdaptor,
+            mVirtualItemKey = mVirtualItemKey
+        };
 
         // Current thumbnail
         if (mImageListView != null)
