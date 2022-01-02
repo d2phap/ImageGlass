@@ -65,11 +65,11 @@ public record IgThemeSettings
     public Color ToolbarItemSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff44");
 
 
-    // Thumbnail bar
+    // Gallery
     public Color ThumbnailBarBgColor { get; set; } = ThemeUtils.ColorFromHex("#242b31");
     public Color ThumbnailBarTextColor { get; set; } = Color.White;
     public Color ThumbnailItemHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
-    public Color ThumbnailItemActiveColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff66");
+    public Color ThumbnailItemActiveColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff22");
     public Color ThumbnailItemSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff44");
 
 

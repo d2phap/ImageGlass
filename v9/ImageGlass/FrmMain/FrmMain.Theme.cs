@@ -1,6 +1,5 @@
 ﻿
 
-using ImageGlass.Gallery;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 
@@ -43,7 +42,7 @@ public partial class FrmMain
         PicBox.ForeColor = Config.Theme.Settings.TextColor;
 
         // Thumbnail bar
-        Gallery.SetRenderer(new ThemeRenderer());
+        Gallery.SetRenderer(new ModernGalleryRenderer(Config.Theme));
         Sp1.SplitterBackColor =
             Gallery.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
 

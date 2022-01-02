@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\IgCodecs\ImageMagickIgCodec\ImageMagick.IgCodec.csproj" />
     <ProjectReference Include="..\ImageGlass.Base\ImageGlass.Base.csproj" />
+    <ProjectReference Include="..\ImageGlass.Gallery\ImageGlass.Gallery.csproj" />
   </ItemGroup>
 
   <ItemGroup>

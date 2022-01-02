@@ -140,12 +140,12 @@ public static class Utility
     public static Rectangle GetSizedImageBounds(Image image, Rectangle fit, float hAlign, float vAlign)
     {
         if (hAlign < 0 || hAlign > 100.0f)
-            throw new ArgumentException("hAlign must be between 0.0 and 100.0 (inclusive).", "hAlign");
+            throw new ArgumentException("hAlign must be between 0.0 and 100.0 (inclusive).", nameof(hAlign));
         if (vAlign < 0 || vAlign > 100.0f)
-            throw new ArgumentException("vAlign must be between 0.0 and 100.0 (inclusive).", "vAlign");
+            throw new ArgumentException("vAlign must be between 0.0 and 100.0 (inclusive).", nameof(vAlign));
         Size scaled = GetSizedImageBounds(image, fit.Size);
-        int x = fit.Left + (int)(hAlign / 100.0f * (float)(fit.Width - scaled.Width));
-        int y = fit.Top + (int)(vAlign / 100.0f * (float)(fit.Height - scaled.Height));
+        int x = fit.Left + (int)(hAlign / 100.0f * (fit.Width - scaled.Width));
+        int y = fit.Top + (int)(vAlign / 100.0f * (fit.Height - scaled.Height));
 
         return new Rectangle(x, y, scaled.Width, scaled.Height);
     }

@@ -43,6 +43,7 @@ public partial class ImageListView : Control, IComponent
     private View mView;
     private Point mViewOffset;
     private bool mShowScrollBars;
+    private bool mShowItemText;
 
     // Renderer variables
     internal ImageListViewRenderer mRenderer;
@@ -442,6 +443,20 @@ public partial class ImageListView : Control, IComponent
     }
 
     /// <summary>
+    /// Gets or sets whether item's text should be shown.
+    /// </summary>
+    [Category("Appearance"), Description("Gets or sets whether item's text should be shown."), DefaultValue(false)]
+    public bool ShowItemText
+    {
+        get => mShowItemText;
+        set
+        {
+            mShowItemText = value;
+            Refresh();
+        }
+    }
+
+    /// <summary>
     /// Gets the collection of selected items contained in the image list view.
     /// </summary>
     [Browsable(false), Category("Behavior"), Description("Gets the collection of selected items contained in the image list view.")]
@@ -753,11 +768,12 @@ public partial class ImageListView : Control, IComponent
         mIconAlignment = ContentAlignment.TopRight;
         mIconPadding = new Size(2, 2);
         Text = string.Empty;
-        mThumbnailSize = new Size(96, 96);
+        mThumbnailSize = new Size(70, 70);
         mUseEmbeddedThumbnails = UseEmbeddedThumbnails.Auto;
         mView = View.Thumbnails;
         mViewOffset = new Point(0, 0);
-        mShowScrollBars = true;
+        mShowScrollBars = false;
+        mShowItemText = true;
 
         // Child controls
         hScrollBar = new HScrollBar();
