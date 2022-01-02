@@ -126,7 +126,7 @@ public partial class ImageListView
         /// </summary>
         /// <param name="item">The <see cref="ImageListViewItem"/> to add to the <see cref="ImageListViewItemCollection"/>.</param>
         /// <param name="adaptor">The adaptor associated with this item.</param>
-        public void Add(ImageListViewItem item, ImageListViewItemAdaptor adaptor)
+        public void Add(ImageListViewItem item, IAdaptor adaptor)
         {
             AddInternal(item, adaptor);
 
@@ -153,7 +153,7 @@ public partial class ImageListView
         /// <param name="item">The <see cref="ImageListViewItem"/> to add to the <see cref="ImageListViewItemCollection"/>.</param>
         /// <param name="initialThumbnail">The initial thumbnail image for the item.</param>
         /// <param name="adaptor">The adaptor associated with this item.</param>
-        public void Add(ImageListViewItem item, Image initialThumbnail, ImageListViewItemAdaptor adaptor)
+        public void Add(ImageListViewItem item, Image initialThumbnail, IAdaptor adaptor)
         {
             item.clonedThumbnail = initialThumbnail;
             Add(item, adaptor);
@@ -200,7 +200,7 @@ public partial class ImageListView
         /// <param name="key">The key identifying the item.</param>
         /// <param name="text">Text of the item.</param>
         /// <param name="adaptor">The adaptor associated with this item.</param>
-        public void Add(object key, string text, ImageListViewItemAdaptor adaptor)
+        public void Add(object key, string text, IAdaptor adaptor)
         {
             Add(key, text, null, adaptor);
         }
@@ -222,7 +222,7 @@ public partial class ImageListView
         /// <param name="text">Text of the item.</param>
         /// <param name="initialThumbnail">The initial thumbnail image for the item.</param>
         /// <param name="adaptor">The adaptor associated with this item.</param>
-        public void Add(object key, string text, Image? initialThumbnail, ImageListViewItemAdaptor adaptor)
+        public void Add(object key, string text, Image? initialThumbnail, IAdaptor adaptor)
         {
             var item = new ImageListViewItem(key, text)
             {
@@ -249,7 +249,7 @@ public partial class ImageListView
         /// <param name="items">An array of <see cref="ImageListViewItem"/> 
         /// to add to the <see cref="ImageListViewItemCollection"/>.</param>
         /// <param name="adaptor">The adaptor associated with this item.</param>
-        public void AddRange(ImageListViewItem[] items, ImageListViewItemAdaptor adaptor)
+        public void AddRange(ImageListViewItem[] items, IAdaptor adaptor)
         {
             if (mImageListView != null)
                 mImageListView.SuspendPaint();
@@ -350,7 +350,7 @@ public partial class ImageListView
         /// <param name="item">The <see cref="ImageListViewItem"/> to 
         /// insert into the <see cref="ImageListViewItemCollection"/>.</param>
         /// <param name="adaptor">The adaptor associated with this item.</param>
-        public void Insert(int index, ImageListViewItem item, ImageListViewItemAdaptor adaptor)
+        public void Insert(int index, ImageListViewItem item, IAdaptor adaptor)
         {
             InsertInternal(index, item, adaptor);
 
@@ -406,7 +406,7 @@ public partial class ImageListView
         /// <param name="key">The key identifying the item.</param>
         /// <param name="text">Text of the item.</param>
         /// <param name="adaptor">The adaptor associated with this item.</param>
-        public void Insert(int index, object key, string text, ImageListViewItemAdaptor adaptor)
+        public void Insert(int index, object key, string text, IAdaptor adaptor)
         {
             Insert(index, key, text, null, adaptor);
         }
@@ -430,7 +430,7 @@ public partial class ImageListView
         /// <param name="text">Text of the item.</param>
         /// <param name="initialThumbnail">The initial thumbnail image for the item.</param>
         /// <param name="adaptor">The adaptor associated with this item.</param>
-        public void Insert(int index, object key, string text, Image initialThumbnail, ImageListViewItemAdaptor adaptor)
+        public void Insert(int index, object key, string text, Image initialThumbnail, IAdaptor adaptor)
         {
             var item = new ImageListViewItem(key, text)
             {
@@ -519,7 +519,7 @@ public partial class ImageListView
         /// <param name="item">The <see cref="ImageListViewItem"/> to add.</param>
         /// <param name="adaptor">The adaptor associated with this item.</param>
         /// <returns>true if the item was added; otherwise false.</returns>
-        internal bool AddInternal(ImageListViewItem item, ImageListViewItemAdaptor adaptor)
+        internal bool AddInternal(ImageListViewItem item, IAdaptor adaptor)
         {
             return InsertInternal(-1, item, adaptor);
         }
@@ -531,7 +531,7 @@ public partial class ImageListView
         /// <param name="item">The <see cref="ImageListViewItem"/> to add.</param>
         /// <param name="adaptor">The adaptor associated with this item.</param>
         /// <returns>true if the item was added; otherwise false.</returns>
-        internal bool InsertInternal(int index, ImageListViewItem item, ImageListViewItemAdaptor adaptor)
+        internal bool InsertInternal(int index, ImageListViewItem item, IAdaptor adaptor)
         {
             if (mImageListView == null)
                 return false;

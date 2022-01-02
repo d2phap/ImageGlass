@@ -71,6 +71,7 @@ public partial class ImageListView : Control, IComponent
     private ResourceManager resources;
     #endregion
 
+
     #region Properties
     /// <summary>
     /// Gets or sets whether thumbnail images are automatically rotated.
@@ -556,6 +557,7 @@ public partial class ImageListView : Control, IComponent
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never), Browsable(false), Bindable(false), DefaultValue(null), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public override string Text { get; set; }
+
     /// <summary>
     /// Gets or sets the size of image thumbnails.
     /// </summary>
@@ -644,6 +646,7 @@ public partial class ImageListView : Control, IComponent
     public IExtractor ThumbnailExtractor => Extractor.Instance;
     #endregion
 
+
     #region Custom Property Serializers
     /// <summary>
     /// Determines if the colors should be serialized.
@@ -655,6 +658,7 @@ public partial class ImageListView : Control, IComponent
         ImageListViewColor defaultColors = ImageListViewColor.Default;
         return !mColors.Equals(defaultColors);
     }
+
     /// <summary>
     /// Resets the colors to their default value.
     /// </summary>
@@ -672,6 +676,7 @@ public partial class ImageListView : Control, IComponent
     {
         return mDefaultImageChanged;
     }
+
     /// <summary>
     /// Resets the default image to its default value.
     /// </summary>
@@ -690,6 +695,7 @@ public partial class ImageListView : Control, IComponent
     {
         return mErrorImageChanged;
     }
+
     /// <summary>
     /// Resets the error image to its default value.
     /// </summary>
@@ -700,6 +706,7 @@ public partial class ImageListView : Control, IComponent
     }
 
     #endregion
+
 
     #region Constructor
     /// <summary>
@@ -801,6 +808,7 @@ public partial class ImageListView : Control, IComponent
         Refresh();
         ResumePaint();
     }
+
     /// <summary>
     /// Marks all items as unselected.
     /// </summary>
@@ -811,6 +819,7 @@ public partial class ImageListView : Control, IComponent
         Refresh();
         ResumePaint();
     }
+
     /// <summary>
     /// Reverses the selection state of all items.
     /// </summary>
@@ -826,6 +835,7 @@ public partial class ImageListView : Control, IComponent
         Refresh();
         ResumePaint();
     }
+
     /// <summary>
     /// Marks all items that satisfy a condition as selected.
     /// </summary>
@@ -839,6 +849,7 @@ public partial class ImageListView : Control, IComponent
         Refresh();
         ResumePaint();
     }
+
     /// <summary>
     /// Marks all items that satisfy a condition as unselected.
     /// </summary>
@@ -852,6 +863,7 @@ public partial class ImageListView : Control, IComponent
         Refresh();
         ResumePaint();
     }
+
     /// <summary>
     /// Marks all items as checked.
     /// </summary>
@@ -868,6 +880,7 @@ public partial class ImageListView : Control, IComponent
         Refresh();
         ResumePaint();
     }
+
     /// <summary>
     /// Marks all items as unchecked.
     /// </summary>
@@ -878,6 +891,7 @@ public partial class ImageListView : Control, IComponent
         Refresh();
         ResumePaint();
     }
+
     /// <summary>
     /// Reverses the check state of all items.
     /// </summary>
@@ -894,6 +908,7 @@ public partial class ImageListView : Control, IComponent
         Refresh();
         ResumePaint();
     }
+
     /// <summary>
     /// Marks all items that satisfy a condition as checked.
     /// </summary>
@@ -910,6 +925,7 @@ public partial class ImageListView : Control, IComponent
         Refresh();
         ResumePaint();
     }
+
     /// <summary>
     /// Marks all items that satisfy a condition as unchecked.
     /// </summary>
@@ -926,6 +942,7 @@ public partial class ImageListView : Control, IComponent
         Refresh();
         ResumePaint();
     }
+
     /// <summary>
     /// Marks all items as enabled.
     /// </summary>
@@ -939,6 +956,7 @@ public partial class ImageListView : Control, IComponent
         Refresh();
         ResumePaint();
     }
+
     /// <summary>
     /// Marks all items as disabled.
     /// </summary>
@@ -952,6 +970,7 @@ public partial class ImageListView : Control, IComponent
         Refresh();
         ResumePaint();
     }
+
     /// <summary>
     /// Marks all items that satisfy a condition as enabled.
     /// </summary>
@@ -965,6 +984,7 @@ public partial class ImageListView : Control, IComponent
         Refresh();
         ResumePaint();
     }
+
     /// <summary>
     /// Marks all items that satisfy a condition as disabled.
     /// </summary>
@@ -978,7 +998,9 @@ public partial class ImageListView : Control, IComponent
         Refresh();
         ResumePaint();
     }
+
     #endregion
+
 
     #region Instance Methods
     /// <summary>
@@ -999,6 +1021,7 @@ public partial class ImageListView : Control, IComponent
             Refresh();
         }
     }
+
     /// <summary>
     /// Temporarily suspends the layout logic for the control.
     /// </summary>
@@ -1011,6 +1034,7 @@ public partial class ImageListView : Control, IComponent
         base.SuspendLayout();
         SuspendPaint();
     }
+
     /// <summary>
     /// Resumes usual layout logic.
     /// </summary>
@@ -1018,6 +1042,7 @@ public partial class ImageListView : Control, IComponent
     {
         ResumeLayout(false);
     }
+
     /// <summary>
     /// Resumes usual layout logic, optionally forcing an immediate layout of pending layout requests.
     /// </summary>
@@ -1033,6 +1058,7 @@ public partial class ImageListView : Control, IComponent
             Refresh();
         ResumePaint();
     }
+
     /// <summary>
     /// Sets the renderer for this instance.
     /// </summary>
@@ -1272,6 +1298,7 @@ public partial class ImageListView : Control, IComponent
         else
             rendererNeedsPaint = true;
     }
+
     /// <summary>
     /// Redraws the owner control.
     /// </summary>
@@ -1281,6 +1308,7 @@ public partial class ImageListView : Control, IComponent
     {
         Refresh(force, false);
     }
+
     /// <summary>
     /// Redraws the owner control.
     /// </summary>
@@ -1288,6 +1316,7 @@ public partial class ImageListView : Control, IComponent
     {
         Refresh(false, false);
     }
+
     /// <summary>
     /// Suspends painting until a matching ResumePaint call is made.
     /// </summary>
@@ -1297,6 +1326,7 @@ public partial class ImageListView : Control, IComponent
             rendererNeedsPaint = false;
         rendererSuspendCount++;
     }
+
     /// <summary>
     /// Resumes painting. This call must be matched by a prior SuspendPaint call.
     /// </summary>
@@ -1308,6 +1338,7 @@ public partial class ImageListView : Control, IComponent
         if (rendererNeedsPaint)
             Refresh();
     }
+
     /// <summary>
     /// Determines if the control can be painted.
     /// </summary>
@@ -1320,6 +1351,7 @@ public partial class ImageListView : Control, IComponent
         else
             return true;
     }
+
     #endregion
 
     #region Helper Methods
@@ -1332,6 +1364,7 @@ public partial class ImageListView : Control, IComponent
     {
         return layoutManager.IsItemVisible(guid);
     }
+
     /// <summary>
     /// Determines whether the specified item is modified.
     /// </summary>
@@ -1344,6 +1377,7 @@ public partial class ImageListView : Control, IComponent
 
         return false;
     }
+
     /// <summary>
     /// Determines whether the specified item is visible on the screen.
     /// </summary>
@@ -1363,6 +1397,7 @@ public partial class ImageListView : Control, IComponent
         else
             return ItemVisibility.PartiallyVisible;
     }
+
     /// <summary>
     /// Gets the guids of visible items.
     /// </summary>
@@ -1398,6 +1433,7 @@ public partial class ImageListView : Control, IComponent
         navigationManager.DragOver(e);
         base.OnDragOver(e);
     }
+
     /// <summary>
     /// Handles the DragEnter event.
     /// </summary>
@@ -1407,6 +1443,7 @@ public partial class ImageListView : Control, IComponent
         navigationManager.DragEnter(e);
         base.OnDragEnter(e);
     }
+
     /// <summary>
     /// Handles the DragLeave event.
     /// </summary>
@@ -1416,6 +1453,7 @@ public partial class ImageListView : Control, IComponent
         navigationManager.DragLeave();
         base.OnDragLeave(e);
     }
+
     /// <summary>
     /// Handles the DragDrop event.
     /// </summary>
@@ -1425,6 +1463,7 @@ public partial class ImageListView : Control, IComponent
         navigationManager.DragDrop(e);
         base.OnDragDrop(e);
     }
+
     /// <summary>
     /// Handles the Scroll event of the vScrollBar control.
     /// </summary>
@@ -1435,6 +1474,7 @@ public partial class ImageListView : Control, IComponent
         mViewOffset.Y = e.NewValue;
         Refresh();
     }
+
     /// <summary>
     /// Handles the Scroll event of the hScrollBar control.
     /// </summary>
@@ -1461,6 +1501,7 @@ public partial class ImageListView : Control, IComponent
         }
         finally { }
     }
+
     /// <summary>
     /// Handles the Resize event.
     /// </summary>
@@ -1477,6 +1518,7 @@ public partial class ImageListView : Control, IComponent
 
         Refresh();
     }
+
     /// <summary>
     /// Handles the Paint event.
     /// </summary>
@@ -1487,6 +1529,7 @@ public partial class ImageListView : Control, IComponent
             mRenderer.Render(e.Graphics);
         rendererNeedsPaint = false;
     }
+
     /// <summary>
     /// Handles the MouseDown event.
     /// </summary>
@@ -1500,6 +1543,7 @@ public partial class ImageListView : Control, IComponent
         navigationManager.MouseDown(e);
         base.OnMouseDown(e);
     }
+
     /// <summary>
     /// Handles the MouseUp event.
     /// </summary>
@@ -1509,6 +1553,7 @@ public partial class ImageListView : Control, IComponent
         navigationManager.MouseUp(e);
         base.OnMouseUp(e);
     }
+
     /// <summary>
     /// Handles the MouseMove event.
     /// </summary>
@@ -1518,6 +1563,7 @@ public partial class ImageListView : Control, IComponent
         navigationManager.MouseMove(e);
         base.OnMouseMove(e);
     }
+
     /// <summary>
     /// Handles the MouseWheel event.
     /// </summary>
@@ -1561,6 +1607,7 @@ public partial class ImageListView : Control, IComponent
 
         base.OnMouseWheel(e);
     }
+
     /// <summary>
     /// Handles the MouseLeave event.
     /// </summary>
@@ -1570,6 +1617,7 @@ public partial class ImageListView : Control, IComponent
         navigationManager.MouseLeave();
         base.OnMouseLeave(e);
     }
+
     /// <summary>
     /// Handles the MouseDoubleClick event.
     /// </summary>
@@ -1579,6 +1627,7 @@ public partial class ImageListView : Control, IComponent
         navigationManager.MouseDoubleClick(e);
         base.OnMouseDoubleClick(e);
     }
+
     /// <summary>
     /// Handles the IsInputKey event.
     /// </summary>
@@ -1593,6 +1642,7 @@ public partial class ImageListView : Control, IComponent
         else
             return base.IsInputKey(keyData);
     }
+
     /// <summary>
     /// Handles the KeyDown event.
     /// </summary>
@@ -1602,6 +1652,7 @@ public partial class ImageListView : Control, IComponent
         navigationManager.KeyDown(e);
         base.OnKeyDown(e);
     }
+
     /// <summary>
     /// Handles the KeyUp event.
     /// </summary>
@@ -1611,6 +1662,7 @@ public partial class ImageListView : Control, IComponent
         navigationManager.KeyUp(e);
         base.OnKeyUp(e);
     }
+
     /// <summary>
     /// Handles the GotFocus event.
     /// </summary>
@@ -1620,6 +1672,7 @@ public partial class ImageListView : Control, IComponent
         base.OnGotFocus(e);
         Refresh();
     }
+
     /// <summary>
     /// Handles the LostFocus event.
     /// </summary>
@@ -1629,6 +1682,7 @@ public partial class ImageListView : Control, IComponent
         base.OnLostFocus(e);
         Refresh();
     }
+
     /// <summary>
     /// Releases the unmanaged resources used by the control and its child controls
     /// and optionally releases the managed resources.
@@ -1677,6 +1731,7 @@ public partial class ImageListView : Control, IComponent
             base.Dispose(disposing);
     }
     #endregion
+
 
     #region Virtual Functions
     /// <summary>
@@ -1832,6 +1887,7 @@ public partial class ImageListView : Control, IComponent
     {
         ItemDoubleClick?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the SelectionChanged event.
     /// </summary>
@@ -1904,6 +1960,7 @@ public partial class ImageListView : Control, IComponent
     {
         ShellInfoCaching?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the ShellInfoCached event.
     /// </summary>
@@ -1912,6 +1969,7 @@ public partial class ImageListView : Control, IComponent
     {
         ShellInfoCached?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the CacheError event.
     /// This method is invoked from the thumbnail thread.
@@ -1925,6 +1983,7 @@ public partial class ImageListView : Control, IComponent
         mItems.TryGetValue(guid, out ImageListViewItem item);
         OnCacheError(new CacheErrorEventArgs(item, error, cacheThread));
     }
+
     /// <summary>
     /// Raises the CacheError event.
     /// This method is invoked from the thumbnail thread.
@@ -1935,6 +1994,7 @@ public partial class ImageListView : Control, IComponent
     {
         OnCacheError(new CacheErrorEventArgs(null, error, cacheThread));
     }
+
     /// <summary>
     /// Raises the ThumbnailCached event.
     /// This method is invoked from the thumbnail thread.
@@ -1961,6 +2021,7 @@ public partial class ImageListView : Control, IComponent
         if (mItems.TryGetValue(guid, out ImageListViewItem item))
             OnThumbnailCaching(new ThumbnailCachingEventArgs(item, size));
     }
+
     /// <summary>
     /// Raises the ThumbnailCaching event.
     /// </summary>
@@ -1969,6 +2030,7 @@ public partial class ImageListView : Control, IComponent
     {
         ThumbnailCaching?.Invoke(this, e);
     }
+
     /// <summary>
     /// Raises the ItemCollectionChanged event.
     /// </summary>
@@ -1977,7 +2039,9 @@ public partial class ImageListView : Control, IComponent
     {
         ItemCollectionChanged?.Invoke(this, e);
     }
+
     #endregion
+
 
     #region Public Events
     /// <summary>

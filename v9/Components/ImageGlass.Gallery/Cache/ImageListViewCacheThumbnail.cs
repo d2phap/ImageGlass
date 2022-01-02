@@ -63,7 +63,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
         /// <summary>
         /// Gets the adaptor of this item.
         /// </summary>
-        public ImageListViewItemAdaptor Adaptor { get; private set; }
+        public IAdaptor Adaptor { get; private set; }
         /// <summary>
         /// Gets the public key for the virtual item.
         /// </summary>
@@ -96,7 +96,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
         /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
         /// <param name="autoRotate">AutoRotate property of the owner control.</param>
         /// <param name="requestType">Type of this request.</param>
-        public CacheRequest(Guid guid, ImageListViewItemAdaptor adaptor, object key, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, RequestType requestType)
+        public CacheRequest(Guid guid, IAdaptor adaptor, object key, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, RequestType requestType)
         {
             Guid = guid;
             VirtualItemKey = key;
@@ -752,7 +752,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// <param name="thumbSize">Requested thumbnail size.</param>
     /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
     /// <param name="autoRotate">AutoRotate property of the owner control.</param>
-    public void Add(Guid guid, ImageListViewItemAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
+    public void Add(Guid guid, IAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
     {
         // Already cached?
         CacheItem item = null;
@@ -775,7 +775,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// <param name="thumb">Thumbnail image to add to cache.</param>
     /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
     /// <param name="autoRotate">AutoRotate property of the owner control.</param>
-    public void Add(Guid guid, ImageListViewItemAdaptor adaptor, object key, Size thumbSize, Image thumb, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
+    public void Add(Guid guid, IAdaptor adaptor, object key, Size thumbSize, Image thumb, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
     {
         // Already cached?
         CacheItem item = null;
@@ -815,7 +815,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// <param name="thumbSize">Requested thumbnail size.</param>
     /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
     /// <param name="autoRotate">AutoRotate property of the owner control.</param>
-    public void AddToGalleryCache(Guid guid, ImageListViewItemAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
+    public void AddToGalleryCache(Guid guid, IAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
     {
         // Already cached?
         if (galleryItem != null && galleryItem.Guid == guid && galleryItem.Image != null && galleryItem.Size == thumbSize && galleryItem.UseEmbeddedThumbnails == useEmbeddedThumbnails && galleryItem.AutoRotate == autoRotate)
@@ -833,7 +833,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// <param name="thumbSize">Requested thumbnail size.</param>
     /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
     /// <param name="autoRotate">AutoRotate property of the owner control.</param>
-    public void AddToRendererCache(Guid guid, ImageListViewItemAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
+    public void AddToRendererCache(Guid guid, IAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
     {
         // Already cached?
         if (rendererItem != null && rendererItem.Guid == guid && rendererItem.Image != null && rendererItem.Size == thumbSize && rendererItem.UseEmbeddedThumbnails == useEmbeddedThumbnails && rendererItem.AutoRotate == autoRotate)
@@ -883,7 +883,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
     /// <param name="autoRotate">AutoRotate property of the owner control.</param>
     /// <param name="clone">true to return a clone of the cached image; otherwise false.</param>
-    public Image GetImage(Guid guid, ImageListViewItemAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool clone)
+    public Image GetImage(Guid guid, IAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool clone)
     {
         CacheItem item = null;
         if (thumbCache.TryGetValue(guid, out item) && item != null && item.Image != null && item.Size == thumbSize && item.UseEmbeddedThumbnails == useEmbeddedThumbnails && item.AutoRotate == autoRotate)

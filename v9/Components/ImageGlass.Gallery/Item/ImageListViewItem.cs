@@ -53,7 +53,7 @@ public class ImageListViewItem : ICloneable
 
     // Adaptor
     internal object? mVirtualItemKey;
-    internal ImageListViewItemAdaptor mAdaptor;
+    internal IAdaptor mAdaptor;
 
     // Used for cloned items
     internal Image? clonedThumbnail;
@@ -133,7 +133,7 @@ public class ImageListViewItem : ICloneable
     /// Gets the adaptor of this item.
     /// </summary>
     [Category("Behavior"), Browsable(false), Description("Gets the adaptor of this item.")]
-    public ImageListViewItemAdaptor Adaptor => mAdaptor;
+    public IAdaptor Adaptor => mAdaptor;
 
     /// <summary>
     /// [IG_CHANGE] Gets the virtual item key associated with this item.

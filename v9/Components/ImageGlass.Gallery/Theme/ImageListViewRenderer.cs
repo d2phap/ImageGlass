@@ -19,7 +19,7 @@ public class ImageListViewRenderer : IDisposable
 
 
     #region Member Variables
-    private BufferedGraphics bufferGraphics;
+    private BufferedGraphics? bufferGraphics;
     private bool disposed;
     private bool creatingGraphics;
     private DateTime lastRenderTime;
@@ -93,6 +93,7 @@ public class ImageListViewRenderer : IDisposable
         ItemDrawOrder = ItemDrawOrder.ItemIndex;
         lastRenderTime = DateTime.MinValue;
     }
+
     #endregion
 
 
@@ -112,7 +113,9 @@ public class ImageListViewRenderer : IDisposable
             State = state;
             Bounds = bounds;
         }
+
     }
+
     #endregion
 
 
@@ -144,7 +147,7 @@ public class ImageListViewRenderer : IDisposable
             if (ReferenceEquals(param1.Item, param2.Item))
                 return 0;
 
-            int comparison = 0;
+            int comparison;
 
             if (mDrawOrder == ItemDrawOrder.ItemIndex)
             {
@@ -221,7 +224,7 @@ public class ImageListViewRenderer : IDisposable
         /// <summary>
         /// Compares items by their index property.
         /// </summary>
-        private int CompareByIndex(DrawItemParams param1, DrawItemParams param2)
+        private static int CompareByIndex(DrawItemParams param1, DrawItemParams param2)
         {
             if (param1.Item.Index < param2.Item.Index)
                 return -1;
@@ -230,10 +233,11 @@ public class ImageListViewRenderer : IDisposable
             else
                 return 0;
         }
+
         /// <summary>
         /// Compares items by their zorder property.
         /// </summary>
-        private int CompareByZOrder(DrawItemParams param1, DrawItemParams param2)
+        private static int CompareByZOrder(DrawItemParams param1, DrawItemParams param2)
         {
             if (param1.Item.ZOrder < param2.Item.ZOrder)
                 return -1;
@@ -242,10 +246,11 @@ public class ImageListViewRenderer : IDisposable
             else
                 return 0;
         }
+
         /// <summary>
         /// Compares items by their neutral state.
         /// </summary>
-        private int CompareByNormal(DrawItemParams param1, DrawItemParams param2)
+        private static int CompareByNormal(DrawItemParams param1, DrawItemParams param2)
         {
             if (param1.State == ItemState.None && param2.State != ItemState.None)
                 return -1;
@@ -254,10 +259,11 @@ public class ImageListViewRenderer : IDisposable
             else
                 return 0;
         }
+
         /// <summary>
         /// Compares items by their selected state.
         /// </summary>
-        private int CompareBySelected(DrawItemParams param1, DrawItemParams param2)
+        private static int CompareBySelected(DrawItemParams param1, DrawItemParams param2)
         {
             if ((param1.State & ItemState.Selected) == ItemState.Selected &&
                 (param2.State & ItemState.Selected) != ItemState.Selected)
@@ -268,10 +274,11 @@ public class ImageListViewRenderer : IDisposable
             else
                 return 0;
         }
+
         /// <summary>
         /// Compares items by their hovered state.
         /// </summary>
-        private int CompareByHovered(DrawItemParams param1, DrawItemParams param2)
+        private static int CompareByHovered(DrawItemParams param1, DrawItemParams param2)
         {
             if ((param1.State & ItemState.Hovered) == ItemState.Hovered)
                 return -1;
@@ -280,6 +287,7 @@ public class ImageListViewRenderer : IDisposable
             else
                 return 0;
         }
+
         /// <summary>
         /// Compares items by their focused state.
         /// </summary>
@@ -303,9 +311,9 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="item">The item to read.</param>
     /// <param name="size">The size of the requested image..</param>
     /// <returns>Item thumbnail of requested size.</returns>
-    public Image GetImageAsync(ImageListViewItem item, Size size)
+    public Image? GetImageAsync(ImageListViewItem item, Size size)
     {
-        Image img = ImageListView.thumbnailCache.GetRendererImage(item.Guid, size, ImageListView.UseEmbeddedThumbnails,
+        var img = ImageListView.thumbnailCache.GetRendererImage(item.Guid, size, ImageListView.UseEmbeddedThumbnails,
             ImageListView.AutoRotateThumbnails);
 
         if (img == null)
@@ -316,6 +324,7 @@ public class ImageListViewRenderer : IDisposable
 
         return img;
     }
+
     #endregion
 
 
@@ -351,6 +360,7 @@ public class ImageListViewRenderer : IDisposable
         // Is the control empty?
         if (ImageListView.Items.Count == 0)
             return;
+
         // No items visible?
         if (ImageListView.layoutManager.FirstPartiallyVisible == -1 ||
             ImageListView.layoutManager.LastPartiallyVisible == -1)
@@ -362,8 +372,9 @@ public class ImageListViewRenderer : IDisposable
             var item = ImageListView.Items[i];
 
             // Determine item state
-            ItemState state = ItemState.None;
-            ItemHighlightState highlightState = ImageListView.navigationManager.HighlightState(item);
+            var state = ItemState.None;
+            var highlightState = ImageListView.navigationManager.HighlightState(item);
+
             if (highlightState == ItemHighlightState.HighlightedAndSelected ||
                 (highlightState == ItemHighlightState.NotHighlighted && item.Selected))
                 state |= ItemState.Selected;
@@ -379,7 +390,7 @@ public class ImageListViewRenderer : IDisposable
                 state |= ItemState.Disabled;
 
             // Get item bounds
-            Rectangle bounds = ImageListView.layoutManager.GetItemBounds(i);
+            var bounds = ImageListView.layoutManager.GetItemBounds(i);
 
             // Add to params to be sorted and drawn
             drawItemParams.Add(new DrawItemParams(item, state, bounds));
@@ -389,7 +400,7 @@ public class ImageListViewRenderer : IDisposable
         drawItemParams.Sort(new ItemDrawOrderComparer(ItemDrawOrder));
 
         // Draw items
-        foreach (DrawItemParams param in drawItemParams)
+        foreach (var param in drawItemParams)
         {
             if (Clip)
             {
@@ -406,10 +417,10 @@ public class ImageListViewRenderer : IDisposable
             // Draw the checkbox and file icon
             if (ImageListView.ShowCheckBoxes)
             {
-                Rectangle cBounds = ImageListView.layoutManager.GetCheckBoxBounds(param.Item.Index);
+                var cBounds = ImageListView.layoutManager.GetCheckBoxBounds(param.Item.Index);
                 if (Clip)
                 {
-                    Rectangle clip = Rectangle.Intersect(cBounds, ImageListView.layoutManager.ItemAreaBounds);
+                    var clip = Rectangle.Intersect(cBounds, ImageListView.layoutManager.ItemAreaBounds);
                     g.SetClip(clip);
                 }
                 else
@@ -417,12 +428,13 @@ public class ImageListViewRenderer : IDisposable
 
                 DrawCheckBox(g, param.Item, cBounds);
             }
+
             if (ImageListView.ShowFileIcons)
             {
-                Rectangle cBounds = ImageListView.layoutManager.GetIconBounds(param.Item.Index);
+                var cBounds = ImageListView.layoutManager.GetIconBounds(param.Item.Index);
                 if (Clip)
                 {
-                    Rectangle clip = Rectangle.Intersect(cBounds, ImageListView.layoutManager.ItemAreaBounds);
+                    var clip = Rectangle.Intersect(cBounds, ImageListView.layoutManager.ItemAreaBounds);
                     g.SetClip(clip);
                 }
                 else
@@ -457,7 +469,8 @@ public class ImageListViewRenderer : IDisposable
         {
             if (ImageListView.navigationManager.DropToRight)
                 bounds.Offset(0, ImageListView.layoutManager.ItemSizeWithMargin.Height);
-            Size itemMargin = MeasureItemMargin(ImageListView.View);
+
+            var itemMargin = MeasureItemMargin(ImageListView.View);
             bounds.Offset(0, -(itemMargin.Height - 2) / 2 - 2);
             bounds.Height = 2;
         }
@@ -465,14 +478,17 @@ public class ImageListViewRenderer : IDisposable
         {
             if (ImageListView.navigationManager.DropToRight)
                 bounds.Offset(ImageListView.layoutManager.ItemSizeWithMargin.Width, 0);
-            Size itemMargin = MeasureItemMargin(ImageListView.View);
+
+            var itemMargin = MeasureItemMargin(ImageListView.View);
             bounds.Offset(-(itemMargin.Width - 2) / 2 - 2, 0);
             bounds.Width = 2;
         }
+
         if (Clip)
             g.SetClip(bounds);
         else
             g.SetClip(ImageListView.layoutManager.ClientArea);
+
         DrawInsertionCaret(g, bounds);
     }
 
@@ -485,15 +501,16 @@ public class ImageListViewRenderer : IDisposable
         if (!ImageListView.navigationManager.MouseSelecting)
             return;
 
-        Rectangle sel = ImageListView.navigationManager.SelectionRectangle;
+        var sel = ImageListView.navigationManager.SelectionRectangle;
         if (sel.Height > 0 && sel.Width > 0)
         {
             g.SetClip(ImageListView.layoutManager.ClientArea);
             if (Clip)
             {
-                Rectangle selclip = new Rectangle(sel.Left, sel.Top, sel.Width + 1, sel.Height + 1);
+                var selclip = new Rectangle(sel.Left, sel.Top, sel.Width + 1, sel.Height + 1);
                 g.IntersectClip(selclip);
             }
+
             g.ExcludeClip(ImageListView.layoutManager.ColumnHeaderBounds);
             DrawSelectionRectangle(g, sel);
         }
@@ -508,8 +525,9 @@ public class ImageListViewRenderer : IDisposable
         if (!ImageListView.hScrollBar.Visible || !ImageListView.vScrollBar.Visible)
             return;
 
-        Rectangle bounds = ImageListView.layoutManager.ClientArea;
-        Rectangle filler = new Rectangle(bounds.Right, bounds.Bottom, ImageListView.vScrollBar.Width, ImageListView.hScrollBar.Height);
+        var bounds = ImageListView.layoutManager.ClientArea;
+        var filler = new Rectangle(bounds.Right, bounds.Bottom, ImageListView.vScrollBar.Width, ImageListView.hScrollBar.Height);
+
         g.SetClip(filler);
         g.FillRectangle(SystemBrushes.Control, filler);
     }
@@ -534,7 +552,7 @@ public class ImageListViewRenderer : IDisposable
         ImageListView.layoutManager.Update();
 
         // Set drawing area
-        Graphics g = bufferGraphics.Graphics;
+        var g = bufferGraphics.Graphics;
         g.ResetClip();
 
         // Draw control border
@@ -610,13 +628,13 @@ public class ImageListViewRenderer : IDisposable
 
         creatingGraphics = true;
 
-        BufferedGraphicsContext bufferContext = BufferedGraphicsManager.Current;
+        var bufferContext = BufferedGraphicsManager.Current;
 
         if (disposed)
-            throw (new ObjectDisposedException("bufferContext"));
+            throw new ObjectDisposedException(nameof(bufferContext));
 
-        int width = System.Math.Max(ImageListView.Width, 1);
-        int height = System.Math.Max(ImageListView.Height, 1);
+        var width = Math.Max(ImageListView.Width, 1);
+        var height = Math.Max(ImageListView.Height, 1);
 
         bufferContext.MaximumBuffer = new Size(width, height);
 
@@ -655,6 +673,7 @@ public class ImageListViewRenderer : IDisposable
         System.Diagnostics.Debug.Print("Finalizer of {0} called.", GetType());
         Dispose();
     }
+
 #endif
 
     #endregion
@@ -708,7 +727,8 @@ public class ImageListViewRenderer : IDisposable
     {
         if (ImageListView.BorderStyle != BorderStyle.None)
         {
-            Border3DStyle style = (ImageListView.BorderStyle == BorderStyle.FixedSingle) ? Border3DStyle.Flat : Border3DStyle.SunkenInner;
+            var style = (ImageListView.BorderStyle == BorderStyle.FixedSingle) ? Border3DStyle.Flat : Border3DStyle.SunkenInner;
+
             ControlPaint.DrawBorder3D(g, bounds, style);
         }
     }
@@ -729,7 +749,7 @@ public class ImageListViewRenderer : IDisposable
         // Draw the background image
         if (ImageListView.BackgroundImage != null)
         {
-            Image img = ImageListView.BackgroundImage;
+            var img = ImageListView.BackgroundImage;
 
             if (ImageListView.BackgroundImageLayout == ImageLayout.None)
             {
@@ -737,8 +757,8 @@ public class ImageListViewRenderer : IDisposable
             }
             else if (ImageListView.BackgroundImageLayout == ImageLayout.Center)
             {
-                int x = bounds.Left + (bounds.Width - img.Width) / 2;
-                int y = bounds.Top + (bounds.Height - img.Height) / 2;
+                var x = bounds.Left + (bounds.Width - img.Width) / 2;
+                var y = bounds.Top + (bounds.Height - img.Height) / 2;
                 g.DrawImageUnscaled(img, x, y);
             }
             else if (ImageListView.BackgroundImageLayout == ImageLayout.Stretch)
@@ -747,20 +767,20 @@ public class ImageListViewRenderer : IDisposable
             }
             else if (ImageListView.BackgroundImageLayout == ImageLayout.Tile)
             {
-                using (Brush imgBrush = new TextureBrush(img, WrapMode.Tile))
-                {
-                    g.FillRectangle(imgBrush, bounds);
-                }
+                using var imgBrush = new TextureBrush(img, WrapMode.Tile);
+                g.FillRectangle(imgBrush, bounds);
             }
             else if (ImageListView.BackgroundImageLayout == ImageLayout.Zoom)
             {
-                float xscale = bounds.Width / (float)img.Width;
-                float yscale = bounds.Height / (float)img.Height;
-                float scale = Math.Min(xscale, yscale);
-                int width = (int)(img.Width * scale);
-                int height = (int)(img.Height * scale);
-                int x = bounds.Left + (bounds.Width - width) / 2;
-                int y = bounds.Top + (bounds.Height - height) / 2;
+                var xscale = bounds.Width / (float)img.Width;
+                var yscale = bounds.Height / (float)img.Height;
+                var scale = Math.Min(xscale, yscale);
+
+                var width = (int)(img.Width * scale);
+                var height = (int)(img.Height * scale);
+                var x = bounds.Left + (bounds.Width - width) / 2;
+                var y = bounds.Top + (bounds.Height - height) / 2;
+
                 g.DrawImage(img, x, y, width, height);
             }
         }
@@ -773,12 +793,11 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="selection">The client coordinates of the selection rectangle.</param>
     public virtual void DrawSelectionRectangle(Graphics g, Rectangle selection)
     {
-        using (SolidBrush brush = new SolidBrush(ImageListView.Colors.SelectionRectangleColor1))
-        using (Pen pen = new Pen(ImageListView.Colors.SelectionRectangleBorderColor))
-        {
-            g.FillRectangle(brush, selection);
-            g.DrawRectangle(pen, selection);
-        }
+        using var brush = new SolidBrush(ImageListView.Colors.SelectionRectangleColor1);
+        using var pen = new Pen(ImageListView.Colors.SelectionRectangleBorderColor);
+
+        g.FillRectangle(brush, selection);
+        g.DrawRectangle(pen, selection);
     }
 
     /// <summary>
@@ -790,8 +809,8 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="bounds">The bounding rectangle of item in client coordinates.</param>
     public virtual void DrawItem(Graphics g, ImageListViewItem item, ItemState state, Rectangle bounds)
     {
-        Size itemPadding = new Size(4, 4);
-        bool alternate = (item.Index % 2 == 1);
+        var itemPadding = new Size(4, 4);
+        var alternate = item.Index % 2 == 1;
 
         // Paint background
         using var bItemBack = new SolidBrush(ImageListView.Colors.DisabledBackColor);
@@ -827,47 +846,47 @@ public class ImageListViewRenderer : IDisposable
             Utility.FillRoundedRectangle(g, bHovered, bounds, 4);
         }
 
-        
-            // Draw the image
-            var img = item.GetCachedImage(CachedImageType.Thumbnail);
-            if (img != null)
+
+        // Draw the image
+        var img = item.GetCachedImage(CachedImageType.Thumbnail);
+        if (img != null)
+        {
+            var pos = Utility.GetSizedImageBounds(img, new Rectangle(bounds.Location + itemPadding, ImageListView.ThumbnailSize));
+            g.DrawImage(img, pos);
+
+            // Draw image border
+            if (Math.Min(pos.Width, pos.Height) > 32)
             {
-                Rectangle pos = Utility.GetSizedImageBounds(img, new Rectangle(bounds.Location + itemPadding, ImageListView.ThumbnailSize));
-                g.DrawImage(img, pos);
-                // Draw image border
-                if (Math.Min(pos.Width, pos.Height) > 32)
+                using var pOuterBorder = new Pen(ImageListView.Colors.ImageOuterBorderColor);
+                g.DrawRectangle(pOuterBorder, pos);
+
+                if (Math.Min(ImageListView.ThumbnailSize.Width, ImageListView.ThumbnailSize.Height) > 32)
                 {
-                    using (Pen pOuterBorder = new Pen(ImageListView.Colors.ImageOuterBorderColor))
-                    {
-                        g.DrawRectangle(pOuterBorder, pos);
-                    }
-                    if (Math.Min(ImageListView.ThumbnailSize.Width, ImageListView.ThumbnailSize.Height) > 32)
-                    {
-                        using (Pen pInnerBorder = new Pen(ImageListView.Colors.ImageInnerBorderColor))
-                        {
-                            g.DrawRectangle(pInnerBorder, Rectangle.Inflate(pos, -1, -1));
-                        }
-                    }
+                    using var pInnerBorder = new Pen(ImageListView.Colors.ImageInnerBorderColor);
+                    g.DrawRectangle(pInnerBorder, Rectangle.Inflate(pos, -1, -1));
                 }
             }
+        }
 
-            // Draw item text
-            var foreColor = ImageListView.Colors.ForeColor;
-            if ((state & ItemState.Disabled) != ItemState.None)
-            {
-                foreColor = ImageListView.Colors.DisabledForeColor;
-            }
-            else if ((state & ItemState.Selected) != ItemState.None)
-            {
-                if (ImageListView.Focused)
-                    foreColor = ImageListView.Colors.SelectedForeColor;
-                else
-                    foreColor = ImageListView.Colors.UnFocusedForeColor;
-            }
-            var szt = TextRenderer.MeasureText(item.Text, ImageListView.Font);
-            var rt = new Rectangle(bounds.Left + itemPadding.Width, bounds.Top + 2 * itemPadding.Height + ImageListView.ThumbnailSize.Height, ImageListView.ThumbnailSize.Width, szt.Height);
-            TextRenderer.DrawText(g, item.Text, ImageListView.Font, rt, foreColor,
-                TextFormatFlags.EndEllipsis | TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix);
+        // Draw item text
+        var foreColor = ImageListView.Colors.ForeColor;
+        if ((state & ItemState.Disabled) != ItemState.None)
+        {
+            foreColor = ImageListView.Colors.DisabledForeColor;
+        }
+        else if ((state & ItemState.Selected) != ItemState.None)
+        {
+            if (ImageListView.Focused)
+                foreColor = ImageListView.Colors.SelectedForeColor;
+            else
+                foreColor = ImageListView.Colors.UnFocusedForeColor;
+        }
+
+        var szt = TextRenderer.MeasureText(item.Text, ImageListView.Font);
+        var rt = new Rectangle(bounds.Left + itemPadding.Width, bounds.Top + 2 * itemPadding.Height + ImageListView.ThumbnailSize.Height, ImageListView.ThumbnailSize.Width, szt.Height);
+
+        TextRenderer.DrawText(g, item.Text, ImageListView.Font, rt, foreColor,
+            TextFormatFlags.EndEllipsis | TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix);
 
 
         // Item border
@@ -932,14 +951,16 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="bounds">The bounding rectangle of the checkbox in client coordinates.</param>
     public virtual void DrawCheckBox(Graphics g, ImageListViewItem item, Rectangle bounds)
     {
-        Size size = CheckBoxRenderer.GetGlyphSize(g, CheckBoxState.CheckedNormal);
-        PointF pt = new PointF(bounds.X + (bounds.Width - (float)size.Width) / 2.0f,
+        var size = CheckBoxRenderer.GetGlyphSize(g, CheckBoxState.CheckedNormal);
+        var pt = new PointF(bounds.X + (bounds.Width - (float)size.Width) / 2.0f,
             bounds.Y + (bounds.Height - (float)size.Height) / 2.0f);
-        CheckBoxState state = CheckBoxState.UncheckedNormal;
+        CheckBoxState state;
+
         if (item.Enabled)
             state = item.Checked ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal;
         else
             state = item.Checked ? CheckBoxState.CheckedDisabled : CheckBoxState.UncheckedDisabled;
+
         CheckBoxRenderer.DrawCheckBox(g, Point.Round(pt), state);
     }
 
@@ -951,13 +972,14 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="bounds">The bounding rectangle of the file icon in client coordinates.</param>
     public virtual void DrawFileIcon(Graphics g, ImageListViewItem item, Rectangle bounds)
     {
-        Image icon = item.GetCachedImage(CachedImageType.SmallIcon);
+        var icon = item.GetCachedImage(CachedImageType.SmallIcon);
         if (icon != null)
         {
-            Size size = icon.Size;
-            PointF ptf = new PointF(bounds.X + (bounds.Width - (float)size.Width) / 2.0f,
+            var size = icon.Size;
+            var ptf = new PointF(bounds.X + (bounds.Width - (float)size.Width) / 2.0f,
                 bounds.Y + (bounds.Height - (float)size.Height) / 2.0f);
-            Point pt = Point.Round(ptf);
+            var pt = Point.Round(ptf);
+
             g.DrawImage(icon, pt.X, pt.Y);
         }
     }
@@ -970,10 +992,8 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="bounds">The bounding rectangle of the insertion caret.</param>
     public virtual void DrawInsertionCaret(Graphics g, Rectangle bounds)
     {
-        using (Brush b = new SolidBrush(ImageListView.Colors.InsertionCaretColor))
-        {
-            g.FillRectangle(b, bounds);
-        }
+        using var b = new SolidBrush(ImageListView.Colors.InsertionCaretColor);
+        g.FillRectangle(b, bounds);
     }
 
     /// <summary>

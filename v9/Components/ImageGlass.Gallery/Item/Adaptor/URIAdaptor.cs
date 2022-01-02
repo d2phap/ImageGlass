@@ -7,14 +7,14 @@ namespace ImageGlass.Gallery;
 /// <summary>
 /// Represents a URI adaptor.
 /// </summary>
-public class URIAdaptor : ImageListViewItemAdaptor
+public class UriAdaptor : IAdaptor
 {
     private bool disposed;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="URIAdaptor"/> class.
+    /// Initializes a new instance of the <see cref="UriAdaptor"/> class.
     /// </summary>
-    public URIAdaptor()
+    public UriAdaptor()
     {
         disposed = false;
     }
@@ -47,6 +47,7 @@ public class URIAdaptor : ImageListViewItemAdaptor
             return null;
         }
     }
+
     /// <summary>
     /// Returns a unique identifier for this thumbnail to be used in persistent
     /// caching.
@@ -71,6 +72,7 @@ public class URIAdaptor : ImageListViewItemAdaptor
         sb.Append(':');
         return sb.ToString();
     }
+
     /// <summary>
     /// Returns the path to the source image for use in drag operations.
     /// </summary>
@@ -79,23 +81,22 @@ public class URIAdaptor : ImageListViewItemAdaptor
     public override string GetSourceImage(object key)
     {
         if (disposed)
-            return null;
+            return string.Empty;
 
         string uri = (string)key;
         try
         {
             string filename = Path.GetTempFileName();
-            using (WebClient client = new WebClient())
-            {
-                client.DownloadFile(uri, filename);
-                return filename;
-            }
+            using var client = new WebClient();
+            client.DownloadFile(uri, filename);
+            return filename;
         }
         catch
         {
-            return null;
+            return string.Empty;
         }
     }
+
     /// <summary>
     /// Returns the details for the given item.
     /// </summary>
@@ -113,6 +114,7 @@ public class URIAdaptor : ImageListViewItemAdaptor
 
         return details.ToArray();
     }
+
     /// <summary>
     /// Performs application-defined tasks associated with freeing,
     /// releasing, or resetting unmanaged resources.

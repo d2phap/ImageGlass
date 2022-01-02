@@ -39,7 +39,7 @@ internal class ImageListViewCacheMetadata : IDisposable
         /// <summary>
         /// Gets the adaptor of this item.
         /// </summary>
-        public ImageListViewItemAdaptor Adaptor { get; private set; }
+        public IAdaptor Adaptor { get; private set; }
 
         /// <summary>
         /// Gets the virtual item key.
@@ -52,7 +52,7 @@ internal class ImageListViewCacheMetadata : IDisposable
         /// <param name="guid">The guid of the item.</param>
         /// <param name="adaptor">The adaptor of this item.</param>
         /// <param name="virtualItemKey">The virtual item key of this item.</param>
-        public CacheRequest(Guid guid, ImageListViewItemAdaptor adaptor, object? virtualItemKey)
+        public CacheRequest(Guid guid, IAdaptor adaptor, object? virtualItemKey)
         {
             Guid = guid;
             Adaptor = adaptor;
@@ -305,7 +305,7 @@ internal class ImageListViewCacheMetadata : IDisposable
     /// <param name="guid">Item guid.</param>
     /// <param name="adaptor">The adaptor for this item.</param>
     /// <param name="virtualItemKey">The virtual item key.</param>
-    public void Add(Guid guid, ImageListViewItemAdaptor adaptor, object? virtualItemKey)
+    public void Add(Guid guid, IAdaptor adaptor, object? virtualItemKey)
     {
         // Add to cache queue
         RunWorker(new CacheRequest(guid, adaptor, virtualItemKey));

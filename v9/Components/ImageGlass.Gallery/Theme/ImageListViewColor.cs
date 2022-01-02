@@ -66,9 +66,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "Window")]
     public Color ControlBackColor
     {
-        get { return mControlBackColor; }
+        get => mControlBackColor;
         set { mControlBackColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the background color of the ImageListView control in its disabled state.
     /// </summary>
@@ -76,9 +77,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "Control")]
     public Color DisabledBackColor
     {
-        get { return mDisabledBackColor; }
+        get => mDisabledBackColor;
         set { mDisabledBackColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the background color of the ImageListViewItem.
     /// </summary>
@@ -86,9 +88,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "Window")]
     public Color BackColor
     {
-        get { return mBackColor; }
+        get => mBackColor;
         set { mBackColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the background color of alternating cells in Details View.
     /// </summary>
@@ -96,9 +99,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "Window")]
     public Color AlternateBackColor
     {
-        get { return mAlternateBackColor; }
+        get => mAlternateBackColor;
         set { mAlternateBackColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the border color of the ImageListViewItem.
     /// </summary>
@@ -106,9 +110,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "64, 128, 128, 128")]
     public Color BorderColor
     {
-        get { return mBorderColor; }
+        get => mBorderColor;
         set { mBorderColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the foreground color of the ImageListViewItem.
     /// </summary>
@@ -116,9 +121,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "ControlText")]
     public Color ForeColor
     {
-        get { return mForeColor; }
+        get => mForeColor;
         set { mForeColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the background gradient color1 of the ImageListViewItem if the control is not focused.
     /// </summary>
@@ -126,9 +132,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "16, 128, 128, 128")]
     public Color UnFocusedColor1
     {
-        get { return mUnFocusedColor1; }
+        get => mUnFocusedColor1;
         set { mUnFocusedColor1 = value; }
     }
+
     /// <summary>
     /// Gets or sets the background gradient color2 of the ImageListViewItem if the control is not focused.
     /// </summary>
@@ -136,9 +143,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "64, 128, 128, 128")]
     public Color UnFocusedColor2
     {
-        get { return mUnFocusedColor2; }
+        get => mUnFocusedColor2;
         set { mUnFocusedColor2 = value; }
     }
+
     /// <summary>
     /// Gets or sets the border color of the ImageListViewItem if the control is not focused.
     /// </summary>
@@ -146,9 +154,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "128, 128, 128, 128")]
     public Color UnFocusedBorderColor
     {
-        get { return mUnFocusedBorderColor; }
+        get => mUnFocusedBorderColor;
         set { mUnFocusedBorderColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the fore color of the ImageListViewItem if the control is not focused.
     /// </summary>
@@ -156,9 +165,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "ControlText")]
     public Color UnFocusedForeColor
     {
-        get { return mUnFocusedForeColor; }
+        get => mUnFocusedForeColor;
         set { mUnFocusedForeColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the background gradient color1 if the ImageListViewItem is hovered.
     /// </summary>
@@ -166,9 +176,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "8, 10, 36, 106")]
     public Color HoverColor1
     {
-        get { return mHoverColor1; }
+        get => mHoverColor1;
         set { mHoverColor1 = value; }
     }
+
     /// <summary>
     /// Gets or sets the background gradient color2 if the ImageListViewItem is hovered.
     /// </summary>
@@ -176,9 +187,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "64, 10, 36, 106")]
     public Color HoverColor2
     {
-        get { return mHoverColor2; }
+        get => mHoverColor2;
         set { mHoverColor2 = value; }
     }
+
     /// <summary>
     /// Gets or sets the border color of the ImageListViewItem if the item is hovered.
     /// </summary>
@@ -186,9 +198,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "64, 10, 36, 106")]
     public Color HoverBorderColor
     {
-        get { return mHoverBorderColor; }
+        get => mHoverBorderColor;
         set { mHoverBorderColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the color of the insertion caret.
     /// </summary>
@@ -196,9 +209,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "Highlight")]
     public Color InsertionCaretColor
     {
-        get { return mInsertionCaretColor; }
+        get => mInsertionCaretColor;
         set { mInsertionCaretColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the background gradient color1 if the ImageListViewItem is selected.
     /// </summary>
@@ -206,9 +220,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "16, 10, 36, 106")]
     public Color SelectedColor1
     {
-        get { return mSelectedColor1; }
+        get => mSelectedColor1;
         set { mSelectedColor1 = value; }
     }
+
     /// <summary>
     /// Gets or sets the background gradient color2 if the ImageListViewItem is selected.
     /// </summary>
@@ -216,9 +231,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "128, 10, 36, 106")]
     public Color SelectedColor2
     {
-        get { return mSelectedColor2; }
+        get => mSelectedColor2;
         set { mSelectedColor2 = value; }
     }
+
     /// <summary>
     /// Gets or sets the border color of the ImageListViewItem if the item is selected.
     /// </summary>
@@ -226,9 +242,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "128, 10, 36, 106")]
     public Color SelectedBorderColor
     {
-        get { return mSelectedBorderColor; }
+        get => mSelectedBorderColor;
         set { mSelectedBorderColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the fore color of the ImageListViewItem if the item is selected.
     /// </summary>
@@ -236,9 +253,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "ControlText")]
     public Color SelectedForeColor
     {
-        get { return mSelectedForeColor; }
+        get => mSelectedForeColor;
         set { mSelectedForeColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the background gradient color1 if the ImageListViewItem is disabled.
     /// </summary>
@@ -246,9 +264,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "0, 128, 128, 128")]
     public Color DisabledColor1
     {
-        get { return mDisabledColor1; }
+        get => mDisabledColor1;
         set { mDisabledColor1 = value; }
     }
+
     /// <summary>
     /// Gets or sets the background gradient color2 if the ImageListViewItem is disabled.
     /// </summary>
@@ -256,9 +275,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "32, 128, 128, 128")]
     public Color DisabledColor2
     {
-        get { return mDisabledColor2; }
+        get => mDisabledColor2;
         set { mDisabledColor2 = value; }
     }
+
     /// <summary>
     /// Gets or sets the border color of the ImageListViewItem if the item is disabled.
     /// </summary>
@@ -266,9 +286,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "32, 128, 128, 128")]
     public Color DisabledBorderColor
     {
-        get { return mDisabledBorderColor; }
+        get => mDisabledBorderColor;
         set { mDisabledBorderColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the fore color of the ImageListViewItem if the item is disabled.
     /// </summary>
@@ -276,9 +297,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "128, 128, 128")]
     public Color DisabledForeColor
     {
-        get { return mDisabledForeColor; }
+        get => mDisabledForeColor;
         set { mDisabledForeColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the background gradient color1 of the column header.
     /// </summary>
@@ -286,9 +308,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "32, 212, 208, 200")]
     public Color ColumnHeaderBackColor1
     {
-        get { return mColumnHeaderBackColor1; }
+        get => mColumnHeaderBackColor1;
         set { mColumnHeaderBackColor1 = value; }
     }
+
     /// <summary>
     /// Gets or sets the background gradient color2 of the column header.
     /// </summary>
@@ -296,9 +319,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "196, 212, 208, 200")]
     public Color ColumnHeaderBackColor2
     {
-        get { return mColumnHeaderBackColor2; }
+        get => mColumnHeaderBackColor2;
         set { mColumnHeaderBackColor2 = value; }
     }
+
     /// <summary>
     /// Gets or sets the background hover gradient color1 of the column header.
     /// </summary>
@@ -306,9 +330,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "16, 10, 36, 106")]
     public Color ColumnHeaderHoverColor1
     {
-        get { return mColumnHeaderHoverColor1; }
+        get => mColumnHeaderHoverColor1;
         set { mColumnHeaderHoverColor1 = value; }
     }
+
     /// <summary>
     /// Gets or sets the background hover gradient color2 of the column header.
     /// </summary>
@@ -316,9 +341,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "64, 10, 36, 106")]
     public Color ColumnHeaderHoverColor2
     {
-        get { return mColumnHeaderHoverColor2; }
+        get => mColumnHeaderHoverColor2;
         set { mColumnHeaderHoverColor2 = value; }
     }
+
     /// <summary>
     /// Gets or sets the cells foreground color of the column header text.
     /// </summary>
@@ -326,9 +352,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "WindowText")]
     public Color ColumnHeaderForeColor
     {
-        get { return mColumnHeaderForeColor; }
+        get => mColumnHeaderForeColor;
         set { mColumnHeaderForeColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the cells background color if column is selected in Details View.
     /// </summary>
@@ -336,9 +363,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "16, 128, 128, 128")]
     public Color ColumnSelectColor
     {
-        get { return mColumnSelectColor; }
+        get => mColumnSelectColor;
         set { mColumnSelectColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the color of the separator in Details View.
     /// </summary>
@@ -346,9 +374,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "32, 128, 128, 128")]
     public Color ColumnSeparatorColor
     {
-        get { return mColumnSeparatorColor; }
+        get => mColumnSeparatorColor;
         set { mColumnSeparatorColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the foreground color of the cell text in Details View.
     /// </summary>
@@ -356,9 +385,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "ControlText")]
     public Color CellForeColor
     {
-        get { return mCellForeColor; }
+        get => mCellForeColor;
         set { mCellForeColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the foreground color of alternating cells text in Details View.
     /// </summary>
@@ -366,7 +396,7 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "ControlText")]
     public Color AlternateCellForeColor
     {
-        get { return mAlternateCellForeColor; }
+        get => mAlternateCellForeColor;
         set { mAlternateCellForeColor = value; }
     }
 
@@ -377,9 +407,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "128, 255, 255, 255")]
     public Color ImageInnerBorderColor
     {
-        get { return mImageInnerBorderColor; }
+        get => mImageInnerBorderColor;
         set { mImageInnerBorderColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the image outer border color for thumbnails and pane.
     /// </summary>
@@ -387,9 +418,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "128, 128, 128, 128")]
     public Color ImageOuterBorderColor
     {
-        get { return mImageOuterBorderColor; }
+        get => mImageOuterBorderColor;
         set { mImageOuterBorderColor = value; }
     }
+
     /// <summary>
     /// Gets or sets the background color1 of the selection rectangle.
     /// </summary>
@@ -397,9 +429,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "128, 10, 36, 106")]
     public Color SelectionRectangleColor1
     {
-        get { return mSelectionRectangleColor1; }
+        get => mSelectionRectangleColor1;
         set { mSelectionRectangleColor1 = value; }
     }
+
     /// <summary>
     /// Gets or sets the background color2 of the selection rectangle.
     /// </summary>
@@ -407,9 +440,10 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "128, 10, 36, 106")]
     public Color SelectionRectangleColor2
     {
-        get { return mSelectionRectangleColor2; }
+        get => mSelectionRectangleColor2;
         set { mSelectionRectangleColor2 = value; }
     }
+
     /// <summary>
     /// Gets or sets the color of the selection rectangle border.
     /// </summary>
@@ -417,7 +451,7 @@ public class ImageListViewColor
     [DefaultValue(typeof(Color), "Highlight")]
     public Color SelectionRectangleBorderColor
     {
-        get { return mSelectionRectangleBorderColor; }
+        get => mSelectionRectangleBorderColor;
         set { mSelectionRectangleBorderColor = value; }
     }
     #endregion
@@ -487,8 +521,7 @@ public class ImageListViewColor
     /// from its string representation.
     /// </summary>
     /// <param name="definition">String representation of the object.</param>
-    public ImageListViewColor(string definition)
-        : this()
+    public ImageListViewColor(string definition) : this()
     {
         try
         {
@@ -557,15 +590,17 @@ public class ImageListViewColor
     /// <summary>
     /// Represents the default color theme.
     /// </summary>
-    public static ImageListViewColor Default { get { return ImageListViewColor.GetDefaultTheme(); } }
+    public static ImageListViewColor Default { get { return GetDefaultTheme(); } }
+
     /// <summary>
     /// Represents the noir color theme.
     /// </summary>
-    public static ImageListViewColor Noir { get { return ImageListViewColor.GetNoirTheme(); } }
+    public static ImageListViewColor Noir { get { return GetNoirTheme(); } }
+
     /// <summary>
     /// Represents the mandarin color theme.
     /// </summary>
-    public static ImageListViewColor Mandarin { get { return ImageListViewColor.GetMandarinTheme(); } }
+    public static ImageListViewColor Mandarin { get { return GetMandarinTheme(); } }
 
     /// <summary>
     /// Sets the color palette to default colors.
@@ -574,127 +609,134 @@ public class ImageListViewColor
     {
         return new ImageListViewColor();
     }
+
     /// <summary>
     /// Sets the color palette to mandarin colors.
     /// </summary>
     private static ImageListViewColor GetMandarinTheme()
     {
-        ImageListViewColor c = new ImageListViewColor();
+        var c = new ImageListViewColor
+        {
 
-        // control
-        c.ControlBackColor = Color.White;
-        c.DisabledBackColor = Color.FromArgb(220, 220, 220);
+            // control
+            ControlBackColor = Color.White,
+            DisabledBackColor = Color.FromArgb(220, 220, 220),
 
-        // item
-        c.BackColor = Color.White;
-        c.ForeColor = Color.FromArgb(60, 60, 60);
-        c.BorderColor = Color.FromArgb(187, 190, 183);
+            // item
+            BackColor = Color.White,
+            ForeColor = Color.FromArgb(60, 60, 60),
+            BorderColor = Color.FromArgb(187, 190, 183),
 
-        c.UnFocusedColor1 = Color.FromArgb(235, 235, 235);
-        c.UnFocusedColor2 = Color.FromArgb(217, 217, 217);
-        c.UnFocusedBorderColor = Color.FromArgb(168, 169, 161);
-        c.UnFocusedForeColor = Color.FromArgb(40, 40, 40);
+            UnFocusedColor1 = Color.FromArgb(235, 235, 235),
+            UnFocusedColor2 = Color.FromArgb(217, 217, 217),
+            UnFocusedBorderColor = Color.FromArgb(168, 169, 161),
+            UnFocusedForeColor = Color.FromArgb(40, 40, 40),
 
-        c.HoverColor1 = Color.Transparent;
-        c.HoverColor2 = Color.Transparent;
-        c.HoverBorderColor = Color.Transparent;
+            HoverColor1 = Color.Transparent,
+            HoverColor2 = Color.Transparent,
+            HoverBorderColor = Color.Transparent,
 
-        c.SelectedColor1 = Color.FromArgb(244, 125, 77);
-        c.SelectedColor2 = Color.FromArgb(235, 110, 60);
-        c.SelectedBorderColor = Color.FromArgb(240, 119, 70);
-        c.SelectedForeColor = Color.White;
+            SelectedColor1 = Color.FromArgb(244, 125, 77),
+            SelectedColor2 = Color.FromArgb(235, 110, 60),
+            SelectedBorderColor = Color.FromArgb(240, 119, 70),
+            SelectedForeColor = Color.White,
 
-        c.DisabledColor1 = Color.FromArgb(217, 217, 217);
-        c.DisabledColor2 = Color.FromArgb(197, 197, 197);
-        c.DisabledBorderColor = Color.FromArgb(128, 128, 128);
-        c.DisabledForeColor = Color.FromArgb(128, 128, 128);
+            DisabledColor1 = Color.FromArgb(217, 217, 217),
+            DisabledColor2 = Color.FromArgb(197, 197, 197),
+            DisabledBorderColor = Color.FromArgb(128, 128, 128),
+            DisabledForeColor = Color.FromArgb(128, 128, 128),
 
-        c.InsertionCaretColor = Color.FromArgb(240, 119, 70);
+            InsertionCaretColor = Color.FromArgb(240, 119, 70),
 
-        // thumbnails & pane
-        c.ImageInnerBorderColor = Color.Transparent;
-        c.ImageOuterBorderColor = Color.White;
+            // thumbnails & pane
+            ImageInnerBorderColor = Color.Transparent,
+            ImageOuterBorderColor = Color.White,
 
-        // details view
-        c.CellForeColor = Color.FromArgb(60, 60, 60);
-        c.ColumnHeaderBackColor1 = Color.FromArgb(247, 247, 247);
-        c.ColumnHeaderBackColor2 = Color.FromArgb(235, 235, 235);
-        c.ColumnHeaderHoverColor1 = Color.White;
-        c.ColumnHeaderHoverColor2 = Color.FromArgb(245, 245, 245);
-        c.ColumnHeaderForeColor = Color.FromArgb(60, 60, 60);
-        c.ColumnSelectColor = Color.FromArgb(34, 128, 128, 128);
-        c.ColumnSeparatorColor = Color.FromArgb(106, 128, 128, 128);
-        c.mAlternateBackColor = Color.FromArgb(234, 234, 234);
-        c.mAlternateCellForeColor = Color.FromArgb(40, 40, 40);
+            // details view
+            CellForeColor = Color.FromArgb(60, 60, 60),
+            ColumnHeaderBackColor1 = Color.FromArgb(247, 247, 247),
+            ColumnHeaderBackColor2 = Color.FromArgb(235, 235, 235),
+            ColumnHeaderHoverColor1 = Color.White,
+            ColumnHeaderHoverColor2 = Color.FromArgb(245, 245, 245),
+            ColumnHeaderForeColor = Color.FromArgb(60, 60, 60),
+            ColumnSelectColor = Color.FromArgb(34, 128, 128, 128),
+            ColumnSeparatorColor = Color.FromArgb(106, 128, 128, 128),
+            mAlternateBackColor = Color.FromArgb(234, 234, 234),
+            mAlternateCellForeColor = Color.FromArgb(40, 40, 40),
 
-        // selection rectangle
-        c.SelectionRectangleColor1 = Color.FromArgb(64, 240, 116, 68);
-        c.SelectionRectangleColor2 = Color.FromArgb(64, 240, 116, 68);
-        c.SelectionRectangleBorderColor = Color.FromArgb(240, 119, 70);
+            // selection rectangle
+            SelectionRectangleColor1 = Color.FromArgb(64, 240, 116, 68),
+            SelectionRectangleColor2 = Color.FromArgb(64, 240, 116, 68),
+            SelectionRectangleBorderColor = Color.FromArgb(240, 119, 70)
+        };
 
         return c;
     }
+
     /// <summary>
     /// Sets the color palette to noir colors.
     /// </summary>
     private static ImageListViewColor GetNoirTheme()
     {
-        ImageListViewColor c = new ImageListViewColor();
+        var c = new ImageListViewColor
+        {
 
-        // control
-        c.ControlBackColor = Color.Black;
-        c.DisabledBackColor = Color.Black;
+            // control
+            ControlBackColor = Color.Black,
+            DisabledBackColor = Color.Black,
 
-        // item
-        c.BackColor = Color.FromArgb(0x31, 0x31, 0x31);
-        c.ForeColor = Color.LightGray;
+            // item
+            BackColor = Color.FromArgb(0x31, 0x31, 0x31),
+            ForeColor = Color.LightGray,
 
-        c.BorderColor = Color.DarkGray;
+            BorderColor = Color.DarkGray,
 
-        c.UnFocusedColor1 = Color.FromArgb(16, SystemColors.GrayText);
-        c.UnFocusedColor2 = Color.FromArgb(64, SystemColors.GrayText);
-        c.UnFocusedBorderColor = Color.FromArgb(128, SystemColors.GrayText);
-        c.UnFocusedForeColor = Color.LightGray;
+            UnFocusedColor1 = Color.FromArgb(16, SystemColors.GrayText),
+            UnFocusedColor2 = Color.FromArgb(64, SystemColors.GrayText),
+            UnFocusedBorderColor = Color.FromArgb(128, SystemColors.GrayText),
+            UnFocusedForeColor = Color.LightGray,
 
-        c.HoverColor1 = Color.FromArgb(64, Color.White);
-        c.HoverColor2 = Color.FromArgb(16, Color.White);
-        c.HoverBorderColor = Color.FromArgb(64, SystemColors.Highlight);
+            HoverColor1 = Color.FromArgb(64, Color.White),
+            HoverColor2 = Color.FromArgb(16, Color.White),
+            HoverBorderColor = Color.FromArgb(64, SystemColors.Highlight),
 
-        c.SelectedColor1 = Color.FromArgb(64, 96, 160);
-        c.SelectedColor2 = Color.FromArgb(64, 64, 96, 160);
-        c.SelectedBorderColor = Color.FromArgb(128, SystemColors.Highlight);
-        c.SelectedForeColor = Color.LightGray;
+            SelectedColor1 = Color.FromArgb(64, 96, 160),
+            SelectedColor2 = Color.FromArgb(64, 64, 96, 160),
+            SelectedBorderColor = Color.FromArgb(128, SystemColors.Highlight),
+            SelectedForeColor = Color.LightGray,
 
-        c.DisabledColor1 = Color.FromArgb(0, SystemColors.GrayText);
-        c.DisabledColor2 = Color.FromArgb(32, SystemColors.GrayText);
-        c.DisabledBorderColor = Color.FromArgb(96, SystemColors.GrayText);
-        c.DisabledForeColor = Color.LightGray;
+            DisabledColor1 = Color.FromArgb(0, SystemColors.GrayText),
+            DisabledColor2 = Color.FromArgb(32, SystemColors.GrayText),
+            DisabledBorderColor = Color.FromArgb(96, SystemColors.GrayText),
+            DisabledForeColor = Color.LightGray,
 
-        c.InsertionCaretColor = Color.FromArgb(96, 144, 240);
+            InsertionCaretColor = Color.FromArgb(96, 144, 240),
 
-        // thumbnails & pane
-        c.ImageInnerBorderColor = Color.FromArgb(128, Color.White);
-        c.ImageOuterBorderColor = Color.FromArgb(128, Color.Gray);
+            // thumbnails & pane
+            ImageInnerBorderColor = Color.FromArgb(128, Color.White),
+            ImageOuterBorderColor = Color.FromArgb(128, Color.Gray),
 
-        // details view
-        c.CellForeColor = Color.WhiteSmoke;
-        c.ColumnHeaderBackColor1 = Color.FromArgb(32, 128, 128, 128);
-        c.ColumnHeaderBackColor2 = Color.FromArgb(196, 128, 128, 128);
-        c.ColumnHeaderHoverColor1 = Color.FromArgb(64, 96, 144, 240);
-        c.ColumnHeaderHoverColor2 = Color.FromArgb(196, 96, 144, 240);
-        c.ColumnHeaderForeColor = Color.White;
-        c.ColumnSelectColor = Color.FromArgb(96, 128, 128, 128);
-        c.ColumnSeparatorColor = Color.Gold;
-        c.AlternateBackColor = Color.FromArgb(0x31, 0x31, 0x31);
-        c.AlternateCellForeColor = Color.WhiteSmoke;
+            // details view
+            CellForeColor = Color.WhiteSmoke,
+            ColumnHeaderBackColor1 = Color.FromArgb(32, 128, 128, 128),
+            ColumnHeaderBackColor2 = Color.FromArgb(196, 128, 128, 128),
+            ColumnHeaderHoverColor1 = Color.FromArgb(64, 96, 144, 240),
+            ColumnHeaderHoverColor2 = Color.FromArgb(196, 96, 144, 240),
+            ColumnHeaderForeColor = Color.White,
+            ColumnSelectColor = Color.FromArgb(96, 128, 128, 128),
+            ColumnSeparatorColor = Color.Gold,
+            AlternateBackColor = Color.FromArgb(0x31, 0x31, 0x31),
+            AlternateCellForeColor = Color.WhiteSmoke,
 
-        // selection rectangke
-        c.SelectionRectangleColor1 = Color.FromArgb(160, 96, 144, 240);
-        c.SelectionRectangleColor2 = Color.FromArgb(32, 96, 144, 240);
-        c.SelectionRectangleBorderColor = Color.FromArgb(64, 96, 144, 240);
+            // selection rectangke
+            SelectionRectangleColor1 = Color.FromArgb(160, 96, 144, 240),
+            SelectionRectangleColor2 = Color.FromArgb(32, 96, 144, 240),
+            SelectionRectangleBorderColor = Color.FromArgb(64, 96, 144, 240)
+        };
 
         return c;
     }
+
     #endregion
 
 
@@ -711,17 +753,17 @@ public class ImageListViewColor
         if (obj == null)
             throw new NullReferenceException();
 
-        ImageListViewColor other = obj as ImageListViewColor;
+        var other = obj as ImageListViewColor;
         if (other == null) return false;
 
-        foreach (PropertyInfo info in typeof(ImageListViewColor).GetProperties())
+        foreach (var info in typeof(ImageListViewColor).GetProperties())
         {
             // Walk through color properties
             if (info.PropertyType == typeof(Color))
             {
                 // Compare colors
-                Color color1 = (Color)info.GetValue(this, null);
-                Color color2 = (Color)info.GetValue(other, null);
+                var color1 = (Color?)info.GetValue(this, null);
+                var color2 = (Color?)info.GetValue(other, null);
 
                 if (color1 != color2) return false;
             }
@@ -729,6 +771,7 @@ public class ImageListViewColor
 
         return true;
     }
+
     /// <summary>
     /// Returns a hash code for this instance.
     /// </summary>
@@ -749,17 +792,17 @@ public class ImageListViewColor
     /// </returns>
     public override string ToString()
     {
-        ImageListViewColor colors = this;
+        var colors = this;
 
         // First check if the color matches a predefined color setting
-        foreach (MemberInfo info in typeof(ImageListViewColor).GetMembers(BindingFlags.Static | BindingFlags.Public))
+        foreach (var info in typeof(ImageListViewColor).GetMembers(BindingFlags.Static | BindingFlags.Public))
         {
             if (info.MemberType == MemberTypes.Property)
             {
-                PropertyInfo propertyInfo = (PropertyInfo)info;
+                var propertyInfo = (PropertyInfo)info;
                 if (propertyInfo.PropertyType == typeof(ImageListViewColor))
                 {
-                    ImageListViewColor presetValue = (ImageListViewColor)propertyInfo.GetValue(null, null);
+                    var presetValue = (ImageListViewColor?)propertyInfo.GetValue(null, null);
                     // If the color setting is equal to a preset value
                     // return the name of the preset
                     if (colors.Equals(presetValue))
@@ -769,27 +812,30 @@ public class ImageListViewColor
         }
 
         // Serialize all colors which are different from the default setting
-        List<string> lines = new List<string>();
-        foreach (PropertyInfo info in typeof(ImageListViewColor).GetProperties())
+        var lines = new List<string>();
+        foreach (var info in typeof(ImageListViewColor).GetProperties())
         {
             // Walk through color properties
             if (info.PropertyType == typeof(Color))
             {
                 // Get property name
-                string name = info.Name;
+                var name = info.Name;
+
                 // Get the current value
-                Color color = (Color)info.GetValue(colors, null);
+                var color = (Color?)info.GetValue(colors, null);
+
                 // Find the default value atribute
-                Attribute[] attributes = (Attribute[])info.GetCustomAttributes(typeof(DefaultValueAttribute), false);
+                var attributes = (Attribute[])info.GetCustomAttributes(typeof(DefaultValueAttribute), false);
+
                 if (attributes.Length != 0)
                 {
                     // Get the default value
-                    DefaultValueAttribute attribute = (DefaultValueAttribute)attributes[0];
-                    Color defaultColor = (Color)attribute.Value;
+                    var attribute = (DefaultValueAttribute)attributes[0];
+                    var defaultColor = (Color?)attribute.Value;
                     // Serialize only if colors are different
                     if (color != defaultColor)
                     {
-                        lines.Add(string.Format("{0} = {1}", name, color.Name));
+                        lines.Add(string.Format("{0} = {1}", name, color?.Name));
                     }
                 }
             }

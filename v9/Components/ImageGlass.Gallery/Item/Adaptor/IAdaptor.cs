@@ -4,7 +4,7 @@ namespace ImageGlass.Gallery;
 /// <summary>
 /// Represents the abstract case class for adaptors.
 /// </summary>
-public abstract class ImageListViewItemAdaptor : IDisposable
+public abstract class IAdaptor : IDisposable
 {
     #region Abstract Methods
 

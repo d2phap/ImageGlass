@@ -9,10 +9,10 @@ namespace ImageGlass.Gallery;
 /// <summary>
 /// Represents a file system adaptor.
 /// </summary>
-public class FileSystemAdaptor : ImageListViewItemAdaptor
+public class FileSystemAdaptor : IAdaptor
 {
     // [IG_CHANGE] use a cache for commonly repeated strings
-    private static StringCache _stringCache = new StringCache();
+    private static StringCache _stringCache = new();
 
     private bool disposed;
 
@@ -57,7 +57,7 @@ public class FileSystemAdaptor : ImageListViewItemAdaptor
     /// <returns>A unique identifier string for the thumnail.</returns>
     public override string GetUniqueIdentifier(object key, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool useExifOrientation)
     {
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
         sb.Append((string)key);// Filename
         sb.Append(':');
         sb.Append(size.Width); // Thumbnail size
@@ -67,8 +67,10 @@ public class FileSystemAdaptor : ImageListViewItemAdaptor
         sb.Append(useEmbeddedThumbnails);
         sb.Append(':');
         sb.Append(useExifOrientation);
+
         return sb.ToString();
     }
+
     /// <summary>
     /// Returns the path to the source image for use in drag operations.
     /// </summary>
@@ -77,11 +79,11 @@ public class FileSystemAdaptor : ImageListViewItemAdaptor
     public override string GetSourceImage(object key)
     {
         if (disposed)
-            return null;
+            return string.Empty;
 
-        string filename = (string)key;
-        return filename;
+        return (string)key;
     }
+
     /// <summary>
     /// Returns the details for the given item.
     /// </summary>
@@ -92,7 +94,7 @@ public class FileSystemAdaptor : ImageListViewItemAdaptor
         if (disposed)
             return Array.Empty<Tuple<ColumnType, string, object>>();
 
-        string filename = (string)key;
+        var filename = (string)key;
         var details = new List<Tuple<ColumnType, string, object>>();
 
         // Get file info
@@ -101,20 +103,19 @@ public class FileSystemAdaptor : ImageListViewItemAdaptor
             var info = new FileInfo(filename);
 
             // [IG_CHANGE] use string cache
-            details.Add(new(ColumnType.FilePath, string.Empty, _stringCache.GetFromCache(info.DirectoryName) ?? ""));
+            details.Add(new(ColumnType.FilePath, string.Empty, _stringCache.GetFromCache(info.DirectoryName ?? "")));
 
             details.Add(new Tuple<ColumnType, string, object>(ColumnType.FolderName, string.Empty, info.Directory?.Name ?? ""));
         }
 
         return details.ToArray();
     }
+
     /// <summary>
     /// Performs application-defined tasks associated with freeing,
     /// releasing, or resetting unmanaged resources.
     /// </summary>
-    public override void Dispose()
-    {
-        disposed = true;
-    }
+    public override void Dispose() => disposed = true;
+
 }
 
