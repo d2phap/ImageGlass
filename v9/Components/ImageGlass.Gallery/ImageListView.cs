@@ -1807,6 +1807,7 @@ public partial class ImageListView : Control, IComponent
     protected virtual void OnItemClick(ItemClickEventArgs e)
     {
         mTooltip.Hide(this);
+        mTooltip.RemoveAll();
 
         if (layoutManager.IsItemPartialyVisible(e.Item.Index))
         {
@@ -1843,6 +1844,7 @@ public partial class ImageListView : Control, IComponent
         ItemHover?.Invoke(this, e);
 
         if (e.Item is null) return;
+        mTooltip.RemoveAll();
 
         // show tooltip
         mTooltip.ToolTipTitle = Path.GetFileName(e.Item.Text);
