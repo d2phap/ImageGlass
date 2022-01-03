@@ -129,8 +129,7 @@ public class ModernGalleryRenderer : ImageListViewRenderer
         var textSize = new Size(0, 0);
         if (ImageListView.ShowItemText)
         {
-            var text = Path.GetFileName(item.FileName);
-            textSize = TextRenderer.MeasureText(text, ImageListView.Font);
+            textSize = TextRenderer.MeasureText(item.Text, ImageListView.Font);
 
             var foreColor = Theme.Settings.ThumbnailBarTextColor;
 
@@ -148,14 +147,19 @@ public class ModernGalleryRenderer : ImageListViewRenderer
                 }
             }
 
+            var text = item.Text;
             var textRegion = new Rectangle(
                 bounds.Left + itemMargin.Width,
                 bounds.Bottom - textSize.Height - itemMargin.Height,
                 bounds.Width - itemMargin.Width * 2,
                 textSize.Height);
 
-            TextRenderer.DrawText(g, text, ImageListView.Font, textRegion, foreColor,
-                TextFormatFlags.EndEllipsis | TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix);
+            if (textSize.Width > textRegion.Width)
+            {
+                text = Helpers.EllipsisText(text, textRegion.Width, g);
+            }
+
+            TextRenderer.DrawText(g, text, ImageListView.Font, textRegion, foreColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix);
         }
 
         #endregion
