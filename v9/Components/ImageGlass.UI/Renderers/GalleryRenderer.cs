@@ -82,8 +82,6 @@ public class ModernGalleryRenderer : ImageListViewRenderer
     /// <param name="bounds">The bounding rectangle of item in client coordinates.</param>
     public override void DrawItem(Graphics g, ImageListViewItem item, ItemState state, Rectangle bounds)
     {
-        g.SmoothingMode = SmoothingMode.HighQuality;
-
         var itemPadding = new Size(5, 5);
         var itemMargin = new Size(5, 5);
         var itemBounds = new Rectangle(

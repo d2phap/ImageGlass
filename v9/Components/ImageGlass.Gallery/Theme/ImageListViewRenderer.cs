@@ -73,10 +73,6 @@ public class ImageListViewRenderer : IDisposable
     /// </summary>
     internal bool LazyRefreshIntervalExceeded { get { return ((int)(DateTime.Now - lastRenderTime).TotalMilliseconds > LazyRefreshInterval); } }
 
-    /// <summary>
-    /// Gets a list of color themes preferred by this renderer.
-    /// </summary>
-    public virtual ImageListViewColor[] PreferredColors { get { return null; } }
     #endregion
 
 
@@ -691,6 +687,7 @@ public class ImageListViewRenderer : IDisposable
     public virtual void InitializeGraphics(Graphics g)
     {
         g.PixelOffsetMode = PixelOffsetMode.None;
+        g.SmoothingMode = SmoothingMode.HighQuality;
         g.InterpolationMode = InterpolationMode.HighQualityBicubic;
     }
 
@@ -744,10 +741,7 @@ public class ImageListViewRenderer : IDisposable
     public virtual void DrawBackground(Graphics g, Rectangle bounds)
     {
         // Clear the background
-        if (ImageListView.Enabled)
-            g.Clear(ImageListView.Colors.ControlBackColor);
-        else
-            g.Clear(ImageListView.Colors.DisabledBackColor);
+        g.Clear(ImageListView.BackColor);
 
         // Draw the background image
         if (ImageListView.BackgroundImage != null)
@@ -796,8 +790,8 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="selection">The client coordinates of the selection rectangle.</param>
     public virtual void DrawSelectionRectangle(Graphics g, Rectangle selection)
     {
-        using var brush = new SolidBrush(ImageListView.Colors.SelectionRectangleColor1);
-        using var pen = new Pen(ImageListView.Colors.SelectionRectangleBorderColor);
+        using var brush = new SolidBrush(Color.FromArgb(170, SystemColors.Highlight));
+        using var pen = new Pen(SystemColors.Highlight);
 
         g.FillRectangle(brush, selection);
         g.DrawRectangle(pen, selection);
@@ -815,44 +809,39 @@ public class ImageListViewRenderer : IDisposable
         var itemPadding = new Size(4, 4);
         var alternate = item.Index % 2 == 1;
 
-        // Paint background
-        using var bItemBack = new SolidBrush(ImageListView.Colors.DisabledBackColor);
-        g.FillRectangle(bItemBack, bounds);
-
-
         // Paint background Disabled
         if ((state & ItemState.Disabled) != ItemState.None)
         {
-            using var bDisabled = new LinearGradientBrush(bounds, ImageListView.Colors.DisabledColor1, ImageListView.Colors.DisabledColor2, LinearGradientMode.Vertical);
-            Utility.FillRoundedRectangle(g, bDisabled, bounds, 4);
+            //using var bDisabled = new LinearGradientBrush(bounds, ImageListView.Colors.DisabledColor1, ImageListView.Colors.DisabledColor2, LinearGradientMode.Vertical);
+            //Utility.FillRoundedRectangle(g, bDisabled, bounds, 4);
         }
 
         // Paint background Selected
         else if ((ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None)) ||
             (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None) && ((state & ItemState.Hovered) != ItemState.None)))
         {
-            using var bSelected = new LinearGradientBrush(bounds, ImageListView.Colors.SelectedColor1, ImageListView.Colors.SelectedColor2, LinearGradientMode.Vertical);
-            Utility.FillRoundedRectangle(g, bSelected, bounds, 4);
+            //using var bSelected = new LinearGradientBrush(bounds, ImageListView.Colors.SelectedColor1, ImageListView.Colors.SelectedColor2, LinearGradientMode.Vertical);
+            //Utility.FillRoundedRectangle(g, bSelected, bounds, 4);
         }
 
         // Paint background unfocused
         else if (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None))
         {
-            using var bGray64 = new LinearGradientBrush(bounds, ImageListView.Colors.UnFocusedColor1, ImageListView.Colors.UnFocusedColor2, LinearGradientMode.Vertical);
-            Utility.FillRoundedRectangle(g, bGray64, bounds, 4);
+            //using var bGray64 = new LinearGradientBrush(bounds, ImageListView.Colors.UnFocusedColor1, ImageListView.Colors.UnFocusedColor2, LinearGradientMode.Vertical);
+            //Utility.FillRoundedRectangle(g, bGray64, bounds, 4);
         }
 
         // Paint background Pressed
         if ((state & ItemState.Pressed) != ItemState.None)
         {
-            using var bHovered = new LinearGradientBrush(bounds, ImageListView.Colors.PressedColor2, ImageListView.Colors.PressedColor2, LinearGradientMode.Vertical);
-            Utility.FillRoundedRectangle(g, bHovered, bounds, 4);
+            //using var bHovered = new LinearGradientBrush(bounds, ImageListView.Colors.PressedColor2, ImageListView.Colors.PressedColor2, LinearGradientMode.Vertical);
+            //Utility.FillRoundedRectangle(g, bHovered, bounds, 4);
         }
         // Paint background Hover
         else if ((state & ItemState.Hovered) != ItemState.None)
         {
-            using var bHovered = new LinearGradientBrush(bounds, ImageListView.Colors.HoverColor1, ImageListView.Colors.HoverColor2, LinearGradientMode.Vertical);
-            Utility.FillRoundedRectangle(g, bHovered, bounds, 4);
+            //using var bHovered = new LinearGradientBrush(bounds, ImageListView.Colors.HoverColor1, ImageListView.Colors.HoverColor2, LinearGradientMode.Vertical);
+            //Utility.FillRoundedRectangle(g, bHovered, bounds, 4);
         }
 
 
@@ -866,77 +855,77 @@ public class ImageListViewRenderer : IDisposable
             // Draw image border
             if (Math.Min(pos.Width, pos.Height) > 32)
             {
-                using var pOuterBorder = new Pen(ImageListView.Colors.ImageOuterBorderColor);
-                g.DrawRectangle(pOuterBorder, pos);
+                //using var pOuterBorder = new Pen(ImageListView.Colors.ImageOuterBorderColor);
+                //g.DrawRectangle(pOuterBorder, pos);
 
-                if (Math.Min(ImageListView.ThumbnailSize.Width, ImageListView.ThumbnailSize.Height) > 32)
-                {
-                    using var pInnerBorder = new Pen(ImageListView.Colors.ImageInnerBorderColor);
-                    g.DrawRectangle(pInnerBorder, Rectangle.Inflate(pos, -1, -1));
-                }
+                //if (Math.Min(ImageListView.ThumbnailSize.Width, ImageListView.ThumbnailSize.Height) > 32)
+                //{
+                //    using var pInnerBorder = new Pen(ImageListView.Colors.ImageInnerBorderColor);
+                //    g.DrawRectangle(pInnerBorder, Rectangle.Inflate(pos, -1, -1));
+                //}
             }
         }
 
-        // Draw item text
-        var foreColor = ImageListView.Colors.ForeColor;
-        if ((state & ItemState.Disabled) != ItemState.None)
-        {
-            foreColor = ImageListView.Colors.DisabledForeColor;
-        }
-        else if ((state & ItemState.Pressed) != ItemState.None)
-        {
-            foreColor = ImageListView.Colors.PressedForeColor;
-        }
-        else if ((state & ItemState.Selected) != ItemState.None)
-        {
-            if (ImageListView.Focused)
-                foreColor = ImageListView.Colors.SelectedForeColor;
-            else
-                foreColor = ImageListView.Colors.UnFocusedForeColor;
-        }
+        //// Draw item text
+        //var foreColor = ImageListView.Colors.ForeColor;
+        //if ((state & ItemState.Disabled) != ItemState.None)
+        //{
+        //    foreColor = ImageListView.Colors.DisabledForeColor;
+        //}
+        //else if ((state & ItemState.Pressed) != ItemState.None)
+        //{
+        //    foreColor = ImageListView.Colors.PressedForeColor;
+        //}
+        //else if ((state & ItemState.Selected) != ItemState.None)
+        //{
+        //    if (ImageListView.Focused)
+        //        foreColor = ImageListView.Colors.SelectedForeColor;
+        //    else
+        //        foreColor = ImageListView.Colors.UnFocusedForeColor;
+        //}
 
-        var szt = TextRenderer.MeasureText(item.Text, ImageListView.Font);
-        var rt = new Rectangle(bounds.Left + itemPadding.Width, bounds.Top + 2 * itemPadding.Height + ImageListView.ThumbnailSize.Height, ImageListView.ThumbnailSize.Width, szt.Height);
+        //var szt = TextRenderer.MeasureText(item.Text, ImageListView.Font);
+        //var rt = new Rectangle(bounds.Left + itemPadding.Width, bounds.Top + 2 * itemPadding.Height + ImageListView.ThumbnailSize.Height, ImageListView.ThumbnailSize.Width, szt.Height);
 
-        TextRenderer.DrawText(g, item.Text, ImageListView.Font, rt, foreColor,
-            TextFormatFlags.EndEllipsis | TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix);
+        //TextRenderer.DrawText(g, item.Text, ImageListView.Font, rt, foreColor,
+        //    TextFormatFlags.EndEllipsis | TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix);
 
 
-        // Item border
-        using var pWhite128 = new Pen(Color.FromArgb(128, ImageListView.Colors.ControlBackColor));
-        Utility.DrawRoundedRectangle(g, pWhite128, bounds.Left + 1, bounds.Top + 1, bounds.Width - 3, bounds.Height - 3, 4);
+        //// Item border
+        //using var pWhite128 = new Pen(Color.FromArgb(128, ImageListView.Colors.ControlBackColor));
+        //Utility.DrawRoundedRectangle(g, pWhite128, bounds.Left + 1, bounds.Top + 1, bounds.Width - 3, bounds.Height - 3, 4);
 
-        if ((state & ItemState.Disabled) != ItemState.None)
-        {
-            using var pHighlight128 = new Pen(ImageListView.Colors.DisabledBorderColor);
-            Utility.DrawRoundedRectangle(g, pHighlight128, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
-        }
-        else if (ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None))
-        {
-            using var pHighlight128 = new Pen(ImageListView.Colors.SelectedBorderColor);
-            Utility.DrawRoundedRectangle(g, pHighlight128, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
-        }
-        else if (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None))
-        {
-            using var pGray128 = new Pen(ImageListView.Colors.UnFocusedBorderColor);
-            Utility.DrawRoundedRectangle(g, pGray128, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
-        }
-        else if ((state & ItemState.Pressed) == ItemState.None)
-        {
-            using var pGray64 = new Pen(ImageListView.Colors.PressedBorderColor);
-            Utility.DrawRoundedRectangle(g, pGray64, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
-        }
-        else if ((state & ItemState.Selected) == ItemState.None)
-        {
-            using var pGray64 = new Pen(ImageListView.Colors.BorderColor);
-            Utility.DrawRoundedRectangle(g, pGray64, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
-        }
+        //if ((state & ItemState.Disabled) != ItemState.None)
+        //{
+        //    using var pHighlight128 = new Pen(ImageListView.Colors.DisabledBorderColor);
+        //    Utility.DrawRoundedRectangle(g, pHighlight128, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
+        //}
+        //else if (ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None))
+        //{
+        //    using var pHighlight128 = new Pen(ImageListView.Colors.SelectedBorderColor);
+        //    Utility.DrawRoundedRectangle(g, pHighlight128, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
+        //}
+        //else if (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None))
+        //{
+        //    using var pGray128 = new Pen(ImageListView.Colors.UnFocusedBorderColor);
+        //    Utility.DrawRoundedRectangle(g, pGray128, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
+        //}
+        //else if ((state & ItemState.Pressed) == ItemState.None)
+        //{
+        //    using var pGray64 = new Pen(ImageListView.Colors.PressedBorderColor);
+        //    Utility.DrawRoundedRectangle(g, pGray64, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
+        //}
+        //else if ((state & ItemState.Selected) == ItemState.None)
+        //{
+        //    using var pGray64 = new Pen(ImageListView.Colors.BorderColor);
+        //    Utility.DrawRoundedRectangle(g, pGray64, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
+        //}
 
-        if (ImageListView.Focused && ((state & ItemState.Hovered) != ItemState.None))
-        {
-            using var pHighlight64 = new Pen(ImageListView.Colors.HoverBorderColor);
-            Utility.DrawRoundedRectangle(g, pHighlight64, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
-        }
+        //if (ImageListView.Focused && ((state & ItemState.Hovered) != ItemState.None))
+        //{
+        //    using var pHighlight64 = new Pen(ImageListView.Colors.HoverBorderColor);
+        //    Utility.DrawRoundedRectangle(g, pHighlight64, bounds.Left, bounds.Top, bounds.Width - 1, bounds.Height - 1, 4);
+        //}
 
         // Focus rectangle
         if (ImageListView.Focused && ((state & ItemState.Focused) != ItemState.None))
@@ -1010,7 +999,7 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="bounds">The bounding rectangle of the insertion caret.</param>
     public virtual void DrawInsertionCaret(Graphics g, Rectangle bounds)
     {
-        using var b = new SolidBrush(ImageListView.Colors.InsertionCaretColor);
+        using var b = new SolidBrush(SystemColors.Highlight);
         g.FillRectangle(b, bounds);
     }
 
@@ -1021,7 +1010,7 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="bounds">The bounding rectangle of the client area.</param>
     public virtual void DrawOverlay(Graphics g, Rectangle bounds)
     {
-        ;
+
     }
 
     /// <summary>
@@ -1038,7 +1027,7 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="e">A LayoutEventArgs that contains event data.</param>
     public virtual void OnLayout(LayoutEventArgs e)
     {
-        ;
+
     }
     #endregion
 

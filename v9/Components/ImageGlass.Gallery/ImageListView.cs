@@ -1,6 +1,5 @@
 ﻿
 using System.ComponentModel;
-using System.Resources;
 
 namespace ImageGlass.Gallery;
 
@@ -20,11 +19,10 @@ public partial class ImageListView : Control, IComponent
     private bool mErrorImageChanged = false;
 
     // Properties
-    private BorderStyle mBorderStyle;
-    private CacheMode mCacheMode;
+    private BorderStyle mBorderStyle = BorderStyle.None;
+    private CacheMode mCacheMode = CacheMode.OnDemand;
     private int mCacheLimitAsItemCount;
     private long mCacheLimitAsMemory;
-    private ImageListViewColor mColors;
     private Image? mDefaultImage;
     private Image? mErrorImage;
     private bool mIntegralScroll;
@@ -44,7 +42,7 @@ public partial class ImageListView : Control, IComponent
     private Point mViewOffset;
     private bool mShowScrollBars;
     private bool mShowItemText;
-    private ToolTip tooltip = new()
+    private readonly ToolTip mTooltip = new()
     {
         InitialDelay = 500,
         ReshowDelay = 500,
@@ -81,47 +79,34 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets whether thumbnail images are automatically rotated.
     /// </summary>
-    [Category("Behavior"), Description("Gets or sets whether thumbnail images are automatically rotated."), DefaultValue(true)]
-    public bool AutoRotateThumbnails { get; set; }
+    [Category("Behavior"), DefaultValue(true)]
+    public bool AutoRotateThumbnails { get; set; } = true;
 
     /// <summary>
     /// Gets or sets whether checkboxes respond to mouse clicks.
     /// </summary>
-    [Category("Behavior"), Description("Gets or sets whether checkboxes respond to mouse clicks."), DefaultValue(true)]
-    public bool AllowCheckBoxClick { get; set; }
+    [Category("Behavior"), DefaultValue(true)]
+    public bool AllowCheckBoxClick { get; set; } = true;
 
     /// <summary>
     /// Gets or sets whether the user can reorder items by moving them.
     /// </summary>
-    [Category("Behavior"), Description("Gets or sets whether the user can reorder items by moving them."), DefaultValue(true)]
-    public bool AllowItemReorder { get; set; }
+    [Category("Behavior"), DefaultValue(false)]
+    public bool AllowItemReorder { get; set; } = false;
 
     /// <summary>
     /// Gets or sets whether items can be dragged out of the control to start a drag and drop operation.
     /// </summary>
-    [Category("Behavior"), Description("Gets or sets whether items can be dragged out of the control to start a drag and drop operation."), DefaultValue(false)]
-    public bool AllowDrag { get; set; }
+    [Category("Behavior"), DefaultValue(true)]
+    public bool AllowDrag { get; set; } = true;
 
     /// <summary>
     /// Gets or sets whether duplicate items (image files pointing to the same path 
     /// on the file system) are allowed.
     /// </summary>
-    [Category("Behavior"), Description("Gets or sets whether duplicate items (image files pointing to the same path on the file system) are allowed."), DefaultValue(false)]
-    public bool AllowDuplicateFileNames { get; set; }
+    [Category("Behavior"), DefaultValue(false)]
+    public bool AllowDuplicateFileNames { get; set; } = false;
 
-    /// <summary>
-    /// Gets or sets the background color of the control.
-    /// </summary>
-    [Category("Appearance"), Description("Gets or sets the background color of the control."), DefaultValue(typeof(Color), "Window")]
-    public override Color BackColor
-    {
-        get => mColors.ControlBackColor;
-        set
-        {
-            mColors.ControlBackColor = value;
-            Refresh();
-        }
-    }
 
     /// <summary>
     /// Gets or sets the border style of the control.
@@ -172,7 +157,7 @@ public partial class ImageListView : Control, IComponent
 
 
     /// <summary>
-    /// [IG_CHANGE] Provides the ability to control the metadata caching
+    /// Provides the ability to control the metadata caching
     /// </summary>
     [Category("Behavior"), Description("Controls metadata caching"), DefaultValue(false)]
     public bool MetadataCacheEnabled
@@ -265,25 +250,6 @@ public partial class ImageListView : Control, IComponent
         }
     }
 
-    /// <summary>
-    /// Gets or sets the color palette of the ImageListView.
-    /// </summary>
-    [Category("Appearance"), Description("Gets or sets the color palette of the ImageListView.")]
-    public ImageListViewColor Colors
-    {
-        get
-        {
-            if (mColors == null)
-                mColors = ImageListViewColor.Default;
-
-            return mColors;
-        }
-        set
-        {
-            mColors = value;
-            Refresh();
-        }
-    }
 
     /// <summary>
     /// Gets or sets the placeholder image.
@@ -655,24 +621,6 @@ public partial class ImageListView : Control, IComponent
 
 
     #region Custom Property Serializers
-    /// <summary>
-    /// Determines if the colors should be serialized.
-    /// </summary>
-    /// <returns>true if the designer should serialize 
-    /// the property; otherwise false.</returns>
-    public bool ShouldSerializeColors()
-    {
-        ImageListViewColor defaultColors = ImageListViewColor.Default;
-        return !mColors.Equals(defaultColors);
-    }
-
-    /// <summary>
-    /// Resets the colors to their default value.
-    /// </summary>
-    public void ResetColors()
-    {
-        Colors = ImageListViewColor.Default;
-    }
 
     /// <summary>
     /// Determines if the default image should be serialized.
@@ -726,17 +674,9 @@ public partial class ImageListView : Control, IComponent
         rendererSuspendCount = 0;
         rendererNeedsPaint = true;
 
-        mColors = ImageListViewColor.Default;
         SetRenderer(new ImageListViewRenderer());
 
         // Property defaults
-        AutoRotateThumbnails = true;
-        AllowCheckBoxClick = true;
-        AllowDrag = false;
-        AllowItemReorder = false;
-        AllowDuplicateFileNames = false;
-        mBorderStyle = BorderStyle.None;
-        mCacheMode = CacheMode.OnDemand;
         mCacheLimitAsItemCount = 0;
         mCacheLimitAsMemory = 20 * 1024 * 1024;
         mIntegralScroll = false;
@@ -1068,22 +1008,12 @@ public partial class ImageListView : Control, IComponent
     /// Sets the renderer for this instance.
     /// </summary>
     /// <param name="renderer">An <see cref="ImageListViewRenderer"/> to assign to the control.</param>
-    /// <param name="keepColors">true to keep current colors; otherwise false.</param>
-    public void SetRenderer(ImageListViewRenderer renderer, bool keepColors)
+    public void SetRenderer(ImageListViewRenderer renderer)
     {
         var oldRenderer = mRenderer;
 
         mRenderer = renderer ?? throw new ArgumentNullException(nameof(renderer));
         mRenderer.ImageListView = this;
-
-        if (!keepColors)
-        {
-            var preferredColors = mRenderer.PreferredColors;
-            if (preferredColors != null)
-                mColors = preferredColors[0];
-            else
-                mColors = ImageListViewColor.Default;
-        }
 
         if (oldRenderer != null)
             oldRenderer.Dispose();
@@ -1092,15 +1022,6 @@ public partial class ImageListView : Control, IComponent
             layoutManager.Update(true);
 
         Refresh();
-    }
-
-    /// <summary>
-    /// Sets the renderer for this instance.
-    /// </summary>
-    /// <param name="renderer">An <see cref="ImageListViewRenderer"/> to assign to the control.</param>
-    public void SetRenderer(ImageListViewRenderer renderer)
-    {
-        SetRenderer(renderer, false);
     }
 
     /// <summary>
@@ -1548,7 +1469,7 @@ public partial class ImageListView : Control, IComponent
         navigationManager.MouseDown(e);
 
         // hide tooltip
-        tooltip.Hide(this);
+        mTooltip.Hide(this);
 
         base.OnMouseDown(e);
     }
@@ -1721,7 +1642,7 @@ public partial class ImageListView : Control, IComponent
                 if (vScrollBar != null && vScrollBar.IsHandleCreated && !vScrollBar.IsDisposed)
                     vScrollBar.Dispose();
 
-                tooltip?.Dispose();
+                mTooltip?.Dispose();
                 lazyRefreshTimer?.Dispose();
 
                 // internal classes
@@ -1858,7 +1779,7 @@ public partial class ImageListView : Control, IComponent
     /// <param name="e">A ItemClickEventArgs that contains event data.</param>
     protected virtual void OnItemClick(ItemClickEventArgs e)
     {
-        tooltip.Hide(this);
+        mTooltip.Hide(this);
 
         if (layoutManager.IsItemPartialyVisible(e.Item.Index))
         {
@@ -1895,10 +1816,10 @@ public partial class ImageListView : Control, IComponent
         ItemHover?.Invoke(this, e);
 
         if (e.Item is null) return;
-        
+
         // show tooltip
-        tooltip.ToolTipTitle = Path.GetFileName(e.Item.Text);
-        tooltip.SetToolTip(this, e.Item.FileName);
+        mTooltip.ToolTipTitle = Path.GetFileName(e.Item.Text);
+        mTooltip.SetToolTip(this, e.Item.FileName);
     }
 
     /// <summary>
