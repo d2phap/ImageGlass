@@ -914,6 +914,7 @@ namespace ImageGlass
             this.Sp1.Cursor = System.Windows.Forms.Cursors.SizeNS;
             this.Sp1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Sp1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.Sp1.IsSplitterFixed = true;
             this.Sp1.Location = new System.Drawing.Point(0, 25);
             this.Sp1.Margin = new System.Windows.Forms.Padding(0);
             this.Sp1.Name = "Sp1";
@@ -932,9 +933,10 @@ namespace ImageGlass
             this.Sp1.Panel2MinSize = 0;
             this.Sp1.Size = new System.Drawing.Size(1108, 569);
             this.Sp1.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.Sp1.SplitterDistance = 406;
-            this.Sp1.SplitterWidth = 9;
+            this.Sp1.SplitterDistance = 455;
+            this.Sp1.SplitterWidth = 1;
             this.Sp1.TabIndex = 2;
+            this.Sp1.TabStop = false;
             // 
             // Sp2
             // 
@@ -957,7 +959,7 @@ namespace ImageGlass
             this.Sp2.Panel2.Controls.Add(this.Sp3);
             this.Sp2.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp2.Panel2MinSize = 10;
-            this.Sp2.Size = new System.Drawing.Size(1108, 406);
+            this.Sp2.Size = new System.Drawing.Size(1108, 455);
             this.Sp2.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.Sp2.SplitterDistance = 164;
             this.Sp2.SplitterWidth = 11;
@@ -970,7 +972,7 @@ namespace ImageGlass
             this.PanLeft.Location = new System.Drawing.Point(0, 0);
             this.PanLeft.Margin = new System.Windows.Forms.Padding(2);
             this.PanLeft.Name = "PanLeft";
-            this.PanLeft.Size = new System.Drawing.Size(164, 406);
+            this.PanLeft.Size = new System.Drawing.Size(164, 455);
             this.PanLeft.TabIndex = 1;
             // 
             // Sp3
@@ -994,9 +996,9 @@ namespace ImageGlass
             this.Sp3.Panel2.Controls.Add(this.PanRight);
             this.Sp3.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp3.Panel2MinSize = 0;
-            this.Sp3.Size = new System.Drawing.Size(933, 406);
+            this.Sp3.Size = new System.Drawing.Size(933, 455);
             this.Sp3.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.Sp3.SplitterDistance = 656;
+            this.Sp3.SplitterDistance = 649;
             this.Sp3.SplitterWidth = 11;
             this.Sp3.TabIndex = 3;
             // 
@@ -1010,7 +1012,7 @@ namespace ImageGlass
             this.PicBox.NavButtonSize = new System.Drawing.SizeF(90F, 90F);
             this.PicBox.NavDisplay = ImageGlass.Base.PhotoBox.NavButtonDisplay.Both;
             this.PicBox.ShowFPS = true;
-            this.PicBox.Size = new System.Drawing.Size(656, 406);
+            this.PicBox.Size = new System.Drawing.Size(649, 455);
             this.PicBox.TabIndex = 0;
             this.PicBox.OnImageChanged += new ImageGlass.PhotoBox.ViewBox.ImageChangedEventHandler(this.PicBox_OnImageChanged);
             // 
@@ -1021,7 +1023,7 @@ namespace ImageGlass
             this.PanRight.Location = new System.Drawing.Point(0, 0);
             this.PanRight.Margin = new System.Windows.Forms.Padding(2);
             this.PanRight.Name = "PanRight";
-            this.PanRight.Size = new System.Drawing.Size(266, 406);
+            this.PanRight.Size = new System.Drawing.Size(273, 455);
             this.PanRight.TabIndex = 1;
             // 
             // Gallery
@@ -1032,9 +1034,11 @@ namespace ImageGlass
             this.Gallery.Name = "Gallery";
             this.Gallery.PersistentCacheDirectory = "";
             this.Gallery.PersistentCacheSize = ((long)(100));
-            this.Gallery.Size = new System.Drawing.Size(1108, 154);
+            this.Gallery.ScrollBars = false;
+            this.Gallery.ShowItemText = true;
+            this.Gallery.Size = new System.Drawing.Size(1108, 113);
             this.Gallery.TabIndex = 1;
-            ImageGlass.Gallery.ImageListView.UseWIC = false;
+            this.Gallery.ThumbnailSize = new System.Drawing.Size(70, 70);
             this.Gallery.View = ImageGlass.Gallery.View.HorizontalStrip;
             // 
             // MnuContext

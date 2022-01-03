@@ -24,8 +24,6 @@ public partial class FrmMain : Form
 
         // apply DPI changes
         OnDpiChanged();
-
-        Prepare();
     }
 
     protected override void WndProc(ref Message m)
@@ -56,6 +54,8 @@ public partial class FrmMain : Form
     private void FrmMain_Load(object sender, EventArgs e)
     {
         Text = $"{PicBox.Width}x{PicBox.Height}";
+
+        Prepare();
     }
 
     private void OnDpiChanged()
@@ -103,28 +103,35 @@ public partial class FrmMain : Form
             return;
         }
 
+        
         Local.Metadata = Config.Codec.LoadMetadata(inputPath);
-
 
         PicBox.ShowMessage("Loading image... \n" + inputPath, 0, 1500);
         var bmp = await Config.Codec.LoadAsync(inputPath, new(Local.Metadata));
         PicBox.LoadImage(bmp);
-        
+
+        LoadGallery(inputPath);
+    }
 
 
-        var files = Directory.GetFiles(Path.GetDirectoryName(inputPath) ?? "");
+    private void LoadGallery(string path = "")
+    {
+        SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
+        if (InvokeRequired)
+        {
+            Invoke(LoadGallery, path);
+        }
 
-        
+        var files = Directory.GetFiles(Path.GetDirectoryName(path) ?? "");
+
         Gallery.Items.Clear();
-        Gallery.SuspendLayout();
-
+        Gallery.SuspendPaint();
         foreach (var file in files)
         {
             var item = new ImageListViewItem(file);
             Gallery.Items.Add(item);
         }
-
-        Gallery.ResumeLayout();
+        Gallery.ResumePaint();
     }
 
 

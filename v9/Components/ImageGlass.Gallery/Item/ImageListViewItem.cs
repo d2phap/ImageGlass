@@ -227,7 +227,7 @@ public class ImageListViewItem : ICloneable
     /// Gets or sets the user-defined data associated with the item.
     /// </summary>
     [Category("Data"), Browsable(true), Description("Gets or sets the user-defined data associated with the item."), TypeConverter(typeof(StringConverter))]
-    public object Tag { get; set; }
+    public object? Tag { get; set; }
 
     /// <summary>
     /// Gets or sets the text associated with this item. If left blank, item Text 
@@ -449,13 +449,13 @@ public class ImageListViewItem : ICloneable
 
         Tag = null;
     }
+
     /// <summary>
     /// Initializes a new instance of the <see cref="ImageListViewItem"/> class.
     /// </summary>
     /// <param name="filename">The image filename representing the item.</param>
     /// <param name="text">Item text</param>
-    public ImageListViewItem(string filename, string text)
-        : this()
+    public ImageListViewItem(string filename, string text) : this()
     {
         if (File.Exists(filename))
         {
@@ -467,8 +467,7 @@ public class ImageListViewItem : ICloneable
             // if text parameter is empty then get file name for item text
             if (string.IsNullOrEmpty(text))
             {
-                // [IG_CHANGE] don't duplicate filename text = Path.GetFileName(filename);
-                mText = text;
+                mText = Path.GetFileName(filename);
             }
         }
         else if (string.IsNullOrEmpty(text))
@@ -489,30 +488,25 @@ public class ImageListViewItem : ICloneable
     /// Initializes a new instance of the <see cref="ImageListViewItem"/> class.
     /// </summary>
     /// <param name="filename">The image filename representing the item.</param>
-    public ImageListViewItem(string filename) : this(filename, string.Empty)
-    {
-        ;
-    }
+    public ImageListViewItem(string filename) : this(filename, string.Empty) { }
+
     /// <summary>
     /// Initializes a new instance of a virtual <see cref="ImageListViewItem"/> class.
     /// </summary>
     /// <param name="key">The key identifying this item.</param>
     /// <param name="text">Text of this item.</param>
-    public ImageListViewItem(object key, string text)
-        : this()
+    public ImageListViewItem(object key, string text) : this()
     {
         mVirtualItemKey = key;
         mText = text;
     }
+
     /// <summary>
     /// Initializes a new instance of a virtual <see cref="ImageListViewItem"/> class.
     /// </summary>
     /// <param name="key">The key identifying this item.</param>
-    public ImageListViewItem(object key)
-        : this(key, string.Empty)
-    {
-        ;
-    }
+    public ImageListViewItem(object key) : this(key, string.Empty) { }
+
     #endregion
 
 

@@ -44,6 +44,11 @@ public partial class ImageListView : Control, IComponent
     private Point mViewOffset;
     private bool mShowScrollBars;
     private bool mShowItemText;
+    private ToolTip tooltip = new()
+    {
+        InitialDelay = 500,
+        ReshowDelay = 500,
+    };
 
     // Renderer variables
     internal ImageListViewRenderer mRenderer;
@@ -74,6 +79,7 @@ public partial class ImageListView : Control, IComponent
 
 
     #region Properties
+
     /// <summary>
     /// Gets or sets whether thumbnail images are automatically rotated.
     /// </summary>
@@ -1175,8 +1181,8 @@ public partial class ImageListView : Control, IComponent
         if (Items.Count == 0 || itemIndex < 0 || itemIndex > Items.Count - 1)
             return false;
 
-        Rectangle bounds = layoutManager.ItemAreaBounds;
-        Rectangle itemBounds = layoutManager.GetItemBounds(itemIndex);
+        var bounds = layoutManager.ItemAreaBounds;
+        var itemBounds = layoutManager.GetItemBounds(itemIndex);
 
         // Align center of the element with center of visible area.
         if (ScrollOrientation == ScrollOrientation.HorizontalScroll)
@@ -1557,6 +1563,10 @@ public partial class ImageListView : Control, IComponent
             Focus();
 
         navigationManager.MouseDown(e);
+
+        // hide tooltip
+        tooltip.Hide(this);
+
         base.OnMouseDown(e);
     }
 
@@ -1727,17 +1737,17 @@ public partial class ImageListView : Control, IComponent
                     hScrollBar.Dispose();
                 if (vScrollBar != null && vScrollBar.IsHandleCreated && !vScrollBar.IsDisposed)
                     vScrollBar.Dispose();
-                if (lazyRefreshTimer != null)
-                    lazyRefreshTimer.Dispose();
+
+                tooltip?.Dispose();
+                lazyRefreshTimer?.Dispose();
 
                 // internal classes
-                defaultAdaptor.Dispose();
-                thumbnailCache.Dispose();
-                shellInfoCache.Dispose();
-                metadataCache.Dispose();
-                navigationManager.Dispose();
-                if (mRenderer != null)
-                    mRenderer.Dispose();
+                defaultAdaptor?.Dispose();
+                thumbnailCache?.Dispose();
+                shellInfoCache?.Dispose();
+                metadataCache?.Dispose();
+                navigationManager?.Dispose();
+                mRenderer?.Dispose();
             }
 
             disposed = true;
@@ -1865,6 +1875,13 @@ public partial class ImageListView : Control, IComponent
     /// <param name="e">A ItemClickEventArgs that contains event data.</param>
     protected virtual void OnItemClick(ItemClickEventArgs e)
     {
+        tooltip.Hide(this);
+
+        if (layoutManager.IsItemPartialyVisible(e.Item.Index))
+        {
+            ScrollToIndex(e.Item.Index);
+        }
+
         ItemClick?.Invoke(this, e);
     }
 
@@ -1893,6 +1910,12 @@ public partial class ImageListView : Control, IComponent
     protected virtual void OnItemHover(ItemHoverEventArgs e)
     {
         ItemHover?.Invoke(this, e);
+
+        if (e.Item is null) return;
+        
+        // show tooltip
+        tooltip.ToolTipTitle = Path.GetFileName(e.Item.Text);
+        tooltip.SetToolTip(this, e.Item.FileName);
     }
 
     /// <summary>

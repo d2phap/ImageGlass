@@ -27,8 +27,6 @@ internal class ImageListViewLayoutManager
     private Size cachedSize;
     private int cachedItemCount;
     private Size cachedItemSize;
-    private int cachedGroupHeaderHeight;
-    private int cachedColumnHeaderHeight;
     private bool cachedIntegralScroll;
     private Size cachedItemMargin;
     private bool cachedScrollBars;
@@ -42,55 +40,68 @@ internal class ImageListViewLayoutManager
     private int totalHeight;
     #endregion
 
+
     #region Properties
     /// <summary>
     /// Gets the bounds of the entire client area.
     /// </summary>
     public Rectangle ClientArea { get { return mClientArea; } }
+    
     /// <summary>
     /// Gets the owner image list view.
     /// </summary>
     public ImageListView ImageListView { get { return mImageListView; } }
+    
     /// <summary>
     /// Gets the extends of the item area.
     /// </summary>
     public Rectangle ItemAreaBounds { get { return mItemAreaBounds; } }
+    
     /// <summary>
     /// Gets the extents of the column header area.
     /// </summary>
     public Rectangle ColumnHeaderBounds { get { return mColumnHeaderBounds; } }
+    
     /// <summary>
     /// Gets the items size.
     /// </summary>
     public Size ItemSize { get { return mItemSize; } }
+    
     /// <summary>
     /// Gets the items size including the margin around the item.
     /// </summary>
     public Size ItemSizeWithMargin { get { return mItemSizeWithMargin; } }
+    
     /// <summary>
     /// Gets the maximum number of columns that can be displayed.
     /// </summary>
     public int Cols { get { return mDisplayedCols; } }
+    
     /// <summary>
     /// Gets the maximum number of rows that can be displayed.
     /// </summary>
     public int Rows { get { return mDisplayedRows; } }
+    
     /// <summary>
     /// Gets the index of the first partially visible item.
     /// </summary>
     public int FirstPartiallyVisible { get { return mFirstPartiallyVisible; } }
+    
     /// <summary>
     /// Gets the index of the last partially visible item.
     /// </summary>
     public int LastPartiallyVisible { get { return mLastPartiallyVisible; } }
+    
     /// <summary>
     /// Gets the index of the first fully visible item.
     /// </summary>
     public int FirstVisible { get { return mFirstVisible; } }
+    
     /// <summary>
     /// Gets the index of the last fully visible item.
     /// </summary>
     public int LastVisible { get { return mLastVisible; } }
+    
     /// <summary>
     /// Determines whether an update is required.
     /// </summary>
@@ -120,7 +131,9 @@ internal class ImageListViewLayoutManager
                 return false;
         }
     }
+
     #endregion
+
 
     #region Constructor
     /// <summary>
@@ -137,7 +150,9 @@ internal class ImageListViewLayoutManager
 
         Update();
     }
+
     #endregion
+
 
     #region Instance Methods
     /// <summary>
@@ -149,6 +164,17 @@ internal class ImageListViewLayoutManager
     {
         return cachedVisibleItems.ContainsKey(guid);
     }
+
+    /// <summary>
+    /// Determines whether the item with the given guid is partially visible.
+    /// </summary>
+    /// <param name="index">The index of the item to check.</param>
+    /// <returns></returns>
+    public bool IsItemPartialyVisible(int index)
+    {
+        return index == FirstPartiallyVisible || index == LastPartiallyVisible;
+    }
+
     /// <summary>
     /// Returns the bounds of the item with the specified index.
     /// </summary>
@@ -168,6 +194,7 @@ internal class ImageListViewLayoutManager
 
         return new Rectangle(location, mItemSize);
     }
+
     /// <summary>
     /// Returns the bounds of the item with the specified index, 
     /// including the margin around the item.
@@ -178,6 +205,7 @@ internal class ImageListViewLayoutManager
         rec.Inflate(cachedItemMargin.Width / 2, cachedItemMargin.Height / 2);
         return rec;
     }
+
     /// <summary>
     /// Returns the item checkbox bounds.
     /// This method assumes a checkbox icon size of 16x16
@@ -200,6 +228,7 @@ internal class ImageListViewLayoutManager
 
         return bounds;
     }
+
     /// <summary>
     /// Returns the item icon bounds.
     /// This method assumes an icon size of 16x16
@@ -225,6 +254,7 @@ internal class ImageListViewLayoutManager
 
         return bounds;
     }
+
     /// <summary>
     /// Returns the bounds of a widget.
     /// Used to calculate the bounds of checkboxes and icons.
@@ -252,6 +282,7 @@ internal class ImageListViewLayoutManager
 
         return new Rectangle(x, y, size.Width, size.Height);
     }
+
     /// <summary>
     /// Recalculates the control layout.
     /// </summary>
@@ -259,6 +290,7 @@ internal class ImageListViewLayoutManager
     {
         Update(false);
     }
+
     /// <summary>
     /// Recalculates the control layout.
     /// <param name="forceUpdate">true to force an update; otherwise false.</param>
@@ -326,6 +358,7 @@ internal class ImageListViewLayoutManager
         if (viewChanged)
             Update();
     }
+
     /// <summary>
     /// Calculates the maximum number of rows and columns 
     /// that can be fully displayed.
@@ -357,6 +390,7 @@ internal class ImageListViewLayoutManager
         totalWidth = mItemCols * mItemSizeWithMargin.Width;
         totalHeight = mItemRows * mItemSizeWithMargin.Height;
     }
+
     /// <summary>
     /// Calculates the item area.
     /// </summary>
@@ -387,6 +421,7 @@ internal class ImageListViewLayoutManager
 
         return mItemAreaBounds.Width > 0 && mItemAreaBounds.Height > 0;
     }
+
     /// <summary>
     /// Shows or hides the scroll bars.
     /// Returns true if the layout needs to be recalculated; otherwise false.
@@ -423,6 +458,7 @@ internal class ImageListViewLayoutManager
         // Determine if the layout needs to be recalculated
         return (hScrollChanged || vScrollChanged);
     }
+
     /// <summary>
     /// Updates scroll bar parameters.
     /// </summary>
@@ -504,6 +540,7 @@ internal class ImageListViewLayoutManager
         mImageListView.vScrollBar.Top = bounds.Top;
         mImageListView.vScrollBar.Height = bounds.Height - (mImageListView.hScrollBar.Visible ? mImageListView.hScrollBar.Height : 0);
     }
+
     /// <summary>
     /// Updates the dictionary of visible items.
     /// </summary>

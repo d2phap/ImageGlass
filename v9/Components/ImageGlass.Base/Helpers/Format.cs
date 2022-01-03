@@ -1,9 +1,16 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Runtime.InteropServices;
+using System.Text;
+using System.Text.RegularExpressions;
+using System;
 
 namespace ImageGlass.Base;
 
 public partial class Helpers
 {
+    [DllImport("shlwapi.dll", CharSet = CharSet.Unicode)]
+    private static extern bool PathCompactPathEx([Out] StringBuilder pszOut, string szPath, int cchMax, int dwFlags);
+
+
     /// <summary>
     /// Formats the given file size as a human readable string.
     /// </summary>
@@ -244,4 +251,42 @@ public partial class Helpers
         }
         return 0;
     }
+
+
+    /// <summary>
+    /// Shorten and ellipsis the path
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="length"></param>
+    /// <returns></returns>
+    public static string ShortenPath(string path, int length)
+    {
+        var sb = new StringBuilder(length);
+        PathCompactPathEx(sb, path, length, 0);
+
+        return sb.ToString();
+    }
+
+
+    /// <summary>
+    /// Ellipses the given text
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="containerWidth"></param>
+    /// <param name="g"></param>
+    /// <returns></returns>
+    public static string EllipsisText(string text, int containerWidth, Graphics g)
+    {
+        var textSize = g.MeasureString(text, Control.DefaultFont);
+        var avgCharW = textSize.Width / text.Length;
+        var maxCharsPerSide = (int)Math.Floor(containerWidth / avgCharW / 2d) - 1;
+
+        var truncated = string.Concat(
+            text.AsSpan(0, maxCharsPerSide),
+            "…",
+            text.AsSpan(text.Length - maxCharsPerSide, maxCharsPerSide));
+
+        return truncated;
+    }
+
 }
