@@ -25,7 +25,7 @@ public partial class ImageListView : Control, IComponent
     private int mCacheLimitAsItemCount;
     private long mCacheLimitAsMemory;
     private ImageListViewColor mColors;
-    private Image mDefaultImage;
+    private Image? mDefaultImage;
     private Image? mErrorImage;
     private bool mIntegralScroll;
     private ImageListViewItemCollection mItems;
@@ -73,8 +73,6 @@ public partial class ImageListView : Control, IComponent
     internal ImageListViewCacheMetadata metadataCache;
     internal FileSystemAdaptor defaultAdaptor;
 
-    // Resource manager
-    private ResourceManager resources;
     #endregion
 
 
@@ -291,15 +289,9 @@ public partial class ImageListView : Control, IComponent
     /// Gets or sets the placeholder image.
     /// </summary>
     [Category("Appearance"), Description("Gets or sets the placeholder image.")]
-    public Image DefaultImage
+    public Image? DefaultImage
     {
-        get
-        {
-            if (mDefaultImage == null)
-                return resources.GetObject("DefaultImage") as Image;
-            else
-                return mDefaultImage;
-        }
+        get => mDefaultImage;
         set
         {
             mDefaultImageChanged = true;
@@ -362,13 +354,7 @@ public partial class ImageListView : Control, IComponent
     [Category("Appearance"), Description("Gets or sets the error image.")]
     public Image? ErrorImage
     {
-        get
-        {
-            if (mErrorImage == null)
-                return resources.GetObject("ErrorImage") as Image;
-            else
-                return mErrorImage;
-        }
+        get => mErrorImage;
         set
         {
             mErrorImageChanged = true;
@@ -703,7 +689,7 @@ public partial class ImageListView : Control, IComponent
     /// </summary>
     public void ResetDefaultImage()
     {
-        DefaultImage = resources.GetObject("DefaultImage") as Image;
+        DefaultImage = null;
         mDefaultImageChanged = false;
     }
 
@@ -722,7 +708,7 @@ public partial class ImageListView : Control, IComponent
     /// </summary>
     public void ResetErrorImage()
     {
-        ErrorImage = resources.GetObject("ErrorImage") as Image;
+        ErrorImage = null;
         mErrorImageChanged = false;
     }
 
@@ -747,15 +733,12 @@ public partial class ImageListView : Control, IComponent
         AutoRotateThumbnails = true;
         AllowCheckBoxClick = true;
         AllowDrag = false;
-        AllowItemReorder = true;
+        AllowItemReorder = false;
         AllowDuplicateFileNames = false;
         mBorderStyle = BorderStyle.None;
         mCacheMode = CacheMode.OnDemand;
         mCacheLimitAsItemCount = 0;
         mCacheLimitAsMemory = 20 * 1024 * 1024;
-        resources = new ResourceManager("ImageGlass.Gallery.ImageListViewResources", typeof(ImageListView).Assembly);
-        mDefaultImage = resources.GetObject("DefaultImage") as Image;
-        mErrorImage = resources.GetObject("ErrorImage") as Image;
         mIntegralScroll = false;
         mItems = new ImageListViewItemCollection(this);
         MultiSelect = true;

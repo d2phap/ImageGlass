@@ -11,19 +11,4 @@
     <ProjectReference Include="..\ImageGlass.Base\ImageGlass.Base.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="ImageListViewResources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ImageListViewResources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="ImageListViewResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ImageListViewResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-
 </Project>

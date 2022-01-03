@@ -77,7 +77,7 @@ public class ModernGalleryRenderer : ImageListViewRenderer
     /// Draws the specified item on the given graphics.
     /// </summary>
     /// <param name="g">The System.Drawing.Graphics to draw on.</param>
-    /// <param name="item">The ImageListViewItem to draw.</param>
+    /// <param name="item">The <see cref="ImageListViewItem"/> to draw.</param>
     /// <param name="state">The current view state of item.</param>
     /// <param name="bounds">The bounding rectangle of item in client coordinates.</param>
     public override void DrawItem(Graphics g, ImageListViewItem item, ItemState state, Rectangle bounds)
