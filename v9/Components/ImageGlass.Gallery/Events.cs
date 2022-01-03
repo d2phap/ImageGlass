@@ -1,4 +1,22 @@
-﻿
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
@@ -37,14 +55,6 @@ public delegate void DropItemsEventHandler(object sender, DropItemEventArgs e);
 /// <param name="e">A DropCompleteEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void DropCompleteEventHandler(object sender, DropCompleteEventArgs e);
-
-/// <summary>
-/// Represents the method that will handle the ColumnClick event. 
-/// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
-/// <param name="e">A ColumnClickEventArgs that contains event data.</param>
-[EditorBrowsable(EditorBrowsableState.Never)]
-public delegate void ColumnClickEventHandler(object sender, ColumnClickEventArgs e);
 
 /// <summary>
 /// Represents the method that will handle the ItemClick event. 
@@ -177,6 +187,7 @@ public class CacheErrorEventArgs : EventArgs
         CacheThread = cacheThread;
     }
 }
+
 /// <summary>
 /// Represents the event arguments for external drag drop events.
 /// </summary>
@@ -189,15 +200,18 @@ public class DropFileEventArgs : EventArgs
     /// Otherwise, the control will not process the dropped files.
     /// </summary>
     public bool Cancel { get; set; }
+
     /// <summary>
     /// Gets the position of the insertion caret.
     /// This determines where the new items will be inserted.
     /// </summary>
     public int Index { get; private set; }
+
     /// <summary>
     /// Gets the array of filenames droppped on the control.
     /// </summary>
     public string[] FileNames { get; private set; }
+
 
     /// <summary>
     /// Initializes a new instance of the DropFileEventArgs class.
@@ -210,7 +224,9 @@ public class DropFileEventArgs : EventArgs
         Index = index;
         FileNames = fileNames;
     }
+
 }
+
 /// <summary>
 /// Represents the event arguments for internal drag drop events.
 /// </summary>
@@ -223,15 +239,18 @@ public class DropItemEventArgs : EventArgs
     /// Otherwise, the control will not process the dropped items.
     /// </summary>
     public bool Cancel { get; set; }
+
     /// <summary>
     /// Gets the position of the insertion caret.
     /// This determines where the new items will be inserted.
     /// </summary>
     public int Index { get; private set; }
+
     /// <summary>
     /// Gets the array of items droppped on the control.
     /// </summary>
     public ImageListViewItem[] Items { get; private set; }
+
 
     /// <summary>
     /// Initializes a new instance of the DropItemEventArgs class.
@@ -256,6 +275,7 @@ public class DropCompleteEventArgs : EventArgs
     /// Gets the array of items droppped on the control.
     /// </summary>
     public ImageListViewItem[] Items { get; private set; }
+
     /// <summary>
     /// Gets if the drag operation is internal or external to the control.
     /// In an internal drag operation, own items of the control are reordered.
@@ -306,18 +326,22 @@ public class ItemClickEventArgs : EventArgs
     /// Gets the ImageListViewItem that is the target of the event.
     /// </summary>
     public ImageListViewItem Item { get; private set; }
+
     /// <summary>
     /// Gets the coordinates of the cursor.
     /// </summary>
     public Point Location { get; private set; }
+
     /// <summary>
     /// Gets the x-coordinates of the cursor.
     /// </summary>
-    public int X { get { return Location.X; } }
+    public int X => Location.X;
+
     /// <summary>
     /// Gets the y-coordinates of the cursor.
     /// </summary>
-    public int Y { get { return Location.Y; } }
+    public int Y => Location.Y;
+
     /// <summary>
     /// Gets the state of the mouse buttons.
     /// </summary>
@@ -337,6 +361,7 @@ public class ItemClickEventArgs : EventArgs
         Buttons = buttons;
     }
 }
+
 /// <summary>
 /// Represents the event arguments for item hover related events.
 /// </summary>
@@ -348,11 +373,13 @@ public class ItemHoverEventArgs : EventArgs
     /// Returns null if there was no previously hovered item.
     /// </summary>
     public ImageListViewItem? PreviousItem { get; private set; }
+
     /// <summary>
     /// Gets the currently hovered ImageListViewItem.
     /// Returns null if there is no hovered item.
     /// </summary>
     public ImageListViewItem? Item { get; private set; }
+
 
     /// <summary>
     /// Initializes a new instance of the ItemEventArgs class.
@@ -365,6 +392,7 @@ public class ItemHoverEventArgs : EventArgs
         PreviousItem = previousItem;
     }
 }
+
 /// <summary>
 /// Represents the event arguments related to control layout.
 /// </summary>
@@ -385,6 +413,7 @@ public class LayoutEventArgs : EventArgs
         ItemAreaBounds = itemAreaBounds;
     }
 }
+
 /// <summary>
 /// Represents the event arguments for the thumbnail caching event.
 /// </summary>
@@ -395,6 +424,7 @@ public class ThumbnailCachingEventArgs : EventArgs
     /// Gets the ImageListViewItem that is the target of the event.
     /// </summary>
     public ImageListViewItem Item { get; private set; }
+
     /// <summary>
     /// Gets the size of the thumbnail request.
     /// </summary>
@@ -411,6 +441,7 @@ public class ThumbnailCachingEventArgs : EventArgs
         Size = size;
     }
 }
+
 /// <summary>
 /// Represents the event arguments for the thumbnail cached event.
 /// </summary>
@@ -421,14 +452,17 @@ public class ThumbnailCachedEventArgs : EventArgs
     /// Gets the ImageListViewItem that is the target of the event.
     /// </summary>
     public ImageListViewItem Item { get; private set; }
+
     /// <summary>
     /// Gets the size of the thumbnail request.
     /// </summary>
     public Size Size { get; private set; }
+
     /// <summary>
     /// Gets the cached thumbnail image.
     /// </summary>
     public Image Thumbnail { get; private set; }
+
     /// <summary>
     /// Gets whether the cached image is a thumbnail image or
     /// a large image for gallery or pane views.
@@ -451,6 +485,7 @@ public class ThumbnailCachedEventArgs : EventArgs
         IsThumbnail = thumbnailImage;
     }
 }
+
 /// <summary>
 /// Represents the event arguments for the shell info caching event.
 /// </summary>
@@ -471,6 +506,7 @@ public class ShellInfoCachingEventArgs : EventArgs
         Extension = extension;
     }
 }
+
 /// <summary>
 /// Represents the event arguments for the shell info cached event.
 /// </summary>
@@ -481,18 +517,22 @@ public class ShellInfoCachedEventArgs : EventArgs
     /// Gets the file extension for which the shell info is requested.
     /// </summary>
     public string Extension { get; private set; }
+
     /// <summary>
     /// Gets the small shell icon.
     /// </summary>
     public Image SmallIcon { get; private set; }
+
     /// <summary>
     /// Gets the large shell icon.
     /// </summary>
     public Image LargeIcon { get; private set; }
+
     /// <summary>
     /// Gets the shell file type.
     /// </summary>
     public string FileType { get; private set; }
+
 
     /// <summary>
     /// Initializes a new instance of the ShellInfoCachedEventArgs class.
@@ -520,6 +560,7 @@ public class ItemCollectionChangedEventArgs : EventArgs
     /// Gets the type of action causing the change.
     /// </summary>
     public CollectionChangeAction Action { get; private set; }
+
     /// <summary>
     /// Gets the ImageListViewItem that is the target of the event.
     /// </summary>
@@ -536,6 +577,8 @@ public class ItemCollectionChangedEventArgs : EventArgs
         Action = action;
         Item = item;
     }
+
 }
+
 #endregion
 

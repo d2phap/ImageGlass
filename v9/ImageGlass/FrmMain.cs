@@ -1,7 +1,6 @@
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Gallery;
-using ImageGlass.Heart;
 using ImageGlass.PhotoBox;
 using ImageGlass.Settings;
 using System.Diagnostics;

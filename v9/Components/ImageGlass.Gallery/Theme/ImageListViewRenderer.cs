@@ -1,4 +1,27 @@
-﻿
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+---------------------
+ImageGlass.Gallery is based on ImageListView v13.8.2:
+Url: https://github.com/oozcitak/imagelistview
+License: Apache License Version 2.0, http://www.apache.org/licenses/
+---------------------
+*/
 using System.Drawing.Drawing2D;
 using System.Windows.Forms.VisualStyles;
 
@@ -57,11 +80,6 @@ public class ImageListViewRenderer : IDisposable
     /// Gets the rectangle bounding the item display area.
     /// </summary>
     public Rectangle ItemAreaBounds { get { return ImageListView.layoutManager.ItemAreaBounds; } }
-
-    /// <summary>
-    /// Gets the rectangle bounding the column headers.
-    /// </summary>
-    public Rectangle ColumnHeaderBounds { get { return ImageListView.layoutManager.ColumnHeaderBounds; } }
 
     /// <summary>
     /// Gets a value indicating whether this renderer can apply custom colors.
@@ -510,7 +528,6 @@ public class ImageListViewRenderer : IDisposable
                 g.IntersectClip(selclip);
             }
 
-            g.ExcludeClip(ImageListView.layoutManager.ColumnHeaderBounds);
             DrawSelectionRectangle(g, sel);
         }
     }
@@ -932,22 +949,6 @@ public class ImageListViewRenderer : IDisposable
         {
             ControlPaint.DrawFocusRectangle(g, bounds);
         }
-    }
-
-    /// <summary>
-    /// Draws the overlay graphics for the specified sub item on the given graphics.
-    /// </summary>
-    /// <param name="g">The System.Drawing.Graphics to draw on.</param>
-    /// <param name="item">The ImageListViewItem to draw.</param>
-    /// <param name="state">The current view state of item.</param>
-    /// <param name="subItemIndex">The index of the sub item. The index returned is the 0-based index of the 
-    /// column as displayed on the screen, considering column visibility and display indices.
-    /// Returns -1 if the hit point is not over a sub item.</param>
-    /// <param name="subItemHovered">true if the mouse cursor is over the sub item; otherwise false.</param>
-    /// <param name="bounds">The bounding rectangle of the sub item in client coordinates.</param>
-    public virtual void DrawSubItemItemOverlay(Graphics g, ImageListViewItem item, ItemState state, int subItemIndex, bool subItemHovered, Rectangle bounds)
-    {
-        ;
     }
 
     /// <summary>

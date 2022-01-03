@@ -1,4 +1,27 @@
-﻿
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+---------------------
+ImageGlass.Gallery is based on ImageListView v13.8.2:
+Url: https://github.com/oozcitak/imagelistview
+License: Apache License Version 2.0, http://www.apache.org/licenses/
+---------------------
+*/
 using System.Drawing.Drawing2D;
 using System.Text;
 
@@ -81,37 +104,6 @@ public static class Utility
         return false;
     }
     
-    /// <summary>
-    /// Draws the given caption and text inside the given rectangle.
-    /// </summary>
-    internal static int DrawStringPair(Graphics g, Rectangle r, string caption, string text, Font font, Brush captionBrush, Brush textBrush)
-    {
-        using (StringFormat sf = new StringFormat())
-        {
-            sf.Alignment = StringAlignment.Near;
-            sf.LineAlignment = StringAlignment.Near;
-            sf.Trimming = StringTrimming.EllipsisCharacter;
-            sf.FormatFlags = StringFormatFlags.NoWrap;
-
-            SizeF szc = g.MeasureString(caption, font, r.Size, sf);
-            int y = (int)szc.Height;
-            if (szc.Width > r.Width) szc.Width = r.Width;
-            Rectangle txrect = new Rectangle(r.Location, Size.Ceiling(szc));
-            g.DrawString(caption, font, captionBrush, txrect, sf);
-            txrect.X += txrect.Width;
-            txrect.Width = r.Width;
-            if (txrect.X < r.Right)
-            {
-                SizeF szt = g.MeasureString(text, font, r.Size, sf);
-                y = Math.Max(y, (int)szt.Height);
-                txrect = Rectangle.Intersect(r, txrect);
-                g.DrawString(text, font, textBrush, txrect, sf);
-            }
-
-            return y;
-        }
-    }
-
     /// <summary>
     /// Gets the scaled size of an image required to fit
     /// in to the given size keeping the image aspect ratio.
@@ -203,45 +195,6 @@ public static class Utility
     }
 
     /// <summary>
-    /// Fills the interior of a rounded rectangle.
-    /// </summary>
-    /// <param name="graphics">The graphics to draw on.</param>
-    /// <param name="brush">The brush to use to fill the rectangle.</param>
-    /// <param name="x">The x-coordinate of the upper-left corner of the rectangle to draw.</param>
-    /// <param name="y">The y-coordinate of the upper-left corner of the rectangle to draw.</param>
-    /// <param name="width">Width of the rectangle to draw.</param>
-    /// <param name="height">Height of the rectangle to draw.</param>
-    /// <param name="radius">The radius of rounded corners.</param>
-    public static void FillRoundedRectangle(Graphics graphics, Brush brush, float x, float y, float width, float height, float radius)
-    {
-        FillRoundedRectangle(graphics, brush, (int)x, (int)y, (int)width, (int)height, (int)radius);
-    }
-
-    /// <summary>
-    /// Fills the interior of a rounded rectangle.
-    /// </summary>
-    /// <param name="graphics">The graphics to draw on.</param>
-    /// <param name="brush">The brush to use to fill the rectangle.</param>
-    /// <param name="rect">The rectangle to draw.</param>
-    /// <param name="radius">The radius of rounded corners.</param>
-    public static void FillRoundedRectangle(Graphics graphics, Brush brush, Rectangle rect, int radius)
-    {
-        FillRoundedRectangle(graphics, brush, rect.Left, rect.Top, rect.Width, rect.Height, radius);
-    }
-
-    /// <summary>
-    /// Fills the interior of a rounded rectangle.
-    /// </summary>
-    /// <param name="graphics">The graphics to draw on.</param>
-    /// <param name="brush">The brush to use to fill the rectangle.</param>
-    /// <param name="rect">The rectangle to draw.</param>
-    /// <param name="radius">The radius of rounded corners.</param>
-    public static void FillRoundedRectangle(Graphics graphics, Brush brush, RectangleF rect, float radius)
-    {
-        FillRoundedRectangle(graphics, brush, (int)rect.Left, (int)rect.Top, (int)rect.Width, (int)rect.Height, (int)radius);
-    }
-
-    /// <summary>
     /// Draws the outline of a rounded rectangle.
     /// </summary>
     /// <param name="graphics">The graphics to draw on.</param>
@@ -253,49 +206,8 @@ public static class Utility
     /// <param name="radius">The radius of rounded corners.</param>
     public static void DrawRoundedRectangle(Graphics graphics, Pen pen, int x, int y, int width, int height, int radius)
     {
-        using (GraphicsPath path = GetRoundedRectanglePath(x, y, width, height, radius))
-        {
-            graphics.DrawPath(pen, path);
-        }
-    }
-
-    /// <summary>
-    /// Draws the outline of a rounded rectangle.
-    /// </summary>
-    /// <param name="graphics">The graphics to draw on.</param>
-    /// <param name="pen">The pen to use to draw the rectangle.</param>
-    /// <param name="x">The x-coordinate of the upper-left corner of the rectangle to draw.</param>
-    /// <param name="y">The y-coordinate of the upper-left corner of the rectangle to draw.</param>
-    /// <param name="width">Width of the rectangle to draw.</param>
-    /// <param name="height">Height of the rectangle to draw.</param>
-    /// <param name="radius">The radius of rounded corners.</param>
-    public static void DrawRoundedRectangle(Graphics graphics, Pen pen, float x, float y, float width, float height, float radius)
-    {
-        DrawRoundedRectangle(graphics, pen, (int)x, (int)y, (int)width, (int)height, (int)radius);
-    }
-
-    /// <summary>
-    /// Draws the outline of a rounded rectangle.
-    /// </summary>
-    /// <param name="graphics">The graphics to draw on.</param>
-    /// <param name="pen">The pen to use to draw the rectangle.</param>
-    /// <param name="rect">The rectangle to draw.</param>
-    /// <param name="radius">The radius of rounded corners.</param>
-    public static void DrawRoundedRectangle(Graphics graphics, Pen pen, Rectangle rect, int radius)
-    {
-        DrawRoundedRectangle(graphics, pen, rect.Left, rect.Top, rect.Width, rect.Height, radius);
-    }
-
-    /// <summary>
-    /// Draws the outline of a rounded rectangle.
-    /// </summary>
-    /// <param name="graphics">The graphics to draw on.</param>
-    /// <param name="pen">The pen to use to draw the rectangle.</param>
-    /// <param name="rect">The rectangle to draw.</param>
-    /// <param name="radius">The radius of rounded corners.</param>
-    public static void DrawRoundedRectangle(Graphics graphics, Pen pen, RectangleF rect, float radius)
-    {
-        DrawRoundedRectangle(graphics, pen, (int)rect.Left, (int)rect.Top, (int)rect.Width, (int)rect.Height, (int)radius);
+        using GraphicsPath path = GetRoundedRectanglePath(x, y, width, height, radius);
+        graphics.DrawPath(pen, path);
     }
 
     #endregion

@@ -1,4 +1,29 @@
-﻿namespace ImageGlass.Gallery;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+---------------------
+ImageGlass.Gallery is based on ImageListView v13.8.2:
+Url: https://github.com/oozcitak/imagelistview
+License: Apache License Version 2.0, http://www.apache.org/licenses/
+---------------------
+*/
+
+namespace ImageGlass.Gallery;
 
 
 /// <summary>
@@ -10,7 +35,6 @@ internal class ImageListViewLayoutManager
     private Rectangle mClientArea;
     private ImageListView mImageListView;
     private Rectangle mItemAreaBounds;
-    private Rectangle mColumnHeaderBounds;
     private Size mItemSize;
     private Size mItemSizeWithMargin;
     private int mDisplayedCols;
@@ -56,11 +80,6 @@ internal class ImageListViewLayoutManager
     /// Gets the extends of the item area.
     /// </summary>
     public Rectangle ItemAreaBounds { get { return mItemAreaBounds; } }
-    
-    /// <summary>
-    /// Gets the extents of the column header area.
-    /// </summary>
-    public Rectangle ColumnHeaderBounds { get { return mColumnHeaderBounds; } }
     
     /// <summary>
     /// Gets the items size.
@@ -415,9 +434,6 @@ internal class ImageListViewLayoutManager
             mClientArea.Width -= mImageListView.vScrollBar.Width;
             mItemAreaBounds.Width -= mImageListView.vScrollBar.Width;
         }
-
-        // Allocate space for column headers
-        mColumnHeaderBounds = Rectangle.Empty;
 
         return mItemAreaBounds.Width > 0 && mItemAreaBounds.Height > 0;
     }

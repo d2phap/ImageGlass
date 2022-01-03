@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Gallery;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using View = ImageGlass.Gallery.View;
 
