@@ -1525,9 +1525,11 @@ public partial class ImageListView : Control, IComponent
     {
         SuspendPaint();
 
+        var speed = e.Delta / (100f + Math.Abs(e.Delta));
+
         if (ScrollOrientation == ScrollOrientation.VerticalScroll)
         {
-            int newYOffset = mViewOffset.Y - (e.Delta / SystemInformation.MouseWheelScrollDelta) * vScrollBar.SmallChange;
+            int newYOffset = mViewOffset.Y - (int)(speed * vScrollBar.SmallChange);
             if (newYOffset > vScrollBar.Maximum - vScrollBar.LargeChange + 1)
                 newYOffset = vScrollBar.Maximum - vScrollBar.LargeChange + 1;
             if (newYOffset < 0)
@@ -1536,12 +1538,13 @@ public partial class ImageListView : Control, IComponent
                 newYOffset = vScrollBar.Minimum;
             if (newYOffset > vScrollBar.Maximum)
                 newYOffset = vScrollBar.Maximum;
+
             mViewOffset.Y = newYOffset;
             vScrollBar.Value = newYOffset;
         }
         else
         {
-            int newXOffset = mViewOffset.X - (e.Delta / SystemInformation.MouseWheelScrollDelta) * hScrollBar.SmallChange;
+            int newXOffset = mViewOffset.X - (int)(speed * hScrollBar.SmallChange);
             if (newXOffset > hScrollBar.Maximum - hScrollBar.LargeChange + 1)
                 newXOffset = hScrollBar.Maximum - hScrollBar.LargeChange + 1;
             if (newXOffset < 0)
@@ -1550,6 +1553,7 @@ public partial class ImageListView : Control, IComponent
                 newXOffset = hScrollBar.Minimum;
             if (newXOffset > hScrollBar.Maximum)
                 newXOffset = hScrollBar.Maximum;
+
             mViewOffset.X = newXOffset;
             hScrollBar.Value = newXOffset;
         }
