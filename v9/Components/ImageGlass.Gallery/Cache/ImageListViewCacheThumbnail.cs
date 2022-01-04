@@ -34,25 +34,34 @@ namespace ImageGlass.Gallery;
 internal class ImageListViewCacheThumbnail : IDisposable
 {
     #region Member Variables
-    private QueuedWorker bw;
-    private SynchronizationContext context;
-    private SendOrPostCallback checkProcessingCallback;
+    private readonly QueuedWorker _bw = new()
+    {
+        ProcessingMode = ProcessingMode.LIFO,
+        IsBackground = true,
+        ThreadName = "Thumbnail cache worker thread",
+    };
+    private SynchronizationContext? _context = null;
+    private readonly SendOrPostCallback _checkProcessingCallback;
 
-    private ImageListView mImageListView;
+    internal PersistentCache _diskCache = new()
+    {
+        CacheSize = 100 * 1024 * 1024, // 100 MB disk cache
+    };
+    private readonly Dictionary<Guid, CacheItem> _thumbCache = new();
+    private readonly Dictionary<Guid, bool> _processing = new();
+    private readonly Dictionary<Guid, bool> _editCache = new();
+    private readonly List<Guid> _removedItems = new();
 
-    internal PersistentCache diskCache;
-    private Dictionary<Guid, CacheItem> thumbCache;
-    private Dictionary<Guid, bool> processing;
-    private Guid processingRendererItem;
-    private Guid processingGalleryItem;
-    private Dictionary<Guid, bool> editCache;
-    private CacheItem? rendererItem;
-    private CacheItem? galleryItem;
+    private Guid _processingRendererItem = Guid.Empty;
+    private Guid _processingGalleryItem = Guid.Empty;
+    private CacheItem? _rendererItem = null;
+    private CacheItem? _galleryItem = null;
 
-    private List<Guid> removedItems;
+    private readonly ImageListView _imageListView;
+    private bool _isDisposed = false;
 
-    private bool disposed;
     #endregion
+
 
     #region RequestType Enum
     private enum RequestType
@@ -73,6 +82,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
         Renderer
     }
     #endregion
+
 
     #region CacheRequest Class
     /// <summary>
@@ -141,34 +151,40 @@ internal class ImageListViewCacheThumbnail : IDisposable
     }
     #endregion
 
+
     #region CacheItem Class
     /// <summary>
     /// Represents an item in the thumbnail cache.
     /// </summary>
     private class CacheItem : IDisposable
     {
-        private bool disposed;
+        private bool _isDisposed;
 
         /// <summary>
         /// Gets the guid of the item.
         /// </summary>
         public Guid Guid { get; private set; }
+
         /// <summary>
         /// Gets the size of the requested thumbnail.
         /// </summary>
         public Size Size { get; private set; }
+
         /// <summary>
         /// Gets the cached image.
         /// </summary>
         public Image? Image { get; private set; }
+
         /// <summary>
         /// Gets or sets the state of the cache item.
         /// </summary>
         public CacheState State { get; set; }
+
         /// <summary>
         /// Gets embedded thumbnail extraction behavior.
         /// </summary>
         public UseEmbeddedThumbnails UseEmbeddedThumbnails { get; private set; }
+
         /// <summary>
         /// Gets Exif rotation behavior.
         /// </summary>
@@ -184,7 +200,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
         /// <param name="state">The cache state of the item.</param>
         /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
         /// <param name="autoRotate">AutoRotate property of the owner control.</param>
-        public CacheItem(Guid guid, Size size, Image image, CacheState state, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
+        public CacheItem(Guid guid, Size size, Image? image, CacheState state, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
         {
             Guid = guid;
             Size = size;
@@ -192,7 +208,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
             State = state;
             UseEmbeddedThumbnails = useEmbeddedThumbnails;
             AutoRotate = autoRotate;
-            disposed = false;
+            _isDisposed = false;
         }
 
         /// <summary>
@@ -201,7 +217,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
         /// </summary>
         public void Dispose()
         {
-            if (!disposed)
+            if (!_isDisposed)
             {
                 if (Image != null)
                 {
@@ -209,10 +225,11 @@ internal class ImageListViewCacheThumbnail : IDisposable
                     Image = null;
                 }
 
-                disposed = true;
+                _isDisposed = true;
                 GC.SuppressFinalize(this);
             }
         }
+
 #if DEBUG
         /// <summary>
         /// Releases unmanaged resources and performs other cleanup operations before the
@@ -225,8 +242,10 @@ internal class ImageListViewCacheThumbnail : IDisposable
             Dispose();
         }
 #endif
+
     }
     #endregion
+
 
     #region CanContinueProcessingEventArgs
     /// <summary>
@@ -238,6 +257,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
         /// Gets the request.
         /// </summary>
         public CacheRequest Request { get; private set; }
+
         /// <summary>
         /// Gets whether this item should be processed.
         /// </summary>
@@ -253,42 +273,49 @@ internal class ImageListViewCacheThumbnail : IDisposable
             ContinueProcessing = true;
         }
     }
+
     #endregion
+
 
     #region Properties
     /// <summary>
     /// Determines whether the cache manager retries loading items on errors.
     /// </summary>
-    public bool RetryOnError { get; internal set; }
+    public bool RetryOnError { get; internal set; } = false;
+
     /// <summary>
     /// Gets or sets the cache mode.
     /// </summary>
-    public CacheMode CacheMode { get; internal set; }
+    public CacheMode CacheMode { get; internal set; } = CacheMode.OnDemand;
+
     /// <summary>
     /// Gets or sets the cache limit as count of items.
     /// </summary>
-    public int CacheLimitAsItemCount { get; internal set; }
+    public int CacheLimitAsItemCount { get; internal set; } = 0;
+
     /// <summary>
     /// Gets or sets the cache limit as allocated memory in MB.
     /// </summary>
-    public long CacheLimitAsMemory { get; internal set; }
+    public long CacheLimitAsMemory { get; internal set; } = 20 * 1024 * 1024;
+
     /// <summary>
     /// Gets the approximate amount of memory used by the cache.
     /// </summary>
-    public long MemoryUsed { get; private set; }
+    public long MemoryUsed { get; private set; } = 0;
+
     /// <summary>
     /// Gets the approximate amount of memory used by removed items in the cache.
     /// This memory can be reclaimed by calling <see cref="Purge()"/>.
     /// </summary>
-    public long MemoryUsedByRemoved { get; private set; }
+    public long MemoryUsedByRemoved { get; private set; } = 0;
+
     /// <summary>
     /// Returns the count of items in the cache.
     /// </summary>
-    public long CacheSize
-    {
-        get { return thumbCache.Count; }
-    }
+    public long CacheSize => _thumbCache.Count;
+
     #endregion
+
 
     #region Constructor
     /// <summary>
@@ -297,42 +324,15 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// <param name="owner">The owner control.</param>
     public ImageListViewCacheThumbnail(ImageListView owner)
     {
-        context = null;
-        bw = new QueuedWorker
-        {
-            ProcessingMode = ProcessingMode.LIFO,
-            IsBackground = true,
-            ThreadName = "Thumbnail Cache Worker Thread"
-        };
-        bw.DoWork += bw_DoWork;
-        bw.RunWorkerCompleted += bw_RunWorkerCompleted;
+        _bw.DoWork += Bw_DoWork;
+        _bw.RunWorkerCompleted += Bw_RunWorkerCompleted;
 
-        checkProcessingCallback = new SendOrPostCallback(CanContinueProcessing);
-
-        mImageListView = owner;
-        diskCache = new PersistentCache();
-        diskCache.CacheSize = 100 * 1024 * 1024; // 100 MB disk cache
-        CacheMode = CacheMode.OnDemand;
-        CacheLimitAsItemCount = 0;
-        CacheLimitAsMemory = 20 * 1024 * 1024;
-        RetryOnError = false;
-
-        thumbCache = new Dictionary<Guid, CacheItem>();
-        editCache = new Dictionary<Guid, bool>();
-        processing = new Dictionary<Guid, bool>();
-        processingRendererItem = Guid.Empty;
-        processingGalleryItem = Guid.Empty;
-
-        rendererItem = null;
-        galleryItem = null;
-
-        MemoryUsed = 0;
-        MemoryUsedByRemoved = 0;
-        removedItems = new List<Guid>();
-
-        disposed = false;
+        _checkProcessingCallback = new SendOrPostCallback(CanContinueProcessing);
+        _imageListView = owner;
     }
+
     #endregion
+
 
     #region Context Callbacks
 
@@ -341,10 +341,13 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// </summary>
     /// <param name="item">The <see cref="CacheItem"/> to check.</param>
     /// <returns>true if the item should be processed; otherwise false.</returns>
-    private bool OnCanContinueProcessing(CacheRequest item)
+    private bool OnCanContinueProcessing(CacheRequest? item)
     {
-        CanContinueProcessingEventArgs arg = new CanContinueProcessingEventArgs(item);
-        context.Send(checkProcessingCallback, arg);
+        if (item is null) return false;
+
+        var arg = new CanContinueProcessingEventArgs(item);
+        _context?.Send(_checkProcessingCallback, arg);
+
         return arg.ContinueProcessing;
     }
 
@@ -355,41 +358,61 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// <returns>true if the item should be processed; otherwise false.</returns>
     private void CanContinueProcessing(object? argument)
     {
-        CanContinueProcessingEventArgs? arg = argument as CanContinueProcessingEventArgs;
-        CacheRequest? request = arg?.Request;
-        bool canProcess = true;
+        var arg = argument as CanContinueProcessingEventArgs;
+        if (arg is null) return;
+
+        var request = arg.Request;
+        if (request is null) return;
+
+        var canProcess = true;
 
         // Is it in the edit cache?
-        if (canProcess && editCache.ContainsKey(request.Guid))
+        if (canProcess && _editCache.ContainsKey(request.Guid))
             canProcess = false;
 
         // Is it already cached?
         if (canProcess && (request?.RequestType == RequestType.Thumbnail))
         {
-            thumbCache.TryGetValue(request.Guid, out CacheItem? existing);
-            if (existing != null && existing.Size == request.Size && existing.UseEmbeddedThumbnails == request.UseEmbeddedThumbnails && existing.AutoRotate == request.AutoRotate)
+            _thumbCache.TryGetValue(request.Guid, out CacheItem? existing);
+            if (existing != null
+                && existing.Size == request.Size
+                && existing.UseEmbeddedThumbnails == request.UseEmbeddedThumbnails
+                && existing.AutoRotate == request.AutoRotate)
                 canProcess = false;
 
             // Is it outside the visible area?
-            if (canProcess && (CacheMode == CacheMode.OnDemand) && mImageListView != null && !mImageListView.IsItemVisible(request.Guid))
+            if (canProcess
+                && CacheMode == CacheMode.OnDemand
+                && _imageListView != null
+                && !_imageListView.IsItemVisible(request.Guid))
                 canProcess = false;
         }
         else if (canProcess && (request?.RequestType == RequestType.Gallery))
         {
-            CacheItem existing = galleryItem;
-            if (existing != null && existing.Guid == request.Guid && existing.Size == request.Size && existing.UseEmbeddedThumbnails == request.UseEmbeddedThumbnails && existing.AutoRotate == request.AutoRotate)
+            var existing = _galleryItem;
+            if (existing != null
+                && existing.Guid == request.Guid
+                && existing.Size == request.Size
+                && existing.UseEmbeddedThumbnails == request.UseEmbeddedThumbnails
+                && existing.AutoRotate == request.AutoRotate)
                 canProcess = false;
         }
         else if (canProcess && (request?.RequestType == RequestType.Renderer))
         {
-            CacheItem existing = rendererItem;
-            if (existing != null && existing.Guid == request.Guid && existing.Size == request.Size && existing.UseEmbeddedThumbnails == request.UseEmbeddedThumbnails && existing.AutoRotate == request.AutoRotate)
+            var existing = _rendererItem;
+            if (existing != null
+                && existing.Guid == request.Guid
+                && existing.Size == request.Size
+                && existing.UseEmbeddedThumbnails == request.UseEmbeddedThumbnails
+                && existing.AutoRotate == request.AutoRotate)
                 canProcess = false;
         }
 
         arg.ContinueProcessing = canProcess;
     }
+
     #endregion
+
 
     #region QueuedBackgroundWorker Events
     /// <summary>
@@ -398,54 +421,53 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="QueuedWorkerCompletedEventArgs"/> 
     /// instance containing the event data.</param>
-    void bw_RunWorkerCompleted(object sender, QueuedWorkerCompletedEventArgs e)
+    private void Bw_RunWorkerCompleted(object? sender, QueuedWorkerCompletedEventArgs e)
     {
-        CacheRequest request = e.UserState as CacheRequest;
-        CacheItem result = e.Result as CacheItem;
+        var request = e.UserState as CacheRequest;
+        if (request is null) return;
+
+        var result = e.Result as CacheItem;
 
         // We are done processing
         if (request.RequestType == RequestType.Renderer)
-            processingRendererItem = Guid.Empty;
+            _processingRendererItem = Guid.Empty;
         else if (request.RequestType == RequestType.Gallery)
-            processingGalleryItem = Guid.Empty;
+            _processingGalleryItem = Guid.Empty;
         else
-            processing.Remove(request.Guid);
+            _processing.Remove(request.Guid);
 
-        // Do not process the result if the cache operation
-        // was cancelled.
-        if (e.Cancelled)
-            return;
+        // Do not process the result if the cache operation was cancelled.
+        if (e.Cancelled) return;
 
         // Dispose old item and add to cache
         if (request.RequestType == RequestType.Renderer)
         {
-            if (rendererItem != null)
-                rendererItem.Dispose();
+            if (_rendererItem != null)
+                _rendererItem.Dispose();
 
-            rendererItem = result;
+            _rendererItem = result;
         }
         else if (request.RequestType == RequestType.Gallery)
         {
-            if (galleryItem != null)
-                galleryItem.Dispose();
+            if (_galleryItem != null)
+                _galleryItem.Dispose();
 
-            galleryItem = result;
+            _galleryItem = result;
         }
         else if (result != null)
         {
-            CacheItem existing = null;
-            if (thumbCache.TryGetValue(result.Guid, out existing))
+            if (_thumbCache.TryGetValue(result.Guid, out CacheItem? existing))
             {
                 existing.Dispose();
-                thumbCache.Remove(result.Guid);
+                _thumbCache.Remove(result.Guid);
             }
-            thumbCache.Add(result.Guid, result);
+            _thumbCache.Add(result.Guid, result);
 
             if (result.Image != null)
             {
                 // Did the thumbnail size change while we were
                 // creating the thumbnail?
-                if (result.Size != mImageListView.ThumbnailSize)
+                if (result.Size != _imageListView.ThumbnailSize)
                     result.State = CacheState.Unknown;
 
                 // Purge invisible items if we exceeded the cache limit
@@ -455,30 +477,32 @@ internal class ImageListViewCacheThumbnail : IDisposable
             }
         }
 
-        //Refresh the control
-        if (mImageListView != null)
+        // Refresh the control
+        if (_imageListView != null)
         {
-            if (request.RequestType != RequestType.Thumbnail || mImageListView.IsItemVisible(request.Guid))
-                mImageListView.Refresh(false, true);
+            if (request.RequestType != RequestType.Thumbnail || _imageListView.IsItemVisible(request.Guid))
+                _imageListView.Refresh(false, true);
         }
 
         // Raise the ThumbnailCached event
-        if (result != null && mImageListView != null)
-            mImageListView.OnThumbnailCachedInternal(result.Guid, result.Image, result.Size, request.RequestType == RequestType.Thumbnail);
+        if (result != null && _imageListView != null)
+            _imageListView.OnThumbnailCachedInternal(result.Guid, result.Image, result.Size, request.RequestType == RequestType.Thumbnail);
 
         // Raise the CacheError event
-        if (e.Error != null && mImageListView != null)
-            mImageListView.OnCacheErrorInternal(request.Guid, e.Error, CacheThread.Thumbnail);
+        if (e.Error != null && _imageListView != null)
+            _imageListView.OnCacheErrorInternal(request.Guid, e.Error, CacheThread.Thumbnail);
     }
+
     /// <summary>
     /// Handles the DoWork event of the queued background worker.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="QueuedWorkerDoWorkEventArgs"/> instance 
     /// containing the event data.</param>
-    void bw_DoWork(object sender, QueuedWorkerDoWorkEventArgs e)
+    private void Bw_DoWork(object? sender, QueuedWorkerDoWorkEventArgs e)
     {
-        CacheRequest request = e.Argument as CacheRequest;
+        var request = e.Argument as CacheRequest;
+        if (request is null) return;
 
         // Should we continue processing this item?
         // The callback checks the following and returns false if
@@ -491,17 +515,16 @@ internal class ImageListViewCacheThumbnail : IDisposable
             return;
         }
 
-        Image thumb = null;
-        string diskCacheKey = request.Adaptor.GetUniqueIdentifier(request.VirtualItemKey, request.Size, request.UseEmbeddedThumbnails, request.AutoRotate);
+        Image? thumb = null;
+        var diskCacheKey = request.Adaptor.GetUniqueIdentifier(request.VirtualItemKey, request.Size, request.UseEmbeddedThumbnails, request.AutoRotate);
 
         // Check the disk cache
-        using (Stream stream = diskCache.Read(diskCacheKey))
+        using var cs = _diskCache.Read(diskCacheKey);
+        if (cs.Length > 0)
         {
-            if (stream.Length > 0)
-            {
-                thumb = new Bitmap(stream);
-            }
+            thumb = new Bitmap(cs);
         }
+
 
         // Extract the thumbnail from the source image.
         if (thumb == null)
@@ -511,14 +534,14 @@ internal class ImageListViewCacheThumbnail : IDisposable
             // Save to disk cache
             if (thumb != null)
             {
-                using var stream = new MemoryStream();
-                thumb.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                diskCache.Write(diskCacheKey, stream);
+                using var ms = new MemoryStream();
+                thumb.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                _diskCache.Write(diskCacheKey, ms);
             }
         }
 
         // Return the thumbnail
-        CacheItem? result = null;
+        CacheItem? result;
         if (thumb == null && !RetryOnError)
         {
             result = new CacheItem(request.Guid, request.Size, null, CacheState.Error, request.UseEmbeddedThumbnails, request.AutoRotate);
@@ -530,7 +553,9 @@ internal class ImageListViewCacheThumbnail : IDisposable
 
         e.Result = result;
     }
+
     #endregion
+
 
     #region Instance Methods
     /// <summary>
@@ -538,15 +563,17 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// </summary>
     public void Pause()
     {
-        bw.Pause();
+        _bw.Pause();
     }
+
     /// <summary>
     /// Resumes the cache threads. 
     /// </summary>
     public void Resume()
     {
-        bw.Resume();
+        _bw.Resume();
     }
+
     /// <summary>
     /// Starts editing an item. While items are edited,
     /// the cache thread will not work on them to prevent collisions.
@@ -554,11 +581,12 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// <param name="guid">The guid representing the item</param>
     public void BeginItemEdit(Guid guid)
     {
-        if (!editCache.ContainsKey(guid))
+        if (!_editCache.ContainsKey(guid))
         {
-            editCache.Add(guid, false);
+            _editCache.Add(guid, false);
         }
     }
+
     /// <summary>
     /// Ends editing an item. After this call, item
     /// image will be continued to be fetched by the thread.
@@ -566,8 +594,9 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// <param name="guid">The guid representing the item.</param>
     public void EndItemEdit(Guid guid)
     {
-        editCache.Remove(guid);
+        _editCache.Remove(guid);
     }
+
     /// <summary>
     /// Rebuilds the thumbnail cache.
     /// Old thumbnails will be kept until they are overwritten
@@ -575,44 +604,46 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// </summary>
     public void Rebuild()
     {
-        foreach (CacheItem item in thumbCache.Values)
+        foreach (var item in _thumbCache.Values)
             item.State = CacheState.Unknown;
 
-        if (galleryItem != null)
-            galleryItem.State = CacheState.Unknown;
+        if (_galleryItem != null)
+            _galleryItem.State = CacheState.Unknown;
 
-        diskCache.Clear();
+        _diskCache.Clear();
     }
+
     /// <summary>
     /// Clears the thumbnail cache.
     /// </summary>
     public void Clear()
     {
-        foreach (CacheItem item in thumbCache.Values)
+        foreach (var item in _thumbCache.Values)
             item.Dispose();
-        thumbCache.Clear();
+        _thumbCache.Clear();
 
-        if (galleryItem != null)
+        if (_galleryItem != null)
         {
-            galleryItem.Dispose();
-            galleryItem = null;
+            _galleryItem.Dispose();
+            _galleryItem = null;
         }
 
-        if (rendererItem != null)
-            rendererItem.Dispose();
-        rendererItem = null;
+        if (_rendererItem != null)
+            _rendererItem.Dispose();
+        _rendererItem = null;
 
-        bw.CancelAsync();
+        _bw.CancelAsync();
 
         MemoryUsed = 0;
         MemoryUsedByRemoved = 0;
-        removedItems.Clear();
-        processing.Clear();
-        processingRendererItem = Guid.Empty;
+        _removedItems.Clear();
+        _processing.Clear();
+        _processingRendererItem = Guid.Empty;
 
         // Empty persistent cache
-        diskCache.Clear();
+        _diskCache.Clear();
     }
+
     /// <summary>
     /// Removes the given item from the cache.
     /// </summary>
@@ -621,6 +652,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
     {
         Remove(guid, false);
     }
+
     /// <summary>
     /// Removes the given item from the cache.
     /// </summary>
@@ -629,38 +661,44 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// item later when the cache is purged.</param>
     public void Remove(Guid guid, bool removeNow)
     {
-        CacheItem cacheItem = null;
-        if (!thumbCache.TryGetValue(guid, out cacheItem))
+        if (!_thumbCache.TryGetValue(guid, out CacheItem? cacheItem))
             return;
 
         if (removeNow)
         {
             MemoryUsed -= GetImageMemorySize(cacheItem.Size.Width, cacheItem.Size.Height);
             cacheItem.Dispose();
-            thumbCache.Remove(guid);
+            _thumbCache.Remove(guid);
 
-            if (galleryItem != null && galleryItem.Guid == guid)
+            if (_galleryItem != null && _galleryItem.Guid == guid)
             {
-                galleryItem.Dispose();
-                galleryItem = null;
+                _galleryItem.Dispose();
+                _galleryItem = null;
             }
         }
         else
         {
             MemoryUsedByRemoved += GetImageMemorySize(cacheItem.Size.Width, cacheItem.Size.Height);
-            removedItems.Add(guid);
+            _removedItems.Add(guid);
 
             Purge();
         }
 
         // Remove from disk cache
-        ImageListViewItem item = null;
-        if (mImageListView != null && mImageListView.Items.TryGetValue(guid, out item))
+        if (_imageListView != null && _imageListView.Items.TryGetValue(guid, out ImageListViewItem? item))
         {
-            string diskCacheKey = item.Adaptor.GetUniqueIdentifier(item.VirtualItemKey, cacheItem.Size, cacheItem.UseEmbeddedThumbnails, cacheItem.AutoRotate);
-            diskCache.Remove(diskCacheKey);
+            if (item != null)
+            {
+                var diskCacheKey = item.Adaptor.GetUniqueIdentifier(
+                    item.VirtualItemKey,
+                    cacheItem.Size,
+                    cacheItem.UseEmbeddedThumbnails,
+                    cacheItem.AutoRotate);
+                _diskCache.Remove(diskCacheKey);
+            }
         }
     }
+
     /// <summary>
     /// Purges removed items from the cache.
     /// </summary>
@@ -672,26 +710,27 @@ internal class ImageListViewCacheThumbnail : IDisposable
         // Remove items now if we can free more than 25% of the cache limit
         if (force || IsPurgeNeeded())
         {
-            foreach (Guid guid in removedItems)
+            foreach (var guid in _removedItems)
             {
-                CacheItem item = null;
-                if (thumbCache.TryGetValue(guid, out item))
+                if (_thumbCache.TryGetValue(guid, out CacheItem? item))
                 {
-                    item.Dispose();
-                    thumbCache.Remove(guid);
+                    item?.Dispose();
+                    _thumbCache.Remove(guid);
                 }
 
-                if (galleryItem != null && galleryItem.Guid == guid)
+                if (_galleryItem != null && _galleryItem.Guid == guid)
                 {
-                    galleryItem.Dispose();
-                    galleryItem = null;
+                    _galleryItem.Dispose();
+                    _galleryItem = null;
                 }
             }
-            removedItems.Clear();
+
+            _removedItems.Clear();
             MemoryUsed -= MemoryUsedByRemoved;
             MemoryUsedByRemoved = 0;
         }
     }
+
     /// <summary>
     /// Purges removed items from the cache automatically
     /// depending on memory usage.
@@ -700,6 +739,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
     {
         Purge(false);
     }
+
     /// <summary>
     /// Purges invisible items from the cache.
     /// </summary>
@@ -708,25 +748,23 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// depending on memory usage.</param>
     public void PurgeInvisible(bool force)
     {
-        if (mImageListView == null)
-            return;
+        if (_imageListView == null) return;
 
-        Dictionary<Guid, bool> visible = mImageListView.GetVisibleItems();
+        var visible = _imageListView.GetVisibleItems();
+        if (visible.Count == 0) return;
 
-        if (visible.Count == 0)
-            return;
-
-        foreach (KeyValuePair<Guid, CacheItem> item in thumbCache)
+        foreach (var item in _thumbCache)
         {
             if (!visible.ContainsKey(item.Key))
             {
-                removedItems.Add(item.Key);
+                _removedItems.Add(item.Key);
                 MemoryUsedByRemoved += GetImageMemorySize(item.Value.Image);
             }
         }
 
         Purge(force);
     }
+
     /// <summary>
     /// Determines if removed items need to be purged. Removed items are purged
     /// if they take up more than 25% of the cache limit.
@@ -734,28 +772,33 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// <returns>true if removed items need to be purged; otherwise false.</returns>
     private bool IsPurgeNeeded()
     {
-        return ((CacheLimitAsMemory != 0 && MemoryUsedByRemoved > CacheLimitAsMemory / 4) || (CacheLimitAsItemCount != 0 && removedItems.Count > CacheLimitAsItemCount / 4));
+        return (CacheLimitAsMemory != 0 && MemoryUsedByRemoved > CacheLimitAsMemory / 4)
+            || (CacheLimitAsItemCount != 0 && _removedItems.Count > CacheLimitAsItemCount / 4);
     }
+
     /// <summary>
     /// Determines if the cache limit is exceeded.
     /// </summary>
     /// <returns>true if the cache limit is exceeded; otherwise false.</returns>
     private bool IsCacheLimitExceeded()
     {
-        return ((CacheLimitAsMemory != 0 && MemoryUsedByRemoved > CacheLimitAsMemory) || (CacheLimitAsItemCount != 0 && removedItems.Count > CacheLimitAsItemCount));
+        return (CacheLimitAsMemory != 0 && MemoryUsedByRemoved > CacheLimitAsMemory)
+            || (CacheLimitAsItemCount != 0 && _removedItems.Count > CacheLimitAsItemCount);
     }
+
     /// <summary>
     /// Returns the memory usage of an image.
     /// </summary>
     /// <param name="image">A image.</param>
     /// <returns>Memory size of the image.</returns>
-    private int GetImageMemorySize(Image image)
+    private static int GetImageMemorySize(Image? image)
     {
         if (image != null)
             return GetImageMemorySize(image.Width, image.Height);
         else
             return 0;
     }
+
     /// <summary>
     /// Returns the memory usage of an image in of given dimensions.
     /// The value is calculated aproximately as (Width * Height * BitsPerPixel / 8)
@@ -763,10 +806,11 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// <param name="width">Image width.</param>
     /// <param name="height">Image height.</param>
     /// <returns>Memory size of the image.</returns>
-    private int GetImageMemorySize(int width, int height)
+    private static int GetImageMemorySize(int width, int height)
     {
         return width * height * 24 / 8;
     }
+
     /// <summary>
     /// Adds a virtual item to the cache queue.
     /// </summary>
@@ -779,8 +823,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
     public void Add(Guid guid, IAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
     {
         // Already cached?
-        CacheItem item = null;
-        if (thumbCache.TryGetValue(guid, out item))
+        if (_thumbCache.TryGetValue(guid, out CacheItem? item))
         {
             if (item.Size == thumbSize && item.UseEmbeddedThumbnails == useEmbeddedThumbnails)
                 return;
@@ -789,6 +832,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
         // Add to cache queue
         RunWorker(new CacheRequest(guid, adaptor, key, thumbSize, useEmbeddedThumbnails, autoRotate, RequestType.Thumbnail));
     }
+
     /// <summary>
     /// Adds a virtual item to the cache.
     /// </summary>
@@ -802,8 +846,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
     public void Add(Guid guid, IAdaptor adaptor, object key, Size thumbSize, Image thumb, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
     {
         // Already cached?
-        CacheItem item = null;
-        if (thumbCache.TryGetValue(guid, out item))
+        if (_thumbCache.TryGetValue(guid, out CacheItem? item))
         {
             if (item.Size == thumbSize && item.UseEmbeddedThumbnails == useEmbeddedThumbnails)
                 return;
@@ -813,23 +856,23 @@ internal class ImageListViewCacheThumbnail : IDisposable
         thumb = Extractor.Instance.GetThumbnail(thumb, thumbSize, useEmbeddedThumbnails, autoRotate);
 
         // Add to cache
-        thumbCache.Add(guid, new CacheItem(guid, thumbSize, thumb, CacheState.Cached, useEmbeddedThumbnails, autoRotate));
+        _thumbCache.Add(guid, new CacheItem(guid, thumbSize, thumb, CacheState.Cached, useEmbeddedThumbnails, autoRotate));
 
         // Add to disk cache
-        using (MemoryStream stream = new MemoryStream())
-        {
-            string diskCacheKey = adaptor.GetUniqueIdentifier(key, thumbSize, useEmbeddedThumbnails, autoRotate);
-            thumb.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-            diskCache.Write(diskCacheKey, stream);
-        }
+        using var stream = new MemoryStream();
+        var diskCacheKey = adaptor.GetUniqueIdentifier(key, thumbSize, useEmbeddedThumbnails, autoRotate);
+        thumb.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+        _diskCache.Write(diskCacheKey, stream);
+
 
         // Raise the cache events
-        if (mImageListView != null)
+        if (_imageListView != null)
         {
-            mImageListView.OnThumbnailCachedInternal(guid, thumb, thumbSize, true);
-            mImageListView.Refresh();
+            _imageListView.OnThumbnailCachedInternal(guid, thumb, thumbSize, true);
+            _imageListView.Refresh();
         }
     }
+
     /// <summary>
     /// Adds the virtual item image to the gallery cache queue.
     /// </summary>
@@ -842,12 +885,18 @@ internal class ImageListViewCacheThumbnail : IDisposable
     public void AddToGalleryCache(Guid guid, IAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
     {
         // Already cached?
-        if (galleryItem != null && galleryItem.Guid == guid && galleryItem.Image != null && galleryItem.Size == thumbSize && galleryItem.UseEmbeddedThumbnails == useEmbeddedThumbnails && galleryItem.AutoRotate == autoRotate)
+        if (_galleryItem != null
+            && _galleryItem.Guid == guid
+            && _galleryItem.Image != null
+            && _galleryItem.Size == thumbSize
+            && _galleryItem.UseEmbeddedThumbnails == useEmbeddedThumbnails
+            && _galleryItem.AutoRotate == autoRotate)
             return;
 
         // Add to cache queue
         RunWorker(new CacheRequest(guid, adaptor, key, thumbSize, useEmbeddedThumbnails, autoRotate, RequestType.Gallery), 2);
     }
+
     /// <summary>
     /// Adds the virtual item image to the renderer cache queue.
     /// </summary>
@@ -860,12 +909,18 @@ internal class ImageListViewCacheThumbnail : IDisposable
     public void AddToRendererCache(Guid guid, IAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
     {
         // Already cached?
-        if (rendererItem != null && rendererItem.Guid == guid && rendererItem.Image != null && rendererItem.Size == thumbSize && rendererItem.UseEmbeddedThumbnails == useEmbeddedThumbnails && rendererItem.AutoRotate == autoRotate)
+        if (_rendererItem != null
+            && _rendererItem.Guid == guid
+            && _rendererItem.Image != null
+            && _rendererItem.Size == thumbSize
+            && _rendererItem.UseEmbeddedThumbnails == useEmbeddedThumbnails
+            && _rendererItem.AutoRotate == autoRotate)
             return;
 
         // Add to cache queue
         RunWorker(new CacheRequest(guid, adaptor, key, thumbSize, useEmbeddedThumbnails, autoRotate, RequestType.Renderer), 1);
     }
+
     /// <summary>
     /// Gets the image from the renderer cache. If the image is not cached,
     /// null will be returned.
@@ -874,13 +929,19 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// <param name="thumbSize">Requested thumbnail size.</param>
     /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
     /// <param name="autoRotate">AutoRotate property of the owner control.</param>
-    public Image GetRendererImage(Guid guid, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
+    public Image? GetRendererImage(Guid guid, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
     {
-        if (rendererItem != null && rendererItem.Guid == guid && rendererItem.Image != null && rendererItem.Size == thumbSize && rendererItem.UseEmbeddedThumbnails == useEmbeddedThumbnails && rendererItem.AutoRotate == autoRotate)
-            return rendererItem.Image;
+        if (_rendererItem != null
+            && _rendererItem.Guid == guid
+            && _rendererItem.Image != null
+            && _rendererItem.Size == thumbSize
+            && _rendererItem.UseEmbeddedThumbnails == useEmbeddedThumbnails
+            && _rendererItem.AutoRotate == autoRotate)
+            return _rendererItem.Image;
         else
             return null;
     }
+
     /// <summary>
     /// Gets the image from the gallery cache. If the image is not cached,
     /// null will be returned.
@@ -889,13 +950,19 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// <param name="thumbSize">Requested thumbnail size.</param>
     /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
     /// <param name="autoRotate">AutoRotate property of the owner control.</param>
-    public Image GetGalleryImage(Guid guid, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
+    public Image? GetGalleryImage(Guid guid, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
     {
-        if (galleryItem != null && galleryItem.Guid == guid && galleryItem.Image != null && galleryItem.Size == thumbSize && galleryItem.UseEmbeddedThumbnails == useEmbeddedThumbnails && galleryItem.AutoRotate == autoRotate)
-            return galleryItem.Image;
+        if (_galleryItem != null
+            && _galleryItem.Guid == guid
+            && _galleryItem.Image != null
+            && _galleryItem.Size == thumbSize
+            && _galleryItem.UseEmbeddedThumbnails == useEmbeddedThumbnails
+            && _galleryItem.AutoRotate == autoRotate)
+            return _galleryItem.Image;
         else
             return null;
     }
+
     /// <summary>
     /// Gets the image from the thumbnail cache. If the image is not cached,
     /// null will be returned.
@@ -907,26 +974,33 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
     /// <param name="autoRotate">AutoRotate property of the owner control.</param>
     /// <param name="clone">true to return a clone of the cached image; otherwise false.</param>
-    public Image GetImage(Guid guid, IAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool clone)
+    public Image? GetImage(Guid guid, IAdaptor adaptor, object key, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate, bool clone)
     {
-        CacheItem item = null;
-        if (thumbCache.TryGetValue(guid, out item) && item != null && item.Image != null && item.Size == thumbSize && item.UseEmbeddedThumbnails == useEmbeddedThumbnails && item.AutoRotate == autoRotate)
-            return clone ? (Image)item.Image.Clone() : item.Image;
+        if (_thumbCache.TryGetValue(guid, out CacheItem? item)
+            && item != null
+            && item.Image != null
+            && item.Size == thumbSize
+            && item.UseEmbeddedThumbnails == useEmbeddedThumbnails
+            && item.AutoRotate == autoRotate)
+        {
+            return clone ? (Image?)item.Image.Clone() : item.Image;
+        }
         else
         {
-            string diskCacheKey = adaptor.GetUniqueIdentifier(key, thumbSize, useEmbeddedThumbnails, autoRotate);
+            var diskCacheKey = adaptor.GetUniqueIdentifier(key, thumbSize, useEmbeddedThumbnails, autoRotate);
 
             // Check the disk cache
-            using (Stream stream = diskCache.Read(diskCacheKey))
+            using var stream = _diskCache.Read(diskCacheKey);
+
+            if (stream.Length > 0)
             {
-                if (stream.Length > 0)
-                {
-                    return new Bitmap(stream);
-                }
+                return new Bitmap(stream);
             }
+
             return null;
         }
     }
+
     /// <summary>
     /// Gets the cache state of the specified item.
     /// </summary>
@@ -936,13 +1010,18 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// <param name="autoRotate">AutoRotate property of the owner control.</param>
     public CacheState GetCacheState(Guid guid, Size thumbSize, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
     {
-        CacheItem item = null;
-        if (thumbCache.TryGetValue(guid, out item) && item != null && item.Size == thumbSize && item.UseEmbeddedThumbnails == useEmbeddedThumbnails && item.AutoRotate == autoRotate)
+        if (_thumbCache.TryGetValue(guid, out CacheItem? item)
+            && item != null
+            && item.Size == thumbSize
+            && item.UseEmbeddedThumbnails == useEmbeddedThumbnails
+            && item.AutoRotate == autoRotate)
             return item.State;
 
         return CacheState.Unknown;
     }
+
     #endregion
+
 
     #region RunWorker
     /// <summary>
@@ -955,45 +1034,46 @@ internal class ImageListViewCacheThumbnail : IDisposable
     private void RunWorker(CacheRequest item, int priority)
     {
         // Get the current synchronization context
-        if (context == null)
-            context = SynchronizationContext.Current;
+        if (_context == null)
+            _context = SynchronizationContext.Current;
 
         // Already being processed?
         if (item.RequestType == RequestType.Thumbnail)
         {
-            if (processing.ContainsKey(item.Guid))
+            if (_processing.ContainsKey(item.Guid))
                 return;
             else
-                processing.Add(item.Guid, false);
+                _processing.Add(item.Guid, false);
         }
         else if (item.RequestType == RequestType.Renderer)
         {
-            if (processingRendererItem == item.Guid)
+            if (_processingRendererItem == item.Guid)
                 return;
             else
             {
-                bw.CancelAsync(priority);
-                processingRendererItem = item.Guid;
+                _bw.CancelAsync(priority);
+                _processingRendererItem = item.Guid;
             }
         }
         else if (item.RequestType == RequestType.Gallery)
         {
-            if (processingGalleryItem == item.Guid)
+            if (_processingGalleryItem == item.Guid)
                 return;
             else
             {
-                bw.CancelAsync(priority);
-                processingGalleryItem = item.Guid;
+                _bw.CancelAsync(priority);
+                _processingGalleryItem = item.Guid;
             }
         }
 
         // Raise the ThumbnailCaching event
-        if (mImageListView != null)
-            mImageListView.OnThumbnailCachingInternal(item.Guid, item.Size);
+        if (_imageListView != null)
+            _imageListView.OnThumbnailCachingInternal(item.Guid, item.Size);
 
         // Add the item to the queue for processing
-        bw.RunWorkerAsync(item, priority, item.RequestType != RequestType.Thumbnail);
+        _bw.RunWorkerAsync(item, priority, item.RequestType != RequestType.Thumbnail);
     }
+
     /// <summary>
     /// Pushes the given item to the worker queue.
     /// </summary>
@@ -1002,7 +1082,9 @@ internal class ImageListViewCacheThumbnail : IDisposable
     {
         RunWorker(item, 0);
     }
+
     #endregion
+
 
     #region Dispose
     /// <summary>
@@ -1011,15 +1093,15 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// </summary>
     public void Dispose()
     {
-        if (!disposed)
+        if (!_isDisposed)
         {
-            bw.DoWork -= bw_DoWork;
-            bw.RunWorkerCompleted -= bw_RunWorkerCompleted;
+            _bw.DoWork -= Bw_DoWork;
+            _bw.RunWorkerCompleted -= Bw_RunWorkerCompleted;
 
             Clear();
-            bw.Dispose();
+            _bw.Dispose();
 
-            disposed = true;
+            _isDisposed = true;
 
             GC.SuppressFinalize(this);
         }
@@ -1034,7 +1116,10 @@ internal class ImageListViewCacheThumbnail : IDisposable
         System.Diagnostics.Debug.Print("Finalizer of {0} called.", GetType());
         Dispose();
     }
+
 #endif
+
     #endregion
+
 }
 

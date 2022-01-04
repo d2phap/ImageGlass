@@ -167,7 +167,7 @@ public partial class ImageListView : Control, IComponent
                     {
                         thumbnailCache.CacheLimitAsItemCount = 0;
                         thumbnailCache.CacheLimitAsMemory = 0;
-                        thumbnailCache.diskCache.CacheSize = 0;
+                        thumbnailCache._diskCache.CacheSize = 0;
                     }
                     // Rebuild the cache
                     ClearThumbnailCache();
@@ -241,10 +241,10 @@ public partial class ImageListView : Control, IComponent
     [Category("Behavior"), Description("Gets or sets the path to the persistent cache file."), Browsable(false)]
     public string PersistentCacheDirectory
     {
-        get => thumbnailCache.diskCache.DirectoryName;
+        get => thumbnailCache._diskCache.DirectoryName;
         set
         {
-            thumbnailCache.diskCache.DirectoryName = value;
+            thumbnailCache._diskCache.DirectoryName = value;
         }
     }
 
@@ -260,14 +260,14 @@ public partial class ImageListView : Control, IComponent
                 return 0;
 
             if (thumbnailCache != null)
-                return thumbnailCache.diskCache.CacheSize / 1024 / 1024;
+                return thumbnailCache._diskCache.CacheSize / 1024 / 1024;
             else
                 return 0;
         }
         set
         {
             if (thumbnailCache != null)
-                thumbnailCache.diskCache.CacheSize = value * 1024 * 1024;
+                thumbnailCache._diskCache.CacheSize = value * 1024 * 1024;
         }
     }
 
@@ -2048,9 +2048,9 @@ public partial class ImageListView : Control, IComponent
     /// <param name="size">Requested thumbnail size.</param>
     /// <param name="thumbnailImage">true if the cached image is a thumbnail image; otherwise false
     /// if the image is a large image for gallery or pane views.</param>
-    internal void OnThumbnailCachedInternal(Guid guid, Image thumbnail, Size size, bool thumbnailImage)
+    internal void OnThumbnailCachedInternal(Guid guid, Image? thumbnail, Size size, bool thumbnailImage)
     {
-        if (mItems.TryGetValue(guid, out ImageListViewItem item))
+        if (mItems.TryGetValue(guid, out ImageListViewItem? item))
             OnThumbnailCached(new ThumbnailCachedEventArgs(item, thumbnail, size, thumbnailImage));
     }
 
@@ -2062,7 +2062,7 @@ public partial class ImageListView : Control, IComponent
     /// <param name="size">Requested thumbnail size.</param>
     internal void OnThumbnailCachingInternal(Guid guid, Size size)
     {
-        if (mItems.TryGetValue(guid, out ImageListViewItem item))
+        if (mItems.TryGetValue(guid, out ImageListViewItem? item))
             OnThumbnailCaching(new ThumbnailCachingEventArgs(item, size));
     }
 

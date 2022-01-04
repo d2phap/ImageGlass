@@ -29,7 +29,7 @@ namespace ImageGlass.Base.QueuedWorker;
 /// <param name="sender">The object that is the source of the event.</param>
 /// <param name="e">An <see cref="QueuedWorkerDoWorkEventArgs"/> that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
-public delegate void QueuedWorkerDoWorkEventHandler(object sender, QueuedWorkerDoWorkEventArgs e);
+public delegate void QueuedWorkerDoWorkEventHandler(object? sender, QueuedWorkerDoWorkEventArgs e);
 
 
 /// <summary>

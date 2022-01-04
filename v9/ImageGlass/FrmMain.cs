@@ -77,7 +77,7 @@ public partial class FrmMain : Form
     }
 
 
-    private async void Prepare(string path = "")
+    private void Prepare(string path = "")
     {
         var inputPath = path.Trim();
 

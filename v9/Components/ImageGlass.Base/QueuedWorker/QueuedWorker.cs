@@ -534,7 +534,9 @@ public class QueuedWorker : Component
     /// <param name="arg">The argument.</param>
     private void RunWorkerCompletedCallback(object? arg)
     {
-        OnRunWorkerCompleted((QueuedWorkerCompletedEventArgs?)arg);
+        if (arg is null) return;
+
+        OnRunWorkerCompleted((QueuedWorkerCompletedEventArgs)arg);
     }
 
     /// <summary>
@@ -625,7 +627,7 @@ public class QueuedWorker : Component
     /// Raises the RunWorkerCompleted event.
     /// </summary>
     /// <param name="e">A <see cref="QueuedWorkerCompletedEventArgs"/> that contains event data.</param>
-    protected virtual void OnRunWorkerCompleted(QueuedWorkerCompletedEventArgs? e)
+    protected virtual void OnRunWorkerCompleted(QueuedWorkerCompletedEventArgs e)
     {
         try
         {

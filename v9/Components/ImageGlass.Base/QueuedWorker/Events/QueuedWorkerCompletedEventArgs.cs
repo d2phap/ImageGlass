@@ -26,7 +26,7 @@ namespace ImageGlass.Base.QueuedWorker;
 /// </summary>
 /// <param name="sender">The object that is the source of the event.</param>
 /// <param name="e">A <see cref="QueuedWorkerCompletedEventArgs"/> that contains event data.</param>
-public delegate void RunQueuedWorkerCompletedEventHandler(object? sender, QueuedWorkerCompletedEventArgs? e);
+public delegate void RunQueuedWorkerCompletedEventHandler(object? sender, QueuedWorkerCompletedEventArgs e);
 
 
 

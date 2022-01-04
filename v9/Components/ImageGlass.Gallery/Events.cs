@@ -15,6 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+---------------------
+ImageGlass.Gallery is based on ImageListView v13.8.2:
+Url: https://github.com/oozcitak/imagelistview
+License: Apache License Version 2.0, http://www.apache.org/licenses/
+---------------------
 */
 
 using System.ComponentModel;
@@ -423,7 +429,7 @@ public class ThumbnailCachingEventArgs : EventArgs
     /// <summary>
     /// Gets the ImageListViewItem that is the target of the event.
     /// </summary>
-    public ImageListViewItem Item { get; private set; }
+    public ImageListViewItem? Item { get; private set; }
 
     /// <summary>
     /// Gets the size of the thumbnail request.
@@ -435,7 +441,7 @@ public class ThumbnailCachingEventArgs : EventArgs
     /// </summary>
     /// <param name="item">The item that is the target of this event.</param>
     /// <param name="size">The size of the thumbnail request.</param>
-    public ThumbnailCachingEventArgs(ImageListViewItem item, Size size)
+    public ThumbnailCachingEventArgs(ImageListViewItem? item, Size size)
     {
         Item = item;
         Size = size;
@@ -451,7 +457,7 @@ public class ThumbnailCachedEventArgs : EventArgs
     /// <summary>
     /// Gets the ImageListViewItem that is the target of the event.
     /// </summary>
-    public ImageListViewItem Item { get; private set; }
+    public ImageListViewItem? Item { get; private set; }
 
     /// <summary>
     /// Gets the size of the thumbnail request.
@@ -461,7 +467,7 @@ public class ThumbnailCachedEventArgs : EventArgs
     /// <summary>
     /// Gets the cached thumbnail image.
     /// </summary>
-    public Image Thumbnail { get; private set; }
+    public Image? Thumbnail { get; private set; }
 
     /// <summary>
     /// Gets whether the cached image is a thumbnail image or
@@ -477,7 +483,7 @@ public class ThumbnailCachedEventArgs : EventArgs
     /// <param name="size">The size of the thumbnail request.</param>
     /// <param name="thumbnailImage">true if the cached image is a thumbnail image; otherwise false
     /// if the image is a large image for gallery or pane views.</param>
-    public ThumbnailCachedEventArgs(ImageListViewItem item, Image thumbnail, Size size, bool thumbnailImage)
+    public ThumbnailCachedEventArgs(ImageListViewItem? item, Image? thumbnail, Size size, bool thumbnailImage)
     {
         Item = item;
         Thumbnail = thumbnail;

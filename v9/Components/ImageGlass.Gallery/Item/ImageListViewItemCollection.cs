@@ -1,4 +1,21 @@
-﻿
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
 using System.Collections;
 using System.ComponentModel;
 
@@ -12,33 +29,35 @@ public partial class ImageListView
     /// </summary>
     public class ImageListViewItemCollection : IList<ImageListViewItem>, ICollection, IList, IEnumerable
     {
+
         #region Member Variables
-        private List<ImageListViewItem> mItems;
+        private readonly List<ImageListViewItem> mItems = new();
+        private ImageListViewItem? mFocused = null;
+        private Dictionary<Guid, ImageListViewItem> lookUp = new();
+
+        internal bool collectionModified = true;
         internal ImageListView mImageListView;
-        private ImageListViewItem? mFocused;
-        private Dictionary<Guid, ImageListViewItem> lookUp;
-        internal bool collectionModified;
         #endregion
+
 
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageListViewItemCollection"/>  class.
         /// </summary>
-        /// <param name="owner">The <see cref="ImageListView"/> owning this collection.</param>
+        /// <param name="owner">The <see cref="Gallery.ImageListView"/> owning this collection.</param>
         internal ImageListViewItemCollection(ImageListView owner)
         {
-            mItems = new List<ImageListViewItem>();
-            lookUp = new Dictionary<Guid, ImageListViewItem>();
-            mFocused = null;
             mImageListView = owner;
-            collectionModified = true;
         }
+
         #endregion
+
 
         #region Properties
 
         /// <summary>
-        /// Gets the number of elements contained in the <see cref="ImageListViewItemCollection"/>.
+        /// Gets the number of elements contained in
+        /// the <see cref="ImageListViewItemCollection"/>.
         /// </summary>
         public int Count => mItems.Count;
 
@@ -67,27 +86,34 @@ public partial class ImageListView
         /// <summary>
         /// Gets the <see cref="ImageListView"/> owning this collection.
         /// </summary>
-        [Category("Behavior"), Browsable(false), Description("Gets the ImageListView owning this collection.")]
+        [Browsable(false)]
         public ImageListView ImageListView => mImageListView;
 
         /// <summary>
         /// Gets or sets the <see cref="ImageListViewItem"/> at the specified index.
         /// </summary>
-        [Category("Behavior"), Browsable(false), Description("Gets or sets the item at the specified index.")]
+        [Browsable(false)]
         public ImageListViewItem this[int index]
         {
             get => mItems[index];
             set
             {
-                ImageListViewItem item = value;
-                ImageListViewItem oldItem = mItems[index];
+                var item = value;
+                var oldItem = mItems[index];
 
                 if (mItems[index] == mFocused)
+                {
                     mFocused = item;
-                bool oldSelected = mItems[index].Selected;
+                }
+
+                var oldSelected = mItems[index].Selected;
                 item.mIndex = index;
+
                 if (mImageListView != null)
+                {
                     item.mImageListView = mImageListView;
+                }
+
                 item.owner = this;
                 mItems[index] = item;
                 lookUp.Remove(oldItem.Guid);
@@ -98,15 +124,24 @@ public partial class ImageListView
                 {
                     mImageListView.thumbnailCache.Remove(oldItem.Guid);
                     mImageListView.metadataCache.Remove(oldItem.Guid);
+
                     if (mImageListView.CacheMode == CacheMode.Continuous)
                     {
-                        mImageListView.thumbnailCache.Add(item.Guid, item.Adaptor, item.VirtualItemKey,
-                            mImageListView.ThumbnailSize, mImageListView.UseEmbeddedThumbnails,
+                        mImageListView.thumbnailCache.Add(
+                            item.Guid,
+                            item.Adaptor,
+                            item.VirtualItemKey,
+                            mImageListView.ThumbnailSize,
+                            mImageListView.UseEmbeddedThumbnails,
                             mImageListView.AutoRotateThumbnails);
                     }
+
                     mImageListView.metadataCache.Add(item.Guid, item.Adaptor, item.VirtualItemKey);
+
                     if (item.Selected != oldSelected)
+                    {
                         mImageListView.OnSelectionChanged(new EventArgs());
+                    }
                 }
             }
         }
@@ -114,13 +149,14 @@ public partial class ImageListView
         /// <summary>
         /// Gets the <see cref="ImageListViewItem"/> with the specified Guid.
         /// </summary>
-        [Category("Behavior"), Browsable(false), Description("Gets or sets the item with the specified Guid.")]
+        [Browsable(false)]
         internal ImageListViewItem this[Guid guid] => lookUp[guid];
 
         #endregion
 
 
         #region Instance Methods
+
         /// <summary>
         /// Adds an item to the <see cref="ImageListViewItemCollection"/>.
         /// </summary>
@@ -188,7 +224,7 @@ public partial class ImageListView
             var item = new ImageListViewItem(filename)
             {
                 mAdaptor = mImageListView.defaultAdaptor,
-                clonedThumbnail = initialThumbnail
+                clonedThumbnail = initialThumbnail,
             };
 
             Add(item);
@@ -252,10 +288,14 @@ public partial class ImageListView
         public void AddRange(ImageListViewItem[] items, IAdaptor adaptor)
         {
             if (mImageListView != null)
+            {
                 mImageListView.SuspendPaint();
+            }
 
             foreach (ImageListViewItem item in items)
+            {
                 Add(item, adaptor);
+            }
 
             if (mImageListView != null)
             {
@@ -280,7 +320,7 @@ public partial class ImageListView
         /// <param name="filenames">The names or the image files.</param>
         public void AddRange(string[] filenames)
         {
-            ImageListViewItem[] items = new ImageListViewItem[filenames.Length];
+            var items = new ImageListViewItem[filenames.Length];
 
             for (int i = 0; i < filenames.Length; i++)
             {
@@ -297,10 +337,7 @@ public partial class ImageListView
         {
             mItems.Clear();
             mFocused = null;
-
-            // [IG_CHANGE] lookUp.Clear() does not deallocate memory
             lookUp = new();
-
             collectionModified = true;
 
             if (mImageListView != null)
@@ -363,9 +400,11 @@ public partial class ImageListView
         }
 
         /// <summary>
-        /// Inserts an item to the <see cref="ImageListViewItemCollection"/> at the specified index.
+        /// Inserts an item to the <see cref="ImageListViewItemCollection"/>
+        /// at the specified index.
         /// </summary>
-        /// <param name="index">The zero-based index at which <paramref name="item"/> should be inserted.</param>
+        /// <param name="index">The zero-based index at which
+        /// <paramref name="item"/> should be inserted.</param>
         /// <param name="item">The <see cref="ImageListViewItem"/> to 
         /// insert into the <see cref="ImageListViewItemCollection"/>.</param>
         public void Insert(int index, ImageListViewItem item)
@@ -374,9 +413,11 @@ public partial class ImageListView
         }
 
         /// <summary>
-        /// Inserts an item to the <see cref="ImageListViewItemCollection"/> at the specified index.
+        /// Inserts an item to the <see cref="ImageListViewItemCollection"/>
+        /// at the specified index.
         /// </summary>
-        /// <param name="index">The zero-based index at which the new item should be inserted.</param>
+        /// <param name="index">The zero-based index at which the new item
+        /// should be inserted.</param>
         /// <param name="filename">The name of the image file.</param>
         public void Insert(int index, string filename)
         {
@@ -384,9 +425,11 @@ public partial class ImageListView
         }
 
         /// <summary>
-        /// Inserts an item to the <see cref="ImageListViewItemCollection"/> at the specified index.
+        /// Inserts an item to the <see cref="ImageListViewItemCollection"/> at
+        /// the specified index.
         /// </summary>
-        /// <param name="index">The zero-based index at which the new item should be inserted.</param>
+        /// <param name="index">The zero-based index at which the new item should
+        /// be inserted.</param>
         /// <param name="filename">The name of the image file.</param>
         /// <param name="initialThumbnail">The initial thumbnail image for the item.</param>
         public void Insert(int index, string filename, Image initialThumbnail)
@@ -400,9 +443,11 @@ public partial class ImageListView
         }
 
         /// <summary>
-        /// Inserts a virtual item to the <see cref="ImageListViewItemCollection"/> at the specified index.
+        /// Inserts a virtual item to the <see cref="ImageListViewItemCollection"/>
+        /// at the specified index.
         /// </summary>
-        /// <param name="index">The zero-based index at which the new item should be inserted.</param>
+        /// <param name="index">The zero-based index at which the new item should
+        /// be inserted.</param>
         /// <param name="key">The key identifying the item.</param>
         /// <param name="text">Text of the item.</param>
         /// <param name="adaptor">The adaptor associated with this item.</param>
@@ -412,9 +457,11 @@ public partial class ImageListView
         }
 
         /// <summary>
-        /// Inserts a virtual item to the <see cref="ImageListViewItemCollection"/> at the specified index.
+        /// Inserts a virtual item to the <see cref="ImageListViewItemCollection"/>
+        /// at the specified index.
         /// </summary>
-        /// <param name="index">The zero-based index at which the new item should be inserted.</param>
+        /// <param name="index">The zero-based index at which the new item should
+        /// be inserted.</param>
         /// <param name="key">The key identifying the item.</param>
         /// <param name="text">Text of the item.</param>
         public void Insert(int index, object key, string text)
@@ -423,14 +470,16 @@ public partial class ImageListView
         }
 
         /// <summary>
-        /// Inserts a virtual item to the <see cref="ImageListViewItemCollection"/> at the specified index.
+        /// Inserts a virtual item to the <see cref="ImageListViewItemCollection"/>
+        /// at the specified index.
         /// </summary>
-        /// <param name="index">The zero-based index at which the new item should be inserted.</param>
+        /// <param name="index">The zero-based index at which the new item should
+        /// be inserted.</param>
         /// <param name="key">The key identifying the item.</param>
         /// <param name="text">Text of the item.</param>
         /// <param name="initialThumbnail">The initial thumbnail image for the item.</param>
         /// <param name="adaptor">The adaptor associated with this item.</param>
-        public void Insert(int index, object key, string text, Image initialThumbnail, IAdaptor adaptor)
+        public void Insert(int index, object key, string text, Image? initialThumbnail, IAdaptor adaptor)
         {
             var item = new ImageListViewItem(key, text)
             {
@@ -441,9 +490,11 @@ public partial class ImageListView
         }
 
         /// <summary>
-        /// Inserts a virtual item to the <see cref="ImageListViewItemCollection"/> at the specified index.
+        /// Inserts a virtual item to the <see cref="ImageListViewItemCollection"/>
+        /// at the specified index.
         /// </summary>
-        /// <param name="index">The zero-based index at which the new item should be inserted.</param>
+        /// <param name="index">The zero-based index at which the new item should
+        /// be inserted.</param>
         /// <param name="key">The key identifying the item.</param>
         /// <param name="text">Text of the item.</param>
         /// <param name="initialThumbnail">The initial thumbnail image for the item.</param>
@@ -471,7 +522,10 @@ public partial class ImageListView
             if (mImageListView != null)
             {
                 if (item.Selected)
+                {
                     mImageListView.OnSelectionChangedInternal();
+                }
+
                 mImageListView.Refresh();
             }
 
@@ -488,6 +542,7 @@ public partial class ImageListView
         }
 
         #endregion
+
 
         #region Helper Methods
         /// <summary>
@@ -508,7 +563,7 @@ public partial class ImageListView
         /// if the key is found; otherwise, the default value for the type 
         /// of the value parameter. This parameter is passed uninitialized.</param>
         /// <returns>true if the collection contains the given key; otherwise false.</returns>
-        internal bool TryGetValue(Guid guid, out ImageListViewItem item)
+        internal bool TryGetValue(Guid guid, out ImageListViewItem? item)
         {
             return lookUp.TryGetValue(guid, out item);
         }
@@ -643,7 +698,7 @@ public partial class ImageListView
         /// <summary>
         /// Returns the index of the specified item.
         /// </summary>
-        internal int IndexOf(ImageListViewItem item)
+        internal static int IndexOf(ImageListViewItem item)
         {
             return item.Index;
         }
@@ -660,6 +715,7 @@ public partial class ImageListView
 
         #endregion
 
+
         #region Unsupported Interface
         /// <summary>
         /// Copies the elements of the <see cref="T:System.Collections.Generic.ICollection`1"/> to an <see cref="T:System.Array"/>, starting at a particular <see cref="T:System.Array"/> index.
@@ -668,6 +724,7 @@ public partial class ImageListView
         {
             mItems.CopyTo(array, arrayIndex);
         }
+
         /// <summary>
         /// Determines the index of a specific item in the <see cref="T:System.Collections.Generic.IList`1"/>.
         /// </summary>
@@ -676,6 +733,7 @@ public partial class ImageListView
         {
             return mItems.IndexOf(item);
         }
+
         /// <summary>
         /// Copies the elements of the <see cref="T:System.Collections.ICollection"/> to an <see cref="T:System.Array"/>, starting at a particular <see cref="T:System.Array"/> index.
         /// </summary>
@@ -685,6 +743,7 @@ public partial class ImageListView
                 throw new ArgumentException("An array of ImageListViewItem is required.", nameof(array));
             mItems.CopyTo((ImageListViewItem[])array, index);
         }
+
         /// <summary>
         /// Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
         /// </summary>
@@ -692,6 +751,7 @@ public partial class ImageListView
         {
             get { return mItems.Count; }
         }
+
         /// <summary>
         /// Gets a value indicating whether access to the <see cref="T:System.Collections.ICollection"/> is synchronized (thread safe).
         /// </summary>
@@ -699,6 +759,7 @@ public partial class ImageListView
         {
             get { return false; }
         }
+
         /// <summary>
         /// Gets an object that can be used to synchronize access to the <see cref="T:System.Collections.ICollection"/>.
         /// </summary>
@@ -706,10 +767,11 @@ public partial class ImageListView
         {
             get { throw new NotSupportedException(); }
         }
+
         /// <summary>
         /// Adds an item to the <see cref="T:System.Collections.IList"/>.
         /// </summary>
-        int IList.Add(object value)
+        int IList.Add(object? value)
         {
             if (value is not ImageListViewItem)
                 throw new ArgumentException("An object of type ImageListViewItem is required.", nameof(value));
@@ -719,15 +781,17 @@ public partial class ImageListView
 
             return mItems.IndexOf(item);
         }
+
         /// <summary>
         /// Determines whether the <see cref="T:System.Collections.IList"/> contains a specific value.
         /// </summary>
-        bool IList.Contains(object value)
+        bool IList.Contains(object? value)
         {
             if (value is not ImageListViewItem)
                 throw new ArgumentException("An object of type ImageListViewItem is required.", nameof(value));
             return mItems.Contains((ImageListViewItem)value);
         }
+
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
@@ -738,24 +802,27 @@ public partial class ImageListView
         {
             return mItems.GetEnumerator();
         }
+
         /// <summary>
         /// Determines the index of a specific item in the <see cref="T:System.Collections.IList"/>.
         /// </summary>
-        int IList.IndexOf(object value)
+        int IList.IndexOf(object? value)
         {
             if (value is not ImageListViewItem)
                 throw new ArgumentException("An object of type ImageListViewItem is required.", nameof(value));
             return IndexOf((ImageListViewItem)value);
         }
+
         /// <summary>
         /// Inserts an item to the <see cref="T:System.Collections.IList"/> at the specified index.
         /// </summary>
-        void IList.Insert(int index, object value)
+        void IList.Insert(int index, object? value)
         {
             if (value is not ImageListViewItem)
                 throw new ArgumentException("An object of type ImageListViewItem is required.", nameof(value));
             Insert(index, (ImageListViewItem)value);
         }
+
         /// <summary>
         /// Gets a value indicating whether the <see cref="T:System.Collections.IList"/> has a fixed size.
         /// </summary>
@@ -763,10 +830,11 @@ public partial class ImageListView
         {
             get { return false; }
         }
+
         /// <summary>
         /// Removes the first occurrence of a specific object from the <see cref="T:System.Collections.IList"/>.
         /// </summary>
-        void IList.Remove(object value)
+        void IList.Remove(object? value)
         {
             if (value is not ImageListViewItem)
                 throw new ArgumentException("An object of type ImageListViewItem is required.", nameof(value));
@@ -774,10 +842,11 @@ public partial class ImageListView
             var item = (ImageListViewItem)value;
             Remove(item);
         }
+
         /// <summary>
         /// Gets or sets the <see cref="object"/> at the specified index.
         /// </summary>
-        object IList.this[int index]
+        object? IList.this[int index]
         {
             get
             {
@@ -791,6 +860,6 @@ public partial class ImageListView
             }
         }
         #endregion
+    
     }
-
 }
