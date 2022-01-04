@@ -23,33 +23,36 @@ using System.Collections.Concurrent;
 
 namespace ImageGlass.Base.Cache;
 
+
 /// <summary>
 /// A string cache.
 /// </summary>
 public class StringCache
 {
-    // A comparator is necessary because just using vanilla char[] will result in
-    // a different hash for each *instance*. This comparator works on the contents.
+    /// <summary>
+    /// A comparator is necessary because just using vanilla char[] will result in
+    /// a different hash for each *instance*. This comparator works on the contents.
+    /// </summary>
     private class TagComparer : IEqualityComparer<char[]>
     {
-        public bool Equals(char[] x, char[] y)
+        public bool Equals(char[]? x, char[]? y)
         {
-            if (x == null && y == null)
-                return true;
-            if (x == null || y == null) // One but not both?
-                return false;
-            if (x.Length != y.Length)
-                return false;
+            if (x == null && y == null) return true;
+            if (x == null || y == null) return false;
+            if (x.Length != y.Length) return false;
+
             for (int i = 0; i < x.Length; i++)
-                if (x[i] != y[i])
-                    return false;
+            {
+                if (x[i] != y[i]) return false;
+            }
+
             return true;
         }
 
         public int GetHashCode(char[] obj)
         {
-            if (obj.Length == 0)
-                return 0;
+            if (obj.Length == 0) return 0;
+
             var hashCode = 0;
             for (var i = 0; i < obj.Length; i++)
             {
@@ -57,13 +60,18 @@ public class StringCache
 
                 // Rotate by 3 bits and XOR the new value.
                 for (var j = 0; j < bytes.Length; j++)
+                {
                     hashCode = (hashCode << 3) | (hashCode >> (29)) ^ bytes[j];
+                }
             }
+
             return hashCode;
         }
     }
 
-    // Concurrent dictionary used for parallelism
+    /// <summary>
+    /// Concurrent dictionary used for parallelism
+    /// </summary>
     private readonly ConcurrentDictionary<char[], string> _stringCache;
 
     /// <summary>
@@ -71,29 +79,33 @@ public class StringCache
     /// </summary>
     public StringCache()
     {
-        //int numProcs = Environment.ProcessorCount; 
-        _stringCache = new ConcurrentDictionary<char[], string>(new TagComparer());
+        _stringCache = new(new TagComparer());
     }
-
 
     /// <summary>
-    /// Fetch or add a string from the cache
+    /// Fetch or add a string from the cache.
     /// </summary>
-    /// <param name="inval">input string to be cached</param>
-    /// <returns>the string from the cache</returns>
-    public string GetFromCache(string inval)
+    /// <param name="str">Input string to be cached.</param>
+    /// <returns>The string from the cache.</returns>
+    public string GetFromCache(string str)
     {
-        return GetFromCache(inval.ToCharArray());
+        return GetFromCache(str.ToCharArray());
     }
 
-    private string GetFromCache(char[] inval)
+    /// <summary>
+    /// Fetch or add a string from the cache.
+    /// </summary>
+    /// <param name="str">Input string to be cached.</param>
+    /// <returns></returns>
+    private string GetFromCache(char[] str)
     {
-        if (!_stringCache.TryGetValue(inval, out var outval))
+        if (!_stringCache.TryGetValue(str, out var result))
         {
-            outval = new string(inval);
-            _stringCache.TryAdd(inval, outval);
+            result = new string(str);
+            _stringCache.TryAdd(str, result);
         }
-        return outval;
+
+        return result;
     }
 }
 
