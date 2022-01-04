@@ -35,9 +35,9 @@ public static class SystemRenderer
     /// </summary>
     /// <param name="control"></param>
     /// <returns></returns>
-    public static int ApplyTheme(Control control)
+    public static int ApplyTheme(Control? control, bool darkMode = true)
     {
-        return ApplyTheme(control, "Explorer");
+        return ApplyTheme(control, darkMode ? "DarkMode_Explorer" : "Explorer");
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public static class SystemRenderer
     /// <param name="control"></param>
     /// <param name="theme"></param>
     /// <returns></returns>
-    public static int ApplyTheme(Control control, string theme)
+    public static int ApplyTheme(Control? control, string theme)
     {
         try
         {

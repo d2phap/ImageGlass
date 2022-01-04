@@ -425,6 +425,16 @@ public partial class ImageListView : Control, IComponent
     }
 
     /// <summary>
+    /// Gets horizontal scrollbar.
+    /// </summary>
+    public HScrollBar HScrollBar => hScrollBar;
+
+    /// <summary>
+    /// Gets verticle scrollbar.
+    /// </summary>
+    public VScrollBar VScrollBar => vScrollBar;
+
+    /// <summary>
     /// Gets or sets whether item's text should be shown.
     /// </summary>
     [Category("Appearance"), Description("Gets or sets whether item's text should be shown."), DefaultValue(false)]
@@ -726,15 +736,17 @@ public partial class ImageListView : Control, IComponent
         mView = View.Thumbnails;
         mViewOffset = new Point(0, 0);
         mShowScrollBars = false;
-        mShowItemText = true;
+        mShowItemText = false;
 
         // Child controls
         hScrollBar = new HScrollBar();
-        vScrollBar = new VScrollBar();
         hScrollBar.Visible = false;
-        vScrollBar.Visible = false;
         hScrollBar.Scroll += HScrollBar_Scroll;
+
+        vScrollBar = new VScrollBar();
+        vScrollBar.Visible = false;
         vScrollBar.Scroll += VScrollBar_Scroll;
+
         Controls.Add(hScrollBar);
         Controls.Add(vScrollBar);
 
@@ -760,6 +772,7 @@ public partial class ImageListView : Control, IComponent
         disposed = false;
     }
     #endregion
+
 
     #region Select/Check
     /// <summary>
@@ -1226,6 +1239,7 @@ public partial class ImageListView : Control, IComponent
 
     #endregion
 
+
     #region Rendering Methods
     /// <summary>
     /// Refreshes the control.
@@ -1303,6 +1317,7 @@ public partial class ImageListView : Control, IComponent
 
     #endregion
 
+
     #region Helper Methods
     /// <summary>
     /// Determines whether the specified item is visible on the screen.
@@ -1372,7 +1387,9 @@ public partial class ImageListView : Control, IComponent
     }
     #endregion
 
+
     #region Event Handlers
+
     /// <summary>
     /// Handles the DragOver event.
     /// </summary>

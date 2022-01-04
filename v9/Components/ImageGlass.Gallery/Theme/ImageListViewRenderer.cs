@@ -696,6 +696,7 @@ public class ImageListViewRenderer : IDisposable
 
 
     #region Virtual Methods
+
     /// <summary>
     /// Initializes the System.Drawing.Graphics used to draw
     /// control elements.

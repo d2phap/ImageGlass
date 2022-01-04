@@ -55,6 +55,18 @@ public class ModernGalleryRenderer : ImageListViewRenderer
         return Math.Max(radius, 5);
     }
 
+    public override void InitializeGraphics(Graphics g)
+    {
+        base.InitializeGraphics(g);
+
+        if (Theme.Info.IsDark)
+        {
+            // dark scrollbars
+            _ = SystemRenderer.ApplyTheme(ImageListView.HScrollBar, true);
+            _ = SystemRenderer.ApplyTheme(ImageListView.VScrollBar, true);
+        }
+    }
+
 
     /// <summary>
     /// Returns item size for the given view mode.
