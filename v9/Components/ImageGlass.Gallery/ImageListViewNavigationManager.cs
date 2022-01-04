@@ -847,7 +847,7 @@ public partial class ImageListView
         {
             mImageListView.HitTest(pt, out HitInfo h);
 
-            if (h.ItemHit && mImageListView.Items[h.ItemIndex].Enabled)
+            if (h.IsItemHit && mImageListView.Items[h.ItemIndex].Enabled)
             {
                 HoveredItem = mImageListView.Items[h.ItemIndex];
             }
@@ -856,8 +856,8 @@ public partial class ImageListView
                 HoveredItem = null;
             }
 
-            inItemArea = h.InItemArea;
-            overCheckBox = h.CheckBoxHit;
+            inItemArea = h.IsInItemArea;
+            overCheckBox = h.IsCheckBoxHit;
         }
         /// <summary>
         /// Returns the item index after applying the given navigation key.

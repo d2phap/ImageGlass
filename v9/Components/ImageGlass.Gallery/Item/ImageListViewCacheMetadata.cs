@@ -186,7 +186,7 @@ internal class ImageListViewCacheMetadata : IDisposable
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="QueuedWorkerCompletedEventArgs"/> 
     /// instance containing the event data.</param>
-    private void Bw_RunWorkerCompleted(object sender, QueuedWorkerCompletedEventArgs e)
+    private void Bw_RunWorkerCompleted(object? sender, QueuedWorkerCompletedEventArgs e)
     {
         var request = e.UserState as CacheRequest;
         if (request is null) return;
@@ -200,7 +200,7 @@ internal class ImageListViewCacheMetadata : IDisposable
             return;
 
         // Get result
-        var details = (Tuple<string, object>[])e.Result;
+        var details = (Tuple<string, object>[]?)e.Result;
 
         // Refresh the control lazily
         if (mImageListView != null && mImageListView.IsItemVisible(request.Guid))
@@ -221,7 +221,7 @@ internal class ImageListViewCacheMetadata : IDisposable
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="QueuedWorkerDoWorkEventArgs"/> instance 
     /// containing the event data.</param>
-    private void Bw_DoWork(object sender, QueuedWorkerDoWorkEventArgs e)
+    private void Bw_DoWork(object? sender, QueuedWorkerDoWorkEventArgs e)
     {
         var request = e.Argument as CacheRequest;
         if (request is null) return;

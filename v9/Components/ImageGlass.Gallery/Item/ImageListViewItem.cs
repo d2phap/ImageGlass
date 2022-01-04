@@ -35,7 +35,7 @@ namespace ImageGlass.Gallery;
 public class ImageListViewItem : ICloneable
 {
     #region Member Variables
-    // [IG_CHANGE] Cache often repeated strings, e.g. extensions, directory path
+
     private static readonly StringCache _stringCache = new();
 
     // Property backing fields

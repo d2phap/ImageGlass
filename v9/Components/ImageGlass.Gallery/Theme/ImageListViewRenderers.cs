@@ -36,9 +36,7 @@ public class DefaultRenderer : ImageListViewRenderer
     /// <summary>
     /// Initializes a new instance of the DefaultRenderer class.
     /// </summary>
-    public DefaultRenderer()
-    {
-    }
+    public DefaultRenderer() { }
 }
 #endregion
 
@@ -89,7 +87,7 @@ public class ThemeRenderer : ImageListViewRenderer
         // Create renderers
         if (VisualStylesEnabled)
         {
-            // See http://msdn.microsoft.com/en-us/library/bb773210(VS.85).aspx
+            // See https://docs.microsoft.com/en-us/windows/win32/controls/parts-and-states
             // for part and state codes used below.
 
             // Check boxes
@@ -97,8 +95,10 @@ public class ThemeRenderer : ImageListViewRenderer
             rUncheckedNormal = GetRenderer(VisualStyleElement.Button.CheckBox.UncheckedNormal);
             rCheckedDisabled = GetRenderer(VisualStyleElement.Button.CheckBox.CheckedDisabled);
             rUncheckedDisabled = GetRenderer(VisualStyleElement.Button.CheckBox.UncheckedDisabled);
+
             // File icons
             rFileIcon = GetRenderer(VisualStyleElement.Button.PushButton.Normal);
+
             // Items
             rItemNormal = GetRenderer("Explorer::ListView", 1, 1);
             rItemHovered = GetRenderer("Explorer::ListView", 1, 2);

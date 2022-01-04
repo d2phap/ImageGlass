@@ -38,10 +38,7 @@ public class UriAdaptor : IAdaptor
     /// <summary>
     /// Initializes a new instance of the <see cref="UriAdaptor"/> class.
     /// </summary>
-    public UriAdaptor()
-    {
-
-    }
+    public UriAdaptor() { }
 
     /// <summary>
     /// Returns the thumbnail image for the given item.
@@ -53,8 +50,7 @@ public class UriAdaptor : IAdaptor
     /// <returns>The thumbnail image from the given item or null if an error occurs.</returns>
     public override Image? GetThumbnail(object key, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool useExifOrientation)
     {
-        if (_isDisposed)
-            return null;
+        if (_isDisposed) return null;
 
         var uri = (string)key;
         try

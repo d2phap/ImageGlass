@@ -35,17 +35,17 @@ public class HitInfo
     /// <summary>
     /// Gets whether an item is under the hit point.
     /// </summary>
-    public bool ItemHit { get { return ItemIndex != -1; } }
+    public bool IsItemHit => ItemIndex != -1;
 
     /// <summary>
     /// Gets whether an item checkbox is under the hit point.
     /// </summary>
-    public bool CheckBoxHit { get; private set; }
+    public bool IsCheckBoxHit { get; private set; }
 
     /// <summary>
     /// Gets whether the file icon is under the hit point.
     /// </summary>
-    public bool FileIconHit { get; private set; }
+    public bool IsFileIconHit { get; private set; }
 
     /// <summary>
     /// Gets the index of the item under the hit point.
@@ -55,7 +55,7 @@ public class HitInfo
     /// <summary>
     /// Gets whether the hit point is inside the item area.
     /// </summary>
-    public bool InItemArea { get; private set; }
+    public bool IsInItemArea { get; private set; }
 
     #endregion
 
@@ -71,10 +71,10 @@ public class HitInfo
     private HitInfo(int itemIndex, bool checkBoxHit, bool fileIconHit, bool inItemArea)
     {
         ItemIndex = itemIndex;
-        CheckBoxHit = checkBoxHit;
-        FileIconHit = fileIconHit;
+        IsCheckBoxHit = checkBoxHit;
+        IsFileIconHit = fileIconHit;
 
-        InItemArea = inItemArea;
+        IsInItemArea = inItemArea;
     }
 
     /// <summary>
