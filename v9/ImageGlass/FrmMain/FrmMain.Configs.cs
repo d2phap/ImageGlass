@@ -18,6 +18,7 @@ public partial class FrmMain
 
         // Thumbnail bar
         Sp1.Panel2Collapsed = !Config.IsShowThumbnail;
+        Sp1.SplitterDistance = 465;
 
         Sp2.Panel1Collapsed = true;
         Sp3.Panel2Collapsed = true;

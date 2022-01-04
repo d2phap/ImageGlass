@@ -11,7 +11,7 @@ internal class ImageListViewCacheMetadata : IDisposable
 {
 
     #region Member Variables
-    private QueuedBackgroundWorker bw;
+    private QueuedWorker bw;
     private SynchronizationContext? context;
     private readonly SendOrPostCallback checkProcessingCallback;
 
@@ -109,7 +109,7 @@ internal class ImageListViewCacheMetadata : IDisposable
     public ImageListViewCacheMetadata(ImageListView owner)
     {
         context = null;
-        bw = new QueuedBackgroundWorker
+        bw = new QueuedWorker
         {
             IsBackground = true,
             ThreadName = "Metadata Cache Worker Thread"

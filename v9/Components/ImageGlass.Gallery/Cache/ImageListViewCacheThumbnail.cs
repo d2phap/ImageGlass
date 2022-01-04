@@ -34,7 +34,7 @@ namespace ImageGlass.Gallery;
 internal class ImageListViewCacheThumbnail : IDisposable
 {
     #region Member Variables
-    private QueuedBackgroundWorker bw;
+    private QueuedWorker bw;
     private SynchronizationContext context;
     private SendOrPostCallback checkProcessingCallback;
 
@@ -298,7 +298,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
     public ImageListViewCacheThumbnail(ImageListView owner)
     {
         context = null;
-        bw = new QueuedBackgroundWorker
+        bw = new QueuedWorker
         {
             ProcessingMode = ProcessingMode.LIFO,
             IsBackground = true,

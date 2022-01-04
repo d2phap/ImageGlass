@@ -102,14 +102,20 @@ public partial class FrmMain : Form
             return;
         }
 
-        
-        Local.Metadata = Config.Codec.LoadMetadata(inputPath);
 
-        PicBox.ShowMessage("Loading image... \n" + inputPath, 0, 1500);
-        var bmp = await Config.Codec.LoadAsync(inputPath, new(Local.Metadata));
-        PicBox.LoadImage(bmp);
+        NextPic(inputPath);
 
         LoadGallery(inputPath);
+    }
+
+
+    private async void NextPic(string filename)
+    {
+        Local.Metadata = Config.Codec.LoadMetadata(filename);
+
+        PicBox.ShowMessage("Loading image... \n" + filename, 0, 1500);
+        var bmp = await Config.Codec.LoadAsync(filename, new(Local.Metadata));
+        PicBox.LoadImage(bmp);
     }
 
 
@@ -197,5 +203,8 @@ public partial class FrmMain : Form
         catch { }
     }
 
-    
+    private void Gallery_ItemClick(object sender, ItemClickEventArgs e)
+    {
+        NextPic(e.Item.FileName);
+    }
 }

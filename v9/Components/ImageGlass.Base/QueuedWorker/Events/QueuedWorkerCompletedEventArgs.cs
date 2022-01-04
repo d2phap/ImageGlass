@@ -1,4 +1,22 @@
-﻿using System.ComponentModel;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+using System.ComponentModel;
 
 namespace ImageGlass.Base.QueuedWorker;
 
@@ -8,8 +26,7 @@ namespace ImageGlass.Base.QueuedWorker;
 /// </summary>
 /// <param name="sender">The object that is the source of the event.</param>
 /// <param name="e">A <see cref="QueuedWorkerCompletedEventArgs"/> that contains event data.</param>
-[EditorBrowsable(EditorBrowsableState.Never)]
-public delegate void RunQueuedWorkerCompletedEventHandler(object sender, QueuedWorkerCompletedEventArgs e);
+public delegate void RunQueuedWorkerCompletedEventHandler(object? sender, QueuedWorkerCompletedEventArgs? e);
 
 
 
@@ -21,7 +38,8 @@ public class QueuedWorkerCompletedEventArgs : AsyncCompletedEventArgs
     /// <summary>
     /// Gets a value that represents the result of an asynchronous operation.
     /// </summary>
-    public object Result { get; private set; }
+    public object? Result { get; private set; }
+
     /// <summary>
     /// Gets the priority of this item.
     /// </summary>
@@ -35,7 +53,7 @@ public class QueuedWorkerCompletedEventArgs : AsyncCompletedEventArgs
     /// <param name="priority">A value between 0 and 5 indicating the priority of this item.</param>
     /// <param name="error">The error that occurred while loading the image.</param>
     /// <param name="cancelled">A value indicating whether the asynchronous operation was canceled.</param>
-    public QueuedWorkerCompletedEventArgs(object argument, object result, int priority, Exception error, bool cancelled)
+    public QueuedWorkerCompletedEventArgs(object argument, object? result, int priority, Exception? error, bool cancelled)
         : base(error, cancelled, argument)
     {
         Result = result;

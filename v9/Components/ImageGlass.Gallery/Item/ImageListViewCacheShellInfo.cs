@@ -11,7 +11,7 @@ namespace ImageGlass.Gallery;
 internal class ImageListViewCacheShellInfo : IDisposable
 {
     #region Member Variables
-    private QueuedBackgroundWorker bw;
+    private QueuedWorker bw;
     private SynchronizationContext? context;
     private readonly SendOrPostCallback checkProcessingCallback;
 
@@ -163,7 +163,7 @@ internal class ImageListViewCacheShellInfo : IDisposable
     public ImageListViewCacheShellInfo(ImageListView owner)
     {
         context = null;
-        bw = new QueuedBackgroundWorker
+        bw = new QueuedWorker
         {
             Threads = 1,
             IsBackground = true,
