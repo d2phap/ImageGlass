@@ -194,9 +194,7 @@ namespace ImageGlass
             this.Toolbar.Size = new System.Drawing.Size(1108, 25);
             this.Toolbar.TabIndex = 1;
             this.Toolbar.Theme = null;
-            this.Toolbar.ToolTipInterval = 4000;
-            this.Toolbar.ToolTipShowUp = false;
-            this.Toolbar.ToolTipText = "";
+            this.Toolbar.ToolTipDirection = UI.TooltipDirection.Bottom;
             this.Toolbar.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.Toolbar_ItemClicked);
             // 
             // MnuMain

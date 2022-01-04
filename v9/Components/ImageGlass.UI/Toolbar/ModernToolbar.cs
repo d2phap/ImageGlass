@@ -24,12 +24,21 @@ namespace ImageGlass.UI;
 
 
 /// <summary>
-/// Toolbar items alignment
+/// Toolbar items alignment.
 /// </summary>
 public enum ToolbarAlignment
 {
     Left = 0,
     Center = 1,
+}
+
+/// <summary>
+/// Tooltip direction of toolbar item.
+/// </summary>
+public enum TooltipDirection
+{
+    Top = 0,
+    Bottom = 1,
 }
 
 
@@ -38,26 +47,12 @@ public enum ToolbarAlignment
 /// </summary>
 public class ModernToolbar : ToolStrip
 {
-    private ToolStripItem? _mouseOverItem;
-    private Point _mouseOverPoint = new();
-    private readonly System.Windows.Forms.Timer _timer;
-    private ToolTip? _tooltip;
     private ToolbarAlignment _alignment = ToolbarAlignment.Center;
     private int _iconHeight = Constants.TOOLBAR_ICON_HEIGHT;
 
-    private ToolTip Tooltip
-    {
-        get
-        {
-            if (_tooltip == null)
-            {
-                _tooltip = new ToolTip();
-                Tooltip.AutomaticDelay = 2000;
-                Tooltip.InitialDelay = 2000;
-            }
-            return _tooltip;
-        }
-    }
+    private readonly ToolTip _tooltip = new();
+    private CancellationTokenSource _tooltipTokenSrc = new();
+    private ToolStripItem? _hoveredItem = null;
 
 
     #region Public properties
@@ -93,21 +88,15 @@ public class ModernToolbar : ToolStrip
     /// </summary>
     public ContextMenuStrip MainMenu { get; set; } = new();
 
-
-    /// <summary>
-    /// Duration for tooltip auto-disappear
-    /// </summary>
-    public int ToolTipInterval { get; set; } = 4000;
-
     /// <summary>
     /// Tooltip display text
     /// </summary>
     public string ToolTipText { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets, sets value indicates that the tooltip direction is top or bottom
+    /// Gets, sets tooltip direction value
     /// </summary>
-    public bool ToolTipShowUp { get; set; } = false;
+    public TooltipDirection ToolTipDirection { get; set; } = TooltipDirection.Bottom;
 
     /// <summary>
     /// Gets, sets value indicates that the tooltip is shown
@@ -155,86 +144,42 @@ public class ModernToolbar : ToolStrip
 
 
     #region Protected methods
-    protected override void OnMouseMove(MouseEventArgs mea)
-    {
-        base.OnMouseMove(mea);
 
+    protected override void OnMouseMove(MouseEventArgs e)
+    {
+        base.OnMouseMove(e);
         if (HideTooltips) return;
 
-        var newMouseOverItem = GetItemAt(mea.Location);
-        if (_mouseOverItem != newMouseOverItem ||
-            (Math.Abs(_mouseOverPoint.X - mea.X) > SystemInformation.MouseHoverSize.Width || (Math.Abs(_mouseOverPoint.Y - mea.Y) > SystemInformation.MouseHoverSize.Height)))
+        var item = GetItemAt(e.Location);
+
+        if (item == null)
         {
-            _mouseOverItem = newMouseOverItem;
-            _mouseOverPoint = mea.Location;
-            Tooltip.Hide(this);
-            _timer.Stop();
-            _timer.Start();
+            HideItemTooltip();
+            _hoveredItem = null;
+        }
+        else if (item != _hoveredItem)
+        {
+            _hoveredItem = item;
+            ShowItemTooltip(_hoveredItem);
         }
     }
 
-    protected override void OnMouseClick(MouseEventArgs e)
+    protected override void OnMouseDown(MouseEventArgs e)
     {
-        base.OnMouseClick(e);
-        var newMouseOverItem = GetItemAt(e.Location);
-        if (newMouseOverItem != null)
-        {
-            Tooltip.Hide(this);
-        }
+        base.OnMouseDown(e);
+        HideItemTooltip();
     }
 
-    protected override void OnMouseUp(MouseEventArgs mea)
+    protected override void OnMouseUp(MouseEventArgs e)
     {
-        base.OnMouseUp(mea);
-#pragma warning disable IDE0059 // Unnecessary assignment of a value
-        var newMouseOverItem = GetItemAt(mea.Location);
-#pragma warning restore IDE0059 // Unnecessary assignment of a value
+        base.OnMouseUp(e);
+        HideItemTooltip();
     }
 
     protected override void OnMouseLeave(EventArgs e)
     {
         base.OnMouseLeave(e);
-        _timer.Stop();
-        Tooltip.Hide(this);
-    }
-
-    private void Timer_Tick(object? sender, EventArgs e)
-    {
-        _timer.Stop();
-        try
-        {
-            Point currentMouseOverPoint;
-            if (ToolTipShowUp)
-            {
-                currentMouseOverPoint = PointToClient(new(MousePosition.X, MousePosition.Y - Cursor.Current.Size.Height + Cursor.Current.HotSpot.Y - Height / 2));
-            }
-            else
-            {
-                currentMouseOverPoint = PointToClient(new(MousePosition.X, MousePosition.Y + Cursor.Current.Size.Height - Cursor.Current.HotSpot.Y));
-            }
-
-            if (_mouseOverItem == null)
-            {
-                if (!string.IsNullOrEmpty(ToolTipText))
-                {
-                    Tooltip.Show(ToolTipText, this, currentMouseOverPoint, ToolTipInterval);
-                }
-            }
-            // TODO: revisit this; toolbar buttons like to disappear, if changed.
-            else if (
-                ((_mouseOverItem is not ToolStripDropDownButton
-                    && _mouseOverItem is not ToolStripSplitButton)
-                || (_mouseOverItem is ToolStripDropDownButton
-                    && !((ToolStripDropDownButton)_mouseOverItem).DropDown.Visible)
-                || (_mouseOverItem is ToolStripSplitButton
-                    && !((ToolStripSplitButton)_mouseOverItem).DropDown.Visible))
-                && !string.IsNullOrEmpty(_mouseOverItem.ToolTipText)
-                && Tooltip != null)
-            {
-                Tooltip.Show(_mouseOverItem.ToolTipText, this, currentMouseOverPoint, ToolTipInterval);
-            }
-        }
-        catch { }
+        HideItemTooltip();
     }
 
     protected override void Dispose(bool disposing)
@@ -244,8 +189,8 @@ public class ModernToolbar : ToolStrip
         if (disposing)
         {
             OverflowButton.DropDown.Opening -= OverflowDropDown_Opening;
-            _timer.Dispose();
-            Tooltip.Dispose();
+            _tooltip.Dispose();
+            _tooltipTokenSrc.Dispose();
         }
     }
 
@@ -303,12 +248,6 @@ public class ModernToolbar : ToolStrip
     public ModernToolbar() : base()
     {
         ShowItemToolTips = false;
-        _timer = new()
-        {
-            Enabled = false,
-            Interval = 200 // KBR enforce long initial time SystemInformation.MouseHoverTime;
-        };
-        _timer.Tick += Timer_Tick;
 
         // Apply Windows 11 corner API
         CornerApi.ApplyCorner(OverflowButton.DropDown.Handle);
@@ -378,6 +317,59 @@ public class ModernToolbar : ToolStrip
 
 
     #region Public functions
+
+    /// <summary>
+    /// Hide item's tooltip
+    /// </summary>
+    public void HideItemTooltip()
+    {
+        _tooltipTokenSrc.Cancel();
+        _tooltip.Hide(this);
+    }
+
+    /// <summary>
+    /// Shows item tooltip
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="duration"></param>
+    /// <param name="delay"></param>
+    public async void ShowItemTooltip(ToolStripItem? item, int duration = 4000, int delay = 400)
+    {
+        if (item is null || string.IsNullOrEmpty(item.ToolTipText))
+            return;
+
+        _tooltipTokenSrc?.Cancel();
+        _tooltipTokenSrc = new();
+
+        _tooltip.Hide(this);
+        
+        try
+        {
+            const int TOOLTIP_HEIGHT = 28;
+            var tooltipPosY = 0;
+
+            if (ToolTipDirection == TooltipDirection.Top)
+            {
+                tooltipPosY = item.Bounds.Top - item.Padding.Top - TOOLTIP_HEIGHT;
+            }
+            else if (ToolTipDirection == TooltipDirection.Bottom)
+            {
+                tooltipPosY = item.Bounds.Bottom + item.Padding.Bottom;
+            }
+
+            // delay
+            await Task.Delay(delay, _tooltipTokenSrc.Token);
+
+            // show tooltip
+            _tooltip.Show(item.ToolTipText, this, item.Bounds.X, tooltipPosY);
+
+            // duration
+            await Task.Delay(duration, _tooltipTokenSrc.Token);
+        }
+        catch { }
+
+        _tooltip.Hide(this);
+    }
 
     /// <summary>
     /// Update the alignment if toolstrip items

@@ -1266,14 +1266,15 @@ public partial class ImageListView : Control, IComponent
         var bounds = layoutManager.GetItemBounds(item.Index);
         var tooltipPosY = 0;
         const int TOOLTIP_HEIGHT = 50;
+        const int GAP = 4;
 
         if (TooltipDirection == TooltipDirection.Top)
         {
-            tooltipPosY = bounds.Y - TOOLTIP_HEIGHT;
+            tooltipPosY = bounds.Y - GAP - TOOLTIP_HEIGHT;
         }
         else if (TooltipDirection == TooltipDirection.Bottom)
         {
-            tooltipPosY = bounds.Bottom;
+            tooltipPosY = bounds.Bottom + GAP;
         }
 
         mTooltip.Hide(this);
@@ -1747,6 +1748,7 @@ public partial class ImageListView : Control, IComponent
                     vScrollBar.Dispose();
 
                 mTooltip?.Dispose();
+                _tooltipTokenSrc.Dispose();
                 lazyRefreshTimer?.Dispose();
 
                 // internal classes
