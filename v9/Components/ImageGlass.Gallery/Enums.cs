@@ -25,7 +25,7 @@ License: Apache License Version 2.0, http://www.apache.org/licenses/
 namespace ImageGlass.Gallery;
 
 
-#region ImageListView Public Enums
+#region Public Enums
 
 /// <summary>
 /// Represents the cache mode.
@@ -109,7 +109,7 @@ public enum CacheThread
 
 
 /// <summary>
-/// Represents the type of information displayed in an image list view column.
+/// Represents the type of information displayed in a column.
 /// </summary>
 public enum ColumnType
 {
@@ -189,7 +189,7 @@ public enum ItemDrawOrder
 }
 
 /// <summary>
-/// Represents the visual state of an image list view item.
+/// Represents the visual state of an ImageListView item.
 /// </summary>
 [Flags]
 public enum ItemState
@@ -269,7 +269,7 @@ public enum UseEmbeddedThumbnails
 }
 
 /// <summary>
-/// Represents the view mode of the image list view.
+/// Represents the view mode of the <see cref="ImageListView"/>.
 /// </summary>
 public enum View
 {
@@ -290,6 +290,15 @@ public enum View
     /// The view can be scrolled vertically.
     /// </summary>
     VerticalStrip,
+}
+
+/// <summary>
+/// Represents the direction of the <see cref="ImageListViewItem"/>.
+/// </summary>
+public enum TooltipDirection
+{
+    Top,
+    Bottom,
 }
 
 #endregion

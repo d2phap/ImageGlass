@@ -66,11 +66,8 @@ public partial class ImageListView : Control, IComponent
     private Point mViewOffset;
     private bool mShowScrollBars;
     private bool mShowItemText;
-    private readonly ToolTip mTooltip = new()
-    {
-        InitialDelay = 500,
-        ReshowDelay = 500,
-    };
+    private readonly ToolTip mTooltip = new();
+    private CancellationTokenSource _tooltipTokenSrc = new();
 
     // Renderer variables
     internal ImageListViewRenderer mRenderer;
@@ -333,7 +330,7 @@ public partial class ImageListView : Control, IComponent
     }
 
     /// <summary>
-    /// [IG_CHANGE: new] Gets or sets whether Key Navigation is enabled.
+    /// Gets or sets whether Key Navigation is enabled.
     /// </summary>
     [Category("Behavior"), Description("Gets or sets whether Key Navigation is enabled.")]
     public bool EnableKeyNavigation { get; set; } = true;
@@ -447,6 +444,12 @@ public partial class ImageListView : Control, IComponent
             Refresh();
         }
     }
+
+    /// <summary>
+    /// Gets, sets tooltip direction
+    /// </summary>
+    [Category("Appearance"), DefaultValue(typeof(TooltipDirection), "Top")]
+    public TooltipDirection TooltipDirection { get; set; } = TooltipDirection.Top;
 
     /// <summary>
     /// Gets the collection of selected items contained in the image list view.
@@ -1110,7 +1113,7 @@ public partial class ImageListView : Control, IComponent
     }
 
     /// <summary>
-    /// [IG_Change] Scrolls the image list view to place the item with the specified
+    /// Scrolls the image list view to place the item with the specified
     /// index as close to the center of the visible area as possible.
     /// </summary>
     /// <param name="itemIndex">The index of the item to scroll to.</param>
@@ -1138,7 +1141,7 @@ public partial class ImageListView : Control, IComponent
     }
 
     /// <summary>
-    /// [IG_CHANGE: new] Scrolls horizontal scrollbar by delta. Checks that scrolling is within
+    /// Scrolls horizontal scrollbar by delta. Checks that scrolling is within
     /// allowed range. Calls Refresh() if scrolling position was changed.
     /// </summary>
     /// <param name="delta">Delta to move scrolling.</param>
@@ -1165,7 +1168,7 @@ public partial class ImageListView : Control, IComponent
     }
 
     /// <summary>
-    /// [IG_CHANGE: new] Scrolls vertical scrollbar by delta. Checks that scrolling is within
+    /// Scrolls vertical scrollbar by delta. Checks that scrolling is within
     /// allowed range. Calls Refresh() if scrolling position was changed.
     /// </summary>
     /// <param name="delta">Delta to move scrolling.</param>
@@ -1235,6 +1238,61 @@ public partial class ImageListView : Control, IComponent
         }
 
         return -1;
+    }
+
+    /// <summary>
+    /// Hide item's tooltip
+    /// </summary>
+    public void HideItemTooltip()
+    {
+        _tooltipTokenSrc.Cancel();
+        mTooltip.Hide(this);
+    }
+
+    /// <summary>
+    /// Shows item tooltip
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="duration"></param>
+    /// <param name="delay"></param>
+    public async void ShowItemTooltip(ImageListViewItem? item,
+        int duration = 4000, int delay = 400)
+    {
+        if (item is null) return;
+
+        _tooltipTokenSrc?.Cancel();
+        _tooltipTokenSrc = new();
+
+        var bounds = layoutManager.GetItemBounds(item.Index);
+        var tooltipPosY = 0;
+        const int TOOLTIP_HEIGHT = 50;
+
+        if (TooltipDirection == TooltipDirection.Top)
+        {
+            tooltipPosY = bounds.Y - TOOLTIP_HEIGHT;
+        }
+        else if (TooltipDirection == TooltipDirection.Bottom)
+        {
+            tooltipPosY = bounds.Bottom;
+        }
+
+        mTooltip.Hide(this);
+
+        try
+        {
+            // delay
+            await Task.Delay(delay, _tooltipTokenSrc.Token);
+
+            // show tooltip
+            mTooltip.ToolTipTitle = item.Text;
+            mTooltip.Show(item.FileName, this, bounds.X, tooltipPosY);
+
+            // duration
+            await Task.Delay(duration, _tooltipTokenSrc.Token);
+        }
+        catch { }
+
+        mTooltip.Hide(this);
     }
 
     #endregion
@@ -1509,7 +1567,7 @@ public partial class ImageListView : Control, IComponent
         navigationManager.MouseDown(e);
 
         // hide tooltip
-        mTooltip.Hide(this);
+        HideItemTooltip();
 
         base.OnMouseDown(e);
     }
@@ -1588,6 +1646,8 @@ public partial class ImageListView : Control, IComponent
     /// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
     protected override void OnMouseLeave(EventArgs e)
     {
+        HideItemTooltip();
+
         navigationManager.MouseLeave();
         base.OnMouseLeave(e);
     }
@@ -1718,7 +1778,7 @@ public partial class ImageListView : Control, IComponent
     }
 
     /// <summary>
-    /// [IG_CHANGE] Raises the DropFiles event.
+    /// Raises the DropFiles event.
     /// </summary>
     /// <param name="e">A DropFileEventArgs that contains event data.</param>
     protected virtual void OnDropFiles(DropFileEventArgs e)
@@ -1823,9 +1883,6 @@ public partial class ImageListView : Control, IComponent
     /// <param name="e">A ItemClickEventArgs that contains event data.</param>
     protected virtual void OnItemClick(ItemClickEventArgs e)
     {
-        mTooltip.Hide(this);
-        mTooltip.RemoveAll();
-
         if (layoutManager.IsItemPartialyVisible(e.Item.Index))
         {
             ScrollToIndex(e.Item.Index);
@@ -1860,12 +1917,8 @@ public partial class ImageListView : Control, IComponent
     {
         ItemHover?.Invoke(this, e);
 
-        if (e.Item is null) return;
-        mTooltip.RemoveAll();
-
-        // show tooltip
-        mTooltip.ToolTipTitle = Path.GetFileName(e.Item.Text);
-        mTooltip.SetToolTip(this, e.Item.FileName);
+        // Tooltip
+        ShowItemTooltip(e.Item);
     }
 
     /// <summary>
