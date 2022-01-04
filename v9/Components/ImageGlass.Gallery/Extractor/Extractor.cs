@@ -9,11 +9,11 @@ namespace ImageGlass.Gallery;
 internal static class Extractor
 {
 #if USEWIC
-        private static bool useWIC = true;
+    private static bool useWIC = true;
 #else
     private static bool useWIC = false;
 #endif
-    private static IExtractor instance = null;
+    private static IExtractor? instance = null;
 
     public static IExtractor Instance
     {
@@ -29,8 +29,9 @@ internal static class Extractor
                 {
                     try
                     {
-                        string programFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                        string pluginFileName = Path.Combine(programFolder, "WPFThumbnailExtractor.dll");
+                        var programFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                        var pluginFileName = Path.Combine(programFolder, "WPFThumbnailExtractor.dll");
+
                         instance = LoadFrom(pluginFileName);
                     }
                     catch
@@ -47,14 +48,17 @@ internal static class Extractor
         }
     }
 
-    private static IExtractor LoadFrom(string pluginFileName)
+    private static IExtractor? LoadFrom(string pluginFileName)
     {
-        Assembly assembly = Assembly.LoadFrom(pluginFileName);
+        var assembly = Assembly.LoadFrom(pluginFileName);
         foreach (Type type in assembly.GetTypes())
         {
-            if (type.GetInterfaces().Contains(typeof(IExtractor)) && !type.IsInterface && type.IsClass && !type.IsAbstract)
+            if (type.GetInterfaces().Contains(typeof(IExtractor))
+                && !type.IsInterface
+                && type.IsClass
+                && !type.IsAbstract)
             {
-                return (IExtractor)Activator.CreateInstance(type, new object[0]);
+                return (IExtractor?)Activator.CreateInstance(type, Array.Empty<object>());
             }
         }
 
@@ -63,19 +67,18 @@ internal static class Extractor
 
     public static bool UseWIC
     {
-        get
-        {
-            return useWIC;
-        }
+        get => useWIC;
         set
         {
 #if USEWIC
-                useWIC = value;
-                instance = null;
+            useWIC = value;
+            instance = null;
 #else
             useWIC = false;
             if (value)
+            {
                 System.Diagnostics.Debug.WriteLine("Trying to set UseWIC option although the library was compiled without WPF/WIC support.");
+            }
 #endif
         }
     }
