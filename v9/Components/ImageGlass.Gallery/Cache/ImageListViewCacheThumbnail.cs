@@ -311,7 +311,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
 
         mImageListView = owner;
         diskCache = new PersistentCache();
-        diskCache.Size = 100 * 1024 * 1024; // 100 MB disk cache
+        diskCache.CacheSize = 100 * 1024 * 1024; // 100 MB disk cache
         CacheMode = CacheMode.OnDemand;
         CacheLimitAsItemCount = 0;
         CacheLimitAsMemory = 20 * 1024 * 1024;

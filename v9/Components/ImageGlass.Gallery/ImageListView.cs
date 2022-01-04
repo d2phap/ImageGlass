@@ -167,7 +167,7 @@ public partial class ImageListView : Control, IComponent
                     {
                         thumbnailCache.CacheLimitAsItemCount = 0;
                         thumbnailCache.CacheLimitAsMemory = 0;
-                        thumbnailCache.diskCache.Size = 0;
+                        thumbnailCache.diskCache.CacheSize = 0;
                     }
                     // Rebuild the cache
                     ClearThumbnailCache();
@@ -260,14 +260,14 @@ public partial class ImageListView : Control, IComponent
                 return 0;
 
             if (thumbnailCache != null)
-                return thumbnailCache.diskCache.Size / 1024 / 1024;
+                return thumbnailCache.diskCache.CacheSize / 1024 / 1024;
             else
                 return 0;
         }
         set
         {
             if (thumbnailCache != null)
-                thumbnailCache.diskCache.Size = value * 1024 * 1024;
+                thumbnailCache.diskCache.CacheSize = value * 1024 * 1024;
         }
     }
 

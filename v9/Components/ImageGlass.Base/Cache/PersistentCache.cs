@@ -1,4 +1,22 @@
-﻿using System.Security.Cryptography;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+using System.Security.Cryptography;
 using System.Text;
 
 namespace ImageGlass.Base.Cache;
@@ -11,13 +29,17 @@ namespace ImageGlass.Base.Cache;
 public class PersistentCache
 {
     #region Member Variables
-    private string mDirectoryName;
-    private long mSize;
-    private long mCurrentSize;
-    private readonly object lockObject;
+
+    private string _dirName = string.Empty;
+    private long _cacheSize = 0;
+    private long _currentCacheSize = 0;
+    private readonly object _lockObject = new();
+
     #endregion
 
+
     #region Properties
+
     /// <summary>
     /// Gets or sets the cache directory.
     /// </summary>
@@ -25,43 +47,47 @@ public class PersistentCache
     {
         get
         {
-            lock (lockObject)
+            lock (_lockObject)
             {
-                return mDirectoryName;
+                return _dirName;
             }
         }
         set
         {
-            lock (lockObject)
+            lock (_lockObject)
             {
-                mDirectoryName = value;
+                _dirName = value;
                 CalculateSize();
             }
         }
     }
+
     /// <summary>
     /// Gets or sets the cache size in bytes.
     /// </summary>
-    public long Size
+    public long CacheSize
     {
         get
         {
-            lock (lockObject)
+            lock (_lockObject)
             {
-                return mSize;
+                return _cacheSize;
             }
         }
         set
         {
-            lock (lockObject)
+            lock (_lockObject)
             {
-                mSize = value;
+                _cacheSize = value;
             }
         }
     }
+
     #endregion
 
+
     #region Constructor
+
     /// <summary>
     /// Initializes a new instance of the <see cref="PersistentCache"/> class.
     /// </summary>
@@ -69,17 +95,17 @@ public class PersistentCache
     /// <param name="size">Cache size in bytes.</param>
     public PersistentCache(string directoryName, long size)
     {
-        lockObject = new object();
-        mCurrentSize = 0;
-        mSize = size;
-        mDirectoryName = directoryName;
+        _cacheSize = size;
+        _dirName = directoryName.Trim();
 
-        if (!string.IsNullOrEmpty(directoryName))
+        if (!string.IsNullOrEmpty(_dirName))
         {
-            if (!Directory.Exists(directoryName))
-                Directory.CreateDirectory(directoryName);
+            if (!Directory.Exists(_dirName))
+            {
+                Directory.CreateDirectory(_dirName);
+            }
 
-            lock (lockObject)
+            lock (_lockObject)
             {
                 CalculateSize();
             }
@@ -93,7 +119,9 @@ public class PersistentCache
 
     #endregion
 
+
     #region Instance Methods
+
     /// <summary>
     /// Reads an item from the cache.
     /// </summary>
@@ -101,13 +129,13 @@ public class PersistentCache
     /// <returns>A stream holding item data.</returns>
     public Stream Read(string id)
     {
-        lock (lockObject)
+        lock (_lockObject)
         {
             var ms = new MemoryStream();
-            if (string.IsNullOrEmpty(mDirectoryName)) return ms;
+            if (string.IsNullOrEmpty(_dirName)) return ms;
 
             id = MakeKey(id);
-            var filename = Path.Combine(mDirectoryName, id);
+            var filename = Path.Combine(_dirName, id);
             if (!File.Exists(filename)) return ms;
 
             using var fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
@@ -131,12 +159,12 @@ public class PersistentCache
     /// <param name="data">Item data.</param>
     public void Write(string id, Stream data)
     {
-        lock (lockObject)
+        lock (_lockObject)
         {
-            if (string.IsNullOrEmpty(mDirectoryName)) return;
+            if (string.IsNullOrEmpty(_dirName)) return;
 
             id = MakeKey(id);
-            var filename = Path.Combine(mDirectoryName, id);
+            var filename = Path.Combine(_dirName, id);
             var bytesWritten = 0L;
             var read = 0;
             var buffer = new byte[4096];
@@ -150,9 +178,12 @@ public class PersistentCache
                 bytesWritten += read;
             }
 
-            mCurrentSize += bytesWritten;
+            _currentCacheSize += bytesWritten;
 
-            if (mCurrentSize > mSize / 2) PurgeCache();
+            if (_currentCacheSize > _cacheSize / 2)
+            {
+                PurgeCache();
+            }
         }
     }
 
@@ -162,19 +193,19 @@ public class PersistentCache
     /// <param name="id">Item identifier.</param>
     public void Remove(string id)
     {
-        lock (lockObject)
+        lock (_lockObject)
         {
-            if (string.IsNullOrEmpty(mDirectoryName)) return;
+            if (string.IsNullOrEmpty(_dirName)) return;
 
             id = MakeKey(id);
 
-            string filename = Path.Combine(mDirectoryName, id);
+            string filename = Path.Combine(_dirName, id);
             if (!File.Exists(filename)) return;
 
             var fi = new FileInfo(filename);
-            mCurrentSize -= fi.Length;
+            _currentCacheSize -= fi.Length;
 
-            if (mCurrentSize < 0) mCurrentSize = 0;
+            if (_currentCacheSize < 0) _currentCacheSize = 0;
             File.Delete(filename);
         }
     }
@@ -184,15 +215,16 @@ public class PersistentCache
     /// </summary>
     public void Clear()
     {
-        lock (lockObject)
+        lock (_lockObject)
         {
-            if (string.IsNullOrEmpty(mDirectoryName)) return;
+            if (string.IsNullOrEmpty(_dirName)) return;
 
-            foreach (var file in Directory.GetFiles(mDirectoryName))
+            foreach (var file in Directory.GetFiles(_dirName))
             {
                 File.Delete(file);
             }
-            mCurrentSize = 0;
+
+            _currentCacheSize = 0;
         }
     }
 
@@ -214,15 +246,15 @@ public class PersistentCache
     /// </summary>
     private void CalculateSize()
     {
-        lock (lockObject)
+        lock (_lockObject)
         {
-            mCurrentSize = 0;
+            _currentCacheSize = 0;
 
-            if (string.IsNullOrEmpty(mDirectoryName)) return;
+            if (string.IsNullOrEmpty(_dirName)) return;
 
-            foreach (FileInfo file in new DirectoryInfo(mDirectoryName).GetFiles())
+            foreach (FileInfo file in new DirectoryInfo(_dirName).GetFiles())
             {
-                mCurrentSize += file.Length;
+                _currentCacheSize += file.Length;
             }
         }
     }
@@ -232,37 +264,39 @@ public class PersistentCache
     /// </summary>
     private void PurgeCache()
     {
-        lock (lockObject)
+        lock (_lockObject)
         {
-            if (string.IsNullOrEmpty(mDirectoryName)) return;
-            if (mSize == 0) return;
+            if (string.IsNullOrEmpty(_dirName)) return;
+            if (_cacheSize == 0) return;
 
-            var files = new DirectoryInfo(mDirectoryName).GetFiles();
-            var index = new List<FileInfo>();
+            var files = new DirectoryInfo(_dirName).GetFiles();
+            var indexList = new List<FileInfo>();
 
-            foreach (var file in new DirectoryInfo(mDirectoryName).GetFiles())
+            foreach (var file in files)
             {
-                index.Add(file);
+                indexList.Add(file);
             }
 
-            index.Sort((f1, f2) =>
+            indexList.Sort((f1, f2) =>
             {
                 var d1 = f1.CreationTime;
                 var d2 = f2.CreationTime;
                 return (d1 < d2 ? -1 : (d2 > d1 ? 1 : 0));
             });
 
-            while (index.Count > 0 && mCurrentSize > mSize / 2)
+            while (indexList.Count > 0 && _currentCacheSize > _cacheSize / 2)
             {
-                int i = index.Count - 1;
-                mCurrentSize -= index[i].Length;
-                index.RemoveAt(i);
-                File.Delete(index[i].FullName);
+                var i = indexList.Count - 1;
+                _currentCacheSize -= indexList[i].Length;
+
+                indexList.RemoveAt(i);
+                File.Delete(indexList[i].FullName);
             }
 
-            if (mCurrentSize < 0) mCurrentSize = 0;
+            if (_currentCacheSize < 0) _currentCacheSize = 0;
         }
     }
+
     #endregion
 
 }
