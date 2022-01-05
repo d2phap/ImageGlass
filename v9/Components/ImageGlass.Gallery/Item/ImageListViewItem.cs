@@ -48,9 +48,9 @@ public class ImageListViewItem : ICloneable
     private int mZOrder = 0;
 
     // File info
+    private ImageDetails? _details = null;
     internal string extension = string.Empty;
     private string mFileName = string.Empty;
-
 
     // Adaptor
     internal object? mVirtualItemKey = null;
@@ -125,10 +125,21 @@ public class ImageListViewItem : ICloneable
     }
 
     /// <summary>
-    /// Gets image details
+    /// Gets image details.
     /// </summary>
     [Browsable(false)]
-    public ImageDetails? Details { get; internal set; } = null;
+    public ImageDetails? Details
+    {
+        get
+        {
+            if (_details is null)
+            {
+                _details = FetchItemDetails();
+            }
+
+            return _details;
+        }
+    }
 
     /// <summary>
     /// Gets the unique identifier for this item.
@@ -678,17 +689,19 @@ public class ImageListViewItem : ICloneable
     /// then update the <see cref="Details"/> property.
     /// </summary>
     /// <param name="force">Force to fetch details from file.</param>
-    public void FetchItemDetails(bool force = false)
+    public ImageDetails? FetchItemDetails(bool force = false)
     {
         if (!isDirty
             || Adaptor is null
             || ImageListView is null
-            || mVirtualItemKey is null) return;
+            || mVirtualItemKey is null) return null;
 
-        if (force || Details is null)
+        if (force || _details is null)
         {
-            Details = Adaptor.GetDetails(mVirtualItemKey);
+            return Adaptor.GetDetails(mVirtualItemKey);
         }
+
+        return null;
     }
 
     /// <summary>
@@ -725,7 +738,7 @@ public class ImageListViewItem : ICloneable
             extension = extension,
             mFileName = mFileName,
 
-            Details = Details,
+            _details = _details,
 
             // Virtual item properties
             mAdaptor = mAdaptor,
