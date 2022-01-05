@@ -10,7 +10,6 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/duongdieuphap?style=social)](https://twitter.com/duongdieuphap)
 
 
-
 ImageGlass is a lightweight software application whose purpose is to help you view images in a clean and intuitive working environment.
 
 It gives you the possibility to view over **80+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers to speed up their work.
@@ -21,17 +20,28 @@ It gives you the possibility to view over **80+** common image formats, includin
 [![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23932043&label=latest%20version&style=for-the-badge)](https://imageglass.org/download)
 
 
+
+### ImageGlass comes to Microsoft Store!
+If you buy ImageGlass on the Microsoft Store, you'll be supporting its development directly. You will get the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes. 😊
+
+<a href="https://www.microsoft.com/store/productId/9N33VZK3C7TH">
+  <img height="75" src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Get_it_from_Microsoft_Badge.svg" />
+</a><br/><br/>
+
+
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
 <img src="https://imageglass.org/upload/photo/release/8.3_1.jpg" alt="ImageGlass 8.3.11.21" width="640">
 </a><br/>
 
 
-## 🛣 Roadmap
-<a href="https://devblogs.microsoft.com/dotnet/announcing-net-6/" target="_blank" rel="noreferrer noopener">
-  <img src="https://kontext.tech/api/flex/medias/obj-2290" alt="ImageGlass on .NET 6" style="height:50px" />
-</a>
-
-We are planning to migrate ImageGlass to [.NET 6](https://devblogs.microsoft.com/dotnet/announcing-net-6/) from version 9 which is scheduled some time in 2022. If you are unable to install .NET 6, you can stay with ImageGlass 8.
+## 🛣 Development progress & Roadmap
+ImageGlass 9 is the biggest update ever, supports ***hardware acceleration*** and many more. I have been rewritting the entire app for months.
+- For more details, you can see the [project board](https://github.com/d2phap/ImageGlass/projects/11).
+- ImageGlass 9 uses [.NET 6](https://devblogs.microsoft.com/dotnet/announcing-net-6/). If you are unable to install .NET 6, you can stay with ImageGlass 8.
+  <br/>
+  <a href="https://devblogs.microsoft.com/dotnet/announcing-net-6/" target="_blank" rel="noreferrer noopener">
+    <img src="https://kontext.tech/api/flex/medias/obj-2290" alt="ImageGlass on .NET 6" style="height:50px" />
+  </a>
 
 
 ## 👨‍💻 Development
@@ -97,6 +107,8 @@ Thanks for your gratitude and finance help!
 ```
 
 ## 👑 Hall of fame (v8.x)
+![Analytics image](https://repobeats.axiom.co/api/embed/4a2781a2a149dd21826309275304696ec75b21fd.svg)
+
 To honor those people who spent their time to contribute to the development of ImageGlass v8:
 - 1️⃣ [@fire-eggs](https://github.com/fire-eggs)
 - 2️⃣ [@datasone](https://github.com/datasone)
@@ -106,3 +118,5 @@ To honor those people who spent their time to contribute to the development of I
 - 6️⃣ [@flyxyz123](https://github.com/flyxyz123)
 
 Thank you!
+
+
