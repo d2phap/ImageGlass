@@ -77,7 +77,7 @@ public class FileSystemAdaptor : IAdaptor
     public override string GetUniqueIdentifier(object key, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool useExifOrientation)
     {
         var sb = new StringBuilder();
-        sb.Append((string)key);// Filename
+        sb.Append((string)key); // Filename
         sb.Append(':');
         sb.Append(size.Width); // Thumbnail size
         sb.Append(',');
@@ -107,24 +107,50 @@ public class FileSystemAdaptor : IAdaptor
     /// </summary>
     /// <param name="key">Item key.</param>
     /// <returns>An array of tuples containing item details or null if an error occurs.</returns>
-    public override Tuple<ColumnType, string, object>[] GetDetails(object key)
+    public override ImageDetails GetDetails(object key)
     {
-        if (_isDisposed) return Array.Empty<Tuple<ColumnType, string, object>>();
+        var details = new ImageDetails();
+        if (_isDisposed) return details;
 
         var filename = (string)key;
-        var details = new List<Tuple<ColumnType, string, object>>();
+        
 
         // Get file info
         if (File.Exists(filename))
         {
             var info = new FileInfo(filename);
 
-            details.Add(new(ColumnType.FilePath, string.Empty, _stringCache.GetFromCache(info.DirectoryName ?? "")));
+            details.DateCreated = info.CreationTime;
+            details.DateAccessed = info.LastAccessTime;
+            details.DateModified = info.LastWriteTime;
+            details.FileSize = info.Length;
+            details.FilePath = filename;
+            details.FileName = Path.GetFileName(filename);
+            details.FileExtension = Path.GetExtension(filename).ToUpperInvariant();
+            details.FolderPath = _stringCache.GetFromCache(info.DirectoryName ?? "");
+            details.FolderName = info.Directory?.Name ?? "";
 
-            details.Add(new(ColumnType.FolderName, string.Empty, info.Directory?.Name ?? ""));
+            // Get metadata
+            var metadata = Extractor.Instance.GetMetadata(filename);
+            details.Width = metadata.Width;
+            details.Height = metadata.Height;
+            details.DPIX = metadata.DPIX;
+            details.DPIY = metadata.DPIY;
+            details.ImageDescription = metadata.ImageDescription ?? "";
+            details.EquipmentModel = metadata.EquipmentModel ?? "";
+            details.DateTaken = metadata.DateTaken;
+            details.Artist = metadata.Artist ?? "";
+            details.Copyright = metadata.Copyright ?? "";
+            details.ExposureTime = (float)metadata.ExposureTime;
+            details.FNumber = (float)metadata.FNumber;
+            details.ISOSpeed = (ushort)metadata.ISOSpeed;
+            details.Comment = metadata.Comment ?? "";
+            details.Rating = (ushort)metadata.Rating;
+            details.Software = metadata.Software ?? "";
+            details.FocalLength = (float)metadata.FocalLength;
         }
 
-        return details.ToArray();
+        return details;
     }
 
     /// <summary>

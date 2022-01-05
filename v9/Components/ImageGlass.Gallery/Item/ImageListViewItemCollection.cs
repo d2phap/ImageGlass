@@ -111,7 +111,7 @@ public partial class ImageListView
 
                 if (mImageListView != null)
                 {
-                    item.mImageListView = mImageListView;
+                    item.ImageListView = mImageListView;
                 }
 
                 item.owner = this;
@@ -617,7 +617,7 @@ public partial class ImageListView
             lookUp.Add(item.Guid, item);
             collectionModified = true;
 
-            item.mImageListView = mImageListView;
+            item.ImageListView = mImageListView;
 
             // Add current thumbnail to cache
             if (item.clonedThumbnail != null)

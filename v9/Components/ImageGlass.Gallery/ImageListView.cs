@@ -31,13 +31,13 @@ namespace ImageGlass.Gallery;
 /// Represents a listview control for image files.
 /// </summary>
 [ToolboxBitmap(typeof(ImageListView))]
-[Description("Represents a listview control for image files.")]
 [DefaultEvent("ItemClick")]
 [DefaultProperty("Items")]
 [Docking(DockingBehavior.Ask)]
 public partial class ImageListView : Control, IComponent
 {
     #region Member Variables
+
     // Set when properties change
     private bool mDefaultImageChanged = false;
     private bool mErrorImageChanged = false;
@@ -45,43 +45,46 @@ public partial class ImageListView : Control, IComponent
     // Properties
     private BorderStyle mBorderStyle = BorderStyle.None;
     private CacheMode mCacheMode = CacheMode.OnDemand;
-    private int mCacheLimitAsItemCount;
-    private long mCacheLimitAsMemory;
+    private int mCacheLimitAsItemCount = 0;
+    private long mCacheLimitAsMemory = 20 * 1024 * 1024; // 20MB
     private Image? mDefaultImage;
     private Image? mErrorImage;
-    private bool mIntegralScroll;
+    private bool mIntegralScroll = false;
     private ImageListViewItemCollection mItems;
-    private bool mRetryOnError;
+    private bool mRetryOnError = true;
     internal ImageListViewSelectedItemCollection mSelectedItems;
     internal ImageListViewCheckedItemCollection mCheckedItems;
-    private bool mShowFileIcons;
-    private bool mShowCheckBoxes;
-    private ContentAlignment mIconAlignment;
-    private Size mIconPadding;
-    private ContentAlignment mCheckBoxAlignment;
-    private Size mCheckBoxPadding;
-    private Size mThumbnailSize;
-    private UseEmbeddedThumbnails mUseEmbeddedThumbnails;
-    private View mView;
-    private Point mViewOffset;
-    private bool mShowScrollBars;
-    private bool mShowItemText;
+    private bool mShowFileIcons = false;
+    private bool mShowCheckBoxes = false;
+    private ContentAlignment mIconAlignment = ContentAlignment.TopRight;
+    private Size mIconPadding = new(2, 2);
+    private ContentAlignment mCheckBoxAlignment = ContentAlignment.BottomRight;
+    private Size mCheckBoxPadding = new(2, 2);
+    private Size mThumbnailSize = new(80, 80);
+    private UseEmbeddedThumbnails mUseEmbeddedThumbnails = UseEmbeddedThumbnails.Auto;
+    private View mView = View.Thumbnails;
+    private Point mViewOffset = new();
+    private bool mShowScrollBars = false;
+    private bool mShowItemText = false;
     private readonly ToolTip mTooltip = new();
     private CancellationTokenSource _tooltipTokenSrc = new();
 
     // Renderer variables
-    internal ImageListViewRenderer mRenderer;
-    private bool controlSuspended;
-    private int rendererSuspendCount;
-    private bool rendererNeedsPaint;
-    private System.Timers.Timer lazyRefreshTimer;
-    private RefreshDelegateInternal lazyRefreshCallback;
+    internal ImageListViewRenderer mRenderer = new();
+    private bool controlSuspended = false;
+    private int rendererSuspendCount = 0;
+    private bool rendererNeedsPaint = true;
+    private readonly System.Timers.Timer lazyRefreshTimer = new() {
+        Interval = ImageListViewRenderer.LazyRefreshInterval,
+        Enabled = false,
+    };
+    private readonly RefreshDelegateInternal lazyRefreshCallback;
 
     // Layout variables
-    internal HScrollBar hScrollBar;
-    internal VScrollBar vScrollBar;
+    internal HScrollBar hScrollBar = new() { Visible = false };
+    internal VScrollBar vScrollBar = new() { Visible = false };
     internal LayoutManager layoutManager;
-    private bool disposed;
+    private bool _isDisposed = false;
 
     // Interaction variables
     internal ImageListViewNavigationManager navigationManager;
@@ -90,7 +93,7 @@ public partial class ImageListView : Control, IComponent
     internal ImageListViewCacheThumbnail thumbnailCache;
     internal ImageListViewCacheShellInfo shellInfoCache;
     internal ImageListViewCacheMetadata metadataCache;
-    internal FileSystemAdaptor defaultAdaptor;
+    internal FileSystemAdaptor defaultAdaptor = new();
 
     #endregion
 
@@ -132,7 +135,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets the border style of the control.
     /// </summary>
-    [Category("Appearance"), Description("Gets or sets the border style of the control."), DefaultValue(typeof(BorderStyle), "None")]
+    [Category("Appearance"), DefaultValue(typeof(BorderStyle), "None")]
     public BorderStyle BorderStyle
     {
         get => mBorderStyle;
@@ -146,7 +149,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets the cache mode. Setting the the CacheMode to Continuous disables the CacheLimit.
     /// </summary>
-    [Category("Behavior"), Description("Gets or sets the cache mode."), DefaultValue(typeof(CacheMode), "OnDemand"), RefreshProperties(RefreshProperties.All)]
+    [Category("Behavior"), DefaultValue(typeof(CacheMode), "OnDemand"), RefreshProperties(RefreshProperties.All)]
     public CacheMode CacheMode
     {
         get => mCacheMode;
@@ -180,7 +183,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Provides the ability to control the metadata caching
     /// </summary>
-    [Category("Behavior"), Description("Controls metadata caching"), DefaultValue(false)]
+    [Category("Behavior"), DefaultValue(false)]
     public bool MetadataCacheEnabled
     {
         set
@@ -195,7 +198,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets the cache limit as either the count of thumbnail images or the memory allocated for cache (e.g. 10MB).
     /// </summary>
-    [Category("Behavior"), Description("Gets or sets the cache limit as either the count of thumbnail images or the memory allocated for cache (e.g. 10MB)."), DefaultValue("20MB"), RefreshProperties(RefreshProperties.All)]
+    [Category("Behavior"), DefaultValue("20MB"), RefreshProperties(RefreshProperties.All)]
     public string CacheLimit
     {
         get
@@ -207,10 +210,13 @@ public partial class ImageListView : Control, IComponent
         }
         set
         {
-            string slimit = value;
+            var slimit = value;
             mCacheMode = CacheMode.OnDemand;
-            if ((slimit.EndsWith("MB", StringComparison.OrdinalIgnoreCase) && int.TryParse(slimit[0..^2].Trim(), out int limit))
-                || (slimit.EndsWith("MiB", StringComparison.OrdinalIgnoreCase) && int.TryParse(slimit[0..^3].Trim(), out limit)))
+
+            if ((slimit.EndsWith("MB", StringComparison.OrdinalIgnoreCase)
+                && int.TryParse(slimit[0..^2].Trim(), out int limit))
+                || (slimit.EndsWith("MiB", StringComparison.OrdinalIgnoreCase)
+                    && int.TryParse(slimit[0..^3].Trim(), out limit)))
             {
                 mCacheLimitAsItemCount = 0;
                 mCacheLimitAsMemory = limit * 1024 * 1024;
@@ -231,14 +237,16 @@ public partial class ImageListView : Control, IComponent
                 }
             }
             else
+            {
                 throw new ArgumentException("Cache limit must be specified as either the count of thumbnail images or the memory allocated for cache (eg 10MB)", nameof(value));
+            }
         }
     }
 
     /// <summary>
     /// Gets or sets the path to the persistent cache file.
     /// </summary>
-    [Category("Behavior"), Description("Gets or sets the path to the persistent cache file."), Browsable(false)]
+    [Category("Behavior"), Browsable(false)]
     public string PersistentCacheDirectory
     {
         get => thumbnailCache._diskCache.DirectoryName;
@@ -251,7 +259,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets the size of the persistent cache file in MB.
     /// </summary>
-    [Category("Behavior"), Description("Gets or sets the size of the persistent cache file in MB."), Browsable(false)]
+    [Category("Behavior"), Browsable(false)]
     public long PersistentCacheSize
     {
         get
@@ -275,7 +283,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets the placeholder image.
     /// </summary>
-    [Category("Appearance"), Description("Gets or sets the placeholder image.")]
+    [Category("Appearance")]
     public Image? DefaultImage
     {
         get => mDefaultImage;
@@ -290,7 +298,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets the rectangle that represents the display area of the control.
     /// </summary>
-    [Category("Appearance"), Browsable(false), Description("Gets the rectangle that represents the display area of the control.")]
+    [Category("Appearance"), Browsable(false)]
     public override Rectangle DisplayRectangle
     {
         get
@@ -307,7 +315,7 @@ public partial class ImageListView : Control, IComponent
     /// Cache threads are paused while the control is disabled and resumed when the control is
     /// enabled.
     /// </summary>
-    [Category("Behavior"), Browsable(true), Description("Gets or sets a value indicating whether the control can respond to user interaction."), DefaultValue(true)]
+    [Category("Behavior"), DefaultValue(true)]
     public new bool Enabled
     {
         get => base.Enabled;
@@ -332,13 +340,13 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets whether Key Navigation is enabled.
     /// </summary>
-    [Category("Behavior"), Description("Gets or sets whether Key Navigation is enabled.")]
+    [Category("Behavior")]
     public bool EnableKeyNavigation { get; set; } = true;
 
     /// <summary>
     /// Gets or sets the error image.
     /// </summary>
-    [Category("Appearance"), Description("Gets or sets the error image.")]
+    [Category("Appearance")]
     public Image? ErrorImage
     {
         get => mErrorImage;
@@ -353,7 +361,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets whether scrollbars scroll by an amount which is a multiple of item height.
     /// </summary>
-    [Browsable(true), Category("Behavior"), Description("Gets or sets whether scrollbars scroll by an amount which is a multiple of item height."), DefaultValue(false)]
+    [Category("Behavior"), DefaultValue(false)]
     public bool IntegralScroll
     {
         get => mIntegralScroll;
@@ -370,8 +378,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets the collection of items contained in the image list view.
     /// </summary>
-    [Category("Behavior"), Description("Gets the collection of items contained in the image list view.")]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+    [Category("Behavior")]
     public ImageListViewItemCollection Items
     {
         get => mItems;
@@ -385,13 +392,13 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets whether multiple items can be selected.
     /// </summary>
-    [Category("Behavior"), Description("Gets or sets whether multiple items can be selected."), DefaultValue(true)]
-    public bool MultiSelect { get; set; }
+    [Category("Behavior"), DefaultValue(false)]
+    public bool MultiSelect { get; set; } = false;
 
     /// <summary>
     /// Gets or sets whether the control will retry loading thumbnails on an error.
     /// </summary>
-    [Category("Behavior"), Description("Gets or sets whether the control will retry loading thumbnails on an error."), DefaultValue(true)]
+    [Category("Behavior"), DefaultValue(true)]
     public bool RetryOnError
     {
         get => mRetryOnError;
@@ -410,7 +417,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets whether the scrollbars should be shown.
     /// </summary>
-    [Category("Appearance"), Description("Gets or sets whether the scrollbars should be shown."), DefaultValue(true)]
+    [Category("Appearance"), DefaultValue(false)]
     public bool ScrollBars
     {
         get => mShowScrollBars;
@@ -434,7 +441,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets whether item's text should be shown.
     /// </summary>
-    [Category("Appearance"), Description("Gets or sets whether item's text should be shown."), DefaultValue(false)]
+    [Category("Appearance"), DefaultValue(false)]
     public bool ShowItemText
     {
         get => mShowItemText;
@@ -454,34 +461,34 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets the collection of selected items contained in the image list view.
     /// </summary>
-    [Browsable(false), Category("Behavior"), Description("Gets the collection of selected items contained in the image list view.")]
+    [Category("Behavior"), Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
     public ImageListViewSelectedItemCollection SelectedItems => mSelectedItems;
 
     /// <summary>
     /// Gets the collection of checked items contained in the image list view.
     /// </summary>
-    [Browsable(false), Category("Behavior"), Description("Gets the collection of checked items contained in the image list view.")]
+    [Category("Behavior"), Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
     public ImageListViewCheckedItemCollection CheckedItems => mCheckedItems;
 
     /// <summary>
     /// Gets or sets whether shell icons are displayed for non-image files.
     /// </summary>
-    [Browsable(false), Category("Behavior"), Description("Gets or sets whether shell icons are displayed for non-image files."), DefaultValue(true)]
-    public bool ShellIconFallback { get; set; }
+    [Category("Behavior"), Browsable(false), DefaultValue(true)]
+    public bool ShellIconFallback { get; set; } = true;
 
     /// <summary>
     /// Gets or sets whether shell icons are extracted from the contents of icon and executable files.
     /// When set to false, the generic shell icon for the filename extension is extracted.
     /// </summary>
-    [Browsable(false), Category("Behavior"), Description("Gets or sets whether shell icons are extracted from the contents of icon and executable files."), DefaultValue(true)]
-    public bool ShellIconFromFileContent { get; set; }
+    [Category("Behavior"), Browsable(false), DefaultValue(true)]
+    public bool ShellIconFromFileContent { get; set; } = true;
 
     /// <summary>
     /// Gets or sets whether to display the file icons.
     /// </summary>
-    [Category("Appearance"), Description("Gets or sets whether to display the file icons."), DefaultValue(false)]
+    [Category("Appearance"), DefaultValue(false)]
     public bool ShowFileIcons
     {
         get => mShowFileIcons;
@@ -495,7 +502,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets whether to display the item checkboxes.
     /// </summary>
-    [Category("Appearance"), Description("Gets or sets whether to display the item checkboxes."), DefaultValue(false)]
+    [Category("Appearance"), DefaultValue(false)]
     public bool ShowCheckBoxes
     {
         get => mShowCheckBoxes;
@@ -509,7 +516,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets alignment of file icons.
     /// </summary>
-    [Category("Appearance"), Description("Gets or sets alignment of file icons."), DefaultValue(ContentAlignment.TopRight)]
+    [Category("Appearance"), DefaultValue(ContentAlignment.TopRight)]
     public ContentAlignment IconAlignment
     {
         get => mIconAlignment;
@@ -523,7 +530,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets file icon padding.
     /// </summary>
-    [Category("Appearance"), Description("Gets or sets file icon padding."), DefaultValue(typeof(Size), "2,2")]
+    [Category("Appearance"), DefaultValue(typeof(Size), "2,2")]
     public Size IconPadding
     {
         get => mIconPadding;
@@ -537,7 +544,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets alignment of item checkboxes.
     /// </summary>
-    [Category("Appearance"), Description("Gets or sets alignment of item checkboxes."), DefaultValue(ContentAlignment.BottomRight)]
+    [Category("Appearance"), DefaultValue(ContentAlignment.BottomRight)]
     public ContentAlignment CheckBoxAlignment
     {
         get => mCheckBoxAlignment;
@@ -551,7 +558,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets item checkbox padding.
     /// </summary>
-    [Category("Appearance"), Description("Gets or sets item checkbox padding."), DefaultValue(typeof(Size), "2,2")]
+    [Category("Appearance"), DefaultValue(typeof(Size), "2,2")]
     public Size CheckBoxPadding
     {
         get => mCheckBoxPadding;
@@ -566,12 +573,12 @@ public partial class ImageListView : Control, IComponent
     /// This property is not relevant for this class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never), Browsable(false), Bindable(false), DefaultValue(null), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public override string Text { get; set; }
+    public override string Text { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the size of image thumbnails.
     /// </summary>
-    [Category("Appearance"), Description("Gets or sets the size of image thumbnails."), DefaultValue(typeof(Size), "96,96")]
+    [Category("Appearance"), DefaultValue(typeof(Size), "80,80")]
     public Size ThumbnailSize
     {
         get => mThumbnailSize;
@@ -589,7 +596,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets the embedded thumbnails extraction behavior.
     /// </summary>
-    [Category("Behavior"), Description("Gets or sets the embedded thumbnails extraction behavior."), DefaultValue(typeof(UseEmbeddedThumbnails), "Auto")]
+    [Category("Behavior"), DefaultValue(typeof(UseEmbeddedThumbnails), "Auto")]
     public UseEmbeddedThumbnails UseEmbeddedThumbnails
     {
         get => mUseEmbeddedThumbnails;
@@ -606,7 +613,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets the view mode of the image list view.
     /// </summary>
-    [Category("Appearance"), Description("Gets or sets the view mode of the image list view."), DefaultValue(typeof(View), "Thumbnails")]
+    [Category("Appearance"), DefaultValue(typeof(View), "Thumbnails")]
     public View View
     {
         get { return mView; }
@@ -639,7 +646,7 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Gets or sets whether the control uses WPF/WIC for thumbnail extraction.
     /// </summary>
-    [Category("Appearance"), Description("Gets or sets whether the control uses for thumbnail extraction.")]
+    [Category("Appearance")]
     public static bool UseWIC
     {
         get => Extractor.UseWIC;
@@ -653,7 +660,7 @@ public partial class ImageListView : Control, IComponent
     /// Gets the thumbnail extractor.
     /// </summary>
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Advanced)]
-    public IExtractor ThumbnailExtractor => Extractor.Instance;
+    public static IExtractor ThumbnailExtractor => Extractor.Instance;
     #endregion
 
 
@@ -706,59 +713,25 @@ public partial class ImageListView : Control, IComponent
     /// </summary>
     public ImageListView()
     {
-        // Renderer parameters
-        controlSuspended = false;
-        rendererSuspendCount = 0;
-        rendererNeedsPaint = true;
-
-        SetRenderer(new ImageListViewRenderer());
+        SetRenderer(new ThemeRenderer());
 
         // Property defaults
-        mCacheLimitAsItemCount = 0;
-        mCacheLimitAsMemory = 20 * 1024 * 1024;
-        mIntegralScroll = false;
         mItems = new ImageListViewItemCollection(this);
-        MultiSelect = true;
-        mRetryOnError = true;
         mSelectedItems = new ImageListViewSelectedItemCollection(this);
         mCheckedItems = new ImageListViewCheckedItemCollection(this);
+
         SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.Opaque | ControlStyles.Selectable | ControlStyles.UserMouse | ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer, true);
-        ScrollBars = true;
-        ShellIconFallback = true;
-        ShellIconFromFileContent = true;
+
         Size = new Size(120, 100);
-        mShowCheckBoxes = false;
-        mCheckBoxAlignment = ContentAlignment.BottomRight;
-        mCheckBoxPadding = new Size(2, 2);
-        mShowFileIcons = false;
-        mIconAlignment = ContentAlignment.TopRight;
-        mIconPadding = new Size(2, 2);
-        Text = string.Empty;
-        mThumbnailSize = new Size(70, 70);
-        mUseEmbeddedThumbnails = UseEmbeddedThumbnails.Auto;
-        mView = View.Thumbnails;
-        mViewOffset = new Point(0, 0);
-        mShowScrollBars = false;
-        mShowItemText = false;
 
         // Child controls
-        hScrollBar = new HScrollBar();
-        hScrollBar.Visible = false;
         hScrollBar.Scroll += HScrollBar_Scroll;
-
-        vScrollBar = new VScrollBar();
-        vScrollBar.Visible = false;
         vScrollBar.Scroll += VScrollBar_Scroll;
 
         Controls.Add(hScrollBar);
         Controls.Add(vScrollBar);
 
         // Lazy refresh timer
-        lazyRefreshTimer = new System.Timers.Timer
-        {
-            Interval = ImageListViewRenderer.LazyRefreshInterval,
-            Enabled = false,
-        };
         lazyRefreshTimer.Elapsed += LazyRefreshTimer_Tick;
         lazyRefreshCallback = new RefreshDelegateInternal(Refresh);
 
@@ -767,12 +740,9 @@ public partial class ImageListView : Control, IComponent
         navigationManager = new ImageListViewNavigationManager(this);
 
         // Cache nabagers
-        defaultAdaptor = new FileSystemAdaptor();
         thumbnailCache = new ImageListViewCacheThumbnail(this);
         shellInfoCache = new ImageListViewCacheShellInfo(this);
         metadataCache = new ImageListViewCacheMetadata(this);
-
-        disposed = false;
     }
     #endregion
 
@@ -1395,8 +1365,8 @@ public partial class ImageListView : Control, IComponent
     /// <returns>true if the item is modified; otherwise false.</returns>
     internal bool IsItemDirty(Guid guid)
     {
-        if (mItems.TryGetValue(guid, out ImageListViewItem item))
-            return item.isDirty;
+        if (mItems.TryGetValue(guid, out ImageListViewItem? item))
+            return item?.isDirty ?? false;
 
         return false;
     }
@@ -1535,7 +1505,7 @@ public partial class ImageListView : Control, IComponent
     {
         base.OnResize(e);
 
-        if (!disposed && mRenderer != null)
+        if (!_isDisposed && mRenderer != null)
             mRenderer.ClearBuffer();
 
         if (hScrollBar != null && layoutManager != null)
@@ -1550,7 +1520,7 @@ public partial class ImageListView : Control, IComponent
     /// <param name="e">A <see cref="T:System.Windows.Forms.PaintEventArgs"/> that contains the event data.</param>
     protected override void OnPaint(PaintEventArgs e)
     {
-        if (!disposed && mRenderer != null)
+        if (!_isDisposed && mRenderer != null)
             mRenderer.Render(e.Graphics);
         rendererNeedsPaint = false;
     }
@@ -1726,7 +1696,7 @@ public partial class ImageListView : Control, IComponent
     /// false to release only unmanaged resources.</param>
     protected override void Dispose(bool disposing)
     {
-        if (!disposed)
+        if (!_isDisposed)
         {
             if (disposing)
             {
@@ -1760,7 +1730,7 @@ public partial class ImageListView : Control, IComponent
                 mRenderer?.Dispose();
             }
 
-            disposed = true;
+            _isDisposed = true;
         }
 
         if (IsHandleCreated && !IsDisposed && !InvokeRequired)
@@ -1982,7 +1952,7 @@ public partial class ImageListView : Control, IComponent
     /// </summary>
     internal virtual void OnDetailsCachingInternal(Guid guid)
     {
-        if (mItems.TryGetValue(guid, out ImageListViewItem item))
+        if (mItems.TryGetValue(guid, out ImageListViewItem? item))
             OnDetailsCaching(new ItemEventArgs(item));
     }
 
@@ -1992,7 +1962,7 @@ public partial class ImageListView : Control, IComponent
     /// </summary>
     internal virtual void OnDetailsCachedInternal(Guid guid)
     {
-        if (mItems.TryGetValue(guid, out ImageListViewItem item))
+        if (mItems.TryGetValue(guid, out ImageListViewItem? item))
             OnDetailsCached(new ItemEventArgs(item));
     }
 
@@ -2024,7 +1994,7 @@ public partial class ImageListView : Control, IComponent
     /// <param name="cacheThread">The thread raising the error.</param>
     internal void OnCacheErrorInternal(Guid guid, Exception error, CacheThread cacheThread)
     {
-        mItems.TryGetValue(guid, out ImageListViewItem item);
+        mItems.TryGetValue(guid, out ImageListViewItem? item);
         OnCacheError(new CacheErrorEventArgs(item, error, cacheThread));
     }
 
@@ -2088,86 +2058,103 @@ public partial class ImageListView : Control, IComponent
 
 
     #region Public Events
+
     /// <summary>
     /// Occurs when an error occurs during an asynchronous cache operation.
     /// </summary>
-    [Category("Behavior"), Browsable(true), Description("Occurs when an error occurs during an asynchronous cache operation.")]
-    public event CacheErrorEventHandler CacheError;
+    [Category("Behavior")]
+    public event CacheErrorEventHandler? CacheError;
+
     /// <summary>
     /// Occurs after the user drops files on to the control.
     /// </summary>
-    [Category("Drag Drop"), Browsable(true), Description("Occurs after the user drops files on to the control.")]
-    public event DropFilesEventHandler DropFiles;
+    [Category("Drag Drop")]
+    public event DropFilesEventHandler? DropFiles;
+
     /// <summary>
     /// Occurs after the user drops items on to the control.
     /// </summary>
-    [Category("Drag Drop"), Browsable(true), Description("Occurs after the user drops items on to the control.")]
-    public event DropItemsEventHandler DropItems;
+    [Category("Drag Drop")]
+    public event DropItemsEventHandler? DropItems;
+
     /// <summary>
     /// Occurs after items are dropped successfully.
     /// </summary>
-    [Category("Drag Drop"), Browsable(true), Description("Occurs after items are dropped successfully.")]
-    public event DropCompleteEventHandler DropComplete;
+    [Category("Drag Drop")]
+    public event DropCompleteEventHandler? DropComplete;
+
     /// <summary>
     /// Occurs when the user clicks an item.
     /// </summary>
-    [Category("Action"), Browsable(true), Description("Occurs when the user clicks an item.")]
-    public event ItemClickEventHandler ItemClick;
+    [Category("Action")]
+    public event ItemClickEventHandler? ItemClick;
+
     /// <summary>
     /// Occurs when the user clicks an item checkbox.
     /// </summary>
-    [Category("Action"), Browsable(true), Description("Occurs when the user clicks an item checkbox.")]
-    public event ItemCheckBoxClickEventHandler ItemCheckBoxClick;
+    [Category("Action")]
+    public event ItemCheckBoxClickEventHandler? ItemCheckBoxClick;
+
     /// <summary>
     /// Occurs when the user moves the mouse over (and out of) an item.
     /// </summary>
-    [Category("Action"), Browsable(true), Description("Occurs when the user moves the mouse over (and out of) an item.")]
-    public event ItemHoverEventHandler ItemHover;
+    [Category("Action")]
+    public event ItemHoverEventHandler? ItemHover;
+
     /// <summary>
     /// Occurs when the user double-clicks an item.
     /// </summary>
-    [Category("Action"), Browsable(true), Description("Occurs when the user double-clicks an item.")]
-    public event ItemDoubleClickEventHandler ItemDoubleClick;
+    [Category("Action")]
+    public event ItemDoubleClickEventHandler? ItemDoubleClick;
+
     /// <summary>
     /// Occurs when the selected items collection changes.
     /// </summary>
-    [Category("Behavior"), Browsable(true), Description("Occurs when the selected items collection changes.")]
-    public event EventHandler SelectionChanged;
+    [Category("Behavior")]
+    public event EventHandler? SelectionChanged;
+
     /// <summary>
     /// Occurs after an item thumbnail is cached.
     /// </summary>
-    [Category("Behavior"), Browsable(true), Description("Occurs after an item thumbnail is cached.")]
-    public event ThumbnailCachedEventHandler ThumbnailCached;
+    [Category("Behavior")]
+    public event ThumbnailCachedEventHandler? ThumbnailCached;
+
     /// <summary>
     /// Occurs before an item thumbnail is cached.
     /// </summary>
-    [Category("Behavior"), Browsable(true), Description("Occurs before an item thumbnail is cached.")]
-    public event ThumbnailCachingEventHandler ThumbnailCaching;
+    [Category("Behavior")]
+    public event ThumbnailCachingEventHandler? ThumbnailCaching;
+
     /// <summary>
     /// Occurs after the item collection is changed.
     /// </summary>
-    [Category("Behavior"), Browsable(true), Description("Occurs after the item collection is changed.")]
-    public event ItemCollectionChangedEventHandler ItemCollectionChanged;
+    [Category("Behavior")]
+    public event ItemCollectionChangedEventHandler? ItemCollectionChanged;
+
     /// <summary>
     /// Occurs before an item details is cached.
     /// </summary>
-    [Category("Behavior"), Browsable(true), Description("Occurs before an item details is cached.")]
-    public event DetailsCachingEventHandler DetailsCaching;
+    [Category("Behavior")]
+    public event DetailsCachingEventHandler? DetailsCaching;
+
     /// <summary>
     /// Occurs after an item details is cached.
     /// </summary>
-    [Category("Behavior"), Browsable(true), Description("Occurs after an item details is cached.")]
-    public event DetailsCachedEventHandler DetailsCached;
+    [Category("Behavior")]
+    public event DetailsCachedEventHandler? DetailsCached;
+
     /// <summary>
     /// Occurs before shell info for a file extension is cached.
     /// </summary>
-    [Category("Behavior"), Browsable(true), Description("Occurs before shell info for a file extension is cached.")]
-    public event ShellInfoCachingEventHandler ShellInfoCaching;
+    [Category("Behavior")]
+    public event ShellInfoCachingEventHandler? ShellInfoCaching;
+
     /// <summary>
     /// Occurs after shell info for a file extension is cached.
     /// </summary>
-    [Category("Behavior"), Browsable(true), Description("Occurs after shell info for a file extension is cached.")]
-    public event ShellInfoCachedEventHandler ShellInfoCached;
+    [Category("Behavior")]
+    public event ShellInfoCachedEventHandler? ShellInfoCached;
+
     #endregion
 }
 

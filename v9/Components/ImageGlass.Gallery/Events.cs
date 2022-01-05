@@ -170,7 +170,7 @@ public class CacheErrorEventArgs : EventArgs
     /// Gets the ImageListViewItem that is associated with this error.
     /// This parameter can be null.
     /// </summary>
-    public ImageListViewItem Item { get; private set; }
+    public ImageListViewItem? Item { get; private set; }
     /// <summary>
     /// Gets a value indicating which error occurred during an asynchronous operation.
     /// </summary>
@@ -186,7 +186,7 @@ public class CacheErrorEventArgs : EventArgs
     /// <param name="item">The ImageListViewItem that is associated with this error.</param>
     /// <param name="error">The error that occurred during an asynchronous operation.</param>
     /// <param name="cacheThread">The thread raising the error.</param>
-    public CacheErrorEventArgs(ImageListViewItem item, Exception error, CacheThread cacheThread)
+    public CacheErrorEventArgs(ImageListViewItem? item, Exception error, CacheThread cacheThread)
     {
         Item = item;
         Error = error;
@@ -310,13 +310,13 @@ public class ItemEventArgs : EventArgs
     /// <summary>
     /// Gets the ImageListViewItem that is the target of the event.
     /// </summary>
-    public ImageListViewItem Item { get; private set; }
+    public ImageListViewItem? Item { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the ItemEventArgs class.
     /// </summary>
     /// <param name="item">The item that is the target of this event.</param>
-    public ItemEventArgs(ImageListViewItem item)
+    public ItemEventArgs(ImageListViewItem? item)
     {
         Item = item;
     }

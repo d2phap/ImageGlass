@@ -123,17 +123,9 @@ public class UriAdaptor : IAdaptor
     /// </summary>
     /// <param name="key">Item key.</param>
     /// <returns>An array of 2-tuples containing item details or null if an error occurs.</returns>
-    public override Tuple<ColumnType, string, object>[] GetDetails(object key)
+    public override ImageDetails GetDetails(object key)
     {
-        if (_isDisposed) return null;
-
-        var uri = (string)key;
-        var details = new List<Tuple<ColumnType, string, object>>
-        {
-            new(ColumnType.Custom, "URL", uri),
-        };
-
-        return details.ToArray();
+        return new();
     }
 
     /// <summary>

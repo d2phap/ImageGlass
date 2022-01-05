@@ -65,7 +65,7 @@ public abstract class IAdaptor : IDisposable
     /// </summary>
     /// <param name="key">Item key.</param>
     /// <returns>An array of tuples containing item details or null if an error occurs.</returns>
-    public abstract Tuple<ColumnType, string, object>[] GetDetails(object key);
+    public abstract ImageDetails GetDetails(object key);
 
     /// <summary>
     /// Performs application-defined tasks associated with freeing,
