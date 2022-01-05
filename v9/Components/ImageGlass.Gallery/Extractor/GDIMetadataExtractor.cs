@@ -1,5 +1,27 @@
-﻿
-using System.Drawing.Imaging;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+---------------------
+ImageGlass.Gallery is based on ImageListView v13.8.2:
+Url: https://github.com/oozcitak/imagelistview
+License: Apache License Version 2.0, http://www.apache.org/licenses/
+---------------------
+*/
 using System.Text;
 
 namespace ImageGlass.Gallery;
@@ -15,7 +37,9 @@ public partial class GDIExtractor : IExtractor
     /// Gets the name of this extractor.
     /// </summary>
     public virtual string Name => "GDI Thumbnail Extractor";
+
     #endregion
+
 
     #region Constructor
     /// <summary>
@@ -23,9 +47,11 @@ public partial class GDIExtractor : IExtractor
     /// </summary>
     public GDIExtractor()
     {
-        ;
+
     }
+
     #endregion
+
 
     #region Exif Tag IDs
     private const int TagImageDescription = 0x010E;
@@ -42,7 +68,9 @@ public partial class GDIExtractor : IExtractor
     private const int TagEquipmentManufacturer = 0x010F;
     private const int TagFocalLength = 0x920A;
     private const int TagSoftware = 0x0131;
+
     #endregion
+
 
     #region Exif Format Conversion
     /// <summary>
@@ -54,10 +82,11 @@ public partial class GDIExtractor : IExtractor
         if (value == null || value.Length == 0)
             return string.Empty;
 
-        string str = Encoding.ASCII.GetString(value);
-        str = str.Trim(new char[] { '\0' });
+        var str = Encoding.ASCII.GetString(value).Trim(new char[] { '\0' });
+
         return str;
     }
+
     /// <summary>
     /// Converts the given Exif data to DateTime.
     /// </summary>
@@ -66,6 +95,7 @@ public partial class GDIExtractor : IExtractor
     {
         return ExifDateTime(ExifAscii(value));
     }
+
     /// <summary>
     /// Converts the given Exif data to DateTime.
     /// Value must be formatted as yyyy:MM:dd HH:mm:ss.
@@ -73,7 +103,7 @@ public partial class GDIExtractor : IExtractor
     /// <param name="value">Exif data as a string.</param>
     private static DateTime ExifDateTime(string value)
     {
-        string[] parts = value.Split(new char[] { ':', ' ' });
+        var parts = value.Split(new char[] { ':', ' ' });
         try
         {
             if (parts.Length == 6)
@@ -98,6 +128,7 @@ public partial class GDIExtractor : IExtractor
             return DateTime.MinValue;
         }
     }
+
     /// <summary>
     /// Converts the given Exif data to an 16-bit unsigned integer.
     /// The value must have 2 bytes.
@@ -107,6 +138,7 @@ public partial class GDIExtractor : IExtractor
     {
         return BitConverter.ToUInt16(value, 0);
     }
+
     /// <summary>
     /// Converts the given Exif data to an 32-bit unsigned integer.
     /// The value must have 4 bytes.
@@ -116,6 +148,7 @@ public partial class GDIExtractor : IExtractor
     {
         return BitConverter.ToUInt32(value, 0);
     }
+
     /// <summary>
     /// Converts the given Exif data to an 32-bit signed integer.
     /// The value must have 4 bytes.
@@ -125,6 +158,7 @@ public partial class GDIExtractor : IExtractor
     {
         return BitConverter.ToInt32(value, 0);
     }
+
     /// <summary>
     /// Converts the given Exif data to an unsigned rational value
     /// represented as a string.
@@ -136,6 +170,7 @@ public partial class GDIExtractor : IExtractor
         return BitConverter.ToUInt32(value, 0).ToString() + "/" +
                 BitConverter.ToUInt32(value, 4).ToString();
     }
+
     /// <summary>
     /// Converts the given Exif data to a signed rational value
     /// represented as a string.
@@ -147,6 +182,7 @@ public partial class GDIExtractor : IExtractor
         return BitConverter.ToInt32(value, 0).ToString() + "/" +
                 BitConverter.ToInt32(value, 4).ToString();
     }
+
     /// <summary>
     /// Converts the given Exif data to a double number.
     /// The value must have 8 bytes.
@@ -154,14 +190,17 @@ public partial class GDIExtractor : IExtractor
     /// <param name="value">Exif data as a byte array.</param>
     private static double ExifDouble(byte[] value)
     {
-        uint num = BitConverter.ToUInt32(value, 0);
-        uint den = BitConverter.ToUInt32(value, 4);
+        var num = BitConverter.ToUInt32(value, 0);
+        var den = BitConverter.ToUInt32(value, 4);
+
         if (den == 0)
             return 0.0;
         else
             return num / (double)den;
     }
+
     #endregion
+
 
     #region Helper Methods
     /// <summary>
@@ -170,40 +209,38 @@ public partial class GDIExtractor : IExtractor
     /// <param name="path">Filepath of image</param>
     private static Metadata InitViaBmp(string path)
     {
-        using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+        using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+        if (Utility.IsImage(stream))
         {
-            if (Utility.IsImage(stream))
+            using var img = Image.FromStream(stream, false, false);
+            if (img != null)
             {
-                using (Image img = Image.FromStream(stream, false, false))
-                {
-                    if (img != null)
-                    {
-                        return InitViaBmp(img);
-                    }
-                }
+                return InitViaBmp(img);
             }
         }
 
         return new Metadata();
     }
+
     /// <summary>
     /// Read metadata using .NET 2.0 methods.
     /// </summary>
     /// <param name="img">Opened image</param>
     private static Metadata InitViaBmp(Image img)
     {
-        Metadata m = new Metadata();
-
-        m.Width = img.Width;
-        m.Height = img.Height;
-        m.DPIX = img.HorizontalResolution;
-        m.DPIY = img.VerticalResolution;
+        var m = new Metadata
+        {
+            Width = img.Width,
+            Height = img.Height,
+            DPIX = img.HorizontalResolution,
+            DPIY = img.VerticalResolution
+        };
 
         double dVal;
         int iVal;
         DateTime dateTime;
         string str;
-        foreach (PropertyItem prop in img.PropertyItems)
+        foreach (var prop in img.PropertyItems)
         {
             if (prop.Value != null && prop.Value.Length != 0)
             {
@@ -211,32 +248,36 @@ public partial class GDIExtractor : IExtractor
                 {
                     case TagImageDescription:
                         str = ExifAscii(prop.Value).Trim();
-                        if (str != String.Empty)
+                        if (str != string.Empty)
                         {
                             m.ImageDescription = str;
                         }
                         break;
+
                     case TagArtist:
                         str = ExifAscii(prop.Value).Trim();
-                        if (str != String.Empty)
+                        if (str != string.Empty)
                         {
                             m.Artist = str;
                         }
                         break;
+
                     case TagEquipmentManufacturer:
                         str = ExifAscii(prop.Value).Trim();
-                        if (str != String.Empty)
+                        if (str != string.Empty)
                         {
                             m.EquipmentManufacturer = str;
                         }
                         break;
+
                     case TagEquipmentModel:
                         str = ExifAscii(prop.Value).Trim();
-                        if (str != String.Empty)
+                        if (str != string.Empty)
                         {
                             m.EquipmentModel = str;
                         }
                         break;
+
                     case TagDateTimeOriginal:
                         dateTime = ExifDateTime(prop.Value);
                         if (dateTime != DateTime.MinValue)
@@ -244,6 +285,7 @@ public partial class GDIExtractor : IExtractor
                             m.DateTaken = dateTime;
                         }
                         break;
+
                     case TagExposureTime:
                         if (prop.Value.Length == 8)
                         {
@@ -254,6 +296,7 @@ public partial class GDIExtractor : IExtractor
                             }
                         }
                         break;
+
                     case TagFNumber:
                         if (prop.Value.Length == 8)
                         {
@@ -264,6 +307,7 @@ public partial class GDIExtractor : IExtractor
                             }
                         }
                         break;
+
                     case TagISOSpeed:
                         if (prop.Value.Length == 2)
                         {
@@ -274,6 +318,7 @@ public partial class GDIExtractor : IExtractor
                             }
                         }
                         break;
+
                     case TagCopyright:
                         str = ExifAscii(prop.Value);
                         if (str != String.Empty)
@@ -281,6 +326,7 @@ public partial class GDIExtractor : IExtractor
                             m.Copyright = str;
                         }
                         break;
+
                     case TagRating:
                         if (m.Rating == 0 && prop.Value.Length == 2)
                         {
@@ -297,6 +343,7 @@ public partial class GDIExtractor : IExtractor
                                 m.Rating = 99;
                         }
                         break;
+
                     case TagRatingPercent:
                         if (prop.Value.Length == 2)
                         {
@@ -304,6 +351,7 @@ public partial class GDIExtractor : IExtractor
                             m.Rating = iVal;
                         }
                         break;
+
                     case TagUserComment:
                         str = ExifAscii(prop.Value);
                         if (str != String.Empty)
@@ -311,6 +359,7 @@ public partial class GDIExtractor : IExtractor
                             m.Comment = str;
                         }
                         break;
+
                     case TagSoftware:
                         str = ExifAscii(prop.Value).Trim();
                         if (str != String.Empty)
@@ -318,6 +367,7 @@ public partial class GDIExtractor : IExtractor
                             m.Software = str;
                         }
                         break;
+
                     case TagFocalLength:
                         if (prop.Value.Length == 8)
                         {
@@ -334,6 +384,7 @@ public partial class GDIExtractor : IExtractor
 
         return m;
     }
+
     /// <summary>
     /// Convert FileTime to DateTime.
     /// </summary>
@@ -341,10 +392,13 @@ public partial class GDIExtractor : IExtractor
     /// <returns>DateTime</returns>
     private static DateTime ConvertFileTime(System.Runtime.InteropServices.ComTypes.FILETIME ft)
     {
-        long longTime = (((long)ft.dwHighDateTime) << 32) | ((uint)ft.dwLowDateTime);
+        var longTime = (((long)ft.dwHighDateTime) << 32) | ((uint)ft.dwLowDateTime);
+
         return DateTime.FromFileTimeUtc(longTime); // using UTC???
     }
+
     #endregion
+
 
     #region Public Methods
     /// <summary>
@@ -353,7 +407,7 @@ public partial class GDIExtractor : IExtractor
     /// <param name="path">Filepath of image</param>
     public virtual Metadata GetMetadata(string path)
     {
-        Metadata m = new Metadata();
+        var m = new Metadata();
         try
         {
             m = InitViaBmp(path);
@@ -364,6 +418,7 @@ public partial class GDIExtractor : IExtractor
         }
         return m;
     }
+
     #endregion
 }
 

@@ -80,7 +80,7 @@ public partial class ImageListView : Control, IComponent
     // Layout variables
     internal HScrollBar hScrollBar;
     internal VScrollBar vScrollBar;
-    internal ImageListViewLayoutManager layoutManager;
+    internal LayoutManager layoutManager;
     private bool disposed;
 
     // Interaction variables
@@ -763,7 +763,7 @@ public partial class ImageListView : Control, IComponent
         lazyRefreshCallback = new RefreshDelegateInternal(Refresh);
 
         // Helpers
-        layoutManager = new ImageListViewLayoutManager(this);
+        layoutManager = new LayoutManager(this);
         navigationManager = new ImageListViewNavigationManager(this);
 
         // Cache nabagers

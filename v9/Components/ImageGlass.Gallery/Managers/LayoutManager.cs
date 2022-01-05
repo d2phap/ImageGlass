@@ -29,7 +29,7 @@ namespace ImageGlass.Gallery;
 /// <summary>
 /// Represents the layout of the image list view drawing area.
 /// </summary>
-internal class ImageListViewLayoutManager
+internal class LayoutManager
 {
     #region Member Variables
     private Rectangle mClientArea;
@@ -54,10 +54,10 @@ internal class ImageListViewLayoutManager
     private bool cachedIntegralScroll;
     private Size cachedItemMargin;
     private bool cachedScrollBars;
-    private Dictionary<Guid, bool> cachedVisibleItems;
+    private readonly Dictionary<Guid, bool> cachedVisibleItems = new();
 
-    private bool vScrollVisible;
-    private bool hScrollVisible;
+    private bool vScrollVisible = false;
+    private bool hScrollVisible = false;
 
     // Size required to display all items (i.e. scroll range)
     private int totalWidth;
@@ -69,58 +69,58 @@ internal class ImageListViewLayoutManager
     /// <summary>
     /// Gets the bounds of the entire client area.
     /// </summary>
-    public Rectangle ClientArea { get { return mClientArea; } }
-    
+    public Rectangle ClientArea => mClientArea;
+
     /// <summary>
     /// Gets the owner image list view.
     /// </summary>
-    public ImageListView ImageListView { get { return mImageListView; } }
-    
+    public ImageListView ImageListView => mImageListView;
+
     /// <summary>
     /// Gets the extends of the item area.
     /// </summary>
-    public Rectangle ItemAreaBounds { get { return mItemAreaBounds; } }
-    
+    public Rectangle ItemAreaBounds => mItemAreaBounds;
+
     /// <summary>
     /// Gets the items size.
     /// </summary>
-    public Size ItemSize { get { return mItemSize; } }
-    
+    public Size ItemSize => mItemSize;
+
     /// <summary>
     /// Gets the items size including the margin around the item.
     /// </summary>
-    public Size ItemSizeWithMargin { get { return mItemSizeWithMargin; } }
-    
+    public Size ItemSizeWithMargin => mItemSizeWithMargin;
+
     /// <summary>
     /// Gets the maximum number of columns that can be displayed.
     /// </summary>
-    public int Cols { get { return mDisplayedCols; } }
-    
+    public int Cols => mDisplayedCols;
+
     /// <summary>
     /// Gets the maximum number of rows that can be displayed.
     /// </summary>
-    public int Rows { get { return mDisplayedRows; } }
-    
+    public int Rows => mDisplayedRows;
+
     /// <summary>
     /// Gets the index of the first partially visible item.
     /// </summary>
-    public int FirstPartiallyVisible { get { return mFirstPartiallyVisible; } }
-    
+    public int FirstPartiallyVisible => mFirstPartiallyVisible;
+
     /// <summary>
     /// Gets the index of the last partially visible item.
     /// </summary>
-    public int LastPartiallyVisible { get { return mLastPartiallyVisible; } }
-    
+    public int LastPartiallyVisible => mLastPartiallyVisible;
+
     /// <summary>
     /// Gets the index of the first fully visible item.
     /// </summary>
-    public int FirstVisible { get { return mFirstVisible; } }
-    
+    public int FirstVisible => mFirstVisible;
+
     /// <summary>
     /// Gets the index of the last fully visible item.
     /// </summary>
-    public int LastVisible { get { return mLastVisible; } }
-    
+    public int LastVisible => mLastVisible;
+
     /// <summary>
     /// Determines whether an update is required.
     /// </summary>
@@ -159,13 +159,9 @@ internal class ImageListViewLayoutManager
     /// Initializes a new instance of the ImageListViewLayoutManager class.
     /// </summary>
     /// <param name="owner">The owner control.</param>
-    public ImageListViewLayoutManager(ImageListView owner)
+    public LayoutManager(ImageListView owner)
     {
         mImageListView = owner;
-        cachedVisibleItems = new Dictionary<Guid, bool>();
-
-        vScrollVisible = false;
-        hScrollVisible = false;
 
         Update();
     }
@@ -231,18 +227,28 @@ internal class ImageListViewLayoutManager
     /// </summary>
     public Rectangle GetCheckBoxBounds(int itemIndex)
     {
-        Rectangle bounds = GetWidgetBounds(GetItemBounds(itemIndex), new Size(16, 16),
+        var bounds = GetWidgetBounds(GetItemBounds(itemIndex), new Size(16, 16),
             mImageListView.CheckBoxPadding, mImageListView.CheckBoxAlignment);
 
         // If the checkbox and the icon have the same alignment,
         // move the checkbox horizontally away from the icon
-        if (mImageListView.CheckBoxAlignment == mImageListView.IconAlignment &&  mImageListView.ShowCheckBoxes && mImageListView.ShowFileIcons)
+        if (mImageListView.CheckBoxAlignment == mImageListView.IconAlignment
+            && mImageListView.ShowCheckBoxes
+            && mImageListView.ShowFileIcons)
         {
-            ContentAlignment alignment = mImageListView.CheckBoxAlignment;
-            if (alignment == ContentAlignment.BottomCenter || alignment == ContentAlignment.MiddleCenter || alignment == ContentAlignment.TopCenter)
+            var alignment = mImageListView.CheckBoxAlignment;
+            if (alignment == ContentAlignment.BottomCenter
+                || alignment == ContentAlignment.MiddleCenter
+                || alignment == ContentAlignment.TopCenter)
+            {
                 bounds.X -= 8 + mImageListView.IconPadding.Width / 2;
-            else if (alignment == ContentAlignment.BottomRight || alignment == ContentAlignment.MiddleRight || alignment == ContentAlignment.TopRight)
+            }
+            else if (alignment == ContentAlignment.BottomRight
+                || alignment == ContentAlignment.MiddleRight
+                || alignment == ContentAlignment.TopRight)
+            {
                 bounds.X -= 16 + mImageListView.IconPadding.Width;
+            }
         }
 
         return bounds;
@@ -254,21 +260,32 @@ internal class ImageListViewLayoutManager
     /// </summary>
     public Rectangle GetIconBounds(int itemIndex)
     {
-        Rectangle bounds = GetWidgetBounds(GetItemBounds(itemIndex), new Size(16, 16),
+        var bounds = GetWidgetBounds(GetItemBounds(itemIndex), new Size(16, 16),
             mImageListView.IconPadding, mImageListView.IconAlignment);
 
         // If the checkbox and the icon have the same alignment,
         // or in details view move the icon horizontally away from the checkbox
         if (mImageListView.ShowCheckBoxes && mImageListView.ShowFileIcons)
-            bounds.X += 16 + 2;
-        else if (mImageListView.CheckBoxAlignment == mImageListView.IconAlignment &&
-            mImageListView.ShowCheckBoxes && mImageListView.ShowFileIcons)
         {
-            ContentAlignment alignment = mImageListView.CheckBoxAlignment;
-            if (alignment == ContentAlignment.BottomLeft || alignment == ContentAlignment.MiddleLeft || alignment == ContentAlignment.TopLeft)
+            bounds.X += 16 + 2;
+        }
+        else if (mImageListView.CheckBoxAlignment == mImageListView.IconAlignment
+            && mImageListView.ShowCheckBoxes
+            && mImageListView.ShowFileIcons)
+        {
+            var alignment = mImageListView.CheckBoxAlignment;
+            if (alignment == ContentAlignment.BottomLeft
+                || alignment == ContentAlignment.MiddleLeft
+                || alignment == ContentAlignment.TopLeft)
+            {
                 bounds.X += 16 + mImageListView.IconPadding.Width;
-            else if (alignment == ContentAlignment.BottomCenter || alignment == ContentAlignment.MiddleCenter || alignment == ContentAlignment.TopCenter)
+            }
+            else if (alignment == ContentAlignment.BottomCenter
+                || alignment == ContentAlignment.MiddleCenter
+                || alignment == ContentAlignment.TopCenter)
+            {
                 bounds.X += 8 + mImageListView.IconPadding.Width / 2;
+            }
         }
 
         return bounds;
@@ -283,21 +300,41 @@ internal class ImageListViewLayoutManager
         // Apply padding
         bounds.Inflate(-padding.Width, -padding.Height);
 
-        int x = 0;
-        if (alignment == ContentAlignment.BottomLeft || alignment == ContentAlignment.MiddleLeft || alignment == ContentAlignment.TopLeft)
+        int x;
+        if (alignment == ContentAlignment.BottomLeft
+            || alignment == ContentAlignment.MiddleLeft
+            || alignment == ContentAlignment.TopLeft)
+        {
             x = bounds.Left;
-        else if (alignment == ContentAlignment.BottomCenter || alignment == ContentAlignment.MiddleCenter || alignment == ContentAlignment.TopCenter)
+        }
+        else if (alignment == ContentAlignment.BottomCenter
+            || alignment == ContentAlignment.MiddleCenter
+            || alignment == ContentAlignment.TopCenter)
+        {
             x = bounds.Left + bounds.Width / 2 - size.Width / 2;
+        }
         else // if (alignment == ContentAlignment.BottomRight || alignment == ContentAlignment.MiddleRight || alignment == ContentAlignment.TopRight)
+        {
             x = bounds.Right - size.Width;
+        }
 
-        int y = 0;
-        if (alignment == ContentAlignment.BottomLeft || alignment == ContentAlignment.BottomCenter || alignment == ContentAlignment.BottomRight)
+        int y;
+        if (alignment == ContentAlignment.BottomLeft
+            || alignment == ContentAlignment.BottomCenter
+            || alignment == ContentAlignment.BottomRight)
+        {
             y = bounds.Bottom - size.Height;
-        else if (alignment == ContentAlignment.MiddleLeft || alignment == ContentAlignment.MiddleCenter || alignment == ContentAlignment.MiddleRight)
+        }
+        else if (alignment == ContentAlignment.MiddleLeft
+            || alignment == ContentAlignment.MiddleCenter
+            || alignment == ContentAlignment.MiddleRight)
+        {
             y = bounds.Top + bounds.Height / 2 - size.Height / 2;
+        }
         else // if (alignment == ContentAlignment.TopLeft || alignment == ContentAlignment.TopCenter || alignment == ContentAlignment.TopRight)
+        {
             y = bounds.Top;
+        }
 
         return new Rectangle(x, y, size.Width, size.Height);
     }
@@ -316,7 +353,8 @@ internal class ImageListViewLayoutManager
     /// </summary>
     public void Update(bool forceUpdate)
     {
-        if (mImageListView.ClientRectangle.Width == 0 || mImageListView.ClientRectangle.Height == 0)
+        if (mImageListView.ClientRectangle.Width == 0
+            || mImageListView.ClientRectangle.Height == 0)
             return;
 
         // If only item order is changed, just update visible items.
@@ -335,7 +373,7 @@ internal class ImageListViewLayoutManager
         mItemSizeWithMargin = mItemSize + cachedItemMargin;
 
         // Cache current properties to determine if we will need an update later
-        bool viewChanged = (cachedView != mImageListView.View);
+        var viewChanged = cachedView != mImageListView.View;
         cachedView = mImageListView.View;
         cachedViewOffset = mImageListView.ViewOffset;
         cachedSize = mImageListView.ClientSize;
@@ -350,7 +388,7 @@ internal class ImageListViewLayoutManager
             return;
 
         // Let the calculated bounds modified by the renderer
-        LayoutEventArgs eLayout = new LayoutEventArgs(mItemAreaBounds);
+        var eLayout = new LayoutEventArgs(mItemAreaBounds);
         mImageListView.mRenderer.OnLayout(eLayout);
         mItemAreaBounds = eLayout.ItemAreaBounds;
         if (mItemAreaBounds.Width <= 0 || mItemAreaBounds.Height <= 0)
@@ -419,8 +457,10 @@ internal class ImageListViewLayoutManager
     {
         // Calculate drawing area
         mClientArea = mImageListView.ClientRectangle;
-        if (mImageListView.BorderStyle != System.Windows.Forms.BorderStyle.None)
+        if (mImageListView.BorderStyle != BorderStyle.None)
+        {
             mClientArea.Inflate(-1, -1);
+        }
         mItemAreaBounds = mClientArea;
 
         // Allocate space for scrollbars
@@ -429,6 +469,7 @@ internal class ImageListViewLayoutManager
             mClientArea.Height -= mImageListView.hScrollBar.Height;
             mItemAreaBounds.Height -= mImageListView.hScrollBar.Height;
         }
+
         if (mImageListView.vScrollBar.Visible)
         {
             mClientArea.Width -= mImageListView.vScrollBar.Width;
@@ -446,10 +487,12 @@ internal class ImageListViewLayoutManager
     private bool CheckScrollBars()
     {
         // Horizontal scroll bar
-        bool hScrollRequired = false;
-        bool hScrollChanged = false;
+        var hScrollRequired = false;
+        var hScrollChanged = false;
         if (mImageListView.ScrollBars)
+        {
             hScrollRequired = (mImageListView.Items.Count > 0) && (mItemAreaBounds.Width < totalWidth);
+        }
 
         if (hScrollRequired != hScrollVisible)
         {
@@ -459,10 +502,12 @@ internal class ImageListViewLayoutManager
         }
 
         // Vertical scroll bar
-        bool vScrollRequired = false;
-        bool vScrollChanged = false;
+        var vScrollRequired = false;
+        var vScrollChanged = false;
         if (mImageListView.ScrollBars)
+        {
             vScrollRequired = (mImageListView.Items.Count > 0) && (mItemAreaBounds.Height < totalHeight);
+        }
 
         if (vScrollRequired != vScrollVisible)
         {
@@ -472,7 +517,7 @@ internal class ImageListViewLayoutManager
         }
 
         // Determine if the layout needs to be recalculated
-        return (hScrollChanged || vScrollChanged);
+        return hScrollChanged || vScrollChanged;
     }
 
     /// <summary>
@@ -484,14 +529,19 @@ internal class ImageListViewLayoutManager
         if (mImageListView.Items.Count != 0)
         {
             // Horizontal scroll range
-            if (mImageListView.ScrollOrientation == System.Windows.Forms.ScrollOrientation.HorizontalScroll)
+            if (mImageListView.ScrollOrientation == ScrollOrientation.HorizontalScroll)
             {
                 mImageListView.hScrollBar.Minimum = 0;
                 mImageListView.hScrollBar.Maximum = Math.Max(0, totalWidth - 1);
+
                 if (!mImageListView.IntegralScroll)
+                {
                     mImageListView.hScrollBar.LargeChange = mItemAreaBounds.Width;
+                }
                 else
+                {
                     mImageListView.hScrollBar.LargeChange = mItemSizeWithMargin.Width * mDisplayedCols;
+                }
                 mImageListView.hScrollBar.SmallChange = mItemSizeWithMargin.Width;
             }
             else
@@ -508,7 +558,7 @@ internal class ImageListViewLayoutManager
             }
 
             // Vertical scroll range
-            if (mImageListView.ScrollOrientation == System.Windows.Forms.ScrollOrientation.HorizontalScroll)
+            if (mImageListView.ScrollOrientation == ScrollOrientation.HorizontalScroll)
             {
                 mImageListView.vScrollBar.Minimum = 0;
                 mImageListView.vScrollBar.Maximum = mDisplayedRows * mItemSizeWithMargin.Height;
@@ -520,9 +570,13 @@ internal class ImageListViewLayoutManager
                 mImageListView.vScrollBar.Minimum = 0;
                 mImageListView.vScrollBar.Maximum = Math.Max(0, totalHeight - 1);
                 if (!mImageListView.IntegralScroll)
+                {
                     mImageListView.vScrollBar.LargeChange = mItemAreaBounds.Height;
+                }
                 else
+                {
                     mImageListView.vScrollBar.LargeChange = mItemSizeWithMargin.Height * mDisplayedRows;
+                }
                 mImageListView.vScrollBar.SmallChange = mItemSizeWithMargin.Height;
             }
             if (mImageListView.ViewOffset.Y > mImageListView.vScrollBar.Maximum - mImageListView.vScrollBar.LargeChange + 1)
@@ -543,14 +597,15 @@ internal class ImageListViewLayoutManager
             mImageListView.ViewOffset = new Point(0, 0);
         }
 
-        Rectangle bounds = mImageListView.ClientRectangle;
-        if (mImageListView.BorderStyle != System.Windows.Forms.BorderStyle.None)
+        var bounds = mImageListView.ClientRectangle;
+        if (mImageListView.BorderStyle != BorderStyle.None)
             bounds.Inflate(-1, -1);
 
         // Horizontal scrollbar position
         mImageListView.hScrollBar.Left = bounds.Left;
         mImageListView.hScrollBar.Top = bounds.Bottom - mImageListView.hScrollBar.Height;
         mImageListView.hScrollBar.Width = bounds.Width - (mImageListView.vScrollBar.Visible ? mImageListView.vScrollBar.Width : 0);
+
         // Vertical scrollbar position
         mImageListView.vScrollBar.Left = bounds.Right - mImageListView.vScrollBar.Width;
         mImageListView.vScrollBar.Top = bounds.Top;
@@ -591,19 +646,21 @@ internal class ImageListViewLayoutManager
         // Cache visible items
         cachedVisibleItems.Clear();
 
-        if (mFirstPartiallyVisible >= 0 &&
-            mLastPartiallyVisible >= 0 &&
-            mFirstPartiallyVisible <= mImageListView.Items.Count - 1 &&
-            mLastPartiallyVisible <= mImageListView.Items.Count - 1)
+        if (mFirstPartiallyVisible >= 0
+            && mLastPartiallyVisible >= 0
+            && mFirstPartiallyVisible <= mImageListView.Items.Count - 1
+            && mLastPartiallyVisible <= mImageListView.Items.Count - 1)
         {
             for (int i = mFirstPartiallyVisible; i <= mLastPartiallyVisible; i++)
+            {
                 cachedVisibleItems.Add(mImageListView.Items[i].Guid, false);
+            }
         }
 
         // Current item state processed
         mImageListView.Items.collectionModified = false;
     }
-    
+
     #endregion
 }
 

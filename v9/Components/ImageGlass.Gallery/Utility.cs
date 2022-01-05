@@ -46,13 +46,13 @@ public static class Utility
         // Sniff some bytes from the start of the stream
         // and check against magic numbers of supported 
         // image file formats
-        byte[] header = new byte[8];
+        var header = new byte[8];
         stream.Seek(0, SeekOrigin.Begin);
         if (stream.Read(header, 0, header.Length) != header.Length)
             return false;
 
         // BMP
-        string bmpHeader = Encoding.ASCII.GetString(header, 0, 2);
+        var bmpHeader = Encoding.ASCII.GetString(header, 0, 2);
         if (bmpHeader == "BM") // BM - Windows bitmap
             return true;
         else if (bmpHeader == "BA") // BA - Bitmap array
@@ -67,7 +67,7 @@ public static class Utility
             return true;
 
         // TIFF
-        string tiffHeader = Encoding.ASCII.GetString(header, 0, 4);
+        var tiffHeader = Encoding.ASCII.GetString(header, 0, 4);
         if (tiffHeader == "MM\x00\x2a") // Big-endian
             return true;
         else if (tiffHeader == "II\x2a\x00") // Little-endian
@@ -113,10 +113,12 @@ public static class Utility
     /// <returns>New image size.</returns>
     internal static Size GetSizedImageBounds(Image image, Size fit)
     {
-        float f = System.Math.Max((float)image.Width / (float)fit.Width, (float)image.Height / (float)fit.Height);
+        var f = Math.Max(1f * image.Width / fit.Width, image.Height / fit.Height);
         if (f < 1.0f) f = 1.0f; // Do not upsize small images
-        int width = (int)System.Math.Round((float)image.Width / f);
-        int height = (int)System.Math.Round((float)image.Height / f);
+
+        var width = (int)Math.Round(image.Width / f);
+        var height = (int)Math.Round(image.Height / f);
+
         return new Size(width, height);
     }
 
@@ -133,11 +135,13 @@ public static class Utility
     {
         if (hAlign < 0 || hAlign > 100.0f)
             throw new ArgumentException("hAlign must be between 0.0 and 100.0 (inclusive).", nameof(hAlign));
+
         if (vAlign < 0 || vAlign > 100.0f)
             throw new ArgumentException("vAlign must be between 0.0 and 100.0 (inclusive).", nameof(vAlign));
-        Size scaled = GetSizedImageBounds(image, fit.Size);
-        int x = fit.Left + (int)(hAlign / 100.0f * (fit.Width - scaled.Width));
-        int y = fit.Top + (int)(vAlign / 100.0f * (fit.Height - scaled.Height));
+
+        var scaled = GetSizedImageBounds(image, fit.Size);
+        var x = fit.Left + (int)(hAlign / 100.0f * (fit.Width - scaled.Width));
+        var y = fit.Top + (int)(vAlign / 100.0f * (fit.Height - scaled.Height));
 
         return new Rectangle(x, y, scaled.Width, scaled.Height);
     }
@@ -160,19 +164,24 @@ public static class Utility
     /// </summary>
     private static GraphicsPath GetRoundedRectanglePath(int x, int y, int width, int height, int radius)
     {
-        GraphicsPath path = new GraphicsPath();
+        var path = new GraphicsPath();
         path.AddLine(x + radius, y, x + width - radius, y);
+
         if (radius > 0)
             path.AddArc(x + width - 2 * radius, y, 2 * radius, 2 * radius, 270.0f, 90.0f);
         path.AddLine(x + width, y + radius, x + width, y + height - radius);
+
         if (radius > 0)
             path.AddArc(x + width - 2 * radius, y + height - 2 * radius, 2 * radius, 2 * radius, 0.0f, 90.0f);
         path.AddLine(x + width - radius, y + height, x + radius, y + height);
+
         if (radius > 0)
             path.AddArc(x, y + height - 2 * radius, 2 * radius, 2 * radius, 90.0f, 90.0f);
         path.AddLine(x, y + height - radius, x, y + radius);
+
         if (radius > 0)
             path.AddArc(x, y, 2 * radius, 2 * radius, 180.0f, 90.0f);
+
         return path;
     }
 
@@ -188,10 +197,8 @@ public static class Utility
     /// <param name="radius">The radius of rounded corners.</param>
     public static void FillRoundedRectangle(Graphics graphics, Brush brush, int x, int y, int width, int height, int radius)
     {
-        using (GraphicsPath path = GetRoundedRectanglePath(x, y, width, height, radius))
-        {
-            graphics.FillPath(brush, path);
-        }
+        using GraphicsPath path = GetRoundedRectanglePath(x, y, width, height, radius);
+        graphics.FillPath(brush, path);
     }
 
     /// <summary>
