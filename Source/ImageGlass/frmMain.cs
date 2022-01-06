@@ -55,7 +55,6 @@ namespace ImageGlass {
             // NOTE: the this.DeviceDpi property is not accurate
             DPIScaling.CurrentDPI = DPIScaling.GetSystemDpi();
 
-
             // Load UI Configs
             LoadConfig(isLoadUI: true, isLoadOthers: false);
 
@@ -74,11 +73,16 @@ namespace ImageGlass {
             CornerApi.ApplyCorner(mnuContext.Handle);
             CornerApi.ApplyCorner(mnuShortcut.Handle);
             CornerApi.ApplyCorner(mnuTray.Handle);
+
+            if (Environment.GetCommandLineArgs().Contains("-HideWindow")) {
+                tray.Visible = true;
+            }
         }
 
 
-
         #region Local variables
+
+        private bool _isHideWindow = Environment.GetCommandLineArgs().Contains("-HideWindow");
 
         // window size value before resizing
         private Size _windowSize = new(1300, 800);
@@ -2847,7 +2851,9 @@ namespace ImageGlass {
                 }
 
                 // Do not show welcome image if params exist.
-                if (Environment.GetCommandLineArgs().Length < 2) {
+                var args = Environment.GetCommandLineArgs();
+                var argCount = args.Where(a => !a.StartsWith("-")).Count();
+                if (argCount < 2) {
                     PrepareLoading(startUpImg);
                 }
                 #endregion
@@ -3193,7 +3199,6 @@ namespace ImageGlass {
             // Trigger Mouse Wheel event
             picMain.MouseWheel += picMain_MouseWheel;
 
-
             // Try to use a faster image clock for animating GIFs
             CheckAnimationClock(true);
 
@@ -3208,13 +3213,12 @@ namespace ImageGlass {
             thDeleteWorker.Start();
         }
 
-
         public void LoadFromParams(string[] args) {
             // Load image from param
             if (args.Length >= 2) {
                 for (var i = 1; i < args.Length; i++) {
                     // only read the path, exclude configs parameter which starts with "--"
-                    if (!args[i].StartsWith("--")) {
+                    if (!args[i].StartsWith("-")) {
                         PrepareLoading(args[i]);
                         break;
                     }
@@ -3244,16 +3248,18 @@ namespace ImageGlass {
                 e.Cancel = true;
 
                 // hide the app
-                Hide();
-
-                // show tray icon
-                tray.Visible = true;
+                ToggleAppVisibility(false);
             }
 
             // close the app
             else {
                 PrepareToExitApp();
             }
+        }
+
+        private void ToggleAppVisibility(bool show) {
+            Visible = show;
+            tray.Visible = !show;
         }
 
         private void PrepareToExitApp() {
@@ -3269,13 +3275,21 @@ namespace ImageGlass {
 
                 SaveConfig();
 
+                // start with os
+                if (Configs.IsStartWithOs) {
+                    var startupDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), Application.ProductName + ".lnk");
+
+                    if (!File.Exists(startupDir)) {
+                        Shortcuts.CreateShortcut(startupDir, App.IGExePath, "-HideWindow");
+                    }
+                }
+
                 // Write user configs file
                 Configs.Write();
             }
             catch { }
 
             tray.Visible = false;
-            tray.Dispose();
         }
 
         private void frmMain_Activated(object sender, EventArgs e) {
@@ -4043,11 +4057,8 @@ namespace ImageGlass {
         }
 
         private void Tray_MouseDoubleClick(object sender, MouseEventArgs e) {
-            // show frmMain
-            Show();
-
-            // hide tray icon
-            tray.Visible = false;
+            // show app
+            ToggleAppVisibility(true);
         }
 
         #endregion
@@ -5496,8 +5507,8 @@ namespace ImageGlass {
 
 
 
-        #endregion
 
+        #endregion
 
     }
 

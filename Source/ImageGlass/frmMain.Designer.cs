@@ -171,9 +171,9 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.mnuShortcut = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tray = new System.Windows.Forms.NotifyIcon(this.components);
             this.mnuTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuTrayExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.tray = new System.Windows.Forms.NotifyIcon(this.components);
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -1971,13 +1971,6 @@
             this.toolStripMenuItem1.Size = new System.Drawing.Size(222, 28);
             this.toolStripMenuItem1.Text = "sample menu item";
             // 
-            // tray
-            // 
-            this.tray.ContextMenuStrip = this.mnuTray;
-            this.tray.Icon = ((System.Drawing.Icon)(resources.GetObject("tray.Icon")));
-            this.tray.Text = "ImageGlass";
-            this.tray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Tray_MouseDoubleClick);
-            // 
             // mnuTray
             // 
             this.mnuTray.BackColor = System.Drawing.Color.White;
@@ -1985,15 +1978,22 @@
             this.mnuTray.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuTrayExit});
             this.mnuTray.Name = "mnuTray";
-            this.mnuTray.Size = new System.Drawing.Size(229, 63);
+            this.mnuTray.Size = new System.Drawing.Size(210, 32);
             this.mnuTray.Opening += new System.ComponentModel.CancelEventHandler(this.MnuTray_Opening);
             // 
             // mnuTrayExit
             // 
             this.mnuTrayExit.Name = "mnuTrayExit";
-            this.mnuTrayExit.Size = new System.Drawing.Size(228, 28);
+            this.mnuTrayExit.Size = new System.Drawing.Size(209, 28);
             this.mnuTrayExit.Text = "[Exit ImageGlass]";
             this.mnuTrayExit.Click += new System.EventHandler(this.MnuTrayExit_Click);
+            // 
+            // tray
+            // 
+            this.tray.ContextMenuStrip = this.mnuTray;
+            this.tray.Icon = ((System.Drawing.Icon)(resources.GetObject("tray.Icon")));
+            this.tray.Text = "ImageGlass";
+            this.tray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Tray_MouseDoubleClick);
             // 
             // frmMain
             // 
@@ -2185,9 +2185,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem mnuSaveImage;
         private System.Windows.Forms.ToolStripMenuItem mnuCustomZoom;
-        private System.Windows.Forms.NotifyIcon tray;
         private System.Windows.Forms.ContextMenuStrip mnuTray;
         private System.Windows.Forms.ToolStripMenuItem mnuTrayExit;
+        private System.Windows.Forms.NotifyIcon tray;
     }
 }
 
