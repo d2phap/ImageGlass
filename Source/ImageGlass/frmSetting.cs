@@ -211,6 +211,8 @@ namespace ImageGlass {
 
             // Others
             lblHeadOthers.Text = lang[$"{Name}.{nameof(lblHeadOthers)}"];
+            chkStartWithOs.Text = lang[$"{Name}.{nameof(chkStartWithOs)}"];
+            chkContinueRunningBackground.Text = lang[$"{Name}.{nameof(chkContinueRunningBackground)}"];
             chkAutoUpdate.Text = lang[$"{Name}.{nameof(chkAutoUpdate)}"];
             chkESCToQuit.Text = lang[$"{Name}.{nameof(chkESCToQuit)}"];
             chkConfirmationDelete.Text = lang[$"{Name}.{nameof(chkConfirmationDelete)}"];
@@ -492,6 +494,9 @@ namespace ImageGlass {
             chkLastSeenImage.Checked = Configs.IsOpenLastSeenImage;
             chkWelcomePicture.Checked = Configs.IsShowWelcome;
             chkShowToolBar.Checked = Configs.IsShowToolBar;
+
+            chkStartWithOs.Checked = Configs.IsStartWithOs;
+            chkContinueRunningBackground.Checked = Configs.IsContinueRunningBackground;
             chkAutoUpdate.Checked = Configs.AutoUpdate != "0";
             chkAllowMultiInstances.Checked = Configs.IsAllowMultiInstances;
             chkESCToQuit.Checked = Configs.IsPressESCToQuit;
@@ -1854,6 +1859,8 @@ namespace ImageGlass {
             // AutoUpdate
             Configs.AutoUpdate = chkAutoUpdate.Checked ? DateTime.Now.ToString("M/d/yyyy HH:mm:ss") : "0";
 
+            Configs.IsStartWithOs = chkStartWithOs.Checked;
+            Configs.IsContinueRunningBackground = chkContinueRunningBackground.Checked;
             Configs.IsAllowMultiInstances = chkAllowMultiInstances.Checked;
             Configs.IsPressESCToQuit = chkESCToQuit.Checked;
             Configs.IsConfirmationDelete = chkConfirmationDelete.Checked;

@@ -299,6 +299,16 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool IsHideThumbnailBarInFullscreen { get; set; } = false;
 
+        /// <summary>
+        /// Gets, sets value indicates that the app can continue running background when it is closed.
+        /// </summary>
+        public static bool IsContinueRunningBackground { get; set; } = true;
+
+        /// <summary>
+        /// Gets, sets value indicates that the app should start with operating system
+        /// </summary>
+        public static bool IsStartWithOs { get; set; } = true;
+
         #endregion
 
 
@@ -633,6 +643,8 @@ namespace ImageGlass.Settings {
             IsUseRawThumbnail = Get<bool>(nameof(IsUseRawThumbnail), IsUseRawThumbnail);
             IsHideToolbarInFullscreen = Get<bool>(nameof(IsHideToolbarInFullscreen), IsHideToolbarInFullscreen);
             IsHideThumbnailBarInFullscreen = Get<bool>(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
+            IsContinueRunningBackground = Get<bool>(nameof(IsContinueRunningBackground), IsContinueRunningBackground);
+            IsStartWithOs = Get<bool>(nameof(IsStartWithOs), IsStartWithOs);
 
             #endregion
 
@@ -875,6 +887,8 @@ namespace ImageGlass.Settings {
             Set(nameof(IsUseRawThumbnail), IsUseRawThumbnail);
             Set(nameof(IsHideToolbarInFullscreen), IsHideToolbarInFullscreen);
             Set(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
+            Set(nameof(IsContinueRunningBackground), IsContinueRunningBackground);
+            Set(nameof(IsStartWithOs), IsStartWithOs);
 
             #endregion
 

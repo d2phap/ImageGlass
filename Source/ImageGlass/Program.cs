@@ -30,8 +30,9 @@ using ImageGlass.Settings;
 
 namespace ImageGlass {
     internal static class Program {
-        private const string appGuid = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
+        public const string APP_GUID = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
         private static frmMain formMain;
+
 
         [DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
@@ -135,7 +136,7 @@ namespace ImageGlass {
                 Application.Run(formMain = new frmMain());
             }
             else {
-                var guid = new Guid(appGuid);
+                var guid = new Guid(APP_GUID);
 
                 // single instance is required
                 using var singleInstance = new SingleInstance(guid);
@@ -149,6 +150,7 @@ namespace ImageGlass {
                     _ = singleInstance.PassArgumentsToFirstInstanceAsync(Environment.GetCommandLineArgs());
                 }
             } //end check multi instances
+
             #endregion
 
         }
@@ -159,17 +161,21 @@ namespace ImageGlass {
 
             Action<string[]> UpdateForm = arguments => {
 
-                // Issues #774, #855 : if IG is normal or maximized, do nothing. If IG is minimized,
-                // restore it to previous state.
+                // Issues #774, #855 : if IG is normal or maximized, do nothing.
+                // If IG is minimized, restore it to previous state.
                 if (formMain.WindowState == FormWindowState.Minimized) {
                     ShowWindow(formMain.Handle, SW_RESTORE);
                 }
 
                 formMain.LoadFromParams(arguments);
+
+                // make sure form is visible, due to Configs.IsContinueRunningBackground
+                formMain.Visible = true;
             };
 
-            // KBR 20181009 Attempt to run a 2nd instance of IG when multi-instance turned off. Primary instance
-            // will crash if no file provided (e.g. by double-clicking on .EXE in explorer).
+            // KBR 20181009 Attempt to run a 2nd instance of IG when multi-instance turned off.
+            // Primary instance will crash if no file provided
+            // (e.g. by double-clicking on .EXE in explorer).
             var realCount = 0;
             foreach (var arg in e.Args) {
                 if (arg != null) {

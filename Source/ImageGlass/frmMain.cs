@@ -73,6 +73,7 @@ namespace ImageGlass {
             CornerApi.ApplyCorner(mnuMain.Handle);
             CornerApi.ApplyCorner(mnuContext.Handle);
             CornerApi.ApplyCorner(mnuShortcut.Handle);
+            CornerApi.ApplyCorner(mnuTray.Handle);
         }
 
 
@@ -109,8 +110,10 @@ namespace ImageGlass {
         // slideshow countdown interval
         private uint _slideshowCountdown = 5;
 
-        // slideshow image alert counter
+        // force exiting app without checking reasons
+        private bool _forceExitApp = false;
 
+        // slideshow image alert counter
         private uint _numberImgsChangeCount = Configs.NumberImagesNotify;
 
         private bool _shouldPlayImgChangeAlert = Configs.IsPlayImageChangeSound;
@@ -1567,6 +1570,7 @@ namespace ImageGlass {
                 mnuMainPageNav.Image =
                 mnuMainAbout.Image =
                 mnuMainSettings.Image =
+                mnuMainExitApplication.Image =
 
                 mnuMainExtractPages.Image =
 
@@ -2630,7 +2634,8 @@ namespace ImageGlass {
             // Modern UI menu renderer
             mnuMain.Renderer =
                 mnuShortcut.Renderer =
-                mnuContext.Renderer = new ModernMenuRenderer(th);
+                mnuContext.Renderer =
+                mnuTray.Renderer = new ModernMenuRenderer(th);
 
 
             // <toolbar_icon>
@@ -3218,11 +3223,45 @@ namespace ImageGlass {
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e) {
+            // continue running background
+            if (!_forceExitApp
+                && Configs.IsContinueRunningBackground
+                && e.CloseReason != CloseReason.WindowsShutDown
+                && e.CloseReason != CloseReason.TaskManagerClosing) {
+
+                // allow to exit if there are multiple instances running
+                if (Configs.IsAllowMultiInstances) {
+                    var processCount = Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName).Length;
+
+                    if (processCount > 1) {
+                        PrepareToExitApp();
+
+                        return;
+                    }
+                }
+
+                // cancel closing requests by user
+                e.Cancel = true;
+
+                // hide the app
+                Hide();
+
+                // show tray icon
+                tray.Visible = true;
+            }
+
+            // close the app
+            else {
+                PrepareToExitApp();
+            }
+        }
+
+        private void PrepareToExitApp() {
             try {
-                //stop the file system watcher
+                // release resource of the file system watcher
                 _fileWatcher.Dispose();
 
-                //clear temp files
+                // clear temp files
                 var tempDir = App.ConfigDir(PathType.Dir, Dir.Temporary);
                 if (Directory.Exists(tempDir)) {
                     Directory.Delete(tempDir, true);
@@ -3234,6 +3273,9 @@ namespace ImageGlass {
                 Configs.Write();
             }
             catch { }
+
+            tray.Visible = false;
+            tray.Dispose();
         }
 
         private void frmMain_Activated(object sender, EventArgs e) {
@@ -4000,6 +4042,14 @@ namespace ImageGlass {
             }
         }
 
+        private void Tray_MouseDoubleClick(object sender, MouseEventArgs e) {
+            // show frmMain
+            Show();
+
+            // hide tray icon
+            tray.Visible = false;
+        }
+
         #endregion
 
 
@@ -4234,6 +4284,19 @@ namespace ImageGlass {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainImageProperties));
             }
         }
+
+        private void MnuTray_Opening(object sender, CancelEventArgs e) {
+            var newMenuIconHeight = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
+            mnuTrayExit.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+
+            mnuTrayExit.Text = Configs.Language.Items[$"{Name}.{nameof(mnuMainExitApplication)}"];
+        }
+
+
+        private void MnuTrayExit_Click(object sender, EventArgs e) {
+            mnuMainExitApplication.PerformClick();
+        }
+
         #endregion
 
 
@@ -5313,6 +5376,8 @@ namespace ImageGlass {
         }
 
         private void mnuMainExitApplication_Click(object sender, EventArgs e) {
+            // make sure app is truly exitted
+            _forceExitApp = true;
             Application.Exit();
         }
 
@@ -5424,6 +5489,9 @@ namespace ImageGlass {
                 mnuItem.DropDownDirection = ToolStripDropDownDirection.Right;
             }
         }
+
+
+
 
 
 

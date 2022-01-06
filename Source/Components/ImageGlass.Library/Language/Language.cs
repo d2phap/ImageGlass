@@ -426,6 +426,8 @@ namespace ImageGlass.Library {
 
             #region Others
             Items.Add("frmSetting.lblHeadOthers", "Others"); //v4.0
+            Items.Add("frmSetting.chkStartWithOs", "Start with OS"); //v8.4
+            Items.Add("frmSetting.chkContinueRunningBackground", "Continue running background when the app is closed"); // v8.4
             Items.Add("frmSetting.chkAutoUpdate", "Check for update automatically");
             Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
             Items.Add("frmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final
