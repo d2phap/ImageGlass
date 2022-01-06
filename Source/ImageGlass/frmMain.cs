@@ -3271,17 +3271,19 @@ namespace ImageGlass {
             }
         }
 
-        private void ToggleAppVisibility(bool show) {
+        public void ToggleAppVisibility(bool show) {
+            tray.Visible = !show;
+
             if (show) {
                 WindowState = Configs.FrmMainWindowState;
                 ShowInTaskbar = true;
+                Visible = true;
             }
             else {
                 SaveConfig(true);
+                ShowInTaskbar = false;
+                Visible = false;
             }
-
-            Visible = show;
-            tray.Visible = !show;
         }
 
         private void PrepareToExitApp() {

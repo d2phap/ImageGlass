@@ -170,7 +170,7 @@ namespace ImageGlass {
                 formMain.LoadFromParams(arguments);
 
                 // make sure form is visible, due to Configs.IsContinueRunningBackground
-                formMain.Visible = true;
+                formMain.ToggleAppVisibility(true);
             };
 
             // KBR 20181009 Attempt to run a 2nd instance of IG when multi-instance turned off.
