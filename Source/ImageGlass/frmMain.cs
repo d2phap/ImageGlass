@@ -48,7 +48,6 @@ using ImageMagick;
 namespace ImageGlass {
     public partial class frmMain: Form {
         public frmMain() {
-            Local.OnImageChanged += Local_OnImageChanged; //Listening To Image change Event
             InitializeComponent();
 
             // Get DPI Scaling ratio
@@ -345,6 +344,7 @@ namespace ImageGlass {
             };
 
             // Track image loading progress
+            Local.ImageList.OnFinishLoadingImage -= ImageList_OnFinishLoadingImage;
             Local.ImageList.OnFinishLoadingImage += ImageList_OnFinishLoadingImage;
 
             // Find the index of current image
@@ -3207,6 +3207,9 @@ namespace ImageGlass {
         }
 
         private void frmMain_Load(object sender, EventArgs e) {
+            // Listening to image change event
+            Local.OnImageChanged += Local_OnImageChanged;
+
             // Load Other Configs
             LoadConfig(isLoadUI: false, isLoadOthers: true);
 
@@ -3222,7 +3225,7 @@ namespace ImageGlass {
             // Start thread to watching deleted files
             var thDeleteWorker = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadWatcherDeleteFiles)) {
                 Priority = System.Threading.ThreadPriority.BelowNormal,
-                IsBackground = true
+                IsBackground = true,
             };
             thDeleteWorker.Start();
         }
@@ -3283,6 +3286,23 @@ namespace ImageGlass {
                 SaveConfig(true);
                 ShowInTaskbar = false;
                 Visible = false;
+
+                // Dispose all garbage
+                Local.ImageList.Dispose();
+                Local.CurrentIndex = -1;
+                Local.CurrentPageCount = 0;
+                Local.CurrentPageIndex = 0;
+                Local.CurrentExif = null;
+                Local.CurrentColor = null;
+
+                thumbnailBar.Items.Clear();
+                picMain.Image = null;
+                SetStatusBar();
+
+                // Collect system garbage
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
             }
         }
 
