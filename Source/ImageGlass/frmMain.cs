@@ -73,10 +73,6 @@ namespace ImageGlass {
             CornerApi.ApplyCorner(mnuContext.Handle);
             CornerApi.ApplyCorner(mnuShortcut.Handle);
             CornerApi.ApplyCorner(mnuTray.Handle);
-
-            if (Environment.GetCommandLineArgs().Contains("-HideWindow")) {
-                tray.Visible = true;
-            }
         }
 
 
@@ -1169,16 +1165,25 @@ namespace ImageGlass {
 
             // ESC ultility
             #region ESC
-            if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)//ESC
+            if (e.KeyCode == Keys.Escape) // ESC
             {
-                //exit slideshow
-                if (Configs.IsSlideshow) {
-                    mnuMainSlideShowExit_Click(null, null);
+                if (!e.Control && !e.Alt) {
+                    if (!e.Shift) {
+                        // ESC: exit slideshow
+                        if (Configs.IsSlideshow) {
+                            mnuMainSlideShowExit_Click(null, null);
+                        }
+                        // ESC: Quit ImageGlass
+                        else if (Configs.IsPressESCToQuit) {
+                            Application.Exit();
+                        }
+                    }
+                    // Shift + ESC: Truly quit ImageGlass
+                    else if (Configs.IsPressESCToQuit) {
+                        mnuMainExitApplication.PerformClick();
+                    }
                 }
-                //Quit ImageGlass
-                else if (Configs.IsPressESCToQuit) {
-                    Application.Exit();
-                }
+
                 return;
             }
             #endregion
@@ -2797,9 +2802,10 @@ namespace ImageGlass {
                 // Windows Bound (Position + Size)
                 Bounds = Configs.FrmMainWindowBound;
 
-                // Windows state must be loaded after Windows Bound!
-                WindowState = Configs.FrmMainWindowState;
-
+                if (!_isHideWindow) {
+                    // Windows state must be loaded after Windows Bound!
+                    WindowState = Configs.FrmMainWindowState;
+                }
 
                 // Load Toolbar buttons
                 // *** Need to trigger after 'this.Bounds'
@@ -2865,6 +2871,14 @@ namespace ImageGlass {
                 // Load state of WindowFit mode setting
                 mnuWindowFit.Checked = Configs.IsWindowFit;
                 WindowFitMode();
+
+                // hide window
+                if (_isHideWindow) {
+                    tray.Visible = true;
+                    WindowState = FormWindowState.Minimized;
+                    ShowInTaskbar = false;
+                    Hide();
+                }
             }
             #endregion
 
@@ -3258,6 +3272,14 @@ namespace ImageGlass {
         }
 
         private void ToggleAppVisibility(bool show) {
+            if (show) {
+                WindowState = Configs.FrmMainWindowState;
+                ShowInTaskbar = true;
+            }
+            else {
+                SaveConfig(true);
+            }
+
             Visible = show;
             tray.Visible = !show;
         }
@@ -5448,7 +5470,12 @@ namespace ImageGlass {
                 }
 
                 // add hotkey to Exit menu
-                mnuMainExitApplication.ShortcutKeyDisplayString = Configs.IsPressESCToQuit ? "ESC" : "Alt+F4";
+                if (Configs.IsContinueRunningBackground) {
+                    mnuMainExitApplication.ShortcutKeyDisplayString = "Shift+ESC";
+                }
+                else {
+                    mnuMainExitApplication.ShortcutKeyDisplayString = Configs.IsPressESCToQuit ? "ESC" : "Alt+F4";
+                }
 
                 // Get EditApp for editing
                 UpdateEditAppInfoForMenu();
