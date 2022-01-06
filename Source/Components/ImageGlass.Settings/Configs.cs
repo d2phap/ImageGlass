@@ -67,7 +67,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets value of alert in Slideshow state
         /// </summary>
-        public static bool IsImageChangeAlert { get; set; } = false;
+        public static bool IsPlayImageChangeSound { get; set; } = false;
 
         /// <summary>
         /// Gets, sets value indicating whether the window is full screen or not
@@ -322,10 +322,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets the number of Images after which alert is played
         /// </summary>
-        public static uint NumerImageChangeAlert { get; set; } = 5;
-
-
-
+        public static uint NumberImagesNotify { get; set; } = 5;
 
         /// <summary>
         /// Gets, sets value of thumbnail dimension in pixel
@@ -589,6 +586,7 @@ namespace ImageGlass.Settings {
             IsSlideshow = Get<bool>(nameof(IsSlideshow), IsSlideshow);
             IsShowSlideshowCountdown = Get<bool>(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
             IsRandomSlideshowInterval = Get<bool>(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
+            IsPlayImageChangeSound = Get<bool>(nameof(IsPlayImageChangeSound), IsPlayImageChangeSound);
             IsFullScreen = Get<bool>(nameof(IsFullScreen), IsFullScreen);
             IsShowThumbnail = Get<bool>(nameof(IsShowThumbnail), IsShowThumbnail);
             IsCenterImage = Get<bool>(nameof(IsCenterImage), IsCenterImage);
@@ -667,6 +665,8 @@ namespace ImageGlass.Settings {
 
             ImageBoosterCachedCount = Get<uint>(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
             ImageBoosterCachedCount = Math.Max(0, Math.Min(ImageBoosterCachedCount, 10));
+
+            NumberImagesNotify = Get<uint>(nameof(NumberImagesNotify), NumberImagesNotify);
 
             ZoomLockValue = Get<double>(nameof(ZoomLockValue), ZoomLockValue);
             if (ZoomLockValue < 0) ZoomLockValue = 100f;
@@ -828,6 +828,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsSlideshow), IsSlideshow);
             Set(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
             Set(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
+            Set(nameof(IsPlayImageChangeSound), IsPlayImageChangeSound);
             Set(nameof(IsFullScreen), IsFullScreen);
             Set(nameof(IsShowThumbnail), IsShowThumbnail);
             Set(nameof(IsCenterImage), IsCenterImage);
@@ -885,6 +886,7 @@ namespace ImageGlass.Settings {
             Set(nameof(ThumbnailDimension), ThumbnailDimension);
             Set(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
             Set(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
+            Set(nameof(NumberImagesNotify), NumberImagesNotify);
             Set(nameof(ZoomLockValue), ZoomLockValue);
             Set(nameof(ToolbarIconHeight), ToolbarIconHeight);
             Set(nameof(ImageEditQuality), ImageEditQuality);

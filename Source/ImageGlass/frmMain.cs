@@ -111,9 +111,9 @@ namespace ImageGlass {
 
         // slideshow image alert counter
 
-        private uint _imgChangeAlertCounter = Configs.NumerImageChangeAlert;
+        private uint _numberImgsChangeCount = Configs.NumberImagesNotify;
 
-        private bool _checkimgChangeAlert = Configs.IsImageChangeAlert;
+        private bool _shouldPlayImgChangeAlert = Configs.IsPlayImageChangeSound;
 
         private readonly ToolFormManager _toolManager = new();
 
@@ -411,7 +411,7 @@ namespace ImageGlass {
         private void ImageList_OnFinishLoadingImage(object sender, EventArgs e) {
             // clear text when finishing
             ShowToastMsg("", 0);
-            
+
         }
 
         /// <summary>
@@ -856,16 +856,17 @@ namespace ImageGlass {
         /// Play sound on Image change
         /// </summary>
         private void Local_OnImageChanged(object sender, EventArgs e) {
-            if (_checkimgChangeAlert == true) {
-                if (_imgChangeAlertCounter == 0) {
+            if (_shouldPlayImgChangeAlert == true) {
+                if (_numberImgsChangeCount == 0) {
                     Local.PlaySound();
-                    _imgChangeAlertCounter = Configs.NumerImageChangeAlert;
-                    return;
+                    _numberImgsChangeCount = Configs.NumberImagesNotify;
                 }
-                else { _imgChangeAlertCounter -= 1; return; }
+                else {
+                    _numberImgsChangeCount -= 1;
+                }
             }
             else {
-                _checkimgChangeAlert = Configs.IsImageChangeAlert;
+                _shouldPlayImgChangeAlert = Configs.IsPlayImageChangeSound;
             }
         }
 
@@ -875,11 +876,11 @@ namespace ImageGlass {
         /// </summary>
         private void SetStatusBar(string text = "") {
             if (Configs.IsUseEmptyTitleBar) {
-                this.Text = "";
+                Text = "";
                 return;
             }
             else if (!string.IsNullOrWhiteSpace(text)) {
-                this.Text = text;
+                Text = text;
                 return;
             }
 
@@ -901,15 +902,15 @@ namespace ImageGlass {
                     catch { }
 
                     // (Image data)  |  {zoom}  |  {image size} - ImageGlass
-                    this.Text = $"{imgData}  |  {zoom}  |  {imgSize}  - {appName}";
+                    Text = $"{imgData}  |  {zoom}  |  {imgSize}  - {appName}";
                 }
                 else {
-                    this.Text = $"{imgData}  |  {zoom}  - {appName}";
+                    Text = $"{imgData}  |  {zoom}  - {appName}";
                 }
             }
             else {
                 if (Local.ImageList.Length < 1) {
-                    this.Text = appName;
+                    Text = appName;
                     return;
                 }
 
@@ -940,8 +941,8 @@ namespace ImageGlass {
                     // ex: C:\...\example.jpg
                     var basename = Path.GetFileName(filename);
 
-                    var charWidth = this.CreateGraphics().MeasureString("A", this.Font).Width;
-                    var textMaxLength = (this.Width - DPIScaling.Transform(400)) / charWidth;
+                    var charWidth = CreateGraphics().MeasureString("A", Font).Width;
+                    var textMaxLength = (Width - DPIScaling.Transform(400)) / charWidth;
                     var maxLength = (int)Math.Max(basename.Length + 8, textMaxLength);
 
                     filename = Helper.ShortenPath(filename, maxLength);
@@ -952,9 +953,9 @@ namespace ImageGlass {
                     Local.FPageNav.lblPageInfo.Text = "";
 
                     if (!isShowMoreData) // size and date not available
-                        this.Text = $"{filename}{SEP}{indexTotal}  - {appName}";
+                        Text = $"{filename}{SEP}{indexTotal}  - {appName}";
                     else
-                        this.Text = $"{filename}{SEP}{indexTotal}{SEP}{fileSize}  - {appName}";
+                        Text = $"{filename}{SEP}{indexTotal}{SEP}{fileSize}  - {appName}";
                 }
                 else {
                     zoom = $"{picMain.Zoom:F2}%";
@@ -977,10 +978,10 @@ namespace ImageGlass {
                         }
                         catch { }
 
-                        this.Text = $"{filename}{SEP}{indexTotal}{SEP}{pageInfo}{zoom}{SEP}{imgSize}{SEP}{fileSize}{exifInfo}  - {appName}";
+                        Text = $"{filename}{SEP}{indexTotal}{SEP}{pageInfo}{zoom}{SEP}{imgSize}{SEP}{fileSize}{exifInfo}  - {appName}";
                     }
                     else {
-                        this.Text = $"{filename}{SEP}{indexTotal}{SEP}{pageInfo}{zoom}{SEP}{fileSize}{exifInfo}  - {appName}";
+                        Text = $"{filename}{SEP}{indexTotal}{SEP}{pageInfo}{zoom}{SEP}{fileSize}{exifInfo}  - {appName}";
                     }
                 }
             }
@@ -1772,7 +1773,7 @@ namespace ImageGlass {
                 message: Configs.Language.Items[$"{Name}._RenameDialog"],
                 defaultValue: newName,
                 title: Configs.Language.Items[$"{Name}._RenameDialogText"],
-                topMost: this.TopMost,
+                topMost: TopMost,
                 isFilename: true) == DialogResult.OK) {
                 str = InputBox.Message;
             }
@@ -1810,7 +1811,7 @@ namespace ImageGlass {
             timer.Tick -= LoadingMessageTimer_Tick;
 
             if (Local.IsBusy) {
-                ShowToastMsg(Configs.Language.Items[$"{this.Name}._Loading"], 10000);
+                ShowToastMsg(Configs.Language.Items[$"{Name}._Loading"], 10000);
             }
 
             timer.Dispose();
@@ -1824,8 +1825,8 @@ namespace ImageGlass {
         private void ShowToastMsg(string msg, int duration) {
             if (!Configs.IsShowToast) return;
 
-            if (this.InvokeRequired) {
-                this.Invoke(new Action<string, int>(ShowToastMsg), msg, duration);
+            if (InvokeRequired) {
+                Invoke(new Action<string, int>(ShowToastMsg), msg, duration);
                 return;
             }
 
@@ -1995,7 +1996,7 @@ namespace ImageGlass {
             }
             catch (Exception ex) {
                 if (showError) {
-                    MessageBox.Show(string.Format(Configs.Language.Items[$"{this.Name}._SaveImageError"], filename) + "\r\n\r\n" + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(string.Format(Configs.Language.Items[$"{Name}._SaveImageError"], filename) + "\r\n\r\n" + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -2081,7 +2082,7 @@ namespace ImageGlass {
                     Image = new Bitmap(newMenuIconHeight, newMenuIconHeight)
                 };
 
-                mnu.Click += this.MnuViewChannelsItem_Click;
+                mnu.Click += MnuViewChannelsItem_Click;
                 mnuMainChannels.DropDown.Items.Add(mnu);
             }
         }
@@ -2304,7 +2305,7 @@ namespace ImageGlass {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             using var textBrush = new SolidBrush(Color.FromArgb(150, Theme.InvertBlackAndWhiteColor(picMain.BackColor)));
-            var font = new Font(this.Font.FontFamily, 30f);
+            var font = new Font(Font.FontFamily, 30f);
             var fontSize = e.Graphics.MeasureString(text, font);
 
             // calculate background size
@@ -2393,7 +2394,7 @@ namespace ImageGlass {
                     Local.FColorPicker.Show(this);
                 }
 
-                this.Activate();
+                Activate();
             }
             else {
                 // Close Color picker tool
@@ -2430,7 +2431,7 @@ namespace ImageGlass {
                     SetStatusBar();
                 }
 
-                this.Activate();
+                Activate();
             }
             else {
                 if (Local.FPageNav != null) {
@@ -2470,7 +2471,7 @@ namespace ImageGlass {
                     Local.FCrop.Show(this);
                 }
 
-                this.Activate();
+                Activate();
             }
             else {
                 if (Local.FCrop != null) {
@@ -2536,7 +2537,7 @@ namespace ImageGlass {
         /// <param name="e"></param>
         private void PaintNavigationRegions(PaintEventArgs e) {
             // get current cursor position on frmMain
-            var pos = this.PointToClient(MousePosition);
+            var pos = PointToClient(MousePosition);
             var navRegion = TestCursorHitNavRegions(pos);
 
             // check if the hotspot hit
@@ -2745,7 +2746,7 @@ namespace ImageGlass {
                 testWindowBound.Inflate(-10, -10);
 
                 if (Helpers.IsVisibleOnAnyScreen(testWindowBound)) {
-                    this.Bounds = Configs.FrmMainWindowBound;
+                    Bounds = Configs.FrmMainWindowBound;
                 }
                 else {
                     // The saved position no longer exists (e.g. 2d monitor removed).
@@ -2785,10 +2786,10 @@ namespace ImageGlass {
                 // the OnLoad event in order to 'take'.
 
                 // Windows Bound (Position + Size)
-                this.Bounds = Configs.FrmMainWindowBound;
+                Bounds = Configs.FrmMainWindowBound;
 
                 // Windows state must be loaded after Windows Bound!
-                this.WindowState = Configs.FrmMainWindowState;
+                WindowState = Configs.FrmMainWindowState;
 
 
                 // Load Toolbar buttons
@@ -2848,7 +2849,7 @@ namespace ImageGlass {
 
 
                 // Load state of IsWindowAlwaysOnTop value 
-                this.TopMost = mnuMainAlwaysOnTop.Checked = Configs.IsWindowAlwaysOnTop;
+                TopMost = mnuMainAlwaysOnTop.Checked = Configs.IsWindowAlwaysOnTop;
 
                 // Load state of WindowFit mode setting
                 mnuWindowFit.Checked = Configs.IsWindowFit;
@@ -2868,14 +2869,14 @@ namespace ImageGlass {
             // don't save Bound if in Full screen and SlideShow mode
             if (!Configs.IsFullScreen && !Configs.IsSlideshow) {
                 if (WindowState == FormWindowState.Normal) {
-                    Configs.FrmMainWindowBound = this.Bounds;
+                    Configs.FrmMainWindowBound = Bounds;
                 }
                 else if (WindowState == FormWindowState.Maximized) {
                     // if moving a maximized window from a screen to other screen
                     // and keep its maximized state, we need to save the "Normal"
                     // location so that it restores to correct screen in Normal state
                     // in the next run.
-                    var newLocation = this.Location;
+                    var newLocation = Location;
                     newLocation.Offset(110, 110);
 
                     Configs.FrmMainWindowBound = new Rectangle(
@@ -2885,7 +2886,7 @@ namespace ImageGlass {
             }
 
             // Windows State----------------------------------------------
-            Configs.FrmMainWindowState = this.WindowState != FormWindowState.Minimized ? this.WindowState : FormWindowState.Normal;
+            Configs.FrmMainWindowState = WindowState != FormWindowState.Minimized ? WindowState : FormWindowState.Normal;
 
             if (windowStateOnly) {
                 return;
@@ -2940,9 +2941,9 @@ namespace ImageGlass {
                 }
 
                 if (changeWindowState) {
-                    this.FormBorderStyle = FormBorderStyle.None;
-                    this.WindowState = FormWindowState.Normal;
-                    this.Bounds = Screen.FromControl(this).Bounds;
+                    FormBorderStyle = FormBorderStyle.None;
+                    WindowState = FormWindowState.Normal;
+                    Bounds = Screen.FromControl(this).Bounds;
                 }
 
                 // Hide toolbar
@@ -2979,15 +2980,15 @@ namespace ImageGlass {
                 picMain.BackColor = Configs.BackgroundColor;
 
                 if (changeWindowState) {
-                    this.FormBorderStyle = FormBorderStyle.Sizable;
+                    FormBorderStyle = FormBorderStyle.Sizable;
 
                     // windows state
                     if (Configs.FrmMainWindowState != FormWindowState.Minimized) {
-                        this.WindowState = Configs.FrmMainWindowState;
+                        WindowState = Configs.FrmMainWindowState;
                     }
 
                     // Windows Bound (Position + Size)
-                    this.Bounds = Configs.FrmMainWindowBound;
+                    Bounds = Configs.FrmMainWindowBound;
                 }
 
                 // restore frameless state
@@ -3137,7 +3138,7 @@ namespace ImageGlass {
                 if ((int)m.Result == 0x01) // HTCLIENT
                 {
                     var screenPoint = new Point(m.LParam.ToInt32());
-                    var clientPoint = this.PointToClient(screenPoint);
+                    var clientPoint = PointToClient(screenPoint);
 
                     const int RESIZE_HANDLE_SIZE = 10;
 
@@ -3219,7 +3220,7 @@ namespace ImageGlass {
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e) {
             try {
                 //stop the file system watcher
-                this._fileWatcher.Dispose();
+                _fileWatcher.Dispose();
 
                 //clear temp files
                 var tempDir = App.ConfigDir(PathType.Dir, Dir.Temporary);
@@ -3650,8 +3651,8 @@ namespace ImageGlass {
         #region File System Watcher events
 
         private void FileWatcher_OnRenamed(object sender, FileChangedEvent e) {
-            if (this.InvokeRequired) {
-                this.Invoke(new Action<object, FileChangedEvent>(FileWatcher_OnRenamed), sender, e);
+            if (InvokeRequired) {
+                Invoke(new Action<object, FileChangedEvent>(FileWatcher_OnRenamed), sender, e);
                 return;
             }
 
@@ -3734,7 +3735,7 @@ namespace ImageGlass {
             // final ".jpg" cannot exist in the ImageList. Fire this off to the "rename" logic
             // so the new file is correctly added. [Could it be the "created" instead?]
             if (imgIndex == -1) {
-                this.Invoke(new Action<object, FileChangedEvent>(FileWatcher_OnRenamed), sender, e);
+                Invoke(new Action<object, FileChangedEvent>(FileWatcher_OnRenamed), sender, e);
                 return;
             }
 
@@ -3767,7 +3768,7 @@ namespace ImageGlass {
             }
 
             // add to queue list for deleting
-            this._queueListForDeleting.Add(e.FullPath);
+            _queueListForDeleting.Add(e.FullPath);
         }
 
         private void FileWatcher_AddNewFileAction(string newFilename) {
@@ -3807,8 +3808,8 @@ namespace ImageGlass {
         /// </summary>
         /// <param name="filename"></param>
         private void DoDeleteFiles(string filename) {
-            if (this.InvokeRequired) {
-                this.Invoke(new Action<string>(DoDeleteFiles), filename);
+            if (InvokeRequired) {
+                Invoke(new Action<string>(DoDeleteFiles), filename);
                 return;
             }
 
@@ -3960,7 +3961,7 @@ namespace ImageGlass {
         private void picMain_MouseMove(object sender, MouseEventArgs e) {
             #region Navigation regions
             // get current cursor position on frmMain
-            var pos = this.PointToClient(MousePosition);
+            var pos = PointToClient(MousePosition);
             var navRegion = TestCursorHitNavRegions(pos);
 
             // get the current nav type
@@ -4555,7 +4556,7 @@ namespace ImageGlass {
                 message: Configs.Language.Items[$"{Name}._GotoDialogText"],
                 defaultValue: value,
                 isNumberOnly: true,
-                topMost: this.TopMost,
+                topMost: TopMost,
                 filterOnKeyPressed: true) == DialogResult.OK) {
                 value = InputBox.Message;
             }
@@ -4726,7 +4727,7 @@ namespace ImageGlass {
             if (picMain.Image == null) return;
 
             if (picMain.CanAnimate) {
-                ShowToastMsg(Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                ShowToastMsg(Configs.Language.Items[$"{Name}._CannotRotateAnimatedFile"], 1000);
                 return;
             }
 
@@ -4744,7 +4745,7 @@ namespace ImageGlass {
             if (picMain.Image == null) return;
 
             if (picMain.CanAnimate) {
-                ShowToastMsg(Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                ShowToastMsg(Configs.Language.Items[$"{Name}._CannotRotateAnimatedFile"], 1000);
                 return;
             }
 
@@ -4762,7 +4763,7 @@ namespace ImageGlass {
             if (picMain.Image == null) return;
 
             if (picMain.CanAnimate) {
-                ShowToastMsg(Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                ShowToastMsg(Configs.Language.Items[$"{Name}._CannotRotateAnimatedFile"], 1000);
                 return;
             }
 
@@ -4778,7 +4779,7 @@ namespace ImageGlass {
             if (picMain.Image == null) return;
 
             if (picMain.CanAnimate) {
-                ShowToastMsg(Configs.Language.Items[$"{this.Name}._CannotRotateAnimatedFile"], 1000);
+                ShowToastMsg(Configs.Language.Items[$"{Name}._CannotRotateAnimatedFile"], 1000);
                 return;
             }
 
@@ -4817,7 +4818,7 @@ namespace ImageGlass {
                 message: Configs.Language.Items[$"{Name}.{nameof(mnuCustomZoom)}._Text"],
                 defaultValue: picMain.Zoom.ToString(),
                 isNumberOnly: true,
-                topMost: this.TopMost,
+                topMost: TopMost,
                 filterOnKeyPressed: true) == DialogResult.OK) {
                 picMain.Zoom = Convert.ToSingle(InputBox.Message);
                 picMain.CenterToImage();
@@ -5213,20 +5214,20 @@ namespace ImageGlass {
             Control[] frameLessMovers = { picMain, toolMain };
 
             if (Configs.IsWindowFrameless) {
-                this.FormBorderStyle = FormBorderStyle.None;
+                FormBorderStyle = FormBorderStyle.None;
 
                 // Enable frameless movable
-                this._movableForm.Enable();
-                this._movableForm.Enable(frameLessMovers);
+                _movableForm.Enable();
+                _movableForm.Enable(frameLessMovers);
 
                 ShowToastMsg(Configs.Language.Items[$"{Name}._Frameless"], 3000);
             }
             else {
                 // Disable frameless movable
-                this._movableForm.Disable();
-                this._movableForm.Disable(frameLessMovers);
+                _movableForm.Disable();
+                _movableForm.Disable(frameLessMovers);
 
-                this.FormBorderStyle = FormBorderStyle.Sizable;
+                FormBorderStyle = FormBorderStyle.Sizable;
             }
         }
 
@@ -5260,13 +5261,13 @@ namespace ImageGlass {
             }
 
             if (!Local.FExifTool.Visible) {
-                Local.FExifTool.TopMost = this.TopMost;
+                Local.FExifTool.TopMost = TopMost;
                 Local.FExifTool.Show();
             }
 
             if (Configs.IsExifToolAlwaysOnTop) {
                 Local.FExifTool.Owner = this;
-                this.Activate();
+                Activate();
             }
         }
 
@@ -5277,14 +5278,14 @@ namespace ImageGlass {
 
             Local.ForceUpdateActions = ForceUpdateActions.NONE;
             Local.FSetting.MainInstance = this;
-            Local.FSetting.TopMost = this.TopMost;
+            Local.FSetting.TopMost = TopMost;
             Local.FSetting.Show();
             Local.FSetting.Activate();
         }
 
         private void mnuMainAbout_Click(object sender, EventArgs e) {
             var f = new frmAbout {
-                TopMost = this.TopMost
+                TopMost = TopMost
             };
             f.ShowDialog();
         }

@@ -209,19 +209,15 @@ namespace ImageGlass {
         /// <summary>
         /// Raise an event when the viewing image changed
         /// </summary>
-
         public static void RaiseImageChangedEvent() {
-            var handler = OnImageChanged;
-            handler?.Invoke(null, EventArgs.Empty);
+            OnImageChanged?.Invoke(null, EventArgs.Empty);
         }
 
         /// <summary>
-        /// Play Sound
+        /// Play sound
         /// </summary>
-
         public static void PlaySound() {
             System.Media.SystemSounds.Asterisk.Play();
-            
         }
 
     }

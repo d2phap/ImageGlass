@@ -230,6 +230,8 @@ namespace ImageGlass {
             chkUseFileExplorerSortOrder.Text = lang[$"{Name}.{nameof(chkUseFileExplorerSortOrder)}"];
             chkGroupByDirectory.Text = lang[$"{Name}.{nameof(chkGroupByDirectory)}"];
             lblImageBoosterCachedCount.Text = lang[$"{Name}.{nameof(lblImageBoosterCachedCount)}"];
+            chkIsPlayImageChangeSound.Text = lang[$"{Name}.{nameof(chkIsPlayImageChangeSound)}"];
+            lblNumberImagesNotify.Text = lang[$"{Name}.{nameof(lblNumberImagesNotify)}"];
 
             lblColorManagement.Text = lang[$"{Name}.{nameof(lblColorManagement)}"];//
             chkApplyColorProfile.Text = lang[$"{Name}.{nameof(chkApplyColorProfile)}"];
@@ -257,8 +259,7 @@ namespace ImageGlass {
             chkShowSlideshowCountdown.Text = lang[$"{Name}.{nameof(chkShowSlideshowCountdown)}"];
             lblSlideshowIntervalTo.Text = lang[$"{Name}.{nameof(lblSlideshowIntervalTo)}"];
             numSlideShowInterval_ValueChanged(null, null); // format interval value
-           // chkImgSound.Text = lang[$"{Name}.{nameof(chkImgSound)}"];
-            
+
             lblHeadFullScreen.Text = lang[$"{Name}.{nameof(lblHeadFullScreen)}"];
             chkHideToolbarInFullScreen.Text = lang[$"{Name}.{nameof(chkHideToolbarInFullScreen)}"];
             chkHideThumbnailBarInFullScreen.Text = lang[$"{Name}.{nameof(chkHideThumbnailBarInFullScreen)}"];
@@ -338,16 +339,16 @@ namespace ImageGlass {
             #endregion
 
             #region THEME TAB
-            lblInstalledThemes.Text = string.Format(lang[$"{this.Name}.{nameof(lblInstalledThemes)}"], "");
-            lnkThemeDownload.Text = lang[$"{this.Name}.{nameof(lnkThemeDownload)}"];
+            lblInstalledThemes.Text = string.Format(lang[$"{Name}.{nameof(lblInstalledThemes)}"], "");
+            lnkThemeDownload.Text = lang[$"{Name}.{nameof(lnkThemeDownload)}"];
 
-            btnThemeRefresh.Text = lang[$"{this.Name}.{nameof(btnThemeRefresh)}"];
-            btnThemeInstall.Text = lang[$"{this.Name}.{nameof(btnThemeInstall)}"];
-            btnThemeUninstall.Text = lang[$"{this.Name}.{nameof(btnThemeUninstall)}"];
-            btnThemeSaveAs.Text = lang[$"{this.Name}.{nameof(btnThemeSaveAs)}"];
-            btnThemeFolderOpen.Text = lang[$"{this.Name}.{nameof(btnThemeFolderOpen)}"];
+            btnThemeRefresh.Text = lang[$"{Name}.{nameof(btnThemeRefresh)}"];
+            btnThemeInstall.Text = lang[$"{Name}.{nameof(btnThemeInstall)}"];
+            btnThemeUninstall.Text = lang[$"{Name}.{nameof(btnThemeUninstall)}"];
+            btnThemeSaveAs.Text = lang[$"{Name}.{nameof(btnThemeSaveAs)}"];
+            btnThemeFolderOpen.Text = lang[$"{Name}.{nameof(btnThemeFolderOpen)}"];
 
-            btnThemeApply.Text = lang[$"{this.Name}.{nameof(btnThemeApply)}"];
+            btnThemeApply.Text = lang[$"{Name}.{nameof(btnThemeApply)}"];
 
             #endregion
 
@@ -556,6 +557,10 @@ namespace ImageGlass {
             // Set value of chkGroupByDirectory
             chkGroupByDirectory.Checked = Configs.IsGroupImagesByDirectory;
 
+            // Number of Images after which sound is played
+            chkIsPlayImageChangeSound.Checked = Configs.IsPlayImageChangeSound;
+            numNumberImagesNotify.Value = Configs.NumberImagesNotify;
+
             #region Load items of cmbImageOrder
             var loadingOrderList = Enum.GetNames(typeof(ImageOrderBy));
             cmbImageOrder.Items.Clear();
@@ -633,10 +638,10 @@ namespace ImageGlass {
             cmbMouseWheelAlt.Items.Clear();
 
             foreach (var item in Enum.GetNames(typeof(MouseWheelActions))) {
-                cmbMouseWheel.Items.Add(Configs.Language.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
-                cmbMouseWheelCtrl.Items.Add(Configs.Language.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
-                cmbMouseWheelShift.Items.Add(Configs.Language.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
-                cmbMouseWheelAlt.Items.Add(Configs.Language.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheel.Items.Add(Configs.Language.Items[$"{Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheelCtrl.Items.Add(Configs.Language.Items[$"{Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheelShift.Items.Add(Configs.Language.Items[$"{Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheelAlt.Items.Add(Configs.Language.Items[$"{Name}.cmbMouseWheel._{item}"]);
             }
 
             //Get value of cmbMouseWheel
@@ -659,7 +664,7 @@ namespace ImageGlass {
             var zoomOptimizationList = Enum.GetNames(typeof(ZoomOptimizationMethods));
             cmbZoomOptimization.Items.Clear();
             foreach (var item in zoomOptimizationList) {
-                cmbZoomOptimization.Items.Add(Configs.Language.Items[$"{this.Name}.cmbZoomOptimization._{item}"]);
+                cmbZoomOptimization.Items.Add(Configs.Language.Items[$"{Name}.cmbZoomOptimization._{item}"]);
             }
 
             // Get value of cmbZoomOptimization
@@ -688,13 +693,6 @@ namespace ImageGlass {
             numSlideShowInterval.Value = Configs.SlideShowInterval;
             numSlideshowIntervalTo.Value = Configs.SlideShowIntervalTo;
             numSlideShowInterval_ValueChanged(null, null); // format interval value
-
-            //Set value of Sound in Slide Show
-            chkImgAlert.Checked = Configs.IsImageChangeAlert;
-
-            //Set number of Images after which sound is played
-            numImageSound.Value = Configs.NumerImageChangeAlert;
-
 
             // Full screen configs 
             chkHideToolbarInFullScreen.Checked = Configs.IsHideToolbarInFullscreen;
@@ -871,7 +869,7 @@ namespace ImageGlass {
                 AppName = apps[0].AppName,
                 AppPath = apps[0].AppPath,
                 AppArguments = apps[0].AppArguments,
-                TopMost = this.TopMost
+                TopMost = TopMost
             };
 
             if (frm.ShowDialog() == DialogResult.OK) {
@@ -888,7 +886,7 @@ namespace ImageGlass {
         private void btnEditEditAllExt_Click(object sender, EventArgs e) {
             using var frm = new frmEditApp() {
                 FileExtension = $"<{string.Format(Configs.Language.Items[$"{Name}._allExtensions"])}>",
-                TopMost = this.TopMost
+                TopMost = TopMost
             };
             if (frm.ShowDialog() == DialogResult.OK) {
                 foreach (var assoc in Configs.EditApps) {
@@ -1092,7 +1090,7 @@ namespace ImageGlass {
         private void btnAddNewExt_Click(object sender, EventArgs e) {
             using var frm = new frmAddNewFormat() {
                 FileFormat = ".svg",
-                TopMost = this.TopMost
+                TopMost = TopMost
             };
             if (frm.ShowDialog() == DialogResult.OK) {
                 // If the ext exist
@@ -1173,7 +1171,7 @@ namespace ImageGlass {
             // Load toolbar position
             cmbToolbarPosition.Items.Clear();
             foreach (var pos in Enum.GetNames(typeof(ToolbarPosition))) {
-                cmbToolbarPosition.Items.Add(lang[$"{this.Name}.cmbToolbarPosition._{pos}"]);
+                cmbToolbarPosition.Items.Add(lang[$"{Name}.cmbToolbarPosition._{pos}"]);
             }
 
             cmbToolbarPosition.SelectedIndex = (int)Configs.ToolbarPosition;
@@ -1546,7 +1544,7 @@ namespace ImageGlass {
         private async Task RefreshThemeListAsync() {
             lvTheme.Items.Clear();
             lvTheme.Enabled = false;
-            this.Cursor = Cursors.WaitCursor;
+            Cursor = Cursors.WaitCursor;
 
             // get default theme dir
             var defaultThemePath = App.StartUpDir(Dir.Themes, Constants.DEFAULT_THEME, Theme.CONFIG_FILE);
@@ -1580,7 +1578,7 @@ namespace ImageGlass {
 
 
             lvTheme.Enabled = true;
-            this.Cursor = Cursors.Default;
+            Cursor = Cursors.Default;
 
             lblInstalledThemes.Text = string.Format(Configs.Language.Items[$"{Name}.lblInstalledThemes"], lvTheme.Items.Count.ToString());
         }
@@ -1825,13 +1823,13 @@ namespace ImageGlass {
         #region ACTION BUTTONS
         private void btnCancel_Click(object sender, EventArgs e) {
             //close without saving
-            this.Close();
+            Close();
         }
 
         private void btnSave_Click(object sender, EventArgs e) {
             // Save and close
             if (ApplySettings()) {
-                this.Close();
+                Close();
             }
         }
 
@@ -1932,6 +1930,10 @@ namespace ImageGlass {
 
             Configs.IsUseRawThumbnail =
                 Local.ImageList.UseRawThumbnail = chkIsUseRawThumbnail.Checked;
+
+            // image changes alert
+            Configs.IsPlayImageChangeSound = chkIsPlayImageChangeSound.Checked;
+            Configs.NumberImagesNotify = (uint)numNumberImagesNotify.Value;
 
             #region ImageLoadingOrder: MainFormForceUpdateAction.IMAGE_LIST
             newInt = cmbImageOrder.SelectedIndex;
@@ -2061,10 +2063,6 @@ namespace ImageGlass {
             Configs.SlideShowInterval = (uint)numSlideShowInterval.Value;
             Configs.SlideShowIntervalTo = (uint)numSlideshowIntervalTo.Value;
 
-            //Sound In Slideshow
-
-            Configs.IsImageChangeAlert=chkImgAlert.Checked;
-            Configs.NumerImageChangeAlert=(uint)numImageSound.Value;
             // Full screen
             Configs.IsHideToolbarInFullscreen = chkHideToolbarInFullScreen.Checked;
             Configs.IsHideThumbnailBarInFullscreen = chkHideThumbnailBarInFullScreen.Checked;
