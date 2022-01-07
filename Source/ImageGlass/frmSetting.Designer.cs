@@ -30,9 +30,9 @@ namespace ImageGlass
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(".123");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(".abc");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(".def");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(".123");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(".abc");
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(".def");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSetting));
             this.imglTheme = new System.Windows.Forms.ImageList(this.components);
             this.lblLanguage = new System.Windows.Forms.Label();
@@ -242,6 +242,7 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.picStoreApp = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
@@ -280,6 +281,7 @@ namespace ImageGlass
             this.tabPrivacy.SuspendLayout();
             this.tblayout.SuspendLayout();
             this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picStoreApp)).BeginInit();
             this.SuspendLayout();
             // 
             // imglTheme
@@ -393,6 +395,7 @@ namespace ImageGlass
             this.sp1.SplitterDistance = 224;
             this.sp1.TabIndex = 17;
             this.sp1.TabStop = false;
+            this.sp1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.sp1_SplitterMoved);
             // 
             // tableTabHeaders
             // 
@@ -633,7 +636,7 @@ namespace ImageGlass
             this.chkStartWithOs.Margin = new System.Windows.Forms.Padding(1);
             this.chkStartWithOs.Name = "chkStartWithOs";
             this.chkStartWithOs.Size = new System.Drawing.Size(263, 28);
-            this.chkStartWithOs.TabIndex = 49;
+            this.chkStartWithOs.TabIndex = 13;
             this.chkStartWithOs.Text = "[Start with operating system]";
             this.chkStartWithOs.UseVisualStyleBackColor = true;
             // 
@@ -645,7 +648,7 @@ namespace ImageGlass
             this.chkContinueRunningBackground.Margin = new System.Windows.Forms.Padding(1);
             this.chkContinueRunningBackground.Name = "chkContinueRunningBackground";
             this.chkContinueRunningBackground.Size = new System.Drawing.Size(465, 28);
-            this.chkContinueRunningBackground.TabIndex = 48;
+            this.chkContinueRunningBackground.TabIndex = 14;
             this.chkContinueRunningBackground.Text = "[Continue running background when the app is closed]";
             this.chkContinueRunningBackground.UseVisualStyleBackColor = true;
             // 
@@ -680,7 +683,7 @@ namespace ImageGlass
             this.chkShowToast.Margin = new System.Windows.Forms.Padding(1);
             this.chkShowToast.Name = "chkShowToast";
             this.chkShowToast.Size = new System.Drawing.Size(210, 28);
-            this.chkShowToast.TabIndex = 18;
+            this.chkShowToast.TabIndex = 20;
             this.chkShowToast.Text = "[Show toast message]";
             this.chkShowToast.UseVisualStyleBackColor = true;
             // 
@@ -692,7 +695,7 @@ namespace ImageGlass
             this.chkCenterWindowFit.Margin = new System.Windows.Forms.Padding(1);
             this.chkCenterWindowFit.Name = "chkCenterWindowFit";
             this.chkCenterWindowFit.Size = new System.Drawing.Size(396, 28);
-            this.chkCenterWindowFit.TabIndex = 17;
+            this.chkCenterWindowFit.TabIndex = 19;
             this.chkCenterWindowFit.Text = "[Auto center the window in Window Fit mode]";
             this.chkCenterWindowFit.UseVisualStyleBackColor = true;
             // 
@@ -832,7 +835,7 @@ namespace ImageGlass
             this.chkConfirmationDelete.Margin = new System.Windows.Forms.Padding(1);
             this.chkConfirmationDelete.Name = "chkConfirmationDelete";
             this.chkConfirmationDelete.Size = new System.Drawing.Size(312, 28);
-            this.chkConfirmationDelete.TabIndex = 16;
+            this.chkConfirmationDelete.TabIndex = 18;
             this.chkConfirmationDelete.Text = "Display Delete confirmation dialog ";
             this.chkConfirmationDelete.UseVisualStyleBackColor = true;
             // 
@@ -844,7 +847,7 @@ namespace ImageGlass
             this.chkAllowMultiInstances.Margin = new System.Windows.Forms.Padding(1);
             this.chkAllowMultiInstances.Name = "chkAllowMultiInstances";
             this.chkAllowMultiInstances.Size = new System.Drawing.Size(349, 28);
-            this.chkAllowMultiInstances.TabIndex = 14;
+            this.chkAllowMultiInstances.TabIndex = 16;
             this.chkAllowMultiInstances.Text = "Allow multiple instances of the program";
             this.chkAllowMultiInstances.UseVisualStyleBackColor = true;
             // 
@@ -856,7 +859,7 @@ namespace ImageGlass
             this.chkESCToQuit.Margin = new System.Windows.Forms.Padding(1);
             this.chkESCToQuit.Name = "chkESCToQuit";
             this.chkESCToQuit.Size = new System.Drawing.Size(330, 28);
-            this.chkESCToQuit.TabIndex = 15;
+            this.chkESCToQuit.TabIndex = 17;
             this.chkESCToQuit.Text = "Allow to press ESC to quit application";
             this.chkESCToQuit.UseVisualStyleBackColor = true;
             // 
@@ -902,7 +905,7 @@ namespace ImageGlass
             this.chkAutoUpdate.Margin = new System.Windows.Forms.Padding(1);
             this.chkAutoUpdate.Name = "chkAutoUpdate";
             this.chkAutoUpdate.Size = new System.Drawing.Size(283, 28);
-            this.chkAutoUpdate.TabIndex = 13;
+            this.chkAutoUpdate.TabIndex = 15;
             this.chkAutoUpdate.Text = "Check for update automatically";
             this.chkAutoUpdate.UseVisualStyleBackColor = true;
             // 
@@ -1007,7 +1010,7 @@ namespace ImageGlass
             this.chkHideThumbnailBarInFullScreen.Margin = new System.Windows.Forms.Padding(1);
             this.chkHideThumbnailBarInFullScreen.Name = "chkHideThumbnailBarInFullScreen";
             this.chkHideThumbnailBarInFullScreen.Size = new System.Drawing.Size(203, 28);
-            this.chkHideThumbnailBarInFullScreen.TabIndex = 45;
+            this.chkHideThumbnailBarInFullScreen.TabIndex = 47;
             this.chkHideThumbnailBarInFullScreen.Text = "[Hide thumbnail bar]";
             this.chkHideThumbnailBarInFullScreen.UseVisualStyleBackColor = true;
             // 
@@ -1029,7 +1032,7 @@ namespace ImageGlass
             this.chkHideToolbarInFullScreen.Margin = new System.Windows.Forms.Padding(1);
             this.chkHideToolbarInFullScreen.Name = "chkHideToolbarInFullScreen";
             this.chkHideToolbarInFullScreen.Size = new System.Drawing.Size(150, 28);
-            this.chkHideToolbarInFullScreen.TabIndex = 44;
+            this.chkHideToolbarInFullScreen.TabIndex = 46;
             this.chkHideToolbarInFullScreen.Text = "[Hide toolbar]";
             this.chkHideToolbarInFullScreen.UseVisualStyleBackColor = true;
             // 
@@ -1090,7 +1093,7 @@ namespace ImageGlass
             0});
             this.numSlideShowInterval.Name = "numSlideShowInterval";
             this.numSlideShowInterval.Size = new System.Drawing.Size(107, 30);
-            this.numSlideShowInterval.TabIndex = 42;
+            this.numSlideShowInterval.TabIndex = 44;
             this.numSlideShowInterval.Value = new decimal(new int[] {
             1,
             0,
@@ -1125,7 +1128,7 @@ namespace ImageGlass
             0});
             this.numSlideshowIntervalTo.Name = "numSlideshowIntervalTo";
             this.numSlideshowIntervalTo.Size = new System.Drawing.Size(107, 30);
-            this.numSlideshowIntervalTo.TabIndex = 43;
+            this.numSlideshowIntervalTo.TabIndex = 45;
             this.numSlideshowIntervalTo.Value = new decimal(new int[] {
             1,
             0,
@@ -1142,7 +1145,7 @@ namespace ImageGlass
             this.chkRandomSlideshowInterval.Margin = new System.Windows.Forms.Padding(1);
             this.chkRandomSlideshowInterval.Name = "chkRandomSlideshowInterval";
             this.chkRandomSlideshowInterval.Size = new System.Drawing.Size(209, 28);
-            this.chkRandomSlideshowInterval.TabIndex = 41;
+            this.chkRandomSlideshowInterval.TabIndex = 43;
             this.chkRandomSlideshowInterval.Text = "[Use random interval]";
             this.chkRandomSlideshowInterval.UseVisualStyleBackColor = true;
             this.chkRandomSlideshowInterval.CheckedChanged += new System.EventHandler(this.chkRandomSlideshowInterval_CheckedChanged);
@@ -1155,7 +1158,7 @@ namespace ImageGlass
             this.chkShowSlideshowCountdown.Margin = new System.Windows.Forms.Padding(1);
             this.chkShowSlideshowCountdown.Name = "chkShowSlideshowCountdown";
             this.chkShowSlideshowCountdown.Size = new System.Drawing.Size(232, 28);
-            this.chkShowSlideshowCountdown.TabIndex = 40;
+            this.chkShowSlideshowCountdown.TabIndex = 42;
             this.chkShowSlideshowCountdown.Text = "[Show countdown timer]";
             this.chkShowSlideshowCountdown.UseVisualStyleBackColor = true;
             // 
@@ -1202,7 +1205,7 @@ namespace ImageGlass
             this.cmbImageBoosterCachedCount.Margin = new System.Windows.Forms.Padding(1);
             this.cmbImageBoosterCachedCount.Name = "cmbImageBoosterCachedCount";
             this.cmbImageBoosterCachedCount.Size = new System.Drawing.Size(259, 31);
-            this.cmbImageBoosterCachedCount.TabIndex = 25;
+            this.cmbImageBoosterCachedCount.TabIndex = 27;
             // 
             // txtZoomLevels
             // 
@@ -1212,7 +1215,7 @@ namespace ImageGlass
             this.txtZoomLevels.Name = "txtZoomLevels";
             this.txtZoomLevels.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtZoomLevels.Size = new System.Drawing.Size(529, 81);
-            this.txtZoomLevels.TabIndex = 35;
+            this.txtZoomLevels.TabIndex = 37;
             // 
             // lblZoomLevels
             // 
@@ -1237,7 +1240,7 @@ namespace ImageGlass
             this.cmbImageOrderType.Margin = new System.Windows.Forms.Padding(1);
             this.cmbImageOrderType.Name = "cmbImageOrderType";
             this.cmbImageOrderType.Size = new System.Drawing.Size(259, 31);
-            this.cmbImageOrderType.TabIndex = 23;
+            this.cmbImageOrderType.TabIndex = 25;
             // 
             // lnkColorProfilePath
             // 
@@ -1249,7 +1252,7 @@ namespace ImageGlass
             this.lnkColorProfilePath.Location = new System.Drawing.Point(38, 713);
             this.lnkColorProfilePath.Name = "lnkColorProfilePath";
             this.lnkColorProfilePath.Size = new System.Drawing.Size(144, 23);
-            this.lnkColorProfilePath.TabIndex = 29;
+            this.lnkColorProfilePath.TabIndex = 31;
             this.lnkColorProfilePath.TabStop = true;
             this.lnkColorProfilePath.Text = "C:\\abc\\custom.icc";
             this.lnkColorProfilePath.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
@@ -1265,7 +1268,7 @@ namespace ImageGlass
             this.lnkColorProfileBrowse.Location = new System.Drawing.Point(306, 683);
             this.lnkColorProfileBrowse.Name = "lnkColorProfileBrowse";
             this.lnkColorProfileBrowse.Size = new System.Drawing.Size(74, 23);
-            this.lnkColorProfileBrowse.TabIndex = 28;
+            this.lnkColorProfileBrowse.TabIndex = 30;
             this.lnkColorProfileBrowse.TabStop = true;
             this.lnkColorProfileBrowse.Text = "[Browse]";
             this.lnkColorProfileBrowse.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
@@ -1289,7 +1292,7 @@ namespace ImageGlass
             this.chkApplyColorProfile.Margin = new System.Windows.Forms.Padding(1);
             this.chkApplyColorProfile.Name = "chkApplyColorProfile";
             this.chkApplyColorProfile.Size = new System.Drawing.Size(464, 28);
-            this.chkApplyColorProfile.TabIndex = 26;
+            this.chkApplyColorProfile.TabIndex = 28;
             this.chkApplyColorProfile.Text = "[Apply also for images without embedded color profile]";
             this.chkApplyColorProfile.UseVisualStyleBackColor = true;
             // 
@@ -1305,7 +1308,7 @@ namespace ImageGlass
             this.cmbColorProfile.Margin = new System.Windows.Forms.Padding(1);
             this.cmbColorProfile.Name = "cmbColorProfile";
             this.cmbColorProfile.Size = new System.Drawing.Size(259, 31);
-            this.cmbColorProfile.TabIndex = 27;
+            this.cmbColorProfile.TabIndex = 29;
             this.cmbColorProfile.SelectedIndexChanged += new System.EventHandler(this.cmbColorProfile_SelectedIndexChanged);
             // 
             // lblColorProfile
@@ -1328,7 +1331,7 @@ namespace ImageGlass
             this.chkShowThumbnailScrollbar.Margin = new System.Windows.Forms.Padding(1);
             this.chkShowThumbnailScrollbar.Name = "chkShowThumbnailScrollbar";
             this.chkShowThumbnailScrollbar.Size = new System.Drawing.Size(278, 28);
-            this.chkShowThumbnailScrollbar.TabIndex = 37;
+            this.chkShowThumbnailScrollbar.TabIndex = 39;
             this.chkShowThumbnailScrollbar.Text = "[Show thumbnail bar scrollbar]";
             this.chkShowThumbnailScrollbar.UseVisualStyleBackColor = true;
             // 
@@ -1341,7 +1344,7 @@ namespace ImageGlass
             this.cmbMouseWheelAlt.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheelAlt.Name = "cmbMouseWheelAlt";
             this.cmbMouseWheelAlt.Size = new System.Drawing.Size(259, 31);
-            this.cmbMouseWheelAlt.TabIndex = 33;
+            this.cmbMouseWheelAlt.TabIndex = 35;
             // 
             // cmbMouseWheelShift
             // 
@@ -1352,7 +1355,7 @@ namespace ImageGlass
             this.cmbMouseWheelShift.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheelShift.Name = "cmbMouseWheelShift";
             this.cmbMouseWheelShift.Size = new System.Drawing.Size(259, 31);
-            this.cmbMouseWheelShift.TabIndex = 32;
+            this.cmbMouseWheelShift.TabIndex = 34;
             // 
             // cmbMouseWheelCtrl
             // 
@@ -1363,7 +1366,7 @@ namespace ImageGlass
             this.cmbMouseWheelCtrl.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheelCtrl.Name = "cmbMouseWheelCtrl";
             this.cmbMouseWheelCtrl.Size = new System.Drawing.Size(259, 31);
-            this.cmbMouseWheelCtrl.TabIndex = 31;
+            this.cmbMouseWheelCtrl.TabIndex = 33;
             // 
             // cmbMouseWheel
             // 
@@ -1374,7 +1377,7 @@ namespace ImageGlass
             this.cmbMouseWheel.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMouseWheel.Name = "cmbMouseWheel";
             this.cmbMouseWheel.Size = new System.Drawing.Size(259, 31);
-            this.cmbMouseWheel.TabIndex = 30;
+            this.cmbMouseWheel.TabIndex = 32;
             // 
             // lblMouseWheelAlt
             // 
@@ -1521,7 +1524,7 @@ namespace ImageGlass
             this.cmbZoomOptimization.Margin = new System.Windows.Forms.Padding(1);
             this.cmbZoomOptimization.Name = "cmbZoomOptimization";
             this.cmbZoomOptimization.Size = new System.Drawing.Size(529, 31);
-            this.cmbZoomOptimization.TabIndex = 34;
+            this.cmbZoomOptimization.TabIndex = 36;
             // 
             // chkThumbnailVertical
             // 
@@ -1531,7 +1534,7 @@ namespace ImageGlass
             this.chkThumbnailVertical.Margin = new System.Windows.Forms.Padding(1);
             this.chkThumbnailVertical.Name = "chkThumbnailVertical";
             this.chkThumbnailVertical.Size = new System.Drawing.Size(257, 28);
-            this.chkThumbnailVertical.TabIndex = 36;
+            this.chkThumbnailVertical.TabIndex = 38;
             this.chkThumbnailVertical.Text = "Thumbnail bar on right side";
             this.chkThumbnailVertical.UseVisualStyleBackColor = true;
             // 
@@ -1563,7 +1566,7 @@ namespace ImageGlass
             this.cmbThumbnailDimension.Margin = new System.Windows.Forms.Padding(1);
             this.cmbThumbnailDimension.Name = "cmbThumbnailDimension";
             this.cmbThumbnailDimension.Size = new System.Drawing.Size(259, 31);
-            this.cmbThumbnailDimension.TabIndex = 38;
+            this.cmbThumbnailDimension.TabIndex = 40;
             // 
             // chkUseFileExplorerSortOrder
             // 
@@ -1573,7 +1576,7 @@ namespace ImageGlass
             this.chkUseFileExplorerSortOrder.Margin = new System.Windows.Forms.Padding(1);
             this.chkUseFileExplorerSortOrder.Name = "chkUseFileExplorerSortOrder";
             this.chkUseFileExplorerSortOrder.Size = new System.Drawing.Size(414, 28);
-            this.chkUseFileExplorerSortOrder.TabIndex = 24;
+            this.chkUseFileExplorerSortOrder.TabIndex = 26;
             this.chkUseFileExplorerSortOrder.Text = "[Use Windows File Explorer sort order if possible]";
             this.chkUseFileExplorerSortOrder.UseVisualStyleBackColor = true;
             // 
@@ -1585,7 +1588,7 @@ namespace ImageGlass
             this.chkLoopSlideshow.Margin = new System.Windows.Forms.Padding(1);
             this.chkLoopSlideshow.Name = "chkLoopSlideshow";
             this.chkLoopSlideshow.Size = new System.Drawing.Size(604, 28);
-            this.chkLoopSlideshow.TabIndex = 39;
+            this.chkLoopSlideshow.TabIndex = 41;
             this.chkLoopSlideshow.Text = "[Loop back slideshow to the first image when reaching the end of the list]";
             this.chkLoopSlideshow.UseVisualStyleBackColor = true;
             // 
@@ -1616,7 +1619,7 @@ namespace ImageGlass
             this.cmbImageOrder.Margin = new System.Windows.Forms.Padding(1);
             this.cmbImageOrder.Name = "cmbImageOrder";
             this.cmbImageOrder.Size = new System.Drawing.Size(259, 31);
-            this.cmbImageOrder.TabIndex = 22;
+            this.cmbImageOrder.TabIndex = 24;
             // 
             // lblSlideshowInterval
             // 
@@ -1774,13 +1777,13 @@ namespace ImageGlass
             this.lvImageEditing.FullRowSelect = true;
             this.lvImageEditing.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvImageEditing.HideSelection = false;
-            listViewItem1.StateImageIndex = 0;
-            listViewItem2.StateImageIndex = 0;
-            listViewItem3.StateImageIndex = 0;
+            listViewItem4.StateImageIndex = 0;
+            listViewItem5.StateImageIndex = 0;
+            listViewItem6.StateImageIndex = 0;
             this.lvImageEditing.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3});
+            listViewItem4,
+            listViewItem5,
+            listViewItem6});
             this.lvImageEditing.Location = new System.Drawing.Point(22, 207);
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
@@ -3019,7 +3022,7 @@ namespace ImageGlass
             this.lnkPrivacyLearnMore.Location = new System.Drawing.Point(40, 56);
             this.lnkPrivacyLearnMore.Name = "lnkPrivacyLearnMore";
             this.lnkPrivacyLearnMore.Size = new System.Drawing.Size(107, 23);
-            this.lnkPrivacyLearnMore.TabIndex = 8;
+            this.lnkPrivacyLearnMore.TabIndex = 5;
             this.lnkPrivacyLearnMore.TabStop = true;
             this.lnkPrivacyLearnMore.Text = "[Learn more]";
             this.lnkPrivacyLearnMore.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
@@ -3033,7 +3036,7 @@ namespace ImageGlass
             this.chkEnableSpiderService.Margin = new System.Windows.Forms.Padding(1);
             this.chkEnableSpiderService.Name = "chkEnableSpiderService";
             this.chkEnableSpiderService.Size = new System.Drawing.Size(215, 28);
-            this.chkEnableSpiderService.TabIndex = 6;
+            this.chkEnableSpiderService.TabIndex = 4;
             this.chkEnableSpiderService.Text = "[Enable Spider service]";
             this.chkEnableSpiderService.UseVisualStyleBackColor = true;
             // 
@@ -3099,6 +3102,7 @@ namespace ImageGlass
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.Transparent;
+            this.panel4.Controls.Add(this.picStoreApp);
             this.panel4.Controls.Add(this.btnApply);
             this.panel4.Controls.Add(this.btnSave);
             this.panel4.Controls.Add(this.btnCancel);
@@ -3108,6 +3112,20 @@ namespace ImageGlass
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(973, 67);
             this.panel4.TabIndex = 18;
+            // 
+            // picStoreApp
+            // 
+            this.picStoreApp.BackColor = System.Drawing.Color.Black;
+            this.picStoreApp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picStoreApp.Dock = System.Windows.Forms.DockStyle.Left;
+            this.picStoreApp.Image = ((System.Drawing.Image)(resources.GetObject("picStoreApp.Image")));
+            this.picStoreApp.Location = new System.Drawing.Point(0, 0);
+            this.picStoreApp.Name = "picStoreApp";
+            this.picStoreApp.Size = new System.Drawing.Size(225, 67);
+            this.picStoreApp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picStoreApp.TabIndex = 23;
+            this.picStoreApp.TabStop = false;
+            this.picStoreApp.Click += new System.EventHandler(this.picStoreApp_Click);
             // 
             // frmSetting
             // 
@@ -3182,6 +3200,7 @@ namespace ImageGlass
             this.tblayout.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picStoreApp)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -3398,5 +3417,6 @@ namespace ImageGlass
         private System.Windows.Forms.TabPage tabPrivacy;
         private System.Windows.Forms.CheckBox chkEnableSpiderService;
         private System.Windows.Forms.LinkLabel lnkPrivacyLearnMore;
+        private System.Windows.Forms.PictureBox picStoreApp;
     }
 }

@@ -41,6 +41,12 @@
             this.lblReferences = new System.Windows.Forms.Label();
             this.lblInfo = new System.Windows.Forms.Label();
             this.lblComponent = new System.Windows.Forms.Label();
+            this.btnDonation = new System.Windows.Forms.PictureBox();
+            this.panHeader = new System.Windows.Forms.Panel();
+            this.lblCodeName = new System.Windows.Forms.Label();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.picStoreApp = new System.Windows.Forms.PictureBox();
             this.tab1 = new ImageGlass.UI.NakedTabControl();
             this.tpInfo = new System.Windows.Forms.TabPage();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
@@ -62,24 +68,20 @@
             this.txtComponents = new System.Windows.Forms.RichTextBox();
             this.tpReferences = new System.Windows.Forms.TabPage();
             this.txtReferences = new System.Windows.Forms.RichTextBox();
-            this.btnDonation = new System.Windows.Forms.PictureBox();
-            this.panHeader = new System.Windows.Forms.Panel();
-            this.lblCodeName = new System.Windows.Forms.Label();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
             this.sp0.Panel1.SuspendLayout();
             this.sp0.Panel2.SuspendLayout();
             this.sp0.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnDonation)).BeginInit();
+            this.panHeader.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picStoreApp)).BeginInit();
             this.tab1.SuspendLayout();
             this.tpInfo.SuspendLayout();
             this.tpComponents.SuspendLayout();
             this.tpReferences.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnDonation)).BeginInit();
-            this.panHeader.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // picLogo
@@ -167,6 +169,7 @@
             // 
             this.sp0.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(165)))), ((int)(((byte)(168)))));
             this.sp0.Panel1.Controls.Add(this.tableLayoutPanel1);
+            this.sp0.Panel1.Controls.Add(this.picStoreApp);
             this.sp0.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             // 
             // sp0.Panel2
@@ -185,14 +188,15 @@
             this.tableLayoutPanel1.Controls.Add(this.lblReferences, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.lblInfo, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblComponent, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(250, 508);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(250, 251);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // lblReferences
@@ -260,6 +264,79 @@
             this.lblComponent.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
             this.lblComponent.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
             this.lblComponent.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
+            // 
+            // btnDonation
+            // 
+            this.btnDonation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDonation.Cursor = System.Windows.Forms.Cursors.Help;
+            this.btnDonation.Image = ((System.Drawing.Image)(resources.GetObject("btnDonation.Image")));
+            this.btnDonation.Location = new System.Drawing.Point(832, 22);
+            this.btnDonation.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDonation.Name = "btnDonation";
+            this.btnDonation.Size = new System.Drawing.Size(56, 56);
+            this.btnDonation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnDonation.TabIndex = 20;
+            this.btnDonation.TabStop = false;
+            this.btnDonation.Click += new System.EventHandler(this.btnDonation_Click);
+            // 
+            // panHeader
+            // 
+            this.panHeader.BackColor = System.Drawing.Color.Transparent;
+            this.panHeader.Controls.Add(this.lblCodeName);
+            this.panHeader.Controls.Add(this.picLogo);
+            this.panHeader.Controls.Add(this.lblAppName);
+            this.panHeader.Controls.Add(this.btnDonation);
+            this.panHeader.Controls.Add(this.lblSlogant);
+            this.panHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panHeader.Location = new System.Drawing.Point(0, 0);
+            this.panHeader.Margin = new System.Windows.Forms.Padding(0);
+            this.panHeader.MinimumSize = new System.Drawing.Size(0, 140);
+            this.panHeader.Name = "panHeader";
+            this.panHeader.Padding = new System.Windows.Forms.Padding(19);
+            this.panHeader.Size = new System.Drawing.Size(910, 140);
+            this.panHeader.TabIndex = 22;
+            // 
+            // lblCodeName
+            // 
+            this.lblCodeName.AutoSize = true;
+            this.lblCodeName.BackColor = System.Drawing.Color.Transparent;
+            this.lblCodeName.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblCodeName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(105)))), ((int)(((byte)(183)))));
+            this.lblCodeName.Location = new System.Drawing.Point(313, 29);
+            this.lblCodeName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCodeName.Name = "lblCodeName";
+            this.lblCodeName.Size = new System.Drawing.Size(59, 30);
+            this.lblCodeName.TabIndex = 21;
+            this.lblCodeName.Text = "Kobe";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.sp0, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.panHeader, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(910, 648);
+            this.tableLayoutPanel2.TabIndex = 23;
+            // 
+            // picStoreApp
+            // 
+            this.picStoreApp.BackColor = System.Drawing.Color.Black;
+            this.picStoreApp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picStoreApp.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.picStoreApp.Image = ((System.Drawing.Image)(resources.GetObject("picStoreApp.Image")));
+            this.picStoreApp.Location = new System.Drawing.Point(0, 442);
+            this.picStoreApp.Name = "picStoreApp";
+            this.picStoreApp.Size = new System.Drawing.Size(250, 66);
+            this.picStoreApp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picStoreApp.TabIndex = 22;
+            this.picStoreApp.TabStop = false;
+            this.picStoreApp.Click += new System.EventHandler(this.picStoreApp_Click);
             // 
             // tab1
             // 
@@ -570,7 +647,7 @@
             this.txtComponents.ReadOnly = true;
             this.txtComponents.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtComponents.ShortcutsEnabled = false;
-            this.txtComponents.Size = new System.Drawing.Size(620, 469);
+            this.txtComponents.Size = new System.Drawing.Size(620, 476);
             this.txtComponents.TabIndex = 4;
             this.txtComponents.Text = "List of components here...";
             // 
@@ -599,68 +676,9 @@
             this.txtReferences.ReadOnly = true;
             this.txtReferences.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtReferences.ShortcutsEnabled = false;
-            this.txtReferences.Size = new System.Drawing.Size(620, 469);
+            this.txtReferences.Size = new System.Drawing.Size(620, 476);
             this.txtReferences.TabIndex = 3;
             this.txtReferences.Text = resources.GetString("txtReferences.Text");
-            // 
-            // btnDonation
-            // 
-            this.btnDonation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDonation.Cursor = System.Windows.Forms.Cursors.Help;
-            this.btnDonation.Image = ((System.Drawing.Image)(resources.GetObject("btnDonation.Image")));
-            this.btnDonation.Location = new System.Drawing.Point(832, 22);
-            this.btnDonation.Margin = new System.Windows.Forms.Padding(4);
-            this.btnDonation.Name = "btnDonation";
-            this.btnDonation.Size = new System.Drawing.Size(56, 56);
-            this.btnDonation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnDonation.TabIndex = 20;
-            this.btnDonation.TabStop = false;
-            this.btnDonation.Click += new System.EventHandler(this.btnDonation_Click);
-            // 
-            // panHeader
-            // 
-            this.panHeader.BackColor = System.Drawing.Color.Transparent;
-            this.panHeader.Controls.Add(this.lblCodeName);
-            this.panHeader.Controls.Add(this.picLogo);
-            this.panHeader.Controls.Add(this.lblAppName);
-            this.panHeader.Controls.Add(this.btnDonation);
-            this.panHeader.Controls.Add(this.lblSlogant);
-            this.panHeader.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panHeader.Location = new System.Drawing.Point(0, 0);
-            this.panHeader.Margin = new System.Windows.Forms.Padding(0);
-            this.panHeader.MinimumSize = new System.Drawing.Size(0, 140);
-            this.panHeader.Name = "panHeader";
-            this.panHeader.Padding = new System.Windows.Forms.Padding(19);
-            this.panHeader.Size = new System.Drawing.Size(910, 140);
-            this.panHeader.TabIndex = 22;
-            // 
-            // lblCodeName
-            // 
-            this.lblCodeName.AutoSize = true;
-            this.lblCodeName.BackColor = System.Drawing.Color.Transparent;
-            this.lblCodeName.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblCodeName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(105)))), ((int)(((byte)(183)))));
-            this.lblCodeName.Location = new System.Drawing.Point(313, 29);
-            this.lblCodeName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblCodeName.Name = "lblCodeName";
-            this.lblCodeName.Size = new System.Drawing.Size(59, 30);
-            this.lblCodeName.TabIndex = 21;
-            this.lblCodeName.Text = "Kobe";
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.sp0, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.panHeader, 0, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(910, 648);
-            this.tableLayoutPanel2.TabIndex = 23;
             // 
             // frmAbout
             // 
@@ -688,15 +706,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).EndInit();
             this.sp0.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.btnDonation)).EndInit();
+            this.panHeader.ResumeLayout(false);
+            this.panHeader.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picStoreApp)).EndInit();
             this.tab1.ResumeLayout(false);
             this.tpInfo.ResumeLayout(false);
             this.tpInfo.PerformLayout();
             this.tpComponents.ResumeLayout(false);
             this.tpReferences.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.btnDonation)).EndInit();
-            this.panHeader.ResumeLayout(false);
-            this.panHeader.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -740,5 +759,6 @@
         private System.Windows.Forms.Label lblCodeName;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.PictureBox picStoreApp;
     }
 }
