@@ -2874,10 +2874,7 @@ namespace ImageGlass {
 
                 // hide window
                 if (_isHideWindow) {
-                    tray.Visible = true;
-                    WindowState = FormWindowState.Minimized;
-                    ShowInTaskbar = false;
-                    Hide();
+                    ToggleAppVisibility(false);
                 }
             }
             #endregion
@@ -3278,12 +3275,13 @@ namespace ImageGlass {
             tray.Visible = !show;
 
             if (show) {
-                WindowState = Configs.FrmMainWindowState;
                 ShowInTaskbar = true;
                 Visible = true;
+                WindowState = Configs.FrmMainWindowState;
             }
             else {
                 SaveConfig(true);
+                WindowState = FormWindowState.Minimized;
                 ShowInTaskbar = false;
                 Visible = false;
 

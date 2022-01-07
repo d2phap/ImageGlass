@@ -160,17 +160,10 @@ namespace ImageGlass {
                 return;
 
             Action<string[]> UpdateForm = arguments => {
-
-                // Issues #774, #855 : if IG is normal or maximized, do nothing.
-                // If IG is minimized, restore it to previous state.
-                if (formMain.WindowState == FormWindowState.Minimized) {
-                    ShowWindow(formMain.Handle, SW_RESTORE);
-                }
-
-                formMain.LoadFromParams(arguments);
-
                 // make sure form is visible, due to Configs.IsContinueRunningBackground
                 formMain.ToggleAppVisibility(true);
+
+                formMain.LoadFromParams(arguments);
             };
 
             // KBR 20181009 Attempt to run a 2nd instance of IG when multi-instance turned off.
@@ -188,9 +181,6 @@ namespace ImageGlass {
 
             // Execute our delegate on the forms thread!
             formMain.Invoke(UpdateForm, (object)realArgs);
-
-            // send our Win32 message to bring ImageGlass dialog to top
-            NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
         }
 
         /// <summary>
