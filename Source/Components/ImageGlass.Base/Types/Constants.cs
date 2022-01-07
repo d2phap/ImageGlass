@@ -28,6 +28,7 @@ namespace ImageGlass.Base {
         public const int MENU_ICON_HEIGHT = 21;
         public const int DEFAULT_TOOLBAR_ICON_HEIGHT = 22;
         public const int VIEWER_GRID_SIZE = 8;
+        public const string MS_APPSTORE_ID = "9N33VZK3C7TH";
 
         /// <summary>
         /// First launch version constant.
