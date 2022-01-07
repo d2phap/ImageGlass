@@ -1645,8 +1645,8 @@ namespace ImageGlass
             this.tabEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
             this.tabEdit.Controls.Add(this.tableEdit);
             this.tabEdit.Location = new System.Drawing.Point(4, 69);
+            this.tabEdit.Margin = new System.Windows.Forms.Padding(0);
             this.tabEdit.Name = "tabEdit";
-            this.tabEdit.Padding = new System.Windows.Forms.Padding(3);
             this.tabEdit.Size = new System.Drawing.Size(737, 596);
             this.tabEdit.TabIndex = 7;
             this.tabEdit.Text = "Edit";
@@ -1658,13 +1658,13 @@ namespace ImageGlass
             this.tableEdit.Controls.Add(this.panel6, 0, 0);
             this.tableEdit.Controls.Add(this.panel7, 0, 1);
             this.tableEdit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableEdit.Location = new System.Drawing.Point(3, 3);
+            this.tableEdit.Location = new System.Drawing.Point(0, 0);
             this.tableEdit.Margin = new System.Windows.Forms.Padding(0);
             this.tableEdit.Name = "tableEdit";
             this.tableEdit.RowCount = 2;
             this.tableEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableEdit.Size = new System.Drawing.Size(731, 590);
+            this.tableEdit.Size = new System.Drawing.Size(737, 596);
             this.tableEdit.TabIndex = 62;
             // 
             // panel6
@@ -1682,7 +1682,7 @@ namespace ImageGlass
             this.panel6.Location = new System.Drawing.Point(0, 0);
             this.panel6.Margin = new System.Windows.Forms.Padding(0);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(731, 520);
+            this.panel6.Size = new System.Drawing.Size(737, 526);
             this.panel6.TabIndex = 60;
             // 
             // cmbAfterEditingApp
@@ -1785,7 +1785,7 @@ namespace ImageGlass
             this.lvImageEditing.Name = "lvImageEditing";
             this.lvImageEditing.RightToLeftLayout = true;
             this.lvImageEditing.ShowItemToolTips = true;
-            this.lvImageEditing.Size = new System.Drawing.Size(691, 298);
+            this.lvImageEditing.Size = new System.Drawing.Size(697, 304);
             this.lvImageEditing.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvImageEditing.TabIndex = 9;
             this.lvImageEditing.UseCompatibleStateImageBehavior = false;
@@ -1832,10 +1832,10 @@ namespace ImageGlass
             this.panel7.Controls.Add(this.btnEditResetExt);
             this.panel7.Controls.Add(this.btnEditEditAllExt);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(0, 520);
+            this.panel7.Location = new System.Drawing.Point(0, 526);
             this.panel7.Margin = new System.Windows.Forms.Padding(0);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(731, 70);
+            this.panel7.Size = new System.Drawing.Size(737, 70);
             this.panel7.TabIndex = 61;
             // 
             // btnEditEditExt
@@ -3023,6 +3023,7 @@ namespace ImageGlass
             this.lnkPrivacyLearnMore.TabStop = true;
             this.lnkPrivacyLearnMore.Text = "[Learn more]";
             this.lnkPrivacyLearnMore.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
+            this.lnkPrivacyLearnMore.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkPrivacyLearnMore_LinkClicked);
             // 
             // chkEnableSpiderService
             // 

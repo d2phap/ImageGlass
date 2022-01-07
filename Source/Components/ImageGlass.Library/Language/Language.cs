@@ -692,10 +692,9 @@ namespace ImageGlass.Library {
             Items.Add("frmFirstLaunch.lnkSkip", "Skip this and Launch ImageGlass"); //v5.0
 
             Items.Add("frmFirstLaunch.lblLanguage", "Select Language"); //v5.0
-            Items.Add("frmFirstLaunch.lblLayout", "Select Layout"); //v5.0
-            Items.Add("frmFirstLaunch.cmbLayout._Standard", "Standard"); //v5.0
-            Items.Add("frmFirstLaunch.cmbLayout._Designer", "Designer"); //v5.0
             Items.Add("frmFirstLaunch.lblTheme", "Select Theme"); //v5.0
+            Items.Add("frmFirstLaunch.lnkPrivacy", "Privacy"); //v8.4
+            Items.Add("frmFirstLaunch.lblPrivacyDesctipion", "ImageGlass comes with Spider service by default. You can always disable it in Settings > Privacy."); //v8.4
             Items.Add("frmFirstLaunch.lblDefaultApp", "Set ImageGlass as Default Photo Viewer?"); //v5.0
             Items.Add("frmFirstLaunch.btnSetDefaultApp", "Yes"); //v5.0
             #endregion

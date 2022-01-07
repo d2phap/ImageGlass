@@ -1849,6 +1849,13 @@ namespace ImageGlass {
             chkEnableSpiderService.Checked = Configs.IsEnableSpiderService;
         }
 
+        private void lnkPrivacyLearnMore_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            try {
+                Process.Start($"https://imageglass.org/privacy?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_settings");
+            }
+            catch { }
+        }
+
         #endregion
 
         #region ACTION BUTTONS
@@ -2207,6 +2214,7 @@ namespace ImageGlass {
 
 
         #endregion
+
 
     }
 }
