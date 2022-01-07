@@ -313,8 +313,14 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainCheckForUpdate._NewVersion", "A new version is available!"); //v5.0
             Items.Add("frmMain.mnuMainReportIssue", "Report an issue…"); //v3.0
 
-            Items.Add("frmMain.mnuMainExitApplication", "Exit ImageGlass"); //v7.0
+            Items.Add("frmMain.mnuMainExitApplication", "Exit"); //v7.0, v8.4
             #endregion
+
+            #endregion
+
+            #region Tray menu
+
+            Items.Add("frmMain.mnuTrayShowWindow", "Show"); //v8.4
 
             #endregion
 

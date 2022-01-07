@@ -172,8 +172,12 @@
             this.mnuShortcut = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuTray = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuTrayInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuTrayShowWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuTrayExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tray = new System.Windows.Forms.NotifyIcon(this.components);
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -1285,6 +1289,7 @@
             // 
             // mnuMainCheckForUpdate
             // 
+            this.mnuMainCheckForUpdate.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainCheckForUpdate.Name = "mnuMainCheckForUpdate";
             this.mnuMainCheckForUpdate.Size = new System.Drawing.Size(317, 30);
             this.mnuMainCheckForUpdate.Text = "A new version is available";
@@ -1317,6 +1322,7 @@
             // 
             // mnuMainExitApplication
             // 
+            this.mnuMainExitApplication.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainExitApplication.Name = "mnuMainExitApplication";
             this.mnuMainExitApplication.Size = new System.Drawing.Size(246, 28);
             this.mnuMainExitApplication.Text = "Exit ImageGlass";
@@ -1976,16 +1982,41 @@
             this.mnuTray.BackColor = System.Drawing.Color.White;
             this.mnuTray.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.mnuTray.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuTrayInfo,
+            this.toolStripMenuItem4,
+            this.mnuTrayShowWindow,
+            this.toolStripMenuItem3,
             this.mnuTrayExit});
             this.mnuTray.Name = "mnuTray";
-            this.mnuTray.Size = new System.Drawing.Size(210, 32);
+            this.mnuTray.Size = new System.Drawing.Size(256, 100);
             this.mnuTray.Opening += new System.ComponentModel.CancelEventHandler(this.MnuTray_Opening);
+            // 
+            // mnuTrayInfo
+            // 
+            this.mnuTrayInfo.Enabled = false;
+            this.mnuTrayInfo.Name = "mnuTrayInfo";
+            this.mnuTrayInfo.Size = new System.Drawing.Size(255, 28);
+            this.mnuTrayInfo.Text = "[ImageGlass v8.4 - x64]";
+            // 
+            // mnuTrayShowWindow
+            // 
+            this.mnuTrayShowWindow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuTrayShowWindow.Name = "mnuTrayShowWindow";
+            this.mnuTrayShowWindow.Size = new System.Drawing.Size(255, 28);
+            this.mnuTrayShowWindow.Text = "[Show ImageGlass]";
+            this.mnuTrayShowWindow.Click += new System.EventHandler(this.mnuTrayShowWindow_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(252, 6);
             // 
             // mnuTrayExit
             // 
+            this.mnuTrayExit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuTrayExit.Name = "mnuTrayExit";
-            this.mnuTrayExit.Size = new System.Drawing.Size(209, 28);
-            this.mnuTrayExit.Text = "[Exit ImageGlass]";
+            this.mnuTrayExit.Size = new System.Drawing.Size(255, 28);
+            this.mnuTrayExit.Text = "[Exit]";
             this.mnuTrayExit.Click += new System.EventHandler(this.MnuTrayExit_Click);
             // 
             // tray
@@ -1994,6 +2025,11 @@
             this.tray.Icon = ((System.Drawing.Icon)(resources.GetObject("tray.Icon")));
             this.tray.Text = "ImageGlass";
             this.tray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Tray_MouseDoubleClick);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(252, 6);
             // 
             // frmMain
             // 
@@ -2188,6 +2224,10 @@
         private System.Windows.Forms.ContextMenuStrip mnuTray;
         private System.Windows.Forms.ToolStripMenuItem mnuTrayExit;
         private System.Windows.Forms.NotifyIcon tray;
+        private System.Windows.Forms.ToolStripMenuItem mnuTrayShowWindow;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem mnuTrayInfo;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
     }
 }
 

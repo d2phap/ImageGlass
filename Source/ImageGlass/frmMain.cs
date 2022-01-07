@@ -77,7 +77,7 @@ namespace ImageGlass {
 
         #region Local variables
 
-        private bool _isHideWindow = Environment.GetCommandLineArgs().Contains("-HideWindow");
+        private readonly bool _isHideWindow = Environment.GetCommandLineArgs().Contains("-HideWindow");
 
         // window size value before resizing
         private Size _windowSize = new(1300, 800);
@@ -1175,12 +1175,12 @@ namespace ImageGlass {
                         }
                         // ESC: Quit ImageGlass
                         else if (Configs.IsPressESCToQuit) {
-                            Application.Exit();
+                            mnuMainExitApplication_Click(null, null);
                         }
                     }
                     // Shift + ESC: Truly quit ImageGlass
                     else if (Configs.IsPressESCToQuit) {
-                        mnuMainExitApplication.PerformClick();
+                        mnuMainExitApplication_Click(null, null);
                     }
                 }
 
@@ -2596,7 +2596,7 @@ namespace ImageGlass {
                 }
             }
             else if (Configs.AfterEditingAction == AfterOpeningEditAppAction.Close) {
-                Application.Exit();
+                mnuMainExitApplication_Click(null, null);
             }
         }
 
@@ -4341,15 +4341,27 @@ namespace ImageGlass {
         }
 
         private void MnuTray_Opening(object sender, CancelEventArgs e) {
-            var newMenuIconHeight = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
-            mnuTrayExit.Image = new Bitmap(newMenuIconHeight, newMenuIconHeight);
+            // menu item size
+            var iconH = DPIScaling.Transform(Constants.MENU_ICON_HEIGHT);
+            mnuTrayExit.Image = new Bitmap(iconH, iconH);
 
+            // language
+            mnuTrayShowWindow.Text = Configs.Language.Items[$"{Name}.{nameof(mnuTrayShowWindow)}"];
             mnuTrayExit.Text = Configs.Language.Items[$"{Name}.{nameof(mnuMainExitApplication)}"];
+
+            // info
+            mnuTrayInfo.Enabled = false;
+            mnuTrayInfo.Text = $"{Application.ProductName}" +
+                $" v{Application.ProductVersion}" +
+                $" {(Environment.Is64BitProcess ? "x64" : "x86")}";
         }
 
+        private void mnuTrayShowWindow_Click(object sender, EventArgs e) {
+            ToggleAppVisibility(true);
+        }
 
         private void MnuTrayExit_Click(object sender, EventArgs e) {
-            mnuMainExitApplication.PerformClick();
+            mnuMainExitApplication_Click(null, null);
         }
 
         #endregion
@@ -5433,7 +5445,7 @@ namespace ImageGlass {
         private void mnuMainExitApplication_Click(object sender, EventArgs e) {
             // make sure app is truly exitted
             _forceExitApp = true;
-            Application.Exit();
+            Close();
         }
 
         private void mnuMainStartStopAnimating_Click(object sender, EventArgs e) {
@@ -5559,6 +5571,7 @@ namespace ImageGlass {
 
         #endregion
 
+        
     }
 
 
