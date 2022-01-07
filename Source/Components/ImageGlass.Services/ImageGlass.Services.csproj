@@ -89,6 +89,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SpiderService.cs" />
     <Compile Include="ExplorerSortOrder.cs" />
     <Compile Include="InstanceManagement\ArgumentsReceivedEventArgs.cs" />
     <Compile Include="InstanceManagement\NativeMethods.cs" />
@@ -112,12 +113,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ExplorerSortOrder32.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ExplorerSortOrder64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="..\..\Libs\Spider-sdk\x86_64\bs-sdk.dll" Condition="'$(Platform)' == 'x64'" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\Libs\ExplorerSortOrder\ExplorerSortOrder32.dll" Condition="'$(Platform)' == 'x86'" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\Libs\ExplorerSortOrder\ExplorerSortOrder64.dll" Condition="'$(Platform)' == 'x64'" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
