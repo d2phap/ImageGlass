@@ -29,6 +29,7 @@ using System.Windows.Forms;
 using ImageGlass.Base;
 using ImageGlass.Library;
 using ImageGlass.Library.Image;
+using ImageGlass.Services;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.UI.Renderers;
@@ -362,6 +363,12 @@ namespace ImageGlass {
             lblKeysLeftRight.Text = lang[$"{Name}.{nameof(lblKeysLeftRight)}"];
             #endregion
 
+            #region KEYBOARD TAB
+            lblPrivacy.Text = lang[$"{Name}.{nameof(lblPrivacy)}"];
+            chkEnableSpiderService.Text = lang[$"{Name}.{nameof(chkEnableSpiderService)}"];
+            lnkPrivacyLearnMore.Text = lang[$"{Name}.{nameof(lnkPrivacyLearnMore)}"];
+            #endregion
+
         }
 
         /// <summary>
@@ -400,6 +407,9 @@ namespace ImageGlass {
                 case nameof(lblKeyboard):
                     tab1.SelectedTab = tabKeyboard;
                     break;
+                case nameof(lblPrivacy):
+                    tab1.SelectedTab = tabPrivacy;
+                    break;
             }
         }
 
@@ -412,6 +422,7 @@ namespace ImageGlass {
             lblToolbar.Tag =
             lblTools.Tag =
             lblTheme.Tag =
+            lblPrivacy.Tag =
             lblKeyboard.Tag = 0;
 
             lblGeneral.BackColor =
@@ -422,6 +433,7 @@ namespace ImageGlass {
             lblToolbar.BackColor =
             lblTools.BackColor =
             lblTheme.BackColor =
+            lblPrivacy.BackColor =
             lblKeyboard.BackColor = M_COLOR_MENU_NORMAL;
 
             if (tab1.SelectedTab == tabGeneral) {
@@ -482,6 +494,12 @@ namespace ImageGlass {
                 lblKeyboard.BackColor = M_COLOR_MENU_SELECTED;
 
                 LoadTabKeyboard(Configs.KeyComboActions);
+            }
+            else if (tab1.SelectedTab == tabPrivacy) {
+                lblPrivacy.Tag = 1;
+                lblPrivacy.BackColor = M_COLOR_MENU_SELECTED;
+
+                LoadTabPrivacy();
             }
         }
 
@@ -1825,6 +1843,14 @@ namespace ImageGlass {
 
         #endregion
 
+        #region TAB PRIVACY
+
+        private void LoadTabPrivacy() {
+            chkEnableSpiderService.Checked = Configs.IsEnableSpiderService;
+        }
+
+        #endregion
+
         #region ACTION BUTTONS
         private void btnCancel_Click(object sender, EventArgs e) {
             //close without saving
@@ -2149,7 +2175,7 @@ namespace ImageGlass {
             ApplyToolbarChanges();
             #endregion
 
-            #region Tools tab ---------------------------------------
+            #region Tools tab ----------------------------------------------
             Configs.IsColorPickerRGBA = chkColorUseRGBA.Checked;
             Configs.IsColorPickerHEXA = chkColorUseHEXA.Checked;
             Configs.IsColorPickerHSLA = chkColorUseHSLA.Checked;
@@ -2159,6 +2185,19 @@ namespace ImageGlass {
             Configs.IsExifToolAlwaysOnTop = chkExifToolAlwaysOnTop.Checked;
             Configs.ExifToolCommandArgs = txtExifToolCommandArgs.Text.Trim().Replace("\n", "");
             #endregion
+
+            #region Privacy tab --------------------------------------------
+            Configs.IsEnableSpiderService = chkEnableSpiderService.Checked;
+
+            // toggle Spider service
+            if (Configs.IsEnableSpiderService) {
+                SpiderService.Enable();
+            }
+            else {
+                SpiderService.Disable();
+            }
+            #endregion
+
 
             SaveKeyboardSettings();
 

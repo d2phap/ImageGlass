@@ -309,6 +309,11 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool IsStartWithOs { get; set; } = true;
 
+        /// <summary>
+        /// Gets, sets value indicates that Spider service is enabled
+        /// </summary>
+        public static bool IsEnableSpiderService { get; set; } = true;
+
         #endregion
 
 
@@ -645,6 +650,7 @@ namespace ImageGlass.Settings {
             IsHideThumbnailBarInFullscreen = Get<bool>(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
             IsContinueRunningBackground = Get<bool>(nameof(IsContinueRunningBackground), IsContinueRunningBackground);
             IsStartWithOs = Get<bool>(nameof(IsStartWithOs), IsStartWithOs);
+            IsEnableSpiderService = Get<bool>(nameof(IsEnableSpiderService), IsEnableSpiderService);
 
             #endregion
 
@@ -889,6 +895,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
             Set(nameof(IsContinueRunningBackground), IsContinueRunningBackground);
             Set(nameof(IsStartWithOs), IsStartWithOs);
+            Set(nameof(IsEnableSpiderService), IsEnableSpiderService);
 
             #endregion
 

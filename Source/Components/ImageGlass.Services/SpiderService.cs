@@ -43,43 +43,70 @@ namespace ImageGlass.Services {
         private static extern void SetApp(GoString appId);
 
 
+        [DllImport(SDK_DLL, CallingConvention = CallingConvention.Cdecl)]
+        private static extern void Start();
+
+
+        [DllImport(SDK_DLL, CallingConvention = CallingConvention.Cdecl)]
+        private static extern void Stop();
+
+
+
         /// <summary>
-        /// Initializes Blueswan service.
+        /// Enables Blueswan service.
         /// </summary>
-        public static void Initialize() {
-            SetApp(new(APP_ID));
+        public static void Enable() {
+            try {
+                SetApp(new(APP_ID));
+                Start();
+
+            }
+            catch { }
         }
 
         /// <summary>
-        /// Starts Blueswan service.
+        /// Disables Blueswan service.
         /// </summary>
-        [DllImport(SDK_DLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void Start();
-
-        /// <summary>
-        /// Stops Blueswan service.
-        /// </summary>
-        [DllImport(SDK_DLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void Stop();
+        public static void Disable() {
+            try {
+                Stop();
+            }
+            catch { }
+        }
 
         /// <summary>
         /// Checks if Blueswan service is started.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// <list type="bullet">
+        ///   <item><c>1</c> the service is started</item>
+        ///   <item><c>0</c> the service is not started</item>
+        /// </list>
+        /// </returns>
         [DllImport(SDK_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern uint IsStarted();
 
         /// <summary>
         /// Checks if Blueswan service is updated.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// <list type="bullet">
+        ///   <item><c>1</c> the service is updated</item>
+        ///   <item><c>0</c> the service is not updated</item>
+        /// </list>
+        /// </returns>
         [DllImport(SDK_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern uint IsUpdated();
 
         /// <summary>
         /// Checks if Blueswan service is running.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// <list type="bullet">
+        ///   <item><c>1</c> the service is running</item>
+        ///   <item><c>0</c> the service is not running</item>
+        /// </list>
+        /// </returns>
         [DllImport(SDK_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern uint IsRunning();
 

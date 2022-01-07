@@ -655,6 +655,15 @@ namespace ImageGlass.Library {
 
             #endregion
 
+
+            #region TAB Privacy
+
+            Items.Add("frmSetting.lblPrivacy", "Privacy"); //v8.4
+            Items.Add("frmSetting.chkEnableSpiderService", "Enable Spider service"); //v8.4
+            Items.Add("frmSetting.lnkPrivacyLearnMore", "Learn more"); //v8.4
+
+            #endregion
+
             #endregion
 
             #region frmAddNewFormat

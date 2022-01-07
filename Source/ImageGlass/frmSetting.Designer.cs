@@ -44,6 +44,7 @@ namespace ImageGlass
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.tableTabHeaders = new System.Windows.Forms.TableLayoutPanel();
+            this.lblPrivacy = new System.Windows.Forms.Label();
             this.lblImage = new System.Windows.Forms.Label();
             this.lblToolbar = new System.Windows.Forms.Label();
             this.lblTools = new System.Windows.Forms.Label();
@@ -52,6 +53,8 @@ namespace ImageGlass
             this.lblTheme = new System.Windows.Forms.Label();
             this.tab1 = new ImageGlass.UI.NakedTabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.chkStartWithOs = new System.Windows.Forms.CheckBox();
+            this.chkContinueRunningBackground = new System.Windows.Forms.CheckBox();
             this.chkUseTouchGesture = new System.Windows.Forms.CheckBox();
             this.lblHeadViewer = new System.Windows.Forms.Label();
             this.chkShowToast = new System.Windows.Forms.CheckBox();
@@ -231,13 +234,14 @@ namespace ImageGlass
             this.lnkGetMoreLanguage = new System.Windows.Forms.LinkLabel();
             this.cmbLanguage = new System.Windows.Forms.ComboBox();
             this.lblLanguageText = new System.Windows.Forms.Label();
+            this.tabPrivacy = new System.Windows.Forms.TabPage();
+            this.lnkPrivacyLearnMore = new System.Windows.Forms.LinkLabel();
+            this.chkEnableSpiderService = new System.Windows.Forms.CheckBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.chkContinueRunningBackground = new System.Windows.Forms.CheckBox();
-            this.chkStartWithOs = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
@@ -273,6 +277,7 @@ namespace ImageGlass
             this.tb3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).BeginInit();
             this.tabLanguage.SuspendLayout();
+            this.tabPrivacy.SuspendLayout();
             this.tblayout.SuspendLayout();
             this.panel4.SuspendLayout();
             this.SuspendLayout();
@@ -294,7 +299,7 @@ namespace ImageGlass
             this.lblLanguage.Size = new System.Drawing.Size(236, 47);
             this.lblLanguage.TabIndex = 9;
             this.lblLanguage.Tag = "0";
-            this.lblLanguage.Text = "Language";
+            this.lblLanguage.Text = "[Language]";
             this.lblLanguage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblLanguage.Click += new System.EventHandler(this.lblMenu_Click);
             this.lblLanguage.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
@@ -394,6 +399,7 @@ namespace ImageGlass
             this.tableTabHeaders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(165)))), ((int)(((byte)(168)))));
             this.tableTabHeaders.ColumnCount = 1;
             this.tableTabHeaders.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 236F));
+            this.tableTabHeaders.Controls.Add(this.lblPrivacy, 0, 9);
             this.tableTabHeaders.Controls.Add(this.lblGeneral, 0, 0);
             this.tableTabHeaders.Controls.Add(this.lblImage, 0, 1);
             this.tableTabHeaders.Controls.Add(this.lblToolbar, 0, 4);
@@ -407,7 +413,11 @@ namespace ImageGlass
             this.tableTabHeaders.Location = new System.Drawing.Point(0, 0);
             this.tableTabHeaders.Margin = new System.Windows.Forms.Padding(0);
             this.tableTabHeaders.Name = "tableTabHeaders";
-            this.tableTabHeaders.RowCount = 9;
+            this.tableTabHeaders.RowCount = 13;
+            this.tableTabHeaders.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableTabHeaders.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableTabHeaders.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableTabHeaders.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableTabHeaders.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableTabHeaders.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableTabHeaders.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -420,6 +430,25 @@ namespace ImageGlass
             this.tableTabHeaders.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableTabHeaders.Size = new System.Drawing.Size(224, 669);
             this.tableTabHeaders.TabIndex = 5;
+            // 
+            // lblPrivacy
+            // 
+            this.lblPrivacy.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblPrivacy.Location = new System.Drawing.Point(0, 423);
+            this.lblPrivacy.Margin = new System.Windows.Forms.Padding(0);
+            this.lblPrivacy.Name = "lblPrivacy";
+            this.lblPrivacy.Padding = new System.Windows.Forms.Padding(13, 0, 13, 0);
+            this.lblPrivacy.Size = new System.Drawing.Size(236, 47);
+            this.lblPrivacy.TabIndex = 10;
+            this.lblPrivacy.Tag = "0";
+            this.lblPrivacy.Text = "[Privacy]";
+            this.lblPrivacy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblPrivacy.Click += new System.EventHandler(this.lblMenu_Click);
+            this.lblPrivacy.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
+            this.lblPrivacy.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
+            this.lblPrivacy.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
+            this.lblPrivacy.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
             // lblImage
             // 
@@ -527,7 +556,7 @@ namespace ImageGlass
             this.lblTheme.Size = new System.Drawing.Size(236, 47);
             this.lblTheme.TabIndex = 8;
             this.lblTheme.Tag = "0";
-            this.lblTheme.Text = "Theme";
+            this.lblTheme.Text = "[Theme]";
             this.lblTheme.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblTheme.Click += new System.EventHandler(this.lblMenu_Click);
             this.lblTheme.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
@@ -547,6 +576,7 @@ namespace ImageGlass
             this.tab1.Controls.Add(this.tabKeyboard);
             this.tab1.Controls.Add(this.tabTheme);
             this.tab1.Controls.Add(this.tabLanguage);
+            this.tab1.Controls.Add(this.tabPrivacy);
             this.tab1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tab1.Location = new System.Drawing.Point(0, 0);
             this.tab1.Margin = new System.Windows.Forms.Padding(0);
@@ -594,6 +624,30 @@ namespace ImageGlass
             this.tabGeneral.Size = new System.Drawing.Size(737, 596);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "general";
+            // 
+            // chkStartWithOs
+            // 
+            this.chkStartWithOs.AutoSize = true;
+            this.chkStartWithOs.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkStartWithOs.Location = new System.Drawing.Point(42, 634);
+            this.chkStartWithOs.Margin = new System.Windows.Forms.Padding(1);
+            this.chkStartWithOs.Name = "chkStartWithOs";
+            this.chkStartWithOs.Size = new System.Drawing.Size(263, 28);
+            this.chkStartWithOs.TabIndex = 49;
+            this.chkStartWithOs.Text = "[Start with operating system]";
+            this.chkStartWithOs.UseVisualStyleBackColor = true;
+            // 
+            // chkContinueRunningBackground
+            // 
+            this.chkContinueRunningBackground.AutoSize = true;
+            this.chkContinueRunningBackground.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkContinueRunningBackground.Location = new System.Drawing.Point(42, 668);
+            this.chkContinueRunningBackground.Margin = new System.Windows.Forms.Padding(1);
+            this.chkContinueRunningBackground.Name = "chkContinueRunningBackground";
+            this.chkContinueRunningBackground.Size = new System.Drawing.Size(465, 28);
+            this.chkContinueRunningBackground.TabIndex = 48;
+            this.chkContinueRunningBackground.Text = "[Continue running background when the app is closed]";
+            this.chkContinueRunningBackground.UseVisualStyleBackColor = true;
             // 
             // chkUseTouchGesture
             // 
@@ -2943,6 +2997,45 @@ namespace ImageGlass
             this.lblLanguageText.TabIndex = 1;
             this.lblLanguageText.Text = "Installed languages:";
             // 
+            // tabPrivacy
+            // 
+            this.tabPrivacy.AutoScroll = true;
+            this.tabPrivacy.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
+            this.tabPrivacy.Controls.Add(this.lnkPrivacyLearnMore);
+            this.tabPrivacy.Controls.Add(this.chkEnableSpiderService);
+            this.tabPrivacy.Location = new System.Drawing.Point(4, 69);
+            this.tabPrivacy.Margin = new System.Windows.Forms.Padding(0);
+            this.tabPrivacy.Name = "tabPrivacy";
+            this.tabPrivacy.Size = new System.Drawing.Size(737, 596);
+            this.tabPrivacy.TabIndex = 9;
+            this.tabPrivacy.Text = "privacy";
+            // 
+            // lnkPrivacyLearnMore
+            // 
+            this.lnkPrivacyLearnMore.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
+            this.lnkPrivacyLearnMore.AutoSize = true;
+            this.lnkPrivacyLearnMore.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lnkPrivacyLearnMore.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
+            this.lnkPrivacyLearnMore.Location = new System.Drawing.Point(40, 56);
+            this.lnkPrivacyLearnMore.Name = "lnkPrivacyLearnMore";
+            this.lnkPrivacyLearnMore.Size = new System.Drawing.Size(107, 23);
+            this.lnkPrivacyLearnMore.TabIndex = 8;
+            this.lnkPrivacyLearnMore.TabStop = true;
+            this.lnkPrivacyLearnMore.Text = "[Learn more]";
+            this.lnkPrivacyLearnMore.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
+            // 
+            // chkEnableSpiderService
+            // 
+            this.chkEnableSpiderService.AutoSize = true;
+            this.chkEnableSpiderService.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkEnableSpiderService.Location = new System.Drawing.Point(22, 20);
+            this.chkEnableSpiderService.Margin = new System.Windows.Forms.Padding(1);
+            this.chkEnableSpiderService.Name = "chkEnableSpiderService";
+            this.chkEnableSpiderService.Size = new System.Drawing.Size(215, 28);
+            this.chkEnableSpiderService.TabIndex = 6;
+            this.chkEnableSpiderService.Text = "[Enable Spider service]";
+            this.chkEnableSpiderService.UseVisualStyleBackColor = true;
+            // 
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -3015,30 +3108,6 @@ namespace ImageGlass
             this.panel4.Size = new System.Drawing.Size(973, 67);
             this.panel4.TabIndex = 18;
             // 
-            // chkContinueRunningBackground
-            // 
-            this.chkContinueRunningBackground.AutoSize = true;
-            this.chkContinueRunningBackground.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkContinueRunningBackground.Location = new System.Drawing.Point(42, 668);
-            this.chkContinueRunningBackground.Margin = new System.Windows.Forms.Padding(1);
-            this.chkContinueRunningBackground.Name = "chkContinueRunningBackground";
-            this.chkContinueRunningBackground.Size = new System.Drawing.Size(465, 28);
-            this.chkContinueRunningBackground.TabIndex = 48;
-            this.chkContinueRunningBackground.Text = "[Continue running background when the app is closed]";
-            this.chkContinueRunningBackground.UseVisualStyleBackColor = true;
-            // 
-            // chkStartWithOs
-            // 
-            this.chkStartWithOs.AutoSize = true;
-            this.chkStartWithOs.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkStartWithOs.Location = new System.Drawing.Point(42, 634);
-            this.chkStartWithOs.Margin = new System.Windows.Forms.Padding(1);
-            this.chkStartWithOs.Name = "chkStartWithOs";
-            this.chkStartWithOs.Size = new System.Drawing.Size(263, 28);
-            this.chkStartWithOs.TabIndex = 49;
-            this.chkStartWithOs.Text = "[Start with operating system]";
-            this.chkStartWithOs.UseVisualStyleBackColor = true;
-            // 
             // frmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(134F, 134F);
@@ -3107,6 +3176,8 @@ namespace ImageGlass
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).EndInit();
             this.tabLanguage.ResumeLayout(false);
             this.tabLanguage.PerformLayout();
+            this.tabPrivacy.ResumeLayout(false);
+            this.tabPrivacy.PerformLayout();
             this.tblayout.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
@@ -3322,5 +3393,9 @@ namespace ImageGlass
         private System.Windows.Forms.Label lblNumberImagesNotify;
         private System.Windows.Forms.CheckBox chkContinueRunningBackground;
         private System.Windows.Forms.CheckBox chkStartWithOs;
+        private System.Windows.Forms.Label lblPrivacy;
+        private System.Windows.Forms.TabPage tabPrivacy;
+        private System.Windows.Forms.CheckBox chkEnableSpiderService;
+        private System.Windows.Forms.LinkLabel lnkPrivacyLearnMore;
     }
 }
