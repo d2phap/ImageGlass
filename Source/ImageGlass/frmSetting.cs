@@ -2231,23 +2231,6 @@ namespace ImageGlass {
             return isSuccessful;
         }
 
-        private void picStoreApp_Click(object sender, EventArgs e) {
-            try {
-                Process.Start($"ms-windows-store://pdp/?ProductId={Constants.MS_APPSTORE_ID}");
-            }
-            catch {
-                try {
-                    Process.Start($"https://www.microsoft.com/store/productId/{Constants.MS_APPSTORE_ID}");
-                }
-                catch { }
-            }
-        }
-
-        private void sp1_SplitterMoved(object sender, SplitterEventArgs e) {
-            picStoreApp.Width = sp1.SplitterDistance;
-        }
-
-
         #endregion
 
     }
