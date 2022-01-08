@@ -1175,12 +1175,12 @@ namespace ImageGlass {
                         }
                         // ESC: Quit ImageGlass
                         else if (Configs.IsPressESCToQuit) {
-                            mnuMainExitApplication_Click(null, null);
+                            Exit();
                         }
                     }
                     // Shift + ESC: Truly quit ImageGlass
                     else if (Configs.IsPressESCToQuit) {
-                        mnuMainExitApplication_Click(null, null);
+                        Exit(true);
                     }
                 }
 
@@ -1327,6 +1327,13 @@ namespace ImageGlass {
                 #region Ctrl + End
                 if (!_isWindowsKeyPressed && e.KeyValue == 35) {
                     mnuMainLastPage_Click(null, null);
+                }
+                #endregion
+
+                // Exit app
+                #region Ctrl + W
+                if (!_isWindowsKeyPressed && e.KeyCode == Keys.W) {
+                    Exit();
                 }
                 #endregion
 
@@ -2596,7 +2603,7 @@ namespace ImageGlass {
                 }
             }
             else if (Configs.AfterEditingAction == AfterOpeningEditAppAction.Close) {
-                mnuMainExitApplication_Click(null, null);
+                Exit();
             }
         }
 
@@ -3051,6 +3058,15 @@ namespace ImageGlass {
                     ApplyZoomMode(Configs.ZoomMode);
                 }
             }
+        }
+
+        /// <summary>
+        /// Exits application
+        /// </summary>
+        /// <param name="force"></param>
+        private void Exit(bool force = false) {
+            _forceExitApp = force;
+            Application.Exit();
         }
 
         #endregion
@@ -4362,7 +4378,7 @@ namespace ImageGlass {
         }
 
         private void MnuTrayExit_Click(object sender, EventArgs e) {
-            mnuMainExitApplication_Click(null, null);
+            Exit(true);
         }
 
         #endregion
@@ -5445,8 +5461,7 @@ namespace ImageGlass {
 
         private void mnuMainExitApplication_Click(object sender, EventArgs e) {
             // make sure app is truly exitted
-            _forceExitApp = true;
-            Close();
+            Exit(true);
         }
 
         private void mnuMainStartStopAnimating_Click(object sender, EventArgs e) {
