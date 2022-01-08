@@ -25,6 +25,7 @@ using System.Linq;
 using System.Windows.Forms;
 using ImageGlass.Base;
 using ImageGlass.Library;
+using ImageGlass.Services;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 
@@ -219,12 +220,13 @@ namespace igcmd {
             lnkSkip.Text = _lang.Items[$"{Name}.lnkSkip"];
 
             lblLanguage.Text = _lang.Items[$"{Name}.lblLanguage"];
-            lnkPrivacy.Text = _lang.Items[$"{Name}.lnkPrivacy"];
-            lblPrivacyDesctipion.Text = _lang.Items[$"{Name}.lblPrivacyDesctipion"];
             lblTheme.Text = _lang.Items[$"{Name}.lblTheme"];
             lblDefaultApp.Text = _lang.Items[$"{Name}.lblDefaultApp"];
             btnSetDefaultApp.Text = _lang.Items[$"{Name}.btnSetDefaultApp"];
+            lnkPrivacy.Text = _lang.Items[$"{Name}.lnkPrivacy"];
 
+            var sdkExist = File.Exists(SpiderService.SDK_DLL);
+            lblPrivacyDesctipion.Text = sdkExist ? _lang.Items[$"{Name}.lblPrivacyDesctipion._Spider"] : _lang.Items[$"{Name}.lblPrivacyDesctipion"];
         }
 
         /// <summary>

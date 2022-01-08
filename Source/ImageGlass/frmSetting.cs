@@ -56,6 +56,7 @@ namespace ImageGlass {
         private readonly Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 176, 181, 183);
         private readonly Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 160, 165, 168);
 
+        private const string PRIVACY_URL = "https://imageglass.org/privacy";
         private List<Language> lstLanguages = new();
 
         #region Toolbar
@@ -364,10 +365,15 @@ namespace ImageGlass {
             lblKeysLeftRight.Text = lang[$"{Name}.{nameof(lblKeysLeftRight)}"];
             #endregion
 
-            #region KEYBOARD TAB
+            #region PRIVACY TAB
             lblPrivacy.Text = lang[$"{Name}.{nameof(lblPrivacy)}"];
+            lnkPrivacy.Text = string.Format(lang[$"{Name}.{nameof(lnkPrivacy)}"], PRIVACY_URL);
+            lnkPrivacy.LinkArea = new(lnkPrivacy.Text.IndexOf(PRIVACY_URL), PRIVACY_URL.Length);
             chkEnableSpiderService.Text = lang[$"{Name}.{nameof(chkEnableSpiderService)}"];
-            lnkPrivacyLearnMore.Text = lang[$"{Name}.{nameof(lnkPrivacyLearnMore)}"];
+
+            var learnMore = lang[$"{Name}.{nameof(lnkSpider)}._LearnMore"];
+            lnkSpider.Text = lang[$"{Name}.{nameof(lnkSpider)}._Description"] + " " + learnMore;
+            lnkSpider.LinkArea = new(lnkSpider.Text.IndexOf(learnMore), learnMore.Length);
             #endregion
 
         }
@@ -1848,13 +1854,23 @@ namespace ImageGlass {
         #region TAB PRIVACY
 
         private void LoadTabPrivacy() {
-            chkEnableSpiderService.Enabled = File.Exists(SpiderService.SDK_DLL);
+            chkEnableSpiderService.Visible =
+                lnkSpider.Visible =
+                File.Exists(SpiderService.SDK_DLL);
+
             chkEnableSpiderService.Checked = Configs.IsEnableSpiderService;
         }
 
-        private void lnkPrivacyLearnMore_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+        private void LnkPrivacy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             try {
-                Process.Start($"https://imageglass.org/privacy?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_settings");
+                Process.Start($"{PRIVACY_URL}?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_settings");
+            }
+            catch { }
+        }
+
+        private void lnkSpider_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            try {
+                Process.Start($"https://imageglass.org/docs/spider-service?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_settings");
             }
             catch { }
         }
@@ -2231,8 +2247,8 @@ namespace ImageGlass {
             picStoreApp.Width = sp1.SplitterDistance;
         }
 
-        #endregion
 
+        #endregion
 
     }
 }
