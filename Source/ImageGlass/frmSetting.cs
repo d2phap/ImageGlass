@@ -132,6 +132,7 @@ namespace ImageGlass {
             LoadTabImageConfig();
             LoadTabEditConfig();
             LoadTabTools();
+            LoadTabPrivacy();
 
             // to prevent the setting: ToolbarPosition = -1, we load this onLoad event
             LoadTabToolbar();
@@ -498,6 +499,7 @@ namespace ImageGlass {
             else if (tab1.SelectedTab == tabPrivacy) {
                 lblPrivacy.Tag = 1;
                 lblPrivacy.BackColor = M_COLOR_MENU_SELECTED;
+                chkEnableSpiderService.Enabled = true;
 
                 LoadTabPrivacy();
             }
@@ -1846,6 +1848,7 @@ namespace ImageGlass {
         #region TAB PRIVACY
 
         private void LoadTabPrivacy() {
+            chkEnableSpiderService.Enabled = File.Exists(SpiderService.SDK_DLL);
             chkEnableSpiderService.Checked = Configs.IsEnableSpiderService;
         }
 
@@ -2194,7 +2197,8 @@ namespace ImageGlass {
             #endregion
 
             #region Privacy tab --------------------------------------------
-            Configs.IsEnableSpiderService = chkEnableSpiderService.Checked;
+            var dllExist = File.Exists(SpiderService.SDK_DLL);
+            Configs.IsEnableSpiderService = dllExist && chkEnableSpiderService.Checked;
 
             // toggle Spider service
             if (Configs.IsEnableSpiderService) {

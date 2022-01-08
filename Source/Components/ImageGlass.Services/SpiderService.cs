@@ -23,7 +23,7 @@ namespace ImageGlass.Services {
     public class SpiderService {
 
         private const string APP_ID = "org.imageglass.app";
-        private const string SDK_DLL = "bs-sdk.dll";
+        public const string SDK_DLL = "bs-sdk.dll";
 
         /// <summary>
         /// Golang string structure
