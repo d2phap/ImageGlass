@@ -3318,12 +3318,15 @@ namespace ImageGlass {
                 SaveConfig();
 
                 // start with os
-                if (Configs.IsStartWithOs) {
-                    var startupDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), Application.ProductName + ".lnk");
+                var appShortcut = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), Application.ProductName + ".lnk");
 
-                    if (!File.Exists(startupDir)) {
-                        Shortcuts.CreateShortcut(startupDir, App.IGExePath, "-HideWindow");
+                if (Configs.IsStartWithOs) {
+                    if (!File.Exists(appShortcut)) {
+                        Shortcuts.CreateShortcut(appShortcut, App.IGExePath, "-HideWindow");
                     }
+                }
+                else {
+                    File.Delete(appShortcut);
                 }
 
                 // Write user configs file
