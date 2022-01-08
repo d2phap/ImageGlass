@@ -4626,52 +4626,32 @@ namespace ImageGlass {
         }
 
         private void mnuMainEditImage_Click(object sender, EventArgs e) {
-            // Viewing image filename
-            var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
+            string filename;
 
             // If viewing image is temporary memory data
             if (Local.IsTempMemoryData) {
                 // Save to temp file
                 filename = SaveTemporaryMemoryData();
-
-                EditByDefaultApp();
             }
             else {
-                // Get extension
-                var ext = Path.GetExtension(filename).ToLower();
-
-                // Get EditApp for editing
-                var app = Configs.GetEditApp(ext);
-
-                if (app != null) {
-                    // Open configured app for editing
-                    using var p = new Process();
-                    p.StartInfo.FileName = Environment.ExpandEnvironmentVariables(app.AppPath);
-
-                    // Build the arguments
-                    var args = app.AppArguments.Replace(EditApp.FileMacro, filename);
-                    p.StartInfo.Arguments = $"{args}";
-
-                    // show error dialog
-                    p.StartInfo.ErrorDialog = true;
-
-                    try {
-                        p.Start();
-
-                        RunActionAfterEditing();
-                    }
-                    catch { }
-                }
-                else // Edit by default associated app
-                {
-                    EditByDefaultApp();
-                }
+                // Viewing image filename
+                filename = Local.ImageList.GetFileName(Local.CurrentIndex);
             }
 
-            void EditByDefaultApp() {
+            // Get extension
+            var ext = Path.GetExtension(filename).ToLower();
+
+            // Get EditApp for editing
+            var app = Configs.GetEditApp(ext);
+
+            if (app != null) {
+                // Open configured app for editing
                 using var p = new Process();
-                p.StartInfo.FileName = filename;
-                p.StartInfo.Verb = "edit";
+                p.StartInfo.FileName = Environment.ExpandEnvironmentVariables(app.AppPath);
+
+                // Build the arguments
+                var args = app.AppArguments.Replace(EditApp.FileMacro, filename);
+                p.StartInfo.Arguments = $"{args}";
 
                 // show error dialog
                 p.StartInfo.ErrorDialog = true;
@@ -4683,6 +4663,34 @@ namespace ImageGlass {
                 }
                 catch { }
             }
+            else // Edit by default associated app
+            {
+                EditByDefaultApp(filename);
+            }
+        }
+
+        private void EditByDefaultApp(string filename) {
+            using var p = new Process();
+
+            if (Helpers.IsOS(WindowsOS.Win11)) {
+                p.StartInfo.FileName = Environment.ExpandEnvironmentVariables("mspaint.exe");
+                p.StartInfo.Arguments = filename;
+            }
+            // Windows 10 or earlier
+            else {
+                p.StartInfo.FileName = filename;
+                p.StartInfo.Verb = "edit";
+            }
+
+            // show error dialog
+            p.StartInfo.ErrorDialog = true;
+
+            try {
+                p.Start();
+
+                RunActionAfterEditing();
+            }
+            catch { }
         }
 
 
