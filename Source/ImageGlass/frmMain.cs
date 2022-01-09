@@ -2624,6 +2624,7 @@ namespace ImageGlass {
 
             // Apply theme
             Configs.ApplyFormTheme(this, Configs.Theme);
+            tray.Icon = Icon;
 
             // Remove white line under tool strip
             toolMain.Renderer = new ModernToolStripRenderer(th);

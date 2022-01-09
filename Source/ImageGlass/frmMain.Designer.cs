@@ -173,11 +173,11 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuTray = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuTrayInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuTrayShowWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuTrayExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tray = new System.Windows.Forms.NotifyIcon(this.components);
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -1998,6 +1998,11 @@
             this.mnuTrayInfo.Size = new System.Drawing.Size(255, 28);
             this.mnuTrayInfo.Text = "[ImageGlass v8.4 - x64]";
             // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(252, 6);
+            // 
             // mnuTrayShowWindow
             // 
             this.mnuTrayShowWindow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -2022,14 +2027,8 @@
             // tray
             // 
             this.tray.ContextMenuStrip = this.mnuTray;
-            this.tray.Icon = ((System.Drawing.Icon)(resources.GetObject("tray.Icon")));
             this.tray.Text = "ImageGlass";
             this.tray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Tray_MouseDoubleClick);
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(252, 6);
             // 
             // frmMain
             // 
