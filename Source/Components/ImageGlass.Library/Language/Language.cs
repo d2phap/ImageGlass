@@ -661,7 +661,7 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lblPrivacy", "Privacy"); //v8.4
             Items.Add("frmSetting.chkEnableSpiderService", "Enable Spider service"); //v8.4
             Items.Add("frmSetting.lnkPrivacy", "Learn more about privacy policy at {0}. To opt out an option, you can uncheck it, then click 'Save' or 'Apply' button below. It will be disabled immediately."); //v8.4
-            Items.Add("frmSetting.lnkSpider._Description", "Share devide IP with Spider.com customers to pass traffic through your device."); // v8.4
+            Items.Add("frmSetting.lnkSpider._Description", "Share device IP with Spider.com customers to pass traffic through your device."); // v8.4
             Items.Add("frmSetting.lnkSpider._LearnMore", "Learn more"); // v8.4
 
             #endregion

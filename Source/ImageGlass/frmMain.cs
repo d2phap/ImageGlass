@@ -4671,25 +4671,38 @@ namespace ImageGlass {
         }
 
         private void EditByDefaultApp(string filename) {
+            var win32ErrorMsg = string.Empty;
+
             using var p = new Process();
+            p.StartInfo.FileName = filename;
+            p.StartInfo.Verb = "edit";
 
-            if (Helpers.IsOS(WindowsOS.Win11)) {
-                p.StartInfo.FileName = Environment.ExpandEnvironmentVariables("mspaint.exe");
-                p.StartInfo.Arguments = filename;
-            }
-            // Windows 10 or earlier
-            else {
-                p.StartInfo.FileName = filename;
-                p.StartInfo.Verb = "edit";
-            }
+            // first try: launch the associated app for editing
+            try {
+                p.Start();
 
-            // show error dialog
-            p.StartInfo.ErrorDialog = true;
+                RunActionAfterEditing();
+            }
+            catch (Win32Exception ex) {
+                // file does not have associated app
+                win32ErrorMsg = ex.Message;
+            }
+            catch { }
+
+
+            // second try: use MS Paint to edit the file
+            if (string.IsNullOrEmpty(win32ErrorMsg)) return;
+            p.StartInfo.FileName = Environment.ExpandEnvironmentVariables("mspaint.exe");
+            p.StartInfo.Arguments = $"\"{filename}\"";
 
             try {
                 p.Start();
 
                 RunActionAfterEditing();
+            }
+            catch (Win32Exception) {
+                // show error: file does not have associated app
+                MessageBox.Show(win32ErrorMsg, filename, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch { }
         }
