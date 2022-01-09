@@ -137,7 +137,15 @@ namespace ImageGlass {
             if (Configs.FirstLaunchVersion < Constants.FIRST_LAUNCH_VERSION) {
                 using var p = new Process();
                 p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
-                p.StartInfo.Arguments = "firstlaunch";
+
+                // update from <=v8.3 to v8.4
+                if (Configs.FirstLaunchVersion >= 5) {
+                    // show privacy update
+                    p.StartInfo.Arguments = "firstlaunch 2";
+                }
+                else {
+                    p.StartInfo.Arguments = "firstlaunch";
+                }
 
                 try {
                     p.Start();

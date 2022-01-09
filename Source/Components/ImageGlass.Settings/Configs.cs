@@ -322,7 +322,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets the version that requires to launch First-Launch Configs screen
         /// </summary>
-        public static int FirstLaunchVersion { get; set; } = 0;
+        public static float FirstLaunchVersion { get; set; } = 0;
 
         /// <summary>
         /// Gets, sets slide show interval (minimum value if it's random)
@@ -656,7 +656,7 @@ namespace ImageGlass.Settings {
 
             #region Number items
 
-            FirstLaunchVersion = Get<int>(nameof(FirstLaunchVersion), FirstLaunchVersion);
+            FirstLaunchVersion = Get<float>(nameof(FirstLaunchVersion), FirstLaunchVersion);
 
             #region Slide show
             SlideShowInterval = Get<uint>(nameof(SlideShowInterval), SlideShowInterval);

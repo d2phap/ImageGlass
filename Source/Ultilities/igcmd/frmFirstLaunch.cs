@@ -42,6 +42,14 @@ namespace igcmd {
             ApplyTheme(Configs.Theme);
         }
 
+        public frmFirstLaunch(int step = 0) : this() {
+            var tabIndex = Math.Max(0, step);
+            tabIndex = Math.Min(tabIndex, tab1.TabCount - 1);
+
+            // select tab to show
+            tab1.SelectTab(tabIndex);
+        }
+
         private readonly List<Theme> _themeList = new List<Theme>();
         private List<Language> _langList = new List<Language>();
         private Language _lang = new Language();
@@ -124,17 +132,16 @@ namespace igcmd {
 
         private void btnSetDefaultApp_Click(object sender, EventArgs e) {
             // Update extensions to registry
-            using (var p = new Process()) {
-                var formats = Configs.GetImageFormats(Configs.AllFormats);
+            using var p = new Process();
+            var formats = Configs.GetImageFormats(Configs.AllFormats);
 
-                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                p.StartInfo.Arguments = $"regassociations {formats}";
+            p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+            p.StartInfo.Arguments = $"regassociations {formats}";
 
-                try {
-                    p.Start();
-                }
-                catch { }
+            try {
+                p.Start();
             }
+            catch { }
         }
 
         private void cmbLanguage_SelectedIndexChanged(object sender, EventArgs e) {
@@ -215,7 +222,9 @@ namespace igcmd {
             _lang = lang;
 
             Text = _lang.Items[$"{Name}._Text"];
-            lblStepNumber.Text = string.Format(_lang.Items[$"{Name}.lblStepNumber"], 1, tab1.TabCount);
+            lblStepNumber.Text = string.Format(_lang.Items[$"{Name}.lblStepNumber"], tab1.SelectedIndex + 1, tab1.TabCount);
+
+
             btnNextStep.Text = _lang.Items[$"{Name}.btnNextStep"];
             lnkSkip.Text = _lang.Items[$"{Name}.lnkSkip"];
 
