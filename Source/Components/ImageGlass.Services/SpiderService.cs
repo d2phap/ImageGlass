@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
 using System.Runtime.InteropServices;
 
 
@@ -29,11 +30,11 @@ namespace ImageGlass.Services {
         /// Golang string structure
         /// </summary>
         private struct GoString {
-            public string p;
-            public int n;
+            public IntPtr p;
+            public long n;
 
             public GoString(string id) {
-                p = id;
+                p = Marshal.StringToHGlobalAnsi(id);
                 n = id.Length;
             }
         }

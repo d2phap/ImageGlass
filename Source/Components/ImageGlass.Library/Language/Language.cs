@@ -458,7 +458,7 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.chkGroupByDirectory", "Group images by directory"); //v8.0
             Items.Add("frmSetting.lblImageBoosterCachedCount", "Number of images cached by ImageBooster (one direction)"); //v7.0
             Items.Add("frmSetting.chkIsPlayImageChangeSound", "Play sound when image changes"); //v8.4
-            Items.Add("frmSetting.lblNumberImagesNotify", "Number of images to nofity"); //v8.4
+            Items.Add("frmSetting.lblNumberImagesNotify", "Number of images to notify"); //v8.4
             #endregion
 
             #region Color Management
