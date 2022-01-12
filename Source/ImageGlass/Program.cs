@@ -236,7 +236,7 @@ namespace ImageGlass {
 
             Action<string[]> UpdateForm = args => {
                 // activate form
-                formMain.ToggleAppVisibility(true);
+                _ = formMain.ToggleAppVisibilityAsync(true);
 
                 // load image file from arg
                 formMain.LoadFromParams(args);

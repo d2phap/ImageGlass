@@ -121,8 +121,9 @@ namespace ImageGlass {
 
         private MovableForm _movableForm;
 
-        // gets, sets the CancellationTokenSource of synchronious image loading task
-        private System.Threading.CancellationTokenSource _cancelToken = new();
+        // cancellation tokens of synchronious task
+        private System.Threading.CancellationTokenSource _loadCancelToken = new();
+        private System.Threading.CancellationTokenSource _busyCancelToken = new();
 
         /***********************************
          * Variables for FileWatcherEx
@@ -615,9 +616,8 @@ namespace ImageGlass {
             System.Threading.SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
 
             // cancel the previous loading task
-            _cancelToken.Cancel();
-            var token = new System.Threading.CancellationTokenSource();
-            _cancelToken = token;
+            _loadCancelToken.Cancel();
+            _loadCancelToken = new();
 
             if (Local.IsBusy) {
                 return;
@@ -625,9 +625,6 @@ namespace ImageGlass {
 
             // Save previous image if it was modified
             if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating) {
-                ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 2000);
-
-                Application.DoEvents();
                 _ = SaveImageChangeAsync();
 
                 // remove the old image data from cache
@@ -718,7 +715,7 @@ namespace ImageGlass {
 
                 // put app in a 'busy' state around image load: allows us to prevent the user
                 // from skipping past a slow-to-load image by processing too many arrow clicks
-                SetAppBusy(true);
+                _ = SetAppBusyAsync(true, Configs.Language.Items[$"{Name}._Loading"], 1000, 2000);
 
                 if (pageIndex != int.MinValue) {
                     UpdateActivePage();
@@ -755,7 +752,7 @@ namespace ImageGlass {
                     Local.ImageError = bmpImg.Error;
 
 
-                    if (bmpImg.Image != null && !token.Token.IsCancellationRequested) {
+                    if (bmpImg.Image != null && !_loadCancelToken.Token.IsCancellationRequested) {
                         picMain.Image = bmpImg.Image;
 
                         // Reset the zoom mode if isKeepZoomRatio = FALSE
@@ -792,7 +789,7 @@ namespace ImageGlass {
             }
 
             // clear busy state
-            SetAppBusy(false);
+            _ = SetAppBusyAsync(false);
             SetStatusBar();
 
             _isDraggingImage = false;
@@ -824,34 +821,6 @@ namespace ImageGlass {
 
                 // Refresh picMain to update the active page
                 picMain.Invalidate();
-            }
-
-            void SetAppBusy(bool isbusy) {
-                Timer _loadingTimer = null;
-
-                Local.IsBusy = isbusy;
-                // fire-eggs 20190902 fix observed issue: cursor switched to
-                // arrow when it maybe should be cross or nav-arrow
-                if (isbusy)
-                    picMain.Cursor = Cursors.WaitCursor;
-                else
-                    picMain.Cursor = Cursors.Default;
-
-                // Part of Issue #485 fix: failure to disable timer after image load meant message 
-                // could appear after image already loaded
-                if (!isbusy && _loadingTimer != null) {
-                    _loadingTimer.Enabled = false;
-                    _loadingTimer.Dispose();
-                    _loadingTimer = null;
-                }
-                if (isbusy) {
-                    _loadingTimer = new Timer() // can't re-use timer, re-create each time
-                    {
-                        Interval = 2000
-                    };
-                    _loadingTimer.Tick += LoadingMessageTimer_Tick;
-                    _loadingTimer.Enabled = true;
-                }
             }
         }
 
@@ -1819,34 +1788,17 @@ namespace ImageGlass {
             }
         }
 
-        /// <summary>
-        /// Check and display message if the image still being loaded
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void LoadingMessageTimer_Tick(object sender, EventArgs e) {
-            var timer = (Timer)sender;
-            timer.Enabled = false;
-            timer.Stop();
-            timer.Tick -= LoadingMessageTimer_Tick;
-
-            if (Local.IsBusy) {
-                ShowToastMsg(Configs.Language.Items[$"{Name}._Loading"], 10000);
-            }
-
-            timer.Dispose();
-        }
 
         /// <summary>
         /// Display a toast message on picture box
         /// </summary>
         /// <param name="msg">Message</param>
         /// <param name="duration">Duration (milisecond)</param>
-        private void ShowToastMsg(string msg, int duration) {
+        private async void ShowToastMsg(string msg, int duration, int delay = 0) {
             if (!Configs.IsShowToast) return;
 
             if (InvokeRequired) {
-                Invoke(new Action<string, int>(ShowToastMsg), msg, duration);
+                Invoke(new Action<string, int, int>(ShowToastMsg), msg, duration, delay);
                 return;
             }
 
@@ -1868,6 +1820,8 @@ namespace ImageGlass {
             picMain.Font = new Font(Font.FontFamily, 12);
             picMain.ForeColor = Color.White;
             picMain.Text = msg;
+
+            await Task.Delay(delay);
 
             // Start timer
             timToast.Enabled = true;
@@ -1986,10 +1940,9 @@ namespace ImageGlass {
             // use backup name to avoid variable conflict
             var filename = Local.ImageModifiedPath;
 
-            try {
-                // display saving msg
-                ShowToastMsg(string.Format(Configs.Language.Items[$"{Name}._SavingImage"], filename), 2000);
+            _ = SetAppBusyAsync(true, string.Format(Configs.Language.Items[$"{Name}._SavingImage"], filename));
 
+            try {
                 var lastWriteTime = File.GetLastWriteTime(filename);
                 Bitmap newBitmap;
 
@@ -2021,6 +1974,7 @@ namespace ImageGlass {
             }
 
             Local.ImageModifiedPath = "";
+            await SetAppBusyAsync(false);
         }
 
         /// <summary>
@@ -2882,7 +2836,7 @@ namespace ImageGlass {
 
                 // hide window
                 if (_isHideWindow) {
-                    ToggleAppVisibility(false);
+                    _ = ToggleAppVisibilityAsync(false);
                 }
             }
             #endregion
@@ -2926,14 +2880,6 @@ namespace ImageGlass {
 
             // Save thumbnail bar width
             Configs.ThumbnailBarWidth = (uint)(sp1.Width - sp1.SplitterDistance);
-
-            // Save previous image if it was modified
-            if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating) {
-                ShowToastMsg(Configs.Language.Items[$"{Name}._SaveChanges"], 1000);
-
-                Application.DoEvents();
-                _ = SaveImageChangeAsync(true);
-            }
 
             // Save last seen image path
             Configs.LastSeenImagePath = Local.ImageList.GetFileName(Local.CurrentIndex);
@@ -3257,7 +3203,13 @@ namespace ImageGlass {
             }
         }
 
-        private void frmMain_FormClosing(object sender, FormClosingEventArgs e) {
+        private async void frmMain_FormClosing(object sender, FormClosingEventArgs e) {
+            // wait for task done
+            if (Local.IsBusy) {
+                e.Cancel = true;
+                return;
+            }
+
             // continue running background
             if (!_forceExitApp
                 && Configs.IsContinueRunningBackground
@@ -3269,7 +3221,7 @@ namespace ImageGlass {
                     var processCount = Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName).Length;
 
                     if (processCount > 1) {
-                        PrepareToExitApp();
+                        await PrepareToExitAppAsync();
 
                         return;
                     }
@@ -3279,16 +3231,16 @@ namespace ImageGlass {
                 e.Cancel = true;
 
                 // hide the app
-                ToggleAppVisibility(false);
+                _ = ToggleAppVisibilityAsync(false);
             }
 
             // close the app
             else {
-                PrepareToExitApp();
+                await PrepareToExitAppAsync();
             }
         }
 
-        public void ToggleAppVisibility(bool show) {
+        public async Task ToggleAppVisibilityAsync(bool show) {
             tray.Visible = !show;
 
             if (show) {
@@ -3305,29 +3257,42 @@ namespace ImageGlass {
                 // Write user configs file
                 Configs.Write();
 
-                // Dispose all garbage
-                Local.ImageList.Dispose();
-                Local.CurrentIndex = -1;
-                Local.CurrentPageCount = 0;
-                Local.CurrentPageIndex = 0;
-                Local.CurrentExif = null;
-                Local.CurrentColor = null;
+                // Save image if it was modified
+                if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating) {
+                    await SaveImageChangeAsync(true);
+                }
+                Application.DoEvents();
 
-                thumbnailBar.Items.Clear();
-                picMain.Image = null;
-                SetStatusBar();
+                if (!Visible) {
+                    // Dispose all garbage
+                    Local.ImageList.Dispose();
+                    Local.CurrentIndex = -1;
+                    Local.CurrentPageCount = 0;
+                    Local.CurrentPageIndex = 0;
+                    Local.CurrentExif = null;
+                    Local.CurrentColor = null;
 
-                // Collect system garbage
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                GC.Collect();
+                    thumbnailBar.Items.Clear();
+                    picMain.Image = null;
+                    SetStatusBar();
+
+                    // Collect system garbage
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
+                }
             }
         }
 
-        private void PrepareToExitApp() {
+        private async Task PrepareToExitAppAsync() {
             try {
                 // release resource of the file system watcher
                 _fileWatcher.Dispose();
+
+                // Save image if it was modified
+                if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating) {
+                    await SaveImageChangeAsync(true);
+                }
 
                 // clear temp files
                 var tempDir = App.ConfigDir(PathType.Dir, Dir.Temporary);
@@ -4114,7 +4079,7 @@ namespace ImageGlass {
 
         private void Tray_MouseDoubleClick(object sender, MouseEventArgs e) {
             // show app
-            ToggleAppVisibility(true);
+            _ = ToggleAppVisibilityAsync(true);
         }
 
         #endregion
@@ -4369,7 +4334,7 @@ namespace ImageGlass {
         }
 
         private void mnuTrayShowWindow_Click(object sender, EventArgs e) {
-            ToggleAppVisibility(true);
+            _ = ToggleAppVisibilityAsync(true);
         }
 
         private void MnuTrayExit_Click(object sender, EventArgs e) {
@@ -4443,6 +4408,42 @@ namespace ImageGlass {
             }
         }
 
+        /// <summary>
+        /// Sets app's busy state. UI interaction is blocked while the app is busy
+        /// </summary>
+        /// <param name="isBusy"></param>
+        /// <param name="msg"></param>
+        private async Task SetAppBusyAsync(bool isBusy, string msg = "", int disableDelay = 0, int msgDelay = 0, int msgDuration = 30_000) {
+            _busyCancelToken.Cancel();
+            _busyCancelToken = new();
+
+            Local.IsBusy = isBusy;
+
+            if (isBusy) {
+                sp0.Cursor = Cursors.WaitCursor;
+                KeyPreview = false;
+
+                if (!string.IsNullOrEmpty(msg)) {
+                    ShowToastMsg(msg, msgDuration, msgDelay);
+                }
+            }
+            else {
+                sp0.Cursor = Cursors.Default;
+                ShowToastMsg("", 0);
+            }
+
+            if (disableDelay > 0) {
+                try {
+                    await Task.Delay(disableDelay, _busyCancelToken.Token);
+                }
+                catch { }
+            }
+
+            sp0.Enabled = !Local.IsBusy;
+            KeyPreview = true;
+            picMain.Focus();
+        }
+
 
         /// <summary>
         /// Save image to file
@@ -4458,6 +4459,8 @@ namespace ImageGlass {
             var currentFile = Local.ImageList.GetFileName(Local.CurrentIndex);
             if (string.IsNullOrEmpty(currentFile)) currentFile = "untitled.png";
 
+            // set app busy
+            _ = SetAppBusyAsync(true, string.Format(Configs.Language.Items[$"{Name}._SavingImage"], destFilename), 1000);
 
             Bitmap clonedPic;
 
@@ -4467,9 +4470,6 @@ namespace ImageGlass {
             else {
                 clonedPic = (Bitmap)picMain.Image;
             }
-
-            // display saving msg
-            ShowToastMsg(string.Format(Configs.Language.Items[$"{Name}._SavingImage"], destFilename), 2000);
 
             switch (destExt) {
                 case "bmp":
@@ -4522,6 +4522,9 @@ namespace ImageGlass {
             if (File.Exists(destFilename)) {
                 ShowToastMsg(string.Format(Configs.Language.Items[$"{Name}._SaveImage"], destFilename), 2000);
             }
+
+            // release busy state
+            _ = SetAppBusyAsync(false);
         }
 
 
