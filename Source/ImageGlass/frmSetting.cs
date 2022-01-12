@@ -1911,7 +1911,10 @@ namespace ImageGlass {
             // AutoUpdate
             Configs.AutoUpdate = chkAutoUpdate.Checked ? DateTime.Now.ToString("M/d/yyyy HH:mm:ss") : "0";
 
+            // start with os
             Configs.IsStartWithOs = chkStartWithOs.Checked;
+            Helper.SetStartWithOS(Configs.IsStartWithOs);
+
             Configs.IsContinueRunningBackground = chkContinueRunningBackground.Checked;
             Configs.IsAllowMultiInstances = chkAllowMultiInstances.Checked;
             Configs.IsPressESCToQuit = chkESCToQuit.Checked;

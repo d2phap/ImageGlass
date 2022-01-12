@@ -3297,10 +3297,13 @@ namespace ImageGlass {
                 WindowState = Configs.FrmMainWindowState;
             }
             else {
-                SaveConfig(true);
+                SaveConfig();
                 WindowState = FormWindowState.Minimized;
                 ShowInTaskbar = false;
                 Visible = false;
+
+                // Write user configs file
+                Configs.Write();
 
                 // Dispose all garbage
                 Local.ImageList.Dispose();
@@ -3335,16 +3338,7 @@ namespace ImageGlass {
                 SaveConfig();
 
                 // start with os
-                var appShortcut = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), Application.ProductName + ".lnk");
-
-                if (Configs.IsStartWithOs) {
-                    if (!File.Exists(appShortcut)) {
-                        Shortcuts.CreateShortcut(appShortcut, App.IGExePath, "-HideWindow");
-                    }
-                }
-                else {
-                    File.Delete(appShortcut);
-                }
+                Helper.SetStartWithOS(Configs.IsStartWithOs);
 
                 // Write user configs file
                 Configs.Write();
