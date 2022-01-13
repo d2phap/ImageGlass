@@ -77,8 +77,6 @@ namespace ImageGlass {
 
         #region Local variables
 
-        private readonly bool _isHideWindow = Environment.GetCommandLineArgs().Contains("-HideWindow");
-
         // window size value before resizing
         private Size _windowSize = new(1300, 800);
 
@@ -2764,7 +2762,7 @@ namespace ImageGlass {
                 // Windows Bound (Position + Size)
                 Bounds = Configs.FrmMainWindowBound;
 
-                if (!_isHideWindow) {
+                if (!Program.IsHideWindow) {
                     // Windows state must be loaded after Windows Bound!
                     WindowState = Configs.FrmMainWindowState;
                 }
@@ -2835,7 +2833,7 @@ namespace ImageGlass {
                 WindowFitMode();
 
                 // hide window
-                if (_isHideWindow) {
+                if (Program.IsHideWindow) {
                     _ = ToggleAppVisibilityAsync(false);
                 }
             }
@@ -4429,7 +4427,7 @@ namespace ImageGlass {
             }
             else {
                 sp0.Cursor = Cursors.Default;
-                ShowToastMsg("", 0);
+                ShowToastMsg(msg, 0);
             }
 
             if (disableDelay > 0) {
@@ -4897,6 +4895,7 @@ namespace ImageGlass {
                 return;
             }
 
+            _ = SetAppBusyAsync(true, "", 1000);
             picMain.Image = await Heart.Photo.RotateImageAsync(new Bitmap(picMain.Image), 270).ConfigureAwait(true);
 
             if (!Local.IsTempMemoryData) {
@@ -4905,6 +4904,7 @@ namespace ImageGlass {
             }
 
             ApplyZoomMode(Configs.ZoomMode);
+            await SetAppBusyAsync(false);
         }
 
         private async void mnuMainRotateClockwise_Click(object sender, EventArgs e) {
@@ -4915,6 +4915,7 @@ namespace ImageGlass {
                 return;
             }
 
+            _ = SetAppBusyAsync(true, "", 1000);
             picMain.Image = await Heart.Photo.RotateImageAsync(new Bitmap(picMain.Image), 90).ConfigureAwait(true);
 
             if (!Local.IsTempMemoryData) {
@@ -4923,6 +4924,7 @@ namespace ImageGlass {
             }
 
             ApplyZoomMode(Configs.ZoomMode);
+            await SetAppBusyAsync(false);
         }
 
         private async void mnuMainFlipHorz_Click(object sender, EventArgs e) {
@@ -4933,12 +4935,14 @@ namespace ImageGlass {
                 return;
             }
 
+            _ = SetAppBusyAsync(true, "", 1000);
             picMain.Image = await Heart.Photo.FlipAsync(new Bitmap(picMain.Image), isHorzontal: true).ConfigureAwait(true);
 
             if (!Local.IsTempMemoryData) {
                 // Save the image path for saving
                 Local.ImageModifiedPath = Local.ImageList.GetFileName(Local.CurrentIndex);
             }
+            await SetAppBusyAsync(false);
         }
 
         private async void mnuMainFlipVert_Click(object sender, EventArgs e) {
@@ -4949,12 +4953,14 @@ namespace ImageGlass {
                 return;
             }
 
+            _ = SetAppBusyAsync(true, "", 1000);
             picMain.Image = await Heart.Photo.FlipAsync(new Bitmap(picMain.Image), isHorzontal: false).ConfigureAwait(true);
 
             if (!Local.IsTempMemoryData) {
                 // Save the image path for saving
                 Local.ImageModifiedPath = Local.ImageList.GetFileName(Local.CurrentIndex);
             }
+            await SetAppBusyAsync(false);
         }
 
         private void mnuMainZoomIn_Click(object sender, EventArgs e) {
@@ -5127,19 +5133,27 @@ namespace ImageGlass {
 
             using var fb = new FolderBrowserDialog() {
                 Description = Configs.Language.Items[$"{Name}._ExtractPageText"],
-                ShowNewFolderButton = true
+                ShowNewFolderButton = true,
             };
             var result = fb.ShowDialog();
 
             if (result == DialogResult.OK && Directory.Exists(fb.SelectedPath)) {
-                var img = await Local.ImageList.GetImgAsync(Local.CurrentIndex).ConfigureAwait(true);
-                await img.SaveImagePagesAsync(fb.SelectedPath).ConfigureAwait(true);
+                // set app busy
+                var img = await Local.ImageList.GetImgAsync(Local.CurrentIndex);
 
+                picMain.StopAnimating();
+                _ = SetAppBusyAsync(true, Configs.Language.Items[$"{Name}._PageExtracting"]);
+
+                await img.SaveImagePagesAsync(fb.SelectedPath);
+                picMain.StartAnimating();
+
+                // release app busy
+                await SetAppBusyAsync(false);
                 ShowToastMsg(Configs.Language.Items[$"{Name}._PageExtractComplete"], 2000);
             }
         }
 
-        // ReSharper disable once EmptyGeneralCatchClause
+
         private void mnuMainSetAsDesktop_Click(object sender, EventArgs e) {
             _ = Task.Run(() => {
                 var isError = false;

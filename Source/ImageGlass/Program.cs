@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ using ImageGlass.Settings;
 namespace ImageGlass {
     internal static class Program {
         public const string APP_GUID = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
+        public static bool IsHideWindow = Environment.GetCommandLineArgs().Contains("-HideWindow");
         private static frmMain formMain;
 
 
@@ -134,7 +136,7 @@ namespace ImageGlass {
         private static bool CheckFirstLaunchConfigs() {
             var canContinue = true;
 
-            if (Configs.FirstLaunchVersion < Constants.FIRST_LAUNCH_VERSION) {
+            if (Configs.FirstLaunchVersion < Constants.FIRST_LAUNCH_VERSION && !IsHideWindow) {
                 using var p = new Process();
                 p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
 

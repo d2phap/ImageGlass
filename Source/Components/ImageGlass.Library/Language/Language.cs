@@ -360,10 +360,11 @@ namespace ImageGlass.Library {
             Items.Add("frmMain._SetBackground_Error", "There was an error while setting desktop background"); // v6.0
             Items.Add("frmMain._SetBackground_Success", "Desktop background was set successfully"); // v6.0
 
+            Items.Add("frmMain._PageExtracting", "Extracting image pages..."); // v8.4
             Items.Add("frmMain._PageExtractComplete", "Page extraction completed."); // v7.5
             Items.Add("frmMain._Frameless", "Hold SHIFT to move the window."); // v7.5
             Items.Add("frmMain._InvalidImageClipboardData", "Clipboard does not contain image data."); // v8.0
-            
+
             #endregion
 
             #endregion
