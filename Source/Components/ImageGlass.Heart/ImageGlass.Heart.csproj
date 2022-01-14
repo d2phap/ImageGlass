@@ -136,4 +136,7 @@
   </Target>
   <Import Project="..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.0.64\build\Microsoft.VisualStudio.Threading.Analyzers.targets" Condition="Exists('..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.0.64\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" />
   <Import Project="..\..\packages\Magick.NET-Q16-OpenMP-x64.8.5.0\build\net20\Magick.NET-Q16-OpenMP-x64.targets" Condition="Exists('..\..\packages\Magick.NET-Q16-OpenMP-x64.8.5.0\build\net20\Magick.NET-Q16-OpenMP-x64.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>$(SolutionDir)post_build.bat $(SolutionDir) $(TargetPath)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

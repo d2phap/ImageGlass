@@ -1,11 +1,35 @@
-fciv -sha1 -add "../../Setup/AdvancedInstaller/Bin/ImageGlass_8.3.11.21_x64.msi"
+
+@echo off
+
+echo:
+echo **********************************************
+echo *          ImageGlass File checksum          *
+echo **********************************************
+echo:
+echo:
+
+set VERSION=8.3.11.21
+set PATHS[0]="../../Setup/AdvancedInstaller/Bin/ImageGlass_%VERSION%_x64.msi"
+set PATHS[1]="../../Setup/AdvancedInstaller/Bin/ImageGlass_%VERSION%_x86.msi"
+set PATHS[2]="../../Setup/AdvancedInstaller/Bin/ImageGlass_%VERSION%_x64.zip"
+set PATHS[3]="../../Setup/AdvancedInstaller/Bin/ImageGlass_%VERSION%_x86.zip"
 
 
-fciv -sha1 -add "../../Setup/AdvancedInstaller/Bin/ImageGlass_8.3.11.21_x86.msi"
+set x=0
+:SymLoop
+if defined PATHS[%x%] (
+    call echo __________________________________________________________________________________________________________
+    call echo [%x%]. Hashing %%PATHS[%x%]%%
+    call echo:
+    call fciv.exe -sha1 -add %%PATHS[%x%]%%
+    call echo:
+    call echo:
+    call echo:
 
+    set /a "x+=1"
+    GOTO :SymLoop
+)
 
-fciv -sha1 -add "../../Setup/AdvancedInstaller/Bin/ImageGlass_8.3.11.21_x64.zip"
-
-
-fciv -sha1 -add "../../Setup/AdvancedInstaller/Bin/ImageGlass_8.3.11.21_x86.zip"
+echo:
+echo:
 pause
