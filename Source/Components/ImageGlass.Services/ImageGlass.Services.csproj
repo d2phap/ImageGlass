@@ -114,8 +114,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\Libs\Spider-sdk\x86_64\bs-sdk.dll" Condition="'$(Platform)' == 'x64'" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="..\..\Libs\ExplorerSortOrder\ExplorerSortOrder32.dll" Condition="'$(Platform)' == 'x86'" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="..\..\Libs\ExplorerSortOrder\ExplorerSortOrder64.dll" Condition="'$(Platform)' == 'x64'" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\Libs\ExplorerSortOrder\x86\ExplorerSortOrder.dll" Condition="'$(Platform)' == 'x86'" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\Libs\ExplorerSortOrder\x64\ExplorerSortOrder.dll" Condition="'$(Platform)' == 'x64'" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -138,7 +138,8 @@
     <Error Condition="!Exists('..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.0.64\build\Microsoft.VisualStudio.Threading.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.0.64\build\Microsoft.VisualStudio.Threading.Analyzers.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>$(SolutionDir)post_build.bat $(SolutionDir) $(TargetPath)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

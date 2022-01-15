@@ -401,7 +401,7 @@
     <PreBuildEvent>"$(DevEnvDir)\devenv" "$(SolutionDir)\ImageGlass.sln" /Build $(ConfigurationName) /Project "$(SolutionDir)\Ultilities\igcmdWin10\igcmdWin10.csproj"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>resources.bat $(SolutionDir) &amp; $(SolutionDir)post_build.bat $(SolutionDir) $(TargetPath)</PostBuildEvent>
+    <PostBuildEvent>$(ProjectDir)resources.bat $(SolutionDir)</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
