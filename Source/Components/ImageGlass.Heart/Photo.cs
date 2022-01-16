@@ -256,7 +256,7 @@ namespace ImageGlass.Heart {
         private static MagickImage ApplyColorChannel(MagickImage imgM, int channel) {
             if (channel != -1) {
                 var magickChannel = (Channels)channel;
-                using var channelImgM = (MagickImage)imgM.Separate(magickChannel).First();
+                var channelImgM = (MagickImage)imgM.Separate(magickChannel).First();
 
                 if (imgM.HasAlpha && magickChannel != Channels.Alpha) {
                     using var alpha = imgM.Separate(Channels.Alpha).First();

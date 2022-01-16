@@ -25,6 +25,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace ImageGlass.Library.WinAPI {
     public static class Shortcuts {
+        public enum ShortcutWindowStyle {
+            Normal = 4,
+            Maximized = 3,
+            Minimized = 7,
+        }
+
+
         /// <summary>
         /// Get the target path from shortcut (*.lnk)
         /// </summary>
@@ -42,6 +49,32 @@ namespace ImageGlass.Library.WinAPI {
                 // A COMException is thrown if the file is not a valid shortcut (.lnk) file 
                 return null;
             }
+        }
+
+
+        /// <summary>
+        /// Create shortcut file
+        /// </summary>
+        /// <param name="shortcutPath"></param>
+        /// <param name="targetPath"></param>
+        /// <param name="args"></param>
+        /// <param name="windowStyle"></param>
+        public static void CreateShortcut(string shortcutPath,
+            string targetPath,
+            string args = "",
+            ShortcutWindowStyle windowStyle = ShortcutWindowStyle.Normal) {
+            var shell = new IWshRuntimeLibrary.WshShell();
+
+            try {
+                var shortcut = (IWshRuntimeLibrary.IWshShortcut)shell.CreateShortcut(shortcutPath);
+
+                shortcut.TargetPath = targetPath;
+                shortcut.IconLocation = targetPath;
+                shortcut.Arguments = args;
+                shortcut.WindowStyle = (int)windowStyle;
+                shortcut.Save();
+            }
+            catch { }
         }
     }
 }

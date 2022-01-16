@@ -122,16 +122,6 @@ namespace ImageGlass.Base {
     }
 
     /// <summary>
-    /// The list of layout mode.
-    /// **If we need to rename, have to update the language string too.
-    /// Because the name is also language keyword!
-    /// </summary>
-    public enum LayoutMode {
-        Standard = 0,
-        Designer = 1
-    }
-
-    /// <summary>
     /// <para>
     /// All the supported toolbar buttons. NOTE: the names here MUST match the field
     /// name in frmMain! Reflection is used to fetch the image and string from the

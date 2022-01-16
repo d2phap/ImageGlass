@@ -28,13 +28,14 @@ namespace ImageGlass.Base {
         public const int MENU_ICON_HEIGHT = 21;
         public const int DEFAULT_TOOLBAR_ICON_HEIGHT = 22;
         public const int VIEWER_GRID_SIZE = 8;
+        public const string MS_APPSTORE_ID = "9N33VZK3C7TH";
 
         /// <summary>
         /// First launch version constant.
         /// If the value read from config file is less than this value,
         /// the First-Launch Configs screen will be launched.
         /// </summary>
-        public const int FIRST_LAUNCH_VERSION = 5;
+        public const float FIRST_LAUNCH_VERSION = 8.4f;
 
         /// <summary>
         /// The URI Scheme to register web-to-app linking

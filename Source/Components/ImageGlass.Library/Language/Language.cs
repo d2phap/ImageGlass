@@ -69,11 +69,11 @@ namespace ImageGlass.Library {
             LangName = "Local name of the language";
             Author = "ImageGlass community";
             Description = "English name of language";
-            MinVersion = "8.3.0.0";
+            MinVersion = "8.4.0.0";
             FileName = "";
             IsRightToLeftLayout = RightToLeft.No;
 
-            Items = new LanguageItem<string, string>();
+            Items = new();
             InitDefaultLanguageDictionary();
         }
 
@@ -313,8 +313,14 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainCheckForUpdate._NewVersion", "A new version is available!"); //v5.0
             Items.Add("frmMain.mnuMainReportIssue", "Report an issue…"); //v3.0
 
-            Items.Add("frmMain.mnuMainExitApplication", "Exit ImageGlass"); //v7.0
+            Items.Add("frmMain.mnuMainExitApplication", "Exit"); //v7.0, v8.4
             #endregion
+
+            #endregion
+
+            #region Tray menu
+
+            Items.Add("frmMain.mnuTrayShowWindow", "Show"); //v8.4
 
             #endregion
 
@@ -342,7 +348,6 @@ namespace ImageGlass.Library {
             Items.Add("frmMain._CutFileText", "Cut {0} file(s)"); // v2.0 final
             Items.Add("frmMain._CopyImageData", "Image was copied to clipboard"); // v5.0
             Items.Add("frmMain._ClearClipboard", "Clipboard was cleared"); // v2.0 final
-            Items.Add("frmMain._SaveChanges", "Saving change..."); // v2.0 final
             Items.Add("frmMain._SaveImage", "Image was saved to\r\n{0}"); // v5.0
             Items.Add("frmMain._SavingImage", "Saving image...\r\n{0}"); // v7.6
             Items.Add("frmMain._SaveImageError", "Unable to save image\r\n{0}."); // v5.0
@@ -355,10 +360,11 @@ namespace ImageGlass.Library {
             Items.Add("frmMain._SetBackground_Error", "There was an error while setting desktop background"); // v6.0
             Items.Add("frmMain._SetBackground_Success", "Desktop background was set successfully"); // v6.0
 
+            Items.Add("frmMain._PageExtracting", "Extracting image pages..."); // v8.4
             Items.Add("frmMain._PageExtractComplete", "Page extraction completed."); // v7.5
             Items.Add("frmMain._Frameless", "Hold SHIFT to move the window."); // v7.5
             Items.Add("frmMain._InvalidImageClipboardData", "Clipboard does not contain image data."); // v8.0
-            
+
             #endregion
 
             #endregion
@@ -426,6 +432,8 @@ namespace ImageGlass.Library {
 
             #region Others
             Items.Add("frmSetting.lblHeadOthers", "Others"); //v4.0
+            Items.Add("frmSetting.chkStartWithOs", "Start with OS"); //v8.4
+            Items.Add("frmSetting.chkContinueRunningBackground", "Continue running background when the app is closed"); // v8.4
             Items.Add("frmSetting.chkAutoUpdate", "Check for update automatically");
             Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
             Items.Add("frmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final
@@ -449,6 +457,8 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.chkUseFileExplorerSortOrder", "Use Windows File Explorer sort order if possible"); //v7.0
             Items.Add("frmSetting.chkGroupByDirectory", "Group images by directory"); //v8.0
             Items.Add("frmSetting.lblImageBoosterCachedCount", "Number of images cached by ImageBooster (one direction)"); //v7.0
+            Items.Add("frmSetting.chkIsPlayImageChangeSound", "Play sound when image changes"); //v8.4
+            Items.Add("frmSetting.lblNumberImagesNotify", "Number of images to notify"); //v8.4
             #endregion
 
             #region Color Management
@@ -645,6 +655,17 @@ namespace ImageGlass.Library {
 
             #endregion
 
+
+            #region TAB Privacy
+
+            Items.Add("frmSetting.lblPrivacy", "Privacy"); //v8.4
+            Items.Add("frmSetting.chkEnableSpiderService", "Enable Spider service"); //v8.4
+            Items.Add("frmSetting.lnkPrivacy", "Learn more about privacy policy at {0}. To opt out an option, you can uncheck it, then click 'Save' or 'Apply' button below. It will be disabled immediately."); //v8.4
+            Items.Add("frmSetting.lnkSpider._Description", "Share device IP with Spider.com customers to pass traffic through your device."); // v8.4
+            Items.Add("frmSetting.lnkSpider._LearnMore", "Learn more"); // v8.4
+
+            #endregion
+
             #endregion
 
             #region frmAddNewFormat
@@ -673,10 +694,10 @@ namespace ImageGlass.Library {
             Items.Add("frmFirstLaunch.lnkSkip", "Skip this and Launch ImageGlass"); //v5.0
 
             Items.Add("frmFirstLaunch.lblLanguage", "Select Language"); //v5.0
-            Items.Add("frmFirstLaunch.lblLayout", "Select Layout"); //v5.0
-            Items.Add("frmFirstLaunch.cmbLayout._Standard", "Standard"); //v5.0
-            Items.Add("frmFirstLaunch.cmbLayout._Designer", "Designer"); //v5.0
             Items.Add("frmFirstLaunch.lblTheme", "Select Theme"); //v5.0
+            Items.Add("frmFirstLaunch.lnkPrivacy", "Privacy"); //v8.4
+            Items.Add("frmFirstLaunch.lblPrivacyDesctipion", "You can review app privacy policy by clicking the link above."); //v8.4
+            Items.Add("frmFirstLaunch.lblPrivacyDesctipion._Spider", "ImageGlass comes with Spider service by default. You can always disable it in Settings > Privacy."); //v8.4
             Items.Add("frmFirstLaunch.lblDefaultApp", "Set ImageGlass as Default Photo Viewer?"); //v5.0
             Items.Add("frmFirstLaunch.btnSetDefaultApp", "Yes"); //v5.0
             #endregion

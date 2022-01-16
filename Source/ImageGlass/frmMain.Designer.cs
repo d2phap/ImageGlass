@@ -171,6 +171,13 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.mnuShortcut = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuTray = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuTrayInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuTrayShowWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuTrayExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.tray = new System.Windows.Forms.NotifyIcon(this.components);
             this.mnuContext.SuspendLayout();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sp0)).BeginInit();
@@ -182,6 +189,7 @@
             this.sp1.SuspendLayout();
             this.toolMain.SuspendLayout();
             this.mnuShortcut.SuspendLayout();
+            this.mnuTray.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnuContext
@@ -191,7 +199,6 @@
             this.mnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sampleMenuItemToolStripMenuItem});
             this.mnuContext.Name = "mnuContext";
-            this.mnuContext.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.mnuContext.Size = new System.Drawing.Size(223, 32);
             this.mnuContext.Opening += new System.ComponentModel.CancelEventHandler(this.mnuContext_Opening);
             // 
@@ -232,8 +239,7 @@
             this.toolStripMenuItem21,
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
-            this.mnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.mnuMain.Size = new System.Drawing.Size(247, 499);
+            this.mnuMain.Size = new System.Drawing.Size(247, 468);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -1283,6 +1289,7 @@
             // 
             // mnuMainCheckForUpdate
             // 
+            this.mnuMainCheckForUpdate.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainCheckForUpdate.Name = "mnuMainCheckForUpdate";
             this.mnuMainCheckForUpdate.Size = new System.Drawing.Size(317, 30);
             this.mnuMainCheckForUpdate.Text = "A new version is available";
@@ -1315,6 +1322,7 @@
             // 
             // mnuMainExitApplication
             // 
+            this.mnuMainExitApplication.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.mnuMainExitApplication.Name = "mnuMainExitApplication";
             this.mnuMainExitApplication.Size = new System.Drawing.Size(246, 28);
             this.mnuMainExitApplication.Text = "Exit ImageGlass";
@@ -1344,7 +1352,7 @@
             this.sp0.Panel2Collapsed = true;
             this.sp0.Size = new System.Drawing.Size(1022, 419);
             this.sp0.SplitterDistance = 588;
-            this.sp0.SplitterWidth = 2;
+            this.sp0.SplitterWidth = 1;
             this.sp0.TabIndex = 1;
             this.sp0.TabStop = false;
             // 
@@ -1371,8 +1379,8 @@
             this.sp1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.sp1.Panel2MinSize = 20;
             this.sp1.Size = new System.Drawing.Size(1022, 363);
-            this.sp1.SplitterDistance = 336;
-            this.sp1.SplitterWidth = 2;
+            this.sp1.SplitterDistance = 337;
+            this.sp1.SplitterWidth = 1;
             this.sp1.TabIndex = 2;
             this.sp1.TabStop = false;
             this.sp1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.sp1_SplitterMoved);
@@ -1391,7 +1399,7 @@
             this.picMain.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
             this.picMain.Location = new System.Drawing.Point(0, 0);
             this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(1022, 336);
+            this.picMain.Size = new System.Drawing.Size(1022, 337);
             this.picMain.TabIndex = 1;
             this.picMain.VerticalScrollBarStyle = ImageGlass.ImageBoxScrollBarStyle.Hide;
             this.picMain.Zoom = 100D;
@@ -1961,7 +1969,6 @@
             this.mnuShortcut.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
             this.mnuShortcut.Name = "mnuContext";
-            this.mnuShortcut.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.mnuShortcut.Size = new System.Drawing.Size(223, 32);
             // 
             // toolStripMenuItem1
@@ -1969,6 +1976,59 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(222, 28);
             this.toolStripMenuItem1.Text = "sample menu item";
+            // 
+            // mnuTray
+            // 
+            this.mnuTray.BackColor = System.Drawing.Color.White;
+            this.mnuTray.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.mnuTray.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuTrayInfo,
+            this.toolStripMenuItem4,
+            this.mnuTrayShowWindow,
+            this.toolStripMenuItem3,
+            this.mnuTrayExit});
+            this.mnuTray.Name = "mnuTray";
+            this.mnuTray.Size = new System.Drawing.Size(256, 100);
+            this.mnuTray.Opening += new System.ComponentModel.CancelEventHandler(this.MnuTray_Opening);
+            // 
+            // mnuTrayInfo
+            // 
+            this.mnuTrayInfo.Enabled = false;
+            this.mnuTrayInfo.Name = "mnuTrayInfo";
+            this.mnuTrayInfo.Size = new System.Drawing.Size(255, 28);
+            this.mnuTrayInfo.Text = "[ImageGlass v8.4 - x64]";
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(252, 6);
+            // 
+            // mnuTrayShowWindow
+            // 
+            this.mnuTrayShowWindow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuTrayShowWindow.Name = "mnuTrayShowWindow";
+            this.mnuTrayShowWindow.Size = new System.Drawing.Size(255, 28);
+            this.mnuTrayShowWindow.Text = "[Show ImageGlass]";
+            this.mnuTrayShowWindow.Click += new System.EventHandler(this.mnuTrayShowWindow_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(252, 6);
+            // 
+            // mnuTrayExit
+            // 
+            this.mnuTrayExit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuTrayExit.Name = "mnuTrayExit";
+            this.mnuTrayExit.Size = new System.Drawing.Size(255, 28);
+            this.mnuTrayExit.Text = "[Exit]";
+            this.mnuTrayExit.Click += new System.EventHandler(this.MnuTrayExit_Click);
+            // 
+            // tray
+            // 
+            this.tray.ContextMenuStrip = this.mnuTray;
+            this.tray.Text = "ImageGlass";
+            this.tray.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Tray_MouseDoubleClick);
             // 
             // frmMain
             // 
@@ -1983,7 +2043,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(22, 56);
+            this.MinimumSize = new System.Drawing.Size(20, 52);
             this.Name = "frmMain";
             this.RightToLeftLayout = true;
             this.Text = "ImageGlass";
@@ -2008,6 +2068,7 @@
             this.toolMain.ResumeLayout(false);
             this.toolMain.PerformLayout();
             this.mnuShortcut.ResumeLayout(false);
+            this.mnuTray.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2159,6 +2220,13 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem mnuSaveImage;
         private System.Windows.Forms.ToolStripMenuItem mnuCustomZoom;
+        private System.Windows.Forms.ContextMenuStrip mnuTray;
+        private System.Windows.Forms.ToolStripMenuItem mnuTrayExit;
+        private System.Windows.Forms.NotifyIcon tray;
+        private System.Windows.Forms.ToolStripMenuItem mnuTrayShowWindow;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem mnuTrayInfo;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
     }
 }
 

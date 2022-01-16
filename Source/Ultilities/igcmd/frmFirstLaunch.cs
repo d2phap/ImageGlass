@@ -17,18 +17,17 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base;
-using ImageGlass.Library;
-using ImageGlass.Library.WinAPI;
-using ImageGlass.Settings;
-using ImageGlass.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using ImageGlass.Base;
+using ImageGlass.Library;
+using ImageGlass.Services;
+using ImageGlass.Settings;
+using ImageGlass.UI;
 
 namespace igcmd {
     public partial class frmFirstLaunch: Form {
@@ -43,12 +42,18 @@ namespace igcmd {
             ApplyTheme(Configs.Theme);
         }
 
+        public frmFirstLaunch(int step = 0) : this() {
+            var tabIndex = Math.Max(0, step);
+            tabIndex = Math.Min(tabIndex, tab1.TabCount - 1);
+
+            // select tab to show
+            tab1.SelectTab(tabIndex);
+        }
+
         private readonly List<Theme> _themeList = new List<Theme>();
         private List<Language> _langList = new List<Language>();
-
         private Language _lang = new Language();
         private Theme _theme = new Theme((int)Configs.ToolbarIconHeight);
-        private LayoutMode _layout = LayoutMode.Standard;
 
         #region Form events
 
@@ -62,7 +67,7 @@ namespace igcmd {
         }
 
         private void tab1_SelectedIndexChanged(object sender, EventArgs e) {
-            lblStepNumber.Text = string.Format(this._lang.Items[$"{Name}.lblStepNumber"], tab1.SelectedIndex + 1, tab1.TabCount);
+            lblStepNumber.Text = string.Format(_lang.Items[$"{Name}.lblStepNumber"], tab1.SelectedIndex + 1, tab1.TabCount);
 
             if (tab1.SelectedIndex == tab1.TabCount - 1) {
                 btnNextStep.Text = _lang.Items[$"{Name}.btnNextStep._Done"];
@@ -86,7 +91,7 @@ namespace igcmd {
                     .ToList();
 
                 if (igProcesses.Count > 0) {
-                    var result = MessageBox.Show(this._lang.Items[$"{Name}._ConfirmCloseProcess"], "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    var result = MessageBox.Show(_lang.Items[$"{Name}._ConfirmCloseProcess"], "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (result == DialogResult.Yes) {
                         // Kill all processes
@@ -99,21 +104,21 @@ namespace igcmd {
                     LaunchImageGlass();
                 }
 
-                this.Close();
+                Close();
 
                 return;
             }
 
             tab1.SelectedIndex++;
-            lblStepNumber.Text = string.Format(this._lang.Items[$"{this.Name}.lblStepNumber"], tab1.SelectedIndex + 1, tab1.TabCount);
+            lblStepNumber.Text = string.Format(_lang.Items[$"{Name}.lblStepNumber"], tab1.SelectedIndex + 1, tab1.TabCount);
 
             // Done
             if (tab1.SelectedIndex == tab1.TabCount - 1) {
-                btnNextStep.Text = this._lang.Items[$"{this.Name}.btnNextStep._Done"];
+                btnNextStep.Text = _lang.Items[$"{Name}.btnNextStep._Done"];
             }
             // Next Step
             else {
-                btnNextStep.Text = this._lang.Items[$"{this.Name}.btnNextStep"];
+                btnNextStep.Text = _lang.Items[$"{Name}.btnNextStep"];
             }
         }
 
@@ -122,40 +127,39 @@ namespace igcmd {
             Configs.Write();
 
             LaunchImageGlass();
-            this.Close();
+            Close();
         }
 
         private void btnSetDefaultApp_Click(object sender, EventArgs e) {
             // Update extensions to registry
-            using (var p = new Process()) {
-                var formats = Configs.GetImageFormats(Configs.AllFormats);
+            using var p = new Process();
+            var formats = Configs.GetImageFormats(Configs.AllFormats);
 
-                p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-                p.StartInfo.Arguments = $"regassociations {formats}";
+            p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
+            p.StartInfo.Arguments = $"regassociations {formats}";
 
-                try {
-                    p.Start();
-                }
-                catch { }
+            try {
+                p.Start();
             }
+            catch { }
         }
 
         private void cmbLanguage_SelectedIndexChanged(object sender, EventArgs e) {
             try {
-                this._lang = _langList[cmbLanguage.SelectedIndex];
+                _lang = _langList[cmbLanguage.SelectedIndex];
             }
             catch {
-                this._lang = new Language();
+                _lang = new Language();
             }
 
-            ApplyLanguage(this._lang);
+            ApplyLanguage(_lang);
         }
 
         private void cmbTheme_SelectedIndexChanged(object sender, EventArgs e) {
             var selectedTheme = new Theme();
 
             try {
-                selectedTheme = this._themeList[cmbTheme.SelectedIndex];
+                selectedTheme = _themeList[cmbTheme.SelectedIndex];
             }
             catch { }
 
@@ -163,8 +167,11 @@ namespace igcmd {
             _theme = selectedTheme;
         }
 
-        private void cmbLayout_SelectedIndexChanged(object sender, EventArgs e) {
-            _layout = (LayoutMode)cmbLayout.SelectedIndex;
+        private void lnkPrivacy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            try {
+                Process.Start($"https://imageglass.org/privacy?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_first_launch");
+            }
+            catch { }
         }
 
         #endregion
@@ -212,20 +219,23 @@ namespace igcmd {
         /// </summary>
         /// <param name="lang"></param>
         private void ApplyLanguage(Language lang) {
-            this._lang = lang;
+            _lang = lang;
 
-            this.Text = _lang.Items[$"{this.Name}._Text"];
-            lblStepNumber.Text = string.Format(_lang.Items[$"{this.Name}.lblStepNumber"], 1, tab1.TabCount);
-            btnNextStep.Text = _lang.Items[$"{this.Name}.btnNextStep"];
-            lnkSkip.Text = _lang.Items[$"{this.Name}.lnkSkip"];
+            Text = _lang.Items[$"{Name}._Text"];
+            lblStepNumber.Text = string.Format(_lang.Items[$"{Name}.lblStepNumber"], tab1.SelectedIndex + 1, tab1.TabCount);
 
-            lblLanguage.Text = _lang.Items[$"{this.Name}.lblLanguage"];
-            lblLayout.Text = _lang.Items[$"{this.Name}.lblLayout"];
-            lblTheme.Text = _lang.Items[$"{this.Name}.lblTheme"];
-            lblDefaultApp.Text = _lang.Items[$"{this.Name}.lblDefaultApp"];
-            btnSetDefaultApp.Text = _lang.Items[$"{this.Name}.btnSetDefaultApp"];
 
-            LoadLayoutList();
+            btnNextStep.Text = _lang.Items[$"{Name}.btnNextStep"];
+            lnkSkip.Text = _lang.Items[$"{Name}.lnkSkip"];
+
+            lblLanguage.Text = _lang.Items[$"{Name}.lblLanguage"];
+            lblTheme.Text = _lang.Items[$"{Name}.lblTheme"];
+            lblDefaultApp.Text = _lang.Items[$"{Name}.lblDefaultApp"];
+            btnSetDefaultApp.Text = _lang.Items[$"{Name}.btnSetDefaultApp"];
+            lnkPrivacy.Text = _lang.Items[$"{Name}.lnkPrivacy"];
+
+            var sdkExist = File.Exists(SpiderService.SDK_DLL);
+            lblPrivacyDesctipion.Text = sdkExist ? _lang.Items[$"{Name}.lblPrivacyDesctipion._Spider"] : _lang.Items[$"{Name}.lblPrivacyDesctipion"];
         }
 
         /// <summary>
@@ -263,16 +273,17 @@ namespace igcmd {
             panFooter.BackColor = th.ToolbarBackgroundColor;
             panHeader.BackColor =
                 tabLanguage.BackColor =
-                tabLayoutMode.BackColor =
+                tabPrivacy.BackColor =
                 tabTheme.BackColor =
                 tabFileAssociation.BackColor =
                 th.BackgroundColor;
 
-            this.lblStepNumber.ForeColor =
-                this.lblLanguage.ForeColor =
-                this.lblLayout.ForeColor =
-                this.lblTheme.ForeColor =
-                this.lblDefaultApp.ForeColor =
+            lblStepNumber.ForeColor =
+                lblLanguage.ForeColor =
+                lnkPrivacy.ForeColor =
+                lblPrivacyDesctipion.ForeColor =
+                lblTheme.ForeColor =
+                lblDefaultApp.ForeColor =
                 Theme.InvertBlackAndWhiteColor(th.BackgroundColor);
 
             // Logo
@@ -294,44 +305,18 @@ namespace igcmd {
         }
 
         /// <summary>
-        /// Load layout list
-        /// </summary>
-        private void LoadLayoutList() {
-            cmbLayout.Items.Clear();
-            var list = Enum.GetNames(typeof(LayoutMode));
-
-            foreach (var item in list) {
-                cmbLayout.Items.Add(_lang.Items[$"{this.Name}.cmbLayout._{item}"]);
-            }
-
-            cmbLayout.SelectedIndex = 0;
-        }
-
-        /// <summary>
         /// Save and apply settings
         /// </summary>
         private void ApplySettings() {
-            Configs.Language = this._lang;
-            Configs.Theme = this._theme;
-            Configs.BackgroundColor = this._theme.BackgroundColor;
+            Configs.Language = _lang;
+            Configs.Theme = _theme;
+            Configs.BackgroundColor = _theme.BackgroundColor;
 
-            if (_layout == LayoutMode.Designer) {
-                Configs.MouseWheelAction = MouseWheelActions.ScrollVertically;
-                Configs.MouseWheelCtrlAction = MouseWheelActions.Zoom;
-                Configs.MouseWheelShiftAction = MouseWheelActions.ScrollHorizontally;
-                Configs.MouseWheelAltAction = MouseWheelActions.DoNothing;
-
-                Configs.ZoomLockValue = 100f;
-                Configs.IsShowColorPickerOnStartup = true;
-            }
-            else {
-                Configs.MouseWheelAction = MouseWheelActions.Zoom;
-                Configs.MouseWheelCtrlAction = MouseWheelActions.ScrollVertically;
-                Configs.MouseWheelShiftAction = MouseWheelActions.ScrollHorizontally;
-                Configs.MouseWheelAltAction = MouseWheelActions.DoNothing;
-
-                Configs.ZoomLockValue = -1f;
-            }
+            Configs.MouseWheelAction = MouseWheelActions.Zoom;
+            Configs.MouseWheelCtrlAction = MouseWheelActions.ScrollVertically;
+            Configs.MouseWheelShiftAction = MouseWheelActions.ScrollHorizontally;
+            Configs.MouseWheelAltAction = MouseWheelActions.DoNothing;
+            Configs.ZoomLockValue = -1f;
 
             // Save configs to file
             Configs.Write();

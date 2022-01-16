@@ -29,6 +29,7 @@ using System.Windows.Forms;
 using ImageGlass.Base;
 using ImageGlass.Library;
 using ImageGlass.Library.Image;
+using ImageGlass.Services;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.UI.Renderers;
@@ -55,6 +56,7 @@ namespace ImageGlass {
         private readonly Color M_COLOR_MENU_HOVER = Color.FromArgb(255, 176, 181, 183);
         private readonly Color M_COLOR_MENU_NORMAL = Color.FromArgb(255, 160, 165, 168);
 
+        private const string PRIVACY_URL = "https://imageglass.org/privacy";
         private List<Language> lstLanguages = new();
 
         #region Toolbar
@@ -131,6 +133,7 @@ namespace ImageGlass {
             LoadTabImageConfig();
             LoadTabEditConfig();
             LoadTabTools();
+            LoadTabPrivacy();
 
             // to prevent the setting: ToolbarPosition = -1, we load this onLoad event
             LoadTabToolbar();
@@ -211,6 +214,8 @@ namespace ImageGlass {
 
             // Others
             lblHeadOthers.Text = lang[$"{Name}.{nameof(lblHeadOthers)}"];
+            chkStartWithOs.Text = lang[$"{Name}.{nameof(chkStartWithOs)}"];
+            chkContinueRunningBackground.Text = lang[$"{Name}.{nameof(chkContinueRunningBackground)}"];
             chkAutoUpdate.Text = lang[$"{Name}.{nameof(chkAutoUpdate)}"];
             chkESCToQuit.Text = lang[$"{Name}.{nameof(chkESCToQuit)}"];
             chkConfirmationDelete.Text = lang[$"{Name}.{nameof(chkConfirmationDelete)}"];
@@ -230,6 +235,8 @@ namespace ImageGlass {
             chkUseFileExplorerSortOrder.Text = lang[$"{Name}.{nameof(chkUseFileExplorerSortOrder)}"];
             chkGroupByDirectory.Text = lang[$"{Name}.{nameof(chkGroupByDirectory)}"];
             lblImageBoosterCachedCount.Text = lang[$"{Name}.{nameof(lblImageBoosterCachedCount)}"];
+            chkIsPlayImageChangeSound.Text = lang[$"{Name}.{nameof(chkIsPlayImageChangeSound)}"];
+            lblNumberImagesNotify.Text = lang[$"{Name}.{nameof(lblNumberImagesNotify)}"];
 
             lblColorManagement.Text = lang[$"{Name}.{nameof(lblColorManagement)}"];//
             chkApplyColorProfile.Text = lang[$"{Name}.{nameof(chkApplyColorProfile)}"];
@@ -337,16 +344,16 @@ namespace ImageGlass {
             #endregion
 
             #region THEME TAB
-            lblInstalledThemes.Text = string.Format(lang[$"{this.Name}.{nameof(lblInstalledThemes)}"], "");
-            lnkThemeDownload.Text = lang[$"{this.Name}.{nameof(lnkThemeDownload)}"];
+            lblInstalledThemes.Text = string.Format(lang[$"{Name}.{nameof(lblInstalledThemes)}"], "");
+            lnkThemeDownload.Text = lang[$"{Name}.{nameof(lnkThemeDownload)}"];
 
-            btnThemeRefresh.Text = lang[$"{this.Name}.{nameof(btnThemeRefresh)}"];
-            btnThemeInstall.Text = lang[$"{this.Name}.{nameof(btnThemeInstall)}"];
-            btnThemeUninstall.Text = lang[$"{this.Name}.{nameof(btnThemeUninstall)}"];
-            btnThemeSaveAs.Text = lang[$"{this.Name}.{nameof(btnThemeSaveAs)}"];
-            btnThemeFolderOpen.Text = lang[$"{this.Name}.{nameof(btnThemeFolderOpen)}"];
+            btnThemeRefresh.Text = lang[$"{Name}.{nameof(btnThemeRefresh)}"];
+            btnThemeInstall.Text = lang[$"{Name}.{nameof(btnThemeInstall)}"];
+            btnThemeUninstall.Text = lang[$"{Name}.{nameof(btnThemeUninstall)}"];
+            btnThemeSaveAs.Text = lang[$"{Name}.{nameof(btnThemeSaveAs)}"];
+            btnThemeFolderOpen.Text = lang[$"{Name}.{nameof(btnThemeFolderOpen)}"];
 
-            btnThemeApply.Text = lang[$"{this.Name}.{nameof(btnThemeApply)}"];
+            btnThemeApply.Text = lang[$"{Name}.{nameof(btnThemeApply)}"];
 
             #endregion
 
@@ -356,6 +363,17 @@ namespace ImageGlass {
             lblKeysPageUpDown.Text = lang[$"{Name}.{nameof(lblKeysPageUpDown)}"];
             lblKeysUpDown.Text = lang[$"{Name}.{nameof(lblKeysUpDown)}"];
             lblKeysLeftRight.Text = lang[$"{Name}.{nameof(lblKeysLeftRight)}"];
+            #endregion
+
+            #region PRIVACY TAB
+            lblPrivacy.Text = lang[$"{Name}.{nameof(lblPrivacy)}"];
+            lnkPrivacy.Text = string.Format(lang[$"{Name}.{nameof(lnkPrivacy)}"], PRIVACY_URL);
+            lnkPrivacy.LinkArea = new(lnkPrivacy.Text.IndexOf(PRIVACY_URL), PRIVACY_URL.Length);
+            chkEnableSpiderService.Text = lang[$"{Name}.{nameof(chkEnableSpiderService)}"];
+
+            var learnMore = lang[$"{Name}.{nameof(lnkSpider)}._LearnMore"];
+            lnkSpider.Text = lang[$"{Name}.{nameof(lnkSpider)}._Description"] + " " + learnMore;
+            lnkSpider.LinkArea = new(lnkSpider.Text.IndexOf(learnMore), learnMore.Length);
             #endregion
 
         }
@@ -396,6 +414,9 @@ namespace ImageGlass {
                 case nameof(lblKeyboard):
                     tab1.SelectedTab = tabKeyboard;
                     break;
+                case nameof(lblPrivacy):
+                    tab1.SelectedTab = tabPrivacy;
+                    break;
             }
         }
 
@@ -408,6 +429,7 @@ namespace ImageGlass {
             lblToolbar.Tag =
             lblTools.Tag =
             lblTheme.Tag =
+            lblPrivacy.Tag =
             lblKeyboard.Tag = 0;
 
             lblGeneral.BackColor =
@@ -418,6 +440,7 @@ namespace ImageGlass {
             lblToolbar.BackColor =
             lblTools.BackColor =
             lblTheme.BackColor =
+            lblPrivacy.BackColor =
             lblKeyboard.BackColor = M_COLOR_MENU_NORMAL;
 
             if (tab1.SelectedTab == tabGeneral) {
@@ -479,6 +502,13 @@ namespace ImageGlass {
 
                 LoadTabKeyboard(Configs.KeyComboActions);
             }
+            else if (tab1.SelectedTab == tabPrivacy) {
+                lblPrivacy.Tag = 1;
+                lblPrivacy.BackColor = M_COLOR_MENU_SELECTED;
+                chkEnableSpiderService.Enabled = true;
+
+                LoadTabPrivacy();
+            }
         }
 
         #region TAB GENERAL
@@ -490,6 +520,9 @@ namespace ImageGlass {
             chkLastSeenImage.Checked = Configs.IsOpenLastSeenImage;
             chkWelcomePicture.Checked = Configs.IsShowWelcome;
             chkShowToolBar.Checked = Configs.IsShowToolBar;
+
+            chkStartWithOs.Checked = Configs.IsStartWithOs;
+            chkContinueRunningBackground.Checked = Configs.IsContinueRunningBackground;
             chkAutoUpdate.Checked = Configs.AutoUpdate != "0";
             chkAllowMultiInstances.Checked = Configs.IsAllowMultiInstances;
             chkESCToQuit.Checked = Configs.IsPressESCToQuit;
@@ -554,6 +587,10 @@ namespace ImageGlass {
 
             // Set value of chkGroupByDirectory
             chkGroupByDirectory.Checked = Configs.IsGroupImagesByDirectory;
+
+            // Number of Images after which sound is played
+            chkIsPlayImageChangeSound.Checked = Configs.IsPlayImageChangeSound;
+            numNumberImagesNotify.Value = Configs.NumberImagesNotify;
 
             #region Load items of cmbImageOrder
             var loadingOrderList = Enum.GetNames(typeof(ImageOrderBy));
@@ -632,10 +669,10 @@ namespace ImageGlass {
             cmbMouseWheelAlt.Items.Clear();
 
             foreach (var item in Enum.GetNames(typeof(MouseWheelActions))) {
-                cmbMouseWheel.Items.Add(Configs.Language.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
-                cmbMouseWheelCtrl.Items.Add(Configs.Language.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
-                cmbMouseWheelShift.Items.Add(Configs.Language.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
-                cmbMouseWheelAlt.Items.Add(Configs.Language.Items[$"{this.Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheel.Items.Add(Configs.Language.Items[$"{Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheelCtrl.Items.Add(Configs.Language.Items[$"{Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheelShift.Items.Add(Configs.Language.Items[$"{Name}.cmbMouseWheel._{item}"]);
+                cmbMouseWheelAlt.Items.Add(Configs.Language.Items[$"{Name}.cmbMouseWheel._{item}"]);
             }
 
             //Get value of cmbMouseWheel
@@ -658,7 +695,7 @@ namespace ImageGlass {
             var zoomOptimizationList = Enum.GetNames(typeof(ZoomOptimizationMethods));
             cmbZoomOptimization.Items.Clear();
             foreach (var item in zoomOptimizationList) {
-                cmbZoomOptimization.Items.Add(Configs.Language.Items[$"{this.Name}.cmbZoomOptimization._{item}"]);
+                cmbZoomOptimization.Items.Add(Configs.Language.Items[$"{Name}.cmbZoomOptimization._{item}"]);
             }
 
             // Get value of cmbZoomOptimization
@@ -692,7 +729,6 @@ namespace ImageGlass {
             chkHideToolbarInFullScreen.Checked = Configs.IsHideToolbarInFullscreen;
             chkHideThumbnailBarInFullScreen.Checked = Configs.IsHideThumbnailBarInFullscreen;
         }
-
         private void chkRandomSlideshowInterval_CheckedChanged(object sender, EventArgs e) {
             lblSlideshowIntervalTo.Visible =
                 numSlideshowIntervalTo.Visible =
@@ -864,7 +900,7 @@ namespace ImageGlass {
                 AppName = apps[0].AppName,
                 AppPath = apps[0].AppPath,
                 AppArguments = apps[0].AppArguments,
-                TopMost = this.TopMost
+                TopMost = TopMost
             };
 
             if (frm.ShowDialog() == DialogResult.OK) {
@@ -881,7 +917,7 @@ namespace ImageGlass {
         private void btnEditEditAllExt_Click(object sender, EventArgs e) {
             using var frm = new frmEditApp() {
                 FileExtension = $"<{string.Format(Configs.Language.Items[$"{Name}._allExtensions"])}>",
-                TopMost = this.TopMost
+                TopMost = TopMost
             };
             if (frm.ShowDialog() == DialogResult.OK) {
                 foreach (var assoc in Configs.EditApps) {
@@ -1085,7 +1121,7 @@ namespace ImageGlass {
         private void btnAddNewExt_Click(object sender, EventArgs e) {
             using var frm = new frmAddNewFormat() {
                 FileFormat = ".svg",
-                TopMost = this.TopMost
+                TopMost = TopMost
             };
             if (frm.ShowDialog() == DialogResult.OK) {
                 // If the ext exist
@@ -1166,7 +1202,7 @@ namespace ImageGlass {
             // Load toolbar position
             cmbToolbarPosition.Items.Clear();
             foreach (var pos in Enum.GetNames(typeof(ToolbarPosition))) {
-                cmbToolbarPosition.Items.Add(lang[$"{this.Name}.cmbToolbarPosition._{pos}"]);
+                cmbToolbarPosition.Items.Add(lang[$"{Name}.cmbToolbarPosition._{pos}"]);
             }
 
             cmbToolbarPosition.SelectedIndex = (int)Configs.ToolbarPosition;
@@ -1539,7 +1575,7 @@ namespace ImageGlass {
         private async Task RefreshThemeListAsync() {
             lvTheme.Items.Clear();
             lvTheme.Enabled = false;
-            this.Cursor = Cursors.WaitCursor;
+            Cursor = Cursors.WaitCursor;
 
             // get default theme dir
             var defaultThemePath = App.StartUpDir(Dir.Themes, Constants.DEFAULT_THEME, Theme.CONFIG_FILE);
@@ -1573,7 +1609,7 @@ namespace ImageGlass {
 
 
             lvTheme.Enabled = true;
-            this.Cursor = Cursors.Default;
+            Cursor = Cursors.Default;
 
             lblInstalledThemes.Text = string.Format(Configs.Language.Items[$"{Name}.lblInstalledThemes"], lvTheme.Items.Count.ToString());
         }
@@ -1815,16 +1851,42 @@ namespace ImageGlass {
 
         #endregion
 
+        #region TAB PRIVACY
+
+        private void LoadTabPrivacy() {
+            chkEnableSpiderService.Visible =
+                lnkSpider.Visible =
+                File.Exists(SpiderService.SDK_DLL);
+
+            chkEnableSpiderService.Checked = Configs.IsEnableSpiderService;
+        }
+
+        private void LnkPrivacy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            try {
+                Process.Start($"{PRIVACY_URL}?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_settings");
+            }
+            catch { }
+        }
+
+        private void lnkSpider_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            try {
+                Process.Start($"https://imageglass.org/docs/spider-service?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_settings");
+            }
+            catch { }
+        }
+
+        #endregion
+
         #region ACTION BUTTONS
         private void btnCancel_Click(object sender, EventArgs e) {
             //close without saving
-            this.Close();
+            Close();
         }
 
         private void btnSave_Click(object sender, EventArgs e) {
             // Save and close
             if (ApplySettings()) {
-                this.Close();
+                Close();
             }
         }
 
@@ -1849,6 +1911,11 @@ namespace ImageGlass {
             // AutoUpdate
             Configs.AutoUpdate = chkAutoUpdate.Checked ? DateTime.Now.ToString("M/d/yyyy HH:mm:ss") : "0";
 
+            // start with os
+            Configs.IsStartWithOs = chkStartWithOs.Checked;
+            Helper.SetStartWithOS(Configs.IsStartWithOs);
+
+            Configs.IsContinueRunningBackground = chkContinueRunningBackground.Checked;
             Configs.IsAllowMultiInstances = chkAllowMultiInstances.Checked;
             Configs.IsPressESCToQuit = chkESCToQuit.Checked;
             Configs.IsConfirmationDelete = chkConfirmationDelete.Checked;
@@ -1925,6 +1992,10 @@ namespace ImageGlass {
 
             Configs.IsUseRawThumbnail =
                 Local.ImageList.UseRawThumbnail = chkIsUseRawThumbnail.Checked;
+
+            // image changes alert
+            Configs.IsPlayImageChangeSound = chkIsPlayImageChangeSound.Checked;
+            Configs.NumberImagesNotify = (uint)numNumberImagesNotify.Value;
 
             #region ImageLoadingOrder: MainFormForceUpdateAction.IMAGE_LIST
             newInt = cmbImageOrder.SelectedIndex;
@@ -2133,7 +2204,7 @@ namespace ImageGlass {
             ApplyToolbarChanges();
             #endregion
 
-            #region Tools tab ---------------------------------------
+            #region Tools tab ----------------------------------------------
             Configs.IsColorPickerRGBA = chkColorUseRGBA.Checked;
             Configs.IsColorPickerHEXA = chkColorUseHEXA.Checked;
             Configs.IsColorPickerHSLA = chkColorUseHSLA.Checked;
@@ -2143,6 +2214,20 @@ namespace ImageGlass {
             Configs.IsExifToolAlwaysOnTop = chkExifToolAlwaysOnTop.Checked;
             Configs.ExifToolCommandArgs = txtExifToolCommandArgs.Text.Trim().Replace("\n", "");
             #endregion
+
+            #region Privacy tab --------------------------------------------
+            var dllExist = File.Exists(SpiderService.SDK_DLL);
+            Configs.IsEnableSpiderService = dllExist && chkEnableSpiderService.Checked;
+
+            // toggle Spider service
+            if (Configs.IsEnableSpiderService) {
+                SpiderService.Enable();
+            }
+            else {
+                SpiderService.Disable();
+            }
+            #endregion
+
 
             SaveKeyboardSettings();
 

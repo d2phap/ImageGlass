@@ -20,18 +20,22 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ImageGlass.Base;
+using ImageGlass.Services;
 using ImageGlass.Services.InstanceManagement;
 using ImageGlass.Settings;
 
 namespace ImageGlass {
     internal static class Program {
-        private const string appGuid = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
+        public const string APP_GUID = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
+        public static bool IsHideWindow = Environment.GetCommandLineArgs().Contains("-HideWindow");
         private static frmMain formMain;
+
 
         [DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
@@ -49,11 +53,6 @@ namespace ImageGlass {
             SEM_NOOPENFILEERRORBOX = 1 << 15
         }
 
-        // Issues #774, #855 : using this method is the ONLY way to successfully restore from minimized state!
-        [DllImport("user32.dll")]
-        private static extern int ShowWindow(IntPtr hWnd, uint msg);
-
-        private const uint SW_RESTORE = 0x09;
 
         /// <summary>
         /// The main entry point for the application.
@@ -61,7 +60,7 @@ namespace ImageGlass {
         [STAThread]
         private static void Main() {
             // Issue #360: IG periodically searching for dismounted device
-            // This _must_ be executed first!
+            // This MUST be executed first!
             SetErrorMode(ErrorModes.SEM_FAILCRITICALERRORS);
 
             // Set up Startup Profile to improve launch performance
@@ -77,8 +76,36 @@ namespace ImageGlass {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            // checks and enables Spider service
+            _ = CheckAndRunSpiderServiceAsync();
 
-            #region Check config file compatibility
+            // check config file compatibility
+            if (!CheckConfigFileCompatibility()) return;
+
+            // check First-launch Configs
+            if (!CheckFirstLaunchConfigs()) return;
+
+            // check and run auto-update
+            CheckAndRunAutoUpdate();
+
+            // checks and runs app instance(s)
+            RunAppInstances();
+
+        }
+
+
+        /// <summary>
+        /// Checks the config file compatibility.
+        /// </summary>
+        /// <returns>
+        /// <list type="bullet">
+        ///   <item><c>true</c> if the config file is compatible.</item>
+        ///   <item><c>false</c> if the config file needs user's attention.</item>
+        /// </list>
+        /// </returns>
+        private static bool CheckConfigFileCompatibility() {
+            var canContinue = true;
+
             if (!Configs.IsCompatible) {
                 var msg = string.Format(Configs.Language.Items["_IncompatibleConfigs"], App.Version);
                 var result = MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -89,17 +116,38 @@ namespace ImageGlass {
                     }
                     catch { }
 
-                    return;
+                    canContinue = false;
                 }
             }
-            #endregion
+
+            return canContinue;
+        }
 
 
-            #region Check First-launch Configs
-            if (Configs.FirstLaunchVersion < Constants.FIRST_LAUNCH_VERSION) {
+        /// <summary>
+        /// Checks if the First launch configs dialog should be shown.
+        /// </summary>
+        /// <returns>
+        /// <list type="bullet">
+        ///   <item><c>true</c> if the config file is compatible.</item>
+        ///   <item><c>false</c> if the config file needs user's attention.</item>
+        /// </list>
+        /// </returns>
+        private static bool CheckFirstLaunchConfigs() {
+            var canContinue = true;
+
+            if (Configs.FirstLaunchVersion < Constants.FIRST_LAUNCH_VERSION && !IsHideWindow) {
                 using var p = new Process();
                 p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
-                p.StartInfo.Arguments = "firstlaunch";
+
+                // update from <=v8.3 to v8.4
+                if (Configs.FirstLaunchVersion >= 5) {
+                    // show privacy update
+                    p.StartInfo.Arguments = "firstlaunch 2";
+                }
+                else {
+                    p.StartInfo.Arguments = "firstlaunch";
+                }
 
                 try {
                     p.Start();
@@ -107,16 +155,25 @@ namespace ImageGlass {
                 catch { }
 
                 Application.Exit();
-                return;
+                canContinue = false;
             }
-            #endregion
+
+            return canContinue;
+        }
 
 
-            #region Auto check for update
+        /// <summary>
+        /// Checks and runs auto-update.
+        /// </summary>
+        private static void CheckAndRunAutoUpdate() {
             if (Configs.AutoUpdate != "0") {
-                var lastUpdate = DateTime.Now;
+                if (DateTime.TryParseExact(
+                    Configs.AutoUpdate,
+                    "M/d/yyyy HH:mm:ss",
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.None,
+                    out var lastUpdate)) {
 
-                if (DateTime.TryParseExact(Configs.AutoUpdate, "M/d/yyyy HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out lastUpdate)) {
                     // Check for update every 5 days
                     if (DateTime.Now.Subtract(lastUpdate).TotalDays > 5) {
                         CheckForUpdate(useAutoCheck: true);
@@ -126,66 +183,8 @@ namespace ImageGlass {
                     CheckForUpdate(useAutoCheck: true);
                 }
             }
-            #endregion
-
-
-            #region Multi instances
-            // check if allows multi instances
-            if (Configs.IsAllowMultiInstances) {
-                Application.Run(formMain = new frmMain());
-            }
-            else {
-                var guid = new Guid(appGuid);
-
-                // single instance is required
-                using var singleInstance = new SingleInstance(guid);
-                if (singleInstance.IsFirstInstance) {
-                    singleInstance.ArgumentsReceived += SingleInstance_ArgsReceived;
-                    singleInstance.ListenForArgumentsFromSuccessiveInstances();
-
-                    Application.Run(formMain = new frmMain());
-                }
-                else {
-                    _ = singleInstance.PassArgumentsToFirstInstanceAsync(Environment.GetCommandLineArgs());
-                }
-            } //end check multi instances
-            #endregion
-
         }
 
-        private static void SingleInstance_ArgsReceived(object sender, ArgumentsReceivedEventArgs e) {
-            if (formMain == null)
-                return;
-
-            Action<string[]> UpdateForm = arguments => {
-
-                // Issues #774, #855 : if IG is normal or maximized, do nothing. If IG is minimized,
-                // restore it to previous state.
-                if (formMain.WindowState == FormWindowState.Minimized) {
-                    ShowWindow(formMain.Handle, SW_RESTORE);
-                }
-
-                formMain.LoadFromParams(arguments);
-            };
-
-            // KBR 20181009 Attempt to run a 2nd instance of IG when multi-instance turned off. Primary instance
-            // will crash if no file provided (e.g. by double-clicking on .EXE in explorer).
-            var realCount = 0;
-            foreach (var arg in e.Args) {
-                if (arg != null) {
-                    realCount++;
-                }
-            }
-
-            var realArgs = new string[realCount];
-            Array.Copy(e.Args, realArgs, realCount);
-
-            // Execute our delegate on the forms thread!
-            formMain.Invoke(UpdateForm, (object)realArgs);
-
-            // send our Win32 message to bring ImageGlass dialog to top
-            NativeMethods.PostMessage((IntPtr)NativeMethods.HWND_BROADCAST, NativeMethods.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
-        }
 
         /// <summary>
         /// Check for updatae
@@ -207,5 +206,73 @@ namespace ImageGlass {
                 Configs.AutoUpdate = DateTime.Now.ToString("M/d/yyyy HH:mm:ss");
             });
         }
+
+
+        /// <summary>
+        /// Checks and runs app instance(s)
+        /// </summary>
+        private static void RunAppInstances() {
+            if (Configs.IsAllowMultiInstances) {
+                Application.Run(formMain = new frmMain());
+            }
+            else {
+                var guid = new Guid(APP_GUID);
+
+                // single instance is required
+                using var instance = new SingleInstance(guid);
+                if (instance.IsFirstInstance) {
+                    instance.ArgumentsReceived += Instance_ArgsReceived;
+                    instance.ListenForArgumentsFromSuccessiveInstances();
+
+                    Application.Run(formMain = new frmMain());
+                }
+                else {
+                    _ = instance.PassArgumentsToFirstInstanceAsync(Environment.GetCommandLineArgs());
+                }
+            }
+        }
+
+
+        private static void Instance_ArgsReceived(object sender, ArgumentsReceivedEventArgs e) {
+            if (formMain == null) return;
+
+            Action<string[]> UpdateForm = args => {
+                // activate form
+                _ = formMain.ToggleAppVisibilityAsync(true);
+
+                // load image file from arg
+                formMain.LoadFromParams(args);
+            };
+
+            // KBR 20181009 Attempt to run a 2nd instance of IG when multi-instance turned off.
+            // Primary instance will crash if no file provided
+            // (e.g. by double-clicking on .EXE in explorer).
+            var realCount = 0;
+            foreach (var arg in e.Args) {
+                if (arg != null) {
+                    realCount++;
+                }
+            }
+
+            var realArgs = new string[realCount];
+            Array.Copy(e.Args, realArgs, realCount);
+
+            // Execute our delegate on the forms thread!
+            formMain.Invoke(UpdateForm, (object)realArgs);
+        }
+
+
+        /// <summary>
+        /// Checks and enables Spider service
+        /// </summary>
+        /// <returns></returns>
+        private static async Task CheckAndRunSpiderServiceAsync() {
+            if (Configs.IsEnableSpiderService) {
+                await Task.Delay(5000);
+
+                SpiderService.Enable();
+            }
+        }
+
     }
 }
