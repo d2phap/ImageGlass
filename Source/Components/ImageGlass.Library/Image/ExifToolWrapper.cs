@@ -269,8 +269,6 @@ namespace ImageGlass.Library.Image {
         /// <param name="imageFilename"></param>
         /// <param name="removeWhiteSpaceInTagNames"></param>
         private void LoadExifData(string imageFilename, string commands = "") {
-            var fullPath = App.ToAbsolutePath(ToolPath);
-
             // exiftool command
             var (output, _) = Open($"-fast -G -t -m -q {commands} \"{imageFilename}\"");
 
