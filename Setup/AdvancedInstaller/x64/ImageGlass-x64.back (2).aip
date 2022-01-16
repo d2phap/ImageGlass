@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="19.0" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="18.8.1" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
-    <ROW Property="AI_CURRENT_YEAR" Value="2022" ValueLocId="-"/>
+    <ROW Property="AI_CURRENT_YEAR" Value="2021" ValueLocId="-"/>
     <ROW Property="AI_RUN_AS_ADMIN" Value="0"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
@@ -15,10 +15,10 @@
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="MsiBuild:1"/>
     <ROW Property="Manufacturer" Value="Duong Dieu Phap"/>
     <ROW Property="MsiLogging" MultiBuildValue="MsiBuild:vp"/>
-    <ROW Property="ProductCode" Value="1033:{7BC18B4D-18B0-4111-8DB6-37ADA303722B} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{DF5D329D-F163-4C44-8079-AFE8F8F7C984} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="ImageGlass"/>
-    <ROW Property="ProductVersion" Value="8.4.1.22" Type="32" TargetFile="ImageGlass.exe"/>
+    <ROW Property="ProductVersion" Value="8.3.11.21" Type="32" TargetFile="ImageGlass.exe"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{877DB994-AB03-4025-B99D-41CE565E810B}"/>
@@ -48,12 +48,11 @@
     <ROW Directory="Themes_Dir" Directory_Parent="APPDIR" DefaultDir="Themes"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
-    <ROW Component="AI_INSTALLPERUSER" ComponentId="{3C727F62-5F7F-449F-86CA-BFCB21DB8626}" Directory_="APPDIR" Attributes="260" KeyPath="AI_INSTALLPERUSER" Options="1"/>
     <ROW Component="APPDIR" ComponentId="{9AA73F17-00E0-4CFF-BB31-59859F667103}" Directory_="APPDIR" Attributes="0"/>
     <ROW Component="ActualSize.svg" ComponentId="{92D6E58E-E96F-40C7-91E2-2DF66DE54A43}" Directory_="Kobe_Dir" Attributes="0" KeyPath="ActualSize.svg" Type="0"/>
     <ROW Component="ChineseSimplified.iglang" ComponentId="{E1A33E6A-C638-46FE-B098-83B0C9F212DC}" Directory_="Languages_Dir" Attributes="0" KeyPath="ChineseSimplified.iglang" Type="0"/>
     <ROW Component="DotNetZip.dll" ComponentId="{C3BB38FA-8689-4C8E-8908-03600DFB8616}" Directory_="APPDIR" Attributes="256" KeyPath="DotNetZip.dll"/>
-    <ROW Component="ExplorerSortOrder.dll" ComponentId="{6E7B0DC3-9369-4177-982F-C99853840F8A}" Directory_="APPDIR" Attributes="256" KeyPath="ExplorerSortOrder.dll"/>
+    <ROW Component="ExplorerSortOrder64.dll" ComponentId="{93BA34BD-CA11-4EEA-B55C-F7AD67F21516}" Directory_="APPDIR" Attributes="256" KeyPath="ExplorerSortOrder64.dll"/>
     <ROW Component="FR.ico" ComponentId="{DC5A65C2-C114-4E39-ABF7-7FC553E47112}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="FR.ico" Type="0"/>
     <ROW Component="FileWatcherEx.dll" ComponentId="{A753DA22-9ACD-4884-8A84-4A843D677A5A}" Directory_="APPDIR" Attributes="256" KeyPath="FileWatcherEx.dll"/>
     <ROW Component="ImageGlass" ComponentId="{11796634-B050-449E-A628-A9EB328399D3}" Directory_="ImageGlass_Dir" Attributes="0"/>
@@ -74,7 +73,6 @@
     <ROW Component="Registry" ComponentId="{8FB9A6E2-EB42-405D-B57B-7E83B423B08E}" Directory_="APPDIR" Attributes="260" KeyPath="ProductName"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{A0ECB089-2670-479A-B45D-4C76901F0F14}" Directory_="SHORTCUTDIR" Attributes="0"/>
     <ROW Component="System.Runtime.WindowsRuntime.dll" ComponentId="{6F633D65-B338-4B7A-A77F-96675B784ED2}" Directory_="APPDIR" Attributes="0" KeyPath="System.Runtime.WindowsRuntime.dll"/>
-    <ROW Component="bssdk.dll" ComponentId="{7B8A5A1C-7A9A-4EAC-845C-149A3047E4F0}" Directory_="APPDIR" Attributes="256" KeyPath="bssdk.dll"/>
     <ROW Component="default.jpg" ComponentId="{DD9ACEDA-3C46-41C1-8C97-5A3D7275ED67}" Directory_="APPDIR" Attributes="0" KeyPath="LICENSE.rtf" Type="0"/>
     <ROW Component="igcmd.exe" ComponentId="{E1F6C5A4-570F-4CCF-9FB3-438ED36C5997}" Directory_="APPDIR" Attributes="256" KeyPath="igcmd.exe"/>
     <ROW Component="igcmdWin10.exe" ComponentId="{1A26187A-D6F6-4E2D-8580-471B567476DC}" Directory_="APPDIR" Attributes="256" KeyPath="igcmdWin10.exe"/>
@@ -93,6 +91,7 @@
     <ROW File="igcmdWin10.exe" Component_="igcmdWin10.exe" FileName="IGCMDW~1.EXE|igcmdWin10.exe" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\igcmdWin10.exe" SelfReg="false" DigSign="true"/>
     <ROW File="igtasks.exe" Component_="igtasks.exe" FileName="igtasks.exe" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\igtasks.exe" SelfReg="false" DigSign="true"/>
     <ROW File="DotNetZip.dll" Component_="DotNetZip.dll" FileName="DOTNET~1.DLL|DotNetZip.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\DotNetZip.dll" SelfReg="false"/>
+    <ROW File="ExplorerSortOrder64.dll" Component_="ExplorerSortOrder64.dll" FileName="EXPLOR~2.DLL|ExplorerSortOrder64.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ExplorerSortOrder64.dll" SelfReg="false"/>
     <ROW File="FileWatcherEx.dll" Component_="FileWatcherEx.dll" FileName="FILEWA~1.DLL|FileWatcherEx.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\FileWatcherEx.dll" SelfReg="false"/>
     <ROW File="ImageGlass.Base.dll" Component_="ImageGlass.Base.dll" FileName="IMAGEG~1.DLL|ImageGlass.Base.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.Base.dll" SelfReg="false"/>
     <ROW File="ImageGlass.Heart.dll" Component_="ImageGlass.Heart.dll" FileName="IMAGEG~2.DLL|ImageGlass.Heart.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.Heart.dll" SelfReg="false"/>
@@ -239,18 +238,6 @@
     <ROW File="ZoomIn.svg" Component_="ActualSize.svg" FileName="ZoomIn.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\ZoomIn.svg" SelfReg="false"/>
     <ROW File="ZoomOut.svg" Component_="ActualSize.svg" FileName="ZoomOut.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\ZoomOut.svg" SelfReg="false"/>
     <ROW File="LightGray.DuongDieuPhap.igtheme" Component_="LightGray.DuongDieuPhap.igtheme" FileName="2017-L~1.IGT|2017-Light-Gray.Duong-Dieu-Phap.igtheme" Attributes="0" SourcePath="..\..\Assets\Themes\2017-Light-Gray.Duong-Dieu-Phap.igtheme" SelfReg="false"/>
-    <ROW File="AVIF.ico" Component_="FR.ico" FileName="AVIF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\AVIF.ico" SelfReg="false"/>
-    <ROW File="B64.ico" Component_="FR.ico" FileName="B64.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\B64.ico" SelfReg="false"/>
-    <ROW File="CR3.ico" Component_="FR.ico" FileName="CR3.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\CR3.ico" SelfReg="false"/>
-    <ROW File="HEIF.ico" Component_="FR.ico" FileName="HEIF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\HEIF.ico" SelfReg="false"/>
-    <ROW File="ICO.ico" Component_="FR.ico" FileName="ICO.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\ICO.ico" SelfReg="false"/>
-    <ROW File="JXL.ico" Component_="FR.ico" FileName="JXL.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\JXL.ico" SelfReg="false"/>
-    <ROW File="_EXIF.ico" Component_="FR.ico" FileName="_EXIF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\_EXIF.ico" SelfReg="false"/>
-    <ROW File="bssdk.dll" Component_="bssdk.dll" FileName="bs-sdk.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\bs-sdk.dll" SelfReg="false"/>
-    <ROW File="ExplorerSortOrder.dll" Component_="ExplorerSortOrder.dll" FileName="EXPLOR~1.DLL|ExplorerSortOrder.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ExplorerSortOrder.dll" SelfReg="false"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.AiPersistentPropComponent">
-    <ROW Property="AI_INSTALLPERUSER" Registry="AI_INSTALLPERUSER" HklmSearch="AI_INSTALLPERUSER" HkcuSearch="AI_INSTALLPERUSER_1" Hklm64Search="AI_INSTALLPERUSER_2" Hkcu64Search="AI_INSTALLPERUSER_3"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
@@ -262,13 +249,9 @@
     <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
     <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
   </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
-    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" SignOptions="7" SignTool="0" EnableLUAPatching="1" UseSha256="1" Thumbprint="a85170621f2faa2a475b3c1eb290c11bff5396ca Subject: Duong Dieu Phap&#10;Issuer: SSL.com Code Signing Intermediate CA RSA R1&#10;Valid from 01/14/2022 to 01/14/2023&#10;User\MY" Subject="CN=Duong Dieu Phap, O=Duong Dieu Phap, L=Tây Ninh, S=Tây Ninh, C=VN"/>
-  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
     <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
     <ROW Fragment="FolderDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\FolderDlg.aip"/>
-    <ROW Fragment="InstallTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\InstallTypeDlg.aip"/>
     <ROW Fragment="LicenseAgreementDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\LicenseAgreementDlg.aip"/>
     <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceTypeDlg.aip"/>
     <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceWelcomeDlg.aip"/>
@@ -280,12 +263,6 @@
     <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRemoveDlg.aip"/>
     <ROW Fragment="VerifyRepairDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRepairDlg.aip"/>
     <ROW Fragment="WelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\WelcomeDlg.aip"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.MsiAppSearchComponent">
-    <ROW Property="AI_INSTALLPERUSER" Signature_="AI_INSTALLPERUSER"/>
-    <ROW Property="AI_INSTALLPERUSER" Signature_="AI_INSTALLPERUSER_1"/>
-    <ROW Property="AI_INSTALLPERUSER" Signature_="AI_INSTALLPERUSER_2"/>
-    <ROW Property="AI_INSTALLPERUSER" Signature_="AI_INSTALLPERUSER_3"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
@@ -312,14 +289,12 @@
     <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="299" Options="1"/>
     <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
     <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
-    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="NewDialog" Argument="InstallTypeDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="1"/>
     <ROW Dialog_="LicenseAgreementDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="203"/>
     <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
-    <ROW Dialog_="FolderDlg" Control_="Back" Event="NewDialog" Argument="InstallTypeDlg" Condition="AI_INSTALL" Ordering="1"/>
-    <ROW Dialog_="InstallTypeDlg" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="101"/>
-    <ROW Dialog_="InstallTypeDlg" Control_="Back" Event="NewDialog" Argument="LicenseAgreementDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="FolderDlg" Control_="Back" Event="NewDialog" Argument="LicenseAgreementDlg" Condition="AI_INSTALL" Ordering="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
@@ -327,7 +302,6 @@
     <ROW Directory_="ImageGlass_Dir" Component_="ImageGlass" ManualDelete="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
-    <ROW Action="AI_AuthorSinglePackage" Type="1" Source="aicustact.dll" Target="AI_AuthorSinglePackage" WithoutSeq="true"/>
     <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
     <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
     <ROW Action="AI_EnableDebugLog" Type="321" Source="aicustact.dll" Target="EnableDebugLog"/>
@@ -353,6 +327,7 @@
     <ROW Feature_="MainFeature" Component_="igtasks.exe"/>
     <ROW Feature_="MainFeature" Component_="Registry"/>
     <ROW Feature_="MainFeature" Component_="DotNetZip.dll"/>
+    <ROW Feature_="MainFeature" Component_="ExplorerSortOrder64.dll"/>
     <ROW Feature_="MainFeature" Component_="FileWatcherEx.dll"/>
     <ROW Feature_="MainFeature" Component_="ImageGlass.Base.dll"/>
     <ROW Feature_="MainFeature" Component_="ImageGlass.Heart.dll"/>
@@ -373,9 +348,6 @@
     <ROW Feature_="MainFeature" Component_="FR.ico"/>
     <ROW Feature_="MainFeature" Component_="ChineseSimplified.iglang"/>
     <ROW Feature_="MainFeature" Component_="ActualSize.svg"/>
-    <ROW Feature_="MainFeature" Component_="bssdk.dll"/>
-    <ROW Feature_="MainFeature" Component_="ExplorerSortOrder.dll"/>
-    <ROW Feature_="MainFeature" Component_="AI_INSTALLPERUSER"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="ImageGlass_1.exe" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.exe" Index="0"/>
@@ -407,14 +379,7 @@
     <ROW Condition="(VersionNT &lt;&gt; 500)" Description="[ProductName] cannot be installed on [WindowsTypeNT50Display]." DescriptionLocId="AI.LaunchCondition.NoNT50" IsPredefined="true" Builds="MsiBuild"/>
     <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="MsiBuild"/>
   </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
-    <ROW Signature_="AI_INSTALLPERUSER" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="2"/>
-    <ROW Signature_="AI_INSTALLPERUSER_1" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="2"/>
-    <ROW Signature_="AI_INSTALLPERUSER_2" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="18"/>
-    <ROW Signature_="AI_INSTALLPERUSER_3" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="18"/>
-  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
-    <ROW Registry="AI_INSTALLPERUSER" Root="-1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Value="[AI_INSTALLPERUSER]" Component_="AI_INSTALLPERUSER"/>
     <ROW Registry="ProductName" Root="-1" Key="Software\[ProductName]" Name="+" Component_="Registry"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
