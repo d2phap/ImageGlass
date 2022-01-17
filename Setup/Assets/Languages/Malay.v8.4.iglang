@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="ms-MY" langName="Bahasa Melayu" author="Abuyop" description="Malay Malaysia" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="ms-MY" langName="Bahasa Melayu" author="Abuyop" description="Malay Malaysia" minVersion="8.4.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Sesetengah tetapan tidak serasi dengan ImageGlass {0} anda. Adalah disarankan anda mengemas kini dahulu sebelum diteruskan.&#10;&#10;- Klik Ya untuk ketahui perubahan-perubahan tersebut.&#10;- Klik Tidak untuk lancarkan ImageGlass dengan tetapan lalai."/>
       <Item key="_.ImageOrderBy._Name" value="Nama (lalai)"/>
@@ -106,7 +106,8 @@
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Periksa kemas kini…"/>
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Satu versi baharu sudah tersedia!"/>
       <Item key="frmMain.mnuMainReportIssue" value="Lapor sebagai isu…"/>
-      <Item key="frmMain.mnuMainExitApplication" value="Keluar dari ImageGlass"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Keluar"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="Tunjuk"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass tidak dapat membuka gambar ini kerana fail berkemungkinan sudah rosak atau tidak disokong."/>
       <Item key="frmMain._ImageNotExist" value="Imej yang ingin dilihat tidak wujud."/>
       <Item key="frmMain.btnMenu" value="Menu utama"/>
@@ -179,6 +180,8 @@
       <Item key="frmSetting.lblBackGroundColor" value="Warna latar belakang"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="Tetap semula"/>
       <Item key="frmSetting.lblHeadOthers" value="Lain-lain"/>
+      <Item key="frmSetting.chkStartWithOs" value="Mula dengan OS"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Masih berjalan di balik tabir bila apl ditutup"/>
       <Item key="frmSetting.chkAutoUpdate" value="Periksa kemas kini secara automatik"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="Benarkan kejadian berbilang program"/>
       <Item key="frmSetting.chkESCToQuit" value="Benarkan ESC ditekan untuk keluar dari aplikasi"/>
@@ -195,6 +198,8 @@
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Guna tertib isih Pelayar Fail Windows jika boleh"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Kelompok imej mengikut direktori"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Bilangan imej dicache oleh ImageBooter (satu arah)"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Main bunyi bila imej berubah"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="Bilangan imej yang dimaklumkan"/>
       <Item key="frmSetting.lblColorManagement" value="Pengurusan warna"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Terap juga imej tanpa profil warna terbenam"/>
       <Item key="frmSetting.lblColorProfile" value="Profil warna:"/>
@@ -326,6 +331,11 @@
       <Item key="frmSetting.KeyActions._ZoomInOut" value="Zum Masuk / Keluar"/>
       <Item key="frmSetting.KeyActions._PauseSlideshow" value="Jeda tayangan slaid"/>
       <Item key="frmSetting.KeyActions._DoNothing" value="Jangan buat apa-apa"/>
+      <Item key="frmSetting.lblPrivacy" value="Privasi"/>
+      <Item key="frmSetting.chkEnableSpiderService" value="Benarkan perkhidmatan Spider"/>
+      <Item key="frmSetting.lnkPrivacy" value="Ketahui lebih lanjut berkenaan dasar privasi di {0}. Untuk menghilangkan pilihan, anda boleh nyahtanda ia, kemudian klik butang 'Simpan' atau 'Terap' di bawah. Ia akan dilumpuhkan serta-merta."/>
+      <Item key="frmSetting.lnkSpider._Description" value="Kongsi IP peranti dengan para pelanggan Spider.com untuk melepasi trafik dengan peranti anda."/>
+      <Item key="frmSetting.lnkSpider._LearnMore" value="Ketahui lebih lanjut"/>
       <Item key="frmAddNewFormat.lblFileExtension" value="Sambungan fail"/>
       <Item key="frmAddNewFormat.btnOK" value="OK"/>
       <Item key="frmAddNewFormat.btnClose" value="Tutup"/>
@@ -344,10 +354,10 @@
       <Item key="frmFirstLaunch.btnNextStep._Done" value="Selesai!"/>
       <Item key="frmFirstLaunch.lnkSkip" value="Langkau ini dan Lancarkan ImageGlass"/>
       <Item key="frmFirstLaunch.lblLanguage" value="Pilih Bahasa"/>
-      <Item key="frmFirstLaunch.lblLayout" value="Pilih Bentangan"/>
-      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Piawai"/>
-      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Pereka"/>
       <Item key="frmFirstLaunch.lblTheme" value="Pilih Tema"/>
+      <Item key="frmFirstLaunch.lnkPrivacy" value="Privasi"/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion" value="Anda boleh tinjau dasar privasi dengan mengklik pautan di bawah."/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion._Spider" value="ImageGlass disertakan dengan perkhidmatan Spider secara lalai. Anda boleh melumpuhkannya dalam Tetapan &gt; Privasi."/>
       <Item key="frmFirstLaunch.lblDefaultApp" value="Tetapkan ImageGlass sebagai Pelihat Foto Lalai?"/>
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="Ya"/>
       <Item key="frmCrop.lblWidth" value="Lebar:"/>

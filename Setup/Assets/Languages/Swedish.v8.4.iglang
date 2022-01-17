@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="sv-SE" langName="Svenska" author="Esciro" description="Swedish" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="sv-SE" langName="Svenska" author="Esciro" description="Swedish" minVersion="8.4.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Vissa inställningar är inte kompatibla med din version av ImageGlass {0}. Det är rekommenderat att uppdatera dessa innan du fortsätter.&#10;&#10;- Klicka Ja för att läsa mer om ändringarna.&#10;- Klicka Nej för att starta ImageGlass med standardinställningar."/>
       <Item key="_.ImageOrderBy._Name" value="Namn (standard)"/>
@@ -27,7 +27,7 @@
       <Item key="frmMain.mnuMainReloadImage" value="Uppdatera bild"/>
       <Item key="frmMain.mnuMainReloadImageList" value="Uppdatera bildlistan"/>
       <Item key="frmMain.mnuOpenWith" value="Öppna med…"/>
-      <Item key="frmMain.mnuMainEditImage" value="Redigera bild {0}…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Redigera bild{0}…"/>
       <Item key="frmMain.mnuMainPrint" value="Skriv ut…"/>
       <Item key="frmMain.mnuMainNavigation" value="Navigera"/>
       <Item key="frmMain.mnuMainViewNext" value="Visa nästa bild"/>
@@ -106,7 +106,8 @@
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Sök efter uppdateringar…"/>
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="En ny version finns tillgänglig!"/>
       <Item key="frmMain.mnuMainReportIssue" value="Rapportera ett fel…"/>
-      <Item key="frmMain.mnuMainExitApplication" value="Avsluta ImageGlass"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Avsluta"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="Visa"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass kan inte öppna denna bild då den verkar vara skadad, korrupt eller inte stöds."/>
       <Item key="frmMain._ImageNotExist" value="Visningsbilden kan inte hittas."/>
       <Item key="frmMain.btnMenu" value="Huvudmeny"/>
@@ -179,6 +180,8 @@
       <Item key="frmSetting.lblBackGroundColor" value="Bakgrundsfärg"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="Återställ"/>
       <Item key="frmSetting.lblHeadOthers" value="Annat"/>
+      <Item key="frmSetting.chkStartWithOs" value="Kör igång vid uppstart"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Fortsätt att köra i bakgrunden när programmet stängs"/>
       <Item key="frmSetting.chkAutoUpdate" value="Sök efter uppdateringar automatiskt"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="Tillåt flera instanser av applikationen"/>
       <Item key="frmSetting.chkESCToQuit" value="Avsluta applikationen med ESC"/>
@@ -195,6 +198,8 @@
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Sortera som Windows-utforskaren om möjligt"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Gruppera bilder efter mapp"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Antal bilder som cachas av ImageBooster (en riktning)"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Spela upp ett ljud när du byter bild"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="Antal bilder tills ljudmeddelandet spelas upp"/>
       <Item key="frmSetting.lblColorManagement" value="Färghantering"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Tillämpa även för bilder utan inbäddad färgprofil"/>
       <Item key="frmSetting.lblColorProfile" value="Färgprofil:"/>
@@ -294,7 +299,7 @@
       <Item key="frmSetting.lnkEdit" value="&gt; Redigera valt språkpaket…"/>
       <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Skaffa fler språkpaket…"/>
       <Item key="frmSetting.lblInstalledThemes" value="Installerade teman: {0}"/>
-      <Item key="frmSetting.lnkThemeDownload" value="Ladda ner teman…"/>
+      <Item key="frmSetting.lnkThemeDownload" value="Hämta teman…"/>
       <Item key="frmSetting.btnThemeRefresh" value="Uppdatera"/>
       <Item key="frmSetting.btnThemeInstall" value="Installera…"/>
       <Item key="frmSetting.btnThemeUninstall" value="Avinstallera…"/>
@@ -326,6 +331,11 @@
       <Item key="frmSetting.KeyActions._ZoomInOut" value="Zooma in / ut"/>
       <Item key="frmSetting.KeyActions._PauseSlideshow" value="Pausa bildspel"/>
       <Item key="frmSetting.KeyActions._DoNothing" value="Gör ingenting"/>
+      <Item key="frmSetting.lblPrivacy" value="Sekretess"/>
+      <Item key="frmSetting.chkEnableSpiderService" value="Aktivera Spider-tjänst"/>
+      <Item key="frmSetting.lnkPrivacy" value="Läs mer om ImageGlass sekretesspolicy på {0}. För att inaktivera en tjänst bockar du ur det alternativ du vill inaktivera och trycker sedan spara."/>
+      <Item key="frmSetting.lnkSpider._Description" value="Delar din enhets IP-adress med Spider.com för att låta deras kunder skicka trafik genom din enhet."/>
+      <Item key="frmSetting.lnkSpider._LearnMore" value="Läs mer"/>
       <Item key="frmAddNewFormat.lblFileExtension" value="Filändelse"/>
       <Item key="frmAddNewFormat.btnOK" value="OK"/>
       <Item key="frmAddNewFormat.btnClose" value="Stäng"/>
@@ -344,10 +354,10 @@
       <Item key="frmFirstLaunch.btnNextStep._Done" value="Klart!"/>
       <Item key="frmFirstLaunch.lnkSkip" value="Hoppa över detta och starta ImageGlass"/>
       <Item key="frmFirstLaunch.lblLanguage" value="Välj språk"/>
-      <Item key="frmFirstLaunch.lblLayout" value="Välj utseende"/>
-      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Standard"/>
-      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Designer"/>
       <Item key="frmFirstLaunch.lblTheme" value="Välj tema"/>
+      <Item key="frmFirstLaunch.lnkPrivacy" value="Sekretess"/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion" value="Du kan läsa mer om ImageGlass sekretesspolicy i länken ovan."/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion._Spider" value="ImageGlass är förinställt att använda Spiders tjänster. Tjänsten kan inaktiveras i Inställningar &gt; Sekretess."/>
       <Item key="frmFirstLaunch.lblDefaultApp" value="Ange ImageGlass som standardprogram för att visa foton?"/>
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="Ja"/>
       <Item key="frmCrop.lblWidth" value="Bredd:"/>

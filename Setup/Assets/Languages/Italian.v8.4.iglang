@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="it-IT" langName="Italiano" author="Tiwi90" description="Italian" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="it-IT" langName="Italiano" author="Tiwi90" description="Italian" minVersion="8.4.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Alcune impostazioni non sono compatibili con ImageGlass {0}. Si consiglia di aggiornarle prima di continuare.&#10;&#10;- Clicca Sì per conoscere i cambiamenti.&#10;- Clicca No per avviare ImageGlass con le impostazioni predefinite."/>
       <Item key="_.ImageOrderBy._Name" value="Nome (impostazione predefinita)"/>
@@ -106,7 +106,8 @@
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Controlla gli aggiornamenti…"/>
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="È disponibile una nuova versione!"/>
       <Item key="frmMain.mnuMainReportIssue" value="Segnala un problema…"/>
-      <Item key="frmMain.mnuMainExitApplication" value="Esci da ImageGlass"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Esci"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="Mostra"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass non può aprire questa immagine perché il file sembra essere danneggiato, corrotto o non supportato."/>
       <Item key="frmMain._ImageNotExist" value="L'immagine visualizzata non esiste."/>
       <Item key="frmMain.btnMenu" value="Menu principale"/>
@@ -179,6 +180,8 @@
       <Item key="frmSetting.lblBackGroundColor" value="Colore sfondo"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="Reset"/>
       <Item key="frmSetting.lblHeadOthers" value="Altri"/>
+      <Item key="frmSetting.chkStartWithOs" value="Inizia con il sistema operativo"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Continua in esecuzione in background quando l'applicazione è chiusa"/>
       <Item key="frmSetting.chkAutoUpdate" value="Controlla aggiornamenti automaticamente"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="Consentire a più istanze del programma"/>
       <Item key="frmSetting.chkESCToQuit" value="Permetti di premere ESC per chiudere l'applicazione"/>
@@ -195,6 +198,8 @@
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Usa l'ordine di Windows File Explorer se possibile"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Raggruppa le immagini per directory"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Numero di immagini memorizzate in cache da ImageBooster (una direzione)"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Riproduci un suono quando l'immagine cambia"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="Numero di immagini da notificare"/>
       <Item key="frmSetting.lblColorManagement" value="Gestione colore"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Applicare anche per immagini senza profilo colore incorporato"/>
       <Item key="frmSetting.lblColorProfile" value="Profilo di colore:"/>
@@ -326,6 +331,11 @@
       <Item key="frmSetting.KeyActions._ZoomInOut" value="Zoom in / out"/>
       <Item key="frmSetting.KeyActions._PauseSlideshow" value="Presentazione in pausa"/>
       <Item key="frmSetting.KeyActions._DoNothing" value="Non fare nulla"/>
+      <Item key="frmSetting.lblPrivacy" value="Privacy"/>
+      <Item key="frmSetting.chkEnableSpiderService" value="Abilita il servizio Spider"/>
+      <Item key="frmSetting.lnkPrivacy" value="Scopri di più sulla privacy policy su {0}. Per disattivare un'opzione, puoi deselezionarla, quindi fare clic su 'Salva' o 'Applica' pulsante qui sotto. Sarà disabilitato immediatamente."/>
+      <Item key="frmSetting.lnkSpider._Description" value="Condividi l'IP devide con i clienti Spider.com per passare il traffico attraverso il tuo dispositivo."/>
+      <Item key="frmSetting.lnkSpider._LearnMore" value="Scopri di più"/>
       <Item key="frmAddNewFormat.lblFileExtension" value="Estensioni file"/>
       <Item key="frmAddNewFormat.btnOK" value="OK"/>
       <Item key="frmAddNewFormat.btnClose" value="Chiudi"/>
@@ -344,10 +354,10 @@
       <Item key="frmFirstLaunch.btnNextStep._Done" value="Fatto!"/>
       <Item key="frmFirstLaunch.lnkSkip" value="Salta e Avvia ImageGlass"/>
       <Item key="frmFirstLaunch.lblLanguage" value="Seleziona lingua"/>
-      <Item key="frmFirstLaunch.lblLayout" value="Seleziona layout"/>
-      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Predefinito"/>
-      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Progettazione"/>
       <Item key="frmFirstLaunch.lblTheme" value="Seleziona Tema"/>
+      <Item key="frmFirstLaunch.lnkPrivacy" value="Privacy"/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion" value="Puoi rivedere l'informativa sulla privacy delle app cliccando sul link qui sopra."/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion._Spider" value="ImageGlass viene fornito con il servizio Spider per impostazione predefinita. È sempre possibile disattivarlo in Impostazioni &gt; Privacy."/>
       <Item key="frmFirstLaunch.lblDefaultApp" value="Impostare ImageGlass come visualizzatore foto predefinito?"/>
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="Sì"/>
       <Item key="frmCrop.lblWidth" value="Larghezza:"/>

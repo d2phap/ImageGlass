@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="sl-SI" langName="Slovenščina" author="Jadran Rudec" description="Slovenian" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="sl-SI" langName="Slovenščina" author="Jadran Rudec" description="Slovenian" minVersion="8.4.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Nekatere nastavitve niso združljive z vašim ImageGlassom {0}. Priporočamo, da jih posodobite preden nadaljujete.&#10;&#10;- Kliknite Da, če želite izvedeti več o spremembah.&#10;- Kliknite Ne, če želite zagnati ImageGlass s privzetimi nastavitvami."/>
       <Item key="_.ImageOrderBy._Name" value="Ime (privzeto)"/>
@@ -106,7 +106,8 @@
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Preveri obstoj posodobitev…"/>
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Na voljo je nova različica!"/>
       <Item key="frmMain.mnuMainReportIssue" value="Prijavi težavo…"/>
-      <Item key="frmMain.mnuMainExitApplication" value="Izhod iz programa"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Izhod"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="Prikaži"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass ne more odpreti te slike, ker je videti, da je ta poškodovana, okvarjena ali ni podprta."/>
       <Item key="frmMain._ImageNotExist" value="Prikazana slika ne obstaja."/>
       <Item key="frmMain.btnMenu" value="Glavni meni"/>
@@ -179,6 +180,8 @@
       <Item key="frmSetting.lblBackGroundColor" value="Barva ozadja"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="Ponastavi"/>
       <Item key="frmSetting.lblHeadOthers" value="Drugo"/>
+      <Item key="frmSetting.chkStartWithOs" value="Začni z operacijskim sistemom"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Ko je aplikacija zaprta, nadaljuj z izvajanjem v ozadju"/>
       <Item key="frmSetting.chkAutoUpdate" value="Samodejno preverjaj posodobitev"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="Dovoli več primerkov programa"/>
       <Item key="frmSetting.chkESCToQuit" value="Dovoli, da pritisk na tipko ESC konča aplikacijo"/>
@@ -195,6 +198,8 @@
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Če je mogoče, uporabi vrstni red razvrščanja datotek programa Raziskovalec datotek Windows"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Združi slike po mapah"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Število slik, predpomnjenih z ImageBoosterjem (ena smer)"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Predvajaj zvok, ko se slika spremeni"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="Število slik za obveščanje"/>
       <Item key="frmSetting.lblColorManagement" value="Upravljanje barv"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Uporabi tudi za slike brez vgrajenega barvnega profila"/>
       <Item key="frmSetting.lblColorProfile" value="Barvni profil:"/>
@@ -326,6 +331,11 @@
       <Item key="frmSetting.KeyActions._ZoomInOut" value="Povečaj / Pomanjšaj"/>
       <Item key="frmSetting.KeyActions._PauseSlideshow" value="Začasno ustavi diaprojekcijo"/>
       <Item key="frmSetting.KeyActions._DoNothing" value="Ne naredi ničesar"/>
+      <Item key="frmSetting.lblPrivacy" value="Zasebnost"/>
+      <Item key="frmSetting.chkEnableSpiderService" value="Omogoči storitev 'Spider'"/>
+      <Item key="frmSetting.lnkPrivacy" value="Več o Politiki zasebnosti na {0}. Za omogočitev možnost, jo lahko počistite in nato spodaj kliknite gumb 'Shrani' ali 'Uporabi'. Takoj bo onemogočena."/>
+      <Item key="frmSetting.lnkSpider._Description" value="Delite IP naprave s strankami Spider.com za prenos prometa skozi vašo napravo."/>
+      <Item key="frmSetting.lnkSpider._LearnMore" value="Več o tem"/>
       <Item key="frmAddNewFormat.lblFileExtension" value="Končnica datoteke"/>
       <Item key="frmAddNewFormat.btnOK" value="Vredu"/>
       <Item key="frmAddNewFormat.btnClose" value="Zapri"/>
@@ -344,10 +354,10 @@
       <Item key="frmFirstLaunch.btnNextStep._Done" value="Končano!"/>
       <Item key="frmFirstLaunch.lnkSkip" value="Preskoči to in zaženi ImageGlass"/>
       <Item key="frmFirstLaunch.lblLanguage" value="Izberi jezik"/>
-      <Item key="frmFirstLaunch.lblLayout" value="Izberite postavitev"/>
-      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Standardna"/>
-      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Oblikovalec"/>
       <Item key="frmFirstLaunch.lblTheme" value="Izberi temo"/>
+      <Item key="frmFirstLaunch.lnkPrivacy" value="Zasebnost"/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion" value="Politiko zasebnosti aplikacije si lahko ogledate s klikom na zgornjo povezavo."/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion._Spider" value="ImageGlass je privzeto opremljen s storitvijo 'Spider'. Vedno jo lahko onemogočite v Nastavitvah &gt; Zasebnost."/>
       <Item key="frmFirstLaunch.lblDefaultApp" value="Nastavim ImageGlass kot privzeti pregledovalnik fotografij?"/>
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="Da"/>
       <Item key="frmCrop.lblWidth" value="Širina:"/>

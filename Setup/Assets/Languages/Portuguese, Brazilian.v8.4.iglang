@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="pt-BR" langName="Português Brasileiro" author="Cláudio Mantovani Vieira" description="Brazilian Portuguese" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="pt-BR" langName="Português Brasileiro" author="Cláudio Mantovani Vieira" description="Brazilian Portuguese" minVersion="8.4.0.0" isRightToLeftLayout="Não"/>
     <Content>
-      <Item key="_IncompatibleConfigs" value="Algumas configurações são incompatíveis com seu ImageGlass {0}. É recomendado atualizar antes de continuar.&#10;&#10;- Clique em Sim para saber mais sobre as mudanças.&#10;- Clique em Não para abrir o ImageGlass com as configurações padrão."/>
+      <Item key="_IncompatibleConfigs" value="Algumas configurações são incompatíveis com seu ImageGlass {0}. Recomenda-se atualizá-las antes de continuar.&#10;&#10;- Clique em Sim para saber mais sobre as mudanças.&#10;- Clique em Não para abrir o ImageGlass com configurações padrão."/>
       <Item key="_.ImageOrderBy._Name" value="Nome (padrão)"/>
       <Item key="_.ImageOrderBy._Length" value="Comprimento"/>
       <Item key="_.ImageOrderBy._CreationTime" value="Data de criação"/>
@@ -106,7 +106,8 @@
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Procurar atualizações…"/>
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Uma nova versão está disponível!"/>
       <Item key="frmMain.mnuMainReportIssue" value="Relatar um problema…"/>
-      <Item key="frmMain.mnuMainExitApplication" value="Sair do ImageGlass"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Sair"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="Exibir"/>
       <Item key="frmMain.picMain._ErrorText" value="O ImageGlass não pode abrir esta imagem porque o arquivo parece estar danificado, corrompido ou é incompatível."/>
       <Item key="frmMain._ImageNotExist" value="A imagem de visualização não existe."/>
       <Item key="frmMain.btnMenu" value="Menu principal"/>
@@ -129,7 +130,7 @@
       <Item key="frmMain._CopyImageData" value="Imagem copiada para área de transferência"/>
       <Item key="frmMain._ClearClipboard" value="A área de transferência está vazia"/>
       <Item key="frmMain._SaveChanges" value="Salvando modificações..."/>
-      <Item key="frmMain._SaveImage" value="A imagem foi salva no&#10;{0}"/>
+      <Item key="frmMain._SaveImage" value="Imagem salva no&#10;{0}"/>
       <Item key="frmMain._SavingImage" value="Salvando imagem...&#10;{0}"/>
       <Item key="frmMain._SaveImageError" value="Não é possível salvar a imagem &#10;{0}."/>
       <Item key="frmMain._Loading" value="Carregando..."/>
@@ -179,6 +180,8 @@
       <Item key="frmSetting.lblBackGroundColor" value="Cor de fundo"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="Redefinir"/>
       <Item key="frmSetting.lblHeadOthers" value="Mais"/>
+      <Item key="frmSetting.chkStartWithOs" value="Iniciar com S. O."/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Continue executando em 2º plano quando o aplicativo estiver fechado"/>
       <Item key="frmSetting.chkAutoUpdate" value="Verificar atualizações automaticamente"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="Permitir várias instâncias do programa"/>
       <Item key="frmSetting.chkESCToQuit" value="Permite pressionar ESC para encerrar o aplicativo"/>
@@ -195,6 +198,8 @@
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Usar ordem de classificação do Explorador de Arquivos do Windows se possível"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Agrupar imagens por diretório"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Número de imagens em cachê pelo ImageBooster (uma direção)"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Tocar som ao mudar imagem"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="Número de imagens a notificar"/>
       <Item key="frmSetting.lblColorManagement" value="Gerenciamento de cor"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Aplicar também para imagens sem perfil de cor incorporado"/>
       <Item key="frmSetting.lblColorProfile" value="Perfil de cor:"/>
@@ -222,7 +227,7 @@
       <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Alta qualidade, bilinear"/>
       <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Alta qualidade, bicúbico"/>
       <Item key="frmSetting.lblZoomLevels" value="Níveis de ampliação"/>
-      <Item key="frmSetting.txtZoomLevels._Error" value="Houve um erro ao atualizar níveis de Ampliação. Mensagem de erro:&#10;&#10;{0}"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="Houve erro ao atualizar níveis de Ampliação. Mensagem de erro:&#10;&#10;{0}"/>
       <Item key="frmSetting.lblHeadThumbnailBar" value="Barra de miniaturas"/>
       <Item key="frmSetting.chkThumbnailVertical" value="Mostrar miniaturas no lado direito"/>
       <Item key="frmSetting.chkShowThumbnailScrollbar" value="Mostrar barra de rolagem de miniaturas"/>
@@ -280,12 +285,12 @@
       <Item key="frmSetting.chkColorUseHSLA" value="Usar formato HSL com valor Alfa"/>
       <Item key="frmSetting.chkColorUseHSVA" value="Usar formato HSV com valor Alfa"/>
       <Item key="frmSetting.lblDefaultColorCode" value="Formato de código de cor padrão ao copiar"/>
-      <Item key="frmSetting.chkShowPageNavAuto" value="Auto exibir ferramenta de navegação de página para múltipla página de imagens"/>
-      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Manter a ferramenta Exif sempre no topo"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="Auto-exibir ferramenta de navegação de página para múltipla página de imagens"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Manter ferramenta Exif sempre no topo"/>
       <Item key="frmSetting.lnkSelectExifTool" value="Selecionar arquivo de ferramenta Exif"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="A ferramenta Exif não existe ou é inválida: &#10;{0}"/>
       <Item key="frmSetting.lblExifToolCommandArgs" value="Argumentos da linha de comando:"/>
-      <Item key="frmSetting.lblExifToolCommandPreview" value="Pré-visualização do comando:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Prévia do comando:"/>
       <Item key="frmSetting.lblLanguageText" value="Idiomas instalados"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Atualizar"/>
       <Item key="frmSetting.lblLanguageWarning" value="Este pacote de idioma pode não ser compatível com {0}"/>
@@ -326,6 +331,11 @@
       <Item key="frmSetting.KeyActions._ZoomInOut" value="Ampliar / Reduzir"/>
       <Item key="frmSetting.KeyActions._PauseSlideshow" value="Pausar apresentação de slides"/>
       <Item key="frmSetting.KeyActions._DoNothing" value="Nenhuma alteração"/>
+      <Item key="frmSetting.lblPrivacy" value="Privacidade"/>
+      <Item key="frmSetting.chkEnableSpiderService" value="Habilitar serviço Spider"/>
+      <Item key="frmSetting.lnkPrivacy" value="Saiba mais sobre a Política de Privacidade em {0}. Para optar por uma opção, você pode desmarcá-lo e, depois, clique em 'Salvar' ou 'Aplicar'. Ele será desabilitado imediatamente."/>
+      <Item key="frmSetting.lnkSpider._Description" value="Compartilhe o IP do dispositivo com clientes do Spider.com para passar o tráfego pelo seu dispositivo."/>
+      <Item key="frmSetting.lnkSpider._LearnMore" value="Saiba mais"/>
       <Item key="frmAddNewFormat.lblFileExtension" value="Extensão do arquivo"/>
       <Item key="frmAddNewFormat.btnOK" value="OK"/>
       <Item key="frmAddNewFormat.btnClose" value="Fechar"/>
@@ -344,10 +354,10 @@
       <Item key="frmFirstLaunch.btnNextStep._Done" value="Concluído!"/>
       <Item key="frmFirstLaunch.lnkSkip" value="Ignorar e Iniciar o ImageGlass"/>
       <Item key="frmFirstLaunch.lblLanguage" value="Selecionar Idioma"/>
-      <Item key="frmFirstLaunch.lblLayout" value="Selecionar Interface"/>
-      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Padrão"/>
-      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Designer"/>
       <Item key="frmFirstLaunch.lblTheme" value="Selecionar Tema"/>
+      <Item key="frmFirstLaunch.lnkPrivacy" value="Privacidade"/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion" value="Você pode revisar a política de privacidade do aplicativo clicando no link acima."/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion._Spider" value="O ImageGlass vem com o serviço Spider por padrão. Você pode sempre desabilitá-lo em Configurações &gt; Privacidade."/>
       <Item key="frmFirstLaunch.lblDefaultApp" value="Definir o ImageGlass como Visualizador de Fotos Padrão?"/>
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="Sim"/>
       <Item key="frmCrop.lblWidth" value="Largura:"/>

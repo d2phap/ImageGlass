@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="el-GR" langName="Ελληνικά" author="Nikolas Spiridakis" description="Greek" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="el-GR" langName="Ελληνικά" author="Nikolas Spiridakis" description="Greek" minVersion="8.4.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Κάποιες μεταφράσεις δεν ειναι συμβατές με το ImageGlass {0}. Σας συστήνουμε να τις ενημερώσετε πριν συνεχίσετε.&#10;&#10;- Πατήστε Ναι για να μάθετε περισσότερα για τις αλλαγές.&#10;- Πατήστε Όχι για να ανοίξετε το ImageGlass με τις προεπιλεγμένες ρυθμίσεις."/>
       <Item key="_.ImageOrderBy._Name" value="Όνομα (προεπιλογή)"/>
@@ -106,7 +106,8 @@
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Έλεγχος για ενημερώσεις…"/>
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Μια νέα έκδοση είναι διαθέσιμη!"/>
       <Item key="frmMain.mnuMainReportIssue" value="Αναφορά προβλήματος…"/>
-      <Item key="frmMain.mnuMainExitApplication" value="Έξοδος από το ImageGlass"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Έξοδος"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="Εμφάνιση"/>
       <Item key="frmMain.picMain._ErrorText" value="Το ImageGlass δεν μπορεί να ανοίξει αυτή την εικόνα επειδή το αρχείο φαίνεται να είναι κατεστραμμένο ή μη συμβατό."/>
       <Item key="frmMain._ImageNotExist" value="Δεν υπάρχει τέτοια εικόνα."/>
       <Item key="frmMain.btnMenu" value="Κεντρικό μενού"/>
@@ -179,6 +180,8 @@
       <Item key="frmSetting.lblBackGroundColor" value="Χρώμα φόντου"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="Επαναφορά"/>
       <Item key="frmSetting.lblHeadOthers" value="Άλλες ρυθμήσεις"/>
+      <Item key="frmSetting.chkStartWithOs" value="Έναρξη με το λειτουργικό σύστημα"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Εκτέλεση στο παρασκήνιο όταν η εφαρμογή είναι κλειστή"/>
       <Item key="frmSetting.chkAutoUpdate" value="Αυτόματος έλεγχος για ενημερώσεις"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="Να επιτρέπονται πολλαπλές εμφανίσεις του προγράμματος"/>
       <Item key="frmSetting.chkESCToQuit" value="Να επιτρέπεται το ESC για έξοδο της εφαρμογής"/>
@@ -195,6 +198,8 @@
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Χρήση της σειράς ταξινόμησης των Windows αν ειναι δυνατό"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Ομαδοποίηση εικόνων ανά φάκελο"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Αριθμός προσωρινά αποθηκευμένων εικόνων απο το ImageBooster (προς μια κατεύθυνση)"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Αναπαραγωγή ήχου όταν αλλάζει η εικόνα"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="Αριθμός εικόνων για ειδοποίηση"/>
       <Item key="frmSetting.lblColorManagement" value="Διαχείριση χρωμάτων"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Εφαρμογή και για τις εικόνες με ενσωματωμένο προφίλ χρώματος"/>
       <Item key="frmSetting.lblColorProfile" value="Προφίλ χρώματος:"/>
@@ -207,7 +212,7 @@
       <Item key="frmSetting.lblMouseWheelCtrl" value="Ροδέλα ποντικιού + Ctrl"/>
       <Item key="frmSetting.lblMouseWheelShift" value="Ροδέλα ποντικιού + Shift"/>
       <Item key="frmSetting.cmbMouseWheel._DoNothing" value="Καμία ενέργεια"/>
-      <Item key="frmSetting.cmbMouseWheel._Zoom" value="Μεγένθυση"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="Μεγέθυνση"/>
       <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Κύλιση οριζόντια"/>
       <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Κύλιση οριζόντια"/>
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Προηγούμενη/επόμενη εικόνα"/>
@@ -326,6 +331,11 @@
       <Item key="frmSetting.KeyActions._ZoomInOut" value="Μεγένθυση"/>
       <Item key="frmSetting.KeyActions._PauseSlideshow" value="Παύση slideshow"/>
       <Item key="frmSetting.KeyActions._DoNothing" value="Καμία ενέργεια"/>
+      <Item key="frmSetting.lblPrivacy" value="Απόρρητο"/>
+      <Item key="frmSetting.chkEnableSpiderService" value="Ενεργοποίηση υπηρεσίας Spider"/>
+      <Item key="frmSetting.lnkPrivacy" value="Μάθετε περισσότερα για την πολιτική απορρήτου στο {0}. Για να εξαιρεθείτε από μια επιλογή, μπορείτε να την αποεπιλέξτε και μετά να πατήσετε 'Αποθήκευση' ή 'Εφαρμογή' παρακάτω. Θα απενεργοποιηθεί αμέσως."/>
+      <Item key="frmSetting.lnkSpider._Description" value="Μοιραστείτε τη διεύθυνση IP της συσκευής με τους πελάτες του Spider.com για να περάσετε δεδομένα μέσω της συσκευής σας."/>
+      <Item key="frmSetting.lnkSpider._LearnMore" value="Μάθετε περισσότερα"/>
       <Item key="frmAddNewFormat.lblFileExtension" value="Επέκταση αρχείου"/>
       <Item key="frmAddNewFormat.btnOK" value="ΟΚ"/>
       <Item key="frmAddNewFormat.btnClose" value="Κλείσιμο"/>
@@ -344,10 +354,10 @@
       <Item key="frmFirstLaunch.btnNextStep._Done" value="Ολοκληρώθηκε!"/>
       <Item key="frmFirstLaunch.lnkSkip" value="Παράλειψη και άνοιγμα ImageGlass"/>
       <Item key="frmFirstLaunch.lblLanguage" value="Επιλέξτε γλώσσα"/>
-      <Item key="frmFirstLaunch.lblLayout" value="Επιλέξτε διάταξη"/>
-      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Τυπικό"/>
-      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Σχεδιαστής"/>
       <Item key="frmFirstLaunch.lblTheme" value="Επιλέξτε θέμα"/>
+      <Item key="frmFirstLaunch.lnkPrivacy" value="Απόρρητο"/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion" value="Μπορείτε να δείτε την πολιτική απορρήτου της εφαρμογής κάνοντας κλικ στον παραπάνω σύνδεσμο."/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion._Spider" value="Το ImageGlass έρχεται με την υπηρεσία Spider από προεπιλογή. Μπορείτε πάντα να το απενεργοποιήσετε στις Ρυθμίσεις &gt; Απόρρητο."/>
       <Item key="frmFirstLaunch.lblDefaultApp" value="Ορισμός του ImageGlass ως προεπιλεγμένο πρόγραμμα προβολής εικόνων;"/>
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="Ναι"/>
       <Item key="frmCrop.lblWidth" value="Πλάτος:"/>
