@@ -370,7 +370,7 @@ namespace ImageGlass {
             lnkPrivacy.Text = string.Format(lang[$"{Name}.{nameof(lnkPrivacy)}"], PRIVACY_URL);
             lnkPrivacy.LinkArea = new(lnkPrivacy.Text.IndexOf(PRIVACY_URL), PRIVACY_URL.Length);
             chkEnableSpiderService.Text = lang[$"{Name}.{nameof(chkEnableSpiderService)}"]
-                + (SpiderService.IsRunning() == 1 ? " ~" : "");
+                + (SpiderService.CheckRunning() ? " ~" : "");
 
             var learnMore = lang[$"{Name}.{nameof(lnkSpider)}._LearnMore"];
             lnkSpider.Text = lang[$"{Name}.{nameof(lnkSpider)}._Description"]
