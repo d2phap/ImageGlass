@@ -113,9 +113,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Libs\Spider-sdk\x86_64\bs-sdk.dll" Condition="'$(Platform)' == 'x64'" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="..\..\Libs\ExplorerSortOrder\x86\ExplorerSortOrder.dll" Condition="'$(Platform)' == 'x86'" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="..\..\Libs\ExplorerSortOrder\x64\ExplorerSortOrder.dll" Condition="'$(Platform)' == 'x64'" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\Libs\Spider-sdk\x86_64\bs-sdk.dll" Condition="'$(Platform)' == 'x64'" CopyToOutputDirectory="Always" />
+    <Content Include="..\..\Libs\ExplorerSortOrder\x86\ExplorerSortOrder.dll" Condition="'$(Platform)' == 'x86'" CopyToOutputDirectory="Always" />
+    <Content Include="..\..\Libs\ExplorerSortOrder\x64\ExplorerSortOrder.dll" Condition="'$(Platform)' == 'x64'" CopyToOutputDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
