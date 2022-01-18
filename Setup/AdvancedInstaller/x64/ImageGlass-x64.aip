@@ -51,7 +51,7 @@
     <ROW Component="AI_INSTALLPERUSER" ComponentId="{3C727F62-5F7F-449F-86CA-BFCB21DB8626}" Directory_="APPDIR" Attributes="260" KeyPath="AI_INSTALLPERUSER" Options="1"/>
     <ROW Component="APPDIR" ComponentId="{9AA73F17-00E0-4CFF-BB31-59859F667103}" Directory_="APPDIR" Attributes="0"/>
     <ROW Component="ActualSize.svg" ComponentId="{92D6E58E-E96F-40C7-91E2-2DF66DE54A43}" Directory_="Kobe_Dir" Attributes="0" KeyPath="ActualSize.svg" Type="0"/>
-    <ROW Component="ApplicationDescription" ComponentId="{B7B2B1D5-B0D0-48F3-B2AA-4E8BB2CD8EB5}" Directory_="APPDIR" Attributes="4" Condition="(VersionNT &gt;= 600)" KeyPath="ApplicationDescription"/>
+    <ROW Component="ApplicationDescription" ComponentId="{B7B2B1D5-B0D0-48F3-B2AA-4E8BB2CD8EB5}" Directory_="APPDIR" Attributes="4" KeyPath="ApplicationDescription"/>
     <ROW Component="ChineseSimplified.iglang" ComponentId="{E1A33E6A-C638-46FE-B098-83B0C9F212DC}" Directory_="Languages_Dir" Attributes="0" KeyPath="Armenian.v8.4.iglang" Type="0"/>
     <ROW Component="DotNetZip.dll" ComponentId="{C3BB38FA-8689-4C8E-8908-03600DFB8616}" Directory_="APPDIR" Attributes="256" KeyPath="DotNetZip.dll"/>
     <ROW Component="ExplorerSortOrder.dll" ComponentId="{6E7B0DC3-9369-4177-982F-C99853840F8A}" Directory_="APPDIR" Attributes="256" KeyPath="ExplorerSortOrder.dll"/>
@@ -371,7 +371,7 @@
     <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
-    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" SignOptions="7" SignTool="0" EnableLUAPatching="1" UseSha256="1" Thumbprint="a85170621f2faa2a475b3c1eb290c11bff5396ca Subject: Duong Dieu Phap&#10;Issuer: SSL.com Code Signing Intermediate CA RSA R1&#10;Valid from 01/14/2022 to 01/14/2023&#10;User\MY" Subject="CN=Duong Dieu Phap, O=Duong Dieu Phap, L=Tây Ninh, S=Tây Ninh, C=VN"/>
+    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" DescriptionUrl="https://imageglass.org" SignOptions="7" SignTool="0" EnableLUAPatching="1" UseSha256="1" Thumbprint="a85170621f2faa2a475b3c1eb290c11bff5396ca Subject: Duong Dieu Phap&#10;Issuer: SSL.com Code Signing Intermediate CA RSA R1&#10;Valid from 01/14/2022 to 01/14/2023&#10;User\MY" Subject="CN=Duong Dieu Phap, O=Duong Dieu Phap, L=Tây Ninh, S=Tây Ninh, C=VN"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
     <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
@@ -444,6 +444,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
     <ROW Action="AI_AuthorSinglePackage" Type="1" Source="aicustact.dll" Target="AI_AuthorSinglePackage" WithoutSeq="true"/>
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH_ORIGINAL" Target="[AI_SETUPEXEPATH]"/>
     <ROW Action="AI_BACKUP_DEFAULTS" Type="1" Source="defaultPrograms.dll" Target="GetAllOldDefaults" AdditionalSeq="AI_DATA_SETTER_1"/>
     <ROW Action="AI_DATA_SETTER" Type="51" Source="CustomActionData" Target="[ProductName]&#2;bmp&#4;avif&#4;gif&#4;ico&#4;heic&#4;heif&#4;jp2&#4;jpe&#4;jpeg&#4;jpg&#4;jxl&#4;png&#4;svg&#4;webp&#4;b64&#4;qoi&#4;tif&#4;tiff"/>
     <ROW Action="AI_DATA_SETTER_1" Type="51" Source="CustomActionData" Target="[ProductName]&#2;bmp&#4;avif&#4;gif&#4;ico&#4;heic&#4;heif&#4;jp2&#4;jpe&#4;jpeg&#4;jpg&#4;jxl&#4;png&#4;svg&#4;webp&#4;b64&#4;qoi&#4;tif&#4;tiff"/>
@@ -453,6 +454,7 @@
     <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
     <ROW Action="AI_LaunchApp" Type="1" Source="aicustact.dll" Target="[#ImageGlass.exe]"/>
     <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH" Target="[AI_SETUPEXEPATH_ORIGINAL]"/>
     <ROW Action="AI_RESTORE_DEFAULTS" Type="1" Source="defaultPrograms.dll" Target="RestoreDefaults"/>
     <ROW Action="AI_RESTORE_DEFAULTS64" Type="1" Source="defaultPrograms.dll_1" Target="RestoreDefaults"/>
     <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
@@ -675,7 +677,7 @@
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
     <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1503"/>
-    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1397"/>
     <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
     <ROW Action="AI_SetArpReadmeFile" Condition="NOT Installed" Sequence="1001"/>
@@ -693,6 +695,8 @@
     <ROW Action="AI_DpiContentScale" Sequence="52"/>
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
     <ROW Action="AI_SETMIXINSTLOCATION" Sequence="748"/>
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="101"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
     <ROW Condition="( Version9X OR ( NOT VersionNT64 ) OR ( VersionNT64 AND ((VersionNT64 &lt;&gt; 600) OR (MsiNTProductType &lt;&gt; 1)) AND ((VersionNT64 &lt;&gt; 600) OR (MsiNTProductType = 1)) ) )" Description="[ProductName] cannot be installed on the following Windows versions: [WindowsTypeNT64Display]." DescriptionLocId="AI.LaunchCondition.NoSpecificNT64" IsPredefined="true" Builds="MsiBuild"/>
@@ -746,9 +750,9 @@
     <ROW FileKey="_" Component_="ImageGlass" DirProperty="ImageGlass_Dir" InstallMode="2"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="ImageGlass8.4" Directory_="DesktopFolder" Name="IMAGEG~2.4|ImageGlass 8.4" Component_="InstallImageGlass.exeComponentShortcuts_1" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="ImageGlass8.4_1" Directory_="SHORTCUTDIR" Name="IMAGEG~2.4|ImageGlass 8.4" Component_="InstallImageGlass.exeComponentShortcuts_1" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="ImageGlass8.4_2" Directory_="ImageGlass_Dir" Name="IMAGEG~2.4|ImageGlass 8.4" Component_="InstallImageGlass.exeComponentShortcuts_1" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="ImageGlass8.4" Directory_="DesktopFolder" Name="IMAGEG~2.4|ImageGlass 8.4" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="ImageGlass8.4_1" Directory_="SHORTCUTDIR" Name="IMAGEG~2.4|ImageGlass 8.4" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="ImageGlass8.4_2" Directory_="ImageGlass_Dir" Name="IMAGEG~2.4|ImageGlass 8.4" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
     <ROW Shortcut="ImageGlassLICENSE_1" Directory_="ImageGlass_Dir" Name="IMAGEG~2|ImageGlass&apos; LICENSE" Component_="Installdefault.jpgComponentShortcuts_1" Target="[APPDIR]\LICENSE.rtf" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
