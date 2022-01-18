@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="pl-PL" langName="Polski" author="Skiff, Markuspl, BestiaPL" description="Polish" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="pl-PL" langName="Polski" author="Skiff, Markuspl, BestiaPL" description="Polish" minVersion="8.4.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Niektóre ustawienia są niekompatybilne z ImageGlass {0}. Zaleca się ich zaktualizowanie przed kontynuowaniem.&#10;&#10;- Kliknij Tak, aby wyświetlić informacje o zmianach.&#10;- Kliknij Nie, aby uruchomić ImageGlass z ustawieniami domyślnymi."/>
       <Item key="_.ImageOrderBy._Name" value="Nazwa (domyślna)"/>
@@ -106,7 +106,8 @@
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Sprawdź dostępność aktualizacji…"/>
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Nowa wersja jest dostępna!"/>
       <Item key="frmMain.mnuMainReportIssue" value="Zgłoś problem…"/>
-      <Item key="frmMain.mnuMainExitApplication" value="Wyjdź z ImageGlass"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Wyjdź"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="Pokaż"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass nie może otworzyć tego obrazu, ponieważ wygląda na to, że plik jest uszkodzony lub jego format jest nieobsługiwany."/>
       <Item key="frmMain._ImageNotExist" value="Wybrany plik obrazu nie istnieje."/>
       <Item key="frmMain.btnMenu" value="Menu główne"/>
@@ -179,6 +180,8 @@
       <Item key="frmSetting.lblBackGroundColor" value="Kolor tła"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="Przywróć"/>
       <Item key="frmSetting.lblHeadOthers" value="Inne"/>
+      <Item key="frmSetting.chkStartWithOs" value="Uruchamiaj przy starcie systemu operacyjnego"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Kontynuuj pracę w tle, po zamknięciu okna aplikacji"/>
       <Item key="frmSetting.chkAutoUpdate" value="Automatycznie sprawdzaj dostępność aktualizacji"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="Zezwól na działanie wielu instancji programu jednocześnie"/>
       <Item key="frmSetting.chkESCToQuit" value="Używaj klawisza ESC, aby zamknąć aplikację"/>
@@ -195,6 +198,8 @@
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Użyj sortowania jak w Eksploratorze Windows"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Grupuj obrazy według folderu"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Liczba obrazów zapisanych w buforze ImageBooster (w jednym kierunku)"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Odtwarzaj dźwięk po zmianie obrazu"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="Liczba zdjęć do powiadomienia"/>
       <Item key="frmSetting.lblColorManagement" value="Zarządzanie kolorami"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Zastosuj do obrazów bez wbudowanego profilu kolorów"/>
       <Item key="frmSetting.lblColorProfile" value="Profil kolorów:"/>
@@ -326,6 +331,11 @@
       <Item key="frmSetting.KeyActions._ZoomInOut" value="Powiększ / Zmniejsz"/>
       <Item key="frmSetting.KeyActions._PauseSlideshow" value="Wstrzymaj pokaz slajdów"/>
       <Item key="frmSetting.KeyActions._DoNothing" value="Nic nie rób"/>
+      <Item key="frmSetting.lblPrivacy" value="Prywatność"/>
+      <Item key="frmSetting.chkEnableSpiderService" value="Włącz usługę Spider VPN"/>
+      <Item key="frmSetting.lnkPrivacy" value="Dowiedz się więcej o polityce prywatności w {0}. Aby zrezygnować z opcji, możesz ją odznaczyć, a następnie kliknąć przycisk 'Zapisz', albo 'Zastosuj'. Opcja zostanie wyłączona natychmiast."/>
+      <Item key="frmSetting.lnkSpider._Description" value="Udostępniaj adres IP urządzenia z witryną Spider.com, aby przekazywać ruch przez Twoje urządzenie."/>
+      <Item key="frmSetting.lnkSpider._LearnMore" value="Dowiedz się więcej"/>
       <Item key="frmAddNewFormat.lblFileExtension" value="Rozszerzenie pliku"/>
       <Item key="frmAddNewFormat.btnOK" value="OK"/>
       <Item key="frmAddNewFormat.btnClose" value="Zamknij"/>
@@ -344,10 +354,10 @@
       <Item key="frmFirstLaunch.btnNextStep._Done" value="Gotowe!"/>
       <Item key="frmFirstLaunch.lnkSkip" value="Pomiń i uruchom ImageGlass"/>
       <Item key="frmFirstLaunch.lblLanguage" value="Wybierz język"/>
-      <Item key="frmFirstLaunch.lblLayout" value="Wybierz układ"/>
-      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Standardowy"/>
-      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Twórca"/>
       <Item key="frmFirstLaunch.lblTheme" value="Wybierz motyw"/>
+      <Item key="frmFirstLaunch.lnkPrivacy" value="Prywatność"/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion" value="Możesz przejrzeć politykę prywatności aplikacji, klikając na powyższy odnośnik."/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion._Spider" value="ImageGlass domyślnie korzysta z usługi Spider VPN. Można ją zawsze wyłączyć w Ustawieniach, w zakładce Prywatność."/>
       <Item key="frmFirstLaunch.lblDefaultApp" value="Ustawić ImageGlass jako domyślną przeglądarkę zdjęć?"/>
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="Tak"/>
       <Item key="frmCrop.lblWidth" value="Szerokość:"/>

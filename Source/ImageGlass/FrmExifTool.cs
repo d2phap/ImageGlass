@@ -37,7 +37,7 @@ namespace ImageGlass {
         }
 
 
-        private readonly ExifToolWrapper exifTool = new(Configs.ExifToolExePath);
+        private ExifToolWrapper exifTool = new(Configs.ExifToolExePath);
 
 
         #region Form events
@@ -111,15 +111,17 @@ namespace ImageGlass {
             };
 
             if (ofd.ShowDialog() == DialogResult.OK) {
-                var exif = new ExifToolWrapper(ofd.FileName);
+                this.exifTool = new ExifToolWrapper(ofd.FileName);
 
-                if (!exif.CheckExists()) {
+                if (!this.exifTool.CheckExists()) {
+                    SetUIVisibility(true);
                     lblNotFound.Text = string.Format(
                         Configs.Language.Items[$"{nameof(frmSetting)}.lnkSelectExifTool._NotFound"],
                         ofd.FileName);
                 }
                 else {
                     Configs.ExifToolExePath = ofd.FileName;
+                    SetUIVisibility(false);
                     Local_OnImageChanged(null, null);
                 }
             }

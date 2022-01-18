@@ -369,10 +369,13 @@ namespace ImageGlass {
             lblPrivacy.Text = lang[$"{Name}.{nameof(lblPrivacy)}"];
             lnkPrivacy.Text = string.Format(lang[$"{Name}.{nameof(lnkPrivacy)}"], PRIVACY_URL);
             lnkPrivacy.LinkArea = new(lnkPrivacy.Text.IndexOf(PRIVACY_URL), PRIVACY_URL.Length);
-            chkEnableSpiderService.Text = lang[$"{Name}.{nameof(chkEnableSpiderService)}"];
+            chkEnableSpiderService.Text = lang[$"{Name}.{nameof(chkEnableSpiderService)}"]
+                + (SpiderService.CheckRunning() ? " ~" : "");
 
             var learnMore = lang[$"{Name}.{nameof(lnkSpider)}._LearnMore"];
-            lnkSpider.Text = lang[$"{Name}.{nameof(lnkSpider)}._Description"] + " " + learnMore;
+            lnkSpider.Text = lang[$"{Name}.{nameof(lnkSpider)}._Description"]
+                + " " + learnMore + "."
+                + "\r\n" + App.StartUpDir(SpiderService.SDK_DLL);
             lnkSpider.LinkArea = new(lnkSpider.Text.IndexOf(learnMore), learnMore.Length);
             #endregion
 
@@ -1856,7 +1859,7 @@ namespace ImageGlass {
         private void LoadTabPrivacy() {
             chkEnableSpiderService.Visible =
                 lnkSpider.Visible =
-                File.Exists(SpiderService.SDK_DLL);
+                File.Exists(App.StartUpDir(SpiderService.SDK_DLL));
 
             chkEnableSpiderService.Checked = Configs.IsEnableSpiderService;
         }

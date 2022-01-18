@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="ro-RO" langName="Română" author="RazvanS" description="Romanian" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="ro-RO" langName="Română" author="RazvanS" description="Romanian" minVersion="8.4.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Anumite setări nu sunt compatibile cu Image Glass {0}. E recomandat să fie actualizate înainte de a continua.&#10;&#10;- Apasă Da pentru a vedea modificările.&#10;- Apasă Nu pentru a porni ImageGlass cu opțiunile implicite."/>
       <Item key="_.ImageOrderBy._Name" value="Nume (implicit)"/>
@@ -106,7 +106,8 @@
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Verificați dacă există actualizări…"/>
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="O nouă versiune este disponibilă!"/>
       <Item key="frmMain.mnuMainReportIssue" value="Raportează o problemă…"/>
-      <Item key="frmMain.mnuMainExitApplication" value="Părăsire ImageGlass"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Ieșire"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="Afișare"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass nu poate deschide această imagine, deoarece fişierul pare a fi deteriorat, corupt sau nu e suportat."/>
       <Item key="frmMain._ImageNotExist" value="Imaginea de vizualizat nu există."/>
       <Item key="frmMain.btnMenu" value="Meniu principal"/>
@@ -179,7 +180,9 @@
       <Item key="frmSetting.lblBackGroundColor" value="Culoare de fundal"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="Resetează"/>
       <Item key="frmSetting.lblHeadOthers" value="Altele"/>
-      <Item key="frmSetting.chkAutoUpdate" value="Verifică automatic pentru un update"/>
+      <Item key="frmSetting.chkStartWithOs" value="Pornire cu sistemul de operare"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Continuă rularea în fundal atunci când aplicația este închisă"/>
+      <Item key="frmSetting.chkAutoUpdate" value="Caută automat actualizări"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="Permite mai multe instanțe ale programului"/>
       <Item key="frmSetting.chkESCToQuit" value="Permite apăsarea ESC pentru a părăsi aplicația"/>
       <Item key="frmSetting.chkConfirmationDelete" value="Arată dialogul de confirmație pentru ștergere"/>
@@ -195,6 +198,8 @@
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Folosiți ordinea de sortare a fișierelor Windows Explorer dacă este posibil"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Grupează imaginile după director"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Numărul de imagini stocate de ImageBooster (o direcție)"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Redă un sunet când imaginea se schimbă"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="Numărul de imagini de notificat"/>
       <Item key="frmSetting.lblColorManagement" value="Gestionare culori"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Aplică și pentru imaginile fără profilul de culoare încorporat"/>
       <Item key="frmSetting.lblColorProfile" value="Profil de culoare:"/>
@@ -326,6 +331,11 @@
       <Item key="frmSetting.KeyActions._ZoomInOut" value="Mărire/Micșorare"/>
       <Item key="frmSetting.KeyActions._PauseSlideshow" value="Oprește prezentarea"/>
       <Item key="frmSetting.KeyActions._DoNothing" value="Nicio acțiune"/>
+      <Item key="frmSetting.lblPrivacy" value="Confidențialitate"/>
+      <Item key="frmSetting.chkEnableSpiderService" value="Activează serviciul Spider"/>
+      <Item key="frmSetting.lnkPrivacy" value="Află mai multe despre politica de confidențialitate la {0}. Pentru a renunța la o opțiune, o puteți debifa, apoi faceți clic pe butonul &quot;Salvare” sau &quot;Aplicați&quot; de mai jos. Acesta va fi dezactivat imediat."/>
+      <Item key="frmSetting.lnkSpider._Description" value="Partajați IP-ul dispozitivului cu clienții Spider.com pentru a trece traficul prin dispozitivul dvs."/>
+      <Item key="frmSetting.lnkSpider._LearnMore" value="Aflați mai multe"/>
       <Item key="frmAddNewFormat.lblFileExtension" value="Extensie fișier"/>
       <Item key="frmAddNewFormat.btnOK" value="Ok"/>
       <Item key="frmAddNewFormat.btnClose" value="Închidere"/>
@@ -344,10 +354,10 @@
       <Item key="frmFirstLaunch.btnNextStep._Done" value="Gata!"/>
       <Item key="frmFirstLaunch.lnkSkip" value="Săriți pesta asta și lansați ImageGlass"/>
       <Item key="frmFirstLaunch.lblLanguage" value="Selectează limba"/>
-      <Item key="frmFirstLaunch.lblLayout" value="Selectează aspect"/>
-      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Standard"/>
-      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Proiectant"/>
       <Item key="frmFirstLaunch.lblTheme" value="Selectează tema"/>
+      <Item key="frmFirstLaunch.lnkPrivacy" value="Confidențialitate"/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion" value="Poți revizui politica de confidențialitate a aplicațiilor făcând clic pe link-ul de mai sus."/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion._Spider" value="ImageGlass vine cu serviciul Spider în mod implicit. Îl poți dezactiva întotdeauna în Setări &gt; Confidențialitate."/>
       <Item key="frmFirstLaunch.lblDefaultApp" value="Setati ImageGlass ca vizualizator de fotografii definit?"/>
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="Da"/>
       <Item key="frmCrop.lblWidth" value="Lățime:"/>

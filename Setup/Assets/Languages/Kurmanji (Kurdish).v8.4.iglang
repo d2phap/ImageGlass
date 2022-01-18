@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="ku-KU" langName="Kurdî" author="Cyax" description="Kurmanji Kurdish" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="ku-KU" langName="Kurdî" author="Cyax" description="Kurmanji Kurdish" minVersion="8.4.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Hinek sazkarî bi ImageGlass {0} a te re ne rêkevtî ne. Tê pêşniyarkirin ku werê rojanekirin berî domandinê.&#10;&#10;- Erê bitikîne ji bo dîtina guhertinan.&#10;- Na bitikîne ji bo ku ImageGlass bi sazkariyên berdest werê destpêkirin."/>
       <Item key="_.ImageOrderBy._Name" value="Nav (berdest)"/>
@@ -106,7 +106,8 @@
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Ji bo rojanekirinê kontrol bike…"/>
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Guhertoyeke nû heye!"/>
       <Item key="frmMain.mnuMainReportIssue" value="Pirsgirêkê ragehîne…"/>
-      <Item key="frmMain.mnuMainExitApplication" value="Ji ImageGlass derkeve"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Derkeve"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="Nîşan bide"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass nikare vê wêneyê veke ji ber ku pel xerabûye, çewt e yan nayê piştgirîkirin xuya dike."/>
       <Item key="frmMain._ImageNotExist" value="Dîtina wêneyê peyda nabe."/>
       <Item key="frmMain.btnMenu" value="Kulîna sereke"/>
@@ -179,6 +180,8 @@
       <Item key="frmSetting.lblBackGroundColor" value="Rengê paşrûyê"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="Ji nû ve saz bike"/>
       <Item key="frmSetting.lblHeadOthers" value="Ên din"/>
+      <Item key="frmSetting.chkStartWithOs" value="Bi PX re bide destpêkirin"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Dema ku sepan girtî be, paşrûyê vêketî bihêle"/>
       <Item key="frmSetting.chkAutoUpdate" value="Ji bo rojanekirinê bixweber kontrol bike"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="Mafê bide gelek mînakên bernameyê"/>
       <Item key="frmSetting.chkESCToQuit" value="Mafê bide derketinê ji sepanê bi riya tikandina ser ESC"/>
@@ -195,6 +198,8 @@
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Heke pêkan be fermana rêzkirina Windows File Explorer bi kar bîne"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Wêneyan bi ya rêgehê kom bike"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Hejmara wêneyên ku ji hêla ImageBooster (yek rêgeh) ve hatine pêşbîrkirin"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Dema ku wêne diguhere deng bide lêdan"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="Hejmara wêneyên ku têne agahdarkirin"/>
       <Item key="frmSetting.lblColorManagement" value="Rêveberiya rengan"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Bêyî profîla rengan a veşartî ji bo wêneyan jî bisepîne"/>
       <Item key="frmSetting.lblColorProfile" value="Profîla rengan:"/>
@@ -326,6 +331,11 @@
       <Item key="frmSetting.KeyActions._ZoomInOut" value="Nêzîk bike / Dûr bixe"/>
       <Item key="frmSetting.KeyActions._PauseSlideshow" value="Pêşandana pêşekerî rawestîne"/>
       <Item key="frmSetting.KeyActions._DoNothing" value="Tiştekî neke"/>
+      <Item key="frmSetting.lblPrivacy" value="Nihênî"/>
+      <Item key="frmSetting.chkEnableSpiderService" value="Rajeyên Spider çalak bike"/>
+      <Item key="frmSetting.lnkPrivacy" value="Di derbarê polîtîkaya nihêniyê de bêtir fêr bibe di {0} de. Ji bo ku tu vebijêrkek veqetînî, tu dikarî hilbijêrka wê rakî, paşê bişkoka 'Tomar bike' an 'Bisepîne' li jêr bitikînî. Ew ê tavilê de ji çalakbûnê derkevê."/>
+      <Item key="frmSetting.lnkSpider._Description" value="IP ya amûrê bi rajekarên Spider.com re parve bike da ku çûyîn û hatinê bi amûra xwe re derbas bikî."/>
+      <Item key="frmSetting.lnkSpider._LearnMore" value="Bêtir fêr bibe"/>
       <Item key="frmAddNewFormat.lblFileExtension" value="Pêvekên pelê"/>
       <Item key="frmAddNewFormat.btnOK" value="BAŞ E"/>
       <Item key="frmAddNewFormat.btnClose" value="Bigire"/>
@@ -344,10 +354,10 @@
       <Item key="frmFirstLaunch.btnNextStep._Done" value="Qediya!"/>
       <Item key="frmFirstLaunch.lnkSkip" value="Vê derbas bike û ImageGlass bide destpêkirin"/>
       <Item key="frmFirstLaunch.lblLanguage" value="Ziman hilbijêre"/>
-      <Item key="frmFirstLaunch.lblLayout" value="Rêkxisitinê hilbijêre"/>
-      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Standard"/>
-      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Dîzayner"/>
       <Item key="frmFirstLaunch.lblTheme" value="Rûkar hilbijêre"/>
+      <Item key="frmFirstLaunch.lnkPrivacy" value="Nihênî"/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion" value="Tu dikarî polîtîkaya nihêniya sepanê bi tikandina girêdanê li jor binirxînî."/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion._Spider" value="ImageGlass bi awayekî berdest bi rajeyên Spider re tê. Tu dikarî her dem wê di Sazkarî &gt; Nihênî de neçalak bikî."/>
       <Item key="frmFirstLaunch.lblDefaultApp" value="ImageGlass wekî nîşandarê wêneyê berdest saz bike?"/>
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="Erê"/>
       <Item key="frmCrop.lblWidth" value="Pahnî:"/>

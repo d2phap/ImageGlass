@@ -1,0 +1,8 @@
+<ImageGlass>
+  <Configuration>
+    <Info description="ImageGlass Configuration file" version="7.5" />
+    <Content>
+      <Item key="IsEnableSpiderService" value="False" />
+    </Content>
+  </Configuration>
+</ImageGlass>

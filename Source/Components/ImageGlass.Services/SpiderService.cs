@@ -76,6 +76,19 @@ namespace ImageGlass.Services {
         }
 
         /// <summary>
+        /// Checks if the service is running
+        /// </summary>
+        /// <returns></returns>
+        public static bool CheckRunning() {
+            try {
+                return IsRunning() == 1;
+            }
+            catch { }
+
+            return false;
+        }
+
+        /// <summary>
         /// Checks if Blueswan service is started.
         /// </summary>
         /// <returns>
@@ -85,7 +98,7 @@ namespace ImageGlass.Services {
         /// </list>
         /// </returns>
         [DllImport(SDK_DLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern uint IsStarted();
+        private static extern uint IsStarted();
 
         /// <summary>
         /// Checks if Blueswan service is updated.
@@ -97,7 +110,7 @@ namespace ImageGlass.Services {
         /// </list>
         /// </returns>
         [DllImport(SDK_DLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern uint IsUpdated();
+        private static extern uint IsUpdated();
 
         /// <summary>
         /// Checks if Blueswan service is running.
@@ -109,7 +122,7 @@ namespace ImageGlass.Services {
         /// </list>
         /// </returns>
         [DllImport(SDK_DLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern uint IsRunning();
+        private static extern uint IsRunning();
 
     }
 }

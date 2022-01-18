@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="zh-TW" langName="正體中文" author="Jeff Huang" description="Traditional Chinese" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="zh-TW" langName="正體中文" author="Jeff Huang" description="Traditional Chinese" minVersion="8.4.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="某些設定與您的 ImageGlass {0} 不相容。建議您在繼續前先更新它們。&#10;&#10;- 點擊是以取得更多關於變更的資訊。&#10;- 點擊否以使用預設的設定啟動 ImageGlass。"/>
       <Item key="_.ImageOrderBy._Name" value="名稱（預設）"/>
@@ -106,7 +106,8 @@
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="檢查更新…"/>
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="有可用的新版本!"/>
       <Item key="frmMain.mnuMainReportIssue" value="問題回報…"/>
-      <Item key="frmMain.mnuMainExitApplication" value="離開 ImageGlass"/>
+      <Item key="frmMain.mnuMainExitApplication" value="離開"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="顯示"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass 無法開啟這張圖片，因為檔案似乎已損毀或不支援。"/>
       <Item key="frmMain._ImageNotExist" value="找不到圖片檔案。"/>
       <Item key="frmMain.btnMenu" value="主選單"/>
@@ -179,6 +180,8 @@
       <Item key="frmSetting.lblBackGroundColor" value="背景顏色"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="重設"/>
       <Item key="frmSetting.lblHeadOthers" value="其他"/>
+      <Item key="frmSetting.chkStartWithOs" value="與作業系統一起啟動"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="應用程式關閉時繼續在背景執行"/>
       <Item key="frmSetting.chkAutoUpdate" value="自動檢查更新"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="允許程式執行多個實體"/>
       <Item key="frmSetting.chkESCToQuit" value="允許按下 ESC 結束應用程式"/>
@@ -195,6 +198,8 @@
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="如果可以的話，使用 Windows 檔案總管排序"/>
       <Item key="frmSetting.chkGroupByDirectory" value="按目錄將圖片分組"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="由 ImageBooster 快取的圖片數量（單向）"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="圖片變化時播放音效"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="要通知的圖片數量"/>
       <Item key="frmSetting.lblColorManagement" value="色彩管理"/>
       <Item key="frmSetting.chkApplyColorProfile" value="也會套用至沒有內嵌色彩描述檔的圖片"/>
       <Item key="frmSetting.lblColorProfile" value="色彩描述檔："/>
@@ -326,6 +331,11 @@
       <Item key="frmSetting.KeyActions._ZoomInOut" value="放大／縮小"/>
       <Item key="frmSetting.KeyActions._PauseSlideshow" value="暫停幻燈片"/>
       <Item key="frmSetting.KeyActions._DoNothing" value="什麼也不做"/>
+      <Item key="frmSetting.lblPrivacy" value="隱私"/>
+      <Item key="frmSetting.chkEnableSpiderService" value="啟用 Spider 服務"/>
+      <Item key="frmSetting.lnkPrivacy" value="在 {0} 取得更多關於隱私權政策的資訊。要選擇退出選項，您可以取消勾選它，然後點擊下方的「儲存」或「套用」按鈕。其將會立刻被停用。"/>
+      <Item key="frmSetting.lnkSpider._Description" value="與 Spider.com 客戶分享裝置 IP 以透過您的裝置傳遞流量。"/>
+      <Item key="frmSetting.lnkSpider._LearnMore" value="取得更多資訊"/>
       <Item key="frmAddNewFormat.lblFileExtension" value="副檔名"/>
       <Item key="frmAddNewFormat.btnOK" value="確定"/>
       <Item key="frmAddNewFormat.btnClose" value="關閉"/>
@@ -344,10 +354,10 @@
       <Item key="frmFirstLaunch.btnNextStep._Done" value="完成！"/>
       <Item key="frmFirstLaunch.lnkSkip" value="跳過這個並啟動 ImageGlass"/>
       <Item key="frmFirstLaunch.lblLanguage" value="選取語言"/>
-      <Item key="frmFirstLaunch.lblLayout" value="選取佈局"/>
-      <Item key="frmFirstLaunch.cmbLayout._Standard" value="標準"/>
-      <Item key="frmFirstLaunch.cmbLayout._Designer" value="設計師"/>
       <Item key="frmFirstLaunch.lblTheme" value="選取佈景主題"/>
+      <Item key="frmFirstLaunch.lnkPrivacy" value="隱私"/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion" value="您可以透過點擊下方連結來審閱應用程式隱私權政策。"/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion._Spider" value="ImageGlass 預設搭載 Spider 服務。您總是可以在「設定」→「隱私」中停用它。"/>
       <Item key="frmFirstLaunch.lblDefaultApp" value="將 ImageGlass 設定為預設圖片檢視器？"/>
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="是"/>
       <Item key="frmCrop.lblWidth" value="寬度："/>

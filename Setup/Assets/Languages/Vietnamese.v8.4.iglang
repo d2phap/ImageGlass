@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="vi-VN" langName="Tiếng Việt" author="Dương Diệu Pháp" description="Vietnamese" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="vi-VN" langName="Tiếng Việt" author="Dương Diệu Pháp" description="Vietnamese" minVersion="8.4.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Một số cài đặt không tương thích với ImageGlass {0}. Bạn nên tự cập nhật trước khi tiếp tục.&#10;&#10;- Nhấn Yes để xem các thay đổi.&#10;- Nhấn No để mở ImageGlass với những cài đặt mặc định."/>
       <Item key="_.ImageOrderBy._Name" value="Tên (mặc định)"/>
@@ -106,7 +106,8 @@
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Kiểm tra phiên bản mới…"/>
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Một phiên bản mới đã có sẵn!"/>
       <Item key="frmMain.mnuMainReportIssue" value="Báo cáo một vấn đề…"/>
-      <Item key="frmMain.mnuMainExitApplication" value="Thoát ImageGlass"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Thoát"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="Hiện lên"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass không thể mở ảnh này vì các tập tin dường như bị hỏng hoặc định dạng không hỗ trợ."/>
       <Item key="frmMain._ImageNotExist" value="Ảnh đang xem không tồn tại."/>
       <Item key="frmMain.btnMenu" value="Menu chính"/>
@@ -179,6 +180,8 @@
       <Item key="frmSetting.lblBackGroundColor" value="Màu nền"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="Thiết lập lại"/>
       <Item key="frmSetting.lblHeadOthers" value="Khác"/>
+      <Item key="frmSetting.chkStartWithOs" value="Khởi động cùng hệ điều hành"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Tiếp tục chạy nền khi đóng ứng dụng"/>
       <Item key="frmSetting.chkAutoUpdate" value="Tự động kiểm tra phiên bản mới"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="Cho phép nhiều cửa sổ chương trình mở cùng lúc"/>
       <Item key="frmSetting.chkESCToQuit" value="Cho phép để nhấn ESC để thoát ứng dụng"/>
@@ -195,6 +198,8 @@
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Sử dụng thứ tự sắp xếp của Windows File Explorer khi có thể"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Nhóm hình ảnh theo thư mục"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Số lượng ảnh được nạp trước vào bộ nhớ bằng ImageBooster (theo một chiều)"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Phát âm thanh khi ảnh thay đổi"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="Số lượng ảnh để thông báo"/>
       <Item key="frmSetting.lblColorManagement" value="Quản lý màu sắc"/>
       <Item key="frmSetting.chkApplyColorProfile" value="Áp dụng luôn cho ảnh không chứa Color profile"/>
       <Item key="frmSetting.lblColorProfile" value="Color profile:"/>
@@ -326,6 +331,11 @@
       <Item key="frmSetting.KeyActions._ZoomInOut" value="Phóng to / thu nhỏ"/>
       <Item key="frmSetting.KeyActions._PauseSlideshow" value="Tạm dừng trình chiếu"/>
       <Item key="frmSetting.KeyActions._DoNothing" value="Không làm gì cả"/>
+      <Item key="frmSetting.lblPrivacy" value="Chính sách riêng tư"/>
+      <Item key="frmSetting.chkEnableSpiderService" value="Bật dịch vụ Spider"/>
+      <Item key="frmSetting.lnkPrivacy" value="Tìm hiểu về chính sách riêng tư tại {0}. Để ngừng tham gia một dịch vụ, bạn có thể bỏ chọn nó, sau đó nhấn nút 'Lưu' hoặc 'Áp dụng' bên dưới. Dịch vụ được chọn sẽ bị vô hiệu hoá ngay lập tức."/>
+      <Item key="frmSetting.lnkSpider._Description" value="Chia sẻ địa chỉ IP với khách hàng của Spider.com để chuyển lưu lượng truy cập qua thiết bị của bạn."/>
+      <Item key="frmSetting.lnkSpider._LearnMore" value="Tìm hiểu thêm"/>
       <Item key="frmAddNewFormat.lblFileExtension" value="Loại tập tin"/>
       <Item key="frmAddNewFormat.btnOK" value="Đồng ý"/>
       <Item key="frmAddNewFormat.btnClose" value="Đóng"/>
@@ -344,10 +354,10 @@
       <Item key="frmFirstLaunch.btnNextStep._Done" value="Hoàn tất!"/>
       <Item key="frmFirstLaunch.lnkSkip" value="Bỏ qua và khởi động ImageGlass"/>
       <Item key="frmFirstLaunch.lblLanguage" value="Chọn Ngôn ngữ"/>
-      <Item key="frmFirstLaunch.lblLayout" value="Chọn bố cục"/>
-      <Item key="frmFirstLaunch.cmbLayout._Standard" value="Tiêu chuẩn"/>
-      <Item key="frmFirstLaunch.cmbLayout._Designer" value="Nhà thiết kế"/>
       <Item key="frmFirstLaunch.lblTheme" value="Chọn Chủ đề"/>
+      <Item key="frmFirstLaunch.lnkPrivacy" value="Chính sách riêng tư"/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion" value="Bạn có thể xem chính sách bảo mật của ứng dụng bằng cách nhấp vào liên kết ở trên."/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion._Spider" value="ImageGlass mặc định đi kèm với dịch vụ Spider. Bạn luôn có thể tắt dịch vụ này trong Cài đặt &gt; Chính sách riêng tư."/>
       <Item key="frmFirstLaunch.lblDefaultApp" value="Thiết lập ImageGlass là trình xem ảnh mặc định?"/>
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="Đồng ý"/>
       <Item key="frmCrop.lblWidth" value="Rộng:"/>

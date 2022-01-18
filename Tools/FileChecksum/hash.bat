@@ -8,7 +8,7 @@ echo **********************************************
 echo:
 echo:
 
-set VERSION=8.3.11.21
+set VERSION=8.4.1.22
 set PATHS[0]="../../Setup/AdvancedInstaller/Bin/ImageGlass_%VERSION%_x64.msi"
 set PATHS[1]="../../Setup/AdvancedInstaller/Bin/ImageGlass_%VERSION%_x86.msi"
 set PATHS[2]="../../Setup/AdvancedInstaller/Bin/ImageGlass_%VERSION%_x64.zip"

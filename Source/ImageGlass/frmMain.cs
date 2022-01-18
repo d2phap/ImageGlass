@@ -713,7 +713,7 @@ namespace ImageGlass {
 
                 // put app in a 'busy' state around image load: allows us to prevent the user
                 // from skipping past a slow-to-load image by processing too many arrow clicks
-                _ = SetAppBusyAsync(true, Configs.Language.Items[$"{Name}._Loading"], 1000, 2000);
+                _ = SetAppBusyAsync(true, Configs.Language.Items[$"{Name}._Loading"], 2000, 2000);
 
                 if (pageIndex != int.MinValue) {
                     UpdateActivePage();
@@ -770,6 +770,9 @@ namespace ImageGlass {
                 Local.ImageError = ex;
             }
 
+            // clear busy state
+            _ = SetAppBusyAsync(false);
+
             // image error
             if (Local.ImageError != null) {
                 picMain.Image = null;
@@ -779,15 +782,14 @@ namespace ImageGlass {
                 Local.CurrentExif = null;
                 Local.CurrentColor = null;
 
-                if (!File.Exists(Local.ImageList.GetFileName(Local.CurrentIndex))) {
+                var currentFile = Local.ImageList.GetFileName(Local.CurrentIndex);
+                if (!string.IsNullOrEmpty(currentFile) && !File.Exists(currentFile)) {
                     Local.ImageList.Unload(Local.CurrentIndex);
                 }
 
                 picMain.Text = Configs.Language.Items[$"{Name}.picMain._ErrorText"] + "\r\n" + Local.ImageError.Source + ": " + Local.ImageError.Message;
             }
 
-            // clear busy state
-            _ = SetAppBusyAsync(false);
             SetStatusBar();
 
             _isDraggingImage = false;
@@ -3272,6 +3274,7 @@ namespace ImageGlass {
 
                     thumbnailBar.Items.Clear();
                     picMain.Image = null;
+                    picMain.Text = "";
                     SetStatusBar();
 
                     // Collect system garbage

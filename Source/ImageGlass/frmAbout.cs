@@ -109,7 +109,7 @@ namespace ImageGlass {
 
             // this.RightToLeft = Configs.Language.IsRightToLeftLayout;
             lblAppName.Text = Application.ProductName;
-            var arch = Environment.Is64BitOperatingSystem ? "x64" : "x86";
+            var arch = Environment.Is64BitProcess ? "x64" : "x86";
             lblVersion.Text = string.Format(lang["frmAbout.lblVersion"], App.Version)
                 + $" {arch}" + (App.IsPortable ? " " + lang["frmAbout._PortableText"] : "");
 

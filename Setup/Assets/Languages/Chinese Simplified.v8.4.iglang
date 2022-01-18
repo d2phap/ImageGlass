@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="zh-CN" langName="简体中文" author="星野みなと, Chenry Lee, 小恐龙, 0xLC, Infinity_X, Yi Fan, gapore, 7YHong, arlen.cn" description="Chinese Simplified" minVersion="8.3.0.0" isRightToLeftLayout="No"/>
+    <Info langCode="zh-CN" langName="简体中文" author="星野みなと, Chenry Lee, 小恐龙, 0xLC, Infinity_X, Yi Fan, gapore, 7YHong, arlen.cn" description="Chinese Simplified" minVersion="8.4.0.0" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="某些设置和您当前的 ImageGlass 版本 {0} 不兼容。我们推荐您在继续使用之前先更新这些设置。&#10;&#10;- 点击“是”，来了解这些变化；&#10;- 点击“否”，则以默认设置启动 ImageGlass。"/>
       <Item key="_.ImageOrderBy._Name" value="文件名（默认）"/>
@@ -11,8 +11,8 @@
       <Item key="_.ImageOrderBy._LastWriteTime" value="最后修改时间"/>
       <Item key="_.ImageOrderBy._Extension" value="扩展名"/>
       <Item key="_.ImageOrderBy._Random" value="随机"/>
-      <Item key="_.ImageOrderType._Asc" value="顺序"/>
-      <Item key="_.ImageOrderType._Desc" value="倒序"/>
+      <Item key="_.ImageOrderType._Asc" value="升序"/>
+      <Item key="_.ImageOrderType._Desc" value="降序"/>
       <Item key="_.AfterOpeningEditAppAction._Nothing" value="无"/>
       <Item key="_.AfterOpeningEditAppAction._Minimize" value="最小化"/>
       <Item key="_.AfterOpeningEditAppAction._Close" value="关闭"/>
@@ -71,7 +71,7 @@
       <Item key="frmMain.mnuMainDeleteFromHardDisk" value="从硬盘删除"/>
       <Item key="frmMain.mnuMainExtractPages" value="提取 {0} 页图像..."/>
       <Item key="frmMain.mnuMainStartStopAnimating" value="开始/停止播放动画"/>
-      <Item key="frmMain.mnuMainSetAsDesktop" value="设为桌面背景"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="设置为桌面背景"/>
       <Item key="frmMain.mnuMainSetAsLockImage" value="设置为锁屏图像"/>
       <Item key="frmMain.mnuMainImageLocation" value="打开图片所在位置"/>
       <Item key="frmMain.mnuMainImageProperties" value="图像属性"/>
@@ -106,7 +106,8 @@
       <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="检查更新"/>
       <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="有新的版本可用！"/>
       <Item key="frmMain.mnuMainReportIssue" value="问题反馈"/>
-      <Item key="frmMain.mnuMainExitApplication" value="关闭 ImageGlass"/>
+      <Item key="frmMain.mnuMainExitApplication" value="退出"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="显示"/>
       <Item key="frmMain.picMain._ErrorText" value="ImageGlass 无法打开该图片，因为该文件貌似已经损坏或不支持。"/>
       <Item key="frmMain._ImageNotExist" value="查看图像不存在。"/>
       <Item key="frmMain.btnMenu" value="主菜单"/>
@@ -179,6 +180,8 @@
       <Item key="frmSetting.lblBackGroundColor" value="背景颜色"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="重置"/>
       <Item key="frmSetting.lblHeadOthers" value="其它"/>
+      <Item key="frmSetting.chkStartWithOs" value="开机时自动启动"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="退出后仍在后台运行"/>
       <Item key="frmSetting.chkAutoUpdate" value="自动检查更新"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="允许运行多个实例"/>
       <Item key="frmSetting.chkESCToQuit" value="允许按下 ESC 退出程序"/>
@@ -195,6 +198,8 @@
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="使用 Windows 资源管理器的默认排序"/>
       <Item key="frmSetting.chkGroupByDirectory" value="按目录分组图像"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="图像加速器的缓存数量（单个目录）"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="当图像改变时播放声音"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="要通知的图像数"/>
       <Item key="frmSetting.lblColorManagement" value="色彩管理"/>
       <Item key="frmSetting.chkApplyColorProfile" value="对无内嵌颜色配置文件的图像启用"/>
       <Item key="frmSetting.lblColorProfile" value="颜色配置文件："/>
@@ -326,6 +331,11 @@
       <Item key="frmSetting.KeyActions._ZoomInOut" value="放大/缩小图像"/>
       <Item key="frmSetting.KeyActions._PauseSlideshow" value="暂停幻灯片"/>
       <Item key="frmSetting.KeyActions._DoNothing" value="不采取任何操作"/>
+      <Item key="frmSetting.lblPrivacy" value="隐私"/>
+      <Item key="frmSetting.chkEnableSpiderService" value="启用 Spider 服务"/>
+      <Item key="frmSetting.lnkPrivacy" value="了解更多隐私政策：{0}。 要退出选项，您可以取消勾选，然后单击下面的“保存”或“应用”按钮。它将立即生效。"/>
+      <Item key="frmSetting.lnkSpider._Description" value="与Spider.com客户分享设备IP，通过您的设备传递流量。"/>
+      <Item key="frmSetting.lnkSpider._LearnMore" value="了解更多"/>
       <Item key="frmAddNewFormat.lblFileExtension" value="文件扩展名"/>
       <Item key="frmAddNewFormat.btnOK" value="确认"/>
       <Item key="frmAddNewFormat.btnClose" value="关闭"/>
@@ -344,10 +354,10 @@
       <Item key="frmFirstLaunch.btnNextStep._Done" value="完成!"/>
       <Item key="frmFirstLaunch.lnkSkip" value="跳过并启动 ImageGlass"/>
       <Item key="frmFirstLaunch.lblLanguage" value="选择语言"/>
-      <Item key="frmFirstLaunch.lblLayout" value="选择布局"/>
-      <Item key="frmFirstLaunch.cmbLayout._Standard" value="标准"/>
-      <Item key="frmFirstLaunch.cmbLayout._Designer" value="设计师"/>
       <Item key="frmFirstLaunch.lblTheme" value="选择主题"/>
+      <Item key="frmFirstLaunch.lnkPrivacy" value="隐私"/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion" value="您可以通过点击上面的链接查看应用隐私政策。"/>
+      <Item key="frmFirstLaunch.lblPrivacyDesctipion._Spider" value="ImageGlass 默认使用 Spider 服务。您可以随时在设置 &gt; 隐私中禁用它。"/>
       <Item key="frmFirstLaunch.lblDefaultApp" value="将 ImageGlass 设置为默认照片查看器？"/>
       <Item key="frmFirstLaunch.btnSetDefaultApp" value="是"/>
       <Item key="frmCrop.lblWidth" value="宽度："/>

@@ -30,7 +30,7 @@ If you buy ImageGlass on the Microsoft Store, you'll be supporting its developme
 
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://imageglass.org/upload/photo/release/8.3_1.jpg" alt="ImageGlass 8.3.11.21" width="640">
+<img src="https://imageglass.org/upload/photo/release/8.4_1.jpg" alt="ImageGlass 8.4.1.22" width="640">
 </a><br/>
 
 
@@ -111,11 +111,12 @@ Thanks for your gratitude and finance help!
 
 To honor those people who spent their time to contribute to the development of ImageGlass v8:
 - 1️⃣ [@fire-eggs](https://github.com/fire-eggs)
-- 2️⃣ [@datasone](https://github.com/datasone)
-- 3️⃣ [@dixonte](https://github.com/dixonte)
-- 4️⃣ [@cocoon](https://github.com/cocoon)
-- 5️⃣ [@Norgerman](https://github.com/Norgerman)
-- 6️⃣ [@flyxyz123](https://github.com/flyxyz123)
+- 2️⃣ [@AutomationBoi](https://github.com/AutomationBoi)
+- 3️⃣ [@datasone](https://github.com/datasone)
+- 4️⃣ [@dixonte](https://github.com/dixonte)
+- 5️⃣ [@cocoon](https://github.com/cocoon)
+- 6️⃣ [@Norgerman](https://github.com/Norgerman)
+- 7️⃣ [@flyxyz123](https://github.com/flyxyz123)
 
 Thank you!
 
