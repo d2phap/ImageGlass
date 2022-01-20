@@ -3972,6 +3972,11 @@ namespace ImageGlass {
         private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e) {
             _isManuallyZoomed = true;
 
+            // Handle window fit after zoom change
+            if (Configs.IsWindowFit) {
+                WindowFitMode(false);
+            }
+
             // Set new zoom ratio if Zoom Mode LockZoomRatio is enabled
             if (Configs.ZoomMode == ZoomMode.LockZoomRatio) {
                 Configs.ZoomLockValue = e.NewZoom;
@@ -4984,11 +4989,6 @@ namespace ImageGlass {
             }
 
             picMain.ZoomIn();
-
-            // Handle window fit after zoom
-            if (Configs.IsWindowFit) {
-                WindowFitMode(false);
-            }
         }
 
         private void mnuMainZoomOut_Click(object sender, EventArgs e) {
@@ -4997,11 +4997,6 @@ namespace ImageGlass {
             }
 
             picMain.ZoomOut();
-
-            // Handle window fit after zoom
-            if (Configs.IsWindowFit) {
-                WindowFitMode(false);
-            }
         }
 
         private void mnuCustomZoom_Click(object sender, EventArgs e) {
