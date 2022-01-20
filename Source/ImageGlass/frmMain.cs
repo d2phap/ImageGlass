@@ -2243,9 +2243,6 @@ namespace ImageGlass {
             if (reZoom) {
                 ApplyZoomMode(Configs.ZoomMode);
             }
-            else {
-                picMain.ScrollTo(0, 0, 0, 0);
-            }
 
             // Now that we have the new zoom value, adjust our main window
             // to fit the *zoomed* image size
@@ -2260,6 +2257,11 @@ namespace ImageGlass {
             maxWidth = Math.Min(fullW, screen.WorkingArea.Width);
             maxHeight = Math.Min(fullH, screen.WorkingArea.Height);
             Size = new Size(Width = maxWidth, Height = maxHeight);
+
+            // Scroll to last position
+            if (!reZoom) {
+                picMain.ScrollTo(picMain.PointToImage(picMain.CenterPoint), picMain.CenterPoint);
+            }
 
             // center window to screen
             if (Configs.IsCenterWindowFit) {
