@@ -2197,7 +2197,7 @@ namespace ImageGlass {
         /// <summary>
         /// Adjust our window dimensions to fit the image size.
         /// </summary>
-        private void WindowFitMode() {
+        private void WindowFitMode(bool reZoom = true) {
             if (!Configs.IsWindowFit || picMain.Image == null)
                 return; // Nothing to do
 
@@ -2240,16 +2240,26 @@ namespace ImageGlass {
 
             // Let the image viewer control figure out the zoom value for
             // the full-size window
-            ApplyZoomMode(Configs.ZoomMode);
-
+            if (reZoom) {
+                ApplyZoomMode(Configs.ZoomMode);
+            }
+            else {
+                picMain.ScrollTo(0, 0, 0, 0);
+            }
 
             // Now that we have the new zoom value, adjust our main window
             // to fit the *zoomed* image size
             var newW = (int)(picMain.Image.Width * picMain.ZoomFactor);
             var newH = (int)(picMain.Image.Height * picMain.ZoomFactor);
 
-            Size = new Size(Width += newW - picMain.Width,
-                            Height += newH - picMain.Height);
+            // Adjust our main window to theoretically fit the entire
+            // picture, but not larger than desktop working area.
+            fullW = Width + newW - picMain.Width;
+            fullH = Height + newH - picMain.Height;
+
+            maxWidth = Math.Min(fullW, screen.WorkingArea.Width);
+            maxHeight = Math.Min(fullH, screen.WorkingArea.Height);
+            Size = new Size(Width = maxWidth, Height = maxHeight);
 
             // center window to screen
             if (Configs.IsCenterWindowFit) {
@@ -4972,6 +4982,11 @@ namespace ImageGlass {
             }
 
             picMain.ZoomIn();
+
+            // Handle window fit after zoom
+            if (Configs.IsWindowFit) {
+                WindowFitMode(false);
+            }
         }
 
         private void mnuMainZoomOut_Click(object sender, EventArgs e) {
@@ -4980,6 +4995,11 @@ namespace ImageGlass {
             }
 
             picMain.ZoomOut();
+
+            // Handle window fit after zoom
+            if (Configs.IsWindowFit) {
+                WindowFitMode(false);
+            }
         }
 
         private void mnuCustomZoom_Click(object sender, EventArgs e) {
