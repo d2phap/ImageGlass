@@ -5025,11 +5025,7 @@ namespace ImageGlass {
             }
 
             if (Configs.IsWindowFit) {
-                WindowFitMode();
-            }
-            else {
-                MinimumSize = new(0, 0);
-                ApplyZoomMode(Configs.ZoomMode);
+                WindowFitMode(false);
             }
         }
 
