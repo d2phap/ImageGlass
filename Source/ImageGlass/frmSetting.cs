@@ -133,7 +133,6 @@ namespace ImageGlass {
             LoadTabImageConfig();
             LoadTabEditConfig();
             LoadTabTools();
-            LoadTabPrivacy();
 
             // to prevent the setting: ToolbarPosition = -1, we load this onLoad event
             LoadTabToolbar();
@@ -365,20 +364,6 @@ namespace ImageGlass {
             lblKeysLeftRight.Text = lang[$"{Name}.{nameof(lblKeysLeftRight)}"];
             #endregion
 
-            #region PRIVACY TAB
-            lblPrivacy.Text = lang[$"{Name}.{nameof(lblPrivacy)}"];
-            lnkPrivacy.Text = string.Format(lang[$"{Name}.{nameof(lnkPrivacy)}"], PRIVACY_URL);
-            lnkPrivacy.LinkArea = new(lnkPrivacy.Text.IndexOf(PRIVACY_URL), PRIVACY_URL.Length);
-            chkEnableSpiderService.Text = lang[$"{Name}.{nameof(chkEnableSpiderService)}"]
-                + (SpiderService.CheckRunning() ? " ~" : "");
-
-            var learnMore = lang[$"{Name}.{nameof(lnkSpider)}._LearnMore"];
-            lnkSpider.Text = lang[$"{Name}.{nameof(lnkSpider)}._Description"]
-                + " " + learnMore + "."
-                + "\r\n" + App.StartUpDir(SpiderService.SDK_DLL);
-            lnkSpider.LinkArea = new(lnkSpider.Text.IndexOf(learnMore), learnMore.Length);
-            #endregion
-
         }
 
         /// <summary>
@@ -417,9 +402,6 @@ namespace ImageGlass {
                 case nameof(lblKeyboard):
                     tab1.SelectedTab = tabKeyboard;
                     break;
-                case nameof(lblPrivacy):
-                    tab1.SelectedTab = tabPrivacy;
-                    break;
             }
         }
 
@@ -432,7 +414,6 @@ namespace ImageGlass {
             lblToolbar.Tag =
             lblTools.Tag =
             lblTheme.Tag =
-            lblPrivacy.Tag =
             lblKeyboard.Tag = 0;
 
             lblGeneral.BackColor =
@@ -443,7 +424,6 @@ namespace ImageGlass {
             lblToolbar.BackColor =
             lblTools.BackColor =
             lblTheme.BackColor =
-            lblPrivacy.BackColor =
             lblKeyboard.BackColor = M_COLOR_MENU_NORMAL;
 
             if (tab1.SelectedTab == tabGeneral) {
@@ -504,13 +484,6 @@ namespace ImageGlass {
                 lblKeyboard.BackColor = M_COLOR_MENU_SELECTED;
 
                 LoadTabKeyboard(Configs.KeyComboActions);
-            }
-            else if (tab1.SelectedTab == tabPrivacy) {
-                lblPrivacy.Tag = 1;
-                lblPrivacy.BackColor = M_COLOR_MENU_SELECTED;
-                chkEnableSpiderService.Enabled = true;
-
-                LoadTabPrivacy();
             }
         }
 
@@ -1857,31 +1830,6 @@ namespace ImageGlass {
 
         #endregion
 
-        #region TAB PRIVACY
-
-        private void LoadTabPrivacy() {
-            chkEnableSpiderService.Visible =
-                lnkSpider.Visible =
-                File.Exists(App.StartUpDir(SpiderService.SDK_DLL));
-
-            chkEnableSpiderService.Checked = Configs.IsEnableSpiderService;
-        }
-
-        private void LnkPrivacy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            try {
-                Process.Start($"{PRIVACY_URL}?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_settings");
-            }
-            catch { }
-        }
-
-        private void lnkSpider_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            try {
-                Process.Start($"https://imageglass.org/docs/spider-service?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_settings");
-            }
-            catch { }
-        }
-
-        #endregion
 
         #region ACTION BUTTONS
         private void btnCancel_Click(object sender, EventArgs e) {
@@ -2219,19 +2167,6 @@ namespace ImageGlass {
             Configs.IsShowPageNavAuto = chkShowPageNavAuto.Checked;
             Configs.IsExifToolAlwaysOnTop = chkExifToolAlwaysOnTop.Checked;
             Configs.ExifToolCommandArgs = txtExifToolCommandArgs.Text.Trim().Replace("\n", "");
-            #endregion
-
-            #region Privacy tab --------------------------------------------
-            var dllExist = File.Exists(SpiderService.SDK_DLL);
-            Configs.IsEnableSpiderService = dllExist && chkEnableSpiderService.Checked;
-
-            // toggle Spider service
-            if (Configs.IsEnableSpiderService) {
-                SpiderService.Enable();
-            }
-            else {
-                SpiderService.Disable();
-            }
             #endregion
 
 

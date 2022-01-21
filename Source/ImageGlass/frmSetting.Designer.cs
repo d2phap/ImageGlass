@@ -44,7 +44,6 @@ namespace ImageGlass
             this.imglOpenWith = new System.Windows.Forms.ImageList(this.components);
             this.sp1 = new System.Windows.Forms.SplitContainer();
             this.tableTabHeaders = new System.Windows.Forms.TableLayoutPanel();
-            this.lblPrivacy = new System.Windows.Forms.Label();
             this.lblImage = new System.Windows.Forms.Label();
             this.lblToolbar = new System.Windows.Forms.Label();
             this.lblTools = new System.Windows.Forms.Label();
@@ -234,11 +233,6 @@ namespace ImageGlass
             this.lnkGetMoreLanguage = new System.Windows.Forms.LinkLabel();
             this.cmbLanguage = new System.Windows.Forms.ComboBox();
             this.lblLanguageText = new System.Windows.Forms.Label();
-            this.tabPrivacy = new System.Windows.Forms.TabPage();
-            this.tbPrivacy = new System.Windows.Forms.TableLayoutPanel();
-            this.lnkSpider = new System.Windows.Forms.LinkLabel();
-            this.lnkPrivacy = new System.Windows.Forms.LinkLabel();
-            this.chkEnableSpiderService = new System.Windows.Forms.CheckBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
@@ -279,8 +273,6 @@ namespace ImageGlass
             this.tb3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).BeginInit();
             this.tabLanguage.SuspendLayout();
-            this.tabPrivacy.SuspendLayout();
-            this.tbPrivacy.SuspendLayout();
             this.tblayout.SuspendLayout();
             this.panel4.SuspendLayout();
             this.SuspendLayout();
@@ -402,7 +394,6 @@ namespace ImageGlass
             this.tableTabHeaders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(165)))), ((int)(((byte)(168)))));
             this.tableTabHeaders.ColumnCount = 1;
             this.tableTabHeaders.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 236F));
-            this.tableTabHeaders.Controls.Add(this.lblPrivacy, 0, 9);
             this.tableTabHeaders.Controls.Add(this.lblGeneral, 0, 0);
             this.tableTabHeaders.Controls.Add(this.lblImage, 0, 1);
             this.tableTabHeaders.Controls.Add(this.lblToolbar, 0, 4);
@@ -433,25 +424,6 @@ namespace ImageGlass
             this.tableTabHeaders.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableTabHeaders.Size = new System.Drawing.Size(224, 669);
             this.tableTabHeaders.TabIndex = 5;
-            // 
-            // lblPrivacy
-            // 
-            this.lblPrivacy.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblPrivacy.Location = new System.Drawing.Point(0, 423);
-            this.lblPrivacy.Margin = new System.Windows.Forms.Padding(0);
-            this.lblPrivacy.Name = "lblPrivacy";
-            this.lblPrivacy.Padding = new System.Windows.Forms.Padding(13, 0, 13, 0);
-            this.lblPrivacy.Size = new System.Drawing.Size(236, 47);
-            this.lblPrivacy.TabIndex = 10;
-            this.lblPrivacy.Tag = "0";
-            this.lblPrivacy.Text = "[Privacy]";
-            this.lblPrivacy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblPrivacy.Click += new System.EventHandler(this.lblMenu_Click);
-            this.lblPrivacy.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseDown);
-            this.lblPrivacy.MouseEnter += new System.EventHandler(this.lblMenu_MouseEnter);
-            this.lblPrivacy.MouseLeave += new System.EventHandler(this.lblMenu_MouseLeave);
-            this.lblPrivacy.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lblMenu_MouseUp);
             // 
             // lblImage
             // 
@@ -579,7 +551,6 @@ namespace ImageGlass
             this.tab1.Controls.Add(this.tabKeyboard);
             this.tab1.Controls.Add(this.tabTheme);
             this.tab1.Controls.Add(this.tabLanguage);
-            this.tab1.Controls.Add(this.tabPrivacy);
             this.tab1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tab1.Location = new System.Drawing.Point(0, 0);
             this.tab1.Margin = new System.Windows.Forms.Padding(0);
@@ -3000,87 +2971,6 @@ namespace ImageGlass
             this.lblLanguageText.TabIndex = 1;
             this.lblLanguageText.Text = "Installed languages:";
             // 
-            // tabPrivacy
-            // 
-            this.tabPrivacy.AutoScroll = true;
-            this.tabPrivacy.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
-            this.tabPrivacy.Controls.Add(this.tbPrivacy);
-            this.tabPrivacy.Location = new System.Drawing.Point(4, 69);
-            this.tabPrivacy.Margin = new System.Windows.Forms.Padding(0);
-            this.tabPrivacy.Name = "tabPrivacy";
-            this.tabPrivacy.Size = new System.Drawing.Size(737, 596);
-            this.tabPrivacy.TabIndex = 9;
-            this.tabPrivacy.Text = "privacy";
-            // 
-            // tbPrivacy
-            // 
-            this.tbPrivacy.ColumnCount = 1;
-            this.tbPrivacy.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tbPrivacy.Controls.Add(this.lnkSpider, 0, 2);
-            this.tbPrivacy.Controls.Add(this.lnkPrivacy, 0, 0);
-            this.tbPrivacy.Controls.Add(this.chkEnableSpiderService, 0, 1);
-            this.tbPrivacy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrivacy.Location = new System.Drawing.Point(0, 0);
-            this.tbPrivacy.Name = "tbPrivacy";
-            this.tbPrivacy.Padding = new System.Windows.Forms.Padding(28, 20, 20, 20);
-            this.tbPrivacy.RowCount = 3;
-            this.tbPrivacy.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tbPrivacy.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tbPrivacy.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tbPrivacy.Size = new System.Drawing.Size(737, 596);
-            this.tbPrivacy.TabIndex = 46;
-            // 
-            // lnkSpider
-            // 
-            this.lnkSpider.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
-            this.lnkSpider.AutoSize = true;
-            this.lnkSpider.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lnkSpider.LinkArea = new System.Windows.Forms.LinkArea(80, 10);
-            this.lnkSpider.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkSpider.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkSpider.Location = new System.Drawing.Point(48, 118);
-            this.lnkSpider.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.lnkSpider.Name = "lnkSpider";
-            this.lnkSpider.Size = new System.Drawing.Size(641, 50);
-            this.lnkSpider.TabIndex = 6;
-            this.lnkSpider.TabStop = true;
-            this.lnkSpider.Text = "[Share devide IP with Spider.com customers to pass traffic through your device. L" +
-    "earn more.]";
-            this.lnkSpider.UseCompatibleTextRendering = true;
-            this.lnkSpider.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkSpider.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSpider_LinkClicked);
-            // 
-            // lnkPrivacy
-            // 
-            this.lnkPrivacy.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
-            this.lnkPrivacy.AutoSize = true;
-            this.lnkPrivacy.LinkArea = new System.Windows.Forms.LinkArea(36, 30);
-            this.lnkPrivacy.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkPrivacy.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkPrivacy.Location = new System.Drawing.Point(31, 20);
-            this.lnkPrivacy.Name = "lnkPrivacy";
-            this.lnkPrivacy.Size = new System.Drawing.Size(683, 50);
-            this.lnkPrivacy.TabIndex = 5;
-            this.lnkPrivacy.TabStop = true;
-            this.lnkPrivacy.Text = "[Learn more about privacy policy at https://imageglass.org/privacy. To opt out an" +
-    " option, you can uncheck it and click \'Save\' or \'Apply\' button below.]";
-            this.lnkPrivacy.UseCompatibleTextRendering = true;
-            this.lnkPrivacy.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkPrivacy.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LnkPrivacy_LinkClicked);
-            // 
-            // chkEnableSpiderService
-            // 
-            this.chkEnableSpiderService.AutoSize = true;
-            this.chkEnableSpiderService.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkEnableSpiderService.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkEnableSpiderService.Location = new System.Drawing.Point(28, 90);
-            this.chkEnableSpiderService.Margin = new System.Windows.Forms.Padding(0, 20, 0, 0);
-            this.chkEnableSpiderService.Name = "chkEnableSpiderService";
-            this.chkEnableSpiderService.Size = new System.Drawing.Size(228, 28);
-            this.chkEnableSpiderService.TabIndex = 4;
-            this.chkEnableSpiderService.Text = "[Enable Spider service]";
-            this.chkEnableSpiderService.UseVisualStyleBackColor = true;
-            // 
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -3221,9 +3111,6 @@ namespace ImageGlass
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).EndInit();
             this.tabLanguage.ResumeLayout(false);
             this.tabLanguage.PerformLayout();
-            this.tabPrivacy.ResumeLayout(false);
-            this.tbPrivacy.ResumeLayout(false);
-            this.tbPrivacy.PerformLayout();
             this.tblayout.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
@@ -3439,11 +3326,5 @@ namespace ImageGlass
         private System.Windows.Forms.Label lblNumberImagesNotify;
         private System.Windows.Forms.CheckBox chkContinueRunningBackground;
         private System.Windows.Forms.CheckBox chkStartWithOs;
-        private System.Windows.Forms.Label lblPrivacy;
-        private System.Windows.Forms.TabPage tabPrivacy;
-        private System.Windows.Forms.CheckBox chkEnableSpiderService;
-        private System.Windows.Forms.LinkLabel lnkPrivacy;
-        private System.Windows.Forms.TableLayoutPanel tbPrivacy;
-        private System.Windows.Forms.LinkLabel lnkSpider;
     }
 }
