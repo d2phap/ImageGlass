@@ -134,7 +134,7 @@ namespace ImageGlass.Library {
             var reg = new RegistryHelper() {
                 BaseRegistryKey = Registry.CurrentUser,
                 SubKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run",
-                ShowError = true,
+                ShowError = false,
             };
 
             if (enable) {
