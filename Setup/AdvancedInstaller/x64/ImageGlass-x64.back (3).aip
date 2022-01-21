@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="19.1" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="19.0" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_CURRENT_YEAR" Value="2022" ValueLocId="-"/>
@@ -15,10 +15,10 @@
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="MsiBuild:1"/>
     <ROW Property="Manufacturer" Value="Duong Dieu Phap"/>
     <ROW Property="MsiLogging" MultiBuildValue="MsiBuild:vp"/>
-    <ROW Property="ProductCode" Value="1033:{A5F09BA9-6FE7-4906-B312-1DC9B85C3DEA} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{7BC18B4D-18B0-4111-8DB6-37ADA303722B} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="ImageGlass"/>
-    <ROW Property="ProductVersion" Value="8.4.2.22" Type="32" TargetFile="ImageGlass.exe"/>
+    <ROW Property="ProductVersion" Value="8.4.1.22" Type="32" TargetFile="ImageGlass.exe"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{877DB994-AB03-4025-B99D-41CE565E810B}"/>
@@ -80,7 +80,7 @@
     <ROW Component="Registry" ComponentId="{8FB9A6E2-EB42-405D-B57B-7E83B423B08E}" Directory_="APPDIR" Attributes="260" KeyPath="ProductName"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{A0ECB089-2670-479A-B45D-4C76901F0F14}" Directory_="SHORTCUTDIR" Attributes="0"/>
     <ROW Component="System.Runtime.WindowsRuntime.dll" ComponentId="{6F633D65-B338-4B7A-A77F-96675B784ED2}" Directory_="APPDIR" Attributes="0" KeyPath="System.Runtime.WindowsRuntime.dll"/>
-    <ROW Component="bssdk.dll" Directory_="APPDIR" Attributes="258" KeyPath="bssdk.dll"/>
+    <ROW Component="bssdk.dll" ComponentId="{7B8A5A1C-7A9A-4EAC-845C-149A3047E4F0}" Directory_="APPDIR" Attributes="256" KeyPath="bssdk.dll"/>
     <ROW Component="default.jpg" ComponentId="{DD9ACEDA-3C46-41C1-8C97-5A3D7275ED67}" Directory_="APPDIR" Attributes="0" KeyPath="LICENSE.rtf" Type="0"/>
     <ROW Component="igcmd.exe" ComponentId="{E1F6C5A4-570F-4CCF-9FB3-438ED36C5997}" Directory_="APPDIR" Attributes="256" KeyPath="igcmd.exe"/>
     <ROW Component="igcmdWin10.exe" ComponentId="{1A26187A-D6F6-4E2D-8580-471B567476DC}" Directory_="APPDIR" Attributes="256" KeyPath="igcmdWin10.exe"/>
@@ -383,7 +383,6 @@
     <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
     <ROW Fragment="SetupTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SetupTypeDlg.aip"/>
     <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
-    <ROW Fragment="Themes.aip" Path="&lt;AI_FRAGS&gt;Themes.aip"/>
     <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;classic\fragments\UI.aip"/>
     <ROW Fragment="Validation.aip" Path="&lt;AI_FRAGS&gt;Validation.aip"/>
     <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRemoveDlg.aip"/>
@@ -752,8 +751,8 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
     <ROW Shortcut="ImageGlass8.4" Directory_="DesktopFolder" Name="IMAGEG~2.4|ImageGlass 8.4" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="ImageGlass8.4_1" Directory_="SHORTCUTDIR" Name="IMAGEG~1|ImageGlass" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="ImageGlass8.4_2" Directory_="ImageGlass_Dir" Name="IMAGEG~1|ImageGlass" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="ImageGlass8.4_1" Directory_="SHORTCUTDIR" Name="IMAGEG~2.4|ImageGlass 8.4" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="ImageGlass8.4_2" Directory_="ImageGlass_Dir" Name="IMAGEG~2.4|ImageGlass 8.4" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
     <ROW Shortcut="ImageGlassLICENSE_1" Directory_="ImageGlass_Dir" Name="IMAGEG~2|ImageGlass&apos; LICENSE" Component_="Installdefault.jpgComponentShortcuts_1" Target="[APPDIR]\LICENSE.rtf" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
