@@ -89,7 +89,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SpiderService.cs" />
     <Compile Include="ExplorerSortOrder.cs" />
     <Compile Include="InstanceManagement\ArgumentsReceivedEventArgs.cs" />
     <Compile Include="InstanceManagement\NativeMethods.cs" />
@@ -113,7 +112,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Libs\Spider-sdk\x86_64\bs-sdk.dll" Condition="'$(Platform)' == 'x64'" CopyToOutputDirectory="Always" />
     <Content Include="..\..\Libs\ExplorerSortOrder\x86\ExplorerSortOrder.dll" Condition="'$(Platform)' == 'x86'" CopyToOutputDirectory="Always" />
     <Content Include="..\..\Libs\ExplorerSortOrder\x64\ExplorerSortOrder.dll" Condition="'$(Platform)' == 'x64'" CopyToOutputDirectory="Always" />
   </ItemGroup>

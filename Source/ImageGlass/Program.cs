@@ -26,7 +26,6 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ImageGlass.Base;
-using ImageGlass.Services;
 using ImageGlass.Services.InstanceManagement;
 using ImageGlass.Settings;
 
@@ -76,9 +75,6 @@ namespace ImageGlass {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // checks and enables Spider service
-            _ = CheckAndRunSpiderServiceAsync();
-
             // check config file compatibility
             if (!CheckConfigFileCompatibility()) return;
 
@@ -90,7 +86,6 @@ namespace ImageGlass {
 
             // checks and runs app instance(s)
             RunAppInstances();
-
         }
 
 
@@ -259,19 +254,6 @@ namespace ImageGlass {
 
             // Execute our delegate on the forms thread!
             formMain.Invoke(UpdateForm, (object)realArgs);
-        }
-
-
-        /// <summary>
-        /// Checks and enables Spider service
-        /// </summary>
-        /// <returns></returns>
-        private static async Task CheckAndRunSpiderServiceAsync() {
-            if (Configs.IsEnableSpiderService) {
-                await Task.Delay(5000);
-
-                SpiderService.Enable();
-            }
         }
 
     }
