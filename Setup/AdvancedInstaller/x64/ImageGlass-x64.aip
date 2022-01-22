@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="19.0" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="19.1" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_CURRENT_YEAR" Value="2022" ValueLocId="-"/>
@@ -15,10 +15,10 @@
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="MsiBuild:1"/>
     <ROW Property="Manufacturer" Value="Duong Dieu Phap"/>
     <ROW Property="MsiLogging" MultiBuildValue="MsiBuild:vp"/>
-    <ROW Property="ProductCode" Value="1033:{7BC18B4D-18B0-4111-8DB6-37ADA303722B} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{50A60C1F-F490-46C4-AB40-2625CC646617} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="ImageGlass"/>
-    <ROW Property="ProductVersion" Value="8.4.1.22" Type="32" TargetFile="ImageGlass.exe"/>
+    <ROW Property="ProductVersion" Value="8.5.1.22" Type="32" TargetFile="ImageGlass.exe"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{877DB994-AB03-4025-B99D-41CE565E810B}"/>
@@ -80,7 +80,6 @@
     <ROW Component="Registry" ComponentId="{8FB9A6E2-EB42-405D-B57B-7E83B423B08E}" Directory_="APPDIR" Attributes="260" KeyPath="ProductName"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{A0ECB089-2670-479A-B45D-4C76901F0F14}" Directory_="SHORTCUTDIR" Attributes="0"/>
     <ROW Component="System.Runtime.WindowsRuntime.dll" ComponentId="{6F633D65-B338-4B7A-A77F-96675B784ED2}" Directory_="APPDIR" Attributes="0" KeyPath="System.Runtime.WindowsRuntime.dll"/>
-    <ROW Component="bssdk.dll" ComponentId="{7B8A5A1C-7A9A-4EAC-845C-149A3047E4F0}" Directory_="APPDIR" Attributes="256" KeyPath="bssdk.dll"/>
     <ROW Component="default.jpg" ComponentId="{DD9ACEDA-3C46-41C1-8C97-5A3D7275ED67}" Directory_="APPDIR" Attributes="0" KeyPath="LICENSE.rtf" Type="0"/>
     <ROW Component="igcmd.exe" ComponentId="{E1F6C5A4-570F-4CCF-9FB3-438ED36C5997}" Directory_="APPDIR" Attributes="256" KeyPath="igcmd.exe"/>
     <ROW Component="igcmdWin10.exe" ComponentId="{1A26187A-D6F6-4E2D-8580-471B567476DC}" Directory_="APPDIR" Attributes="256" KeyPath="igcmdWin10.exe"/>
@@ -90,84 +89,83 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="FileTypeAssociations" Feature_Parent="MainFeature" Title="File Type Associations" Description="Description" Display="3" Level="1" Directory_="APPDIR" Attributes="0" Options="13"/>
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
-    <ROW Feature="ari" Feature_Parent="FileTypeAssociations" Title=".ari" Description="Description" Display="81" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="arw" Feature_Parent="FileTypeAssociations" Title=".arw" Description="Description" Display="99" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="avif" Feature_Parent="FileTypeAssociations" Title=".avif" Description="Description" Display="9" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="b64" Feature_Parent="FileTypeAssociations" Title=".b64" Description="Description" Display="11" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="bay" Feature_Parent="FileTypeAssociations" Title=".bay" Description="Description" Display="97" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="bmp" Feature_Parent="FileTypeAssociations" Title=".bmp" Description="Description" Display="5" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="cap" Feature_Parent="FileTypeAssociations" Title=".cap" Description="Description" Display="83" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="cr2" Feature_Parent="FileTypeAssociations" Title=".cr2" Description="Description" Display="95" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="cr3" Feature_Parent="FileTypeAssociations" Title=".cr3" Description="Description" Display="103" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="crw" Feature_Parent="FileTypeAssociations" Title=".crw" Description="Description" Display="87" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="cur" Feature_Parent="FileTypeAssociations" Title=".cur" Description="Description" Display="7" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="cut" Feature_Parent="FileTypeAssociations" Title=".cut" Description="Description" Display="13" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="dcr" Feature_Parent="FileTypeAssociations" Title=".dcr" Description="Description" Display="101" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="dcs" Feature_Parent="FileTypeAssociations" Title=".dcs" Description="Description" Display="85" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="dds" Feature_Parent="FileTypeAssociations" Title=".dds" Description="Description" Display="15" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="dib" Feature_Parent="FileTypeAssociations" Title=".dib" Description="Description" Display="17" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="dng" Feature_Parent="FileTypeAssociations" Title=".dng" Description="Description" Display="91" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="drf" Feature_Parent="FileTypeAssociations" Title=".drf" Description="Description" Display="105" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="eip" Feature_Parent="FileTypeAssociations" Title=".eip" Description="Description" Display="107" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="emf" Feature_Parent="FileTypeAssociations" Title=".emf" Description="Description" Display="19" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="erf" Feature_Parent="FileTypeAssociations" Title=".erf" Description="Description" Display="93" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="exif" Feature_Parent="FileTypeAssociations" Title=".exif" Description="Description" Display="21" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="exr" Feature_Parent="FileTypeAssociations" Title=".exr" Description="Description" Display="57" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="fff" Feature_Parent="FileTypeAssociations" Title=".fff" Description="Description" Display="89" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="fr" Feature_Parent="FileTypeAssociations" Title=".3fr" Description="Description" Display="69" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="gif" Feature_Parent="FileTypeAssociations" Title=".gif" Description="Description" Display="23" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="gpr" Feature_Parent="FileTypeAssociations" Title=".gpr" Description="Description" Display="125" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="hdr" Feature_Parent="FileTypeAssociations" Title=".hdr" Description="Description" Display="55" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="heic" Feature_Parent="FileTypeAssociations" Title=".heic" Description="Description" Display="25" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="heif" Feature_Parent="FileTypeAssociations" Title=".heif" Description="Description" Display="27" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="ico" Feature_Parent="FileTypeAssociations" Title=".ico" Description="Description" Display="29" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="iiq" Feature_Parent="FileTypeAssociations" Title=".iiq" Description="Description" Display="109" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="jfif" Feature_Parent="FileTypeAssociations" Title=".jfif" Description="Description" Display="31" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="jp2" Feature_Parent="FileTypeAssociations" Title=".jp2" Description="Description" Display="33" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="jpe" Feature_Parent="FileTypeAssociations" Title=".jpe" Description="Description" Display="35" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="jpeg" Feature_Parent="FileTypeAssociations" Title=".jpeg" Description="Description" Display="37" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="jpg" Feature_Parent="FileTypeAssociations" Title=".jpg" Description="Description" Display="39" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="jxl" Feature_Parent="FileTypeAssociations" Title=".jxl" Description="Description" Display="41" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="k25" Feature_Parent="FileTypeAssociations" Title=".k25" Description="Description" Display="127" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="kdc" Feature_Parent="FileTypeAssociations" Title=".kdc" Description="Description" Display="129" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="mdc" Feature_Parent="FileTypeAssociations" Title=".mdc" Description="Description" Display="115" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="mef" Feature_Parent="FileTypeAssociations" Title=".mef" Description="Description" Display="123" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="mos" Feature_Parent="FileTypeAssociations" Title=".mos" Description="Description" Display="117" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="mrw" Feature_Parent="FileTypeAssociations" Title=".mrw" Description="Description" Display="121" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="nef" Feature_Parent="FileTypeAssociations" Title=".nef" Description="Description" Display="119" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="nrw" Feature_Parent="FileTypeAssociations" Title=".nrw" Description="Description" Display="113" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="obm" Feature_Parent="FileTypeAssociations" Title=".obm" Description="Description" Display="135" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="orf" Feature_Parent="FileTypeAssociations" Title=".orf" Description="Description" Display="139" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="pbm" Feature_Parent="FileTypeAssociations" Title=".pbm" Description="Description" Display="43" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="pcx" Feature_Parent="FileTypeAssociations" Title=".pcx" Description="Description" Display="45" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="pef" Feature_Parent="FileTypeAssociations" Title=".pef" Description="Description" Display="137" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="pgm" Feature_Parent="FileTypeAssociations" Title=".pgm" Description="Description" Display="47" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="png" Feature_Parent="FileTypeAssociations" Title=".png" Description="Description" Display="49" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="ppm" Feature_Parent="FileTypeAssociations" Title=".ppm" Description="Description" Display="51" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="psb" Feature_Parent="FileTypeAssociations" Title=".psb" Description="Description" Display="71" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="psd" Feature_Parent="FileTypeAssociations" Title=".psd" Description="Description" Display="75" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="ptx" Feature_Parent="FileTypeAssociations" Title=".ptx" Description="Description" Display="111" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="pxn" Feature_Parent="FileTypeAssociations" Title=".pxn" Description="Description" Display="133" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="qoi" Feature_Parent="FileTypeAssociations" Title=".qoi" Description="Description" Display="131" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="r3d" Feature_Parent="FileTypeAssociations" Title=".r3d" Description="Description" Display="141" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="raf" Feature_Parent="FileTypeAssociations" Title=".raf" Description="Description" Display="143" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="raw" Feature_Parent="FileTypeAssociations" Title=".raw" Description="Description" Display="145" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="rw2" Feature_Parent="FileTypeAssociations" Title=".rw2" Description="Description" Display="149" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="rwl" Feature_Parent="FileTypeAssociations" Title=".rwl" Description="Description" Display="147" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="rwz" Feature_Parent="FileTypeAssociations" Title=".rwz" Description="Description" Display="151" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="sr2" Feature_Parent="FileTypeAssociations" Title=".sr2" Description="Description" Display="153" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="srf" Feature_Parent="FileTypeAssociations" Title=".srf" Description="Description" Display="155" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="srw" Feature_Parent="FileTypeAssociations" Title=".srw" Description="Description" Display="157" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="svg" Feature_Parent="FileTypeAssociations" Title=".svg" Description="Description" Display="53" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="tga" Feature_Parent="FileTypeAssociations" Title=".tga" Description="Description" Display="73" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="tif" Feature_Parent="FileTypeAssociations" Title=".tif" Description="Description" Display="79" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="tiff" Feature_Parent="FileTypeAssociations" Title=".tiff" Description="Description" Display="77" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="webp" Feature_Parent="FileTypeAssociations" Title=".webp" Description="Description" Display="59" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="wmf" Feature_Parent="FileTypeAssociations" Title=".wmf" Description="Description" Display="63" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="wpg" Feature_Parent="FileTypeAssociations" Title=".wpg" Description="Description" Display="67" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="x3f" Feature_Parent="FileTypeAssociations" Title=".x3f" Description="Description" Display="159" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="xbm" Feature_Parent="FileTypeAssociations" Title=".xbm" Description="Description" Display="65" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ROW Feature="xpm" Feature_Parent="FileTypeAssociations" Title=".xpm" Description="Description" Display="61" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="_3fr" Feature_Parent="FileTypeAssociations" Title=".3fr" Description="Description" Display="5" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="ari" Feature_Parent="FileTypeAssociations" Title=".ari" Description="Description" Display="7" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="arw" Feature_Parent="FileTypeAssociations" Title=".arw" Description="Description" Display="9" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="avif" Feature_Parent="FileTypeAssociations" Title=".avif" Description="Description" Display="11" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="b64" Feature_Parent="FileTypeAssociations" Title=".b64" Description="Description" Display="13" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="bay" Feature_Parent="FileTypeAssociations" Title=".bay" Description="Description" Display="15" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="bmp" Feature_Parent="FileTypeAssociations" Title=".bmp" Description="Description" Display="17" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="cap" Feature_Parent="FileTypeAssociations" Title=".cap" Description="Description" Display="19" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="cr2" Feature_Parent="FileTypeAssociations" Title=".cr2" Description="Description" Display="21" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="cr3" Feature_Parent="FileTypeAssociations" Title=".cr3" Description="Description" Display="23" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="crw" Feature_Parent="FileTypeAssociations" Title=".crw" Description="Description" Display="25" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="cur" Feature_Parent="FileTypeAssociations" Title=".cur" Description="Description" Display="27" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="cut" Feature_Parent="FileTypeAssociations" Title=".cut" Description="Description" Display="29" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="dcr" Feature_Parent="FileTypeAssociations" Title=".dcr" Description="Description" Display="31" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="dcs" Feature_Parent="FileTypeAssociations" Title=".dcs" Description="Description" Display="33" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="dds" Feature_Parent="FileTypeAssociations" Title=".dds" Description="Description" Display="35" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="dib" Feature_Parent="FileTypeAssociations" Title=".dib" Description="Description" Display="37" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="dng" Feature_Parent="FileTypeAssociations" Title=".dng" Description="Description" Display="39" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="drf" Feature_Parent="FileTypeAssociations" Title=".drf" Description="Description" Display="41" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="eip" Feature_Parent="FileTypeAssociations" Title=".eip" Description="Description" Display="43" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="emf" Feature_Parent="FileTypeAssociations" Title=".emf" Description="Description" Display="45" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="erf" Feature_Parent="FileTypeAssociations" Title=".erf" Description="Description" Display="47" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="exif" Feature_Parent="FileTypeAssociations" Title=".exif" Description="Description" Display="49" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="exr" Feature_Parent="FileTypeAssociations" Title=".exr" Description="Description" Display="51" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="fff" Feature_Parent="FileTypeAssociations" Title=".fff" Description="Description" Display="53" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="gif" Feature_Parent="FileTypeAssociations" Title=".gif" Description="Description" Display="55" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="gpr" Feature_Parent="FileTypeAssociations" Title=".gpr" Description="Description" Display="57" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="hdr" Feature_Parent="FileTypeAssociations" Title=".hdr" Description="Description" Display="59" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="heic" Feature_Parent="FileTypeAssociations" Title=".heic" Description="Description" Display="61" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="heif" Feature_Parent="FileTypeAssociations" Title=".heif" Description="Description" Display="63" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="iiq" Feature_Parent="FileTypeAssociations" Title=".iiq" Description="Description" Display="65" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="jfif" Feature_Parent="FileTypeAssociations" Title=".jfif" Description="Description" Display="67" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="jp2" Feature_Parent="FileTypeAssociations" Title=".jp2" Description="Description" Display="69" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="jpe" Feature_Parent="FileTypeAssociations" Title=".jpe" Description="Description" Display="71" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="jpeg" Feature_Parent="FileTypeAssociations" Title=".jpeg" Description="Description" Display="73" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="jpg" Feature_Parent="FileTypeAssociations" Title=".jpg" Description="Description" Display="75" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="jxl" Feature_Parent="FileTypeAssociations" Title=".jxl" Description="Description" Display="77" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="k25" Feature_Parent="FileTypeAssociations" Title=".k25" Description="Description" Display="79" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="kdc" Feature_Parent="FileTypeAssociations" Title=".kdc" Description="Description" Display="81" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="mdc" Feature_Parent="FileTypeAssociations" Title=".mdc" Description="Description" Display="83" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="mef" Feature_Parent="FileTypeAssociations" Title=".mef" Description="Description" Display="85" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="mos" Feature_Parent="FileTypeAssociations" Title=".mos" Description="Description" Display="87" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="mrw" Feature_Parent="FileTypeAssociations" Title=".mrw" Description="Description" Display="89" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="nef" Feature_Parent="FileTypeAssociations" Title=".nef" Description="Description" Display="91" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="nrw" Feature_Parent="FileTypeAssociations" Title=".nrw" Description="Description" Display="93" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="obm" Feature_Parent="FileTypeAssociations" Title=".obm" Description="Description" Display="95" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="orf" Feature_Parent="FileTypeAssociations" Title=".orf" Description="Description" Display="97" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="pbm" Feature_Parent="FileTypeAssociations" Title=".pbm" Description="Description" Display="99" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="pcx" Feature_Parent="FileTypeAssociations" Title=".pcx" Description="Description" Display="101" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="pef" Feature_Parent="FileTypeAssociations" Title=".pef" Description="Description" Display="103" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="pgm" Feature_Parent="FileTypeAssociations" Title=".pgm" Description="Description" Display="105" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="png" Feature_Parent="FileTypeAssociations" Title=".png" Description="Description" Display="107" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="ppm" Feature_Parent="FileTypeAssociations" Title=".ppm" Description="Description" Display="109" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="psb" Feature_Parent="FileTypeAssociations" Title=".psb" Description="Description" Display="111" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="psd" Feature_Parent="FileTypeAssociations" Title=".psd" Description="Description" Display="113" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="ptx" Feature_Parent="FileTypeAssociations" Title=".ptx" Description="Description" Display="115" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="pxn" Feature_Parent="FileTypeAssociations" Title=".pxn" Description="Description" Display="117" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="qoi" Feature_Parent="FileTypeAssociations" Title=".qoi" Description="Description" Display="119" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="r3d" Feature_Parent="FileTypeAssociations" Title=".r3d" Description="Description" Display="121" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="raf" Feature_Parent="FileTypeAssociations" Title=".raf" Description="Description" Display="123" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="raw" Feature_Parent="FileTypeAssociations" Title=".raw" Description="Description" Display="125" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="rw2" Feature_Parent="FileTypeAssociations" Title=".rw2" Description="Description" Display="127" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="rwl" Feature_Parent="FileTypeAssociations" Title=".rwl" Description="Description" Display="129" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="rwz" Feature_Parent="FileTypeAssociations" Title=".rwz" Description="Description" Display="131" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="sr2" Feature_Parent="FileTypeAssociations" Title=".sr2" Description="Description" Display="133" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="srf" Feature_Parent="FileTypeAssociations" Title=".srf" Description="Description" Display="135" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="srw" Feature_Parent="FileTypeAssociations" Title=".srw" Description="Description" Display="137" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="svg" Feature_Parent="FileTypeAssociations" Title=".svg" Description="Description" Display="139" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="tga" Feature_Parent="FileTypeAssociations" Title=".tga" Description="Description" Display="141" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="tif" Feature_Parent="FileTypeAssociations" Title=".tif" Description="Description" Display="143" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="tiff" Feature_Parent="FileTypeAssociations" Title=".tiff" Description="Description" Display="145" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="webp" Feature_Parent="FileTypeAssociations" Title=".webp" Description="Description" Display="147" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="wmf" Feature_Parent="FileTypeAssociations" Title=".wmf" Description="Description" Display="149" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="wpg" Feature_Parent="FileTypeAssociations" Title=".wpg" Description="Description" Display="151" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="x3f" Feature_Parent="FileTypeAssociations" Title=".x3f" Description="Description" Display="153" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="xbm" Feature_Parent="FileTypeAssociations" Title=".xbm" Description="Description" Display="155" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
+    <ROW Feature="xpm" Feature_Parent="FileTypeAssociations" Title=".xpm" Description="Description" Display="157" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
@@ -308,7 +306,6 @@
     <ROW File="HEIF.ico" Component_="FR.ico" FileName="HEIF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\HEIF.ico" SelfReg="false"/>
     <ROW File="ICO.ico" Component_="FR.ico" FileName="ICO.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\ICO.ico" SelfReg="false"/>
     <ROW File="JXL.ico" Component_="FR.ico" FileName="JXL.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\JXL.ico" SelfReg="false"/>
-    <ROW File="bssdk.dll" Component_="bssdk.dll" FileName="bs-sdk.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\bs-sdk.dll" SelfReg="false"/>
     <ROW File="ExplorerSortOrder.dll" Component_="ExplorerSortOrder.dll" FileName="EXPLOR~1.DLL|ExplorerSortOrder.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ExplorerSortOrder.dll" SelfReg="false"/>
     <ROW File="Armenian.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="ARMENI~1.IGL|Armenian.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Armenian.v8.4.iglang" SelfReg="false"/>
     <ROW File="ChineseSimplified.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="CHINES~3.IGL|Chinese Simplified.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Chinese Simplified.v8.4.iglang" SelfReg="false"/>
@@ -344,27 +341,24 @@
     <ROW BuildKey="MsiBuild" BuildName="MsiBuild" BuildOrder="1" BuildType="0" PackageFolder="..\Bin" PackageFileName="ImageGlass_[|ProductVersion]_x64" Languages="en" InstallationType="4" UseLargeSchema="true" MsiPackageType="x64"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DefaultProgramsComponent">
-    <ROW ApplicationDescription="A lightweight, versatile image viewer" ApplicationName="[ProductName]" CapabilitiesPath="SOFTWARE\PhapSoftware\[ProductName]" Defaults="bmp|avif|gif|ico|heic|heif|jp2|jpe|jpeg|jpg|jxl|png|svg|webp|b64|qoi|tif|tiff" RegistryKey="ApplicationDescription" RegistryAppName="ApplicationName" RegistryRegisterApp="ProductName_3"/>
+    <ROW ApplicationDescription="A lightweight, versatile image viewer" ApplicationName="[ProductName]" CapabilitiesPath="SOFTWARE\PhapSoftware\[ProductName]" Defaults="bmp|b64|avif|gif|heic|heif|jpeg|jpg|jxl|png|qoi|svg|tif|tiff|webp" RegistryKey="ApplicationDescription" RegistryAppName="ApplicationName" RegistryRegisterApp="ProductName_3"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DefaultProgramsExtComponent">
-    <ROW DefaultProgram="ApplicationDescription" Extension="bmp" Component_="ImageGlass.exe" Registry="ext"/>
+    <ROW DefaultProgram="ApplicationDescription" Extension="bmp" Component_="ImageGlass.exe" Registry="bmp"/>
+    <ROW DefaultProgram="ApplicationDescription" Extension="b64" Component_="ImageGlass.exe" Registry="b64"/>
     <ROW DefaultProgram="ApplicationDescription" Extension="avif" Component_="ImageGlass.exe" Registry="avif"/>
     <ROW DefaultProgram="ApplicationDescription" Extension="gif" Component_="ImageGlass.exe" Registry="gif"/>
-    <ROW DefaultProgram="ApplicationDescription" Extension="ico" Component_="ImageGlass.exe" Registry="ico"/>
     <ROW DefaultProgram="ApplicationDescription" Extension="heic" Component_="ImageGlass.exe" Registry="heic"/>
     <ROW DefaultProgram="ApplicationDescription" Extension="heif" Component_="ImageGlass.exe" Registry="heif"/>
-    <ROW DefaultProgram="ApplicationDescription" Extension="jp2" Component_="ImageGlass.exe" Registry="jp2"/>
-    <ROW DefaultProgram="ApplicationDescription" Extension="jpe" Component_="ImageGlass.exe" Registry="jpe"/>
     <ROW DefaultProgram="ApplicationDescription" Extension="jpeg" Component_="ImageGlass.exe" Registry="jpeg"/>
     <ROW DefaultProgram="ApplicationDescription" Extension="jpg" Component_="ImageGlass.exe" Registry="jpg"/>
     <ROW DefaultProgram="ApplicationDescription" Extension="jxl" Component_="ImageGlass.exe" Registry="jxl"/>
     <ROW DefaultProgram="ApplicationDescription" Extension="png" Component_="ImageGlass.exe" Registry="png"/>
-    <ROW DefaultProgram="ApplicationDescription" Extension="svg" Component_="ImageGlass.exe" Registry="svg_1"/>
-    <ROW DefaultProgram="ApplicationDescription" Extension="webp" Component_="ImageGlass.exe" Registry="webp"/>
-    <ROW DefaultProgram="ApplicationDescription" Extension="b64" Component_="ImageGlass.exe" Registry="b64"/>
     <ROW DefaultProgram="ApplicationDescription" Extension="qoi" Component_="ImageGlass.exe" Registry="qoi"/>
+    <ROW DefaultProgram="ApplicationDescription" Extension="svg" Component_="ImageGlass.exe" Registry="svg"/>
     <ROW DefaultProgram="ApplicationDescription" Extension="tif" Component_="ImageGlass.exe" Registry="tif"/>
     <ROW DefaultProgram="ApplicationDescription" Extension="tiff" Component_="ImageGlass.exe" Registry="tiff"/>
+    <ROW DefaultProgram="ApplicationDescription" Extension="webp" Component_="ImageGlass.exe" Registry="webp"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
     <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
@@ -383,6 +377,7 @@
     <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
     <ROW Fragment="SetupTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SetupTypeDlg.aip"/>
     <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
+    <ROW Fragment="Themes.aip" Path="&lt;AI_FRAGS&gt;Themes.aip"/>
     <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;classic\fragments\UI.aip"/>
     <ROW Fragment="Validation.aip" Path="&lt;AI_FRAGS&gt;Validation.aip"/>
     <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRemoveDlg.aip"/>
@@ -446,8 +441,8 @@
     <ROW Action="AI_AuthorSinglePackage" Type="1" Source="aicustact.dll" Target="AI_AuthorSinglePackage" WithoutSeq="true"/>
     <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH_ORIGINAL" Target="[AI_SETUPEXEPATH]"/>
     <ROW Action="AI_BACKUP_DEFAULTS" Type="1" Source="defaultPrograms.dll" Target="GetAllOldDefaults" AdditionalSeq="AI_DATA_SETTER_1"/>
-    <ROW Action="AI_DATA_SETTER" Type="51" Source="CustomActionData" Target="[ProductName]&#2;bmp&#4;avif&#4;gif&#4;ico&#4;heic&#4;heif&#4;jp2&#4;jpe&#4;jpeg&#4;jpg&#4;jxl&#4;png&#4;svg&#4;webp&#4;b64&#4;qoi&#4;tif&#4;tiff"/>
-    <ROW Action="AI_DATA_SETTER_1" Type="51" Source="CustomActionData" Target="[ProductName]&#2;bmp&#4;avif&#4;gif&#4;ico&#4;heic&#4;heif&#4;jp2&#4;jpe&#4;jpeg&#4;jpg&#4;jxl&#4;png&#4;svg&#4;webp&#4;b64&#4;qoi&#4;tif&#4;tiff"/>
+    <ROW Action="AI_DATA_SETTER" Type="51" Source="CustomActionData" Target="[ProductName]&#2;bmp&#4;b64&#4;avif&#4;gif&#4;heic&#4;heif&#4;jpeg&#4;jpg&#4;jxl&#4;png&#4;qoi&#4;svg&#4;tif&#4;tiff&#4;webp"/>
+    <ROW Action="AI_DATA_SETTER_1" Type="51" Source="CustomActionData" Target="[ProductName]&#2;bmp&#4;b64&#4;avif&#4;gif&#4;heic&#4;heif&#4;jpeg&#4;jpg&#4;jxl&#4;png&#4;qoi&#4;svg&#4;tif&#4;tiff&#4;webp"/>
     <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
     <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
     <ROW Action="AI_EnableDebugLog" Type="321" Source="aicustact.dll" Target="EnableDebugLog"/>
@@ -469,84 +464,83 @@
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiExtComponent">
-    <ROW Extension="bmp" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="bmp" Options="39"/>
-    <ROW Extension="cur" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="cur" Options="38"/>
-    <ROW Extension="avif" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="avif" Options="39"/>
-    <ROW Extension="b64" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="b64" Options="38"/>
-    <ROW Extension="cut" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="cut" Options="38"/>
-    <ROW Extension="dds" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="dds" Options="38"/>
-    <ROW Extension="dib" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="dib" Options="38"/>
-    <ROW Extension="emf" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="emf" Options="38"/>
-    <ROW Extension="exif" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="exif" Options="38"/>
-    <ROW Extension="gif" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="gif" Options="39"/>
-    <ROW Extension="heic" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="heic" Options="39"/>
-    <ROW Extension="heif" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="heif" Options="39"/>
-    <ROW Extension="ico" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="ico" Options="39"/>
-    <ROW Extension="jfif" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="jfif" Options="39"/>
-    <ROW Extension="jp2" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="jp2" Options="39"/>
-    <ROW Extension="jpe" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="jpe" Options="39"/>
-    <ROW Extension="jpeg" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="jpeg" Options="39"/>
-    <ROW Extension="jpg" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="jpg" Options="39"/>
-    <ROW Extension="jxl" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="jxl" Options="39"/>
-    <ROW Extension="pbm" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="pbm" Options="38"/>
-    <ROW Extension="pcx" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="pcx" Options="38"/>
-    <ROW Extension="pgm" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="pgm" Options="38"/>
-    <ROW Extension="png" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="png" Options="39"/>
-    <ROW Extension="ppm" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="ppm" Options="38"/>
-    <ROW Extension="svg" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="svg" Options="39"/>
-    <ROW Extension="hdr" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="hdr" Options="39"/>
-    <ROW Extension="exr" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="exr" Options="38"/>
-    <ROW Extension="webp" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="webp" Options="39"/>
-    <ROW Extension="xpm" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="xpm" Options="38"/>
-    <ROW Extension="wmf" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="wmf" Options="39"/>
-    <ROW Extension="xbm" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="xbm" Options="38"/>
-    <ROW Extension="wpg" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="wpg" Options="38"/>
-    <ROW Extension="3fr" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="fr" Options="38"/>
-    <ROW Extension="psb" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="psb" Options="38"/>
-    <ROW Extension="tga" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="tga" Options="38"/>
-    <ROW Extension="psd" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="psd" Options="38"/>
-    <ROW Extension="tiff" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="tiff" Options="39"/>
-    <ROW Extension="tif" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="tif" Options="39"/>
-    <ROW Extension="ari" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="ari" Options="38"/>
-    <ROW Extension="cap" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="cap" Options="38"/>
-    <ROW Extension="dcs" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="dcs" Options="38"/>
-    <ROW Extension="crw" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="crw" Options="38"/>
-    <ROW Extension="fff" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="fff" Options="38"/>
-    <ROW Extension="dng" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="dng" Options="38"/>
-    <ROW Extension="erf" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="erf" Options="38"/>
-    <ROW Extension="cr2" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="cr2" Options="38"/>
-    <ROW Extension="bay" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="bay" Options="38"/>
-    <ROW Extension="arw" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="arw" Options="38"/>
-    <ROW Extension="dcr" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="dcr" Options="38"/>
-    <ROW Extension="cr3" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="cr3" Options="38"/>
-    <ROW Extension="drf" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="drf" Options="38"/>
-    <ROW Extension="eip" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="eip" Options="38"/>
-    <ROW Extension="iiq" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="iiq" Options="38"/>
-    <ROW Extension="ptx" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="ptx" Options="38"/>
-    <ROW Extension="nrw" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="nrw" Options="38"/>
-    <ROW Extension="mdc" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="mdc" Options="39"/>
-    <ROW Extension="mos" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="mos" Options="38"/>
-    <ROW Extension="nef" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="nef" Options="38"/>
-    <ROW Extension="mrw" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="mrw" Options="38"/>
-    <ROW Extension="mef" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="mef" Options="38"/>
-    <ROW Extension="gpr" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="gpr" Options="38"/>
-    <ROW Extension="k25" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="k25" Options="38"/>
-    <ROW Extension="kdc" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="kdc" Options="38"/>
-    <ROW Extension="qoi" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="qoi" Options="38"/>
-    <ROW Extension="pxn" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="pxn" Options="38"/>
-    <ROW Extension="obm" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="obm" Options="38"/>
-    <ROW Extension="pef" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="pef" Options="38"/>
-    <ROW Extension="orf" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="orf" Options="38"/>
-    <ROW Extension="r3d" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="r3d" Options="38"/>
-    <ROW Extension="raf" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="raf" Options="38"/>
-    <ROW Extension="raw" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="raw" Options="38"/>
-    <ROW Extension="rwl" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="rwl" Options="38"/>
-    <ROW Extension="rw2" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="rw2" Options="38"/>
-    <ROW Extension="rwz" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="rwz" Options="38"/>
-    <ROW Extension="sr2" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="sr2" Options="38"/>
-    <ROW Extension="srf" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="srf" Options="38"/>
-    <ROW Extension="srw" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="srw" Options="38"/>
-    <ROW Extension="x3f" Component_="ImageGlass.exe" ProgId_="PhapSoftware.[|ProductName]" Feature_="x3f" Options="38"/>
+    <ROW Extension="3fr" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.3FR" Feature_="_3fr" Options="38"/>
+    <ROW Extension="ari" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.ARI" Feature_="ari" Options="38"/>
+    <ROW Extension="arw" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.ARW" Feature_="arw" Options="38"/>
+    <ROW Extension="avif" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.AVIF" Feature_="avif" Options="38"/>
+    <ROW Extension="b64" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.B64" Feature_="b64" Options="38"/>
+    <ROW Extension="bay" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.BAY" Feature_="bay" Options="38"/>
+    <ROW Extension="bmp" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.BMP" Feature_="bmp" Options="38"/>
+    <ROW Extension="cap" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.CAP" Feature_="cap" Options="38"/>
+    <ROW Extension="cr2" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.CR2" Feature_="cr2" Options="38"/>
+    <ROW Extension="cr3" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.CR3" Feature_="cr3" Options="38"/>
+    <ROW Extension="crw" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.CRW" Feature_="crw" Options="38"/>
+    <ROW Extension="cur" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.CUR" Feature_="cur" Options="38"/>
+    <ROW Extension="cut" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.CUT" Feature_="cut" Options="38"/>
+    <ROW Extension="dcr" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.DCR" Feature_="dcr" Options="38"/>
+    <ROW Extension="dcs" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.DCS" Feature_="dcs" Options="38"/>
+    <ROW Extension="dds" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.DDS" Feature_="dds" Options="38"/>
+    <ROW Extension="dib" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.DIB" Feature_="dib" Options="38"/>
+    <ROW Extension="dng" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.DNG" Feature_="dng" Options="38"/>
+    <ROW Extension="drf" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.DRF" Feature_="drf" Options="38"/>
+    <ROW Extension="eip" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.EIP" Feature_="eip" Options="38"/>
+    <ROW Extension="emf" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.EMF" Feature_="emf" Options="38"/>
+    <ROW Extension="erf" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.ERF" Feature_="erf" Options="38"/>
+    <ROW Extension="exif" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.EXIF" Feature_="exif" Options="38"/>
+    <ROW Extension="exr" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.EXR" Feature_="exr" Options="38"/>
+    <ROW Extension="fff" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.FFF" Feature_="fff" Options="38"/>
+    <ROW Extension="gif" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.GIF" Feature_="gif" Options="38"/>
+    <ROW Extension="gpr" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.GPR" Feature_="gpr" Options="38"/>
+    <ROW Extension="hdr" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.HDR" Feature_="hdr" Options="38"/>
+    <ROW Extension="heic" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.HEIC" Feature_="heic" Options="38"/>
+    <ROW Extension="heif" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.HEIF" Feature_="heif" Options="38"/>
+    <ROW Extension="iiq" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.IIQ" Feature_="iiq" Options="38"/>
+    <ROW Extension="jfif" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.JFIF" Feature_="jfif" Options="38"/>
+    <ROW Extension="jp2" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.JP2" Feature_="jp2" Options="38"/>
+    <ROW Extension="jpe" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.JPE" Feature_="jpe" Options="38"/>
+    <ROW Extension="jpeg" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.JPEG" Feature_="jpeg" Options="38"/>
+    <ROW Extension="jpg" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.JPG" Feature_="jpg" Options="38"/>
+    <ROW Extension="jxl" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.JXL" Feature_="jxl" Options="38"/>
+    <ROW Extension="k25" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.K25" Feature_="k25" Options="38"/>
+    <ROW Extension="kdc" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.KDC" Feature_="kdc" Options="38"/>
+    <ROW Extension="mdc" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.MDC" Feature_="mdc" Options="38"/>
+    <ROW Extension="mef" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.MEF" Feature_="mef" Options="38"/>
+    <ROW Extension="mos" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.MOS" Feature_="mos" Options="38"/>
+    <ROW Extension="mrw" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.MRW" Feature_="mrw" Options="38"/>
+    <ROW Extension="nef" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.NEF" Feature_="nef" Options="38"/>
+    <ROW Extension="nrw" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.NRW" Feature_="nrw" Options="38"/>
+    <ROW Extension="obm" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.OBM" Feature_="obm" Options="38"/>
+    <ROW Extension="orf" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.ORF" Feature_="orf" Options="38"/>
+    <ROW Extension="pbm" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.PBM" Feature_="pbm" Options="38"/>
+    <ROW Extension="pcx" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.PCX" Feature_="pcx" Options="38"/>
+    <ROW Extension="pef" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.PEF" Feature_="pef" Options="38"/>
+    <ROW Extension="pgm" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.PGM" Feature_="pgm" Options="38"/>
+    <ROW Extension="png" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.PNG" Feature_="png" Options="38"/>
+    <ROW Extension="ppm" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.PPM" Feature_="ppm" Options="38"/>
+    <ROW Extension="psb" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.PSB" Feature_="psb" Options="38"/>
+    <ROW Extension="psd" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.PSD" Feature_="psd" Options="38"/>
+    <ROW Extension="ptx" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.PTX" Feature_="ptx" Options="38"/>
+    <ROW Extension="pxn" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.PXN" Feature_="pxn" Options="38"/>
+    <ROW Extension="qoi" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.QOI" Feature_="qoi" Options="38"/>
+    <ROW Extension="r3d" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.R3D" Feature_="r3d" Options="38"/>
+    <ROW Extension="raf" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.RAF" Feature_="raf" Options="38"/>
+    <ROW Extension="raw" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.RAW" Feature_="raw" Options="38"/>
+    <ROW Extension="rw2" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.RW2" Feature_="rw2" Options="38"/>
+    <ROW Extension="rwl" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.RWL" Feature_="rwl" Options="38"/>
+    <ROW Extension="rwz" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.RWZ" Feature_="rwz" Options="38"/>
+    <ROW Extension="sr2" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.SR2" Feature_="sr2" Options="38"/>
+    <ROW Extension="srf" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.SRF" Feature_="srf" Options="38"/>
+    <ROW Extension="srw" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.SRW" Feature_="srw" Options="38"/>
+    <ROW Extension="svg" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.SVG" Feature_="svg" Options="38"/>
+    <ROW Extension="tga" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.TGA" Feature_="tga" Options="38"/>
+    <ROW Extension="tif" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.TIF" Feature_="tif" Options="38"/>
+    <ROW Extension="tiff" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.TIFF" Feature_="tiff" Options="38"/>
+    <ROW Extension="webp" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.WEBP" Feature_="webp" Options="38"/>
+    <ROW Extension="wmf" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.WMF" Feature_="wmf" Options="38"/>
+    <ROW Extension="wpg" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.WPG" Feature_="wpg" Options="38"/>
+    <ROW Extension="x3f" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.X3F" Feature_="x3f" Options="38"/>
+    <ROW Extension="xbm" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.XBM" Feature_="xbm" Options="38"/>
+    <ROW Extension="xpm" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.XPM" Feature_="xpm" Options="38"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
     <ROW Feature_="MainFeature" Component_="APPDIR"/>
@@ -578,7 +572,6 @@
     <ROW Feature_="MainFeature" Component_="FR.ico"/>
     <ROW Feature_="MainFeature" Component_="ChineseSimplified.iglang"/>
     <ROW Feature_="MainFeature" Component_="ActualSize.svg"/>
-    <ROW Feature_="MainFeature" Component_="bssdk.dll"/>
     <ROW Feature_="MainFeature" Component_="ExplorerSortOrder.dll"/>
     <ROW Feature_="MainFeature" Component_="AI_INSTALLPERUSER"/>
     <ROW Feature_="MainFeature" Component_="Installdefault.jpgComponentShortcuts"/>
@@ -587,87 +580,161 @@
     <ROW Feature_="MainFeature" Component_="InstallImageGlass.exeComponentShortcuts_1"/>
     <ROW Feature_="MainFeature" Component_="Installdefault.jpgComponentShortcuts_1"/>
     <ROW Feature_="MainFeature" Component_="ApplicationDescription"/>
-    <ROW Feature_="bmp" Component_="ImageGlass.exe"/>
-    <ROW Feature_="cur" Component_="ImageGlass.exe"/>
+    <ROW Feature_="_3fr" Component_="ImageGlass.exe"/>
+    <ROW Feature_="ari" Component_="ImageGlass.exe"/>
+    <ROW Feature_="arw" Component_="ImageGlass.exe"/>
     <ROW Feature_="avif" Component_="ImageGlass.exe"/>
     <ROW Feature_="b64" Component_="ImageGlass.exe"/>
+    <ROW Feature_="bay" Component_="ImageGlass.exe"/>
+    <ROW Feature_="bmp" Component_="ImageGlass.exe"/>
+    <ROW Feature_="cap" Component_="ImageGlass.exe"/>
+    <ROW Feature_="cr2" Component_="ImageGlass.exe"/>
+    <ROW Feature_="cr3" Component_="ImageGlass.exe"/>
+    <ROW Feature_="crw" Component_="ImageGlass.exe"/>
+    <ROW Feature_="cur" Component_="ImageGlass.exe"/>
     <ROW Feature_="cut" Component_="ImageGlass.exe"/>
+    <ROW Feature_="dcr" Component_="ImageGlass.exe"/>
+    <ROW Feature_="dcs" Component_="ImageGlass.exe"/>
     <ROW Feature_="dds" Component_="ImageGlass.exe"/>
     <ROW Feature_="dib" Component_="ImageGlass.exe"/>
+    <ROW Feature_="dng" Component_="ImageGlass.exe"/>
+    <ROW Feature_="drf" Component_="ImageGlass.exe"/>
+    <ROW Feature_="eip" Component_="ImageGlass.exe"/>
     <ROW Feature_="emf" Component_="ImageGlass.exe"/>
+    <ROW Feature_="erf" Component_="ImageGlass.exe"/>
     <ROW Feature_="exif" Component_="ImageGlass.exe"/>
+    <ROW Feature_="exr" Component_="ImageGlass.exe"/>
+    <ROW Feature_="fff" Component_="ImageGlass.exe"/>
     <ROW Feature_="gif" Component_="ImageGlass.exe"/>
+    <ROW Feature_="gpr" Component_="ImageGlass.exe"/>
+    <ROW Feature_="hdr" Component_="ImageGlass.exe"/>
     <ROW Feature_="heic" Component_="ImageGlass.exe"/>
     <ROW Feature_="heif" Component_="ImageGlass.exe"/>
-    <ROW Feature_="ico" Component_="ImageGlass.exe"/>
+    <ROW Feature_="iiq" Component_="ImageGlass.exe"/>
     <ROW Feature_="jfif" Component_="ImageGlass.exe"/>
     <ROW Feature_="jp2" Component_="ImageGlass.exe"/>
     <ROW Feature_="jpe" Component_="ImageGlass.exe"/>
     <ROW Feature_="jpeg" Component_="ImageGlass.exe"/>
     <ROW Feature_="jpg" Component_="ImageGlass.exe"/>
     <ROW Feature_="jxl" Component_="ImageGlass.exe"/>
+    <ROW Feature_="k25" Component_="ImageGlass.exe"/>
+    <ROW Feature_="kdc" Component_="ImageGlass.exe"/>
+    <ROW Feature_="mdc" Component_="ImageGlass.exe"/>
+    <ROW Feature_="mef" Component_="ImageGlass.exe"/>
+    <ROW Feature_="mos" Component_="ImageGlass.exe"/>
+    <ROW Feature_="mrw" Component_="ImageGlass.exe"/>
+    <ROW Feature_="nef" Component_="ImageGlass.exe"/>
+    <ROW Feature_="nrw" Component_="ImageGlass.exe"/>
+    <ROW Feature_="obm" Component_="ImageGlass.exe"/>
+    <ROW Feature_="orf" Component_="ImageGlass.exe"/>
     <ROW Feature_="pbm" Component_="ImageGlass.exe"/>
     <ROW Feature_="pcx" Component_="ImageGlass.exe"/>
+    <ROW Feature_="pef" Component_="ImageGlass.exe"/>
     <ROW Feature_="pgm" Component_="ImageGlass.exe"/>
     <ROW Feature_="png" Component_="ImageGlass.exe"/>
     <ROW Feature_="ppm" Component_="ImageGlass.exe"/>
-    <ROW Feature_="svg" Component_="ImageGlass.exe"/>
-    <ROW Feature_="hdr" Component_="ImageGlass.exe"/>
-    <ROW Feature_="exr" Component_="ImageGlass.exe"/>
-    <ROW Feature_="webp" Component_="ImageGlass.exe"/>
-    <ROW Feature_="xpm" Component_="ImageGlass.exe"/>
-    <ROW Feature_="wmf" Component_="ImageGlass.exe"/>
-    <ROW Feature_="xbm" Component_="ImageGlass.exe"/>
-    <ROW Feature_="wpg" Component_="ImageGlass.exe"/>
-    <ROW Feature_="fr" Component_="ImageGlass.exe"/>
     <ROW Feature_="psb" Component_="ImageGlass.exe"/>
-    <ROW Feature_="tga" Component_="ImageGlass.exe"/>
     <ROW Feature_="psd" Component_="ImageGlass.exe"/>
-    <ROW Feature_="tiff" Component_="ImageGlass.exe"/>
-    <ROW Feature_="tif" Component_="ImageGlass.exe"/>
-    <ROW Feature_="ari" Component_="ImageGlass.exe"/>
-    <ROW Feature_="cap" Component_="ImageGlass.exe"/>
-    <ROW Feature_="dcs" Component_="ImageGlass.exe"/>
-    <ROW Feature_="crw" Component_="ImageGlass.exe"/>
-    <ROW Feature_="fff" Component_="ImageGlass.exe"/>
-    <ROW Feature_="dng" Component_="ImageGlass.exe"/>
-    <ROW Feature_="erf" Component_="ImageGlass.exe"/>
-    <ROW Feature_="cr2" Component_="ImageGlass.exe"/>
-    <ROW Feature_="bay" Component_="ImageGlass.exe"/>
-    <ROW Feature_="arw" Component_="ImageGlass.exe"/>
-    <ROW Feature_="dcr" Component_="ImageGlass.exe"/>
-    <ROW Feature_="cr3" Component_="ImageGlass.exe"/>
-    <ROW Feature_="drf" Component_="ImageGlass.exe"/>
-    <ROW Feature_="eip" Component_="ImageGlass.exe"/>
-    <ROW Feature_="iiq" Component_="ImageGlass.exe"/>
     <ROW Feature_="ptx" Component_="ImageGlass.exe"/>
-    <ROW Feature_="nrw" Component_="ImageGlass.exe"/>
-    <ROW Feature_="mdc" Component_="ImageGlass.exe"/>
-    <ROW Feature_="mos" Component_="ImageGlass.exe"/>
-    <ROW Feature_="nef" Component_="ImageGlass.exe"/>
-    <ROW Feature_="mrw" Component_="ImageGlass.exe"/>
-    <ROW Feature_="mef" Component_="ImageGlass.exe"/>
-    <ROW Feature_="gpr" Component_="ImageGlass.exe"/>
-    <ROW Feature_="k25" Component_="ImageGlass.exe"/>
-    <ROW Feature_="kdc" Component_="ImageGlass.exe"/>
-    <ROW Feature_="qoi" Component_="ImageGlass.exe"/>
     <ROW Feature_="pxn" Component_="ImageGlass.exe"/>
-    <ROW Feature_="obm" Component_="ImageGlass.exe"/>
-    <ROW Feature_="pef" Component_="ImageGlass.exe"/>
-    <ROW Feature_="orf" Component_="ImageGlass.exe"/>
+    <ROW Feature_="qoi" Component_="ImageGlass.exe"/>
     <ROW Feature_="r3d" Component_="ImageGlass.exe"/>
     <ROW Feature_="raf" Component_="ImageGlass.exe"/>
     <ROW Feature_="raw" Component_="ImageGlass.exe"/>
-    <ROW Feature_="rwl" Component_="ImageGlass.exe"/>
     <ROW Feature_="rw2" Component_="ImageGlass.exe"/>
+    <ROW Feature_="rwl" Component_="ImageGlass.exe"/>
     <ROW Feature_="rwz" Component_="ImageGlass.exe"/>
     <ROW Feature_="sr2" Component_="ImageGlass.exe"/>
     <ROW Feature_="srf" Component_="ImageGlass.exe"/>
     <ROW Feature_="srw" Component_="ImageGlass.exe"/>
+    <ROW Feature_="svg" Component_="ImageGlass.exe"/>
+    <ROW Feature_="tga" Component_="ImageGlass.exe"/>
+    <ROW Feature_="tif" Component_="ImageGlass.exe"/>
+    <ROW Feature_="tiff" Component_="ImageGlass.exe"/>
+    <ROW Feature_="webp" Component_="ImageGlass.exe"/>
+    <ROW Feature_="wmf" Component_="ImageGlass.exe"/>
+    <ROW Feature_="wpg" Component_="ImageGlass.exe"/>
     <ROW Feature_="x3f" Component_="ImageGlass.exe"/>
+    <ROW Feature_="xbm" Component_="ImageGlass.exe"/>
+    <ROW Feature_="xpm" Component_="ImageGlass.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="ImageGlass_1.exe" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.exe" Index="0"/>
+    <ROW Name="_3fr.exe" SourcePath="..\..\Assets\Ext-Icons\3FR.ico" Index="0"/>
+    <ROW Name="ari.exe" SourcePath="..\..\Assets\Ext-Icons\ARI.ico" Index="0"/>
+    <ROW Name="arw.exe" SourcePath="..\..\Assets\Ext-Icons\ARW.ico" Index="0"/>
+    <ROW Name="avif.exe" SourcePath="..\..\Assets\Ext-Icons\AVIF.ico" Index="0"/>
+    <ROW Name="b64.exe" SourcePath="..\..\Assets\Ext-Icons\B64.ico" Index="0"/>
+    <ROW Name="bay.exe" SourcePath="..\..\Assets\Ext-Icons\BAY.ico" Index="0"/>
+    <ROW Name="bmp.exe" SourcePath="..\..\Assets\Ext-Icons\BMP.ico" Index="0"/>
+    <ROW Name="cap.exe" SourcePath="..\..\Assets\Ext-Icons\CAP.ico" Index="0"/>
+    <ROW Name="cr2.exe" SourcePath="..\..\Assets\Ext-Icons\CR2.ico" Index="0"/>
+    <ROW Name="cr3.exe" SourcePath="..\..\Assets\Ext-Icons\CR3.ico" Index="0"/>
+    <ROW Name="crw.exe" SourcePath="..\..\Assets\Ext-Icons\CRW.ico" Index="0"/>
+    <ROW Name="cur.exe" SourcePath="..\..\Assets\Ext-Icons\CUR.ico" Index="0"/>
+    <ROW Name="cut.exe" SourcePath="..\..\Assets\Ext-Icons\CUT.ico" Index="0"/>
+    <ROW Name="dcr.exe" SourcePath="..\..\Assets\Ext-Icons\DCR.ico" Index="0"/>
+    <ROW Name="dcs.exe" SourcePath="..\..\Assets\Ext-Icons\DCS.ico" Index="0"/>
+    <ROW Name="dds.exe" SourcePath="..\..\Assets\Ext-Icons\DDS.ico" Index="0"/>
+    <ROW Name="dib.exe" SourcePath="..\..\Assets\Ext-Icons\DIB.ico" Index="0"/>
+    <ROW Name="dng.exe" SourcePath="..\..\Assets\Ext-Icons\DNG.ico" Index="0"/>
+    <ROW Name="drf.exe" SourcePath="..\..\Assets\Ext-Icons\DRF.ico" Index="0"/>
+    <ROW Name="eip.exe" SourcePath="..\..\Assets\Ext-Icons\EIP.ico" Index="0"/>
+    <ROW Name="emf.exe" SourcePath="..\..\Assets\Ext-Icons\EMF.ico" Index="0"/>
+    <ROW Name="erf.exe" SourcePath="..\..\Assets\Ext-Icons\ERF.ico" Index="0"/>
+    <ROW Name="exif.exe" SourcePath="..\..\Assets\Ext-Icons\EXIF.ico" Index="0"/>
+    <ROW Name="exr.exe" SourcePath="..\..\Assets\Ext-Icons\EXR.ico" Index="0"/>
+    <ROW Name="fff.exe" SourcePath="..\..\Assets\Ext-Icons\FFF.ico" Index="0"/>
+    <ROW Name="gif.exe" SourcePath="..\..\Assets\Ext-Icons\GIF.ico" Index="0"/>
+    <ROW Name="gpr.exe" SourcePath="..\..\Assets\Ext-Icons\GPR.ico" Index="0"/>
+    <ROW Name="hdr.exe" SourcePath="..\..\Assets\Ext-Icons\HDR.ico" Index="0"/>
+    <ROW Name="heic.exe" SourcePath="..\..\Assets\Ext-Icons\HEIC.ico" Index="0"/>
+    <ROW Name="heif.exe" SourcePath="..\..\Assets\Ext-Icons\HEIF.ico" Index="0"/>
+    <ROW Name="iiq.exe" SourcePath="..\..\Assets\Ext-Icons\IIQ.ico" Index="0"/>
+    <ROW Name="jfif.exe" SourcePath="..\..\Assets\Ext-Icons\JFIF.ico" Index="0"/>
+    <ROW Name="jpe.exe" SourcePath="..\..\Assets\Ext-Icons\JPE.ico" Index="0"/>
+    <ROW Name="jpeg.exe" SourcePath="..\..\Assets\Ext-Icons\JPEG.ico" Index="0"/>
+    <ROW Name="jpg.exe" SourcePath="..\..\Assets\Ext-Icons\JPG.ico" Index="0"/>
+    <ROW Name="jxl.exe" SourcePath="..\..\Assets\Ext-Icons\JXL.ico" Index="0"/>
+    <ROW Name="k25.exe" SourcePath="..\..\Assets\Ext-Icons\K25.ico" Index="0"/>
+    <ROW Name="kdc.exe" SourcePath="..\..\Assets\Ext-Icons\KDC.ico" Index="0"/>
+    <ROW Name="mdc.exe" SourcePath="..\..\Assets\Ext-Icons\MDC.ico" Index="0"/>
+    <ROW Name="mef.exe" SourcePath="..\..\Assets\Ext-Icons\MEF.ico" Index="0"/>
+    <ROW Name="mos.exe" SourcePath="..\..\Assets\Ext-Icons\MOS.ico" Index="0"/>
+    <ROW Name="mrw.exe" SourcePath="..\..\Assets\Ext-Icons\MRW.ico" Index="0"/>
+    <ROW Name="nef.exe" SourcePath="..\..\Assets\Ext-Icons\NEF.ico" Index="0"/>
+    <ROW Name="nrw.exe" SourcePath="..\..\Assets\Ext-Icons\NRW.ico" Index="0"/>
+    <ROW Name="obm.exe" SourcePath="..\..\Assets\Ext-Icons\OBM.ico" Index="0"/>
+    <ROW Name="orf.exe" SourcePath="..\..\Assets\Ext-Icons\ORF.ico" Index="0"/>
+    <ROW Name="pbm.exe" SourcePath="..\..\Assets\Ext-Icons\PBM.ico" Index="0"/>
+    <ROW Name="pcx.exe" SourcePath="..\..\Assets\Ext-Icons\PCX.ico" Index="0"/>
+    <ROW Name="pef.exe" SourcePath="..\..\Assets\Ext-Icons\PEF.ico" Index="0"/>
+    <ROW Name="pgm.exe" SourcePath="..\..\Assets\Ext-Icons\PGM.ico" Index="0"/>
+    <ROW Name="png.exe" SourcePath="..\..\Assets\Ext-Icons\PNG.ico" Index="0"/>
+    <ROW Name="ppm.exe" SourcePath="..\..\Assets\Ext-Icons\PPM.ico" Index="0"/>
+    <ROW Name="psd.exe" SourcePath="..\..\Assets\Ext-Icons\PSD.ico" Index="0"/>
+    <ROW Name="ptx.exe" SourcePath="..\..\Assets\Ext-Icons\PTX.ico" Index="0"/>
+    <ROW Name="pxn.exe" SourcePath="..\..\Assets\Ext-Icons\PXN.ico" Index="0"/>
+    <ROW Name="qoi.exe" SourcePath="..\..\Assets\Ext-Icons\QOI.ico" Index="0"/>
+    <ROW Name="r3d.exe" SourcePath="..\..\Assets\Ext-Icons\R3D.ico" Index="0"/>
+    <ROW Name="raf.exe" SourcePath="..\..\Assets\Ext-Icons\RAF.ico" Index="0"/>
+    <ROW Name="raw.exe" SourcePath="..\..\Assets\Ext-Icons\RAW.ico" Index="0"/>
+    <ROW Name="rw2.exe" SourcePath="..\..\Assets\Ext-Icons\RW2.ico" Index="0"/>
+    <ROW Name="rwl.exe" SourcePath="..\..\Assets\Ext-Icons\RWL.ico" Index="0"/>
+    <ROW Name="rwz.exe" SourcePath="..\..\Assets\Ext-Icons\RWZ.ico" Index="0"/>
+    <ROW Name="sr2.exe" SourcePath="..\..\Assets\Ext-Icons\SR2.ico" Index="0"/>
+    <ROW Name="srf.exe" SourcePath="..\..\Assets\Ext-Icons\SRF.ico" Index="0"/>
+    <ROW Name="srw.exe" SourcePath="..\..\Assets\Ext-Icons\SRW.ico" Index="0"/>
+    <ROW Name="svg.exe" SourcePath="..\..\Assets\Ext-Icons\SVG.ico" Index="0"/>
+    <ROW Name="tga.exe" SourcePath="..\..\Assets\Ext-Icons\TGA.ico" Index="0"/>
+    <ROW Name="tif.exe" SourcePath="..\..\Assets\Ext-Icons\TIF.ico" Index="0"/>
+    <ROW Name="tiff.exe" SourcePath="..\..\Assets\Ext-Icons\TIFF.ico" Index="0"/>
+    <ROW Name="webp.exe" SourcePath="..\..\Assets\Ext-Icons\WEBP.ico" Index="0"/>
+    <ROW Name="wmf.exe" SourcePath="..\..\Assets\Ext-Icons\WMF.ico" Index="0"/>
+    <ROW Name="wpg.exe" SourcePath="..\..\Assets\Ext-Icons\WPG.ico" Index="0"/>
+    <ROW Name="x3f.exe" SourcePath="..\..\Assets\Ext-Icons\X3F.ico" Index="0"/>
+    <ROW Name="xbm.exe" SourcePath="..\..\Assets\Ext-Icons\XBM.ico" Index="0"/>
+    <ROW Name="xpm.exe" SourcePath="..\..\Assets\Ext-Icons\XPM.ico" Index="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIniFileComponent">
     <ROW IniFile="URL" FileName="VISITI~1.URL|Visit ImageGlass website.url" DirProperty="SHORTCUTDIR" Section="InternetShortcut" Key="URL" Value="https://imageglass.org/?utm_source=app_8.0.12.8&amp;utm_medium=url_shortcut&amp;utm_campaign=app_homepage" Action="0" Component_="ImageGlass.exe"/>
@@ -707,7 +774,83 @@
     <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="MsiBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiProgIdComponent">
-    <ROW ProgId="PhapSoftware.[|ProductName]"/>
+    <ROW ProgId="ImageGlass.AssocFile.3FR" Icon_="_3fr.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.ARI" Icon_="ari.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.ARW" Icon_="arw.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.AVIF" Icon_="avif.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.B64" Icon_="b64.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.BAY" Icon_="bay.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.BMP" Icon_="bmp.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.CAP" Icon_="cap.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.CR2" Icon_="cr2.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.CR3" Icon_="cr3.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.CRW" Icon_="crw.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.CUR" Icon_="cur.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.CUT" Icon_="cut.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.DCR" Icon_="dcr.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.DCS" Icon_="dcs.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.DDS" Icon_="dds.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.DIB" Icon_="dib.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.DNG" Icon_="dng.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.DRF" Icon_="drf.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.EIP" Icon_="eip.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.EMF" Icon_="emf.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.ERF" Icon_="erf.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.EXIF" Icon_="exif.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.EXR" Icon_="exr.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.FFF" Icon_="fff.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.GIF" Icon_="gif.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.GPR" Icon_="gpr.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.HDR" Icon_="hdr.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.HEIC" Icon_="heic.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.HEIF" Icon_="heif.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.IIQ" Icon_="iiq.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.JFIF" Icon_="jfif.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.JP2"/>
+    <ROW ProgId="ImageGlass.AssocFile.JPE" Icon_="jpe.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.JPEG" Icon_="jpeg.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.JPG" Icon_="jpg.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.JXL" Icon_="jxl.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.K25" Icon_="k25.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.KDC" Icon_="kdc.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.MDC" Icon_="mdc.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.MEF" Icon_="mef.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.MOS" Icon_="mos.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.MRW" Icon_="mrw.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.NEF" Icon_="nef.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.NRW" Icon_="nrw.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.OBM" Icon_="obm.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.ORF" Icon_="orf.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.PBM" Icon_="pbm.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.PCX" Icon_="pcx.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.PEF" Icon_="pef.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.PGM" Icon_="pgm.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.PNG" Icon_="png.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.PPM" Icon_="ppm.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.PSB"/>
+    <ROW ProgId="ImageGlass.AssocFile.PSD" Icon_="psd.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.PTX" Icon_="ptx.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.PXN" Icon_="pxn.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.QOI" Icon_="qoi.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.R3D" Icon_="r3d.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.RAF" Icon_="raf.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.RAW" Icon_="raw.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.RW2" Icon_="rw2.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.RWL" Icon_="rwl.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.RWZ" Icon_="rwz.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.SR2" Icon_="sr2.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.SRF" Icon_="srf.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.SRW" Icon_="srw.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.SVG" Icon_="svg.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.TGA" Icon_="tga.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.TIF" Icon_="tif.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.TIFF" Icon_="tiff.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.WEBP" Icon_="webp.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.WMF" Icon_="wmf.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.WPG" Icon_="wpg.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.X3F" Icon_="x3f.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.XBM" Icon_="xbm.exe"/>
+    <ROW ProgId="ImageGlass.AssocFile.XPM" Icon_="xpm.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
     <ROW Signature_="AI_INSTALLPERUSER" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="2"/>
@@ -727,32 +870,29 @@
     <ROW Registry="Installdefault.jpgComponentShortcut" Root="1" Key="Software\[Manufacturer]\[ProductName]" Name="Installdefault.jpgComponentShortcuts" Value="0" Component_="Installdefault.jpgComponentShortcuts"/>
     <ROW Registry="ProductName" Root="-1" Key="Software\[ProductName]" Name="+" Component_="Registry"/>
     <ROW Registry="ProductName_3" Root="2" Key="SOFTWARE\RegisteredApplications" Name="[ProductName]" Value="SOFTWARE\PhapSoftware\[ProductName]\Capabilities" Component_="ApplicationDescription"/>
-    <ROW Registry="avif" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".avif" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="b64" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".b64" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="ext" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".bmp" Value="Duong Dieu Phap.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="gif" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".gif" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="heic" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".heic" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="heif" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".heif" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="ico" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".ico" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="jp2" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".jp2" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="jpe" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".jpe" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="jpeg" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".jpeg" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="jpg" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".jpg" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="jxl" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".jxl" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="png" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".png" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="qoi" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".qoi" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="svg_1" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".svg" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="tif" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".tif" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="tiff" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".tiff" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
-    <ROW Registry="webp" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".webp" Value="PhapSoftware.ImageGlass" Component_="ApplicationDescription"/>
+    <ROW Registry="avif" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".avif" Value="ImageGlass.AssocFile.AVIF" Component_="ApplicationDescription"/>
+    <ROW Registry="b64" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".b64" Value="ImageGlass.AssocFile.B64" Component_="ApplicationDescription"/>
+    <ROW Registry="bmp" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".bmp" Value="ImageGlass.AssocFile.BMP" Component_="ApplicationDescription"/>
+    <ROW Registry="gif" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".gif" Value="ImageGlass.AssocFile.GIF" Component_="ApplicationDescription"/>
+    <ROW Registry="heic" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".heic" Value="ImageGlass.AssocFile.HEIC" Component_="ApplicationDescription"/>
+    <ROW Registry="heif" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".heif" Value="ImageGlass.AssocFile.HEIF" Component_="ApplicationDescription"/>
+    <ROW Registry="jpeg" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".jpeg" Value="ImageGlass.AssocFile.JPEG" Component_="ApplicationDescription"/>
+    <ROW Registry="jpg" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".jpg" Value="ImageGlass.AssocFile.JPG" Component_="ApplicationDescription"/>
+    <ROW Registry="jxl" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".jxl" Value="ImageGlass.AssocFile.JXL" Component_="ApplicationDescription"/>
+    <ROW Registry="png" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".png" Value="ImageGlass.AssocFile.PNG" Component_="ApplicationDescription"/>
+    <ROW Registry="qoi" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".qoi" Value="ImageGlass.AssocFile.QOI" Component_="ApplicationDescription"/>
+    <ROW Registry="svg" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".svg" Value="ImageGlass.AssocFile.SVG" Component_="ApplicationDescription"/>
+    <ROW Registry="tif" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".tif" Value="ImageGlass.AssocFile.TIF" Component_="ApplicationDescription"/>
+    <ROW Registry="tiff" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".tiff" Value="ImageGlass.AssocFile.TIFF" Component_="ApplicationDescription"/>
+    <ROW Registry="webp" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".webp" Value="ImageGlass.AssocFile.WEBP" Component_="ApplicationDescription"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRemoveFileComponent">
     <ROW FileKey="_" Component_="ImageGlass" DirProperty="ImageGlass_Dir" InstallMode="2"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="ImageGlass8.4" Directory_="DesktopFolder" Name="IMAGEG~2.4|ImageGlass 8.4" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="ImageGlass8.4_1" Directory_="SHORTCUTDIR" Name="IMAGEG~2.4|ImageGlass 8.4" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="ImageGlass8.4_2" Directory_="ImageGlass_Dir" Name="IMAGEG~2.4|ImageGlass 8.4" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="ImageGlass8.4" Directory_="DesktopFolder" Name="IMAGEG~1|ImageGlass" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="ImageGlass8.4_1" Directory_="SHORTCUTDIR" Name="IMAGEG~1|ImageGlass" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="ImageGlass8.4_2" Directory_="ImageGlass_Dir" Name="IMAGEG~1|ImageGlass" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
     <ROW Shortcut="ImageGlassLICENSE_1" Directory_="ImageGlass_Dir" Name="IMAGEG~2|ImageGlass&apos; LICENSE" Component_="Installdefault.jpgComponentShortcuts_1" Target="[APPDIR]\LICENSE.rtf" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
@@ -763,84 +903,83 @@
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiVerbComponent">
-    <ROW Extension_="bmp" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="cur" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="3fr" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="ari" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="arw" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
     <ROW Extension_="avif" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
     <ROW Extension_="b64" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="bay" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="bmp" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="cap" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="cr2" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="cr3" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="crw" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="cur" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
     <ROW Extension_="cut" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="dcr" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="dcs" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
     <ROW Extension_="dds" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
     <ROW Extension_="dib" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="dng" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="drf" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="eip" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
     <ROW Extension_="emf" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="erf" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
     <ROW Extension_="exif" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="exr" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="fff" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
     <ROW Extension_="gif" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="gpr" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="hdr" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
     <ROW Extension_="heic" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
     <ROW Extension_="heif" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="ico" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="iiq" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
     <ROW Extension_="jfif" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="jp2" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="jpe" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="jpeg" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="jpg" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="jxl" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="pbm" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="pcx" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="pgm" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="png" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="ppm" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="svg" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="hdr" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="exr" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="webp" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="xpm" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="wmf" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="xbm" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="wpg" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="3fr" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="psb" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="tga" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="psd" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="tiff" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="tif" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="ari" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="cap" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="dcs" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="crw" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="fff" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="dng" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="erf" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="cr2" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="bay" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="arw" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="dcr" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="cr3" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="drf" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="eip" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="iiq" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="ptx" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="nrw" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="mdc" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="mos" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="nef" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="mrw" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="mef" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="gpr" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="k25" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="kdc" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="qoi" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="pxn" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="obm" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="pef" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="orf" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="r3d" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="raf" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="raw" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="rwl" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="rw2" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="rwz" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="sr2" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="srf" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="srw" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
-    <ROW Extension_="x3f" Component_="ImageGlass.exe" Verb="open" Sequence="1" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="jp2" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="jpe" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="jpeg" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="jpg" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="jxl" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="k25" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="kdc" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="mdc" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="mef" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="mos" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="mrw" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="nef" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="nrw" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="obm" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="orf" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="pbm" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="pcx" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="pef" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="pgm" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="png" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="ppm" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="psb" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="psd" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="ptx" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="pxn" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="qoi" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="r3d" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="raf" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="raw" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="rw2" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="rwl" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="rwz" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="sr2" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="srf" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="srw" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="svg" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="tga" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="tif" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="tiff" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="webp" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="wmf" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="wpg" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="x3f" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="xbm" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
+    <ROW Extension_="xpm" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.SynchronizedFolderComponent">
     <ROW Directory_="Languages_Dir" SourcePath="..\..\Assets\Languages" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>

@@ -35,7 +35,7 @@ namespace ImageGlass.Base {
         /// If the value read from config file is less than this value,
         /// the First-Launch Configs screen will be launched.
         /// </summary>
-        public const float FIRST_LAUNCH_VERSION = 8.4f;
+        public const float FIRST_LAUNCH_VERSION = 5f;
 
         /// <summary>
         /// The URI Scheme to register web-to-app linking

@@ -40,9 +40,6 @@
             this.tabTheme = new System.Windows.Forms.TabPage();
             this.cmbTheme = new System.Windows.Forms.ComboBox();
             this.lblTheme = new System.Windows.Forms.Label();
-            this.tabPrivacy = new System.Windows.Forms.TabPage();
-            this.lnkPrivacy = new System.Windows.Forms.LinkLabel();
-            this.lblPrivacyDesctipion = new System.Windows.Forms.Label();
             this.tabFileAssociation = new System.Windows.Forms.TabPage();
             this.btnSetDefaultApp = new System.Windows.Forms.Button();
             this.lblDefaultApp = new System.Windows.Forms.Label();
@@ -53,7 +50,6 @@
             this.tab1.SuspendLayout();
             this.tabLanguage.SuspendLayout();
             this.tabTheme.SuspendLayout();
-            this.tabPrivacy.SuspendLayout();
             this.tabFileAssociation.SuspendLayout();
             this.panHeader.SuspendLayout();
             this.SuspendLayout();
@@ -120,7 +116,6 @@
             this.tab1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.tab1.Controls.Add(this.tabLanguage);
             this.tab1.Controls.Add(this.tabTheme);
-            this.tab1.Controls.Add(this.tabPrivacy);
             this.tab1.Controls.Add(this.tabFileAssociation);
             this.tab1.Location = new System.Drawing.Point(-20, 198);
             this.tab1.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
@@ -210,51 +205,6 @@
             this.lblTheme.Text = "Select Theme_";
             this.lblTheme.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tabPrivacy
-            // 
-            this.tabPrivacy.BackColor = System.Drawing.Color.White;
-            this.tabPrivacy.Controls.Add(this.lnkPrivacy);
-            this.tabPrivacy.Controls.Add(this.lblPrivacyDesctipion);
-            this.tabPrivacy.Location = new System.Drawing.Point(4, 35);
-            this.tabPrivacy.Name = "tabPrivacy";
-            this.tabPrivacy.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrivacy.Size = new System.Drawing.Size(515, 160);
-            this.tabPrivacy.TabIndex = 8;
-            this.tabPrivacy.Text = "Privacy";
-            // 
-            // lnkPrivacy
-            // 
-            this.lnkPrivacy.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
-            this.lnkPrivacy.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lnkPrivacy.BackColor = System.Drawing.Color.Transparent;
-            this.lnkPrivacy.Font = new System.Drawing.Font("Segoe UI", 10.5F);
-            this.lnkPrivacy.LinkBehavior = System.Windows.Forms.LinkBehavior.AlwaysUnderline;
-            this.lnkPrivacy.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(143)))), ((int)(((byte)(183)))));
-            this.lnkPrivacy.Location = new System.Drawing.Point(28, 32);
-            this.lnkPrivacy.Name = "lnkPrivacy";
-            this.lnkPrivacy.Size = new System.Drawing.Size(465, 32);
-            this.lnkPrivacy.TabIndex = 30;
-            this.lnkPrivacy.TabStop = true;
-            this.lnkPrivacy.Text = "[Privacy]";
-            this.lnkPrivacy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lnkPrivacy.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(143)))), ((int)(((byte)(183)))));
-            this.lnkPrivacy.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkPrivacy_LinkClicked);
-            // 
-            // lblPrivacyDesctipion
-            // 
-            this.lblPrivacyDesctipion.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblPrivacyDesctipion.BackColor = System.Drawing.Color.Transparent;
-            this.lblPrivacyDesctipion.Location = new System.Drawing.Point(33, 72);
-            this.lblPrivacyDesctipion.Name = "lblPrivacyDesctipion";
-            this.lblPrivacyDesctipion.Size = new System.Drawing.Size(455, 69);
-            this.lblPrivacyDesctipion.TabIndex = 4;
-            this.lblPrivacyDesctipion.Text = "[ImageGlass comes with Spider service by default.\r\nYou can disable it in Settings" +
-    " > Privacy.]";
-            this.lblPrivacyDesctipion.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
             // tabFileAssociation
             // 
             this.tabFileAssociation.BackColor = System.Drawing.Color.White;
@@ -311,7 +261,7 @@
             this.lblStepNumber.Name = "lblStepNumber";
             this.lblStepNumber.Size = new System.Drawing.Size(465, 32);
             this.lblStepNumber.TabIndex = 2;
-            this.lblStepNumber.Text = "Step 1/4_";
+            this.lblStepNumber.Text = "[Step 1/3]";
             this.lblStepNumber.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // frmFirstLaunch
@@ -337,7 +287,6 @@
             this.tab1.ResumeLayout(false);
             this.tabLanguage.ResumeLayout(false);
             this.tabTheme.ResumeLayout(false);
-            this.tabPrivacy.ResumeLayout(false);
             this.tabFileAssociation.ResumeLayout(false);
             this.panHeader.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -351,7 +300,6 @@
         private System.Windows.Forms.Button btnNextStep;
         private System.Windows.Forms.TabControl tab1;
         private System.Windows.Forms.TabPage tabLanguage;
-        private System.Windows.Forms.TabPage tabPrivacy;
         private System.Windows.Forms.TabPage tabTheme;
         private System.Windows.Forms.TabPage tabFileAssociation;
         private System.Windows.Forms.Panel panHeader;
@@ -363,7 +311,5 @@
         private System.Windows.Forms.ComboBox cmbTheme;
         private System.Windows.Forms.Label lblTheme;
         private System.Windows.Forms.LinkLabel lnkSkip;
-        private System.Windows.Forms.Label lblPrivacyDesctipion;
-        private System.Windows.Forms.LinkLabel lnkPrivacy;
     }
 }

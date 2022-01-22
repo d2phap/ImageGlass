@@ -655,17 +655,6 @@ namespace ImageGlass.Library {
 
             #endregion
 
-
-            #region TAB Privacy
-
-            Items.Add("frmSetting.lblPrivacy", "Privacy"); //v8.4
-            Items.Add("frmSetting.chkEnableSpiderService", "Enable Spider service"); //v8.4
-            Items.Add("frmSetting.lnkPrivacy", "Learn more about privacy policy at {0}. To opt out an option, you can uncheck it, then click 'Save' or 'Apply' button below. It will be disabled immediately."); //v8.4
-            Items.Add("frmSetting.lnkSpider._Description", "Share device IP with Spider.com customers to pass traffic through your device."); // v8.4
-            Items.Add("frmSetting.lnkSpider._LearnMore", "Learn more"); // v8.4
-
-            #endregion
-
             #endregion
 
             #region frmAddNewFormat
@@ -695,9 +684,6 @@ namespace ImageGlass.Library {
 
             Items.Add("frmFirstLaunch.lblLanguage", "Select Language"); //v5.0
             Items.Add("frmFirstLaunch.lblTheme", "Select Theme"); //v5.0
-            Items.Add("frmFirstLaunch.lnkPrivacy", "Privacy"); //v8.4
-            Items.Add("frmFirstLaunch.lblPrivacyDesctipion", "You can review app privacy policy by clicking the link above."); //v8.4
-            Items.Add("frmFirstLaunch.lblPrivacyDesctipion._Spider", "ImageGlass comes with Spider service by default. You can always disable it in Settings > Privacy."); //v8.4
             Items.Add("frmFirstLaunch.lblDefaultApp", "Set ImageGlass as Default Photo Viewer?"); //v5.0
             Items.Add("frmFirstLaunch.btnSetDefaultApp", "Yes"); //v5.0
             #endregion
