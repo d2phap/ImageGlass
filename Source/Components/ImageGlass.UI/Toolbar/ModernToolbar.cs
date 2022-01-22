@@ -60,6 +60,11 @@ namespace ImageGlass.UI {
         /// </summary>
         public bool HideTooltips { get; set; } = false;
 
+        /// <summary>
+        /// Gets, sets value indicates that the toolstrip will autofocus
+        /// </summary>
+        public bool AutoFocus { get; set; } = false;
+
         private ToolbarAlignment _alignment;
 
         private ToolTip Tooltip {
@@ -115,6 +120,13 @@ namespace ImageGlass.UI {
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
             var newMouseOverItem = this.GetItemAt(mea.Location);
 #pragma warning restore IDE0059 // Unnecessary assignment of a value
+        }
+
+        protected override void OnMouseEnter(EventArgs e) {
+            if (AutoFocus && this.CanFocus && !this.Focused)
+                this.Focus();
+
+            base.OnMouseEnter(e);
         }
 
         protected override void OnMouseLeave(EventArgs e) {

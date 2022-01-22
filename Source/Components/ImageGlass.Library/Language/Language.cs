@@ -578,6 +578,7 @@ namespace ImageGlass.Library {
 
             Items.Add("frmSetting.chkHorzCenterToolbarBtns", "Center toolbar buttons horizontally in window"); // V6.0
             Items.Add("frmSetting.chkHideTooltips", "Hide toolbar tooltips"); // v8.0
+            Items.Add("frmSetting.chkToolbarAutoFocus", "Autofocus Toolbar on mouse hover");
             #endregion
 
             #region TAB Tools

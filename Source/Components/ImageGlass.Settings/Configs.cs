@@ -275,6 +275,11 @@ namespace ImageGlass.Settings {
         public static bool IsHideTooltips { get; set; } = false;
 
         /// <summary>
+        /// Gets, sets value indicates whether toolbar will autofocus
+        /// </summary>
+        public static bool IsToolbarAutoFocus { get; set; } = false;
+
+        /// <summary>
         /// Gets, sets value indicates that FrmExifTool always show on top
         /// </summary>
         public static bool IsExifToolAlwaysOnTop { get; set; } = true;
@@ -638,6 +643,7 @@ namespace ImageGlass.Settings {
             IsShowToast = Get<bool>(nameof(IsShowToast), IsShowToast);
             IsUseTouchGesture = Get<bool>(nameof(IsUseTouchGesture), IsUseTouchGesture);
             IsHideTooltips = Get<bool>(nameof(IsHideTooltips), IsHideTooltips);
+            IsToolbarAutoFocus = Get<bool>(nameof(IsToolbarAutoFocus), IsToolbarAutoFocus);
             IsExifToolAlwaysOnTop = Get<bool>(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
             IsUseEmptyTitleBar = Get<bool>(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
             IsUseRawThumbnail = Get<bool>(nameof(IsUseRawThumbnail), IsUseRawThumbnail);
@@ -882,6 +888,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsShowToast), IsShowToast);
             Set(nameof(IsUseTouchGesture), IsUseTouchGesture);
             Set(nameof(IsHideTooltips), IsHideTooltips);
+            Set(nameof(IsToolbarAutoFocus), IsToolbarAutoFocus);
             Set(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
             Set(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
             Set(nameof(IsUseRawThumbnail), IsUseRawThumbnail);
