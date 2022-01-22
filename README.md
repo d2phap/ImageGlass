@@ -12,12 +12,12 @@
 
 ImageGlass is a lightweight software application whose purpose is to help you view images in a clean and intuitive working environment.
 
-It gives you the possibility to view over **80+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers to speed up their work.
+It gives you the possibility to view over **80+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers speed up their work.
 
 
 ## 📥 Download
-[![Total Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%233097B8&label=total%20downloads&style=for-the-badge)](https://imageglass.org/download)
-[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23932043&label=latest%20version&style=for-the-badge)](https://imageglass.org/download)
+[![Total Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%232A7C91&label=total%20downloads&style=for-the-badge)](https://imageglass.org/download)
+[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%232A7C91&label=latest%20version&style=for-the-badge)](https://imageglass.org/download)
 
 
 
@@ -30,7 +30,7 @@ If you buy ImageGlass on the Microsoft Store, you'll be supporting its developme
 
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://imageglass.org/upload/photo/release/8.4_1.jpg" alt="ImageGlass 8.4.1.22" width="640">
+<img src="https://imageglass.org/upload/photo/release/8.5_1.jpg" alt="ImageGlass 8.5.1.22" width="640">
 </a><br/>
 
 
