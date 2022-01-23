@@ -83,7 +83,7 @@ public partial class ViewBox : HybridControl
     private PointF _navRightPos => new(Width - NavButtonSize.Width / 2 - NAV_PADDING, Height / 2);
     private NavButtonDisplay _navDisplay = NavButtonDisplay.None;
     private bool _isNavVisible = false;
-    public float _navBorderRadius = 1f;
+    public float _navBorderRadius = 45f;
 
 
 
