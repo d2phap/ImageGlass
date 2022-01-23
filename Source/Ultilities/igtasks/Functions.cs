@@ -102,7 +102,7 @@ namespace igtasks {
         /// <returns>0 = SUCCESS; 1 = ERROR</returns>
         public static int DeleteRegistryAssociations(string exts, bool deleteAllKeys = false) {
             var reg = new RegistryHelper {
-                ShowError = true,
+                ShowError = false,
                 BaseRegistryKey = Registry.LocalMachine,
 
                 // delete current registry settings
@@ -137,7 +137,7 @@ namespace igtasks {
             DeleteRegistryAssociations(extensions);
 
             var reg = new RegistryHelper {
-                ShowError = true,
+                ShowError = false,
                 BaseRegistryKey = Registry.LocalMachine,
 
                 // Register the application to Registry
@@ -215,7 +215,7 @@ namespace igtasks {
             var baseKey = $@"SOFTWARE\Classes\{Constants.URI_SCHEME}";
 
             var reg = new RegistryHelper {
-                ShowError = true,
+                ShowError = false,
                 BaseRegistryKey = Registry.CurrentUser,
                 SubKey = baseKey
             };
@@ -234,7 +234,7 @@ namespace igtasks {
 
             var baseKey = $@"SOFTWARE\Classes\{Constants.URI_SCHEME}";
             var reg = new RegistryHelper {
-                ShowError = true,
+                ShowError = false,
                 BaseRegistryKey = Registry.CurrentUser,
                 SubKey = baseKey
             };

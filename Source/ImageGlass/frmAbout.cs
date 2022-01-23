@@ -109,8 +109,9 @@ namespace ImageGlass {
 
             // this.RightToLeft = Configs.Language.IsRightToLeftLayout;
             lblAppName.Text = Application.ProductName;
+            var arch = Environment.Is64BitProcess ? "x64" : "x86";
             lblVersion.Text = string.Format(lang["frmAbout.lblVersion"], App.Version)
-                + (App.IsPortable ? " " + lang["frmAbout._PortableText"] : "");
+                + $" {arch}" + (App.IsPortable ? " " + lang["frmAbout._PortableText"] : "");
 
             lblCopyright.Text = "Copyright © 2010-" + DateTime.Now.Year.ToString() + " by Dương Diệu Pháp\nAll rights reserved.";
 
@@ -233,6 +234,18 @@ namespace ImageGlass {
                 Process.Start("https://www.patreon.com/d2phap?utm_source=app_" + App.Version + "&utm_medium=app_click&utm_campaign=app_patreon");
             }
             catch { }
+        }
+
+        private void picStoreApp_Click(object sender, EventArgs e) {
+            try {
+                Process.Start($"ms-windows-store://pdp/?ProductId={Constants.MS_APPSTORE_ID}");
+            }
+            catch {
+                try {
+                    Process.Start($"https://www.microsoft.com/store/productId/{Constants.MS_APPSTORE_ID}");
+                }
+                catch { }
+            }
         }
     }
 }

@@ -90,8 +90,14 @@ namespace igcmd {
             }
 
             // run first launch configs
+            // firstlaunch [int tabIndex]
             else if (topcmd == "firstlaunch") {
-                Application.Run(new frmFirstLaunch());
+                var tabIndex = 0;
+                if (args.Length > 1) {
+                    int.TryParse(args[1], out tabIndex);
+                }
+
+                Application.Run(new frmFirstLaunch(tabIndex));
             }
 
             return 0;

@@ -34,7 +34,7 @@ namespace ImageGlass.UI {
         private static extern IntPtr GetDC(IntPtr hWnd);
 
         [DllImport("user32.dll")]
-        private static extern void ReleaseDC(IntPtr hWnd);
+        private static extern bool ReleaseDC(IntPtr hWnd, IntPtr hDC);
 
         private enum DeviceCaps {
             /// <summary>
@@ -80,7 +80,7 @@ namespace ImageGlass.UI {
 
             var val = GetDeviceCaps(hdc, DeviceCaps.LOGPIXELSX);
 
-            ReleaseDC(hdc);
+            ReleaseDC(IntPtr.Zero, hdc);
             return val;
         }
 

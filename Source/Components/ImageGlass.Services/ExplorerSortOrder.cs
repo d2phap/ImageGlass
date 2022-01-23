@@ -18,12 +18,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 Author: Kevin Routley (aka fire-eggs)
 */
-using ImageGlass.Base;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using ImageGlass.Base;
 
 namespace ImageGlass.Services {
     public static class ExplorerSortOrder {
@@ -43,11 +42,9 @@ namespace ImageGlass.Services {
             { "System.DateAccessed", ImageOrderBy.LastAccessTime },
         };
 
-        [DllImport("ExplorerSortOrder32.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]
-        private static extern int GetExplorerSortOrder32(string folderPath, ref StringBuilder columnName, int columnNameMaxLen, ref int isAscending);
+        [DllImport("ExplorerSortOrder.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]
+        private static extern int GetExplorerSortOrder(string folderPath, ref StringBuilder columnName, int columnNameMaxLen, ref int isAscending);
 
-        [DllImport("ExplorerSortOrder64.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]
-        private static extern int GetExplorerSortOrder64(string folderPath, ref StringBuilder columnName, int columnNameMaxLen, ref int isAscending);
 
         /// <summary>
         /// <para>
@@ -77,13 +74,7 @@ namespace ImageGlass.Services {
                 int sortResult;
                 var ascend = -1;
 
-                if (IntPtr.Size == 8) // 64 bit platform
-                {
-                    sortResult = GetExplorerSortOrder64(folderPath, ref sb, sb.Capacity, ref ascend);
-                }
-                else {
-                    sortResult = GetExplorerSortOrder32(folderPath, ref sb, sb.Capacity, ref ascend);
-                }
+                sortResult = GetExplorerSortOrder(folderPath, ref sb, sb.Capacity, ref ascend);
 
                 if (sortResult != 0) // failure
                 {
@@ -101,10 +92,7 @@ namespace ImageGlass.Services {
 
                 return loadOrder != null; // will be false on not-yet-supported column
             }
-#pragma warning disable 168
-            catch
-#pragma warning restore 168
-            {
+            catch {
                 return false; // failure
             }
         }

@@ -22,6 +22,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using ImageGlass.Base;
 using ImageGlass.Library.Image;
 using ImageGlass.Settings;
 using ImageGlass.UI.Renderers;
@@ -36,7 +37,7 @@ namespace ImageGlass {
         }
 
 
-        private readonly ExifToolWrapper exifTool = new(Configs.ExifToolExePath);
+        private ExifToolWrapper exifTool = new(Configs.ExifToolExePath);
 
 
         #region Form events
@@ -46,8 +47,16 @@ namespace ImageGlass {
 
         private void FrmExif_Load(object sender, EventArgs e) {
             SystemRenderer.ApplyTheme(lvExifItems);
-            Local_OnImageChanged(null, null);
 
+            // check if exif tool exists
+            this.exifTool.ToolPath = Environment.ExpandEnvironmentVariables(Configs.ExifToolExePath);
+            if (!this.exifTool.CheckExists()) {
+                SetUIVisibility(true);
+            }
+            else {
+                SetUIVisibility(false);
+                Local_OnImageChanged(null, null);
+            }
 
             // Load config
             // Windows Bound (Position + Size)
@@ -102,15 +111,17 @@ namespace ImageGlass {
             };
 
             if (ofd.ShowDialog() == DialogResult.OK) {
-                var exif = new ExifToolWrapper(ofd.FileName);
+                this.exifTool = new ExifToolWrapper(ofd.FileName);
 
-                if (!exif.CheckExists()) {
+                if (!this.exifTool.CheckExists()) {
+                    SetUIVisibility(true);
                     lblNotFound.Text = string.Format(
                         Configs.Language.Items[$"{nameof(frmSetting)}.lnkSelectExifTool._NotFound"],
                         ofd.FileName);
                 }
                 else {
                     Configs.ExifToolExePath = ofd.FileName;
+                    SetUIVisibility(false);
                     Local_OnImageChanged(null, null);
                 }
             }
@@ -181,15 +192,6 @@ namespace ImageGlass {
         private async void Local_OnImageChanged(object sender, EventArgs e) {
             SetFormState(false);
 
-            // check if exif tool exists
-            this.exifTool.ToolPath = Configs.ExifToolExePath;
-            if (!this.exifTool.CheckExists()) {
-                SetUIVisibility(true);
-
-                return;
-            }
-
-            SetUIVisibility(false);
             UpdateExifToolCommandPreview();
             var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
 
@@ -235,7 +237,7 @@ namespace ImageGlass {
         }
 
         private void UpdateExifToolCommandPreview() {
-            var toolPath = Configs.ExifToolExePath;
+            var toolPath = App.ToAbsolutePath(Configs.ExifToolExePath);
             if (!File.Exists(toolPath)) {
                 toolPath = @"C:\fake dir\exiftool.exe";
             }

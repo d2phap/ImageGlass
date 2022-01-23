@@ -875,8 +875,8 @@ namespace ImageGlass.ImageListView {
                 // Clear the background
                 if (ImageListView.Enabled)
                     g.Clear(ImageListView.Colors.ControlBackColor);
-                else
-                    g.Clear(ImageListView.Colors.DisabledBackColor);
+                //else
+                //    g.Clear(ImageListView.Colors.DisabledBackColor);
 
                 // Draw the background image
                 if (ImageListView.BackgroundImage != null) {

@@ -59,14 +59,14 @@ namespace ImageGlass.Library.Image {
         /// <returns></returns>
         public bool CheckExists() {
             var output = "";
-            var toolPath = $"\"{this.ToolPath}\" -ver";
+            var fullPath = App.ToAbsolutePath(ToolPath); // $"\"{this.ToolPath}\" -ver";
 
-            if (!File.Exists(this.ToolPath)) {
+            if (!File.Exists(fullPath)) {
                 return false;
             }
             else {
                 try {
-                    (output, stdErr) = Open(toolPath);
+                    (output, stdErr) = Open("-ver");
                 }
                 catch (Exception) {
                 }
@@ -213,18 +213,14 @@ namespace ImageGlass.Library.Image {
         /// </summary>
         /// <param name="cmd"></param>
         /// <returns></returns>
-        private (string stdOut, string stdErr) Open(string cmd) {
-            var program = "\"%COMSPEC%\"";
-            var args = "/c [command]";
-
-            this.psi = new ProcessStartInfo(
-                Environment.ExpandEnvironmentVariables(program),
-                args.Replace("[command]", cmd)
-            ) {
+        private (string stdOut, string stdErr) Open(string cmd = "") {
+            this.psi = new ProcessStartInfo() {
+                FileName = App.ToAbsolutePath(this.ToolPath),
+                Arguments = cmd,
                 CreateNoWindow = true,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
-                RedirectStandardError = true
+                RedirectStandardError = true,
             };
 
             var thread_ReadStandardError = new Thread(new ThreadStart(Thread_ReadStandardError));
@@ -274,7 +270,7 @@ namespace ImageGlass.Library.Image {
         /// <param name="removeWhiteSpaceInTagNames"></param>
         private void LoadExifData(string imageFilename, string commands = "") {
             // exiftool command
-            var (output, _) = Open($"\"\"{this.ToolPath}\" -fast -G -t -m -q {commands} \"{imageFilename}\"\"");
+            var (output, _) = Open($"-fast -G -t -m -q {commands} \"{imageFilename}\"");
 
             // parse the output into tags
             this.Clear();

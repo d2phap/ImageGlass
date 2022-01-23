@@ -16,7 +16,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using ImageGlass.Base;
+using ImageGlass.Library.FileAssociations;
 using ImageGlass.Library.WinAPI;
+using Microsoft.Win32;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -119,6 +122,27 @@ namespace ImageGlass.Library {
             }
 
             return hashedDirsList.ToList();
+        }
+
+
+        /// <summary>
+        /// Sets or removes start with OS
+        /// </summary>
+        /// <param name="enable"></param>
+        /// <returns></returns>
+        public static bool SetStartWithOS(bool enable) {
+            var reg = new RegistryHelper() {
+                BaseRegistryKey = Registry.CurrentUser,
+                SubKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run",
+                ShowError = false,
+            };
+
+            if (enable) {
+                return reg.Write(Application.ProductName, $"{App.IGExePath} -HideWindow");
+            }
+            else {
+                return reg.DeleteKey(Application.ProductName);
+            }
         }
     }
 }

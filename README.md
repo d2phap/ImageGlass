@@ -12,12 +12,12 @@
 
 ImageGlass is a lightweight software application whose purpose is to help you view images in a clean and intuitive working environment.
 
-It gives you the possibility to view over **80+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers to speed up their work.
+It gives you the possibility to view over **80+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers speed up their work.
 
 
 ## 📥 Download
-[![Total Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%233097B8&label=total%20downloads&style=for-the-badge)](https://imageglass.org/download)
-[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%23932043&label=latest%20version&style=for-the-badge)](https://imageglass.org/download)
+[![Total Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%232A7C91&label=total%20downloads&style=for-the-badge)](https://imageglass.org/download)
+[![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%232A7C91&label=latest%20version&style=for-the-badge)](https://imageglass.org/download)
 
 
 
@@ -30,12 +30,12 @@ If you buy ImageGlass on the Microsoft Store, you'll be supporting its developme
 
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://imageglass.org/upload/photo/release/8.3_1.jpg" alt="ImageGlass 8.3.11.21" width="640">
+<img src="https://imageglass.org/upload/photo/release/8.5_1.jpg" alt="ImageGlass 8.5.1.22" width="640">
 </a><br/>
 
 
 ## 🛣 Development progress & Roadmap
-ImageGlass 9 is the biggest update ever, supports ***hardware acceleration*** and many more. I have been rewritting the entire app for months.
+ImageGlass 9 is the biggest update ever, supports ***hardware acceleration*** and many more. I have been rewriting the entire app for months.
 - For more details, you can see the [project board](https://github.com/d2phap/ImageGlass/projects/11).
 - ImageGlass 9 uses [.NET 6](https://devblogs.microsoft.com/dotnet/announcing-net-6/). If you are unable to install .NET 6, you can stay with ImageGlass 8.
   <br/>
@@ -63,7 +63,7 @@ ImageGlass 9 is the biggest update ever, supports ***hardware acceleration*** an
 - [Command lines](https://imageglass.org/docs/command-line-utilities)
 
 
-For information of the future developments, please visit [Wiki](https://github.com/d2phap/ImageGlass/wiki) and [Project](https://github.com/d2phap/ImageGlass/projects) page. 
+For information on future developments, please visit [Wiki](https://github.com/d2phap/ImageGlass/wiki) and [Project](https://github.com/d2phap/ImageGlass/projects) page. 
 
 For more information about ImageGlass, go to [Documentation](https://imageglass.org/docs)
 
@@ -75,9 +75,9 @@ For more information about ImageGlass, go to [Documentation](https://imageglass.
 
 
 ## 💖 This project needs your help!
-ImageGlass is free and open source but developing it has taken thousands of hours of my time and a large part of my sanity. If you feel this little viewer useful to you, it would go a great way to ensuring that I can afford to take the time to continue to develop it.
+ImageGlass is free and open source but developing it has taken thousands of hours of my time and a large part of my sanity. If you feel this little viewer is useful to you, it would go a great way to ensure that I can afford to take the time to continue to develop it.
 
-Thanks for your gratitude and finance help!
+Thanks for your gratitude and financial help!
 
 <a href="https://github.com/sponsors/d2phap" target="_blank" title="Become a sponsor">
 <img src="https://img.shields.io/badge/Github-@d2phap-24292e.svg?maxAge=3600&logo=github" height="30" alt="Become a sponsor">
@@ -111,11 +111,12 @@ Thanks for your gratitude and finance help!
 
 To honor those people who spent their time to contribute to the development of ImageGlass v8:
 - 1️⃣ [@fire-eggs](https://github.com/fire-eggs)
-- 2️⃣ [@datasone](https://github.com/datasone)
-- 3️⃣ [@dixonte](https://github.com/dixonte)
-- 4️⃣ [@cocoon](https://github.com/cocoon)
-- 5️⃣ [@Norgerman](https://github.com/Norgerman)
-- 6️⃣ [@flyxyz123](https://github.com/flyxyz123)
+- 2️⃣ [@AutomationBoi](https://github.com/AutomationBoi)
+- 3️⃣ [@datasone](https://github.com/datasone)
+- 4️⃣ [@dixonte](https://github.com/dixonte)
+- 5️⃣ [@cocoon](https://github.com/cocoon)
+- 6️⃣ [@Norgerman](https://github.com/Norgerman)
+- 7️⃣ [@flyxyz123](https://github.com/flyxyz123)
 
 Thank you!
 
