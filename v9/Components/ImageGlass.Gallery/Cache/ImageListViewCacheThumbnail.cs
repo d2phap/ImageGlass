@@ -43,7 +43,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
     private SynchronizationContext? _context = null;
     private readonly SendOrPostCallback _checkProcessingCallback;
 
-    internal PersistentCache _diskCache = new()
+    internal DiskCache _diskCache = new()
     {
         CacheSize = 100 * 1024 * 1024, // 100 MB disk cache
     };

@@ -26,7 +26,7 @@ namespace ImageGlass.Base.Cache;
 /// Represents a collection of items on disk that can be read 
 /// and written by multiple threads.
 /// </summary>
-public class PersistentCache
+public class DiskCache
 {
     #region Member Variables
 
@@ -89,11 +89,11 @@ public class PersistentCache
     #region Constructor
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="PersistentCache"/> class.
+    /// Initializes a new instance of the <see cref="DiskCache"/> class.
     /// </summary>
     /// <param name="directoryName">The path to the cache file.</param>
     /// <param name="size">Cache size in bytes.</param>
-    public PersistentCache(string directoryName, long size)
+    public DiskCache(string directoryName, long size)
     {
         _cacheSize = size;
         _dirName = directoryName.Trim();
@@ -113,9 +113,9 @@ public class PersistentCache
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="PersistentCache"/> class.
+    /// Initializes a new instance of the <see cref="DiskCache"/> class.
     /// </summary>
-    public PersistentCache() : this(string.Empty, 0) { }
+    public DiskCache() : this(string.Empty, 0) { }
 
     #endregion
 

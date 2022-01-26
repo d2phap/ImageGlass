@@ -1,6 +1,9 @@
-﻿using HapplaBox.Heart;
+﻿
 
-namespace ImageGlass.Heart;
+using ImageGlass.Base.Photoing;
+using ImageGlass.Base.Photoing.Codecs;
+
+namespace ImageGlass.Base.Photoing;
 
 public class Img : IDisposable
 {

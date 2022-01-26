@@ -1,7 +1,8 @@
 ﻿
-using ImageGlass.Heart;
 
-namespace HapplaBox.Heart;
+using ImageGlass.Base.Photoing.Codecs;
+
+namespace ImageGlass.Base.Photoing;
 
 
 /// <summary>

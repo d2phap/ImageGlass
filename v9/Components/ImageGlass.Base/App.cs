@@ -35,7 +35,7 @@ public class App
 
 
     /// <summary>
-    /// Gets the path based on the startup folder of HapplaBox.
+    /// Gets the path based on the startup folder of ImageGlass.
     /// </summary>
     /// <param name="paths"></param>
     /// <returns></returns>
@@ -53,8 +53,8 @@ public class App
 
 
     /// <summary>
-    /// Returns the path based on the configuration folder of HapplaBox.
-    /// For portable mode, ConfigDir = Installed Dir, else %appdata%\HapplaBox
+    /// Returns the path based on the configuration folder of ImageGlass.
+    /// For portable mode, ConfigDir = Installed Dir, else %appdata%\ImageGlass
     /// </summary>
     /// <param name="type">Indicates if the given path is either file or directory</param>
     /// <param name="paths"></param>

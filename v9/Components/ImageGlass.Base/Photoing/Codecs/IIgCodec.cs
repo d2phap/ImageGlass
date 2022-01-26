@@ -1,5 +1,5 @@
 ﻿
-namespace ImageGlass.Heart;
+namespace ImageGlass.Base.Photoing.Codecs;
 
 
 /// <summary>

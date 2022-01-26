@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.Loader;
 
 
-namespace ImageGlass.Heart;
+namespace ImageGlass.Base.Photoing.Codecs;
 
 public class DllLoadContext : AssemblyLoadContext
 {
