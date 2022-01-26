@@ -1,6 +1,4 @@
 ﻿
-
-using ImageGlass.Base.Photoing;
 using ImageGlass.Base.Photoing.Codecs;
 
 namespace ImageGlass.Base.Photoing;

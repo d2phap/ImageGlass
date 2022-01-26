@@ -3,23 +3,6 @@ namespace ImageGlass.Base.Photoing.Codecs;
 
 
 /// <summary>
-/// Settings for loading image
-/// </summary>
-public struct CodecReadOptions
-{
-    public int Width = 0;
-    public int Height = 0;
-    public bool IgnoreColorProfile = false;
-    public IgMetadata? Metadata = null;
-
-    public CodecReadOptions(IgMetadata? meta = null)
-    {
-        Metadata = meta;
-    }
-}
-
-
-/// <summary>
 /// Provides interface of image codec
 /// </summary>
 public interface IIgCodec : IDisposable
@@ -97,7 +80,7 @@ public interface IIgCodec : IDisposable
     /// </summary>
     /// <param name="filename">Full path of the file</param>
     /// <returns></returns>
-    IgMetadata? LoadMetadata(string filename, CodecReadOptions options = default);
+    IgMetadata? LoadMetadata(string filename, CodecReadOptions? options = default);
 
 
     /// <summary>
@@ -107,7 +90,7 @@ public interface IIgCodec : IDisposable
     /// <param name="options">Loading options</param>
     /// <param name="token">Cancellation token</param>
     Task<Bitmap?> LoadAsync(string filename,
-        CodecReadOptions options = default,
+        CodecReadOptions? options = default,
         CancellationToken token = default);
 
 
@@ -117,7 +100,7 @@ public interface IIgCodec : IDisposable
     /// <param name="filename">Full path of the file</param>
     /// <param name="options">Loading options</param>
     /// <returns></returns>
-    Bitmap? Load(string filename, CodecReadOptions options = default);
+    Bitmap? Load(string filename, CodecReadOptions? options = default);
 
 
     /// <summary>

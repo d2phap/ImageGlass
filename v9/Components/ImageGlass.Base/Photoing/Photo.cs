@@ -65,8 +65,7 @@ public class Photo : IDisposable
     /// <param name="filename">Image file name</param>
     /// <param name="settings">Image loading settings</param>
     /// <returns></returns>
-    public Bitmap? Load(string filename,
-        CodecReadOptions settings = default)
+    public Bitmap? Load(string filename, CodecReadOptions? settings = default)
     {
         return Codec.Load(filename, settings);
     }
@@ -80,7 +79,7 @@ public class Photo : IDisposable
     /// <param name="token">Cancellation token</param>
     /// <returns></returns>
     public async Task<Bitmap?> LoadAsync(string filename,
-        CodecReadOptions settings = default,
+        CodecReadOptions? settings = default,
         CancellationToken token = default)
     {
         return await Codec.LoadAsync(filename, settings, token);

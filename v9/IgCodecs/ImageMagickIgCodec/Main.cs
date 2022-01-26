@@ -115,8 +115,10 @@ public class Main : IIgCodec
 
     public void Dispose() { }
 
-    private MagickReadSettings ParseSettings(CodecReadOptions options, string filename = "")
+    private MagickReadSettings ParseSettings(CodecReadOptions? options, string filename = "")
     {
+        options ??= new();
+
         var ext = Path.GetExtension(filename).ToUpperInvariant();
         var settings = new MagickReadSettings();
 
@@ -151,7 +153,7 @@ public class Main : IIgCodec
     }
 
 
-    public IgMetadata? LoadMetadata(string filename, CodecReadOptions options = default)
+    public IgMetadata? LoadMetadata(string filename, CodecReadOptions? options = null)
     {
         IgMetadata? meta = null;
 
@@ -169,7 +171,7 @@ public class Main : IIgCodec
             {
                 Width = imgM.Width,
                 Height = imgM.Height,
-                FrameCount = imgC.Count,
+                FramesCount = imgC.Count,
             };
         }
         catch { }
@@ -178,8 +180,10 @@ public class Main : IIgCodec
     }
 
 
-    public Bitmap? Load(string filename, CodecReadOptions options = default)
+    public Bitmap? Load(string filename, CodecReadOptions? options = null)
     {
+        options ??= new();
+
         var ext = Path.GetExtension(filename).ToUpperInvariant();
         var settings = ParseSettings(options, filename);
         Bitmap? output;
@@ -189,7 +193,7 @@ public class Main : IIgCodec
             return new Bitmap(filename);
         }
 
-        if (options.Metadata?.FrameCount > 0)
+        if (options.Metadata?.FramesCount > 0)
         {
             using var imgC = new MagickImageCollection();
             imgC.Read(filename, settings);
@@ -208,9 +212,10 @@ public class Main : IIgCodec
     }
 
     public async Task<Bitmap?> LoadAsync(string filename,
-        CodecReadOptions options = default,
+        CodecReadOptions? options = null,
         CancellationToken token = default)
     {
+        options ??= new();
         var ext = Path.GetExtension(filename).ToUpperInvariant();
         var settings = ParseSettings(options, filename);
         Bitmap? output;
@@ -220,7 +225,7 @@ public class Main : IIgCodec
             return new Bitmap(filename);
         }
 
-        if (options.Metadata?.FrameCount > 0)
+        if (options.Metadata?.FramesCount > 0)
         {
             using var imgC = new MagickImageCollection();
             await imgC.ReadAsync(filename, settings, token);
