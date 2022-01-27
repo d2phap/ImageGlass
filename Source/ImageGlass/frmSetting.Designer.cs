@@ -170,7 +170,6 @@ namespace ImageGlass
             this.lblToolbarIconHeight = new System.Windows.Forms.Label();
             this.numToolbarIconHeight = new System.Windows.Forms.NumericUpDown();
             this.chkHideTooltips = new System.Windows.Forms.CheckBox();
-            this.chkToolbarAutoFocus = new System.Windows.Forms.CheckBox();
             this.lblToolbarPosition = new System.Windows.Forms.Label();
             this.chkHorzCenterToolbarBtns = new System.Windows.Forms.CheckBox();
             this.cmbToolbarPosition = new System.Windows.Forms.ComboBox();
@@ -2050,7 +2049,7 @@ namespace ImageGlass
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 204F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 169F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(737, 596);
             this.tableLayoutPanel1.TabIndex = 50;
@@ -2060,7 +2059,6 @@ namespace ImageGlass
             this.panel9.Controls.Add(this.lblToolbarIconHeight);
             this.panel9.Controls.Add(this.numToolbarIconHeight);
             this.panel9.Controls.Add(this.chkHideTooltips);
-            this.panel9.Controls.Add(this.chkToolbarAutoFocus);
             this.panel9.Controls.Add(this.lblToolbarPosition);
             this.panel9.Controls.Add(this.chkHorzCenterToolbarBtns);
             this.panel9.Controls.Add(this.cmbToolbarPosition);
@@ -2068,7 +2066,7 @@ namespace ImageGlass
             this.panel9.Location = new System.Drawing.Point(0, 3);
             this.panel9.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(734, 198);
+            this.panel9.Size = new System.Drawing.Size(734, 163);
             this.panel9.TabIndex = 49;
             // 
             // lblToolbarIconHeight
@@ -2116,18 +2114,6 @@ namespace ImageGlass
             this.chkHideTooltips.TabIndex = 50;
             this.chkHideTooltips.Text = "[Hide toolbar tooltips]";
             this.chkHideTooltips.UseVisualStyleBackColor = true;
-            //
-            // chkToolbarAutoFocus
-            //
-            this.chkToolbarAutoFocus.AutoSize = true;
-            this.chkToolbarAutoFocus.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkToolbarAutoFocus.Location = new System.Drawing.Point(27, 154);
-            this.chkToolbarAutoFocus.Margin = new System.Windows.Forms.Padding(1);
-            this.chkToolbarAutoFocus.Name = "chkToolbarAutoFocus";
-            this.chkToolbarAutoFocus.Size = new System.Drawing.Size(226, 28);
-            this.chkToolbarAutoFocus.TabIndex = 51;
-            this.chkToolbarAutoFocus.Text = "[Autofocus Toolbar on mouse hover]";
-            this.chkToolbarAutoFocus.UseVisualStyleBackColor = true;
             // 
             // lblToolbarPosition
             // 
@@ -2175,7 +2161,7 @@ namespace ImageGlass
             this.panel5.Controls.Add(this.lvUsedButtons);
             this.panel5.Controls.Add(this.btnMoveDown);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(0, 207);
+            this.panel5.Location = new System.Drawing.Point(0, 172);
             this.panel5.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(734, 421);
@@ -3315,7 +3301,6 @@ namespace ImageGlass
         private System.Windows.Forms.Label lblExifToolPath;
         private System.Windows.Forms.LinkLabel lnkSelectExifTool;
         private System.Windows.Forms.CheckBox chkHideTooltips;
-        private System.Windows.Forms.CheckBox chkToolbarAutoFocus;
         private System.Windows.Forms.CheckBox chkColorUseHSVA;
         private System.Windows.Forms.Label lblToolbarIconHeight;
         private System.Windows.Forms.NumericUpDown numToolbarIconHeight;

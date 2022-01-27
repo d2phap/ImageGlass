@@ -220,7 +220,6 @@ namespace ImageGlass {
             chkConfirmationDelete.Text = lang[$"{Name}.{nameof(chkConfirmationDelete)}"];
             chkCenterWindowFit.Text = lang[$"{Name}.{nameof(chkCenterWindowFit)}"];
             chkShowToast.Text = lang[$"{Name}.{nameof(chkShowToast)}"];
-            chkToolbarAutoFocus.Text = lang[$"{Name}.{nameof(chkToolbarAutoFocus)}"];
 
             #endregion
 
@@ -510,8 +509,6 @@ namespace ImageGlass {
             chkShowCheckerboardOnlyImage.Checked = Configs.IsShowCheckerboardOnlyImageRegion;
             chkCenterWindowFit.Checked = Configs.IsCenterWindowFit;
             chkShowToast.Checked = Configs.IsShowToast;
-            chkToolbarAutoFocus.Checked = Configs.IsToolbarAutoFocus;
-
             chkUseTouchGesture.Checked = Configs.IsUseTouchGesture;
             picBackgroundColor.BackColor = Configs.BackgroundColor;
         }
@@ -2149,15 +2146,6 @@ namespace ImageGlass {
             }
             #endregion
 
-            #region ToolbarAutoFocus: MainFormForceUpdateAction.TOOLBAR_POSITION
-            newBool = chkToolbarAutoFocus.Checked;
-
-            if (Configs.IsToolbarAutoFocus != newBool) {
-                Configs.IsToolbarAutoFocus = newBool;
-                Local.ForceUpdateActions |= ForceUpdateActions.TOOLBAR_POSITION;
-            }
-            #endregion
-
             #region ToolbarIconHeight: MainFormForceUpdateAction.TOOLBAR_ICON_HEIGHT
             newUInt = (uint)numToolbarIconHeight.Value;
 
@@ -2188,5 +2176,6 @@ namespace ImageGlass {
         }
 
         #endregion
+
     }
 }

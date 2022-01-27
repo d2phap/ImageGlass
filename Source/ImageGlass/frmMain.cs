@@ -3571,9 +3571,6 @@ namespace ImageGlass {
 
                 // Hide toolbar tooltips
                 toolMain.HideTooltips = Configs.IsHideTooltips;
-
-                // AutoFocus
-                toolMain.AutoFocus = Configs.IsToolbarAutoFocus;
             }
             #endregion
 
