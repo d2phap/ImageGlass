@@ -39,6 +39,11 @@ internal class Local
     public static ImageBooster Images { get; set; } = new(Config.Codec);
 
     /// <summary>
+    /// Gets, sets current image error
+    /// </summary>
+    public static Exception? ImageError { get; set; } = null;
+
+    /// <summary>
     /// Gets, sets index of the viewing image
     /// </summary>
     public static int CurrentIndex { get; set; } = -1;
@@ -60,12 +65,19 @@ internal class Local
     /// </summary>
     public static ImageOrderType ActiveImageLoadingOrderType { get; set; }
 
-
     /// <summary>
     /// Gets, sets color channel of image
     /// </summary>
     public static ColorChannels ImageChannel { get; set; } = ColorChannels.All;
 
+    /// <summary>
+    /// Gets, sets value if image data was modified
+    /// </summary>
+    public static string ImageModifiedPath { get; set; } = "";
 
+    /// <summary>
+    /// Gets, sets value indicating whether the viewing image is memory data (clipboard / screenshot,...) or not
+    /// </summary>
+    public static bool IsTempMemoryData { get; set; } = false;
 
 }

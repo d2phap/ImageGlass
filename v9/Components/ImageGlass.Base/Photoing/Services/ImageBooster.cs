@@ -314,7 +314,7 @@ public class ImageBooster : IDisposable
     /// <param name="isSkipCache"></param>
     /// <param name="pageIndex">The index of image page to display (if it's multi-page). Set pageIndex = int.MinValue to use defaut page index</param>
     /// <returns></returns>
-    public async Task<IgPhoto?> GetAsync(int index, bool isSkipCache = false)
+    public async Task<IgPhoto?> GetAsync(int index, bool isSkipCache = false, int pageIndex = int.MinValue)
     {
         // reload fresh new image data
         if (isSkipCache)

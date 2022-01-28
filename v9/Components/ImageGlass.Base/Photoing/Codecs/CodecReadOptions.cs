@@ -35,7 +35,7 @@ public record CodecReadOptions
     /// <summary>
     /// Gets, sets the value of ImageMagick.Channels to apply to the entire image list
     /// </summary>
-    public int ImageChannel { get; set; } = -1;
+    public ColorChannels ImageChannel { get; set; } = ColorChannels.All;
 
     /// <summary>
     /// Gets, sests the value indicates that the embedded thumbnail should be return (if found).

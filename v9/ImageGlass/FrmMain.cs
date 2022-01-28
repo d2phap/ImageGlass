@@ -1,5 +1,6 @@
 using ImageGlass.Base;
 using ImageGlass.Base.DirectoryComparer;
+using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Gallery;
 using ImageGlass.Settings;
@@ -532,9 +533,9 @@ public partial class FrmMain : Form
             Gallery.Items.Add(lvi);
         }
 
-        SelectCurrentThumbnail();
-
         Gallery.ResumeLayout();
+
+        SelectCurrentThumbnail();
     }
 
 
@@ -556,6 +557,262 @@ public partial class FrmMain : Form
             catch { }
         }
     }
+
+
+    /// <summary>
+    /// Change image
+    /// </summary>
+    /// <param name="step">Image step to change. Zero is reload the current image.</param>
+    /// <param name="isKeepZoomRatio"></param>
+    /// <param name="isSkipCache"></param>
+    /// <param name="pageIndex">Set pageIndex = int.MinValue to use default page index</param>
+    public async Task NextPicAsync(int step,
+        bool isKeepZoomRatio = false,
+        bool isSkipCache = false,
+        int pageIndex = int.MinValue,
+        string filename = "")
+    {
+        System.Threading.SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
+
+        if (Local.IsBusy) return;
+
+        //// cancel the previous loading task
+        //_loadCancelToken.Cancel();
+        //_loadCancelToken = new();
+        
+
+        // Save previous image if it was modified
+        if (File.Exists(Local.ImageModifiedPath) && Config.IsSaveAfterRotating)
+        {
+            //_ = SaveImageChangeAsync();
+
+            // remove the old image data from cache
+            Local.Images.Unload(Local.CurrentIndex);
+
+            // update thumbnail
+            Gallery.Items[Local.CurrentIndex].Update();
+        }
+        else
+        {
+            // KBR 20190804 Fix obscure issue: 
+            // 1. Rotate/flip image with "IsSaveAfterRotating" is OFF
+            // 2. Move through images
+            // 3. Turn "IsSaveAfterRotating" ON
+            // 4. On navigate to another image, the change made at step 1 will be saved.
+            Local.ImageModifiedPath = "";
+        }
+
+        //SetStatusBar();
+        PicBox.Text = "";
+        Local.IsTempMemoryData = false;
+
+        if (string.IsNullOrEmpty(filename) && Local.Images.Length == 0)
+        {
+            Local.ImageError = new FileNotFoundException();
+            //PicBox.Image = null;
+            Local.ImageModifiedPath = "";
+
+            return;
+        }
+
+
+        #region Validate image index
+
+        // temp index
+        var tempIndex = Local.CurrentIndex + step;
+
+        //// Issue #609: do not auto-reactivate slideshow if disabled
+        //if (Config.IsSlideshow && timSlideShow.Enabled)
+        //{
+        //    timSlideShow.Enabled = false;
+        //    timSlideShow.Enabled = true;
+        //}
+
+        // Issue #1019:
+        // When showing the initial image, the ImageList is empty; don't show toast messages
+        if (!Config.IsSlideshow && !Config.IsLoopBackViewer && Local.Images.Length > 0)
+        {
+            // Reach end of list
+            if (tempIndex >= Local.Images.Length)
+            {
+                PicBox.ShowMessage(Config.Language[$"{Name}._LastItemOfList"], 1500);
+                return;
+            }
+
+            // Reach the first item of list
+            if (tempIndex < 0)
+            {
+                PicBox.ShowMessage(Config.Language[$"{Name}._FirstItemOfList"], 1500);
+                return;
+            }
+        }
+
+        // Check if current index is greater than upper limit
+        if (tempIndex >= Local.Images.Length)
+            tempIndex = 0;
+
+        // Check if current index is less than lower limit
+        if (tempIndex < 0)
+            tempIndex = Local.Images.Length - 1;
+
+        // Update current index
+        Local.CurrentIndex = tempIndex;
+
+        #endregion
+
+        // Issue #1020 : don't stop existing animation unless we're actually switching images
+        // stop the animation
+        if (PicBox.IsAnimatingImage)
+        {
+            PicBox.StopAnimatingImage();
+        }
+
+
+        // Select thumbnail item
+        SelectCurrentThumbnail();
+
+        //// Raise image changed event
+        //Local.RaiseImageChangedEvent();
+
+        try
+        {
+            // apply image list settings
+            Local.Images.ReadOptions.IsApplyColorProfileForAll = Config.IsApplyColorProfileForAll;
+            Local.Images.ReadOptions.ColorProfileName = Config.ColorProfile;
+            Local.Images.ReadOptions.UseRawThumbnail = Config.IsUseRawThumbnail;
+            Local.Images.SinglePageFormats = Config.SinglePageFormats;
+
+            //// put app in a 'busy' state around image load: allows us to prevent the user
+            //// from skipping past a slow-to-load image by processing too many arrow clicks
+            //_ = SetAppBusyAsync(true, Config.Language[$"{Name}._Loading"], 2000, 2000);
+
+            if (pageIndex != int.MinValue)
+            {
+                //UpdateActivePage();
+            }
+            else
+            {
+                IgPhoto? bmpImg;
+
+                // directly load the image file, skip image list
+                if (filename.Length > 0)
+                {
+                    bmpImg = new IgPhoto(filename);
+                    await bmpImg.LoadAsync(new() {
+                        ColorProfileName = Config.ColorProfile,
+                        IsApplyColorProfileForAll = Config.IsApplyColorProfileForAll,
+                        ImageChannel = Local.ImageChannel,
+                        UseRawThumbnail = Local.Images.ReadOptions.UseRawThumbnail,
+                        FirstFrameOnly = Config.SinglePageFormats.Contains(bmpImg.Extension)
+                    });
+                }
+                else
+                {
+                    bmpImg = await Local.Images.GetAsync(
+                        Local.CurrentIndex,
+                        isSkipCache: isSkipCache,
+                        pageIndex: pageIndex
+                       ).ConfigureAwait(true);
+                }
+
+                //// Update current frame index
+                //Local.CurrentPageIndex = bmpImg.ActivePageIndex;
+                //Local.CurrentPageCount = bmpImg.FramesCount;
+
+                //Local.CurrentExif = bmpImg.Exif;
+                //Local.CurrentColor = bmpImg.ColorProfile;
+
+                Local.ImageError = bmpImg?.Error;
+
+
+                if (bmpImg?.Image != null) // && !_loadCancelToken.Token.IsCancellationRequested)
+                {
+                    PicBox.LoadImage(bmpImg.Image);
+
+                    // Reset the zoom mode if isKeepZoomRatio = FALSE
+                    if (!isKeepZoomRatio)
+                    {
+                        if (Config.IsWindowFit)
+                        {
+                            //WindowFitMode();
+                        }
+                        else
+                        {
+                            // reset zoom mode
+                            PicBox.ZoomMode = Config.ZoomMode;
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Local.ImageError = ex;
+        }
+
+        //// clear busy state
+        //_ = SetAppBusyAsync(false);
+
+        // image error
+        if (Local.ImageError != null)
+        {
+            //picMain.Image = null;
+            Local.ImageModifiedPath = "";
+            //Local.CurrentPageIndex = 0;
+            //Local.CurrentPageCount = 0;
+            //Local.CurrentExif = null;
+            //Local.CurrentColor = null;
+
+            var currentFile = Local.Images.GetFileName(Local.CurrentIndex);
+            if (!string.IsNullOrEmpty(currentFile) && !File.Exists(currentFile))
+            {
+                Local.Images.Unload(Local.CurrentIndex);
+            }
+
+            PicBox.Text = Config.Language[$"{Name}.picMain._ErrorText"] + "\r\n" + Local.ImageError.Source + ": " + Local.ImageError.Message;
+        }
+
+        //SetStatusBar();
+
+        //_isDraggingImage = false;
+
+        //// reset countdown timer value
+        //_slideshowCountdown = Config.RandomizeSlideshowInterval();
+
+        //// reset Cropping region
+        //ShowCropTool(mnuMainCrop.Checked);
+
+        //// auto-show Page Nav tool
+        //if (Local.CurrentPageCount > 1 && Config.IsShowPageNavAuto)
+        //{
+        //    ShowPageNavTool(true);
+        //}
+        //// hide the Page Nav tool
+        //else if (!Config.IsShowPageNavOnStartup)
+        //{
+        //    ShowPageNavTool(false);
+        //}
+
+        // Collect system garbage
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
+
+
+        //void UpdateActivePage()
+        //{
+        //    var currentFile = Local.Images.GetFileName(Local.CurrentIndex);
+        //    Local.CurrentPageIndex = Heart.Img.SetActivePage((Bitmap)picMain.Image, pageIndex, currentFile);
+
+        //    // Refresh picMain to update the active page
+        //    picMain.Invalidate();
+        //}
+    }
+
+
+
+
+
 
 
 
