@@ -10,6 +10,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <COMReference Include="IWshRuntimeLibrary">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>f935dc20-1cf0-11d0-adb9-00c04fd58a0b</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\D2DLib\D2DLibExport\D2DLibExport.csproj" />
   </ItemGroup>
 
@@ -18,5 +30,10 @@
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="..\..\Libs\ExplorerSortOrder\x86\ExplorerSortOrder.dll" Condition="'$(Platform)' == 'x86'" CopyToOutputDirectory="Always" />
+        <Content Include="..\..\Libs\ExplorerSortOrder\x64\ExplorerSortOrder.dll" Condition="'$(Platform)' == 'x64'" CopyToOutputDirectory="Always" />
+    </ItemGroup>
 
 </Project>
