@@ -33,17 +33,7 @@ public partial class FrmMain
     /// <returns></returns>
     private void IG_OpenFile()
     {
-        var of = new OpenFileDialog()
-        {
-            Multiselect = false,
-            CheckFileExists = true,
-        };
-
-
-        if (of.ShowDialog() == DialogResult.OK)
-        {
-            Prepare(of.FileName);
-        }
+        OpenFilePicker();
     }
 }
 
