@@ -31,6 +31,7 @@ public static class Constants
     public const int VIEWER_GRID_SIZE = 8;
     public const int TOOLBAR_ICON_HEIGHT = 22;
     public const string FILE_MACRO = "<file>";
+    public const string CONFIG_CMD_PREFIX = "-";
 
     /// <summary>
     /// First launch version constant.

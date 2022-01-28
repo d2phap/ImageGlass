@@ -1,9 +1,31 @@
-﻿
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 using ImageGlass.Base.Photoing.Codecs;
 using System.ComponentModel;
 
 namespace ImageGlass.Base.Services;
 
+
+/// <summary>
+/// Image booster service.
+/// </summary>
 public class ImageBooster : IDisposable
 {
     #region IDisposable Disposing
@@ -89,7 +111,7 @@ public class ImageBooster : IDisposable
     public List<string> FileNames => ImgList.Select(i => i.Filename).ToList();
 
     /// <summary>
-    /// Gets, sets the list of formats that only load the first page forcefully
+    /// Gets, sets the list of formats that only load the first page forcefully.
     /// </summary>
     public HashSet<string> SinglePageFormats { get; set; } = new();
 
@@ -97,7 +119,12 @@ public class ImageBooster : IDisposable
     /// Gets, sets the number of maximum items in queue list for 1 direction (Next or Back navigation).
     /// The maximum number of items in queue list is 2x + 1.
     /// </summary>
-    public uint MaxQueue { get; set; } = 1;
+    public int MaxQueue { get; set; } = 1;
+
+    /// <summary>
+    /// Gets, sets the value of <see cref="ColorChannels"/> to apply to the entire image list.
+    /// </summary>
+    public ColorChannels ImageChannel { get; set; } = ColorChannels.All;
 
 
     public int MaxImageSizePreload = 10_000;
@@ -115,7 +142,15 @@ public class ImageBooster : IDisposable
     /// <summary>
     /// Initializes <see cref="ImageBooster"/> instance.
     /// </summary>
+    /// <param name="codec"></param>
+    public ImageBooster(IIgCodec codec) : this(new List<string>(0), codec) { }
+
+
+    /// <summary>
+    /// Initializes <see cref="ImageBooster"/> instance.
+    /// </summary>
     /// <param name="filenames">List of filenames</param>
+    /// <param name="codec">Codec</param>
     public ImageBooster(IList<string> filenames, IIgCodec codec)
     {
         Codec = codec;
