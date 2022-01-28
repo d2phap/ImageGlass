@@ -58,6 +58,7 @@ ipch/
 *.psess
 *.vsp
 *.vspx
+.vs/
 
 # Guidance Automation Toolkit
 *.gpState
@@ -167,14 +168,3 @@ Setup/AdvancedInstaller/x86/ImageGlass-x86-cache
 Setup/AdvancedInstaller/x64/ImageGlass-x64-cache
 Source/.vs/ImageGlass.sqlite
 Source/ImageGlass/obj/Debug/DesignTimeResolveAssemblyReferences.cache
-
-/.vs/ProjectSettings.json
-.dtbcache.*
-.futdcache.*
-v9/.vs/ImageGlass/v17/Preview/Solution.VC.db-wal
-v9/.vs/ImageGlass/v17/Preview/Solution.VC.db-shm
-v9/.vs/ImageGlass/v17/Preview/Solution.VC.db
-v9/.vs/ImageGlass/v17/Preview/Browse.VC.opendb
-v9/.vs/ImageGlass/v17/Preview/Browse.VC.db-wal
-v9/.vs/ImageGlass/v17/Preview/Browse.VC.db-shm
-v9/.vs/ImageGlass/v17/Preview/Browse.VC.db

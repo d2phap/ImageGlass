@@ -23,7 +23,6 @@ using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.UI;
 using Microsoft.Extensions.Configuration;
-using System.Diagnostics;
 using System.Dynamic;
 using System.Text;
 
