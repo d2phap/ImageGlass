@@ -2197,7 +2197,7 @@ namespace ImageGlass {
         /// <summary>
         /// Adjust our window dimensions to fit the image size.
         /// </summary>
-        private void WindowFitMode() {
+        private void WindowFitMode(bool reZoom = true) {
             if (!Configs.IsWindowFit || picMain.Image == null)
                 return; // Nothing to do
 
@@ -2240,16 +2240,28 @@ namespace ImageGlass {
 
             // Let the image viewer control figure out the zoom value for
             // the full-size window
-            ApplyZoomMode(Configs.ZoomMode);
-
+            if (reZoom) {
+                ApplyZoomMode(Configs.ZoomMode);
+            }
 
             // Now that we have the new zoom value, adjust our main window
             // to fit the *zoomed* image size
             var newW = (int)(picMain.Image.Width * picMain.ZoomFactor);
             var newH = (int)(picMain.Image.Height * picMain.ZoomFactor);
 
-            Size = new Size(Width += newW - picMain.Width,
-                            Height += newH - picMain.Height);
+            // Adjust our main window to theoretically fit the entire
+            // picture, but not larger than desktop working area.
+            fullW = Width + newW - picMain.Width;
+            fullH = Height + newH - picMain.Height;
+
+            maxWidth = Math.Min(fullW, screen.WorkingArea.Width);
+            maxHeight = Math.Min(fullH, screen.WorkingArea.Height);
+            Size = new Size(Width = maxWidth, Height = maxHeight);
+
+            // Scroll to last position
+            if (!reZoom) {
+                picMain.ScrollTo(picMain.PointToImage(picMain.CenterPoint), picMain.CenterPoint);
+            }
 
             // center window to screen
             if (Configs.IsCenterWindowFit) {
@@ -3960,6 +3972,11 @@ namespace ImageGlass {
         private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e) {
             _isManuallyZoomed = true;
 
+            // Handle window fit after zoom change
+            if (Configs.IsWindowFit) {
+                WindowFitMode(false);
+            }
+
             // Set new zoom ratio if Zoom Mode LockZoomRatio is enabled
             if (Configs.ZoomMode == ZoomMode.LockZoomRatio) {
                 Configs.ZoomLockValue = e.NewZoom;
@@ -5025,11 +5042,7 @@ namespace ImageGlass {
             }
 
             if (Configs.IsWindowFit) {
-                WindowFitMode();
-            }
-            else {
-                MinimumSize = new(0, 0);
-                ApplyZoomMode(Configs.ZoomMode);
+                WindowFitMode(false);
             }
         }
 
