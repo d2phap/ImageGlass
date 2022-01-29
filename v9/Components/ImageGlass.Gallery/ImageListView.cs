@@ -23,6 +23,7 @@ License: Apache License Version 2.0, http://www.apache.org/licenses/
 ---------------------
 */
 
+using ImageGlass.Base;
 using System.ComponentModel;
 
 namespace ImageGlass.Gallery;
@@ -1226,7 +1227,7 @@ public partial class ImageListView : Control, IComponent
     /// <param name="duration"></param>
     /// <param name="delay"></param>
     public async void ShowItemTooltip(ImageListViewItem? item,
-        int duration = 4000, int delay = 400)
+        int duration = int.MinValue, int delay = 400)
     {
         if (item is null) return;
 
@@ -1235,7 +1236,7 @@ public partial class ImageListView : Control, IComponent
 
         var bounds = layoutManager.GetItemBounds(item.Index);
         var tooltipPosY = 0;
-        const int TOOLTIP_HEIGHT = 50;
+        const int TOOLTIP_HEIGHT = 23 * 3; // 23 x lines
         const int GAP = 4;
 
         if (TooltipDirection == TooltipDirection.Top)
@@ -1255,15 +1256,22 @@ public partial class ImageListView : Control, IComponent
             await Task.Delay(delay, _tooltipTokenSrc.Token);
 
             // show tooltip
-            mTooltip.ToolTipTitle = item.Text;
-            mTooltip.Show(item.FileName, this, bounds.X, tooltipPosY);
+            var tooltipContent = $"{item.FileName}" +
+                $"\r\n{Helpers.FormatSize(item.Details.FileSize)}";
+            mTooltip.ToolTipTitle = item.Text +
+                $" ({item.Details.Width} x {item.Details.Height})";
+            mTooltip.Show(tooltipContent, this, bounds.X, tooltipPosY);
+
 
             // duration
             await Task.Delay(duration, _tooltipTokenSrc.Token);
         }
         catch { }
 
-        mTooltip.Hide(this);
+        if (duration >= 0)
+        {
+            mTooltip.Hide(this);
+        }
     }
 
     #endregion

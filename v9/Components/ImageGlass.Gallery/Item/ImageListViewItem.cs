@@ -128,7 +128,7 @@ public class ImageListViewItem : ICloneable
     /// Gets image details.
     /// </summary>
     [Browsable(false)]
-    public ImageDetails? Details
+    public ImageDetails Details
     {
         get
         {
