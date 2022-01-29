@@ -7,21 +7,26 @@ public class IgPhoto : IDisposable
 {
     #region IDisposable Disposing
 
-    private bool _disposed = false;
+    public bool IsDisposed { get; private set; } = false;
 
     protected virtual void Dispose(bool disposing)
     {
-        if (_disposed)
+        if (IsDisposed)
             return;
 
         if (disposing)
         {
             // Free any other managed objects here.
+            IsDone = false;
+            Error = null;
+            FramesCount = 0;
+
             Image?.Dispose();
+            Image = null;
         }
 
         // Free any unmanaged objects here.
-        _disposed = true;
+        IsDisposed = true;
     }
 
     public virtual void Dispose()
@@ -99,7 +104,8 @@ public class IgPhoto : IDisposable
     /// <returns></returns>
     public async Task LoadAsync(IIgCodec? codec, CodecReadOptions? options = null)
     {
-        //_tokenSrc?.Cancel();
+        IsDisposed = false;
+        _tokenSrc?.Cancel();
         _tokenSrc = new();
 
         // reset done status
@@ -150,6 +156,7 @@ public class IgPhoto : IDisposable
     public void CancelLoading()
     {
         _tokenSrc?.Cancel();
+        Dispose();
     }
 
     #endregion

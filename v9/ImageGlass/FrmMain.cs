@@ -903,12 +903,18 @@ public partial class FrmMain : Form
 
     private void Gallery_ItemClick(object sender, ItemClickEventArgs e)
     {
-        //NextPic(e.Item.FileName);
-        Local.CurrentIndex = e.Item.Index;
-        _ = NextPicAsync(0);
+        if (e.Item.Index == Local.CurrentIndex)
+        {
+            PicBox.Refresh();
+        }
+        else
+        {
+            Local.CurrentIndex = e.Item.Index;
+            _ = NextPicAsync(0);
+        }
+        
 
         //e.Item.FetchItemDetails();
-
     }
 
     private void PicBox_Click(object sender, EventArgs e)
