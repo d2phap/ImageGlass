@@ -140,6 +140,11 @@ public class ModernToolbar : ToolStrip
         }
     }
 
+    /// <summary>
+    /// Gets, sets value indicates that the toolstrip will autofocus on hover
+    /// </summary>
+    public bool AutoFocusOnHover { get; set; } = true;
+
     #endregion
 
 
@@ -174,6 +179,14 @@ public class ModernToolbar : ToolStrip
     {
         base.OnMouseUp(e);
         HideItemTooltip();
+    }
+
+    protected override void OnMouseEnter(EventArgs e)
+    {
+        if (AutoFocusOnHover && this.CanFocus && !this.Focused)
+            this.Focus();
+
+        base.OnMouseEnter(e);
     }
 
     protected override void OnMouseLeave(EventArgs e)
