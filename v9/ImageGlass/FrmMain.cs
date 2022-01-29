@@ -144,12 +144,18 @@ public partial class FrmMain : Form
         var currentFile = currentFileName;
         var hasInitFile = !string.IsNullOrEmpty(currentFile);
 
+        // Dispose all garbage
+        Local.Images.Dispose();
+        Local.Images = new(Config.Codec)
+        {
+            MaxQueue = Config.ImageBoosterCachedCount,
+            ImageChannel = Local.ImageChannel,
+        };
+
         // Display currentFile while loading the full directory
         if (hasInitFile)
         {
-            // TODO:
-            //_ = NextPicAsync(0, filename: currentFile);
-            NextPic(currentFile);
+            _ = NextPicAsync(0, filename: currentFile);
         }
 
         // Parse string to absolute path
@@ -239,17 +245,14 @@ public partial class FrmMain : Form
     /// </summary>
     /// <param name="imageFilenameList">The list of files to load</param>
     /// <param name="filePath">The image file path to view first</param>
-    private void LoadImages(List<string> imageFilenameList, string filePath, bool skipLoadingImage = false)
+    private void LoadImages(
+        List<string> imageFilenameList,
+        string filePath,
+        bool skipLoadingImage = false)
     {
-        // Dispose all garbage
-        Local.Images.Dispose();
-
         // Set filename to image list
-        Local.Images = new(imageFilenameList, Config.Codec)
-        {
-            MaxQueue = Config.ImageBoosterCachedCount,
-            ImageChannel = Local.ImageChannel,
-        };
+        Local.Images.Clear();
+        Local.Images.Add(imageFilenameList);
 
         // Find the index of current image
         if (filePath.Length > 0)
@@ -284,16 +287,15 @@ public partial class FrmMain : Form
             Local.CurrentIndex = 0;
         }
 
+        
         // Load thumnbnail
         LoadThumbnails();
 
 
         if (!skipLoadingImage)
         {
-            // TODO:
-            //// Start loading image
-            //_ = NextPicAsync(0);
-            NextPic(Local.Images.GetFileName(Local.CurrentIndex));
+            // Start loading image
+            _ = NextPicAsync(0);
         }
 
         // TODO:
@@ -574,12 +576,13 @@ public partial class FrmMain : Form
     {
         System.Threading.SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
 
-        if (Local.IsBusy) return;
+        //if (Local.IsBusy) return;
 
-        //// cancel the previous loading task
+        // cancel the previous loading task
+        Local.Images.CancelLoading(Local.CurrentIndex);
         //_loadCancelToken.Cancel();
         //_loadCancelToken = new();
-        
+
 
         // Save previous image if it was modified
         if (File.Exists(Local.ImageModifiedPath) && Config.IsSaveAfterRotating)
@@ -609,7 +612,7 @@ public partial class FrmMain : Form
         if (string.IsNullOrEmpty(filename) && Local.Images.Length == 0)
         {
             Local.ImageError = new FileNotFoundException();
-            //PicBox.Image = null;
+            PicBox.SetImage(null);
             Local.ImageModifiedPath = "";
 
             return;
@@ -698,11 +701,12 @@ public partial class FrmMain : Form
                 if (filename.Length > 0)
                 {
                     bmpImg = new IgPhoto(filename);
-                    await bmpImg.LoadAsync(new() {
+                    await bmpImg.LoadAsync(Config.Codec, new() {
                         ColorProfileName = Config.ColorProfile,
                         IsApplyColorProfileForAll = Config.IsApplyColorProfileForAll,
                         ImageChannel = Local.ImageChannel,
                         UseRawThumbnail = Local.Images.ReadOptions.UseRawThumbnail,
+                        //UseEmbeddedThumbnail = Local.Images.
                         FirstFrameOnly = Config.SinglePageFormats.Contains(bmpImg.Extension)
                     });
                 }
@@ -756,7 +760,7 @@ public partial class FrmMain : Form
         // image error
         if (Local.ImageError != null)
         {
-            //picMain.Image = null;
+            PicBox.SetImage(null);
             Local.ImageModifiedPath = "";
             //Local.CurrentPageIndex = 0;
             //Local.CurrentPageCount = 0;

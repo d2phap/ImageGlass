@@ -928,8 +928,6 @@ public partial class ViewBox : HybridControl
     {
         if (IsImageNull) return;
 
-        g.FillRectangle(_destRect, Color.Yellow);
-
         if (CanUseDirect2D && UseHardwareAcceleration)
         {
             var d2dg = g as Direct2DGraphics;

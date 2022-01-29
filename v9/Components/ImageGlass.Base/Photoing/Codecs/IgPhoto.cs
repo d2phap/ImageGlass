@@ -44,11 +44,6 @@ public class IgPhoto : IDisposable
     #region Public properties
 
     /// <summary>
-    /// Gets, sets image codec.
-    /// </summary>
-    public IIgCodec? Codec { get; set; }
-
-    /// <summary>
     /// Gets, sets original filename.
     /// </summary>
     public string OriginalFilename { get; set; } = string.Empty;
@@ -85,18 +80,10 @@ public class IgPhoto : IDisposable
 
     #endregion
 
-
-    /// <summary>
-    /// Initializes <see cref="IgPhoto"/> instance.
-    /// </summary>
-    public IgPhoto() { }
-
-
     /// <summary>
     /// Initializes <see cref="IgPhoto"/> instance.
     /// </summary>
     /// <param name="filename"></param>
-    /// <param name="codec"></param>
     public IgPhoto(string filename)
     {
         Filename = filename;
@@ -110,9 +97,9 @@ public class IgPhoto : IDisposable
     /// </summary>
     /// <param name="options"></param>
     /// <returns></returns>
-    public async Task LoadAsync(CodecReadOptions? options = null)
+    public async Task LoadAsync(IIgCodec? codec, CodecReadOptions? options = null)
     {
-        _tokenSrc?.Cancel();
+        //_tokenSrc?.Cancel();
         _tokenSrc = new();
 
         // reset done status
@@ -125,11 +112,11 @@ public class IgPhoto : IDisposable
 
         try
         {
-            if (Codec == null)
-                throw new NullReferenceException(nameof(Codec));
+            if (codec == null)
+                throw new NullReferenceException(nameof(codec));
 
             // load image data
-            var metadata = Codec.LoadMetadata(Filename, options);
+            var metadata = codec.LoadMetadata(Filename, options);
             FramesCount = metadata?.FramesCount ?? 0;
 
             options = options with
@@ -138,18 +125,22 @@ public class IgPhoto : IDisposable
             };
 
             // load image
-            Image = await Codec.LoadAsync(Filename, options, _tokenSrc.Token);
+            Image = await codec.LoadAsync(Filename, options, _tokenSrc.Token);
 
+            // done loading
+            IsDone = true;
         }
-        catch (TaskCanceledException) { }
+        catch (TaskCanceledException) {
+            Image = null;
+        }
         catch (Exception ex)
         {
             // save the error
             Error = ex;
-        }
 
-        // done loading
-        IsDone = true;
+            // done loading
+            IsDone = true;
+        }
     }
 
 

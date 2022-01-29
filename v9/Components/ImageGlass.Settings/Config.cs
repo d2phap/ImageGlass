@@ -384,7 +384,7 @@ public class Config
     /// <summary>
     /// Gets, sets the number of images cached by Image
     /// </summary>
-    public static int ImageBoosterCachedCount { get; set; } = 1;
+    public static int ImageBoosterCachedCount { get; set; } = 0;
 
     /// <summary>
     /// Gets, sets fixed width on zooming
@@ -435,11 +435,6 @@ public class Config
 
 
     #region Array items
-
-    /// <summary>
-    /// Gets, sets zoom levels of the viewer
-    /// </summary>
-    public static int[] ZoomLevels { get; set; } = new int[] { 5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 90, 100, 125, 150, 175, 200, 250, 300, 350, 400, 500, 600, 700, 800, 1000, 1200, 1500, 1800, 2100, 2500, 3000, 3500 };
 
     /// <summary>
     /// Gets, sets the list of Image Editing Association
@@ -739,8 +734,6 @@ public class Config
         // Array values
         #region Array items
 
-        ZoomLevels = items.GetValue(nameof(ZoomLevels), ZoomLevels);
-
         #region EditApps
 
         var appStr = items.GetValue(nameof(EditApps), "");
@@ -1002,7 +995,6 @@ public class Config
 
         #region Array items
 
-        settings.TryAdd(nameof(ZoomLevels), ZoomLevels);
         settings.TryAdd(nameof(EditApps), GetEditApps(EditApps));
         settings.TryAdd(nameof(AllFormats), GetImageFormats(AllFormats));
         settings.TryAdd(nameof(SinglePageFormats), GetImageFormats(SinglePageFormats));

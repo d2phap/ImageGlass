@@ -119,7 +119,7 @@ public class ImageBooster : IDisposable
     /// Gets, sets the number of maximum items in queue list for 1 direction (Next or Back navigation).
     /// The maximum number of items in queue list is 2x + 1.
     /// </summary>
-    public int MaxQueue { get; set; } = 0;
+    public int MaxQueue { get; set; } = 1;
 
     /// <summary>
     /// Gets, sets the value of <see cref="ColorChannels"/> to apply to the entire image list.
@@ -143,23 +143,9 @@ public class ImageBooster : IDisposable
     /// Initializes <see cref="ImageBooster"/> instance.
     /// </summary>
     /// <param name="codec"></param>
-    public ImageBooster(IIgCodec codec) : this(new List<string>(0), codec) { }
-
-
-    /// <summary>
-    /// Initializes <see cref="ImageBooster"/> instance.
-    /// </summary>
-    /// <param name="filenames">List of filenames</param>
-    /// <param name="codec">Codec</param>
-    public ImageBooster(IList<string> filenames, IIgCodec codec)
+    public ImageBooster(IIgCodec codec)
     {
         Codec = codec;
-
-        // import filenames to the list
-        foreach (var filename in filenames)
-        {
-            ImgList.Add(new IgPhoto(filename));
-        }
 
         // start background service worker
         IsRunWorker = true;
@@ -269,10 +255,8 @@ public class ImageBooster : IDisposable
                     //    || metadata?.Height > MaxImageSizePreload)
                     //    continue;
 
-                    img.Codec = Codec;
-
                     // start loading image file
-                    await img.LoadAsync(ReadOptions with
+                    await img.LoadAsync(Codec, ReadOptions with
                     {
                         FirstFrameOnly = SinglePageFormats.Contains(img.Extension),
                         Metadata = metadata,
@@ -291,7 +275,7 @@ public class ImageBooster : IDisposable
     /// <param name="index">Item index</param>
     public void CancelLoading(int index)
     {
-        if (ImgList[index] is not null)
+        if (0 <= index && index < ImgList.Count)
         {
             ImgList[index].CancelLoading();
         }
@@ -299,12 +283,26 @@ public class ImageBooster : IDisposable
 
 
     /// <summary>
-    /// Add a filename to the list
+    /// Adds a file path
     /// </summary>
-    /// <param name="filename">Image filename</param>
-    public void Add(string filename)
+    /// <param name="filePath">Image file path</param>
+    public void Add(string filePath)
     {
-        ImgList.Add(new IgPhoto(filename));
+        ImgList.Add(new IgPhoto(filePath));
+    }
+
+
+    /// <summary>
+    /// Adds multiple file paths
+    /// </summary>
+    /// <param name="filePaths"></param>
+    public void Add(IEnumerable<string> filePaths)
+    {
+        // import filenames to the list
+        foreach (var filename in filePaths)
+        {
+            Add(filename);
+        }
     }
 
     /// <summary>
@@ -319,7 +317,7 @@ public class ImageBooster : IDisposable
         // reload fresh new image data
         if (isSkipCache)
         {
-            await ImgList[index].LoadAsync(ReadOptions with
+            await ImgList[index].LoadAsync(Codec, ReadOptions with
             {
                 FirstFrameOnly = SinglePageFormats.Contains(ImgList[index].Extension),
             }).ConfigureAwait(true);
