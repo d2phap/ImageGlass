@@ -179,8 +179,10 @@ public class GDIGraphics : IHybridGraphics
     #region Draw image
 
     /// <param name="interpolationMode">0 = NearestNeighbor; 1 = Linear</param>
-    public void DrawImage(Bitmap bmp, RectangleF destRect, RectangleF srcRect, float opacity = 1f, int interpolationMode = 0)
+    public void DrawImage(Bitmap? bmp, RectangleF destRect, RectangleF srcRect, float opacity = 1f, int interpolationMode = 0)
     {
+        if (bmp is null) return;
+
         if (interpolationMode == 0)
         {
             Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;

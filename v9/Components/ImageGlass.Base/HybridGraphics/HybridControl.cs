@@ -105,7 +105,7 @@ public class HybridControl : Control
     /// </summary>
     [Category("Graphics")]
     [DefaultValue(false)]
-    public bool ShowFPS { get; set; } = false;
+    public bool ShowDebugInfo { get; set; } = false;
 
     /// <summary>
     /// Enables animation support for the control.
@@ -349,8 +349,8 @@ public class HybridControl : Control
         }
 
 
-        // FPS info
-        if (ShowFPS)
+        // Show debug info
+        if (ShowDebugInfo)
         {
             if (_lastFpsUpdate.Second != DateTime.UtcNow.Second)
             {
@@ -363,10 +363,17 @@ public class HybridControl : Control
                 _currentFps++;
             }
 
-            var info = string.Format("{0} FPS", _lastFps);
+            var info = $"{_lastFps} FPS, {(UseHardwareAcceleration ? "GPU" : "GDI+")}";
             var size = e.Graphics.MeasureString(info, Font, Width);
+            var infoRect = new RectangleF(
+                ClientRectangle.Right - size.Width - 10,
+                5, size.Width, size.Height);
 
-            e.Graphics.DrawString(info, Font, Brushes.Black, ClientRectangle.Right - size.Width - 10, 5);
+            using var infoBgBrush = new SolidBrush(Color.FromArgb(180, BackColor));
+            e.Graphics.FillRectangle(infoBgBrush, infoRect);
+
+            using var infoTextBrush = new SolidBrush(ForeColor);
+            e.Graphics.DrawString(info, Font, infoTextBrush, infoRect);
         }
 
 

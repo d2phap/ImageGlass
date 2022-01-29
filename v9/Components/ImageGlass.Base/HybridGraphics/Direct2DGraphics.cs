@@ -153,8 +153,10 @@ public class Direct2DGraphics : IHybridGraphics
     #region Draw image
 
     /// <param name="interpolationMode">0 = NearestNeighbor; 1 = Linear</param>
-    public void DrawImage(Bitmap bmp, RectangleF destRect, RectangleF srcRect, float opacity = 1f, int interpolationMode = 0)
+    public void DrawImage(Bitmap? bmp, RectangleF destRect, RectangleF srcRect, float opacity = 1f, int interpolationMode = 0)
     {
+        if (bmp is null) return;
+
         Graphics.DrawGDIBitmap(bmp.GetHbitmap(), destRect, srcRect, opacity, true, (D2DBitmapInterpolationMode)interpolationMode);
     }
 
@@ -162,8 +164,10 @@ public class Direct2DGraphics : IHybridGraphics
     /// Draw image using Direct2D
     /// </summary>
     /// <param name="interpolationMode">0 = NearestNeighbor; 1 = Linear</param>
-    public void DrawImage(D2DBitmap d2dBmp, RectangleF destRect, RectangleF srcRect, float opacity = 1f, int interpolationMode = 0)
+    public void DrawImage(D2DBitmap? d2dBmp, RectangleF destRect, RectangleF srcRect, float opacity = 1f, int interpolationMode = 0)
     {
+        if (d2dBmp is null) return;
+
         Graphics.DrawBitmap(d2dBmp, destRect, srcRect, opacity, (D2DBitmapInterpolationMode)interpolationMode);
     }
 

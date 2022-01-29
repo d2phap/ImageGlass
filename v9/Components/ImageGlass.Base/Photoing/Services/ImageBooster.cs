@@ -119,7 +119,7 @@ public class ImageBooster : IDisposable
     /// Gets, sets the number of maximum items in queue list for 1 direction (Next or Back navigation).
     /// The maximum number of items in queue list is 2x + 1.
     /// </summary>
-    public int MaxQueue { get; set; } = 1;
+    public int MaxQueue { get; set; } = 0;
 
     /// <summary>
     /// Gets, sets the value of <see cref="ColorChannels"/> to apply to the entire image list.

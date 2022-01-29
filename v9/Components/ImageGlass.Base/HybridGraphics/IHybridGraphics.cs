@@ -56,7 +56,7 @@ public interface IHybridGraphics : IDisposable
     // draw image
     void DrawMemoryBitmap(MemoryBitmap mb, int x, int y);
     void DrawMemoryBitmap(int x, int y, int w, int h, int stride, IntPtr buf, int offset, int length);
-    void DrawImage(Bitmap bmp, RectangleF destRect, RectangleF srcRect, float opacity = 1f, int interpolationMode = 0);
+    void DrawImage(Bitmap? bmp, RectangleF destRect, RectangleF srcRect, float opacity = 1f, int interpolationMode = 0);
     
 
     // others
