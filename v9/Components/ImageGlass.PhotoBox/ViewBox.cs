@@ -36,8 +36,8 @@ namespace ImageGlass.PhotoBox;
 /// </summary>
 public partial class ViewBox : HybridControl
 {
-    private Bitmap? _gdiBitmap;
-    private D2DBitmap? _d2dBitmap;
+    private Bitmap? _imageGdiPlus;
+    private D2DBitmap? _imageD2D;
     private CancellationTokenSource? _msgTokenSrc;
 
 
@@ -86,8 +86,9 @@ public partial class ViewBox : HybridControl
     public float _navBorderRadius = 45f;
 
 
-
     #region Public properties
+
+
 
 
     // Viewport
@@ -117,30 +118,53 @@ public partial class ViewBox : HybridControl
     #region Image information
 
     /// <summary>
-    /// Checks if the bitmap image has alpha pixels
+    /// Checks if the bitmap image has alpha pixels.
     /// </summary>
     [Browsable(false)]
-    public bool HasAlphaPixels => _gdiBitmap is not null && _gdiBitmap.PixelFormat.HasFlag(PixelFormat.Alpha);
+    public bool HasAlphaPixels { get; private set; } = false;
 
     /// <summary>
-    /// Gets, sets the value indicates whether it's animating
+    /// Checks if the bitmap image can animate.
     /// </summary>
     [Browsable(false)]
-    public bool IsAnimatingImage { get; protected set; } = false;
+    public bool CanImageAnimate { get; private set; } = false;
 
     /// <summary>
-    /// Gets, sets the value indicates whether the image can animate
+    /// Checks if the image is animating.
     /// </summary>
     [Browsable(false)]
-    public bool CanImageAnimate
+    public bool IsImageAnimating { get; protected set; } = false;
+
+    /// <summary>
+    /// Gets value that Direct2D can be used to draw the input image.
+    /// </summary>
+    public bool CanUseDirect2D => !CanImageAnimate && !HasAlphaPixels;
+
+    /// <summary>
+    /// Checks if the input image is null.
+    /// </summary>
+    public bool IsImageNull
     {
         get
         {
-            if (_gdiBitmap is null) return false;
+            if (CanUseDirect2D && UseHardwareAcceleration)
+            {
+                return _imageD2D is null;
+            }
 
-            return _imageAnimator.CanAnimate(_gdiBitmap);
+            return _imageGdiPlus is null;
         }
     }
+
+    /// <summary>
+    /// Gets the input image's width.
+    /// </summary>
+    public float ImageWidth { get; private set; } = 0;
+
+    /// <summary>
+    /// Gets the input image's height.
+    /// </summary>
+    public float ImageHeight { get; private set; } = 0;
 
     #endregion
 
@@ -159,8 +183,8 @@ public partial class ViewBox : HybridControl
     /// Gets, sets the maximum zoom factor (<c>100% = 1.0f</c>)
     /// </summary>
     [Category("Zooming")]
-    [DefaultValue(40.0f)]
-    public float MaxZoom { get; set; } = 40f;
+    [DefaultValue(35.0f)]
+    public float MaxZoom { get; set; } = 35f;
 
     /// <summary>
     /// Gets, sets current zoom factor (<c>100% = 1.0f</c>)
@@ -399,8 +423,8 @@ public partial class ViewBox : HybridControl
     {
         base.Dispose(disposing);
 
-        _d2dBitmap?.Dispose();
-        _gdiBitmap?.Dispose();
+        _imageD2D?.Dispose();
+        _imageGdiPlus?.Dispose();
 
         NavLeftImage?.Dispose();
         NavRightImage?.Dispose();
@@ -453,7 +477,7 @@ public partial class ViewBox : HybridControl
 
         // Image panning check
         #region Image panning check
-        if (_d2dBitmap is not null)
+        if (!IsImageNull)
         {
             _panHostPoint.X = e.Location.X;
             _panHostPoint.Y = e.Location.Y;
@@ -618,7 +642,7 @@ public partial class ViewBox : HybridControl
     {
         base.OnMouseWheel(e);
 
-        if (!IsReady || _d2dBitmap is null || e.Delta == 0) return;
+        if (!IsReady || IsImageNull || e.Delta == 0) return;
 
         _ = ZoomToPoint(e.Delta, e.Location);
     }
@@ -628,7 +652,7 @@ public partial class ViewBox : HybridControl
         _shouldRecalculateDrawingRegion = true;
 
         // redraw the control on resizing if it's not manual zoom
-        if (IsReady && _d2dBitmap is not null && !_isManualZoom)
+        if (IsReady && !IsImageNull && !_isManualZoom)
         {
             Refresh();
         }
@@ -640,7 +664,7 @@ public partial class ViewBox : HybridControl
     {
         base.OnPreviewKeyDown(e);
 
-        
+
         if (e.KeyCode == Keys.Right)
         {
             StartAnimation(AnimationSource.PanRight);
@@ -700,7 +724,6 @@ public partial class ViewBox : HybridControl
         }
     }
 
-
     protected override void OnFrame()
     {
         base.OnFrame();
@@ -736,7 +759,6 @@ public partial class ViewBox : HybridControl
         }
     }
 
-
     protected override void OnRender(IHybridGraphics g)
     {
         base.OnRender(g);
@@ -767,9 +789,13 @@ public partial class ViewBox : HybridControl
     }
 
 
+    /// <summary>
+    /// Draw GIF frame using GDI+
+    /// </summary>
+    /// <param name="hg"></param>
     protected virtual void DrawGifFrame(IHybridGraphics hg)
     {
-        if (_gdiBitmap is null) return;
+        if (IsImageNull) return;
 
         // use GDI+ to handle GIF animation
         var g = hg as GDIGraphics;
@@ -780,12 +806,12 @@ public partial class ViewBox : HybridControl
 
         try
         {
-            if (IsAnimatingImage && !DesignMode)
+            if (IsImageAnimating && !DesignMode)
             {
-                _imageAnimator.UpdateFrames(_gdiBitmap);
+                _imageAnimator.UpdateFrames(_imageGdiPlus);
             }
 
-            g.DrawImage(_gdiBitmap, _destRect, _srcRect, 1, (int)_interpolationMode);
+            g.DrawImage(_imageGdiPlus, _destRect, _srcRect, 1, (int)_interpolationMode);
         }
         catch (ArgumentException)
         {
@@ -798,8 +824,8 @@ public partial class ViewBox : HybridControl
         catch (ExternalException)
         {
             // stop the animation and reset to the first frame.
-            IsAnimatingImage = false;
-            _imageAnimator.StopAnimate(_gdiBitmap, OnImageFrameChanged);
+            IsImageAnimating = false;
+            _imageAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
         }
         catch (InvalidOperationException)
         {
@@ -808,17 +834,20 @@ public partial class ViewBox : HybridControl
             // the correct response.
 
             // stop the animation and reset to the first frame.
-            IsAnimatingImage = false;
-            _imageAnimator.StopAnimate(_gdiBitmap, OnImageFrameChanged);
+            IsImageAnimating = false;
+            _imageAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
         }
 
         g.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
     }
 
 
+    /// <summary>
+    /// Calculates the drawing region
+    /// </summary>
     protected virtual void CalculateDrawingRegion()
     {
-        if (_d2dBitmap is null || _shouldRecalculateDrawingRegion is false) return;
+        if (IsImageNull || _shouldRecalculateDrawingRegion is false) return;
 
         var zoomX = _drawPoint.X;
         var zoomY = _drawPoint.Y;
@@ -829,12 +858,12 @@ public partial class ViewBox : HybridControl
         var clientW = Width;
         var clientH = Height;
 
-        if (clientW > _d2dBitmap.Width * _zoomFactor)
+        if (clientW > ImageWidth * _zoomFactor)
         {
             _srcRect.X = 0;
-            _srcRect.Width = _d2dBitmap.Width;
-            _destRect.X = (clientW - _d2dBitmap.Width * _zoomFactor) / 2.0f;
-            _destRect.Width = _d2dBitmap.Width * _zoomFactor;
+            _srcRect.Width = ImageWidth;
+            _destRect.X = (clientW - ImageWidth * _zoomFactor) / 2.0f;
+            _destRect.Width = ImageWidth * _zoomFactor;
         }
         else
         {
@@ -845,12 +874,12 @@ public partial class ViewBox : HybridControl
         }
 
 
-        if (clientH > _d2dBitmap.Height * _zoomFactor)
+        if (clientH > ImageHeight * _zoomFactor)
         {
             _srcRect.Y = 0;
-            _srcRect.Height = _d2dBitmap.Height;
-            _destRect.Y = (clientH - _d2dBitmap.Height * _zoomFactor) / 2f;
-            _destRect.Height = _d2dBitmap.Height * _zoomFactor;
+            _srcRect.Height = ImageHeight;
+            _destRect.Y = (clientH - ImageHeight * _zoomFactor) / 2f;
+            _destRect.Height = ImageHeight * _zoomFactor;
         }
         else
         {
@@ -863,10 +892,10 @@ public partial class ViewBox : HybridControl
         _oldZoomFactor = _zoomFactor;
         //------------------------
 
-        if (_srcRect.X + _srcRect.Width > _d2dBitmap.Width)
+        if (_srcRect.X + _srcRect.Width > ImageWidth)
         {
             _xOut = true;
-            _srcRect.X = _d2dBitmap.Width - _srcRect.Width;
+            _srcRect.X = ImageWidth - _srcRect.Width;
         }
 
         if (_srcRect.X < 0)
@@ -875,10 +904,10 @@ public partial class ViewBox : HybridControl
             _srcRect.X = 0;
         }
 
-        if (_srcRect.Y + _srcRect.Height > _d2dBitmap.Height)
+        if (_srcRect.Y + _srcRect.Height > ImageHeight)
         {
             _yOut = true;
-            _srcRect.Y = _d2dBitmap.Height - _srcRect.Height;
+            _srcRect.Y = ImageHeight - _srcRect.Height;
         }
 
         if (_srcRect.Y < 0)
@@ -891,20 +920,32 @@ public partial class ViewBox : HybridControl
     }
 
 
+    /// <summary>
+    /// Draw the input image.
+    /// </summary>
+    /// <param name="g">Drawing graphic object.</param>
     protected virtual void DrawImageLayer(IHybridGraphics g)
     {
-        if (_d2dBitmap is not null && UseHardwareAcceleration)
+        if (IsImageNull) return;
+
+        g.FillRectangle(_destRect, Color.Yellow);
+
+        if (CanUseDirect2D && UseHardwareAcceleration)
         {
             var d2dg = g as Direct2DGraphics;
-            d2dg?.DrawImage(_d2dBitmap, _destRect, _srcRect, 1f, (int)_interpolationMode);
+            d2dg?.DrawImage(_imageD2D, _destRect, _srcRect, 1f, (int)_interpolationMode);
         }
-        else if (_gdiBitmap is not null)
+        else
         {
-            g.DrawImage(_gdiBitmap, _destRect, _srcRect, 1f, (int)_interpolationMode);
+            g.DrawImage(_imageGdiPlus, _destRect, _srcRect, 1f, (int)_interpolationMode);
         }
     }
 
 
+    /// <summary>
+    /// Draw checkerboard background
+    /// </summary>
+    /// <param name="g"></param>
     protected virtual void DrawCheckerboardLayer(IHybridGraphics g)
     {
         if (CheckerboardMode == CheckerboardMode.None) return;
@@ -924,7 +965,7 @@ public partial class ViewBox : HybridControl
             region = ClientRectangle;
         }
 
-        
+
         if (UseHardwareAcceleration)
         {
             // grid size
@@ -972,6 +1013,10 @@ public partial class ViewBox : HybridControl
     }
 
 
+    /// <summary>
+    /// Draws text message
+    /// </summary>
+    /// <param name="g"></param>
     protected virtual void DrawMessageLayer(IHybridGraphics g)
     {
         if (Text.Trim().Length == 0) return;
@@ -1005,6 +1050,10 @@ public partial class ViewBox : HybridControl
     }
 
 
+    /// <summary>
+    /// Draws navigation arrow buttons
+    /// </summary>
+    /// <param name="g"></param>
     protected virtual void DrawNavigationLayer(IHybridGraphics g)
     {
         if (NavDisplay == NavButtonDisplay.None) return;
@@ -1105,19 +1154,21 @@ public partial class ViewBox : HybridControl
     }
 
 
+    /// <summary>
+    /// Updates zoom mode.
+    /// </summary>
+    /// <param name="mode"></param>
     protected virtual void UpdateZoomMode(ZoomMode? mode = null)
     {
-        if (!IsReady || _d2dBitmap is null) return;
+        if (!IsReady || IsImageNull) return;
 
         var viewportW = Width;
         var viewportH = Height;
-        var imgFullW = _d2dBitmap.Width;
-        var imgFullH = _d2dBitmap.Height;
 
         var horizontalPadding = Padding.Left + Padding.Right;
         var verticalPadding = Padding.Top + Padding.Bottom;
-        var widthScale = (viewportW - horizontalPadding) / imgFullW;
-        var heightScale = (viewportH - verticalPadding) / imgFullH;
+        var widthScale = (viewportW - horizontalPadding) / ImageWidth;
+        var heightScale = (viewportH - verticalPadding) / ImageHeight;
 
         float zoomFactor;
         var zoomMode = mode ?? _zoomMode;
@@ -1162,6 +1213,13 @@ public partial class ViewBox : HybridControl
     }
 
 
+    /// <summary>
+    /// Creates checker box tile for drawing checkerboard (GDI+)
+    /// </summary>
+    /// <param name="cellSize"></param>
+    /// <param name="cellColor1"></param>
+    /// <param name="cellColor2"></param>
+    /// <returns></returns>
     private static Bitmap CreateCheckerBoxTile(float cellSize, Color cellColor1, Color cellColor2)
     {
         // draw the tile
@@ -1170,13 +1228,13 @@ public partial class ViewBox : HybridControl
         var result = new Bitmap((int)width, (int)height);
 
         using var g = Graphics.FromImage(result);
-        using (Brush brush = new SolidBrush(cellColor1))
+        using (Brush brush = new SolidBrush(cellColor2))
         {
             g.FillRectangle(brush, new RectangleF(cellSize, 0, cellSize, cellSize));
             g.FillRectangle(brush, new RectangleF(0, cellSize, cellSize, cellSize));
         }
 
-        using (Brush brush = new SolidBrush(cellColor2))
+        using (Brush brush = new SolidBrush(cellColor1))
         {
             g.FillRectangle(brush, new RectangleF(0, 0, cellSize, cellSize));
             g.FillRectangle(brush, new RectangleF(cellSize, cellSize, cellSize, cellSize));
@@ -1334,7 +1392,7 @@ public partial class ViewBox : HybridControl
     /// </returns>
     public bool PanTo(float hDistance, float vDistance, bool requestRerender = true)
     {
-        if (_d2dBitmap is null) return false;
+        if (IsImageNull) return false;
 
         var loc = PointToClient(Cursor.Position);
 
@@ -1423,27 +1481,34 @@ public partial class ViewBox : HybridControl
 
 
     /// <summary>
-    /// Load image from file path
+    /// Checks the input image and updates dependent properties.
     /// </summary>
-    /// <param name="filename">Full path of file</param>
-    public void LoadImage(string filename)
+    /// <param name="bmp"></param>
+    private void CheckInputImage(Bitmap? bmp)
     {
-        if (string.IsNullOrEmpty(filename)) return;
-
-        // disable animations
-        StopAnimatingImage();
-
-        _gdiBitmap?.Dispose();
-        try
+        if (bmp is null)
         {
-            _gdiBitmap = new Bitmap(filename);
+            ImageWidth = 0;
+            ImageHeight = 0;
+            HasAlphaPixels = false;
+            CanImageAnimate = false;
         }
-        catch { }
+        else
+        {
+            ImageWidth = bmp.Width;
+            ImageHeight = bmp.Height;
+            HasAlphaPixels = bmp.PixelFormat.HasFlag(PixelFormat.Alpha);
+            CanImageAnimate = _imageAnimator.CanAnimate(bmp);
+        }
 
-        _d2dBitmap?.Dispose();
-        _d2dBitmap = Device.LoadBitmap(filename);
+        // backup current UseHardwardAcceleration value
+        _useHardwareAccelerationBackup = UseHardwareAcceleration;
 
-        PrepareImage();
+        if (!CanUseDirect2D)
+        {
+            // force using GDI+
+            UseHardwareAcceleration = false;
+        }
     }
 
 
@@ -1451,27 +1516,38 @@ public partial class ViewBox : HybridControl
     /// Load image
     /// </summary>
     /// <param name="bmp"></param>
-    public void LoadImage(Bitmap? bmp)
+    public void SetImage(Bitmap? bmp)
     {
         // disable animations
         StopAnimatingImage();
 
-        _d2dBitmap?.Dispose();
-        _gdiBitmap?.Dispose();
+        // restore the UseHardwardAcceleration value
+        UseHardwareAcceleration = _useHardwareAccelerationBackup;
 
-        _gdiBitmap = bmp;
-        if (_gdiBitmap is null) return;
+        _imageD2D?.Dispose();
+        _imageD2D = null;
+        _imageGdiPlus = null;
 
-        _d2dBitmap = Device.CreateBitmapFromGDIBitmap(_gdiBitmap);
-        PrepareImage();
-    }
+        if (bmp is null) return;
 
-    private void PrepareImage()
-    {
+        // Check and preprocess image info
+        CheckInputImage(bmp);
+
+        // use Direct2D
+        if (CanUseDirect2D && UseHardwareAcceleration)
+        {
+            _imageD2D = Device.CreateBitmapFromGDIBitmap(bmp);
+        }
+        // use GDI+
+        else
+        {
+            _imageGdiPlus = bmp;
+        }
+
         // emit OnImageChanged event
         OnImageChanged?.Invoke(EventArgs.Empty);
 
-        if (CanImageAnimate && _gdiBitmap is not null)
+        if (CanImageAnimate && !IsImageNull)
         {
             UpdateZoomMode();
             StartAnimatingImage();
@@ -1490,42 +1566,36 @@ public partial class ViewBox : HybridControl
 
 
 
+
+
     /// <summary>
     /// Start animating the image if it can animate, using GDI+.
     /// </summary>
     public void StartAnimatingImage()
     {
-        if (IsAnimatingImage || !CanImageAnimate || _gdiBitmap is null)
+        if (IsImageAnimating || !CanImageAnimate || IsImageNull)
             return;
 
         try
         {
-            // backup current UseHardwardAcceleration value
-            _useHardwareAccelerationBackup = UseHardwareAcceleration;
-
-            // force using GDI+ to animate GIF
-            UseHardwareAcceleration = false;
-
-            _imageAnimator.Animate(_gdiBitmap, OnImageFrameChanged);
-            IsAnimatingImage = true;
+            _imageAnimator.Animate(_imageGdiPlus, OnImageFrameChanged);
+            IsImageAnimating = true;
         }
         catch (Exception) { }
     }
+
 
     /// <summary>
     /// Stop animating the image
     /// </summary>
     public void StopAnimatingImage()
     {
-        if (_gdiBitmap is not null)
+        if (!IsImageNull)
         {
-            _imageAnimator.StopAnimate(_gdiBitmap, OnImageFrameChanged);
+            _imageAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
         }
 
-        IsAnimatingImage = false;
-
-        // restore the UseHardwardAcceleration value
-        UseHardwareAcceleration = _useHardwareAccelerationBackup;
+        IsImageAnimating = false;
     }
 
 

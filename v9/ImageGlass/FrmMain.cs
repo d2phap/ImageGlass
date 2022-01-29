@@ -662,7 +662,7 @@ public partial class FrmMain : Form
 
         // Issue #1020 : don't stop existing animation unless we're actually switching images
         // stop the animation
-        if (PicBox.IsAnimatingImage)
+        if (PicBox.IsImageAnimating)
         {
             PicBox.StopAnimatingImage();
         }
@@ -727,7 +727,7 @@ public partial class FrmMain : Form
 
                 if (bmpImg?.Image != null) // && !_loadCancelToken.Token.IsCancellationRequested)
                 {
-                    PicBox.LoadImage(bmpImg.Image);
+                    PicBox.SetImage(bmpImg.Image);
 
                     // Reset the zoom mode if isKeepZoomRatio = FALSE
                     if (!isKeepZoomRatio)
@@ -829,29 +829,9 @@ public partial class FrmMain : Form
 
         PicBox.ShowMessage("Loading image... \n" + filename, 0, 1500);
         var bmp = await Config.Codec.LoadAsync(filename, new(Local.Metadata));
-        PicBox.LoadImage(bmp);
+        PicBox.SetImage(bmp);
     }
 
-
-    private void LoadGallery(string path = "")
-    {
-        SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
-        if (InvokeRequired)
-        {
-            Invoke(LoadGallery, path);
-        }
-
-        var files = Directory.GetFiles(Path.GetDirectoryName(path) ?? "");
-
-        Gallery.Items.Clear();
-        Gallery.SuspendPaint();
-        foreach (var file in files)
-        {
-            var item = new ImageListViewItem(file);
-            Gallery.Items.Add(item);
-        }
-        Gallery.ResumePaint();
-    }
 
 
 
@@ -919,9 +899,16 @@ public partial class FrmMain : Form
 
     private void Gallery_ItemClick(object sender, ItemClickEventArgs e)
     {
-        NextPic(e.Item.FileName);
+        //NextPic(e.Item.FileName);
+        Local.CurrentIndex = e.Item.Index;
+        _ = NextPicAsync(0);
 
         //e.Item.FetchItemDetails();
 
+    }
+
+    private void PicBox_Click(object sender, EventArgs e)
+    {
+        PicBox.Focus();
     }
 }
