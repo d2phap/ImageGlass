@@ -178,7 +178,7 @@ public class ImageBooster : IDisposable
             var img = ImgList[index];
             QueuedList.RemoveAt(0);
 
-
+            
             if (!img.IsDone)
             {
                 var metadata = Codec.LoadMetadata(img.Filename, ReadOptions);
@@ -190,8 +190,6 @@ public class ImageBooster : IDisposable
                     Metadata = metadata,
                 }).ConfigureAwait(true);
             }
-
-            await Task.Delay(10).ConfigureAwait(true);
         }
     }
 
@@ -205,10 +203,7 @@ public class ImageBooster : IDisposable
         // check valid index
         if (index < 0 || index >= ImgList.Count) return;
 
-        var list = new HashSet<int>
-            {
-                index
-            };
+        var list = new HashSet<int> { index };
 
         var maxCachedItems = (MaxQueue * 2) + 1;
         var iRight = index;
@@ -254,6 +249,8 @@ public class ImageBooster : IDisposable
         {
             if (!list.Contains(indexItem) && indexItem >= 0 && indexItem < ImgList.Count)
             {
+                // TODO:
+                // ImgList[indexItem].CancelLoading();
                 ImgList[indexItem].Dispose();
             }
         }
@@ -292,7 +289,11 @@ public class ImageBooster : IDisposable
     /// <param name="useCache"></param>
     /// <param name="pageIndex">The index of image page to display (if it's multi-page). Set pageIndex = int.MinValue to use defaut page index</param>
     /// <returns></returns>
-    public async Task<IgPhoto?> GetAsync(int index, bool useCache = true, int pageIndex = int.MinValue)
+    public async Task<IgPhoto?> GetAsync(
+        int index,
+        bool useCache = true,
+        int pageIndex = int.MinValue,
+        CancellationTokenSource? tokenSrc = null)
     {
         // reload fresh new image data
         if (!useCache)
@@ -300,7 +301,7 @@ public class ImageBooster : IDisposable
             await ImgList[index].LoadAsync(Codec, ReadOptions with
             {
                 FirstFrameOnly = SinglePageFormats.Contains(ImgList[index].Extension),
-            }).ConfigureAwait(true);
+            }, tokenSrc).ConfigureAwait(true);
         }
 
         // get image data from cache

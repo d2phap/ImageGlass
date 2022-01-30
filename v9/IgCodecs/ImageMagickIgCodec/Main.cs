@@ -213,9 +213,11 @@ public class Main : IIgCodec
 
     public async Task<Bitmap?> LoadAsync(string filename,
         CodecReadOptions? options = null,
-        CancellationToken token = default)
+        CancellationToken? token = null)
     {
         options ??= new();
+        var cancelToken = token ?? default;
+
         var ext = Path.GetExtension(filename).ToUpperInvariant();
         var settings = ParseSettings(options, filename);
         Bitmap? output;
@@ -225,17 +227,17 @@ public class Main : IIgCodec
             return new Bitmap(filename);
         }
 
-        if (options.Metadata?.FramesCount > 0)
+        if (options.Metadata?.FramesCount > 1)
         {
             using var imgC = new MagickImageCollection();
-            await imgC.ReadAsync(filename, settings, token);
+            await imgC.ReadAsync(filename, settings, cancelToken);
 
             output = imgC.ToBitmap();
         }
         else
         {
             using var imgM = new MagickImage();
-            await imgM.ReadAsync(filename, settings, token);
+            await imgM.ReadAsync(filename, settings, cancelToken);
 
             output = imgM.ToBitmap();
         }

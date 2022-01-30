@@ -11,6 +11,11 @@ namespace ImageGlass;
 
 public partial class FrmMain : Form
 {
+    // cancellation tokens of synchronious task
+    private System.Threading.CancellationTokenSource _loadCancelToken = new();
+    private System.Threading.CancellationTokenSource _busyCancelToken = new();
+
+
     public FrmMain()
     {
         InitializeComponent();
@@ -155,7 +160,7 @@ public partial class FrmMain : Form
         // Display currentFile while loading the full directory
         if (hasInitFile)
         {
-            _ = NextPicAsync(0, filename: currentFile);
+            _ = NextImageAsync(0, filename: currentFile);
         }
 
         // Parse string to absolute path
@@ -295,7 +300,7 @@ public partial class FrmMain : Form
         if (!skipLoadingImage)
         {
             // Start loading image
-            _ = NextPicAsync(0);
+            _ = NextImageAsync(0);
         }
 
         // TODO:
@@ -562,88 +567,35 @@ public partial class FrmMain : Form
 
 
     /// <summary>
-    /// Change image
+    /// View the next image using jump step
     /// </summary>
-    /// <param name="step">Image step to change. Zero is reload the current image.</param>
-    /// <param name="isKeepZoomRatio"></param>
-    /// <param name="isSkipCache"></param>
-    /// <param name="pageIndex">Set pageIndex = int.MinValue to use default page index</param>
-    public async Task NextPicAsync(int step,
+    private async Task ViewNextAsync(int step,
         bool isKeepZoomRatio = false,
         bool isSkipCache = false,
         int pageIndex = int.MinValue,
-        string filename = "")
+        string filename = "",
+        CancellationTokenSource? token = null)
     {
-        System.Threading.SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
-
-        //if (Local.IsBusy) return;
-
-        // cancel the previous loading task
-        //Local.Images.CancelLoading(Local.CurrentIndex);
-        //_loadCancelToken.Cancel();
-        //_loadCancelToken = new();
-
-
-        // Save previous image if it was modified
-        if (File.Exists(Local.ImageModifiedPath) && Config.IsSaveAfterRotating)
-        {
-            //_ = SaveImageChangeAsync();
-
-            // remove the old image data from cache
-            Local.Images.Unload(Local.CurrentIndex);
-
-            // update thumbnail
-            Gallery.Items[Local.CurrentIndex].Update();
-        }
-        else
-        {
-            // KBR 20190804 Fix obscure issue: 
-            // 1. Rotate/flip image with "IsSaveAfterRotating" is OFF
-            // 2. Move through images
-            // 3. Turn "IsSaveAfterRotating" ON
-            // 4. On navigate to another image, the change made at step 1 will be saved.
-            Local.ImageModifiedPath = "";
-        }
-
-        //SetStatusBar();
-        PicBox.Text = "";
-        Local.IsTempMemoryData = false;
-
-        if (string.IsNullOrEmpty(filename) && Local.Images.Length == 0)
-        {
-            Local.ImageError = new FileNotFoundException();
-            PicBox.SetImage(null);
-            Local.ImageModifiedPath = "";
-
-            return;
-        }
-
+        SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
 
         #region Validate image index
 
         // temp index
-        var tempIndex = Local.CurrentIndex + step;
-
-        //// Issue #609: do not auto-reactivate slideshow if disabled
-        //if (Config.IsSlideshow && timSlideShow.Enabled)
-        //{
-        //    timSlideShow.Enabled = false;
-        //    timSlideShow.Enabled = true;
-        //}
+        var imageIndex = Local.CurrentIndex + step;
 
         // Issue #1019:
         // When showing the initial image, the ImageList is empty; don't show toast messages
         if (!Config.IsSlideshow && !Config.IsLoopBackViewer && Local.Images.Length > 0)
         {
             // Reach end of list
-            if (tempIndex >= Local.Images.Length)
+            if (imageIndex >= Local.Images.Length)
             {
                 PicBox.ShowMessage(Config.Language[$"{Name}._LastItemOfList"], 1500);
                 return;
             }
 
             // Reach the first item of list
-            if (tempIndex < 0)
+            if (imageIndex < 0)
             {
                 PicBox.ShowMessage(Config.Language[$"{Name}._FirstItemOfList"], 1500);
                 return;
@@ -651,31 +603,20 @@ public partial class FrmMain : Form
         }
 
         // Check if current index is greater than upper limit
-        if (tempIndex >= Local.Images.Length)
-            tempIndex = 0;
+        if (imageIndex >= Local.Images.Length)
+            imageIndex = 0;
 
         // Check if current index is less than lower limit
-        if (tempIndex < 0)
-            tempIndex = Local.Images.Length - 1;
-
-        // Update current index
-        Local.CurrentIndex = tempIndex;
+        if (imageIndex < 0)
+            imageIndex = Local.Images.Length - 1;
 
         #endregion
-
-        // Issue #1020 : don't stop existing animation unless we're actually switching images
-        // stop the animation
-        if (PicBox.IsImageAnimating)
-        {
-            PicBox.StopAnimatingImage();
-        }
 
 
         // Select thumbnail item
         SelectCurrentThumbnail();
 
-        //// Raise image changed event
-        //Local.RaiseImageChangedEvent();
+        PicBox.ShowMessage("Loading image... \n" + filename, 0, 1500);
 
         try
         {
@@ -685,53 +626,52 @@ public partial class FrmMain : Form
             Local.Images.ReadOptions.UseRawThumbnail = Config.IsUseRawThumbnail;
             Local.Images.SinglePageFormats = Config.SinglePageFormats;
 
-            //// put app in a 'busy' state around image load: allows us to prevent the user
-            //// from skipping past a slow-to-load image by processing too many arrow clicks
-            //_ = SetAppBusyAsync(true, Config.Language[$"{Name}._Loading"], 2000, 2000);
-
             if (pageIndex != int.MinValue)
             {
                 //UpdateActivePage();
             }
             else
             {
-                IgPhoto? bmpImg;
+                IgPhoto? photo;
+
+                // check if loading is cancelled
+                token?.Token.ThrowIfCancellationRequested();
 
                 // directly load the image file, skip image list
                 if (filename.Length > 0)
                 {
-                    bmpImg = new IgPhoto(filename);
-                    await bmpImg.LoadAsync(Config.Codec, new() {
+                    photo = new IgPhoto(filename);
+                    await photo.LoadAsync(Config.Codec, new()
+                    {
                         ColorProfileName = Config.ColorProfile,
                         IsApplyColorProfileForAll = Config.IsApplyColorProfileForAll,
                         ImageChannel = Local.ImageChannel,
                         UseRawThumbnail = Local.Images.ReadOptions.UseRawThumbnail,
                         //UseEmbeddedThumbnail = Local.Images.
-                        FirstFrameOnly = Config.SinglePageFormats.Contains(bmpImg.Extension)
+                        FirstFrameOnly = Config.SinglePageFormats.Contains(photo.Extension)
                     });
                 }
                 else
                 {
-                    bmpImg = await Local.Images.GetAsync(
-                        Local.CurrentIndex,
+                    photo = await Local.Images.GetAsync(
+                        imageIndex,
                         useCache: !isSkipCache,
-                        pageIndex: pageIndex
-                       ).ConfigureAwait(true);
+                        pageIndex: pageIndex,
+                        tokenSrc: token
+                    ).ConfigureAwait(true);
                 }
 
-                //// Update current frame index
-                //Local.CurrentPageIndex = bmpImg.ActivePageIndex;
-                //Local.CurrentPageCount = bmpImg.FramesCount;
+                Local.ImageError = photo?.Error;
 
-                //Local.CurrentExif = bmpImg.Exif;
-                //Local.CurrentColor = bmpImg.ColorProfile;
-
-                Local.ImageError = bmpImg?.Error;
-
-
-                if (bmpImg?.Image != null) // && !_loadCancelToken.Token.IsCancellationRequested)
+                if (photo?.Image != null)
                 {
-                    PicBox.SetImage(bmpImg.Image);
+                    // check if loading is cancelled
+                    token?.Token.ThrowIfCancellationRequested();
+
+                    PicBox.SetImage(photo.Image);
+
+                    // Update current index
+                    Local.CurrentIndex = imageIndex;
 
                     // Reset the zoom mode if isKeepZoomRatio = FALSE
                     if (!isKeepZoomRatio)
@@ -746,75 +686,93 @@ public partial class FrmMain : Form
                             PicBox.ZoomMode = Config.ZoomMode;
                         }
                     }
+
+                    PicBox.ClearMessage();
                 }
             }
+        }
+        catch (OperationCanceledException)
+        {
+            Local.Images.CancelLoading(imageIndex);
         }
         catch (Exception ex)
         {
             Local.ImageError = ex;
         }
 
-        //// clear busy state
-        //_ = SetAppBusyAsync(false);
 
         // image error
         if (Local.ImageError != null)
         {
             PicBox.SetImage(null);
             Local.ImageModifiedPath = "";
-            //Local.CurrentPageIndex = 0;
-            //Local.CurrentPageCount = 0;
-            //Local.CurrentExif = null;
-            //Local.CurrentColor = null;
 
-            var currentFile = Local.Images.GetFileName(Local.CurrentIndex);
+            var currentFile = Local.Images.GetFileName(imageIndex);
             if (!string.IsNullOrEmpty(currentFile) && !File.Exists(currentFile))
             {
-                Local.Images.Unload(Local.CurrentIndex);
+                Local.Images.Unload(imageIndex);
             }
 
-            PicBox.Text = Config.Language[$"{Name}.picMain._ErrorText"] + "\r\n" + Local.ImageError.Source + ": " + Local.ImageError.Message;
+            PicBox.ShowMessage(Config.Language[$"{Name}.picMain._ErrorText"] + "\r\n" + Local.ImageError.Source + ": " + Local.ImageError.Message);
         }
 
-        //SetStatusBar();
-
-        //_isDraggingImage = false;
-
-        //// reset countdown timer value
-        //_slideshowCountdown = Config.RandomizeSlideshowInterval();
-
-        //// reset Cropping region
-        //ShowCropTool(mnuMainCrop.Checked);
-
-        //// auto-show Page Nav tool
-        //if (Local.CurrentPageCount > 1 && Config.IsShowPageNavAuto)
-        //{
-        //    ShowPageNavTool(true);
-        //}
-        //// hide the Page Nav tool
-        //else if (!Config.IsShowPageNavOnStartup)
-        //{
-        //    ShowPageNavTool(false);
-        //}
 
         // Collect system garbage
         GC.Collect();
         GC.WaitForPendingFinalizers();
         GC.Collect();
-
-
-        //void UpdateActivePage()
-        //{
-        //    var currentFile = Local.Images.GetFileName(Local.CurrentIndex);
-        //    Local.CurrentPageIndex = Heart.Img.SetActivePage((Bitmap)picMain.Image, pageIndex, currentFile);
-
-        //    // Refresh picMain to update the active page
-        //    picMain.Invalidate();
-        //}
     }
 
 
+    /// <summary>
+    /// View the next image using jump step
+    /// </summary>
+    /// <param name="step">The step to change image index. Use <c>0</c> to reload the viewing image.</param>
+    /// <param name="isKeepZoomRatio"></param>
+    /// <param name="isSkipCache"></param>
+    /// <param name="pageIndex">Use <see cref="int.MinValue"/> to load the default page index.</param>
+    /// <param name="filename"></param>
+    public async Task NextImageAsync(int step,
+        bool isKeepZoomRatio = false,
+        bool isSkipCache = false,
+        int pageIndex = int.MinValue,
+        string filename = "")
+    {
+        _loadCancelToken?.Cancel();
+        _loadCancelToken = new();
 
+        await ViewNextAsync(step, isKeepZoomRatio, isSkipCache, pageIndex, filename, _loadCancelToken);
+    }
+
+
+    /// <summary>
+    /// View image using index
+    /// </summary>
+    /// <param name="index">Image index</param>
+    private async void GoToImageAsync(int index)
+    {
+        _loadCancelToken?.Cancel();
+        _loadCancelToken = new();
+
+        Local.CurrentIndex = index;
+        await ViewNextAsync(0, token: _loadCancelToken);
+    }
+
+
+    private void Gallery_ItemClick(object sender, ItemClickEventArgs e)
+    {
+        if (e.Item.Index == Local.CurrentIndex)
+        {
+            PicBox.Refresh();
+        }
+        else
+        {
+            GoToImageAsync(e.Item.Index);
+        }
+
+
+        //e.Item.FetchItemDetails();
+    }
 
 
 
@@ -901,21 +859,6 @@ public partial class FrmMain : Form
         catch { }
     }
 
-    private void Gallery_ItemClick(object sender, ItemClickEventArgs e)
-    {
-        if (e.Item.Index == Local.CurrentIndex)
-        {
-            PicBox.Refresh();
-        }
-        else
-        {
-            Local.CurrentIndex = e.Item.Index;
-            _ = NextPicAsync(0);
-        }
-        
-
-        //e.Item.FetchItemDetails();
-    }
 
     private void PicBox_Click(object sender, EventArgs e)
     {

@@ -100,14 +100,14 @@ public class IgPhoto : IDisposable
     /// <summary>
     /// Load the photo.
     /// </summary>
+    /// <param name="codec"></param>
     /// <param name="options"></param>
     /// <returns></returns>
-    public async Task LoadAsync(IIgCodec? codec, CodecReadOptions? options = null)
+    /// <exception cref="NullReferenceException"></exception>
+    private async Task LoadImageAsync(
+        IIgCodec? codec,
+        CodecReadOptions? options = null)
     {
-        IsDisposed = false;
-        _tokenSrc?.Cancel();
-        _tokenSrc = new();
-
         // reset done status
         IsDone = false;
 
@@ -131,13 +131,13 @@ public class IgPhoto : IDisposable
             };
 
             // load image
-            Image = await codec.LoadAsync(Filename, options, _tokenSrc.Token);
+            Image = await codec.LoadAsync(Filename, options, _tokenSrc?.Token);
 
             // done loading
             IsDone = true;
         }
-        catch (TaskCanceledException) {
-            Image = null;
+        catch (OperationCanceledException) {
+            Dispose();
         }
         catch (Exception ex)
         {
@@ -151,12 +151,28 @@ public class IgPhoto : IDisposable
 
 
     /// <summary>
+    /// Read and load image into memory.
+    /// </summary>
+    /// <param name="codec"></param>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    public async Task LoadAsync(
+        IIgCodec? codec,
+        CodecReadOptions? options = null,
+        CancellationTokenSource? tokenSrc = null)
+    {
+        _tokenSrc = tokenSrc ?? new();
+
+        await LoadImageAsync(codec, options);
+    }
+
+
+    /// <summary>
     /// Cancels image loading.
     /// </summary>
     public void CancelLoading()
     {
         _tokenSrc?.Cancel();
-        IsDisposed = false;
     }
 
     #endregion

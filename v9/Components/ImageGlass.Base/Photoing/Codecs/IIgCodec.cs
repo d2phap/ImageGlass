@@ -91,7 +91,7 @@ public interface IIgCodec : IDisposable
     /// <param name="token">Cancellation token</param>
     Task<Bitmap?> LoadAsync(string filename,
         CodecReadOptions? options = default,
-        CancellationToken token = default);
+        CancellationToken? token = null);
 
 
     /// <summary>
