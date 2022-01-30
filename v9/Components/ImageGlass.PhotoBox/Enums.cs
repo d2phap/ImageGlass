@@ -34,3 +34,13 @@ public enum AnimationSource
     ZoomIn = 1 << 5,
     ZoomOut = 1 << 6,
 }
+
+
+[Flags]
+public enum ImageSource
+{
+    Null = 0,
+
+    Direct2D = 1 << 1,
+    GDIPlus = 1 << 2,
+}

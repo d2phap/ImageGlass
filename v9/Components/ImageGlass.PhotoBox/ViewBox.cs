@@ -136,25 +136,9 @@ public partial class ViewBox : HybridControl
     public bool IsImageAnimating { get; protected set; } = false;
 
     /// <summary>
-    /// Gets value that Direct2D can be used to draw the input image.
-    /// </summary>
-    public bool CanUseDirect2D => !CanImageAnimate && !HasAlphaPixels;
-
-    /// <summary>
     /// Checks if the input image is null.
     /// </summary>
-    public bool IsImageNull
-    {
-        get
-        {
-            if (CanUseDirect2D && UseHardwareAcceleration)
-            {
-                return _imageD2D is null;
-            }
-
-            return _imageGdiPlus is null;
-        }
-    }
+    public ImageSource Source { get; private set; } = ImageSource.Null;
 
     /// <summary>
     /// Gets the input image's width.
@@ -477,7 +461,7 @@ public partial class ViewBox : HybridControl
 
         // Image panning check
         #region Image panning check
-        if (!IsImageNull)
+        if (Source != ImageSource.Null)
         {
             _panHostPoint.X = e.Location.X;
             _panHostPoint.Y = e.Location.Y;
@@ -642,7 +626,7 @@ public partial class ViewBox : HybridControl
     {
         base.OnMouseWheel(e);
 
-        if (!IsReady || IsImageNull || e.Delta == 0) return;
+        if (!IsReady || Source == ImageSource.Null || e.Delta == 0) return;
 
         _ = ZoomToPoint(e.Delta, e.Location);
     }
@@ -652,7 +636,7 @@ public partial class ViewBox : HybridControl
         _shouldRecalculateDrawingRegion = true;
 
         // redraw the control on resizing if it's not manual zoom
-        if (IsReady && !IsImageNull && !_isManualZoom)
+        if (IsReady && Source != ImageSource.Null && !_isManualZoom)
         {
             Refresh();
         }
@@ -795,7 +779,7 @@ public partial class ViewBox : HybridControl
     /// <param name="hg"></param>
     protected virtual void DrawGifFrame(IHybridGraphics hg)
     {
-        if (IsImageNull) return;
+        if (Source == ImageSource.Null) return;
 
         // use GDI+ to handle GIF animation
         var g = hg as GDIGraphics;
@@ -847,7 +831,7 @@ public partial class ViewBox : HybridControl
     /// </summary>
     protected virtual void CalculateDrawingRegion()
     {
-        if (IsImageNull || _shouldRecalculateDrawingRegion is false) return;
+        if (Source == ImageSource.Null || _shouldRecalculateDrawingRegion is false) return;
 
         var zoomX = _drawPoint.X;
         var zoomY = _drawPoint.Y;
@@ -926,9 +910,9 @@ public partial class ViewBox : HybridControl
     /// <param name="g">Drawing graphic object.</param>
     protected virtual void DrawImageLayer(IHybridGraphics g)
     {
-        if (IsImageNull) return;
+        if (Source == ImageSource.Null) return;
 
-        if (CanUseDirect2D && UseHardwareAcceleration)
+        if (Source == ImageSource.Direct2D)
         {
             var d2dg = g as Direct2DGraphics;
             d2dg?.DrawImage(_imageD2D, _destRect, _srcRect, 1f, (int)_interpolationMode);
@@ -1158,7 +1142,7 @@ public partial class ViewBox : HybridControl
     /// <param name="mode"></param>
     protected virtual void UpdateZoomMode(ZoomMode? mode = null)
     {
-        if (!IsReady || IsImageNull) return;
+        if (!IsReady || Source == ImageSource.Null) return;
 
         var viewportW = Width;
         var viewportH = Height;
@@ -1390,7 +1374,7 @@ public partial class ViewBox : HybridControl
     /// </returns>
     public bool PanTo(float hDistance, float vDistance, bool requestRerender = true)
     {
-        if (IsImageNull) return false;
+        if (Source == ImageSource.Null) return false;
 
         var loc = PointToClient(Cursor.Position);
 
@@ -1499,10 +1483,12 @@ public partial class ViewBox : HybridControl
             CanImageAnimate = _imageAnimator.CanAnimate(bmp);
         }
 
+        var shouldUseDirect2D = !CanImageAnimate && !HasAlphaPixels;
+
         // backup current UseHardwardAcceleration value
         _useHardwareAccelerationBackup = UseHardwareAcceleration;
 
-        if (!CanUseDirect2D)
+        if (!shouldUseDirect2D)
         {
             // force using GDI+
             UseHardwareAcceleration = false;
@@ -1514,7 +1500,7 @@ public partial class ViewBox : HybridControl
     /// Load image
     /// </summary>
     /// <param name="bmp"></param>
-    public void SetImage(Bitmap? bmp)
+    public async void SetImage(Bitmap? bmp)
     {
         // disable animations
         StopAnimatingImage();
@@ -1522,8 +1508,10 @@ public partial class ViewBox : HybridControl
         // restore the UseHardwardAcceleration value
         UseHardwareAcceleration = _useHardwareAccelerationBackup;
 
+        Source = ImageSource.Null;
         _imageD2D?.Dispose();
         _imageD2D = null;
+        _imageGdiPlus?.Dispose();
         _imageGdiPlus = null;
 
         if (bmp is null) return;
@@ -1532,20 +1520,22 @@ public partial class ViewBox : HybridControl
         CheckInputImage(bmp);
 
         // use Direct2D
-        if (CanUseDirect2D && UseHardwareAcceleration)
+        if (UseHardwareAcceleration && !CanImageAnimate && !HasAlphaPixels)
         {
             _imageD2D = Device.CreateBitmapFromGDIBitmap(bmp);
+            Source = ImageSource.Direct2D;
         }
         // use GDI+
         else
         {
             _imageGdiPlus = bmp;
+            Source = ImageSource.GDIPlus;
         }
 
         // emit OnImageChanged event
         OnImageChanged?.Invoke(EventArgs.Empty);
 
-        if (CanImageAnimate && !IsImageNull)
+        if (CanImageAnimate && Source != ImageSource.Null)
         {
             UpdateZoomMode();
             StartAnimatingImage();
@@ -1571,7 +1561,7 @@ public partial class ViewBox : HybridControl
     /// </summary>
     public void StartAnimatingImage()
     {
-        if (IsImageAnimating || !CanImageAnimate || IsImageNull)
+        if (IsImageAnimating || !CanImageAnimate || Source == ImageSource.Null)
             return;
 
         try
@@ -1588,7 +1578,7 @@ public partial class ViewBox : HybridControl
     /// </summary>
     public void StopAnimatingImage()
     {
-        if (!IsImageNull)
+        if (Source != ImageSource.Null)
         {
             _imageAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
         }
