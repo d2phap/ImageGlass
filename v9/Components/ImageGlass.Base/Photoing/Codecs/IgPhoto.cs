@@ -156,7 +156,7 @@ public class IgPhoto : IDisposable
     public void CancelLoading()
     {
         _tokenSrc?.Cancel();
-        Dispose();
+        IsDisposed = false;
     }
 
     #endregion

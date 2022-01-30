@@ -579,7 +579,7 @@ public partial class FrmMain : Form
         //if (Local.IsBusy) return;
 
         // cancel the previous loading task
-        Local.Images.CancelLoading(Local.CurrentIndex);
+        //Local.Images.CancelLoading(Local.CurrentIndex);
         //_loadCancelToken.Cancel();
         //_loadCancelToken = new();
 
@@ -714,7 +714,7 @@ public partial class FrmMain : Form
                 {
                     bmpImg = await Local.Images.GetAsync(
                         Local.CurrentIndex,
-                        isSkipCache: isSkipCache,
+                        useCache: !isSkipCache,
                         pageIndex: pageIndex
                        ).ConfigureAwait(true);
                 }

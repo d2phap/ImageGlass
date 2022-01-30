@@ -39,10 +39,17 @@ public class ImageBooster : IDisposable
 
         if (disposing)
         {
-            // Free any other managed objects
+            // Free any other managed objects here.
+            FileNames.Clear();
+            QueuedList.Clear();
+            ImgList.Clear();
+            FreeList.Clear();
 
-            // stop the worker
-            IsRunWorker = false;
+            if (Worker != null)
+            {
+                Worker.DoWork -= Worker_DoWork;
+                Worker.Dispose();
+            }
 
             // clear list and release resources
             Clear();
@@ -69,6 +76,11 @@ public class ImageBooster : IDisposable
     #region PRIVATE PROPERTIES
 
     /// <summary>
+    /// Image booster background service
+    /// </summary>
+    private readonly BackgroundWorker Worker = new();
+
+    /// <summary>
     /// The list of Imgs
     /// </summary>
     private List<IgPhoto> ImgList { get; } = new();
@@ -83,7 +95,6 @@ public class ImageBooster : IDisposable
     /// </summary>
     private List<int> FreeList { get; } = new();
 
-    private bool IsRunWorker { get; set; } = false;
 
     #endregion
 
@@ -147,14 +158,43 @@ public class ImageBooster : IDisposable
     {
         Codec = codec;
 
-        // start background service worker
-        IsRunWorker = true;
-        var _bw = new BackgroundWorker();
-        _bw.RunWorkerAsync(StartService());
+        // background worker
+        Worker.DoWork -= Worker_DoWork;
+        Worker.DoWork += Worker_DoWork;
     }
 
 
     #region PRIVATE FUNCTIONS
+
+    /// <summary>
+    /// Preload the images in <see cref="QueuedList"/>.
+    /// </summary>
+    private async void Worker_DoWork(object? sender, DoWorkEventArgs e)
+    {
+        while (QueuedList.Count > 0)
+        {
+            // pop out the first item
+            var index = QueuedList[0];
+            var img = ImgList[index];
+            QueuedList.RemoveAt(0);
+
+
+            if (!img.IsDone)
+            {
+                var metadata = Codec.LoadMetadata(img.Filename, ReadOptions);
+
+                // start loading image file
+                await img.LoadAsync(Codec, ReadOptions with
+                {
+                    FirstFrameOnly = SinglePageFormats.Contains(img.Extension),
+                    Metadata = metadata,
+                }).ConfigureAwait(true);
+            }
+
+            await Task.Delay(10).ConfigureAwait(true);
+        }
+    }
+
 
     /// <summary>
     /// Add index of the image to queue list
@@ -233,43 +273,6 @@ public class ImageBooster : IDisposable
     #region PUBLIC FUNCTIONS
 
     /// <summary>
-    /// Start ImageBooster thread
-    /// </summary>
-    public async Task StartService()
-    {
-        while (IsRunWorker)
-        {
-            if (QueuedList.Count > 0)
-            {
-                // pop out the first item
-                var index = QueuedList[0];
-                var img = ImgList[index];
-                QueuedList.RemoveAt(0);
-
-                if (!img.IsDone)
-                {
-                    var metadata = Codec.LoadMetadata(img.Filename, ReadOptions);
-
-                    //// limit the max dimmention to preload
-                    //if (metadata?.Width > MaxImageSizePreload
-                    //    || metadata?.Height > MaxImageSizePreload)
-                    //    continue;
-
-                    // start loading image file
-                    await img.LoadAsync(Codec, ReadOptions with
-                    {
-                        FirstFrameOnly = SinglePageFormats.Contains(img.Extension),
-                        Metadata = metadata,
-                    }).ConfigureAwait(true);
-                }
-            }
-
-            await Task.Delay(10).ConfigureAwait(true);
-        }
-    }
-
-
-    /// <summary>
     /// Cancels loading process of a <see cref="IgPhoto"/>.
     /// </summary>
     /// <param name="index">Item index</param>
@@ -280,6 +283,56 @@ public class ImageBooster : IDisposable
             ImgList[index].CancelLoading();
         }
     }
+
+
+    /// <summary>
+    /// Get Img data
+    /// </summary>
+    /// <param name="index">image index</param>
+    /// <param name="useCache"></param>
+    /// <param name="pageIndex">The index of image page to display (if it's multi-page). Set pageIndex = int.MinValue to use defaut page index</param>
+    /// <returns></returns>
+    public async Task<IgPhoto?> GetAsync(int index, bool useCache = true, int pageIndex = int.MinValue)
+    {
+        // reload fresh new image data
+        if (!useCache)
+        {
+            await ImgList[index].LoadAsync(Codec, ReadOptions with
+            {
+                FirstFrameOnly = SinglePageFormats.Contains(ImgList[index].Extension),
+            }).ConfigureAwait(true);
+        }
+
+        // get image data from cache
+        else
+        {
+            // update queue list according to index
+            UpdateQueueList(index);
+
+            Worker.RunWorkerAsync(index);
+        }
+
+        // wait until the image loading is done
+        if (ImgList.Count > 0)
+        {
+            while (!ImgList[index].IsDone)
+            {
+                await Task.Delay(1).ConfigureAwait(true);
+            }
+        }
+
+        // Trigger event OnFinishLoadingImage
+        OnFinishLoadingImage?.Invoke(this, EventArgs.Empty);
+
+        // if there is no error
+        if (ImgList.Count > 0)
+        {
+            return ImgList[index];
+        }
+
+        return null;
+    }
+
 
 
     /// <summary>
@@ -305,50 +358,6 @@ public class ImageBooster : IDisposable
         }
     }
 
-    /// <summary>
-    /// Get Img data
-    /// </summary>
-    /// <param name="index">image index</param>
-    /// <param name="isSkipCache"></param>
-    /// <param name="pageIndex">The index of image page to display (if it's multi-page). Set pageIndex = int.MinValue to use defaut page index</param>
-    /// <returns></returns>
-    public async Task<IgPhoto?> GetAsync(int index, bool isSkipCache = false, int pageIndex = int.MinValue)
-    {
-        // reload fresh new image data
-        if (isSkipCache)
-        {
-            await ImgList[index].LoadAsync(Codec, ReadOptions with
-            {
-                FirstFrameOnly = SinglePageFormats.Contains(ImgList[index].Extension),
-            }).ConfigureAwait(true);
-        }
-        // get image data from cache
-        else
-        {
-            // update queue list according to index
-            UpdateQueueList(index);
-        }
-
-        // wait until the image loading is done
-        if (ImgList.Count > 0)
-        {
-            while (!ImgList[index].IsDone)
-            {
-                await Task.Delay(1).ConfigureAwait(true);
-            }
-        }
-
-        // Trigger event OnFinishLoadingImage
-        OnFinishLoadingImage?.Invoke(this, EventArgs.Empty);
-
-        // if there is no error
-        if (ImgList.Count > 0)
-        {
-            return ImgList[index];
-        }
-
-        return null;
-    }
 
     /// <summary>
     /// Get filename with the given index
@@ -372,6 +381,7 @@ public class ImageBooster : IDisposable
         return string.Empty;
     }
 
+
     /// <summary>
     /// Set filename
     /// </summary>
@@ -385,6 +395,7 @@ public class ImageBooster : IDisposable
         }
     }
 
+
     /// <summary>
     /// Gets file extension. Ex: <c>.jpg</c>
     /// </summary>
@@ -397,6 +408,7 @@ public class ImageBooster : IDisposable
         return Path.GetExtension(filename);
     }
 
+
     /// <summary>
     /// Find index with the given filename
     /// </summary>
@@ -404,9 +416,15 @@ public class ImageBooster : IDisposable
     /// <returns></returns>
     public int IndexOf(string filename)
     {
+        if (string.IsNullOrEmpty(filename.Trim()))
+        {
+            return -1;
+        }
+
         // case sensitivity, esp. if filename passed on command line
         return ImgList.FindIndex(item => string.Equals(item.Filename, filename, StringComparison.InvariantCultureIgnoreCase));
     }
+
 
     /// <summary>
     /// Unload and release resources of item with the given index
@@ -416,6 +434,7 @@ public class ImageBooster : IDisposable
     {
         ImgList[index]?.Dispose();
     }
+
 
     /// <summary>
     /// Remove an item in the list with the given index
@@ -427,6 +446,7 @@ public class ImageBooster : IDisposable
         ImgList.RemoveAt(index);
     }
 
+
     /// <summary>
     /// Empty and release resource of the list
     /// </summary>
@@ -436,6 +456,7 @@ public class ImageBooster : IDisposable
         ClearCache();
         ImgList.Clear();
     }
+
 
     /// <summary>
     /// Clear all cached images and release resource of the list
@@ -450,6 +471,7 @@ public class ImageBooster : IDisposable
 
         QueuedList.Clear();
     }
+
 
     /// <summary>
     /// Update cached images
@@ -474,6 +496,7 @@ public class ImageBooster : IDisposable
         // add to queue list
         QueuedList.AddRange(cachedIndexList);
     }
+
 
     /// <summary>
     /// Check if the folder path of input filename exists in the list
