@@ -518,6 +518,8 @@ namespace ImageGlass {
             picBackgroundColor.BackColor = Configs.BackgroundColor;
             tbrVertScroll.Value = Configs.ImageVerticalScrollSpeed;
             tbrHorzScroll.Value = Configs.ImageHorizontalScrollSpeed;
+            tbrVertScroll_ValueChanged(null, null); // Fix ValueChanged() not called when value == Configs.ImageVerticalScrollSpeed
+            tbrHorzScroll_ValueChanged(null, null); // Fix ValueChanged() not called when value == Configs.ImageHorizontalScrollSpeed
         }
 
         private void lnkConfigDir_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
