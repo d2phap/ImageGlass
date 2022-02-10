@@ -364,6 +364,16 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static int ImageEditQuality { get; set; } = 100;
 
+        /// <summary>
+        /// Gets, sets the vertical scroll speed for viewing images.
+        /// </summary>
+        public static byte ImageVerticalScrollSpeed { get; set; } = 10;
+
+        /// <summary>
+        /// Gets, sets the horizontal scroll speed for viewing images.
+        /// </summary>
+        public static byte ImageHorizontalScrollSpeed { get; set; } = 10;
+
         #endregion
 
 
@@ -686,6 +696,9 @@ namespace ImageGlass.Settings {
             ToolbarIconHeight = Get<uint>(nameof(ToolbarIconHeight), ToolbarIconHeight);
             ImageEditQuality = Get<int>(nameof(ImageEditQuality), ImageEditQuality);
 
+            ImageVerticalScrollSpeed = Get<byte>(nameof(ImageVerticalScrollSpeed), ImageVerticalScrollSpeed);
+            ImageHorizontalScrollSpeed = Get<byte>(nameof(ImageHorizontalScrollSpeed), ImageHorizontalScrollSpeed);
+
             #endregion
 
             #region Enum items
@@ -904,7 +917,8 @@ namespace ImageGlass.Settings {
             Set(nameof(ZoomLockValue), ZoomLockValue);
             Set(nameof(ToolbarIconHeight), ToolbarIconHeight);
             Set(nameof(ImageEditQuality), ImageEditQuality);
-
+            Set(nameof(ImageVerticalScrollSpeed), ImageVerticalScrollSpeed);
+            Set(nameof(ImageHorizontalScrollSpeed), ImageHorizontalScrollSpeed);
             #endregion
 
             #region Enum items

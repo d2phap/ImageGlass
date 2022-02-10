@@ -1167,8 +1167,12 @@ namespace ImageGlass {
                 if (Configs.KeyComboActions[KeyCombos.LeftRight] == AssignableActions.PrevNextImage) {
                     e.Handled = true; // Issue #963: don't let ImageBox see the keystroke!
                     _ = NextPicAsync(-1);
+                } 
+                else {
+                    picMain.HandlePan(Configs.ImageHorizontalScrollSpeed, Configs.ImageVerticalScrollSpeed, e);
+                    e.Handled = true;
                 }
-                return; // fall-through lets pan happen
+                return;
             }
             if (!ignore && e.KeyValue == (int)Keys.PageUp && hasNoMods) {
                 var action = Configs.KeyComboActions[KeyCombos.PageUpDown];
@@ -1193,8 +1197,13 @@ namespace ImageGlass {
                 if (Configs.KeyComboActions[KeyCombos.LeftRight] == AssignableActions.PrevNextImage) {
                     e.Handled = true; // Issue #963: don't let ImageBox see the keystroke!
                     _ = NextPicAsync(1);
+                } 
+                else 
+                {
+                    picMain.HandlePan(Configs.ImageHorizontalScrollSpeed, Configs.ImageVerticalScrollSpeed, e);
+                    e.Handled = true;
                 }
-                return; // fall-through lets pan happen
+                return;
             }
             if (!ignore && e.KeyValue == (int)Keys.PageDown && hasNoMods) {
                 var action = Configs.KeyComboActions[KeyCombos.PageUpDown];
@@ -1217,6 +1226,11 @@ namespace ImageGlass {
                     mnuMainZoomIn_Click(null, null);
                     e.Handled = true;
                 }
+                else {
+                    // Assume action is pan.
+                    picMain.HandlePan(Configs.ImageHorizontalScrollSpeed, Configs.ImageVerticalScrollSpeed, e);
+                    e.Handled = true;
+                }
                 return; // fall-through lets pan happen
             }
             #endregion
@@ -1229,6 +1243,12 @@ namespace ImageGlass {
                     mnuMainZoomOut_Click(null, null);
                     e.Handled = true;
                 }
+                else {
+                    // Assume action is pan.
+                    picMain.HandlePan(Configs.ImageHorizontalScrollSpeed, Configs.ImageVerticalScrollSpeed, e);
+                    e.Handled = true;
+                }
+                // Handle pan events.
                 return; // fall-through lets pan happen
             }
             #endregion
@@ -5634,9 +5654,16 @@ namespace ImageGlass {
 
 
 
+
         #endregion
 
-        
+        private void picMain_Click(object sender, EventArgs e) {
+
+        }
+
+        private void picMain_KeyDown(object sender, KeyEventArgs e) {
+
+        }
     }
 
 

@@ -430,6 +430,15 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lnkResetBackgroundColor", "Reset"); // v4.0
             #endregion
 
+            #region Scrolling
+            Items.Add("frmSetting.lblHeadScrolling", "Scrolling");
+            Items.Add("frmSetting.lblVertScrollSpeed", "Vertical Scroll Speed");
+            Items.Add("frmSetting.lblVertScrollValue", "Current Value: ");
+            Items.Add("frmSetting.lblHorzScrollSpeed", "Horizontal Scroll Speed");
+            Items.Add("frmSetting.lblHorzScrollValue", "Current Value: ");
+
+            #endregion
+
             #region Others
             Items.Add("frmSetting.lblHeadOthers", "Others"); //v4.0
             Items.Add("frmSetting.chkStartWithOs", "Start with OS"); //v8.4

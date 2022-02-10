@@ -211,6 +211,11 @@ namespace ImageGlass {
             lblBackGroundColor.Text = lang[$"{Name}.{nameof(lblBackGroundColor)}"];
             lnkResetBackgroundColor.Text = lang[$"{Name}.{nameof(lnkResetBackgroundColor)}"];
 
+            // Scrolling
+            lblHeadScrolling.Text = lang[$"{Name}.{nameof(lblHeadScrolling)}"];
+            lblVertScrollValue.Text = lang[$"{Name}.{nameof(lblVertScrollValue)}"];
+            lblHorzScrollValue.Text = lang[$"{Name}.{nameof(lblHorzScrollValue)}"];
+
             // Others
             lblHeadOthers.Text = lang[$"{Name}.{nameof(lblHeadOthers)}"];
             chkStartWithOs.Text = lang[$"{Name}.{nameof(chkStartWithOs)}"];
@@ -511,6 +516,8 @@ namespace ImageGlass {
             chkShowToast.Checked = Configs.IsShowToast;
             chkUseTouchGesture.Checked = Configs.IsUseTouchGesture;
             picBackgroundColor.BackColor = Configs.BackgroundColor;
+            tbrVertScroll.Value = Configs.ImageVerticalScrollSpeed;
+            tbrHorzScroll.Value = Configs.ImageHorizontalScrollSpeed;
         }
 
         private void lnkConfigDir_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -533,6 +540,18 @@ namespace ImageGlass {
 
         private void lnkResetBackgroundColor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             picBackgroundColor.BackColor = Configs.Theme.BackgroundColor;
+        }
+
+        private void tbrVertScroll_ValueChanged(object sender, EventArgs e) {
+            // TODO: Make complaint with language packs OR maybe seperate the labels.
+            lblVertScrollValue.Text =
+                $"{Configs.Language.Items[$"{Name}.{nameof(lblVertScrollValue)}"]}" + tbrVertScroll.Value;
+        }
+
+        private void tbrHorzScroll_ValueChanged(object sender, EventArgs e) {
+            // TODO: Make complaint with language packs OR maybe seperate the labels.
+            lblHorzScrollValue.Text =
+                $"{Configs.Language.Items[$"{Name}.{nameof(lblHorzScrollValue)}"]}" + tbrHorzScroll.Value;
         }
 
         #endregion
@@ -1869,6 +1888,10 @@ namespace ImageGlass {
             Configs.IsStartWithOs = chkStartWithOs.Checked;
             Helper.SetStartWithOS(Configs.IsStartWithOs);
 
+            // Scrolling
+            Configs.ImageVerticalScrollSpeed = (byte)tbrVertScroll.Value;
+            Configs.ImageHorizontalScrollSpeed = (byte)tbrHorzScroll.Value;
+
             Configs.IsContinueRunningBackground = chkContinueRunningBackground.Checked;
             Configs.IsAllowMultiInstances = chkAllowMultiInstances.Checked;
             Configs.IsPressESCToQuit = chkESCToQuit.Checked;
@@ -2176,6 +2199,5 @@ namespace ImageGlass {
         }
 
         #endregion
-
     }
 }
