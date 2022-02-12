@@ -5657,13 +5657,6 @@ namespace ImageGlass {
 
         #endregion
 
-        private void picMain_Click(object sender, EventArgs e) {
-
-        }
-
-        private void picMain_KeyDown(object sender, KeyEventArgs e) {
-
-        }
     }
 
 
