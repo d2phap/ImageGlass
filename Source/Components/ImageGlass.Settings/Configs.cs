@@ -367,12 +367,12 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets the vertical scroll speed for viewing images.
         /// </summary>
-        public static byte ImageVerticalScrollSpeed { get; set; } = 10;
+        public static byte ImageVerticalScrollSpeed { get; set; } = 40;
 
         /// <summary>
         /// Gets, sets the horizontal scroll speed for viewing images.
         /// </summary>
-        public static byte ImageHorizontalScrollSpeed { get; set; } = 10;
+        public static byte ImageHorizontalScrollSpeed { get; set; } = 40;
 
         #endregion
 
