@@ -211,10 +211,10 @@ namespace ImageGlass {
             lblBackGroundColor.Text = lang[$"{Name}.{nameof(lblBackGroundColor)}"];
             lnkResetBackgroundColor.Text = lang[$"{Name}.{nameof(lnkResetBackgroundColor)}"];
 
-            // Scrolling
-            lblHeadScrolling.Text = lang[$"{Name}.{nameof(lblHeadScrolling)}"];
-            lblVertScrollValue.Text = lang[$"{Name}.{nameof(lblVertScrollValue)}"];
-            lblHorzScrollValue.Text = lang[$"{Name}.{nameof(lblHorzScrollValue)}"];
+            // Panning
+            lblHeadPanning.Text = lang[$"{Name}.{nameof(lblHeadPanning)}"];
+            lblVertPanningSpeed.Text = string.Format(lang[$"{Name}.{nameof(lblVertPanningSpeed)}"], Configs.ImageVerticalPanningSpeed);
+            lblHorzPanningSpeed.Text = string.Format(lang[$"{Name}.{nameof(lblHorzPanningSpeed)}"], Configs.ImageHorizontalPanningSpeed);
 
             // Others
             lblHeadOthers.Text = lang[$"{Name}.{nameof(lblHeadOthers)}"];
@@ -516,8 +516,8 @@ namespace ImageGlass {
             chkShowToast.Checked = Configs.IsShowToast;
             chkUseTouchGesture.Checked = Configs.IsUseTouchGesture;
             picBackgroundColor.BackColor = Configs.BackgroundColor;
-            tbrVertScroll.Value = Configs.ImageVerticalScrollSpeed;
-            tbrHorzScroll.Value = Configs.ImageHorizontalScrollSpeed;
+            tbrVertScroll.Value = Configs.ImageVerticalPanningSpeed;
+            tbrHorzScroll.Value = Configs.ImageHorizontalPanningSpeed;
             tbrVertScroll_ValueChanged(null, null); // Fix ValueChanged() not called when value == Configs.ImageVerticalScrollSpeed
             tbrHorzScroll_ValueChanged(null, null); // Fix ValueChanged() not called when value == Configs.ImageHorizontalScrollSpeed
         }
@@ -545,15 +545,11 @@ namespace ImageGlass {
         }
 
         private void tbrVertScroll_ValueChanged(object sender, EventArgs e) {
-            // TODO: Make complaint with language packs OR maybe seperate the labels.
-            lblVertScrollValue.Text =
-                $"{Configs.Language.Items[$"{Name}.{nameof(lblVertScrollValue)}"]}" + tbrVertScroll.Value;
+            lblVertPanningSpeed.Text = string.Format(Configs.Language.Items[$"{Name}.{nameof(lblVertPanningSpeed)}"], tbrVertScroll.Value);
         }
 
         private void tbrHorzScroll_ValueChanged(object sender, EventArgs e) {
-            // TODO: Make complaint with language packs OR maybe seperate the labels.
-            lblHorzScrollValue.Text =
-                $"{Configs.Language.Items[$"{Name}.{nameof(lblHorzScrollValue)}"]}" + tbrHorzScroll.Value;
+            lblHorzPanningSpeed.Text = string.Format(Configs.Language.Items[$"{Name}.{nameof(lblHorzPanningSpeed)}"], tbrHorzScroll.Value);
         }
 
         #endregion
@@ -1891,8 +1887,8 @@ namespace ImageGlass {
             Helper.SetStartWithOS(Configs.IsStartWithOs);
 
             // Scrolling
-            Configs.ImageVerticalScrollSpeed = (byte)tbrVertScroll.Value;
-            Configs.ImageHorizontalScrollSpeed = (byte)tbrHorzScroll.Value;
+            Configs.ImageVerticalPanningSpeed = (byte)tbrVertScroll.Value;
+            Configs.ImageHorizontalPanningSpeed = (byte)tbrHorzScroll.Value;
 
             Configs.IsContinueRunningBackground = chkContinueRunningBackground.Checked;
             Configs.IsAllowMultiInstances = chkAllowMultiInstances.Checked;

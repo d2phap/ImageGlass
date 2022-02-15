@@ -1169,7 +1169,7 @@ namespace ImageGlass {
                     _ = NextPicAsync(-1);
                 } 
                 else {
-                    picMain.HandlePan(Configs.ImageHorizontalScrollSpeed, Configs.ImageVerticalScrollSpeed, e);
+                    picMain.HandlePan(Configs.ImageHorizontalPanningSpeed, Configs.ImageVerticalPanningSpeed, e);
                     e.Handled = true;
                 }
                 return;
@@ -1200,7 +1200,7 @@ namespace ImageGlass {
                 } 
                 else 
                 {
-                    picMain.HandlePan(Configs.ImageHorizontalScrollSpeed, Configs.ImageVerticalScrollSpeed, e);
+                    picMain.HandlePan(Configs.ImageHorizontalPanningSpeed, Configs.ImageVerticalPanningSpeed, e);
                     e.Handled = true;
                 }
                 return;
@@ -1228,7 +1228,7 @@ namespace ImageGlass {
                 }
                 else {
                     // Assume action is pan.
-                    picMain.HandlePan(Configs.ImageHorizontalScrollSpeed, Configs.ImageVerticalScrollSpeed, e);
+                    picMain.HandlePan(Configs.ImageHorizontalPanningSpeed, Configs.ImageVerticalPanningSpeed, e);
                     e.Handled = true;
                 }
                 return; // fall-through lets pan happen
@@ -1245,7 +1245,7 @@ namespace ImageGlass {
                 }
                 else {
                     // Assume action is pan.
-                    picMain.HandlePan(Configs.ImageHorizontalScrollSpeed, Configs.ImageVerticalScrollSpeed, e);
+                    picMain.HandlePan(Configs.ImageHorizontalPanningSpeed, Configs.ImageVerticalPanningSpeed, e);
                     e.Handled = true;
                 }
                 // Handle pan events.
