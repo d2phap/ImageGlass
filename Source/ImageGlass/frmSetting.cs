@@ -516,10 +516,8 @@ namespace ImageGlass {
             chkShowToast.Checked = Configs.IsShowToast;
             chkUseTouchGesture.Checked = Configs.IsUseTouchGesture;
             picBackgroundColor.BackColor = Configs.BackgroundColor;
-            tbrVertScroll.Value = Configs.ImageVerticalPanningSpeed;
-            tbrHorzScroll.Value = Configs.ImageHorizontalPanningSpeed;
-            tbrVertScroll_ValueChanged(null, null); // Fix ValueChanged() not called when value == Configs.ImageVerticalScrollSpeed
-            tbrHorzScroll_ValueChanged(null, null); // Fix ValueChanged() not called when value == Configs.ImageHorizontalScrollSpeed
+            numVertPanningSpeed.Value = Configs.ImageVerticalPanningSpeed;
+            numHorzPanningSpeed.Value = Configs.ImageHorizontalPanningSpeed;
         }
 
         private void lnkConfigDir_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -544,13 +542,6 @@ namespace ImageGlass {
             picBackgroundColor.BackColor = Configs.Theme.BackgroundColor;
         }
 
-        private void tbrVertScroll_ValueChanged(object sender, EventArgs e) {
-            lblVertPanningSpeed.Text = string.Format(Configs.Language.Items[$"{Name}.{nameof(lblVertPanningSpeed)}"], tbrVertScroll.Value);
-        }
-
-        private void tbrHorzScroll_ValueChanged(object sender, EventArgs e) {
-            lblHorzPanningSpeed.Text = string.Format(Configs.Language.Items[$"{Name}.{nameof(lblHorzPanningSpeed)}"], tbrHorzScroll.Value);
-        }
 
         #endregion
 
@@ -1887,8 +1878,8 @@ namespace ImageGlass {
             Helper.SetStartWithOS(Configs.IsStartWithOs);
 
             // Scrolling
-            Configs.ImageVerticalPanningSpeed = (byte)tbrVertScroll.Value;
-            Configs.ImageHorizontalPanningSpeed = (byte)tbrHorzScroll.Value;
+            Configs.ImageVerticalPanningSpeed = (byte)numVertPanningSpeed.Value;
+            Configs.ImageHorizontalPanningSpeed = (byte)numHorzPanningSpeed.Value;
 
             Configs.IsContinueRunningBackground = chkContinueRunningBackground.Checked;
             Configs.IsAllowMultiInstances = chkAllowMultiInstances.Checked;
@@ -2197,5 +2188,6 @@ namespace ImageGlass {
         }
 
         #endregion
+
     }
 }

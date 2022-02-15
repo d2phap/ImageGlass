@@ -432,8 +432,8 @@ namespace ImageGlass.Library {
 
             #region Panning
             Items.Add("frmSetting.lblHeadPanning", "Panning");
-            Items.Add("frmSetting.lblVertPanningSpeed", "Vertical panning speed: {0}");
-            Items.Add("frmSetting.lblHorzPanningSpeed", "Horizontal panning speed: {0}");
+            Items.Add("frmSetting.lblVertPanningSpeed", "Vertical panning speed");
+            Items.Add("frmSetting.lblHorzPanningSpeed", "Horizontal panning speed");
 
             #endregion
 
