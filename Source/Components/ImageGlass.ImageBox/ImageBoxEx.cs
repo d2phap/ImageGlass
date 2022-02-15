@@ -374,6 +374,32 @@ namespace ImageGlass {
             }
         }
 
+        /// <summary>
+        /// Adjusts scroll based on ImageGlass.Settings.Configs.ImageHorizontalScrollSpeed & ImageGlass.Settings.Configs.ImageVerticaclScrollSpeed
+        /// </summary>
+        /// <param name="horizontalScrollDistance">The distance to move the horizontal scrollbar.</param>
+        /// <param name="verticalScrollDistance">The distance to move the vertical scrollbar.</param>
+        /// <param name="e"></param>
+        public void HandlePan(byte horizontalScrollDistance, byte verticalScrollDistance, KeyEventArgs e) {
+            switch (e.KeyCode) {
+                case Keys.Left:
+                    base.AdjustScroll(-horizontalScrollDistance, 0);
+                    break;
+
+                case Keys.Right:
+                    base.AdjustScroll(horizontalScrollDistance, 0);
+                    break;
+
+                case Keys.Up:
+                    base.AdjustScroll(0, -verticalScrollDistance);
+                    break;
+
+                case Keys.Down:
+                    base.AdjustScroll(0, verticalScrollDistance);
+                    break;
+            }
+        }
+
         #endregion
 
 

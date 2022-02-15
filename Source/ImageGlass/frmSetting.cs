@@ -211,6 +211,11 @@ namespace ImageGlass {
             lblBackGroundColor.Text = lang[$"{Name}.{nameof(lblBackGroundColor)}"];
             lnkResetBackgroundColor.Text = lang[$"{Name}.{nameof(lnkResetBackgroundColor)}"];
 
+            // Panning
+            lblHeadPanning.Text = lang[$"{Name}.{nameof(lblHeadPanning)}"];
+            lblVertPanningSpeed.Text = string.Format(lang[$"{Name}.{nameof(lblVertPanningSpeed)}"], Configs.ImageVerticalPanningSpeed);
+            lblHorzPanningSpeed.Text = string.Format(lang[$"{Name}.{nameof(lblHorzPanningSpeed)}"], Configs.ImageHorizontalPanningSpeed);
+
             // Others
             lblHeadOthers.Text = lang[$"{Name}.{nameof(lblHeadOthers)}"];
             chkStartWithOs.Text = lang[$"{Name}.{nameof(chkStartWithOs)}"];
@@ -511,6 +516,8 @@ namespace ImageGlass {
             chkShowToast.Checked = Configs.IsShowToast;
             chkUseTouchGesture.Checked = Configs.IsUseTouchGesture;
             picBackgroundColor.BackColor = Configs.BackgroundColor;
+            numVertPanningSpeed.Value = Configs.ImageVerticalPanningSpeed;
+            numHorzPanningSpeed.Value = Configs.ImageHorizontalPanningSpeed;
         }
 
         private void lnkConfigDir_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -534,6 +541,7 @@ namespace ImageGlass {
         private void lnkResetBackgroundColor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             picBackgroundColor.BackColor = Configs.Theme.BackgroundColor;
         }
+
 
         #endregion
 
@@ -1868,6 +1876,10 @@ namespace ImageGlass {
             // start with os
             Configs.IsStartWithOs = chkStartWithOs.Checked;
             Helper.SetStartWithOS(Configs.IsStartWithOs);
+
+            // Scrolling
+            Configs.ImageVerticalPanningSpeed = (byte)numVertPanningSpeed.Value;
+            Configs.ImageHorizontalPanningSpeed = (byte)numHorzPanningSpeed.Value;
 
             Configs.IsContinueRunningBackground = chkContinueRunningBackground.Checked;
             Configs.IsAllowMultiInstances = chkAllowMultiInstances.Checked;
