@@ -28,6 +28,7 @@ public record ToolbarItemModel
 
     public string Id { get; set; } = string.Empty;
     public string Text { get; set; } = string.Empty;
+    public string Group { get; set; } = string.Empty;
 
     public ToolStripItemDisplayStyle DisplayStyle { get; set; } = ToolStripItemDisplayStyle.Image;
     public bool CheckOnClick { get; set; } = false;
@@ -47,6 +48,7 @@ public record ToolbarItemTagModel
 {
     public ToolbarItemActionModel OnClick { get; set; } = new();
     public string Image { get; set; } = string.Empty;
+    public string Group { get; set; } = string.Empty;
 }
 
 public record ToolbarItemActionModel

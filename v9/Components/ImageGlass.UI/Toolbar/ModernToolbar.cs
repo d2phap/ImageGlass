@@ -242,16 +242,44 @@ public class ModernToolbar : ToolStrip
     protected override void OnItemClicked(ToolStripItemClickedEventArgs e)
     {
         // filter out BtnMainMenu
-        if (e.ClickedItem.Name != MainMenuButton.Name)
-        {
-            base.OnItemClicked(e);
-        }
-        else
+        if (e.ClickedItem.Name == MainMenuButton.Name)
         {
             // on main menu button clicked
             MainMenu.Show(this,
                 e.ClickedItem.Bounds.Left + e.ClickedItem.Bounds.Width - MainMenu.Width,
                 Height);
+        }
+        else
+        {
+            if (e.ClickedItem.GetType() != typeof(ToolStripButton))
+                return;
+
+            var clickedItem = (ToolStripButton)e.ClickedItem;
+            var tagModel = clickedItem.Tag as ToolbarItemTagModel;
+            
+            // auto-deselect the items which have same group name
+            if (clickedItem.CheckOnClick && !string.IsNullOrEmpty(tagModel?.Group))
+            {
+                // Toolbar items
+                foreach (var item in Items)
+                {
+                    if (item.GetType() != typeof(ToolStripButton))
+                        continue;
+
+                    var bItem = (ToolStripButton)item;
+                    var bItemTagModel = bItem.Tag as ToolbarItemTagModel;
+
+                    if (bItem.CheckOnClick && bItemTagModel?.Group == tagModel.Group)
+                    {
+                        bItem.Checked = false;
+                    }
+                }
+            }
+
+            // select current item
+            clickedItem.Checked = true;
+
+            base.OnItemClicked(e);
         }
     }
 
@@ -582,6 +610,7 @@ public class ModernToolbar : ToolStrip
             Tag = new ToolbarItemTagModel()
             {
                 Image = model.Image,
+                Group = model.Group,
                 OnClick = model.OnClick,
             },
 
