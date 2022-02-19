@@ -222,11 +222,11 @@ namespace ImageGlass.Heart {
                             useEmbeddedThumbnail: UseEmbeddedThumbnail,
                             useRawThumbnail: UseRawThumbnail,
                             forceLoadFirstPage: SinglePageFormats.Contains(img.Extension)
-                        ).ConfigureAwait(true);
+                        ).ConfigureAwait(false);
                     }
                 }
 
-                await Task.Delay(10).ConfigureAwait(true);
+                await Task.Delay(10).ConfigureAwait(false);
             }
         }
 
@@ -267,7 +267,7 @@ namespace ImageGlass.Heart {
                     useEmbeddedThumbnail: UseEmbeddedThumbnail,
                     useRawThumbnail: UseRawThumbnail,
                     forceLoadFirstPage: SinglePageFormats.Contains(ImgList[index].Extension)
-                ).ConfigureAwait(true);
+                ).ConfigureAwait(false);
             }
             // get image data from cache
             else {
@@ -278,7 +278,7 @@ namespace ImageGlass.Heart {
             // wait until the image loading is done
             if (ImgList.Count > 0) {
                 while (!ImgList[index].IsDone) {
-                    await Task.Delay(1).ConfigureAwait(true);
+                    await Task.Delay(1).ConfigureAwait(false);
                 }
             }
 

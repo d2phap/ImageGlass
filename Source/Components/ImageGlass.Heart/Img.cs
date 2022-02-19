@@ -134,7 +134,7 @@ namespace ImageGlass.Heart {
                     useEmbeddedThumbnail: useEmbeddedThumbnail,
                     useRawThumbnail: useRawThumbnail,
                     forceLoadFirstPage: forceLoadFirstPage
-                ).ConfigureAwait(true);
+                ).ConfigureAwait(false);
 
                 Image = data.Image;
                 Exif = data.Exif;
@@ -164,7 +164,8 @@ namespace ImageGlass.Heart {
         /// <param name="useEmbeddedThumbnail">Return the embedded thumbnail if required size was not found.</param>
         /// <returns></returns>
         public async Task<Bitmap> GetThumbnailAsync(Size size, bool useEmbeddedThumbnail = true) {
-            return await Photo.GetThumbnailAsync(Filename, size, useEmbeddedThumbnail).ConfigureAwait(true);
+            return await Photo.GetThumbnailAsync(Filename, size, useEmbeddedThumbnail)
+                .ConfigureAwait(false);
         }
 
 
@@ -174,7 +175,7 @@ namespace ImageGlass.Heart {
         /// <param name="destFolder">The destination folder to save to</param>
         /// <returns></returns>
         public async Task SaveImagePagesAsync(string destFolder) {
-            await Photo.SavePagesAsync(Filename, destFolder).ConfigureAwait(true);
+            await Photo.SavePagesAsync(Filename, destFolder).ConfigureAwait(false);
         }
 
         #endregion

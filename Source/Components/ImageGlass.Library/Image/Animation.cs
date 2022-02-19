@@ -53,7 +53,7 @@ namespace ImageGlass.Library.Image {
 
                 //begin extract
                 AnimateImage();
-            }).ConfigureAwait(true);
+            }).ConfigureAwait(false);
         }
 
         /// <summary>

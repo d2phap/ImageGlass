@@ -306,7 +306,7 @@ namespace ImageGlass.Heart {
                     useRawThumbnail,
                     forceLoadFirstPage
                 );
-            }).ConfigureAwait(true);
+            }).ConfigureAwait(false);
 
             return data;
         }
@@ -342,7 +342,7 @@ namespace ImageGlass.Heart {
                     quality: 70,
                     useEmbeddedThumbnail: useEmbeddedThumbnail,
                     forceLoadFirstPage: true);
-            }).ConfigureAwait(true);
+            }).ConfigureAwait(false);
 
             return data.Image;
         }
@@ -492,7 +492,7 @@ namespace ImageGlass.Heart {
                     Quality = quality
                 };
                 imgM.Write(destFileName, format);
-            }).ConfigureAwait(true);
+            }).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -540,7 +540,7 @@ namespace ImageGlass.Heart {
                     }
                     catch { }
                 }
-            }).ConfigureAwait(true);
+            }).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -561,7 +561,7 @@ namespace ImageGlass.Heart {
 
                 using var fs = new FileStream(srcFilename, FileMode.Open, FileAccess.Read);
                 data = new byte[fs.Length];
-                await fs.ReadAsync(data, 0, (int)fs.Length).ConfigureAwait(true);
+                await fs.ReadAsync(data, 0, (int)fs.Length).ConfigureAwait(false);
                 fs.Close();
 
 
@@ -569,16 +569,16 @@ namespace ImageGlass.Heart {
                 var base64 = Convert.ToBase64String(data);
 
                 using var sw = new StreamWriter(destFilename);
-                await sw.WriteAsync(header + base64).ConfigureAwait(true);
-                await sw.FlushAsync().ConfigureAwait(true);
+                await sw.WriteAsync(header + base64).ConfigureAwait(false);
+                await sw.FlushAsync().ConfigureAwait(false);
                 sw.Close();
 
                 return;
             }
 
             // non-svg formats
-            var bmp = await LoadAsync(srcFilename).ConfigureAwait(true);
-            await SaveAsBase64Async(bmp.Image, destFilename, format).ConfigureAwait(true);
+            var bmp = await LoadAsync(srcFilename).ConfigureAwait(false);
+            await SaveAsBase64Async(bmp.Image, destFilename, format).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -602,8 +602,8 @@ namespace ImageGlass.Heart {
             var base64 = Convert.ToBase64String(ms.ToArray());
 
             using var sw = new StreamWriter(destFilename);
-            await sw.WriteAsync(header + base64).ConfigureAwait(true);
-            await sw.FlushAsync().ConfigureAwait(true);
+            await sw.WriteAsync(header + base64).ConfigureAwait(false);
+            await sw.FlushAsync().ConfigureAwait(false);
             sw.Close();
         }
 
@@ -626,7 +626,7 @@ namespace ImageGlass.Heart {
                 imgM.Quality = 100;
 
                 bitmap = imgM.ToBitmap();
-            }).ConfigureAwait(true);
+            }).ConfigureAwait(false);
 
             return bitmap;
         }
@@ -647,7 +647,7 @@ namespace ImageGlass.Heart {
                 imgM.Quality = 100;
 
                 bitmap = imgM.ToBitmap();
-            }).ConfigureAwait(true);
+            }).ConfigureAwait(false);
 
             return bitmap;
         }
@@ -668,7 +668,7 @@ namespace ImageGlass.Heart {
             await Task.Run(() => {
                 using var imgM = new MagickImage(srcFileName);
                 bitmap = Flip(imgM, isHorzontal);
-            }).ConfigureAwait(true);
+            }).ConfigureAwait(false);
 
             return bitmap;
         }
@@ -686,7 +686,7 @@ namespace ImageGlass.Heart {
                 using var imgM = new MagickImage();
                 imgM.Read(srcBitmap);
                 bitmap = Flip(imgM, isHorzontal);
-            }).ConfigureAwait(true);
+            }).ConfigureAwait(false);
 
             return bitmap;
         }
