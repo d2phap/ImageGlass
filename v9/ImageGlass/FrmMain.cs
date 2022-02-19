@@ -12,8 +12,8 @@ namespace ImageGlass;
 public partial class FrmMain : Form
 {
     // cancellation tokens of synchronious task
-    private System.Threading.CancellationTokenSource _loadCancelToken = new();
-    private System.Threading.CancellationTokenSource _busyCancelToken = new();
+    private CancellationTokenSource _loadCancelToken = new();
+    private CancellationTokenSource _busyCancelToken = new();
 
 
     public FrmMain()
@@ -649,7 +649,7 @@ public partial class FrmMain : Form
                         UseRawThumbnail = Local.Images.ReadOptions.UseRawThumbnail,
                         //UseEmbeddedThumbnail = Local.Images.
                         FirstFrameOnly = Config.SinglePageFormats.Contains(photo.Extension)
-                    });
+                    }, token);
                 }
                 else
                 {

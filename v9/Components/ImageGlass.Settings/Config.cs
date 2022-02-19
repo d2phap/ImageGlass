@@ -762,10 +762,11 @@ public class Config
         #endregion
 
 
-        ToolbarItems = items.GetSection(nameof(ToolbarItems))
+        var toolbarItems = items.GetSection(nameof(ToolbarItems))
             .GetChildren()
-            .Select(i => i.Get<ToolbarItemModel>())
-            .ToList();
+            .Select(i => i.Get<ToolbarItemModel>());
+
+        ToolbarItems = toolbarItems.Any() ? toolbarItems.ToList() : Constants.DefaultToolbarItems;
 
         #endregion
 
