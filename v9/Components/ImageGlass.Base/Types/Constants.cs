@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Base.PhotoBox;
 using System.Globalization;
 
 namespace ImageGlass.Base;
@@ -92,12 +93,14 @@ public static class Constants
             Id = "btn_ViewPrevious",
             Text = "Previous image",
             Image = "ViewPreviousImage",
+            OnClick = new("IG_ViewPreviousImage"),
         },
         new()
         {
             Id = "btn_ViewNext",
             Text = "Next image",
             Image = "ViewNextImage",
+            OnClick = new("IG_ViewNextImage"),
         },
         new() { Type = ToolbarItemModelType.Separator },
         new()
@@ -106,6 +109,8 @@ public static class Constants
             Text = "Auto zoom",
             Image = "AutoZoom",
             CheckOnClick = true,
+            Group = "ZoomMode",
+            OnClick = new("IG_SetZoomMode", ((int)ZoomMode.AutoZoom).ToString()),
         },
         new()
         {
@@ -113,6 +118,8 @@ public static class Constants
             Text = "Lock zoom",
             Image = "LockZoom",
             CheckOnClick = true,
+            Group = "ZoomMode",
+            OnClick = new("IG_SetZoomMode", ((int)ZoomMode.LockZoom).ToString()),
         },
         new()
         {
@@ -120,6 +127,8 @@ public static class Constants
             Text = "Scale to width",
             Image = "ScaleToWidth",
             CheckOnClick = true,
+            Group = "ZoomMode",
+            OnClick = new("IG_SetZoomMode", ((int)ZoomMode.ScaleToWidth).ToString()),
         },
         new()
         {
@@ -127,6 +136,8 @@ public static class Constants
             Text = "Scale to height",
             Image = "ScaleToHeight",
             CheckOnClick = true,
+            Group = "ZoomMode",
+            OnClick = new("IG_SetZoomMode", ((int)ZoomMode.ScaleToHeight).ToString()),
         },
         new()
         {
@@ -134,6 +145,8 @@ public static class Constants
             Text = "Scale to fit",
             Image = "ScaleToFit",
             CheckOnClick = true,
+            Group = "ZoomMode",
+            OnClick = new("IG_SetZoomMode", ((int)ZoomMode.ScaleToFit).ToString()),
         },
         new()
         {
@@ -141,6 +154,8 @@ public static class Constants
             Text = "Scale to fill",
             Image = "ScaleToFill",
             CheckOnClick = true,
+            Group = "ZoomMode",
+            OnClick = new("IG_SetZoomMode", ((int)ZoomMode.ScaleToFill).ToString()),
         },
         new() { Type = ToolbarItemModelType.Separator },
         new()

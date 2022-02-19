@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using ImageGlass.Base;
+using ImageGlass.Base.PhotoBox;
 using ImageGlass.Settings;
 
 namespace ImageGlass;
@@ -35,5 +37,22 @@ public partial class FrmMain
     {
         OpenFilePicker();
     }
+
+    private void IG_ViewPreviousImage()
+    {
+        _ = ViewNextAsync(-1);
+    }
+
+    private void IG_ViewNextImage()
+    {
+        _ = ViewNextAsync(1);
+    }
+
+    private void IG_SetZoomMode(string mode)
+    {
+        PicBox.ZoomMode = Config.ZoomMode = Helpers.ParseEnum<ZoomMode>(mode);
+
+    }
+
 }
 

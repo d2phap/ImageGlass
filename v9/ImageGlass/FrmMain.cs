@@ -824,7 +824,7 @@ public partial class FrmMain : Form
         if (method is not null)
         {
             // method must be bool/void()
-            var result = (bool?)method?.Invoke(this, null);
+            var result = (bool?)method?.Invoke(this, new[] { tagModel.OnClick.Arguments });
 
             var btn = e.ClickedItem as ToolStripButton;
             if (btn is not null)
