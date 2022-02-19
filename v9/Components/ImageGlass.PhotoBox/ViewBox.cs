@@ -39,6 +39,7 @@ public partial class ViewBox : HybridControl
     private Bitmap? _imageGdiPlus;
     private D2DBitmap? _imageD2D;
     private CancellationTokenSource? _msgTokenSrc;
+    private bool _canUseDirect2D = false;
 
 
     /// <summary>
@@ -72,7 +73,6 @@ public partial class ViewBox : HybridControl
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
     private IImageAnimator _imageAnimator;
     private AnimationSource _animationSource = AnimationSource.None;
-    private bool _useHardwareAccelerationBackup = true;
     private bool _shouldRecalculateDrawingRegion = true;
 
     // Navigation buttons
@@ -427,9 +427,6 @@ public partial class ViewBox : HybridControl
     protected override void OnLoaded()
     {
         base.OnLoaded();
-
-        // back up value
-        _useHardwareAccelerationBackup = UseHardwareAcceleration;
 
         // draw the control
         Refresh();
@@ -953,6 +950,8 @@ public partial class ViewBox : HybridControl
         {
             g.DrawImage(_imageGdiPlus, _destRect, _srcRect, 1f, (int)_interpolationMode);
         }
+
+        _ = OnImageDrawn();
     }
 
 
@@ -1407,7 +1406,7 @@ public partial class ViewBox : HybridControl
     public bool PanTo(float hDistance, float vDistance, bool requestRerender = true)
     {
         if (Source == ImageSource.Null) return false;
-        if (hDistance <= 0 && vDistance <= 0) return false;
+        if (hDistance == 0 && vDistance == 0) return false;
 
         var loc = PointToClient(Cursor.Position);
 
@@ -1531,16 +1530,7 @@ public partial class ViewBox : HybridControl
             CanImageAnimate = _imageAnimator.CanAnimate(bmp);
         }
 
-        var shouldUseDirect2D = !CanImageAnimate && !HasAlphaPixels;
-
-        // backup current UseHardwardAcceleration value
-        _useHardwareAccelerationBackup = UseHardwareAcceleration;
-
-        if (!shouldUseDirect2D)
-        {
-            // force using GDI+
-            UseHardwareAcceleration = false;
-        }
+        _canUseDirect2D = !CanImageAnimate && !HasAlphaPixels;
     }
 
 
@@ -1553,9 +1543,6 @@ public partial class ViewBox : HybridControl
         // disable animations
         StopAnimatingImage();
 
-        // restore the UseHardwardAcceleration value
-        UseHardwareAcceleration = _useHardwareAccelerationBackup;
-
         Source = ImageSource.Null;
         _imageD2D?.Dispose();
         _imageD2D = null;
@@ -1566,18 +1553,11 @@ public partial class ViewBox : HybridControl
         // Check and preprocess image info
         CheckInputImage(bmp);
 
-        // use Direct2D
-        if (UseHardwareAcceleration && !CanImageAnimate && !HasAlphaPixels)
-        {
-            _imageD2D = Device.CreateBitmapFromGDIBitmap(bmp);
-            Source = ImageSource.Direct2D;
-        }
-        // use GDI+
-        else
-        {
-            _imageGdiPlus = bmp;
-            Source = ImageSource.GDIPlus;
-        }
+        // converting from GDI+ to Direct2D is expensive,
+        // we use GDI+ to preview the image
+        _imageGdiPlus = bmp;
+        Source = ImageSource.GDIPlus;
+        UseHardwareAcceleration = false;
 
         // emit OnImageChanged event
         OnImageChanged?.Invoke(EventArgs.Empty);
@@ -1590,6 +1570,28 @@ public partial class ViewBox : HybridControl
         else
         {
             Refresh();
+        }
+    }
+
+
+    private async Task OnImageDrawn()
+    {
+        // after previewing, check if we can use Direct2D to handle
+        if (_canUseDirect2D && Source == ImageSource.GDIPlus && _imageGdiPlus != null)
+        {
+            // give some time to render GDI+
+            await Task.Delay(100);
+
+            Source = ImageSource.Direct2D;
+            UseHardwareAcceleration = true;
+
+            lock(_imageGdiPlus)
+            {
+                _imageD2D = Device.CreateBitmapFromGDIBitmap(_imageGdiPlus);
+            }
+
+            // release the GDI+ resouce
+            _imageGdiPlus = null;
         }
     }
 
