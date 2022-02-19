@@ -170,6 +170,7 @@ public static class Constants
             Text = "Thumbnail bar",
             Image = "ThumbnailBar",
             CheckOnClick = true,
+            OnClick = new("IG_ToggleGallery"),
         },
         new()
         {
@@ -177,6 +178,7 @@ public static class Constants
             Text = "Checkerboard",
             Image = "Checkerboard",
             CheckOnClick = true,
+            OnClick = new("IG_ToggleCheckerboard"),
         },
         new() { Type = ToolbarItemModelType.Separator },
         new()

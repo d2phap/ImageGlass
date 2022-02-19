@@ -33,17 +33,17 @@ public partial class FrmMain
     /// Open an image from file picker
     /// </summary>
     /// <returns></returns>
-    private void IG_OpenFile()
+    private void IG_OpenFile(string args)
     {
         OpenFilePicker();
     }
 
-    private void IG_ViewPreviousImage()
+    private void IG_ViewPreviousImage(string args)
     {
         _ = ViewNextAsync(-1);
     }
 
-    private void IG_ViewNextImage()
+    private void IG_ViewNextImage(string args)
     {
         _ = ViewNextAsync(1);
     }
@@ -51,8 +51,41 @@ public partial class FrmMain
     private void IG_SetZoomMode(string mode)
     {
         PicBox.ZoomMode = Config.ZoomMode = Helpers.ParseEnum<ZoomMode>(mode);
-
     }
 
+    private bool IG_ToggleCheckerboard(string args)
+    {
+        Config.IsShowCheckerBoard = !Config.IsShowCheckerBoard;
+
+        if (Config.IsShowCheckerBoard)
+        {
+            if (Config.IsShowCheckerboardOnlyImageRegion)
+            {
+                PicBox.CheckerboardMode = CheckerboardMode.Image;
+            }
+            else
+            {
+                PicBox.CheckerboardMode = CheckerboardMode.Client;
+            }
+        }
+        else
+        {
+            PicBox.CheckerboardMode = CheckerboardMode.None;
+        }
+
+        return Config.IsShowCheckerBoard;
+    }
+
+
+    private bool IG_ToggleGallery(string args)
+    {
+        Config.IsShowThumbnail = !Config.IsShowThumbnail;
+
+        // Gallery bar
+        Sp1.Panel2Collapsed = !Config.IsShowThumbnail;
+
+        return Config.IsShowCheckerBoard;
+    }
+    
 }
 
