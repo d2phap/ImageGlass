@@ -52,8 +52,9 @@ public partial class ViewBox : HybridControl
     private D2DRect _destRect = new(0, 0, 0, 0);
 
     private Vector2 _panHostPoint;
-    private Vector2 _panSpeed;
+    private Vector2 _panSpeedPoint;
     private Vector2 _panHostStartPoint;
+    private float _panSpeed = 20f;
 
     private bool _xOut = false;
     private bool _yOut = false;
@@ -65,6 +66,7 @@ public partial class ViewBox : HybridControl
     private float _oldZoomFactor = 1f;
     private bool _isManualZoom = false;
     private ZoomMode _zoomMode = ZoomMode.AutoZoom;
+    private float _zoomSpeed = 0f;
     private Base.PhotoBox.InterpolationMode _interpolationMode = Base.PhotoBox.InterpolationMode.NearestNeighbor;
 
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
@@ -191,6 +193,21 @@ public partial class ViewBox : HybridControl
     }
 
     /// <summary>
+    /// Gets, sets the zoom speed. Value is from -500f to 500f.
+    /// </summary>
+    [Category("Zooming")]
+    [DefaultValue(0f)]
+    public float ZoomSpeed
+    {
+        get => _zoomSpeed;
+        set
+        {
+            _zoomFactor = Math.Min(value, 500f); // max 500f
+            _zoomFactor = Math.Max(value, -500f); // min -500f
+        }
+    }
+
+    /// <summary>
     /// Gets, sets zoom mode
     /// </summary>
     [Category("Zooming")]
@@ -223,6 +240,21 @@ public partial class ViewBox : HybridControl
                 _interpolationMode = value;
                 Invalidate();
             }
+        }
+    }
+
+    /// <summary>
+    /// Gets, sets the panning speed. Value is from 0 to 100f.
+    /// </summary>
+    [Category("Zooming")]
+    [DefaultValue(20f)]
+    public float PanSpeed
+    {
+        get => _panSpeed;
+        set
+        {
+            _panSpeed = Math.Min(value, 100f); // max 100f
+            _panSpeed = Math.Max(value, 0); // min 0
         }
     }
 
@@ -465,8 +497,8 @@ public partial class ViewBox : HybridControl
         {
             _panHostPoint.X = e.Location.X;
             _panHostPoint.Y = e.Location.Y;
-            _panSpeed.X = 0;
-            _panSpeed.Y = 0;
+            _panSpeedPoint.X = 0;
+            _panSpeedPoint.Y = 0;
             _panHostStartPoint.X = e.Location.X;
             _panHostStartPoint.Y = e.Location.Y;
         }
@@ -716,20 +748,20 @@ public partial class ViewBox : HybridControl
         // Panning
         if (_animationSource.HasFlag(AnimationSource.PanLeft))
         {
-            _ = PanTo(-20, 0, requestRerender: false);
+            _ = PanTo(-PanSpeed, 0, requestRerender: false);
         }
         else if (_animationSource.HasFlag(AnimationSource.PanRight))
         {
-            _ = PanTo(20, 0, requestRerender: false);
+            _ = PanTo(PanSpeed, 0, requestRerender: false);
         }
 
         if (_animationSource.HasFlag(AnimationSource.PanUp))
         {
-            _ = PanTo(0, -20, requestRerender: false);
+            _ = PanTo(0, -PanSpeed, requestRerender: false);
         }
         else if (_animationSource.HasFlag(AnimationSource.PanDown))
         {
-            _ = PanTo(0, 20, requestRerender: false);
+            _ = PanTo(0, PanSpeed, requestRerender: false);
         }
 
         // Zooming
@@ -1317,7 +1349,7 @@ public partial class ViewBox : HybridControl
     /// </returns>
     public bool ZoomToPoint(float delta, PointF? point = null, bool requestRerender = true)
     {
-        var speed = delta / 500f;
+        var speed = delta / (500f - ZoomSpeed);
         var location = new PointF()
         {
             X = point?.X ?? ImageViewportCenterPoint.X,
@@ -1375,6 +1407,7 @@ public partial class ViewBox : HybridControl
     public bool PanTo(float hDistance, float vDistance, bool requestRerender = true)
     {
         if (Source == ImageSource.Null) return false;
+        if (hDistance <= 0 && vDistance <= 0) return false;
 
         var loc = PointToClient(Cursor.Position);
 
@@ -1382,13 +1415,13 @@ public partial class ViewBox : HybridControl
         // horizontal
         if (hDistance != 0)
         {
-            _srcRect.X += (hDistance / _zoomFactor) + _panSpeed.X;
+            _srcRect.X += (hDistance / _zoomFactor) + _panSpeedPoint.X;
         }
 
         // vertical 
         if (vDistance != 0)
         {
-            _srcRect.Y += (vDistance / _zoomFactor) + _panSpeed.Y;
+            _srcRect.Y += (vDistance / _zoomFactor) + _panSpeedPoint.Y;
         }
 
         _drawPoint = new();
@@ -1424,31 +1457,46 @@ public partial class ViewBox : HybridControl
     /// <param name="durationMs">Display duration in millisecond.
     /// Set it <b>greater than 0</b> to disable auto clear.</param>
     /// <param name="delayMs">Duration to delay before displaying the message.</param>
-    public async void ShowMessage(string text, int durationMs = 0, int delayMs = 0)
+    private async void ShowMessagePrivate(string text, int durationMs = 0, int delayMs = 0)
     {
-        _msgTokenSrc?.Cancel();
-        _msgTokenSrc = new();
+        var token = _msgTokenSrc?.Token ?? default;
 
         try
         {
             if (delayMs > 0)
             {
-                await Task.Delay(delayMs, _msgTokenSrc.Token);
+                await Task.Delay(delayMs, token);
             }
 
             Text = text;
 
             if (durationMs > 0)
             {
-                await Task.Delay(durationMs, _msgTokenSrc.Token);
+                await Task.Delay(durationMs, token);
             }
         }
         catch { }
 
-        if (durationMs > 0 || _msgTokenSrc.IsCancellationRequested)
+        if (durationMs > 0 || token.IsCancellationRequested)
         {
             Text = string.Empty;
         }
+    }
+
+
+    /// <summary>
+    /// Shows text message.
+    /// </summary>
+    /// <param name="text">Message to show</param>
+    /// <param name="durationMs">Display duration in millisecond.
+    /// Set it <b>greater than 0</b> to disable auto clear.</param>
+    /// <param name="delayMs">Duration to delay before displaying the message.</param>
+    public void ShowMessage(string text, int durationMs = 0, int delayMs = 0)
+    {
+        _msgTokenSrc?.Cancel();
+        _msgTokenSrc = new();
+
+        ShowMessagePrivate(text, durationMs, delayMs);
     }
 
 
@@ -1500,7 +1548,7 @@ public partial class ViewBox : HybridControl
     /// Load image
     /// </summary>
     /// <param name="bmp"></param>
-    public async void SetImage(Bitmap? bmp)
+    public void SetImage(Bitmap? bmp)
     {
         // disable animations
         StopAnimatingImage();
@@ -1511,7 +1559,6 @@ public partial class ViewBox : HybridControl
         Source = ImageSource.Null;
         _imageD2D?.Dispose();
         _imageD2D = null;
-        _imageGdiPlus?.Dispose();
         _imageGdiPlus = null;
 
         if (bmp is null) return;
