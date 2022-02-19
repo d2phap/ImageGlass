@@ -85,6 +85,7 @@ public class IgPhoto : IDisposable
 
     #endregion
 
+
     /// <summary>
     /// Initializes <see cref="IgPhoto"/> instance.
     /// </summary>
@@ -108,6 +109,9 @@ public class IgPhoto : IDisposable
         IIgCodec? codec,
         CodecReadOptions? options = null)
     {
+        // reset dispose status
+        IsDisposed = false;
+
         // reset done status
         IsDone = false;
 
