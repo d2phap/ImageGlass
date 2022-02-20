@@ -110,7 +110,7 @@ public static class Constants
             Image = "AutoZoom",
             CheckOnClick = true,
             Group = "ZoomMode",
-            OnClick = new("IG_SetZoomMode", ((int)ZoomMode.AutoZoom).ToString()),
+            OnClick = new("IG_SetZoomMode", ZoomMode.AutoZoom.ToString()),
         },
         new()
         {
@@ -119,7 +119,7 @@ public static class Constants
             Image = "LockZoom",
             CheckOnClick = true,
             Group = "ZoomMode",
-            OnClick = new("IG_SetZoomMode", ((int)ZoomMode.LockZoom).ToString()),
+            OnClick = new("IG_SetZoomMode", ZoomMode.LockZoom.ToString()),
         },
         new()
         {
@@ -128,7 +128,7 @@ public static class Constants
             Image = "ScaleToWidth",
             CheckOnClick = true,
             Group = "ZoomMode",
-            OnClick = new("IG_SetZoomMode", ((int)ZoomMode.ScaleToWidth).ToString()),
+            OnClick = new("IG_SetZoomMode", ZoomMode.ScaleToWidth.ToString()),
         },
         new()
         {
@@ -137,7 +137,7 @@ public static class Constants
             Image = "ScaleToHeight",
             CheckOnClick = true,
             Group = "ZoomMode",
-            OnClick = new("IG_SetZoomMode", ((int)ZoomMode.ScaleToHeight).ToString()),
+            OnClick = new("IG_SetZoomMode", ZoomMode.ScaleToHeight.ToString()),
         },
         new()
         {
@@ -146,7 +146,7 @@ public static class Constants
             Image = "ScaleToFit",
             CheckOnClick = true,
             Group = "ZoomMode",
-            OnClick = new("IG_SetZoomMode", ((int)ZoomMode.ScaleToFit).ToString()),
+            OnClick = new("IG_SetZoomMode", ZoomMode.ScaleToFit.ToString()),
         },
         new()
         {
@@ -155,7 +155,7 @@ public static class Constants
             Image = "ScaleToFill",
             CheckOnClick = true,
             Group = "ZoomMode",
-            OnClick = new("IG_SetZoomMode", ((int)ZoomMode.ScaleToFill).ToString()),
+            OnClick = new("IG_SetZoomMode", ZoomMode.ScaleToFill.ToString()),
         },
         new() { Type = ToolbarItemModelType.Separator },
         new()

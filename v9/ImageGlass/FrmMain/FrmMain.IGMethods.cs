@@ -50,7 +50,16 @@ public partial class FrmMain
 
     private void IG_SetZoomMode(string mode)
     {
-        PicBox.ZoomMode = Config.ZoomMode = Helpers.ParseEnum<ZoomMode>(mode);
+        Config.ZoomMode = Helpers.ParseEnum<ZoomMode>(mode);
+
+        if (PicBox.ZoomMode == Config.ZoomMode)
+        {
+            PicBox.Refresh();
+        }
+        else
+        {
+            PicBox.ZoomMode = Config.ZoomMode;
+        }
     }
 
     private bool IG_ToggleCheckerboard(string args)
