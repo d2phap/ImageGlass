@@ -131,7 +131,13 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
                 pen.Color = Color.FromArgb(35, 255, 255, 255);
             }
 
-            e.Graphics.DrawRectangle(pen, 0, 0, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1);
+            const int UNWANTED_BORDER_WIDTH = 1;
+
+            e.Graphics.DrawRectangle(pen,
+                UNWANTED_BORDER_WIDTH,
+                UNWANTED_BORDER_WIDTH,
+                e.AffectedBounds.Width - 1 - UNWANTED_BORDER_WIDTH,
+                e.AffectedBounds.Height - 1 - UNWANTED_BORDER_WIDTH);
         }
         else
         {

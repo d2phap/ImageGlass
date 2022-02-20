@@ -29,6 +29,7 @@ namespace ImageGlass.UI;
 public class ModernMenu : ContextMenuStrip
 {
     private IgTheme _theme = new();
+    private bool _isFixedUnwantedBorder = false;
 
 
     #region Public properties
@@ -54,7 +55,6 @@ public class ModernMenu : ContextMenuStrip
     #endregion
 
 
-    
     public ModernMenu(IContainer container) : base(container)
     {
         // apply Windows 11 Corner API
@@ -63,6 +63,22 @@ public class ModernMenu : ContextMenuStrip
 
 
     #region Protected override
+
+    protected override void OnLayoutCompleted(EventArgs e)
+    {
+        base.OnLayoutCompleted(e);
+
+        // fix unwanted top-left border by shifting the region to (1,1)
+        if (!_isFixedUnwantedBorder && !DesignMode)
+        {
+            _isFixedUnwantedBorder = true;
+            var path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddRectangle(new RectangleF(0.05f, 0.05f,
+                DpiApi.Transform(Width), DpiApi.Transform(Height)));
+
+            Region = new Region(path);
+        }
+    }
 
     protected override void OnItemAdded(ToolStripItemEventArgs e)
     {
