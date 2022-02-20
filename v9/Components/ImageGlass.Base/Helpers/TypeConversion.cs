@@ -21,8 +21,10 @@ public partial class Helpers
     /// <typeparam name="T">Type</typeparam>
     /// <param name="value">Value</param>
     /// <returns></returns>
-    public static T ConvertType<T>(object value)
+    public static T? ConvertType<T>(object? value)
     {
+        if (value == null) return default;
+
         var type = typeof(T);
 
         if (type.IsEnum)

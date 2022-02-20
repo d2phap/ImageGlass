@@ -1,4 +1,5 @@
-﻿using ImageGlass.Settings;
+﻿using ImageGlass.Base;
+using ImageGlass.Settings;
 
 namespace ImageGlass;
 
@@ -14,7 +15,7 @@ public partial class FrmMain
         // Toolbar
         Toolbar.Visible = Config.IsShowToolbar;
         Toolbar.IconHeight = Config.ToolbarIconHeight;
-        LoadToolbarItems();
+        LoadToolbarItemsConfig();
 
         // Thumbnail bar
         Sp1.Panel2Collapsed = !Config.IsShowThumbnail;
@@ -61,13 +62,41 @@ public partial class FrmMain
     }
 
 
-
-    private void LoadToolbarItems()
+    private void LoadToolbarItemsConfig()
     {
         Toolbar.Items.Clear();
 
         // add other items
-        Toolbar.AddItems(Config.ToolbarItems);
+        Toolbar.AddItems(Config.ToolbarItems, (item) =>
+        {
+            if (item.GetType() != typeof(ToolStripButton))
+                return;
+
+            var bItem = item as ToolStripButton;
+            if (bItem is null || !bItem.CheckOnClick) return;
+
+            var tagModel = bItem.Tag as ToolbarItemTagModel;
+            if (tagModel is null || string.IsNullOrEmpty(tagModel.CheckableConfigBinding))
+                return;
+
+            // get config name
+            var configProp = Config.GetProp(tagModel.CheckableConfigBinding);
+            if (configProp is null) return;
+
+            // get config value
+            var propValue = configProp.GetValue(null);
+            if (propValue is null) return;
+
+            // load check state based on config value
+            if (configProp.PropertyType.IsEnum)
+            {
+                bItem.Checked = propValue.ToString() == tagModel.OnClick.Arguments;
+            }
+            else if (configProp.PropertyType == typeof(bool))
+            {
+                bItem.Checked = (bool)propValue;
+            }
+        });
     }
 
 

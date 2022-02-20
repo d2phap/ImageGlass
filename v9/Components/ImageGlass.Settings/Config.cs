@@ -24,6 +24,7 @@ using ImageGlass.Base.WinApi;
 using ImageGlass.UI;
 using Microsoft.Extensions.Configuration;
 using System.Dynamic;
+using System.Reflection;
 using System.Text;
 
 namespace ImageGlass.Settings;
@@ -31,11 +32,145 @@ namespace ImageGlass.Settings;
 /// <summary>
 /// Provides app configuration
 /// </summary>
-public class Config
+public static class Config
 {
 
     #region Internal properties
     private static readonly Source _source = new();
+
+    /// <summary>
+    /// Gets the default set of toolbar buttons
+    /// </summary>
+    public static List<ToolbarItemModel> DefaultToolbarItems => new()
+    {
+        new()
+        {
+            Id = "btn_OpenFile",
+            Text = "Open file",
+            Alignment = ToolStripItemAlignment.Right,
+            Image = "OpenFile",
+            OnClick = new("IG_OpenFile"),
+        },
+        new()
+        {
+            Id = "btn_ViewPrevious",
+            Text = "Previous image",
+            Image = "ViewPreviousImage",
+            OnClick = new("IG_ViewPreviousImage"),
+        },
+        new()
+        {
+            Id = "btn_ViewNext",
+            Text = "Next image",
+            Image = "ViewNextImage",
+            OnClick = new("IG_ViewNextImage"),
+        },
+        new() { Type = ToolbarItemModelType.Separator },
+        new()
+        {
+            Id = "btn_AutoZoom",
+            Text = "Auto zoom",
+            Image = "AutoZoom",
+            CheckOnClick = true,
+            CheckableConfigBinding = nameof(ZoomMode),
+            Group = "ZoomMode",
+            OnClick = new("IG_SetZoomMode", ZoomMode.AutoZoom.ToString()),
+        },
+        new()
+        {
+            Id = "btn_LockZoom",
+            Text = "Lock zoom",
+            Image = "LockZoom",
+            CheckOnClick = true,
+            CheckableConfigBinding = nameof(ZoomMode),
+            Group = "ZoomMode",
+            OnClick = new("IG_SetZoomMode", ZoomMode.LockZoom.ToString()),
+        },
+        new()
+        {
+            Id = "btn_ScaleToWidth",
+            Text = "Scale to width",
+            Image = "ScaleToWidth",
+            CheckOnClick = true,
+            CheckableConfigBinding = nameof(ZoomMode),
+            Group = "ZoomMode",
+            OnClick = new("IG_SetZoomMode", ZoomMode.ScaleToWidth.ToString()),
+        },
+        new()
+        {
+            Id = "btn_ScaleToHeight",
+            Text = "Scale to height",
+            Image = "ScaleToHeight",
+            CheckOnClick = true,
+            CheckableConfigBinding = nameof(ZoomMode),
+            Group = "ZoomMode",
+            OnClick = new("IG_SetZoomMode", ZoomMode.ScaleToHeight.ToString()),
+        },
+        new()
+        {
+            Id = "btn_ScaleToFit",
+            Text = "Scale to fit",
+            Image = "ScaleToFit",
+            CheckOnClick = true,
+            CheckableConfigBinding = nameof(ZoomMode),
+            Group = "ZoomMode",
+            OnClick = new("IG_SetZoomMode", ZoomMode.ScaleToFit.ToString()),
+        },
+        new()
+        {
+            Id = "btn_ScaleToFill",
+            Text = "Scale to fill",
+            Image = "ScaleToFill",
+            CheckOnClick = true,
+            CheckableConfigBinding = nameof(ZoomMode),
+            Group = "ZoomMode",
+            OnClick = new("IG_SetZoomMode", ZoomMode.ScaleToFill.ToString()),
+        },
+        new() { Type = ToolbarItemModelType.Separator },
+        new()
+        {
+            Id = "btn_Slideshow",
+            Text = "Slideshow",
+            Image = "Slideshow",
+        },
+        new()
+        {
+            Id = "btn_Thumbnail",
+            Text = "Thumbnail bar",
+            Image = "ThumbnailBar",
+            CheckOnClick = true,
+            CheckableConfigBinding = nameof(IsShowThumbnail),
+            OnClick = new("IG_ToggleGallery"),
+        },
+        new()
+        {
+            Id = "btn_Checkerboard",
+            Text = "Checkerboard",
+            Image = "Checkerboard",
+            CheckOnClick = true,
+            CheckableConfigBinding = nameof(IsShowCheckerBoard),
+            OnClick = new("IG_ToggleCheckerboard"),
+        },
+        new() { Type = ToolbarItemModelType.Separator },
+        new()
+        {
+            Id = "btn_Edit",
+            Text = "Edit...",
+            Image = "Edit",
+        },
+        new()
+        {
+            Id = "btn_Print",
+            Text = "Print...",
+            Image = "Print",
+        },
+        new()
+        {
+            Id = "btn_Delete",
+            Text = "Delete...",
+            Image = "Delete",
+        }
+    };
 
     #endregion
 
@@ -459,7 +594,7 @@ public class Config
     /// <summary>
     /// Gets, sets the list of toolbar buttons
     /// </summary>
-    public static List<ToolbarItemModel> ToolbarItems { get; set; } = Constants.DefaultToolbarItems;
+    public static List<ToolbarItemModel> ToolbarItems { get; set; } = DefaultToolbarItems;
 
     #endregion
 
@@ -766,7 +901,7 @@ public class Config
             .GetChildren()
             .Select(i => i.Get<ToolbarItemModel>());
 
-        ToolbarItems = toolbarItems.Any() ? toolbarItems.ToList() : Constants.DefaultToolbarItems;
+        ToolbarItems = toolbarItems.Any() ? toolbarItems.ToList() : DefaultToolbarItems;
 
         #endregion
 
@@ -852,6 +987,25 @@ public class Config
         var jsonObj = PrepareJsonSettingObjects();
 
         Helpers.WriteJson(jsonFile, jsonObj);
+    }
+
+
+    /// <summary>
+    /// Gets property by name.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public static PropertyInfo? GetProp(string? name)
+    {
+        if (string.IsNullOrEmpty(name))
+            return null;
+
+        // Find the public property in Config
+        var prop = typeof(Config)
+            .GetProperties(BindingFlags.Public | BindingFlags.Static)
+            .FirstOrDefault(i => i.Name == name);
+
+        return prop;
     }
 
     #endregion

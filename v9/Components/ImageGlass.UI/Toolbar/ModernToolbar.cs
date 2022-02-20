@@ -269,15 +269,14 @@ public class ModernToolbar : ToolStrip
                     var bItem = (ToolStripButton)item;
                     var bItemTagModel = bItem.Tag as ToolbarItemTagModel;
 
-                    if (bItem.CheckOnClick && bItemTagModel?.Group == tagModel.Group)
+                    if (bItem.CheckOnClick
+                        && bItem.Name != clickedItem.Name
+                        && bItemTagModel?.Group == tagModel.Group)
                     {
                         bItem.Checked = false;
                     }
                 }
             }
-
-            // select current item
-            clickedItem.Checked = true;
 
             base.OnItemClicked(e);
         }
@@ -577,14 +576,19 @@ public class ModernToolbar : ToolStrip
     /// <summary>
     /// Adds new toolbar item
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">Item model</param>
+    /// <param name="modifier">Modifier function to modify item properties</param>
     /// <returns></returns>
-    public ToolbarAddItemResult AddItem(ToolbarItemModel model)
+    public ToolbarAddItemResult AddItem(ToolbarItemModel model,
+        Action<ToolStripItem>? modifier = null)
     {
         // separator
         if (model.Type == ToolbarItemModelType.Separator)
         {
-            Items.Add(new ToolStripSeparator());
+            var sItem = new ToolStripSeparator();
+            modifier?.Invoke(sItem);
+
+            Items.Add(sItem);
             return ToolbarAddItemResult.Success;
         }
 
@@ -594,7 +598,7 @@ public class ModernToolbar : ToolStrip
 
 
         // button
-        var item = new ToolStripButton()
+        var bItem = new ToolStripButton()
         {
             Name = model.Id,
             DisplayStyle = model.DisplayStyle,
@@ -611,13 +615,15 @@ public class ModernToolbar : ToolStrip
             {
                 Image = model.Image,
                 Group = model.Group,
+                CheckableConfigBinding = model.CheckableConfigBinding,
                 OnClick = model.OnClick,
             },
 
             Image = Theme?.GetToolbarIcon(model.Image),
         };
 
-        Items.Add(item);
+        modifier?.Invoke(bItem);
+        Items.Add(bItem);
 
         return ToolbarAddItemResult.Success;
     }
@@ -626,12 +632,14 @@ public class ModernToolbar : ToolStrip
     /// <summary>
     /// Adds list of toolbar items
     /// </summary>
-    /// <param name="list"></param>
-    public void AddItems(IEnumerable<ToolbarItemModel> list)
+    /// <param name="list">The list of item models</param>
+    /// <param name="modifier">Modifier function to modify item properties</param>
+    public void AddItems(IEnumerable<ToolbarItemModel> list,
+        Action<ToolStripItem>? modifier = null)
     {
         foreach (var item in list)
         {
-            _ = AddItem(item);
+            _ = AddItem(item, modifier);
         }
     }
 
