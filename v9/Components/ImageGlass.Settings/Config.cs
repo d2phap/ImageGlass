@@ -66,7 +66,7 @@ public class Config
     /// <summary>
     /// Gets, sets value of thumbnail visibility
     /// </summary>
-    public static bool IsShowThumbnail { get; set; } = false;
+    public static bool IsShowThumbnail { get; set; } = true;
 
     /// <summary>
     /// Gets, sets the value that indicates if the default position of image in the viewer is center or top left
