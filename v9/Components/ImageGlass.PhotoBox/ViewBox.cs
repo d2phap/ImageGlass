@@ -160,6 +160,14 @@ public partial class ViewBox : HybridControl
     // Zooming
     #region Zooming
 
+
+    /// <summary>
+    /// Gets, sets the value whether the internal built-in zooming by keys is allowed.
+    /// </summary>
+    [Category("Zooming")]
+    [DefaultValue(true)]
+    public bool AllowInternalZoomingKeys { get; set; } = true;
+
     /// <summary>
     /// Gets, sets the minimum zoom factor (<c>100% = 1.0f</c>)
     /// </summary>
@@ -323,10 +331,20 @@ public partial class ViewBox : HybridControl
     #endregion
 
 
-    // Navigation Buttons
-    #region Navigation Buttons
+    // Navigation
+    #region Navigation
 
-    [Category("NavigationButtons")]
+    /// <summary>
+    /// Gets, sets the value whether the internal built-in panning by arrow keys is allowed.
+    /// </summary>
+    [Category("Navigation")]
+    [DefaultValue(true)]
+    public bool AllowInternalPanningKeys { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets the navigation buttons display style.
+    /// </summary>
+    [Category("Navigation")]
     [DefaultValue(NavButtonDisplay.None)]
     public NavButtonDisplay NavDisplay
     {
@@ -341,11 +359,17 @@ public partial class ViewBox : HybridControl
         }
     }
 
-    [Category("NavigationButtons")]
+    /// <summary>
+    /// Gets, sets the navigation button size.
+    /// </summary>
+    [Category("Navigation")]
     [DefaultValue(90f)]
     public SizeF NavButtonSize { get; set; } = new(90f, 90f);
 
-    [Category("NavigationButtons")]
+    /// <summary>
+    /// Gets, sets the navigation button border radius.
+    /// </summary>
+    [Category("Navigation")]
     [DefaultValue(1f)]
     public float NavBorderRadius
     {
@@ -356,21 +380,31 @@ public partial class ViewBox : HybridControl
         }
     }
 
-    [Category("NavigationButtons")]
+    /// <summary>
+    /// Gets, sets the navigation button color when hovered.
+    /// </summary>
+    [Category("Navigation")]
     [DefaultValue(typeof(Color), "150, 0, 0, 0")]
     public Color NavHoveredColor { get; set; } = Color.FromArgb(150, Color.Black);
 
-    [Category("NavigationButtons")]
+    /// <summary>
+    /// Gets, sets the navigation button color when pressed.
+    /// </summary>
+    [Category("Navigation")]
     [DefaultValue(typeof(Color), "200, 0, 0, 0")]
     public Color NavPressedColor { get; set; } = Color.FromArgb(200, Color.Black);
 
-    // Left button
-    [Category("NavigationButtons")]
+    /// <summary>
+    /// Gets, sets the left navigation button icon image.
+    /// </summary>
+    [Category("Navigation")]
     [DefaultValue(typeof(Bitmap), null)]
     public Bitmap? NavLeftImage { get; set; }
 
-    // Right button
-    [Category("NavigationButtons")]
+    /// <summary>
+    /// Gets, sets the right navigation button icon image.
+    /// </summary>
+    [Category("Navigation")]
     [DefaultValue(typeof(Bitmap), null)]
     public Bitmap? NavRightImage { get; set; }
 
@@ -378,7 +412,7 @@ public partial class ViewBox : HybridControl
     /// <summary>
     /// Occurs when the left navigation button clicked.
     /// </summary>
-    [Category("NavigationButtons")]
+    [Category("Navigation")]
     public event NavLeftClickedEventHandler? OnNavLeftClicked = null;
     public delegate void NavLeftClickedEventHandler(MouseEventArgs e);
 
@@ -386,7 +420,7 @@ public partial class ViewBox : HybridControl
     /// <summary>
     /// Occurs when the right navigation button clicked.
     /// </summary>
-    [Category("NavigationButtons")]
+    [Category("Navigation")]
     public event NavRightClickedEventHandler? OnNavRightClicked = null;
     public delegate void NavRightClickedEventHandler(MouseEventArgs e);
 
@@ -699,30 +733,38 @@ public partial class ViewBox : HybridControl
     {
         base.OnPreviewKeyDown(e);
 
+        // Panning
+        if (AllowInternalPanningKeys)
+        {
+            if (e.KeyCode == Keys.Right)
+            {
+                StartAnimation(AnimationSource.PanRight);
+            }
+            else if (e.KeyCode == Keys.Left)
+            {
+                StartAnimation(AnimationSource.PanLeft);
+            }
+            else if (e.KeyCode == Keys.Up)
+            {
+                StartAnimation(AnimationSource.PanUp);
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                StartAnimation(AnimationSource.PanDown);
+            }
+        }
 
-        if (e.KeyCode == Keys.Right)
+        // Zooming
+        if (AllowInternalZoomingKeys)
         {
-            StartAnimation(AnimationSource.PanRight);
-        }
-        else if (e.KeyCode == Keys.Left)
-        {
-            StartAnimation(AnimationSource.PanLeft);
-        }
-        else if (e.KeyCode == Keys.Up)
-        {
-            StartAnimation(AnimationSource.PanUp);
-        }
-        else if (e.KeyCode == Keys.Down)
-        {
-            StartAnimation(AnimationSource.PanDown);
-        }
-        else if (e.KeyCode == Keys.Oemplus)
-        {
-            StartAnimation(AnimationSource.ZoomIn);
-        }
-        else if (e.KeyCode == Keys.OemMinus)
-        {
-            StartAnimation(AnimationSource.ZoomOut);
+            if (e.KeyCode == Keys.Oemplus)
+            {
+                StartAnimation(AnimationSource.ZoomIn);
+            }
+            else if (e.KeyCode == Keys.OemMinus)
+            {
+                StartAnimation(AnimationSource.ZoomOut);
+            }
         }
     }
 
@@ -731,31 +773,37 @@ public partial class ViewBox : HybridControl
         base.OnKeyUp(e);
 
         // Panning
-        if (_animationSource.HasFlag(AnimationSource.PanLeft))
+        if (AllowInternalPanningKeys)
         {
-            StopAnimation(AnimationSource.PanLeft);
-        }
-        if (_animationSource.HasFlag(AnimationSource.PanRight))
-        {
-            StopAnimation(AnimationSource.PanRight);
-        }
-        if (_animationSource.HasFlag(AnimationSource.PanUp))
-        {
-            StopAnimation(AnimationSource.PanUp);
-        }
-        if (_animationSource.HasFlag(AnimationSource.PanDown))
-        {
-            StopAnimation(AnimationSource.PanDown);
+            if (_animationSource.HasFlag(AnimationSource.PanLeft))
+            {
+                StopAnimation(AnimationSource.PanLeft);
+            }
+            if (_animationSource.HasFlag(AnimationSource.PanRight))
+            {
+                StopAnimation(AnimationSource.PanRight);
+            }
+            if (_animationSource.HasFlag(AnimationSource.PanUp))
+            {
+                StopAnimation(AnimationSource.PanUp);
+            }
+            if (_animationSource.HasFlag(AnimationSource.PanDown))
+            {
+                StopAnimation(AnimationSource.PanDown);
+            }
         }
 
         // Zooming
-        if (_animationSource.HasFlag(AnimationSource.ZoomIn))
+        if (AllowInternalZoomingKeys)
         {
-            StopAnimation(AnimationSource.ZoomIn);
-        }
-        if (_animationSource.HasFlag(AnimationSource.ZoomOut))
-        {
-            StopAnimation(AnimationSource.ZoomOut);
+            if (_animationSource.HasFlag(AnimationSource.ZoomIn))
+            {
+                StopAnimation(AnimationSource.ZoomIn);
+            }
+            if (_animationSource.HasFlag(AnimationSource.ZoomOut))
+            {
+                StopAnimation(AnimationSource.ZoomOut);
+            }
         }
     }
 
