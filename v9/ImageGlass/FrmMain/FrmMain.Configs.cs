@@ -1,4 +1,5 @@
 ﻿using ImageGlass.Base;
+using ImageGlass.Base.PhotoBox;
 using ImageGlass.Settings;
 
 namespace ImageGlass;
@@ -27,6 +28,11 @@ public partial class FrmMain
 
         // PicBox
         PicBox.ZoomMode = Config.ZoomMode;
+        PicBox.CheckerboardMode = Config.IsShowCheckerBoard
+            ? (Config.IsShowCheckerboardOnlyImageRegion
+                ? CheckerboardMode.Image
+                : CheckerboardMode.Client)
+            : CheckerboardMode.None;
 
 
         Load += FrmMainConfig_Load;
