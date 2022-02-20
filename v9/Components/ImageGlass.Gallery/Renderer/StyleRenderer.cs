@@ -31,7 +31,7 @@ namespace ImageGlass.Gallery;
 /// <summary>
 /// Represents an overridable class for image list view renderers.
 /// </summary>
-public class ImageListViewRenderer : IDisposable
+public class StyleRenderer : IDisposable
 {
     #region Constants
     /// <summary>
@@ -51,9 +51,9 @@ public class ImageListViewRenderer : IDisposable
 
     #region Properties
     /// <summary>
-    /// Gets the ImageListView owning this item.
+    /// Gets the <see cref="ImageGallery"/> owning this item.
     /// </summary>
-    public ImageListView ImageListView { get; internal set; }
+    public ImageGallery ImageGalleryOwner { get; internal set; }
 
     /// <summary>
     /// Gets or sets whether the graphics is clipped to the bounds of 
@@ -74,12 +74,12 @@ public class ImageListViewRenderer : IDisposable
     /// <summary>
     /// Gets the rectangle bounding the client area of the control without the scroll bars.
     /// </summary>
-    public Rectangle ClientBounds { get { return ImageListView.layoutManager.ClientArea; } }
+    public Rectangle ClientBounds { get { return ImageGalleryOwner.layoutManager.ClientArea; } }
 
     /// <summary>
     /// Gets the rectangle bounding the item display area.
     /// </summary>
-    public Rectangle ItemAreaBounds { get { return ImageListView.layoutManager.ItemAreaBounds; } }
+    public Rectangle ItemAreaBounds { get { return ImageGalleryOwner.layoutManager.ItemAreaBounds; } }
 
     /// <summary>
     /// Gets a value indicating whether this renderer can apply custom colors.
@@ -96,9 +96,9 @@ public class ImageListViewRenderer : IDisposable
 
     #region Constructor
     /// <summary>
-    /// Initializes a new instance of the ImageListViewRenderer class.
+    /// Initializes a new instance of the <see cref="StyleRenderer"/> class.
     /// </summary>
-    public ImageListViewRenderer()
+    public StyleRenderer()
     {
         creatingGraphics = false;
         disposed = false;
@@ -117,11 +117,11 @@ public class ImageListViewRenderer : IDisposable
     /// </summary>
     private struct DrawItemParams
     {
-        public ImageListViewItem Item;
+        public ImageGalleryItem Item;
         public ItemState State;
         public Rectangle Bounds;
 
-        public DrawItemParams(ImageListViewItem item, ItemState state, Rectangle bounds)
+        public DrawItemParams(ImageGalleryItem item, ItemState state, Rectangle bounds)
         {
             Item = item;
             State = state;
@@ -325,15 +325,15 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="item">The item to read.</param>
     /// <param name="size">The size of the requested image..</param>
     /// <returns>Item thumbnail of requested size.</returns>
-    public Image? GetImageAsync(ImageListViewItem item, Size size)
+    public Image? GetImageAsync(ImageGalleryItem item, Size size)
     {
-        var img = ImageListView.thumbnailCache.GetRendererImage(item.Guid, size, ImageListView.UseEmbeddedThumbnails,
-            ImageListView.AutoRotateThumbnails);
+        var img = ImageGalleryOwner.thumbnailCache.GetRendererImage(item.Guid, size, ImageGalleryOwner.UseEmbeddedThumbnails,
+            ImageGalleryOwner.AutoRotateThumbnails);
 
         if (img == null)
         {
-            ImageListView.thumbnailCache.AddToRendererCache(item.Guid, item.mAdaptor, item.VirtualItemKey,
-                size, ImageListView.UseEmbeddedThumbnails, ImageListView.AutoRotateThumbnails);
+            ImageGalleryOwner.thumbnailCache.AddToRendererCache(item.Guid, item.mAdaptor, item.VirtualItemKey,
+                size, ImageGalleryOwner.UseEmbeddedThumbnails, ImageGalleryOwner.AutoRotateThumbnails);
         }
 
         return img;
@@ -351,7 +351,7 @@ public class ImageListViewRenderer : IDisposable
     {
         // Background
         g.ResetClip();
-        DrawBorder(g, new Rectangle(0, 0, ImageListView.Width, ImageListView.Height));
+        DrawBorder(g, new Rectangle(0, 0, ImageGalleryOwner.Width, ImageGalleryOwner.Height));
     }
 
     /// <summary>
@@ -361,8 +361,8 @@ public class ImageListViewRenderer : IDisposable
     private void RenderBackground(Graphics g)
     {
         // Background
-        g.SetClip(ImageListView.layoutManager.ClientArea);
-        DrawBackground(g, ImageListView.layoutManager.ClientArea);
+        g.SetClip(ImageGalleryOwner.layoutManager.ClientArea);
+        DrawBackground(g, ImageGalleryOwner.layoutManager.ClientArea);
     }
 
     /// <summary>
@@ -372,29 +372,29 @@ public class ImageListViewRenderer : IDisposable
     private void RenderItems(Graphics g)
     {
         // Is the control empty?
-        if (ImageListView.Items.Count == 0)
+        if (ImageGalleryOwner.Items.Count == 0)
             return;
 
         // No items visible?
-        if (ImageListView.layoutManager.FirstPartiallyVisible == -1 ||
-            ImageListView.layoutManager.LastPartiallyVisible == -1)
+        if (ImageGalleryOwner.layoutManager.FirstPartiallyVisible == -1 ||
+            ImageGalleryOwner.layoutManager.LastPartiallyVisible == -1)
             return;
 
         var drawItemParams = new List<DrawItemParams>();
-        for (int i = ImageListView.layoutManager.FirstPartiallyVisible; i <= ImageListView.layoutManager.LastPartiallyVisible; i++)
+        for (int i = ImageGalleryOwner.layoutManager.FirstPartiallyVisible; i <= ImageGalleryOwner.layoutManager.LastPartiallyVisible; i++)
         {
-            var item = ImageListView.Items[i];
+            var item = ImageGalleryOwner.Items[i];
 
             // Determine item state
             var state = ItemState.None;
-            var highlightState = ImageListView.navigationManager.HighlightState(item);
+            var highlightState = ImageGalleryOwner.navigationManager.HighlightState(item);
 
             if (highlightState == ItemHighlightState.HighlightedAndSelected ||
                 (highlightState == ItemHighlightState.NotHighlighted && item.Selected))
                 state |= ItemState.Selected;
 
-            if (ReferenceEquals(ImageListView.navigationManager.HoveredItem, item) &&
-                ImageListView.navigationManager.MouseSelecting == false)
+            if (ReferenceEquals(ImageGalleryOwner.navigationManager.HoveredItem, item) &&
+                ImageGalleryOwner.navigationManager.MouseSelecting == false)
                 state |= ItemState.Hovered;
 
             if (item.Pressed)
@@ -407,7 +407,7 @@ public class ImageListViewRenderer : IDisposable
                 state |= ItemState.Disabled;
 
             // Get item bounds
-            var bounds = ImageListView.layoutManager.GetItemBounds(i);
+            var bounds = ImageGalleryOwner.layoutManager.GetItemBounds(i);
 
             // Add to params to be sorted and drawn
             drawItemParams.Add(new DrawItemParams(item, state, bounds));
@@ -421,41 +421,41 @@ public class ImageListViewRenderer : IDisposable
         {
             if (Clip)
             {
-                Rectangle clip = Rectangle.Intersect(param.Bounds, ImageListView.layoutManager.ItemAreaBounds);
+                Rectangle clip = Rectangle.Intersect(param.Bounds, ImageGalleryOwner.layoutManager.ItemAreaBounds);
                 g.SetClip(clip);
             }
             else
-                g.SetClip(ImageListView.layoutManager.ClientArea);
+                g.SetClip(ImageGalleryOwner.layoutManager.ClientArea);
 
             // Draw the item
             DrawItem(g, param.Item, param.State, param.Bounds);
 
 
             // Draw the checkbox and file icon
-            if (ImageListView.ShowCheckBoxes)
+            if (ImageGalleryOwner.ShowCheckBoxes)
             {
-                var cBounds = ImageListView.layoutManager.GetCheckBoxBounds(param.Item.Index);
+                var cBounds = ImageGalleryOwner.layoutManager.GetCheckBoxBounds(param.Item.Index);
                 if (Clip)
                 {
-                    var clip = Rectangle.Intersect(cBounds, ImageListView.layoutManager.ItemAreaBounds);
+                    var clip = Rectangle.Intersect(cBounds, ImageGalleryOwner.layoutManager.ItemAreaBounds);
                     g.SetClip(clip);
                 }
                 else
-                    g.SetClip(ImageListView.layoutManager.ClientArea);
+                    g.SetClip(ImageGalleryOwner.layoutManager.ClientArea);
 
                 DrawCheckBox(g, param.Item, cBounds);
             }
 
-            if (ImageListView.ShowFileIcons)
+            if (ImageGalleryOwner.ShowFileIcons)
             {
-                var cBounds = ImageListView.layoutManager.GetIconBounds(param.Item.Index);
+                var cBounds = ImageGalleryOwner.layoutManager.GetIconBounds(param.Item.Index);
                 if (Clip)
                 {
-                    var clip = Rectangle.Intersect(cBounds, ImageListView.layoutManager.ItemAreaBounds);
+                    var clip = Rectangle.Intersect(cBounds, ImageGalleryOwner.layoutManager.ItemAreaBounds);
                     g.SetClip(clip);
                 }
                 else
-                    g.SetClip(ImageListView.layoutManager.ClientArea);
+                    g.SetClip(ImageGalleryOwner.layoutManager.ClientArea);
 
                 DrawFileIcon(g, param.Item, cBounds);
             }
@@ -468,8 +468,8 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="g">The graphics to draw on.</param>
     private void RenderOverlay(Graphics g)
     {
-        g.SetClip(ImageListView.layoutManager.ClientArea);
-        DrawOverlay(g, ImageListView.layoutManager.ClientArea);
+        g.SetClip(ImageGalleryOwner.layoutManager.ClientArea);
+        DrawOverlay(g, ImageGalleryOwner.layoutManager.ClientArea);
     }
 
     /// <summary>
@@ -478,25 +478,25 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="g">The graphics to draw on.</param>
     private void RenderInsertionCaret(Graphics g)
     {
-        if (ImageListView.navigationManager.DropTarget == null)
+        if (ImageGalleryOwner.navigationManager.DropTarget == null)
             return;
 
-        var bounds = ImageListView.layoutManager.GetItemBounds(ImageListView.navigationManager.DropTarget.Index);
-        if (ImageListView.View == View.VerticalStrip)
+        var bounds = ImageGalleryOwner.layoutManager.GetItemBounds(ImageGalleryOwner.navigationManager.DropTarget.Index);
+        if (ImageGalleryOwner.View == View.VerticalStrip)
         {
-            if (ImageListView.navigationManager.DropToRight)
-                bounds.Offset(0, ImageListView.layoutManager.ItemSizeWithMargin.Height);
+            if (ImageGalleryOwner.navigationManager.DropToRight)
+                bounds.Offset(0, ImageGalleryOwner.layoutManager.ItemSizeWithMargin.Height);
 
-            var itemMargin = MeasureItemMargin(ImageListView.View);
+            var itemMargin = MeasureItemMargin(ImageGalleryOwner.View);
             bounds.Offset(0, -(itemMargin.Height - 2) / 2 - 2);
             bounds.Height = 2;
         }
         else
         {
-            if (ImageListView.navigationManager.DropToRight)
-                bounds.Offset(ImageListView.layoutManager.ItemSizeWithMargin.Width, 0);
+            if (ImageGalleryOwner.navigationManager.DropToRight)
+                bounds.Offset(ImageGalleryOwner.layoutManager.ItemSizeWithMargin.Width, 0);
 
-            var itemMargin = MeasureItemMargin(ImageListView.View);
+            var itemMargin = MeasureItemMargin(ImageGalleryOwner.View);
             bounds.Offset(-(itemMargin.Width - 2) / 2 - 2, 0);
             bounds.Width = 2;
         }
@@ -504,7 +504,7 @@ public class ImageListViewRenderer : IDisposable
         if (Clip)
             g.SetClip(bounds);
         else
-            g.SetClip(ImageListView.layoutManager.ClientArea);
+            g.SetClip(ImageGalleryOwner.layoutManager.ClientArea);
 
         DrawInsertionCaret(g, bounds);
     }
@@ -515,13 +515,13 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="g">The graphics to draw on.</param>
     private void RenderSelectionRectangle(Graphics g)
     {
-        if (!ImageListView.navigationManager.MouseSelecting)
+        if (!ImageGalleryOwner.navigationManager.MouseSelecting)
             return;
 
-        var sel = ImageListView.navigationManager.SelectionRectangle;
+        var sel = ImageGalleryOwner.navigationManager.SelectionRectangle;
         if (sel.Height > 0 && sel.Width > 0)
         {
-            g.SetClip(ImageListView.layoutManager.ClientArea);
+            g.SetClip(ImageGalleryOwner.layoutManager.ClientArea);
             if (Clip)
             {
                 var selclip = new Rectangle(sel.Left, sel.Top, sel.Width + 1, sel.Height + 1);
@@ -538,11 +538,11 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="g">The graphics to draw on.</param>
     private void RenderScrollbarFiller(Graphics g)
     {
-        if (!ImageListView.hScrollBar.Visible || !ImageListView.vScrollBar.Visible)
+        if (!ImageGalleryOwner.hScrollBar.Visible || !ImageGalleryOwner.vScrollBar.Visible)
             return;
 
-        var bounds = ImageListView.layoutManager.ClientArea;
-        var filler = new Rectangle(bounds.Right, bounds.Bottom, ImageListView.vScrollBar.Width, ImageListView.hScrollBar.Height);
+        var bounds = ImageGalleryOwner.layoutManager.ClientArea;
+        var filler = new Rectangle(bounds.Right, bounds.Bottom, ImageGalleryOwner.vScrollBar.Width, ImageGalleryOwner.hScrollBar.Height);
 
         g.SetClip(filler);
         g.FillRectangle(SystemBrushes.Control, filler);
@@ -565,7 +565,7 @@ public class ImageListViewRenderer : IDisposable
         lastRenderTime = DateTime.Now;
 
         // Update the layout
-        ImageListView.layoutManager.Update();
+        ImageGalleryOwner.layoutManager.Update();
 
         // Set drawing area
         var g = bufferGraphics.Graphics;
@@ -609,15 +609,15 @@ public class ImageListViewRenderer : IDisposable
     /// <summary>
     /// Loads and returns the large gallery image for the given item.
     /// </summary>
-    private Image GetGalleryImageAsync(ImageListViewItem item, Size size)
+    private Image GetGalleryImageAsync(ImageGalleryItem item, Size size)
     {
-        Image img = ImageListView.thumbnailCache.GetGalleryImage(item.Guid, size, ImageListView.UseEmbeddedThumbnails,
-            ImageListView.AutoRotateThumbnails);
+        Image img = ImageGalleryOwner.thumbnailCache.GetGalleryImage(item.Guid, size, ImageGalleryOwner.UseEmbeddedThumbnails,
+            ImageGalleryOwner.AutoRotateThumbnails);
 
         if (img == null)
         {
-            ImageListView.thumbnailCache.AddToGalleryCache(item.Guid, item.mAdaptor, item.VirtualItemKey,
-                size, ImageListView.UseEmbeddedThumbnails, ImageListView.AutoRotateThumbnails);
+            ImageGalleryOwner.thumbnailCache.AddToGalleryCache(item.Guid, item.mAdaptor, item.VirtualItemKey,
+                size, ImageGalleryOwner.UseEmbeddedThumbnails, ImageGalleryOwner.AutoRotateThumbnails);
         }
 
         return img;
@@ -649,8 +649,8 @@ public class ImageListViewRenderer : IDisposable
         if (disposed)
             throw new ObjectDisposedException(nameof(bufferContext));
 
-        var width = Math.Max(ImageListView.Width, 1);
-        var height = Math.Max(ImageListView.Height, 1);
+        var width = Math.Max(ImageGalleryOwner.Width, 1);
+        var height = Math.Max(ImageGalleryOwner.Height, 1);
 
         bufferContext.MaximumBuffer = new Size(width, height);
 
@@ -682,9 +682,9 @@ public class ImageListViewRenderer : IDisposable
 #if DEBUG
     /// <summary>
     /// Releases unmanaged resources and performs other cleanup operations before the
-    /// ImageListViewRenderer is reclaimed by garbage collection.
+    /// <see cref="StyleRenderer"/> is reclaimed by garbage collection.
     /// </summary>
-    ~ImageListViewRenderer()
+    ~StyleRenderer()
     {
         System.Diagnostics.Debug.Print("Finalizer of {0} called.", GetType());
         Dispose();
@@ -727,10 +727,10 @@ public class ImageListViewRenderer : IDisposable
     public virtual Size MeasureItem(View view)
     {
         // Reference text height
-        int textHeight = ImageListView.Font.Height;
+        int textHeight = ImageGalleryOwner.Font.Height;
 
         var itemPadding = new Size(4, 4);
-        var itemSize = ImageListView.ThumbnailSize + itemPadding + itemPadding;
+        var itemSize = ImageGalleryOwner.ThumbnailSize + itemPadding + itemPadding;
         itemSize.Height += textHeight + Math.Max(4, textHeight / 3); // textHeight / 3 = vertical space between thumbnail and text
 
         return itemSize;
@@ -743,9 +743,9 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="bounds">The coordinates of the border.</param>
     public virtual void DrawBorder(Graphics g, Rectangle bounds)
     {
-        if (ImageListView.BorderStyle != BorderStyle.None)
+        if (ImageGalleryOwner.BorderStyle != BorderStyle.None)
         {
-            var style = (ImageListView.BorderStyle == BorderStyle.FixedSingle) ? Border3DStyle.Flat : Border3DStyle.SunkenInner;
+            var style = (ImageGalleryOwner.BorderStyle == BorderStyle.FixedSingle) ? Border3DStyle.Flat : Border3DStyle.SunkenInner;
 
             ControlPaint.DrawBorder3D(g, bounds, style);
         }
@@ -759,33 +759,33 @@ public class ImageListViewRenderer : IDisposable
     public virtual void DrawBackground(Graphics g, Rectangle bounds)
     {
         // Clear the background
-        g.Clear(ImageListView.BackColor);
+        g.Clear(ImageGalleryOwner.BackColor);
 
         // Draw the background image
-        if (ImageListView.BackgroundImage != null)
+        if (ImageGalleryOwner.BackgroundImage != null)
         {
-            var img = ImageListView.BackgroundImage;
+            var img = ImageGalleryOwner.BackgroundImage;
 
-            if (ImageListView.BackgroundImageLayout == ImageLayout.None)
+            if (ImageGalleryOwner.BackgroundImageLayout == ImageLayout.None)
             {
-                g.DrawImageUnscaled(img, ImageListView.layoutManager.ItemAreaBounds.Location);
+                g.DrawImageUnscaled(img, ImageGalleryOwner.layoutManager.ItemAreaBounds.Location);
             }
-            else if (ImageListView.BackgroundImageLayout == ImageLayout.Center)
+            else if (ImageGalleryOwner.BackgroundImageLayout == ImageLayout.Center)
             {
                 var x = bounds.Left + (bounds.Width - img.Width) / 2;
                 var y = bounds.Top + (bounds.Height - img.Height) / 2;
                 g.DrawImageUnscaled(img, x, y);
             }
-            else if (ImageListView.BackgroundImageLayout == ImageLayout.Stretch)
+            else if (ImageGalleryOwner.BackgroundImageLayout == ImageLayout.Stretch)
             {
                 g.DrawImage(img, bounds);
             }
-            else if (ImageListView.BackgroundImageLayout == ImageLayout.Tile)
+            else if (ImageGalleryOwner.BackgroundImageLayout == ImageLayout.Tile)
             {
                 using var imgBrush = new TextureBrush(img, WrapMode.Tile);
                 g.FillRectangle(imgBrush, bounds);
             }
-            else if (ImageListView.BackgroundImageLayout == ImageLayout.Zoom)
+            else if (ImageGalleryOwner.BackgroundImageLayout == ImageLayout.Zoom)
             {
                 var xscale = bounds.Width / (float)img.Width;
                 var yscale = bounds.Height / (float)img.Height;
@@ -822,7 +822,7 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="item">The ImageListViewItem to draw.</param>
     /// <param name="state">The current view state of item.</param>
     /// <param name="bounds">The bounding rectangle of item in client coordinates.</param>
-    public virtual void DrawItem(Graphics g, ImageListViewItem item, ItemState state, Rectangle bounds)
+    public virtual void DrawItem(Graphics g, ImageGalleryItem item, ItemState state, Rectangle bounds)
     {
         var itemPadding = new Size(4, 4);
         var alternate = item.Index % 2 == 1;
@@ -835,15 +835,15 @@ public class ImageListViewRenderer : IDisposable
         }
 
         // Paint background Selected
-        else if ((ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None)) ||
-            (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None) && ((state & ItemState.Hovered) != ItemState.None)))
+        else if ((ImageGalleryOwner.Focused && ((state & ItemState.Selected) != ItemState.None)) ||
+            (!ImageGalleryOwner.Focused && ((state & ItemState.Selected) != ItemState.None) && ((state & ItemState.Hovered) != ItemState.None)))
         {
             //using var bSelected = new LinearGradientBrush(bounds, ImageListView.Colors.SelectedColor1, ImageListView.Colors.SelectedColor2, LinearGradientMode.Vertical);
             //Utility.FillRoundedRectangle(g, bSelected, bounds, 4);
         }
 
         // Paint background unfocused
-        else if (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None))
+        else if (!ImageGalleryOwner.Focused && ((state & ItemState.Selected) != ItemState.None))
         {
             //using var bGray64 = new LinearGradientBrush(bounds, ImageListView.Colors.UnFocusedColor1, ImageListView.Colors.UnFocusedColor2, LinearGradientMode.Vertical);
             //Utility.FillRoundedRectangle(g, bGray64, bounds, 4);
@@ -867,7 +867,7 @@ public class ImageListViewRenderer : IDisposable
         var img = item.GetCachedImage(CachedImageType.Thumbnail);
         if (img != null)
         {
-            var pos = Utility.GetSizedImageBounds(img, new Rectangle(bounds.Location + itemPadding, ImageListView.ThumbnailSize));
+            var pos = Utility.GetSizedImageBounds(img, new Rectangle(bounds.Location + itemPadding, ImageGalleryOwner.ThumbnailSize));
             g.DrawImage(img, pos);
 
             // Draw image border
@@ -946,7 +946,7 @@ public class ImageListViewRenderer : IDisposable
         //}
 
         // Focus rectangle
-        if (ImageListView.Focused && ((state & ItemState.Focused) != ItemState.None))
+        if (ImageGalleryOwner.Focused && ((state & ItemState.Focused) != ItemState.None))
         {
             ControlPaint.DrawFocusRectangle(g, bounds);
         }
@@ -958,7 +958,7 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="g">The System.Drawing.Graphics to draw on.</param>
     /// <param name="item">The ImageListViewItem to draw.</param>
     /// <param name="bounds">The bounding rectangle of the checkbox in client coordinates.</param>
-    public virtual void DrawCheckBox(Graphics g, ImageListViewItem item, Rectangle bounds)
+    public virtual void DrawCheckBox(Graphics g, ImageGalleryItem item, Rectangle bounds)
     {
         var size = CheckBoxRenderer.GetGlyphSize(g, CheckBoxState.CheckedNormal);
         var pt = new PointF(bounds.X + (bounds.Width - (float)size.Width) / 2.0f,
@@ -979,7 +979,7 @@ public class ImageListViewRenderer : IDisposable
     /// <param name="g">The System.Drawing.Graphics to draw on.</param>
     /// <param name="item">The ImageListViewItem to draw.</param>
     /// <param name="bounds">The bounding rectangle of the file icon in client coordinates.</param>
-    public virtual void DrawFileIcon(Graphics g, ImageListViewItem item, Rectangle bounds)
+    public virtual void DrawFileIcon(Graphics g, ImageGalleryItem item, Rectangle bounds)
     {
         var icon = item.GetCachedImage(CachedImageType.SmallIcon);
         if (icon != null)

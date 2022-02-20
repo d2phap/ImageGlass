@@ -31,7 +31,7 @@ namespace ImageGlass.Gallery;
 /// <summary>
 /// The default renderer.
 /// </summary>
-public class DefaultRenderer : ImageListViewRenderer
+public class DefaultRenderer : StyleRenderer
 {
     /// <summary>
     /// Initializes a new instance of the DefaultRenderer class.
@@ -41,12 +41,12 @@ public class DefaultRenderer : ImageListViewRenderer
 #endregion
 
 
-#region ThemeRenderer
+#region SystemRenderer
 /// <summary>
 /// Displays the control in the current system theme.
 /// This renderer cannot be themed.
 /// </summary>
-public class ThemeRenderer : ImageListViewRenderer
+public class SystemRenderer : StyleRenderer
 {
     // Check boxes
     private readonly VisualStyleRenderer? rCheckedNormal = null;
@@ -80,7 +80,7 @@ public class ThemeRenderer : ImageListViewRenderer
     /// <summary>
     /// Initializes a new instance of the ThemeRenderer class.
     /// </summary>
-    public ThemeRenderer()
+    public SystemRenderer()
     {
         VisualStylesEnabled = Application.RenderWithVisualStyles;
 
@@ -137,9 +137,9 @@ public class ThemeRenderer : ImageListViewRenderer
     /// Draws the checkbox icon for the specified item on the given graphics.
     /// </summary>
     /// <param name="g">The System.Drawing.Graphics to draw on.</param>
-    /// <param name="item">The ImageListViewItem to draw.</param>
+    /// <param name="item">The <see cref="ImageGalleryItem"/> to draw.</param>
     /// <param name="bounds">The bounding rectangle of the checkbox in client coordinates.</param>
-    public override void DrawCheckBox(Graphics g, ImageListViewItem item, Rectangle bounds)
+    public override void DrawCheckBox(Graphics g, ImageGalleryItem item, Rectangle bounds)
     {
         VisualStyleRenderer? renderer;
         if (item.Enabled)
@@ -167,9 +167,9 @@ public class ThemeRenderer : ImageListViewRenderer
     /// Draws the file icon for the specified item on the given graphics.
     /// </summary>
     /// <param name="g">The System.Drawing.Graphics to draw on.</param>
-    /// <param name="item">The ImageListViewItem to draw.</param>
+    /// <param name="item">The <see cref="ImageGalleryItem"/> to draw.</param>
     /// <param name="bounds">The bounding rectangle of the file icon in client coordinates.</param>
-    public override void DrawFileIcon(Graphics g, ImageListViewItem item, Rectangle bounds)
+    public override void DrawFileIcon(Graphics g, ImageGalleryItem item, Rectangle bounds)
     {
         Image icon = item.GetCachedImage(CachedImageType.SmallIcon);
 
@@ -191,7 +191,7 @@ public class ThemeRenderer : ImageListViewRenderer
 
         //sz.Width += 6;
         //sz.Height += 6;
-        int textHeight = ImageListView.Font.Height;
+        int textHeight = ImageGalleryOwner.Font.Height;
 
         sz.Width += textHeight * 2 / 5;
         sz.Height -= textHeight / 2;
@@ -203,14 +203,14 @@ public class ThemeRenderer : ImageListViewRenderer
     /// [IG_CHANGE] Draws the specified item on the given graphics.
     /// </summary>
     /// <param name="g">The System.Drawing.Graphics to draw on.</param>
-    /// <param name="item">The ImageListViewItem to draw.</param>
+    /// <param name="item">The <see cref="ImageGalleryItem"/> to draw.</param>
     /// <param name="state">The current view state of item.</param>
     /// <param name="bounds">The bounding rectangle of item in client coordinates.</param>
-    public override void DrawItem(Graphics g, ImageListViewItem item, ItemState state, Rectangle bounds)
+    public override void DrawItem(Graphics g, ImageGalleryItem item, ItemState state, Rectangle bounds)
     {
         VisualStyleRenderer? rBack;
 
-        if (!ImageListView.Enabled)
+        if (!ImageGalleryOwner.Enabled)
         {
             rBack = rItemSelectedHidden;
         }
@@ -219,7 +219,7 @@ public class ThemeRenderer : ImageListViewRenderer
         {
             rBack = rItemDisabled;
         }
-        else if (!ImageListView.Focused && ((state & ItemState.Selected) != ItemState.None))
+        else if (!ImageGalleryOwner.Focused && ((state & ItemState.Selected) != ItemState.None))
         {
             rBack = rItemSelectedHidden;
         }
@@ -270,7 +270,7 @@ public class ThemeRenderer : ImageListViewRenderer
             }
 
             // Focus rectangle
-            if (ImageListView.Focused && ((state & ItemState.Focused) != ItemState.None))
+            if (ImageGalleryOwner.Focused && ((state & ItemState.Focused) != ItemState.None))
             {
                 Rectangle focusBounds = bounds;
                 focusBounds.Inflate(-2, -2);

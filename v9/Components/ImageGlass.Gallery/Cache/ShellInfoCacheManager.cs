@@ -1,4 +1,27 @@
-﻿
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+---------------------
+ImageGlass.Gallery is based on ImageListView v13.8.2:
+Url: https://github.com/oozcitak/imagelistview
+License: Apache License Version 2.0, http://www.apache.org/licenses/
+---------------------
+*/
 using ImageGlass.Base.QueuedWorker;
 
 namespace ImageGlass.Gallery;
@@ -8,14 +31,14 @@ namespace ImageGlass.Gallery;
 /// Represents the cache manager responsible for asynchronously loading
 /// shell info.
 /// </summary>
-internal class ImageListViewCacheShellInfo : IDisposable
+internal class ShellInfoCacheManager : IDisposable
 {
     #region Member Variables
     private QueuedWorker bw;
     private SynchronizationContext? context;
     private readonly SendOrPostCallback checkProcessingCallback;
 
-    private ImageListView mImageListView;
+    private ImageGallery _imageGallery;
 
     private Dictionary<string, CacheItem> shellCache;
     private Dictionary<string, bool> processing;
@@ -157,10 +180,10 @@ internal class ImageListViewCacheShellInfo : IDisposable
 
     #region Constructor
     /// <summary>
-    /// Initializes a new instance of the <see cref="ImageListViewCacheShellInfo"/> class.
+    /// Initializes a new instance of the <see cref="ShellInfoCacheManager"/> class.
     /// </summary>
     /// <param name="owner">The owner control.</param>
-    public ImageListViewCacheShellInfo(ImageListView owner)
+    public ShellInfoCacheManager(ImageGallery owner)
     {
         context = null;
         bw = new QueuedWorker
@@ -174,7 +197,7 @@ internal class ImageListViewCacheShellInfo : IDisposable
 
         checkProcessingCallback = new SendOrPostCallback(CanContinueProcessing);
 
-        mImageListView = owner;
+        _imageGallery = owner;
         RetryOnError = false;
 
         shellCache = new Dictionary<string, CacheItem>();
@@ -251,16 +274,16 @@ internal class ImageListViewCacheShellInfo : IDisposable
         }
 
         // Refresh the control lazily
-        if (result != null && mImageListView != null)
-            mImageListView.Refresh(false, true);
+        if (result != null && _imageGallery != null)
+            _imageGallery.Refresh(false, true);
 
         // Raise the ShellInfoCached event
-        if (result != null && mImageListView != null)
-            mImageListView.OnShellInfoCached(new ShellInfoCachedEventArgs(result.Extension, result.SmallIcon, result.LargeIcon, result.FileType));
+        if (result != null && _imageGallery != null)
+            _imageGallery.OnShellInfoCached(new ShellInfoCachedEventArgs(result.Extension, result.SmallIcon, result.LargeIcon, result.FileType));
 
         // Raise the CacheError event
-        if (e.Error != null && mImageListView != null)
-            mImageListView.OnCacheErrorInternal(e.Error, CacheThread.ShellInfo);
+        if (e.Error != null && _imageGallery != null)
+            _imageGallery.OnCacheErrorInternal(e.Error, CacheThread.ShellInfo);
     }
 
     /// <summary>
@@ -457,8 +480,8 @@ internal class ImageListViewCacheShellInfo : IDisposable
             processing.Add(extension, false);
 
         // Raise the ShellInfoCaching event
-        if (mImageListView != null)
-            mImageListView.OnShellInfoCaching(new ShellInfoCachingEventArgs(extension));
+        if (_imageGallery != null)
+            _imageGallery.OnShellInfoCaching(new ShellInfoCachingEventArgs(extension));
 
         // Add the item to the queue for processing
         bw.RunWorkerAsync(extension);
@@ -491,9 +514,9 @@ internal class ImageListViewCacheShellInfo : IDisposable
 #if DEBUG
     /// <summary>
     /// Releases unmanaged resources and performs other cleanup operations before the
-    /// ImageListViewCacheManager is reclaimed by garbage collection.
+    /// <see cref="ShellInfoCacheManager"/> is reclaimed by garbage collection.
     /// </summary>
-    ~ImageListViewCacheShellInfo()
+    ~ShellInfoCacheManager()
     {
         System.Diagnostics.Debug.Print("Finalizer of {0} called.", GetType());
         Dispose();

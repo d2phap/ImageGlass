@@ -283,7 +283,7 @@ public enum ItemDrawOrder
 }
 
 /// <summary>
-/// Represents the visual state of an ImageListView item.
+/// Represents the visual state of an <see cref="ImageGalleryItem"/>.
 /// </summary>
 [Flags]
 public enum ItemState
@@ -363,7 +363,7 @@ public enum UseEmbeddedThumbnails
 }
 
 /// <summary>
-/// Represents the view mode of the <see cref="ImageListView"/>.
+/// Represents the view mode of the <see cref="ImageGallery"/>.
 /// </summary>
 public enum View
 {
@@ -387,7 +387,7 @@ public enum View
 }
 
 /// <summary>
-/// Represents the direction of the <see cref="ImageListViewItem"/>.
+/// Represents the direction of the <see cref="ImageGalleryItem"/>.
 /// </summary>
 public enum TooltipDirection
 {

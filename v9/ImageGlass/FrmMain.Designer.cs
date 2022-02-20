@@ -135,7 +135,7 @@ namespace ImageGlass
             this.Sp3 = new ImageGlass.UI.ModernSplitContainer();
             this.PicBox = new ImageGlass.PhotoBox.ViewBox();
             this.PanRight = new System.Windows.Forms.FlowLayoutPanel();
-            this.Gallery = new ImageGlass.Gallery.ImageListView();
+            this.Gallery = new ImageGlass.Gallery.ImageGallery();
             this.MnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menu1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1376,6 +1376,6 @@ namespace ImageGlass
         private ToolStripMenuItem reportAnIssueToolStripMenuItem;
         private ToolStripMenuItem firstlaunchConfigurationsToolStripMenuItem;
         private PhotoBox.ViewBox PicBox;
-        private Gallery.ImageListView Gallery;
+        private Gallery.ImageGallery Gallery;
     }
 }

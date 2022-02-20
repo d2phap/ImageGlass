@@ -1,4 +1,28 @@
-﻿using ImageGlass.Base.QueuedWorker;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+---------------------
+ImageGlass.Gallery is based on ImageListView v13.8.2:
+Url: https://github.com/oozcitak/imagelistview
+License: Apache License Version 2.0, http://www.apache.org/licenses/
+---------------------
+*/
+using ImageGlass.Base.QueuedWorker;
 
 namespace ImageGlass.Gallery;
 
@@ -7,7 +31,7 @@ namespace ImageGlass.Gallery;
 /// Represents the cache manager responsible for asynchronously loading
 /// item metadata.
 /// </summary>
-internal class ImageListViewCacheMetadata : IDisposable
+internal class MetadataCacheManager : IDisposable
 {
 
     #region Member Variables
@@ -15,7 +39,7 @@ internal class ImageListViewCacheMetadata : IDisposable
     private SynchronizationContext? context;
     private readonly SendOrPostCallback checkProcessingCallback;
 
-    private ImageListView mImageListView;
+    private ImageGallery _imageGallery;
 
     private Dictionary<Guid, bool> editCache;
     private Dictionary<Guid, bool> processing;
@@ -103,10 +127,10 @@ internal class ImageListViewCacheMetadata : IDisposable
 
     #region Constructor
     /// <summary>
-    /// Initializes a new instance of the <see cref="ImageListViewCacheMetadata"/> class.
+    /// Initializes a new instance of the <see cref="MetadataCacheManager"/> class.
     /// </summary>
     /// <param name="owner">The owner control.</param>
-    public ImageListViewCacheMetadata(ImageListView owner)
+    public MetadataCacheManager(ImageGallery owner)
     {
         context = null;
         bw = new QueuedWorker
@@ -119,7 +143,7 @@ internal class ImageListViewCacheMetadata : IDisposable
 
         checkProcessingCallback = new SendOrPostCallback(CanContinueProcessing);
 
-        mImageListView = owner;
+        _imageGallery = owner;
         RetryOnError = false;
 
         editCache = new Dictionary<Guid, bool>();
@@ -170,7 +194,7 @@ internal class ImageListViewCacheMetadata : IDisposable
         // Was the item was updated by the UI thread?
         if (canProcess)
         {
-            if (mImageListView != null && !mImageListView.IsItemDirty(request.Guid))
+            if (_imageGallery != null && !_imageGallery.IsItemDirty(request.Guid))
                 canProcess = false;
         }
 
@@ -203,16 +227,16 @@ internal class ImageListViewCacheMetadata : IDisposable
         var details = (Tuple<string, object>[]?)e.Result;
 
         // Refresh the control lazily
-        if (mImageListView != null && mImageListView.IsItemVisible(request.Guid))
-            mImageListView.Refresh(false, true);
+        if (_imageGallery != null && _imageGallery.IsItemVisible(request.Guid))
+            _imageGallery.Refresh(false, true);
 
         // Raise the DetailsCached event
-        if (details != null && mImageListView != null)
-            mImageListView.OnDetailsCachedInternal(request.Guid);
+        if (details != null && _imageGallery != null)
+            _imageGallery.OnDetailsCachedInternal(request.Guid);
 
         // Raise the CacheError event
-        if (e.Error != null && mImageListView != null)
-            mImageListView.OnCacheErrorInternal(request.Guid, e.Error, CacheThread.Details);
+        if (e.Error != null && _imageGallery != null)
+            _imageGallery.OnCacheErrorInternal(request.Guid, e.Error, CacheThread.Details);
     }
 
     /// <summary>
@@ -332,8 +356,8 @@ internal class ImageListViewCacheMetadata : IDisposable
             processing.Add(item.Guid, false);
 
         // Raise the DetailsCaching event
-        if (mImageListView != null)
-            mImageListView.OnDetailsCachingInternal(item.Guid);
+        if (_imageGallery != null)
+            _imageGallery.OnDetailsCachingInternal(item.Guid);
 
         // Add the item to the queue for processing
         bw.RunWorkerAsync(item);
@@ -364,9 +388,9 @@ internal class ImageListViewCacheMetadata : IDisposable
 #if DEBUG
     /// <summary>
     /// Releases unmanaged resources and performs other cleanup operations before the
-    /// ImageListViewCacheManager is reclaimed by garbage collection.
+    /// <see cref="MetadataCacheManager"/> is reclaimed by garbage collection.
     /// </summary>
-    ~ImageListViewCacheMetadata()
+    ~MetadataCacheManager()
     {
         System.Diagnostics.Debug.Print("Finalizer of {0} called.", GetType());
         Dispose();

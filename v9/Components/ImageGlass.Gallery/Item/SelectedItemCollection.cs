@@ -1,35 +1,59 @@
-﻿using System.Collections;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+---------------------
+ImageGlass.Gallery is based on ImageListView v13.8.2:
+Url: https://github.com/oozcitak/imagelistview
+License: Apache License Version 2.0, http://www.apache.org/licenses/
+---------------------
+*/
+using System.Collections;
 using System.ComponentModel;
 
 namespace ImageGlass.Gallery;
 
 
-public partial class ImageListView
+public partial class ImageGallery
 {
     /// <summary>
     /// Represents the collection of selected items in the image list view.
     /// </summary>
-    public class ImageListViewSelectedItemCollection : IList<ImageListViewItem>
+    public class SelectedItemCollection : IList<ImageGalleryItem>
     {
         #region Member Variables
-        internal ImageListView mImageListView;
+        internal ImageGallery _imageGallery;
         #endregion
 
         #region Constructors
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageListViewSelectedItemCollection"/> class.
+        /// Initializes a new instance of the <see cref="SelectedItemCollection"/> class.
         /// </summary>
-        /// <param name="owner">The <see cref="ImageListView"/> owning this collection.</param>
-        internal ImageListViewSelectedItemCollection(ImageListView owner)
+        /// <param name="owner">The <see cref="ImageGallery"/> owning this collection.</param>
+        internal SelectedItemCollection(ImageGallery owner)
         {
-            mImageListView = owner;
+            _imageGallery = owner;
         }
 
         #endregion
 
         #region Properties
         /// <summary>
-        /// Gets the number of elements contained in the <see cref="ImageListViewSelectedItemCollection"/>.
+        /// Gets the number of elements contained in the <see cref="SelectedItemCollection"/>.
         /// </summary>
         [Category("Behavior"), Browsable(true), Description("Gets the number of elements contained in the collection.")]
         public int Count
@@ -37,34 +61,34 @@ public partial class ImageListView
             get
             {
                 int count = 0;
-                foreach (ImageListViewItem item in mImageListView.Items)
+                foreach (ImageGalleryItem item in _imageGallery.Items)
                     if (item.Selected && item.Enabled) count++;
                 return count;
             }
         }
 
         /// <summary>
-        /// Gets a value indicating whether the <see cref="ImageListViewSelectedItemCollection"/> is read-only.
+        /// Gets a value indicating whether the <see cref="SelectedItemCollection"/> is read-only.
         /// </summary>
         [Category("Behavior"), Browsable(false), Description("Gets a value indicating whether the collection is read-only.")]
         public bool IsReadOnly => true;
 
         /// <summary>
-        /// Gets the <see cref="ImageListView"/> owning this collection.
+        /// Gets the <see cref="ImageGallery"/> owning this collection.
         /// </summary>
-        [Category("Behavior"), Browsable(false), Description("Gets the ImageListView owning this collection.")]
-        public ImageListView ImageListView => mImageListView;
+        [Category("Behavior"), Browsable(false), Description($"Gets the {nameof(ImageGallery)} owning this collection.")]
+        public ImageGallery ImageGalleryOwner => _imageGallery;
 
         /// <summary>
-        /// Gets or sets the <see cref="ImageListViewItem"/> at the specified index.
+        /// Gets or sets the <see cref="ImageGalleryItem"/> at the specified index.
         /// </summary>
         [Category("Behavior"), Browsable(false), Description("Gets or sets the item at the specified index")]
-        public ImageListViewItem this[int index]
+        public ImageGalleryItem this[int index]
         {
             get
             {
                 int i = 0;
-                foreach (ImageListViewItem item in this)
+                foreach (ImageGalleryItem item in this)
                 {
                     if (i == index)
                         return item;
@@ -78,15 +102,15 @@ public partial class ImageListView
 
         #region Instance Methods
         /// <summary>
-        /// Determines whether the <see cref="ImageListViewSelectedItemCollection"/> contains a specific value.
+        /// Determines whether the <see cref="SelectedItemCollection"/> contains a specific value.
         /// </summary>
-        /// <param name="item">The <see cref="ImageListViewItem"/> to locate in the <see cref="ImageListViewSelectedItemCollection"/>.</param>
+        /// <param name="item">The <see cref="ImageGalleryItem"/> to locate in the <see cref="SelectedItemCollection"/>.</param>
         /// <returns>
-        /// true if <paramref name="item"/> is found in the <see cref="ImageListViewSelectedItemCollection"/>; otherwise, false.
+        /// true if <paramref name="item"/> is found in the <see cref="SelectedItemCollection"/>; otherwise, false.
         /// </returns>
-        public bool Contains(ImageListViewItem item)
+        public bool Contains(ImageGalleryItem item)
         {
-            return item.Selected && item.Enabled && mImageListView.Items.Contains(item);
+            return item.Selected && item.Enabled && _imageGallery.Items.Contains(item);
         }
 
         /// <summary>
@@ -95,9 +119,9 @@ public partial class ImageListView
         /// <returns>
         /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
         /// </returns>
-        public IEnumerator<ImageListViewItem> GetEnumerator()
+        public IEnumerator<ImageGalleryItem> GetEnumerator()
         {
-            return new ImageListViewSelectedItemEnumerator(mImageListView.Items);
+            return new SelectedItemEnumerator(_imageGallery.Items);
         }
 
         #endregion
@@ -116,10 +140,10 @@ public partial class ImageListView
         /// </summary>
         internal void Clear(bool raiseEvent)
         {
-            foreach (ImageListViewItem item in this)
+            foreach (ImageGalleryItem item in this)
                 item.mSelected = false;
-            if (raiseEvent && mImageListView != null)
-                mImageListView.OnSelectionChangedInternal();
+            if (raiseEvent && _imageGallery != null)
+                _imageGallery.OnSelectionChangedInternal();
         }
 
         #endregion
@@ -130,14 +154,14 @@ public partial class ImageListView
         /// Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
         /// </summary>
         /// <param name="item">The object to add to the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param>
-        void ICollection<ImageListViewItem>.Add(ImageListViewItem item)
+        void ICollection<ImageGalleryItem>.Add(ImageGalleryItem item)
         {
             throw new NotSupportedException();
         }
         /// <summary>
         /// Removes all items from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
         /// </summary>
-        void ICollection<ImageListViewItem>.Clear()
+        void ICollection<ImageGalleryItem>.Clear()
         {
             throw new NotSupportedException();
         }
@@ -146,7 +170,7 @@ public partial class ImageListView
         /// </summary>
         /// <param name="array">The one-dimensional <see cref="T:System.Array"/> that is the destination of the elements copied from <see cref="T:System.Collections.Generic.ICollection`1"/>. The <see cref="T:System.Array"/> must have zero-based indexing.</param>
         /// <param name="arrayIndex">The zero-based index in <paramref name="array"/> at which copying begins.</param>
-        void ICollection<ImageListViewItem>.CopyTo(ImageListViewItem[] array, int arrayIndex)
+        void ICollection<ImageGalleryItem>.CopyTo(ImageGalleryItem[] array, int arrayIndex)
         {
             throw new NotSupportedException();
         }
@@ -157,8 +181,8 @@ public partial class ImageListView
         /// <returns>
         /// The index of <paramref name="item"/> if found in the list; otherwise, -1.
         /// </returns>
-        [Obsolete("Use ImageListViewItem.Index property instead.")]
-        int IList<ImageListViewItem>.IndexOf(ImageListViewItem item)
+        [Obsolete($"Use {nameof(ImageGalleryItem.Index)} property instead.")]
+        int IList<ImageGalleryItem>.IndexOf(ImageGalleryItem item)
         {
             throw new NotSupportedException();
         }
@@ -167,7 +191,7 @@ public partial class ImageListView
         /// </summary>
         /// <param name="index">The zero-based index at which <paramref name="item"/> should be inserted.</param>
         /// <param name="item">The object to insert into the <see cref="T:System.Collections.Generic.IList`1"/>.</param>
-        void IList<ImageListViewItem>.Insert(int index, ImageListViewItem item)
+        void IList<ImageGalleryItem>.Insert(int index, ImageGalleryItem item)
         {
             throw new NotSupportedException();
         }
@@ -178,7 +202,7 @@ public partial class ImageListView
         /// <returns>
         /// true if <paramref name="item"/> was successfully removed from the <see cref="T:System.Collections.Generic.ICollection`1"/>; otherwise, false. This method also returns false if <paramref name="item"/> is not found in the original <see cref="T:System.Collections.Generic.ICollection`1"/>.
         /// </returns>
-        bool ICollection<ImageListViewItem>.Remove(ImageListViewItem item)
+        bool ICollection<ImageGalleryItem>.Remove(ImageGalleryItem item)
         {
             throw new NotSupportedException();
         }
@@ -186,14 +210,14 @@ public partial class ImageListView
         /// Removes the <see cref="T:System.Collections.Generic.IList`1"/> item at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index of the item to remove.</param>
-        void IList<ImageListViewItem>.RemoveAt(int index)
+        void IList<ImageGalleryItem>.RemoveAt(int index)
         {
             throw new NotSupportedException();
         }
         /// <summary>
         /// Gets or sets the item at the specified index.
         /// </summary>
-        ImageListViewItem IList<ImageListViewItem>.this[int index]
+        ImageGalleryItem IList<ImageGalleryItem>.this[int index]
         {
             get
             {
@@ -221,16 +245,16 @@ public partial class ImageListView
         /// <summary>
         /// Represents an enumerator to walk though the selected items.
         /// </summary>
-        internal class ImageListViewSelectedItemEnumerator : IEnumerator<ImageListViewItem>
+        internal class SelectedItemEnumerator : IEnumerator<ImageGalleryItem>
         {
             #region Member Variables
-            private ImageListViewItemCollection owner;
+            private ItemCollection owner;
             private int current;
             private Guid lastItem;
             #endregion
 
             #region Constructor
-            public ImageListViewSelectedItemEnumerator(ImageListViewItemCollection collection)
+            public SelectedItemEnumerator(ItemCollection collection)
             {
                 owner = collection;
                 current = -1;
@@ -242,7 +266,7 @@ public partial class ImageListView
             /// <summary>
             /// Gets the element in the collection at the current position of the enumerator.
             /// </summary>
-            public ImageListViewItem Current
+            public ImageGalleryItem Current
             {
                 get
                 {

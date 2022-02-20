@@ -33,7 +33,7 @@ namespace ImageGlass.Gallery;
 /// <summary>
 /// Represents the method that will handle the CacheError event.
 /// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
+/// <param name="sender">The <see cref="ImageGallery"/> object that is the source of the event.</param>
 /// <param name="e">A CacheErrorEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void CacheErrorEventHandler(object sender, CacheErrorEventArgs e);
@@ -41,7 +41,7 @@ public delegate void CacheErrorEventHandler(object sender, CacheErrorEventArgs e
 /// <summary>
 /// Represents the method that will handle the DropFiles event. 
 /// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
+/// <param name="sender">The <see cref="ImageGallery"/> object that is the source of the event.</param>
 /// <param name="e">A DropFileEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void DropFilesEventHandler(object sender, DropFileEventArgs e);
@@ -49,7 +49,7 @@ public delegate void DropFilesEventHandler(object sender, DropFileEventArgs e);
 /// <summary>
 /// Represents the method that will handle the DropItems event. 
 /// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
+/// <param name="sender">The <see cref="ImageGallery"/> object that is the source of the event.</param>
 /// <param name="e">A DropItemEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void DropItemsEventHandler(object sender, DropItemEventArgs e);
@@ -57,7 +57,7 @@ public delegate void DropItemsEventHandler(object sender, DropItemEventArgs e);
 /// <summary>
 /// Represents the method that will handle the DropComplete event. 
 /// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
+/// <param name="sender">The <see cref="ImageGallery"/> object that is the source of the event.</param>
 /// <param name="e">A DropCompleteEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void DropCompleteEventHandler(object sender, DropCompleteEventArgs e);
@@ -65,7 +65,7 @@ public delegate void DropCompleteEventHandler(object sender, DropCompleteEventAr
 /// <summary>
 /// Represents the method that will handle the ItemClick event. 
 /// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
+/// <param name="sender">The <see cref="ImageGallery"/> object that is the source of the event.</param>
 /// <param name="e">A ItemClickEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ItemClickEventHandler(object sender, ItemClickEventArgs e);
@@ -73,7 +73,7 @@ public delegate void ItemClickEventHandler(object sender, ItemClickEventArgs e);
 /// <summary>
 /// Represents the method that will handle the ItemCheckBoxClick event. 
 /// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
+/// <param name="sender">The <see cref="ImageGallery"/> object that is the source of the event.</param>
 /// <param name="e">A ItemEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ItemCheckBoxClickEventHandler(object sender, ItemEventArgs e);
@@ -81,7 +81,7 @@ public delegate void ItemCheckBoxClickEventHandler(object sender, ItemEventArgs 
 /// <summary>
 /// Represents the method that will handle the ItemHover event. 
 /// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
+/// <param name="sender">The <see cref="ImageGallery"/> object that is the source of the event.</param>
 /// <param name="e">A ItemHoverEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ItemHoverEventHandler(object sender, ItemHoverEventArgs e);
@@ -89,7 +89,7 @@ public delegate void ItemHoverEventHandler(object sender, ItemHoverEventArgs e);
 /// <summary>
 /// Represents the method that will handle the ItemDoubleClick event. 
 /// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
+/// <param name="sender">The <see cref="ImageGallery"/> object that is the source of the event.</param>
 /// <param name="e">An ItemClickEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ItemDoubleClickEventHandler(object sender, ItemClickEventArgs e);
@@ -97,7 +97,7 @@ public delegate void ItemDoubleClickEventHandler(object sender, ItemClickEventAr
 /// <summary>
 /// Represents the method that will handle the ThumbnailCaching event. 
 /// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
+/// <param name="sender">The <see cref="ImageGallery"/> object that is the source of the event.</param>
 /// <param name="e">A ThumbnailCachingEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ThumbnailCachingEventHandler(object sender, ThumbnailCachingEventArgs e);
@@ -105,7 +105,7 @@ public delegate void ThumbnailCachingEventHandler(object sender, ThumbnailCachin
 /// <summary>
 /// Represents the method that will handle the ThumbnailCached event. 
 /// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
+/// <param name="sender">The <see cref="ImageGallery"/> object that is the source of the event.</param>
 /// <param name="e">A ThumbnailCachedEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ThumbnailCachedEventHandler(object sender, ThumbnailCachedEventArgs e);
@@ -113,7 +113,7 @@ public delegate void ThumbnailCachedEventHandler(object sender, ThumbnailCachedE
 /// <summary>
 /// Represents the method that will handle the DetailsCaching event. 
 /// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
+/// <param name="sender">The <see cref="ImageGallery"/> object that is the source of the event.</param>
 /// <param name="e">An ItemEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void DetailsCachingEventHandler(object sender, ItemEventArgs e);
@@ -121,7 +121,7 @@ public delegate void DetailsCachingEventHandler(object sender, ItemEventArgs e);
 /// <summary>
 /// Represents the method that will handle the DetailsCached event. 
 /// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
+/// <param name="sender">The <see cref="ImageGallery"/> object that is the source of the event.</param>
 /// <param name="e">An ItemEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void DetailsCachedEventHandler(object sender, ItemEventArgs e);
@@ -129,7 +129,7 @@ public delegate void DetailsCachedEventHandler(object sender, ItemEventArgs e);
 /// <summary>
 /// Represents the method that will handle the ShellInfoCachingEventHandler event. 
 /// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
+/// <param name="sender">The <see cref="ImageGallery"/> object that is the source of the event.</param>
 /// <param name="e">A ShellInfoCachingEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ShellInfoCachingEventHandler(object sender, ShellInfoCachingEventArgs e);
@@ -137,7 +137,7 @@ public delegate void ShellInfoCachingEventHandler(object sender, ShellInfoCachin
 /// <summary>
 /// Represents the method that will handle the ShellInfoCachedEventHandler event. 
 /// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
+/// <param name="sender">The <see cref="ImageGallery"/> object that is the source of the event.</param>
 /// <param name="e">A ShellInfoCachedEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ShellInfoCachedEventHandler(object sender, ShellInfoCachedEventArgs e);
@@ -151,7 +151,7 @@ internal delegate void RefreshDelegateInternal();
 /// <summary>
 /// Represents the method that will handle the ItemCollectionChanged event. 
 /// </summary>
-/// <param name="sender">The ImageListView object that is the source of the event.</param>
+/// <param name="sender">The <see cref="ImageGallery"/> object that is the source of the event.</param>
 /// <param name="e">A ItemCollectionChangedEventArgs that contains event data.</param>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public delegate void ItemCollectionChangedEventHandler(object sender, ItemCollectionChangedEventArgs e);
@@ -167,10 +167,10 @@ public delegate void ItemCollectionChangedEventHandler(object sender, ItemCollec
 public class CacheErrorEventArgs : EventArgs
 {
     /// <summary>
-    /// Gets the ImageListViewItem that is associated with this error.
+    /// Gets the <see cref="ImageGalleryItem"/> that is associated with this error.
     /// This parameter can be null.
     /// </summary>
-    public ImageListViewItem? Item { get; private set; }
+    public ImageGalleryItem? Item { get; private set; }
     /// <summary>
     /// Gets a value indicating which error occurred during an asynchronous operation.
     /// </summary>
@@ -183,10 +183,10 @@ public class CacheErrorEventArgs : EventArgs
     /// <summary>
     /// Initializes a new instance of the CacheErrorEventArgs class.
     /// </summary>
-    /// <param name="item">The ImageListViewItem that is associated with this error.</param>
+    /// <param name="item">The <see cref="ImageGalleryItem"/> that is associated with this error.</param>
     /// <param name="error">The error that occurred during an asynchronous operation.</param>
     /// <param name="cacheThread">The thread raising the error.</param>
-    public CacheErrorEventArgs(ImageListViewItem? item, Exception error, CacheThread cacheThread)
+    public CacheErrorEventArgs(ImageGalleryItem? item, Exception error, CacheThread cacheThread)
     {
         Item = item;
         Error = error;
@@ -255,7 +255,7 @@ public class DropItemEventArgs : EventArgs
     /// <summary>
     /// Gets the array of items droppped on the control.
     /// </summary>
-    public ImageListViewItem[] Items { get; private set; }
+    public ImageGalleryItem[] Items { get; private set; }
 
 
     /// <summary>
@@ -263,7 +263,7 @@ public class DropItemEventArgs : EventArgs
     /// </summary>
     /// <param name="index">The position of the insertion caret.</param>
     /// <param name="items">The array of items droppped on the control.</param>
-    public DropItemEventArgs(int index, ImageListViewItem[] items)
+    public DropItemEventArgs(int index, ImageGalleryItem[] items)
     {
         Cancel = false;
         Index = index;
@@ -280,7 +280,7 @@ public class DropCompleteEventArgs : EventArgs
     /// <summary>
     /// Gets the array of items droppped on the control.
     /// </summary>
-    public ImageListViewItem[] Items { get; private set; }
+    public ImageGalleryItem[] Items { get; private set; }
 
     /// <summary>
     /// Gets if the drag operation is internal or external to the control.
@@ -294,7 +294,7 @@ public class DropCompleteEventArgs : EventArgs
     /// <param name="items">The array of items droppped on the control.</param>
     /// <param name="internalDrag">true if a drop event occurred after an internal reordering of items,
     /// otherwise false if image files were externally dropped onto the control.</param>
-    public DropCompleteEventArgs(ImageListViewItem[] items, bool internalDrag)
+    public DropCompleteEventArgs(ImageGalleryItem[] items, bool internalDrag)
     {
         Items = items;
         InternalDrag = internalDrag;
@@ -308,15 +308,15 @@ public class DropCompleteEventArgs : EventArgs
 public class ItemEventArgs : EventArgs
 {
     /// <summary>
-    /// Gets the ImageListViewItem that is the target of the event.
+    /// Gets the <see cref="ImageGalleryItem"/> that is the target of the event.
     /// </summary>
-    public ImageListViewItem? Item { get; private set; }
+    public ImageGalleryItem? Item { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the ItemEventArgs class.
     /// </summary>
     /// <param name="item">The item that is the target of this event.</param>
-    public ItemEventArgs(ImageListViewItem? item)
+    public ItemEventArgs(ImageGalleryItem? item)
     {
         Item = item;
     }
@@ -329,9 +329,9 @@ public class ItemEventArgs : EventArgs
 public class ItemClickEventArgs : EventArgs
 {
     /// <summary>
-    /// Gets the ImageListViewItem that is the target of the event.
+    /// Gets the <see cref="ImageGalleryItem"/> that is the target of the event.
     /// </summary>
-    public ImageListViewItem Item { get; private set; }
+    public ImageGalleryItem Item { get; private set; }
 
     /// <summary>
     /// Gets the coordinates of the cursor.
@@ -360,7 +360,7 @@ public class ItemClickEventArgs : EventArgs
     /// <param name="location">The location of the mouse.</param>
     /// <param name="buttons">One of the System.Windows.Forms.MouseButtons values 
     /// indicating which mouse button was pressed.</param>
-    public ItemClickEventArgs(ImageListViewItem item, Point location, MouseButtons buttons)
+    public ItemClickEventArgs(ImageGalleryItem item, Point location, MouseButtons buttons)
     {
         Item = item;
         Location = location;
@@ -375,16 +375,16 @@ public class ItemClickEventArgs : EventArgs
 public class ItemHoverEventArgs : EventArgs
 {
     /// <summary>
-    /// Gets the ImageListViewItem that was previously hovered.
+    /// Gets the <see cref="ImageGalleryItem"/> that was previously hovered.
     /// Returns null if there was no previously hovered item.
     /// </summary>
-    public ImageListViewItem? PreviousItem { get; private set; }
+    public ImageGalleryItem? PreviousItem { get; private set; }
 
     /// <summary>
-    /// Gets the currently hovered ImageListViewItem.
+    /// Gets the currently hovered <see cref="ImageGalleryItem"/>.
     /// Returns null if there is no hovered item.
     /// </summary>
-    public ImageListViewItem? Item { get; private set; }
+    public ImageGalleryItem? Item { get; private set; }
 
 
     /// <summary>
@@ -392,7 +392,7 @@ public class ItemHoverEventArgs : EventArgs
     /// </summary>
     /// <param name="item">The currently hovered item.</param>
     /// <param name="previousItem">The previously hovered item.</param>
-    public ItemHoverEventArgs(ImageListViewItem? item, ImageListViewItem? previousItem)
+    public ItemHoverEventArgs(ImageGalleryItem? item, ImageGalleryItem? previousItem)
     {
         Item = item;
         PreviousItem = previousItem;
@@ -427,9 +427,9 @@ public class LayoutEventArgs : EventArgs
 public class ThumbnailCachingEventArgs : EventArgs
 {
     /// <summary>
-    /// Gets the ImageListViewItem that is the target of the event.
+    /// Gets the <see cref="ImageGalleryItem"/> that is the target of the event.
     /// </summary>
-    public ImageListViewItem? Item { get; private set; }
+    public ImageGalleryItem? Item { get; private set; }
 
     /// <summary>
     /// Gets the size of the thumbnail request.
@@ -441,7 +441,7 @@ public class ThumbnailCachingEventArgs : EventArgs
     /// </summary>
     /// <param name="item">The item that is the target of this event.</param>
     /// <param name="size">The size of the thumbnail request.</param>
-    public ThumbnailCachingEventArgs(ImageListViewItem? item, Size size)
+    public ThumbnailCachingEventArgs(ImageGalleryItem? item, Size size)
     {
         Item = item;
         Size = size;
@@ -455,9 +455,9 @@ public class ThumbnailCachingEventArgs : EventArgs
 public class ThumbnailCachedEventArgs : EventArgs
 {
     /// <summary>
-    /// Gets the ImageListViewItem that is the target of the event.
+    /// Gets the <see cref="ImageGalleryItem"/> that is the target of the event.
     /// </summary>
-    public ImageListViewItem? Item { get; private set; }
+    public ImageGalleryItem? Item { get; private set; }
 
     /// <summary>
     /// Gets the size of the thumbnail request.
@@ -483,7 +483,7 @@ public class ThumbnailCachedEventArgs : EventArgs
     /// <param name="size">The size of the thumbnail request.</param>
     /// <param name="thumbnailImage">true if the cached image is a thumbnail image; otherwise false
     /// if the image is a large image for gallery or pane views.</param>
-    public ThumbnailCachedEventArgs(ImageListViewItem? item, Image? thumbnail, Size size, bool thumbnailImage)
+    public ThumbnailCachedEventArgs(ImageGalleryItem? item, Image? thumbnail, Size size, bool thumbnailImage)
     {
         Item = item;
         Thumbnail = thumbnail;
@@ -568,9 +568,9 @@ public class ItemCollectionChangedEventArgs : EventArgs
     public CollectionChangeAction Action { get; private set; }
 
     /// <summary>
-    /// Gets the ImageListViewItem that is the target of the event.
+    /// Gets the <see cref="ImageGalleryItem"/> that is the target of the event.
     /// </summary>
-    public ImageListViewItem? Item { get; private set; }
+    public ImageGalleryItem? Item { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the ItemCollectionChangedEventArgs class.
@@ -578,7 +578,7 @@ public class ItemCollectionChangedEventArgs : EventArgs
     /// <param name="action">The type of action causing the change.</param>
     /// <param name="item">The item that is the target of this event. This parameter will be null
     /// if the collection is cleared.</param>
-    public ItemCollectionChangedEventArgs(CollectionChangeAction action, ImageListViewItem? item)
+    public ItemCollectionChangedEventArgs(CollectionChangeAction action, ImageGalleryItem? item)
     {
         Action = action;
         Item = item;

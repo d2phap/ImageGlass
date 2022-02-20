@@ -25,14 +25,14 @@ License: Apache License Version 2.0, http://www.apache.org/licenses/
 
 using ImageGlass.Base.Cache;
 using System.ComponentModel;
-using static ImageGlass.Gallery.ImageListView;
+using static ImageGlass.Gallery.ImageGallery;
 
 namespace ImageGlass.Gallery;
 
 /// <summary>
 /// Represents an item in the image list view.
 /// </summary>
-public class ImageListViewItem : ICloneable
+public class ImageGalleryItem : ICloneable
 {
     #region Member Variables
 
@@ -59,7 +59,7 @@ public class ImageListViewItem : ICloneable
     // Used for cloned items
     internal Image? clonedThumbnail;
 
-    internal ImageListViewItemCollection? owner = null;
+    internal ItemCollection? owner = null;
     internal bool isDirty = true;
     private bool editing = false;
     #endregion
@@ -74,16 +74,16 @@ public class ImageListViewItem : ICloneable
     {
         get
         {
-            if (ImageListView is null)
+            if (ImageGalleryOwner is null)
             {
                 return CacheState.Unknown;
             }
 
-            return ImageListView.thumbnailCache.GetCacheState(
+            return ImageGalleryOwner.thumbnailCache.GetCacheState(
                 Guid,
-                ImageListView.ThumbnailSize,
-                ImageListView.UseEmbeddedThumbnails,
-                ImageListView.AutoRotateThumbnails);
+                ImageGalleryOwner.ThumbnailSize,
+                ImageGalleryOwner.UseEmbeddedThumbnails,
+                ImageGalleryOwner.AutoRotateThumbnails);
         }
     }
     /// <summary>
@@ -116,11 +116,11 @@ public class ImageListViewItem : ICloneable
             if (!mEnabled && mSelected)
             {
                 mSelected = false;
-                if (ImageListView != null)
-                    ImageListView.OnSelectionChangedInternal();
+                if (ImageGalleryOwner != null)
+                    ImageGalleryOwner.OnSelectionChangedInternal();
             }
-            if (ImageListView != null && ImageListView.IsItemVisible(Guid))
-                ImageListView.Refresh();
+            if (ImageGalleryOwner != null && ImageGalleryOwner.IsItemVisible(Guid))
+                ImageGalleryOwner.Refresh();
         }
     }
 
@@ -164,7 +164,7 @@ public class ImageListViewItem : ICloneable
     /// Gets the ImageListView owning this item.
     /// </summary>
     [Category("Behavior"), Browsable(false)]
-    public ImageListView? ImageListView { get; internal set; } = null;
+    public ImageGallery? ImageGalleryOwner { get; internal set; } = null;
 
     /// <summary>
     /// Gets the index of the item.
@@ -184,8 +184,8 @@ public class ImageListViewItem : ICloneable
             if (value != mChecked)
             {
                 mChecked = value;
-                if (ImageListView != null)
-                    ImageListView.OnItemCheckBoxClickInternal(this);
+                if (ImageGalleryOwner != null)
+                    ImageGalleryOwner.OnItemCheckBoxClickInternal(this);
             }
         }
     }
@@ -202,11 +202,11 @@ public class ImageListViewItem : ICloneable
             if (value != mSelected && mEnabled)
             {
                 mSelected = value;
-                if (ImageListView != null)
+                if (ImageGalleryOwner != null)
                 {
-                    ImageListView.OnSelectionChangedInternal();
-                    if (ImageListView.IsItemVisible(Guid))
-                        ImageListView.Refresh();
+                    ImageGalleryOwner.OnSelectionChangedInternal();
+                    if (ImageGalleryOwner.IsItemVisible(Guid))
+                        ImageGalleryOwner.Refresh();
                 }
             }
         }
@@ -223,10 +223,10 @@ public class ImageListViewItem : ICloneable
             if (value != mPressed && mEnabled)
             {
                 mPressed = value;
-                if (ImageListView != null)
+                if (ImageGalleryOwner != null)
                 {
-                    if (ImageListView.IsItemVisible(Guid))
-                        ImageListView.Refresh();
+                    if (ImageGalleryOwner.IsItemVisible(Guid))
+                        ImageGalleryOwner.Refresh();
                 }
             }
         }
@@ -249,8 +249,8 @@ public class ImageListViewItem : ICloneable
         set
         {
             mText = value;
-            if (ImageListView != null && ImageListView.IsItemVisible(Guid))
-                ImageListView.Refresh();
+            if (ImageGalleryOwner != null && ImageGalleryOwner.IsItemVisible(Guid))
+                ImageGalleryOwner.Refresh();
         }
     }
 
@@ -273,13 +273,13 @@ public class ImageListViewItem : ICloneable
                 extension = _stringCache.GetFromCache(Path.GetExtension(mFileName));
 
                 isDirty = true;
-                if (ImageListView != null)
+                if (ImageGalleryOwner != null)
                 {
-                    ImageListView.thumbnailCache.Remove(Guid, true);
-                    ImageListView.metadataCache.Remove(Guid);
-                    ImageListView.metadataCache.Add(Guid, Adaptor, mFileName);
-                    if (ImageListView.IsItemVisible(Guid))
-                        ImageListView.Refresh();
+                    ImageGalleryOwner.thumbnailCache.Remove(Guid, true);
+                    ImageGalleryOwner.metadataCache.Remove(Guid);
+                    ImageGalleryOwner.metadataCache.Add(Guid, Adaptor, mFileName);
+                    if (ImageGalleryOwner.IsItemVisible(Guid))
+                        ImageGalleryOwner.Refresh();
                 }
             }
         }
@@ -295,17 +295,17 @@ public class ImageListViewItem : ICloneable
     {
         get
         {
-            if (ImageListView == null)
+            if (ImageGalleryOwner == null)
                 throw new InvalidOperationException("Owner control is null.");
 
             if (ThumbnailCacheState != CacheState.Cached)
             {
-                ImageListView.thumbnailCache.Add(Guid, mAdaptor, mVirtualItemKey, ImageListView.ThumbnailSize,
-                    ImageListView.UseEmbeddedThumbnails, ImageListView.AutoRotateThumbnails);
+                ImageGalleryOwner.thumbnailCache.Add(Guid, mAdaptor, mVirtualItemKey, ImageGalleryOwner.ThumbnailSize,
+                    ImageGalleryOwner.UseEmbeddedThumbnails, ImageGalleryOwner.AutoRotateThumbnails);
             }
 
-            return ImageListView.thumbnailCache.GetImage(Guid, mAdaptor, mVirtualItemKey, ImageListView.ThumbnailSize, ImageListView.UseEmbeddedThumbnails,
-                ImageListView.AutoRotateThumbnails, true);
+            return ImageGalleryOwner.thumbnailCache.GetImage(Guid, mAdaptor, mVirtualItemKey, ImageGalleryOwner.ThumbnailSize, ImageGalleryOwner.UseEmbeddedThumbnails,
+                ImageGalleryOwner.AutoRotateThumbnails, true);
         }
     }
 
@@ -334,27 +334,27 @@ public class ImageListViewItem : ICloneable
     {
         get
         {
-            if (ImageListView == null)
+            if (ImageGalleryOwner == null)
                 throw new InvalidOperationException("Owner control is null.");
 
             var iconPath = PathForShellIcon();
-            var state = ImageListView.shellInfoCache.GetCacheState(iconPath);
+            var state = ImageGalleryOwner.shellInfoCache.GetCacheState(iconPath);
             if (state == CacheState.Cached)
             {
-                return ImageListView.shellInfoCache.GetSmallIcon(iconPath);
+                return ImageGalleryOwner.shellInfoCache.GetSmallIcon(iconPath);
             }
             else if (state == CacheState.Error)
             {
-                if (ImageListView.RetryOnError)
+                if (ImageGalleryOwner.RetryOnError)
                 {
-                    ImageListView.shellInfoCache.Remove(iconPath);
-                    ImageListView.shellInfoCache.Add(iconPath);
+                    ImageGalleryOwner.shellInfoCache.Remove(iconPath);
+                    ImageGalleryOwner.shellInfoCache.Add(iconPath);
                 }
                 return null;
             }
             else
             {
-                ImageListView.shellInfoCache.Add(iconPath);
+                ImageGalleryOwner.shellInfoCache.Add(iconPath);
                 return null;
             }
         }
@@ -369,27 +369,27 @@ public class ImageListViewItem : ICloneable
     {
         get
         {
-            if (ImageListView == null)
+            if (ImageGalleryOwner == null)
                 throw new InvalidOperationException("Owner control is null.");
 
             var iconPath = PathForShellIcon();
-            var state = ImageListView.shellInfoCache.GetCacheState(iconPath);
+            var state = ImageGalleryOwner.shellInfoCache.GetCacheState(iconPath);
             if (state == CacheState.Cached)
             {
-                return ImageListView.shellInfoCache.GetLargeIcon(iconPath);
+                return ImageGalleryOwner.shellInfoCache.GetLargeIcon(iconPath);
             }
             else if (state == CacheState.Error)
             {
-                if (ImageListView.RetryOnError)
+                if (ImageGalleryOwner.RetryOnError)
                 {
-                    ImageListView.shellInfoCache.Remove(iconPath);
-                    ImageListView.shellInfoCache.Add(iconPath);
+                    ImageGalleryOwner.shellInfoCache.Remove(iconPath);
+                    ImageGalleryOwner.shellInfoCache.Add(iconPath);
                 }
                 return null;
             }
             else
             {
-                ImageListView.shellInfoCache.Add(iconPath);
+                ImageGalleryOwner.shellInfoCache.Add(iconPath);
                 return null;
             }
         }
@@ -403,27 +403,27 @@ public class ImageListViewItem : ICloneable
     {
         get
         {
-            if (ImageListView == null)
+            if (ImageGalleryOwner == null)
                 throw new InvalidOperationException("Owner control is null.");
 
             var iconPath = PathForShellIcon();
-            var state = ImageListView.shellInfoCache.GetCacheState(iconPath);
+            var state = ImageGalleryOwner.shellInfoCache.GetCacheState(iconPath);
             if (state == CacheState.Cached)
             {
-                return ImageListView.shellInfoCache.GetFileType(iconPath);
+                return ImageGalleryOwner.shellInfoCache.GetFileType(iconPath);
             }
             else if (state == CacheState.Error)
             {
-                if (ImageListView.RetryOnError)
+                if (ImageGalleryOwner.RetryOnError)
                 {
-                    ImageListView.shellInfoCache.Remove(iconPath);
-                    ImageListView.shellInfoCache.Add(iconPath);
+                    ImageGalleryOwner.shellInfoCache.Remove(iconPath);
+                    ImageGalleryOwner.shellInfoCache.Add(iconPath);
                 }
                 return string.Empty;
             }
             else
             {
-                ImageListView.shellInfoCache.Add(iconPath);
+                ImageGalleryOwner.shellInfoCache.Add(iconPath);
                 return string.Empty;
             }
         }
@@ -434,18 +434,18 @@ public class ImageListViewItem : ICloneable
 
     #region Constructors
     /// <summary>
-    /// Initializes a new instance of the <see cref="ImageListViewItem"/> class.
+    /// Initializes a new instance of the <see cref="ImageGalleryItem"/> class.
     /// </summary>
-    public ImageListViewItem()
+    public ImageGalleryItem()
     {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ImageListViewItem"/> class.
+    /// Initializes a new instance of the <see cref="ImageGalleryItem"/> class.
     /// </summary>
     /// <param name="filename">The image filename representing the item.</param>
     /// <param name="text">Item text</param>
-    public ImageListViewItem(string filename, string text) : this()
+    public ImageGalleryItem(string filename, string text) : this()
     {
         if (File.Exists(filename))
         {
@@ -473,27 +473,27 @@ public class ImageListViewItem : ICloneable
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ImageListViewItem"/> class.
+    /// Initializes a new instance of the <see cref="ImageGalleryItem"/> class.
     /// </summary>
     /// <param name="filename">The image filename representing the item.</param>
-    public ImageListViewItem(string filename) : this(filename, string.Empty) { }
+    public ImageGalleryItem(string filename) : this(filename, string.Empty) { }
 
     /// <summary>
-    /// Initializes a new instance of a virtual <see cref="ImageListViewItem"/> class.
+    /// Initializes a new instance of a virtual <see cref="ImageGalleryItem"/> class.
     /// </summary>
     /// <param name="key">The key identifying this item.</param>
     /// <param name="text">Text of this item.</param>
-    public ImageListViewItem(object key, string text) : this()
+    public ImageGalleryItem(object key, string text) : this()
     {
         mVirtualItemKey = key;
         mText = text;
     }
 
     /// <summary>
-    /// Initializes a new instance of a virtual <see cref="ImageListViewItem"/> class.
+    /// Initializes a new instance of a virtual <see cref="ImageGalleryItem"/> class.
     /// </summary>
     /// <param name="key">The key identifying this item.</param>
-    public ImageListViewItem(object key) : this(key, string.Empty) { }
+    public ImageGalleryItem(object key) : this(key, string.Empty) { }
 
     #endregion
 
@@ -509,11 +509,11 @@ public class ImageListViewItem : ICloneable
         if (editing == true)
             throw new InvalidOperationException("Already editing this item.");
 
-        if (ImageListView == null)
+        if (ImageGalleryOwner == null)
             throw new InvalidOperationException("Owner control is null.");
 
-        ImageListView.thumbnailCache.BeginItemEdit(Guid);
-        ImageListView.metadataCache.BeginItemEdit(Guid);
+        ImageGalleryOwner.thumbnailCache.BeginItemEdit(Guid);
+        ImageGalleryOwner.metadataCache.BeginItemEdit(Guid);
 
         editing = true;
     }
@@ -527,11 +527,11 @@ public class ImageListViewItem : ICloneable
         if (editing == false)
             throw new InvalidOperationException("This item is not being edited.");
 
-        if (ImageListView == null)
+        if (ImageGalleryOwner == null)
             throw new InvalidOperationException("Owner control is null.");
 
-        ImageListView.thumbnailCache.EndItemEdit(Guid);
-        ImageListView.metadataCache.EndItemEdit(Guid);
+        ImageGalleryOwner.thumbnailCache.EndItemEdit(Guid);
+        ImageGalleryOwner.metadataCache.EndItemEdit(Guid);
 
         editing = false;
         if (update) Update();
@@ -551,12 +551,12 @@ public class ImageListViewItem : ICloneable
     public void Update()
     {
         isDirty = true;
-        if (ImageListView != null)
+        if (ImageGalleryOwner != null)
         {
-            ImageListView.thumbnailCache.Remove(Guid, true);
-            ImageListView.metadataCache.Remove(Guid);
-            ImageListView.metadataCache.Add(Guid, mAdaptor, mVirtualItemKey);
-            ImageListView.Refresh();
+            ImageGalleryOwner.thumbnailCache.Remove(Guid, true);
+            ImageGalleryOwner.metadataCache.Remove(Guid);
+            ImageGalleryOwner.metadataCache.Add(Guid, mAdaptor, mVirtualItemKey);
+            ImageGalleryOwner.Refresh();
         }
     }
 
@@ -592,7 +592,7 @@ public class ImageListViewItem : ICloneable
     /// <returns>Requested thumbnail or icon.</returns>
     public Image? GetCachedImage(CachedImageType imageType)
     {
-        if (ImageListView == null)
+        if (ImageGalleryOwner == null)
             throw new InvalidOperationException("Owner control is null.");
 
         string iconPath = PathForShellIcon();
@@ -600,29 +600,29 @@ public class ImageListViewItem : ICloneable
         if (imageType == CachedImageType.SmallIcon || imageType == CachedImageType.LargeIcon)
         {
             if (string.IsNullOrEmpty(iconPath))
-                return ImageListView.DefaultImage;
+                return ImageGalleryOwner.DefaultImage;
 
-            CacheState state = ImageListView.shellInfoCache.GetCacheState(iconPath);
+            CacheState state = ImageGalleryOwner.shellInfoCache.GetCacheState(iconPath);
             if (state == CacheState.Cached)
             {
                 if (imageType == CachedImageType.SmallIcon)
-                    return ImageListView.shellInfoCache.GetSmallIcon(iconPath);
+                    return ImageGalleryOwner.shellInfoCache.GetSmallIcon(iconPath);
                 else
-                    return ImageListView.shellInfoCache.GetLargeIcon(iconPath);
+                    return ImageGalleryOwner.shellInfoCache.GetLargeIcon(iconPath);
             }
             else if (state == CacheState.Error)
             {
-                if (ImageListView.RetryOnError)
+                if (ImageGalleryOwner.RetryOnError)
                 {
-                    ImageListView.shellInfoCache.Remove(iconPath);
-                    ImageListView.shellInfoCache.Add(iconPath);
+                    ImageGalleryOwner.shellInfoCache.Remove(iconPath);
+                    ImageGalleryOwner.shellInfoCache.Add(iconPath);
                 }
-                return ImageListView.ErrorImage;
+                return ImageGalleryOwner.ErrorImage;
             }
             else
             {
-                ImageListView.shellInfoCache.Add(iconPath);
-                return ImageListView.DefaultImage;
+                ImageGalleryOwner.shellInfoCache.Add(iconPath);
+                return ImageGalleryOwner.DefaultImage;
             }
         }
         else
@@ -632,53 +632,53 @@ public class ImageListViewItem : ICloneable
 
             if (state == CacheState.Error)
             {
-                if (ImageListView.ShellIconFallback && !string.IsNullOrEmpty(iconPath))
+                if (ImageGalleryOwner.ShellIconFallback && !string.IsNullOrEmpty(iconPath))
                 {
-                    CacheState iconstate = ImageListView.shellInfoCache.GetCacheState(iconPath);
+                    CacheState iconstate = ImageGalleryOwner.shellInfoCache.GetCacheState(iconPath);
                     if (iconstate == CacheState.Cached)
                     {
-                        if (ImageListView.ThumbnailSize.Width > 32 && ImageListView.ThumbnailSize.Height > 32)
-                            img = ImageListView.shellInfoCache.GetLargeIcon(iconPath);
+                        if (ImageGalleryOwner.ThumbnailSize.Width > 32 && ImageGalleryOwner.ThumbnailSize.Height > 32)
+                            img = ImageGalleryOwner.shellInfoCache.GetLargeIcon(iconPath);
                         else
-                            img = ImageListView.shellInfoCache.GetSmallIcon(iconPath);
+                            img = ImageGalleryOwner.shellInfoCache.GetSmallIcon(iconPath);
                     }
                     else if (iconstate == CacheState.Error)
                     {
-                        if (ImageListView.RetryOnError)
+                        if (ImageGalleryOwner.RetryOnError)
                         {
-                            ImageListView.shellInfoCache.Remove(iconPath);
-                            ImageListView.shellInfoCache.Add(iconPath);
+                            ImageGalleryOwner.shellInfoCache.Remove(iconPath);
+                            ImageGalleryOwner.shellInfoCache.Add(iconPath);
                         }
                     }
                     else
                     {
-                        ImageListView.shellInfoCache.Add(iconPath);
+                        ImageGalleryOwner.shellInfoCache.Add(iconPath);
                     }
                 }
 
                 if (img == null)
-                    img = ImageListView.ErrorImage;
+                    img = ImageGalleryOwner.ErrorImage;
                 return img;
             }
 
-            img = ImageListView.thumbnailCache.GetImage(Guid, mAdaptor, mVirtualItemKey, ImageListView.ThumbnailSize, ImageListView.UseEmbeddedThumbnails,
-                ImageListView.AutoRotateThumbnails, false);
+            img = ImageGalleryOwner.thumbnailCache.GetImage(Guid, mAdaptor, mVirtualItemKey, ImageGalleryOwner.ThumbnailSize, ImageGalleryOwner.UseEmbeddedThumbnails,
+                ImageGalleryOwner.AutoRotateThumbnails, false);
 
             if (state == CacheState.Cached)
                 return img;
 
-            ImageListView.thumbnailCache.Add(Guid, mAdaptor, mVirtualItemKey, ImageListView.ThumbnailSize,
-                ImageListView.UseEmbeddedThumbnails, ImageListView.AutoRotateThumbnails);
+            ImageGalleryOwner.thumbnailCache.Add(Guid, mAdaptor, mVirtualItemKey, ImageGalleryOwner.ThumbnailSize,
+                ImageGalleryOwner.UseEmbeddedThumbnails, ImageGalleryOwner.AutoRotateThumbnails);
 
             if (img == null && string.IsNullOrEmpty(iconPath))
-                return ImageListView.DefaultImage;
+                return ImageGalleryOwner.DefaultImage;
 
-            if (img == null && ImageListView.ShellIconFallback && ImageListView.ThumbnailSize.Width > 16 && ImageListView.ThumbnailSize.Height > 16)
-                img = ImageListView.shellInfoCache.GetLargeIcon(iconPath);
-            if (img == null && ImageListView.ShellIconFallback)
-                img = ImageListView.shellInfoCache.GetSmallIcon(iconPath);
+            if (img == null && ImageGalleryOwner.ShellIconFallback && ImageGalleryOwner.ThumbnailSize.Width > 16 && ImageGalleryOwner.ThumbnailSize.Height > 16)
+                img = ImageGalleryOwner.shellInfoCache.GetLargeIcon(iconPath);
+            if (img == null && ImageGalleryOwner.ShellIconFallback)
+                img = ImageGalleryOwner.shellInfoCache.GetSmallIcon(iconPath);
             if (img == null)
-                img = ImageListView.DefaultImage;
+                img = ImageGalleryOwner.DefaultImage;
 
             return img;
         }
@@ -693,7 +693,7 @@ public class ImageListViewItem : ICloneable
     {
         if (!isDirty
             || Adaptor is null
-            || ImageListView is null
+            || ImageGalleryOwner is null
             || mVirtualItemKey is null) return null;
 
         if (force || _details is null)
@@ -711,7 +711,7 @@ public class ImageListViewItem : ICloneable
     /// </summary>
     private string PathForShellIcon()
     {
-        if (ImageListView != null && ImageListView.ShellIconFromFileContent &&
+        if (ImageGalleryOwner != null && ImageGalleryOwner.ShellIconFromFileContent &&
             (string.Compare(extension, ".ico", StringComparison.OrdinalIgnoreCase) == 0 || string.Compare(extension, ".exe", StringComparison.OrdinalIgnoreCase) == 0))
             return mFileName;
         else
@@ -730,7 +730,7 @@ public class ImageListViewItem : ICloneable
     /// </returns>
     public object Clone()
     {
-        var item = new ImageListViewItem
+        var item = new ImageGalleryItem
         {
             mText = mText,
 
@@ -746,10 +746,10 @@ public class ImageListViewItem : ICloneable
         };
 
         // Current thumbnail
-        if (ImageListView != null && mAdaptor != null)
+        if (ImageGalleryOwner != null && mAdaptor != null)
         {
-            item.clonedThumbnail = ImageListView.thumbnailCache.GetImage(Guid, mAdaptor, mVirtualItemKey, ImageListView.ThumbnailSize,
-                ImageListView.UseEmbeddedThumbnails, ImageListView.AutoRotateThumbnails, true);
+            item.clonedThumbnail = ImageGalleryOwner.thumbnailCache.GetImage(Guid, mAdaptor, mVirtualItemKey, ImageGalleryOwner.ThumbnailSize,
+                ImageGalleryOwner.UseEmbeddedThumbnails, ImageGalleryOwner.AutoRotateThumbnails, true);
         }
 
         return item;

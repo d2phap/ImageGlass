@@ -27,7 +27,7 @@ namespace ImageGlass.UI;
 /// <summary>
 /// Displays items with large tiles.
 /// </summary>
-public class ModernGalleryRenderer : ImageListViewRenderer
+public class ModernGalleryRenderer : StyleRenderer
 {
     private IgTheme Theme { get; set; }
 
@@ -62,8 +62,8 @@ public class ModernGalleryRenderer : ImageListViewRenderer
         if (Theme.Info.IsDark)
         {
             // dark scrollbars
-            _ = SystemRenderer.ApplyTheme(ImageListView.HScrollBar, true);
-            _ = SystemRenderer.ApplyTheme(ImageListView.VScrollBar, true);
+            _ = SystemRenderer.ApplyTheme(ImageGalleryOwner.HScrollBar, true);
+            _ = SystemRenderer.ApplyTheme(ImageGalleryOwner.VScrollBar, true);
         }
     }
 
@@ -76,7 +76,7 @@ public class ModernGalleryRenderer : ImageListViewRenderer
     public override Size MeasureItem(View view)
     {
         var sz = base.MeasureItem(view);
-        var textHeight = ImageListView.Font.Height;
+        var textHeight = ImageGalleryOwner.Font.Height;
 
         sz.Width += textHeight * 2 / 5;
         sz.Height -= textHeight / 2;
@@ -88,10 +88,10 @@ public class ModernGalleryRenderer : ImageListViewRenderer
     /// Draws the specified item on the given graphics.
     /// </summary>
     /// <param name="g">The System.Drawing.Graphics to draw on.</param>
-    /// <param name="item">The <see cref="ImageListViewItem"/> to draw.</param>
+    /// <param name="item">The <see cref="ImageGalleryItem"/> to draw.</param>
     /// <param name="state">The current view state of item.</param>
     /// <param name="bounds">The bounding rectangle of item in client coordinates.</param>
-    public override void DrawItem(Graphics g, ImageListViewItem item, ItemState state, Rectangle bounds)
+    public override void DrawItem(Graphics g, ImageGalleryItem item, ItemState state, Rectangle bounds)
     {
         var itemPadding = new Size(5, 5);
         var itemMargin = new Size(5, 5);
@@ -136,9 +136,9 @@ public class ModernGalleryRenderer : ImageListViewRenderer
         #region Display text
 
         var textSize = new Size(0, 0);
-        if (ImageListView.ShowItemText)
+        if (ImageGalleryOwner.ShowItemText)
         {
-            textSize = TextRenderer.MeasureText(item.Text, ImageListView.Font);
+            textSize = TextRenderer.MeasureText(item.Text, ImageGalleryOwner.Font);
 
             var foreColor = Theme.Settings.ThumbnailBarTextColor;
 
@@ -168,7 +168,7 @@ public class ModernGalleryRenderer : ImageListViewRenderer
                 text = Helpers.EllipsisText(text, textRegion.Width, g);
             }
 
-            TextRenderer.DrawText(g, text, ImageListView.Font, textRegion, foreColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix);
+            TextRenderer.DrawText(g, text, ImageGalleryOwner.Font, textRegion, foreColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix);
         }
 
         #endregion

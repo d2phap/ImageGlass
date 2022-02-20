@@ -169,14 +169,14 @@ public partial class ViewBox : HybridControl
     public bool AllowInternalZoomingKeys { get; set; } = true;
 
     /// <summary>
-    /// Gets, sets the minimum zoom factor (<c>100% = 1.0f</c>)
+    /// Gets, sets the minimum zoom factor (<c>1.0f = 100%</c>)
     /// </summary>
     [Category("Zooming")]
     [DefaultValue(0.01f)]
     public float MinZoom { get; set; } = 0.01f;
 
     /// <summary>
-    /// Gets, sets the maximum zoom factor (<c>100% = 1.0f</c>)
+    /// Gets, sets the maximum zoom factor (<c>1.0f = 100%</c>)
     /// </summary>
     [Category("Zooming")]
     [DefaultValue(35.0f)]

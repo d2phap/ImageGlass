@@ -31,11 +31,11 @@ namespace ImageGlass.Gallery;
 /// <summary>
 /// Represents a listview control for image files.
 /// </summary>
-[ToolboxBitmap(typeof(ImageListView))]
+[ToolboxBitmap(typeof(ImageGallery))]
 [DefaultEvent("ItemClick")]
 [DefaultProperty("Items")]
 [Docking(DockingBehavior.Ask)]
-public partial class ImageListView : Control, IComponent
+public partial class ImageGallery : Control, IComponent
 {
     #region Member Variables
 
@@ -51,10 +51,10 @@ public partial class ImageListView : Control, IComponent
     private Image? mDefaultImage;
     private Image? mErrorImage;
     private bool mIntegralScroll = false;
-    private ImageListViewItemCollection mItems;
+    private ItemCollection mItems;
     private bool mRetryOnError = true;
-    internal ImageListViewSelectedItemCollection mSelectedItems;
-    internal ImageListViewCheckedItemCollection mCheckedItems;
+    internal SelectedItemCollection mSelectedItems;
+    internal CheckedItemCollection mCheckedItems;
     private bool mShowFileIcons = false;
     private bool mShowCheckBoxes = false;
     private ContentAlignment mIconAlignment = ContentAlignment.TopRight;
@@ -71,12 +71,12 @@ public partial class ImageListView : Control, IComponent
     private CancellationTokenSource _tooltipTokenSrc = new();
 
     // Renderer variables
-    internal ImageListViewRenderer mRenderer = new();
+    internal StyleRenderer mRenderer = new();
     private bool controlSuspended = false;
     private int rendererSuspendCount = 0;
     private bool rendererNeedsPaint = true;
     private readonly System.Timers.Timer lazyRefreshTimer = new() {
-        Interval = ImageListViewRenderer.LazyRefreshInterval,
+        Interval = StyleRenderer.LazyRefreshInterval,
         Enabled = false,
     };
     private readonly RefreshDelegateInternal lazyRefreshCallback;
@@ -88,12 +88,12 @@ public partial class ImageListView : Control, IComponent
     private bool _isDisposed = false;
 
     // Interaction variables
-    internal ImageListViewNavigationManager navigationManager;
+    internal NavigationManager navigationManager;
 
     // Cache threads
-    internal ImageListViewCacheThumbnail thumbnailCache;
-    internal ImageListViewCacheShellInfo shellInfoCache;
-    internal ImageListViewCacheMetadata metadataCache;
+    internal ThumbnailCacheManager thumbnailCache;
+    internal ShellInfoCacheManager shellInfoCache;
+    internal MetadataCacheManager metadataCache;
     internal FileSystemAdaptor defaultAdaptor = new();
 
     #endregion
@@ -380,7 +380,7 @@ public partial class ImageListView : Control, IComponent
     /// Gets the collection of items contained in the image list view.
     /// </summary>
     [Category("Behavior")]
-    public ImageListViewItemCollection Items
+    public ItemCollection Items
     {
         get => mItems;
         internal set
@@ -464,14 +464,14 @@ public partial class ImageListView : Control, IComponent
     /// </summary>
     [Category("Behavior"), Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-    public ImageListViewSelectedItemCollection SelectedItems => mSelectedItems;
+    public SelectedItemCollection SelectedItems => mSelectedItems;
 
     /// <summary>
     /// Gets the collection of checked items contained in the image list view.
     /// </summary>
     [Category("Behavior"), Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-    public ImageListViewCheckedItemCollection CheckedItems => mCheckedItems;
+    public CheckedItemCollection CheckedItems => mCheckedItems;
 
     /// <summary>
     /// Gets or sets whether shell icons are displayed for non-image files.
@@ -710,16 +710,16 @@ public partial class ImageListView : Control, IComponent
 
     #region Constructor
     /// <summary>
-    /// Initializes a new instance of the ImageListView class.
+    /// Initializes a new instance of the <see cref="ImageGallery"/> class.
     /// </summary>
-    public ImageListView()
+    public ImageGallery()
     {
-        SetRenderer(new ThemeRenderer());
+        SetRenderer(new SystemRenderer());
 
         // Property defaults
-        mItems = new ImageListViewItemCollection(this);
-        mSelectedItems = new ImageListViewSelectedItemCollection(this);
-        mCheckedItems = new ImageListViewCheckedItemCollection(this);
+        mItems = new ItemCollection(this);
+        mSelectedItems = new SelectedItemCollection(this);
+        mCheckedItems = new CheckedItemCollection(this);
 
         SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.Opaque | ControlStyles.Selectable | ControlStyles.UserMouse | ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer, true);
 
@@ -738,12 +738,12 @@ public partial class ImageListView : Control, IComponent
 
         // Helpers
         layoutManager = new LayoutManager(this);
-        navigationManager = new ImageListViewNavigationManager(this);
+        navigationManager = new NavigationManager(this);
 
         // Cache nabagers
-        thumbnailCache = new ImageListViewCacheThumbnail(this);
-        shellInfoCache = new ImageListViewCacheShellInfo(this);
-        metadataCache = new ImageListViewCacheMetadata(this);
+        thumbnailCache = new ThumbnailCacheManager(this);
+        shellInfoCache = new ShellInfoCacheManager(this);
+        metadataCache = new MetadataCacheManager(this);
     }
     #endregion
 
@@ -756,7 +756,7 @@ public partial class ImageListView : Control, IComponent
     {
         SuspendPaint();
 
-        foreach (ImageListViewItem item in Items)
+        foreach (ImageGalleryItem item in Items)
             item.mSelected = true;
 
         OnSelectionChangedInternal();
@@ -783,7 +783,7 @@ public partial class ImageListView : Control, IComponent
     {
         SuspendPaint();
 
-        foreach (ImageListViewItem item in Items)
+        foreach (ImageGalleryItem item in Items)
             item.mSelected = !item.mSelected;
 
         OnSelectionChangedInternal();
@@ -795,9 +795,9 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Marks all items that satisfy a condition as selected.
     /// </summary>
-    public void SelectWhere(Func<ImageListViewItem, bool> predicate)
+    public void SelectWhere(Func<ImageGalleryItem, bool> predicate)
     {
-        foreach (ImageListViewItem item in Items.Where(predicate))
+        foreach (ImageGalleryItem item in Items.Where(predicate))
             item.mSelected = true;
 
         OnSelectionChangedInternal();
@@ -809,9 +809,9 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Marks all items that satisfy a condition as unselected.
     /// </summary>
-    public void UnselectWhere(Func<ImageListViewItem, bool> predicate)
+    public void UnselectWhere(Func<ImageGalleryItem, bool> predicate)
     {
-        foreach (ImageListViewItem item in Items.Where(predicate))
+        foreach (ImageGalleryItem item in Items.Where(predicate))
             item.mSelected = false;
 
         OnSelectionChangedInternal();
@@ -827,7 +827,7 @@ public partial class ImageListView : Control, IComponent
     {
         SuspendPaint();
 
-        foreach (ImageListViewItem item in Items)
+        foreach (ImageGalleryItem item in Items)
         {
             item.mChecked = true;
             OnItemCheckBoxClickInternal(item);
@@ -855,7 +855,7 @@ public partial class ImageListView : Control, IComponent
     {
         SuspendPaint();
 
-        foreach (ImageListViewItem item in Items)
+        foreach (ImageGalleryItem item in Items)
         {
             item.mChecked = !item.mChecked;
             OnItemCheckBoxClickInternal(item);
@@ -868,11 +868,11 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Marks all items that satisfy a condition as checked.
     /// </summary>
-    public void CheckWhere(Func<ImageListViewItem, bool> predicate)
+    public void CheckWhere(Func<ImageGalleryItem, bool> predicate)
     {
         SuspendPaint();
 
-        foreach (ImageListViewItem item in Items.Where(predicate))
+        foreach (ImageGalleryItem item in Items.Where(predicate))
         {
             item.mChecked = true;
             OnItemCheckBoxClickInternal(item);
@@ -885,11 +885,11 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Marks all items that satisfy a condition as unchecked.
     /// </summary>
-    public void UncheckWhere(Func<ImageListViewItem, bool> predicate)
+    public void UncheckWhere(Func<ImageGalleryItem, bool> predicate)
     {
         SuspendPaint();
 
-        foreach (ImageListViewItem item in Items.Where(predicate))
+        foreach (ImageGalleryItem item in Items.Where(predicate))
         {
             item.mChecked = false;
             OnItemCheckBoxClickInternal(item);
@@ -906,7 +906,7 @@ public partial class ImageListView : Control, IComponent
     {
         SuspendPaint();
 
-        foreach (ImageListViewItem item in Items)
+        foreach (ImageGalleryItem item in Items)
             item.mEnabled = true;
 
         Refresh();
@@ -920,7 +920,7 @@ public partial class ImageListView : Control, IComponent
     {
         SuspendPaint();
 
-        foreach (ImageListViewItem item in Items)
+        foreach (ImageGalleryItem item in Items)
             item.mEnabled = false;
 
         Refresh();
@@ -930,11 +930,11 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Marks all items that satisfy a condition as enabled.
     /// </summary>
-    public void EnableWhere(Func<ImageListViewItem, bool> predicate)
+    public void EnableWhere(Func<ImageGalleryItem, bool> predicate)
     {
         SuspendPaint();
 
-        foreach (ImageListViewItem item in Items.Where(predicate))
+        foreach (ImageGalleryItem item in Items.Where(predicate))
             item.mEnabled = true;
 
         Refresh();
@@ -944,11 +944,11 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Marks all items that satisfy a condition as disabled.
     /// </summary>
-    public void DisableWhere(Func<ImageListViewItem, bool> predicate)
+    public void DisableWhere(Func<ImageGalleryItem, bool> predicate)
     {
         SuspendPaint();
 
-        foreach (ImageListViewItem item in Items.Where(predicate))
+        foreach (ImageGalleryItem item in Items.Where(predicate))
             item.mEnabled = false;
 
         Refresh();
@@ -969,7 +969,7 @@ public partial class ImageListView : Control, IComponent
             thumbnailCache.Clear();
             if (CacheMode == CacheMode.Continuous)
             {
-                foreach (ImageListViewItem item in mItems)
+                foreach (ImageGalleryItem item in mItems)
                 {
                     thumbnailCache.Add(item.Guid, item.Adaptor, item.VirtualItemKey, mThumbnailSize, mUseEmbeddedThumbnails, AutoRotateThumbnails);
                 }
@@ -1018,13 +1018,13 @@ public partial class ImageListView : Control, IComponent
     /// <summary>
     /// Sets the renderer for this instance.
     /// </summary>
-    /// <param name="renderer">An <see cref="ImageListViewRenderer"/> to assign to the control.</param>
-    public void SetRenderer(ImageListViewRenderer renderer)
+    /// <param name="renderer">An <see cref="StyleRenderer"/> to assign to the control.</param>
+    public void SetRenderer(StyleRenderer renderer)
     {
         var oldRenderer = mRenderer;
 
         mRenderer = renderer ?? throw new ArgumentNullException(nameof(renderer));
-        mRenderer.ImageListView = this;
+        mRenderer.ImageGalleryOwner = this;
 
         if (oldRenderer != null)
             oldRenderer.Dispose();
@@ -1170,7 +1170,7 @@ public partial class ImageListView : Control, IComponent
     /// </summary>
     /// <param name="item">The item to test.</param>
     /// <returns>An ItemVisibility value.</returns>
-    public ItemVisibility IsItemVisible(ImageListViewItem item)
+    public ItemVisibility IsItemVisible(ImageGalleryItem item)
     {
         return IsItemVisible(item.Index);
     }
@@ -1201,7 +1201,7 @@ public partial class ImageListView : Control, IComponent
     {
         for (int i = startIndex; i < mItems.Count; i++)
         {
-            ImageListViewItem item = mItems[i];
+            ImageGalleryItem item = mItems[i];
             if (item.Text.StartsWith(s, StringComparison.InvariantCultureIgnoreCase))
             {
                 return item.Index;
@@ -1226,7 +1226,7 @@ public partial class ImageListView : Control, IComponent
     /// <param name="item"></param>
     /// <param name="duration"></param>
     /// <param name="delay"></param>
-    public async void ShowItemTooltip(ImageListViewItem? item,
+    public async void ShowItemTooltip(ImageGalleryItem? item,
         int duration = int.MinValue, int delay = 400)
     {
         if (item is null) return;
@@ -1373,7 +1373,7 @@ public partial class ImageListView : Control, IComponent
     /// <returns>true if the item is modified; otherwise false.</returns>
     internal bool IsItemDirty(Guid guid)
     {
-        if (mItems.TryGetValue(guid, out ImageListViewItem? item))
+        if (mItems.TryGetValue(guid, out ImageGalleryItem? item))
             return item?.isDirty ?? false;
 
         return false;
@@ -1774,11 +1774,11 @@ public partial class ImageListView : Control, IComponent
 
         // Add items
         bool first = true;
-        var items = new List<ImageListViewItem>();
+        var items = new List<ImageGalleryItem>();
 
         foreach (string filename in e.FileNames)
         {
-            var item = new ImageListViewItem(filename);
+            var item = new ImageGalleryItem(filename);
             if (first || MultiSelect)
             {
                 item.mSelected = true;
@@ -1826,7 +1826,7 @@ public partial class ImageListView : Control, IComponent
 
         // Add items
         bool first = true;
-        var items = new List<ImageListViewItem>();
+        var items = new List<ImageGalleryItem>();
 
         foreach (var item in e.Items)
         {
@@ -1884,7 +1884,7 @@ public partial class ImageListView : Control, IComponent
     /// Raises the ItemCheckBoxClick event.
     /// </summary>
     /// <param name="item">The checked item.</param>
-    internal virtual void OnItemCheckBoxClickInternal(ImageListViewItem item)
+    internal virtual void OnItemCheckBoxClickInternal(ImageGalleryItem item)
     {
         OnItemCheckBoxClick(new ItemEventArgs(item));
     }
@@ -1960,7 +1960,7 @@ public partial class ImageListView : Control, IComponent
     /// </summary>
     internal virtual void OnDetailsCachingInternal(Guid guid)
     {
-        if (mItems.TryGetValue(guid, out ImageListViewItem? item))
+        if (mItems.TryGetValue(guid, out ImageGalleryItem? item))
             OnDetailsCaching(new ItemEventArgs(item));
     }
 
@@ -1970,7 +1970,7 @@ public partial class ImageListView : Control, IComponent
     /// </summary>
     internal virtual void OnDetailsCachedInternal(Guid guid)
     {
-        if (mItems.TryGetValue(guid, out ImageListViewItem? item))
+        if (mItems.TryGetValue(guid, out ImageGalleryItem? item))
             OnDetailsCached(new ItemEventArgs(item));
     }
 
@@ -1996,13 +1996,13 @@ public partial class ImageListView : Control, IComponent
     /// Raises the CacheError event.
     /// This method is invoked from the thumbnail thread.
     /// </summary>
-    /// <param name="guid">The Guid of the ImageListViewItem that is associated with this error.
+    /// <param name="guid">The Guid of the <see cref="ImageGalleryItem"/> that is associated with this error.
     /// This parameter can be null.</param>
     /// <param name="error">The error that occurred during an asynchronous operation.</param>
     /// <param name="cacheThread">The thread raising the error.</param>
     internal void OnCacheErrorInternal(Guid guid, Exception error, CacheThread cacheThread)
     {
-        mItems.TryGetValue(guid, out ImageListViewItem? item);
+        mItems.TryGetValue(guid, out ImageGalleryItem? item);
         OnCacheError(new CacheErrorEventArgs(item, error, cacheThread));
     }
 
@@ -2028,7 +2028,7 @@ public partial class ImageListView : Control, IComponent
     /// if the image is a large image for gallery or pane views.</param>
     internal void OnThumbnailCachedInternal(Guid guid, Image? thumbnail, Size size, bool thumbnailImage)
     {
-        if (mItems.TryGetValue(guid, out ImageListViewItem? item))
+        if (mItems.TryGetValue(guid, out ImageGalleryItem? item))
             OnThumbnailCached(new ThumbnailCachedEventArgs(item, thumbnail, size, thumbnailImage));
     }
 
@@ -2040,7 +2040,7 @@ public partial class ImageListView : Control, IComponent
     /// <param name="size">Requested thumbnail size.</param>
     internal void OnThumbnailCachingInternal(Guid guid, Size size)
     {
-        if (mItems.TryGetValue(guid, out ImageListViewItem? item))
+        if (mItems.TryGetValue(guid, out ImageGalleryItem? item))
             OnThumbnailCaching(new ThumbnailCachingEventArgs(item, size));
     }
 

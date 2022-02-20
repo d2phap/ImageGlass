@@ -31,7 +31,7 @@ namespace ImageGlass.Gallery;
 /// Represents the cache manager responsible for asynchronously loading
 /// item thumbnails.
 /// </summary>
-internal class ImageListViewCacheThumbnail : IDisposable
+internal class ThumbnailCacheManager : IDisposable
 {
     #region Member Variables
     private readonly QueuedWorker _bw = new()
@@ -57,7 +57,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
     private CacheItem? _rendererItem = null;
     private CacheItem? _galleryItem = null;
 
-    private readonly ImageListView _imageListView;
+    private readonly ImageGallery _imageGallery;
     private bool _isDisposed = false;
 
     #endregion
@@ -123,7 +123,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
         /// Initializes a new instance of the <see cref="CacheRequest"/> class
         /// for use with a virtual item.
         /// </summary>
-        /// <param name="guid">The guid of the ImageListViewItem.</param>
+        /// <param name="guid">The guid of the <see cref="ImageGalleryItem"/>.</param>
         /// <param name="adaptor">The adaptor of this item.</param>
         /// <param name="key">The public key for the virtual item.</param>
         /// <param name="size">The size of the requested thumbnail.</param>
@@ -194,7 +194,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
         /// Initializes a new instance of the <see cref="CacheItem"/> class
         /// for use with a virtual item.
         /// </summary>
-        /// <param name="guid">The guid of the ImageListViewItem.</param>
+        /// <param name="guid">The guid of the <see cref="ImageGalleryItem"/>.</param>
         /// <param name="size">The size of the requested thumbnail.</param>
         /// <param name="image">The thumbnail image.</param>
         /// <param name="state">The cache state of the item.</param>
@@ -319,16 +319,16 @@ internal class ImageListViewCacheThumbnail : IDisposable
 
     #region Constructor
     /// <summary>
-    /// Initializes a new instance of the <see cref="ImageListViewCacheThumbnail"/> class.
+    /// Initializes a new instance of the <see cref="ThumbnailCacheManager"/> class.
     /// </summary>
     /// <param name="owner">The owner control.</param>
-    public ImageListViewCacheThumbnail(ImageListView owner)
+    public ThumbnailCacheManager(ImageGallery owner)
     {
         _bw.DoWork += Bw_DoWork;
         _bw.RunWorkerCompleted += Bw_RunWorkerCompleted;
 
         _checkProcessingCallback = new SendOrPostCallback(CanContinueProcessing);
-        _imageListView = owner;
+        _imageGallery = owner;
     }
 
     #endregion
@@ -383,8 +383,8 @@ internal class ImageListViewCacheThumbnail : IDisposable
             // Is it outside the visible area?
             if (canProcess
                 && CacheMode == CacheMode.OnDemand
-                && _imageListView != null
-                && !_imageListView.IsItemVisible(request.Guid))
+                && _imageGallery != null
+                && !_imageGallery.IsItemVisible(request.Guid))
                 canProcess = false;
         }
         else if (canProcess && (request?.RequestType == RequestType.Gallery))
@@ -467,7 +467,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
             {
                 // Did the thumbnail size change while we were
                 // creating the thumbnail?
-                if (result.Size != _imageListView.ThumbnailSize)
+                if (result.Size != _imageGallery.ThumbnailSize)
                     result.State = CacheState.Unknown;
 
                 // Purge invisible items if we exceeded the cache limit
@@ -478,19 +478,19 @@ internal class ImageListViewCacheThumbnail : IDisposable
         }
 
         // Refresh the control
-        if (_imageListView != null)
+        if (_imageGallery != null)
         {
-            if (request.RequestType != RequestType.Thumbnail || _imageListView.IsItemVisible(request.Guid))
-                _imageListView.Refresh(false, true);
+            if (request.RequestType != RequestType.Thumbnail || _imageGallery.IsItemVisible(request.Guid))
+                _imageGallery.Refresh(false, true);
         }
 
         // Raise the ThumbnailCached event
-        if (result != null && _imageListView != null)
-            _imageListView.OnThumbnailCachedInternal(result.Guid, result.Image, result.Size, request.RequestType == RequestType.Thumbnail);
+        if (result != null && _imageGallery != null)
+            _imageGallery.OnThumbnailCachedInternal(result.Guid, result.Image, result.Size, request.RequestType == RequestType.Thumbnail);
 
         // Raise the CacheError event
-        if (e.Error != null && _imageListView != null)
-            _imageListView.OnCacheErrorInternal(request.Guid, e.Error, CacheThread.Thumbnail);
+        if (e.Error != null && _imageGallery != null)
+            _imageGallery.OnCacheErrorInternal(request.Guid, e.Error, CacheThread.Thumbnail);
     }
 
     /// <summary>
@@ -685,7 +685,7 @@ internal class ImageListViewCacheThumbnail : IDisposable
         }
 
         // Remove from disk cache
-        if (_imageListView != null && _imageListView.Items.TryGetValue(guid, out ImageListViewItem? item))
+        if (_imageGallery != null && _imageGallery.Items.TryGetValue(guid, out ImageGalleryItem? item))
         {
             if (item != null)
             {
@@ -748,9 +748,9 @@ internal class ImageListViewCacheThumbnail : IDisposable
     /// depending on memory usage.</param>
     public void PurgeInvisible(bool force)
     {
-        if (_imageListView == null) return;
+        if (_imageGallery == null) return;
 
-        var visible = _imageListView.GetVisibleItems();
+        var visible = _imageGallery.GetVisibleItems();
         if (visible.Count == 0) return;
 
         foreach (var item in _thumbCache)
@@ -866,10 +866,10 @@ internal class ImageListViewCacheThumbnail : IDisposable
 
 
         // Raise the cache events
-        if (_imageListView != null)
+        if (_imageGallery != null)
         {
-            _imageListView.OnThumbnailCachedInternal(guid, thumb, thumbSize, true);
-            _imageListView.Refresh();
+            _imageGallery.OnThumbnailCachedInternal(guid, thumb, thumbSize, true);
+            _imageGallery.Refresh();
         }
     }
 
@@ -1067,8 +1067,8 @@ internal class ImageListViewCacheThumbnail : IDisposable
         }
 
         // Raise the ThumbnailCaching event
-        if (_imageListView != null)
-            _imageListView.OnThumbnailCachingInternal(item.Guid, item.Size);
+        if (_imageGallery != null)
+            _imageGallery.OnThumbnailCachingInternal(item.Guid, item.Size);
 
         // Add the item to the queue for processing
         _bw.RunWorkerAsync(item, priority, item.RequestType != RequestType.Thumbnail);
@@ -1109,9 +1109,9 @@ internal class ImageListViewCacheThumbnail : IDisposable
 #if DEBUG
     /// <summary>
     /// Releases unmanaged resources and performs other cleanup operations before the
-    /// ImageListViewCacheManager is reclaimed by garbage collection.
+    /// <see cref="ThumbnailCacheManager"/> is reclaimed by garbage collection.
     /// </summary>
-    ~ImageListViewCacheThumbnail()
+    ~ThumbnailCacheManager()
     {
         System.Diagnostics.Debug.Print("Finalizer of {0} called.", GetType());
         Dispose();

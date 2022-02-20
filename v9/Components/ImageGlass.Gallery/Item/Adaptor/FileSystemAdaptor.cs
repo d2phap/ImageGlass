@@ -34,7 +34,7 @@ namespace ImageGlass.Gallery;
 /// </summary>
 public class FileSystemAdaptor : IAdaptor
 {
-    // [IG_CHANGE] use a cache for commonly repeated strings
+    // Use a cache for commonly repeated strings
     private static readonly StringCache _stringCache = new();
 
     private bool _isDisposed = false;

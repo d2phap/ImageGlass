@@ -535,7 +535,7 @@ public partial class FrmMain : Form
 
         for (var i = 0; i < Local.Images.Length; i++)
         {
-            var lvi = new ImageListViewItem(Local.Images.GetFileName(i));
+            var lvi = new ImageGalleryItem(Local.Images.GetFileName(i));
 
             Gallery.Items.Add(lvi);
         }
