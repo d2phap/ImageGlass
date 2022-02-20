@@ -430,6 +430,13 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lnkResetBackgroundColor", "Reset"); // v4.0
             #endregion
 
+            #region Panning
+            Items.Add("frmSetting.lblHeadPanning", "Panning");
+            Items.Add("frmSetting.lblVertPanningSpeed", "Vertical panning speed");
+            Items.Add("frmSetting.lblHorzPanningSpeed", "Horizontal panning speed");
+
+            #endregion
+
             #region Others
             Items.Add("frmSetting.lblHeadOthers", "Others"); //v4.0
             Items.Add("frmSetting.chkStartWithOs", "Start with OS"); //v8.4
