@@ -68,7 +68,9 @@ public partial class ViewBox : HybridControl
     private bool _isManualZoom = false;
     private ZoomMode _zoomMode = ZoomMode.AutoZoom;
     private float _zoomSpeed = 0f;
-    private Base.PhotoBox.InterpolationMode _interpolationMode = Base.PhotoBox.InterpolationMode.NearestNeighbor;
+    private ImageInterpolation _interpolationScaleDown = ImageInterpolation.Linear;
+    private ImageInterpolation _interpolationScaledUp = ImageInterpolation.NearestNeighbor;
+    private ImageInterpolation CurrentInterpolation => ZoomFactor > 1f ? _interpolationScaledUp : _interpolationScaleDown;
 
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
     private IImageAnimator _imageAnimator;
@@ -173,7 +175,7 @@ public partial class ViewBox : HybridControl
     public float MaxZoom { get; set; } = 35f;
 
     /// <summary>
-    /// Gets, sets current zoom factor (<c>100% = 1.0f</c>)
+    /// Gets, sets current zoom factor (<c>1.0f = 100%</c>)
     /// </summary>
     [Category("Zooming")]
     [DefaultValue(1.0f)]
@@ -208,7 +210,7 @@ public partial class ViewBox : HybridControl
     }
 
     /// <summary>
-    /// Gets, sets zoom mode
+    /// Gets, sets zoom mode.
     /// </summary>
     [Category("Zooming")]
     [DefaultValue(ZoomMode.AutoZoom)]
@@ -226,18 +228,38 @@ public partial class ViewBox : HybridControl
     }
 
     /// <summary>
-    /// Gets, sets interpolation mode
+    /// Gets, sets interpolation mode used when the
+    /// <see cref="ZoomFactor"/> is less than or equal <c>1.0f</c>.
     /// </summary>
     [Category("Zooming")]
-    [DefaultValue(Base.PhotoBox.InterpolationMode.NearestNeighbor)]
-    public Base.PhotoBox.InterpolationMode InterpolationMode
+    [DefaultValue(ImageInterpolation.NearestNeighbor)]
+    public ImageInterpolation InterpolationScaleDown
     {
-        get => _interpolationMode;
+        get => _interpolationScaleDown;
         set
         {
-            if (_interpolationMode != value)
+            if (_interpolationScaleDown != value)
             {
-                _interpolationMode = value;
+                _interpolationScaleDown = value;
+                Invalidate();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets, sets interpolation mode used when the
+    /// <see cref="ZoomFactor"/> is greater than <c>1.0f</c>.
+    /// </summary>
+    [Category("Zooming")]
+    [DefaultValue(ImageInterpolation.NearestNeighbor)]
+    public ImageInterpolation InterpolationScaleUp
+    {
+        get => _interpolationScaledUp;
+        set
+        {
+            if (_interpolationScaledUp != value)
+            {
+                _interpolationScaledUp = value;
                 Invalidate();
             }
         }
@@ -824,7 +846,7 @@ public partial class ViewBox : HybridControl
                 _imageAnimator.UpdateFrames(_imageGdiPlus);
             }
 
-            g.DrawImage(_imageGdiPlus, _destRect, _srcRect, 1, (int)_interpolationMode);
+            g.DrawImage(_imageGdiPlus, _destRect, _srcRect, 1, (int)CurrentInterpolation);
         }
         catch (ArgumentException)
         {
@@ -944,11 +966,11 @@ public partial class ViewBox : HybridControl
         if (Source == ImageSource.Direct2D)
         {
             var d2dg = g as Direct2DGraphics;
-            d2dg?.DrawImage(_imageD2D, _destRect, _srcRect, 1f, (int)_interpolationMode);
+            d2dg?.DrawImage(_imageD2D, _destRect, _srcRect, 1f, (int)CurrentInterpolation);
         }
         else
         {
-            g.DrawImage(_imageGdiPlus, _destRect, _srcRect, 1f, (int)_interpolationMode);
+            g.DrawImage(_imageGdiPlus, _destRect, _srcRect, 1f, (int)CurrentInterpolation);
         }
 
         _ = OnImageDrawn();
