@@ -837,4 +837,80 @@ public partial class FrmMain : Form
     {
         PicBox.Focus();
     }
+
+    private void PicBox_DragOver(object sender, DragEventArgs e)
+    {
+        try
+        {
+            if (e.Data is null || !e.Data.GetDataPresent(DataFormats.FileDrop))
+                return;
+
+            var dataTest = e.Data.GetData(DataFormats.FileDrop, false);
+
+            // observed: null w/ long path and long path support not enabled
+            if (dataTest == null)
+                return;
+
+            var filePath = ((string[])dataTest)[0];
+
+            // KBR 20190617 Fix observed issue: dragging from CD/DVD would fail because we set the
+            // drag effect to Move, which is _not_allowed_
+            // Drag file from DESKTOP to APP
+            if (Local.Images.IndexOf(filePath) == -1
+                && (e.AllowedEffect & DragDropEffects.Move) != 0)
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+            // Drag file from APP to DESKTOP
+            else
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+        }
+        catch
+        {
+            // observed: exception with a long path and long path support enabled
+        }
+    }
+
+    private void PicBox_DragDrop(object sender, DragEventArgs e)
+    {
+        // Drag file from DESKTOP to APP
+        if (e.Data is null || !e.Data.GetDataPresent(DataFormats.FileDrop))
+            return;
+
+        var filepaths = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+        if (filepaths.Length > 1)
+        {
+            _ = PrepareLoadingAsync(filepaths, Local.Images.GetFileName(Local.CurrentIndex));
+            return;
+        }
+
+        var filePath = filepaths[0];
+
+        if (string.Equals(Path.GetExtension(filePath), ".lnk", StringComparison.CurrentCultureIgnoreCase))
+        {
+            filePath = FileShortcutApi.GetTargetPathFromShortcut(filePath);
+        }
+
+        var imageIndex = Local.Images.IndexOf(filePath);
+
+        // The file is located another folder, load the entire folder
+        if (imageIndex == -1)
+        {
+            PrepareLoading(filePath);
+        }
+        // The file is in current folder AND it is the viewing image
+        else if (Local.CurrentIndex == imageIndex)
+        {
+            //do nothing
+        }
+        // The file is in current folder AND it is NOT the viewing image
+        else
+        {
+            Local.CurrentIndex = imageIndex;
+            _ = NextImageCancellableAsync(0);
+        }
+    }
 }
