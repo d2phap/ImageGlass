@@ -913,4 +913,19 @@ public partial class FrmMain : Form
             _ = NextImageCancellableAsync(0);
         }
     }
+
+    private void PicBox_OnNavLeftClicked(MouseEventArgs e)
+    {
+        _ = NextImageCancellableAsync(-1);
+    }
+
+    private void PicBox_OnNavRightClicked(MouseEventArgs e)
+    {
+        _ = NextImageCancellableAsync(1);
+    }
+
+    private void PicBox_OnZoomChanged(PhotoBox.ZoomEventArgs e)
+    {
+        Text = Math.Round(e.ZoomFactor * 100, 2).ToString() + "%";
+    }
 }
