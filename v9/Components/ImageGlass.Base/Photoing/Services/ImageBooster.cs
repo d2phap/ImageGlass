@@ -190,6 +190,8 @@ public class ImageBooster : IDisposable
                     Metadata = metadata,
                 }).ConfigureAwait(true);
             }
+
+            await Task.Delay(10);
         }
     }
 
@@ -251,6 +253,7 @@ public class ImageBooster : IDisposable
             {
                 // TODO:
                 // ImgList[indexItem].CancelLoading();
+
                 ImgList[indexItem].Dispose();
             }
         }

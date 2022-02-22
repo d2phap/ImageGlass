@@ -160,7 +160,7 @@ public partial class FrmMain : Form
         // Display currentFile while loading the full directory
         if (hasInitFile)
         {
-            _ = NextImageAsync(0, filename: currentFile);
+            _ = NextImageCancellableAsync(0, filename: currentFile);
         }
 
         // Parse string to absolute path
@@ -300,7 +300,7 @@ public partial class FrmMain : Form
         if (!skipLoadingImage)
         {
             // Start loading image
-            _ = NextImageAsync(0);
+            _ = NextImageCancellableAsync(0);
         }
 
         // TODO:
@@ -567,7 +567,7 @@ public partial class FrmMain : Form
 
 
     /// <summary>
-    /// View the next image using jump step
+    /// View the next image using jump step.
     /// </summary>
     private async Task ViewNextAsync(int step,
         bool isKeepZoomRatio = false,
@@ -609,6 +609,9 @@ public partial class FrmMain : Form
         // Check if current index is less than lower limit
         if (imageIndex < 0)
             imageIndex = Local.Images.Length - 1;
+
+        // Update current index
+        Local.CurrentIndex = imageIndex;
 
         #endregion
 
@@ -670,9 +673,6 @@ public partial class FrmMain : Form
 
                     PicBox.SetImage(photo.Image);
 
-                    // Update current index
-                    Local.CurrentIndex = imageIndex;
-
                     // Reset the zoom mode if isKeepZoomRatio = FALSE
                     if (!isKeepZoomRatio)
                     {
@@ -732,7 +732,7 @@ public partial class FrmMain : Form
     /// <param name="isSkipCache"></param>
     /// <param name="pageIndex">Use <see cref="int.MinValue"/> to load the default page index.</param>
     /// <param name="filename"></param>
-    public async Task NextImageAsync(int step,
+    public async Task NextImageCancellableAsync(int step,
         bool isKeepZoomRatio = false,
         bool isSkipCache = false,
         int pageIndex = int.MinValue,
@@ -773,27 +773,6 @@ public partial class FrmMain : Form
 
         //e.Item.FetchItemDetails();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-    private async void NextPic(string filename)
-    {
-        Local.Metadata = Config.Codec.LoadMetadata(filename);
-
-        PicBox.ShowMessage("Loading image... \n" + filename, 0, 1500);
-        var bmp = await Config.Codec.LoadAsync(filename, new(Local.Metadata));
-        PicBox.SetImage(bmp);
-    }
-
 
 
 
