@@ -137,9 +137,9 @@ public class ImageBooster : IDisposable
     public int MaxQueue { get; set; } = 1;
 
     /// <summary>
-    /// Gets, sets the value of <see cref="ColorChannels"/> to apply to the entire image list.
+    /// Gets, sets the value of <see cref="ColorChannel"/> to apply to the entire image list.
     /// </summary>
-    public ColorChannels ImageChannel { get; set; } = ColorChannels.All;
+    public ColorChannel ImageChannel { get; set; } = ColorChannel.All;
 
 
     public int MaxImageSizePreload = 10_000;

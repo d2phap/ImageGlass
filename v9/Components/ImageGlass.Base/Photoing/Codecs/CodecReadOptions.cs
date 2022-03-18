@@ -17,6 +17,11 @@ public record CodecReadOptions
     public int Height = 0;
 
     /// <summary>
+    /// Gets, sets the quality of image
+    /// </summary>
+    public int Quality = 100;
+
+    /// <summary>
     /// Gets, sets the value indicates whether the color profile should be ignored.
     /// </summary>
     public bool IgnoreColorProfile = false;
@@ -35,7 +40,7 @@ public record CodecReadOptions
     /// <summary>
     /// Gets, sets the value of ImageMagick.Channels to apply to the entire image list
     /// </summary>
-    public ColorChannels ImageChannel { get; set; } = ColorChannels.All;
+    public ColorChannel ImageChannel { get; set; } = ColorChannel.All;
 
     /// <summary>
     /// Gets, sests the value indicates that the embedded thumbnail should be return (if found).

@@ -68,7 +68,7 @@ internal class Local
     /// <summary>
     /// Gets, sets color channel of image
     /// </summary>
-    public static ColorChannels ImageChannel { get; set; } = ColorChannels.All;
+    public static ColorChannel ImageChannel { get; set; } = ColorChannel.All;
 
     /// <summary>
     /// Gets, sets value if image data was modified

@@ -151,7 +151,7 @@ public enum ToolbarPosition
 /// <summary>
 /// Color channels of image, the value should be same as MagickImage.Channels enum
 /// </summary>
-public enum ColorChannels
+public enum ColorChannel
 {
     All = -1, // not applicable
 
