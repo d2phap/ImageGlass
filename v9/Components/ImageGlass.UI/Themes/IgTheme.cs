@@ -201,13 +201,13 @@ public class IgTheme
                 // property is Bitmap
                 if (prop?.PropertyType == typeof(Bitmap) && Codec is not null)
                 {
-                    var bmp = Codec.Load(Path.Combine(FolderPath, value), new()
+                    var data = Codec.Load(Path.Combine(FolderPath, value), new()
                     {
                         Width = ToolbarActualIconHeight * 2,
                         Height = ToolbarActualIconHeight * 2,
                     });
 
-                    prop.SetValue(Settings, bmp);
+                    prop.SetValue(Settings, data.Image);
                     continue;
                 }
 
@@ -237,13 +237,13 @@ public class IgTheme
 
                 try
                 {
-                    var icon = Codec.Load(Path.Combine(FolderPath, value), new()
+                    var data = Codec.Load(Path.Combine(FolderPath, value), new()
                     {
                         Width = ToolbarActualIconHeight,
                         Height = ToolbarActualIconHeight,
                     });
 
-                    ToolbarIcons.GetType().GetProperty(item.Key)?.SetValue(ToolbarIcons, icon);
+                    ToolbarIcons.GetType().GetProperty(item.Key)?.SetValue(ToolbarIcons, data.Image);
                 }
                 catch { }
             }

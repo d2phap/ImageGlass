@@ -21,9 +21,48 @@ using ImageMagick;
 namespace ImageGlass.Base.Photoing.Codecs;
 
 
-public class IgImgData
+public class IgImgData : IDisposable
 {
+
+    #region IDisposable Disposing
+
+    public bool IsDisposed { get; private set; } = false;
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (IsDisposed)
+            return;
+
+        if (disposing)
+        {
+            // Free any other managed objects here.
+            Image?.Dispose();
+            Image = null;
+
+            ExifProfile = null;
+            ColorProfile = null;
+        }
+
+        // Free any unmanaged objects here.
+        IsDisposed = true;
+    }
+
+    public virtual void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    ~IgImgData()
+    {
+        Dispose(false);
+    }
+
+    #endregion
+
+
     public Bitmap? Image { get; set; } = null;
     public IExifProfile? ExifProfile { get; set; } = null;
     public IColorProfile? ColorProfile { get; set; } = null;
+
 }

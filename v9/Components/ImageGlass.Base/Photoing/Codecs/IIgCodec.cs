@@ -89,7 +89,7 @@ public interface IIgCodec : IDisposable
     /// <param name="filename">Full path of the file</param>
     /// <param name="options">Loading options</param>
     /// <param name="token">Cancellation token</param>
-    Task<Bitmap?> LoadAsync(string filename,
+    Task<IgImgData> LoadAsync(string filename,
         CodecReadOptions? options = default,
         CancellationToken? token = null);
 
@@ -100,7 +100,7 @@ public interface IIgCodec : IDisposable
     /// <param name="filename">Full path of the file</param>
     /// <param name="options">Loading options</param>
     /// <returns></returns>
-    Bitmap? Load(string filename, CodecReadOptions? options = default);
+    IgImgData Load(string filename, CodecReadOptions? options = default);
 
 
     /// <summary>

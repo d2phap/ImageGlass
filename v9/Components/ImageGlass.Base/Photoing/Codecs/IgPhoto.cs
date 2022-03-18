@@ -75,9 +75,9 @@ public class IgPhoto : IDisposable
     public int FramesCount { get; set; } = 0;
 
     /// <summary>
-    /// Gets the first frame of image.
+    /// Gets the image data.
     /// </summary>
-    public Bitmap? Image { get; internal set; }
+    public IgImgData ImgData { get; internal set; } = new();
 
     #endregion
 
@@ -137,7 +137,7 @@ public class IgPhoto : IDisposable
             }
 
             // load image
-            Image = await codec.LoadAsync(Filename, options, _tokenSrc?.Token);
+            ImgData = await codec.LoadAsync(Filename, options, _tokenSrc?.Token);
 
             // cancel if requested
             if (_tokenSrc is not null && _tokenSrc.IsCancellationRequested)
@@ -190,8 +190,7 @@ public class IgPhoto : IDisposable
         FramesCount = 0;
 
         // unload image
-        Image?.Dispose();
-        Image = null;
+        ImgData?.Dispose();
     }
 
 

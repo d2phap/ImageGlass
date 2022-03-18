@@ -666,12 +666,12 @@ public partial class FrmMain : Form
 
                 Local.ImageError = photo?.Error;
 
-                if (photo?.Image != null)
+                if (photo?.ImgData.Image != null)
                 {
                     // check if loading is cancelled
                     token?.Token.ThrowIfCancellationRequested();
 
-                    PicBox.SetImage(photo.Image);
+                    PicBox.SetImage(photo.ImgData.Image);
 
                     // Reset the zoom mode if isKeepZoomRatio = FALSE
                     if (!isKeepZoomRatio)

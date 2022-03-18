@@ -36,4 +36,8 @@
         <Content Include="..\..\Libs\ExplorerSortOrder\x64\ExplorerSortOrder.dll" Condition="'$(Platform)' == 'x64'" CopyToOutputDirectory="Always" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Magick.NET-Q16-OpenMP-x64" Version="10.1.0" />
+    </ItemGroup>
+
 </Project>
