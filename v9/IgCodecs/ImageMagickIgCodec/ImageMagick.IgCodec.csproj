@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Magick.NET-Q16-OpenMP-x64" Version="9.0.0" />
-    <PackageReference Include="Magick.NET.SystemDrawing" Version="4.0.13" />
+    <PackageReference Include="Magick.NET-Q16-OpenMP-x64" Version="10.1.0" />
+    <PackageReference Include="Magick.NET.SystemDrawing" Version="4.0.18" />
   </ItemGroup>
 
   <ItemGroup>

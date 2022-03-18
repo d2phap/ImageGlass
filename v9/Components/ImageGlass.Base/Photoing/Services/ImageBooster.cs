@@ -39,17 +39,16 @@ public class ImageBooster : IDisposable
 
         if (disposing)
         {
+            // stop the worker
+            IsRunWorker = false;
+
             // Free any other managed objects here.
             FileNames.Clear();
             QueuedList.Clear();
             ImgList.Clear();
             FreeList.Clear();
 
-            if (Worker != null)
-            {
-                Worker.DoWork -= Worker_DoWork;
-                Worker.Dispose();
-            }
+            Worker?.Dispose();
 
             // clear list and release resources
             Clear();
@@ -79,6 +78,11 @@ public class ImageBooster : IDisposable
     /// Image booster background service
     /// </summary>
     private readonly BackgroundWorker Worker = new();
+
+    /// <summary>
+    /// Controls worker state
+    /// </summary>
+    private bool IsRunWorker { get; set; } = false;
 
     /// <summary>
     /// The list of Imgs
@@ -159,8 +163,8 @@ public class ImageBooster : IDisposable
         Codec = codec;
 
         // background worker
-        Worker.DoWork -= Worker_DoWork;
-        Worker.DoWork += Worker_DoWork;
+        IsRunWorker = true;
+        Worker.RunWorkerAsync(RunBackgroundWorker());
     }
 
 
@@ -169,29 +173,32 @@ public class ImageBooster : IDisposable
     /// <summary>
     /// Preload the images in <see cref="QueuedList"/>.
     /// </summary>
-    private async void Worker_DoWork(object? sender, DoWorkEventArgs e)
+    private async Task RunBackgroundWorker()
     {
-        while (QueuedList.Count > 0)
+        while (IsRunWorker)
         {
-            // pop out the first item
-            var index = QueuedList[0];
-            var img = ImgList[index];
-            QueuedList.RemoveAt(0);
-
-            
-            if (!img.IsDone)
+            if (QueuedList.Count > 0)
             {
-                var metadata = Codec.LoadMetadata(img.Filename, ReadOptions);
+                // pop out the first item
+                var index = QueuedList[0];
+                var img = ImgList[index];
+                QueuedList.RemoveAt(0);
 
-                // start loading image file
-                await img.LoadAsync(Codec, ReadOptions with
+
+                if (!img.IsDone)
                 {
-                    FirstFrameOnly = SinglePageFormats.Contains(img.Extension),
-                    Metadata = metadata,
-                }).ConfigureAwait(true);
+                    var metadata = Codec.LoadMetadata(img.Filename, ReadOptions);
+
+                    // start loading image file
+                    await img.LoadAsync(Codec, ReadOptions with
+                    {
+                        FirstFrameOnly = SinglePageFormats.Contains(img.Extension),
+                        Metadata = metadata,
+                    }).ConfigureAwait(true);
+                }
             }
 
-            await Task.Delay(10);
+            await Task.Delay(10).ConfigureAwait(false);
         }
     }
 
@@ -247,19 +254,17 @@ public class ImageBooster : IDisposable
         }
 
         // release the resources
-        foreach (var indexItem in FreeList)
+        var freeListCloned = new List<int>(FreeList);
+        foreach (var indexItem in freeListCloned)
         {
             if (!list.Contains(indexItem) && indexItem >= 0 && indexItem < ImgList.Count)
             {
-                // TODO:
-                // ImgList[indexItem].CancelLoading();
-
                 ImgList[indexItem].Dispose();
+                FreeList.Remove(indexItem);
             }
         }
 
         // update new index of free list
-        FreeList.Clear();
         FreeList.AddRange(list);
 
         // update queue list
@@ -312,8 +317,6 @@ public class ImageBooster : IDisposable
         {
             // update queue list according to index
             UpdateQueueList(index);
-
-            Worker.RunWorkerAsync(index);
         }
 
         // wait until the image loading is done

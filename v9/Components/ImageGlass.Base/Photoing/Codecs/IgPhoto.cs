@@ -17,12 +17,7 @@ public class IgPhoto : IDisposable
         if (disposing)
         {
             // Free any other managed objects here.
-            IsDone = false;
-            Error = null;
-            FramesCount = 0;
-
-            Image?.Dispose();
-            Image = null;
+            Unload();
         }
 
         // Free any unmanaged objects here.
@@ -31,6 +26,7 @@ public class IgPhoto : IDisposable
 
     public virtual void Dispose()
     {
+        CancelLoading();
         Dispose(true);
         GC.SuppressFinalize(this);
     }
@@ -134,13 +130,26 @@ public class IgPhoto : IDisposable
                 FirstFrameOnly = FramesCount < 2,
             };
 
+            // cancel if requested
+            if (_tokenSrc is not null && _tokenSrc.IsCancellationRequested)
+            {
+                _tokenSrc.Token.ThrowIfCancellationRequested();
+            }
+
             // load image
             Image = await codec.LoadAsync(Filename, options, _tokenSrc?.Token);
+
+            // cancel if requested
+            if (_tokenSrc is not null && _tokenSrc.IsCancellationRequested)
+            {
+                _tokenSrc.Token.ThrowIfCancellationRequested();
+            }
 
             // done loading
             IsDone = true;
         }
         catch (OperationCanceledException) {
+            Unload();
             Dispose();
         }
         catch (Exception ex)
@@ -168,6 +177,21 @@ public class IgPhoto : IDisposable
         _tokenSrc = tokenSrc ?? new();
 
         await LoadImageAsync(codec, options);
+    }
+
+    /// <summary>
+    /// Unload the image and reset the relevant info
+    /// </summary>
+    public void Unload()
+    {
+        // reset info
+        IsDone = false;
+        Error = null;
+        FramesCount = 0;
+
+        // unload image
+        Image?.Dispose();
+        Image = null;
     }
 
 

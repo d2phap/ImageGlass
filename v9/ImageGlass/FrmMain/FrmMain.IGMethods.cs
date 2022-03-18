@@ -40,12 +40,12 @@ public partial class FrmMain
 
     private void IG_ViewPreviousImage(string args)
     {
-        _ = NextImageCancellableAsync(-1);
+        _ = ViewNextCancellableAsync(-1);
     }
 
     private void IG_ViewNextImage(string args)
     {
-        _ = NextImageCancellableAsync(1);
+        _ = ViewNextCancellableAsync(1);
     }
 
     private void IG_SetZoomMode(string mode)

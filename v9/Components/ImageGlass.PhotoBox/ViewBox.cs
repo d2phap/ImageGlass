@@ -1011,15 +1011,19 @@ public partial class ViewBox : HybridControl
     {
         if (Source == ImageSource.Null) return;
 
-        if (Source == ImageSource.Direct2D)
+        try
         {
-            var d2dg = g as Direct2DGraphics;
-            d2dg?.DrawImage(_imageD2D, _destRect, _srcRect, 1f, (int)CurrentInterpolation);
+            if (Source == ImageSource.Direct2D)
+            {
+                var d2dg = g as Direct2DGraphics;
+                d2dg?.DrawImage(_imageD2D, _destRect, _srcRect, 1f, (int)CurrentInterpolation);
+            }
+            else
+            {
+                g.DrawImage(_imageGdiPlus, _destRect, _srcRect, 1f, (int)CurrentInterpolation);
+            }
         }
-        else
-        {
-            g.DrawImage(_imageGdiPlus, _destRect, _srcRect, 1f, (int)CurrentInterpolation);
-        }
+        catch { };
 
         _ = OnImageDrawn();
     }

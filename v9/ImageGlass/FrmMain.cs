@@ -160,7 +160,7 @@ public partial class FrmMain : Form
         // Display currentFile while loading the full directory
         if (hasInitFile)
         {
-            _ = NextImageCancellableAsync(0, filename: currentFile);
+            _ = ViewNextCancellableAsync(0, filename: currentFile);
         }
 
         // Parse string to absolute path
@@ -300,7 +300,7 @@ public partial class FrmMain : Form
         if (!skipLoadingImage)
         {
             // Start loading image
-            _ = NextImageCancellableAsync(0);
+            _ = ViewNextCancellableAsync(0);
         }
 
         // TODO:
@@ -732,7 +732,7 @@ public partial class FrmMain : Form
     /// <param name="isSkipCache"></param>
     /// <param name="pageIndex">Use <see cref="int.MinValue"/> to load the default page index.</param>
     /// <param name="filename"></param>
-    public async Task NextImageCancellableAsync(int step,
+    public async Task ViewNextCancellableAsync(int step,
         bool isKeepZoomRatio = false,
         bool isSkipCache = false,
         int pageIndex = int.MinValue,
@@ -910,18 +910,18 @@ public partial class FrmMain : Form
         else
         {
             Local.CurrentIndex = imageIndex;
-            _ = NextImageCancellableAsync(0);
+            _ = ViewNextCancellableAsync(0);
         }
     }
 
     private void PicBox_OnNavLeftClicked(MouseEventArgs e)
     {
-        _ = NextImageCancellableAsync(-1);
+        _ = ViewNextCancellableAsync(-1);
     }
 
     private void PicBox_OnNavRightClicked(MouseEventArgs e)
     {
-        _ = NextImageCancellableAsync(1);
+        _ = ViewNextCancellableAsync(1);
     }
 
     private void PicBox_OnZoomChanged(PhotoBox.ZoomEventArgs e)
