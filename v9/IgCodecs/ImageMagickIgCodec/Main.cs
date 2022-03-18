@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageMagick.Formats;
+using System.Drawing.Imaging;
 
 namespace ImageMagick.IgCodec;
 
@@ -154,6 +155,7 @@ public class Main : IIgCodec
     }
 
 
+    // load basic info from image
     public IgMetadata? LoadMetadata(string filename, CodecReadOptions? options = null)
     {
         IgMetadata? meta = null;
@@ -161,17 +163,24 @@ public class Main : IIgCodec
         try
         {
             var settings = ParseSettings(options, filename);
-
             using var imgC = new MagickImageCollection();
-            imgC.Ping(filename, settings);
+            
+            if (filename.Length > 260)
+            {
+                var newFilename = ImageGlass.Base.Helpers.PrefixLongPath(filename);
+                var allBytes = File.ReadAllBytes(newFilename);
 
-            using var imgM = new MagickImage();
-            imgM.Ping(filename, settings);
+                imgC.Ping(allBytes, settings);
+            }
+            else
+            {
+                imgC.Ping(filename, settings);
+            }
 
             meta = new()
             {
-                Width = imgM.Width,
-                Height = imgM.Height,
+                Width = imgC.Count > 0 ? imgC[0].Width : 0,
+                Height = imgC.Count > 0 ? imgC[0].Height : 0,
                 FramesCount = imgC.Count,
             };
         }
@@ -195,13 +204,16 @@ public class Main : IIgCodec
     {
         options ??= new();
         var cancelToken = token ?? default;
+        var result = new IgImgData();
+
+        if (options.Metadata == null)
+        {
+            options.Metadata = LoadMetadata(filename, options);
+        }
 
         var ext = Path.GetExtension(filename).ToUpperInvariant();
         var settings = ParseSettings(options, filename);
 
-        Bitmap? output;
-        IColorProfile? colorProfile = null;
-        IExifProfile? exifProfile = null;
 
         #region Read image data
         switch (ext)
@@ -214,7 +226,9 @@ public class Main : IIgCodec
                     base64Content = fs.ReadToEnd();
                 }
 
-                output = ConvertBase64ToBitmap(base64Content);
+                result.Image = ConvertBase64ToBitmap(base64Content);
+                result.FrameCount = options.Metadata?.FramesCount ?? 0;
+
                 break;
 
             case ".GIF":
@@ -222,29 +236,25 @@ public class Main : IIgCodec
                 try
                 {
                     // Note: Using FileStream is much faster than using MagickImageCollection
-                    output = ConvertFileToBitmap(filename);
+                    result.Image = ConvertFileToBitmap(filename);
+                    result.FrameCount = options.Metadata?.FramesCount ?? 0;
                 }
                 catch
                 {
-                    (output, exifProfile, colorProfile) = await ReadWithMagickImage(filename, ext, settings, options, cancelToken);
+                    result = await ReadWithMagickImage(filename, ext, settings, options, cancelToken);
                 }
                 break;
 
 
             default:
-                (output, exifProfile, colorProfile) = await ReadWithMagickImage(filename, ext, settings, options, cancelToken);
+                result = await ReadWithMagickImage(filename, ext, settings, options, cancelToken);
 
                 break;
         }
         #endregion
 
 
-        return new IgImgData()
-        {
-            Image = output,
-            ExifProfile = exifProfile,
-            ColorProfile = colorProfile,
-        };
+        return result;
     }
 
 
@@ -346,14 +356,12 @@ public class Main : IIgCodec
     /// <param name="options"></param>
     /// <param name="cancelToken"></param>
     /// <returns></returns>
-    private static async Task<(Bitmap?, IExifProfile?, IColorProfile?)> ReadWithMagickImage(
+    private static async Task<IgImgData> ReadWithMagickImage(
         string filename, string ext,
         MagickReadSettings settings, CodecReadOptions options,
         CancellationToken cancelToken)
     {
-        Bitmap? bitmapOutput = null;
-        IColorProfile? colorProfile = null;
-        IExifProfile? exifProfile = null;
+        var result = new IgImgData();
 
         var checkRotation = ext != ".HEIC";
         using var imgColl = new MagickImageCollection();
@@ -373,19 +381,27 @@ public class Main : IIgCodec
             imgColl.Ping(filename, settings);
         }
 
+        // standardize first frame reading option
+        result.FrameCount = imgColl.Count;
+        var readFirstFrameOnly = true;
+        if (options.FirstFrameOnly == null)
+        {
+            readFirstFrameOnly = imgColl.Count < 2;
+        }
+
 
         // read all frames
-        if (imgColl.Count > 1 && options.FirstFrameOnly is false)
+        if (imgColl.Count > 1 && readFirstFrameOnly is false)
         {
             await imgColl.ReadAsync(filename, settings, cancelToken);
             foreach (var imgPageM in imgColl)
             {
-                (exifProfile, colorProfile) = ProcessMagickImage((MagickImage)imgPageM, options, ref bitmapOutput, checkRotation);
+                ProcessMagickImage((MagickImage)imgPageM, options, ref result, checkRotation);
             }
 
-            bitmapOutput = imgColl.ToBitmap();
+            result.Image = imgColl.ToBitmap();
 
-            return (bitmapOutput, exifProfile, colorProfile);
+            return result;
         }
 
 
@@ -423,15 +439,22 @@ public class Main : IIgCodec
         if (ext == ".TGA") imgM.AutoOrient();
 
 
-        // preprocess image
+        // preprocess image, read embedded thumbnail if any
         imgM.Quality = options.Quality;
-        (exifProfile, colorProfile) = ProcessMagickImage(imgM, options, ref bitmapOutput, checkRotation);
+        ProcessMagickImage(imgM, options, ref result, checkRotation);
 
         // apply color channel
-        using var channelImgM = FilterColorChannel(imgM, options.ImageChannel);
-        bitmapOutput = channelImgM.ToBitmap();
+        if (options.ImageChannel != ColorChannel.All)
+        {
+            using var channelImgM = FilterColorChannel(imgM, options.ImageChannel);
+            result.Image = channelImgM.ToBitmap();
+        }
+        else if (result.Image is null)
+        {
+            result.Image = imgM.ToBitmap();
+        }
 
-        return (bitmapOutput, exifProfile, colorProfile);
+        return result;
     }
 
     /// <summary>
@@ -442,43 +465,41 @@ public class Main : IIgCodec
     /// <param name="bitmapOutput"></param>
     /// <param name="checkRotation"></param>
     /// <returns></returns>
-    private static (IExifProfile?, IColorProfile?) ProcessMagickImage(
+    private static void ProcessMagickImage(
         MagickImage imgM, CodecReadOptions options,
-        ref Bitmap? bitmapOutput,
+        ref IgImgData result,
         bool checkRotation = true)
     {
         imgM.Quality = options.Quality;
 
-        IColorProfile? imgColorProfile = null;
-        IExifProfile? exifProfile = null;
         try
         {
             // get the color profile of image
-            imgColorProfile = imgM.GetColorProfile();
+            result.ColorProfile = imgM.GetColorProfile();
 
             // Get Exif information
-            exifProfile = imgM.GetExifProfile();
+            result.ExifProfile = imgM.GetExifProfile();
         }
         catch { }
 
         // Use embedded thumbnails if specified
-        if (exifProfile != null && options.UseEmbeddedThumbnail)
+        if (result.ExifProfile != null && options.UseEmbeddedThumbnail)
         {
             // Fetch the embedded thumbnail
-            using var thumbM = exifProfile.CreateThumbnail();
+            using var thumbM = result.ExifProfile.CreateThumbnail();
             if (thumbM != null)
             {
-                bitmapOutput = thumbM.ToBitmap();
+                result.Image = thumbM.ToBitmap();
             }
         }
 
         // Revert to source image if an embedded thumbnail with required size was not found.
-        if (bitmapOutput == null)
+        if (result.Image == null)
         {
-            if (exifProfile != null && checkRotation)
+            if (result.ExifProfile != null && checkRotation)
             {
                 // Get Orientation Flag
-                var exifRotationTag = exifProfile.GetValue(ExifTag.Orientation);
+                var exifRotationTag = result.ExifProfile.GetValue(ExifTag.Orientation);
 
                 if (exifRotationTag != null)
                 {
@@ -496,7 +517,7 @@ public class Main : IIgCodec
 
             // if always apply color profile
             // or only apply color profile if there is an embedded profile
-            if (options.IsApplyColorProfileForAll || imgColorProfile != null)
+            if (options.IsApplyColorProfileForAll || result.ColorProfile != null)
             {
                 var imgColor = Utils.GetColorProfile(options.ColorProfileName);
 
@@ -504,13 +525,11 @@ public class Main : IIgCodec
                 {
                     imgM.TransformColorSpace(
                         //set default color profile to sRGB
-                        imgColorProfile ?? ColorProfile.SRGB,
+                        result.ColorProfile ?? ColorProfile.SRGB,
                         imgColor);
                 }
             }
         }
-
-        return (exifProfile, imgColorProfile);
     }
 
     /// <summary>
@@ -521,21 +540,19 @@ public class Main : IIgCodec
     /// <returns></returns>
     private static MagickImage FilterColorChannel(MagickImage imgM, ColorChannel channel)
     {
-        if (channel != ColorChannel.All)
+        if (channel == ColorChannel.All) return imgM;
+
+
+        var magickChannel = (Channels)channel;
+        var channelImgM = (MagickImage)imgM.Separate(magickChannel).First();
+
+        if (imgM.HasAlpha && magickChannel != Channels.Alpha)
         {
-            var magickChannel = (Channels)channel;
-            var channelImgM = (MagickImage)imgM.Separate(magickChannel).First();
-
-            if (imgM.HasAlpha && magickChannel != Channels.Alpha)
-            {
-                using var alpha = imgM.Separate(Channels.Alpha).First();
-                channelImgM.Composite(alpha, CompositeOperator.CopyAlpha);
-            }
-
-            return channelImgM;
+            using var alpha = imgM.Separate(Channels.Alpha).First();
+            channelImgM.Composite(alpha, CompositeOperator.CopyAlpha);
         }
 
-        return imgM;
+        return channelImgM;
     }
 
     /// <summary>

@@ -125,10 +125,12 @@ public class IgPhoto : IDisposable
             var metadata = codec.LoadMetadata(Filename, options);
             FramesCount = metadata?.FramesCount ?? 0;
 
-            options = options with
-            {
-                FirstFrameOnly = FramesCount < 2,
-            };
+            if (options.FirstFrameOnly == null) {
+                options = options with
+                {
+                    FirstFrameOnly = FramesCount < 2,
+                };
+            }
 
             // cancel if requested
             if (_tokenSrc is not null && _tokenSrc.IsCancellationRequested)

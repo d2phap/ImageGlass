@@ -53,9 +53,10 @@ public record CodecReadOptions
     public bool UseRawThumbnail { get; set; } = true;
 
     /// <summary>
-    /// Gets, sets the value indicates that the first frame of the image should be return.
+    /// Gets, sets the value indicates that the first frame of the image should be returned.
+    /// If it's <c>null</c>, the coder will decide.
     /// </summary>
-    public bool FirstFrameOnly { get; set; } = false;
+    public bool? FirstFrameOnly { get; set; } = null;
 
     /// <summary>
     /// Gets, sets metadata

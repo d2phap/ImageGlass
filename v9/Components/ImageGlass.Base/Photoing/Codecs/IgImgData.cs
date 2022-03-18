@@ -26,11 +26,11 @@ public class IgImgData : IDisposable
 
     #region IDisposable Disposing
 
-    public bool IsDisposed { get; private set; } = false;
+    private bool _isDisposed = false;
 
     protected virtual void Dispose(bool disposing)
     {
-        if (IsDisposed)
+        if (_isDisposed)
             return;
 
         if (disposing)
@@ -44,7 +44,7 @@ public class IgImgData : IDisposable
         }
 
         // Free any unmanaged objects here.
-        IsDisposed = true;
+        _isDisposed = true;
     }
 
     public virtual void Dispose()
@@ -62,6 +62,8 @@ public class IgImgData : IDisposable
 
 
     public Bitmap? Image { get; set; } = null;
+
+    public int FrameCount { get; set; } = 0;
     public IExifProfile? ExifProfile { get; set; } = null;
     public IColorProfile? ColorProfile { get; set; } = null;
 

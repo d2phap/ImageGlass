@@ -650,8 +650,8 @@ public partial class FrmMain : Form
                         IsApplyColorProfileForAll = Config.IsApplyColorProfileForAll,
                         ImageChannel = Local.ImageChannel,
                         UseRawThumbnail = Local.Images.ReadOptions.UseRawThumbnail,
-                        //UseEmbeddedThumbnail = Local.Images.
-                        FirstFrameOnly = Config.SinglePageFormats.Contains(photo.Extension)
+                        //UseEmbeddedThumbnail = Local.Images.use
+                        FirstFrameOnly = Config.SinglePageFormats.Contains(photo.Extension),
                     }, token);
                 }
                 else
