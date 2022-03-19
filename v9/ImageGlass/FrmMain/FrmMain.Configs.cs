@@ -19,6 +19,7 @@ public partial class FrmMain
         LoadToolbarItemsConfig();
 
         // Thumbnail bar
+        Gallery.Codec = Config.Codec;
         Sp1.Panel2Collapsed = !Config.IsShowThumbnail;
         Sp1.SplitterDistance = 465;
 

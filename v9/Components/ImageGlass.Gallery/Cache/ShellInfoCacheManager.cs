@@ -305,7 +305,7 @@ internal class ShellInfoCacheManager : IDisposable
         }
 
         // Read shell info
-        var info = Extractor.Instance.GetShellInfo(extension);
+        var info = Extractor.Current.GetShellInfo(extension);
 
         // Return the info
         CacheItem result;

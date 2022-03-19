@@ -24,6 +24,7 @@ License: Apache License Version 2.0, http://www.apache.org/licenses/
 */
 
 using ImageGlass.Base;
+using ImageGlass.Base.Photoing.Codecs;
 using System.ComponentModel;
 
 namespace ImageGlass.Gallery;
@@ -38,6 +39,8 @@ namespace ImageGlass.Gallery;
 public partial class ImageGallery : Control, IComponent
 {
     #region Member Variables
+    // image codec
+    private IIgCodec? _codec = null;
 
     // Set when properties change
     private bool mDefaultImageChanged = false;
@@ -100,6 +103,22 @@ public partial class ImageGallery : Control, IComponent
 
 
     #region Properties
+
+    /// <summary>
+    /// Gets, sets code for caching images.
+    /// </summary>
+    public IIgCodec? Codec
+    {
+        get => _codec;
+        set
+        {
+            if (value is not null)
+            {
+                _codec = value;
+                Extractor.Initialize(_codec);
+            }
+        }
+    }
 
     /// <summary>
     /// Gets or sets whether thumbnail images are automatically rotated.
@@ -644,24 +663,6 @@ public partial class ImageGallery : Control, IComponent
     /// </summary>
     internal ScrollOrientation ScrollOrientation => mView == View.HorizontalStrip ? ScrollOrientation.HorizontalScroll : ScrollOrientation.VerticalScroll;
 
-    /// <summary>
-    /// Gets or sets whether the control uses WPF/WIC for thumbnail extraction.
-    /// </summary>
-    [Category("Appearance")]
-    public static bool UseWIC
-    {
-        get => Extractor.UseWIC;
-        set
-        {
-            Extractor.UseWIC = value;
-        }
-    }
-
-    /// <summary>
-    /// Gets the thumbnail extractor.
-    /// </summary>
-    [Browsable(false), EditorBrowsable(EditorBrowsableState.Advanced)]
-    public static IExtractor ThumbnailExtractor => Extractor.Instance;
     #endregion
 
 

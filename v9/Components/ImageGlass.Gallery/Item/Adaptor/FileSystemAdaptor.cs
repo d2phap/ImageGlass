@@ -60,7 +60,7 @@ public class FileSystemAdaptor : IAdaptor
         var filename = Helpers.PrefixLongPath((string)key);
 
         if (File.Exists(filename))
-            return Extractor.Instance.GetThumbnail(filename, size, useEmbeddedThumbnails, useExifOrientation);
+            return Extractor.Current.GetThumbnail(filename, size, useEmbeddedThumbnails, useExifOrientation);
         else
             return null;
     }
@@ -131,7 +131,7 @@ public class FileSystemAdaptor : IAdaptor
             details.FolderName = info.Directory?.Name ?? "";
 
             // Get metadata
-            var metadata = Extractor.Instance.GetMetadata(filename);
+            var metadata = Extractor.Current.GetMetadata(filename);
             details.Width = metadata.Width;
             details.Height = metadata.Height;
             details.DPIX = metadata.DPIX;

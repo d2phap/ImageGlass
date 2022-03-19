@@ -22,6 +22,7 @@ Url: https://github.com/oozcitak/imagelistview
 License: Apache License Version 2.0, http://www.apache.org/licenses/
 ---------------------
 */
+using ImageGlass.Base.Photoing.Codecs;
 using System.Drawing.Drawing2D;
 using System.Text;
 
@@ -36,6 +37,20 @@ public partial class GDIExtractor : IExtractor
     // Exif Tag IDs
     private const int TagThumbnailData = 0x501B;
     private const int TagOrientation = 0x0112;
+
+    private IIgCodec _codec;
+
+
+    #region Constructor
+    /// <summary>
+    /// Initializes a new instance of the GDIExtractor class.
+    /// </summary>
+    public GDIExtractor(IIgCodec codec)
+    {
+        _codec = codec;
+    }
+
+    #endregion
 
 
     #region Public Methods
@@ -130,6 +145,10 @@ public partial class GDIExtractor : IExtractor
     {
         if (size.Width <= 0 || size.Height <= 0)
             throw new ArgumentException("Thumbnail size cannot be empty.", nameof(size));
+
+
+        //_codec.
+
 
         // Check if this is an image file
         try

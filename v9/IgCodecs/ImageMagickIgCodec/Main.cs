@@ -262,12 +262,18 @@ public class Main : IIgCodec
     public Bitmap? GetThumbnail(string filename, int width, int height)
     {
         Bitmap? result = null;
-        using var imgM = new MagickImage();
 
+        var settings = ParseSettings(new()
+        {
+            Width = width,
+            Height = height,
+        });
+
+        using var imgM = new MagickImage();
 
         try
         {
-            imgM.Ping(filename);
+            imgM.Ping(filename, settings);
         }
         // exit on invalid image
         catch { return result; }
@@ -282,7 +288,7 @@ public class Main : IIgCodec
 
             if (imgBytes is not null)
             {
-                using var rawImgM = new MagickImage(imgBytes);
+                using var rawImgM = new MagickImage(imgBytes, settings);
 
                 if (imgM.BaseWidth > width || imgM.BaseHeight > height)
                 {
@@ -297,7 +303,7 @@ public class Main : IIgCodec
         if (result is null)
         {
             // read entire file content
-            imgM.Read(filename);
+            imgM.Read(filename, settings);
 
             try
             {

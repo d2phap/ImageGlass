@@ -60,7 +60,7 @@ public class UriAdaptor : IAdaptor
             using var stream = new MemoryStream(imageData);
             using var sourceImage = Image.FromStream(stream);
 
-            return Extractor.Instance.GetThumbnail(sourceImage, size, useEmbeddedThumbnails, useExifOrientation);
+            return Extractor.Current.GetThumbnail(sourceImage, size, useEmbeddedThumbnails, useExifOrientation);
         }
         catch
         {

@@ -41,18 +41,6 @@ public partial class GDIExtractor : IExtractor
     #endregion
 
 
-    #region Constructor
-    /// <summary>
-    /// Initializes a new instance of the GDIExtractor class.
-    /// </summary>
-    public GDIExtractor()
-    {
-
-    }
-
-    #endregion
-
-
     #region Exif Tag IDs
     private const int TagImageDescription = 0x010E;
     private const int TagEquipmentModel = 0x0110;
