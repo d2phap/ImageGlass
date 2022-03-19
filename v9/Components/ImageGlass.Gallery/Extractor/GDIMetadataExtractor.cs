@@ -195,7 +195,7 @@ public partial class GDIExtractor : IExtractor
     /// Open image and read metadata (.NET 2.0).
     /// </summary>
     /// <param name="path">Filepath of image</param>
-    private static Metadata InitViaBmp(string path)
+    private Metadata InitViaBmp(string path)
     {
         using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
         if (Utility.IsImage(stream))
@@ -214,7 +214,7 @@ public partial class GDIExtractor : IExtractor
     /// Read metadata using .NET 2.0 methods.
     /// </summary>
     /// <param name="img">Opened image</param>
-    private static Metadata InitViaBmp(Image img)
+    private Metadata InitViaBmp(Image img)
     {
         var m = new Metadata
         {
