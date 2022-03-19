@@ -640,8 +640,12 @@ internal class ThumbnailCacheManager : IDisposable
         _processing.Clear();
         _processingRendererItem = Guid.Empty;
 
+
         // Empty persistent cache
-        _diskCache.Clear();
+        if (!_imageGallery.DoNotDeletePersistentCache)
+        {
+            _diskCache.Clear();
+        }
     }
 
     /// <summary>

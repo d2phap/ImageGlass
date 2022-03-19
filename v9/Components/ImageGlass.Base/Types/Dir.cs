@@ -22,6 +22,11 @@ public static class Dir
     public static string Languages { get; } = "Languages";
 
     /// <summary>
+    /// Gets the cached thumbnails folder name
+    /// </summary>
+    public static string ThumbnailsCache { get; } = "ThumbnailsCache";
+
+    /// <summary>
     /// Gets the temporary folder name
     /// </summary>
     public static string Temporary { get; } = "Temp";

@@ -199,6 +199,11 @@ public partial class ImageGallery : Control, IComponent
         }
     }
 
+    /// <summary>
+    /// Should the cache files still be saved for next time load or be deleted.
+    /// </summary>
+    [Category("Behavior"), DefaultValue(true)]
+    public bool DoNotDeletePersistentCache { get; set; } = true;
 
     /// <summary>
     /// Provides the ability to control the metadata caching

@@ -252,6 +252,8 @@ public class DiskCache
 
             if (string.IsNullOrEmpty(_dirName)) return;
 
+            Directory.CreateDirectory(_dirName);
+
             foreach (FileInfo file in new DirectoryInfo(_dirName).GetFiles())
             {
                 _currentCacheSize += file.Length;
