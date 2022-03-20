@@ -66,4 +66,18 @@ public partial class Helpers
             return func();
         }).Unwrap().GetAwaiter().GetResult();
     }
+
+
+    /// <summary>
+    /// Runs a function in a new thread
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns></returns>
+    public static int RunAsThread(ThreadStart func)
+    {
+        var th = new Thread(func);
+        th.Start();
+
+        return th.ManagedThreadId;
+    }
 }

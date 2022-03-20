@@ -194,7 +194,7 @@ public class ImageBooster : IDisposable
                     {
                         FirstFrameOnly = SinglePageFormats.Contains(img.Extension),
                         Metadata = metadata,
-                    }).ConfigureAwait(true);
+                    }).ConfigureAwait(false);
                 }
             }
 
@@ -309,7 +309,7 @@ public class ImageBooster : IDisposable
             await ImgList[index].LoadAsync(Codec, ReadOptions with
             {
                 FirstFrameOnly = SinglePageFormats.Contains(ImgList[index].Extension),
-            }, tokenSrc).ConfigureAwait(true);
+            }, tokenSrc).ConfigureAwait(false);
         }
 
         // get image data from cache
@@ -324,7 +324,7 @@ public class ImageBooster : IDisposable
         {
             while (!ImgList[index].IsDone)
             {
-                await Task.Delay(1).ConfigureAwait(true);
+                await Task.Delay(1).ConfigureAwait(false);
             }
         }
 

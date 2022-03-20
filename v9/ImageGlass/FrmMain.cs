@@ -33,8 +33,7 @@ public partial class FrmMain : Form
 
     private void FrmMain_Load(object sender, EventArgs e)
     {
-        // Load image from param
-        LoadImagesFromCmdArgs(Environment.GetCommandLineArgs());
+        _ = LoadImagesFromCmdArgs();
     }
 
     protected override void WndProc(ref Message m)
@@ -79,6 +78,26 @@ public partial class FrmMain : Form
 
 
     /// <summary>
+    /// Load images from command line arguments
+    /// (<see cref="Environment.GetCommandLineArgs"/>)
+    /// </summary>
+    /// <param name="args"></param>
+    public async Task LoadImagesFromCmdArgs()
+    {
+        var args = Environment.GetCommandLineArgs();
+        if (args.Length < 2) return;
+
+        // get path from params
+        var path = args.Skip(1).FirstOrDefault(i => !i.StartsWith(Constants.CONFIG_CMD_PREFIX));
+
+        if (path == null) return;
+
+        // Start loading path
+        await PrepareLoadingAsync(path);
+    }
+
+
+    /// <summary>
     /// Open file picker and load the selected image
     /// </summary>
     private void OpenFilePicker()
@@ -99,39 +118,18 @@ public partial class FrmMain : Form
 
 
     /// <summary>
-    /// Load images from command line arguments (<see cref="Environment.GetCommandLineArgs"/>)
-    /// </summary>
-    /// <param name="args"></param>
-    public void LoadImagesFromCmdArgs(string[] args)
-    {
-        // Load image from param
-        if (args.Length >= 2)
-        {
-            for (var i = 1; i < args.Length; i++)
-            {
-                // only read the path, exclude configs parameter which starts with "-"
-                if (!args[i].StartsWith(Constants.CONFIG_CMD_PREFIX))
-                {
-                    PrepareLoading(args[i]);
-                    break;
-                }
-            }
-        }
-    }
-
-
-    /// <summary>
     /// Prepare to load images. This method invoked for image on the command line,
     /// i.e. when double-clicking an image.
     /// </summary>
     /// <param name="inputPath">The relative/absolute path of file/folder; or a URI Scheme</param>
-    private void PrepareLoading(string inputPath)
+    private async Task PrepareLoadingAsync(string inputPath)
     {
         var path = App.ToAbsolutePath(inputPath);
-        var currentFileName = File.Exists(path) ? path : "";
+        var currentFilePath = File.Exists(path) ? path : "";
+
 
         // Start loading path
-        _ = PrepareLoadingAsync(new string[] { inputPath }, currentFileName);
+        await PrepareLoadingAsync(new string[] { inputPath }, currentFilePath);
     }
 
 
@@ -140,13 +138,13 @@ public partial class FrmMain : Form
     /// </summary>
     /// <param name="inputPaths">Paths of image files or folders.
     /// It can be relative/absolute paths or URI scheme.</param>
-    /// <param name="currentFileName">Current viewing filename.</param>
-    private async Task PrepareLoadingAsync(IEnumerable<string> inputPaths, string currentFileName = "")
+    /// <param name="currentFilePath">Current viewing filename.</param>
+    private async Task PrepareLoadingAsync(IEnumerable<string> inputPaths, string currentFilePath = "")
     {
         if (!inputPaths.Any()) return;
 
         var allFilesToLoad = new HashSet<string>();
-        var currentFile = currentFileName;
+        var currentFile = currentFilePath;
         var hasInitFile = !string.IsNullOrEmpty(currentFile);
 
         // Dispose all garbage
@@ -157,17 +155,13 @@ public partial class FrmMain : Form
             ImageChannel = Local.ImageChannel,
         };
 
+
         // Display currentFile while loading the full directory
         if (hasInitFile)
         {
-            _ = ViewNextCancellableAsync(0, filename: currentFile);
+            _ = Helpers.RunAsThread(async
+                () => await ViewNextCancellableAsync(0, filename: currentFile));
         }
-
-        // Parse string to absolute path
-        var paths = inputPaths.Select(item => App.ToAbsolutePath(item));
-
-        // prepare the distinct dir list
-        var distinctDirsList = Helpers.GetDistinctDirsFromPaths(paths);
 
         // track paths loaded to prevent duplicates
         var pathsLoaded = new HashSet<string>();
@@ -178,6 +172,12 @@ public partial class FrmMain : Form
         // Async load, filter and sort files in directories
         await Task.Run(() =>
         {
+            // Parse string to absolute path
+            var paths = inputPaths.Select(item => App.ToAbsolutePath(item));
+
+            // prepare the distinct dir list
+            var distinctDirsList = Helpers.GetDistinctDirsFromPaths(paths);
+
             foreach (var aPath in distinctDirsList)
             {
                 var dirPath = aPath;
@@ -241,33 +241,34 @@ public partial class FrmMain : Form
         }).ConfigureAwait(true);
 
 
-        LoadImages(sortedFilesList, currentFile, skipLoadingImage: hasInitFile);
+        // load list
+        await LoadImageListAsync(sortedFilesList, currentFile, skipLoadingImage: hasInitFile);
     }
 
 
     /// <summary>
-    /// Load the images.
+    /// Load the images list.
     /// </summary>
-    /// <param name="imageFilenameList">The list of files to load</param>
-    /// <param name="filePath">The image file path to view first</param>
-    private void LoadImages(
-        List<string> imageFilenameList,
-        string filePath,
+    /// <param name="sortedFilePathsList">The sorted list of files to load</param>
+    /// <param name="currentFilePath">The image file path to view first</param>
+    private async Task LoadImageListAsync(
+        List<string> sortedFilePathsList,
+        string currentFilePath,
         bool skipLoadingImage = false)
     {
         // Set filename to image list
         Local.Images.Clear();
-        Local.Images.Add(imageFilenameList);
+        Local.Images.Add(sortedFilePathsList);
 
         // Find the index of current image
-        if (filePath.Length > 0)
+        if (currentFilePath.Length > 0)
         {
             // this part of code fixes calls on legacy 8.3 filenames
             // (for example opening files from IBM Notes)
-            var di = new DirectoryInfo(filePath);
-            filePath = di.FullName;
+            var di = new DirectoryInfo(currentFilePath);
+            currentFilePath = di.FullName;
 
-            Local.CurrentIndex = Local.Images.IndexOf(filePath);
+            Local.CurrentIndex = Local.Images.IndexOf(currentFilePath);
 
             // KBR 20181009
             // Changing "include subfolder" setting could lose the "current" image. Prefer
@@ -282,7 +283,7 @@ public partial class FrmMain : Form
             // open single, hidden image with 'show hidden' OFF)
             if (Local.CurrentIndex == -1
                 && Local.Images.Length > 0
-                && !Local.Images.ContainsDirPathOf(filePath))
+                && !Local.Images.ContainsDirPathOf(currentFilePath))
             {
                 Local.CurrentIndex = 0;
             }
@@ -292,15 +293,13 @@ public partial class FrmMain : Form
             Local.CurrentIndex = 0;
         }
 
-        
         // Load thumnbnail
-        LoadThumbnails();
-
+        _ = Helpers.RunAsThread(LoadThumbnails);
 
         if (!skipLoadingImage)
         {
             // Start loading image
-            _ = ViewNextCancellableAsync(0);
+            await ViewNextCancellableAsync(0).ConfigureAwait(true);
         }
 
         // TODO:
@@ -529,6 +528,12 @@ public partial class FrmMain : Form
     /// </summary>
     private void LoadThumbnails()
     {
+        if (InvokeRequired)
+        {
+            Invoke(new(LoadThumbnails));
+            return;
+        }
+
         Gallery.SuspendLayout();
         Gallery.Items.Clear();
         Gallery.ThumbnailSize = new Size(Config.ThumbnailDimension, Config.ThumbnailDimension);
@@ -899,7 +904,7 @@ public partial class FrmMain : Form
         // The file is located another folder, load the entire folder
         if (imageIndex == -1)
         {
-            PrepareLoading(filePath);
+            _ = PrepareLoadingAsync(filePath);
         }
         // The file is in current folder AND it is the viewing image
         else if (Local.CurrentIndex == imageIndex)
