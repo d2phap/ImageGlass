@@ -92,7 +92,7 @@ public partial class FrmMain : Form
 
     private void Local_OnImageListLoaded(object? sender, EventArgs e)
     {
-        // Load thumnbnail
+         //Load thumnbnail
         _ = Helpers.RunAsThread(LoadThumbnails);
     }
 
@@ -185,25 +185,45 @@ public partial class FrmMain : Form
     private async Task PrepareLoadingAsync(string inputPath)
     {
         var path = App.ToAbsolutePath(inputPath);
-        var currentFile = "";
 
         if (Helpers.IsDirectory(path))
         {
+            _ = PrepareLoadingAsync(new string[] { inputPath }, "");
+        }
+        else
+        {
             // load images list
-            await LoadImageListAsync(new string[] { inputPath }, currentFile);
+            _ = LoadImageListAsync(new string[] { inputPath }, path);
+
+            // load the current image
+            _ = ViewNextCancellableAsync(0, filename: path);
+        }
+    }
+
+    private async Task PrepareLoadingAsync(string[] paths, string? currentFile = null)
+    {
+        var filePath = currentFile;
+
+        if (string.IsNullOrEmpty(currentFile))
+        {
+            filePath = paths.AsParallel().FirstOrDefault(i => !Helpers.IsDirectory(i));
+        }
+
+        if (string.IsNullOrEmpty(filePath))
+        {
+            // load images list
+            await LoadImageListAsync(paths, currentFile ?? filePath ?? "");
 
             // load the current image
             await ViewNextCancellableAsync(0);
         }
         else
         {
-            currentFile = path;
+            // load the current image
+            _ = ViewNextCancellableAsync(0, filename: filePath);
 
             // load images list
-            _ = LoadImageListAsync(new string[] { inputPath }, currentFile);
-
-            // load the current image
-            _ = ViewNextCancellableAsync(0, filename: currentFile);
+            _ = LoadImageListAsync(paths, currentFile ?? filePath ?? "");
         }
     }
 
@@ -225,13 +245,9 @@ public partial class FrmMain : Form
             var currentFile = currentFilePath;
             var hasInitFile = !string.IsNullOrEmpty(currentFile);
 
-            // reset Image list
-            Local.InitImageList();
-
 
             // track paths loaded to prevent duplicates
             var pathsLoaded = new HashSet<string>();
-            var sortedFilesList = new List<string>();
             var firstPath = true;
 
             // Parse string to absolute path
@@ -249,19 +265,13 @@ public partial class FrmMain : Form
                 {
                     isDir = Helpers.IsDirectory(aPath);
                 }
-                catch
-                {
-                    continue;
-                }
+                catch { continue; }
 
                 // path is directory
                 if (isDir)
                 {
                     // Issue #415: If the folder name ends in ALT+255 (alternate space),
-                    // DirectoryInfo strips it. By ensuring a terminating slash,
-                    // the problem disappears. By doing that *here*, the uses of
-                    // DirectoryInfo in DirectoryFinder and FileWatcherEx are fixed as well.
-                    // https://stackoverflow.com/questions/5368054/getdirectories-fails-to-enumerate-subfolders-of-a-folder-with-255-name
+                    // DirectoryInfo strips it.
                     if (!aPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
                     {
                         dirPath = aPath + Path.DirectorySeparatorChar;
@@ -296,22 +306,24 @@ public partial class FrmMain : Form
                 // KBR 20181004 Fix observed bug: dropping multiple files from the same path
                 // would load ALL files in said path multiple times! Prevent loading the same
                 // path more than once.
-                if (pathsLoaded.Contains(dirPath))
-                    continue;
+                if (!pathsLoaded.Contains(dirPath))
+                {
+                    pathsLoaded.Add(dirPath);
 
-                pathsLoaded.Add(dirPath);
-
-                var imageFilenameList = LoadImageFilesFromDirectory(dirPath);
-                allFilesToLoad.UnionWith(imageFilenameList);
+                    var imageFilenameList = LoadImageFilesFromDirectory(dirPath);
+                    allFilesToLoad.UnionWith(imageFilenameList);
+                }
             }
+
 
             Local.InitialInputPath = hasInitFile ? (distinctDirsList.Count > 0 ? distinctDirsList[0] : "") : currentFile;
 
+
             // sort list
-            sortedFilesList = SortImageList(allFilesToLoad);
+            var sortedFilesList = SortImageList(allFilesToLoad);
 
             // add to image list
-            Local.Images.Add(sortedFilesList);
+            Local.InitImageList(sortedFilesList);
 
             // Find the index of current image
             if (currentFilePath.Length > 0)
@@ -347,7 +359,6 @@ public partial class FrmMain : Form
             }
 
             Local.RaiseImageListLoadedEvent();
-
         });
     }
 
@@ -435,10 +446,9 @@ public partial class FrmMain : Form
     /// </summary>
     /// <param name="fileList"></param>
     /// <returns></returns>
-    private static List<string> SortImageList(IEnumerable<string> fileList)
+    private static IEnumerable<string> SortImageList(IEnumerable<string> fileList)
     {
         // NOTE: relies on LocalSetting.ActiveImageLoadingOrder been updated first!
-        var list = new List<string>();
 
         // KBR 20190605
         // Fix observed limitation: to more closely match the Windows Explorer's sort
@@ -468,104 +478,104 @@ public partial class FrmMain : Form
         // Sort image file
         if (Local.ActiveImageLoadingOrder == ImageOrderBy.Name)
         {
-            list.AddRange(fileList
+            return fileList.AsParallel()
                 .OrderBy(f => f, directorySortComparer)
-                .ThenBy(f => f, naturalSortComparer));
+                .ThenBy(f => f, naturalSortComparer);
         }
         else if (Local.ActiveImageLoadingOrder == ImageOrderBy.Length)
         {
             if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
             {
-                list.AddRange(fileList
+                return fileList.AsParallel()
                     .OrderBy(f => f, directorySortComparer)
                     .ThenByDescending(f => new FileInfo(f).Length)
-                    .ThenBy(f => f, naturalSortComparer));
+                    .ThenBy(f => f, naturalSortComparer);
             }
             else
             {
-                list.AddRange(fileList
+                return fileList.AsParallel()
                     .OrderBy(f => f, directorySortComparer)
                     .ThenBy(f => new FileInfo(f).Length)
-                    .ThenBy(f => f, naturalSortComparer));
+                    .ThenBy(f => f, naturalSortComparer);
             }
         }
         else if (Local.ActiveImageLoadingOrder == ImageOrderBy.CreationTime)
         {
             if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
             {
-                list.AddRange(fileList
+                return fileList.AsParallel()
                     .OrderBy(f => f, directorySortComparer)
                     .ThenByDescending(f => new FileInfo(f).CreationTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer));
+                    .ThenBy(f => f, naturalSortComparer);
             }
             else
             {
-                list.AddRange(fileList
+                return fileList.AsParallel()
                     .OrderBy(f => f, directorySortComparer)
                     .ThenBy(f => new FileInfo(f).CreationTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer));
+                    .ThenBy(f => f, naturalSortComparer);
             }
         }
         else if (Local.ActiveImageLoadingOrder == ImageOrderBy.Extension)
         {
             if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
             {
-                list.AddRange(fileList
+                return fileList.AsParallel()
                     .OrderBy(f => f, directorySortComparer)
                     .ThenByDescending(f => new FileInfo(f).Extension)
-                    .ThenBy(f => f, naturalSortComparer));
+                    .ThenBy(f => f, naturalSortComparer);
             }
             else
             {
-                list.AddRange(fileList
+                return fileList.AsParallel()
                     .OrderBy(f => f, directorySortComparer)
                     .ThenBy(f => new FileInfo(f).Extension)
-                    .ThenBy(f => f, naturalSortComparer));
+                    .ThenBy(f => f, naturalSortComparer);
             }
         }
         else if (Local.ActiveImageLoadingOrder == ImageOrderBy.LastAccessTime)
         {
             if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
             {
-                list.AddRange(fileList
+                return fileList.AsParallel()
                     .OrderBy(f => f, directorySortComparer)
                     .ThenByDescending(f => new FileInfo(f).LastAccessTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer));
+                    .ThenBy(f => f, naturalSortComparer);
             }
             else
             {
-                list.AddRange(fileList
+                return fileList.AsParallel()
                     .OrderBy(f => f, directorySortComparer)
                     .ThenBy(f => new FileInfo(f).LastAccessTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer));
+                    .ThenBy(f => f, naturalSortComparer);
             }
         }
         else if (Local.ActiveImageLoadingOrder == ImageOrderBy.LastWriteTime)
         {
             if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
             {
-                list.AddRange(fileList
+                return fileList.AsParallel()
                     .OrderBy(f => f, directorySortComparer)
                     .ThenByDescending(f => new FileInfo(f).LastWriteTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer));
+                    .ThenBy(f => f, naturalSortComparer);
             }
             else
             {
-                list.AddRange(fileList
+                return fileList.AsParallel()
                     .OrderBy(f => f, directorySortComparer)
                     .ThenBy(f => new FileInfo(f).LastWriteTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer));
+                    .ThenBy(f => f, naturalSortComparer);
             }
         }
         else if (Local.ActiveImageLoadingOrder == ImageOrderBy.Random)
         {
             // NOTE: ignoring the 'descending order' setting
-            list.AddRange(fileList
+            return fileList.AsParallel()
                 .OrderBy(f => f, directorySortComparer)
-                .ThenBy(_ => Guid.NewGuid()));
+                .ThenBy(_ => Guid.NewGuid());
         }
 
-        return list;
+        return new List<string>(0);
     }
 
 
@@ -580,9 +590,14 @@ public partial class FrmMain : Form
             return;
         }
 
+        
+
         Gallery.SuspendLayout();
         Gallery.Items.Clear();
         Gallery.ThumbnailSize = new Size(Config.ThumbnailDimension, Config.ThumbnailDimension);
+
+        //var watch = new Stopwatch();
+        //watch.Start();
 
         for (var i = 0; i < Local.Images.Length; i++)
         {
@@ -590,6 +605,9 @@ public partial class FrmMain : Form
 
             Gallery.Items.Add(lvi);
         }
+
+        //watch.Stop();
+        //MessageBox.Show($"{watch.ElapsedMilliseconds} ms for {Gallery.Items.Count} items.");
 
         Gallery.ResumeLayout();
 
@@ -886,16 +904,16 @@ public partial class FrmMain : Form
         if (e.Data is null || !e.Data.GetDataPresent(DataFormats.FileDrop))
             return;
 
-        var filepaths = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+        var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 
-        if (filepaths.Length > 1)
+        if (filePaths.Length > 1)
         {
-            await LoadImageListAsync(filepaths, Local.Images.GetFileName(Local.CurrentIndex));
-            await ViewNextCancellableAsync(0);
+            await PrepareLoadingAsync(filePaths);
+
             return;
         }
 
-        var filePath = filepaths[0];
+        var filePath = filePaths[0];
 
         if (string.Equals(Path.GetExtension(filePath), ".lnk", StringComparison.CurrentCultureIgnoreCase))
         {

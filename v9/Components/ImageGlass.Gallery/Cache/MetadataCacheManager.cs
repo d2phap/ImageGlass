@@ -224,7 +224,7 @@ internal class MetadataCacheManager : IDisposable
             return;
 
         // Get result
-        var details = (Tuple<string, object>[]?)e.Result;
+        var details = e.Result as ImageDetails;
 
         // Refresh the control lazily
         if (_imageGallery != null && _imageGallery.IsItemVisible(request.Guid))

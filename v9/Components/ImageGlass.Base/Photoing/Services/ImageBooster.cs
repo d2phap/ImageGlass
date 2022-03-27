@@ -152,9 +152,14 @@ public class ImageBooster : IDisposable
     /// Initializes <see cref="ImageBooster"/> instance.
     /// </summary>
     /// <param name="codec"></param>
-    public ImageBooster(IIgCodec codec)
+    public ImageBooster(IIgCodec codec, IEnumerable<string>? list = null)
     {
         Codec = codec;
+
+        if (list != null)
+        {
+            Add(list);
+        }
 
         // background worker
         IsRunWorker = true;

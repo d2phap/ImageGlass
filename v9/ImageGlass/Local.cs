@@ -132,10 +132,10 @@ internal class Local
 
     #region Public Functions
 
-    public static void InitImageList()
+    public static void InitImageList(IEnumerable<string>? list = null)
     {
         Images.Dispose();
-        Images = new(Config.Codec)
+        Images = new(Config.Codec, list)
         {
             MaxQueue = Config.ImageBoosterCachedCount,
             ImageChannel = ImageChannel,

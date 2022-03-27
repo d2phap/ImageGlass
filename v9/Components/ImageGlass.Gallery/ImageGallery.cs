@@ -1233,7 +1233,7 @@ public partial class ImageGallery : Control, IComponent
     /// <param name="duration"></param>
     /// <param name="delay"></param>
     public async void ShowItemTooltip(ImageGalleryItem? item,
-        int duration = int.MinValue, int delay = 400)
+        int duration = -1, int delay = 400)
     {
         if (item is null) return;
 
