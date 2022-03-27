@@ -13,7 +13,6 @@ public partial class FrmMain : Form
 {
     // cancellation tokens of synchronious task
     private CancellationTokenSource _loadCancelToken = new();
-    private CancellationTokenSource _busyCancelToken = new();
 
 
     public FrmMain()
@@ -33,7 +32,68 @@ public partial class FrmMain : Form
 
     private void FrmMain_Load(object sender, EventArgs e)
     {
+        Local.OnImageLoading += Local_OnImageLoading;
+        Local.OnImageListLoaded += Local_OnImageListLoaded;
+        Local.OnImageLoaded += Local_OnImageLoaded;
+
         _ = LoadImagesFromCmdArgs();
+    }
+
+    private void Local_OnImageLoading(ImageLoadingEventArgs e)
+    {
+        // Select thumbnail item
+        _ = Helpers.RunAsThread(SelectCurrentThumbnail);
+    }
+
+    private void Local_OnImageLoaded(ImageLoadedEventArgs e)
+    {
+        // image error
+        if (e.Error != null)
+        {
+            PicBox.SetImage(null);
+            Local.ImageModifiedPath = "";
+
+            var currentFile = Local.Images.GetFileName(e.Index);
+            if (!string.IsNullOrEmpty(currentFile) && !File.Exists(currentFile))
+            {
+                Local.Images.Unload(e.Index);
+            }
+
+            PicBox.ShowMessage(Config.Language[$"{Name}.picMain._ErrorText"] + "\r\n" + e.Error.Source + ": " + e.Error.Message);
+        }
+
+        else if (e.Data?.ImgData.Image != null)
+        {
+            PicBox.SetImage(e.Data.ImgData.Image);
+
+            // Reset the zoom mode if KeepZoomRatio = FALSE
+            if (!e.KeepZoomRatio)
+            {
+                if (Config.IsWindowFit)
+                {
+                    //WindowFitMode();
+                }
+                else
+                {
+                    // reset zoom mode
+                    PicBox.ZoomMode = Config.ZoomMode;
+                }
+            }
+
+            PicBox.ClearMessage();
+        }
+
+
+        // Collect system garbage
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
+    }
+
+    private void Local_OnImageListLoaded(object? sender, EventArgs e)
+    {
+        // Load thumnbnail
+        _ = Helpers.RunAsThread(LoadThumbnails);
     }
 
     protected override void WndProc(ref Message m)
@@ -93,7 +153,7 @@ public partial class FrmMain : Form
         if (path == null) return;
 
         // Start loading path
-        await PrepareLoadingAsync(path);
+        Helpers.RunAsThread(async () => await PrepareLoadingAsync(path));
     }
 
 
@@ -112,7 +172,7 @@ public partial class FrmMain : Form
 
         if (o.ShowDialog() == DialogResult.OK)
         {
-            _ = PrepareLoadingAsync(o.FileNames, o.FileNames[0]);
+            _ = PrepareLoadingAsync(o.FileName);
         }
     }
 
@@ -125,53 +185,55 @@ public partial class FrmMain : Form
     private async Task PrepareLoadingAsync(string inputPath)
     {
         var path = App.ToAbsolutePath(inputPath);
-        var currentFilePath = File.Exists(path) ? path : "";
+        var currentFile = "";
 
+        if (Helpers.IsDirectory(path))
+        {
+            // load images list
+            await LoadImageListAsync(new string[] { inputPath }, currentFile);
 
-        // Start loading path
-        await PrepareLoadingAsync(new string[] { inputPath }, currentFilePath);
+            // load the current image
+            await ViewNextCancellableAsync(0);
+        }
+        else
+        {
+            currentFile = path;
+
+            // load images list
+            _ = LoadImageListAsync(new string[] { inputPath }, currentFile);
+
+            // load the current image
+            _ = ViewNextCancellableAsync(0, filename: currentFile);
+        }
     }
 
 
     /// <summary>
-    /// Prepare to load images
+    /// Load the images list.
     /// </summary>
-    /// <param name="inputPaths">Paths of image files or folders.
-    /// It can be relative/absolute paths or URI scheme.</param>
-    /// <param name="currentFilePath">Current viewing filename.</param>
-    private async Task PrepareLoadingAsync(IEnumerable<string> inputPaths, string currentFilePath = "")
+    /// <param name="sortedFilePathsList">The sorted list of files to load</param>
+    /// <param name="currentFilePath">The image file path to view first</param>
+    private async Task LoadImageListAsync(
+        IEnumerable<string> inputPaths,
+        string currentFilePath)
     {
         if (!inputPaths.Any()) return;
 
-        var allFilesToLoad = new HashSet<string>();
-        var currentFile = currentFilePath;
-        var hasInitFile = !string.IsNullOrEmpty(currentFile);
-
-        // Dispose all garbage
-        Local.Images.Dispose();
-        Local.Images = new(Config.Codec)
-        {
-            MaxQueue = Config.ImageBoosterCachedCount,
-            ImageChannel = Local.ImageChannel,
-        };
-
-
-        // Display currentFile while loading the full directory
-        if (hasInitFile)
-        {
-            _ = Helpers.RunAsThread(async
-                () => await ViewNextCancellableAsync(0, filename: currentFile));
-        }
-
-        // track paths loaded to prevent duplicates
-        var pathsLoaded = new HashSet<string>();
-        var sortedFilesList = new List<string>();
-        var firstPath = true;
-
-
-        // Async load, filter and sort files in directories
         await Task.Run(() =>
         {
+            var allFilesToLoad = new HashSet<string>();
+            var currentFile = currentFilePath;
+            var hasInitFile = !string.IsNullOrEmpty(currentFile);
+
+            // reset Image list
+            Local.InitImageList();
+
+
+            // track paths loaded to prevent duplicates
+            var pathsLoaded = new HashSet<string>();
+            var sortedFilesList = new List<string>();
+            var firstPath = true;
+
             // Parse string to absolute path
             var paths = inputPaths.Select(item => App.ToAbsolutePath(item));
 
@@ -181,18 +243,19 @@ public partial class FrmMain : Form
             foreach (var aPath in distinctDirsList)
             {
                 var dirPath = aPath;
-                if (File.Exists(aPath))
+                var isDir = false;
+
+                try
                 {
-                    if (string.Equals(Path.GetExtension(aPath), ".lnk", StringComparison.CurrentCultureIgnoreCase))
-                    {
-                        dirPath = FileShortcutApi.GetTargetPathFromShortcut(aPath);
-                    }
-                    else
-                    {
-                        dirPath = Path.GetDirectoryName(aPath) ?? "";
-                    }
+                    isDir = Helpers.IsDirectory(aPath);
                 }
-                else if (Directory.Exists(aPath))
+                catch
+                {
+                    continue;
+                }
+
+                // path is directory
+                if (isDir)
                 {
                     // Issue #415: If the folder name ends in ALT+255 (alternate space),
                     // DirectoryInfo strips it. By ensuring a terminating slash,
@@ -204,10 +267,19 @@ public partial class FrmMain : Form
                         dirPath = aPath + Path.DirectorySeparatorChar;
                     }
                 }
+                // path is file
                 else
                 {
-                    continue;
+                    if (string.Equals(Path.GetExtension(aPath), ".lnk", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        dirPath = FileShortcutApi.GetTargetPathFromShortcut(aPath);
+                    }
+                    else
+                    {
+                        dirPath = Path.GetDirectoryName(aPath) ?? "";
+                    }
                 }
+
 
                 // TODO: Currently only have the ability to watch a single path for changes!
                 if (firstPath)
@@ -238,73 +310,47 @@ public partial class FrmMain : Form
             // sort list
             sortedFilesList = SortImageList(allFilesToLoad);
 
-        }).ConfigureAwait(true);
+            // add to image list
+            Local.Images.Add(sortedFilesList);
 
+            // Find the index of current image
+            if (currentFilePath.Length > 0)
+            {
+                // this part of code fixes calls on legacy 8.3 filenames
+                // (for example opening files from IBM Notes)
+                var di = new DirectoryInfo(currentFilePath);
+                currentFilePath = di.FullName;
 
-        // load list
-        await LoadImageListAsync(sortedFilesList, currentFile, skipLoadingImage: hasInitFile);
-    }
+                Local.CurrentIndex = Local.Images.IndexOf(currentFilePath);
 
-
-    /// <summary>
-    /// Load the images list.
-    /// </summary>
-    /// <param name="sortedFilePathsList">The sorted list of files to load</param>
-    /// <param name="currentFilePath">The image file path to view first</param>
-    private async Task LoadImageListAsync(
-        List<string> sortedFilePathsList,
-        string currentFilePath,
-        bool skipLoadingImage = false)
-    {
-        // Set filename to image list
-        Local.Images.Clear();
-        Local.Images.Add(sortedFilePathsList);
-
-        // Find the index of current image
-        if (currentFilePath.Length > 0)
-        {
-            // this part of code fixes calls on legacy 8.3 filenames
-            // (for example opening files from IBM Notes)
-            var di = new DirectoryInfo(currentFilePath);
-            currentFilePath = di.FullName;
-
-            Local.CurrentIndex = Local.Images.IndexOf(currentFilePath);
-
-            // KBR 20181009
-            // Changing "include subfolder" setting could lose the "current" image. Prefer
-            // not to report said image is "corrupt", merely reset the index in that case.
-            // 1. Setting: "include subfolders: ON".
-            //    Open image in folder with images in subfolders.
-            // 2. Move to an image in a subfolder.
-            // 3. Change setting "include subfolders: OFF".
-            // Issue: the image in the subfolder is attempted to be shown,
-            // declared as corrupt/missing.
-            // Issue #481: the test is incorrect when imagelist is empty (i.e. attempt to
-            // open single, hidden image with 'show hidden' OFF)
-            if (Local.CurrentIndex == -1
-                && Local.Images.Length > 0
-                && !Local.Images.ContainsDirPathOf(currentFilePath))
+                // KBR 20181009
+                // Changing "include subfolder" setting could lose the "current" image. Prefer
+                // not to report said image is "corrupt", merely reset the index in that case.
+                // 1. Setting: "include subfolders: ON".
+                //    Open image in folder with images in subfolders.
+                // 2. Move to an image in a subfolder.
+                // 3. Change setting "include subfolders: OFF".
+                // Issue: the image in the subfolder is attempted to be shown,
+                // declared as corrupt/missing.
+                // Issue #481: the test is incorrect when imagelist is empty (i.e. attempt to
+                // open single, hidden image with 'show hidden' OFF)
+                if (Local.CurrentIndex == -1
+                    && Local.Images.Length > 0
+                    && !Local.Images.ContainsDirPathOf(currentFilePath))
+                {
+                    Local.CurrentIndex = 0;
+                }
+            }
+            else
             {
                 Local.CurrentIndex = 0;
             }
-        }
-        else
-        {
-            Local.CurrentIndex = 0;
-        }
 
-        // Load thumnbnail
-        _ = Helpers.RunAsThread(LoadThumbnails);
+            Local.RaiseImageListLoadedEvent();
 
-        if (!skipLoadingImage)
-        {
-            // Start loading image
-            await ViewNextCancellableAsync(0).ConfigureAwait(true);
-        }
-
-        // TODO:
-        //SetStatusBar();
+        });
     }
+
 
 
     /// <summary>
@@ -556,6 +602,12 @@ public partial class FrmMain : Form
     /// </summary>
     private void SelectCurrentThumbnail()
     {
+        if (InvokeRequired)
+        {
+            Invoke(new(SelectCurrentThumbnail));
+            return;
+        }
+
         if (Gallery.Items.Count > 0)
         {
             Gallery.ClearSelection();
@@ -574,38 +626,17 @@ public partial class FrmMain : Form
     /// <summary>
     /// View the next image using jump step.
     /// </summary>
-    private async Task ViewNextAsync(int step,
+    private static async Task ViewNextAsync(int step,
         bool isKeepZoomRatio = false,
         bool isSkipCache = false,
         int pageIndex = int.MinValue,
         string filename = "",
         CancellationTokenSource? token = null)
     {
-        SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
-
         #region Validate image index
 
         // temp index
         var imageIndex = Local.CurrentIndex + step;
-
-        // Issue #1019:
-        // When showing the initial image, the ImageList is empty; don't show toast messages
-        if (!Config.IsSlideshow && !Config.IsLoopBackViewer && Local.Images.Length > 0)
-        {
-            // Reach end of list
-            if (imageIndex >= Local.Images.Length)
-            {
-                PicBox.ShowMessage(Config.Language[$"{Name}._LastItemOfList"], 1500);
-                return;
-            }
-
-            // Reach the first item of list
-            if (imageIndex < 0)
-            {
-                PicBox.ShowMessage(Config.Language[$"{Name}._FirstItemOfList"], 1500);
-                return;
-            }
-        }
 
         // Check if current index is greater than upper limit
         if (imageIndex >= Local.Images.Length)
@@ -615,16 +646,19 @@ public partial class FrmMain : Form
         if (imageIndex < 0)
             imageIndex = Local.Images.Length - 1;
 
+
+        Local.RaiseImageLoadingEvent(new()
+        {
+            CurrentIndex = Local.CurrentIndex,
+            NewIndex = imageIndex,
+        });
+
+
         // Update current index
         Local.CurrentIndex = imageIndex;
 
         #endregion
 
-
-        // Select thumbnail item
-        SelectCurrentThumbnail();
-
-        PicBox.ShowMessage("Loading image... \n" + filename, 0, 1500);
 
         try
         {
@@ -666,34 +700,19 @@ public partial class FrmMain : Form
                         useCache: !isSkipCache,
                         pageIndex: pageIndex,
                         tokenSrc: token
-                    ).ConfigureAwait(true);
+                    );
                 }
 
-                Local.ImageError = photo?.Error;
+                // check if loading is cancelled
+                token?.Token.ThrowIfCancellationRequested();
 
-                if (photo?.ImgData.Image != null)
+                Local.RaiseImageLoadedEvent(new()
                 {
-                    // check if loading is cancelled
-                    token?.Token.ThrowIfCancellationRequested();
-
-                    PicBox.SetImage(photo.ImgData.Image);
-
-                    // Reset the zoom mode if isKeepZoomRatio = FALSE
-                    if (!isKeepZoomRatio)
-                    {
-                        if (Config.IsWindowFit)
-                        {
-                            //WindowFitMode();
-                        }
-                        else
-                        {
-                            // reset zoom mode
-                            PicBox.ZoomMode = Config.ZoomMode;
-                        }
-                    }
-
-                    PicBox.ClearMessage();
-                }
+                    Index = imageIndex,
+                    Data = photo,
+                    Error = photo?.Error,
+                    KeepZoomRatio = isKeepZoomRatio,
+                });
             }
         }
         catch (OperationCanceledException)
@@ -702,30 +721,13 @@ public partial class FrmMain : Form
         }
         catch (Exception ex)
         {
-            Local.ImageError = ex;
-        }
-
-
-        // image error
-        if (Local.ImageError != null)
-        {
-            PicBox.SetImage(null);
-            Local.ImageModifiedPath = "";
-
-            var currentFile = Local.Images.GetFileName(imageIndex);
-            if (!string.IsNullOrEmpty(currentFile) && !File.Exists(currentFile))
+            Local.RaiseImageLoadedEvent(new()
             {
-                Local.Images.Unload(imageIndex);
-            }
-
-            PicBox.ShowMessage(Config.Language[$"{Name}.picMain._ErrorText"] + "\r\n" + Local.ImageError.Source + ": " + Local.ImageError.Message);
+                Index = imageIndex,
+                Error = ex,
+                KeepZoomRatio = isKeepZoomRatio,
+            });
         }
-
-
-        // Collect system garbage
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-        GC.Collect();
     }
 
 
@@ -858,8 +860,8 @@ public partial class FrmMain : Form
 
             var filePath = ((string[])dataTest)[0];
 
-            // KBR 20190617 Fix observed issue: dragging from CD/DVD would fail because we set the
-            // drag effect to Move, which is _not_allowed_
+            // KBR 20190617 Fix observed issue: dragging from CD/DVD would fail because
+            // we set the drag effect to Move, which is _not_allowed_
             // Drag file from DESKTOP to APP
             if (Local.Images.IndexOf(filePath) == -1
                 && (e.AllowedEffect & DragDropEffects.Move) != 0)
@@ -878,7 +880,7 @@ public partial class FrmMain : Form
         }
     }
 
-    private void PicBox_DragDrop(object sender, DragEventArgs e)
+    private async void PicBox_DragDrop(object sender, DragEventArgs e)
     {
         // Drag file from DESKTOP to APP
         if (e.Data is null || !e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -888,7 +890,8 @@ public partial class FrmMain : Form
 
         if (filepaths.Length > 1)
         {
-            _ = PrepareLoadingAsync(filepaths, Local.Images.GetFileName(Local.CurrentIndex));
+            await LoadImageListAsync(filepaths, Local.Images.GetFileName(Local.CurrentIndex));
+            await ViewNextCancellableAsync(0);
             return;
         }
 

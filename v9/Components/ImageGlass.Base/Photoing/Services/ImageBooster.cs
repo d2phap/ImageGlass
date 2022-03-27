@@ -43,15 +43,10 @@ public class ImageBooster : IDisposable
             IsRunWorker = false;
 
             // Free any other managed objects here.
-            FileNames.Clear();
-            QueuedList.Clear();
-            ImgList.Clear();
-            FreeList.Clear();
+            // clear list and release resources
+            Reset();
 
             Worker?.Dispose();
-
-            // clear list and release resources
-            Clear();
         }
 
         // Free any unmanaged objects here.
@@ -149,7 +144,6 @@ public class ImageBooster : IDisposable
     /// Occurs when the image is loaded.
     /// </summary>
     public event EventHandler<EventArgs>? OnFinishLoadingImage;
-    public delegate void FinishLoadingImageHandler(object sender, EventArgs e);
 
     #endregion
 
@@ -276,6 +270,7 @@ public class ImageBooster : IDisposable
 
 
     #region PUBLIC FUNCTIONS
+
 
     /// <summary>
     /// Cancels loading process of a <see cref="IgPhoto"/>.
@@ -451,6 +446,21 @@ public class ImageBooster : IDisposable
     {
         Unload(index);
         ImgList.RemoveAt(index);
+    }
+
+
+    /// <summary>
+    /// Clears and resets all resources 
+    /// </summary>
+    public void Reset()
+    {
+        // clear list and release resources
+        Clear();
+
+        // Clear lists
+        FileNames.Clear();
+        QueuedList.Clear();
+        FreeList.Clear();
     }
 
 

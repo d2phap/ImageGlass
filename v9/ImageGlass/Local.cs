@@ -26,6 +26,58 @@ namespace ImageGlass;
 
 internal class Local
 {
+    #region Public events
+
+    /// <summary>
+    /// Occurs when <see cref="Images"/> is loaded.
+    /// </summary>
+    public static event EventHandler? OnImageListLoaded;
+
+    /// <summary>
+    /// Occurs when the requested image is being loaded.
+    /// </summary>
+    public static event ImageLoadingHandler? OnImageLoading;
+    public delegate void ImageLoadingHandler(ImageLoadingEventArgs e);
+
+    /// <summary>
+    /// Occurs when the requested image is loaded.
+    /// </summary>
+    public static event ImageLoadedHandler? OnImageLoaded;
+    public delegate void ImageLoadedHandler(ImageLoadedEventArgs e);
+
+
+    /// <summary>
+    /// Raise <see cref="OnImageListLoaded"/> event.
+    /// </summary>
+    public static void RaiseImageListLoadedEvent()
+    {
+        OnImageListLoaded?.Invoke(null, EventArgs.Empty);
+    }
+
+
+    /// <summary>
+    /// Raise <see cref="OnImageLoading"/> event.
+    /// </summary>
+    public static void RaiseImageLoadingEvent(ImageLoadingEventArgs e)
+    {
+        OnImageLoading?.Invoke(e);
+    }
+
+
+    /// <summary>
+    /// Raise <see cref="OnImageLoaded"/> event.
+    /// </summary>
+    public static void RaiseImageLoadedEvent(ImageLoadedEventArgs e)
+    {
+        OnImageLoaded?.Invoke(e);
+    }
+
+
+    #endregion
+
+
+    #region Public properties
+
     public static IgMetadata? Metadata { get; set; }
 
     /// <summary>
@@ -37,11 +89,6 @@ internal class Local
     /// Gets, sets images list
     /// </summary>
     public static ImageBooster Images { get; set; } = new(Config.Codec);
-
-    /// <summary>
-    /// Gets, sets current image error
-    /// </summary>
-    public static Exception? ImageError { get; set; } = null;
 
     /// <summary>
     /// Gets, sets index of the viewing image
@@ -79,5 +126,22 @@ internal class Local
     /// Gets, sets value indicating whether the viewing image is memory data (clipboard / screenshot,...) or not
     /// </summary>
     public static bool IsTempMemoryData { get; set; } = false;
+
+    #endregion
+
+
+    #region Public Functions
+
+    public static void InitImageList()
+    {
+        Images.Dispose();
+        Images = new(Config.Codec)
+        {
+            MaxQueue = Config.ImageBoosterCachedCount,
+            ImageChannel = ImageChannel,
+        };
+    }
+
+    #endregion
 
 }

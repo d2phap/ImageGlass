@@ -156,4 +156,18 @@ public partial class Helpers
 
         return hashedDirsList.ToList();
     }
+
+
+    /// <summary>
+    /// Checks whether the input path is a directory
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public static bool IsDirectory(string path)
+    {
+        var attrs = File.GetAttributes(path);
+
+        return attrs.HasFlag(FileAttributes.Directory);
+    }
+
 }

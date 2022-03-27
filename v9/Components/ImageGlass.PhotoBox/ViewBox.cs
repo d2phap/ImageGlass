@@ -1023,7 +1023,7 @@ public partial class ViewBox : HybridControl
                 g.DrawImage(_imageGdiPlus, _destRect, _srcRect, 1f, (int)CurrentInterpolation);
             }
         }
-        catch { };
+        catch { }
 
         _ = OnImageDrawn();
     }
@@ -1622,7 +1622,10 @@ public partial class ViewBox : HybridControl
         _imageD2D = null;
         _imageGdiPlus = null;
 
-        if (bmp is null) return;
+        if (bmp is null)
+        {
+            Refresh();
+        };
 
         // Check and preprocess image info
         CheckInputImage(bmp);
