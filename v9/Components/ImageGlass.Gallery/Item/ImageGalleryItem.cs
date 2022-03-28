@@ -447,29 +447,19 @@ public class ImageGalleryItem : ICloneable
     /// <param name="text">Item text</param>
     public ImageGalleryItem(string filename, string text) : this()
     {
-        if (File.Exists(filename))
-        {
-            mFileName = filename;
-            extension = _stringCache.GetFromCache(Path.GetExtension(filename));
+        mFileName = filename;
+        extension = _stringCache.GetFromCache(Path.GetExtension(filename));
+        mVirtualItemKey = mFileName;
 
-            // if text parameter is empty then get file name for item text
-            if (string.IsNullOrEmpty(text))
-            {
-                mText = Path.GetFileName(filename);
-            }
-        }
-        else if (string.IsNullOrEmpty(text))
+        // if text parameter is empty then get file name for item text
+        if (string.IsNullOrEmpty(text))
         {
-            mFileName = filename;
-            mText = filename;
+            mText = Path.GetFileName(filename);
         }
         else
         {
-            mFileName = filename;
             mText = text;
         }
-
-        mVirtualItemKey = mFileName;
     }
 
     /// <summary>
@@ -494,87 +484,6 @@ public class ImageGalleryItem : ICloneable
     /// </summary>
     /// <param name="key">The key identifying this item.</param>
     public ImageGalleryItem(object key) : this(key, string.Empty) { }
-
-    #endregion
-
-
-    #region Instance Methods
-    /// <summary>
-    /// Begins editing the item.
-    /// This method must be used while editing the item
-    /// to prevent collisions with the cache manager.
-    /// </summary>
-    public void BeginEdit()
-    {
-        if (editing == true)
-            throw new InvalidOperationException("Already editing this item.");
-
-        if (ImageGalleryOwner == null)
-            throw new InvalidOperationException("Owner control is null.");
-
-        ImageGalleryOwner.thumbnailCache.BeginItemEdit(Guid);
-        ImageGalleryOwner.metadataCache.BeginItemEdit(Guid);
-
-        editing = true;
-    }
-
-    /// <summary>
-    /// Ends editing and updates the item.
-    /// </summary>
-    /// <param name="update">If set to true, the item will be immediately updated.</param>
-    public void EndEdit(bool update)
-    {
-        if (editing == false)
-            throw new InvalidOperationException("This item is not being edited.");
-
-        if (ImageGalleryOwner == null)
-            throw new InvalidOperationException("Owner control is null.");
-
-        ImageGalleryOwner.thumbnailCache.EndItemEdit(Guid);
-        ImageGalleryOwner.metadataCache.EndItemEdit(Guid);
-
-        editing = false;
-        if (update) Update();
-    }
-
-    /// <summary>
-    /// Ends editing and updates the item.
-    /// </summary>
-    public void EndEdit()
-    {
-        EndEdit(true);
-    }
-
-    /// <summary>
-    /// Updates item thumbnail and item details.
-    /// </summary>
-    public void Update()
-    {
-        isDirty = true;
-        if (ImageGalleryOwner != null)
-        {
-            ImageGalleryOwner.thumbnailCache.Remove(Guid, true);
-            ImageGalleryOwner.metadataCache.Remove(Guid);
-            ImageGalleryOwner.metadataCache.Add(Guid, mAdaptor, mVirtualItemKey);
-            ImageGalleryOwner.Refresh();
-        }
-    }
-
-    /// <summary>
-    /// Returns a <see cref="string"/> that represents this instance.
-    /// </summary>
-    /// <returns>
-    /// A <see cref="string"/> that represents this instance.
-    /// </returns>
-    public override string ToString()
-    {
-        if (!string.IsNullOrEmpty(mText))
-            return mText;
-        else if (!string.IsNullOrEmpty(mFileName))
-            return Path.GetFileName(mFileName);
-        else
-            return string.Format("Item {0}", mIndex);
-    }
 
     #endregion
 

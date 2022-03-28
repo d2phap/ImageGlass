@@ -36,7 +36,7 @@ public partial class FrmMain : Form
         Local.OnImageListLoaded += Local_OnImageListLoaded;
         Local.OnImageLoaded += Local_OnImageLoaded;
 
-        _ = LoadImagesFromCmdArgs();
+        LoadImagesFromCmdArgs();
     }
 
     private void Local_OnImageLoading(ImageLoadingEventArgs e)
@@ -90,9 +90,9 @@ public partial class FrmMain : Form
         GC.Collect();
     }
 
-    private void Local_OnImageListLoaded(object? sender, EventArgs e)
+    private async void Local_OnImageListLoaded(object? sender, EventArgs e)
     {
-         //Load thumnbnail
+        //Load thumnbnail
         _ = Helpers.RunAsThread(LoadThumbnails);
     }
 
@@ -142,7 +142,7 @@ public partial class FrmMain : Form
     /// (<see cref="Environment.GetCommandLineArgs"/>)
     /// </summary>
     /// <param name="args"></param>
-    public async Task LoadImagesFromCmdArgs()
+    public void LoadImagesFromCmdArgs()
     {
         var args = Environment.GetCommandLineArgs();
         if (args.Length < 2) return;
@@ -153,7 +153,7 @@ public partial class FrmMain : Form
         if (path == null) return;
 
         // Start loading path
-        Helpers.RunAsThread(async () => await PrepareLoadingAsync(path));
+        Helpers.RunAsThread(() => PrepareLoadingAsync(path));
     }
 
 
@@ -172,7 +172,7 @@ public partial class FrmMain : Form
 
         if (o.ShowDialog() == DialogResult.OK)
         {
-            _ = PrepareLoadingAsync(o.FileName);
+            PrepareLoadingAsync(o.FileName);
         }
     }
 
@@ -182,7 +182,7 @@ public partial class FrmMain : Form
     /// i.e. when double-clicking an image.
     /// </summary>
     /// <param name="inputPath">The relative/absolute path of file/folder; or a URI Scheme</param>
-    private async Task PrepareLoadingAsync(string inputPath)
+    private void PrepareLoadingAsync(string inputPath)
     {
         var path = App.ToAbsolutePath(inputPath);
 
@@ -586,15 +586,14 @@ public partial class FrmMain : Form
     {
         if (InvokeRequired)
         {
-            Invoke(new(LoadThumbnails));
+            Invoke(LoadThumbnails);
             return;
         }
-
-        
 
         Gallery.SuspendLayout();
         Gallery.Items.Clear();
         Gallery.ThumbnailSize = new Size(Config.ThumbnailDimension, Config.ThumbnailDimension);
+
 
         //var watch = new Stopwatch();
         //watch.Start();
@@ -602,7 +601,6 @@ public partial class FrmMain : Form
         for (var i = 0; i < Local.Images.Length; i++)
         {
             var lvi = new ImageGalleryItem(Local.Images.GetFileName(i));
-
             Gallery.Items.Add(lvi);
         }
 
@@ -925,7 +923,7 @@ public partial class FrmMain : Form
         // The file is located another folder, load the entire folder
         if (imageIndex == -1)
         {
-            _ = PrepareLoadingAsync(filePath);
+            PrepareLoadingAsync(filePath);
         }
         // The file is in current folder AND it is the viewing image
         else if (Local.CurrentIndex == imageIndex)
