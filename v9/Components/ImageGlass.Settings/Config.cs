@@ -173,6 +173,20 @@ public static class Config
         }
     };
 
+    /// <summary>
+    /// The default info items
+    /// </summary>
+    public static List<string> DefaultInfoItems => new()
+    {
+        "Name",
+        "ListCount",
+        "Zoom",
+        "Dimension",
+        "FileSize",
+        "ModifiedDate",
+        "AppName",
+    };
+
     #endregion
 
 
@@ -597,6 +611,11 @@ public static class Config
     /// </summary>
     public static List<ToolbarItemModel> ToolbarItems { get; set; } = DefaultToolbarItems;
 
+    /// <summary>
+    /// Gets, sets the items for displaying image info
+    /// </summary>
+    public static List<string> InfoItems { get; set; } = DefaultInfoItems;
+
     #endregion
 
 
@@ -901,8 +920,12 @@ public static class Config
         var toolbarItems = items.GetSection(nameof(ToolbarItems))
             .GetChildren()
             .Select(i => i.Get<ToolbarItemModel>());
-
         ToolbarItems = toolbarItems.Any() ? toolbarItems.ToList() : DefaultToolbarItems;
+
+        var infoItems = items.GetSection(nameof(InfoItems))
+            .GetChildren()
+            .Select(i => i.Get<string>());
+        InfoItems = infoItems.Any() ? infoItems.ToList() : DefaultInfoItems;
 
         #endregion
 
@@ -1157,6 +1180,7 @@ public static class Config
         settings.TryAdd(nameof(SinglePageFormats), GetImageFormats(SinglePageFormats));
         settings.TryAdd(nameof(KeyComboActions), GetKeyComboActions(KeyComboActions));
         settings.TryAdd(nameof(ToolbarItems), ToolbarItems);
+        settings.TryAdd(nameof(InfoItems), InfoItems);
         #endregion
 
 

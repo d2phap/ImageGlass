@@ -20,7 +20,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageMagick.Formats;
-using System.Drawing.Imaging;
 
 namespace ImageMagick.IgCodec;
 

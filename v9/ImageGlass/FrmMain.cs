@@ -977,7 +977,10 @@ public partial class FrmMain : Form
     #endregion
 
 
-    public void UpdateImageInfo()
+    /// <summary>
+    /// Update image info in status bar
+    /// </summary>
+    private void UpdateImageInfo()
     {
         if (InvokeRequired)
         {
@@ -985,13 +988,10 @@ public partial class FrmMain : Form
             return;
         }
 
-        var pattern = "Name;ListCount;Zoom;Dimension;FileSize;ModifiedDate;AppName";
-        var items = pattern.Split(";", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-
         var strBuilder = new StringBuilder();
         var count = 0;
 
-        foreach (var item in items)
+        foreach (var item in Config.InfoItems)
         {
             var str = string.Empty;
 
