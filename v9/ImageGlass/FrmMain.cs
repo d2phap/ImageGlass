@@ -6,6 +6,7 @@ using ImageGlass.Gallery;
 using ImageGlass.Settings;
 using System.Diagnostics;
 using System.Reflection;
+using System.Text;
 
 namespace ImageGlass;
 
@@ -67,7 +68,6 @@ public partial class FrmMain : Form
 
     private void FrmMain_Resize(object sender, EventArgs e)
     {
-        Text = $"{PicMain.Width}x{PicMain.Height}";
     }
 
     private void Gallery_ItemClick(object sender, ItemClickEventArgs e)
@@ -848,6 +848,8 @@ public partial class FrmMain : Form
         }
 
 
+        UpdateImageInfo();
+
         // Collect system garbage
         GC.Collect();
         GC.WaitForPendingFinalizers();
@@ -856,6 +858,8 @@ public partial class FrmMain : Form
 
     private void Local_OnImageListLoaded(object? sender, EventArgs e)
     {
+        UpdateImageInfo();
+
         //Load thumnbnail
         _ = Helpers.RunAsThread(LoadThumbnails);
     }
@@ -967,9 +971,117 @@ public partial class FrmMain : Form
 
     private void PicMain_OnZoomChanged(PhotoBox.ZoomEventArgs e)
     {
-        Text = Math.Round(e.ZoomFactor * 100, 2).ToString() + "%";
+        UpdateImageInfo();
     }
 
     #endregion
+
+
+    public void UpdateImageInfo()
+    {
+        if (InvokeRequired)
+        {
+            Invoke(UpdateImageInfo);
+            return;
+        }
+
+        var pattern = "Name;ListCount;Zoom;Dimension;FileSize;ModifiedDate;AppName";
+        var items = pattern.Split(";", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+
+        var strBuilder = new StringBuilder();
+        var count = 0;
+
+        foreach (var item in items)
+        {
+            var str = string.Empty;
+
+            // AppName
+            if (item.Equals(nameof(ImageInfo.AppName), StringComparison.OrdinalIgnoreCase))
+            {
+                str = Application.ProductName;
+            }
+
+            // ListCount
+            else if (item.Equals(nameof(ImageInfo.ListCount), StringComparison.OrdinalIgnoreCase))
+            {
+                if (Local.Images.Length == 0)
+                {
+                    str = "0/0 file(s)";
+                }
+                else
+                {
+                    str = $"{Local.CurrentIndex + 1}/{Local.Images.Length} file(s)";
+                }
+            }
+
+            // Name
+            else if (item.Equals(nameof(ImageInfo.Name), StringComparison.OrdinalIgnoreCase))
+            {
+                var fullPath = Local.Images.GetFileName(Local.CurrentIndex);
+                if (string.IsNullOrEmpty(fullPath))
+                    continue;
+
+                str = Path.GetFileName(fullPath);
+            }
+
+            // Path
+            else if (item.Equals(nameof(ImageInfo.Path), StringComparison.OrdinalIgnoreCase))
+            {
+                var fullPath = Local.Images.GetFileName(Local.CurrentIndex);
+                if (string.IsNullOrEmpty(fullPath))
+                    continue;
+
+                str = fullPath;
+            }
+
+            // FileSize
+            else if (item.Equals(nameof(ImageInfo.FileSize), StringComparison.OrdinalIgnoreCase))
+            {
+                var fullPath = Local.Images.GetFileName(Local.CurrentIndex);
+                if (string.IsNullOrEmpty(fullPath))
+                    continue;
+
+                var fi = new FileInfo(fullPath);
+                str = Helpers.FormatSize(fi.Length);
+            }
+
+            // Dimension
+            else if (item.Equals(nameof(ImageInfo.Dimension), StringComparison.OrdinalIgnoreCase))
+            {
+                str = $"{PicMain.ImageWidth} x {PicMain.ImageHeight} px";
+            }
+
+            // Zoom
+            else if (item.Equals(nameof(ImageInfo.Zoom), StringComparison.OrdinalIgnoreCase))
+            {
+                str = $"{Math.Round(PicMain.ZoomFactor * 100, 2)} %";
+            }
+
+            // ModifiedDate
+            else if (item.Equals(nameof(ImageInfo.ModifiedDate), StringComparison.OrdinalIgnoreCase))
+            {
+                var fullPath = Local.Images.GetFileName(Local.CurrentIndex);
+                if (string.IsNullOrEmpty(fullPath))
+                    continue;
+
+                var fi = new FileInfo(fullPath);
+                str = fi.LastWriteTime.ToString();
+            }
+
+
+            if (count > 0)
+            {
+                strBuilder.Append("  |  ");
+            }
+
+            if (!string.IsNullOrEmpty(str))
+            {
+                strBuilder.Append(str);
+                count++;
+            }
+        }
+
+        Text = strBuilder.ToString();
+    }
 
 }

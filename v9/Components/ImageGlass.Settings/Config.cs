@@ -26,6 +26,7 @@ using Microsoft.Extensions.Configuration;
 using System.Dynamic;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ImageGlass.Settings;
 
@@ -1007,6 +1008,7 @@ public static class Config
 
         return prop;
     }
+
 
     #endregion
 
