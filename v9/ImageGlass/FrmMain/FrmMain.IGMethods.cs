@@ -52,13 +52,13 @@ public partial class FrmMain
     {
         Config.ZoomMode = Helpers.ParseEnum<ZoomMode>(mode);
 
-        if (PicBox.ZoomMode == Config.ZoomMode)
+        if (PicMain.ZoomMode == Config.ZoomMode)
         {
-            PicBox.Refresh();
+            PicMain.Refresh();
         }
         else
         {
-            PicBox.ZoomMode = Config.ZoomMode;
+            PicMain.ZoomMode = Config.ZoomMode;
         }
     }
 
@@ -70,16 +70,16 @@ public partial class FrmMain
         {
             if (Config.IsShowCheckerboardOnlyImageRegion)
             {
-                PicBox.CheckerboardMode = CheckerboardMode.Image;
+                PicMain.CheckerboardMode = CheckerboardMode.Image;
             }
             else
             {
-                PicBox.CheckerboardMode = CheckerboardMode.Client;
+                PicMain.CheckerboardMode = CheckerboardMode.Client;
             }
         }
         else
         {
-            PicBox.CheckerboardMode = CheckerboardMode.None;
+            PicMain.CheckerboardMode = CheckerboardMode.None;
         }
 
         return Config.IsShowCheckerBoard;

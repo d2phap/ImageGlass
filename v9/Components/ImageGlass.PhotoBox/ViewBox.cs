@@ -1662,13 +1662,17 @@ public partial class ViewBox : HybridControl
             Source = ImageSource.Direct2D;
             UseHardwareAcceleration = true;
 
-            lock(_imageGdiPlus)
+            // _imageGdiPlus can be null due to cancellation token
+            if (_imageGdiPlus != null)
             {
-                _imageD2D = Device.CreateBitmapFromGDIBitmap(_imageGdiPlus);
-            }
+                lock (_imageGdiPlus)
+                {
+                    _imageD2D = Device.CreateBitmapFromGDIBitmap(_imageGdiPlus);
+                }
 
-            // release the GDI+ resouce
-            _imageGdiPlus = null;
+                // release the GDI+ resouce
+                _imageGdiPlus = null;
+            }
         }
     }
 
@@ -1677,8 +1681,6 @@ public partial class ViewBox : HybridControl
     {
         Invalidate();
     }
-
-
 
 
 

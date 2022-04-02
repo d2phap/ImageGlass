@@ -31,8 +31,8 @@ public partial class FrmMain
 
 
         // PicBox
-        PicBox.ZoomMode = Config.ZoomMode;
-        PicBox.CheckerboardMode = Config.IsShowCheckerBoard
+        PicMain.ZoomMode = Config.ZoomMode;
+        PicMain.CheckerboardMode = Config.IsShowCheckerBoard
             ? (Config.IsShowCheckerboardOnlyImageRegion
                 ? CheckerboardMode.Image
                 : CheckerboardMode.Client)

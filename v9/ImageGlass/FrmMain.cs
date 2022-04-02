@@ -39,63 +39,6 @@ public partial class FrmMain : Form
         LoadImagesFromCmdArgs();
     }
 
-    private void Local_OnImageLoading(ImageLoadingEventArgs e)
-    {
-        // Select thumbnail item
-        _ = Helpers.RunAsThread(SelectCurrentThumbnail);
-    }
-
-    private void Local_OnImageLoaded(ImageLoadedEventArgs e)
-    {
-        // image error
-        if (e.Error != null)
-        {
-            PicBox.SetImage(null);
-            Local.ImageModifiedPath = "";
-
-            var currentFile = Local.Images.GetFileName(e.Index);
-            if (!string.IsNullOrEmpty(currentFile) && !File.Exists(currentFile))
-            {
-                Local.Images.Unload(e.Index);
-            }
-
-            PicBox.ShowMessage(Config.Language[$"{Name}.picMain._ErrorText"] + "\r\n" + e.Error.Source + ": " + e.Error.Message);
-        }
-
-        else if (e.Data?.ImgData.Image != null)
-        {
-            PicBox.SetImage(e.Data.ImgData.Image);
-
-            // Reset the zoom mode if KeepZoomRatio = FALSE
-            if (!e.KeepZoomRatio)
-            {
-                if (Config.IsWindowFit)
-                {
-                    //WindowFitMode();
-                }
-                else
-                {
-                    // reset zoom mode
-                    PicBox.ZoomMode = Config.ZoomMode;
-                }
-            }
-
-            PicBox.ClearMessage();
-        }
-
-
-        // Collect system garbage
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-        GC.Collect();
-    }
-
-    private async void Local_OnImageListLoaded(object? sender, EventArgs e)
-    {
-        //Load thumnbnail
-        _ = Helpers.RunAsThread(LoadThumbnails);
-    }
-
     protected override void WndProc(ref Message m)
     {
         // WM_SYSCOMMAND
@@ -122,6 +65,70 @@ public partial class FrmMain : Form
     }
 
 
+    private void FrmMain_Resize(object sender, EventArgs e)
+    {
+        Text = $"{PicMain.Width}x{PicMain.Height}";
+    }
+
+    private void Gallery_ItemClick(object sender, ItemClickEventArgs e)
+    {
+        if (e.Item.Index == Local.CurrentIndex)
+        {
+            PicMain.Refresh();
+        }
+        else
+        {
+            GoToImageAsync(e.Item.Index);
+        }
+    }
+
+
+    private void Toolbar_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+    {
+        var tagModel = e.ClickedItem.Tag as ToolbarItemTagModel;
+        if (tagModel is null || string.IsNullOrEmpty(tagModel.OnClick.Executable)) return;
+
+        // Find the private method in FrmMain
+        var method = GetType().GetMethod(
+            tagModel.OnClick.Executable,
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+
+        // run built-in method
+        if (method is not null)
+        {
+            // method must be bool/void()
+            method?.Invoke(this, new[] { tagModel.OnClick.Arguments });
+
+            return;
+        }
+
+
+        var currentFilePath = Local.Images.GetFileName(Local.CurrentIndex);
+
+        // run external command line
+        var proc = new Process
+        {
+            StartInfo = new(tagModel.OnClick.Executable)
+            {
+                Arguments = tagModel.OnClick.Arguments.Replace(Constants.FILE_MACRO, currentFilePath),
+                UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                ErrorDialog = true,
+            },
+        };
+
+        try
+        {
+            proc.Start();
+        }
+        catch { }
+    }
+
+
+    /// <summary>
+    /// Handle DPI changes
+    /// </summary>
     private void OnDpiChanged()
     {
         Text = DpiApi.CurrentDpi.ToString();
@@ -136,6 +143,8 @@ public partial class FrmMain : Form
         Toolbar.UpdateTheme(newIconHeight);
     }
 
+
+    #region Image Loading functions
 
     /// <summary>
     /// Load images from command line arguments
@@ -153,7 +162,7 @@ public partial class FrmMain : Form
         if (path == null) return;
 
         // Start loading path
-        Helpers.RunAsThread(() => PrepareLoadingAsync(path));
+        Helpers.RunAsThread(() => PrepareLoading(path));
     }
 
 
@@ -172,17 +181,19 @@ public partial class FrmMain : Form
 
         if (o.ShowDialog() == DialogResult.OK)
         {
-            PrepareLoadingAsync(o.FileName);
+            PrepareLoading(o.FileName);
         }
     }
 
 
     /// <summary>
-    /// Prepare to load images. This method invoked for image on the command line,
-    /// i.e. when double-clicking an image.
+    /// Prepare and loads images from the input path
     /// </summary>
-    /// <param name="inputPath">The relative/absolute path of file/folder; or a URI Scheme</param>
-    private void PrepareLoadingAsync(string inputPath)
+    /// <param name="inputPath">
+    /// The relative/absolute path of file/folder;
+    /// or a URI Scheme
+    /// </param>
+    private void PrepareLoading(string inputPath)
     {
         var path = App.ToAbsolutePath(inputPath);
 
@@ -200,6 +211,13 @@ public partial class FrmMain : Form
         }
     }
 
+
+    /// <summary>
+    /// Prepares and load images from the input paths
+    /// </summary>
+    /// <param name="paths"></param>
+    /// <param name="currentFile"></param>
+    /// <returns></returns>
     private async Task PrepareLoadingAsync(string[] paths, string? currentFile = null)
     {
         var filePath = currentFile;
@@ -231,7 +249,7 @@ public partial class FrmMain : Form
     /// <summary>
     /// Load the images list.
     /// </summary>
-    /// <param name="sortedFilePathsList">The sorted list of files to load</param>
+    /// <param name="inputPaths">The list of files to load</param>
     /// <param name="currentFilePath">The image file path to view first</param>
     private async Task LoadImageListAsync(
         IEnumerable<string> inputPaths,
@@ -361,7 +379,6 @@ public partial class FrmMain : Form
             Local.RaiseImageListLoadedEvent();
         });
     }
-
 
 
     /// <summary>
@@ -781,87 +798,85 @@ public partial class FrmMain : Form
         await ViewNextAsync(0, token: _loadCancelToken);
     }
 
+    #endregion
 
-    private void Gallery_ItemClick(object sender, ItemClickEventArgs e)
+
+    #region Local.Images event
+
+    private void Local_OnImageLoading(ImageLoadingEventArgs e)
     {
-        if (e.Item.Index == Local.CurrentIndex)
-        {
-            PicBox.Refresh();
-        }
-        else
-        {
-            GoToImageAsync(e.Item.Index);
-        }
-
-
-        //e.Item.FetchItemDetails();
+        // Select thumbnail item
+        _ = Helpers.RunAsThread(SelectCurrentThumbnail);
     }
 
-
-
-    private void FrmMain_Resize(object sender, EventArgs e)
+    private void Local_OnImageLoaded(ImageLoadedEventArgs e)
     {
-        Text = $"{PicBox.Width}x{PicBox.Height}";
-    }
-
-
-    private void PicBox_OnImageChanged(EventArgs e)
-    {
-        PicBox.ClearMessage();
-    }
-
-
-    private void Toolbar_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-    {
-        var tagModel = e.ClickedItem.Tag as ToolbarItemTagModel;
-        if (tagModel is null || string.IsNullOrEmpty(tagModel.OnClick.Executable)) return;
-
-        // Find the private method in FrmMain
-        var method = GetType().GetMethod(
-            tagModel.OnClick.Executable,
-            BindingFlags.Instance | BindingFlags.NonPublic);
-
-
-        // run built-in method
-        if (method is not null)
+        // image error
+        if (e.Error != null)
         {
-            // method must be bool/void()
-            method?.Invoke(this, new[] { tagModel.OnClick.Arguments });
+            PicMain.SetImage(null);
+            Local.ImageModifiedPath = "";
 
-            return;
-        }
-
-
-        // TODO: test file macro <file>
-        var currentFilename = @"E:\WALLPAPER\NEW\dark2\horizon_by_t1na_den4yvj-fullview.jpg";
-
-
-        // run external command line
-        var proc = new Process
-        {
-            StartInfo = new(tagModel.OnClick.Executable)
+            var currentFile = Local.Images.GetFileName(e.Index);
+            if (!string.IsNullOrEmpty(currentFile) && !File.Exists(currentFile))
             {
-                Arguments = tagModel.OnClick.Arguments.Replace(Constants.FILE_MACRO, currentFilename),
-                UseShellExecute = true,
-                WindowStyle = ProcessWindowStyle.Hidden,
-                ErrorDialog = true,
-            },
-        };
+                Local.Images.Unload(e.Index);
+            }
 
-        try
-        {
-            proc.Start();
+            PicMain.ShowMessage(Config.Language[$"{Name}.picMain._ErrorText"] + "\r\n" + e.Error.Source + ": " + e.Error.Message);
         }
-        catch { }
+
+        else if (e.Data?.ImgData.Image != null)
+        {
+            PicMain.SetImage(e.Data.ImgData.Image);
+
+            // Reset the zoom mode if KeepZoomRatio = FALSE
+            if (!e.KeepZoomRatio)
+            {
+                if (Config.IsWindowFit)
+                {
+                    //WindowFitMode();
+                }
+                else
+                {
+                    // reset zoom mode
+                    PicMain.ZoomMode = Config.ZoomMode;
+                }
+            }
+
+            PicMain.ClearMessage();
+        }
+
+
+        // Collect system garbage
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
     }
 
-
-    private void PicBox_Click(object sender, EventArgs e)
+    private void Local_OnImageListLoaded(object? sender, EventArgs e)
     {
-        PicBox.Focus();
+        //Load thumnbnail
+        _ = Helpers.RunAsThread(LoadThumbnails);
     }
 
-    private void PicBox_DragOver(object sender, DragEventArgs e)
+    #endregion
+
+
+    #region PicMain events
+
+    private void PicMain_OnImageChanged(EventArgs e)
+    {
+        PicMain.ClearMessage();
+    }
+
+    private void PicMain_Click(object sender, EventArgs e)
+    {
+        PicMain.Focus();
+    }
+    
+
+    private void PicMain_DragOver(object sender, DragEventArgs e)
     {
         try
         {
@@ -896,7 +911,8 @@ public partial class FrmMain : Form
         }
     }
 
-    private async void PicBox_DragDrop(object sender, DragEventArgs e)
+
+    private async void PicMain_DragDrop(object sender, DragEventArgs e)
     {
         // Drag file from DESKTOP to APP
         if (e.Data is null || !e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -923,7 +939,7 @@ public partial class FrmMain : Form
         // The file is located another folder, load the entire folder
         if (imageIndex == -1)
         {
-            PrepareLoadingAsync(filePath);
+            PrepareLoading(filePath);
         }
         // The file is in current folder AND it is the viewing image
         else if (Local.CurrentIndex == imageIndex)
@@ -938,18 +954,22 @@ public partial class FrmMain : Form
         }
     }
 
-    private void PicBox_OnNavLeftClicked(MouseEventArgs e)
+
+    private void PicMain_OnNavLeftClicked(MouseEventArgs e)
     {
         _ = ViewNextCancellableAsync(-1);
     }
 
-    private void PicBox_OnNavRightClicked(MouseEventArgs e)
+    private void PicMain_OnNavRightClicked(MouseEventArgs e)
     {
         _ = ViewNextCancellableAsync(1);
     }
 
-    private void PicBox_OnZoomChanged(PhotoBox.ZoomEventArgs e)
+    private void PicMain_OnZoomChanged(PhotoBox.ZoomEventArgs e)
     {
         Text = Math.Round(e.ZoomFactor * 100, 2).ToString() + "%";
     }
+
+    #endregion
+
 }

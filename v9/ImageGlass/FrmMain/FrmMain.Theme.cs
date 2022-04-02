@@ -38,8 +38,8 @@ public partial class FrmMain
 
         // background
         BackColor = Config.BackgroundColor;
-        PicBox.BackColor = Config.BackgroundColor;
-        PicBox.ForeColor = Config.Theme.Settings.TextColor;
+        PicMain.BackColor = Config.BackgroundColor;
+        PicMain.ForeColor = Config.Theme.Settings.TextColor;
 
         // Thumbnail bar
         Gallery.SetRenderer(new ModernGalleryRenderer(Config.Theme));
@@ -53,10 +53,10 @@ public partial class FrmMain
             PanRight.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
 
         // navigation buttons
-        PicBox.NavHoveredColor = Color.FromArgb(200, Config.Theme.Settings.ToolbarBgColor);
-        PicBox.NavPressedColor = Color.FromArgb(240, Config.Theme.Settings.ToolbarBgColor);
-        PicBox.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
-        PicBox.NavRightImage = Config.Theme.Settings.NavButtonRight;
+        PicMain.NavHoveredColor = Color.FromArgb(200, Config.Theme.Settings.ToolbarBgColor);
+        PicMain.NavPressedColor = Color.FromArgb(240, Config.Theme.Settings.ToolbarBgColor);
+        PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
+        PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
 
     }
 

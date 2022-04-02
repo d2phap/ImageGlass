@@ -133,7 +133,7 @@ namespace ImageGlass
             this.Sp2 = new ImageGlass.UI.ModernSplitContainer();
             this.PanLeft = new System.Windows.Forms.FlowLayoutPanel();
             this.Sp3 = new ImageGlass.UI.ModernSplitContainer();
-            this.PicBox = new ImageGlass.PhotoBox.ViewBox();
+            this.PicMain = new ImageGlass.PhotoBox.ViewBox();
             this.PanRight = new System.Windows.Forms.FlowLayoutPanel();
             this.Gallery = new ImageGlass.Gallery.ImageGallery();
             this.MnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -987,7 +987,7 @@ namespace ImageGlass
             // 
             // Sp3.Panel1
             // 
-            this.Sp3.Panel1.Controls.Add(this.PicBox);
+            this.Sp3.Panel1.Controls.Add(this.PicMain);
             this.Sp3.Panel1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp3.Panel1MinSize = 10;
             // 
@@ -1004,26 +1004,26 @@ namespace ImageGlass
             // 
             // PicBox
             // 
-            this.PicBox.AllowDrop = true;
-            this.PicBox.BackgroundImage = null;
-            this.PicBox.CheckerboardMode = ImageGlass.Base.PhotoBox.CheckerboardMode.Client;
-            this.PicBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PicBox.InterpolationScaleDown = ImageGlass.Base.PhotoBox.ImageInterpolation.Linear;
-            this.PicBox.Location = new System.Drawing.Point(0, 0);
-            this.PicBox.Name = "PicBox";
-            this.PicBox.NavBorderRadius = 45F;
-            this.PicBox.NavButtonSize = new System.Drawing.SizeF(90F, 90F);
-            this.PicBox.NavDisplay = ImageGlass.Base.PhotoBox.NavButtonDisplay.Both;
-            this.PicBox.ShowDebugInfo = true;
-            this.PicBox.Size = new System.Drawing.Size(637, 491);
-            this.PicBox.TabIndex = 0;
-            this.PicBox.OnZoomChanged += new ImageGlass.PhotoBox.ViewBox.ZoomChangedEventHandler(this.PicBox_OnZoomChanged);
-            this.PicBox.OnNavLeftClicked += new ImageGlass.PhotoBox.ViewBox.NavLeftClickedEventHandler(this.PicBox_OnNavLeftClicked);
-            this.PicBox.OnNavRightClicked += new ImageGlass.PhotoBox.ViewBox.NavRightClickedEventHandler(this.PicBox_OnNavRightClicked);
-            this.PicBox.OnImageChanged += new ImageGlass.PhotoBox.ViewBox.ImageChangedEventHandler(this.PicBox_OnImageChanged);
-            this.PicBox.Click += new System.EventHandler(this.PicBox_Click);
-            this.PicBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.PicBox_DragDrop);
-            this.PicBox.DragOver += new System.Windows.Forms.DragEventHandler(this.PicBox_DragOver);
+            this.PicMain.AllowDrop = true;
+            this.PicMain.BackgroundImage = null;
+            this.PicMain.CheckerboardMode = ImageGlass.Base.PhotoBox.CheckerboardMode.Client;
+            this.PicMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PicMain.InterpolationScaleDown = ImageGlass.Base.PhotoBox.ImageInterpolation.Linear;
+            this.PicMain.Location = new System.Drawing.Point(0, 0);
+            this.PicMain.Name = "PicBox";
+            this.PicMain.NavBorderRadius = 45F;
+            this.PicMain.NavButtonSize = new System.Drawing.SizeF(90F, 90F);
+            this.PicMain.NavDisplay = ImageGlass.Base.PhotoBox.NavButtonDisplay.Both;
+            this.PicMain.ShowDebugInfo = true;
+            this.PicMain.Size = new System.Drawing.Size(637, 491);
+            this.PicMain.TabIndex = 0;
+            this.PicMain.OnZoomChanged += new ImageGlass.PhotoBox.ViewBox.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
+            this.PicMain.OnNavLeftClicked += new ImageGlass.PhotoBox.ViewBox.NavLeftClickedEventHandler(this.PicMain_OnNavLeftClicked);
+            this.PicMain.OnNavRightClicked += new ImageGlass.PhotoBox.ViewBox.NavRightClickedEventHandler(this.PicMain_OnNavRightClicked);
+            this.PicMain.OnImageChanged += new ImageGlass.PhotoBox.ViewBox.ImageChangedEventHandler(this.PicMain_OnImageChanged);
+            this.PicMain.Click += new System.EventHandler(this.PicMain_Click);
+            this.PicMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.PicMain_DragDrop);
+            this.PicMain.DragOver += new System.Windows.Forms.DragEventHandler(this.PicMain_DragOver);
             // 
             // PanRight
             // 
@@ -1382,7 +1382,7 @@ namespace ImageGlass
         private ToolStripMenuItem aNewVersionIsAvailableToolStripMenuItem;
         private ToolStripMenuItem reportAnIssueToolStripMenuItem;
         private ToolStripMenuItem firstlaunchConfigurationsToolStripMenuItem;
-        private PhotoBox.ViewBox PicBox;
+        private PhotoBox.ViewBox PicMain;
         private Gallery.ImageGallery Gallery;
     }
 }
