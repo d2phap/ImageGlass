@@ -1054,7 +1054,7 @@ public partial class FrmMain : Form
             // Zoom
             else if (item.Equals(nameof(ImageInfo.Zoom), StringComparison.OrdinalIgnoreCase))
             {
-                str = $"{Math.Round(PicMain.ZoomFactor * 100, 2)} %";
+                str = $"{Math.Round(PicMain.ZoomFactor * 100, 2)}%";
             }
 
             // ModifiedDate
