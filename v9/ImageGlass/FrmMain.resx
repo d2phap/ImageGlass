@@ -63,9 +63,6 @@
   <metadata name="MnuMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>129, 17</value>
   </metadata>
-  <metadata name="MnuContext.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>262, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="MnuNavigation.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -89,13 +86,6 @@
 </value>
   </data>
   <data name="MnuClipboard.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
-        kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
-        gg==
-</value>
-  </data>
-  <data name="MnuWindowFit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
         kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
@@ -152,6 +142,16 @@
 </value>
   </data>
   <data name="MnuExit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
+        kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <metadata name="MnuContext.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>262, 17</value>
+  </metadata>
+  <data name="MnuWindowFit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
         kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
