@@ -25,6 +25,7 @@ public class ImageLoadingEventArgs
 {
     public int CurrentIndex { get; init; }
     public int NewIndex { get; init; }
+    public string? Filename { get; init; }
 }
 
 public class ImageLoadedEventArgs

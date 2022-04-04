@@ -6,7 +6,6 @@ using ImageGlass.Gallery;
 using ImageGlass.Settings;
 using System.Diagnostics;
 using System.Reflection;
-using System.Text;
 
 namespace ImageGlass;
 
@@ -684,6 +683,7 @@ public partial class FrmMain : Form
         {
             CurrentIndex = Local.CurrentIndex,
             NewIndex = imageIndex,
+            Filename = filename,
         });
 
 
@@ -807,6 +807,8 @@ public partial class FrmMain : Form
     {
         // Select thumbnail item
         _ = Helpers.RunAsThread(SelectCurrentThumbnail);
+
+        _ = UpdateImageInfo(BasicInfoUpdate.Name | BasicInfoUpdate.Path | BasicInfoUpdate.FileSize | BasicInfoUpdate.ModifiedDate | BasicInfoUpdate.ListCount, e.Filename);
     }
 
     private void Local_OnImageLoaded(ImageLoadedEventArgs e)
@@ -848,7 +850,7 @@ public partial class FrmMain : Form
         }
 
 
-        UpdateImageInfo();
+        _ = UpdateImageInfo(BasicInfoUpdate.Dimension | BasicInfoUpdate.FramesCount);
 
         // Collect system garbage
         GC.Collect();
@@ -858,7 +860,7 @@ public partial class FrmMain : Form
 
     private void Local_OnImageListLoaded(object? sender, EventArgs e)
     {
-        UpdateImageInfo();
+        _ = UpdateImageInfo(BasicInfoUpdate.ListCount);
 
         //Load thumnbnail
         _ = Helpers.RunAsThread(LoadThumbnails);
@@ -971,7 +973,7 @@ public partial class FrmMain : Form
 
     private void PicMain_OnZoomChanged(PhotoBox.ZoomEventArgs e)
     {
-        UpdateImageInfo();
+        UpdateImageInfo(BasicInfoUpdate.Zoom);
     }
 
     #endregion
@@ -980,108 +982,155 @@ public partial class FrmMain : Form
     /// <summary>
     /// Update image info in status bar
     /// </summary>
-    private void UpdateImageInfo()
+    private async Task UpdateImageInfo(BasicInfoUpdate types = BasicInfoUpdate.All,
+        string? filename = null)
     {
         if (InvokeRequired)
         {
-            Invoke(UpdateImageInfo);
+            Invoke(UpdateImageInfo, types, filename);
             return;
         }
 
-        var strBuilder = new StringBuilder();
-        var count = 0;
+        var updateAll = BasicInfo.IsNull || types.HasFlag(BasicInfoUpdate.All);
+        FileInfo? fi = null;
+        var fullPath = string.IsNullOrEmpty(filename) ? Local.Images.GetFileName(Local.CurrentIndex) : filename;
 
-        foreach (var item in Config.InfoItems)
+        try
         {
-            var str = string.Empty;
+            fi = new FileInfo(fullPath);
+        }
+        catch { }
 
-            // AppName
-            if (item.Equals(nameof(ImageInfo.AppName), StringComparison.OrdinalIgnoreCase))
+
+        // AppName
+        if (updateAll || types.HasFlag(BasicInfoUpdate.AppName))
+        {
+            if (Config.InfoItems.Contains(nameof(BasicInfo.AppName)))
             {
-                str = Application.ProductName;
+                BasicInfo.AppName = Application.ProductName;
             }
-
-            // ListCount
-            else if (item.Equals(nameof(ImageInfo.ListCount), StringComparison.OrdinalIgnoreCase))
+            else
             {
-                if (Local.Images.Length == 0)
-                {
-                    str = "0/0 file(s)";
-                }
-                else
-                {
-                    str = $"{Local.CurrentIndex + 1}/{Local.Images.Length} file(s)";
-                }
-            }
-
-            // Name
-            else if (item.Equals(nameof(ImageInfo.Name), StringComparison.OrdinalIgnoreCase))
-            {
-                var fullPath = Local.Images.GetFileName(Local.CurrentIndex);
-                if (string.IsNullOrEmpty(fullPath))
-                    continue;
-
-                str = Path.GetFileName(fullPath);
-            }
-
-            // Path
-            else if (item.Equals(nameof(ImageInfo.Path), StringComparison.OrdinalIgnoreCase))
-            {
-                var fullPath = Local.Images.GetFileName(Local.CurrentIndex);
-                if (string.IsNullOrEmpty(fullPath))
-                    continue;
-
-                str = fullPath;
-            }
-
-            // FileSize
-            else if (item.Equals(nameof(ImageInfo.FileSize), StringComparison.OrdinalIgnoreCase))
-            {
-                var fullPath = Local.Images.GetFileName(Local.CurrentIndex);
-                if (string.IsNullOrEmpty(fullPath))
-                    continue;
-
-                var fi = new FileInfo(fullPath);
-                str = Helpers.FormatSize(fi.Length);
-            }
-
-            // Dimension
-            else if (item.Equals(nameof(ImageInfo.Dimension), StringComparison.OrdinalIgnoreCase))
-            {
-                str = $"{PicMain.ImageWidth} x {PicMain.ImageHeight} px";
-            }
-
-            // Zoom
-            else if (item.Equals(nameof(ImageInfo.Zoom), StringComparison.OrdinalIgnoreCase))
-            {
-                str = $"{Math.Round(PicMain.ZoomFactor * 100, 2)}%";
-            }
-
-            // ModifiedDate
-            else if (item.Equals(nameof(ImageInfo.ModifiedDate), StringComparison.OrdinalIgnoreCase))
-            {
-                var fullPath = Local.Images.GetFileName(Local.CurrentIndex);
-                if (string.IsNullOrEmpty(fullPath))
-                    continue;
-
-                var fi = new FileInfo(fullPath);
-                str = fi.LastWriteTime.ToString();
-            }
-
-
-            if (count > 0)
-            {
-                strBuilder.Append("  |  ");
-            }
-
-            if (!string.IsNullOrEmpty(str))
-            {
-                strBuilder.Append(str);
-                count++;
+                BasicInfo.AppName = string.Empty;
             }
         }
 
-        Text = strBuilder.ToString();
+        // ListCount
+        if (updateAll || types.HasFlag(BasicInfoUpdate.ListCount))
+        {
+            if (Config.InfoItems.Contains(nameof(BasicInfo.ListCount)))
+            {
+                if (Local.Images.Length == 0)
+                {
+                    BasicInfo.ListCount = "0/0 file(s)";
+                }
+                else
+                {
+                    BasicInfo.ListCount = $"{Local.CurrentIndex + 1}/{Local.Images.Length} file(s)";
+                }
+            }
+            else
+            {
+                BasicInfo.ListCount = string.Empty;
+            }
+        }
+
+        // Name
+        if (updateAll || types.HasFlag(BasicInfoUpdate.Name))
+        {
+            if (Config.InfoItems.Contains(nameof(BasicInfo.Name)))
+            {
+                BasicInfo.Name = Path.GetFileName(fullPath);
+            }
+            else
+            {
+                BasicInfo.Name = string.Empty;
+            }
+        }
+
+        // Path
+        if (updateAll || types.HasFlag(BasicInfoUpdate.Path))
+        {
+            if (Config.InfoItems.Contains(nameof(BasicInfo.Path)))
+            {
+                BasicInfo.Path = fullPath;
+            }
+            else
+            {
+                BasicInfo.Path = string.Empty;
+            }
+        }
+
+        // FileSize
+        if (updateAll || types.HasFlag(BasicInfoUpdate.FileSize))
+        {
+            if (Config.InfoItems.Contains(nameof(BasicInfo.FileSize)))
+            {
+                BasicInfo.FileSize = Helpers.FormatSize(fi.Length);
+            }
+            else
+            {
+                BasicInfo.FileSize = string.Empty;
+            }
+        }
+
+        // Dimension
+        if (updateAll || types.HasFlag(BasicInfoUpdate.Dimension))
+        {
+            if (Config.InfoItems.Contains(nameof(BasicInfo.Dimension)))
+            {
+                BasicInfo.Dimension = $"{PicMain.ImageWidth} x {PicMain.ImageHeight} px";
+            }
+            else
+            {
+                BasicInfo.Dimension = string.Empty;
+            }
+        }
+
+        // Zoom
+        if (updateAll || types.HasFlag(BasicInfoUpdate.Zoom))
+        {
+            if (Config.InfoItems.Contains(nameof(BasicInfo.Zoom)))
+            {
+                BasicInfo.Zoom = $"{Math.Round(PicMain.ZoomFactor * 100, 2)}%";
+            }
+            else
+            {
+                BasicInfo.Zoom = string.Empty;
+            }
+        }
+
+        // ModifiedDate
+        if (updateAll || types.HasFlag(BasicInfoUpdate.ModifiedDate))
+        {
+            if (Config.InfoItems.Contains(nameof(BasicInfo.ModifiedDate)))
+            {
+                BasicInfo.ModifiedDate = fi.LastWriteTime.ToString();
+            }
+            else
+            {
+                BasicInfo.ModifiedDate = string.Empty;
+            }
+        }
+
+
+        // FramesCount
+        if (updateAll || types.HasFlag(BasicInfoUpdate.FramesCount))
+        {
+            if (Config.InfoItems.Contains(nameof(BasicInfo.FramesCount)))
+            {
+                var imgData = await Local.Images.GetAsync(Local.CurrentIndex);
+                BasicInfo.FramesCount = $"{imgData?.FramesCount} frame(s)";
+            }
+            else
+            {
+                BasicInfo.FramesCount = string.Empty;
+            }
+        }
+
+
+        Text = BasicInfo.ToString(Config.InfoItems);
+        Application.DoEvents();
     }
 
 }

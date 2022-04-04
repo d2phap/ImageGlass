@@ -180,6 +180,7 @@ public static class Config
     {
         "Name",
         "ListCount",
+        "FramesCount",
         "Zoom",
         "Dimension",
         "FileSize",

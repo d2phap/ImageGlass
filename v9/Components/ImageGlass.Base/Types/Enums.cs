@@ -250,3 +250,23 @@ public enum WindowsOS
     Win10OrLater,
     Win7,
 }
+
+
+/// <summary>
+/// Types of image infomation update request
+/// </summary>
+[Flags]
+public enum BasicInfoUpdate
+{
+    None = 0,
+    All = 1 << 1,
+    AppName = 1 << 2,
+    Name = 1 << 3,
+    Path = 1 << 4,
+    FileSize = 1 << 5,
+    Dimension = 1 << 6,
+    ListCount = 1 << 7,
+    Zoom = 1 << 8,
+    ModifiedDate = 1 << 9,
+    FramesCount = 1 << 10,
+}
