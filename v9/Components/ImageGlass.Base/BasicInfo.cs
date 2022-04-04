@@ -60,13 +60,13 @@ public static class BasicInfo
             // get the property using name
             var str = typeof(BasicInfo).GetProperty(key)?.GetValue(null)?.ToString();
 
-            if (count > 0)
-            {
-                strBuilder.Append("  |  ");
-            }
-
             if (!string.IsNullOrEmpty(str))
             {
+                if (count > 0)
+                {
+                    strBuilder.Append("  |  ");
+                }
+
                 strBuilder.Append(str);
                 count++;
             }
