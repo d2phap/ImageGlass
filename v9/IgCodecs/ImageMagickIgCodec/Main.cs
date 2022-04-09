@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageMagick.Formats;
+using System.Drawing.Imaging;
 
 namespace ImageMagick.IgCodec;
 
@@ -296,7 +297,6 @@ public class Main : IIgCodec
                 }
                 break;
 
-
             default:
                 result = await ReadWithMagickImage(filename, ext, settings, options, cancelToken);
 
@@ -443,18 +443,31 @@ public class Main : IIgCodec
         {
             readFirstFrameOnly = imgColl.Count < 2;
         }
+        else
+        {
+            readFirstFrameOnly = options.FirstFrameOnly.Value;
+        }
 
 
         // read all frames
         if (imgColl.Count > 1 && readFirstFrameOnly is false)
         {
             await imgColl.ReadAsync(filename, settings, cancelToken);
-            foreach (var imgPageM in imgColl)
+            
+            // convert WEBP to GIF for animation
+            if (ext == ".WEBP")
             {
-                ProcessMagickImage((MagickImage)imgPageM, options, ref result);
+                result.Image = imgColl.ToBitmap(ImageFormat.Gif);
             }
+            else
+            {
+                foreach (var imgPageM in imgColl)
+                {
+                    ProcessMagickImage((MagickImage)imgPageM, options, ref result);
+                }
 
-            result.Image = imgColl.ToBitmap();
+                result.Image = imgColl.ToBitmap();
+            }
 
             return result;
         }
