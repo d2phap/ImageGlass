@@ -1,4 +1,4 @@
-/*
+﻿/*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2010 - 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
@@ -1160,6 +1160,20 @@ public partial class FrmMain : Form
             }
         }
 
+        // FramesCount
+        if (updateAll || types.HasFlag(BasicInfoUpdate.FramesCount))
+        {
+            if (Config.InfoItems.Contains(nameof(BasicInfo.FramesCount))
+                && Local.Metadata != null)
+            {
+                BasicInfo.FramesCount = $"{Local.Metadata.FramesCount} frame(s)";
+            }
+            else
+            {
+                BasicInfo.FramesCount = string.Empty;
+            }
+        }
+
         // ModifiedDate
         if (updateAll || types.HasFlag(BasicInfoUpdate.ModifiedDate))
         {
@@ -1174,17 +1188,20 @@ public partial class FrmMain : Form
             }
         }
 
-        // FramesCount
-        if (updateAll || types.HasFlag(BasicInfoUpdate.FramesCount))
+        // ExifRating
+        if (updateAll || types.HasFlag(BasicInfoUpdate.ExifRating))
         {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.FramesCount))
+            if (Config.InfoItems.Contains(nameof(BasicInfo.ExifRating))
                 && Local.Metadata != null)
             {
-                BasicInfo.FramesCount = $"{Local.Metadata.FramesCount} frame(s)";
+                var star = Helpers.FormatStarRating(Local.Metadata.ExifRatingPercent);
+                BasicInfo.ExifRating = star > 0
+                    ? "".PadRight(star, '⭐').PadRight(5, '-').Replace("-", " -")
+                    : string.Empty;
             }
             else
             {
-                BasicInfo.FramesCount = string.Empty;
+                BasicInfo.ExifRating = string.Empty;
             }
         }
 

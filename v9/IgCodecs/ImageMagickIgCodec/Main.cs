@@ -219,8 +219,8 @@ public class Main : IIgCodec
 
                 if (exifProfile != null)
                 {
-                    // ExifRating
-                    meta.ExifRating = GetExifValue(exifProfile, ExifTag.Rating);
+                    // ExifRatingPercent
+                    meta.ExifRatingPercent = GetExifValue(exifProfile, ExifTag.RatingPercent);
 
                     // ExifDateTimeOriginal
                     var dt = GetExifValue(exifProfile, ExifTag.DateTimeOriginal);

@@ -268,6 +268,10 @@ public enum BasicInfoUpdate
     Dimension = 1 << 6,
     ListCount = 1 << 7,
     Zoom = 1 << 8,
-    ModifiedDate = 1 << 9,
-    FramesCount = 1 << 10,
+    FramesCount = 1 << 9,
+    ModifiedDate = 1 << 10,
+    
+    ExifDateTime = 1 << 11,
+    ExifDateTimeOriginal = 1 << 12,
+    ExifRating = 1 << 13,
 }
