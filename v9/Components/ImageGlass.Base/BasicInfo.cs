@@ -30,11 +30,13 @@ public static class BasicInfo
     public static string? FramesCount { get; set; } = null;
     public static string? ListCount { get; set; } = null;
     public static string? Zoom { get; set; } = null;
-    public static string? ModifiedDate { get; set; } = null;
+    public static string? ModifiedDateTime { get; set; } = null;
 
     public static string? ExifRating { get; set; } = null;
     public static string? ExifDateTime { get; set; } = null;
     public static string? ExifDateTimeOriginal { get; set; } = null;
+
+    public static string? DateTimeAuto { get; set; } = null;
 
 
     public static bool IsNull => AppName == null
@@ -45,11 +47,13 @@ public static class BasicInfo
         && FramesCount == null
         && ListCount == null
         && Zoom == null
-        && ModifiedDate == null
 
-        && ExifRating == null
+        && DateTimeAuto == null
+        && ModifiedDateTime == null
         && ExifDateTime == null
-        && ExifDateTimeOriginal == null;
+        && ExifDateTimeOriginal == null
+
+        && ExifRating == null;
 
 
     /// <summary>

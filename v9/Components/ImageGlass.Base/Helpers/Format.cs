@@ -65,7 +65,7 @@ public partial class Helpers
     {
         if (dt != null)
         {
-            return string.Format(includeTime ? Constants.DATETIME_FORMAT : Constants.DATE_FORMAT, dt);
+            return dt.Value.ToString(includeTime ? Constants.DATETIME_FORMAT : Constants.DATE_FORMAT);
         }
 
         return string.Empty;

@@ -1050,7 +1050,7 @@ public partial class FrmMain : Form
         var updateAll = BasicInfo.IsNull || types.HasFlag(BasicInfoUpdate.All);
         var isFileUpdate = updateAll && !string.IsNullOrEmpty(fullPath)
             || types.HasFlag(BasicInfoUpdate.FileSize)
-            || types.HasFlag(BasicInfoUpdate.ModifiedDate);
+            || types.HasFlag(BasicInfoUpdate.ModifiedDateTime);
 
         try
         {
@@ -1174,17 +1174,17 @@ public partial class FrmMain : Form
             }
         }
 
-        // ModifiedDate
-        if (updateAll || types.HasFlag(BasicInfoUpdate.ModifiedDate))
+        // ModifiedDateTime
+        if (updateAll || types.HasFlag(BasicInfoUpdate.ModifiedDateTime))
         {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.ModifiedDate))
+            if (Config.InfoItems.Contains(nameof(BasicInfo.ModifiedDateTime))
                 && fi != null)
             {
-                BasicInfo.ModifiedDate = fi.LastWriteTime.ToString();
+                BasicInfo.ModifiedDateTime = Helpers.FormatDateTime(fi.LastWriteTime) + " (m)";
             }
             else
             {
-                BasicInfo.ModifiedDate = string.Empty;
+                BasicInfo.ModifiedDateTime = string.Empty;
             }
         }
 
@@ -1203,6 +1203,64 @@ public partial class FrmMain : Form
             {
                 BasicInfo.ExifRating = string.Empty;
             }
+        }
+
+        // ExifDateTime
+        if (updateAll || types.HasFlag(BasicInfoUpdate.ExifDateTime))
+        {
+            if (Config.InfoItems.Contains(nameof(BasicInfo.ExifDateTime))
+                && Local.Metadata != null
+                && Local.Metadata.ExifDateTime != null)
+            {
+                BasicInfo.ExifDateTime = Helpers.FormatDateTime(Local.Metadata.ExifDateTime) + " (e)";
+            }
+            else
+            {
+                BasicInfo.ExifDateTime = string.Empty;
+            }
+        }
+
+        // ExifDateTimeOriginal
+        if (updateAll || types.HasFlag(BasicInfoUpdate.ExifDateTimeOriginal))
+        {
+            if (Config.InfoItems.Contains(nameof(BasicInfo.ExifDateTimeOriginal))
+                && Local.Metadata != null
+                && Local.Metadata.ExifDateTimeOriginal != null)
+            {
+                BasicInfo.ExifDateTimeOriginal = Helpers.FormatDateTime(Local.Metadata.ExifDateTimeOriginal) + " (o)";
+            }
+            else
+            {
+                BasicInfo.ExifDateTimeOriginal = string.Empty;
+            }
+        }
+
+        // DateTimeAuto
+        if (updateAll || types.HasFlag(BasicInfoUpdate.DateTimeAuto))
+        {
+            var dtStr = string.Empty;
+
+            if (Config.InfoItems.Contains(nameof(BasicInfo.DateTimeAuto)))
+            {
+                if (Local.Metadata != null)
+                {
+                    if (Local.Metadata.ExifDateTimeOriginal != null)
+                    {
+                        dtStr = Helpers.FormatDateTime(Local.Metadata.ExifDateTime) + " (o)";
+                    }
+                    else if (Local.Metadata.ExifDateTime != null)
+                    {
+                        dtStr = Helpers.FormatDateTime(Local.Metadata.ExifDateTime) + " (e)";
+                    }
+                }
+
+                if (fi != null && string.IsNullOrEmpty(dtStr))
+                {
+                    dtStr = Helpers.FormatDateTime(fi.LastWriteTime) + " (m)";
+                }
+            }
+
+            BasicInfo.DateTimeAuto = dtStr;
         }
 
 
