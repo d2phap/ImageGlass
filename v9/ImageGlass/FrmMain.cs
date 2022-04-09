@@ -746,6 +746,8 @@ public partial class FrmMain : Form
             Local.CurrentIndex = imageIndex;
         }
 
+        directReadSettings.Metadata = Local.Metadata;
+
 
         Local.RaiseImageLoadingEvent(new()
         {
@@ -1164,9 +1166,10 @@ public partial class FrmMain : Form
         if (updateAll || types.HasFlag(BasicInfoUpdate.FramesCount))
         {
             if (Config.InfoItems.Contains(nameof(BasicInfo.FramesCount))
-                && Local.Metadata != null)
+                && Local.Metadata != null
+                && Local.Metadata.FramesCount > 1)
             {
-                BasicInfo.FramesCount = $"{Local.Metadata.FramesCount} frame(s)";
+                BasicInfo.FramesCount = $"{Local.Metadata.FramesCount} frames";
             }
             else
             {
@@ -1246,7 +1249,7 @@ public partial class FrmMain : Form
                 {
                     if (Local.Metadata.ExifDateTimeOriginal != null)
                     {
-                        dtStr = Helpers.FormatDateTime(Local.Metadata.ExifDateTime) + " (o)";
+                        dtStr = Helpers.FormatDateTime(Local.Metadata.ExifDateTimeOriginal) + " (o)";
                     }
                     else if (Local.Metadata.ExifDateTime != null)
                     {
