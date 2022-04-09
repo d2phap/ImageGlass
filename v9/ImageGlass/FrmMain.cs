@@ -506,13 +506,7 @@ public partial class FrmMain : Form
         // but not for write/access times
 
         // Sort image file
-        if (Local.ActiveImageLoadingOrder == ImageOrderBy.Name)
-        {
-            return fileList.AsParallel()
-                .OrderBy(f => f, directorySortComparer)
-                .ThenBy(f => f, naturalSortComparer);
-        }
-        else if (Local.ActiveImageLoadingOrder == ImageOrderBy.Length)
+        if (Local.ActiveImageLoadingOrder == ImageOrderBy.Length)
         {
             if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
             {
@@ -529,7 +523,9 @@ public partial class FrmMain : Form
                     .ThenBy(f => f, naturalSortComparer);
             }
         }
-        else if (Local.ActiveImageLoadingOrder == ImageOrderBy.CreationTime)
+
+        // sort by CreationTime
+        if (Local.ActiveImageLoadingOrder == ImageOrderBy.CreationTime)
         {
             if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
             {
@@ -546,7 +542,9 @@ public partial class FrmMain : Form
                     .ThenBy(f => f, naturalSortComparer);
             }
         }
-        else if (Local.ActiveImageLoadingOrder == ImageOrderBy.Extension)
+
+        // sort by Extension
+        if (Local.ActiveImageLoadingOrder == ImageOrderBy.Extension)
         {
             if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
             {
@@ -563,7 +561,9 @@ public partial class FrmMain : Form
                     .ThenBy(f => f, naturalSortComparer);
             }
         }
-        else if (Local.ActiveImageLoadingOrder == ImageOrderBy.LastAccessTime)
+
+        // sort by LastAccessTime
+        if (Local.ActiveImageLoadingOrder == ImageOrderBy.LastAccessTime)
         {
             if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
             {
@@ -580,7 +580,9 @@ public partial class FrmMain : Form
                     .ThenBy(f => f, naturalSortComparer);
             }
         }
-        else if (Local.ActiveImageLoadingOrder == ImageOrderBy.LastWriteTime)
+
+        // sort by LastWriteTime
+        if (Local.ActiveImageLoadingOrder == ImageOrderBy.LastWriteTime)
         {
             if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
             {
@@ -593,11 +595,13 @@ public partial class FrmMain : Form
             {
                 return fileList.AsParallel()
                     .OrderBy(f => f, directorySortComparer)
-                    .ThenBy(f => new FileInfo(f).LastWriteTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer);
+                    .ThenBy(f => f, naturalSortComparer)
+                    .ThenBy(f => new FileInfo(f).LastWriteTimeUtc);
             }
         }
-        else if (Local.ActiveImageLoadingOrder == ImageOrderBy.Random)
+
+        // sort by Random
+        if (Local.ActiveImageLoadingOrder == ImageOrderBy.Random)
         {
             // NOTE: ignoring the 'descending order' setting
             return fileList.AsParallel()
@@ -605,7 +609,10 @@ public partial class FrmMain : Form
                 .ThenBy(_ => Guid.NewGuid());
         }
 
-        return new List<string>(0);
+        // sort by Name (default)
+        return fileList.AsParallel()
+            .OrderBy(f => f, directorySortComparer)
+            .ThenBy(f => f, naturalSortComparer);
     }
 
 

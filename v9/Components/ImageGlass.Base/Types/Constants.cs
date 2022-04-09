@@ -32,6 +32,8 @@ public static class Constants
     public const int TOOLBAR_ICON_HEIGHT = 22;
     public const string FILE_MACRO = "<file>";
     public const string CONFIG_CMD_PREFIX = "-";
+    public const string DATETIME_FORMAT = "yyyy/MM/dd HH:mm:ss";
+    public const string DATE_FORMAT = "yyyy/MM/dd";
 
     /// <summary>
     /// First launch version constant.

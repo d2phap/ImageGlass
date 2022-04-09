@@ -33,7 +33,8 @@ public enum ImageOrderBy
     Extension = 3,
     LastAccessTime = 4,
     LastWriteTime = 5,
-    Random = 6
+    Rating = 6,
+    Random = 7,
 }
 
 /// <summary>

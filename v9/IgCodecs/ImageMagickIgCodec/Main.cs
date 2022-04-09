@@ -122,12 +122,32 @@ public class Main : IIgCodec
         options ??= new();
 
         var ext = Path.GetExtension(filename).ToUpperInvariant();
-        var settings = new MagickReadSettings();
+        var settings = new MagickReadSettings
+        {
+            // https://github.com/dlemstra/Magick.NET/issues/1077
+            SyncImageWithExifProfile = true,
+            SyncImageWithTiffProperties = true
+        };
 
-        if (ext == ".SVG")
+        if (ext.Equals(".SVG", StringComparison.OrdinalIgnoreCase))
         {
             settings.BackgroundColor = MagickColors.Transparent;
             settings.SetDefine("svg:xml-parse-huge", "true");
+        }
+        else if (ext.Equals(".HEIC", StringComparison.OrdinalIgnoreCase)
+            || ext.Equals(".HEIF", StringComparison.OrdinalIgnoreCase))
+        {
+            settings.SetDefines(new HeicReadDefines
+            {
+                PreserveOrientation = true,
+            });
+        }
+        else if (ext.Equals(".JP2", StringComparison.OrdinalIgnoreCase))
+        {
+            settings.SetDefines(new Jp2ReadDefines
+            {
+                QualityLayers = options.Quality,
+            });
         }
 
         if (options.Width > 0 && options.Height > 0)
@@ -152,6 +172,16 @@ public class Main : IIgCodec
 
 
         return settings;
+    }
+
+    private static T? GetExifValue<T>(IExifProfile? profile, ExifTag<T> tag, T? defaultValue = default)
+    {
+        if (profile == null) return default;
+
+        var exifValue = profile.GetValue(tag);
+        if (exifValue == null) return defaultValue;
+
+        return exifValue.Value;
     }
 
 
@@ -179,10 +209,31 @@ public class Main : IIgCodec
 
             meta = new()
             {
-                Width = imgC.Count > 0 ? imgC[0].Width : 0,
-                Height = imgC.Count > 0 ? imgC[0].Height : 0,
                 FramesCount = imgC.Count,
             };
+
+            if (imgC.Count > 0)
+            {
+                using var imgM = imgC[0];
+                var exifProfile = imgM.GetExifProfile();
+
+                if (exifProfile != null)
+                {
+                    // ExifRating
+                    meta.ExifRating = GetExifValue(exifProfile, ExifTag.Rating);
+
+                    // ExifDateTimeOriginal
+                    var dt = GetExifValue(exifProfile, ExifTag.DateTimeOriginal);
+                    meta.ExifDateTimeOriginal = ImageGlass.Base.Helpers.ConvertDateTime(dt);
+
+                    // ExifDateTime
+                    dt = GetExifValue(exifProfile, ExifTag.DateTime);
+                    meta.ExifDateTime = ImageGlass.Base.Helpers.ConvertDateTime(dt);
+                }
+
+                meta.Width = imgM.Width;
+                meta.Height = imgM.Height;
+            }
         }
         catch { }
 
@@ -368,8 +419,6 @@ public class Main : IIgCodec
         CancellationToken cancelToken)
     {
         var result = new IgImgData();
-
-        var checkRotation = ext != ".HEIC";
         using var imgColl = new MagickImageCollection();
 
         // Issue #530: ImageMagick falls over if the file path is longer than the (old)
@@ -402,7 +451,7 @@ public class Main : IIgCodec
             await imgColl.ReadAsync(filename, settings, cancelToken);
             foreach (var imgPageM in imgColl)
             {
-                ProcessMagickImage((MagickImage)imgPageM, options, ref result, checkRotation);
+                ProcessMagickImage((MagickImage)imgPageM, options, ref result);
             }
 
             result.Image = imgColl.ToBitmap();
@@ -447,7 +496,7 @@ public class Main : IIgCodec
 
         // preprocess image, read embedded thumbnail if any
         imgM.Quality = options.Quality;
-        ProcessMagickImage(imgM, options, ref result, checkRotation);
+        ProcessMagickImage(imgM, options, ref result);
 
         // apply color channel
         if (options.ImageChannel != ColorChannel.All)

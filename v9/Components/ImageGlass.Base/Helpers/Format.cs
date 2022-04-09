@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -29,6 +30,54 @@ public partial class Helpers
 
         return string.Format("{0} {1}", Math.Round(sized, 2), units[i]);
     }
+
+    /// <summary>
+    /// Formats date time string to string
+    /// </summary>
+    /// <param name="str"></param>
+    /// <returns></returns>
+    public static string FormatDateTime(string? str, bool includeTime = true)
+    {
+        var dt = ConvertDateTime(str);
+
+        return FormatDateTime(dt, includeTime);
+    }
+
+    /// <summary>
+    /// Formats <see cref="DateTime"/> to string
+    /// </summary>
+    /// <param name="dt"></param>
+    /// <param name="includeTime"></param>
+    /// <returns></returns>
+    public static string FormatDateTime(DateTime? dt, bool includeTime = true)
+    {
+        if (dt != null)
+        {
+            return string.Format(includeTime ? Constants.DATETIME_FORMAT : Constants.DATE_FORMAT, dt);
+        }
+
+        return string.Empty;
+    }
+
+    /// <summary>
+    /// Convert date time string to <see cref="DateTime"/>
+    /// </summary>
+    /// <param name="dt"></param>
+    /// <returns></returns>
+    public static DateTime? ConvertDateTime(string? dt)
+    {
+        if (DateTime.TryParseExact(dt,
+                    "yyyy:MM:dd HH:mm:ss",
+                    CultureInfo.CurrentCulture,
+                    DateTimeStyles.None,
+                    out var dateTaken))
+        {
+            return dateTaken;
+        }
+
+        return null;
+    }
+
 
 
     /// <summary>
