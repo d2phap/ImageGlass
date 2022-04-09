@@ -31,7 +31,8 @@ internal class Local
     /// <summary>
     /// Occurs when <see cref="Images"/> is loaded.
     /// </summary>
-    public static event EventHandler? OnImageListLoaded;
+    public static event ImageListLoadedHandler? OnImageListLoaded;
+    public delegate void ImageListLoadedHandler(ImageListLoadedEventArgs e);
 
     /// <summary>
     /// Occurs when the requested image is being loaded.
@@ -49,9 +50,9 @@ internal class Local
     /// <summary>
     /// Raise <see cref="OnImageListLoaded"/> event.
     /// </summary>
-    public static void RaiseImageListLoadedEvent()
+    public static void RaiseImageListLoadedEvent(ImageListLoadedEventArgs e)
     {
-        OnImageListLoaded?.Invoke(null, EventArgs.Empty);
+        OnImageListLoaded?.Invoke(e);
     }
 
 

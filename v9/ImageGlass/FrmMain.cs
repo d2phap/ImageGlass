@@ -183,7 +183,7 @@ public partial class FrmMain : Form
             PrepareLoading(o.FileName);
         }
     }
-
+    
 
     /// <summary>
     /// Prepare and loads images from the input path
@@ -194,7 +194,7 @@ public partial class FrmMain : Form
     /// </param>
     private void PrepareLoading(string inputPath)
     {
-        var path = App.ToAbsolutePath(inputPath);
+        var path = Helpers.ResolvePath(inputPath);
 
         if (Helpers.IsDirectory(path))
         {
@@ -224,6 +224,7 @@ public partial class FrmMain : Form
         if (string.IsNullOrEmpty(currentFile))
         {
             filePath = paths.AsParallel().FirstOrDefault(i => !Helpers.IsDirectory(i));
+            filePath = Helpers.ResolvePath(filePath);
         }
 
         if (string.IsNullOrEmpty(filePath))
@@ -268,7 +269,7 @@ public partial class FrmMain : Form
             var firstPath = true;
 
             // Parse string to absolute path
-            var paths = inputPaths.Select(item => App.ToAbsolutePath(item));
+            var paths = inputPaths.Select(item => Helpers.ResolvePath(item));
 
             // prepare the distinct dir list
             var distinctDirsList = Helpers.GetDistinctDirsFromPaths(paths);
@@ -343,40 +344,53 @@ public partial class FrmMain : Form
             Local.InitImageList(sortedFilesList);
 
             // Find the index of current image
-            if (currentFilePath.Length > 0)
+            UpdateCurrentIndex(currentFilePath);
+
+            Local.RaiseImageListLoadedEvent(new()
             {
-                // this part of code fixes calls on legacy 8.3 filenames
-                // (for example opening files from IBM Notes)
-                var di = new DirectoryInfo(currentFilePath);
-                currentFilePath = di.FullName;
-
-                Local.CurrentIndex = Local.Images.IndexOf(currentFilePath);
-
-                // KBR 20181009
-                // Changing "include subfolder" setting could lose the "current" image. Prefer
-                // not to report said image is "corrupt", merely reset the index in that case.
-                // 1. Setting: "include subfolders: ON".
-                //    Open image in folder with images in subfolders.
-                // 2. Move to an image in a subfolder.
-                // 3. Change setting "include subfolders: OFF".
-                // Issue: the image in the subfolder is attempted to be shown,
-                // declared as corrupt/missing.
-                // Issue #481: the test is incorrect when imagelist is empty (i.e. attempt to
-                // open single, hidden image with 'show hidden' OFF)
-                if (Local.CurrentIndex == -1
-                    && Local.Images.Length > 0
-                    && !Local.Images.ContainsDirPathOf(currentFilePath))
-                {
-                    Local.CurrentIndex = 0;
-                }
-            }
-            else
-            {
-                Local.CurrentIndex = 0;
-            }
-
-            Local.RaiseImageListLoadedEvent();
+                FilePath = currentFilePath,
+            });
         });
+    }
+
+
+    /// <summary>
+    /// Updates <see cref="Local.CurrentIndex"/> according to the context.
+    /// </summary>
+    /// <param name="currentFilePath"></param>
+    private static void UpdateCurrentIndex(string? currentFilePath)
+    {
+        if (string.IsNullOrEmpty(currentFilePath))
+        {
+            Local.CurrentIndex = 0;
+            return;
+        }
+
+        // this part of code fixes calls on legacy 8.3 filenames
+        // (for example opening files from IBM Notes)
+        var di = new DirectoryInfo(currentFilePath);
+        currentFilePath = di.FullName;
+
+        // Find the index of current image
+        Local.CurrentIndex = Local.Images.IndexOf(currentFilePath);
+
+        // KBR 20181009
+        // Changing "include subfolder" setting could lose the "current" image. Prefer
+        // not to report said image is "corrupt", merely reset the index in that case.
+        // 1. Setting: "include subfolders: ON".
+        //    Open image in folder with images in subfolders.
+        // 2. Move to an image in a subfolder.
+        // 3. Change setting "include subfolders: OFF".
+        // Issue: the image in the subfolder is attempted to be shown,
+        // declared as corrupt/missing.
+        // Issue #481: the test is incorrect when imagelist is empty (i.e. attempt to
+        // open single, hidden image with 'show hidden' OFF)
+        if (Local.CurrentIndex == -1
+            && Local.Images.Length > 0
+            && !Local.Images.ContainsDirPathOf(currentFilePath))
+        {
+            Local.CurrentIndex = 0;
+        }
     }
 
 
@@ -650,7 +664,7 @@ public partial class FrmMain : Form
                 Gallery.Items[Local.CurrentIndex].Focused = true;
                 Gallery.ScrollToIndex(Local.CurrentIndex);
             }
-            catch { }
+            catch (ArgumentOutOfRangeException) { }
         }
     }
 
@@ -665,7 +679,19 @@ public partial class FrmMain : Form
         string filename = "",
         CancellationTokenSource? token = null)
     {
-        #region Validate image index
+        IgPhoto? photo = null;
+        var directReadSettings = new CodecReadOptions()
+        {
+            ColorProfileName = Config.ColorProfile,
+            IsApplyColorProfileForAll = Config.IsApplyColorProfileForAll,
+            ImageChannel = Local.ImageChannel,
+            UseRawThumbnail = Local.Images.ReadOptions.UseRawThumbnail,
+            //UseEmbeddedThumbnail = Local.Images.use
+            Metadata = Local.Metadata,
+        };
+
+
+        #region Validate image index & load image metadata
 
         // temp index
         var imageIndex = Local.CurrentIndex + step;
@@ -679,16 +705,29 @@ public partial class FrmMain : Form
             imageIndex = Local.Images.Length - 1;
 
 
+        // load image metadata
+        if (!string.IsNullOrEmpty(filename))
+        {
+            photo = new IgPhoto(filename);
+            directReadSettings.FirstFrameOnly = Config.SinglePageFormats.Contains(photo.Extension);
+
+            Local.Metadata = Config.Codec.LoadMetadata(filename, directReadSettings);
+        }
+        else
+        {
+            Local.Metadata = Local.Images.GetMetadata(imageIndex);
+
+            // Update current index
+            Local.CurrentIndex = imageIndex;
+        }
+
+
         Local.RaiseImageLoadingEvent(new()
         {
             CurrentIndex = Local.CurrentIndex,
             NewIndex = imageIndex,
-            Filename = filename,
+            FilePath = filename,
         });
-
-
-        // Update current index
-        Local.CurrentIndex = imageIndex;
 
         #endregion
 
@@ -707,24 +746,13 @@ public partial class FrmMain : Form
             }
             else
             {
-                IgPhoto? photo;
-
                 // check if loading is cancelled
                 token?.Token.ThrowIfCancellationRequested();
 
                 // directly load the image file, skip image list
-                if (filename.Length > 0)
+                if (photo != null)
                 {
-                    photo = new IgPhoto(filename);
-                    await photo.LoadAsync(Config.Codec, new()
-                    {
-                        ColorProfileName = Config.ColorProfile,
-                        IsApplyColorProfileForAll = Config.IsApplyColorProfileForAll,
-                        ImageChannel = Local.ImageChannel,
-                        UseRawThumbnail = Local.Images.ReadOptions.UseRawThumbnail,
-                        //UseEmbeddedThumbnail = Local.Images.use
-                        FirstFrameOnly = Config.SinglePageFormats.Contains(photo.Extension),
-                    }, token);
+                    await photo.LoadAsync(Config.Codec, directReadSettings, token);
                 }
                 else
                 {
@@ -808,7 +836,7 @@ public partial class FrmMain : Form
         // Select thumbnail item
         _ = Helpers.RunAsThread(SelectCurrentThumbnail);
 
-        _ = UpdateImageInfo(BasicInfoUpdate.Name | BasicInfoUpdate.Path | BasicInfoUpdate.FileSize | BasicInfoUpdate.ModifiedDate | BasicInfoUpdate.ListCount, e.Filename);
+        UpdateImageInfo(BasicInfoUpdate.All, e.FilePath);
     }
 
     private void Local_OnImageLoaded(ImageLoadedEventArgs e)
@@ -850,7 +878,12 @@ public partial class FrmMain : Form
         }
 
 
-        _ = UpdateImageInfo(BasicInfoUpdate.Dimension | BasicInfoUpdate.FramesCount);
+        if (Local.CurrentIndex >= 0)
+        {
+            SelectCurrentThumbnail();
+        }
+
+        UpdateImageInfo(BasicInfoUpdate.Dimension | BasicInfoUpdate.FramesCount);
 
         // Collect system garbage
         GC.Collect();
@@ -858,11 +891,16 @@ public partial class FrmMain : Form
         GC.Collect();
     }
 
-    private void Local_OnImageListLoaded(object? sender, EventArgs e)
+    private void Local_OnImageListLoaded(ImageListLoadedEventArgs e)
     {
-        _ = UpdateImageInfo(BasicInfoUpdate.ListCount);
+        if (!string.IsNullOrEmpty(e.FilePath))
+        {
+            UpdateCurrentIndex(e.FilePath);
+        }
 
-        //Load thumnbnail
+        UpdateImageInfo(BasicInfoUpdate.ListCount);
+
+        // Load thumnbnail
         _ = Helpers.RunAsThread(LoadThumbnails);
     }
 
@@ -870,17 +908,6 @@ public partial class FrmMain : Form
 
 
     #region PicMain events
-
-    private void PicMain_OnImageChanged(EventArgs e)
-    {
-        PicMain.ClearMessage();
-    }
-
-    private void PicMain_Click(object sender, EventArgs e)
-    {
-        PicMain.Focus();
-    }
-    
 
     private void PicMain_DragOver(object sender, DragEventArgs e)
     {
@@ -933,13 +960,7 @@ public partial class FrmMain : Form
             return;
         }
 
-        var filePath = filePaths[0];
-
-        if (string.Equals(Path.GetExtension(filePath), ".lnk", StringComparison.CurrentCultureIgnoreCase))
-        {
-            filePath = FileShortcutApi.GetTargetPathFromShortcut(filePath);
-        }
-
+        var filePath = Helpers.ResolvePath(filePaths[0]);
         var imageIndex = Local.Images.IndexOf(filePath);
 
         // The file is located another folder, load the entire folder
@@ -960,6 +981,10 @@ public partial class FrmMain : Form
         }
     }
 
+    private void PicMain_Click(object sender, EventArgs e)
+    {
+        PicMain.Focus();
+    }
 
     private void PicMain_OnNavLeftClicked(MouseEventArgs e)
     {
@@ -982,7 +1007,7 @@ public partial class FrmMain : Form
     /// <summary>
     /// Update image info in status bar
     /// </summary>
-    private async Task UpdateImageInfo(BasicInfoUpdate types = BasicInfoUpdate.All,
+    private void UpdateImageInfo(BasicInfoUpdate types = BasicInfoUpdate.All,
         string? filename = null)
     {
         if (InvokeRequired)
@@ -991,28 +1016,35 @@ public partial class FrmMain : Form
             return;
         }
 
-        var updateAll = BasicInfo.IsNull || types.HasFlag(BasicInfoUpdate.All);
         FileInfo? fi = null;
-        var fullPath = string.IsNullOrEmpty(filename) ? Local.Images.GetFileName(Local.CurrentIndex) : filename;
+
+        var fullPath = string.IsNullOrEmpty(filename)
+            ? Local.Images.GetFileName(Local.CurrentIndex)
+            : Helpers.ResolvePath(filename);
+
+        var updateAll = BasicInfo.IsNull || types.HasFlag(BasicInfoUpdate.All);
+        var isFileUpdate = updateAll && !string.IsNullOrEmpty(fullPath)
+            || types.HasFlag(BasicInfoUpdate.FileSize)
+            || types.HasFlag(BasicInfoUpdate.ModifiedDate);
 
         try
         {
-            fi = new FileInfo(fullPath);
+            if (isFileUpdate)
+            {
+                fi = new FileInfo(fullPath);
+            }
         }
         catch { }
 
 
         // AppName
-        if (updateAll || types.HasFlag(BasicInfoUpdate.AppName))
+        if (Config.InfoItems.Contains(nameof(BasicInfo.AppName)))
         {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.AppName)))
-            {
-                BasicInfo.AppName = Application.ProductName;
-            }
-            else
-            {
-                BasicInfo.AppName = string.Empty;
-            }
+            BasicInfo.AppName = Application.ProductName;
+        }
+        else
+        {
+            BasicInfo.AppName = string.Empty;
         }
 
         // ListCount
@@ -1064,7 +1096,8 @@ public partial class FrmMain : Form
         // FileSize
         if (updateAll || types.HasFlag(BasicInfoUpdate.FileSize))
         {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.FileSize)))
+            if (Config.InfoItems.Contains(nameof(BasicInfo.FileSize))
+                && fi != null)
             {
                 BasicInfo.FileSize = Helpers.FormatSize(fi.Length);
             }
@@ -1077,9 +1110,10 @@ public partial class FrmMain : Form
         // Dimension
         if (updateAll || types.HasFlag(BasicInfoUpdate.Dimension))
         {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.Dimension)))
+            if (Config.InfoItems.Contains(nameof(BasicInfo.Dimension))
+                && Local.Metadata != null)
             {
-                BasicInfo.Dimension = $"{PicMain.ImageWidth} x {PicMain.ImageHeight} px";
+                BasicInfo.Dimension = $"{Local.Metadata.Width} x {Local.Metadata.Height} px";
             }
             else
             {
@@ -1090,7 +1124,8 @@ public partial class FrmMain : Form
         // Zoom
         if (updateAll || types.HasFlag(BasicInfoUpdate.Zoom))
         {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.Zoom)))
+            if (Config.InfoItems.Contains(nameof(BasicInfo.Zoom))
+                && Local.Metadata != null)
             {
                 BasicInfo.Zoom = $"{Math.Round(PicMain.ZoomFactor * 100, 2)}%";
             }
@@ -1103,7 +1138,8 @@ public partial class FrmMain : Form
         // ModifiedDate
         if (updateAll || types.HasFlag(BasicInfoUpdate.ModifiedDate))
         {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.ModifiedDate)))
+            if (Config.InfoItems.Contains(nameof(BasicInfo.ModifiedDate))
+                && fi != null)
             {
                 BasicInfo.ModifiedDate = fi.LastWriteTime.ToString();
             }
@@ -1113,14 +1149,13 @@ public partial class FrmMain : Form
             }
         }
 
-
         // FramesCount
         if (updateAll || types.HasFlag(BasicInfoUpdate.FramesCount))
         {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.FramesCount)))
+            if (Config.InfoItems.Contains(nameof(BasicInfo.FramesCount))
+                && Local.Metadata != null)
             {
-                var imgData = await Local.Images.GetAsync(Local.CurrentIndex);
-                BasicInfo.FramesCount = $"{imgData?.FramesCount} frame(s)";
+                BasicInfo.FramesCount = $"{Local.Metadata.FramesCount} frame(s)";
             }
             else
             {

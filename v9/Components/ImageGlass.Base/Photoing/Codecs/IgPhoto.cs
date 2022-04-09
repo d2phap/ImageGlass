@@ -79,6 +79,11 @@ public class IgPhoto : IDisposable
     /// </summary>
     public IgImgData ImgData { get; internal set; } = new();
 
+    /// <summary>
+    /// Gets image metadata
+    /// </summary>
+    public IgMetadata? Metadata { get; internal set; }
+
     #endregion
 
 
@@ -93,6 +98,7 @@ public class IgPhoto : IDisposable
 
 
     #region Public functions
+
 
     /// <summary>
     /// Load the photo.
@@ -122,8 +128,8 @@ public class IgPhoto : IDisposable
                 throw new NullReferenceException(nameof(codec));
 
             // load image data
-            var metadata = codec.LoadMetadata(Filename, options);
-            FramesCount = metadata?.FramesCount ?? 0;
+            Metadata ??= options.Metadata ?? codec.LoadMetadata(Filename, options);
+            FramesCount = Metadata?.FramesCount ?? 0;
 
             if (options.FirstFrameOnly == null) {
                 options = options with

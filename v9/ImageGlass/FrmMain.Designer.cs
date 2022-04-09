@@ -1022,7 +1022,6 @@ namespace ImageGlass
             this.PicMain.OnZoomChanged += new ImageGlass.PhotoBox.ViewBox.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
             this.PicMain.OnNavLeftClicked += new ImageGlass.PhotoBox.ViewBox.NavLeftClickedEventHandler(this.PicMain_OnNavLeftClicked);
             this.PicMain.OnNavRightClicked += new ImageGlass.PhotoBox.ViewBox.NavRightClickedEventHandler(this.PicMain_OnNavRightClicked);
-            this.PicMain.OnImageChanged += new ImageGlass.PhotoBox.ViewBox.ImageChangedEventHandler(this.PicMain_OnImageChanged);
             this.PicMain.Click += new System.EventHandler(this.PicMain_Click);
             this.PicMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.PicMain_DragDrop);
             this.PicMain.DragOver += new System.Windows.Forms.DragEventHandler(this.PicMain_DragOver);

@@ -1641,6 +1641,8 @@ public partial class ViewBox : HybridControl
         // emit OnImageChanged event
         OnImageChanged?.Invoke(EventArgs.Empty);
 
+        ClearMessage();
+
         if (CanImageAnimate && Source != ImageSource.Null)
         {
             UpdateZoomMode();

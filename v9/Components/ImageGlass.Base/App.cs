@@ -81,28 +81,6 @@ public class App
 
 
     /// <summary>
-    /// Parse string to absolute path
-    /// </summary>
-    /// <param name="inputPath">The relative/absolute path of file/folder; or a URI Scheme</param>
-    /// <returns></returns>
-    public static string ToAbsolutePath(string inputPath)
-    {
-        var path = inputPath;
-        const string protocol = Constants.URI_SCHEME + ":";
-
-        // If inputPath is URI Scheme
-        if (path.StartsWith(protocol))
-        {
-            // Retrieve the real path
-            path = Uri.UnescapeDataString(path).Remove(0, protocol.Length);
-        }
-
-        // Parse environment vars to absolute path
-        return Environment.ExpandEnvironmentVariables(path);
-    }
-
-
-    /// <summary>
     /// Center the given form to the current screen.
     /// Note***: The method Form.CenterToScreen() contains a bug:
     /// https://stackoverflow.com/a/6837499/2856887

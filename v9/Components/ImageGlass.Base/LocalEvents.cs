@@ -25,7 +25,7 @@ public class ImageLoadingEventArgs
 {
     public int CurrentIndex { get; init; }
     public int NewIndex { get; init; }
-    public string? Filename { get; init; }
+    public string? FilePath { get; init; }
 }
 
 public class ImageLoadedEventArgs
@@ -34,4 +34,9 @@ public class ImageLoadedEventArgs
     public IgPhoto? Data { get; init; }
     public Exception? Error { get; init; }
     public bool KeepZoomRatio { get; init; }
+}
+
+public class ImageListLoadedEventArgs
+{
+    public string? FilePath { get; init; }
 }

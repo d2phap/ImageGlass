@@ -186,13 +186,10 @@ public class ImageBooster : IDisposable
 
                 if (!img.IsDone)
                 {
-                    var metadata = Codec.LoadMetadata(img.Filename, ReadOptions);
-
                     // start loading image file
                     await img.LoadAsync(Codec, ReadOptions with
                     {
                         FirstFrameOnly = SinglePageFormats.Contains(img.Extension),
-                        Metadata = metadata,
                     }).ConfigureAwait(false);
                 }
             }
@@ -287,6 +284,29 @@ public class ImageBooster : IDisposable
         {
             ImgList[index].CancelLoading();
         }
+    }
+
+
+    /// <summary>
+    /// Gets image metadat
+    /// </summary>
+    /// <param name="index">Image index</param>
+    /// <returns></returns>
+    public IgMetadata? GetMetadata(int index)
+    {
+        try
+        {
+            if (ImgList[index].Metadata is null)
+            {
+                ImgList[index].Metadata = Codec.LoadMetadata(
+                    ImgList[index].Filename, ReadOptions);
+            }
+
+            return ImgList[index].Metadata;
+        }
+        catch (ArgumentOutOfRangeException) { }
+
+        return null;
     }
 
 

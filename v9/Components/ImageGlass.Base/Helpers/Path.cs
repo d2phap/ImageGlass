@@ -170,4 +170,36 @@ public partial class Helpers
         return attrs.HasFlag(FileAttributes.Directory);
     }
 
+
+    /// <summary>
+    /// Resolves a relative/protocol/link path to absolute path
+    /// </summary>
+    /// <param name="inputPath">A path</param>
+    /// <returns></returns>
+    public static string ResolvePath(string? inputPath)
+    {
+        if (string.IsNullOrEmpty(inputPath))
+            return inputPath ?? "";
+
+        var path = inputPath;
+        const string protocol = Constants.URI_SCHEME + ":";
+
+        // If inputPath is URI Scheme
+        if (path.StartsWith(protocol))
+        {
+            // Retrieve the real path
+            path = Uri.UnescapeDataString(path).Remove(0, protocol.Length);
+        }
+
+        // Parse environment vars to absolute path
+        path = Environment.ExpandEnvironmentVariables(path);
+
+        if (string.Equals(Path.GetExtension(inputPath), ".lnk", StringComparison.CurrentCultureIgnoreCase))
+        {
+            path = FileShortcutApi.GetTargetPathFromShortcut(path);
+        }
+
+        return path;
+    }
+
 }
