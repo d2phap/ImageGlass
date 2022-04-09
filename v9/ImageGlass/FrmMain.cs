@@ -710,7 +710,7 @@ public partial class FrmMain : Form
             ColorProfileName = Config.ColorProfile,
             IsApplyColorProfileForAll = Config.IsApplyColorProfileForAll,
             ImageChannel = Local.ImageChannel,
-            UseRawThumbnail = Local.Images.ReadOptions.UseRawThumbnail,
+            UseRawThumbnail = Config.IsUseRawThumbnail,
             //UseEmbeddedThumbnail = Local.Images.use
             Metadata = Local.Metadata,
         };

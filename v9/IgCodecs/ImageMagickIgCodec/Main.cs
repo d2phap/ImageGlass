@@ -127,7 +127,7 @@ public class Main : IIgCodec
         {
             // https://github.com/dlemstra/Magick.NET/issues/1077
             SyncImageWithExifProfile = true,
-            SyncImageWithTiffProperties = true
+            SyncImageWithTiffProperties = true,
         };
 
         if (ext.Equals(".SVG", StringComparison.OrdinalIgnoreCase))
@@ -141,6 +141,7 @@ public class Main : IIgCodec
             settings.SetDefines(new HeicReadDefines
             {
                 PreserveOrientation = true,
+                DepthImage = true,
             });
         }
         else if (ext.Equals(".JP2", StringComparison.OrdinalIgnoreCase))
