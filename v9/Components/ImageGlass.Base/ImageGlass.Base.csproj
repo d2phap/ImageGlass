@@ -37,7 +37,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Magick.NET-Q16-OpenMP-x64" Version="10.1.0" />
+      <PackageReference Include="Magick.NET-Q16-OpenMP-x64" Version="11.1.0" />
     </ItemGroup>
 
 </Project>
