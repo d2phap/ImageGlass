@@ -1568,6 +1568,12 @@ public partial class ViewBox : HybridControl
     /// <param name="delayMs">Duration to delay before displaying the message.</param>
     public void ShowMessage(string text, int durationMs = 0, int delayMs = 0)
     {
+        if (InvokeRequired)
+        {
+            Invoke(ShowMessage, text, durationMs, delayMs);
+            return;
+        }
+
         _msgTokenSrc?.Cancel();
         _msgTokenSrc = new();
 
@@ -1580,6 +1586,12 @@ public partial class ViewBox : HybridControl
     /// </summary>
     public void ClearMessage()
     {
+        if (InvokeRequired)
+        {
+            Invoke(ClearMessage);
+            return;
+        }
+
         _msgTokenSrc?.Cancel();
         Text = string.Empty;
     }
