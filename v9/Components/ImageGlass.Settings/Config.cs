@@ -26,7 +26,6 @@ using Microsoft.Extensions.Configuration;
 using System.Dynamic;
 using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace ImageGlass.Settings;
 
@@ -178,14 +177,14 @@ public static class Config
     /// </summary>
     public static List<string> DefaultInfoItems => new()
     {
-        "Name",
-        "ListCount",
-        "FramesCount",
-        "Zoom",
-        "Dimension",
-        "FileSize",
-        "ModifiedDate",
-        "AppName",
+        nameof(BasicInfo.Name),
+        nameof(BasicInfo.ListCount),
+        nameof(BasicInfo.FramesCount),
+        nameof(BasicInfo.Zoom),
+        nameof(BasicInfo.Dimension),
+        nameof(BasicInfo.FileSize),
+        nameof(BasicInfo.DateTimeAuto),
+        nameof(BasicInfo.AppName),
     };
 
     #endregion
