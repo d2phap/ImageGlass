@@ -244,6 +244,42 @@ public partial class FrmMain
         #endregion
 
 
+        // Menu Layout
+        #region Menu Layout
+        MnuLayout.Text = lang[$"{Name}.{nameof(MnuLayout)}"];
+
+        MnuToggleToolbar.Text = lang[$"{Name}.{nameof(MnuToggleToolbar)}"];
+        MnuToggleThumbnails.Text = lang[$"{Name}.{nameof(MnuToggleThumbnails)}"];
+        MnuToggleCheckerboard.Text = lang[$"{Name}.{nameof(MnuToggleCheckerboard)}"];
+        MnuToggleTopMost.Text = lang[$"{Name}.{nameof(MnuToggleTopMost)}"];
+        #endregion
+
+
+        // Menu Tools
+        #region Menu Tools
+        MnuTools.Text = lang[$"{Name}.{nameof(MnuTools)}"];
+
+        MnuColorPicker.Text = lang[$"{Name}.{nameof(MnuColorPicker)}"];
+        MnuPageNav.Text = lang[$"{Name}.{nameof(MnuPageNav)}"];
+        MnuCropping.Text = lang[$"{Name}.{nameof(MnuCropping)}"];
+        MnuExifTool.Text = lang[$"{Name}.{nameof(MnuExifTool)}"];
+        #endregion
+
+
+        MnuSettings.Text = lang[$"{Name}.{nameof(MnuSettings)}"];
+        MnuExit.Text = lang[$"{Name}.{nameof(MnuExit)}"];
+
+
+        // Menu Help
+        #region Menu Help
+        MnuHelp.Text = lang[$"{Name}.{nameof(MnuHelp)}"];
+
+        MnuAbout.Text = lang[$"{Name}.{nameof(MnuAbout)}"];
+        MnuFirstLaunch.Text = lang[$"{Name}.{nameof(MnuFirstLaunch)}"];
+        MnuReportIssue.Text = lang[$"{Name}.{nameof(MnuReportIssue)}"];
+        #endregion
+
+
         #endregion
     }
 

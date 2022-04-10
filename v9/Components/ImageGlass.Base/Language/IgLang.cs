@@ -215,37 +215,34 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuExitSlideshow", "Exit slideshow"); //v3.0
         #endregion
 
-
-        Add("FrmMain.mnuMainShare", "Share…"); // v3.0
-
         #region Layout
-        Add("FrmMain.mnuMainLayout", "Layout"); //v3.0
-        Add("FrmMain.mnuMainToolbar", "Toolbar"); //v3.0
-        Add("FrmMain.mnuMainThumbnailBar", "Thumbnail panel"); //v3.0
-        Add("FrmMain.mnuMainCheckBackground", "Checkerboard background"); //v3.0, updated v5.0
-        Add("FrmMain.mnuMainAlwaysOnTop", "Keep window always on top"); //v3.2
+        Add("FrmMain.MnuLayout", "Layout"); //v3.0
+        Add("FrmMain.MnuToggleToolbar", "Toolbar"); //v3.0
+        Add("FrmMain.MnuToggleThumbnails", "Thumbnail panel"); //v3.0
+        Add("FrmMain.MnuToggleCheckerboard", "Checkerboard background"); //v3.0, updated v5.0
+        Add("FrmMain.MnuToggleTopMost", "Keep window always on top"); //v3.2
         #endregion
 
         #region Tools
-        Add("FrmMain.mnuMainTools", "Tools"); //v3.0
-        Add("FrmMain.mnuMainColorPicker", "Color picker"); //v5.0
-        Add("FrmMain.mnuMainPageNav", "Page navigation"); // v7.5
-        Add("FrmMain.mnuMainCrop", "Cropping"); // v7.6
-        Add("FrmMain.mnuExifTool", "Exif tool"); // v8.0
+        Add("FrmMain.MnuTools", "Tools"); //v3.0
+        Add("FrmMain.MnuColorPicker", "Color picker"); //v5.0
+        Add("FrmMain.MnuPageNav", "Page navigation"); // v7.5
+        Add("FrmMain.MnuCropping", "Cropping"); // v7.6
+        Add("FrmMain.MnuExifTool", "Exif tool"); // v8.0
         #endregion
 
-        Add("FrmMain.mnuMainSettings", "Settings…"); // v3.0
+        Add("FrmMain.MnuSettings", "Settings…"); // v3.0
 
         #region Help
-        Add("FrmMain.mnuMainHelp", "Help"); //v7.0
-        Add("FrmMain.mnuMainAbout", "About"); //v3.0
-        Add("FrmMain.mnuMainFirstLaunch", "First-launch configurations…"); //v5.0
-        Add("FrmMain.mnuMainCheckForUpdate._NoUpdate", "Check for update…"); //v5.0
-        Add("FrmMain.mnuMainCheckForUpdate._NewVersion", "A new version is available!"); //v5.0
-        Add("FrmMain.mnuMainReportIssue", "Report an issue…"); //v3.0
-
-        Add("FrmMain.mnuMainExitApplication", "Exit ImageGlass"); //v7.0
+        Add("FrmMain.MnuHelp", "Help"); //v7.0
+        Add("FrmMain.MnuAbout", "About"); //v3.0
+        Add("FrmMain.MnuFirstLaunch", "First-launch configurations…"); //v5.0
+        Add("FrmMain.MnuCheckForUpdate._NoUpdate", "Check for update…"); //v5.0
+        Add("FrmMain.MnuCheckForUpdate._NewVersion", "A new version is available!"); //v5.0
+        Add("FrmMain.MnuReportIssue", "Report an issue…"); //v3.0
         #endregion
+
+        Add("FrmMain.MnuExit", "Exit ImageGlass"); //v7.0
 
         #endregion
 
