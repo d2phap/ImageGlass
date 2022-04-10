@@ -1532,7 +1532,7 @@ public partial class ViewBox : HybridControl
     /// <param name="durationMs">Display duration in millisecond.
     /// Set it <b>greater than 0</b> to disable auto clear.</param>
     /// <param name="delayMs">Duration to delay before displaying the message.</param>
-    private async void ShowMessagePrivate(string text, int durationMs = 0, int delayMs = 0)
+    private async void ShowMessagePrivate(string text, int durationMs = 0, int delayMs = 0, bool forceUpdate = true)
     {
         var token = _msgTokenSrc?.Token ?? default;
 
@@ -1545,6 +1545,11 @@ public partial class ViewBox : HybridControl
 
             Text = text;
 
+            if (forceUpdate)
+            {
+                Invalidate();
+            }
+
             if (durationMs > 0)
             {
                 await Task.Delay(durationMs, token);
@@ -1555,6 +1560,11 @@ public partial class ViewBox : HybridControl
         if (durationMs > 0 || token.IsCancellationRequested)
         {
             Text = string.Empty;
+
+            if (forceUpdate)
+            {
+                Invalidate();
+            }
         }
     }
 
@@ -1566,34 +1576,39 @@ public partial class ViewBox : HybridControl
     /// <param name="durationMs">Display duration in millisecond.
     /// Set it <b>greater than 0</b> to disable auto clear.</param>
     /// <param name="delayMs">Duration to delay before displaying the message.</param>
-    public void ShowMessage(string text, int durationMs = 0, int delayMs = 0)
+    public void ShowMessage(string text, int durationMs = 0, int delayMs = 0, bool forceUpdate = true)
     {
         if (InvokeRequired)
         {
-            Invoke(ShowMessage, text, durationMs, delayMs);
+            Invoke(ShowMessage, text, durationMs, delayMs, forceUpdate);
             return;
         }
 
         _msgTokenSrc?.Cancel();
         _msgTokenSrc = new();
 
-        ShowMessagePrivate(text, durationMs, delayMs);
+        ShowMessagePrivate(text, durationMs, delayMs, forceUpdate);
     }
 
 
     /// <summary>
     /// Immediately clears text message.
     /// </summary>
-    public void ClearMessage()
+    public void ClearMessage(bool forceUpdate = true)
     {
         if (InvokeRequired)
         {
-            Invoke(ClearMessage);
+            Invoke(ClearMessage, forceUpdate);
             return;
         }
 
         _msgTokenSrc?.Cancel();
         Text = string.Empty;
+
+        if (forceUpdate)
+        {
+            Invalidate();
+        }
     }
 
 
@@ -1636,13 +1651,14 @@ public partial class ViewBox : HybridControl
         _imageD2D = null;
         _imageGdiPlus = null;
 
+        // Check and preprocess image info
+        CheckInputImage(bmp);
+
         if (bmp is null)
         {
             Refresh();
+            return;
         };
-
-        // Check and preprocess image info
-        CheckInputImage(bmp);
 
         // converting from GDI+ to Direct2D is expensive,
         // we use GDI+ to preview the image
@@ -1652,8 +1668,6 @@ public partial class ViewBox : HybridControl
 
         // emit OnImageChanged event
         OnImageChanged?.Invoke(EventArgs.Empty);
-
-        ClearMessage();
 
         if (CanImageAnimate && Source != ImageSource.Null)
         {

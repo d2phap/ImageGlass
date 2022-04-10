@@ -844,11 +844,8 @@ public partial class FrmMain : Form
     /// <param name="index">Image index</param>
     private async void GoToImageAsync(int index)
     {
-        _loadCancelToken?.Cancel();
-        _loadCancelToken = new();
-
         Local.CurrentIndex = index;
-        await ViewNextAsync(0, token: _loadCancelToken);
+        await ViewNextCancellableAsync(0);
     }
 
     #endregion
@@ -858,6 +855,9 @@ public partial class FrmMain : Form
 
     private void Local_OnImageLoading(ImageLoadingEventArgs e)
     {
+        PicMain.ClearMessage();
+        PicMain.ShowMessage(Config.Language[$"{Name}._Loading"], delayMs: 1500);
+
         // Select thumbnail item
         _ = Helpers.RunAsThread(SelectCurrentThumbnail);
 
