@@ -196,24 +196,25 @@ public class IgLang : Dictionary<string, string>
         #endregion
 
         #region Clipboard
-        Add("FrmMain.mnuMainClipboard", "Clipboard"); //v3.0
-        Add("FrmMain.mnuMainCopy", "Copy"); //v3.0
-        Add("FrmMain.mnuMainCopyImageData", "Copy image data"); //v5.0
-        Add("FrmMain.mnuMainCut", "Cut"); //v3.0
-        Add("FrmMain.mnuMainCopyImagePath", "Copy image path"); //v3.0
-        Add("FrmMain.mnuMainClearClipboard", "Clear clipboard"); //v3.0
+        Add("FrmMain.MnuClipboard", "Clipboard"); //v3.0
+        Add("FrmMain.MnuCopy", "Copy"); //v3.0
+        Add("FrmMain.MnuCopyImageData", "Copy image data"); //v5.0
+        Add("FrmMain.MnuCut", "Cut"); //v3.0
+        Add("FrmMain.MnuCopyPath", "Copy image path"); //v3.0
+        Add("FrmMain.MnuClearClipboard", "Clear clipboard"); //v3.0
         #endregion
 
-        Add("FrmMain.mnuWindowFit", "Window fit"); //v7.5
-        Add("FrmMain.mnuMainFullScreen", "Full screen"); //v3.0
-        Add("FrmMain.mnuFrameless", "Frameless"); //v7.5
+        Add("FrmMain.MnuWindowFit", "Window fit"); //v7.5
+        Add("FrmMain.MnuFullScreen", "Full screen"); //v3.0
+        Add("FrmMain.MnuFrameless", "Frameless"); //v7.5
 
         #region Slideshow
-        Add("FrmMain.mnuMainSlideShow", "Slideshow"); //v3.0
-        Add("FrmMain.mnuMainSlideShowStart", "Start slideshow"); //v3.0
-        Add("FrmMain.mnuMainSlideShowPause", "Pause / Resume slideshow"); //v3.0
-        Add("FrmMain.mnuMainSlideShowExit", "Exit slideshow"); //v3.0
+        Add("FrmMain.MnuSlideshow", "Slideshow"); //v3.0
+        Add("FrmMain.MnuStartSlideshow", "Start slideshow"); //v3.0
+        Add("FrmMain.MnuPauseResumeSlideshow", "Pause / Resume slideshow"); //v3.0
+        Add("FrmMain.MnuExitSlideshow", "Exit slideshow"); //v3.0
         #endregion
+
 
         Add("FrmMain.mnuMainShare", "Share…"); // v3.0
 

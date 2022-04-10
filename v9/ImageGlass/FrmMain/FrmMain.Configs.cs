@@ -214,6 +214,35 @@ public partial class FrmMain
         #endregion
 
 
+        // Menu Clipboard
+        #region Menu CLipboard
+        MnuClipboard.Text = lang[$"{Name}.{nameof(MnuClipboard)}"];
+
+        MnuCopy.Text = lang[$"{Name}.{nameof(MnuCopy)}"];
+        MnuCopyImageData.Text = lang[$"{Name}.{nameof(MnuCopyImageData)}"];
+        MnuCut.Text = lang[$"{Name}.{nameof(MnuCut)}"];
+        MnuCopyPath.Text = lang[$"{Name}.{nameof(MnuCopyPath)}"];
+        MnuClearClipboard.Text = lang[$"{Name}.{nameof(MnuClearClipboard)}"];
+        #endregion
+
+
+        // Window modes & Menu Slideshow
+        #region Window modes
+        MnuWindowFit.Text = lang[$"{Name}.{nameof(MnuWindowFit)}"];
+        MnuFullScreen.Text = lang[$"{Name}.{nameof(MnuFullScreen)}"];
+        MnuFrameless.Text = lang[$"{Name}.{nameof(MnuFrameless)}"];
+
+        // Menu Slideshow
+        #region Menu Slideshow
+        MnuSlideshow.Text = lang[$"{Name}.{nameof(MnuSlideshow)}"];
+
+        MnuStartSlideshow.Text = lang[$"{Name}.{nameof(MnuStartSlideshow)}"];
+        MnuPauseResumeSlideshow.Text = lang[$"{Name}.{nameof(MnuPauseResumeSlideshow)}"];
+        MnuExitSlideshow.Text = lang[$"{Name}.{nameof(MnuExitSlideshow)}"];
+        #endregion
+
+        #endregion
+
 
         #endregion
     }
