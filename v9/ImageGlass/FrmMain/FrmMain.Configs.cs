@@ -125,6 +125,9 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Load <see cref="MnuMain"/> language.
+    /// </summary>
     private void LoadLanguages()
     {
         var lang = Config.Language;
@@ -282,7 +285,6 @@ public partial class FrmMain
 
         #endregion
     }
-
 
 
     /// <summary>

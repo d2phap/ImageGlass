@@ -148,8 +148,6 @@ public partial class FrmMain : Form
     /// </summary>
     private void OnDpiChanged()
     {
-        Text = DpiApi.CurrentDpi.ToString();
-
         // scale toolbar icons corresponding to DPI
         var newIconHeight = DpiApi.Transform(Config.ToolbarIconHeight);
 
@@ -880,7 +878,7 @@ public partial class FrmMain : Form
                 Local.Images.Unload(e.Index);
             }
 
-            PicMain.ShowMessage(Config.Language[$"{Name}.picMain._ErrorText"] + "\r\n" + e.Error.Source + ": " + e.Error.Message);
+            PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(PicMain)}._ErrorText"] + "\r\n" + e.Error.Source + ": " + e.Error.Message);
         }
 
         else if (e.Data?.ImgData.Image != null)
@@ -1081,11 +1079,11 @@ public partial class FrmMain : Form
             {
                 if (Local.Images.Length == 0)
                 {
-                    BasicInfo.ListCount = "0/0 file(s)";
+                    BasicInfo.ListCount = $"0/0 {Config.Language[$"{Name}._Files"]}";
                 }
                 else
                 {
-                    BasicInfo.ListCount = $"{Local.CurrentIndex + 1}/{Local.Images.Length} file(s)";
+                    BasicInfo.ListCount = $"{Local.CurrentIndex + 1}/{Local.Images.Length} {Config.Language[$"{Name}._Files"]}";
                 }
             }
             else
