@@ -254,6 +254,7 @@ public class IgLang : Dictionary<string, string>
 
         Add("FrmMain._OpenFileDialog", "All supported files");
         Add("FrmMain._Files", "file(s)"); // v7.5
+        Add("FrmMain._Loading", "Loading..."); // v3.0
         //Add("FrmMain._Pages", "pages"); // v7.5
         //Add("FrmMain._ImageData", "Image data"); // v5.0
         //Add("FrmMain._RenameDialogText", "Rename"); // v3.5
@@ -275,7 +276,7 @@ public class IgLang : Dictionary<string, string>
         //Add("FrmMain._SaveImage", "Image was saved to\r\n{0}"); // v5.0
         //Add("FrmMain._SavingImage", "Saving image...\r\n{0}"); // v7.6
         //Add("FrmMain._SaveImageError", "Unable to save image\r\n{0}."); // v5.0
-        Add("FrmMain._Loading", "Loading..."); // v3.0
+        
         //Add("FrmMain._FirstItemOfList", "Reached the first image"); // v4.0
         //Add("FrmMain._LastItemOfList", "Reached the last image"); // v4.0
         //Add("FrmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); // Added V5.0; Modified V6.0
