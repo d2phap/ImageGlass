@@ -99,58 +99,57 @@ public class IgLang : Dictionary<string, string>
     /// </summary>
     public void InitDefaultLanguage()
     {
-        Add("_IncompatibleConfigs", "Some settings are not compatible with your ImageGlass {0}. It's recommended to update them before continuing.\r\n\n- Click Yes to learn about the changes.\r\n- Click No to launch ImageGlass with default settings."); //v7.5
 
-        Add("_.ImageOrderBy._Name", "Name (default)"); //v8.0
-        Add("_.ImageOrderBy._Length", "Length"); //v8.0
-        Add("_.ImageOrderBy._CreationTime", "Creation time"); //v8.0
-        Add("_.ImageOrderBy._LastAccessTime", "Last access time"); //v8.0
-        Add("_.ImageOrderBy._LastWriteTime", "Last write time"); //v8.0
-        Add("_.ImageOrderBy._Extension", "Extension"); //v8.0
-        Add("_.ImageOrderBy._Random", "Random"); //v8.0
+        //Add("_IncompatibleConfigs", "Some settings are not compatible with your ImageGlass {0}. It's recommended to update them before continuing.\r\n\n- Click Yes to learn about the changes.\r\n- Click No to launch ImageGlass with default settings."); //v7.5
 
-        Add("_.ImageOrderType._Asc", "Ascending");  //v8.0
-        Add("_.ImageOrderType._Desc", "Descending");  //v8.0
+        //Add("_.ImageOrderBy._Name", "Name (default)"); //v8.0
+        //Add("_.ImageOrderBy._Length", "Length"); //v8.0
+        //Add("_.ImageOrderBy._CreationTime", "Creation time"); //v8.0
+        //Add("_.ImageOrderBy._LastAccessTime", "Last access time"); //v8.0
+        //Add("_.ImageOrderBy._LastWriteTime", "Last write time"); //v8.0
+        //Add("_.ImageOrderBy._Extension", "Extension"); //v8.0
+        //Add("_.ImageOrderBy._Random", "Random"); //v8.0
 
-        Add("_.AfterOpeningEditAppAction._Nothing", "Nothing"); //v8.0
-        Add("_.AfterOpeningEditAppAction._Minimize", "Minimize"); //v8.0
-        Add("_.AfterOpeningEditAppAction._Close", "Close"); //v8.0
+        //Add("_.ImageOrderType._Asc", "Ascending");  //v8.0
+        //Add("_.ImageOrderType._Desc", "Descending");  //v8.0
+
+        //Add("_.AfterOpeningEditAppAction._Nothing", "Nothing"); //v8.0
+        //Add("_.AfterOpeningEditAppAction._Minimize", "Minimize"); //v8.0
+        //Add("_.AfterOpeningEditAppAction._Close", "Close"); //v8.0
 
         #region FrmMain
 
         #region Main menu
 
         #region File
-        Add("FrmMain.mnuMainFile", "File"); //v7.0
-        Add("FrmMain.mnuMainOpenFile", "Open file…"); //v3.0
-        Add("FrmMain.mnuMainOpenImageData", "Open image data from clipboard"); //v3.0
-        Add("FrmMain.mnuMainNewWindow", "Open new window"); //v7.0
-        Add("FrmMain.mnuMainNewWindow._Error", "Cannot open new window because only one instance allowed"); //v7.0
-        Add("FrmMain.mnuSaveImage", "Save image"); //v8.1
-        Add("FrmMain.mnuMainSaveAs", "Save image as…"); //v3.0
-        Add("FrmMain.mnuMainRefresh", "Refresh"); //v3.0
-        Add("FrmMain.mnuMainReloadImage", "Reload image"); //v5.5
-        Add("FrmMain.mnuMainReloadImageList", "Reload image list"); //v7.0
-        Add("FrmMain.mnuOpenWith", "Open with…"); //v7.6
-        Add("FrmMain.mnuMainEditImage", "Edit image {0}…"); //v3.0, updated 4.0
-        Add("FrmMain.mnuMainPrint", "Print…"); //v3.0
+        Add("FrmMain.MnuFile", "File"); //v7.0
+        Add("FrmMain.MnuOpenFile", "Open file…"); //v3.0
+        Add("FrmMain.MnuOpenImageData", "Open image data from clipboard"); //v3.0
+        Add("FrmMain.MnuNewWindow", "Open new window"); //v7.0
+        Add("FrmMain.MnuNewWindow._Error", "Cannot open new window because only one instance allowed"); //v7.0
+        Add("FrmMain.MnuSave", "Save image"); //v8.1
+        Add("FrmMain.MnuSaveAs", "Save image as…"); //v3.0
+        Add("FrmMain.MnuRefresh", "Refresh"); //v3.0
+        Add("FrmMain.MnuReload", "Reload image"); //v5.5
+        Add("FrmMain.MnuReloadImageList", "Reload image list"); //v7.0
+        Add("FrmMain.MnuOpenWith", "Open with…"); //v7.6
+        Add("FrmMain.MnuEdit", "Edit image {0}…"); //v3.0, updated 4.0
+        Add("FrmMain.MnuPrint", "Print…"); //v3.0
         #endregion
 
         #region Navigation
-        Add("FrmMain.mnuMainNavigation", "Navigation"); //v3.0
-        Add("FrmMain.mnuMainViewNext", "View next image"); //v3.0
-        Add("FrmMain.mnuMainViewNext.Shortcut", "Right Arrow / PageDown"); //v6.0
-        Add("FrmMain.mnuMainViewPrevious", "View previous image"); //v3.0
-        Add("FrmMain.mnuMainViewPrevious.Shortcut", "Left Arrow / PageUp"); // V6.0
+        Add("FrmMain.MnuNavigation", "Navigation"); //v3.0
+        Add("FrmMain.MnuViewNext", "View next image"); //v3.0
+        Add("FrmMain.MnuViewPrevious", "View previous image"); //v3.0
 
-        Add("FrmMain.mnuMainGoto", "Go to…"); //v3.0
-        Add("FrmMain.mnuMainGotoFirst", "Go to the first image"); //v3.0
-        Add("FrmMain.mnuMainGotoLast", "Go to the last image"); //v3.0
+        Add("FrmMain.MnuGoTo", "Go to…"); //v3.0
+        Add("FrmMain.MnuGoToFirst", "Go to the first image"); //v3.0
+        Add("FrmMain.MnuGoToLast", "Go to the last image"); //v3.0
 
-        Add("FrmMain.mnuMainNextPage", "View next page"); //v7.5
-        Add("FrmMain.mnuMainPrevPage", "View previous page"); //v7.5
-        Add("FrmMain.mnuMainFirstPage", "View the first page"); //v7.5
-        Add("FrmMain.mnuMainLastPage", "View the last page"); //v7.5
+        Add("FrmMain.MnuViewNextFrame", "View next frame"); //v7.5
+        Add("FrmMain.MnuViewPreviousFrame", "View previous frame"); //v7.5
+        Add("FrmMain.MnuViewFirstFrame", "View the first frame"); //v7.5
+        Add("FrmMain.MnuViewLastFrame", "View the last last"); //v7.5
         #endregion
 
         #region Zoom
@@ -294,16 +293,16 @@ public class IgLang : Dictionary<string, string>
         #endregion
 
         #region FrmAbout
-        Add("FrmAbout.lblSlogant", "A lightweight, versatile image viewer"); //changed 4.0
-        Add("FrmAbout.lblInfo", "Information");
-        Add("FrmAbout.lblComponent", "Components");
-        Add("FrmAbout.lblReferences", "References");
-        Add("FrmAbout.lblVersion", "Version: {0}");
-        Add("FrmAbout.lblInfoContact", "Contact");
-        Add("FrmAbout.lblSoftwareUpdate", "Software updates");
-        Add("FrmAbout.lnkCheckUpdate", "» Check for update…");
-        Add("FrmAbout._Text", "About");
-        Add("FrmAbout._PortableText", "[Portable]"); //v4.0
+        //Add("FrmAbout.lblSlogant", "A lightweight, versatile image viewer"); //changed 4.0
+        //Add("FrmAbout.lblInfo", "Information");
+        //Add("FrmAbout.lblComponent", "Components");
+        //Add("FrmAbout.lblReferences", "References");
+        //Add("FrmAbout.lblVersion", "Version: {0}");
+        //Add("FrmAbout.lblInfoContact", "Contact");
+        //Add("FrmAbout.lblSoftwareUpdate", "Software updates");
+        //Add("FrmAbout.lnkCheckUpdate", "» Check for update…");
+        //Add("FrmAbout._Text", "About");
+        //Add("FrmAbout._PortableText", "[Portable]"); //v4.0
         #endregion
 
         #region FrmSetting

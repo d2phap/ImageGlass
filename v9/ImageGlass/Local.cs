@@ -46,6 +46,12 @@ internal class Local
     public static event ImageLoadedHandler? OnImageLoaded;
     public delegate void ImageLoadedHandler(ImageLoadedEventArgs e);
 
+    /// <summary>
+    /// Occurs when the FrmMain's state needs to be updated.
+    /// </summary>
+    public static event FrmMainUpdateRequestedHandler? OnRequestUpdateFrmMain;
+    public delegate void FrmMainUpdateRequestedHandler(ForceUpdateAction e);
+
 
     /// <summary>
     /// Raise <see cref="OnImageListLoaded"/> event.
@@ -71,6 +77,16 @@ internal class Local
     public static void RaiseImageLoadedEvent(ImageLoadedEventArgs e)
     {
         OnImageLoaded?.Invoke(e);
+    }
+
+
+    /// <summary>
+    /// Raise <see cref="OnRequestUpdateFrmMain"/> event.
+    /// </summary>
+    /// <param name="e"></param>
+    public static void UpdateFrmMain(ForceUpdateAction e)
+    {
+        OnRequestUpdateFrmMain?.Invoke(e);
     }
 
 

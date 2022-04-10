@@ -37,7 +37,7 @@ namespace ImageGlass
             this.MnuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuOpenFile = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuOpenImageData = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuOpenNewWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuNewWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuSave = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
@@ -213,7 +213,7 @@ namespace ImageGlass
             this.MnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MnuOpenFile,
             this.MnuOpenImageData,
-            this.MnuOpenNewWindow,
+            this.MnuNewWindow,
             this.MnuSave,
             this.MnuSaveAs,
             this.toolStripMenuItem10,
@@ -243,9 +243,9 @@ namespace ImageGlass
             // 
             // MnuOpenNewWindow
             // 
-            this.MnuOpenNewWindow.Name = "MnuOpenNewWindow";
-            this.MnuOpenNewWindow.Size = new System.Drawing.Size(364, 30);
-            this.MnuOpenNewWindow.Text = "[Open new window]";
+            this.MnuNewWindow.Name = "MnuOpenNewWindow";
+            this.MnuNewWindow.Size = new System.Drawing.Size(364, 30);
+            this.MnuNewWindow.Text = "[Open new window]";
             // 
             // MnuSave
             // 
@@ -1162,7 +1162,7 @@ namespace ImageGlass
         private ToolStripSeparator toolStripMenuItem9;
         private ToolStripMenuItem MnuOpenFile;
         private ToolStripMenuItem MnuOpenImageData;
-        private ToolStripMenuItem MnuOpenNewWindow;
+        private ToolStripMenuItem MnuNewWindow;
         private ToolStripMenuItem MnuSave;
         private ToolStripMenuItem MnuSaveAs;
         private ToolStripSeparator toolStripMenuItem10;

@@ -42,7 +42,6 @@ public partial class FrmMain
         Load += FrmMainConfig_Load;
         FormClosing += FrmMainConfig_FormClosing;
         SizeChanged += FrmMainConfig_SizeChanged;
-
     }
 
     private void FrmMainConfig_SizeChanged(object? sender, EventArgs e)
@@ -55,10 +54,15 @@ public partial class FrmMain
 
     private void FrmMainConfig_Load(object? sender, EventArgs e)
     {
+        Local.OnRequestUpdateFrmMain += Local_OnFrmMainUpdateRequested;
+
         // load window placement from settings
         WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
 
         TopMost = Config.IsWindowAlwaysOnTop;
+
+        // load language pack
+        Local.UpdateFrmMain(ForceUpdateAction.LANGUAGE);
     }
 
     private void FrmMainConfig_FormClosing(object? sender, FormClosingEventArgs e)
@@ -69,6 +73,15 @@ public partial class FrmMain
 
 
         Config.Write();
+    }
+
+
+    private void Local_OnFrmMainUpdateRequested(ForceUpdateAction e)
+    {
+        if (e.HasFlag(ForceUpdateAction.LANGUAGE))
+        {
+            LoadLanguages();
+        }
     }
 
 
@@ -109,6 +122,50 @@ public partial class FrmMain
         });
     }
 
+
+    private void LoadLanguages()
+    {
+        var lang = Config.Language;
+
+        #region Main menu
+
+        // Menu File
+        #region Menu File
+        MnuFile.Text = lang[$"{Name}.{nameof(MnuFile)}"];
+
+        MnuOpenFile.Text = lang[$"{Name}.{nameof(MnuOpenFile)}"];
+        MnuOpenImageData.Text = lang[$"{Name}.{nameof(MnuOpenImageData)}"];
+        MnuNewWindow.Text = lang[$"{Name}.{nameof(MnuNewWindow)}"];
+        MnuSave.Text = lang[$"{Name}.{nameof(MnuSave)}"];
+        MnuSaveAs.Text = lang[$"{Name}.{nameof(MnuSaveAs)}"];
+        MnuRefresh.Text = lang[$"{Name}.{nameof(MnuRefresh)}"];
+        MnuReload.Text = lang[$"{Name}.{nameof(MnuReload)}"];
+        MnuReloadImageList.Text = lang[$"{Name}.{nameof(MnuReloadImageList)}"];
+        MnuOpenWith.Text = lang[$"{Name}.{nameof(MnuOpenWith)}"];
+        MnuEdit.Text = lang[$"{Name}.{nameof(MnuEdit)}"];
+        MnuPrint.Text = lang[$"{Name}.{nameof(MnuPrint)}"];
+        #endregion
+
+
+        // Menu Navigation
+        #region Menu Navigation
+        MnuNavigation.Text = lang[$"{Name}.{nameof(MnuNavigation)}"];
+
+        MnuViewNext.Text = lang[$"{Name}.{nameof(MnuViewNext)}"];
+        MnuViewPrevious.Text = lang[$"{Name}.{nameof(MnuViewPrevious)}"];
+
+        MnuGoTo.Text = lang[$"{Name}.{nameof(MnuGoTo)}"];
+        MnuGoToFirst.Text = lang[$"{Name}.{nameof(MnuGoToFirst)}"];
+        MnuGoToLast.Text = lang[$"{Name}.{nameof(MnuGoToLast)}"];
+
+        MnuViewNextFrame.Text = lang[$"{Name}.{nameof(MnuViewNextFrame)}"];
+        MnuViewPreviousFrame.Text = lang[$"{Name}.{nameof(MnuViewPreviousFrame)}"];
+        MnuViewFirstFrame.Text = lang[$"{Name}.{nameof(MnuViewFirstFrame)}"];
+        MnuViewLastFrame.Text = lang[$"{Name}.{nameof(MnuViewLastFrame)}"];
+        #endregion
+
+        #endregion
+    }
 
 }
 

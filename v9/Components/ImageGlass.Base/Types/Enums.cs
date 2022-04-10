@@ -111,7 +111,7 @@ public enum MouseWheelActions
 /// Define the flags to tell frmMain update the UI
 /// </summary>
 [Flags]
-public enum ForceUpdateActions
+public enum ForceUpdateAction
 {
     NONE = 0,
     OTHER_SETTINGS = 1,
