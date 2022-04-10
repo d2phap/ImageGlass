@@ -150,7 +150,7 @@ public class ModernMenu : ContextMenuStrip
         bool toFixDpiSize = false,
         bool toFixDropdown = false)
     {
-        if (items.Count() == 0) return;
+        if (!items.Any()) return;
 
         // standard icon size
         var iconH = DpiApi.Transform(Constants.MENU_ICON_HEIGHT);

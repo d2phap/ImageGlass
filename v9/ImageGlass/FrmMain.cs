@@ -1271,4 +1271,72 @@ public partial class FrmMain : Form
         Application.DoEvents();
     }
 
+
+    private void MnuMain_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+        try
+        {
+            // Alert user if there is a new version
+            if (Config.IsNewVersionAvailable)
+            {
+                MnuCheckForUpdate.Text = MnuCheckForUpdate.Text = Config.Language[$"{Name}.{nameof(MnuCheckForUpdate)}._NewVersion"];
+                MnuHelp.BackColor = MnuCheckForUpdate.BackColor = Color.FromArgb(35, 255, 165, 2);
+            }
+            else
+            {
+                MnuCheckForUpdate.Text = MnuCheckForUpdate.Text = Config.Language[$"{Name}.{nameof(MnuCheckForUpdate)}._NoUpdate"];
+                MnuHelp.BackColor = MnuCheckForUpdate.BackColor = Color.Transparent;
+            }
+
+            MnuViewChannels.Enabled = true;
+            MnuExtractFrames.Enabled =
+                MnuStartStopAnimating.Enabled =
+                MnuViewPreviousFrame.Enabled =
+                MnuViewNextFrame.Enabled =
+                MnuViewFirstFrame.Enabled =
+                MnuViewLastFrame.Enabled = false;
+
+            MnuSetLockScreen.Enabled = true;
+
+            if (Local.Metadata?.FramesCount > 1)
+            {
+                MnuViewChannels.Enabled = false;
+
+                MnuExtractFrames.Enabled =
+                    MnuStartStopAnimating.Enabled =
+                    MnuViewPreviousFrame.Enabled =
+                    MnuViewNextFrame.Enabled =
+                    MnuViewFirstFrame.Enabled =
+                    MnuViewLastFrame.Enabled = true;
+            }
+
+            MnuExtractFrames.Text = string.Format(Config.Language[$"{Name}.{nameof(MnuExtractFrames)}"], Local.Metadata?.FramesCount);
+
+            // check if igcmdWin10.exe exists!
+            if (!Helpers.IsOS(WindowsOS.Win10OrLater) || !File.Exists(App.StartUpDir("igcmdWin10.exe")))
+            {
+                MnuSetLockScreen.Enabled = false;
+            }
+
+            if (Helpers.IsOS(WindowsOS.Win7))
+            {
+                MnuOpenWith.Enabled = false;
+            }
+
+            // add hotkey to Exit menu
+            if (false) // Config.IsContinueRunningBackground)
+            {
+                MnuExit.ShortcutKeyDisplayString = "Shift+ESC";
+            }
+            else
+            {
+                MnuExit.ShortcutKeyDisplayString = Config.IsPressESCToQuit ? "ESC" : "Alt+F4";
+            }
+
+            //// Get EditApp for editing
+            //UpdateEditAppInfoForMenu();
+        }
+        catch { }
+
+    }
 }
