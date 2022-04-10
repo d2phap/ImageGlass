@@ -1,6 +1,8 @@
 ﻿using ImageGlass.Base;
 using ImageGlass.Base.PhotoBox;
+using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
+using ImageGlass.UI;
 
 namespace ImageGlass;
 
@@ -138,12 +140,15 @@ public partial class FrmMain
         MnuNewWindow.Text = lang[$"{Name}.{nameof(MnuNewWindow)}"];
         MnuSave.Text = lang[$"{Name}.{nameof(MnuSave)}"];
         MnuSaveAs.Text = lang[$"{Name}.{nameof(MnuSaveAs)}"];
-        MnuRefresh.Text = lang[$"{Name}.{nameof(MnuRefresh)}"];
-        MnuReload.Text = lang[$"{Name}.{nameof(MnuReload)}"];
-        MnuReloadImageList.Text = lang[$"{Name}.{nameof(MnuReloadImageList)}"];
+
         MnuOpenWith.Text = lang[$"{Name}.{nameof(MnuOpenWith)}"];
         MnuEdit.Text = lang[$"{Name}.{nameof(MnuEdit)}"];
         MnuPrint.Text = lang[$"{Name}.{nameof(MnuPrint)}"];
+
+        MnuRefresh.Text = lang[$"{Name}.{nameof(MnuRefresh)}"];
+        MnuReload.Text = lang[$"{Name}.{nameof(MnuReload)}"];
+        MnuReloadImageList.Text = lang[$"{Name}.{nameof(MnuReloadImageList)}"];
+        
         #endregion
 
 
@@ -164,8 +169,199 @@ public partial class FrmMain
         MnuViewLastFrame.Text = lang[$"{Name}.{nameof(MnuViewLastFrame)}"];
         #endregion
 
+
+        // Menu Zoom
+        #region Menu Zoom
+        MnuZoom.Text = lang[$"{Name}.{nameof(MnuZoom)}"];
+
+        MnuZoomIn.Text = lang[$"{Name}.{nameof(MnuZoomIn)}"];
+        MnuZoomOut.Text = lang[$"{Name}.{nameof(MnuZoomOut)}"];
+        MnuCustomZoom.Text = lang[$"{Name}.{nameof(MnuCustomZoom)}"];
+        MnuScaleToFit.Text = lang[$"{Name}.{nameof(MnuScaleToFit)}"];
+        MnuScaleToFill.Text = lang[$"{Name}.{nameof(MnuScaleToFill)}"];
+
+        MnuActualSize.Text = lang[$"{Name}.{nameof(MnuActualSize)}"];
+        MnuLockZoom.Text = lang[$"{Name}.{nameof(MnuLockZoom)}"];
+        MnuAutoZoom.Text = lang[$"{Name}.{nameof(MnuAutoZoom)}"];
+        MnuScaleToWidth.Text = lang[$"{Name}.{nameof(MnuScaleToWidth)}"];
+        MnuScaleToHeight.Text = lang[$"{Name}.{nameof(MnuScaleToHeight)}"];
+        #endregion
+
+
+        // Menu Image
+        #region Menu Image
+        MnuImage.Text = lang[$"{Name}.{nameof(MnuImage)}"];
+        MnuRotateLeft.Text = lang[$"{Name}.{nameof(MnuRotateLeft)}"];
+        MnuRotateRight.Text = lang[$"{Name}.{nameof(MnuRotateRight)}"];
+        MnuFlipHorizontal.Text = lang[$"{Name}.{nameof(MnuFlipHorizontal)}"];
+        MnuFlipVertical.Text = lang[$"{Name}.{nameof(MnuFlipVertical)}"];
+
+        MnuRename.Text = lang[$"{Name}.{nameof(MnuRename)}"];
+        MnuMoveToRecycleBin.Text = lang[$"{Name}.{nameof(MnuMoveToRecycleBin)}"];
+        MnuDeleteFromHardDisk.Text = lang[$"{Name}.{nameof(MnuDeleteFromHardDisk)}"];
+        MnuExtractFrames.Text = lang[$"{Name}.{nameof(MnuExtractFrames)}"];
+        MnuStartStopAnimating.Text = lang[$"{Name}.{nameof(MnuStartStopAnimating)}"];
+        MnuSetDesktopBackground.Text = lang[$"{Name}.{nameof(MnuSetDesktopBackground)}"];
+        MnuSetLockScreen.Text = lang[$"{Name}.{nameof(MnuSetLockScreen)}"];
+        MnuOpenLocation.Text = lang[$"{Name}.{nameof(MnuOpenLocation)}"];
+        MnuImageProperties.Text = lang[$"{Name}.{nameof(MnuImageProperties)}"];
+
+        MnuViewChannels.Text = lang[$"{Name}.{nameof(MnuViewChannels)}"];
+        LoadMnuViewChannelsSubItems(); // update Channels menu items
+
+        MnuLoadingOrders.Text = lang[$"{Name}.{nameof(MnuLoadingOrders)}"];
+        LoadMnuLoadingOrdersSubItems(); // update Loading order items
+        #endregion
+
+
+
         #endregion
     }
+
+
+
+    /// <summary>
+    /// Load View Channels menu items
+    /// </summary>
+    private void LoadMnuViewChannelsSubItems()
+    {
+        // clear items
+        MnuViewChannels.DropDown.Items.Clear();
+
+        var newMenuIconHeight = DpiApi.Transform(Constants.MENU_ICON_HEIGHT);
+
+        // add new items
+        foreach (var channel in Enum.GetValues(typeof(ColorChannel)))
+        {
+            var channelName = Enum.GetName(typeof(ColorChannel), channel);
+            var mnu = new ToolStripRadioButtonMenuItem()
+            {
+                Text = Config.Language[$"{Name}.{nameof(MnuViewChannels)}._{channelName}"],
+                Tag = channel,
+                CheckOnClick = true,
+                Checked = (int)channel == (int)Local.ImageChannel,
+                ImageScaling = ToolStripItemImageScaling.None,
+                Image = new Bitmap(newMenuIconHeight, newMenuIconHeight)
+            };
+
+            mnu.Click += MnuViewChannelsItem_Click;
+            MnuViewChannels.DropDown.Items.Add(mnu);
+        }
+    }
+
+    private void MnuViewChannelsItem_Click(object? sender, EventArgs e)
+    {
+        var mnu = sender as ToolStripMenuItem;
+        if (mnu is null) return;
+
+        var selectedChannel = (ColorChannel)(int)mnu.Tag;
+
+        if (selectedChannel != Local.ImageChannel)
+        {
+            Local.ImageChannel = selectedChannel;
+            Local.Images.ImageChannel = selectedChannel;
+
+            // update the viewing image
+            _ = ViewNextCancellableAsync(0, true, true);
+
+            // update cached images
+            Local.Images.UpdateCache();
+
+            // reload state
+            LoadMnuViewChannelsSubItems();
+        }
+    }
+
+
+    /// <summary>
+    /// Load Loading order menu items
+    /// </summary>
+    private void LoadMnuLoadingOrdersSubItems()
+    {
+        // clear items
+        MnuLoadingOrders.DropDown.Items.Clear();
+
+        var newMenuIconHeight = DpiApi.Transform(Constants.MENU_ICON_HEIGHT);
+
+        // add ImageOrderBy items
+        foreach (var order in Enum.GetValues(typeof(ImageOrderBy)))
+        {
+            var orderName = Enum.GetName(typeof(ImageOrderBy), order);
+            var mnu = new ToolStripRadioButtonMenuItem()
+            {
+                Text = Config.Language[$"_.{nameof(ImageOrderBy)}._{orderName}"],
+                Tag = order,
+                CheckOnClick = true,
+                Checked = (int)order == (int)Config.ImageLoadingOrder,
+                ImageScaling = ToolStripItemImageScaling.None,
+                Image = new Bitmap(newMenuIconHeight, newMenuIconHeight)
+            };
+
+            mnu.Click += MnuLoadingOrderItem_Click;
+            MnuLoadingOrders.DropDown.Items.Add(mnu);
+        }
+
+        MnuLoadingOrders.DropDown.Items.Add(new ToolStripSeparator());
+
+        // add ImageOrderType items
+        foreach (var orderType in Enum.GetValues(typeof(ImageOrderType)))
+        {
+            var typeName = Enum.GetName(typeof(ImageOrderType), orderType);
+            var mnu = new ToolStripRadioButtonMenuItem()
+            {
+                Text = Config.Language[$"_.{nameof(ImageOrderType)}._{typeName}"],
+                Tag = orderType,
+                CheckOnClick = true,
+                Checked = (int)orderType == (int)Config.ImageLoadingOrderType,
+                ImageScaling = ToolStripItemImageScaling.None,
+                Image = new Bitmap(newMenuIconHeight, newMenuIconHeight)
+            };
+
+            mnu.Click += MnuLoadingOrderTypeItem_Click;
+            MnuLoadingOrders.DropDown.Items.Add(mnu);
+        }
+    }
+
+    private void MnuLoadingOrderItem_Click(object? sender, EventArgs e)
+    {
+        var mnu = sender as ToolStripMenuItem;
+        if (mnu is null) return;
+
+        var selectedOrder = (ImageOrderBy)(int)mnu.Tag;
+
+        if (selectedOrder != Config.ImageLoadingOrder)
+        {
+            Config.ImageLoadingOrder = selectedOrder;
+
+            // TODO:
+            //// reload image list
+            //MnuReloadImageList_Click(null, null);
+
+            // reload the state
+            LoadMnuLoadingOrdersSubItems();
+        }
+    }
+
+    private void MnuLoadingOrderTypeItem_Click(object? sender, EventArgs e)
+    {
+        var mnu = sender as ToolStripMenuItem;
+        if (mnu is null) return;
+
+        var selectedType = (ImageOrderType)(int)mnu.Tag;
+
+        if (selectedType != Config.ImageLoadingOrderType)
+        {
+            Config.ImageLoadingOrderType = selectedType;
+
+            // TODO:
+            //// reload image list
+            //MnuReloadImageList_Click(null, null);
+
+            // reload the state
+            LoadMnuLoadingOrdersSubItems();
+        }
+    }
+
 
 }
 

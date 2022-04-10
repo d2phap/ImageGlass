@@ -102,16 +102,17 @@ public class IgLang : Dictionary<string, string>
 
         //Add("_IncompatibleConfigs", "Some settings are not compatible with your ImageGlass {0}. It's recommended to update them before continuing.\r\n\n- Click Yes to learn about the changes.\r\n- Click No to launch ImageGlass with default settings."); //v7.5
 
-        //Add("_.ImageOrderBy._Name", "Name (default)"); //v8.0
-        //Add("_.ImageOrderBy._Length", "Length"); //v8.0
-        //Add("_.ImageOrderBy._CreationTime", "Creation time"); //v8.0
-        //Add("_.ImageOrderBy._LastAccessTime", "Last access time"); //v8.0
-        //Add("_.ImageOrderBy._LastWriteTime", "Last write time"); //v8.0
-        //Add("_.ImageOrderBy._Extension", "Extension"); //v8.0
-        //Add("_.ImageOrderBy._Random", "Random"); //v8.0
+        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Name)}", "Name (default)"); //v8.0
+        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Length)}", "Length"); //v8.0
+        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.CreationTime)}", "Creation time"); //v8.0
+        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.LastAccessTime)}", "Last access time"); //v8.0
+        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.LastWriteTime)}", "Last write time"); //v8.0
+        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Extension)}", "Extension"); //v8.0
+        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Rating)}", "Rating"); //v8.0
+        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Random)}", "Random"); //v8.0
 
-        //Add("_.ImageOrderType._Asc", "Ascending");  //v8.0
-        //Add("_.ImageOrderType._Desc", "Descending");  //v8.0
+        Add($"_.{nameof(ImageOrderType)}._{nameof(ImageOrderType.Asc)}", "Ascending");  //v8.0
+        Add($"_.{nameof(ImageOrderType)}._{nameof(ImageOrderType.Desc)}", "Descending");  //v8.0
 
         //Add("_.AfterOpeningEditAppAction._Nothing", "Nothing"); //v8.0
         //Add("_.AfterOpeningEditAppAction._Minimize", "Minimize"); //v8.0
@@ -153,45 +154,45 @@ public class IgLang : Dictionary<string, string>
         #endregion
 
         #region Zoom
-        Add("FrmMain.mnuMainZoom", "Zoom"); //v7.0
-        Add("FrmMain.mnuMainZoomIn", "Zoom in"); //v3.0
-        Add("FrmMain.mnuMainZoomOut", "Zoom out"); //v3.0
-        Add("FrmMain.mnuCustomZoom", "Custom zoom…"); // v8.3
-        Add("FrmMain.mnuCustomZoom._Text", "Enter a new zoom value"); // v8.3
-        Add("FrmMain.mnuMainScaleToFit", "Scale to fit"); //v3.5
-        Add("FrmMain.mnuMainScaleToFill", "Scale to fill"); //v7.5
-        Add("FrmMain.mnuMainActualSize", "Actual size"); //v3.0
-        Add("FrmMain.mnuMainLockZoomRatio", "Lock zoom ratio"); //v3.0
-        Add("FrmMain.mnuMainAutoZoom", "Auto zoom"); //v5.5
-        Add("FrmMain.mnuMainScaleToWidth", "Scale to width"); //v3.0
-        Add("FrmMain.mnuMainScaleToHeight", "Scale to height"); //v3.0
+        Add("FrmMain.MnuZoom", "Zoom"); //v7.0
+        Add("FrmMain.MnuZoomIn", "Zoom in"); //v3.0
+        Add("FrmMain.MnuZoomOut", "Zoom out"); //v3.0
+        Add("FrmMain.MnuCustomZoom", "Custom zoom…"); // v8.3
+        Add("FrmMain.MnuCustomZoom._Text", "Enter a new zoom value"); // v8.3
+        Add("FrmMain.MnuScaleToFit", "Scale to fit"); //v3.5
+        Add("FrmMain.MnuScaleToFill", "Scale to fill"); //v7.5
+        Add("FrmMain.MnuActualSize", "Actual size"); //v3.0
+        Add("FrmMain.MnuLockZoom", "Lock zoom ratio"); //v3.0
+        Add("FrmMain.MnuAutoZoom", "Auto zoom"); //v5.5
+        Add("FrmMain.MnuScaleToWidth", "Scale to width"); //v3.0
+        Add("FrmMain.MnuScaleToHeight", "Scale to height"); //v3.0
         #endregion
 
         #region Image
-        Add("FrmMain.mnuMainImage", "Image"); //v7.0
-        Add("FrmMain.mnuMainChannels", "View channels"); //v7.0
-        Add("FrmMain.mnuMainChannels._All", "All"); //v7.0
-        Add("FrmMain.mnuMainChannels._Red", "Red"); //v7.0
-        Add("FrmMain.mnuMainChannels._Green", "Green"); //v7.0
-        Add("FrmMain.mnuMainChannels._Blue", "Blue"); //v7.0
-        Add("FrmMain.mnuMainChannels._Black", "Black"); //v7.0
-        Add("FrmMain.mnuMainChannels._Alpha", "Alpha"); //v7.0
+        Add("FrmMain.MnuImage", "Image"); //v7.0
+        Add("FrmMain.MnuViewChannels", "View channels"); //v7.0
+        Add("FrmMain.MnuViewChannels._All", "All"); //v7.0
+        Add("FrmMain.MnuViewChannels._Red", "Red"); //v7.0
+        Add("FrmMain.MnuViewChannels._Green", "Green"); //v7.0
+        Add("FrmMain.MnuViewChannels._Blue", "Blue"); //v7.0
+        Add("FrmMain.MnuViewChannels._Black", "Black"); //v7.0
+        Add("FrmMain.MnuViewChannels._Alpha", "Alpha"); //v7.0
 
-        Add("FrmMain.mnuLoadingOrder", "Loading order"); //v8.0
+        Add("FrmMain.MnuLoadingOrders", "Loading orders"); //v8.0
 
-        Add("FrmMain.mnuMainRotateLeft", "Rotate left"); //v7.5
-        Add("FrmMain.mnuMainRotateRight", "Rotate right"); //v7.5
-        Add("FrmMain.mnuMainFlipHorz", "Flip Horizontal"); // V6.0
-        Add("FrmMain.mnuMainFlipVert", "Flip Vertical"); // V6.0
-        Add("FrmMain.mnuMainRename", "Rename image…"); //v3.0
-        Add("FrmMain.mnuMainMoveToRecycleBin", "Move to recycle bin"); //v3.0
-        Add("FrmMain.mnuMainDeleteFromHardDisk", "Delete from hard disk"); //v3.0
-        Add("FrmMain.mnuMainExtractPages", "Extract image pages ({0})…"); //v7.5
-        Add("FrmMain.mnuMainStartStopAnimating", "Start / Stop animating image"); //v3.0
-        Add("FrmMain.mnuMainSetAsDesktop", "Set as Desktop background"); //v3.0
-        Add("FrmMain.mnuMainSetAsLockImage", "Set as Lock screen image"); // V6.0
-        Add("FrmMain.mnuMainImageLocation", "Open image location"); //v3.0
-        Add("FrmMain.mnuMainImageProperties", "Image properties"); //v3.0
+        Add("FrmMain.MnuRotateLeft", "Rotate left"); //v7.5
+        Add("FrmMain.MnuRotateRight", "Rotate right"); //v7.5
+        Add("FrmMain.MnuFlipHorizontal", "Flip Horizontal"); // V6.0
+        Add("FrmMain.MnuFlipVertical", "Flip Vertical"); // V6.0
+        Add("FrmMain.MnuRename", "Rename image…"); //v3.0
+        Add("FrmMain.MnuMoveToRecycleBin", "Move to recycle bin"); //v3.0
+        Add("FrmMain.MnuDeleteFromHardDisk", "Delete from hard disk"); //v3.0
+        Add("FrmMain.MnuExtractFrames", "Extract image frames ({0})…"); //v7.5
+        Add("FrmMain.MnuStartStopAnimating", "Start / Stop animating image"); //v3.0
+        Add("FrmMain.MnuSetDesktopBackground", "Set as Desktop background"); //v3.0
+        Add("FrmMain.MnuSetLockScreen", "Set as Lock screen image"); // V6.0
+        Add("FrmMain.MnuOpenLocation", "Open image location"); //v3.0
+        Add("FrmMain.MnuImageProperties", "Image properties"); //v3.0
         #endregion
 
         #region Clipboard
