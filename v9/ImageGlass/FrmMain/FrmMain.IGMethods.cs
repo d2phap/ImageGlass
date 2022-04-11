@@ -38,6 +38,21 @@ public partial class FrmMain
         OpenFilePicker();
     }
 
+    private void IG_Refresh(string? args = null)
+    {
+        PicMain.Refresh();
+    }
+
+    private void IG_Reload(string? args = null)
+    {
+        _ = ViewNextCancellableAsync(0, isSkipCache: true);
+    }
+
+    private void IG_ReloadList(string? args = null)
+    {
+        _ = LoadImageListAsync(Local.Images.DistinctDirs, Local.Images.GetFileName(Local.CurrentIndex));
+    }
+
     private void IG_ViewPreviousImage(string? args = null)
     {
         _ = ViewNextCancellableAsync(-1);
@@ -98,6 +113,29 @@ public partial class FrmMain
         }
     }
 
+
+    private bool IG_ToggleToolbar(string? args = null)
+    {
+        Config.IsShowToolbar = !Config.IsShowToolbar;
+
+        // Gallery bar
+        Toolbar.Visible = Config.IsShowToolbar;
+
+        return Config.IsShowToolbar;
+    }
+
+
+    private bool IG_ToggleGallery(string? args = null)
+    {
+        Config.IsShowThumbnail = !Config.IsShowThumbnail;
+
+        // Gallery bar
+        Sp1.Panel2Collapsed = !Config.IsShowThumbnail;
+
+        return Config.IsShowCheckerBoard;
+    }
+
+
     private bool IG_ToggleCheckerboard(string? args = null)
     {
         Config.IsShowCheckerBoard = !Config.IsShowCheckerBoard;
@@ -122,15 +160,16 @@ public partial class FrmMain
     }
 
 
-    private bool IG_ToggleGallery(string? args = null)
+    private bool IG_ToggleTopMost(string? args = null)
     {
-        Config.IsShowThumbnail = !Config.IsShowThumbnail;
+        Config.IsWindowAlwaysOnTop = !Config.IsWindowAlwaysOnTop;
 
         // Gallery bar
-        Sp1.Panel2Collapsed = !Config.IsShowThumbnail;
+        TopMost = Config.IsWindowAlwaysOnTop;
 
-        return Config.IsShowCheckerBoard;
+        return Config.IsWindowAlwaysOnTop;
     }
-    
+
+
 }
 

@@ -111,6 +111,11 @@ public class ImageBooster : IDisposable
     public CodecReadOptions ReadOptions { get; set; } = new();
 
     /// <summary>
+    /// Gets, sets the distinct directories list
+    /// </summary>
+    public List<string> DistinctDirs { get; set; } = new();
+
+    /// <summary>
     /// Gets length of Img list
     /// </summary>
     public int Length => ImgList.Count;

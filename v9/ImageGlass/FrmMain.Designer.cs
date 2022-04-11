@@ -434,28 +434,28 @@ namespace ImageGlass
             // MnuZoomIn
             // 
             this.MnuZoomIn.Name = "MnuZoomIn";
-            this.MnuZoomIn.Size = new System.Drawing.Size(252, 30);
+            this.MnuZoomIn.Size = new System.Drawing.Size(236, 30);
             this.MnuZoomIn.Text = "[Zoom in]";
             this.MnuZoomIn.Click += new System.EventHandler(this.MnuZoomIn_Click);
             // 
             // MnuZoomOut
             // 
             this.MnuZoomOut.Name = "MnuZoomOut";
-            this.MnuZoomOut.Size = new System.Drawing.Size(252, 30);
+            this.MnuZoomOut.Size = new System.Drawing.Size(236, 30);
             this.MnuZoomOut.Text = "[Zoom out]";
             this.MnuZoomOut.Click += new System.EventHandler(this.MnuZoomOut_Click);
             // 
             // MnuCustomZoom
             // 
             this.MnuCustomZoom.Name = "MnuCustomZoom";
-            this.MnuCustomZoom.Size = new System.Drawing.Size(252, 30);
+            this.MnuCustomZoom.Size = new System.Drawing.Size(236, 30);
             this.MnuCustomZoom.Text = "[Custom zoom...]";
             this.MnuCustomZoom.Click += new System.EventHandler(this.MnuCustomZoom_Click);
             // 
             // MnuActualSize
             // 
             this.MnuActualSize.Name = "MnuActualSize";
-            this.MnuActualSize.Size = new System.Drawing.Size(252, 30);
+            this.MnuActualSize.Size = new System.Drawing.Size(236, 30);
             this.MnuActualSize.Text = "[View actual size]";
             this.MnuActualSize.Click += new System.EventHandler(this.MnuActualSize_Click);
             // 
@@ -470,7 +470,7 @@ namespace ImageGlass
             this.MnuAutoZoom.CheckOnClick = true;
             this.MnuAutoZoom.CheckState = System.Windows.Forms.CheckState.Checked;
             this.MnuAutoZoom.Name = "MnuAutoZoom";
-            this.MnuAutoZoom.Size = new System.Drawing.Size(252, 30);
+            this.MnuAutoZoom.Size = new System.Drawing.Size(236, 30);
             this.MnuAutoZoom.Text = "[Auto Zoom]";
             this.MnuAutoZoom.Click += new System.EventHandler(this.MnuAutoZoom_Click);
             // 
@@ -478,7 +478,7 @@ namespace ImageGlass
             // 
             this.MnuLockZoom.CheckOnClick = true;
             this.MnuLockZoom.Name = "MnuLockZoom";
-            this.MnuLockZoom.Size = new System.Drawing.Size(252, 30);
+            this.MnuLockZoom.Size = new System.Drawing.Size(236, 30);
             this.MnuLockZoom.Text = "[Lock zoom ratio]";
             this.MnuLockZoom.Click += new System.EventHandler(this.MnuLockZoom_Click);
             // 
@@ -486,7 +486,7 @@ namespace ImageGlass
             // 
             this.MnuScaleToWidth.CheckOnClick = true;
             this.MnuScaleToWidth.Name = "MnuScaleToWidth";
-            this.MnuScaleToWidth.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToWidth.Size = new System.Drawing.Size(236, 30);
             this.MnuScaleToWidth.Text = "[Scale to width]";
             this.MnuScaleToWidth.Click += new System.EventHandler(this.MnuScaleToWidth_Click);
             // 
@@ -494,7 +494,7 @@ namespace ImageGlass
             // 
             this.MnuScaleToHeight.CheckOnClick = true;
             this.MnuScaleToHeight.Name = "MnuScaleToHeight";
-            this.MnuScaleToHeight.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToHeight.Size = new System.Drawing.Size(236, 30);
             this.MnuScaleToHeight.Text = "[Scale to height]";
             this.MnuScaleToHeight.Click += new System.EventHandler(this.MnuScaleToHeight_Click);
             // 
@@ -502,7 +502,7 @@ namespace ImageGlass
             // 
             this.MnuScaleToFit.CheckOnClick = true;
             this.MnuScaleToFit.Name = "MnuScaleToFit";
-            this.MnuScaleToFit.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToFit.Size = new System.Drawing.Size(236, 30);
             this.MnuScaleToFit.Text = "[Scale to fit]";
             this.MnuScaleToFit.Click += new System.EventHandler(this.MnuScaleToFit_Click);
             // 
@@ -510,7 +510,7 @@ namespace ImageGlass
             // 
             this.MnuScaleToFill.CheckOnClick = true;
             this.MnuScaleToFill.Name = "MnuScaleToFill";
-            this.MnuScaleToFill.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToFill.Size = new System.Drawing.Size(236, 30);
             this.MnuScaleToFill.Text = "[Scale to fill]";
             this.MnuScaleToFill.Click += new System.EventHandler(this.MnuScaleToFill_Click);
             // 
@@ -796,6 +796,7 @@ namespace ImageGlass
             this.MnuToggleToolbar.Name = "MnuToggleToolbar";
             this.MnuToggleToolbar.Size = new System.Drawing.Size(325, 30);
             this.MnuToggleToolbar.Text = "[Toolbar]";
+            this.MnuToggleToolbar.Click += new System.EventHandler(this.MnuToggleToolbar_Click);
             // 
             // MnuToggleThumbnails
             // 
@@ -805,6 +806,7 @@ namespace ImageGlass
             this.MnuToggleThumbnails.Name = "MnuToggleThumbnails";
             this.MnuToggleThumbnails.Size = new System.Drawing.Size(325, 30);
             this.MnuToggleThumbnails.Text = "[Thumbnail panel]";
+            this.MnuToggleThumbnails.Click += new System.EventHandler(this.MnuToggleThumbnails_Click);
             // 
             // MnuToggleCheckerboard
             // 
@@ -812,6 +814,7 @@ namespace ImageGlass
             this.MnuToggleCheckerboard.Name = "MnuToggleCheckerboard";
             this.MnuToggleCheckerboard.Size = new System.Drawing.Size(325, 30);
             this.MnuToggleCheckerboard.Text = "[Checkerboard]";
+            this.MnuToggleCheckerboard.Click += new System.EventHandler(this.MnuToggleCheckerboard_Click);
             // 
             // toolStripMenuItem20
             // 
@@ -824,6 +827,7 @@ namespace ImageGlass
             this.MnuToggleTopMost.Name = "MnuToggleTopMost";
             this.MnuToggleTopMost.Size = new System.Drawing.Size(325, 30);
             this.MnuToggleTopMost.Text = "[Keep window always on top]";
+            this.MnuToggleTopMost.Click += new System.EventHandler(this.MnuToggleTopMost_Click);
             // 
             // MnuTools
             // 
@@ -842,25 +846,25 @@ namespace ImageGlass
             // MnuColorPicker
             // 
             this.MnuColorPicker.Name = "MnuColorPicker";
-            this.MnuColorPicker.Size = new System.Drawing.Size(236, 30);
+            this.MnuColorPicker.Size = new System.Drawing.Size(252, 30);
             this.MnuColorPicker.Text = "[Color picker]";
             // 
             // MnuCropping
             // 
             this.MnuCropping.Name = "MnuCropping";
-            this.MnuCropping.Size = new System.Drawing.Size(236, 30);
+            this.MnuCropping.Size = new System.Drawing.Size(252, 30);
             this.MnuCropping.Text = "[Cropping]";
             // 
             // MnuPageNav
             // 
             this.MnuPageNav.Name = "MnuPageNav";
-            this.MnuPageNav.Size = new System.Drawing.Size(236, 30);
+            this.MnuPageNav.Size = new System.Drawing.Size(252, 30);
             this.MnuPageNav.Text = "[Page navigation]";
             // 
             // MnuExifTool
             // 
             this.MnuExifTool.Name = "MnuExifTool";
-            this.MnuExifTool.Size = new System.Drawing.Size(236, 30);
+            this.MnuExifTool.Size = new System.Drawing.Size(252, 30);
             this.MnuExifTool.Text = "[Exif tool]";
             // 
             // toolStripMenuItem8
@@ -1035,7 +1039,7 @@ namespace ImageGlass
             this.Sp3.Panel2MinSize = 0;
             this.Sp3.Size = new System.Drawing.Size(933, 543);
             this.Sp3.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.Sp3.SplitterDistance = 628;
+            this.Sp3.SplitterDistance = 627;
             this.Sp3.SplitterWidth = 11;
             this.Sp3.TabIndex = 3;
             // 
@@ -1052,7 +1056,7 @@ namespace ImageGlass
             this.PicMain.NavButtonSize = new System.Drawing.SizeF(90F, 90F);
             this.PicMain.NavDisplay = ImageGlass.Base.PhotoBox.NavButtonDisplay.Both;
             this.PicMain.ShowDebugInfo = true;
-            this.PicMain.Size = new System.Drawing.Size(628, 543);
+            this.PicMain.Size = new System.Drawing.Size(627, 543);
             this.PicMain.TabIndex = 0;
             this.PicMain.OnZoomChanged += new ImageGlass.PhotoBox.ViewBox.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
             this.PicMain.OnNavLeftClicked += new ImageGlass.PhotoBox.ViewBox.NavLeftClickedEventHandler(this.PicMain_OnNavLeftClicked);
@@ -1068,7 +1072,7 @@ namespace ImageGlass
             this.PanRight.Location = new System.Drawing.Point(0, 0);
             this.PanRight.Margin = new System.Windows.Forms.Padding(2);
             this.PanRight.Name = "PanRight";
-            this.PanRight.Size = new System.Drawing.Size(294, 543);
+            this.PanRight.Size = new System.Drawing.Size(295, 543);
             this.PanRight.TabIndex = 1;
             // 
             // Gallery

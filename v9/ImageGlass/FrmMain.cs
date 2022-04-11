@@ -358,7 +358,7 @@ public partial class FrmMain : Form
             var sortedFilesList = SortImageList(allFilesToLoad);
 
             // add to image list
-            Local.InitImageList(sortedFilesList);
+            Local.InitImageList(sortedFilesList, distinctDirsList);
 
             // Find the index of current image
             UpdateCurrentIndex(currentFilePath);
@@ -1386,20 +1386,21 @@ public partial class FrmMain : Form
 
     private void MnuRefresh_Click(object sender, EventArgs e)
     {
-        // TODO
+        IG_Refresh();
     }
 
     private void MnuReload_Click(object sender, EventArgs e)
     {
-        // TODO
+        IG_Reload();
     }
 
     private void MnuReloadImageList_Click(object sender, EventArgs e)
     {
-        // TODO
+        IG_ReloadList();
     }
 
     #endregion
+
 
     // Menu Navigation
     #region Menu Navigation
@@ -1453,6 +1454,7 @@ public partial class FrmMain : Form
     #endregion
 
 
+    // Menu Zoom
     #region Menu Zoom
     private void MnuZoomIn_Click(object sender, EventArgs e)
     {
@@ -1503,6 +1505,33 @@ public partial class FrmMain : Form
     {
         IG_SetZoomMode(nameof(ZoomMode.ScaleToFill));
     }
-    
+
+
+
     #endregion
+
+
+    // Menu Layout
+    #region Menu Layout
+    private void MnuToggleToolbar_Click(object sender, EventArgs e)
+    {
+        IG_ToggleToolbar();
+    }
+
+    private void MnuToggleThumbnails_Click(object sender, EventArgs e)
+    {
+        IG_ToggleGallery();
+    }
+
+    private void MnuToggleCheckerboard_Click(object sender, EventArgs e)
+    {
+        IG_ToggleCheckerboard();
+    }
+
+    private void MnuToggleTopMost_Click(object sender, EventArgs e)
+    {
+        IG_ToggleTopMost();
+    }
+    #endregion
+
 }

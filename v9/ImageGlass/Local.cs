@@ -149,13 +149,16 @@ internal class Local
 
     #region Public Functions
 
-    public static void InitImageList(IEnumerable<string>? list = null)
+    public static void InitImageList(
+        IEnumerable<string>? list = null,
+        List<string>? distinctDirsList = null)
     {
         Images.Dispose();
         Images = new(Config.Codec, list)
         {
             MaxQueue = Config.ImageBoosterCachedCount,
             ImageChannel = ImageChannel,
+            DistinctDirs = distinctDirsList ?? new(0),
         };
     }
 
