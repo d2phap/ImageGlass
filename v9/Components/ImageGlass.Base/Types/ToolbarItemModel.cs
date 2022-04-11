@@ -56,13 +56,13 @@ public record ToolbarItemTagModel
 public record ToolbarItemActionModel
 {
     public string Executable { get; set; } = string.Empty;
-    public string Arguments { get; set; } = string.Empty;
+    public object Argument { get; set; }
 
 
     public ToolbarItemActionModel(string executable = "", string arguments = "")
     {
         Executable = executable.Trim();
-        Arguments = arguments.Trim();
+        Argument = arguments.Trim();
     }
 }
 

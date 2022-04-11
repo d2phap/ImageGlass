@@ -36,70 +36,64 @@ public partial class FrmMain
     /// Open an image from file picker
     /// </summary>
     /// <returns></returns>
-    private void IG_OpenFile(string? args = null)
+    private void IG_OpenFile()
     {
         OpenFilePicker();
     }
 
-    private void IG_Refresh(string? args = null)
+    private void IG_Refresh()
     {
         PicMain.Refresh();
     }
 
-    private void IG_Reload(string? args = null)
+    private void IG_Reload()
     {
         _ = ViewNextCancellableAsync(0, isSkipCache: true);
     }
 
-    private void IG_ReloadList(string? args = null)
+    private void IG_ReloadList()
     {
         _ = LoadImageListAsync(Local.Images.DistinctDirs, Local.Images.GetFileName(Local.CurrentIndex));
     }
 
-    private void IG_ViewPreviousImage(string? args = null)
+    private void IG_ViewPreviousImage()
     {
         _ = ViewNextCancellableAsync(-1);
     }
 
-    private void IG_ViewNextImage(string? args = null)
+    private void IG_ViewNextImage()
     {
         _ = ViewNextCancellableAsync(1);
     }
 
-    private void IG_GoTo(string? indexStr = null)
+    private void IG_GoTo(int index)
     {
-        if (int.TryParse(indexStr, out int index))
-        {
-            GoToImageAsync(index);
-        }
+        GoToImageAsync(index);
     }
 
-    private void IG_GoToFirst(string? args = null)
+    private void IG_GoToFirst()
     {
         GoToImageAsync(0);
     }
 
-    private void IG_GoToLast(string? args = null)
+    private void IG_GoToLast()
     {
         GoToImageAsync(Local.Images.Length - 1);
     }
 
-    private void IG_ZoomIn(string? args = null)
+    private void IG_ZoomIn()
     {
         PicMain.ZoomIn();
     }
 
-    private void IG_ZoomOut(string? args = null)
+    private void IG_ZoomOut()
     {
         PicMain.ZoomOut();
     }
 
-    private void IG_SetZoom(string? zoomFactor = null)
+    private void IG_SetZoom(float factor)
     {
-        if (float.TryParse(zoomFactor, out float factor))
-        {
-            PicMain.ZoomFactor = factor;
-        }
+        PicMain.ZoomFactor = factor;
     }
 
     private void IG_SetZoomMode(string mode)
@@ -117,7 +111,7 @@ public partial class FrmMain
     }
 
 
-    private bool IG_ToggleToolbar(string? args = null)
+    private bool IG_ToggleToolbar()
     {
         Config.IsShowToolbar = !Config.IsShowToolbar;
 
@@ -128,7 +122,7 @@ public partial class FrmMain
     }
 
 
-    private bool IG_ToggleGallery(string? args = null)
+    private bool IG_ToggleGallery()
     {
         Config.IsShowThumbnail = !Config.IsShowThumbnail;
 
@@ -139,7 +133,7 @@ public partial class FrmMain
     }
 
 
-    private bool IG_ToggleCheckerboard(string? args = null)
+    private bool IG_ToggleCheckerboard()
     {
         Config.IsShowCheckerBoard = !Config.IsShowCheckerBoard;
 
@@ -163,7 +157,7 @@ public partial class FrmMain
     }
 
 
-    private bool IG_ToggleTopMost(string? args = null)
+    private bool IG_ToggleTopMost()
     {
         Config.IsWindowAlwaysOnTop = !Config.IsWindowAlwaysOnTop;
 
@@ -173,7 +167,7 @@ public partial class FrmMain
         return Config.IsWindowAlwaysOnTop;
     }
 
-    private void IG_ReportIssue(string? args = null)
+    private void IG_ReportIssue()
     {
         try
         {
@@ -182,7 +176,7 @@ public partial class FrmMain
         catch { }
     }
 
-    private void IG_About(string? args = null)
+    private void IG_About()
     {
         var archInfo = Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
         var appVersion = Application.ProductVersion.ToString() + $" ({archInfo})";
@@ -216,7 +210,7 @@ public partial class FrmMain
         });
     }
 
-    private void IG_Settings(string? args = null)
+    private void IG_Settings()
     {
         var path = App.ConfigDir(PathType.File, Source.UserFilename);
         var psi = new ProcessStartInfo(path)
@@ -227,7 +221,7 @@ public partial class FrmMain
         Process.Start(psi);
     }
 
-    private void IG_Exit(string? args = null)
+    private void IG_Exit()
     {
         Application.Exit();
     }

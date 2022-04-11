@@ -111,33 +111,57 @@ public partial class FrmMain : Form
             tagModel.OnClick.Executable,
             BindingFlags.Instance | BindingFlags.NonPublic);
 
+        object? methodArg = null;
+
         // run built-in method
         if (method is not null)
         {
             // check method's params
-            var args = Array.Empty<object>();
-            if (method?.GetParameters().Length > 0)
+            var paramItems = method.GetParameters();
+            var paramters = new List<object>();
+
+            if (paramItems.Length == 1)
             {
-                args = new[] { tagModel.OnClick.Arguments };
+                if (paramItems[0].ParameterType.IsPrimitive)
+                {
+                    methodArg = Convert.ChangeType(tagModel.OnClick.Argument, paramItems[0].ParameterType);
+                }
+                else
+                {
+                    throw new ArgumentException($"Argument of {e.ClickedItem.Name} must be primitive type.", $"{nameof(tagModel.OnClick)}.{nameof(tagModel.OnClick.Argument)}");
+                }
+            }
+
+            if (methodArg != null)
+            {
+                if (methodArg.GetType().IsArray)
+                {
+                    paramters.AddRange((object[])methodArg);
+                }
+                else
+                {
+                    paramters.Add(methodArg);
+                }
             }
 
             // method must be bool/void()
-            method?.Invoke(this, args);
+            method.Invoke(this, paramters.ToArray());
 
             return;
         }
 
 
         var currentFilePath = Local.Images.GetFileName(Local.CurrentIndex);
+        var procArgs = $"{tagModel.OnClick.Argument}".Replace(Constants.FILE_MACRO, currentFilePath);
 
         // run external command line
         var proc = new Process
         {
             StartInfo = new(tagModel.OnClick.Executable)
             {
-                Arguments = tagModel.OnClick.Arguments.Replace(Constants.FILE_MACRO, currentFilePath),
+                Arguments = procArgs,
                 UseShellExecute = true,
-                WindowStyle = ProcessWindowStyle.Hidden,
+                //WindowStyle = ProcessWindowStyle.Hidden,
                 ErrorDialog = true,
             },
         };
@@ -1481,7 +1505,7 @@ public partial class FrmMain : Form
 
     private void MnuActualSize_Click(object sender, EventArgs e)
     {
-        IG_SetZoom("1.0");
+        IG_SetZoom(1f);
     }
 
     private void MnuAutoZoom_Click(object sender, EventArgs e)
