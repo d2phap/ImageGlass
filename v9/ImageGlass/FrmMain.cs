@@ -1272,6 +1272,8 @@ public partial class FrmMain : Form
 
 
 
+    #region Main Menu component
+
     private void MnuMain_Opening(object sender, System.ComponentModel.CancelEventArgs e)
     {
         try
@@ -1532,6 +1534,214 @@ public partial class FrmMain : Form
     {
         IG_ToggleTopMost();
     }
+    #endregion
+
+
+    // Menu Image
+    #region Menu Image
+    private void MnuRotateLeft_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuRotateRight_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuFlipHorizontal_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuFlipVertical_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuRename_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuMoveToRecycleBin_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuDeleteFromHardDisk_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuStartStopAnimating_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuExtractFrames_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuSetDesktopBackground_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuSetLockScreen_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuOpenLocation_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuImageProperties_Click(object sender, EventArgs e)
+    {
+
+    }
+
+
+    #endregion
+
+
+    // Window modes menu
+    #region Window modes menu
+    private void MnuWindowFit_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuFrameless_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuFullScreen_Click(object sender, EventArgs e)
+    {
+
+    }
+    #endregion
+
+
+    // Menu Slideshow
+    #region Menu Slideshow
+    private void MnuStartSlideshow_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuPauseResumeSlideshow_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuExitSlideshow_Click(object sender, EventArgs e)
+    {
+
+    }
+    #endregion
+
+
+    // Menu Clipboard
+    #region Menu Clipboard
+    private void MnuCopyImageData_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuCopy_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuCut_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuCopyPath_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuClearClipboard_Click(object sender, EventArgs e)
+    {
+
+    }
+
+
+    #endregion
+
+
+    // Menu Tools
+    #region Menu Tools
+    private void MnuColorPicker_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuCropping_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuPageNav_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuExifTool_Click(object sender, EventArgs e)
+    {
+
+    }
+
+
+
+    #endregion
+
+
+    // Menu Help
+    #region Menu Help
+    private void MnuAbout_Click(object sender, EventArgs e)
+    {
+        IG_About();
+    }
+
+    private void MnuCheckForUpdate_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuReportIssue_Click(object sender, EventArgs e)
+    {
+        IG_ReportIssue();
+    }
+
+    private void MnuFirstLaunch_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    #endregion
+
+
+    // Others
+    #region Other menu
+    private void MnuSettings_Click(object sender, EventArgs e)
+    {
+        IG_Settings();
+    }
+
+    private void MnuExit_Click(object sender, EventArgs e)
+    {
+        IG_Exit();
+    }
+    #endregion
+
     #endregion
 
 }

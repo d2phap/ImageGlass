@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Settings;
+using System.Diagnostics;
 
 namespace ImageGlass;
 
@@ -170,6 +171,64 @@ public partial class FrmMain
         return Config.IsWindowAlwaysOnTop;
     }
 
+    private void IG_ReportIssue(string? args = null)
+    {
+        try
+        {
+            Process.Start("https://github.com/d2phap/ImageGlass/issues");
+        }
+        catch { }
+    }
+
+    private void IG_About(string? args = null)
+    {
+        var archInfo = Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
+        var appVersion = Application.ProductVersion.ToString() + $" ({archInfo})";
+
+        var btnDonate = new TaskDialogButton("Donate", allowCloseDialog: false);
+        var btnClose = new TaskDialogButton("Close", allowCloseDialog: true);
+
+        btnDonate.Click += (object? sender, EventArgs e) =>
+        {
+            try
+            {
+                Process.Start("https://imageglass.org/source#donation?utm_source=app_" + App.Version + "&utm_medium=app_click&utm_campaign=app_donation");
+            }
+            catch { }
+        };
+
+
+        TaskDialog.ShowDialog(new()
+        {
+            Icon = TaskDialogIcon.Information,
+            Caption = $"About {Application.ProductName}",
+
+            Heading = $"Version: {appVersion}",
+            Text = $"Copyright © 2010-{DateTime.Now.Year} by Dương Diệu Pháp.\r\n" +
+                $"All rights reserved.\r\n\r\n" +
+                $"Homepage: https://imageglass.org\r\n" +
+                $"GitHub: https://github.com/d2phap/ImageGlass" +
+                $"",
+
+            Buttons = new TaskDialogButtonCollection { btnDonate, btnClose },
+        });
+    }
+
+    private void IG_Settings(string? args = null)
+    {
+        var path = App.ConfigDir(PathType.File, Source.UserFilename);
+        var psi = new ProcessStartInfo(path)
+        {
+            UseShellExecute = true,
+        };
+
+        Process.Start(psi);
+    }
+
+    private void IG_Exit(string? args = null)
+    {
+        Application.Exit();
+    }
 
 }
 

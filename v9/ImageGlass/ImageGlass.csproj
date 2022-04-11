@@ -24,6 +24,7 @@
     <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <DebugType>portable</DebugType>
+    <Product>$(AssemblyName) Kobe</Product>
   </PropertyGroup>
 
   <ItemGroup>

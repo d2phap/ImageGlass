@@ -565,24 +565,28 @@ namespace ImageGlass
             this.MnuRotateLeft.Name = "MnuRotateLeft";
             this.MnuRotateLeft.Size = new System.Drawing.Size(334, 30);
             this.MnuRotateLeft.Text = "[Rotate counterclockwise]";
+            this.MnuRotateLeft.Click += new System.EventHandler(this.MnuRotateLeft_Click);
             // 
             // MnuRotateRight
             // 
             this.MnuRotateRight.Name = "MnuRotateRight";
             this.MnuRotateRight.Size = new System.Drawing.Size(334, 30);
             this.MnuRotateRight.Text = "[Rotate Clockwise]";
+            this.MnuRotateRight.Click += new System.EventHandler(this.MnuRotateRight_Click);
             // 
             // MnuFlipHorizontal
             // 
             this.MnuFlipHorizontal.Name = "MnuFlipHorizontal";
             this.MnuFlipHorizontal.Size = new System.Drawing.Size(334, 30);
             this.MnuFlipHorizontal.Text = "[Flip Horizontal]";
+            this.MnuFlipHorizontal.Click += new System.EventHandler(this.MnuFlipHorizontal_Click);
             // 
             // MnuFlipVertical
             // 
             this.MnuFlipVertical.Name = "MnuFlipVertical";
             this.MnuFlipVertical.Size = new System.Drawing.Size(334, 30);
             this.MnuFlipVertical.Text = "[Flip Vertical]";
+            this.MnuFlipVertical.Click += new System.EventHandler(this.MnuFlipVertical_Click);
             // 
             // toolStripMenuItem17
             // 
@@ -594,18 +598,21 @@ namespace ImageGlass
             this.MnuRename.Name = "MnuRename";
             this.MnuRename.Size = new System.Drawing.Size(334, 30);
             this.MnuRename.Text = "[Rename image]";
+            this.MnuRename.Click += new System.EventHandler(this.MnuRename_Click);
             // 
             // MnuMoveToRecycleBin
             // 
             this.MnuMoveToRecycleBin.Name = "MnuMoveToRecycleBin";
             this.MnuMoveToRecycleBin.Size = new System.Drawing.Size(334, 30);
             this.MnuMoveToRecycleBin.Text = "[Move to recycle bin]";
+            this.MnuMoveToRecycleBin.Click += new System.EventHandler(this.MnuMoveToRecycleBin_Click);
             // 
             // MnuDeleteFromHardDisk
             // 
             this.MnuDeleteFromHardDisk.Name = "MnuDeleteFromHardDisk";
             this.MnuDeleteFromHardDisk.Size = new System.Drawing.Size(334, 30);
             this.MnuDeleteFromHardDisk.Text = "[Delete from hard disk]";
+            this.MnuDeleteFromHardDisk.Click += new System.EventHandler(this.MnuDeleteFromHardDisk_Click);
             // 
             // toolStripMenuItem18
             // 
@@ -617,30 +624,35 @@ namespace ImageGlass
             this.MnuStartStopAnimating.Name = "MnuStartStopAnimating";
             this.MnuStartStopAnimating.Size = new System.Drawing.Size(334, 30);
             this.MnuStartStopAnimating.Text = "[Start / Stop animating image]";
+            this.MnuStartStopAnimating.Click += new System.EventHandler(this.MnuStartStopAnimating_Click);
             // 
             // MnuExtractFrames
             // 
             this.MnuExtractFrames.Name = "MnuExtractFrames";
             this.MnuExtractFrames.Size = new System.Drawing.Size(334, 30);
             this.MnuExtractFrames.Text = "[Extract image frames]";
+            this.MnuExtractFrames.Click += new System.EventHandler(this.MnuExtractFrames_Click);
             // 
             // MnuSetDesktopBackground
             // 
             this.MnuSetDesktopBackground.Name = "MnuSetDesktopBackground";
             this.MnuSetDesktopBackground.Size = new System.Drawing.Size(334, 30);
             this.MnuSetDesktopBackground.Text = "[Set as desktop background]";
+            this.MnuSetDesktopBackground.Click += new System.EventHandler(this.MnuSetDesktopBackground_Click);
             // 
             // MnuSetLockScreen
             // 
             this.MnuSetLockScreen.Name = "MnuSetLockScreen";
             this.MnuSetLockScreen.Size = new System.Drawing.Size(334, 30);
             this.MnuSetLockScreen.Text = "[Set as Lock Screen image]";
+            this.MnuSetLockScreen.Click += new System.EventHandler(this.MnuSetLockScreen_Click);
             // 
             // MnuOpenLocation
             // 
             this.MnuOpenLocation.Name = "MnuOpenLocation";
             this.MnuOpenLocation.Size = new System.Drawing.Size(334, 30);
             this.MnuOpenLocation.Text = "[Open image location]";
+            this.MnuOpenLocation.Click += new System.EventHandler(this.MnuOpenLocation_Click);
             // 
             // toolStripSeparator1
             // 
@@ -652,6 +664,7 @@ namespace ImageGlass
             this.MnuImageProperties.Name = "MnuImageProperties";
             this.MnuImageProperties.Size = new System.Drawing.Size(334, 30);
             this.MnuImageProperties.Text = "[Image properties]";
+            this.MnuImageProperties.Click += new System.EventHandler(this.MnuImageProperties_Click);
             // 
             // MnuClipboard
             // 
@@ -674,18 +687,21 @@ namespace ImageGlass
             this.MnuCopyImageData.Name = "MnuCopyImageData";
             this.MnuCopyImageData.Size = new System.Drawing.Size(252, 30);
             this.MnuCopyImageData.Text = "[Copy image pixels]";
+            this.MnuCopyImageData.Click += new System.EventHandler(this.MnuCopyImageData_Click);
             // 
             // MnuCopy
             // 
             this.MnuCopy.Name = "MnuCopy";
             this.MnuCopy.Size = new System.Drawing.Size(252, 30);
             this.MnuCopy.Text = "[Copy]";
+            this.MnuCopy.Click += new System.EventHandler(this.MnuCopy_Click);
             // 
             // MnuCut
             // 
             this.MnuCut.Name = "MnuCut";
             this.MnuCut.Size = new System.Drawing.Size(252, 30);
             this.MnuCut.Text = "[Cut]";
+            this.MnuCut.Click += new System.EventHandler(this.MnuCut_Click);
             // 
             // toolStripMenuItem19
             // 
@@ -697,12 +713,14 @@ namespace ImageGlass
             this.MnuCopyPath.Name = "MnuCopyPath";
             this.MnuCopyPath.Size = new System.Drawing.Size(252, 30);
             this.MnuCopyPath.Text = "[Copy image path]";
+            this.MnuCopyPath.Click += new System.EventHandler(this.MnuCopyPath_Click);
             // 
             // MnuClearClipboard
             // 
             this.MnuClearClipboard.Name = "MnuClearClipboard";
             this.MnuClearClipboard.Size = new System.Drawing.Size(252, 30);
             this.MnuClearClipboard.Text = "[Clear clipboard]";
+            this.MnuClearClipboard.Click += new System.EventHandler(this.MnuClearClipboard_Click);
             // 
             // toolStripMenuItem6
             // 
@@ -716,6 +734,7 @@ namespace ImageGlass
             this.MnuWindowFit.Name = "MnuWindowFit";
             this.MnuWindowFit.Size = new System.Drawing.Size(246, 40);
             this.MnuWindowFit.Text = "[Window fit]";
+            this.MnuWindowFit.Click += new System.EventHandler(this.MnuWindowFit_Click);
             // 
             // MnuFrameless
             // 
@@ -726,6 +745,7 @@ namespace ImageGlass
             this.MnuFrameless.Name = "MnuFrameless";
             this.MnuFrameless.Size = new System.Drawing.Size(246, 40);
             this.MnuFrameless.Text = "[Frameless]";
+            this.MnuFrameless.Click += new System.EventHandler(this.MnuFrameless_Click);
             // 
             // MnuFullScreen
             // 
@@ -736,6 +756,7 @@ namespace ImageGlass
             this.MnuFullScreen.Name = "MnuFullScreen";
             this.MnuFullScreen.Size = new System.Drawing.Size(246, 40);
             this.MnuFullScreen.Text = "[Full screen]";
+            this.MnuFullScreen.Click += new System.EventHandler(this.MnuFullScreen_Click);
             // 
             // MnuSlideshow
             // 
@@ -755,18 +776,21 @@ namespace ImageGlass
             this.MnuStartSlideshow.Name = "MnuStartSlideshow";
             this.MnuStartSlideshow.Size = new System.Drawing.Size(313, 30);
             this.MnuStartSlideshow.Text = "[Start slideshow]";
+            this.MnuStartSlideshow.Click += new System.EventHandler(this.MnuStartSlideshow_Click);
             // 
             // MnuPauseResumeSlideshow
             // 
             this.MnuPauseResumeSlideshow.Name = "MnuPauseResumeSlideshow";
             this.MnuPauseResumeSlideshow.Size = new System.Drawing.Size(313, 30);
             this.MnuPauseResumeSlideshow.Text = "[Pause / Resume slideshow]";
+            this.MnuPauseResumeSlideshow.Click += new System.EventHandler(this.MnuPauseResumeSlideshow_Click);
             // 
             // MnuExitSlideshow
             // 
             this.MnuExitSlideshow.Name = "MnuExitSlideshow";
             this.MnuExitSlideshow.Size = new System.Drawing.Size(313, 30);
             this.MnuExitSlideshow.Text = "[Exit slideshow]";
+            this.MnuExitSlideshow.Click += new System.EventHandler(this.MnuExitSlideshow_Click);
             // 
             // toolStripMenuItem7
             // 
@@ -848,24 +872,28 @@ namespace ImageGlass
             this.MnuColorPicker.Name = "MnuColorPicker";
             this.MnuColorPicker.Size = new System.Drawing.Size(252, 30);
             this.MnuColorPicker.Text = "[Color picker]";
+            this.MnuColorPicker.Click += new System.EventHandler(this.MnuColorPicker_Click);
             // 
             // MnuCropping
             // 
             this.MnuCropping.Name = "MnuCropping";
             this.MnuCropping.Size = new System.Drawing.Size(252, 30);
             this.MnuCropping.Text = "[Cropping]";
+            this.MnuCropping.Click += new System.EventHandler(this.MnuCropping_Click);
             // 
             // MnuPageNav
             // 
             this.MnuPageNav.Name = "MnuPageNav";
             this.MnuPageNav.Size = new System.Drawing.Size(252, 30);
             this.MnuPageNav.Text = "[Page navigation]";
+            this.MnuPageNav.Click += new System.EventHandler(this.MnuPageNav_Click);
             // 
             // MnuExifTool
             // 
             this.MnuExifTool.Name = "MnuExifTool";
             this.MnuExifTool.Size = new System.Drawing.Size(252, 30);
             this.MnuExifTool.Text = "[Exif tool]";
+            this.MnuExifTool.Click += new System.EventHandler(this.MnuExifTool_Click);
             // 
             // toolStripMenuItem8
             // 
@@ -880,6 +908,7 @@ namespace ImageGlass
             this.MnuSettings.Name = "MnuSettings";
             this.MnuSettings.Size = new System.Drawing.Size(246, 40);
             this.MnuSettings.Text = "[Settings]";
+            this.MnuSettings.Click += new System.EventHandler(this.MnuSettings_Click);
             // 
             // MnuHelp
             // 
@@ -900,24 +929,28 @@ namespace ImageGlass
             this.MnuAbout.Name = "MnuAbout";
             this.MnuAbout.Size = new System.Drawing.Size(317, 30);
             this.MnuAbout.Text = "[About]";
+            this.MnuAbout.Click += new System.EventHandler(this.MnuAbout_Click);
             // 
             // MnuCheckForUpdate
             // 
             this.MnuCheckForUpdate.Name = "MnuCheckForUpdate";
             this.MnuCheckForUpdate.Size = new System.Drawing.Size(317, 30);
             this.MnuCheckForUpdate.Text = "[A new version is available]";
+            this.MnuCheckForUpdate.Click += new System.EventHandler(this.MnuCheckForUpdate_Click);
             // 
             // MnuReportIssue
             // 
             this.MnuReportIssue.Name = "MnuReportIssue";
             this.MnuReportIssue.Size = new System.Drawing.Size(317, 30);
             this.MnuReportIssue.Text = "[Report an issue]";
+            this.MnuReportIssue.Click += new System.EventHandler(this.MnuReportIssue_Click);
             // 
             // MnuFirstLaunch
             // 
             this.MnuFirstLaunch.Name = "MnuFirstLaunch";
             this.MnuFirstLaunch.Size = new System.Drawing.Size(317, 30);
             this.MnuFirstLaunch.Text = "[First-launch configurations]";
+            this.MnuFirstLaunch.Click += new System.EventHandler(this.MnuFirstLaunch_Click);
             // 
             // toolStripMenuItem9
             // 
@@ -932,6 +965,7 @@ namespace ImageGlass
             this.MnuExit.Name = "MnuExit";
             this.MnuExit.Size = new System.Drawing.Size(246, 40);
             this.MnuExit.Text = "[Exit]";
+            this.MnuExit.Click += new System.EventHandler(this.MnuExit_Click);
             // 
             // Tb0
             // 
@@ -1039,7 +1073,7 @@ namespace ImageGlass
             this.Sp3.Panel2MinSize = 0;
             this.Sp3.Size = new System.Drawing.Size(933, 543);
             this.Sp3.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.Sp3.SplitterDistance = 627;
+            this.Sp3.SplitterDistance = 626;
             this.Sp3.SplitterWidth = 11;
             this.Sp3.TabIndex = 3;
             // 
@@ -1056,7 +1090,7 @@ namespace ImageGlass
             this.PicMain.NavButtonSize = new System.Drawing.SizeF(90F, 90F);
             this.PicMain.NavDisplay = ImageGlass.Base.PhotoBox.NavButtonDisplay.Both;
             this.PicMain.ShowDebugInfo = true;
-            this.PicMain.Size = new System.Drawing.Size(627, 543);
+            this.PicMain.Size = new System.Drawing.Size(626, 543);
             this.PicMain.TabIndex = 0;
             this.PicMain.OnZoomChanged += new ImageGlass.PhotoBox.ViewBox.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
             this.PicMain.OnNavLeftClicked += new ImageGlass.PhotoBox.ViewBox.NavLeftClickedEventHandler(this.PicMain_OnNavLeftClicked);
@@ -1072,7 +1106,7 @@ namespace ImageGlass
             this.PanRight.Location = new System.Drawing.Point(0, 0);
             this.PanRight.Margin = new System.Windows.Forms.Padding(2);
             this.PanRight.Name = "PanRight";
-            this.PanRight.Size = new System.Drawing.Size(295, 543);
+            this.PanRight.Size = new System.Drawing.Size(296, 543);
             this.PanRight.TabIndex = 1;
             // 
             // Gallery
