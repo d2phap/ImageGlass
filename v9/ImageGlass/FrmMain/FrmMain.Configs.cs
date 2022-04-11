@@ -115,7 +115,7 @@ public partial class FrmMain
             // load check state based on config value
             if (configProp.PropertyType.IsEnum)
             {
-                bItem.Checked = propValue.ToString() == tagModel.OnClick.Argument;
+                bItem.Checked = tagModel.OnClick.Argument.Equals(propValue.ToString());
             }
             else if (configProp.PropertyType == typeof(bool))
             {

@@ -122,7 +122,8 @@ public partial class FrmMain : Form
 
             if (paramItems.Length == 1)
             {
-                if (paramItems[0].ParameterType.IsPrimitive)
+                if (paramItems[0].ParameterType.IsPrimitive
+                    || paramItems[0].ParameterType.Equals(typeof(string)))
                 {
                     methodArg = Convert.ChangeType(tagModel.OnClick.Argument, paramItems[0].ParameterType);
                 }
