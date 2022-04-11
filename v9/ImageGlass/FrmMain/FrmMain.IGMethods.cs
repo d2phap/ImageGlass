@@ -171,6 +171,7 @@ public partial class FrmMain
     {
         try
         {
+            // TODO:
             Process.Start("https://github.com/d2phap/ImageGlass/issues");
         }
         catch { }
@@ -188,6 +189,7 @@ public partial class FrmMain
         {
             try
             {
+                // TODO:
                 Process.Start("https://imageglass.org/source#donation?utm_source=app_" + App.Version + "&utm_medium=app_click&utm_campaign=app_donation");
             }
             catch { }
