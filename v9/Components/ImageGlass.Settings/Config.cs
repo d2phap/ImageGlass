@@ -127,6 +127,13 @@ public static class Config
             OnClick = new("IG_SetZoomMode", ZoomMode.ScaleToFill.ToString()),
         },
         new() { Type = ToolbarItemModelType.Separator },
+        new()
+        {
+            Id = "btnRefresh",
+            Text = "Refresh",
+            Image = "Refresh",
+            OnClick = new("IG_Refresh"),
+        },
         //new()
         //{
         //    Id = "btn_Slideshow",
@@ -151,19 +158,20 @@ public static class Config
             CheckableConfigBinding = nameof(IsShowCheckerBoard),
             OnClick = new("IG_ToggleCheckerboard"),
         },
-        //new() { Type = ToolbarItemModelType.Separator },
+        new() { Type = ToolbarItemModelType.Separator },
         //new()
         //{
         //    Id = "btn_Edit",
         //    Text = "Edit...",
         //    Image = "Edit",
         //},
-        //new()
-        //{
-        //    Id = "btn_Print",
-        //    Text = "Print...",
-        //    Image = "Print",
-        //},
+        new()
+        {
+            Id = "btn_Print",
+            Text = "Print...",
+            Image = "Print",
+            OnClick = new("IG_Print"),
+        },
         //new()
         //{
         //    Id = "btn_Delete",

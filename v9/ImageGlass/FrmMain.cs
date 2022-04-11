@@ -111,12 +111,18 @@ public partial class FrmMain : Form
             tagModel.OnClick.Executable,
             BindingFlags.Instance | BindingFlags.NonPublic);
 
-
         // run built-in method
         if (method is not null)
         {
+            // check method's params
+            var args = Array.Empty<object>();
+            if (method?.GetParameters().Length > 0)
+            {
+                args = new[] { tagModel.OnClick.Arguments };
+            }
+
             // method must be bool/void()
-            method?.Invoke(this, new[] { tagModel.OnClick.Arguments });
+            method?.Invoke(this, args);
 
             return;
         }
@@ -1383,7 +1389,7 @@ public partial class FrmMain : Form
 
     private void MnuPrint_Click(object sender, EventArgs e)
     {
-        // TODO
+        IG_Print();
     }
 
     private void MnuRefresh_Click(object sender, EventArgs e)

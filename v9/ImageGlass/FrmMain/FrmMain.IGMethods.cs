@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Base.PhotoBox;
+using ImageGlass.Library.WinAPI;
+using ImageGlass.PhotoBox;
 using ImageGlass.Settings;
 using System.Diagnostics;
 
@@ -228,6 +230,44 @@ public partial class FrmMain
     private void IG_Exit(string? args = null)
     {
         Application.Exit();
+    }
+
+
+    private void IG_Print()
+    {
+        // image error
+        if (PicMain.Source == ImageSource.Null)
+        {
+            return;
+        }
+
+        var currentFile = Local.Images.GetFileName(Local.CurrentIndex);
+        var fileToPrint = currentFile;
+
+        if (Local.IsTempMemoryData || Local.Metadata?.FramesCount == 1)
+        {
+            // TODO: // save image to temp file
+            //fileToPrint = SaveTemporaryMemoryData();
+        }
+        // rename ext FAX -> TIFF to multipage printing
+        else if (Path.GetExtension(currentFile).Equals(".FAX", StringComparison.OrdinalIgnoreCase))
+        {
+            fileToPrint = App.ConfigDir(PathType.File, Dir.Temporary, Path.GetFileNameWithoutExtension(currentFile) + ".tiff");
+            File.Copy(currentFile, fileToPrint, true);
+        }
+
+        PrintService.OpenPrintPictures(fileToPrint);
+
+        // TODO:
+        //try
+        //{
+        //    PrintService.OpenPrintPictures(fileToPrint);
+        //}
+        //catch
+        //{
+        //    fileToPrint = SaveTemporaryMemoryData();
+        //    PrintService.OpenPrintPictures(fileToPrint);
+        //}
     }
 
 }
