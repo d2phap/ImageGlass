@@ -33,19 +33,55 @@ public partial class FrmMain
     /// Open an image from file picker
     /// </summary>
     /// <returns></returns>
-    private void IG_OpenFile(string args)
+    private void IG_OpenFile(string? args = null)
     {
         OpenFilePicker();
     }
 
-    private void IG_ViewPreviousImage(string args)
+    private void IG_ViewPreviousImage(string? args = null)
     {
         _ = ViewNextCancellableAsync(-1);
     }
 
-    private void IG_ViewNextImage(string args)
+    private void IG_ViewNextImage(string? args = null)
     {
         _ = ViewNextCancellableAsync(1);
+    }
+
+    private void IG_GoTo(string? indexStr = null)
+    {
+        if (int.TryParse(indexStr, out int index))
+        {
+            GoToImageAsync(index);
+        }
+    }
+
+    private void IG_GoToFirst(string? args = null)
+    {
+        GoToImageAsync(0);
+    }
+
+    private void IG_GoToLast(string? args = null)
+    {
+        GoToImageAsync(Local.Images.Length - 1);
+    }
+
+    private void IG_ZoomIn(string? args = null)
+    {
+        PicMain.ZoomIn();
+    }
+
+    private void IG_ZoomOut(string? args = null)
+    {
+        PicMain.ZoomOut();
+    }
+
+    private void IG_SetZoom(string? zoomFactor = null)
+    {
+        if (float.TryParse(zoomFactor, out float factor))
+        {
+            PicMain.ZoomFactor = factor;
+        }
     }
 
     private void IG_SetZoomMode(string mode)
@@ -62,7 +98,7 @@ public partial class FrmMain
         }
     }
 
-    private bool IG_ToggleCheckerboard(string args)
+    private bool IG_ToggleCheckerboard(string? args = null)
     {
         Config.IsShowCheckerBoard = !Config.IsShowCheckerBoard;
 
@@ -86,7 +122,7 @@ public partial class FrmMain
     }
 
 
-    private bool IG_ToggleGallery(string args)
+    private bool IG_ToggleGallery(string? args = null)
     {
         Config.IsShowThumbnail = !Config.IsShowThumbnail;
 

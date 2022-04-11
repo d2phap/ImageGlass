@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Base.DirectoryComparer;
+using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Gallery;
@@ -1270,6 +1271,7 @@ public partial class FrmMain : Form
     }
 
 
+
     private void MnuMain_Opening(object sender, System.ComponentModel.CancelEventArgs e)
     {
         try
@@ -1337,4 +1339,170 @@ public partial class FrmMain : Form
         catch { }
 
     }
+
+
+    // Menu File
+    #region Menu File
+
+    private void MnuOpenFile_Click(object sender, EventArgs e)
+    {
+        IG_OpenFile();
+    }
+
+    private void MnuOpenImageData_Click(object sender, EventArgs e)
+    {
+        // TODO
+    }
+
+    private void MnuNewWindow_Click(object sender, EventArgs e)
+    {
+        // TODO
+    }
+
+    private void MnuSave_Click(object sender, EventArgs e)
+    {
+        // TODO
+    }
+
+    private void MnuSaveAs_Click(object sender, EventArgs e)
+    {
+        // TODO
+    }
+
+    private void MnuOpenWith_Click(object sender, EventArgs e)
+    {
+        // TODO
+    }
+
+    private void MnuEdit_Click(object sender, EventArgs e)
+    {
+        // TODO
+    }
+
+    private void MnuPrint_Click(object sender, EventArgs e)
+    {
+        // TODO
+    }
+
+    private void MnuRefresh_Click(object sender, EventArgs e)
+    {
+        // TODO
+    }
+
+    private void MnuReload_Click(object sender, EventArgs e)
+    {
+        // TODO
+    }
+
+    private void MnuReloadImageList_Click(object sender, EventArgs e)
+    {
+        // TODO
+    }
+
+    #endregion
+
+    // Menu Navigation
+    #region Menu Navigation
+    private void MnuViewNext_Click(object sender, EventArgs e)
+    {
+        IG_ViewNextImage();
+    }
+
+    private void MnuViewPrevious_Click(object sender, EventArgs e)
+    {
+        IG_ViewPreviousImage();
+    }
+
+    private void MnuGoTo_Click(object sender, EventArgs e)
+    {
+        // TODO
+    }
+
+    private void MnuGoToFirst_Click(object sender, EventArgs e)
+    {
+        IG_GoToFirst();
+    }
+
+    private void MnuGoToLast_Click(object sender, EventArgs e)
+    {
+        IG_GoToLast();
+    }
+
+    private void MnuViewNextFrame_Click(object sender, EventArgs e)
+    {
+        // TODO
+    }
+
+    private void MnuViewPreviousFrame_Click(object sender, EventArgs e)
+    {
+        // TODO
+    }
+
+    private void MnuViewFirstFrame_Click(object sender, EventArgs e)
+    {
+        // TODO
+    }
+
+    private void MnuViewLastFrame_Click(object sender, EventArgs e)
+    {
+        // TODO
+    }
+
+
+
+    #endregion
+
+
+    #region Menu Zoom
+    private void MnuZoomIn_Click(object sender, EventArgs e)
+    {
+        IG_ZoomIn();
+    }
+
+    private void MnuZoomOut_Click(object sender, EventArgs e)
+    {
+        IG_ZoomOut();
+    }
+
+    private void MnuCustomZoom_Click(object sender, EventArgs e)
+    {
+        // TODO
+    }
+
+    private void MnuActualSize_Click(object sender, EventArgs e)
+    {
+        IG_SetZoom("1.0");
+    }
+
+    private void MnuAutoZoom_Click(object sender, EventArgs e)
+    {
+        IG_SetZoomMode(nameof(ZoomMode.AutoZoom));
+    }
+
+    private void MnuLockZoom_Click(object sender, EventArgs e)
+    {
+        IG_SetZoomMode(nameof(ZoomMode.LockZoom));
+    }
+
+    private void MnuScaleToWidth_Click(object sender, EventArgs e)
+    {
+        IG_SetZoomMode(nameof(ZoomMode.ScaleToWidth));
+    }
+
+    private void MnuScaleToHeight_Click(object sender, EventArgs e)
+    {
+        IG_SetZoomMode(nameof(ZoomMode.ScaleToHeight));
+    }
+
+    private void MnuScaleToFit_Click(object sender, EventArgs e)
+    {
+        IG_SetZoomMode(nameof(ZoomMode.ScaleToFit));
+    }
+
+    private void MnuScaleToFill_Click(object sender, EventArgs e)
+    {
+        IG_SetZoomMode(nameof(ZoomMode.ScaleToFill));
+    }
+    
+    #endregion
 }
