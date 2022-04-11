@@ -196,6 +196,9 @@ public partial class ViewBox : HybridControl
             {
                 _zoomFactor = value;
                 _isManualZoom = true;
+                _shouldRecalculateDrawingRegion = true;
+
+                OnZoomChanged?.Invoke(new(_zoomFactor));
 
                 Invalidate();
             }
