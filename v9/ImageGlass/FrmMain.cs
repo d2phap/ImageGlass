@@ -1414,7 +1414,7 @@ public partial class FrmMain : Form
 
     private void MnuOpenWith_Click(object sender, EventArgs e)
     {
-        // TODO
+        IG_OpenWith();
     }
 
     private void MnuEdit_Click(object sender, EventArgs e)
@@ -1642,7 +1642,7 @@ public partial class FrmMain : Form
 
     private void MnuImageProperties_Click(object sender, EventArgs e)
     {
-
+        IG_OpenProperties();
     }
 
 

@@ -527,5 +527,37 @@ public partial class FrmMain
         }
     }
 
+    /// <summary>
+    /// Opens image file properties dialog
+    /// </summary>
+    private void IG_OpenProperties()
+    {
+        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
+        ExplorerApi.DisplayFileProperties(filePath, Handle);
+    }
+
+    /// <summary>
+    /// Shows OpenWith dialog
+    /// </summary>
+    private void IG_OpenWith()
+    {
+        using var p = new Process();
+        p.StartInfo.FileName = "openwith";
+
+        // Build the arguments
+        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
+        p.StartInfo.Arguments = $"\"{filePath}\"";
+
+        // show error dialog
+        p.StartInfo.ErrorDialog = true;
+
+        try
+        {
+            p.Start();
+        }
+        catch { }
+    }
+
+
 }
 
