@@ -18,7 +18,9 @@ public partial class FrmMain
         // Toolbar
         Toolbar.Visible = Config.IsShowToolbar;
         Toolbar.IconHeight = Config.ToolbarIconHeight;
-        LoadToolbarItemsConfig();
+        Toolbar.Items.Clear();
+        Toolbar.AddItems(Config.ToolbarItems);
+
 
         // Thumbnail bar
         Gallery.Codec = Config.Codec;
@@ -33,7 +35,7 @@ public partial class FrmMain
 
 
         // PicBox
-        PicMain.ZoomMode = Config.ZoomMode;
+        IG_SetZoomMode(Config.ZoomMode.ToString());
         PicMain.CheckerboardMode = Config.IsShowCheckerBoard
             ? (Config.IsShowCheckerboardOnlyImageRegion
                 ? CheckerboardMode.Image
@@ -87,41 +89,38 @@ public partial class FrmMain
     }
 
 
-    private void LoadToolbarItemsConfig()
+    /// <summary>
+    /// Updates items state of <see cref="Toolbar"/>
+    /// </summary>
+    private void UpdateToolbarItemsState()
     {
-        Toolbar.Items.Clear();
-
-        // add other items
-        Toolbar.AddItems(Config.ToolbarItems, (item) =>
+        // Toolbar itoms
+        foreach (var item in Toolbar.Items)
         {
-            if (item.GetType() != typeof(ToolStripButton))
-                return;
-
-            var bItem = item as ToolStripButton;
-            if (bItem is null || !bItem.CheckOnClick) return;
-
-            var tagModel = bItem.Tag as ToolbarItemTagModel;
-            if (tagModel is null || string.IsNullOrEmpty(tagModel.CheckableConfigBinding))
-                return;
-
-            // get config name
-            var configProp = Config.GetProp(tagModel.CheckableConfigBinding);
-            if (configProp is null) return;
-
-            // get config value
-            var propValue = configProp.GetValue(null);
-            if (propValue is null) return;
-
-            // load check state based on config value
-            if (configProp.PropertyType.IsEnum)
+            if (item.GetType() == typeof(ToolStripButton))
             {
-                bItem.Checked = tagModel.OnClick.Argument.Equals(propValue.ToString());
+                var tItem = item as ToolStripButton;
+                if (tItem is null) continue;
+
+                // update item from metadata
+                var tagModel = tItem.Tag as ToolbarItemTagModel;
+                if (tagModel is null) continue;
+
+                // get config name
+                var configProp = Config.GetProp(tagModel.CheckableConfigBinding);
+                if (configProp is null) continue;
+
+                // load check state based on config value
+                if (configProp.PropertyType.IsEnum)
+                {
+                    // get config value
+                    var propValue = configProp.GetValue(null);
+                    if (propValue is null) continue;
+
+                    tItem.Checked = tagModel.OnClick.Argument.Equals(propValue.ToString());
+                }
             }
-            else if (configProp.PropertyType == typeof(bool))
-            {
-                bItem.Checked = (bool)propValue;
-            }
-        });
+        }
     }
 
 

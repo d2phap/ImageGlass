@@ -927,7 +927,7 @@ public partial class FrmMain : Form
                 else
                 {
                     // reset zoom mode
-                    PicMain.ZoomMode = Config.ZoomMode;
+                    IG_SetZoomMode(Config.ZoomMode.ToString());
                 }
             }
 

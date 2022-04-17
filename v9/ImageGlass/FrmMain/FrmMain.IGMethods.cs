@@ -108,6 +108,17 @@ public partial class FrmMain
         {
             PicMain.ZoomMode = Config.ZoomMode;
         }
+
+        // update menu items state
+        MnuAutoZoom.Checked = Config.ZoomMode == ZoomMode.AutoZoom;
+        MnuLockZoom.Checked = Config.ZoomMode == ZoomMode.LockZoom;
+        MnuScaleToWidth.Checked = Config.ZoomMode == ZoomMode.ScaleToWidth;
+        MnuScaleToHeight.Checked = Config.ZoomMode == ZoomMode.ScaleToHeight;
+        MnuScaleToFill.Checked = Config.ZoomMode == ZoomMode.ScaleToFill;
+        MnuScaleToFit.Checked = Config.ZoomMode == ZoomMode.ScaleToFit;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
     }
 
 
