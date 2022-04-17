@@ -1637,7 +1637,7 @@ public partial class FrmMain : Form
 
     private void MnuOpenLocation_Click(object sender, EventArgs e)
     {
-
+        IG_OpenLocation();
     }
 
     private void MnuImageProperties_Click(object sender, EventArgs e)

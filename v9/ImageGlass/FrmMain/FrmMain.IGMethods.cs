@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Base.PhotoBox;
+using ImageGlass.Base.WinApi;
 using ImageGlass.Library.WinAPI;
 using ImageGlass.PhotoBox;
 using ImageGlass.Settings;
@@ -506,6 +507,23 @@ public partial class FrmMain
         {
             Clipboard.SetImage(img.ImgData.Image);
             PicMain.ShowMessage(Config.Language[$"{Name}._CopyImageData"], 1000);
+        }
+    }
+
+    /// <summary>
+    /// Open the current image's location
+    /// </summary>
+    private void IG_OpenLocation()
+    {
+        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
+
+        try
+        {
+            ExplorerApi.OpenFolderAndSelectItem(filePath);
+        }
+        catch
+        {
+            Process.Start("explorer.exe", $"/select,\"{filePath}\"");
         }
     }
 
