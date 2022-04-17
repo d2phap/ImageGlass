@@ -111,7 +111,6 @@ public partial class FrmMain : Form
             tagModel.OnClick.Executable,
             BindingFlags.Instance | BindingFlags.NonPublic);
 
-        object? methodArg = null;
 
         // run built-in method
         if (method is not null)
@@ -122,20 +121,28 @@ public partial class FrmMain : Form
 
             if (paramItems.Length == 1)
             {
-                if (paramItems[0].ParameterType.IsPrimitive
-                    || paramItems[0].ParameterType.Equals(typeof(string)))
+                object? methodArg = null;
+                var type = Nullable.GetUnderlyingType(paramItems[0].ParameterType) ?? paramItems[0].ParameterType;
+
+                if (type.IsPrimitive
+                    || type.Equals(typeof(string)))
                 {
-                    methodArg = Convert.ChangeType(tagModel.OnClick.Argument, paramItems[0].ParameterType);
+                    if (string.IsNullOrEmpty(tagModel.OnClick.Argument.ToString()))
+                    {
+                        methodArg = null;
+                    }
+                    else
+                    {
+                        methodArg = Convert.ChangeType(tagModel.OnClick.Argument, type);
+                    }
                 }
                 else
                 {
-                    throw new ArgumentException($"Argument of {e.ClickedItem.Name} must be primitive type.", $"{nameof(tagModel.OnClick)}.{nameof(tagModel.OnClick.Argument)}");
+                    throw new ArgumentException($"The type of argument {e.ClickedItem.Name} is not supported.",$"{nameof(tagModel.OnClick)}.{nameof(tagModel.OnClick.Argument)}");
                 }
-            }
 
-            if (methodArg != null)
-            {
-                if (methodArg.GetType().IsArray)
+
+                if (methodArg != null && methodArg.GetType().IsArray)
                 {
                     paramters.AddRange((object[])methodArg);
                 }
@@ -144,6 +151,7 @@ public partial class FrmMain : Form
                     paramters.Add(methodArg);
                 }
             }
+            
 
             // method must be bool/void()
             method.Invoke(this, paramters.ToArray());
@@ -162,7 +170,6 @@ public partial class FrmMain : Form
             {
                 Arguments = procArgs,
                 UseShellExecute = true,
-                //WindowStyle = ProcessWindowStyle.Hidden,
                 ErrorDialog = true,
             },
         };

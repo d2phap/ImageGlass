@@ -1,5 +1,23 @@
-﻿using ImageGlass.Base;
-using ImageGlass.Base.PhotoBox;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.UI;
@@ -10,14 +28,13 @@ namespace ImageGlass;
 /* ****************************************************** *
  * FrmMain.Configs contains methods for dynamic binding   *
  * ****************************************************** */
-
 public partial class FrmMain
 {
     private void SetUpFrmMainConfigs()
     {
         // Toolbar
-        Toolbar.Visible = Config.IsShowToolbar;
         Toolbar.IconHeight = Config.ToolbarIconHeight;
+        IG_ToggleToolbar(Config.IsShowToolbar);
         Toolbar.Items.Clear();
         Toolbar.AddItems(Config.ToolbarItems);
 
@@ -27,8 +44,8 @@ public partial class FrmMain
         Gallery.DoNotDeletePersistentCache = true;
         Gallery.PersistentCacheSize = 100;
         Gallery.PersistentCacheDirectory = App.ConfigDir(PathType.Dir, Dir.ThumbnailsCache);
-        Sp1.Panel2Collapsed = !Config.IsShowThumbnail;
-        Sp1.SplitterDistance = 465;
+        IG_ToggleGallery(Config.IsShowThumbnail);
+        
 
         Sp2.Panel1Collapsed = true;
         Sp3.Panel2Collapsed = true;
@@ -36,11 +53,7 @@ public partial class FrmMain
 
         // PicBox
         IG_SetZoomMode(Config.ZoomMode.ToString());
-        PicMain.CheckerboardMode = Config.IsShowCheckerBoard
-            ? (Config.IsShowCheckerboardOnlyImageRegion
-                ? CheckerboardMode.Image
-                : CheckerboardMode.Client)
-            : CheckerboardMode.None;
+        IG_ToggleCheckerboard(Config.IsShowCheckerBoard);
 
 
         Load += FrmMainConfig_Load;
@@ -63,7 +76,8 @@ public partial class FrmMain
         // load window placement from settings
         WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
 
-        TopMost = Config.IsWindowAlwaysOnTop;
+        // IsWindowAlwaysOnTop
+        IG_ToggleTopMost(Config.IsWindowAlwaysOnTop);
 
         // load language pack
         Local.UpdateFrmMain(ForceUpdateAction.LANGUAGE);
@@ -80,6 +94,10 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Processes internal update requests
+    /// </summary>
+    /// <param name="e"></param>
     private void Local_OnFrmMainUpdateRequested(ForceUpdateAction e)
     {
         if (e.HasFlag(ForceUpdateAction.LANGUAGE))
@@ -110,14 +128,20 @@ public partial class FrmMain
                 var configProp = Config.GetProp(tagModel.CheckableConfigBinding);
                 if (configProp is null) continue;
 
+                // get config value
+                var propValue = configProp.GetValue(null);
+                if (propValue is null) continue;
+
                 // load check state based on config value
                 if (configProp.PropertyType.IsEnum)
                 {
-                    // get config value
-                    var propValue = configProp.GetValue(null);
-                    if (propValue is null) continue;
-
                     tItem.Checked = tagModel.OnClick.Argument.Equals(propValue.ToString());
+                }
+                else if (configProp.PropertyType.Equals(typeof(bool)))
+                {
+                    if (bool.TryParse(propValue.ToString(), out bool value)) {
+                        tItem.Checked = value;
+                    }
                 }
             }
         }
@@ -283,6 +307,7 @@ public partial class FrmMain
 
 
         #endregion
+
     }
 
 
@@ -399,9 +424,8 @@ public partial class FrmMain
         {
             Config.ImageLoadingOrder = selectedOrder;
 
-            // TODO:
-            //// reload image list
-            //MnuReloadImageList_Click(null, null);
+            // reload image list
+            IG_ReloadList();
 
             // reload the state
             LoadMnuLoadingOrdersSubItems();
@@ -419,9 +443,8 @@ public partial class FrmMain
         {
             Config.ImageLoadingOrderType = selectedType;
 
-            // TODO:
-            //// reload image list
-            //MnuReloadImageList_Click(null, null);
+            // reload image list
+            IG_ReloadList();
 
             // reload the state
             LoadMnuLoadingOrdersSubItems();

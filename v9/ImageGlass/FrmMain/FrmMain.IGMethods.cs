@@ -33,7 +33,7 @@ namespace ImageGlass;
 public partial class FrmMain
 {
     /// <summary>
-    /// Open an image from file picker
+    /// Opens file picker to choose an image
     /// </summary>
     /// <returns></returns>
     private void IG_OpenFile()
@@ -41,61 +41,101 @@ public partial class FrmMain
         OpenFilePicker();
     }
 
+
+    /// <summary>
+    /// Refreshes image viewport.
+    /// </summary>
     private void IG_Refresh()
     {
         PicMain.Refresh();
     }
 
+    /// <summary>
+    /// Reloads image file.
+    /// </summary>
     private void IG_Reload()
     {
         _ = ViewNextCancellableAsync(0, isSkipCache: true);
     }
 
+    /// <summary>
+    /// Reloads images list
+    /// </summary>
     private void IG_ReloadList()
     {
         _ = LoadImageListAsync(Local.Images.DistinctDirs, Local.Images.GetFileName(Local.CurrentIndex));
     }
 
+    /// <summary>
+    /// Views previous image
+    /// </summary>
     private void IG_ViewPreviousImage()
     {
         _ = ViewNextCancellableAsync(-1);
     }
 
+    /// <summary>
+    /// View next image
+    /// </summary>
     private void IG_ViewNextImage()
     {
         _ = ViewNextCancellableAsync(1);
     }
 
+    /// <summary>
+    /// Views an image by its index
+    /// </summary>
+    /// <param name="index"></param>
     private void IG_GoTo(int index)
     {
         GoToImageAsync(index);
     }
 
+    /// <summary>
+    /// Views the first image in the list
+    /// </summary>
     private void IG_GoToFirst()
     {
         GoToImageAsync(0);
     }
 
+    /// <summary>
+    /// Views the last image in the list
+    /// </summary>
     private void IG_GoToLast()
     {
         GoToImageAsync(Local.Images.Length - 1);
     }
 
+    /// <summary>
+    /// Zooms into the image
+    /// </summary>
     private void IG_ZoomIn()
     {
         PicMain.ZoomIn();
     }
 
+    /// <summary>
+    /// Zooms out of the image
+    /// </summary>
     private void IG_ZoomOut()
     {
         PicMain.ZoomOut();
     }
 
+    /// <summary>
+    /// Zoom the image by a custom value
+    /// </summary>
+    /// <param name="factor"></param>
     private void IG_SetZoom(float factor)
     {
         PicMain.ZoomFactor = factor;
     }
 
+    /// <summary>
+    /// Sets the zoom mode value
+    /// </summary>
+    /// <param name="mode"><see cref="ZoomMode"/> value in string</param>
     private void IG_SetZoomMode(string mode)
     {
         Config.ZoomMode = Helpers.ParseEnum<ZoomMode>(mode);
@@ -121,34 +161,66 @@ public partial class FrmMain
         UpdateToolbarItemsState();
     }
 
-
-    private bool IG_ToggleToolbar()
+    /// <summary>
+    /// Toggles <see cref="Toolbar"/> visibility
+    /// </summary>
+    /// <param name="visible"></param>
+    /// <returns></returns>
+    private bool IG_ToggleToolbar(bool? visible = null)
     {
-        Config.IsShowToolbar = !Config.IsShowToolbar;
+        visible ??= !Config.IsShowToolbar;
+        Config.IsShowToolbar = visible.Value;
 
         // Gallery bar
         Toolbar.Visible = Config.IsShowToolbar;
 
+        // update menu item state
+        MnuToggleToolbar.Checked = Config.IsShowToolbar;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
+
         return Config.IsShowToolbar;
     }
 
-
-    private bool IG_ToggleGallery()
+    /// <summary>
+    /// Toggles <see cref="Gallery"/> visibility
+    /// </summary>
+    /// <param name="visible"></param>
+    /// <returns></returns>
+    private bool IG_ToggleGallery(bool? visible = null)
     {
-        Config.IsShowThumbnail = !Config.IsShowThumbnail;
+        visible ??= !Config.IsShowThumbnail;
+        Config.IsShowThumbnail = visible.Value;
 
         // Gallery bar
         Sp1.Panel2Collapsed = !Config.IsShowThumbnail;
+        Sp1.SplitterDistance = Sp1.Height
+            - Sp1.SplitterWidth
+            - Gallery.ThumbnailSize.Height
+            - 30;
 
-        return Config.IsShowCheckerBoard;
+
+        // update menu item state
+        MnuToggleThumbnails.Checked = Config.IsShowThumbnail;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
+
+        return Config.IsShowThumbnail;
     }
 
-
-    private bool IG_ToggleCheckerboard()
+    /// <summary>
+    /// Toggles checkerboard background visibility
+    /// </summary>
+    /// <param name="visible"></param>
+    /// <returns></returns>
+    private bool IG_ToggleCheckerboard(bool? visible = null)
     {
-        Config.IsShowCheckerBoard = !Config.IsShowCheckerBoard;
+        visible ??= !Config.IsShowCheckerBoard;
+        Config.IsShowCheckerBoard = visible.Value;
 
-        if (Config.IsShowCheckerBoard)
+        if (visible.Value)
         {
             if (Config.IsShowCheckerboardOnlyImageRegion)
             {
@@ -164,19 +236,35 @@ public partial class FrmMain
             PicMain.CheckerboardMode = CheckerboardMode.None;
         }
 
+        // update menu item state
+        MnuToggleCheckerboard.Checked = visible.Value;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
+
+
         return Config.IsShowCheckerBoard;
     }
 
-
-    private bool IG_ToggleTopMost()
+    /// <summary>
+    /// Toggles form top most
+    /// </summary>
+    /// <param name="enableTopMost"></param>
+    /// <returns></returns>
+    private bool IG_ToggleTopMost(bool? enableTopMost = null)
     {
-        Config.IsWindowAlwaysOnTop = !Config.IsWindowAlwaysOnTop;
+        enableTopMost ??= !Config.IsWindowAlwaysOnTop;
+        Config.IsWindowAlwaysOnTop = enableTopMost.Value;
 
         // Gallery bar
         TopMost = Config.IsWindowAlwaysOnTop;
 
+        // update menu item state
+        MnuToggleTopMost.Checked = TopMost;
+
         return Config.IsWindowAlwaysOnTop;
     }
+
 
     private void IG_ReportIssue()
     {
@@ -187,6 +275,7 @@ public partial class FrmMain
         }
         catch { }
     }
+
 
     private void IG_About()
     {
@@ -223,6 +312,7 @@ public partial class FrmMain
         });
     }
 
+
     private void IG_Settings()
     {
         var path = App.ConfigDir(PathType.File, Source.UserFilename);
@@ -233,6 +323,7 @@ public partial class FrmMain
 
         Process.Start(psi);
     }
+
 
     private void IG_Exit()
     {

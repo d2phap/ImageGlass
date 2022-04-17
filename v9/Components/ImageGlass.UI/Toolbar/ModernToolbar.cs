@@ -241,6 +241,8 @@ public class ModernToolbar : ToolStrip
 
     protected override void OnItemClicked(ToolStripItemClickedEventArgs e)
     {
+        base.OnItemClicked(e);
+
         // filter out BtnMainMenu
         if (e.ClickedItem.Name == MainMenuButton.Name)
         {
@@ -248,37 +250,6 @@ public class ModernToolbar : ToolStrip
             MainMenu.Show(this,
                 e.ClickedItem.Bounds.Left + e.ClickedItem.Bounds.Width - MainMenu.Width,
                 Height);
-        }
-        else
-        {
-            if (e.ClickedItem.GetType() != typeof(ToolStripButton))
-                return;
-
-            var clickedItem = (ToolStripButton)e.ClickedItem;
-            var tagModel = clickedItem.Tag as ToolbarItemTagModel;
-            
-            // auto-deselect the items which have same group name
-            if (clickedItem.CheckOnClick && !string.IsNullOrEmpty(tagModel?.Group))
-            {
-                // Toolbar items
-                foreach (var item in Items)
-                {
-                    if (item.GetType() != typeof(ToolStripButton))
-                        continue;
-
-                    var bItem = (ToolStripButton)item;
-                    var bItemTagModel = bItem.Tag as ToolbarItemTagModel;
-
-                    if (bItem.CheckOnClick
-                        && bItem.Name != clickedItem.Name
-                        && bItemTagModel?.Group == tagModel.Group)
-                    {
-                        bItem.Checked = false;
-                    }
-                }
-            }
-
-            base.OnItemClicked(e);
         }
     }
 
@@ -605,7 +576,6 @@ public class ModernToolbar : ToolStrip
             Text = model.Text,
             ToolTipText = model.Text,
             Alignment = model.Alignment,
-            CheckOnClick = model.CheckOnClick,
 
             TextImageRelation = TextImageRelation.ImageBeforeText,
             TextAlign = ContentAlignment.MiddleRight,
@@ -614,7 +584,6 @@ public class ModernToolbar : ToolStrip
             Tag = new ToolbarItemTagModel()
             {
                 Image = model.Image,
-                Group = model.Group,
                 CheckableConfigBinding = model.CheckableConfigBinding,
                 OnClick = model.OnClick,
             },
