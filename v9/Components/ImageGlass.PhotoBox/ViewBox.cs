@@ -1621,6 +1621,9 @@ public partial class ViewBox : HybridControl
     /// <param name="bmp"></param>
     private void CheckInputImage(Bitmap? bmp)
     {
+        const int MAX_D2D_DIMENTION = 16_384;
+        var exceedMaxDimention = false;
+
         if (bmp is null)
         {
             ImageWidth = 0;
@@ -1634,9 +1637,10 @@ public partial class ViewBox : HybridControl
             ImageHeight = bmp.Height;
             HasAlphaPixels = bmp.PixelFormat.HasFlag(PixelFormat.Alpha);
             CanImageAnimate = _imageAnimator.CanAnimate(bmp);
+            exceedMaxDimention = ImageWidth > MAX_D2D_DIMENTION || ImageHeight > MAX_D2D_DIMENTION;
         }
 
-        _canUseDirect2D = !CanImageAnimate && !HasAlphaPixels;
+        _canUseDirect2D = !CanImageAnimate && !HasAlphaPixels && !exceedMaxDimention;
     }
 
 
