@@ -52,6 +52,7 @@ public partial class FrmMain
         PicMain.Refresh();
     }
 
+
     /// <summary>
     /// Reloads image file.
     /// </summary>
@@ -59,6 +60,7 @@ public partial class FrmMain
     {
         _ = ViewNextCancellableAsync(0, isSkipCache: true);
     }
+
 
     /// <summary>
     /// Reloads images list
@@ -68,6 +70,7 @@ public partial class FrmMain
         _ = LoadImageListAsync(Local.Images.DistinctDirs, Local.Images.GetFileName(Local.CurrentIndex));
     }
 
+
     /// <summary>
     /// Views previous image
     /// </summary>
@@ -76,6 +79,7 @@ public partial class FrmMain
         _ = ViewNextCancellableAsync(-1);
     }
 
+
     /// <summary>
     /// View next image
     /// </summary>
@@ -83,6 +87,7 @@ public partial class FrmMain
     {
         _ = ViewNextCancellableAsync(1);
     }
+
 
     /// <summary>
     /// Views an image by its index
@@ -93,6 +98,7 @@ public partial class FrmMain
         GoToImageAsync(index);
     }
 
+
     /// <summary>
     /// Views the first image in the list
     /// </summary>
@@ -100,6 +106,7 @@ public partial class FrmMain
     {
         GoToImageAsync(0);
     }
+
 
     /// <summary>
     /// Views the last image in the list
@@ -109,6 +116,7 @@ public partial class FrmMain
         GoToImageAsync(Local.Images.Length - 1);
     }
 
+
     /// <summary>
     /// Zooms into the image
     /// </summary>
@@ -116,6 +124,7 @@ public partial class FrmMain
     {
         PicMain.ZoomIn();
     }
+
 
     /// <summary>
     /// Zooms out of the image
@@ -125,6 +134,7 @@ public partial class FrmMain
         PicMain.ZoomOut();
     }
 
+
     /// <summary>
     /// Zoom the image by a custom value
     /// </summary>
@@ -133,6 +143,7 @@ public partial class FrmMain
     {
         PicMain.ZoomFactor = factor;
     }
+
 
     /// <summary>
     /// Sets the zoom mode value
@@ -163,6 +174,7 @@ public partial class FrmMain
         UpdateToolbarItemsState();
     }
 
+
     /// <summary>
     /// Toggles <see cref="Toolbar"/> visibility
     /// </summary>
@@ -184,6 +196,7 @@ public partial class FrmMain
 
         return Config.IsShowToolbar;
     }
+
 
     /// <summary>
     /// Toggles <see cref="Gallery"/> visibility
@@ -211,6 +224,7 @@ public partial class FrmMain
 
         return Config.IsShowThumbnail;
     }
+
 
     /// <summary>
     /// Toggles checkerboard background visibility
@@ -247,6 +261,7 @@ public partial class FrmMain
 
         return Config.IsShowCheckerBoard;
     }
+
 
     /// <summary>
     /// Toggles form top most
@@ -333,6 +348,9 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Prints the viewing image data
+    /// </summary>
     private void IG_Print()
     {
         // image error
@@ -369,7 +387,6 @@ public partial class FrmMain
         //    PrintService.OpenPrintPictures(fileToPrint);
         //}
     }
-
 
 
     /// <summary>
@@ -414,6 +431,7 @@ public partial class FrmMain
             string.Format(Config.Language[$"{Name}._CopyFileText"], Local.StringClipboard.Count),
             1000);
     }
+
 
     /// <summary>
     /// Cut multiple files
@@ -468,6 +486,7 @@ public partial class FrmMain
             1000);
     }
 
+
     /// <summary>
     /// Copies the ucrrent image path
     /// </summary>
@@ -481,6 +500,7 @@ public partial class FrmMain
         }
         catch { }
     }
+
 
     /// <summary>
     /// Clears clipboard
@@ -497,6 +517,7 @@ public partial class FrmMain
         PicMain.ShowMessage(Config.Language[$"{Name}._ClearClipboard"], 1000);
     }
 
+
     /// <summary>
     /// Copies image data to clipboard
     /// </summary>
@@ -509,6 +530,7 @@ public partial class FrmMain
             PicMain.ShowMessage(Config.Language[$"{Name}._CopyImageData"], 1000);
         }
     }
+
 
     /// <summary>
     /// Open the current image's location
@@ -527,6 +549,7 @@ public partial class FrmMain
         }
     }
 
+
     /// <summary>
     /// Opens image file properties dialog
     /// </summary>
@@ -535,6 +558,7 @@ public partial class FrmMain
         var filePath = Local.Images.GetFileName(Local.CurrentIndex);
         ExplorerApi.DisplayFileProperties(filePath, Handle);
     }
+
 
     /// <summary>
     /// Shows OpenWith dialog
@@ -557,6 +581,7 @@ public partial class FrmMain
         }
         catch { }
     }
+
 
 
 }
