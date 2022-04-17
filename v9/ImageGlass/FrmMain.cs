@@ -894,6 +894,8 @@ public partial class FrmMain : Form
 
     private void Local_OnImageLoading(ImageLoadingEventArgs e)
     {
+        Local.IsImageError = false;
+
         PicMain.ClearMessage();
         PicMain.ShowMessage(Config.Language[$"{Name}._Loading"], delayMs: 1500);
 
@@ -909,6 +911,7 @@ public partial class FrmMain : Form
         if (e.Error != null)
         {
             PicMain.SetImage(null);
+            Local.IsImageError = true;
             Local.ImageModifiedPath = "";
 
             var currentFile = Local.Images.GetFileName(e.Index);
@@ -1688,27 +1691,27 @@ public partial class FrmMain : Form
     #region Menu Clipboard
     private void MnuCopyImageData_Click(object sender, EventArgs e)
     {
-
+        IG_CopyImageData();
     }
 
     private void MnuCopy_Click(object sender, EventArgs e)
     {
-
+        IG_CopyMultiFiles();
     }
 
     private void MnuCut_Click(object sender, EventArgs e)
     {
-
+        IG_CutMultiFiles();
     }
 
     private void MnuCopyPath_Click(object sender, EventArgs e)
     {
-
+        IG_CopyImagePath();
     }
 
     private void MnuClearClipboard_Click(object sender, EventArgs e)
     {
-
+        IG_ClearClipboard();
     }
 
 

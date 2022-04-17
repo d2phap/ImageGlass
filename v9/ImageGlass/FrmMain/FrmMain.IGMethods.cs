@@ -21,6 +21,7 @@ using ImageGlass.Base.PhotoBox;
 using ImageGlass.Library.WinAPI;
 using ImageGlass.PhotoBox;
 using ImageGlass.Settings;
+using System.Collections.Specialized;
 using System.Diagnostics;
 
 namespace ImageGlass;
@@ -366,6 +367,146 @@ public partial class FrmMain
         //    fileToPrint = SaveTemporaryMemoryData();
         //    PrintService.OpenPrintPictures(fileToPrint);
         //}
+    }
+
+
+
+    /// <summary>
+    /// Copy multiple files
+    /// </summary>
+    private void IG_CopyMultiFiles()
+    {
+        // get filename
+        var filename = Local.Images.GetFileName(Local.CurrentIndex);
+
+        if (Local.IsImageError || !File.Exists(filename))
+        {
+            return;
+        }
+
+        // update the list
+        var fileList = new List<string>();
+        fileList.AddRange(Local.StringClipboard);
+
+        for (var i = 0; i < fileList.Count; i++)
+        {
+            if (!File.Exists(fileList[i]))
+            {
+                Local.StringClipboard.Remove(fileList[i]);
+            }
+        }
+
+        // exit if duplicated filename
+        if (Local.StringClipboard.IndexOf(filename) == -1)
+        {
+            // add filename to clipboard
+            Local.StringClipboard.Add(filename);
+        }
+
+        var fileDropList = new StringCollection();
+        fileDropList.AddRange(Local.StringClipboard.ToArray());
+
+        Clipboard.Clear();
+        Clipboard.SetFileDropList(fileDropList);
+
+        PicMain.ShowMessage(
+            string.Format(Config.Language[$"{Name}._CopyFileText"], Local.StringClipboard.Count),
+            1000);
+    }
+
+    /// <summary>
+    /// Cut multiple files
+    /// </summary>
+    private async void IG_CutMultiFiles()
+    {
+        // get filename
+        var filename = Local.Images.GetFileName(Local.CurrentIndex);
+
+        if (Local.IsImageError || !File.Exists(filename))
+        {
+            return;
+        }
+
+        // update the list
+        var fileList = new List<string>();
+        fileList.AddRange(Local.StringClipboard);
+
+        Parallel.ForEach(fileList, f =>
+        {
+            if (!File.Exists(f))
+            {
+                Local.StringClipboard.Remove(f);
+            }
+        });
+
+        // exit if duplicated filename
+        if (Local.StringClipboard.IndexOf(filename) == -1)
+        {
+            // add filename to clipboard
+            Local.StringClipboard.Add(filename);
+        }
+
+        var moveEffect = new byte[] { 2, 0, 0, 0 };
+        using (var dropEffect = new MemoryStream())
+        {
+            await dropEffect.WriteAsync(moveEffect).ConfigureAwait(true);
+
+            var fileDropList = new StringCollection();
+            fileDropList.AddRange(Local.StringClipboard.ToArray());
+
+            var data = new DataObject();
+            data.SetFileDropList(fileDropList);
+            data.SetData("Preferred DropEffect", dropEffect);
+
+            Clipboard.Clear();
+            Clipboard.SetDataObject(data, true);
+        }
+
+        PicMain.ShowMessage(
+            string.Format(Config.Language[$"{Name}._CutFileText"], Local.StringClipboard.Count),
+            1000);
+    }
+
+    /// <summary>
+    /// Copies the ucrrent image path
+    /// </summary>
+    private void IG_CopyImagePath()
+    {
+        try
+        {
+            Clipboard.SetText(Local.Images.GetFileName(Local.CurrentIndex));
+
+            PicMain.ShowMessage(Config.Language[$"{Name}._ImagePathCopied"], 1000);
+        }
+        catch { }
+    }
+
+    /// <summary>
+    /// Clears clipboard
+    /// </summary>
+    private void IG_ClearClipboard()
+    {
+        // clear copied files in clipboard
+        if (Local.StringClipboard.Count > 0)
+        {
+            Local.StringClipboard = new();
+            Clipboard.Clear();
+        }
+
+        PicMain.ShowMessage(Config.Language[$"{Name}._ClearClipboard"], 1000);
+    }
+
+    /// <summary>
+    /// Copies image data to clipboard
+    /// </summary>
+    private async void IG_CopyImageData()
+    {
+        var img = await Local.Images.GetAsync(Local.CurrentIndex);
+        if (img != null)
+        {
+            Clipboard.SetImage(img.ImgData.Image);
+            PicMain.ShowMessage(Config.Language[$"{Name}._CopyImageData"], 1000);
+        }
     }
 
 }

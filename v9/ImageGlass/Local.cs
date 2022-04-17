@@ -112,6 +112,12 @@ internal class Local
     /// </summary>
     public static int CurrentIndex { get; set; } = -1;
 
+
+    /// <summary>
+    /// Gets, sets the value if the current image is error
+    /// </summary>
+    public static bool IsImageError { get; set; } = false;
+
     /// <summary>
     /// <para>The current "initial" path (file or dir) we're viewing. Used when the user changes the sort settings: we need to rebuild the image list, but otherwise we don't know what image/folder we started with.</para>
     /// <para>Here's what happened: I opened a folder with subfolders (child folders enabled). I was going through the images, and decided I wanted to change the sort order. Since the _current_ image was in a sub-folder, after a rescan of the image list, only the _sub_-folders images were re-loaded!</para>
@@ -143,6 +149,11 @@ internal class Local
     /// Gets, sets value indicating whether the viewing image is memory data (clipboard / screenshot,...) or not
     /// </summary>
     public static bool IsTempMemoryData { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets copied filename collection (multi-copy)
+    /// </summary>
+    public static List<string> StringClipboard { get; set; } = new();
 
     #endregion
 

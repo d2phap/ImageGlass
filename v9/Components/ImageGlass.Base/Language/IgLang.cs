@@ -268,10 +268,11 @@ public class IgLang : Dictionary<string, string>
         //Add("FrmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu."); // v2.0 beta
         //Add("FrmMain._SlideshowMessagePause", "Slideshow is paused"); // v4.0
         //Add("FrmMain._SlideshowMessageResume", "Slideshow is resumed"); // v4.0
-        //Add("FrmMain._CopyFileText", "Copied {0} file(s)"); // v2.0 final
-        //Add("FrmMain._CutFileText", "Cut {0} file(s)"); // v2.0 final
-        //Add("FrmMain._CopyImageData", "Image was copied to clipboard"); // v5.0
-        //Add("FrmMain._ClearClipboard", "Clipboard was cleared"); // v2.0 final
+        Add("FrmMain._CopyFileText", "Copied {0} file(s)."); // v2.0 final
+        Add("FrmMain._CutFileText", "Cut {0} file(s)."); // v2.0 final
+        Add("FrmMain._CopyImageData", "Copied the current image data."); // v5.0
+        Add("FrmMain._ImagePathCopied", "Copied the current image path."); // v9.0
+        Add("FrmMain._ClearClipboard", "Cleared clipboard."); // v2.0 final
         //Add("FrmMain._SaveChanges", "Saving change..."); // v2.0 final
         //Add("FrmMain._SaveImage", "Image was saved to\r\n{0}"); // v5.0
         //Add("FrmMain._SavingImage", "Saving image...\r\n{0}"); // v7.6
