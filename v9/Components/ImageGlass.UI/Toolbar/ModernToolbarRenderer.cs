@@ -25,8 +25,6 @@ namespace ImageGlass.UI;
 public class ModernToolbarRenderer : ToolStripSystemRenderer
 {
     private ModernToolbar Toolbar { get; set; }
-    System.Windows.Forms.Timer _paintTimer = new();
-
     private IgTheme Theme => Toolbar.Theme ?? new();
 
 
@@ -34,21 +32,6 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
     {
         Toolbar = control;
     }
-
-
-    private int BorderRadius(int itemHeight)
-    {
-        if (Helpers.IsOS(WindowsOS.Win10))
-        {
-            return 0;
-        }
-
-        var radius = (int)(itemHeight * 1.0f / Constants.TOOLBAR_ICON_HEIGHT * 3);
-
-        // min border radius = 5
-        return Math.Max(radius, 5);
-    }
-
 
     protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
     {
@@ -70,7 +53,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
             e.Item.Height - 2 - Toolbar.DefaultGap * 2
         );
 
-        using var path = ThemeUtils.GetRoundRectanglePath(rect, BorderRadius(rect.Width));
+        using var path = ThemeUtils.GetRoundRectanglePath(rect, Helpers.GetItemBorderRadius(rect.Width, Constants.TOOLBAR_ICON_HEIGHT));
         
         // on pressed
         if (e.Item.Pressed)
@@ -132,7 +115,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         rect.Location = new(1, 1);
 
         using var brush = new SolidBrush(Color.Transparent);
-        using var path = ThemeUtils.GetRoundRectanglePath(rect, BorderRadius(rect.Height));
+        using var path = ThemeUtils.GetRoundRectanglePath(rect, Helpers.GetItemBorderRadius(rect.Height, Constants.TOOLBAR_ICON_HEIGHT));
 
 
         // on pressed

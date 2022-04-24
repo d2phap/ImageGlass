@@ -30,6 +30,7 @@ public static class Constants
     public const int MENU_ICON_HEIGHT = 22;
     public const int VIEWER_GRID_SIZE = 8;
     public const int TOOLBAR_ICON_HEIGHT = 22;
+    public const int THUMBNAIL_HEIGHT = 70;
     public const string FILE_MACRO = "<file>";
     public const string CONFIG_CMD_PREFIX = "-";
     public const string DATETIME_FORMAT = "yyyy/MM/dd HH:mm:ss";

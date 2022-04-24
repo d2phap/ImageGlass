@@ -41,20 +41,6 @@ public class ModernGalleryRenderer : StyleRenderer
         Theme = theme;
     }
 
-    private int BorderRadius(int itemHeight)
-    {
-        if (Helpers.IsOS(WindowsOS.Win10))
-        {
-            return 0;
-        }
-
-        const int DEFAULT_SIZE = 70;
-        var radius = (int)(itemHeight * 1.0f / DEFAULT_SIZE * 3);
-
-        // min border radius = 5
-        return Math.Max(radius, 5);
-    }
-
     public override void InitializeGraphics(Graphics g)
     {
         base.InitializeGraphics(g);
@@ -105,7 +91,7 @@ public class ModernGalleryRenderer : StyleRenderer
         #region Draw background
 
         using var bgBrush = new SolidBrush(Color.Transparent);
-        using var bgPath = ThemeUtils.GetRoundRectanglePath(itemBounds, BorderRadius(itemBounds.Height));
+        using var bgPath = ThemeUtils.GetRoundRectanglePath(itemBounds, Helpers.GetItemBorderRadius(itemBounds.Height, Constants.THUMBNAIL_HEIGHT));
 
         // on pressed
         if (state.HasFlag(ItemState.Pressed))
