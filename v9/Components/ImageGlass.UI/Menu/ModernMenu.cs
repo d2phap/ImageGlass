@@ -29,7 +29,6 @@ namespace ImageGlass.UI;
 public class ModernMenu : ContextMenuStrip
 {
     private IgTheme _theme = new();
-    private bool _isFixedUnwantedBorder = false;
 
 
     #region Public properties
@@ -50,7 +49,7 @@ public class ModernMenu : ContextMenuStrip
     /// <summary>
     /// Gets all items excluding <c>ToolStripSeparator</c> items.
     /// </summary>
-    public IEnumerable<ToolStripItem> ActualItems => GetActualItems(Items);
+    public IEnumerable<ToolStripItem> ActualItems => MenuUtils.GetActualItems(Items);
 
     #endregion
 
@@ -64,28 +63,17 @@ public class ModernMenu : ContextMenuStrip
 
     #region Protected override
 
-    protected override void OnLayoutCompleted(EventArgs e)
-    {
-        base.OnLayoutCompleted(e);
-
-        // fix unwanted top-left border by shifting the region to (1,1)
-        if (!_isFixedUnwantedBorder && !DesignMode)
-        {
-            _isFixedUnwantedBorder = true;
-            var path = new System.Drawing.Drawing2D.GraphicsPath();
-            path.AddRectangle(new RectangleF(0.05f, 0.05f,
-                DpiApi.Transform(Width), DpiApi.Transform(Height)));
-
-            Region = new Region(path);
-        }
-    }
-
     protected override void OnItemAdded(ToolStripItemEventArgs e)
     {
         base.OnItemAdded(e);
 
         // manually control the height og menu by disable image scaling
         e.Item.ImageScaling = ToolStripItemImageScaling.None;
+
+        if (e.Item is ToolStripMenuItem item)
+        {
+            item.DropDown.Renderer = new ModernMenuRenderer(Theme);
+        }
     }
 
     protected override void OnOpening(CancelEventArgs e)
@@ -94,7 +82,17 @@ public class ModernMenu : ContextMenuStrip
 
         if (!DesignMode)
         {
-            FixGeneralIssues(toFixDpiSize: true, toFixDropdown: true);
+            FixGeneralIssues(toFixDpiSize: true,toFixDropdown: true);
+        }
+    }
+
+    protected override void OnOpened(EventArgs e)
+    {
+        base.OnOpened(e);
+
+        if (!DesignMode)
+        {
+            FixGeneralIssues(toFixUnwantedBorder: true);
         }
     }
 
@@ -110,29 +108,14 @@ public class ModernMenu : ContextMenuStrip
     ///   <item>Windows 11 round border</item>
     ///   <item>Dropdown direction</item>
     /// </list>
+    /// to the <see cref="ModernMenu"/> component.
     /// </summary>
-    public void FixGeneralIssues(bool toFixDpiSize = false, bool toFixDropdown = false)
-    {
-        FixGeneralIssues(ActualItems, toFixDpiSize, toFixDropdown);
-    }
-
-
-    /// <summary>
-    /// Apply these fixes:
-    /// <list type="bullet">
-    ///   <item>Menu height when DPI changes</item>
-    ///   <item>Windows 11 round border</item>
-    ///   <item>Dropdown direction</item>
-    /// </list>
-    /// </summary>
-    /// <param name="coll"></param>
-    public void FixGeneralIssues(ToolStripItemCollection coll,
+    public void FixGeneralIssues(
         bool toFixDpiSize = false,
-        bool toFixDropdown = false)
+        bool toFixDropdown = false,
+        bool toFixUnwantedBorder = false)
     {
-        var items = GetActualItems(coll);
-
-        FixGeneralIssues(items, toFixDpiSize, toFixDropdown);
+        FixGeneralIssues(this, toFixDpiSize, toFixDropdown, toFixUnwantedBorder);
     }
 
 
@@ -143,20 +126,31 @@ public class ModernMenu : ContextMenuStrip
     ///   <item>Windows 11 round border</item>
     ///   <item>Dropdown direction</item>
     /// </list>
+    /// to the provided menu component.
     /// </summary>
     /// <param name="items"></param>
     public void FixGeneralIssues(
-        IEnumerable<ToolStripItem> items,
+        ToolStripDropDown menu,
         bool toFixDpiSize = false,
-        bool toFixDropdown = false)
+        bool toFixDropdown = false,
+        bool toFixUnwantedBorder = false)
     {
-        if (!items.Any()) return;
+        //// fix unwanted top-left border by shifting the region to (1,1)
+        //if (toFixUnwantedBorder)
+        //{
+        //    menu.Region = GetCorrectMenuRegion(menu);
+        //}
+
+        if (!toFixDpiSize && !toFixDropdown) return;
+
+        var allItems = MenuUtils.GetActualItems(menu.Items);
+        if (!allItems.Any()) return;
 
         // standard icon size
         var iconH = DpiApi.Transform(Constants.MENU_ICON_HEIGHT);
         var standardIcon = new Bitmap(iconH, iconH);
 
-        foreach (ToolStripMenuItem item in items)
+        foreach (ToolStripMenuItem item in allItems)
         {
             #region Fix menu height
             if (toFixDpiSize)
@@ -183,23 +177,36 @@ public class ModernMenu : ContextMenuStrip
                 // apply corner
                 CornerApi.ApplyCorner(item.DropDown.Handle);
 
-                // set background
-                item.DropDown.BackColor = Theme.Settings.MenuBgColor;
-
                 // fix dropdown direction
                 item.DropDownOpening -= Item_DropDownOpening;
                 item.DropDownOpening += Item_DropDownOpening;
+                item.DropDownOpened += Item_DropDownOpened;
 
                 // fix dropdown items
-                FixGeneralIssues(item.DropDownItems, toFixDpiSize, toFixDropdown);
+                FixGeneralIssues(item.DropDown, toFixDpiSize, toFixDropdown);
             }
         }
+
+    }
+
+    private void Item_DropDownOpened(object? sender, EventArgs e)
+    {
+        var mnuItem = sender as ToolStripMenuItem;
+        if (mnuItem is null || !mnuItem.HasDropDownItems)
+        {
+            return; // not a dropdown item
+        }
+
+        //// fix unwanted top-left border by shifting the region to (1,1)
+        //FixGeneralIssues(mnuItem.DropDown, toFixUnwantedBorder: true);
+
     }
 
     #endregion
 
 
     #region Private functions
+
     private void Item_DropDownOpening(object? sender, EventArgs e)
     {
         var mnuItem = sender as ToolStripMenuItem;
@@ -247,22 +254,22 @@ public class ModernMenu : ContextMenuStrip
         #endregion
     }
 
-    #endregion
-
-
-    #region Public static functions
 
     /// <summary>
-    /// Gets all items excluding <c>ToolStripSeparator</c> items. 
+    /// Fix unwanted top-left border by shifting the region to (1,1)
     /// </summary>
-    /// <param name="coll"></param>
+    /// <param name="menu"></param>
     /// <returns></returns>
-    public static IEnumerable<ToolStripItem> GetActualItems(ToolStripItemCollection coll)
+    private Region GetCorrectMenuRegion(ToolStripDropDown menu)
     {
-        return coll
-            .Cast<ToolStripItem>()
-            .Where(item => item.GetType() != typeof(ToolStripSeparator));
+        var path = new System.Drawing.Drawing2D.GraphicsPath();
+        path.AddRectangle(new RectangleF(0.05f, 0.05f,
+            DpiApi.Transform(Width), DpiApi.Transform(Height)));
+
+        return new Region(path);
     }
 
     #endregion
+
+
 }

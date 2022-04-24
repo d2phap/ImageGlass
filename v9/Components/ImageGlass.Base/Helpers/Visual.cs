@@ -52,4 +52,23 @@ public partial class Helpers
 
         return Color.FromArgb(color.A, (byte)red, (byte)green, (byte)blue);
     }
+
+
+    /// <summary>
+    /// Gets menu item border radius
+    /// </summary>
+    /// <param name="itemHeight"></param>
+    /// <returns></returns>
+    public static int GetItemBorderRadius(int itemHeight, int defaultItemHeight)
+    {
+        if (IsOS(WindowsOS.Win10))
+        {
+            return 0;
+        }
+
+        var radius = (int)(itemHeight * 1.0f / defaultItemHeight * 3);
+
+        // min border radius = 4
+        return Math.Max(radius, 4);
+    }
 }

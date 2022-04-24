@@ -29,23 +29,9 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
     private IgTheme _theme { get; set; }
 
 
-
     public ModernMenuRenderer(IgTheme theme) : base(new ModernMenuColors(theme))
     {
         _theme = theme;
-    }
-
-    private int BorderRadius(int itemHeight)
-    {
-        if (Helpers.IsOS(WindowsOS.Win10))
-        {
-            return 0;
-        }
-
-        var radius = (int)(itemHeight * 1.0f / Constants.MENU_ICON_HEIGHT * 3);
-
-        // min border radius = 5
-        return Math.Max(radius, 5);
     }
 
     protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
@@ -107,41 +93,6 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             e.Graphics.DrawLine(pen, lineLeft, lineY, lineRight, lineY);
 
             base.OnRenderSeparator(e);
-        }
-    }
-
-    protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
-    {
-        if (e.ToolStrip is ToolStripDropDown)
-        {
-            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-
-            // draw background
-            using var brush = new SolidBrush(_theme.Settings.MenuBgColor);
-            e.Graphics.FillRectangle(brush, e.AffectedBounds);
-
-            // draw border
-            using var pen = new Pen(Color.Black);
-            if (_theme.Settings.MenuBgColor.GetBrightness() > 0.5) // light background color
-            {
-                pen.Color = Color.FromArgb(35, 0, 0, 0);
-            }
-            else // dark background color
-            {
-                pen.Color = Color.FromArgb(35, 255, 255, 255);
-            }
-
-            const int UNWANTED_BORDER_WIDTH = 1;
-
-            e.Graphics.DrawRectangle(pen,
-                UNWANTED_BORDER_WIDTH,
-                UNWANTED_BORDER_WIDTH,
-                e.AffectedBounds.Width - 1 - UNWANTED_BORDER_WIDTH,
-                e.AffectedBounds.Height - 1 - UNWANTED_BORDER_WIDTH);
-        }
-        else
-        {
-            base.OnRenderToolStripBackground(e);
         }
     }
 
@@ -242,7 +193,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
                 e.Item.Bounds.Height - 5);
 
             using var brush = new SolidBrush(_theme.Settings.MenuBgHoverColor);
-            using var path = ThemeUtils.GetRoundRectanglePath(rect, BorderRadius(rect.Height));
+            using var path = ThemeUtils.GetRoundRectanglePath(rect, Helpers.GetItemBorderRadius(rect.Height, Constants.MENU_ICON_HEIGHT));
             using var penBorder = new Pen(Color.FromArgb(brush.Color.A, brush.Color));
 
             // draw
@@ -255,7 +206,68 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         {
             base.OnRenderMenuItemBackground(e);
         }
+    }
 
+
+    // render menu dropdown background
+    protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
+    {
+        if (e.ToolStrip is ToolStripDropDown)
+        {
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+
+            // draw background
+            using var brush = new SolidBrush(_theme.Settings.MenuBgColor);
+            e.Graphics.FillRectangle(brush, e.AffectedBounds);
+        }
+        else
+        {
+            base.OnRenderToolStripBackground(e);
+        }
+    }
+
+
+    // render menu dropdown border
+    protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
+    {
+        e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+
+        if (Helpers.IsOS(WindowsOS.Win10))
+        {
+            // override default ugly border by a solid color
+            using var penDefault = new Pen(_theme.Settings.MenuBgColor);
+            e.Graphics.DrawRectangle(penDefault,
+                0,
+                0,
+                e.AffectedBounds.Width,
+                e.AffectedBounds.Height);
+        }
+        else
+        {
+            base.OnRenderToolStripBorder(e);
+        }
+
+        using var pen = new Pen(_theme.Settings.MenuBgColor);
+
+        if (_theme.Settings.MenuBgColor.GetBrightness() > 0.5) // light background
+        {
+            pen.Color = Color.FromArgb(35, 0, 0, 0);
+        }
+        else // dark background
+        {
+            pen.Color = Color.FromArgb(35, 255, 255, 255);
+        }
+
+        var menuBorderRadius = Helpers.IsOS(WindowsOS.Win11) ? 8 : 0;
+        using var path = ThemeUtils.GetRoundRectanglePath(new()
+        {
+            X = 0,
+            Y = 0,
+            Width = e.AffectedBounds.Width - 1,
+            Height = e.AffectedBounds.Height - 1,
+        }, menuBorderRadius);
+
+        e.Graphics.DrawPath(pen, path);
     }
 
 }
