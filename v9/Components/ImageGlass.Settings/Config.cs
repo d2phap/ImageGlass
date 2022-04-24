@@ -393,11 +393,6 @@ public static class Config
     public static bool IsCenterWindowFit { get; set; } = true;
 
     /// <summary>
-    /// Gets, sets value indicates that toast messages will show
-    /// </summary>
-    public static bool IsShowToast { get; set; } = true;
-
-    /// <summary>
     /// Gets, sets value indicates that touch gesture support enabled
     /// </summary>
     public static bool IsUseTouchGesture { get; set; } = true;
@@ -544,6 +539,11 @@ public static class Config
     /// Gets, sets value of image quality for editting
     /// </summary>
     public static int ImageEditQuality { get; set; } = 100;
+
+    /// <summary>
+    /// Gets, sets value of duration to display the in-app message
+    /// </summary>
+    public static int InappMessageDuration { get; set; } = 2000;
 
     #endregion
 
@@ -771,7 +771,6 @@ public static class Config
         IsShowPageNavAuto = items.GetValue(nameof(IsShowPageNavAuto), IsShowPageNavAuto);
         IsWindowFit = items.GetValue(nameof(IsWindowFit), IsWindowFit);
         IsCenterWindowFit = items.GetValue(nameof(IsCenterWindowFit), IsCenterWindowFit);
-        IsShowToast = items.GetValue(nameof(IsShowToast), IsShowToast);
         IsUseTouchGesture = items.GetValue(nameof(IsUseTouchGesture), IsUseTouchGesture);
         IsHideTooltips = items.GetValue(nameof(IsHideTooltips), IsHideTooltips);
         IsExifToolAlwaysOnTop = items.GetValue(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
@@ -840,6 +839,7 @@ public static class Config
 
         ToolbarIconHeight = items.GetValue(nameof(ToolbarIconHeight), ToolbarIconHeight);
         ImageEditQuality = items.GetValue(nameof(ImageEditQuality), ImageEditQuality);
+        InappMessageDuration = items.GetValue(nameof(InappMessageDuration), InappMessageDuration);
 
         #endregion
 
@@ -1092,7 +1092,6 @@ public static class Config
         settings.TryAdd(nameof(IsShowPageNavAuto), IsShowPageNavAuto);
         settings.TryAdd(nameof(IsWindowFit), IsWindowFit);
         settings.TryAdd(nameof(IsCenterWindowFit), IsCenterWindowFit);
-        settings.TryAdd(nameof(IsShowToast), IsShowToast);
         settings.TryAdd(nameof(IsUseTouchGesture), IsUseTouchGesture);
         settings.TryAdd(nameof(IsHideTooltips), IsHideTooltips);
         settings.TryAdd(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
@@ -1133,6 +1132,7 @@ public static class Config
         settings.TryAdd(nameof(ZoomLockValue), ZoomLockValue);
         settings.TryAdd(nameof(ToolbarIconHeight), ToolbarIconHeight);
         settings.TryAdd(nameof(ImageEditQuality), ImageEditQuality);
+        settings.TryAdd(nameof(InappMessageDuration), InappMessageDuration);
 
         #endregion
 

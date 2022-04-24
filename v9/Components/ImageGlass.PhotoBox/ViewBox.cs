@@ -1533,10 +1533,13 @@ public partial class ViewBox : HybridControl
     /// </summary>
     /// <param name="text">Message to show</param>
     /// <param name="durationMs">Display duration in millisecond.
-    /// Set it <b>greater than 0</b> to disable auto clear.</param>
+    /// Set it <b>0</b> to disable,
+    /// or <b>-1</b> to display permanently.</param>
     /// <param name="delayMs">Duration to delay before displaying the message.</param>
-    private async void ShowMessagePrivate(string text, int durationMs = 0, int delayMs = 0, bool forceUpdate = true)
+    private async void ShowMessagePrivate(string text, int durationMs = -1, int delayMs = 0, bool forceUpdate = true)
     {
+        if (durationMs == 0) return;
+
         var token = _msgTokenSrc?.Token ?? default;
 
         try
@@ -1577,9 +1580,10 @@ public partial class ViewBox : HybridControl
     /// </summary>
     /// <param name="text">Message to show</param>
     /// <param name="durationMs">Display duration in millisecond.
-    /// Set it <b>greater than 0</b> to disable auto clear.</param>
+    /// Set it <b>0</b> to disable,
+    /// or <b>-1</b> to display permanently.</param>
     /// <param name="delayMs">Duration to delay before displaying the message.</param>
-    public void ShowMessage(string text, int durationMs = 0, int delayMs = 0, bool forceUpdate = true)
+    public void ShowMessage(string text, int durationMs = -1, int delayMs = 0, bool forceUpdate = true)
     {
         if (InvokeRequired)
         {

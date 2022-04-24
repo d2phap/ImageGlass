@@ -429,7 +429,7 @@ public partial class FrmMain
 
         PicMain.ShowMessage(
             string.Format(Config.Language[$"{Name}._CopyFileText"], Local.StringClipboard.Count),
-            1000);
+            Config.InappMessageDuration);
     }
 
 
@@ -483,7 +483,7 @@ public partial class FrmMain
 
         PicMain.ShowMessage(
             string.Format(Config.Language[$"{Name}._CutFileText"], Local.StringClipboard.Count),
-            1000);
+            Config.InappMessageDuration);
     }
 
 
@@ -496,7 +496,7 @@ public partial class FrmMain
         {
             Clipboard.SetText(Local.Images.GetFileName(Local.CurrentIndex));
 
-            PicMain.ShowMessage(Config.Language[$"{Name}._ImagePathCopied"], 1000);
+            PicMain.ShowMessage(Config.Language[$"{Name}._ImagePathCopied"], Config.InappMessageDuration);
         }
         catch { }
     }
@@ -514,7 +514,7 @@ public partial class FrmMain
             Clipboard.Clear();
         }
 
-        PicMain.ShowMessage(Config.Language[$"{Name}._ClearClipboard"], 1000);
+        PicMain.ShowMessage(Config.Language[$"{Name}._ClearClipboard"], Config.InappMessageDuration);
     }
 
 
@@ -527,7 +527,7 @@ public partial class FrmMain
         if (img != null)
         {
             Clipboard.SetImage(img.ImgData.Image);
-            PicMain.ShowMessage(Config.Language[$"{Name}._CopyImageData"], 1000);
+            PicMain.ShowMessage(Config.Language[$"{Name}._CopyImageData"], Config.InappMessageDuration);
         }
     }
 
