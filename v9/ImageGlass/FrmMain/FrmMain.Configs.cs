@@ -332,7 +332,7 @@ public partial class FrmMain
                 CheckOnClick = true,
                 Checked = (int)channel == (int)Local.ImageChannel,
                 ImageScaling = ToolStripItemImageScaling.None,
-                Image = new Bitmap(newMenuIconHeight, newMenuIconHeight)
+                Image = new Bitmap(newMenuIconHeight, newMenuIconHeight),
             };
 
             mnu.Click += MnuViewChannelsItem_Click;

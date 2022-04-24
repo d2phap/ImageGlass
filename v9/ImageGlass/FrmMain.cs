@@ -23,6 +23,7 @@ using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Gallery;
 using ImageGlass.Settings;
+using ImageGlass.UI;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -1384,6 +1385,112 @@ public partial class FrmMain : Form
     }
 
 
+    private void MnuContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+        var imageNotFound = !File.Exists(Local.Images.GetFileName(Local.CurrentIndex));
+
+
+        // clear current items
+        MnuContext.Items.Clear();
+
+        if (Config.IsSlideshow && !imageNotFound)
+        {
+            MnuContext.Items.Add(MenuUtils.Clone(MnuPauseResumeSlideshow));
+            MnuContext.Items.Add(MenuUtils.Clone(MnuExitSlideshow));
+            MnuContext.Items.Add(new ToolStripSeparator());
+        }
+
+        // toolbar menu
+        MnuContext.Items.Add(MenuUtils.Clone(MnuToggleToolbar));
+        MnuContext.Items.Add(MenuUtils.Clone(MnuToggleTopMost));
+
+        MnuContext.Items.Add(new ToolStripSeparator());
+        MnuContext.Items.Add(MenuUtils.Clone(MnuLoadingOrders));
+
+        // Get Edit App info
+        if (!imageNotFound)
+        {
+            if (!Local.IsImageError
+                && !Local.IsTempMemoryData
+                && Local.Metadata?.FramesCount <= 1)
+            {
+                MnuContext.Items.Add(MenuUtils.Clone(MnuViewChannels));
+            }
+
+            MnuContext.Items.Add(new ToolStripSeparator());
+            if (!Helpers.IsOS(WindowsOS.Win7))
+            {
+                MnuContext.Items.Add(MenuUtils.Clone(MnuOpenWith));
+            }
+
+            //UpdateEditAppInfoForMenu();
+            MnuContext.Items.Add(MenuUtils.Clone(MnuEdit));
+
+            #region Check if image can animate (GIF)
+            try
+            {
+                if (!Local.IsImageError && Local.Metadata?.FramesCount > 1)
+                {
+                    var mnu1 = MenuUtils.Clone(MnuExtractFrames);
+                    mnu1.Text = string.Format(Config.Language[$"{Name}.{nameof(MnuExtractFrames)}"], Local.Metadata?.FramesCount);
+                    mnu1.Enabled = true;
+
+                    var mnu2 = MenuUtils.Clone(MnuStartStopAnimating);
+                    mnu2.Enabled = true;
+
+                    MnuContext.Items.Add(mnu1);
+                    MnuContext.Items.Add(mnu2);
+                }
+            }
+            catch { }
+            #endregion
+        }
+
+        if (!imageNotFound && !Local.IsImageError || Local.IsTempMemoryData)
+        {
+            MnuContext.Items.Add(MenuUtils.Clone(MnuSetDesktopBackground));
+
+            // check if igcmdWin10.exe exists!
+            if (Helpers.IsOS(WindowsOS.Win10OrLater) && File.Exists(App.StartUpDir("igcmdWin10.exe")))
+            {
+                MnuContext.Items.Add(MenuUtils.Clone(MnuSetLockScreen));
+            }
+        }
+
+        // Menu group: CLIPBOARD
+        #region Menu group: CLIPBOARD
+        MnuContext.Items.Add(new ToolStripSeparator());//------------
+
+        MnuContext.Items.Add(MenuUtils.Clone(MnuCopyImageData));
+
+        if (!imageNotFound && !Local.IsTempMemoryData)
+        {
+            MnuContext.Items.Add(MenuUtils.Clone(MnuCopy));
+            MnuContext.Items.Add(MenuUtils.Clone(MnuCut));
+        }
+
+        MnuContext.Items.Add(MenuUtils.Clone(MnuOpenImageData));
+        if (!imageNotFound && !Local.IsTempMemoryData)
+        {
+            MnuContext.Items.Add(MenuUtils.Clone(MnuClearClipboard));
+        }
+        #endregion
+
+        if (!imageNotFound && !Local.IsTempMemoryData)
+        {
+            MnuContext.Items.Add(new ToolStripSeparator());//------------
+            MnuContext.Items.Add(MenuUtils.Clone(MnuRename));
+            MnuContext.Items.Add(MenuUtils.Clone(MnuMoveToRecycleBin));
+
+            MnuContext.Items.Add(new ToolStripSeparator());//------------
+            MnuContext.Items.Add(MenuUtils.Clone(MnuCopyPath));
+            MnuContext.Items.Add(MenuUtils.Clone(MnuOpenLocation));
+            MnuContext.Items.Add(MenuUtils.Clone(MnuImageProperties));
+        }
+    }
+
+
+
     // Menu File
     #region Menu File
 
@@ -1784,5 +1891,8 @@ public partial class FrmMain : Form
     #endregion
 
     #endregion
+
+
+
 
 }
