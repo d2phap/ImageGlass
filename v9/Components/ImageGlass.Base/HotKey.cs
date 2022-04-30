@@ -26,8 +26,13 @@ public class HotKey
     public Keys Modifiers { get; set; } = Keys.None;
     public Keys KeyCode { get; set; } = Keys.None;
     public Keys KeyData { get; set; } = Keys.None;
-    public int KeyValue { get; set; }
+    public int KeyValue { get; set; } = -1;
 
+
+    public HotKey()
+    {
+        ParseFrom(Keys.None);
+    }
 
     public HotKey(string s)
     {
@@ -76,5 +81,23 @@ public class HotKey
         KeyCode = ka.KeyCode;
         KeyData = ka.KeyData;
         KeyValue = ka.KeyValue;
+    }
+
+    /// <summary>
+    /// Converts hotkey to string
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        var str = string.Empty;
+
+        try
+        {
+            var kc = new KeysConverter();
+            str = kc.ConvertToInvariantString(KeyData) ?? "";
+        }
+        catch { }
+
+        return str;
     }
 }
