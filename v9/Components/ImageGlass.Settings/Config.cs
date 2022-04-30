@@ -181,6 +181,7 @@ public static class Config
         nameof(BasicInfo.AppName),
     };
 
+
     #endregion
 
 
@@ -610,6 +611,18 @@ public static class Config
     /// </summary>
     public static List<string> InfoItems { get; set; } = DefaultInfoItems;
 
+    /// <summary>
+    /// Gets, sets hotkey lists of menu
+    /// </summary>
+    public static Dictionary<string, HotKey> MenuHotKeysOverride = new()
+    {
+        // Open main menu
+	    { "MnuMain",                  new(Keys.Alt |                  Keys.F) },
+
+	    // MnuFile
+	    { "MnuOpenFile",              new(Keys.Control |              Keys.O) },
+    };
+
     #endregion
 
 
@@ -921,6 +934,13 @@ public static class Config
             .Select(i => i.Get<string>());
         InfoItems = infoItems.Any() ? infoItems.ToList() : DefaultInfoItems;
 
+
+        // hotkeys for menu
+        var hotkeysList = items.GetSection(nameof(MenuHotKeysOverride))
+            .GetChildren()
+            .ToDictionary(i => i.Key, i => i.Value);
+        MenuHotKeysOverride = ParseMenuHotKey(hotkeysList);
+
         #endregion
 
 
@@ -1175,6 +1195,7 @@ public static class Config
         settings.TryAdd(nameof(KeyComboActions), GetKeyComboActions(KeyComboActions));
         settings.TryAdd(nameof(ToolbarItems), ToolbarItems);
         settings.TryAdd(nameof(InfoItems), InfoItems);
+        settings.TryAdd(nameof(MenuHotKeysOverride), ParseHotKey(MenuHotKeysOverride));
         #endregion
 
 
@@ -1400,6 +1421,53 @@ public static class Config
         {
             frm.Icon = Icon.FromHandle(th.Settings.AppLogo.GetHicon());
         }
+    }
+
+
+    /// <summary>
+    /// Parses string dictionary to hotkey dictionary
+    /// </summary>
+    /// <param name="dict"></param>
+    /// <returns></returns>
+    public static Dictionary<string, HotKey> ParseMenuHotKey(Dictionary<string, string> dict)
+    {
+        var result = new Dictionary<string, HotKey>();
+
+        foreach (var item in dict)
+        {
+            try
+            {
+                // sample item: { "MnuOpen": "Ctrl+O" }
+                var keyCombo = new HotKey(item.Value);
+
+                if (result.ContainsKey(item.Key))
+                {
+                    result[item.Key] = keyCombo;
+                }
+                else
+                {
+                    result.Add(item.Key, keyCombo);
+                }
+            }
+            catch { continue; }
+        }
+
+        return result;
+    }
+
+
+    /// <summary>
+    /// Parses hotkey dictionary to string dictionary
+    /// </summary>
+    /// <param name="dict"></param>
+    /// <returns></returns>
+    public static Dictionary<string, string> ParseHotKey(Dictionary<string, HotKey> dict)
+    {
+        return dict.Select(i => new
+        {
+            Key = i.Key,
+            Value = i.Value.ToString(),
+        }).ToDictionary(i => i.Key, i => i.Value);
     }
 
     #endregion
