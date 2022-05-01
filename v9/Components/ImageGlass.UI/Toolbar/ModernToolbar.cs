@@ -54,6 +54,26 @@ public class ModernToolbar : ToolStrip
     private CancellationTokenSource _tooltipTokenSrc = new();
     private ToolStripItem? _hoveredItem = null;
 
+    private ContextMenuStrip _mainMenu = new();
+    private ToolStripButton _mainMenuButton => new()
+    {
+        Name = "btn_MainMenu",
+        DisplayStyle = ToolStripItemDisplayStyle.Image,
+        TextImageRelation = TextImageRelation.ImageBeforeText,
+        Text = "Main menu",
+        ToolTipText = "Main menu (Alf+F)",
+
+        // save icon name to load later
+        Tag = new ToolbarItemTagModel()
+        {
+            Image = nameof(Theme.ToolbarIcons.MainMenu),
+        },
+
+        Alignment = ToolStripItemAlignment.Right,
+        Overflow = ToolStripItemOverflow.Never,
+    };
+
+
 
     #region Public properties
 
@@ -65,28 +85,24 @@ public class ModernToolbar : ToolStrip
     /// <summary>
     /// Gets main menu button
     /// </summary>
-    public ToolStripButton MainMenuButton => new()
-    {
-        Name = "btn_MainMenu",
-        DisplayStyle = ToolStripItemDisplayStyle.Image,
-        TextImageRelation = TextImageRelation.ImageBeforeText,
-        Text = "Main menu",
-        ToolTipText = "Main menu (Alf+F)",
-        
-        // save icon name to load later
-        Tag = new ToolbarItemTagModel()
-        {
-            Image = nameof(Theme.ToolbarIcons.MainMenu),
-        },
-
-        Alignment = ToolStripItemAlignment.Right,
-        Overflow = ToolStripItemOverflow.Never,
-    };
+    public ToolStripButton MainMenuButton => GetItem(_mainMenuButton.Name) ?? _mainMenuButton;
 
     /// <summary>
     /// Gets, sets main menu
     /// </summary>
-    public ContextMenuStrip MainMenu { get; set; } = new();
+    public ContextMenuStrip MainMenu {
+        get => _mainMenu;
+        set
+        {
+            _mainMenu.Opened -= MainMenu_Opened;
+            _mainMenu.Closed -= MainMenu_Closed;
+
+            _mainMenu = value;
+
+            _mainMenu.Opened += MainMenu_Opened;
+            _mainMenu.Closed += MainMenu_Closed;
+        }
+    }
 
     /// <summary>
     /// Tooltip display text
@@ -183,8 +199,8 @@ public class ModernToolbar : ToolStrip
 
     protected override void OnMouseEnter(EventArgs e)
     {
-        if (AutoFocusOnHover && this.CanFocus && !this.Focused)
-            this.Focus();
+        if (AutoFocusOnHover && CanFocus && !Focused)
+            Focus();
 
         base.OnMouseEnter(e);
     }
@@ -247,9 +263,7 @@ public class ModernToolbar : ToolStrip
         if (e.ClickedItem.Name == MainMenuButton.Name)
         {
             // on main menu button clicked
-            MainMenu.Show(this,
-                e.ClickedItem.Bounds.Left + e.ClickedItem.Bounds.Width - MainMenu.Width,
-                Height);
+            ShowMainMenu();
         }
     }
 
@@ -266,6 +280,19 @@ public class ModernToolbar : ToolStrip
 
 
     #region Private functions
+    private void MainMenu_Opened(object? sender, EventArgs e)
+    {
+        MainMenuButton.Checked = true;
+    }
+    private void MainMenu_Closed(object? sender, ToolStripDropDownClosedEventArgs e)
+    {
+        MainMenuButton.Checked = false;
+    }
+
+
+    /// <summary>
+    /// Updates overflow button and dropdown
+    /// </summary>
     private void UpdateOverflow()
     {
         // overflow size
@@ -328,6 +355,17 @@ public class ModernToolbar : ToolStrip
 
 
     #region Public functions
+
+    /// <summary>
+    /// Shows main menu
+    /// </summary>
+    public void ShowMainMenu()
+    {
+        var x = MainMenuButton.Bounds.Left + MainMenuButton.Bounds.Width - MainMenu.Width;
+        var y = Visible ? Height: 10;
+
+        MainMenu.Show(this,x, y);
+    }
 
     /// <summary>
     /// Hide item's tooltip
