@@ -16,6 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass.Base.WinApi;
+using System.Text;
+
 namespace ImageGlass.Base;
 
 public class Hotkey
@@ -23,10 +26,44 @@ public class Hotkey
     public bool Control { get; set; } = false;
     public bool Shift { get; set; } = false;
     public bool Alt { get; set; } = false;
+    public Keys KeyData { get; set; } = Keys.None;
     public Keys Modifiers { get; set; } = Keys.None;
     public Keys KeyCode { get; set; } = Keys.None;
-    public Keys KeyData { get; set; } = Keys.None;
     public int KeyValue { get; set; } = -1;
+    public string KeyStr
+    {
+        get
+        {
+            var str = KeyCode.ToString();
+
+            if (str.StartsWith("Oem"))
+            {
+                var unicode = KeyboardApi.KeyCodeToUnicode(KeyData);
+
+                if (!string.IsNullOrEmpty(unicode))
+                {
+                    str = unicode;
+                }
+            }
+
+            return str;
+        }
+    }
+
+    public Dictionary<string, Keys> OemCharToKeyMapping => new()
+    {
+        { "`", Keys.Oemtilde },
+        { "-", Keys.OemMinus },
+        { "=", Keys.Oemplus },
+        { "[", Keys.OemOpenBrackets },
+        { "]", Keys.OemCloseBrackets },
+        { "\\", Keys.Oem5 },
+        { ";", Keys.Oem1 },
+        { "'", Keys.Oem7 },
+        { ",", Keys.Oemcomma },
+        { ".", Keys.OemPeriod },
+        { "/", Keys.OemQuestion },
+    };
 
 
     public Hotkey()
@@ -51,18 +88,48 @@ public class Hotkey
     /// <param name="s"></param>
     public void ParseFrom(string s)
     {
-        var kc = new KeysConverter();
+        var hotkey = Keys.None;
 
-        try
+        var chars = s.Split("+", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+        foreach (var c in chars)
         {
-            var keys = (Keys?)kc.ConvertFromString(s);
-
-            if (keys != null)
+            if (c.Equals("ctrl", StringComparison.OrdinalIgnoreCase))
             {
-                ParseFrom(keys.Value);
+                hotkey |= Keys.Control;
+            }
+            else if (c.Equals("shift", StringComparison.OrdinalIgnoreCase))
+            {
+                hotkey |= Keys.Shift;
+            }
+            else if (c.Equals("alt", StringComparison.OrdinalIgnoreCase))
+            {
+                hotkey |= Keys.Alt;
+            }
+            else
+            {
+                if (OemCharToKeyMapping.ContainsKey(c))
+                {
+                    hotkey |= OemCharToKeyMapping[c];
+                }
+                else
+                {
+                    var kc = new KeysConverter();
+                    var key = (Keys?)kc.ConvertFromString(c);
+
+                    if (key is not null)
+                    {
+                        hotkey |= key.Value;
+                    }
+                }
             }
         }
-        catch { }
+
+
+        if (hotkey != Keys.None)
+        {
+            ParseFrom(hotkey);
+        }
     }
 
 
@@ -83,21 +150,40 @@ public class Hotkey
         KeyValue = ka.KeyValue;
     }
 
+
     /// <summary>
     /// Converts hotkey to string
     /// </summary>
     /// <returns></returns>
     public override string ToString()
     {
-        var str = string.Empty;
+        var strB = new StringBuilder();
 
-        try
+        if (Control)
         {
-            var kc = new KeysConverter();
-            str = kc.ConvertToInvariantString(KeyData) ?? "";
+            strB.Append("Ctrl+");
         }
-        catch { }
 
-        return str;
+        if (Shift)
+        {
+            strB.Append("Shift+");
+        }
+
+        if (Alt)
+        {
+            strB.Append("Alt+");
+        }
+
+        if (KeyStr.Length == 1)
+        {
+            strB.Append(KeyStr.ToUpperInvariant());
+        }
+        else
+        {
+            strB.Append(KeyStr);
+        }
+        
+
+        return strB.ToString();
     }
 }
