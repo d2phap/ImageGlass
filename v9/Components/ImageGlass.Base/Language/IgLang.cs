@@ -250,7 +250,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.PicMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, corrupted or not supported."); // v2.0 beta, updated 4.0
 
         //Add("FrmMain._ImageNotExist", "The viewing image doesn't exist."); // v4.5
-        //Add("FrmMain.btnMenu", "Main menu"); // v3.0
+        Add("FrmMain.MnuMain", "Main menu"); // v3.0
 
         Add("FrmMain._OpenFileDialog", "All supported files");
         Add("FrmMain._Files", "file(s)"); // v7.5

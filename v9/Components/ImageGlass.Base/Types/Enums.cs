@@ -113,19 +113,11 @@ public enum MouseWheelActions
 [Flags]
 public enum ForceUpdateAction
 {
-    NONE = 0,
-    OTHER_SETTINGS = 1,
-    THEME = 2,
-    LANGUAGE = 4,
-    THUMBNAIL_BAR = 8,
-    THUMBNAIL_ITEMS = 16,
-    TOOLBAR = 32,
-    TOOLBAR_POSITION = 64,
-    TOOLBAR_ICON_HEIGHT = 128,
-    IMAGE_LIST = 256,
-    IMAGE_LIST_NO_RECURSIVE = 512,
-    COLOR_PICKER_MENU = 1024,
-    PAGE_NAV_MENU = 2048
+    None = 0,
+    Language = 1 << 1,
+    MenuHotKeys = 1 << 2,
+    Toolbar = 1 << 3,
+    ThumbnailBar = 1 << 4,
 }
 
 /// <summary>

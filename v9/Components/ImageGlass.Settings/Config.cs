@@ -612,7 +612,7 @@ public static class Config
     public static List<string> InfoItems { get; set; } = DefaultInfoItems;
 
     /// <summary>
-    /// Gets, sets hotkey lists of menu
+    /// Gets, sets hotkeys list of menu
     /// </summary>
     public static Dictionary<string, HotKey> MenuHotKeysOverride = new()
     {
@@ -1435,22 +1435,26 @@ public static class Config
 
         foreach (var item in dict)
         {
+            HotKey keyCombo;
             try
             {
                 // sample item: { "MnuOpen": "Ctrl+O" }
-                var keyCombo = new HotKey(item.Value);
-
-                if (result.ContainsKey(item.Key))
-                {
-                    result[item.Key] = keyCombo;
-                }
-                else
-                {
-                    result.Add(item.Key, keyCombo);
-                }
+                keyCombo = new HotKey(item.Value);
             }
-            catch { continue; }
-        }
+            catch
+            {
+                keyCombo = new HotKey();
+            }
+
+            if (result.ContainsKey(item.Key))
+            {
+                result[item.Key] = keyCombo;
+            }
+            else
+            {
+                result.Add(item.Key, keyCombo);
+            }
+        };
 
         return result;
     }
@@ -1468,6 +1472,42 @@ public static class Config
             Key = i.Key,
             Value = i.Value.ToString(),
         }).ToDictionary(i => i.Key, i => i.Value);
+    }
+
+
+    /// <summary>
+    /// Merge <paramref name="srcDict"/> dictionary
+    /// into <paramref name="destDict"/> dictionary
+    /// </summary>
+    /// <param name="destDict"></param>
+    /// <param name="srcDict"></param>
+    /// <returns></returns>
+    public static void MergeHotKeys(ref Dictionary<string, HotKey> destDict, Dictionary<string, HotKey> srcDict)
+    {
+        foreach (var item in srcDict)
+        {
+            if (destDict.ContainsKey(item.Key))
+            {
+                destDict[item.Key] = item.Value;
+            }
+            else
+            {
+                destDict.Add(item.Key, item.Value);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets hotkey string
+    /// </summary>
+    /// <param name="dict"></param>
+    /// <param name="dictKey"></param>
+    /// <returns></returns>
+    public static string GetHotkey(Dictionary<string, HotKey> dict, string dictKey)
+    {
+        dict.TryGetValue(dictKey, out var hotkey);
+
+        return hotkey?.ToString() ?? string.Empty;
     }
 
     #endregion

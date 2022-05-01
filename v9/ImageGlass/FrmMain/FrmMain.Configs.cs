@@ -30,6 +30,28 @@ namespace ImageGlass;
  * ****************************************************** */
 public partial class FrmMain
 {
+    /// <summary>
+    /// Hotkeys list of main menu
+    /// </summary>
+    public static Dictionary<string, HotKey> MenuHotKeys = new()
+    {
+	    // Open main menu
+	    { nameof(MnuMain),                  new(Keys.Alt |                  Keys.F) },
+
+	    // MnuFile
+	    { nameof(MnuOpenFile),              new(Keys.Control |              Keys.O) },
+        { nameof(MnuOpenImageData),         new(Keys.Control |              Keys.V) },
+        { nameof(MnuNewWindow),             new(Keys.Control |              Keys.N) },
+        { nameof(MnuSave),                  new(Keys.Control |              Keys.S) },
+        { nameof(MnuSaveAs),                new(Keys.Control | Keys.Shift | Keys.S) },
+        { nameof(MnuOpenWith),              new(                            Keys.D) },
+        { nameof(MnuEdit),                  new(                            Keys.E) },
+        { nameof(MnuPrint),                 new(Keys.Control |              Keys.P) },
+        { nameof(MnuRefresh),               new(                            Keys.R) },
+        { nameof(MnuReload),                new(Keys.Control |              Keys.R) },
+        { nameof(MnuReloadImageList),       new(Keys.Control | Keys.Shift | Keys.R) },
+    };
+
     private void SetUpFrmMainConfigs()
     {
         // Toolbar
@@ -45,7 +67,7 @@ public partial class FrmMain
         Gallery.PersistentCacheSize = 100;
         Gallery.PersistentCacheDirectory = App.ConfigDir(PathType.Dir, Dir.ThumbnailsCache);
         IG_ToggleGallery(Config.IsShowThumbnail);
-        
+
 
         Sp2.Panel1Collapsed = true;
         Sp3.Panel2Collapsed = true;
@@ -61,14 +83,6 @@ public partial class FrmMain
         SizeChanged += FrmMainConfig_SizeChanged;
     }
 
-    private void FrmMainConfig_SizeChanged(object? sender, EventArgs e)
-    {
-        Config.FrmMainPositionX = Location.X;
-        Config.FrmMainPositionY = Location.Y;
-        Config.FrmMainWidth = Size.Width;
-        Config.FrmMainHeight = Size.Height;
-    }
-
     private void FrmMainConfig_Load(object? sender, EventArgs e)
     {
         Local.OnRequestUpdateFrmMain += Local_OnFrmMainUpdateRequested;
@@ -79,8 +93,15 @@ public partial class FrmMain
         // IsWindowAlwaysOnTop
         IG_ToggleTopMost(Config.IsWindowAlwaysOnTop);
 
+        // load menu hotkeys
+        Helpers.RunAsThread(() =>
+        {
+            Config.MergeHotKeys(ref MenuHotKeys, Config.MenuHotKeysOverride);
+            Local.UpdateFrmMain(ForceUpdateAction.MenuHotKeys);
+        });
+
         // load language pack
-        Local.UpdateFrmMain(ForceUpdateAction.LANGUAGE);
+        Local.UpdateFrmMain(ForceUpdateAction.Language);
     }
 
     private void FrmMainConfig_FormClosing(object? sender, FormClosingEventArgs e)
@@ -93,6 +114,14 @@ public partial class FrmMain
         Config.Write();
     }
 
+    private void FrmMainConfig_SizeChanged(object? sender, EventArgs e)
+    {
+        Config.FrmMainPositionX = Location.X;
+        Config.FrmMainPositionY = Location.Y;
+        Config.FrmMainWidth = Size.Width;
+        Config.FrmMainHeight = Size.Height;
+    }
+
 
     /// <summary>
     /// Processes internal update requests
@@ -100,9 +129,14 @@ public partial class FrmMain
     /// <param name="e"></param>
     private void Local_OnFrmMainUpdateRequested(ForceUpdateAction e)
     {
-        if (e.HasFlag(ForceUpdateAction.LANGUAGE))
+        if (e.HasFlag(ForceUpdateAction.Language))
         {
             LoadLanguages();
+        }
+        
+        if (e.HasFlag(ForceUpdateAction.MenuHotKeys))
+        {
+            LoadMenuHotkeys();
         }
     }
 
@@ -139,7 +173,8 @@ public partial class FrmMain
                 }
                 else if (configProp.PropertyType.Equals(typeof(bool)))
                 {
-                    if (bool.TryParse(propValue.ToString(), out bool value)) {
+                    if (bool.TryParse(propValue.ToString(), out bool value))
+                    {
                         tItem.Checked = value;
                     }
                 }
@@ -174,7 +209,7 @@ public partial class FrmMain
         MnuRefresh.Text = lang[$"{Name}.{nameof(MnuRefresh)}"];
         MnuReload.Text = lang[$"{Name}.{nameof(MnuReload)}"];
         MnuReloadImageList.Text = lang[$"{Name}.{nameof(MnuReloadImageList)}"];
-        
+
         #endregion
 
 
@@ -308,6 +343,44 @@ public partial class FrmMain
 
         #endregion
 
+    }
+
+
+    /// <summary>
+    /// Load hotkeys of menu
+    /// </summary>
+    /// <param name="menu"></param>
+    private void LoadMenuHotkeys(ToolStripDropDown? menu = null)
+    {
+        if (InvokeRequired)
+        {
+            Invoke(LoadMenuHotkeys, menu);
+            return;
+        }
+
+        if (menu == null)
+        {
+            var mnuMainHotkey = Config.GetHotkey(MenuHotKeys, nameof(MnuMain));
+
+            Toolbar.MainMenuButton.ToolTipText = 
+                Config.Language[$"{Name}.{nameof(MnuMain)}"] 
+                + (String.IsNullOrEmpty(mnuMainHotkey) ? "" : $"{mnuMainHotkey}");
+        }
+
+        // default: main menu
+        menu ??= MnuMain;
+
+
+        var allItems = MenuUtils.GetActualItems(menu.Items);
+        foreach (ToolStripMenuItem item in allItems)
+        {
+            item.ShortcutKeyDisplayString = Config.GetHotkey(MenuHotKeys, item.Name);
+
+            if (item.HasDropDownItems)
+            {
+                LoadMenuHotkeys(item.DropDown);
+            }
+        }
     }
 
 
