@@ -1462,11 +1462,10 @@ public partial class FrmMain : Form
 
     private void MnuContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
     {
-        var imageNotFound = !File.Exists(Local.Images.GetFileName(Local.CurrentIndex));
-
-
         // clear current items
         MnuContext.Items.Clear();
+
+        var imageNotFound = !File.Exists(Local.Images.GetFileName(Local.CurrentIndex));
 
         if (Config.IsSlideshow && !imageNotFound)
         {

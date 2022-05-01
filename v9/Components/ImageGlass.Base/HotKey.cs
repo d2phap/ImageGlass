@@ -52,7 +52,7 @@ public class Hotkey
         }
     }
 
-    public Dictionary<string, Keys> CharToKeyMapping => new()
+    public static Dictionary<string, Keys> CharToKeyMapping => new()
     {
         { "`", Keys.Oemtilde },
         { "-", Keys.OemMinus },
