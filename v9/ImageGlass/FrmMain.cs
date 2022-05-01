@@ -95,6 +95,12 @@ public partial class FrmMain : Form
 
             if (menuHotkey?.KeyData == e.KeyData)
             {
+                // ignore invisible menu
+                if (mnu.Visible)
+                {
+                    return false;
+                }
+
                 if (mnu.HasDropDownItems)
                 {
                     ShowSubMenu(mnu);
