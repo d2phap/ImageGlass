@@ -64,8 +64,8 @@ public partial class FrmMain
         { nameof(MnuViewLastFrame),         new(Keys.Control | Keys.End) },
 
         // MnuZoom
-        { nameof(MnuZoomIn),                new(Keys.Oemplus) },
-        { nameof(MnuZoomOut),               new(Keys.OemMinus) },
+        { nameof(MnuZoomIn),                new(Keys.Oemplus) }, // =
+        { nameof(MnuZoomOut),               new(Keys.OemMinus) }, // -
         { nameof(MnuCustomZoom),            new(Keys.Z) },
         { nameof(MnuActualSize),            new(Keys.D0) },
         { nameof(MnuAutoZoom),              new(Keys.D1) },
@@ -78,10 +78,10 @@ public partial class FrmMain
         // MnuImage
         { nameof(MnuViewChannels),          new(Keys.Shift | Keys.C) },
         { nameof(MnuLoadingOrders),         new(Keys.Shift | Keys.O) },
-        { nameof(MnuRotateLeft),            new(Keys.Control | Keys.Oemcomma) },
-        { nameof(MnuRotateRight),           new(Keys.Control | Keys.OemPeriod) },
-        { nameof(MnuFlipHorizontal),        new(Keys.Control | Keys.Oem1) }, // ;
-        { nameof(MnuFlipVertical),          new(Keys.Control | Keys.Oem7) }, // '
+        { nameof(MnuRotateLeft),            new(Keys.Control | Keys.OemPeriod) }, // Ctrl+.
+        { nameof(MnuRotateRight),           new(Keys.Control | Keys.Oem5) }, // Ctrl+/
+        { nameof(MnuFlipHorizontal),        new(Keys.Control | Keys.Oem1) }, // Ctrl+;
+        { nameof(MnuFlipVertical),          new(Keys.Control | Keys.Oem7) }, // Ctrl+'
         { nameof(MnuRename),                new(Keys.F2) },
         { nameof(MnuMoveToRecycleBin),      new(Keys.Delete) },
         { nameof(MnuDeleteFromHardDisk),    new(Keys.Shift | Keys.Delete) },
@@ -95,7 +95,7 @@ public partial class FrmMain
         { nameof(MnuCopy),                  new(Keys.Control | Keys.Shift | Keys.C) },
         { nameof(MnuCut),                   new(Keys.Control | Keys.X) },
         { nameof(MnuCopyPath),              new(Keys.Control | Keys.L) },
-        { nameof(MnuClearClipboard),        new(Keys.Control | Keys.Oemtilde) }, // `
+        { nameof(MnuClearClipboard),        new(Keys.Control | Keys.Oemtilde) }, // Ctrl+`
 
         { nameof(MnuWindowFit),             new(Keys.F9) },
         { nameof(MnuFrameless),             new(Keys.F10) },
@@ -121,7 +121,7 @@ public partial class FrmMain
         // MnuHelp
         { nameof(MnuAbout),                 new(Keys.F1) },
 
-        { nameof(MnuSettings),              new(Keys.Control | Keys.Shift | Keys.P) },
+        { nameof(MnuSettings),              new(Keys.Control | Keys.Oemcomma) }, // Ctrl+,
         { nameof(MnuExit),                  new(Keys.Escape) },
     };
 
@@ -172,6 +172,10 @@ public partial class FrmMain
         // load menu hotkeys
         Config.MergeHotkeys(ref MenuHotkeys, Config.MenuHotkeysOverride);
         Local.UpdateFrmMain(ForceUpdateAction.MenuHotkeys);
+
+
+        // TODO: hide menu items that haven't implemented
+        HideUnreadyMenuItems();
     }
 
     private void FrmMainConfig_FormClosing(object? sender, FormClosingEventArgs e)
@@ -435,6 +439,7 @@ public partial class FrmMain
 
     }
 
+
     /// <summary>
     /// Load hotkeys of menu
     /// </summary>
@@ -494,6 +499,7 @@ public partial class FrmMain
         }
     }
 
+
     /// <summary>
     /// Load View Channels menu items
     /// </summary>
@@ -522,6 +528,7 @@ public partial class FrmMain
             MnuViewChannels.DropDown.Items.Add(mnu);
         }
     }
+
 
     private void MnuViewChannelsItem_Click(object? sender, EventArgs e)
     {
@@ -635,5 +642,99 @@ public partial class FrmMain
     }
 
 
+    private void HideUnreadyMenuItems()
+    {
+        // MnuFile
+        //MnuOpenFile.Visible = false;
+        MnuOpenImageData.Visible = false;
+        MnuNewWindow.Visible = false;
+        MnuSave.Visible = false;
+        MnuSaveAs.Visible = false;
+        //MnuOpenWith.Visible = false;
+        MnuEdit.Visible = false;
+        //MnuPrint.Visible = false;
+        //MnuRefresh.Visible = false;
+        //MnuReload.Visible = false;
+        //MnuReloadImageList.Visible = false;
+
+        // MnuNavigation
+        //MnuViewNext.Visible = false;
+        //MnuViewPrevious.Visible = false;
+        MnuGoTo.Visible = false;
+        //MnuGoToFirst.Visible = false;
+        //MnuGoToLast.Visible = false;
+        MnuViewNextFrame.Visible = false;
+        MnuViewPreviousFrame.Visible = false;
+        MnuViewFirstFrame.Visible = false;
+        MnuViewLastFrame.Visible = false;
+
+        // MnuZoom
+        //MnuZoomIn.Visible = false;
+        //MnuZoomOut.Visible = false;
+        MnuCustomZoom.Visible = false;
+        //MnuActualSize.Visible = false;
+        //MnuAutoZoom.Visible = false;
+        //MnuLockZoom.Visible = false;
+        //MnuScaleToWidth.Visible = false;
+        //MnuScaleToHeight.Visible = false;
+        //MnuScaleToFit.Visible = false;
+        //MnuScaleToFill.Visible = false;
+
+        // MnuImage
+        MnuViewChannels.Visible = false;
+        //MnuLoadingOrders.Visible = false;
+        MnuRotateLeft.Visible = false;
+        MnuRotateRight.Visible = false;
+        MnuFlipHorizontal.Visible = false;
+        MnuFlipVertical.Visible = false;
+        MnuRename.Visible = false;
+        MnuMoveToRecycleBin.Visible = false;
+        MnuDeleteFromHardDisk.Visible = false;
+        MnuStartStopAnimating.Visible = false;
+        MnuExtractFrames.Visible = false;
+        MnuSetDesktopBackground.Visible = false;
+        MnuSetLockScreen.Visible = false;
+        //MnuOpenLocation.Visible = false;
+        //MnuImageProperties.Visible = false;
+
+        // MnuClipboard
+        //MnuCopyImageData.Visible = false;
+        //MnuCopy.Visible = false;
+        //MnuCut.Visible = false;
+        //MnuCopyPath.Visible = false;
+        //MnuClearClipboard.Visible = false;
+
+        MnuWindowFit.Visible = false;
+        MnuFrameless.Visible = false;
+        MnuFullScreen.Visible = false;
+
+        // MnuSlideshow
+        MnuSlideshow.Visible = false;
+        MnuStartSlideshow.Visible = false;
+        MnuPauseResumeSlideshow.Visible = false;
+        MnuExitSlideshow.Visible = false;
+
+        // MnuLayout
+        //MnuToggleToolbar.Visible = false;
+        //MnuToggleThumbnails.Visible = false;
+        //MnuToggleCheckerboard.Visible = false;
+        //MnuToggleTopMost.Visible = false;
+
+        // MnuTools
+        MnuTools.Visible = false;
+        MnuColorPicker.Visible = false;
+        MnuCropping.Visible = false;
+        MnuPageNav.Visible = false;
+        MnuExifTool.Visible = false;
+
+        // MnuHelp
+        //MnuAbout.Visible = false;
+        MnuCheckForUpdate.Visible = false;
+        //MnuReportIssue.Visible = false;
+        MnuFirstLaunch.Visible = false;
+
+        //MnuSettings.Visible = false;
+        //MnuExit.Visible = false;
+    }
 }
 

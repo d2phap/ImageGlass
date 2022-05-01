@@ -117,7 +117,7 @@ public static class Config
         new() { Type = ToolbarItemModelType.Separator },
         new()
         {
-            Id = "btnRefresh",
+            Id = "btn_Refresh",
             Text = "Refresh",
             Image = "Refresh",
             OnClick = new("MnuRefresh"),
