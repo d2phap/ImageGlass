@@ -166,15 +166,12 @@ public partial class FrmMain
         // IsWindowAlwaysOnTop
         IG_ToggleTopMost(Config.IsWindowAlwaysOnTop);
 
-        // load menu hotkeys
-        Helpers.RunAsThread(() =>
-        {
-            Config.MergeHotkeys(ref MenuHotkeys, Config.MenuHotkeysOverride);
-            Local.UpdateFrmMain(ForceUpdateAction.MenuHotkeys);
-        });
-
         // load language pack
         Local.UpdateFrmMain(ForceUpdateAction.Language);
+
+        // load menu hotkeys
+        Config.MergeHotkeys(ref MenuHotkeys, Config.MenuHotkeysOverride);
+        Local.UpdateFrmMain(ForceUpdateAction.MenuHotkeys);
     }
 
     private void FrmMainConfig_FormClosing(object? sender, FormClosingEventArgs e)
@@ -210,6 +207,7 @@ public partial class FrmMain
         if (e.HasFlag(ForceUpdateAction.MenuHotkeys))
         {
             LoadMenuHotkeys();
+            LoadToolbarItemsText();
         }
     }
 
@@ -431,8 +429,11 @@ public partial class FrmMain
 
         #endregion
 
-    }
 
+        // Toolbar
+        LoadToolbarItemsText();
+
+    }
 
     /// <summary>
     /// Load hotkeys of menu
@@ -444,15 +445,6 @@ public partial class FrmMain
         {
             Invoke(LoadMenuHotkeys, menu);
             return;
-        }
-
-        if (menu == null)
-        {
-            var mnuMainHotkey = Config.GetHotkeyString(MenuHotkeys, nameof(MnuMain));
-
-            Toolbar.MainMenuButton.ToolTipText = 
-                Config.Language[$"{Name}.{nameof(MnuMain)}"] 
-                + (string.IsNullOrEmpty(mnuMainHotkey) ? "" : $" ({mnuMainHotkey})");
         }
 
         // default: main menu
@@ -471,6 +463,36 @@ public partial class FrmMain
         }
     }
 
+
+    /// <summary>
+    /// Loads text and tooltip for toolbar items
+    /// </summary>
+    private void LoadToolbarItemsText()
+    {
+        foreach (var item in Toolbar.Items)
+        {
+            if (item.GetType() == typeof(ToolStripButton))
+            {
+                var tItem = item as ToolStripButton;
+                if (tItem is null) continue;
+
+                var tagModel = tItem.Tag as ToolbarItemTagModel;
+                if (tagModel is null) continue;
+
+                var langKey = $"{Name}.{tagModel.OnClick.Executable}";
+                if (Config.Language.ContainsKey(langKey))
+                {
+                    tItem.Text = tItem.ToolTipText = Config.Language[langKey];
+
+                    var hotkey = Config.GetHotkeyString(MenuHotkeys, tagModel.OnClick.Executable);
+                    if (!string.IsNullOrEmpty(hotkey))
+                    {
+                        tItem.ToolTipText += $" ({hotkey})";
+                    }
+                }
+            }
+        }
+    }
 
     /// <summary>
     /// Load View Channels menu items
