@@ -360,11 +360,11 @@ public partial class FrmMain
 
         if (menu == null)
         {
-            var mnuMainHotkey = Config.GetHotkey(MenuHotkeys, nameof(MnuMain));
+            var mnuMainHotkey = Config.GetHotkeyString(MenuHotkeys, nameof(MnuMain));
 
             Toolbar.MainMenuButton.ToolTipText = 
                 Config.Language[$"{Name}.{nameof(MnuMain)}"] 
-                + (String.IsNullOrEmpty(mnuMainHotkey) ? "" : $"{mnuMainHotkey}");
+                + (string.IsNullOrEmpty(mnuMainHotkey) ? "" : $"{mnuMainHotkey}");
         }
 
         // default: main menu
@@ -374,7 +374,7 @@ public partial class FrmMain
         var allItems = MenuUtils.GetActualItems(menu.Items);
         foreach (ToolStripMenuItem item in allItems)
         {
-            item.ShortcutKeyDisplayString = Config.GetHotkey(MenuHotkeys, item.Name);
+            item.ShortcutKeyDisplayString = Config.GetHotkeyString(MenuHotkeys, item.Name);
 
             if (item.HasDropDownItems)
             {

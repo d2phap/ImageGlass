@@ -1067,7 +1067,7 @@ namespace ImageGlass
             this.Sp3.Panel2MinSize = 0;
             this.Sp3.Size = new System.Drawing.Size(933, 543);
             this.Sp3.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.Sp3.SplitterDistance = 618;
+            this.Sp3.SplitterDistance = 614;
             this.Sp3.SplitterWidth = 11;
             this.Sp3.TabIndex = 3;
             // 
@@ -1085,7 +1085,7 @@ namespace ImageGlass
             this.PicMain.NavButtonSize = new System.Drawing.SizeF(90F, 90F);
             this.PicMain.NavDisplay = ImageGlass.Base.PhotoBox.NavButtonDisplay.Both;
             this.PicMain.ShowDebugInfo = true;
-            this.PicMain.Size = new System.Drawing.Size(618, 543);
+            this.PicMain.Size = new System.Drawing.Size(614, 543);
             this.PicMain.TabIndex = 0;
             this.PicMain.OnZoomChanged += new ImageGlass.PhotoBox.ViewBox.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
             this.PicMain.OnNavLeftClicked += new ImageGlass.PhotoBox.ViewBox.NavLeftClickedEventHandler(this.PicMain_OnNavLeftClicked);
@@ -1098,7 +1098,7 @@ namespace ImageGlass
             // 
             this.MnuContext.ImageScalingSize = new System.Drawing.Size(22, 22);
             this.MnuContext.Name = "MnuContext";
-            this.MnuContext.Size = new System.Drawing.Size(229, 35);
+            this.MnuContext.Size = new System.Drawing.Size(61, 4);
             this.MnuContext.Opening += new System.ComponentModel.CancelEventHandler(this.MnuContext_Opening);
             // 
             // PanRight
@@ -1108,7 +1108,7 @@ namespace ImageGlass
             this.PanRight.Location = new System.Drawing.Point(0, 0);
             this.PanRight.Margin = new System.Windows.Forms.Padding(2);
             this.PanRight.Name = "PanRight";
-            this.PanRight.Size = new System.Drawing.Size(304, 543);
+            this.PanRight.Size = new System.Drawing.Size(308, 543);
             this.PanRight.TabIndex = 1;
             // 
             // Gallery
@@ -1162,6 +1162,7 @@ namespace ImageGlass
             this.RightToLeftLayout = true;
             this.Text = "ImageGlass 9";
             this.Load += new System.EventHandler(this.FrmMain_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmMain_KeyDown);
             this.Resize += new System.EventHandler(this.FrmMain_Resize);
             this.MnuMain.ResumeLayout(false);
             this.Tb0.ResumeLayout(false);

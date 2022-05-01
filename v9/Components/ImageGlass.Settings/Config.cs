@@ -1503,11 +1503,24 @@ public static class Config
     /// <param name="dict"></param>
     /// <param name="dictKey"></param>
     /// <returns></returns>
-    public static string GetHotkey(Dictionary<string, Hotkey> dict, string dictKey)
+    public static string GetHotkeyString(Dictionary<string, Hotkey> dict, string dictKey)
     {
         dict.TryGetValue(dictKey, out var hotkey);
 
         return hotkey?.ToString() ?? string.Empty;
+    }
+
+    /// <summary>
+    /// Gets hotkey
+    /// </summary>
+    /// <param name="dict"></param>
+    /// <param name="dictKey"></param>
+    /// <returns></returns>
+    public static Hotkey? GetHotkey(Dictionary<string, Hotkey> dict, string dictKey)
+    {
+        dict.TryGetValue(dictKey, out var hotkey);
+
+        return hotkey;
     }
 
     #endregion

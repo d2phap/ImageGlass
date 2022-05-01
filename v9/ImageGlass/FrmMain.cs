@@ -26,6 +26,8 @@ using ImageGlass.Settings;
 using ImageGlass.UI;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace ImageGlass;
 
@@ -82,6 +84,41 @@ public partial class FrmMain : Form
         }
 
         base.WndProc(ref m);
+    }
+
+    private void FrmMain_KeyDown(object sender, KeyEventArgs e)
+    {
+        Text = new Hotkey(e.KeyData).ToString() + " " + e.KeyValue.ToString();
+
+        #region Register MAIN MENU shortcuts
+        bool CheckMenuShortcut(ToolStripMenuItem mnu)
+        {
+            var menuHotkey = Config.GetHotkey(MenuHotkeys, mnu.Name);
+
+            if (menuHotkey?.KeyData == e.KeyData)
+            {
+                mnu.PerformClick();
+                return true;
+            }
+
+            foreach (var child in mnu.DropDownItems.OfType<ToolStripMenuItem>())
+            {
+                CheckMenuShortcut(child);
+            }
+
+            return false;
+        }
+
+        // register context menu shortcuts
+        foreach (var item in MnuMain.Items.OfType<ToolStripMenuItem>())
+        {
+            if (CheckMenuShortcut(item))
+            {
+                return;
+            }
+        }
+        #endregion
+
     }
 
 
@@ -1888,11 +1925,12 @@ public partial class FrmMain : Form
     {
         IG_Exit();
     }
+
+
+
     #endregion
 
     #endregion
 
-
-
-
+    
 }
