@@ -21,6 +21,7 @@ using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.UI;
+using System.Reflection;
 
 namespace ImageGlass;
 
@@ -238,11 +239,26 @@ public partial class FrmMain
                 var propValue = configProp.GetValue(null);
                 if (propValue is null) continue;
 
-                // load check state based on config value
-                if (configProp.PropertyType.IsEnum)
+                // load check state:
+                // Executable is menu item
+                if (tagModel.OnClick.Executable.StartsWith("Mnu"))
+                {
+                    var field = GetType().GetField(tagModel.OnClick.Executable, BindingFlags.Instance | BindingFlags.NonPublic);
+                    var mnu = field?.GetValue(this) as ToolStripMenuItem;
+
+                    if (mnu is not null)
+                    {
+                        tItem.Checked = mnu.Checked;
+                    }
+                }
+                // Executable is IGMethod
+                // Example: OnClick = new("IG_SetZoomMode", ZoomMode.AutoZoom.ToString())
+                else if (configProp.PropertyType.IsEnum)
                 {
                     tItem.Checked = tagModel.OnClick.Argument.Equals(propValue.ToString());
                 }
+                // Executable is IGMethod
+                // Example: OnClick = new("IG_ToggleToolbar", false)
                 else if (configProp.PropertyType.Equals(typeof(bool)))
                 {
                     if (bool.TryParse(propValue.ToString(), out bool value))
@@ -436,7 +452,7 @@ public partial class FrmMain
 
             Toolbar.MainMenuButton.ToolTipText = 
                 Config.Language[$"{Name}.{nameof(MnuMain)}"] 
-                + (string.IsNullOrEmpty(mnuMainHotkey) ? "" : $"{mnuMainHotkey}");
+                + (string.IsNullOrEmpty(mnuMainHotkey) ? "" : $" ({mnuMainHotkey})");
         }
 
         // default: main menu

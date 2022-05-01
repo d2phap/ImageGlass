@@ -159,59 +159,97 @@ public partial class FrmMain : Form
         var tagModel = e.ClickedItem.Tag as ToolbarItemTagModel;
         if (tagModel is null || string.IsNullOrEmpty(tagModel.OnClick.Executable)) return;
 
-        // Find the private method in FrmMain
-        var method = GetType().GetMethod(
-            tagModel.OnClick.Executable,
-            BindingFlags.Instance | BindingFlags.NonPublic);
-
-
-        // run built-in method
-        if (method is not null)
+        // Executable is name of main menu item
+        #region Main menu item executable
+        if (tagModel.OnClick.Executable.StartsWith("Mnu"))
         {
-            // check method's params
-            var paramItems = method.GetParameters();
-            var paramters = new List<object>();
+            var field = GetType().GetField(tagModel.OnClick.Executable,
+                BindingFlags.Instance | BindingFlags.NonPublic);
+            var mnu = field?.GetValue(this) as ToolStripMenuItem;
 
-            if (paramItems.Length == 1)
+            if (mnu is not null)
             {
-                object? methodArg = null;
-                var type = Nullable.GetUnderlyingType(paramItems[0].ParameterType) ?? paramItems[0].ParameterType;
+                mnu.PerformClick();
+            }
+            else
+            {
+                var msg = string.Format(Config.Language[$"{Name}._ToolbarItemClick._CannotFindMenu"], tagModel.OnClick.Executable);
+                MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
-                if (type.IsPrimitive
-                    || type.Equals(typeof(string)))
+            return;
+        }
+        #endregion
+
+
+        // Executable is a predefined function in FrmMain.IGMethods
+        #region IGMethods executable
+        if (tagModel.OnClick.Executable.StartsWith("IG_"))
+        {
+            // Find the private method in FrmMain
+            var method = GetType().GetMethod(
+                tagModel.OnClick.Executable,
+                BindingFlags.Instance | BindingFlags.NonPublic);
+
+
+            // run built-in method
+            if (method is not null)
+            {
+                // check method's params
+                var paramItems = method.GetParameters();
+                var paramters = new List<object>();
+
+                if (paramItems.Length == 1)
                 {
-                    if (string.IsNullOrEmpty(tagModel.OnClick.Argument.ToString()))
+                    object? methodArg = null;
+                    var type = Nullable.GetUnderlyingType(paramItems[0].ParameterType) ?? paramItems[0].ParameterType;
+
+                    if (type.IsPrimitive
+                        || type.Equals(typeof(string)))
                     {
-                        methodArg = null;
+                        if (string.IsNullOrEmpty(tagModel.OnClick.Argument.ToString()))
+                        {
+                            methodArg = null;
+                        }
+                        else
+                        {
+                            methodArg = Convert.ChangeType(tagModel.OnClick.Argument, type);
+                        }
                     }
                     else
                     {
-                        methodArg = Convert.ChangeType(tagModel.OnClick.Argument, type);
+                        throw new ArgumentException($"The type of argument {e.ClickedItem.Name} is not supported.", $"{nameof(tagModel.OnClick)}.{nameof(tagModel.OnClick.Argument)}");
+                    }
+
+
+                    if (methodArg != null && methodArg.GetType().IsArray)
+                    {
+                        paramters.AddRange((object[])methodArg);
+                    }
+                    else
+                    {
+                        paramters.Add(methodArg);
                     }
                 }
-                else
-                {
-                    throw new ArgumentException($"The type of argument {e.ClickedItem.Name} is not supported.",$"{nameof(tagModel.OnClick)}.{nameof(tagModel.OnClick.Argument)}");
-                }
 
 
-                if (methodArg != null && methodArg.GetType().IsArray)
-                {
-                    paramters.AddRange((object[])methodArg);
-                }
-                else
-                {
-                    paramters.Add(methodArg);
-                }
+                // method must be bool/void()
+                method.Invoke(this, paramters.ToArray());
             }
-            
-
-            // method must be bool/void()
-            method.Invoke(this, paramters.ToArray());
+            else
+            {
+                var msg = string.Format(Config.Language[$"{Name}._ToolbarItemClick._CannotFindMethod"], tagModel.OnClick.Executable);
+                MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             return;
         }
 
+        #endregion
+
+
+        // Executable is a free path
+        #region Free path executable
 
         var currentFilePath = Local.Images.GetFileName(Local.CurrentIndex);
         var procArgs = $"{tagModel.OnClick.Argument}".Replace(Constants.FILE_MACRO, currentFilePath);
@@ -232,6 +270,8 @@ public partial class FrmMain : Form
             proc.Start();
         }
         catch { }
+
+        #endregion
     }
 
 

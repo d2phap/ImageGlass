@@ -277,7 +277,7 @@ public class IgLang : Dictionary<string, string>
         //Add("FrmMain._SaveImage", "Image was saved to\r\n{0}"); // v5.0
         //Add("FrmMain._SavingImage", "Saving image...\r\n{0}"); // v7.6
         //Add("FrmMain._SaveImageError", "Unable to save image\r\n{0}."); // v5.0
-        
+
         //Add("FrmMain._FirstItemOfList", "Reached the first image"); // v4.0
         //Add("FrmMain._LastItemOfList", "Reached the last image"); // v4.0
         //Add("FrmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); // Added V5.0; Modified V6.0
@@ -289,6 +289,9 @@ public class IgLang : Dictionary<string, string>
         //Add("FrmMain._PageExtractComplete", "Page extraction completed."); // v7.5
         //Add("FrmMain._Frameless", "Hold SHIFT to move the window."); // v7.5
         //Add("FrmMain._InvalidImageClipboardData", "Clipboard does not contain image data."); // v8.0
+
+        Add("FrmMain._ToolbarItemClick._CannotFindMenu", "Cannot find the menu {0}"); // 9.0
+        Add("FrmMain._ToolbarItemClick._CannotFindMethod", "Cannot find the method {0}"); // 9.0
 
         #endregion
 

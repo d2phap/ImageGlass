@@ -49,21 +49,21 @@ public static class Config
             Text = "Open file",
             Alignment = ToolStripItemAlignment.Right,
             Image = "OpenFile",
-            OnClick = new("IG_OpenFile"),
+            OnClick = new("MnuOpenFile"),
         },
         new()
         {
             Id = "btn_ViewPrevious",
             Text = "Previous image",
             Image = "ViewPreviousImage",
-            OnClick = new("IG_ViewPreviousImage"),
+            OnClick = new("MnuViewPrevious"),
         },
         new()
         {
             Id = "btn_ViewNext",
             Text = "Next image",
             Image = "ViewNextImage",
-            OnClick = new("IG_ViewNextImage"),
+            OnClick = new("MnuViewNext"),
         },
         new() { Type = ToolbarItemModelType.Separator },
         new()
@@ -72,7 +72,7 @@ public static class Config
             Text = "Auto zoom",
             Image = "AutoZoom",
             CheckableConfigBinding = nameof(ZoomMode),
-            OnClick = new("IG_SetZoomMode", ZoomMode.AutoZoom.ToString()),
+            OnClick = new("MnuAutoZoom"),
         },
         new()
         {
@@ -80,7 +80,7 @@ public static class Config
             Text = "Lock zoom",
             Image = "LockZoom",
             CheckableConfigBinding = nameof(ZoomMode),
-            OnClick = new("IG_SetZoomMode", ZoomMode.LockZoom.ToString()),
+            OnClick = new("MnuLockZoom"),
         },
         new()
         {
@@ -88,7 +88,7 @@ public static class Config
             Text = "Scale to width",
             Image = "ScaleToWidth",
             CheckableConfigBinding = nameof(ZoomMode),
-            OnClick = new("IG_SetZoomMode", ZoomMode.ScaleToWidth.ToString()),
+            OnClick = new("MnuScaleToWidth"),
         },
         new()
         {
@@ -96,7 +96,7 @@ public static class Config
             Text = "Scale to height",
             Image = "ScaleToHeight",
             CheckableConfigBinding = nameof(ZoomMode),
-            OnClick = new("IG_SetZoomMode", ZoomMode.ScaleToHeight.ToString()),
+            OnClick = new("MnuScaleToHeight"),
         },
         new()
         {
@@ -104,7 +104,7 @@ public static class Config
             Text = "Scale to fit",
             Image = "ScaleToFit",
             CheckableConfigBinding = nameof(ZoomMode),
-            OnClick = new("IG_SetZoomMode", ZoomMode.ScaleToFit.ToString()),
+            OnClick = new("MnuScaleToFit"),
         },
         new()
         {
@@ -112,7 +112,7 @@ public static class Config
             Text = "Scale to fill",
             Image = "ScaleToFill",
             CheckableConfigBinding = nameof(ZoomMode),
-            OnClick = new("IG_SetZoomMode", ZoomMode.ScaleToFill.ToString()),
+            OnClick = new("MnuScaleToFill"),
         },
         new() { Type = ToolbarItemModelType.Separator },
         new()
@@ -120,7 +120,7 @@ public static class Config
             Id = "btnRefresh",
             Text = "Refresh",
             Image = "Refresh",
-            OnClick = new("IG_Refresh"),
+            OnClick = new("MnuRefresh"),
         },
         //new()
         //{
@@ -134,7 +134,7 @@ public static class Config
             Text = "Thumbnail bar",
             Image = "ThumbnailBar",
             CheckableConfigBinding = nameof(IsShowThumbnail),
-            OnClick = new("IG_ToggleGallery"),
+            OnClick = new("MnuToggleThumbnails"),
         },
         new()
         {
@@ -142,7 +142,7 @@ public static class Config
             Text = "Checkerboard",
             Image = "Checkerboard",
             CheckableConfigBinding = nameof(IsShowCheckerBoard),
-            OnClick = new("IG_ToggleCheckerboard"),
+            OnClick = new("MnuToggleCheckerboard"),
         },
         new() { Type = ToolbarItemModelType.Separator },
         //new()
@@ -156,7 +156,7 @@ public static class Config
             Id = "btn_Print",
             Text = "Print...",
             Image = "Print",
-            OnClick = new("IG_Print"),
+            OnClick = new("MnuPrint"),
         },
         //new()
         //{
