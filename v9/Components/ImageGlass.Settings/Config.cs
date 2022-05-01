@@ -1523,6 +1523,18 @@ public static class Config
         return hotkey;
     }
 
+    /// <summary>
+    /// Gets hotkey actions
+    /// </summary>
+    /// <param name="dict"></param>
+    /// <param name="dictValue"></param>
+    /// <returns></returns>
+    public static IEnumerable<string> GetHotkeyActions(Dictionary<string, Hotkey> dict, Hotkey dictValue)
+    {
+        return dict.Where(i => i.Value.ToString() == dictValue.ToString())
+            .Select(i => i.Key);
+    }
+
     #endregion
 
 

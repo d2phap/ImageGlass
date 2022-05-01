@@ -26,8 +26,6 @@ using ImageGlass.Settings;
 using ImageGlass.UI;
 using System.Diagnostics;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
 
 namespace ImageGlass;
 
@@ -88,7 +86,7 @@ public partial class FrmMain : Form
 
     private void FrmMain_KeyDown(object sender, KeyEventArgs e)
     {
-        Text = new Hotkey(e.KeyData).ToString() + " " + e.KeyValue.ToString();
+        Text = new Hotkey(e.KeyData).ToString() + " - " + e.KeyValue.ToString();
 
         #region Register MAIN MENU shortcuts
         bool CheckMenuShortcut(ToolStripMenuItem mnu)
@@ -119,6 +117,15 @@ public partial class FrmMain : Form
         }
         #endregion
 
+
+        var hotkey = new Hotkey(e.KeyData);
+        var actions = Config.GetHotkeyActions(MenuHotkeys, hotkey);
+
+        // open main menu
+        if (actions.Contains(nameof(MnuMain)))
+        {
+            Toolbar.ShowMainMenu();
+        }
     }
 
 
