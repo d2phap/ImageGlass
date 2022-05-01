@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 namespace ImageGlass.Base;
 
-public class HotKey
+public class Hotkey
 {
     public bool Control { get; set; } = false;
     public bool Shift { get; set; } = false;
@@ -29,17 +29,17 @@ public class HotKey
     public int KeyValue { get; set; } = -1;
 
 
-    public HotKey()
+    public Hotkey()
     {
         ParseFrom(Keys.None);
     }
 
-    public HotKey(string s)
+    public Hotkey(string s)
     {
         ParseFrom(s);
     }
 
-    public HotKey(Keys keys)
+    public Hotkey(Keys keys)
     {
         ParseFrom(keys);
     }

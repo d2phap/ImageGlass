@@ -33,7 +33,7 @@ public partial class FrmMain
     /// <summary>
     /// Hotkeys list of main menu
     /// </summary>
-    public static Dictionary<string, HotKey> MenuHotKeys = new()
+    public static Dictionary<string, Hotkey> MenuHotkeys = new()
     {
 	    // Open main menu
 	    { nameof(MnuMain),                  new(Keys.Alt |                  Keys.F) },
@@ -96,8 +96,8 @@ public partial class FrmMain
         // load menu hotkeys
         Helpers.RunAsThread(() =>
         {
-            Config.MergeHotKeys(ref MenuHotKeys, Config.MenuHotKeysOverride);
-            Local.UpdateFrmMain(ForceUpdateAction.MenuHotKeys);
+            Config.MergeHotkeys(ref MenuHotkeys, Config.MenuHotkeysOverride);
+            Local.UpdateFrmMain(ForceUpdateAction.MenuHotkeys);
         });
 
         // load language pack
@@ -134,7 +134,7 @@ public partial class FrmMain
             LoadLanguages();
         }
         
-        if (e.HasFlag(ForceUpdateAction.MenuHotKeys))
+        if (e.HasFlag(ForceUpdateAction.MenuHotkeys))
         {
             LoadMenuHotkeys();
         }
@@ -360,7 +360,7 @@ public partial class FrmMain
 
         if (menu == null)
         {
-            var mnuMainHotkey = Config.GetHotkey(MenuHotKeys, nameof(MnuMain));
+            var mnuMainHotkey = Config.GetHotkey(MenuHotkeys, nameof(MnuMain));
 
             Toolbar.MainMenuButton.ToolTipText = 
                 Config.Language[$"{Name}.{nameof(MnuMain)}"] 
@@ -374,7 +374,7 @@ public partial class FrmMain
         var allItems = MenuUtils.GetActualItems(menu.Items);
         foreach (ToolStripMenuItem item in allItems)
         {
-            item.ShortcutKeyDisplayString = Config.GetHotkey(MenuHotKeys, item.Name);
+            item.ShortcutKeyDisplayString = Config.GetHotkey(MenuHotkeys, item.Name);
 
             if (item.HasDropDownItems)
             {

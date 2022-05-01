@@ -614,7 +614,7 @@ public static class Config
     /// <summary>
     /// Gets, sets hotkeys list of menu
     /// </summary>
-    public static Dictionary<string, HotKey> MenuHotKeysOverride = new()
+    public static Dictionary<string, Hotkey> MenuHotkeysOverride = new()
     {
         // Open main menu
 	    { "MnuMain",                  new(Keys.Alt |                  Keys.F) },
@@ -936,10 +936,10 @@ public static class Config
 
 
         // hotkeys for menu
-        var hotkeysList = items.GetSection(nameof(MenuHotKeysOverride))
+        var hotkeysList = items.GetSection(nameof(MenuHotkeysOverride))
             .GetChildren()
             .ToDictionary(i => i.Key, i => i.Value);
-        MenuHotKeysOverride = ParseMenuHotKey(hotkeysList);
+        MenuHotkeysOverride = ParseHotkeys(hotkeysList);
 
         #endregion
 
@@ -1195,7 +1195,7 @@ public static class Config
         settings.TryAdd(nameof(KeyComboActions), GetKeyComboActions(KeyComboActions));
         settings.TryAdd(nameof(ToolbarItems), ToolbarItems);
         settings.TryAdd(nameof(InfoItems), InfoItems);
-        settings.TryAdd(nameof(MenuHotKeysOverride), ParseHotKey(MenuHotKeysOverride));
+        settings.TryAdd(nameof(MenuHotkeysOverride), ParseHotkeys(MenuHotkeysOverride));
         #endregion
 
 
@@ -1429,21 +1429,21 @@ public static class Config
     /// </summary>
     /// <param name="dict"></param>
     /// <returns></returns>
-    public static Dictionary<string, HotKey> ParseMenuHotKey(Dictionary<string, string> dict)
+    public static Dictionary<string, Hotkey> ParseHotkeys(Dictionary<string, string> dict)
     {
-        var result = new Dictionary<string, HotKey>();
+        var result = new Dictionary<string, Hotkey>();
 
         foreach (var item in dict)
         {
-            HotKey keyCombo;
+            Hotkey keyCombo;
             try
             {
                 // sample item: { "MnuOpen": "Ctrl+O" }
-                keyCombo = new HotKey(item.Value);
+                keyCombo = new Hotkey(item.Value);
             }
             catch
             {
-                keyCombo = new HotKey();
+                keyCombo = new Hotkey();
             }
 
             if (result.ContainsKey(item.Key))
@@ -1465,7 +1465,7 @@ public static class Config
     /// </summary>
     /// <param name="dict"></param>
     /// <returns></returns>
-    public static Dictionary<string, string> ParseHotKey(Dictionary<string, HotKey> dict)
+    public static Dictionary<string, string> ParseHotkeys(Dictionary<string, Hotkey> dict)
     {
         return dict.Select(i => new
         {
@@ -1482,7 +1482,7 @@ public static class Config
     /// <param name="destDict"></param>
     /// <param name="srcDict"></param>
     /// <returns></returns>
-    public static void MergeHotKeys(ref Dictionary<string, HotKey> destDict, Dictionary<string, HotKey> srcDict)
+    public static void MergeHotkeys(ref Dictionary<string, Hotkey> destDict, Dictionary<string, Hotkey> srcDict)
     {
         foreach (var item in srcDict)
         {
@@ -1503,7 +1503,7 @@ public static class Config
     /// <param name="dict"></param>
     /// <param name="dictKey"></param>
     /// <returns></returns>
-    public static string GetHotkey(Dictionary<string, HotKey> dict, string dictKey)
+    public static string GetHotkey(Dictionary<string, Hotkey> dict, string dictKey)
     {
         dict.TryGetValue(dictKey, out var hotkey);
 

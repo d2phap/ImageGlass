@@ -115,7 +115,7 @@ public enum ForceUpdateAction
 {
     None = 0,
     Language = 1 << 1,
-    MenuHotKeys = 1 << 2,
+    MenuHotkeys = 1 << 2,
     Toolbar = 1 << 3,
     ThumbnailBar = 1 << 4,
 }
