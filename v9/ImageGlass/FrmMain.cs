@@ -95,7 +95,15 @@ public partial class FrmMain : Form
 
             if (menuHotkey?.KeyData == e.KeyData)
             {
-                mnu.PerformClick();
+                if (mnu.HasDropDownItems)
+                {
+                    ShowSubMenu(mnu);
+                }
+                else
+                {
+                    mnu.PerformClick();
+                }
+                
                 return true;
             }
 
@@ -1359,6 +1367,29 @@ public partial class FrmMain : Form
 
 
     #region Main Menu component
+
+    /// <summary>
+    /// Shows submenu items
+    /// </summary>
+    /// <param name="parentMenu"></param>
+    private void ShowSubMenu(ToolStripMenuItem parentMenu)
+    {
+        MnuSubMenu.Items.Clear();
+
+        foreach (ToolStripItem item in parentMenu.DropDownItems)
+        {
+            if (item.GetType() == typeof(ToolStripSeparator))
+            {
+                MnuSubMenu.Items.Add(new ToolStripSeparator());
+            }
+            else
+            {
+                MnuSubMenu.Items.Add(MenuUtils.Clone((ToolStripMenuItem)item));
+            }
+        }
+
+        MnuSubMenu.Show(Cursor.Position);
+    }
 
     private void MnuMain_Opening(object sender, System.ComponentModel.CancelEventArgs e)
     {

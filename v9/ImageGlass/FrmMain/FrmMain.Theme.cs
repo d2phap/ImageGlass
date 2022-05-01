@@ -35,7 +35,8 @@ public partial class FrmMain
         // toolbar
         Toolbar.Theme =
             MnuMain.Theme =
-            MnuContext.Theme = Config.Theme;
+            MnuContext.Theme =
+            MnuSubMenu.Theme = Config.Theme;
 
         // background
         BackColor = Config.BackgroundColor;

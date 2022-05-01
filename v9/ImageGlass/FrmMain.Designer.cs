@@ -141,6 +141,7 @@ namespace ImageGlass
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.MnuSubMenu = new ImageGlass.UI.ModernMenu(this.components);
             this.MnuMain.SuspendLayout();
             this.Tb0.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Sp1)).BeginInit();
@@ -1067,7 +1068,7 @@ namespace ImageGlass
             this.Sp3.Panel2MinSize = 0;
             this.Sp3.Size = new System.Drawing.Size(933, 543);
             this.Sp3.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.Sp3.SplitterDistance = 614;
+            this.Sp3.SplitterDistance = 613;
             this.Sp3.SplitterWidth = 11;
             this.Sp3.TabIndex = 3;
             // 
@@ -1085,7 +1086,7 @@ namespace ImageGlass
             this.PicMain.NavButtonSize = new System.Drawing.SizeF(90F, 90F);
             this.PicMain.NavDisplay = ImageGlass.Base.PhotoBox.NavButtonDisplay.Both;
             this.PicMain.ShowDebugInfo = true;
-            this.PicMain.Size = new System.Drawing.Size(614, 543);
+            this.PicMain.Size = new System.Drawing.Size(613, 543);
             this.PicMain.TabIndex = 0;
             this.PicMain.OnZoomChanged += new ImageGlass.PhotoBox.ViewBox.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
             this.PicMain.OnNavLeftClicked += new ImageGlass.PhotoBox.ViewBox.NavLeftClickedEventHandler(this.PicMain_OnNavLeftClicked);
@@ -1108,7 +1109,7 @@ namespace ImageGlass
             this.PanRight.Location = new System.Drawing.Point(0, 0);
             this.PanRight.Margin = new System.Windows.Forms.Padding(2);
             this.PanRight.Name = "PanRight";
-            this.PanRight.Size = new System.Drawing.Size(308, 543);
+            this.PanRight.Size = new System.Drawing.Size(309, 543);
             this.PanRight.TabIndex = 1;
             // 
             // Gallery
@@ -1145,6 +1146,12 @@ namespace ImageGlass
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
             this.toolStripMenuItem4.Size = new System.Drawing.Size(188, 6);
+            // 
+            // MnuSubMenu
+            // 
+            this.MnuSubMenu.ImageScalingSize = new System.Drawing.Size(22, 22);
+            this.MnuSubMenu.Name = "MnuContext";
+            this.MnuSubMenu.Size = new System.Drawing.Size(229, 35);
             // 
             // FrmMain
             // 
@@ -1293,5 +1300,6 @@ namespace ImageGlass
         private Gallery.ImageGallery Gallery;
         private ToolStripSeparator toolStripSeparator1;
         private UI.ModernMenu MnuContext;
+        private UI.ModernMenu MnuSubMenu;
     }
 }
