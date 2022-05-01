@@ -1507,12 +1507,12 @@ public partial class FrmMain : Form
 
         var imageNotFound = !File.Exists(Local.Images.GetFileName(Local.CurrentIndex));
 
-        if (Config.IsSlideshow && !imageNotFound)
-        {
-            MnuContext.Items.Add(MenuUtils.Clone(MnuPauseResumeSlideshow));
-            MnuContext.Items.Add(MenuUtils.Clone(MnuExitSlideshow));
-            MnuContext.Items.Add(new ToolStripSeparator());
-        }
+        //if (Config.IsSlideshow && !imageNotFound)
+        //{
+        //    MnuContext.Items.Add(MenuUtils.Clone(MnuPauseResumeSlideshow));
+        //    MnuContext.Items.Add(MenuUtils.Clone(MnuExitSlideshow));
+        //    MnuContext.Items.Add(new ToolStripSeparator());
+        //}
 
         // toolbar menu
         MnuContext.Items.Add(MenuUtils.Clone(MnuToggleToolbar));
@@ -1524,12 +1524,12 @@ public partial class FrmMain : Form
         // Get Edit App info
         if (!imageNotFound)
         {
-            if (!Local.IsImageError
-                && !Local.IsTempMemoryData
-                && Local.Metadata?.FramesCount <= 1)
-            {
-                MnuContext.Items.Add(MenuUtils.Clone(MnuViewChannels));
-            }
+            //if (!Local.IsImageError
+            //    && !Local.IsTempMemoryData
+            //    && Local.Metadata?.FramesCount <= 1)
+            //{
+            //    MnuContext.Items.Add(MenuUtils.Clone(MnuViewChannels));
+            //}
 
             MnuContext.Items.Add(new ToolStripSeparator());
             if (!Helpers.IsOS(WindowsOS.Win7))
@@ -1538,38 +1538,39 @@ public partial class FrmMain : Form
             }
 
             //UpdateEditAppInfoForMenu();
-            MnuContext.Items.Add(MenuUtils.Clone(MnuEdit));
+            //MnuContext.Items.Add(MenuUtils.Clone(MnuEdit));
 
-            #region Check if image can animate (GIF)
-            try
-            {
-                if (!Local.IsImageError && Local.Metadata?.FramesCount > 1)
-                {
-                    var mnu1 = MenuUtils.Clone(MnuExtractFrames);
-                    mnu1.Text = string.Format(Config.Language[$"{Name}.{nameof(MnuExtractFrames)}"], Local.Metadata?.FramesCount);
-                    mnu1.Enabled = true;
+            //#region Check if image can animate (GIF)
+            //try
+            //{
+            //    if (!Local.IsImageError && Local.Metadata?.FramesCount > 1)
+            //    {
+            //        var mnu1 = MenuUtils.Clone(MnuExtractFrames);
+            //        mnu1.Text = string.Format(Config.Language[$"{Name}.{nameof(MnuExtractFrames)}"], Local.Metadata?.FramesCount);
+            //        mnu1.Enabled = true;
 
-                    var mnu2 = MenuUtils.Clone(MnuStartStopAnimating);
-                    mnu2.Enabled = true;
+            //        var mnu2 = MenuUtils.Clone(MnuStartStopAnimating);
+            //        mnu2.Enabled = true;
 
-                    MnuContext.Items.Add(mnu1);
-                    MnuContext.Items.Add(mnu2);
-                }
-            }
-            catch { }
-            #endregion
+            //        MnuContext.Items.Add(mnu1);
+            //        MnuContext.Items.Add(mnu2);
+            //    }
+            //}
+            //catch { }
+            //#endregion
         }
 
-        if (!imageNotFound && !Local.IsImageError || Local.IsTempMemoryData)
-        {
-            MnuContext.Items.Add(MenuUtils.Clone(MnuSetDesktopBackground));
 
-            // check if igcmdWin10.exe exists!
-            if (Helpers.IsOS(WindowsOS.Win10OrLater) && File.Exists(App.StartUpDir("igcmdWin10.exe")))
-            {
-                MnuContext.Items.Add(MenuUtils.Clone(MnuSetLockScreen));
-            }
-        }
+        //if (!imageNotFound && !Local.IsImageError || Local.IsTempMemoryData)
+        //{
+        //    MnuContext.Items.Add(MenuUtils.Clone(MnuSetDesktopBackground));
+
+        //    // check if igcmdWin10.exe exists!
+        //    if (Helpers.IsOS(WindowsOS.Win10OrLater) && File.Exists(App.StartUpDir("igcmdWin10.exe")))
+        //    {
+        //        MnuContext.Items.Add(MenuUtils.Clone(MnuSetLockScreen));
+        //    }
+        //}
 
         // Menu group: CLIPBOARD
         #region Menu group: CLIPBOARD
@@ -1583,7 +1584,7 @@ public partial class FrmMain : Form
             MnuContext.Items.Add(MenuUtils.Clone(MnuCut));
         }
 
-        MnuContext.Items.Add(MenuUtils.Clone(MnuOpenImageData));
+        //MnuContext.Items.Add(MenuUtils.Clone(MnuOpenImageData));
         if (!imageNotFound && !Local.IsTempMemoryData)
         {
             MnuContext.Items.Add(MenuUtils.Clone(MnuClearClipboard));
@@ -1593,8 +1594,8 @@ public partial class FrmMain : Form
         if (!imageNotFound && !Local.IsTempMemoryData)
         {
             MnuContext.Items.Add(new ToolStripSeparator());//------------
-            MnuContext.Items.Add(MenuUtils.Clone(MnuRename));
-            MnuContext.Items.Add(MenuUtils.Clone(MnuMoveToRecycleBin));
+            //MnuContext.Items.Add(MenuUtils.Clone(MnuRename));
+            //MnuContext.Items.Add(MenuUtils.Clone(MnuMoveToRecycleBin));
 
             MnuContext.Items.Add(new ToolStripSeparator());//------------
             MnuContext.Items.Add(MenuUtils.Clone(MnuCopyPath));

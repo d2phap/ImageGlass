@@ -79,7 +79,7 @@ public partial class FrmMain
         { nameof(MnuViewChannels),          new(Keys.Shift | Keys.C) },
         { nameof(MnuLoadingOrders),         new(Keys.Shift | Keys.O) },
         { nameof(MnuRotateLeft),            new(Keys.Control | Keys.OemPeriod) }, // Ctrl+.
-        { nameof(MnuRotateRight),           new(Keys.Control | Keys.Oem5) }, // Ctrl+/
+        { nameof(MnuRotateRight),           new(Keys.Control | Keys.OemQuestion) }, // Ctrl+/
         { nameof(MnuFlipHorizontal),        new(Keys.Control | Keys.Oem1) }, // Ctrl+;
         { nameof(MnuFlipVertical),          new(Keys.Control | Keys.Oem7) }, // Ctrl+'
         { nameof(MnuRename),                new(Keys.F2) },
