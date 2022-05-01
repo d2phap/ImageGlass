@@ -36,7 +36,9 @@ public class Hotkey
         {
             var str = KeyCode.ToString();
 
-            if (str.StartsWith("Oem"))
+            if (str.StartsWith("Oem")
+                || (str.StartsWith("D") && str.Length == 2) // D0 -> D9
+                )
             {
                 var unicode = KeyboardApi.KeyCodeToUnicode(KeyData);
 
@@ -50,7 +52,7 @@ public class Hotkey
         }
     }
 
-    public Dictionary<string, Keys> OemCharToKeyMapping => new()
+    public Dictionary<string, Keys> CharToKeyMapping => new()
     {
         { "`", Keys.Oemtilde },
         { "-", Keys.OemMinus },
@@ -63,6 +65,17 @@ public class Hotkey
         { ",", Keys.Oemcomma },
         { ".", Keys.OemPeriod },
         { "/", Keys.OemQuestion },
+
+        { "0", Keys.D0 },
+        { "1", Keys.D1 },
+        { "2", Keys.D2 },
+        { "3", Keys.D3 },
+        { "4", Keys.D4 },
+        { "5", Keys.D5 },
+        { "6", Keys.D6 },
+        { "7", Keys.D7 },
+        { "8", Keys.D8 },
+        { "9", Keys.D9 },
     };
 
 
@@ -108,9 +121,9 @@ public class Hotkey
             }
             else
             {
-                if (OemCharToKeyMapping.ContainsKey(c))
+                if (CharToKeyMapping.ContainsKey(c))
                 {
-                    hotkey |= OemCharToKeyMapping[c];
+                    hotkey |= CharToKeyMapping[c];
                 }
                 else
                 {
