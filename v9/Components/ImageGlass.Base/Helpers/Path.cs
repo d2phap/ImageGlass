@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base.WinApi;
+using System.Diagnostics;
+using System.Web;
 
 namespace ImageGlass.Base;
 
@@ -200,6 +202,31 @@ public partial class Helpers
         }
 
         return path;
+    }
+
+
+    /// <summary>
+    /// Open URL in the default browser
+    /// </summary>
+    /// <param name="url"></param>
+    public static void OpenUrl(string url, string campaign = "app_unknown")
+    {
+        try
+        {
+            var ub = new UriBuilder(url);
+            var queries = HttpUtility.ParseQueryString(ub.Query);
+            queries["utm_source"] = "app_" + App.Version;
+            queries["utm_medium"] = "app_click";
+            queries["utm_campaign"] = "app_donation";
+
+            ub.Query = queries.ToString();
+
+            Process.Start(new ProcessStartInfo(ub.Uri.AbsoluteUri)
+            {
+                UseShellExecute = true,
+            });
+        }
+        catch { }
     }
 
 }
