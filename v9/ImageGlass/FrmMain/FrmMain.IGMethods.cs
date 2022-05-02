@@ -297,7 +297,7 @@ public partial class FrmMain
     private void IG_About()
     {
         var archInfo = Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
-        var appVersion = Application.ProductVersion.ToString() + $" ({archInfo})";
+        var appVersion = App.Version + $" ({archInfo})";
 
         var btnDonate = new TaskDialogButton("Donate", allowCloseDialog: false);
         var btnClose = new TaskDialogButton("Close", allowCloseDialog: true);

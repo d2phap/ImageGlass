@@ -31,7 +31,7 @@ public class App
     /// <summary>
     /// Gets the application version
     /// </summary>
-    public static string Version { get => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion ?? ""; }
+    public static string Version { get => FileVersionInfo.GetVersionInfo(IGExePath).ProductVersion ?? ""; }
 
 
     /// <summary>

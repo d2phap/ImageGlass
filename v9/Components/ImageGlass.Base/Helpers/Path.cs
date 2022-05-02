@@ -217,7 +217,7 @@ public partial class Helpers
             var queries = HttpUtility.ParseQueryString(ub.Query);
             queries["utm_source"] = "app_" + App.Version;
             queries["utm_medium"] = "app_click";
-            queries["utm_campaign"] = "app_donation";
+            queries["utm_campaign"] = campaign;
 
             ub.Query = queries.ToString();
 
