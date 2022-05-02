@@ -428,6 +428,11 @@ public static class Config
     /// </summary>
     public static bool IsHideThumbnailBarInFullscreen { get; set; } = false;
 
+    /// <summary>
+    /// Gets, sets value indicates that the Image focus tool should be enable
+    /// </summary>
+    public static bool EnableImageFocus { get; set; } = true;
+
     #endregion
 
 
@@ -791,6 +796,7 @@ public static class Config
         IsUseRawThumbnail = items.GetValue(nameof(IsUseRawThumbnail), IsUseRawThumbnail);
         IsHideToolbarInFullscreen = items.GetValue(nameof(IsHideToolbarInFullscreen), IsHideToolbarInFullscreen);
         IsHideThumbnailBarInFullscreen = items.GetValue(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
+        EnableImageFocus = items.GetValue(nameof(EnableImageFocus), EnableImageFocus);
 
         #endregion
 
@@ -1119,6 +1125,7 @@ public static class Config
         settings.TryAdd(nameof(IsUseRawThumbnail), IsUseRawThumbnail);
         settings.TryAdd(nameof(IsHideToolbarInFullscreen), IsHideToolbarInFullscreen);
         settings.TryAdd(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
+        settings.TryAdd(nameof(EnableImageFocus), EnableImageFocus);
 
         #endregion
 

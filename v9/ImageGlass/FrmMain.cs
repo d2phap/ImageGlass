@@ -1149,7 +1149,10 @@ public partial class FrmMain : Form
 
     private void PicMain_Click(object sender, EventArgs e)
     {
-        PicMain.Focus();
+        if (Config.EnableImageFocus)
+        {
+            PicMain.Focus();
+        }
     }
 
     private void PicMain_OnNavLeftClicked(MouseEventArgs e)
@@ -1808,6 +1811,12 @@ public partial class FrmMain : Form
 
     // Menu Image
     #region Menu Image
+
+    private void MnuToggleImageFocus_Click(object sender, EventArgs e)
+    {
+        IG_ToggleImageFocus();
+    }
+
     private void MnuRotateLeft_Click(object sender, EventArgs e)
     {
 
@@ -1948,6 +1957,7 @@ public partial class FrmMain : Form
 
     // Menu Tools
     #region Menu Tools
+
     private void MnuColorPicker_Click(object sender, EventArgs e)
     {
 
@@ -2012,9 +2022,9 @@ public partial class FrmMain : Form
 
 
 
-    #endregion
+
 
     #endregion
 
-    
+    #endregion
 }

@@ -583,6 +583,45 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Toggles image focus mode
+    /// </summary>
+    /// <param name="enable"></param>
+    /// <returns></returns>
+    private bool IG_ToggleImageFocus(bool? enable = null)
+    {
+        enable ??= !Config.EnableImageFocus;
+        Config.EnableImageFocus = enable.Value;
+
+        if (enable.Value)
+        {
+            PicMain.AllowInternalPanningKeys = true;
+            PicMain.AllowInternalZoomingKeys = true;
+            PicMain.TabStop = true;
+            PicMain.Focus();
+        }
+        else
+        {
+            PicMain.AllowInternalPanningKeys = false;
+            PicMain.AllowInternalZoomingKeys = false;
+            PicMain.TabStop = false;
+            PicMain.Enabled = false;
+            Focus();
+            PicMain.Enabled = true;
+        }
+
+        // update menu item state
+        MnuToggleImageFocus.Checked = enable.Value;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
+
+        var msgKey = Config.EnableImageFocus ? "_Enable" : "_Disable";
+        PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuToggleImageFocus)}.{msgKey}"],
+            Config.InappMessageDuration);
+
+        return Config.EnableImageFocus;
+    }
 
 }
 

@@ -76,6 +76,7 @@ public partial class FrmMain
         { nameof(MnuScaleToFill),           new(Keys.D6) },
 
         // MnuImage
+        { nameof(MnuToggleImageFocus),      new(Keys.F) },
         { nameof(MnuViewChannels),          new(Keys.Shift | Keys.C) },
         { nameof(MnuLoadingOrders),         new(Keys.Shift | Keys.O) },
         { nameof(MnuRotateLeft),            new(Keys.Control | Keys.OemPeriod) }, // Ctrl+.
@@ -143,11 +144,13 @@ public partial class FrmMain
         IG_ToggleGallery(Config.IsShowThumbnail);
 
 
-        Sp2.Panel1Collapsed = true;
-        Sp3.Panel2Collapsed = true;
+        Sp1.TabStop = false;
+        Sp2.Panel2Collapsed = true;
+        Sp2.TabStop = false;
 
 
-        // PicBox
+        // PicMain
+        PicMain.TabStop = false;
         IG_SetZoomMode(Config.ZoomMode.ToString());
         IG_ToggleCheckerboard(Config.IsShowCheckerBoard);
 
@@ -166,6 +169,9 @@ public partial class FrmMain
 
         // IsWindowAlwaysOnTop
         IG_ToggleTopMost(Config.IsWindowAlwaysOnTop);
+
+        // EnableImageFocus
+        IG_ToggleImageFocus(Config.EnableImageFocus);
 
         // load language pack
         Local.UpdateFrmMain(ForceUpdateAction.Language);
@@ -415,6 +421,7 @@ public partial class FrmMain
         MnuPageNav.Text = lang[$"{Name}.{nameof(MnuPageNav)}"];
         MnuCropping.Text = lang[$"{Name}.{nameof(MnuCropping)}"];
         MnuExifTool.Text = lang[$"{Name}.{nameof(MnuExifTool)}"];
+        MnuToggleImageFocus.Text = lang[$"{Name}.{nameof(MnuToggleImageFocus)}"];
         #endregion
 
 
@@ -682,6 +689,7 @@ public partial class FrmMain
         //MnuScaleToFill.Visible = false;
 
         // MnuImage
+        //MnuImageFocus.Visible = false;
         MnuViewChannels.Visible = false;
         //MnuLoadingOrders.Visible = false;
         MnuRotateLeft.Visible = false;

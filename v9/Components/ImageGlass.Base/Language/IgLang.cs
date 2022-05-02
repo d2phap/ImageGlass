@@ -170,6 +170,10 @@ public class IgLang : Dictionary<string, string>
 
         #region Image
         Add("FrmMain.MnuImage", "Image"); //v7.0
+        Add("FrmMain.MnuToggleImageFocus", "Toggle Image focus mode"); // v9.0
+        Add("FrmMain.MnuToggleImageFocus._Enable", "Enabled Image focus mode."); // v9.0
+        Add("FrmMain.MnuToggleImageFocus._Disable", "Disabled Image focus mode."); // v9.0
+
         Add("FrmMain.MnuViewChannels", "View channels"); //v7.0
         Add("FrmMain.MnuViewChannels._All", "All"); //v7.0
         Add("FrmMain.MnuViewChannels._Red", "Red"); //v7.0
@@ -229,6 +233,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuPageNav", "Page navigation"); // v7.5
         Add("FrmMain.MnuCropping", "Cropping"); // v7.6
         Add("FrmMain.MnuExifTool", "Exif tool"); // v8.0
+        
         #endregion
 
         Add("FrmMain.MnuSettings", "Settings…"); // v3.0

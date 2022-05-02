@@ -73,6 +73,8 @@ namespace ImageGlass
             this.MnuScaleToFit = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuScaleToFill = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuImage = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuToggleImageFocus = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuViewChannels = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuLoadingOrders = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem16 = new System.Windows.Forms.ToolStripSeparator();
@@ -131,12 +133,9 @@ namespace ImageGlass
             this.Tb0 = new System.Windows.Forms.TableLayoutPanel();
             this.Sp1 = new ImageGlass.UI.ModernSplitContainer();
             this.Sp2 = new ImageGlass.UI.ModernSplitContainer();
-            this.PanLeft = new System.Windows.Forms.FlowLayoutPanel();
-            this.Sp3 = new ImageGlass.UI.ModernSplitContainer();
             this.PicMain = new ImageGlass.PhotoBox.ViewBox();
             this.MnuContext = new ImageGlass.UI.ModernMenu(this.components);
             this.itemToPreserveTheSpaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.PanRight = new System.Windows.Forms.FlowLayoutPanel();
             this.Gallery = new ImageGlass.Gallery.ImageGallery();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
@@ -152,12 +151,7 @@ namespace ImageGlass
             this.Sp1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Sp2)).BeginInit();
             this.Sp2.Panel1.SuspendLayout();
-            this.Sp2.Panel2.SuspendLayout();
             this.Sp2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Sp3)).BeginInit();
-            this.Sp3.Panel1.SuspendLayout();
-            this.Sp3.Panel2.SuspendLayout();
-            this.Sp3.SuspendLayout();
             this.MnuContext.SuspendLayout();
             this.MnuSubMenu.SuspendLayout();
             this.SuspendLayout();
@@ -520,6 +514,8 @@ namespace ImageGlass
             // MnuImage
             // 
             this.MnuImage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MnuToggleImageFocus,
+            this.toolStripMenuItem5,
             this.MnuViewChannels,
             this.MnuLoadingOrders,
             this.toolStripMenuItem16,
@@ -545,6 +541,18 @@ namespace ImageGlass
             this.MnuImage.Name = "MnuImage";
             this.MnuImage.Size = new System.Drawing.Size(191, 40);
             this.MnuImage.Text = "[Image]";
+            // 
+            // MnuToggleImageFocus
+            // 
+            this.MnuToggleImageFocus.Name = "MnuToggleImageFocus";
+            this.MnuToggleImageFocus.Size = new System.Drawing.Size(334, 30);
+            this.MnuToggleImageFocus.Text = "[Toggle Image focus mode]";
+            this.MnuToggleImageFocus.Click += new System.EventHandler(this.MnuToggleImageFocus_Click);
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(331, 6);
             // 
             // MnuViewChannels
             // 
@@ -1017,68 +1025,32 @@ namespace ImageGlass
             this.Sp2.BackColor = System.Drawing.Color.Transparent;
             this.Sp2.Cursor = System.Windows.Forms.Cursors.SizeWE;
             this.Sp2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Sp2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.Sp2.IsSplitterFixed = true;
             this.Sp2.Location = new System.Drawing.Point(0, 0);
             this.Sp2.Margin = new System.Windows.Forms.Padding(0);
             this.Sp2.Name = "Sp2";
             // 
             // Sp2.Panel1
             // 
-            this.Sp2.Panel1.Controls.Add(this.PanLeft);
+            this.Sp2.Panel1.Controls.Add(this.PicMain);
             this.Sp2.Panel1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp2.Panel1MinSize = 0;
             // 
             // Sp2.Panel2
             // 
-            this.Sp2.Panel2.Controls.Add(this.Sp3);
             this.Sp2.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp2.Panel2MinSize = 10;
             this.Sp2.Size = new System.Drawing.Size(1108, 543);
             this.Sp2.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.Sp2.SplitterDistance = 164;
+            this.Sp2.SplitterDistance = 730;
             this.Sp2.SplitterWidth = 11;
             this.Sp2.TabIndex = 3;
-            // 
-            // PanLeft
-            // 
-            this.PanLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.PanLeft.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PanLeft.Location = new System.Drawing.Point(0, 0);
-            this.PanLeft.Margin = new System.Windows.Forms.Padding(2);
-            this.PanLeft.Name = "PanLeft";
-            this.PanLeft.Size = new System.Drawing.Size(164, 543);
-            this.PanLeft.TabIndex = 1;
-            // 
-            // Sp3
-            // 
-            this.Sp3.BackColor = System.Drawing.Color.Transparent;
-            this.Sp3.Cursor = System.Windows.Forms.Cursors.SizeWE;
-            this.Sp3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Sp3.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.Sp3.Location = new System.Drawing.Point(0, 0);
-            this.Sp3.Margin = new System.Windows.Forms.Padding(0);
-            this.Sp3.Name = "Sp3";
-            // 
-            // Sp3.Panel1
-            // 
-            this.Sp3.Panel1.Controls.Add(this.PicMain);
-            this.Sp3.Panel1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.Sp3.Panel1MinSize = 10;
-            // 
-            // Sp3.Panel2
-            // 
-            this.Sp3.Panel2.Controls.Add(this.PanRight);
-            this.Sp3.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.Sp3.Panel2MinSize = 0;
-            this.Sp3.Size = new System.Drawing.Size(933, 543);
-            this.Sp3.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.Sp3.SplitterDistance = 609;
-            this.Sp3.SplitterWidth = 11;
-            this.Sp3.TabIndex = 3;
+            this.Sp2.TabStop = false;
             // 
             // PicMain
             // 
             this.PicMain.AllowDrop = true;
+            this.PicMain.BackColor = System.Drawing.SystemColors.Control;
             this.PicMain.BackgroundImage = null;
             this.PicMain.CheckerboardMode = ImageGlass.Base.PhotoBox.CheckerboardMode.Client;
             this.PicMain.ContextMenuStrip = this.MnuContext;
@@ -1090,7 +1062,7 @@ namespace ImageGlass
             this.PicMain.NavButtonSize = new System.Drawing.SizeF(90F, 90F);
             this.PicMain.NavDisplay = ImageGlass.Base.PhotoBox.NavButtonDisplay.Both;
             this.PicMain.ShowDebugInfo = true;
-            this.PicMain.Size = new System.Drawing.Size(609, 543);
+            this.PicMain.Size = new System.Drawing.Size(730, 543);
             this.PicMain.TabIndex = 0;
             this.PicMain.OnZoomChanged += new ImageGlass.PhotoBox.ViewBox.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
             this.PicMain.OnNavLeftClicked += new ImageGlass.PhotoBox.ViewBox.NavLeftClickedEventHandler(this.PicMain_OnNavLeftClicked);
@@ -1114,16 +1086,6 @@ namespace ImageGlass
             this.itemToPreserveTheSpaceToolStripMenuItem.Name = "itemToPreserveTheSpaceToolStripMenuItem";
             this.itemToPreserveTheSpaceToolStripMenuItem.Size = new System.Drawing.Size(282, 28);
             this.itemToPreserveTheSpaceToolStripMenuItem.Text = "item to preserve the space";
-            // 
-            // PanRight
-            // 
-            this.PanRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.PanRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PanRight.Location = new System.Drawing.Point(0, 0);
-            this.PanRight.Margin = new System.Windows.Forms.Padding(2);
-            this.PanRight.Name = "PanRight";
-            this.PanRight.Size = new System.Drawing.Size(313, 543);
-            this.PanRight.TabIndex = 1;
             // 
             // Gallery
             // 
@@ -1166,7 +1128,7 @@ namespace ImageGlass
             this.MnuSubMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.itemToPreserveSpaceToolStripMenuItem});
             this.MnuSubMenu.Name = "MnuContext";
-            this.MnuSubMenu.Size = new System.Drawing.Size(253, 63);
+            this.MnuSubMenu.Size = new System.Drawing.Size(253, 32);
             // 
             // itemToPreserveSpaceToolStripMenuItem
             // 
@@ -1201,13 +1163,8 @@ namespace ImageGlass
             ((System.ComponentModel.ISupportInitialize)(this.Sp1)).EndInit();
             this.Sp1.ResumeLayout(false);
             this.Sp2.Panel1.ResumeLayout(false);
-            this.Sp2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Sp2)).EndInit();
             this.Sp2.ResumeLayout(false);
-            this.Sp3.Panel1.ResumeLayout(false);
-            this.Sp3.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.Sp3)).EndInit();
-            this.Sp3.ResumeLayout(false);
             this.MnuContext.ResumeLayout(false);
             this.MnuSubMenu.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -1219,9 +1176,6 @@ namespace ImageGlass
         private TableLayoutPanel Tb0;
         private UI.ModernSplitContainer Sp1;
         private UI.ModernSplitContainer Sp2;
-        private UI.ModernSplitContainer Sp3;
-        private FlowLayoutPanel PanLeft;
-        private FlowLayoutPanel PanRight;
         private UI.ModernMenu MnuMain;
         private ToolStripMenuItem MnuNavigation;
         private ToolStripMenuItem MnuZoom;
@@ -1327,5 +1281,7 @@ namespace ImageGlass
         private UI.ModernMenu MnuSubMenu;
         private ToolStripMenuItem itemToPreserveTheSpaceToolStripMenuItem;
         private ToolStripMenuItem itemToPreserveSpaceToolStripMenuItem;
+        private ToolStripMenuItem MnuToggleImageFocus;
+        private ToolStripSeparator toolStripMenuItem5;
     }
 }

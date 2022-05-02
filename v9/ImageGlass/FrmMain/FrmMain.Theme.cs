@@ -49,10 +49,7 @@ public partial class FrmMain
             Gallery.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
 
         // Side panels
-        Sp2.SplitterBackColor =
-            Sp3.SplitterBackColor =
-            PanLeft.BackColor =
-            PanRight.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
+        Sp2.SplitterBackColor = Config.Theme.Settings.ThumbnailBarBgColor;
 
         // navigation buttons
         PicMain.NavHoveredColor = Color.FromArgb(200, Config.Theme.Settings.ToolbarBgColor);

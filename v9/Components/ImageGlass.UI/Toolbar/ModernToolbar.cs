@@ -197,13 +197,13 @@ public class ModernToolbar : ToolStrip
         HideItemTooltip();
     }
 
-    protected override void OnMouseEnter(EventArgs e)
-    {
-        if (AutoFocusOnHover && CanFocus && !Focused)
-            Focus();
+    //protected override void OnMouseEnter(EventArgs e)
+    //{
+    //    if (AutoFocusOnHover && CanFocus && !Focused)
+    //        Focus();
 
-        base.OnMouseEnter(e);
-    }
+    //    base.OnMouseEnter(e);
+    //}
 
     protected override void OnMouseLeave(EventArgs e)
     {
@@ -651,5 +651,15 @@ public class ModernToolbar : ToolStrip
     }
 
     #endregion
+
+    //protected override bool ProcessCmdKey(ref Message m, Keys keyData)
+    //{
+    //    //if (m.HWnd.Equals(Handle) &&
+    //    //    (keyData == Keys.Left || keyData == Keys.Right ||
+    //    //    keyData == Keys.Tab))
+    //    //    return true;
+
+    //    return base.ProcessCmdKey(ref m, keyData);
+    //}
 
 }
