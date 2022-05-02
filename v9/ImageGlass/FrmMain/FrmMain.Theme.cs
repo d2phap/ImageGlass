@@ -39,7 +39,7 @@ public partial class FrmMain
             MnuSubMenu.Theme = Config.Theme;
 
         // background
-        BackColor = Config.BackgroundColor;
+        BackColor = Sp1.BackColor = Sp2.BackColor = Config.BackgroundColor;
         PicMain.BackColor = Config.BackgroundColor;
         PicMain.ForeColor = Config.Theme.Settings.TextColor;
 

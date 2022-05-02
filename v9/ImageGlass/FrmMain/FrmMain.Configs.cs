@@ -128,6 +128,10 @@ public partial class FrmMain
 
     private void SetUpFrmMainConfigs()
     {
+        Sp1.TabStop = false;
+        Sp2.Panel2Collapsed = true;
+        Sp2.TabStop = false;
+
         // Toolbar
         Toolbar.IconHeight = Config.ToolbarIconHeight;
         IG_ToggleToolbar(Config.IsShowToolbar);
@@ -144,11 +148,6 @@ public partial class FrmMain
         IG_ToggleGallery(Config.IsShowThumbnail);
 
 
-        Sp1.TabStop = false;
-        Sp2.Panel2Collapsed = true;
-        Sp2.TabStop = false;
-
-
         // PicMain
         PicMain.TabStop = false;
         IG_SetZoomMode(Config.ZoomMode.ToString());
@@ -163,15 +162,12 @@ public partial class FrmMain
     private void FrmMainConfig_Load(object? sender, EventArgs e)
     {
         Local.OnRequestUpdateFrmMain += Local_OnFrmMainUpdateRequested;
-
-        // load window placement from settings
-        WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
-
+        
         // IsWindowAlwaysOnTop
         IG_ToggleTopMost(Config.IsWindowAlwaysOnTop);
 
         // EnableImageFocus
-        IG_ToggleImageFocus(Config.EnableImageFocus);
+        IG_ToggleImageFocus(Config.EnableImageFocus, showInAppMessage: false);
 
         // load language pack
         Local.UpdateFrmMain(ForceUpdateAction.Language);
@@ -183,6 +179,11 @@ public partial class FrmMain
 
         // TODO: hide menu items that haven't implemented
         HideUnreadyMenuItems();
+
+
+        // load window placement from settings
+        WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
+
     }
 
     private void FrmMainConfig_FormClosing(object? sender, FormClosingEventArgs e)

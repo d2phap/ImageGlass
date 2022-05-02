@@ -43,8 +43,9 @@ public partial class FrmMain : Form
         DpiApi.OnDpiChanged += OnDpiChanged;
         DpiApi.CurrentDpi = DeviceDpi;
 
-        SetUpFrmMainConfigs();
+
         SetUpFrmMainTheme();
+        SetUpFrmMainConfigs();
 
         // apply DPI changes
         OnDpiChanged();

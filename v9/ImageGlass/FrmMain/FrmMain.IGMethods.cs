@@ -588,7 +588,7 @@ public partial class FrmMain
     /// </summary>
     /// <param name="enable"></param>
     /// <returns></returns>
-    private bool IG_ToggleImageFocus(bool? enable = null)
+    private bool IG_ToggleImageFocus(bool? enable = null, bool showInAppMessage = true)
     {
         enable ??= !Config.EnableImageFocus;
         Config.EnableImageFocus = enable.Value;
@@ -616,9 +616,12 @@ public partial class FrmMain
         // update toolbar items state
         UpdateToolbarItemsState();
 
-        var msgKey = Config.EnableImageFocus ? "_Enable" : "_Disable";
-        PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuToggleImageFocus)}.{msgKey}"],
-            Config.InappMessageDuration);
+        if (showInAppMessage)
+        {
+            var msgKey = Config.EnableImageFocus ? "_Enable" : "_Disable";
+            PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuToggleImageFocus)}.{msgKey}"],
+                Config.InappMessageDuration);
+        }
 
         return Config.EnableImageFocus;
     }
