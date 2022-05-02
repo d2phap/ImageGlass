@@ -283,17 +283,17 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Opens project site to report issue
+    /// </summary>
     private void IG_ReportIssue()
     {
-        try
-        {
-            // TODO:
-            Process.Start("https://github.com/d2phap/ImageGlass/issues");
-        }
-        catch { }
+        Helpers.OpenUrl("https://github.com/d2phap/ImageGlass/issues?q=is%3Aissue+label%3Av9+", "app_report_issue");
     }
 
-
+    /// <summary>
+    /// Open About dialog
+    /// </summary>
     private void IG_About()
     {
         var archInfo = Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
@@ -304,12 +304,7 @@ public partial class FrmMain
 
         btnDonate.Click += (object? sender, EventArgs e) =>
         {
-            try
-            {
-                // TODO:
-                Process.Start("https://imageglass.org/source#donation?utm_source=app_" + App.Version + "&utm_medium=app_click&utm_campaign=app_donation");
-            }
-            catch { }
+            Helpers.OpenUrl("https://imageglass.org/source#donation", "app_donation");
         };
 
 
