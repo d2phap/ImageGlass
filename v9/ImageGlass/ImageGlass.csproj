@@ -16,8 +16,8 @@
     <RepositoryUrl>https://imageglass.org/source</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <FileVersion>$(Version)</FileVersion>
-    <VersionPrefix>9.0.1</VersionPrefix>
-    <VersionSuffix>beta</VersionSuffix>
+    <VersionPrefix>9.0.0</VersionPrefix>
+    <VersionSuffix>beta-1</VersionSuffix>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
     <SignAssembly>False</SignAssembly>

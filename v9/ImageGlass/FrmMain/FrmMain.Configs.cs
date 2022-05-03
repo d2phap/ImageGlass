@@ -739,7 +739,7 @@ public partial class FrmMain
 
         // MnuHelp
         //MnuAbout.Visible = false;
-        MnuCheckForUpdate.Visible = false;
+        //MnuCheckForUpdate.Visible = false;
         //MnuReportIssue.Visible = false;
         MnuFirstLaunch.Visible = false;
 

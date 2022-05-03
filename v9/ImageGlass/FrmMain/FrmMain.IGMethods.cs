@@ -325,6 +325,16 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Check for updates
+    /// </summary>
+    /// <param name="showNewUpdate"></param>
+    private void IG_CheckForUpdate(bool? showNewUpdate = null)
+    {
+        Program.CheckForUpdate(showNewUpdate);
+    }
+
+
     private void IG_Settings()
     {
         var path = App.ConfigDir(PathType.File, Source.UserFilename);

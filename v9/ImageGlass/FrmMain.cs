@@ -1993,7 +1993,7 @@ public partial class FrmMain : Form
 
     private void MnuCheckForUpdate_Click(object sender, EventArgs e)
     {
-
+        IG_CheckForUpdate(true);
     }
 
     private void MnuReportIssue_Click(object sender, EventArgs e)
