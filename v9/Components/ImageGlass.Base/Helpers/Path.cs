@@ -209,13 +209,15 @@ public partial class Helpers
     /// Open URL in the default browser
     /// </summary>
     /// <param name="url"></param>
-    public static void OpenUrl(string url, string campaign = "app_unknown")
+    public static void OpenUrl(string? url, string campaign = "app_unknown")
     {
+        if (string.IsNullOrEmpty(url)) return;
+
         try
         {
             var ub = new UriBuilder(url);
             var queries = HttpUtility.ParseQueryString(ub.Query);
-            queries["utm_source"] = "app_" + App.Version;
+            queries["utm_source"] = "app_" + App.FileVersion;
             queries["utm_medium"] = "app_click";
             queries["utm_campaign"] = campaign;
 

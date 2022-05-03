@@ -27,6 +27,7 @@ namespace ImageGlass.Base;
 /// </summary>
 public static class Constants
 {
+    public const string UPDATE_CHANNEL = "beta";
     public const int MENU_ICON_HEIGHT = 22;
     public const int VIEWER_GRID_SIZE = 8;
     public const int TOOLBAR_ICON_HEIGHT = 22;
