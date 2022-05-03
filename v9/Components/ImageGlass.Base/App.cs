@@ -29,9 +29,21 @@ public class App
 
 
     /// <summary>
-    /// Gets the application version
+    /// Gets the file version
+    /// </summary>
+    public static string FileVersion { get => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion ?? ""; }
+
+
+    /// <summary>
+    /// Gets the product version
     /// </summary>
     public static string Version { get => FileVersionInfo.GetVersionInfo(IGExePath).ProductVersion ?? ""; }
+
+
+    /// <summary>
+    /// Gets value of Portable mode if the startup dir is writable
+    /// </summary>
+    public static bool IsPortable => Helpers.CheckPathWritable(PathType.Dir, StartUpDir());
 
 
     /// <summary>

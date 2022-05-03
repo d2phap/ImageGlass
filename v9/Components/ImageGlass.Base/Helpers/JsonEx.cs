@@ -37,6 +37,8 @@ public partial class Helpers
         {
             // Write enum value as string
             new JsonStringEnumConverter(),
+
+            new CustomDateTimeConverter(Constants.DATETIME_FORMAT),
         },
 
         // ignoring policy
@@ -55,6 +57,18 @@ public partial class Helpers
     public static T? ParseJson<T>(string json)
     {
         return JsonSerializer.Deserialize<T>(json, JsonOptions);
+    }
+
+
+    /// <summary>
+    /// Parse JSON from a stream
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="stream"></param>
+    /// <returns></returns>
+    public static async Task<T?> ParseJson<T>(Stream stream)
+    {
+        return await JsonSerializer.DeserializeAsync<T>(stream, JsonOptions);
     }
 
 
@@ -82,5 +96,25 @@ public partial class Helpers
         var json = JsonSerializer.Serialize(value, JsonOptions);
 
         await File.WriteAllTextAsync(jsonFilePath, json, Encoding.UTF8, token);
+    }
+}
+
+
+public class CustomDateTimeConverter : JsonConverter<DateTime>
+{
+    private readonly string Format;
+    public CustomDateTimeConverter(string format)
+    {
+        Format = format;
+    }
+
+    public override void Write(Utf8JsonWriter writer, DateTime date, JsonSerializerOptions options)
+    {
+        writer.WriteStringValue(date.ToString(Format));
+    }
+
+    public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        return DateTime.ParseExact(reader.GetString(), Format, null);
     }
 }
