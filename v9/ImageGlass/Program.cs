@@ -1,4 +1,22 @@
-﻿using ImageGlass.Base;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+using ImageGlass.Base;
 using ImageGlass.Base.Update;
 using ImageGlass.Settings;
 using System.Globalization;
@@ -103,7 +121,10 @@ internal static class Program
     /// <summary>
     /// Check for updatae
     /// </summary>
-    /// <param name="useAutoCheck">If TRUE, use "igautoupdate"; else "igupdate" for argument</param>
+    /// <param name="showIfNewUpdate">
+    /// Set to <c>true</c> if you want to show the Update dialog
+    /// when there is a new version. Default value is <c>false</c>.
+    /// </param>
     public static void CheckForUpdate(bool? showIfNewUpdate = null)
     {
         _ = Task.Run(async () =>
