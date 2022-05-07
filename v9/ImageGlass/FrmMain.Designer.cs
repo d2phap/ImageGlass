@@ -1151,7 +1151,7 @@ namespace ImageGlass
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FrmMain";
             this.RightToLeftLayout = true;
-            this.Text = "ImageGlass 9";
+            this.Text = "ImageGlass Kobe";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmMain_KeyDown);
             this.MnuMain.ResumeLayout(false);

@@ -830,13 +830,22 @@ public partial class FrmMain : Form
     /// <summary>
     /// View the next image using jump step.
     /// </summary>
-    private static async Task ViewNextAsync(int step,
+    private async Task ViewNextAsync(int step,
         bool isKeepZoomRatio = false,
         bool isSkipCache = false,
         int pageIndex = int.MinValue,
         string filename = "",
         CancellationTokenSource? token = null)
     {
+        if (Local.Images.Length == 0 && string.IsNullOrEmpty(filename))
+        {
+            Local.CurrentIndex = -1;
+            UpdateImageInfo(BasicInfoUpdate.All);
+
+            return;
+        }
+
+
         IgPhoto? photo = null;
         var directReadSettings = new CodecReadOptions()
         {
@@ -993,7 +1002,10 @@ public partial class FrmMain : Form
         Local.IsImageError = false;
 
         PicMain.ClearMessage();
-        PicMain.ShowMessage(Config.Language[$"{Name}._Loading"], delayMs: 1500);
+        if (e.CurrentIndex >= 0)
+        {
+            PicMain.ShowMessage(Config.Language[$"{Name}._Loading"], delayMs: 1500);
+        }
 
         // Select thumbnail item
         _ = Helpers.RunAsThread(SelectCurrentThumbnail);
@@ -1216,16 +1228,11 @@ public partial class FrmMain : Form
         // ListCount
         if (updateAll || types.HasFlag(BasicInfoUpdate.ListCount))
         {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.ListCount)))
+            if (Config.InfoItems.Contains(nameof(BasicInfo.ListCount))
+                && Local.Images.Length > 0)
             {
-                if (Local.Images.Length == 0)
-                {
-                    BasicInfo.ListCount = $"0/0 {Config.Language[$"{Name}._Files"]}";
-                }
-                else
-                {
-                    BasicInfo.ListCount = $"{Local.CurrentIndex + 1}/{Local.Images.Length} {Config.Language[$"{Name}._Files"]}";
-                }
+                BasicInfo.ListCount = $"{Local.CurrentIndex + 1}/{Local.Images.Length} {Config.Language[$"{Name}._Files"]}";
+
             }
             else
             {

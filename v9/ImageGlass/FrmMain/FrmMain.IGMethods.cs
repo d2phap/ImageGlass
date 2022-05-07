@@ -311,9 +311,10 @@ public partial class FrmMain
         TaskDialog.ShowDialog(new()
         {
             Icon = TaskDialogIcon.Information,
-            Caption = $"About {Application.ProductName}",
+            Caption = $"About",
 
-            Heading = $"Version: {appVersion}",
+            Heading = $"{Application.ProductName}\r\n" +
+                $"Version: {appVersion}",
             Text = $"Copyright © 2010-{DateTime.Now.Year} by Dương Diệu Pháp.\r\n" +
                 $"All rights reserved.\r\n\r\n" +
                 $"Homepage: https://imageglass.org\r\n" +
