@@ -389,13 +389,13 @@ public partial class ViewBox : HybridControl
     /// Checks if the current viewing image supports horizontal panning.
     /// </summary>
     [Browsable(false)]
-    public bool CanPanHorizontal => Height > ImageHeight * ZoomFactor;
+    public bool CanPanHorizontal => Width < ImageWidth * ZoomFactor;
 
     /// <summary>
     /// Checks if the current viewing image supports vertical panning.
     /// </summary>
     [Browsable(false)]
-    public bool CanPanVertical => Width > ImageWidth * ZoomFactor;
+    public bool CanPanVertical => Height < ImageHeight * ZoomFactor;
     #endregion
 
 
@@ -798,22 +798,22 @@ public partial class ViewBox : HybridControl
         if (AllowInternalPanningKeys)
         {
             // pan right
-            if (e.KeyData == InternalPanningRightKeys)
+            if (e.KeyData == InternalPanningRightKeys && CanPanHorizontal)
             {
                 StartAnimation(AnimationSource.PanRight);
             }
             // pan left
-            else if (e.KeyData == InternalPanningLeftKeys)
+            else if (e.KeyData == InternalPanningLeftKeys && CanPanHorizontal)
             {
                 StartAnimation(AnimationSource.PanLeft);
             }
             // pan up
-            else if (e.KeyData == InternalPanningUpKeys)
+            else if (e.KeyData == InternalPanningUpKeys && CanPanVertical)
             {
                 StartAnimation(AnimationSource.PanUp);
             }
             // pan down
-            else if (e.KeyData == InternalPanningDownKeys)
+            else if (e.KeyData == InternalPanningDownKeys && CanPanVertical)
             {
                 StartAnimation(AnimationSource.PanDown);
             }
