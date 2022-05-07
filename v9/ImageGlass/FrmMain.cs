@@ -92,7 +92,7 @@ public partial class FrmMain : Form
         #region Register MAIN MENU shortcuts
         bool CheckMenuShortcut(ToolStripMenuItem mnu)
         {
-            var menuHotkey = Config.GetHotkey(MenuHotkeys, mnu.Name);
+            var menuHotkey = Config.GetHotkey(CurrentMenuHotkeys, mnu.Name);
 
             if (menuHotkey?.KeyData == e.KeyData)
             {
@@ -134,7 +134,7 @@ public partial class FrmMain : Form
 
 
         var hotkey = new Hotkey(e.KeyData);
-        var actions = Config.GetHotkeyActions(MenuHotkeys, hotkey);
+        var actions = Config.GetHotkeyActions(CurrentMenuHotkeys, hotkey);
 
         // open main menu
         if (actions.Contains(nameof(MnuMain)))

@@ -34,7 +34,7 @@ public partial class FrmMain
     /// <summary>
     /// Hotkeys list of main menu
     /// </summary>
-    public static Dictionary<string, Hotkey> MenuHotkeys = new()
+    public static Dictionary<string, Hotkey> CurrentMenuHotkeys = new()
     {
 	    // Open main menu
 	    { nameof(MnuMain),                  new(Keys.Alt | Keys.F) },
@@ -173,8 +173,11 @@ public partial class FrmMain
         Local.UpdateFrmMain(ForceUpdateAction.Language);
 
         // load menu hotkeys
-        Config.MergeHotkeys(ref MenuHotkeys, Config.MenuHotkeysOverride);
+        Config.MergeHotkeys(ref CurrentMenuHotkeys, Config.MenuHotkeys);
         Local.UpdateFrmMain(ForceUpdateAction.MenuHotkeys);
+
+        // load Image Focus mode hotkeys
+        LoadImageFocusModeHotkeys();
 
 
         // TODO: hide menu items that haven't implemented
@@ -468,7 +471,7 @@ public partial class FrmMain
         var allItems = MenuUtils.GetActualItems(menu.Items);
         foreach (ToolStripMenuItem item in allItems)
         {
-            item.ShortcutKeyDisplayString = Config.GetHotkeyString(MenuHotkeys, item.Name);
+            item.ShortcutKeyDisplayString = Config.GetHotkeyString(CurrentMenuHotkeys, item.Name);
 
             if (item.HasDropDownItems)
             {
@@ -498,7 +501,7 @@ public partial class FrmMain
                 {
                     tItem.Text = tItem.ToolTipText = Config.Language[langKey];
 
-                    var hotkey = Config.GetHotkeyString(MenuHotkeys, tagModel.OnClick.Executable);
+                    var hotkey = Config.GetHotkeyString(CurrentMenuHotkeys, tagModel.OnClick.Executable);
                     if (!string.IsNullOrEmpty(hotkey))
                     {
                         tItem.ToolTipText += $" ({hotkey})";
@@ -746,5 +749,49 @@ public partial class FrmMain
         //MnuSettings.Visible = false;
         //MnuExit.Visible = false;
     }
+
+
+    /// <summary>
+    /// Loads hotkeys for Image focus mode of PicMain
+    /// </summary>
+    private void LoadImageFocusModeHotkeys()
+    {
+        // pan left
+        PicMain.InternalPanningLeftKeys = Config.GetHotkeyData(
+            Config.ImageFocusModeHotkeys,
+            nameof(PicMain.InternalPanningLeftKeys),
+            PicMain.InternalPanningLeftKeys);
+
+        // pan right
+        PicMain.InternalPanningRightKeys = Config.GetHotkeyData(
+            Config.ImageFocusModeHotkeys,
+            nameof(PicMain.InternalPanningRightKeys),
+            PicMain.InternalPanningRightKeys);
+
+        // pan up
+        PicMain.InternalPanningUpKeys = Config.GetHotkeyData(
+            Config.ImageFocusModeHotkeys,
+            nameof(PicMain.InternalPanningUpKeys),
+            PicMain.InternalPanningUpKeys);
+
+        // pan down
+        PicMain.InternalPanningDownKeys = Config.GetHotkeyData(
+            Config.ImageFocusModeHotkeys,
+            nameof(PicMain.InternalPanningDownKeys),
+            PicMain.InternalPanningDownKeys);
+
+        // zoom in
+        PicMain.InternalZoomInKeys = Config.GetHotkeyData(
+            Config.ImageFocusModeHotkeys,
+            nameof(PicMain.InternalZoomInKeys),
+            PicMain.InternalZoomInKeys);
+
+        // zoom out
+        PicMain.InternalZoomOutKeys = Config.GetHotkeyData(
+            Config.ImageFocusModeHotkeys,
+            nameof(PicMain.InternalZoomOutKeys),
+            PicMain.InternalZoomOutKeys);
+    }
+
 }
 

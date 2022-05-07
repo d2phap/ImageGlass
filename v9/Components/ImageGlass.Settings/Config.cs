@@ -620,7 +620,12 @@ public static class Config
     /// <summary>
     /// Gets, sets hotkeys list of menu
     /// </summary>
-    public static Dictionary<string, Hotkey> MenuHotkeysOverride = new();
+    public static Dictionary<string, Hotkey> MenuHotkeys = new();
+
+    /// <summary>
+    /// Gets, sets hotkeys list of image focus mode
+    /// </summary>
+    public static Dictionary<string, Hotkey> ImageFocusModeHotkeys = new();
 
     #endregion
 
@@ -936,10 +941,17 @@ public static class Config
 
 
         // hotkeys for menu
-        var hotkeysList = items.GetSection(nameof(MenuHotkeysOverride))
+        var hotkeysList = items.GetSection(nameof(MenuHotkeys))
             .GetChildren()
             .ToDictionary(i => i.Key, i => i.Value);
-        MenuHotkeysOverride = ParseHotkeys(hotkeysList);
+        MenuHotkeys = ParseHotkeys(hotkeysList);
+
+
+        // hotkeys for menu
+        hotkeysList = items.GetSection(nameof(ImageFocusModeHotkeys))
+            .GetChildren()
+            .ToDictionary(i => i.Key, i => i.Value);
+        ImageFocusModeHotkeys = ParseHotkeys(hotkeysList);
 
         #endregion
 
@@ -1196,7 +1208,8 @@ public static class Config
         settings.TryAdd(nameof(KeyComboActions), GetKeyComboActions(KeyComboActions));
         settings.TryAdd(nameof(ToolbarItems), ToolbarItems);
         settings.TryAdd(nameof(InfoItems), InfoItems);
-        settings.TryAdd(nameof(MenuHotkeysOverride), ParseHotkeys(MenuHotkeysOverride));
+        settings.TryAdd(nameof(MenuHotkeys), ParseHotkeys(MenuHotkeys));
+        settings.TryAdd(nameof(ImageFocusModeHotkeys), ParseHotkeys(ImageFocusModeHotkeys));
         #endregion
 
 
@@ -1498,6 +1511,7 @@ public static class Config
         }
     }
 
+
     /// <summary>
     /// Gets hotkey string
     /// </summary>
@@ -1511,17 +1525,26 @@ public static class Config
         return hotkey?.ToString() ?? string.Empty;
     }
 
+
     /// <summary>
     /// Gets hotkey
     /// </summary>
-    /// <param name="dict"></param>
-    /// <param name="dictKey"></param>
-    /// <returns></returns>
     public static Hotkey? GetHotkey(Dictionary<string, Hotkey> dict, string dictKey)
     {
         dict.TryGetValue(dictKey, out var hotkey);
 
         return hotkey;
+    }
+
+    /// <summary>
+    /// Gets hotkey's KeyData
+    /// </summary>
+    /// <returns></returns>
+    public static Keys GetHotkeyData(Dictionary<string, Hotkey> dict, string dictKey, Keys defaultValue)
+    {
+        var hotkey = GetHotkey(dict, dictKey);
+
+        return hotkey?.KeyData ?? defaultValue;
     }
 
     /// <summary>
