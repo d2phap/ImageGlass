@@ -1,0 +1,22 @@
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+ <!-- ImageGlass icons http://www.imageglass.org -->
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="22" width="22" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <rect stroke="#dedede" id="svg_1" height="4.703196" width="4.703196" y="0.35" x="0.35" stroke-width="0.7" fill="none"/>
+  <rect stroke="#dedede" id="svg_4" height="4.703196" width="4.703196" y="0.35" x="7.648402" stroke-width="0.7" fill="none"/>
+  <rect stroke="#dedede" id="svg_5" height="4.703196" width="4.703196" y="0.35" x="14.946804" stroke-width="0.7" fill="none"/>
+  <rect stroke="#dedede" id="svg_6" height="4.703196" width="4.703196" y="7.648402" x="14.946804" stroke-width="0.7" fill="none"/>
+  <rect stroke="#dedede" id="svg_7" height="4.703196" width="4.703196" y="14.946804" x="14.946804" stroke-width="0.7" fill="none"/>
+  <rect stroke="#dedede" id="svg_8" height="4.703196" width="4.703196" y="7.648402" x="0.35" stroke-width="0.7" fill="none"/>
+  <rect stroke="#dedede" id="svg_9" height="4.703196" width="4.703196" y="14.946804" x="0.35" stroke-width="0.7" fill="none"/>
+  <rect stroke="#dedede" id="svg_10" height="4.703196" width="4.703196" y="14.946804" x="7.648402" stroke-width="0.7" fill="none"/>
+  <rect stroke="#dedede" id="svg_11" height="4.703196" width="4.703196" y="7.648402" x="7.648402" stroke-width="0.7" fill="none"/>
+ </g>
+</svg>

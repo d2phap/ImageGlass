@@ -1,0 +1,18 @@
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+ <!-- ImageGlass icons http://www.imageglass.org -->
+
+ <g>
+  <title>background</title>
+  <rect x="-1" y="-1" width="22" height="22" id="canvas_background" fill="none"/>
+  <g id="canvasGrid" display="none">
+   <rect width="100%" height="100%" x="0" y="0" stroke-width="0" fill="url(#gridpattern)" id="svg_2"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g transform="rotate(-90 10.000000000000002,10) " id="svg_7">
+   <path stroke="#dedede" id="svg_1" d="m11.732368,18.680327l0,-17.360655l7.667634,17.360655l-7.667634,0z" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+   <path stroke="#dedede" id="svg_4" d="m8.339955,18.680328l0,-17.360655l-7.739957,17.360655l7.739957,0z" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+  </g>
+ </g>
+</svg>

@@ -1,0 +1,14 @@
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+ <!-- ImageGlass icons http://www.imageglass.org -->
+ <g>
+  <title>Layer 1</title>
+  <g transform="rotate(-180 10,10) " id="svg_11">
+   <g id="svg_9"/>
+   <g id="svg_8">
+    <line fill="none" x1="4.335806" y1="2.582889" x2="12.055108" y2="10.302191" id="svg_5" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#dedede" stroke-width="0.9"/>
+    <line fill="none" x1="4.335806" y1="9.647889" x2="12.055108" y2="17.367191" id="svg_6" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#dedede" transform="rotate(-90 8.195457458496096,13.507539749145508) " stroke-width="0.9"/>
+   </g>
+   <line stroke="#dedede" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_2" y2="17.788619" x2="15.664194" y1="2.21138" x1="15.664194" fill-opacity="null" stroke-opacity="null" stroke-width="0.9" fill="none"/>
+  </g>
+ </g>
+</svg>

@@ -1,0 +1,51 @@
+{
+  "Info": {
+    "Name": "Kobe",
+    "Version": "9.0",
+    "Author": "Dương Diệu Pháp",
+    "Email": "phap@imageglass.org",
+    "Website": "https://imageglass.org",
+    "Description": "ImageGlass Kobe theme",
+    "IsDark": true,
+    "ConfigVersion": "9"
+  },
+  "Settings": {
+    "IsShowTitlebarLogo": true,
+    "NavButtonLeft": "ViewPreviousImage.svg",
+    "NavButtonRight": "ViewNextImage.svg"
+  },
+  "ToolbarIcons": {
+    "ActualSize": "ActualSize.svg",
+    "AutoZoom": "AutoZoom.svg",
+    "Checkerboard": "Checkerboard.svg",
+    "ColorPicker": "ColorPicker.svg",
+    "Crop": "Crop.svg",
+    "Delete": "Delete.svg",
+    "Edit": "Edit.svg",
+    "FlipHorz": "FlipHorz.svg",
+    "FlipVert": "FlipVert.svg",
+    "FullScreen": "FullScreen.svg",
+    "GoToImage": "GoToImage.svg",
+    "LockZoom": "LockZoom.svg",
+    "MainMenu": "MainMenu.svg",
+    "OpenFile": "OpenFile.svg",
+    "Print": "Print.svg",
+    "Refresh": "Refresh.svg",
+    "RotateLeft": "RotateLeft.svg",
+    "RotateRight": "RotateRight.svg",
+    "SaveAs": "SaveAs.svg",
+    "ScaleToFill": "ScaleToFill.svg",
+    "ScaleToFit": "ScaleToFit.svg",
+    "ScaleToHeight": "ScaleToHeight.svg",
+    "ScaleToWidth": "ScaleToWidth.svg",
+    "Slideshow": "Slideshow.svg",
+    "ThumbnailBar": "ThumbnailBar.svg",
+    "ViewFirstImage": "ViewFirstImage.svg",
+    "ViewLastImage": "ViewLastImage.svg",
+    "ViewNextImage": "ViewNextImage.svg",
+    "ViewPreviousImage": "ViewPreviousImage.svg",
+    "WindowFit": "WindowFit.svg",
+    "ZoomIn": "ZoomIn.svg",
+    "ZoomOut": "ZoomOut.svg"
+  }
+}

@@ -20,7 +20,7 @@ echo:
 set SOLUTION_DIR=%1
 set OUTPUT_DIR=%2
 set DEFAULT_CODEC=%OUTPUT_DIR:\ImageGlass\bin\=\IgCodecs\ImageMagickIgCodec\bin\%ImageMagick.IgCodec.dll
-set THEME_DIR=%SOLUTION_DIR%..\Setup\Assets\Themes\
+set THEME_DIR=%SOLUTION_DIR%..\Setup\v9\Assets\Themes\
 
 
 echo 1. Creating variables:
@@ -42,9 +42,9 @@ echo:
 
 echo 3. Copy default theme: %THEME_DIR% (if not exist)
 echo -----------------------------------------------------------------------
-IF NOT EXIST Themes\ (
-	mkdir Themes
-	xcopy /Q /K /D /H /E /Y %THEME_DIR%*.* %OUTPUT_DIR%\Themes\
+IF NOT EXIST %OUTPUT_DIR%Themes (
+	mkdir %OUTPUT_DIR%Themes
+	xcopy /E /H /C /I %THEME_DIR% %OUTPUT_DIR%Themes
 )
 echo:
 echo:
