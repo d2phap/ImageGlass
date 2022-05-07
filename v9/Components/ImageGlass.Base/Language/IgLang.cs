@@ -246,7 +246,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuReportIssue", "Report an issue…"); //v3.0
         #endregion
 
-        Add("FrmMain.MnuExit", "Exit ImageGlass"); //v7.0
+        Add("FrmMain.MnuExit", "Exit"); //v7.0
 
         #endregion
 

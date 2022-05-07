@@ -675,6 +675,7 @@ public partial class FrmMain
         MnuGoTo.Visible = false;
         //MnuGoToFirst.Visible = false;
         //MnuGoToLast.Visible = false;
+        toolStripMenuItem14.Visible = false;
         MnuViewNextFrame.Visible = false;
         MnuViewPreviousFrame.Visible = false;
         MnuViewFirstFrame.Visible = false;
@@ -696,10 +697,12 @@ public partial class FrmMain
         //MnuImageFocus.Visible = false;
         MnuViewChannels.Visible = false;
         //MnuLoadingOrders.Visible = false;
+        toolStripMenuItem16.Visible = false;
         MnuRotateLeft.Visible = false;
         MnuRotateRight.Visible = false;
         MnuFlipHorizontal.Visible = false;
         MnuFlipVertical.Visible = false;
+        toolStripMenuItem17.Visible = false;
         MnuRename.Visible = false;
         MnuMoveToRecycleBin.Visible = false;
         MnuDeleteFromHardDisk.Visible = false;
@@ -717,6 +720,7 @@ public partial class FrmMain
         //MnuCopyPath.Visible = false;
         //MnuClearClipboard.Visible = false;
 
+        toolStripMenuItem6.Visible = false;
         MnuWindowFit.Visible = false;
         MnuFrameless.Visible = false;
         MnuFullScreen.Visible = false;
