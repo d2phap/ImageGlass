@@ -21,6 +21,20 @@ namespace ImageGlass.UI;
 
 
 /// <summary>
+/// Metadata for theme config file
+/// </summary>
+public record IgThemeMetadata
+{
+    public string Description { get; set; } = "ImageGlass theme configuration file";
+
+    /// <summary>
+    /// Config version of this theme to work with (required)
+    /// </summary>
+    public string Version { get; set; } = "9.0";
+}
+
+
+/// <summary>
 /// Theme information
 /// </summary>
 public record IgThemeInfo
@@ -29,13 +43,6 @@ public record IgThemeInfo
     /// Theme name (required)
     /// </summary>
     public string Name { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Config version of this theme to work with (required)
-    /// </summary>
-    public string ConfigVersion { get; set; } = "9";
-
-
     public string Version { get; set; } = string.Empty;
     public string Author { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
@@ -151,10 +158,12 @@ public class IgThemeToolbarIcons
 /// <summary>
 /// JSON model for theme file
 /// </summary>
+/// <param name="_Metadata"></param>
 /// <param name="Info"></param>
 /// <param name="Settings"></param>
 /// <param name="ToolbarIcons"></param>
 public record IgThemeJsonModel(
+    IgThemeMetadata _Metadata,
     IgThemeInfo Info,
     Dictionary<string, object> Settings,
     Dictionary<string, string> ToolbarIcons)

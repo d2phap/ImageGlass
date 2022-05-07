@@ -1,13 +1,16 @@
 {
+  "_Metadata": {
+    "Description": "ImageGlass theme configuration file",
+    "Version": "9.0"
+  },
   "Info": {
     "Name": "Kobe",
-    "Version": "9.0",
     "Author": "Dương Diệu Pháp",
     "Email": "phap@imageglass.org",
     "Website": "https://imageglass.org",
     "Description": "ImageGlass Kobe theme",
     "IsDark": true,
-    "ConfigVersion": "9"
+    "Version": "9.0"
   },
   "Settings": {
     "IsShowTitlebarLogo": true,

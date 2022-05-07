@@ -98,7 +98,7 @@ public class Source
 }
 
 
-public record ConfigInfoJsonModel
+public record ConfigMetadata
 {
     public string Description { get; set; } = string.Empty;
     public string Version { get; set; } = string.Empty;

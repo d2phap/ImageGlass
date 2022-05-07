@@ -22,7 +22,7 @@ namespace ImageGlass.Base;
 /// <summary>
 /// Language information
 /// </summary>
-public record IgLangInfo
+public record IgLangMetadata
 {
     public string Code { get; set; } = "en-US";
     public string EnglishName { get; set; } = "English";
@@ -35,6 +35,6 @@ public record IgLangInfo
 /// <summary>
 /// JSON model for IgLang file
 /// </summary>
-/// <param name="Info"></param>
+/// <param name="_Metadata"></param>
 /// <param name="Items"></param>
-public record IgLangJsonModel(IgLangInfo Info, Dictionary<string, string> Items) { }
+public record IgLangJsonModel(IgLangMetadata _Metadata, Dictionary<string, string> Items) { }

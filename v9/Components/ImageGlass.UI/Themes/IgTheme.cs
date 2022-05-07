@@ -151,7 +151,7 @@ public class IgTheme
 
         // check required fields
         if (string.IsNullOrEmpty(JsonModel.Info.Name)
-            || string.IsNullOrEmpty(JsonModel.Info.ConfigVersion))
+            || string.IsNullOrEmpty(JsonModel._Metadata.Version))
         {
             IsValid = false;
             return IsValid;

@@ -32,7 +32,7 @@ public class IgLang : Dictionary<string, string>
     /// <summary>
     /// Language information
     /// </summary>
-    public IgLangInfo Info { get; set; } = new();
+    public IgLangMetadata Metadata { get; set; } = new();
 
 
     /// <summary>
@@ -69,7 +69,7 @@ public class IgLang : Dictionary<string, string>
         var model = Helpers.ReadJson<IgLangJsonModel>(FileName);
         if (model == null) return;
 
-        Info = model.Info;
+        Metadata = model._Metadata;
 
         // import language items
         foreach (var item in model.Items)
@@ -88,7 +88,7 @@ public class IgLang : Dictionary<string, string>
     /// <param name="filePath"></param>
     public void SaveAsFile(string filePath)
     {
-        var model = new IgLangJsonModel(Info, this);
+        var model = new IgLangJsonModel(Metadata, this);
 
         Helpers.WriteJson(filePath, model);
     }
@@ -99,7 +99,6 @@ public class IgLang : Dictionary<string, string>
     /// </summary>
     public void InitDefaultLanguage()
     {
-
         //Add("_IncompatibleConfigs", "Some settings are not compatible with your ImageGlass {0}. It's recommended to update them before continuing.\r\n\n- Click Yes to learn about the changes.\r\n- Click No to launch ImageGlass with default settings."); //v7.5
 
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Name)}", "Name (default)"); //v8.0
