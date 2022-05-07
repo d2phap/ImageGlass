@@ -156,7 +156,7 @@ public partial class FrmMain : Form
         }
         else
         {
-            GoToImageAsync(e.Item.Index);
+            GoToImage(e.Item.Index);
         }
     }
 
@@ -981,10 +981,10 @@ public partial class FrmMain : Form
     /// View image using index
     /// </summary>
     /// <param name="index">Image index</param>
-    private async void GoToImageAsync(int index)
+    private void GoToImage(int index)
     {
         Local.CurrentIndex = index;
-        await ViewNextCancellableAsync(0);
+        _ = ViewNextCancellableAsync(0);
     }
 
     #endregion

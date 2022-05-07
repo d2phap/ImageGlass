@@ -95,7 +95,7 @@ public partial class FrmMain
     /// <param name="index"></param>
     private void IG_GoTo(int index)
     {
-        GoToImageAsync(index);
+        GoToImage(index);
     }
 
 
@@ -104,7 +104,7 @@ public partial class FrmMain
     /// </summary>
     private void IG_GoToFirst()
     {
-        GoToImageAsync(0);
+        GoToImage(0);
     }
 
 
@@ -113,7 +113,7 @@ public partial class FrmMain
     /// </summary>
     private void IG_GoToLast()
     {
-        GoToImageAsync(Local.Images.Length - 1);
+        GoToImage(Local.Images.Length - 1);
     }
 
 
