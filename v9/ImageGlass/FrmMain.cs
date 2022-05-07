@@ -87,7 +87,7 @@ public partial class FrmMain : Form
 
     private void FrmMain_KeyDown(object sender, KeyEventArgs e)
     {
-        Text = new Hotkey(e.KeyData).ToString() + " - " + e.KeyValue.ToString();
+        //Text = new Hotkey(e.KeyData).ToString() + " - " + e.KeyValue.ToString();
 
         #region Register MAIN MENU shortcuts
         bool CheckMenuShortcut(ToolStripMenuItem mnu)
@@ -143,10 +143,6 @@ public partial class FrmMain : Form
         }
     }
 
-
-    private void FrmMain_Resize(object sender, EventArgs e)
-    {
-    }
 
     private void Gallery_ItemClick(object sender, ItemClickEventArgs e)
     {

@@ -177,6 +177,7 @@ public static class Config
         nameof(BasicInfo.Zoom),
         nameof(BasicInfo.Dimension),
         nameof(BasicInfo.FileSize),
+        nameof(BasicInfo.ExifRating),
         nameof(BasicInfo.DateTimeAuto),
         nameof(BasicInfo.AppName),
     };
@@ -619,14 +620,7 @@ public static class Config
     /// <summary>
     /// Gets, sets hotkeys list of menu
     /// </summary>
-    public static Dictionary<string, Hotkey> MenuHotkeysOverride = new()
-    {
-        // Open main menu
-	    { "MnuMain",                  new(Keys.Alt |                  Keys.F) },
-
-	    // MnuFile
-	    { "MnuOpenFile",              new(Keys.Control |              Keys.O) },
-    };
+    public static Dictionary<string, Hotkey> MenuHotkeysOverride = new();
 
     #endregion
 

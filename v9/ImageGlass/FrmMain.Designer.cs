@@ -1017,7 +1017,7 @@ namespace ImageGlass
             this.Sp1.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.Sp1.SplitterDistance = 543;
             this.Sp1.SplitterWidth = 1;
-            this.Sp1.TabIndex = 2;
+            this.Sp1.TabIndex = 98;
             this.Sp1.TabStop = false;
             // 
             // Sp2
@@ -1044,7 +1044,7 @@ namespace ImageGlass
             this.Sp2.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.Sp2.SplitterDistance = 730;
             this.Sp2.SplitterWidth = 11;
-            this.Sp2.TabIndex = 3;
+            this.Sp2.TabIndex = 99;
             this.Sp2.TabStop = false;
             // 
             // PicMain
@@ -1063,7 +1063,7 @@ namespace ImageGlass
             this.PicMain.NavDisplay = ImageGlass.Base.PhotoBox.NavButtonDisplay.Both;
             this.PicMain.ShowDebugInfo = true;
             this.PicMain.Size = new System.Drawing.Size(730, 543);
-            this.PicMain.TabIndex = 0;
+            this.PicMain.TabIndex = 3;
             this.PicMain.OnZoomChanged += new ImageGlass.PhotoBox.ViewBox.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
             this.PicMain.OnNavLeftClicked += new ImageGlass.PhotoBox.ViewBox.NavLeftClickedEventHandler(this.PicMain_OnNavLeftClicked);
             this.PicMain.OnNavRightClicked += new ImageGlass.PhotoBox.ViewBox.NavRightClickedEventHandler(this.PicMain_OnNavRightClicked);
@@ -1097,7 +1097,7 @@ namespace ImageGlass
             this.Gallery.PersistentCacheDirectory = "";
             this.Gallery.PersistentCacheSize = ((long)(100));
             this.Gallery.Size = new System.Drawing.Size(1108, 25);
-            this.Gallery.TabIndex = 1;
+            this.Gallery.TabIndex = 0;
             this.Gallery.ThumbnailSize = new System.Drawing.Size(70, 70);
             this.Gallery.View = ImageGlass.Gallery.View.HorizontalStrip;
             this.Gallery.ItemClick += new ImageGlass.Gallery.ItemClickEventHandler(this.Gallery_ItemClick);
@@ -1154,7 +1154,6 @@ namespace ImageGlass
             this.Text = "ImageGlass 9";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmMain_KeyDown);
-            this.Resize += new System.EventHandler(this.FrmMain_Resize);
             this.MnuMain.ResumeLayout(false);
             this.Tb0.ResumeLayout(false);
             this.Tb0.PerformLayout();
