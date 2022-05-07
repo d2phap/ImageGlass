@@ -431,7 +431,7 @@ public static class Config
     /// <summary>
     /// Gets, sets value indicates that the Image focus tool should be enable
     /// </summary>
-    public static bool EnableImageFocus { get; set; } = true;
+    public static bool EnableImageFocus { get; set; } = false;
 
     #endregion
 

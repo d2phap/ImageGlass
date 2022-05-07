@@ -160,7 +160,6 @@ public partial class ViewBox : HybridControl
     // Zooming
     #region Zooming
 
-
     /// <summary>
     /// Gets, sets the value whether the internal built-in zooming by keys is allowed.
     /// </summary>
@@ -169,21 +168,35 @@ public partial class ViewBox : HybridControl
     public bool AllowInternalZoomingKeys { get; set; } = true;
 
     /// <summary>
-    /// Gets, sets the minimum zoom factor (<c>1.0f = 100%</c>)
+    /// Gets, sets hotkey for internal zoom in.
+    /// </summary>
+    [Category("Zooming")]
+    [DefaultValue(Keys.Oemplus)]
+    public Keys InternalZoomInKeys { get; set; } = Keys.Oemplus;
+
+    /// <summary>
+    /// Gets, sets hotkey for internal zoom out.
+    /// </summary>
+    [Category("Zooming")]
+    [DefaultValue(Keys.OemMinus)]
+    public Keys InternalZoomOutKeys { get; set; } = Keys.OemMinus;
+
+    /// <summary>
+    /// Gets, sets the minimum zoom factor (<c>1.0f = 100%</c>).
     /// </summary>
     [Category("Zooming")]
     [DefaultValue(0.01f)]
     public float MinZoom { get; set; } = 0.01f;
 
     /// <summary>
-    /// Gets, sets the maximum zoom factor (<c>1.0f = 100%</c>)
+    /// Gets, sets the maximum zoom factor (<c>1.0f = 100%</c>).
     /// </summary>
     [Category("Zooming")]
     [DefaultValue(35.0f)]
     public float MaxZoom { get; set; } = 35f;
 
     /// <summary>
-    /// Gets, sets current zoom factor (<c>1.0f = 100%</c>)
+    /// Gets, sets current zoom factor (<c>1.0f = 100%</c>).
     /// </summary>
     [Category("Zooming")]
     [DefaultValue(1.0f)]
@@ -334,15 +347,60 @@ public partial class ViewBox : HybridControl
     #endregion
 
 
-    // Navigation
-    #region Navigation
+    // Panning
+    #region Panning
 
     /// <summary>
     /// Gets, sets the value whether the internal built-in panning by arrow keys is allowed.
     /// </summary>
-    [Category("Navigation")]
+    [Category("Panning")]
     [DefaultValue(true)]
     public bool AllowInternalPanningKeys { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets hotkey for internal panning left.
+    /// </summary>
+    [Category("Panning")]
+    [DefaultValue(Keys.Left)]
+    public Keys InternalPanningLeftKeys { get; set; } = Keys.Left;
+
+    /// <summary>
+    /// Gets, sets hotkey for internal panning right.
+    /// </summary>
+    [Category("Panning")]
+    [DefaultValue(Keys.Right)]
+    public Keys InternalPanningRightKeys { get; set; } = Keys.Right;
+
+    /// <summary>
+    /// Gets, sets hotkey for internal panning up.
+    /// </summary>
+    [Category("Panning")]
+    [DefaultValue(Keys.Up)]
+    public Keys InternalPanningUpKeys { get; set; } = Keys.Up;
+
+    /// <summary>
+    /// Gets, sets hotkey for internal panning down.
+    /// </summary>
+    [Category("Panning")]
+    [DefaultValue(Keys.Down)]
+    public Keys InternalPanningDownKeys { get; set; } = Keys.Down;
+
+    /// <summary>
+    /// Checks if the current viewing image supports horizontal panning.
+    /// </summary>
+    [Browsable(false)]
+    public bool CanPanHorizontal => Height > ImageHeight * ZoomFactor;
+
+    /// <summary>
+    /// Checks if the current viewing image supports vertical panning.
+    /// </summary>
+    [Browsable(false)]
+    public bool CanPanVertical => Width > ImageWidth * ZoomFactor;
+    #endregion
+
+
+    // Navigation
+    #region Navigation
 
     /// <summary>
     /// Gets, sets the navigation buttons display style.
@@ -739,19 +797,23 @@ public partial class ViewBox : HybridControl
         // Panning
         if (AllowInternalPanningKeys)
         {
-            if (e.KeyCode == Keys.Right)
+            // pan right
+            if (e.KeyData == InternalPanningRightKeys)
             {
                 StartAnimation(AnimationSource.PanRight);
             }
-            else if (e.KeyCode == Keys.Left)
+            // pan left
+            else if (e.KeyData == InternalPanningLeftKeys)
             {
                 StartAnimation(AnimationSource.PanLeft);
             }
-            else if (e.KeyCode == Keys.Up)
+            // pan up
+            else if (e.KeyData == InternalPanningUpKeys)
             {
                 StartAnimation(AnimationSource.PanUp);
             }
-            else if (e.KeyCode == Keys.Down)
+            // pan down
+            else if (e.KeyData == InternalPanningDownKeys)
             {
                 StartAnimation(AnimationSource.PanDown);
             }
@@ -760,11 +822,13 @@ public partial class ViewBox : HybridControl
         // Zooming
         if (AllowInternalZoomingKeys)
         {
-            if (e.KeyCode == Keys.Oemplus)
+            // zoom in
+            if (e.KeyData == InternalZoomInKeys)
             {
                 StartAnimation(AnimationSource.ZoomIn);
             }
-            else if (e.KeyCode == Keys.OemMinus)
+            // zoom out
+            else if (e.KeyCode == InternalZoomOutKeys)
             {
                 StartAnimation(AnimationSource.ZoomOut);
             }
