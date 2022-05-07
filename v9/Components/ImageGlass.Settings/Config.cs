@@ -1072,13 +1072,13 @@ public static class Config
     {
         var settings = new ExpandoObject();
 
-        var infoJson = new
+        var infoJson = new ConfigInfoJsonModel()
         {
-            _source.Description,
-            _source.Version
+            Description = _source.Description,
+            Version = _source.Version,
         };
 
-        settings.TryAdd("Info", infoJson);
+        settings.TryAdd("_Info", infoJson);
 
 
         #region Boolean items
