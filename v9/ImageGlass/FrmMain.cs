@@ -56,9 +56,12 @@ public partial class FrmMain : Form
         Local.OnImageLoading += Local_OnImageLoading;
         Local.OnImageListLoaded += Local_OnImageListLoaded;
         Local.OnImageLoaded += Local_OnImageLoaded;
+        Local.OnFirstImageReached += Local_OnFirstImageReached;
+        Local.OnLastImageReached += Local_OnLastImageReached;
 
         LoadImagesFromCmdArgs();
     }
+
 
     protected override void WndProc(ref Message m)
     {
@@ -84,6 +87,7 @@ public partial class FrmMain : Form
 
         base.WndProc(ref m);
     }
+
 
     private void FrmMain_KeyDown(object sender, KeyEventArgs e)
     {
@@ -882,6 +886,33 @@ public partial class FrmMain : Form
         // temp index
         var imageIndex = Local.CurrentIndex + step;
 
+
+        if (Local.Images.Length > 0)
+        {
+            // Reach end of list
+            if (imageIndex >= Local.Images.Length)
+            {
+                Local.RaiseLastImageReachedEvent();
+
+                if (!Config.EnableLoopBackViewer)
+                {
+                    return;
+                }
+            }
+
+            // Reach the first image of list
+            if (imageIndex < 0)
+            {
+                Local.RaiseFirstImageReachedEvent();
+
+                if (!Config.EnableLoopBackViewer)
+                {
+                    return;
+                }
+            }
+        }
+        
+
         // Check if current index is greater than upper limit
         if (imageIndex >= Local.Images.Length)
             imageIndex = 0;
@@ -1096,6 +1127,24 @@ public partial class FrmMain : Form
 
         // Load thumnbnail
         _ = Helpers.RunAsThread(LoadThumbnails);
+    }
+
+    private void Local_OnFirstImageReached()
+    {
+        if (!Config.EnableLoopBackViewer)
+        {
+            PicMain.ShowMessage(Config.Language[$"{Name}._ReachedFirstImage"],
+                Config.InAppMessageDuration);
+        }
+    }
+
+    private void Local_OnLastImageReached()
+    {
+        if (!Config.EnableLoopBackViewer)
+        {
+            PicMain.ShowMessage(Config.Language[$"{Name}._ReachedLastLast"],
+                Config.InAppMessageDuration);
+        }
     }
 
     #endregion

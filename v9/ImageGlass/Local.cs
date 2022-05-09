@@ -47,6 +47,18 @@ internal class Local
     public delegate void ImageLoadedHandler(ImageLoadedEventArgs e);
 
     /// <summary>
+    /// Occurs when the first image is reached.
+    /// </summary>
+    public static event FirstImageReachedHandler? OnFirstImageReached;
+    public delegate void FirstImageReachedHandler();
+
+    /// <summary>
+    /// Occurs when the last image is reached.
+    /// </summary>
+    public static event LastImageReachedHandler? OnLastImageReached;
+    public delegate void LastImageReachedHandler();
+
+    /// <summary>
     /// Occurs when the FrmMain's state needs to be updated.
     /// </summary>
     public static event FrmMainUpdateRequestedHandler? OnRequestUpdateFrmMain;
@@ -77,6 +89,24 @@ internal class Local
     public static void RaiseImageLoadedEvent(ImageLoadedEventArgs e)
     {
         OnImageLoaded?.Invoke(e);
+    }
+
+
+    /// <summary>
+    /// Raise <see cref="OnFirstImageReached"/> event.
+    /// </summary>
+    public static void RaiseFirstImageReachedEvent()
+    {
+        OnFirstImageReached?.Invoke();
+    }
+
+
+    /// <summary>
+    /// Raise <see cref="OnLastImageReached"/> event.
+    /// </summary>
+    public static void RaiseLastImageReachedEvent()
+    {
+        OnLastImageReached?.Invoke();
     }
 
 

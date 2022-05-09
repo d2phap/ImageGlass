@@ -282,8 +282,8 @@ public class IgLang : Dictionary<string, string>
         //Add("FrmMain._SavingImage", "Saving image...\r\n{0}"); // v7.6
         //Add("FrmMain._SaveImageError", "Unable to save image\r\n{0}."); // v5.0
 
-        //Add("FrmMain._FirstItemOfList", "Reached the first image"); // v4.0
-        //Add("FrmMain._LastItemOfList", "Reached the last image"); // v4.0
+        Add("FrmMain._ReachedFirstImage", "Reached the first image"); // v4.0
+        Add("FrmMain._ReachedLastLast", "Reached the last image"); // v4.0
         //Add("FrmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); // Added V5.0; Modified V6.0
         //Add("FrmMain._SetLockImage_Error", "There was an error while setting lock screen image"); // v6.0
         //Add("FrmMain._SetLockImage_Success", "Lock screen image was set successfully"); //v6.0
