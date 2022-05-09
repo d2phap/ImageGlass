@@ -587,10 +587,10 @@ public static class Config
 
     #region Array items
 
-    /// <summary>
-    /// Gets, sets the list of Image Editing Association
-    /// </summary>
-    public static List<EditApp> EditApps { get; set; } = new();
+    ///// <summary>
+    ///// Gets, sets the list of Image Editing Association
+    ///// </summary>
+    //public static List<EditApp> EditApps { get; set; } = new();
 
     /// <summary>
     /// Gets, sets the list of supported image formats
@@ -602,10 +602,10 @@ public static class Config
     /// </summary>
     public static HashSet<string> SinglePageFormats { get; set; } = new() { "*.heic;*.heif;*.psd;" };
 
-    /// <summary>
-    /// Gets, sets the list of keycombo actions
-    /// </summary>
-    public static Dictionary<KeyCombos, AssignableActions> KeyComboActions = Constants.DefaultKeycomboActions;
+    ///// <summary>
+    ///// Gets, sets the list of keycombo actions
+    ///// </summary>
+    //public static Dictionary<KeyCombos, AssignableActions> KeyComboActions = Constants.DefaultKeycomboActions;
 
     /// <summary>
     /// Gets, sets the list of toolbar buttons
@@ -638,16 +638,16 @@ public static class Config
     public static WindowState FrmMainState { get; set; } = WindowState.Normal;
 
 
-    /// <summary>
-    /// Gets, sets state of settings window
-    /// </summary>
-    public static WindowState FrmSettingsState { get; set; } = WindowState.Normal;
+    ///// <summary>
+    ///// Gets, sets state of settings window
+    ///// </summary>
+    //public static WindowState FrmSettingsState { get; set; } = WindowState.Normal;
 
 
-    /// <summary>
-    /// Gets, sets state of exif tool window
-    /// </summary>
-    public static WindowState FrmExifToolState { get; set; } = WindowState.Normal;
+    ///// <summary>
+    ///// Gets, sets state of exif tool window
+    ///// </summary>
+    //public static WindowState FrmExifToolState { get; set; } = WindowState.Normal;
 
     /// <summary>
     /// Gets, sets image loading order
@@ -659,48 +659,48 @@ public static class Config
     /// </summary>
     public static ImageOrderType ImageLoadingOrderType { get; set; } = ImageOrderType.Asc;
 
-    /// <summary>
-    /// Gets, sets action to be performed when user spins the mouse wheel
-    /// </summary>
-    public static MouseWheelActions MouseWheelAction { get; set; } = MouseWheelActions.Zoom;
+    ///// <summary>
+    ///// Gets, sets action to be performed when user spins the mouse wheel
+    ///// </summary>
+    //public static MouseWheelActions MouseWheelAction { get; set; } = MouseWheelActions.Zoom;
 
-    /// <summary>
-    /// Gets, sets action to be performed when user spins the mouse wheel
-    /// while holding Ctrl key
-    /// </summary>
-    public static MouseWheelActions MouseWheelCtrlAction { get; set; } = MouseWheelActions.ScrollVertically;
+    ///// <summary>
+    ///// Gets, sets action to be performed when user spins the mouse wheel
+    ///// while holding Ctrl key
+    ///// </summary>
+    //public static MouseWheelActions MouseWheelCtrlAction { get; set; } = MouseWheelActions.ScrollVertically;
 
-    /// <summary>
-    /// Gets, sets action to be performed when user spins the mouse wheel
-    /// while holding Shift key
-    /// </summary>
-    public static MouseWheelActions MouseWheelShiftAction { get; set; } = MouseWheelActions.ScrollHorizontally;
+    ///// <summary>
+    ///// Gets, sets action to be performed when user spins the mouse wheel
+    ///// while holding Shift key
+    ///// </summary>
+    //public static MouseWheelActions MouseWheelShiftAction { get; set; } = MouseWheelActions.ScrollHorizontally;
 
-    /// <summary>
-    /// Gets, sets action to be performed when user spins the mouse wheel
-    /// while holding Alt key
-    /// </summary>
-    public static MouseWheelActions MouseWheelAltAction { get; set; } = MouseWheelActions.BrowseImages;
+    ///// <summary>
+    ///// Gets, sets action to be performed when user spins the mouse wheel
+    ///// while holding Alt key
+    ///// </summary>
+    //public static MouseWheelActions MouseWheelAltAction { get; set; } = MouseWheelActions.BrowseImages;
 
     /// <summary>
     /// Gets, sets zoom mode value
     /// </summary>
     public static ZoomMode ZoomMode { get; set; } = ZoomMode.AutoZoom;
 
-    /// <summary>
-    /// Gets, sets zoom optimization value
-    /// </summary>
-    public static ZoomOptimizationMethods ZoomOptimizationMethod { get; set; } = ZoomOptimizationMethods.Auto;
+    ///// <summary>
+    ///// Gets, sets zoom optimization value
+    ///// </summary>
+    //public static ZoomOptimizationMethods ZoomOptimizationMethod { get; set; } = ZoomOptimizationMethods.Auto;
 
-    /// <summary>
-    /// Gets, sets toolbar position
-    /// </summary>
-    public static ToolbarPosition ToolbarPosition { get; set; } = ToolbarPosition.Top;
+    ///// <summary>
+    ///// Gets, sets toolbar position
+    ///// </summary>
+    //public static ToolbarPosition ToolbarPosition { get; set; } = ToolbarPosition.Top;
 
-    /// <summary>
-    /// Gets, sets value indicates what happens after clicking Edit menu
-    /// </summary>
-    public static AfterOpeningEditAppAction AfterEditingAction { get; set; } = AfterOpeningEditAppAction.Nothing;
+    ///// <summary>
+    ///// Gets, sets value indicates what happens after clicking Edit menu
+    ///// </summary>
+    //public static AfterOpeningEditAppAction AfterEditingAction { get; set; } = AfterOpeningEditAppAction.Nothing;
 
     #endregion
 
@@ -866,18 +866,18 @@ public static class Config
         #region Enum items
 
         FrmMainState = items.GetValue(nameof(FrmMainState), FrmMainState);
-        FrmSettingsState = items.GetValue(nameof(FrmSettingsState), FrmSettingsState);
-        FrmExifToolState = items.GetValue(nameof(FrmExifToolState), FrmExifToolState);
+        //FrmSettingsState = items.GetValue(nameof(FrmSettingsState), FrmSettingsState);
+        //FrmExifToolState = items.GetValue(nameof(FrmExifToolState), FrmExifToolState);
         ImageLoadingOrder = items.GetValue(nameof(ImageLoadingOrder), ImageLoadingOrder);
         ImageLoadingOrderType = items.GetValue(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
-        MouseWheelAction = items.GetValue(nameof(MouseWheelAction), MouseWheelAction);
-        MouseWheelCtrlAction = items.GetValue(nameof(MouseWheelCtrlAction), MouseWheelCtrlAction);
-        MouseWheelShiftAction = items.GetValue(nameof(MouseWheelShiftAction), MouseWheelShiftAction);
-        MouseWheelAltAction = items.GetValue(nameof(MouseWheelAltAction), MouseWheelAltAction);
+        //MouseWheelAction = items.GetValue(nameof(MouseWheelAction), MouseWheelAction);
+        //MouseWheelCtrlAction = items.GetValue(nameof(MouseWheelCtrlAction), MouseWheelCtrlAction);
+        //MouseWheelShiftAction = items.GetValue(nameof(MouseWheelShiftAction), MouseWheelShiftAction);
+        //MouseWheelAltAction = items.GetValue(nameof(MouseWheelAltAction), MouseWheelAltAction);
         ZoomMode = items.GetValue(nameof(ZoomMode), ZoomMode);
-        ZoomOptimizationMethod = items.GetValue(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod);
-        ToolbarPosition = items.GetValue(nameof(ToolbarPosition), ToolbarPosition);
-        AfterEditingAction = items.GetValue(nameof(AfterEditingAction), AfterEditingAction);
+        //ZoomOptimizationMethod = items.GetValue(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod);
+        //ToolbarPosition = items.GetValue(nameof(ToolbarPosition), ToolbarPosition);
+        //AfterEditingAction = items.GetValue(nameof(AfterEditingAction), AfterEditingAction);
 
 
         #endregion
@@ -903,8 +903,8 @@ public static class Config
 
         #region EditApps
 
-        var appStr = items.GetValue(nameof(EditApps), "");
-        EditApps = GetEditApps(appStr);
+        //var appStr = items.GetValue(nameof(EditApps), "");
+        //EditApps = GetEditApps(appStr);
 
         #endregion
 
@@ -920,11 +920,11 @@ public static class Config
 
         #region KeyComboActions
 
-        var keyActionStr = items.GetValue(nameof(KeyComboActions), "");
-        if (!string.IsNullOrEmpty(keyActionStr))
-        {
-            KeyComboActions = GetKeyComboActions(keyActionStr);
-        }
+        //var keyActionStr = items.GetValue(nameof(KeyComboActions), "");
+        //if (!string.IsNullOrEmpty(keyActionStr))
+        //{
+        //    KeyComboActions = GetKeyComboActions(keyActionStr);
+        //}
 
         #endregion
 
@@ -1173,18 +1173,18 @@ public static class Config
         #region Enum items
 
         settings.TryAdd(nameof(FrmMainState), FrmMainState.ToString());
-        settings.TryAdd(nameof(FrmSettingsState), FrmSettingsState.ToString());
-        settings.TryAdd(nameof(FrmExifToolState), FrmExifToolState.ToString());
+        //settings.TryAdd(nameof(FrmSettingsState), FrmSettingsState.ToString());
+        //settings.TryAdd(nameof(FrmExifToolState), FrmExifToolState.ToString());
         settings.TryAdd(nameof(ImageLoadingOrder), ImageLoadingOrder.ToString());
         settings.TryAdd(nameof(ImageLoadingOrderType), ImageLoadingOrderType.ToString());
-        settings.TryAdd(nameof(MouseWheelAction), MouseWheelAction.ToString());
-        settings.TryAdd(nameof(MouseWheelCtrlAction), MouseWheelCtrlAction.ToString());
-        settings.TryAdd(nameof(MouseWheelShiftAction), MouseWheelShiftAction.ToString());
-        settings.TryAdd(nameof(MouseWheelAltAction), MouseWheelAltAction.ToString());
+        //settings.TryAdd(nameof(MouseWheelAction), MouseWheelAction.ToString());
+        //settings.TryAdd(nameof(MouseWheelCtrlAction), MouseWheelCtrlAction.ToString());
+        //settings.TryAdd(nameof(MouseWheelShiftAction), MouseWheelShiftAction.ToString());
+        //settings.TryAdd(nameof(MouseWheelAltAction), MouseWheelAltAction.ToString());
         settings.TryAdd(nameof(ZoomMode), ZoomMode.ToString());
-        settings.TryAdd(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod.ToString());
-        settings.TryAdd(nameof(ToolbarPosition), ToolbarPosition.ToString());
-        settings.TryAdd(nameof(AfterEditingAction), AfterEditingAction.ToString());
+        //settings.TryAdd(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod.ToString());
+        //settings.TryAdd(nameof(ToolbarPosition), ToolbarPosition.ToString());
+        //settings.TryAdd(nameof(AfterEditingAction), AfterEditingAction.ToString());
 
         #endregion
 
@@ -1202,10 +1202,10 @@ public static class Config
 
         #region Array items
 
-        settings.TryAdd(nameof(EditApps), GetEditApps(EditApps));
+        //settings.TryAdd(nameof(EditApps), GetEditApps(EditApps));
         settings.TryAdd(nameof(AllFormats), GetImageFormats(AllFormats));
         settings.TryAdd(nameof(SinglePageFormats), GetImageFormats(SinglePageFormats));
-        settings.TryAdd(nameof(KeyComboActions), GetKeyComboActions(KeyComboActions));
+        //settings.TryAdd(nameof(KeyComboActions), GetKeyComboActions(KeyComboActions));
         settings.TryAdd(nameof(ToolbarItems), ToolbarItems);
         settings.TryAdd(nameof(InfoItems), InfoItems);
         settings.TryAdd(nameof(MenuHotkeys), ParseHotkeys(MenuHotkeys));
@@ -1230,40 +1230,40 @@ public static class Config
 
     #region EditApp
 
-    /// <summary>
-    /// Gets an EditApp from an extension
-    /// </summary>
-    /// <param name="ext">An extension to search. Ex: .png</param>
-    /// <returns></returns>
-    public static EditApp GetEditApp(string ext)
-    {
-        if (EditApps.Count > 0)
-        {
-            return EditApps.Find(v =>
-                v.Extension.CompareTo(ext) == 0
-                && v.AppPath?.Length > 0);
-        }
+    ///// <summary>
+    ///// Gets an EditApp from an extension
+    ///// </summary>
+    ///// <param name="ext">An extension to search. Ex: .png</param>
+    ///// <returns></returns>
+    //public static EditApp GetEditApp(string ext)
+    //{
+    //    if (EditApps.Count > 0)
+    //    {
+    //        return EditApps.Find(v =>
+    //            v.Extension.CompareTo(ext) == 0
+    //            && v.AppPath?.Length > 0);
+    //    }
 
-        return null;
-    }
+    //    return null;
+    //}
 
 
-    /// <summary>
-    /// Gets list of EditApps from a list of extensions
-    /// </summary>
-    /// <param name="exts">List() {".png", ".jpg"}</param>
-    /// <returns></returns>
-    public static List<EditApp> GetEditApps(List<string> exts)
-    {
-        var list = new List<EditApp>();
+    ///// <summary>
+    ///// Gets list of EditApps from a list of extensions
+    ///// </summary>
+    ///// <param name="exts">List() {".png", ".jpg"}</param>
+    ///// <returns></returns>
+    //public static List<EditApp> GetEditApps(List<string> exts)
+    //{
+    //    var list = new List<EditApp>();
 
-        if (EditApps.Count > 0)
-        {
-            list = EditApps.FindAll(v => exts.Contains(v.Extension));
-        }
+    //    if (EditApps.Count > 0)
+    //    {
+    //        list = EditApps.FindAll(v => exts.Contains(v.Extension));
+    //    }
 
-        return list;
-    }
+    //    return list;
+    //}
 
 
     /// <summary>
