@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
+using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.UI;
@@ -149,6 +150,9 @@ public partial class FrmMain
 
 
         // PicMain
+        PicMain.NavDisplay = Config.EnableNavigationButtons
+            ? NavButtonDisplay.Both
+            : NavButtonDisplay.None;
         PicMain.TabStop = false;
         IG_SetZoomMode(Config.ZoomMode.ToString());
         IG_ToggleCheckerboard(Config.ShowCheckerBoard);

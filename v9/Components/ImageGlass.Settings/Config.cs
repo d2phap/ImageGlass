@@ -342,7 +342,7 @@ public static class Config
     /// <summary>
     /// Gets, sets the value indicates whether to show or hide the Navigation Buttons on viewer
     /// </summary>
-    public static bool EnableNavigationButtons { get; set; } = false;
+    public static bool EnableNavigationButtons { get; set; } = true;
 
     /// <summary>
     /// Gets, sets the value indicates whether to show checkerboard in the image region only
