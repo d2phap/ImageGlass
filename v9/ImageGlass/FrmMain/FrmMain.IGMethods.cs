@@ -435,7 +435,7 @@ public partial class FrmMain
 
         PicMain.ShowMessage(
             string.Format(Config.Language[$"{Name}._CopyFileText"], Local.StringClipboard.Count),
-            Config.InappMessageDuration);
+            Config.InAppMessageDuration);
     }
 
 
@@ -489,7 +489,7 @@ public partial class FrmMain
 
         PicMain.ShowMessage(
             string.Format(Config.Language[$"{Name}._CutFileText"], Local.StringClipboard.Count),
-            Config.InappMessageDuration);
+            Config.InAppMessageDuration);
     }
 
 
@@ -502,7 +502,7 @@ public partial class FrmMain
         {
             Clipboard.SetText(Local.Images.GetFileName(Local.CurrentIndex));
 
-            PicMain.ShowMessage(Config.Language[$"{Name}._ImagePathCopied"], Config.InappMessageDuration);
+            PicMain.ShowMessage(Config.Language[$"{Name}._ImagePathCopied"], Config.InAppMessageDuration);
         }
         catch { }
     }
@@ -520,7 +520,7 @@ public partial class FrmMain
             Clipboard.Clear();
         }
 
-        PicMain.ShowMessage(Config.Language[$"{Name}._ClearClipboard"], Config.InappMessageDuration);
+        PicMain.ShowMessage(Config.Language[$"{Name}._ClearClipboard"], Config.InAppMessageDuration);
     }
 
 
@@ -533,7 +533,7 @@ public partial class FrmMain
         if (img != null)
         {
             Clipboard.SetImage(img.ImgData.Image);
-            PicMain.ShowMessage(Config.Language[$"{Name}._CopyImageData"], Config.InappMessageDuration);
+            PicMain.ShowMessage(Config.Language[$"{Name}._CopyImageData"], Config.InAppMessageDuration);
         }
     }
 
@@ -626,7 +626,7 @@ public partial class FrmMain
         {
             var msgKey = Config.EnableImageFocus ? "_Enable" : "_Disable";
             PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuToggleImageFocus)}.{msgKey}"],
-                Config.InappMessageDuration);
+                Config.InAppMessageDuration);
         }
 
         return Config.EnableImageFocus;

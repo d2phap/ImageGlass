@@ -460,62 +460,62 @@ public static class Config
     public static int FrmMainHeight { get; set; } = 800;
 
 
-    /// <summary>
-    /// Gets, sets 'Left' position of settings window
-    /// </summary>
-    public static int FrmSettingsPositionX { get; set; } = 200;
+    ///// <summary>
+    ///// Gets, sets 'Left' position of settings window
+    ///// </summary>
+    //public static int FrmSettingsPositionX { get; set; } = 200;
 
-    /// <summary>
-    /// Gets, sets 'Top' position of settings window
-    /// </summary>
-    public static int FrmSettingsPositionY { get; set; } = 200;
+    ///// <summary>
+    ///// Gets, sets 'Top' position of settings window
+    ///// </summary>
+    //public static int FrmSettingsPositionY { get; set; } = 200;
 
-    /// <summary>
-    /// Gets, sets width of settings window
-    /// </summary>
-    public static int FrmSettingsWidth { get; set; } = 1050;
+    ///// <summary>
+    ///// Gets, sets width of settings window
+    ///// </summary>
+    //public static int FrmSettingsWidth { get; set; } = 1050;
 
-    /// <summary>
-    /// Gets, sets height of settings window
-    /// </summary>
-    public static int FrmSettingsHeight { get; set; } = 750;
-
-
-    /// <summary>
-    /// Gets, sets 'Left' position of ExifTool window
-    /// </summary>
-    public static int FrmExifToolPositionX { get; set; } = 200;
-
-    /// <summary>
-    /// Gets, sets 'Top' position of ExifTool window
-    /// </summary>
-    public static int FrmExifToolPositionY { get; set; } = 200;
-
-    /// <summary>
-    /// Gets, sets width of ExifTool window
-    /// </summary>
-    public static int FrmExifToolWidth { get; set; } = 800;
-
-    /// <summary>
-    /// Gets, sets height of ExifTool window
-    /// </summary>
-    public static int FrmExifToolHeight { get; set; } = 600;
+    ///// <summary>
+    ///// Gets, sets height of settings window
+    ///// </summary>
+    //public static int FrmSettingsHeight { get; set; } = 750;
 
 
-    /// <summary>
-    /// Gets, sets the version that requires to launch First-Launch Configs screen
-    /// </summary>
-    public static int FirstLaunchVersion { get; set; } = 0;
+    ///// <summary>
+    ///// Gets, sets 'Left' position of ExifTool window
+    ///// </summary>
+    //public static int FrmExifToolPositionX { get; set; } = 200;
 
-    /// <summary>
-    /// Gets, sets slide show interval (minimum value if it's random)
-    /// </summary>
-    public static int SlideShowInterval { get; set; } = 5;
+    ///// <summary>
+    ///// Gets, sets 'Top' position of ExifTool window
+    ///// </summary>
+    //public static int FrmExifToolPositionY { get; set; } = 200;
 
-    /// <summary>
-    /// Gets, sets the maximum slide show interval value
-    /// </summary>
-    public static int SlideShowIntervalTo { get; set; } = 5;
+    ///// <summary>
+    ///// Gets, sets width of ExifTool window
+    ///// </summary>
+    //public static int FrmExifToolWidth { get; set; } = 800;
+
+    ///// <summary>
+    ///// Gets, sets height of ExifTool window
+    ///// </summary>
+    //public static int FrmExifToolHeight { get; set; } = 600;
+
+
+    ///// <summary>
+    ///// Gets, sets the version that requires to launch First-Launch Configs screen
+    ///// </summary>
+    //public static int FirstLaunchVersion { get; set; } = 0;
+
+    ///// <summary>
+    ///// Gets, sets slide show interval (minimum value if it's random)
+    ///// </summary>
+    //public static int SlideShowInterval { get; set; } = 5;
+
+    ///// <summary>
+    ///// Gets, sets the maximum slide show interval value
+    ///// </summary>
+    //public static int SlideShowIntervalTo { get; set; } = 5;
 
     /// <summary>
     /// Gets, sets value of thumbnail dimension in pixel
@@ -542,15 +542,15 @@ public static class Config
     /// </summary>
     public static int ToolbarIconHeight { get; set; } = Constants.TOOLBAR_ICON_HEIGHT;
 
-    /// <summary>
-    /// Gets, sets value of image quality for editting
-    /// </summary>
-    public static int ImageEditQuality { get; set; } = 100;
+    ///// <summary>
+    ///// Gets, sets value of image quality for editting
+    ///// </summary>
+    //public static int ImageEditQuality { get; set; } = 100;
 
     /// <summary>
     /// Gets, sets value of duration to display the in-app message
     /// </summary>
-    public static int InappMessageDuration { get; set; } = 2000;
+    public static int InAppMessageDuration { get; set; } = 2000;
 
     #endregion
 
@@ -572,15 +572,15 @@ public static class Config
     /// </summary>
     public static string LastSeenImagePath { get; set; } = "";
 
-    /// <summary>
-    /// Gets, sets the absolute file path of the exiftool executable file
-    /// </summary>
-    public static string ExifToolExePath { get; set; } = "";
+    ///// <summary>
+    ///// Gets, sets the absolute file path of the exiftool executable file
+    ///// </summary>
+    //public static string ExifToolExePath { get; set; } = "";
 
-    /// <summary>
-    /// Gets, sets the custom arguments for Exif tool command
-    /// </summary>
-    public static string ExifToolCommandArgs { get; set; } = "";
+    ///// <summary>
+    ///// Gets, sets the custom arguments for Exif tool command
+    ///// </summary>
+    //public static string ExifToolCommandArgs { get; set; } = "";
 
     #endregion
 
@@ -809,27 +809,27 @@ public static class Config
         FrmMainWidth = items.GetValue(nameof(FrmMainWidth), FrmMainWidth);
         FrmMainHeight = items.GetValue(nameof(FrmMainHeight), FrmMainHeight);
 
-        // FrmSettings
-        FrmSettingsPositionX = items.GetValue(nameof(FrmSettingsPositionX), FrmSettingsPositionX);
-        FrmSettingsPositionY = items.GetValue(nameof(FrmSettingsPositionY), FrmSettingsPositionY);
-        FrmSettingsWidth = items.GetValue(nameof(FrmSettingsWidth), FrmSettingsWidth);
-        FrmSettingsHeight = items.GetValue(nameof(FrmSettingsHeight), FrmSettingsHeight);
+        //// FrmSettings
+        //FrmSettingsPositionX = items.GetValue(nameof(FrmSettingsPositionX), FrmSettingsPositionX);
+        //FrmSettingsPositionY = items.GetValue(nameof(FrmSettingsPositionY), FrmSettingsPositionY);
+        //FrmSettingsWidth = items.GetValue(nameof(FrmSettingsWidth), FrmSettingsWidth);
+        //FrmSettingsHeight = items.GetValue(nameof(FrmSettingsHeight), FrmSettingsHeight);
 
-        // FrmExifTool
-        FrmExifToolPositionX = items.GetValue(nameof(FrmExifToolPositionX), FrmExifToolPositionX);
-        FrmExifToolPositionY = items.GetValue(nameof(FrmExifToolPositionY), FrmExifToolPositionY);
-        FrmExifToolWidth = items.GetValue(nameof(FrmExifToolWidth), FrmExifToolWidth);
-        FrmExifToolHeight = items.GetValue(nameof(FrmExifToolHeight), FrmExifToolHeight);
+        //// FrmExifTool
+        //FrmExifToolPositionX = items.GetValue(nameof(FrmExifToolPositionX), FrmExifToolPositionX);
+        //FrmExifToolPositionY = items.GetValue(nameof(FrmExifToolPositionY), FrmExifToolPositionY);
+        //FrmExifToolWidth = items.GetValue(nameof(FrmExifToolWidth), FrmExifToolWidth);
+        //FrmExifToolHeight = items.GetValue(nameof(FrmExifToolHeight), FrmExifToolHeight);
 
 
-        FirstLaunchVersion = items.GetValue(nameof(FirstLaunchVersion), FirstLaunchVersion);
+        //FirstLaunchVersion = items.GetValue(nameof(FirstLaunchVersion), FirstLaunchVersion);
 
         #region Slide show
-        SlideShowInterval = items.GetValue(nameof(SlideShowInterval), SlideShowInterval);
-        if (SlideShowInterval < 1) SlideShowInterval = 5;
+        //SlideShowInterval = items.GetValue(nameof(SlideShowInterval), SlideShowInterval);
+        //if (SlideShowInterval < 1) SlideShowInterval = 5;
 
-        SlideShowIntervalTo = items.GetValue(nameof(SlideShowIntervalTo), SlideShowIntervalTo);
-        SlideShowIntervalTo = Math.Max(SlideShowIntervalTo, SlideShowInterval);
+        //SlideShowIntervalTo = items.GetValue(nameof(SlideShowIntervalTo), SlideShowIntervalTo);
+        //SlideShowIntervalTo = Math.Max(SlideShowIntervalTo, SlideShowInterval);
         #endregion
 
         #region Load thumbnail bar width & position
@@ -856,8 +856,8 @@ public static class Config
         if (ZoomLockValue < 0) ZoomLockValue = 100f;
 
         ToolbarIconHeight = items.GetValue(nameof(ToolbarIconHeight), ToolbarIconHeight);
-        ImageEditQuality = items.GetValue(nameof(ImageEditQuality), ImageEditQuality);
-        InappMessageDuration = items.GetValue(nameof(InappMessageDuration), InappMessageDuration);
+        //ImageEditQuality = items.GetValue(nameof(ImageEditQuality), ImageEditQuality);
+        InAppMessageDuration = items.GetValue(nameof(InAppMessageDuration), InAppMessageDuration);
 
         #endregion
 
@@ -892,8 +892,8 @@ public static class Config
 
         AutoUpdate = items.GetValue(nameof(AutoUpdate), AutoUpdate);
         LastSeenImagePath = items.GetValue(nameof(LastSeenImagePath), LastSeenImagePath);
-        ExifToolExePath = items.GetValue(nameof(ExifToolExePath), ExifToolExePath);
-        ExifToolCommandArgs = items.GetValue(nameof(ExifToolCommandArgs), ExifToolCommandArgs);
+        //ExifToolExePath = items.GetValue(nameof(ExifToolExePath), ExifToolExePath);
+        //ExifToolCommandArgs = items.GetValue(nameof(ExifToolCommandArgs), ExifToolCommandArgs);
 
         #endregion
 
@@ -1144,28 +1144,28 @@ public static class Config
         settings.TryAdd(nameof(FrmMainWidth), FrmMainWidth);
         settings.TryAdd(nameof(FrmMainHeight), FrmMainHeight);
 
-        // FrmSettings
-        settings.TryAdd(nameof(FrmSettingsPositionX), FrmSettingsPositionX);
-        settings.TryAdd(nameof(FrmSettingsPositionY), FrmSettingsPositionY);
-        settings.TryAdd(nameof(FrmSettingsWidth), FrmSettingsWidth);
-        settings.TryAdd(nameof(FrmSettingsHeight), FrmSettingsHeight);
+        //// FrmSettings
+        //settings.TryAdd(nameof(FrmSettingsPositionX), FrmSettingsPositionX);
+        //settings.TryAdd(nameof(FrmSettingsPositionY), FrmSettingsPositionY);
+        //settings.TryAdd(nameof(FrmSettingsWidth), FrmSettingsWidth);
+        //settings.TryAdd(nameof(FrmSettingsHeight), FrmSettingsHeight);
 
-        // FrmExifTool
-        settings.TryAdd(nameof(FrmExifToolPositionX), FrmExifToolPositionX);
-        settings.TryAdd(nameof(FrmExifToolPositionY), FrmExifToolPositionY);
-        settings.TryAdd(nameof(FrmExifToolWidth), FrmExifToolWidth);
-        settings.TryAdd(nameof(FrmExifToolHeight), FrmExifToolHeight);
+        //// FrmExifTool
+        //settings.TryAdd(nameof(FrmExifToolPositionX), FrmExifToolPositionX);
+        //settings.TryAdd(nameof(FrmExifToolPositionY), FrmExifToolPositionY);
+        //settings.TryAdd(nameof(FrmExifToolWidth), FrmExifToolWidth);
+        //settings.TryAdd(nameof(FrmExifToolHeight), FrmExifToolHeight);
 
-        settings.TryAdd(nameof(FirstLaunchVersion), FirstLaunchVersion);
-        settings.TryAdd(nameof(SlideShowInterval), SlideShowInterval);
-        settings.TryAdd(nameof(SlideShowIntervalTo), SlideShowIntervalTo);
+        //settings.TryAdd(nameof(FirstLaunchVersion), FirstLaunchVersion);
+        //settings.TryAdd(nameof(SlideShowInterval), SlideShowInterval);
+        //settings.TryAdd(nameof(SlideShowIntervalTo), SlideShowIntervalTo);
         settings.TryAdd(nameof(ThumbnailDimension), ThumbnailDimension);
         settings.TryAdd(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
         settings.TryAdd(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
         settings.TryAdd(nameof(ZoomLockValue), ZoomLockValue);
         settings.TryAdd(nameof(ToolbarIconHeight), ToolbarIconHeight);
-        settings.TryAdd(nameof(ImageEditQuality), ImageEditQuality);
-        settings.TryAdd(nameof(InappMessageDuration), InappMessageDuration);
+        //settings.TryAdd(nameof(ImageEditQuality), ImageEditQuality);
+        settings.TryAdd(nameof(InAppMessageDuration), InAppMessageDuration);
 
         #endregion
 
@@ -1194,8 +1194,8 @@ public static class Config
         settings.TryAdd(nameof(ColorProfile), ColorProfile);
         settings.TryAdd(nameof(AutoUpdate), AutoUpdate);
         settings.TryAdd(nameof(LastSeenImagePath), LastSeenImagePath);
-        settings.TryAdd(nameof(ExifToolExePath), ExifToolExePath);
-        settings.TryAdd(nameof(ExifToolCommandArgs), ExifToolCommandArgs);
+        //settings.TryAdd(nameof(ExifToolExePath), ExifToolExePath);
+        //settings.TryAdd(nameof(ExifToolCommandArgs), ExifToolCommandArgs);
 
         #endregion
 
