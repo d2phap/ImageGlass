@@ -1052,7 +1052,7 @@ public partial class FrmMain : Form
         Local.IsImageError = false;
 
         PicMain.ClearMessage();
-        if (e.CurrentIndex >= 0)
+        if (e.CurrentIndex >= 0 || !string.IsNullOrEmpty(e.FilePath))
         {
             PicMain.ShowMessage(Config.Language[$"{Name}._Loading"], delayMs: 1500);
         }
