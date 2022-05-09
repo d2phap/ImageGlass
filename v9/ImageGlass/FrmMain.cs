@@ -894,7 +894,7 @@ public partial class FrmMain : Form
             {
                 Local.RaiseLastImageReachedEvent();
 
-                if (!Config.EnableLoopBackViewer)
+                if (!Config.EnableLoopBackNavigation)
                 {
                     return;
                 }
@@ -905,7 +905,7 @@ public partial class FrmMain : Form
             {
                 Local.RaiseFirstImageReachedEvent();
 
-                if (!Config.EnableLoopBackViewer)
+                if (!Config.EnableLoopBackNavigation)
                 {
                     return;
                 }
@@ -1131,7 +1131,7 @@ public partial class FrmMain : Form
 
     private void Local_OnFirstImageReached()
     {
-        if (!Config.EnableLoopBackViewer)
+        if (!Config.EnableLoopBackNavigation)
         {
             PicMain.ShowMessage(Config.Language[$"{Name}._ReachedFirstImage"],
                 Config.InAppMessageDuration);
@@ -1140,7 +1140,7 @@ public partial class FrmMain : Form
 
     private void Local_OnLastImageReached()
     {
-        if (!Config.EnableLoopBackViewer)
+        if (!Config.EnableLoopBackNavigation)
         {
             PicMain.ShowMessage(Config.Language[$"{Name}._ReachedLastLast"],
                 Config.InAppMessageDuration);
@@ -1563,15 +1563,15 @@ public partial class FrmMain : Form
                 MnuOpenWith.Enabled = false;
             }
 
-            // add hotkey to Exit menu
-            if (false) // Config.IsContinueRunningBackground)
-            {
-                MnuExit.ShortcutKeyDisplayString = "Shift+ESC";
-            }
-            else
-            {
-                MnuExit.ShortcutKeyDisplayString = Config.EnablePressESCToQuit ? "ESC" : "Alt+F4";
-            }
+            //// add hotkey to Exit menu
+            //if (false) // Config.IsContinueRunningBackground)
+            //{
+            //    MnuExit.ShortcutKeyDisplayString = "Shift+ESC";
+            //}
+            //else
+            //{
+            //    MnuExit.ShortcutKeyDisplayString = Config.EnablePressESCToQuit ? "ESC" : "Alt+F4";
+            //}
 
             //// Get EditApp for editing
             //UpdateEditAppInfoForMenu();

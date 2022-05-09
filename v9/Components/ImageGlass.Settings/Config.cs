@@ -262,12 +262,12 @@ public static class Config
     /// <summary>
     /// Gets, sets value indicating that ImageGlass will loop back viewer to the first image when reaching the end of the list.
     /// </summary>
-    public static bool EnableLoopBackViewer { get; set; } = true;
+    public static bool EnableLoopBackNavigation { get; set; } = true;
 
-    /// <summary>
-    /// Gets, sets value indicating that allow quit application by ESC
-    /// </summary>
-    public static bool EnablePressESCToQuit { get; set; } = true;
+    ///// <summary>
+    ///// Gets, sets value indicating that allow quit application by ESC
+    ///// </summary>
+    //public static bool EnablePressESCToQuit { get; set; } = true;
 
     /// <summary>
     /// Gets, sets value indicating that checker board is shown or not
@@ -761,8 +761,8 @@ public static class Config
         ShowToolbar = items.GetValue(nameof(ShowToolbar), ShowToolbar);
         ShowThumbnailScrollbars = items.GetValue(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
         //IsLoopBackSlideshow = items.GetValue(nameof(IsLoopBackSlideshow), IsLoopBackSlideshow);
-        EnableLoopBackViewer = items.GetValue(nameof(EnableLoopBackViewer), EnableLoopBackViewer);
-        EnablePressESCToQuit = items.GetValue(nameof(EnablePressESCToQuit), EnablePressESCToQuit);
+        EnableLoopBackNavigation = items.GetValue(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
+        //EnablePressESCToQuit = items.GetValue(nameof(EnablePressESCToQuit), EnablePressESCToQuit);
         ShowCheckerBoard = items.GetValue(nameof(ShowCheckerBoard), ShowCheckerBoard);
         EnableMultiInstances = items.GetValue(nameof(EnableMultiInstances), EnableMultiInstances);
         EnableWindowAlwaysOnTop = items.GetValue(nameof(EnableWindowAlwaysOnTop), EnableWindowAlwaysOnTop);
@@ -1097,8 +1097,8 @@ public static class Config
         settings.TryAdd(nameof(ShowToolbar), ShowToolbar);
         settings.TryAdd(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
         //settings.TryAdd(nameof(IsLoopBackSlideshow), IsLoopBackSlideshow);
-        settings.TryAdd(nameof(EnableLoopBackViewer), EnableLoopBackViewer);
-        settings.TryAdd(nameof(EnablePressESCToQuit), EnablePressESCToQuit);
+        settings.TryAdd(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
+        //settings.TryAdd(nameof(EnablePressESCToQuit), EnablePressESCToQuit);
         settings.TryAdd(nameof(ShowCheckerBoard), ShowCheckerBoard);
         settings.TryAdd(nameof(EnableMultiInstances), EnableMultiInstances);
         settings.TryAdd(nameof(EnableWindowAlwaysOnTop), EnableWindowAlwaysOnTop);
