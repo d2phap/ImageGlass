@@ -134,6 +134,9 @@ public partial class FrmMain
         Sp2.TabStop = false;
 
         // Toolbar
+        Toolbar.Alignment = Config.CenterToolbar
+            ? ToolbarAlignment.Center
+            : ToolbarAlignment.Left;
         Toolbar.IconHeight = Config.ToolbarIconHeight;
         IG_ToggleToolbar(Config.ShowToolbar);
         Toolbar.Items.Clear();
