@@ -133,7 +133,7 @@ public static class Config
             Id = "btn_Thumbnail",
             Text = "Thumbnail bar",
             Image = "ThumbnailBar",
-            CheckableConfigBinding = nameof(ShowThumbnail),
+            CheckableConfigBinding = nameof(ShowThumbnails),
             OnClick = new("MnuToggleThumbnails"),
         },
         new()
@@ -212,7 +212,7 @@ public static class Config
     /// <summary>
     /// Gets, sets value of thumbnail visibility
     /// </summary>
-    public static bool ShowThumbnail { get; set; } = true;
+    public static bool ShowThumbnails { get; set; } = true;
 
     ///// <summary>
     ///// Gets, sets the value that indicates if the default position of image in the viewer is center or top left
@@ -751,7 +751,7 @@ public static class Config
         //IsShowSlideshowCountdown = items.GetValue(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
         //IsRandomSlideshowInterval = items.GetValue(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
         //IsFullScreen = items.GetValue(nameof(IsFullScreen), IsFullScreen);
-        ShowThumbnail = items.GetValue(nameof(ShowThumbnail), ShowThumbnail);
+        ShowThumbnails = items.GetValue(nameof(ShowThumbnails), ShowThumbnails);
         //IsCenterImage = items.GetValue(nameof(IsCenterImage), IsCenterImage);
         //IsColorPickerRGBA = items.GetValue(nameof(IsColorPickerRGBA), IsColorPickerRGBA);
         //IsColorPickerHEXA = items.GetValue(nameof(IsColorPickerHEXA), IsColorPickerHEXA);
@@ -1087,7 +1087,7 @@ public static class Config
         //settings.TryAdd(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
         //settings.TryAdd(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
         //settings.TryAdd(nameof(IsFullScreen), IsFullScreen);
-        settings.TryAdd(nameof(ShowThumbnail), ShowThumbnail);
+        settings.TryAdd(nameof(ShowThumbnails), ShowThumbnails);
         //settings.TryAdd(nameof(IsCenterImage), IsCenterImage);
         //settings.TryAdd(nameof(IsColorPickerRGBA), IsColorPickerRGBA);
         //settings.TryAdd(nameof(IsColorPickerHEXA), IsColorPickerHEXA);

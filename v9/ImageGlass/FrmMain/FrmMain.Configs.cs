@@ -150,7 +150,7 @@ public partial class FrmMain
         Gallery.PersistentCacheSize = 100;
         Gallery.PersistentCacheDirectory = App.ConfigDir(PathType.Dir, Dir.ThumbnailsCache);
         Gallery.EnableKeyNavigation = false;
-        IG_ToggleGallery(Config.ShowThumbnail);
+        IG_ToggleGallery(Config.ShowThumbnails);
 
 
         // PicMain

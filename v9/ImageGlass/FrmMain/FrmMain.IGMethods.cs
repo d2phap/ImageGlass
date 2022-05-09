@@ -205,11 +205,11 @@ public partial class FrmMain
     /// <returns></returns>
     private bool IG_ToggleGallery(bool? visible = null)
     {
-        visible ??= !Config.ShowThumbnail;
-        Config.ShowThumbnail = visible.Value;
+        visible ??= !Config.ShowThumbnails;
+        Config.ShowThumbnails = visible.Value;
 
         // Gallery bar
-        Sp1.Panel2Collapsed = !Config.ShowThumbnail;
+        Sp1.Panel2Collapsed = !Config.ShowThumbnails;
         Sp1.SplitterDistance = Sp1.Height
             - Sp1.SplitterWidth
             - Gallery.ThumbnailSize.Height
@@ -217,12 +217,12 @@ public partial class FrmMain
 
 
         // update menu item state
-        MnuToggleThumbnails.Checked = Config.ShowThumbnail;
+        MnuToggleThumbnails.Checked = Config.ShowThumbnails;
 
         // update toolbar items state
         UpdateToolbarItemsState();
 
-        return Config.ShowThumbnail;
+        return Config.ShowThumbnails;
     }
 
 
