@@ -532,21 +532,6 @@ public class StyleRenderer : IDisposable
         }
     }
 
-    /// <summary>
-    /// Renders the area between scrollbars.
-    /// </summary>
-    /// <param name="g">The graphics to draw on.</param>
-    private void RenderScrollbarFiller(Graphics g)
-    {
-        if (!ImageGalleryOwner.hScrollBar.Visible || !ImageGalleryOwner.vScrollBar.Visible)
-            return;
-
-        var bounds = ImageGalleryOwner.layoutManager.ClientArea;
-        var filler = new Rectangle(bounds.Right, bounds.Bottom, ImageGalleryOwner.vScrollBar.Width, ImageGalleryOwner.hScrollBar.Height);
-
-        g.SetClip(filler);
-        g.FillRectangle(SystemBrushes.Control, filler);
-    }
 
     /// <summary>
     /// Renders the control.
@@ -707,6 +692,22 @@ public class StyleRenderer : IDisposable
         g.PixelOffsetMode = PixelOffsetMode.None;
         g.SmoothingMode = SmoothingMode.HighQuality;
         g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+    }
+
+    /// <summary>
+    /// Renders the area between scrollbars.
+    /// </summary>
+    /// <param name="g">The graphics to draw on.</param>
+    public virtual void RenderScrollbarFiller(Graphics g)
+    {
+        if (!ImageGalleryOwner.hScrollBar.Visible || !ImageGalleryOwner.vScrollBar.Visible)
+            return;
+
+        var bounds = ImageGalleryOwner.layoutManager.ClientArea;
+        var filler = new Rectangle(bounds.Right, bounds.Bottom, ImageGalleryOwner.vScrollBar.Width, ImageGalleryOwner.hScrollBar.Height);
+
+        g.SetClip(filler);
+        g.FillRectangle(SystemBrushes.Control, filler);
     }
 
     /// <summary>

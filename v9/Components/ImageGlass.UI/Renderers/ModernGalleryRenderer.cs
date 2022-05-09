@@ -41,10 +41,8 @@ public class ModernGalleryRenderer : StyleRenderer
         Theme = theme;
     }
 
-    public override void InitializeGraphics(Graphics g)
+    public override void RenderScrollbarFiller(Graphics g)
     {
-        base.InitializeGraphics(g);
-
         if (Theme.Info.IsDark)
         {
             // dark scrollbars

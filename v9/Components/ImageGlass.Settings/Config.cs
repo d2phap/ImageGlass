@@ -249,10 +249,10 @@ public static class Config
     /// </summary>
     public static bool ShowToolbar { get; set; } = true;
 
-    ///// <summary>
-    ///// Gets, sets value whether thumbnail scrollbars visible
-    ///// </summary>
-    //public static bool ShowThumbnailScrollbar { get; set; } = false;
+    /// <summary>
+    /// Gets, sets value whether thumbnail scrollbars visible
+    /// </summary>
+    public static bool ShowThumbnailScrollbars { get; set; } = false;
 
     ///// <summary>
     ///// Gets, sets value that allows user to loop back to the first image when reaching the end of list
@@ -759,7 +759,7 @@ public static class Config
         //IsColorPickerHSVA = items.GetValue(nameof(IsColorPickerHSVA), IsColorPickerHSVA);
         //IsShowWelcome = items.GetValue(nameof(IsShowWelcome), IsShowWelcome);
         ShowToolbar = items.GetValue(nameof(ShowToolbar), ShowToolbar);
-        //ShowThumbnailScrollbar = items.GetValue(nameof(ShowThumbnailScrollbar), ShowThumbnailScrollbar);
+        ShowThumbnailScrollbars = items.GetValue(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
         //IsLoopBackSlideshow = items.GetValue(nameof(IsLoopBackSlideshow), IsLoopBackSlideshow);
         EnableLoopBackViewer = items.GetValue(nameof(EnableLoopBackViewer), EnableLoopBackViewer);
         EnablePressESCToQuit = items.GetValue(nameof(EnablePressESCToQuit), EnablePressESCToQuit);
@@ -1095,7 +1095,7 @@ public static class Config
         //settings.TryAdd(nameof(IsColorPickerHSVA), IsColorPickerHSVA);
         //settings.TryAdd(nameof(IsShowWelcome), IsShowWelcome);
         settings.TryAdd(nameof(ShowToolbar), ShowToolbar);
-        //settings.TryAdd(nameof(ShowThumbnailScrollbar), ShowThumbnailScrollbar);
+        settings.TryAdd(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
         //settings.TryAdd(nameof(IsLoopBackSlideshow), IsLoopBackSlideshow);
         settings.TryAdd(nameof(EnableLoopBackViewer), EnableLoopBackViewer);
         settings.TryAdd(nameof(EnablePressESCToQuit), EnablePressESCToQuit);

@@ -22,6 +22,7 @@ using ImageGlass.Base.WinApi;
 using ImageGlass.Library.WinAPI;
 using ImageGlass.PhotoBox;
 using ImageGlass.Settings;
+using ImageGlass.UI;
 using System.Collections.Specialized;
 using System.Diagnostics;
 
@@ -208,13 +209,22 @@ public partial class FrmMain
         visible ??= !Config.ShowThumbnails;
         Config.ShowThumbnails = visible.Value;
 
+        var scrollBarSize = 0;
+        Gallery.ScrollBars = Config.ShowThumbnailScrollbars;
+
+        if (Config.ShowThumbnailScrollbars)
+        {
+            Gallery.HScrollBar.Height = Gallery.VScrollBar.Width = DpiApi.Transform(8);
+            scrollBarSize = Gallery.HScrollBar.Height + 1;
+        }
+
         // Gallery bar
         Sp1.Panel2Collapsed = !Config.ShowThumbnails;
         Sp1.SplitterDistance = Sp1.Height
             - Sp1.SplitterWidth
             - Config.ThumbnailSize
+            - scrollBarSize
             - 30;
-
 
         // update menu item state
         MnuToggleThumbnails.Checked = Config.ShowThumbnails;
