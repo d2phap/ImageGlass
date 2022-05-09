@@ -586,7 +586,7 @@ public class Main : IIgCodec
 
             // if always apply color profile
             // or only apply color profile if there is an embedded profile
-            if (options.IsApplyColorProfileForAll || result.ColorProfile != null)
+            if (options.ApplyColorProfileForAll || result.ColorProfile != null)
             {
                 var imgColor = Utils.GetColorProfile(options.ColorProfileName);
 

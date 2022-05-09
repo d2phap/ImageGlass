@@ -35,7 +35,7 @@ public record CodecReadOptions
     /// Gets, sets the value indicates if the <see cref="ColorProfileName"/>
     /// should apply to all image files
     /// </summary>
-    public bool IsApplyColorProfileForAll { get; set; } = false;
+    public bool ApplyColorProfileForAll { get; set; } = false;
 
     /// <summary>
     /// Gets, sets the value of ImageMagick.Channels to apply to the entire image list

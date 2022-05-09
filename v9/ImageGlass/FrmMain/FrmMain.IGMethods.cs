@@ -182,19 +182,19 @@ public partial class FrmMain
     /// <returns></returns>
     private bool IG_ToggleToolbar(bool? visible = null)
     {
-        visible ??= !Config.IsShowToolbar;
-        Config.IsShowToolbar = visible.Value;
+        visible ??= !Config.ShowToolbar;
+        Config.ShowToolbar = visible.Value;
 
         // Gallery bar
-        Toolbar.Visible = Config.IsShowToolbar;
+        Toolbar.Visible = Config.ShowToolbar;
 
         // update menu item state
-        MnuToggleToolbar.Checked = Config.IsShowToolbar;
+        MnuToggleToolbar.Checked = Config.ShowToolbar;
 
         // update toolbar items state
         UpdateToolbarItemsState();
 
-        return Config.IsShowToolbar;
+        return Config.ShowToolbar;
     }
 
 
@@ -205,11 +205,11 @@ public partial class FrmMain
     /// <returns></returns>
     private bool IG_ToggleGallery(bool? visible = null)
     {
-        visible ??= !Config.IsShowThumbnail;
-        Config.IsShowThumbnail = visible.Value;
+        visible ??= !Config.ShowThumbnail;
+        Config.ShowThumbnail = visible.Value;
 
         // Gallery bar
-        Sp1.Panel2Collapsed = !Config.IsShowThumbnail;
+        Sp1.Panel2Collapsed = !Config.ShowThumbnail;
         Sp1.SplitterDistance = Sp1.Height
             - Sp1.SplitterWidth
             - Gallery.ThumbnailSize.Height
@@ -217,12 +217,12 @@ public partial class FrmMain
 
 
         // update menu item state
-        MnuToggleThumbnails.Checked = Config.IsShowThumbnail;
+        MnuToggleThumbnails.Checked = Config.ShowThumbnail;
 
         // update toolbar items state
         UpdateToolbarItemsState();
 
-        return Config.IsShowThumbnail;
+        return Config.ShowThumbnail;
     }
 
 
@@ -233,12 +233,12 @@ public partial class FrmMain
     /// <returns></returns>
     private bool IG_ToggleCheckerboard(bool? visible = null)
     {
-        visible ??= !Config.IsShowCheckerBoard;
-        Config.IsShowCheckerBoard = visible.Value;
+        visible ??= !Config.ShowCheckerBoard;
+        Config.ShowCheckerBoard = visible.Value;
 
         if (visible.Value)
         {
-            if (Config.IsShowCheckerboardOnlyImageRegion)
+            if (Config.ShowCheckerboardOnlyImageRegion)
             {
                 PicMain.CheckerboardMode = CheckerboardMode.Image;
             }
@@ -259,7 +259,7 @@ public partial class FrmMain
         UpdateToolbarItemsState();
 
 
-        return Config.IsShowCheckerBoard;
+        return Config.ShowCheckerBoard;
     }
 
 
@@ -270,16 +270,16 @@ public partial class FrmMain
     /// <returns></returns>
     private bool IG_ToggleTopMost(bool? enableTopMost = null)
     {
-        enableTopMost ??= !Config.IsWindowAlwaysOnTop;
-        Config.IsWindowAlwaysOnTop = enableTopMost.Value;
+        enableTopMost ??= !Config.EnableWindowAlwaysOnTop;
+        Config.EnableWindowAlwaysOnTop = enableTopMost.Value;
 
         // Gallery bar
-        TopMost = Config.IsWindowAlwaysOnTop;
+        TopMost = Config.EnableWindowAlwaysOnTop;
 
         // update menu item state
         MnuToggleTopMost.Checked = TopMost;
 
-        return Config.IsWindowAlwaysOnTop;
+        return Config.EnableWindowAlwaysOnTop;
     }
 
 

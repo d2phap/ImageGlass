@@ -134,7 +134,7 @@ public partial class FrmMain
 
         // Toolbar
         Toolbar.IconHeight = Config.ToolbarIconHeight;
-        IG_ToggleToolbar(Config.IsShowToolbar);
+        IG_ToggleToolbar(Config.ShowToolbar);
         Toolbar.Items.Clear();
         Toolbar.AddItems(Config.ToolbarItems);
 
@@ -145,13 +145,13 @@ public partial class FrmMain
         Gallery.PersistentCacheSize = 100;
         Gallery.PersistentCacheDirectory = App.ConfigDir(PathType.Dir, Dir.ThumbnailsCache);
         Gallery.EnableKeyNavigation = false;
-        IG_ToggleGallery(Config.IsShowThumbnail);
+        IG_ToggleGallery(Config.ShowThumbnail);
 
 
         // PicMain
         PicMain.TabStop = false;
         IG_SetZoomMode(Config.ZoomMode.ToString());
-        IG_ToggleCheckerboard(Config.IsShowCheckerBoard);
+        IG_ToggleCheckerboard(Config.ShowCheckerBoard);
 
 
         Load += FrmMainConfig_Load;
@@ -164,7 +164,7 @@ public partial class FrmMain
         Local.OnRequestUpdateFrmMain += Local_OnFrmMainUpdateRequested;
         
         // IsWindowAlwaysOnTop
-        IG_ToggleTopMost(Config.IsWindowAlwaysOnTop);
+        IG_ToggleTopMost(Config.EnableWindowAlwaysOnTop);
 
         // EnableImageFocus
         IG_ToggleImageFocus(Config.EnableImageFocus, showInAppMessage: false);

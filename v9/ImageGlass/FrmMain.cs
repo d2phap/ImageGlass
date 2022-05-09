@@ -567,7 +567,7 @@ public partial class FrmMain : Form
         Local.ActiveImageLoadingOrderType = Config.ImageLoadingOrderType;
 
         // Use File Explorer sort order if possible
-        if (Config.IsUseFileExplorerSortOrder)
+        if (Config.UseFileExplorerSortOrder)
         {
             if (ExplorerSortOrder.GetExplorerSortOrder(fullPath, out var explorerOrder, out var isAscending))
             {
@@ -593,7 +593,7 @@ public partial class FrmMain : Form
     {
         // Get files from dir
         return DirectoryFinder.FindFiles(path,
-            Config.IsRecursiveLoading,
+            Config.EnableRecursiveLoading,
             new Predicate<FileInfo>((FileInfo fi) =>
             {
                 // KBR 20180607 Rework predicate to use a FileInfo instead of the filename.
@@ -607,7 +607,7 @@ public partial class FrmMain : Form
                 var extension = fi.Extension.ToLower();
 
                 // checks if image is hidden and ignores it if so
-                if (!Config.IsShowingHiddenImages)
+                if (!Config.IncludeHiddenImages)
                 {
                     var attributes = fi.Attributes;
                     var isHidden = (attributes & FileAttributes.Hidden) != 0;
@@ -641,7 +641,7 @@ public partial class FrmMain : Form
         // initiate directory sorter to a comparer that does nothing
         // if user wants to group by directory, we initiate the real comparer
         var directorySortComparer = (IComparer<string>)new IdentityComparer();
-        if (Config.IsGroupImagesByDirectory)
+        if (Config.GroupImagesByDirectory)
         {
             if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
             {
@@ -850,9 +850,9 @@ public partial class FrmMain : Form
         var directReadSettings = new CodecReadOptions()
         {
             ColorProfileName = Config.ColorProfile,
-            IsApplyColorProfileForAll = Config.IsApplyColorProfileForAll,
+            ApplyColorProfileForAll = Config.ApplyColorProfileForAll,
             ImageChannel = Local.ImageChannel,
-            UseRawThumbnail = Config.IsUseRawThumbnail,
+            UseRawThumbnail = Config.UseRawThumbnail,
             //UseEmbeddedThumbnail = Local.Images.use
             Metadata = Local.Metadata,
         };
@@ -904,9 +904,9 @@ public partial class FrmMain : Form
         try
         {
             // apply image list settings
-            Local.Images.ReadOptions.IsApplyColorProfileForAll = Config.IsApplyColorProfileForAll;
+            Local.Images.ReadOptions.ApplyColorProfileForAll = Config.ApplyColorProfileForAll;
             Local.Images.ReadOptions.ColorProfileName = Config.ColorProfile;
-            Local.Images.ReadOptions.UseRawThumbnail = Config.IsUseRawThumbnail;
+            Local.Images.ReadOptions.UseRawThumbnail = Config.UseRawThumbnail;
             Local.Images.SinglePageFormats = Config.SinglePageFormats;
 
             if (pageIndex != int.MinValue)
@@ -1038,15 +1038,15 @@ public partial class FrmMain : Form
             // Reset the zoom mode if KeepZoomRatio = FALSE
             if (!e.KeepZoomRatio)
             {
-                if (Config.IsWindowFit)
-                {
-                    //WindowFitMode();
-                }
-                else
-                {
+                //if (Config.IsWindowFit)
+                //{
+                //    //WindowFitMode();
+                //}
+                //else
+                //{
                     // reset zoom mode
                     IG_SetZoomMode(Config.ZoomMode.ToString());
-                }
+                //}
             }
 
             PicMain.ClearMessage();
@@ -1502,7 +1502,7 @@ public partial class FrmMain : Form
             }
             else
             {
-                MnuExit.ShortcutKeyDisplayString = Config.IsPressESCToQuit ? "ESC" : "Alt+F4";
+                MnuExit.ShortcutKeyDisplayString = Config.EnablePressESCToQuit ? "ESC" : "Alt+F4";
             }
 
             //// Get EditApp for editing
