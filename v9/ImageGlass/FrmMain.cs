@@ -803,7 +803,7 @@ public partial class FrmMain : Form
 
         Gallery.SuspendLayout();
         Gallery.Items.Clear();
-        Gallery.ThumbnailSize = new Size(Config.ThumbnailDimension, Config.ThumbnailDimension);
+        Gallery.ThumbnailSize = new Size(Config.ThumbnailSize, Config.ThumbnailSize);
 
 
         //var watch = new Stopwatch();

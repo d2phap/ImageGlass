@@ -520,12 +520,12 @@ public static class Config
     /// <summary>
     /// Gets, sets value of thumbnail dimension in pixel
     /// </summary>
-    public static int ThumbnailDimension { get; set; } = 70;
+    public static int ThumbnailSize { get; set; } = 70;
 
-    /// <summary>
-    /// Gets, sets width of horizontal thumbnail bar
-    /// </summary>
-    public static int ThumbnailBarWidth { get; set; } = new ThumbnailItemInfo(ThumbnailDimension, true).GetTotalDimension();
+    ///// <summary>
+    ///// Gets, sets width of horizontal thumbnail bar
+    ///// </summary>
+    //public static int ThumbnailBarWidth { get; set; } = new ThumbnailItemInfo(ThumbnailDimension, true).GetTotalDimension();
 
     /// <summary>
     /// Gets, sets the number of images cached by Image
@@ -833,7 +833,7 @@ public static class Config
         #endregion
 
         #region Load thumbnail bar width & position
-        ThumbnailDimension = items.GetValue(nameof(ThumbnailDimension), ThumbnailDimension);
+        ThumbnailSize = items.GetValue(nameof(ThumbnailSize), ThumbnailSize);
 
         //if (IsThumbnailHorizontal)
         //{
@@ -1159,8 +1159,8 @@ public static class Config
         //settings.TryAdd(nameof(FirstLaunchVersion), FirstLaunchVersion);
         //settings.TryAdd(nameof(SlideShowInterval), SlideShowInterval);
         //settings.TryAdd(nameof(SlideShowIntervalTo), SlideShowIntervalTo);
-        settings.TryAdd(nameof(ThumbnailDimension), ThumbnailDimension);
-        settings.TryAdd(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
+        settings.TryAdd(nameof(ThumbnailSize), ThumbnailSize);
+        //settings.TryAdd(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
         settings.TryAdd(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
         settings.TryAdd(nameof(ZoomLockValue), ZoomLockValue);
         settings.TryAdd(nameof(ToolbarIconHeight), ToolbarIconHeight);

@@ -212,7 +212,7 @@ public partial class FrmMain
         Sp1.Panel2Collapsed = !Config.ShowThumbnails;
         Sp1.SplitterDistance = Sp1.Height
             - Sp1.SplitterWidth
-            - Gallery.ThumbnailSize.Height
+            - Config.ThumbnailSize
             - 30;
 
 
