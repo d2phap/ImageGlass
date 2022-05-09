@@ -15,16 +15,18 @@
     <PackageProjectUrl>https://imageglass.org</PackageProjectUrl>
     <RepositoryUrl>https://imageglass.org/source</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <Version>9.0.0.0</Version>
     <FileVersion>$(Version)</FileVersion>
     <VersionPrefix>9.0.0</VersionPrefix>
-    <VersionSuffix>beta-1</VersionSuffix>
+    <VersionSuffix>0</VersionSuffix>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
     <SignAssembly>False</SignAssembly>
     <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <DebugType>portable</DebugType>
-    <Product>$(AssemblyName) Kobe</Product>
+    <Product>$(AssemblyName) Moon</Product>
+    <AssemblyVersion></AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

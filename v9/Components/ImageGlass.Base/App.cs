@@ -29,15 +29,9 @@ public class App
 
 
     /// <summary>
-    /// Gets the file version
-    /// </summary>
-    public static string FileVersion { get => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion ?? ""; }
-
-
-    /// <summary>
     /// Gets the product version
     /// </summary>
-    public static string Version { get => FileVersionInfo.GetVersionInfo(IGExePath).ProductVersion ?? ""; }
+    public static string Version { get => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion ?? ""; }
 
 
     /// <summary>

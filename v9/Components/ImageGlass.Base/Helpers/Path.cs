@@ -217,7 +217,7 @@ public partial class Helpers
         {
             var ub = new UriBuilder(url);
             var queries = HttpUtility.ParseQueryString(ub.Query);
-            queries["utm_source"] = "app_" + App.FileVersion;
+            queries["utm_source"] = "app_" + App.Version;
             queries["utm_medium"] = "app_click";
             queries["utm_campaign"] = campaign;
 
