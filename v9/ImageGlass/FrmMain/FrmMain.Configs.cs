@@ -195,6 +195,7 @@ public partial class FrmMain
         var wp = WindowSettings.GetPlacementFromWindow(this);
         WindowSettings.SetFrmMainPlacementConfig(wp);
 
+        Config.LastSeenImagePath = Local.Images.GetFileName(Local.CurrentIndex);
 
         Config.Write();
     }

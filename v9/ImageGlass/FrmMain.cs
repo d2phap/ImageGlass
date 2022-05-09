@@ -303,16 +303,33 @@ public partial class FrmMain : Form
     /// <param name="args"></param>
     public void LoadImagesFromCmdArgs()
     {
+        var pathToLoad = "";
         var args = Environment.GetCommandLineArgs();
-        if (args.Length < 2) return;
 
-        // get path from params
-        var path = args.Skip(1).FirstOrDefault(i => !i.StartsWith(Constants.CONFIG_CMD_PREFIX));
+        if (args.Length >= 2)
+        {
+            // get path from params
+            var cmdPath = args
+                .Skip(1)
+                .FirstOrDefault(i => !i.StartsWith(Constants.CONFIG_CMD_PREFIX));
 
-        if (path == null) return;
+            if (!string.IsNullOrEmpty(cmdPath))
+            {
+                pathToLoad = cmdPath;
+            }
+        }
+
+        if (string.IsNullOrEmpty(pathToLoad)
+            && Config.OpenLastSeenImage
+            && File.Exists(Config.LastSeenImagePath))
+        {
+            pathToLoad = Config.LastSeenImagePath;
+        }
+
+        if (string.IsNullOrEmpty(pathToLoad)) return;
 
         // Start loading path
-        Helpers.RunAsThread(() => PrepareLoading(path));
+        Helpers.RunAsThread(() => PrepareLoading(pathToLoad));
     }
 
 
@@ -346,6 +363,8 @@ public partial class FrmMain : Form
     private void PrepareLoading(string inputPath)
     {
         var path = Helpers.ResolvePath(inputPath);
+
+        if (string.IsNullOrEmpty(path)) return;
 
         if (Helpers.IsDirectory(path))
         {
