@@ -80,15 +80,30 @@ public class Source
             .Select(cmd => cmd[1..]) // trim '-' from the command
             .ToArray();
 
-        var userConfig = new ConfigurationBuilder()
-          .SetBasePath(App.ConfigDir(PathType.Dir))
-          .AddJsonFile(DefaultFilename, optional: true)
-          .AddJsonFile(UserFilename, optional: true)
-          .AddCommandLine(args)
-          .AddJsonFile(AdminFilename, optional: true)
-          .Build();
+        try
+        {
+            var userConfig = new ConfigurationBuilder()
+              .SetBasePath(App.ConfigDir(PathType.Dir))
+              .AddJsonFile(DefaultFilename, optional: true)
+              .AddJsonFile(UserFilename, optional: true)
+              .AddCommandLine(args)
+              .AddJsonFile(AdminFilename, optional: true)
+              .Build();
 
-        return userConfig;
+            return userConfig;
+        }
+        catch { }
+
+
+        // fall back to default config if user config is invalid
+        var defaultConfig = new ConfigurationBuilder()
+                .SetBasePath(App.ConfigDir(PathType.Dir))
+                .AddJsonFile(DefaultFilename, optional: true)
+                .AddCommandLine(args)
+                .AddJsonFile(AdminFilename, optional: true)
+                .Build();
+
+        return defaultConfig;
     }
 
 
