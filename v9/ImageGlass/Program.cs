@@ -86,6 +86,7 @@ internal static class Program
 
             Expander = new(ex.ToString()),
             Buttons = new TaskDialogButtonCollection { btnContinue, btnCopy, btnQuit },
+            AllowCancel = true,
         });
     }
 
@@ -173,6 +174,7 @@ internal static class Program
                         $"Published date: {updater.CurrentReleaseInfo?.PublishedDate.ToString(Constants.DATETIME_FORMAT)}",
 
                     Buttons = new TaskDialogButtonCollection { btnWhatNew, btnClose },
+                    AllowCancel = true,
                 });
             }
 

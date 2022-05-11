@@ -307,7 +307,7 @@ public partial class FrmMain
     private void IG_About()
     {
         var archInfo = Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
-        var appVersion = App.Version + $" ({archInfo})";
+        var appVersion = App.Version + $" beta 1 ({archInfo})";
 
         var btnDonate = new TaskDialogButton("Donate", allowCloseDialog: false);
         var btnClose = new TaskDialogButton("Close", allowCloseDialog: true);
@@ -317,10 +317,9 @@ public partial class FrmMain
             Helpers.OpenUrl("https://imageglass.org/source#donation", "app_donation");
         };
 
-
         TaskDialog.ShowDialog(new()
         {
-            Icon = TaskDialogIcon.Information,
+            Icon = new TaskDialogIcon(Icon),
             Caption = $"About",
 
             Heading = $"{Application.ProductName}\r\n" +
@@ -328,10 +327,10 @@ public partial class FrmMain
             Text = $"Copyright © 2010-{DateTime.Now.Year} by Dương Diệu Pháp.\r\n" +
                 $"All rights reserved.\r\n\r\n" +
                 $"Homepage: https://imageglass.org\r\n" +
-                $"GitHub: https://github.com/d2phap/ImageGlass" +
-                $"",
+                $"GitHub: https://github.com/d2phap/ImageGlass",
 
             Buttons = new TaskDialogButtonCollection { btnDonate, btnClose },
+            AllowCancel = true,
         });
     }
 
