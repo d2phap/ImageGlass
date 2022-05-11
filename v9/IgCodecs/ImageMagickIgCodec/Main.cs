@@ -26,6 +26,8 @@ namespace ImageMagick.IgCodec;
 
 public class Main : IIgCodec
 {
+
+    #region Public propterties
     public string DisplayName => "Magick.NET codec";
     public string Description => "Use ImageMagick.NET to decode file formats";
     public string Author => "Duong Dieu Phap";
@@ -116,75 +118,12 @@ public class Main : IIgCodec
         ".xpm",
     };
 
+    #endregion
+
+
+    #region Public functions
+
     public void Dispose() { }
-
-    private MagickReadSettings ParseSettings(CodecReadOptions? options, string filename = "")
-    {
-        options ??= new();
-
-        var ext = Path.GetExtension(filename).ToUpperInvariant();
-        var settings = new MagickReadSettings
-        {
-            // https://github.com/dlemstra/Magick.NET/issues/1077
-            SyncImageWithExifProfile = true,
-            SyncImageWithTiffProperties = true,
-        };
-
-        if (ext.Equals(".SVG", StringComparison.OrdinalIgnoreCase))
-        {
-            settings.BackgroundColor = MagickColors.Transparent;
-            settings.SetDefine("svg:xml-parse-huge", "true");
-        }
-        else if (ext.Equals(".HEIC", StringComparison.OrdinalIgnoreCase)
-            || ext.Equals(".HEIF", StringComparison.OrdinalIgnoreCase))
-        {
-            settings.SetDefines(new HeicReadDefines
-            {
-                PreserveOrientation = true,
-                DepthImage = true,
-            });
-        }
-        else if (ext.Equals(".JP2", StringComparison.OrdinalIgnoreCase))
-        {
-            settings.SetDefines(new Jp2ReadDefines
-            {
-                QualityLayers = options.Quality,
-            });
-        }
-
-        if (options.Width > 0 && options.Height > 0)
-        {
-            settings.Width = options.Width;
-            settings.Height = options.Height;
-        }
-
-        // Fixed #708: length and filesize do not match
-        settings.SetDefines(new BmpReadDefines
-        {
-            IgnoreFileSize = true,
-        });
-
-        // Fix RAW color
-        settings.SetDefines(new DngReadDefines()
-        {
-            UseCameraWhitebalance = true,
-            OutputColor = DngOutputColor.AdobeRGB,
-            ReadThumbnail = true,
-        });
-
-
-        return settings;
-    }
-
-    private static T? GetExifValue<T>(IExifProfile? profile, ExifTag<T> tag, T? defaultValue = default)
-    {
-        if (profile == null) return default;
-
-        var exifValue = profile.GetValue(tag);
-        if (exifValue == null) return defaultValue;
-
-        return exifValue.Value;
-    }
 
 
     // load basic info from image
@@ -246,7 +185,16 @@ public class Main : IIgCodec
     // load image sync
     public IgImgData Load(string filename, CodecReadOptions? options = null)
     {
-        return ImageGlass.Base.Helpers.RunSync(() => LoadAsync(filename, options));
+        options ??= new();
+
+        var (loadSuccessful, result, ext, settings) = ReadWithStream(filename, options);
+
+        if (!loadSuccessful)
+        {
+            result = ReadWithMagickImage(filename, ext, settings, options);
+        }
+
+        return result;
     }
 
 
@@ -257,6 +205,77 @@ public class Main : IIgCodec
     {
         options ??= new();
         var cancelToken = token ?? default;
+
+        try
+        {
+            cancelToken.ThrowIfCancellationRequested();
+
+            var (loadSuccessful, result, ext, settings) = ReadWithStream(filename, options);
+
+            if (!loadSuccessful)
+            {
+                result = await ReadWithMagickImageAsync(filename, ext, settings, options, cancelToken);
+            }
+
+            return result;
+        }
+        catch (OperationCanceledException) { }
+
+        return new IgImgData();
+    }
+
+
+    // get thumbnail
+    public Bitmap? GetThumbnail(string filename, int width, int height)
+    {
+        var data = Load(filename, new()
+        {
+            Width = width,
+            Height = height,
+            FirstFrameOnly = true,
+            ImageChannel = ColorChannel.All,
+            UseEmbeddedThumbnail = true,
+            UseRawThumbnail = true,
+            ApplyColorProfileForAll = false,
+            Quality = 80,
+        });
+
+        return data.Image;
+    }
+
+
+    // get thumbnail as base64 string
+    public string GetThumbnailBase64(string filename, int width, int height)
+    {
+        var thumbnail = GetThumbnail(filename, width, height);
+
+        if (thumbnail != null)
+        {
+            using var imgM = new MagickImage();
+            imgM.Read(thumbnail);
+
+            return "data:image/png;base64," + imgM.ToBase64(MagickFormat.Png);
+        }
+
+        return string.Empty;
+    }
+
+    #endregion
+
+
+    #region Private functions
+
+
+    /// <summary>
+    /// Read image file using stream 
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    private (bool loadSuccessful, IgImgData result, string ext, MagickReadSettings settings) ReadWithStream(string filename, CodecReadOptions? options = null)
+    {
+        options ??= new();
+        var loadSuccessful = true;
         var result = new IgImgData();
 
         if (options.Metadata == null)
@@ -294,116 +313,143 @@ public class Main : IIgCodec
                 }
                 catch
                 {
-                    result = await ReadWithMagickImage(filename, ext, settings, options, cancelToken);
+                    loadSuccessful = false;
                 }
                 break;
 
             default:
-                result = await ReadWithMagickImage(filename, ext, settings, options, cancelToken);
+                loadSuccessful = false;
 
                 break;
         }
         #endregion
 
 
-        return result;
-    }
-
-
-    // get thumbnail
-    public Bitmap? GetThumbnail(string filename, int width, int height)
-    {
-        Bitmap? result = null;
-
-        var settings = ParseSettings(new()
+        // apply size setting
+        if (result.Image != null && options.Width > 0 && options.Height > 0)
         {
-            Width = width,
-            Height = height,
-        });
-
-        using var imgM = new MagickImage();
-
-        try
-        {
-            imgM.Ping(filename, settings);
-        }
-        // exit on invalid image
-        catch { return result; }
-
-
-        // try to get RAW thumbnail
-        var rawProfile = imgM.GetProfile("dng:thumbnail");
-
-        if (rawProfile is not null)
-        {
-            var imgBytes = rawProfile?.GetData();
-
-            if (imgBytes is not null)
+            if (result.Image.Width > options.Width || result.Image.Height > options.Height)
             {
-                using var rawImgM = new MagickImage(imgBytes, settings);
+                using var imgM = new MagickImage();
+                imgM.Read(result.Image);
 
-                if (imgM.BaseWidth > width || imgM.BaseHeight > height)
-                {
-                    rawImgM.Thumbnail(width, height);
-                    result = rawImgM.ToBitmap();
-                }
+                ApplySizeSettings(imgM, options);
+
+                result.Image = imgM.ToBitmap();
             }
         }
 
 
-        // cannot find raw thumbnail, try to create a thumbnail
-        if (result is null)
+        return (loadSuccessful, result, ext, settings);
+    }
+
+
+    /// <summary>
+    /// Read image file using Magick.NET
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <param name="ext"></param>
+    /// <param name="settings"></param>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    private static IgImgData ReadWithMagickImage(
+        string filename, string ext,
+        MagickReadSettings settings, CodecReadOptions options)
+    {
+        var result = new IgImgData();
+        using var imgColl = new MagickImageCollection();
+
+        // Issue #530: ImageMagick falls over if the file path is longer than the (old)
+        // windows limit of 260 characters. Workaround is to read the file bytes,
+        // but that requires using the "long path name" prefix to succeed.
+        if (filename.Length > 260)
         {
-            // read entire file content
-            imgM.Read(filename, settings);
+            var newFilename = ImageGlass.Base.Helpers.PrefixLongPath(filename);
+            var allBytes = File.ReadAllBytes(newFilename);
+
+            imgColl.Ping(allBytes, settings);
+        }
+        else
+        {
+            imgColl.Ping(filename, settings);
+        }
+
+        // standardize first frame reading option
+        result.FrameCount = imgColl.Count;
+        var readFirstFrameOnly = true;
+        if (options.FirstFrameOnly == null)
+        {
+            readFirstFrameOnly = imgColl.Count < 2;
+        }
+        else
+        {
+            readFirstFrameOnly = options.FirstFrameOnly.Value;
+        }
+
+
+        // read all frames
+        if (imgColl.Count > 1 && readFirstFrameOnly is false)
+        {
+            imgColl.Read(filename, settings);
+
+            // convert WEBP to GIF for animation
+            if (ext == ".WEBP")
+            {
+                result.Image = imgColl.ToBitmap(ImageFormat.Gif);
+            }
+            else
+            {
+                foreach (var imgPageM in imgColl)
+                {
+                    ProcessMagickImage((MagickImage)imgPageM, options, ext, ref result, generateBitmap: false);
+                }
+
+                result.Image = imgColl.ToBitmap();
+            }
+
+            return result;
+        }
+
+
+        // read a single frame only
+        using var imgM = new MagickImage();
+        if (options.UseRawThumbnail is true)
+        {
+            var profile = imgColl[0].GetProfile("dng:thumbnail");
 
             try
             {
-                var profile = imgM.GetExifProfile();
-                using var thumbM = profile?.CreateThumbnail();
-
-                if (thumbM is not null)
+                // try to get thumbnail
+                var thumbnailData = profile?.GetData();
+                if (thumbnailData != null)
                 {
-                    result = thumbM.ToBitmap();
+                    imgM.Read(thumbnailData, settings);
+                }
+                else
+                {
+                    imgM.Read(filename, settings);
                 }
             }
-            catch { }
-        }
-
-
-        // cannot create thumbnail, resize the image file
-        if (result is null)
-        {
-            if (imgM.BaseWidth > width || imgM.BaseHeight > height)
+            catch
             {
-                imgM.Thumbnail(width, height);
+                imgM.Read(filename, settings);
             }
-
-            result = imgM.ToBitmap();
         }
+        else
+        {
+            imgM.Read(filename, settings);
+        }
+
+        // process image
+        ProcessMagickImage(imgM, options, ext, ref result);
+
+
+        // apply color channel
+        ApplyColorChannel(imgM, options, ref result);
 
         return result;
     }
 
-
-    // get thumbnail as base64 string
-    public string GetThumbnailBase64(string filename, int width, int height)
-    {
-        var thumbnail = GetThumbnail(filename, width, height);
-
-        if (thumbnail is not null)
-        {
-            using var imgM = new MagickImage();
-            imgM.Read(thumbnail);
-
-            return "data:image/png;base64," + imgM.ToBase64(MagickFormat.Png);
-        }
-
-        return string.Empty;
-    }
-
-
-    #region Private functions
 
     /// <summary>
     /// Read image file using Magick.NET
@@ -414,7 +460,7 @@ public class Main : IIgCodec
     /// <param name="options"></param>
     /// <param name="cancelToken"></param>
     /// <returns></returns>
-    private static async Task<IgImgData> ReadWithMagickImage(
+    private static async Task<IgImgData> ReadWithMagickImageAsync(
         string filename, string ext,
         MagickReadSettings settings, CodecReadOptions options,
         CancellationToken cancelToken)
@@ -454,7 +500,7 @@ public class Main : IIgCodec
         if (imgColl.Count > 1 && readFirstFrameOnly is false)
         {
             await imgColl.ReadAsync(filename, settings, cancelToken);
-            
+
             // convert WEBP to GIF for animation
             if (ext == ".WEBP")
             {
@@ -464,7 +510,7 @@ public class Main : IIgCodec
             {
                 foreach (var imgPageM in imgColl)
                 {
-                    ProcessMagickImage((MagickImage)imgPageM, options, ref result);
+                    ProcessMagickImage((MagickImage)imgPageM, options, ext, ref result, generateBitmap: false);
                 }
 
                 result.Image = imgColl.ToBitmap();
@@ -504,41 +550,38 @@ public class Main : IIgCodec
         }
 
 
-        // Issue #679: fix targa display with Magick.NET 7.15.x 
-        if (ext == ".TGA") imgM.AutoOrient();
+        // process image
+        ProcessMagickImage(imgM, options, ext, ref result);
 
-
-        // preprocess image, read embedded thumbnail if any
-        imgM.Quality = options.Quality;
-        ProcessMagickImage(imgM, options, ref result);
 
         // apply color channel
-        if (options.ImageChannel != ColorChannel.All)
-        {
-            using var channelImgM = FilterColorChannel(imgM, options.ImageChannel);
-            result.Image = channelImgM.ToBitmap();
-        }
-        else if (result.Image is null)
-        {
-            result.Image = imgM.ToBitmap();
-        }
+        ApplyColorChannel(imgM, options, ref result);
 
         return result;
     }
+
 
     /// <summary>
     /// Process Magick image
     /// </summary>
     /// <param name="imgM"></param>
     /// <param name="options"></param>
-    /// <param name="bitmapOutput"></param>
+    /// <param name="ext"></param>
+    /// <param name="result"></param>
     /// <param name="checkRotation"></param>
-    /// <returns></returns>
+    /// <param name="generateBitmap"></param>
     private static void ProcessMagickImage(
         MagickImage imgM, CodecReadOptions options,
-        ref IgImgData result,
-        bool checkRotation = true)
+        string ext, ref IgImgData result,
+        bool checkRotation = true, bool generateBitmap = true)
     {
+        var foundThumbnailBitmap = false;
+
+        // Issue #679: fix targa display with Magick.NET 7.15.x 
+        if (ext == ".TGA") imgM.AutoOrient();
+
+
+        // preprocess image, read embedded thumbnail if any
         imgM.Quality = options.Quality;
 
         try
@@ -552,36 +595,29 @@ public class Main : IIgCodec
         catch { }
 
         // Use embedded thumbnails if specified
-        if (result.ExifProfile != null && options.UseEmbeddedThumbnail)
+        if (generateBitmap && result.ExifProfile != null && options.UseEmbeddedThumbnail)
         {
             // Fetch the embedded thumbnail
             using var thumbM = result.ExifProfile.CreateThumbnail();
             if (thumbM != null)
             {
-                result.Image = thumbM.ToBitmap();
+                ApplyRotation(thumbM, result.ExifProfile);
+                ApplySizeSettings(thumbM, options);
+
+                result.Image = thumbM.ToBitmap(ImageFormat.Png);
+                foundThumbnailBitmap = true;
             }
         }
 
         // Revert to source image if an embedded thumbnail with required size was not found.
-        if (result.Image == null)
+        if (foundThumbnailBitmap == false)
         {
-            if (result.ExifProfile != null && checkRotation)
-            {
-                // Get Orientation Flag
-                var exifRotationTag = result.ExifProfile.GetValue(ExifTag.Orientation);
+            // resize the image
+            ApplySizeSettings(imgM, options);
 
-                if (exifRotationTag != null)
-                {
-                    if (int.TryParse(exifRotationTag.Value.ToString(), out var orientationFlag))
-                    {
-                        var orientationDegree = ImageGlass.Base.Helpers.GetOrientationDegree(orientationFlag);
-                        if (orientationDegree != 0)
-                        {
-                            //Rotate image accordingly
-                            imgM.Rotate(orientationDegree);
-                        }
-                    }
-                }
+            if (checkRotation)
+            {
+                ApplyRotation(imgM, result.ExifProfile);
             }
 
             // if always apply color profile
@@ -600,6 +636,45 @@ public class Main : IIgCodec
             }
         }
     }
+
+
+    /// <summary>
+    /// Applies the size settings
+    /// </summary>
+    /// <param name="imgM"></param>
+    /// <param name="options"></param>
+    private static void ApplySizeSettings(IMagickImage imgM, CodecReadOptions options)
+    {
+        if (options.Width > 0 && options.Height > 0)
+        {
+            if (imgM.BaseWidth > options.Width || imgM.BaseHeight > options.Height)
+            {
+                imgM.Thumbnail(options.Width, options.Height);
+            } 
+        } 
+    }
+
+
+    /// <summary>
+    /// Checks and applies color channel from settings
+    /// </summary>
+    /// <param name="imgM"></param>
+    /// <param name="options"></param>
+    /// <param name="result"></param>
+    private static void ApplyColorChannel(MagickImage imgM, CodecReadOptions options, ref IgImgData result)
+    {
+        // apply color channel
+        if (options.ImageChannel != ColorChannel.All)
+        {
+            using var channelImgM = FilterColorChannel(imgM, options.ImageChannel);
+            result.Image = channelImgM.ToBitmap();
+        }
+        else if (result.Image is null)
+        {
+            result.Image = imgM.ToBitmap();
+        }
+    }
+
 
     /// <summary>
     /// Filter color channel of Magick image
@@ -624,6 +699,34 @@ public class Main : IIgCodec
         return channelImgM;
     }
 
+
+    /// <summary>
+    /// Applies rotation from EXIF profile
+    /// </summary>
+    /// <param name="imgM"></param>
+    /// <param name="profile"></param>
+    private static void ApplyRotation(IMagickImage imgM, IExifProfile? profile)
+    {
+        if (profile == null) return;
+
+        // Get Orientation Flag
+        var exifRotationTag = profile.GetValue(ExifTag.Orientation);
+
+        if (exifRotationTag != null)
+        {
+            if (int.TryParse(exifRotationTag.Value.ToString(), out var orientationFlag))
+            {
+                var orientationDegree = ImageGlass.Base.Helpers.GetOrientationDegree(orientationFlag);
+                if (orientationDegree != 0)
+                {
+                    // Rotate image accordingly
+                    imgM.Rotate(orientationDegree);
+                }
+            }
+        }
+    }
+
+
     /// <summary>
     /// Converts file to Bitmap
     /// </summary>
@@ -638,6 +741,7 @@ public class Main : IIgCodec
 
         return new Bitmap(ms, true);
     }
+
 
     /// <summary>
     /// Converts base64 string to Bitmap.
@@ -731,6 +835,89 @@ public class Main : IIgCodec
         return bmp;
     }
 
+
+    /// <summary>
+    /// Parse <see cref="CodecReadOptions"/> to <see cref="MagickReadSettings"/>
+    /// </summary>
+    /// <param name="options"></param>
+    /// <param name="filename"></param>
+    /// <returns></returns>
+    private MagickReadSettings ParseSettings(CodecReadOptions? options, string filename = "")
+    {
+        options ??= new();
+
+        var ext = Path.GetExtension(filename).ToUpperInvariant();
+        var settings = new MagickReadSettings
+        {
+            // https://github.com/dlemstra/Magick.NET/issues/1077
+            SyncImageWithExifProfile = true,
+            SyncImageWithTiffProperties = true,
+        };
+
+        if (ext.Equals(".SVG", StringComparison.OrdinalIgnoreCase))
+        {
+            settings.BackgroundColor = MagickColors.Transparent;
+            settings.SetDefine("svg:xml-parse-huge", "true");
+        }
+        else if (ext.Equals(".HEIC", StringComparison.OrdinalIgnoreCase)
+            || ext.Equals(".HEIF", StringComparison.OrdinalIgnoreCase))
+        {
+            settings.SetDefines(new HeicReadDefines
+            {
+                PreserveOrientation = true,
+                DepthImage = true,
+            });
+        }
+        else if (ext.Equals(".JP2", StringComparison.OrdinalIgnoreCase))
+        {
+            settings.SetDefines(new Jp2ReadDefines
+            {
+                QualityLayers = options.Quality,
+            });
+        }
+
+        if (options.Width > 0 && options.Height > 0)
+        {
+            settings.Width = options.Width;
+            settings.Height = options.Height;
+        }
+
+        // Fixed #708: length and filesize do not match
+        settings.SetDefines(new BmpReadDefines
+        {
+            IgnoreFileSize = true,
+        });
+
+        // Fix RAW color
+        settings.SetDefines(new DngReadDefines()
+        {
+            UseCameraWhitebalance = true,
+            OutputColor = DngOutputColor.AdobeRGB,
+            ReadThumbnail = true,
+        });
+
+
+        return settings;
+    }
+
+
+    /// <summary>
+    /// Get EXIF value
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="profile"></param>
+    /// <param name="tag"></param>
+    /// <param name="defaultValue"></param>
+    /// <returns></returns>
+    private static T? GetExifValue<T>(IExifProfile? profile, ExifTag<T> tag, T? defaultValue = default)
+    {
+        if (profile == null) return default;
+
+        var exifValue = profile.GetValue(tag);
+        if (exifValue == null) return defaultValue;
+
+        return exifValue.Value;
+    }
 
     #endregion
 
