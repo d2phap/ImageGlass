@@ -211,6 +211,7 @@ public partial class FrmMain
 
         var scrollBarSize = 0;
         Gallery.ScrollBars = Config.ShowThumbnailScrollbars;
+        Gallery.ShowItemText = Config.ShowThumbnailFilename;
 
         if (Config.ShowThumbnailScrollbars)
         {

@@ -214,6 +214,16 @@ public static class Config
     /// </summary>
     public static bool ShowThumbnails { get; set; } = true;
 
+    /// <summary>
+    /// Gets, sets value whether thumbnail scrollbars visible
+    /// </summary>
+    public static bool ShowThumbnailScrollbars { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value indicates that showing image filename on thumbnail bar
+    /// </summary>
+    public static bool ShowThumbnailFilename { get; set; } = true;
+
     ///// <summary>
     ///// Gets, sets the value that indicates if the default position of image in the viewer is center or top left
     ///// </summary>
@@ -248,11 +258,6 @@ public static class Config
     /// Gets, sets value of visibility of toolbar when start up
     /// </summary>
     public static bool ShowToolbar { get; set; } = true;
-
-    /// <summary>
-    /// Gets, sets value whether thumbnail scrollbars visible
-    /// </summary>
-    public static bool ShowThumbnailScrollbars { get; set; } = false;
 
     ///// <summary>
     ///// Gets, sets value that allows user to loop back to the first image when reaching the end of list
@@ -752,6 +757,8 @@ public static class Config
         //IsRandomSlideshowInterval = items.GetValue(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
         //IsFullScreen = items.GetValue(nameof(IsFullScreen), IsFullScreen);
         ShowThumbnails = items.GetValue(nameof(ShowThumbnails), ShowThumbnails);
+        ShowThumbnailScrollbars = items.GetValue(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
+        ShowThumbnailFilename = items.GetValue(nameof(ShowThumbnailFilename), ShowThumbnailFilename);
         //IsCenterImage = items.GetValue(nameof(IsCenterImage), IsCenterImage);
         //IsColorPickerRGBA = items.GetValue(nameof(IsColorPickerRGBA), IsColorPickerRGBA);
         //IsColorPickerHEXA = items.GetValue(nameof(IsColorPickerHEXA), IsColorPickerHEXA);
@@ -759,7 +766,6 @@ public static class Config
         //IsColorPickerHSVA = items.GetValue(nameof(IsColorPickerHSVA), IsColorPickerHSVA);
         //IsShowWelcome = items.GetValue(nameof(IsShowWelcome), IsShowWelcome);
         ShowToolbar = items.GetValue(nameof(ShowToolbar), ShowToolbar);
-        ShowThumbnailScrollbars = items.GetValue(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
         //IsLoopBackSlideshow = items.GetValue(nameof(IsLoopBackSlideshow), IsLoopBackSlideshow);
         EnableLoopBackNavigation = items.GetValue(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
         //EnablePressESCToQuit = items.GetValue(nameof(EnablePressESCToQuit), EnablePressESCToQuit);
@@ -1088,6 +1094,8 @@ public static class Config
         //settings.TryAdd(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
         //settings.TryAdd(nameof(IsFullScreen), IsFullScreen);
         settings.TryAdd(nameof(ShowThumbnails), ShowThumbnails);
+        settings.TryAdd(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
+        settings.TryAdd(nameof(ShowThumbnailFilename), ShowThumbnailFilename);
         //settings.TryAdd(nameof(IsCenterImage), IsCenterImage);
         //settings.TryAdd(nameof(IsColorPickerRGBA), IsColorPickerRGBA);
         //settings.TryAdd(nameof(IsColorPickerHEXA), IsColorPickerHEXA);
@@ -1095,7 +1103,6 @@ public static class Config
         //settings.TryAdd(nameof(IsColorPickerHSVA), IsColorPickerHSVA);
         //settings.TryAdd(nameof(IsShowWelcome), IsShowWelcome);
         settings.TryAdd(nameof(ShowToolbar), ShowToolbar);
-        settings.TryAdd(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
         //settings.TryAdd(nameof(IsLoopBackSlideshow), IsLoopBackSlideshow);
         settings.TryAdd(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
         //settings.TryAdd(nameof(EnablePressESCToQuit), EnablePressESCToQuit);
