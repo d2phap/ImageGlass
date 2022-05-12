@@ -228,8 +228,8 @@ public partial class ViewBox : HybridControl
         get => _zoomSpeed;
         set
         {
-            _zoomFactor = Math.Min(value, 500f); // max 500f
-            _zoomFactor = Math.Max(value, -500f); // min -500f
+            _zoomSpeed = Math.Min(value, 500f); // max 500f
+            _zoomSpeed = Math.Max(value, -500f); // min -500f
         }
     }
 

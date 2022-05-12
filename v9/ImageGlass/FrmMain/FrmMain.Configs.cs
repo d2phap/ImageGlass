@@ -145,7 +145,6 @@ public partial class FrmMain
 
         // Thumbnail bar
         Gallery.Codec = Config.Codec;
-        //Gallery.ScrollBars = Config.ShowThumbnailScrollbar;
         Gallery.DoNotDeletePersistentCache = true;
         Gallery.PersistentCacheSize = 100;
         Gallery.PersistentCacheDirectory = App.ConfigDir(PathType.Dir, Dir.ThumbnailsCache);
@@ -172,7 +171,7 @@ public partial class FrmMain
     private void FrmMainConfig_Load(object? sender, EventArgs e)
     {
         Local.OnRequestUpdateFrmMain += Local_OnFrmMainUpdateRequested;
-        
+
         // IsWindowAlwaysOnTop
         IG_ToggleTopMost(Config.EnableWindowAlwaysOnTop);
 

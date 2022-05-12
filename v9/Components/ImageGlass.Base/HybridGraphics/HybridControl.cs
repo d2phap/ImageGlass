@@ -62,7 +62,7 @@ public class HybridControl : Control
     /// Gets the value indicates if control is fully loaded
     /// </summary>
     [Browsable(false)]
-    public bool IsReady => !DesignMode && _isControlLoaded;
+    public bool IsReady => !DesignMode && Created;
 
     /// <summary>
     /// Gets Direct2D device
