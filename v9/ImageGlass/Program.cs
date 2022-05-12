@@ -38,7 +38,7 @@ internal static class Program
     static void Main()
     {
         // Issue #360: IG periodically searching for dismounted device.
-        ErrorModeApi.SetAppErrorMode();
+        WindowApi.SetAppErrorMode();
 
         ApplicationConfiguration.Initialize();
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
@@ -256,4 +256,20 @@ internal static class Program
 
         // load image file from arg
         FormMain.LoadImagesFromCmdArgs(args);
+
+        // Issues #774, #855 : if IG is normal or maximized, do nothing. If IG is minimized,
+        // restore it to previous state.
+        if (FormMain.WindowState == FormWindowState.Minimized)
+        {
+            WindowApi.ShowAppWindow(FormMain.Handle, WindowApi.ShowWindowCommands.SW_RESTORE);
+        }
+        else
+        {
+            // Hack for issue #620: IG does not activate in normal / maximized window state
+            FormMain.TopMost = true;
+            WindowApi.ClickOnWindow(FormMain.Handle, new(0, 0));
+            FormMain.TopMost = Config.EnableWindowAlwaysOnTop;
+        }
+    }
+
 }
