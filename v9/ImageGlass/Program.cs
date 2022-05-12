@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Base.Update;
+using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using System.Globalization;
 
@@ -31,6 +32,9 @@ internal static class Program
     [STAThread]
     static void Main()
     {
+        // Issue #360: IG periodically searching for dismounted device.
+        ErrorModeApi.SetAppErrorMode();
+
         ApplicationConfiguration.Initialize();
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
         Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
