@@ -158,6 +158,8 @@ public partial class FrmMain
             ? NavButtonDisplay.Both
             : NavButtonDisplay.None;
         PicMain.TabStop = false;
+        PicMain.PanSpeed = Config.PanSpeed;
+        PicMain.ZoomSpeed = Config.ZoomSpeed;
         IG_SetZoomMode(Config.ZoomMode.ToString());
         IG_ToggleCheckerboard(Config.ShowCheckerBoard);
 

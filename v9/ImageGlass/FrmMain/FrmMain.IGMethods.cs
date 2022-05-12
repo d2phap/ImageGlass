@@ -611,6 +611,9 @@ public partial class FrmMain
 
         if (enable.Value)
         {
+            PicMain.PanSpeed = Config.PanSpeed;
+            PicMain.ZoomSpeed = Config.ZoomSpeed;
+
             PicMain.AllowInternalPanningKeys = true;
             PicMain.AllowInternalZoomingKeys = true;
             PicMain.TabStop = true;

@@ -464,6 +464,18 @@ public static class Config
     /// </summary>
     public static int FrmMainHeight { get; set; } = 800;
 
+    /// <summary>
+    /// Gets, sets the panning speed when <see cref="EnableImageFocus"/> is on.
+    /// Value range is from 0 to 100.
+    /// </summary>
+    public static float PanSpeed { get; set; } = 20f;
+
+    /// <summary>
+    /// Gets, sets the zooming speed when <see cref="EnableImageFocus"/> is on.
+    /// Value range is from -500 to 500.
+    /// </summary>
+    public static float ZoomSpeed { get; set; } = 0;
+
 
     ///// <summary>
     ///// Gets, sets 'Left' position of settings window
@@ -815,6 +827,9 @@ public static class Config
         FrmMainWidth = items.GetValue(nameof(FrmMainWidth), FrmMainWidth);
         FrmMainHeight = items.GetValue(nameof(FrmMainHeight), FrmMainHeight);
 
+        PanSpeed = items.GetValue(nameof(PanSpeed), PanSpeed);
+        ZoomSpeed = items.GetValue(nameof(ZoomSpeed), ZoomSpeed);
+
         //// FrmSettings
         //FrmSettingsPositionX = items.GetValue(nameof(FrmSettingsPositionX), FrmSettingsPositionX);
         //FrmSettingsPositionY = items.GetValue(nameof(FrmSettingsPositionY), FrmSettingsPositionY);
@@ -1150,6 +1165,9 @@ public static class Config
         settings.TryAdd(nameof(FrmMainPositionY), FrmMainPositionY);
         settings.TryAdd(nameof(FrmMainWidth), FrmMainWidth);
         settings.TryAdd(nameof(FrmMainHeight), FrmMainHeight);
+
+        settings.TryAdd(nameof(PanSpeed), PanSpeed);
+        settings.TryAdd(nameof(ZoomSpeed), ZoomSpeed);
 
         //// FrmSettings
         //settings.TryAdd(nameof(FrmSettingsPositionX), FrmSettingsPositionX);
