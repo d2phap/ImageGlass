@@ -1491,7 +1491,7 @@ public partial class ViewBox : HybridControl
     /// </returns>
     public bool ZoomToPoint(float delta, PointF? point = null, bool requestRerender = true)
     {
-        var speed = delta / (500f - ZoomSpeed);
+        var speed = delta / (501f - ZoomSpeed);
         var location = new PointF()
         {
             X = point?.X ?? ImageViewportCenterPoint.X,
