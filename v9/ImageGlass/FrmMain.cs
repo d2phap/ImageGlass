@@ -59,9 +59,8 @@ public partial class FrmMain : Form
         Local.OnFirstImageReached += Local_OnFirstImageReached;
         Local.OnLastImageReached += Local_OnLastImageReached;
 
-        LoadImagesFromCmdArgs();
+        LoadImagesFromCmdArgs(Environment.GetCommandLineArgs());
     }
-
 
     protected override void WndProc(ref Message m)
     {
@@ -305,10 +304,9 @@ public partial class FrmMain : Form
     /// (<see cref="Environment.GetCommandLineArgs"/>)
     /// </summary>
     /// <param name="args"></param>
-    public void LoadImagesFromCmdArgs()
+    public void LoadImagesFromCmdArgs(string[] args)
     {
         var pathToLoad = "";
-        var args = Environment.GetCommandLineArgs();
 
         if (args.Length >= 2)
         {

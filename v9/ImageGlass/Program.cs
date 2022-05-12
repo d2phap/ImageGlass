@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
+using ImageGlass.Base.InstanceManagement;
 using ImageGlass.Base.Update;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
@@ -26,6 +27,10 @@ namespace ImageGlass;
 
 internal static class Program
 {
+    public const string APP_GUID = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
+    private static FrmMain? FormMain;
+
+
     /// <summary>
     ///  The main entry point for the application.
     /// </summary>
@@ -49,7 +54,8 @@ internal static class Program
         // check and run auto-update
         CheckAndRunAutoUpdate();
 
-        Application.Run(new FrmMain());
+        // checks and runs app instance(s)
+        RunAppInstances();
     }
 
 
@@ -185,4 +191,69 @@ internal static class Program
         });
     }
 
+
+    /// <summary>
+    /// Checks and runs app instance(s)
+    /// </summary>
+    private static void RunAppInstances()
+    {
+        if (Config.EnableMultiInstances)
+        {
+            Application.Run(FormMain = new FrmMain());
+        }
+        else
+        {
+            var guid = new Guid(APP_GUID);
+
+            // single instance is required
+            using var instance = new SingleInstance(guid);
+            if (instance.IsFirstInstance)
+            {
+                instance.ArgsReceived += Instance_ArgumentsReceived; ;
+                instance.ListenForArgsFromChildInstances();
+
+                Application.Run(FormMain = new FrmMain());
+            }
+            else
+            {
+                _ = instance.PassArgsToFirstInstanceAsync(Environment.GetCommandLineArgs());
+            }
+        }
+    }
+
+    private static void Instance_ArgumentsReceived(object? sender, ArgsReceivedEventArgs e)
+    {
+        if (FormMain == null) return;
+
+
+        // Attempt to run a 2nd instance of IG when multi-instance turned off.
+        // The primary instance will crash if no file provided
+        // (e.g. by double-clicking on .EXE in explorer).
+        var realCount = 0;
+        foreach (var arg in e.Arguments)
+        {
+            if (arg != null)
+            {
+                realCount++;
+            }
+        }
+
+        var realArgs = new string[realCount];
+        Array.Copy(e.Arguments, realArgs, realCount);
+
+        // Execute our delegate on the forms thread!
+        FormMain.Invoke(ActivateWindow, (object)realArgs);
+    }
+
+
+    /// <summary>
+    /// Pass arguments and activate the main window
+    /// </summary>
+    /// <param name="args"></param>
+    private static void ActivateWindow(string[] args)
+    {
+        if (FormMain == null) return;
+
+        // load image file from arg
+        FormMain.LoadImagesFromCmdArgs(args);
 }
