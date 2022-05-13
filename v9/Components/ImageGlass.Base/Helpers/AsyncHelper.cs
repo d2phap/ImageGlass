@@ -75,7 +75,11 @@ public partial class Helpers
     /// <returns></returns>
     public static int RunAsThread(ThreadStart func)
     {
-        var th = new Thread(func);
+        var th = new Thread(func)
+        {
+            IsBackground = true
+        };
+
         th.Start();
 
         return th.ManagedThreadId;

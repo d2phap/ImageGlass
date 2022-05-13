@@ -997,15 +997,15 @@ public partial class FrmMain : Form
         {
             Local.Images.CancelLoading(imageIndex);
         }
-        catch (Exception ex)
-        {
-            Local.RaiseImageLoadedEvent(new()
-            {
-                Index = imageIndex,
-                Error = ex,
-                KeepZoomRatio = isKeepZoomRatio,
-            });
-        }
+        //catch (Exception ex)
+        //{
+        //    Local.RaiseImageLoadedEvent(new()
+        //    {
+        //        Index = imageIndex,
+        //        Error = ex,
+        //        KeepZoomRatio = isKeepZoomRatio,
+        //    });
+        //}
     }
 
 
@@ -1058,8 +1058,25 @@ public partial class FrmMain : Form
         // Select thumbnail item
         _ = Helpers.RunAsThread(SelectCurrentThumbnail);
 
-        UpdateImageInfo(BasicInfoUpdate.All, e.FilePath);
+        //DisplayThumbnail();
+
+        _ = Task.Run(() => UpdateImageInfo(BasicInfoUpdate.All, e.FilePath));
     }
+
+    //private void DisplayThumbnail()
+    //{
+    //    if (Local.CurrentIndex >= 0 && Local.CurrentIndex < Gallery.Items.Count)
+    //    {
+    //        _ = Task.Run(() =>
+    //        {
+    //            var thumb = Gallery.Items[Local.CurrentIndex].ThumbnailImage;
+    //            if (thumb != null && Local.Metadata != null)
+    //            {
+    //                PicMain.SetImage((Bitmap)thumb);
+    //            }
+    //        });
+    //    }
+    //}
 
     private void Local_OnImageLoaded(ImageLoadedEventArgs e)
     {

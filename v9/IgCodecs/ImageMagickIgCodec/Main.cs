@@ -208,9 +208,7 @@ public class Main : IIgCodec
 
         try
         {
-            cancelToken.ThrowIfCancellationRequested();
-
-            var (loadSuccessful, result, ext, settings) = await ReadWithStreamAsync(filename, options, cancelToken);
+            var (loadSuccessful, result, ext, settings) = ReadWithStream(filename, options);
 
             if (!loadSuccessful)
             {
@@ -309,80 +307,6 @@ public class Main : IIgCodec
                 {
                     // Note: Using FileStream is much faster than using MagickImageCollection
                     result.Image = ConvertFileToBitmap(filename);
-                    result.FrameCount = options.Metadata?.FramesCount ?? 0;
-                }
-                catch
-                {
-                    loadSuccessful = false;
-                }
-                break;
-
-            default:
-                loadSuccessful = false;
-
-                break;
-        }
-        #endregion
-
-
-        // apply size setting
-        if (result.Image != null && options.Width > 0 && options.Height > 0)
-        {
-            if (result.Image.Width > options.Width || result.Image.Height > options.Height)
-            {
-                using var imgM = new MagickImage();
-                imgM.Read(result.Image);
-
-                ApplySizeSettings(imgM, options);
-
-                result.Image = imgM.ToBitmap();
-            }
-        }
-
-
-        return (loadSuccessful, result, ext, settings);
-    }
-
-
-    /// <summary>
-    /// Read image file using stream 
-    /// </summary>
-    /// <param name="filename"></param>
-    /// <param name="options"></param>
-    /// <returns></returns>
-    private async Task<(bool loadSuccessful, IgImgData result, string ext, MagickReadSettings settings)> ReadWithStreamAsync(string filename, CodecReadOptions? options = null, CancellationToken token = default)
-    {
-        options ??= new();
-        var loadSuccessful = true;
-        var result = new IgImgData();
-
-        if (options.Metadata == null)
-        {
-            options.Metadata = LoadMetadata(filename, options);
-        }
-
-        var ext = Path.GetExtension(filename).ToUpperInvariant();
-        var settings = ParseSettings(options, filename);
-
-
-        #region Read image data
-        switch (ext)
-        {
-            case ".TXT": // base64 string
-            case ".B64":
-                var base64Content = await File.ReadAllTextAsync(filename, token);
-
-                result.Image = ConvertBase64ToBitmap(base64Content);
-                result.FrameCount = options.Metadata?.FramesCount ?? 0;
-
-                break;
-
-            case ".GIF":
-            case ".FAX":
-                try
-                {
-                    // Note: Using FileStream is much faster than using MagickImageCollection
-                    result.Image = await ConvertFileToBitmapAsync(filename, token);
                     result.FrameCount = options.Metadata?.FramesCount ?? 0;
                 }
                 catch
@@ -817,23 +741,6 @@ public class Main : IIgCodec
         using var fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
         var ms = new MemoryStream();
         fs.CopyTo(ms);
-        ms.Position = 0;
-
-        return new Bitmap(ms, true);
-    }
-
-
-    /// <summary>
-    /// Converts file to Bitmap
-    /// </summary>
-    /// <param name="filename"></param>
-    /// <param name="cancelToken"></param>
-    /// <returns></returns>
-    private static async Task<Bitmap> ConvertFileToBitmapAsync(string filename, CancellationToken cancelToken = default)
-    {
-        using var fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
-        var ms = new MemoryStream();
-        await fs.CopyToAsync(ms, cancelToken);
         ms.Position = 0;
 
         return new Bitmap(ms, true);

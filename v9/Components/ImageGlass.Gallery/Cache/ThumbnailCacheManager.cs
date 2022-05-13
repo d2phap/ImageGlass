@@ -987,7 +987,14 @@ internal class ThumbnailCacheManager : IDisposable
             && item.UseEmbeddedThumbnails == useEmbeddedThumbnails
             && item.AutoRotate == autoRotate)
         {
-            return clone ? (Image?)item.Image.Clone() : item.Image;
+            if (clone)
+            {
+                lock (item.Image)
+                {
+                    return (Image?)item.Image.Clone();
+                }
+            }
+            return item.Image;
         }
         else
         {
