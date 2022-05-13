@@ -516,7 +516,7 @@ public class Main : IIgCodec
 
         // process image
         ProcessMagickImage(imgM, options, ext, ref result);
-
+        
 
         // apply color channel
         ApplyColorChannel(imgM, options, ref result);
@@ -652,14 +652,9 @@ public class Main : IIgCodec
     /// <param name="generateBitmap"></param>
     private static void ProcessMagickImage(
         MagickImage imgM, CodecReadOptions options,
-        string ext, ref IgImgData result,
-        bool checkRotation = true, bool generateBitmap = true)
+        string ext, ref IgImgData result, bool generateBitmap = true)
     {
         var foundThumbnailBitmap = false;
-
-        // Issue #679: fix targa display with Magick.NET 7.15.x 
-        if (ext == ".TGA") imgM.AutoOrient();
-
 
         // preprocess image, read embedded thumbnail if any
         imgM.Quality = options.Quality;
@@ -681,7 +676,7 @@ public class Main : IIgCodec
             using var thumbM = result.ExifProfile.CreateThumbnail();
             if (thumbM != null)
             {
-                ApplyRotation(thumbM, result.ExifProfile);
+                ApplyRotation(thumbM, result.ExifProfile, ext);
                 ApplySizeSettings(thumbM, options);
 
                 result.Image = thumbM.ToBitmap(ImageFormat.Png);
@@ -695,10 +690,7 @@ public class Main : IIgCodec
             // resize the image
             ApplySizeSettings(imgM, options);
 
-            if (checkRotation)
-            {
-                ApplyRotation(imgM, result.ExifProfile);
-            }
+            ApplyRotation(imgM, result.ExifProfile, ext);
 
             // if always apply color profile
             // or only apply color profile if there is an embedded profile
@@ -785,8 +777,16 @@ public class Main : IIgCodec
     /// </summary>
     /// <param name="imgM"></param>
     /// <param name="profile"></param>
-    private static void ApplyRotation(IMagickImage imgM, IExifProfile? profile)
+    private static void ApplyRotation(IMagickImage imgM, IExifProfile? profile, string ext)
     {
+        if (ext == ".HEIC" || ext == ".HEIF") return;
+
+        if (ext == ".TGA")
+        {
+            imgM.AutoOrient();
+            return;
+        }
+
         if (profile == null) return;
 
         // Get Orientation Flag
