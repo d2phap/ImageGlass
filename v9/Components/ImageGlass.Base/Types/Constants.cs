@@ -36,6 +36,7 @@ public static class Constants
     public const string CONFIG_CMD_PREFIX = "-";
     public const string DATETIME_FORMAT = "yyyy/MM/dd HH:mm:ss";
     public const string DATE_FORMAT = "yyyy/MM/dd";
+    public const string APP_PROTOCOL = "igm";
 
     /// <summary>
     /// First launch version constant.
@@ -43,11 +44,6 @@ public static class Constants
     /// the First-Launch Configs screen will be launched.
     /// </summary>
     public const int FIRST_LAUNCH_VERSION = 9;
-
-    /// <summary>
-    /// The URI Scheme to register web-to-app linking
-    /// </summary>
-    public const string URI_SCHEME = "imageglass";
 
     /// <summary>
     /// The default theme pack

@@ -16,7 +16,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Microsoft.Win32;
 using System.Diagnostics;
+using System.Security.Principal;
+using System.Text;
+using static ImageGlass.Base.RegistryEx;
 
 namespace ImageGlass.Base;
 
@@ -29,10 +33,22 @@ public class App
 
 
     /// <summary>
+    /// Gets the application name after removing all space characters.
+    /// Example: ImageGlass Kobe => ImageGlassKobe
+    /// </summary>
+    public static string AppNameCode = Application.ProductName.Replace(" ", "", StringComparison.InvariantCultureIgnoreCase);
+
+
+    /// <summary>
     /// Gets the product version
     /// </summary>
     public static string Version { get => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion ?? ""; }
 
+    /// <summary>
+    /// Checks if the current process is running as administator
+    /// </summary>
+    public static bool IsAdministrator => new WindowsPrincipal(WindowsIdentity.GetCurrent())
+       .IsInRole(WindowsBuiltInRole.Administrator);
 
     /// <summary>
     /// Gets value of Portable mode if the startup dir is writable
@@ -76,7 +92,7 @@ public class App
         }
 
         // else, use AppData dir
-        var appDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ImageGlass");
+        var appDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppNameCode);
 
         var newPaths = paths.ToList();
         newPaths.Insert(0, appDataDir);
@@ -106,27 +122,204 @@ public class App
 
 
     /// <summary>
-    /// Write log in DEBUG mode
+    /// Register file type associations and app capabilities to registry
     /// </summary>
-    /// <param name="msg"></param>
-    public static void LogIt(string msg)
+    /// <param name="extensions">Extension string, ex: *.png;*.svg;</param>
+    public static (bool IsSuccessful, StringBuilder Keys) RegisterAppAndExtensions(string extensions)
     {
-#if DEBUG
-        try
-        {
-            var tempDir = ConfigDir(PathType.Dir, Dir.Log);
-            if (!Directory.Exists(tempDir))
-            {
-                Directory.CreateDirectory(tempDir);
-            }
-            var path = Path.Combine(tempDir, "iglog.log");
+        var keys = new StringBuilder();
+        _ = UnregisterAppAndExtensions(extensions);
 
-            using var tw = new StreamWriter(path, append: true);
-            tw.WriteLine(msg);
-            tw.Flush();
-            tw.Close();
+        var reg = new RegistryEx
+        {
+            ShowError = false,
+            BaseRegistryKey = Registry.LocalMachine,
+
+            // Register the application to Registry
+            SubKey = @"SOFTWARE\RegisteredApplications"
+        };
+
+        if (!reg.Write(AppNameCode, $@"SOFTWARE\{AppNameCode}\Capabilities"))
+        {
+            keys.AppendLine($@"{reg.FullKey}\{AppNameCode}");
         }
-        catch { }
-#endif
+
+        // Register Capabilities info
+        reg.SubKey = $@"SOFTWARE\{AppNameCode}\Capabilities";
+        if (!reg.Write("ApplicationName", Application.ProductName))
+        {
+            keys.AppendLine($@"{reg.FullKey}\ApplicationName");
+        }
+
+        if (!reg.Write("ApplicationIcon", $"\"{IGExePath}\", 0"))
+        {
+            keys.AppendLine($@"{reg.FullKey}\ApplicationIcon");
+        }
+
+        if (!reg.Write("ApplicationDescription", "A lightweight, versatile image viewer"))
+        {
+            keys.AppendLine($@"{reg.FullKey}\ApplicationDescription");
+        }
+
+        // Register File Associations
+        var extList = extensions.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (var ext in extList)
+        {
+            var keyname = $"{AppNameCode}.AssocFile" + ext.ToUpper();
+            var extNoDot = ext[1..].ToUpperInvariant();
+
+            reg.SubKey = $@"SOFTWARE\{AppNameCode}\Capabilities\FileAssociations";
+            if (!reg.Write(ext, keyname))
+            {
+                keys.AppendLine($@"{reg.FullKey}\{ext}");
+            }
+
+            // File type description: ImageGlass <...> JPG file
+            reg.SubKey = @"SOFTWARE\Classes\" + keyname;
+            if (!reg.Write("", $"{AppNameCode} {extNoDot} file"))
+            {
+                keys.AppendLine($@"{reg.FullKey}");
+            }
+
+            // File type icon
+            var iconPath = StartUpDir(@"Ext-Icons\" + extNoDot + ".ico");
+            if (!File.Exists(iconPath))
+            {
+                iconPath = IGExePath;
+            }
+
+            reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\DefaultIcon";
+            if (!reg.Write("", $"\"{iconPath}\", 0"))
+            {
+                keys.AppendLine($@"{reg.FullKey}");
+            }
+
+            // Friendly App Name
+            reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open";
+            if (!reg.Write("FriendlyAppName", Application.ProductName))
+            {
+                keys.AppendLine($@"{reg.FullKey}\FriendlyAppName");
+            }
+
+            // Execute command
+            reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open\command";
+            if (!reg.Write("", $"\"{IGExePath}\" \"%1\""))
+            {
+                keys.AppendLine($@"{reg.FullKey}");
+            }
+        }
+
+        return (keys.Length == 0, keys);
     }
+
+
+    /// <summary>
+    /// Unregister file type associations and app information from registry
+    /// </summary>
+    /// <param name="exts">Extensions string to delete. Ex: *.png;*.bmp;</param>
+    public static (bool IsSuccessful, StringBuilder Keys) UnregisterAppAndExtensions(string exts)
+    {
+        var keys = new StringBuilder();
+
+        var reg = new RegistryEx
+        {
+            ShowError = false,
+            BaseRegistryKey = Registry.LocalMachine,
+        };
+
+        var extList = exts.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+        foreach (var ext in extList)
+        {
+            reg.SubKey = $@"SOFTWARE\Classes\{AppNameCode}.AssocFile" + ext.ToUpper();
+            reg.DeleteSubKeyTree();
+        }
+
+        reg.SubKey = $@"SOFTWARE\{AppNameCode}";
+        if (!reg.DeleteSubKeyTree())
+        {
+            keys.AppendLine(reg.FullKey);
+        }
+
+        reg.SubKey = @"SOFTWARE\RegisteredApplications";
+        if (!reg.DeleteKey(AppNameCode))
+        {
+            keys.AppendLine(reg.FullKey);
+        }
+
+        reg.SubKey = $@"SOFTWARE\{AppNameCode}\Capabilities\FileAssociations";
+        if (!reg.DeleteSubKeyTree())
+        {
+            keys.AppendLine(reg.FullKey);
+        }
+
+        return (keys.Length == 0, keys);
+    }
+
+
+    /// <summary>
+    /// Register app protocol to registry
+    /// </summary>
+    /// <returns></returns>
+    public static bool RegisterAppProtocol()
+    {
+        _ = UnregisterAppProtocol();
+
+        var baseKey = $@"SOFTWARE\Classes\{Constants.APP_PROTOCOL}";
+        var reg = new RegistryEx
+        {
+            ShowError = false,
+            BaseRegistryKey = Registry.CurrentUser,
+            SubKey = baseKey,
+        };
+
+        if (!reg.Write("", $"URL: {Application.ProductName} Protocol"))
+        {
+            return false;
+        }
+
+        if (!reg.Write("URL Protocol", ""))
+        {
+            return false;
+        }
+
+        // DefaultIcon
+        reg.SubKey = $@"{baseKey}\DefaultIcon";
+        if (!reg.Write("", $"\"{IGExePath}\", 0"))
+        {
+            return false;
+        }
+
+        // shell\open\command
+        reg.SubKey = $@"{baseKey}\shell\open\command";
+        if (!reg.Write("", $"\"{IGExePath}\" \"%1\""))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    /// <summary>
+    /// Delete app protocol from registry
+    /// </summary>
+    /// <returns></returns>
+    public static bool UnregisterAppProtocol()
+    {
+        var baseKey = $@"SOFTWARE\Classes\{Constants.APP_PROTOCOL}";
+
+        var reg = new RegistryEx
+        {
+            ShowError = false,
+            BaseRegistryKey = Registry.CurrentUser,
+            SubKey = baseKey,
+        };
+
+        if (!reg.DeleteSubKeyTree()) return false;
+
+        return true;
+    }
+
+
 }

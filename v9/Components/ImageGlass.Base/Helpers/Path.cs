@@ -184,7 +184,7 @@ public partial class Helpers
             return inputPath ?? "";
 
         var path = inputPath;
-        const string protocol = Constants.URI_SCHEME + ":";
+        const string protocol = Constants.APP_PROTOCOL + ":";
 
         // If inputPath is URI Scheme
         if (path.StartsWith(protocol))
