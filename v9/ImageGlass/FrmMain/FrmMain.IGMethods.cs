@@ -311,6 +311,7 @@ public partial class FrmMain
         var appVersion = App.Version + $" ({archInfo})";
 
         var btnDonate = new TaskDialogButton("Donate", allowCloseDialog: false);
+        var btnCheckForUpdate = new TaskDialogButton("Check for update", allowCloseDialog: false);
         var btnClose = new TaskDialogButton("Close", allowCloseDialog: true);
 
         btnDonate.Click += (object? sender, EventArgs e) =>
@@ -318,10 +319,15 @@ public partial class FrmMain
             Helpers.OpenUrl("https://imageglass.org/source#donation", "app_donation");
         };
 
+        btnCheckForUpdate.Click += (_, _) => IG_CheckForUpdate(true);
+
         _ = TaskDialog.ShowDialog(new()
         {
             Icon = new TaskDialogIcon(Icon),
-            Buttons = new TaskDialogButtonCollection { btnDonate, btnClose },
+            Buttons = new TaskDialogButtonCollection {
+                btnDonate, btnCheckForUpdate, btnClose
+            },
+            SizeToContent = true,
             AllowCancel = true,
             Caption = $"About",
 
