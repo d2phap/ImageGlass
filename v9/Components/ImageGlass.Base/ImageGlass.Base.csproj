@@ -7,6 +7,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Platforms>AnyCPU;x64;x86</Platforms>
+      <Version>9.0.1.514</Version>
+      <FileVersion>$(Version)</FileVersion>
+    <Copyright>Copyright © 2010 - 2022 Duong Dieu Phap</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

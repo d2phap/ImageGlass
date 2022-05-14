@@ -6,7 +6,9 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <FileVersion>$(Version)</FileVersion>
+      <Version>9.0.1.514</Version>
+      <FileVersion>$(Version)</FileVersion>
+      <Copyright>Copyright © 2010 - 2022 Duong Dieu Phap</Copyright>
     <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 

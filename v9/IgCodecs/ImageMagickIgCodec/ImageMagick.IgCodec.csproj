@@ -6,6 +6,9 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>x64</Platforms>
+      <Version>1.0.0.0</Version>
+      <FileVersion>$(Version)</FileVersion>
+      <Copyright>Copyright © 2010 - 2022 Duong Dieu Phap</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
