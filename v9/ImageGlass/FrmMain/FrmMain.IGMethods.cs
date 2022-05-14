@@ -308,7 +308,7 @@ public partial class FrmMain
     private void IG_About()
     {
         var archInfo = Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
-        var appVersion = App.Version + $" beta 1 ({archInfo})";
+        var appVersion = App.Version + $" ({archInfo})";
 
         var btnDonate = new TaskDialogButton("Donate", allowCloseDialog: false);
         var btnClose = new TaskDialogButton("Close", allowCloseDialog: true);
@@ -318,20 +318,68 @@ public partial class FrmMain
             Helpers.OpenUrl("https://imageglass.org/source#donation", "app_donation");
         };
 
-        TaskDialog.ShowDialog(new()
+        _ = TaskDialog.ShowDialog(new()
         {
             Icon = new TaskDialogIcon(Icon),
-            Caption = $"About",
-
-            Heading = $"{Application.ProductName}\r\n" +
-                $"Version: {appVersion}",
-            Text = $"Copyright © 2010-{DateTime.Now.Year} by Dương Diệu Pháp.\r\n" +
-                $"All rights reserved.\r\n\r\n" +
-                $"Homepage: https://imageglass.org\r\n" +
-                $"GitHub: https://github.com/d2phap/ImageGlass",
-
             Buttons = new TaskDialogButtonCollection { btnDonate, btnClose },
             AllowCancel = true,
+            Caption = $"About",
+
+            Heading = $"{Application.ProductName} beta 1\r\n" +
+                $"A lightweight, versatile image viewer\r\n" +
+                $"\r\n" +
+                $"Version: {appVersion}",
+
+            Text = $"Special thanks to:\r\n" +
+                    $"◾ Logo designer: Nguyễn Quốc Tuấn.\r\n" +
+                    $"◾ Collaborator: Kevin Routley (https://github.com/fire-eggs).\r\n" +
+                    $"\r\n" +
+
+                    $"Contact:\r\n" +
+                    $"◾ Homepage: https://imageglass.org\r\n" +
+                    $"◾ GitHub: https://github.com/d2phap/ImageGlass\r\n" +
+                    $"◾ Email: phap@imageglass.org",
+
+            Footnote = new()
+            {
+                Icon = TaskDialogIcon.ShieldSuccessGreenBar,
+                Text = "" +
+                    $"This software is released under the terms of the GNU General Public License v3.0.\r\n" +
+                    $"Copyright © 2010-{DateTime.Now.Year} by Dương Diệu Pháp. All rights reserved.",
+            },
+
+            Expander = new()
+            {
+                Position = TaskDialogExpanderPosition.AfterText,
+                ExpandedButtonText = "Hide License and credits",
+                CollapsedButtonText = "Show License and credits",
+                Text = "\r\n" +
+                    "LICENSE AND CREDITS\r\n" +
+                    "\r\n" +
+                    "◾ D2DLib\r\n" +
+                    "    Distributed under the terms of the MIT license.\r\n" +
+                    "    Copyright © 2009-2020 unvell.com, Jingwood. All rights reserved.\r\n" +
+                    "\r\n" +
+
+                    "◾ Magick.NET\r\n" +
+                    "    Distributed under the terms of the MIT license.\r\n" +
+                    "    Copyright © 2013-2022 Dirk Lemstra.\r\n" +
+                    "\r\n" +
+
+                    "◾ ExplorerSortOrder\r\n" +
+                    "    Distributed under the terms of the Apache License 2.0.\r\n" +
+                    "    Copyright © 2019 Kevin Routley.\r\n" +
+                    "\r\n" +
+
+                    "◾ ImageGlass.Gallery\r\n" +
+                    "    This software uses code of ImageListView licensed under the Apache License 2.0.\r\n" +
+                    "    Copyright © 2013 Özgür Özçıtak.\r\n" +
+
+                    "\r\n" +
+                    "◾ All Microsoft.Extensions libraries\r\n" +
+                    "    Distributed under the terms of the MIT license.\r\n" +
+                    "    Copyright © Microsoft Corporation. All rights reserved.",
+            },
         });
     }
 
