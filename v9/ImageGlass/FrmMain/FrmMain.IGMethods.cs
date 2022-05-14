@@ -25,6 +25,7 @@ using ImageGlass.Settings;
 using ImageGlass.UI;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Security.Permissions;
 
 namespace ImageGlass;
 
@@ -697,6 +698,96 @@ public partial class FrmMain
         }
 
         return Config.EnableImageFocus;
+    }
+
+
+    private void IG_SetDefaultPhotoViewer()
+    {
+        var allExts = Config.AllFormats;
+
+        // Issue #664
+        allExts.Remove(".ico");
+        var extensions = Config.GetImageFormats(allExts);
+
+        var result = App.RegisterAppAndExtensions(extensions);
+        
+        if (result.IsSuccessful)
+        {
+            _ = TaskDialog.ShowDialog(new()
+            {
+                Caption = Application.ProductName,
+                Icon = TaskDialogIcon.Information,
+                AllowCancel = true,
+                SizeToContent = true,
+                Heading = $"You have successfully registered {Application.ProductName} " +
+                    $"as default photo viewer.\r\n\r\n" +
+                    $"Next, please open Windows Settings > Default apps, and select {Application.ProductName} under Photo viewer section.",
+            });
+        }
+        else
+        {
+            _ = TaskDialog.ShowDialog(new()
+            {
+                Caption = Application.ProductName,
+                Icon = TaskDialogIcon.Error,
+                AllowCancel = true,
+                SizeToContent = true,
+                Heading = $"{Application.ProductName} encountered an error while trying to set itself as default photo viewer.",
+
+                Text = App.IsAdministrator ? "" : $"You may run {Application.ProductName} as administrator and try again.",
+
+                Expander = new()
+                {
+                    CollapsedButtonText = "Show details",
+                    ExpandedButtonText = "Hide details",
+                    Text = "Could not create keys:\r\n" + result.Keys.ToString(),
+                },
+            });
+        }
+    }
+
+    private void IG_UnsetDefaultPhotoViewer()
+    {
+        var allExts = Config.AllFormats;
+
+        // Issue #664
+        allExts.Remove(".ico");
+        var extensions = Config.GetImageFormats(allExts);
+
+        var result = App.UnregisterAppAndExtensions(extensions);
+
+        if (result.IsSuccessful)
+        {
+            _ = TaskDialog.ShowDialog(new()
+            {
+                Caption = Application.ProductName,
+                Icon = TaskDialogIcon.Information,
+                AllowCancel = true,
+                SizeToContent = true,
+                Heading = $"{Application.ProductName} is now not your default photo viewer anymore.",
+            });
+        }
+        else
+        {
+            _ = TaskDialog.ShowDialog(new()
+            {
+                Caption = Application.ProductName,
+                Icon = TaskDialogIcon.Error,
+                AllowCancel = true,
+                SizeToContent = true,
+                Heading = $"{Application.ProductName} encountered an error while trying to remove itself from the default photo viewer setting.",
+
+                Text = App.IsAdministrator ? "" : $"You may run {Application.ProductName} as administrator and try again.",
+
+                Expander = new()
+                {
+                    CollapsedButtonText = "Show details",
+                    ExpandedButtonText = "Hide details",
+                    Text = "Could not delete keys:\r\n" + result.Keys.ToString(),
+                },
+            });
+        }
+
     }
 
 }
