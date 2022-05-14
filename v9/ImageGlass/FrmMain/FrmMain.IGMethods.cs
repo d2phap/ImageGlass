@@ -744,6 +744,8 @@ public partial class FrmMain
                 },
             });
         }
+
+        result.Keys.Clear();
     }
 
     private void IG_UnsetDefaultPhotoViewer()
@@ -788,6 +790,7 @@ public partial class FrmMain
             });
         }
 
+        result.Keys.Clear();
     }
 
 }

@@ -244,6 +244,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuCheckForUpdate._NoUpdate", "Check for update…"); //v5.0
         Add("FrmMain.MnuCheckForUpdate._NewVersion", "A new version is available!"); //v5.0
         Add("FrmMain.MnuReportIssue", "Report an issue…"); //v3.0
+        Add("FrmMain.MnuSetDefaultPhotoViewer", "Set as default photo viewer"); //v9.0
+        Add("FrmMain.MnuUnsetDefaultPhotoViewer", "Unset default photo viewer"); //v9.0
         #endregion
 
         Add("FrmMain.MnuExit", "Exit"); //v7.0

@@ -2092,6 +2092,16 @@ public partial class FrmMain : Form
 
     }
 
+    private void MnuSetDefaultPhotoViewer_Click(object sender, EventArgs e)
+    {
+        IG_SetDefaultPhotoViewer();
+    }
+
+    private void MnuUnsetDefaultPhotoViewer_Click(object sender, EventArgs e)
+    {
+        IG_UnsetDefaultPhotoViewer();
+    }
+
     #endregion
 
 
@@ -2114,4 +2124,6 @@ public partial class FrmMain : Form
     #endregion
 
     #endregion
+
+    
 }

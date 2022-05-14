@@ -450,6 +450,9 @@ public partial class FrmMain
         MnuAbout.Text = lang[$"{Name}.{nameof(MnuAbout)}"];
         MnuFirstLaunch.Text = lang[$"{Name}.{nameof(MnuFirstLaunch)}"];
         MnuReportIssue.Text = lang[$"{Name}.{nameof(MnuReportIssue)}"];
+
+        MnuSetDefaultPhotoViewer.Text = lang[$"{Name}.{nameof(MnuSetDefaultPhotoViewer)}"];
+        MnuUnsetDefaultPhotoViewer.Text = lang[$"{Name}.{nameof(MnuUnsetDefaultPhotoViewer)}"];
         #endregion
 
 
