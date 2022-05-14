@@ -497,11 +497,6 @@ public class Main : IIgCodec
         // read all frames
         if (imgColl.Count > 1 && readFirstFrameOnly is false)
         {
-            // Hack for https://github.com/dlemstra/Magick.NET/issues/1174
-            if (ext == ".ICO")
-            {
-                settings.Format = MagickFormat.Ico;
-            }
             await imgColl.ReadAsync(filename, settings, cancelToken);
 
 
