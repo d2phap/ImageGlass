@@ -437,7 +437,7 @@ public static class Config
     /// <summary>
     /// Gets, sets value indicates that the Image focus tool should be enable
     /// </summary>
-    public static bool EnableImageFocus { get; set; } = false;
+    public static bool EnableImageFocusMode { get; set; } = false;
 
     #endregion
 
@@ -465,13 +465,13 @@ public static class Config
     public static int FrmMainHeight { get; set; } = 800;
 
     /// <summary>
-    /// Gets, sets the panning speed when <see cref="EnableImageFocus"/> is on.
+    /// Gets, sets the panning speed when <see cref="EnableImageFocusMode"/> is on.
     /// Value range is from 0 to 100.
     /// </summary>
     public static float PanSpeed { get; set; } = 20f;
 
     /// <summary>
-    /// Gets, sets the zooming speed when <see cref="EnableImageFocus"/> is on.
+    /// Gets, sets the zooming speed when <see cref="EnableImageFocusMode"/> is on.
     /// Value range is from -500 to 500.
     /// </summary>
     public static float ZoomSpeed { get; set; } = 0;
@@ -813,7 +813,7 @@ public static class Config
         UseRawThumbnail = items.GetValue(nameof(UseRawThumbnail), UseRawThumbnail);
         //IsHideToolbarInFullscreen = items.GetValue(nameof(IsHideToolbarInFullscreen), IsHideToolbarInFullscreen);
         //IsHideThumbnailBarInFullscreen = items.GetValue(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
-        EnableImageFocus = items.GetValue(nameof(EnableImageFocus), EnableImageFocus);
+        EnableImageFocusMode = items.GetValue(nameof(EnableImageFocusMode), EnableImageFocusMode);
 
         #endregion
 
@@ -1153,7 +1153,7 @@ public static class Config
         settings.TryAdd(nameof(UseRawThumbnail), UseRawThumbnail);
         //settings.TryAdd(nameof(IsHideToolbarInFullscreen), IsHideToolbarInFullscreen);
         //settings.TryAdd(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
-        settings.TryAdd(nameof(EnableImageFocus), EnableImageFocus);
+        settings.TryAdd(nameof(EnableImageFocusMode), EnableImageFocusMode);
 
         #endregion
 

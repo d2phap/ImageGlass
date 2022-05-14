@@ -176,7 +176,7 @@ public partial class FrmMain
         IG_ToggleTopMost(Config.EnableWindowAlwaysOnTop);
 
         // EnableImageFocus
-        IG_ToggleImageFocus(Config.EnableImageFocus, showInAppMessage: false);
+        IG_ToggleImageFocus(Config.EnableImageFocusMode, showInAppMessage: false);
 
         // load language pack
         Local.UpdateFrmMain(ForceUpdateAction.Language);

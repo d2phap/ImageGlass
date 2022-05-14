@@ -661,8 +661,8 @@ public partial class FrmMain
     /// <returns></returns>
     private bool IG_ToggleImageFocus(bool? enable = null, bool showInAppMessage = true)
     {
-        enable ??= !Config.EnableImageFocus;
-        Config.EnableImageFocus = enable.Value;
+        enable ??= !Config.EnableImageFocusMode;
+        Config.EnableImageFocusMode = enable.Value;
 
         if (enable.Value)
         {
@@ -692,12 +692,12 @@ public partial class FrmMain
 
         if (showInAppMessage)
         {
-            var msgKey = Config.EnableImageFocus ? "_Enable" : "_Disable";
+            var msgKey = Config.EnableImageFocusMode ? "_Enable" : "_Disable";
             PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuToggleImageFocus)}.{msgKey}"],
                 Config.InAppMessageDuration);
         }
 
-        return Config.EnableImageFocus;
+        return Config.EnableImageFocusMode;
     }
 
 

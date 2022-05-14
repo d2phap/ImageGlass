@@ -1241,7 +1241,7 @@ public partial class FrmMain : Form
 
     private void PicMain_Click(object sender, EventArgs e)
     {
-        if (Config.EnableImageFocus)
+        if (Config.EnableImageFocusMode)
         {
             PicMain.Focus();
         }
