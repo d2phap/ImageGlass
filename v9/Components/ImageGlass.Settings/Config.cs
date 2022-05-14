@@ -222,7 +222,7 @@ public static class Config
     /// <summary>
     /// Gets, sets value indicates that showing image filename on thumbnail bar
     /// </summary>
-    public static bool ShowThumbnailFilename { get; set; } = true;
+    public static bool ShowThumbnailFilename { get; set; } = false;
 
     ///// <summary>
     ///// Gets, sets the value that indicates if the default position of image in the viewer is center or top left
@@ -547,7 +547,7 @@ public static class Config
     /// <summary>
     /// Gets, sets the number of images cached by Image
     /// </summary>
-    public static int ImageBoosterCachedCount { get; set; } = 0;
+    public static int ImageBoosterCachedCount { get; set; } = 1;
 
     /// <summary>
     /// Gets, sets fixed width on zooming
