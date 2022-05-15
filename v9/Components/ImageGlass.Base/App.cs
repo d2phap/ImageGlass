@@ -94,6 +94,9 @@ public class App
         // else, use AppData dir
         var appDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppNameCode);
 
+        // create the directory if not exists
+        Directory.CreateDirectory(appDataDir);
+
         var newPaths = paths.ToList();
         newPaths.Insert(0, appDataDir);
         appDataDir = Path.Combine(newPaths.ToArray());

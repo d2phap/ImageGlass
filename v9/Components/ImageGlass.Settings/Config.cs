@@ -1016,7 +1016,7 @@ public static class Config
         else
         {
             // load default theme
-            Theme = new(App.ConfigDir(PathType.Dir, Dir.Themes, Constants.DEFAULT_THEME));
+            Theme = new(App.StartUpDir(Dir.Themes, Constants.DEFAULT_THEME));
         }
 
         if (!Theme.IsValid)
