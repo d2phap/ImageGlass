@@ -29,7 +29,6 @@ public class CodecManager
         Directory.CreateDirectory(codecDir);
         var files = Directory.GetFiles(codecDir, "*.IgCodec.dll", SearchOption.TopDirectoryOnly);
 
-
         Items = files.SelectMany(path =>
         {
             var pluginAssembly = LoadPlugin(path);
@@ -58,21 +57,12 @@ public class CodecManager
         }
     }
 
-    private static Assembly LoadPlugin(string relativePath)
+    private static Assembly LoadPlugin(string fullPath)
     {
-        // Navigate up to the solution root
-        var root = Path.GetFullPath(Path.Combine(
-            Path.GetDirectoryName(
-                Path.GetDirectoryName(
-                    Path.GetDirectoryName(
-                        Path.GetDirectoryName(
-                            Path.GetDirectoryName(typeof(CodecManager).Assembly.Location)))))));
+        var loadContext = new DllLoadContext(fullPath);
+        var name = Path.GetFileNameWithoutExtension(fullPath);
 
-        var pluginLocation = Path.GetFullPath(Path.Combine(root, relativePath.Replace('\\', Path.DirectorySeparatorChar)));
-
-        var loadContext = new DllLoadContext(pluginLocation);
-
-        return loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(pluginLocation)));
+        return loadContext.LoadFromAssemblyName(new AssemblyName(name));
     }
 }
 
