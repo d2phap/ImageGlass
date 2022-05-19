@@ -17,7 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using ImageGlass.Base;
 
 namespace ImageGlass.Library.WinAPI {
@@ -60,6 +62,69 @@ namespace ImageGlass.Library.WinAPI {
             var preference = DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND;
 
             DwmSetWindowAttribute(handle, attribute, ref preference, sizeof(uint));
+        }
+
+
+
+
+
+        // Simulate mouse click
+        #region Simulate mouse click
+
+        [DllImport("user32.dll")]
+        static extern bool ClientToScreen(IntPtr hWnd, ref Point lpPoint);
+
+        [DllImport("user32.dll")]
+        private static extern uint SendInput(uint nInputs, [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs, int cbSize);
+
+        private struct INPUT {
+            public uint Type;
+            public MOUSEKEYBDHARDWAREINPUT Data;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        private struct MOUSEKEYBDHARDWAREINPUT {
+            [FieldOffset(0)]
+            public MOUSEINPUT Mouse;
+        }
+
+        private struct MOUSEINPUT {
+            public int X;
+            public int Y;
+            public uint MouseData;
+            public uint Flags;
+            public uint Time;
+            public IntPtr ExtraInfo;
+        }
+
+        #endregion
+
+        public static void ClickOnWindow(IntPtr wndHandle, Point clientPoint) {
+            var oldPos = Cursor.Position;
+
+            // get screen coordinates
+            ClientToScreen(wndHandle, ref clientPoint);
+
+            // set cursor on coords, and press mouse
+            Cursor.Position = new Point(clientPoint.X, clientPoint.Y);
+
+            // left button down data
+            var inputMouseDown = new INPUT {
+                Type = 0
+            };
+            inputMouseDown.Data.Mouse.Flags = 0x0002;
+
+            // left button up data
+            var inputMouseUp = new INPUT {
+                Type = 0
+            };
+            inputMouseUp.Data.Mouse.Flags = 0x0004;
+
+            var inputs = new INPUT[] { inputMouseDown, inputMouseUp };
+            _ = SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT)));
+
+            // return mouse 
+            Cursor.Position = oldPos;
         }
     }
 }
