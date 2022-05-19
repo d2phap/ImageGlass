@@ -4420,7 +4420,9 @@ namespace ImageGlass {
             // Is there a image in clipboard ?
             // CheckImageInClipboard: ;
             else if (Clipboard.ContainsImage()) {
-                LoadImageData(Clipboard.GetImage());
+                var bmp = ClipboardEx.GetClipboardImage((DataObject)Clipboard.GetDataObject());
+
+                LoadImageData(bmp);
             }
 
             // Is there a filename in clipboard?
@@ -5312,7 +5314,8 @@ namespace ImageGlass {
             }
 
             if (img != null) {
-                Clipboard.SetImage(img);
+                ClipboardEx.SetClipboardImage(new Bitmap(img), null, null);
+
                 ShowToastMsg(Configs.Language.Items[$"{Name}._CopyImageData"], 1000);
             }
         }
