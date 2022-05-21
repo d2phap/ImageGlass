@@ -1,4 +1,4 @@
-🏞 ImageGlass - A lightweight, versatile image viewer
+🏞 ImageGlass Kobe - A lightweight, versatile image viewer
 ===
 
 
@@ -10,7 +10,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/duongdieuphap?style=social)](https://twitter.com/duongdieuphap)
 
 
-ImageGlass is a lightweight software application whose purpose is to help you view images in a clean and intuitive working environment.
+ImageGlass Kobe is a lightweight software application whose purpose is to help you view images in a clean and intuitive working environment.
 
 It gives you the possibility to view over **80+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers speed up their work.
 
@@ -21,8 +21,8 @@ It gives you the possibility to view over **80+** common image formats, includin
 
 
 
-### ImageGlass comes to Microsoft Store!
-If you buy ImageGlass on the Microsoft Store, you'll be supporting its development directly. You will get the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes. 😊
+### ImageGlass Kobe comes to Microsoft Store!
+If you buy ImageGlass Kobe on the Microsoft Store, you'll be supporting its development directly. You will get the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes. 😊
 
 <a href="https://www.microsoft.com/store/productId/9N33VZK3C7TH">
   <img height="75" src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Get_it_from_Microsoft_Badge.svg" />
@@ -35,9 +35,12 @@ If you buy ImageGlass on the Microsoft Store, you'll be supporting its developme
 
 
 ## 🛣 Development progress & Roadmap
-ImageGlass 9 is the biggest update ever, supports ***hardware acceleration*** and many more. I have been rewriting the entire app for months.
-- For more details, you can see the [project board](https://github.com/d2phap/ImageGlass/projects/11).
-- ImageGlass 9 uses [.NET 6](https://devblogs.microsoft.com/dotnet/announcing-net-6/). If you are unable to install .NET 6, you can stay with ImageGlass 8.
+ImageGlass 9.0 is the biggest update ever, supports ***hardware acceleration*** and many more. I have been rewriting the entire app for months.
+- [Version 9.0 beta 1](https://github.com/d2phap/ImageGlass/releases/tag/9.0.1.514) was already released. Try it and let me know your feedback.
+- [Version 9.0 beta 2](https://github.com/d2phap/ImageGlass/projects/12) is under develpoment.
+- There will be a few more beta releases before version 9.0 reaches stable state. In the meanwhile, you can still enjoy the new updates of version 8.x.
+
+ImageGlass 9 uses [.NET 6](https://devblogs.microsoft.com/dotnet/announcing-net-6/). If you are unable to install .NET 6, you can stay with the version 8.
   <br/>
   <a href="https://devblogs.microsoft.com/dotnet/announcing-net-6/" target="_blank" rel="noreferrer noopener">
     <img src="https://kontext.tech/api/flex/medias/obj-2290" alt="ImageGlass on .NET 6" style="height:50px" />
@@ -45,11 +48,11 @@ ImageGlass 9 is the biggest update ever, supports ***hardware acceleration*** an
 
 
 ## 👨‍💻 Development
-- Visual Studio 2022
-- .NET Framework 4.8
 - Windows 10
+- Visual Studio 2022
+- .NET Framework 4.8 for v8.x, .NET 6 for v9.0
 
-```develop``` branch contains the latest commits while ```prod``` branch is for the final stable release.
+The `develop` branch contains the latest commits of version 8.x while the `prod` branch is for the final stable release. For the source code of version 9.0 beta, you can check `v9` branch.
 
 **``Pull Request``** is most welcome!
 
@@ -69,13 +72,13 @@ For more information about ImageGlass, go to [Documentation](https://imageglass.
 
 
 ## 🤼 Community and Support
-- [Google forum](https://groups.google.com/forum/#!forum/imageglass)
 - [GitHub issues](https://github.com/d2phap/ImageGlass/issues)
 - [ImageGlass Discord](https://discord.io/imageglass)
+- [Google forum](https://groups.google.com/forum/#!forum/imageglass)
 
 
 ## 💖 This project needs your help!
-ImageGlass is free and open source but developing it has taken thousands of hours of my time and a large part of my sanity. If you feel this little viewer is useful to you, it would go a great way to ensure that I can afford to take the time to continue to develop it.
+ImageGlass Kobe is free and open source but developing it has taken thousands of hours of my time and a large part of my sanity. If you feel this little viewer is useful to you, it would go a great way to ensure that I can afford to take the time to continue to develop it.
 
 Thanks for your gratitude and financial help!
 
@@ -95,16 +98,6 @@ Thanks for your gratitude and financial help!
 <img src="https://img.shields.io/badge/DonorBox-@imageglass%20-005384.svg?maxAge=3600&logo=donorbox" height="30" alt="Wire transfer">
 </a>
 
-
-### Cryptocurrency donation:
-
-```bash
-# Ethereum
-0xc19be8972809b6b989f3e4ba16595712ba8e0de4
-
-# Bitcoin
-1PcCezBmM3ahTzfBBi5KVWnnd3bCHbas8Z
-```
 
 ## 👑 Hall of fame (v8.x)
 ![Analytics image](https://repobeats.axiom.co/api/embed/4a2781a2a149dd21826309275304696ec75b21fd.svg)
