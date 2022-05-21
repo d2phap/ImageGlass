@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -140,9 +141,14 @@ namespace ImageGlass.Library.WinAPI {
         /// <param name="windowHandle">Window handle</param>
         /// <returns>Full file path of the color profile file.</returns>
         public static string GetMonitorColorProfileFromWindow(IntPtr windowHandle) {
-            var hMonitor = MonitorFromWindow(windowHandle, MonitorDefaults.TONEAREST);
+            try {
+                var hMonitor = MonitorFromWindow(windowHandle, MonitorDefaults.TONEAREST);
 
-            return GetMonitorColorProfile(hMonitor);
+                return GetMonitorColorProfile(hMonitor);
+            }
+            catch { }
+
+            return string.Empty;
         }
 
 
@@ -171,7 +177,7 @@ namespace ImageGlass.Library.WinAPI {
             if (!WcsGetDefaultColorProfile(scope, dd.DeviceKey, ColorProfileType.ICC, ColorProfileSubtype.NONE, 0, size, profileName))
                 return null;
 
-            return System.IO.Path.Combine(profileDir.ToString(), profileName.ToString());
+            return Path.Combine(profileDir.ToString(), profileName.ToString());
         }
 
 

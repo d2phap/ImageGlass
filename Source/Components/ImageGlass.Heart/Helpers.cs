@@ -18,8 +18,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using ImageGlass.Base;
+using ImageGlass.Library.WinAPI;
 using ImageMagick;
 
 namespace ImageGlass.Heart {
@@ -75,7 +77,17 @@ namespace ImageGlass.Heart {
         /// <param name="name">Name or Full path of color profile</param>
         /// <returns></returns>
         public static ColorProfile GetColorProfile(string name) {
-            if (File.Exists(name)) {
+            if (name.Equals(Constants.CURRENT_MONITOR_PROFILE, StringComparison.InvariantCultureIgnoreCase)) {
+                var winHandle = Process.GetCurrentProcess().MainWindowHandle;
+                var colorProfilePath = DisplayApi.GetMonitorColorProfileFromWindow(winHandle);
+
+                if (string.IsNullOrEmpty(colorProfilePath)) {
+                    return ColorProfile.SRGB;
+                }
+
+                return new ColorProfile(colorProfilePath);
+            }
+            else if (File.Exists(name)) {
                 return new ColorProfile(name);
             }
             else {

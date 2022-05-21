@@ -131,6 +131,10 @@
       <Project>{6CC96A70-6773-41B5-9FCA-4F0AB6FAD8CA}</Project>
       <Name>ImageGlass.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ImageGlass.Library\ImageGlass.Library.csproj">
+      <Project>{4BB719ED-B68B-4CB1-AAAF-BA0E3BC5FE81}</Project>
+      <Name>ImageGlass.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
