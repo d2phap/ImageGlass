@@ -1167,7 +1167,7 @@ namespace ImageGlass {
                 if (Configs.KeyComboActions[KeyCombos.LeftRight] == AssignableActions.PrevNextImage) {
                     e.Handled = true; // Issue #963: don't let ImageBox see the keystroke!
                     _ = NextPicAsync(-1);
-                } 
+                }
                 else {
                     picMain.HandlePan(Configs.ImageHorizontalPanningSpeed, Configs.ImageVerticalPanningSpeed, e);
                     e.Handled = true;
@@ -1197,9 +1197,8 @@ namespace ImageGlass {
                 if (Configs.KeyComboActions[KeyCombos.LeftRight] == AssignableActions.PrevNextImage) {
                     e.Handled = true; // Issue #963: don't let ImageBox see the keystroke!
                     _ = NextPicAsync(1);
-                } 
-                else 
-                {
+                }
+                else {
                     picMain.HandlePan(Configs.ImageHorizontalPanningSpeed, Configs.ImageVerticalPanningSpeed, e);
                     e.Handled = true;
                 }
@@ -1430,6 +1429,12 @@ namespace ImageGlass {
                 // Refresh image
                 if (e.KeyCode == Keys.R) {
                     mnuMainRefresh.PerformClick();
+                    return;
+                }
+
+                // Share image
+                if (e.KeyCode == Keys.S) {
+                    mnuMainShare.PerformClick();
                     return;
                 }
 
@@ -4745,6 +4750,23 @@ namespace ImageGlass {
         }
 
 
+        private void mnuMainShare_Click(object sender, EventArgs e) {
+            try {
+                using var p = new Process();
+                var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
+                var args = string.Format("share \"{0}\"", filename);
+
+                p.StartInfo.FileName = App.StartUpDir("igcmdWin10.exe");
+                p.StartInfo.Arguments = args;
+                p.EnableRaisingEvents = true;
+                p.Start();
+
+                p.WaitForExit();
+            }
+            catch { }
+        }
+
+
         private void mnuMainViewNext_Click(object sender, EventArgs e) {
             _ = NextPicAsync(1);
         }
@@ -5585,6 +5607,7 @@ namespace ImageGlass {
                 // check if igcmdWin10.exe exists!
                 if (!Helpers.IsOS(WindowsOS.Win10OrLater) || !File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
                     mnuMainSetAsLockImage.Enabled = false;
+                    mnuMainShare.Enabled = false;
                 }
 
                 if (Helpers.IsOS(WindowsOS.Win7)) {
@@ -5651,16 +5674,7 @@ namespace ImageGlass {
         }
 
 
-
-
-
-
-
-
-
         #endregion
-
     }
-
 
 }
