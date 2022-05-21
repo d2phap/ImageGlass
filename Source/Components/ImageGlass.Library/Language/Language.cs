@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
+using ImageGlass.Base;
 
 namespace ImageGlass.Library {
     public class Language {
@@ -474,6 +475,7 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lblColorProfile", "Color profile:"); //v6.0
             Items.Add("frmSetting.lnkColorProfileBrowse", "Browse…"); //v6.0
             Items.Add("frmSetting.cmbColorProfile._None", "None"); //v6.0
+            Items.Add($"frmSetting.cmbColorProfile._{Constants.CURRENT_MONITOR_PROFILE}", "Use current monitor profile"); //v8.6
             Items.Add("frmSetting.cmbColorProfile._CustomProfileFile", "Custom…"); //v6.0
 
             #endregion

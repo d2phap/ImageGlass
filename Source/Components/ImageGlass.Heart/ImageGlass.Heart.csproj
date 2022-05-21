@@ -126,6 +126,12 @@
     <Analyzer Include="..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.2.32\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.dll" />
     <Analyzer Include="..\..\packages\Microsoft.VisualStudio.Threading.Analyzers.17.2.32\analyzers\vb\Microsoft.VisualStudio.Threading.Analyzers.VisualBasic.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImageGlass.Base\ImageGlass.Base.csproj">
+      <Project>{6CC96A70-6773-41B5-9FCA-4F0AB6FAD8CA}</Project>
+      <Name>ImageGlass.Base</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

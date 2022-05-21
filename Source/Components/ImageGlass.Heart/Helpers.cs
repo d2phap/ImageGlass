@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
 using System.IO;
+using ImageGlass.Base;
 using ImageMagick;
 
 namespace ImageGlass.Heart {
@@ -47,7 +48,10 @@ namespace ImageGlass.Heart {
         public static string GetCorrectColorProfileName(string name) {
             var profileName = "";
 
-            if (File.Exists(name)) {
+            if (name.Equals(Constants.CURRENT_MONITOR_PROFILE, StringComparison.InvariantCultureIgnoreCase)) {
+                return Constants.CURRENT_MONITOR_PROFILE;
+            }
+            else if (File.Exists(name)) {
                 return name;
             }
             else {

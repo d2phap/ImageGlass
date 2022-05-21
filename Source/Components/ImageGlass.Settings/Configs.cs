@@ -382,7 +382,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets color profile string. It can be a defined name or ICC/ICM file path
         /// </summary>
-        public static string ColorProfile { get; set; } = "sRGB";
+        public static string ColorProfile { get; set; } = Constants.CURRENT_MONITOR_PROFILE;
 
         /// <summary>
         /// Gets, sets the last time to check for update. Set it to "0" to disable auto-update.

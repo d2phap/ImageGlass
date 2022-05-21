@@ -609,11 +609,19 @@ namespace ImageGlass {
             // color profile list
             cmbColorProfile.Items.Clear();
             cmbColorProfile.Items.Add(Configs.Language.Items[$"{Name}.cmbColorProfile._None"]);
+            cmbColorProfile.Items.Add(Configs.Language.Items[$"{Name}.cmbColorProfile._{Constants.CURRENT_MONITOR_PROFILE}"]);
             cmbColorProfile.Items.AddRange(Heart.Helpers.GetBuiltInColorProfiles());
             cmbColorProfile.Items.Add(Configs.Language.Items[$"{Name}.cmbColorProfile._CustomProfileFile"]); // always last position
 
-            // select the color profile
-            if (File.Exists(Configs.ColorProfile)) {
+            // use current color profile
+            if (Configs.ColorProfile.Equals(Constants.CURRENT_MONITOR_PROFILE, StringComparison.InvariantCultureIgnoreCase)) {
+                cmbColorProfile.SelectedIndex = 1;
+
+                lnkColorProfilePath.Text = string.Empty;
+                lnkColorProfileBrowse.Visible = false;
+                lnkColorProfilePath.Visible = false;
+            }
+            else if (File.Exists(Configs.ColorProfile)) {
                 cmbColorProfile.SelectedIndex = cmbColorProfile.Items.Count - 1;
                 lnkColorProfilePath.Text = Configs.ColorProfile;
 
@@ -2000,9 +2008,13 @@ namespace ImageGlass {
             // apply color profile for all
             Configs.IsApplyColorProfileForAll = chkApplyColorProfile.Checked;
 
-            // color profile
-            if (cmbColorProfile.SelectedIndex == cmbColorProfile.Items.Count - 1) {
-                // custom color profile file
+
+            // use current monitor profile
+            if (cmbColorProfile.SelectedIndex == 1) {
+                Configs.ColorProfile = Constants.CURRENT_MONITOR_PROFILE;
+            }
+            // custom color profile file
+            else if (cmbColorProfile.SelectedIndex == cmbColorProfile.Items.Count - 1) {
                 Configs.ColorProfile = lnkColorProfilePath.Text;
             }
             else {
