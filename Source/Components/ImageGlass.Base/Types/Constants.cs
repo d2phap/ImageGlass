@@ -30,6 +30,8 @@ namespace ImageGlass.Base {
         public const int VIEWER_GRID_SIZE = 8;
         public const string MS_APPSTORE_ID = "9N33VZK3C7TH";
         public const string CURRENT_MONITOR_PROFILE = "CurrentMonitorProfile";
+        public const string UPDATE_CHANNEL = "kobe";
+        public const string DATETIME_FORMAT = "yyyy/MM/dd HH:mm:ss";
 
         /// <summary>
         /// First launch version constant.

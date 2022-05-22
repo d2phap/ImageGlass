@@ -1879,7 +1879,7 @@ namespace ImageGlass {
             Configs.IsShowToolBar = chkShowToolBar.Checked;
 
             // AutoUpdate
-            Configs.AutoUpdate = chkAutoUpdate.Checked ? DateTime.Now.ToString("M/d/yyyy HH:mm:ss") : "0";
+            Configs.AutoUpdate = chkAutoUpdate.Checked ? DateTime.Now.ToString(Constants.DATETIME_FORMAT) : "0";
 
             // start with os
             Configs.IsStartWithOs = chkStartWithOs.Checked;

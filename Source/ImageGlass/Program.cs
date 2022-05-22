@@ -165,7 +165,7 @@ namespace ImageGlass {
             if (Configs.AutoUpdate != "0") {
                 if (DateTime.TryParseExact(
                     Configs.AutoUpdate,
-                    "M/d/yyyy HH:mm:ss",
+                    Constants.DATETIME_FORMAT,
                     CultureInfo.InvariantCulture,
                     DateTimeStyles.None,
                     out var lastUpdate)) {
@@ -199,7 +199,7 @@ namespace ImageGlass {
                 Configs.IsNewVersionAvailable = p.ExitCode == 1;
 
                 // save last update
-                Configs.AutoUpdate = DateTime.Now.ToString("M/d/yyyy HH:mm:ss");
+                Configs.AutoUpdate = DateTime.Now.ToString(Constants.DATETIME_FORMAT);
             });
         }
 
