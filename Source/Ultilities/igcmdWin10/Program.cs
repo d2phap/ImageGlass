@@ -43,6 +43,8 @@ namespace igcmdWin10 {
             }
 
             else if (topcmd == "share") {
+                if (args.Length < 3) return 1;
+
                 Application.Run(new FrmShare());
             }
 

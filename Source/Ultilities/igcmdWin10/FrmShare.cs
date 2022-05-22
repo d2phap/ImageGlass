@@ -59,6 +59,9 @@ namespace igcmdWin10 {
             if (args.Length > 2) {
                 WinShare.ShowShare(Handle, args.Skip(2).ToArray());
             }
+            else {
+                Application.Exit();
+            }
         }
 
     }

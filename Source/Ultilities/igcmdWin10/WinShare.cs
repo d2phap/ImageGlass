@@ -35,6 +35,8 @@ namespace igcmdWin10 {
         public static bool IsShareShown = false;
 
         public static void ShowShare(IntPtr windowHandle, string[] filenames) {
+            if (filenames.Length == 0) return;
+
             IsShareShown = false;
             _filenames.Clear();
             _filenames.AddRange(filenames);
