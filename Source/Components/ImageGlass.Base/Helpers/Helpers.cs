@@ -28,7 +28,7 @@ namespace ImageGlass.Base {
     /// <summary>
     /// The helper functions used globally
     /// </summary>
-    public static class Helpers {
+    public static partial class Helpers {
 
         #region Public functions
 
