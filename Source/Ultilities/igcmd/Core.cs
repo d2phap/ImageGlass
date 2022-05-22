@@ -17,11 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base;
-using ImageGlass.Services;
+using ImageGlass.Base.Update;
 using ImageGlass.Settings;
-using System;
-using System.IO;
 using System.Windows.Forms;
 
 namespace igcmd {
@@ -30,26 +27,14 @@ namespace igcmd {
         /// Check for update
         /// </summary>
         public static bool AutoUpdate() {
-            // Issue #520: intercept any possible exception and fail quietly
-            try {
-                Directory.CreateDirectory(App.ConfigDir(PathType.Dir, Dir.Temporary));
+            var updater = new UpdateService();
 
-                var updateXML = App.ConfigDir(PathType.File, Dir.Temporary, "update.xml");
-                var up = new Update(new Uri("https://imageglass.org/checkforupdate"), updateXML);
+            updater.GetUpdates().Wait();
+            Configs.IsNewVersionAvailable = updater.HasNewUpdate;
 
-                if (File.Exists(updateXML)) {
-                    File.Delete(updateXML);
-                }
-
-                if (!up.IsError &&
-                    up.CheckForUpdate(App.StartUpDir("ImageGlass.exe")) &&
-                    string.Equals(up.Info.VersionType, "stable", StringComparison.CurrentCultureIgnoreCase)) {
-                    using (var f = new frmCheckForUpdate()) {
-                        f.ShowDialog();
-                    }
-                }
+            if (updater.HasNewUpdate) {
+                Application.Run(new frmCheckForUpdate());
             }
-            catch { }
 
             return Configs.IsNewVersionAvailable;
         }
