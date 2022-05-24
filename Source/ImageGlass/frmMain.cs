@@ -4713,15 +4713,45 @@ namespace ImageGlass {
         }
 
         private void EditByDefaultApp(string filename) {
+            // windows 11 sucks the verb 'edit'
+            if (Helpers.IsOS(WindowsOS.Win11)) {
+                var mspaint11 = @"%LocalAppData%\Microsoft\WindowsApps\mspaint.exe";
+                var fullPath = Environment.ExpandEnvironmentVariables(mspaint11);
+
+                if (!File.Exists(fullPath)) {
+                    MessageBox.Show("Could not find the default app for editing. Please associate your app in ImageGlass Settings > Edit.", filename, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    return;
+                }
+
+                using var p11 = new Process();
+                p11.StartInfo.FileName = fullPath;
+                p11.StartInfo.Arguments = $"\"{filename}\"";
+                p11.StartInfo.UseShellExecute = true;
+
+                try {
+                    p11.Start();
+
+                    RunActionAfterEditing();
+                }
+                catch (Exception ex) {
+                    MessageBox.Show(ex.Message, filename, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                return;
+            }
+
+
+            // windows 10 or earlier ------------------------------
             var win32ErrorMsg = string.Empty;
 
-            using var p = new Process();
-            p.StartInfo.FileName = filename;
-            p.StartInfo.Verb = "edit";
+            using var p10 = new Process();
+            p10.StartInfo.FileName = $"\"{filename}\"";
+            p10.StartInfo.Verb = "edit";
 
             // first try: launch the associated app for editing
             try {
-                p.Start();
+                p10.Start();
 
                 RunActionAfterEditing();
             }
@@ -4731,11 +4761,15 @@ namespace ImageGlass {
             }
             catch { }
 
+            if (string.IsNullOrEmpty(win32ErrorMsg)) return;
+
 
             // second try: use MS Paint to edit the file
-            if (string.IsNullOrEmpty(win32ErrorMsg)) return;
+            using var p = new Process();
             p.StartInfo.FileName = Environment.ExpandEnvironmentVariables("mspaint.exe");
             p.StartInfo.Arguments = $"\"{filename}\"";
+            p.StartInfo.UseShellExecute = true;
+
 
             try {
                 p.Start();
@@ -4747,6 +4781,7 @@ namespace ImageGlass {
                 MessageBox.Show(win32ErrorMsg, filename, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch { }
+
         }
 
 
