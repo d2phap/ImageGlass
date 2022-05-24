@@ -68,18 +68,27 @@ namespace ImageGlass.Base {
         /// <returns></returns>
         public static string ConfigDir(PathType type, params string[] paths) {
             // use StartUp dir if it's writable
-            var startUpDir = StartUpDir(paths);
+            var fullPath = StartUpDir(paths);
 
-            if (Helpers.CheckPathWritable(type, startUpDir)) {
-                return startUpDir;
+            // dont have write access
+            if (!Helpers.CheckPathWritable(type, fullPath)) {
+                // use AppData dir
+                var igAppDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ImageGlass");
+
+                var newPaths = paths.ToList();
+                newPaths.Insert(0, igAppDataDir);
+                fullPath = Path.Combine(newPaths.ToArray());
             }
 
-            // else, use AppData dir
-            var igAppDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ImageGlass");
+            // make sure the path exists
+            if (type == PathType.File) {
+                Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+            }
+            else {
+                Directory.CreateDirectory(fullPath);
+            }
 
-            var newPaths = paths.ToList();
-            newPaths.Insert(0, igAppDataDir);
-            return Path.Combine(newPaths.ToArray());
+            return fullPath;
         }
 
         /// <summary>

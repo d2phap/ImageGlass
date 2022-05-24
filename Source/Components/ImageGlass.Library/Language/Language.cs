@@ -70,7 +70,7 @@ namespace ImageGlass.Library {
             LangName = "Local name of the language";
             Author = "ImageGlass community";
             Description = "English name of language";
-            MinVersion = "8.4.0.0";
+            MinVersion = "8.6";
             FileName = "";
             IsRightToLeftLayout = RightToLeft.No;
 
