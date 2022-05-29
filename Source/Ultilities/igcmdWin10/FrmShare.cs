@@ -56,10 +56,13 @@ namespace igcmdWin10 {
         private void OpenShare() {
             var args = Environment.GetCommandLineArgs();
 
-            if (args.Length > 2) {
-                WinShare.ShowShare(Handle, args.Skip(2).ToArray());
+            try {
+                if (args.Length > 2) {
+                    WinShare.ShowShare(Handle, args.Skip(2).ToArray());
+                }
             }
-            else {
+            catch {
+
                 Application.Exit();
             }
         }

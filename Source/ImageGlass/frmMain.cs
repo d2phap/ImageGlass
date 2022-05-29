@@ -4786,9 +4786,19 @@ namespace ImageGlass {
 
 
         private void mnuMainShare_Click(object sender, EventArgs e) {
+            var filename = "";
+
+            if (Local.IsTempMemoryData) {
+                filename = SaveTemporaryMemoryData();
+            }
+            else {
+                filename = Local.ImageList.GetFileName(Local.CurrentIndex);
+
+                if (!File.Exists(filename)) return;
+            }
+
             try {
                 using var p = new Process();
-                var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
                 var args = string.Format("share \"{0}\"", filename);
 
                 p.StartInfo.FileName = App.StartUpDir("igcmdWin10.exe");
