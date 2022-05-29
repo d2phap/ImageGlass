@@ -187,7 +187,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets the value indicates that to show full image path or only base name
         /// </summary>
-        public static bool IsDisplayBasenameOfImage { get; set; } = false;
+        public static bool IsDisplayBasenameOfImage { get; set; } = true;
 
         /// <summary>
         /// Gets, sets the value indicates that to toolbar buttons to be centered horizontally
@@ -197,7 +197,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets the value indicates that to show last seen image on startup
         /// </summary>
-        public static bool IsOpenLastSeenImage { get; set; } = false;
+        public static bool IsOpenLastSeenImage { get; set; } = true;
 
         /// <summary>
         /// Gets, sets the value indicates that the ColorProfile will be applied for all or only the images with embedded profile
