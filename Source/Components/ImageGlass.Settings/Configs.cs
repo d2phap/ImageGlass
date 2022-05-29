@@ -309,6 +309,11 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool IsStartWithOs { get; set; } = false;
 
+        /// <summary>
+        /// Gets, sets value indicates that the app will auto-display the new added image in the current folder
+        /// </summary>
+        public static bool AutoDisplayNewImageInFolder { get; set; } = false;
+
         #endregion
 
 
@@ -655,6 +660,7 @@ namespace ImageGlass.Settings {
             IsHideThumbnailBarInFullscreen = Get<bool>(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
             IsContinueRunningBackground = Get<bool>(nameof(IsContinueRunningBackground), IsContinueRunningBackground);
             IsStartWithOs = Get<bool>(nameof(IsStartWithOs), IsStartWithOs);
+            AutoDisplayNewImageInFolder = Get<bool>(nameof(AutoDisplayNewImageInFolder), AutoDisplayNewImageInFolder);
 
             #endregion
 
@@ -902,6 +908,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
             Set(nameof(IsContinueRunningBackground), IsContinueRunningBackground);
             Set(nameof(IsStartWithOs), IsStartWithOs);
+            Set(nameof(AutoDisplayNewImageInFolder), AutoDisplayNewImageInFolder);
 
             #endregion
 

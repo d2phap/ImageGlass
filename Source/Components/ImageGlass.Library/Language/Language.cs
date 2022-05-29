@@ -460,6 +460,7 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.chkLoopViewer", "Loop back viewer to the first image when reaching the end of the list"); //v4.0
             Items.Add("frmSetting.chkIsCenterImage", "Center image on viewer"); //v7.0
             Items.Add("frmSetting.chkIsUseRawThumbnail", "Use embedded thumbnail for RAW formats"); //v8.3
+            Items.Add("frmSetting.chkAutoDisplayNewImage", "Display new image in folder automatically"); //v8.6
 
             Items.Add("frmSetting.lblImageLoadingOrder", "Image loading order");
             Items.Add("frmSetting.chkUseFileExplorerSortOrder", "Use Windows File Explorer sort order if possible"); //v7.0

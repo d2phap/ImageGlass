@@ -235,6 +235,7 @@ namespace ImageGlass {
             chkLoopViewer.Text = lang[$"{Name}.{nameof(chkLoopViewer)}"];
             chkIsCenterImage.Text = lang[$"{Name}.{nameof(chkIsCenterImage)}"];
             chkIsUseRawThumbnail.Text = lang[$"{Name}.{nameof(chkIsUseRawThumbnail)}"];
+            chkAutoDisplayNewImage.Text = lang[$"{Name}.{nameof(chkAutoDisplayNewImage)}"];
             lblImageLoadingOrder.Text = lang[$"{Name}.{nameof(lblImageLoadingOrder)}"];
             chkUseFileExplorerSortOrder.Text = lang[$"{Name}.{nameof(chkUseFileExplorerSortOrder)}"];
             chkGroupByDirectory.Text = lang[$"{Name}.{nameof(chkGroupByDirectory)}"];
@@ -565,6 +566,9 @@ namespace ImageGlass {
 
             // Set value of IsUseRawThumbnail
             chkIsUseRawThumbnail.Checked = Configs.IsUseRawThumbnail;
+
+            // AutoDisplayNewImageInFolder
+            chkAutoDisplayNewImage.Checked = Configs.AutoDisplayNewImageInFolder;
 
             // Set value of chkUseFileExplorerSortOrder
             chkUseFileExplorerSortOrder.Checked = Configs.IsUseFileExplorerSortOrder;
@@ -1966,6 +1970,7 @@ namespace ImageGlass {
 
             Configs.IsUseRawThumbnail =
                 Local.ImageList.UseRawThumbnail = chkIsUseRawThumbnail.Checked;
+            Configs.AutoDisplayNewImageInFolder = chkAutoDisplayNewImage.Checked;
 
             // image changes alert
             Configs.IsPlayImageChangeSound = chkIsPlayImageChangeSound.Checked;

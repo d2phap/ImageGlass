@@ -3899,6 +3899,12 @@ namespace ImageGlass {
             thumbnailBar.Refresh();
 
             SetStatusBar(); // File count has changed - update title bar
+
+            // display the file just added
+            if (Configs.AutoDisplayNewImageInFolder) {
+                Local.CurrentIndex = Local.ImageList.Length - 1;
+                _ = NextPicAsync(0);
+            }
         }
 
         /// <summary>
