@@ -181,8 +181,9 @@ namespace ImageGlass {
             if (srcPortion.Width <= MaxDrawImageSidePixels && srcPortion.Height <= MaxDrawImageSidePixels) {
                 base.DrawImage(g);
 
-                // debug
-                TextRenderer.DrawText(g, srcPortion.ToString(), Font, ClientRectangle, ForeColor, BackColor, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.WordBreak | TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix);
+                //// debug
+                //TextRenderer.DrawText(g, srcPortion.ToString(), Font, ClientRectangle, ForeColor, BackColor, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.WordBreak | TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix);
+
                 return;
             }
 
@@ -216,14 +217,14 @@ namespace ImageGlass {
                         var rfSrc = new RectangleF(srcPortion.X + stepSrcX * w, srcPortion.Y + stepSrcY * h, stepSrcX, stepSrcY);
                         g.DrawImage(Image, rfDst, rfSrc, GraphicsUnit.Pixel);
 
-                        // debug
-                        var txtRect = new Rectangle((int)rfDst.X, (int)rfDst.Y, (int)rfDst.Width, (int)rfDst.Height);
-                        TextRenderer.DrawText(g, rfDst.ToString() + " " + rfSrc.ToString(), Font, txtRect, ForeColor, BackColor, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.WordBreak | TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix);
+                        //// debug
+                        //var txtRect = new Rectangle((int)rfDst.X, (int)rfDst.Y, (int)rfDst.Width, (int)rfDst.Height);
+                        //TextRenderer.DrawText(g, rfDst.ToString() + " " + rfSrc.ToString(), Font, txtRect, ForeColor, BackColor, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.WordBreak | TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix);
                     }
             }
             catch (Exception ex) {
-                // debug
-                TextRenderer.DrawText(g, ex.Message, Font, ClientRectangle, ForeColor, BackColor, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.WordBreak | TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix);
+                //// debug
+                //TextRenderer.DrawText(g, ex.Message, Font, ClientRectangle, ForeColor, BackColor, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.WordBreak | TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix);
             }
 
             g.PixelOffsetMode = currentPixelOffsetMode;
