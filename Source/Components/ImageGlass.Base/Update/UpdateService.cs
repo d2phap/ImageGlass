@@ -24,8 +24,6 @@ using System.Threading.Tasks;
 namespace ImageGlass.Base.Update {
     public class UpdateService {
 
-        private const string Url = "https://raw.githubusercontent.com/ImageGlass/config/main/update.json";
-
         /// <summary>
         /// Gets the update information
         /// </summary>
@@ -90,6 +88,9 @@ namespace ImageGlass.Base.Update {
         /// </summary>
         /// <returns></returns>
         public async Task GetUpdates() {
+            // example: https://imageglass.org/url/update?channel=kobe&version=8.5.1.22
+            var Url = $"https://imageglass.org/url/update?channel={Constants.UPDATE_CHANNEL}&version={App.Version}";
+
             var requestMsg = new HttpRequestMessage(HttpMethod.Get, Url);
             using var httpClient = new HttpClient();
             var response = await httpClient.SendAsync(requestMsg);
