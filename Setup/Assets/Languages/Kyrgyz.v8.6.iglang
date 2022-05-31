@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="ky-KG" langName="Кыргызча" author="Ravidin Tursunkulov" description="Kyrgyz" minVersion="8.6" isRightToLeftLayout="No"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="Айрым жөндөөлөр ImageGlass {0} менен шайкеш келбейт. Улантуудан мурун аларды жаңыртышыңызды сунуштайбыз.&#10;&#10;- Өзгөртүүлөр жөнүндө билүү үчүн &quot;Ооба&quot; баскычын басыңыз.&#10;- ImageGlass демейки орнотуулары менен ишке киргизүү үчүн &quot;Жок&quot; баскычын басыңыз."/>
+      <Item key="_.ImageOrderBy._Name" value="Аты (баштапкы абалда)"/>
+      <Item key="_.ImageOrderBy._Length" value="Өлчөмү"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Түзүү убактысы"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Соңку кирүү убакыты"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Соңку жазуу убакыты"/>
+      <Item key="_.ImageOrderBy._Extension" value="Түрү"/>
+      <Item key="_.ImageOrderBy._Random" value="Туш келди"/>
+      <Item key="_.ImageOrderType._Asc" value="Өсүү боюнча"/>
+      <Item key="_.ImageOrderType._Desc" value="Кемүү боюнча"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Калтыруу"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Кичирейтүү"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Жабык"/>
+      <Item key="frmMain.mnuMainFile" value="Файл"/>
+      <Item key="frmMain.mnuMainOpenFile" value="Файлды ачыңыз…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Сүрөттү алмашуу буферинен ачыңыз"/>
+      <Item key="frmMain.mnuMainNewWindow" value="Жаңы терезени ачыңыз"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Жаңы терезе ачылбай жатат, анткени программанын бир даанасы гана уруксат берилген"/>
+      <Item key="frmMain.mnuSaveImage" value="Сүрөттү сактоо"/>
+      <Item key="frmMain.mnuMainSaveAs" value="Сүрөттү кантип сактоо керек…"/>
+      <Item key="frmMain.mnuMainRefresh" value="Жаңылоо"/>
+      <Item key="frmMain.mnuMainReloadImage" value="Сүрөттү жаңылоо"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="Сүрөттөр тизмесин кайра жүктөө"/>
+      <Item key="frmMain.mnuOpenWith" value="Жардамы менен ачуу…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Сүрөттү түзөтүү {0}…"/>
+      <Item key="frmMain.mnuMainPrint" value="Басып чыгаруу…"/>
+      <Item key="frmMain.mnuMainNavigation" value="Багыттоо баскычтары"/>
+      <Item key="frmMain.mnuMainViewNext" value="Кийинки сүрөт"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Оң жебе / Барак төмөнгө"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="Мурунку сүрөт"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Сол жебе / Барак өйдөгө"/>
+      <Item key="frmMain.mnuMainGoto" value="Өтүү…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="Биринчи файлга баруу"/>
+      <Item key="frmMain.mnuMainGotoLast" value="Акыркы файлга баруу"/>
+      <Item key="frmMain.mnuMainNextPage" value="Кийинки бет"/>
+      <Item key="frmMain.mnuMainPrevPage" value="Мурунку бет"/>
+      <Item key="frmMain.mnuMainFirstPage" value="Биринчи бетке"/>
+      <Item key="frmMain.mnuMainLastPage" value="Акыркы бетке"/>
+      <Item key="frmMain.mnuMainZoom" value="Масштабдоо"/>
+      <Item key="frmMain.mnuMainZoomIn" value="Жакындатуу"/>
+      <Item key="frmMain.mnuMainZoomOut" value="Алыстатуу"/>
+      <Item key="frmMain.mnuCustomZoom" value="Колдонуучунун масштабы…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="Жаңы масштабдын маанисин киргизиңиз"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="Сүрөт терезенин өлчөмү боюнча"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="Терезени толтуруу"/>
+      <Item key="frmMain.mnuMainActualSize" value="Масштабы 100%"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Масштабда белгилөө"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="Автоматтык масштабдоо"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="Туурасы боюнча масштабы"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="Бийиктиги боюнча масштабы"/>
+      <Item key="frmMain.mnuMainImage" value="Сүрөт"/>
+      <Item key="frmMain.mnuMainChannels" value="Каналдарды көрүү"/>
+      <Item key="frmMain.mnuMainChannels._All" value="Баары"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="Кызыл"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="Жашыл"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="Көк"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="Кара"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="Альфа (ачыктык)"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Көрүү тартиби"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="Саат жебесине каршы буруу"/>
+      <Item key="frmMain.mnuMainRotateRight" value="Сааттын жебеси боюнча буруу"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="Туурасынан чагылдыруу"/>
+      <Item key="frmMain.mnuMainFlipVert" value="Тигинен чагылдыруу"/>
+      <Item key="frmMain.mnuMainRename" value="Сүрөттүн атын өзгөртүү…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Себетке таштоо"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Түбөлүккө өчүрүү"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Сүрөттөн кадрларды чыгарып алыңыз ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="Сүрөт анимациясын Баштоо / Токтотуу"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Жумуш үстөлүнүн фонуна орнотуңуз"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="Кулпуланган экран фону катары орнотуу"/>
+      <Item key="frmMain.mnuMainImageLocation" value="Файл сактагыч жайгашкан жерди ачыңыз"/>
+      <Item key="frmMain.mnuMainImageProperties" value="Файлдын касиеттери"/>
+      <Item key="frmMain.mnuMainClipboard" value="Алмашуу буфери"/>
+      <Item key="frmMain.mnuMainCopy" value="Көчүрүү"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="Сүрөттү көчүрүү"/>
+      <Item key="frmMain.mnuMainCut" value="Файлды кесүү"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="Файлдын жолун көчүрүү"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="Алмашуу буферин тазалоо"/>
+      <Item key="frmMain.mnuWindowFit" value="Сүрөт өлчөмү боюнча терезе"/>
+      <Item key="frmMain.mnuMainFullScreen" value="Толук экрандуу режим"/>
+      <Item key="frmMain.mnuFrameless" value="Терезенин аталышын жана алкагын жашыруу"/>
+      <Item key="frmMain.mnuMainSlideShow" value="Слайд көрсөтүү"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="Слайд көрсөтүүнү баштаңыз"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="Слайд көрсөтүүнү Токтотуу / Кайра баштоо"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="Слайд көрсөтүү режиминен Чыгуу"/>
+      <Item key="frmMain.mnuMainShare" value="Бөлүшүү…"/>
+      <Item key="frmMain.mnuMainLayout" value="Башкаруу элементтери"/>
+      <Item key="frmMain.mnuMainToolbar" value="Аспаптар панели"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="Эскиздер панели"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="Фон (туташ / тунук)"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Бардык терезелердин үстүнө орнотуңуз"/>
+      <Item key="frmMain.mnuMainTools" value="Аспаптар"/>
+      <Item key="frmMain.mnuMainColorPicker" value="Түс тандоо"/>
+      <Item key="frmMain.mnuMainPageNav" value="Барактар"/>
+      <Item key="frmMain.mnuMainCrop" value="Кесүү"/>
+      <Item key="frmMain.mnuExifTool" value="ExifTool"/>
+      <Item key="frmMain.mnuMainSettings" value="Орнотуулар…"/>
+      <Item key="frmMain.mnuMainHelp" value="Жардам"/>
+      <Item key="frmMain.mnuMainAbout" value="Программа жөнүндө"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="Негизги орнотуулар конфигуратору…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Жаңыртууларды текшериңиз…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Жаңы нускасы жеткиликтүү!"/>
+      <Item key="frmMain.mnuMainReportIssue" value="Көйгөй жөнүндө кабарлоо…"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Чыгуу"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="Көрсөтүү"/>
+      <Item key="frmMain.picMain._ErrorText" value="Программа бул сүрөттү ача албайт, анткени файл бузулган же формат колдоого алынбайт."/>
+      <Item key="frmMain._ImageNotExist" value="Программа сүрөттү таба албайт."/>
+      <Item key="frmMain.btnMenu" value="Башкы меню"/>
+      <Item key="frmMain._OpenFileDialog" value="Бардык колдоого алынган форматтар"/>
+      <Item key="frmMain._Files" value="файл(дар)"/>
+      <Item key="frmMain._Pages" value="беттер"/>
+      <Item key="frmMain._ImageData" value="Сүрөттүн маалыматтары"/>
+      <Item key="frmMain._RenameDialogText" value="Атын өзгөртүү"/>
+      <Item key="frmMain._RenameDialog" value="Файлдын жаңы атын киргизиңиз"/>
+      <Item key="frmMain._GotoDialogText" value="Көрүү үчүн сүрөттүн индексин киргизиңиз. Enter баскычын басыңыз"/>
+      <Item key="frmMain._DeleteDialogText" value="'{0}' файлын өчүрөсүзбү?"/>
+      <Item key="frmMain._DeleteDialogTitle" value="Ырастоо"/>
+      <Item key="frmMain._ExtractPageText" value="Сүрөттүн кадрларын бөлүп алыңыз. Сураныч, бөлүп алуу үчүн папканы тандаңыз."/>
+      <Item key="frmMain._FullScreenMessage" value="Толук экран режиминен чыгуу үчүн {0} басыңыз."/>
+      <Item key="frmMain._SlideshowMessage" value="Слайдшоудан чыгуу үчүн ESC басыңыз.&#10; Контексттик менюну ачуу үчүн оң баскычты басыңыз."/>
+      <Item key="frmMain._SlideshowMessagePause" value="Көрсөтүүнү тындыруу"/>
+      <Item key="frmMain._SlideshowMessageResume" value="Көрсөтүүнү улантуу"/>
+      <Item key="frmMain._CopyFileText" value="Файл(дар) алмашуу буферине {0} көчүрүлгөн"/>
+      <Item key="frmMain._CutFileText" value="Файл(дар) алмашуу буферине {0} кесилген"/>
+      <Item key="frmMain._CopyImageData" value="Сүрөт алмашуу буферине көчүрүлдү"/>
+      <Item key="frmMain._ClearClipboard" value="Алмашуу буфери тазаланды"/>
+      <Item key="frmMain._SaveImage" value="Файл каталогдо ийгиликтүү сакталды:&#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="Сүрөт сакталууда...&#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="Каталогдо файлды сактоодо ката кетти&#10;{0}."/>
+      <Item key="frmMain._Loading" value="Жүктөлүүдө..."/>
+      <Item key="frmMain._FirstItemOfList" value="Биринчи сүрөткө өтүңүз"/>
+      <Item key="frmMain._LastItemOfList" value="Акыркы сүрөткө өтүңүз"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="Анимацияланган сүрөттөрдү айлантып бурууну, өзгөртүүнү&#10;ImageGlass программасы колдобойт"/>
+      <Item key="frmMain._SetLockImage_Error" value="Экранды кулпулоо сүрөтүн орнотуу учурунда ката кетти"/>
+      <Item key="frmMain._SetLockImage_Success" value="Экранды кулпулоо ийгиликтүү орнотулду"/>
+      <Item key="frmMain._SetBackground_Error" value="Жумуш үстөлүнүн фонун орнотуу учурунда ката кетти"/>
+      <Item key="frmMain._SetBackground_Success" value="Жумуш үстөлүнүн фону ийгиликтүү орнотулду"/>
+      <Item key="frmMain._PageExtracting" value="Extracting image pages..."/>
+      <Item key="frmMain._PageExtractComplete" value="Кадрды бөлүп алуу аяктады."/>
+      <Item key="frmMain._Frameless" value="Терезени жылдыруу үчүн SHIFT басып туруңуз."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Алмашуу буферинде сүрөт жок."/>
+      <Item key="frmAbout.lblSlogant" value="Оңой, ар тараптуу сүрөттөрдү көрүү каражаты"/>
+      <Item key="frmAbout.lblInfo" value="Маалымат"/>
+      <Item key="frmAbout.lblComponent" value="Компоненттер"/>
+      <Item key="frmAbout.lblReferences" value="Кошумча материалдар"/>
+      <Item key="frmAbout.lblVersion" value="Нускасы: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="Байланышуу"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="Программанын жаңыртылышы"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="Жаңыртууну текшерүү…"/>
+      <Item key="frmAbout._Text" value="Программа жөнүндө"/>
+      <Item key="frmAbout._PortableText" value="[Портативдүү]"/>
+      <Item key="frmSetting._Text" value="Орнотуулар"/>
+      <Item key="frmSetting.btnSave" value="Сактоо"/>
+      <Item key="frmSetting.btnCancel" value="Токтотуу"/>
+      <Item key="frmSetting.btnApply" value="Колдонуу"/>
+      <Item key="frmSetting.lblGeneral" value="Негизги орнотуулар"/>
+      <Item key="frmSetting.lblImage" value="Сүрөт"/>
+      <Item key="frmSetting.lblEdit" value="Оңдоо"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="Файл бирикмелери"/>
+      <Item key="frmSetting.lblToolbar" value="Аспаптар панели"/>
+      <Item key="frmSetting.lblLanguage" value="Тил"/>
+      <Item key="frmSetting.lblTheme" value="Тема"/>
+      <Item key="frmSetting.lblKeyboard" value="Баскычтоп"/>
+      <Item key="frmSetting.lblHeadStartup" value="Орнотууларды баштоо"/>
+      <Item key="frmSetting.chkWelcomePicture" value="Саламдашуу сүрөтүн көрсөтүү"/>
+      <Item key="frmSetting.chkLastSeenImage" value="Акыркы ачылган файлды көрсөтүү"/>
+      <Item key="frmSetting.chkShowToolBar" value="Аспаптар панелин көрсөтүү"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="Учурдагы конфигурация папкасы"/>
+      <Item key="frmSetting.lblHeadViewer" value="Орнотууларды көрүү"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Айландырып жылдыруу тилкесин көрсөтүү"/>
+      <Item key="frmSetting.chkShowNavButtons" value="Экинчи солго / оңго багыттоо жебелерин көрсөтүү"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Файл жолун аталыш тилкесинде көрсөтпөө"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Сүрөттүн аймагында тунуктук фонун (альфа канал) көрсөтүү"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="Тийүү жаңсоолорун колдоону күйгүзүү"/>
+      <Item key="frmSetting.lblBackGroundColor" value="Сүрөттүн аймагындагы фондо түсү"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Кайра баштоо"/>
+      <Item key="frmSetting.lblHeadPanning" value="Panning"/>
+      <Item key="frmSetting.lblVertPanningSpeed" value="Vertical panning speed"/>
+      <Item key="frmSetting.lblHorzPanningSpeed" value="Horizontal panning speed"/>
+      <Item key="frmSetting.lblHeadOthers" value="Башка орнотуулар"/>
+      <Item key="frmSetting.chkStartWithOs" value="Start with OS to improve startup speed"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Continue running in the background when the app is closed"/>
+      <Item key="frmSetting.chkAutoUpdate" value="Автоматтык түрдө жаңыртууларды текшериңиз"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="Программанын бир нече нускаларына уруксат берүү"/>
+      <Item key="frmSetting.chkESCToQuit" value="ESC баскычын басып, программадан чыгууга уруксат бериңиз"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="Файлдын жок кылынышын ырастоо үчүн диалог кутусун көрсөтүү"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="Терезени орнотуу режиминдеги терезени авто-борбордо"/>
+      <Item key="frmSetting.chkShowToast" value="Калкып чыкма кеңештерди көрсөтүңүз"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="Сүрөт жүктөө параметрлери"/>
+      <Item key="frmSetting.chkFindChildFolder" value="Папкалардан файлдарды издөө"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="Жашырылган файлдарды көрсөтүү"/>
+      <Item key="frmSetting.chkLoopViewer" value="Көрсөтүүнү биринчи файлдан аягына чейин кайталаңыз"/>
+      <Item key="frmSetting.chkIsCenterImage" value="Сүрөттү көрүүчүнүн борборуна коюңуз"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="RAW файлдары үчүн камтылган эскиздерди (JPEG көрүү) колдонуңуз"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="Файлды окуу тартиби"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Мүмкүн болсо, жол көрсөткүчкө окшош иреттөө тартибин колдонуңуз"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Сүрөттөрдү папка боюнча топтоо"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="ImageBooster тарабынан кэштелген файлдардын саны (бир каталогдо)"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Презентацияны көрсөтүүдө мөөнөт аяктагандан кийин белги бериңиз"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="Презентацияны көрсөтүүдө сигнал берүүнүн сандык мезгили (шт.)"/>
+      <Item key="frmSetting.lblColorManagement" value="Түстөрдү башкаруу"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="Кыналган түстүү профили жок сүрөттөргө колдонуңуз"/>
+      <Item key="frmSetting.lblColorProfile" value="Түс профили:"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="Сереп салуу…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="Жок"/>
+      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="Use current monitor profile"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Түзөтүү…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="Чычкан дөңгөлөгүн жылдырып айландыруу аракеттери"/>
+      <Item key="frmSetting.lblMouseWheel" value="Чычкан дөңгөлөгү"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="Чычкан дөңгөлөгү + Alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Чычкан дөңгөлөгү + Ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="Чычкан дөңгөлөгү + Shift"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="Эч аракет жок"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="Масштабдоо"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Тик айландыруу"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Көлдөлөң айландыруу"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Мурунку / кийинки"/>
+      <Item key="frmSetting.lblHeadZooming" value="Жакындатуу (алыстатуу)"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Өлчөмдү оптималдаштыруу"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Авто (Сапаты төмөн/Кошуна пикселди иштетүү)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Сапаты төмөн"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Сапаты жогору"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Билинардык ыкма"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Бикубикалык ыкма"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Кошуна пиксел боюнча"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Билинардык ыкма (жогорку сапат)"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Бикубикалык ыкма (жогорку сапат)"/>
+      <Item key="frmSetting.lblZoomLevels" value="Масштабдын деңгээли"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="Масштабдын деңгээлин жаңыртуу учурунда ката кетти. Ката жөнүндө билдирүү:&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Эскиздер панели"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="Эскиздин панелин оңго көрсөтүү"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Эскиздин панелиндеги жылдыруу тилкесин көрсөтүү"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Эскиздин өлчөмү (пиксел менен)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="Слайд көрсөтүү"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="Тизменин аягына жеткенде көрсөтүүнү биринчи файлга кайтар"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="Слайд көрсөтүү режиминде тескери саноону көрсөтүү"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="Кокус аралыкты колдонуңуз"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="Сүрөттөрдү көрсөтүү убактысы: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="чейин"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="Толук экрандуу режим"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Куралдар тилкесин жашыруу"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Эскиз панелин жашыруу"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="Түзөтүлгөндөн кийин файлдын кайра жазыңыз"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="Сүрөттү түзөтүү колдонмолорун тандаңыз"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="Редактордо ачылгандан кийин:"/>
+      <Item key="frmSetting.lblImageQuality" value="Сүрөттүн сапаты:"/>
+      <Item key="frmSetting.btnEditEditExt" value="Оңдоо…"/>
+      <Item key="frmSetting.btnEditResetExt" value="Орнотууларды кайтаруу"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="Баарын өзгөртүү…"/>
+      <Item key="frmSetting._allExtensions" value="бардык кеңейтүүлөр"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Файлды кеңейтүүсү"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="Колдонмонун аталышы"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="Колдонмого жол"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Колдонмо параметрлери"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Сүрөттү сактоодо өзгөртүлгөн күндү сактаңыз"/>
+      <Item key="frmSetting.lblSupportedExtension" value="Колдоого алынган форматтар: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Демейки программалар"/>
+      <Item key="frmSetting.btnAddNewExt" value="Кошуу…"/>
+      <Item key="frmSetting.btnRegisterExt" value="Демейки катары колдонуңуз…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Кеңейтүүлөрдү каттоодон чыгаруу"/>
+      <Item key="frmSetting.btnDeleteExt" value="Өчүрүү"/>
+      <Item key="frmSetting.btnResetExt" value="Орнотууларды кайтаруу"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="Веб колдонмосунда милдеттүү функцияны каттоодо ката кетти"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="ImageGlass колдонмосу үчүн файл кеңейтүүлөрүн каттоо мүмкүн болбой жатат"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="Бардык файл кеңейтүүлөрү ийгиликтүү катталды!&#10;&#10;Сүрөт көргүчүңүздү демейки көрүнүш катары орнотуу үчүн, Windows Жөндөөлөрү → Демейки тиркемелерди ачып, Photo Viewer бөлүмүндө ImageGlass колдонмосун кол менен тандаңыз."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Кеңейтүүлөрдү каттоодон чыгаруу мүмкүн эмес"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Бардык кеңейтүүлөр ийгиликтүү катталды!"/>
+      <Item key="frmSetting.lblToolbarPosition" value="Куралдар панелинин абалы:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Куралдар панелинин сөлөкөтүнүн өлчөмү:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Өйдөгө"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Ылдыйга"/>
+      <Item key="frmSetting._separator" value="Бөлүүчү"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="Куралдар панелин ыңгайлаштыруу"/>
+      <Item key="frmSetting.lblUsedBtns" value="Учурдагы баскычтар:"/>
+      <Item key="frmSetting.lblAvailBtns" value="Жеткиликтүү баскычтар:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="Төмөн жылдырыңыз"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="Тандалган баскычты(тар) куралдар панелинен алып салыңыз"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="Тандалган баскычты(тар) куралдар панелине кошуңуз"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="Өйдөгө жылдырыңыз"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Терезеге салыштырганда куралдар тилкесин туурасынан ортосуна коюңуз"/>
+      <Item key="frmSetting.chkHideTooltips" value="Куралдар тилкесинин кеңештерин көрсөтпө"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="&quot;RGB&quot; формат + α-канал"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="&quot;HEX&quot; формат + α-канал"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="&quot;HSL&quot; формат + α-канал"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="&quot;HSV&quot; формат + α-канал"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="Көчүрүүдө демейки түс код форматы"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="Барактар ​​куралын автоматтык түрдө көрсөтүү (көп беттен турган сүрөттөр үчүн өзүнчө)"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="&quot;ExifTool&quot; терезеси ар дайым үстүндө"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="&quot;ExifTool&quot; файлды тандаңыз..."/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="&quot;ExifTool&quot; табылган жок же жеткиликтүү эмес:&#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Буйрук сап аргументтери:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Алдын ала көрүү:"/>
+      <Item key="frmSetting.lblLanguageText" value="Орнотулган тилдер"/>
+      <Item key="frmSetting.lnkRefresh" value="→ Тизмекти жаңылоо"/>
+      <Item key="frmSetting.lblLanguageWarning" value="Бул тил топтому {0} версиясына дал келбеши мүмкүн"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="→ Тил топтомун орнотуу (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="→ Жаңы тил топтомун түзүү…"/>
+      <Item key="frmSetting.lnkEdit" value="→ Тандалган тил топтомун түзөтүү…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="→ Кошумча тил топтомдорун алыңыз…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="Орнотулган темалар: {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="→ Дагы темаларды жүктөп алуу…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="Жаңылоо"/>
+      <Item key="frmSetting.btnThemeInstall" value="Орнотуу…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="Теманы өчүрүү…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="Кантип сактоо керек…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="Тема папкасын ачыңыз"/>
+      <Item key="frmSetting.btnThemeApply" value="Теманы колдонуу"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="Аталышы"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="Нускасы"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="Автору"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="Email"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="Сайт"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="Шайкештик"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="Баяндамасы"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="Темаңыз ийгиликтүү орнотулду!"/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="Тема орнотулган жок."/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="Тема өчпөй калды."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="Тема каталогдо сакталды:&#10;&#10;{0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="Тема сакталбай калды."/>
+      <Item key="frmSetting.btnThemeApply._Success" value="Тема ийгиликтүү колдонулду!"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="Тандалган теманы колдонуу мүмкүн эмес."/>
+      <Item key="frmSetting.btnKeyReset" value="Орнотууларды кайтаруу"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="Боштук / Өчүрүү"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="Өйдөгө / Ылдыйга"/>
+      <Item key="frmSetting.lblKeysUpDown" value="Жебелер жогору / ылдый"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="Жебелер солго / оңго"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="Мурунку / кийинки"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="Айландыруу солго / оңго"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="Айландыруу жогору / ылдый"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="Жакындатуу / алыстатуу"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="Көрсөтүүнү тындыруу"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="Эч аракет жок"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="Файлды кеңейтүүсү"/>
+      <Item key="frmAddNewFormat.btnOK" value="Макул"/>
+      <Item key="frmAddNewFormat.btnClose" value="Жабык"/>
+      <Item key="frmEditApp.lblFileExtension" value="Файлды кеңейтүүсү"/>
+      <Item key="frmEditApp.lblAppName" value="Колдонмонун аталышы"/>
+      <Item key="frmEditApp.lblAppPath" value="Колдонмого жол"/>
+      <Item key="frmEditApp.lblAppArguments" value="Колдонмо параметрлери"/>
+      <Item key="frmEditApp.btnReset" value="Кайра баштоо"/>
+      <Item key="frmEditApp.btnOK" value="Макул"/>
+      <Item key="frmEditApp.btnClose" value="Жабык"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="Алдын ала көрүү"/>
+      <Item key="frmFirstLaunch._Text" value="Негизги орнотуулар конфигуратору"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ImageGlass анын бардык процесстерин токтотушу керек,&#10;жаңы орнотууларды колдонууга.&#10;&#10;Улантууга даярсызбы?"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="{0}/{1} кадам"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="Кененирээк"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="Даяр!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="Өткөрүп жиберүү жана ImageGlass колдонмосун пайдаланууну баштоо"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="Тилди тандаңыз"/>
+      <Item key="frmFirstLaunch.lblTheme" value="Теманы тандаңыз"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="Баарын ImageGlassтан ачасызбы?"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="Ооба"/>
+      <Item key="frmCrop.lblWidth" value="Туурасы:"/>
+      <Item key="frmCrop.lblHeight" value="Бийиктиги:"/>
+      <Item key="frmCrop.btnSave" value="Сактоо"/>
+      <Item key="frmCrop.btnSaveAs" value="Кантип сактоо керек…"/>
+      <Item key="frmCrop.btnCopy" value="Көчүрүү"/>
+      <Item key="frmCrop.btnReset" value="Кайра баштоо"/>
+      <Item key="FrmExifTool.clnProperty" value="Мааниси"/>
+      <Item key="FrmExifTool.clnValue" value="Мааниси"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Көчүрүү"/>
+      <Item key="FrmExifTool.btnExport" value="Экспорт…"/>
+      <Item key="FrmExifTool.btnClose" value="Жабык"/>
+    </Content>
+  </Language>
+</ImageGlass>

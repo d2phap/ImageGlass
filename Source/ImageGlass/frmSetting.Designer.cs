@@ -77,6 +77,7 @@ namespace ImageGlass
             this.chkWelcomePicture = new System.Windows.Forms.CheckBox();
             this.chkAutoUpdate = new System.Windows.Forms.CheckBox();
             this.tabImage = new System.Windows.Forms.TabPage();
+            this.chkAutoDisplayNewImage = new System.Windows.Forms.CheckBox();
             this.numHorzPanningSpeed = new System.Windows.Forms.NumericUpDown();
             this.numVertPanningSpeed = new System.Windows.Forms.NumericUpDown();
             this.lblHorzPanningSpeed = new System.Windows.Forms.Label();
@@ -243,7 +244,6 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.chkAutoDisplayNewImage = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
@@ -708,7 +708,7 @@ namespace ImageGlass
             // 
             this.chkLastSeenImage.AutoSize = true;
             this.chkLastSeenImage.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkLastSeenImage.Location = new System.Drawing.Point(44, 83);
+            this.chkLastSeenImage.Location = new System.Drawing.Point(44, 89);
             this.chkLastSeenImage.Margin = new System.Windows.Forms.Padding(1);
             this.chkLastSeenImage.Name = "chkLastSeenImage";
             this.chkLastSeenImage.Size = new System.Drawing.Size(250, 28);
@@ -722,7 +722,7 @@ namespace ImageGlass
             this.lnkConfigDir.AutoSize = true;
             this.lnkConfigDir.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkConfigDir.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkConfigDir.Location = new System.Drawing.Point(44, 211);
+            this.lnkConfigDir.Location = new System.Drawing.Point(44, 213);
             this.lnkConfigDir.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkConfigDir.Name = "lnkConfigDir";
             this.lnkConfigDir.Size = new System.Drawing.Size(108, 23);
@@ -787,7 +787,7 @@ namespace ImageGlass
             // 
             this.lblHeadConfigDir.AutoSize = true;
             this.lblHeadConfigDir.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeadConfigDir.Location = new System.Drawing.Point(22, 180);
+            this.lblHeadConfigDir.Location = new System.Drawing.Point(22, 182);
             this.lblHeadConfigDir.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHeadConfigDir.Name = "lblHeadConfigDir";
             this.lblHeadConfigDir.Size = new System.Drawing.Size(213, 23);
@@ -853,7 +853,7 @@ namespace ImageGlass
             // 
             this.chkShowToolBar.AutoSize = true;
             this.chkShowToolBar.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkShowToolBar.Location = new System.Drawing.Point(44, 113);
+            this.chkShowToolBar.Location = new System.Drawing.Point(44, 124);
             this.chkShowToolBar.Margin = new System.Windows.Forms.Padding(1);
             this.chkShowToolBar.Name = "chkShowToolBar";
             this.chkShowToolBar.Size = new System.Drawing.Size(280, 28);
@@ -875,7 +875,7 @@ namespace ImageGlass
             // 
             this.chkWelcomePicture.AutoSize = true;
             this.chkWelcomePicture.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkWelcomePicture.Location = new System.Drawing.Point(44, 46);
+            this.chkWelcomePicture.Location = new System.Drawing.Point(44, 54);
             this.chkWelcomePicture.Margin = new System.Windows.Forms.Padding(1);
             this.chkWelcomePicture.Name = "chkWelcomePicture";
             this.chkWelcomePicture.Size = new System.Drawing.Size(216, 28);
@@ -962,6 +962,18 @@ namespace ImageGlass
             this.tabImage.Size = new System.Drawing.Size(744, 596);
             this.tabImage.TabIndex = 3;
             this.tabImage.Text = "Image";
+            // 
+            // chkAutoDisplayNewImage
+            // 
+            this.chkAutoDisplayNewImage.AutoSize = true;
+            this.chkAutoDisplayNewImage.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkAutoDisplayNewImage.Location = new System.Drawing.Point(44, 254);
+            this.chkAutoDisplayNewImage.Margin = new System.Windows.Forms.Padding(1);
+            this.chkAutoDisplayNewImage.Name = "chkAutoDisplayNewImage";
+            this.chkAutoDisplayNewImage.Size = new System.Drawing.Size(372, 28);
+            this.chkAutoDisplayNewImage.TabIndex = 22;
+            this.chkAutoDisplayNewImage.Text = "[Display new image in folder automatically]";
+            this.chkAutoDisplayNewImage.UseVisualStyleBackColor = true;
             // 
             // numHorzPanningSpeed
             // 
@@ -3157,18 +3169,6 @@ namespace ImageGlass
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(973, 67);
             this.panel4.TabIndex = 18;
-            // 
-            // chkAutoDisplayNewImage
-            // 
-            this.chkAutoDisplayNewImage.AutoSize = true;
-            this.chkAutoDisplayNewImage.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkAutoDisplayNewImage.Location = new System.Drawing.Point(44, 254);
-            this.chkAutoDisplayNewImage.Margin = new System.Windows.Forms.Padding(1);
-            this.chkAutoDisplayNewImage.Name = "chkAutoDisplayNewImage";
-            this.chkAutoDisplayNewImage.Size = new System.Drawing.Size(372, 28);
-            this.chkAutoDisplayNewImage.TabIndex = 22;
-            this.chkAutoDisplayNewImage.Text = "[Display new image in folder automatically]";
-            this.chkAutoDisplayNewImage.UseVisualStyleBackColor = true;
             // 
             // frmSetting
             // 
