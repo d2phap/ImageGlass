@@ -1,4 +1,4 @@
-🏞 ImageGlass Kobe - A lightweight, versatile image viewer
+ImageGlass Kobe - A lightweight, versatile image viewer
 ===
 
 
@@ -20,7 +20,6 @@ It gives you the possibility to view over **80+** common image formats, includin
 [![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%232A7C91&label=latest%20version&style=for-the-badge)](https://imageglass.org/download)
 
 
-
 ### ImageGlass Kobe comes to Microsoft Store!
 If you buy ImageGlass Kobe on the Microsoft Store, you'll be supporting its development directly. You will get the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes. 😊
 
@@ -30,7 +29,7 @@ If you buy ImageGlass Kobe on the Microsoft Store, you'll be supporting its deve
 
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://imageglass.org/upload/photo/release/8.5_1.jpg" alt="ImageGlass 8.5.1.22" width="640">
+<img src="https://github.com/ImageGlass/config/raw/main/screenshots/v8.6/8.6_1.jpg" alt="ImageGlass 8.6.6.6" width="640">
 </a><br/>
 
 
@@ -103,13 +102,16 @@ Thanks for your gratitude and financial help!
 ![Analytics image](https://repobeats.axiom.co/api/embed/4a2781a2a149dd21826309275304696ec75b21fd.svg)
 
 To honor those people who spent their time to contribute to the development of ImageGlass v8:
-- 1️⃣ [@fire-eggs](https://github.com/fire-eggs)
-- 2️⃣ [@AutomationBoi](https://github.com/AutomationBoi)
-- 3️⃣ [@datasone](https://github.com/datasone)
-- 4️⃣ [@dixonte](https://github.com/dixonte)
-- 5️⃣ [@cocoon](https://github.com/cocoon)
-- 6️⃣ [@Norgerman](https://github.com/Norgerman)
-- 7️⃣ [@flyxyz123](https://github.com/flyxyz123)
+- [@siblount](https://github.com/siblount)
+- [@SylwesterZarebski](https://github.com/SylwesterZarebski)
+- [@Sxderp](https://github.com/Sxderp)
+- [@fire-eggs](https://github.com/fire-eggs)
+- [@AutomationBoi](https://github.com/AutomationBoi)
+- [@datasone](https://github.com/datasone)
+- [@dixonte](https://github.com/dixonte)
+- [@cocoon](https://github.com/cocoon)
+- [@Norgerman](https://github.com/Norgerman)
+- [@flyxyz123](https://github.com/flyxyz123)
 
 Thank you!
 
