@@ -19,7 +19,7 @@
     <ROW Property="ARPPRODUCTICON" Value="ImageGlass_1.exe" Type="8"/>
     <ROW Property="ARPURLINFOABOUT" Value="https://imageglass.org/support"/>
     <ROW Property="ARPURLUPDATEINFO" Value="https://imageglass.org/download"/>
-    <ROW Property="CTRLS" Value="2"/>
+    <ROW Property="CTRLS" Value="3"/>
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="MsiBuild:1"/>
     <ROW Property="Manufacturer" Value="Duong Dieu Phap"/>
     <ROW Property="MsiLogging" MultiBuildValue="MsiBuild:vp"/>
@@ -30,6 +30,7 @@
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{877DB994-AB03-4025-B99D-41CE565E810B}"/>
+    <ROW Property="VIEWREADME" Value="1" Type="4"/>
     <ROW Property="WindowsType9X" MultiBuildValue="MsiBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsType9XDisplay" MultiBuildValue="MsiBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT" MultiBuildValue="MsiBuild:Windows 9x/ME/NT/2000/XP/Vista/Windows 7/Windows 8 x86/Windows 8.1 x86/Windows 10 x86" ValueLocId="-"/>
@@ -47,7 +48,7 @@
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
     <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
     <ROW Directory="ExtIcons_Dir" Directory_Parent="APPDIR" DefaultDir="EXT-IC~1|Ext-Icons"/>
-    <ROW Directory="ImageGlass_Dir" Directory_Parent="ProgramMenuFolder" DefaultDir="IMAGEG~1|ImageGlass"/>
+    <ROW Directory="ImageGlass_Dir" Directory_Parent="ProgramMenuFolder" DefaultDir="IMAGEG~2|ImageGlass Kobe"/>
     <ROW Directory="Kobe_Dir" Directory_Parent="Themes_Dir" DefaultDir="Kobe"/>
     <ROW Directory="Languages_Dir" Directory_Parent="APPDIR" DefaultDir="LANGUA~1|Languages"/>
     <ROW Directory="ProgramMenuFolder" Directory_Parent="TARGETDIR" DefaultDir="PROGRA~1|ProgramMenuFolder" IsPseudoRoot="1"/>
@@ -563,6 +564,7 @@
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
     <ROW Action="AI_SetArpReadmeFile" Type="51" Source="ARPREADME" Target="[#LICENSE.rtf]"/>
+    <ROW Action="AI_ViewReadme" Type="1" Source="aicustact.dll" Target="[#LICENSE.rtf]"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="MsiBuild:[AI_UserProgramFiles]\[ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]" MultiBuildTarget="MsiBuild:[ProgramFiles64Folder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
