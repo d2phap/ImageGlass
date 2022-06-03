@@ -138,10 +138,10 @@ namespace ImageGlass.Library {
             };
 
             if (enable) {
-                return reg.Write(Application.ProductName, $"{App.IGExePath} -HideWindow");
+                return reg.Write("ImageGlass", $"{App.IGExePath} -HideWindow");
             }
             else {
-                return reg.DeleteKey(Application.ProductName);
+                return reg.DeleteKey("ImageGlass");
             }
         }
     }

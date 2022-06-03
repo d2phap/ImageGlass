@@ -1168,7 +1168,11 @@ namespace ImageGlass {
                     e.Handled = true; // Issue #963: don't let ImageBox see the keystroke!
                     _ = NextPicAsync(-1);
                 }
-                return; // fall-through lets pan happen
+                else {
+                    picMain.HandlePan(Configs.ImageHorizontalPanningSpeed, Configs.ImageVerticalPanningSpeed, e);
+                    e.Handled = true;
+                }
+                return;
             }
             if (!ignore && e.KeyValue == (int)Keys.PageUp && hasNoMods) {
                 var action = Configs.KeyComboActions[KeyCombos.PageUpDown];
@@ -1194,7 +1198,11 @@ namespace ImageGlass {
                     e.Handled = true; // Issue #963: don't let ImageBox see the keystroke!
                     _ = NextPicAsync(1);
                 }
-                return; // fall-through lets pan happen
+                else {
+                    picMain.HandlePan(Configs.ImageHorizontalPanningSpeed, Configs.ImageVerticalPanningSpeed, e);
+                    e.Handled = true;
+                }
+                return;
             }
             if (!ignore && e.KeyValue == (int)Keys.PageDown && hasNoMods) {
                 var action = Configs.KeyComboActions[KeyCombos.PageUpDown];
@@ -1217,6 +1225,11 @@ namespace ImageGlass {
                     mnuMainZoomIn_Click(null, null);
                     e.Handled = true;
                 }
+                else {
+                    // Assume action is pan.
+                    picMain.HandlePan(Configs.ImageHorizontalPanningSpeed, Configs.ImageVerticalPanningSpeed, e);
+                    e.Handled = true;
+                }
                 return; // fall-through lets pan happen
             }
             #endregion
@@ -1229,6 +1242,12 @@ namespace ImageGlass {
                     mnuMainZoomOut_Click(null, null);
                     e.Handled = true;
                 }
+                else {
+                    // Assume action is pan.
+                    picMain.HandlePan(Configs.ImageHorizontalPanningSpeed, Configs.ImageVerticalPanningSpeed, e);
+                    e.Handled = true;
+                }
+                // Handle pan events.
                 return; // fall-through lets pan happen
             }
             #endregion
@@ -1410,6 +1429,12 @@ namespace ImageGlass {
                 // Refresh image
                 if (e.KeyCode == Keys.R) {
                     mnuMainRefresh.PerformClick();
+                    return;
+                }
+
+                // Share image
+                if (e.KeyCode == Keys.S) {
+                    mnuMainShare.PerformClick();
                     return;
                 }
 
@@ -2197,7 +2222,7 @@ namespace ImageGlass {
         /// <summary>
         /// Adjust our window dimensions to fit the image size.
         /// </summary>
-        private void WindowFitMode() {
+        private void WindowFitMode(bool reZoom = true) {
             if (!Configs.IsWindowFit || picMain.Image == null)
                 return; // Nothing to do
 
@@ -2240,16 +2265,28 @@ namespace ImageGlass {
 
             // Let the image viewer control figure out the zoom value for
             // the full-size window
-            ApplyZoomMode(Configs.ZoomMode);
-
+            if (reZoom) {
+                ApplyZoomMode(Configs.ZoomMode);
+            }
 
             // Now that we have the new zoom value, adjust our main window
             // to fit the *zoomed* image size
             var newW = (int)(picMain.Image.Width * picMain.ZoomFactor);
             var newH = (int)(picMain.Image.Height * picMain.ZoomFactor);
 
-            Size = new Size(Width += newW - picMain.Width,
-                            Height += newH - picMain.Height);
+            // Adjust our main window to theoretically fit the entire
+            // picture, but not larger than desktop working area.
+            fullW = Width + newW - picMain.Width;
+            fullH = Height + newH - picMain.Height;
+
+            maxWidth = Math.Min(fullW, screen.WorkingArea.Width);
+            maxHeight = Math.Min(fullH, screen.WorkingArea.Height);
+            Size = new Size(Width = maxWidth, Height = maxHeight);
+
+            // Scroll to last position
+            if (!reZoom) {
+                picMain.ScrollTo(picMain.PointToImage(picMain.CenterPoint), picMain.CenterPoint);
+            }
 
             // center window to screen
             if (Configs.IsCenterWindowFit) {
@@ -3862,6 +3899,12 @@ namespace ImageGlass {
             thumbnailBar.Refresh();
 
             SetStatusBar(); // File count has changed - update title bar
+
+            // display the file just added
+            if (Configs.AutoDisplayNewImageInFolder) {
+                Local.CurrentIndex = Local.ImageList.Length - 1;
+                _ = NextPicAsync(0);
+            }
         }
 
         /// <summary>
@@ -3959,6 +4002,11 @@ namespace ImageGlass {
 
         private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e) {
             _isManuallyZoomed = true;
+
+            // Handle window fit after zoom change
+            if (Configs.IsWindowFit) {
+                WindowFitMode(false);
+            }
 
             // Set new zoom ratio if Zoom Mode LockZoomRatio is enabled
             if (Configs.ZoomMode == ZoomMode.LockZoomRatio) {
@@ -4383,7 +4431,9 @@ namespace ImageGlass {
             // Is there a image in clipboard ?
             // CheckImageInClipboard: ;
             else if (Clipboard.ContainsImage()) {
-                LoadImageData(Clipboard.GetImage());
+                var bmp = ClipboardEx.GetClipboardImage((DataObject)Clipboard.GetDataObject());
+
+                LoadImageData(bmp);
             }
 
             // Is there a filename in clipboard?
@@ -4669,15 +4719,45 @@ namespace ImageGlass {
         }
 
         private void EditByDefaultApp(string filename) {
+            // windows 11 sucks the verb 'edit'
+            if (Helpers.IsOS(WindowsOS.Win11)) {
+                var mspaint11 = @"%LocalAppData%\Microsoft\WindowsApps\mspaint.exe";
+                var fullPath = Environment.ExpandEnvironmentVariables(mspaint11);
+
+                if (!File.Exists(fullPath)) {
+                    MessageBox.Show("Could not find the default app for editing. Please associate your app in ImageGlass Settings > Edit.", filename, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    return;
+                }
+
+                using var p11 = new Process();
+                p11.StartInfo.FileName = fullPath;
+                p11.StartInfo.Arguments = $"\"{filename}\"";
+                p11.StartInfo.UseShellExecute = true;
+
+                try {
+                    p11.Start();
+
+                    RunActionAfterEditing();
+                }
+                catch (Exception ex) {
+                    MessageBox.Show(ex.Message, filename, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                return;
+            }
+
+
+            // windows 10 or earlier ------------------------------
             var win32ErrorMsg = string.Empty;
 
-            using var p = new Process();
-            p.StartInfo.FileName = filename;
-            p.StartInfo.Verb = "edit";
+            using var p10 = new Process();
+            p10.StartInfo.FileName = $"\"{filename}\"";
+            p10.StartInfo.Verb = "edit";
 
             // first try: launch the associated app for editing
             try {
-                p.Start();
+                p10.Start();
 
                 RunActionAfterEditing();
             }
@@ -4687,11 +4767,15 @@ namespace ImageGlass {
             }
             catch { }
 
+            if (string.IsNullOrEmpty(win32ErrorMsg)) return;
+
 
             // second try: use MS Paint to edit the file
-            if (string.IsNullOrEmpty(win32ErrorMsg)) return;
+            using var p = new Process();
             p.StartInfo.FileName = Environment.ExpandEnvironmentVariables("mspaint.exe");
             p.StartInfo.Arguments = $"\"{filename}\"";
+            p.StartInfo.UseShellExecute = true;
+
 
             try {
                 p.Start();
@@ -4701,6 +4785,34 @@ namespace ImageGlass {
             catch (Win32Exception) {
                 // show error: file does not have associated app
                 MessageBox.Show(win32ErrorMsg, filename, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch { }
+
+        }
+
+
+        private void mnuMainShare_Click(object sender, EventArgs e) {
+            var filename = "";
+
+            if (Local.IsTempMemoryData) {
+                filename = SaveTemporaryMemoryData();
+            }
+            else {
+                filename = Local.ImageList.GetFileName(Local.CurrentIndex);
+
+                if (!File.Exists(filename)) return;
+            }
+
+            try {
+                using var p = new Process();
+                var args = string.Format("share \"{0}\"", filename);
+
+                p.StartInfo.FileName = App.StartUpDir("igcmdWin10.exe");
+                p.StartInfo.Arguments = args;
+                p.EnableRaisingEvents = true;
+                p.Start();
+
+                p.WaitForExit();
             }
             catch { }
         }
@@ -5025,11 +5137,7 @@ namespace ImageGlass {
             }
 
             if (Configs.IsWindowFit) {
-                WindowFitMode();
-            }
-            else {
-                MinimumSize = new(0, 0);
-                ApplyZoomMode(Configs.ZoomMode);
+                WindowFitMode(false);
             }
         }
 
@@ -5279,7 +5387,8 @@ namespace ImageGlass {
             }
 
             if (img != null) {
-                Clipboard.SetImage(img);
+                ClipboardEx.SetClipboardImage(new Bitmap(img), null, null);
+
                 ShowToastMsg(Configs.Language.Items[$"{Name}._CopyImageData"], 1000);
             }
         }
@@ -5549,6 +5658,7 @@ namespace ImageGlass {
                 // check if igcmdWin10.exe exists!
                 if (!Helpers.IsOS(WindowsOS.Win10OrLater) || !File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
                     mnuMainSetAsLockImage.Enabled = false;
+                    mnuMainShare.Enabled = false;
                 }
 
                 if (Helpers.IsOS(WindowsOS.Win7)) {
@@ -5615,16 +5725,7 @@ namespace ImageGlass {
         }
 
 
-
-
-
-
-
-
         #endregion
-
-        
     }
-
 
 }

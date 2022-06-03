@@ -91,14 +91,14 @@ namespace ImageGlass.Library.Net {
 
                 fs = new FileStream(filename, FileMode.Create, FileAccess.Write);
                 wRemote = WebRequest.Create(URL);
-                var myWebResponse = await wRemote.GetResponseAsync().ConfigureAwait(true);
+                var myWebResponse = await wRemote.GetResponseAsync().ConfigureAwait(false);
 
                 FileDownloadSizeObtained?.Invoke(myWebResponse.ContentLength);
                 var sChunks = myWebResponse.GetResponseStream();
 
                 do {
-                    iBytesRead = await sChunks.ReadAsync(bBuffer, 0, 256).ConfigureAwait(true);
-                    await fs.WriteAsync(bBuffer, 0, iBytesRead).ConfigureAwait(true);
+                    iBytesRead = await sChunks.ReadAsync(bBuffer, 0, 256).ConfigureAwait(false);
+                    await fs.WriteAsync(bBuffer, 0, iBytesRead).ConfigureAwait(false);
                     iTotalBytesRead += iBytesRead;
 
                     if (myWebResponse.ContentLength < iTotalBytesRead) {

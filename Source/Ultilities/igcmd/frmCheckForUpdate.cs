@@ -18,21 +18,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
+using ImageGlass.Base.Update;
 using ImageGlass.Library.WinAPI;
-using ImageGlass.Services;
 using ImageGlass.Settings;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace igcmd {
     public partial class frmCheckForUpdate: Form {
-        private Update up = new Update();
-        private string UpdateInfoFile { get => App.ConfigDir(PathType.File, Dir.Temporary, "update.xml"); }
+        private UpdateService updater = new UpdateService();
 
         public frmCheckForUpdate() {
             InitializeComponent();
@@ -60,92 +59,60 @@ namespace igcmd {
             }
         }
 
-        private void CheckForUpdate() {
-            up = new Update(new Uri("https://imageglass.org/checkforupdate"), UpdateInfoFile);
-            Configs.IsNewVersionAvailable = false;
+        private async Task CheckForUpdateAsync() {
+            await updater.GetUpdates();
 
-            if (File.Exists(UpdateInfoFile)) {
-                File.Delete(UpdateInfoFile);
+
+            Configs.IsNewVersionAvailable = updater.HasNewUpdate;
+
+            // has a new update
+            if (Configs.IsNewVersionAvailable) {
+                lblStatus.Text = "A new update is available!";
+                lblStatus.ForeColor = Color.FromArgb(241, 89, 58);
+
+                picStatus.Image = igcmd.Properties.Resources.warning;
+                btnDownload.Visible = true;
             }
+
+            // no update
+            else {
+                lblStatus.Text = "ImageGlass is up to date!";
+                lblStatus.ForeColor = Configs.Theme.AccentColor;
+                btnDownload.Visible = false;
+                picStatus.Image = igcmd.Properties.Resources.ok;
+            }
+
 
             var sb = new StringBuilder();
 
-            if (up.IsError) {
-                sb.Append("Please visit https://imageglass.org/download to check for updates.");
+            sb.AppendLine(updater.CurrentReleaseInfo.Title);
+            sb.AppendLine();
+            sb.AppendLine(updater.CurrentReleaseInfo.Description);
+            sb.AppendLine();
+            sb.AppendLine("Current version: " + App.Version);
+            sb.AppendLine("Latest version: " + updater.CurrentReleaseInfo.Version);
+            sb.AppendLine("Published date: " + updater.CurrentReleaseInfo.PublishedDate);
 
-                lblStatus.Text = "Unable to check for current version online.";
-                lblStatus.ForeColor = Color.FromArgb(241, 89, 58);
-                picStatus.Image = igcmd.Properties.Resources.warning;
-            }
-            else {
-                sb
-                    .Append("The latest ImageGlass information:\r\n")
-                    .Append("------------------------------\r\n")
-                    .Append("Version: ")
-                    .Append(up.Info.NewVersion)
-                    .Append("\r\n")
-                    .Append("Version type: ")
-                    .Append(up.Info.VersionType)
-                    .Append("\r\n")
-                    .Append("Importance: ")
-                    .Append(up.Info.Level)
-                    .Append("\r\n")
-                    .Append("Size: ")
-                    .Append(up.Info.Size)
-                    .Append("\r\n")
-                    .Append("Published date: ")
-                    .AppendFormat("{0:MMM d, yyyy HH:mm:ss}", up.Info.PublishDate)
-                    .AppendLine();
-
-                if (up.CheckForUpdate(App.StartUpDir("ImageGlass.exe"))) {
-                    if (string.Equals(up.Info.VersionType, "stable", StringComparison.CurrentCultureIgnoreCase)) {
-                        lblStatus.Text = "A new update is available!";
-                        lblStatus.ForeColor = Color.FromArgb(241, 89, 58);
-                    }
-                    else {
-                        lblStatus.Text = "ImageGlass is up to date!";
-                        lblStatus.ForeColor = Configs.Theme.AccentColor;
-                    }
-                    picStatus.Image = igcmd.Properties.Resources.warning;
-                    btnDownload.Enabled = true;
-
-                    Configs.IsNewVersionAvailable = true;
-                }
-                else {
-                    lblStatus.Text = "ImageGlass is up to date!";
-                    lblStatus.ForeColor = Configs.Theme.AccentColor;
-                    btnDownload.Enabled = false;
-                    picStatus.Image = igcmd.Properties.Resources.ok;
-                }
-            }
-
-            txtUpdates.Text += sb.ToString();
+            txtUpdates.Text = sb.ToString();
         }
+
 
         #region Form events
         private void frmMain_Load(object sender, EventArgs e) {
             Directory.CreateDirectory(App.ConfigDir(PathType.Dir, Dir.Temporary));
 
             picStatus.Image = igcmd.Properties.Resources.loading;
-            var t = new Thread(new ThreadStart(CheckForUpdate)) {
-                Priority = ThreadPriority.BelowNormal,
-                IsBackground = true
-            };
-            t.Start();
+            _ = CheckForUpdateAsync();
 
-            var fv = FileVersionInfo.GetVersionInfo(App.StartUpDir("ImageGlass.exe"));
-
-            txtUpdates.Text = $"Current version: {fv.FileVersion}\r\n------------------------------\r\n\r\n";
+            txtUpdates.Text = $"Current version: " + App.Version;
         }
 
         private void frmCheckForUpdate_FormClosing(object sender, FormClosingEventArgs e) {
-            if (File.Exists(UpdateInfoFile))
-                File.Delete(UpdateInfoFile);
         }
 
         private void lnkUpdateReadMore_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             try {
-                Process.Start(up.Info.Description + $"?utm_source=app_{App.Version}& utm_medium=app_click&utm_campaign=app_update_read_more");
+                Process.Start(updater.CurrentReleaseInfo.ChangelogUrl + $"?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_update_read_more");
             }
             catch {
                 MessageBox.Show("Check your Internet connection!");
@@ -154,7 +121,7 @@ namespace igcmd {
 
         private void btnDownload_Click(object sender, EventArgs e) {
             try {
-                Process.Start(up.Info.Link.ToString() + $"?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_update_read_more");
+                Process.Start("https://imageglass.org/download?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_download");
             }
             catch {
                 MessageBox.Show("Check your Internet connection!");

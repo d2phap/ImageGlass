@@ -211,6 +211,11 @@ namespace ImageGlass {
             lblBackGroundColor.Text = lang[$"{Name}.{nameof(lblBackGroundColor)}"];
             lnkResetBackgroundColor.Text = lang[$"{Name}.{nameof(lnkResetBackgroundColor)}"];
 
+            // Panning
+            lblHeadPanning.Text = lang[$"{Name}.{nameof(lblHeadPanning)}"];
+            lblVertPanningSpeed.Text = string.Format(lang[$"{Name}.{nameof(lblVertPanningSpeed)}"], Configs.ImageVerticalPanningSpeed);
+            lblHorzPanningSpeed.Text = string.Format(lang[$"{Name}.{nameof(lblHorzPanningSpeed)}"], Configs.ImageHorizontalPanningSpeed);
+
             // Others
             lblHeadOthers.Text = lang[$"{Name}.{nameof(lblHeadOthers)}"];
             chkStartWithOs.Text = lang[$"{Name}.{nameof(chkStartWithOs)}"];
@@ -230,6 +235,7 @@ namespace ImageGlass {
             chkLoopViewer.Text = lang[$"{Name}.{nameof(chkLoopViewer)}"];
             chkIsCenterImage.Text = lang[$"{Name}.{nameof(chkIsCenterImage)}"];
             chkIsUseRawThumbnail.Text = lang[$"{Name}.{nameof(chkIsUseRawThumbnail)}"];
+            chkAutoDisplayNewImage.Text = lang[$"{Name}.{nameof(chkAutoDisplayNewImage)}"];
             lblImageLoadingOrder.Text = lang[$"{Name}.{nameof(lblImageLoadingOrder)}"];
             chkUseFileExplorerSortOrder.Text = lang[$"{Name}.{nameof(chkUseFileExplorerSortOrder)}"];
             chkGroupByDirectory.Text = lang[$"{Name}.{nameof(chkGroupByDirectory)}"];
@@ -511,6 +517,8 @@ namespace ImageGlass {
             chkShowToast.Checked = Configs.IsShowToast;
             chkUseTouchGesture.Checked = Configs.IsUseTouchGesture;
             picBackgroundColor.BackColor = Configs.BackgroundColor;
+            numVertPanningSpeed.Value = Configs.ImageVerticalPanningSpeed;
+            numHorzPanningSpeed.Value = Configs.ImageHorizontalPanningSpeed;
         }
 
         private void lnkConfigDir_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -535,6 +543,7 @@ namespace ImageGlass {
             picBackgroundColor.BackColor = Configs.Theme.BackgroundColor;
         }
 
+
         #endregion
 
         #region TAB IMAGE
@@ -557,6 +566,9 @@ namespace ImageGlass {
 
             // Set value of IsUseRawThumbnail
             chkIsUseRawThumbnail.Checked = Configs.IsUseRawThumbnail;
+
+            // AutoDisplayNewImageInFolder
+            chkAutoDisplayNewImage.Checked = Configs.AutoDisplayNewImageInFolder;
 
             // Set value of chkUseFileExplorerSortOrder
             chkUseFileExplorerSortOrder.Checked = Configs.IsUseFileExplorerSortOrder;
@@ -601,11 +613,19 @@ namespace ImageGlass {
             // color profile list
             cmbColorProfile.Items.Clear();
             cmbColorProfile.Items.Add(Configs.Language.Items[$"{Name}.cmbColorProfile._None"]);
+            cmbColorProfile.Items.Add(Configs.Language.Items[$"{Name}.cmbColorProfile._{Constants.CURRENT_MONITOR_PROFILE}"]);
             cmbColorProfile.Items.AddRange(Heart.Helpers.GetBuiltInColorProfiles());
             cmbColorProfile.Items.Add(Configs.Language.Items[$"{Name}.cmbColorProfile._CustomProfileFile"]); // always last position
 
-            // select the color profile
-            if (File.Exists(Configs.ColorProfile)) {
+            // use current color profile
+            if (Configs.ColorProfile.Equals(Constants.CURRENT_MONITOR_PROFILE, StringComparison.InvariantCultureIgnoreCase)) {
+                cmbColorProfile.SelectedIndex = 1;
+
+                lnkColorProfilePath.Text = string.Empty;
+                lnkColorProfileBrowse.Visible = false;
+                lnkColorProfilePath.Visible = false;
+            }
+            else if (File.Exists(Configs.ColorProfile)) {
                 cmbColorProfile.SelectedIndex = cmbColorProfile.Items.Count - 1;
                 lnkColorProfilePath.Text = Configs.ColorProfile;
 
@@ -1863,11 +1883,15 @@ namespace ImageGlass {
             Configs.IsShowToolBar = chkShowToolBar.Checked;
 
             // AutoUpdate
-            Configs.AutoUpdate = chkAutoUpdate.Checked ? DateTime.Now.ToString("M/d/yyyy HH:mm:ss") : "0";
+            Configs.AutoUpdate = chkAutoUpdate.Checked ? DateTime.Now.ToString(Constants.DATETIME_FORMAT) : "0";
 
             // start with os
             Configs.IsStartWithOs = chkStartWithOs.Checked;
             Helper.SetStartWithOS(Configs.IsStartWithOs);
+
+            // Scrolling
+            Configs.ImageVerticalPanningSpeed = (byte)numVertPanningSpeed.Value;
+            Configs.ImageHorizontalPanningSpeed = (byte)numHorzPanningSpeed.Value;
 
             Configs.IsContinueRunningBackground = chkContinueRunningBackground.Checked;
             Configs.IsAllowMultiInstances = chkAllowMultiInstances.Checked;
@@ -1946,6 +1970,7 @@ namespace ImageGlass {
 
             Configs.IsUseRawThumbnail =
                 Local.ImageList.UseRawThumbnail = chkIsUseRawThumbnail.Checked;
+            Configs.AutoDisplayNewImageInFolder = chkAutoDisplayNewImage.Checked;
 
             // image changes alert
             Configs.IsPlayImageChangeSound = chkIsPlayImageChangeSound.Checked;
@@ -1988,9 +2013,13 @@ namespace ImageGlass {
             // apply color profile for all
             Configs.IsApplyColorProfileForAll = chkApplyColorProfile.Checked;
 
-            // color profile
-            if (cmbColorProfile.SelectedIndex == cmbColorProfile.Items.Count - 1) {
-                // custom color profile file
+
+            // use current monitor profile
+            if (cmbColorProfile.SelectedIndex == 1) {
+                Configs.ColorProfile = Constants.CURRENT_MONITOR_PROFILE;
+            }
+            // custom color profile file
+            else if (cmbColorProfile.SelectedIndex == cmbColorProfile.Items.Count - 1) {
                 Configs.ColorProfile = lnkColorProfilePath.Text;
             }
             else {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace ImageGlass {
@@ -164,6 +165,72 @@ namespace ImageGlass {
                 }
             }
         }
+
+
+        /// <summary>
+        /// [IG_CHANGE] https://github.com/cyotek/Cyotek.Windows.Forms.ImageBox/issues/37
+        /// </summary>
+        /// <param name="g"></param>
+        protected override void DrawImage(Graphics g) {
+            const float MaxDrawImageSidePixels = 5000;
+
+            var dstView = GetImageViewPort();
+            var srcPortion = GetSourceImageRegion();
+
+            // draw entire image
+            if (srcPortion.Width <= MaxDrawImageSidePixels && srcPortion.Height <= MaxDrawImageSidePixels) {
+                base.DrawImage(g);
+
+                //// debug
+                //TextRenderer.DrawText(g, srcPortion.ToString(), Font, ClientRectangle, ForeColor, BackColor, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.WordBreak | TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix);
+
+                return;
+            }
+
+            var currentInterpolationMode = g.InterpolationMode;
+            var currentPixelOffsetMode = g.PixelOffsetMode;
+            g.InterpolationMode = GetInterpolationMode();
+
+
+            // disable pixel offsets. Thanks to Rotem for the info.
+            // http://stackoverflow.com/questions/14070311/why-is-graphics-drawimage-cropping-part-of-my-image/14070372#14070372
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+            try {
+                // Animation. Thanks to teamalpha5441 for the contribution
+                if (IsAnimating && !DesignMode) {
+                    ImageAnimator.UpdateFrames(Image);
+                }
+
+                // slice image into small tiles and draw
+                var CountOfStepX = (int)Math.Round(srcPortion.Width / MaxDrawImageSidePixels + 0.5);
+                var CountOfStepY = (int)Math.Round(srcPortion.Height / MaxDrawImageSidePixels + 0.5);
+
+                var stepDstX = dstView.Width / CountOfStepX;
+                var stepDstY = dstView.Height / CountOfStepY;
+                var stepSrcX = (int)(srcPortion.Width / CountOfStepX);
+                var stepSrcY = (int)(srcPortion.Height / CountOfStepY);
+
+                for (var w = 0; w < CountOfStepX; w++)
+                    for (var h = 0; h < CountOfStepY; h++) {
+                        var rfDst = new RectangleF(dstView.X + stepDstX * w, dstView.Y + stepDstY * h, stepDstX, stepDstY);
+                        var rfSrc = new RectangleF(srcPortion.X + stepSrcX * w, srcPortion.Y + stepSrcY * h, stepSrcX, stepSrcY);
+                        g.DrawImage(Image, rfDst, rfSrc, GraphicsUnit.Pixel);
+
+                        //// debug
+                        //var txtRect = new Rectangle((int)rfDst.X, (int)rfDst.Y, (int)rfDst.Width, (int)rfDst.Height);
+                        //TextRenderer.DrawText(g, rfDst.ToString() + " " + rfSrc.ToString(), Font, txtRect, ForeColor, BackColor, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.WordBreak | TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix);
+                    }
+            }
+            catch (Exception ex) {
+                //// debug
+                //TextRenderer.DrawText(g, ex.Message, Font, ClientRectangle, ForeColor, BackColor, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter | TextFormatFlags.WordBreak | TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix);
+            }
+
+            g.PixelOffsetMode = currentPixelOffsetMode;
+            g.InterpolationMode = currentInterpolationMode;
+        }
+
 
         /// <summary>
         ///   Raises the <see cref="ImageBox.PanStart" /> event.
@@ -371,6 +438,32 @@ namespace ImageGlass {
             if (!e.Cancel) {
                 this.PreviousSelectionRegion = this.SelectionRegion;
                 this.IsMovingSelection = true;
+            }
+        }
+
+        /// <summary>
+        /// Adjusts scroll based on ImageGlass.Settings.Configs.ImageHorizontalScrollSpeed & ImageGlass.Settings.Configs.ImageVerticaclScrollSpeed
+        /// </summary>
+        /// <param name="horizontalScrollDistance">The distance to move the horizontal scrollbar.</param>
+        /// <param name="verticalScrollDistance">The distance to move the vertical scrollbar.</param>
+        /// <param name="e"></param>
+        public void HandlePan(byte horizontalScrollDistance, byte verticalScrollDistance, KeyEventArgs e) {
+            switch (e.KeyCode) {
+                case Keys.Left:
+                    base.AdjustScroll(-horizontalScrollDistance, 0);
+                    break;
+
+                case Keys.Right:
+                    base.AdjustScroll(horizontalScrollDistance, 0);
+                    break;
+
+                case Keys.Up:
+                    base.AdjustScroll(0, -verticalScrollDistance);
+                    break;
+
+                case Keys.Down:
+                    base.AdjustScroll(0, verticalScrollDistance);
+                    break;
             }
         }
 

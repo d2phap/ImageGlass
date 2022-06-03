@@ -35,8 +35,8 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.picStatus = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.txtUpdates = new System.Windows.Forms.RichTextBox();
             this.picStoreApp = new System.Windows.Forms.PictureBox();
+            this.txtUpdates = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.picStatus)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picStoreApp)).BeginInit();
@@ -75,7 +75,6 @@
             // 
             this.btnDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDownload.AutoSize = true;
-            this.btnDownload.Enabled = false;
             this.btnDownload.Location = new System.Drawing.Point(251, 16);
             this.btnDownload.Name = "btnDownload";
             this.btnDownload.Size = new System.Drawing.Size(115, 42);
@@ -119,6 +118,20 @@
             this.panel1.Size = new System.Drawing.Size(475, 74);
             this.panel1.TabIndex = 4;
             // 
+            // picStoreApp
+            // 
+            this.picStoreApp.BackColor = System.Drawing.Color.Black;
+            this.picStoreApp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picStoreApp.Dock = System.Windows.Forms.DockStyle.Left;
+            this.picStoreApp.Image = ((System.Drawing.Image)(resources.GetObject("picStoreApp.Image")));
+            this.picStoreApp.Location = new System.Drawing.Point(0, 0);
+            this.picStoreApp.Name = "picStoreApp";
+            this.picStoreApp.Size = new System.Drawing.Size(215, 74);
+            this.picStoreApp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picStoreApp.TabIndex = 24;
+            this.picStoreApp.TabStop = false;
+            this.picStoreApp.Click += new System.EventHandler(this.picStoreApp_Click);
+            // 
             // txtUpdates
             // 
             this.txtUpdates.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -137,20 +150,6 @@
             this.txtUpdates.Size = new System.Drawing.Size(432, 278);
             this.txtUpdates.TabIndex = 17;
             this.txtUpdates.Text = "List of components here...";
-            // 
-            // picStoreApp
-            // 
-            this.picStoreApp.BackColor = System.Drawing.Color.Black;
-            this.picStoreApp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picStoreApp.Dock = System.Windows.Forms.DockStyle.Left;
-            this.picStoreApp.Image = ((System.Drawing.Image)(resources.GetObject("picStoreApp.Image")));
-            this.picStoreApp.Location = new System.Drawing.Point(0, 0);
-            this.picStoreApp.Name = "picStoreApp";
-            this.picStoreApp.Size = new System.Drawing.Size(215, 74);
-            this.picStoreApp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picStoreApp.TabIndex = 24;
-            this.picStoreApp.TabStop = false;
-            this.picStoreApp.Click += new System.EventHandler(this.picStoreApp_Click);
             // 
             // frmCheckForUpdate
             // 

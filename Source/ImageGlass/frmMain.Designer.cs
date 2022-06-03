@@ -40,6 +40,7 @@
             this.mnuOpenWith = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainEditImage = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainPrint = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainShare = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainReloadImage = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,7 +106,6 @@
             this.mnuMainSlideShowStart = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSlideShowPause = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainSlideShowExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainShare = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainLayout = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainToolbar = new System.Windows.Forms.ToolStripMenuItem();
@@ -229,7 +229,6 @@
             this.mnuFrameless,
             this.mnuMainFullScreen,
             this.mnuMainSlideShow,
-            this.mnuMainShare,
             this.toolStripSeparator9,
             this.mnuMainLayout,
             this.mnuMainTools,
@@ -239,7 +238,7 @@
             this.toolStripMenuItem21,
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
-            this.mnuMain.Size = new System.Drawing.Size(247, 468);
+            this.mnuMain.Size = new System.Drawing.Size(247, 470);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 
@@ -255,6 +254,7 @@
             this.mnuOpenWith,
             this.mnuMainEditImage,
             this.mnuMainPrint,
+            this.mnuMainShare,
             this.toolStripSeparator8,
             this.mnuMainRefresh,
             this.mnuMainReloadImage,
@@ -370,6 +370,17 @@
             this.mnuMainPrint.Size = new System.Drawing.Size(414, 31);
             this.mnuMainPrint.Text = "&Print";
             this.mnuMainPrint.Click += new System.EventHandler(this.mnuMainPrint_Click);
+            // 
+            // mnuMainShare
+            // 
+            this.mnuMainShare.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainShare.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainShare.Name = "mnuMainShare";
+            this.mnuMainShare.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainShare.ShortcutKeyDisplayString = "S";
+            this.mnuMainShare.Size = new System.Drawing.Size(414, 31);
+            this.mnuMainShare.Text = "[Share...]";
+            this.mnuMainShare.Click += new System.EventHandler(this.mnuMainShare_Click);
             // 
             // toolStripSeparator8
             // 
@@ -1089,17 +1100,6 @@
             this.mnuMainSlideShowExit.Text = "E&xit slideshow";
             this.mnuMainSlideShowExit.Click += new System.EventHandler(this.mnuMainSlideShowExit_Click);
             // 
-            // mnuMainShare
-            // 
-            this.mnuMainShare.ForeColor = System.Drawing.Color.Black;
-            this.mnuMainShare.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.mnuMainShare.Name = "mnuMainShare";
-            this.mnuMainShare.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
-            this.mnuMainShare.Size = new System.Drawing.Size(246, 29);
-            this.mnuMainShare.Text = "S&hare ...";
-            this.mnuMainShare.Visible = false;
-            this.mnuMainShare.DropDownOpening += new System.EventHandler(this.subMenu_DropDownOpening);
-            // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
@@ -1442,6 +1442,7 @@
             // 
             this.toolMain.Alignment = ImageGlass.UI.ToolbarAlignment.LEFT;
             this.toolMain.AllowMerge = false;
+            this.toolMain.AutoFocus = true;
             this.toolMain.AutoSize = false;
             this.toolMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(60)))), ((int)(((byte)(61)))));
             this.toolMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -2133,7 +2134,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem13;
         private System.Windows.Forms.ToolStripMenuItem mnuMainSetAsDesktop;
         private System.Windows.Forms.ToolStripMenuItem mnuMainSetAsLockImage;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainShare;
         private System.Windows.Forms.ToolStripMenuItem mnuMainLayout;
         private System.Windows.Forms.ToolStripMenuItem mnuMainToolbar;
         private System.Windows.Forms.ToolStripMenuItem mnuMainThumbnailBar;
@@ -2227,6 +2227,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem mnuTrayInfo;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainShare;
     }
 }
 

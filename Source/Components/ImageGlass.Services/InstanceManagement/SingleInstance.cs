@@ -59,9 +59,9 @@ namespace ImageGlass.Services.InstanceManagement {
             try {
                 using (var client = new NamedPipeClientStream(identifier.ToString()))
                 using (var writer = new StreamWriter(client)) {
-                    await client.ConnectAsync(200).ConfigureAwait(true);
+                    await client.ConnectAsync(200).ConfigureAwait(false);
                     foreach (var argument in arguments)
-                        await writer.WriteLineAsync(argument).ConfigureAwait(true);
+                        await writer.WriteLineAsync(argument).ConfigureAwait(false);
                 }
                 return true;
             }

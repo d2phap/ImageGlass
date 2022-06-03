@@ -187,7 +187,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets the value indicates that to show full image path or only base name
         /// </summary>
-        public static bool IsDisplayBasenameOfImage { get; set; } = false;
+        public static bool IsDisplayBasenameOfImage { get; set; } = true;
 
         /// <summary>
         /// Gets, sets the value indicates that to toolbar buttons to be centered horizontally
@@ -197,7 +197,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets the value indicates that to show last seen image on startup
         /// </summary>
-        public static bool IsOpenLastSeenImage { get; set; } = false;
+        public static bool IsOpenLastSeenImage { get; set; } = true;
 
         /// <summary>
         /// Gets, sets the value indicates that the ColorProfile will be applied for all or only the images with embedded profile
@@ -309,6 +309,11 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool IsStartWithOs { get; set; } = false;
 
+        /// <summary>
+        /// Gets, sets value indicates that the app will auto-display the new added image in the current folder
+        /// </summary>
+        public static bool AutoDisplayNewImageInFolder { get; set; } = false;
+
         #endregion
 
 
@@ -364,6 +369,16 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static int ImageEditQuality { get; set; } = 100;
 
+        /// <summary>
+        /// Gets, sets the vertical scroll speed for viewing images.
+        /// </summary>
+        public static byte ImageVerticalPanningSpeed { get; set; } = 40;
+
+        /// <summary>
+        /// Gets, sets the horizontal scroll speed for viewing images.
+        /// </summary>
+        public static byte ImageHorizontalPanningSpeed { get; set; } = 40;
+
         #endregion
 
 
@@ -372,7 +387,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets color profile string. It can be a defined name or ICC/ICM file path
         /// </summary>
-        public static string ColorProfile { get; set; } = "sRGB";
+        public static string ColorProfile { get; set; } = Constants.CURRENT_MONITOR_PROFILE;
 
         /// <summary>
         /// Gets, sets the last time to check for update. Set it to "0" to disable auto-update.
@@ -645,6 +660,7 @@ namespace ImageGlass.Settings {
             IsHideThumbnailBarInFullscreen = Get<bool>(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
             IsContinueRunningBackground = Get<bool>(nameof(IsContinueRunningBackground), IsContinueRunningBackground);
             IsStartWithOs = Get<bool>(nameof(IsStartWithOs), IsStartWithOs);
+            AutoDisplayNewImageInFolder = Get<bool>(nameof(AutoDisplayNewImageInFolder), AutoDisplayNewImageInFolder);
 
             #endregion
 
@@ -685,6 +701,9 @@ namespace ImageGlass.Settings {
 
             ToolbarIconHeight = Get<uint>(nameof(ToolbarIconHeight), ToolbarIconHeight);
             ImageEditQuality = Get<int>(nameof(ImageEditQuality), ImageEditQuality);
+
+            ImageVerticalPanningSpeed = Get<byte>(nameof(ImageVerticalPanningSpeed), ImageVerticalPanningSpeed);
+            ImageHorizontalPanningSpeed = Get<byte>(nameof(ImageHorizontalPanningSpeed), ImageHorizontalPanningSpeed);
 
             #endregion
 
@@ -889,6 +908,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
             Set(nameof(IsContinueRunningBackground), IsContinueRunningBackground);
             Set(nameof(IsStartWithOs), IsStartWithOs);
+            Set(nameof(AutoDisplayNewImageInFolder), AutoDisplayNewImageInFolder);
 
             #endregion
 
@@ -904,7 +924,8 @@ namespace ImageGlass.Settings {
             Set(nameof(ZoomLockValue), ZoomLockValue);
             Set(nameof(ToolbarIconHeight), ToolbarIconHeight);
             Set(nameof(ImageEditQuality), ImageEditQuality);
-
+            Set(nameof(ImageVerticalPanningSpeed), ImageVerticalPanningSpeed);
+            Set(nameof(ImageHorizontalPanningSpeed), ImageHorizontalPanningSpeed);
             #endregion
 
             #region Enum items
