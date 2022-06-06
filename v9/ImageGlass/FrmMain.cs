@@ -804,17 +804,10 @@ public partial class FrmMain : Form
         Gallery.ThumbnailSize = new Size(Config.ThumbnailSize, Config.ThumbnailSize);
 
 
-        //var watch = new Stopwatch();
-        //watch.Start();
-
-        for (var i = 0; i < Local.Images.Length; i++)
+        foreach (string filename in Local.Images.FileNames)
         {
-            var lvi = new ImageGalleryItem(Local.Images.GetFileName(i));
-            Gallery.Items.Add(lvi);
+            Gallery.Items.Add(filename);
         }
-
-        //watch.Stop();
-        //MessageBox.Show($"{watch.ElapsedMilliseconds} ms for {Gallery.Items.Count} items.");
 
         Gallery.ResumeLayout();
 

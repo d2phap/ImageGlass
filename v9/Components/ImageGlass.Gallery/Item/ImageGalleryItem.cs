@@ -50,10 +50,10 @@ public class ImageGalleryItem : ICloneable
     // File info
     private ImageDetails? _details = null;
     internal string extension = string.Empty;
-    private string mFileName = string.Empty;
+    internal string mFileName = string.Empty;
 
     // Adaptor
-    internal object? mVirtualItemKey = null;
+    internal object mVirtualItemKey;
     internal IAdaptor? mAdaptor = null;
 
     // Used for cloned items
@@ -154,11 +154,10 @@ public class ImageGalleryItem : ICloneable
     public IAdaptor? Adaptor => mAdaptor;
 
     /// <summary>
-    /// [IG_CHANGE] Gets the virtual item key associated with this item.
-    /// Returns null if the item is not a virtual item.
+    /// Gets the virtual item key associated with this item.
     /// </summary>
     [Category("Behavior"), Browsable(false)]
-    public object VirtualItemKey => mVirtualItemKey ?? mFileName;
+    public object VirtualItemKey => mVirtualItemKey;
 
     /// <summary>
     /// Gets the ImageListView owning this item.
@@ -436,54 +435,17 @@ public class ImageGalleryItem : ICloneable
     /// <summary>
     /// Initializes a new instance of the <see cref="ImageGalleryItem"/> class.
     /// </summary>
-    public ImageGalleryItem()
-    {
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ImageGalleryItem"/> class.
-    /// </summary>
     /// <param name="filename">The image filename representing the item.</param>
     /// <param name="text">Item text</param>
-    public ImageGalleryItem(string filename, string text) : this()
+    public ImageGalleryItem(string filename, string text = "")
     {
+        // important! to make it load faster using virtual items
+        mVirtualItemKey = filename;
+
         mFileName = filename;
+        mText = string.IsNullOrEmpty(text) ? Path.GetFileName(filename) : text;
         extension = _stringCache.GetFromCache(Path.GetExtension(filename));
-        mVirtualItemKey = mFileName;
-
-        // if text parameter is empty then get file name for item text
-        if (string.IsNullOrEmpty(text))
-        {
-            mText = Path.GetFileName(filename);
-        }
-        else
-        {
-            mText = text;
-        }
     }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ImageGalleryItem"/> class.
-    /// </summary>
-    /// <param name="filename">The image filename representing the item.</param>
-    public ImageGalleryItem(string filename) : this(filename, string.Empty) { }
-
-    /// <summary>
-    /// Initializes a new instance of a virtual <see cref="ImageGalleryItem"/> class.
-    /// </summary>
-    /// <param name="key">The key identifying this item.</param>
-    /// <param name="text">Text of this item.</param>
-    public ImageGalleryItem(object key, string text) : this()
-    {
-        mVirtualItemKey = key;
-        mText = text;
-    }
-
-    /// <summary>
-    /// Initializes a new instance of a virtual <see cref="ImageGalleryItem"/> class.
-    /// </summary>
-    /// <param name="key">The key identifying this item.</param>
-    public ImageGalleryItem(object key) : this(key, string.Empty) { }
 
     #endregion
 
@@ -639,19 +601,14 @@ public class ImageGalleryItem : ICloneable
     /// </returns>
     public object Clone()
     {
-        var item = new ImageGalleryItem
+        var item = new ImageGalleryItem(mFileName, mText)
         {
-            mText = mText,
-
             // File info
             extension = extension,
-            mFileName = mFileName,
-
             _details = _details,
 
             // Virtual item properties
             mAdaptor = mAdaptor,
-            mVirtualItemKey = mVirtualItemKey
         };
 
         // Current thumbnail

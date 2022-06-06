@@ -144,13 +144,6 @@ public partial class ImageGallery : Control, IComponent
     [Category("Behavior"), DefaultValue(true)]
     public bool AllowDrag { get; set; } = true;
 
-    /// <summary>
-    /// Gets or sets whether duplicate items (image files pointing to the same path 
-    /// on the file system) are allowed.
-    /// </summary>
-    [Category("Behavior"), DefaultValue(false)]
-    public bool AllowDuplicateFileNames { get; set; } = false;
-
 
     /// <summary>
     /// Gets or sets the border style of the control.
@@ -1261,11 +1254,14 @@ public partial class ImageGallery : Control, IComponent
             // delay
             await Task.Delay(delay, _tooltipTokenSrc.Token);
 
-            // show tooltip
+            // build tooltip content
             var tooltipContent = $"{item.FileName}" +
                 $"\r\n{Helpers.FormatSize(item.Details.FileSize)}";
+
             mTooltip.ToolTipTitle = item.Text +
                 $" ({item.Details.Width} x {item.Details.Height})";
+
+            // show tooltip
             mTooltip.Show(tooltipContent, this, bounds.X, tooltipPosY);
 
 

@@ -237,55 +237,6 @@ public partial class ImageGallery
         }
 
         /// <summary>
-        /// Adds a virtual item to the <see cref="ItemCollection"/>.
-        /// </summary>
-        /// <param name="key">The key identifying the item.</param>
-        /// <param name="text">Text of the item.</param>
-        /// <param name="adaptor">The adaptor associated with this item.</param>
-        public void Add(object key, string text, IAdaptor adaptor)
-        {
-            Add(key, text, null, adaptor);
-        }
-
-        /// <summary>
-        /// Adds a virtual item to the <see cref="ItemCollection"/>.
-        /// </summary>
-        /// <param name="key">The key identifying the item.</param>
-        /// <param name="text">Text of the item.</param>
-        public void Add(object key, string text)
-        {
-            Add(key, text, _imageGallery.defaultAdaptor);
-        }
-
-        /// <summary>
-        /// Adds a virtual item to the <see cref="ItemCollection"/>.
-        /// </summary>
-        /// <param name="key">The key identifying the item.</param>
-        /// <param name="text">Text of the item.</param>
-        /// <param name="initialThumbnail">The initial thumbnail image for the item.</param>
-        /// <param name="adaptor">The adaptor associated with this item.</param>
-        public void Add(object key, string text, Image? initialThumbnail, IAdaptor adaptor)
-        {
-            var item = new ImageGalleryItem(key, text)
-            {
-                clonedThumbnail = initialThumbnail,
-            };
-
-            Add(item, adaptor);
-        }
-
-        /// <summary>
-        /// Adds a virtual item to the <see cref="ItemCollection"/>.
-        /// </summary>
-        /// <param name="key">The key identifying the item.</param>
-        /// <param name="text">Text of the item.</param>
-        /// <param name="initialThumbnail">The initial thumbnail image for the item.</param>
-        public void Add(object key, string text, Image initialThumbnail)
-        {
-            Add(key, text, initialThumbnail, _imageGallery.defaultAdaptor);
-        }
-
-        /// <summary>
         /// Adds a range of items to the <see cref="ItemCollection"/>.
         /// </summary>
         /// <param name="items">An array of <see cref="ImageGalleryItem"/> 
@@ -449,67 +400,6 @@ public partial class ImageGallery
         }
 
         /// <summary>
-        /// Inserts a virtual item to the <see cref="ItemCollection"/>
-        /// at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index at which the new item should
-        /// be inserted.</param>
-        /// <param name="key">The key identifying the item.</param>
-        /// <param name="text">Text of the item.</param>
-        /// <param name="adaptor">The adaptor associated with this item.</param>
-        public void Insert(int index, object key, string text, IAdaptor adaptor)
-        {
-            Insert(index, key, text, null, adaptor);
-        }
-
-        /// <summary>
-        /// Inserts a virtual item to the <see cref="ItemCollection"/>
-        /// at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index at which the new item should
-        /// be inserted.</param>
-        /// <param name="key">The key identifying the item.</param>
-        /// <param name="text">Text of the item.</param>
-        public void Insert(int index, object key, string text)
-        {
-            Insert(index, key, text, _imageGallery.defaultAdaptor);
-        }
-
-        /// <summary>
-        /// Inserts a virtual item to the <see cref="ItemCollection"/>
-        /// at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index at which the new item should
-        /// be inserted.</param>
-        /// <param name="key">The key identifying the item.</param>
-        /// <param name="text">Text of the item.</param>
-        /// <param name="initialThumbnail">The initial thumbnail image for the item.</param>
-        /// <param name="adaptor">The adaptor associated with this item.</param>
-        public void Insert(int index, object key, string text, Image? initialThumbnail, IAdaptor adaptor)
-        {
-            var item = new ImageGalleryItem(key, text)
-            {
-                clonedThumbnail = initialThumbnail
-            };
-
-            Insert(index, item, adaptor);
-        }
-
-        /// <summary>
-        /// Inserts a virtual item to the <see cref="ItemCollection"/>
-        /// at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index at which the new item should
-        /// be inserted.</param>
-        /// <param name="key">The key identifying the item.</param>
-        /// <param name="text">Text of the item.</param>
-        /// <param name="initialThumbnail">The initial thumbnail image for the item.</param>
-        public void Insert(int index, object key, string text, Image initialThumbnail)
-        {
-            Insert(index, key, text, initialThumbnail, _imageGallery.defaultAdaptor);
-        }
-
-        /// <summary>
         /// Removes the first occurrence of a specific object 
         /// from the <see cref="ItemCollection"/>.
         /// </summary>
@@ -596,13 +486,6 @@ public partial class ImageGallery
         {
             if (_imageGallery == null)
                 return false;
-
-            // Check if the file already exists
-            if (!string.IsNullOrEmpty(item.FileName) && !_imageGallery.AllowDuplicateFileNames)
-            {
-                if (mItems.Exists(a => string.Compare(a.FileName, item.FileName, StringComparison.OrdinalIgnoreCase) == 0))
-                    return false;
-            }
 
             item.owner = this;
             item.mAdaptor = adaptor;
