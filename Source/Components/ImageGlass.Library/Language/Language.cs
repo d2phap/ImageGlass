@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
+using ImageGlass.Base;
 
 namespace ImageGlass.Library {
     public class Language {
@@ -69,7 +70,7 @@ namespace ImageGlass.Library {
             LangName = "Local name of the language";
             Author = "ImageGlass community";
             Description = "English name of language";
-            MinVersion = "8.4.0.0";
+            MinVersion = "8.6";
             FileName = "";
             IsRightToLeftLayout = RightToLeft.No;
 
@@ -439,8 +440,8 @@ namespace ImageGlass.Library {
 
             #region Others
             Items.Add("frmSetting.lblHeadOthers", "Others"); //v4.0
-            Items.Add("frmSetting.chkStartWithOs", "Start with OS"); //v8.4
-            Items.Add("frmSetting.chkContinueRunningBackground", "Continue running background when the app is closed"); // v8.4
+            Items.Add("frmSetting.chkStartWithOs", "Start with OS to improve startup speed"); //v8.4
+            Items.Add("frmSetting.chkContinueRunningBackground", "Continue running in the background when the app is closed"); // v8.4
             Items.Add("frmSetting.chkAutoUpdate", "Check for update automatically");
             Items.Add("frmSetting.chkAllowMultiInstances", "Allow multiple instances of the program"); //v3.0
             Items.Add("frmSetting.chkESCToQuit", "Allow to press ESC to quit application"); //v2.0 final
@@ -459,6 +460,7 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.chkLoopViewer", "Loop back viewer to the first image when reaching the end of the list"); //v4.0
             Items.Add("frmSetting.chkIsCenterImage", "Center image on viewer"); //v7.0
             Items.Add("frmSetting.chkIsUseRawThumbnail", "Use embedded thumbnail for RAW formats"); //v8.3
+            Items.Add("frmSetting.chkAutoDisplayNewImage", "Display new image in folder automatically"); //v8.6
 
             Items.Add("frmSetting.lblImageLoadingOrder", "Image loading order");
             Items.Add("frmSetting.chkUseFileExplorerSortOrder", "Use Windows File Explorer sort order if possible"); //v7.0
@@ -474,6 +476,7 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lblColorProfile", "Color profile:"); //v6.0
             Items.Add("frmSetting.lnkColorProfileBrowse", "Browse…"); //v6.0
             Items.Add("frmSetting.cmbColorProfile._None", "None"); //v6.0
+            Items.Add($"frmSetting.cmbColorProfile._{Constants.CURRENT_MONITOR_PROFILE}", "Use current monitor profile"); //v8.6
             Items.Add("frmSetting.cmbColorProfile._CustomProfileFile", "Custom…"); //v6.0
 
             #endregion

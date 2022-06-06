@@ -205,11 +205,19 @@ namespace ImageGlass.Heart {
 
                 if (imgColl.Count > 1 && forceLoadFirstPage is false) {
                     imgColl.Read(filename, settings);
-                    foreach (var imgPageM in imgColl) {
-                        (exif, colorProfile) = PreprocesMagickImage((MagickImage)imgPageM, checkRotation);
+
+                    // convert WEBP to GIF for animation
+                    if (ext == ".WEBP") {
+                        bitmap = imgColl.ToBitmap(ImageFormat.Gif);
+                    }
+                    else {
+                        foreach (var imgPageM in imgColl) {
+                            (exif, colorProfile) = PreprocesMagickImage((MagickImage)imgPageM, checkRotation);
+                        }
+
+                        bitmap = imgColl.ToBitmap();
                     }
 
-                    bitmap = imgColl.ToBitmap();
                     return;
                 }
 

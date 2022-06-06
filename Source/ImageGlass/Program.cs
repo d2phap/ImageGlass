@@ -26,6 +26,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ImageGlass.Base;
+using ImageGlass.Library.WinAPI;
 using ImageGlass.Services.InstanceManagement;
 using ImageGlass.Settings;
 
@@ -164,7 +165,7 @@ namespace ImageGlass {
             if (Configs.AutoUpdate != "0") {
                 if (DateTime.TryParseExact(
                     Configs.AutoUpdate,
-                    "M/d/yyyy HH:mm:ss",
+                    Constants.DATETIME_FORMAT,
                     CultureInfo.InvariantCulture,
                     DateTimeStyles.None,
                     out var lastUpdate)) {
@@ -198,7 +199,7 @@ namespace ImageGlass {
                 Configs.IsNewVersionAvailable = p.ExitCode == 1;
 
                 // save last update
-                Configs.AutoUpdate = DateTime.Now.ToString("M/d/yyyy HH:mm:ss");
+                Configs.AutoUpdate = DateTime.Now.ToString(Constants.DATETIME_FORMAT);
             });
         }
 
@@ -237,6 +238,15 @@ namespace ImageGlass {
 
                 // load image file from arg
                 formMain.LoadFromParams(args);
+
+
+                // Hack for issue #620: IG does not activate in normal / maximized window state
+                if (formMain.WindowState != FormWindowState.Minimized) {
+                    formMain.TopMost = true;
+                    CornerApi.ClickOnWindow(formMain.Handle, new(0, 0));
+                    formMain.TopMost = Configs.IsWindowAlwaysOnTop;
+                }
+
             };
 
             // KBR 20181009 Attempt to run a 2nd instance of IG when multi-instance turned off.
@@ -255,6 +265,7 @@ namespace ImageGlass {
             // Execute our delegate on the forms thread!
             formMain.Invoke(UpdateForm, (object)realArgs);
         }
+
 
     }
 }

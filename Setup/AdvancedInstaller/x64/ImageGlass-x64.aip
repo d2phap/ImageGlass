@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="19.1" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="16.6.1" version="19.5" Modules="express" RootPath="." Language="en" Id="{F94250A5-86CD-4D74-BDB8-560C4CA1354D}">
+  <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
+    <ROW Name="HiddenItems" Value="AppXAppDetailsComponent;FixupComponent;AppXCapabilitiesComponent;AppXDependenciesComponent;AppXProductDetailsComponent;AppXVisualAssetsComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;MsiXDiffComponent;MsixManifestEditorComponent"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_CURRENT_YEAR" Value="2022" ValueLocId="-"/>
+    <ROW Property="AI_IA_APPLICATION_ID" Value="6299dac055c3811e8b0abeb0"/>
+    <ROW Property="AI_IA_ENABLE" Value="0"/>
+    <ROW Property="AI_IA_SEND_HTTPS" Value="1"/>
+    <ROW Property="AI_PACKAGING_TOOL" Value="Advanced Installer 19.5 build 36301275" ValueLocId="-"/>
+    <ROW Property="AI_PREDEF_LCONDS_PROPS" Value="AI_DETECTED_ADMIN_USER;AI_DETECTED_ALL"/>
     <ROW Property="AI_RUN_AS_ADMIN" Value="0"/>
     <ROW Property="ALLUSERS" Value="1" MultiBuildValue="MsiBuild:2"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
@@ -11,17 +19,18 @@
     <ROW Property="ARPPRODUCTICON" Value="ImageGlass_1.exe" Type="8"/>
     <ROW Property="ARPURLINFOABOUT" Value="https://imageglass.org/support"/>
     <ROW Property="ARPURLUPDATEINFO" Value="https://imageglass.org/download"/>
-    <ROW Property="CTRLS" Value="2"/>
+    <ROW Property="CTRLS" Value="3"/>
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="MsiBuild:1"/>
     <ROW Property="Manufacturer" Value="Duong Dieu Phap"/>
     <ROW Property="MsiLogging" MultiBuildValue="MsiBuild:vp"/>
-    <ROW Property="ProductCode" Value="1033:{50A60C1F-F490-46C4-AB40-2625CC646617} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{5B4F29B0-FB78-4837-9220-23A8D198DFDD} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
-    <ROW Property="ProductName" Value="ImageGlass"/>
-    <ROW Property="ProductVersion" Value="8.5.1.22" Type="32" TargetFile="ImageGlass.exe"/>
+    <ROW Property="ProductName" Value="ImageGlass Kobe"/>
+    <ROW Property="ProductVersion" Value="8.6.6.6"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{877DB994-AB03-4025-B99D-41CE565E810B}"/>
+    <ROW Property="VIEWREADME" Value="1" Type="4"/>
     <ROW Property="WindowsType9X" MultiBuildValue="MsiBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsType9XDisplay" MultiBuildValue="MsiBuild:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT" MultiBuildValue="MsiBuild:Windows 9x/ME/NT/2000/XP/Vista/Windows 7/Windows 8 x86/Windows 8.1 x86/Windows 10 x86" ValueLocId="-"/>
@@ -39,7 +48,7 @@
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
     <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
     <ROW Directory="ExtIcons_Dir" Directory_Parent="APPDIR" DefaultDir="EXT-IC~1|Ext-Icons"/>
-    <ROW Directory="ImageGlass_Dir" Directory_Parent="ProgramMenuFolder" DefaultDir="IMAGEG~1|ImageGlass"/>
+    <ROW Directory="ImageGlass_Dir" Directory_Parent="ProgramMenuFolder" DefaultDir="IMAGEG~2|ImageGlass Kobe"/>
     <ROW Directory="Kobe_Dir" Directory_Parent="Themes_Dir" DefaultDir="Kobe"/>
     <ROW Directory="Languages_Dir" Directory_Parent="APPDIR" DefaultDir="LANGUA~1|Languages"/>
     <ROW Directory="ProgramMenuFolder" Directory_Parent="TARGETDIR" DefaultDir="PROGRA~1|ProgramMenuFolder" IsPseudoRoot="1"/>
@@ -48,11 +57,12 @@
     <ROW Directory="Themes_Dir" Directory_Parent="APPDIR" DefaultDir="Themes"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
+    <ROW Component="AI_IA_ENABLE" ComponentId="{C61A4274-1B28-441A-A6A2-8ACBB3F8087A}" Directory_="APPDIR" Attributes="260" KeyPath="AI_IA_ENABLE" Options="1"/>
     <ROW Component="AI_INSTALLPERUSER" ComponentId="{3C727F62-5F7F-449F-86CA-BFCB21DB8626}" Directory_="APPDIR" Attributes="260" KeyPath="AI_INSTALLPERUSER" Options="1"/>
     <ROW Component="APPDIR" ComponentId="{9AA73F17-00E0-4CFF-BB31-59859F667103}" Directory_="APPDIR" Attributes="0"/>
     <ROW Component="ActualSize.svg" ComponentId="{92D6E58E-E96F-40C7-91E2-2DF66DE54A43}" Directory_="Kobe_Dir" Attributes="0" KeyPath="ActualSize.svg" Type="0"/>
     <ROW Component="ApplicationDescription" ComponentId="{B7B2B1D5-B0D0-48F3-B2AA-4E8BB2CD8EB5}" Directory_="APPDIR" Attributes="4" KeyPath="ApplicationDescription"/>
-    <ROW Component="ChineseSimplified.iglang" ComponentId="{E1A33E6A-C638-46FE-B098-83B0C9F212DC}" Directory_="Languages_Dir" Attributes="0" KeyPath="Armenian.v8.4.iglang" Type="0"/>
+    <ROW Component="ChineseSimplified.iglang" ComponentId="{E1A33E6A-C638-46FE-B098-83B0C9F212DC}" Directory_="Languages_Dir" Attributes="0" KeyPath="ArabicEgypt.v8.6.iglang" Type="0"/>
     <ROW Component="DotNetZip.dll" ComponentId="{C3BB38FA-8689-4C8E-8908-03600DFB8616}" Directory_="APPDIR" Attributes="256" KeyPath="DotNetZip.dll"/>
     <ROW Component="ExplorerSortOrder.dll" ComponentId="{6E7B0DC3-9369-4177-982F-C99853840F8A}" Directory_="APPDIR" Attributes="256" KeyPath="ExplorerSortOrder.dll"/>
     <ROW Component="FR.ico" ComponentId="{DC5A65C2-C114-4E39-ABF7-7FC553E47112}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="FR.ico" Type="0"/>
@@ -77,14 +87,22 @@
     <ROW Component="Magick.NET.SystemDrawing.dll" ComponentId="{CD5E7C9A-47F6-4DE4-A79E-344483CFDC27}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NET.SystemDrawing.dll"/>
     <ROW Component="Magick.NETQ16OpenMPx64.dll" ComponentId="{C0489429-6F96-4F3F-AEC3-E879BFF78EBC}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NETQ16OpenMPx64.dll"/>
     <ROW Component="Magick.NativeQ16OpenMPx64.dll" ComponentId="{C39985B0-7400-4BFF-882B-A98494AF76B1}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NativeQ16OpenMPx64.dll"/>
+    <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{52FEB1A2-E3F2-46AF-8B49-0BF19D3D7730}" Directory_="APPDIR" Attributes="256" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
     <ROW Component="Registry" ComponentId="{8FB9A6E2-EB42-405D-B57B-7E83B423B08E}" Directory_="APPDIR" Attributes="260" KeyPath="ProductName"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{A0ECB089-2670-479A-B45D-4C76901F0F14}" Directory_="SHORTCUTDIR" Attributes="0"/>
+    <ROW Component="System.Buffers.dll" ComponentId="{F670543B-6F43-47FB-9D03-0D7BEFA5D0AF}" Directory_="APPDIR" Attributes="256" KeyPath="System.Buffers.dll"/>
+    <ROW Component="System.Memory.dll" ComponentId="{7BB42E3A-F5F2-4339-977D-02E4E95319CC}" Directory_="APPDIR" Attributes="256" KeyPath="System.Memory.dll"/>
+    <ROW Component="System.Numerics.Vectors.dll" ComponentId="{2928EF4E-F874-4FAA-8634-C05EBE523DFF}" Directory_="APPDIR" Attributes="256" KeyPath="System.Numerics.Vectors.dll"/>
+    <ROW Component="System.Runtime.CompilerServices.Unsafe.dll" ComponentId="{0F760CA5-60F3-4782-8A34-08A2F3DAF0B4}" Directory_="APPDIR" Attributes="256" KeyPath="System.Runtime.CompilerServices.Unsafe.dll"/>
     <ROW Component="System.Runtime.WindowsRuntime.dll" ComponentId="{6F633D65-B338-4B7A-A77F-96675B784ED2}" Directory_="APPDIR" Attributes="0" KeyPath="System.Runtime.WindowsRuntime.dll"/>
+    <ROW Component="System.Text.Encodings.Web.dll" ComponentId="{32379B5C-C21B-45E2-8B56-E49A8AF97385}" Directory_="APPDIR" Attributes="256" KeyPath="System.Text.Encodings.Web.dll"/>
+    <ROW Component="System.Text.Json.dll" ComponentId="{D30FB21A-ADC9-4833-8502-1E1942731B5D}" Directory_="APPDIR" Attributes="256" KeyPath="System.Text.Json.dll"/>
+    <ROW Component="System.Threading.Tasks.Extensions.dll" ComponentId="{1DB216C6-59E8-41D0-BDF4-1B36CEE9A154}" Directory_="APPDIR" Attributes="256" KeyPath="System.Threading.Tasks.Extensions.dll"/>
+    <ROW Component="System.ValueTuple.dll" ComponentId="{EA56503D-223E-4091-918D-CB57D86C6D42}" Directory_="APPDIR" Attributes="256" KeyPath="System.ValueTuple.dll"/>
     <ROW Component="default.jpg" ComponentId="{DD9ACEDA-3C46-41C1-8C97-5A3D7275ED67}" Directory_="APPDIR" Attributes="0" KeyPath="LICENSE.rtf" Type="0"/>
     <ROW Component="igcmd.exe" ComponentId="{E1F6C5A4-570F-4CCF-9FB3-438ED36C5997}" Directory_="APPDIR" Attributes="256" KeyPath="igcmd.exe"/>
     <ROW Component="igcmdWin10.exe" ComponentId="{1A26187A-D6F6-4E2D-8580-471B567476DC}" Directory_="APPDIR" Attributes="256" KeyPath="igcmdWin10.exe"/>
     <ROW Component="igtasks.exe" ComponentId="{FCDD9E18-FBDD-412E-A67E-41F38E3248A6}" Directory_="APPDIR" Attributes="256" KeyPath="igtasks.exe"/>
-    <ROW Component="vcomp140.dll" ComponentId="{C3F4DAFA-7C47-44E4-A969-21EA8C999ABD}" Directory_="APPDIR" Attributes="256" KeyPath="vcomp140.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="FileTypeAssociations" Title="File Type Associations" Description="Description" Display="5" Level="1" Directory_="APPDIR" Attributes="0" Options="13"/>
@@ -190,7 +208,6 @@
     <ROW File="Magick.NET.SystemDrawing.dll" Component_="Magick.NET.SystemDrawing.dll" FileName="MAGICK~3.DLL|Magick.NET.SystemDrawing.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\Magick.NET.SystemDrawing.dll" SelfReg="false"/>
     <ROW File="Magick.NETQ16OpenMPx64.dll" Component_="Magick.NETQ16OpenMPx64.dll" FileName="MAGICK~4.DLL|Magick.NET-Q16-OpenMP-x64.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\Magick.NET-Q16-OpenMP-x64.dll" SelfReg="false"/>
     <ROW File="System.Runtime.WindowsRuntime.dll" Component_="System.Runtime.WindowsRuntime.dll" FileName="SYSTEM~1.DLL|System.Runtime.WindowsRuntime.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.Runtime.WindowsRuntime.dll" SelfReg="false"/>
-    <ROW File="vcomp140.dll" Component_="vcomp140.dll" FileName="vcomp140.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\vcomp140.dll" SelfReg="false"/>
     <ROW File="igstartup.profile" Component_="default.jpg" FileName="IGSTAR~1.PRO|igstartup.profile" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\igstartup.profile" SelfReg="false"/>
     <ROW File="Windows.winmd" Component_="default.jpg" FileName="WINDOW~1.WIN|Windows.winmd" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\Windows.winmd" SelfReg="false"/>
     <ROW File="FR.ico" Component_="FR.ico" FileName="3FR.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\3FR.ico" SelfReg="false"/>
@@ -307,41 +324,112 @@
     <ROW File="ICO.ico" Component_="FR.ico" FileName="ICO.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\ICO.ico" SelfReg="false"/>
     <ROW File="JXL.ico" Component_="FR.ico" FileName="JXL.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\JXL.ico" SelfReg="false"/>
     <ROW File="ExplorerSortOrder.dll" Component_="ExplorerSortOrder.dll" FileName="EXPLOR~1.DLL|ExplorerSortOrder.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ExplorerSortOrder.dll" SelfReg="false"/>
-    <ROW File="Armenian.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="ARMENI~1.IGL|Armenian.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Armenian.v8.4.iglang" SelfReg="false"/>
-    <ROW File="ChineseSimplified.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="CHINES~3.IGL|Chinese Simplified.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Chinese Simplified.v8.4.iglang" SelfReg="false"/>
-    <ROW File="ChineseTraditional.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="CHINES~4.IGL|Chinese Traditional.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Chinese Traditional.v8.4.iglang" SelfReg="false"/>
-    <ROW File="German.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="GERMAN~2.IGL|German.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\German.v8.4.iglang" SelfReg="false"/>
-    <ROW File="Greek.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="GREEKV~1.IGL|Greek.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Greek.v8.4.iglang" SelfReg="false"/>
-    <ROW File="Hungarian.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="HUNGAR~1.IGL|Hungarian.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Hungarian.v8.4.iglang" SelfReg="false"/>
-    <ROW File="Italian.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="ITALIA~2.IGL|Italian.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Italian.v8.4.iglang" SelfReg="false"/>
-    <ROW File="Korean.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="KOREAN~2.IGL|Korean.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Korean.v8.4.iglang" SelfReg="false"/>
-    <ROW File="KurmanjiKurdish.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="KURMAN~2.IGL|Kurmanji (Kurdish).v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Kurmanji (Kurdish).v8.4.iglang" SelfReg="false"/>
-    <ROW File="Lithuanian.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="LITHUA~1.IGL|Lithuanian.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Lithuanian.v8.4.iglang" SelfReg="false"/>
-    <ROW File="Malay.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="MALAYV~1.IGL|Malay.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Malay.v8.4.iglang" SelfReg="false"/>
-    <ROW File="Polish.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="POLISH~2.IGL|Polish.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Polish.v8.4.iglang" SelfReg="false"/>
-    <ROW File="PortugueseBrazilian.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="PORTUG~3.IGL|Portuguese, Brazilian.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Portuguese, Brazilian.v8.4.iglang" SelfReg="false"/>
-    <ROW File="Portuguese.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="PORTUG~4.IGL|Portuguese.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Portuguese.v8.4.iglang" SelfReg="false"/>
-    <ROW File="Romanian.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="ROMANI~2.IGL|Romanian.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Romanian.v8.4.iglang" SelfReg="false"/>
-    <ROW File="Russian.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="RUSSIA~2.IGL|Russian.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Russian.v8.4.iglang" SelfReg="false"/>
-    <ROW File="Slovenian.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="SLOVEN~2.IGL|Slovenian.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Slovenian.v8.4.iglang" SelfReg="false"/>
-    <ROW File="Spanish.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="SPANIS~2.IGL|Spanish.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Spanish.v8.4.iglang" SelfReg="false"/>
-    <ROW File="Swedish.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="SWEDIS~2.IGL|Swedish.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Swedish.v8.4.iglang" SelfReg="false"/>
-    <ROW File="Turkish.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="TURKIS~1.IGL|Turkish.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Turkish.v8.4.iglang" SelfReg="false"/>
-    <ROW File="Ukrainian.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="UKRAIN~1.IGL|Ukrainian.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Ukrainian.v8.4.iglang" SelfReg="false"/>
-    <ROW File="Vietnamese.v8.4.iglang" Component_="ChineseSimplified.iglang" FileName="VIETNA~2.IGL|Vietnamese.v8.4.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Vietnamese.v8.4.iglang" SelfReg="false"/>
     <ROW File="QOI.ico" Component_="FR.ico" FileName="QOI.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\QOI.ico" SelfReg="false"/>
+    <ROW File="ArabicEgypt.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="ARABIC~1.IGL|Arabic, Egypt.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Arabic, Egypt.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Armenian.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="ARMENI~2.IGL|Armenian.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Armenian.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Azerbaijani.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="AZERBA~1.IGL|Azerbaijani.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Azerbaijani.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Bengali.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="BENGAL~1.IGL|Bengali.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Bengali.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Catalan.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="CATALA~1.IGL|Catalan.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Catalan.v8.6.iglang" SelfReg="false"/>
+    <ROW File="ChineseSimplified.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="CHINES~1.IGL|Chinese Simplified.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Chinese Simplified.v8.6.iglang" SelfReg="false"/>
+    <ROW File="ChineseTraditional.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="CHINES~2.IGL|Chinese Traditional.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Chinese Traditional.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Croatian.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="CROATI~1.IGL|Croatian.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Croatian.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Czech.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="CZECHV~1.IGL|Czech.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Czech.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Danish.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="DANISH~1.IGL|Danish.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Danish.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Dutch.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="DUTCHV~1.IGL|Dutch.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Dutch.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Esperanto.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="ESPERA~1.IGL|Esperanto.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Esperanto.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Finnish.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="FINNIS~1.IGL|Finnish.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Finnish.v8.6.iglang" SelfReg="false"/>
+    <ROW File="French.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="FRENCH~1.IGL|French.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\French.v8.6.iglang" SelfReg="false"/>
+    <ROW File="German.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="GERMAN~1.IGL|German.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\German.v8.6.iglang" SelfReg="false"/>
+    <ROW File="GreekCyprus.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="GREEK_~1.IGL|Greek, Cyprus.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Greek, Cyprus.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Greek.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="GREEKV~2.IGL|Greek.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Greek.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Hebrew.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="HEBREW~1.IGL|Hebrew.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Hebrew.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Hungarian.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="HUNGAR~2.IGL|Hungarian.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Hungarian.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Icelandic.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="ICELAN~1.IGL|Icelandic.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Icelandic.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Indonesian.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="INDONE~1.IGL|Indonesian.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Indonesian.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Irish.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="IRISHV~1.IGL|Irish.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Irish.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Italian.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="ITALIA~1.IGL|Italian.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Italian.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Japanese.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="JAPANE~1.IGL|Japanese.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Japanese.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Khmer.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="KHMERV~1.IGL|Khmer.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Khmer.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Korean.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="KOREAN~1.IGL|Korean.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Korean.v8.6.iglang" SelfReg="false"/>
+    <ROW File="KurmanjiKurdish.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="KURMAN~1.IGL|Kurmanji (Kurdish).v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Kurmanji (Kurdish).v8.6.iglang" SelfReg="false"/>
+    <ROW File="Kyrgyz.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="KYRGYZ~1.IGL|Kyrgyz.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Kyrgyz.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Lithuanian.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="LITHUA~2.IGL|Lithuanian.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Lithuanian.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Malay.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="MALAYV~2.IGL|Malay.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Malay.v8.6.iglang" SelfReg="false"/>
+    <ROW File="NorwegianBokmal.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="NORWEG~1.IGL|Norwegian Bokmal.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Norwegian Bokmal.v8.6.iglang" SelfReg="false"/>
+    <ROW File="NorwegianNynorsk.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="NORWEG~2.IGL|Norwegian Nynorsk.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Norwegian Nynorsk.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Persian.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="PERSIA~1.IGL|Persian.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Persian.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Polish.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="POLISH~1.IGL|Polish.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Polish.v8.6.iglang" SelfReg="false"/>
+    <ROW File="PortugueseBrazilian.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="PORTUG~1.IGL|Portuguese, Brazilian.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Portuguese, Brazilian.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Portuguese.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="PORTUG~2.IGL|Portuguese.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Portuguese.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Romanian.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="ROMANI~1.IGL|Romanian.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Romanian.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Russian.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="RUSSIA~1.IGL|Russian.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Russian.v8.6.iglang" SelfReg="false"/>
+    <ROW File="SerbianCyrillic.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="SERBIA~1.IGL|Serbian (Cyrillic).v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Serbian (Cyrillic).v8.6.iglang" SelfReg="false"/>
+    <ROW File="SerbianLatin.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="SERBIA~2.IGL|Serbian (Latin).v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Serbian (Latin).v8.6.iglang" SelfReg="false"/>
+    <ROW File="Sinhala.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="SINHAL~1.IGL|Sinhala.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Sinhala.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Slovak.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="SLOVAK~1.IGL|Slovak.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Slovak.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Slovenian.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="SLOVEN~1.IGL|Slovenian.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Slovenian.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Spanish.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="SPANIS~1.IGL|Spanish.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Spanish.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Swedish.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="SWEDIS~1.IGL|Swedish.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Swedish.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Tamil.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="TAMILV~1.IGL|Tamil.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Tamil.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Thai.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="THAIV8~1.IGL|Thai.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Thai.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Turkish.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="TURKIS~2.IGL|Turkish.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Turkish.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Ukrainian.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="UKRAIN~2.IGL|Ukrainian.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Ukrainian.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Vietnamese.v8.6.iglang" Component_="ChineseSimplified.iglang" FileName="VIETNA~1.IGL|Vietnamese.v8.6.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Vietnamese.v8.6.iglang" SelfReg="false"/>
+    <ROW File="Microsoft.Bcl.AsyncInterfaces.dll" Component_="Microsoft.Bcl.AsyncInterfaces.dll" FileName="MICROS~1.DLL|Microsoft.Bcl.AsyncInterfaces.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\Microsoft.Bcl.AsyncInterfaces.dll" SelfReg="false"/>
+    <ROW File="System.Buffers.dll" Component_="System.Buffers.dll" FileName="SYSTEM~2.DLL|System.Buffers.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.Buffers.dll" SelfReg="false"/>
+    <ROW File="System.Memory.dll" Component_="System.Memory.dll" FileName="SYSTEM~3.DLL|System.Memory.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.Memory.dll" SelfReg="false"/>
+    <ROW File="System.Numerics.Vectors.dll" Component_="System.Numerics.Vectors.dll" FileName="SYSTEM~4.DLL|System.Numerics.Vectors.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.Numerics.Vectors.dll" SelfReg="false"/>
+    <ROW File="System.Runtime.CompilerServices.Unsafe.dll" Component_="System.Runtime.CompilerServices.Unsafe.dll" FileName="SYSTEM~5.DLL|System.Runtime.CompilerServices.Unsafe.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.Runtime.CompilerServices.Unsafe.dll" SelfReg="false"/>
+    <ROW File="System.Text.Encodings.Web.dll" Component_="System.Text.Encodings.Web.dll" FileName="SYSTEM~6.DLL|System.Text.Encodings.Web.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.Text.Encodings.Web.dll" SelfReg="false"/>
+    <ROW File="System.Text.Json.dll" Component_="System.Text.Json.dll" FileName="SYSTEM~7.DLL|System.Text.Json.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.Text.Json.dll" SelfReg="false"/>
+    <ROW File="System.Threading.Tasks.Extensions.dll" Component_="System.Threading.Tasks.Extensions.dll" FileName="SYSTEM~8.DLL|System.Threading.Tasks.Extensions.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.Threading.Tasks.Extensions.dll" SelfReg="false"/>
+    <ROW File="System.ValueTuple.dll" Component_="System.ValueTuple.dll" FileName="SYSTEM~9.DLL|System.ValueTuple.dll" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.ValueTuple.dll" SelfReg="false"/>
+    <ROW File="igcmd.exe.config" Component_="default.jpg" FileName="IGCMDE~1.CON|igcmd.exe.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\igcmd.exe.config" SelfReg="false"/>
+    <ROW File="igcmdWin10.exe.config" Component_="default.jpg" FileName="IGCMDW~1.CON|igcmdWin10.exe.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\igcmdWin10.exe.config" SelfReg="false"/>
+    <ROW File="igtasks.exe.config" Component_="default.jpg" FileName="IGTASK~1.CON|igtasks.exe.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\igtasks.exe.config" SelfReg="false"/>
+    <ROW File="ImageGlass.Base.dll.config" Component_="default.jpg" FileName="IMAGEG~1.CON|ImageGlass.Base.dll.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.Base.dll.config" SelfReg="false"/>
+    <ROW File="ImageGlass.exe.config" Component_="default.jpg" FileName="IMAGEG~2.CON|ImageGlass.exe.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.exe.config" SelfReg="false"/>
+    <ROW File="ImageGlass.Heart.dll.config" Component_="default.jpg" FileName="IMAGEG~3.CON|ImageGlass.Heart.dll.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.Heart.dll.config" SelfReg="false"/>
+    <ROW File="ImageGlass.ImageListView.dll.config" Component_="default.jpg" FileName="IMAGEG~4.CON|ImageGlass.ImageListView.dll.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.ImageListView.dll.config" SelfReg="false"/>
+    <ROW File="ImageGlass.Library.dll.config" Component_="default.jpg" FileName="IMAGEG~5.CON|ImageGlass.Library.dll.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.Library.dll.config" SelfReg="false"/>
+    <ROW File="ImageGlass.Services.dll.config" Component_="default.jpg" FileName="IMAGEG~6.CON|ImageGlass.Services.dll.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.Services.dll.config" SelfReg="false"/>
+    <ROW File="ImageGlass.Settings.dll.config" Component_="default.jpg" FileName="IMAGEG~7.CON|ImageGlass.Settings.dll.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.Settings.dll.config" SelfReg="false"/>
+    <ROW File="ImageGlass.UI.dll.config" Component_="default.jpg" FileName="IMAGEG~8.CON|ImageGlass.UI.dll.config" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.UI.dll.config" SelfReg="false"/>
+    <ROW File="DotNetZip.xml" Component_="default.jpg" FileName="DOTNET~1.XML|DotNetZip.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\DotNetZip.xml" SelfReg="false"/>
+    <ROW File="ImageGlass.ImageBox.xml" Component_="default.jpg" FileName="IMAGEG~1.XML|ImageGlass.ImageBox.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.ImageBox.xml" SelfReg="false"/>
+    <ROW File="ImageGlass.ImageListView.xml" Component_="default.jpg" FileName="IMAGEG~2.XML|ImageGlass.ImageListView.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.ImageListView.xml" SelfReg="false"/>
+    <ROW File="Magick.NET.Core.xml" Component_="default.jpg" FileName="MAGICK~1.XML|Magick.NET.Core.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\Magick.NET.Core.xml" SelfReg="false"/>
+    <ROW File="Magick.NET.SystemDrawing.xml" Component_="default.jpg" FileName="MAGICK~2.XML|Magick.NET.SystemDrawing.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\Magick.NET.SystemDrawing.xml" SelfReg="false"/>
+    <ROW File="Magick.NETQ16OpenMPx64.xml" Component_="default.jpg" FileName="MAGICK~3.XML|Magick.NET-Q16-OpenMP-x64.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\Magick.NET-Q16-OpenMP-x64.xml" SelfReg="false"/>
+    <ROW File="Microsoft.Bcl.AsyncInterfaces.xml" Component_="default.jpg" FileName="MICROS~1.XML|Microsoft.Bcl.AsyncInterfaces.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\Microsoft.Bcl.AsyncInterfaces.xml" SelfReg="false"/>
+    <ROW File="System.Buffers.xml" Component_="default.jpg" FileName="SYSTEM~1.XML|System.Buffers.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.Buffers.xml" SelfReg="false"/>
+    <ROW File="System.Memory.xml" Component_="default.jpg" FileName="SYSTEM~2.XML|System.Memory.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.Memory.xml" SelfReg="false"/>
+    <ROW File="System.Numerics.Vectors.xml" Component_="default.jpg" FileName="SYSTEM~3.XML|System.Numerics.Vectors.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.Numerics.Vectors.xml" SelfReg="false"/>
+    <ROW File="System.Runtime.CompilerServices.Unsafe.xml" Component_="default.jpg" FileName="SYSTEM~4.XML|System.Runtime.CompilerServices.Unsafe.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.Runtime.CompilerServices.Unsafe.xml" SelfReg="false"/>
+    <ROW File="System.Text.Encodings.Web.xml" Component_="default.jpg" FileName="SYSTEM~5.XML|System.Text.Encodings.Web.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.Text.Encodings.Web.xml" SelfReg="false"/>
+    <ROW File="System.Text.Json.xml" Component_="default.jpg" FileName="SYSTEM~6.XML|System.Text.Json.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.Text.Json.xml" SelfReg="false"/>
+    <ROW File="System.Threading.Tasks.Extensions.xml" Component_="default.jpg" FileName="SYSTEM~7.XML|System.Threading.Tasks.Extensions.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.Threading.Tasks.Extensions.xml" SelfReg="false"/>
+    <ROW File="System.ValueTuple.xml" Component_="default.jpg" FileName="SYSTEM~8.XML|System.ValueTuple.xml" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\System.ValueTuple.xml" SelfReg="false"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.custcomp.MsiEmbeddedUIComponent">
+    <ROW MsiEmbeddedUI="embeddeduiproxy" FileName="embeddeduiproxy.dll" Attributes="3" MessageFilter="201359327" Data="&lt;AI_HOME&gt;bin\x86\embeddeduiproxy.dll"/>
+    <ROW MsiEmbeddedUI="InstallerAnalytics" FileName="InstallerAnalytics.dll" Attributes="0" Data="&lt;AI_TEMPLATES&gt;PlaceHolder.dat"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AiPersistentPropComponent">
     <ROW Property="AI_INSTALLPERUSER" Registry="AI_INSTALLPERUSER" HklmSearch="AI_INSTALLPERUSER" HkcuSearch="AI_INSTALLPERUSER_1" Hklm64Search="AI_INSTALLPERUSER_2" Hkcu64Search="AI_INSTALLPERUSER_3"/>
+    <ROW Property="AI_IA_ENABLE" Registry="AI_IA_ENABLE" HklmSearch="AI_IA_ENABLE" HkcuSearch="AI_IA_ENABLE_1" Hklm64Search="AI_IA_ENABLE_2" Hkcu64Search="AI_IA_ENABLE_3"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
   </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BootstrapperUISequenceComponent">
+    <ROW Action="AI_DetectSoftware" Sequence="151"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="MsiBuild" BuildName="MsiBuild" BuildOrder="1" BuildType="0" PackageFolder="..\Bin" PackageFileName="ImageGlass_[|ProductVersion]_x64" Languages="en" InstallationType="4" UseLargeSchema="true" MsiPackageType="x64"/>
+    <ROW BuildKey="MsiBuild" BuildName="MsiBuild" BuildOrder="1" BuildType="0" PackageFolder="..\Bin" PackageFileName="ImageGlass_Kobe_[|ProductVersion]_x64" Languages="en" InstallationType="4" UseLargeSchema="true" MsiPackageType="x64"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DefaultProgramsComponent">
-    <ROW ApplicationDescription="A lightweight, versatile image viewer" ApplicationName="[ProductName]" CapabilitiesPath="SOFTWARE\PhapSoftware\[ProductName]" Defaults="bmp|b64|avif|gif|heic|heif|jpeg|jpg|jxl|png|qoi|svg|tif|tiff|webp" RegistryKey="ApplicationDescription" RegistryAppName="ApplicationName" RegistryRegisterApp="ProductName_3"/>
+    <ROW ApplicationDescription="A lightweight, versatile image viewer" ApplicationName="[ProductName]" CapabilitiesPath="SOFTWARE\PhapSoftware\ImageGlass" Defaults="bmp|b64|avif|gif|heic|heif|jpeg|jpg|jxl|png|qoi|svg|tif|tiff|webp" RegistryKey="ApplicationDescription" RegistryAppName="ApplicationName" RegistryRegisterApp="ProductName_3"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DefaultProgramsExtComponent">
     <ROW DefaultProgram="ApplicationDescription" Extension="bmp" Component_="ImageGlass.exe" Registry="bmp"/>
@@ -389,8 +477,14 @@
     <ROW Property="AI_INSTALLPERUSER" Signature_="AI_INSTALLPERUSER_1"/>
     <ROW Property="AI_INSTALLPERUSER" Signature_="AI_INSTALLPERUSER_2"/>
     <ROW Property="AI_INSTALLPERUSER" Signature_="AI_INSTALLPERUSER_3"/>
+    <ROW Property="AI_IA_ENABLE" Signature_="AI_IA_ENABLE"/>
+    <ROW Property="AI_IA_ENABLE" Signature_="AI_IA_ENABLE_1"/>
+    <ROW Property="AI_IA_ENABLE" Signature_="AI_IA_ENABLE_2"/>
+    <ROW Property="AI_IA_ENABLE" Signature_="AI_IA_ENABLE_3"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
+    <ROW Name="InstallerAnalytics.dll" SourcePath="&lt;AI_CUSTACTS&gt;InstallerAnalytics.dll"/>
+    <ROW Name="SoftwareDetector.dll" SourcePath="&lt;AI_CUSTACTS&gt;SoftwareDetector.dll"/>
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
     <ROW Name="defaultPrograms.dll" SourcePath="&lt;AI_CUSTACTS&gt;defaultPrograms.dll"/>
     <ROW Name="defaultPrograms.dll_1" SourcePath="&lt;AI_CUSTACTS64&gt;defaultPrograms.dll"/>
@@ -431,6 +525,8 @@
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="SetupTypeDlg" Condition="AI_INSTALL AND InstallMode=InstallModeComplete" Ordering="202"/>
     <ROW Dialog_="SetupTypeDlg" Control_="CompleteButton" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL AND InstallMode=InstallModeComplete" Ordering="201"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_INSTALL AND InstallMode=InstallModeCustom" Ordering="203"/>
+    <ROW Dialog_="CancelDlg" Control_="Yes" Event="DoAction" Argument="AI_IaLogPkgExitUserAbort" Condition="VersionMsi &lt; &quot;4.05&quot; OR UILevel = 2 OR LIMITUI = 1 OR UPGRADINGPRODUCTCODE" Ordering="101"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="[AI_IA_ENABLE]" Argument="1" Condition="AI_INSTALL" Ordering="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
@@ -444,8 +540,17 @@
     <ROW Action="AI_DATA_SETTER" Type="51" Source="CustomActionData" Target="[ProductName]&#2;bmp&#4;b64&#4;avif&#4;gif&#4;heic&#4;heif&#4;jpeg&#4;jpg&#4;jxl&#4;png&#4;qoi&#4;svg&#4;tif&#4;tiff&#4;webp"/>
     <ROW Action="AI_DATA_SETTER_1" Type="51" Source="CustomActionData" Target="[ProductName]&#2;bmp&#4;b64&#4;avif&#4;gif&#4;heic&#4;heif&#4;jpeg&#4;jpg&#4;jxl&#4;png&#4;qoi&#4;svg&#4;tif&#4;tiff&#4;webp"/>
     <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
+    <ROW Action="AI_DetectSoftware" Type="257" Source="SoftwareDetector.dll" Target="OnDetectSoftware"/>
     <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
     <ROW Action="AI_EnableDebugLog" Type="321" Source="aicustact.dll" Target="EnableDebugLog"/>
+    <ROW Action="AI_IaLogCustomInfo" Type="65" Source="InstallerAnalytics.dll" Target="OnAnalyticsLogCustomInfo"/>
+    <ROW Action="AI_IaLogInstallData" Type="65" Source="InstallerAnalytics.dll" Target="OnAnalyticsLogInstallData"/>
+    <ROW Action="AI_IaLogMachineInfo" Type="321" Source="InstallerAnalytics.dll" Target="OnAnalyticsLogMachineInfo"/>
+    <ROW Action="AI_IaLogPkgExitFatalError" Type="65" Source="InstallerAnalytics.dll" Target="OnAnalyticsLogFatalError"/>
+    <ROW Action="AI_IaLogPkgExitFinish" Type="65" Source="InstallerAnalytics.dll" Target="OnAnalyticsLogFinish"/>
+    <ROW Action="AI_IaLogPkgExitUserAbort" Type="65" Source="InstallerAnalytics.dll" Target="OnAnalyticsLogUserAbort" WithoutSeq="true"/>
+    <ROW Action="AI_IaLogPkgStarted" Type="321" Source="InstallerAnalytics.dll" Target="OnAnalyticsLogStart"/>
+    <ROW Action="AI_IaToggle" Type="65" Source="InstallerAnalytics.dll" Target="OnAnalyticsToggle"/>
     <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
     <ROW Action="AI_LaunchApp" Type="1" Source="aicustact.dll" Target="[#ImageGlass.exe]"/>
     <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
@@ -459,6 +564,7 @@
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
     <ROW Action="AI_SetArpReadmeFile" Type="51" Source="ARPREADME" Target="[#LICENSE.rtf]"/>
+    <ROW Action="AI_ViewReadme" Type="1" Source="aicustact.dll" Target="[#LICENSE.rtf]"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="MsiBuild:[AI_UserProgramFiles]\[ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]" MultiBuildTarget="MsiBuild:[ProgramFiles64Folder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
@@ -567,7 +673,6 @@
     <ROW Feature_="MainFeature" Component_="Magick.NET.SystemDrawing.dll"/>
     <ROW Feature_="MainFeature" Component_="Magick.NETQ16OpenMPx64.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Runtime.WindowsRuntime.dll"/>
-    <ROW Feature_="MainFeature" Component_="vcomp140.dll"/>
     <ROW Feature_="MainFeature" Component_="LightGray.DuongDieuPhap.igtheme"/>
     <ROW Feature_="MainFeature" Component_="FR.ico"/>
     <ROW Feature_="MainFeature" Component_="ChineseSimplified.iglang"/>
@@ -657,9 +762,20 @@
     <ROW Feature_="x3f" Component_="ImageGlass.exe"/>
     <ROW Feature_="xbm" Component_="ImageGlass.exe"/>
     <ROW Feature_="xpm" Component_="ImageGlass.exe"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Bcl.AsyncInterfaces.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Buffers.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Memory.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Numerics.Vectors.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Runtime.CompilerServices.Unsafe.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Text.Encodings.Web.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Text.Json.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Threading.Tasks.Extensions.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.ValueTuple.dll"/>
+    <ROW Feature_="MainFeature" Component_="AI_IA_ENABLE"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="ImageGlass_1.exe" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.exe" Index="0"/>
+    <ROW Name="SystemFoldermsiexec.exe" SourcePath="&lt;AI_RES&gt;uninstall.ico" Index="0"/>
     <ROW Name="_3fr.exe" SourcePath="..\..\Assets\Ext-Icons\3FR.ico" Index="0"/>
     <ROW Name="ari.exe" SourcePath="..\..\Assets\Ext-Icons\ARI.ico" Index="0"/>
     <ROW Name="arw.exe" SourcePath="..\..\Assets\Ext-Icons\ARW.ico" Index="0"/>
@@ -745,8 +861,8 @@
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
     <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1503"/>
     <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1397"/>
-    <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
-    <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="56"/>
+    <ROW Action="AI_EnableDebugLog" Sequence="55"/>
     <ROW Action="AI_SetArpReadmeFile" Condition="NOT Installed" Sequence="1001"/>
     <ROW Action="AI_SETMIXINSTLOCATION" Sequence="748"/>
     <ROW Action="AI_SET_DEFAULTS" Condition="(VersionNT &gt;= 600) AND (Not Installed)" Sequence="6602"/>
@@ -755,15 +871,29 @@
     <ROW Action="AI_DATA_SETTER_1" Condition="(VersionNT &gt;= 600) AND (Not Installed)" Sequence="1501"/>
     <ROW Action="AI_RESTORE_DEFAULTS" Condition="(VersionNT &gt;= 600) AND (REMOVE = &quot;ALL&quot;)" Sequence="1627"/>
     <ROW Action="AI_RESTORE_DEFAULTS64" Condition="VersionNT64 AND (VersionNT &gt;= 600) AND (REMOVE = &quot;ALL&quot;)" Sequence="1626"/>
+    <ROW Action="AI_DetectSoftware" Sequence="102"/>
+    <ROW Action="AI_DETECT_MODERNWIN" Condition="(VersionNT &gt;= 603)" Sequence="57" MsiKey="AI_DETECT_MODERNWIN"/>
+    <ROW Action="AI_IaToggle" Sequence="101"/>
+    <ROW Action="AI_IaLogPkgStarted" Condition="VersionMsi &lt; &quot;4.05&quot; OR UILevel = 2 OR LIMITUI = 1 OR UPGRADINGPRODUCTCODE" Sequence="54"/>
+    <ROW Action="AI_IaLogPkgExitFinish" Condition="VersionMsi &lt; &quot;4.05&quot; OR UILevel = 2 OR LIMITUI = 1 OR UPGRADINGPRODUCTCODE" Sequence="-1"/>
+    <ROW Action="AI_IaLogPkgExitFatalError" Condition="VersionMsi &lt; &quot;4.05&quot; OR UILevel = 2 OR LIMITUI = 1 OR UPGRADINGPRODUCTCODE" Sequence="-3"/>
+    <ROW Action="AI_IaLogPkgExitUserAbort" Condition="VersionMsi &lt; &quot;4.05&quot; OR UILevel = 2 OR LIMITUI = 1 OR UPGRADINGPRODUCTCODE" Sequence="-2"/>
+    <ROW Action="AI_IaLogInstallData" Sequence="1402"/>
+    <ROW Action="AI_IaLogMachineInfo" Sequence="399"/>
+    <ROW Action="AI_IaLogCustomInfo" Sequence="1401"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
-    <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
-    <ROW Action="AI_DpiContentScale" Sequence="52"/>
-    <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="54"/>
+    <ROW Action="AI_DpiContentScale" Sequence="53"/>
+    <ROW Action="AI_EnableDebugLog" Sequence="52"/>
     <ROW Action="AI_SETMIXINSTLOCATION" Sequence="748"/>
-    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99"/>
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="98"/>
     <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="101"/>
+    <ROW Action="AI_DetectSoftware" Sequence="102"/>
+    <ROW Action="AI_IaToggle" Sequence="99"/>
+    <ROW Action="AI_IaLogPkgStarted" Condition="VersionMsi &lt; &quot;4.05&quot; OR UILevel = 2 OR LIMITUI = 1 OR UPGRADINGPRODUCTCODE" Sequence="51"/>
+    <ROW Action="AI_IaLogMachineInfo" Sequence="399"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
     <ROW Condition="( Version9X OR ( NOT VersionNT64 ) OR ( VersionNT64 AND ((VersionNT64 &lt;&gt; 600) OR (MsiNTProductType &lt;&gt; 1)) AND ((VersionNT64 &lt;&gt; 600) OR (MsiNTProductType = 1)) ) )" Description="[ProductName] cannot be installed on the following Windows versions: [WindowsTypeNT64Display]." DescriptionLocId="AI.LaunchCondition.NoSpecificNT64" IsPredefined="true" Builds="MsiBuild"/>
@@ -853,47 +983,65 @@
     <ROW ProgId="ImageGlass.AssocFile.XPM" Icon_="xpm.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
+    <ROW Signature_="AI_IA_ENABLE" Root="2" Key="Software\[Manufacturer]\[ProductCode]" Name="AI_IA_ENABLE" Type="2"/>
+    <ROW Signature_="AI_IA_ENABLE_1" Root="1" Key="Software\[Manufacturer]\[ProductCode]" Name="AI_IA_ENABLE" Type="2"/>
+    <ROW Signature_="AI_IA_ENABLE_2" Root="2" Key="Software\[Manufacturer]\[ProductCode]" Name="AI_IA_ENABLE" Type="18"/>
+    <ROW Signature_="AI_IA_ENABLE_3" Root="1" Key="Software\[Manufacturer]\[ProductCode]" Name="AI_IA_ENABLE" Type="18"/>
     <ROW Signature_="AI_INSTALLPERUSER" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="2"/>
     <ROW Signature_="AI_INSTALLPERUSER_1" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="2"/>
     <ROW Signature_="AI_INSTALLPERUSER_2" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="18"/>
     <ROW Signature_="AI_INSTALLPERUSER_3" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Type="18"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
+    <ROW Registry="AI_IA_ENABLE" Root="-1" Key="Software\[Manufacturer]\[ProductCode]" Name="AI_IA_ENABLE" Value="[AI_IA_ENABLE]" Component_="AI_IA_ENABLE"/>
     <ROW Registry="AI_INSTALLPERUSER" Root="-1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="AI_INSTALLPERUSER" Value="[AI_INSTALLPERUSER]" Component_="AI_INSTALLPERUSER"/>
-    <ROW Registry="ApplicationDescription" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities" Name="ApplicationDescription" Value="#%A lightweight, versatile image viewer" Component_="ApplicationDescription" VirtualValue="#%"/>
-    <ROW Registry="ApplicationName" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities" Name="ApplicationName" Value="#%[ProductName]" Component_="ApplicationDescription" VirtualValue="#%"/>
-    <ROW Registry="ImageGlass" Root="1" Key="Software\[Manufacturer]\[ProductName]" Name="ImageGlass" Value="0" Component_="ImageGlass"/>
-    <ROW Registry="ImageGlass_1" Root="1" Key="Software\[Manufacturer]\[ProductName]" Name="ImageGlass_1" Value="0" Component_="ImageGlass_1"/>
-    <ROW Registry="InstallImageGlass.exeComponentSho_1" Root="1" Key="Software\[Manufacturer]\[ProductName]" Name="InstallImageGlass.exeComponentShortcuts" Value="0" Component_="InstallImageGlass.exeComponentShortcuts_1"/>
-    <ROW Registry="InstallImageGlass.exeComponentShort" Root="1" Key="Software\[Manufacturer]\[ProductName]" Name="InstallImageGlass.exeComponentShortcuts" Value="0" Component_="InstallImageGlass.exeComponentShortcuts"/>
-    <ROW Registry="Installdefault.jpgComponentShortc_1" Root="1" Key="Software\[Manufacturer]\[ProductName]" Name="Installdefault.jpgComponentShortcuts" Value="0" Component_="Installdefault.jpgComponentShortcuts_1"/>
-    <ROW Registry="Installdefault.jpgComponentShortcut" Root="1" Key="Software\[Manufacturer]\[ProductName]" Name="Installdefault.jpgComponentShortcuts" Value="0" Component_="Installdefault.jpgComponentShortcuts"/>
-    <ROW Registry="ProductName" Root="-1" Key="Software\[ProductName]" Name="+" Component_="Registry"/>
-    <ROW Registry="ProductName_3" Root="2" Key="SOFTWARE\RegisteredApplications" Name="[ProductName]" Value="SOFTWARE\PhapSoftware\[ProductName]\Capabilities" Component_="ApplicationDescription"/>
-    <ROW Registry="avif" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".avif" Value="ImageGlass.AssocFile.AVIF" Component_="ApplicationDescription"/>
-    <ROW Registry="b64" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".b64" Value="ImageGlass.AssocFile.B64" Component_="ApplicationDescription"/>
-    <ROW Registry="bmp" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".bmp" Value="ImageGlass.AssocFile.BMP" Component_="ApplicationDescription"/>
-    <ROW Registry="gif" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".gif" Value="ImageGlass.AssocFile.GIF" Component_="ApplicationDescription"/>
-    <ROW Registry="heic" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".heic" Value="ImageGlass.AssocFile.HEIC" Component_="ApplicationDescription"/>
-    <ROW Registry="heif" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".heif" Value="ImageGlass.AssocFile.HEIF" Component_="ApplicationDescription"/>
-    <ROW Registry="jpeg" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".jpeg" Value="ImageGlass.AssocFile.JPEG" Component_="ApplicationDescription"/>
-    <ROW Registry="jpg" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".jpg" Value="ImageGlass.AssocFile.JPG" Component_="ApplicationDescription"/>
-    <ROW Registry="jxl" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".jxl" Value="ImageGlass.AssocFile.JXL" Component_="ApplicationDescription"/>
-    <ROW Registry="png" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".png" Value="ImageGlass.AssocFile.PNG" Component_="ApplicationDescription"/>
-    <ROW Registry="qoi" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".qoi" Value="ImageGlass.AssocFile.QOI" Component_="ApplicationDescription"/>
-    <ROW Registry="svg" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".svg" Value="ImageGlass.AssocFile.SVG" Component_="ApplicationDescription"/>
-    <ROW Registry="tif" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".tif" Value="ImageGlass.AssocFile.TIF" Component_="ApplicationDescription"/>
-    <ROW Registry="tiff" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".tiff" Value="ImageGlass.AssocFile.TIFF" Component_="ApplicationDescription"/>
-    <ROW Registry="webp" Root="2" Key="SOFTWARE\PhapSoftware\[ProductName]\Capabilities\FileAssociations" Name=".webp" Value="ImageGlass.AssocFile.WEBP" Component_="ApplicationDescription"/>
+    <ROW Registry="ApplicationDescription" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities" Name="ApplicationDescription" Value="#%A lightweight, versatile image viewer" Component_="ApplicationDescription" VirtualValue="#%"/>
+    <ROW Registry="ApplicationName" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities" Name="ApplicationName" Value="#%[ProductName]" Component_="ApplicationDescription" VirtualValue="#%"/>
+    <ROW Registry="Capabilities_1" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities" Name="\"/>
+    <ROW Registry="FileAssociations_1" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations" Name="\"/>
+    <ROW Registry="ImageGlass" Root="1" Key="Software\[Manufacturer]\ImageGlass" Name="ImageGlass" Value="0" Component_="ImageGlass"/>
+    <ROW Registry="ImageGlass_1" Root="1" Key="Software\[Manufacturer]\ImageGlass" Name="ImageGlass_1" Value="0" Component_="ImageGlass_1"/>
+    <ROW Registry="ImageGlass_2" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass" Name="\"/>
+    <ROW Registry="InstallImageGlass.exeComponentSho_1" Root="1" Key="Software\[Manufacturer]\ImageGlass" Name="InstallImageGlass.exeComponentShortcuts" Value="0" Component_="InstallImageGlass.exeComponentShortcuts_1"/>
+    <ROW Registry="InstallImageGlass.exeComponentShort" Root="1" Key="Software\[Manufacturer]\ImageGlass" Name="InstallImageGlass.exeComponentShortcuts" Value="0" Component_="InstallImageGlass.exeComponentShortcuts"/>
+    <ROW Registry="Installdefault.jpgComponentShortc_1" Root="1" Key="Software\[Manufacturer]\ImageGlass" Name="Installdefault.jpgComponentShortcuts" Value="0" Component_="Installdefault.jpgComponentShortcuts_1"/>
+    <ROW Registry="Installdefault.jpgComponentShortcut" Root="1" Key="Software\[Manufacturer]\ImageGlass" Name="Installdefault.jpgComponentShortcuts" Value="0" Component_="Installdefault.jpgComponentShortcuts"/>
+    <ROW Registry="Manufacturer" Root="-1" Key="Software\[Manufacturer]" Name="\"/>
+    <ROW Registry="Manufacturer_1" Root="1" Key="Software\[Manufacturer]" Name="\"/>
+    <ROW Registry="PhapSoftware" Root="2" Key="SOFTWARE\PhapSoftware" Name="\"/>
+    <ROW Registry="ProductCode" Root="-1" Key="Software\[Manufacturer]\[ProductCode]" Name="\"/>
+    <ROW Registry="ProductName" Root="-1" Key="Software\ImageGlass" Name="+" Component_="Registry"/>
+    <ROW Registry="ProductName_2" Root="1" Key="Software\[Manufacturer]\ImageGlass" Name="\"/>
+    <ROW Registry="ProductName_3" Root="2" Key="SOFTWARE\RegisteredApplications" Name="[ProductName]" Value="SOFTWARE\PhapSoftware\ImageGlass\Capabilities" Component_="ApplicationDescription"/>
+    <ROW Registry="RegisteredApplications" Root="2" Key="SOFTWARE\RegisteredApplications" Name="\"/>
+    <ROW Registry="SOFTWARE" Root="2" Key="SOFTWARE" Name="\"/>
+    <ROW Registry="Software" Root="-1" Key="Software" Name="\"/>
+    <ROW Registry="Software_1" Root="1" Key="Software" Name="\"/>
+    <ROW Registry="UpgradeCode" Root="-1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="\"/>
+    <ROW Registry="avif" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations" Name=".avif" Value="ImageGlass.AssocFile.AVIF" Component_="ApplicationDescription"/>
+    <ROW Registry="b64" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations" Name=".b64" Value="ImageGlass.AssocFile.B64" Component_="ApplicationDescription"/>
+    <ROW Registry="bmp" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations" Name=".bmp" Value="ImageGlass.AssocFile.BMP" Component_="ApplicationDescription"/>
+    <ROW Registry="gif" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations" Name=".gif" Value="ImageGlass.AssocFile.GIF" Component_="ApplicationDescription"/>
+    <ROW Registry="heic" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations" Name=".heic" Value="ImageGlass.AssocFile.HEIC" Component_="ApplicationDescription"/>
+    <ROW Registry="heif" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations" Name=".heif" Value="ImageGlass.AssocFile.HEIF" Component_="ApplicationDescription"/>
+    <ROW Registry="jpeg" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations" Name=".jpeg" Value="ImageGlass.AssocFile.JPEG" Component_="ApplicationDescription"/>
+    <ROW Registry="jpg" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations" Name=".jpg" Value="ImageGlass.AssocFile.JPG" Component_="ApplicationDescription"/>
+    <ROW Registry="jxl" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations" Name=".jxl" Value="ImageGlass.AssocFile.JXL" Component_="ApplicationDescription"/>
+    <ROW Registry="png" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations" Name=".png" Value="ImageGlass.AssocFile.PNG" Component_="ApplicationDescription"/>
+    <ROW Registry="qoi" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations" Name=".qoi" Value="ImageGlass.AssocFile.QOI" Component_="ApplicationDescription"/>
+    <ROW Registry="svg" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations" Name=".svg" Value="ImageGlass.AssocFile.SVG" Component_="ApplicationDescription"/>
+    <ROW Registry="tif" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations" Name=".tif" Value="ImageGlass.AssocFile.TIF" Component_="ApplicationDescription"/>
+    <ROW Registry="tiff" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations" Name=".tiff" Value="ImageGlass.AssocFile.TIFF" Component_="ApplicationDescription"/>
+    <ROW Registry="webp" Root="2" Key="SOFTWARE\PhapSoftware\ImageGlass\Capabilities\FileAssociations" Name=".webp" Value="ImageGlass.AssocFile.WEBP" Component_="ApplicationDescription"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRemoveFileComponent">
     <ROW FileKey="_" Component_="ImageGlass" DirProperty="ImageGlass_Dir" InstallMode="2"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="ImageGlass8.4" Directory_="DesktopFolder" Name="IMAGEG~1|ImageGlass" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="ImageGlass8.4_1" Directory_="SHORTCUTDIR" Name="IMAGEG~1|ImageGlass" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="ImageGlass8.4_2" Directory_="ImageGlass_Dir" Name="IMAGEG~1|ImageGlass" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="ImageGlassLICENSE_1" Directory_="ImageGlass_Dir" Name="IMAGEG~2|ImageGlass&apos; LICENSE" Component_="Installdefault.jpgComponentShortcuts_1" Target="[APPDIR]\LICENSE.rtf" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="ImageGlass8.4" Directory_="DesktopFolder" Name="IMAGEG~1|[|ProductName]" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="ImageGlass8.4_2" Directory_="ImageGlass_Dir" Name="IMAGEG~1|[|ProductName]" Component_="ApplicationDescription" Target="[APPDIR]\ImageGlass.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="ImageGlassLICENSE_1" Directory_="ImageGlass_Dir" Name="IMAGEG~2|[|ProductName] LICENSE" Component_="Installdefault.jpgComponentShortcuts_1" Target="[APPDIR]\LICENSE.rtf" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="UninstallProductNameProductVersion" Directory_="SHORTCUTDIR" Name="UNINST~1|Uninstall [|ProductName]" Component_="FileWatcherEx.dll" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Hotkey="0" Icon_="SystemFoldermsiexec.exe" IconIndex="0" ShowCmd="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>

@@ -161,10 +161,7 @@ $RECYCLE.BIN/
 *.lock
 *.sqlite
 .DS_Store
-.vs/VSWorkspaceState.json
-/Source/.vs/ImageGlass/v15/Server/sqlite3
 Setup/*.zip
 Setup/AdvancedInstaller/x86/ImageGlass-x86-cache
 Setup/AdvancedInstaller/x64/ImageGlass-x64-cache
-Source/.vs/ImageGlass.sqlite
 Source/ImageGlass/obj/Debug/DesignTimeResolveAssemblyReferences.cache

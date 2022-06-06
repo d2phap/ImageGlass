@@ -204,6 +204,45 @@ namespace ImageGlass.UI.Renderers {
             base.OnRenderMenuItemBackground(e);
         }
 
+
+        protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e) {
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+
+            if (Helpers.IsOS(WindowsOS.Win10)) {
+                // override default ugly border by a solid color
+                using var penDefault = new Pen(theme.MenuBackgroundColor);
+                e.Graphics.DrawRectangle(penDefault,
+                    0,
+                    0,
+                    e.AffectedBounds.Width,
+                    e.AffectedBounds.Height);
+            }
+            else {
+                base.OnRenderToolStripBorder(e);
+            }
+
+            using var pen = new Pen(theme.MenuBackgroundColor);
+
+            if (theme.MenuBackgroundColor.GetBrightness() > 0.5) // light background
+            {
+                pen.Color = Color.FromArgb(35, 0, 0, 0);
+            }
+            else // dark background
+            {
+                pen.Color = Color.FromArgb(35, 255, 255, 255);
+            }
+
+            var menuBorderRadius = Helpers.IsOS(WindowsOS.Win11) ? 8 : 0;
+            using var path = Theme.GetRoundRectanglePath(new() {
+                X = 0,
+                Y = 0,
+                Width = e.AffectedBounds.Width - 1,
+                Height = e.AffectedBounds.Height - 1,
+            }, menuBorderRadius);
+
+            e.Graphics.DrawPath(pen, path);
+        }
+
     }
 
     public class ModernColors: ProfessionalColorTable {

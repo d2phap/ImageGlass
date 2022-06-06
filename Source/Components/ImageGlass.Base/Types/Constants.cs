@@ -29,6 +29,9 @@ namespace ImageGlass.Base {
         public const int DEFAULT_TOOLBAR_ICON_HEIGHT = 22;
         public const int VIEWER_GRID_SIZE = 8;
         public const string MS_APPSTORE_ID = "9N33VZK3C7TH";
+        public const string CURRENT_MONITOR_PROFILE = "CurrentMonitorProfile";
+        public const string UPDATE_CHANNEL = "kobe";
+        public const string DATETIME_FORMAT = "yyyy/MM/dd HH:mm:ss";
 
         /// <summary>
         /// First launch version constant.
@@ -50,7 +53,7 @@ namespace ImageGlass.Base {
         /// <summary>
         /// Gets built-in image formats
         /// </summary>
-        public const string IMAGE_FORMATS = "*.avif;*.b64;*.bmp;*.cur;*.cut;*.dds;*.dib;*.emf;*.exif;*.gif;*.heic;*.heif;*.ico;*.jfif;*.jp2;*.jpe;*.jpeg;*.jpg;*.jxl;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.psb;*.svg;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;*.exr;*.hdr;*.psd;*.tga;*.3fr;*.ari;*.arw;*.bay;*.crw;*.cr2;*.cr3;*.cap;*.dcs;*.dcr;*.dng;*.drf;*.eip;*.erf;*.fff;*.gpr;*.iiq;*.k25;*.kdc;*.mdc;*.mef;*.mos;*.mrw;*.nef;*.nrw;*.obm;*.orf;*.pef;*.ptx;*.pxn;*.qoi;*.r3d;*.raf;*.raw;*.rwl;*.rw2;*.rwz;*.sr2;*.srf;*.srw;*.x3f";
+        public const string IMAGE_FORMATS = "*.avif;*.b64;*.bmp;*.cur;*.cut;*.dds;*.dib;*.emf;*.exif;*.gif;*.heic;*.heif;*.ico;*.jfif;*.jp2;*.jpe;*.jpeg;*.jpg;*.jxl;*.pbm;*.pcx;*.pgm;*.png;*.ppm;*.psb;*.svg;*.tif;*.tiff;*.webp;*.wmf;*.wpg;*.xbm;*.xpm;*.exr;*.hdr;*.psd;*.tga;*.3fr;*.ari;*.arw;*.bay;*.crw;*.cr2;*.cr3;*.cap;*.dcs;*.dcr;*.dng;*.drf;*.eip;*.erf;*.fff;*.gpr;*.iiq;*.k25;*.kdc;*.mdc;*.mef;*.mos;*.mrw;*.nef;*.nrw;*.obm;*.orf;*.pef;*.ptx;*.pxn;*.qoi;*.r3d;*.raf;*.raw;*.rwl;*.rw2;*.rwz;*.sr2;*.srf;*.srw;*.x3f;*.fits;*.xv;*.mjpeg;*.viff";
 
         /// <summary>
         /// Number format to use for save/restore ImageGlass settings

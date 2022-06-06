@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 /// <summary>
 /// Application to perform Windows 8/10 specific operations.
@@ -29,6 +30,9 @@ namespace igcmdWin10 {
     internal static class Program {
         [STAThread]
         private static int Main(string[] args) {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
             var topcmd = args[0].ToLower().Trim();
 
             if (topcmd == "setlockimage") {
@@ -36,6 +40,12 @@ namespace igcmdWin10 {
                 task.Wait();
 
                 return task.Result;
+            }
+
+            else if (topcmd == "share") {
+                if (args.Length < 2) return 1;
+
+                Application.Run(new FrmShare());
             }
 
             return 0;
