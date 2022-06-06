@@ -280,6 +280,7 @@ namespace ImageGlass.UI.ToolForms {
             this.BackColor = bgColor;
         }
 
+
         #region ToolForm "Snap" support
         private ToolFormManager _manager;
         public void SetToolFormManager(ToolFormManager manager) {
