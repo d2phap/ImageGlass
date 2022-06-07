@@ -716,7 +716,7 @@ public partial class FrmMain
         MnuFlipHorizontal.Visible = false;
         MnuFlipVertical.Visible = false;
         toolStripMenuItem17.Visible = false;
-        MnuRename.Visible = false;
+        //MnuRename.Visible = false;
         MnuMoveToRecycleBin.Visible = false;
         MnuDeleteFromHardDisk.Visible = false;
         MnuStartStopAnimating.Visible = false;

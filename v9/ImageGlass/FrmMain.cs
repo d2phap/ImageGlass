@@ -1919,7 +1919,7 @@ public partial class FrmMain : Form
 
     private void MnuRename_Click(object sender, EventArgs e)
     {
-
+        IG_Rename();
     }
 
     private void MnuMoveToRecycleBin_Click(object sender, EventArgs e)

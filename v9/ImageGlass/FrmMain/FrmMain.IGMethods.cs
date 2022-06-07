@@ -23,6 +23,7 @@ using ImageGlass.Library.WinAPI;
 using ImageGlass.PhotoBox;
 using ImageGlass.Settings;
 using ImageGlass.UI;
+using ImageGlass.UI.BuiltInForms;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Security.Permissions;
@@ -792,6 +793,70 @@ public partial class FrmMain
 
         result.Keys.Clear();
     }
+
+
+    private void IG_Rename()
+    {
+        var oldFilePath = Local.Images.GetFileName(Local.CurrentIndex);
+        if (!File.Exists(oldFilePath)) return;
+
+
+        var currentFolder = Path.GetDirectoryName(oldFilePath) ?? "";
+        var ext = Path.GetExtension(oldFilePath);
+        var newName = Path.GetFileNameWithoutExtension(oldFilePath);
+
+        var frm = new InputForm(Config.Theme, Config.Language)
+        {
+            Title = Config.Language[$"{Name}.{nameof(MnuRename)}"],
+            Value = newName,
+
+            FileNameValueOnly = true,
+            TopMost = TopMost,
+
+            Description = oldFilePath
+                + "\r\n"
+                + Config.Language[$"{Name}.{nameof(MnuRename)}._Description"],
+            
+        };
+
+
+        if (frm.ShowDialog() != DialogResult.OK || string.IsNullOrEmpty(frm.Value.Trim()))
+        {
+            return;
+        }
+
+        newName = frm.Value.Trim() + ext;
+        var newFilePath = Path.Combine(currentFolder, newName);
+
+
+        try
+        {
+            // Issue 73: Windows ignores case-only changes
+            if (string.Equals(oldFilePath, newFilePath, StringComparison.InvariantCultureIgnoreCase))
+            {
+                // user changing only the case of the filename. Need to perform a trick.
+                File.Move(oldFilePath, oldFilePath + "_temp");
+                File.Move(oldFilePath + "_temp", newFilePath);
+            }
+            else
+            {
+                File.Move(oldFilePath, newFilePath);
+            }
+
+
+            // TODO: once the realtime watcher implemented, delete this:
+            Local.Images.SetFileName(Local.CurrentIndex, newFilePath);
+            Gallery.Items[Local.CurrentIndex].FileName = newFilePath;
+            Gallery.Items[Local.CurrentIndex].Text = newName;
+            UpdateImageInfo(BasicInfoUpdate.Name | BasicInfoUpdate.Path);
+            //////////////////////////////////////////////////////////////
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
 
 }
 

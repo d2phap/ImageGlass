@@ -191,6 +191,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuFlipHorizontal", "Flip Horizontal"); // V6.0
         Add("FrmMain.MnuFlipVertical", "Flip Vertical"); // V6.0
         Add("FrmMain.MnuRename", "Rename image…"); //v3.0
+        Add("FrmMain.MnuRename._Description", "Enter a new filename:"); // v9.0
         Add("FrmMain.MnuMoveToRecycleBin", "Move to recycle bin"); //v3.0
         Add("FrmMain.MnuDeleteFromHardDisk", "Delete from hard disk"); //v3.0
         Add("FrmMain.MnuExtractFrames", "Extract image frames ({0})…"); //v7.5
@@ -265,9 +266,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain._Files", "file(s)"); // v7.5
         Add("FrmMain._Loading", "Loading..."); // v3.0
         //Add("FrmMain._Pages", "pages"); // v7.5
-        //Add("FrmMain._ImageData", "Image data"); // v5.0
-        //Add("FrmMain._RenameDialogText", "Rename"); // v3.5
-        //Add("FrmMain._RenameDialog", "Enter new filename");
+        //Add("FrmMain._ImageData", "Image data"); // v5.0\
         //Add("FrmMain._GotoDialogText", "Enter the image index to view it. Press ENTER");
         //Add("FrmMain._DeleteDialogText", "Delete file '{0}' ?");
         //Add("FrmMain._DeleteDialogTitle", "Confirm");

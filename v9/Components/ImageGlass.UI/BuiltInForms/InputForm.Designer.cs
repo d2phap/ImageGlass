@@ -100,7 +100,7 @@
             this.panBottom.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panBottom.Controls.Add(this.tableBottom);
             this.panBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panBottom.Location = new System.Drawing.Point(1, 198);
+            this.panBottom.Location = new System.Drawing.Point(1, 188);
             this.panBottom.Name = "panBottom";
             this.panBottom.Padding = new System.Windows.Forms.Padding(20);
             this.panBottom.Size = new System.Drawing.Size(578, 81);
@@ -157,12 +157,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(580, 280);
+            this.ClientSize = new System.Drawing.Size(580, 270);
             this.Controls.Add(this.panBottom);
             this.Controls.Add(this.tableMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(580, 280);
+            this.MinimumSize = new System.Drawing.Size(580, 240);
             this.Name = "InputForm";
             this.Padding = new System.Windows.Forms.Padding(1);
             this.ShowIcon = false;

@@ -190,13 +190,15 @@ public partial class InputForm : Form
     public IgLang Language { get; private set; }
 
 
-    public override string Text
+    /// <summary>
+    /// Form title
+    /// </summary>
+    public string Title
     {
-        get => base.Text;
+        get => lblTitle.Text;
         set
         {
             lblTitle.Text = value;
-            base.Text = value;
         }
     }
 
@@ -204,7 +206,7 @@ public partial class InputForm : Form
     /// <summary>
     /// Description text
     /// </summary>
-    public string ContentText
+    public string Description
     {
         get => lblContent.Text;
         set => lblContent.Text = value;
