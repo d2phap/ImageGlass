@@ -95,10 +95,38 @@ public partial class FrmMain
     /// <summary>
     /// Views an image by its index
     /// </summary>
-    /// <param name="index"></param>
-    private void IG_GoTo(int index)
+    private void IG_GoTo()
     {
-        GoToImage(index);
+        if (Local.Images.Length == 0) return;
+
+        var oldIndex = Local.CurrentIndex + 1;
+        var frm = new InputForm(Config.Theme, Config.Language)
+        {
+            Title = Config.Language[$"{Name}.{nameof(MnuGoTo)}"],
+            Value = oldIndex.ToString(),
+
+            UIntValueOnly = true,
+            TopMost = TopMost,
+
+            Description = Config.Language[$"{Name}.{nameof(MnuGoTo)}._Description"],
+        };
+
+
+        if (frm.ShowDialog() != DialogResult.OK)
+        {
+            return;
+        }
+
+        if (int.TryParse(frm.Value.Trim(), out var newIndex))
+        {
+            newIndex--;
+
+            if (newIndex != Local.CurrentIndex
+                && 0 <= newIndex && newIndex < Local.Images.Length)
+            {
+                GoToImage(newIndex);
+            }
+        }
     }
 
 

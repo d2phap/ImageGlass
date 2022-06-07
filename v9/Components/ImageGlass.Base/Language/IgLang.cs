@@ -146,6 +146,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuViewPrevious", "View previous image"); //v3.0
 
         Add("FrmMain.MnuGoTo", "Go to…"); //v3.0
+        Add("FrmMain.MnuGoTo._Description", "Enter the image index to view, and then press ENTER");
         Add("FrmMain.MnuGoToFirst", "Go to the first image"); //v3.0
         Add("FrmMain.MnuGoToLast", "Go to the last image"); //v3.0
 
@@ -267,7 +268,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain._Loading", "Loading..."); // v3.0
         //Add("FrmMain._Pages", "pages"); // v7.5
         //Add("FrmMain._ImageData", "Image data"); // v5.0\
-        //Add("FrmMain._GotoDialogText", "Enter the image index to view it. Press ENTER");
+        
         //Add("FrmMain._DeleteDialogText", "Delete file '{0}' ?");
         //Add("FrmMain._DeleteDialogTitle", "Confirm");
 

@@ -685,7 +685,7 @@ public partial class FrmMain
         // MnuNavigation
         //MnuViewNext.Visible = false;
         //MnuViewPrevious.Visible = false;
-        MnuGoTo.Visible = false;
+        //MnuGoTo.Visible = false;
         //MnuGoToFirst.Visible = false;
         //MnuGoToLast.Visible = false;
         toolStripMenuItem14.Visible = false;

@@ -1770,7 +1770,7 @@ public partial class FrmMain : Form
 
     private void MnuGoTo_Click(object sender, EventArgs e)
     {
-        // TODO
+        IG_GoTo();
     }
 
     private void MnuGoToFirst_Click(object sender, EventArgs e)
