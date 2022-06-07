@@ -1,6 +1,6 @@
 ﻿namespace ImageGlass.UI.BuiltInForms
 {
-    partial class ToolForm
+    partial class InputForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.tableMain = new System.Windows.Forms.TableLayoutPanel();
-            this.btnClose = new System.Windows.Forms.Button();
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblContent = new System.Windows.Forms.Label();
             this.txtValue = new System.Windows.Forms.TextBox();
@@ -44,10 +43,9 @@
             // 
             // tableMain
             // 
-            this.tableMain.ColumnCount = 2;
-            this.tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 74.32433F));
-            this.tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableMain.Controls.Add(this.btnClose, 1, 0);
+            this.tableMain.BackColor = System.Drawing.Color.Transparent;
+            this.tableMain.ColumnCount = 1;
+            this.tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableMain.Controls.Add(this.lblTitle, 0, 0);
             this.tableMain.Controls.Add(this.lblContent, 0, 1);
             this.tableMain.Controls.Add(this.txtValue, 0, 2);
@@ -59,30 +57,19 @@
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableMain.Size = new System.Drawing.Size(578, 604);
+            this.tableMain.Size = new System.Drawing.Size(578, 898);
             this.tableMain.TabIndex = 0;
-            // 
-            // btnClose
-            // 
-            this.btnClose.Location = new System.Drawing.Point(498, 0);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(0);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(80, 40);
-            this.btnClose.TabIndex = 0;
-            this.btnClose.TabStop = false;
-            this.btnClose.Text = "[x]";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // lblTitle
             // 
             this.lblTitle.BackColor = System.Drawing.Color.Transparent;
             this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 9.134328F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblTitle.Location = new System.Drawing.Point(15, 0);
-            this.lblTitle.Margin = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.lblTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(483, 40);
+            this.lblTitle.Padding = new System.Windows.Forms.Padding(15, 2, 0, 2);
+            this.lblTitle.Size = new System.Drawing.Size(578, 40);
             this.lblTitle.TabIndex = 2;
             this.lblTitle.Text = "[Title]";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -90,9 +77,8 @@
             // lblContent
             // 
             this.lblContent.AutoSize = true;
-            this.tableMain.SetColumnSpan(this.lblContent, 2);
             this.lblContent.Location = new System.Drawing.Point(15, 60);
-            this.lblContent.Margin = new System.Windows.Forms.Padding(15, 20, 20, 20);
+            this.lblContent.Margin = new System.Windows.Forms.Padding(15, 20, 20, 10);
             this.lblContent.Name = "lblContent";
             this.lblContent.Size = new System.Drawing.Size(82, 23);
             this.lblContent.TabIndex = 3;
@@ -100,10 +86,9 @@
             // 
             // txtValue
             // 
-            this.tableMain.SetColumnSpan(this.txtValue, 2);
             this.txtValue.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtValue.Location = new System.Drawing.Point(20, 123);
-            this.txtValue.Margin = new System.Windows.Forms.Padding(20);
+            this.txtValue.Location = new System.Drawing.Point(20, 103);
+            this.txtValue.Margin = new System.Windows.Forms.Padding(20, 10, 20, 20);
             this.txtValue.Name = "txtValue";
             this.txtValue.Size = new System.Drawing.Size(538, 30);
             this.txtValue.TabIndex = 0;
@@ -121,6 +106,7 @@
             // 
             // tableBottom
             // 
+            this.tableBottom.BackColor = System.Drawing.Color.Transparent;
             this.tableBottom.ColumnCount = 3;
             this.tableBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -159,7 +145,7 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // ToolForm
+            // InputForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -168,10 +154,13 @@
             this.Controls.Add(this.panBottom);
             this.Controls.Add(this.tableMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(580, 280);
-            this.Name = "ToolForm";
+            this.Name = "InputForm";
             this.Padding = new System.Windows.Forms.Padding(1);
+            this.ShowIcon = false;
             this.Text = "InputBox";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputForm_KeyDown);
             this.tableMain.ResumeLayout(false);
             this.tableMain.PerformLayout();
             this.panBottom.ResumeLayout(false);
@@ -187,7 +176,6 @@
         private TableLayoutPanel tableBottom;
         private Button btnOK;
         private Button btnCancel;
-        private Button btnClose;
         private Label lblTitle;
         private Label lblContent;
         private TextBox txtValue;

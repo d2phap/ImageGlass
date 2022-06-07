@@ -60,7 +60,7 @@ public record IgThemeSettings
     public Color AccentColor { get; set; } = ThemeUtils.ColorFromHex("#0078D7");
     public Color AccentHoverColor { get; set; } = ThemeUtils.ColorFromHex("#0d92ff");
     public Color AccentSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#0060ae");
-    public Color TextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
+    public Color TextColor { get; set; } = ThemeUtils.ColorFromHex("#d3d3d3");
     public Color BgColor { get; set; } = ThemeUtils.ColorFromHex("#151b1f");
 
 
