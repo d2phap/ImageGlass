@@ -1,4 +1,25 @@
-﻿using Windows.Win32;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+using ImageGlass.Base;
+using System.Globalization;
+using System.Text.RegularExpressions;
+using Windows.Win32;
 using Windows.Win32.Graphics.Dwm;
 using Windows.Win32.UI.Controls;
 
@@ -6,40 +27,6 @@ namespace ImageGlass.UI.BuiltInForms;
 
 public partial class InputForm : Form
 {
-
-    public override string Text
-    {
-        get => base.Text; set
-        {
-            lblTitle.Text = value;
-            base.Text = value;
-        }
-    }
-
-    public string ContentText
-    {
-        get => lblContent.Text;
-        set
-        {
-            lblContent.Text = value;
-        }
-    }
-
-    public string Value
-    {
-        get => txtValue.Text;
-        set
-        {
-            txtValue.Text = value;
-        }
-    }
-
-    public InputForm()
-    {
-        InitializeComponent();
-        RegisterFormEvents();
-    }
-
     #region Borderless form
 
     private bool isAeroEnabled;
@@ -192,44 +179,223 @@ public partial class InputForm : Form
     #endregion
 
 
+    private bool _intValueOnly = false;
+    private bool _uintValueOnly = false;
+    private bool _floatValueOnly = false;
+
+
+    #region Public properties
+
+    public IgTheme Theme { get; private set; }
+    public IgLang Language { get; private set; }
+
+    public override string Text
+    {
+        get => base.Text;
+        set
+        {
+            lblTitle.Text = value;
+            base.Text = value;
+        }
+    }
+
+    public string ContentText
+    {
+        get => lblContent.Text;
+        set => lblContent.Text = value;
+    }
+
+    public string Value
+    {
+        get => txtValue.Text;
+        set => txtValue.Text = value;
+    }
+
+    public string RegexPattern { get; set; } = "";
 
     /// <summary>
-    /// Apply theme colors to controls
+    /// Limit the number of characters the user can enter
     /// </summary>
-    /// <param name="th">Theme</param>
-    public void SetTheme(IgTheme th)
+    public int MaxLimit
     {
-        lblTitle.ForeColor = 
-            lblContent.ForeColor = th.Settings.TextColor;
-
-        txtValue.BackColor = th.Settings.ToolbarBgColor;
-        txtValue.ForeColor = th.Settings.TextColor;
-        txtValue.BorderStyle = BorderStyle.FixedSingle;
-
-        lblTitle.BackColor =
-        panBottom.BackColor = th.Settings.ToolbarBgColor;
-
-        BackColor = th.Settings.BgColor;
+        set => txtValue.MaxLength = value;
     }
 
 
+    public bool IntValueOnly
+    {
+        get => _intValueOnly;
+        set
+        {
+            _intValueOnly = value;
+
+            if (_intValueOnly)
+            {
+                var negativeSign = NumberFormatInfo.CurrentInfo.NegativeSign;
+                var positiveSign = NumberFormatInfo.CurrentInfo.PositiveSign;
+
+                RegexPattern = $"^[{positiveSign}{negativeSign}]?[0-9]+$";
+            }
+        }
+    }
+
+
+    public bool UIntValueOnly
+    {
+        get => _uintValueOnly;
+        set
+        {
+            _uintValueOnly = value;
+
+            if (_uintValueOnly)
+            {
+                RegexPattern = $"^[0-9]+$";
+            }
+        }
+    }
+
+
+    public bool FloatValueOnly
+    {
+        get => _floatValueOnly;
+        set
+        {
+            _floatValueOnly = value;
+
+            if (_floatValueOnly)
+            {
+                var negativeSign = NumberFormatInfo.CurrentInfo.NegativeSign;
+                var positiveSign = NumberFormatInfo.CurrentInfo.PositiveSign;
+                var decSeparator = NumberFormatInfo.CurrentInfo.NumberDecimalSeparator;
+
+                RegexPattern = $"^[{positiveSign}{negativeSign}]?([0-9]+([{decSeparator}][0-9]*)?|[{decSeparator}][0-9]+)$";
+            }
+        }
+    }
+
+
+    public bool FileNameValueOnly { get; set; } = false;
+
+
+    #endregion
+
+
+    public InputForm(IgTheme theme, IgLang lang)
+    {
+        InitializeComponent();
+        RegisterFormEvents();
+
+        lblTitle.Text = "";
+        lblContent.Text = "";
+
+        Language = lang;
+        ApplyLanguage();
+
+        Theme = theme;
+        ApplyTheme();
+    }
+
+
+    public void ApplyLanguage()
+    {
+        btnOK.Text = Language["_._OK"];
+        btnCancel.Text = Language["_._Cancel"];
+    }
+
+
+    /// <summary>
+    /// Apply theme to the form
+    /// </summary>
+    public void ApplyTheme()
+    {
+        lblTitle.ForeColor = 
+            lblContent.ForeColor = Theme.Settings.TextColor;
+
+        txtValue.BackColor = Theme.Settings.ToolbarBgColor;
+        txtValue.ForeColor = Theme.Settings.TextColor;
+
+        lblTitle.BackColor =
+        panBottom.BackColor = Theme.Settings.ToolbarBgColor;
+
+        BackColor = Theme.Settings.BgColor;
+    }
+
+
+    private bool ValidateInput()
+    {
+        var isValid = true;
+
+        if (!string.IsNullOrEmpty(RegexPattern))
+        {
+            isValid = Regex.IsMatch(txtValue.Text, RegexPattern);
+        }
+        else if (FileNameValueOnly)
+        {
+            var badChars = Path.GetInvalidFileNameChars();
+
+            foreach (var c in badChars)
+            {
+                if (txtValue.Text.Contains(c))
+                {
+                    isValid = false;
+                    break;
+                }
+            }
+        }
+
+        // invalid char
+        if (!isValid)
+        {
+            btnOK.Enabled = false;
+
+            txtValue.BackColor = Theme.DangerColor;
+        }
+        else
+        {
+            btnOK.Enabled = true;
+            txtValue.BackColor = Theme.Settings.ToolbarBgColor;
+        }
+
+        return isValid;
+    }
+
+    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    {
+        // disable parent form shotcuts
+        return false;
+    }
+
     private void InputForm_KeyDown(object sender, KeyEventArgs e)
     {
-        if (e.KeyCode == Keys.Escape)
+        if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
         {
             btnCancel.PerformClick();
         }
     }
 
-    private void btnOK_Click(object sender, EventArgs e)
+    private void BtnOK_Click(object sender, EventArgs e)
     {
+        if (ValidateInput())
+        {
+            DialogResult = DialogResult.OK;
+        }
+    }
+
+    private void BtnCancel_Click(object sender, EventArgs e)
+    {
+        DialogResult = DialogResult.Cancel;
         Close();
     }
 
-    private void btnCancel_Click(object sender, EventArgs e)
+    private void InputForm_Load(object sender, EventArgs e)
     {
-        Close();
+        txtValue.Focus();
+        txtValue.SelectAll();
     }
 
-    
+    private void TxtValue_TextChanged(object sender, EventArgs e)
+    {
+        _ = ValidateInput();
+    }
+
 }

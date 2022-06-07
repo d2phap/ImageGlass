@@ -101,6 +101,9 @@ public class IgLang : Dictionary<string, string>
     {
         //Add("_IncompatibleConfigs", "Some settings are not compatible with your ImageGlass {0}. It's recommended to update them before continuing.\r\n\n- Click Yes to learn about the changes.\r\n- Click No to launch ImageGlass with default settings."); //v7.5
 
+        Add("_._OK", "OK"); // v9.0
+        Add("_._Cancel", "Cancel"); // v9.0
+
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Name)}", "Name (default)"); //v8.0
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Length)}", "Length"); //v8.0
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.CreationTime)}", "Creation time"); //v8.0

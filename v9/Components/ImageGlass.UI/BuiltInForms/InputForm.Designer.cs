@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.tableMain = new System.Windows.Forms.TableLayoutPanel();
+            this.txtValue = new System.Windows.Forms.MaskedTextBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblContent = new System.Windows.Forms.Label();
-            this.txtValue = new System.Windows.Forms.TextBox();
             this.panBottom = new System.Windows.Forms.Panel();
             this.tableBottom = new System.Windows.Forms.TableLayoutPanel();
             this.btnOK = new System.Windows.Forms.Button();
@@ -46,9 +46,9 @@
             this.tableMain.BackColor = System.Drawing.Color.Transparent;
             this.tableMain.ColumnCount = 1;
             this.tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableMain.Controls.Add(this.txtValue, 0, 2);
             this.tableMain.Controls.Add(this.lblTitle, 0, 0);
             this.tableMain.Controls.Add(this.lblContent, 0, 1);
-            this.tableMain.Controls.Add(this.txtValue, 0, 2);
             this.tableMain.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableMain.Location = new System.Drawing.Point(1, 1);
             this.tableMain.Margin = new System.Windows.Forms.Padding(0);
@@ -59,6 +59,17 @@
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.Size = new System.Drawing.Size(578, 898);
             this.tableMain.TabIndex = 0;
+            // 
+            // txtValue
+            // 
+            this.txtValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtValue.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtValue.Location = new System.Drawing.Point(20, 103);
+            this.txtValue.Margin = new System.Windows.Forms.Padding(20, 10, 20, 20);
+            this.txtValue.Name = "txtValue";
+            this.txtValue.Size = new System.Drawing.Size(538, 30);
+            this.txtValue.TabIndex = 1;
+            this.txtValue.TextChanged += new System.EventHandler(this.TxtValue_TextChanged);
             // 
             // lblTitle
             // 
@@ -83,15 +94,6 @@
             this.lblContent.Size = new System.Drawing.Size(82, 23);
             this.lblContent.TabIndex = 3;
             this.lblContent.Text = "[Content]";
-            // 
-            // txtValue
-            // 
-            this.txtValue.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtValue.Location = new System.Drawing.Point(20, 103);
-            this.txtValue.Margin = new System.Windows.Forms.Padding(20, 10, 20, 20);
-            this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(538, 30);
-            this.txtValue.TabIndex = 0;
             // 
             // panBottom
             // 
@@ -123,30 +125,35 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(278, 0);
+            this.btnOK.AutoSize = true;
+            this.btnOK.Location = new System.Drawing.Point(277, 0);
             this.btnOK.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnOK.MinimumSize = new System.Drawing.Size(120, 0);
             this.btnOK.Name = "btnOK";
+            this.btnOK.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.btnOK.Size = new System.Drawing.Size(120, 40);
             this.btnOK.TabIndex = 1;
             this.btnOK.Text = "[OK]";
             this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            this.btnOK.Click += new System.EventHandler(this.BtnOK_Click);
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(418, 0);
+            this.btnCancel.AutoSize = true;
+            this.btnCancel.Location = new System.Drawing.Point(417, 0);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnCancel.MinimumSize = new System.Drawing.Size(120, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(120, 40);
+            this.btnCancel.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.btnCancel.Size = new System.Drawing.Size(121, 40);
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "[Cancel]";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // InputForm
             // 
+            this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
@@ -159,12 +166,15 @@
             this.Name = "InputForm";
             this.Padding = new System.Windows.Forms.Padding(1);
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "InputBox";
+            this.Load += new System.EventHandler(this.InputForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputForm_KeyDown);
             this.tableMain.ResumeLayout(false);
             this.tableMain.PerformLayout();
             this.panBottom.ResumeLayout(false);
             this.tableBottom.ResumeLayout(false);
+            this.tableBottom.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -178,6 +188,6 @@
         private Button btnCancel;
         private Label lblTitle;
         private Label lblContent;
-        private TextBox txtValue;
+        private MaskedTextBox txtValue;
     }
 }

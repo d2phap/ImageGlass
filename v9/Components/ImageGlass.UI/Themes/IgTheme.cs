@@ -32,6 +32,21 @@ public class IgTheme
     public static string CONFIG_FILE { get; } = "igtheme.json";
 
 
+    /// <summary>
+    /// Gets the danger color.
+    /// </summary>
+    public Color DangerColor
+    {
+        get
+        {
+            var danger = Color.FromArgb(255, 255, 0, 0);
+            var themedColor = ThemeUtils.LightnessColor(danger, Info.IsDark ? -0.8f : 0.8f);
+
+            return themedColor;
+        }
+    }
+
+
 
     /// <summary>
     /// Gets, sets the height of toolbar icons.
