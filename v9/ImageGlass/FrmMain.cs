@@ -24,7 +24,6 @@ using ImageGlass.Base.WinApi;
 using ImageGlass.Gallery;
 using ImageGlass.Settings;
 using ImageGlass.UI;
-using ImageGlass.UI.BuiltInForms;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -61,10 +60,6 @@ public partial class FrmMain : Form
         Local.OnLastImageReached += Local_OnLastImageReached;
 
         LoadImagesFromCmdArgs(Environment.GetCommandLineArgs());
-
-        //var tf = new ToolForm();
-        //tf.SetTheme(Config.Theme);
-        //tf.Show();
     }
 
     protected override void WndProc(ref Message m)

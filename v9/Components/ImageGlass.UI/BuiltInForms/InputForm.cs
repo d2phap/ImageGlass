@@ -189,6 +189,7 @@ public partial class InputForm : Form
     public IgTheme Theme { get; private set; }
     public IgLang Language { get; private set; }
 
+
     public override string Text
     {
         get => base.Text;
@@ -199,18 +200,28 @@ public partial class InputForm : Form
         }
     }
 
+
+    /// <summary>
+    /// Description text
+    /// </summary>
     public string ContentText
     {
         get => lblContent.Text;
         set => lblContent.Text = value;
     }
 
+    /// <summary>
+    /// Form value
+    /// </summary>
     public string Value
     {
         get => txtValue.Text;
         set => txtValue.Text = value;
     }
 
+    /// <summary>
+    /// Pattern for validation
+    /// </summary>
     public string RegexPattern { get; set; } = "";
 
     /// <summary>
@@ -221,7 +232,9 @@ public partial class InputForm : Form
         set => txtValue.MaxLength = value;
     }
 
-
+    /// <summary>
+    /// Allows integer number value only
+    /// </summary>
     public bool IntValueOnly
     {
         get => _intValueOnly;
@@ -239,7 +252,9 @@ public partial class InputForm : Form
         }
     }
 
-
+    /// <summary>
+    /// Allows unsigned integer number only
+    /// </summary>
     public bool UIntValueOnly
     {
         get => _uintValueOnly;
@@ -254,7 +269,9 @@ public partial class InputForm : Form
         }
     }
 
-
+    /// <summary>
+    /// Allows float number only
+    /// </summary>
     public bool FloatValueOnly
     {
         get => _floatValueOnly;
@@ -273,9 +290,10 @@ public partial class InputForm : Form
         }
     }
 
-
+    /// <summary>
+    /// Allow valid filename only
+    /// </summary>
     public bool FileNameValueOnly { get; set; } = false;
-
 
     #endregion
 
@@ -296,6 +314,9 @@ public partial class InputForm : Form
     }
 
 
+    /// <summary>
+    /// Apply language pack
+    /// </summary>
     public void ApplyLanguage()
     {
         btnOK.Text = Language["_._OK"];
@@ -321,6 +342,10 @@ public partial class InputForm : Form
     }
 
 
+    /// <summary>
+    /// Validate the input and show error
+    /// </summary>
+    /// <returns></returns>
     private bool ValidateInput()
     {
         var isValid = true;
@@ -359,10 +384,18 @@ public partial class InputForm : Form
         return isValid;
     }
 
+
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
         // disable parent form shotcuts
         return false;
+    }
+
+
+    private void InputForm_Load(object sender, EventArgs e)
+    {
+        txtValue.Focus();
+        txtValue.SelectAll();
     }
 
     private void InputForm_KeyDown(object sender, KeyEventArgs e)
@@ -373,29 +406,26 @@ public partial class InputForm : Form
         }
     }
 
+    private void TxtValue_TextChanged(object sender, EventArgs e)
+    {
+        _ = ValidateInput();
+    }
+
     private void BtnOK_Click(object sender, EventArgs e)
     {
         if (ValidateInput())
         {
             DialogResult = DialogResult.OK;
         }
+        else
+        {
+            txtValue.Focus();
+        }
     }
 
     private void BtnCancel_Click(object sender, EventArgs e)
     {
         DialogResult = DialogResult.Cancel;
-        Close();
-    }
-
-    private void InputForm_Load(object sender, EventArgs e)
-    {
-        txtValue.Focus();
-        txtValue.SelectAll();
-    }
-
-    private void TxtValue_TextChanged(object sender, EventArgs e)
-    {
-        _ = ValidateInput();
     }
 
 }
