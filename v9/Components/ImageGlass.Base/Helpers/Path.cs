@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base.WinApi;
+using Microsoft.VisualBasic.FileIO;
 using System.Diagnostics;
 using System.Web;
 
@@ -229,6 +230,20 @@ public partial class Helpers
             });
         }
         catch { }
+    }
+
+
+    /// <summary>
+    /// Delete a file
+    /// </summary>
+    /// <param name="filePath">Full file path to delete</param>
+    /// <param name="moveToRecycleBin">True: Move to Recycle bin | False: Delete permanently</param>
+    /// <returns></returns>
+    public static void DeleteFile(string filePath, bool moveToRecycleBin = true)
+    {
+        var option = moveToRecycleBin ? RecycleOption.SendToRecycleBin : RecycleOption.DeletePermanently;
+
+        FileSystem.DeleteFile(filePath, UIOption.OnlyErrorDialogs, option);
     }
 
 }

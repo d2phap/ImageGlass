@@ -1924,12 +1924,12 @@ public partial class FrmMain : Form
 
     private void MnuMoveToRecycleBin_Click(object sender, EventArgs e)
     {
-
+        IG_Delete(true);
     }
 
     private void MnuDeleteFromHardDisk_Click(object sender, EventArgs e)
     {
-
+        IG_Delete(false);
     }
 
     private void MnuStartStopAnimating_Click(object sender, EventArgs e)

@@ -194,7 +194,9 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuRename", "Rename image…"); //v3.0
         Add("FrmMain.MnuRename._Description", "Enter a new filename:"); // v9.0
         Add("FrmMain.MnuMoveToRecycleBin", "Move to recycle bin"); //v3.0
+        Add("FrmMain.MnuMoveToRecycleBin._Description", "Do you want to move this file to the Recycle Bin?"); //v3.0
         Add("FrmMain.MnuDeleteFromHardDisk", "Delete from hard disk"); //v3.0
+        Add("FrmMain.MnuDeleteFromHardDisk._Description", "Do you want to permanently delete this file?"); //v3.0
         Add("FrmMain.MnuExtractFrames", "Extract image frames ({0})…"); //v7.5
         Add("FrmMain.MnuStartStopAnimating", "Start / Stop animating image"); //v3.0
         Add("FrmMain.MnuSetDesktopBackground", "Set as Desktop background"); //v3.0
@@ -267,10 +269,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain._Files", "file(s)"); // v7.5
         Add("FrmMain._Loading", "Loading..."); // v3.0
         //Add("FrmMain._Pages", "pages"); // v7.5
-        //Add("FrmMain._ImageData", "Image data"); // v5.0\
-        
-        //Add("FrmMain._DeleteDialogText", "Delete file '{0}' ?");
-        //Add("FrmMain._DeleteDialogTitle", "Confirm");
+        //Add("FrmMain._ImageData", "Image data"); // v5.0
 
         //Add("FrmMain._ExtractPageText", "Extracting image pages. Please select output folder.");
         //Add("FrmMain._FullScreenMessage", "Press {0} to exit full screen mode.");// v2.0 beta, v6.0, v8.0

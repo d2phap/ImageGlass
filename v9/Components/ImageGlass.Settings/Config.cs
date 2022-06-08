@@ -299,10 +299,10 @@ public static class Config
     ///// </summary>
     //public static bool IsThumbnailHorizontal { get; set; } = true;
 
-    ///// <summary>
-    ///// Gets, sets value indicating that Confirmation dialog is displayed when deleting image
-    ///// </summary>
-    //public static bool IsConfirmationDelete { get; set; } = false;
+    /// <summary>
+    /// Gets, sets value indicating that Confirmation dialog is displayed when deleting image
+    /// </summary>
+    public static bool RequireDeleteConfirmation { get; set; } = true;
 
     ///// <summary>
     ///// Gets, sets the value indicates that viewer scrollbars are visible
@@ -786,7 +786,7 @@ public static class Config
         EnableWindowAlwaysOnTop = items.GetValue(nameof(EnableWindowAlwaysOnTop), EnableWindowAlwaysOnTop);
         //IsWindowFrameless = items.GetValue(nameof(IsWindowFrameless), IsWindowFrameless);
         //IsThumbnailHorizontal = items.GetValue(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
-        //IsConfirmationDelete = items.GetValue(nameof(IsConfirmationDelete), IsConfirmationDelete);
+        RequireDeleteConfirmation = items.GetValue(nameof(RequireDeleteConfirmation), RequireDeleteConfirmation);
         //IsScrollbarsVisible = items.GetValue(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
         //IsSaveAfterRotating = items.GetValue(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
         //IsPreserveModifiedDate = items.GetValue(nameof(IsPreserveModifiedDate), IsPreserveModifiedDate);
@@ -1126,7 +1126,7 @@ public static class Config
         settings.TryAdd(nameof(EnableWindowAlwaysOnTop), EnableWindowAlwaysOnTop);
         //settings.TryAdd(nameof(IsWindowFrameless), IsWindowFrameless);
         //settings.TryAdd(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
-        //settings.TryAdd(nameof(IsConfirmationDelete), IsConfirmationDelete);
+        settings.TryAdd(nameof(RequireDeleteConfirmation), RequireDeleteConfirmation);
         //settings.TryAdd(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
         //settings.TryAdd(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
         //settings.TryAdd(nameof(IsPreserveModifiedDate), IsPreserveModifiedDate);

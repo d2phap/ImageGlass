@@ -810,6 +810,7 @@ public partial class FrmMain
         result.Keys.Clear();
     }
 
+
     private void IG_UnsetDefaultPhotoViewer()
     {
         var allExts = Config.AllFormats;
@@ -870,6 +871,7 @@ public partial class FrmMain
         {
             Title = Config.Language[$"{Name}.{nameof(MnuRename)}"],
             Value = newName,
+            Thumbnail = Gallery.Items[Local.CurrentIndex].ThumbnailImage,
 
             FileNameValueOnly = true,
             TopMost = TopMost,
@@ -918,6 +920,60 @@ public partial class FrmMain
         }
     }
 
+
+    private void IG_Delete(bool moveToRecycleBin = true)
+    {
+        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
+        if (!File.Exists(filePath)) return;
+
+        var result = DialogResult.OK;
+
+        if (Config.RequireDeleteConfirmation)
+        {
+            var title = moveToRecycleBin
+                ? Config.Language[$"{Name}.{nameof(MnuMoveToRecycleBin)}"]
+                : Config.Language[$"{Name}.{nameof(MnuDeleteFromHardDisk)}"];
+
+            var description = moveToRecycleBin
+                ? Config.Language[$"{Name}.{nameof(MnuMoveToRecycleBin)}._Description"]
+                : Config.Language[$"{Name}.{nameof(MnuDeleteFromHardDisk)}._Description"];
+
+            var frm = new InputForm(Config.Theme, Config.Language)
+            {
+                Title = title,
+                TopMost = TopMost,
+                ShowTextInput = false,
+                Thumbnail = Gallery.Items[Local.CurrentIndex].ThumbnailImage,
+
+                Description = description + "\r\n\r\n" +
+                    filePath + "\r\n" +
+                    Helpers.FormatSize(Gallery.Items[Local.CurrentIndex].Details.FileSize),
+            };
+
+            result = frm.ShowDialog();
+        }
+
+
+        if (result == DialogResult.OK)
+        {
+            try
+            {
+                Helpers.DeleteFile(filePath, moveToRecycleBin);
+
+
+                // TODO: once the realtime watcher implemented, delete this:
+                Local.Images.Remove(Local.CurrentIndex);
+                Gallery.Items.RemoveAt(Local.CurrentIndex);
+                Local.CurrentIndex++;
+                _ = ViewNextCancellableAsync(0);
+                //////////////////////////////////////////////////////////////
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
 
 }
 
