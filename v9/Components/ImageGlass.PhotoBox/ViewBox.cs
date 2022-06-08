@@ -207,7 +207,8 @@ public partial class ViewBox : HybridControl
         {
             if (_zoomFactor != value)
             {
-                _zoomFactor = value;
+                _zoomFactor = Math.Min(MaxZoom, Math.Max(value, MinZoom));
+
                 _isManualZoom = true;
                 _shouldRecalculateDrawingRegion = true;
 

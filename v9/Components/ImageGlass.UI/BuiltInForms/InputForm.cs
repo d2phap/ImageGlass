@@ -180,8 +180,9 @@ public partial class InputForm : Form
 
 
     private bool _intValueOnly = false;
-    private bool _uintValueOnly = false;
+    private bool _unsignedIntValueOnly = false;
     private bool _floatValueOnly = false;
+    private bool _unsignedFloatValueOnly = false;
 
 
     #region Public properties
@@ -257,14 +258,14 @@ public partial class InputForm : Form
     /// <summary>
     /// Allows unsigned integer number only
     /// </summary>
-    public bool UIntValueOnly
+    public bool UnsignedIntValueOnly
     {
-        get => _uintValueOnly;
+        get => _unsignedIntValueOnly;
         set
         {
-            _uintValueOnly = value;
+            _unsignedIntValueOnly = value;
 
-            if (_uintValueOnly)
+            if (_unsignedIntValueOnly)
             {
                 RegexPattern = $"^[0-9]+$";
             }
@@ -275,6 +276,25 @@ public partial class InputForm : Form
     /// Allows float number only
     /// </summary>
     public bool FloatValueOnly
+    {
+        get => _unsignedFloatValueOnly;
+        set
+        {
+            _unsignedFloatValueOnly = value;
+
+            if (_unsignedFloatValueOnly)
+            {
+                var decSeparator = NumberFormatInfo.CurrentInfo.NumberDecimalSeparator;
+
+                RegexPattern = $"^([0-9]+([{decSeparator}][0-9]*)?|[{decSeparator}][0-9]+)$";
+            }
+        }
+    }
+
+    /// <summary>
+    /// Allows unsigned float number only
+    /// </summary>
+    public bool UnsignedFloatValueOnly
     {
         get => _floatValueOnly;
         set

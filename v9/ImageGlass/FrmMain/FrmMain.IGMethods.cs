@@ -105,7 +105,7 @@ public partial class FrmMain
             Title = Config.Language[$"{Name}.{nameof(MnuGoTo)}"],
             Value = oldIndex.ToString(),
 
-            UIntValueOnly = true,
+            UnsignedIntValueOnly = true,
             TopMost = TopMost,
 
             Description = Config.Language[$"{Name}.{nameof(MnuGoTo)}._Description"],
@@ -163,6 +163,39 @@ public partial class FrmMain
     private void IG_ZoomOut()
     {
         PicMain.ZoomOut();
+    }
+
+
+    /// <summary>
+    /// Shows Input dialog for custom zoom
+    /// </summary>
+    private void IG_CustomZoom()
+    {
+        if (PicMain.Source == ImageSource.Null) return;
+
+        var oldZoom = PicMain.ZoomFactor * 100f;
+
+        var frm = new InputForm(Config.Theme, Config.Language)
+        {
+            Title = Config.Language[$"{Name}.{nameof(MnuCustomZoom)}"],
+            Value = oldZoom.ToString(),
+
+            UnsignedFloatValueOnly = true,
+            TopMost = TopMost,
+
+            Description = Config.Language[$"{Name}.{nameof(MnuCustomZoom)}._Description"],
+        };
+
+
+        if (frm.ShowDialog() != DialogResult.OK)
+        {
+            return;
+        }
+
+        if (int.TryParse(frm.Value.Trim(), out var newZoom))
+        {
+            PicMain.ZoomFactor = newZoom / 100f;
+        }
     }
 
 

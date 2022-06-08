@@ -697,7 +697,7 @@ public partial class FrmMain
         // MnuZoom
         //MnuZoomIn.Visible = false;
         //MnuZoomOut.Visible = false;
-        MnuCustomZoom.Visible = false;
+        //MnuCustomZoom.Visible = false;
         //MnuActualSize.Visible = false;
         //MnuAutoZoom.Visible = false;
         //MnuLockZoom.Visible = false;

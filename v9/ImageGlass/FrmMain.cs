@@ -1822,7 +1822,7 @@ public partial class FrmMain : Form
 
     private void MnuCustomZoom_Click(object sender, EventArgs e)
     {
-        // TODO
+        IG_CustomZoom();
     }
 
     private void MnuActualSize_Click(object sender, EventArgs e)

@@ -161,7 +161,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuZoomIn", "Zoom in"); //v3.0
         Add("FrmMain.MnuZoomOut", "Zoom out"); //v3.0
         Add("FrmMain.MnuCustomZoom", "Custom zoom…"); // v8.3
-        Add("FrmMain.MnuCustomZoom._Text", "Enter a new zoom value"); // v8.3
+        Add("FrmMain.MnuCustomZoom._Description", "Enter a new zoom value"); // v8.3
         Add("FrmMain.MnuScaleToFit", "Scale to fit"); //v3.5
         Add("FrmMain.MnuScaleToFill", "Scale to fill"); //v7.5
         Add("FrmMain.MnuActualSize", "Actual size"); //v3.0
