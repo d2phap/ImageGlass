@@ -223,6 +223,44 @@ public partial class InputForm : Form
     }
 
     /// <summary>
+    /// Hides or shows text input
+    /// </summary>
+    public bool ShowTextInput {
+        get => txtValue.Visible;
+        set => txtValue.Visible = value;
+    }
+
+    /// <summary>
+    /// The thumbnail of the form
+    /// </summary>
+    public Image? Thumbnail
+    {
+        get => picThumbnail.Image;
+        set
+        {
+            picThumbnail.Image = value;
+            picThumbnail.Visible = value != null;
+
+            var columnIndex = tableMain.GetColumn(picThumbnail);
+
+            if (value != null)
+            {
+                picThumbnail.Visible = true;
+                picThumbnail.Width = picThumbnail.Height =
+                    Math.Max(value.Width, value.Height);
+
+                tableMain.ColumnStyles[columnIndex].SizeType = SizeType.AutoSize;
+            }
+            else
+            {
+                picThumbnail.Visible = false;
+                tableMain.ColumnStyles[columnIndex].SizeType = SizeType.Absolute;
+                tableMain.ColumnStyles[columnIndex].Width = 0;
+            }
+        }
+    }
+
+    /// <summary>
     /// Pattern for validation
     /// </summary>
     public string RegexPattern { get; set; } = "";
@@ -327,6 +365,7 @@ public partial class InputForm : Form
 
         lblTitle.Text = "";
         lblContent.Text = "";
+        Thumbnail = null; // hide thumbnail by default
 
         Language = lang;
         ApplyLanguage();

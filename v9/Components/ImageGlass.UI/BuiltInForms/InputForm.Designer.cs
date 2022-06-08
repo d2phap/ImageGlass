@@ -32,11 +32,13 @@
             this.txtValue = new System.Windows.Forms.MaskedTextBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblContent = new System.Windows.Forms.Label();
+            this.picThumbnail = new System.Windows.Forms.PictureBox();
             this.panBottom = new System.Windows.Forms.Panel();
             this.tableBottom = new System.Windows.Forms.TableLayoutPanel();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.tableMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picThumbnail)).BeginInit();
             this.panBottom.SuspendLayout();
             this.tableBottom.SuspendLayout();
             this.SuspendLayout();
@@ -44,11 +46,13 @@
             // tableMain
             // 
             this.tableMain.BackColor = System.Drawing.Color.Transparent;
-            this.tableMain.ColumnCount = 1;
+            this.tableMain.ColumnCount = 2;
+            this.tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableMain.Controls.Add(this.txtValue, 0, 2);
+            this.tableMain.Controls.Add(this.txtValue, 1, 2);
             this.tableMain.Controls.Add(this.lblTitle, 0, 0);
-            this.tableMain.Controls.Add(this.lblContent, 0, 1);
+            this.tableMain.Controls.Add(this.lblContent, 1, 1);
+            this.tableMain.Controls.Add(this.picThumbnail, 0, 1);
             this.tableMain.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableMain.Location = new System.Drawing.Point(1, 1);
             this.tableMain.Margin = new System.Windows.Forms.Padding(0);
@@ -64,16 +68,17 @@
             // 
             this.txtValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtValue.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtValue.Location = new System.Drawing.Point(20, 103);
+            this.txtValue.Location = new System.Drawing.Point(140, 113);
             this.txtValue.Margin = new System.Windows.Forms.Padding(20, 10, 20, 20);
             this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(538, 30);
+            this.txtValue.Size = new System.Drawing.Size(418, 30);
             this.txtValue.TabIndex = 1;
             this.txtValue.TextChanged += new System.EventHandler(this.TxtValue_TextChanged);
             // 
             // lblTitle
             // 
             this.lblTitle.BackColor = System.Drawing.Color.Transparent;
+            this.tableMain.SetColumnSpan(this.lblTitle, 2);
             this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 9.134328F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblTitle.Location = new System.Drawing.Point(0, 0);
@@ -88,12 +93,25 @@
             // lblContent
             // 
             this.lblContent.AutoSize = true;
-            this.lblContent.Location = new System.Drawing.Point(15, 60);
-            this.lblContent.Margin = new System.Windows.Forms.Padding(15, 20, 20, 10);
+            this.lblContent.Location = new System.Drawing.Point(135, 70);
+            this.lblContent.Margin = new System.Windows.Forms.Padding(15, 30, 20, 10);
             this.lblContent.Name = "lblContent";
             this.lblContent.Size = new System.Drawing.Size(82, 23);
             this.lblContent.TabIndex = 3;
             this.lblContent.Text = "[Content]";
+            // 
+            // picThumbnail
+            // 
+            this.picThumbnail.Location = new System.Drawing.Point(20, 70);
+            this.picThumbnail.Margin = new System.Windows.Forms.Padding(20, 30, 0, 10);
+            this.picThumbnail.MaximumSize = new System.Drawing.Size(100, 100);
+            this.picThumbnail.Name = "picThumbnail";
+            this.tableMain.SetRowSpan(this.picThumbnail, 2);
+            this.picThumbnail.Size = new System.Drawing.Size(100, 100);
+            this.picThumbnail.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picThumbnail.TabIndex = 4;
+            this.picThumbnail.TabStop = false;
+            this.picThumbnail.Visible = false;
             // 
             // panBottom
             // 
@@ -172,6 +190,7 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputForm_KeyDown);
             this.tableMain.ResumeLayout(false);
             this.tableMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picThumbnail)).EndInit();
             this.panBottom.ResumeLayout(false);
             this.tableBottom.ResumeLayout(false);
             this.tableBottom.PerformLayout();
@@ -189,5 +208,6 @@
         private Label lblTitle;
         private Label lblContent;
         private MaskedTextBox txtValue;
+        private PictureBox picThumbnail;
     }
 }
