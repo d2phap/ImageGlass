@@ -3,12 +3,12 @@
   <Language>
     <Info langCode="ja-JP" langName="日本語" author="Cue, KAWASAKICHIRO, Dice K, AdiXZ01, 片山朋和, tena4, wikeaka, tam330" description="Japanese" minVersion="8.6" isRightToLeftLayout="No"/>
     <Content>
-      <Item key="_IncompatibleConfigs" value="一部の設定は、現在のImageGlass {0} と互換性がありません。続行する前に、これらの設定を確認することをお勧めします。&#10;&#10;-[はい] をクリックすると変更内容について確認します。&#10;-[いいえ] をクリックするとImageGlassをデフォルト設定で起動します。"/>
+      <Item key="_IncompatibleConfigs" value="一部の設定は、現在の ImageGlass {0} と互換性がありません。続行する前に、これらの設定を確認することをお勧めします。&#10;&#10;- [はい] をクリックすると変更される内容を確認できます。&#10;- [いいえ] をクリックするとImageGlassをデフォルトの設定に戻して起動します。"/>
       <Item key="_.ImageOrderBy._Name" value="ファイル名 (デフォルト)"/>
       <Item key="_.ImageOrderBy._Length" value="ファイルサイズ"/>
       <Item key="_.ImageOrderBy._CreationTime" value="作成日時"/>
       <Item key="_.ImageOrderBy._LastAccessTime" value="最終アクセス日時"/>
-      <Item key="_.ImageOrderBy._LastWriteTime" value="最終変更日"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="最終変更"/>
       <Item key="_.ImageOrderBy._Extension" value="拡張子"/>
       <Item key="_.ImageOrderBy._Random" value="ランダム"/>
       <Item key="_.ImageOrderType._Asc" value="昇順"/>
@@ -140,7 +140,7 @@
       <Item key="frmMain._SetLockImage_Success" value="ロック画面の画像の設定に成功しました"/>
       <Item key="frmMain._SetBackground_Error" value="デスクトップの背景の設定中にエラーが発生しました"/>
       <Item key="frmMain._SetBackground_Success" value="デスクトップの背景の設定に成功しました"/>
-      <Item key="frmMain._PageExtracting" value="Extracting image pages..."/>
+      <Item key="frmMain._PageExtracting" value="ページを取り出しています..."/>
       <Item key="frmMain._PageExtractComplete" value="ページの展開を完了しました"/>
       <Item key="frmMain._Frameless" value="ウインドウを移動する時はSHIFTを押しながらドラッグしてください"/>
       <Item key="frmMain._InvalidImageClipboardData" value="クリップボードに画像データが含まれていません。"/>
@@ -179,12 +179,12 @@
       <Item key="frmSetting.chkUseTouchGesture" value="タッチジェスチャーへの対応を有効化"/>
       <Item key="frmSetting.lblBackGroundColor" value="背景色"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="リセット"/>
-      <Item key="frmSetting.lblHeadPanning" value="Panning"/>
-      <Item key="frmSetting.lblVertPanningSpeed" value="Vertical panning speed"/>
-      <Item key="frmSetting.lblHorzPanningSpeed" value="Horizontal panning speed"/>
+      <Item key="frmSetting.lblHeadPanning" value="画像をつかんで移動"/>
+      <Item key="frmSetting.lblVertPanningSpeed" value="垂直方向のパン速度"/>
+      <Item key="frmSetting.lblHorzPanningSpeed" value="水平方向のパン速度"/>
       <Item key="frmSetting.lblHeadOthers" value="その他"/>
-      <Item key="frmSetting.chkStartWithOs" value="Start with OS to improve startup speed"/>
-      <Item key="frmSetting.chkContinueRunningBackground" value="Continue running in the background when the app is closed"/>
+      <Item key="frmSetting.chkStartWithOs" value="OSの起動後に自動で起動し起動時間を短縮する"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="アプリを閉じてもバックグラウンドで実行し続ける"/>
       <Item key="frmSetting.chkAutoUpdate" value="アップデートを自動的に確認"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="アプリの複数起動を許可"/>
       <Item key="frmSetting.chkESCToQuit" value="ESCキーでアプリケーションを終了する"/>
@@ -208,7 +208,7 @@
       <Item key="frmSetting.lblColorProfile" value="カラープロファイル:"/>
       <Item key="frmSetting.lnkColorProfileBrowse" value="ブラウズ…"/>
       <Item key="frmSetting.cmbColorProfile._None" value="無し"/>
-      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="Use current monitor profile"/>
+      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="現在のモニターのプロファイルを使う"/>
       <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="カスタム…"/>
       <Item key="frmSetting.lblHeadMouseWheelActions" value="マウスホイールの動作"/>
       <Item key="frmSetting.lblMouseWheel" value="マウスホイール"/>
