@@ -363,6 +363,7 @@ public partial class InputForm : Form
         InitializeComponent();
         RegisterFormEvents();
 
+        ShowInTaskbar = false;
         lblTitle.Text = "";
         lblContent.Text = "";
         Thumbnail = null; // hide thumbnail by default
@@ -400,6 +401,11 @@ public partial class InputForm : Form
         panBottom.BackColor = Theme.Settings.ToolbarBgColor;
 
         BackColor = Theme.Settings.BgColor;
+
+        if (Theme.Info.IsDark)
+        {
+            btnOK.DarkMode = btnCancel.DarkMode = true;
+        }
     }
 
 

@@ -35,8 +35,8 @@
             this.picThumbnail = new System.Windows.Forms.PictureBox();
             this.panBottom = new System.Windows.Forms.Panel();
             this.tableBottom = new System.Windows.Forms.TableLayoutPanel();
-            this.btnOK = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOK = new ImageGlass.UI.ModernButton();
+            this.btnCancel = new ImageGlass.UI.ModernButton();
             this.tableMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picThumbnail)).BeginInit();
             this.panBottom.SuspendLayout();
@@ -144,6 +144,7 @@
             // btnOK
             // 
             this.btnOK.AutoSize = true;
+            this.btnOK.DarkMode = false;
             this.btnOK.Location = new System.Drawing.Point(277, 0);
             this.btnOK.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnOK.MinimumSize = new System.Drawing.Size(120, 0);
@@ -152,12 +153,12 @@
             this.btnOK.Size = new System.Drawing.Size(120, 40);
             this.btnOK.TabIndex = 1;
             this.btnOK.Text = "[OK]";
-            this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.BtnOK_Click);
             // 
             // btnCancel
             // 
             this.btnCancel.AutoSize = true;
+            this.btnCancel.DarkMode = false;
             this.btnCancel.Location = new System.Drawing.Point(417, 0);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnCancel.MinimumSize = new System.Drawing.Size(120, 0);
@@ -166,7 +167,6 @@
             this.btnCancel.Size = new System.Drawing.Size(121, 40);
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "[Cancel]";
-            this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // InputForm
@@ -203,8 +203,8 @@
         private TableLayoutPanel tableMain;
         private Panel panBottom;
         private TableLayoutPanel tableBottom;
-        private Button btnOK;
-        private Button btnCancel;
+        private ModernButton btnOK;
+        private ModernButton btnCancel;
         private Label lblTitle;
         private Label lblContent;
         private MaskedTextBox txtValue;
