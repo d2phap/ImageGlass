@@ -60,7 +60,23 @@ namespace igcmd {
         }
 
         private async Task CheckForUpdateAsync() {
-            await updater.GetUpdates();
+            try {
+                await updater.GetUpdatesAsync();
+            }
+            catch (Exception ex) {
+
+                lblStatus.Text = "Could not check for update";
+                lblStatus.ForeColor = Color.FromArgb(241, 89, 58);
+
+                picStatus.Image = Properties.Resources.warning;
+                btnDownload.Visible = false;
+                lnkUpdateReadMore.Visible = false;
+
+                txtUpdates.Text = ex.Message + "\r\n\r\n" + 
+                    $"Current version: " + App.Version;
+
+                return;
+            }
 
 
             Configs.IsNewVersionAvailable = updater.HasNewUpdate;
@@ -70,7 +86,7 @@ namespace igcmd {
                 lblStatus.Text = "A new update is available!";
                 lblStatus.ForeColor = Color.FromArgb(241, 89, 58);
 
-                picStatus.Image = igcmd.Properties.Resources.warning;
+                picStatus.Image = Properties.Resources.warning;
                 btnDownload.Visible = true;
             }
 
@@ -79,7 +95,7 @@ namespace igcmd {
                 lblStatus.Text = "ImageGlass is up to date!";
                 lblStatus.ForeColor = Configs.Theme.AccentColor;
                 btnDownload.Visible = false;
-                picStatus.Image = igcmd.Properties.Resources.ok;
+                picStatus.Image = Properties.Resources.ok;
             }
 
 
@@ -101,7 +117,7 @@ namespace igcmd {
         private void frmMain_Load(object sender, EventArgs e) {
             Directory.CreateDirectory(App.ConfigDir(PathType.Dir, Dir.Temporary));
 
-            picStatus.Image = igcmd.Properties.Resources.loading;
+            picStatus.Image = Properties.Resources.loading;
             _ = CheckForUpdateAsync();
 
             txtUpdates.Text = $"Current version: " + App.Version;
