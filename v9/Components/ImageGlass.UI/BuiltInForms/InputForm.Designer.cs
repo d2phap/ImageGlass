@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.tableMain = new System.Windows.Forms.TableLayoutPanel();
-            this.txtValue = new System.Windows.Forms.MaskedTextBox();
+            this.txtValue = new System.Windows.Forms.TextBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblContent = new System.Windows.Forms.Label();
             this.picThumbnail = new System.Windows.Forms.PictureBox();
@@ -145,7 +145,8 @@
             // 
             this.btnOK.AutoSize = true;
             this.btnOK.DarkMode = false;
-            this.btnOK.Location = new System.Drawing.Point(277, 0);
+            this.btnOK.ImagePadding = 2;
+            this.btnOK.Location = new System.Drawing.Point(275, 0);
             this.btnOK.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnOK.MinimumSize = new System.Drawing.Size(120, 0);
             this.btnOK.Name = "btnOK";
@@ -153,20 +154,23 @@
             this.btnOK.Size = new System.Drawing.Size(120, 40);
             this.btnOK.TabIndex = 1;
             this.btnOK.Text = "[OK]";
+            this.btnOK.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnOK.Click += new System.EventHandler(this.BtnOK_Click);
             // 
             // btnCancel
             // 
             this.btnCancel.AutoSize = true;
             this.btnCancel.DarkMode = false;
-            this.btnCancel.Location = new System.Drawing.Point(417, 0);
+            this.btnCancel.ImagePadding = 2;
+            this.btnCancel.Location = new System.Drawing.Point(415, 0);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnCancel.MinimumSize = new System.Drawing.Size(120, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.btnCancel.Size = new System.Drawing.Size(121, 40);
+            this.btnCancel.Size = new System.Drawing.Size(123, 40);
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "[Cancel]";
+            this.btnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // InputForm
@@ -207,7 +211,7 @@
         private ModernButton btnCancel;
         private Label lblTitle;
         private Label lblContent;
-        private MaskedTextBox txtValue;
+        private TextBox txtValue;
         private PictureBox picThumbnail;
     }
 }

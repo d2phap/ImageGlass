@@ -231,6 +231,27 @@ public partial class InputForm : Form
     }
 
     /// <summary>
+    /// Hides or shows Shield icon for the CTA button
+    /// </summary>
+    public bool ShowCTAShieldIcon
+    {
+        get => btnOK.ShowShieldIcon;
+        set => btnOK.ShowShieldIcon = value;
+    }
+
+    public string AcceptButtonText
+    {
+        get => btnOK.Text;
+        set => btnOK.Text = value;
+    }
+
+    public string CancelButtonText
+    {
+        get => btnCancel.Text;
+        set => btnCancel.Text = value;
+    }
+
+    /// <summary>
     /// The thumbnail of the form
     /// </summary>
     public Image? Thumbnail

@@ -944,6 +944,9 @@ public partial class FrmMain
                 TopMost = TopMost,
                 ShowTextInput = false,
                 Thumbnail = Gallery.Items[Local.CurrentIndex].ThumbnailImage,
+                ShowCTAShieldIcon = true,
+                AcceptButtonText = Config.Language["_._Yes"],
+                CancelButtonText = Config.Language["_._No"],
 
                 Description = description + "\r\n\r\n" +
                     filePath + "\r\n" +
