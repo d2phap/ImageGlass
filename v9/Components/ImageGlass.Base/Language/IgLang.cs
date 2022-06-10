@@ -105,6 +105,7 @@ public class IgLang : Dictionary<string, string>
         Add("_._Cancel", "Cancel"); // v9.0
         Add("_._Yes", "Yes"); // v9.0
         Add("_._No", "No"); // v9.0
+        Add("_._Error", "Error"); // v9.0
 
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Name)}", "Name (default)"); //v8.0
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Length)}", "Length"); //v8.0
@@ -202,6 +203,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuExtractFrames", "Extract image frames ({0})…"); //v7.5
         Add("FrmMain.MnuStartStopAnimating", "Start / Stop animating image"); //v3.0
         Add("FrmMain.MnuSetDesktopBackground", "Set as Desktop background"); //v3.0
+        Add("FrmMain.MnuSetDesktopBackground._Error", "Could not set the viewing image as desktop background"); // v6.0
+        Add("FrmMain.MnuSetDesktopBackground._Success", "Desktop background is updated."); // v6.0
         Add("FrmMain.MnuSetLockScreen", "Set as Lock screen image"); // V6.0
         Add("FrmMain.MnuOpenLocation", "Open image location"); //v3.0
         Add("FrmMain.MnuImageProperties", "Image properties"); //v3.0
@@ -293,8 +296,7 @@ public class IgLang : Dictionary<string, string>
         //Add("FrmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); // Added V5.0; Modified V6.0
         //Add("FrmMain._SetLockImage_Error", "There was an error while setting lock screen image"); // v6.0
         //Add("FrmMain._SetLockImage_Success", "Lock screen image was set successfully"); //v6.0
-        //Add("FrmMain._SetBackground_Error", "There was an error while setting desktop background"); // v6.0
-        //Add("FrmMain._SetBackground_Success", "Desktop background was set successfully"); // v6.0
+        
 
         //Add("FrmMain._PageExtractComplete", "Page extraction completed."); // v7.5
         //Add("FrmMain._Frameless", "Hold SHIFT to move the window."); // v7.5

@@ -1944,7 +1944,7 @@ public partial class FrmMain : Form
 
     private void MnuSetDesktopBackground_Click(object sender, EventArgs e)
     {
-
+        IG_SetDesktopBackground();
     }
 
     private void MnuSetLockScreen_Click(object sender, EventArgs e)

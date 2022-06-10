@@ -984,5 +984,39 @@ public partial class FrmMain
         }
     }
 
+
+    private void IG_SetDesktopBackground()
+    {
+        _ = SetDesktopBackgroundAsync();
+    }
+
+
+    private async Task SetDesktopBackgroundAsync()
+    {
+        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
+        if (!File.Exists(filePath)) return;
+
+        var args = string.Format("setwallpaper \"{0}\" {1}", filePath, (int)WallpaperStyle.Current);
+
+        var result = await Helpers.RunIgcmd(args);
+        var langPath = $"{Name}.{nameof(MnuSetDesktopBackground)}";
+
+
+        if (result == IgExitCode.Done)
+        {
+            PicMain.ShowMessage(
+                Config.Language[$"{langPath}._Success"], 
+                Config.InAppMessageDuration);
+        }
+        else
+        {
+            Popup.ShowDialog(Config.Theme, Config.Language,
+                title: Config.Language[langPath],
+                heading: Config.Language["_._Error"],
+                description: Config.Language[$"{langPath}._Error"],
+                icon: SHSTOCKICONID.SIID_ERROR);
+        }
+    }
+
 }
 

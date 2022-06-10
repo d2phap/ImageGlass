@@ -727,7 +727,7 @@ public partial class FrmMain
         //MnuDeleteFromHardDisk.Visible = false;
         MnuStartStopAnimating.Visible = false;
         MnuExtractFrames.Visible = false;
-        MnuSetDesktopBackground.Visible = false;
+        //MnuSetDesktopBackground.Visible = false;
         MnuSetLockScreen.Visible = false;
         //MnuOpenLocation.Visible = false;
         //MnuImageProperties.Visible = false;
