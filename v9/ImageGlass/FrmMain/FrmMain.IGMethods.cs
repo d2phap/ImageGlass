@@ -234,6 +234,7 @@ public partial class FrmMain
         MnuScaleToFill.Checked = Config.ZoomMode == ZoomMode.ScaleToFill;
         MnuScaleToFit.Checked = Config.ZoomMode == ZoomMode.ScaleToFit;
 
+
         // update toolbar items state
         UpdateToolbarItemsState();
     }

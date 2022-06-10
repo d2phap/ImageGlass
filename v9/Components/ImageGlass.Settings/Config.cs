@@ -552,7 +552,7 @@ public static class Config
     /// <summary>
     /// Gets, sets fixed width on zooming
     /// </summary>
-    public static double ZoomLockValue { get; set; } = 100f;
+    public static float ZoomLockValue { get; set; } = 100f;
 
     /// <summary>
     /// Gets, sets toolbar icon height

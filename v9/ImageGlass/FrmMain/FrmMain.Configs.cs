@@ -160,6 +160,12 @@ public partial class FrmMain
         PicMain.PanSpeed = Config.PanSpeed;
         PicMain.ZoomSpeed = Config.ZoomSpeed;
         IG_SetZoomMode(Config.ZoomMode.ToString());
+
+        if (Config.ZoomMode == ZoomMode.LockZoom)
+        {
+            PicMain.ZoomFactor = Config.ZoomLockValue / 100f;
+        }
+
         IG_ToggleCheckerboard(Config.ShowCheckerBoard);
 
 
@@ -205,6 +211,7 @@ public partial class FrmMain
         WindowSettings.SetFrmMainPlacementConfig(wp);
 
         Config.LastSeenImagePath = Local.Images.GetFileName(Local.CurrentIndex);
+        Config.ZoomLockValue = PicMain.ZoomFactor * 100f;
 
         Config.Write();
     }
