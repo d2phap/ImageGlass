@@ -29,9 +29,10 @@
         private void InitializeComponent()
         {
             this.tableMain = new System.Windows.Forms.TableLayoutPanel();
-            this.txtValue = new System.Windows.Forms.TextBox();
+            this.lblHeading = new System.Windows.Forms.Label();
+            this.txtValue = new ImageGlass.UI.ModernTextBox();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.lblContent = new System.Windows.Forms.Label();
+            this.lblDescription = new System.Windows.Forms.Label();
             this.picThumbnail = new System.Windows.Forms.PictureBox();
             this.panBottom = new System.Windows.Forms.Panel();
             this.tableBottom = new System.Windows.Forms.TableLayoutPanel();
@@ -49,27 +50,42 @@
             this.tableMain.ColumnCount = 2;
             this.tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableMain.Controls.Add(this.txtValue, 1, 2);
+            this.tableMain.Controls.Add(this.lblHeading, 1, 1);
+            this.tableMain.Controls.Add(this.txtValue, 1, 3);
             this.tableMain.Controls.Add(this.lblTitle, 0, 0);
-            this.tableMain.Controls.Add(this.lblContent, 1, 1);
+            this.tableMain.Controls.Add(this.lblDescription, 1, 2);
             this.tableMain.Controls.Add(this.picThumbnail, 0, 1);
             this.tableMain.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableMain.Location = new System.Drawing.Point(1, 1);
             this.tableMain.Margin = new System.Windows.Forms.Padding(0);
             this.tableMain.Name = "tableMain";
-            this.tableMain.RowCount = 3;
+            this.tableMain.RowCount = 4;
+            this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.Size = new System.Drawing.Size(578, 898);
             this.tableMain.TabIndex = 0;
             // 
+            // lblHeading
+            // 
+            this.lblHeading.AutoSize = true;
+            this.lblHeading.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblHeading.Location = new System.Drawing.Point(135, 73);
+            this.lblHeading.Margin = new System.Windows.Forms.Padding(15, 0, 20, 20);
+            this.lblHeading.Name = "lblHeading";
+            this.lblHeading.Size = new System.Drawing.Size(115, 31);
+            this.lblHeading.TabIndex = 4;
+            this.lblHeading.Text = "[Heading]";
+            // 
             // txtValue
             // 
-            this.txtValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtValue.BackColor = System.Drawing.SystemColors.Window;
+            this.txtValue.DarkMode = false;
             this.txtValue.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtValue.Location = new System.Drawing.Point(140, 113);
-            this.txtValue.Margin = new System.Windows.Forms.Padding(20, 10, 20, 20);
+            this.txtValue.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.txtValue.Location = new System.Drawing.Point(140, 167);
+            this.txtValue.Margin = new System.Windows.Forms.Padding(20, 0, 20, 20);
             this.txtValue.Name = "txtValue";
             this.txtValue.Size = new System.Drawing.Size(418, 30);
             this.txtValue.TabIndex = 1;
@@ -77,38 +93,38 @@
             // 
             // lblTitle
             // 
+            this.lblTitle.AutoSize = true;
             this.lblTitle.BackColor = System.Drawing.Color.Transparent;
             this.tableMain.SetColumnSpan(this.lblTitle, 2);
-            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 9.134328F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblTitle.Location = new System.Drawing.Point(0, 0);
-            this.lblTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(0, 0, 0, 30);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Padding = new System.Windows.Forms.Padding(15, 2, 0, 2);
-            this.lblTitle.Size = new System.Drawing.Size(578, 40);
+            this.lblTitle.Padding = new System.Windows.Forms.Padding(15, 10, 0, 10);
+            this.lblTitle.Size = new System.Drawing.Size(578, 43);
             this.lblTitle.TabIndex = 2;
             this.lblTitle.Text = "[Title]";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblContent
             // 
-            this.lblContent.AutoSize = true;
-            this.lblContent.Location = new System.Drawing.Point(135, 70);
-            this.lblContent.Margin = new System.Windows.Forms.Padding(15, 30, 20, 10);
-            this.lblContent.Name = "lblContent";
-            this.lblContent.Size = new System.Drawing.Size(82, 23);
-            this.lblContent.TabIndex = 3;
-            this.lblContent.Text = "[Content]";
+            this.lblDescription.AutoSize = true;
+            this.lblDescription.Location = new System.Drawing.Point(135, 124);
+            this.lblDescription.Margin = new System.Windows.Forms.Padding(15, 0, 20, 20);
+            this.lblDescription.Name = "lblContent";
+            this.lblDescription.Size = new System.Drawing.Size(82, 23);
+            this.lblDescription.TabIndex = 3;
+            this.lblDescription.Text = "[Content]";
             // 
             // picThumbnail
             // 
-            this.picThumbnail.Location = new System.Drawing.Point(20, 70);
-            this.picThumbnail.Margin = new System.Windows.Forms.Padding(20, 30, 0, 10);
+            this.picThumbnail.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.picThumbnail.Location = new System.Drawing.Point(20, 73);
+            this.picThumbnail.Margin = new System.Windows.Forms.Padding(20, 0, 0, 20);
             this.picThumbnail.MaximumSize = new System.Drawing.Size(100, 100);
             this.picThumbnail.Name = "picThumbnail";
-            this.tableMain.SetRowSpan(this.picThumbnail, 2);
+            this.tableMain.SetRowSpan(this.picThumbnail, 3);
             this.picThumbnail.Size = new System.Drawing.Size(100, 100);
-            this.picThumbnail.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picThumbnail.TabIndex = 4;
             this.picThumbnail.TabStop = false;
             this.picThumbnail.Visible = false;
@@ -118,7 +134,7 @@
             this.panBottom.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panBottom.Controls.Add(this.tableBottom);
             this.panBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panBottom.Location = new System.Drawing.Point(1, 188);
+            this.panBottom.Location = new System.Drawing.Point(1, 223);
             this.panBottom.Name = "panBottom";
             this.panBottom.Padding = new System.Windows.Forms.Padding(20);
             this.panBottom.Size = new System.Drawing.Size(578, 81);
@@ -152,6 +168,7 @@
             this.btnOK.Name = "btnOK";
             this.btnOK.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.btnOK.Size = new System.Drawing.Size(120, 40);
+            this.btnOK.SystemIcon = null;
             this.btnOK.TabIndex = 1;
             this.btnOK.Text = "[OK]";
             this.btnOK.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -168,6 +185,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.btnCancel.Size = new System.Drawing.Size(123, 40);
+            this.btnCancel.SystemIcon = null;
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "[Cancel]";
             this.btnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -179,7 +197,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(580, 270);
+            this.ClientSize = new System.Drawing.Size(580, 305);
             this.Controls.Add(this.panBottom);
             this.Controls.Add(this.tableMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -188,7 +206,7 @@
             this.Name = "InputForm";
             this.Padding = new System.Windows.Forms.Padding(1);
             this.ShowIcon = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "InputBox";
             this.Load += new System.EventHandler(this.InputForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputForm_KeyDown);
@@ -210,8 +228,9 @@
         private ModernButton btnOK;
         private ModernButton btnCancel;
         private Label lblTitle;
-        private Label lblContent;
-        private TextBox txtValue;
+        private Label lblDescription;
+        private ModernTextBox txtValue;
         private PictureBox picThumbnail;
+        private Label lblHeading;
     }
 }

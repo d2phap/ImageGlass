@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
+using ImageGlass.Base.WinApi;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Windows.Win32;
@@ -205,13 +206,58 @@ public partial class InputForm : Form
 
 
     /// <summary>
+    /// Heading text
+    /// </summary>
+    public string Heading
+    {
+        get => lblHeading.Text;
+        set
+        {
+            lblHeading.Text = value;
+            var isVisible = !string.IsNullOrEmpty(value);
+            var rowIndex = tableMain.GetRow(lblHeading);
+
+            if (isVisible)
+            {
+                lblHeading.Visible = true;
+                tableMain.RowStyles[rowIndex].SizeType = SizeType.AutoSize;
+            }
+            else
+            {
+                lblHeading.Visible = false;
+                tableMain.RowStyles[rowIndex].SizeType = SizeType.Absolute;
+                tableMain.RowStyles[rowIndex].Height = 0;
+            }
+        }
+    }
+
+
+    /// <summary>
     /// Description text
     /// </summary>
     public string Description
     {
-        get => lblContent.Text;
-        set => lblContent.Text = value;
+        get => lblDescription.Text;
+        set
+        {
+            lblDescription.Text = value;
+            var isVisible = !string.IsNullOrEmpty(value);
+            var rowIndex = tableMain.GetRow(lblDescription);
+
+            if (isVisible)
+            {
+                lblDescription.Visible = true;
+                tableMain.RowStyles[rowIndex].SizeType = SizeType.AutoSize;
+            }
+            else
+            {
+                lblDescription.Visible = false;
+                tableMain.RowStyles[rowIndex].SizeType = SizeType.Absolute;
+                tableMain.RowStyles[rowIndex].Height = 0;
+            }
+        }
     }
+
 
     /// <summary>
     /// Form value
@@ -235,8 +281,8 @@ public partial class InputForm : Form
     /// </summary>
     public bool ShowCTAShieldIcon
     {
-        get => btnOK.ShowShieldIcon;
-        set => btnOK.ShowShieldIcon = value;
+        get => btnOK.SystemIcon == SHSTOCKICONID.SIID_SHIELD;
+        set => btnOK.SystemIcon = value ? SHSTOCKICONID.SIID_SHIELD : null;
     }
 
     public string AcceptButtonText
@@ -251,33 +297,54 @@ public partial class InputForm : Form
         set => btnCancel.Text = value;
     }
 
+
     /// <summary>
-    /// The thumbnail of the form
+    /// Gets, sets the thumbnail overlay image
     /// </summary>
-    public Image? Thumbnail
+    public Image? ThumbnailOverlay
     {
         get => picThumbnail.Image;
         set
         {
-            picThumbnail.Image = value;
-            picThumbnail.Visible = value != null;
-
-            var columnIndex = tableMain.GetColumn(picThumbnail);
-
-            if (value != null)
+            if (value == null)
             {
-                picThumbnail.Visible = true;
-                picThumbnail.Width = picThumbnail.Height =
-                    Math.Max(value.Width, value.Height);
+                picThumbnail.Image = null;
+                return;
+            };
 
-                tableMain.ColumnStyles[columnIndex].SizeType = SizeType.AutoSize;
+            // draw thumbnail overlay
+            var bmp = new Bitmap(picThumbnail.Width, picThumbnail.Height);
+            var g = Graphics.FromImage(bmp);
+
+            g.DrawImageUnscaled(value, new Point(
+                bmp.Width - value.Width,
+                bmp.Height - value.Height));
+
+            picThumbnail.Image = bmp;
+        }
+    }
+
+
+    /// <summary>
+    /// Gets, sets the thumbnail image
+    /// </summary>
+    public Image? Thumbnail
+    {
+        get => picThumbnail.BackgroundImage;
+        set
+        {
+            if (value != null && picThumbnail.Width >= Math.Max(value.Width, value.Height))
+            {
+                // image is smaller than picThumbnail
+                picThumbnail.BackgroundImageLayout = ImageLayout.Center;
             }
             else
             {
-                picThumbnail.Visible = false;
-                tableMain.ColumnStyles[columnIndex].SizeType = SizeType.Absolute;
-                tableMain.ColumnStyles[columnIndex].Width = 0;
+                // image is bigger than picThumbnail
+                picThumbnail.BackgroundImageLayout = ImageLayout.Zoom;
             }
+
+            picThumbnail.BackgroundImage = value;
         }
     }
 
@@ -385,8 +452,9 @@ public partial class InputForm : Form
         RegisterFormEvents();
 
         ShowInTaskbar = false;
-        lblTitle.Text = "";
-        lblContent.Text = "";
+        Heading = "";
+        Description = "";
+        Title = "";
         Thumbnail = null; // hide thumbnail by default
 
         Language = lang;
@@ -412,21 +480,22 @@ public partial class InputForm : Form
     /// </summary>
     public void ApplyTheme()
     {
-        lblTitle.ForeColor = 
-            lblContent.ForeColor = Theme.Settings.TextColor;
-
-        txtValue.BackColor = Theme.Settings.ToolbarBgColor;
-        txtValue.ForeColor = Theme.Settings.TextColor;
-
-        lblTitle.BackColor =
-        panBottom.BackColor = Theme.Settings.ToolbarBgColor;
-
         BackColor = Theme.Settings.BgColor;
 
-        if (Theme.Info.IsDark)
-        {
-            btnOK.DarkMode = btnCancel.DarkMode = true;
-        }
+        // text color
+        lblTitle.ForeColor = 
+            lblHeading.ForeColor =
+            lblDescription.ForeColor = Theme.Settings.TextColor;
+
+        // header and footer
+        lblTitle.BackColor =
+            picThumbnail.BackColor =
+            panBottom.BackColor = Theme.Settings.ToolbarBgColor;
+
+        // dark mode
+        txtValue.DarkMode =
+            btnOK.DarkMode =
+            btnCancel.DarkMode = Theme.Info.IsDark;
     }
 
 
@@ -473,6 +542,34 @@ public partial class InputForm : Form
     }
 
 
+    private void CancelForm()
+    {
+        DialogResult = DialogResult.Cancel;
+    }
+
+
+    protected override void OnLoad(EventArgs e)
+    {
+        base.OnLoad(e);
+
+        var showThumbnail = Thumbnail != null || ThumbnailOverlay != null;
+        var columnIndex = tableMain.GetColumn(picThumbnail);
+
+        if (showThumbnail)
+        {
+            picThumbnail.Visible = true;
+            tableMain.ColumnStyles[columnIndex].SizeType = SizeType.AutoSize;
+        }
+        else
+        {
+            picThumbnail.Visible = false;
+
+            tableMain.ColumnStyles[columnIndex].SizeType = SizeType.Absolute;
+            tableMain.ColumnStyles[columnIndex].Width = 0;
+        }
+    }
+
+
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
         // disable parent form shotcuts
@@ -482,6 +579,17 @@ public partial class InputForm : Form
 
     private void InputForm_Load(object sender, EventArgs e)
     {
+        var contentHeight = lblHeading.Height + lblHeading.Margin.Vertical +
+            lblDescription.Height + lblDescription.Margin.Vertical +
+            txtValue.Height + txtValue.Margin.Vertical;
+
+        var height = lblTitle.Height + lblTitle.Margin.Vertical +
+            Math.Max(picThumbnail.Height, contentHeight) +
+            panBottom.Height;
+
+        Height = height;
+
+
         txtValue.Focus();
         txtValue.SelectAll();
     }
@@ -490,7 +598,7 @@ public partial class InputForm : Form
     {
         if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
         {
-            btnCancel.PerformClick();
+            CancelForm();
         }
     }
 
@@ -513,7 +621,7 @@ public partial class InputForm : Form
 
     private void BtnCancel_Click(object sender, EventArgs e)
     {
-        DialogResult = DialogResult.Cancel;
+        CancelForm();
     }
 
 }

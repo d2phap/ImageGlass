@@ -934,9 +934,13 @@ public partial class FrmMain
                 ? Config.Language[$"{Name}.{nameof(MnuMoveToRecycleBin)}"]
                 : Config.Language[$"{Name}.{nameof(MnuDeleteFromHardDisk)}"];
 
-            var description = moveToRecycleBin
+            var heading = moveToRecycleBin
                 ? Config.Language[$"{Name}.{nameof(MnuMoveToRecycleBin)}._Description"]
                 : Config.Language[$"{Name}.{nameof(MnuDeleteFromHardDisk)}._Description"];
+
+            var overlayIcon = SystemIconApi.GetSystemIcon(moveToRecycleBin
+                ? SHSTOCKICONID.SIID_RECYCLER
+                : SHSTOCKICONID.SIID_DELETE, true);
 
             var frm = new InputForm(Config.Theme, Config.Language)
             {
@@ -944,12 +948,14 @@ public partial class FrmMain
                 TopMost = TopMost,
                 ShowTextInput = false,
                 Thumbnail = Gallery.Items[Local.CurrentIndex].ThumbnailImage,
+                ThumbnailOverlay = overlayIcon,
+
                 ShowCTAShieldIcon = true,
                 AcceptButtonText = Config.Language["_._Yes"],
                 CancelButtonText = Config.Language["_._No"],
 
-                Description = description + "\r\n\r\n" +
-                    filePath + "\r\n" +
+                Heading = heading,
+                Description = filePath + "\r\n" +
                     Helpers.FormatSize(Gallery.Items[Local.CurrentIndex].Details.FileSize),
             };
 
