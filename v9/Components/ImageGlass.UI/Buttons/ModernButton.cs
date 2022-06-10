@@ -23,6 +23,7 @@ License: MIT, https://github.com/RobinPerris/DarkUI/blob/master/LICENSE
 ---------------------
 */
 
+using ImageGlass.Base.WinApi;
 using System.ComponentModel;
 
 
@@ -45,7 +46,9 @@ public class ModernButton : Button
     private bool _darkMode = false;
 
     private readonly int _padding = DEFAULT_PADDING / 2;
-    private int _imagePadding = 5; // Consts.Padding / 2
+    private int _imagePadding = 2; // Consts.Padding / 2
+
+    private bool _showShieldIcon = false;
 
     #endregion
 
@@ -64,6 +67,31 @@ public class ModernButton : Button
             Invalidate();
         }
     }
+
+
+    [DefaultValue(false)]
+    public bool ShowShieldIcon
+    {
+        get => _showShieldIcon;
+        set
+        {
+            _showShieldIcon = value;
+
+            if (!_showShieldIcon)
+            {
+                Image = null;
+            }
+            else
+            {
+                var icon = ImageApi.LoadSystemIcon(SystemIconType.Shield, SystemInformation.SmallIconSize);
+
+                Image = icon?.ToBitmap();
+            }
+            
+            Invalidate();
+        }
+    }
+
 
     public new string Text
     {
@@ -273,70 +301,80 @@ public class ModernButton : Button
         g.FillRectangle(bgBrush, rect);
         
 
-        var modRect = new Rectangle(
-            rect.Left, rect.Top,
-            rect.Width - 1, rect.Height - 1);
-
+        // draw border
         if (ButtonStyle == ModernButtonStyle.Normal)
         {
+            var borderRect = new Rectangle(
+                rect.Left, rect.Top,
+                rect.Width - 1, rect.Height - 1);
+
             using var pen = new Pen(borderColor, 1);
-            g.DrawRectangle(pen, modRect);
+            g.DrawRectangle(pen, borderRect);
         }
 
-        var textOffsetX = 0;
-        var textOffsetY = 0;
+        
+        var contentRect = new Rectangle(
+            Padding.Left,
+            Padding.Top,
+            Width - Padding.Horizontal,
+            Height - Padding.Vertical);
 
+        var textOffsetX = contentRect.Left;
+        var textOffsetY = contentRect.Top;
+
+        // draw icon
         if (Image != null)
         {
             var stringSize = g.MeasureString(Text, Font, rect.Size);
 
-            var x = (ClientSize.Width / 2) - (Image.Size.Width / 2);
-            var y = (ClientSize.Height / 2) - (Image.Size.Height / 2);
+            var x = (Width / 2) - (Image.Width / 2);
+            var y = (Height / 2) - (Image.Height / 2);
+
+            TextImageRelation = TextImageRelation.ImageBeforeText;
 
             switch (TextImageRelation)
             {
                 case TextImageRelation.ImageAboveText:
-                    textOffsetY = (Image.Size.Height / 2) + (ImagePadding / 2);
-                    y -= (int)(stringSize.Height / 2) + (ImagePadding / 2);
+                    y -= (int)(stringSize.Height / 2) + ImagePadding;
+                    textOffsetY = (Image.Height / 2) + ImagePadding;
                     break;
 
                 case TextImageRelation.TextAboveImage:
-                    textOffsetY = ((Image.Size.Height / 2) + (ImagePadding / 2)) * -1;
-                    y += (int)(stringSize.Height / 2) + (ImagePadding / 2);
+                    y += (int)(stringSize.Height / 2) + ImagePadding;
+                    textOffsetY = ((Image.Height / 2) + ImagePadding) * -1;
                     break;
 
                 case TextImageRelation.ImageBeforeText:
-                    textOffsetX = Image.Size.Width + (ImagePadding * 2);
-                    x = ImagePadding;
+                    x -= (int)stringSize.Width / 2 + ImagePadding;
+                    textOffsetX = Padding.Left + Image.Width / 2;
                     break;
 
                 case TextImageRelation.TextBeforeImage:
-                    x += (int)stringSize.Width;
+                    x += (int)stringSize.Width / 2 + ImagePadding;
+                    textOffsetX = Padding.Left - Image.Width / 2;
                     break;
             }
 
             g.DrawImageUnscaled(Image, x, y);
         }
 
-        
-        modRect = new Rectangle(
-            rect.Left + textOffsetX + Padding.Left,
-            rect.Top + textOffsetY + Padding.Top,
-            rect.Width - Padding.Horizontal,
-            rect.Height - Padding.Vertical);
+
+        var textRect = new Rectangle(
+            textOffsetX,
+            textOffsetY,
+            contentRect.Width,
+            contentRect.Height);
 
         var stringFormat = new StringFormat
         {
             LineAlignment = StringAlignment.Center,
             Alignment = StringAlignment.Center,
-            Trimming = StringTrimming.EllipsisCharacter
+            Trimming = StringTrimming.EllipsisCharacter,
         };
-
 
         // draw text
         using var textBrush = new SolidBrush(textColor);
-        g.DrawString(Text, Font, textBrush, modRect, stringFormat);
-
+        g.DrawString(Text, Font, textBrush, textRect, stringFormat);
     }
 
 
