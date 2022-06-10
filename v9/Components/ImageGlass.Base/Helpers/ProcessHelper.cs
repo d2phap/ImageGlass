@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 // Source:
 // https://github.com/aspnet/AspNetIdentity/blob/main/src/Microsoft.AspNet.Identity.Core/AsyncHelper.cs
 
+using System.Diagnostics;
 using System.Globalization;
 
 namespace ImageGlass.Base;
@@ -83,5 +84,67 @@ public partial class Helpers
         th.Start();
 
         return th.ManagedThreadId;
+    }
+
+
+    /// <summary>
+    /// Runs as admin
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <param name="args"></param>
+    public static async Task<int> RunExeAsync(string filename, string args, bool asAdmin = false, bool waitForExit = false)
+    {
+        var proc = new Process();
+        proc.StartInfo.FileName = filename;
+        proc.StartInfo.Arguments = args;
+
+        proc.StartInfo.Verb = asAdmin ? "runas" : "";
+        proc.StartInfo.UseShellExecute = true;
+
+        try
+        {
+            proc.Start();
+
+            if (waitForExit)
+            {
+                await proc.WaitForExitAsync();
+            }
+
+            return proc.ExitCode;
+        }
+        catch
+        {
+            return (int)IgExitCode.Error;
+        }
+    }
+
+
+    /// <summary>
+    /// Runs a command from Igcmd.exe
+    /// </summary>
+    /// <param name="args"></param>
+    /// <returns></returns>
+    public static async Task<IgExitCode> RunIgcmd(string args)
+    {
+        var exePath = App.StartUpDir("igcmd.exe");
+        IgExitCode code;
+
+        try
+        {
+            code = (IgExitCode)await RunExeAsync(exePath, args, waitForExit: true);
+
+
+            // If that fails due to privs error, re-attempt with admin privs.
+            if (code == IgExitCode.AdminRequired)
+            {
+                code = (IgExitCode)await RunExeAsync(exePath, args, asAdmin: true, waitForExit: true);
+            }
+        }
+        catch
+        {
+            code = IgExitCode.Error;
+        }
+
+        return code;
     }
 }

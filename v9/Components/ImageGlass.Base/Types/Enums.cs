@@ -244,6 +244,16 @@ public enum WindowsOS
     Win7,
 }
 
+/// <summary>
+/// Exit codes of ImageGlass ultilities
+/// </summary>
+public enum IgExitCode : int
+{
+    Done = 0,
+    Error = 1,
+    AdminRequired = 2,
+}
+
 
 /// <summary>
 /// Types of image infomation update request
