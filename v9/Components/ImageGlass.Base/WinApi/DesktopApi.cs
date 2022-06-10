@@ -1,10 +1,59 @@
-﻿
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
 namespace ImageGlass.Base.WinApi;
 
-public class DesktopApi
+
+public enum WallpaperStyle : int
+{
+    /// <summary>
+    /// Current windows wallpaper style
+    /// </summary>
+    Current = -1,
+    Centered = 0,
+    Stretched = 1,
+    Tiled = 2,
+}
+
+
+public enum WallpaperResult
+{
+    /// <summary>
+    /// Wallpaper successfully set
+    /// </summary>
+    Success = 0,
+
+    /// <summary>
+    /// Wallpaper failure due to privileges - can re-attempt with Admin privileges.
+    /// </summary>
+    PrivilegesFail,
+
+    /// <summary>
+    /// Wallpaper failure - no point in re-attempting
+    /// </summary>
+    Fail,
+}
+
+
+public static class DesktopApi
 {
     private const int SPI_SETDESKWALLPAPER = 20;
     private const int SPIF_UPDATEINIFILE = 0x01;
@@ -13,152 +62,62 @@ public class DesktopApi
     [DllImport("user32.dll", CharSet = CharSet.Unicode)]
     private static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
 
-    public enum Style : int
-    {
-        /// <summary>
-        /// Current windows wallpaper style
-        /// </summary>
-        Current = -1,
-        Centered = 0,
-        Stretched = 1,
-        Tiled = 2,
-    }
-
-    public enum Result
-    {
-        Success = 0, // Wallpaper successfully set
-        PrivsFail,  // Wallpaper failure due to privileges - can re-attempt with Admin privs.
-        Fail        // Wallpaper failure - no point in re-attempting
-    }
-
-
-    /// <summary>
-    /// Set desktop wallpaper
-    /// </summary>
-    /// <param name="uri">Image filename</param>
-    /// <param name="style">Style of wallpaper</param>
-    public static void Set(Uri uri, Style style)
-    {
-        using var s = new System.Net.WebClient().OpenRead(uri.ToString());
-
-        using var img = Image.FromStream(s);
-        Set(img, style);
-    }
-
-
-    /// <summary>
-    /// Set desktop wallpaper
-    /// </summary>
-    /// <param name="img">Image data</param>
-    /// <param name="style">Style of wallpaper</param>
-    private static void Set(Image img, Style style)
-    {
-        try
-        {
-            var key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
-            if (key == null)
-            {
-                return;
-            }
-
-            if (style == Style.Stretched)
-            {
-                key.SetValue("WallpaperStyle", "2");
-                key.SetValue("TileWallpaper", "0");
-            }
-
-            if (style == Style.Centered)
-            {
-                key.SetValue("WallpaperStyle", "1");
-                key.SetValue("TileWallpaper", "0");
-            }
-
-            if (style == Style.Tiled)
-            {
-                key.SetValue("WallpaperStyle", "1");
-                key.SetValue("TileWallpaper", "1");
-            }
-
-            var tempPath = App.ConfigDir(PathType.File, Dir.Temporary, "wallpaper_temp.jpg");
-            img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-            _ = SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, tempPath,
-                SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
-        }
-        catch { }
-    }
-
-
-    private static string SaveTempFile(string path)
-    {
-        return "";
-    }
-
 
     /// <summary>
     /// Set the desktop wallpaper.
     /// </summary>
-    /// <param name="path">File system path to the image</param>
+    /// <param name="bmpPath">BMP image file path</param>
     /// <param name="style">Style of wallpaper</param>
     /// <returns>Success/failure indication.</returns>
-    public static Result Set(string path, Style style)
+    public static WallpaperResult SetWallpaper(string bmpPath, WallpaperStyle style)
     {
-        // TODO use ImageMagick to load image
-        var tempPath = Path.Combine(Path.GetTempPath(), "wallpaper_temp.bmp");
-
-        try
-        {
-            using var img = Image.FromFile(path);
-            // SPI_SETDESKWALLPAPER will *only* work consistently if image is a Bitmap! (Issue #327)
-            img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Bmp);
-        }
-        catch
-        {
-            // Couldn't open/save image file: Fail, and don't re-try
-            return Result.Fail;
-        }
-
         try
         {
             using (var key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true))
             {
                 if (key == null)
                 {
-                    return Result.Fail;
+                    return WallpaperResult.Fail;
                 }
 
                 var tileVal = "0"; // default not-tiled
                 var winStyle = "1"; // default centered
+
                 switch (style)
                 {
-                    case Style.Tiled:
+                    case WallpaperStyle.Tiled:
                         tileVal = "1";
                         break;
-                    case Style.Stretched:
+
+                    case WallpaperStyle.Stretched:
                         winStyle = "2";
                         break;
-                    case Style.Current:
-                        tileVal = (string)key.GetValue("TileWallpaper");
-                        winStyle = (string)key.GetValue("WallpaperStyle");
+
+                    case WallpaperStyle.Current:
+                        tileVal = key.GetValue("TileWallpaper")?.ToString() ?? "";
+                        winStyle = key.GetValue("WallpaperStyle")?.ToString() ?? "";
                         break;
                 }
+
                 key.SetValue("TileWallpaper", tileVal);
                 key.SetValue("WallpaperStyle", winStyle);
-                key.SetValue("Wallpaper", tempPath);
+                key.SetValue("Wallpaper", bmpPath);
             }
 
-            SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, tempPath, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
+            SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, bmpPath, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
         }
         catch (Exception ex)
         {
             if (ex is System.Security.SecurityException ||
                 ex is UnauthorizedAccessException)
             {
-                return Result.PrivsFail;
+                return WallpaperResult.PrivilegesFail;
             }
 
-            return Result.Fail;
+            return WallpaperResult.Fail;
         }
-        return Result.Success;
+
+        return WallpaperResult.Success;
     }
+
 }
