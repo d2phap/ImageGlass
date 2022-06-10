@@ -1,6 +1,6 @@
 ﻿namespace ImageGlass.UI.BuiltInForms
 {
-    partial class InputForm
+    partial class Popup
     {
         /// <summary>
         /// Required designer variable.

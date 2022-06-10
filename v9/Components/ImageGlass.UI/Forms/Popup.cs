@@ -26,7 +26,7 @@ using Windows.Win32.UI.Controls;
 
 namespace ImageGlass.UI.BuiltInForms;
 
-public partial class InputForm : Form
+public partial class Popup : Form
 {
     #region Borderless form
 
@@ -446,7 +446,7 @@ public partial class InputForm : Form
     #endregion
 
 
-    public InputForm(IgTheme theme, IgLang lang)
+    public Popup(IgTheme theme, IgLang lang)
     {
         InitializeComponent();
         RegisterFormEvents();

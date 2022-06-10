@@ -61,9 +61,20 @@ public static class SystemIconApi
             size |= SHGSI.SHGSI_SMALLICON;
         }
 
-        _ = SHGetStockIconInfo(iconType.Value, size, ref iconResult);
+        try
+        {
+            _ = SHGetStockIconInfo(iconType.Value, size, ref iconResult);
 
-        return Icon.FromHandle(iconResult.hIcon)?.ToBitmap();
+            if (iconResult.hIcon == IntPtr.Zero)
+            {
+                return null;
+            }
+
+            return Icon.FromHandle(iconResult.hIcon)?.ToBitmap();
+        }
+        catch { }
+
+        return null;
     }
 
 }
@@ -171,7 +182,7 @@ public enum SHSTOCKICONID : uint
     SIID_CLUSTEREDDRIVE = 140,    // Clustered disk
 
     // 160+ are for Windows 7 icons
-    SIID_MAX_ICONS = 181,
+    //SIID_MAX_ICONS = 181,
 }
 
 

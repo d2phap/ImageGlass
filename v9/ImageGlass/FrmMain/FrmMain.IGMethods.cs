@@ -100,7 +100,7 @@ public partial class FrmMain
         if (Local.Images.Length == 0) return;
 
         var oldIndex = Local.CurrentIndex + 1;
-        var frm = new InputForm(Config.Theme, Config.Language)
+        var frm = new Popup(Config.Theme, Config.Language)
         {
             Title = Config.Language[$"{Name}.{nameof(MnuGoTo)}"],
             Value = oldIndex.ToString(),
@@ -175,7 +175,7 @@ public partial class FrmMain
 
         var oldZoom = PicMain.ZoomFactor * 100f;
 
-        var frm = new InputForm(Config.Theme, Config.Language)
+        var frm = new Popup(Config.Theme, Config.Language)
         {
             Title = Config.Language[$"{Name}.{nameof(MnuCustomZoom)}"],
             Value = oldZoom.ToString(),
@@ -867,7 +867,7 @@ public partial class FrmMain
         var ext = Path.GetExtension(oldFilePath);
         var newName = Path.GetFileNameWithoutExtension(oldFilePath);
 
-        var frm = new InputForm(Config.Theme, Config.Language)
+        var frm = new Popup(Config.Theme, Config.Language)
         {
             Title = Config.Language[$"{Name}.{nameof(MnuRename)}"],
             Value = newName,
@@ -876,8 +876,7 @@ public partial class FrmMain
             FileNameValueOnly = true,
             TopMost = TopMost,
 
-            Description = oldFilePath
-                + "\r\n"
+            Description = oldFilePath + "\r\n"
                 + Config.Language[$"{Name}.{nameof(MnuRename)}._Description"],
             
         };
@@ -942,7 +941,7 @@ public partial class FrmMain
                 ? SHSTOCKICONID.SIID_RECYCLER
                 : SHSTOCKICONID.SIID_DELETE, true);
 
-            var frm = new InputForm(Config.Theme, Config.Language)
+            var frm = new Popup(Config.Theme, Config.Language)
             {
                 Title = title,
                 TopMost = TopMost,
