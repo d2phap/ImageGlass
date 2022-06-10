@@ -263,12 +263,12 @@ public partial class ThemeUtils
 
 
     /// <summary>
-    /// Lightness of the color between black (-1) and white (+1).
+    /// Adjust the lightness of the color to a value between black (-1) and white (+1).
     /// </summary>
     /// <param name="color">The color to change the lightness.</param>
     /// <param name="factor">The factor (-1 = black ... +1 = white) to change the lightness.</param>
     /// <returns>The color with the changed lightness.</returns>
-    public static Color LightnessColor(Color color, float factor)
+    public static Color AdjustLightness(Color color, float factor)
     {
         factor = MinMax(factor, -1f, 1f);
         return factor < 0f ? DarkenColor(color, -factor) : LightenColor(color, factor);

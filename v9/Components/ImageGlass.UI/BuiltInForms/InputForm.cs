@@ -569,6 +569,29 @@ public partial class InputForm : Form
         }
     }
 
+    protected override void OnActivated(EventArgs e)
+    {
+        base.OnActivated(e);
+
+        lblTitle.ForeColor = Theme.Settings.TextColor;
+        lblTitle.BackColor = Theme.Settings.ToolbarBgColor;
+    }
+
+    protected override void OnDeactivate(EventArgs e)
+    {
+        base.OnDeactivate(e);
+
+
+        // title text color
+        lblTitle.ForeColor = ThemeUtils.AdjustLightness(
+            Theme.Settings.TextColor, 
+            Theme.Info.IsDark ? -0.5f : 0.5f);
+
+        lblTitle.BackColor = ThemeUtils.AdjustLightness(
+            Theme.Settings.ToolbarBgColor,
+            Theme.Info.IsDark ? -0.2f : 0.2f);
+    }
+
 
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {

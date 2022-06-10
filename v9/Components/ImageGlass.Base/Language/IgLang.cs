@@ -195,10 +195,10 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuFlipVertical", "Flip Vertical"); // V6.0
         Add("FrmMain.MnuRename", "Rename image…"); //v3.0
         Add("FrmMain.MnuRename._Description", "Enter a new filename:"); // v9.0
-        Add("FrmMain.MnuMoveToRecycleBin", "Move to recycle bin"); //v3.0
+        Add("FrmMain.MnuMoveToRecycleBin", "Move to the Recycle Bin"); //v3.0
         Add("FrmMain.MnuMoveToRecycleBin._Description", "Do you want to move this file to the Recycle Bin?"); //v3.0
         Add("FrmMain.MnuDeleteFromHardDisk", "Delete from hard disk"); //v3.0
-        Add("FrmMain.MnuDeleteFromHardDisk._Description", "Do you want to permanently delete this file?"); //v3.0
+        Add("FrmMain.MnuDeleteFromHardDisk._Description", "Are you sure you want to permanently delete this file?"); //v3.0
         Add("FrmMain.MnuExtractFrames", "Extract image frames ({0})…"); //v7.5
         Add("FrmMain.MnuStartStopAnimating", "Start / Stop animating image"); //v3.0
         Add("FrmMain.MnuSetDesktopBackground", "Set as Desktop background"); //v3.0

@@ -106,12 +106,12 @@
             this.lblTitle.Text = "[Title]";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblContent
+            // lblDescription
             // 
             this.lblDescription.AutoSize = true;
             this.lblDescription.Location = new System.Drawing.Point(135, 124);
             this.lblDescription.Margin = new System.Windows.Forms.Padding(15, 0, 20, 20);
-            this.lblDescription.Name = "lblContent";
+            this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(82, 23);
             this.lblDescription.TabIndex = 3;
             this.lblDescription.Text = "[Content]";

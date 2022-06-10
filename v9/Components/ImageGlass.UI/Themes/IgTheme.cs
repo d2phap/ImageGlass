@@ -40,7 +40,7 @@ public class IgTheme
         get
         {
             var danger = Color.FromArgb(255, 255, 0, 0);
-            var themedColor = ThemeUtils.LightnessColor(danger, Info.IsDark ? -0.8f : 0.8f);
+            var themedColor = ThemeUtils.AdjustLightness(danger, Info.IsDark ? -0.8f : 0.8f);
 
             return themedColor;
         }
