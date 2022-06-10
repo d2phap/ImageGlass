@@ -191,7 +191,7 @@
             this.btnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
-            // InputForm
+            // Popup
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
@@ -203,7 +203,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(580, 240);
-            this.Name = "InputForm";
+            this.Name = "Popup";
             this.Padding = new System.Windows.Forms.Padding(1);
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

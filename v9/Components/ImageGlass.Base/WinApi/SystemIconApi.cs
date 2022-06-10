@@ -44,7 +44,7 @@ public static class SystemIconApi
     /// <summary>
     /// Loads the system icon.
     /// </summary>
-    public static Bitmap? GetSystemIcon(SHSTOCKICONID? iconType, bool useLargeIcon = false)
+    public static Bitmap? GetSystemIcon(SHSTOCKICONID? iconType, bool useLargeIcon = true)
     {
         if (iconType == null) return null;
 

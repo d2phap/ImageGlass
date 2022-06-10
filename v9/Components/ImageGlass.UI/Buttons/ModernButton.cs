@@ -77,7 +77,7 @@ public class ModernButton : Button
         {
             _systemIcon = value;
 
-            Image = SystemIconApi.GetSystemIcon(_systemIcon);
+            Image = SystemIconApi.GetSystemIcon(_systemIcon, false);
             Invalidate();
         }
     }

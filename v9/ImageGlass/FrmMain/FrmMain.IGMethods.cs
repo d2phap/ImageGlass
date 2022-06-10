@@ -872,6 +872,7 @@ public partial class FrmMain
             Title = Config.Language[$"{Name}.{nameof(MnuRename)}"],
             Value = newName,
             Thumbnail = Gallery.Items[Local.CurrentIndex].ThumbnailImage,
+            ThumbnailOverlay = SystemIconApi.GetSystemIcon(SHSTOCKICONID.SIID_RENAME),
 
             FileNameValueOnly = true,
             TopMost = TopMost,
@@ -939,7 +940,7 @@ public partial class FrmMain
 
             var overlayIcon = SystemIconApi.GetSystemIcon(moveToRecycleBin
                 ? SHSTOCKICONID.SIID_RECYCLER
-                : SHSTOCKICONID.SIID_DELETE, true);
+                : SHSTOCKICONID.SIID_DELETE);
 
             var frm = new Popup(Config.Theme, Config.Language)
             {
@@ -949,7 +950,6 @@ public partial class FrmMain
                 Thumbnail = Gallery.Items[Local.CurrentIndex].ThumbnailImage,
                 ThumbnailOverlay = overlayIcon,
 
-                ShowCTAShieldIcon = true,
                 AcceptButtonText = Config.Language["_._Yes"],
                 CancelButtonText = Config.Language["_._No"],
 
