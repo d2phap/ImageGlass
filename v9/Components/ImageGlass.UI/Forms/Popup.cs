@@ -545,6 +545,7 @@ public partial class Popup : Form
     private void CancelForm()
     {
         DialogResult = DialogResult.Cancel;
+        Close();
     }
 
 
@@ -645,6 +646,37 @@ public partial class Popup : Form
     private void BtnCancel_Click(object sender, EventArgs e)
     {
         CancelForm();
+    }
+
+
+    /// <summary>
+    /// Shows dialog
+    /// </summary>
+    /// <param name="theme"></param>
+    /// <param name="lang"></param>
+    /// <param name="title"></param>
+    /// <param name="heading"></param>
+    /// <param name="description"></param>
+    /// <param name="icon"></param>
+    /// <returns></returns>
+    public static DialogResult ShowDialog(IgTheme theme, IgLang lang,
+        string title = "", string heading = "", string description = "",
+        SHSTOCKICONID? icon = null)
+    {
+        var frm = new Popup(theme, lang)
+        {
+            Title = title,
+            Heading = heading,
+            Description = description,
+
+            Thumbnail = SystemIconApi.GetSystemIcon(icon),
+            ShowTextInput = false,
+
+            CancelButtonText = "Close",
+            ShowInTaskbar = true,
+        };
+
+        return frm.ShowDialog();
     }
 
 }
