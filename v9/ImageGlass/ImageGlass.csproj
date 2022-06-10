@@ -46,6 +46,7 @@
     <ProjectReference Include="..\Components\ImageGlass.PhotoBox\ImageGlass.PhotoBox.csproj" />
     <ProjectReference Include="..\Components\ImageGlass.Settings\ImageGlass.Settings.csproj" />
     <ProjectReference Include="..\Components\ImageGlass.UI\ImageGlass.UI.csproj" />
+    <ProjectReference Include="..\Utilities\igcmd\igcmd.csproj" />
   </ItemGroup>
 
   <ItemGroup>
