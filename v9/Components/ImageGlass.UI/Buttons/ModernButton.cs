@@ -48,7 +48,7 @@ public class ModernButton : Button
     private readonly int _padding = DEFAULT_PADDING / 2;
     private int _imagePadding = 2; // Consts.Padding / 2
 
-    private bool _showShieldIcon = false;
+    private SHSTOCKICONID? _systemIcon = null;
 
     #endregion
 
@@ -70,24 +70,14 @@ public class ModernButton : Button
 
 
     [DefaultValue(false)]
-    public bool ShowShieldIcon
+    public SHSTOCKICONID? SystemIcon
     {
-        get => _showShieldIcon;
+        get => _systemIcon;
         set
         {
-            _showShieldIcon = value;
+            _systemIcon = value;
 
-            if (!_showShieldIcon)
-            {
-                Image = null;
-            }
-            else
-            {
-                var icon = ImageApi.LoadSystemIcon(SystemIconType.Shield, SystemInformation.SmallIconSize);
-
-                Image = icon?.ToBitmap();
-            }
-            
+            Image = SystemIconApi.GetSystemIcon(_systemIcon);
             Invalidate();
         }
     }
