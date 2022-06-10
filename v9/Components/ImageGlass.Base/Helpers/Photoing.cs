@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageMagick;
 using System.Text.RegularExpressions;
 
 namespace ImageGlass.Base;
@@ -87,6 +88,88 @@ public partial class Helpers
         }
 
         return (mimeType, rawData);
+    }
+
+
+    /// <summary>
+    /// Get built-in color profiles
+    /// </summary>
+    /// <returns></returns>
+    public static string[] GetBuiltInColorProfiles()
+    {
+        return new string[]
+        {
+            "AdobeRGB1998",
+            "AppleRGB",
+            "CoatedFOGRA39",
+            "ColorMatchRGB",
+            "sRGB",
+            "USWebCoatedSWOP",
+        };
+    }
+
+    /// <summary>
+    /// Get the correct color profile name
+    /// </summary>
+    /// <param name="name">Name or Full path of color profile</param>
+    /// <returns></returns>
+    public static string GetCorrectColorProfileName(string name)
+    {
+        var profileName = "";
+
+        if (File.Exists(name))
+        {
+            return name;
+        }
+        else
+        {
+            var builtInProfiles = GetBuiltInColorProfiles();
+            var result = Array.Find(builtInProfiles, i => string.Equals(i, name, StringComparison.InvariantCultureIgnoreCase));
+
+            if (result != null)
+            {
+                profileName = result;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        return profileName;
+    }
+
+    /// <summary>
+    /// Get ColorProfile
+    /// </summary>
+    /// <param name="name">Name or Full path of color profile</param>
+    /// <returns></returns>
+    public static ColorProfile? GetColorProfile(string name)
+    {
+        if (File.Exists(name))
+        {
+            return new ColorProfile(name);
+        }
+        else
+        {
+            // get all profile names in Magick.NET
+            var profiles = typeof(ColorProfile).GetProperties();
+            var result = Array.Find(profiles, i => string.Equals(i.Name, name, StringComparison.InvariantCultureIgnoreCase));
+
+            if (result != null)
+            {
+                try
+                {
+                    return (ColorProfile?)result.GetValue(result);
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+        }
+
+        return null;
     }
 }
 

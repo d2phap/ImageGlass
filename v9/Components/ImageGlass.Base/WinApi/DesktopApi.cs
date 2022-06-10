@@ -91,7 +91,7 @@ public class DesktopApi
 
     private static string SaveTempFile(string path)
     {
-        return "":
+        return "";
     }
 
 

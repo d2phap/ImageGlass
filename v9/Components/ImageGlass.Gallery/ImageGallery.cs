@@ -24,7 +24,6 @@ License: Apache License Version 2.0, http://www.apache.org/licenses/
 */
 
 using ImageGlass.Base;
-using ImageGlass.Base.Photoing.Codecs;
 using System.ComponentModel;
 
 namespace ImageGlass.Gallery;
@@ -39,8 +38,6 @@ namespace ImageGlass.Gallery;
 public partial class ImageGallery : Control, IComponent
 {
     #region Member Variables
-    // image codec
-    private IIgCodec? _codec = null;
 
     // Set when properties change
     private bool mDefaultImageChanged = false;
@@ -103,22 +100,6 @@ public partial class ImageGallery : Control, IComponent
 
 
     #region Properties
-
-    /// <summary>
-    /// Gets, sets code for caching images.
-    /// </summary>
-    public IIgCodec? Codec
-    {
-        get => _codec;
-        set
-        {
-            if (value is not null)
-            {
-                _codec = value;
-                Extractor.Initialize(_codec);
-            }
-        }
-    }
 
     /// <summary>
     /// Gets or sets whether thumbnail images are automatically rotated.

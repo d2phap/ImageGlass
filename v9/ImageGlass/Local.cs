@@ -135,7 +135,7 @@ internal class Local
     /// <summary>
     /// Gets, sets images list
     /// </summary>
-    public static ImageBooster Images { get; set; } = new(Config.Codec);
+    public static ImageBooster Images { get; set; } = new();
 
     /// <summary>
     /// Gets, sets index of the viewing image
@@ -195,7 +195,7 @@ internal class Local
         List<string>? distinctDirsList = null)
     {
         Images.Dispose();
-        Images = new(Config.Codec, list)
+        Images = new(list)
         {
             MaxQueue = Config.ImageBoosterCachedCount,
             ImageChannel = ImageChannel,

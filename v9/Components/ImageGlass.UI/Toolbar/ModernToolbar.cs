@@ -511,7 +511,7 @@ public class ModernToolbar : ToolStrip
             IconHeight = iconHeight.Value;
         }
 
-        if (Theme is null || Theme.Codec is null) return;
+        if (Theme is null) return;
 
         Renderer = new ModernToolbarRenderer(this);
 

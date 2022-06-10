@@ -16,35 +16,27 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
-using ImageGlass.Base;
-using ImageGlass.Base.Photoing.Codecs;
+using ImageMagick;
 using ImageMagick.Formats;
 using System.Drawing.Imaging;
 
-namespace ImageMagick.IgCodec;
+namespace ImageGlass.Base.Photoing.Codecs;
 
-public class Main : IIgCodec
+
+/// <summary>
+/// Handles reading and writing image file formats.
+/// </summary>
+public static class PhotoCodec
 {
-
-    #region Public propterties
-    public string DisplayName => "Magick.NET codec";
-    public string Description => "Use ImageMagick.NET to decode file formats";
-    public string Author => "Duong Dieu Phap";
-    public string Contact => "phap@imageglass.org";
-    public Version Version => new(1, 0, 0, 0);
-    public Version ApiVersion => new(0, 5);
-
-    #endregion
-
 
     #region Public functions
 
-    public void Dispose() { }
-
-
-    // load basic info from image
-    public IgMetadata? LoadMetadata(string filename, CodecReadOptions? options = null)
+    /// <summary>
+    /// Loads metadata from file.
+    /// </summary>
+    /// <param name="filename">Full path of the file</param>
+    /// <returns></returns>
+    public static IgMetadata? LoadMetadata(string filename, CodecReadOptions? options = null)
     {
         IgMetadata? meta = null;
 
@@ -52,10 +44,10 @@ public class Main : IIgCodec
         {
             var settings = ParseSettings(options, filename);
             using var imgC = new MagickImageCollection();
-            
+
             if (filename.Length > 260)
             {
-                var newFilename = ImageGlass.Base.Helpers.PrefixLongPath(filename);
+                var newFilename = Helpers.PrefixLongPath(filename);
                 var allBytes = File.ReadAllBytes(newFilename);
 
                 imgC.Ping(allBytes, settings);
@@ -82,11 +74,11 @@ public class Main : IIgCodec
 
                     // ExifDateTimeOriginal
                     var dt = GetExifValue(exifProfile, ExifTag.DateTimeOriginal);
-                    meta.ExifDateTimeOriginal = ImageGlass.Base.Helpers.ConvertDateTime(dt);
+                    meta.ExifDateTimeOriginal = Helpers.ConvertDateTime(dt);
 
                     // ExifDateTime
                     dt = GetExifValue(exifProfile, ExifTag.DateTime);
-                    meta.ExifDateTime = ImageGlass.Base.Helpers.ConvertDateTime(dt);
+                    meta.ExifDateTime = Helpers.ConvertDateTime(dt);
                 }
 
                 meta.Width = imgM.Width;
@@ -99,8 +91,13 @@ public class Main : IIgCodec
     }
 
 
-    // load image sync
-    public IgImgData Load(string filename, CodecReadOptions? options = null)
+    /// <summary>
+    /// Loads image file.
+    /// </summary>
+    /// <param name="filename">Full path of the file</param>
+    /// <param name="options">Loading options</param>
+    /// <returns></returns>
+    public static IgImgData Load(string filename, CodecReadOptions? options = null)
     {
         options ??= new();
 
@@ -115,8 +112,13 @@ public class Main : IIgCodec
     }
 
 
-    // load image async
-    public async Task<IgImgData> LoadAsync(string filename,
+    /// <summary>
+    /// Loads image file async.
+    /// </summary>
+    /// <param name="filename">Full path of the file</param>
+    /// <param name="options">Loading options</param>
+    /// <param name="token">Cancellation token</param>
+    public static async Task<IgImgData> LoadAsync(string filename,
         CodecReadOptions? options = null,
         CancellationToken? token = null)
     {
@@ -140,8 +142,14 @@ public class Main : IIgCodec
     }
 
 
-    // get thumbnail
-    public Bitmap? GetThumbnail(string filename, int width, int height)
+    /// <summary>
+    /// Gets thumbnail from image.
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <returns></returns>
+    public static Bitmap? GetThumbnail(string filename, int width, int height)
     {
         var data = Load(filename, new()
         {
@@ -159,8 +167,12 @@ public class Main : IIgCodec
     }
 
 
-    // get thumbnail as base64 string
-    public string GetThumbnailBase64(string filename, int width, int height)
+    /// <summary>
+    /// Gets base64 thumbnail from image
+    /// </summary>
+    /// <param name="bytes"></param>
+    /// <returns></returns>
+    public static string GetThumbnailBase64(string filename, int width, int height)
     {
         var thumbnail = GetThumbnail(filename, width, height);
 
@@ -174,12 +186,12 @@ public class Main : IIgCodec
 
         return string.Empty;
     }
+    
 
     #endregion
 
 
     #region Private functions
-
 
     /// <summary>
     /// Read image file using stream 
@@ -187,7 +199,7 @@ public class Main : IIgCodec
     /// <param name="filename"></param>
     /// <param name="options"></param>
     /// <returns></returns>
-    private (bool loadSuccessful, IgImgData result, string ext, MagickReadSettings settings) ReadWithStream(string filename, CodecReadOptions? options = null)
+    private static (bool loadSuccessful, IgImgData result, string ext, MagickReadSettings settings) ReadWithStream(string filename, CodecReadOptions? options = null)
     {
         options ??= new();
         var loadSuccessful = true;
@@ -279,7 +291,7 @@ public class Main : IIgCodec
         // but that requires using the "long path name" prefix to succeed.
         if (filename.Length > 260)
         {
-            var newFilename = ImageGlass.Base.Helpers.PrefixLongPath(filename);
+            var newFilename = Helpers.PrefixLongPath(filename);
             var allBytes = File.ReadAllBytes(newFilename);
 
             imgColl.Ping(allBytes, settings);
@@ -357,7 +369,7 @@ public class Main : IIgCodec
 
         // process image
         ProcessMagickImage(imgM, options, ext, ref result);
-        
+
 
         // apply color channel
         ApplyColorChannel(imgM, options, ref result);
@@ -388,7 +400,7 @@ public class Main : IIgCodec
         // but that requires using the "long path name" prefix to succeed.
         if (filename.Length > 260)
         {
-            var newFilename = ImageGlass.Base.Helpers.PrefixLongPath(filename);
+            var newFilename = Helpers.PrefixLongPath(filename);
             var allBytes = File.ReadAllBytes(newFilename);
 
             imgColl.Ping(allBytes, settings);
@@ -532,7 +544,7 @@ public class Main : IIgCodec
             // or only apply color profile if there is an embedded profile
             if (options.ApplyColorProfileForAll || result.ColorProfile != null)
             {
-                var imgColor = Utils.GetColorProfile(options.ColorProfileName);
+                var imgColor = Helpers.GetColorProfile(options.ColorProfileName);
 
                 if (imgColor != null)
                 {
@@ -558,8 +570,8 @@ public class Main : IIgCodec
             if (imgM.BaseWidth > options.Width || imgM.BaseHeight > options.Height)
             {
                 imgM.Thumbnail(options.Width, options.Height);
-            } 
-        } 
+            }
+        }
     }
 
 
@@ -632,7 +644,7 @@ public class Main : IIgCodec
         {
             if (int.TryParse(exifRotationTag.Value.ToString(), out var orientationFlag))
             {
-                var orientationDegree = ImageGlass.Base.Helpers.GetOrientationDegree(orientationFlag);
+                var orientationDegree = Helpers.GetOrientationDegree(orientationFlag);
                 if (orientationDegree != 0)
                 {
                     // Rotate image accordingly
@@ -666,7 +678,7 @@ public class Main : IIgCodec
     /// <returns></returns>
     private static Bitmap? ConvertBase64ToBitmap(string content)
     {
-        var (mimeType, rawData) = ImageGlass.Base.Helpers.ConvertBase64ToBytes(content);
+        var (mimeType, rawData) = Helpers.ConvertBase64ToBytes(content);
         if (string.IsNullOrEmpty(mimeType)) return null;
 
         // supported MIME types:
@@ -758,7 +770,7 @@ public class Main : IIgCodec
     /// <param name="options"></param>
     /// <param name="filename"></param>
     /// <returns></returns>
-    private MagickReadSettings ParseSettings(CodecReadOptions? options, string filename = "")
+    private static MagickReadSettings ParseSettings(CodecReadOptions? options, string filename = "")
     {
         options ??= new();
 

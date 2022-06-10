@@ -144,7 +144,6 @@ public partial class FrmMain
 
 
         // Thumbnail bar
-        Gallery.Codec = Config.Codec;
         Gallery.DoNotDeletePersistentCache = true;
         Gallery.PersistentCacheSize = 100;
         Gallery.PersistentCacheDirectory = App.ConfigDir(PathType.Dir, Dir.ThumbnailsCache);

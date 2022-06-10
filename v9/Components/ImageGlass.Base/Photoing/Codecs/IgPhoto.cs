@@ -1,4 +1,23 @@
-﻿namespace ImageGlass.Base.Photoing.Codecs;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+namespace ImageGlass.Base.Photoing.Codecs;
 
 /// <summary>
 /// Initialize <see cref="IgPhoto"/> instance
@@ -103,13 +122,10 @@ public class IgPhoto : IDisposable
     /// <summary>
     /// Load the photo.
     /// </summary>
-    /// <param name="codec"></param>
     /// <param name="options"></param>
     /// <returns></returns>
     /// <exception cref="NullReferenceException"></exception>
-    private async Task LoadImageAsync(
-        IIgCodec? codec,
-        CodecReadOptions? options = null)
+    private async Task LoadImageAsync(CodecReadOptions? options = null)
     {
         // reset dispose status
         IsDisposed = false;
@@ -124,11 +140,8 @@ public class IgPhoto : IDisposable
 
         try
         {
-            if (codec == null)
-                throw new NullReferenceException(nameof(codec));
-
             // load image data
-            Metadata ??= options.Metadata ?? codec.LoadMetadata(Filename, options);
+            Metadata ??= options.Metadata ?? PhotoCodec.LoadMetadata(Filename, options);
             FramesCount = Metadata?.FramesCount ?? 0;
 
             if (options.FirstFrameOnly == null) {
@@ -145,7 +158,7 @@ public class IgPhoto : IDisposable
             }
 
             // load image
-            ImgData = await codec.LoadAsync(Filename, options, _tokenSrc?.Token);
+            ImgData = await PhotoCodec.LoadAsync(Filename, options, _tokenSrc?.Token);
 
             // cancel if requested
             if (_tokenSrc is not null && _tokenSrc.IsCancellationRequested)
@@ -174,17 +187,15 @@ public class IgPhoto : IDisposable
     /// <summary>
     /// Read and load image into memory.
     /// </summary>
-    /// <param name="codec"></param>
     /// <param name="options"></param>
     /// <returns></returns>
     public async Task LoadAsync(
-        IIgCodec? codec,
         CodecReadOptions? options = null,
         CancellationTokenSource? tokenSrc = null)
     {
         _tokenSrc = tokenSrc ?? new();
 
-        await LoadImageAsync(codec, options);
+        await LoadImageAsync(options);
     }
 
     /// <summary>

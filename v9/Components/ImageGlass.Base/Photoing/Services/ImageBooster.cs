@@ -101,11 +101,6 @@ public class ImageBooster : IDisposable
     #region PUBLIC PROPERTIES
 
     /// <summary>
-    /// Gets, sets image codec
-    /// </summary>
-    public IIgCodec Codec { get; set; }
-
-    /// <summary>
     /// Gets, sets codec read options
     /// </summary>
     public CodecReadOptions ReadOptions { get; set; } = new();
@@ -157,10 +152,8 @@ public class ImageBooster : IDisposable
     /// Initializes <see cref="ImageBooster"/> instance.
     /// </summary>
     /// <param name="codec"></param>
-    public ImageBooster(IIgCodec codec, IEnumerable<string>? list = null)
+    public ImageBooster(IEnumerable<string>? list = null)
     {
-        Codec = codec;
-
         if (list != null)
         {
             Add(list);
@@ -192,7 +185,7 @@ public class ImageBooster : IDisposable
                 if (!img.IsDone)
                 {
                     // start loading image file
-                    await img.LoadAsync(Codec, ReadOptions with
+                    await img.LoadAsync(ReadOptions with
                     {
                         FirstFrameOnly = SinglePageFormats.Contains(img.Extension),
                     }).ConfigureAwait(false);
@@ -303,7 +296,7 @@ public class ImageBooster : IDisposable
         {
             if (ImgList[index].Metadata is null)
             {
-                ImgList[index].Metadata = Codec.LoadMetadata(
+                ImgList[index].Metadata = PhotoCodec.LoadMetadata(
                     ImgList[index].Filename, ReadOptions);
             }
 
@@ -331,7 +324,7 @@ public class ImageBooster : IDisposable
         // reload fresh new image data
         if (!useCache)
         {
-            await ImgList[index].LoadAsync(Codec, ReadOptions with
+            await ImgList[index].LoadAsync(ReadOptions with
             {
                 FirstFrameOnly = SinglePageFormats.Contains(ImgList[index].Extension),
             }, tokenSrc).ConfigureAwait(false);

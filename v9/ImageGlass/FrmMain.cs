@@ -919,7 +919,7 @@ public partial class FrmMain : Form
             photo = new IgPhoto(filename);
             directReadSettings.FirstFrameOnly = Config.SinglePageFormats.Contains(photo.Extension);
 
-            Local.Metadata = Config.Codec.LoadMetadata(filename, directReadSettings);
+            Local.Metadata = PhotoCodec.LoadMetadata(filename, directReadSettings);
         }
         else
         {
@@ -962,7 +962,7 @@ public partial class FrmMain : Form
                 // directly load the image file, skip image list
                 if (photo != null)
                 {
-                    await photo.LoadAsync(Config.Codec, directReadSettings, token);
+                    await photo.LoadAsync(directReadSettings, token);
                 }
                 else
                 {

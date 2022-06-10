@@ -38,16 +38,13 @@ public partial class GDIExtractor : IExtractor
     private const int TagThumbnailData = 0x501B;
     private const int TagOrientation = 0x0112;
 
-    private IIgCodec _codec;
-
 
     #region Constructor
     /// <summary>
     /// Initializes a new instance of the GDIExtractor class.
     /// </summary>
-    public GDIExtractor(IIgCodec codec)
+    public GDIExtractor()
     {
-        _codec = codec;
     }
 
     #endregion
@@ -147,7 +144,7 @@ public partial class GDIExtractor : IExtractor
             throw new ArgumentException("Thumbnail size cannot be empty.", nameof(size));
 
 
-        return _codec.GetThumbnail(filename, size.Width, size.Height);
+        return PhotoCodec.GetThumbnail(filename, size.Width, size.Height);
     }
 
     /// <summary>

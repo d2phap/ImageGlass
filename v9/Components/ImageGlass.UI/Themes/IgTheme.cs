@@ -84,11 +84,6 @@ public class IgTheme
     public IgThemeJsonModel? JsonModel { get; internal set; }
 
     /// <summary>
-    /// Gets, sets codec to load theme icons
-    /// </summary>
-    public IIgCodec? Codec { get; set; }
-
-    /// <summary>
     /// Checks if this theme is valid
     /// </summary>
     public bool IsValid { get; internal set; } = false;
@@ -118,11 +113,9 @@ public class IgTheme
     /// <param name="themeFolderPath"></param>
     public IgTheme(
         string themeFolderPath = "",
-        int iconHeight = Constants.TOOLBAR_ICON_HEIGHT,
-        IIgCodec? codec = null)
+        int iconHeight = Constants.TOOLBAR_ICON_HEIGHT)
     {
         ToolbarActualIconHeight = iconHeight;
-        Codec = codec;
 
         // read theme config
         _ = ReadTheme(themeFolderPath);
@@ -214,9 +207,9 @@ public class IgTheme
                 }
 
                 // property is Bitmap
-                if (prop?.PropertyType == typeof(Bitmap) && Codec is not null)
+                if (prop?.PropertyType == typeof(Bitmap))
                 {
-                    var data = Codec.Load(Path.Combine(FolderPath, value), new()
+                    var data = PhotoCodec.Load(Path.Combine(FolderPath, value), new()
                     {
                         Width = ToolbarActualIconHeight * 2,
                         Height = ToolbarActualIconHeight * 2,
@@ -242,26 +235,23 @@ public class IgTheme
 
 
         #region import toolbar icons
-        if (Codec is not null)
+        foreach (var item in JsonModel.ToolbarIcons)
         {
-            foreach (var item in JsonModel.ToolbarIcons)
+            var value = (item.Value ?? "")?.ToString()?.Trim();
+            if (string.IsNullOrEmpty(value))
+                continue;
+
+            try
             {
-                var value = (item.Value ?? "")?.ToString()?.Trim();
-                if (string.IsNullOrEmpty(value))
-                    continue;
-
-                try
+                var data = PhotoCodec.Load(Path.Combine(FolderPath, value), new()
                 {
-                    var data = Codec.Load(Path.Combine(FolderPath, value), new()
-                    {
-                        Width = ToolbarActualIconHeight,
-                        Height = ToolbarActualIconHeight,
-                    });
+                    Width = ToolbarActualIconHeight,
+                    Height = ToolbarActualIconHeight,
+                });
 
-                    ToolbarIcons.GetType().GetProperty(item.Key)?.SetValue(ToolbarIcons, data.Image);
-                }
-                catch { }
+                ToolbarIcons.GetType().GetProperty(item.Key)?.SetValue(ToolbarIcons, data.Image);
             }
+            catch { }
         }
         #endregion
     }

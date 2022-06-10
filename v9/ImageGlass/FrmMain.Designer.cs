@@ -1115,7 +1115,6 @@ namespace ImageGlass
             // 
             this.Gallery.CheckBoxAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.Gallery.CheckBoxPadding = new System.Drawing.Size(6, 6);
-            this.Gallery.Codec = null;
             this.Gallery.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Gallery.EnableKeyNavigation = true;
             this.Gallery.Location = new System.Drawing.Point(0, 0);

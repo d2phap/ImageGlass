@@ -27,12 +27,7 @@ namespace ImageGlass.Gallery;
 /// </summary>
 internal static class Extractor
 {
-    private static IExtractor? _extractor = null;
-
-    public static void Initialize(IIgCodec codec)
-    {
-        _extractor = new GDIExtractor(codec);
-    }
+    private static IExtractor _extractor = new GDIExtractor();
 
     public static IExtractor Current
     {
