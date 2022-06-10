@@ -41,6 +41,9 @@
 
     <ItemGroup>
       <PackageReference Include="Magick.NET-Q16-OpenMP-x64" Version="11.1.2" />
+      <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.1-beta">
+        <PrivateAssets>all</PrivateAssets>
+      </PackageReference>
     </ItemGroup>
 
 </Project>
