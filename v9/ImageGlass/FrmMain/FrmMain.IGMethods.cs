@@ -953,7 +953,7 @@ public partial class FrmMain
         var filePath = Local.Images.GetFileName(Local.CurrentIndex);
         if (!File.Exists(filePath)) return;
 
-        var args = string.Format($"{Commands.SET_WALLPAPER} \"{0}\" {1}", filePath, (int)WallpaperStyle.Current);
+        var args = string.Format($"{Commands.SET_WALLPAPER} \"{filePath}\" {(int)WallpaperStyle.Current}");
 
         var result = await Helpers.RunIgcmd(args);
         var langPath = $"{Name}.{nameof(MnuSetDesktopBackground)}";

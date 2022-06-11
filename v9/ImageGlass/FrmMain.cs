@@ -1652,16 +1652,16 @@ public partial class FrmMain : Form
         }
 
 
-        //if (!imageNotFound && !Local.IsImageError || Local.IsTempMemoryData)
-        //{
-        //    MnuContext.Items.Add(MenuUtils.Clone(MnuSetDesktopBackground));
+        if (!imageNotFound && !Local.IsImageError || Local.IsTempMemoryData)
+        {
+            MnuContext.Items.Add(MenuUtils.Clone(MnuSetDesktopBackground));
 
-        //    // check if igcmdWin10.exe exists!
-        //    if (Helpers.IsOS(WindowsOS.Win10OrLater) && File.Exists(App.StartUpDir("igcmdWin10.exe")))
-        //    {
-        //        MnuContext.Items.Add(MenuUtils.Clone(MnuSetLockScreen));
-        //    }
-        //}
+            // check if igcmd10.exe exists!
+            if (Helpers.IsOS(WindowsOS.Win10OrLater) && File.Exists(App.StartUpDir("igcmd10.exe")))
+            {
+                MnuContext.Items.Add(MenuUtils.Clone(MnuSetLockScreen));
+            }
+        }
 
         // Menu group: CLIPBOARD
         #region Menu group: CLIPBOARD

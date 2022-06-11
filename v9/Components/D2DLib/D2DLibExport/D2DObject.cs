@@ -40,7 +40,7 @@ namespace unvell.D2DLib
   public class D2DObject : IDisposable
   {
     protected HANDLE handle;
-    internal HANDLE Handle { get { return this.handle; } }
+    public HANDLE Handle { get { return handle; } }
 
     internal D2DObject(HANDLE handle)
     {
