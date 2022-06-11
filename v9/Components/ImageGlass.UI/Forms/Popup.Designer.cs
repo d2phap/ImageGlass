@@ -64,8 +64,8 @@
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableMain.Size = new System.Drawing.Size(578, 898);
-            this.tableMain.TabIndex = 0;
+            this.tableMain.Size = new System.Drawing.Size(598, 898);
+            this.tableMain.TabIndex = 1;
             // 
             // lblHeading
             // 
@@ -86,9 +86,11 @@
             this.txtValue.ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtValue.Location = new System.Drawing.Point(140, 167);
             this.txtValue.Margin = new System.Windows.Forms.Padding(20, 0, 20, 20);
+            this.txtValue.MaximumSize = new System.Drawing.Size(0, 200);
             this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(418, 30);
-            this.txtValue.TabIndex = 1;
+            this.txtValue.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtValue.Size = new System.Drawing.Size(438, 30);
+            this.txtValue.TabIndex = 3;
             this.txtValue.TextChanged += new System.EventHandler(this.TxtValue_TextChanged);
             // 
             // lblTitle
@@ -101,7 +103,7 @@
             this.lblTitle.Margin = new System.Windows.Forms.Padding(0, 0, 0, 30);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Padding = new System.Windows.Forms.Padding(15, 10, 0, 10);
-            this.lblTitle.Size = new System.Drawing.Size(578, 43);
+            this.lblTitle.Size = new System.Drawing.Size(598, 43);
             this.lblTitle.TabIndex = 2;
             this.lblTitle.Text = "[Title]";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -134,11 +136,11 @@
             this.panBottom.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panBottom.Controls.Add(this.tableBottom);
             this.panBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panBottom.Location = new System.Drawing.Point(1, 223);
+            this.panBottom.Location = new System.Drawing.Point(1, 218);
             this.panBottom.Name = "panBottom";
             this.panBottom.Padding = new System.Windows.Forms.Padding(20);
-            this.panBottom.Size = new System.Drawing.Size(578, 81);
-            this.panBottom.TabIndex = 1;
+            this.panBottom.Size = new System.Drawing.Size(598, 81);
+            this.panBottom.TabIndex = 0;
             // 
             // tableBottom
             // 
@@ -154,7 +156,7 @@
             this.tableBottom.Name = "tableBottom";
             this.tableBottom.RowCount = 1;
             this.tableBottom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableBottom.Size = new System.Drawing.Size(538, 41);
+            this.tableBottom.Size = new System.Drawing.Size(558, 41);
             this.tableBottom.TabIndex = 0;
             // 
             // BtnAccept
@@ -162,7 +164,7 @@
             this.BtnAccept.AutoSize = true;
             this.BtnAccept.DarkMode = false;
             this.BtnAccept.ImagePadding = 2;
-            this.BtnAccept.Location = new System.Drawing.Point(275, 0);
+            this.BtnAccept.Location = new System.Drawing.Point(295, 0);
             this.BtnAccept.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.BtnAccept.MinimumSize = new System.Drawing.Size(120, 0);
             this.BtnAccept.Name = "BtnAccept";
@@ -179,7 +181,7 @@
             this.BtnCancel.AutoSize = true;
             this.BtnCancel.DarkMode = false;
             this.BtnCancel.ImagePadding = 2;
-            this.BtnCancel.Location = new System.Drawing.Point(415, 0);
+            this.BtnCancel.Location = new System.Drawing.Point(435, 0);
             this.BtnCancel.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.BtnCancel.MinimumSize = new System.Drawing.Size(120, 0);
             this.BtnCancel.Name = "BtnCancel";
@@ -197,19 +199,18 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(580, 305);
+            this.ClientSize = new System.Drawing.Size(600, 300);
             this.Controls.Add(this.panBottom);
             this.Controls.Add(this.tableMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(580, 240);
+            this.MinimumSize = new System.Drawing.Size(500, 240);
             this.Name = "Popup";
             this.Padding = new System.Windows.Forms.Padding(1);
             this.ShowIcon = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "InputBox";
-            this.Load += new System.EventHandler(this.InputForm_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputForm_KeyDown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Popup_KeyDown);
             this.tableMain.ResumeLayout(false);
             this.tableMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picThumbnail)).EndInit();

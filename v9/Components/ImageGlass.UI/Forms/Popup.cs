@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
+using System.ComponentModel;
 using System.Globalization;
 using System.Media;
 using System.Text.RegularExpressions;
@@ -142,9 +143,10 @@ public partial class Popup : Form
 
         foreach (Control control in Controls)
         {
-            if (control is Label ||
-                control is TableLayoutPanel ||
-                control.HasChildren)
+            if (control is Label
+                || control is PictureBox
+                || control is TableLayoutPanel
+                || control.HasChildren)
             {
                 control.MouseDown += InputForm_MouseDown;
                 control.MouseUp += InputForm_MouseUp;
@@ -154,7 +156,9 @@ public partial class Popup : Form
             // child controls
             foreach (Control childControl in control.Controls)
             {
-                if (childControl is Label || childControl is TableLayoutPanel)
+                if (childControl is Label
+                    || childControl is PictureBox
+                    || childControl is TableLayoutPanel)
                 {
                     childControl.MouseDown += InputForm_MouseDown;
                     childControl.MouseUp += InputForm_MouseUp;
@@ -292,6 +296,36 @@ public partial class Popup : Form
     {
         get => txtValue.Visible;
         set => txtValue.Visible = value;
+    }
+
+
+    /// <summary>
+    /// Gets, set the value indicates that text input <c>Multiline</c> is enabled.
+    /// </summary>
+    public bool TextInputMultiLine
+    {
+        get => txtValue.Multiline;
+        set => txtValue.Multiline = value;
+    }
+
+
+    /// <summary>
+    /// Gets, set the value indicates that text input <c>ReadOnly</c> is enabled.
+    /// </summary>
+    public bool TextInputReadOnly
+    {
+        get => txtValue.ReadOnly;
+        set => txtValue.ReadOnly = value;
+    }
+
+
+    /// <summary>
+    /// Gets, set the height of the text input when <c>Multiline</c> is enabled.
+    /// </summary>
+    public int TextInputMultilineHeight
+    {
+        get => txtValue.Height;
+        set => txtValue.Height = value;
     }
 
 
@@ -522,8 +556,7 @@ public partial class Popup : Form
 
     protected override void OnLoad(EventArgs e)
     {
-        base.OnLoad(e);
-
+        // show thumbnail
         var showThumbnail = Thumbnail != null || ThumbnailOverlay != null;
         var columnIndex = tableMain.GetColumn(picThumbnail);
 
@@ -539,6 +572,45 @@ public partial class Popup : Form
             tableMain.ColumnStyles[columnIndex].SizeType = SizeType.Absolute;
             tableMain.ColumnStyles[columnIndex].Width = 0;
         }
+
+
+        // calculate form height
+        var contentHeight = lblHeading.Height + lblHeading.Margin.Vertical +
+            lblDescription.Height + lblDescription.Margin.Vertical +
+            txtValue.Height + txtValue.Margin.Vertical;
+
+        var height = lblTitle.Height + lblTitle.Margin.Vertical +
+            Math.Max(picThumbnail.Height, contentHeight) +
+            panBottom.Height;
+
+        Height = height;
+
+
+
+        // set default focus
+        if (!TextInputReadOnly)
+        {
+            tableMain.TabIndex = 0;
+            panBottom.TabIndex = 1;
+            txtValue.Focus();
+            txtValue.SelectAll();
+        }
+        else
+        {
+            tableMain.TabIndex = 1;
+            panBottom.TabIndex = 0;
+
+            if (ShowAcceptButton)
+            {
+                BtnAccept.Focus();
+            }
+            else
+            {
+                BtnCancel.Focus();
+            }
+        }
+
+        base.OnLoad(e);
     }
 
 
@@ -578,24 +650,7 @@ public partial class Popup : Form
 
     #region Form and control events
 
-    private void InputForm_Load(object sender, EventArgs e)
-    {
-        var contentHeight = lblHeading.Height + lblHeading.Margin.Vertical +
-            lblDescription.Height + lblDescription.Margin.Vertical +
-            txtValue.Height + txtValue.Margin.Vertical;
-
-        var height = lblTitle.Height + lblTitle.Margin.Vertical +
-            Math.Max(picThumbnail.Height, contentHeight) +
-            panBottom.Height;
-
-        Height = height;
-
-
-        txtValue.Focus();
-        txtValue.SelectAll();
-    }
-
-    private void InputForm_KeyDown(object sender, KeyEventArgs e)
+    private void Popup_KeyDown(object sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
         {
@@ -664,6 +719,7 @@ public partial class Popup : Form
         txtValue.DarkMode =
             BtnAccept.DarkMode =
             BtnCancel.DarkMode = Theme.Info.IsDark;
+
     }
 
 
@@ -743,6 +799,7 @@ public partial class Popup : Form
     /// <param name="title">Popup title.</param>
     /// <param name="heading">Popup heading text.</param>
     /// <param name="description">Popup description.</param>
+    /// <param name="details">Other details</param>
     /// <param name="buttons">Popup buttons.</param>
     /// <param name="icon">Popup icon.</param>
     /// <returns>
@@ -761,6 +818,7 @@ public partial class Popup : Form
         string title = "",
         string heading = "",
         string description = "",
+        string details = "",
         PopupButtons buttons = PopupButtons.OK,
         SHSTOCKICONID? icon = null)
     {
@@ -774,6 +832,16 @@ public partial class Popup : Form
             ShowTextInput = false,
             ShowInTaskbar = true,
         };
+
+        if (!string.IsNullOrEmpty(details.Trim()))
+        {
+            frm.Value = details;
+            frm.TextInputMultiLine = true;
+            frm.TextInputReadOnly = true;
+            frm.ShowTextInput = true;
+
+            frm.Width += 200;
+        }
 
         if (buttons == PopupButtons.OK_Cancel)
         {
@@ -834,6 +902,7 @@ public partial class Popup : Form
     /// <param name="title">Popup title.</param>
     /// <param name="heading">Popup heading text.</param>
     /// <param name="description">Popup description.</param>
+    /// <param name="details">Other details</param>
     /// <param name="buttons">Popup buttons.</param>
     /// <returns>
     /// <list type="table">
@@ -851,11 +920,12 @@ public partial class Popup : Form
         string title = "",
         string heading = "",
         string description = "",
+        string details = "",
         PopupButtons buttons = PopupButtons.OK)
     {
         SystemSounds.Question.Play();
 
-        return ShowDialog(theme, lang, title, heading, description, buttons, SHSTOCKICONID.SIID_INFO);
+        return ShowDialog(theme, lang, title, heading, description, details, buttons, SHSTOCKICONID.SIID_INFO);
     }
 
 
@@ -867,6 +937,7 @@ public partial class Popup : Form
     /// <param name="title">Popup title.</param>
     /// <param name="heading">Popup heading text.</param>
     /// <param name="description">Popup description.</param>
+    /// <param name="details">Other details</param>
     /// <param name="buttons">Popup buttons.</param>
     /// <returns>
     /// <list type="table">
@@ -884,11 +955,12 @@ public partial class Popup : Form
         string title = "",
         string heading = "",
         string description = "",
+        string details = "",
         PopupButtons buttons = PopupButtons.OK)
     {
         SystemSounds.Exclamation.Play();
 
-        return ShowDialog(theme, lang, title, heading, description, buttons, SHSTOCKICONID.SIID_WARNING);
+        return ShowDialog(theme, lang, title, heading, description, details, buttons, SHSTOCKICONID.SIID_WARNING);
     }
 
 
@@ -900,6 +972,7 @@ public partial class Popup : Form
     /// <param name="title">Popup title.</param>
     /// <param name="heading">Popup heading text.</param>
     /// <param name="description">Popup description.</param>
+    /// <param name="details">Other details</param>
     /// <param name="buttons">Popup buttons.</param>
     /// <returns>
     /// <list type="table">
@@ -917,11 +990,12 @@ public partial class Popup : Form
         string title = "",
         string heading = "",
         string description = "",
+        string details = "",
         PopupButtons buttons = PopupButtons.OK)
     {
         SystemSounds.Asterisk.Play();
 
-        return ShowDialog(theme, lang, title, heading, description, buttons, SHSTOCKICONID.SIID_ERROR);
+        return ShowDialog(theme, lang, title, heading, description, details, buttons, SHSTOCKICONID.SIID_ERROR);
     }
 
 
