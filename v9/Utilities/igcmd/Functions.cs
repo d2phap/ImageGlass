@@ -19,11 +19,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
+using ImageGlass.Settings;
 
 namespace igcmd;
 
 public static class Functions
 {
+    /// <summary>
+    /// Set desktop wallpaper
+    /// </summary>
+    /// <param name="bmpPath">Full path of BMP file</param>
+    /// <param name="styleStr">Wallpaper style, see <see cref="WallpaperStyle"/>.</param>
+    /// <returns></returns>
     public static IgExitCode SetDesktopWallpaper(string bmpPath, string styleStr)
     {
         // Get style
@@ -40,6 +47,43 @@ public static class Functions
             {
                 return IgExitCode.Done;
             }
+        }
+
+        return IgExitCode.Error;
+    }
+
+
+    /// <summary>
+    /// Sets or unsets app extensions
+    /// </summary>
+    /// <param name="enable"></param>
+    /// <param name="ext">Extensions to proceed. Example: <c>*.png;*.jpg;</c></param>
+    /// <returns></returns>
+    public static IgExitCode SetAppExtensions(bool enable, string ext = "")
+    {
+        if (string.IsNullOrEmpty(ext))
+        {
+            var allExts = Config.AllFormats;
+
+            // Issue #664
+            allExts.Remove(".ico");
+            ext = Config.GetImageFormats(allExts);
+        }
+
+
+        var result = enable
+            ? App.RegisterAppAndExtensions(ext)
+            : App.UnregisterAppAndExtensions(ext);
+        result.Keys.Clear();
+
+        if (result.IsSuccessful)
+        {
+            return IgExitCode.Done;
+        }
+        
+        if (!App.IsAdmin)
+        {
+            return IgExitCode.AdminRequired;
         }
 
         return IgExitCode.Error;

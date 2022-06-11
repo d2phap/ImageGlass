@@ -53,8 +53,9 @@ internal static class Program
 
         var topCmd = args[0].ToLower().Trim();
 
-        // Set desktop wallpaper: setwallpaper <string imgPath> [int style]
-        if (topCmd == "setwallpaper")
+
+        #region SET_WALLPAPER <string imgPath> [int style]
+        if (topCmd == Commands.SET_WALLPAPER)
         {
             if (args.Length < 3)
             {
@@ -63,6 +64,37 @@ internal static class Program
 
             return (int)Functions.SetDesktopWallpaper(args[1], args[2]);
         }
+        #endregion
+
+
+        #region SET_DEFAULT_PHOTO_VIEWER [string ext]
+        if (topCmd == Commands.SET_DEFAULT_PHOTO_VIEWER)
+        {
+            var ext = "";
+            if (args.Length > 1)
+            {
+                ext = args[1];
+            }
+
+            return (int)Functions.SetAppExtensions(true, ext);
+        }
+        #endregion
+
+
+        #region UNSET_DEFAULT_PHOTO_VIEWER [string ext]
+        if (topCmd == Commands.UNSET_DEFAULT_PHOTO_VIEWER)
+        {
+            var ext = "";
+            if (args.Length > 1)
+            {
+                ext = args[1];
+            }
+
+            return (int)Functions.SetAppExtensions(false, ext);
+        }
+        #endregion
+
+
 
         return (int)IgExitCode.Error;
     }
