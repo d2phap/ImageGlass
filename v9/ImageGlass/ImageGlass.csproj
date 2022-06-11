@@ -25,7 +25,7 @@
     <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <DebugType>portable</DebugType>
-    <Product>$(AssemblyName) Moon</Product>
+    <Product>$(AssemblyName)</Product>
     <AssemblyVersion></AssemblyVersion>
   </PropertyGroup>
 

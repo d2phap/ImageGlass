@@ -23,10 +23,8 @@ using ImageGlass.Library.WinAPI;
 using ImageGlass.PhotoBox;
 using ImageGlass.Settings;
 using ImageGlass.UI;
-using ImageGlass.UI.BuiltInForms;
 using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Security.Permissions;
 
 namespace ImageGlass;
 

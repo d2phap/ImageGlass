@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
-using System.ComponentModel;
 using System.Globalization;
 using System.Media;
 using System.Text.RegularExpressions;
@@ -26,7 +25,7 @@ using Windows.Win32;
 using Windows.Win32.Graphics.Dwm;
 using Windows.Win32.UI.Controls;
 
-namespace ImageGlass.UI.BuiltInForms;
+namespace ImageGlass.UI;
 
 
 /// <summary>
@@ -40,6 +39,7 @@ public enum PopupButtons: uint
     OK_Cancel = 3,
     OK_Close = 4,
     LearnMore_Close = 5,
+    Continue_Quit = 6,
 }
 
 
@@ -305,7 +305,11 @@ public partial class Popup : Form
     public bool TextInputMultiLine
     {
         get => txtValue.Multiline;
-        set => txtValue.Multiline = value;
+        set
+        {
+            txtValue.Multiline = value;
+            txtValue.Font = new Font("Consolas", Font.Size);
+        }
     }
 
 
@@ -316,16 +320,6 @@ public partial class Popup : Form
     {
         get => txtValue.ReadOnly;
         set => txtValue.ReadOnly = value;
-    }
-
-
-    /// <summary>
-    /// Gets, set the height of the text input when <c>Multiline</c> is enabled.
-    /// </summary>
-    public int TextInputMultilineHeight
-    {
-        get => txtValue.Height;
-        set => txtValue.Height = value;
     }
 
 
@@ -654,7 +648,7 @@ public partial class Popup : Form
     {
         if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
         {
-            CancelForm();
+            AbortForm();
         }
     }
 
@@ -767,7 +761,7 @@ public partial class Popup : Form
 
 
     /// <summary>
-    /// Closes the form and return <see cref="DialogResult.Cancel"/> code.
+    /// Closes the form and returns <see cref="DialogResult.Cancel"/> code.
     /// </summary>
     private void CancelForm()
     {
@@ -777,7 +771,17 @@ public partial class Popup : Form
 
 
     /// <summary>
-    /// Closes the form and return <see cref="DialogResult.OK"/> code.
+    /// Closes the form and returns <see cref="DialogResult.Abort"/> code.
+    /// </summary>
+    private void AbortForm()
+    {
+        DialogResult = DialogResult.Abort;
+        Close();
+    }
+
+
+    /// <summary>
+    /// Closes the form and returns <see cref="DialogResult.OK"/> code.
     /// </summary>
     private void AcceptForm()
     {
@@ -811,6 +815,9 @@ public partial class Popup : Form
     ///   <item>
     ///     <see cref="DialogResult.Cancel"/> if user clicks on
     ///     the <c>Cancel</c>, <c>No</c> or <c>Close</c> button.
+    ///   </item>
+    ///   <item>
+    ///     <see cref="DialogResult.Abort"/> if user presses <c>ESC</c>.
     ///   </item>
     /// </list>
     /// </returns>
@@ -875,6 +882,14 @@ public partial class Popup : Form
             frm.CancelButtonText = lang["_._Close"];
             frm.ShowCancelButton = true;
         }
+        else if (buttons == PopupButtons.Continue_Quit)
+        {
+            frm.AcceptButtonText = lang["_._Continue"];
+            frm.ShowAcceptButton = true;
+
+            frm.CancelButtonText = lang["_._Quit"];
+            frm.ShowCancelButton = true;
+        }
         else if (buttons == PopupButtons.Close)
         {
             frm.ShowAcceptButton = false;
@@ -914,6 +929,9 @@ public partial class Popup : Form
     ///     <see cref="DialogResult.Cancel"/> if user clicks on
     ///     the <c>Cancel</c>, <c>No</c> or <c>Close</c> button.
     ///   </item>
+    ///   <item>
+    ///     <see cref="DialogResult.Abort"/> if user presses <c>ESC</c>.
+    ///   </item>
     /// </list>
     /// </returns>
     public static DialogResult ShowInfo(IgTheme theme, IgLang lang,
@@ -949,6 +967,9 @@ public partial class Popup : Form
     ///     <see cref="DialogResult.Cancel"/> if user clicks on
     ///     the <c>Cancel</c>, <c>No</c> or <c>Close</c> button.
     ///   </item>
+    ///   <item>
+    ///     <see cref="DialogResult.Abort"/> if user presses <c>ESC</c>.
+    ///   </item>
     /// </list>
     /// </returns>
     public static DialogResult ShowWarning(IgTheme theme, IgLang lang,
@@ -983,6 +1004,9 @@ public partial class Popup : Form
     ///   <item>
     ///     <see cref="DialogResult.Cancel"/> if user clicks on
     ///     the <c>Cancel</c>, <c>No</c> or <c>Close</c> button.
+    ///   </item>
+    ///   <item>
+    ///     <see cref="DialogResult.Abort"/> if user presses <c>ESC</c>.
     ///   </item>
     /// </list>
     /// </returns>

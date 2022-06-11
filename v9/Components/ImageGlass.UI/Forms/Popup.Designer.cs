@@ -1,4 +1,4 @@
-﻿namespace ImageGlass.UI.BuiltInForms
+﻿namespace ImageGlass.UI
 {
     partial class Popup
     {
@@ -86,7 +86,7 @@
             this.txtValue.ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtValue.Location = new System.Drawing.Point(140, 167);
             this.txtValue.Margin = new System.Windows.Forms.Padding(20, 0, 20, 20);
-            this.txtValue.MaximumSize = new System.Drawing.Size(0, 200);
+            this.txtValue.MaximumSize = new System.Drawing.Size(0, 240);
             this.txtValue.Name = "txtValue";
             this.txtValue.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtValue.Size = new System.Drawing.Size(438, 30);

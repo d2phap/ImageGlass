@@ -37,6 +37,7 @@ public static class Constants
     public const string DATETIME_FORMAT = "yyyy/MM/dd HH:mm:ss";
     public const string DATE_FORMAT = "yyyy/MM/dd";
     public const string APP_PROTOCOL = "igm";
+    public const string APP_CODE = "moon";
 
     /// <summary>
     /// First launch version constant.
