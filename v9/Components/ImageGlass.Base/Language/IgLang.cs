@@ -125,6 +125,7 @@ public class IgLang : Dictionary<string, string>
         //Add("_.AfterOpeningEditAppAction._Minimize", "Minimize"); //v8.0
         //Add("_.AfterOpeningEditAppAction._Close", "Close"); //v8.0
 
+
         #region FrmMain
 
         #region Main menu
@@ -639,6 +640,15 @@ public class IgLang : Dictionary<string, string>
         Add("FrmExifTool.btnCopyValue", "Copy value"); // v8.0
         Add("FrmExifTool.btnExport", "Export…"); // v8.0
         Add("FrmExifTool.btnClose", "Close"); // v8.0
+
+        #endregion
+
+
+
+        #region igcmd.exe
+
+        Add("igcmd._DefaultError._Heading", "Invalid commands"); //v9.0
+        Add("igcmd._DefaultError._Description", "Make sure you pass the correct commands!\r\nThis executable file contains command-line functions for ImageGlass software.\r\n\r\nTo explore all command lines, please visit:\r\n{0}"); //v9.0
 
         #endregion
 

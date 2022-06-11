@@ -104,7 +104,7 @@ public static class DesktopApi
                 key.SetValue("Wallpaper", bmpPath);
             }
 
-            SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, bmpPath, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
+            _ = SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, bmpPath, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
         }
         catch (Exception ex)
         {

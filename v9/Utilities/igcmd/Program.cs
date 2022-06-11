@@ -1,4 +1,21 @@
+/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
 
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
@@ -31,7 +48,7 @@ internal static class Program
 
         if (args.Length == 0)
         {
-            return ShowErrorPopup();
+            return ShowDefaultError();
         }
 
         var topCmd = args[0].ToLower().Trim();
@@ -41,7 +58,7 @@ internal static class Program
         {
             if (args.Length < 3)
             {
-                return ShowErrorPopup();
+                return ShowDefaultError();
             }
 
             return (int)Functions.SetDesktopWallpaper(args[1], args[2]);
@@ -55,22 +72,21 @@ internal static class Program
     /// Show error popup.
     /// </summary>
     /// <returns><see cref="IgExitCode.Error"/></returns>
-    private static int ShowErrorPopup()
+    private static int ShowDefaultError()
     {
+        var url = "https://imageglass.org/docs/command-line-utilities";
+        var langPath = $"{nameof(igcmd)}._DefaultError";
+
         var result = Popup.ShowError(Config.Theme, Config.Language,
             title: Application.ProductName + " " + Application.ProductVersion,
-            heading: "Invalid commands",
-            description: "This executable file contains command-line functions for " +
-                    "ImageGlass software. Please make sure you pass the commands correctly." +
-                    "\r\n\r\n" +
-                    "To explore all command lines, please visit: \r\n" +
-                    "https://imageglass.org/docs/command-line-utilities",
+            heading: Config.Language[$"{langPath}._Heading"],
+            description: string.Format(Config.Language[$"{langPath}._Description"], url),
             buttons: PopupButtons.LearnMore_Close);
 
 
         if (result == DialogResult.OK)
         {
-            Helpers.OpenUrl("https://imageglass.org/docs/command-line-utilities", "igcmd_invalid_command");
+            Helpers.OpenUrl(url, "igcmd_invalid_command");
         }
 
         return (int)IgExitCode.Error;
