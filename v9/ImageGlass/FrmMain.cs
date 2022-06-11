@@ -180,7 +180,8 @@ public partial class FrmMain : Form
             else
             {
                 var msg = string.Format(Config.Language[$"{Name}._ToolbarItemClick._CannotFindMenu"], tagModel.OnClick.Executable);
-                MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                Popup.ShowError(Config.Theme, Config.Language, msg);
             }
 
             return;
@@ -245,7 +246,8 @@ public partial class FrmMain : Form
             else
             {
                 var msg = string.Format(Config.Language[$"{Name}._ToolbarItemClick._CannotFindMethod"], tagModel.OnClick.Executable);
-                MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                Popup.ShowError(Config.Theme, Config.Language, msg);
             }
 
             return;

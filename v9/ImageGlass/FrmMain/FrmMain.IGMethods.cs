@@ -177,6 +177,7 @@ public partial class FrmMain
         {
             Title = Config.Language[$"{Name}.{nameof(MnuCustomZoom)}"],
             Value = oldZoom.ToString(),
+            Thumbnail = SystemIconApi.GetSystemIcon(SHSTOCKICONID.SIID_FIND),
 
             UnsignedFloatValueOnly = true,
             TopMost = TopMost,
@@ -865,10 +866,11 @@ public partial class FrmMain
         var currentFolder = Path.GetDirectoryName(oldFilePath) ?? "";
         var ext = Path.GetExtension(oldFilePath);
         var newName = Path.GetFileNameWithoutExtension(oldFilePath);
+        var title = Config.Language[$"{Name}.{nameof(MnuRename)}"];
 
         var frm = new Popup(Config.Theme, Config.Language)
         {
-            Title = Config.Language[$"{Name}.{nameof(MnuRename)}"],
+            Title = title,
             Value = newName,
             Thumbnail = Gallery.Items[Local.CurrentIndex].ThumbnailImage,
             ThumbnailOverlay = SystemIconApi.GetSystemIcon(SHSTOCKICONID.SIID_RENAME),
@@ -878,7 +880,6 @@ public partial class FrmMain
 
             Description = oldFilePath + "\r\n"
                 + Config.Language[$"{Name}.{nameof(MnuRename)}._Description"],
-            
         };
 
 
@@ -915,7 +916,7 @@ public partial class FrmMain
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Popup.ShowError(Config.Theme, Config.Language, ex.Message, title);
         }
     }
 
@@ -927,12 +928,12 @@ public partial class FrmMain
 
         var result = DialogResult.OK;
 
+        var title = moveToRecycleBin
+            ? Config.Language[$"{Name}.{nameof(MnuMoveToRecycleBin)}"]
+            : Config.Language[$"{Name}.{nameof(MnuDeleteFromHardDisk)}"];
+
         if (Config.RequireDeleteConfirmation)
         {
-            var title = moveToRecycleBin
-                ? Config.Language[$"{Name}.{nameof(MnuMoveToRecycleBin)}"]
-                : Config.Language[$"{Name}.{nameof(MnuDeleteFromHardDisk)}"];
-
             var heading = moveToRecycleBin
                 ? Config.Language[$"{Name}.{nameof(MnuMoveToRecycleBin)}._Description"]
                 : Config.Language[$"{Name}.{nameof(MnuDeleteFromHardDisk)}._Description"];
@@ -940,6 +941,9 @@ public partial class FrmMain
             var overlayIcon = SystemIconApi.GetSystemIcon(moveToRecycleBin
                 ? SHSTOCKICONID.SIID_RECYCLER
                 : SHSTOCKICONID.SIID_DELETE);
+
+            var description = filePath + "\r\n" +
+                    Helpers.FormatSize(Gallery.Items[Local.CurrentIndex].Details.FileSize);
 
             var frm = new Popup(Config.Theme, Config.Language)
             {
@@ -953,8 +957,7 @@ public partial class FrmMain
                 CancelButtonText = Config.Language["_._No"],
 
                 Heading = heading,
-                Description = filePath + "\r\n" +
-                    Helpers.FormatSize(Gallery.Items[Local.CurrentIndex].Details.FileSize),
+                Description = description,
             };
 
             result = frm.ShowDialog();
@@ -977,7 +980,7 @@ public partial class FrmMain
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Popup.ShowError(Config.Theme, Config.Language, ex.Message, title);
             }
         }
     }
@@ -1008,11 +1011,10 @@ public partial class FrmMain
         }
         else
         {
-            Popup.ShowDialog(Config.Theme, Config.Language,
+            _ = Popup.ShowError(Config.Theme, Config.Language,
                 title: Config.Language[langPath],
                 heading: Config.Language["_._Error"],
-                description: Config.Language[$"{langPath}._Error"],
-                icon: SHSTOCKICONID.SIID_ERROR);
+                description: Config.Language[$"{langPath}._Error"]);
         }
     }
 

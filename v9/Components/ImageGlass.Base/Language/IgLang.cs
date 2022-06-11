@@ -106,10 +106,11 @@ public class IgLang : Dictionary<string, string>
         Add("_._Close", "Close"); // v9.0
         Add("_._Yes", "Yes"); // v9.0
         Add("_._No", "No"); // v9.0
-        Add("_._Error", "Error"); // v9.0
         Add("_._LearnMore", "Learn more…"); // v9.0
         Add("_._Continue", "Continue"); // v9.0
         Add("_._Quit", "Quit"); // v9.0
+        Add("_._Error", "Error"); // v9.0
+        Add("_._Warning", "Warning"); // v9.0
 
         Add("_._UnhandledException", "Unhandled exception"); // v9.0
         Add("_._UnhandledException._Description", "Unhandled exception has occurred. If you click Continue, the application will ignore this error and attempt to continue. If you click Quit, the application will close immediately."); // v9.0

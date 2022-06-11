@@ -822,9 +822,9 @@ public partial class Popup : Form
     /// </list>
     /// </returns>
     public static DialogResult ShowDialog(IgTheme theme, IgLang lang,
+        string description = "",
         string title = "",
         string heading = "",
-        string description = "",
         string details = "",
         PopupButtons buttons = PopupButtons.OK,
         SHSTOCKICONID? icon = null)
@@ -935,9 +935,9 @@ public partial class Popup : Form
     /// </list>
     /// </returns>
     public static DialogResult ShowInfo(IgTheme theme, IgLang lang,
+        string description = "",
         string title = "",
         string heading = "",
-        string description = "",
         string details = "",
         PopupButtons buttons = PopupButtons.OK)
     {
@@ -973,12 +973,14 @@ public partial class Popup : Form
     /// </list>
     /// </returns>
     public static DialogResult ShowWarning(IgTheme theme, IgLang lang,
-        string title = "",
-        string heading = "",
         string description = "",
+        string title = "",
+        string? heading = null,
         string details = "",
         PopupButtons buttons = PopupButtons.OK)
     {
+        heading ??= lang["_._Warning"];
+
         SystemSounds.Exclamation.Play();
 
         return ShowDialog(theme, lang, title, heading, description, details, buttons, SHSTOCKICONID.SIID_WARNING);
@@ -1011,12 +1013,14 @@ public partial class Popup : Form
     /// </list>
     /// </returns>
     public static DialogResult ShowError(IgTheme theme, IgLang lang,
-        string title = "",
-        string heading = "",
         string description = "",
+        string title = "",
+        string? heading = null,
         string details = "",
         PopupButtons buttons = PopupButtons.OK)
     {
+        heading ??= lang["_._Error"];
+
         SystemSounds.Asterisk.Play();
 
         return ShowDialog(theme, lang, title, heading, description, details, buttons, SHSTOCKICONID.SIID_ERROR);
