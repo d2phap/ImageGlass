@@ -765,53 +765,17 @@ public partial class FrmMain
 
     private void IG_SetDefaultPhotoViewer()
     {
-        var allExts = Config.AllFormats;
-
-        // Issue #664
-        allExts.Remove(".ico");
-        var extensions = Config.GetImageFormats(allExts);
-
-        var result = App.RegisterAppAndExtensions(extensions);
-        
-        if (result.IsSuccessful)
-        {
-            _ = TaskDialog.ShowDialog(new()
-            {
-                Caption = Application.ProductName,
-                Icon = TaskDialogIcon.Information,
-                AllowCancel = true,
-                SizeToContent = true,
-                Heading = $"You have successfully registered {Application.ProductName} " +
-                    $"as default photo viewer.\r\n\r\n" +
-                    $"Next, please open Windows Settings > Default apps, and select {Application.ProductName} under Photo viewer section.",
-            });
-        }
-        else
-        {
-            _ = TaskDialog.ShowDialog(new()
-            {
-                Caption = Application.ProductName,
-                Icon = TaskDialogIcon.Error,
-                AllowCancel = true,
-                SizeToContent = true,
-                Heading = $"{Application.ProductName} encountered an error while trying to set itself as default photo viewer.",
-
-                Text = App.IsAdministrator ? "" : $"You may run {Application.ProductName} as administrator and try again.",
-
-                Expander = new()
-                {
-                    CollapsedButtonText = "Show details",
-                    ExpandedButtonText = "Hide details",
-                    Text = "Could not create keys:\r\n" + result.Keys.ToString(),
-                },
-            });
-        }
-
-        result.Keys.Clear();
+        _ = UpdateDefaultPhotoViewerAsync(true);
     }
 
 
     private void IG_UnsetDefaultPhotoViewer()
+    {
+        _ = UpdateDefaultPhotoViewerAsync(false);
+    }
+
+
+    private async Task UpdateDefaultPhotoViewerAsync(bool enable)
     {
         var allExts = Config.AllFormats;
 
@@ -819,41 +783,33 @@ public partial class FrmMain
         allExts.Remove(".ico");
         var extensions = Config.GetImageFormats(allExts);
 
-        var result = App.UnregisterAppAndExtensions(extensions);
+        var cmd = enable
+            ? Commands.SET_DEFAULT_PHOTO_VIEWER
+            : Commands.UNSET_DEFAULT_PHOTO_VIEWER;
 
-        if (result.IsSuccessful)
+        // run command
+        var result = await Helpers.RunIgcmd($"{cmd} {extensions}");
+
+        var langPath = enable
+            ? $"{Name}.{nameof(MnuSetDefaultPhotoViewer)}"
+            : $"{Name}.{nameof(MnuUnsetDefaultPhotoViewer)}";
+
+        var description = enable
+            ? Config.Language[$"{langPath}._Success._Description"]
+            : "";
+
+        if (result == IgExitCode.Done)
         {
-            _ = TaskDialog.ShowDialog(new()
-            {
-                Caption = Application.ProductName,
-                Icon = TaskDialogIcon.Information,
-                AllowCancel = true,
-                SizeToContent = true,
-                Heading = $"{Application.ProductName} is now not your default photo viewer anymore.",
-            });
+            _ = Popup.ShowInfo(Config.Theme, Config.Language,
+                description,
+                Config.Language[langPath],
+                Config.Language[$"{langPath}._Success"]);
         }
         else
         {
-            _ = TaskDialog.ShowDialog(new()
-            {
-                Caption = Application.ProductName,
-                Icon = TaskDialogIcon.Error,
-                AllowCancel = true,
-                SizeToContent = true,
-                Heading = $"{Application.ProductName} encountered an error while trying to remove itself from the default photo viewer setting.",
-
-                Text = App.IsAdministrator ? "" : $"You may run {Application.ProductName} as administrator and try again.",
-
-                Expander = new()
-                {
-                    CollapsedButtonText = "Show details",
-                    ExpandedButtonText = "Hide details",
-                    Text = "Could not delete keys:\r\n" + result.Keys.ToString(),
-                },
-            });
+            _ = Popup.ShowError(Config.Theme, Config.Language,
+                Config.Language[$"{langPath}._Error"], Config.Language[langPath]);
         }
-
-        result.Keys.Clear();
     }
 
 
@@ -997,7 +953,7 @@ public partial class FrmMain
         var filePath = Local.Images.GetFileName(Local.CurrentIndex);
         if (!File.Exists(filePath)) return;
 
-        var args = string.Format("setwallpaper \"{0}\" {1}", filePath, (int)WallpaperStyle.Current);
+        var args = string.Format($"{Commands.SET_WALLPAPER} \"{0}\" {1}", filePath, (int)WallpaperStyle.Current);
 
         var result = await Helpers.RunIgcmd(args);
         var langPath = $"{Name}.{nameof(MnuSetDesktopBackground)}";

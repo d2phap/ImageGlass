@@ -265,8 +265,16 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuCheckForUpdate._NoUpdate", "Check for update…"); //v5.0
         Add("FrmMain.MnuCheckForUpdate._NewVersion", "A new version is available!"); //v5.0
         Add("FrmMain.MnuReportIssue", "Report an issue…"); //v3.0
+
         Add("FrmMain.MnuSetDefaultPhotoViewer", "Set as default photo viewer"); //v9.0
+        Add("FrmMain.MnuSetDefaultPhotoViewer._Success", "You have successfully registered ImageGlass as default photo viewer."); //v9.0
+        Add("FrmMain.MnuSetDefaultPhotoViewer._Success._Description", "Next, please open Windows Settings > Default apps, and select ImageGlass under the Photo viewer section."); //v9.0
+        Add("FrmMain.MnuSetDefaultPhotoViewer._Error", "Could not set ImageGlass as default photo viewer."); //v9.0
+
         Add("FrmMain.MnuUnsetDefaultPhotoViewer", "Unset default photo viewer"); //v9.0
+        Add("FrmMain.MnuUnsetDefaultPhotoViewer._Success", "ImageGlass is now not the default photo viewer anymore."); //v9.0
+        Add("FrmMain.MnuUnsetDefaultPhotoViewer._Error", "Could not remove ImageGlass from the default photo viewer setting."); //v9.0
+
         #endregion
 
         Add("FrmMain.MnuExit", "Exit"); //v7.0
@@ -486,16 +494,9 @@ public class IgLang : Dictionary<string, string>
         //Add("FrmSetting.lnkOpenFileAssoc", "Open File Type Associations"); // 4.0
 
         //Add("FrmSetting.btnAddNewExt", "Add…"); // 4.0
-        //Add("FrmSetting.btnRegisterExt", "Set as Default photo viewer…"); // 4.0, updated v5.0
-        //Add("FrmSetting.btnUnregisterExt", "Unregister extensions"); // 8.0
         //Add("FrmSetting.btnDeleteExt", "Delete"); // 4.0
         //Add("FrmSetting.btnResetExt", "Reset to default"); // 4.0
-        //Add("FrmSetting._RegisterWebToApp_Error", "Unable to register Web-to-App linking"); // 7.0
-        //Add("FrmSetting._RegisterAppExtensions_Error", "Unable to register file extensions for ImageGlass app"); // 6.0
-        //Add("FrmSetting._RegisterAppExtensions_Success", "All file extensions are registered successfully! To set ImageGlass as Default photo viewer, please open Windows Settings > Default Apps, and manually select ImageGlass app under Photo Viewer section."); // 6.0
 
-        //Add("FrmSetting._UnregisterAppExtensions_Error", "Unable to delete registered file extensions of ImageGlass app"); // 8.0
-        //Add("FrmSetting._UnregisterAppExtensions_Success", "All file extensions are unregistered successfully!"); // 8.0
         #endregion
 
         #region TAB Toolbar
