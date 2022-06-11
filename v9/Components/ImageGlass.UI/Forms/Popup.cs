@@ -19,12 +19,28 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using System.Globalization;
+using System.Media;
 using System.Text.RegularExpressions;
 using Windows.Win32;
 using Windows.Win32.Graphics.Dwm;
 using Windows.Win32.UI.Controls;
 
 namespace ImageGlass.UI.BuiltInForms;
+
+
+/// <summary>
+/// The built-in buttons for Popup.
+/// </summary>
+public enum PopupButtons: uint
+{
+    OK = 0,
+    Close = 1,
+    Yes_No = 2,
+    OK_Cancel = 3,
+    OK_Close = 4,
+    LearnMore_Close = 5,
+}
+
 
 public partial class Popup : Form
 {
@@ -189,7 +205,7 @@ public partial class Popup : Form
     #region Public properties
 
     public IgTheme Theme { get; private set; }
-    public IgLang Language { get; private set; }
+    public IgLang? Language { get; private set; }
 
 
     /// <summary>
@@ -260,7 +276,7 @@ public partial class Popup : Form
 
 
     /// <summary>
-    /// Form value
+    /// Form value.
     /// </summary>
     public string Value
     {
@@ -268,38 +284,67 @@ public partial class Popup : Form
         set => txtValue.Text = value;
     }
 
+
     /// <summary>
-    /// Hides or shows text input
+    /// Shows or hides text input.
     /// </summary>
-    public bool ShowTextInput {
+    public bool ShowTextInput
+    {
         get => txtValue.Visible;
         set => txtValue.Visible = value;
     }
 
+
     /// <summary>
-    /// Hides or shows Shield icon for the CTA button
+    /// Shows or hides the Shield icon for the <see cref="BtnAccept"/>.
     /// </summary>
-    public bool ShowCTAShieldIcon
+    public bool ShowAcceptButtonShieldIcon
     {
-        get => btnOK.SystemIcon == SHSTOCKICONID.SIID_SHIELD;
-        set => btnOK.SystemIcon = value ? SHSTOCKICONID.SIID_SHIELD : null;
+        get => BtnAccept.SystemIcon == SHSTOCKICONID.SIID_SHIELD;
+        set => BtnAccept.SystemIcon = value ? SHSTOCKICONID.SIID_SHIELD : null;
     }
 
+    /// <summary>
+    /// Gets, sets visibility value of the <see cref="BtnAccept"/>.
+    /// </summary>
+    public bool ShowAcceptButton
+    {
+        get => BtnAccept.Visible;
+        set => BtnAccept.Visible = value;
+    }
+
+    /// <summary>
+    /// Gets, sets text of the <see cref="BtnAccept"/>.
+    /// </summary>
     public string AcceptButtonText
     {
-        get => btnOK.Text;
-        set => btnOK.Text = value;
-    }
-
-    public string CancelButtonText
-    {
-        get => btnCancel.Text;
-        set => btnCancel.Text = value;
+        get => BtnAccept.Text;
+        set => BtnAccept.Text = value;
     }
 
 
     /// <summary>
-    /// Gets, sets the thumbnail overlay image
+    /// Gets, sets visibility value of the <see cref="BtnCancel"/>.
+    /// </summary>
+    public bool ShowCancelButton
+    {
+        get => BtnCancel.Visible;
+        set => BtnCancel.Visible = value;
+    }
+
+
+    /// <summary>
+    /// Gets, sets text of the <see cref="BtnCancel"/>.
+    /// </summary>
+    public string CancelButtonText
+    {
+        get => BtnCancel.Text;
+        set => BtnCancel.Text = value;
+    }
+
+
+    /// <summary>
+    /// Gets, sets the thumbnail overlay image.
     /// </summary>
     public Image? ThumbnailOverlay
     {
@@ -348,10 +393,12 @@ public partial class Popup : Form
         }
     }
 
+
     /// <summary>
     /// Pattern for validation
     /// </summary>
     public string RegexPattern { get; set; } = "";
+
 
     /// <summary>
     /// Limit the number of characters the user can enter
@@ -360,6 +407,7 @@ public partial class Popup : Form
     {
         set => txtValue.MaxLength = value;
     }
+
 
     /// <summary>
     /// Allows integer number value only
@@ -381,6 +429,7 @@ public partial class Popup : Form
         }
     }
 
+
     /// <summary>
     /// Allows unsigned integer number only
     /// </summary>
@@ -397,6 +446,7 @@ public partial class Popup : Form
             }
         }
     }
+
 
     /// <summary>
     /// Allows float number only
@@ -416,6 +466,7 @@ public partial class Popup : Form
             }
         }
     }
+
 
     /// <summary>
     /// Allows unsigned float number only
@@ -438,15 +489,17 @@ public partial class Popup : Form
         }
     }
 
+
     /// <summary>
     /// Allow valid filename only
     /// </summary>
     public bool FileNameValueOnly { get; set; } = false;
 
+
     #endregion
 
 
-    public Popup(IgTheme theme, IgLang lang)
+    public Popup(IgTheme theme, IgLang? lang)
     {
         InitializeComponent();
         RegisterFormEvents();
@@ -465,89 +518,7 @@ public partial class Popup : Form
     }
 
 
-    /// <summary>
-    /// Apply language pack
-    /// </summary>
-    public void ApplyLanguage()
-    {
-        btnOK.Text = Language["_._OK"];
-        btnCancel.Text = Language["_._Cancel"];
-    }
-
-
-    /// <summary>
-    /// Apply theme to the form
-    /// </summary>
-    public void ApplyTheme()
-    {
-        BackColor = Theme.Settings.BgColor;
-
-        // text color
-        lblTitle.ForeColor = 
-            lblHeading.ForeColor =
-            lblDescription.ForeColor = Theme.Settings.TextColor;
-
-        // header and footer
-        lblTitle.BackColor =
-            picThumbnail.BackColor =
-            panBottom.BackColor = Theme.Settings.ToolbarBgColor;
-
-        // dark mode
-        txtValue.DarkMode =
-            btnOK.DarkMode =
-            btnCancel.DarkMode = Theme.Info.IsDark;
-    }
-
-
-    /// <summary>
-    /// Validate the input and show error
-    /// </summary>
-    /// <returns></returns>
-    private bool ValidateInput()
-    {
-        var isValid = true;
-
-        if (!string.IsNullOrEmpty(RegexPattern))
-        {
-            isValid = Regex.IsMatch(txtValue.Text, RegexPattern);
-        }
-        else if (FileNameValueOnly)
-        {
-            var badChars = Path.GetInvalidFileNameChars();
-
-            foreach (var c in badChars)
-            {
-                if (txtValue.Text.Contains(c))
-                {
-                    isValid = false;
-                    break;
-                }
-            }
-        }
-
-        // invalid char
-        if (!isValid)
-        {
-            btnOK.Enabled = false;
-
-            txtValue.BackColor = Theme.DangerColor;
-        }
-        else
-        {
-            btnOK.Enabled = true;
-            txtValue.BackColor = Theme.Settings.ToolbarBgColor;
-        }
-
-        return isValid;
-    }
-
-
-    private void CancelForm()
-    {
-        DialogResult = DialogResult.Cancel;
-        Close();
-    }
-
+    #region Override functions
 
     protected override void OnLoad(EventArgs e)
     {
@@ -570,6 +541,7 @@ public partial class Popup : Form
         }
     }
 
+
     protected override void OnActivated(EventArgs e)
     {
         base.OnActivated(e);
@@ -578,6 +550,7 @@ public partial class Popup : Form
         lblTitle.BackColor = Theme.Settings.ToolbarBgColor;
     }
 
+
     protected override void OnDeactivate(EventArgs e)
     {
         base.OnDeactivate(e);
@@ -585,7 +558,7 @@ public partial class Popup : Form
 
         // title text color
         lblTitle.ForeColor = ThemeUtils.AdjustLightness(
-            Theme.Settings.TextColor, 
+            Theme.Settings.TextColor,
             Theme.Info.IsDark ? -0.5f : 0.5f);
 
         lblTitle.BackColor = ThemeUtils.AdjustLightness(
@@ -600,6 +573,10 @@ public partial class Popup : Form
         return false;
     }
 
+    #endregion
+
+
+    #region Form and control events
 
     private void InputForm_Load(object sender, EventArgs e)
     {
@@ -631,11 +608,11 @@ public partial class Popup : Form
         _ = ValidateInput();
     }
 
-    private void BtnOK_Click(object sender, EventArgs e)
+    private void BtnAccept_Click(object sender, EventArgs e)
     {
         if (ValidateInput())
         {
-            DialogResult = DialogResult.OK;
+            AcceptForm();
         }
         else
         {
@@ -648,19 +625,143 @@ public partial class Popup : Form
         CancelForm();
     }
 
+    #endregion
+
+
+    #region Private functions
 
     /// <summary>
-    /// Shows dialog
+    /// Apply language pack
     /// </summary>
-    /// <param name="theme"></param>
-    /// <param name="lang"></param>
-    /// <param name="title"></param>
-    /// <param name="heading"></param>
-    /// <param name="description"></param>
-    /// <param name="icon"></param>
+    private void ApplyLanguage()
+    {
+        if (Language != null)
+        {
+            BtnAccept.Text = Language["_._OK"];
+            BtnCancel.Text = Language["_._Cancel"];
+        }
+    }
+
+
+    /// <summary>
+    /// Apply theme to the form
+    /// </summary>
+    private void ApplyTheme()
+    {
+        BackColor = Theme.Settings.BgColor;
+
+        // text color
+        lblTitle.ForeColor =
+            lblHeading.ForeColor =
+            lblDescription.ForeColor = Theme.Settings.TextColor;
+
+        // header and footer
+        lblTitle.BackColor =
+            picThumbnail.BackColor =
+            panBottom.BackColor = Theme.Settings.ToolbarBgColor;
+
+        // dark mode
+        txtValue.DarkMode =
+            BtnAccept.DarkMode =
+            BtnCancel.DarkMode = Theme.Info.IsDark;
+    }
+
+
+    /// <summary>
+    /// Validates the input and shows error.
+    /// </summary>
     /// <returns></returns>
+    private bool ValidateInput()
+    {
+        var isValid = true;
+
+        if (!string.IsNullOrEmpty(RegexPattern))
+        {
+            isValid = Regex.IsMatch(txtValue.Text, RegexPattern);
+        }
+        else if (FileNameValueOnly)
+        {
+            var badChars = Path.GetInvalidFileNameChars();
+
+            foreach (var c in badChars)
+            {
+                if (txtValue.Text.Contains(c))
+                {
+                    isValid = false;
+                    break;
+                }
+            }
+        }
+
+        // invalid char
+        if (!isValid)
+        {
+            BtnAccept.Enabled = false;
+
+            txtValue.BackColor = Theme.DangerColor;
+        }
+        else
+        {
+            BtnAccept.Enabled = true;
+            txtValue.BackColor = Theme.Settings.ToolbarBgColor;
+        }
+
+        return isValid;
+    }
+
+
+    /// <summary>
+    /// Closes the form and return <see cref="DialogResult.Cancel"/> code.
+    /// </summary>
+    private void CancelForm()
+    {
+        DialogResult = DialogResult.Cancel;
+        Close();
+    }
+
+
+    /// <summary>
+    /// Closes the form and return <see cref="DialogResult.OK"/> code.
+    /// </summary>
+    private void AcceptForm()
+    {
+        DialogResult = DialogResult.OK;
+        Close();
+    }
+
+
+    #endregion
+
+
+    #region Static functions
+
+    /// <summary>
+    /// Shows popup widow.
+    /// </summary>
+    /// <param name="theme">Popup theme.</param>
+    /// <param name="lang">Popup language.</param>
+    /// <param name="title">Popup title.</param>
+    /// <param name="heading">Popup heading text.</param>
+    /// <param name="description">Popup description.</param>
+    /// <param name="buttons">Popup buttons.</param>
+    /// <param name="icon">Popup icon.</param>
+    /// <returns>
+    /// <list type="table">
+    ///   <item>
+    ///     <see cref="DialogResult.OK"/> if user clicks on
+    ///     the <c>OK</c>, <c>Yes</c> or <c>Learn more</c> button.
+    ///   </item>
+    ///   <item>
+    ///     <see cref="DialogResult.Cancel"/> if user clicks on
+    ///     the <c>Cancel</c>, <c>No</c> or <c>Close</c> button.
+    ///   </item>
+    /// </list>
+    /// </returns>
     public static DialogResult ShowDialog(IgTheme theme, IgLang lang,
-        string title = "", string heading = "", string description = "",
+        string title = "",
+        string heading = "",
+        string description = "",
+        PopupButtons buttons = PopupButtons.OK,
         SHSTOCKICONID? icon = null)
     {
         var frm = new Popup(theme, lang)
@@ -671,12 +772,160 @@ public partial class Popup : Form
 
             Thumbnail = SystemIconApi.GetSystemIcon(icon),
             ShowTextInput = false,
-
-            CancelButtonText = "Close",
             ShowInTaskbar = true,
         };
 
+        if (buttons == PopupButtons.OK_Cancel)
+        {
+            frm.AcceptButtonText = lang["_._OK"];
+            frm.ShowAcceptButton = true;
+
+            frm.CancelButtonText = lang["_._Cancel"];
+            frm.ShowCancelButton = true;
+        }
+        else if (buttons == PopupButtons.OK_Close)
+        {
+            frm.AcceptButtonText = lang["_._OK"];
+            frm.ShowAcceptButton = true;
+
+            frm.CancelButtonText = lang["_._Close"];
+            frm.ShowCancelButton = true;
+        }
+        else if (buttons == PopupButtons.Yes_No)
+        {
+            frm.AcceptButtonText = lang["_._Yes"];
+            frm.ShowAcceptButton = true;
+
+            frm.CancelButtonText = lang["_._No"];
+            frm.ShowCancelButton = true;
+        }
+        else if (buttons == PopupButtons.LearnMore_Close)
+        {
+            frm.AcceptButtonText = lang["_._LearnMore"];
+            frm.ShowAcceptButton = true;
+
+            frm.CancelButtonText = lang["_._Close"];
+            frm.ShowCancelButton = true;
+        }
+        else if (buttons == PopupButtons.Close)
+        {
+            frm.ShowAcceptButton = false;
+
+            frm.CancelButtonText = lang["_._Close"];
+            frm.ShowCancelButton = true;
+        }
+        else
+        {
+            frm.CancelButtonText = lang["_._OK"];
+            frm.ShowAcceptButton = false;
+
+            frm.ShowCancelButton = false;
+        }
+
         return frm.ShowDialog();
     }
+
+
+    /// <summary>
+    /// Shows information popup widow.
+    /// </summary>
+    /// <param name="theme">Popup theme.</param>
+    /// <param name="lang">Popup language.</param>
+    /// <param name="title">Popup title.</param>
+    /// <param name="heading">Popup heading text.</param>
+    /// <param name="description">Popup description.</param>
+    /// <param name="buttons">Popup buttons.</param>
+    /// <returns>
+    /// <list type="table">
+    ///   <item>
+    ///     <see cref="DialogResult.OK"/> if user clicks on
+    ///     the <c>OK</c>, <c>Yes</c> or <c>Learn more</c> button.
+    ///   </item>
+    ///   <item>
+    ///     <see cref="DialogResult.Cancel"/> if user clicks on
+    ///     the <c>Cancel</c>, <c>No</c> or <c>Close</c> button.
+    ///   </item>
+    /// </list>
+    /// </returns>
+    public static DialogResult ShowInfo(IgTheme theme, IgLang lang,
+        string title = "",
+        string heading = "",
+        string description = "",
+        PopupButtons buttons = PopupButtons.OK)
+    {
+        SystemSounds.Question.Play();
+
+        return ShowDialog(theme, lang, title, heading, description, buttons, SHSTOCKICONID.SIID_INFO);
+    }
+
+
+    /// <summary>
+    /// Shows warning popup widow.
+    /// </summary>
+    /// <param name="theme">Popup theme.</param>
+    /// <param name="lang">Popup language.</param>
+    /// <param name="title">Popup title.</param>
+    /// <param name="heading">Popup heading text.</param>
+    /// <param name="description">Popup description.</param>
+    /// <param name="buttons">Popup buttons.</param>
+    /// <returns>
+    /// <list type="table">
+    ///   <item>
+    ///     <see cref="DialogResult.OK"/> if user clicks on
+    ///     the <c>OK</c>, <c>Yes</c> or <c>Learn more</c> button.
+    ///   </item>
+    ///   <item>
+    ///     <see cref="DialogResult.Cancel"/> if user clicks on
+    ///     the <c>Cancel</c>, <c>No</c> or <c>Close</c> button.
+    ///   </item>
+    /// </list>
+    /// </returns>
+    public static DialogResult ShowWarning(IgTheme theme, IgLang lang,
+        string title = "",
+        string heading = "",
+        string description = "",
+        PopupButtons buttons = PopupButtons.OK)
+    {
+        SystemSounds.Exclamation.Play();
+
+        return ShowDialog(theme, lang, title, heading, description, buttons, SHSTOCKICONID.SIID_WARNING);
+    }
+
+
+    /// <summary>
+    /// Shows error popup widow.
+    /// </summary>
+    /// <param name="theme">Popup theme.</param>
+    /// <param name="lang">Popup language.</param>
+    /// <param name="title">Popup title.</param>
+    /// <param name="heading">Popup heading text.</param>
+    /// <param name="description">Popup description.</param>
+    /// <param name="buttons">Popup buttons.</param>
+    /// <returns>
+    /// <list type="table">
+    ///   <item>
+    ///     <see cref="DialogResult.OK"/> if user clicks on
+    ///     the <c>OK</c>, <c>Yes</c> or <c>Learn more</c> button.
+    ///   </item>
+    ///   <item>
+    ///     <see cref="DialogResult.Cancel"/> if user clicks on
+    ///     the <c>Cancel</c>, <c>No</c> or <c>Close</c> button.
+    ///   </item>
+    /// </list>
+    /// </returns>
+    public static DialogResult ShowError(IgTheme theme, IgLang lang,
+        string title = "",
+        string heading = "",
+        string description = "",
+        PopupButtons buttons = PopupButtons.OK)
+    {
+        SystemSounds.Asterisk.Play();
+
+        return ShowDialog(theme, lang, title, heading, description, buttons, SHSTOCKICONID.SIID_ERROR);
+    }
+
+
+    #endregion
+
 
 }

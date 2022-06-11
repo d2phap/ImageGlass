@@ -51,26 +51,24 @@ internal static class Program
     }
 
 
+    /// <summary>
+    /// Show error popup.
+    /// </summary>
+    /// <returns><see cref="IgExitCode.Error"/></returns>
     private static int ShowErrorPopup()
     {
-        var frm = new Popup(Config.Theme, Config.Language)
-        {
-            Title = Application.ProductName + " " + Application.ProductVersion,
-            Heading = "Invalid commands",
-            Description = "This executable file contains command-line functions for ImageGlass software. Please make sure you pass the commands correctly." +
+        var result = Popup.ShowError(Config.Theme, Config.Language,
+            title: Application.ProductName + " " + Application.ProductVersion,
+            heading: "Invalid commands",
+            description: "This executable file contains command-line functions for " +
+                    "ImageGlass software. Please make sure you pass the commands correctly." +
                     "\r\n\r\n" +
                     "To explore all command lines, please visit: \r\n" +
                     "https://imageglass.org/docs/command-line-utilities",
+            buttons: PopupButtons.LearnMore_Close);
 
-            Thumbnail = SystemIconApi.GetSystemIcon(SHSTOCKICONID.SIID_ERROR),
-            ShowTextInput = false,
 
-            AcceptButtonText = "Learn more...",
-            CancelButtonText = "Close",
-            ShowInTaskbar = true,
-        };
-
-        if (frm.ShowDialog() == DialogResult.OK)
+        if (result == DialogResult.OK)
         {
             Helpers.OpenUrl("https://imageglass.org/docs/command-line-utilities", "igcmd_invalid_command");
         }

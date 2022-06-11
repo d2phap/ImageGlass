@@ -36,8 +36,8 @@
             this.picThumbnail = new System.Windows.Forms.PictureBox();
             this.panBottom = new System.Windows.Forms.Panel();
             this.tableBottom = new System.Windows.Forms.TableLayoutPanel();
-            this.btnOK = new ImageGlass.UI.ModernButton();
-            this.btnCancel = new ImageGlass.UI.ModernButton();
+            this.BtnAccept = new ImageGlass.UI.ModernButton();
+            this.BtnCancel = new ImageGlass.UI.ModernButton();
             this.tableMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picThumbnail)).BeginInit();
             this.panBottom.SuspendLayout();
@@ -147,8 +147,8 @@
             this.tableBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableBottom.Controls.Add(this.btnOK, 1, 0);
-            this.tableBottom.Controls.Add(this.btnCancel, 2, 0);
+            this.tableBottom.Controls.Add(this.BtnAccept, 1, 0);
+            this.tableBottom.Controls.Add(this.BtnCancel, 2, 0);
             this.tableBottom.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableBottom.Location = new System.Drawing.Point(20, 20);
             this.tableBottom.Name = "tableBottom";
@@ -157,43 +157,43 @@
             this.tableBottom.Size = new System.Drawing.Size(538, 41);
             this.tableBottom.TabIndex = 0;
             // 
-            // btnOK
+            // BtnAccept
             // 
-            this.btnOK.AutoSize = true;
-            this.btnOK.DarkMode = false;
-            this.btnOK.ImagePadding = 2;
-            this.btnOK.Location = new System.Drawing.Point(275, 0);
-            this.btnOK.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.btnOK.MinimumSize = new System.Drawing.Size(120, 0);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.btnOK.Size = new System.Drawing.Size(120, 40);
-            this.btnOK.SystemIcon = null;
-            this.btnOK.TabIndex = 1;
-            this.btnOK.Text = "[OK]";
-            this.btnOK.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnOK.Click += new System.EventHandler(this.BtnOK_Click);
+            this.BtnAccept.AutoSize = true;
+            this.BtnAccept.DarkMode = false;
+            this.BtnAccept.ImagePadding = 2;
+            this.BtnAccept.Location = new System.Drawing.Point(275, 0);
+            this.BtnAccept.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.BtnAccept.MinimumSize = new System.Drawing.Size(120, 0);
+            this.BtnAccept.Name = "BtnAccept";
+            this.BtnAccept.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.BtnAccept.Size = new System.Drawing.Size(120, 40);
+            this.BtnAccept.SystemIcon = null;
+            this.BtnAccept.TabIndex = 1;
+            this.BtnAccept.Text = "[OK]";
+            this.BtnAccept.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BtnAccept.Click += new System.EventHandler(this.BtnAccept_Click);
             // 
-            // btnCancel
+            // BtnCancel
             // 
-            this.btnCancel.AutoSize = true;
-            this.btnCancel.DarkMode = false;
-            this.btnCancel.ImagePadding = 2;
-            this.btnCancel.Location = new System.Drawing.Point(415, 0);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.btnCancel.MinimumSize = new System.Drawing.Size(120, 0);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.btnCancel.Size = new System.Drawing.Size(123, 40);
-            this.btnCancel.SystemIcon = null;
-            this.btnCancel.TabIndex = 2;
-            this.btnCancel.Text = "[Cancel]";
-            this.btnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
+            this.BtnCancel.AutoSize = true;
+            this.BtnCancel.DarkMode = false;
+            this.BtnCancel.ImagePadding = 2;
+            this.BtnCancel.Location = new System.Drawing.Point(415, 0);
+            this.BtnCancel.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.BtnCancel.MinimumSize = new System.Drawing.Size(120, 0);
+            this.BtnCancel.Name = "BtnCancel";
+            this.BtnCancel.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.BtnCancel.Size = new System.Drawing.Size(123, 40);
+            this.BtnCancel.SystemIcon = null;
+            this.BtnCancel.TabIndex = 2;
+            this.BtnCancel.Text = "[Cancel]";
+            this.BtnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // Popup
             // 
-            this.AcceptButton = this.btnOK;
+            this.AcceptButton = this.BtnAccept;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
@@ -225,12 +225,12 @@
         private TableLayoutPanel tableMain;
         private Panel panBottom;
         private TableLayoutPanel tableBottom;
-        private ModernButton btnOK;
-        private ModernButton btnCancel;
         private Label lblTitle;
         private Label lblDescription;
         private ModernTextBox txtValue;
         private PictureBox picThumbnail;
         private Label lblHeading;
+        private ModernButton BtnAccept;
+        private ModernButton BtnCancel;
     }
 }

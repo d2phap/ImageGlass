@@ -103,9 +103,11 @@ public class IgLang : Dictionary<string, string>
 
         Add("_._OK", "OK"); // v9.0
         Add("_._Cancel", "Cancel"); // v9.0
+        Add("_._Close", "Close"); // v9.0
         Add("_._Yes", "Yes"); // v9.0
         Add("_._No", "No"); // v9.0
         Add("_._Error", "Error"); // v9.0
+        Add("_._LearnMore", "Learn more…"); // v9.0
 
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Name)}", "Name (default)"); //v8.0
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Length)}", "Length"); //v8.0
