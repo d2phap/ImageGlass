@@ -1313,7 +1313,7 @@ public static class Config
     #region ImageFormats
 
     /// <summary>
-    /// Returns distinc list of image formats
+    /// Returns distinc list of image formats.
     /// </summary>
     /// <param name="formats">The format string. E.g: *.bpm;*.jpg;</param>
     /// <returns></returns>
@@ -1332,7 +1332,7 @@ public static class Config
     }
 
     /// <summary>
-    /// Returns the image formats string
+    /// Returns the image formats string. Example: <c>*.png;*.jpg;</c>
     /// </summary>
     /// <param name="list">The input HashSet</param>
     /// <returns></returns>

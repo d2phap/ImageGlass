@@ -45,9 +45,9 @@ public class App
     public static string Version { get => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion ?? ""; }
 
     /// <summary>
-    /// Checks if the current process is running as administator
+    /// Checks if the current user is administator
     /// </summary>
-    public static bool IsAdministrator => new WindowsPrincipal(WindowsIdentity.GetCurrent())
+    public static bool IsAdmin => new WindowsPrincipal(WindowsIdentity.GetCurrent())
        .IsInRole(WindowsBuiltInRole.Administrator);
 
     /// <summary>

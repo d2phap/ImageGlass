@@ -900,7 +900,7 @@ public partial class Popup : Form
         else
         {
             frm.CancelButtonText = lang["_._OK"];
-            frm.ShowAcceptButton = false;
+            frm.ShowAcceptButton = true;
 
             frm.ShowCancelButton = false;
         }
@@ -943,7 +943,7 @@ public partial class Popup : Form
     {
         SystemSounds.Question.Play();
 
-        return ShowDialog(theme, lang, title, heading, description, details, buttons, SHSTOCKICONID.SIID_INFO);
+        return ShowDialog(theme, lang, description, title, heading, details, buttons, SHSTOCKICONID.SIID_INFO);
     }
 
 
@@ -983,7 +983,7 @@ public partial class Popup : Form
 
         SystemSounds.Exclamation.Play();
 
-        return ShowDialog(theme, lang, title, heading, description, details, buttons, SHSTOCKICONID.SIID_WARNING);
+        return ShowDialog(theme, lang, description, title, heading, details, buttons, SHSTOCKICONID.SIID_WARNING);
     }
 
 
@@ -1023,7 +1023,7 @@ public partial class Popup : Form
 
         SystemSounds.Asterisk.Play();
 
-        return ShowDialog(theme, lang, title, heading, description, details, buttons, SHSTOCKICONID.SIID_ERROR);
+        return ShowDialog(theme, lang, description, title, heading, details, buttons, SHSTOCKICONID.SIID_ERROR);
     }
 
 
