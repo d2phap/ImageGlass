@@ -268,13 +268,32 @@ public class IgTheme
 
 
     /// <summary>
-    /// Gets toolbar icon from property name
+    /// Gets toolbar icon from theme property name or image file path.
     /// </summary>
-    /// <param name="propName">Property name. Example: OpenFile</param>
+    /// <param name="name">
+    /// Theme pack's icon name or image file path.
+    /// Example: <c>OpenFile</c>, or <c>.\Themes\Kobe\OpenFile.svg</c>
+    /// </param>
     /// <returns></returns>
-    public Bitmap? GetToolbarIcon(string? propName)
+    public Bitmap? GetToolbarIcon(string? name)
     {
-        var icon = ToolbarIcons.GetType().GetProperty(propName ?? string.Empty)?.GetValue(ToolbarIcons);
+        if (string.IsNullOrEmpty(name)) return null;
+
+        // get icon from theme pack icon name
+        var icon = ToolbarIcons.GetType().GetProperty(name ?? string.Empty)?.GetValue(ToolbarIcons);
+
+        // get icon from file
+        if (icon == null)
+        {
+            var fullPath = Helpers.ResolvePath(name);
+            var data = PhotoCodec.Load(fullPath, new()
+            {
+                Width = ToolbarActualIconHeight,
+                Height = ToolbarActualIconHeight,
+            });
+
+            icon = data.Image;
+        }
 
         return icon as Bitmap;
     }
