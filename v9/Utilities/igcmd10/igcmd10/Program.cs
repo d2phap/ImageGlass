@@ -65,6 +65,12 @@ internal static class Program
         #region SET_LOCK_SCREEN <string imgPath>
         if (topCmd == IgCommands.SET_LOCK_SCREEN)
         {
+            if (args.Length < 2)
+            {
+                return Popup.ShowDefaultIgCommandError(nameof(igcmd10), Config.Theme, Config.Language);
+            }
+
+            return (int)Functions.SetLockScreenBackground(args[1]);
         }
         #endregion
 
