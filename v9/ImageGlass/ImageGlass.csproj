@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Platforms>AnyCPU;x64;x86;ARM32;ARM64</Platforms>
+    <Platforms>x64;x86;ARM32;ARM64</Platforms>
     <ApplicationIcon>icon256.ico</ApplicationIcon>
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -71,7 +71,11 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="call $(ProjectDir)post-build.bat $(SolutionDir) $(TargetDir)" />
+    <Exec Command="call $(ProjectDir)post-build.bat $(SolutionDir) $(TargetDir) $(ConfigurationName) $(Platform)" />
+  </Target>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="&quot;$(DevEnvDir)devenv&quot; &quot;$(SolutionDir)ImageGlass.sln&quot; /Build $(ConfigurationName) /Project &quot;$(SolutionDir)Utilities\igcmd10\igcmd10.csproj&quot;" />
   </Target>
 
 </Project>
