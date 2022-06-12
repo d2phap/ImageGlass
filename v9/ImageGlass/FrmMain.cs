@@ -863,13 +863,12 @@ public partial class FrmMain : Form
 
 
         IgPhoto? photo = null;
-        var directReadSettings = new CodecReadOptions()
+        var readSettings = new CodecReadOptions()
         {
             ColorProfileName = Config.ColorProfile,
             ApplyColorProfileForAll = Config.ApplyColorProfileForAll,
             ImageChannel = Local.ImageChannel,
             UseRawThumbnail = Config.UseRawThumbnail,
-            //UseEmbeddedThumbnail = Local.Images.use
             Metadata = Local.Metadata,
         };
 
@@ -919,9 +918,9 @@ public partial class FrmMain : Form
         if (!string.IsNullOrEmpty(filename))
         {
             photo = new IgPhoto(filename);
-            directReadSettings.FirstFrameOnly = Config.SinglePageFormats.Contains(photo.Extension);
+            readSettings.FirstFrameOnly = Config.SinglePageFormats.Contains(photo.Extension);
 
-            Local.Metadata = PhotoCodec.LoadMetadata(filename, directReadSettings);
+            Local.Metadata = PhotoCodec.LoadMetadata(filename, readSettings);
         }
         else
         {
@@ -931,7 +930,7 @@ public partial class FrmMain : Form
             Local.CurrentIndex = imageIndex;
         }
 
-        directReadSettings.Metadata = Local.Metadata;
+        readSettings.Metadata = Local.Metadata;
 
 
         Local.RaiseImageLoadingEvent(new()
@@ -947,10 +946,9 @@ public partial class FrmMain : Form
         try
         {
             // apply image list settings
-            Local.Images.ReadOptions.ApplyColorProfileForAll = Config.ApplyColorProfileForAll;
-            Local.Images.ReadOptions.ColorProfileName = Config.ColorProfile;
-            Local.Images.ReadOptions.UseRawThumbnail = Config.UseRawThumbnail;
             Local.Images.SinglePageFormats = Config.SinglePageFormats;
+            Local.Images.ReadOptions = readSettings;
+            
 
             if (pageIndex != int.MinValue)
             {
@@ -964,7 +962,7 @@ public partial class FrmMain : Form
                 // directly load the image file, skip image list
                 if (photo != null)
                 {
-                    await photo.LoadAsync(directReadSettings, token);
+                    await photo.LoadAsync(readSettings, token);
                 }
                 else
                 {
@@ -1615,12 +1613,12 @@ public partial class FrmMain : Form
         // Get Edit App info
         if (!imageNotFound)
         {
-            //if (!Local.IsImageError
-            //    && !Local.IsTempMemoryData
-            //    && Local.Metadata?.FramesCount <= 1)
-            //{
-            //    MnuContext.Items.Add(MenuUtils.Clone(MnuViewChannels));
-            //}
+            if (!Local.IsImageError
+                && !Local.IsTempMemoryData
+                && Local.Metadata?.FramesCount <= 1)
+            {
+                MnuContext.Items.Add(MenuUtils.Clone(MnuViewChannels));
+            }
 
             MnuContext.Items.Add(new ToolStripSeparator());
             if (!Helpers.IsOS(WindowsOS.Win7))

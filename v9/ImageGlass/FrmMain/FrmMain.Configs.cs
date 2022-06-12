@@ -714,7 +714,7 @@ public partial class FrmMain
 
         // MnuImage
         //MnuImageFocus.Visible = false;
-        MnuViewChannels.Visible = false;
+        //MnuViewChannels.Visible = false;
         //MnuLoadingOrders.Visible = false;
         toolStripMenuItem16.Visible = false;
         MnuRotateLeft.Visible = false;
