@@ -1561,7 +1561,8 @@ public partial class FrmMain : Form
             MnuExtractFrames.Text = string.Format(Config.Language[$"{Name}.{nameof(MnuExtractFrames)}"], Local.Metadata?.FramesCount);
 
             // check if igcmdWin10.exe exists!
-            if (!Helpers.IsOS(WindowsOS.Win10OrLater) || !File.Exists(App.StartUpDir("igcmdWin10.exe")))
+            if (!Helpers.IsOS(WindowsOS.Win10OrLater)
+                || !File.Exists(App.StartUpDir("igcmd10.exe")))
             {
                 MnuSetLockScreen.Enabled = false;
             }
@@ -1949,7 +1950,7 @@ public partial class FrmMain : Form
 
     private void MnuSetLockScreen_Click(object sender, EventArgs e)
     {
-
+        IG_SetLockScreenBackground();
     }
 
     private void MnuOpenLocation_Click(object sender, EventArgs e)

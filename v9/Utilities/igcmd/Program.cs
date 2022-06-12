@@ -48,18 +48,18 @@ internal static class Program
 
         if (args.Length == 0)
         {
-            return ShowDefaultError();
+            return Popup.ShowDefaultIgCommandError(nameof(igcmd), Config.Theme, Config.Language);
         }
 
         var topCmd = args[0].ToLower().Trim();
 
 
         #region SET_WALLPAPER <string imgPath> [int style]
-        if (topCmd == Commands.SET_WALLPAPER)
+        if (topCmd == IgCommands.SET_WALLPAPER)
         {
             if (args.Length < 3)
             {
-                return ShowDefaultError();
+                return Popup.ShowDefaultIgCommandError(nameof(igcmd), Config.Theme, Config.Language);
             }
 
             return (int)Functions.SetDesktopWallpaper(args[1], args[2]);
@@ -68,7 +68,7 @@ internal static class Program
 
 
         #region SET_DEFAULT_PHOTO_VIEWER [string ext]
-        if (topCmd == Commands.SET_DEFAULT_PHOTO_VIEWER)
+        if (topCmd == IgCommands.SET_DEFAULT_PHOTO_VIEWER)
         {
             var ext = "";
             if (args.Length > 1)
@@ -82,7 +82,7 @@ internal static class Program
 
 
         #region UNSET_DEFAULT_PHOTO_VIEWER [string ext]
-        if (topCmd == Commands.UNSET_DEFAULT_PHOTO_VIEWER)
+        if (topCmd == IgCommands.UNSET_DEFAULT_PHOTO_VIEWER)
         {
             var ext = "";
             if (args.Length > 1)
@@ -100,27 +100,4 @@ internal static class Program
     }
 
 
-    /// <summary>
-    /// Show error popup.
-    /// </summary>
-    /// <returns><see cref="IgExitCode.Error"/></returns>
-    private static int ShowDefaultError()
-    {
-        var url = "https://imageglass.org/docs/command-line-utilities";
-        var langPath = $"{nameof(igcmd)}._DefaultError";
-
-        var result = Popup.ShowError(Config.Theme, Config.Language,
-            title: Application.ProductName + " " + Application.ProductVersion,
-            heading: Config.Language[$"{langPath}._Heading"],
-            description: string.Format(Config.Language[$"{langPath}._Description"], url),
-            buttons: PopupButtons.LearnMore_Close);
-
-
-        if (result == DialogResult.OK)
-        {
-            Helpers.OpenUrl(url, "igcmd_invalid_command");
-        }
-
-        return (int)IgExitCode.Error;
-    }
 }

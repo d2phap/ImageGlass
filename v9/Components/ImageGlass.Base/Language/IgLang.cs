@@ -215,6 +215,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuSetDesktopBackground._Error", "Could not set the viewing image as desktop background"); // v6.0
         Add("FrmMain.MnuSetDesktopBackground._Success", "Desktop background is updated."); // v6.0
         Add("FrmMain.MnuSetLockScreen", "Set as Lock screen image"); // V6.0
+        Add("FrmMain.MnuSetLockScreen._Error", "Could not set the viewing image as lock screen image"); // v6.0
+        Add("FrmMain.MnuSetLockScreen._Success", "Lock screen image is updated."); // v6.0
         Add("FrmMain.MnuOpenLocation", "Open image location"); //v3.0
         Add("FrmMain.MnuImageProperties", "Image properties"); //v3.0
         #endregion
@@ -654,8 +656,8 @@ public class IgLang : Dictionary<string, string>
 
         #region igcmd.exe
 
-        Add("igcmd._DefaultError._Heading", "Invalid commands"); //v9.0
-        Add("igcmd._DefaultError._Description", "Make sure you pass the correct commands!\r\nThis executable file contains command-line functions for ImageGlass software.\r\n\r\nTo explore all command lines, please visit:\r\n{0}"); //v9.0
+        Add("_._IgCommandExe._DefaultError._Heading", "Invalid commands"); //v9.0
+        Add("_._IgCommandExe._DefaultError._Description", "Make sure you pass the correct commands!\r\nThis executable file contains command-line functions for ImageGlass software.\r\n\r\nTo explore all command lines, please visit:\r\n{0}"); //v9.0
 
         #endregion
 

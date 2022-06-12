@@ -784,8 +784,8 @@ public partial class FrmMain
         var extensions = Config.GetImageFormats(allExts);
 
         var cmd = enable
-            ? Commands.SET_DEFAULT_PHOTO_VIEWER
-            : Commands.UNSET_DEFAULT_PHOTO_VIEWER;
+            ? IgCommands.SET_DEFAULT_PHOTO_VIEWER
+            : IgCommands.UNSET_DEFAULT_PHOTO_VIEWER;
 
         // run command
         var result = await Helpers.RunIgcmd($"{cmd} {extensions}");
@@ -953,7 +953,7 @@ public partial class FrmMain
         var filePath = Local.Images.GetFileName(Local.CurrentIndex);
         if (!File.Exists(filePath)) return;
 
-        var args = string.Format($"{Commands.SET_WALLPAPER} \"{filePath}\" {(int)WallpaperStyle.Current}");
+        var args = string.Format($"{IgCommands.SET_WALLPAPER} \"{filePath}\" {(int)WallpaperStyle.Current}");
 
         var result = await Helpers.RunIgcmd(args);
         var langPath = $"{Name}.{nameof(MnuSetDesktopBackground)}";
@@ -974,5 +974,37 @@ public partial class FrmMain
         }
     }
 
+
+    private void IG_SetLockScreenBackground()
+    {
+        _ = SetLockScreenBackgroundAsync();
+    }
+
+
+    private async Task SetLockScreenBackgroundAsync()
+    {
+        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
+        if (!File.Exists(filePath)) return;
+
+        var args = string.Format($"{IgCommands.SET_LOCK_SCREEN} \"{filePath}\"");
+
+        var result = await Helpers.RunIgcmd10(args);
+        var langPath = $"{Name}.{nameof(MnuSetLockScreen)}";
+
+
+        if (result == IgExitCode.Done)
+        {
+            PicMain.ShowMessage(
+                Config.Language[$"{langPath}._Success"],
+                Config.InAppMessageDuration);
+        }
+        else
+        {
+            _ = Popup.ShowError(Config.Theme, Config.Language,
+                title: Config.Language[langPath],
+                heading: Config.Language["_._Error"],
+                description: Config.Language[$"{langPath}._Error"]);
+        }
+    }
 }
 
