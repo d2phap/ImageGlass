@@ -120,13 +120,12 @@ public partial class Helpers
 
 
     /// <summary>
-    /// Runs a command from Igcmd.exe
+    /// Run a command, supports auto-elevating process privilege
+    /// if admin permission is required.
     /// </summary>
-    /// <param name="args"></param>
     /// <returns></returns>
-    public static async Task<IgExitCode> RunIgcmd(string args)
+    public static async Task<IgExitCode> RunExeCmd(string exePath, string args)
     {
-        var exePath = App.StartUpDir("igcmd.exe");
         IgExitCode code;
 
         try
@@ -146,5 +145,31 @@ public partial class Helpers
         }
 
         return code;
+    }
+
+
+    /// <summary>
+    /// Runs a command from <c>igcmd10.exe</c>, supports auto-elevating process privilege
+    /// if admin permission is required.
+    /// </summary>
+    /// <returns></returns>
+    public static async Task<IgExitCode> RunIgcmd(string args)
+    {
+        var exePath = App.StartUpDir("igcmd.exe");
+
+        return await RunExeCmd(exePath, args);
+    }
+
+
+    /// <summary>
+    /// Runs a command from <c>igcmd10.exe</c>, supports auto-elevating process privilege
+    /// if admin permission is required.
+    /// </summary>
+    /// <returns></returns>
+    public static async Task<IgExitCode> RunIgcmd10(string args)
+    {
+        var exePath = App.StartUpDir("igcmd10.exe");
+
+        return await RunExeCmd(exePath, args);
     }
 }
