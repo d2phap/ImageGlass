@@ -1684,9 +1684,9 @@ public partial class FrmMain : Form
 
         if (!imageNotFound && !Local.IsTempMemoryData)
         {
-            //MnuContext.Items.Add(new ToolStripSeparator());//------------
-            //MnuContext.Items.Add(MenuUtils.Clone(MnuRename));
-            //MnuContext.Items.Add(MenuUtils.Clone(MnuMoveToRecycleBin));
+            MnuContext.Items.Add(new ToolStripSeparator());//------------
+            MnuContext.Items.Add(MenuUtils.Clone(MnuRename));
+            MnuContext.Items.Add(MenuUtils.Clone(MnuMoveToRecycleBin));
 
             MnuContext.Items.Add(new ToolStripSeparator());//------------
             MnuContext.Items.Add(MenuUtils.Clone(MnuCopyPath));
