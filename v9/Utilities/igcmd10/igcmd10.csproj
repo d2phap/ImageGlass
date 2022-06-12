@@ -7,11 +7,16 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <Platforms>x64;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Components\ImageGlass.Base\ImageGlass.Base.csproj" />
-    <ProjectReference Include="..\..\..\Components\ImageGlass.Settings\ImageGlass.Settings.csproj" />
+    <ProjectReference Include="..\..\Components\ImageGlass.Base\ImageGlass.Base.csproj" />
+    <ProjectReference Include="..\..\Components\ImageGlass.Settings\ImageGlass.Settings.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

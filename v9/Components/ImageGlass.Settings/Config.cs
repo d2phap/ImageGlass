@@ -337,7 +337,7 @@ public static class Config
     /// <summary>
     /// Gets, sets the value indicates that to show last seen image on startup
     /// </summary>
-    public static bool OpenLastSeenImage { get; set; } = false;
+    public static bool OpenLastSeenImage { get; set; } = true;
 
     /// <summary>
     /// Gets, sets the value indicates that the ColorProfile will be applied for all or only the images with embedded profile
