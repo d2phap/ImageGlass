@@ -1027,6 +1027,31 @@ public partial class Popup : Form
     }
 
 
+    /// <summary>
+    /// Show the default error popup for igcmd/igcmd10.exe
+    /// </summary>
+    /// <returns><see cref="IgExitCode.Error"/></returns>
+    public static int ShowDefaultIgCommandError(string igcmdExeName, IgTheme theme, IgLang lang)
+    {
+        var url = "https://imageglass.org/docs/command-line-utilities";
+        var langPath = $"_._IgCommandExe._DefaultError";
+
+        var result = ShowError(theme, lang,
+            title: Application.ProductName + " " + Application.ProductVersion,
+            heading: lang[$"{langPath}._Heading"],
+            description: string.Format(lang[$"{langPath}._Description"], url),
+            buttons: PopupButtons.LearnMore_Close);
+
+
+        if (result == DialogResult.OK)
+        {
+            Helpers.OpenUrl(url, $"{igcmdExeName}_invalid_command");
+        }
+
+        return (int)IgExitCode.Error;
+    }
+
+
     #endregion
 
 
