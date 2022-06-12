@@ -17,15 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageMagick;
-using System.Drawing.Imaging;
 
 namespace ImageGlass.Base.Photoing.Codecs;
 
 
 /// <summary>
-/// Contains image data and metadata to pass to frontend.
+/// Contains Magick.NET data after the image file loaded.
 /// </summary>
-public class IgImgData : IDisposable
+public class IgMagickReadData : IDisposable
 {
 
     #region IDisposable Disposing
@@ -40,11 +39,12 @@ public class IgImgData : IDisposable
         if (disposing)
         {
             // Free any other managed objects here.
-            Image?.Dispose();
-            Image = null;
+            MultiFrameImage?.Dispose();
+            SingleFrameImage?.Dispose();
 
             ExifProfile = null;
             ColorProfile = null;
+            Extension = string.Empty;
         }
 
         // Free any unmanaged objects here.
@@ -57,7 +57,7 @@ public class IgImgData : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    ~IgImgData()
+    ~IgMagickReadData()
     {
         Dispose(false);
     }
@@ -65,41 +65,13 @@ public class IgImgData : IDisposable
     #endregion
 
 
-    public Bitmap? Image { get; set; } = null;
     public int FrameCount { get; set; } = 0;
-    public IExifProfile? ExifProfile { get; set; } = null;
+    public string Extension { get; set; } = string.Empty;
+
+    public MagickImageCollection? MultiFrameImage { get; set; } = null;
+    public MagickImage? SingleFrameImage { get; set; } = null;
+
     public IColorProfile? ColorProfile { get; set; } = null;
+    public IExifProfile? ExifProfile { get; set; } = null;
 
-
-    public IgImgData() { }
-
-
-    /// <summary>
-    /// Initializes <see cref="IgImgData"/> instance
-    /// with <see cref="IgMagickReadData"/> value.
-    /// </summary>
-    /// <param name="data"></param>
-    public IgImgData(IgMagickReadData data)
-    {
-        FrameCount = data.FrameCount;
-        ColorProfile = data.ColorProfile;
-        ExifProfile = data.ExifProfile;
-
-        if (data.MultiFrameImage != null)
-        {
-            // convert WEBP to GIF for animation
-            if (data.Extension.Equals(".WEBP", StringComparison.InvariantCultureIgnoreCase))
-            {
-                Image = data.MultiFrameImage.ToBitmap(ImageFormat.Gif);
-            }
-            else
-            {
-                Image = data.MultiFrameImage.ToBitmap();
-            }
-        }
-        else
-        {
-            Image = data.SingleFrameImage?.ToBitmap();
-        }
-    }
 }

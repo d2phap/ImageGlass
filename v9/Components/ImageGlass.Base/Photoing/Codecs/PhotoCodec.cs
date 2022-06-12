@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageMagick;
 using ImageMagick.Formats;
-using System.Drawing.Imaging;
 
 namespace ImageGlass.Base.Photoing.Codecs;
 
@@ -34,27 +33,26 @@ public static class PhotoCodec
     /// <summary>
     /// Loads metadata from file.
     /// </summary>
-    /// <param name="filename">Full path of the file</param>
-    /// <returns></returns>
-    public static IgMetadata? LoadMetadata(string filename, CodecReadOptions? options = null)
+    /// <param name="filePath">Full path of the file</param>
+    public static IgMetadata? LoadMetadata(string filePath, CodecReadOptions? options = null)
     {
         IgMetadata? meta = null;
 
         try
         {
-            var settings = ParseSettings(options, filename);
+            var settings = ParseSettings(options, filePath);
             using var imgC = new MagickImageCollection();
 
-            if (filename.Length > 260)
+            if (filePath.Length > 260)
             {
-                var newFilename = Helpers.PrefixLongPath(filename);
+                var newFilename = Helpers.PrefixLongPath(filePath);
                 var allBytes = File.ReadAllBytes(newFilename);
 
                 imgC.Ping(allBytes, settings);
             }
             else
             {
-                imgC.Ping(filename, settings);
+                imgC.Ping(filePath, settings);
             }
 
             meta = new()
@@ -94,18 +92,17 @@ public static class PhotoCodec
     /// <summary>
     /// Loads image file.
     /// </summary>
-    /// <param name="filename">Full path of the file</param>
+    /// <param name="filePath">Full path of the file</param>
     /// <param name="options">Loading options</param>
-    /// <returns></returns>
-    public static IgImgData Load(string filename, CodecReadOptions? options = null)
+    public static IgImgData Load(string filePath, CodecReadOptions? options = null)
     {
         options ??= new();
 
-        var (loadSuccessful, result, ext, settings) = ReadWithStream(filename, options);
+        var (loadSuccessful, result, ext, settings) = ReadWithStream(filePath, options);
 
         if (!loadSuccessful)
         {
-            result = ReadWithMagickImage(filename, ext, settings, options);
+            result = LoadWithMagickImage(filePath, ext, settings, options);
         }
 
         return result;
@@ -115,10 +112,10 @@ public static class PhotoCodec
     /// <summary>
     /// Loads image file async.
     /// </summary>
-    /// <param name="filename">Full path of the file</param>
+    /// <param name="filePath">Full path of the file</param>
     /// <param name="options">Loading options</param>
     /// <param name="token">Cancellation token</param>
-    public static async Task<IgImgData> LoadAsync(string filename,
+    public static async Task<IgImgData> LoadAsync(string filePath,
         CodecReadOptions? options = null,
         CancellationToken? token = null)
     {
@@ -127,11 +124,11 @@ public static class PhotoCodec
 
         try
         {
-            var (loadSuccessful, result, ext, settings) = ReadWithStream(filename, options);
+            var (loadSuccessful, result, ext, settings) = ReadWithStream(filePath, options);
 
             if (!loadSuccessful)
             {
-                result = await ReadWithMagickImageAsync(filename, ext, settings, options, cancelToken);
+                result = await LoadWithMagickImageAsync(filePath, ext, settings, options, cancelToken);
             }
 
             return result;
@@ -145,13 +142,9 @@ public static class PhotoCodec
     /// <summary>
     /// Gets thumbnail from image.
     /// </summary>
-    /// <param name="filename"></param>
-    /// <param name="width"></param>
-    /// <param name="height"></param>
-    /// <returns></returns>
-    public static Bitmap? GetThumbnail(string filename, int width, int height)
+    public static Bitmap? GetThumbnail(string filePath, int width, int height)
     {
-        var data = Load(filename, new()
+        var data = Load(filePath, new()
         {
             Width = width,
             Height = height,
@@ -170,11 +163,9 @@ public static class PhotoCodec
     /// <summary>
     /// Gets base64 thumbnail from image
     /// </summary>
-    /// <param name="bytes"></param>
-    /// <returns></returns>
-    public static string GetThumbnailBase64(string filename, int width, int height)
+    public static string GetThumbnailBase64(string filePath, int width, int height)
     {
-        var thumbnail = GetThumbnail(filename, width, height);
+        var thumbnail = GetThumbnail(filePath, width, height);
 
         if (thumbnail != null)
         {
@@ -186,19 +177,17 @@ public static class PhotoCodec
 
         return string.Empty;
     }
-    
+
 
     #endregion
+
 
 
     #region Private functions
 
     /// <summary>
-    /// Read image file using stream 
+    /// Read image file using stream
     /// </summary>
-    /// <param name="filename"></param>
-    /// <param name="options"></param>
-    /// <returns></returns>
     private static (bool loadSuccessful, IgImgData result, string ext, MagickReadSettings settings) ReadWithStream(string filename, CodecReadOptions? options = null)
     {
         options ??= new();
@@ -272,127 +261,39 @@ public static class PhotoCodec
 
 
     /// <summary>
-    /// Read image file using Magick.NET
+    /// Loads image file with Magick.NET
     /// </summary>
-    /// <param name="filename"></param>
-    /// <param name="ext"></param>
-    /// <param name="settings"></param>
-    /// <param name="options"></param>
-    /// <returns></returns>
-    private static IgImgData ReadWithMagickImage(
-        string filename, string ext,
-        MagickReadSettings settings, CodecReadOptions options)
+    private static async Task<IgImgData> LoadWithMagickImageAsync(string filename, string ext,
+        MagickReadSettings settings, CodecReadOptions options, CancellationToken cancelToken)
     {
-        var result = new IgImgData();
-        using var imgColl = new MagickImageCollection();
-
-        // Issue #530: ImageMagick falls over if the file path is longer than the (old)
-        // windows limit of 260 characters. Workaround is to read the file bytes,
-        // but that requires using the "long path name" prefix to succeed.
-        if (filename.Length > 260)
-        {
-            var newFilename = Helpers.PrefixLongPath(filename);
-            var allBytes = File.ReadAllBytes(newFilename);
-
-            imgColl.Ping(allBytes, settings);
-        }
-        else
-        {
-            imgColl.Ping(filename, settings);
-        }
-
-        // standardize first frame reading option
-        result.FrameCount = imgColl.Count;
-        var readFirstFrameOnly = true;
-        if (options.FirstFrameOnly == null)
-        {
-            readFirstFrameOnly = imgColl.Count < 2;
-        }
-        else
-        {
-            readFirstFrameOnly = options.FirstFrameOnly.Value;
-        }
-
-
-        // read all frames
-        if (imgColl.Count > 1 && readFirstFrameOnly is false)
-        {
-            imgColl.Read(filename, settings);
-
-            // convert WEBP to GIF for animation
-            if (ext == ".WEBP")
-            {
-                result.Image = imgColl.ToBitmap(ImageFormat.Gif);
-            }
-            else
-            {
-                foreach (var imgPageM in imgColl)
-                {
-                    ProcessMagickImage((MagickImage)imgPageM, options, ext, ref result, generateBitmap: false);
-                }
-
-                result.Image = imgColl.ToBitmap();
-            }
-
-            return result;
-        }
-
-
-        // read a single frame only
-        using var imgM = new MagickImage();
-        if (options.UseRawThumbnail is true)
-        {
-            var profile = imgColl[0].GetProfile("dng:thumbnail");
-
-            try
-            {
-                // try to get thumbnail
-                var thumbnailData = profile?.GetData();
-                if (thumbnailData != null)
-                {
-                    imgM.Read(thumbnailData, settings);
-                }
-                else
-                {
-                    imgM.Read(filename, settings);
-                }
-            }
-            catch
-            {
-                imgM.Read(filename, settings);
-            }
-        }
-        else
-        {
-            imgM.Read(filename, settings);
-        }
-
-        // process image
-        ProcessMagickImage(imgM, options, ext, ref result);
-
-
-        // apply color channel
-        ApplyColorChannel(imgM, options, ref result);
+        using var data = await ReadMagickImageAsync(filename, ext, settings, options, cancelToken);
+        var result = new IgImgData(data);
 
         return result;
     }
 
 
     /// <summary>
-    /// Read image file using Magick.NET
+    /// Loads image file with Magick.NET
     /// </summary>
-    /// <param name="filename"></param>
-    /// <param name="ext"></param>
-    /// <param name="settings"></param>
-    /// <param name="options"></param>
-    /// <param name="cancelToken"></param>
-    /// <returns></returns>
-    private static async Task<IgImgData> ReadWithMagickImageAsync(
-        string filename, string ext,
-        MagickReadSettings settings, CodecReadOptions options,
-        CancellationToken cancelToken)
+    private static IgImgData LoadWithMagickImage(string filename, string ext,
+        MagickReadSettings settings, CodecReadOptions options)
     {
-        var result = new IgImgData();
+        using var data = ReadMagickImage(filename, ext, settings, options);
+        var result = new IgImgData(data);
+
+        return result;
+    }
+
+
+    /// <summary>
+    /// Reads and processes image file with Magick.NET
+    /// </summary>
+    private static async Task<IgMagickReadData> ReadMagickImageAsync(
+        string filename, string ext, MagickReadSettings settings, CodecReadOptions options, CancellationToken cancelToken)
+    {
+        var result = new IgMagickReadData() { Extension = ext };
+
         using var imgColl = new MagickImageCollection();
 
         // Issue #530: ImageMagick falls over if the file path is longer than the (old)
@@ -428,28 +329,18 @@ public static class PhotoCodec
         {
             await imgColl.ReadAsync(filename, settings, cancelToken);
 
-
-            // convert WEBP to GIF for animation
-            if (ext == ".WEBP")
+            foreach (var imgPageM in imgColl)
             {
-                result.Image = imgColl.ToBitmap(ImageFormat.Gif);
-            }
-            else
-            {
-                foreach (var imgPageM in imgColl)
-                {
-                    ProcessMagickImage((MagickImage)imgPageM, options, ext, ref result, generateBitmap: false);
-                }
-
-                result.Image = imgColl.ToBitmap();
+                ProcessMagickImage((MagickImage)imgPageM, options, ext, false);
             }
 
+            result.MultiFrameImage = imgColl;
             return result;
         }
 
 
         // read a single frame only
-        using var imgM = new MagickImage();
+        var imgM = new MagickImage();
         if (options.UseRawThumbnail is true)
         {
             var profile = imgColl[0].GetProfile("dng:thumbnail");
@@ -479,90 +370,213 @@ public static class PhotoCodec
 
 
         // process image
-        ProcessMagickImage(imgM, options, ext, ref result);
+        var processResult = ProcessMagickImage(imgM, options, ext, true);
+
+        if (processResult.ThumbM != null)
+        {
+            imgM = processResult.ThumbM;
+        }
 
 
         // apply color channel
-        ApplyColorChannel(imgM, options, ref result);
+        imgM = ApplyColorChannel(imgM, options);
+
+
+        result.SingleFrameImage = imgM;
+        result.ColorProfile = processResult.ColorProfile;
+        result.ExifProfile = processResult.ExifProfile;
 
         return result;
     }
 
 
     /// <summary>
-    /// Process Magick image
+    /// Loads and processes image file with Magick.NET
     /// </summary>
-    /// <param name="imgM"></param>
-    /// <param name="options"></param>
-    /// <param name="ext"></param>
-    /// <param name="result"></param>
-    /// <param name="checkRotation"></param>
-    /// <param name="generateBitmap"></param>
-    private static void ProcessMagickImage(
-        MagickImage imgM, CodecReadOptions options,
-        string ext, ref IgImgData result, bool generateBitmap = true)
+    private static IgMagickReadData ReadMagickImage(string filename, string ext, MagickReadSettings settings, CodecReadOptions options)
     {
-        var foundThumbnailBitmap = false;
+        var result = new IgMagickReadData() { Extension = ext };
+
+        using var imgColl = new MagickImageCollection();
+
+        // Issue #530: ImageMagick falls over if the file path is longer than the (old)
+        // windows limit of 260 characters. Workaround is to read the file bytes,
+        // but that requires using the "long path name" prefix to succeed.
+        if (filename.Length > 260)
+        {
+            var newFilename = Helpers.PrefixLongPath(filename);
+            var allBytes = File.ReadAllBytes(newFilename);
+
+            imgColl.Ping(allBytes, settings);
+        }
+        else
+        {
+            imgColl.Ping(filename, settings);
+        }
+
+        // standardize first frame reading option
+        result.FrameCount = imgColl.Count;
+        var readFirstFrameOnly = true;
+        if (options.FirstFrameOnly == null)
+        {
+            readFirstFrameOnly = imgColl.Count < 2;
+        }
+        else
+        {
+            readFirstFrameOnly = options.FirstFrameOnly.Value;
+        }
+
+
+        // read all frames
+        if (imgColl.Count > 1 && readFirstFrameOnly is false)
+        {
+            imgColl.Read(filename, settings);
+
+            foreach (var imgPageM in imgColl)
+            {
+                ProcessMagickImage((MagickImage)imgPageM, options, ext, false);
+            }
+
+            result.MultiFrameImage = imgColl;
+            return result;
+        }
+
+
+        // read a single frame only
+        var imgM = new MagickImage();
+        if (options.UseRawThumbnail is true)
+        {
+            var profile = imgColl[0].GetProfile("dng:thumbnail");
+
+            try
+            {
+                // try to get thumbnail
+                var thumbnailData = profile?.GetData();
+                if (thumbnailData != null)
+                {
+                    imgM.Read(thumbnailData, settings);
+                }
+                else
+                {
+                    imgM.Read(filename, settings);
+                }
+            }
+            catch
+            {
+                imgM.Read(filename, settings);
+            }
+        }
+        else
+        {
+            imgM.Read(filename, settings);
+        }
+
+
+        // process image
+        var processResult = ProcessMagickImage(imgM, options, ext, true);
+
+        if (processResult.ThumbM != null)
+        {
+            imgM = processResult.ThumbM;
+        }
+
+
+        // apply color channel
+        imgM = ApplyColorChannel(imgM, options);
+
+
+        result.SingleFrameImage = imgM;
+        result.ColorProfile = processResult.ColorProfile;
+        result.ExifProfile = processResult.ExifProfile;
+
+        return result;
+    }
+
+
+    /// <summary>
+    /// Processes single-frame Magick image
+    /// </summary>
+    /// <param name="refImgM">Input Magick image to process</param>
+    /// <returns></returns>
+    private static (IColorProfile? ColorProfile, IExifProfile? ExifProfile, MagickImage? ThumbM) ProcessMagickImage(MagickImage refImgM, CodecReadOptions options, string ext, bool requestThumbnail)
+    {
+        IColorProfile? colorProfile = null;
+        IExifProfile? exifProfile = null;
+        IMagickImage? thumbM = null;
 
         // preprocess image, read embedded thumbnail if any
-        imgM.Quality = options.Quality;
+        refImgM.Quality = options.Quality;
 
         try
         {
             // get the color profile of image
-            result.ColorProfile = imgM.GetColorProfile();
+            colorProfile = refImgM.GetColorProfile();
 
             // Get Exif information
-            result.ExifProfile = imgM.GetExifProfile();
+            exifProfile = refImgM.GetExifProfile();
         }
         catch { }
 
         // Use embedded thumbnails if specified
-        if (generateBitmap && result.ExifProfile != null && options.UseEmbeddedThumbnail)
+        if (requestThumbnail && exifProfile != null && options.UseEmbeddedThumbnail)
         {
             // Fetch the embedded thumbnail
-            using var thumbM = result.ExifProfile.CreateThumbnail();
+            thumbM = exifProfile.CreateThumbnail();
             if (thumbM != null)
             {
-                ApplyRotation(thumbM, result.ExifProfile, ext);
+                ApplyRotation(thumbM, exifProfile, ext);
                 ApplySizeSettings(thumbM, options);
-
-                result.Image = thumbM.ToBitmap(ImageFormat.Png);
-                foundThumbnailBitmap = true;
             }
         }
 
         // Revert to source image if an embedded thumbnail with required size was not found.
-        if (foundThumbnailBitmap == false)
+        if (!requestThumbnail || thumbM == null)
         {
             // resize the image
-            ApplySizeSettings(imgM, options);
+            ApplySizeSettings(refImgM, options);
 
-            ApplyRotation(imgM, result.ExifProfile, ext);
+            ApplyRotation(refImgM, exifProfile, ext);
 
             // if always apply color profile
             // or only apply color profile if there is an embedded profile
-            if (options.ApplyColorProfileForAll || result.ColorProfile != null)
+            if (options.ApplyColorProfileForAll || colorProfile != null)
             {
                 var imgColor = Helpers.GetColorProfile(options.ColorProfileName);
 
                 if (imgColor != null)
                 {
-                    imgM.TransformColorSpace(
+                    refImgM.TransformColorSpace(
                         //set default color profile to sRGB
-                        result.ColorProfile ?? ColorProfile.SRGB,
+                        colorProfile ?? ColorProfile.SRGB,
                         imgColor);
                 }
             }
         }
+
+
+        return (colorProfile, exifProfile, (MagickImage?)thumbM);
+    }
+
+
+    /// <summary>
+    /// Applies color channel setting
+    /// </summary>
+    /// <returns></returns>
+    private static MagickImage ApplyColorChannel(MagickImage imgM, CodecReadOptions options)
+    {
+        // apply color channel
+        if (options.ImageChannel != ColorChannel.All)
+        {
+            return FilterColorChannel(imgM, options.ImageChannel);
+        }
+
+        return imgM;
     }
 
 
     /// <summary>
     /// Applies the size settings
     /// </summary>
-    /// <param name="imgM"></param>
-    /// <param name="options"></param>
     private static void ApplySizeSettings(IMagickImage imgM, CodecReadOptions options)
     {
         if (options.Width > 0 && options.Height > 0)
@@ -571,27 +585,6 @@ public static class PhotoCodec
             {
                 imgM.Thumbnail(options.Width, options.Height);
             }
-        }
-    }
-
-
-    /// <summary>
-    /// Checks and applies color channel from settings
-    /// </summary>
-    /// <param name="imgM"></param>
-    /// <param name="options"></param>
-    /// <param name="result"></param>
-    private static void ApplyColorChannel(MagickImage imgM, CodecReadOptions options, ref IgImgData result)
-    {
-        // apply color channel
-        if (options.ImageChannel != ColorChannel.All)
-        {
-            using var channelImgM = FilterColorChannel(imgM, options.ImageChannel);
-            result.Image = channelImgM.ToBitmap();
-        }
-        else if (result.Image is null)
-        {
-            result.Image = imgM.ToBitmap();
         }
     }
 
@@ -848,5 +841,6 @@ public static class PhotoCodec
     }
 
     #endregion
+
 
 }
