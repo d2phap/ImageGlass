@@ -71,7 +71,7 @@ public class Source
     /// Loads all config files: default, user, command-lines, admin;
     /// then unify configs.
     /// </summary>
-    public IConfigurationRoot LoadUserConfigs()
+    public static IConfigurationRoot LoadUserConfigs()
     {
         // filter the command lines begin with '-'
         // example: ImageGlass.exe -FrmMainWidth=900

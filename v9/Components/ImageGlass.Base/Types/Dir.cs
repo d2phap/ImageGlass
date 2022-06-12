@@ -7,11 +7,6 @@ namespace ImageGlass.Base;
 public static class Dir
 {
     /// <summary>
-    /// Gets folder name of language
-    /// </summary>
-    public static string Codecs { get; } = "Codecs";
-
-    /// <summary>
     /// Gets the Themes folder name
     /// </summary>
     public static string Themes { get; } = "Themes";

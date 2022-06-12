@@ -16,54 +16,18 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-using System.Runtime.InteropServices;
 
 namespace ImageGlass.Base.WinApi;
 
 public static class DpiApi
 {
-    [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-    private static extern bool SetWindowPos(HandleRef hWnd, HandleRef hWndInsertAfter, int x, int y, int cx, int cy, int flags);
-
-    [DllImport("gdi32.dll")]
-    private static extern int GetDeviceCaps(IntPtr hdc, DeviceCaps nIndex);
-
-    [DllImport("user32.dll")]
-    private static extern IntPtr GetDC(IntPtr hWnd);
-
-    [DllImport("user32.dll")]
-    private static extern void ReleaseDC(IntPtr hWnd);
-
-
-    private enum DeviceCaps
-    {
-        /// <summary>
-        /// Horizontal width in pixels
-        /// </summary>
-        HORZRES = 8,
-
-        /// <summary>
-        /// Logical pixels inch in X
-        /// </summary>
-        LOGPIXELSX = 88,
-
-        /// <summary>
-        /// Logical pixels inch in Y
-        /// </summary>
-        LOGPIXELSY = 90,
-
-        /// <summary>
-        /// Horizontal width of entire desktop in pixels
-        /// </summary>
-        DESKTOPHORZRES = 118
-    }
     private static int _currentDpi = DPI_DEFAULT;
 
     public const int WM_DPICHANGED = 0x02E0;
     public const int DPI_DEFAULT = 96;
 
     /// <summary>
-    /// Occurs when <see cref="CurrentZoom"/> value changes
+    /// Triggers <see cref="DpiChanged"/> event.
     /// </summary>
     public static event DpiChanged? OnDpiChanged = null;
     public delegate void DpiChanged();
@@ -72,7 +36,8 @@ public static class DpiApi
     /// <summary>
     /// Gets, sets current DPI scaling value
     /// </summary>
-    public static int CurrentDpi {
+    public static int CurrentDpi
+    {
         get => _currentDpi;
         set
         {

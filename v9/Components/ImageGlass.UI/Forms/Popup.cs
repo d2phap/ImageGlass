@@ -221,6 +221,7 @@ public partial class Popup : Form
         set
         {
             lblTitle.Text = value;
+            Text = value;
         }
     }
 

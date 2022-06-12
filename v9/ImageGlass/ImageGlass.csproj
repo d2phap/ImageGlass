@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Platforms>x64;x86;ARM32;ARM64</Platforms>
+    <Platforms>AnyCPU;x64;x86;ARM32;ARM64</Platforms>
     <ApplicationIcon>icon256.ico</ApplicationIcon>
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -15,7 +15,7 @@
     <PackageProjectUrl>https://imageglass.org</PackageProjectUrl>
     <RepositoryUrl>https://imageglass.org/source</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>9.0.1.518</Version>
+    <Version>9.0.1.612</Version>
     <FileVersion>$(Version)</FileVersion>
     <VersionPrefix>9.0.1</VersionPrefix>
     <VersionSuffix>beta-1</VersionSuffix>

@@ -209,7 +209,6 @@
             this.Padding = new System.Windows.Forms.Padding(1);
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "InputBox";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Popup_KeyDown);
             this.tableMain.ResumeLayout(false);
             this.tableMain.PerformLayout();

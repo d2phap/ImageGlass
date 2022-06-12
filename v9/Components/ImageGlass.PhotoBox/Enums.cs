@@ -1,5 +1,4 @@
-﻿
-/*
+﻿/*
 ImageGlass Project - Image viewer for Windows
 Copyright (C) 2010 - 2022 DUONG DIEU PHAP
 Project homepage: https://imageglass.org

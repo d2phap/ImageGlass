@@ -17,21 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Runtime.InteropServices;
+using Windows.Win32;
+using Windows.Win32.Graphics.Dwm;
 
 namespace ImageGlass.Base.WinApi;
 
 public class CornerApi
 {
-    /// <summary>
-    /// The enum flag for DwmSetWindowAttribute's second parameter,
-    /// which tells the function what attribute to set.
-    /// </summary>
-    private enum DWMWINDOWATTRIBUTE
-    {
-        DWMWA_WINDOW_CORNER_PREFERENCE = 33
-    }
-
     /// <summary>
     /// The DWM_WINDOW_CORNER_PREFERENCE enum for DwmSetWindowAttribute's third parameter, 
     /// which tells the function what value of the enum to set.
@@ -43,9 +35,6 @@ public class CornerApi
         DWMWCP_ROUND = 2,
         DWMWCP_ROUNDSMALL = 3,
     }
-
-    [DllImport("dwmapi.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-    private static extern long DwmSetWindowAttribute(IntPtr hwnd, DWMWINDOWATTRIBUTE attribute, ref DWM_WINDOW_CORNER_PREFERENCE pvAttribute, uint cbAttribute);
 
 
     /// <summary>
@@ -60,10 +49,13 @@ public class CornerApi
             return;
         }
 
+        unsafe
+        {
+            var preference = DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND;
 
-        var attribute = DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE;
-        var preference = DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND;
-
-        DwmSetWindowAttribute(handle, attribute, ref preference, sizeof(uint));
+            PInvoke.DwmSetWindowAttribute(new(handle),
+                DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE,
+                &preference, sizeof(uint));
+        }
     }
 }

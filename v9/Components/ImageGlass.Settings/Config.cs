@@ -753,7 +753,7 @@ public static class Config
     /// </summary>
     public static void Load()
     {
-        var items = _source.LoadUserConfigs();
+        var items = Source.LoadUserConfigs();
 
 
         // Boolean values

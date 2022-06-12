@@ -85,7 +85,7 @@ internal static class Program
             ex.ToString();
 
         var result = Popup.ShowError(Config.Theme, Config.Language,
-            title: Config.Language[langPath],
+            title: Application.ProductName + " - " + Config.Language[langPath],
             heading: ex.Message,
             description: description,
             details: details,
