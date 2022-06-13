@@ -54,10 +54,14 @@ internal static class Program
         var topCmd = args[0].ToLower().Trim();
 
 
-        #region SHARE <string imgPath> [int style]
+        #region SHARE <string[] imgPath>
         if (topCmd == IgCommands.SHARE)
         {
-            //////////
+            if (args.Length < 2) return (int)IgExitCode.Error;
+
+            Application.Run(new FrmShare());
+
+            return (int)IgExitCode.Done;
         }
         #endregion
 
