@@ -2875,6 +2875,9 @@ namespace ImageGlass {
                 if (Program.IsHideWindow) {
                     _ = ToggleAppVisibilityAsync(false);
                 }
+
+                // auto-focus on hover
+                toolMain.AutoFocus = Configs.AutoFocusToolbarOnHover;
             }
             #endregion
 

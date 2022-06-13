@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageGlass.Base.Update;
 using ImageGlass.Settings;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace igcmd {
@@ -26,18 +27,26 @@ namespace igcmd {
         /// <summary>
         /// Check for update
         /// </summary>
-        public static bool AutoUpdate() {
+        public static void AutoUpdate() {
+            _ = AutoUpdateAsync();
+        }
+
+
+        private static async Task AutoUpdateAsync() {
             var updater = new UpdateService();
 
-            updater.GetUpdates().Wait();
+            try {
+                await updater.GetUpdatesAsync();
+            }
+            catch { }
+
             Configs.IsNewVersionAvailable = updater.HasNewUpdate;
 
             if (updater.HasNewUpdate) {
                 Application.Run(new frmCheckForUpdate());
             }
-
-            return Configs.IsNewVersionAvailable;
         }
+
 
         /// <summary>
         /// Check for update

@@ -140,7 +140,7 @@
       <Item key="frmMain._SetLockImage_Success" value="Vergrendelingsscherm is succesvol ingesteld"/>
       <Item key="frmMain._SetBackground_Error" value="Er is iets fout gegaan bij het instellen van de bureaublad achtergrond"/>
       <Item key="frmMain._SetBackground_Success" value="Bureaublad achtergrond is succesvol ingesteld"/>
-      <Item key="frmMain._PageExtracting" value="Extracting image pages..."/>
+      <Item key="frmMain._PageExtracting" value="Afbeeldingspagina's uitpakken..."/>
       <Item key="frmMain._PageExtractComplete" value="Uitpakken van afbeelding voltooid."/>
       <Item key="frmMain._Frameless" value="Houd SHIFT ingedrukt om het scherm te bewegen."/>
       <Item key="frmMain._InvalidImageClipboardData" value="Klembord bevat geen afbeelding."/>
@@ -179,12 +179,12 @@
       <Item key="frmSetting.chkUseTouchGesture" value="Schakel aanraak ondersteuning in"/>
       <Item key="frmSetting.lblBackGroundColor" value="Achtergrondkleur"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="Resetten"/>
-      <Item key="frmSetting.lblHeadPanning" value="Panning"/>
-      <Item key="frmSetting.lblVertPanningSpeed" value="Vertical panning speed"/>
-      <Item key="frmSetting.lblHorzPanningSpeed" value="Horizontal panning speed"/>
+      <Item key="frmSetting.lblHeadPanning" value="Pannen"/>
+      <Item key="frmSetting.lblVertPanningSpeed" value="Verticale snelheid pannen"/>
+      <Item key="frmSetting.lblHorzPanningSpeed" value="Horizontale snelheid pannen"/>
       <Item key="frmSetting.lblHeadOthers" value="Andere"/>
-      <Item key="frmSetting.chkStartWithOs" value="Start with OS to improve startup speed"/>
-      <Item key="frmSetting.chkContinueRunningBackground" value="Continue running in the background when the app is closed"/>
+      <Item key="frmSetting.chkStartWithOs" value="Opstarten met besturingssysteem om de opstartsnelheid te verbeteren"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Blijf op de achtergrond draaien als de app is gesloten"/>
       <Item key="frmSetting.chkAutoUpdate" value="Controleer automatisch op updates"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="Meerdere exemplaren van het programma toestaan"/>
       <Item key="frmSetting.chkESCToQuit" value="Druk op ESC om toepassing af te sluiten"/>
@@ -197,9 +197,9 @@
       <Item key="frmSetting.chkLoopViewer" value="Ga terug naar de eerste afbeelding bij het bereiken van het einde van de lijst"/>
       <Item key="frmSetting.chkIsCenterImage" value="Centreer afbeelding op het canvas"/>
       <Item key="frmSetting.chkIsUseRawThumbnail" value="Ingesloten miniatuur gebruiken voor RAW indelingen"/>
-      <Item key="frmSetting.lblImageLoadingOrder" value="Afbeelding laden volgorde"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="Laadvolgorde afbeeldingen"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Gebruik Windows File Explorer sortering indien mogelijk"/>
-      <Item key="frmSetting.chkGroupByDirectory" value="Group images by directory"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Afbeeldingen groeperen op map"/>
       <Item key="frmSetting.lblImageBoosterCachedCount" value="Aantal afbeeldingen gecached door ImageBooster (één richting)"/>
       <Item key="frmSetting.chkIsPlayImageChangeSound" value="Geluid afspelen wanneer de afbeelding verandert"/>
       <Item key="frmSetting.lblNumberImagesNotify" value="Aantal afbeeldingen waarna melding wordt afgespeeld"/>
@@ -208,7 +208,7 @@
       <Item key="frmSetting.lblColorProfile" value="Kleurprofiel:"/>
       <Item key="frmSetting.lnkColorProfileBrowse" value="Bladeren…"/>
       <Item key="frmSetting.cmbColorProfile._None" value="Geen"/>
-      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="Use current monitor profile"/>
+      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="Huidige monitor profiel gebruiken"/>
       <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Aanpassen…"/>
       <Item key="frmSetting.lblHeadMouseWheelActions" value="Muis wiel acties"/>
       <Item key="frmSetting.lblMouseWheel" value="Muis wiel"/>

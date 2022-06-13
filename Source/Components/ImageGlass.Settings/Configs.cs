@@ -314,6 +314,12 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool AutoDisplayNewImageInFolder { get; set; } = false;
 
+        /// <summary>
+        /// Gets, sets value indicates that toolbar will be auto-focused when hovering on it.
+        /// </summary>
+        public static bool AutoFocusToolbarOnHover { get; set; } = false;
+
+
         #endregion
 
 
@@ -661,6 +667,7 @@ namespace ImageGlass.Settings {
             IsContinueRunningBackground = Get<bool>(nameof(IsContinueRunningBackground), IsContinueRunningBackground);
             IsStartWithOs = Get<bool>(nameof(IsStartWithOs), IsStartWithOs);
             AutoDisplayNewImageInFolder = Get<bool>(nameof(AutoDisplayNewImageInFolder), AutoDisplayNewImageInFolder);
+            AutoFocusToolbarOnHover = Get<bool>(nameof(AutoFocusToolbarOnHover), AutoFocusToolbarOnHover);
 
             #endregion
 
@@ -909,6 +916,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsContinueRunningBackground), IsContinueRunningBackground);
             Set(nameof(IsStartWithOs), IsStartWithOs);
             Set(nameof(AutoDisplayNewImageInFolder), AutoDisplayNewImageInFolder);
+            Set(nameof(AutoFocusToolbarOnHover), AutoFocusToolbarOnHover);
 
             #endregion
 
@@ -1246,7 +1254,7 @@ namespace ImageGlass.Settings {
             // load theme colors
             foreach (var ctr in Helpers.GetAllControls(frm, typeof(LinkLabel))) {
                 if (ctr is LinkLabel lnk) {
-                    lnk.LinkColor = lnk.VisitedLinkColor = Theme.AccentColor;
+                    lnk.LinkColor = lnk.VisitedLinkColor = Color.FromArgb(255, 9, 132, 227);
                 }
             }
 

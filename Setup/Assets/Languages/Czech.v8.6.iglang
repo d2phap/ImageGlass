@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="cz-CZ" langName="Čeština" author="etherforea" description="Czech" minVersion="8.6" isRightToLeftLayout="No"/>
+    <Info langCode="cz-CZ" langName="Čeština" author="Komunita ImageGlass" description="Czech" minVersion="8.6" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Některá nastavení nejsou kompatibilní s Vaším ImageGlass {0}. Je doporučeno je před pokračováním aktualizovat.&#10;&#10;- Klepněte na Ano pro informace o změnách.&#10;- Klepnutím na tlačítko Ne spustíte ImageGlass s výchozím nastavením."/>
       <Item key="_.ImageOrderBy._Name" value="Název (výchozí)"/>
-      <Item key="_.ImageOrderBy._Length" value="Délka"/>
+      <Item key="_.ImageOrderBy._Length" value="Velikost"/>
       <Item key="_.ImageOrderBy._CreationTime" value="Datum vytvoření"/>
-      <Item key="_.ImageOrderBy._LastAccessTime" value="Naposled zobrazeno"/>
-      <Item key="_.ImageOrderBy._LastWriteTime" value="Naposled upraveno"/>
-      <Item key="_.ImageOrderBy._Extension" value="Přípona"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Naposledy zobrazeno"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Naposledy upraveno"/>
+      <Item key="_.ImageOrderBy._Extension" value="Rozšíření"/>
       <Item key="_.ImageOrderBy._Random" value="Náhodně"/>
       <Item key="_.ImageOrderType._Asc" value="Vzestupně"/>
       <Item key="_.ImageOrderType._Desc" value="Sestupně"/>
       <Item key="_.AfterOpeningEditAppAction._Nothing" value="Nedělat nic"/>
       <Item key="_.AfterOpeningEditAppAction._Minimize" value="Minimalizovat"/>
-      <Item key="_.AfterOpeningEditAppAction._Close" value="Zavřít"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Ukončit ImageGlass"/>
       <Item key="frmMain.mnuMainFile" value="Soubor"/>
       <Item key="frmMain.mnuMainOpenFile" value="Otevřít soubor…"/>
       <Item key="frmMain.mnuMainOpenImageData" value="Otevřít obrázek ze schránky"/>
-      <Item key="frmMain.mnuMainNewWindow" value="Otevřít nový soubor"/>
-      <Item key="frmMain.mnuMainNewWindow._Error" value="Nemohu otevřít nové okno, protože je dovolena pouze jedna instance programu"/>
+      <Item key="frmMain.mnuMainNewWindow" value="Otevřít v novém okně"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Nelze otevřít nové okno, protože je povolena pouze jedna instance"/>
       <Item key="frmMain.mnuSaveImage" value="Uložit obrázek"/>
       <Item key="frmMain.mnuMainSaveAs" value="Uložit obrázek jako…"/>
       <Item key="frmMain.mnuMainRefresh" value="Obnovit"/>
@@ -46,26 +46,26 @@
       <Item key="frmMain.mnuMainZoomOut" value="Oddálit"/>
       <Item key="frmMain.mnuCustomZoom" value="Vlastní přiblížení…"/>
       <Item key="frmMain.mnuCustomZoom._Text" value="Zadejte novou hodnotu přiblížení"/>
-      <Item key="frmMain.mnuMainScaleToFit" value="Přizpůsobit měřítku"/>
-      <Item key="frmMain.mnuMainScaleToFill" value="Přizpůsobit měřítku"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="Zobrazit vše"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="Vyplnit"/>
       <Item key="frmMain.mnuMainActualSize" value="Skutečná velikost"/>
       <Item key="frmMain.mnuMainLockZoomRatio" value="Zamknout poměr přiblížení"/>
       <Item key="frmMain.mnuMainAutoZoom" value="Automatické přiblížení"/>
       <Item key="frmMain.mnuMainScaleToWidth" value="Přizpůsobit šířce okna"/>
       <Item key="frmMain.mnuMainScaleToHeight" value="Přizpůsobit výšce okna"/>
       <Item key="frmMain.mnuMainImage" value="Obrázek"/>
-      <Item key="frmMain.mnuMainChannels" value="Otevřít kanály"/>
+      <Item key="frmMain.mnuMainChannels" value="Zobrazit kanály"/>
       <Item key="frmMain.mnuMainChannels._All" value="Vše"/>
       <Item key="frmMain.mnuMainChannels._Red" value="Červená"/>
       <Item key="frmMain.mnuMainChannels._Green" value="Zelená"/>
       <Item key="frmMain.mnuMainChannels._Blue" value="Modrá"/>
       <Item key="frmMain.mnuMainChannels._Black" value="Černá"/>
-      <Item key="frmMain.mnuMainChannels._Alpha" value="Alpha"/>
-      <Item key="frmMain.mnuLoadingOrder" value="Načítání pořadí"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="Alfa"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Pořadí načítání"/>
       <Item key="frmMain.mnuMainRotateLeft" value="Otočit vlevo"/>
       <Item key="frmMain.mnuMainRotateRight" value="Otočit vpravo"/>
-      <Item key="frmMain.mnuMainFlipHorz" value="Otoč horizontálně"/>
-      <Item key="frmMain.mnuMainFlipVert" value="Otoč vertikálně"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="Překlopit horizontálně"/>
+      <Item key="frmMain.mnuMainFlipVert" value="Překlopit vertikálně"/>
       <Item key="frmMain.mnuMainRename" value="Přejmenovat obrázek…"/>
       <Item key="frmMain.mnuMainMoveToRecycleBin" value="Přesunout do koše"/>
       <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Odstranit z pevného disku"/>
@@ -81,7 +81,7 @@
       <Item key="frmMain.mnuMainCut" value="Vyjmout"/>
       <Item key="frmMain.mnuMainCopyImagePath" value="Kopírovat cestu k souboru"/>
       <Item key="frmMain.mnuMainClearClipboard" value="Vyčistit schránku"/>
-      <Item key="frmMain.mnuWindowFit" value="Přizpůsobit oknu"/>
+      <Item key="frmMain.mnuWindowFit" value="Přizpůsobit velikost okna"/>
       <Item key="frmMain.mnuMainFullScreen" value="Celá obrazovka"/>
       <Item key="frmMain.mnuFrameless" value="Bez rámečků"/>
       <Item key="frmMain.mnuMainSlideShow" value="Prezentace"/>
@@ -93,7 +93,7 @@
       <Item key="frmMain.mnuMainToolbar" value="Panel nástrojů"/>
       <Item key="frmMain.mnuMainThumbnailBar" value="Panel náhledů"/>
       <Item key="frmMain.mnuMainCheckBackground" value="Šachovnicové pozadí"/>
-      <Item key="frmMain.mnuMainAlwaysOnTop" value="Okno vždy navrchu"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Ponechat okno vždy nahoře"/>
       <Item key="frmMain.mnuMainTools" value="Nástroje"/>
       <Item key="frmMain.mnuMainColorPicker" value="Výběr barvy"/>
       <Item key="frmMain.mnuMainPageNav" value="Navigace ve stránce"/>
@@ -175,7 +175,7 @@
       <Item key="frmSetting.chkShowScrollbar" value="Zobrazit posuvníky v prohlížeči"/>
       <Item key="frmSetting.chkShowNavButtons" value="Navigace pomocí kurzorových šipek"/>
       <Item key="frmSetting.chkDisplayBasename" value="Zobrazit název souboru v horní liště v prezentaci"/>
-      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Zobrazit kontrolní tabulku v oblasti obrázku"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Zobrazit šachovnicové pozadí pouze v oblasti obrázku"/>
       <Item key="frmSetting.chkUseTouchGesture" value="Aktivovat podporu dotykových gest"/>
       <Item key="frmSetting.lblBackGroundColor" value="Barva pozadí"/>
       <Item key="frmSetting.lnkResetBackgroundColor" value="Výchozí"/>
@@ -183,16 +183,16 @@
       <Item key="frmSetting.lblVertPanningSpeed" value="Rychlost posouvání svisle"/>
       <Item key="frmSetting.lblHorzPanningSpeed" value="Rychlost posouvání vodorovně"/>
       <Item key="frmSetting.lblHeadOthers" value="Ostatní"/>
-      <Item key="frmSetting.chkStartWithOs" value="Pro zvýšení rychlosti spouštění spouštět s operačním systémem"/>
-      <Item key="frmSetting.chkContinueRunningBackground" value="Po ukončení aplikace ji nechat běžet na pozadí"/>
+      <Item key="frmSetting.chkStartWithOs" value="Pro zvýšení rychlosti spouštět s operačním systémem"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Pokračovat v běhu na pozadí, když je aplikace zavřena"/>
       <Item key="frmSetting.chkAutoUpdate" value="Automatická kontrola aktualizací"/>
       <Item key="frmSetting.chkAllowMultiInstances" value="Povolit více instancí programu"/>
       <Item key="frmSetting.chkESCToQuit" value="Povolit ukončení aplikace klávesou ESC"/>
       <Item key="frmSetting.chkConfirmationDelete" value="Zobrazit dialogové okno pro potvrzení odstranění"/>
-      <Item key="frmSetting.chkCenterWindowFit" value="Automaticky vycentrovat okno v režimu velikost obrázku podle okna"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="Automaticky vycentrovat okno programu v režimu přizpůsobení velikosti obrázku"/>
       <Item key="frmSetting.chkShowToast" value="Zobrazit kontextovou nápovědu"/>
       <Item key="frmSetting.lblHeadImageLoading" value="Načítání obrázku"/>
-      <Item key="frmSetting.chkFindChildFolder" value="Vyhledávat obrázky v podřízené složce"/>
+      <Item key="frmSetting.chkFindChildFolder" value="Vyhledávat obrázky v podsložkách"/>
       <Item key="frmSetting.chkShowHiddenImages" value="Zobrazit skryté obrázky"/>
       <Item key="frmSetting.chkLoopViewer" value="Vrátit prohlížeč na první obrázek po dosažení konce seznamu"/>
       <Item key="frmSetting.chkIsCenterImage" value="Vystředit obrázek v prohlížeči"/>
@@ -243,7 +243,7 @@
       <Item key="frmSetting.lblSlideshowInterval" value="Interval promítání slideshow: {0}"/>
       <Item key="frmSetting.lblSlideshowIntervalTo" value="do"/>
       <Item key="frmSetting.lblHeadFullScreen" value="Celá obrazovka"/>
-      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Skrýt Panel nástrojů"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Skrýt panel nástrojů"/>
       <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Skrýt panel náhledů"/>
       <Item key="frmSetting.chkSaveOnRotate" value="Ukládat obrázky po otočení"/>
       <Item key="frmSetting.lblSelectAppForEdit" value="Vyberte aplikaci pro editaci obrázku"/>
@@ -291,7 +291,7 @@
       <Item key="frmSetting.lblDefaultColorCode" value="Výchozí formát kódu barvy při kopírování"/>
       <Item key="frmSetting.chkShowPageNavAuto" value="Automaticky zobrazit navigační nástroj stránky pro vícestránkový obrázek"/>
       <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Ponechat Exif nástroj vždy na vrchu"/>
-      <Item key="frmSetting.lnkSelectExifTool" value="Vybrat soubor Exif nástrojem"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Vybrat spustitelný soubor Exif nástroje"/>
       <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Exif nástroj neexistuje nebo není funkční: &#10;{0}"/>
       <Item key="frmSetting.lblExifToolCommandArgs" value="Parametry příkazového řádku:"/>
       <Item key="frmSetting.lblExifToolCommandPreview" value="Náhled příkazu:"/>
@@ -337,14 +337,14 @@
       <Item key="frmSetting.KeyActions._DoNothing" value="Bez funkce"/>
       <Item key="frmAddNewFormat.lblFileExtension" value="Přípona souboru"/>
       <Item key="frmAddNewFormat.btnOK" value="OK"/>
-      <Item key="frmAddNewFormat.btnClose" value="Zavřít"/>
+      <Item key="frmAddNewFormat.btnClose" value="Ukončit ImageGlass"/>
       <Item key="frmEditApp.lblFileExtension" value="Přípona souboru"/>
       <Item key="frmEditApp.lblAppName" value="Název aplikace"/>
       <Item key="frmEditApp.lblAppPath" value="Cesta k aplikaci"/>
       <Item key="frmEditApp.lblAppArguments" value="Parametry aplikace"/>
       <Item key="frmEditApp.btnReset" value="Výchozí"/>
       <Item key="frmEditApp.btnOK" value="OK"/>
-      <Item key="frmEditApp.btnClose" value="Zavřít"/>
+      <Item key="frmEditApp.btnClose" value="Ukončit ImageGlass"/>
       <Item key="frmEditApp.lblPreviewLabel" value="Náhled"/>
       <Item key="frmFirstLaunch._Text" value="Konfigurace prvního spuštění"/>
       <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ImageGlass potřebuje zavřít všechny procesy, aby mohla být použita nová nastavení, chcete pokračovat?"/>
@@ -366,7 +366,7 @@
       <Item key="FrmExifTool.clnValue" value="Hodnota"/>
       <Item key="FrmExifTool.btnCopyValue" value="Zkopírovat hodnotu"/>
       <Item key="FrmExifTool.btnExport" value="Exportovat…"/>
-      <Item key="FrmExifTool.btnClose" value="Zavřít"/>
+      <Item key="FrmExifTool.btnClose" value="Ukončit ImageGlass"/>
     </Content>
   </Language>
 </ImageGlass>
