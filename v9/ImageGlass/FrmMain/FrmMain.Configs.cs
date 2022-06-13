@@ -49,6 +49,7 @@ public partial class FrmMain
         { nameof(MnuOpenWith),              new(Keys.D) },
         { nameof(MnuEdit),                  new(Keys.E) },
         { nameof(MnuPrint),                 new(Keys.Control | Keys.P) },
+        { nameof(MnuShare),                 new(Keys.S) },
         { nameof(MnuRefresh),               new(Keys.R) },
         { nameof(MnuReload),                new(Keys.Control | Keys.R) },
         { nameof(MnuReloadImageList),       new(Keys.Control | Keys.Shift | Keys.R) },
@@ -322,6 +323,7 @@ public partial class FrmMain
         MnuOpenWith.Text = lang[$"{Name}.{nameof(MnuOpenWith)}"];
         MnuEdit.Text = lang[$"{Name}.{nameof(MnuEdit)}"];
         MnuPrint.Text = lang[$"{Name}.{nameof(MnuPrint)}"];
+        MnuShare.Text = lang[$"{Name}.{nameof(MnuShare)}"];
 
         MnuRefresh.Text = lang[$"{Name}.{nameof(MnuRefresh)}"];
         MnuReload.Text = lang[$"{Name}.{nameof(MnuReload)}"];
@@ -684,6 +686,7 @@ public partial class FrmMain
         //MnuOpenWith.Visible = false;
         MnuEdit.Visible = false;
         //MnuPrint.Visible = false;
+        // MnuPrint.Visible = false;
         //MnuRefresh.Visible = false;
         //MnuReload.Visible = false;
         //MnuReloadImageList.Visible = false;

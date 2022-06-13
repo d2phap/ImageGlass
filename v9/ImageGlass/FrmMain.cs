@@ -113,7 +113,7 @@ public partial class FrmMain : Form
                 {
                     mnu.PerformClick();
                 }
-                
+
                 return true;
             }
 
@@ -355,7 +355,7 @@ public partial class FrmMain : Form
             PrepareLoading(o.FileName);
         }
     }
-    
+
 
     /// <summary>
     /// Prepare and loads images from the input path
@@ -903,7 +903,7 @@ public partial class FrmMain : Form
                 }
             }
         }
-        
+
 
         // Check if current index is greater than upper limit
         if (imageIndex >= Local.Images.Length)
@@ -948,7 +948,7 @@ public partial class FrmMain : Form
             // apply image list settings
             Local.Images.SinglePageFormats = Config.SinglePageFormats;
             Local.Images.ReadOptions = readSettings;
-            
+
 
             if (pageIndex != int.MinValue)
             {
@@ -1102,8 +1102,8 @@ public partial class FrmMain : Form
                 //}
                 //else
                 //{
-                    // reset zoom mode
-                    IG_SetZoomMode(Config.ZoomMode.ToString());
+                // reset zoom mode
+                IG_SetZoomMode(Config.ZoomMode.ToString());
                 //}
             }
 
@@ -1739,6 +1739,11 @@ public partial class FrmMain : Form
         IG_Print();
     }
 
+    private void MnuShare_Click(object sender, EventArgs e)
+    {
+        IG_Share();
+    }
+
     private void MnuRefresh_Click(object sender, EventArgs e)
     {
         IG_Refresh();
@@ -2115,9 +2120,9 @@ public partial class FrmMain : Form
 
 
 
-    #endregion
 
     #endregion
 
-    
+    #endregion
+
 }

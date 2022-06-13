@@ -150,6 +150,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuOpenWith", "Open with…"); //v7.6
         Add("FrmMain.MnuEdit", "Edit image {0}…"); //v3.0, updated 4.0
         Add("FrmMain.MnuPrint", "Print…"); //v3.0
+        Add("FrmMain.MnuShare", "Share…"); //v8.6
+        Add("FrmMain.MnuShare._Error", "Could not open Share dialog."); //v9.0
         #endregion
 
         #region Navigation

@@ -522,6 +522,32 @@ public partial class FrmMain
     }
 
 
+    private void IG_Share()
+    {
+        _ = ShowShareDialogAsync();
+    }
+
+    private async Task ShowShareDialogAsync()
+    {
+        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
+        if (!File.Exists(filePath)) return;
+
+        var args = string.Format($"{IgCommands.SHARE} \"{filePath}\"");
+
+        var result = await Helpers.RunIgcmd10(args);
+        var langPath = $"{Name}.{nameof(MnuShare)}";
+
+
+        if (result == IgExitCode.Error)
+        {
+            _ = Popup.ShowError(Config.Theme, Config.Language,
+                title: Config.Language[langPath],
+                heading: Config.Language["_._Error"],
+                description: Config.Language[$"{langPath}._Error"]);
+        }
+    }
+
+
     /// <summary>
     /// Copy multiple files
     /// </summary>
