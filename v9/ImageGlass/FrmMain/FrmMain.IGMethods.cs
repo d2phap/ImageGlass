@@ -533,13 +533,13 @@ public partial class FrmMain
         if (!File.Exists(filePath)) return;
 
         var args = string.Format($"{IgCommands.SHARE} \"{filePath}\"");
-
         var result = await Helpers.RunIgcmd10(args);
-        var langPath = $"{Name}.{nameof(MnuShare)}";
-
+        
 
         if (result == IgExitCode.Error)
         {
+            var langPath = $"{Name}.{nameof(MnuShare)}";
+
             _ = Config.ShowError(
                 description: Config.Language[$"{langPath}._Error"],
                 title: Config.Language[langPath],

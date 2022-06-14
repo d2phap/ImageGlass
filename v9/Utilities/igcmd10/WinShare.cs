@@ -16,22 +16,27 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.WindowsRuntime;
+using ImageGlass.Base;
+using ImageGlass.Settings;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
-
 
 namespace igcmd10;
 
 public class WinShare
 {
     // declare datapackage
-    private static DataPackage _dp;
-    private static readonly List<string> _filenames = new List<string>();
+    private static DataPackage? _dp;
+    private static readonly List<string> _filenames = new();
 
     public static bool IsShareShown = false;
 
+
+    /// <summary>
+    /// Show Share dialog
+    /// </summary>
+    /// <param name="windowHandle"></param>
+    /// <param name="filenames"></param>
     public static void ShowShare(IntPtr windowHandle, string[] filenames)
     {
         if (filenames.Length == 0) return;
@@ -49,8 +54,10 @@ public class WinShare
         DataTransferManagerHelper.ShowShareUIForWindow(windowHandle);
     }
 
+
     private static async void Dtm_DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
     {
+        if (_filenames.Count == 0) return;
         var deferral = e.Request.GetDeferral();
 
         // create datapackage
@@ -59,21 +66,16 @@ public class WinShare
         // create List to hold all files to share
         var filesToShare = new List<IStorageItem>();
 
-        if (_filenames.Count == 0)
-        {
-            return;
-        }
-
 
         // Set properties of shareUI
-        _dp.Properties.Title = $"Share from ImageGlass";
+        _dp.Properties.Title = $"ImageGlass {App.Version}";
 
         try
         {
             if (_filenames.Count == 1)
             {
                 // only 1 photo is being shared
-                _dp.Properties.Description = Path.GetFileName(_filenames[0]);
+                _dp.Properties.Description = _filenames[0];
             }
             else
             {
@@ -90,45 +92,13 @@ public class WinShare
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Config.ShowError(ex.Message);
         }
         finally
         {
             IsShareShown = true;
             deferral.Complete();
         }
-    }
-}
-
-
-static class DataTransferManagerHelper
-{
-    static readonly Guid _dtm_iid = new Guid(0xa5caee9b, 0x8708, 0x49d1, 0x8d, 0x36, 0x67, 0xd2, 0x5a, 0x8d, 0xa0, 0x0c);
-
-    static IDataTransferManagerInterop DataTransferManagerInterop
-    {
-        get
-        {
-            return (IDataTransferManagerInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(DataTransferManager));
-        }
-    }
-
-    public static DataTransferManager GetForWindow(IntPtr hwnd)
-    {
-        return DataTransferManagerInterop.GetForWindow(hwnd, _dtm_iid);
-    }
-
-    public static void ShowShareUIForWindow(IntPtr hwnd)
-    {
-        DataTransferManagerInterop.ShowShareUIForWindow(hwnd);
-    }
-
-    [ComImport, Guid("3A3DCD6C-3EAB-43DC-BCDE-45671CE800C8")]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    interface IDataTransferManagerInterop
-    {
-        DataTransferManager GetForWindow([In] IntPtr appWindow, [In] ref Guid riid);
-        void ShowShareUIForWindow(IntPtr appWindow);
     }
 }
 

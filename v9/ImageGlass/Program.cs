@@ -39,6 +39,8 @@ internal static class Program
     [STAThread]
     static void Main()
     {
+        #region Form configs
+
         // Issue #360: IG periodically searching for dismounted device.
         WindowApi.SetAppErrorMode();
 
@@ -55,6 +57,9 @@ internal static class Program
 
             Application.ThreadException += (object sender, ThreadExceptionEventArgs e) => Config.HandleException(e.Exception);
         }
+
+        #endregion
+
 
         // load application configs
         Config.Load();

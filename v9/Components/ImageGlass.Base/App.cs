@@ -20,7 +20,6 @@ using Microsoft.Win32;
 using System.Diagnostics;
 using System.Security.Principal;
 using System.Text;
-using static ImageGlass.Base.RegistryEx;
 
 namespace ImageGlass.Base;
 

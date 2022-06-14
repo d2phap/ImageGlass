@@ -18,9 +18,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 namespace igcmd10;
+
 partial class FrmShare : Form
 {
-
     public FrmShare()
     {
         InitializeComponent();
@@ -44,32 +44,27 @@ partial class FrmShare : Form
     {
         if (!WinShare.IsShareShown)
         {
-            Thread.Sleep(200);
+            Thread.Sleep(300);
         }
 
         base.OnActivated(e);
 
         if (CanFocus && WinShare.IsShareShown)
         {
+            Thread.Sleep(1000);
             Application.Exit();
         }
     }
 
     private void OpenShare()
     {
-        var args = Environment.GetCommandLineArgs();
-
-        try
+        if (Program.Args.Length > 1)
         {
-            if (args.Length > 2)
-            {
-                WinShare.ShowShare(Handle, args.Skip(2).ToArray());
-            }
+            WinShare.ShowShare(Handle, Program.Args.Skip(1).ToArray());
         }
-        catch
+        else
         {
-
-            Application.Exit();
+            Close();
         }
     }
 

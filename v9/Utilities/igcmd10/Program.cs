@@ -19,7 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
-using ImageGlass.UI;
 using System.Diagnostics;
 
 namespace igcmd10;
@@ -35,6 +34,8 @@ internal static class Program
     [STAThread]
     private static int Main(string[] args)
     {
+        #region Form configs
+
         // Issue #360: IG periodically searching for dismounted device.
         WindowApi.SetAppErrorMode();
 
@@ -54,9 +55,11 @@ internal static class Program
             Application.ThreadException += (object sender, ThreadExceptionEventArgs e) => Config.HandleException(e.Exception);
         }
 
+        #endregion
+
+
         // load application configs
         Config.Load();
-
         Args = args;
 
         if (args.Length == 0)
