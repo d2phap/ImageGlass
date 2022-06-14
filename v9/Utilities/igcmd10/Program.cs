@@ -20,6 +20,7 @@ using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.UI;
+using System.Diagnostics;
 
 namespace igcmd10;
 
@@ -40,6 +41,18 @@ internal static class Program
         // To customize application configuration such as set high DPI settings
         // or default font, see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
+        Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
+
+
+        // App-level exception handler for non-debugger
+        if (!Debugger.IsAttached)
+        {
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+
+            AppDomain.CurrentDomain.UnhandledException += (object sender, UnhandledExceptionEventArgs e) => Config.HandleException((Exception)e.ExceptionObject);
+
+            Application.ThreadException += (object sender, ThreadExceptionEventArgs e) => Config.HandleException(e.Exception);
+        }
 
         // load application configs
         Config.Load();
@@ -48,7 +61,7 @@ internal static class Program
 
         if (args.Length == 0)
         {
-            return Popup.ShowDefaultIgCommandError(nameof(igcmd10), Config.Theme, Config.Language);
+            return Config.ShowDefaultIgCommandError(nameof(igcmd10));
         }
 
         var topCmd = args[0].ToLower().Trim();
@@ -71,7 +84,7 @@ internal static class Program
         {
             if (args.Length < 2)
             {
-                return Popup.ShowDefaultIgCommandError(nameof(igcmd10), Config.Theme, Config.Language);
+                return Config.ShowDefaultIgCommandError(nameof(igcmd10));
             }
 
             return (int)Functions.SetLockScreenBackground(args[1]);

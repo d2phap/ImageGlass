@@ -540,10 +540,10 @@ public partial class FrmMain
 
         if (result == IgExitCode.Error)
         {
-            _ = Popup.ShowError(Config.Theme, Config.Language,
+            _ = Config.ShowError(
+                description: Config.Language[$"{langPath}._Error"],
                 title: Config.Language[langPath],
-                heading: Config.Language["_._Error"],
-                description: Config.Language[$"{langPath}._Error"]);
+                heading: Config.Language["_._Error"]);
         }
     }
 
@@ -826,15 +826,14 @@ public partial class FrmMain
 
         if (result == IgExitCode.Done)
         {
-            _ = Popup.ShowInfo(Config.Theme, Config.Language,
-                description,
+            _ = Config.ShowInfo(description,
                 Config.Language[langPath],
                 Config.Language[$"{langPath}._Success"]);
         }
         else
         {
-            _ = Popup.ShowError(Config.Theme, Config.Language,
-                Config.Language[$"{langPath}._Error"], Config.Language[langPath]);
+            _ = Config.ShowError(Config.Language[$"{langPath}._Error"],
+                Config.Language[langPath]);
         }
     }
 
@@ -898,7 +897,7 @@ public partial class FrmMain
         }
         catch (Exception ex)
         {
-            Popup.ShowError(Config.Theme, Config.Language, ex.Message, title);
+            Config.ShowError(ex.Message, title);
         }
     }
 
@@ -962,7 +961,7 @@ public partial class FrmMain
             }
             catch (Exception ex)
             {
-                Popup.ShowError(Config.Theme, Config.Language, ex.Message, title);
+                Config.ShowError(ex.Message, title);
             }
         }
     }
@@ -993,10 +992,10 @@ public partial class FrmMain
         }
         else
         {
-            _ = Popup.ShowError(Config.Theme, Config.Language,
+            _ = Config.ShowError(
+                description: Config.Language[$"{langPath}._Error"],
                 title: Config.Language[langPath],
-                heading: Config.Language["_._Error"],
-                description: Config.Language[$"{langPath}._Error"]);
+                heading: Config.Language["_._Error"]);
         }
     }
 
@@ -1026,10 +1025,10 @@ public partial class FrmMain
         }
         else
         {
-            _ = Popup.ShowError(Config.Theme, Config.Language,
+            _ = Config.ShowError(
+                description: Config.Language[$"{langPath}._Error"],
                 title: Config.Language[langPath],
-                heading: Config.Language["_._Error"],
-                description: Config.Language[$"{langPath}._Error"]);
+                heading: Config.Language["_._Error"]);
         }
     }
 }

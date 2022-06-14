@@ -181,7 +181,7 @@ public partial class FrmMain : Form
             {
                 var msg = string.Format(Config.Language[$"{Name}._ToolbarItemClick._CannotFindMenu"], tagModel.OnClick.Executable);
 
-                Popup.ShowError(Config.Theme, Config.Language, msg);
+                Config.ShowError(msg);
             }
 
             return;
@@ -247,7 +247,7 @@ public partial class FrmMain : Form
             {
                 var msg = string.Format(Config.Language[$"{Name}._ToolbarItemClick._CannotFindMethod"], tagModel.OnClick.Executable);
 
-                Popup.ShowError(Config.Theme, Config.Language, msg);
+                Config.ShowError(msg);
             }
 
             return;

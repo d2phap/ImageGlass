@@ -51,9 +51,9 @@ internal static class Program
         {
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 
-            AppDomain.CurrentDomain.UnhandledException += (object sender, UnhandledExceptionEventArgs e) => HandleException((Exception)e.ExceptionObject);
+            AppDomain.CurrentDomain.UnhandledException += (object sender, UnhandledExceptionEventArgs e) => Config.HandleException((Exception)e.ExceptionObject);
 
-            Application.ThreadException += (object sender, ThreadExceptionEventArgs e) => HandleException(e.Exception);
+            Application.ThreadException += (object sender, ThreadExceptionEventArgs e) => Config.HandleException(e.Exception);
         }
 
         // load application configs
@@ -64,37 +64,6 @@ internal static class Program
 
         // checks and runs app instance(s)
         RunAppInstances();
-    }
-
-
-    /// <summary>
-    /// Shows unhandled exception popup
-    /// </summary>
-    private static void HandleException(Exception ex)
-    {
-        var appInfo = Application.ProductName + " v" + App.Version;
-        var osInfo = Environment.OSVersion.VersionString + " " + (Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit");
-
-        var langPath = $"_._UnhandledException";
-        var description = Config.Language[$"{langPath}._Description"];
-        var details =
-            $"Application: {appInfo}\r\n" +
-            $"Release code: {Constants.APP_CODE}\r\n" +
-            $"OS: {osInfo}\r\n" +
-            $"Error: {ex.Message}\r\n\r\n" +
-            ex.ToString();
-
-        var result = Popup.ShowError(Config.Theme, Config.Language,
-            title: Application.ProductName + " - " + Config.Language[langPath],
-            heading: ex.Message,
-            description: description,
-            details: details,
-            buttons: PopupButtons.Continue_Quit);
-
-        if (result == DialogResult.Cancel)
-        {
-            Application.Exit();
-        }
     }
 
 

@@ -23,7 +23,9 @@ using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.UI;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 using System.Dynamic;
+using System.Media;
 using System.Reflection;
 using System.Text;
 
@@ -1051,6 +1053,187 @@ public static class Config
             .FirstOrDefault(i => i.Name == name);
 
         return prop;
+    }
+
+
+    /// <summary>
+    /// Show the default error popup for igcmd/igcmd10.exe
+    /// </summary>
+    /// <returns><see cref="IgExitCode.Error"/></returns>
+    public static int ShowDefaultIgCommandError(string igcmdExeName)
+    {
+        var url = "https://imageglass.org/docs/command-line-utilities";
+        var langPath = $"_._IgCommandExe._DefaultError";
+
+        var result = ShowError(
+            title: Application.ProductName + " " + Application.ProductVersion,
+            heading: Language[$"{langPath}._Heading"],
+            description: string.Format(Language[$"{langPath}._Description"], url),
+            buttons: PopupButtons.LearnMore_Close);
+
+
+        if (result == DialogResult.OK)
+        {
+            Helpers.OpenUrl(url, $"{igcmdExeName}_invalid_command");
+        }
+
+        return (int)IgExitCode.Error;
+    }
+
+
+    /// <summary>
+    /// Shows unhandled exception popup
+    /// </summary>
+    public static void HandleException(Exception ex)
+    {
+        var exeVersion = FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion;
+        var appInfo = Application.ProductName + " v" + exeVersion;
+        var osInfo = Environment.OSVersion.VersionString + " " + (Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit");
+
+        var langPath = $"_._UnhandledException";
+        var description = Language[$"{langPath}._Description"];
+        var details =
+            $"Version: {appInfo}\r\n" +
+            $"Release code: {Constants.APP_CODE}\r\n" +
+            $"OS: {osInfo}\r\n\r\n" +
+
+            $"-------------------------------------------------------------\r\n" +
+            $"Error:\r\n\r\n" +
+            $"{ex.Message}\r\n" +
+            $"-------------------------------------------------------------\r\n\r\n" +
+
+            ex.ToString();
+
+        var result = ShowError(
+            title: Application.ProductName + " - " + Language[langPath],
+            heading: ex.Message,
+            description: description,
+            details: details,
+            buttons: PopupButtons.Continue_Quit);
+
+        if (result == DialogResult.Cancel)
+        {
+            Application.Exit();
+        }
+    }
+
+
+
+    /// <summary>
+    /// Shows information popup widow.
+    /// </summary>
+    /// <param name="theme">Popup theme.</param>
+    /// <param name="lang">Popup language.</param>
+    /// <param name="title">Popup title.</param>
+    /// <param name="heading">Popup heading text.</param>
+    /// <param name="description">Popup description.</param>
+    /// <param name="details">Other details</param>
+    /// <param name="buttons">Popup buttons.</param>
+    /// <returns>
+    /// <list type="table">
+    ///   <item>
+    ///     <see cref="DialogResult.OK"/> if user clicks on
+    ///     the <c>OK</c>, <c>Yes</c> or <c>Learn more</c> button.
+    ///   </item>
+    ///   <item>
+    ///     <see cref="DialogResult.Cancel"/> if user clicks on
+    ///     the <c>Cancel</c>, <c>No</c> or <c>Close</c> button.
+    ///   </item>
+    ///   <item>
+    ///     <see cref="DialogResult.Abort"/> if user presses <c>ESC</c>.
+    ///   </item>
+    /// </list>
+    /// </returns>
+    public static DialogResult ShowInfo(
+        string description = "",
+        string title = "",
+        string heading = "",
+        string details = "",
+        PopupButtons buttons = PopupButtons.OK)
+    {
+        SystemSounds.Question.Play();
+
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, SHSTOCKICONID.SIID_INFO);
+    }
+
+
+    /// <summary>
+    /// Shows warning popup widow.
+    /// </summary>
+    /// <param name="theme">Popup theme.</param>
+    /// <param name="lang">Popup language.</param>
+    /// <param name="title">Popup title.</param>
+    /// <param name="heading">Popup heading text.</param>
+    /// <param name="description">Popup description.</param>
+    /// <param name="details">Other details</param>
+    /// <param name="buttons">Popup buttons.</param>
+    /// <returns>
+    /// <list type="table">
+    ///   <item>
+    ///     <see cref="DialogResult.OK"/> if user clicks on
+    ///     the <c>OK</c>, <c>Yes</c> or <c>Learn more</c> button.
+    ///   </item>
+    ///   <item>
+    ///     <see cref="DialogResult.Cancel"/> if user clicks on
+    ///     the <c>Cancel</c>, <c>No</c> or <c>Close</c> button.
+    ///   </item>
+    ///   <item>
+    ///     <see cref="DialogResult.Abort"/> if user presses <c>ESC</c>.
+    ///   </item>
+    /// </list>
+    /// </returns>
+    public static DialogResult ShowWarning(
+        string description = "",
+        string title = "",
+        string? heading = null,
+        string details = "",
+        PopupButtons buttons = PopupButtons.OK)
+    {
+        heading ??= Language["_._Warning"];
+
+        SystemSounds.Exclamation.Play();
+
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, SHSTOCKICONID.SIID_WARNING);
+    }
+
+
+    /// <summary>
+    /// Shows error popup widow.
+    /// </summary>
+    /// <param name="theme">Popup theme.</param>
+    /// <param name="lang">Popup language.</param>
+    /// <param name="title">Popup title.</param>
+    /// <param name="heading">Popup heading text.</param>
+    /// <param name="description">Popup description.</param>
+    /// <param name="details">Other details</param>
+    /// <param name="buttons">Popup buttons.</param>
+    /// <returns>
+    /// <list type="table">
+    ///   <item>
+    ///     <see cref="DialogResult.OK"/> if user clicks on
+    ///     the <c>OK</c>, <c>Yes</c> or <c>Learn more</c> button.
+    ///   </item>
+    ///   <item>
+    ///     <see cref="DialogResult.Cancel"/> if user clicks on
+    ///     the <c>Cancel</c>, <c>No</c> or <c>Close</c> button.
+    ///   </item>
+    ///   <item>
+    ///     <see cref="DialogResult.Abort"/> if user presses <c>ESC</c>.
+    ///   </item>
+    /// </list>
+    /// </returns>
+    public static DialogResult ShowError(
+        string description = "",
+        string title = "",
+        string? heading = null,
+        string details = "",
+        PopupButtons buttons = PopupButtons.OK)
+    {
+        heading ??= Language["_._Error"];
+
+        SystemSounds.Asterisk.Play();
+
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, SHSTOCKICONID.SIID_ERROR);
     }
 
 
