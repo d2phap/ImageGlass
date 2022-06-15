@@ -19,7 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageGlass.Base;
 using ImageGlass.Base.PhotoBox;
-using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.UI;
 using Microsoft.Extensions.Configuration;
@@ -579,7 +578,7 @@ public static class Config
     /// <summary>
     /// Gets, sets color profile string. It can be a defined name or ICC/ICM file path
     /// </summary>
-    public static string ColorProfile { get; set; } = "sRGB";
+    public static string ColorProfile { get; set; } = Constants.CURRENT_MONITOR_PROFILE;
 
     /// <summary>
     /// Gets, sets the last time to check for update. Set it to "0" to disable auto-update.
@@ -905,8 +904,7 @@ public static class Config
         #region String items
 
         ColorProfile = items.GetValue(nameof(ColorProfile), ColorProfile);
-        // TODO
-        //ColorProfile = Heart.Helpers.GetCorrectColorProfileName(ColorProfile);
+        ColorProfile = Helpers.GetCorrectColorProfileName(ColorProfile);
 
         AutoUpdate = items.GetValue(nameof(AutoUpdate), AutoUpdate);
         LastSeenImagePath = items.GetValue(nameof(LastSeenImagePath), LastSeenImagePath);

@@ -16,7 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass.Base.WinApi;
 using ImageMagick;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace ImageGlass.Base;
@@ -117,7 +119,11 @@ public partial class Helpers
     {
         var profileName = "";
 
-        if (File.Exists(name))
+        if (name.Equals(Constants.CURRENT_MONITOR_PROFILE, StringComparison.InvariantCultureIgnoreCase))
+        {
+            return Constants.CURRENT_MONITOR_PROFILE;
+        }
+        else if (File.Exists(name))
         {
             return name;
         }
@@ -146,7 +152,19 @@ public partial class Helpers
     /// <returns></returns>
     public static ColorProfile? GetColorProfile(string name)
     {
-        if (File.Exists(name))
+        if (name.Equals(Constants.CURRENT_MONITOR_PROFILE, StringComparison.InvariantCultureIgnoreCase))
+        {
+            var winHandle = Process.GetCurrentProcess().MainWindowHandle;
+            var colorProfilePath = DisplayApi.GetMonitorColorProfileFromWindow(winHandle);
+
+            if (string.IsNullOrEmpty(colorProfilePath))
+            {
+                return ColorProfile.SRGB;
+            }
+
+            return new ColorProfile(colorProfilePath);
+        }
+        else if (File.Exists(name))
         {
             return new ColorProfile(name);
         }
