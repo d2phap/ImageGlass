@@ -1,4 +1,4 @@
-ImageGlass Kobe - A lightweight, versatile image viewer
+ImageGlass - A lightweight, versatile image viewer
 ===
 
 
@@ -10,7 +10,7 @@ ImageGlass Kobe - A lightweight, versatile image viewer
 [![Twitter Follow](https://img.shields.io/twitter/follow/duongdieuphap?style=social)](https://twitter.com/duongdieuphap)
 
 
-ImageGlass Kobe is a lightweight software application whose purpose is to help you view images in a clean and intuitive working environment.
+ImageGlass is a lightweight software application whose purpose is to help you view images in a clean and intuitive working environment.
 
 It gives you the possibility to view over **80+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers speed up their work.
 
@@ -20,8 +20,8 @@ It gives you the possibility to view over **80+** common image formats, includin
 [![Latest Downloads](https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%232A7C91&label=latest%20version&style=for-the-badge)](https://imageglass.org/download)
 
 
-### ImageGlass Kobe comes to Microsoft Store!
-If you buy ImageGlass Kobe on the Microsoft Store, you'll be supporting its development directly. You will get the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes. 😊
+### ImageGlass comes to Microsoft Store!
+If you buy ImageGlass on the Microsoft Store, you'll be supporting its development directly. You will get the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes. 😊
 
 <a href="https://www.microsoft.com/store/productId/9N33VZK3C7TH">
   <img height="75" src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Get_it_from_Microsoft_Badge.svg" />
@@ -29,7 +29,7 @@ If you buy ImageGlass Kobe on the Microsoft Store, you'll be supporting its deve
 
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://github.com/ImageGlass/config/raw/main/screenshots/v8.6/8.6_1.jpg" alt="ImageGlass 8.6.6.6" width="640">
+<img src="https://github.com/ImageGlass/config/raw/main/screenshots/v8.6/8.6_1.jpg" alt="ImageGlass 8.6.7.13" width="640">
 </a><br/>
 
 
@@ -77,7 +77,7 @@ For more information about ImageGlass, go to [Documentation](https://imageglass.
 
 
 ## 💖 This project needs your help!
-ImageGlass Kobe is free and open source but developing it has taken thousands of hours of my time and a large part of my sanity. If you feel this little viewer is useful to you, it would go a great way to ensure that I can afford to take the time to continue to develop it.
+ImageGlass is free and open source but developing it has taken thousands of hours of my time and a large part of my sanity. If you feel this little viewer is useful to you, it would go a great way to ensure that I can afford to take the time to continue to develop it.
 
 Thanks for your gratitude and financial help!
 

@@ -91,6 +91,8 @@ namespace ImageGlass.UI {
         }
 
         #region Protected methods
+
+
         protected override void OnMouseMove(MouseEventArgs mea) {
             base.OnMouseMove(mea);
 
@@ -115,6 +117,7 @@ namespace ImageGlass.UI {
             }
         }
 
+
         protected override void OnMouseUp(MouseEventArgs mea) {
             base.OnMouseUp(mea);
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
@@ -123,8 +126,8 @@ namespace ImageGlass.UI {
         }
 
         protected override void OnMouseEnter(EventArgs e) {
-            if (AutoFocus && this.CanFocus && !this.Focused)
-                this.Focus();
+            if (AutoFocus && CanFocus && !Focused)
+                Focus();
 
             base.OnMouseEnter(e);
         }
