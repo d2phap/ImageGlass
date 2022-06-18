@@ -680,12 +680,19 @@ public partial class FrmMain
     /// <summary>
     /// Copies image data to clipboard
     /// </summary>
-    private async void IG_CopyImageData()
+    private void IG_CopyImageData()
+    {
+        _ = CopyImageDataAsync();
+    }
+
+    private async Task CopyImageDataAsync()
     {
         var img = await Local.Images.GetAsync(Local.CurrentIndex);
+
         if (img != null)
         {
-            Clipboard.SetImage(img.ImgData.Image);
+            ClipboardEx.SetClipboardImage(img.ImgData.Image);
+
             PicMain.ShowMessage(Config.Language[$"{Name}._CopyImageData"], Config.InAppMessageDuration);
         }
     }

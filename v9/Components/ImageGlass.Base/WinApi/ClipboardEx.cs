@@ -41,8 +41,10 @@ public class ClipboardEx
     /// Might already contain other stuff.
     /// Leave null to create a new one.
     /// </param>
-    public static void SetClipboardImage(Bitmap image, Bitmap? imageNoTr = null, DataObject? data = null)
+    public static void SetClipboardImage(Bitmap? image, Bitmap? imageNoTr = null, DataObject? data = null)
     {
+        if (image == null) return;
+
         Clipboard.Clear();
 
         if (data == null)
@@ -437,7 +439,7 @@ public class ClipboardEx
 
         if (data.Length < startIndex + bytes)
         {
-            throw new ArgumentOutOfRangeException("startIndex", "Data array is too small to write a " + bytes + "-byte value at offset " + startIndex + ".");
+            throw new ArgumentOutOfRangeException(nameof(startIndex), "Data array is too small to write a " + bytes + "-byte value at offset " + startIndex + ".");
         }
 
         for (var index = 0; index < bytes; index++)
@@ -454,7 +456,7 @@ public class ClipboardEx
 
         if (data.Length < startIndex + bytes)
         {
-            throw new ArgumentOutOfRangeException("startIndex", "Data array is too small to read a " + bytes + "-byte value at offset " + startIndex + ".");
+            throw new ArgumentOutOfRangeException(nameof(startIndex), "Data array is too small to read a " + bytes + "-byte value at offset " + startIndex + ".");
         }
 
         uint value = 0;
