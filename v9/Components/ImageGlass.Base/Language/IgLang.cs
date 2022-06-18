@@ -287,7 +287,7 @@ public class IgLang : Dictionary<string, string>
         #endregion
 
         #region Form message texts
-        Add("FrmMain.PicMain._ErrorText", "ImageGlass cannot open this picture because the file appears to be damaged, corrupted or not supported."); // v2.0 beta, updated 4.0
+        Add("FrmMain.PicMain._ErrorText", "Could not open this picture. The file appears to be damaged, corrupted or not supported."); // v2.0 beta, updated 4.0
 
         //Add("FrmMain._ImageNotExist", "The viewing image doesn't exist."); // v4.5
         Add("FrmMain.MnuMain", "Main menu"); // v3.0

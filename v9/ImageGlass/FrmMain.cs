@@ -1045,7 +1045,7 @@ public partial class FrmMain : Form
         PicMain.ClearMessage();
         if (e.CurrentIndex >= 0 || !string.IsNullOrEmpty(e.FilePath))
         {
-            PicMain.ShowMessage(Config.Language[$"{Name}._Loading"], delayMs: 1500);
+            PicMain.ShowMessage(Config.Language[$"{Name}._Loading"], "", delayMs: 1500);
         }
 
         // Select thumbnail item
@@ -1086,7 +1086,8 @@ public partial class FrmMain : Form
                 Local.Images.Unload(e.Index);
             }
 
-            PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(PicMain)}._ErrorText"] + "\r\n" + e.Error.Source + ": " + e.Error.Message);
+            PicMain.ShowMessage(e.Error.Source + ": " + e.Error.Message,
+                Config.Language[$"{Name}.{nameof(PicMain)}._ErrorText"]);
         }
 
         else if (e.Data?.ImgData.Image != null)

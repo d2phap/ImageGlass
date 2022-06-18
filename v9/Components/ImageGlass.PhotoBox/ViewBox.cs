@@ -1182,11 +1182,10 @@ public partial class ViewBox : HybridControl
     /// <param name="g"></param>
     protected virtual void DrawMessageLayer(IHybridGraphics g)
     {
-        if (Text.Trim().Length == 0) return;
-
-
         var hasHeading = !string.IsNullOrEmpty(TextHeading);
         var hasText = !string.IsNullOrEmpty(Text);
+
+        if (!hasHeading && !hasText) return;
 
         var textMargin = 20;
         var textPaddingX = textMargin * 2;
@@ -1659,11 +1658,12 @@ public partial class ViewBox : HybridControl
     /// Shows text message.
     /// </summary>
     /// <param name="text">Message to show</param>
+    /// <param name="heading">Heading text</param>
     /// <param name="durationMs">Display duration in millisecond.
     /// Set it <b>0</b> to disable,
     /// or <b>-1</b> to display permanently.</param>
     /// <param name="delayMs">Duration to delay before displaying the message.</param>
-    private async void ShowMessagePrivate(string text, int durationMs = -1, int delayMs = 0, bool forceUpdate = true)
+    private async void ShowMessagePrivate(string text, string heading = "", int durationMs = -1, int delayMs = 0, bool forceUpdate = true)
     {
         if (durationMs == 0) return;
 
@@ -1676,6 +1676,7 @@ public partial class ViewBox : HybridControl
                 await Task.Delay(delayMs, token);
             }
 
+            TextHeading = heading;
             Text = text;
 
             if (forceUpdate)
@@ -1692,13 +1693,40 @@ public partial class ViewBox : HybridControl
 
         if (durationMs > 0 || token.IsCancellationRequested)
         {
-            Text = string.Empty;
+            TextHeading = Text = string.Empty;
 
             if (forceUpdate)
             {
                 Invalidate();
             }
         }
+    }
+
+
+    /// <summary>
+    /// Shows text message.
+    /// </summary>
+    /// <param name="text">Message to show</param>
+    /// <param name="heading">Heading text</param>
+    /// <param name="durationMs">Display duration in millisecond.
+    /// Set it <b>0</b> to disable,
+    /// or <b>-1</b> to display permanently.</param>
+    /// <param name="delayMs">Duration to delay before displaying the message.</param>
+    public void ShowMessage(string text, string heading = "", int durationMs = -1, int delayMs = 0, bool forceUpdate = true)
+    {
+        if (InvokeRequired)
+        {
+            Invoke(delegate
+            {
+                ShowMessage(text, heading, durationMs, delayMs, forceUpdate);
+            });
+            return;
+        }
+
+        _msgTokenSrc?.Cancel();
+        _msgTokenSrc = new();
+
+        ShowMessagePrivate(text, heading, durationMs, delayMs, forceUpdate);
     }
 
 
@@ -1714,14 +1742,17 @@ public partial class ViewBox : HybridControl
     {
         if (InvokeRequired)
         {
-            Invoke(ShowMessage, text, durationMs, delayMs, forceUpdate);
+            Invoke(delegate
+            {
+                ShowMessage(text, durationMs, delayMs, forceUpdate);
+            });
             return;
         }
 
         _msgTokenSrc?.Cancel();
         _msgTokenSrc = new();
 
-        ShowMessagePrivate(text, durationMs, delayMs, forceUpdate);
+        ShowMessagePrivate(text, string.Empty, durationMs, delayMs, forceUpdate);
     }
 
 
@@ -1738,6 +1769,7 @@ public partial class ViewBox : HybridControl
 
         _msgTokenSrc?.Cancel();
         Text = string.Empty;
+        TextHeading = string.Empty;
 
         if (forceUpdate)
         {

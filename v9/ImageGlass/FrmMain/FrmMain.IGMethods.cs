@@ -740,7 +740,7 @@ public partial class FrmMain
                 {
                     var msg = Config.Language[$"{Name}.{nameof(MnuPasteImage)}._Error"];
 
-                    PicMain.ShowMessage($"{msg}\r\n{ex.Source}: {ex.Message}", Config.InAppMessageDuration * 200);
+                    PicMain.ShowMessage($"{ex.Source}: {ex.Message}", msg, Config.InAppMessageDuration * 200);
                 }
             }
         }
@@ -854,8 +854,7 @@ public partial class FrmMain
         if (showInAppMessage)
         {
             var msgKey = Config.EnableImageFocusMode ? "_Enable" : "_Disable";
-            PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuToggleImageFocus)}.{msgKey}"],
-                Config.InAppMessageDuration);
+            PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuToggleImageFocus)}.{msgKey}"], Config.InAppMessageDuration);
         }
 
         return Config.EnableImageFocusMode;
