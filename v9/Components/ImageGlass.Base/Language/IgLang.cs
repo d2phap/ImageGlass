@@ -139,7 +139,6 @@ public class IgLang : Dictionary<string, string>
         #region File
         Add("FrmMain.MnuFile", "File"); //v7.0
         Add("FrmMain.MnuOpenFile", "Open file…"); //v3.0
-        Add("FrmMain.MnuOpenImageData", "Open image data from clipboard"); //v3.0
         Add("FrmMain.MnuNewWindow", "Open new window"); //v7.0
         Add("FrmMain.MnuNewWindow._Error", "Cannot open new window because only one instance allowed"); //v7.0
         Add("FrmMain.MnuSave", "Save image"); //v8.1
@@ -215,10 +214,10 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuStartStopAnimating", "Start / Stop animating image"); //v3.0
         Add("FrmMain.MnuSetDesktopBackground", "Set as Desktop background"); //v3.0
         Add("FrmMain.MnuSetDesktopBackground._Error", "Could not set the viewing image as desktop background"); // v6.0
-        Add("FrmMain.MnuSetDesktopBackground._Success", "Desktop background is updated."); // v6.0
+        Add("FrmMain.MnuSetDesktopBackground._Success", "Desktop background is updated"); // v6.0
         Add("FrmMain.MnuSetLockScreen", "Set as Lock screen image"); // V6.0
         Add("FrmMain.MnuSetLockScreen._Error", "Could not set the viewing image as lock screen image"); // v6.0
-        Add("FrmMain.MnuSetLockScreen._Success", "Lock screen image is updated."); // v6.0
+        Add("FrmMain.MnuSetLockScreen._Success", "Lock screen image is updated"); // v6.0
         Add("FrmMain.MnuOpenLocation", "Open image location"); //v3.0
         Add("FrmMain.MnuImageProperties", "Image properties"); //v3.0
         #endregion
@@ -229,6 +228,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuCopyImageData", "Copy image data"); //v5.0
         Add("FrmMain.MnuCut", "Cut"); //v3.0
         Add("FrmMain.MnuCopyPath", "Copy image path"); //v3.0
+        Add("FrmMain.MnuPasteImage", "Paste image"); //v3.0
+        Add("FrmMain.MnuPasteImage._Error", "Could not find image data in the Clipboard"); // v8.0
         Add("FrmMain.MnuClearClipboard", "Clear clipboard"); //v3.0
         #endregion
 
@@ -314,17 +315,18 @@ public class IgLang : Dictionary<string, string>
 
         Add("FrmMain._ReachedFirstImage", "Reached the first image"); // v4.0
         Add("FrmMain._ReachedLastLast", "Reached the last image"); // v4.0
-        //Add("FrmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); // Added V5.0; Modified V6.0
-        //Add("FrmMain._SetLockImage_Error", "There was an error while setting lock screen image"); // v6.0
-        //Add("FrmMain._SetLockImage_Success", "Lock screen image was set successfully"); //v6.0
-        
+                                                                   //Add("FrmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); // Added V5.0; Modified V6.0
+                                                                   //Add("FrmMain._SetLockImage_Error", "There was an error while setting lock screen image"); // v6.0
+                                                                   //Add("FrmMain._SetLockImage_Success", "Lock screen image was set successfully"); //v6.0
+
 
         //Add("FrmMain._PageExtractComplete", "Page extraction completed."); // v7.5
         //Add("FrmMain._Frameless", "Hold SHIFT to move the window."); // v7.5
-        //Add("FrmMain._InvalidImageClipboardData", "Clipboard does not contain image data."); // v8.0
 
-        Add("FrmMain._ToolbarItemClick._CannotFindMenu", "Cannot find the menu {0}"); // 9.0
-        Add("FrmMain._ToolbarItemClick._CannotFindMethod", "Cannot find the method {0}"); // 9.0
+        Add("FrmMain._ClipboardImage", "Clipboard image"); //v9.0
+
+        Add("FrmMain._ToolbarItemClick._CannotFindMenu", "Cannot find the menu {0}"); // v9.0
+        Add("FrmMain._ToolbarItemClick._CannotFindMethod", "Cannot find the method {0}"); // v9.0
 
         #endregion
 

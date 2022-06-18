@@ -42,7 +42,7 @@ public partial class FrmMain
 
 	    // MnuFile
 	    { nameof(MnuOpenFile),              new(Keys.Control | Keys.O) },
-        { nameof(MnuOpenImageData),         new(Keys.Control | Keys.V) },
+        { nameof(MnuPasteImage),            new(Keys.Control | Keys.V) },
         { nameof(MnuNewWindow),             new(Keys.Control | Keys.N) },
         { nameof(MnuSave),                  new(Keys.Control | Keys.S) },
         { nameof(MnuSaveAs),                new(Keys.Control | Keys.Shift | Keys.S) },
@@ -315,7 +315,7 @@ public partial class FrmMain
         MnuFile.Text = lang[$"{Name}.{nameof(MnuFile)}"];
 
         MnuOpenFile.Text = lang[$"{Name}.{nameof(MnuOpenFile)}"];
-        MnuOpenImageData.Text = lang[$"{Name}.{nameof(MnuOpenImageData)}"];
+        MnuPasteImage.Text = lang[$"{Name}.{nameof(MnuPasteImage)}"];
         MnuNewWindow.Text = lang[$"{Name}.{nameof(MnuNewWindow)}"];
         MnuSave.Text = lang[$"{Name}.{nameof(MnuSave)}"];
         MnuSaveAs.Text = lang[$"{Name}.{nameof(MnuSaveAs)}"];
@@ -679,7 +679,6 @@ public partial class FrmMain
     {
         // MnuFile
         //MnuOpenFile.Visible = false;
-        MnuOpenImageData.Visible = false;
         MnuNewWindow.Visible = false;
         MnuSave.Visible = false;
         MnuSaveAs.Visible = false;
@@ -736,10 +735,11 @@ public partial class FrmMain
         //MnuImageProperties.Visible = false;
 
         // MnuClipboard
+        //MnuPasteImage.Visible = false;
         //MnuCopyImageData.Visible = false;
+        //MnuCopyPath.Visible = false;
         //MnuCopy.Visible = false;
         //MnuCut.Visible = false;
-        //MnuCopyPath.Visible = false;
         //MnuClearClipboard.Visible = false;
 
         toolStripMenuItem6.Visible = false;

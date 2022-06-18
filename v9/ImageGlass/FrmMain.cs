@@ -1091,6 +1091,11 @@ public partial class FrmMain : Form
 
         else if (e.Data?.ImgData.Image != null)
         {
+            // delete clipboard image
+            Local.ClipboardImage?.Dispose();
+            Local.ClipboardImage = null;
+
+            // set the main image
             PicMain.SetImage(e.Data.ImgData.Image);
 
             // Reset the zoom mode if KeepZoomRatio = FALSE
@@ -1270,25 +1275,8 @@ public partial class FrmMain : Form
             return;
         }
 
-        FileInfo? fi = null;
-
-        var fullPath = string.IsNullOrEmpty(filename)
-            ? Local.Images.GetFileName(Local.CurrentIndex)
-            : Helpers.ResolvePath(filename);
-
         var updateAll = BasicInfo.IsNull || types.HasFlag(BasicInfoUpdate.All);
-        var isFileUpdate = updateAll && !string.IsNullOrEmpty(fullPath)
-            || types.HasFlag(BasicInfoUpdate.FileSize)
-            || types.HasFlag(BasicInfoUpdate.ModifiedDateTime);
-
-        try
-        {
-            if (isFileUpdate)
-            {
-                fi = new FileInfo(fullPath);
-            }
-        }
-        catch { }
+        var clipboardImageText = string.Empty;
 
 
         // AppName
@@ -1301,80 +1289,10 @@ public partial class FrmMain : Form
             BasicInfo.AppName = string.Empty;
         }
 
-        // ListCount
-        if (updateAll || types.HasFlag(BasicInfoUpdate.ListCount))
-        {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.ListCount))
-                && Local.Images.Length > 0)
-            {
-                BasicInfo.ListCount = $"{Local.CurrentIndex + 1}/{Local.Images.Length} {Config.Language[$"{Name}._Files"]}";
-
-            }
-            else
-            {
-                BasicInfo.ListCount = string.Empty;
-            }
-        }
-
-        // Name
-        if (updateAll || types.HasFlag(BasicInfoUpdate.Name))
-        {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.Name)))
-            {
-                BasicInfo.Name = Path.GetFileName(fullPath);
-            }
-            else
-            {
-                BasicInfo.Name = string.Empty;
-            }
-        }
-
-        // Path
-        if (updateAll || types.HasFlag(BasicInfoUpdate.Path))
-        {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.Path)))
-            {
-                BasicInfo.Path = fullPath;
-            }
-            else
-            {
-                BasicInfo.Path = string.Empty;
-            }
-        }
-
-        // FileSize
-        if (updateAll || types.HasFlag(BasicInfoUpdate.FileSize))
-        {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.FileSize))
-                && fi != null)
-            {
-                BasicInfo.FileSize = Helpers.FormatSize(fi.Length);
-            }
-            else
-            {
-                BasicInfo.FileSize = string.Empty;
-            }
-        }
-
-        // Dimension
-        if (updateAll || types.HasFlag(BasicInfoUpdate.Dimension))
-        {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.Dimension))
-                && Local.Metadata != null)
-            {
-                BasicInfo.Dimension = $"{Local.Metadata.Width} x {Local.Metadata.Height} px";
-            }
-            else
-            {
-                BasicInfo.Dimension = string.Empty;
-            }
-        }
-
         // Zoom
         if (updateAll || types.HasFlag(BasicInfoUpdate.Zoom))
         {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.Zoom))
-                && Local.Metadata != null)
+            if (Config.InfoItems.Contains(nameof(BasicInfo.Zoom)))
             {
                 BasicInfo.Zoom = $"{Math.Round(PicMain.ZoomFactor * 100, 2)}%";
             }
@@ -1384,112 +1302,225 @@ public partial class FrmMain : Form
             }
         }
 
-        // FramesCount
-        if (updateAll || types.HasFlag(BasicInfoUpdate.FramesCount))
-        {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.FramesCount))
-                && Local.Metadata != null
-                && Local.Metadata.FramesCount > 1)
-            {
-                BasicInfo.FramesCount = $"{Local.Metadata.FramesCount} frames";
-            }
-            else
-            {
-                BasicInfo.FramesCount = string.Empty;
-            }
-        }
 
-        // ModifiedDateTime
-        if (updateAll || types.HasFlag(BasicInfoUpdate.ModifiedDateTime))
+        // the viewing image is a clipboard image
+        if (Local.ClipboardImage != null)
         {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.ModifiedDateTime))
-                && fi != null)
-            {
-                BasicInfo.ModifiedDateTime = Helpers.FormatDateTime(fi.LastWriteTime) + " (m)";
-            }
-            else
-            {
-                BasicInfo.ModifiedDateTime = string.Empty;
-            }
-        }
+            clipboardImageText = Config.Language[$"{Name}._ClipboardImage"];
 
-        // ExifRating
-        if (updateAll || types.HasFlag(BasicInfoUpdate.ExifRating))
-        {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.ExifRating))
-                && Local.Metadata != null)
+            // Dimension
+            if (updateAll || types.HasFlag(BasicInfoUpdate.Dimension))
             {
-                var star = Helpers.FormatStarRating(Local.Metadata.ExifRatingPercent);
-                BasicInfo.ExifRating = star > 0
-                    ? "".PadRight(star, '⭐').PadRight(5, '-').Replace("-", " -")
-                    : string.Empty;
-            }
-            else
-            {
-                BasicInfo.ExifRating = string.Empty;
-            }
-        }
-
-        // ExifDateTime
-        if (updateAll || types.HasFlag(BasicInfoUpdate.ExifDateTime))
-        {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.ExifDateTime))
-                && Local.Metadata != null
-                && Local.Metadata.ExifDateTime != null)
-            {
-                BasicInfo.ExifDateTime = Helpers.FormatDateTime(Local.Metadata.ExifDateTime) + " (e)";
-            }
-            else
-            {
-                BasicInfo.ExifDateTime = string.Empty;
-            }
-        }
-
-        // ExifDateTimeOriginal
-        if (updateAll || types.HasFlag(BasicInfoUpdate.ExifDateTimeOriginal))
-        {
-            if (Config.InfoItems.Contains(nameof(BasicInfo.ExifDateTimeOriginal))
-                && Local.Metadata != null
-                && Local.Metadata.ExifDateTimeOriginal != null)
-            {
-                BasicInfo.ExifDateTimeOriginal = Helpers.FormatDateTime(Local.Metadata.ExifDateTimeOriginal) + " (o)";
-            }
-            else
-            {
-                BasicInfo.ExifDateTimeOriginal = string.Empty;
-            }
-        }
-
-        // DateTimeAuto
-        if (updateAll || types.HasFlag(BasicInfoUpdate.DateTimeAuto))
-        {
-            var dtStr = string.Empty;
-
-            if (Config.InfoItems.Contains(nameof(BasicInfo.DateTimeAuto)))
-            {
-                if (Local.Metadata != null)
+                if (Config.InfoItems.Contains(nameof(BasicInfo.Dimension)))
                 {
-                    if (Local.Metadata.ExifDateTimeOriginal != null)
-                    {
-                        dtStr = Helpers.FormatDateTime(Local.Metadata.ExifDateTimeOriginal) + " (o)";
-                    }
-                    else if (Local.Metadata.ExifDateTime != null)
-                    {
-                        dtStr = Helpers.FormatDateTime(Local.Metadata.ExifDateTime) + " (e)";
-                    }
+                    BasicInfo.Dimension = $"{Local.ClipboardImage.Width} x {Local.ClipboardImage.Height} px";
                 }
-
-                if (fi != null && string.IsNullOrEmpty(dtStr))
+                else
                 {
-                    dtStr = Helpers.FormatDateTime(fi.LastWriteTime) + " (m)";
+                    BasicInfo.Dimension = string.Empty;
+                }
+            }
+        }
+        // the viewing image is from the image list
+        else
+        {
+            FileInfo? fi = null;
+
+            var fullPath = string.IsNullOrEmpty(filename)
+                ? Local.Images.GetFileName(Local.CurrentIndex)
+                : Helpers.ResolvePath(filename);
+
+            var isFileUpdate = updateAll && !string.IsNullOrEmpty(fullPath)
+                || types.HasFlag(BasicInfoUpdate.FileSize)
+                || types.HasFlag(BasicInfoUpdate.ModifiedDateTime);
+
+            try
+            {
+                if (isFileUpdate)
+                {
+                    fi = new FileInfo(fullPath);
+                }
+            }
+            catch { }
+
+
+            // ListCount
+            if (updateAll || types.HasFlag(BasicInfoUpdate.ListCount))
+            {
+                if (Config.InfoItems.Contains(nameof(BasicInfo.ListCount))
+                    && Local.Images.Length > 0)
+                {
+                    BasicInfo.ListCount = $"{Local.CurrentIndex + 1}/{Local.Images.Length} {Config.Language[$"{Name}._Files"]}";
+
+                }
+                else
+                {
+                    BasicInfo.ListCount = string.Empty;
                 }
             }
 
-            BasicInfo.DateTimeAuto = dtStr;
+            // Name
+            if (updateAll || types.HasFlag(BasicInfoUpdate.Name))
+            {
+                if (Config.InfoItems.Contains(nameof(BasicInfo.Name)))
+                {
+                    BasicInfo.Name = Path.GetFileName(fullPath);
+                }
+                else
+                {
+                    BasicInfo.Name = string.Empty;
+                }
+            }
+
+            // Path
+            if (updateAll || types.HasFlag(BasicInfoUpdate.Path))
+            {
+                if (Config.InfoItems.Contains(nameof(BasicInfo.Path)))
+                {
+                    BasicInfo.Path = fullPath;
+                }
+                else
+                {
+                    BasicInfo.Path = string.Empty;
+                }
+            }
+
+            // FileSize
+            if (updateAll || types.HasFlag(BasicInfoUpdate.FileSize))
+            {
+                if (Config.InfoItems.Contains(nameof(BasicInfo.FileSize))
+                    && fi != null)
+                {
+                    BasicInfo.FileSize = Helpers.FormatSize(fi.Length);
+                }
+                else
+                {
+                    BasicInfo.FileSize = string.Empty;
+                }
+            }
+
+            // FramesCount
+            if (updateAll || types.HasFlag(BasicInfoUpdate.FramesCount))
+            {
+                if (Config.InfoItems.Contains(nameof(BasicInfo.FramesCount))
+                    && Local.Metadata != null
+                    && Local.Metadata.FramesCount > 1)
+                {
+                    BasicInfo.FramesCount = $"{Local.Metadata.FramesCount} frames";
+                }
+                else
+                {
+                    BasicInfo.FramesCount = string.Empty;
+                }
+            }
+
+            // Dimension
+            if (updateAll || types.HasFlag(BasicInfoUpdate.Dimension))
+            {
+                if (Config.InfoItems.Contains(nameof(BasicInfo.Dimension))
+                    && Local.Metadata != null)
+                {
+                    BasicInfo.Dimension = $"{Local.Metadata.Width} x {Local.Metadata.Height} px";
+                }
+                else
+                {
+                    BasicInfo.Dimension = string.Empty;
+                }
+            }
+
+            // ModifiedDateTime
+            if (updateAll || types.HasFlag(BasicInfoUpdate.ModifiedDateTime))
+            {
+                if (Config.InfoItems.Contains(nameof(BasicInfo.ModifiedDateTime))
+                    && fi != null)
+                {
+                    BasicInfo.ModifiedDateTime = Helpers.FormatDateTime(fi.LastWriteTime) + " (m)";
+                }
+                else
+                {
+                    BasicInfo.ModifiedDateTime = string.Empty;
+                }
+            }
+
+            // ExifRating
+            if (updateAll || types.HasFlag(BasicInfoUpdate.ExifRating))
+            {
+                if (Config.InfoItems.Contains(nameof(BasicInfo.ExifRating))
+                    && Local.Metadata != null)
+                {
+                    var star = Helpers.FormatStarRating(Local.Metadata.ExifRatingPercent);
+                    BasicInfo.ExifRating = star > 0
+                        ? "".PadRight(star, '⭐').PadRight(5, '-').Replace("-", " -")
+                        : string.Empty;
+                }
+                else
+                {
+                    BasicInfo.ExifRating = string.Empty;
+                }
+            }
+
+            // ExifDateTime
+            if (updateAll || types.HasFlag(BasicInfoUpdate.ExifDateTime))
+            {
+                if (Config.InfoItems.Contains(nameof(BasicInfo.ExifDateTime))
+                    && Local.Metadata != null
+                    && Local.Metadata.ExifDateTime != null)
+                {
+                    BasicInfo.ExifDateTime = Helpers.FormatDateTime(Local.Metadata.ExifDateTime) + " (e)";
+                }
+                else
+                {
+                    BasicInfo.ExifDateTime = string.Empty;
+                }
+            }
+
+            // ExifDateTimeOriginal
+            if (updateAll || types.HasFlag(BasicInfoUpdate.ExifDateTimeOriginal))
+            {
+                if (Config.InfoItems.Contains(nameof(BasicInfo.ExifDateTimeOriginal))
+                    && Local.Metadata != null
+                    && Local.Metadata.ExifDateTimeOriginal != null)
+                {
+                    BasicInfo.ExifDateTimeOriginal = Helpers.FormatDateTime(Local.Metadata.ExifDateTimeOriginal) + " (o)";
+                }
+                else
+                {
+                    BasicInfo.ExifDateTimeOriginal = string.Empty;
+                }
+            }
+
+            // DateTimeAuto
+            if (updateAll || types.HasFlag(BasicInfoUpdate.DateTimeAuto))
+            {
+                var dtStr = string.Empty;
+
+                if (Config.InfoItems.Contains(nameof(BasicInfo.DateTimeAuto)))
+                {
+                    if (Local.Metadata != null)
+                    {
+                        if (Local.Metadata.ExifDateTimeOriginal != null)
+                        {
+                            dtStr = Helpers.FormatDateTime(Local.Metadata.ExifDateTimeOriginal) + " (o)";
+                        }
+                        else if (Local.Metadata.ExifDateTime != null)
+                        {
+                            dtStr = Helpers.FormatDateTime(Local.Metadata.ExifDateTime) + " (e)";
+                        }
+                    }
+
+                    if (fi != null && string.IsNullOrEmpty(dtStr))
+                    {
+                        dtStr = Helpers.FormatDateTime(fi.LastWriteTime) + " (m)";
+                    }
+                }
+
+                BasicInfo.DateTimeAuto = dtStr;
+            }
+
         }
 
 
-        Text = BasicInfo.ToString(Config.InfoItems);
+        Text = BasicInfo.ToString(Config.InfoItems, Local.ClipboardImage != null, clipboardImageText);
         Application.DoEvents();
     }
 
@@ -1615,7 +1646,7 @@ public partial class FrmMain : Form
         if (!imageNotFound)
         {
             if (!Local.IsImageError
-                && !Local.IsTempMemoryData
+                && Local.ClipboardImage == null
                 && Local.Metadata?.FramesCount <= 1)
             {
                 MnuContext.Items.Add(MenuUtils.Clone(MnuViewChannels));
@@ -1651,7 +1682,7 @@ public partial class FrmMain : Form
         }
 
 
-        if (!imageNotFound && !Local.IsImageError || Local.IsTempMemoryData)
+        if ((!imageNotFound && !Local.IsImageError) || Local.ClipboardImage != null)
         {
             MnuContext.Items.Add(MenuUtils.Clone(MnuSetDesktopBackground));
 
@@ -1662,26 +1693,28 @@ public partial class FrmMain : Form
             }
         }
 
+
         // Menu group: CLIPBOARD
         #region Menu group: CLIPBOARD
         MnuContext.Items.Add(new ToolStripSeparator());//------------
 
+        MnuContext.Items.Add(MenuUtils.Clone(MnuPasteImage));
         MnuContext.Items.Add(MenuUtils.Clone(MnuCopyImageData));
 
-        if (!imageNotFound && !Local.IsTempMemoryData)
+        if (!imageNotFound && Local.ClipboardImage == null)
         {
             MnuContext.Items.Add(MenuUtils.Clone(MnuCopy));
             MnuContext.Items.Add(MenuUtils.Clone(MnuCut));
         }
 
-        //MnuContext.Items.Add(MenuUtils.Clone(MnuOpenImageData));
-        if (!imageNotFound && !Local.IsTempMemoryData)
+        if (!imageNotFound && Local.ClipboardImage == null)
         {
             MnuContext.Items.Add(MenuUtils.Clone(MnuClearClipboard));
         }
         #endregion
 
-        if (!imageNotFound && !Local.IsTempMemoryData)
+
+        if (!imageNotFound && Local.ClipboardImage == null)
         {
             MnuContext.Items.Add(new ToolStripSeparator());//------------
             MnuContext.Items.Add(MenuUtils.Clone(MnuRename));
@@ -1702,11 +1735,6 @@ public partial class FrmMain : Form
     private void MnuOpenFile_Click(object sender, EventArgs e)
     {
         IG_OpenFile();
-    }
-
-    private void MnuOpenImageData_Click(object sender, EventArgs e)
-    {
-        // TODO
     }
 
     private void MnuNewWindow_Click(object sender, EventArgs e)
@@ -2012,6 +2040,12 @@ public partial class FrmMain : Form
 
     // Menu Clipboard
     #region Menu Clipboard
+
+    private void MnuPasteImage_Click(object sender, EventArgs e)
+    {
+        IG_PasteImage();
+    }
+
     private void MnuCopyImageData_Click(object sender, EventArgs e)
     {
         IG_CopyImageData();

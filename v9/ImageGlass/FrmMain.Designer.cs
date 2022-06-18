@@ -36,7 +36,7 @@ namespace ImageGlass
             this.MnuMain = new ImageGlass.UI.ModernMenu(this.components);
             this.MnuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuOpenFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuOpenImageData = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuPasteImage = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuNewWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuSave = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuSaveAs = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,6 +99,7 @@ namespace ImageGlass
             this.MnuCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuCut = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem19 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem23 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuCopyPath = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuClearClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
@@ -215,7 +216,6 @@ namespace ImageGlass
             // 
             this.MnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MnuOpenFile,
-            this.MnuOpenImageData,
             this.MnuNewWindow,
             this.MnuSave,
             this.MnuSaveAs,
@@ -240,12 +240,12 @@ namespace ImageGlass
             this.MnuOpenFile.Text = "[Open file...]";
             this.MnuOpenFile.Click += new System.EventHandler(this.MnuOpenFile_Click);
             // 
-            // MnuOpenImageData
+            // MnuPasteImage
             // 
-            this.MnuOpenImageData.Name = "MnuOpenImageData";
-            this.MnuOpenImageData.Size = new System.Drawing.Size(364, 30);
-            this.MnuOpenImageData.Text = "[Open image data from clipboard]";
-            this.MnuOpenImageData.Click += new System.EventHandler(this.MnuOpenImageData_Click);
+            this.MnuPasteImage.Name = "MnuPasteImage";
+            this.MnuPasteImage.Size = new System.Drawing.Size(364, 30);
+            this.MnuPasteImage.Text = "[Paste image]";
+            this.MnuPasteImage.Click += new System.EventHandler(this.MnuPasteImage_Click);
             // 
             // MnuNewWindow
             // 
@@ -685,11 +685,13 @@ namespace ImageGlass
             // MnuClipboard
             // 
             this.MnuClipboard.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MnuPasteImage,
+            this.toolStripMenuItem19,
             this.MnuCopyImageData,
+            this.MnuCopyPath,
             this.MnuCopy,
             this.MnuCut,
-            this.toolStripMenuItem19,
-            this.MnuCopyPath,
+            this.toolStripMenuItem23,
             this.MnuClearClipboard});
             this.MnuClipboard.Image = ((System.Drawing.Image)(resources.GetObject("MnuClipboard.Image")));
             this.MnuClipboard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -723,6 +725,11 @@ namespace ImageGlass
             // 
             this.toolStripMenuItem19.Name = "toolStripMenuItem19";
             this.toolStripMenuItem19.Size = new System.Drawing.Size(249, 6);
+            // 
+            // toolStripMenuItem23
+            // 
+            this.toolStripMenuItem23.Name = "toolStripMenuItem23";
+            this.toolStripMenuItem23.Size = new System.Drawing.Size(249, 6);
             // 
             // MnuCopyPath
             // 
@@ -1233,7 +1240,7 @@ namespace ImageGlass
         private ToolStripSeparator toolStripMenuItem8;
         private ToolStripSeparator toolStripMenuItem9;
         private ToolStripMenuItem MnuOpenFile;
-        private ToolStripMenuItem MnuOpenImageData;
+        private ToolStripMenuItem MnuPasteImage;
         private ToolStripMenuItem MnuNewWindow;
         private ToolStripMenuItem MnuSave;
         private ToolStripMenuItem MnuSaveAs;
@@ -1289,6 +1296,7 @@ namespace ImageGlass
         private ToolStripMenuItem MnuCopy;
         private ToolStripMenuItem MnuCut;
         private ToolStripSeparator toolStripMenuItem19;
+        private ToolStripSeparator toolStripMenuItem23;
         private ToolStripMenuItem MnuCopyPath;
         private ToolStripMenuItem MnuClearClipboard;
         private ToolStripMenuItem MnuStartSlideshow;

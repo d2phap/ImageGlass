@@ -176,9 +176,9 @@ internal class Local
     public static string ImageModifiedPath { get; set; } = "";
 
     /// <summary>
-    /// Gets, sets value indicating whether the viewing image is memory data (clipboard / screenshot,...) or not
+    /// Gets, sets the temporary image data
     /// </summary>
-    public static bool IsTempMemoryData { get; set; } = false;
+    public static Bitmap? ClipboardImage { get; set; }
 
     /// <summary>
     /// Gets, sets copied filename collection (multi-copy)
