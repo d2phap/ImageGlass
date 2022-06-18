@@ -288,7 +288,7 @@ public static class Config
     /// <summary>
     /// Gets, sets value indicating that FrmMain is always on top or not.
     /// </summary>
-    public static bool EnableWindowAlwaysOnTop { get; set; } = false;
+    public static bool EnableWindowTopMost { get; set; } = false;
 
     ///// <summary>
     ///// Gets, sets value of FrmMain's frameless mode.
@@ -779,7 +779,7 @@ public static class Config
         //EnablePressESCToQuit = items.GetValue(nameof(EnablePressESCToQuit), EnablePressESCToQuit);
         ShowCheckerBoard = items.GetValue(nameof(ShowCheckerBoard), ShowCheckerBoard);
         EnableMultiInstances = items.GetValue(nameof(EnableMultiInstances), EnableMultiInstances);
-        EnableWindowAlwaysOnTop = items.GetValue(nameof(EnableWindowAlwaysOnTop), EnableWindowAlwaysOnTop);
+        EnableWindowTopMost = items.GetValue(nameof(EnableWindowTopMost), EnableWindowTopMost);
         //IsWindowFrameless = items.GetValue(nameof(IsWindowFrameless), IsWindowFrameless);
         //IsThumbnailHorizontal = items.GetValue(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
         RequireDeleteConfirmation = items.GetValue(nameof(RequireDeleteConfirmation), RequireDeleteConfirmation);
@@ -1278,7 +1278,7 @@ public static class Config
         //settings.TryAdd(nameof(EnablePressESCToQuit), EnablePressESCToQuit);
         settings.TryAdd(nameof(ShowCheckerBoard), ShowCheckerBoard);
         settings.TryAdd(nameof(EnableMultiInstances), EnableMultiInstances);
-        settings.TryAdd(nameof(EnableWindowAlwaysOnTop), EnableWindowAlwaysOnTop);
+        settings.TryAdd(nameof(EnableWindowTopMost), EnableWindowTopMost);
         //settings.TryAdd(nameof(IsWindowFrameless), IsWindowFrameless);
         //settings.TryAdd(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
         settings.TryAdd(nameof(RequireDeleteConfirmation), RequireDeleteConfirmation);

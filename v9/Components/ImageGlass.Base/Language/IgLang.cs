@@ -225,14 +225,19 @@ public class IgLang : Dictionary<string, string>
         #region Clipboard
         Add("FrmMain.MnuClipboard", "Clipboard"); //v3.0
         Add("FrmMain.MnuCopy", "Copy"); //v3.0
+        Add("FrmMain.MnuCopy._Success", "Copied {0} file(s)."); // v2.0 final
         Add("FrmMain.MnuCopyImageData", "Copy image data"); //v5.0
         Add("FrmMain.MnuCopyImageData._Copying", "Still copying the image data..."); // v9.0
-        Add("FrmMain.MnuCopyImageData._Copied", "Copied the current image data."); // v5.0
+        Add("FrmMain.MnuCopyImageData._Success", "Copied the current image data."); // v5.0
         Add("FrmMain.MnuCut", "Cut"); //v3.0
+        Add("FrmMain.MnuCut._Success", "Cut {0} file(s)."); // v2.0 final
         Add("FrmMain.MnuCopyPath", "Copy image path"); //v3.0
+        Add("FrmMain.MnuCopyPath._Success", "Copied the current image path."); // v9.0
         Add("FrmMain.MnuPasteImage", "Paste image"); //v3.0
         Add("FrmMain.MnuPasteImage._Error", "Could not find image data in the Clipboard"); // v8.0
         Add("FrmMain.MnuClearClipboard", "Clear clipboard"); //v3.0
+        Add("FrmMain.MnuClearClipboard._Success", "Cleared clipboard."); // v2.0 final
+
         #endregion
 
         Add("FrmMain.MnuWindowFit", "Window fit"); //v7.5
@@ -252,6 +257,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuToggleThumbnails", "Thumbnail panel"); //v3.0
         Add("FrmMain.MnuToggleCheckerboard", "Checkerboard background"); //v3.0, updated v5.0
         Add("FrmMain.MnuToggleTopMost", "Keep window always on top"); //v3.2
+        Add("FrmMain.MnuToggleTopMost._Enable", "Enabled window always on top"); // v9.0
+        Add("FrmMain.MnuToggleTopMost._Disable", "Disabled window always on top"); // v9.0
         #endregion
 
         #region Tools
@@ -298,18 +305,13 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain._Files", "file(s)"); // v7.5
         Add("FrmMain._Loading", "Loading..."); // v3.0
         //Add("FrmMain._Pages", "pages"); // v7.5
-        //Add("FrmMain._ImageData", "Image data"); // v5.0
 
         //Add("FrmMain._ExtractPageText", "Extracting image pages. Please select output folder.");
         //Add("FrmMain._FullScreenMessage", "Press {0} to exit full screen mode.");// v2.0 beta, v6.0, v8.0
         //Add("FrmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu."); // v2.0 beta
         //Add("FrmMain._SlideshowMessagePause", "Slideshow is paused"); // v4.0
         //Add("FrmMain._SlideshowMessageResume", "Slideshow is resumed"); // v4.0
-        Add("FrmMain._CopyFileText", "Copied {0} file(s)."); // v2.0 final
-        Add("FrmMain._CutFileText", "Cut {0} file(s)."); // v2.0 final
         
-        Add("FrmMain._ImagePathCopied", "Copied the current image path."); // v9.0
-        Add("FrmMain._ClearClipboard", "Cleared clipboard."); // v2.0 final
         //Add("FrmMain._SaveChanges", "Saving change..."); // v2.0 final
         //Add("FrmMain._SaveImage", "Image was saved to\r\n{0}"); // v5.0
         //Add("FrmMain._SavingImage", "Saving image...\r\n{0}"); // v7.6
@@ -317,9 +319,9 @@ public class IgLang : Dictionary<string, string>
 
         Add("FrmMain._ReachedFirstImage", "Reached the first image"); // v4.0
         Add("FrmMain._ReachedLastLast", "Reached the last image"); // v4.0
-                                                                   //Add("FrmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); // Added V5.0; Modified V6.0
-                                                                   //Add("FrmMain._SetLockImage_Error", "There was an error while setting lock screen image"); // v6.0
-                                                                   //Add("FrmMain._SetLockImage_Success", "Lock screen image was set successfully"); //v6.0
+        //Add("FrmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); // Added V5.0; Modified V6.0
+        //Add("FrmMain._SetLockImage_Error", "There was an error while setting lock screen image"); // v6.0
+        //Add("FrmMain._SetLockImage_Success", "Lock screen image was set successfully"); //v6.0
 
 
         //Add("FrmMain._PageExtractComplete", "Page extraction completed."); // v7.5

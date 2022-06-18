@@ -179,7 +179,7 @@ public partial class FrmMain
         Local.OnRequestUpdateFrmMain += Local_OnFrmMainUpdateRequested;
 
         // IsWindowAlwaysOnTop
-        IG_ToggleTopMost(Config.EnableWindowAlwaysOnTop);
+        IG_ToggleTopMost(Config.EnableWindowTopMost);
 
         // EnableImageFocus
         IG_ToggleImageFocus(Config.EnableImageFocusMode, showInAppMessage: false);

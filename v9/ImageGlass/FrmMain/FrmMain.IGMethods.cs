@@ -345,16 +345,19 @@ public partial class FrmMain
     /// <returns></returns>
     private bool IG_ToggleTopMost(bool? enableTopMost = null)
     {
-        enableTopMost ??= !Config.EnableWindowAlwaysOnTop;
-        Config.EnableWindowAlwaysOnTop = enableTopMost.Value;
+        enableTopMost ??= !Config.EnableWindowTopMost;
+        Config.EnableWindowTopMost = enableTopMost.Value;
 
         // Gallery bar
-        TopMost = Config.EnableWindowAlwaysOnTop;
+        TopMost = Config.EnableWindowTopMost;
 
         // update menu item state
         MnuToggleTopMost.Checked = TopMost;
 
-        return Config.EnableWindowAlwaysOnTop;
+        var msgKey = Config.EnableWindowTopMost ? "_Enable" : "_Disable";
+        PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuToggleTopMost)}.{msgKey}"], Config.InAppMessageDuration);
+
+        return Config.EnableWindowTopMost;
     }
 
 
@@ -588,7 +591,7 @@ public partial class FrmMain
         Clipboard.SetFileDropList(fileDropList);
 
         PicMain.ShowMessage(
-            string.Format(Config.Language[$"{Name}._CopyFileText"], Local.StringClipboard.Count),
+            string.Format(Config.Language[$"{Name}.{nameof(MnuCopy)}._Success"], Local.StringClipboard.Count),
             Config.InAppMessageDuration);
     }
 
@@ -596,7 +599,13 @@ public partial class FrmMain
     /// <summary>
     /// Cut multiple files
     /// </summary>
-    private async void IG_CutMultiFiles()
+    private void IG_CutMultiFiles()
+    {
+        _ = CutMultiFilesAsync();
+    }
+
+
+    private async Task CutMultiFilesAsync()
     {
         // get filename
         var filename = Local.Images.GetFileName(Local.CurrentIndex);
@@ -642,7 +651,7 @@ public partial class FrmMain
         }
 
         PicMain.ShowMessage(
-            string.Format(Config.Language[$"{Name}._CutFileText"], Local.StringClipboard.Count),
+            string.Format(Config.Language[$"{Name}.{nameof(MnuCut)}._Success"], Local.StringClipboard.Count),
             Config.InAppMessageDuration);
     }
 
@@ -656,7 +665,7 @@ public partial class FrmMain
         {
             Clipboard.SetText(Local.Images.GetFileName(Local.CurrentIndex));
 
-            PicMain.ShowMessage(Config.Language[$"{Name}._ImagePathCopied"], Config.InAppMessageDuration);
+            PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuCopyPath)}._Success"], Config.InAppMessageDuration);
         }
         catch { }
     }
@@ -674,7 +683,7 @@ public partial class FrmMain
             Clipboard.Clear();
         }
 
-        PicMain.ShowMessage(Config.Language[$"{Name}._ClearClipboard"], Config.InAppMessageDuration);
+        PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuClearClipboard)}._ClearClipboard"], Config.InAppMessageDuration);
     }
 
 
@@ -699,7 +708,7 @@ public partial class FrmMain
 
             await Task.Run(() => ClipboardEx.SetClipboardImage(img.ImgData.Image));
 
-            PicMain.ShowMessage(Config.Language[$"{langPath}._Copied"], Config.InAppMessageDuration);
+            PicMain.ShowMessage(Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
         }
     }
 
@@ -750,6 +759,7 @@ public partial class FrmMain
             }
         }
     }
+
 
     private void LoadClipboardImage(Bitmap? img)
     {

@@ -243,7 +243,7 @@ internal static class Program
             // Hack for issue #620: IG does not activate in normal / maximized window state
             FormMain.TopMost = true;
             WindowApi.ClickOnWindow(FormMain.Handle, new(0, 0));
-            FormMain.TopMost = Config.EnableWindowAlwaysOnTop;
+            FormMain.TopMost = Config.EnableWindowTopMost;
         }
     }
 
