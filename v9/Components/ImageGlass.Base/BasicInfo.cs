@@ -59,18 +59,36 @@ public static class BasicInfo
     /// <summary>
     /// Gets complete information string in order
     /// </summary>
-    /// <param name="orders"></param>
-    /// <returns></returns>
-    public static string ToString(List<string> orders)
+    public static string ToString(List<string> infoTags, bool isVirtualImage, string clipboardImageText = "")
     {
         var strBuilder = new StringBuilder();
         int count = 0;
 
+        // remove unsupported tags for virtual image
+        if (isVirtualImage)
+        {
+            ListCount =
+                Name =
+                Path =
+                FileSize =
+                FramesCount =
+                ModifiedDateTime =
+                ExifRating =
+                ExifDateTime =
+                ExifDateTimeOriginal =
+                DateTimeAuto = null;
 
-        foreach (var key in orders)
+            if (!string.IsNullOrEmpty(clipboardImageText))
+            {
+                strBuilder.Append(clipboardImageText);
+                count++;
+            }
+        }
+
+        foreach (var tag in infoTags)
         {
             // get the property using name
-            var str = typeof(BasicInfo).GetProperty(key)?.GetValue(null)?.ToString();
+            var str = typeof(BasicInfo).GetProperty(tag)?.GetValue(null)?.ToString();
 
             if (!string.IsNullOrEmpty(str))
             {
