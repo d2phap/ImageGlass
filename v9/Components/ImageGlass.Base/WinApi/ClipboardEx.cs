@@ -80,7 +80,7 @@ public class ClipboardEx
     /// </summary>
     /// <param name="retrievedData">The clipboard data.</param>
     /// <returns>The extracted image, or null if no supported image type was found.</returns>
-    public static Bitmap? GetClipboardImage(DataObject retrievedData)
+    public static Bitmap? GetClipboardImage(IDataObject retrievedData)
     {
         Bitmap? clipboardImage = null;
 

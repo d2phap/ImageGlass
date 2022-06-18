@@ -179,6 +179,98 @@ public static class PhotoCodec
     }
 
 
+    /// <summary>
+    /// Converts base64 string to Bitmap.
+    /// </summary>
+    /// <param name="content">Base64 string</param>
+    /// <returns></returns>
+    public static Bitmap? Base64ToBitmap(string content)
+    {
+        var (MimeType, ByteData) = Helpers.ConvertBase64ToBytes(content);
+        if (string.IsNullOrEmpty(MimeType)) return null;
+
+        // supported MIME types:
+        // https://www.iana.org/assignments/media-types/media-types.xhtml#image
+        #region Settings
+        var settings = new MagickReadSettings();
+
+        switch (MimeType)
+        {
+            case "image/avif":
+                settings.Format = MagickFormat.Avif;
+                break;
+            case "image/bmp":
+                settings.Format = MagickFormat.Bmp;
+                break;
+            case "image/gif":
+                settings.Format = MagickFormat.Gif;
+                break;
+            case "image/tiff":
+                settings.Format = MagickFormat.Tiff;
+                break;
+            case "image/jpeg":
+                settings.Format = MagickFormat.Jpeg;
+                break;
+            case "image/svg+xml":
+                settings.BackgroundColor = MagickColors.Transparent;
+                settings.Format = MagickFormat.Svg;
+                break;
+            case "image/x-icon":
+                settings.Format = MagickFormat.Ico;
+                break;
+            case "image/x-portable-anymap":
+                settings.Format = MagickFormat.Pnm;
+                break;
+            case "image/x-portable-bitmap":
+                settings.Format = MagickFormat.Pbm;
+                break;
+            case "image/x-portable-graymap":
+                settings.Format = MagickFormat.Pgm;
+                break;
+            case "image/x-portable-pixmap":
+                settings.Format = MagickFormat.Ppm;
+                break;
+            case "image/x-xbitmap":
+                settings.Format = MagickFormat.Xbm;
+                break;
+            case "image/x-xpixmap":
+                settings.Format = MagickFormat.Xpm;
+                break;
+            case "image/x-cmu-raster":
+                settings.Format = MagickFormat.Ras;
+                break;
+        }
+        #endregion
+
+
+        Bitmap? bmp = null;
+        switch (settings.Format)
+        {
+            case MagickFormat.Gif:
+            case MagickFormat.Gif87:
+            case MagickFormat.Tif:
+            case MagickFormat.Tiff64:
+            case MagickFormat.Tiff:
+            case MagickFormat.Ico:
+            case MagickFormat.Icon:
+                bmp = new Bitmap(new MemoryStream(ByteData)
+                {
+                    Position = 0
+                }, true);
+
+                break;
+
+            default:
+                using (var imgM = new MagickImage(ByteData, settings))
+                {
+                    bmp = imgM.ToBitmap();
+                }
+                break;
+        }
+
+        return bmp;
+    }
+
     #endregion
 
 
@@ -214,7 +306,7 @@ public static class PhotoCodec
                     base64Content = fs.ReadToEnd();
                 }
 
-                result.Image = ConvertBase64ToBitmap(base64Content);
+                result.Image = Base64ToBitmap(base64Content);
                 result.FrameCount = options.Metadata?.FramesCount ?? 0;
 
                 break;
@@ -661,99 +753,6 @@ public static class PhotoCodec
         ms.Position = 0;
 
         return new Bitmap(ms, true);
-    }
-
-
-    /// <summary>
-    /// Converts base64 string to Bitmap.
-    /// </summary>
-    /// <param name="content">Base64 string</param>
-    /// <returns></returns>
-    private static Bitmap? ConvertBase64ToBitmap(string content)
-    {
-        var (mimeType, rawData) = Helpers.ConvertBase64ToBytes(content);
-        if (string.IsNullOrEmpty(mimeType)) return null;
-
-        // supported MIME types:
-        // https://www.iana.org/assignments/media-types/media-types.xhtml#image
-        #region Settings
-        var settings = new MagickReadSettings();
-
-        switch (mimeType)
-        {
-            case "image/avif":
-                settings.Format = MagickFormat.Avif;
-                break;
-            case "image/bmp":
-                settings.Format = MagickFormat.Bmp;
-                break;
-            case "image/gif":
-                settings.Format = MagickFormat.Gif;
-                break;
-            case "image/tiff":
-                settings.Format = MagickFormat.Tiff;
-                break;
-            case "image/jpeg":
-                settings.Format = MagickFormat.Jpeg;
-                break;
-            case "image/svg+xml":
-                settings.BackgroundColor = MagickColors.Transparent;
-                settings.Format = MagickFormat.Svg;
-                break;
-            case "image/x-icon":
-                settings.Format = MagickFormat.Ico;
-                break;
-            case "image/x-portable-anymap":
-                settings.Format = MagickFormat.Pnm;
-                break;
-            case "image/x-portable-bitmap":
-                settings.Format = MagickFormat.Pbm;
-                break;
-            case "image/x-portable-graymap":
-                settings.Format = MagickFormat.Pgm;
-                break;
-            case "image/x-portable-pixmap":
-                settings.Format = MagickFormat.Ppm;
-                break;
-            case "image/x-xbitmap":
-                settings.Format = MagickFormat.Xbm;
-                break;
-            case "image/x-xpixmap":
-                settings.Format = MagickFormat.Xpm;
-                break;
-            case "image/x-cmu-raster":
-                settings.Format = MagickFormat.Ras;
-                break;
-        }
-        #endregion
-
-
-        Bitmap? bmp = null;
-        switch (settings.Format)
-        {
-            case MagickFormat.Gif:
-            case MagickFormat.Gif87:
-            case MagickFormat.Tif:
-            case MagickFormat.Tiff64:
-            case MagickFormat.Tiff:
-            case MagickFormat.Ico:
-            case MagickFormat.Icon:
-                bmp = new Bitmap(new MemoryStream(rawData)
-                {
-                    Position = 0
-                }, true);
-
-                break;
-
-            default:
-                using (var imgM = new MagickImage(rawData, settings))
-                {
-                    bmp = imgM.ToBitmap();
-                }
-                break;
-        }
-
-        return bmp;
     }
 
 

@@ -60,7 +60,7 @@ public partial class Helpers
     /// </summary>
     /// <param name="content">Base64 string</param>
     /// <returns></returns>
-    public static (string, byte[]) ConvertBase64ToBytes(string content)
+    public static (string MimeType, byte[] ByteData) ConvertBase64ToBytes(string content)
     {
         if (string.IsNullOrWhiteSpace(content))
         {
@@ -80,7 +80,7 @@ public partial class Helpers
 
 
         var base64Data = match.Groups["data"].Value;
-        var rawData = Convert.FromBase64String(base64Data);
+        var byteData = Convert.FromBase64String(base64Data);
         var mimeType = match.Groups["type"].Value.ToLower();
 
         if (mimeType.Length == 0)
@@ -89,7 +89,7 @@ public partial class Helpers
             mimeType = "image/png";
         }
 
-        return (mimeType, rawData);
+        return (mimeType, byteData);
     }
 
 
