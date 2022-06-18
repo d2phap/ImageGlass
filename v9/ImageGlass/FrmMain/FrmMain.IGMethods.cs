@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Base.PhotoBox;
+using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Library.WinAPI;
 using ImageGlass.PhotoBox;
@@ -495,7 +496,7 @@ public partial class FrmMain
         var currentFile = Local.Images.GetFileName(Local.CurrentIndex);
         var fileToPrint = currentFile;
 
-        if (Local.IsTempMemoryData || Local.Metadata?.FramesCount == 1)
+        if (Local.ClipboardImage != null || Local.Metadata?.FramesCount == 1)
         {
             // TODO: // save image to temp file
             //fileToPrint = SaveTemporaryMemoryData();
@@ -695,6 +696,71 @@ public partial class FrmMain
 
             PicMain.ShowMessage(Config.Language[$"{Name}._CopyImageData"], Config.InAppMessageDuration);
         }
+    }
+
+
+    private void IG_PasteImage()
+    {
+        // Is there a file in clipboard?
+        if (Clipboard.ContainsFileDropList())
+        {
+            var sFile = (string[])Clipboard.GetData(DataFormats.FileDrop);
+
+            // load file
+            PrepareLoading(sFile[0]);
+        }
+
+        // Is there a image in clipboard?
+        else if (Clipboard.ContainsImage())
+        {
+            var bmp = ClipboardEx.GetClipboardImage(Clipboard.GetDataObject());
+
+            LoadClipboardImage(bmp);
+        }
+
+        // Is there a filename in clipboard?
+        else if (Clipboard.ContainsText())
+        {
+            // try to get absolute path
+            var text = Helpers.ResolvePath(Clipboard.GetText());
+
+            if (File.Exists(text) || Directory.Exists(text))
+            {
+                PrepareLoading(text);
+            }
+            // get image from Base64string 
+            else
+            {
+                try
+                {
+                    var img = PhotoCodec.Base64ToBitmap(text);
+                    LoadClipboardImage(img);
+                }
+                catch (Exception ex)
+                {
+                    var msg = Config.Language[$"{Name}.{nameof(MnuPasteImage)}._Error"];
+
+                    PicMain.ShowMessage($"{msg}\r\n\r\n{ex.Source}: {ex.Message}", Config.InAppMessageDuration * 2);
+                }
+            }
+        }
+    }
+
+    private void LoadClipboardImage(Bitmap? img)
+    {
+        // cancel the current loading image
+        _loadCancelToken?.Cancel();
+
+        Local.ClipboardImage?.Dispose();
+        Local.ClipboardImage = img;
+
+        PicMain.SetImage(img);
+        PicMain.ClearMessage();
+
+        // reset zoom mode
+        IG_SetZoomMode(Config.ZoomMode.ToString());
+
+        UpdateImageInfo(BasicInfoUpdate.All);
     }
 
 
