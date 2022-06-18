@@ -740,7 +740,7 @@ public partial class FrmMain
                 {
                     var msg = Config.Language[$"{Name}.{nameof(MnuPasteImage)}._Error"];
 
-                    PicMain.ShowMessage($"{msg}\r\n\r\n{ex.Source}: {ex.Message}", Config.InAppMessageDuration * 2);
+                    PicMain.ShowMessage($"{msg}\r\n{ex.Source}: {ex.Message}", Config.InAppMessageDuration * 200);
                 }
             }
         }

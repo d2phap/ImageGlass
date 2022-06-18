@@ -50,7 +50,7 @@ public static class DpiApi
     /// Get DPI Scale factor
     /// </summary>
     /// <returns></returns>
-    public static double DpiScale => (double)CurrentDpi / DPI_DEFAULT;
+    public static float DpiScale => (float)CurrentDpi / DPI_DEFAULT;
 
 
     /// <summary>

@@ -493,8 +493,16 @@ public partial class ViewBox : HybridControl
     #region Misc
 
     /// <summary>
+    /// Gets, sets the message heading text
+    /// </summary>
+    [Category("Misc")]
+    [DefaultValue("")]
+    public string TextHeading { get; set; } = string.Empty;
+
+    /// <summary>
     /// Gets, sets border radius of message box
     /// </summary>
+    [Category("Misc")]
     [DefaultValue(1f)]
     public float MessageBorderRadius { get; set; } = 1f;
 
@@ -1176,9 +1184,16 @@ public partial class ViewBox : HybridControl
     {
         if (Text.Trim().Length == 0) return;
 
+
+        var hasHeading = !string.IsNullOrEmpty(TextHeading);
+        var hasText = !string.IsNullOrEmpty(Text);
+
         var textMargin = 20;
         var textPaddingX = textMargin * 2;
-        var textPaddingY = textMargin;
+        var textPaddingY = textMargin * 2;
+        var gap = hasHeading && hasText
+            ? (g is Direct2DGraphics ? textMargin : textMargin / 2)
+            : 0;
 
         var drawableArea = new Rectangle(
             textMargin,
@@ -1186,22 +1201,69 @@ public partial class ViewBox : HybridControl
             Width - textPaddingX,
             Height - textPaddingY);
 
-        // calculate text region
-        var fontSize = DpiApi.Transform<float>(Font.Size * (float)DpiApi.DpiScale);
-        var textSize = g.MeasureText(Text, Font, fontSize, drawableArea.Size);
-        var region = new RectangleF(
-            drawableArea.Width / 2 - textSize.Width / 2,
-            drawableArea.Height / 2 - textSize.Height / 2,
-            textSize.Width + textPaddingX,
-            textSize.Height + textPaddingY);
+        var hFontSize = 0f;
+        var hTextSize = new SizeF();
+        var tFontSize = 0f;
+        var tTextSize = new SizeF();
 
-        // draw text background
+        // heading size
+        if (hasHeading)
+        {
+            hFontSize = DpiApi.Transform<float>(Font.Size * 1.3f * DpiApi.DpiScale);
+            hTextSize = g.MeasureText(TextHeading, Font, hFontSize, drawableArea.Size);
+        }
+
+        // text size
+        if (hasText)
+        {
+            tFontSize = DpiApi.Transform<float>(Font.Size * DpiApi.DpiScale);
+            tTextSize = g.MeasureText(Text, Font, tFontSize, drawableArea.Size);
+        }
+
+        var centerX = drawableArea.X + drawableArea.Width / 2;
+        var centerY = drawableArea.Y + drawableArea.Height / 2;
+
+        var hRegion = new RectangleF(
+            centerX - hTextSize.Width / 2,
+            centerY - ((hTextSize.Height + tTextSize.Height) / 2) - gap / 2,
+            hTextSize.Width + textPaddingX - drawableArea.X * 2 + 1,
+            hTextSize.Height + textMargin - drawableArea.Y);
+
+        var tRegion = new RectangleF(
+            centerX - tTextSize.Width / 2,
+            centerY - ((hTextSize.Height + tTextSize.Height) / 2) + hTextSize.Height + gap / 2,
+            tTextSize.Width + textPaddingX - drawableArea.X * 2 + 1,
+            tTextSize.Height + textMargin - drawableArea.Y);
+
+        var bgRegion = new RectangleF(
+            Math.Min(tRegion.X, hRegion.X) - textMargin / 2,
+            Math.Min(tRegion.Y, hRegion.Y) - textMargin / 2,
+            Math.Max(tRegion.Width, hRegion.Width) + textPaddingX / 2,
+            tRegion.Height + hRegion.Height + textMargin + gap);
+
+
         var color = Color.FromArgb(170, BackColor);
-        g.DrawRoundedRectangle(region, color, color, new(MessageBorderRadius, MessageBorderRadius));
 
+        //// debug
+        //g.DrawRoundedRectangle(drawableArea, Color.DarkOrchid, color, new(MessageBorderRadius, MessageBorderRadius));
+        //g.DrawRoundedRectangle(hRegion, Color.Yellow, color, new(MessageBorderRadius, MessageBorderRadius));
+        //g.DrawRoundedRectangle(tRegion, Color.Green, color, new(MessageBorderRadius, MessageBorderRadius));
+
+        // draw background
+        g.DrawRoundedRectangle(bgRegion, color, color, new(MessageBorderRadius, MessageBorderRadius));
+
+
+        // draw text heading
+        if (hasHeading)
+        {
+            g.DrawText(TextHeading, Font, hFontSize, ForeColor, hRegion);
+        }
 
         // draw text
-        g.DrawText(Text, Font, fontSize, ForeColor, region);
+        if (hasText)
+        {
+            g.DrawText(Text, Font, tFontSize, ForeColor, tRegion);
+        }
     }
 
 
