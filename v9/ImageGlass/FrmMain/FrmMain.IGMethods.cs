@@ -692,9 +692,14 @@ public partial class FrmMain
 
         if (img != null)
         {
-            ClipboardEx.SetClipboardImage(img.ImgData.Image);
+            var langPath = $"{Name}.{nameof(MnuCopyImageData)}";
 
-            PicMain.ShowMessage(Config.Language[$"{Name}._CopyImageData"], Config.InAppMessageDuration);
+            PicMain.ClearMessage();
+            PicMain.ShowMessage(Config.Language[$"{langPath}._Copying"], "", delayMs: 1500);
+
+            await Task.Run(() => ClipboardEx.SetClipboardImage(img.ImgData.Image));
+
+            PicMain.ShowMessage(Config.Language[$"{langPath}._Copied"], Config.InAppMessageDuration);
         }
     }
 

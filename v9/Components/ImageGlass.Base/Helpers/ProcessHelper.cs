@@ -74,16 +74,17 @@ public partial class Helpers
     /// </summary>
     /// <param name="func"></param>
     /// <returns></returns>
-    public static int RunAsThread(ThreadStart func)
+    public static Thread RunAsThread(ThreadStart func, ApartmentState thState = ApartmentState.Unknown)
     {
         var th = new Thread(func)
         {
-            IsBackground = true
+            IsBackground = true,
         };
 
+        th.SetApartmentState(thState);
         th.Start();
 
-        return th.ManagedThreadId;
+        return th;
     }
 
 

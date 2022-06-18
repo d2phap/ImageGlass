@@ -226,6 +226,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuClipboard", "Clipboard"); //v3.0
         Add("FrmMain.MnuCopy", "Copy"); //v3.0
         Add("FrmMain.MnuCopyImageData", "Copy image data"); //v5.0
+        Add("FrmMain.MnuCopyImageData._Copying", "Still copying the image data..."); // v9.0
+        Add("FrmMain.MnuCopyImageData._Copied", "Copied the current image data."); // v5.0
         Add("FrmMain.MnuCut", "Cut"); //v3.0
         Add("FrmMain.MnuCopyPath", "Copy image path"); //v3.0
         Add("FrmMain.MnuPasteImage", "Paste image"); //v3.0
@@ -305,7 +307,7 @@ public class IgLang : Dictionary<string, string>
         //Add("FrmMain._SlideshowMessageResume", "Slideshow is resumed"); // v4.0
         Add("FrmMain._CopyFileText", "Copied {0} file(s)."); // v2.0 final
         Add("FrmMain._CutFileText", "Cut {0} file(s)."); // v2.0 final
-        Add("FrmMain._CopyImageData", "Copied the current image data."); // v5.0
+        
         Add("FrmMain._ImagePathCopied", "Copied the current image path."); // v9.0
         Add("FrmMain._ClearClipboard", "Cleared clipboard."); // v2.0 final
         //Add("FrmMain._SaveChanges", "Saving change..."); // v2.0 final

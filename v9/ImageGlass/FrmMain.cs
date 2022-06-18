@@ -333,7 +333,7 @@ public partial class FrmMain : Form
         if (string.IsNullOrEmpty(pathToLoad)) return;
 
         // Start loading path
-        Helpers.RunAsThread(() => PrepareLoading(pathToLoad));
+        _ = Helpers.RunAsThread(() => PrepareLoading(pathToLoad));
     }
 
 

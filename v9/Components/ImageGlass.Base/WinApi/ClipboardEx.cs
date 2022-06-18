@@ -45,7 +45,9 @@ public class ClipboardEx
     {
         if (image == null) return;
 
-        Clipboard.Clear();
+        // https://stackoverflow.com/a/17762059/2856887
+        Helpers.RunAsThread(() => Clipboard.Clear(), ApartmentState.STA)
+            .Join();
 
         if (data == null)
             data = new DataObject();
@@ -70,7 +72,8 @@ public class ClipboardEx
 
         // The 'copy=true' argument means the MemoryStreams can be safely disposed
         // after the operation.
-        Clipboard.SetDataObject(data, true);
+        Helpers.RunAsThread(() => Clipboard.SetDataObject(data, true), ApartmentState.STA)
+            .Join();
     }
 
 
