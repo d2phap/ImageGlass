@@ -390,11 +390,7 @@ public static class PhotoCodec
         options ??= new();
         var loadSuccessful = true;
         var result = new IgImgData();
-
-        if (options.Metadata == null)
-        {
-            options.Metadata = LoadMetadata(filename, options);
-        }
+        var metadata = LoadMetadata(filename, options);
 
         var ext = Path.GetExtension(filename).ToUpperInvariant();
         var settings = ParseSettings(options, filename);
@@ -412,7 +408,7 @@ public static class PhotoCodec
                 }
 
                 result.Image = Base64ToBitmap(base64Content);
-                result.FrameCount = options.Metadata?.FramesCount ?? 0;
+                result.FrameCount = metadata?.FramesCount ?? 0;
 
                 break;
 
@@ -422,7 +418,7 @@ public static class PhotoCodec
                 {
                     // Note: Using FileStream is much faster than using MagickImageCollection
                     result.Image = ConvertFileToBitmap(filename);
-                    result.FrameCount = options.Metadata?.FramesCount ?? 0;
+                    result.FrameCount = metadata?.FramesCount ?? 0;
                 }
                 catch
                 {

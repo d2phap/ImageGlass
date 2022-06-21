@@ -76,18 +76,11 @@ public record CodecReadOptions
     /// </summary>
     public bool? FirstFrameOnly { get; set; } = null;
 
-    /// <summary>
-    /// Gets, sets metadata
-    /// </summary>
-    public IgMetadata? Metadata = null;
-
 
     /// <summary>
     /// Initializes <see cref="CodecReadOptions"/> instance.
     /// </summary>
-    /// <param name="meta"></param>
-    public CodecReadOptions(IgMetadata? meta = null)
+    public CodecReadOptions()
     {
-        Metadata = meta;
     }
 }

@@ -141,7 +141,7 @@ public class IgPhoto : IDisposable
         try
         {
             // load image data
-            Metadata ??= options.Metadata ?? PhotoCodec.LoadMetadata(Filename, options);
+            Metadata ??= PhotoCodec.LoadMetadata(Filename, options);
             FramesCount = Metadata?.FramesCount ?? 0;
 
             if (options.FirstFrameOnly == null) {

@@ -489,7 +489,13 @@ public partial class FrmMain
     /// <summary>
     /// Prints the viewing image data
     /// </summary>
-    private async void IG_Print()
+    private void IG_Print()
+    {
+        _ = PrintAsync();
+    }
+
+
+    private async Task PrintAsync()
     {
         // image error
         if (PicMain.Source == ImageSource.Null)

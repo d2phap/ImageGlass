@@ -929,8 +929,6 @@ public partial class FrmMain : Form
             Local.CurrentIndex = imageIndex;
         }
 
-        readSettings.Metadata = Local.Metadata;
-
 
         Local.RaiseImageLoadingEvent(new()
         {
