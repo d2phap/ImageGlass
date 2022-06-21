@@ -210,12 +210,12 @@ internal class Local
     /// Save the viewing image as temporary file
     /// with the <see cref="Config.ImageEditQuality"/> quality.
     /// </summary>
-    public static async Task<string?> SaveImageAsTempFileAsync()
+    public static async Task<string?> SaveImageAsTempFileAsync(string ext = ".png")
     {
         var tempDir = App.ConfigDir(PathType.Dir, Dir.Temporary);
         Directory.CreateDirectory(tempDir);
 
-        var filename = Path.Combine(tempDir, $"temp_{DateTime.Now:yyyy-MM-dd-hh-mm-ss}.png");
+        var filename = Path.Combine(tempDir, $"temp_{DateTime.Now:yyyy-MM-dd-hh-mm-ss}{ext}");
 
 
         // save clipboard image
@@ -223,7 +223,7 @@ internal class Local
         {
             try
             {
-                await PhotoCodec.SaveAsync(ClipboardImage, filename, MagickFormat.Png, Config.ImageEditQuality);
+                await PhotoCodec.SaveAsync(ClipboardImage, filename, quality: Config.ImageEditQuality);
 
                 return filename;
             }
@@ -239,7 +239,7 @@ internal class Local
         {
             try
             {
-                await PhotoCodec.SaveAsync(img.ImgData.Image, filename, MagickFormat.Png, Config.ImageEditQuality);
+                await PhotoCodec.SaveAsync(img.ImgData.Image, filename, quality: Config.ImageEditQuality);
 
                 return filename;
             }

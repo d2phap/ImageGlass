@@ -26,7 +26,6 @@ using ImageGlass.Settings;
 using ImageGlass.UI;
 using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Drawing.Imaging;
 
 namespace ImageGlass;
 
@@ -1095,27 +1094,67 @@ public partial class FrmMain
 
     private async Task SetDesktopBackgroundAsync()
     {
+        // image error
+        if (PicMain.Source == ImageSource.Null)
+        {
+            return;
+        }
+
         var filePath = Local.Images.GetFileName(Local.CurrentIndex);
-        if (!File.Exists(filePath)) return;
-
-        var args = string.Format($"{IgCommands.SET_WALLPAPER} \"{filePath}\" {(int)WallpaperStyle.Current}");
-
-        var result = await Helpers.RunIgcmd(args);
+        var ext = Path.GetExtension(filePath).ToUpperInvariant();
+        var defaultExt = Helpers.IsOS(WindowsOS.Win7) ? ".bmp" : ".jpg";
         var langPath = $"{Name}.{nameof(MnuSetDesktopBackground)}";
 
+        PicMain.ShowMessage(Config.Language[$"{langPath}._PreparingFile"], "", delayMs: 500);
 
-        if (result == IgExitCode.Done)
+
+        // print clipboard image
+        if (Local.ClipboardImage != null)
         {
-            PicMain.ShowMessage(
-                Config.Language[$"{langPath}._Success"], 
-                Config.InAppMessageDuration);
+            // save image to temp file
+            filePath = await Local.SaveImageAsTempFileAsync(defaultExt);
+        }
+        else if (ext != ".BMP")
+        {
+            if (ext != ".JPG"
+                && ext != ".JPEG"
+                && ext != ".PNG"
+                && ext != ".GIF")
+            {
+                // save image to temp file
+                filePath = await Local.SaveImageAsTempFileAsync(defaultExt);
+            }
+        }
+
+
+        if (!File.Exists(filePath))
+        {
+            PicMain.ClearMessage();
+
+            _ = Config.ShowError(Config.Language[$"{langPath}._PreparingFileError"],
+                Config.Language[langPath]);
         }
         else
         {
-            _ = Config.ShowError(
-                description: Config.Language[$"{langPath}._Error"],
-                title: Config.Language[langPath],
-                heading: Config.Language["_._Error"]);
+            var args = string.Format($"{IgCommands.SET_WALLPAPER} \"{filePath}\" {(int)WallpaperStyle.Current}");
+            var result = await Helpers.RunIgcmd(args);
+
+
+            if (result == IgExitCode.Done)
+            {
+                PicMain.ShowMessage(
+                    Config.Language[$"{langPath}._Success"],
+                    Config.InAppMessageDuration);
+            }
+            else
+            {
+                PicMain.ClearMessage();
+
+                _ = Config.ShowError(
+                    description: Config.Language[$"{langPath}._Error"],
+                    title: Config.Language[langPath],
+                    heading: Config.Language["_._Error"]);
+            }
         }
     }
 

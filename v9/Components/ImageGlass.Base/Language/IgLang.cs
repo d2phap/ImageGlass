@@ -216,6 +216,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuExtractFrames", "Extract image frames ({0})…"); //v7.5
         Add("FrmMain.MnuStartStopAnimating", "Start / Stop animating image"); //v3.0
         Add("FrmMain.MnuSetDesktopBackground", "Set as Desktop background"); //v3.0
+        Add("FrmMain.MnuSetDesktopBackground._PreparingFile", "Preparing file for desktop background..."); //v9.0
+        Add("FrmMain.MnuSetDesktopBackground._PreparingFileError", "Could not prepare the image file for desktop background"); //v9.0
         Add("FrmMain.MnuSetDesktopBackground._Error", "Could not set the viewing image as desktop background"); // v6.0
         Add("FrmMain.MnuSetDesktopBackground._Success", "Desktop background is updated"); // v6.0
         Add("FrmMain.MnuSetLockScreen", "Set as Lock screen image"); // V6.0
