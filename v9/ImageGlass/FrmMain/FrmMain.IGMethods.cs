@@ -505,9 +505,10 @@ public partial class FrmMain
 
         var currentFile = Local.Images.GetFileName(Local.CurrentIndex);
         var fileToPrint = currentFile;
+        var ext = Path.GetExtension(currentFile).ToUpperInvariant();
         var langPath = $"{Name}.{nameof(MnuPrint)}";
 
-        PicMain.ShowMessage(Config.Language[$"{langPath}._PreparingFile"], "", delayMs: 1500);
+        PicMain.ShowMessage(Config.Language[$"{langPath}._PreparingFile"], "", delayMs: 500);
 
 
         // print clipboard image
@@ -519,11 +520,19 @@ public partial class FrmMain
 
         // print an image file
         // rename ext FAX -> TIFF to multipage printing
-        else if (Path.GetExtension(currentFile).Equals(".FAX", StringComparison.OrdinalIgnoreCase))
+        else if (ext.Equals(".FAX", StringComparison.OrdinalIgnoreCase))
         {
             fileToPrint = App.ConfigDir(PathType.File, Dir.Temporary, Path.GetFileNameWithoutExtension(currentFile) + ".tiff");
 
             File.Copy(currentFile, fileToPrint, true);
+        }
+        else if (Local.Metadata?.FramesCount > 1
+            && !ext.Equals(".GIF", StringComparison.OrdinalIgnoreCase)
+            && !ext.Equals(".TIF", StringComparison.OrdinalIgnoreCase)
+            && !ext.Equals(".TIFF", StringComparison.OrdinalIgnoreCase))
+        {
+            // save image to temp file
+            fileToPrint = await Local.SaveImageAsTempFileAsync();
         }
 
 

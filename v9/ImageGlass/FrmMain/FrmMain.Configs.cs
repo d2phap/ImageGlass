@@ -214,6 +214,13 @@ public partial class FrmMain
         Config.ZoomLockValue = PicMain.ZoomFactor * 100f;
 
         Config.Write();
+
+        try
+        {
+            // delete trash
+            Directory.Delete(App.ConfigDir(PathType.Dir, Dir.Temporary), true);
+        }
+        catch { }
     }
 
     private void FrmMainConfig_SizeChanged(object? sender, EventArgs e)
