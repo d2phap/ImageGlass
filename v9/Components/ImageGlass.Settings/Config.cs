@@ -560,10 +560,10 @@ public static class Config
     /// </summary>
     public static int ToolbarIconHeight { get; set; } = Constants.TOOLBAR_ICON_HEIGHT;
 
-    ///// <summary>
-    ///// Gets, sets value of image quality for editting
-    ///// </summary>
-    //public static int ImageEditQuality { get; set; } = 100;
+    /// <summary>
+    /// Gets, sets value of image quality for editting
+    /// </summary>
+    public static int ImageEditQuality { get; set; } = 80;
 
     /// <summary>
     /// Gets, sets value of duration to display the in-app message
@@ -873,7 +873,7 @@ public static class Config
         if (ZoomLockValue < 0) ZoomLockValue = 100f;
 
         ToolbarIconHeight = items.GetValue(nameof(ToolbarIconHeight), ToolbarIconHeight);
-        //ImageEditQuality = items.GetValue(nameof(ImageEditQuality), ImageEditQuality);
+        ImageEditQuality = items.GetValue(nameof(ImageEditQuality), ImageEditQuality);
         InAppMessageDuration = items.GetValue(nameof(InAppMessageDuration), InAppMessageDuration);
 
         #endregion
@@ -1344,7 +1344,7 @@ public static class Config
         settings.TryAdd(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
         settings.TryAdd(nameof(ZoomLockValue), ZoomLockValue);
         settings.TryAdd(nameof(ToolbarIconHeight), ToolbarIconHeight);
-        //settings.TryAdd(nameof(ImageEditQuality), ImageEditQuality);
+        settings.TryAdd(nameof(ImageEditQuality), ImageEditQuality);
         settings.TryAdd(nameof(InAppMessageDuration), InAppMessageDuration);
 
         #endregion

@@ -26,6 +26,7 @@ using ImageGlass.Settings;
 using ImageGlass.UI;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 
 namespace ImageGlass;
 
@@ -488,7 +489,7 @@ public partial class FrmMain
     /// <summary>
     /// Prints the viewing image data
     /// </summary>
-    private void IG_Print()
+    private async void IG_Print()
     {
         // image error
         if (PicMain.Source == ImageSource.Null)
@@ -498,31 +499,48 @@ public partial class FrmMain
 
         var currentFile = Local.Images.GetFileName(Local.CurrentIndex);
         var fileToPrint = currentFile;
+        var langPath = $"{Name}.{nameof(MnuPrint)}";
 
+        PicMain.ShowMessage(Config.Language[$"{langPath}._PreparingFile"], "", delayMs: 1500);
+
+
+        // print clipboard image
         if (Local.ClipboardImage != null || Local.Metadata?.FramesCount == 1)
         {
-            // TODO: // save image to temp file
-            //fileToPrint = SaveTemporaryMemoryData();
+            // save image to temp file
+            fileToPrint = await Local.SaveImageAsTempFileAsync();
         }
+
+        // print an image file
         // rename ext FAX -> TIFF to multipage printing
         else if (Path.GetExtension(currentFile).Equals(".FAX", StringComparison.OrdinalIgnoreCase))
         {
             fileToPrint = App.ConfigDir(PathType.File, Dir.Temporary, Path.GetFileNameWithoutExtension(currentFile) + ".tiff");
+
             File.Copy(currentFile, fileToPrint, true);
         }
 
-        PrintService.OpenPrintPictures(fileToPrint);
 
-        // TODO:
-        //try
-        //{
-        //    PrintService.OpenPrintPictures(fileToPrint);
-        //}
-        //catch
-        //{
-        //    fileToPrint = SaveTemporaryMemoryData();
-        //    PrintService.OpenPrintPictures(fileToPrint);
-        //}
+        if (string.IsNullOrEmpty(fileToPrint))
+        {
+            _ = Config.ShowError(Config.Language[$"{langPath}._PreparingFileError"],
+                Config.Language[langPath]);
+        }
+        else
+        {
+            try
+            {
+                PrintService.OpenPrintPictures(fileToPrint);
+            }
+            catch (Exception ex)
+            {
+                _ = Config.ShowError($"{ex.Source}:\r\n{ex.Message}",
+                    Config.Language[$"{langPath}._Error"]);
+            }
+        }
+
+
+        PicMain.ClearMessage();
     }
 
 
@@ -754,7 +772,7 @@ public partial class FrmMain
                 {
                     var msg = Config.Language[$"{Name}.{nameof(MnuPasteImage)}._Error"];
 
-                    PicMain.ShowMessage($"{ex.Source}: {ex.Message}", msg, Config.InAppMessageDuration * 200);
+                    PicMain.ShowMessage($"{ex.Source}: {ex.Message}", msg, Config.InAppMessageDuration * 2);
                 }
             }
         }
@@ -1118,5 +1136,7 @@ public partial class FrmMain
                 heading: Config.Language["_._Error"]);
         }
     }
+
+
 }
 

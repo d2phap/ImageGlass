@@ -21,6 +21,8 @@ using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.Services;
 using ImageGlass.Settings;
+using ImageMagick;
+using System.Drawing.Imaging;
 
 namespace ImageGlass;
 
@@ -201,6 +203,50 @@ internal class Local
             ImageChannel = ImageChannel,
             DistinctDirs = distinctDirsList ?? new(0),
         };
+    }
+
+
+    /// <summary>
+    /// Save the viewing image as temporary file
+    /// with the <see cref="Config.ImageEditQuality"/> quality.
+    /// </summary>
+    public static async Task<string?> SaveImageAsTempFileAsync()
+    {
+        var tempDir = App.ConfigDir(PathType.Dir, Dir.Temporary);
+        Directory.CreateDirectory(tempDir);
+
+        var filename = Path.Combine(tempDir, $"temp_{DateTime.Now:yyyy-MM-dd-hh-mm-ss}.png");
+
+
+        // save clipboard image
+        if (ClipboardImage != null)
+        {
+            try
+            {
+                await PhotoCodec.SaveAsync(ClipboardImage, filename, MagickFormat.Png, Config.ImageEditQuality);
+
+                return filename;
+            }
+            catch { }
+
+            return null;
+        }
+
+
+        // save the current viewing image file
+        var img = await Images.GetAsync(CurrentIndex);
+        if (img?.ImgData?.Image != null)
+        {
+            try
+            {
+                await PhotoCodec.SaveAsync(img.ImgData.Image, filename, MagickFormat.Png, Config.ImageEditQuality);
+
+                return filename;
+            }
+            catch { }
+        }
+
+        return null;
     }
 
     #endregion

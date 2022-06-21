@@ -869,7 +869,6 @@ public partial class FrmMain : Form
             ApplyColorProfileForAll = Config.ApplyColorProfileForAll,
             ImageChannel = Local.ImageChannel,
             UseRawThumbnail = Config.UseRawThumbnail,
-            Metadata = Local.Metadata,
         };
 
 
