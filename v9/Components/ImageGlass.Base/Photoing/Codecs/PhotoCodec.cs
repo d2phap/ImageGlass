@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageMagick;
 using ImageMagick.Formats;
+using System.Runtime.CompilerServices;
 
 namespace ImageGlass.Base.Photoing.Codecs;
 
@@ -271,6 +272,110 @@ public static class PhotoCodec
         return bmp;
     }
 
+
+    /// <summary>
+    /// Save as image file
+    /// </summary>
+    /// <param name="srcFileName">Source filename to save</param>
+    /// <param name="destFilePath">Destination filename</param>
+    /// <param name="format">New image format</param>
+    /// <param name="quality">JPEG/MIFF/PNG compression level</param>
+    public static async Task SaveAsync(string srcFileName, string destFilePath, MagickFormat format = MagickFormat.Unknown, int quality = 100, CancellationToken token = default)
+    {
+        using var imgM = new MagickImage(srcFileName)
+        {
+            Quality = quality,
+        };
+
+        try
+        {
+            if (format != MagickFormat.Unknown)
+            {
+                await imgM.WriteAsync(destFilePath, format, token);
+            }
+            else
+            {
+                await imgM.WriteAsync(destFilePath, token);
+            }
+        }
+        catch (OperationCanceledException) { }
+    }
+
+
+    /// <summary>
+    /// Save as image file
+    /// </summary>
+    /// <param name="srcBitmap">Source bitmap to save</param>
+    /// <param name="destFilePath">Destination file path</param>
+    /// <param name="format">New image format</param>
+    /// <param name="quality">JPEG/MIFF/PNG compression level</param>
+    /// <returns></returns>
+    public static async Task SaveAsync(Bitmap? srcBitmap, string destFilePath, MagickFormat format = MagickFormat.Unknown, int quality = 100)
+    {
+        await Task.Run(() => Save(srcBitmap, destFilePath, format, quality));
+    }
+
+
+    /// <summary>
+    /// Save as image file
+    /// </summary>
+    /// <param name="srcBitmap">Source bitmap to save</param>
+    /// <param name="destFilePath">Destination file path</param>
+    /// <param name="format">New image format</param>
+    /// <param name="quality">JPEG/MIFF/PNG compression level</param>
+    public static void Save(Bitmap? srcBitmap, string destFilePath, MagickFormat format = MagickFormat.Unknown, int quality = 100)
+    {
+        if (srcBitmap == null) return;
+
+        using var imgM = new MagickImage();
+        imgM.Read(srcBitmap);
+        imgM.Quality = quality;
+
+        if (format != MagickFormat.Unknown)
+        {
+            imgM.Write(destFilePath, format);
+        }
+        else
+        {
+            imgM.Write(destFilePath);
+        }
+    }
+
+
+    /// <summary>
+    /// Save image pages to files
+    /// </summary>
+    /// <param name="filename">The full path of source file</param>
+    /// <param name="destFolder">The destination folder to save to</param>
+    public static async IAsyncEnumerable<int> SaveFramesAsync(string filename, string destFolder, [EnumeratorCancellation] CancellationToken token = default)
+    {
+        // create dirs unless it does not exist
+        Directory.CreateDirectory(destFolder);
+
+        using var imgColl = new MagickImageCollection(filename);
+        var index = 0;
+
+        foreach (var imgM in imgColl)
+        {
+            index++;
+            imgM.Quality = 100;
+
+            try
+            {
+                var newFilename = Path.GetFileNameWithoutExtension(filename)
+                    + " - " + index.ToString($"D{imgColl.Count.ToString().Length}")
+                    + ".png";
+                var destFilePath = Path.Combine(destFolder, newFilename);
+
+                await imgM.WriteAsync(destFilePath, MagickFormat.Png, token);
+            }
+            catch (OperationCanceledException) { break; }
+            catch { }
+
+            yield return index;
+        }
+    }
+
     #endregion
 
 
@@ -358,7 +463,7 @@ public static class PhotoCodec
     private static async Task<IgImgData> LoadWithMagickImageAsync(string filename, string ext,
         MagickReadSettings settings, CodecReadOptions options, CancellationToken cancelToken)
     {
-        using var data = await ReadMagickImageAsync(filename, ext, settings, options, cancelToken);
+        var data = await ReadMagickImageAsync(filename, ext, settings, options, cancelToken);
         var result = new IgImgData(data);
 
         return result;
@@ -371,7 +476,7 @@ public static class PhotoCodec
     private static IgImgData LoadWithMagickImage(string filename, string ext,
         MagickReadSettings settings, CodecReadOptions options)
     {
-        using var data = ReadMagickImage(filename, ext, settings, options);
+        var data = ReadMagickImage(filename, ext, settings, options);
         var result = new IgImgData(data);
 
         return result;
@@ -385,8 +490,7 @@ public static class PhotoCodec
         string filename, string ext, MagickReadSettings settings, CodecReadOptions options, CancellationToken cancelToken)
     {
         var result = new IgMagickReadData() { Extension = ext };
-
-        using var imgColl = new MagickImageCollection();
+        var imgColl = new MagickImageCollection();
 
         // Issue #530: ImageMagick falls over if the file path is longer than the (old)
         // windows limit of 260 characters. Workaround is to read the file bytes,
@@ -405,7 +509,8 @@ public static class PhotoCodec
 
         // standardize first frame reading option
         result.FrameCount = imgColl.Count;
-        var readFirstFrameOnly = true;
+        bool readFirstFrameOnly;
+
         if (options.FirstFrameOnly == null)
         {
             readFirstFrameOnly = imgColl.Count < 2;
@@ -478,6 +583,9 @@ public static class PhotoCodec
         result.ColorProfile = processResult.ColorProfile;
         result.ExifProfile = processResult.ExifProfile;
 
+
+        imgColl.Dispose();
+
         return result;
     }
 
@@ -488,8 +596,7 @@ public static class PhotoCodec
     private static IgMagickReadData ReadMagickImage(string filename, string ext, MagickReadSettings settings, CodecReadOptions options)
     {
         var result = new IgMagickReadData() { Extension = ext };
-
-        using var imgColl = new MagickImageCollection();
+        var imgColl = new MagickImageCollection();
 
         // Issue #530: ImageMagick falls over if the file path is longer than the (old)
         // windows limit of 260 characters. Workaround is to read the file bytes,
@@ -508,7 +615,8 @@ public static class PhotoCodec
 
         // standardize first frame reading option
         result.FrameCount = imgColl.Count;
-        var readFirstFrameOnly = true;
+        bool readFirstFrameOnly;
+
         if (options.FirstFrameOnly == null)
         {
             readFirstFrameOnly = imgColl.Count < 2;
@@ -580,6 +688,8 @@ public static class PhotoCodec
         result.SingleFrameImage = imgM;
         result.ColorProfile = processResult.ColorProfile;
         result.ExifProfile = processResult.ExifProfile;
+
+        imgColl.Dispose();
 
         return result;
     }
