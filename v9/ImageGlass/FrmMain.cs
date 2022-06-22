@@ -1625,6 +1625,7 @@ public partial class FrmMain : Form
         // clear current items
         MnuContext.Items.Clear();
 
+        var hasClipboardImage = Local.ClipboardImage != null;
         var imageNotFound = !File.Exists(Local.Images.GetFileName(Local.CurrentIndex));
 
         //if (Config.IsSlideshow && !imageNotFound)
@@ -1638,14 +1639,17 @@ public partial class FrmMain : Form
         MnuContext.Items.Add(MenuUtils.Clone(MnuToggleToolbar));
         MnuContext.Items.Add(MenuUtils.Clone(MnuToggleTopMost));
 
-        MnuContext.Items.Add(new ToolStripSeparator());
-        MnuContext.Items.Add(MenuUtils.Clone(MnuLoadingOrders));
+        if (!hasClipboardImage)
+        {
+            MnuContext.Items.Add(new ToolStripSeparator());
+            MnuContext.Items.Add(MenuUtils.Clone(MnuLoadingOrders));
+        }
 
         // Get Edit App info
         if (!imageNotFound)
         {
             if (!Local.IsImageError
-                && Local.ClipboardImage == null
+                && !hasClipboardImage
                 && Local.Metadata?.FramesCount <= 1)
             {
                 MnuContext.Items.Add(MenuUtils.Clone(MnuViewChannels));
