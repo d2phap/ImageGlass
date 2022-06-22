@@ -149,8 +149,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuOpenWith", "Open with…"); //v7.6
         Add("FrmMain.MnuEdit", "Edit image {0}…"); //v3.0, updated 4.0
         Add("FrmMain.MnuPrint", "Print…"); //v3.0
-        Add("FrmMain.MnuPrint._PreparingFile", "Preparing file for printing..."); //v9.0
-        Add("FrmMain.MnuPrint._PreparingFileError", "Could not prepare the image file for printing"); //v9.0
+        Add("FrmMain.MnuPrint._CreatingFile", "Creating file for printing..."); //v9.0
+        Add("FrmMain.MnuPrint._CreatingFileError", "Could not create the image file for printing"); //v9.0
         Add("FrmMain.MnuPrint._Error", "Could not print the viewing image"); //v9.0
         Add("FrmMain.MnuShare", "Share…"); //v8.6
         Add("FrmMain.MnuShare._Error", "Could not open Share dialog."); //v9.0
@@ -216,13 +216,15 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuExtractFrames", "Extract image frames ({0})…"); //v7.5
         Add("FrmMain.MnuStartStopAnimating", "Start / Stop animating image"); //v3.0
         Add("FrmMain.MnuSetDesktopBackground", "Set as Desktop background"); //v3.0
-        Add("FrmMain.MnuSetDesktopBackground._PreparingFile", "Preparing file for desktop background..."); //v9.0
-        Add("FrmMain.MnuSetDesktopBackground._PreparingFileError", "Could not prepare the image file for desktop background"); //v9.0
+        Add("FrmMain.MnuSetDesktopBackground._CreatingFile", "Creating image file for desktop background..."); //v9.0
+        Add("FrmMain.MnuSetDesktopBackground._CreatingFileError", "Could not create the image for desktop background"); //v9.0
         Add("FrmMain.MnuSetDesktopBackground._Error", "Could not set the viewing image as desktop background"); // v6.0
         Add("FrmMain.MnuSetDesktopBackground._Success", "Desktop background is updated"); // v6.0
         Add("FrmMain.MnuSetLockScreen", "Set as Lock screen image"); // V6.0
         Add("FrmMain.MnuSetLockScreen._Error", "Could not set the viewing image as lock screen image"); // v6.0
         Add("FrmMain.MnuSetLockScreen._Success", "Lock screen image is updated"); // v6.0
+        Add("FrmMain.MnuSetLockScreen._CreatingFile", "Creating image file for lock screen..."); //v9.0
+        Add("FrmMain.MnuSetLockScreen._CreatingFileError", "Could not create the image for lock screen"); //v9.0
         Add("FrmMain.MnuOpenLocation", "Open image location"); //v3.0
         Add("FrmMain.MnuImageProperties", "Image properties"); //v3.0
         #endregion
@@ -232,7 +234,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuCopy", "Copy"); //v3.0
         Add("FrmMain.MnuCopy._Success", "Copied {0} file(s)."); // v2.0 final
         Add("FrmMain.MnuCopyImageData", "Copy image data"); //v5.0
-        Add("FrmMain.MnuCopyImageData._Copying", "Still copying the image data..."); // v9.0
+        Add("FrmMain.MnuCopyImageData._Copying", "Copying the image data. It's going to take a while..."); // v9.0
         Add("FrmMain.MnuCopyImageData._Success", "Copied the current image data."); // v5.0
         Add("FrmMain.MnuCut", "Cut"); //v3.0
         Add("FrmMain.MnuCut._Success", "Cut {0} file(s)."); // v2.0 final

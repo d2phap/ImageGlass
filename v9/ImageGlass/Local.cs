@@ -183,6 +183,12 @@ internal class Local
     public static Bitmap? ClipboardImage { get; set; }
 
     /// <summary>
+    /// Gets, sets the path of the temporary image
+    /// (clipboard image, temp imgae for printing, background,...)
+    /// </summary>
+    public static string? TempImagePath { get; set; }
+
+    /// <summary>
     /// Gets, sets copied filename collection (multi-copy)
     /// </summary>
     public static List<string> StringClipboard { get; set; } = new();
@@ -212,6 +218,17 @@ internal class Local
     /// </summary>
     public static async Task<string?> SaveImageAsTempFileAsync(string ext = ".png")
     {
+        // check if we can use the current clipboard image path
+        if (File.Exists(TempImagePath))
+        {
+            var extension = Path.GetExtension(TempImagePath);
+
+            if (extension.Equals(ext, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return TempImagePath;
+            }
+        }
+
         var tempDir = App.ConfigDir(PathType.Dir, Dir.Temporary);
         Directory.CreateDirectory(tempDir);
 
@@ -225,11 +242,14 @@ internal class Local
             {
                 await PhotoCodec.SaveAsync(ClipboardImage, filename, quality: Config.ImageEditQuality);
 
-                return filename;
+                TempImagePath = filename;
             }
-            catch { }
+            catch
+            {
+                TempImagePath = null;
+            }
 
-            return null;
+            return TempImagePath;
         }
 
 
@@ -241,12 +261,15 @@ internal class Local
             {
                 await PhotoCodec.SaveAsync(img.ImgData.Image, filename, quality: Config.ImageEditQuality);
 
-                return filename;
+                TempImagePath = filename;
             }
-            catch { }
+            catch
+            {
+                TempImagePath = null;
+            }
         }
 
-        return null;
+        return TempImagePath;
     }
 
     #endregion

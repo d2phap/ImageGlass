@@ -507,7 +507,7 @@ public partial class FrmMain
         var ext = Path.GetExtension(currentFile).ToUpperInvariant();
         var langPath = $"{Name}.{nameof(MnuPrint)}";
 
-        PicMain.ShowMessage(Config.Language[$"{langPath}._PreparingFile"], "", delayMs: 500);
+        PicMain.ShowMessage(Config.Language[$"{langPath}._CreatingFile"], "", delayMs: 500);
 
 
         // print clipboard image
@@ -537,7 +537,7 @@ public partial class FrmMain
 
         if (string.IsNullOrEmpty(fileToPrint))
         {
-            _ = Config.ShowError(Config.Language[$"{langPath}._PreparingFileError"],
+            _ = Config.ShowError(Config.Language[$"{langPath}._CreatingFileError"],
                 Config.Language[langPath]);
         }
         else
@@ -1105,7 +1105,7 @@ public partial class FrmMain
         var defaultExt = Helpers.IsOS(WindowsOS.Win7) ? ".bmp" : ".jpg";
         var langPath = $"{Name}.{nameof(MnuSetDesktopBackground)}";
 
-        PicMain.ShowMessage(Config.Language[$"{langPath}._PreparingFile"], "", delayMs: 500);
+        PicMain.ShowMessage(Config.Language[$"{langPath}._CreatingFile"], "", delayMs: 500);
 
 
         // print clipboard image
@@ -1131,7 +1131,7 @@ public partial class FrmMain
         {
             PicMain.ClearMessage();
 
-            _ = Config.ShowError(Config.Language[$"{langPath}._PreparingFileError"],
+            _ = Config.ShowError(Config.Language[$"{langPath}._CreatingFileError"],
                 Config.Language[langPath]);
         }
         else
@@ -1167,27 +1167,58 @@ public partial class FrmMain
 
     private async Task SetLockScreenBackgroundAsync()
     {
+        // image error
+        if (PicMain.Source == ImageSource.Null)
+        {
+            return;
+        }
+
         var filePath = Local.Images.GetFileName(Local.CurrentIndex);
-        if (!File.Exists(filePath)) return;
-
-        var args = string.Format($"{IgCommands.SET_LOCK_SCREEN} \"{filePath}\"");
-
-        var result = await Helpers.RunIgcmd10(args);
+        var ext = Path.GetExtension(filePath).ToUpperInvariant();
         var langPath = $"{Name}.{nameof(MnuSetLockScreen)}";
 
+        PicMain.ShowMessage(Config.Language[$"{langPath}._CreatingFile"], "", delayMs: 500);
 
-        if (result == IgExitCode.Done)
+
+        // print clipboard image
+        if (Local.ClipboardImage != null
+            || (ext != ".BMP"
+                && ext != ".JPG"
+                && ext != ".JPEG"
+                && ext != ".PNG"
+                && ext != ".GIF"))
         {
-            PicMain.ShowMessage(
-                Config.Language[$"{langPath}._Success"],
-                Config.InAppMessageDuration);
+            // save image to temp file
+            filePath = await Local.SaveImageAsTempFileAsync(".jpg");
+        }
+
+
+        if (!File.Exists(filePath))
+        {
+            PicMain.ClearMessage();
+
+            _ = Config.ShowError(Config.Language[$"{langPath}._CreatingFileError"],
+                Config.Language[langPath]);
         }
         else
         {
-            _ = Config.ShowError(
-                description: Config.Language[$"{langPath}._Error"],
-                title: Config.Language[langPath],
-                heading: Config.Language["_._Error"]);
+            var args = string.Format($"{IgCommands.SET_LOCK_SCREEN} \"{filePath}\"");
+            var result = await Helpers.RunIgcmd10(args);
+
+
+            if (result == IgExitCode.Done)
+            {
+                PicMain.ShowMessage(
+                    Config.Language[$"{langPath}._Success"],
+                    Config.InAppMessageDuration);
+            }
+            else
+            {
+                _ = Config.ShowError(
+                    description: Config.Language[$"{langPath}._Error"],
+                    title: Config.Language[langPath],
+                    heading: Config.Language["_._Error"]);
+            }
         }
     }
 
