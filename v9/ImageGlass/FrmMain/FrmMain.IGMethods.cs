@@ -880,21 +880,53 @@ public partial class FrmMain
     /// </summary>
     private void IG_OpenWith()
     {
-        using var p = new Process();
-        p.StartInfo.FileName = "openwith";
+        _ = OpenWithAsync();
+    }
 
-        // Build the arguments
-        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
-        p.StartInfo.Arguments = $"\"{filePath}\"";
 
-        // show error dialog
-        p.StartInfo.ErrorDialog = true;
+    private async Task OpenWithAsync()
+    {
+        if (PicMain.Source == ImageSource.Null) return;
 
-        try
+        string? filePath;
+        var langPath = $"{Name}.{nameof(MnuOpenWith)}";
+
+        if (Local.ClipboardImage != null)
         {
-            p.Start();
+            PicMain.ShowMessage(Config.Language[$"{langPath}._CreatingFile"], "", delayMs: 500);
+
+            filePath = await Local.SaveImageAsTempFileAsync(".png");
         }
-        catch { }
+        else
+        {
+            filePath = Local.Images.GetFileName(Local.CurrentIndex);
+        }
+
+        PicMain.ClearMessage();
+
+
+        if (!File.Exists(filePath))
+        {
+            _ = Config.ShowError(Config.Language[$"{langPath}._CreatingFileError"],
+                Config.Language[langPath]);
+        }
+        else
+        {
+            using var p = new Process();
+            p.StartInfo.FileName = "openwith";
+
+            // Build the arguments
+            p.StartInfo.Arguments = $"\"{filePath}\"";
+
+            // show error dialog
+            p.StartInfo.ErrorDialog = true;
+
+            try
+            {
+                p.Start();
+            }
+            catch { }
+        }
     }
 
 

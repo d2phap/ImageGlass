@@ -147,9 +147,11 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuReload", "Reload image"); //v5.5
         Add("FrmMain.MnuReloadImageList", "Reload image list"); //v7.0
         Add("FrmMain.MnuOpenWith", "Open with…"); //v7.6
+        Add("FrmMain.MnuOpenWith._CreatingFile", "Creating image file for opening with the other apps..."); //v9.0
+        Add("FrmMain.MnuOpenWith._CreatingFileError", "Could not create the image file for opening with the other apps..."); //v9.0
         Add("FrmMain.MnuEdit", "Edit image {0}…"); //v3.0, updated 4.0
         Add("FrmMain.MnuPrint", "Print…"); //v3.0
-        Add("FrmMain.MnuPrint._CreatingFile", "Creating file for printing..."); //v9.0
+        Add("FrmMain.MnuPrint._CreatingFile", "Creating image file for printing..."); //v9.0
         Add("FrmMain.MnuPrint._CreatingFileError", "Could not create the image file for printing"); //v9.0
         Add("FrmMain.MnuPrint._Error", "Could not print the viewing image"); //v9.0
         Add("FrmMain.MnuShare", "Share…"); //v8.6
