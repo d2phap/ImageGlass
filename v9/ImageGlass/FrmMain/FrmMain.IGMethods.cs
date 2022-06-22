@@ -565,21 +565,45 @@ public partial class FrmMain
 
     private async Task ShowShareDialogAsync()
     {
-        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
-        if (!File.Exists(filePath)) return;
-
-        var args = string.Format($"{IgCommands.SHARE} \"{filePath}\"");
-        var result = await Helpers.RunIgcmd10(args);
-        
-
-        if (result == IgExitCode.Error)
+        // image error
+        if (PicMain.Source == ImageSource.Null)
         {
-            var langPath = $"{Name}.{nameof(MnuShare)}";
+            return;
+        }
 
-            _ = Config.ShowError(
-                description: Config.Language[$"{langPath}._Error"],
-                title: Config.Language[langPath],
-                heading: Config.Language["_._Error"]);
+        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
+        var langPath = $"{Name}.{nameof(MnuShare)}";
+
+
+        // print clipboard image
+        if (Local.ClipboardImage != null)
+        {
+            PicMain.ShowMessage(Config.Language[$"{langPath}._CreatingFile"], "", delayMs: 500);
+
+            // save image to temp file
+            filePath = await Local.SaveImageAsTempFileAsync(".png");
+        }
+
+        PicMain.ClearMessage();
+
+        if (!File.Exists(filePath))
+        {
+            _ = Config.ShowError(Config.Language[$"{langPath}._CreatingFileError"],
+                Config.Language[langPath]);
+        }
+        else
+        {
+            var args = string.Format($"{IgCommands.SHARE} \"{filePath}\"");
+            var result = await Helpers.RunIgcmd10(args);
+
+
+            if (result == IgExitCode.Error)
+            {
+                _ = Config.ShowError(
+                    description: Config.Language[$"{langPath}._Error"],
+                    title: Config.Language[langPath],
+                    heading: Config.Language["_._Error"]);
+            }
         }
     }
 
@@ -800,6 +824,7 @@ public partial class FrmMain
 
         Local.ClipboardImage?.Dispose();
         Local.ClipboardImage = img;
+        Local.TempImagePath = null;
 
         PicMain.SetImage(img);
         PicMain.ClearMessage();
@@ -1214,6 +1239,8 @@ public partial class FrmMain
             }
             else
             {
+                PicMain.ClearMessage();
+
                 _ = Config.ShowError(
                     description: Config.Language[$"{langPath}._Error"],
                     title: Config.Language[langPath],

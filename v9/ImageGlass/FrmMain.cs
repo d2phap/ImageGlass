@@ -1092,6 +1092,7 @@ public partial class FrmMain : Form
             // delete clipboard image
             Local.ClipboardImage?.Dispose();
             Local.ClipboardImage = null;
+            Local.TempImagePath = null;
 
             // set the main image
             PicMain.SetImage(e.Data.ImgData.Image);

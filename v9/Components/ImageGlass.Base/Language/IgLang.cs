@@ -153,6 +153,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuPrint._CreatingFileError", "Could not create the image file for printing"); //v9.0
         Add("FrmMain.MnuPrint._Error", "Could not print the viewing image"); //v9.0
         Add("FrmMain.MnuShare", "Share…"); //v8.6
+        Add("FrmMain.MnuShare._CreatingFile", "Creating image file for sharing..."); //v9.0
+        Add("FrmMain.MnuShare._CreatingFileError", "Could not create the image file for sharing"); //v9.0
         Add("FrmMain.MnuShare._Error", "Could not open Share dialog."); //v9.0
         #endregion
 
