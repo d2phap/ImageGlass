@@ -1865,13 +1865,18 @@ public partial class ViewBox : HybridControl
             // _imageGdiPlus can be null due to cancellation token
             if (_imageGdiPlus != null)
             {
-                lock (_imageGdiPlus)
+                try
                 {
                     _imageD2D = Device.CreateBitmapFromGDIBitmap(_imageGdiPlus);
-                }
 
-                // release the GDI+ resouce
-                _imageGdiPlus = null;
+                    // release the GDI+ resouce
+                    _imageGdiPlus = null;
+                }
+                catch
+                {
+                    Source = ImageSource.GDIPlus;
+                    UseHardwareAcceleration = false;
+                }
             }
         }
     }

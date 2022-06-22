@@ -753,16 +753,27 @@ public partial class FrmMain
 
     private async Task CopyImageDataAsync()
     {
-        var img = await Local.Images.GetAsync(Local.CurrentIndex);
+        if (PicMain.Source == ImageSource.Null)
+        {
+            return;
+        }
 
-        if (img != null)
+        var bitmap = Local.ClipboardImage;
+
+        if (bitmap == null)
+        {
+            var img = await Local.Images.GetAsync(Local.CurrentIndex);
+            bitmap = img?.ImgData?.Image;
+        }
+
+        if (bitmap != null)
         {
             var langPath = $"{Name}.{nameof(MnuCopyImageData)}";
 
             PicMain.ClearMessage();
             PicMain.ShowMessage(Config.Language[$"{langPath}._Copying"], "", delayMs: 1500);
 
-            await Task.Run(() => ClipboardEx.SetClipboardImage(img.ImgData.Image));
+            await Task.Run(() => ClipboardEx.SetClipboardImage(bitmap));
 
             PicMain.ShowMessage(Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
         }
