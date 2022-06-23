@@ -1747,12 +1747,12 @@ public partial class FrmMain : Form
 
     private void MnuSave_Click(object sender, EventArgs e)
     {
-        // TODO
+        IG_Save();
     }
 
     private void MnuSaveAs_Click(object sender, EventArgs e)
     {
-        // TODO
+        IG_SaveAs();
     }
 
     private void MnuOpenWith_Click(object sender, EventArgs e)

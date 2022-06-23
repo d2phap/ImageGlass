@@ -874,6 +874,61 @@ public partial class FrmMain
         ExplorerApi.DisplayFileProperties(filePath, Handle);
     }
 
+    
+    private void IG_Save()
+    {
+        if (PicMain.Source == ImageSource.Null)
+        {
+            return;
+        }
+    }
+
+
+
+    private void IG_SaveAs()
+    {
+        if (PicMain.Source == ImageSource.Null)
+        {
+            return;
+        }
+
+        var currentFile = Local.Images.GetFileName(Local.CurrentIndex);
+        var ext = Path.GetExtension(currentFile).ToLowerInvariant();
+
+        if (string.IsNullOrEmpty(ext) || ext.Length < 2)
+        {
+            ext = ".jpg";
+        }
+
+        var saveDialog = new SaveFileDialog
+        {
+            Filter = SavingExts.GetFilterStringForSaveDialog(),
+            FileName = Path.GetFileNameWithoutExtension(currentFile),
+            RestoreDirectory = true,
+            SupportMultiDottedExtensions = true,
+            Title = Config.Language[$"{Name}.{nameof(MnuSaveAs)}"],
+        };
+
+        var dirPath = string.IsNullOrEmpty(currentFile) ? currentFile : Path.GetDirectoryName(currentFile);
+        saveDialog.CustomPlaces.Add(dirPath);
+        
+        // Use the last-selected file extension, if available.
+        var extIndex = !string.IsNullOrEmpty(Local.SaveAsFilterExt)
+            ? SavingExts.IndexOf(Local.SaveAsFilterExt)
+            : SavingExts.IndexOf(ext);
+
+        saveDialog.FilterIndex = Math.Max(extIndex, 0) + 1;
+
+        if (saveDialog.ShowDialog() == DialogResult.OK)
+        {
+            var destExt = Path.GetExtension(saveDialog.FileName).ToLower();
+            Local.SaveAsFilterExt = destExt;
+
+
+            //_ = SaveImageAsAsync(saveDialog.FileName, destExt);
+        }
+    }
+
 
     /// <summary>
     /// Shows OpenWith dialog

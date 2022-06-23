@@ -168,6 +168,13 @@ internal class Local
     public static ImageOrderType ActiveImageLoadingOrderType { get; set; }
 
     /// <summary>
+    /// Remember for this session the last-used "Save As" extension. When the user is iterating
+    /// through a set of images and using "Save As" to always save to the same file type, this
+    /// memory prevents them from having to manually re-select their desired extension.
+    /// </summary>
+    public static string SaveAsFilterExt { get; set; } = "";
+
+    /// <summary>
     /// Gets, sets color channel of image
     /// </summary>
     public static ColorChannel ImageChannel { get; set; } = ColorChannel.All;
