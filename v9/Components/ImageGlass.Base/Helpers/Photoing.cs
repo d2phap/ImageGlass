@@ -19,7 +19,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base.WinApi;
 using ImageMagick;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
+using static System.Windows.Forms.DataFormats;
 
 namespace ImageGlass.Base;
 
@@ -60,11 +62,11 @@ public partial class Helpers
     /// </summary>
     /// <param name="content">Base64 string</param>
     /// <returns></returns>
-    public static (string MimeType, byte[] ByteData) ConvertBase64ToBytes(string content)
+    public static (string MimeType, byte[] ByteData) ConvertBase64ToBytes(string? content)
     {
         if (string.IsNullOrWhiteSpace(content))
         {
-            throw new Exception("Base-64 file content is empty.");
+            throw new ArgumentNullException(nameof(content)); 
         }
 
         // data:image/svg-xml;base64,xxxxxxxx
@@ -75,7 +77,7 @@ public partial class Helpers
         var match = base64DataUri.Match(content);
         if (!match.Success)
         {
-            throw new Exception("Base-64 file content is invalid.");
+            throw new FormatException("The base64 content is invalid.");
         }
 
 
@@ -185,6 +187,120 @@ public partial class Helpers
                     return null;
                 }
             }
+        }
+
+        return null;
+    }
+
+
+    /// <summary>
+    /// Gets image MIME type from the input extension.
+    /// Returns <c>image/png</c> if the format is not supported.
+    /// </summary>
+    /// <param name="ext">The extension, example: .png</param>
+    public static string GetMIMEType(string? ext)
+    {
+        var mimeType = ext?.ToUpperInvariant() switch
+        {
+            ".GIF" => "image/gif",
+            ".BMP" => "image/bmp",
+            ".PNG" => "image/png",
+            ".WEBP" => "image/webp",
+            ".SVG" => "image/svg+xml",
+            ".JPG" or ".JPEG" or ".JFIF" or ".JP2" => "image/jpeg",
+            ".JXL" => "image/jxl",
+            ".TIF" or ".TIFF" or "FAX" => "image/tiff",
+            ".ICO" or ".ICON" => "image/x-icon",
+            _ => "image/png",
+        };
+
+        return mimeType;
+    }
+
+
+    /// <summary>
+    /// Gets image MIME type from the input <see cref="ImageFormat"/>.
+    /// Returns <paramref name="defaultValue"/> if the format is not supported.
+    /// </summary>
+    /// <param name="format">Image format</param>
+    /// <returns></returns>
+    public static string GetMIMEType(ImageFormat? format = null, string defaultValue = "image/png")
+    {
+        if (format == null)
+        {
+            return defaultValue;
+        }
+
+        if (format.Equals(ImageFormat.Gif))
+        {
+            return "image/gif";
+        }
+
+        if (format.Equals(ImageFormat.Bmp))
+        {
+            return "image/bmp";
+        }
+
+        if (format.Equals(ImageFormat.Jpeg))
+        {
+            return "image/jpeg";
+        }
+
+        if (format.Equals(ImageFormat.Png))
+        {
+            return "image/png";
+        }
+
+        if (format.Equals(ImageFormat.Tiff))
+        {
+            return "image/tiff";
+        }
+
+        if (format.Equals(ImageFormat.Icon))
+        {
+            return "image/x-icon";
+        }
+
+        return defaultValue;
+    }
+
+
+    /// <summary>
+    /// Gets <see cref="ImageFormat"/> from the input extension
+    /// </summary>
+    /// <param name="ext">The extension, example: .png</param>
+    /// <returns></returns>
+    public static ImageFormat? GetImageFormatFromExtension(string ext)
+    {
+        if (ext.Equals(".gif", StringComparison.OrdinalIgnoreCase))
+        {
+            return ImageFormat.Gif;
+        }
+
+        if (ext.Equals(".bmp", StringComparison.OrdinalIgnoreCase))
+        {
+            return ImageFormat.Bmp;
+        }
+
+        if (ext.Equals(".jpg", StringComparison.OrdinalIgnoreCase)
+            || ext.Equals(".jpe", StringComparison.OrdinalIgnoreCase)
+            || ext.Equals(".jpeg", StringComparison.OrdinalIgnoreCase)
+            || ext.Equals(".jp2", StringComparison.OrdinalIgnoreCase)
+            || ext.Equals(".jxl", StringComparison.OrdinalIgnoreCase))
+        {
+            return ImageFormat.Jpeg;
+        }
+
+        if (ext.Equals(".tiff", StringComparison.OrdinalIgnoreCase)
+            || ext.Equals(".tif", StringComparison.OrdinalIgnoreCase)
+            || ext.Equals(".fax", StringComparison.OrdinalIgnoreCase))
+        {
+            return ImageFormat.Tiff;
+        }
+
+        if (ext.Equals(".ico", StringComparison.OrdinalIgnoreCase))
+        {
+            return ImageFormat.Icon;
         }
 
         return null;
