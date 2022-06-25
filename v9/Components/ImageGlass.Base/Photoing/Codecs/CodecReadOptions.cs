@@ -35,11 +35,6 @@ public record CodecReadOptions
     public int Height = 0;
 
     /// <summary>
-    /// Gets, sets the quality of image
-    /// </summary>
-    public int Quality = 100;
-
-    /// <summary>
     /// Gets, sets the value indicates whether the color profile should be ignored.
     /// </summary>
     public bool IgnoreColorProfile = false;
@@ -47,7 +42,7 @@ public record CodecReadOptions
     /// <summary>
     /// Gets sets ColorProfile name of path
     /// </summary>
-    public string ColorProfileName { get; set; } = "sRGB";
+    public string ColorProfileName { get; set; } = Constants.CURRENT_MONITOR_PROFILE;
 
     /// <summary>
     /// Gets, sets the value indicates if the <see cref="ColorProfileName"/>

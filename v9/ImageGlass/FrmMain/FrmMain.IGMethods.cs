@@ -548,7 +548,7 @@ public partial class FrmMain
             }
             catch (Exception ex)
             {
-                _ = Config.ShowError($"{ex.Source}:\r\n{ex.Message}",
+                _ = Config.ShowError($"{ex.Source}:\r\n{ex.Message}", "",
                     Config.Language[$"{langPath}._Error"]);
             }
         }
@@ -892,30 +892,43 @@ public partial class FrmMain
             return;
         }
 
-        var currentFile = Local.Images.GetFileName(Local.CurrentIndex);
-        var ext = Path.GetExtension(currentFile).ToLowerInvariant();
+        var srcFilePath = "";
+        var srcExt = ".png";
 
-        if (string.IsNullOrEmpty(ext) || ext.Length < 2)
+        if (Local.ClipboardImage == null)
         {
-            ext = ".jpg";
+            srcFilePath = Local.Images.GetFileName(Local.CurrentIndex);
+            srcExt = Path.GetExtension(srcFilePath).ToLowerInvariant();
+
+            if (string.IsNullOrEmpty(srcExt) || srcExt.Length < 2)
+            {
+                srcExt = ".png";
+            }
         }
 
         var saveDialog = new SaveFileDialog
         {
             Filter = SavingExts.GetFilterStringForSaveDialog(),
-            FileName = Path.GetFileNameWithoutExtension(currentFile),
+            FileName = string.IsNullOrEmpty(srcFilePath)
+                ? $"untitle{srcExt}"
+                : Path.GetFileNameWithoutExtension(srcFilePath),
             RestoreDirectory = true,
             SupportMultiDottedExtensions = true,
             Title = Config.Language[$"{Name}.{nameof(MnuSaveAs)}"],
         };
 
-        var dirPath = string.IsNullOrEmpty(currentFile) ? currentFile : Path.GetDirectoryName(currentFile);
+
+        // add custom places to the SaveFileDialog
+        var dirPath = string.IsNullOrEmpty(srcFilePath)
+            ? srcFilePath
+            : Path.GetDirectoryName(srcFilePath);
         saveDialog.CustomPlaces.Add(dirPath);
         
+
         // Use the last-selected file extension, if available.
         var extIndex = !string.IsNullOrEmpty(Local.SaveAsFilterExt)
             ? SavingExts.IndexOf(Local.SaveAsFilterExt)
-            : SavingExts.IndexOf(ext);
+            : SavingExts.IndexOf(srcExt);
 
         saveDialog.FilterIndex = Math.Max(extIndex, 0) + 1;
 
@@ -925,9 +938,85 @@ public partial class FrmMain
             Local.SaveAsFilterExt = destExt;
 
 
-            //_ = SaveImageAsAsync(saveDialog.FileName, destExt);
+            _ = SaveImageAsAsync(saveDialog.FileName, destExt, srcFilePath);
         }
     }
+
+
+    /// <summary>
+    /// Save image to file
+    /// </summary>
+    /// <param name="destFilePath">Destination file path</param>
+    /// <param name="destExt">Destination file extension. E.g. ".png"</param>
+    /// <param name="srcFilePath">Source file path</param>
+    private async Task SaveImageAsAsync(string destFilePath, string destExt, string srcFilePath = "")
+    {
+        var hasSrcPath = !string.IsNullOrEmpty(srcFilePath);
+        if (!hasSrcPath && Local.ClipboardImage == null)
+        {
+            return;
+        }
+
+        Bitmap? clonedPic = null;
+        var srcExt = "";
+
+        // get the bitmap data from file
+        if (hasSrcPath)
+        {
+            var img = await Local.Images.GetAsync(Local.CurrentIndex);
+            clonedPic = img?.ImgData?.Image?.Clone() as Bitmap;
+
+            srcExt = Path.GetExtension(srcFilePath).ToLowerInvariant();
+        }
+        // get bitmap from clipboard image
+        else if (Local.ClipboardImage != null)
+        {
+            clonedPic = Local.ClipboardImage.Clone() as Bitmap;
+        }
+
+        if (clonedPic == null) return;
+
+        var langPath = $"{Name}.{nameof(MnuSave)}";
+        PicMain.ShowMessage(string.Format(Config.Language[$"{langPath}._Saving"], destFilePath), "");
+
+        try
+        {
+            // base64 format
+            if (destExt == ".b64" || destExt == ".txt")
+            {
+                if (hasSrcPath)
+                {
+                    await PhotoCodec.SaveAsBase64Async(srcFilePath, destFilePath, Local.Images.ReadOptions);
+                }
+                else if (Local.ClipboardImage != null)
+                {
+                    await PhotoCodec.SaveAsBase64Async(clonedPic, srcExt, destFilePath);
+                }
+            }
+            // other formats
+            else
+            {
+                if (hasSrcPath)
+                {
+                    await PhotoCodec.SaveAsync(srcFilePath, destFilePath, Local.Images.ReadOptions, Config.ImageEditQuality);
+                }
+                else if (Local.ClipboardImage != null)
+                {
+                    await PhotoCodec.SaveAsync(clonedPic, destFilePath, quality: Config.ImageEditQuality);
+                }
+            }
+
+            PicMain.ShowMessage(string.Format(Config.Language[$"{langPath}._Success"], destFilePath), Config.InAppMessageDuration);
+        }
+        catch (Exception ex)
+        {
+            PicMain.ClearMessage();
+            _ = Config.ShowError(ex.Source + ":\r\n" + ex.Message,
+                Config.Language[langPath],
+                string.Format(Config.Language[$"{langPath}._Error"]), destFilePath);
+        }
+    }
+
 
 
     /// <summary>
