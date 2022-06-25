@@ -43,7 +43,8 @@ public class ClipboardEx
     /// </param>
     public static void SetClipboardImage(Bitmap? image, Bitmap? imageNoTr = null, DataObject? data = null)
     {
-        if (image == null) return;
+        var clonedImg = image?.Clone() as Bitmap;
+        if (clonedImg == null) return;
 
         // https://stackoverflow.com/a/17762059/2856887
         Helpers.RunAsThread(() => Clipboard.Clear(), ApartmentState.STA)
@@ -53,7 +54,7 @@ public class ClipboardEx
             data = new DataObject();
 
         if (imageNoTr == null)
-            imageNoTr = image;
+            imageNoTr = clonedImg;
 
         using var pngMemStream = new MemoryStream();
         using var dibMemStream = new MemoryStream();
@@ -62,11 +63,11 @@ public class ClipboardEx
         data.SetData(DataFormats.Bitmap, true, imageNoTr);
 
         // As PNG. Gimp will prefer this over the other two.
-        image.Save(pngMemStream, ImageFormat.Png);
+        clonedImg.Save(pngMemStream, ImageFormat.Png);
         data.SetData("PNG", false, pngMemStream);
 
         // As DIB. This is (wrongly) accepted as ARGB by many applications.
-        var dibData = ConvertToDib(image);
+        var dibData = ConvertToDib(clonedImg);
         dibMemStream.Write(dibData, 0, dibData.Length);
         data.SetData(DataFormats.Dib, false, dibMemStream);
 
