@@ -18,7 +18,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageMagick;
 using ImageMagick.Formats;
+using System.Drawing.Imaging;
 using System.Runtime.CompilerServices;
+using static System.Windows.Forms.DataFormats;
+using System;
 
 namespace ImageGlass.Base.Photoing.Codecs;
 
@@ -154,7 +157,6 @@ public static class PhotoCodec
             UseEmbeddedThumbnail = true,
             UseRawThumbnail = true,
             ApplyColorProfileForAll = false,
-            Quality = 80,
         });
 
         return data.Image;
@@ -278,24 +280,23 @@ public static class PhotoCodec
     /// </summary>
     /// <param name="srcFileName">Source filename to save</param>
     /// <param name="destFilePath">Destination filename</param>
-    /// <param name="format">New image format</param>
-    /// <param name="quality">JPEG/MIFF/PNG compression level</param>
-    public static async Task SaveAsync(string srcFileName, string destFilePath, MagickFormat format = MagickFormat.Unknown, int quality = 100, CancellationToken token = default)
+    /// <param name="readOptions">Options for reading image file</param>
+    /// <param name="quality">Quality</param>
+    public static async Task SaveAsync(string srcFileName, string destFilePath, CodecReadOptions readOptions, int quality = 100, CancellationToken token = default)
     {
-        using var imgM = new MagickImage(srcFileName)
-        {
-            Quality = quality,
-        };
-
         try
         {
-            if (format != MagickFormat.Unknown)
+            var settings = ParseSettings(readOptions, srcFileName);
+            var imgData = await ReadMagickImageAsync(srcFileName, Path.GetExtension(srcFileName), settings, readOptions, token);
+
+            if (imgData.MultiFrameImage != null)
             {
-                await imgM.WriteAsync(destFilePath, format, token);
+                await imgData.MultiFrameImage.WriteAsync(destFilePath, token);
             }
-            else
+            else if (imgData.SingleFrameImage != null)
             {
-                await imgM.WriteAsync(destFilePath, token);
+                imgData.SingleFrameImage.Quality = quality;
+                await imgData.SingleFrameImage.WriteAsync(destFilePath, token);
             }
         }
         catch (OperationCanceledException) { }
@@ -374,6 +375,96 @@ public static class PhotoCodec
 
             yield return index;
         }
+    }
+
+
+    /// <summary>
+    /// Saves source bitmap image as base64
+    /// </summary>
+    /// <param name="srcBitmap">Source bitmap</param>
+    /// <param name="srcExt">Source file extension, example: .png</param>
+    /// <param name="destFilePath">Destination file</param>
+    /// <returns></returns>
+    public static async Task SaveAsBase64Async(Bitmap? srcBitmap, string srcExt, string destFilePath, CancellationToken token = default)
+    {
+        if (srcBitmap == null) return;
+
+        var mimeType = Helpers.GetMIMEType(srcExt);
+        var header = $"data:{mimeType};base64,";
+
+        // there is no encoder associated with an in-memory bitmap,
+        // so we will have to specify an image format
+        // https://stackoverflow.com/a/25242900/2856887
+        var srcFormat = Helpers.GetImageFormatFromExtension(srcExt) ?? ImageFormat.Png;
+        
+        try
+        {
+            token.ThrowIfCancellationRequested();
+
+            // convert bitmap to base64
+            using var ms = new MemoryStream();
+            srcBitmap.Save(ms, srcFormat);
+            var base64 = Convert.ToBase64String(ms.ToArray());
+
+            token.ThrowIfCancellationRequested();
+
+            // write base64 file
+            using var sw = new StreamWriter(destFilePath);
+            await sw.WriteAsync(header + base64).ConfigureAwait(false);
+            await sw.FlushAsync().ConfigureAwait(false);
+            sw.Close();
+        }
+        catch (OperationCanceledException) { }
+    }
+
+
+    /// <summary>
+    /// Saves image file as base64
+    /// </summary>
+    /// <param name="srcFilePath">Source file path</param>
+    /// <param name="destFilePath">Destination file path</param>
+    /// <returns></returns>
+    public static async Task SaveAsBase64Async(string srcFilePath, string destFilePath, CodecReadOptions readOptions, CancellationToken token = default)
+    {
+        var srcExt = Path.GetExtension(srcFilePath).ToLowerInvariant();
+        var mimeType = Helpers.GetMIMEType(srcExt);
+
+        try
+        {
+            token.ThrowIfCancellationRequested();
+
+            // for basic MIME formats
+            if (!string.IsNullOrEmpty(mimeType))
+            {
+                // read source file content
+                using var fs = new FileStream(srcFilePath, FileMode.Open, FileAccess.Read);
+                var data = new byte[fs.Length];
+                await fs.ReadAsync(data.AsMemory(0, (int)fs.Length), token);
+                fs.Close();
+
+                token.ThrowIfCancellationRequested();
+
+                // convert bitmap to base64
+                var header = $"data:{mimeType};base64,";
+                var base64 = Convert.ToBase64String(data);
+
+                token.ThrowIfCancellationRequested();
+
+                // write base64 file
+                using var sw = new StreamWriter(destFilePath);
+                await sw.WriteAsync(header + base64);
+                await sw.FlushAsync().ConfigureAwait(false);
+                sw.Close();
+
+                return;
+            }
+
+
+            // for not supported formats
+            var bmp = await LoadAsync(srcFilePath, readOptions, token);
+            await SaveAsBase64Async(bmp.Image, srcExt, destFilePath, token);
+        }
+        catch (OperationCanceledException) { }
     }
 
     #endregion
@@ -703,7 +794,7 @@ public static class PhotoCodec
         IMagickImage? thumbM = null;
 
         // preprocess image, read embedded thumbnail if any
-        refImgM.Quality = options.Quality;
+        refImgM.Quality = 100;
 
         try
         {
@@ -898,7 +989,7 @@ public static class PhotoCodec
         {
             settings.SetDefines(new Jp2ReadDefines
             {
-                QualityLayers = options.Quality,
+                QualityLayers = 100,
             });
         }
 
@@ -944,6 +1035,7 @@ public static class PhotoCodec
 
         return exifValue.Value;
     }
+
 
     #endregion
 
