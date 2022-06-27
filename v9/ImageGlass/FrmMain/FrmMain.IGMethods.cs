@@ -877,10 +877,61 @@ public partial class FrmMain
     
     private void IG_Save()
     {
-        if (PicMain.Source == ImageSource.Null)
+        if (Local.ClipboardImage != null)
         {
+            IG_SaveAs();
             return;
         }
+
+        var srcFilePath = Local.Images.GetFileName(Local.CurrentIndex);
+        Local.ImageModifiedPath = srcFilePath;
+
+        _ = SaveImageAsync();
+    }
+
+    
+    private async Task SaveImageAsync()
+    {
+        // use backup name to avoid variable conflict
+        var filename = Local.ImageModifiedPath;
+        var lastWriteTime = File.GetLastWriteTime(filename);
+
+        var langPath = $"{Name}.{nameof(MnuSave)}";
+        PicMain.ShowMessage(filename, Config.Language[$"{langPath}._Saving"]);
+        
+        var img = await Local.Images.GetAsync(Local.CurrentIndex);
+        if (img?.ImgData?.Image == null)
+        {
+            Local.ImageModifiedPath = "";
+            PicMain.ShowMessage("Image is null.", Config.Language[$"{langPath}._Error"], Config.InAppMessageDuration);
+            return;
+        }
+
+        try
+        {
+            await PhotoCodec.SaveAsync(img.ImgData.Image, filename, quality: Config.ImageEditQuality);
+
+            // Issue #307: option to preserve the modified date/time
+            if (Config.PreserveModifiedDate)
+            {
+                File.SetLastWriteTime(filename, lastWriteTime);
+            }
+
+            // update cache of the modified item
+            Gallery.Items[Local.CurrentIndex].UpdateDetails(true);
+
+            PicMain.ShowMessage(filename, Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
+        }
+        catch (Exception ex)
+        {
+            PicMain.ClearMessage();
+            _ = Config.ShowError(ex.Source + ":\r\n" + ex.Message,
+                Config.Language[langPath],
+                string.Format(Config.Language[$"{langPath}._Error"]), filename);
+        }
+
+
+        Local.ImageModifiedPath = "";
     }
 
 
@@ -959,6 +1010,9 @@ public partial class FrmMain
 
         Bitmap? clonedPic = null;
         var srcExt = "";
+        var langPath = $"{Name}.{nameof(MnuSave)}";
+        
+        PicMain.ShowMessage(destFilePath, Config.Language[$"{langPath}._Saving"]);
 
         // get the bitmap data from file
         if (hasSrcPath)
@@ -974,10 +1028,11 @@ public partial class FrmMain
             clonedPic = Local.ClipboardImage.Clone() as Bitmap;
         }
 
-        if (clonedPic == null) return;
-
-        var langPath = $"{Name}.{nameof(MnuSave)}";
-        PicMain.ShowMessage(string.Format(Config.Language[$"{langPath}._Saving"], destFilePath), "");
+        if (clonedPic == null)
+        {
+            PicMain.ShowMessage("Image is null.", Config.Language[$"{langPath}._Error"], Config.InAppMessageDuration);
+            return;
+        }
 
         try
         {
@@ -1006,7 +1061,7 @@ public partial class FrmMain
                 }
             }
 
-            PicMain.ShowMessage(string.Format(Config.Language[$"{langPath}._Success"], destFilePath), Config.InAppMessageDuration);
+            PicMain.ShowMessage(destFilePath, Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
         }
         catch (Exception ex)
         {
@@ -1286,7 +1341,6 @@ public partial class FrmMain
                 // TODO: once the realtime watcher implemented, delete this:
                 Local.Images.Remove(Local.CurrentIndex);
                 Gallery.Items.RemoveAt(Local.CurrentIndex);
-                Local.CurrentIndex++;
                 _ = ViewNextCancellableAsync(0);
                 //////////////////////////////////////////////////////////////
             }

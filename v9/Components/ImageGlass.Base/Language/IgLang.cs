@@ -142,9 +142,9 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuNewWindow", "Open new window"); //v7.0
         Add("FrmMain.MnuNewWindow._Error", "Cannot open new window because only one instance allowed"); //v7.0
         Add("FrmMain.MnuSave", "Save image"); //v8.1
-        Add("FrmMain.MnuSave._Saving", "Saving image...\r\n{0}"); //v9.0
-        Add("FrmMain.MnuSave._Success", "Image is saved to\r\n{0}"); //v9.0
-        Add("FrmMain.MnuSave._Error", "Could not save the image\r\n{0}"); //v9.0
+        Add("FrmMain.MnuSave._Saving", "Saving image..."); //v9.0
+        Add("FrmMain.MnuSave._Success", "Image is saved"); //v9.0
+        Add("FrmMain.MnuSave._Error", "Could not save the image"); //v9.0
         Add("FrmMain.MnuSaveAs", "Save image as…"); //v3.0
         Add("FrmMain.MnuRefresh", "Refresh"); //v3.0
         Add("FrmMain.MnuReload", "Reload image"); //v5.5
