@@ -315,10 +315,10 @@ public static class Config
     ///// </summary>
     //public static bool IsSaveAfterRotating { get; set; } = false;
 
-    ///// <summary>
-    ///// Gets, sets the setting to control whether the image's original modified date value is preserved on save
-    ///// </summary>
-    //public static bool IsPreserveModifiedDate { get; set; } = true;
+    /// <summary>
+    /// Gets, sets the setting to control whether the image's original modified date value is preserved on save
+    /// </summary>
+    public static bool PreserveModifiedDate { get; set; } = true;
 
     /// <summary>
     /// Gets, sets the value indicates that there is a new version
@@ -785,7 +785,7 @@ public static class Config
         RequireDeleteConfirmation = items.GetValue(nameof(RequireDeleteConfirmation), RequireDeleteConfirmation);
         //IsScrollbarsVisible = items.GetValue(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
         //IsSaveAfterRotating = items.GetValue(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
-        //IsPreserveModifiedDate = items.GetValue(nameof(IsPreserveModifiedDate), IsPreserveModifiedDate);
+        PreserveModifiedDate = items.GetValue(nameof(PreserveModifiedDate), PreserveModifiedDate);
         IsNewVersionAvailable = items.GetValue(nameof(IsNewVersionAvailable), IsNewVersionAvailable);
         //IsDisplayBasenameOfImage = items.GetValue(nameof(IsDisplayBasenameOfImage), IsDisplayBasenameOfImage);
         CenterToolbar = items.GetValue(nameof(CenterToolbar), CenterToolbar);
@@ -1284,7 +1284,7 @@ public static class Config
         settings.TryAdd(nameof(RequireDeleteConfirmation), RequireDeleteConfirmation);
         //settings.TryAdd(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
         //settings.TryAdd(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
-        //settings.TryAdd(nameof(IsPreserveModifiedDate), IsPreserveModifiedDate);
+        settings.TryAdd(nameof(PreserveModifiedDate), PreserveModifiedDate);
         settings.TryAdd(nameof(IsNewVersionAvailable), IsNewVersionAvailable);
         //settings.TryAdd(nameof(IsDisplayBasenameOfImage), IsDisplayBasenameOfImage);
         settings.TryAdd(nameof(CenterToolbar), CenterToolbar);
