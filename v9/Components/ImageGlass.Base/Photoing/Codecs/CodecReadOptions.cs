@@ -66,6 +66,11 @@ public record CodecReadOptions
     public bool UseRawThumbnail { get; set; } = true;
 
     /// <summary>
+    /// Gets, sets the value indicates that the incorrect rotation should be fixed
+    /// </summary>
+    public bool CorrectRotation { get; set; } = true;
+
+    /// <summary>
     /// Gets, sets the value indicates that the first frame of the image should be returned.
     /// If it's <c>null</c>, the coder will decide.
     /// </summary>

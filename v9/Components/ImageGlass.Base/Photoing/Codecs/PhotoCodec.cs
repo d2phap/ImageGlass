@@ -287,7 +287,12 @@ public static class PhotoCodec
         try
         {
             var settings = ParseSettings(readOptions, srcFileName);
-            var imgData = await ReadMagickImageAsync(srcFileName, Path.GetExtension(srcFileName), settings, readOptions, token);
+            using var imgData = await ReadMagickImageAsync(srcFileName, Path.GetExtension(srcFileName), settings, readOptions with
+            {
+                // Magick.NET auto-corrects the rotation when saving,
+                // so we don't need to correct it manually.
+                CorrectRotation = false,
+            }, token);
 
             if (imgData.MultiFrameImage != null)
             {
@@ -311,9 +316,34 @@ public static class PhotoCodec
     /// <param name="format">New image format</param>
     /// <param name="quality">JPEG/MIFF/PNG compression level</param>
     /// <returns></returns>
-    public static async Task SaveAsync(Bitmap? srcBitmap, string destFilePath, MagickFormat format = MagickFormat.Unknown, int quality = 100)
+    public static async Task SaveAsync(Bitmap? srcBitmap, string destFilePath, MagickFormat format = MagickFormat.Unknown, int quality = 100, CancellationToken token = default)
     {
-        await Task.Run(() => Save(srcBitmap, destFilePath, format, quality));
+        if (srcBitmap == null) return;
+
+
+        try
+        {
+            token.ThrowIfCancellationRequested();
+            
+            using var imgM = new MagickImage();
+            await Task.Run(() =>
+            {
+                imgM.Read(srcBitmap);
+                imgM.Quality = quality;
+            }, token);
+
+            token.ThrowIfCancellationRequested();
+
+            if (format != MagickFormat.Unknown)
+            {
+                await imgM.WriteAsync(destFilePath, format, token);
+            }
+            else
+            {
+                await imgM.WriteAsync(destFilePath, token);
+            }
+        }
+        catch (OperationCanceledException) { }
     }
 
 
@@ -813,7 +843,8 @@ public static class PhotoCodec
             thumbM = exifProfile.CreateThumbnail();
             if (thumbM != null)
             {
-                ApplyRotation(thumbM, exifProfile, ext);
+                if (options.CorrectRotation) ApplyRotation(thumbM, exifProfile, ext);
+
                 ApplySizeSettings(thumbM, options);
             }
         }
@@ -824,7 +855,7 @@ public static class PhotoCodec
             // resize the image
             ApplySizeSettings(refImgM, options);
 
-            ApplyRotation(refImgM, exifProfile, ext);
+            if (options.CorrectRotation) ApplyRotation(refImgM, exifProfile, ext);
 
             // if always apply color profile
             // or only apply color profile if there is an embedded profile
