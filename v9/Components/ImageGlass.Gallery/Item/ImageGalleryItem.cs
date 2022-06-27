@@ -134,10 +134,10 @@ public class ImageGalleryItem : ICloneable
         {
             if (_details is null)
             {
-                _details = FetchItemDetails();
+                UpdateDetails();
             }
 
-            return _details;
+            return _details ?? new();
         }
     }
 
@@ -560,19 +560,17 @@ public class ImageGalleryItem : ICloneable
     /// then update the <see cref="Details"/> property.
     /// </summary>
     /// <param name="force">Force to fetch details from file.</param>
-    public ImageDetails? FetchItemDetails(bool force = false)
+    public void UpdateDetails(bool force = false)
     {
         if (!isDirty
-            || Adaptor is null
-            || ImageGalleryOwner is null
-            || mVirtualItemKey is null) return null;
+            || Adaptor == null
+            || ImageGalleryOwner == null
+            || mVirtualItemKey == null) return;
 
-        if (force || _details is null)
+        if (force || _details == null)
         {
-            return Adaptor.GetDetails(mVirtualItemKey);
+            _details = Adaptor.GetDetails(mVirtualItemKey);
         }
-
-        return null;
     }
 
     /// <summary>
