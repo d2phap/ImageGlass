@@ -19,7 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using System.Globalization;
-using System.Media;
 using System.Text.RegularExpressions;
 using Windows.Win32;
 using Windows.Win32.Graphics.Dwm;
@@ -828,18 +827,29 @@ public partial class Popup : Form
         string heading = "",
         string details = "",
         PopupButtons buttons = PopupButtons.OK,
-        SHSTOCKICONID? icon = null)
+        SHSTOCKICONID? icon = null,
+        Image? thumbnail = null)
     {
+        var sysIcon = SystemIconApi.GetSystemIcon(icon);
+
         var frm = new Popup(theme, lang)
         {
             Title = title,
             Heading = heading,
             Description = description,
 
-            Thumbnail = SystemIconApi.GetSystemIcon(icon),
+            Thumbnail = thumbnail ?? sysIcon,
+            ThumbnailOverlay = (thumbnail != null && sysIcon != null) ? sysIcon : null,
             ShowTextInput = false,
             ShowInTaskbar = true,
         };
+
+        if (sysIcon != null)
+        {
+            var formIconHandle = sysIcon.GetHicon();
+            frm.Icon = Icon.FromHandle(formIconHandle);
+            FormIconApi.SetTaskbarIcon(frm, formIconHandle);
+        }
 
         if (!string.IsNullOrEmpty(details.Trim()))
         {

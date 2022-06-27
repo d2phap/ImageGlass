@@ -1120,8 +1120,6 @@ public static class Config
     /// <summary>
     /// Shows information popup widow.
     /// </summary>
-    /// <param name="theme">Popup theme.</param>
-    /// <param name="lang">Popup language.</param>
     /// <param name="title">Popup title.</param>
     /// <param name="heading">Popup heading text.</param>
     /// <param name="description">Popup description.</param>
@@ -1147,19 +1145,19 @@ public static class Config
         string title = "",
         string heading = "",
         string details = "",
+        SHSTOCKICONID? icon = SHSTOCKICONID.SIID_INFO,
+        Image? thumbnail = null,
         PopupButtons buttons = PopupButtons.OK)
     {
         SystemSounds.Question.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, SHSTOCKICONID.SIID_INFO);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, icon, thumbnail);
     }
 
 
     /// <summary>
     /// Shows warning popup widow.
     /// </summary>
-    /// <param name="theme">Popup theme.</param>
-    /// <param name="lang">Popup language.</param>
     /// <param name="title">Popup title.</param>
     /// <param name="heading">Popup heading text.</param>
     /// <param name="description">Popup description.</param>
@@ -1185,21 +1183,21 @@ public static class Config
         string title = "",
         string? heading = null,
         string details = "",
+        SHSTOCKICONID? icon = SHSTOCKICONID.SIID_WARNING,
+        Image? thumbnail = null,
         PopupButtons buttons = PopupButtons.OK)
     {
         heading ??= Language["_._Warning"];
 
         SystemSounds.Exclamation.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, SHSTOCKICONID.SIID_WARNING);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, icon, thumbnail);
     }
 
 
     /// <summary>
     /// Shows error popup widow.
     /// </summary>
-    /// <param name="theme">Popup theme.</param>
-    /// <param name="lang">Popup language.</param>
     /// <param name="title">Popup title.</param>
     /// <param name="heading">Popup heading text.</param>
     /// <param name="description">Popup description.</param>
@@ -1225,13 +1223,15 @@ public static class Config
         string title = "",
         string? heading = null,
         string details = "",
+        SHSTOCKICONID? icon = SHSTOCKICONID.SIID_ERROR,
+        Image? thumbnail = null,
         PopupButtons buttons = PopupButtons.OK)
     {
         heading ??= Language["_._Error"];
 
         SystemSounds.Asterisk.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, SHSTOCKICONID.SIID_ERROR);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, icon, thumbnail);
     }
 
 
