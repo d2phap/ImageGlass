@@ -893,12 +893,30 @@ public partial class FrmMain
     private async Task SaveImageAsync()
     {
         // use backup name to avoid variable conflict
-        var filename = Local.ImageModifiedPath;
-        var lastWriteTime = File.GetLastWriteTime(filename);
-
+        var filePath = Local.ImageModifiedPath;
         var langPath = $"{Name}.{nameof(MnuSave)}";
-        PicMain.ShowMessage(filename, Config.Language[$"{langPath}._Saving"]);
+
+
+        // show override warning
+        if (Config.ShowSaveOverrideConfirmation)
+        {
+            var confirm = Config.ShowWarning(
+                description: filePath + "\r\n\r\n" +
+                    Config.Language[$"{langPath}._ConfirmDescription"],
+                title: Config.Language[langPath],
+                heading: Config.Language[$"{langPath}._Confirm"],
+                buttons: PopupButtons.Yes_No,
+                thumbnail: Gallery.Items[Local.CurrentIndex].ThumbnailImage);
+
+            if (confirm != DialogResult.OK)
+            {
+                return;
+            }
+        }
+
         
+        PicMain.ShowMessage(filePath, Config.Language[$"{langPath}._Saving"]);
+
         var img = await Local.Images.GetAsync(Local.CurrentIndex);
         if (img?.ImgData?.Image == null)
         {
@@ -909,31 +927,32 @@ public partial class FrmMain
 
         try
         {
-            await PhotoCodec.SaveAsync(img.ImgData.Image, filename, quality: Config.ImageEditQuality);
+            var lastWriteTime = File.GetLastWriteTime(filePath);
+            
+            await PhotoCodec.SaveAsync(img.ImgData.Image, filePath, quality: Config.ImageEditQuality);
 
             // Issue #307: option to preserve the modified date/time
             if (Config.PreserveModifiedDate)
             {
-                File.SetLastWriteTime(filename, lastWriteTime);
+                File.SetLastWriteTime(filePath, lastWriteTime);
             }
 
             // update cache of the modified item
             Gallery.Items[Local.CurrentIndex].UpdateDetails(true);
 
-            PicMain.ShowMessage(filename, Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
+            PicMain.ShowMessage(filePath, Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
         }
         catch (Exception ex)
         {
             PicMain.ClearMessage();
             _ = Config.ShowError(ex.Source + ":\r\n" + ex.Message,
                 Config.Language[langPath],
-                string.Format(Config.Language[$"{langPath}._Error"]), filename);
+                string.Format(Config.Language[$"{langPath}._Error"]), filePath);
         }
 
 
         Local.ImageModifiedPath = "";
     }
-
 
 
     private void IG_SaveAs()
@@ -987,6 +1006,24 @@ public partial class FrmMain
         {
             var destExt = Path.GetExtension(saveDialog.FileName).ToLower();
             Local.SaveAsFilterExt = destExt;
+
+            // show override warning
+            if (saveDialog.FileName.Equals(srcFilePath, StringComparison.OrdinalIgnoreCase)
+                && Config.ShowSaveOverrideConfirmation)
+            {
+                var langPath = $"{Name}.{nameof(MnuSave)}";
+                var confirm = Config.ShowWarning(
+                    description: srcFilePath + "\r\n\r\n" +
+                        Config.Language[$"{langPath}._ConfirmDescription"],
+                    title: Config.Language[langPath],
+                    heading: Config.Language[$"{langPath}._Confirm"],
+                    buttons: PopupButtons.Yes_No);
+
+                if (confirm != DialogResult.OK)
+                {
+                    return;
+                }
+            }
 
 
             _ = SaveImageAsAsync(saveDialog.FileName, destExt, srcFilePath);
@@ -1249,7 +1286,6 @@ public partial class FrmMain
                 + Config.Language[$"{Name}.{nameof(MnuRename)}._Description"],
         };
 
-
         if (frm.ShowDialog() != DialogResult.OK || string.IsNullOrEmpty(frm.Value.Trim()))
         {
             return;
@@ -1299,35 +1335,26 @@ public partial class FrmMain
             ? Config.Language[$"{Name}.{nameof(MnuMoveToRecycleBin)}"]
             : Config.Language[$"{Name}.{nameof(MnuDeleteFromHardDisk)}"];
 
-        if (Config.RequireDeleteConfirmation)
+        if (Config.ShowDeleteConfirmation)
         {
             var heading = moveToRecycleBin
                 ? Config.Language[$"{Name}.{nameof(MnuMoveToRecycleBin)}._Description"]
                 : Config.Language[$"{Name}.{nameof(MnuDeleteFromHardDisk)}._Description"];
 
-            var overlayIcon = SystemIconApi.GetSystemIcon(moveToRecycleBin
+            var overlayIcon = moveToRecycleBin
                 ? SHSTOCKICONID.SIID_RECYCLER
-                : SHSTOCKICONID.SIID_DELETE);
+                : SHSTOCKICONID.SIID_DELETE;
 
             var description = filePath + "\r\n" +
                     Helpers.FormatSize(Gallery.Items[Local.CurrentIndex].Details.FileSize);
 
-            var frm = new Popup(Config.Theme, Config.Language)
-            {
-                Title = title,
-                TopMost = TopMost,
-                ShowTextInput = false,
-                Thumbnail = Gallery.Items[Local.CurrentIndex].ThumbnailImage,
-                ThumbnailOverlay = overlayIcon,
-
-                AcceptButtonText = Config.Language["_._Yes"],
-                CancelButtonText = Config.Language["_._No"],
-
-                Heading = heading,
-                Description = description,
-            };
-
-            result = frm.ShowDialog();
+            result = Config.ShowWarning(
+                description: description,
+                title: title,
+                heading: heading,
+                buttons: PopupButtons.Yes_No,
+                icon: overlayIcon,
+                thumbnail: Gallery.Items[Local.CurrentIndex].ThumbnailImage);
         }
 
 

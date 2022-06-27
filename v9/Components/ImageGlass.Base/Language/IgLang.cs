@@ -142,6 +142,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuNewWindow", "Open new window"); //v7.0
         Add("FrmMain.MnuNewWindow._Error", "Cannot open new window because only one instance allowed"); //v7.0
         Add("FrmMain.MnuSave", "Save image"); //v8.1
+        Add("FrmMain.MnuSave._Confirm", "Are you sure you want to override this image?"); //v9.0
+        Add("FrmMain.MnuSave._ConfirmDescription", "ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."); //v9.0
         Add("FrmMain.MnuSave._Saving", "Saving image..."); //v9.0
         Add("FrmMain.MnuSave._Success", "Image is saved"); //v9.0
         Add("FrmMain.MnuSave._Error", "Could not save the image"); //v9.0

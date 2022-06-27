@@ -303,7 +303,12 @@ public static class Config
     /// <summary>
     /// Gets, sets value indicating that Confirmation dialog is displayed when deleting image
     /// </summary>
-    public static bool RequireDeleteConfirmation { get; set; } = true;
+    public static bool ShowDeleteConfirmation { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets value indicating that Confirmation dialog is displayed when overriding the viewing image
+    /// </summary>
+    public static bool ShowSaveOverrideConfirmation { get; set; } = true;
 
     ///// <summary>
     ///// Gets, sets the value indicates that viewer scrollbars are visible
@@ -439,6 +444,7 @@ public static class Config
     /// Gets, sets value indicates that the Image focus tool should be enable
     /// </summary>
     public static bool EnableImageFocusMode { get; set; } = false;
+
 
     #endregion
 
@@ -782,7 +788,8 @@ public static class Config
         EnableWindowTopMost = items.GetValue(nameof(EnableWindowTopMost), EnableWindowTopMost);
         //IsWindowFrameless = items.GetValue(nameof(IsWindowFrameless), IsWindowFrameless);
         //IsThumbnailHorizontal = items.GetValue(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
-        RequireDeleteConfirmation = items.GetValue(nameof(RequireDeleteConfirmation), RequireDeleteConfirmation);
+        ShowDeleteConfirmation = items.GetValue(nameof(ShowDeleteConfirmation), ShowDeleteConfirmation);
+        ShowSaveOverrideConfirmation = items.GetValue(nameof(ShowSaveOverrideConfirmation), ShowSaveOverrideConfirmation);
         //IsScrollbarsVisible = items.GetValue(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
         //IsSaveAfterRotating = items.GetValue(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
         PreserveModifiedDate = items.GetValue(nameof(PreserveModifiedDate), PreserveModifiedDate);
@@ -1281,7 +1288,8 @@ public static class Config
         settings.TryAdd(nameof(EnableWindowTopMost), EnableWindowTopMost);
         //settings.TryAdd(nameof(IsWindowFrameless), IsWindowFrameless);
         //settings.TryAdd(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
-        settings.TryAdd(nameof(RequireDeleteConfirmation), RequireDeleteConfirmation);
+        settings.TryAdd(nameof(ShowDeleteConfirmation), ShowDeleteConfirmation);
+        settings.TryAdd(nameof(ShowSaveOverrideConfirmation), ShowSaveOverrideConfirmation);
         //settings.TryAdd(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
         //settings.TryAdd(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
         settings.TryAdd(nameof(PreserveModifiedDate), PreserveModifiedDate);
