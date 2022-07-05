@@ -183,7 +183,7 @@ namespace ImageGlass {
 
 
         /// <summary>
-        /// Check for updatae
+        /// Checks for updates
         /// </summary>
         /// <param name="useAutoCheck">If TRUE, use "igautoupdate"; else "igupdate" for argument</param>
         public static void CheckForUpdate(bool useAutoCheck = false) {
