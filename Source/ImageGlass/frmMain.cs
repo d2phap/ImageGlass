@@ -2254,6 +2254,17 @@ namespace ImageGlass {
             // get current screen
             var screen = Screen.FromControl(this);
 
+            // Check for early exits
+            // This fixes issue(https://github.com/d2phap/ImageGlass/issues/1371)
+            // If window size already reached max, then can't be expanded more larger
+            if (picMain.Width * picMain.ZoomFactor > screen.WorkingArea.Width &&
+                picMain.Height * picMain.ZoomFactor > screen.WorkingArea.Height &&
+                Size.Width == screen.WorkingArea.Width &&
+                Size.Height == screen.WorkingArea.Height) {
+                return;
+            }
+
+
             // First, adjust our main window to theoretically fit the entire
             // picture, but not larger than desktop working area.
             var fullW = Width + picMain.Image.Width - picMain.Width;
