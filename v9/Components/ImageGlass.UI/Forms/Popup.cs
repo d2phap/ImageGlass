@@ -372,6 +372,43 @@ public partial class Popup : Form
 
 
     /// <summary>
+    /// Gets, sets check state of <see cref="ChkOption"/>.
+    /// </summary>
+    public bool OptionCheckBoxChecked
+    {
+        get => ChkOption.Checked;
+        set => ChkOption.Checked = value;
+    }
+
+
+    /// <summary>
+    /// Gets, sets text of the <see cref="ChkOption"/>.
+    /// </summary>
+    public string OptionCheckBoxText
+    {
+        get => ChkOption.Text;
+        set
+        {
+            ChkOption.Text = value;
+            var isVisible = !string.IsNullOrEmpty(value);
+            var rowIndex = tableMain.GetRow(ChkOption);
+
+            if (isVisible)
+            {
+                ChkOption.Visible = true;
+                tableMain.RowStyles[rowIndex].SizeType = SizeType.AutoSize;
+            }
+            else
+            {
+                ChkOption.Visible = false;
+                tableMain.RowStyles[rowIndex].SizeType = SizeType.Absolute;
+                tableMain.RowStyles[rowIndex].Height = 0;
+            }
+        }
+    }
+
+
+    /// <summary>
     /// Gets, sets the thumbnail overlay image.
     /// </summary>
     public Image? ThumbnailOverlay
@@ -537,6 +574,7 @@ public partial class Popup : Form
         Description = "";
         Title = "";
         Thumbnail = null; // hide thumbnail by default
+        OptionCheckBoxText = "";
 
         Language = lang;
         ApplyLanguage();
@@ -702,7 +740,8 @@ public partial class Popup : Form
         // text color
         lblTitle.ForeColor =
             lblHeading.ForeColor =
-            lblDescription.ForeColor = Theme.Settings.TextColor;
+            lblDescription.ForeColor =
+            ChkOption.ForeColor = Theme.Settings.TextColor;
 
         // header and footer
         lblTitle.BackColor =
@@ -806,29 +845,17 @@ public partial class Popup : Form
     /// <param name="details">Other details</param>
     /// <param name="buttons">Popup buttons.</param>
     /// <param name="icon">Popup icon.</param>
-    /// <returns>
-    /// <list type="table">
-    ///   <item>
-    ///     <see cref="DialogResult.OK"/> if user clicks on
-    ///     the <c>OK</c>, <c>Yes</c> or <c>Learn more</c> button.
-    ///   </item>
-    ///   <item>
-    ///     <see cref="DialogResult.Cancel"/> if user clicks on
-    ///     the <c>Cancel</c>, <c>No</c> or <c>Close</c> button.
-    ///   </item>
-    ///   <item>
-    ///     <see cref="DialogResult.Abort"/> if user presses <c>ESC</c>.
-    ///   </item>
-    /// </list>
-    /// </returns>
-    public static DialogResult ShowDialog(IgTheme theme, IgLang lang,
+    /// <param name="thumbnail"></param>
+    /// <param name="optionText"></param>
+    public static PopupResult ShowDialog(IgTheme theme, IgLang lang,
         string description = "",
         string title = "",
         string heading = "",
         string details = "",
         PopupButtons buttons = PopupButtons.OK,
         SHSTOCKICONID? icon = null,
-        Image? thumbnail = null)
+        Image? thumbnail = null,
+        string optionText = "")
     {
         var sysIcon = SystemIconApi.GetSystemIcon(icon);
 
@@ -859,6 +886,11 @@ public partial class Popup : Form
             frm.ShowTextInput = true;
 
             frm.Width += 200;
+        }
+
+        if (!string.IsNullOrEmpty(optionText.Trim()))
+        {
+            frm.OptionCheckBoxText = optionText;
         }
 
         if (buttons == PopupButtons.OK_Cancel)
@@ -916,7 +948,15 @@ public partial class Popup : Form
             frm.ShowCancelButton = false;
         }
 
-        return frm.ShowDialog();
+        var exitResult = (PopupExitResult)frm.ShowDialog();
+
+
+        return new PopupResult()
+        {
+            ExitResult = exitResult,
+            Value = frm.Value,
+            IsOptionChecked = frm.OptionCheckBoxChecked,
+        };
     }
 
 

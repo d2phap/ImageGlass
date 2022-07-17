@@ -1065,7 +1065,7 @@ public static class Config
             buttons: PopupButtons.LearnMore_Close);
 
 
-        if (result == DialogResult.OK)
+        if (result.ExitResult == PopupExitResult.OK)
         {
             Helpers.OpenUrl(url, $"{igcmdExeName}_invalid_command");
         }
@@ -1104,7 +1104,7 @@ public static class Config
             details: details,
             buttons: PopupButtons.Continue_Quit);
 
-        if (result == DialogResult.Cancel)
+        if (result.ExitResult == PopupExitResult.OK)
         {
             Application.Exit();
         }
@@ -1120,33 +1120,19 @@ public static class Config
     /// <param name="description">Popup description.</param>
     /// <param name="details">Other details</param>
     /// <param name="buttons">Popup buttons.</param>
-    /// <returns>
-    /// <list type="table">
-    ///   <item>
-    ///     <see cref="DialogResult.OK"/> if user clicks on
-    ///     the <c>OK</c>, <c>Yes</c> or <c>Learn more</c> button.
-    ///   </item>
-    ///   <item>
-    ///     <see cref="DialogResult.Cancel"/> if user clicks on
-    ///     the <c>Cancel</c>, <c>No</c> or <c>Close</c> button.
-    ///   </item>
-    ///   <item>
-    ///     <see cref="DialogResult.Abort"/> if user presses <c>ESC</c>.
-    ///   </item>
-    /// </list>
-    /// </returns>
-    public static DialogResult ShowInfo(
+    public static PopupResult ShowInfo(
         string description = "",
         string title = "",
         string heading = "",
         string details = "",
         SHSTOCKICONID? icon = SHSTOCKICONID.SIID_INFO,
         Image? thumbnail = null,
-        PopupButtons buttons = PopupButtons.OK)
+        PopupButtons buttons = PopupButtons.OK,
+        string optionText = "")
     {
         SystemSounds.Question.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, icon, thumbnail);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, icon, thumbnail, optionText);
     }
 
 
@@ -1158,35 +1144,21 @@ public static class Config
     /// <param name="description">Popup description.</param>
     /// <param name="details">Other details</param>
     /// <param name="buttons">Popup buttons.</param>
-    /// <returns>
-    /// <list type="table">
-    ///   <item>
-    ///     <see cref="DialogResult.OK"/> if user clicks on
-    ///     the <c>OK</c>, <c>Yes</c> or <c>Learn more</c> button.
-    ///   </item>
-    ///   <item>
-    ///     <see cref="DialogResult.Cancel"/> if user clicks on
-    ///     the <c>Cancel</c>, <c>No</c> or <c>Close</c> button.
-    ///   </item>
-    ///   <item>
-    ///     <see cref="DialogResult.Abort"/> if user presses <c>ESC</c>.
-    ///   </item>
-    /// </list>
-    /// </returns>
-    public static DialogResult ShowWarning(
+    public static PopupResult ShowWarning(
         string description = "",
         string title = "",
         string? heading = null,
         string details = "",
         SHSTOCKICONID? icon = SHSTOCKICONID.SIID_WARNING,
         Image? thumbnail = null,
-        PopupButtons buttons = PopupButtons.OK)
+        PopupButtons buttons = PopupButtons.OK,
+        string optionText = "")
     {
         heading ??= Language["_._Warning"];
 
         SystemSounds.Exclamation.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, icon, thumbnail);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, icon, thumbnail, optionText);
     }
 
 
@@ -1198,35 +1170,21 @@ public static class Config
     /// <param name="description">Popup description.</param>
     /// <param name="details">Other details</param>
     /// <param name="buttons">Popup buttons.</param>
-    /// <returns>
-    /// <list type="table">
-    ///   <item>
-    ///     <see cref="DialogResult.OK"/> if user clicks on
-    ///     the <c>OK</c>, <c>Yes</c> or <c>Learn more</c> button.
-    ///   </item>
-    ///   <item>
-    ///     <see cref="DialogResult.Cancel"/> if user clicks on
-    ///     the <c>Cancel</c>, <c>No</c> or <c>Close</c> button.
-    ///   </item>
-    ///   <item>
-    ///     <see cref="DialogResult.Abort"/> if user presses <c>ESC</c>.
-    ///   </item>
-    /// </list>
-    /// </returns>
-    public static DialogResult ShowError(
+    public static PopupResult ShowError(
         string description = "",
         string title = "",
         string? heading = null,
         string details = "",
         SHSTOCKICONID? icon = SHSTOCKICONID.SIID_ERROR,
         Image? thumbnail = null,
-        PopupButtons buttons = PopupButtons.OK)
+        PopupButtons buttons = PopupButtons.OK,
+        string optionText = "")
     {
         heading ??= Language["_._Error"];
 
         SystemSounds.Asterisk.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, icon, thumbnail);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, icon, thumbnail, optionText);
     }
 
 

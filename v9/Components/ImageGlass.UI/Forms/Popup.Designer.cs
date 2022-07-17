@@ -34,6 +34,7 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblDescription = new System.Windows.Forms.Label();
             this.picThumbnail = new System.Windows.Forms.PictureBox();
+            this.ChkOption = new System.Windows.Forms.CheckBox();
             this.panBottom = new System.Windows.Forms.Panel();
             this.tableBottom = new System.Windows.Forms.TableLayoutPanel();
             this.BtnAccept = new ImageGlass.UI.ModernButton();
@@ -55,16 +56,18 @@
             this.tableMain.Controls.Add(this.lblTitle, 0, 0);
             this.tableMain.Controls.Add(this.lblDescription, 1, 2);
             this.tableMain.Controls.Add(this.picThumbnail, 0, 1);
+            this.tableMain.Controls.Add(this.ChkOption, 0, 4);
             this.tableMain.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableMain.Location = new System.Drawing.Point(1, 1);
             this.tableMain.Margin = new System.Windows.Forms.Padding(0);
             this.tableMain.Name = "tableMain";
-            this.tableMain.RowCount = 4;
+            this.tableMain.RowCount = 5;
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableMain.Size = new System.Drawing.Size(598, 898);
+            this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableMain.Size = new System.Drawing.Size(598, 879);
             this.tableMain.TabIndex = 1;
             // 
             // lblHeading
@@ -131,12 +134,25 @@
             this.picThumbnail.TabStop = false;
             this.picThumbnail.Visible = false;
             // 
+            // ChkOption
+            // 
+            this.ChkOption.AutoSize = true;
+            this.tableMain.SetColumnSpan(this.ChkOption, 2);
+            this.ChkOption.Location = new System.Drawing.Point(0, 217);
+            this.ChkOption.Margin = new System.Windows.Forms.Padding(0);
+            this.ChkOption.Name = "ChkOption";
+            this.ChkOption.Padding = new System.Windows.Forms.Padding(20, 10, 20, 20);
+            this.ChkOption.Size = new System.Drawing.Size(329, 57);
+            this.ChkOption.TabIndex = 5;
+            this.ChkOption.Text = "[Do not show this message again]";
+            this.ChkOption.UseVisualStyleBackColor = true;
+            // 
             // panBottom
             // 
             this.panBottom.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panBottom.Controls.Add(this.tableBottom);
             this.panBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panBottom.Location = new System.Drawing.Point(1, 218);
+            this.panBottom.Location = new System.Drawing.Point(1, 282);
             this.panBottom.Name = "panBottom";
             this.panBottom.Padding = new System.Windows.Forms.Padding(20);
             this.panBottom.Size = new System.Drawing.Size(598, 81);
@@ -199,7 +215,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(600, 300);
+            this.ClientSize = new System.Drawing.Size(600, 364);
             this.Controls.Add(this.panBottom);
             this.Controls.Add(this.tableMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -232,5 +248,6 @@
         private Label lblHeading;
         private ModernButton BtnAccept;
         private ModernButton BtnCancel;
+        private CheckBox ChkOption;
     }
 }
