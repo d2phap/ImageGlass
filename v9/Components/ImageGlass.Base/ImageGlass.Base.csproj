@@ -40,9 +40,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Magick.NET-Q16-OpenMP-x64" Version="11.2.1" />
-      <PackageReference Include="Magick.NET.SystemDrawing" Version="5.0.3" />
-      <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.1-beta">
+      <PackageReference Include="Magick.NET-Q16-OpenMP-x64" Version="11.3.0" />
+      <PackageReference Include="Magick.NET.SystemDrawing" Version="5.1.0" />
+      <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.10-beta">
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
     </ItemGroup>

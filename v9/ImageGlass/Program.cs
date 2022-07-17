@@ -21,7 +21,6 @@ using ImageGlass.Base.InstanceManagement;
 using ImageGlass.Base.Update;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
-using ImageGlass.UI;
 using System.Diagnostics;
 using System.Globalization;
 
