@@ -902,7 +902,7 @@ public partial class FrmMain
         // show override warning
         if (Config.ShowSaveOverrideConfirmation)
         {
-            var confirm = Config.ShowWarning(
+            var result = Config.ShowWarning(
                 description: filePath + "\r\n\r\n" +
                     Config.Language[$"{langPath}._ConfirmDescription"],
                 title: Config.Language[langPath],
@@ -910,7 +910,7 @@ public partial class FrmMain
                 buttons: PopupButtons.Yes_No,
                 thumbnail: Gallery.Items[Local.CurrentIndex].ThumbnailImage);
 
-            if (confirm != DialogResult.OK)
+            if (result.ExitResult != PopupExitResult.OK)
             {
                 return;
             }
@@ -1014,14 +1014,14 @@ public partial class FrmMain
                 && Config.ShowSaveOverrideConfirmation)
             {
                 var langPath = $"{Name}.{nameof(MnuSave)}";
-                var confirm = Config.ShowWarning(
+                var result = Config.ShowWarning(
                     description: srcFilePath + "\r\n\r\n" +
                         Config.Language[$"{langPath}._ConfirmDescription"],
                     title: Config.Language[langPath],
                     heading: Config.Language[$"{langPath}._Confirm"],
                     buttons: PopupButtons.Yes_No);
 
-                if (confirm != DialogResult.OK)
+                if (result.ExitResult != PopupExitResult.OK)
                 {
                     return;
                 }
@@ -1331,7 +1331,7 @@ public partial class FrmMain
         var filePath = Local.Images.GetFileName(Local.CurrentIndex);
         if (!File.Exists(filePath)) return;
 
-        var result = DialogResult.OK;
+        PopupResult? result = null;
 
         var title = moveToRecycleBin
             ? Config.Language[$"{Name}.{nameof(MnuMoveToRecycleBin)}"]
@@ -1356,11 +1356,14 @@ public partial class FrmMain
                 heading: heading,
                 buttons: PopupButtons.Yes_No,
                 icon: overlayIcon,
-                thumbnail: Gallery.Items[Local.CurrentIndex].ThumbnailImage);
+                thumbnail: Gallery.Items[Local.CurrentIndex].ThumbnailImage,
+                optionText: Config.Language["_._DoNotShowThisMessageAgain"]);
+
+            // update the delete confirm setting
+            Config.ShowDeleteConfirmation = !result.IsOptionChecked;
         }
 
-
-        if (result == DialogResult.OK)
+        if (result == null || result.ExitResult == PopupExitResult.OK)
         {
             try
             {
