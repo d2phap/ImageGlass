@@ -1041,7 +1041,7 @@ namespace ImageGlass.Settings {
             var intervalTo = IsRandomSlideshowInterval ? SlideShowIntervalTo : SlideShowInterval;
 
             var ran = new Random();
-            var interval = (float)(ran.NextDouble() * (SlideShowIntervalTo - SlideShowInterval) + SlideShowInterval);
+            var interval = (float)(ran.NextDouble() * (intervalTo - SlideShowInterval) + SlideShowInterval);
 
             return interval;
         }
