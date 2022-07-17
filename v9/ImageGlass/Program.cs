@@ -231,7 +231,7 @@ internal static class Program
         // load image file from arg
         FormMain.LoadImagesFromCmdArgs(args);
 
-        // Issues #774, #855 : if IG is normal or maximized, do nothing. If IG is minimized,
+        // Issues #774, #855: if IG is normal or maximized, do nothing. If IG is minimized,
         // restore it to previous state.
         if (FormMain.WindowState == FormWindowState.Minimized)
         {

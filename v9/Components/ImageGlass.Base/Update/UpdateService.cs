@@ -21,8 +21,6 @@ namespace ImageGlass.Base.Update;
 
 public class UpdateService
 {
-    private const string Url = "https://raw.githubusercontent.com/ImageGlass/config/main/update.json";
-    
     /// <summary>
     /// Gets the update information
     /// </summary>
@@ -73,8 +71,8 @@ public class UpdateService
     /// <summary>
     /// Gets the value indicates that the current app has a new update
     /// </summary>
-    public bool HasNewUpdate => CurrentReleaseInfo is not null
-        && !CurrentReleaseInfo.Version.Equals(App.Version);
+    public bool HasNewUpdate => CurrentReleaseInfo != null
+        && new Version(App.Version) < new Version(CurrentReleaseInfo.Version);
 
 
 
@@ -84,7 +82,9 @@ public class UpdateService
     /// <returns></returns>
     public async Task GetUpdates()
     {
-        var requestMsg = new HttpRequestMessage(HttpMethod.Get, Url);
+        var url = $"https://imageglass.org/url/update?channel={Constants.UPDATE_CHANNEL}&version={App.Version}";
+
+        var requestMsg = new HttpRequestMessage(HttpMethod.Get, url);
         using var httpClient = new HttpClient();
         var response = await httpClient.SendAsync(requestMsg);
 
@@ -96,5 +96,4 @@ public class UpdateService
         using var stream = await response.Content.ReadAsStreamAsync();
         UpdateInfo = await Helpers.ParseJson<UpdateModel>(stream);
     }
-
 }
