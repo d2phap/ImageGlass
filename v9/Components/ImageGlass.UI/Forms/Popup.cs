@@ -879,9 +879,6 @@ public partial class Popup : Form
         }
         else if (buttons == PopupButtons.Yes_No)
         {
-            // change the default CTA button
-            (frm.BtnAccept.TabIndex, frm.BtnCancel.TabIndex) = (frm.BtnCancel.TabIndex, frm.BtnAccept.TabIndex);
-
             frm.AcceptButtonText = lang["_._Yes"];
             frm.ShowAcceptButton = true;
 
