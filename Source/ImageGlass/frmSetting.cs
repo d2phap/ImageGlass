@@ -717,8 +717,8 @@ namespace ImageGlass {
             chkRandomSlideshowInterval.Checked = Configs.IsRandomSlideshowInterval;
 
             // Set value of slideshow intervals
-            numSlideShowInterval.Value = Configs.SlideShowInterval;
-            numSlideshowIntervalTo.Value = Configs.SlideShowIntervalTo;
+            numSlideShowInterval.Value = (decimal)Configs.SlideShowInterval;
+            numSlideshowIntervalTo.Value = (decimal)Configs.SlideShowIntervalTo;
             numSlideShowInterval_ValueChanged(null, null); // format interval value
 
             // Full screen configs 
@@ -736,10 +736,10 @@ namespace ImageGlass {
             numSlideshowIntervalTo.Minimum = numSlideShowInterval.Value;
 
             // format value
-            var time = TimeSpan.FromSeconds((double)numSlideShowInterval.Value).ToString("mm':'ss");
+            var time = TimeSpan.FromSeconds((double)numSlideShowInterval.Value).ToString("mm':'ss'.'fff");
 
             if (chkRandomSlideshowInterval.Checked) {
-                var timeTo = TimeSpan.FromSeconds((double)numSlideshowIntervalTo.Value).ToString("mm':'ss");
+                var timeTo = TimeSpan.FromSeconds((double)numSlideshowIntervalTo.Value).ToString("mm':'ss'.'fff");
 
                 time = $"{time} - {timeTo}";
             }
@@ -749,9 +749,9 @@ namespace ImageGlass {
 
         private void numSlideshowIntervalTo_ValueChanged(object sender, EventArgs e) {
             // format value
-            var time = TimeSpan.FromSeconds((double)numSlideShowInterval.Value).ToString("mm':'ss");
+            var time = TimeSpan.FromSeconds((double)numSlideShowInterval.Value).ToString("mm':'ss'.'fff");
 
-            var timeTo = TimeSpan.FromSeconds((double)numSlideshowIntervalTo.Value).ToString("mm':'ss");
+            var timeTo = TimeSpan.FromSeconds((double)numSlideshowIntervalTo.Value).ToString("mm':'ss'.'fff");
 
             time = $"{time} - {timeTo}";
 
@@ -2105,8 +2105,8 @@ namespace ImageGlass {
             Configs.IsShowSlideshowCountdown = chkShowSlideshowCountdown.Checked;
             Configs.IsRandomSlideshowInterval = chkRandomSlideshowInterval.Checked;
 
-            Configs.SlideShowInterval = (uint)numSlideShowInterval.Value;
-            Configs.SlideShowIntervalTo = (uint)numSlideshowIntervalTo.Value;
+            Configs.SlideShowInterval = (float)numSlideShowInterval.Value;
+            Configs.SlideShowIntervalTo = (float)numSlideshowIntervalTo.Value;
 
             // Full screen
             Configs.IsHideToolbarInFullscreen = chkHideToolbarInFullScreen.Checked;

@@ -333,12 +333,12 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets slide show interval (minimum value if it's random)
         /// </summary>
-        public static uint SlideShowInterval { get; set; } = 5;
+        public static float SlideShowInterval { get; set; } = 5;
 
         /// <summary>
         /// Gets, sets the maximum slide show interval value
         /// </summary>
-        public static uint SlideShowIntervalTo { get; set; } = 5;
+        public static float SlideShowIntervalTo { get; set; } = 5;
 
         /// <summary>
         /// Gets, sets the number of Images after which alert is played
@@ -1037,11 +1037,11 @@ namespace ImageGlass.Settings {
         /// Randomize slideshow interval in seconds
         /// </summary>
         /// <returns></returns>
-        public static uint RandomizeSlideshowInterval() {
-            var intervalTo = (int)(IsRandomSlideshowInterval ? SlideShowIntervalTo : SlideShowInterval);
+        public static float RandomizeSlideshowInterval() {
+            var intervalTo = IsRandomSlideshowInterval ? SlideShowIntervalTo : SlideShowInterval;
 
             var ran = new Random();
-            var interval = (uint)ran.Next((int)SlideShowInterval, intervalTo);
+            var interval = (float)(ran.NextDouble() * (SlideShowIntervalTo - SlideShowInterval) + SlideShowInterval);
 
             return interval;
         }
