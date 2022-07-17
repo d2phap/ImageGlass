@@ -199,6 +199,16 @@ public static class Config
     public static bool EnableFullScreen { get; set; } = false;
 
     /// <summary>
+    /// Gets, sets value indicates that the toolbar should be hidden in Full screen mode
+    /// </summary>
+    public static bool HideToolbarInFullscreen { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value indicates that the thumbnail bar should be hidden in Full screen mode
+    /// </summary>
+    public static bool HideThumbnailsInFullscreen { get; set; } = false;
+
+    /// <summary>
     /// Gets, sets value of thumbnail visibility
     /// </summary>
     public static bool ShowThumbnails { get; set; } = true;
@@ -417,16 +427,6 @@ public static class Config
     /// Gets, sets value indicates that RAW thumbnail will be use if found
     /// </summary>
     public static bool UseRawThumbnail { get; set; } = false;
-
-    ///// <summary>
-    ///// Gets, sets value indicates that the toolbar should be hidden in Full screen mode
-    ///// </summary>
-    //public static bool IsHideToolbarInFullscreen { get; set; } = false;
-
-    ///// <summary>
-    ///// Gets, sets value indicates that the thumbnail bar should be hidden in Full screen mode
-    ///// </summary>
-    //public static bool IsHideThumbnailBarInFullscreen { get; set; } = false;
 
     /// <summary>
     /// Gets, sets value indicates that the Image focus tool should be enable
@@ -802,8 +802,8 @@ public static class Config
         //IsExifToolAlwaysOnTop = items.GetValue(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
         //IsUseEmptyTitleBar = items.GetValue(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
         UseRawThumbnail = items.GetValue(nameof(UseRawThumbnail), UseRawThumbnail);
-        //IsHideToolbarInFullscreen = items.GetValue(nameof(IsHideToolbarInFullscreen), IsHideToolbarInFullscreen);
-        //IsHideThumbnailBarInFullscreen = items.GetValue(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
+        HideToolbarInFullscreen = items.GetValue(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
+        HideThumbnailsInFullscreen = items.GetValue(nameof(HideThumbnailsInFullscreen), HideThumbnailsInFullscreen);
         EnableImageFocusMode = items.GetValue(nameof(EnableImageFocusMode), EnableImageFocusMode);
 
         #endregion
@@ -1302,8 +1302,8 @@ public static class Config
         //settings.TryAdd(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
         //settings.TryAdd(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
         settings.TryAdd(nameof(UseRawThumbnail), UseRawThumbnail);
-        //settings.TryAdd(nameof(IsHideToolbarInFullscreen), IsHideToolbarInFullscreen);
-        //settings.TryAdd(nameof(IsHideThumbnailBarInFullscreen), IsHideThumbnailBarInFullscreen);
+        settings.TryAdd(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
+        settings.TryAdd(nameof(HideThumbnailsInFullscreen), HideThumbnailsInFullscreen);
         settings.TryAdd(nameof(EnableImageFocusMode), EnableImageFocusMode);
 
         #endregion

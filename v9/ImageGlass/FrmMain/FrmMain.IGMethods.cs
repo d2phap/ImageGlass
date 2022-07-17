@@ -1518,5 +1518,128 @@ public partial class FrmMain
     }
 
 
+    private bool IG_ToggleFullScreen(bool? enable = null)
+    {
+        enable ??= !Config.EnableFullScreen;
+        Config.EnableFullScreen = enable.Value;
+
+        SetFullScreenMode(
+            enable: enable.Value,
+            changeWindowState: true,
+            hideToolbar: Config.HideToolbarInFullscreen,
+            hideThumbnails: Config.HideThumbnailsInFullscreen);
+
+        // update menu item state
+        MnuFullScreen.Checked = Config.EnableFullScreen;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
+
+        return Config.EnableFullScreen;
+    }
+    
+
+    /// <summary>
+    /// Enter or Exit Full screen mode
+    /// </summary>
+    /// <param name="enable"></param>
+    /// <param name="changeWindowState"></param>
+    /// <param name="hideToolbar">Hide Toolbar</param>
+    /// <param name="hideThumbnails">Hide Thumbnail bar</param>
+    private void SetFullScreenMode(bool enable = true,
+        bool changeWindowState = true,
+        bool hideToolbar = false,
+        bool hideThumbnails = false)
+    {
+        // full screen
+        if (enable)
+        {
+            SuspendLayout();
+
+            // back up the last states of the window
+            _bound = Bounds;
+            _windowState = WindowState;
+            if (hideToolbar) _showToolbar = Config.ShowToolbar;
+            if (hideThumbnails) _showThumbnails = Config.ShowThumbnails;
+
+            if (changeWindowState)
+            {
+                FormBorderStyle = FormBorderStyle.None;
+                WindowState = FormWindowState.Normal;
+                Bounds = Screen.FromControl(this).Bounds;
+            }
+
+            // Hide toolbar
+            if (hideToolbar)
+            {
+                IG_ToggleToolbar(false);
+            }
+            // hide thumbnail
+            if (hideThumbnails)
+            {
+                IG_ToggleGallery(false);
+            }
+
+            ResumeLayout();
+        }
+
+        // exit full screen
+        else
+        {
+            SuspendLayout();
+
+            // restore last state of the window
+            if (hideToolbar) Config.ShowToolbar = _showToolbar;
+            if (hideThumbnails) Config.ShowThumbnails = _showThumbnails;
+
+            // restore background color in case of being overriden by SlideShow mode
+            PicMain.BackColor = Config.BackgroundColor;
+
+            if (hideToolbar && Config.ShowToolbar)
+            {
+                // Show toolbar
+                IG_ToggleToolbar(true);
+            }
+            if (hideThumbnails && Config.ShowThumbnails)
+            {
+                // Show thumbnail
+                IG_ToggleGallery(true);
+            }
+
+            ResumeLayout();
+
+            // restore window state, size, position
+            if (changeWindowState)
+            {
+                Config.FrmMainState = WindowSettings.ToWindowState(_windowState);
+
+                // windows state
+                if (_windowState == FormWindowState.Normal)
+                {
+                    FormBorderStyle = FormBorderStyle.Sizable;
+                    WindowState = FormWindowState.Normal;
+
+                    // Windows Bound (Position + Size)
+                    Bounds = _bound;
+                }
+                else if (_windowState == FormWindowState.Maximized)
+                {
+                    // Windows Bound (Position + Size)
+                    var wp = WindowSettings.GetFrmMainPlacementFromConfig();
+                    WindowSettings.SetPlacementToWindow(this, wp);
+
+                    // to make sure the SizeChanged event is not triggered
+                    // before we set the window placement
+                    FormBorderStyle = FormBorderStyle.Sizable;
+                }
+                else
+                {
+                    FormBorderStyle = FormBorderStyle.Sizable;
+                }
+            }
+
+        }
+
+    }
 }
 
