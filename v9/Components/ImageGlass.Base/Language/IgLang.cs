@@ -258,6 +258,8 @@ public class IgLang : Dictionary<string, string>
 
         Add("FrmMain.MnuWindowFit", "Window fit"); //v7.5
         Add("FrmMain.MnuFullScreen", "Full screen"); //v3.0
+        Add("FrmMain.MnuFullScreen._Enable", "Enabled Full screen mode."); // v9.0
+        Add("FrmMain.MnuFullScreen._EnableDescription", "Press {0} to exit full screen mode."); // v2.0
         Add("FrmMain.MnuFrameless", "Frameless"); //v7.5
 
         #region Slideshow
@@ -298,7 +300,7 @@ public class IgLang : Dictionary<string, string>
 
         Add("FrmMain.MnuSetDefaultPhotoViewer", "Set as default photo viewer"); //v9.0
         Add("FrmMain.MnuSetDefaultPhotoViewer._Success", "You have successfully registered ImageGlass as default photo viewer."); //v9.0
-        Add("FrmMain.MnuSetDefaultPhotoViewer._Success._Description", "Next, please open Windows Settings > Default apps, and select ImageGlass under the Photo viewer section."); //v9.0
+        Add("FrmMain.MnuSetDefaultPhotoViewer._SuccessDescription", "Next, please open Windows Settings > Default apps, and select ImageGlass under the Photo viewer section."); //v9.0
         Add("FrmMain.MnuSetDefaultPhotoViewer._Error", "Could not set ImageGlass as default photo viewer."); //v9.0
 
         Add("FrmMain.MnuUnsetDefaultPhotoViewer", "Unset default photo viewer"); //v9.0
@@ -323,7 +325,7 @@ public class IgLang : Dictionary<string, string>
         //Add("FrmMain._Pages", "pages"); // v7.5
 
         //Add("FrmMain._ExtractPageText", "Extracting image pages. Please select output folder.");
-        //Add("FrmMain._FullScreenMessage", "Press {0} to exit full screen mode.");// v2.0 beta, v6.0, v8.0
+        
         //Add("FrmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu."); // v2.0 beta
         //Add("FrmMain._SlideshowMessagePause", "Slideshow is paused"); // v4.0
         //Add("FrmMain._SlideshowMessageResume", "Slideshow is resumed"); // v4.0

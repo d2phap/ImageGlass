@@ -34,6 +34,12 @@ public partial class FrmMain : Form
     // cancellation tokens of synchronious task
     private CancellationTokenSource _loadCancelToken = new();
 
+    // variable to back up / restore window layout when changing window mode
+    private bool _showToolbar = true;
+    private bool _showThumbnails = true;
+    private Rectangle _windowBound = new();
+    private FormWindowState _windowState = FormWindowState.Normal;
+
 
     public FrmMain()
     {
@@ -2017,7 +2023,7 @@ public partial class FrmMain : Form
 
     private void MnuFullScreen_Click(object sender, EventArgs e)
     {
-
+        IG_ToggleFullScreen();
     }
     #endregion
 

@@ -343,19 +343,21 @@ public partial class FrmMain
     /// </summary>
     /// <param name="enableTopMost"></param>
     /// <returns></returns>
-    private bool IG_ToggleTopMost(bool? enableTopMost = null)
+    private bool IG_ToggleTopMost(bool? enableTopMost = null, bool showInAppMessage = true)
     {
         enableTopMost ??= !Config.EnableWindowTopMost;
         Config.EnableWindowTopMost = enableTopMost.Value;
 
-        // Gallery bar
         TopMost = Config.EnableWindowTopMost;
 
         // update menu item state
         MnuToggleTopMost.Checked = TopMost;
 
-        var msgKey = Config.EnableWindowTopMost ? "_Enable" : "_Disable";
-        PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuToggleTopMost)}.{msgKey}"], Config.InAppMessageDuration);
+        if (showInAppMessage)
+        {
+            var msgKey = Config.EnableWindowTopMost ? "_Enable" : "_Disable";
+            PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuToggleTopMost)}.{msgKey}"], Config.InAppMessageDuration);
+        }
 
         return Config.EnableWindowTopMost;
     }
@@ -1244,7 +1246,7 @@ public partial class FrmMain
             : $"{Name}.{nameof(MnuUnsetDefaultPhotoViewer)}";
 
         var description = enable
-            ? Config.Language[$"{langPath}._Success._Description"]
+            ? Config.Language[$"{langPath}._SuccessDescription"]
             : "";
 
         if (result == IgExitCode.Done)
@@ -1518,7 +1520,7 @@ public partial class FrmMain
     }
 
 
-    private bool IG_ToggleFullScreen(bool? enable = null)
+    private bool IG_ToggleFullScreen(bool? enable = null, bool showInAppMessage = true)
     {
         enable ??= !Config.EnableFullScreen;
         Config.EnableFullScreen = enable.Value;
@@ -1534,6 +1536,15 @@ public partial class FrmMain
 
         // update toolbar items state
         UpdateToolbarItemsState();
+
+        if (showInAppMessage && Config.EnableFullScreen)
+        {
+            var langPath = $"{Name}.{nameof(MnuFullScreen)}";
+            PicMain.ShowMessage(
+                string.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFullScreen.ShortcutKeyDisplayString),
+                Config.Language[$"{langPath}._Enable"],
+                Config.InAppMessageDuration);
+        }
 
         return Config.EnableFullScreen;
     }
@@ -1557,7 +1568,7 @@ public partial class FrmMain
             SuspendLayout();
 
             // back up the last states of the window
-            _bound = Bounds;
+            _windowBound = Bounds;
             _windowState = WindowState;
             if (hideToolbar) _showToolbar = Config.ShowToolbar;
             if (hideThumbnails) _showThumbnails = Config.ShowThumbnails;
@@ -1620,7 +1631,7 @@ public partial class FrmMain
                     WindowState = FormWindowState.Normal;
 
                     // Windows Bound (Position + Size)
-                    Bounds = _bound;
+                    Bounds = _windowBound;
                 }
                 else if (_windowState == FormWindowState.Maximized)
                 {
