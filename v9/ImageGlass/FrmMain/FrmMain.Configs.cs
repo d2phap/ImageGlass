@@ -179,7 +179,7 @@ public partial class FrmMain
         Local.OnRequestUpdateFrmMain += Local_OnFrmMainUpdateRequested;
 
         // IsWindowAlwaysOnTop
-        IG_ToggleTopMost(Config.EnableWindowTopMost);
+        IG_ToggleTopMost(Config.EnableWindowTopMost, showInAppMessage: false);
 
         // EnableImageFocus
         IG_ToggleImageFocus(Config.EnableImageFocusMode, showInAppMessage: false);
@@ -202,13 +202,25 @@ public partial class FrmMain
         // load window placement from settings
         WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
 
+        // load Full screen mode
+        if (Config.EnableFullScreen) IG_ToggleFullScreen(true, showInAppMessage: false);
     }
 
     private void FrmMainConfig_FormClosing(object? sender, FormClosingEventArgs e)
     {
         // save FrmMain placement
-        var wp = WindowSettings.GetPlacementFromWindow(this);
-        WindowSettings.SetFrmMainPlacementConfig(wp);
+        if (!Config.EnableFullScreen)
+        {
+            var wp = WindowSettings.GetPlacementFromWindow(this);
+            WindowSettings.SetFrmMainPlacementConfig(wp);
+        }
+
+        // correct the settings when Full screen mode is enabled
+        if (Config.EnableFullScreen)
+        {
+            Config.ShowToolbar = _showToolbar;
+            Config.ShowThumbnails = _showThumbnails;
+        }
 
         Config.LastSeenImagePath = Local.Images.GetFileName(Local.CurrentIndex);
         Config.ZoomLockValue = PicMain.ZoomFactor * 100f;
@@ -225,10 +237,14 @@ public partial class FrmMain
 
     private void FrmMainConfig_SizeChanged(object? sender, EventArgs e)
     {
-        Config.FrmMainPositionX = Location.X;
-        Config.FrmMainPositionY = Location.Y;
-        Config.FrmMainWidth = Size.Width;
-        Config.FrmMainHeight = Size.Height;
+        if (WindowState == FormWindowState.Normal
+            && !Config.EnableFullScreen)
+        {
+            Config.FrmMainPositionX = Location.X;
+            Config.FrmMainPositionY = Location.Y;
+            Config.FrmMainWidth = Size.Width;
+            Config.FrmMainHeight = Size.Height;
+        }
     }
 
 
@@ -752,7 +768,7 @@ public partial class FrmMain
         toolStripMenuItem6.Visible = false;
         MnuWindowFit.Visible = false;
         MnuFrameless.Visible = false;
-        MnuFullScreen.Visible = false;
+        //MnuFullScreen.Visible = false;
 
         // MnuSlideshow
         MnuSlideshow.Visible = false;
