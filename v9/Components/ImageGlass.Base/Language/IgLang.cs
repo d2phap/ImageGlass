@@ -219,7 +219,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuRename", "Rename image…"); //v3.0
         Add("FrmMain.MnuRename._Description", "Enter a new filename:"); // v9.0
         Add("FrmMain.MnuMoveToRecycleBin", "Move to the Recycle Bin"); //v3.0
-        Add("FrmMain.MnuMoveToRecycleBin._Description", "Do you want to move this file to the Recycle Bin?"); //v3.0
+        Add("FrmMain.MnuMoveToRecycleBin._Description", "Do you want to move this file to the Recycle bin?"); //v3.0
         Add("FrmMain.MnuDeleteFromHardDisk", "Delete from hard disk"); //v3.0
         Add("FrmMain.MnuDeleteFromHardDisk._Description", "Are you sure you want to permanently delete this file?"); //v3.0
         Add("FrmMain.MnuExtractFrames", "Extract image frames ({0})…"); //v7.5
@@ -258,7 +258,7 @@ public class IgLang : Dictionary<string, string>
 
         Add("FrmMain.MnuWindowFit", "Window fit"); //v7.5
         Add("FrmMain.MnuFullScreen", "Full screen"); //v3.0
-        Add("FrmMain.MnuFullScreen._Enable", "Enabled Full screen mode."); // v9.0
+        Add("FrmMain.MnuFullScreen._Enable", "Enabled Full screen mode"); // v9.0
         Add("FrmMain.MnuFullScreen._EnableDescription", "Press {0} to exit full screen mode."); // v2.0
         Add("FrmMain.MnuFrameless", "Frameless"); //v7.5
 
