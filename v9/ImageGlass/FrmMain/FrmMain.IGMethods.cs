@@ -908,7 +908,11 @@ public partial class FrmMain
                 title: Config.Language[langPath],
                 heading: Config.Language[$"{langPath}._Confirm"],
                 buttons: PopupButtons.Yes_No,
-                thumbnail: Gallery.Items[Local.CurrentIndex].ThumbnailImage);
+                thumbnail: Gallery.Items[Local.CurrentIndex].ThumbnailImage,
+                optionText: Config.Language["_._DoNotShowThisMessageAgain"]);
+
+            // update ShowSaveOverrideConfirmation setting
+            Config.ShowSaveOverrideConfirmation = !result.IsOptionChecked;
 
             if (result.ExitResult != PopupExitResult.OK)
             {
@@ -1009,8 +1013,9 @@ public partial class FrmMain
             var destExt = Path.GetExtension(saveDialog.FileName).ToLower();
             Local.SaveAsFilterExt = destExt;
 
+
             // show override warning
-            if (saveDialog.FileName.Equals(srcFilePath, StringComparison.OrdinalIgnoreCase)
+            if (File.Exists(saveDialog.FileName)
                 && Config.ShowSaveOverrideConfirmation)
             {
                 var langPath = $"{Name}.{nameof(MnuSave)}";
@@ -1019,7 +1024,11 @@ public partial class FrmMain
                         Config.Language[$"{langPath}._ConfirmDescription"],
                     title: Config.Language[langPath],
                     heading: Config.Language[$"{langPath}._Confirm"],
-                    buttons: PopupButtons.Yes_No);
+                    buttons: PopupButtons.Yes_No,
+                    optionText: Config.Language["_._DoNotShowThisMessageAgain"]);
+
+                // update ShowSaveOverrideConfirmation setting
+                Config.ShowSaveOverrideConfirmation = !result.IsOptionChecked;
 
                 if (result.ExitResult != PopupExitResult.OK)
                 {
