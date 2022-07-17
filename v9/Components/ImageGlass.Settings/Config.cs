@@ -47,7 +47,6 @@ public static class Config
         new()
         {
             Id = "btn_OpenFile",
-            Text = "Open file",
             Alignment = ToolStripItemAlignment.Right,
             Image = "OpenFile",
             OnClick = new("MnuOpenFile"),
@@ -55,14 +54,12 @@ public static class Config
         new()
         {
             Id = "btn_ViewPrevious",
-            Text = "Previous image",
             Image = "ViewPreviousImage",
             OnClick = new("MnuViewPrevious"),
         },
         new()
         {
             Id = "btn_ViewNext",
-            Text = "Next image",
             Image = "ViewNextImage",
             OnClick = new("MnuViewNext"),
         },
@@ -70,7 +67,6 @@ public static class Config
         new()
         {
             Id = "btn_AutoZoom",
-            Text = "Auto zoom",
             Image = "AutoZoom",
             CheckableConfigBinding = nameof(ZoomMode),
             OnClick = new("MnuAutoZoom"),
@@ -78,7 +74,6 @@ public static class Config
         new()
         {
             Id = "btn_LockZoom",
-            Text = "Lock zoom",
             Image = "LockZoom",
             CheckableConfigBinding = nameof(ZoomMode),
             OnClick = new("MnuLockZoom"),
@@ -86,7 +81,6 @@ public static class Config
         new()
         {
             Id = "btn_ScaleToWidth",
-            Text = "Scale to width",
             Image = "ScaleToWidth",
             CheckableConfigBinding = nameof(ZoomMode),
             OnClick = new("MnuScaleToWidth"),
@@ -94,7 +88,6 @@ public static class Config
         new()
         {
             Id = "btn_ScaleToHeight",
-            Text = "Scale to height",
             Image = "ScaleToHeight",
             CheckableConfigBinding = nameof(ZoomMode),
             OnClick = new("MnuScaleToHeight"),
@@ -102,7 +95,6 @@ public static class Config
         new()
         {
             Id = "btn_ScaleToFit",
-            Text = "Scale to fit",
             Image = "ScaleToFit",
             CheckableConfigBinding = nameof(ZoomMode),
             OnClick = new("MnuScaleToFit"),
@@ -110,7 +102,6 @@ public static class Config
         new()
         {
             Id = "btn_ScaleToFill",
-            Text = "Scale to fill",
             Image = "ScaleToFill",
             CheckableConfigBinding = nameof(ZoomMode),
             OnClick = new("MnuScaleToFill"),
@@ -119,20 +110,12 @@ public static class Config
         new()
         {
             Id = "btn_Refresh",
-            Text = "Refresh",
             Image = "Refresh",
             OnClick = new("MnuRefresh"),
         },
-        //new()
-        //{
-        //    Id = "btn_Slideshow",
-        //    Text = "Slideshow",
-        //    Image = "Slideshow",
-        //},
         new()
         {
             Id = "btn_Thumbnail",
-            Text = "Thumbnail bar",
             Image = "ThumbnailBar",
             CheckableConfigBinding = nameof(ShowThumbnails),
             OnClick = new("MnuToggleThumbnails"),
@@ -140,31 +123,36 @@ public static class Config
         new()
         {
             Id = "btn_Checkerboard",
-            Text = "Checkerboard",
             Image = "Checkerboard",
             CheckableConfigBinding = nameof(ShowCheckerBoard),
             OnClick = new("MnuToggleCheckerboard"),
         },
         new() { Type = ToolbarItemModelType.Separator },
+        new()
+        {
+            Id = "btn_FullScreen",
+            Image = "FullScreen",
+            CheckableConfigBinding = nameof(EnableFullScreen),
+            OnClick = new("MnuFullScreen"),
+        },
+        new() { Type = ToolbarItemModelType.Separator },
         //new()
         //{
         //    Id = "btn_Edit",
-        //    Text = "Edit...",
         //    Image = "Edit",
         //},
         new()
         {
             Id = "btn_Print",
-            Text = "Print...",
             Image = "Print",
             OnClick = new("MnuPrint"),
         },
-        //new()
-        //{
-        //    Id = "btn_Delete",
-        //    Text = "Delete...",
-        //    Image = "Delete",
-        //}
+        new()
+        {
+            Id = "btn_Delete",
+            Image = "Delete",
+            OnClick = new("MnuMoveToRecycleBin"),
+        }
     };
 
     /// <summary>
@@ -205,10 +193,10 @@ public static class Config
     ///// </summary>
     //public static bool IsRandomSlideshowInterval { get; set; } = false;
 
-    ///// <summary>
-    ///// Gets, sets value indicating whether the window is full screen or not
-    ///// </summary>
-    //public static bool IsFullScreen { get; set; } = false;
+    /// <summary>
+    /// Gets, sets value indicating whether the full screen mode is enabled or not
+    /// </summary>
+    public static bool EnableFullScreen { get; set; } = false;
 
     /// <summary>
     /// Gets, sets value of thumbnail visibility
@@ -769,7 +757,7 @@ public static class Config
         //IsSlideshow = items.GetValue(nameof(IsSlideshow), IsSlideshow);
         //IsShowSlideshowCountdown = items.GetValue(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
         //IsRandomSlideshowInterval = items.GetValue(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
-        //IsFullScreen = items.GetValue(nameof(IsFullScreen), IsFullScreen);
+        EnableFullScreen = items.GetValue(nameof(EnableFullScreen), EnableFullScreen);
         ShowThumbnails = items.GetValue(nameof(ShowThumbnails), ShowThumbnails);
         ShowThumbnailScrollbars = items.GetValue(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
         ShowThumbnailFilename = items.GetValue(nameof(ShowThumbnailFilename), ShowThumbnailFilename);
@@ -1269,7 +1257,7 @@ public static class Config
         //settings.TryAdd(nameof(IsSlideshow), IsSlideshow);
         //settings.TryAdd(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
         //settings.TryAdd(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
-        //settings.TryAdd(nameof(IsFullScreen), IsFullScreen);
+        settings.TryAdd(nameof(EnableFullScreen), EnableFullScreen);
         settings.TryAdd(nameof(ShowThumbnails), ShowThumbnails);
         settings.TryAdd(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
         settings.TryAdd(nameof(ShowThumbnailFilename), ShowThumbnailFilename);
