@@ -1136,10 +1136,10 @@ namespace ImageGlass
             // 
             this.numSlideShowInterval.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
             this.numSlideShowInterval.Increment = new decimal(new int[] {
-            25,
+            1,
             0,
             0,
-            131072});
+            0});
             this.numSlideShowInterval.DecimalPlaces = 3;
             this.numSlideShowInterval.Location = new System.Drawing.Point(4, 4);
             this.numSlideShowInterval.Margin = new System.Windows.Forms.Padding(4);
@@ -1178,10 +1178,10 @@ namespace ImageGlass
             // 
             this.numSlideshowIntervalTo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(225)))));
             this.numSlideshowIntervalTo.Increment = new decimal(new int[] {
-            25,
+            1,
             0,
             0,
-            131072});
+            0});
             this.numSlideshowIntervalTo.DecimalPlaces = 3;
             this.numSlideshowIntervalTo.Location = new System.Drawing.Point(157, 4);
             this.numSlideshowIntervalTo.Margin = new System.Windows.Forms.Padding(4);
