@@ -42,6 +42,19 @@ public partial class ViewBox : HybridControl
     private bool _canUseDirect2D = false;
 
 
+    // to distinguish between clicks
+    // https://docs.microsoft.com/en-us/dotnet/desktop/winforms/input-mouse/how-to-distinguish-between-clicks-and-double-clicks?view=netdesktop-6.0
+    private DateTime _lastClick = DateTime.Now;
+    private MouseEventArgs _lastClickArgs = new(MouseButtons.Left, 0, 0, 0, 0);
+    private bool _isDoubleClick = false;
+    private Rectangle _doubleClickArea = new();
+    private readonly TimeSpan _doubleClickMaxTime = TimeSpan.FromMilliseconds(SystemInformation.DoubleClickTime);
+    private readonly System.Windows.Forms.Timer _clickTimer = new()
+    {
+        Interval = SystemInformation.DoubleClickTime,
+    };
+
+
     /// <summary>
     /// Gets the area of the image content to draw
     /// </summary>
@@ -539,8 +552,11 @@ public partial class ViewBox : HybridControl
     #endregion
 
 
+
     public ViewBox()
     {
+        SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.UserPaint, true);
+        
         // request for high resolution gif animation
         if (!TimerApi.HasRequestedRateAtLeastAsFastAs(10) && TimerApi.TimeBeginPeriod(10))
         {
@@ -548,6 +564,20 @@ public partial class ViewBox : HybridControl
         }
 
         _imageAnimator = new HighResolutionGifAnimator();
+
+        _clickTimer.Tick += ClickTimer_Tick;
+    }
+
+    private void ClickTimer_Tick(object? sender, EventArgs e)
+    {
+        // Clear double click watcher and timer
+        _isDoubleClick = false;
+        _clickTimer.Stop();
+        
+        if (CheckWhichNav(_lastClickArgs.Location) == MouseAndNavLocation.Outside)
+        {
+            base.OnMouseClick(_lastClickArgs);
+        }
     }
 
     protected override void OnLoaded()
@@ -567,22 +597,20 @@ public partial class ViewBox : HybridControl
 
         NavLeftImage?.Dispose();
         NavRightImage?.Dispose();
+
+        _clickTimer.Dispose();
     }
 
     protected override void OnMouseClick(MouseEventArgs e)
     {
-        if (CheckWhichNav(e.Location) == MouseAndNavLocation.Outside)
-        {
-            base.OnMouseClick(e);
-        }
+        // disable the default OnMouseClick
+        //base.OnMouseClick(e);
     }
 
     protected override void OnMouseDoubleClick(MouseEventArgs e)
     {
-        if (CheckWhichNav(e.Location) == MouseAndNavLocation.Outside)
-        {
-            base.OnMouseDoubleClick(e);
-        }
+        // disable the default OnMouseDoubleClick
+        //base.OnMouseDoubleClick(e);
     }
 
     protected override void OnMouseDown(MouseEventArgs e)
@@ -640,6 +668,39 @@ public partial class ViewBox : HybridControl
         if (!IsReady) return;
 
 
+        // Distinguish between clicks
+        #region Distinguish between clicks
+        if (_isMouseDown)
+        {
+            if (_isDoubleClick)
+            {
+                _isDoubleClick = false;
+
+                var length = DateTime.Now - _lastClick;
+
+                // If double click is valid, respond
+                if (_doubleClickArea.Contains(e.Location) && length < _doubleClickMaxTime)
+                {
+                    _clickTimer.Stop();
+                    if (CheckWhichNav(e.Location) == MouseAndNavLocation.Outside)
+                    {
+                        base.OnMouseDoubleClick(e);
+                    }
+                }
+            }
+            else
+            {
+                // Double click was invalid, restart 
+                _clickTimer.Stop();
+                _clickTimer.Start();
+                _lastClick = DateTime.Now;
+                _isDoubleClick = true;
+                _doubleClickArea = new(e.Location - (SystemInformation.DoubleClickSize / 2), SystemInformation.DoubleClickSize);
+            }
+        }
+        #endregion
+
+
         // Navigation clickable check
         #region Navigation clickable check
         if (e.Button == MouseButtons.Left)
@@ -668,6 +729,7 @@ public partial class ViewBox : HybridControl
 
 
         _isMouseDown = false;
+        _lastClickArgs = e;
     }
 
     protected override void OnMouseMove(MouseEventArgs e)
