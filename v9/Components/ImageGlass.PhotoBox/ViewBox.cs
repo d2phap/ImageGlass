@@ -569,6 +569,22 @@ public partial class ViewBox : HybridControl
         NavRightImage?.Dispose();
     }
 
+    protected override void OnMouseClick(MouseEventArgs e)
+    {
+        if (CheckWhichNav(e.Location) == MouseAndNavLocation.Outside)
+        {
+            base.OnMouseClick(e);
+        }
+    }
+
+    protected override void OnMouseDoubleClick(MouseEventArgs e)
+    {
+        if (CheckWhichNav(e.Location) == MouseAndNavLocation.Outside)
+        {
+            base.OnMouseDoubleClick(e);
+        }
+    }
+
     protected override void OnMouseDown(MouseEventArgs e)
     {
         base.OnMouseDown(e);
@@ -580,33 +596,16 @@ public partial class ViewBox : HybridControl
         #region Navigation clickable check
         if (e.Button == MouseButtons.Left)
         {
-            if (NavDisplay == NavButtonDisplay.Left
-                || NavDisplay == NavButtonDisplay.Both)
+            // calculate whether the point inside the left nav
+            if (CheckWhichNav(e.Location, true) == MouseAndNavLocation.LeftNav)
             {
-                // left clickable region
-                var leftClickable = new RectangleF(
-                _navLeftPos.X - NavButtonSize.Width / 2,
-                _navLeftPos.Y - NavButtonSize.Height / 2,
-                NavButtonSize.Width,
-                NavButtonSize.Height);
-
-                // calculate whether the point inside the rect
-                _isNavLeftPressed = leftClickable.Contains(e.Location);
+                _isNavLeftPressed = true;
             }
 
-
-            if (NavDisplay == NavButtonDisplay.Right
-                || NavDisplay == NavButtonDisplay.Both)
+            // calculate whether the point inside the right nav
+            if (CheckWhichNav(e.Location, false) == MouseAndNavLocation.RightNav)
             {
-                // right clickable region
-                var rightClickable = new RectangleF(
-                _navRightPos.X - NavButtonSize.Width / 2,
-                _navRightPos.Y - NavButtonSize.Height / 2,
-                NavButtonSize.Width,
-                NavButtonSize.Height);
-
-                // calculate whether the point inside the rect
-                _isNavRightPressed = rightClickable.Contains(e.Location);
+                _isNavRightPressed = true;
             }
 
             requestRerender = _isNavLeftPressed || _isNavRightPressed;
@@ -645,34 +644,20 @@ public partial class ViewBox : HybridControl
         #region Navigation clickable check
         if (e.Button == MouseButtons.Left)
         {
-            if (_isNavLeftPressed)
+            if (_isNavRightPressed)
             {
-                // left clickable region
-                var leftClickable = new RectangleF(
-                    _navLeftPos.X - NavButtonSize.Width / 2,
-                    _navLeftPos.Y - NavButtonSize.Height / 2,
-                    NavButtonSize.Width,
-                    NavButtonSize.Height);
-
-                // emit nav button event if the point inside the rect
-                if (leftClickable.Contains(e.Location))
-                {
-                    OnNavLeftClicked?.Invoke(e);
-                }
-            }
-            else if (_isNavRightPressed)
-            {
-                // right clickable region
-                var rightClickable = new RectangleF(
-                    _navRightPos.X - NavButtonSize.Width / 2,
-                    _navRightPos.Y - NavButtonSize.Height / 2,
-                    NavButtonSize.Width,
-                    NavButtonSize.Height);
-
-                // emit nav button event if the point inside the rect
-                if (rightClickable.Contains(e.Location))
+                // emit nav button event if the point inside the right nav
+                if (CheckWhichNav(e.Location, false) == MouseAndNavLocation.RightNav)
                 {
                     OnNavRightClicked?.Invoke(e);
+                }
+            }
+            else if (_isNavLeftPressed)
+            {
+                // emit nav button event if the point inside the left nav
+                if (CheckWhichNav(e.Location, true) == MouseAndNavLocation.LeftNav)
+                {
+                    OnNavLeftClicked?.Invoke(e);
                 }
             }
         }
@@ -1920,4 +1905,83 @@ public partial class ViewBox : HybridControl
     }
 
 
+    /// <summary>
+    /// Checks if the input point is inside the navigation buttons.
+    /// </summary>
+    /// <param name="point"></param>
+    /// <param name="onlyCheckNavLeft">
+    /// If the value is
+    /// <list type="bullet">
+    ///   <item><c>null</c>, checks both navs</item>
+    ///   <item><c>true</c>, checks only left nav</item>
+    ///   <item><c>false</c>, checks only right nav</item>
+    /// </list>
+    /// </param>
+    private MouseAndNavLocation CheckWhichNav(Point point, bool? onlyCheckNavLeft = null)
+    {
+        var isLocationInNavLeft = false;
+        var isLocationInNavRight = false;
+
+        
+        if (NavDisplay == NavButtonDisplay.Left || NavDisplay == NavButtonDisplay.Both)
+        {
+            if (onlyCheckNavLeft == null || onlyCheckNavLeft == false)
+            {
+                // right clickable region
+                var rightClickable = new RectangleF(
+                    _navRightPos.X - NavButtonSize.Width / 2,
+                    _navRightPos.Y - NavButtonSize.Height / 2,
+                    NavButtonSize.Width,
+                    NavButtonSize.Height);
+
+                // emit nav button event if the point inside the rect
+                if (rightClickable.Contains(point))
+                {
+                    // nav right clicked
+                    isLocationInNavRight = true;
+                }
+            }
+        }
+
+        
+        if (NavDisplay == NavButtonDisplay.Right || NavDisplay == NavButtonDisplay.Both)
+        {
+            if (onlyCheckNavLeft == null || onlyCheckNavLeft == true)
+            {
+                // left clickable region
+                var leftClickable = new RectangleF(
+                    _navLeftPos.X - NavButtonSize.Width / 2,
+                    _navLeftPos.Y - NavButtonSize.Height / 2,
+                    NavButtonSize.Width,
+                    NavButtonSize.Height);
+
+                // emit nav button event if the point inside the rect
+                if (leftClickable.Contains(point))
+                {
+                    // nav left clicked
+                    isLocationInNavLeft = true;
+                }
+            }
+        }
+
+
+        if (isLocationInNavLeft && isLocationInNavRight)
+        {
+            return MouseAndNavLocation.BothNavs;
+        }
+
+        if (isLocationInNavLeft)
+        {
+            return MouseAndNavLocation.LeftNav;
+        }
+
+        if (isLocationInNavRight)
+        {
+            return MouseAndNavLocation.RightNav;
+        }
+
+        return MouseAndNavLocation.Outside;
+    }
+
+    
 }

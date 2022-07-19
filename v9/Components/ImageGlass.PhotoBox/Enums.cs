@@ -43,3 +43,14 @@ public enum ImageSource
     Direct2D = 1 << 1,
     GDIPlus = 1 << 2,
 }
+
+
+public enum MouseAndNavLocation
+{
+    Outside = 0,
+    
+    LeftNav = 1 << 1,
+    RightNav = 1 << 2,
+    
+    BothNavs = 1 << 3,
+}
