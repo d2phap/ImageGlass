@@ -639,6 +639,11 @@ public static class Config
     /// </summary>
     public static Dictionary<string, Hotkey> ImageFocusModeHotkeys = new();
 
+    /// <summary>
+    /// Gets, sets mouse actions
+    /// </summary>
+    public static Dictionary<MouseActionEvent, UserAction> MouseActions = new();
+
     #endregion
 
 
@@ -940,11 +945,14 @@ public static class Config
         #endregion
 
 
+        // toolbar items
         var toolbarItems = items.GetSection(nameof(ToolbarItems))
             .GetChildren()
             .Select(i => i.Get<ToolbarItemModel>());
         ToolbarItems = toolbarItems.Any() ? toolbarItems.ToList() : DefaultToolbarItems;
 
+        
+        // info items
         var infoItems = items.GetSection(nameof(InfoItems))
             .GetChildren()
             .Select(i => i.Get<string>());
@@ -952,18 +960,25 @@ public static class Config
 
 
         // hotkeys for menu
-        var hotkeysList = items.GetSection(nameof(MenuHotkeys))
+        var stringDict = items.GetSection(nameof(MenuHotkeys))
             .GetChildren()
             .ToDictionary(i => i.Key, i => i.Value);
-        MenuHotkeys = ParseHotkeys(hotkeysList);
+        MenuHotkeys = ParseHotkeys(stringDict);
 
 
         // hotkeys for menu
-        hotkeysList = items.GetSection(nameof(ImageFocusModeHotkeys))
+        stringDict = items.GetSection(nameof(ImageFocusModeHotkeys))
             .GetChildren()
             .ToDictionary(i => i.Key, i => i.Value);
-        ImageFocusModeHotkeys = ParseHotkeys(hotkeysList);
+        ImageFocusModeHotkeys = ParseHotkeys(stringDict);
 
+
+        // mouse actions
+        MouseActions = items.GetSection(nameof(MouseActions))
+            .GetChildren()
+            .ToDictionary(
+                i => Helpers.ParseEnum<MouseActionEvent>(i.Key),
+                i => i.Get<UserAction>());
         #endregion
 
 
@@ -1344,6 +1359,7 @@ public static class Config
         settings.TryAdd(nameof(InfoItems), InfoItems);
         settings.TryAdd(nameof(MenuHotkeys), ParseHotkeys(MenuHotkeys));
         settings.TryAdd(nameof(ImageFocusModeHotkeys), ParseHotkeys(ImageFocusModeHotkeys));
+        settings.TryAdd(nameof(MouseActions), ParseMouseActions(MouseActions));
         #endregion
 
 
@@ -1358,91 +1374,6 @@ public static class Config
 
         return settings;
     }
-
-
-
-    #region EditApp
-
-    ///// <summary>
-    ///// Gets an EditApp from an extension
-    ///// </summary>
-    ///// <param name="ext">An extension to search. Ex: .png</param>
-    ///// <returns></returns>
-    //public static EditApp GetEditApp(string ext)
-    //{
-    //    if (EditApps.Count > 0)
-    //    {
-    //        return EditApps.Find(v =>
-    //            v.Extension.CompareTo(ext) == 0
-    //            && v.AppPath?.Length > 0);
-    //    }
-
-    //    return null;
-    //}
-
-
-    ///// <summary>
-    ///// Gets list of EditApps from a list of extensions
-    ///// </summary>
-    ///// <param name="exts">List() {".png", ".jpg"}</param>
-    ///// <returns></returns>
-    //public static List<EditApp> GetEditApps(List<string> exts)
-    //{
-    //    var list = new List<EditApp>();
-
-    //    if (EditApps.Count > 0)
-    //    {
-    //        list = EditApps.FindAll(v => exts.Contains(v.Extension));
-    //    }
-
-    //    return list;
-    //}
-
-
-    /// <summary>
-    /// Returns string from the given apps
-    /// </summary>
-    /// <param name="apps"></param>
-    /// <returns></returns>
-    public static List<EditApp> GetEditApps(string apps)
-    {
-        var appStr = apps.Split("[]".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-        var list = new List<EditApp>();
-
-        if (appStr.Length > 0)
-        {
-            foreach (var item in appStr)
-            {
-                try
-                {
-                    var extAssoc = new EditApp(item);
-                    list.Add(extAssoc);
-                }
-                catch (InvalidCastException) { }
-            }
-        }
-
-        return list;
-    }
-
-
-    /// <summary>
-    /// Returns string from the given apps
-    /// </summary>
-    /// <param name="apps"></param>
-    /// <returns></returns>
-    public static string GetEditApps(List<EditApp> apps)
-    {
-        var appStr = new StringBuilder();
-        foreach (var item in apps)
-        {
-            appStr.Append('[').Append(item).Append(']');
-        }
-
-        return appStr.ToString();
-    }
-
-    #endregion
 
 
     #region ImageFormats
@@ -1485,62 +1416,10 @@ public static class Config
     #endregion
 
 
-    #region KeyComboActions
-
-    /// <summary>
-    /// Returns the keycombo actions from string
-    /// </summary>
-    /// <param name="keyActions">The input string. E.g. "combo1:action1;combo2:action2"</param>
-    /// <returns></returns>
-    public static Dictionary<KeyCombos, AssignableActions> GetKeyComboActions(string keyActions)
-    {
-        var pairs = keyActions.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-        var dic = new Dictionary<KeyCombos, AssignableActions>();
-
-        try
-        {
-            foreach (var pair in pairs)
-            {
-                var parts = pair.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-
-                var keyCombo = Helpers.ParseEnum<KeyCombos>(parts[0]);
-                var action = Helpers.ParseEnum<AssignableActions>(parts[1]);
-
-                dic.Add(keyCombo, action);
-            }
-        }
-        catch
-        {
-            // reset to default set on error
-            dic = Constants.DefaultKeycomboActions;
-        }
-
-        return dic;
-    }
-
-    /// <summary>
-    /// Returns the string from keycombo actions
-    /// </summary>
-    /// <param name="keyActions">The input keycombo actions</param>
-    /// <returns></returns>
-    public static string GetKeyComboActions(Dictionary<KeyCombos, AssignableActions> keyActions)
-    {
-        var sb = new StringBuilder();
-
-        foreach (var key in keyActions.Keys)
-        {
-            sb.Append(key.ToString());
-            sb.Append(':');
-            sb.Append(keyActions[key].ToString());
-            sb.Append(';');
-        }
-
-        return sb.ToString();
-    }
-
     #endregion
 
 
+    #region Public static functions
 
     /// <summary>
     /// Apply theme colors and logo to form
@@ -1669,6 +1548,7 @@ public static class Config
         return hotkey;
     }
 
+    
     /// <summary>
     /// Gets hotkey's KeyData
     /// </summary>
@@ -1680,6 +1560,7 @@ public static class Config
         return hotkey?.KeyData ?? defaultValue;
     }
 
+    
     /// <summary>
     /// Gets hotkey actions
     /// </summary>
@@ -1690,6 +1571,18 @@ public static class Config
     {
         return dict.Where(i => i.Value.ToString() == dictValue.ToString())
             .Select(i => i.Key);
+    }
+
+
+
+    /// <summary>
+    /// Parses hotkey dictionary to string dictionary
+    /// </summary>
+    /// <param name="dict"></param>
+    /// <returns></returns>
+    public static Dictionary<string, UserAction> ParseMouseActions(Dictionary<MouseActionEvent, UserAction> dict)
+    {
+        return dict.ToDictionary(i => i.Key.ToString(), i => i.Value);
     }
 
     #endregion

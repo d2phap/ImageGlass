@@ -52,7 +52,7 @@ public partial class ViewBox : HybridControl
     private readonly TimeSpan _doubleClickMaxTime = TimeSpan.FromMilliseconds(SystemInformation.DoubleClickTime);
     private readonly System.Windows.Forms.Timer _clickTimer = new()
     {
-        Interval = SystemInformation.DoubleClickTime,
+        Interval = SystemInformation.DoubleClickTime / 2,
     };
 
 
