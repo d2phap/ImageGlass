@@ -61,6 +61,18 @@ public partial class Helpers
 
 
     /// <summary>
+    /// Parse object to JSON string
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public static string ToJson<T>(T obj)
+    {
+        return JsonSerializer.Serialize(obj, typeof(T), JsonOptions);
+    }
+
+
+    /// <summary>
     /// Parse JSON from a stream
     /// </summary>
     /// <typeparam name="T"></typeparam>
