@@ -34,7 +34,7 @@ public record ToolbarItemModel
     public ToolStripItemAlignment Alignment { get; set; } = ToolStripItemAlignment.Left;
 
     public string Image { get; set; } = string.Empty;
-    public ToolbarItemActionModel OnClick { get; set; } = new();
+    public UserAction OnClick { get; set; } = new();
 }
 
 public enum ToolbarItemModelType
@@ -45,23 +45,11 @@ public enum ToolbarItemModelType
 
 public record ToolbarItemTagModel
 {
-    public ToolbarItemActionModel OnClick { get; set; } = new();
+    public UserAction OnClick { get; set; } = new();
     public string Image { get; set; } = string.Empty;
     public string CheckableConfigBinding { get; set; } = string.Empty;
 }
 
-public record ToolbarItemActionModel
-{
-    public string Executable { get; set; } = string.Empty;
-    public object Argument { get; set; }
-
-
-    public ToolbarItemActionModel(string executable = "", string arguments = "")
-    {
-        Executable = executable.Trim();
-        Argument = arguments.Trim();
-    }
-}
 
 public enum ToolbarAddItemResult
 {

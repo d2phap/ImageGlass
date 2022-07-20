@@ -876,7 +876,7 @@ public partial class FrmMain
         ExplorerApi.DisplayFileProperties(filePath, Handle);
     }
 
-    
+
     private void IG_Save()
     {
         if (Local.ClipboardImage != null)
@@ -891,7 +891,7 @@ public partial class FrmMain
         _ = SaveImageAsync();
     }
 
-    
+
     private async Task SaveImageAsync()
     {
         // use backup name to avoid variable conflict
@@ -920,7 +920,7 @@ public partial class FrmMain
             }
         }
 
-        
+
         PicMain.ShowMessage(filePath, Config.Language[$"{langPath}._Saving"]);
 
         var img = await Local.Images.GetAsync(Local.CurrentIndex);
@@ -934,7 +934,7 @@ public partial class FrmMain
         try
         {
             var lastWriteTime = File.GetLastWriteTime(filePath);
-            
+
             await PhotoCodec.SaveAsync(img.ImgData.Image, filePath, quality: Config.ImageEditQuality);
 
             // Issue #307: option to preserve the modified date/time
@@ -999,7 +999,7 @@ public partial class FrmMain
             ? srcFilePath
             : Path.GetDirectoryName(srcFilePath);
         saveDialog.CustomPlaces.Add(dirPath);
-        
+
 
         // Use the last-selected file extension, if available.
         var extIndex = !string.IsNullOrEmpty(Local.SaveAsFilterExt)
@@ -1059,7 +1059,7 @@ public partial class FrmMain
         Bitmap? clonedPic = null;
         var srcExt = "";
         var langPath = $"{Name}.{nameof(MnuSave)}";
-        
+
         PicMain.ShowMessage(destFilePath, Config.Language[$"{langPath}._Saving"]);
 
         // get the bitmap data from file
@@ -1560,7 +1560,7 @@ public partial class FrmMain
 
         return Config.EnableFullScreen;
     }
-    
+
 
     /// <summary>
     /// Enter or Exit Full screen mode
@@ -1664,5 +1664,6 @@ public partial class FrmMain
         }
 
     }
+
 }
 
