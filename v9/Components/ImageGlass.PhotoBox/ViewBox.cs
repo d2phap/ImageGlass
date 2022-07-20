@@ -46,6 +46,7 @@ public partial class ViewBox : HybridControl
     // https://docs.microsoft.com/en-us/dotnet/desktop/winforms/input-mouse/how-to-distinguish-between-clicks-and-double-clicks?view=netdesktop-6.0
     private DateTime _lastClick = DateTime.Now;
     private MouseEventArgs _lastClickArgs = new(MouseButtons.Left, 0, 0, 0, 0);
+    private bool _isMouseDragged = false;
     private bool _isDoubleClick = false;
     private Rectangle _doubleClickArea = new();
     private readonly TimeSpan _doubleClickMaxTime = TimeSpan.FromMilliseconds(SystemInformation.DoubleClickTime);
@@ -574,10 +575,13 @@ public partial class ViewBox : HybridControl
         _isDoubleClick = false;
         _clickTimer.Stop();
         
-        if (CheckWhichNav(_lastClickArgs.Location) == MouseAndNavLocation.Outside)
+        if (CheckWhichNav(_lastClickArgs.Location) == MouseAndNavLocation.Outside
+            && !_isMouseDragged)
         {
             base.OnMouseClick(_lastClickArgs);
         }
+
+        _isMouseDragged = false;
     }
 
     protected override void OnLoaded()
@@ -656,6 +660,8 @@ public partial class ViewBox : HybridControl
 
 
         _isMouseDown = true;
+        _isMouseDragged = false;
+        
         if (requestRerender)
         {
             Invalidate();
@@ -789,6 +795,8 @@ public partial class ViewBox : HybridControl
         // Image panning check
         if (_isMouseDown)
         {
+            _isMouseDragged = true;
+            
             requestRerender = PanTo(
                 _panHostPoint.X - e.Location.X,
                 _panHostPoint.Y - e.Location.Y,
