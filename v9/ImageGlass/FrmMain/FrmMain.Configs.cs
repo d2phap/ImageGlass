@@ -271,10 +271,25 @@ public partial class FrmMain
 
         if (e.HasFlag(ForceUpdateAction.MouseActions))
         {
-            if (!Config.MouseActions.ContainsKey(MouseEvent.RightClick)
-            || string.IsNullOrEmpty(Config.MouseActions[MouseEvent.RightClick].Executable))
+            var hasRightClick = Config.MouseActions.ContainsKey(MouseEvent.RightClick);
+            var executable = hasRightClick
+                ? Config.MouseActions[MouseEvent.RightClick].Executable.Trim()
+                : nameof(IG_OpenContextMenu);
+
+            // set context menu = MnuContext
+            if (executable == nameof(IG_OpenContextMenu))
             {
                 PicMain.ContextMenuStrip = MnuContext;
+            }
+            // set context menu = MnuMain
+            else if (executable == nameof(IG_OpenMainMenu))
+            {
+                PicMain.ContextMenuStrip = MnuMain;
+            }
+            // remove context menu
+            else
+            {
+                PicMain.ContextMenuStrip = null;
             }
         }
     }
