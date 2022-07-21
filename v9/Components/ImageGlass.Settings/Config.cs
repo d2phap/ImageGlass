@@ -642,7 +642,7 @@ public static class Config
     /// <summary>
     /// Gets, sets mouse actions
     /// </summary>
-    public static Dictionary<MouseActionEvent, UserAction> MouseActions = new();
+    public static Dictionary<MouseEvent, UserAction> MouseActions = new();
 
     #endregion
 
@@ -977,7 +977,7 @@ public static class Config
         MouseActions = items.GetSection(nameof(MouseActions))
             .GetChildren()
             .ToDictionary(
-                i => Helpers.ParseEnum<MouseActionEvent>(i.Key),
+                i => Helpers.ParseEnum<MouseEvent>(i.Key),
                 i => i.Get<UserAction>());
         #endregion
 
@@ -1580,7 +1580,7 @@ public static class Config
     /// </summary>
     /// <param name="dict"></param>
     /// <returns></returns>
-    public static Dictionary<string, UserAction> ParseMouseActions(Dictionary<MouseActionEvent, UserAction> dict)
+    public static Dictionary<string, UserAction> ParseMouseActions(Dictionary<MouseEvent, UserAction> dict)
     {
         return dict.ToDictionary(i => i.Key.ToString(), i => i.Value);
     }

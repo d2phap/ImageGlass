@@ -204,6 +204,10 @@ public partial class FrmMain
 
         // load Full screen mode
         if (Config.EnableFullScreen) IG_ToggleFullScreen(true, showInAppMessage: false);
+
+
+        // load context menu config
+        Local.UpdateFrmMain(ForceUpdateAction.MouseActions);
     }
 
     private void FrmMainConfig_FormClosing(object? sender, FormClosingEventArgs e)
@@ -263,6 +267,15 @@ public partial class FrmMain
         {
             LoadMenuHotkeys();
             LoadToolbarItemsText();
+        }
+
+        if (e.HasFlag(ForceUpdateAction.MouseActions))
+        {
+            if (!Config.MouseActions.ContainsKey(MouseEvent.RightClick)
+            || string.IsNullOrEmpty(Config.MouseActions[MouseEvent.RightClick].Executable))
+            {
+                PicMain.ContextMenuStrip = MnuContext;
+            }
         }
     }
 

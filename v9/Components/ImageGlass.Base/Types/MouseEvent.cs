@@ -20,19 +20,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 namespace ImageGlass.Base;
 
 
-public enum MouseActionEvent
+public enum MouseEvent
 {
     LeftClick = 1,
-    RightClick = 2,
-    MiddleClick = 3,
-    XButton1Click = 4,
-    XButton2Click = 5,
+    LeftDoubleClick = 2,
 
-    LeftDoubleClick = 6,
-    RightDoubleClick = 7,
-    MiddleDoubleClick = 8,
-    XButton1DoubleClick = 9,
-    XButton2DoubleClick = 10,
+    RightClick = 3,
+    RightDoubleClick = 4,
 
+    XButton1Click = 5,
+    XButton1DoubleClick = 6,
+
+    XButton2Click = 7,
+    XButton2DoubleClick = 8,
+
+    WheelClick = 9,
+    WheelDoubleClick = 10,
     WheelScroll = 11,
 }
