@@ -21,8 +21,6 @@ using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.Services;
 using ImageGlass.Settings;
-using ImageMagick;
-using System.Drawing.Imaging;
 
 namespace ImageGlass;
 
@@ -278,6 +276,8 @@ internal class Local
 
         return TempImagePath;
     }
+
+    
 
     #endregion
 

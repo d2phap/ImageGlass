@@ -65,8 +65,12 @@ public partial class FrmMain : Form
         Local.OnFirstImageReached += Local_OnFirstImageReached;
         Local.OnLastImageReached += Local_OnLastImageReached;
 
+        PicMain.MouseClick += PicMain_MouseClick;
+        PicMain.MouseDoubleClick += PicMain_MouseDoubleClick;
+
         LoadImagesFromCmdArgs(Environment.GetCommandLineArgs());
     }
+
 
     protected override void WndProc(ref Message m)
     {
@@ -169,123 +173,10 @@ public partial class FrmMain : Form
     private void Toolbar_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
     {
         var tagModel = e.ClickedItem.Tag as ToolbarItemTagModel;
-        if (tagModel is null || string.IsNullOrEmpty(tagModel.OnClick.Executable)) return;
+        if (tagModel == null) return;
 
-        // Executable is name of main menu item
-        #region Main menu item executable
-        if (tagModel.OnClick.Executable.StartsWith("Mnu"))
-        {
-            var field = GetType().GetField(tagModel.OnClick.Executable,
-                BindingFlags.Instance | BindingFlags.NonPublic);
-            var mnu = field?.GetValue(this) as ToolStripMenuItem;
-
-            if (mnu is not null)
-            {
-                mnu.PerformClick();
-            }
-            else
-            {
-                var msg = string.Format(Config.Language[$"{Name}._ToolbarItemClick._CannotFindMenu"], tagModel.OnClick.Executable);
-
-                Config.ShowError(msg);
-            }
-
-            return;
-        }
-        #endregion
-
-
-        // Executable is a predefined function in FrmMain.IGMethods
-        #region IGMethods executable
-        if (tagModel.OnClick.Executable.StartsWith("IG_"))
-        {
-            // Find the private method in FrmMain
-            var method = GetType().GetMethod(
-                tagModel.OnClick.Executable,
-                BindingFlags.Instance | BindingFlags.NonPublic);
-
-
-            // run built-in method
-            if (method is not null)
-            {
-                // check method's params
-                var paramItems = method.GetParameters();
-                var paramters = new List<object>();
-
-                if (paramItems.Length == 1)
-                {
-                    object? methodArg = null;
-                    var type = Nullable.GetUnderlyingType(paramItems[0].ParameterType) ?? paramItems[0].ParameterType;
-
-                    if (type.IsPrimitive
-                        || type.Equals(typeof(string)))
-                    {
-                        if (string.IsNullOrEmpty(tagModel.OnClick.Argument.ToString()))
-                        {
-                            methodArg = null;
-                        }
-                        else
-                        {
-                            methodArg = Convert.ChangeType(tagModel.OnClick.Argument, type);
-                        }
-                    }
-                    else
-                    {
-                        throw new ArgumentException($"The type of argument {e.ClickedItem.Name} is not supported.", $"{nameof(tagModel.OnClick)}.{nameof(tagModel.OnClick.Argument)}");
-                    }
-
-
-                    if (methodArg != null && methodArg.GetType().IsArray)
-                    {
-                        paramters.AddRange((object[])methodArg);
-                    }
-                    else
-                    {
-                        paramters.Add(methodArg);
-                    }
-                }
-
-
-                // method must be bool/void()
-                method.Invoke(this, paramters.ToArray());
-            }
-            else
-            {
-                var msg = string.Format(Config.Language[$"{Name}._ToolbarItemClick._CannotFindMethod"], tagModel.OnClick.Executable);
-
-                Config.ShowError(msg);
-            }
-
-            return;
-        }
-
-        #endregion
-
-
-        // Executable is a free path
-        #region Free path executable
-
-        var currentFilePath = Local.Images.GetFileName(Local.CurrentIndex);
-        var procArgs = $"{tagModel.OnClick.Argument}".Replace(Constants.FILE_MACRO, currentFilePath);
-
-        // run external command line
-        var proc = new Process
-        {
-            StartInfo = new(tagModel.OnClick.Executable)
-            {
-                Arguments = procArgs,
-                UseShellExecute = true,
-                ErrorDialog = true,
-            },
-        };
-
-        try
-        {
-            proc.Start();
-        }
-        catch { }
-
-        #endregion
+        // execute action
+        ExecuteUserAction(tagModel.OnClick);
     }
 
 
@@ -1242,6 +1133,7 @@ public partial class FrmMain : Form
         }
     }
 
+
     private void PicMain_Click(object sender, EventArgs e)
     {
         if (Config.EnableImageFocusMode)
@@ -1249,6 +1141,60 @@ public partial class FrmMain : Form
             PicMain.Focus();
         }
     }
+
+    private void PicMain_DoubleClick(object sender, EventArgs e)
+    {
+
+    }
+
+    private void PicMain_MouseClick(object? sender, MouseEventArgs e)
+    {
+        if (e.Button == MouseButtons.Left)
+        {
+            
+        }
+        else if (e.Button == MouseButtons.Right)
+        {
+            
+        }
+        else if (e.Button == MouseButtons.Middle)
+        {
+            
+        }
+        else if (e.Button == MouseButtons.XButton1)
+        {
+            
+        }
+        else if (e.Button == MouseButtons.XButton2)
+        {
+            
+        }
+    }
+
+    private void PicMain_MouseDoubleClick(object? sender, MouseEventArgs e)
+    {
+        if (e.Button == MouseButtons.Left)
+        {
+
+        }
+        else if (e.Button == MouseButtons.Right)
+        {
+            
+        }
+        else if (e.Button == MouseButtons.Middle)
+        {
+            
+        }
+        else if (e.Button == MouseButtons.XButton1)
+        {
+
+        }
+        else if (e.Button == MouseButtons.XButton2)
+        {
+
+        }
+    }
+    
 
     private void PicMain_OnNavLeftClicked(MouseEventArgs e)
     {
@@ -1529,6 +1475,145 @@ public partial class FrmMain : Form
         Application.DoEvents();
     }
 
+
+    /// <summary>
+    /// Executes user action
+    /// </summary>
+    /// <param name="ac">User action</param>
+    private void ExecuteUserAction(UserAction? ac)
+    {
+        if (ac == null) return;
+        if (string.IsNullOrEmpty(ac.Executable)) return;
+
+        var langPath = $"_._UserAction";
+        Exception? error = null;
+
+
+        // Executable is name of main menu item
+        #region Main menu item executable
+        if (ac.Executable.StartsWith("Mnu"))
+        {
+            var field = this.GetType().GetField(ac.Executable,
+                BindingFlags.Instance | BindingFlags.NonPublic);
+            var mnu = field?.GetValue(this) as ToolStripMenuItem;
+
+            if (mnu is not null)
+            {
+                mnu.PerformClick();
+            }
+            else
+            {
+                error = new MissingFieldException(string.Format(Config.Language[$"{langPath}._MenuNotFound"], ac.Executable));
+            }
+        }
+        #endregion
+
+
+        // Executable is a predefined function in FrmMain.IGMethods
+        #region IGMethods executable
+        else if (ac.Executable.StartsWith("IG_"))
+        {
+            // Find the private method in FrmMain
+            var method = this.GetType().GetMethod(ac.Executable,
+                BindingFlags.Instance | BindingFlags.NonPublic);
+
+
+            // run built-in method
+            if (method is not null)
+            {
+                // check method's params
+                var paramItems = method.GetParameters();
+                var paramters = new List<object>();
+
+                if (paramItems.Length == 1)
+                {
+                    object? methodArg = null;
+                    var type = Nullable.GetUnderlyingType(paramItems[0].ParameterType) ?? paramItems[0].ParameterType;
+
+                    if (type.IsPrimitive || type.Equals(typeof(string)))
+                    {
+                        if (string.IsNullOrEmpty(ac.Argument.ToString()))
+                        {
+                            methodArg = null;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                methodArg = Convert.ChangeType(ac.Argument, type);
+                            }
+                            catch (Exception ex) { error = ex; }
+                        }
+                    }
+                    else
+                    {
+                        error = new ArgumentException(
+                            string.Format(Config.Language[$"{langPath}._MethodArgumentNotSupported"], ac.Executable),
+                            nameof(ac.Argument));
+                    }
+
+
+                    if (methodArg != null && methodArg.GetType().IsArray)
+                    {
+                        paramters.AddRange((object[])methodArg);
+                    }
+                    else
+                    {
+                        paramters.Add(methodArg);
+                    }
+                }
+
+
+                // method must be bool/void()
+                try
+                {
+                    method.Invoke(this, paramters.ToArray());
+                }
+                catch (Exception ex) { error = ex; }
+            }
+            else
+            {
+                error = new MissingMethodException(
+                    string.Format(Config.Language[$"{langPath}._MethodNotFound"], ac.Executable));
+            }
+        }
+
+        #endregion
+
+
+        // Executable is a free path
+        #region Free path executable
+        else
+        {
+            var currentFilePath = Local.Images.GetFileName(Local.CurrentIndex);
+            var procArgs = $"{ac.Argument}".Replace(Constants.FILE_MACRO, currentFilePath);
+
+            // run external command line
+            var proc = new Process
+            {
+                StartInfo = new(ac.Executable)
+                {
+                    Arguments = procArgs,
+                    UseShellExecute = true,
+                    ErrorDialog = true,
+                },
+            };
+
+            try
+            {
+                proc.Start();
+            }
+            catch { }
+        }
+
+        #endregion
+
+
+        if (error != null)
+        {
+            Config.ShowError(error.ToString(), Config.Language["_._Error"], error.Message);
+        }
+    }
 
 
     #region Main Menu component
@@ -2164,8 +2249,10 @@ public partial class FrmMain : Form
 
 
 
-    #endregion
 
     #endregion
 
+    #endregion
+
+    
 }

@@ -134,6 +134,11 @@ public class IgLang : Dictionary<string, string>
         //Add("_.AfterOpeningEditAppAction._Close", "Close"); //v8.0
 
 
+        Add("_._UserAction._MenuNotFound", "The menu {0} is not found."); // v9.0
+        Add("_._UserAction._MethodNotFound", "The method {0} is not found."); // v9.0
+        Add("_._UserAction._MethodArgumentNotSupported", "The argument type of method {0} is not supported."); // v9.0
+
+
         #region FrmMain
 
         #region Main menu
@@ -346,8 +351,6 @@ public class IgLang : Dictionary<string, string>
 
         Add("FrmMain._ClipboardImage", "Clipboard image"); //v9.0
 
-        Add("FrmMain._ToolbarItemClick._CannotFindMenu", "Cannot find the menu {0}"); // v9.0
-        Add("FrmMain._ToolbarItemClick._CannotFindMethod", "Cannot find the method {0}"); // v9.0
 
         #endregion
 
