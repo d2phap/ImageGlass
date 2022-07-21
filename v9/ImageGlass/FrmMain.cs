@@ -1151,23 +1151,23 @@ public partial class FrmMain : Form
     {
         if (e.Button == MouseButtons.Left)
         {
-            
+            ExecuteMouseAction(MouseEvent.LeftClick);
         }
         else if (e.Button == MouseButtons.Right)
         {
-            
+            ExecuteMouseAction(MouseEvent.RightClick);
         }
         else if (e.Button == MouseButtons.Middle)
         {
-            
+            ExecuteMouseAction(MouseEvent.WheelClick);
         }
         else if (e.Button == MouseButtons.XButton1)
         {
-            
+            ExecuteMouseAction(MouseEvent.XButton1Click);
         }
         else if (e.Button == MouseButtons.XButton2)
         {
-            
+            ExecuteMouseAction(MouseEvent.XButton2Click);
         }
     }
 
@@ -1175,23 +1175,23 @@ public partial class FrmMain : Form
     {
         if (e.Button == MouseButtons.Left)
         {
-
+            ExecuteMouseAction(MouseEvent.LeftDoubleClick);
         }
         else if (e.Button == MouseButtons.Right)
         {
-            
+            ExecuteMouseAction(MouseEvent.RightDoubleClick);
         }
         else if (e.Button == MouseButtons.Middle)
         {
-            
+            ExecuteMouseAction(MouseEvent.WheelDoubleClick);
         }
         else if (e.Button == MouseButtons.XButton1)
         {
-
+            ExecuteMouseAction(MouseEvent.XButton1DoubleClick);
         }
         else if (e.Button == MouseButtons.XButton2)
         {
-
+            ExecuteMouseAction(MouseEvent.XButton2DoubleClick);
         }
     }
     
@@ -1479,7 +1479,6 @@ public partial class FrmMain : Form
     /// <summary>
     /// Executes user action
     /// </summary>
-    /// <param name="ac">User action</param>
     private void ExecuteUserAction(UserAction? ac)
     {
         if (ac == null) return;
@@ -1614,6 +1613,33 @@ public partial class FrmMain : Form
             Config.ShowError(error.ToString(), Config.Language["_._Error"], error.Message);
         }
     }
+
+
+    /// <summary>
+    /// Executes action from mouse event
+    /// </summary>
+    private void ExecuteMouseAction(MouseEvent e)
+    {
+        if (Config.MouseActions.ContainsKey(e))
+        {
+            if (e == MouseEvent.RightClick)
+            {
+                // update PicMain's context menu
+                Local.UpdateFrmMain(ForceUpdateAction.MouseActions);
+
+                if (Config.MouseActions[e].Executable.Trim() != nameof(IG_OpenContextMenu)
+                    && Config.MouseActions[e].Executable.Trim() != nameof(IG_OpenMainMenu))
+                {
+                    ExecuteUserAction(Config.MouseActions[e]);
+                }
+            }
+            else
+            {
+                ExecuteUserAction(Config.MouseActions[e]);
+            }
+        }
+    }
+
 
 
     #region Main Menu component

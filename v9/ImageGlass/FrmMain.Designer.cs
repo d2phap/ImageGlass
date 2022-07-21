@@ -36,7 +36,6 @@ namespace ImageGlass
             this.MnuMain = new ImageGlass.UI.ModernMenu(this.components);
             this.MnuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuOpenFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuPasteImage = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuNewWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuSave = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuSaveAs = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,6 +43,7 @@ namespace ImageGlass
             this.MnuOpenWith = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuPrint = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuShare = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuReload = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,12 +95,13 @@ namespace ImageGlass
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuImageProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuClipboard = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuPasteImage = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem19 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuCopyImageData = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuCopyPath = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuCut = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem19 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem23 = new System.Windows.Forms.ToolStripSeparator();
-            this.MnuCopyPath = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuClearClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuWindowFit = new System.Windows.Forms.ToolStripMenuItem();
@@ -138,16 +139,15 @@ namespace ImageGlass
             this.Sp1 = new ImageGlass.UI.ModernSplitContainer();
             this.Sp2 = new ImageGlass.UI.ModernSplitContainer();
             this.PicMain = new ImageGlass.PhotoBox.ViewBox();
+            this.Gallery = new ImageGlass.Gallery.ImageGallery();
             this.MnuContext = new ImageGlass.UI.ModernMenu(this.components);
             this.itemToPreserveTheSpaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Gallery = new ImageGlass.Gallery.ImageGallery();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuSubMenu = new ImageGlass.UI.ModernMenu(this.components);
             this.itemToPreserveSpaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuShare = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuMain.SuspendLayout();
             this.Tb0.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Sp1)).BeginInit();
@@ -209,7 +209,7 @@ namespace ImageGlass
             this.MnuExit});
             this.MnuMain.Name = "MnuContext";
             this.MnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.MnuMain.Size = new System.Drawing.Size(199, 610);
+            this.MnuMain.Size = new System.Drawing.Size(192, 588);
             this.MnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.MnuMain_Opening);
             // 
             // MnuFile
@@ -230,93 +230,93 @@ namespace ImageGlass
             this.MnuReloadImageList});
             this.MnuFile.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuFile.Name = "MnuFile";
-            this.MnuFile.Size = new System.Drawing.Size(198, 40);
+            this.MnuFile.Size = new System.Drawing.Size(191, 40);
             this.MnuFile.Text = "[File]";
             // 
             // MnuOpenFile
             // 
             this.MnuOpenFile.Name = "MnuOpenFile";
-            this.MnuOpenFile.Size = new System.Drawing.Size(364, 30);
+            this.MnuOpenFile.Size = new System.Drawing.Size(255, 30);
             this.MnuOpenFile.Text = "[Open file...]";
             this.MnuOpenFile.Click += new System.EventHandler(this.MnuOpenFile_Click);
-            // 
-            // MnuPasteImage
-            // 
-            this.MnuPasteImage.Name = "MnuPasteImage";
-            this.MnuPasteImage.Size = new System.Drawing.Size(364, 30);
-            this.MnuPasteImage.Text = "[Paste image]";
-            this.MnuPasteImage.Click += new System.EventHandler(this.MnuPasteImage_Click);
             // 
             // MnuNewWindow
             // 
             this.MnuNewWindow.Name = "MnuNewWindow";
-            this.MnuNewWindow.Size = new System.Drawing.Size(364, 30);
+            this.MnuNewWindow.Size = new System.Drawing.Size(255, 30);
             this.MnuNewWindow.Text = "[Open new window]";
             this.MnuNewWindow.Click += new System.EventHandler(this.MnuNewWindow_Click);
             // 
             // MnuSave
             // 
             this.MnuSave.Name = "MnuSave";
-            this.MnuSave.Size = new System.Drawing.Size(364, 30);
+            this.MnuSave.Size = new System.Drawing.Size(255, 30);
             this.MnuSave.Text = "[Save image]";
             this.MnuSave.Click += new System.EventHandler(this.MnuSave_Click);
             // 
             // MnuSaveAs
             // 
             this.MnuSaveAs.Name = "MnuSaveAs";
-            this.MnuSaveAs.Size = new System.Drawing.Size(364, 30);
+            this.MnuSaveAs.Size = new System.Drawing.Size(255, 30);
             this.MnuSaveAs.Text = "[Save image as...]";
             this.MnuSaveAs.Click += new System.EventHandler(this.MnuSaveAs_Click);
             // 
             // toolStripMenuItem10
             // 
             this.toolStripMenuItem10.Name = "toolStripMenuItem10";
-            this.toolStripMenuItem10.Size = new System.Drawing.Size(361, 6);
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(252, 6);
             // 
             // MnuOpenWith
             // 
             this.MnuOpenWith.Name = "MnuOpenWith";
-            this.MnuOpenWith.Size = new System.Drawing.Size(364, 30);
+            this.MnuOpenWith.Size = new System.Drawing.Size(255, 30);
             this.MnuOpenWith.Text = "[Open with...]";
             this.MnuOpenWith.Click += new System.EventHandler(this.MnuOpenWith_Click);
             // 
             // MnuEdit
             // 
             this.MnuEdit.Name = "MnuEdit";
-            this.MnuEdit.Size = new System.Drawing.Size(364, 30);
+            this.MnuEdit.Size = new System.Drawing.Size(255, 30);
             this.MnuEdit.Text = "[Edit image...]";
             this.MnuEdit.Click += new System.EventHandler(this.MnuEdit_Click);
             // 
             // MnuPrint
             // 
             this.MnuPrint.Name = "MnuPrint";
-            this.MnuPrint.Size = new System.Drawing.Size(364, 30);
+            this.MnuPrint.Size = new System.Drawing.Size(255, 30);
             this.MnuPrint.Text = "[Print...]";
             this.MnuPrint.Click += new System.EventHandler(this.MnuPrint_Click);
+            // 
+            // MnuShare
+            // 
+            this.MnuShare.Name = "MnuShare";
+            this.MnuShare.Size = new System.Drawing.Size(255, 30);
+            this.MnuShare.Text = "[Share...]";
+            this.MnuShare.Click += new System.EventHandler(this.MnuShare_Click);
             // 
             // toolStripMenuItem12
             // 
             this.toolStripMenuItem12.Name = "toolStripMenuItem12";
-            this.toolStripMenuItem12.Size = new System.Drawing.Size(361, 6);
+            this.toolStripMenuItem12.Size = new System.Drawing.Size(252, 6);
             // 
             // MnuRefresh
             // 
             this.MnuRefresh.Name = "MnuRefresh";
-            this.MnuRefresh.Size = new System.Drawing.Size(364, 30);
+            this.MnuRefresh.Size = new System.Drawing.Size(255, 30);
             this.MnuRefresh.Text = "[Refresh]";
             this.MnuRefresh.Click += new System.EventHandler(this.MnuRefresh_Click);
             // 
             // MnuReload
             // 
             this.MnuReload.Name = "MnuReload";
-            this.MnuReload.Size = new System.Drawing.Size(364, 30);
+            this.MnuReload.Size = new System.Drawing.Size(255, 30);
             this.MnuReload.Text = "[Reload image]";
             this.MnuReload.Click += new System.EventHandler(this.MnuReload_Click);
             // 
             // MnuReloadImageList
             // 
             this.MnuReloadImageList.Name = "MnuReloadImageList";
-            this.MnuReloadImageList.Size = new System.Drawing.Size(364, 30);
+            this.MnuReloadImageList.Size = new System.Drawing.Size(255, 30);
             this.MnuReloadImageList.Text = "[Reload image list]";
             this.MnuReloadImageList.Click += new System.EventHandler(this.MnuReloadImageList_Click);
             // 
@@ -338,7 +338,7 @@ namespace ImageGlass
             this.MnuNavigation.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuNavigation.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuNavigation.Name = "MnuNavigation";
-            this.MnuNavigation.Size = new System.Drawing.Size(198, 40);
+            this.MnuNavigation.Size = new System.Drawing.Size(191, 40);
             this.MnuNavigation.Text = "[Navigation]";
             // 
             // MnuViewNext
@@ -432,7 +432,7 @@ namespace ImageGlass
             this.MnuZoom.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuZoom.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuZoom.Name = "MnuZoom";
-            this.MnuZoom.Size = new System.Drawing.Size(198, 40);
+            this.MnuZoom.Size = new System.Drawing.Size(191, 40);
             this.MnuZoom.Text = "[Zoom]";
             // 
             // MnuZoomIn
@@ -544,7 +544,7 @@ namespace ImageGlass
             this.MnuImage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuImage.Name = "MnuImage";
-            this.MnuImage.Size = new System.Drawing.Size(198, 40);
+            this.MnuImage.Size = new System.Drawing.Size(191, 40);
             this.MnuImage.Text = "[Image]";
             // 
             // MnuToggleImageFocus
@@ -697,8 +697,20 @@ namespace ImageGlass
             this.MnuClipboard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuClipboard.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuClipboard.Name = "MnuClipboard";
-            this.MnuClipboard.Size = new System.Drawing.Size(198, 40);
+            this.MnuClipboard.Size = new System.Drawing.Size(191, 40);
             this.MnuClipboard.Text = "[Clipboard]";
+            // 
+            // MnuPasteImage
+            // 
+            this.MnuPasteImage.Name = "MnuPasteImage";
+            this.MnuPasteImage.Size = new System.Drawing.Size(252, 30);
+            this.MnuPasteImage.Text = "[Paste image]";
+            this.MnuPasteImage.Click += new System.EventHandler(this.MnuPasteImage_Click);
+            // 
+            // toolStripMenuItem19
+            // 
+            this.toolStripMenuItem19.Name = "toolStripMenuItem19";
+            this.toolStripMenuItem19.Size = new System.Drawing.Size(249, 6);
             // 
             // MnuCopyImageData
             // 
@@ -706,6 +718,13 @@ namespace ImageGlass
             this.MnuCopyImageData.Size = new System.Drawing.Size(252, 30);
             this.MnuCopyImageData.Text = "[Copy image pixels]";
             this.MnuCopyImageData.Click += new System.EventHandler(this.MnuCopyImageData_Click);
+            // 
+            // MnuCopyPath
+            // 
+            this.MnuCopyPath.Name = "MnuCopyPath";
+            this.MnuCopyPath.Size = new System.Drawing.Size(252, 30);
+            this.MnuCopyPath.Text = "[Copy image path]";
+            this.MnuCopyPath.Click += new System.EventHandler(this.MnuCopyPath_Click);
             // 
             // MnuCopy
             // 
@@ -721,22 +740,10 @@ namespace ImageGlass
             this.MnuCut.Text = "[Cut]";
             this.MnuCut.Click += new System.EventHandler(this.MnuCut_Click);
             // 
-            // toolStripMenuItem19
-            // 
-            this.toolStripMenuItem19.Name = "toolStripMenuItem19";
-            this.toolStripMenuItem19.Size = new System.Drawing.Size(249, 6);
-            // 
             // toolStripMenuItem23
             // 
             this.toolStripMenuItem23.Name = "toolStripMenuItem23";
             this.toolStripMenuItem23.Size = new System.Drawing.Size(249, 6);
-            // 
-            // MnuCopyPath
-            // 
-            this.MnuCopyPath.Name = "MnuCopyPath";
-            this.MnuCopyPath.Size = new System.Drawing.Size(252, 30);
-            this.MnuCopyPath.Text = "[Copy image path]";
-            this.MnuCopyPath.Click += new System.EventHandler(this.MnuCopyPath_Click);
             // 
             // MnuClearClipboard
             // 
@@ -748,14 +755,14 @@ namespace ImageGlass
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(195, 6);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(188, 6);
             // 
             // MnuWindowFit
             // 
             this.MnuWindowFit.CheckOnClick = true;
             this.MnuWindowFit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuWindowFit.Name = "MnuWindowFit";
-            this.MnuWindowFit.Size = new System.Drawing.Size(198, 40);
+            this.MnuWindowFit.Size = new System.Drawing.Size(191, 40);
             this.MnuWindowFit.Text = "[Window fit]";
             this.MnuWindowFit.Click += new System.EventHandler(this.MnuWindowFit_Click);
             // 
@@ -766,7 +773,7 @@ namespace ImageGlass
             this.MnuFrameless.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuFrameless.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuFrameless.Name = "MnuFrameless";
-            this.MnuFrameless.Size = new System.Drawing.Size(198, 40);
+            this.MnuFrameless.Size = new System.Drawing.Size(191, 40);
             this.MnuFrameless.Text = "[Frameless]";
             this.MnuFrameless.Click += new System.EventHandler(this.MnuFrameless_Click);
             // 
@@ -777,7 +784,7 @@ namespace ImageGlass
             this.MnuFullScreen.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuFullScreen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuFullScreen.Name = "MnuFullScreen";
-            this.MnuFullScreen.Size = new System.Drawing.Size(198, 40);
+            this.MnuFullScreen.Size = new System.Drawing.Size(191, 40);
             this.MnuFullScreen.Text = "[Full screen]";
             this.MnuFullScreen.Click += new System.EventHandler(this.MnuFullScreen_Click);
             // 
@@ -791,7 +798,7 @@ namespace ImageGlass
             this.MnuSlideshow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuSlideshow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuSlideshow.Name = "MnuSlideshow";
-            this.MnuSlideshow.Size = new System.Drawing.Size(198, 40);
+            this.MnuSlideshow.Size = new System.Drawing.Size(191, 40);
             this.MnuSlideshow.Text = "Slideshow";
             // 
             // MnuStartSlideshow
@@ -818,7 +825,7 @@ namespace ImageGlass
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(195, 6);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(188, 6);
             // 
             // MnuLayout
             // 
@@ -832,7 +839,7 @@ namespace ImageGlass
             this.MnuLayout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuLayout.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuLayout.Name = "MnuLayout";
-            this.MnuLayout.Size = new System.Drawing.Size(198, 40);
+            this.MnuLayout.Size = new System.Drawing.Size(191, 40);
             this.MnuLayout.Text = "[Layout]";
             // 
             // MnuToggleToolbar
@@ -883,7 +890,7 @@ namespace ImageGlass
             this.MnuTools.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuTools.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuTools.Name = "MnuTools";
-            this.MnuTools.Size = new System.Drawing.Size(198, 40);
+            this.MnuTools.Size = new System.Drawing.Size(191, 40);
             this.MnuTools.Text = "[Tools]";
             // 
             // MnuColorPicker
@@ -917,7 +924,7 @@ namespace ImageGlass
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(195, 6);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(188, 6);
             // 
             // MnuSettings
             // 
@@ -925,7 +932,7 @@ namespace ImageGlass
             this.MnuSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuSettings.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuSettings.Name = "MnuSettings";
-            this.MnuSettings.Size = new System.Drawing.Size(198, 40);
+            this.MnuSettings.Size = new System.Drawing.Size(191, 40);
             this.MnuSettings.Text = "[Settings]";
             this.MnuSettings.Click += new System.EventHandler(this.MnuSettings_Click);
             // 
@@ -943,7 +950,7 @@ namespace ImageGlass
             this.MnuHelp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuHelp.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuHelp.Name = "MnuHelp";
-            this.MnuHelp.Size = new System.Drawing.Size(198, 40);
+            this.MnuHelp.Size = new System.Drawing.Size(191, 40);
             this.MnuHelp.Text = "[Help]";
             // 
             // MnuAbout
@@ -996,7 +1003,7 @@ namespace ImageGlass
             // toolStripMenuItem9
             // 
             this.toolStripMenuItem9.Name = "toolStripMenuItem9";
-            this.toolStripMenuItem9.Size = new System.Drawing.Size(195, 6);
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(188, 6);
             // 
             // MnuExit
             // 
@@ -1004,7 +1011,7 @@ namespace ImageGlass
             this.MnuExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuExit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuExit.Name = "MnuExit";
-            this.MnuExit.Size = new System.Drawing.Size(198, 40);
+            this.MnuExit.Size = new System.Drawing.Size(191, 40);
             this.MnuExit.Text = "[Exit]";
             this.MnuExit.Click += new System.EventHandler(this.MnuExit_Click);
             // 
@@ -1087,7 +1094,6 @@ namespace ImageGlass
             this.PicMain.BackColor = System.Drawing.SystemColors.Control;
             this.PicMain.BackgroundImage = null;
             this.PicMain.CheckerboardMode = ImageGlass.Base.PhotoBox.CheckerboardMode.Client;
-            this.PicMain.ContextMenuStrip = this.MnuContext;
             this.PicMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PicMain.InterpolationScaleDown = ImageGlass.Base.PhotoBox.ImageInterpolation.Linear;
             this.PicMain.Location = new System.Drawing.Point(0, 0);
@@ -1103,22 +1109,7 @@ namespace ImageGlass
             this.PicMain.Click += new System.EventHandler(this.PicMain_Click);
             this.PicMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.PicMain_DragDrop);
             this.PicMain.DragOver += new System.Windows.Forms.DragEventHandler(this.PicMain_DragOver);
-            // 
-            // MnuContext
-            // 
-            this.MnuContext.ImageScalingSize = new System.Drawing.Size(22, 22);
-            this.MnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.itemToPreserveTheSpaceToolStripMenuItem});
-            this.MnuContext.Name = "MnuContext";
-            this.MnuContext.Size = new System.Drawing.Size(283, 32);
-            this.MnuContext.Opening += new System.ComponentModel.CancelEventHandler(this.MnuContext_Opening);
-            // 
-            // itemToPreserveTheSpaceToolStripMenuItem
-            // 
-            this.itemToPreserveTheSpaceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.itemToPreserveTheSpaceToolStripMenuItem.Name = "itemToPreserveTheSpaceToolStripMenuItem";
-            this.itemToPreserveTheSpaceToolStripMenuItem.Size = new System.Drawing.Size(282, 28);
-            this.itemToPreserveTheSpaceToolStripMenuItem.Text = "item to preserve the space";
+            this.PicMain.DoubleClick += new System.EventHandler(this.PicMain_DoubleClick);
             // 
             // Gallery
             // 
@@ -1135,6 +1126,22 @@ namespace ImageGlass
             this.Gallery.ThumbnailSize = new System.Drawing.Size(70, 70);
             this.Gallery.View = ImageGlass.Gallery.View.HorizontalStrip;
             this.Gallery.ItemClick += new ImageGlass.Gallery.ItemClickEventHandler(this.Gallery_ItemClick);
+            // 
+            // MnuContext
+            // 
+            this.MnuContext.ImageScalingSize = new System.Drawing.Size(22, 22);
+            this.MnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.itemToPreserveTheSpaceToolStripMenuItem});
+            this.MnuContext.Name = "MnuContext";
+            this.MnuContext.Size = new System.Drawing.Size(283, 32);
+            this.MnuContext.Opening += new System.ComponentModel.CancelEventHandler(this.MnuContext_Opening);
+            // 
+            // itemToPreserveTheSpaceToolStripMenuItem
+            // 
+            this.itemToPreserveTheSpaceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.itemToPreserveTheSpaceToolStripMenuItem.Name = "itemToPreserveTheSpaceToolStripMenuItem";
+            this.itemToPreserveTheSpaceToolStripMenuItem.Size = new System.Drawing.Size(282, 28);
+            this.itemToPreserveTheSpaceToolStripMenuItem.Text = "item to preserve the space";
             // 
             // toolStripMenuItem1
             // 
@@ -1170,13 +1177,6 @@ namespace ImageGlass
             this.itemToPreserveSpaceToolStripMenuItem.Name = "itemToPreserveSpaceToolStripMenuItem";
             this.itemToPreserveSpaceToolStripMenuItem.Size = new System.Drawing.Size(252, 28);
             this.itemToPreserveSpaceToolStripMenuItem.Text = "item to preserve space";
-            // 
-            // MnuShare
-            // 
-            this.MnuShare.Name = "MnuShare";
-            this.MnuShare.Size = new System.Drawing.Size(364, 30);
-            this.MnuShare.Text = "[Share...]";
-            this.MnuShare.Click += new System.EventHandler(this.MnuShare_Click);
             // 
             // FrmMain
             // 
