@@ -1665,5 +1665,23 @@ public partial class FrmMain
 
     }
 
+
+    /// <summary>
+    /// Opens context menu at the current cursor position
+    /// </summary>
+    private void IG_OpenContextMenu()
+    {
+        MnuContext.Show(Cursor.Position);
+    }
+
+
+    /// <summary>
+    /// Opens main menu at the current cursor position
+    /// </summary>
+    private void IG_OpenMainMenu()
+    {
+        MnuMain.Show(Cursor.Position);
+    }
+
 }
 
