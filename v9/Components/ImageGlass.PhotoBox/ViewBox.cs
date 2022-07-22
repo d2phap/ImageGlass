@@ -175,7 +175,8 @@ public partial class ViewBox : HybridControl
     #region Zooming
 
     /// <summary>
-    /// Gets, sets the value whether the internal built-in zooming by keys is allowed.
+    /// Gets, sets the value indicates whether
+    /// the internal built-in zooming by keys is allowed.
     /// </summary>
     [Category("Zooming")]
     [DefaultValue(true)]
@@ -304,21 +305,6 @@ public partial class ViewBox : HybridControl
         }
     }
 
-    /// <summary>
-    /// Gets, sets the panning speed. Value is from 0 to 100f.
-    /// </summary>
-    [Category("Zooming")]
-    [DefaultValue(20f)]
-    public float PanSpeed
-    {
-        get => _panSpeed;
-        set
-        {
-            _panSpeed = Math.Min(value, 100f); // max 100f
-            _panSpeed = Math.Max(value, 0); // min 0
-        }
-    }
-
 
     /// <summary>
     /// Occurs when <see cref="ZoomFactor"/> value changes.
@@ -364,6 +350,21 @@ public partial class ViewBox : HybridControl
 
     // Panning
     #region Panning
+
+    /// <summary>
+    /// Gets, sets the panning speed. Value is from 0 to 100f.
+    /// </summary>
+    [Category("Panning")]
+    [DefaultValue(20f)]
+    public float PanSpeed
+    {
+        get => _panSpeed;
+        set
+        {
+            _panSpeed = Math.Min(value, 100f); // max 100f
+            _panSpeed = Math.Max(value, 0); // min 0
+        }
+    }
 
     /// <summary>
     /// Gets, sets the value whether the internal built-in panning by arrow keys is allowed.
@@ -832,15 +833,6 @@ public partial class ViewBox : HybridControl
         }
     }
 
-    protected override void OnMouseWheel(MouseEventArgs e)
-    {
-        base.OnMouseWheel(e);
-
-        if (!IsReady || Source == ImageSource.Null || e.Delta == 0) return;
-
-        _ = ZoomToPoint(e.Delta, e.Location);
-    }
-
     protected override void OnResize(EventArgs e)
     {
         _shouldRecalculateDrawingRegion = true;
@@ -946,20 +938,20 @@ public partial class ViewBox : HybridControl
         // Panning
         if (_animationSource.HasFlag(AnimationSource.PanLeft))
         {
-            _ = PanTo(-PanSpeed, 0, requestRerender: false);
+            PanLeft(requestRerender: false);
         }
         else if (_animationSource.HasFlag(AnimationSource.PanRight))
         {
-            _ = PanTo(PanSpeed, 0, requestRerender: false);
+            PanRight(requestRerender: false);
         }
 
         if (_animationSource.HasFlag(AnimationSource.PanUp))
         {
-            _ = PanTo(0, -PanSpeed, requestRerender: false);
+            PanUp(requestRerender: false);
         }
         else if (_animationSource.HasFlag(AnimationSource.PanDown))
         {
-            _ = PanTo(0, PanSpeed, requestRerender: false);
+            PanDown(requestRerender: false);
         }
 
         // Zooming
@@ -1648,6 +1640,66 @@ public partial class ViewBox : HybridControl
         OnZoomChanged?.Invoke(new(_zoomFactor));
 
         return true;
+    }
+
+
+    /// <summary>
+    /// Pan the viewport to the left
+    /// </summary>
+    /// <param name="speed">Panning speed</param>
+    /// <param name="requestRerender"><c>true</c> to request the control invalidates.</param>
+    public void PanLeft(float? speed = null, bool requestRerender = true)
+    {
+        speed ??= PanSpeed;
+        speed = Math.Min(speed.Value, 100f); // max 100f
+        speed = Math.Max(speed.Value, 0); // min 0
+
+        _ = PanTo(-speed.Value, 0, requestRerender);
+    }
+
+
+    /// <summary>
+    /// Pan the viewport to the right
+    /// </summary>
+    /// <param name="speed">Panning speed</param>
+    /// <param name="requestRerender"><c>true</c> to request the control invalidates.</param>
+    public void PanRight(float? speed = null, bool requestRerender = true)
+    {
+        speed ??= PanSpeed;
+        speed = Math.Min(speed.Value, 100f); // max 100f
+        speed = Math.Max(speed.Value, 0); // min 0
+        
+        _ = PanTo(speed.Value, 0, requestRerender);
+    }
+
+
+    /// <summary>
+    /// Pan the viewport to the top
+    /// </summary>
+    /// <param name="speed">Panning speed</param>
+    /// <param name="requestRerender"><c>true</c> to request the control invalidates.</param>
+    public void PanUp(float? speed = null, bool requestRerender = true)
+    {
+        speed ??= PanSpeed;
+        speed = Math.Min(speed.Value, 100f); // max 100f
+        speed = Math.Max(speed.Value, 0); // min 0
+        
+        _ = PanTo(0, -speed.Value, requestRerender);
+    }
+
+
+    /// <summary>
+    /// Pan the viewport to the bottom
+    /// </summary>
+    /// <param name="speed">Panning speed</param>
+    /// <param name="requestRerender"><c>true</c> to request the control invalidates.</param>
+    public void PanDown(float? speed = null, bool requestRerender = true)
+    {
+        speed ??= PanSpeed;
+        speed = Math.Min(speed.Value, 100f); // max 100f
+        speed = Math.Max(speed.Value, 0); // min 0
+        
+        _ = PanTo(0, speed.Value, requestRerender);
     }
 
 
