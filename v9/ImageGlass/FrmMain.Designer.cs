@@ -1109,6 +1109,9 @@ namespace ImageGlass
             this.PicMain.Click += new System.EventHandler(this.PicMain_Click);
             this.PicMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.PicMain_DragDrop);
             this.PicMain.DragOver += new System.Windows.Forms.DragEventHandler(this.PicMain_DragOver);
+            this.PicMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicMain_MouseClick);
+            this.PicMain.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.PicMain_MouseDoubleClick);
+            this.PicMain.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.PicMain_MouseWheel);
             // 
             // Gallery
             // 
