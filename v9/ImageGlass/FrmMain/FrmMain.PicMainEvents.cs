@@ -196,10 +196,10 @@ public partial class FrmMain
                     action = MouseWheelAction.Zoom;
                     break;
                 case MouseWheelEvent.PressCtrlAndScroll:
-                    action = MouseWheelAction.ScrollVertically;
+                    action = MouseWheelAction.PanVertically;
                     break;
                 case MouseWheelEvent.PressShiftAndScroll:
-                    action = MouseWheelAction.ScrollHorizontally;
+                    action = MouseWheelAction.PanHorizontally;
                     break;
                 case MouseWheelEvent.PressAltAndScroll:
                     action = MouseWheelAction.BrowseImages;
@@ -219,7 +219,7 @@ public partial class FrmMain
         {
             PicMain.ZoomToPoint(e.Delta, e.Location);
         }
-        else if (action == MouseWheelAction.ScrollVertically)
+        else if (action == MouseWheelAction.PanVertically)
         {
             if (e.Delta > 0)
             {
@@ -230,7 +230,7 @@ public partial class FrmMain
                 PicMain.PanDown(Math.Abs(e.Delta) + PicMain.PanSpeed / 4);
             }
         }
-        else if (action == MouseWheelAction.ScrollHorizontally)
+        else if (action == MouseWheelAction.PanHorizontally)
         {
             if (e.Delta > 0)
             {

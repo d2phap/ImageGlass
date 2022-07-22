@@ -614,11 +614,6 @@ public static class Config
     /// </summary>
     public static HashSet<string> SinglePageFormats { get; set; } = new() { "*.heic;*.heif;*.psd;" };
 
-    ///// <summary>
-    ///// Gets, sets the list of keycombo actions
-    ///// </summary>
-    //public static Dictionary<KeyCombos, AssignableActions> KeyComboActions = Constants.DefaultKeycomboActions;
-
     /// <summary>
     /// Gets, sets the list of toolbar buttons
     /// </summary>
@@ -680,29 +675,6 @@ public static class Config
     /// Gets, sets image loading order type
     /// </summary>
     public static ImageOrderType ImageLoadingOrderType { get; set; } = ImageOrderType.Asc;
-
-    ///// <summary>
-    ///// Gets, sets action to be performed when user spins the mouse wheel
-    ///// </summary>
-    //public static MouseWheelActions MouseWheelAction { get; set; } = MouseWheelActions.Zoom;
-
-    ///// <summary>
-    ///// Gets, sets action to be performed when user spins the mouse wheel
-    ///// while holding Ctrl key
-    ///// </summary>
-    //public static MouseWheelActions MouseWheelCtrlAction { get; set; } = MouseWheelActions.ScrollVertically;
-
-    ///// <summary>
-    ///// Gets, sets action to be performed when user spins the mouse wheel
-    ///// while holding Shift key
-    ///// </summary>
-    //public static MouseWheelActions MouseWheelShiftAction { get; set; } = MouseWheelActions.ScrollHorizontally;
-
-    ///// <summary>
-    ///// Gets, sets action to be performed when user spins the mouse wheel
-    ///// while holding Alt key
-    ///// </summary>
-    //public static MouseWheelActions MouseWheelAltAction { get; set; } = MouseWheelActions.BrowseImages;
 
     /// <summary>
     /// Gets, sets zoom mode value
@@ -892,10 +864,6 @@ public static class Config
         //FrmExifToolState = items.GetValue(nameof(FrmExifToolState), FrmExifToolState);
         ImageLoadingOrder = items.GetValue(nameof(ImageLoadingOrder), ImageLoadingOrder);
         ImageLoadingOrderType = items.GetValue(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
-        //MouseWheelAction = items.GetValue(nameof(MouseWheelAction), MouseWheelAction);
-        //MouseWheelCtrlAction = items.GetValue(nameof(MouseWheelCtrlAction), MouseWheelCtrlAction);
-        //MouseWheelShiftAction = items.GetValue(nameof(MouseWheelShiftAction), MouseWheelShiftAction);
-        //MouseWheelAltAction = items.GetValue(nameof(MouseWheelAltAction), MouseWheelAltAction);
         ZoomMode = items.GetValue(nameof(ZoomMode), ZoomMode);
         //ZoomOptimizationMethod = items.GetValue(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod);
         //ToolbarPosition = items.GetValue(nameof(ToolbarPosition), ToolbarPosition);
@@ -936,16 +904,6 @@ public static class Config
 
         formats = items.GetValue(nameof(SinglePageFormats), string.Join(";", SinglePageFormats));
         SinglePageFormats = GetImageFormats(formats);
-
-        #endregion
-
-        #region KeyComboActions
-
-        //var keyActionStr = items.GetValue(nameof(KeyComboActions), "");
-        //if (!string.IsNullOrEmpty(keyActionStr))
-        //{
-        //    KeyComboActions = GetKeyComboActions(keyActionStr);
-        //}
 
         #endregion
 
@@ -1339,10 +1297,6 @@ public static class Config
         //settings.TryAdd(nameof(FrmExifToolState), FrmExifToolState.ToString());
         settings.TryAdd(nameof(ImageLoadingOrder), ImageLoadingOrder.ToString());
         settings.TryAdd(nameof(ImageLoadingOrderType), ImageLoadingOrderType.ToString());
-        //settings.TryAdd(nameof(MouseWheelAction), MouseWheelAction.ToString());
-        //settings.TryAdd(nameof(MouseWheelCtrlAction), MouseWheelCtrlAction.ToString());
-        //settings.TryAdd(nameof(MouseWheelShiftAction), MouseWheelShiftAction.ToString());
-        //settings.TryAdd(nameof(MouseWheelAltAction), MouseWheelAltAction.ToString());
         settings.TryAdd(nameof(ZoomMode), ZoomMode.ToString());
         //settings.TryAdd(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod.ToString());
         //settings.TryAdd(nameof(ToolbarPosition), ToolbarPosition.ToString());

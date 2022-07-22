@@ -61,7 +61,7 @@ public enum MouseWheelAction
 {
     DoNothing = 0,
     Zoom = 1,
-    ScrollVertically = 2,
-    ScrollHorizontally = 3,
+    PanVertically = 2,
+    PanHorizontally = 3,
     BrowseImages = 4
 }
