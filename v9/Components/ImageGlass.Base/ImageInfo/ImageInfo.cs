@@ -20,7 +20,7 @@ using System.Text;
 
 namespace ImageGlass.Base;
 
-public static class BasicInfo
+public static class ImageInfo
 {
     public static string? AppName { get; set; } = null;
     public static string? Name { get; set; } = null;
@@ -88,7 +88,7 @@ public static class BasicInfo
         foreach (var tag in infoTags)
         {
             // get the property using name
-            var str = typeof(BasicInfo).GetProperty(tag)?.GetValue(null)?.ToString();
+            var str = typeof(ImageInfo).GetProperty(tag)?.GetValue(null)?.ToString();
 
             if (!string.IsNullOrEmpty(str))
             {

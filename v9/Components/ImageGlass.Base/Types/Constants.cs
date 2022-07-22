@@ -67,15 +67,4 @@ public static class Constants
         NegativeSign = "-",
     };
 
-    /// <summary>
-    /// Gets the default set of keycombo actions
-    /// </summary>
-    public static Dictionary<KeyCombos, AssignableActions> DefaultKeycomboActions => new()
-    {
-        { KeyCombos.LeftRight, AssignableActions.PrevNextImage },
-        { KeyCombos.PageUpDown, AssignableActions.PrevNextImage },
-        { KeyCombos.SpaceBack, AssignableActions.PauseSlideshow },
-        { KeyCombos.UpDown, AssignableActions.PauseSlideshow }
-    };
-
 }

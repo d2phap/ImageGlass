@@ -156,19 +156,19 @@ public static class Config
     };
 
     /// <summary>
-    /// The default info items
+    /// The default image info tags
     /// </summary>
     public static List<string> DefaultInfoItems => new()
     {
-        nameof(BasicInfo.Name),
-        nameof(BasicInfo.ListCount),
-        nameof(BasicInfo.FramesCount),
-        nameof(BasicInfo.Zoom),
-        nameof(BasicInfo.Dimension),
-        nameof(BasicInfo.FileSize),
-        nameof(BasicInfo.ExifRating),
-        nameof(BasicInfo.DateTimeAuto),
-        nameof(BasicInfo.AppName),
+        nameof(ImageInfo.Name),
+        nameof(ImageInfo.ListCount),
+        nameof(ImageInfo.FramesCount),
+        nameof(ImageInfo.Zoom),
+        nameof(ImageInfo.Dimension),
+        nameof(ImageInfo.FileSize),
+        nameof(ImageInfo.ExifRating),
+        nameof(ImageInfo.DateTimeAuto),
+        nameof(ImageInfo.AppName),
     };
 
 
@@ -640,9 +640,9 @@ public static class Config
     public static Dictionary<string, Hotkey> ImageFocusModeHotkeys = new();
 
     /// <summary>
-    /// Gets, sets mouse actions
+    /// Gets, sets mouse click actions
     /// </summary>
-    public static Dictionary<MouseEvent, UserAction> MouseActions = new();
+    public static Dictionary<MouseClickEvent, UserAction> MouseClickActions = new();
 
     #endregion
 
@@ -974,10 +974,10 @@ public static class Config
 
 
         // mouse actions
-        MouseActions = items.GetSection(nameof(MouseActions))
+        MouseClickActions = items.GetSection(nameof(MouseClickActions))
             .GetChildren()
             .ToDictionary(
-                i => Helpers.ParseEnum<MouseEvent>(i.Key),
+                i => Helpers.ParseEnum<MouseClickEvent>(i.Key),
                 i => i.Get<UserAction>());
         #endregion
 
@@ -1359,7 +1359,7 @@ public static class Config
         settings.TryAdd(nameof(InfoItems), InfoItems);
         settings.TryAdd(nameof(MenuHotkeys), ParseHotkeys(MenuHotkeys));
         settings.TryAdd(nameof(ImageFocusModeHotkeys), ParseHotkeys(ImageFocusModeHotkeys));
-        settings.TryAdd(nameof(MouseActions), ParseMouseActions(MouseActions));
+        settings.TryAdd(nameof(MouseClickActions), ParseMouseClickActions(MouseClickActions));
         #endregion
 
 
@@ -1424,8 +1424,6 @@ public static class Config
     /// <summary>
     /// Apply theme colors and logo to form
     /// </summary>
-    /// <param name="frm"></param>
-    /// <param name="th"></param>
     public static void ApplyFormTheme(Form frm, IgTheme th)
     {
         // load theme colors
@@ -1453,7 +1451,6 @@ public static class Config
     /// <summary>
     /// Parses string dictionary to hotkey dictionary
     /// </summary>
-    /// <param name="dict"></param>
     /// <returns></returns>
     public static Dictionary<string, Hotkey> ParseHotkeys(Dictionary<string, string> dict)
     {
@@ -1489,7 +1486,6 @@ public static class Config
     /// <summary>
     /// Parses hotkey dictionary to string dictionary
     /// </summary>
-    /// <param name="dict"></param>
     /// <returns></returns>
     public static Dictionary<string, string> ParseHotkeys(Dictionary<string, Hotkey> dict)
     {
@@ -1505,8 +1501,6 @@ public static class Config
     /// Merge <paramref name="srcDict"/> dictionary
     /// into <paramref name="destDict"/> dictionary
     /// </summary>
-    /// <param name="destDict"></param>
-    /// <param name="srcDict"></param>
     /// <returns></returns>
     public static void MergeHotkeys(ref Dictionary<string, Hotkey> destDict, Dictionary<string, Hotkey> srcDict)
     {
@@ -1527,8 +1521,6 @@ public static class Config
     /// <summary>
     /// Gets hotkey string
     /// </summary>
-    /// <param name="dict"></param>
-    /// <param name="dictKey"></param>
     /// <returns></returns>
     public static string GetHotkeyString(Dictionary<string, Hotkey> dict, string dictKey)
     {
@@ -1564,8 +1556,6 @@ public static class Config
     /// <summary>
     /// Gets hotkey actions
     /// </summary>
-    /// <param name="dict"></param>
-    /// <param name="dictValue"></param>
     /// <returns></returns>
     public static IEnumerable<string> GetHotkeyActions(Dictionary<string, Hotkey> dict, Hotkey dictValue)
     {
@@ -1576,11 +1566,10 @@ public static class Config
 
 
     /// <summary>
-    /// Parses hotkey dictionary to string dictionary
+    /// Parses <see cref="MouseClickEvent"/> to string
     /// </summary>
-    /// <param name="dict"></param>
     /// <returns></returns>
-    public static Dictionary<string, UserAction> ParseMouseActions(Dictionary<MouseEvent, UserAction> dict)
+    public static Dictionary<string, UserAction> ParseMouseClickActions(Dictionary<MouseClickEvent, UserAction> dict)
     {
         return dict.ToDictionary(i => i.Key.ToString(), i => i.Value);
     }

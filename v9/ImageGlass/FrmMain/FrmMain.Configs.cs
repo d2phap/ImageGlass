@@ -185,11 +185,11 @@ public partial class FrmMain
         IG_ToggleImageFocus(Config.EnableImageFocusMode, showInAppMessage: false);
 
         // load language pack
-        Local.UpdateFrmMain(ForceUpdateAction.Language);
+        Local.UpdateFrmMain(UpdateRequests.Language);
 
         // load menu hotkeys
         Config.MergeHotkeys(ref CurrentMenuHotkeys, Config.MenuHotkeys);
-        Local.UpdateFrmMain(ForceUpdateAction.MenuHotkeys);
+        Local.UpdateFrmMain(UpdateRequests.MenuHotkeys);
 
         // load Image Focus mode hotkeys
         LoadImageFocusModeHotkeys();
@@ -207,7 +207,7 @@ public partial class FrmMain
 
 
         // load context menu config
-        Local.UpdateFrmMain(ForceUpdateAction.MouseActions);
+        Local.UpdateFrmMain(UpdateRequests.MouseActions);
     }
 
     private void FrmMainConfig_FormClosing(object? sender, FormClosingEventArgs e)
@@ -256,24 +256,24 @@ public partial class FrmMain
     /// Processes internal update requests
     /// </summary>
     /// <param name="e"></param>
-    private void Local_OnFrmMainUpdateRequested(ForceUpdateAction e)
+    private void Local_OnFrmMainUpdateRequested(UpdateRequests e)
     {
-        if (e.HasFlag(ForceUpdateAction.Language))
+        if (e.HasFlag(UpdateRequests.Language))
         {
             LoadLanguages();
         }
         
-        if (e.HasFlag(ForceUpdateAction.MenuHotkeys))
+        if (e.HasFlag(UpdateRequests.MenuHotkeys))
         {
             LoadMenuHotkeys();
             LoadToolbarItemsText();
         }
 
-        if (e.HasFlag(ForceUpdateAction.MouseActions))
+        if (e.HasFlag(UpdateRequests.MouseActions))
         {
-            var hasRightClick = Config.MouseActions.ContainsKey(MouseEvent.RightClick);
+            var hasRightClick = Config.MouseClickActions.ContainsKey(MouseClickEvent.RightClick);
             var executable = hasRightClick
-                ? Config.MouseActions[MouseEvent.RightClick].Executable.Trim()
+                ? Config.MouseClickActions[MouseClickEvent.RightClick].Executable.Trim()
                 : nameof(IG_OpenContextMenu);
 
             // set context menu = MnuContext

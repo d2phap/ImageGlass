@@ -19,49 +19,28 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace ImageGlass.Base;
 
-
 /// <summary>
-/// List of MouseClick / MouseDoubleClick events
+/// Types of image infomation update request
 /// </summary>
-public enum MouseClickEvent
+[Flags]
+public enum ImageInfoUpdateTypes
 {
-    LeftClick = 1,
-    LeftDoubleClick = 2,
+    None = 0,
+    
+    All = 1 << 1,
+    AppName = 1 << 2,
+    Name = 1 << 3,
+    Path = 1 << 4,
+    FileSize = 1 << 5,
+    Dimension = 1 << 6,
+    ListCount = 1 << 7,
+    Zoom = 1 << 8,
+    FramesCount = 1 << 9,
 
-    RightClick = 3,
-    RightDoubleClick = 4,
+    DateTimeAuto = 1 << 10,
+    ModifiedDateTime = 1 << 11,
+    ExifDateTime = 1 << 12,
+    ExifDateTimeOriginal = 1 << 13,
 
-    XButton1Click = 5,
-    XButton1DoubleClick = 6,
-
-    XButton2Click = 7,
-    XButton2DoubleClick = 8,
-
-    WheelClick = 9,
-    WheelDoubleClick = 10,
-}
-
-
-/// <summary>
-/// List of MouseWheel events
-/// </summary>
-public enum MouseWheelEvent
-{
-    Scroll = 1,
-    PressCtrlAndScroll = 2,
-    PressShiftAndScroll = 3,
-    PressAltAndScroll = 4,
-}
-
-
-/// <summary>
-/// List of mouse wheel action for the <see cref="MouseWheelEvent"/>
-/// </summary>
-public enum MouseWheelAction
-{
-    DoNothing = 0,
-    Zoom = 1,
-    ScrollVertically = 2,
-    ScrollHorizontally = 3,
-    BrowseImages = 4
+    ExifRating = 1 << 14,
 }

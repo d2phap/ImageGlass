@@ -845,7 +845,7 @@ public partial class FrmMain
         // reset zoom mode
         IG_SetZoomMode(Config.ZoomMode.ToString());
 
-        UpdateImageInfo(BasicInfoUpdate.All);
+        UpdateImageInfo(ImageInfoUpdateTypes.All);
     }
 
 
@@ -1325,7 +1325,7 @@ public partial class FrmMain
             Local.Images.SetFileName(Local.CurrentIndex, newFilePath);
             Gallery.Items[Local.CurrentIndex].FileName = newFilePath;
             Gallery.Items[Local.CurrentIndex].Text = newName;
-            UpdateImageInfo(BasicInfoUpdate.Name | BasicInfoUpdate.Path);
+            UpdateImageInfo(ImageInfoUpdateTypes.Name | ImageInfoUpdateTypes.Path);
             //////////////////////////////////////////////////////////////
         }
         catch (Exception ex)

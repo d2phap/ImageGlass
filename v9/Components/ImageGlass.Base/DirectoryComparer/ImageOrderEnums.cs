@@ -19,49 +19,31 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace ImageGlass.Base;
 
-
 /// <summary>
-/// List of MouseClick / MouseDoubleClick events
+/// The loading order list.
+/// **If we need to rename, we MUST update the language string too.
+/// Because the name is also language keyword!
 /// </summary>
-public enum MouseClickEvent
+public enum ImageOrderBy
 {
-    LeftClick = 1,
-    LeftDoubleClick = 2,
-
-    RightClick = 3,
-    RightDoubleClick = 4,
-
-    XButton1Click = 5,
-    XButton1DoubleClick = 6,
-
-    XButton2Click = 7,
-    XButton2DoubleClick = 8,
-
-    WheelClick = 9,
-    WheelDoubleClick = 10,
+    Name = 0,
+    Length = 1,
+    CreationTime = 2,
+    Extension = 3,
+    LastAccessTime = 4,
+    LastWriteTime = 5,
+    Rating = 6,
+    Random = 7,
 }
 
 
 /// <summary>
-/// List of MouseWheel events
+/// The loading order types list
+/// **If we need to rename, we MUST update the language string too.
+/// Because the name is also language keyword!
 /// </summary>
-public enum MouseWheelEvent
+public enum ImageOrderType
 {
-    Scroll = 1,
-    PressCtrlAndScroll = 2,
-    PressShiftAndScroll = 3,
-    PressAltAndScroll = 4,
-}
-
-
-/// <summary>
-/// List of mouse wheel action for the <see cref="MouseWheelEvent"/>
-/// </summary>
-public enum MouseWheelAction
-{
-    DoNothing = 0,
-    Zoom = 1,
-    ScrollVertically = 2,
-    ScrollHorizontally = 3,
-    BrowseImages = 4
+    Asc = 0,
+    Desc = 1,
 }
