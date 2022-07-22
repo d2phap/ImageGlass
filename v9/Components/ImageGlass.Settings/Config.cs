@@ -644,6 +644,11 @@ public static class Config
     /// </summary>
     public static Dictionary<MouseClickEvent, UserAction> MouseClickActions = new();
 
+    /// <summary>
+    /// Gets, sets mouse wheel actions
+    /// </summary>
+    public static Dictionary<MouseWheelEvent, MouseWheelAction> MouseWheelActions = new();
+
     #endregion
 
 
@@ -973,12 +978,20 @@ public static class Config
         ImageFocusModeHotkeys = ParseHotkeys(stringDict);
 
 
-        // mouse actions
+        // mouse click actions
         MouseClickActions = items.GetSection(nameof(MouseClickActions))
             .GetChildren()
             .ToDictionary(
                 i => Helpers.ParseEnum<MouseClickEvent>(i.Key),
                 i => i.Get<UserAction>());
+
+        // mouse wheel actions
+        MouseWheelActions = items.GetSection(nameof(MouseWheelActions))
+            .GetChildren()
+            .ToDictionary(
+                i => Helpers.ParseEnum<MouseWheelEvent>(i.Key),
+                i => Helpers.ParseEnum<MouseWheelAction>(i.Value));
+
         #endregion
 
 
@@ -1354,12 +1367,12 @@ public static class Config
         //settings.TryAdd(nameof(EditApps), GetEditApps(EditApps));
         settings.TryAdd(nameof(AllFormats), GetImageFormats(AllFormats));
         settings.TryAdd(nameof(SinglePageFormats), GetImageFormats(SinglePageFormats));
-        //settings.TryAdd(nameof(KeyComboActions), GetKeyComboActions(KeyComboActions));
         settings.TryAdd(nameof(ToolbarItems), ToolbarItems);
         settings.TryAdd(nameof(InfoItems), InfoItems);
         settings.TryAdd(nameof(MenuHotkeys), ParseHotkeys(MenuHotkeys));
         settings.TryAdd(nameof(ImageFocusModeHotkeys), ParseHotkeys(ImageFocusModeHotkeys));
-        settings.TryAdd(nameof(MouseClickActions), ParseMouseClickActions(MouseClickActions));
+        settings.TryAdd(nameof(MouseClickActions), MouseClickActions);
+        settings.TryAdd(nameof(MouseWheelActions), MouseWheelActions);
         #endregion
 
 
@@ -1563,16 +1576,6 @@ public static class Config
             .Select(i => i.Key);
     }
 
-
-
-    /// <summary>
-    /// Parses <see cref="MouseClickEvent"/> to string
-    /// </summary>
-    /// <returns></returns>
-    public static Dictionary<string, UserAction> ParseMouseClickActions(Dictionary<MouseClickEvent, UserAction> dict)
-    {
-        return dict.ToDictionary(i => i.Key.ToString(), i => i.Value);
-    }
 
     #endregion
 
