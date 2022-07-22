@@ -4271,6 +4271,16 @@ namespace ImageGlass {
         }
         #endregion
 
+        #region Menu Common
+        private void SetShortcutExit() {
+            if (Configs.IsContinueRunningBackground) {
+                mnuMainExitApplication.ShortcutKeyDisplayString = "Shift+ESC";
+            }
+            else {
+                mnuMainExitApplication.ShortcutKeyDisplayString = Configs.IsPressESCToQuit ? "ESC" : "Alt+F4";
+            }
+        }
+        #endregion
 
         #region Context Menu
         private void OpenShortcutMenu(ToolStripMenuItem parentMenu) {
@@ -4378,6 +4388,10 @@ namespace ImageGlass {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainImageLocation));
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainImageProperties));
             }
+
+            SetShortcutExit();
+            mnuContext.Items.Add(new ToolStripSeparator());
+            mnuContext.Items.Add(UI.Menu.Clone(mnuMainExitApplication));
         }
 
         private void MnuTray_Opening(object sender, CancelEventArgs e) {
@@ -5680,12 +5694,7 @@ namespace ImageGlass {
                 }
 
                 // add hotkey to Exit menu
-                if (Configs.IsContinueRunningBackground) {
-                    mnuMainExitApplication.ShortcutKeyDisplayString = "Shift+ESC";
-                }
-                else {
-                    mnuMainExitApplication.ShortcutKeyDisplayString = Configs.IsPressESCToQuit ? "ESC" : "Alt+F4";
-                }
+                SetShortcutExit();
 
                 // Get EditApp for editing
                 UpdateEditAppInfoForMenu();
