@@ -67,6 +67,7 @@ public partial class FrmMain : Form
 
         PicMain.MouseClick += PicMain_MouseClick;
         PicMain.MouseDoubleClick += PicMain_MouseDoubleClick;
+        PicMain.MouseWheel += PicMain_MouseWheel;
 
         LoadImagesFromCmdArgs(Environment.GetCommandLineArgs());
     }
@@ -1142,10 +1143,6 @@ public partial class FrmMain : Form
         }
     }
 
-    private void PicMain_DoubleClick(object sender, EventArgs e)
-    {
-
-    }
 
     private void PicMain_MouseClick(object? sender, MouseEventArgs e)
     {
@@ -1195,6 +1192,96 @@ public partial class FrmMain : Form
         }
     }
     
+
+    private void PicMain_MouseWheel(object? sender, MouseEventArgs e)
+    {
+        MouseWheelAction action;
+        
+        var eventType = ModifierKeys switch
+        {
+            Keys.Control => MouseWheelEvent.PressCtrlAndScroll,
+            Keys.Shift => MouseWheelEvent.PressShiftAndScroll,
+            Keys.Alt => MouseWheelEvent.PressAltAndScroll,
+            _ => MouseWheelEvent.Scroll,
+        };
+        
+        
+        // Get mouse wheel action
+        #region Get mouse wheel action
+
+        // get user-defined mouse wheel action
+        if (Config.MouseWheelActions.ContainsKey(eventType))
+        {
+            action = Config.MouseWheelActions[eventType];
+        }
+        // if not found, use the defaut mouse wheel action
+        else
+        {
+            switch (eventType)
+            {
+                case MouseWheelEvent.Scroll:
+                    action = MouseWheelAction.Zoom;
+                    break;
+                case MouseWheelEvent.PressCtrlAndScroll:
+                    action = MouseWheelAction.ScrollVertically;
+                    break;
+                case MouseWheelEvent.PressShiftAndScroll:
+                    action = MouseWheelAction.ScrollHorizontally;
+                    break;
+                case MouseWheelEvent.PressAltAndScroll:
+                    action = MouseWheelAction.BrowseImages;
+                    break;
+                default:
+                    action = MouseWheelAction.DoNothing;
+                    break;
+            }
+        }
+        #endregion
+
+
+        // Run mouse wheel action
+        #region Run mouse wheel action
+
+        if (action == MouseWheelAction.Zoom)
+        {
+            PicMain.ZoomToPoint(e.Delta, e.Location);
+        }
+        else if (action == MouseWheelAction.ScrollVertically)
+        {
+            if (e.Delta > 0)
+            {
+                PicMain.PanUp(e.Delta + PicMain.PanSpeed / 4);
+            }
+            else
+            {
+                PicMain.PanDown(Math.Abs(e.Delta) + PicMain.PanSpeed / 4);
+            }
+        }
+        else if (action == MouseWheelAction.ScrollHorizontally)
+        {
+            if (e.Delta > 0)
+            {
+                PicMain.PanLeft(e.Delta + PicMain.PanSpeed / 4);
+            }
+            else
+            {
+                PicMain.PanRight(Math.Abs(e.Delta) + PicMain.PanSpeed / 4);
+            }
+        }
+        else if (action == MouseWheelAction.BrowseImages)
+        {
+            if (e.Delta < 0)
+            {
+                IG_ViewNextImage();
+            }
+            else
+            {
+                IG_ViewPreviousImage();
+            }
+        }
+        #endregion
+    }
+
 
     private void PicMain_OnNavLeftClicked(MouseEventArgs e)
     {
