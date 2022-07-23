@@ -36,6 +36,9 @@ namespace ImageGlass.PhotoBox;
 /// </summary>
 public partial class ViewBox : HybridControl
 {
+    
+    #region Private properties
+    
     private Bitmap? _imageGdiPlus;
     private D2DBitmap? _imageD2D;
     private CancellationTokenSource? _msgTokenSrc;
@@ -103,11 +106,10 @@ public partial class ViewBox : HybridControl
     private bool _isNavVisible = false;
     public float _navBorderRadius = 45f;
 
+    #endregion
+    
 
     #region Public properties
-
-
-
 
     // Viewport
     #region Viewport
@@ -958,11 +960,13 @@ public partial class ViewBox : HybridControl
         // Zooming
         if (_animationSource.HasFlag(AnimationSource.ZoomIn))
         {
-            _ = ZoomByDeltaToPoint(20, requestRerender: false);
+            var point = PointToClient(Cursor.Position);
+            _ = ZoomByDeltaToPoint(20, point, requestRerender: false);
         }
         else if (_animationSource.HasFlag(AnimationSource.ZoomOut))
         {
-            _ = ZoomByDeltaToPoint(-20, requestRerender: false);
+            var point = PointToClient(Cursor.Position);
+            _ = ZoomByDeltaToPoint(-20, point, requestRerender: false);
         }
     }
 
@@ -1597,16 +1601,14 @@ public partial class ViewBox : HybridControl
     /// </returns>
     public bool ZoomToPoint(float factor, PointF? point = null, bool requestRerender = true)
     {
-        // set default point location to outside of the control
-        var location = new PointF(point?.X ?? -1, point?.Y ?? -1);
+        var location = point ?? new PointF(-1, -1);
 
-        // use the center point if the location is outside
-        var isPointInside = Bounds.Contains((int)location.X, (int)location.Y);
-        if (!isPointInside)
+        // use the center point if the point is outside
+        if (!Bounds.Contains((int)location.X, (int)location.Y))
         {
             location = ImageViewportCenterPoint;
         }
-        
+
         // get the gap when the viewport is smaller than the control size
         var gapX = Math.Max(ImageViewport.X, 0);
         var gapY = Math.Max(ImageViewport.Y, 0);
@@ -1666,11 +1668,13 @@ public partial class ViewBox : HybridControl
     public bool ZoomByDeltaToPoint(float delta, PointF? point = null, bool requestRerender = true)
     {
         var speed = delta / (501f - ZoomSpeed);
-        var location = new PointF()
+        var location = point ?? new PointF(-1, -1);
+
+        // use the center point if the point is outside
+        if (!Bounds.Contains((int)location.X, (int)location.Y))
         {
-            X = point?.X ?? ImageViewportCenterPoint.X,
-            Y = point?.Y ?? ImageViewportCenterPoint.Y,
-        };
+            location = ImageViewportCenterPoint;
+        }
 
         // zoom in
         if (delta > 0)
