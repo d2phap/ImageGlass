@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
+using ImageGlass.Base.Actions;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.WinApi;
 using ImageGlass.UI;
@@ -637,7 +638,7 @@ public static class Config
     /// <summary>
     /// Gets, sets mouse click actions
     /// </summary>
-    public static Dictionary<MouseClickEvent, UserAction> MouseClickActions = new();
+    public static Dictionary<MouseClickEvent, ToggleAction> MouseClickActions = new();
 
     /// <summary>
     /// Gets, sets mouse wheel actions
@@ -941,7 +942,8 @@ public static class Config
             .GetChildren()
             .ToDictionary(
                 i => Helpers.ParseEnum<MouseClickEvent>(i.Key),
-                i => i.Get<UserAction>());
+                i => i.Get<ToggleAction>());
+        
 
         // mouse wheel actions
         MouseWheelActions = items.GetSection(nameof(MouseWheelActions))

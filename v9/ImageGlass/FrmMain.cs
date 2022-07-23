@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
+using ImageGlass.Base.Actions;
 using ImageGlass.Base.DirectoryComparer;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.Photoing.Codecs;
@@ -1321,7 +1322,7 @@ public partial class FrmMain : Form
     /// <summary>
     /// Executes user action
     /// </summary>
-    private void ExecuteUserAction(UserAction? ac)
+    private void ExecuteUserAction(SingleAction? ac)
     {
         if (ac == null) return;
         if (string.IsNullOrEmpty(ac.Executable)) return;
@@ -1470,22 +1471,34 @@ public partial class FrmMain : Form
     {
         if (Config.MouseClickActions.ContainsKey(e))
         {
+            var toggleAction = Config.MouseClickActions[e];
+            var isToggled = ToggleAction.IsToggled(toggleAction.Id);
+            var action = isToggled
+                ? toggleAction.ToggleOff
+                : toggleAction.ToggleOn;
+
+            var executable = action?.Executable.Trim();
+
+            
             if (e == MouseClickEvent.RightClick)
             {
                 // update PicMain's context menu
                 Local.UpdateFrmMain(UpdateRequests.MouseActions);
-                
-                var executable = Config.MouseClickActions[e].Executable.Trim();
+
+
                 if (executable != nameof(IG_OpenContextMenu)
                     && executable != nameof(IG_OpenMainMenu))
                 {
-                    ExecuteUserAction(Config.MouseClickActions[e]);
+                    ExecuteUserAction(action);
                 }
             }
             else
             {
-                ExecuteUserAction(Config.MouseClickActions[e]);
+                ExecuteUserAction(action);
             }
+
+            // update toggling value
+            ToggleAction.SetToggleValue(toggleAction.Id, !isToggled);
         }
     }
 

@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
+using ImageGlass.Base.Actions;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
@@ -271,10 +272,24 @@ public partial class FrmMain
 
         if (e.HasFlag(UpdateRequests.MouseActions))
         {
+            var executable = nameof(IG_OpenContextMenu);
             var hasRightClick = Config.MouseClickActions.ContainsKey(MouseClickEvent.RightClick);
-            var executable = hasRightClick
-                ? Config.MouseClickActions[MouseClickEvent.RightClick].Executable.Trim()
-                : nameof(IG_OpenContextMenu);
+
+            // get the executable value of the right click action
+            if (hasRightClick)
+            {
+                var toggleAction = Config.MouseClickActions[MouseClickEvent.RightClick];
+                var isToggled = ToggleAction.IsToggled(toggleAction.Id);
+                var action = isToggled
+                    ? toggleAction.ToggleOff
+                    : toggleAction.ToggleOn;
+
+                if (action != null)
+                {
+                    executable = action.Executable.Trim();
+                }
+            }
+            
 
             // set context menu = MnuContext
             if (executable == nameof(IG_OpenContextMenu))
