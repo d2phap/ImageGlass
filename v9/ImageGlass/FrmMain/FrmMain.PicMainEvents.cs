@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
+using ImageGlass.PhotoBox;
 using ImageGlass.Settings;
 
 namespace ImageGlass;
@@ -103,6 +104,43 @@ public partial class FrmMain
         {
             Local.CurrentIndex = imageIndex;
             _ = ViewNextCancellableAsync(0);
+        }
+    }
+
+
+    private void PicMain_KeyUp(object? sender, KeyEventArgs e)
+    {
+        if (PicMain.AnimationSource.HasFlag(AnimationSource.ZoomIn))
+        {
+            PicMain.StopAnimation(AnimationSource.ZoomIn);
+        }
+
+        if (PicMain.AnimationSource.HasFlag(AnimationSource.ZoomOut))
+        {
+            PicMain.StopAnimation(AnimationSource.ZoomOut);
+        }
+    }
+
+
+    private void PicMain_KeyDown(object? sender, KeyEventArgs e)
+    {
+        var hotkey = new Hotkey(e.KeyData);
+        var actions = Config.GetHotkeyActions(CurrentMenuHotkeys, hotkey);
+
+        // zoom in
+        if (actions.Contains(nameof(MnuZoomIn))
+            || actions.Contains(nameof(IG_ZoomIn)))
+        {
+            PicMain.StartAnimation(AnimationSource.ZoomIn);
+            return;
+        }
+
+        // zoom out
+        if (actions.Contains(nameof(MnuZoomOut))
+            || actions.Contains(nameof(IG_ZoomOut)))
+        {
+            PicMain.StartAnimation(AnimationSource.ZoomOut);
+            return;
         }
     }
 
@@ -266,7 +304,7 @@ public partial class FrmMain
         _ = ViewNextCancellableAsync(1);
     }
 
-    private void PicMain_OnZoomChanged(PhotoBox.ZoomEventArgs e)
+    private void PicMain_OnZoomChanged(ZoomEventArgs e)
     {
         UpdateImageInfo(ImageInfoUpdateTypes.Zoom);
     }

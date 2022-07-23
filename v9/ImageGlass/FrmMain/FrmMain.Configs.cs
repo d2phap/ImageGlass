@@ -21,6 +21,7 @@ using ImageGlass.Base;
 using ImageGlass.Base.Actions;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.WinApi;
+using ImageGlass.PhotoBox;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using System.Reflection;
@@ -209,7 +210,9 @@ public partial class FrmMain
 
         // load context menu config
         Local.UpdateFrmMain(UpdateRequests.MouseActions);
+
     }
+
 
     private void FrmMainConfig_FormClosing(object? sender, FormClosingEventArgs e)
     {
@@ -871,18 +874,6 @@ public partial class FrmMain
             Config.ImageFocusModeHotkeys,
             nameof(PicMain.InternalPanningDownKeys),
             PicMain.InternalPanningDownKeys);
-
-        // zoom in
-        PicMain.InternalZoomInKeys = Config.GetHotkeyData(
-            Config.ImageFocusModeHotkeys,
-            nameof(PicMain.InternalZoomInKeys),
-            PicMain.InternalZoomInKeys);
-
-        // zoom out
-        PicMain.InternalZoomOutKeys = Config.GetHotkeyData(
-            Config.ImageFocusModeHotkeys,
-            nameof(PicMain.InternalZoomOutKeys),
-            PicMain.InternalZoomOutKeys);
     }
 
 }

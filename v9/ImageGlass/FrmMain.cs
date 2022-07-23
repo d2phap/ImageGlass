@@ -100,7 +100,27 @@ public partial class FrmMain : Form
     {
         //Text = new Hotkey(e.KeyData).ToString() + " - " + e.KeyValue.ToString();
 
-        #region Register MAIN MENU shortcuts
+        var hotkey = new Hotkey(e.KeyData);
+        var actions = Config.GetHotkeyActions(CurrentMenuHotkeys, hotkey);
+
+        // open main menu
+        if (actions.Contains(nameof(MnuMain)))
+        {
+            Toolbar.ShowMainMenu();
+        }
+        // zoom in/out
+        else if (actions.Contains(nameof(MnuZoomIn))
+            || actions.Contains(nameof(IG_ZoomIn))
+            || actions.Contains(nameof(MnuZoomOut))
+            || actions.Contains(nameof(IG_ZoomOut)))
+        {
+            PicMain_KeyDown(PicMain, e);
+            return;
+        }
+
+
+        #region Register and run MAIN MENU shortcuts
+
         bool CheckMenuShortcut(ToolStripMenuItem mnu)
         {
             var menuHotkey = Config.GetHotkey(CurrentMenuHotkeys, mnu.Name);
@@ -133,6 +153,7 @@ public partial class FrmMain : Form
             return false;
         }
 
+
         // register context menu shortcuts
         foreach (var item in MnuMain.Items.OfType<ToolStripMenuItem>())
         {
@@ -143,14 +164,22 @@ public partial class FrmMain : Form
         }
         #endregion
 
+    }
 
+
+    private void FrmMain_KeyUp(object sender, KeyEventArgs e)
+    {
         var hotkey = new Hotkey(e.KeyData);
         var actions = Config.GetHotkeyActions(CurrentMenuHotkeys, hotkey);
 
-        // open main menu
-        if (actions.Contains(nameof(MnuMain)))
+        // zoom in/out
+        if (actions.Contains(nameof(MnuZoomIn))
+            || actions.Contains(nameof(IG_ZoomIn))
+            || actions.Contains(nameof(MnuZoomOut))
+            || actions.Contains(nameof(IG_ZoomOut)))
         {
-            Toolbar.ShowMainMenu();
+            PicMain_KeyUp(PicMain, e);
+            return;
         }
     }
 

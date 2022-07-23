@@ -178,28 +178,6 @@ public partial class ViewBox : HybridControl
     #region Zooming
 
     /// <summary>
-    /// Gets, sets the value indicates whether
-    /// the internal built-in zooming by keys is allowed.
-    /// </summary>
-    [Category("Zooming")]
-    [DefaultValue(true)]
-    public bool AllowInternalZoomingKeys { get; set; } = true;
-
-    /// <summary>
-    /// Gets, sets hotkey for internal zoom in.
-    /// </summary>
-    [Category("Zooming")]
-    [DefaultValue(Keys.Oemplus)]
-    public Keys InternalZoomInKeys { get; set; } = Keys.Oemplus;
-
-    /// <summary>
-    /// Gets, sets hotkey for internal zoom out.
-    /// </summary>
-    [Category("Zooming")]
-    [DefaultValue(Keys.OemMinus)]
-    public Keys InternalZoomOutKeys { get; set; } = Keys.OemMinus;
-
-    /// <summary>
     /// Gets, sets the minimum zoom factor (<c>1.0f = 100%</c>).
     /// </summary>
     [Category("Zooming")]
@@ -523,6 +501,12 @@ public partial class ViewBox : HybridControl
     [Category("Misc")]
     [DefaultValue(1f)]
     public float MessageBorderRadius { get; set; } = 1f;
+
+    /// <summary>
+    /// Gets the current animating source
+    /// </summary>
+    [Browsable(false)]
+    public AnimationSource AnimationSource => _animationSource;
 
     #endregion
 
@@ -878,20 +862,6 @@ public partial class ViewBox : HybridControl
             }
         }
 
-        // Zooming
-        if (AllowInternalZoomingKeys)
-        {
-            // zoom in
-            if (e.KeyData == InternalZoomInKeys)
-            {
-                StartAnimation(AnimationSource.ZoomIn);
-            }
-            // zoom out
-            else if (e.KeyCode == InternalZoomOutKeys)
-            {
-                StartAnimation(AnimationSource.ZoomOut);
-            }
-        }
     }
 
     protected override void OnKeyUp(KeyEventArgs e)
@@ -919,18 +889,6 @@ public partial class ViewBox : HybridControl
             }
         }
 
-        // Zooming
-        if (AllowInternalZoomingKeys)
-        {
-            if (_animationSource.HasFlag(AnimationSource.ZoomIn))
-            {
-                StopAnimation(AnimationSource.ZoomIn);
-            }
-            if (_animationSource.HasFlag(AnimationSource.ZoomOut))
-            {
-                StopAnimation(AnimationSource.ZoomOut);
-            }
-        }
     }
 
     protected override void OnFrame()

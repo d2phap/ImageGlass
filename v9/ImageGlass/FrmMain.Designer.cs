@@ -1109,6 +1109,8 @@ namespace ImageGlass
             this.PicMain.Click += new System.EventHandler(this.PicMain_Click);
             this.PicMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.PicMain_DragDrop);
             this.PicMain.DragOver += new System.Windows.Forms.DragEventHandler(this.PicMain_DragOver);
+            this.PicMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PicMain_KeyDown);
+            this.PicMain.KeyUp += new System.Windows.Forms.KeyEventHandler(this.PicMain_KeyUp);
             this.PicMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicMain_MouseClick);
             this.PicMain.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.PicMain_MouseDoubleClick);
             this.PicMain.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.PicMain_MouseWheel);
@@ -1197,6 +1199,7 @@ namespace ImageGlass
             this.Text = "ImageGlass";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmMain_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmMain_KeyUp);
             this.MnuMain.ResumeLayout(false);
             this.Tb0.ResumeLayout(false);
             this.Tb0.PerformLayout();

@@ -153,18 +153,18 @@ public partial class FrmMain
     private void IG_ZoomIn()
     {
         var point = PicMain.PointToClient(Cursor.Position);
-        
+
         PicMain.ZoomIn(point);
     }
 
-
+    
     /// <summary>
     /// Zooms out of the image
     /// </summary>
     private void IG_ZoomOut()
     {
         var point = PicMain.PointToClient(Cursor.Position);
-        
+
         PicMain.ZoomOut(point);
     }
 
@@ -1199,14 +1199,12 @@ public partial class FrmMain
             PicMain.ZoomSpeed = Config.ZoomSpeed;
 
             PicMain.AllowInternalPanningKeys = true;
-            PicMain.AllowInternalZoomingKeys = true;
             PicMain.TabStop = true;
             PicMain.Focus();
         }
         else
         {
             PicMain.AllowInternalPanningKeys = false;
-            PicMain.AllowInternalZoomingKeys = false;
             PicMain.TabStop = false;
             PicMain.Enabled = false;
             Focus();
