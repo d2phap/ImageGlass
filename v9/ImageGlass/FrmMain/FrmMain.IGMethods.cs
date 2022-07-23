@@ -152,7 +152,9 @@ public partial class FrmMain
     /// </summary>
     private void IG_ZoomIn()
     {
-        PicMain.ZoomIn();
+        var point = PicMain.PointToClient(Cursor.Position);
+        
+        PicMain.ZoomIn(point);
     }
 
 
@@ -161,7 +163,9 @@ public partial class FrmMain
     /// </summary>
     private void IG_ZoomOut()
     {
-        PicMain.ZoomOut();
+        var point = PicMain.PointToClient(Cursor.Position);
+        
+        PicMain.ZoomOut(point);
     }
 
 
