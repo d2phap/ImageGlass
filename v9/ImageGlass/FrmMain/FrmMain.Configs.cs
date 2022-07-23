@@ -21,7 +21,6 @@ using ImageGlass.Base;
 using ImageGlass.Base.Actions;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.WinApi;
-using ImageGlass.PhotoBox;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using System.Reflection;
@@ -129,6 +128,7 @@ public partial class FrmMain
         { nameof(MnuSettings),              new(Keys.Control | Keys.Oemcomma) }, // Ctrl+,
         { nameof(MnuExit),                  new(Keys.Escape) },
     };
+
 
     private void SetUpFrmMainConfigs()
     {

@@ -26,6 +26,7 @@ using ImageGlass.Settings;
 using ImageGlass.UI;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace ImageGlass;
 
@@ -1690,10 +1691,32 @@ public partial class FrmMain
     /// <summary>
     /// Sets <see cref="FrmMain"/> window state
     /// </summary>
-    private void IG_SetWindowState(string state)
+    private void IG_SetFrmMainState(string state)
     {
         WindowState = Helpers.ParseEnum<FormWindowState>(state);
     }
 
+
+    /// <summary>
+    /// Sets <see cref="FrmMain"/> movable state
+    /// </summary>
+    /// <param name="enable"></param>
+    private void IG_SetFrmMainMoveable(bool? enable = null)
+    {
+        enable ??= true;
+        _movableForm.Key = Keys.ShiftKey | Keys.Shift;
+
+        if (enable.Value)
+        {
+            _movableForm.Enable();
+            _movableForm.Enable(Toolbar, PicMain, Gallery);
+        }
+        else
+        {
+            _movableForm.Disable();
+            _movableForm.Disable(Toolbar, PicMain, Gallery);
+        }
+
+    }
 }
 

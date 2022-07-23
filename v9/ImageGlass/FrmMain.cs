@@ -35,6 +35,9 @@ public partial class FrmMain : Form
     // cancellation tokens of synchronious task
     private CancellationTokenSource _loadCancelToken = new();
 
+    private MovableForm _movableForm;
+
+
     // variable to back up / restore window layout when changing window mode
     private bool _showToolbar = true;
     private bool _showThumbnails = true;
@@ -46,6 +49,8 @@ public partial class FrmMain : Form
     {
         InitializeComponent();
 
+        _movableForm = new(this);
+
         // Get the DPI of the current display
         DpiApi.OnDpiChanged += OnDpiChanged;
         DpiApi.CurrentDpi = DeviceDpi;
@@ -53,6 +58,7 @@ public partial class FrmMain : Form
 
         SetUpFrmMainTheme();
         SetUpFrmMainConfigs();
+
 
         // apply DPI changes
         OnDpiChanged();
@@ -1364,7 +1370,7 @@ public partial class FrmMain : Form
         #region Main menu item executable
         if (ac.Executable.StartsWith("Mnu"))
         {
-            var field = this.GetType().GetField(ac.Executable,
+            var field = GetType().GetField(ac.Executable,
                 BindingFlags.Instance | BindingFlags.NonPublic);
             var mnu = field?.GetValue(this) as ToolStripMenuItem;
 
@@ -1385,7 +1391,7 @@ public partial class FrmMain : Form
         else if (ac.Executable.StartsWith("IG_"))
         {
             // Find the private method in FrmMain
-            var method = this.GetType().GetMethod(ac.Executable,
+            var method = GetType().GetMethod(ac.Executable,
                 BindingFlags.Instance | BindingFlags.NonPublic);
 
 
@@ -1508,7 +1514,7 @@ public partial class FrmMain : Form
 
             var executable = action?.Executable.Trim();
 
-            
+
             if (e == MouseClickEvent.RightClick)
             {
                 // update PicMain's context menu
