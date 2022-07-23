@@ -1614,8 +1614,8 @@ public partial class ViewBox : HybridControl
         // the location after zoomed
         var zoomedLocation = new PointF()
         {
-            X = (location.X * factor - gapX) / ZoomFactor,
-            Y = (location.Y * factor - gapY) / ZoomFactor,
+            X = (location.X - gapX) * factor / ZoomFactor,
+            Y = (location.Y - gapY) * factor / ZoomFactor,
         };
 
         // the distance of 2 points after zoomed
