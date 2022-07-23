@@ -200,12 +200,14 @@ public partial class FrmMain
 
 
     /// <summary>
-    /// Zoom the image by a custom value
+    /// Zoom to the current cursor location by the given factor.
     /// </summary>
     /// <param name="factor"></param>
     private void IG_SetZoom(float factor)
     {
-        PicMain.ZoomFactor = factor;
+        var point = PicMain.PointToClient(Cursor.Position);
+
+        PicMain.ZoomToPoint(factor, point);
     }
 
 
