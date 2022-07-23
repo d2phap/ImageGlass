@@ -1666,7 +1666,6 @@ public partial class FrmMain
             }
 
         }
-
     }
 
 
@@ -1685,6 +1684,15 @@ public partial class FrmMain
     private void IG_OpenMainMenu()
     {
         MnuMain.Show(Cursor.Position);
+    }
+
+
+    /// <summary>
+    /// Sets <see cref="FrmMain"/> window state
+    /// </summary>
+    private void IG_SetWindowState(string state)
+    {
+        WindowState = Helpers.ParseEnum<FormWindowState>(state);
     }
 
 }
