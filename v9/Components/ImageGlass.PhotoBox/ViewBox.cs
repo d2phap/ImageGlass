@@ -113,14 +113,14 @@ public partial class ViewBox : HybridControl
     #region Viewport
 
     /// <summary>
-    /// Gets image viewport
+    /// Gets image viewport.
     /// </summary>
     [Browsable(false)]
     public RectangleF ImageViewport => new(_destRect.Location, _destRect.Size);
 
 
     /// <summary>
-    /// Gets the center point of image viewport
+    /// Gets the center point of image viewport.
     /// </summary>
     [Browsable(false)]
     public PointF ImageViewportCenterPoint => new()
@@ -161,13 +161,14 @@ public partial class ViewBox : HybridControl
     /// <summary>
     /// Gets the input image's width.
     /// </summary>
-    public float ImageWidth { get; private set; } = 0;
+    public float SourceWidth { get; private set; } = 0;
 
     /// <summary>
     /// Gets the input image's height.
     /// </summary>
-    public float ImageHeight { get; private set; } = 0;
+    public float SourceHeight { get; private set; } = 0;
 
+    
     #endregion
 
 
@@ -227,9 +228,9 @@ public partial class ViewBox : HybridControl
                 _isManualZoom = true;
                 _shouldRecalculateDrawingRegion = true;
 
-                OnZoomChanged?.Invoke(new(_zoomFactor));
-
                 Invalidate();
+
+                OnZoomChanged?.Invoke(new(_zoomFactor));
             }
         }
     }
@@ -405,13 +406,13 @@ public partial class ViewBox : HybridControl
     /// Checks if the current viewing image supports horizontal panning.
     /// </summary>
     [Browsable(false)]
-    public bool CanPanHorizontal => Width < ImageWidth * ZoomFactor;
+    public bool CanPanHorizontal => Width < SourceWidth * ZoomFactor;
 
     /// <summary>
     /// Checks if the current viewing image supports vertical panning.
     /// </summary>
     [Browsable(false)]
-    public bool CanPanVertical => Height < ImageHeight * ZoomFactor;
+    public bool CanPanVertical => Height < SourceHeight * ZoomFactor;
     #endregion
 
 
@@ -957,11 +958,11 @@ public partial class ViewBox : HybridControl
         // Zooming
         if (_animationSource.HasFlag(AnimationSource.ZoomIn))
         {
-            _ = ZoomToPoint(20, requestRerender: false);
+            _ = ZoomByDeltaToPoint(20, requestRerender: false);
         }
         else if (_animationSource.HasFlag(AnimationSource.ZoomOut))
         {
-            _ = ZoomToPoint(-20, requestRerender: false);
+            _ = ZoomByDeltaToPoint(-20, requestRerender: false);
         }
     }
 
@@ -1064,12 +1065,12 @@ public partial class ViewBox : HybridControl
         var clientW = Width;
         var clientH = Height;
 
-        if (clientW > ImageWidth * _zoomFactor)
+        if (clientW > SourceWidth * _zoomFactor)
         {
             _srcRect.X = 0;
-            _srcRect.Width = ImageWidth;
-            _destRect.X = (clientW - ImageWidth * _zoomFactor) / 2.0f;
-            _destRect.Width = ImageWidth * _zoomFactor;
+            _srcRect.Width = SourceWidth;
+            _destRect.X = (clientW - SourceWidth * _zoomFactor) / 2.0f;
+            _destRect.Width = SourceWidth * _zoomFactor;
         }
         else
         {
@@ -1080,12 +1081,12 @@ public partial class ViewBox : HybridControl
         }
 
 
-        if (clientH > ImageHeight * _zoomFactor)
+        if (clientH > SourceHeight * _zoomFactor)
         {
             _srcRect.Y = 0;
-            _srcRect.Height = ImageHeight;
-            _destRect.Y = (clientH - ImageHeight * _zoomFactor) / 2f;
-            _destRect.Height = ImageHeight * _zoomFactor;
+            _srcRect.Height = SourceHeight;
+            _destRect.Y = (clientH - SourceHeight * _zoomFactor) / 2f;
+            _destRect.Height = SourceHeight * _zoomFactor;
         }
         else
         {
@@ -1098,10 +1099,10 @@ public partial class ViewBox : HybridControl
         _oldZoomFactor = _zoomFactor;
         //------------------------
 
-        if (_srcRect.X + _srcRect.Width > ImageWidth)
+        if (_srcRect.X + _srcRect.Width > SourceWidth)
         {
             _xOut = true;
-            _srcRect.X = ImageWidth - _srcRect.Width;
+            _srcRect.X = SourceWidth - _srcRect.Width;
         }
 
         if (_srcRect.X < 0)
@@ -1110,10 +1111,10 @@ public partial class ViewBox : HybridControl
             _srcRect.X = 0;
         }
 
-        if (_srcRect.Y + _srcRect.Height > ImageHeight)
+        if (_srcRect.Y + _srcRect.Height > SourceHeight)
         {
             _yOut = true;
-            _srcRect.Y = ImageHeight - _srcRect.Height;
+            _srcRect.Y = SourceHeight - _srcRect.Height;
         }
 
         if (_srcRect.Y < 0)
@@ -1430,8 +1431,8 @@ public partial class ViewBox : HybridControl
 
         var horizontalPadding = Padding.Left + Padding.Right;
         var verticalPadding = Padding.Top + Padding.Bottom;
-        var widthScale = (viewportW - horizontalPadding) / ImageWidth;
-        var heightScale = (viewportH - verticalPadding) / ImageHeight;
+        var widthScale = (viewportW - horizontalPadding) / SourceWidth;
+        var heightScale = (viewportH - verticalPadding) / SourceHeight;
 
         float zoomFactor;
         var zoomMode = mode ?? _zoomMode;
@@ -1556,7 +1557,7 @@ public partial class ViewBox : HybridControl
     /// </returns>
     public bool ZoomIn(PointF? point = null, bool requestRerender = true)
     {
-        return ZoomToPoint(SystemInformation.MouseWheelScrollDelta, point, requestRerender);
+        return ZoomByDeltaToPoint(SystemInformation.MouseWheelScrollDelta, point, requestRerender);
     }
 
 
@@ -1575,7 +1576,71 @@ public partial class ViewBox : HybridControl
     /// </returns>
     public bool ZoomOut(PointF? point = null, bool requestRerender = true)
     {
-        return ZoomToPoint(-SystemInformation.MouseWheelScrollDelta, point, requestRerender);
+        return ZoomByDeltaToPoint(-SystemInformation.MouseWheelScrollDelta, point, requestRerender);
+    }
+
+
+    /// <summary>
+    /// Scales the image using factor value.
+    /// </summary>
+    /// <param name="factor">Zoom factor (<c>1.0f = 100%</c>).</param>
+    /// <param name="point">
+    /// Client's cursor location to zoom out.
+    /// If its value is <c>null</c> or outside of the <see cref="ViewBox"/> control,
+    /// <c><see cref="ImageViewportCenterPoint"/></c> is used.
+    /// </param>
+    /// <returns>
+    ///   <list type="table">
+    ///     <item><c>true</c> if the viewport is changed.</item>
+    ///     <item><c>false</c> if the viewport is unchanged.</item>
+    ///   </list>
+    /// </returns>
+    public bool ZoomToPoint(float factor, PointF? point = null, bool requestRerender = true)
+    {
+        // set default point location to outside of the control
+        var location = new PointF(point?.X ?? -1, point?.Y ?? -1);
+
+        // use the center point if the location is outside
+        var isPointInside = Bounds.Contains((int)location.X, (int)location.Y);
+        if (!isPointInside)
+        {
+            location = ImageViewportCenterPoint;
+        }
+        
+        // get the gap when the viewport is smaller than the control size
+        var gapX = Math.Max(ImageViewport.X, 0);
+        var gapY = Math.Max(ImageViewport.Y, 0);
+
+        // the location after zoomed
+        var zoomedLocation = new PointF()
+        {
+            X = (location.X * factor - gapX) / ZoomFactor,
+            Y = (location.Y * factor - gapY) / ZoomFactor,
+        };
+
+        // the distance of 2 points after zoomed
+        var zoomedDistance = new SizeF()
+        {
+            Width = zoomedLocation.X - location.X,
+            Height = zoomedLocation.Y - location.Y,
+        };
+
+        // perform zoom if the factor is different
+        if (_zoomFactor != factor)
+        {
+            _zoomFactor = Math.Min(MaxZoom, Math.Max(factor, MinZoom));
+            _shouldRecalculateDrawingRegion = true;
+            _isManualZoom = true;
+
+            PanTo(zoomedDistance.Width, zoomedDistance.Height, requestRerender);
+
+            // emit OnZoomChanged event
+            OnZoomChanged?.Invoke(new(_zoomFactor));
+
+            return true;
+        }
+
+        return false;
     }
 
 
@@ -1598,7 +1663,7 @@ public partial class ViewBox : HybridControl
     ///     <item><c>false</c> if the viewport is unchanged.</item>
     ///   </list>
     /// </returns>
-    public bool ZoomToPoint(float delta, PointF? point = null, bool requestRerender = true)
+    public bool ZoomByDeltaToPoint(float delta, PointF? point = null, bool requestRerender = true)
     {
         var speed = delta / (501f - ZoomSpeed);
         var location = new PointF()
@@ -1896,18 +1961,18 @@ public partial class ViewBox : HybridControl
 
         if (bmp is null)
         {
-            ImageWidth = 0;
-            ImageHeight = 0;
+            SourceWidth = 0;
+            SourceHeight = 0;
             HasAlphaPixels = false;
             CanImageAnimate = false;
         }
         else
         {
-            ImageWidth = bmp.Width;
-            ImageHeight = bmp.Height;
+            SourceWidth = bmp.Width;
+            SourceHeight = bmp.Height;
             HasAlphaPixels = bmp.PixelFormat.HasFlag(PixelFormat.Alpha);
             CanImageAnimate = _imageAnimator.CanAnimate(bmp);
-            exceedMaxDimention = ImageWidth > MAX_D2D_DIMENTION || ImageHeight > MAX_D2D_DIMENTION;
+            exceedMaxDimention = SourceWidth > MAX_D2D_DIMENTION || SourceHeight > MAX_D2D_DIMENTION;
         }
 
         _canUseDirect2D = !CanImageAnimate && !HasAlphaPixels && !exceedMaxDimention;
