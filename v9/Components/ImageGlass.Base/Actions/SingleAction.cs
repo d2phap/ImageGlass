@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-namespace ImageGlass.Base;
+namespace ImageGlass.Base.Actions;
 
 
 /// <summary>
-/// Defines user action chain
+/// Defines user single action
 /// </summary>
-public class UserAction
+public class SingleAction
 {
     /// <summary>
     /// Executable action, its value can be:
@@ -54,19 +54,19 @@ public class UserAction
     /// <summary>
     /// Next action to execute after running <see cref="Executable"/>.
     /// </summary>
-    public UserAction? NextAction { get; set; } = null;
+    public SingleAction? NextAction { get; set; } = null;
 
 
     /// <summary>
-    /// Initialize the empty <see cref="UserAction"/> instance.
+    /// Initialize the empty <see cref="SingleAction"/> instance.
     /// </summary>
-    public UserAction() { }
+    public SingleAction() { }
 
 
     /// <summary>
-    /// Initialize the <see cref="UserAction"/> instance.
+    /// Initialize the <see cref="SingleAction"/> instance.
     /// </summary>
-    public UserAction(string executable = "", string arguments = "", UserAction? nextAction = null)
+    public SingleAction(string executable = "", string arguments = "", SingleAction? nextAction = null)
     {
         Executable = executable.Trim();
         Argument = arguments.Trim();

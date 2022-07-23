@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass.Base.Actions;
+
 namespace ImageGlass.Base;
 
 
@@ -34,7 +36,7 @@ public record ToolbarItemModel
     public ToolStripItemAlignment Alignment { get; set; } = ToolStripItemAlignment.Left;
 
     public string Image { get; set; } = string.Empty;
-    public UserAction OnClick { get; set; } = new();
+    public SingleAction OnClick { get; set; } = new();
 }
 
 public enum ToolbarItemModelType
@@ -45,7 +47,7 @@ public enum ToolbarItemModelType
 
 public record ToolbarItemTagModel
 {
-    public UserAction OnClick { get; set; } = new();
+    public SingleAction OnClick { get; set; } = new();
     public string Image { get; set; } = string.Empty;
     public string CheckableConfigBinding { get; set; } = string.Empty;
 }
