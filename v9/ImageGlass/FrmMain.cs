@@ -1450,7 +1450,13 @@ public partial class FrmMain : Form
         #endregion
 
 
-        if (error != null)
+        // run next action
+        if (error == null)
+        {
+            ExecuteUserAction(ac.NextAction);
+        }
+        // show error if any
+        else
         {
             Config.ShowError(error.ToString(), Config.Language["_._Error"], error.Message);
         }
@@ -1468,9 +1474,10 @@ public partial class FrmMain : Form
             {
                 // update PicMain's context menu
                 Local.UpdateFrmMain(UpdateRequests.MouseActions);
-
-                if (Config.MouseClickActions[e].Executable.Trim() != nameof(IG_OpenContextMenu)
-                    && Config.MouseClickActions[e].Executable.Trim() != nameof(IG_OpenMainMenu))
+                
+                var executable = Config.MouseClickActions[e].Executable.Trim();
+                if (executable != nameof(IG_OpenContextMenu)
+                    && executable != nameof(IG_OpenMainMenu))
                 {
                     ExecuteUserAction(Config.MouseClickActions[e]);
                 }

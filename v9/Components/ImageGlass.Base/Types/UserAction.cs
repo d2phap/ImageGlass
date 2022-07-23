@@ -19,17 +19,58 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace ImageGlass.Base;
 
+
+/// <summary>
+/// Defines user action chain
+/// </summary>
 public class UserAction
 {
+    /// <summary>
+    /// Executable action, its value can be:
+    /// <list type="bullet">
+    ///   <item>
+    ///   Name of a menu item of <c>MnuMain</c> in <c>FrmMain.cs</c>.
+    ///   For example: <c>MnuPrint</c>
+    ///   </item>
+    ///   <item>
+    ///   Name of <c>IG_</c> methods defined in <c>FrmMain.IGMethods.cs</c>.
+    ///   For example: <c>IG_Print</c>
+    ///   </item>
+    ///   <item>
+    ///   Path of executable file / command.
+    ///   For example: <c>cmd.exe</c>
+    ///   </item>
+    /// </list>
+    /// </summary>
     public string Executable { get; set; } = string.Empty;
+
+    
+    /// <summary>
+    /// Argument to pass to the <see cref="Executable"/>.
+    /// </summary>
     public object Argument { get; set; } = string.Empty;
 
+    
+    /// <summary>
+    /// Next action to execute after running <see cref="Executable"/>.
+    /// </summary>
+    public UserAction? NextAction { get; set; } = null;
 
+
+    /// <summary>
+    /// Initialize the empty <see cref="UserAction"/> instance.
+    /// </summary>
     public UserAction() { }
 
-    public UserAction(string executable = "", string arguments = "")
+
+    /// <summary>
+    /// Initialize the <see cref="UserAction"/> instance.
+    /// </summary>
+    public UserAction(string executable = "", string arguments = "", UserAction? nextAction = null)
     {
         Executable = executable.Trim();
         Argument = arguments.Trim();
+        NextAction = nextAction;
     }
+    
 }
