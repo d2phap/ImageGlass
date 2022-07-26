@@ -210,7 +210,7 @@
             // 
             // timSlideShow
             // 
-            this.timSlideShow.Interval = 1000;
+            this.timSlideShow.Interval = 1;
             this.timSlideShow.Tick += new System.EventHandler(this.timSlideShow_Tick);
             // 
             // mnuMain
