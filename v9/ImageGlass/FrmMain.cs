@@ -35,7 +35,7 @@ public partial class FrmMain : Form
     // cancellation tokens of synchronious task
     private CancellationTokenSource _loadCancelToken = new();
 
-    private MovableForm _movableForm;
+    private readonly MovableForm _movableForm;
 
 
     // variable to back up / restore window layout when changing window mode
@@ -261,6 +261,7 @@ public partial class FrmMain : Form
         }
 
         if (string.IsNullOrEmpty(pathToLoad)) return;
+
 
         // Start loading path
         _ = Helpers.RunAsThread(() => PrepareLoading(pathToLoad));
@@ -1000,6 +1001,12 @@ public partial class FrmMain : Form
 
     private void Local_OnImageLoaded(ImageLoadedEventArgs e)
     {
+        if (InvokeRequired)
+        {
+            Invoke(Local_OnImageLoaded, e);
+            return;
+        }
+
         // image error
         if (e.Error != null)
         {
@@ -1350,7 +1357,6 @@ public partial class FrmMain : Form
 
 
         Text = ImageInfo.ToString(Config.InfoItems, Local.ClipboardImage != null, clipboardImageText);
-        Application.DoEvents();
     }
 
 

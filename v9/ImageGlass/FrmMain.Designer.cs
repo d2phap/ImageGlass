@@ -138,7 +138,7 @@ namespace ImageGlass
             this.Tb0 = new System.Windows.Forms.TableLayoutPanel();
             this.Sp1 = new ImageGlass.UI.ModernSplitContainer();
             this.Sp2 = new ImageGlass.UI.ModernSplitContainer();
-            this.PicMain = new ImageGlass.PhotoBox.ViewBox();
+            this.PicMain = new ImageGlass.Views.DXCanvas();
             this.Gallery = new ImageGlass.Gallery.ImageGallery();
             this.MnuContext = new ImageGlass.UI.ModernMenu(this.components);
             this.itemToPreserveTheSpaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1103,9 +1103,9 @@ namespace ImageGlass
             this.PicMain.NavDisplay = ImageGlass.Base.PhotoBox.NavButtonDisplay.Both;
             this.PicMain.Size = new System.Drawing.Size(730, 543);
             this.PicMain.TabIndex = 3;
-            this.PicMain.OnZoomChanged += new ImageGlass.PhotoBox.ViewBox.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
-            this.PicMain.OnNavLeftClicked += new ImageGlass.PhotoBox.ViewBox.NavLeftClickedEventHandler(this.PicMain_OnNavLeftClicked);
-            this.PicMain.OnNavRightClicked += new ImageGlass.PhotoBox.ViewBox.NavRightClickedEventHandler(this.PicMain_OnNavRightClicked);
+            this.PicMain.OnZoomChanged += new ImageGlass.Views.DXCanvas.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
+            this.PicMain.OnNavLeftClicked += new ImageGlass.Views.DXCanvas.NavLeftClickedEventHandler(this.PicMain_OnNavLeftClicked);
+            this.PicMain.OnNavRightClicked += new ImageGlass.Views.DXCanvas.NavRightClickedEventHandler(this.PicMain_OnNavRightClicked);
             this.PicMain.Click += new System.EventHandler(this.PicMain_Click);
             this.PicMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.PicMain_DragDrop);
             this.PicMain.DragOver += new System.Windows.Forms.DragEventHandler(this.PicMain_DragOver);
@@ -1320,7 +1320,7 @@ namespace ImageGlass
         private ToolStripMenuItem MnuCheckForUpdate;
         private ToolStripMenuItem MnuReportIssue;
         private ToolStripMenuItem MnuFirstLaunch;
-        private PhotoBox.ViewBox PicMain;
+        private Views.DXCanvas PicMain;
         private Gallery.ImageGallery Gallery;
         private ToolStripSeparator toolStripSeparator1;
         private UI.ModernMenu MnuContext;

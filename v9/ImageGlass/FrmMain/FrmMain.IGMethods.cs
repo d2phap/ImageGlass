@@ -21,12 +21,14 @@ using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Library.WinAPI;
-using ImageGlass.PhotoBox;
+using ImageGlass.Views;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Windows.Media.Imaging;
+using WicNet;
 
 namespace ImageGlass;
 
@@ -782,7 +784,8 @@ public partial class FrmMain
             PicMain.ClearMessage();
             PicMain.ShowMessage(Config.Language[$"{langPath}._Copying"], "", delayMs: 1500);
 
-            await Task.Run(() => ClipboardEx.SetClipboardImage(bitmap));
+            // todo:
+            //await Task.Run(() => ClipboardEx.SetClipboardImage(bitmap));
 
             PicMain.ShowMessage(Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
         }
@@ -805,7 +808,8 @@ public partial class FrmMain
         {
             var bmp = ClipboardEx.GetClipboardImage(Clipboard.GetDataObject());
 
-            LoadClipboardImage(bmp);
+            // todo:
+            //LoadClipboardImage(bmp);
         }
 
         // Is there a filename in clipboard?
@@ -837,11 +841,11 @@ public partial class FrmMain
     }
 
 
-    private void LoadClipboardImage(Bitmap? img)
+    private void LoadClipboardImage(WicBitmapSource? img)
     {
         // cancel the current loading image
         _loadCancelToken?.Cancel();
-
+        
         Local.ClipboardImage?.Dispose();
         Local.ClipboardImage = img;
         Local.TempImagePath = null;
@@ -1063,7 +1067,7 @@ public partial class FrmMain
             return;
         }
 
-        Bitmap? clonedPic = null;
+        WicBitmapSource? clonedPic = null;
         var srcExt = "";
         var langPath = $"{Name}.{nameof(MnuSave)}";
 
@@ -1073,14 +1077,14 @@ public partial class FrmMain
         if (hasSrcPath)
         {
             var img = await Local.Images.GetAsync(Local.CurrentIndex);
-            clonedPic = img?.ImgData?.Image?.Clone() as Bitmap;
+            clonedPic = img?.ImgData?.Image?.Clone();
 
             srcExt = Path.GetExtension(srcFilePath).ToLowerInvariant();
         }
         // get bitmap from clipboard image
         else if (Local.ClipboardImage != null)
         {
-            clonedPic = Local.ClipboardImage.Clone() as Bitmap;
+            clonedPic = Local.ClipboardImage.Clone();
         }
 
         if (clonedPic == null)

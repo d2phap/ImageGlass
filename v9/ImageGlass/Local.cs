@@ -21,6 +21,7 @@ using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.Services;
 using ImageGlass.Settings;
+using WicNet;
 
 namespace ImageGlass;
 
@@ -185,7 +186,7 @@ internal class Local
     /// <summary>
     /// Gets, sets the temporary image data
     /// </summary>
-    public static Bitmap? ClipboardImage { get; set; }
+    public static WicBitmapSource? ClipboardImage { get; set; }
 
     /// <summary>
     /// Gets, sets the path of the temporary image
