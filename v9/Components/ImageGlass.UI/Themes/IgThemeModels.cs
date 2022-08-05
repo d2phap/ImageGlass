@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using WicNet;
+
 namespace ImageGlass.UI;
 
 
@@ -90,12 +92,12 @@ public record IgThemeSettings
     /// <summary>
     /// Gets, sets the navigation left arrow
     /// </summary>
-    public Bitmap? NavButtonLeft { get; set; }
+    public WicBitmapSource? NavButtonLeft { get; set; }
 
     /// <summary>
     /// Gets, sets the navigation right arrow
     /// </summary>
-    public Bitmap? NavButtonRight { get; set; }
+    public WicBitmapSource? NavButtonRight { get; set; }
 
     /// <summary>
     /// Sets, sets app logo

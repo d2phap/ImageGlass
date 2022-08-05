@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
+using WicNet;
 
 namespace ImageGlass.UI;
 
@@ -206,8 +207,8 @@ public class IgTheme
                     continue;
                 }
 
-                // property is Bitmap
-                if (prop?.PropertyType == typeof(Bitmap))
+                // property is WicBitmapSource
+                if (prop?.PropertyType == typeof(WicBitmapSource))
                 {
                     var data = PhotoCodec.Load(Path.Combine(FolderPath, value), new()
                     {
@@ -216,6 +217,15 @@ public class IgTheme
                     });
 
                     prop.SetValue(Settings, data.Image);
+                    continue;
+                }
+
+                // property is Bitmap
+                if (prop?.PropertyType == typeof(Bitmap))
+                {
+                    var bmp = PhotoCodec.GetThumbnail(Path.Combine(FolderPath, value), ToolbarActualIconHeight, ToolbarActualIconHeight);
+
+                    prop.SetValue(Settings, bmp);
                     continue;
                 }
 
@@ -243,13 +253,9 @@ public class IgTheme
 
             try
             {
-                var data = PhotoCodec.Load(Path.Combine(FolderPath, value), new()
-                {
-                    Width = ToolbarActualIconHeight,
-                    Height = ToolbarActualIconHeight,
-                });
+                var bmp = PhotoCodec.GetThumbnail(Path.Combine(FolderPath, value), ToolbarActualIconHeight, ToolbarActualIconHeight);
 
-                ToolbarIcons.GetType().GetProperty(item.Key)?.SetValue(ToolbarIcons, data.Image);
+                ToolbarIcons.GetType().GetProperty(item.Key)?.SetValue(ToolbarIcons, bmp);
             }
             catch { }
         }
