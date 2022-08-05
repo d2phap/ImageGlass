@@ -35,12 +35,16 @@ public enum ZoomMode
 
 /// <summary>
 /// Interpolation modes.
-/// These values are based on <b>D2DBitmapInterpolationMode</b> of <b>D2DLib</b>.
+/// These values are based on <see cref="D2D1_INTERPOLATION_MODE"/>.
 /// </summary>
 public enum ImageInterpolation : int
 {
     NearestNeighbor = 0,
     Linear = 1,
+    Cubic = 2,
+    MultisampleLinear = 3,
+    Antisotropic = 4,
+    HighQualityCubic = 5,
 }
 
 

@@ -18,15 +18,59 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base.WinApi;
 using ImageMagick;
+using Microsoft.Win32.SafeHandles;
 using System.Diagnostics;
 using System.Drawing.Imaging;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using static System.Windows.Forms.DataFormats;
+using System.Windows.Media.Imaging;
+using WicNet;
 
 namespace ImageGlass.Base;
 
 public partial class Helpers
 {
+    /// <summary>
+    /// Converts <see cref="BitmapSource"/> to <see cref="WicBitmapSource"/> object.
+    /// </summary>
+    public static WicBitmapSource? FromBitmapSource(BitmapSource? bmp)
+    {
+        if (bmp == null)
+            return null;
+
+
+        var prop = bmp.GetType().GetProperty("WicSourceHandle",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        var srcHandle = (SafeHandleZeroOrMinusOneIsInvalid?)prop?.GetValue(bmp);
+        if (srcHandle == null) return null;
+
+
+        var obj = Marshal.GetObjectForIUnknown(srcHandle.DangerousGetHandle());
+
+        var wicSrc = new WicBitmapSource(obj);
+        wicSrc.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+
+        return wicSrc;
+    }
+
+
+    /// <summary>
+    /// Converts <see cref="WicBitmapSource"/> to <see cref="Bitmap"/>.
+    /// </summary>
+    public static Bitmap? FromWicBitmapSource(WicBitmapSource? bmp)
+    {
+        if (bmp == null)
+            return null;
+
+        var imgData = bmp.CopyPixels(0, 0, bmp.Width, bmp.Height);
+        using var ms = new MemoryStream(imgData);
+
+        return new Bitmap(ms);
+    }
+
+
     /// <summary>
     /// Returns Exif rotation in degrees. Returns 0 if the metadata
     /// does not exist or could not be read. A negative value means
@@ -112,6 +156,7 @@ public partial class Helpers
         };
     }
 
+
     /// <summary>
     /// Get the correct color profile name
     /// </summary>
@@ -146,6 +191,7 @@ public partial class Helpers
 
         return profileName;
     }
+
 
     /// <summary>
     /// Get ColorProfile
@@ -266,20 +312,20 @@ public partial class Helpers
 
 
     /// <summary>
-    /// Gets <see cref="ImageFormat"/> from the input extension
+    /// Gets WIC container format from the input extension.
+    /// Default value is <see cref="WicCodec.GUID_ContainerFormatPng"/>
     /// </summary>
     /// <param name="ext">The extension, example: .png</param>
-    /// <returns></returns>
-    public static ImageFormat? GetImageFormatFromExtension(string ext)
+    public static Guid GetWicContainerFormatFromExtension(string ext)
     {
         if (ext.Equals(".gif", StringComparison.OrdinalIgnoreCase))
         {
-            return ImageFormat.Gif;
+            return WicCodec.GUID_ContainerFormatGif;
         }
 
         if (ext.Equals(".bmp", StringComparison.OrdinalIgnoreCase))
         {
-            return ImageFormat.Bmp;
+            return WicCodec.GUID_ContainerFormatBmp;
         }
 
         if (ext.Equals(".jpg", StringComparison.OrdinalIgnoreCase)
@@ -288,22 +334,28 @@ public partial class Helpers
             || ext.Equals(".jp2", StringComparison.OrdinalIgnoreCase)
             || ext.Equals(".jxl", StringComparison.OrdinalIgnoreCase))
         {
-            return ImageFormat.Jpeg;
+            return WicCodec.GUID_ContainerFormatJpeg;
         }
 
         if (ext.Equals(".tiff", StringComparison.OrdinalIgnoreCase)
             || ext.Equals(".tif", StringComparison.OrdinalIgnoreCase)
             || ext.Equals(".fax", StringComparison.OrdinalIgnoreCase))
         {
-            return ImageFormat.Tiff;
+            return WicCodec.GUID_ContainerFormatTiff;
         }
 
         if (ext.Equals(".ico", StringComparison.OrdinalIgnoreCase))
         {
-            return ImageFormat.Icon;
+            return WicCodec.GUID_ContainerFormatIco;
         }
 
-        return null;
+        if (ext.Equals(".webp", StringComparison.OrdinalIgnoreCase))
+        {
+            return WicCodec.GUID_ContainerFormatWebp;
+        }
+
+
+        return WicCodec.GUID_ContainerFormatPng;
     }
 }
 

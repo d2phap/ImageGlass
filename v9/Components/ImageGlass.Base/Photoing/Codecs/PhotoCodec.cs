@@ -22,6 +22,8 @@ using System.Drawing.Imaging;
 using System.Runtime.CompilerServices;
 using static System.Windows.Forms.DataFormats;
 using System;
+using WicNet;
+using System.Windows.Media.Imaging;
 
 namespace ImageGlass.Base.Photoing.Codecs;
 
@@ -148,7 +150,9 @@ public static class PhotoCodec
     /// </summary>
     public static Bitmap? GetThumbnail(string filePath, int width, int height)
     {
-        var data = Load(filePath, new()
+        if (string.IsNullOrEmpty(filePath)) return null;
+
+        var options = new CodecReadOptions()
         {
             Width = width,
             Height = height,
@@ -157,9 +161,19 @@ public static class PhotoCodec
             UseEmbeddedThumbnail = true,
             UseRawThumbnail = true,
             ApplyColorProfileForAll = false,
-        });
+        };
+        var settings = ParseSettings(options, filePath);
+        var ext = Path.GetExtension(filePath).ToLower();
 
-        return data.Image;
+
+        var imgData = ReadMagickImage(filePath, ext, settings, options);
+
+        if (imgData?.SingleFrameImage != null)
+        {
+            return imgData.SingleFrameImage.ToBitmap();
+        }
+
+        return null;
     }
 
 
@@ -187,7 +201,7 @@ public static class PhotoCodec
     /// </summary>
     /// <param name="content">Base64 string</param>
     /// <returns></returns>
-    public static Bitmap? Base64ToBitmap(string content)
+    public static WicBitmapSource? Base64ToBitmap(string content)
     {
         var (MimeType, ByteData) = Helpers.ConvertBase64ToBytes(content);
         if (string.IsNullOrEmpty(MimeType)) return null;
@@ -246,32 +260,33 @@ public static class PhotoCodec
         #endregion
 
 
-        Bitmap? bmp = null;
+        BitmapSource? bmp = null;
         switch (settings.Format)
         {
-            case MagickFormat.Gif:
-            case MagickFormat.Gif87:
-            case MagickFormat.Tif:
-            case MagickFormat.Tiff64:
-            case MagickFormat.Tiff:
-            case MagickFormat.Ico:
-            case MagickFormat.Icon:
-                bmp = new Bitmap(new MemoryStream(ByteData)
-                {
-                    Position = 0
-                }, true);
+            // todo:
+            //case MagickFormat.Gif:
+            //case MagickFormat.Gif87:
+            //case MagickFormat.Tif:
+            //case MagickFormat.Tiff64:
+            //case MagickFormat.Tiff:
+            //case MagickFormat.Ico:
+            //case MagickFormat.Icon:
+            //    bmp = new Bitmap(new MemoryStream(ByteData)
+            //    {
+            //        Position = 0
+            //    }, true);
 
-                break;
+            //    break;
 
             default:
                 using (var imgM = new MagickImage(ByteData, settings))
                 {
-                    bmp = imgM.ToBitmap();
+                    bmp = imgM.ToBitmapSource();
                 }
                 break;
         }
 
-        return bmp;
+        return Helpers.FromBitmapSource(bmp);
     }
 
 
@@ -316,7 +331,7 @@ public static class PhotoCodec
     /// <param name="format">New image format</param>
     /// <param name="quality">JPEG/MIFF/PNG compression level</param>
     /// <returns></returns>
-    public static async Task SaveAsync(Bitmap? srcBitmap, string destFilePath, MagickFormat format = MagickFormat.Unknown, int quality = 100, CancellationToken token = default)
+    public static async Task SaveAsync(WicBitmapSource? srcBitmap, string destFilePath, MagickFormat format = MagickFormat.Unknown, int quality = 100, CancellationToken token = default)
     {
         if (srcBitmap == null) return;
 
@@ -328,7 +343,7 @@ public static class PhotoCodec
             using var imgM = new MagickImage();
             await Task.Run(() =>
             {
-                imgM.Read(srcBitmap);
+                imgM.Read(srcBitmap.CopyPixels(0, 0, srcBitmap.Width, srcBitmap.Height));
                 imgM.Quality = quality;
             }, token);
 
@@ -354,12 +369,12 @@ public static class PhotoCodec
     /// <param name="destFilePath">Destination file path</param>
     /// <param name="format">New image format</param>
     /// <param name="quality">JPEG/MIFF/PNG compression level</param>
-    public static void Save(Bitmap? srcBitmap, string destFilePath, MagickFormat format = MagickFormat.Unknown, int quality = 100)
+    public static void Save(WicBitmapSource? srcBitmap, string destFilePath, MagickFormat format = MagickFormat.Unknown, int quality = 100)
     {
         if (srcBitmap == null) return;
 
         using var imgM = new MagickImage();
-        imgM.Read(srcBitmap);
+        imgM.Read(srcBitmap.CopyPixels(0, 0, srcBitmap.Width, srcBitmap.Height));
         imgM.Quality = quality;
 
         if (format != MagickFormat.Unknown)
@@ -415,21 +430,19 @@ public static class PhotoCodec
     /// <param name="srcExt">Source file extension, example: .png</param>
     /// <param name="destFilePath">Destination file</param>
     /// <returns></returns>
-    public static async Task SaveAsBase64Async(Bitmap? srcBitmap, string srcExt, string destFilePath, CancellationToken token = default)
+    public static async Task SaveAsBase64Async(WicBitmapSource? srcBitmap, string srcExt, string destFilePath, CancellationToken token = default)
     {
         if (srcBitmap == null) return;
 
         var mimeType = Helpers.GetMIMEType(srcExt);
         var header = $"data:{mimeType};base64,";
-
-        // there is no encoder associated with an in-memory bitmap,
-        // so we will have to specify an image format
-        // https://stackoverflow.com/a/25242900/2856887
-        var srcFormat = Helpers.GetImageFormatFromExtension(srcExt) ?? ImageFormat.Png;
+        var srcFormat = Helpers.GetWicContainerFormatFromExtension(srcExt);
         
         try
         {
             token.ThrowIfCancellationRequested();
+
+            var encoder = WicEncoder.FromFileExtension(srcExt);
 
             // convert bitmap to base64
             using var ms = new MemoryStream();
@@ -561,11 +574,11 @@ public static class PhotoCodec
             if (result.Image.Width > options.Width || result.Image.Height > options.Height)
             {
                 using var imgM = new MagickImage();
-                imgM.Read(result.Image);
+                imgM.Read(result.Image.CopyPixels(0, 0, result.Image.Width, result.Image.Height));
 
                 ApplySizeSettings(imgM, options);
 
-                result.Image = imgM.ToBitmap();
+                result.Image = Helpers.FromBitmapSource(imgM.ToBitmapSource());
             }
         }
 
@@ -973,14 +986,14 @@ public static class PhotoCodec
     /// </summary>
     /// <param name="filename">Full path of file</param>
     /// <returns></returns>
-    private static Bitmap ConvertFileToBitmap(string filename)
+    private static WicBitmapSource ConvertFileToBitmap(string filename)
     {
         using var fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
         var ms = new MemoryStream();
         fs.CopyTo(ms);
         ms.Position = 0;
 
-        return new Bitmap(ms, true);
+        return WicBitmapSource.Load(ms);
     }
 
 

@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageMagick;
 using System.Drawing.Imaging;
+using WicNet;
 
 namespace ImageGlass.Base.Photoing.Codecs;
 
@@ -65,7 +66,7 @@ public class IgImgData : IDisposable
     #endregion
 
 
-    public Bitmap? Image { get; set; } = null;
+    public WicBitmapSource? Image { get; set; } = null;
     public int FrameCount { get; set; } = 0;
     public IExifProfile? ExifProfile { get; set; } = null;
     public IColorProfile? ColorProfile { get; set; } = null;
@@ -85,21 +86,22 @@ public class IgImgData : IDisposable
         ColorProfile = data.ColorProfile;
         ExifProfile = data.ExifProfile;
 
+
         if (data.MultiFrameImage != null)
         {
-            // convert WEBP to GIF for animation
-            if (data.Extension.Equals(".WEBP", StringComparison.InvariantCultureIgnoreCase))
-            {
-                Image = data.MultiFrameImage.ToBitmap(ImageFormat.Gif);
-            }
-            else
-            {
-                Image = data.MultiFrameImage.ToBitmap();
-            }
+            //// convert WEBP to GIF for animation
+            //if (data.Extension.Equals(".WEBP", StringComparison.InvariantCultureIgnoreCase))
+            //{
+            //    Image = data.MultiFrameImage.ToBitmap(ImageFormat.Gif);
+            //}
+            //else
+            //{
+            //    Image = data.MultiFrameImage.ToBitmapSource();
+            //}
         }
         else
         {
-            Image = data.SingleFrameImage?.ToBitmap();
+            Image = Helpers.FromBitmapSource(data.SingleFrameImage?.ToBitmapSource());
         }
     }
 }
