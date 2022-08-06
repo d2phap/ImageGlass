@@ -850,7 +850,8 @@ public partial class FrmMain
         Local.ClipboardImage = img;
         Local.TempImagePath = null;
 
-        PicMain.SetImage(img);
+        // TODO:
+        //PicMain.SetImage(img);
         PicMain.ClearMessage();
 
         // reset zoom mode

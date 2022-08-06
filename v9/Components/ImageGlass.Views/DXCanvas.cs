@@ -19,9 +19,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using D2Phap;
 using DirectN;
 using ImageGlass.Base.PhotoBox;
+using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Views.ImageAnimator;
 using System.ComponentModel;
+using System.Drawing;
 using System.Numerics;
 using WicNet;
 
@@ -1116,13 +1118,7 @@ public class DXCanvas : DXControl
     {
         if (Source == ImageSource.Null) return;
 
-        try
-        {
-            g.DrawBitmap(_imageD2D?.Object, _destRect, _srcRect, (D2D1_INTERPOLATION_MODE)CurrentInterpolation);
-        }
-        catch { }
-
-        //_ = OnImageDrawn();
+        g.DrawBitmap(_imageD2D?.Object, _destRect, _srcRect, (D2D1_INTERPOLATION_MODE)CurrentInterpolation);
     }
 
 
@@ -1908,39 +1904,27 @@ public class DXCanvas : DXControl
 
 
     /// <summary>
-    /// Checks the input image and updates dependent properties.
+    /// Loads image data.
     /// </summary>
-    /// <param name="bmp"></param>
-    private void CheckInputImage(WicBitmapSource? bmp)
+    private void LoadImageData(IgImgData? imgData)
     {
+        SourceWidth = imgData?.Image?.Width ?? 0;
+        SourceHeight = imgData?.Image?.Height ?? 0;
+        HasAlphaPixels = imgData?.HasAlpha ?? false;
+        // TODO:
+        CanImageAnimate = false;
+
         const int MAX_D2D_DIMENTION = 16_384;
-        var exceedMaxDimention = false;
-
-        if (bmp is null)
-        {
-            SourceWidth = 0;
-            SourceHeight = 0;
-            HasAlphaPixels = false;
-            CanImageAnimate = false;
-        }
-        else
-        {
-            SourceWidth = bmp.Width;
-            SourceHeight = bmp.Height;
-            HasAlphaPixels = false;
-            CanImageAnimate = false; // _imageAnimator.CanAnimate(bmp);
-            exceedMaxDimention = SourceWidth > MAX_D2D_DIMENTION || SourceHeight > MAX_D2D_DIMENTION;
-        }
-
+        var exceedMaxDimention = SourceWidth > MAX_D2D_DIMENTION || SourceHeight > MAX_D2D_DIMENTION;
+        
         _canUseDirect2D = !CanImageAnimate && !HasAlphaPixels && !exceedMaxDimention;
     }
 
 
     /// <summary>
-    /// Load image
+    /// Load image.
     /// </summary>
-    /// <param name="bmp"></param>
-    public async Task SetImage(WicBitmapSource? bmp)
+    public void SetImage(IgImgData? imgData)
     {
         // disable animations
         StopAnimatingImage();
@@ -1951,23 +1935,18 @@ public class DXCanvas : DXControl
         _imageGdiPlus = null;
 
         // Check and preprocess image info
-        CheckInputImage(bmp);
+        LoadImageData(imgData);
 
-        if (bmp is null)
+        if (imgData == null || imgData.Image == null)
         {
             Refresh();
             return;
         };
 
-        //// converting from GDI+ to Direct2D is expensive,
-        //// we use GDI+ to preview the image
-        //_imageGdiPlus = bmp;
-        //Source = ImageSource.GDIPlus;
-        //UseHardwareAcceleration = false;
 
         Source = ImageSource.Direct2D;
         UseHardwareAcceleration = true;
-        Image = bmp;
+        Image = imgData.Image;
 
         // emit OnImageChanged event
         OnImageChanged?.Invoke(EventArgs.Empty);
@@ -2016,37 +1995,6 @@ public class DXCanvas : DXControl
             Refresh();
         }
     }
-
-
-    //private async Task OnImageDrawn()
-    //{
-    //    // after previewing, check if we can use Direct2D to handle
-    //    if (_canUseDirect2D && Source == ImageSource.GDIPlus && _imageGdiPlus != null)
-    //    {
-    //        // give some time to render GDI+
-    //        await Task.Delay(100);
-
-    //        Source = ImageSource.Direct2D;
-    //        UseHardwareAcceleration = true;
-
-    //        // _imageGdiPlus can be null due to cancellation token
-    //        if (_imageGdiPlus != null)
-    //        {
-    //            try
-    //            {
-    //                _imageD2D = Device.CreateBitmapFromGDIBitmap(_imageGdiPlus);
-
-    //                // release the GDI+ resouce
-    //                _imageGdiPlus = null;
-    //            }
-    //            catch
-    //            {
-    //                Source = ImageSource.GDIPlus;
-    //                UseHardwareAcceleration = false;
-    //            }
-    //        }
-    //    }
-    //}
 
 
     private void OnImageFrameChanged(object? sender, EventArgs eventArgs)

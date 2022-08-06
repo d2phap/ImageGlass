@@ -1032,7 +1032,7 @@ public partial class FrmMain : Form
             Local.TempImagePath = null;
 
             // set the main image
-            PicMain.SetImage(e.Data.ImgData.Image);
+            PicMain.SetImage(e.Data.ImgData);
 
             // Reset the zoom mode if KeepZoomRatio = FALSE
             if (!e.KeepZoomRatio)

@@ -68,10 +68,11 @@ public class IgImgData : IDisposable
 
     public WicBitmapSource? Image { get; set; } = null;
     public int FrameCount { get; set; } = 0;
+    public bool HasAlpha { get; set; } = false;
     public IExifProfile? ExifProfile { get; set; } = null;
     public IColorProfile? ColorProfile { get; set; } = null;
-
-
+    
+    
     public IgImgData() { }
 
 
@@ -79,7 +80,6 @@ public class IgImgData : IDisposable
     /// Initializes <see cref="IgImgData"/> instance
     /// with <see cref="IgMagickReadData"/> value.
     /// </summary>
-    /// <param name="data"></param>
     public IgImgData(IgMagickReadData data)
     {
         FrameCount = data.FrameCount;
@@ -102,6 +102,7 @@ public class IgImgData : IDisposable
         else
         {
             Image = Helpers.FromBitmapSource(data.SingleFrameImage?.ToBitmapSource());
+            HasAlpha = data.SingleFrameImage?.HasAlpha ?? false;
         }
     }
 }
