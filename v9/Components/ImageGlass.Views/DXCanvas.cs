@@ -1041,8 +1041,8 @@ public class DXCanvas : DXControl
         _xOut = false;
         _yOut = false;
 
-        var clientW = Width;
-        var clientH = Height;
+        var clientW = ClientSize.Width;
+        var clientH = ClientSize.Height;
 
         if (clientW > SourceWidth * _zoomFactor)
         {
@@ -1087,6 +1087,7 @@ public class DXCanvas : DXControl
         if (_srcRect.left < 0)
         {
             _xOut = true;
+            _srcRect.Width -= _srcRect.left;
             _srcRect.left = 0;
         }
 
@@ -1099,6 +1100,7 @@ public class DXCanvas : DXControl
         if (_srcRect.top < 0)
         {
             _yOut = true;
+            _srcRect.Height -= _srcRect.top;
             _srcRect.top = 0;
         }
 
