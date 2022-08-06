@@ -20,10 +20,12 @@ using ImageMagick;
 using ImageMagick.Formats;
 using System.Drawing.Imaging;
 using System.Runtime.CompilerServices;
-using static System.Windows.Forms.DataFormats;
 using System;
 using WicNet;
 using System.Windows.Media.Imaging;
+using DirectN;
+using System.Windows;
+using ColorProfile = ImageMagick.ColorProfile;
 
 namespace ImageGlass.Base.Photoing.Codecs;
 
@@ -508,6 +510,33 @@ public static class PhotoCodec
             await SaveAsBase64Async(bmp.Image, srcExt, destFilePath, token);
         }
         catch (OperationCanceledException) { }
+    }
+
+
+    /// <summary>
+    /// Converts <see cref="WicBitmapSource"/> to <see cref="Bitmap"/>.
+    /// https://stackoverflow.com/a/2897325/2856887
+    /// </summary>
+    public static Bitmap? BitmapSourceToGdiPlusBitmap(WicBitmapSource source)
+    {
+        if (source == null)
+            return null;
+
+        var bmp = new Bitmap(
+          source.Width,
+          source.Height,
+          PixelFormat.Format32bppPArgb);
+
+        var data = bmp.LockBits(
+          new Rectangle(new(0, 0), bmp.Size),
+          ImageLockMode.WriteOnly,
+          PixelFormat.Format32bppPArgb);
+
+        source.CopyPixels(data.Height * data.Stride, data.Scan0, data.Stride);
+
+        bmp.UnlockBits(data);
+
+        return bmp;
     }
 
     #endregion

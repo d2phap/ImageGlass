@@ -784,8 +784,7 @@ public partial class FrmMain
             PicMain.ClearMessage();
             PicMain.ShowMessage(Config.Language[$"{langPath}._Copying"], "", delayMs: 1500);
 
-            // todo:
-            //await Task.Run(() => ClipboardEx.SetClipboardImage(bitmap));
+            await Task.Run(() => ClipboardEx.SetClipboardImage(bitmap));
 
             PicMain.ShowMessage(Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
         }
@@ -808,8 +807,7 @@ public partial class FrmMain
         {
             var bmp = ClipboardEx.GetClipboardImage(Clipboard.GetDataObject());
 
-            // todo:
-            //LoadClipboardImage(bmp);
+            LoadClipboardImage(bmp);
         }
 
         // Is there a filename in clipboard?
@@ -851,7 +849,12 @@ public partial class FrmMain
         Local.TempImagePath = null;
 
         // TODO:
-        //PicMain.SetImage(img);
+        PicMain.SetImage(new()
+        {
+            Image = img,
+            FrameCount = 1,
+            HasAlpha = true,
+        });
         PicMain.ClearMessage();
 
         // reset zoom mode

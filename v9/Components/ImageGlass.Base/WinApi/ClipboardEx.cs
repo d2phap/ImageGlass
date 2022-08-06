@@ -17,8 +17,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Base.Photoing.Codecs;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using WicNet;
 
 namespace ImageGlass.Base.WinApi;
 
@@ -41,29 +43,26 @@ public class ClipboardEx
     /// Might already contain other stuff.
     /// Leave null to create a new one.
     /// </param>
-    public static void SetClipboardImage(Bitmap? image, Bitmap? imageNoTr = null, DataObject? data = null)
+    public static void SetClipboardImage(WicBitmapSource? image, WicBitmapSource? imageNoTr = null, DataObject? data = null)
     {
-        var clonedImg = image?.Clone() as Bitmap;
+        var clonedImg = image?.Clone();
         if (clonedImg == null) return;
 
         // https://stackoverflow.com/a/17762059/2856887
         Helpers.RunAsThread(() => Clipboard.Clear(), ApartmentState.STA)
             .Join();
 
-        if (data == null)
-            data = new DataObject();
-
-        if (imageNoTr == null)
-            imageNoTr = clonedImg;
+        data ??= new DataObject();
+        imageNoTr ??= clonedImg;
 
         using var pngMemStream = new MemoryStream();
         using var dibMemStream = new MemoryStream();
 
         // As standard bitmap, without transparency support
-        data.SetData(DataFormats.Bitmap, true, imageNoTr);
+        data.SetData(DataFormats.Bitmap, true, PhotoCodec.BitmapSourceToGdiPlusBitmap(imageNoTr));
 
         // As PNG. Gimp will prefer this over the other two.
-        clonedImg.Save(pngMemStream, ImageFormat.Png);
+        clonedImg.Save(pngMemStream, WicEncoder.GUID_ContainerFormatPng);
         data.SetData("PNG", false, pngMemStream);
 
         // As DIB. This is (wrongly) accepted as ARGB by many applications.
@@ -84,17 +83,20 @@ public class ClipboardEx
     /// </summary>
     /// <param name="retrievedData">The clipboard data.</param>
     /// <returns>The extracted image, or null if no supported image type was found.</returns>
-    public static Bitmap? GetClipboardImage(IDataObject retrievedData)
+    public static WicBitmapSource? GetClipboardImage(IDataObject retrievedData)
     {
-        Bitmap? clipboardImage = null;
+        WicBitmapSource? clipboardImage = null;
 
         // Order: try PNG, move on to try 32-bit ARGB DIB, then try the normal
         // Bitmap and Image types.
         if (retrievedData.GetDataPresent("PNG", false))
         {
             if (retrievedData.GetData("PNG", false) is MemoryStream png_stream)
-                using (var bm = new Bitmap(png_stream))
-                    clipboardImage = CloneImage(bm);
+            {
+                using var bm = WicBitmapSource.Load(png_stream);
+                bm.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+                clipboardImage = bm.Clone();
+            }
         }
 
         if (clipboardImage == null && retrievedData.GetDataPresent(DataFormats.Dib, false))
@@ -109,7 +111,8 @@ public class ClipboardEx
         {
             if (retrievedData.GetData(DataFormats.Bitmap) is Image img)
             {
-                clipboardImage = new Bitmap(img);
+                var bmp = new Bitmap(img);
+                clipboardImage = WicBitmapSource.FromHBitmap(bmp.GetHbitmap());
             }
         }
 
@@ -117,7 +120,8 @@ public class ClipboardEx
         {
             if (retrievedData.GetData(typeof(Image)) is Image img)
             {
-                clipboardImage = new Bitmap(img);
+                var bmp = new Bitmap(img);
+                clipboardImage = WicBitmapSource.FromHBitmap(bmp.GetHbitmap());
             }
         }
 
@@ -125,7 +129,7 @@ public class ClipboardEx
     }
 
 
-    private static Bitmap? ImageFromClipboardDib(byte[] dibBytes)
+    private static WicBitmapSource? ImageFromClipboardDib(byte[] dibBytes)
     {
         if (dibBytes == null || dibBytes.Length < 4)
             return null;
@@ -223,65 +227,14 @@ public class ClipboardEx
             // This is bmp; reverse image lines.
             bitmap?.RotateFlip(RotateFlipType.Rotate180FlipX);
 
-            return bitmap;
+            if (bitmap != null)
+            {
+                return WicBitmapSource.FromHBitmap(bitmap.GetHbitmap());
+            }
         }
-        catch
-        {
-            return null;
-        }
-    }
+        catch { }
 
-
-    /// <summary>
-    /// Clones an image object to free it from any backing resources.
-    /// Code taken from http://stackoverflow.com/a/3661892/ with some extra fixes.
-    /// </summary>
-    /// <param name="sourceImage">The image to clone</param>
-    /// <returns>The cloned image</returns>
-    private static Bitmap? CloneImage(Bitmap sourceImage)
-    {
-        var rect = NewMethod(sourceImage);
-        var targetImage = new Bitmap(rect.Width, rect.Height, sourceImage.PixelFormat);
-        targetImage.SetResolution(sourceImage.HorizontalResolution, sourceImage.VerticalResolution);
-
-        var sourceData = sourceImage.LockBits(rect, ImageLockMode.ReadOnly, sourceImage.PixelFormat);
-        var targetData = targetImage.LockBits(rect, ImageLockMode.WriteOnly, targetImage.PixelFormat);
-        var actualDataWidth = ((Image.GetPixelFormatSize(sourceImage.PixelFormat) * rect.Width) + 7) / 8;
-        var h = sourceImage.Height;
-        var origStride = sourceData.Stride;
-        var isFlipped = origStride < 0;
-        origStride = Math.Abs(origStride); // Fix for negative stride in BMP format.
-        var targetStride = targetData.Stride;
-        var imageData = new byte[actualDataWidth];
-        var sourcePos = sourceData.Scan0;
-        var destPos = targetData.Scan0;
-
-        // Copy line by line, skipping by stride but copying actual data width
-        for (var y = 0; y < h; y++)
-        {
-            Marshal.Copy(sourcePos, imageData, 0, actualDataWidth);
-            Marshal.Copy(imageData, 0, destPos, actualDataWidth);
-
-            sourcePos = new IntPtr(sourcePos.ToInt64() + origStride);
-            destPos = new IntPtr(destPos.ToInt64() + targetStride);
-        }
-
-        targetImage.UnlockBits(targetData);
-        sourceImage.UnlockBits(sourceData);
-
-        // Fix for negative stride on BMP format.
-        if (isFlipped)
-            targetImage.RotateFlip(RotateFlipType.Rotate180FlipX);
-
-        // For indexed images, restore the palette. This is not linking to a referenced
-        // object in the original image; the getter of Palette creates a new object when called.
-        if ((sourceImage.PixelFormat & PixelFormat.Indexed) != 0)
-            targetImage.Palette = sourceImage.Palette;
-
-        // Restore DPI settings
-        targetImage.SetResolution(sourceImage.HorizontalResolution, sourceImage.VerticalResolution);
-
-        return targetImage;
+        return null;
     }
 
 
@@ -347,31 +300,6 @@ public class ClipboardEx
     }
 
 
-    private static Rectangle NewMethod(Bitmap sourceImage)
-    {
-        return new Rectangle(0, 0, sourceImage.Width, sourceImage.Height);
-    }
-
-
-    /// <summary>
-    /// Gets the raw bytes from an image.
-    /// </summary>
-    /// <param name="sourceImage">The image to get the bytes from.</param>
-    /// <param name="stride">Stride of the retrieved image data.</param>
-    /// <returns>The raw bytes of the image</returns>
-    private static byte[] GetImageData(Bitmap sourceImage, out int stride)
-    {
-        var sourceData = sourceImage.LockBits(new Rectangle(0, 0, sourceImage.Width, sourceImage.Height), ImageLockMode.ReadOnly, sourceImage.PixelFormat);
-
-        stride = sourceData.Stride;
-        var data = new byte[stride * sourceImage.Height];
-
-        Marshal.Copy(sourceData.Scan0, data, 0, data.Length);
-        sourceImage.UnlockBits(sourceData);
-
-        return data;
-    }
-
 
     /// <summary>
     /// Converts the image to Device Independent Bitmap format of type BITFIELDS.
@@ -380,20 +308,14 @@ public class ClipboardEx
     /// </summary>
     /// <param name="image">Image to convert to DIB</param>
     /// <returns>The image converted to DIB, in bytes.</returns>
-    private static byte[] ConvertToDib(Image image)
+    private static byte[] ConvertToDib(WicBitmapSource image)
     {
-        byte[] bm32bData;
-        var width = image.Width;
-        var height = image.Height;
-
         // Ensure image is 32bppARGB by painting it on a new 32bppARGB image.
-        using var bm32b = new Bitmap(image.Width, image.Height, PixelFormat.Format32bppArgb);
-        using var gr = Graphics.FromImage(bm32b);
-        gr.DrawImage(image, new Rectangle(0, 0, bm32b.Width, bm32b.Height));
+        image.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
 
         // Bitmap format has its lines reversed.
-        bm32b.RotateFlip(RotateFlipType.Rotate180FlipX);
-        bm32bData = GetImageData(bm32b, out var stride);
+        //image.Rotate(DirectN.WICBitmapTransformOptions.WICBitmapTransformRotate180);
+        var bm32bData = image.CopyPixels();
 
         // BITMAPINFOHEADER struct for DIB.
         var hdrSize = 0x28;
@@ -402,10 +324,10 @@ public class ClipboardEx
         WriteIntToByteArray(fullImage, 0x00, 4, true, (uint)hdrSize);
 
         //Int32 biWidth;
-        WriteIntToByteArray(fullImage, 0x04, 4, true, (uint)width);
+        WriteIntToByteArray(fullImage, 0x04, 4, true, (uint)image.Width);
 
         //Int32 biHeight;
-        WriteIntToByteArray(fullImage, 0x08, 4, true, (uint)height);
+        WriteIntToByteArray(fullImage, 0x08, 4, true, (uint)image.Height);
 
         //Int16 biPlanes;
         WriteIntToByteArray(fullImage, 0x0C, 2, true, 1);
