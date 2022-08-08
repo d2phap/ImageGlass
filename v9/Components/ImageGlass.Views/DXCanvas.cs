@@ -1222,7 +1222,7 @@ public class DXCanvas : DXControl
         // heading size
         if (hasHeading)
         {
-            hTextSize = g.MeasureText(TextHeading, Font.Name, Font.Size * 1.2f, drawableArea.Width, drawableArea.Height, DeviceDpi);
+            hTextSize = g.MeasureText(TextHeading, Font.Name, Font.Size * 1.3f, drawableArea.Width, drawableArea.Height, DeviceDpi);
         }
 
         // text size
@@ -1274,7 +1274,7 @@ public class DXCanvas : DXControl
         // draw text heading
         if (hasHeading)
         {
-            g.DrawText(TextHeading, Font.Name, Font.Size * 1.2f, hRegion, _D3DCOLORVALUE.FromColor(ForeColor), DeviceDpi, DWRITE_TEXT_ALIGNMENT.DWRITE_TEXT_ALIGNMENT_CENTER);
+            g.DrawText(TextHeading, Font.Name, Font.Size * 1.3f, hRegion, _D3DCOLORVALUE.FromColor(ForeColor), DeviceDpi, DWRITE_TEXT_ALIGNMENT.DWRITE_TEXT_ALIGNMENT_CENTER);
         }
 
         // draw text
@@ -1946,7 +1946,7 @@ public class DXCanvas : DXControl
 
         Source = ImageSource.Direct2D;
         UseHardwareAcceleration = true;
-        Image = imgData.Image;
+        _imageD2D = this.FromWicBitmapSource(imgData.Image);
 
         // emit OnImageChanged event
         OnImageChanged?.Invoke(EventArgs.Empty);
@@ -1958,40 +1958,6 @@ public class DXCanvas : DXControl
         }
         else
         {
-            Refresh();
-        }
-    }
-
-
-    public WicBitmapSource? Image
-    {
-        set
-        {
-            DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
-            GC.Collect();
-
-            if (Device == null) return;
-            if (value == null) return;
-
-            // create D2DBitmap from WICBitmapSource
-            var bitmapProps = new D2D1_BITMAP_PROPERTIES()
-            {
-                pixelFormat = new D2D1_PIXEL_FORMAT()
-                {
-                    alphaMode = D2D1_ALPHA_MODE.D2D1_ALPHA_MODE_PREMULTIPLIED,
-                    format = DXGI_FORMAT.DXGI_FORMAT_B8G8R8A8_UNORM,
-                },
-                dpiX = 96.0f,
-                dpiY = 96.0f,
-            };
-            var bitmapPropsPtr = bitmapProps.StructureToPtr();
-
-            Device.CreateBitmapFromWicBitmap(value.ComObject.Object, bitmapPropsPtr,
-                out ID2D1Bitmap? bmp)
-                .ThrowOnError();
-
-            _imageD2D = new ComObject<ID2D1Bitmap>(bmp);
-
             Refresh();
         }
     }
