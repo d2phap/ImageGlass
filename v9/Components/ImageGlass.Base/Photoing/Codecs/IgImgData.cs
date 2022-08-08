@@ -89,15 +89,22 @@ public class IgImgData : IDisposable
 
         if (data.MultiFrameImage != null)
         {
-            //// convert WEBP to GIF for animation
-            //if (data.Extension.Equals(".WEBP", StringComparison.InvariantCultureIgnoreCase))
-            //{
-            //    Image = data.MultiFrameImage.ToBitmap(ImageFormat.Gif);
-            //}
-            //else
-            //{
-            //    Image = data.MultiFrameImage.ToBitmapSource();
-            //}
+            // convert WEBP to GIF for animation
+            if (data.Extension.Equals(".WEBP", StringComparison.InvariantCultureIgnoreCase))
+            {
+                data.MultiFrameImage.Coalesce();
+                using var bmp = data.MultiFrameImage.ToBitmap(ImageFormat.Gif);
+                
+                Image = WicBitmapSource.FromHBitmap(bmp.GetHbitmap());
+                Image.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+            }
+            else
+            {
+                using var bmp = data.MultiFrameImage.ToBitmap(ImageFormat.Tiff);
+
+                Image = WicBitmapSource.FromHBitmap(bmp.GetHbitmap());
+                Image.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+            }
         }
         else
         {
