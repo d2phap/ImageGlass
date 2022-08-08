@@ -803,9 +803,9 @@ public partial class FrmMain
         }
 
         // Is there a image in clipboard?
-        else if (Clipboard.ContainsImage())
+        else if (ClipboardEx.ContainsImage())
         {
-            var bmp = ClipboardEx.GetClipboardImage(Clipboard.GetDataObject());
+            var bmp = ClipboardEx.GetClipboardImage();
 
             LoadClipboardImage(bmp);
         }
