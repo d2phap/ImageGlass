@@ -20,11 +20,8 @@ using ImageMagick;
 using ImageMagick.Formats;
 using System.Drawing.Imaging;
 using System.Runtime.CompilerServices;
-using System;
-using WicNet;
 using System.Windows.Media.Imaging;
-using DirectN;
-using System.Windows;
+using WicNet;
 using ColorProfile = ImageMagick.ColorProfile;
 
 namespace ImageGlass.Base.Photoing.Codecs;
@@ -262,33 +259,36 @@ public static class PhotoCodec
         #endregion
 
 
-        BitmapSource? bmp = null;
+        WicBitmapSource? src = null;
         switch (settings.Format)
         {
-            // todo:
-            //case MagickFormat.Gif:
-            //case MagickFormat.Gif87:
-            //case MagickFormat.Tif:
-            //case MagickFormat.Tiff64:
-            //case MagickFormat.Tiff:
-            //case MagickFormat.Ico:
-            //case MagickFormat.Icon:
-            //    bmp = new Bitmap(new MemoryStream(ByteData)
-            //    {
-            //        Position = 0
-            //    }, true);
-
-            //    break;
+            case MagickFormat.Gif:
+            case MagickFormat.Gif87:
+            case MagickFormat.Tif:
+            case MagickFormat.Tiff64:
+            case MagickFormat.Tiff:
+            case MagickFormat.Ico:
+            case MagickFormat.Icon:
+                using (var ms = new MemoryStream(ByteData) { Position = 0 })
+                {
+                    using var bitm = new Bitmap(ms, true);
+                    src = WicBitmapSource.FromHBitmap(bitm.GetHbitmap());
+                }
+                break;
 
             default:
                 using (var imgM = new MagickImage(ByteData, settings))
                 {
-                    bmp = imgM.ToBitmapSource();
+                    var bmp = imgM.ToBitmapSource();
+                    src = Helpers.FromBitmapSource(bmp);
                 }
                 break;
         }
 
-        return Helpers.FromBitmapSource(bmp);
+        if (src == null) return null;
+
+        src?.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+        return src;
     }
 
 
@@ -341,7 +341,7 @@ public static class PhotoCodec
         try
         {
             token.ThrowIfCancellationRequested();
-            
+
             using var imgM = new MagickImage();
             await Task.Run(() =>
             {
@@ -439,7 +439,7 @@ public static class PhotoCodec
         var mimeType = Helpers.GetMIMEType(srcExt);
         var header = $"data:{mimeType};base64,";
         var srcFormat = Helpers.GetWicContainerFormatFromExtension(srcExt);
-        
+
         try
         {
             token.ThrowIfCancellationRequested();

@@ -67,7 +67,7 @@ public partial class Helpers
         var imgData = bmp.CopyPixels(0, 0, bmp.Width, bmp.Height);
         using var ms = new MemoryStream(imgData);
 
-        return new Bitmap(ms);
+        return new Bitmap(ms, true);
     }
 
 
