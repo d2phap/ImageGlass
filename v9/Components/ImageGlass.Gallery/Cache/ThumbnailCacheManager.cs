@@ -847,7 +847,7 @@ internal class ThumbnailCacheManager : IDisposable
     /// <param name="thumb">Thumbnail image to add to cache.</param>
     /// <param name="useEmbeddedThumbnails">UseEmbeddedThumbnails property of the owner control.</param>
     /// <param name="autoRotate">AutoRotate property of the owner control.</param>
-    public void Add(Guid guid, IAdaptor adaptor, object key, Size thumbSize, Image thumb, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
+    public void Add(Guid guid, IAdaptor adaptor, object key, Size thumbSize, Image? thumb, UseEmbeddedThumbnails useEmbeddedThumbnails, bool autoRotate)
     {
         // Already cached?
         if (_thumbCache.TryGetValue(guid, out CacheItem? item))

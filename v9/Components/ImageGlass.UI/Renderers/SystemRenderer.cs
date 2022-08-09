@@ -43,9 +43,6 @@ public static class SystemRenderer
     /// <summary>
     /// Apply system theme to control (customize)
     /// </summary>
-    /// <param name="control"></param>
-    /// <param name="theme"></param>
-    /// <returns></returns>
     public static int ApplyTheme(Control? control, string theme)
     {
         try
@@ -54,7 +51,7 @@ public static class SystemRenderer
             {
                 if (control.IsHandleCreated)
                 {
-                    return SetWindowTheme(control.Handle, theme, null);
+                    return SetWindowTheme(control.Handle, theme, string.Empty);
                 }
             }
         }

@@ -113,7 +113,7 @@ public class SystemRenderer : StyleRenderer
     /// <summary>
     /// Returns a renderer for the given element.
     /// </summary>
-    private VisualStyleRenderer? GetRenderer(VisualStyleElement e)
+    private static VisualStyleRenderer? GetRenderer(VisualStyleElement e)
     {
         if (VisualStyleRenderer.IsElementDefined(e))
             return new VisualStyleRenderer(e);
@@ -124,7 +124,7 @@ public class SystemRenderer : StyleRenderer
     /// <summary>
     /// Returns a renderer for the given element.
     /// </summary>
-    private VisualStyleRenderer? GetRenderer(string className, int part, int state)
+    private static VisualStyleRenderer? GetRenderer(string className, int part, int state)
     {
         var e = VisualStyleElement.CreateElement(className, part, state);
         if (VisualStyleRenderer.IsElementDefined(e))
@@ -171,7 +171,7 @@ public class SystemRenderer : StyleRenderer
     /// <param name="bounds">The bounding rectangle of the file icon in client coordinates.</param>
     public override void DrawFileIcon(Graphics g, ImageGalleryItem item, Rectangle bounds)
     {
-        Image icon = item.GetCachedImage(CachedImageType.SmallIcon);
+        var icon = item.GetCachedImage(CachedImageType.SmallIcon);
 
         if (icon != null && VisualStylesEnabled && rFileIcon != null)
             rFileIcon.DrawImage(g, bounds, icon);

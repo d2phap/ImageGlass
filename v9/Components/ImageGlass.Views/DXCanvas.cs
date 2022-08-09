@@ -23,7 +23,6 @@ using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Views.ImageAnimator;
 using System.ComponentModel;
-using System.Drawing;
 using System.Numerics;
 using WicNet;
 
@@ -914,7 +913,7 @@ public class DXCanvas : DXControl
 
         base.OnFrame(e);
 
-        
+
         // Panning
         if (_animationSource.HasFlag(AnimationSource.PanLeft))
         {
@@ -965,8 +964,8 @@ public class DXCanvas : DXControl
         //}
         //else
         //{
-            // image layer
-            DrawImageLayer(g);
+        // image layer
+        DrawImageLayer(g);
         //}
 
         // text message
@@ -1389,7 +1388,7 @@ public class DXCanvas : DXControl
                     top = NavRightPos.Y - iconSize / 2 + iconY,
                     Width = iconSize,
                     Height = iconSize,
-                }, new D2D_RECT_F(srcIconSize), 
+                }, new D2D_RECT_F(srcIconSize),
                     D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR,
                     iconOpacity);
             }
@@ -1457,7 +1456,7 @@ public class DXCanvas : DXControl
         OnZoomChanged?.Invoke(new(ZoomFactor));
     }
 
-    
+
     /// <summary>
     /// Force the control to update zoom mode and invalidate itself.
     /// </summary>
@@ -1916,7 +1915,7 @@ public class DXCanvas : DXControl
 
         const int MAX_D2D_DIMENTION = 16_384;
         var exceedMaxDimention = SourceWidth > MAX_D2D_DIMENTION || SourceHeight > MAX_D2D_DIMENTION;
-        
+
         _canUseDirect2D = !CanImageAnimate && !HasAlphaPixels && !exceedMaxDimention;
     }
 

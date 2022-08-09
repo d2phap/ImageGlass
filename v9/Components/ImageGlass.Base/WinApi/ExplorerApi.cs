@@ -131,7 +131,7 @@ public static class ExplorerApi
         bool opened = false;
 
         var shellWindowsType = Type.GetTypeFromCLSID(SID_ShellWindows);
-        var shellWindows = (dynamic)Activator.CreateInstance(shellWindowsType);
+        var shellWindows = (dynamic?)Activator.CreateInstance(shellWindowsType);
 
         try
         {
@@ -175,7 +175,7 @@ public static class ExplorerApi
                                     fileArray = new IntPtr[] { nativeFile };
                                 }
 
-                                SHOpenFolderAndSelectItems(pidl, (uint)fileArray.Length, fileArray, 0);
+                                _ = SHOpenFolderAndSelectItems(pidl, (uint)fileArray.Length, fileArray, 0);
                                 opened = true;
 
                                 break;

@@ -18,9 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageMagick;
 using ImageMagick.Formats;
-using System.Drawing.Imaging;
 using System.Runtime.CompilerServices;
-using System.Windows.Media.Imaging;
 using WicNet;
 using ColorProfile = ImageMagick.ColorProfile;
 

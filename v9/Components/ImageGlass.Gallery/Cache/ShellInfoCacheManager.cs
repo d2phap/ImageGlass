@@ -255,7 +255,7 @@ internal class ShellInfoCacheManager : IDisposable
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="QueuedWorkerCompletedEventArgs"/> 
     /// instance containing the event data.</param>
-    private void Bw_RunWorkerCompleted(object sender, QueuedWorkerCompletedEventArgs e)
+    private void Bw_RunWorkerCompleted(object? sender, QueuedWorkerCompletedEventArgs e)
     {
         var result = e.Result as CacheItem;
 
@@ -292,7 +292,7 @@ internal class ShellInfoCacheManager : IDisposable
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="QueuedWorkerDoWorkEventArgs"/> instance 
     /// containing the event data.</param>
-    private void Bw_DoWork(object sender, QueuedWorkerDoWorkEventArgs e)
+    private void Bw_DoWork(object? sender, QueuedWorkerDoWorkEventArgs e)
     {
         var extension = e.Argument as string;
 

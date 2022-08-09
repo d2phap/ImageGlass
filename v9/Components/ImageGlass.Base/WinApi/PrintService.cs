@@ -64,8 +64,8 @@ public static class PrintService
 
         var CLSID_PrintPhotosDropTarget = new Guid("60fd46de-f830-4894-a628-6fa81bc0190d");
         var dropTargetType = Type.GetTypeFromCLSID(CLSID_PrintPhotosDropTarget, true);
-        var dropTarget = (IDropTarget)Activator.CreateInstance(dropTargetType);
+        var dropTarget = (IDropTarget?)Activator.CreateInstance(dropTargetType);
 
-        dropTarget.Drop(dataObj, 0, new Point(), 0);
+        dropTarget?.Drop(dataObj, 0, new Point(), 0);
     }
 }

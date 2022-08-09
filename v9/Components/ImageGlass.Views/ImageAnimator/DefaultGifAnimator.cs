@@ -35,7 +35,7 @@ public class DefaultGifAnimator : IImageAnimator
     /// Updates the time frame for this image.
     /// </summary>
     /// <param name="image"></param>
-    public void UpdateFrames(Image image)
+    public void UpdateFrames(Image? image)
     {
         System.Drawing.ImageAnimator.UpdateFrames(image);
     }
@@ -45,7 +45,7 @@ public class DefaultGifAnimator : IImageAnimator
     /// </summary>
     /// <param name="image"></param>
     /// <param name="eventHandler"></param>
-    public void StopAnimate(Image image, EventHandler eventHandler)
+    public void StopAnimate(Image? image, EventHandler eventHandler)
     {
         System.Drawing.ImageAnimator.StopAnimate(image, eventHandler);
     }
@@ -55,7 +55,7 @@ public class DefaultGifAnimator : IImageAnimator
     /// </summary>
     /// <param name="image"></param>
     /// <param name="eventHandler"></param>
-    public void Animate(Image image, EventHandler eventHandler)
+    public void Animate(Image? image, EventHandler eventHandler)
     {
         System.Drawing.ImageAnimator.Animate(image, eventHandler);
     }
@@ -65,7 +65,7 @@ public class DefaultGifAnimator : IImageAnimator
     /// </summary>
     /// <param name="image"></param>
     /// <returns></returns>
-    public bool CanAnimate(Image image)
+    public bool CanAnimate(Image? image)
     {
         return System.Drawing.ImageAnimator.CanAnimate(image);
     }

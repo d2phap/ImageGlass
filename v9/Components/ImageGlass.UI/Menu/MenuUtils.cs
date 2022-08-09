@@ -144,7 +144,7 @@ public static class MenuUtils
         var eventsInfo = component.GetType()
             .GetProperty("Events", BindingFlags.Instance | BindingFlags.NonPublic);
 
-        return (EventHandlerList)eventsInfo.GetValue(component, null);
+        return (EventHandlerList?)eventsInfo.GetValue(component, null);
     }
 
 

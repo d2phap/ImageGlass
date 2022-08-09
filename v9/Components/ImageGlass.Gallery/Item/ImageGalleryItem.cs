@@ -61,7 +61,6 @@ public class ImageGalleryItem : ICloneable
 
     internal ItemCollection? owner = null;
     internal bool isDirty = true;
-    private bool editing = false;
     #endregion
 
 
@@ -393,7 +392,7 @@ public class ImageGalleryItem : ICloneable
             }
         }
     }
-    
+
     /// <summary>
     /// Gets the shell type of the image file represented by this item.
     /// </summary>
@@ -427,7 +426,7 @@ public class ImageGalleryItem : ICloneable
             }
         }
     }
-    
+
     #endregion
 
 
