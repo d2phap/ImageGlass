@@ -29,7 +29,7 @@ using WicNet;
 
 namespace ImageGlass.Base;
 
-public partial class Helpers
+public partial class BHelper
 {
     /// <summary>
     /// Converts <see cref="BitmapSource"/> to <see cref="WicBitmapSource"/> object.
@@ -180,7 +180,7 @@ public partial class Helpers
                 using (var imgM = new MagickImage(ByteData, settings))
                 {
                     var bmp = imgM.ToBitmapSource();
-                    src = Helpers.ToWicBitmapSource(bmp);
+                    src = BHelper.ToWicBitmapSource(bmp);
                 }
                 break;
         }

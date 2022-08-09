@@ -148,7 +148,7 @@ public class IgTheme
         try
         {
             //parse theme config file
-            JsonModel = Helpers.ReadJson<IgThemeJsonModel>(ConfigFilePath);
+            JsonModel = BHelper.ReadJson<IgThemeJsonModel>(ConfigFilePath);
         }
         catch { }
 
@@ -269,7 +269,7 @@ public class IgTheme
     /// <param name="filePath"></param>
     public void SaveConfigAsFile(string filePath)
     {
-        Helpers.WriteJson(filePath, JsonModel);
+        BHelper.WriteJson(filePath, JsonModel);
     }
 
 
@@ -291,7 +291,7 @@ public class IgTheme
         // get icon from file
         if (icon == null)
         {
-            var fullPath = Helpers.ResolvePath(name);
+            var fullPath = BHelper.ResolvePath(name);
             var data = PhotoCodec.Load(fullPath, new()
             {
                 Width = ToolbarActualIconHeight,

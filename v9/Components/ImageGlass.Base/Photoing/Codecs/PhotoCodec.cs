@@ -50,7 +50,7 @@ public static class PhotoCodec
 
             if (filePath.Length > 260)
             {
-                var newFilename = Helpers.PrefixLongPath(filePath);
+                var newFilename = BHelper.PrefixLongPath(filePath);
                 var allBytes = File.ReadAllBytes(newFilename);
 
                 imgC.Ping(allBytes, settings);
@@ -77,11 +77,11 @@ public static class PhotoCodec
 
                     // ExifDateTimeOriginal
                     var dt = GetExifValue(exifProfile, ExifTag.DateTimeOriginal);
-                    meta.ExifDateTimeOriginal = Helpers.ConvertDateTime(dt);
+                    meta.ExifDateTimeOriginal = BHelper.ConvertDateTime(dt);
 
                     // ExifDateTime
                     dt = GetExifValue(exifProfile, ExifTag.DateTime);
-                    meta.ExifDateTime = Helpers.ConvertDateTime(dt);
+                    meta.ExifDateTime = BHelper.ConvertDateTime(dt);
                 }
 
                 meta.Width = imgM.Width;
@@ -245,7 +245,7 @@ public static class PhotoCodec
         {
             token.ThrowIfCancellationRequested();
 
-            using var bitmap = Helpers.ToGdiPlusBitmap(srcBitmap);
+            using var bitmap = BHelper.ToGdiPlusBitmap(srcBitmap);
             if (bitmap == null) return;
             
             using var imgM = new MagickImage();
@@ -343,9 +343,9 @@ public static class PhotoCodec
     {
         if (srcBitmap == null) return;
 
-        var mimeType = Helpers.GetMIMEType(srcExt);
+        var mimeType = BHelper.GetMIMEType(srcExt);
         var header = $"data:{mimeType};base64,";
-        var srcFormat = Helpers.GetWicContainerFormatFromExtension(srcExt);
+        var srcFormat = BHelper.GetWicContainerFormatFromExtension(srcExt);
 
         try
         {
@@ -379,7 +379,7 @@ public static class PhotoCodec
     public static async Task SaveAsBase64Async(string srcFilePath, string destFilePath, CodecReadOptions readOptions, CancellationToken token = default)
     {
         var srcExt = Path.GetExtension(srcFilePath).ToLowerInvariant();
-        var mimeType = Helpers.GetMIMEType(srcExt);
+        var mimeType = BHelper.GetMIMEType(srcExt);
 
         try
         {
@@ -451,7 +451,7 @@ public static class PhotoCodec
                     base64Content = fs.ReadToEnd();
                 }
 
-                result.Image = Helpers.ToWicBitmapSource(base64Content);
+                result.Image = BHelper.ToWicBitmapSource(base64Content);
                 result.FrameCount = metadata?.FramesCount ?? 0;
 
                 break;
@@ -488,7 +488,7 @@ public static class PhotoCodec
 
                 ApplySizeSettings(imgM, options);
 
-                result.Image = Helpers.ToWicBitmapSource(imgM.ToBitmapSource());
+                result.Image = BHelper.ToWicBitmapSource(imgM.ToBitmapSource());
             }
         }
 
@@ -537,7 +537,7 @@ public static class PhotoCodec
         // but that requires using the "long path name" prefix to succeed.
         if (filename.Length > 260)
         {
-            var newFilename = Helpers.PrefixLongPath(filename);
+            var newFilename = BHelper.PrefixLongPath(filename);
             var allBytes = File.ReadAllBytes(newFilename);
 
             imgColl.Ping(allBytes, settings);
@@ -643,7 +643,7 @@ public static class PhotoCodec
         // but that requires using the "long path name" prefix to succeed.
         if (filename.Length > 260)
         {
-            var newFilename = Helpers.PrefixLongPath(filename);
+            var newFilename = BHelper.PrefixLongPath(filename);
             var allBytes = File.ReadAllBytes(newFilename);
 
             imgColl.Ping(allBytes, settings);
@@ -784,7 +784,7 @@ public static class PhotoCodec
             // or only apply color profile if there is an embedded profile
             if (options.ApplyColorProfileForAll || colorProfile != null)
             {
-                var imgColor = Helpers.GetColorProfile(options.ColorProfileName);
+                var imgColor = BHelper.GetColorProfile(options.ColorProfileName);
 
                 if (imgColor != null)
                 {
@@ -880,7 +880,7 @@ public static class PhotoCodec
         {
             if (int.TryParse(exifRotationTag.Value.ToString(), out var orientationFlag))
             {
-                var orientationDegree = Helpers.GetOrientationDegree(orientationFlag);
+                var orientationDegree = BHelper.GetOrientationDegree(orientationFlag);
                 if (orientationDegree != 0)
                 {
                     // Rotate image accordingly

@@ -878,7 +878,7 @@ public static class Config
         #region String items
 
         ColorProfile = items.GetValue(nameof(ColorProfile), ColorProfile);
-        ColorProfile = Helpers.GetCorrectColorProfileName(ColorProfile);
+        ColorProfile = BHelper.GetCorrectColorProfileName(ColorProfile);
 
         AutoUpdate = items.GetValue(nameof(AutoUpdate), AutoUpdate);
         LastSeenImagePath = items.GetValue(nameof(LastSeenImagePath), LastSeenImagePath);
@@ -941,7 +941,7 @@ public static class Config
         MouseClickActions = items.GetSection(nameof(MouseClickActions))
             .GetChildren()
             .ToDictionary(
-                i => Helpers.ParseEnum<MouseClickEvent>(i.Key),
+                i => BHelper.ParseEnum<MouseClickEvent>(i.Key),
                 i => i.Get<ToggleAction>());
         
 
@@ -949,8 +949,8 @@ public static class Config
         MouseWheelActions = items.GetSection(nameof(MouseWheelActions))
             .GetChildren()
             .ToDictionary(
-                i => Helpers.ParseEnum<MouseWheelEvent>(i.Key),
-                i => Helpers.ParseEnum<MouseWheelAction>(i.Value));
+                i => BHelper.ParseEnum<MouseWheelEvent>(i.Key),
+                i => BHelper.ParseEnum<MouseWheelAction>(i.Value));
 
         #endregion
 
@@ -1014,7 +1014,7 @@ public static class Config
         var jsonFile = App.ConfigDir(PathType.File, Source.UserFilename);
         var jsonObj = PrepareJsonSettingObjects();
 
-        Helpers.WriteJson(jsonFile, jsonObj);
+        BHelper.WriteJson(jsonFile, jsonObj);
     }
 
 
@@ -1055,7 +1055,7 @@ public static class Config
 
         if (result.ExitResult == PopupExitResult.OK)
         {
-            Helpers.OpenUrl(url, $"{igcmdExeName}_invalid_command");
+            BHelper.OpenUrl(url, $"{igcmdExeName}_invalid_command");
         }
 
         return (int)IgExitCode.Error;
@@ -1396,7 +1396,7 @@ public static class Config
     public static void ApplyFormTheme(Form frm, IgTheme th)
     {
         // load theme colors
-        foreach (var ctr in Helpers.GetAllControls(frm, typeof(LinkLabel)))
+        foreach (var ctr in BHelper.GetAllControls(frm, typeof(LinkLabel)))
         {
             if (ctr is LinkLabel lnk)
             {

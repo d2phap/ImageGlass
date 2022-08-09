@@ -24,7 +24,7 @@ using System.Web;
 namespace ImageGlass.Base;
 
 
-public partial class Helpers
+public partial class BHelper
 {
     private const string LONG_PATH_PREFIX = @"\\?\";
 

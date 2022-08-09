@@ -224,7 +224,7 @@ public partial class FrmMain
     /// <param name="mode"><see cref="ZoomMode"/> value in string</param>
     private void IG_SetZoomMode(string mode)
     {
-        Config.ZoomMode = Helpers.ParseEnum<ZoomMode>(mode);
+        Config.ZoomMode = BHelper.ParseEnum<ZoomMode>(mode);
 
         if (PicMain.ZoomMode == Config.ZoomMode)
         {
@@ -377,7 +377,7 @@ public partial class FrmMain
     /// </summary>
     private void IG_ReportIssue()
     {
-        Helpers.OpenUrl("https://github.com/d2phap/ImageGlass/issues?q=is%3Aissue+label%3Av9+", "app_report_issue");
+        BHelper.OpenUrl("https://github.com/d2phap/ImageGlass/issues?q=is%3Aissue+label%3Av9+", "app_report_issue");
     }
 
     /// <summary>
@@ -394,7 +394,7 @@ public partial class FrmMain
 
         btnDonate.Click += (object? sender, EventArgs e) =>
         {
-            Helpers.OpenUrl("https://imageglass.org/source#donation", "app_donation");
+            BHelper.OpenUrl("https://imageglass.org/source#donation", "app_donation");
         };
 
         btnCheckForUpdate.Click += (_, _) => IG_CheckForUpdate(true);
@@ -605,7 +605,7 @@ public partial class FrmMain
         else
         {
             var args = string.Format($"{IgCommands.SHARE} \"{filePath}\"");
-            var result = await Helpers.RunIgcmd10(args);
+            var result = await BHelper.RunIgcmd10(args);
 
 
             if (result == IgExitCode.Error)
@@ -814,7 +814,7 @@ public partial class FrmMain
         else if (Clipboard.ContainsText())
         {
             // try to get absolute path
-            var text = Helpers.ResolvePath(Clipboard.GetText());
+            var text = BHelper.ResolvePath(Clipboard.GetText());
 
             if (File.Exists(text) || Directory.Exists(text))
             {
@@ -825,7 +825,7 @@ public partial class FrmMain
             {
                 try
                 {
-                    var img = Helpers.ToWicBitmapSource(text);
+                    var img = BHelper.ToWicBitmapSource(text);
                     LoadClipboardImage(img);
                 }
                 catch (Exception ex)
@@ -1261,7 +1261,7 @@ public partial class FrmMain
             : IgCommands.UNSET_DEFAULT_PHOTO_VIEWER;
 
         // run command
-        var result = await Helpers.RunIgcmd($"{cmd} {extensions}");
+        var result = await BHelper.RunIgcmd($"{cmd} {extensions}");
 
         var langPath = enable
             ? $"{Name}.{nameof(MnuSetDefaultPhotoViewer)}"
@@ -1370,7 +1370,7 @@ public partial class FrmMain
                 : SHSTOCKICONID.SIID_DELETE;
 
             var description = filePath + "\r\n" +
-                    Helpers.FormatSize(Gallery.Items[Local.CurrentIndex].Details.FileSize);
+                    BHelper.FormatSize(Gallery.Items[Local.CurrentIndex].Details.FileSize);
 
             result = Config.ShowWarning(
                 description: description,
@@ -1389,7 +1389,7 @@ public partial class FrmMain
         {
             try
             {
-                Helpers.DeleteFile(filePath, moveToRecycleBin);
+                BHelper.DeleteFile(filePath, moveToRecycleBin);
 
 
                 // TODO: once the realtime watcher implemented, delete this:
@@ -1422,7 +1422,7 @@ public partial class FrmMain
 
         var filePath = Local.Images.GetFileName(Local.CurrentIndex);
         var ext = Path.GetExtension(filePath).ToUpperInvariant();
-        var defaultExt = Helpers.IsOS(WindowsOS.Win7) ? ".bmp" : ".jpg";
+        var defaultExt = BHelper.IsOS(WindowsOS.Win7) ? ".bmp" : ".jpg";
         var langPath = $"{Name}.{nameof(MnuSetDesktopBackground)}";
 
         PicMain.ShowMessage(Config.Language[$"{langPath}._CreatingFile"], "", delayMs: 500);
@@ -1457,7 +1457,7 @@ public partial class FrmMain
         else
         {
             var args = string.Format($"{IgCommands.SET_WALLPAPER} \"{filePath}\" {(int)WallpaperStyle.Current}");
-            var result = await Helpers.RunIgcmd(args);
+            var result = await BHelper.RunIgcmd(args);
 
 
             if (result == IgExitCode.Done)
@@ -1523,7 +1523,7 @@ public partial class FrmMain
         else
         {
             var args = string.Format($"{IgCommands.SET_LOCK_SCREEN} \"{filePath}\"");
-            var result = await Helpers.RunIgcmd10(args);
+            var result = await BHelper.RunIgcmd10(args);
 
 
             if (result == IgExitCode.Done)
@@ -1701,7 +1701,7 @@ public partial class FrmMain
     /// </summary>
     private void IG_SetFrmMainState(string state)
     {
-        WindowState = Helpers.ParseEnum<FormWindowState>(state);
+        WindowState = BHelper.ParseEnum<FormWindowState>(state);
     }
 
 

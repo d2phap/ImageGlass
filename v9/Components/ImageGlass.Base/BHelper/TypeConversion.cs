@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 namespace ImageGlass.Base;
 
-public partial class Helpers
+public partial class BHelper
 {
     /// <summary>
     /// Convert the given object to Enum type

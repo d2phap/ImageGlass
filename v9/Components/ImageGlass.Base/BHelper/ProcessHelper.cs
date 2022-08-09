@@ -25,7 +25,7 @@ using System.Globalization;
 
 namespace ImageGlass.Base;
 
-public partial class Helpers
+public partial class BHelper
 {
     private static readonly TaskFactory _myTaskFactory = new(
         CancellationToken.None, TaskCreationOptions.None,

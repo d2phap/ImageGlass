@@ -94,17 +94,17 @@ public class IgImgData : IDisposable
             {
                 data.MultiFrameImage.Coalesce();
                 using var bmp = data.MultiFrameImage.ToBitmap(ImageFormat.Gif);
-                Image = Helpers.ToWicBitmapSource(bmp);
+                Image = BHelper.ToWicBitmapSource(bmp);
             }
             else
             {
                 using var bmp = data.MultiFrameImage.ToBitmap(ImageFormat.Tiff);
-                Image = Helpers.ToWicBitmapSource(bmp);
+                Image = BHelper.ToWicBitmapSource(bmp);
             }
         }
         else
         {
-            Image = Helpers.ToWicBitmapSource(data.SingleFrameImage?.ToBitmapSource());
+            Image = BHelper.ToWicBitmapSource(data.SingleFrameImage?.ToBitmapSource());
             HasAlpha = data.SingleFrameImage?.HasAlpha ?? false;
         }
     }

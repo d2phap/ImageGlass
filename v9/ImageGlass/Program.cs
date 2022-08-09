@@ -135,7 +135,7 @@ internal static class Program
 
                 btnWhatNew.Click += (object? sender, EventArgs e) =>
                 {
-                    Helpers.OpenUrl(updater.CurrentReleaseInfo?.ChangelogUrl.ToString(), "app_update");
+                    BHelper.OpenUrl(updater.CurrentReleaseInfo?.ChangelogUrl.ToString(), "app_update");
                 };
 
 

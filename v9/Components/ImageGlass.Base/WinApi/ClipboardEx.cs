@@ -46,7 +46,7 @@ public static class ClipboardEx
         if (clonedImg == null) return;
 
         // https://stackoverflow.com/a/17762059/2856887
-        Helpers.RunAsThread(() => Clipboard.Clear(), ApartmentState.STA)
+        BHelper.RunAsThread(() => Clipboard.Clear(), ApartmentState.STA)
             .Join();
 
         data ??= new DataObject();
@@ -56,7 +56,7 @@ public static class ClipboardEx
         using var dibMemStream = new MemoryStream();
 
         // As standard bitmap, without transparency support
-        data.SetData(DataFormats.Bitmap, true, Helpers.ToGdiPlusBitmap(nonAlphaImg));
+        data.SetData(DataFormats.Bitmap, true, BHelper.ToGdiPlusBitmap(nonAlphaImg));
 
         // As PNG. Gimp will prefer this over the other two.
         clonedImg.Save(pngMemStream, WicCodec.GUID_ContainerFormatPng);
@@ -64,7 +64,7 @@ public static class ClipboardEx
 
         // The 'copy=true' argument means the MemoryStreams can be safely disposed
         // after the operation.
-        Helpers.RunAsThread(() => Clipboard.SetDataObject(data, true), ApartmentState.STA)
+        BHelper.RunAsThread(() => Clipboard.SetDataObject(data, true), ApartmentState.STA)
             .Join();
     }
 
@@ -88,7 +88,7 @@ public static class ClipboardEx
         {
             if (dataObj.GetData("PNG", false) is MemoryStream pngStream)
             {
-                using var wicBmp = Helpers.ToWicBitmapSource(pngStream);
+                using var wicBmp = BHelper.ToWicBitmapSource(pngStream);
                 clipboardImage = wicBmp?.Clone();
             }
         }
@@ -97,7 +97,7 @@ public static class ClipboardEx
         {
             if (dataObj.GetData(DataFormats.Bitmap) is Image img)
             {
-                clipboardImage = Helpers.ToWicBitmapSource(img);
+                clipboardImage = BHelper.ToWicBitmapSource(img);
             }
         }
 
@@ -105,7 +105,7 @@ public static class ClipboardEx
         {
             if (dataObj.GetData(typeof(Image)) is Image img)
             {
-                clipboardImage = Helpers.ToWicBitmapSource(img);
+                clipboardImage = BHelper.ToWicBitmapSource(img);
             }
         }
 

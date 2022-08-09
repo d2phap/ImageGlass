@@ -21,7 +21,7 @@ using System.Globalization;
 
 namespace ImageGlass.Base;
 
-public partial class Helpers
+public partial class BHelper
 {
     /// <summary>
     /// Formats the given file size as a human readable string.

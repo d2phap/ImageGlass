@@ -44,7 +44,7 @@ public class CornerApi
     /// <returns></returns>
     public static void ApplyCorner(IntPtr handle)
     {
-        if (!Helpers.IsOS(WindowsOS.Win11))
+        if (!BHelper.IsOS(WindowsOS.Win11))
         {
             return;
         }

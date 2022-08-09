@@ -24,7 +24,7 @@ using System.Text.Json.Serialization;
 
 namespace ImageGlass.Base;
 
-public partial class Helpers
+public partial class BHelper
 {
     private static JsonSerializerOptions JsonOptions { get; } = new()
     {

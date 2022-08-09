@@ -264,7 +264,7 @@ public partial class FrmMain : Form
 
 
         // Start loading path
-        _ = Helpers.RunAsThread(() => PrepareLoading(pathToLoad));
+        _ = BHelper.RunAsThread(() => PrepareLoading(pathToLoad));
     }
 
 
@@ -297,11 +297,11 @@ public partial class FrmMain : Form
     /// </param>
     private void PrepareLoading(string inputPath)
     {
-        var path = Helpers.ResolvePath(inputPath);
+        var path = BHelper.ResolvePath(inputPath);
 
         if (string.IsNullOrEmpty(path)) return;
 
-        if (Helpers.IsDirectory(path))
+        if (BHelper.IsDirectory(path))
         {
             _ = PrepareLoadingAsync(new string[] { inputPath }, "");
         }
@@ -328,8 +328,8 @@ public partial class FrmMain : Form
 
         if (string.IsNullOrEmpty(currentFile))
         {
-            filePath = paths.AsParallel().FirstOrDefault(i => !Helpers.IsDirectory(i));
-            filePath = Helpers.ResolvePath(filePath);
+            filePath = paths.AsParallel().FirstOrDefault(i => !BHelper.IsDirectory(i));
+            filePath = BHelper.ResolvePath(filePath);
         }
 
         if (string.IsNullOrEmpty(filePath))
@@ -374,10 +374,10 @@ public partial class FrmMain : Form
             var firstPath = true;
 
             // Parse string to absolute path
-            var paths = inputPaths.Select(item => Helpers.ResolvePath(item));
+            var paths = inputPaths.Select(item => BHelper.ResolvePath(item));
 
             // prepare the distinct dir list
-            var distinctDirsList = Helpers.GetDistinctDirsFromPaths(paths);
+            var distinctDirsList = BHelper.GetDistinctDirsFromPaths(paths);
 
             foreach (var aPath in distinctDirsList)
             {
@@ -386,7 +386,7 @@ public partial class FrmMain : Form
 
                 try
                 {
-                    isDir = Helpers.IsDirectory(aPath);
+                    isDir = BHelper.IsDirectory(aPath);
                 }
                 catch { continue; }
 
@@ -977,7 +977,7 @@ public partial class FrmMain : Form
         }
 
         // Select thumbnail item
-        _ = Helpers.RunAsThread(SelectCurrentThumbnail);
+        _ = BHelper.RunAsThread(SelectCurrentThumbnail);
 
         //DisplayThumbnail();
 
@@ -1075,7 +1075,7 @@ public partial class FrmMain : Form
         UpdateImageInfo(ImageInfoUpdateTypes.ListCount);
 
         // Load thumnbnail
-        _ = Helpers.RunAsThread(LoadThumbnails);
+        _ = BHelper.RunAsThread(LoadThumbnails);
     }
 
     private void Local_OnFirstImageReached()
@@ -1164,7 +1164,7 @@ public partial class FrmMain : Form
 
             var fullPath = string.IsNullOrEmpty(filename)
                 ? Local.Images.GetFileName(Local.CurrentIndex)
-                : Helpers.ResolvePath(filename);
+                : BHelper.ResolvePath(filename);
 
             var isFileUpdate = updateAll && !string.IsNullOrEmpty(fullPath)
                 || types.HasFlag(ImageInfoUpdateTypes.FileSize)
@@ -1227,7 +1227,7 @@ public partial class FrmMain : Form
                 if (Config.InfoItems.Contains(nameof(ImageInfo.FileSize))
                     && fi != null)
                 {
-                    ImageInfo.FileSize = Helpers.FormatSize(fi.Length);
+                    ImageInfo.FileSize = BHelper.FormatSize(fi.Length);
                 }
                 else
                 {
@@ -1270,7 +1270,7 @@ public partial class FrmMain : Form
                 if (Config.InfoItems.Contains(nameof(ImageInfo.ModifiedDateTime))
                     && fi != null)
                 {
-                    ImageInfo.ModifiedDateTime = Helpers.FormatDateTime(fi.LastWriteTime) + " (m)";
+                    ImageInfo.ModifiedDateTime = BHelper.FormatDateTime(fi.LastWriteTime) + " (m)";
                 }
                 else
                 {
@@ -1284,7 +1284,7 @@ public partial class FrmMain : Form
                 if (Config.InfoItems.Contains(nameof(ImageInfo.ExifRating))
                     && Local.Metadata != null)
                 {
-                    var star = Helpers.FormatStarRating(Local.Metadata.ExifRatingPercent);
+                    var star = BHelper.FormatStarRating(Local.Metadata.ExifRatingPercent);
                     ImageInfo.ExifRating = star > 0
                         ? "".PadRight(star, '⭐').PadRight(5, '-').Replace("-", " -")
                         : string.Empty;
@@ -1302,7 +1302,7 @@ public partial class FrmMain : Form
                     && Local.Metadata != null
                     && Local.Metadata.ExifDateTime != null)
                 {
-                    ImageInfo.ExifDateTime = Helpers.FormatDateTime(Local.Metadata.ExifDateTime) + " (e)";
+                    ImageInfo.ExifDateTime = BHelper.FormatDateTime(Local.Metadata.ExifDateTime) + " (e)";
                 }
                 else
                 {
@@ -1317,7 +1317,7 @@ public partial class FrmMain : Form
                     && Local.Metadata != null
                     && Local.Metadata.ExifDateTimeOriginal != null)
                 {
-                    ImageInfo.ExifDateTimeOriginal = Helpers.FormatDateTime(Local.Metadata.ExifDateTimeOriginal) + " (o)";
+                    ImageInfo.ExifDateTimeOriginal = BHelper.FormatDateTime(Local.Metadata.ExifDateTimeOriginal) + " (o)";
                 }
                 else
                 {
@@ -1336,17 +1336,17 @@ public partial class FrmMain : Form
                     {
                         if (Local.Metadata.ExifDateTimeOriginal != null)
                         {
-                            dtStr = Helpers.FormatDateTime(Local.Metadata.ExifDateTimeOriginal) + " (o)";
+                            dtStr = BHelper.FormatDateTime(Local.Metadata.ExifDateTimeOriginal) + " (o)";
                         }
                         else if (Local.Metadata.ExifDateTime != null)
                         {
-                            dtStr = Helpers.FormatDateTime(Local.Metadata.ExifDateTime) + " (e)";
+                            dtStr = BHelper.FormatDateTime(Local.Metadata.ExifDateTime) + " (e)";
                         }
                     }
 
                     if (fi != null && string.IsNullOrEmpty(dtStr))
                     {
-                        dtStr = Helpers.FormatDateTime(fi.LastWriteTime) + " (m)";
+                        dtStr = BHelper.FormatDateTime(fi.LastWriteTime) + " (m)";
                     }
                 }
 
@@ -1611,13 +1611,13 @@ public partial class FrmMain : Form
             MnuExtractFrames.Text = string.Format(Config.Language[$"{Name}.{nameof(MnuExtractFrames)}"], Local.Metadata?.FramesCount);
 
             // check if igcmdWin10.exe exists!
-            if (!Helpers.IsOS(WindowsOS.Win10OrLater)
+            if (!BHelper.IsOS(WindowsOS.Win10OrLater)
                 || !File.Exists(App.StartUpDir("igcmd10.exe")))
             {
                 MnuSetLockScreen.Enabled = false;
             }
 
-            if (Helpers.IsOS(WindowsOS.Win7))
+            if (BHelper.IsOS(WindowsOS.Win7))
             {
                 MnuOpenWith.Enabled = false;
             }
@@ -1676,7 +1676,7 @@ public partial class FrmMain : Form
             }
 
             MnuContext.Items.Add(new ToolStripSeparator());
-            if (!Helpers.IsOS(WindowsOS.Win7))
+            if (!BHelper.IsOS(WindowsOS.Win7))
             {
                 MnuContext.Items.Add(MenuUtils.Clone(MnuOpenWith));
             }
@@ -1710,7 +1710,7 @@ public partial class FrmMain : Form
             MnuContext.Items.Add(MenuUtils.Clone(MnuSetDesktopBackground));
 
             // check if igcmd10.exe exists!
-            if (Helpers.IsOS(WindowsOS.Win10OrLater) && File.Exists(App.StartUpDir("igcmd10.exe")))
+            if (BHelper.IsOS(WindowsOS.Win10OrLater) && File.Exists(App.StartUpDir("igcmd10.exe")))
             {
                 MnuContext.Items.Add(MenuUtils.Clone(MnuSetLockScreen));
             }

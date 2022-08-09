@@ -53,7 +53,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
             e.Item.Height - 2 - Toolbar.DefaultGap * 2
         );
 
-        using var path = ThemeUtils.GetRoundRectanglePath(rect, Helpers.GetItemBorderRadius(rect.Width, Constants.TOOLBAR_ICON_HEIGHT));
+        using var path = ThemeUtils.GetRoundRectanglePath(rect, BHelper.GetItemBorderRadius(rect.Width, Constants.TOOLBAR_ICON_HEIGHT));
         
         // on pressed
         if (e.Item.Pressed)
@@ -115,7 +115,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         rect.Location = new(1, 1);
 
         using var brush = new SolidBrush(Color.Transparent);
-        using var path = ThemeUtils.GetRoundRectanglePath(rect, Helpers.GetItemBorderRadius(rect.Height, Constants.TOOLBAR_ICON_HEIGHT));
+        using var path = ThemeUtils.GetRoundRectanglePath(rect, BHelper.GetItemBorderRadius(rect.Height, Constants.TOOLBAR_ICON_HEIGHT));
 
 
         // on pressed

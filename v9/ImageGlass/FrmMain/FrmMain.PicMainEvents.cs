@@ -88,7 +88,7 @@ public partial class FrmMain
             return;
         }
 
-        var filePath = Helpers.ResolvePath(filePaths[0]);
+        var filePath = BHelper.ResolvePath(filePaths[0]);
         var imageIndex = Local.Images.IndexOf(filePath);
 
         // The file is located another folder, load the entire folder
