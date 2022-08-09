@@ -34,7 +34,7 @@ public partial class Helpers
     /// <summary>
     /// Converts <see cref="BitmapSource"/> to <see cref="WicBitmapSource"/> object.
     /// </summary>
-    public static WicBitmapSource? FromBitmapSource(BitmapSource? bmp)
+    public static WicBitmapSource? ToWicBitmapSource(BitmapSource? bmp)
     {
         if (bmp == null)
             return null;
@@ -55,19 +55,167 @@ public partial class Helpers
         return wicSrc;
     }
 
+    
+    /// <summary>
+    /// Converts <see cref="Bitmap"/> to <see cref="WicBitmapSource"/>.
+    /// </summary>
+    public static WicBitmapSource? ToWicBitmapSource(Bitmap? bmp)
+    {
+        if (bmp == null) return null;
+        
+        var wicSrc = WicBitmapSource.FromHBitmap(bmp.GetHbitmap());
+        wicSrc.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+
+        return wicSrc;
+    }
+
 
     /// <summary>
-    /// Converts <see cref="WicBitmapSource"/> to <see cref="Bitmap"/>.
+    /// Converts <see cref="Image"/> to <see cref="WicBitmapSource"/>.
     /// </summary>
-    public static Bitmap? FromWicBitmapSource(WicBitmapSource? bmp)
+    public static WicBitmapSource? ToWicBitmapSource(Image? img)
     {
-        if (bmp == null)
+        if (img == null) return null;
+
+        var bmp = new Bitmap(img);
+        return ToWicBitmapSource(bmp);
+    }
+
+
+    /// <summary>
+    /// Converts <see cref="Stream"/> to <see cref="WicBitmapSource"/>.
+    /// </summary>
+    public static WicBitmapSource? ToWicBitmapSource(Stream? stream)
+    {
+        if (stream == null) return null;
+
+        var wicSrc = WicBitmapSource.Load(stream);
+        wicSrc.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+
+        return wicSrc;
+    }
+
+
+    /// <summary>
+    /// Converts base64 string to <see cref="WicBitmapSource"/>.
+    /// </summary>
+    /// <param name="base64">Base64 string</param>
+    public static WicBitmapSource? ToWicBitmapSource(string base64)
+    {
+        var (MimeType, ByteData) = ConvertBase64ToBytes(base64);
+        if (string.IsNullOrEmpty(MimeType)) return null;
+
+        // supported MIME types:
+        // https://www.iana.org/assignments/media-types/media-types.xhtml#image
+        #region Settings
+        var settings = new MagickReadSettings();
+
+        switch (MimeType)
+        {
+            case "image/avif":
+                settings.Format = MagickFormat.Avif;
+                break;
+            case "image/bmp":
+                settings.Format = MagickFormat.Bmp;
+                break;
+            case "image/gif":
+                settings.Format = MagickFormat.Gif;
+                break;
+            case "image/tiff":
+                settings.Format = MagickFormat.Tiff;
+                break;
+            case "image/jpeg":
+                settings.Format = MagickFormat.Jpeg;
+                break;
+            case "image/svg+xml":
+                settings.BackgroundColor = MagickColors.Transparent;
+                settings.Format = MagickFormat.Svg;
+                break;
+            case "image/x-icon":
+                settings.Format = MagickFormat.Ico;
+                break;
+            case "image/x-portable-anymap":
+                settings.Format = MagickFormat.Pnm;
+                break;
+            case "image/x-portable-bitmap":
+                settings.Format = MagickFormat.Pbm;
+                break;
+            case "image/x-portable-graymap":
+                settings.Format = MagickFormat.Pgm;
+                break;
+            case "image/x-portable-pixmap":
+                settings.Format = MagickFormat.Ppm;
+                break;
+            case "image/x-xbitmap":
+                settings.Format = MagickFormat.Xbm;
+                break;
+            case "image/x-xpixmap":
+                settings.Format = MagickFormat.Xpm;
+                break;
+            case "image/x-cmu-raster":
+                settings.Format = MagickFormat.Ras;
+                break;
+        }
+        #endregion
+
+
+        WicBitmapSource? src = null;
+        switch (settings.Format)
+        {
+            case MagickFormat.Gif:
+            case MagickFormat.Gif87:
+            case MagickFormat.Tif:
+            case MagickFormat.Tiff64:
+            case MagickFormat.Tiff:
+            case MagickFormat.Ico:
+            case MagickFormat.Icon:
+                using (var ms = new MemoryStream(ByteData) { Position = 0 })
+                {
+                    using var bitm = new Bitmap(ms, true);
+                    src = WicBitmapSource.FromHBitmap(bitm.GetHbitmap());
+                }
+                break;
+
+            default:
+                using (var imgM = new MagickImage(ByteData, settings))
+                {
+                    var bmp = imgM.ToBitmapSource();
+                    src = Helpers.ToWicBitmapSource(bmp);
+                }
+                break;
+        }
+
+        if (src == null) return null;
+
+        src.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+        return src;
+    }
+
+    
+    /// <summary>
+    /// Converts <see cref="WicBitmapSource"/> to <see cref="Bitmap"/>.
+    /// https://stackoverflow.com/a/2897325/2856887
+    /// </summary>
+    public static Bitmap? ToGdiPlusBitmap(WicBitmapSource? source)
+    {
+        if (source == null)
             return null;
 
-        var imgData = bmp.CopyPixels(0, 0, bmp.Width, bmp.Height);
-        using var ms = new MemoryStream(imgData);
+        var bmp = new Bitmap(
+          source.Width,
+          source.Height,
+          PixelFormat.Format32bppPArgb);
 
-        return new Bitmap(ms, true);
+        var data = bmp.LockBits(
+          new Rectangle(new(0, 0), bmp.Size),
+          ImageLockMode.WriteOnly,
+          PixelFormat.Format32bppPArgb);
+
+        source.CopyPixels(data.Height * data.Stride, data.Scan0, data.Stride);
+
+        bmp.UnlockBits(data);
+
+        return bmp;
     }
 
 
@@ -110,7 +258,7 @@ public partial class Helpers
     {
         if (string.IsNullOrWhiteSpace(content))
         {
-            throw new ArgumentNullException(nameof(content)); 
+            throw new ArgumentNullException(nameof(content));
         }
 
         // data:image/svg-xml;base64,xxxxxxxx
@@ -357,5 +505,6 @@ public partial class Helpers
 
         return WicCodec.GUID_ContainerFormatPng;
     }
+
 }
 

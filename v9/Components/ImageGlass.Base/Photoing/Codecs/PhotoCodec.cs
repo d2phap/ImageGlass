@@ -196,103 +196,6 @@ public static class PhotoCodec
 
 
     /// <summary>
-    /// Converts base64 string to Bitmap.
-    /// </summary>
-    /// <param name="content">Base64 string</param>
-    /// <returns></returns>
-    public static WicBitmapSource? Base64ToBitmap(string content)
-    {
-        var (MimeType, ByteData) = Helpers.ConvertBase64ToBytes(content);
-        if (string.IsNullOrEmpty(MimeType)) return null;
-
-        // supported MIME types:
-        // https://www.iana.org/assignments/media-types/media-types.xhtml#image
-        #region Settings
-        var settings = new MagickReadSettings();
-
-        switch (MimeType)
-        {
-            case "image/avif":
-                settings.Format = MagickFormat.Avif;
-                break;
-            case "image/bmp":
-                settings.Format = MagickFormat.Bmp;
-                break;
-            case "image/gif":
-                settings.Format = MagickFormat.Gif;
-                break;
-            case "image/tiff":
-                settings.Format = MagickFormat.Tiff;
-                break;
-            case "image/jpeg":
-                settings.Format = MagickFormat.Jpeg;
-                break;
-            case "image/svg+xml":
-                settings.BackgroundColor = MagickColors.Transparent;
-                settings.Format = MagickFormat.Svg;
-                break;
-            case "image/x-icon":
-                settings.Format = MagickFormat.Ico;
-                break;
-            case "image/x-portable-anymap":
-                settings.Format = MagickFormat.Pnm;
-                break;
-            case "image/x-portable-bitmap":
-                settings.Format = MagickFormat.Pbm;
-                break;
-            case "image/x-portable-graymap":
-                settings.Format = MagickFormat.Pgm;
-                break;
-            case "image/x-portable-pixmap":
-                settings.Format = MagickFormat.Ppm;
-                break;
-            case "image/x-xbitmap":
-                settings.Format = MagickFormat.Xbm;
-                break;
-            case "image/x-xpixmap":
-                settings.Format = MagickFormat.Xpm;
-                break;
-            case "image/x-cmu-raster":
-                settings.Format = MagickFormat.Ras;
-                break;
-        }
-        #endregion
-
-
-        WicBitmapSource? src = null;
-        switch (settings.Format)
-        {
-            case MagickFormat.Gif:
-            case MagickFormat.Gif87:
-            case MagickFormat.Tif:
-            case MagickFormat.Tiff64:
-            case MagickFormat.Tiff:
-            case MagickFormat.Ico:
-            case MagickFormat.Icon:
-                using (var ms = new MemoryStream(ByteData) { Position = 0 })
-                {
-                    using var bitm = new Bitmap(ms, true);
-                    src = WicBitmapSource.FromHBitmap(bitm.GetHbitmap());
-                }
-                break;
-
-            default:
-                using (var imgM = new MagickImage(ByteData, settings))
-                {
-                    var bmp = imgM.ToBitmapSource();
-                    src = Helpers.FromBitmapSource(bmp);
-                }
-                break;
-        }
-
-        if (src == null) return null;
-
-        src?.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
-        return src;
-    }
-
-
-    /// <summary>
     /// Save as image file
     /// </summary>
     /// <param name="srcFileName">Source filename to save</param>
@@ -342,10 +245,14 @@ public static class PhotoCodec
         {
             token.ThrowIfCancellationRequested();
 
+            using var bitmap = Helpers.ToGdiPlusBitmap(srcBitmap);
+            if (bitmap == null) return;
+            
             using var imgM = new MagickImage();
+            
             await Task.Run(() =>
             {
-                imgM.Read(srcBitmap.CopyPixels(0, 0, srcBitmap.Width, srcBitmap.Height));
+                imgM.Read(bitmap);
                 imgM.Quality = quality;
             }, token);
 
@@ -513,32 +420,6 @@ public static class PhotoCodec
     }
 
 
-    /// <summary>
-    /// Converts <see cref="WicBitmapSource"/> to <see cref="Bitmap"/>.
-    /// https://stackoverflow.com/a/2897325/2856887
-    /// </summary>
-    public static Bitmap? BitmapSourceToGdiPlusBitmap(WicBitmapSource source)
-    {
-        if (source == null)
-            return null;
-
-        var bmp = new Bitmap(
-          source.Width,
-          source.Height,
-          PixelFormat.Format32bppPArgb);
-
-        var data = bmp.LockBits(
-          new Rectangle(new(0, 0), bmp.Size),
-          ImageLockMode.WriteOnly,
-          PixelFormat.Format32bppPArgb);
-
-        source.CopyPixels(data.Height * data.Stride, data.Scan0, data.Stride);
-
-        bmp.UnlockBits(data);
-
-        return bmp;
-    }
-
     #endregion
 
 
@@ -570,7 +451,7 @@ public static class PhotoCodec
                     base64Content = fs.ReadToEnd();
                 }
 
-                result.Image = Base64ToBitmap(base64Content);
+                result.Image = Helpers.ToWicBitmapSource(base64Content);
                 result.FrameCount = metadata?.FramesCount ?? 0;
 
                 break;
@@ -580,7 +461,7 @@ public static class PhotoCodec
                 try
                 {
                     // Note: Using FileStream is much faster than using MagickImageCollection
-                    result.Image = ConvertFileToBitmap(filename);
+                    result.Image = WicBitmapSource.Load(filename);
                     result.FrameCount = metadata?.FramesCount ?? 0;
                 }
                 catch
@@ -607,7 +488,7 @@ public static class PhotoCodec
 
                 ApplySizeSettings(imgM, options);
 
-                result.Image = Helpers.FromBitmapSource(imgM.ToBitmapSource());
+                result.Image = Helpers.ToWicBitmapSource(imgM.ToBitmapSource());
             }
         }
 
@@ -1007,22 +888,6 @@ public static class PhotoCodec
                 }
             }
         }
-    }
-
-
-    /// <summary>
-    /// Converts file to Bitmap
-    /// </summary>
-    /// <param name="filename">Full path of file</param>
-    /// <returns></returns>
-    private static WicBitmapSource ConvertFileToBitmap(string filename)
-    {
-        using var fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
-        var ms = new MemoryStream();
-        fs.CopyTo(ms);
-        ms.Position = 0;
-
-        return WicBitmapSource.Load(ms);
     }
 
 

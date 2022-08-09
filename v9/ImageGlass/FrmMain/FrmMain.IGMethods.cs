@@ -825,7 +825,7 @@ public partial class FrmMain
             {
                 try
                 {
-                    var img = PhotoCodec.Base64ToBitmap(text);
+                    var img = Helpers.ToWicBitmapSource(text);
                     LoadClipboardImage(img);
                 }
                 catch (Exception ex)

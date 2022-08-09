@@ -56,7 +56,7 @@ public static class ClipboardEx
         using var dibMemStream = new MemoryStream();
 
         // As standard bitmap, without transparency support
-        data.SetData(DataFormats.Bitmap, true, PhotoCodec.BitmapSourceToGdiPlusBitmap(nonAlphaImg));
+        data.SetData(DataFormats.Bitmap, true, Helpers.ToGdiPlusBitmap(nonAlphaImg));
 
         // As PNG. Gimp will prefer this over the other two.
         clonedImg.Save(pngMemStream, WicCodec.GUID_ContainerFormatPng);
@@ -88,9 +88,8 @@ public static class ClipboardEx
         {
             if (dataObj.GetData("PNG", false) is MemoryStream pngStream)
             {
-                using var bm = WicBitmapSource.Load(pngStream);
-                bm.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
-                clipboardImage = bm.Clone();
+                using var wicBmp = Helpers.ToWicBitmapSource(pngStream);
+                clipboardImage = wicBmp?.Clone();
             }
         }
 
@@ -98,8 +97,7 @@ public static class ClipboardEx
         {
             if (dataObj.GetData(DataFormats.Bitmap) is Image img)
             {
-                var bmp = new Bitmap(img);
-                clipboardImage = WicBitmapSource.FromHBitmap(bmp.GetHbitmap());
+                clipboardImage = Helpers.ToWicBitmapSource(img);
             }
         }
 
@@ -107,8 +105,7 @@ public static class ClipboardEx
         {
             if (dataObj.GetData(typeof(Image)) is Image img)
             {
-                var bmp = new Bitmap(img);
-                clipboardImage = WicBitmapSource.FromHBitmap(bmp.GetHbitmap());
+                clipboardImage = Helpers.ToWicBitmapSource(img);
             }
         }
 
