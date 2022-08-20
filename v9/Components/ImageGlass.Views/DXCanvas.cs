@@ -465,7 +465,7 @@ public class DXCanvas : DXControl
             _navLeftImageGdip?.Dispose();
             _navLeftImageGdip = null;
 
-            _navLeftImage = this.FromWicBitmapSource(value);
+            _navLeftImage = DXHelper.ToD2D1Bitmap(Device, value);
             _navLeftImageGdip = BHelper.ToGdiPlusBitmap(value);
         }
     }
@@ -484,7 +484,7 @@ public class DXCanvas : DXControl
             _navRightImageGdip?.Dispose();
             _navRightImageGdip = null;
 
-            _navRightImage = this.FromWicBitmapSource(value);
+            _navRightImage = DXHelper.ToD2D1Bitmap(Device, value);
             _navRightImageGdip = BHelper.ToGdiPlusBitmap(value);
         }
     }
@@ -1162,36 +1162,21 @@ public class DXCanvas : DXControl
 
         if (UseHardwareAcceleration)
         {
-            var d2dG = g as D2DGraphics;
-            using var checkerTileSrc = VHelper.CreateCheckerBoxTileD2D(CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
+            //var d2dG = g as D2DGraphics;
 
-            // create tile bitmap source
-            using var comBmp = this.FromWicBitmapSource(checkerTileSrc);
-            var bmpPropsPtr = new D2D1_BITMAP_BRUSH_PROPERTIES()
-            {
-                extendModeX = D2D1_EXTEND_MODE.D2D1_EXTEND_MODE_WRAP,
-                extendModeY = D2D1_EXTEND_MODE.D2D1_EXTEND_MODE_WRAP,
-            }.StructureToPtr();
-            var brushPropsPtr = new D2D1_BRUSH_PROPERTIES()
-            {
-                opacity = 1f,
-            }.StructureToPtr();
-
-            d2dG.DeviceContext.CreateBitmapBrush(comBmp.Object, bmpPropsPtr, IntPtr.Zero, out ID2D1BitmapBrush bmpBrush).ThrowOnError();
+            // create bitmap brush
+            using var bmpBrush = VHelper.CreateCheckerBoxTileD2D(Device, CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
 
             // draw checkerboard
-            d2dG.DeviceContext.FillRectangle(DXHelper.ToD2DRectF(region), bmpBrush);
+            Device.FillRectangle(DXHelper.ToD2DRectF(region), bmpBrush.Object);
 
-            Marshal.FreeHGlobal(bmpPropsPtr);
-            Marshal.FreeHGlobal(brushPropsPtr);
         }
         else
         {
             var gdiG = g as GdipGraphics;
 
-            // create tile bitmap source
-            using var checkerTile = VHelper.CreateCheckerBoxTileGdip(CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
-            using var texture = new TextureBrush(checkerTile);
+            // create bitmap brush
+            using var texture = VHelper.CreateCheckerBoxTileGdip(CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
 
             // draw checkerboard
             gdiG?.Graphics.FillRectangle(texture, region);
@@ -1979,7 +1964,7 @@ public class DXCanvas : DXControl
         if (UseHardwareAcceleration)
         {
             Source = ImageSource.Direct2D;
-            _imageD2D = this.FromWicBitmapSource(imgData.Image);
+            _imageD2D = DXHelper.ToD2D1Bitmap(Device, imgData.Image);
         }
         else
         {

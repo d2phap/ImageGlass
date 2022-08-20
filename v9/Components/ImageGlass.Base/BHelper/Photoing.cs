@@ -26,6 +26,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Media.Imaging;
 using WicNet;
+using ColorProfile = ImageMagick.ColorProfile;
 
 namespace ImageGlass.Base;
 
@@ -217,6 +218,7 @@ public partial class BHelper
 
         return bmp;
     }
+
 
 
     /// <summary>

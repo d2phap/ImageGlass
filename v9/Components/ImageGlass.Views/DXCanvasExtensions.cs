@@ -27,32 +27,7 @@ namespace ImageGlass.Views;
 
 public static class DXCanvasExtensions
 {
-    /// <summary>
-    /// Converts <see cref="WicBitmapSource"/> to <see cref="ID2D1Bitmap1"/> COM object.
-    /// </summary>
-    public static ComObject<ID2D1Bitmap>? FromWicBitmapSource(this DXCanvas c, WicBitmapSource? wicSrc)
-    {
-        if (c.Device == null || wicSrc == null)
-        {
-            return null;
-        }
-
-        wicSrc.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
-
-        // create D2DBitmap from WICBitmapSource
-        var bitmapProps = DXHelper.CreateDefaultBitmapProps();
-        var bitmapPropsPtr = bitmapProps.StructureToPtr();
-
-        _ = c.Device.CreateBitmapFromWicBitmap(wicSrc.ComObject.Object,
-            bitmapPropsPtr, out ID2D1Bitmap? bmp)
-            .ThrowOnError();
-
-        var comBmp = new ComObject<ID2D1Bitmap>(bmp);
-
-        return comBmp;
-    }
-
-
+ 
     /// <summary>
     /// Checks if the input point is inside the navigation buttons.
     /// </summary>

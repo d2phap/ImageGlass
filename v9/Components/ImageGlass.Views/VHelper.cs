@@ -1,6 +1,24 @@
-﻿
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
 using D2Phap;
 using DirectN;
+using ImageGlass.Base;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -14,14 +32,14 @@ public static class VHelper
     /// <summary>
     /// Creates checker box tile for drawing checkerboard (GDI+)
     /// </summary>
-    public static Bitmap CreateCheckerBoxTileGdip(float cellSize, Color cellColor1, Color cellColor2)
+    public static TextureBrush CreateCheckerBoxTileGdip(float cellSize, Color cellColor1, Color cellColor2)
     {
         // draw the tile
         var width = cellSize * 2;
         var height = cellSize * 2;
-        var result = new Bitmap((int)width, (int)height);
+        var tileImg = new Bitmap((int)width, (int)height);
 
-        using var g = Graphics.FromImage(result);
+        using var g = Graphics.FromImage(tileImg);
         using (Brush brush = new SolidBrush(cellColor1))
         {
             g.FillRectangle(brush, new RectangleF(0, 0, cellSize, cellSize));
@@ -34,50 +52,71 @@ public static class VHelper
             g.FillRectangle(brush, new RectangleF(0, cellSize, cellSize, cellSize));
         }
 
-        return result;
+        return new TextureBrush(tileImg);
     }
 
 
     /// <summary>
     /// Creates checker box tile for drawing checkerboard (Direct2D)
     /// </summary>
-    public static WicBitmapSource CreateCheckerBoxTileD2D(float cellSize, Color cellColor1, Color cellColor2)
+    public static ComObject<ID2D1BitmapBrush> CreateCheckerBoxTileD2D(ID2D1DeviceContext dc, float cellSize, Color cellColor1, Color cellColor2)
     {
         // create tile: [X,O]
         //              [O,X]
         var width = (int)cellSize * 2;
         var height = (int)cellSize * 2;
 
-        var wicSrc = new WicBitmapSource(width, height, WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+        var tileImg = new WicBitmapSource(width, height, WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
 
-        var dc = wicSrc.CreateRenderTarget().Object;
-        dc.SetAntialiasMode(D2D1_ANTIALIAS_MODE.D2D1_ANTIALIAS_MODE_ALIASED);
-        dc.BeginDraw();
+        using var tileImgDc = tileImg.CreateRenderTarget();
+        tileImgDc.Object.SetAntialiasMode(D2D1_ANTIALIAS_MODE.D2D1_ANTIALIAS_MODE_ALIASED);
+        tileImgDc.BeginDraw();
 
 
         // draw X cells -------------------------------
         var color1 = DXHelper.FromColor(cellColor1);
-        dc.CreateSolidColorBrush(color1, IntPtr.Zero, out var brush1);
+        tileImgDc.Object.CreateSolidColorBrush(color1, IntPtr.Zero, out var brush1);
 
         // draw cell: [X, ]
         //            [ ,X]
-        dc.FillRectangle(DXHelper.ToD2DRectF(0, 0, cellSize, cellSize), brush1);
-        dc.FillRectangle(DXHelper.ToD2DRectF(cellSize, cellSize, cellSize, cellSize), brush1);
+        tileImgDc.Object.FillRectangle(DXHelper.ToD2DRectF(0, 0, cellSize, cellSize), brush1);
+        tileImgDc.Object.FillRectangle(DXHelper.ToD2DRectF(cellSize, cellSize, cellSize, cellSize), brush1);
 
 
         // draw O cells -------------------------------
         var color2 = DXHelper.FromColor(cellColor2);
-        dc.CreateSolidColorBrush(color2, IntPtr.Zero, out var brush2);
+        tileImgDc.Object.CreateSolidColorBrush(color2, IntPtr.Zero, out var brush2);
 
         // draw cell: [X,O]
         //            [O,X]
-        dc.FillRectangle(DXHelper.ToD2DRectF(cellSize, 0, cellSize, cellSize), brush2);
-        dc.FillRectangle(DXHelper.ToD2DRectF(0, cellSize, cellSize, cellSize), brush2);
+        tileImgDc.Object.FillRectangle(DXHelper.ToD2DRectF(cellSize, 0, cellSize, cellSize), brush2);
+        tileImgDc.Object.FillRectangle(DXHelper.ToD2DRectF(0, cellSize, cellSize, cellSize), brush2);
 
 
-        dc.EndDraw();
+        tileImgDc.EndDraw();
 
-        return wicSrc;
+
+        // create D2DBitmap from WICBitmapSource
+        using var bmp = DXHelper.ToD2D1Bitmap(dc, tileImg);
+        var bmpPropsPtr = new D2D1_BITMAP_BRUSH_PROPERTIES()
+        {
+            extendModeX = D2D1_EXTEND_MODE.D2D1_EXTEND_MODE_WRAP,
+            extendModeY = D2D1_EXTEND_MODE.D2D1_EXTEND_MODE_WRAP,
+        }.StructureToPtr();
+        var brushPropsPtr = new D2D1_BRUSH_PROPERTIES()
+        {
+            opacity = 1f,
+        }.StructureToPtr();
+
+
+        // create bitmap brush
+        dc.CreateBitmapBrush(bmp.Object, bmpPropsPtr, IntPtr.Zero, out ID2D1BitmapBrush bmpBrush).ThrowOnError();
+
+
+        Marshal.FreeHGlobal(bmpPropsPtr);
+        Marshal.FreeHGlobal(brushPropsPtr);
+
+        return new ComObject<ID2D1BitmapBrush>(bmpBrush);
     }
 
 }
