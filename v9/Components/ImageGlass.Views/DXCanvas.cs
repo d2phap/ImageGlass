@@ -25,6 +25,7 @@ using ImageGlass.Base.WinApi;
 using ImageGlass.Views.ImageAnimator;
 using System.ComponentModel;
 using System.Numerics;
+using System.Runtime.InteropServices;
 using WicNet;
 
 namespace ImageGlass.Views;
@@ -1139,7 +1140,6 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Draw checkerboard background
     /// </summary>
-    /// <param name="g"></param>
     protected virtual void DrawCheckerboardLayer(IGraphics g)
     {
         if (CheckerboardMode == CheckerboardMode.None) return;
@@ -1162,46 +1162,38 @@ public class DXCanvas : DXControl
 
         if (UseHardwareAcceleration)
         {
-            // grid size
-            int rows = (int)Math.Ceiling(region.Width / CheckerboardCellSize);
-            int cols = (int)Math.Ceiling(region.Height / CheckerboardCellSize);
+            var d2dG = g as D2DGraphics;
+            using var checkerTileSrc = VHelper.CreateCheckerBoxTileD2D(CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
 
-            // draw grid
-            for (int row = 0; row < rows; row++)
+            // create tile bitmap source
+            using var comBmp = this.FromWicBitmapSource(checkerTileSrc);
+            var bmpPropsPtr = new D2D1_BITMAP_BRUSH_PROPERTIES()
             {
-                for (int col = 0; col < cols; col++)
-                {
-                    Color color;
-                    if ((row + col) % 2 == 0)
-                    {
-                        color = CheckerboardColor1;
-                    }
-                    else
-                    {
-                        color = CheckerboardColor2;
-                    }
+                extendModeX = D2D1_EXTEND_MODE.D2D1_EXTEND_MODE_WRAP,
+                extendModeY = D2D1_EXTEND_MODE.D2D1_EXTEND_MODE_WRAP,
+            }.StructureToPtr();
+            var brushPropsPtr = new D2D1_BRUSH_PROPERTIES()
+            {
+                opacity = 1f,
+            }.StructureToPtr();
 
-                    var drawnW = row * CheckerboardCellSize;
-                    var drawnH = col * CheckerboardCellSize;
+            d2dG.DeviceContext.CreateBitmapBrush(comBmp.Object, bmpPropsPtr, IntPtr.Zero, out ID2D1BitmapBrush bmpBrush).ThrowOnError();
 
-                    var x = drawnW + region.X;
-                    var y = drawnH + region.Y;
+            // draw checkerboard
+            d2dG.DeviceContext.FillRectangle(DXHelper.ToD2DRectF(region), bmpBrush);
 
-                    var w = Math.Min(region.Width - drawnW, CheckerboardCellSize);
-                    var h = Math.Min(region.Height - drawnH, CheckerboardCellSize);
-
-                    g.DrawRectangle(new(x, y, w, h), 0, Color.Transparent, color);
-                }
-            }
+            Marshal.FreeHGlobal(bmpPropsPtr);
+            Marshal.FreeHGlobal(brushPropsPtr);
         }
         else
         {
-            // use GDI+ Texture
             var gdiG = g as GdipGraphics;
 
-            using var checkerTile = VHelper.CreateCheckerBoxTile(CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
+            // create tile bitmap source
+            using var checkerTile = VHelper.CreateCheckerBoxTileGdip(CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
             using var texture = new TextureBrush(checkerTile);
 
+            // draw checkerboard
             gdiG?.Graphics.FillRectangle(texture, region);
         }
     }

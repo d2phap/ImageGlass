@@ -16,8 +16,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using D2Phap;
 using DirectN;
 using ImageGlass.Base.PhotoBox;
+using System.Runtime.InteropServices;
 using WicNet;
 
 namespace ImageGlass.Views;
@@ -38,16 +40,7 @@ public static class DXCanvasExtensions
         wicSrc.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
 
         // create D2DBitmap from WICBitmapSource
-        var bitmapProps = new D2D1_BITMAP_PROPERTIES()
-        {
-            pixelFormat = new D2D1_PIXEL_FORMAT()
-            {
-                alphaMode = D2D1_ALPHA_MODE.D2D1_ALPHA_MODE_PREMULTIPLIED,
-                format = DXGI_FORMAT.DXGI_FORMAT_B8G8R8A8_UNORM,
-            },
-            dpiX = 96.0f,
-            dpiY = 96.0f,
-        };
+        var bitmapProps = DXHelper.CreateDefaultBitmapProps();
         var bitmapPropsPtr = bitmapProps.StructureToPtr();
 
         _ = c.Device.CreateBitmapFromWicBitmap(wicSrc.ComObject.Object,
@@ -139,5 +132,4 @@ public static class DXCanvasExtensions
         return MouseAndNavLocation.Outside;
     }
 
-    
 }
