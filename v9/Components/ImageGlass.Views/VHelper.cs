@@ -1,8 +1,10 @@
 ﻿
+using DirectN;
+
 namespace ImageGlass.Views;
 
 
-public static class VHelpers
+public static class VHelper
 {
     /// <summary>
     /// Creates checker box tile for drawing checkerboard (GDI+)
@@ -30,6 +32,5 @@ public static class VHelpers
         return result;
     }
 
-    
 }
 

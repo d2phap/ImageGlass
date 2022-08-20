@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using D2Phap;
 using DirectN;
+using ImageGlass.Base;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
@@ -79,9 +80,9 @@ public class DXCanvas : DXControl
     private bool _isManualZoom = false;
     private ZoomMode _zoomMode = ZoomMode.AutoZoom;
     private float _zoomSpeed = 0f;
-    private ImageInterpolation _interpolationScaleDown = ImageInterpolation.HighQualityCubic;
-    private ImageInterpolation _interpolationScaledUp = ImageInterpolation.NearestNeighbor;
-    private ImageInterpolation CurrentInterpolation => ZoomFactor > 1f ? _interpolationScaledUp : _interpolationScaleDown;
+    private InterpolationMode _interpolationScaleDown = InterpolationMode.HighQualityBicubic;
+    private InterpolationMode _interpolationScaledUp = InterpolationMode.NearestNeighbor;
+    private InterpolationMode CurrentInterpolation => ZoomFactor > 1f ? _interpolationScaledUp : _interpolationScaleDown;
 
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
     private IImageAnimator _imageAnimator;
@@ -101,6 +102,8 @@ public class DXCanvas : DXControl
     public float _navBorderRadius = 45f;
     private IComObject<ID2D1Bitmap>? _navLeftImage = null;
     private IComObject<ID2D1Bitmap>? _navRightImage = null;
+    private Bitmap? _navLeftImageGdip = null;
+    private Bitmap? _navRightImageGdip = null;
 
     #endregion
 
@@ -249,8 +252,8 @@ public class DXCanvas : DXControl
     /// <see cref="ZoomFactor"/> is less than or equal <c>1.0f</c>.
     /// </summary>
     [Category("Zooming")]
-    [DefaultValue(ImageInterpolation.NearestNeighbor)]
-    public ImageInterpolation InterpolationScaleDown
+    [DefaultValue(InterpolationMode.NearestNeighbor)]
+    public InterpolationMode InterpolationScaleDown
     {
         get => _interpolationScaleDown;
         set
@@ -268,8 +271,8 @@ public class DXCanvas : DXControl
     /// <see cref="ZoomFactor"/> is greater than <c>1.0f</c>.
     /// </summary>
     [Category("Zooming")]
-    [DefaultValue(ImageInterpolation.NearestNeighbor)]
-    public ImageInterpolation InterpolationScaleUp
+    [DefaultValue(InterpolationMode.NearestNeighbor)]
+    public InterpolationMode InterpolationScaleUp
     {
         get => _interpolationScaledUp;
         set
@@ -458,7 +461,11 @@ public class DXCanvas : DXControl
         set
         {
             DXHelper.DisposeD2D1Bitmap(ref _navLeftImage);
+            _navLeftImageGdip?.Dispose();
+            _navLeftImageGdip = null;
+
             _navLeftImage = this.FromWicBitmapSource(value);
+            _navLeftImageGdip = BHelper.ToGdiPlusBitmap(value);
         }
     }
 
@@ -473,7 +480,11 @@ public class DXCanvas : DXControl
         set
         {
             DXHelper.DisposeD2D1Bitmap(ref _navRightImage);
+            _navRightImageGdip?.Dispose();
+            _navRightImageGdip = null;
+
             _navRightImage = this.FromWicBitmapSource(value);
+            _navRightImageGdip = BHelper.ToGdiPlusBitmap(value);
         }
     }
 
@@ -946,10 +957,9 @@ public class DXCanvas : DXControl
         }
     }
 
-    protected override void OnDirect2DRender(DXGraphics g)
+    protected override void OnRender(IGraphics g)
     {
-        base.OnDirect2DRender(g);
-
+        base.OnRender(g);
 
         // update drawing regions
         CalculateDrawingRegion();
@@ -980,7 +990,7 @@ public class DXCanvas : DXControl
     /// Draw GIF frame using GDI+
     /// </summary>
     /// <param name="hg"></param>
-    protected virtual void DrawGifFrame(DXGraphics hg)
+    protected virtual void DrawGifFrame(IGraphics hg)
     {
         //if (Source == ImageSource.Null) return;
 
@@ -1113,11 +1123,18 @@ public class DXCanvas : DXControl
     /// Draw the input image.
     /// </summary>
     /// <param name="g">Drawing graphic object.</param>
-    protected virtual void DrawImageLayer(DXGraphics g)
+    protected virtual void DrawImageLayer(IGraphics g)
     {
         if (Source == ImageSource.Null) return;
 
-        g.DrawBitmap(_imageD2D?.Object, _destRect, _srcRect, (D2D1_INTERPOLATION_MODE)CurrentInterpolation);
+        if (UseHardwareAcceleration)
+        {
+            g.DrawBitmap(_imageD2D?.Object, DXHelper.ToRectangle(_destRect), DXHelper.ToRectangle(_srcRect), CurrentInterpolation);
+        }
+        else
+        {
+            g.DrawBitmap(_imageGdiPlus, DXHelper.ToRectangle(_destRect), DXHelper.ToRectangle(_srcRect), CurrentInterpolation);
+        }
     }
 
 
@@ -1125,23 +1142,23 @@ public class DXCanvas : DXControl
     /// Draw checkerboard background
     /// </summary>
     /// <param name="g"></param>
-    protected virtual void DrawCheckerboardLayer(DXGraphics g)
+    protected virtual void DrawCheckerboardLayer(IGraphics g)
     {
         if (CheckerboardMode == CheckerboardMode.None) return;
 
         // region to draw
-        D2D_RECT_F region;
+        RectangleF region;
 
         if (CheckerboardMode == CheckerboardMode.Image)
         {
             // no need to draw checkerboard if image does not has alpha pixels
             if (!HasAlphaPixels) return;
 
-            region = _destRect;
+            region = DXHelper.ToRectangle(_destRect);
         }
         else
         {
-            region = DXHelper.ToD2DRectF(ClientRectangle);
+            region = ClientRectangle;
         }
 
 
@@ -1169,33 +1186,33 @@ public class DXCanvas : DXControl
                     var drawnW = row * CheckerboardCellSize;
                     var drawnH = col * CheckerboardCellSize;
 
-                    var x = drawnW + region.left;
-                    var y = drawnH + region.top;
+                    var x = drawnW + region.X;
+                    var y = drawnH + region.Y;
 
                     var w = Math.Min(region.Width - drawnW, CheckerboardCellSize);
                     var h = Math.Min(region.Height - drawnH, CheckerboardCellSize);
 
-                    g.FillRectangle(new(x, y, x + w, y + h), _D3DCOLORVALUE.FromColor(color));
+                    g.DrawRectangle(new(x, y, w, h), 0, Color.Transparent, color);
                 }
             }
         }
-        //else
-        //{
-        //    // use GDI+ Texture
-        //    var gdiG = g as GDIGraphics;
+        else
+        {
+            // use GDI+ Texture
+            var gdiG = g as GdipGraphics;
 
-        //    using var checkerTile = CreateCheckerBoxTile(CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
-        //    using var texture = new TextureBrush(checkerTile);
+            using var checkerTile = VHelper.CreateCheckerBoxTile(CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
+            using var texture = new TextureBrush(checkerTile);
 
-        //    gdiG?.Graphics.FillRectangle(texture, region);
-        //}
+            gdiG?.Graphics.FillRectangle(texture, region);
+        }
     }
 
 
     /// <summary>
     /// Draws text message.
     /// </summary>
-    protected virtual void DrawMessageLayer(DXGraphics g)
+    protected virtual void DrawMessageLayer(IGraphics g)
     {
         var hasHeading = !string.IsNullOrEmpty(TextHeading);
         var hasText = !string.IsNullOrEmpty(Text);
@@ -1209,14 +1226,14 @@ public class DXCanvas : DXControl
             ? textMargin
             : 0;
 
-        var drawableArea = DXHelper.ToD2DRectF(
+        var drawableArea = new RectangleF(
             textMargin,
             textMargin,
             Width - textPaddingX,
             Height - textPaddingY);
 
-        var hTextSize = new D2D_SIZE_F();
-        var tTextSize = new D2D_SIZE_F();
+        var hTextSize = new SizeF();
+        var tTextSize = new SizeF();
 
         // heading size
         if (hasHeading)
@@ -1230,56 +1247,56 @@ public class DXCanvas : DXControl
             tTextSize = g.MeasureText(Text, Font.Name, Font.Size, drawableArea.Width, drawableArea.Height, DeviceDpi);
         }
 
-        var centerX = drawableArea.CenterPoint.x;
-        var centerY = drawableArea.CenterPoint.y;
+        var centerX = drawableArea.X + drawableArea.Width / 2;
+        var centerY = drawableArea.Y + drawableArea.Height / 2;
 
-        var hRegion = new D2D_RECT_F()
+        var hRegion = new RectangleF()
         {
-            left = centerX - hTextSize.width / 2,
-            top = centerY - ((hTextSize.height + tTextSize.height) / 2) - gap / 2,
-            Width = hTextSize.width + textPaddingX - drawableArea.left * 2 + 1,
-            Height = hTextSize.height + textMargin - drawableArea.top,
+            X = centerX - hTextSize.Width / 2,
+            Y = centerY - ((hTextSize.Height + tTextSize.Height) / 2) - gap / 2,
+            Width = hTextSize.Width + textPaddingX - drawableArea.X * 2 + 1,
+            Height = hTextSize.Height + textMargin - drawableArea.Y,
         };
 
-        var tRegion = new D2D_RECT_F()
+        var tRegion = new RectangleF()
         {
-            left = centerX - tTextSize.width / 2,
-            top = centerY - ((hTextSize.height + tTextSize.height) / 2) + hTextSize.height + gap / 2,
-            Width = tTextSize.width + textPaddingX - drawableArea.left * 2 + 1,
-            Height = tTextSize.height + textMargin - drawableArea.top,
+            X = centerX - tTextSize.Width / 2,
+            Y = centerY - ((hTextSize.Height + tTextSize.Height) / 2) + hTextSize.Height + gap / 2,
+            Width = tTextSize.Width + textPaddingX - drawableArea.X * 2 + 1,
+            Height = tTextSize.Height + textMargin - drawableArea.Y,
         };
 
-        var bgRegion = new D2D_RECT_F()
+        var bgRegion = new RectangleF()
         {
-            left = Math.Min(tRegion.left, hRegion.left) - textMargin / 2,
-            top = Math.Min(tRegion.top, hRegion.top) - textMargin / 2,
+            X = Math.Min(tRegion.X, hRegion.X) - textMargin / 2,
+            Y = Math.Min(tRegion.Y, hRegion.Y) - textMargin / 2,
             Width = Math.Max(tRegion.Width, hRegion.Width) + textPaddingX / 2,
             Height = tRegion.Height + hRegion.Height + textMargin + gap,
         };
 
 
-        var bgColor = DXHelper.FromColor(BackColor, 200);
+        var bgColor = Color.FromArgb(200, BackColor);
 
         // draw background
-        g.DrawRoundedRectangle(bgRegion, MessageBorderRadius, bgColor, bgColor);
+        g.DrawRectangle(bgRegion, MessageBorderRadius, bgColor, bgColor);
 
 
         //// debug
-        //g.DrawRoundedRectangle(drawableArea, MessageBorderRadius, _D3DCOLORVALUE.Red);
-        //g.DrawRoundedRectangle(hRegion, MessageBorderRadius, _D3DCOLORVALUE.Yellow);
-        //g.DrawRoundedRectangle(tRegion, MessageBorderRadius, _D3DCOLORVALUE.Green);
+        //g.DrawRectangle(drawableArea, MessageBorderRadius, Color.Red);
+        //g.DrawRectangle(hRegion, MessageBorderRadius, Color.Yellow);
+        //g.DrawRectangle(tRegion, MessageBorderRadius, Color.Green);
 
 
         // draw text heading
         if (hasHeading)
         {
-            g.DrawText(TextHeading, Font.Name, Font.Size * 1.3f, hRegion, _D3DCOLORVALUE.FromColor(ForeColor), DeviceDpi, DWRITE_TEXT_ALIGNMENT.DWRITE_TEXT_ALIGNMENT_CENTER);
+            g.DrawText(TextHeading, Font.Name, Font.Size * 1.3f, hRegion, ForeColor, DeviceDpi, StringAlignment.Center);
         }
 
         // draw text
         if (hasText)
         {
-            g.DrawText(Text, Font.Name, Font.Size, tRegion, _D3DCOLORVALUE.FromColor(ForeColor), DeviceDpi, DWRITE_TEXT_ALIGNMENT.DWRITE_TEXT_ALIGNMENT_CENTER);
+            g.DrawText(Text, Font.Name, Font.Size, tRegion, ForeColor, DeviceDpi, StringAlignment.Center);
         }
     }
 
@@ -1287,7 +1304,7 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Draws navigation arrow buttons
     /// </summary>
-    protected virtual void DrawNavigationLayer(DXGraphics g)
+    protected virtual void DrawNavigationLayer(IGraphics g)
     {
         if (NavDisplay == NavButtonDisplay.None) return;
 
@@ -1297,49 +1314,61 @@ public class DXCanvas : DXControl
         {
             var iconOpacity = 1f;
             var iconY = 0;
-            var leftColor = _D3DCOLORVALUE.Transparent;
+            var leftColor = Color.Transparent;
 
             if (_isNavLeftPressed)
             {
-                leftColor = _D3DCOLORVALUE.FromColor(NavPressedColor);
+                leftColor = NavPressedColor;
                 iconOpacity = 0.7f;
                 iconY = 1;
             }
             else if (_isNavLeftHovered)
             {
-                leftColor = _D3DCOLORVALUE.FromColor(NavHoveredColor);
+                leftColor = NavHoveredColor;
             }
 
             // draw background
-            if (leftColor != _D3DCOLORVALUE.Transparent)
+            if (leftColor != Color.Transparent)
             {
-                var leftBgRect = new D2D_RECT_F()
+                var leftBgRect = new RectangleF()
                 {
-                    left = NavLeftPos.X - NavButtonSize.Width / 2,
-                    top = NavLeftPos.Y - NavButtonSize.Height / 2,
+                    X = NavLeftPos.X - NavButtonSize.Width / 2,
+                    Y = NavLeftPos.Y - NavButtonSize.Height / 2,
                     Width = NavButtonSize.Width,
                     Height = NavButtonSize.Height,
                 };
 
-                g.DrawRoundedRectangle(leftBgRect, NavBorderRadius, leftColor, leftColor, 1.25f);
+                g.DrawRectangle(leftBgRect, NavBorderRadius, leftColor, leftColor, 1.25f);
             }
 
             // draw icon
-            if (_navLeftImage != null && (_isNavLeftHovered || _isNavLeftPressed))
+            if (_isNavLeftHovered || _isNavLeftPressed)
             {
                 var iconSize = Math.Min(NavButtonSize.Width, NavButtonSize.Height) / 2;
-                _navLeftImage.Object.GetSize(out var srcIconSize);
 
-
-                g.DrawBitmap(_navLeftImage.Object, new D2D_RECT_F()
+                object? bmpObj;
+                SizeF srcIconSize;
+                if (UseHardwareAcceleration)
                 {
-                    left = NavLeftPos.X - iconSize / 2,
-                    top = NavLeftPos.Y - iconSize / 2 + iconY,
+                    bmpObj = _navLeftImage.Object;
+                    _navLeftImage.Object.GetSize(out var size);
+
+                    srcIconSize = new(size.width, size.height);
+                }
+                else
+                {
+                    bmpObj = _navLeftImageGdip;
+                    srcIconSize = new SizeF(_navLeftImageGdip.Width, _navLeftImageGdip.Height);
+                }
+
+                g.DrawBitmap(bmpObj, new RectangleF()
+                {
+                    X = NavLeftPos.X - iconSize / 2,
+                    Y = NavLeftPos.Y - iconSize / 2 + iconY,
                     Width = iconSize,
                     Height = iconSize,
-                }, new D2D_RECT_F(srcIconSize),
-                    D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR,
-                    iconOpacity);
+                }, new RectangleF(0,0, srcIconSize.Width, srcIconSize.Height),
+                    InterpolationMode.Linear, iconOpacity);
             }
         }
 
@@ -1349,48 +1378,61 @@ public class DXCanvas : DXControl
         {
             var iconOpacity = 1f;
             var iconY = 0;
-            var rightColor = _D3DCOLORVALUE.Transparent;
+            var rightColor = Color.Transparent;
 
             if (_isNavRightPressed)
             {
-                rightColor = _D3DCOLORVALUE.FromColor(NavPressedColor);
+                rightColor = NavPressedColor;
                 iconOpacity = 0.7f;
                 iconY = 1;
             }
             else if (_isNavRightHovered)
             {
-                rightColor = _D3DCOLORVALUE.FromColor(NavHoveredColor);
+                rightColor = NavHoveredColor;
             }
 
             // draw background
-            if (rightColor != _D3DCOLORVALUE.Transparent)
+            if (rightColor != Color.Transparent)
             {
-                var rightBgRect = new D2D_RECT_F()
+                var rightBgRect = new RectangleF()
                 {
-                    left = NavRightPos.X - NavButtonSize.Width / 2,
-                    top = NavRightPos.Y - NavButtonSize.Height / 2,
+                    X = NavRightPos.X - NavButtonSize.Width / 2,
+                    Y = NavRightPos.Y - NavButtonSize.Height / 2,
                     Width = NavButtonSize.Width,
                     Height = NavButtonSize.Height,
                 };
 
-                g.DrawRoundedRectangle(rightBgRect, NavBorderRadius, rightColor, rightColor, 1.25f);
+                g.DrawRectangle(rightBgRect, NavBorderRadius, rightColor, rightColor, 1.25f);
             }
 
             // draw icon
-            if (_navRightImage is not null && (_isNavRightHovered || _isNavRightPressed))
+            if (_isNavRightHovered || _isNavRightPressed)
             {
                 var iconSize = Math.Min(NavButtonSize.Width, NavButtonSize.Height) / 2;
-                _navRightImage.Object.GetSize(out var srcIconSize);
 
-                g.DrawBitmap(_navRightImage.Object, new D2D_RECT_F()
+                object? bmpObj;
+                SizeF srcIconSize;
+                if (UseHardwareAcceleration)
                 {
-                    left = NavRightPos.X - iconSize / 2,
-                    top = NavRightPos.Y - iconSize / 2 + iconY,
+                    bmpObj = _navRightImage.Object;
+                    _navRightImage.Object.GetSize(out var size);
+
+                    srcIconSize = new(size.width, size.height);
+                }
+                else
+                {
+                    bmpObj = _navRightImageGdip;
+                    srcIconSize = new SizeF(_navRightImageGdip.Width, _navRightImageGdip.Height);
+                }
+
+                g.DrawBitmap(bmpObj, new RectangleF()
+                {
+                    X = NavRightPos.X - iconSize / 2,
+                    Y = NavRightPos.Y - iconSize / 2 + iconY,
                     Width = iconSize,
                     Height = iconSize,
-                }, new D2D_RECT_F(srcIconSize),
-                    D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_LINEAR,
-                    iconOpacity);
+                }, new RectangleF(0,0, srcIconSize.Width, srcIconSize.Height),
+                    InterpolationMode.Linear, iconOpacity);
             }
         }
     }
@@ -1943,9 +1985,17 @@ public class DXCanvas : DXControl
         };
 
 
-        Source = ImageSource.Direct2D;
-        UseHardwareAcceleration = true;
-        _imageD2D = this.FromWicBitmapSource(imgData.Image);
+        UseHardwareAcceleration = false;
+        if (UseHardwareAcceleration)
+        {
+            Source = ImageSource.Direct2D;
+            _imageD2D = this.FromWicBitmapSource(imgData.Image);
+        }
+        else
+        {
+            Source = ImageSource.GDIPlus;
+            _imageGdiPlus = BHelper.ToGdiPlusBitmap(imgData.Image);
+        }
 
         // emit OnImageChanged event
         OnImageChanged?.Invoke(EventArgs.Empty);

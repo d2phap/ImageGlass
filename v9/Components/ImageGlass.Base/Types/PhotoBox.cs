@@ -33,20 +33,6 @@ public enum ZoomMode
     ScaleToFill = 6,
 }
 
-/// <summary>
-/// Interpolation modes.
-/// These values are based on <see cref="D2D1_INTERPOLATION_MODE"/>.
-/// </summary>
-public enum ImageInterpolation : int
-{
-    NearestNeighbor = 0,
-    Linear = 1,
-    Cubic = 2,
-    MultisampleLinear = 3,
-    Antisotropic = 4,
-    HighQualityCubic = 5,
-}
-
 
 /// <summary>
 /// Specifies the display styles for the background texture grid
