@@ -81,11 +81,18 @@ public class DXCanvas : DXControl
     private bool _isManualZoom = false;
     private ZoomMode _zoomMode = ZoomMode.AutoZoom;
     private float _zoomSpeed = 0f;
-    private InterpolationMode _interpolationScaleDown = InterpolationMode.HighQualityBicubic;
+    private InterpolationMode _interpolationScaleDown = InterpolationMode.Linear;
     private InterpolationMode _interpolationScaledUp = InterpolationMode.NearestNeighbor;
     private InterpolationMode CurrentInterpolation => ZoomFactor > 1f ? _interpolationScaledUp : _interpolationScaleDown;
 
+    // checkerboard
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
+    private float _checkerboardCellSize = 12f;
+    private Color _checkerboardColor1 = Color.FromArgb(25, Color.Black);
+    private Color _checkerboardColor2 = Color.FromArgb(25, Color.White);
+    private TextureBrush? _checkerboardBrushGdip;
+    private ComObject<ID2D1BitmapBrush>? _checkerboardBrushD2D;
+
     private IImageAnimator _imageAnimator;
     private AnimationSource _animationSource = AnimationSource.None;
     private bool _shouldRecalculateDrawingRegion = true;
@@ -309,22 +316,74 @@ public class DXCanvas : DXControl
             if (_checkerboardMode != value)
             {
                 _checkerboardMode = value;
+
+                // reset checkerboard brush
+                DisposeCheckerboardBrushes();
+
                 Invalidate();
             }
         }
     }
 
+
     [Category("Checkerboard")]
     [DefaultValue(typeof(float), "12")]
-    public float CheckerboardCellSize { get; set; } = 12f;
+    public float CheckerboardCellSize
+    {
+        get => _checkerboardCellSize;
+        set
+        {
+            if (_checkerboardCellSize != value)
+            {
+                _checkerboardCellSize = value;
+
+                // reset checkerboard brush
+                DisposeCheckerboardBrushes();
+
+                Invalidate();
+            }
+        }
+    }
+
 
     [Category("Checkerboard")]
     [DefaultValue(typeof(Color), "25, 0, 0, 0")]
-    public Color CheckerboardColor1 { get; set; } = Color.FromArgb(25, Color.Black);
+    public Color CheckerboardColor1
+    {
+        get => _checkerboardColor1;
+        set
+        {
+            if (_checkerboardColor1 != value)
+            {
+                _checkerboardColor1 = value;
+
+                // reset checkerboard brush
+                DisposeCheckerboardBrushes();
+
+                Invalidate();
+            }
+        }
+    }
+
 
     [Category("Checkerboard")]
     [DefaultValue(typeof(Color), "25, 255, 255, 255")]
-    public Color CheckerboardColor2 { get; set; } = Color.FromArgb(25, Color.White);
+    public Color CheckerboardColor2
+    {
+        get => _checkerboardColor2;
+        set
+        {
+            if (_checkerboardColor2 != value)
+            {
+                _checkerboardColor2 = value;
+
+                // reset checkerboard brush
+                DisposeCheckerboardBrushes();
+
+                Invalidate();
+            }
+        }
+    }
 
     #endregion
 
@@ -607,12 +666,20 @@ public class DXCanvas : DXControl
     {
         base.Dispose(disposing);
 
-        _imageD2D?.Dispose();
-        _imageGdiPlus?.Dispose();
-
+        
         DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
+        _imageGdiPlus?.Dispose();
+        _imageGdiPlus = null;
+
         DXHelper.DisposeD2D1Bitmap(ref _navLeftImage);
+        _navLeftImageGdip?.Dispose();
+        _navLeftImageGdip = null;
+
         DXHelper.DisposeD2D1Bitmap(ref _navRightImage);
+        _navRightImageGdip?.Dispose();
+        _navRightImageGdip = null;
+
+        DisposeCheckerboardBrushes();
 
         _clickTimer.Dispose();
     }
@@ -1162,24 +1229,21 @@ public class DXCanvas : DXControl
 
         if (UseHardwareAcceleration)
         {
-            //var d2dG = g as D2DGraphics;
-
             // create bitmap brush
-            using var bmpBrush = VHelper.CreateCheckerBoxTileD2D(Device, CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
+            _checkerboardBrushD2D ??= VHelper.CreateCheckerBoxTileD2D(Device, CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
 
             // draw checkerboard
-            Device.FillRectangle(DXHelper.ToD2DRectF(region), bmpBrush.Object);
-
+            Device.FillRectangle(DXHelper.ToD2DRectF(region), _checkerboardBrushD2D.Object);
         }
         else
         {
             var gdiG = g as GdipGraphics;
 
             // create bitmap brush
-            using var texture = VHelper.CreateCheckerBoxTileGdip(CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
+            _checkerboardBrushGdip ??= VHelper.CreateCheckerBoxTileGdip(CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
 
             // draw checkerboard
-            gdiG?.Graphics.FillRectangle(texture, region);
+            gdiG?.Graphics.FillRectangle(_checkerboardBrushGdip, region);
         }
     }
 
@@ -2022,6 +2086,19 @@ public class DXCanvas : DXControl
         }
 
         IsImageAnimating = false;
+    }
+
+
+    /// <summary>
+    /// Disposes and set all checkerboard brushes to <c>null</c>.
+    /// </summary>
+    private void DisposeCheckerboardBrushes()
+    {
+        _checkerboardBrushGdip?.Dispose();
+        _checkerboardBrushGdip = null;
+
+        _checkerboardBrushD2D?.Dispose();
+        _checkerboardBrushD2D = null;
     }
 
 }
