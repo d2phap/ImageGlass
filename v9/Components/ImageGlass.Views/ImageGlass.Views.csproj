@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="D2Phap.DXControl" Version="1.1.0" />
+    <PackageReference Include="D2Phap.DXControl" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
