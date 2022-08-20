@@ -57,12 +57,12 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Gets the area of the image content to draw
     /// </summary>
-    private D2D_RECT_F _srcRect = new(0, 0, 0, 0);
+    private RectangleF _srcRect = new(0, 0, 0, 0);
 
     /// <summary>
     /// Image viewport
     /// </summary>
-    private D2D_RECT_F _destRect = new(0, 0, 0, 0);
+    private RectangleF _destRect = new(0, 0, 0, 0);
 
     private Vector2 _panHostPoint;
     private Vector2 _panSpeedPoint;
@@ -117,7 +117,7 @@ public class DXCanvas : DXControl
     /// Gets image viewport.
     /// </summary>
     [Browsable(false)]
-    public RectangleF ImageViewport => new(_destRect.left, _destRect.top, _destRect.Width, _destRect.Height);
+    public RectangleF ImageViewport => _destRect;
 
 
     /// <summary>
@@ -816,8 +816,8 @@ public class DXCanvas : DXControl
 
 
         // emit event OnImageMouseMove
-        var imgX = (e.X - _destRect.left) / _zoomFactor + _srcRect.left;
-        var imgY = (e.Y - _destRect.top) / _zoomFactor + _srcRect.top;
+        var imgX = (e.X - _destRect.X) / _zoomFactor + _srcRect.X;
+        var imgY = (e.Y - _destRect.Y) / _zoomFactor + _srcRect.Y;
         OnImageMouseMove?.Invoke(new(imgX, imgY, e.Button));
 
 
@@ -1052,67 +1052,65 @@ public class DXCanvas : DXControl
         _xOut = false;
         _yOut = false;
 
-        var clientW = ClientSize.Width;
-        var clientH = ClientSize.Height;
+        var clientW = Width;
+        var clientH = Height;
 
         if (clientW > SourceWidth * _zoomFactor)
         {
-            _srcRect.left = 0;
+            _srcRect.X = 0;
             _srcRect.Width = SourceWidth;
-            _destRect.left = (clientW - SourceWidth * _zoomFactor) / 2.0f;
+            _destRect.X = (clientW - SourceWidth * _zoomFactor) / 2.0f;
             _destRect.Width = SourceWidth * _zoomFactor;
         }
         else
         {
-            _srcRect.left += (clientW / _oldZoomFactor - clientW / _zoomFactor) / ((clientW + 0.001f) / zoomX);
+            _srcRect.X += (clientW / _oldZoomFactor - clientW / _zoomFactor) / ((clientW + 0.00000001f) / zoomX);
             _srcRect.Width = clientW / _zoomFactor;
-            _destRect.left = 0;
+            _destRect.X = 0;
             _destRect.Width = clientW;
         }
 
 
         if (clientH > SourceHeight * _zoomFactor)
         {
-            _srcRect.top = 0;
+            _srcRect.Y = 0;
             _srcRect.Height = SourceHeight;
-            _destRect.top = (clientH - SourceHeight * _zoomFactor) / 2f;
+            _destRect.Y = (clientH - SourceHeight * _zoomFactor) / 2f;
             _destRect.Height = SourceHeight * _zoomFactor;
         }
         else
         {
-            _srcRect.top += (clientH / _oldZoomFactor - clientH / _zoomFactor) / ((clientH + 0.001f) / zoomY);
+            _srcRect.Y += (clientH / _oldZoomFactor - clientH / _zoomFactor) / ((clientH + 0.00000001f) / zoomY);
             _srcRect.Height = clientH / _zoomFactor;
-            _destRect.top = 0;
+            _destRect.Y = 0;
             _destRect.Height = clientH;
         }
 
         _oldZoomFactor = _zoomFactor;
         //------------------------
 
-        if (_srcRect.left + _srcRect.Width > SourceWidth)
+        if (_srcRect.X + _srcRect.Width > SourceWidth)
         {
             _xOut = true;
-            _srcRect.left = SourceWidth - _srcRect.Width;
+            _srcRect.X = SourceWidth - _srcRect.Width;
         }
 
-        if (_srcRect.left < 0)
+        if (_srcRect.X < 0)
         {
             _xOut = true;
-            _srcRect.Width -= _srcRect.left;
-            _srcRect.left = 0;
+            _srcRect.X = 0;
         }
 
-        if (_srcRect.top + _srcRect.Height > SourceHeight)
+        if (_srcRect.Y + _srcRect.Height > SourceHeight)
         {
             _yOut = true;
-            _srcRect.top = SourceHeight - _srcRect.Height;
+            _srcRect.Y = SourceHeight - _srcRect.Height;
         }
 
-        if (_srcRect.top < 0)
+        if (_srcRect.Y < 0)
         {
             _yOut = true;
-            _srcRect.Height -= _srcRect.top;
-            _srcRect.top = 0;
+            _srcRect.Y = 0;
         }
 
         _shouldRecalculateDrawingRegion = false;
@@ -1129,11 +1127,11 @@ public class DXCanvas : DXControl
 
         if (UseHardwareAcceleration)
         {
-            g.DrawBitmap(_imageD2D?.Object, DXHelper.ToRectangle(_destRect), DXHelper.ToRectangle(_srcRect), CurrentInterpolation);
+            g.DrawBitmap(_imageD2D?.Object, _destRect, _srcRect, CurrentInterpolation);
         }
         else
         {
-            g.DrawBitmap(_imageGdiPlus, DXHelper.ToRectangle(_destRect), DXHelper.ToRectangle(_srcRect), CurrentInterpolation);
+            g.DrawBitmap(_imageGdiPlus, _destRect, _srcRect, CurrentInterpolation);
         }
     }
 
@@ -1154,7 +1152,7 @@ public class DXCanvas : DXControl
             // no need to draw checkerboard if image does not has alpha pixels
             if (!HasAlphaPixels) return;
 
-            region = DXHelper.ToRectangle(_destRect);
+            region = _destRect;
         }
         else
         {
@@ -1785,13 +1783,13 @@ public class DXCanvas : DXControl
         // horizontal
         if (hDistance != 0)
         {
-            _srcRect.left += (hDistance / _zoomFactor) + _panSpeedPoint.X;
+            _srcRect.X += (hDistance / _zoomFactor) + _panSpeedPoint.X;
         }
 
         // vertical 
         if (vDistance != 0)
         {
-            _srcRect.top += (vDistance / _zoomFactor) + _panSpeedPoint.Y;
+            _srcRect.Y += (vDistance / _zoomFactor) + _panSpeedPoint.Y;
         }
 
         _drawPoint = new();
@@ -1985,7 +1983,7 @@ public class DXCanvas : DXControl
         };
 
 
-        UseHardwareAcceleration = false;
+        UseHardwareAcceleration = true;
         if (UseHardwareAcceleration)
         {
             Source = ImageSource.Direct2D;
