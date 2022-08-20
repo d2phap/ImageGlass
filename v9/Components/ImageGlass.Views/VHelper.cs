@@ -27,10 +27,13 @@ using WicNet;
 namespace ImageGlass.Views;
 
 
+/// <summary>
+/// Provides helper functions for <see cref="DXCanvas"/>.
+/// </summary>
 public static class VHelper
 {
     /// <summary>
-    /// Creates checker box tile for drawing checkerboard (GDI+)
+    /// Creates checkerboard tile brush (GDI+)
     /// </summary>
     public static TextureBrush CreateCheckerBoxTileGdip(float cellSize, Color cellColor1, Color cellColor2)
     {
@@ -57,7 +60,7 @@ public static class VHelper
 
 
     /// <summary>
-    /// Creates checker box tile for drawing checkerboard (Direct2D)
+    /// Creates checkerboard tile brush (Direct2D)
     /// </summary>
     public static ComObject<ID2D1BitmapBrush> CreateCheckerBoxTileD2D(ID2D1DeviceContext dc, float cellSize, Color cellColor1, Color cellColor2)
     {
@@ -103,18 +106,12 @@ public static class VHelper
             extendModeX = D2D1_EXTEND_MODE.D2D1_EXTEND_MODE_WRAP,
             extendModeY = D2D1_EXTEND_MODE.D2D1_EXTEND_MODE_WRAP,
         }.StructureToPtr();
-        var brushPropsPtr = new D2D1_BRUSH_PROPERTIES()
-        {
-            opacity = 1f,
-        }.StructureToPtr();
-
 
         // create bitmap brush
         dc.CreateBitmapBrush(bmp.Object, bmpPropsPtr, IntPtr.Zero, out ID2D1BitmapBrush bmpBrush).ThrowOnError();
 
 
         Marshal.FreeHGlobal(bmpPropsPtr);
-        Marshal.FreeHGlobal(brushPropsPtr);
 
         return new ComObject<ID2D1BitmapBrush>(bmpBrush);
     }

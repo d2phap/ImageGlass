@@ -1095,7 +1095,6 @@ namespace ImageGlass
             this.PicMain.BackgroundImage = null;
             this.PicMain.CheckerboardMode = ImageGlass.Base.PhotoBox.CheckerboardMode.Client;
             this.PicMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PicMain.InterpolationScaleDown = D2Phap.InterpolationMode.Linear;
             this.PicMain.Location = new System.Drawing.Point(0, 0);
             this.PicMain.Name = "PicMain";
             this.PicMain.NavBorderRadius = 45F;

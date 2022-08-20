@@ -81,9 +81,9 @@ public class DXCanvas : DXControl
     private bool _isManualZoom = false;
     private ZoomMode _zoomMode = ZoomMode.AutoZoom;
     private float _zoomSpeed = 0f;
-    private InterpolationMode _interpolationScaleDown = InterpolationMode.Linear;
-    private InterpolationMode _interpolationScaledUp = InterpolationMode.NearestNeighbor;
-    private InterpolationMode CurrentInterpolation => ZoomFactor > 1f ? _interpolationScaledUp : _interpolationScaleDown;
+    private ImageInterpolation _interpolationScaleDown = ImageInterpolation.Linear;
+    private ImageInterpolation _interpolationScaledUp = ImageInterpolation.NearestNeighbor;
+    private ImageInterpolation CurrentInterpolation => ZoomFactor > 1f ? _interpolationScaledUp : _interpolationScaleDown;
 
     // checkerboard
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
@@ -260,8 +260,8 @@ public class DXCanvas : DXControl
     /// <see cref="ZoomFactor"/> is less than or equal <c>1.0f</c>.
     /// </summary>
     [Category("Zooming")]
-    [DefaultValue(InterpolationMode.NearestNeighbor)]
-    public InterpolationMode InterpolationScaleDown
+    [DefaultValue(ImageInterpolation.Linear)]
+    public ImageInterpolation InterpolationScaleDown
     {
         get => _interpolationScaleDown;
         set
@@ -279,8 +279,8 @@ public class DXCanvas : DXControl
     /// <see cref="ZoomFactor"/> is greater than <c>1.0f</c>.
     /// </summary>
     [Category("Zooming")]
-    [DefaultValue(InterpolationMode.NearestNeighbor)]
-    public InterpolationMode InterpolationScaleUp
+    [DefaultValue(ImageInterpolation.NearestNeighbor)]
+    public ImageInterpolation InterpolationScaleUp
     {
         get => _interpolationScaledUp;
         set
@@ -1195,11 +1195,11 @@ public class DXCanvas : DXControl
 
         if (UseHardwareAcceleration)
         {
-            g.DrawBitmap(_imageD2D?.Object, _destRect, _srcRect, CurrentInterpolation);
+            g.DrawBitmap(_imageD2D?.Object, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation);
         }
         else
         {
-            g.DrawBitmap(_imageGdiPlus, _destRect, _srcRect, CurrentInterpolation);
+            g.DrawBitmap(_imageGdiPlus, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation);
         }
     }
 
@@ -1406,8 +1406,7 @@ public class DXCanvas : DXControl
                     Y = NavLeftPos.Y - iconSize / 2 + iconY,
                     Width = iconSize,
                     Height = iconSize,
-                }, new RectangleF(0,0, srcIconSize.Width, srcIconSize.Height),
-                    InterpolationMode.Linear, iconOpacity);
+                }, new RectangleF(0,0, srcIconSize.Width, srcIconSize.Height), InterpolationMode.Linear, iconOpacity);
             }
         }
 
