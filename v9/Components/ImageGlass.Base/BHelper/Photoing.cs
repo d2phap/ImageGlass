@@ -24,11 +24,13 @@ using System.Drawing.Imaging;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using WicNet;
 using ColorProfile = ImageMagick.ColorProfile;
 
 namespace ImageGlass.Base;
+
 
 public partial class BHelper
 {
@@ -108,56 +110,13 @@ public partial class BHelper
 
         // supported MIME types:
         // https://www.iana.org/assignments/media-types/media-types.xhtml#image
-        #region Settings
         var settings = new MagickReadSettings();
+        settings.Format = MimeTypeToMagickFormat(MimeType);
 
-        switch (MimeType)
+        if (settings.Format == MagickFormat.Svg)
         {
-            case "image/avif":
-                settings.Format = MagickFormat.Avif;
-                break;
-            case "image/bmp":
-                settings.Format = MagickFormat.Bmp;
-                break;
-            case "image/gif":
-                settings.Format = MagickFormat.Gif;
-                break;
-            case "image/tiff":
-                settings.Format = MagickFormat.Tiff;
-                break;
-            case "image/jpeg":
-                settings.Format = MagickFormat.Jpeg;
-                break;
-            case "image/svg+xml":
-                settings.BackgroundColor = MagickColors.Transparent;
-                settings.Format = MagickFormat.Svg;
-                break;
-            case "image/x-icon":
-                settings.Format = MagickFormat.Ico;
-                break;
-            case "image/x-portable-anymap":
-                settings.Format = MagickFormat.Pnm;
-                break;
-            case "image/x-portable-bitmap":
-                settings.Format = MagickFormat.Pbm;
-                break;
-            case "image/x-portable-graymap":
-                settings.Format = MagickFormat.Pgm;
-                break;
-            case "image/x-portable-pixmap":
-                settings.Format = MagickFormat.Ppm;
-                break;
-            case "image/x-xbitmap":
-                settings.Format = MagickFormat.Xbm;
-                break;
-            case "image/x-xpixmap":
-                settings.Format = MagickFormat.Xpm;
-                break;
-            case "image/x-cmu-raster":
-                settings.Format = MagickFormat.Ras;
-                break;
+            settings.BackgroundColor = MagickColors.Transparent;
         }
-        #endregion
 
 
         WicBitmapSource? src = null;
@@ -218,6 +177,71 @@ public partial class BHelper
 
         return bmp;
     }
+
+
+    /// <summary>
+    /// Loads <see cref="Bitmap"/> from file.
+    /// </summary>
+    /// <param name="filePath">Full file path.</param>
+    /// <param name="useICM">Use color profile.</param>
+    public static Bitmap ToGdiPlusBitmap(string filePath, bool useICM = true)
+    {
+        using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+        var ms = new MemoryStream();
+        fs.CopyTo(ms);
+        ms.Position = 0;
+
+        return new Bitmap(ms, useICM);
+    }
+
+
+    /// <summary>
+    /// Converts base64 string to <see cref="Bitmap"/>.
+    /// </summary>
+    public static Bitmap? ToGdiPlusBitmapFromBase64(string? content)
+    {
+        var (MimeType, ByteData) = ConvertBase64ToBytes(content);
+        if (string.IsNullOrEmpty(MimeType)) return null;
+
+        // supported MIME types:
+        // https://www.iana.org/assignments/media-types/media-types.xhtml#image
+        var settings = new MagickReadSettings();
+        settings.Format = MimeTypeToMagickFormat(MimeType);
+
+        if (settings.Format == MagickFormat.Svg)
+        {
+            settings.BackgroundColor = MagickColors.Transparent;
+        }
+
+
+        Bitmap? bmp = null;
+        switch (settings.Format)
+        {
+            case MagickFormat.Gif:
+            case MagickFormat.Gif87:
+            case MagickFormat.Tif:
+            case MagickFormat.Tiff64:
+            case MagickFormat.Tiff:
+            case MagickFormat.Ico:
+            case MagickFormat.Icon:
+                bmp = new Bitmap(new MemoryStream(ByteData)
+                {
+                    Position = 0
+                }, true);
+
+                break;
+
+            default:
+                using (var imgM = new MagickImage(ByteData, settings))
+                {
+                    bmp = imgM.ToBitmap();
+                }
+                break;
+        }
+
+        return bmp;
+    }
+
 
 
 
@@ -506,6 +530,34 @@ public partial class BHelper
 
 
         return WicCodec.GUID_ContainerFormatPng;
+    }
+
+
+
+
+    /// <summary>
+    /// Gets <see cref="MagickFormat"/> from mime type.
+    /// </summary>
+    private static MagickFormat MimeTypeToMagickFormat(string? mimeType)
+    {
+        return mimeType switch
+        {
+            "image/avif" => MagickFormat.Avif,
+            "image/bmp" => MagickFormat.Bmp,
+            "image/gif" => MagickFormat.Gif,
+            "image/tiff" => MagickFormat.Tiff,
+            "image/jpeg" => MagickFormat.Jpeg,
+            "image/svg+xml" => MagickFormat.Svg,
+            "image/x-icon" => MagickFormat.Ico,
+            "image/x-portable-anymap" => MagickFormat.Pnm,
+            "image/x-portable-bitmap" => MagickFormat.Pbm,
+            "image/x-portable-graymap" => MagickFormat.Pgm,
+            "image/x-portable-pixmap" => MagickFormat.Ppm,
+            "image/x-xbitmap" => MagickFormat.Xbm,
+            "image/x-xpixmap" => MagickFormat.Xpm,
+            "image/x-cmu-raster" => MagickFormat.Ras,
+            _ => MagickFormat.Png
+        };
     }
 
 }
