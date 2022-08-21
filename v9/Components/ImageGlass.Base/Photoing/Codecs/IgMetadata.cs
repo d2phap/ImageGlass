@@ -26,6 +26,8 @@ public class IgMetadata
     public int Height { get; set; } = 0;
 
     public int FramesCount { get; set; } = 0;
+    public bool HasAlpha { get; set; } = false;
+    public bool CanAnimate { get; set; } = false;
 
     public int ExifRatingPercent { get; set; } = 0;
     public DateTime? ExifDateTimeOriginal { get; set; } = null;

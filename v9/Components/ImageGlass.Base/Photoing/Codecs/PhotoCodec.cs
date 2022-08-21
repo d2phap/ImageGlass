@@ -84,6 +84,9 @@ public static class PhotoCodec
 
                 meta.Width = imgM.Width;
                 meta.Height = imgM.Height;
+
+                meta.HasAlpha = imgC.Any(i => i.HasAlpha);
+                meta.CanAnimate = imgC.Count > 1 && imgC.Any(i => i.AnimationDelay > 0);
             }
         }
         catch { }
@@ -427,16 +430,19 @@ public static class PhotoCodec
     /// <summary>
     /// Read image file using stream
     /// </summary>
-    private static (bool loadSuccessful, IgImgData result, string ext, MagickReadSettings settings) ReadWithStream(string filename, CodecReadOptions? options = null)
+    private static (bool loadSuccessful, IgImgData result, string ext, MagickReadSettings settings) ReadWithStream(string filenPath, CodecReadOptions? options = null)
     {
         options ??= new();
         var loadSuccessful = true;
+        
+        var metadata = LoadMetadata(filenPath, options);
+        var ext = Path.GetExtension(filenPath).ToUpperInvariant();
+        var settings = ParseSettings(options, filenPath);
+
         var result = new IgImgData();
-        var metadata = LoadMetadata(filename, options);
-
-        var ext = Path.GetExtension(filename).ToUpperInvariant();
-        var settings = ParseSettings(options, filename);
-
+        result.FrameCount = metadata?.FramesCount ?? 0;
+        result.HasAlpha = metadata?.HasAlpha ?? false;
+        result.CanAnimate = metadata?.CanAnimate ?? false;
 
         #region Read image data
         switch (ext)
@@ -444,14 +450,19 @@ public static class PhotoCodec
             case ".TXT": // base64 string
             case ".B64":
                 var base64Content = string.Empty;
-                using (var fs = new StreamReader(filename))
+                using (var fs = new StreamReader(filenPath))
                 {
                     base64Content = fs.ReadToEnd();
                 }
 
-                result.Image = BHelper.ToWicBitmapSource(base64Content);
-                result.FrameCount = metadata?.FramesCount ?? 0;
-
+                if (result.CanAnimate)
+                {
+                    result.Bitmap = BHelper.ToGdiPlusBitmapFromBase64(base64Content);
+                }
+                else
+                {
+                    result.Image = BHelper.ToWicBitmapSource(base64Content);
+                }
                 break;
 
             case ".GIF":
@@ -459,8 +470,14 @@ public static class PhotoCodec
                 try
                 {
                     // Note: Using FileStream is much faster than using MagickImageCollection
-                    result.Image = WicBitmapSource.Load(filename);
-                    result.FrameCount = metadata?.FramesCount ?? 0;
+                    if (result.CanAnimate)
+                    {
+                        result.Bitmap = BHelper.ToGdiPlusBitmap(filenPath);
+                    }
+                    else
+                    {
+                        result.Image = WicBitmapSource.Load(filenPath);
+                    }
                 }
                 catch
                 {
@@ -477,19 +494,34 @@ public static class PhotoCodec
 
 
         // apply size setting
-        if (result.Image != null && options.Width > 0 && options.Height > 0)
+        if (options.Width > 0 && options.Height > 0)
         {
-            if (result.Image.Width > options.Width || result.Image.Height > options.Height)
+            using var imgM = new MagickImage();
+
+            if (result.Image != null)
             {
-                using var imgM = new MagickImage();
-                imgM.Read(result.Image.CopyPixels(0, 0, result.Image.Width, result.Image.Height));
+                if (result.Image.Width > options.Width || result.Image.Height > options.Height)
+                {
+                    imgM.Read(result.Image.CopyPixels(0, 0, result.Image.Width, result.Image.Height));
 
-                ApplySizeSettings(imgM, options);
+                    ApplySizeSettings(imgM, options);
 
-                result.Image = BHelper.ToWicBitmapSource(imgM.ToBitmapSource());
+                    result.Image = BHelper.ToWicBitmapSource(imgM.ToBitmapSource());
+                }
+            }
+            else if (result.Bitmap != null)
+            {
+                if (result.Bitmap.Width > options.Width || result.Bitmap.Height > options.Height)
+                {
+                    imgM.Read(result.Bitmap);
+
+                    ApplySizeSettings(imgM, options);
+
+                    result.Bitmap = imgM.ToBitmap();
+                }
             }
         }
-
+        
 
         return (loadSuccessful, result, ext, settings);
     }

@@ -44,8 +44,14 @@ public class IgImgData : IDisposable
             Image?.Dispose();
             Image = null;
 
+            Bitmap?.Dispose();
+            Bitmap = null;
+
             ExifProfile = null;
             ColorProfile = null;
+            FrameCount = 0;
+            HasAlpha = false;
+            CanAnimate = false;
         }
 
         // Free any unmanaged objects here.
@@ -67,8 +73,15 @@ public class IgImgData : IDisposable
 
 
     public WicBitmapSource? Image { get; set; } = null;
+    public Bitmap? Bitmap { get; set; } = null;
+
+    /// <summary>
+    /// Checks if both <see cref="Image"/> and <see cref="Bitmap"/> are null;
+    /// </summary>
+    public bool IsImageNull => Image == null && Bitmap == null;
     public int FrameCount { get; set; } = 0;
     public bool HasAlpha { get; set; } = false;
+    public bool CanAnimate { get; set; } = false;
     public IExifProfile? ExifProfile { get; set; } = null;
     public IColorProfile? ColorProfile { get; set; } = null;
     
@@ -77,8 +90,7 @@ public class IgImgData : IDisposable
 
 
     /// <summary>
-    /// Initializes <see cref="IgImgData"/> instance
-    /// with <see cref="IgMagickReadData"/> value.
+    /// Initializes <see cref="IgImgData"/> instance with <see cref="IgMagickReadData"/> value.
     /// </summary>
     public IgImgData(IgMagickReadData data)
     {
@@ -86,15 +98,15 @@ public class IgImgData : IDisposable
         ColorProfile = data.ColorProfile;
         ExifProfile = data.ExifProfile;
 
-
         if (data.MultiFrameImage != null)
         {
-            // convert WEBP to GIF for animation
-            if (data.Extension.Equals(".WEBP", StringComparison.InvariantCultureIgnoreCase))
+            CanAnimate = data.MultiFrameImage.Any(imgM => imgM.GifDisposeMethod != GifDisposeMethod.Undefined);
+            HasAlpha = data.MultiFrameImage.Any(imgM => imgM.HasAlpha);
+
+            if (CanAnimate)
             {
                 data.MultiFrameImage.Coalesce();
-                using var bmp = data.MultiFrameImage.ToBitmap(ImageFormat.Gif);
-                Image = BHelper.ToWicBitmapSource(bmp);
+                Bitmap = data.MultiFrameImage.ToBitmap(ImageFormat.Gif);
             }
             else
             {
