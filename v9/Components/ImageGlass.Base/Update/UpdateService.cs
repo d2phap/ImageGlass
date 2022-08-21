@@ -94,6 +94,6 @@ public class UpdateService
         }
 
         using var stream = await response.Content.ReadAsStreamAsync();
-        UpdateInfo = await Helpers.ParseJson<UpdateModel>(stream);
+        UpdateInfo = await BHelper.ParseJson<UpdateModel>(stream);
     }
 }

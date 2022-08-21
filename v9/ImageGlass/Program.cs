@@ -38,7 +38,7 @@ internal static class Program
     [STAThread]
     static void Main()
     {
-        #region Form configs
+        #region App configs
 
         // Issue #360: IG periodically searching for dismounted device.
         WindowApi.SetAppErrorMode();
@@ -135,7 +135,7 @@ internal static class Program
 
                 btnWhatNew.Click += (object? sender, EventArgs e) =>
                 {
-                    Helpers.OpenUrl(updater.CurrentReleaseInfo?.ChangelogUrl.ToString(), "app_update");
+                    BHelper.OpenUrl(updater.CurrentReleaseInfo?.ChangelogUrl.ToString(), "app_update");
                 };
 
 

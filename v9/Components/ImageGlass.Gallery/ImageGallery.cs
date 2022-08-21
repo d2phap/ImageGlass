@@ -1237,7 +1237,7 @@ public partial class ImageGallery : Control, IComponent
 
             // build tooltip content
             var tooltipContent = $"{item.FileName}" +
-                $"\r\n{Helpers.FormatSize(item.Details.FileSize)}";
+                $"\r\n{BHelper.FormatSize(item.Details.FileSize)}";
 
             mTooltip.ToolTipTitle = item.Text +
                 $" ({item.Details.Width} x {item.Details.Height})";

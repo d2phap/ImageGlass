@@ -21,12 +21,14 @@ using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Library.WinAPI;
-using ImageGlass.PhotoBox;
+using ImageGlass.Views;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Windows.Media.Imaging;
+using WicNet;
 
 namespace ImageGlass;
 
@@ -222,7 +224,7 @@ public partial class FrmMain
     /// <param name="mode"><see cref="ZoomMode"/> value in string</param>
     private void IG_SetZoomMode(string mode)
     {
-        Config.ZoomMode = Helpers.ParseEnum<ZoomMode>(mode);
+        Config.ZoomMode = BHelper.ParseEnum<ZoomMode>(mode);
 
         if (PicMain.ZoomMode == Config.ZoomMode)
         {
@@ -375,7 +377,7 @@ public partial class FrmMain
     /// </summary>
     private void IG_ReportIssue()
     {
-        Helpers.OpenUrl("https://github.com/d2phap/ImageGlass/issues?q=is%3Aissue+label%3Av9+", "app_report_issue");
+        BHelper.OpenUrl("https://github.com/d2phap/ImageGlass/issues?q=is%3Aissue+label%3Av9+", "app_report_issue");
     }
 
     /// <summary>
@@ -392,7 +394,7 @@ public partial class FrmMain
 
         btnDonate.Click += (object? sender, EventArgs e) =>
         {
-            Helpers.OpenUrl("https://imageglass.org/source#donation", "app_donation");
+            BHelper.OpenUrl("https://imageglass.org/source#donation", "app_donation");
         };
 
         btnCheckForUpdate.Click += (_, _) => IG_CheckForUpdate(true);
@@ -603,7 +605,7 @@ public partial class FrmMain
         else
         {
             var args = string.Format($"{IgCommands.SHARE} \"{filePath}\"");
-            var result = await Helpers.RunIgcmd10(args);
+            var result = await BHelper.RunIgcmd10(args);
 
 
             if (result == IgExitCode.Error)
@@ -801,9 +803,9 @@ public partial class FrmMain
         }
 
         // Is there a image in clipboard?
-        else if (Clipboard.ContainsImage())
+        else if (ClipboardEx.ContainsImage())
         {
-            var bmp = ClipboardEx.GetClipboardImage(Clipboard.GetDataObject());
+            var bmp = ClipboardEx.GetClipboardImage();
 
             LoadClipboardImage(bmp);
         }
@@ -812,7 +814,7 @@ public partial class FrmMain
         else if (Clipboard.ContainsText())
         {
             // try to get absolute path
-            var text = Helpers.ResolvePath(Clipboard.GetText());
+            var text = BHelper.ResolvePath(Clipboard.GetText());
 
             if (File.Exists(text) || Directory.Exists(text))
             {
@@ -823,7 +825,7 @@ public partial class FrmMain
             {
                 try
                 {
-                    var img = PhotoCodec.Base64ToBitmap(text);
+                    var img = BHelper.ToWicBitmapSource(text);
                     LoadClipboardImage(img);
                 }
                 catch (Exception ex)
@@ -837,16 +839,22 @@ public partial class FrmMain
     }
 
 
-    private void LoadClipboardImage(Bitmap? img)
+    private void LoadClipboardImage(WicBitmapSource? img)
     {
         // cancel the current loading image
         _loadCancelToken?.Cancel();
-
+        
         Local.ClipboardImage?.Dispose();
         Local.ClipboardImage = img;
         Local.TempImagePath = null;
 
-        PicMain.SetImage(img);
+        // TODO:
+        PicMain.SetImage(new()
+        {
+            Image = img,
+            FrameCount = 1,
+            HasAlpha = true,
+        });
         PicMain.ClearMessage();
 
         // reset zoom mode
@@ -1063,7 +1071,7 @@ public partial class FrmMain
             return;
         }
 
-        Bitmap? clonedPic = null;
+        WicBitmapSource? clonedPic = null;
         var srcExt = "";
         var langPath = $"{Name}.{nameof(MnuSave)}";
 
@@ -1073,14 +1081,14 @@ public partial class FrmMain
         if (hasSrcPath)
         {
             var img = await Local.Images.GetAsync(Local.CurrentIndex);
-            clonedPic = img?.ImgData?.Image?.Clone() as Bitmap;
+            clonedPic = img?.ImgData?.Image?.Clone();
 
             srcExt = Path.GetExtension(srcFilePath).ToLowerInvariant();
         }
         // get bitmap from clipboard image
         else if (Local.ClipboardImage != null)
         {
-            clonedPic = Local.ClipboardImage.Clone() as Bitmap;
+            clonedPic = Local.ClipboardImage.Clone();
         }
 
         if (clonedPic == null)
@@ -1253,7 +1261,7 @@ public partial class FrmMain
             : IgCommands.UNSET_DEFAULT_PHOTO_VIEWER;
 
         // run command
-        var result = await Helpers.RunIgcmd($"{cmd} {extensions}");
+        var result = await BHelper.RunIgcmd($"{cmd} {extensions}");
 
         var langPath = enable
             ? $"{Name}.{nameof(MnuSetDefaultPhotoViewer)}"
@@ -1362,7 +1370,7 @@ public partial class FrmMain
                 : SHSTOCKICONID.SIID_DELETE;
 
             var description = filePath + "\r\n" +
-                    Helpers.FormatSize(Gallery.Items[Local.CurrentIndex].Details.FileSize);
+                    BHelper.FormatSize(Gallery.Items[Local.CurrentIndex].Details.FileSize);
 
             result = Config.ShowWarning(
                 description: description,
@@ -1381,7 +1389,7 @@ public partial class FrmMain
         {
             try
             {
-                Helpers.DeleteFile(filePath, moveToRecycleBin);
+                BHelper.DeleteFile(filePath, moveToRecycleBin);
 
 
                 // TODO: once the realtime watcher implemented, delete this:
@@ -1414,7 +1422,7 @@ public partial class FrmMain
 
         var filePath = Local.Images.GetFileName(Local.CurrentIndex);
         var ext = Path.GetExtension(filePath).ToUpperInvariant();
-        var defaultExt = Helpers.IsOS(WindowsOS.Win7) ? ".bmp" : ".jpg";
+        var defaultExt = BHelper.IsOS(WindowsOS.Win7) ? ".bmp" : ".jpg";
         var langPath = $"{Name}.{nameof(MnuSetDesktopBackground)}";
 
         PicMain.ShowMessage(Config.Language[$"{langPath}._CreatingFile"], "", delayMs: 500);
@@ -1449,7 +1457,7 @@ public partial class FrmMain
         else
         {
             var args = string.Format($"{IgCommands.SET_WALLPAPER} \"{filePath}\" {(int)WallpaperStyle.Current}");
-            var result = await Helpers.RunIgcmd(args);
+            var result = await BHelper.RunIgcmd(args);
 
 
             if (result == IgExitCode.Done)
@@ -1515,7 +1523,7 @@ public partial class FrmMain
         else
         {
             var args = string.Format($"{IgCommands.SET_LOCK_SCREEN} \"{filePath}\"");
-            var result = await Helpers.RunIgcmd10(args);
+            var result = await BHelper.RunIgcmd10(args);
 
 
             if (result == IgExitCode.Done)
@@ -1693,7 +1701,7 @@ public partial class FrmMain
     /// </summary>
     private void IG_SetFrmMainState(string state)
     {
-        WindowState = Helpers.ParseEnum<FormWindowState>(state);
+        WindowState = BHelper.ParseEnum<FormWindowState>(state);
     }
 
 

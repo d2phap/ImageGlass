@@ -33,14 +33,19 @@ public enum ZoomMode
     ScaleToFill = 6,
 }
 
+
 /// <summary>
 /// Interpolation modes.
-/// These values are based on <b>D2DBitmapInterpolationMode</b> of <b>D2DLib</b>.
+/// These values are based on <see cref="D2Phap.InterpolationMode"/>.
 /// </summary>
 public enum ImageInterpolation : int
 {
     NearestNeighbor = 0,
     Linear = 1,
+    Cubic = 2,
+    SampleLinear = 3,
+    Antisotropic = 4,
+    HighQualityBicubic = 5,
 }
 
 

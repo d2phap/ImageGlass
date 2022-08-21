@@ -36,7 +36,7 @@ public class Functions
         }
 
 
-        var result = Helpers.RunSync(() => SetLockScreenBackgroundAsync(imgPath));
+        var result = BHelper.RunSync(() => SetLockScreenBackgroundAsync(imgPath));
 
         return result;
     }

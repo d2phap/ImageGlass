@@ -66,7 +66,7 @@ public class IgLang : Dictionary<string, string>
     /// </summary>
     public void ReadFromFile()
     {
-        var model = Helpers.ReadJson<IgLangJsonModel>(FileName);
+        var model = BHelper.ReadJson<IgLangJsonModel>(FileName);
         if (model == null) return;
 
         Metadata = model._Metadata;
@@ -90,7 +90,7 @@ public class IgLang : Dictionary<string, string>
     {
         var model = new IgLangJsonModel(Metadata, this);
 
-        Helpers.WriteJson(filePath, model);
+        BHelper.WriteJson(filePath, model);
     }
 
 

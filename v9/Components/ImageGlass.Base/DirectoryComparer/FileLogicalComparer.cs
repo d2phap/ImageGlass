@@ -36,9 +36,8 @@ public class FileLogicalComparer
             return;
         }
 
-#pragma warning disable IDE0074 // Use compound assignment
-        (Files ?? (Files = new ArrayList())).Add(new DictionaryEntry(Path.GetFileName(file), file));
-#pragma warning restore IDE0074 // Use compound assignment
+        Files ??= new ArrayList();
+        Files.Add(new DictionaryEntry(Path.GetFileName(file), file));
     }
 
     public void AddFiles(string[] f)
@@ -86,7 +85,10 @@ public class FileLogicalComparer
 
         for (var i = 0; i < list.Count; i++)
         {
-            stringArray[i] = (string)((DictionaryEntry)list[i]).Value;
+            if (list[i] is DictionaryEntry entry && entry.Value != null)
+            {
+                stringArray[i] = (string)entry.Value;
+            }
         }
 
         return stringArray;

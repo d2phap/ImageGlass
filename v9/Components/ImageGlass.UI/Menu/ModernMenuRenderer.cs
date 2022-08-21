@@ -193,7 +193,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
                 e.Item.Bounds.Height - 5);
 
             using var brush = new SolidBrush(_theme.Settings.MenuBgHoverColor);
-            using var path = ThemeUtils.GetRoundRectanglePath(rect, Helpers.GetItemBorderRadius(rect.Height, Constants.MENU_ICON_HEIGHT));
+            using var path = ThemeUtils.GetRoundRectanglePath(rect, BHelper.GetItemBorderRadius(rect.Height, Constants.MENU_ICON_HEIGHT));
             using var penBorder = new Pen(Color.FromArgb(brush.Color.A, brush.Color));
 
             // draw
@@ -232,7 +232,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
     {
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-        if (Helpers.IsOS(WindowsOS.Win10))
+        if (BHelper.IsOS(WindowsOS.Win10))
         {
             // override default ugly border by a solid color
             using var penDefault = new Pen(_theme.Settings.MenuBgColor);
@@ -258,7 +258,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             pen.Color = Color.FromArgb(35, 255, 255, 255);
         }
 
-        var menuBorderRadius = Helpers.IsOS(WindowsOS.Win11) ? 8 : 0;
+        var menuBorderRadius = BHelper.IsOS(WindowsOS.Win11) ? 8 : 0;
         using var path = ThemeUtils.GetRoundRectanglePath(new()
         {
             X = 0,

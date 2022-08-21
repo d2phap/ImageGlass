@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
+using WicNet;
 
 namespace ImageGlass.UI;
 
@@ -147,7 +148,7 @@ public class IgTheme
         try
         {
             //parse theme config file
-            JsonModel = Helpers.ReadJson<IgThemeJsonModel>(ConfigFilePath);
+            JsonModel = BHelper.ReadJson<IgThemeJsonModel>(ConfigFilePath);
         }
         catch { }
 
@@ -206,8 +207,8 @@ public class IgTheme
                     continue;
                 }
 
-                // property is Bitmap
-                if (prop?.PropertyType == typeof(Bitmap))
+                // property is WicBitmapSource
+                if (prop?.PropertyType == typeof(WicBitmapSource))
                 {
                     var data = PhotoCodec.Load(Path.Combine(FolderPath, value), new()
                     {
@@ -216,6 +217,15 @@ public class IgTheme
                     });
 
                     prop.SetValue(Settings, data.Image);
+                    continue;
+                }
+
+                // property is Bitmap
+                if (prop?.PropertyType == typeof(Bitmap))
+                {
+                    var bmp = PhotoCodec.GetThumbnail(Path.Combine(FolderPath, value), ToolbarActualIconHeight, ToolbarActualIconHeight);
+
+                    prop.SetValue(Settings, bmp);
                     continue;
                 }
 
@@ -243,13 +253,9 @@ public class IgTheme
 
             try
             {
-                var data = PhotoCodec.Load(Path.Combine(FolderPath, value), new()
-                {
-                    Width = ToolbarActualIconHeight,
-                    Height = ToolbarActualIconHeight,
-                });
+                var bmp = PhotoCodec.GetThumbnail(Path.Combine(FolderPath, value), ToolbarActualIconHeight, ToolbarActualIconHeight);
 
-                ToolbarIcons.GetType().GetProperty(item.Key)?.SetValue(ToolbarIcons, data.Image);
+                ToolbarIcons.GetType().GetProperty(item.Key)?.SetValue(ToolbarIcons, bmp);
             }
             catch { }
         }
@@ -263,7 +269,7 @@ public class IgTheme
     /// <param name="filePath"></param>
     public void SaveConfigAsFile(string filePath)
     {
-        Helpers.WriteJson(filePath, JsonModel);
+        BHelper.WriteJson(filePath, JsonModel);
     }
 
 
@@ -285,7 +291,7 @@ public class IgTheme
         // get icon from file
         if (icon == null)
         {
-            var fullPath = Helpers.ResolvePath(name);
+            var fullPath = BHelper.ResolvePath(name);
             var data = PhotoCodec.Load(fullPath, new()
             {
                 Width = ToolbarActualIconHeight,

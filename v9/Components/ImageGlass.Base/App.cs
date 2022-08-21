@@ -52,7 +52,7 @@ public class App
     /// <summary>
     /// Gets value of Portable mode if the startup dir is writable
     /// </summary>
-    public static bool IsPortable => Helpers.CheckPathWritable(PathType.Dir, StartUpDir());
+    public static bool IsPortable => BHelper.CheckPathWritable(PathType.Dir, StartUpDir());
 
 
     /// <summary>
@@ -85,7 +85,7 @@ public class App
         // use StartUp dir if it's writable
         var startUpDir = StartUpDir(paths);
 
-        if (Helpers.CheckPathWritable(type, startUpDir))
+        if (BHelper.CheckPathWritable(type, startUpDir))
         {
             return startUpDir;
         }

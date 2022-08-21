@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageMagick;
 using System.Drawing.Imaging;
+using WicNet;
 
 namespace ImageGlass.Base.Photoing.Codecs;
 
@@ -43,8 +44,14 @@ public class IgImgData : IDisposable
             Image?.Dispose();
             Image = null;
 
+            Bitmap?.Dispose();
+            Bitmap = null;
+
             ExifProfile = null;
             ColorProfile = null;
+            FrameCount = 0;
+            HasAlpha = false;
+            CanAnimate = false;
         }
 
         // Free any unmanaged objects here.
@@ -65,20 +72,26 @@ public class IgImgData : IDisposable
     #endregion
 
 
-    public Bitmap? Image { get; set; } = null;
+    public WicBitmapSource? Image { get; set; } = null;
+    public Bitmap? Bitmap { get; set; } = null;
+
+    /// <summary>
+    /// Checks if both <see cref="Image"/> and <see cref="Bitmap"/> are null;
+    /// </summary>
+    public bool IsImageNull => Image == null && Bitmap == null;
     public int FrameCount { get; set; } = 0;
+    public bool HasAlpha { get; set; } = false;
+    public bool CanAnimate { get; set; } = false;
     public IExifProfile? ExifProfile { get; set; } = null;
     public IColorProfile? ColorProfile { get; set; } = null;
-
-
+    
+    
     public IgImgData() { }
 
 
     /// <summary>
-    /// Initializes <see cref="IgImgData"/> instance
-    /// with <see cref="IgMagickReadData"/> value.
+    /// Initializes <see cref="IgImgData"/> instance with <see cref="IgMagickReadData"/> value.
     /// </summary>
-    /// <param name="data"></param>
     public IgImgData(IgMagickReadData data)
     {
         FrameCount = data.FrameCount;
@@ -87,19 +100,24 @@ public class IgImgData : IDisposable
 
         if (data.MultiFrameImage != null)
         {
-            // convert WEBP to GIF for animation
-            if (data.Extension.Equals(".WEBP", StringComparison.InvariantCultureIgnoreCase))
+            CanAnimate = data.MultiFrameImage.Any(imgM => imgM.GifDisposeMethod != GifDisposeMethod.Undefined);
+            HasAlpha = data.MultiFrameImage.Any(imgM => imgM.HasAlpha);
+
+            if (CanAnimate)
             {
-                Image = data.MultiFrameImage.ToBitmap(ImageFormat.Gif);
+                data.MultiFrameImage.Coalesce();
+                Bitmap = data.MultiFrameImage.ToBitmap(ImageFormat.Gif);
             }
             else
             {
-                Image = data.MultiFrameImage.ToBitmap();
+                using var bmp = data.MultiFrameImage.ToBitmap(ImageFormat.Tiff);
+                Image = BHelper.ToWicBitmapSource(bmp);
             }
         }
         else
         {
-            Image = data.SingleFrameImage?.ToBitmap();
+            Image = BHelper.ToWicBitmapSource(data.SingleFrameImage?.ToBitmapSource());
+            HasAlpha = data.SingleFrameImage?.HasAlpha ?? false;
         }
     }
 }

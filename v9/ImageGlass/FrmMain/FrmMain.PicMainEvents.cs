@@ -18,8 +18,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
-using ImageGlass.PhotoBox;
+using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Settings;
+using ImageGlass.Views;
+using System.Windows.Controls;
 
 namespace ImageGlass;
 
@@ -86,7 +88,7 @@ public partial class FrmMain
             return;
         }
 
-        var filePath = Helpers.ResolvePath(filePaths[0]);
+        var filePath = BHelper.ResolvePath(filePaths[0]);
         var imageIndex = Local.Images.IndexOf(filePath);
 
         // The file is located another folder, load the entire folder

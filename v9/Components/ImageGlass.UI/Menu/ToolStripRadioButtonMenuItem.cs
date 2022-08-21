@@ -28,17 +28,17 @@ public class ToolStripRadioButtonMenuItem : ToolStripMenuItem
         Initialize();
     }
 
-    public ToolStripRadioButtonMenuItem(string text) : base(text, null, (EventHandler)null)
+    public ToolStripRadioButtonMenuItem(string text) : base(text, null, (EventHandler?)null)
     {
         Initialize();
     }
 
-    public ToolStripRadioButtonMenuItem(Image image) : base(null, image, (EventHandler)null)
+    public ToolStripRadioButtonMenuItem(Image image) : base(null, image, (EventHandler?)null)
     {
         Initialize();
     }
 
-    public ToolStripRadioButtonMenuItem(string text, Image image) : base(text, image, (EventHandler)null)
+    public ToolStripRadioButtonMenuItem(string text, Image image) : base(text, image, (EventHandler?)null)
     {
         Initialize();
     }
@@ -238,8 +238,7 @@ public class ToolStripRadioButtonMenuItem : ToolStripMenuItem
 
     // When the checked state of the parent item changes, 
     // repaint the item so that the new Enabled state is displayed. 
-    private void OwnerMenuItem_CheckedChanged(
-        object sender, EventArgs e)
+    private void OwnerMenuItem_CheckedChanged(object? sender, EventArgs e)
     {
         Invalidate();
     }

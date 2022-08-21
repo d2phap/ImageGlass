@@ -16,20 +16,41 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-namespace ImageGlass.Base.Photoing.Codecs;
+
+namespace ImageGlass.Views;
 
 
-public class IgMetadata
+[Flags]
+public enum AnimationSource
 {
-    public int Width { get; set; } = 0;
+    None = 0,
 
-    public int Height { get; set; } = 0;
+    PanLeft = 1 << 1,
+    PanRight = 1 << 2,
+    PanUp = 1 << 3,
+    PanDown = 1 << 4,
 
-    public int FramesCount { get; set; } = 0;
-    public bool HasAlpha { get; set; } = false;
-    public bool CanAnimate { get; set; } = false;
+    ZoomIn = 1 << 5,
+    ZoomOut = 1 << 6,
+}
 
-    public int ExifRatingPercent { get; set; } = 0;
-    public DateTime? ExifDateTimeOriginal { get; set; } = null;
-    public DateTime? ExifDateTime { get; set; } = null;
+
+[Flags]
+public enum ImageSource
+{
+    Null = 0,
+
+    Direct2D = 1 << 1,
+    GDIPlus = 1 << 2,
+}
+
+
+public enum MouseAndNavLocation
+{
+    Outside = 0,
+    
+    LeftNav = 1 << 1,
+    RightNav = 1 << 2,
+    
+    BothNavs = 1 << 3,
 }
