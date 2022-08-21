@@ -24,9 +24,11 @@ using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Views.ImageAnimator;
 using System.ComponentModel;
+using System.Drawing.Drawing2D;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using WicNet;
+using InterpolationMode = D2Phap.InterpolationMode;
 
 namespace ImageGlass.Views;
 
@@ -35,10 +37,9 @@ public class DXCanvas : DXControl
 
     #region Private properties
 
-    private Bitmap? _imageGdiPlus = null;
     private IComObject<ID2D1Bitmap>? _imageD2D = null;
+    private Bitmap? _imageGdiPlus = null;
     private CancellationTokenSource? _msgTokenSrc;
-    private bool _canUseDirect2D = false;
 
 
     // to distinguish between clicks
@@ -666,10 +667,7 @@ public class DXCanvas : DXControl
     {
         base.Dispose(disposing);
 
-        
-        DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
-        _imageGdiPlus?.Dispose();
-        _imageGdiPlus = null;
+        DisposeImageResources();
 
         DXHelper.DisposeD2D1Bitmap(ref _navLeftImage);
         _navLeftImageGdip?.Dispose();
@@ -682,6 +680,7 @@ public class DXCanvas : DXControl
         DisposeCheckerboardBrushes();
 
         _clickTimer.Dispose();
+        _msgTokenSrc?.Dispose();
     }
 
     protected override void OnMouseClick(MouseEventArgs e)
@@ -1036,15 +1035,15 @@ public class DXCanvas : DXControl
         DrawCheckerboardLayer(g);
 
 
-        //if (CanImageAnimate)
-        //{
-        //    DrawGifFrame(g);
-        //}
-        //else
-        //{
-        // image layer
-        DrawImageLayer(g);
-        //}
+        if (CanImageAnimate)
+        {
+            DrawGifFrame(g);
+        }
+        else
+        {
+            // image layer
+            DrawImageLayer(g);
+        }
 
         // text message
         DrawMessageLayer(g);
@@ -1057,53 +1056,52 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Draw GIF frame using GDI+
     /// </summary>
-    /// <param name="hg"></param>
-    protected virtual void DrawGifFrame(IGraphics hg)
+    protected virtual void DrawGifFrame(IGraphics g)
     {
-        //if (Source == ImageSource.Null) return;
+        if (Source == ImageSource.Null) return;
 
-        //// use GDI+ to handle GIF animation
-        //var g = hg as GDIGraphics;
-        //if (g is null) return;
+        // use GDI+ to handle GIF animation
+        if (g is not GdipGraphics gdip) return;
 
-        //g.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
-        //g.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+        gdip.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
+        gdip.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-        //try
-        //{
-        //    if (IsImageAnimating && !DesignMode)
-        //    {
-        //        _imageAnimator.UpdateFrames(_imageGdiPlus);
-        //    }
+        try
+        {
+            if (IsImageAnimating && !DesignMode)
+            {
+                _imageAnimator.UpdateFrames(_imageGdiPlus);
+            }
 
-        //    g.DrawImage(_imageGdiPlus, _destRect, _srcRect, 1, (int)CurrentInterpolation);
-        //}
-        //catch (ArgumentException)
-        //{
-        //    // ignore errors that occur due to the image being disposed
-        //}
-        //catch (OutOfMemoryException)
-        //{
-        //    // also ignore errors that occur due to running out of memory
-        //}
-        //catch (ExternalException)
-        //{
-        //    // stop the animation and reset to the first frame.
-        //    IsImageAnimating = false;
-        //    _imageAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
-        //}
-        //catch (InvalidOperationException)
-        //{
-        //    // issue #373: a race condition caused this exception: deleting the image from underneath us could
-        //    // cause a collision in HighResolutionGif_animator. I've not been able to repro; hopefully this is
-        //    // the correct response.
+            g.DrawBitmap(_imageGdiPlus, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation);
+        }
+        catch (ArgumentException)
+        {
+            // ignore errors that occur due to the image being disposed
+        }
+        catch (OutOfMemoryException)
+        {
+            // also ignore errors that occur due to running out of memory
+        }
+        catch (ExternalException)
+        {
+            // stop the animation and reset to the first frame.
+            IsImageAnimating = false;
+            _imageAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
+        }
+        catch (InvalidOperationException)
+        {
+            // issue #373: a race condition caused this exception: deleting
+            // the image from underneath us could cause a collision in
+            // HighResolutionGif_animator. I've not been able to repro;
+            // hopefully this is the correct response.
 
-        //    // stop the animation and reset to the first frame.
-        //    IsImageAnimating = false;
-        //    _imageAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
-        //}
+            // stop the animation and reset to the first frame.
+            IsImageAnimating = false;
+            _imageAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
+        }
 
-        //g.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
+        gdip.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
     }
 
 
@@ -1392,12 +1390,12 @@ public class DXCanvas : DXControl
                     bmpObj = _navLeftImage.Object;
                     _navLeftImage.Object.GetSize(out var size);
 
-                    srcIconSize = new(size.width, size.height);
+                    srcIconSize = DXHelper.ToSize(size);
                 }
                 else
                 {
                     bmpObj = _navLeftImageGdip;
-                    srcIconSize = new SizeF(_navLeftImageGdip.Width, _navLeftImageGdip.Height);
+                    srcIconSize = _navLeftImageGdip.Size;
                 }
 
                 g.DrawBitmap(bmpObj, new RectangleF()
@@ -1455,12 +1453,12 @@ public class DXCanvas : DXControl
                     bmpObj = _navRightImage.Object;
                     _navRightImage.Object.GetSize(out var size);
 
-                    srcIconSize = new(size.width, size.height);
+                    srcIconSize = DXHelper.ToSize(size);
                 }
                 else
                 {
                     bmpObj = _navRightImageGdip;
-                    srcIconSize = new SizeF(_navRightImageGdip.Width, _navRightImageGdip.Height);
+                    srcIconSize = _navRightImageGdip.Size;
                 }
 
                 g.DrawBitmap(bmpObj, new RectangleF()
@@ -1479,7 +1477,6 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Updates zoom mode.
     /// </summary>
-    /// <param name="mode"></param>
     protected virtual void UpdateZoomMode(ZoomMode? mode = null)
     {
         if (!IsReady || Source == ImageSource.Null) return;
@@ -1987,16 +1984,24 @@ public class DXCanvas : DXControl
     /// </summary>
     private void LoadImageData(IgImgData? imgData)
     {
-        SourceWidth = imgData?.Image?.Width ?? 0;
-        SourceHeight = imgData?.Image?.Height ?? 0;
+        CanImageAnimate = imgData?.CanAnimate ?? false;
         HasAlphaPixels = imgData?.HasAlpha ?? false;
-        // TODO:
-        CanImageAnimate = false;
+
+        if (CanImageAnimate)
+        {
+            SourceWidth = imgData?.Bitmap?.Width ?? 0;
+            SourceHeight = imgData?.Bitmap?.Height ?? 0;
+        }
+        else
+        {
+            SourceWidth = imgData?.Image?.Width ?? 0;
+            SourceHeight = imgData?.Image?.Height ?? 0;
+        }
 
         const int MAX_D2D_DIMENTION = 16_384;
         var exceedMaxDimention = SourceWidth > MAX_D2D_DIMENTION || SourceHeight > MAX_D2D_DIMENTION;
 
-        _canUseDirect2D = !CanImageAnimate && !HasAlphaPixels && !exceedMaxDimention;
+        UseHardwareAcceleration = !CanImageAnimate && !exceedMaxDimention;
     }
 
 
@@ -2007,23 +2012,19 @@ public class DXCanvas : DXControl
     {
         // disable animations
         StopAnimatingImage();
+        DisposeImageResources();
+        GC.Collect();
 
-        Source = ImageSource.Null;
-        _imageD2D?.Dispose();
-        _imageD2D = null;
-        _imageGdiPlus = null;
 
         // Check and preprocess image info
         LoadImageData(imgData);
 
-        if (imgData == null || imgData.Image == null)
+        if (imgData == null || imgData.IsImageNull)
         {
             Refresh();
             return;
         };
 
-
-        UseHardwareAcceleration = true;
         if (UseHardwareAcceleration)
         {
             Source = ImageSource.Direct2D;
@@ -2032,7 +2033,7 @@ public class DXCanvas : DXControl
         else
         {
             Source = ImageSource.GDIPlus;
-            _imageGdiPlus = BHelper.ToGdiPlusBitmap(imgData.Image);
+            _imageGdiPlus = imgData.Bitmap;
         }
 
         // emit OnImageChanged event
@@ -2098,6 +2099,19 @@ public class DXCanvas : DXControl
 
         _checkerboardBrushD2D?.Dispose();
         _checkerboardBrushD2D = null;
+    }
+
+
+    /// <summary>
+    /// Disposes and set all image resources to <c>null</c>.
+    /// </summary>
+    private void DisposeImageResources()
+    {
+        Source = ImageSource.Null;
+
+        DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
+        _imageGdiPlus?.Dispose();
+        _imageGdiPlus = null;
     }
 
 }

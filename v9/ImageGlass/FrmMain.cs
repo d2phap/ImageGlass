@@ -1024,7 +1024,7 @@ public partial class FrmMain : Form
                 Config.Language[$"{Name}.{nameof(PicMain)}._ErrorText"]);
         }
 
-        else if (e.Data?.ImgData.Image != null)
+        else if (!(e.Data?.ImgData.IsImageNull ?? true))
         {
             // delete clipboard image
             Local.ClipboardImage?.Dispose();
@@ -1037,6 +1037,7 @@ public partial class FrmMain : Form
             // Reset the zoom mode if KeepZoomRatio = FALSE
             if (!e.KeepZoomRatio)
             {
+                //TODO:
                 //if (Config.IsWindowFit)
                 //{
                 //    //WindowFitMode();

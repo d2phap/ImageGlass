@@ -84,7 +84,7 @@ public class HighResolutionGifAnimator : IImageAnimator
     /// </summary>
     /// <param name="image"></param>
     /// <param name="onFrameChangedHandler"></param>
-    public void Animate(Image image, EventHandler onFrameChangedHandler)
+    public void Animate(Image? image, EventHandler onFrameChangedHandler)
     {
 
         if (!CanAnimate(image))
@@ -132,7 +132,7 @@ public class HighResolutionGifAnimator : IImageAnimator
     /// Updates the time frame for this image.
     /// </summary>
     /// <param name="image"></param>
-    public void UpdateFrames(Image image)
+    public void UpdateFrames(Image? image)
     {
         if (image == null)
             return;
@@ -154,12 +154,12 @@ public class HighResolutionGifAnimator : IImageAnimator
     /// </summary>
     /// <param name="image"></param>
     /// <param name="eventHandler"></param>
-    public void StopAnimate(Image image, EventHandler eventHandler)
+    public void StopAnimate(Image? image, EventHandler eventHandler)
     {
         if (image == null)
             return;
 
-        GifImageData outData;
+        GifImageData? outData;
         if (ourImageState.TryRemove(image, out outData))
             Interlocked.Exchange(ref outData.myIsThreadDead, 1);
     }
@@ -171,7 +171,7 @@ public class HighResolutionGifAnimator : IImageAnimator
     /// </summary>
     /// <param name="image"></param>
     /// <returns></returns>
-    public bool CanAnimate(Image image)
+    public bool CanAnimate(Image? image)
     {
         if (image == null)
             return false;
@@ -277,9 +277,11 @@ public class HighResolutionGifAnimator : IImageAnimator
             myImage.SelectActiveFrame(FrameDimension.Time, myCurrentFrame);
         }
 
-        private void PopulateFrameDelays(Image image)
+        private void PopulateFrameDelays(Image? image)
         {
-            byte[] frameDelays = image.GetPropertyItem(FrameDelayTag).Value;
+            if (image == null) return;
+
+            byte[]? frameDelays = image.GetPropertyItem(FrameDelayTag)?.Value;
             for (int i = 0; i < myNumFrames; i++)
             {
                 myFrameDelaysInCentiseconds[i] = BitConverter.ToInt32(frameDelays, i * 4);
