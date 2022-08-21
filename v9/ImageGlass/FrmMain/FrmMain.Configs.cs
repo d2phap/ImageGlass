@@ -132,18 +132,21 @@ public partial class FrmMain
 
     private void SetUpFrmMainConfigs()
     {
+        
+
         Sp1.TabStop = false;
         Sp2.Panel2Collapsed = true;
         Sp2.TabStop = false;
+
 
         // Toolbar
         Toolbar.Alignment = Config.CenterToolbar
             ? ToolbarAlignment.Center
             : ToolbarAlignment.Left;
-        Toolbar.IconHeight = Config.ToolbarIconHeight;
-        IG_ToggleToolbar(Config.ShowToolbar);
+        
         Toolbar.Items.Clear();
         Toolbar.AddItems(Config.ToolbarItems);
+        IG_ToggleToolbar(Config.ShowToolbar);
 
 
         // Thumbnail bar
@@ -196,21 +199,41 @@ public partial class FrmMain
         // load Image Focus mode hotkeys
         LoadImageFocusModeHotkeys();
 
-
         // TODO: hide menu items that haven't implemented
         HideUnreadyMenuItems();
 
 
-        // load window placement from settings
-        WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
+        // make sure all controls are painted before showing window
+        Application.DoEvents();
 
         // load Full screen mode
-        if (Config.EnableFullScreen) IG_ToggleFullScreen(true, showInAppMessage: false);
+        if (Config.EnableFullScreen)
+        {
+            // to hide the animation effect of window border
+            FormBorderStyle = FormBorderStyle.None;
 
+            // load window placement from settings here to save the initial
+            // position of window so that when user exists the fullscreen mode,
+            // it can be restore correctly
+            WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
+
+            IG_ToggleFullScreen(true, showInAppMessage: false);
+        }
+        else
+        {
+            // load window placement from settings
+            WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
+        }
 
         // load context menu config
         Local.UpdateFrmMain(UpdateRequests.MouseActions);
 
+
+        // make sure all other painting are done before showing the root layout
+        Application.DoEvents();
+
+        // display the root layout after the window shown
+        Tb0.Visible = true;
     }
 
 

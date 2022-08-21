@@ -49,19 +49,20 @@ public partial class FrmMain : Form
     {
         InitializeComponent();
 
+        // hide the root layout to avoid flickering render,
+        // and show again when window is loaded
+        Tb0.Visible = false;
+
         _movableForm = new(this);
 
-        // Get the DPI of the current display
+        SetUpFrmMainConfigs();
+
+        // Get the DPI of the current display,
+        // and load theme icons
         DpiApi.OnDpiChanged += OnDpiChanged;
         DpiApi.CurrentDpi = DeviceDpi;
 
-
         SetUpFrmMainTheme();
-        SetUpFrmMainConfigs();
-
-
-        // apply DPI changes
-        OnDpiChanged();
     }
 
     private void FrmMain_Load(object sender, EventArgs e)

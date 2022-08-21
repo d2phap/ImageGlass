@@ -119,7 +119,7 @@ public class IgTheme
         ToolbarActualIconHeight = iconHeight;
 
         // read theme config
-        _ = ReadTheme(themeFolderPath);
+        _ = ReadThemeConfig(themeFolderPath);
     }
 
 
@@ -128,7 +128,7 @@ public class IgTheme
     /// </summary>
     /// <param name="themeFolderPath"></param>
     /// <returns></returns>
-    public bool ReadTheme(string themeFolderPath)
+    public bool ReadThemeConfig(string themeFolderPath)
     {
         // get full path of config file
         ConfigFilePath = Path.Combine(themeFolderPath, CONFIG_FILE);

@@ -259,7 +259,7 @@ public partial class FrmMain
         visible ??= !Config.ShowToolbar;
         Config.ShowToolbar = visible.Value;
 
-        // Gallery bar
+        // Toolbar
         Toolbar.Visible = Config.ShowToolbar;
 
         // update menu item state
@@ -1590,6 +1590,7 @@ public partial class FrmMain
         // full screen
         if (enable)
         {
+            Visible = false;
             SuspendLayout();
 
             // back up the last states of the window
@@ -1617,6 +1618,7 @@ public partial class FrmMain
             }
 
             ResumeLayout();
+            Visible = true;
         }
 
         // exit full screen
@@ -1675,6 +1677,8 @@ public partial class FrmMain
             }
 
         }
+
+        
     }
 
 

@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 
@@ -53,6 +54,7 @@ public partial class FrmMain
             MnuMain.Theme =
             MnuContext.Theme =
             MnuSubMenu.Theme = Config.Theme;
+        Toolbar.UpdateTheme(DpiApi.Transform(Config.ToolbarIconHeight));
 
         // background
         BackColor = Sp1.BackColor = Sp2.BackColor = Config.BackgroundColor;
