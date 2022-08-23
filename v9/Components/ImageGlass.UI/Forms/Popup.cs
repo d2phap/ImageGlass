@@ -309,6 +309,7 @@ public partial class Popup : Form
         {
             txtValue.Multiline = value;
             txtValue.Font = new Font("Consolas", Font.Size);
+            txtValue.Height = 200;
         }
     }
 

@@ -15,7 +15,7 @@
     <PackageProjectUrl>https://imageglass.org</PackageProjectUrl>
     <RepositoryUrl>https://imageglass.org/source</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>9.0.1.722</Version>
+    <Version>9.0.1.821</Version>
     <FileVersion>$(Version)</FileVersion>
     <VersionPrefix>9.0.1</VersionPrefix>
     <VersionSuffix>beta-1</VersionSuffix>

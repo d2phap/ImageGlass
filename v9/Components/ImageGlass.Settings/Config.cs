@@ -1092,7 +1092,7 @@ public static class Config
             details: details,
             buttons: PopupButtons.Continue_Quit);
 
-        if (result.ExitResult == PopupExitResult.OK)
+        if (result.ExitResult == PopupExitResult.Cancel)
         {
             Application.Exit();
         }
