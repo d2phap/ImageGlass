@@ -92,7 +92,7 @@ public partial class BHelper
 
 
     /// <summary>
-    /// Sets the simple rating (0-5) from rating (0-99).
+    /// Formats the 0-99 rating to the simple rating (0-5).
     /// </summary>
     public static int FormatStarRating(int rating)
     {
@@ -111,6 +111,21 @@ public partial class BHelper
 
         return star;
     }
+
+
+    /// <summary>
+    /// Formats the rating as stars
+    /// </summary>
+    public static string FormatStarRatingText(int rating)
+    {
+        var star = FormatStarRating(rating);
+        var ratingText = star > 0
+            ? "".PadRight(star, '⭐').PadRight(5, '-').Replace("-", " -")
+            : string.Empty;
+
+        return ratingText;
+    }
+
 
     /// <summary>
     /// Ellipses the given text

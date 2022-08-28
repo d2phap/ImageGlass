@@ -1270,10 +1270,7 @@ public partial class FrmMain : Form
                 if (Config.InfoItems.Contains(nameof(ImageInfo.ExifRating))
                     && Local.Metadata != null)
                 {
-                    var star = BHelper.FormatStarRating(Local.Metadata.ExifRatingPercent);
-                    ImageInfo.ExifRating = star > 0
-                        ? "".PadRight(star, '⭐').PadRight(5, '-').Replace("-", " -")
-                        : string.Empty;
+                    ImageInfo.ExifRating = BHelper.FormatStarRatingText(Local.Metadata.ExifRatingPercent);
                 }
                 else
                 {
