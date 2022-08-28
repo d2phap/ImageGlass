@@ -206,23 +206,25 @@ public partial class FrmMain : Form
 
     private void Gallery_ItemTooltipShowing(object sender, ItemTooltipShowingEventArgs e)
     {
+        var langPath = $"{nameof(FrmMain)}.{nameof(Gallery)}.Tooltip";
+
         // build tooltip content
         var sb = new StringBuilder();
         sb.AppendLine(e.Item.FileName);
-        sb.AppendLine($"Size: {e.Item.Details.FileSizeFormated}");
-        sb.AppendLine($"Date modified: {e.Item.Details.DateModifiedFormated}");
+        sb.AppendLine($"{Config.Language[$"{langPath}._{nameof(IgMetadata.FileSize)}"]}: {e.Item.Details.FileSizeFormated}");
+        sb.AppendLine($"{Config.Language[$"{langPath}._{nameof(IgMetadata.FileLastWriteTime)}"]}: {e.Item.Details.FileLastWriteTimeFormated}");
         var tooltipLinesCount = 4;
 
         if (e.Item.Details.FramesCount > 1)
         {
-            sb.AppendLine($"Frames: {e.Item.Details.FramesCount}");
+            sb.AppendLine($"{Config.Language[$"{langPath}._{nameof(IgMetadata.FramesCount)}"]}: {e.Item.Details.FramesCount}");
             tooltipLinesCount++;
         }
 
         var rating = BHelper.FormatStarRatingText(e.Item.Details.ExifRatingPercent);
         if (!string.IsNullOrEmpty(rating))
         {
-            sb.AppendLine($"Rating: {rating}");
+            sb.AppendLine($"{Config.Language[$"{langPath}._Rating"]}: {rating}");
             tooltipLinesCount++;
         }
 
@@ -639,7 +641,7 @@ public partial class FrmMain : Form
         // but not for write/access times
 
         // Sort image file
-        if (Local.ActiveImageLoadingOrder == ImageOrderBy.Length)
+        if (Local.ActiveImageLoadingOrder == ImageOrderBy.FileSize)
         {
             if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
             {
@@ -1283,7 +1285,7 @@ public partial class FrmMain : Form
                 if (Config.InfoItems.Contains(nameof(ImageInfo.ModifiedDateTime))
                     && Local.Metadata != null)
                 {
-                    ImageInfo.ModifiedDateTime = Local.Metadata.DateModifiedFormated + " (m)";
+                    ImageInfo.ModifiedDateTime = Local.Metadata.FileLastWriteTimeFormated + " (m)";
                 }
                 else
                 {
@@ -1353,7 +1355,7 @@ public partial class FrmMain : Form
                     }
                     else
                     {
-                        dtStr = Local.Metadata.DateModifiedFormated + " (m)";
+                        dtStr = Local.Metadata.FileLastWriteTimeFormated + " (m)";
                     }
                 }
 

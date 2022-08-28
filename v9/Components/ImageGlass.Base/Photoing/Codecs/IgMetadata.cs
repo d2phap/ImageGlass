@@ -28,12 +28,12 @@ public class IgMetadata
     public string FolderPath { get; set; } = string.Empty;
     public string FolderName { get; set; } = string.Empty;
 
-    public DateTime DateCreated { get; set; }
-    public DateTime DateAccessed { get; set; }
-    public DateTime DateModified { get; set; }
-    public string DateCreatedFormated => BHelper.FormatDateTime(DateCreated);
-    public string DateAccessedFormated => BHelper.FormatDateTime(DateAccessed);
-    public string DateModifiedFormated => BHelper.FormatDateTime(DateModified);
+    public DateTime FileCreationTime { get; set; }
+    public DateTime FileLastAccessTime { get; set; }
+    public DateTime FileLastWriteTime { get; set; }
+    public string FileCreationTimeFormated => BHelper.FormatDateTime(FileCreationTime);
+    public string FileLastAccessTimeFormated => BHelper.FormatDateTime(FileLastAccessTime);
+    public string FileLastWriteTimeFormated => BHelper.FormatDateTime(FileLastWriteTime);
 
     public long FileSize { get; set; } = 0;
     public string FileSizeFormated => BHelper.FormatSize(FileSize);

@@ -57,9 +57,9 @@ public static class PhotoCodec
         meta.FolderName = Path.GetFileName(meta.FolderPath);
 
         meta.FileSize = fi.Length;
-        meta.DateCreated = fi.CreationTimeUtc;
-        meta.DateModified = fi.LastWriteTimeUtc;
-        meta.DateAccessed = fi.LastAccessTimeUtc;
+        meta.FileCreationTime = fi.CreationTimeUtc;
+        meta.FileLastWriteTime = fi.LastWriteTimeUtc;
+        meta.FileLastAccessTime = fi.LastAccessTimeUtc;
 
         try
         {

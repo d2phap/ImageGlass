@@ -16,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass.Base.Photoing.Codecs;
+
 namespace ImageGlass.Base;
 
 
@@ -118,8 +120,8 @@ public class IgLang : Dictionary<string, string>
 
 
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Name)}", "Name (default)"); //v8.0
-        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Length)}", "Length"); //v8.0
-        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.CreationTime)}", "Creation time"); //v8.0
+        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.FileSize)}", "File size"); //v8.0
+        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.CreationTime)}", "Date created"); //v8.0
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.LastAccessTime)}", "Last access time"); //v8.0
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.LastWriteTime)}", "Last write time"); //v8.0
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Extension)}", "Extension"); //v8.0
@@ -137,6 +139,7 @@ public class IgLang : Dictionary<string, string>
         Add("_._UserAction._MenuNotFound", "The menu {0} is not found."); // v9.0
         Add("_._UserAction._MethodNotFound", "The method {0} is not found."); // v9.0
         Add("_._UserAction._MethodArgumentNotSupported", "The argument type of method {0} is not supported."); // v9.0
+
 
 
         #region FrmMain
@@ -353,6 +356,15 @@ public class IgLang : Dictionary<string, string>
 
 
         #endregion
+
+        // Gallery tooltip
+        Add($"FrmMain.Gallery.Tooltip._{nameof(IgMetadata.FileSize)}", "File size"); //v9.0
+        Add($"FrmMain.Gallery.Tooltip._{nameof(IgMetadata.FileCreationTime)}", "Date created"); //v9.0
+        Add($"FrmMain.Gallery.Tooltip._{nameof(IgMetadata.FileLastAccessTime)}", "Date accessed"); //v9.0
+        Add($"FrmMain.Gallery.Tooltip._{nameof(IgMetadata.FileLastWriteTime)}", "Date modified"); //v9.0
+        Add($"FrmMain.Gallery.Tooltip._{nameof(IgMetadata.FramesCount)}", "Frames"); //v9.0
+        Add($"FrmMain.Gallery.Tooltip._Rating", "Rating"); //v9.0
+
 
         #endregion
 
