@@ -27,6 +27,7 @@ using ImageGlass.Settings;
 using ImageGlass.UI;
 using System.Diagnostics;
 using System.Reflection;
+using System.Text;
 
 namespace ImageGlass;
 
@@ -201,6 +202,32 @@ public partial class FrmMain : Form
         {
             GoToImage(e.Item.Index);
         }
+    }
+
+    private void Gallery_ItemTooltipShowing(object sender, ItemTooltipShowingEventArgs e)
+    {
+        // build tooltip content
+        var sb = new StringBuilder();
+        sb.AppendLine(e.Item.FileName);
+        sb.AppendLine($"Size: {e.Item.Details.FileSizeFormated}");
+        sb.AppendLine($"Date modified: {e.Item.Details.DateModifiedFormated}");
+        var tooltipLinesCount = 4;
+
+        if (e.Item.Details.FramesCount > 1)
+        {
+            sb.AppendLine($"Frames: {e.Item.Details.FramesCount}");
+            tooltipLinesCount++;
+        }
+
+        var rating = BHelper.FormatStarRatingText(e.Item.Details.ExifRatingPercent);
+        if (!string.IsNullOrEmpty(rating))
+        {
+            sb.AppendLine($"Rating: {rating}");
+            tooltipLinesCount++;
+        }
+
+        e.TooltipContent = sb.ToString();
+        e.TooltipTitle = e.Item.Text + $" ({e.Item.Details.OriginalWidth} x {e.Item.Details.OriginalWidth})";
     }
 
 
@@ -2160,9 +2187,9 @@ public partial class FrmMain : Form
 
 
 
-    #endregion
 
     #endregion
 
+    #endregion
 
 }

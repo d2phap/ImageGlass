@@ -1092,14 +1092,16 @@ namespace ImageGlass
             // 
             this.PicMain.AllowDrop = true;
             this.PicMain.BackColor = System.Drawing.SystemColors.Control;
-            this.PicMain.BackgroundImage = null;
+            this.PicMain.BaseDpi = 96F;
             this.PicMain.CheckerboardMode = ImageGlass.Base.PhotoBox.CheckerboardMode.Client;
+            this.PicMain.CheckFPS = false;
             this.PicMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PicMain.Location = new System.Drawing.Point(0, 0);
             this.PicMain.Name = "PicMain";
             this.PicMain.NavBorderRadius = 45F;
             this.PicMain.NavButtonSize = new System.Drawing.SizeF(90F, 90F);
             this.PicMain.NavDisplay = ImageGlass.Base.PhotoBox.NavButtonDisplay.Both;
+            this.PicMain.RequestUpdateFrame = false;
             this.PicMain.Size = new System.Drawing.Size(730, 543);
             this.PicMain.TabIndex = 3;
             this.PicMain.OnZoomChanged += new ImageGlass.Views.DXCanvas.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
@@ -1129,6 +1131,7 @@ namespace ImageGlass
             this.Gallery.ThumbnailSize = new System.Drawing.Size(70, 70);
             this.Gallery.View = ImageGlass.Gallery.View.HorizontalStrip;
             this.Gallery.ItemClick += new ImageGlass.Gallery.ItemClickEventHandler(this.Gallery_ItemClick);
+            this.Gallery.ItemTooltipShowing += new System.EventHandler<ImageGlass.Gallery.ItemTooltipShowingEventArgs>(this.Gallery_ItemTooltipShowing);
             // 
             // MnuContext
             // 

@@ -541,7 +541,7 @@ public class ShellInfoCachedEventArgs : EventArgs
 
 
     /// <summary>
-    /// Initializes a new instance of the ShellInfoCachedEventArgs class.
+    /// Initializes a new instance of the <see cref="ShellInfoCachedEventArgs"/> class.
     /// </summary>
     /// <param name="extension">The file extension for which the shell info is requested.</param>
     /// <param name="smallIcon">The small shell icon.</param>
@@ -586,5 +586,38 @@ public class ItemCollectionChangedEventArgs : EventArgs
 
 }
 
-#endregion
+
+/// <summary>
+/// Represents the event arguments for item tooltip showing events.
+/// </summary>
+[Serializable, ComVisible(true)]
+public class ItemTooltipShowingEventArgs : EventArgs
+{
+    /// <summary>
+    /// Gets, sets the tooltip title.
+    /// </summary>
+    public string TooltipTitle { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets, sets the tooltip content.
+    /// </summary>
+    public string TooltipContent { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets the thumbnail item.
+    /// </summary>
+    public ImageGalleryItem Item { get; init; }
+
+
+    /// <summary>
+    /// Initialize the new instance of <see cref="ItemTooltipShowingEventArgs"/>.
+    /// </summary>
+    /// <param name="item"></param>
+    public ItemTooltipShowingEventArgs(ImageGalleryItem item)
+    {
+        Item = item;
+    }
+}
+
+#endregion // Event arguments
 

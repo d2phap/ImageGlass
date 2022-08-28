@@ -1218,39 +1218,24 @@ public partial class ImageGallery : Control, IComponent
             // delay
             await Task.Delay(delay, _tooltipTokenSrc.Token);
 
-            mTooltip.ToolTipTitle = item.Text +
-                $" ({item.Details.OriginalWidth} x {item.Details.OriginalWidth})";
+            // emit event
+            var args = new ItemTooltipShowingEventArgs(item);
+            ItemTooltipShowing?.Invoke(mTooltip, args);
 
-            // build tooltip content
-            var sb = new StringBuilder();
-            sb.AppendLine(item.FileName);
-            sb.AppendLine($"Size: {item.Details.FileSizeFormated}");
-            sb.AppendLine($"Date modified: {item.Details.DateModifiedFormated}");
-            var tooltipLinesCount = 4;
-
-            if (item.Details.FramesCount > 1)
-            {
-                sb.AppendLine($"Frames: {item.Details.FramesCount}");
-                tooltipLinesCount++;
-            }
-
-            var rating = BHelper.FormatStarRatingText(item.Details.ExifRatingPercent);
-            if (!string.IsNullOrEmpty(rating))
-            {
-                sb.AppendLine($"Rating: {rating}");
-                tooltipLinesCount++;
-            }
-
-
-
-            var bounds = layoutManager.GetItemBounds(item.Index);
+            // calculate tooltip position
             var tooltipPosY = 0;
-            var TOOLTIP_HEIGHT = 23 * tooltipLinesCount; // 23 x lines
             const int GAP = 4;
+            var bounds = layoutManager.GetItemBounds(item.Index);
 
             if (TooltipDirection == TooltipDirection.Top)
             {
-                tooltipPosY = bounds.Y - GAP - TOOLTIP_HEIGHT;
+                var g = CreateGraphics();
+                using var titleFont = new Font(Font, FontStyle.Bold);
+                var titleSize = g.MeasureString(args.TooltipTitle, titleFont);
+                var contentSize = g.MeasureString(args.TooltipContent, Font);
+                var tooltipHeight = (int)(titleSize.Height + contentSize.Height);
+
+                tooltipPosY = bounds.Y - GAP - tooltipHeight;
             }
             else if (TooltipDirection == TooltipDirection.Bottom)
             {
@@ -1258,7 +1243,8 @@ public partial class ImageGallery : Control, IComponent
             }
 
             // show tooltip
-            mTooltip.Show(sb.ToString(), this, bounds.X, tooltipPosY);
+            mTooltip.ToolTipTitle = args.TooltipTitle;
+            mTooltip.Show(args.TooltipContent, this, bounds.X, tooltipPosY);
 
 
             // duration
@@ -2160,6 +2146,12 @@ public partial class ImageGallery : Control, IComponent
     /// </summary>
     [Category("Behavior")]
     public event ShellInfoCachedEventHandler? ShellInfoCached;
+
+    /// <summary>
+    /// Occurs before the tooltip is shown.
+    /// </summary>
+    [Category("Behavior")]
+    public event EventHandler<ItemTooltipShowingEventArgs>? ItemTooltipShowing;
 
     #endregion
 }
