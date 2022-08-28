@@ -25,6 +25,7 @@ License: Apache License Version 2.0, http://www.apache.org/licenses/
 
 using ImageGlass.Base;
 using System.ComponentModel;
+using System.Text;
 
 namespace ImageGlass.Gallery;
 
@@ -1203,9 +1204,6 @@ public partial class ImageGallery : Control, IComponent
     /// <summary>
     /// Shows item tooltip
     /// </summary>
-    /// <param name="item"></param>
-    /// <param name="duration"></param>
-    /// <param name="delay"></param>
     public async void ShowItemTooltip(ImageGalleryItem? item,
         int duration = -1, int delay = 400)
     {
@@ -1213,21 +1211,6 @@ public partial class ImageGallery : Control, IComponent
 
         _tooltipTokenSrc?.Cancel();
         _tooltipTokenSrc = new();
-
-        var bounds = layoutManager.GetItemBounds(item.Index);
-        var tooltipPosY = 0;
-        const int TOOLTIP_HEIGHT = 23 * 3; // 23 x lines
-        const int GAP = 4;
-
-        if (TooltipDirection == TooltipDirection.Top)
-        {
-            tooltipPosY = bounds.Y - GAP - TOOLTIP_HEIGHT;
-        }
-        else if (TooltipDirection == TooltipDirection.Bottom)
-        {
-            tooltipPosY = bounds.Bottom + GAP;
-        }
-
         mTooltip.Hide(this);
 
         try
@@ -1235,15 +1218,47 @@ public partial class ImageGallery : Control, IComponent
             // delay
             await Task.Delay(delay, _tooltipTokenSrc.Token);
 
-            // build tooltip content
-            var tooltipContent = $"{item.FileName}" +
-                $"\r\n{BHelper.FormatSize(item.Details.FileSize)}";
-
             mTooltip.ToolTipTitle = item.Text +
-                $" ({item.Details.Width} x {item.Details.Height})";
+                $" ({item.Details.OriginalWidth} x {item.Details.OriginalWidth})";
+
+            // build tooltip content
+            var sb = new StringBuilder();
+            sb.AppendLine(item.FileName);
+            sb.AppendLine($"Size: {item.Details.FileSizeFormated}");
+            sb.AppendLine($"Date modified: {item.Details.DateModifiedFormated}");
+            var tooltipLinesCount = 4;
+
+            if (item.Details.FramesCount > 1)
+            {
+                sb.AppendLine($"Frames: {item.Details.FramesCount}");
+                tooltipLinesCount++;
+            }
+
+            var rating = BHelper.FormatStarRatingText(item.Details.ExifRatingPercent);
+            if (!string.IsNullOrEmpty(rating))
+            {
+                sb.AppendLine($"Rating: {rating}");
+                tooltipLinesCount++;
+            }
+
+
+
+            var bounds = layoutManager.GetItemBounds(item.Index);
+            var tooltipPosY = 0;
+            var TOOLTIP_HEIGHT = 23 * tooltipLinesCount; // 23 x lines
+            const int GAP = 4;
+
+            if (TooltipDirection == TooltipDirection.Top)
+            {
+                tooltipPosY = bounds.Y - GAP - TOOLTIP_HEIGHT;
+            }
+            else if (TooltipDirection == TooltipDirection.Bottom)
+            {
+                tooltipPosY = bounds.Bottom + GAP;
+            }
 
             // show tooltip
-            mTooltip.Show(tooltipContent, this, bounds.X, tooltipPosY);
+            mTooltip.Show(sb.ToString(), this, bounds.X, tooltipPosY);
 
 
             // duration
