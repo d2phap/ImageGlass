@@ -1162,25 +1162,9 @@ public partial class FrmMain : Form
         // the viewing image is from the image list
         else
         {
-            FileInfo? fi = null;
-
             var fullPath = string.IsNullOrEmpty(filename)
                 ? Local.Images.GetFileName(Local.CurrentIndex)
                 : BHelper.ResolvePath(filename);
-
-            var isFileUpdate = updateAll && !string.IsNullOrEmpty(fullPath)
-                || types.HasFlag(ImageInfoUpdateTypes.FileSize)
-                || types.HasFlag(ImageInfoUpdateTypes.ModifiedDateTime);
-
-            try
-            {
-                if (isFileUpdate)
-                {
-                    fi = new FileInfo(fullPath);
-                }
-            }
-            catch { }
-
 
             // ListCount
             if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ListCount))
@@ -1227,9 +1211,9 @@ public partial class FrmMain : Form
             if (updateAll || types.HasFlag(ImageInfoUpdateTypes.FileSize))
             {
                 if (Config.InfoItems.Contains(nameof(ImageInfo.FileSize))
-                    && fi != null)
+                    && Local.Metadata != null)
                 {
-                    ImageInfo.FileSize = BHelper.FormatSize(fi.Length);
+                    ImageInfo.FileSize = Local.Metadata.FileSizeFormated;
                 }
                 else
                 {
@@ -1258,7 +1242,7 @@ public partial class FrmMain : Form
                 if (Config.InfoItems.Contains(nameof(ImageInfo.Dimension))
                     && Local.Metadata != null)
                 {
-                    ImageInfo.Dimension = $"{Local.Metadata.Width} x {Local.Metadata.Height} px";
+                    ImageInfo.Dimension = $"{Local.Metadata.OriginalWidth} x {Local.Metadata.OriginalHeight} px";
                 }
                 else
                 {
@@ -1270,9 +1254,9 @@ public partial class FrmMain : Form
             if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ModifiedDateTime))
             {
                 if (Config.InfoItems.Contains(nameof(ImageInfo.ModifiedDateTime))
-                    && fi != null)
+                    && Local.Metadata != null)
                 {
-                    ImageInfo.ModifiedDateTime = BHelper.FormatDateTime(fi.LastWriteTime) + " (m)";
+                    ImageInfo.ModifiedDateTime = Local.Metadata.DateModifiedFormated + " (m)";
                 }
                 else
                 {
@@ -1332,23 +1316,20 @@ public partial class FrmMain : Form
             {
                 var dtStr = string.Empty;
 
-                if (Config.InfoItems.Contains(nameof(ImageInfo.DateTimeAuto)))
+                if (Config.InfoItems.Contains(nameof(ImageInfo.DateTimeAuto))
+                    && Local.Metadata != null)
                 {
-                    if (Local.Metadata != null)
+                    if (Local.Metadata.ExifDateTimeOriginal != null)
                     {
-                        if (Local.Metadata.ExifDateTimeOriginal != null)
-                        {
-                            dtStr = BHelper.FormatDateTime(Local.Metadata.ExifDateTimeOriginal) + " (o)";
-                        }
-                        else if (Local.Metadata.ExifDateTime != null)
-                        {
-                            dtStr = BHelper.FormatDateTime(Local.Metadata.ExifDateTime) + " (e)";
-                        }
+                        dtStr = BHelper.FormatDateTime(Local.Metadata.ExifDateTimeOriginal) + " (o)";
                     }
-
-                    if (fi != null && string.IsNullOrEmpty(dtStr))
+                    else if (Local.Metadata.ExifDateTime != null)
                     {
-                        dtStr = BHelper.FormatDateTime(fi.LastWriteTime) + " (m)";
+                        dtStr = BHelper.FormatDateTime(Local.Metadata.ExifDateTime) + " (e)";
+                    }
+                    else
+                    {
+                        dtStr = Local.Metadata.DateModifiedFormated + " (m)";
                     }
                 }
 

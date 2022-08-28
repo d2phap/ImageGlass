@@ -20,6 +20,7 @@ using DirectN;
 using ImageMagick;
 using ImageMagick.Formats;
 using System.Runtime.CompilerServices;
+using System.Text;
 using WicNet;
 using ColorProfile = ImageMagick.ColorProfile;
 
@@ -40,7 +41,25 @@ public static class PhotoCodec
     /// <param name="filePath">Full path of the file</param>
     public static IgMetadata? LoadMetadata(string filePath, CodecReadOptions? options = null)
     {
-        IgMetadata? meta = null;
+        FileInfo? fi = null;
+        var meta = new IgMetadata() { FilePath = filePath };
+
+        try
+        {
+            fi = new FileInfo(filePath);
+        }
+        catch { }
+        if (fi == null) return meta;
+
+        meta.FileName = fi.Name;
+        meta.FileExtension = fi.Extension;
+        meta.FolderPath = fi.DirectoryName ?? string.Empty;
+        meta.FolderName = Path.GetFileName(meta.FolderPath);
+
+        meta.FileSize = fi.Length;
+        meta.DateCreated = fi.CreationTimeUtc;
+        meta.DateModified = fi.LastWriteTimeUtc;
+        meta.DateAccessed = fi.LastAccessTimeUtc;
 
         try
         {
@@ -59,10 +78,7 @@ public static class PhotoCodec
                 imgC.Ping(filePath, settings);
             }
 
-            meta = new()
-            {
-                FramesCount = imgC.Count,
-            };
+            meta.FramesCount = imgC.Count;
 
             if (imgC.Count > 0)
             {
@@ -81,10 +97,36 @@ public static class PhotoCodec
                     // ExifDateTime
                     dt = GetExifValue(exifProfile, ExifTag.DateTime);
                     meta.ExifDateTime = BHelper.ConvertDateTime(dt);
+
+
+                    meta.ExifArtist = GetExifValue(exifProfile, ExifTag.Artist);
+                    meta.ExifCopyright = GetExifValue(exifProfile, ExifTag.Copyright);
+                    meta.ExifSoftware = GetExifValue(exifProfile, ExifTag.Software);
+                    meta.ExifImageDescription = GetExifValue(exifProfile, ExifTag.ImageDescription);
+                    meta.ExifModel = GetExifValue(exifProfile, ExifTag.Model);
+                    meta.ExifISOSpeed = (int?)GetExifValue(exifProfile, ExifTag.ISOSpeed);
+
+                    var rational = GetExifValue(exifProfile, ExifTag.ExposureTime);
+                    meta.ExifExposureTime = rational.Denominator == 0
+                        ? null
+                        : rational.Numerator / rational.Denominator;
+
+                    rational = GetExifValue(exifProfile, ExifTag.FNumber);
+                    meta.ExifFNumber = rational.Denominator == 0
+                        ? null
+                        : rational.Numerator / rational.Denominator;
+
+                    rational = GetExifValue(exifProfile, ExifTag.FocalLength);
+                    meta.ExifFocalLength = rational.Denominator == 0
+                        ? null
+                        : rational.Numerator / rational.Denominator;
                 }
 
                 meta.Width = imgM.Width;
                 meta.Height = imgM.Height;
+
+                meta.OriginalWidth = imgM.BaseWidth;
+                meta.OriginalHeight = imgM.BaseHeight;
 
                 meta.HasAlpha = imgC.Any(i => i.HasAlpha);
                 meta.CanAnimate = imgC.Count > 1 && imgC.Any(i => i.AnimationDelay > 0);
