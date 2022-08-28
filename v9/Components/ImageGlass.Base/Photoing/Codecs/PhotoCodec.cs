@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using DirectN;
 using ImageMagick;
 using ImageMagick.Formats;
 using System.Runtime.CompilerServices;
@@ -197,7 +198,7 @@ public static class PhotoCodec
 
 
     /// <summary>
-    /// Save as image file
+    /// Save as image file, use Magick.NET.
     /// </summary>
     /// <param name="srcFileName">Source filename to save</param>
     /// <param name="destFilePath">Destination filename</param>
@@ -230,13 +231,57 @@ public static class PhotoCodec
 
 
     /// <summary>
-    /// Save as image file
+    /// Save as image file, use WIC if the extension is supported, else use Magick.NET.
+    /// </summary>
+    /// <param name="srcBitmap">Source bitmap to save</param>
+    /// <param name="destFilePath">Destination file path</param>
+    /// <param name="quality">JPEG/MIFF/PNG compression level</param>
+    public static async Task SaveAsync(WicBitmapSource? srcBitmap, string destFilePath, int quality = 100, CancellationToken token = default)
+    {
+        if (srcBitmap == null) return;
+
+
+        try
+        {
+            token.ThrowIfCancellationRequested();
+
+            var wicEncoder = WicEncoder.FromFileExtension(Path.GetExtension(destFilePath));
+            if (wicEncoder == null)
+            {
+                // use Magick.NET for saving
+                await SaveAsync(srcBitmap, destFilePath, format: MagickFormat.Unknown, quality: quality, token);
+
+                return;
+            }
+
+
+            // set saving options for WIC
+            var encoderOptions = new List<KeyValuePair<string, object>>();
+            if (quality == 100)
+            {
+                encoderOptions.Add(new("Lossless", true));
+            }
+            else
+            {
+                encoderOptions.Add(new("ImageQuality", quality / 100f));
+            }
+
+
+            using var stream = new FileStream(destFilePath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
+
+            await Task.Run(() => srcBitmap.Save(stream, wicEncoder.ContainerFormat, encoderOptions: encoderOptions), token);
+        }
+        catch (OperationCanceledException) { }
+    }
+
+
+    /// <summary>
+    /// Save as image file, use Magick.NET.
     /// </summary>
     /// <param name="srcBitmap">Source bitmap to save</param>
     /// <param name="destFilePath">Destination file path</param>
     /// <param name="format">New image format</param>
     /// <param name="quality">JPEG/MIFF/PNG compression level</param>
-    /// <returns></returns>
     public static async Task SaveAsync(WicBitmapSource? srcBitmap, string destFilePath, MagickFormat format = MagickFormat.Unknown, int quality = 100, CancellationToken token = default)
     {
         if (srcBitmap == null) return;
@@ -248,9 +293,9 @@ public static class PhotoCodec
 
             using var bitmap = BHelper.ToGdiPlusBitmap(srcBitmap);
             if (bitmap == null) return;
-            
+
             using var imgM = new MagickImage();
-            
+
             await Task.Run(() =>
             {
                 imgM.Read(bitmap);
@@ -273,7 +318,7 @@ public static class PhotoCodec
 
 
     /// <summary>
-    /// Save as image file
+    /// Save as image file, use Magick.NET.
     /// </summary>
     /// <param name="srcBitmap">Source bitmap to save</param>
     /// <param name="destFilePath">Destination file path</param>
@@ -299,7 +344,7 @@ public static class PhotoCodec
 
 
     /// <summary>
-    /// Save image pages to files
+    /// Save image pages to files, using Magick.NET
     /// </summary>
     /// <param name="filename">The full path of source file</param>
     /// <param name="destFolder">The destination folder to save to</param>
@@ -339,7 +384,6 @@ public static class PhotoCodec
     /// <param name="srcBitmap">Source bitmap</param>
     /// <param name="srcExt">Source file extension, example: .png</param>
     /// <param name="destFilePath">Destination file</param>
-    /// <returns></returns>
     public static async Task SaveAsBase64Async(WicBitmapSource? srcBitmap, string srcExt, string destFilePath, CancellationToken token = default)
     {
         if (srcBitmap == null) return;
@@ -351,8 +395,6 @@ public static class PhotoCodec
         try
         {
             token.ThrowIfCancellationRequested();
-
-            var encoder = WicEncoder.FromFileExtension(srcExt);
 
             // convert bitmap to base64
             using var ms = new MemoryStream();
@@ -376,7 +418,6 @@ public static class PhotoCodec
     /// </summary>
     /// <param name="srcFilePath">Source file path</param>
     /// <param name="destFilePath">Destination file path</param>
-    /// <returns></returns>
     public static async Task SaveAsBase64Async(string srcFilePath, string destFilePath, CodecReadOptions readOptions, CancellationToken token = default)
     {
         var srcExt = Path.GetExtension(srcFilePath).ToLowerInvariant();

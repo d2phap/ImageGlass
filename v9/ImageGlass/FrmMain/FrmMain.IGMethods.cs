@@ -525,7 +525,7 @@ public partial class FrmMain
         if (Local.ClipboardImage != null || Local.Metadata?.FramesCount == 1)
         {
             // save image to temp file
-            fileToPrint = await Local.SaveImageAsTempFileAsync();
+            fileToPrint = await Local.SaveImageAsTempFileAsync(quality: 100);
         }
 
         // print an image file
@@ -542,7 +542,7 @@ public partial class FrmMain
             && !ext.Equals(".TIFF", StringComparison.OrdinalIgnoreCase))
         {
             // save image to temp file
-            fileToPrint = await Local.SaveImageAsTempFileAsync();
+            fileToPrint = await Local.SaveImageAsTempFileAsync(quality: 100);
         }
 
 
@@ -950,7 +950,7 @@ public partial class FrmMain
         {
             var lastWriteTime = File.GetLastWriteTime(filePath);
 
-            await PhotoCodec.SaveAsync(img.ImgData.Image, filePath, quality: Config.ImageEditQuality);
+            await PhotoCodec.SaveAsync(img.ImgData.Image, filePath, Config.ImageEditQuality);
 
             // Issue #307: option to preserve the modified date/time
             if (Config.PreserveModifiedDate)
@@ -1120,7 +1120,7 @@ public partial class FrmMain
                 }
                 else if (Local.ClipboardImage != null)
                 {
-                    await PhotoCodec.SaveAsync(clonedPic, destFilePath, quality: Config.ImageEditQuality);
+                    await PhotoCodec.SaveAsync(clonedPic, destFilePath, Config.ImageEditQuality);
                 }
             }
 

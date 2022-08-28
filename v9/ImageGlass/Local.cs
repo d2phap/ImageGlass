@@ -222,7 +222,7 @@ internal class Local
     /// Save the viewing image as temporary file
     /// with the <see cref="Config.ImageEditQuality"/> quality.
     /// </summary>
-    public static async Task<string?> SaveImageAsTempFileAsync(string ext = ".png")
+    public static async Task<string?> SaveImageAsTempFileAsync(string ext = ".png", int? quality = null)
     {
         // check if we can use the current clipboard image path
         if (File.Exists(TempImagePath))
@@ -239,6 +239,7 @@ internal class Local
         Directory.CreateDirectory(tempDir);
 
         var filename = Path.Combine(tempDir, $"temp_{DateTime.Now:yyyy-MM-dd-hh-mm-ss}{ext}");
+        quality ??= Config.ImageEditQuality;
 
 
         // save clipboard image
@@ -246,7 +247,7 @@ internal class Local
         {
             try
             {
-                await PhotoCodec.SaveAsync(ClipboardImage, filename, quality: Config.ImageEditQuality);
+                await PhotoCodec.SaveAsync(ClipboardImage, filename, quality.Value);
 
                 TempImagePath = filename;
             }
@@ -265,7 +266,7 @@ internal class Local
         {
             try
             {
-                await PhotoCodec.SaveAsync(img.ImgData.Image, filename, quality: Config.ImageEditQuality);
+                await PhotoCodec.SaveAsync(img.ImgData.Image, filename, quality.Value);
 
                 TempImagePath = filename;
             }
