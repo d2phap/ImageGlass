@@ -24,6 +24,7 @@ License: Apache License Version 2.0, http://www.apache.org/licenses/
 */
 using ImageGlass.Base;
 using ImageGlass.Base.Cache;
+using ImageGlass.Base.Photoing.Codecs;
 using System.Text;
 
 namespace ImageGlass.Gallery;
@@ -107,50 +108,13 @@ public class FileSystemAdaptor : IAdaptor
     /// </summary>
     /// <param name="key">Item key.</param>
     /// <returns>An array of tuples containing item details or null if an error occurs.</returns>
-    public override ImageDetails GetDetails(object key)
+    public override IgMetadata GetDetails(object key)
     {
-        var details = new ImageDetails();
-        if (_isDisposed) return details;
+        if (_isDisposed) return new IgMetadata();
 
-        var filename = (string)key;
+        var filePath = (string)key;
         
-
-        // Get file info
-        if (File.Exists(filename))
-        {
-            var info = new FileInfo(filename);
-
-            details.DateCreated = info.CreationTime;
-            details.DateAccessed = info.LastAccessTime;
-            details.DateModified = info.LastWriteTime;
-            details.FileSize = info.Length;
-            details.FilePath = filename;
-            details.FileName = Path.GetFileName(filename);
-            details.FileExtension = Path.GetExtension(filename).ToUpperInvariant();
-            details.FolderPath = _stringCache.GetFromCache(info.DirectoryName ?? "");
-            details.FolderName = info.Directory?.Name ?? "";
-
-            // Get metadata
-            var metadata = Extractor.Current.GetMetadata(filename);
-            details.Width = metadata.Width;
-            details.Height = metadata.Height;
-            details.DPIX = metadata.DPIX;
-            details.DPIY = metadata.DPIY;
-            details.ImageDescription = metadata.ImageDescription ?? "";
-            details.EquipmentModel = metadata.EquipmentModel ?? "";
-            details.DateTaken = metadata.DateTaken;
-            details.Artist = metadata.Artist ?? "";
-            details.Copyright = metadata.Copyright ?? "";
-            details.ExposureTime = (float)metadata.ExposureTime;
-            details.FNumber = (float)metadata.FNumber;
-            details.ISOSpeed = (ushort)metadata.ISOSpeed;
-            details.Comment = metadata.Comment ?? "";
-            details.Rating = (ushort)metadata.Rating;
-            details.Software = metadata.Software ?? "";
-            details.FocalLength = (float)metadata.FocalLength;
-        }
-
-        return details;
+        return PhotoCodec.LoadMetadata(filePath);
     }
 
     /// <summary>

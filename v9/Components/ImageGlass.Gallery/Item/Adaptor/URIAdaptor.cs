@@ -22,6 +22,7 @@ Url: https://github.com/oozcitak/imagelistview
 License: Apache License Version 2.0, http://www.apache.org/licenses/
 ---------------------
 */
+using ImageGlass.Base.Photoing.Codecs;
 using System.Net;
 using System.Text;
 
@@ -123,7 +124,7 @@ public class UriAdaptor : IAdaptor
     /// </summary>
     /// <param name="key">Item key.</param>
     /// <returns>An array of 2-tuples containing item details or null if an error occurs.</returns>
-    public override ImageDetails GetDetails(object key)
+    public override IgMetadata GetDetails(object key)
     {
         return new();
     }

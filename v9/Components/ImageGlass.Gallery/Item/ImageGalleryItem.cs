@@ -24,6 +24,7 @@ License: Apache License Version 2.0, http://www.apache.org/licenses/
 */
 
 using ImageGlass.Base.Cache;
+using ImageGlass.Base.Photoing.Codecs;
 using System.ComponentModel;
 using static ImageGlass.Gallery.ImageGallery;
 
@@ -48,7 +49,7 @@ public class ImageGalleryItem : ICloneable
     private int mZOrder = 0;
 
     // File info
-    private ImageDetails? _details = null;
+    private IgMetadata? _details = null;
     internal string extension = string.Empty;
     internal string mFileName = string.Empty;
 
@@ -127,7 +128,7 @@ public class ImageGalleryItem : ICloneable
     /// Gets image details.
     /// </summary>
     [Browsable(false)]
-    public ImageDetails Details
+    public IgMetadata Details
     {
         get
         {

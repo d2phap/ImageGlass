@@ -23,6 +23,8 @@ License: Apache License Version 2.0, http://www.apache.org/licenses/
 ---------------------
 */
 
+using ImageGlass.Base.Photoing.Codecs;
+
 namespace ImageGlass.Gallery;
 
 /// <summary>
@@ -39,7 +41,7 @@ public interface IExtractor
     /// Returns image metadata.
     /// </summary>
     /// <param name="path">Filepath of image</param>
-    Metadata GetMetadata(string path);
+    IgMetadata GetMetadata(string path);
 
     /// <summary>
     /// Creates a thumbnail from the given image file.

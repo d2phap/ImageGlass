@@ -52,7 +52,7 @@ public static class PhotoCodec
         if (fi == null) return meta;
 
         meta.FileName = fi.Name;
-        meta.FileExtension = fi.Extension;
+        meta.FileExtension = fi.Extension.ToUpperInvariant();
         meta.FolderPath = fi.DirectoryName ?? string.Empty;
         meta.FolderName = Path.GetFileName(meta.FolderPath);
 

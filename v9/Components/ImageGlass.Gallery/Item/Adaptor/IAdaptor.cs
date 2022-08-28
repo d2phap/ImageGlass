@@ -22,6 +22,8 @@ Url: https://github.com/oozcitak/imagelistview
 License: Apache License Version 2.0, http://www.apache.org/licenses/
 ---------------------
 */
+using ImageGlass.Base.Photoing.Codecs;
+
 namespace ImageGlass.Gallery;
 
 
@@ -64,8 +66,7 @@ public abstract class IAdaptor : IDisposable
     /// Returns the details for the given item.
     /// </summary>
     /// <param name="key">Item key.</param>
-    /// <returns>An array of tuples containing item details or null if an error occurs.</returns>
-    public abstract ImageDetails GetDetails(object key);
+    public abstract IgMetadata GetDetails(object key);
 
     /// <summary>
     /// Performs application-defined tasks associated with freeing,

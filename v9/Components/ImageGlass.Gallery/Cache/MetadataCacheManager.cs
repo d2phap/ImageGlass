@@ -22,6 +22,7 @@ Url: https://github.com/oozcitak/imagelistview
 License: Apache License Version 2.0, http://www.apache.org/licenses/
 ---------------------
 */
+using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.QueuedWorker;
 
 namespace ImageGlass.Gallery;
@@ -224,7 +225,7 @@ internal class MetadataCacheManager : IDisposable
             return;
 
         // Get result
-        var details = e.Result as ImageDetails;
+        var details = e.Result as IgMetadata;
 
         // Refresh the control lazily
         if (_imageGallery != null && _imageGallery.IsItemVisible(request.Guid))
