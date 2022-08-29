@@ -293,12 +293,11 @@ public partial class FrmMain
         }
 
         // Gallery bar
+        Gallery.Height = Config.ThumbnailSize + scrollBarSize + 30;
         Sp1.Panel2Collapsed = !Config.ShowThumbnails;
         Sp1.SplitterDistance = Sp1.Height
             - Sp1.SplitterWidth
-            - Config.ThumbnailSize
-            - scrollBarSize
-            - 30;
+            - Gallery.Height;
 
         // update menu item state
         MnuToggleThumbnails.Checked = Config.ShowThumbnails;

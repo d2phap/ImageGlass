@@ -1051,6 +1051,7 @@ namespace ImageGlass
             // 
             // Sp1.Panel2
             // 
+            this.Sp1.Panel2.BackColor = System.Drawing.Color.RosyBrown;
             this.Sp1.Panel2.Controls.Add(this.Gallery);
             this.Sp1.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp1.Panel2MinSize = 0;
@@ -1120,9 +1121,10 @@ namespace ImageGlass
             // 
             this.Gallery.CheckBoxAlignment = System.Drawing.ContentAlignment.TopLeft;
             this.Gallery.CheckBoxPadding = new System.Drawing.Size(6, 6);
-            this.Gallery.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Gallery.Dock = System.Windows.Forms.DockStyle.Top;
             this.Gallery.EnableKeyNavigation = true;
             this.Gallery.Location = new System.Drawing.Point(0, 0);
+            this.Gallery.Margin = new System.Windows.Forms.Padding(0);
             this.Gallery.Name = "Gallery";
             this.Gallery.PersistentCacheDirectory = "";
             this.Gallery.PersistentCacheSize = ((long)(100));
