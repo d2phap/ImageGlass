@@ -158,7 +158,7 @@ public class IgPhoto : IDisposable
             }
 
             // load image
-            ImgData = await PhotoCodec.LoadAsync(Filename, options, _tokenSrc?.Token);
+            ImgData = await PhotoCodec.LoadAsync(Filename, options, null, _tokenSrc?.Token);
 
             // cancel if requested
             if (_tokenSrc is not null && _tokenSrc.IsCancellationRequested)

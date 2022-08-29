@@ -21,52 +21,6 @@ namespace ImageGlass.Base;
 
 
 /// <summary>
-/// The list of Zoom Optimization.
-/// **If we need to rename, have to update the language string too.
-/// Because the name is also language keyword!
-/// </summary>
-public enum ZoomOptimizationMethods
-{
-    /// <summary>
-    /// Combination of NearestNeighbor
-    /// </summary>
-    Auto = 0,
-    /// <summary>
-    /// Specifies low quality interpolation.
-    /// </summary>
-    Low = 1,
-    /// <summary>
-    /// Specifies high quality interpolation.
-    /// </summary>
-    High = 2,
-    /// <summary>
-    /// Specifies bilinear interpolation. No prefiltering is done. This mode is not suitable
-    /// for shrinking an image below 50 percent of its original size.
-    /// </summary>
-    Bilinear = 3,
-    /// <summary>
-    /// Specifies bicubic interpolation. No prefiltering is done. This mode is not suitable
-    /// for shrinking an image below 25 percent of its original size.
-    /// </summary>
-    Bicubic = 4,
-    /// <summary>
-    /// Specifies nearest-neighbor interpolation.
-    /// </summary>
-    NearestNeighbor = 5,
-    /// <summary>
-    /// Specifies high-quality, bilinear interpolation. Prefiltering is performed to
-    /// ensure high-quality shrinking.
-    /// </summary>
-    HighQualityBilinear = 6,
-    /// <summary>
-    /// Specifies high-quality, bicubic interpolation. Prefiltering is performed to ensure
-    /// high-quality shrinking. This mode produces the highest quality transformed images.
-    /// </summary>
-    HighQualityBicubic = 7,
-}
-
-
-/// <summary>
 /// Define the flags to tell FrmMain update the UI
 /// </summary>
 [Flags]
@@ -149,3 +103,14 @@ public enum IgExitCode : int
     AdminRequired = 2,
 }
 
+
+/// <summary>
+/// Flip options.
+/// </summary>
+[Flags]
+public enum FlipOptions
+{
+    None = 0,
+    Horizontal = 1 << 1,
+    Vertical = 1 << 2,
+}
