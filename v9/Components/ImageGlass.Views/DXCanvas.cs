@@ -1385,17 +1385,21 @@ public class DXCanvas : DXControl
 
                 object? bmpObj;
                 SizeF srcIconSize;
-                if (UseHardwareAcceleration)
+                if (UseHardwareAcceleration && _navLeftImage != null)
                 {
                     bmpObj = _navLeftImage.Object;
                     _navLeftImage.Object.GetSize(out var size);
 
                     srcIconSize = DXHelper.ToSize(size);
                 }
-                else
+                else if (_navLeftImageGdip != null)
                 {
                     bmpObj = _navLeftImageGdip;
                     srcIconSize = _navLeftImageGdip.Size;
+                }
+                else
+                {
+                    return;
                 }
 
                 g.DrawBitmap(bmpObj, new RectangleF()
@@ -1448,17 +1452,21 @@ public class DXCanvas : DXControl
 
                 object? bmpObj;
                 SizeF srcIconSize;
-                if (UseHardwareAcceleration)
+                if (UseHardwareAcceleration && _navRightImage != null)
                 {
                     bmpObj = _navRightImage.Object;
                     _navRightImage.Object.GetSize(out var size);
 
                     srcIconSize = DXHelper.ToSize(size);
                 }
-                else
+                else if (_navRightImageGdip != null)
                 {
                     bmpObj = _navRightImageGdip;
                     srcIconSize = _navRightImageGdip.Size;
+                }
+                else
+                {
+                    return;
                 }
 
                 g.DrawBitmap(bmpObj, new RectangleF()
