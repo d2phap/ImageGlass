@@ -810,12 +810,12 @@ public partial class FrmMain
         //MnuImageFocus.Visible = false;
         //MnuViewChannels.Visible = false;
         //MnuLoadingOrders.Visible = false;
-        toolStripMenuItem16.Visible = false;
+        //toolStripMenuItem16.Visible = false;
         MnuRotateLeft.Visible = false;
         MnuRotateRight.Visible = false;
-        MnuFlipHorizontal.Visible = false;
-        MnuFlipVertical.Visible = false;
-        toolStripMenuItem17.Visible = false;
+        //MnuFlipHorizontal.Visible = false;
+        //MnuFlipVertical.Visible = false;
+        //toolStripMenuItem17.Visible = false;
         //MnuRename.Visible = false;
         //MnuMoveToRecycleBin.Visible = false;
         //MnuDeleteFromHardDisk.Visible = false;

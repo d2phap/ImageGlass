@@ -814,9 +814,13 @@ public partial class FrmMain : Form
         string filename = "",
         CancellationTokenSource? token = null)
     {
+        Local.CurrentChanges.Clear();
+
         if (Local.Images.Length == 0 && string.IsNullOrEmpty(filename))
         {
             Local.CurrentIndex = -1;
+            Local.Metadata = null;
+            
             UpdateImageInfo(ImageInfoUpdateTypes.All);
 
             return;
@@ -1975,12 +1979,12 @@ public partial class FrmMain : Form
 
     private void MnuFlipHorizontal_Click(object sender, EventArgs e)
     {
-
+        IG_FlipImage(FlipOptions.Horizontal);
     }
 
     private void MnuFlipVertical_Click(object sender, EventArgs e)
     {
-
+        IG_FlipImage(FlipOptions.Vertical);
     }
 
     private void MnuRename_Click(object sender, EventArgs e)

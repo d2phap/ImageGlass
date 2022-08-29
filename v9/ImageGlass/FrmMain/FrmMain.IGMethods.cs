@@ -29,6 +29,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using WicNet;
+using DirectN;
 
 namespace ImageGlass;
 
@@ -949,7 +950,7 @@ public partial class FrmMain
         {
             var lastWriteTime = File.GetLastWriteTime(filePath);
 
-            await PhotoCodec.SaveAsync(img.ImgData.Image, filePath, Config.ImageEditQuality);
+            await PhotoCodec.SaveAsync(filePath, filePath, Local.Images.ReadOptions, Local.CurrentChanges, Config.ImageEditQuality);
 
             // Issue #307: option to preserve the modified date/time
             if (Config.PreserveModifiedDate)
@@ -1071,6 +1072,7 @@ public partial class FrmMain
         }
 
         WicBitmapSource? clonedPic = null;
+        IgPhoto? img = null;
         var srcExt = "";
         var langPath = $"{Name}.{nameof(MnuSave)}";
 
@@ -1079,7 +1081,7 @@ public partial class FrmMain
         // get the bitmap data from file
         if (hasSrcPath)
         {
-            var img = await Local.Images.GetAsync(Local.CurrentIndex);
+            img = await Local.Images.GetAsync(Local.CurrentIndex);
             clonedPic = img?.ImgData?.Image?.Clone();
 
             srcExt = Path.GetExtension(srcFilePath).ToLowerInvariant();
@@ -1103,7 +1105,7 @@ public partial class FrmMain
             {
                 if (hasSrcPath)
                 {
-                    await PhotoCodec.SaveAsBase64Async(srcFilePath, destFilePath, Local.Images.ReadOptions);
+                    await PhotoCodec.SaveAsBase64Async(srcFilePath, destFilePath, Local.Images.ReadOptions, Local.CurrentChanges);
                 }
                 else if (Local.ClipboardImage != null)
                 {
@@ -1115,7 +1117,7 @@ public partial class FrmMain
             {
                 if (hasSrcPath)
                 {
-                    await PhotoCodec.SaveAsync(srcFilePath, destFilePath, Local.Images.ReadOptions, Config.ImageEditQuality);
+                    await PhotoCodec.SaveAsync(srcFilePath, destFilePath, Local.Images.ReadOptions, Local.CurrentChanges, Config.ImageEditQuality);
                 }
                 else if (Local.ClipboardImage != null)
                 {
@@ -1729,5 +1731,75 @@ public partial class FrmMain
         }
 
     }
+
+
+
+    private void IG_FlipImage(FlipOptions options)
+    {
+        _ = FlipImageAsync(options);
+    }
+
+
+    private async Task FlipImageAsync(FlipOptions options)
+    {
+        if (PicMain.Source == ImageSource.Null || options == FlipOptions.None) return;
+
+        if (Local.ClipboardImage != null)
+        {
+            PhotoCodec.ApplyIgImgChanges(Local.ClipboardImage, new()
+            {
+                Flips = options,
+            });
+
+            // TODO:
+            PicMain.SetImage(new() {
+                Image = Local.ClipboardImage,
+                FrameCount = 1,
+                HasAlpha = true,
+            });
+
+            return;
+        }
+
+
+        var img = await Local.Images.GetAsync(Local.CurrentIndex);
+        if (img?.ImgData?.Image != null)
+        {
+            // update flip changes
+            if (options.HasFlag(FlipOptions.Horizontal))
+            {
+                if (Local.CurrentChanges.Flips.HasFlag(FlipOptions.Horizontal))
+                {
+                    Local.CurrentChanges.Flips ^= FlipOptions.Horizontal;
+                }
+                else
+                {
+                    Local.CurrentChanges.Flips |= FlipOptions.Horizontal;
+                }
+            }
+
+            if (options.HasFlag(FlipOptions.Vertical))
+            {
+                if (Local.CurrentChanges.Flips.HasFlag(FlipOptions.Vertical))
+                {
+                    Local.CurrentChanges.Flips ^= FlipOptions.Vertical;
+                }
+                else
+                {
+                    Local.CurrentChanges.Flips |= FlipOptions.Vertical;
+                }
+            }
+
+
+            PhotoCodec.ApplyIgImgChanges(img.ImgData.Image, new IgImgChanges()
+            {
+                Flips = options,
+            });
+            PicMain.SetImage(img.ImgData);
+        }
+
+    }
+
+
 }
 
