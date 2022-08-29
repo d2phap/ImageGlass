@@ -143,6 +143,11 @@ internal class Local
     /// </summary>
     public static int CurrentIndex { get; set; } = -1;
 
+    /// <summary>
+    /// Gets, sets the changes of the current viewing image.
+    /// </summary>
+    public static IgImgChanges CurrentChanges = new();
+
 
     /// <summary>
     /// Gets, sets the value if the current image is error
