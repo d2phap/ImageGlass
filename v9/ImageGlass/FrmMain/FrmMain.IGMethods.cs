@@ -440,9 +440,14 @@ public partial class FrmMain
                 Text = "\r\n" +
                     "LICENSE AND CREDITS\r\n" +
                     "\r\n" +
-                    "◾ D2DLib\r\n" +
+                    "◾ WicNet\r\n" +
                     "    Distributed under the terms of the MIT license.\r\n" +
-                    "    Copyright © 2009-2020 unvell.com, Jingwood. All rights reserved.\r\n" +
+                    "    Copyright © 2022 Simon Mourier. All rights reserved.\r\n" +
+                    "\r\n" +
+
+                    "◾ D2Phap.DXControl\r\n" +
+                    "    Distributed under the terms of the MIT license.\r\n" +
+                    "    Copyright © 2022 Dương Diệu Pháp. All rights reserved.\r\n" +
                     "\r\n" +
 
                     "◾ Magick.NET\r\n" +
