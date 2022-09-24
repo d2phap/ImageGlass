@@ -997,7 +997,7 @@ public partial class FrmMain : Form
         _ = ViewNextCancellableAsync(0);
     }
 
-    #endregion
+    #endregion // Image Loading functions
 
 
     #region Local.Images event
@@ -1020,78 +1020,6 @@ public partial class FrmMain : Form
         _ = Task.Run(() => UpdateImageInfo(ImageInfoUpdateTypes.All, e.FilePath));
     }
 
-
-    /// <summary>
-    /// Show image preview using the thumbnail
-    /// </summary>
-    private void ShowImagePreview(string filePath)
-    {
-        if (InvokeRequired)
-        {
-            Invoke(ShowImagePreview, filePath);
-            return;
-        }
-
-        if (Local.Metadata == null || !Config.ShowImagePreview) return;
-        WicBitmapSource? wicSrc = null;
-
-
-        try
-        {
-            // get embedded thumbnail for preview
-            wicSrc = PhotoCodec.GetEmbeddedThumbnail(filePath);
-
-            // use thumbnail image for preview
-            if (wicSrc == null)
-            {
-                if (Local.CurrentIndex >= 0 && Local.CurrentIndex < Gallery.Items.Count)
-                {
-                    var thumbnailPath = Gallery.Items[Local.CurrentIndex].FileName;
-                    var thumb = Gallery.Items[Local.CurrentIndex].ThumbnailImage;
-
-                    if (thumb != null
-                        && thumbnailPath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        wicSrc = BHelper.ToWicBitmapSource(thumb);
-                    }
-                }
-            }
-        }
-        catch { }
-
-
-        if (wicSrc != null)
-        {
-            Size previewSize;
-
-            // get preview size
-            if (Config.ZoomMode == ZoomMode.LockZoom)
-            {
-                previewSize = new(Local.Metadata.Width, Local.Metadata.Height);
-            }
-            else
-            {
-                var zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, Local.Metadata.Width, Local.Metadata.Height);
-
-                previewSize = new((int)(Local.Metadata.Width * zoomFactor), (int)(Local.Metadata.Height * zoomFactor));
-            }
-
-
-            // scale the preview image
-            if (wicSrc.Width < previewSize.Width || wicSrc.Height < previewSize.Height)
-            {
-                wicSrc.Scale(previewSize.Width, previewSize.Height, DirectN.WICBitmapInterpolationMode.WICBitmapInterpolationModeNearestNeighbor);
-            }
-
-
-            PicMain.SetImage(new()
-            {
-                Image = wicSrc,
-                CanAnimate = false,
-                FrameCount = 1,
-            });
-        }
-    }
 
     private void Local_OnImageLoaded(ImageLoadedEventArgs e)
     {
@@ -1191,7 +1119,80 @@ public partial class FrmMain : Form
         }
     }
 
-    #endregion
+    #endregion // Local.Images event
+
+
+    /// <summary>
+    /// Show image preview using the thumbnail
+    /// </summary>
+    private void ShowImagePreview(string filePath)
+    {
+        if (InvokeRequired)
+        {
+            Invoke(ShowImagePreview, filePath);
+            return;
+        }
+
+        if (Local.Metadata == null || !Config.ShowImagePreview) return;
+        WicBitmapSource? wicSrc = null;
+
+
+        try
+        {
+            // get embedded thumbnail for preview
+            wicSrc = PhotoCodec.GetEmbeddedThumbnail(filePath);
+
+            // use thumbnail image for preview
+            if (wicSrc == null)
+            {
+                if (Local.CurrentIndex >= 0 && Local.CurrentIndex < Gallery.Items.Count)
+                {
+                    var thumbnailPath = Gallery.Items[Local.CurrentIndex].FileName;
+                    var thumb = Gallery.Items[Local.CurrentIndex].ThumbnailImage;
+
+                    if (thumb != null
+                        && thumbnailPath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        wicSrc = BHelper.ToWicBitmapSource(thumb);
+                    }
+                }
+            }
+        }
+        catch { }
+
+
+        if (wicSrc != null)
+        {
+            Size previewSize;
+
+            // get preview size
+            if (Config.ZoomMode == ZoomMode.LockZoom)
+            {
+                previewSize = new(Local.Metadata.Width, Local.Metadata.Height);
+            }
+            else
+            {
+                var zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, Local.Metadata.Width, Local.Metadata.Height);
+
+                previewSize = new((int)(Local.Metadata.Width * zoomFactor), (int)(Local.Metadata.Height * zoomFactor));
+            }
+
+
+            // scale the preview image
+            if (wicSrc.Width < previewSize.Width || wicSrc.Height < previewSize.Height)
+            {
+                wicSrc.Scale(previewSize.Width, previewSize.Height, DirectN.WICBitmapInterpolationMode.WICBitmapInterpolationModeNearestNeighbor);
+            }
+
+
+            PicMain.SetImage(new()
+            {
+                Image = wicSrc,
+                CanAnimate = false,
+                FrameCount = 1,
+            });
+        }
+    }
 
 
     /// <summary>
@@ -1883,7 +1884,7 @@ public partial class FrmMain : Form
         IG_ReloadList();
     }
 
-    #endregion
+    #endregion // Menu File
 
 
     // Menu Navigation
@@ -1935,7 +1936,7 @@ public partial class FrmMain : Form
 
 
 
-    #endregion
+    #endregion // Menu Navigation
 
 
     // Menu Zoom
@@ -1992,7 +1993,7 @@ public partial class FrmMain : Form
 
 
 
-    #endregion
+    #endregion // Menu Zoom
 
 
     // Menu Layout
@@ -2016,7 +2017,7 @@ public partial class FrmMain : Form
     {
         IG_ToggleTopMost();
     }
-    #endregion
+    #endregion // Menu Layout
 
 
     // Menu Image
@@ -2093,7 +2094,7 @@ public partial class FrmMain : Form
     }
 
 
-    #endregion
+    #endregion // Menu Image
 
 
     // Window modes menu
@@ -2112,7 +2113,7 @@ public partial class FrmMain : Form
     {
         IG_ToggleFullScreen();
     }
-    #endregion
+    #endregion // Window modes menu
 
 
     // Menu Slideshow
@@ -2131,7 +2132,7 @@ public partial class FrmMain : Form
     {
 
     }
-    #endregion
+    #endregion // Menu Slideshow
 
 
     // Menu Clipboard
@@ -2168,7 +2169,7 @@ public partial class FrmMain : Form
     }
 
 
-    #endregion
+    #endregion // Menu Clipboard
 
 
     // Menu Tools
@@ -2196,7 +2197,7 @@ public partial class FrmMain : Form
 
 
 
-    #endregion
+    #endregion // Menu Tools
 
 
     // Menu Help
@@ -2231,7 +2232,7 @@ public partial class FrmMain : Form
         IG_UnsetDefaultPhotoViewer();
     }
 
-    #endregion
+    #endregion // Menu Help
 
 
     // Others
@@ -2254,8 +2255,8 @@ public partial class FrmMain : Form
 
 
 
-    #endregion
+    #endregion // Other menu
 
-    #endregion
+    #endregion // Main Menu component
 
 }
