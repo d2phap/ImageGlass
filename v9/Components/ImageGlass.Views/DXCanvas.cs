@@ -1489,16 +1489,29 @@ public class DXCanvas : DXControl
     {
         if (!IsReady || Source == ImageSource.Null) return;
 
+        // get zoom factor after applying the zoom mode
+        _zoomFactor = CalculateZoomFactor(mode ?? _zoomMode, SourceWidth, SourceHeight);
+        _isManualZoom = false;
+        _shouldRecalculateDrawingRegion = true;
+
+        OnZoomChanged?.Invoke(new(ZoomFactor));
+    }
+
+
+    /// <summary>
+    /// Calculates zoom factor by the input zoom mode, and source size.
+    /// </summary>
+    public float CalculateZoomFactor(ZoomMode zoomMode, float srcWidth, float srcHeight)
+    {
         var viewportW = Width;
         var viewportH = Height;
 
         var horizontalPadding = Padding.Left + Padding.Right;
         var verticalPadding = Padding.Top + Padding.Bottom;
-        var widthScale = (viewportW - horizontalPadding) / SourceWidth;
-        var heightScale = (viewportH - verticalPadding) / SourceHeight;
+        var widthScale = (viewportW - horizontalPadding) / srcWidth;
+        var heightScale = (viewportH - verticalPadding) / srcHeight;
 
         float zoomFactor;
-        var zoomMode = mode ?? _zoomMode;
 
         if (zoomMode == ZoomMode.ScaleToWidth)
         {
@@ -1534,11 +1547,7 @@ public class DXCanvas : DXControl
             }
         }
 
-        _zoomFactor = zoomFactor;
-        _isManualZoom = false;
-        _shouldRecalculateDrawingRegion = true;
-
-        OnZoomChanged?.Invoke(new(ZoomFactor));
+        return zoomFactor;
     }
 
 
