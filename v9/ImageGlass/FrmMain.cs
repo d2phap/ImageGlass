@@ -28,6 +28,8 @@ using ImageGlass.UI;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
+using System.Windows.Media.Media3D;
+using WicNet;
 
 namespace ImageGlass;
 
@@ -1024,41 +1026,61 @@ public partial class FrmMain : Form
     /// </summary>
     private void ShowImagePreview(string filePath)
     {
-        if (Local.CurrentIndex >= 0
-            && Local.CurrentIndex < Gallery.Items.Count
-            && Local.Metadata != null
-            && !Local.Metadata.CanAnimate)
+        if (InvokeRequired)
         {
-            var thumbnailPath = Gallery.Items[Local.CurrentIndex].FileName;
-            var thumb = Gallery.Items[Local.CurrentIndex].ThumbnailImage;
+            Invoke(ShowImagePreview, filePath);
+            return;
+        }
 
-            if (thumb != null
-                && thumbnailPath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase))
+        if (Local.Metadata == null) return;
+
+        WicBitmapSource? wicSrc = null;
+        Size previewSize;
+
+        // get preview size
+        if (Config.ZoomMode == ZoomMode.LockZoom)
+        {
+            previewSize = new(Local.Metadata.Width, Local.Metadata.Height);
+        }
+        else
+        {
+            var zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, Local.Metadata.Width, Local.Metadata.Height);
+
+            previewSize = new((int)(Local.Metadata.Width * zoomFactor), (int)(Local.Metadata.Height * zoomFactor));
+        }
+
+        // get embedded thumbnail for preview
+        wicSrc = PhotoCodec.GetEmbeddedThumbnail(filePath);
+
+        // use thumbnail image for preview
+        if (wicSrc == null)
+        {
+            if (Local.CurrentIndex >= 0 && Local.CurrentIndex < Gallery.Items.Count)
             {
-                Size outputSize;
-                if (Config.ZoomMode == ZoomMode.LockZoom)
+                var thumbnailPath = Gallery.Items[Local.CurrentIndex].FileName;
+                var thumb = Gallery.Items[Local.CurrentIndex].ThumbnailImage;
+
+                if (thumb != null
+                    && thumbnailPath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    outputSize = new(Local.Metadata.Width, Local.Metadata.Height);
+                    wicSrc = BHelper.ToWicBitmapSource(thumb);
                 }
-                else
-                {
-                    var zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, Local.Metadata.Width, Local.Metadata.Height);
-
-                    outputSize = new((int)(Local.Metadata.Width * zoomFactor), (int)(Local.Metadata.Height * zoomFactor));
-                }
-                
-
-                var wicSrc = BHelper.ToWicBitmapSource(thumb);
-                wicSrc.Scale(outputSize.Width, outputSize.Height, DirectN.WICBitmapInterpolationMode.WICBitmapInterpolationModeNearestNeighbor);
-
-                PicMain.SetImage(new()
-                {
-                    Image = wicSrc,
-                    CanAnimate = false,
-                    FrameCount = 1,
-                });
             }
         }
+
+        // scale the preview image
+        if (wicSrc.Width < previewSize.Width || wicSrc.Height < previewSize.Height)
+        {
+            wicSrc.Scale(previewSize.Width, previewSize.Height, DirectN.WICBitmapInterpolationMode.WICBitmapInterpolationModeNearestNeighbor);
+        }
+
+
+        PicMain.SetImage(new()
+        {
+            Image = wicSrc,
+            CanAnimate = false,
+            FrameCount = 1,
+        });
     }
 
     private void Local_OnImageLoaded(ImageLoadedEventArgs e)
