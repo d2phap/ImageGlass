@@ -1032,7 +1032,7 @@ public partial class FrmMain : Form
             return;
         }
 
-        if (Local.Metadata == null) return;
+        if (Local.Metadata == null || !Config.ShowImagePreview) return;
 
         WicBitmapSource? wicSrc = null;
         Size previewSize;
@@ -1068,19 +1068,23 @@ public partial class FrmMain : Form
             }
         }
 
-        // scale the preview image
-        if (wicSrc.Width < previewSize.Width || wicSrc.Height < previewSize.Height)
+
+        if (wicSrc != null)
         {
-            wicSrc.Scale(previewSize.Width, previewSize.Height, DirectN.WICBitmapInterpolationMode.WICBitmapInterpolationModeNearestNeighbor);
+            // scale the preview image
+            if (wicSrc.Width < previewSize.Width || wicSrc.Height < previewSize.Height)
+            {
+                wicSrc.Scale(previewSize.Width, previewSize.Height, DirectN.WICBitmapInterpolationMode.WICBitmapInterpolationModeNearestNeighbor);
+            }
+
+
+            PicMain.SetImage(new()
+            {
+                Image = wicSrc,
+                CanAnimate = false,
+                FrameCount = 1,
+            });
         }
-
-
-        PicMain.SetImage(new()
-        {
-            Image = wicSrc,
-            CanAnimate = false,
-            FrameCount = 1,
-        });
     }
 
     private void Local_OnImageLoaded(ImageLoadedEventArgs e)

@@ -430,6 +430,11 @@ public static class Config
     public static bool UseRawThumbnail { get; set; } = false;
 
     /// <summary>
+    /// Gets, sets value indicates that image preview is shown while the image is being loaded.
+    /// </summary>
+    public static bool ShowImagePreview { get; set; } = true;
+
+    /// <summary>
     /// Gets, sets value indicates that the Image focus tool should be enable
     /// </summary>
     public static bool EnableImageFocusMode { get; set; } = false;
@@ -785,6 +790,7 @@ public static class Config
         //IsExifToolAlwaysOnTop = items.GetValue(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
         //IsUseEmptyTitleBar = items.GetValue(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
         UseRawThumbnail = items.GetValue(nameof(UseRawThumbnail), UseRawThumbnail);
+        ShowImagePreview = items.GetValue(nameof(ShowImagePreview), ShowImagePreview);
         HideToolbarInFullscreen = items.GetValue(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
         HideThumbnailsInFullscreen = items.GetValue(nameof(HideThumbnailsInFullscreen), HideThumbnailsInFullscreen);
         EnableImageFocusMode = items.GetValue(nameof(EnableImageFocusMode), EnableImageFocusMode);
@@ -1248,6 +1254,7 @@ public static class Config
         //settings.TryAdd(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
         //settings.TryAdd(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
         settings.TryAdd(nameof(UseRawThumbnail), UseRawThumbnail);
+        settings.TryAdd(nameof(ShowImagePreview), ShowImagePreview);
         settings.TryAdd(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
         settings.TryAdd(nameof(HideThumbnailsInFullscreen), HideThumbnailsInFullscreen);
         settings.TryAdd(nameof(EnableImageFocusMode), EnableImageFocusMode);
