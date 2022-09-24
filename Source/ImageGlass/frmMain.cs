@@ -105,7 +105,10 @@ namespace ImageGlass {
         private bool _isDraggingImage;
 
         // slideshow countdown interval
-        private uint _slideshowCountdown = 5;
+        private float _slideshowCountdown = 5;
+
+        // slideshow stopwatch
+        private Stopwatch _slideshowStopwatch = new();
 
         // force exiting app without checking reasons
         private bool _forceExitApp = false;
@@ -662,6 +665,7 @@ namespace ImageGlass {
             if (Configs.IsSlideshow && timSlideShow.Enabled) {
                 timSlideShow.Enabled = false;
                 timSlideShow.Enabled = true;
+                _slideshowStopwatch.Reset();
             }
 
             // Issue #1019 : When showing the initial image, the ImageList is empty; don't show toast messages
@@ -796,6 +800,9 @@ namespace ImageGlass {
 
             // reset countdown timer value
             _slideshowCountdown = Configs.RandomizeSlideshowInterval();
+            // since the UI does not print milliseconds, this prevents the coutdown to flash the maximum value during the first tick
+            if (_slideshowCountdown == Math.Floor(_slideshowCountdown))
+                _slideshowCountdown -= 0.001f;
 
             // reset Cropping region
             ShowCropTool(mnuMainCrop.Checked);
@@ -2254,6 +2261,17 @@ namespace ImageGlass {
             // get current screen
             var screen = Screen.FromControl(this);
 
+            // Check for early exits
+            // This fixes issue(https://github.com/d2phap/ImageGlass/issues/1371)
+            // If window size already reached max, then can't be expanded more larger
+            if (picMain.Width * picMain.ZoomFactor > screen.WorkingArea.Width &&
+                picMain.Height * picMain.ZoomFactor > screen.WorkingArea.Height &&
+                Size.Width == screen.WorkingArea.Width &&
+                Size.Height == screen.WorkingArea.Height) {
+                return;
+            }
+
+
             // First, adjust our main window to theoretically fit the entire
             // picture, but not larger than desktop working area.
             var fullW = Width + picMain.Image.Width - picMain.Width;
@@ -2311,7 +2329,7 @@ namespace ImageGlass {
 
             // draw countdown text ----------------------------------------------
             var gap = DPIScaling.Transform(20);
-            var text = TimeSpan.FromSeconds(_slideshowCountdown).ToString("mm':'ss");
+            var text = TimeSpan.FromSeconds(_slideshowCountdown - _slideshowStopwatch.Elapsed.TotalSeconds + 1).ToString("mm':'ss");
 
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
@@ -3738,10 +3756,10 @@ namespace ImageGlass {
         }
 
         private void timSlideShow_Tick(object sender, EventArgs e) {
-            if (_slideshowCountdown > 1) {
-                _slideshowCountdown--;
-            }
-            else {
+            if (!_slideshowStopwatch.IsRunning)
+                _slideshowStopwatch.Restart();
+
+            if (_slideshowCountdown <= _slideshowStopwatch.Elapsed.TotalSeconds) {
                 // end of image list
                 if (Local.CurrentIndex == Local.ImageList.Length - 1) {
                     // loop the list
@@ -4260,6 +4278,16 @@ namespace ImageGlass {
         }
         #endregion
 
+        #region Menu Common
+        private void SetShortcutExit() {
+            if (Configs.IsContinueRunningBackground) {
+                mnuMainExitApplication.ShortcutKeyDisplayString = "Shift+ESC";
+            }
+            else {
+                mnuMainExitApplication.ShortcutKeyDisplayString = Configs.IsPressESCToQuit ? "ESC" : "Alt+F4";
+            }
+        }
+        #endregion
 
         #region Context Menu
         private void OpenShortcutMenu(ToolStripMenuItem parentMenu) {
@@ -4367,6 +4395,10 @@ namespace ImageGlass {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainImageLocation));
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainImageProperties));
             }
+
+            SetShortcutExit();
+            mnuContext.Items.Add(new ToolStripSeparator());
+            mnuContext.Items.Add(UI.Menu.Clone(mnuMainExitApplication));
         }
 
         private void MnuTray_Opening(object sender, CancelEventArgs e) {
@@ -4935,6 +4967,7 @@ namespace ImageGlass {
 
                 //perform slideshow
                 timSlideShow.Enabled = true;
+                _slideshowStopwatch.Reset();
 
                 Configs.IsSlideshow = true;
                 SysExecutionState.PreventSleep();
@@ -4951,11 +4984,13 @@ namespace ImageGlass {
             // performing
             if (timSlideShow.Enabled) {
                 timSlideShow.Enabled = false;
+                _slideshowStopwatch.Stop();
 
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SlideshowMessagePause"], 2000);
             }
             else {
                 timSlideShow.Enabled = true;
+                _slideshowStopwatch.Start();
 
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SlideshowMessageResume"], 2000);
             }
@@ -5669,12 +5704,7 @@ namespace ImageGlass {
                 }
 
                 // add hotkey to Exit menu
-                if (Configs.IsContinueRunningBackground) {
-                    mnuMainExitApplication.ShortcutKeyDisplayString = "Shift+ESC";
-                }
-                else {
-                    mnuMainExitApplication.ShortcutKeyDisplayString = Configs.IsPressESCToQuit ? "ESC" : "Alt+F4";
-                }
+                SetShortcutExit();
 
                 // Get EditApp for editing
                 UpdateEditAppInfoForMenu();
