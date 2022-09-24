@@ -899,7 +899,7 @@ public partial class FrmMain : Form
         {
             CurrentIndex = Local.CurrentIndex,
             NewIndex = imageIndex,
-            FilePath = filename,
+            FilePath = string.IsNullOrEmpty(filename) ? Local.Images.GetFileName(Local.CurrentIndex) : filename,
         });
 
         #endregion
@@ -1013,25 +1013,53 @@ public partial class FrmMain : Form
         // Select thumbnail item
         _ = BHelper.RunAsThread(SelectCurrentThumbnail);
 
-        //DisplayThumbnail();
+        ShowImagePreview(e.FilePath);
 
         _ = Task.Run(() => UpdateImageInfo(ImageInfoUpdateTypes.All, e.FilePath));
     }
 
-    //private void DisplayThumbnail()
-    //{
-    //    if (Local.CurrentIndex >= 0 && Local.CurrentIndex < Gallery.Items.Count)
-    //    {
-    //        _ = Task.Run(() =>
-    //        {
-    //            var thumb = Gallery.Items[Local.CurrentIndex].ThumbnailImage;
-    //            if (thumb != null && Local.Metadata != null)
-    //            {
-    //                PicMain.SetImage((Bitmap)thumb);
-    //            }
-    //        });
-    //    }
-    //}
+
+    /// <summary>
+    /// Show image preview using the thumbnail
+    /// </summary>
+    private void ShowImagePreview(string filePath)
+    {
+        if (Local.CurrentIndex >= 0
+            && Local.CurrentIndex < Gallery.Items.Count
+            && Local.Metadata != null
+            && !Local.Metadata.CanAnimate)
+        {
+            var thumbnailPath = Gallery.Items[Local.CurrentIndex].FileName;
+            var thumb = Gallery.Items[Local.CurrentIndex].ThumbnailImage;
+
+            if (thumb != null
+                && thumbnailPath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase))
+            {
+                Size outputSize;
+                if (Config.ZoomMode == ZoomMode.LockZoom)
+                {
+                    outputSize = new(Local.Metadata.Width, Local.Metadata.Height);
+                }
+                else
+                {
+                    var zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, Local.Metadata.Width, Local.Metadata.Height);
+
+                    outputSize = new((int)(Local.Metadata.Width * zoomFactor), (int)(Local.Metadata.Height * zoomFactor));
+                }
+                
+
+                var wicSrc = BHelper.ToWicBitmapSource(thumb);
+                wicSrc.Scale(outputSize.Width, outputSize.Height, DirectN.WICBitmapInterpolationMode.WICBitmapInterpolationModeNearestNeighbor);
+
+                PicMain.SetImage(new()
+                {
+                    Image = wicSrc,
+                    CanAnimate = false,
+                    FrameCount = 1,
+                });
+            }
+        }
+    }
 
     private void Local_OnImageLoaded(ImageLoadedEventArgs e)
     {
