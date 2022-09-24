@@ -1033,44 +1033,50 @@ public partial class FrmMain : Form
         }
 
         if (Local.Metadata == null || !Config.ShowImagePreview) return;
-
         WicBitmapSource? wicSrc = null;
-        Size previewSize;
 
-        // get preview size
-        if (Config.ZoomMode == ZoomMode.LockZoom)
+
+        try
         {
-            previewSize = new(Local.Metadata.Width, Local.Metadata.Height);
-        }
-        else
-        {
-            var zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, Local.Metadata.Width, Local.Metadata.Height);
+            // get embedded thumbnail for preview
+            wicSrc = PhotoCodec.GetEmbeddedThumbnail(filePath);
 
-            previewSize = new((int)(Local.Metadata.Width * zoomFactor), (int)(Local.Metadata.Height * zoomFactor));
-        }
-
-        // get embedded thumbnail for preview
-        wicSrc = PhotoCodec.GetEmbeddedThumbnail(filePath);
-
-        // use thumbnail image for preview
-        if (wicSrc == null)
-        {
-            if (Local.CurrentIndex >= 0 && Local.CurrentIndex < Gallery.Items.Count)
+            // use thumbnail image for preview
+            if (wicSrc == null)
             {
-                var thumbnailPath = Gallery.Items[Local.CurrentIndex].FileName;
-                var thumb = Gallery.Items[Local.CurrentIndex].ThumbnailImage;
-
-                if (thumb != null
-                    && thumbnailPath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase))
+                if (Local.CurrentIndex >= 0 && Local.CurrentIndex < Gallery.Items.Count)
                 {
-                    wicSrc = BHelper.ToWicBitmapSource(thumb);
+                    var thumbnailPath = Gallery.Items[Local.CurrentIndex].FileName;
+                    var thumb = Gallery.Items[Local.CurrentIndex].ThumbnailImage;
+
+                    if (thumb != null
+                        && thumbnailPath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        wicSrc = BHelper.ToWicBitmapSource(thumb);
+                    }
                 }
             }
         }
+        catch { }
 
 
         if (wicSrc != null)
         {
+            Size previewSize;
+
+            // get preview size
+            if (Config.ZoomMode == ZoomMode.LockZoom)
+            {
+                previewSize = new(Local.Metadata.Width, Local.Metadata.Height);
+            }
+            else
+            {
+                var zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, Local.Metadata.Width, Local.Metadata.Height);
+
+                previewSize = new((int)(Local.Metadata.Width * zoomFactor), (int)(Local.Metadata.Height * zoomFactor));
+            }
+
+
             // scale the preview image
             if (wicSrc.Width < previewSize.Width || wicSrc.Height < previewSize.Height)
             {
