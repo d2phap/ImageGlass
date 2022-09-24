@@ -21,6 +21,7 @@ using ImageMagick;
 using ImageMagick.Formats;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows.Media.Media3D;
 using WicNet;
 using ColorProfile = ImageMagick.ColorProfile;
 
@@ -217,6 +218,60 @@ public static class PhotoCodec
         }
 
         return null;
+    }
+
+
+    /// <summary>
+    /// Gets embedded thumbnail.
+    /// </summary>
+    /// <param name="filePath">Full path of image file</param>
+    public static WicBitmapSource? GetEmbeddedThumbnail(string filePath)
+    {
+        if (string.IsNullOrEmpty(filePath)) return null;
+        
+
+        var settings = ParseSettings(new() { FirstFrameOnly = true }, filePath);
+        WicBitmapSource? result = null;
+
+        using var imgM = new MagickImage();
+        imgM.Ping(filePath, settings);
+
+        
+        // get RAW embedded thumbnail
+        try
+        {
+            var profile = imgM.GetProfile("dng:thumbnail");
+
+            // try to get thumbnail
+            var thumbnailData = profile?.GetData();
+            if (thumbnailData != null)
+            {
+                imgM.Read(thumbnailData, settings);
+                result = BHelper.ToWicBitmapSource(imgM.ToBitmapSource());
+            }
+        }
+        catch { }
+
+
+        // Use JPEG embedded thumbnail
+        try
+        {
+            var exifProfile = imgM.GetExifProfile();
+
+            // Fetch the embedded thumbnail
+            using var thumbM = exifProfile?.CreateThumbnail();
+            if (thumbM != null)
+            {
+                var ext = Path.GetExtension(filePath).ToLower();
+                ApplyRotation(thumbM, exifProfile, ext);
+
+                result = BHelper.ToWicBitmapSource(thumbM.ToBitmapSource());
+            }
+        }
+        catch { }
+
+
+        return result;
     }
 
 
