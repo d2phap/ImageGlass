@@ -136,8 +136,17 @@ public class ImageBooster : IDisposable
     /// </summary>
     public ColorChannel ImageChannel { get; set; } = ColorChannel.All;
 
+    /// <summary>
+    /// Gets, sets the maximum image dimension to cache.
+    /// If this value is <c>less than or equals 0</c>, the option will be ignored.
+    /// </summary>
+    public int MaxImageDimensionToCache { get; set; } = 8_000;
 
-    public int MaxImageSizePreload = 10_000;
+    /// <summary>
+    /// Gets, sets the maximum image file size (in MB) to cache.
+    /// If this value is <c>less than or equals 0</c>, the option will be ignored.
+    /// </summary>
+    public float MaxFileSizeInMbToCache { get; set; } = 100f;
 
 
     /// <summary>
@@ -168,7 +177,7 @@ public class ImageBooster : IDisposable
     #region PRIVATE FUNCTIONS
 
     /// <summary>
-    /// Preload the images in <see cref="QueuedList"/>.
+    /// Preloads the images in <see cref="QueuedList"/>.
     /// </summary>
     private async Task RunBackgroundWorker()
     {
@@ -201,10 +210,10 @@ public class ImageBooster : IDisposable
     /// Add index of the image to queue list
     /// </summary>
     /// <param name="index">Current index of image list</param>
-    private void UpdateQueueList(int index)
+    private List<int> GetQueueList(int index)
     {
         // check valid index
-        if (index < 0 || index >= ImgList.Count) return;
+        if (index < 0 || index >= ImgList.Count) return new List<int>(0);
 
         var list = new HashSet<int> { index };
 
@@ -249,21 +258,46 @@ public class ImageBooster : IDisposable
 
         // release the resources
         var freeListCloned = new List<int>(FreeList);
-        foreach (var indexItem in freeListCloned)
+        foreach (var itemIndex in freeListCloned)
         {
-            if (!list.Contains(indexItem) && indexItem >= 0 && indexItem < ImgList.Count)
+            if (!list.Contains(itemIndex) && itemIndex >= 0 && itemIndex < ImgList.Count)
             {
-                ImgList[indexItem].Dispose();
-                FreeList.Remove(indexItem);
+                ImgList[itemIndex].Dispose();
+                FreeList.Remove(itemIndex);
             }
         }
 
         // update new index of free list
         FreeList.AddRange(list);
 
-        // update queue list
-        QueuedList.Clear();
-        QueuedList.AddRange(list);
+        // get new queue list
+        var newQueueList = new List<int>();
+
+        foreach (var itemIndex in list)
+        {
+            try
+            {
+                var metadata = PhotoCodec.LoadMetadata(ImgList[itemIndex].Filename);
+
+                // check image dimension
+                var notExceedDimension = MaxImageDimensionToCache <= 0
+                    || (metadata.Width <= MaxImageDimensionToCache
+                        && metadata.Height <= MaxImageDimensionToCache);
+
+                // check file size
+                var notExceedFileSize = MaxFileSizeInMbToCache <= 0
+                    || (metadata.FileSize / 1024f / 1024f <= MaxFileSizeInMbToCache);
+
+                // only put the index to the queue if it does not exceed the size limit
+                if (ImgList[itemIndex].IsDone || (notExceedDimension && notExceedFileSize))
+                {
+                    newQueueList.Add(itemIndex);
+                }
+            }
+            catch { }
+        }
+
+        return newQueueList;
     }
 
     #endregion
@@ -333,7 +367,20 @@ public class ImageBooster : IDisposable
         else
         {
             // update queue list according to index
-            UpdateQueueList(index);
+            var queueItems = GetQueueList(index);
+
+            if (!queueItems.Contains(index))
+            {
+                await ImgList[index].LoadAsync(ReadOptions with
+                {
+                    FirstFrameOnly = SinglePageFormats.Contains(ImgList[index].Extension),
+                }, tokenSrc).ConfigureAwait(false);
+            }
+            else
+            {
+                QueuedList.Clear();
+                QueuedList.AddRange(queueItems);
+            }
         }
 
         // wait until the image loading is done
@@ -341,7 +388,7 @@ public class ImageBooster : IDisposable
         {
             while (!ImgList[index].IsDone)
             {
-                await Task.Delay(1).ConfigureAwait(false);
+                await Task.Delay(10).ConfigureAwait(false);
             }
         }
 

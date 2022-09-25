@@ -35,7 +35,14 @@ public class IgMetadata
     public string FileLastAccessTimeFormated => BHelper.FormatDateTime(FileLastAccessTime);
     public string FileLastWriteTimeFormated => BHelper.FormatDateTime(FileLastWriteTime);
 
+    /// <summary>
+    /// File size in bytes.
+    /// </summary>
     public long FileSize { get; set; } = 0;
+
+    /// <summary>
+    /// The formated file size. E.g. <c>32.09 MB</c>.
+    /// </summary>
     public string FileSizeFormated => BHelper.FormatSize(FileSize);
 
 
