@@ -27,7 +27,7 @@ It gives you the possibility to view over **80+** common image formats, includin
 
 
 ### ImageGlass on Microsoft Store!
-- If you want to **purchase ImageGlass Store version without letting Microsoft to suck 🩸 me 15% of the amount**, you can use one time donation from [♥ GitHub Sponsor](https://github.com/sponsors/d2phap), then drop me a message in [ImageGlass Discord](https://discord.com/channels/818852544859209748/818852544859209751), or [email](https://imageglass.org/about), I will send the code shortly.
+- If you want to **purchase ImageGlass Store version without letting Microsoft to suck 🩸 me 15% of the amount**, you can use a one-time donation from [♥ GitHub Sponsor](https://github.com/sponsors/d2phap), then drop me a message in [ImageGlass Discord](https://discord.com/channels/818852544859209748/818852544859209751) or [email](https://imageglass.org/about), and I will send the code shortly.
 - ImageGlass Store provides the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes.
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
@@ -36,10 +36,10 @@ It gives you the possibility to view over **80+** common image formats, includin
 
 
 ## 🛣 Development progress & Roadmap for ImageGlass 9.0
-ImageGlass 9.0 is the biggest update ever, supports ***hardware acceleration*** and many more. I have been rewriting the entire app for months. There will be a few more beta releases before version 9.0 reaches stable state. In the meanwhile, you will still receive the updates for version 8.x.
+ImageGlass 9.0 is the biggest update ever, supports ***hardware acceleration*** and many more. I have been rewriting the entire app for months. There will be a few more beta releases before version 9.0 reaches a stable state. In the meanwhile, you will still receive the updates for version 8.x.
 - ✅ [Version 9.0 beta 1](https://github.com/d2phap/ImageGlass/releases/tag/9.0.1.514) was released.
 - ✅ [Version 9.0 beta 2](https://github.com/d2phap/ImageGlass/releases/tag/9.0.2.904) was released. Try it and let me know your feedback.
-- 🎯 [Version 9.0 beta 3](https://github.com/d2phap/ImageGlass/projects/13) is under develpoment.
+- 🎯 [Version 9.0 beta 3](https://github.com/d2phap/ImageGlass/projects/13) is under development.
 
 ImageGlass 9 uses [.NET 6](https://devblogs.microsoft.com/dotnet/announcing-net-6/). If you are unable to install .NET 6, you can still use version 8.
   <br/>
@@ -103,7 +103,7 @@ Thanks for your gratitude and financial help!
 ## 👑 Hall of fame (v8.x)
 ![Analytics image](https://repobeats.axiom.co/api/embed/4a2781a2a149dd21826309275304696ec75b21fd.svg)
 
-To honor those people who spent their time to contribute to the development of ImageGlass v8:
+To honor those people who spent their time contributing to the development of ImageGlass v8:
 - [@siblount](https://github.com/siblount)
 - [@SylwesterZarebski](https://github.com/SylwesterZarebski)
 - [@Sxderp](https://github.com/Sxderp)
