@@ -546,10 +546,22 @@ public static class Config
     //public static int ThumbnailBarWidth { get; set; } = new ThumbnailItemInfo(ThumbnailDimension, true).GetTotalDimension();
 
     /// <summary>
-    /// Gets, sets the number of images cached by Image
+    /// Gets, sets the number of images cached by <see cref="Base.Services.ImageBooster"/>.
     /// </summary>
-    public static int ImageBoosterCachedCount { get; set; } = 1;
+    public static int ImageBoosterCacheCount { get; set; } = 1;
 
+    /// <summary>
+    /// Gets, sets the maximum image dimension when caching by <see cref="Base.Services.ImageBooster"/>.
+    /// If this value is <c>less than or equals 0</c>, the option will be ignored.
+    /// </summary>
+    public static int ImageBoosterCacheMaxDimension { get; set; } = 8_000;
+
+    /// <summary>
+    /// Gets, sets the maximum image file size (in MB) when caching by <see cref="Base.Services.ImageBooster"/>.
+    /// If this value is <c>less than or equals 0</c>, the option will be ignored.
+    /// </summary>
+    public static float ImageBoosterCacheMaxFileSizeInMb { get; set; } = 100f;
+    
     /// <summary>
     /// Gets, sets fixed width on zooming
     /// </summary>
@@ -850,8 +862,11 @@ public static class Config
         //}
         #endregion
 
-        ImageBoosterCachedCount = items.GetValue(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
-        ImageBoosterCachedCount = Math.Max(0, Math.Min(ImageBoosterCachedCount, 10));
+        ImageBoosterCacheCount = items.GetValue(nameof(ImageBoosterCacheCount), ImageBoosterCacheCount);
+        ImageBoosterCacheCount = Math.Max(0, Math.Min(ImageBoosterCacheCount, 10));
+
+        ImageBoosterCacheMaxDimension = items.GetValue(nameof(ImageBoosterCacheMaxDimension), ImageBoosterCacheMaxDimension);
+        ImageBoosterCacheMaxFileSizeInMb = items.GetValue(nameof(ImageBoosterCacheMaxFileSizeInMb), ImageBoosterCacheMaxFileSizeInMb);
 
         ZoomLockValue = items.GetValue(nameof(ZoomLockValue), ZoomLockValue);
         if (ZoomLockValue < 0) ZoomLockValue = 100f;
@@ -1290,7 +1305,9 @@ public static class Config
         //settings.TryAdd(nameof(SlideShowIntervalTo), SlideShowIntervalTo);
         settings.TryAdd(nameof(ThumbnailSize), ThumbnailSize);
         //settings.TryAdd(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
-        settings.TryAdd(nameof(ImageBoosterCachedCount), ImageBoosterCachedCount);
+        settings.TryAdd(nameof(ImageBoosterCacheCount), ImageBoosterCacheCount);
+        settings.TryAdd(nameof(ImageBoosterCacheMaxDimension), ImageBoosterCacheMaxDimension);
+        settings.TryAdd(nameof(ImageBoosterCacheMaxFileSizeInMb), ImageBoosterCacheMaxFileSizeInMb);
         settings.TryAdd(nameof(ZoomLockValue), ZoomLockValue);
         settings.TryAdd(nameof(ToolbarIconHeight), ToolbarIconHeight);
         settings.TryAdd(nameof(ImageEditQuality), ImageEditQuality);

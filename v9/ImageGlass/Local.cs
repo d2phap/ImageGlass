@@ -216,7 +216,10 @@ internal class Local
         Images.Dispose();
         Images = new(list)
         {
-            MaxQueue = Config.ImageBoosterCachedCount,
+            MaxQueue = Config.ImageBoosterCacheCount,
+            MaxImageDimensionToCache = Config.ImageBoosterCacheMaxDimension,
+            MaxFileSizeInMbToCache = Config.ImageBoosterCacheMaxFileSizeInMb,
+
             ImageChannel = ImageChannel,
             DistinctDirs = distinctDirsList ?? new(0),
         };

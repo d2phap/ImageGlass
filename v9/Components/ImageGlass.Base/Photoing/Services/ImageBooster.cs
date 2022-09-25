@@ -140,13 +140,13 @@ public class ImageBooster : IDisposable
     /// Gets, sets the maximum image dimension to cache.
     /// If this value is <c>less than or equals 0</c>, the option will be ignored.
     /// </summary>
-    public int MaxImageDimensionToCache { get; set; } = 8_000;
+    public int MaxImageDimensionToCache { get; set; } = 0;
 
     /// <summary>
     /// Gets, sets the maximum image file size (in MB) to cache.
     /// If this value is <c>less than or equals 0</c>, the option will be ignored.
     /// </summary>
-    public float MaxFileSizeInMbToCache { get; set; } = 100f;
+    public float MaxFileSizeInMbToCache { get; set; } = 0f;
 
 
     /// <summary>
