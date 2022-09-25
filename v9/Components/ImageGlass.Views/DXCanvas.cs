@@ -2127,8 +2127,11 @@ public class DXCanvas : DXControl
         Source = ImageSource.Null;
 
         DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
-        _imageGdiPlus?.Dispose();
-        _imageGdiPlus = null;
+
+        // *** Do not dispose the GDI Bitmap because it's a ref to the Local.Images
+
+        //_imageGdiPlus?.Dispose();
+        //_imageGdiPlus = null;
     }
 
 }
