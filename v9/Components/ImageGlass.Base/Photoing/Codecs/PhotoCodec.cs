@@ -1059,8 +1059,33 @@ public static class PhotoCodec
         {
             if (imgM.BaseWidth > options.Width || imgM.BaseHeight > options.Height)
             {
-                imgM.Thumbnail(options.Width, options.Height);
+                imgM.InterpolativeResize(options.Width, options.Height, PixelInterpolateMethod.Nearest);
             }
+        }
+
+
+        // the image is larger than the supported dimension
+        var isSizeTooLarge = imgM.BaseWidth > Constants.MAX_IMAGE_DIMENSION || imgM.BaseHeight > Constants.MAX_IMAGE_DIMENSION;
+        if (options.AutoScaleDownLargeImage && isSizeTooLarge)
+        {
+            var widthScale = 1f;
+            var heightScale = 1f;
+
+            if (imgM.BaseWidth > Constants.MAX_IMAGE_DIMENSION)
+            {
+                widthScale = 1f * Constants.MAX_IMAGE_DIMENSION / imgM.BaseWidth;
+            }
+
+            if (imgM.BaseHeight > Constants.MAX_IMAGE_DIMENSION)
+            {
+                heightScale = 1f * Constants.MAX_IMAGE_DIMENSION / imgM.BaseHeight;
+            }
+
+            var scale = Math.Min(widthScale, heightScale);
+            var newW = (int)(imgM.BaseWidth * scale);
+            var newH = (int)(imgM.BaseHeight * scale);
+
+            imgM.InterpolativeResize(newW, newH, PixelInterpolateMethod.Nearest);
         }
     }
 
@@ -1217,11 +1242,6 @@ public static class PhotoCodec
     /// <summary>
     /// Get EXIF value
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="profile"></param>
-    /// <param name="tag"></param>
-    /// <param name="defaultValue"></param>
-    /// <returns></returns>
     private static T? GetExifValue<T>(IExifProfile? profile, ExifTag<T> tag, T? defaultValue = default)
     {
         if (profile == null) return default;

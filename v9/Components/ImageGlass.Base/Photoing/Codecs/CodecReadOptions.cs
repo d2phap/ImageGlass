@@ -76,6 +76,12 @@ public record CodecReadOptions
     /// </summary>
     public bool? FirstFrameOnly { get; set; } = null;
 
+    /// <summary>
+    /// Gets, sets the value indicates that if the image dimension exceeds the supported value,
+    /// it will be scale down to <see cref="Constants.MAX_IMAGE_DIMENSION"/> value.
+    /// </summary>
+    public bool AutoScaleDownLargeImage { get; set; } = true;
+
 
     /// <summary>
     /// Initializes <see cref="CodecReadOptions"/> instance.

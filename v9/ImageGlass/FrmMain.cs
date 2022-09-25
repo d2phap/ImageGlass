@@ -836,9 +836,11 @@ public partial class FrmMain : Form
             ApplyColorProfileForAll = Config.ApplyColorProfileForAll,
             ImageChannel = Local.ImageChannel,
             UseRawThumbnail = Config.UseRawThumbnail,
+            AutoScaleDownLargeImage = true,
         };
 
 
+        // Validate image index & load image metadata
         #region Validate image index & load image metadata
 
         // temp index
@@ -904,7 +906,7 @@ public partial class FrmMain : Form
             FilePath = string.IsNullOrEmpty(filename) ? Local.Images.GetFileName(Local.CurrentIndex) : filename,
         });
 
-        #endregion
+        #endregion // Validate image index & load image metadata
 
 
         try
