@@ -56,14 +56,14 @@ public record CodecReadOptions
     public ColorChannel ImageChannel { get; set; } = ColorChannel.All;
 
     /// <summary>
-    /// Gets, sests the value indicates that the embedded thumbnail should be return (if found).
+    /// Gets, sets the value indicates the embedded thumbnail of the RAW formats should be returned (if found).
     /// </summary>
-    public bool UseEmbeddedThumbnail { get; set; } = false;
+    public bool UseEmbeddedThumbnailRawFormats { get; set; } = true;
 
     /// <summary>
-    /// Gets, sets the value indicates the RAW embedded thumbnail should be returned (if found).
+    /// Gets, sets the value indicates the embedded thumbnail of the non-RAW formats should be returned (if found).
     /// </summary>
-    public bool UseRawThumbnail { get; set; } = true;
+    public bool UseEmbeddedThumbnailOtherFormats { get; set; } = false;
 
     /// <summary>
     /// Gets, sets the value indicates that the incorrect rotation should be fixed

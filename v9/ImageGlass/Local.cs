@@ -209,6 +209,9 @@ internal class Local
 
     #region Public Functions
 
+    /// <summary>
+    /// Initialize image list.
+    /// </summary>
     public static void InitImageList(
         IEnumerable<string>? list = null,
         List<string>? distinctDirsList = null)

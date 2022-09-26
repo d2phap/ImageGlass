@@ -202,8 +202,8 @@ public static class PhotoCodec
             Height = height,
             FirstFrameOnly = true,
             ImageChannel = ColorChannel.All,
-            UseEmbeddedThumbnail = true,
-            UseRawThumbnail = true,
+            UseEmbeddedThumbnailRawFormats = true,
+            UseEmbeddedThumbnailOtherFormats = true,
             ApplyColorProfileForAll = false,
         };
         var settings = ParseSettings(options, filePath);
@@ -806,7 +806,7 @@ public static class PhotoCodec
 
         // read a single frame only
         var imgM = new MagickImage();
-        if (options.UseRawThumbnail is true)
+        if (options.UseEmbeddedThumbnailRawFormats is true)
         {
             var profile = imgColl[0].GetProfile("dng:thumbnail");
 
@@ -914,7 +914,7 @@ public static class PhotoCodec
 
         // read a single frame only
         var imgM = new MagickImage();
-        if (options.UseRawThumbnail is true)
+        if (options.UseEmbeddedThumbnailRawFormats is true)
         {
             var profile = imgColl[0].GetProfile("dng:thumbnail");
 
@@ -993,7 +993,7 @@ public static class PhotoCodec
         catch { }
 
         // Use embedded thumbnails if specified
-        if (requestThumbnail && exifProfile != null && options.UseEmbeddedThumbnail)
+        if (requestThumbnail && exifProfile != null && options.UseEmbeddedThumbnailOtherFormats)
         {
             // Fetch the embedded thumbnail
             thumbM = exifProfile.CreateThumbnail();
