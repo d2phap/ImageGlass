@@ -425,9 +425,14 @@ public static class Config
     //public static bool IsUseEmptyTitleBar { get; set; } = false;
 
     /// <summary>
-    /// Gets, sets value indicates that RAW thumbnail will be use if found
+    /// Displays the embedded thumbnail for RAW formats if found.
     /// </summary>
-    public static bool UseRawThumbnail { get; set; } = false;
+    public static bool UseEmbeddedThumbnailRawFormats { get; set; } = false;
+
+    /// <summary>
+    /// Displays the embedded thumbnail for other formats if found.
+    /// </summary>
+    public static bool UseEmbeddedThumbnailOtherFormats { get; set; } = false;
 
     /// <summary>
     /// Gets, sets value indicates that image preview is shown while the image is being loaded.
@@ -801,7 +806,8 @@ public static class Config
         //IsHideTooltips = items.GetValue(nameof(IsHideTooltips), IsHideTooltips);
         //IsExifToolAlwaysOnTop = items.GetValue(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
         //IsUseEmptyTitleBar = items.GetValue(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
-        UseRawThumbnail = items.GetValue(nameof(UseRawThumbnail), UseRawThumbnail);
+        UseEmbeddedThumbnailRawFormats = items.GetValue(nameof(UseEmbeddedThumbnailRawFormats), UseEmbeddedThumbnailRawFormats);
+        UseEmbeddedThumbnailOtherFormats = items.GetValue(nameof(UseEmbeddedThumbnailOtherFormats), UseEmbeddedThumbnailOtherFormats);
         ShowImagePreview = items.GetValue(nameof(ShowImagePreview), ShowImagePreview);
         HideToolbarInFullscreen = items.GetValue(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
         HideThumbnailsInFullscreen = items.GetValue(nameof(HideThumbnailsInFullscreen), HideThumbnailsInFullscreen);
@@ -1268,7 +1274,8 @@ public static class Config
         //settings.TryAdd(nameof(IsHideTooltips), IsHideTooltips);
         //settings.TryAdd(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
         //settings.TryAdd(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
-        settings.TryAdd(nameof(UseRawThumbnail), UseRawThumbnail);
+        settings.TryAdd(nameof(UseEmbeddedThumbnailRawFormats), UseEmbeddedThumbnailRawFormats);
+        settings.TryAdd(nameof(UseEmbeddedThumbnailOtherFormats), UseEmbeddedThumbnailOtherFormats);
         settings.TryAdd(nameof(ShowImagePreview), ShowImagePreview);
         settings.TryAdd(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
         settings.TryAdd(nameof(HideThumbnailsInFullscreen), HideThumbnailsInFullscreen);
