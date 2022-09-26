@@ -66,6 +66,18 @@ public record CodecReadOptions
     public bool UseEmbeddedThumbnailOtherFormats { get; set; } = false;
 
     /// <summary>
+    /// Gets, sets the minimum width of the embedded thumbnail to use for displaying
+    /// image when the setting <see cref="UseEmbeddedThumbnailRawFormats"/> or <see cref="UseEmbeddedThumbnailOtherFormats"/> is <c>true</c>.
+    /// </summary>
+    public int EmbeddedThumbnailMinWidth { get; set; } = 0;
+
+    /// <summary>
+    /// Gets, sets the minimum height of the embedded thumbnail to use for displaying
+    /// image when the setting <see cref="UseEmbeddedThumbnailRawFormats"/> or <see cref="UseEmbeddedThumbnailOtherFormats"/> is <c>true</c>.
+    /// </summary>
+    public int EmbeddedThumbnailMinHeight { get; set; } = 0;
+
+    /// <summary>
     /// Gets, sets the value indicates that the incorrect rotation should be fixed
     /// </summary>
     public bool CorrectRotation { get; set; } = true;

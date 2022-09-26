@@ -587,6 +587,18 @@ public static class Config
     /// </summary>
     public static int InAppMessageDuration { get; set; } = 2000;
 
+    /// <summary>
+    /// Gets, sets the minimum width of the embedded thumbnail to use for displaying
+    /// image when the setting <see cref="UseEmbeddedThumbnailRawFormats"/> or <see cref="UseEmbeddedThumbnailOtherFormats"/> is <c>true</c>.
+    /// </summary>
+    public static int EmbeddedThumbnailMinWidth { get; set; } = 0;
+
+    /// <summary>
+    /// Gets, sets the minimum height of the embedded thumbnail to use for displaying
+    /// image when the setting <see cref="UseEmbeddedThumbnailRawFormats"/> or <see cref="UseEmbeddedThumbnailOtherFormats"/> is <c>true</c>.
+    /// </summary>
+    public static int EmbeddedThumbnailMinHeight { get; set; } = 0;
+
     #endregion
 
 
@@ -880,6 +892,8 @@ public static class Config
         ToolbarIconHeight = items.GetValue(nameof(ToolbarIconHeight), ToolbarIconHeight);
         ImageEditQuality = items.GetValue(nameof(ImageEditQuality), ImageEditQuality);
         InAppMessageDuration = items.GetValue(nameof(InAppMessageDuration), InAppMessageDuration);
+        EmbeddedThumbnailMinWidth = items.GetValue(nameof(EmbeddedThumbnailMinWidth), EmbeddedThumbnailMinWidth);
+        EmbeddedThumbnailMinHeight = items.GetValue(nameof(EmbeddedThumbnailMinHeight), EmbeddedThumbnailMinHeight);
 
         #endregion
 
@@ -1319,6 +1333,8 @@ public static class Config
         settings.TryAdd(nameof(ToolbarIconHeight), ToolbarIconHeight);
         settings.TryAdd(nameof(ImageEditQuality), ImageEditQuality);
         settings.TryAdd(nameof(InAppMessageDuration), InAppMessageDuration);
+        settings.TryAdd(nameof(EmbeddedThumbnailMinWidth), EmbeddedThumbnailMinWidth);
+        settings.TryAdd(nameof(EmbeddedThumbnailMinHeight), EmbeddedThumbnailMinHeight);
 
         #endregion
 
