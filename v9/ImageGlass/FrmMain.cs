@@ -1186,7 +1186,16 @@ public partial class FrmMain : Form
             // scale the preview image
             if (wicSrc.Width < previewSize.Width || wicSrc.Height < previewSize.Height)
             {
-                wicSrc.Scale(previewSize.Width, previewSize.Height, DirectN.WICBitmapInterpolationMode.WICBitmapInterpolationModeNearestNeighbor);
+                // sync interpolation mode for the preview
+                var interpolation = DirectN.WICBitmapInterpolationMode.WICBitmapInterpolationModeLinear;
+                if (PicMain.ZoomFactor > 1 &&
+                    (PicMain.CurrentInterpolation == ImageInterpolation.HighQualityBicubic))
+                {
+                    interpolation = DirectN.WICBitmapInterpolationMode.WICBitmapInterpolationModeNearestNeighbor;
+                }
+
+
+                wicSrc.Scale(previewSize.Width, previewSize.Height, interpolation);
             }
 
 

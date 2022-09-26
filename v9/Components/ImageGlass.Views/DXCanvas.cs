@@ -84,7 +84,6 @@ public class DXCanvas : DXControl
     private float _zoomSpeed = 0f;
     private ImageInterpolation _interpolationScaleDown = ImageInterpolation.SampleLinear;
     private ImageInterpolation _interpolationScaledUp = ImageInterpolation.NearestNeighbor;
-    private ImageInterpolation CurrentInterpolation => ZoomFactor > 1f ? _interpolationScaledUp : _interpolationScaleDown;
 
     // checkerboard
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
@@ -293,6 +292,12 @@ public class DXCanvas : DXControl
             }
         }
     }
+
+
+    /// <summary>
+    /// Gets the current <see cref="ImageInterpolation"/> mode.
+    /// </summary>
+    public ImageInterpolation CurrentInterpolation => ZoomFactor > 1f ? _interpolationScaledUp : _interpolationScaleDown;
 
 
     /// <summary>
