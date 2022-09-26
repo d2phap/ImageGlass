@@ -40,11 +40,34 @@ public enum ZoomMode
 /// </summary>
 public enum ImageInterpolation : int
 {
+    /// <summary>
+    /// Pixelated scaling down (poor quality) and up.
+    /// </summary>
     NearestNeighbor = 0,
+
+    /// <summary>
+    /// Pixelated scaling down (poor quality), smooth scaling up (normal quality).
+    /// </summary>
     Linear = 1,
+
+    /// <summary>
+    /// Pixelated scaling down (poor quality), smooth scaling up (better quality).
+    /// </summary>
     Cubic = 2,
+
+    /// <summary>
+    /// Smooth scaling down (the best), smooth scaling up (normal quality).
+    /// </summary>
     SampleLinear = 3,
+
+    /// <summary>
+    /// Smooth scaling down (normal quality) and up (normal quality).
+    /// </summary>
     Antisotropic = 4,
+
+    /// <summary>
+    /// Smooth scaling down (normal quality) and up (better quality).
+    /// </summary>
     HighQualityBicubic = 5,
 }
 

@@ -82,7 +82,7 @@ public class DXCanvas : DXControl
     private bool _isManualZoom = false;
     private ZoomMode _zoomMode = ZoomMode.AutoZoom;
     private float _zoomSpeed = 0f;
-    private ImageInterpolation _interpolationScaleDown = ImageInterpolation.Linear;
+    private ImageInterpolation _interpolationScaleDown = ImageInterpolation.SampleLinear;
     private ImageInterpolation _interpolationScaledUp = ImageInterpolation.NearestNeighbor;
     private ImageInterpolation CurrentInterpolation => ZoomFactor > 1f ? _interpolationScaledUp : _interpolationScaleDown;
 

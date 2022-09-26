@@ -132,8 +132,6 @@ public partial class FrmMain
 
     private void SetUpFrmMainConfigs()
     {
-        
-
         Sp1.TabStop = false;
         Sp2.Panel2Collapsed = true;
         Sp2.TabStop = false;
@@ -164,6 +162,8 @@ public partial class FrmMain
         PicMain.TabStop = false;
         PicMain.PanSpeed = Config.PanSpeed;
         PicMain.ZoomSpeed = Config.ZoomSpeed;
+        PicMain.InterpolationScaleDown = Config.ImageInterpolationScaleDown;
+        PicMain.InterpolationScaleUp = Config.ImageInterpolationScaleUp;
         IG_SetZoomMode(Config.ZoomMode.ToString());
 
         if (Config.ZoomMode == ZoomMode.LockZoom)

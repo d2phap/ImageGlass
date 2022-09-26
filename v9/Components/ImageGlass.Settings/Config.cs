@@ -716,10 +716,16 @@ public static class Config
     /// </summary>
     public static ZoomMode ZoomMode { get; set; } = ZoomMode.AutoZoom;
 
-    ///// <summary>
-    ///// Gets, sets zoom optimization value
-    ///// </summary>
-    //public static ZoomOptimizationMethods ZoomOptimizationMethod { get; set; } = ZoomOptimizationMethods.Auto;
+    /// <summary>
+    /// Gets, sets the interpolation mode to render the viewing image when the zoom factor is <c>less than or equals 100%</c>.
+    /// </summary>
+    public static ImageInterpolation ImageInterpolationScaleDown = ImageInterpolation.SampleLinear;
+
+    /// <summary>
+    /// Gets, sets the interpolation mode to render the viewing image when the zoom factor is <c>greater than 100%</c>.
+    /// </summary>
+    public static ImageInterpolation ImageInterpolationScaleUp = ImageInterpolation.NearestNeighbor;
+
 
     ///// <summary>
     ///// Gets, sets toolbar position
@@ -907,7 +913,8 @@ public static class Config
         ImageLoadingOrder = items.GetValue(nameof(ImageLoadingOrder), ImageLoadingOrder);
         ImageLoadingOrderType = items.GetValue(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
         ZoomMode = items.GetValue(nameof(ZoomMode), ZoomMode);
-        //ZoomOptimizationMethod = items.GetValue(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod);
+        ImageInterpolationScaleDown = items.GetValue(nameof(ImageInterpolationScaleDown), ImageInterpolationScaleDown);
+        ImageInterpolationScaleUp = items.GetValue(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
         //ToolbarPosition = items.GetValue(nameof(ToolbarPosition), ToolbarPosition);
         //AfterEditingAction = items.GetValue(nameof(AfterEditingAction), AfterEditingAction);
 
@@ -1347,7 +1354,8 @@ public static class Config
         settings.TryAdd(nameof(ImageLoadingOrder), ImageLoadingOrder.ToString());
         settings.TryAdd(nameof(ImageLoadingOrderType), ImageLoadingOrderType.ToString());
         settings.TryAdd(nameof(ZoomMode), ZoomMode.ToString());
-        //settings.TryAdd(nameof(ZoomOptimizationMethod), ZoomOptimizationMethod.ToString());
+        settings.TryAdd(nameof(ImageInterpolationScaleDown), ImageInterpolationScaleDown);
+        settings.TryAdd(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
         //settings.TryAdd(nameof(ToolbarPosition), ToolbarPosition.ToString());
         //settings.TryAdd(nameof(AfterEditingAction), AfterEditingAction.ToString());
 
