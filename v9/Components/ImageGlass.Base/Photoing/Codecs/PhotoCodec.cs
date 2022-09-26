@@ -806,6 +806,8 @@ public static class PhotoCodec
 
         // read a single frame only
         var imgM = new MagickImage();
+        var hasRequestedThumbnail = false;
+
         if (options.UseEmbeddedThumbnailRawFormats is true)
         {
             var profile = imgColl[0].GetProfile("dng:thumbnail");
@@ -816,19 +818,21 @@ public static class PhotoCodec
                 var thumbnailData = profile?.GetData();
                 if (thumbnailData != null)
                 {
-                    imgM.Read(thumbnailData, settings);
-                }
-                else
-                {
-                    await imgM.ReadAsync(filename, settings, cancelToken);
+                    imgM.Ping(thumbnailData);
+
+                    // check min size
+                    if (imgM.Width > options.EmbeddedThumbnailMinWidth
+                        && imgM.Height > options.EmbeddedThumbnailMinHeight)
+                    {
+                        imgM.Read(thumbnailData, settings);
+                        hasRequestedThumbnail = true;
+                    }
                 }
             }
-            catch
-            {
-                await imgM.ReadAsync(filename, settings, cancelToken);
-            }
+            catch { }
         }
-        else
+
+        if (!hasRequestedThumbnail)
         {
             await imgM.ReadAsync(filename, settings, cancelToken);
         }
@@ -914,6 +918,8 @@ public static class PhotoCodec
 
         // read a single frame only
         var imgM = new MagickImage();
+        var hasRequestedThumbnail = false;
+
         if (options.UseEmbeddedThumbnailRawFormats is true)
         {
             var profile = imgColl[0].GetProfile("dng:thumbnail");
@@ -924,19 +930,21 @@ public static class PhotoCodec
                 var thumbnailData = profile?.GetData();
                 if (thumbnailData != null)
                 {
-                    imgM.Read(thumbnailData, settings);
-                }
-                else
-                {
-                    imgM.Read(filename, settings);
+                    imgM.Ping(thumbnailData);
+
+                    // check min size
+                    if (imgM.Width > options.EmbeddedThumbnailMinWidth
+                        && imgM.Height > options.EmbeddedThumbnailMinHeight)
+                    {
+                        imgM.Read(thumbnailData, settings);
+                        hasRequestedThumbnail = true;
+                    }
                 }
             }
-            catch
-            {
-                imgM.Read(filename, settings);
-            }
+            catch { }
         }
-        else
+
+        if (!hasRequestedThumbnail)
         {
             imgM.Read(filename, settings);
         }
@@ -997,11 +1005,18 @@ public static class PhotoCodec
         {
             // Fetch the embedded thumbnail
             thumbM = exifProfile.CreateThumbnail();
-            if (thumbM != null)
+            if (thumbM != null
+                && thumbM.Width > options.EmbeddedThumbnailMinWidth
+                && thumbM.Height > options.EmbeddedThumbnailMinHeight)
             {
                 if (options.CorrectRotation) ApplyRotation(thumbM, exifProfile, ext);
 
                 ApplySizeSettings(thumbM, options);
+            }
+            else
+            {
+                thumbM?.Dispose();
+                thumbM = null;
             }
         }
 

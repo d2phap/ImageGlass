@@ -835,9 +835,11 @@ public partial class FrmMain : Form
             ColorProfileName = Config.ColorProfile,
             ApplyColorProfileForAll = Config.ApplyColorProfileForAll,
             ImageChannel = Local.ImageChannel,
+            AutoScaleDownLargeImage = true,
             UseEmbeddedThumbnailRawFormats = Config.UseEmbeddedThumbnailRawFormats,
             UseEmbeddedThumbnailOtherFormats = Config.UseEmbeddedThumbnailOtherFormats,
-            AutoScaleDownLargeImage = true,
+            EmbeddedThumbnailMinWidth = Config.EmbeddedThumbnailMinWidth,
+            EmbeddedThumbnailMinHeight = Config.EmbeddedThumbnailMinHeight,
         };
 
 
