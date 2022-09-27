@@ -37,7 +37,6 @@ public partial class FrmMain : Form
 {
     // cancellation tokens of synchronious task
     private CancellationTokenSource _loadCancelToken = new();
-
     private readonly MovableForm _movableForm;
 
 
@@ -914,6 +913,9 @@ public partial class FrmMain : Form
 
         try
         {
+            // check if loading is cancelled
+            token?.Token.ThrowIfCancellationRequested();
+
             // apply image list settings
             Local.Images.SinglePageFormats = Config.SinglePageFormats;
             Local.Images.ReadOptions = readSettings;
@@ -925,9 +927,6 @@ public partial class FrmMain : Form
             }
             else
             {
-                // check if loading is cancelled
-                token?.Token.ThrowIfCancellationRequested();
-
                 // directly load the image file, skip image list
                 if (photo != null)
                 {
@@ -1020,7 +1019,7 @@ public partial class FrmMain : Form
         // Select thumbnail item
         _ = BHelper.RunAsThread(SelectCurrentThumbnail);
 
-        ShowImagePreview(e.FilePath);
+        ShowImagePreview(e.FilePath, _loadCancelToken.Token);
 
         _ = Task.Run(() => UpdateImageInfo(ImageInfoUpdateTypes.All, e.FilePath));
     }
@@ -1130,11 +1129,11 @@ public partial class FrmMain : Form
     /// <summary>
     /// Show image preview using the thumbnail
     /// </summary>
-    private void ShowImagePreview(string filePath)
+    private void ShowImagePreview(string filePath, CancellationToken token = default)
     {
         if (InvokeRequired)
         {
-            Invoke(ShowImagePreview, filePath);
+            Invoke(ShowImagePreview, filePath, token);
             return;
         }
 
@@ -1144,14 +1143,19 @@ public partial class FrmMain : Form
 
         try
         {
+            token.ThrowIfCancellationRequested();
+            var isImageBig = Local.Metadata.Width >= 4000 || Local.Metadata.Height >= 4000;
+
             // get embedded thumbnail for preview
-            wicSrc = PhotoCodec.GetEmbeddedThumbnail(filePath);
+            wicSrc = PhotoCodec.GetEmbeddedThumbnail(filePath,
+                rawThumbnail: true, exifThumbnail: isImageBig, token: token);
 
             // use thumbnail image for preview
-            if (wicSrc == null)
+            if (wicSrc == null && isImageBig)
             {
                 if (Local.CurrentIndex >= 0 && Local.CurrentIndex < Gallery.Items.Count)
                 {
+                    token.ThrowIfCancellationRequested();
                     var thumbnailPath = Gallery.Items[Local.CurrentIndex].FileName;
                     var thumb = Gallery.Items[Local.CurrentIndex].ThumbnailImage;
 
@@ -1163,48 +1167,54 @@ public partial class FrmMain : Form
                 }
             }
         }
+        catch (OperationCanceledException) { return; }
         catch { }
 
 
         if (wicSrc != null)
         {
-            Size previewSize;
-
-            // get preview size
-            if (Config.ZoomMode == ZoomMode.LockZoom)
+            try
             {
-                previewSize = new(Local.Metadata.Width, Local.Metadata.Height);
-            }
-            else
-            {
-                var zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, Local.Metadata.Width, Local.Metadata.Height);
+                Size previewSize;
+                token.ThrowIfCancellationRequested();
 
-                previewSize = new((int)(Local.Metadata.Width * zoomFactor), (int)(Local.Metadata.Height * zoomFactor));
-            }
-
-
-            // scale the preview image
-            if (wicSrc.Width < previewSize.Width || wicSrc.Height < previewSize.Height)
-            {
-                // sync interpolation mode for the preview
-                var interpolation = DirectN.WICBitmapInterpolationMode.WICBitmapInterpolationModeLinear;
-                if (PicMain.ZoomFactor > 1 &&
-                    (PicMain.CurrentInterpolation == ImageInterpolation.HighQualityBicubic))
+                // get preview size
+                if (Config.ZoomMode == ZoomMode.LockZoom)
                 {
-                    interpolation = DirectN.WICBitmapInterpolationMode.WICBitmapInterpolationModeNearestNeighbor;
+                    previewSize = new(Local.Metadata.Width, Local.Metadata.Height);
+                }
+                else
+                {
+                    var zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, Local.Metadata.Width, Local.Metadata.Height);
+
+                    previewSize = new((int)(Local.Metadata.Width * zoomFactor), (int)(Local.Metadata.Height * zoomFactor));
                 }
 
 
-                wicSrc.Scale(previewSize.Width, previewSize.Height, interpolation);
+                // scale the preview image
+                if (wicSrc.Width < previewSize.Width || wicSrc.Height < previewSize.Height)
+                {
+                    // sync interpolation mode for the preview
+                    var interpolation = DirectN.WICBitmapInterpolationMode.WICBitmapInterpolationModeLinear;
+                    if (PicMain.ZoomFactor > 1 &&
+                        (PicMain.CurrentInterpolation == ImageInterpolation.HighQualityBicubic))
+                    {
+                        interpolation = DirectN.WICBitmapInterpolationMode.WICBitmapInterpolationModeNearestNeighbor;
+                    }
+
+                    token.ThrowIfCancellationRequested();
+                    wicSrc.Scale(previewSize.Width, previewSize.Height, interpolation);
+                }
+
+                token.ThrowIfCancellationRequested();
+                PicMain.SetImage(new()
+                {
+                    Image = wicSrc,
+                    CanAnimate = false,
+                    FrameCount = 1,
+                });
             }
-
-
-            PicMain.SetImage(new()
-            {
-                Image = wicSrc,
-                CanAnimate = false,
-                FrameCount = 1,
-            });
+            catch (OperationCanceledException) { }
         }
     }
 

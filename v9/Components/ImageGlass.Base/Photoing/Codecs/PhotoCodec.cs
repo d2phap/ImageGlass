@@ -224,11 +224,15 @@ public static class PhotoCodec
     /// <summary>
     /// Gets embedded thumbnail.
     /// </summary>
-    /// <param name="filePath">Full path of image file</param>
-    public static WicBitmapSource? GetEmbeddedThumbnail(string filePath)
+    public static WicBitmapSource? GetEmbeddedThumbnail(string filePath, bool rawThumbnail = true, bool exifThumbnail = true, CancellationToken token = default)
     {
         if (string.IsNullOrEmpty(filePath)) return null;
-        
+
+        try
+        {
+            token.ThrowIfCancellationRequested();
+        }
+        catch (OperationCanceledException) { return null; }
 
         var settings = ParseSettings(new() { FirstFrameOnly = true }, filePath);
         WicBitmapSource? result = null;
@@ -238,38 +242,48 @@ public static class PhotoCodec
 
         
         // get RAW embedded thumbnail
-        try
+        if (rawThumbnail)
         {
-            var profile = imgM.GetProfile("dng:thumbnail");
-
-            // try to get thumbnail
-            var thumbnailData = profile?.GetData();
-            if (thumbnailData != null)
+            try
             {
-                imgM.Read(thumbnailData, settings);
-                result = BHelper.ToWicBitmapSource(imgM.ToBitmapSource());
+                token.ThrowIfCancellationRequested();
+                var profile = imgM.GetProfile("dng:thumbnail");
+
+                // try to get thumbnail
+                var thumbnailData = profile?.GetData();
+                if (thumbnailData != null)
+                {
+                    imgM.Read(thumbnailData, settings);
+                    result = BHelper.ToWicBitmapSource(imgM.ToBitmapSource());
+                }
             }
+            catch (OperationCanceledException) { return null; }
+            catch { }
         }
-        catch { }
+        
 
 
         // Use JPEG embedded thumbnail
-        try
+        if (exifThumbnail)
         {
-            var exifProfile = imgM.GetExifProfile();
-
-            // Fetch the embedded thumbnail
-            using var thumbM = exifProfile?.CreateThumbnail();
-            if (thumbM != null)
+            try
             {
-                var ext = Path.GetExtension(filePath).ToLower();
-                ApplyRotation(thumbM, exifProfile, ext);
+                token.ThrowIfCancellationRequested();
+                var exifProfile = imgM.GetExifProfile();
 
-                result = BHelper.ToWicBitmapSource(thumbM.ToBitmapSource());
+                // Fetch the embedded thumbnail
+                using var thumbM = exifProfile?.CreateThumbnail();
+                if (thumbM != null)
+                {
+                    var ext = Path.GetExtension(filePath).ToLower();
+                    ApplyRotation(thumbM, exifProfile, ext);
+
+                    result = BHelper.ToWicBitmapSource(thumbM.ToBitmapSource());
+                }
             }
+            catch (OperationCanceledException) { return null; }
+            catch { }
         }
-        catch { }
-
 
         return result;
     }
