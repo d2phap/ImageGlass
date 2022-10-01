@@ -189,6 +189,11 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuViewPreviousFrame", "View previous frame"); //v7.5
         Add("FrmMain.MnuViewFirstFrame", "View the first frame"); //v7.5
         Add("FrmMain.MnuViewLastFrame", "View the last last"); //v7.5
+
+        Add("FrmMain.MnuPanLeft", "Pan image left"); //v9.0
+        Add("FrmMain.MnuPanRight", "Pan image right"); //v9.0
+        Add("FrmMain.MnuPanUp", "Pan image up"); //v9.0
+        Add("FrmMain.MnuPanDown", "Pan image down"); //v9.0
         #endregion
 
         #region Zoom

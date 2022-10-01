@@ -112,6 +112,7 @@ public partial class FrmMain
 
     private void PicMain_KeyUp(object? sender, KeyEventArgs e)
     {
+        // zooming
         if (PicMain.AnimationSource.HasFlag(AnimationSource.ZoomIn))
         {
             PicMain.StopAnimation(AnimationSource.ZoomIn);
@@ -120,6 +121,27 @@ public partial class FrmMain
         if (PicMain.AnimationSource.HasFlag(AnimationSource.ZoomOut))
         {
             PicMain.StopAnimation(AnimationSource.ZoomOut);
+        }
+
+        // panning
+        if (PicMain.AnimationSource.HasFlag(AnimationSource.PanLeft))
+        {
+            PicMain.StopAnimation(AnimationSource.PanLeft);
+        }
+
+        if (PicMain.AnimationSource.HasFlag(AnimationSource.PanRight))
+        {
+            PicMain.StopAnimation(AnimationSource.PanRight);
+        }
+
+        if (PicMain.AnimationSource.HasFlag(AnimationSource.PanUp))
+        {
+            PicMain.StopAnimation(AnimationSource.PanUp);
+        }
+
+        if (PicMain.AnimationSource.HasFlag(AnimationSource.PanDown))
+        {
+            PicMain.StopAnimation(AnimationSource.PanDown);
         }
     }
 
@@ -142,6 +164,38 @@ public partial class FrmMain
             || actions.Contains(nameof(IG_ZoomOut)))
         {
             PicMain.StartAnimation(AnimationSource.ZoomOut);
+            return;
+        }
+
+        // pan left
+        if (actions.Contains(nameof(MnuPanLeft))
+            || actions.Contains(nameof(IG_PanLeft)))
+        {
+            PicMain.StartAnimation(AnimationSource.PanLeft);
+            return;
+        }
+
+        // pan right
+        if (actions.Contains(nameof(MnuPanRight))
+            || actions.Contains(nameof(IG_PanRight)))
+        {
+            PicMain.StartAnimation(AnimationSource.PanRight);
+            return;
+        }
+
+        // pan up
+        if (actions.Contains(nameof(MnuPanUp))
+            || actions.Contains(nameof(IG_PanUp)))
+        {
+            PicMain.StartAnimation(AnimationSource.PanUp);
+            return;
+        }
+
+        // pan down
+        if (actions.Contains(nameof(MnuPanDown))
+            || actions.Contains(nameof(IG_PanDown)))
+        {
+            PicMain.StartAnimation(AnimationSource.PanDown);
             return;
         }
     }

@@ -65,6 +65,10 @@ public partial class FrmMain
         { nameof(MnuViewPreviousFrame),     new() { new (Keys.Control | Keys.Left) } },
         { nameof(MnuViewFirstFrame),        new() { new (Keys.Control | Keys.Home) } },
         { nameof(MnuViewLastFrame),         new() { new (Keys.Control | Keys.End) } },
+        { nameof(MnuPanLeft),               new() { new (Keys.Alt | Keys.Left) } },
+        { nameof(MnuPanRight),              new() { new (Keys.Alt | Keys.Right) } },
+        { nameof(MnuPanUp),                 new() { new (Keys.Alt | Keys.Up) } },
+        { nameof(MnuPanDown),               new() { new (Keys.Alt | Keys.Down) } },
 
         // MnuZoom
         { nameof(MnuZoomIn),                new() { new (Keys.Oemplus) } }, // =
@@ -439,6 +443,11 @@ public partial class FrmMain
         MnuViewPreviousFrame.Text = lang[$"{Name}.{nameof(MnuViewPreviousFrame)}"];
         MnuViewFirstFrame.Text = lang[$"{Name}.{nameof(MnuViewFirstFrame)}"];
         MnuViewLastFrame.Text = lang[$"{Name}.{nameof(MnuViewLastFrame)}"];
+
+        MnuPanLeft.Text = lang[$"{Name}.{nameof(MnuPanLeft)}"];
+        MnuPanRight.Text = lang[$"{Name}.{nameof(MnuPanRight)}"];
+        MnuPanUp.Text = lang[$"{Name}.{nameof(MnuPanUp)}"];
+        MnuPanDown.Text = lang[$"{Name}.{nameof(MnuPanDown)}"];
         #endregion
 
 
@@ -793,6 +802,10 @@ public partial class FrmMain
         MnuViewPreviousFrame.Visible = false;
         MnuViewFirstFrame.Visible = false;
         MnuViewLastFrame.Visible = false;
+        //MnuPanLeft.Visible = false;
+        //MnuPanRight.Visible = false;
+        //MnuPanUp.Visible = false;
+        //MnuPanDown.Visible = false;
 
         // MnuZoom
         //MnuZoomIn.Visible = false;

@@ -117,11 +117,20 @@ public partial class FrmMain : Form
         {
             Toolbar.ShowMainMenu();
         }
-        // zoom in/out
+        // pass the zooming/panning to PicMain for smooth transition
         else if (actions.Contains(nameof(MnuZoomIn))
             || actions.Contains(nameof(IG_ZoomIn))
             || actions.Contains(nameof(MnuZoomOut))
-            || actions.Contains(nameof(IG_ZoomOut)))
+            || actions.Contains(nameof(IG_ZoomOut))
+
+            || actions.Contains(nameof(MnuPanLeft))
+            || actions.Contains(nameof(IG_PanLeft))
+            || actions.Contains(nameof(MnuPanRight))
+            || actions.Contains(nameof(IG_PanRight))
+            || actions.Contains(nameof(MnuPanUp))
+            || actions.Contains(nameof(IG_PanUp))
+            || actions.Contains(nameof(MnuPanDown))
+            || actions.Contains(nameof(IG_PanDown)))
         {
             PicMain_KeyDown(PicMain, e);
             return;
@@ -182,11 +191,20 @@ public partial class FrmMain : Form
         var hotkey = new Hotkey(e.KeyData);
         var actions = Config.GetHotkeyActions(CurrentMenuHotkeys, hotkey);
 
-        // zoom in/out
+        // pass the zooming/panning to PicMain for smooth transition
         if (actions.Contains(nameof(MnuZoomIn))
             || actions.Contains(nameof(IG_ZoomIn))
             || actions.Contains(nameof(MnuZoomOut))
-            || actions.Contains(nameof(IG_ZoomOut)))
+            || actions.Contains(nameof(IG_ZoomOut))
+
+            || actions.Contains(nameof(MnuPanLeft))
+            || actions.Contains(nameof(IG_PanLeft))
+            || actions.Contains(nameof(MnuPanRight))
+            || actions.Contains(nameof(IG_PanRight))
+            || actions.Contains(nameof(MnuPanUp))
+            || actions.Contains(nameof(IG_PanUp))
+            || actions.Contains(nameof(MnuPanDown))
+            || actions.Contains(nameof(IG_PanDown)))
         {
             PicMain_KeyUp(PicMain, e);
             return;
@@ -1959,7 +1977,25 @@ public partial class FrmMain : Form
         // TODO
     }
 
+    private void MnuPanLeft_Click(object sender, EventArgs e)
+    {
+        IG_PanLeft();
+    }
 
+    private void MnuPanRight_Click(object sender, EventArgs e)
+    {
+        IG_PanRight();
+    }
+
+    private void MnuPanUp_Click(object sender, EventArgs e)
+    {
+        IG_PanUp();
+    }
+
+    private void MnuPanDown_Click(object sender, EventArgs e)
+    {
+        IG_PanDown();
+    }
 
     #endregion // Menu Navigation
 
@@ -2284,4 +2320,5 @@ public partial class FrmMain : Form
 
     #endregion // Main Menu component
 
+    
 }

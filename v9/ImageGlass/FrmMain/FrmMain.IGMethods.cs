@@ -150,26 +150,106 @@ public partial class FrmMain
         GoToImage(Local.Images.Length - 1);
     }
 
+    
+    /// <summary>
+    /// Pans the viewing image to left
+    /// </summary>
+    private void IG_PanLeft()
+    {
+        _ = PanLeftAsync();
+    }
+
+    private async Task PanLeftAsync()
+    {
+        PicMain.StartAnimation(AnimationSource.PanLeft);
+        await Task.Delay(200);
+
+        PicMain.StopAnimation(AnimationSource.PanLeft);
+    }
+
+
+    /// <summary>
+    /// Pans the viewing image to right
+    /// </summary>
+    private void IG_PanRight()
+    {
+        _ = PanRightAsync();
+    }
+
+    private async Task PanRightAsync()
+    {
+        PicMain.StartAnimation(AnimationSource.PanRight);
+        await Task.Delay(200);
+
+        PicMain.StopAnimation(AnimationSource.PanRight);
+    }
+
+
+    /// <summary>
+    /// Pans the viewing image up.
+    /// </summary>
+    private void IG_PanUp()
+    {
+        _ = PanUpAsync();
+    }
+
+    private async Task PanUpAsync()
+    {
+        PicMain.StartAnimation(AnimationSource.PanUp);
+        await Task.Delay(200);
+
+        PicMain.StopAnimation(AnimationSource.PanUp);
+    }
+
+
+    /// <summary>
+    /// Pans the viewing image down.
+    /// </summary>
+    private void IG_PanDown()
+    {
+        _ = PanDownAsync();
+    }
+
+    private async Task PanDownAsync()
+    {
+        PicMain.StartAnimation(AnimationSource.PanDown);
+        await Task.Delay(200);
+
+        PicMain.StopAnimation(AnimationSource.PanDown);
+    }
+
 
     /// <summary>
     /// Zooms into the image
     /// </summary>
     private void IG_ZoomIn()
     {
-        var point = PicMain.PointToClient(Cursor.Position);
-
-        PicMain.ZoomIn(point);
+        _ = ZoomInAsync();
     }
 
+    private async Task ZoomInAsync()
+    {
+        PicMain.StartAnimation(AnimationSource.ZoomIn);
+        await Task.Delay(100);
+
+        PicMain.StopAnimation(AnimationSource.ZoomIn);
+    }
     
+
     /// <summary>
     /// Zooms out of the image
     /// </summary>
     private void IG_ZoomOut()
     {
-        var point = PicMain.PointToClient(Cursor.Position);
+        _ = ZoomOutAsync();
+    }
 
-        PicMain.ZoomOut(point);
+    private async Task ZoomOutAsync()
+    {
+        PicMain.StartAnimation(AnimationSource.ZoomOut);
+        await Task.Delay(100);
+
+        PicMain.StopAnimation(AnimationSource.ZoomOut);
     }
 
 
@@ -254,7 +334,6 @@ public partial class FrmMain
     /// Toggles <see cref="Toolbar"/> visibility
     /// </summary>
     /// <param name="visible"></param>
-    /// <returns></returns>
     private bool IG_ToggleToolbar(bool? visible = null)
     {
         visible ??= !Config.ShowToolbar;
@@ -1213,13 +1292,13 @@ public partial class FrmMain
             PicMain.PanSpeed = Config.PanSpeed;
             PicMain.ZoomSpeed = Config.ZoomSpeed;
 
-            PicMain.AllowInternalPanningKeys = true;
+            //PicMain.AllowInternalPanningKeys = true;
             PicMain.TabStop = true;
             PicMain.Focus();
         }
         else
         {
-            PicMain.AllowInternalPanningKeys = false;
+            //PicMain.AllowInternalPanningKeys = false;
             PicMain.TabStop = false;
             PicMain.Enabled = false;
             Focus();
