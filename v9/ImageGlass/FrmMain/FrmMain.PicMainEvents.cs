@@ -201,15 +201,6 @@ public partial class FrmMain
     }
 
 
-    private void PicMain_Click(object sender, EventArgs e)
-    {
-        if (Config.EnableImageFocusMode)
-        {
-            PicMain.Focus();
-        }
-    }
-
-
     private void PicMain_MouseClick(object? sender, MouseEventArgs e)
     {
         if (e.Button == MouseButtons.Left)

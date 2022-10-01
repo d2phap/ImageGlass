@@ -83,7 +83,6 @@ public partial class FrmMain
         { nameof(MnuScaleToFill),           new() { new (Keys.D6) } },
 
         // MnuImage
-        { nameof(MnuToggleImageFocus),      new() { new (Keys.F) } },
         { nameof(MnuViewChannels),          new() { new (Keys.Shift | Keys.C) } },
         { nameof(MnuLoadingOrders),         new() { new (Keys.Shift | Keys.O) } },
         { nameof(MnuRotateLeft),            new() { new (Keys.Control | Keys.OemPeriod) } }, // Ctrl+.
@@ -190,18 +189,12 @@ public partial class FrmMain
         // IsWindowAlwaysOnTop
         IG_ToggleTopMost(Config.EnableWindowTopMost, showInAppMessage: false);
 
-        // EnableImageFocus
-        IG_ToggleImageFocus(Config.EnableImageFocusMode, showInAppMessage: false);
-
         // load language pack
         Local.UpdateFrmMain(UpdateRequests.Language);
 
         // load menu hotkeys
         Config.MergeHotkeys(ref CurrentMenuHotkeys, Config.MenuHotkeys);
         Local.UpdateFrmMain(UpdateRequests.MenuHotkeys);
-
-        // load Image Focus mode hotkeys
-        LoadImageFocusModeHotkeys();
 
         // TODO: hide menu items that haven't implemented
         HideUnreadyMenuItems();
@@ -444,6 +437,7 @@ public partial class FrmMain
         MnuViewFirstFrame.Text = lang[$"{Name}.{nameof(MnuViewFirstFrame)}"];
         MnuViewLastFrame.Text = lang[$"{Name}.{nameof(MnuViewLastFrame)}"];
 
+        // panning
         MnuPanLeft.Text = lang[$"{Name}.{nameof(MnuPanLeft)}"];
         MnuPanRight.Text = lang[$"{Name}.{nameof(MnuPanRight)}"];
         MnuPanUp.Text = lang[$"{Name}.{nameof(MnuPanUp)}"];
@@ -496,7 +490,7 @@ public partial class FrmMain
 
 
         // Menu Clipboard
-        #region Menu CLipboard
+        #region Menu Clipboard
         MnuClipboard.Text = lang[$"{Name}.{nameof(MnuClipboard)}"];
 
         MnuCopy.Text = lang[$"{Name}.{nameof(MnuCopy)}"];
@@ -544,7 +538,6 @@ public partial class FrmMain
         MnuPageNav.Text = lang[$"{Name}.{nameof(MnuPageNav)}"];
         MnuCropping.Text = lang[$"{Name}.{nameof(MnuCropping)}"];
         MnuExifTool.Text = lang[$"{Name}.{nameof(MnuExifTool)}"];
-        MnuToggleImageFocus.Text = lang[$"{Name}.{nameof(MnuToggleImageFocus)}"];
         #endregion
 
 
@@ -820,7 +813,6 @@ public partial class FrmMain
         //MnuScaleToFill.Visible = false;
 
         // MnuImage
-        //MnuImageFocus.Visible = false;
         //MnuViewChannels.Visible = false;
         //MnuLoadingOrders.Visible = false;
         //toolStripMenuItem16.Visible = false;
@@ -879,37 +871,6 @@ public partial class FrmMain
 
         //MnuSettings.Visible = false;
         //MnuExit.Visible = false;
-    }
-
-
-    /// <summary>
-    /// Loads hotkeys for Image focus mode of PicMain
-    /// </summary>
-    private void LoadImageFocusModeHotkeys()
-    {
-        //// pan left
-        //PicMain.InternalPanningLeftKeys = Config.GetHotkeyData(
-        //    Config.ImageFocusModeHotkeys,
-        //    nameof(PicMain.InternalPanningLeftKeys),
-        //    PicMain.InternalPanningLeftKeys);
-
-        //// pan right
-        //PicMain.InternalPanningRightKeys = Config.GetHotkeyData(
-        //    Config.ImageFocusModeHotkeys,
-        //    nameof(PicMain.InternalPanningRightKeys),
-        //    PicMain.InternalPanningRightKeys);
-
-        //// pan up
-        //PicMain.InternalPanningUpKeys = Config.GetHotkeyData(
-        //    Config.ImageFocusModeHotkeys,
-        //    nameof(PicMain.InternalPanningUpKeys),
-        //    PicMain.InternalPanningUpKeys);
-
-        //// pan down
-        //PicMain.InternalPanningDownKeys = Config.GetHotkeyData(
-        //    Config.ImageFocusModeHotkeys,
-        //    nameof(PicMain.InternalPanningDownKeys),
-        //    PicMain.InternalPanningDownKeys);
     }
 
 }

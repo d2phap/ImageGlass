@@ -1277,50 +1277,6 @@ public partial class FrmMain
     }
 
 
-    /// <summary>
-    /// Toggles image focus mode
-    /// </summary>
-    /// <param name="enable"></param>
-    /// <returns></returns>
-    private bool IG_ToggleImageFocus(bool? enable = null, bool showInAppMessage = true)
-    {
-        enable ??= !Config.EnableImageFocusMode;
-        Config.EnableImageFocusMode = enable.Value;
-
-        if (enable.Value)
-        {
-            PicMain.PanSpeed = Config.PanSpeed;
-            PicMain.ZoomSpeed = Config.ZoomSpeed;
-
-            //PicMain.AllowInternalPanningKeys = true;
-            PicMain.TabStop = true;
-            PicMain.Focus();
-        }
-        else
-        {
-            //PicMain.AllowInternalPanningKeys = false;
-            PicMain.TabStop = false;
-            PicMain.Enabled = false;
-            Focus();
-            PicMain.Enabled = true;
-        }
-
-        // update menu item state
-        MnuToggleImageFocus.Checked = enable.Value;
-
-        // update toolbar items state
-        UpdateToolbarItemsState();
-
-        if (showInAppMessage)
-        {
-            var msgKey = Config.EnableImageFocusMode ? "_Enable" : "_Disable";
-            PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuToggleImageFocus)}.{msgKey}"], Config.InAppMessageDuration);
-        }
-
-        return Config.EnableImageFocusMode;
-    }
-
-
     private void IG_SetDefaultPhotoViewer()
     {
         _ = UpdateDefaultPhotoViewerAsync(true);

@@ -2084,11 +2084,6 @@ public partial class FrmMain : Form
     // Menu Image
     #region Menu Image
 
-    private void MnuToggleImageFocus_Click(object sender, EventArgs e)
-    {
-        IG_ToggleImageFocus();
-    }
-
     private void MnuRotateLeft_Click(object sender, EventArgs e)
     {
 

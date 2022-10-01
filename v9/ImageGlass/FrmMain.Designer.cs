@@ -78,8 +78,6 @@ namespace ImageGlass
             this.MnuScaleToFit = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuScaleToFill = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuImage = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuToggleImageFocus = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuViewChannels = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuLoadingOrders = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem16 = new System.Windows.Forms.ToolStripSeparator();
@@ -481,41 +479,41 @@ namespace ImageGlass
             // MnuZoomIn
             // 
             this.MnuZoomIn.Name = "MnuZoomIn";
-            this.MnuZoomIn.Size = new System.Drawing.Size(252, 30);
+            this.MnuZoomIn.Size = new System.Drawing.Size(236, 30);
             this.MnuZoomIn.Text = "[Zoom in]";
             this.MnuZoomIn.Click += new System.EventHandler(this.MnuZoomIn_Click);
             // 
             // MnuZoomOut
             // 
             this.MnuZoomOut.Name = "MnuZoomOut";
-            this.MnuZoomOut.Size = new System.Drawing.Size(252, 30);
+            this.MnuZoomOut.Size = new System.Drawing.Size(236, 30);
             this.MnuZoomOut.Text = "[Zoom out]";
             this.MnuZoomOut.Click += new System.EventHandler(this.MnuZoomOut_Click);
             // 
             // MnuCustomZoom
             // 
             this.MnuCustomZoom.Name = "MnuCustomZoom";
-            this.MnuCustomZoom.Size = new System.Drawing.Size(252, 30);
+            this.MnuCustomZoom.Size = new System.Drawing.Size(236, 30);
             this.MnuCustomZoom.Text = "[Custom zoom...]";
             this.MnuCustomZoom.Click += new System.EventHandler(this.MnuCustomZoom_Click);
             // 
             // MnuActualSize
             // 
             this.MnuActualSize.Name = "MnuActualSize";
-            this.MnuActualSize.Size = new System.Drawing.Size(252, 30);
+            this.MnuActualSize.Size = new System.Drawing.Size(236, 30);
             this.MnuActualSize.Text = "[View actual size]";
             this.MnuActualSize.Click += new System.EventHandler(this.MnuActualSize_Click);
             // 
             // toolStripMenuItem15
             // 
             this.toolStripMenuItem15.Name = "toolStripMenuItem15";
-            this.toolStripMenuItem15.Size = new System.Drawing.Size(249, 6);
+            this.toolStripMenuItem15.Size = new System.Drawing.Size(233, 6);
             // 
             // MnuAutoZoom
             // 
             this.MnuAutoZoom.CheckOnClick = true;
             this.MnuAutoZoom.Name = "MnuAutoZoom";
-            this.MnuAutoZoom.Size = new System.Drawing.Size(252, 30);
+            this.MnuAutoZoom.Size = new System.Drawing.Size(236, 30);
             this.MnuAutoZoom.Text = "[Auto Zoom]";
             this.MnuAutoZoom.Click += new System.EventHandler(this.MnuAutoZoom_Click);
             // 
@@ -523,7 +521,7 @@ namespace ImageGlass
             // 
             this.MnuLockZoom.CheckOnClick = true;
             this.MnuLockZoom.Name = "MnuLockZoom";
-            this.MnuLockZoom.Size = new System.Drawing.Size(252, 30);
+            this.MnuLockZoom.Size = new System.Drawing.Size(236, 30);
             this.MnuLockZoom.Text = "[Lock zoom ratio]";
             this.MnuLockZoom.Click += new System.EventHandler(this.MnuLockZoom_Click);
             // 
@@ -531,7 +529,7 @@ namespace ImageGlass
             // 
             this.MnuScaleToWidth.CheckOnClick = true;
             this.MnuScaleToWidth.Name = "MnuScaleToWidth";
-            this.MnuScaleToWidth.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToWidth.Size = new System.Drawing.Size(236, 30);
             this.MnuScaleToWidth.Text = "[Scale to width]";
             this.MnuScaleToWidth.Click += new System.EventHandler(this.MnuScaleToWidth_Click);
             // 
@@ -539,7 +537,7 @@ namespace ImageGlass
             // 
             this.MnuScaleToHeight.CheckOnClick = true;
             this.MnuScaleToHeight.Name = "MnuScaleToHeight";
-            this.MnuScaleToHeight.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToHeight.Size = new System.Drawing.Size(236, 30);
             this.MnuScaleToHeight.Text = "[Scale to height]";
             this.MnuScaleToHeight.Click += new System.EventHandler(this.MnuScaleToHeight_Click);
             // 
@@ -547,7 +545,7 @@ namespace ImageGlass
             // 
             this.MnuScaleToFit.CheckOnClick = true;
             this.MnuScaleToFit.Name = "MnuScaleToFit";
-            this.MnuScaleToFit.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToFit.Size = new System.Drawing.Size(236, 30);
             this.MnuScaleToFit.Text = "[Scale to fit]";
             this.MnuScaleToFit.Click += new System.EventHandler(this.MnuScaleToFit_Click);
             // 
@@ -555,15 +553,13 @@ namespace ImageGlass
             // 
             this.MnuScaleToFill.CheckOnClick = true;
             this.MnuScaleToFill.Name = "MnuScaleToFill";
-            this.MnuScaleToFill.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToFill.Size = new System.Drawing.Size(236, 30);
             this.MnuScaleToFill.Text = "[Scale to fill]";
             this.MnuScaleToFill.Click += new System.EventHandler(this.MnuScaleToFill_Click);
             // 
             // MnuImage
             // 
             this.MnuImage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MnuToggleImageFocus,
-            this.toolStripMenuItem5,
             this.MnuViewChannels,
             this.MnuLoadingOrders,
             this.toolStripMenuItem16,
@@ -589,18 +585,6 @@ namespace ImageGlass
             this.MnuImage.Name = "MnuImage";
             this.MnuImage.Size = new System.Drawing.Size(246, 40);
             this.MnuImage.Text = "[Image]";
-            // 
-            // MnuToggleImageFocus
-            // 
-            this.MnuToggleImageFocus.Name = "MnuToggleImageFocus";
-            this.MnuToggleImageFocus.Size = new System.Drawing.Size(334, 30);
-            this.MnuToggleImageFocus.Text = "[Toggle Image focus mode]";
-            this.MnuToggleImageFocus.Click += new System.EventHandler(this.MnuToggleImageFocus_Click);
-            // 
-            // toolStripMenuItem5
-            // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(331, 6);
             // 
             // MnuViewChannels
             // 
@@ -1152,7 +1136,6 @@ namespace ImageGlass
             this.PicMain.OnZoomChanged += new ImageGlass.Views.DXCanvas.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
             this.PicMain.OnNavLeftClicked += new ImageGlass.Views.DXCanvas.NavLeftClickedEventHandler(this.PicMain_OnNavLeftClicked);
             this.PicMain.OnNavRightClicked += new ImageGlass.Views.DXCanvas.NavRightClickedEventHandler(this.PicMain_OnNavRightClicked);
-            this.PicMain.Click += new System.EventHandler(this.PicMain_Click);
             this.PicMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.PicMain_DragDrop);
             this.PicMain.DragOver += new System.Windows.Forms.DragEventHandler(this.PicMain_DragOver);
             this.PicMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PicMain_KeyDown);
@@ -1375,8 +1358,6 @@ namespace ImageGlass
         private UI.ModernMenu MnuSubMenu;
         private ToolStripMenuItem itemToPreserveTheSpaceToolStripMenuItem;
         private ToolStripMenuItem itemToPreserveSpaceToolStripMenuItem;
-        private ToolStripMenuItem MnuToggleImageFocus;
-        private ToolStripSeparator toolStripMenuItem5;
         private ToolStripSeparator toolStripMenuItem22;
         private ToolStripMenuItem MnuUnsetDefaultPhotoViewer;
         private ToolStripMenuItem MnuSetDefaultPhotoViewer;

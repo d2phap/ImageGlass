@@ -213,9 +213,6 @@ public class IgLang : Dictionary<string, string>
 
         #region Image
         Add("FrmMain.MnuImage", "Image"); //v7.0
-        Add("FrmMain.MnuToggleImageFocus", "Toggle Image focus mode"); // v9.0
-        Add("FrmMain.MnuToggleImageFocus._Enable", "Enabled Image focus mode."); // v9.0
-        Add("FrmMain.MnuToggleImageFocus._Disable", "Disabled Image focus mode."); // v9.0
 
         Add("FrmMain.MnuViewChannels", "View channels"); //v7.0
         Add("FrmMain.MnuViewChannels._All", "All"); //v7.0

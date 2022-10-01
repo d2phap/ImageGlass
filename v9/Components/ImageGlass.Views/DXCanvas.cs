@@ -413,41 +413,6 @@ public class DXCanvas : DXControl
     }
 
     /// <summary>
-    /// Gets, sets the value whether the internal built-in panning by arrow keys is allowed.
-    /// </summary>
-    [Category("Panning")]
-    [DefaultValue(true)]
-    public bool AllowInternalPanningKeys { get; set; } = true;
-
-    /// <summary>
-    /// Gets, sets hotkey for internal panning left.
-    /// </summary>
-    [Category("Panning")]
-    [DefaultValue(Keys.Left)]
-    public Keys InternalPanningLeftKeys { get; set; } = Keys.Left;
-
-    /// <summary>
-    /// Gets, sets hotkey for internal panning right.
-    /// </summary>
-    [Category("Panning")]
-    [DefaultValue(Keys.Right)]
-    public Keys InternalPanningRightKeys { get; set; } = Keys.Right;
-
-    /// <summary>
-    /// Gets, sets hotkey for internal panning up.
-    /// </summary>
-    [Category("Panning")]
-    [DefaultValue(Keys.Up)]
-    public Keys InternalPanningUpKeys { get; set; } = Keys.Up;
-
-    /// <summary>
-    /// Gets, sets hotkey for internal panning down.
-    /// </summary>
-    [Category("Panning")]
-    [DefaultValue(Keys.Down)]
-    public Keys InternalPanningDownKeys { get; set; } = Keys.Down;
-
-    /// <summary>
     /// Checks if the current viewing image supports horizontal panning.
     /// </summary>
     [Browsable(false)]
@@ -927,64 +892,6 @@ public class DXCanvas : DXControl
 
         base.OnResize(e);
     }
-
-    protected override void OnPreviewKeyDown(PreviewKeyDownEventArgs e)
-    {
-        base.OnPreviewKeyDown(e);
-
-        // Panning
-        if (AllowInternalPanningKeys)
-        {
-            // pan right
-            if (e.KeyData == InternalPanningRightKeys && CanPanHorizontal)
-            {
-                StartAnimation(AnimationSource.PanRight);
-            }
-            // pan left
-            else if (e.KeyData == InternalPanningLeftKeys && CanPanHorizontal)
-            {
-                StartAnimation(AnimationSource.PanLeft);
-            }
-            // pan up
-            else if (e.KeyData == InternalPanningUpKeys && CanPanVertical)
-            {
-                StartAnimation(AnimationSource.PanUp);
-            }
-            // pan down
-            else if (e.KeyData == InternalPanningDownKeys && CanPanVertical)
-            {
-                StartAnimation(AnimationSource.PanDown);
-            }
-        }
-    }
-
-    protected override void OnKeyUp(KeyEventArgs e)
-    {
-        base.OnKeyUp(e);
-
-        // Panning
-        if (AllowInternalPanningKeys)
-        {
-            if (_animationSource.HasFlag(AnimationSource.PanLeft))
-            {
-                StopAnimation(AnimationSource.PanLeft);
-            }
-            if (_animationSource.HasFlag(AnimationSource.PanRight))
-            {
-                StopAnimation(AnimationSource.PanRight);
-            }
-            if (_animationSource.HasFlag(AnimationSource.PanUp))
-            {
-                StopAnimation(AnimationSource.PanUp);
-            }
-            if (_animationSource.HasFlag(AnimationSource.PanDown))
-            {
-                StopAnimation(AnimationSource.PanDown);
-            }
-        }
-
-    }
-
 
     protected override void OnFrame(FrameEventArgs e)
     {

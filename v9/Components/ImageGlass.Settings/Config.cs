@@ -439,11 +439,6 @@ public static class Config
     /// </summary>
     public static bool ShowImagePreview { get; set; } = true;
 
-    /// <summary>
-    /// Gets, sets value indicates that the Image focus tool should be enable
-    /// </summary>
-    public static bool EnableImageFocusMode { get; set; } = false;
-
 
     #endregion
 
@@ -471,13 +466,13 @@ public static class Config
     public static int FrmMainHeight { get; set; } = 800;
 
     /// <summary>
-    /// Gets, sets the panning speed when <see cref="EnableImageFocusMode"/> is on.
+    /// Gets, sets the panning speed.
     /// Value range is from 0 to 100.
     /// </summary>
     public static float PanSpeed { get; set; } = 20f;
 
     /// <summary>
-    /// Gets, sets the zooming speed when <see cref="EnableImageFocusMode"/> is on.
+    /// Gets, sets the zooming speed.
     /// Value range is from -500 to 500.
     /// </summary>
     public static float ZoomSpeed { get; set; } = 0;
@@ -665,11 +660,6 @@ public static class Config
     public static Dictionary<string, List<Hotkey>> MenuHotkeys = new();
 
     /// <summary>
-    /// Gets, sets hotkeys list of image focus mode
-    /// </summary>
-    public static Dictionary<string, List<Hotkey>> ImageFocusModeHotkeys = new();
-
-    /// <summary>
     /// Gets, sets mouse click actions
     /// </summary>
     public static Dictionary<MouseClickEvent, ToggleAction> MouseClickActions = new();
@@ -829,7 +819,6 @@ public static class Config
         ShowImagePreview = items.GetValue(nameof(ShowImagePreview), ShowImagePreview);
         HideToolbarInFullscreen = items.GetValue(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
         HideThumbnailsInFullscreen = items.GetValue(nameof(HideThumbnailsInFullscreen), HideThumbnailsInFullscreen);
-        EnableImageFocusMode = items.GetValue(nameof(EnableImageFocusMode), EnableImageFocusMode);
 
         #endregion
 
@@ -979,16 +968,6 @@ public static class Config
                 i => i.GetChildren().Select(i => i.Value).ToArray()
             );
         MenuHotkeys = ParseHotkeys(stringArrDict);
-
-
-        // hotkeys for menu
-        stringArrDict = items.GetSection(nameof(ImageFocusModeHotkeys))
-            .GetChildren()
-            .ToDictionary(
-                i => i.Key,
-                i => i.GetChildren().Select(i => i.Value).ToArray()
-            );
-        ImageFocusModeHotkeys = ParseHotkeys(stringArrDict);
 
 
         // mouse click actions
@@ -1306,7 +1285,6 @@ public static class Config
         settings.TryAdd(nameof(ShowImagePreview), ShowImagePreview);
         settings.TryAdd(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
         settings.TryAdd(nameof(HideThumbnailsInFullscreen), HideThumbnailsInFullscreen);
-        settings.TryAdd(nameof(EnableImageFocusMode), EnableImageFocusMode);
 
         #endregion
 
@@ -1387,7 +1365,6 @@ public static class Config
         settings.TryAdd(nameof(ToolbarItems), ToolbarItems);
         settings.TryAdd(nameof(InfoItems), InfoItems);
         settings.TryAdd(nameof(MenuHotkeys), ParseHotkeys(MenuHotkeys));
-        settings.TryAdd(nameof(ImageFocusModeHotkeys), ParseHotkeys(ImageFocusModeHotkeys));
         settings.TryAdd(nameof(MouseClickActions), MouseClickActions);
         settings.TryAdd(nameof(MouseWheelActions), MouseWheelActions);
         #endregion
