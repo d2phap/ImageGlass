@@ -36,97 +36,97 @@ public partial class FrmMain
     /// <summary>
     /// Hotkeys list of main menu
     /// </summary>
-    public static Dictionary<string, Hotkey> CurrentMenuHotkeys = new()
+    public static Dictionary<string, List<Hotkey>> CurrentMenuHotkeys = new()
     {
 	    // Open main menu
-	    { nameof(MnuMain),                  new(Keys.Alt | Keys.F) },
+	    { nameof(MnuMain),                  new() { new(Keys.Alt | Keys.F) } },
 
 	    // MnuFile
-	    { nameof(MnuOpenFile),              new(Keys.Control | Keys.O) },
-        { nameof(MnuPasteImage),            new(Keys.Control | Keys.V) },
-        { nameof(MnuNewWindow),             new(Keys.Control | Keys.N) },
-        { nameof(MnuSave),                  new(Keys.Control | Keys.S) },
-        { nameof(MnuSaveAs),                new(Keys.Control | Keys.Shift | Keys.S) },
-        { nameof(MnuOpenWith),              new(Keys.D) },
-        { nameof(MnuEdit),                  new(Keys.E) },
-        { nameof(MnuPrint),                 new(Keys.Control | Keys.P) },
-        { nameof(MnuShare),                 new(Keys.S) },
-        { nameof(MnuRefresh),               new(Keys.R) },
-        { nameof(MnuReload),                new(Keys.Control | Keys.R) },
-        { nameof(MnuReloadImageList),       new(Keys.Control | Keys.Shift | Keys.R) },
+	    { nameof(MnuOpenFile),              new() { new (Keys.Control | Keys.O) } },
+        { nameof(MnuPasteImage),            new() { new (Keys.Control | Keys.V) } },
+        { nameof(MnuNewWindow),             new() { new (Keys.Control | Keys.N) } },
+        { nameof(MnuSave),                  new() { new (Keys.Control | Keys.S) } },
+        { nameof(MnuSaveAs),                new() { new (Keys.Control | Keys.Shift | Keys.S) } },
+        { nameof(MnuOpenWith),              new() { new (Keys.D) } },
+        { nameof(MnuEdit),                  new() { new (Keys.E) } },
+        { nameof(MnuPrint),                 new() { new (Keys.Control | Keys.P) } },
+        { nameof(MnuShare),                 new() { new (Keys.S) } },
+        { nameof(MnuRefresh),               new() { new (Keys.R) } },
+        { nameof(MnuReload),                new() { new (Keys.Control | Keys.R) } },
+        { nameof(MnuReloadImageList),       new() { new (Keys.Control | Keys.Shift | Keys.R) } },
 
         // MnuNavigation
-        { nameof(MnuViewNext),              new(Keys.Right) },
-        { nameof(MnuViewPrevious),          new(Keys.Left) },
-        { nameof(MnuGoTo),                  new(Keys.G) },
-        { nameof(MnuGoToFirst),             new(Keys.Home) },
-        { nameof(MnuGoToLast),              new(Keys.End) },
-        { nameof(MnuViewNextFrame),         new(Keys.Control | Keys.Right) },
-        { nameof(MnuViewPreviousFrame),     new(Keys.Control | Keys.Left) },
-        { nameof(MnuViewFirstFrame),        new(Keys.Control | Keys.Home) },
-        { nameof(MnuViewLastFrame),         new(Keys.Control | Keys.End) },
+        { nameof(MnuViewNext),              new() { new (Keys.Right) } },
+        { nameof(MnuViewPrevious),          new() { new (Keys.Left) } },
+        { nameof(MnuGoTo),                  new() { new (Keys.G) } },
+        { nameof(MnuGoToFirst),             new() { new (Keys.Home) } },
+        { nameof(MnuGoToLast),              new() { new (Keys.End) } },
+        { nameof(MnuViewNextFrame),         new() { new (Keys.Control | Keys.Right) } },
+        { nameof(MnuViewPreviousFrame),     new() { new (Keys.Control | Keys.Left) } },
+        { nameof(MnuViewFirstFrame),        new() { new (Keys.Control | Keys.Home) } },
+        { nameof(MnuViewLastFrame),         new() { new (Keys.Control | Keys.End) } },
 
         // MnuZoom
-        { nameof(MnuZoomIn),                new(Keys.Oemplus) }, // =
-        { nameof(MnuZoomOut),               new(Keys.OemMinus) }, // -
-        { nameof(MnuCustomZoom),            new(Keys.Z) },
-        { nameof(MnuActualSize),            new(Keys.D0) },
-        { nameof(MnuAutoZoom),              new(Keys.D1) },
-        { nameof(MnuLockZoom),              new(Keys.D2) },
-        { nameof(MnuScaleToWidth),          new(Keys.D3) },
-        { nameof(MnuScaleToHeight),         new(Keys.D4) },
-        { nameof(MnuScaleToFit),            new(Keys.D5) },
-        { nameof(MnuScaleToFill),           new(Keys.D6) },
+        { nameof(MnuZoomIn),                new() { new (Keys.Oemplus) } }, // =
+        { nameof(MnuZoomOut),               new() { new (Keys.OemMinus) } }, // -
+        { nameof(MnuCustomZoom),            new() { new (Keys.Z) } },
+        { nameof(MnuActualSize),            new() { new (Keys.D0) } },
+        { nameof(MnuAutoZoom),              new() { new (Keys.D1) } },
+        { nameof(MnuLockZoom),              new() { new (Keys.D2) } },
+        { nameof(MnuScaleToWidth),          new() { new (Keys.D3) } },
+        { nameof(MnuScaleToHeight),         new() { new (Keys.D4) } },
+        { nameof(MnuScaleToFit),            new() { new (Keys.D5) } },
+        { nameof(MnuScaleToFill),           new() { new (Keys.D6) } },
 
         // MnuImage
-        { nameof(MnuToggleImageFocus),      new(Keys.F) },
-        { nameof(MnuViewChannels),          new(Keys.Shift | Keys.C) },
-        { nameof(MnuLoadingOrders),         new(Keys.Shift | Keys.O) },
-        { nameof(MnuRotateLeft),            new(Keys.Control | Keys.OemPeriod) }, // Ctrl+.
-        { nameof(MnuRotateRight),           new(Keys.Control | Keys.OemQuestion) }, // Ctrl+/
-        { nameof(MnuFlipHorizontal),        new(Keys.Control | Keys.Oem1) }, // Ctrl+;
-        { nameof(MnuFlipVertical),          new(Keys.Control | Keys.Oem7) }, // Ctrl+'
-        { nameof(MnuRename),                new(Keys.F2) },
-        { nameof(MnuMoveToRecycleBin),      new(Keys.Delete) },
-        { nameof(MnuDeleteFromHardDisk),    new(Keys.Shift | Keys.Delete) },
-        { nameof(MnuStartStopAnimating),    new(Keys.Control | Keys.Space) },
-        { nameof(MnuExtractFrames),         new(Keys.Control | Keys.J) },
-        { nameof(MnuOpenLocation),          new(Keys.L) },
-        { nameof(MnuImageProperties),       new(Keys.Control | Keys.I) },
+        { nameof(MnuToggleImageFocus),      new() { new (Keys.F) } },
+        { nameof(MnuViewChannels),          new() { new (Keys.Shift | Keys.C) } },
+        { nameof(MnuLoadingOrders),         new() { new (Keys.Shift | Keys.O) } },
+        { nameof(MnuRotateLeft),            new() { new (Keys.Control | Keys.OemPeriod) } }, // Ctrl+.
+        { nameof(MnuRotateRight),           new() { new (Keys.Control | Keys.OemQuestion) } }, // Ctrl+/
+        { nameof(MnuFlipHorizontal),        new() { new (Keys.Control | Keys.Oem1) } }, // Ctrl+;
+        { nameof(MnuFlipVertical),          new() { new (Keys.Control | Keys.Oem7) } }, // Ctrl+'
+        { nameof(MnuRename),                new() { new (Keys.F2) } },
+        { nameof(MnuMoveToRecycleBin),      new() { new (Keys.Delete) } },
+        { nameof(MnuDeleteFromHardDisk),    new() { new (Keys.Shift | Keys.Delete) } },
+        { nameof(MnuStartStopAnimating),    new() { new (Keys.Control | Keys.Space) } },
+        { nameof(MnuExtractFrames),         new() { new (Keys.Control | Keys.J) } },
+        { nameof(MnuOpenLocation),          new() { new (Keys.L) } },
+        { nameof(MnuImageProperties),       new() { new (Keys.Control | Keys.I) } },
 
         // MnuClipboard
-        { nameof(MnuCopyImageData),         new(Keys.Control | Keys.C) },
-        { nameof(MnuCopy),                  new(Keys.Control | Keys.Shift | Keys.C) },
-        { nameof(MnuCut),                   new(Keys.Control | Keys.X) },
-        { nameof(MnuCopyPath),              new(Keys.Control | Keys.L) },
-        { nameof(MnuClearClipboard),        new(Keys.Control | Keys.Oemtilde) }, // Ctrl+`
+        { nameof(MnuCopyImageData),         new() { new (Keys.Control | Keys.C) } },
+        { nameof(MnuCopy),                  new() { new (Keys.Control | Keys.Shift | Keys.C) } },
+        { nameof(MnuCut),                   new() { new (Keys.Control | Keys.X) } },
+        { nameof(MnuCopyPath),              new() { new (Keys.Control | Keys.L) } },
+        { nameof(MnuClearClipboard),        new() { new (Keys.Control | Keys.Oemtilde) } }, // Ctrl+`
 
-        { nameof(MnuWindowFit),             new(Keys.F9) },
-        { nameof(MnuFrameless),             new(Keys.F10) },
-        { nameof(MnuFullScreen),            new(Keys.F11) },
+        { nameof(MnuWindowFit),             new() { new (Keys.F9) } },
+        { nameof(MnuFrameless),             new() { new (Keys.F10) } },
+        { nameof(MnuFullScreen),            new() { new (Keys.F11) } },
 
         // MnuSlideshow
-        { nameof(MnuStartSlideshow),        new(Keys.F12) },
-        { nameof(MnuPauseResumeSlideshow),  new(Keys.Space) },
-        { nameof(MnuExitSlideshow),         new(Keys.Escape) },
+        { nameof(MnuStartSlideshow),        new() { new (Keys.F12) } },
+        { nameof(MnuPauseResumeSlideshow),  new() { new (Keys.Space) } },
+        { nameof(MnuExitSlideshow),         new() { new (Keys.Escape) } },
 
         // MnuLayout
-        { nameof(MnuToggleToolbar),         new(Keys.T) },
-        { nameof(MnuToggleThumbnails),      new(Keys.H) },
-        { nameof(MnuToggleCheckerboard),    new(Keys.B) },
-        { nameof(MnuToggleTopMost),         new(Keys.Oemtilde) }, // `
+        { nameof(MnuToggleToolbar),         new() { new (Keys.T) } },
+        { nameof(MnuToggleThumbnails),      new() { new (Keys.H) } },
+        { nameof(MnuToggleCheckerboard),    new() { new (Keys.B) } },
+        { nameof(MnuToggleTopMost),         new() { new (Keys.Oemtilde) } }, // `
 
         // MnuTools
-        { nameof(MnuColorPicker),           new(Keys.K) },
-        { nameof(MnuCropping),              new(Keys.C) },
-        { nameof(MnuPageNav),               new(Keys.P) },
-        { nameof(MnuExifTool),              new(Keys.X) },
+        { nameof(MnuColorPicker),           new() { new (Keys.K) } },
+        { nameof(MnuCropping),              new() { new (Keys.C) } },
+        { nameof(MnuPageNav),               new() { new (Keys.P) } },
+        { nameof(MnuExifTool),              new() { new (Keys.X) } },
 
         // MnuHelp
-        { nameof(MnuAbout),                 new(Keys.F1) },
+        { nameof(MnuAbout),                 new() { new (Keys.F1) } },
 
-        { nameof(MnuSettings),              new(Keys.Control | Keys.Oemcomma) }, // Ctrl+,
-        { nameof(MnuExit),                  new(Keys.Escape) },
+        { nameof(MnuSettings),              new() { new (Keys.Control | Keys.Oemcomma) } }, // Ctrl+,
+        { nameof(MnuExit),                  new() { new (Keys.Escape) } },
     };
 
 
@@ -874,29 +874,29 @@ public partial class FrmMain
     /// </summary>
     private void LoadImageFocusModeHotkeys()
     {
-        // pan left
-        PicMain.InternalPanningLeftKeys = Config.GetHotkeyData(
-            Config.ImageFocusModeHotkeys,
-            nameof(PicMain.InternalPanningLeftKeys),
-            PicMain.InternalPanningLeftKeys);
+        //// pan left
+        //PicMain.InternalPanningLeftKeys = Config.GetHotkeyData(
+        //    Config.ImageFocusModeHotkeys,
+        //    nameof(PicMain.InternalPanningLeftKeys),
+        //    PicMain.InternalPanningLeftKeys);
 
-        // pan right
-        PicMain.InternalPanningRightKeys = Config.GetHotkeyData(
-            Config.ImageFocusModeHotkeys,
-            nameof(PicMain.InternalPanningRightKeys),
-            PicMain.InternalPanningRightKeys);
+        //// pan right
+        //PicMain.InternalPanningRightKeys = Config.GetHotkeyData(
+        //    Config.ImageFocusModeHotkeys,
+        //    nameof(PicMain.InternalPanningRightKeys),
+        //    PicMain.InternalPanningRightKeys);
 
-        // pan up
-        PicMain.InternalPanningUpKeys = Config.GetHotkeyData(
-            Config.ImageFocusModeHotkeys,
-            nameof(PicMain.InternalPanningUpKeys),
-            PicMain.InternalPanningUpKeys);
+        //// pan up
+        //PicMain.InternalPanningUpKeys = Config.GetHotkeyData(
+        //    Config.ImageFocusModeHotkeys,
+        //    nameof(PicMain.InternalPanningUpKeys),
+        //    PicMain.InternalPanningUpKeys);
 
-        // pan down
-        PicMain.InternalPanningDownKeys = Config.GetHotkeyData(
-            Config.ImageFocusModeHotkeys,
-            nameof(PicMain.InternalPanningDownKeys),
-            PicMain.InternalPanningDownKeys);
+        //// pan down
+        //PicMain.InternalPanningDownKeys = Config.GetHotkeyData(
+        //    Config.ImageFocusModeHotkeys,
+        //    nameof(PicMain.InternalPanningDownKeys),
+        //    PicMain.InternalPanningDownKeys);
     }
 
 }

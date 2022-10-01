@@ -662,12 +662,12 @@ public static class Config
     /// <summary>
     /// Gets, sets hotkeys list of menu
     /// </summary>
-    public static Dictionary<string, Hotkey> MenuHotkeys = new();
+    public static Dictionary<string, List<Hotkey>> MenuHotkeys = new();
 
     /// <summary>
     /// Gets, sets hotkeys list of image focus mode
     /// </summary>
-    public static Dictionary<string, Hotkey> ImageFocusModeHotkeys = new();
+    public static Dictionary<string, List<Hotkey>> ImageFocusModeHotkeys = new();
 
     /// <summary>
     /// Gets, sets mouse click actions
@@ -972,17 +972,23 @@ public static class Config
 
 
         // hotkeys for menu
-        var stringDict = items.GetSection(nameof(MenuHotkeys))
+        var stringArrDict = items.GetSection(nameof(MenuHotkeys))
             .GetChildren()
-            .ToDictionary(i => i.Key, i => i.Value);
-        MenuHotkeys = ParseHotkeys(stringDict);
+            .ToDictionary(
+                i => i.Key,
+                i => i.GetChildren().Select(i => i.Value).ToArray()
+            );
+        MenuHotkeys = ParseHotkeys(stringArrDict);
 
 
         // hotkeys for menu
-        stringDict = items.GetSection(nameof(ImageFocusModeHotkeys))
+        stringArrDict = items.GetSection(nameof(ImageFocusModeHotkeys))
             .GetChildren()
-            .ToDictionary(i => i.Key, i => i.Value);
-        ImageFocusModeHotkeys = ParseHotkeys(stringDict);
+            .ToDictionary(
+                i => i.Key,
+                i => i.GetChildren().Select(i => i.Value).ToArray()
+            );
+        ImageFocusModeHotkeys = ParseHotkeys(stringArrDict);
 
 
         // mouse click actions
@@ -1476,30 +1482,33 @@ public static class Config
     /// Parses string dictionary to hotkey dictionary
     /// </summary>
     /// <returns></returns>
-    public static Dictionary<string, Hotkey> ParseHotkeys(Dictionary<string, string> dict)
+    public static Dictionary<string, List<Hotkey>> ParseHotkeys(Dictionary<string, string[]> dict)
     {
-        var result = new Dictionary<string, Hotkey>();
+        var result = new Dictionary<string, List<Hotkey>>();
 
         foreach (var item in dict)
         {
-            Hotkey keyCombo;
-            try
+            var keyList = new List<Hotkey>();
+
+            // sample item: { "MnuOpen": ["O", "Ctrl+O"] }
+            foreach (var strKey in item.Value)
             {
-                // sample item: { "MnuOpen": "Ctrl+O" }
-                keyCombo = new Hotkey(item.Value);
+                try
+                {
+                    keyList.Add(new Hotkey(strKey));
+                }
+                catch { }
             }
-            catch
-            {
-                keyCombo = new Hotkey();
-            }
+
 
             if (result.ContainsKey(item.Key))
             {
-                result[item.Key] = keyCombo;
+                result[item.Key].Clear();
+                result[item.Key].AddRange(keyList);
             }
             else
             {
-                result.Add(item.Key, keyCombo);
+                result.Add(item.Key, keyList);
             }
         };
 
@@ -1508,16 +1517,17 @@ public static class Config
 
 
     /// <summary>
-    /// Parses hotkey dictionary to string dictionary
+    /// Parses hotkey dictionary to string dictionary.
     /// </summary>
-    /// <returns></returns>
-    public static Dictionary<string, string> ParseHotkeys(Dictionary<string, Hotkey> dict)
+    public static Dictionary<string, string[]> ParseHotkeys(Dictionary<string, List<Hotkey>> dict)
     {
-        return dict.Select(i => new
+        var result = dict.Select(i => new
         {
             Key = i.Key,
-            Value = i.Value.ToString(),
-        }).ToDictionary(i => i.Key, i => i.Value);
+            Value = i.Value.Select(k => k.ToString()),
+        }).ToDictionary(i => i.Key, i => i.Value.ToArray());
+
+        return result;
     }
 
 
@@ -1525,8 +1535,7 @@ public static class Config
     /// Merge <paramref name="srcDict"/> dictionary
     /// into <paramref name="destDict"/> dictionary
     /// </summary>
-    /// <returns></returns>
-    public static void MergeHotkeys(ref Dictionary<string, Hotkey> destDict, Dictionary<string, Hotkey> srcDict)
+    public static void MergeHotkeys(ref Dictionary<string, List<Hotkey>> destDict, Dictionary<string, List<Hotkey>> srcDict)
     {
         foreach (var item in srcDict)
         {
@@ -1543,48 +1552,67 @@ public static class Config
 
 
     /// <summary>
-    /// Gets hotkey string
+    /// Gets hotkeys string from the action.
     /// </summary>
-    /// <returns></returns>
-    public static string GetHotkeyString(Dictionary<string, Hotkey> dict, string dictKey)
+    public static string GetHotkeyString(Dictionary<string, List<Hotkey>> dict, string action)
     {
-        dict.TryGetValue(dictKey, out var hotkey);
+        dict.TryGetValue(action, out var hotkeyList);
 
-        return hotkey?.ToString() ?? string.Empty;
+        if (hotkeyList != null)
+        {
+            var str = string.Join(", ", hotkeyList.Select(k => k.ToString()));
+
+            return str ?? string.Empty;
+        }
+
+
+        return string.Empty;
     }
 
 
     /// <summary>
-    /// Gets hotkey
+    /// Gets hotkeys from the action.
     /// </summary>
-    public static Hotkey? GetHotkey(Dictionary<string, Hotkey> dict, string dictKey)
+    public static List<Hotkey> GetHotkey(Dictionary<string, List<Hotkey>> dict, string action)
     {
-        dict.TryGetValue(dictKey, out var hotkey);
+        dict.TryGetValue(action, out var hotkeyList);
 
-        return hotkey;
-    }
-
-    
-    /// <summary>
-    /// Gets hotkey's KeyData
-    /// </summary>
-    /// <returns></returns>
-    public static Keys GetHotkeyData(Dictionary<string, Hotkey> dict, string dictKey, Keys defaultValue)
-    {
-        var hotkey = GetHotkey(dict, dictKey);
-
-        return hotkey?.KeyData ?? defaultValue;
+        return hotkeyList ?? new List<Hotkey>(0);
     }
 
     
     /// <summary>
-    /// Gets hotkey actions
+    /// Gets hotkey's KeyData.
     /// </summary>
-    /// <returns></returns>
-    public static IEnumerable<string> GetHotkeyActions(Dictionary<string, Hotkey> dict, Hotkey dictValue)
+    public static List<Keys> GetHotkeyData(Dictionary<string, List<Hotkey>> dict, string action, Keys defaultValue)
     {
-        return dict.Where(i => i.Value.ToString() == dictValue.ToString())
-            .Select(i => i.Key);
+        var keyDataList = GetHotkey(dict, action)
+            .Select(k => k.KeyData).ToList();
+
+        return keyDataList ?? new List<Keys>(1) { defaultValue };
+    }
+
+    
+    /// <summary>
+    /// Gets actions from the input hotkey.
+    /// </summary>
+    public static List<string> GetHotkeyActions(Dictionary<string, List<Hotkey>> dict, Hotkey hotkey)
+    {
+        var actions = new HashSet<string>();
+
+        foreach (var item in dict)
+        {
+            foreach (var key in item.Value)
+            {
+                var result = string.Compare(key.ToString(), hotkey.ToString(), true);
+                if (result == 0)
+                {
+                    actions.Add(item.Key);
+                }
+            }
+        }
+
+        return actions.ToList();
     }
 
 

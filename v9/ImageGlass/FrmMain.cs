@@ -132,9 +132,10 @@ public partial class FrmMain : Form
 
         bool CheckMenuShortcut(ToolStripMenuItem mnu)
         {
-            var menuHotkey = Config.GetHotkey(CurrentMenuHotkeys, mnu.Name);
+            var menuHotkeyList = Config.GetHotkey(CurrentMenuHotkeys, mnu.Name);
+            var menuHotkey = menuHotkeyList.SingleOrDefault(k => k.KeyData == e.KeyData);
 
-            if (menuHotkey?.KeyData == e.KeyData)
+            if (menuHotkey != null)
             {
                 // ignore invisible menu
                 if (mnu.Visible)
