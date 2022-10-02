@@ -67,9 +67,9 @@ public class DXCanvas : DXControl
     private RectangleF _destRect = new(0, 0, 0, 0);
 
     private Vector2 _panHostPoint;
-    private Vector2 _panSpeedPoint;
+    private Vector2 _panStartPoint;
     private Vector2 _panHostStartPoint;
-    private float _panSpeed = 20f;
+    private float _panDistance = 20f;
 
     private bool _xOut = false;
     private bool _yOut = false;
@@ -122,10 +122,17 @@ public class DXCanvas : DXControl
     #region Viewport
 
     /// <summary>
-    /// Gets image viewport.
+    /// Gets rectangle of the viewport.
     /// </summary>
     [Browsable(false)]
-    public RectangleF ImageViewport => _destRect;
+    public RectangleF ImageDestBounds => _destRect;
+
+
+    /// <summary>
+    /// Gets the rectangle of the source image region being drawn.
+    /// </summary>
+    [Browsable(false)]
+    public RectangleF ImageSourceBounds => _srcRect;
 
 
     /// <summary>
@@ -134,8 +141,8 @@ public class DXCanvas : DXControl
     [Browsable(false)]
     public PointF ImageViewportCenterPoint => new()
     {
-        X = ImageViewport.X + ImageViewport.Width / 2,
-        Y = ImageViewport.Y + ImageViewport.Height / 2,
+        X = ImageDestBounds.X + ImageDestBounds.Width / 2,
+        Y = ImageDestBounds.Y + ImageDestBounds.Height / 2,
     };
 
     #endregion
@@ -398,17 +405,16 @@ public class DXCanvas : DXControl
     #region Panning
 
     /// <summary>
-    /// Gets, sets the panning speed. Value is from 0 to 100f.
+    /// Gets, sets the panning distance. Min value is <c>0</c>.
     /// </summary>
     [Category("Panning")]
     [DefaultValue(20f)]
-    public float PanSpeed
+    public float PanDistance
     {
-        get => _panSpeed;
+        get => _panDistance;
         set
         {
-            _panSpeed = Math.Min(value, 100f); // max 100f
-            _panSpeed = Math.Max(value, 0); // min 0
+            _panDistance = Math.Max(value, 0); // min 0
         }
     }
 
@@ -605,6 +611,7 @@ public class DXCanvas : DXControl
             HighResolutionGifAnimator.SetTickTimeInMilliseconds(10);
         }
 
+
         _imageAnimator = new HighResolutionGifAnimator();
 
         _clickTimer.Tick += ClickTimer_Tick;
@@ -699,8 +706,8 @@ public class DXCanvas : DXControl
         {
             _panHostPoint.X = e.Location.X;
             _panHostPoint.Y = e.Location.Y;
-            _panSpeedPoint.X = 0;
-            _panSpeedPoint.Y = 0;
+            _panStartPoint.X = 0;
+            _panStartPoint.Y = 0;
             _panHostStartPoint.X = e.Location.X;
             _panHostStartPoint.Y = e.Location.Y;
         }
@@ -1559,8 +1566,8 @@ public class DXCanvas : DXControl
         }
 
         // get the gap when the viewport is smaller than the control size
-        var gapX = Math.Max(ImageViewport.X, 0);
-        var gapY = Math.Max(ImageViewport.Y, 0);
+        var gapX = Math.Max(ImageDestBounds.X, 0);
+        var gapY = Math.Max(ImageDestBounds.Y, 0);
 
         // the location after zoomed
         var zoomedLocation = new PointF()
@@ -1662,62 +1669,58 @@ public class DXCanvas : DXControl
 
 
     /// <summary>
-    /// Pan the viewport to the left
+    /// Pan the viewport left
     /// </summary>
-    /// <param name="speed">Panning speed</param>
+    /// <param name="distance">Distance to pan</param>
     /// <param name="requestRerender"><c>true</c> to request the control invalidates.</param>
-    public void PanLeft(float? speed = null, bool requestRerender = true)
+    public void PanLeft(float? distance = null, bool requestRerender = true)
     {
-        speed ??= PanSpeed;
-        speed = Math.Min(speed.Value, 100f); // max 100f
-        speed = Math.Max(speed.Value, 0); // min 0
+        distance ??= PanDistance;
+        distance = Math.Max(distance.Value, 0); // min 0
 
-        _ = PanTo(-speed.Value, 0, requestRerender);
+        _ = PanTo(-distance.Value, 0, requestRerender);
     }
 
 
     /// <summary>
-    /// Pan the viewport to the right
+    /// Pan the viewport right
     /// </summary>
-    /// <param name="speed">Panning speed</param>
+    /// <param name="distance">Distance to pan</param>
     /// <param name="requestRerender"><c>true</c> to request the control invalidates.</param>
-    public void PanRight(float? speed = null, bool requestRerender = true)
+    public void PanRight(float? distance = null, bool requestRerender = true)
     {
-        speed ??= PanSpeed;
-        speed = Math.Min(speed.Value, 100f); // max 100f
-        speed = Math.Max(speed.Value, 0); // min 0
+        distance ??= PanDistance;
+        distance = Math.Max(distance.Value, 0); // min 0
 
-        _ = PanTo(speed.Value, 0, requestRerender);
+        _ = PanTo(distance.Value, 0, requestRerender);
     }
 
 
     /// <summary>
-    /// Pan the viewport to the top
+    /// Pan the viewport up
     /// </summary>
-    /// <param name="speed">Panning speed</param>
+    /// <param name="distance">Distance to pan</param>
     /// <param name="requestRerender"><c>true</c> to request the control invalidates.</param>
-    public void PanUp(float? speed = null, bool requestRerender = true)
+    public void PanUp(float? distance = null, bool requestRerender = true)
     {
-        speed ??= PanSpeed;
-        speed = Math.Min(speed.Value, 100f); // max 100f
-        speed = Math.Max(speed.Value, 0); // min 0
+        distance ??= PanDistance;
+        distance = Math.Max(distance.Value, 0); // min 0
 
-        _ = PanTo(0, -speed.Value, requestRerender);
+        _ = PanTo(0, -distance.Value, requestRerender);
     }
 
 
     /// <summary>
-    /// Pan the viewport to the bottom
+    /// Pan the viewport down
     /// </summary>
-    /// <param name="speed">Panning speed</param>
+    /// <param name="distance">Distance to pan</param>
     /// <param name="requestRerender"><c>true</c> to request the control invalidates.</param>
-    public void PanDown(float? speed = null, bool requestRerender = true)
+    public void PanDown(float? distance = null, bool requestRerender = true)
     {
-        speed ??= PanSpeed;
-        speed = Math.Min(speed.Value, 100f); // max 100f
-        speed = Math.Max(speed.Value, 0); // min 0
+        distance ??= PanDistance;
+        distance = Math.Max(distance.Value, 0); // min 0
 
-        _ = PanTo(0, speed.Value, requestRerender);
+        _ = PanTo(0, distance.Value, requestRerender);
     }
 
 
@@ -1749,13 +1752,13 @@ public class DXCanvas : DXControl
         // horizontal
         if (hDistance != 0)
         {
-            _srcRect.X += (hDistance / _zoomFactor) + _panSpeedPoint.X;
+            _srcRect.X += (hDistance / _zoomFactor) + _panStartPoint.X;
         }
 
         // vertical 
         if (vDistance != 0)
         {
-            _srcRect.Y += (vDistance / _zoomFactor) + _panSpeedPoint.Y;
+            _srcRect.Y += (vDistance / _zoomFactor) + _panStartPoint.Y;
         }
 
         _drawPoint = new();

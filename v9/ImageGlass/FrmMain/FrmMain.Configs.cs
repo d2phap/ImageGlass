@@ -163,7 +163,7 @@ public partial class FrmMain
             ? NavButtonDisplay.Both
             : NavButtonDisplay.None;
         PicMain.TabStop = false;
-        PicMain.PanSpeed = Config.PanSpeed;
+        PicMain.PanDistance = Config.PanSpeed;
         PicMain.ZoomSpeed = Config.ZoomSpeed;
         PicMain.InterpolationScaleDown = Config.ImageInterpolationScaleDown;
         PicMain.InterpolationScaleUp = Config.ImageInterpolationScaleUp;

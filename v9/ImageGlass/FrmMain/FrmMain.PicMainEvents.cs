@@ -308,22 +308,22 @@ public partial class FrmMain
         {
             if (e.Delta > 0)
             {
-                PicMain.PanUp(e.Delta + PicMain.PanSpeed / 4);
+                PicMain.PanUp(e.Delta + PicMain.PanDistance / 4);
             }
             else
             {
-                PicMain.PanDown(Math.Abs(e.Delta) + PicMain.PanSpeed / 4);
+                PicMain.PanDown(Math.Abs(e.Delta) + PicMain.PanDistance / 4);
             }
         }
         else if (action == MouseWheelAction.PanHorizontally)
         {
             if (e.Delta > 0)
             {
-                PicMain.PanLeft(e.Delta + PicMain.PanSpeed / 4);
+                PicMain.PanLeft(e.Delta + PicMain.PanDistance / 4);
             }
             else
             {
-                PicMain.PanRight(Math.Abs(e.Delta) + PicMain.PanSpeed / 4);
+                PicMain.PanRight(Math.Abs(e.Delta) + PicMain.PanDistance / 4);
             }
         }
         else if (action == MouseWheelAction.BrowseImages)
