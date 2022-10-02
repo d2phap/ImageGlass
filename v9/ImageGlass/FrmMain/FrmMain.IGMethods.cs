@@ -150,7 +150,10 @@ public partial class FrmMain
         GoToImage(Local.Images.Length - 1);
     }
 
-    
+
+    // Panning ------------------------------------
+    #region Panning
+
     /// <summary>
     /// Pans the viewing image to left
     /// </summary>
@@ -218,6 +221,97 @@ public partial class FrmMain
         PicMain.StopAnimation(AnimationSource.PanDown);
     }
 
+
+    /// <summary>
+    /// Pans the viewing image to left side
+    /// </summary>
+    private void IG_PanToLeftSide()
+    {
+        _ = PanToLeftSideAsync();
+    }
+
+    private async Task PanToLeftSideAsync()
+    {
+        var distanceX = PicMain.ImageSourceBounds.X;
+
+        PicMain.PanDistance = distanceX * PicMain.ZoomFactor / 10;
+        PicMain.StartAnimation(AnimationSource.PanLeft);
+        await Task.Delay(200);
+
+        PicMain.StopAnimation(AnimationSource.PanLeft);
+        PicMain.PanDistance = Config.PanSpeed;
+    }
+
+
+    /// <summary>
+    /// Pans the viewing image to right side
+    /// </summary>
+    private void IG_PanToRightSide()
+    {
+        _ = PanToRightSideAsync();
+    }
+
+    private async Task PanToRightSideAsync()
+    {
+        var x = PicMain.SourceWidth - PicMain.ImageSourceBounds.Width;
+        var distanceX = x + PicMain.ImageSourceBounds.X;
+
+        PicMain.PanDistance = distanceX * PicMain.ZoomFactor / 10;
+        PicMain.StartAnimation(AnimationSource.PanRight);
+        await Task.Delay(200);
+
+        PicMain.StopAnimation(AnimationSource.PanRight);
+        PicMain.PanDistance = Config.PanSpeed;
+    }
+
+
+    /// <summary>
+    /// Pans the viewing image to top side
+    /// </summary>
+    private void IG_PanToTopSide()
+    {
+        _ = PanToTopSideAsync();
+    }
+
+    private async Task PanToTopSideAsync()
+    {
+        var distanceY = PicMain.ImageSourceBounds.Y;
+
+        PicMain.PanDistance = distanceY * PicMain.ZoomFactor / 10;
+        PicMain.StartAnimation(AnimationSource.PanUp);
+        await Task.Delay(200);
+
+        PicMain.StopAnimation(AnimationSource.PanUp);
+        PicMain.PanDistance = Config.PanSpeed;
+    }
+
+
+    /// <summary>
+    /// Pans the viewing image to bottom side
+    /// </summary>
+    private void IG_PanToBottomSide()
+    {
+        _ = PanToBottomSideAsync();
+    }
+
+    private async Task PanToBottomSideAsync()
+    {
+        var y = PicMain.SourceHeight - PicMain.ImageSourceBounds.Height;
+        var distanceY = y + PicMain.ImageSourceBounds.Y;
+
+        PicMain.PanDistance = distanceY * PicMain.ZoomFactor / 10;
+        PicMain.StartAnimation(AnimationSource.PanDown);
+        await Task.Delay(200);
+
+        PicMain.StopAnimation(AnimationSource.PanDown);
+        PicMain.PanDistance = Config.PanSpeed;
+    }
+
+    #endregion // Panning
+
+
+    // Zooming ------------------------------------
+    #region Zooming
 
     /// <summary>
     /// Zooms into the image
@@ -329,6 +423,8 @@ public partial class FrmMain
         UpdateToolbarItemsState();
     }
 
+    #endregion // Zooming
+
 
     /// <summary>
     /// Toggles <see cref="Toolbar"/> visibility
@@ -393,7 +489,6 @@ public partial class FrmMain
     /// Toggles checkerboard background visibility
     /// </summary>
     /// <param name="visible"></param>
-    /// <returns></returns>
     private bool IG_ToggleCheckerboard(bool? visible = null)
     {
         visible ??= !Config.ShowCheckerBoard;
@@ -703,6 +798,10 @@ public partial class FrmMain
     }
 
 
+
+    // Clipboard functions ------------------------------------
+    #region Clipboard functions
+
     /// <summary>
     /// Copy multiple files
     /// </summary>
@@ -754,7 +853,6 @@ public partial class FrmMain
     {
         _ = CutMultiFilesAsync();
     }
-
 
     private async Task CutMultiFilesAsync()
     {
@@ -875,6 +973,9 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Pastes image from clipboard and opens it.
+    /// </summary>
     private void IG_PasteImage()
     {
         // Is there a file in clipboard?
@@ -922,7 +1023,6 @@ public partial class FrmMain
         }
     }
 
-
     private void LoadClipboardImage(WicBitmapSource? img)
     {
         // cancel the current loading image
@@ -946,6 +1046,9 @@ public partial class FrmMain
 
         UpdateImageInfo(ImageInfoUpdateTypes.All);
     }
+
+
+    #endregion // Clipboard functions
 
 
     /// <summary>
@@ -976,6 +1079,12 @@ public partial class FrmMain
     }
 
 
+    /// Saving ------------------------------------
+    #region Saving
+
+    /// <summary>
+    /// Saves and overrides the current image.
+    /// </summary>
     private void IG_Save()
     {
         if (Local.ClipboardImage != null)
@@ -1060,6 +1169,9 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Saves the viewing image as a new file.
+    /// </summary>
     private void IG_SaveAs()
     {
         if (PicMain.Source == ImageSource.Null)
@@ -1220,6 +1332,7 @@ public partial class FrmMain
         }
     }
 
+    #endregion // Saving
 
 
     /// <summary>
@@ -1229,7 +1342,6 @@ public partial class FrmMain
     {
         _ = OpenWithAsync();
     }
-
 
     private async Task OpenWithAsync()
     {
@@ -1326,6 +1438,9 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Renames the current image.
+    /// </summary>
     private void IG_Rename()
     {
         var oldFilePath = Local.Images.GetFileName(Local.CurrentIndex);
@@ -1389,6 +1504,10 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Sends or permenantly deletes the current image.
+    /// </summary>
+    /// <param name="moveToRecycleBin"></param>
     private void IG_Delete(bool moveToRecycleBin = true)
     {
         var filePath = Local.Images.GetFileName(Local.CurrentIndex);
@@ -1447,11 +1566,13 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Sets the viewing image as desktop background.
+    /// </summary>
     private void IG_SetDesktopBackground()
     {
         _ = SetDesktopBackgroundAsync();
     }
-
 
     private async Task SetDesktopBackgroundAsync()
     {
@@ -1520,11 +1641,13 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Sets the viewing image as lock screen background.
+    /// </summary>
     private void IG_SetLockScreenBackground()
     {
         _ = SetLockScreenBackgroundAsync();
     }
-
 
     private async Task SetLockScreenBackgroundAsync()
     {
@@ -1773,12 +1896,14 @@ public partial class FrmMain
     }
 
 
-
+    /// <summary>
+    /// Flips the viewing image.
+    /// </summary>
+    /// <param name="options"></param>
     private void IG_FlipImage(FlipOptions options)
     {
         _ = FlipImageAsync(options);
     }
-
 
     private async Task FlipImageAsync(FlipOptions options)
     {
