@@ -60,11 +60,6 @@ namespace ImageGlass
             this.MnuViewPreviousFrame = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuViewFirstFrame = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuViewLastFrame = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.MnuPanLeft = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuPanRight = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuPanUp = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuPanDown = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuZoom = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuZoomIn = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuZoomOut = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,6 +72,16 @@ namespace ImageGlass
             this.MnuScaleToHeight = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuScaleToFit = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuScaleToFill = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuPanning = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuPanLeft = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuPanRight = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuPanUp = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuPanDown = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.MnuPanToLeftSide = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuPanToRightSide = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuPanToTop = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuPanToBottom = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuImage = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuViewChannels = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuLoadingOrders = new System.Windows.Forms.ToolStripMenuItem();
@@ -195,6 +200,7 @@ namespace ImageGlass
             this.MnuFile,
             this.MnuNavigation,
             this.MnuZoom,
+            this.MnuPanning,
             this.MnuImage,
             this.MnuClipboard,
             this.toolStripMenuItem6,
@@ -212,7 +218,7 @@ namespace ImageGlass
             this.MnuExit});
             this.MnuMain.Name = "MnuContext";
             this.MnuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.MnuMain.Size = new System.Drawing.Size(247, 619);
+            this.MnuMain.Size = new System.Drawing.Size(192, 628);
             this.MnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.MnuMain_Opening);
             // 
             // MnuFile
@@ -233,7 +239,7 @@ namespace ImageGlass
             this.MnuReloadImageList});
             this.MnuFile.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuFile.Name = "MnuFile";
-            this.MnuFile.Size = new System.Drawing.Size(246, 40);
+            this.MnuFile.Size = new System.Drawing.Size(191, 40);
             this.MnuFile.Text = "[File]";
             // 
             // MnuOpenFile
@@ -336,17 +342,12 @@ namespace ImageGlass
             this.MnuViewNextFrame,
             this.MnuViewPreviousFrame,
             this.MnuViewFirstFrame,
-            this.MnuViewLastFrame,
-            this.toolStripSeparator2,
-            this.MnuPanLeft,
-            this.MnuPanRight,
-            this.MnuPanUp,
-            this.MnuPanDown});
+            this.MnuViewLastFrame});
             this.MnuNavigation.Image = ((System.Drawing.Image)(resources.GetObject("MnuNavigation.Image")));
             this.MnuNavigation.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuNavigation.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuNavigation.Name = "MnuNavigation";
-            this.MnuNavigation.Size = new System.Drawing.Size(246, 40);
+            this.MnuNavigation.Size = new System.Drawing.Size(191, 40);
             this.MnuNavigation.Text = "[Navigation]";
             // 
             // MnuViewNext
@@ -422,39 +423,6 @@ namespace ImageGlass
             this.MnuViewLastFrame.Text = "[View the last frame]";
             this.MnuViewLastFrame.Click += new System.EventHandler(this.MnuViewLastFrame_Click);
             // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(269, 6);
-            // 
-            // MnuPanLeft
-            // 
-            this.MnuPanLeft.Name = "MnuPanLeft";
-            this.MnuPanLeft.Size = new System.Drawing.Size(272, 30);
-            this.MnuPanLeft.Text = "[Pan image left]";
-            this.MnuPanLeft.Click += new System.EventHandler(this.MnuPanLeft_Click);
-            // 
-            // MnuPanRight
-            // 
-            this.MnuPanRight.Name = "MnuPanRight";
-            this.MnuPanRight.Size = new System.Drawing.Size(272, 30);
-            this.MnuPanRight.Text = "[Pan image right]";
-            this.MnuPanRight.Click += new System.EventHandler(this.MnuPanRight_Click);
-            // 
-            // MnuPanUp
-            // 
-            this.MnuPanUp.Name = "MnuPanUp";
-            this.MnuPanUp.Size = new System.Drawing.Size(272, 30);
-            this.MnuPanUp.Text = "[Pan image top]";
-            this.MnuPanUp.Click += new System.EventHandler(this.MnuPanUp_Click);
-            // 
-            // MnuPanDown
-            // 
-            this.MnuPanDown.Name = "MnuPanDown";
-            this.MnuPanDown.Size = new System.Drawing.Size(272, 30);
-            this.MnuPanDown.Text = "[Pan image down]";
-            this.MnuPanDown.Click += new System.EventHandler(this.MnuPanDown_Click);
-            // 
             // MnuZoom
             // 
             this.MnuZoom.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -473,7 +441,7 @@ namespace ImageGlass
             this.MnuZoom.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuZoom.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuZoom.Name = "MnuZoom";
-            this.MnuZoom.Size = new System.Drawing.Size(246, 40);
+            this.MnuZoom.Size = new System.Drawing.Size(191, 40);
             this.MnuZoom.Text = "[Zoom]";
             // 
             // MnuZoomIn
@@ -557,6 +525,86 @@ namespace ImageGlass
             this.MnuScaleToFill.Text = "[Scale to fill]";
             this.MnuScaleToFill.Click += new System.EventHandler(this.MnuScaleToFill_Click);
             // 
+            // MnuPanning
+            // 
+            this.MnuPanning.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MnuPanLeft,
+            this.MnuPanRight,
+            this.MnuPanUp,
+            this.MnuPanDown,
+            this.toolStripSeparator3,
+            this.MnuPanToLeftSide,
+            this.MnuPanToRightSide,
+            this.MnuPanToTop,
+            this.MnuPanToBottom});
+            this.MnuPanning.Image = ((System.Drawing.Image)(resources.GetObject("MnuPanning.Image")));
+            this.MnuPanning.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MnuPanning.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.MnuPanning.Name = "MnuPanning";
+            this.MnuPanning.Size = new System.Drawing.Size(191, 40);
+            this.MnuPanning.Text = "[Panning]";
+            // 
+            // MnuPanLeft
+            // 
+            this.MnuPanLeft.Name = "MnuPanLeft";
+            this.MnuPanLeft.Size = new System.Drawing.Size(321, 30);
+            this.MnuPanLeft.Text = "[Pan image left]";
+            this.MnuPanLeft.Click += new System.EventHandler(this.MnuPanLeft_Click);
+            // 
+            // MnuPanRight
+            // 
+            this.MnuPanRight.Name = "MnuPanRight";
+            this.MnuPanRight.Size = new System.Drawing.Size(321, 30);
+            this.MnuPanRight.Text = "[Pan image right]";
+            this.MnuPanRight.Click += new System.EventHandler(this.MnuPanRight_Click);
+            // 
+            // MnuPanUp
+            // 
+            this.MnuPanUp.Name = "MnuPanUp";
+            this.MnuPanUp.Size = new System.Drawing.Size(321, 30);
+            this.MnuPanUp.Text = "[Pan image up]";
+            this.MnuPanUp.Click += new System.EventHandler(this.MnuPanUp_Click);
+            // 
+            // MnuPanDown
+            // 
+            this.MnuPanDown.Name = "MnuPanDown";
+            this.MnuPanDown.Size = new System.Drawing.Size(321, 30);
+            this.MnuPanDown.Text = "[Pan image down]";
+            this.MnuPanDown.Click += new System.EventHandler(this.MnuPanDown_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(318, 6);
+            // 
+            // MnuPanToLeftSide
+            // 
+            this.MnuPanToLeftSide.Name = "MnuPanToLeftSide";
+            this.MnuPanToLeftSide.Size = new System.Drawing.Size(321, 30);
+            this.MnuPanToLeftSide.Text = "[Pan image to the left side]";
+            this.MnuPanToLeftSide.Click += new System.EventHandler(this.MnuPanToLeftSide_Click);
+            // 
+            // MnuPanToRightSide
+            // 
+            this.MnuPanToRightSide.Name = "MnuPanToRightSide";
+            this.MnuPanToRightSide.Size = new System.Drawing.Size(321, 30);
+            this.MnuPanToRightSide.Text = "[Pan image to the right side]";
+            this.MnuPanToRightSide.Click += new System.EventHandler(this.MnuPanToRightSide_Click);
+            // 
+            // MnuPanToTop
+            // 
+            this.MnuPanToTop.Name = "MnuPanToTop";
+            this.MnuPanToTop.Size = new System.Drawing.Size(321, 30);
+            this.MnuPanToTop.Text = "[Pan image to the top]";
+            this.MnuPanToTop.Click += new System.EventHandler(this.MnuPanToTop_Click);
+            // 
+            // MnuPanToBottom
+            // 
+            this.MnuPanToBottom.Name = "MnuPanToBottom";
+            this.MnuPanToBottom.Size = new System.Drawing.Size(321, 30);
+            this.MnuPanToBottom.Text = "[Pan image to the bottom]";
+            this.MnuPanToBottom.Click += new System.EventHandler(this.MnuPanToBottom_Click);
+            // 
             // MnuImage
             // 
             this.MnuImage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -583,7 +631,7 @@ namespace ImageGlass
             this.MnuImage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuImage.Name = "MnuImage";
-            this.MnuImage.Size = new System.Drawing.Size(246, 40);
+            this.MnuImage.Size = new System.Drawing.Size(191, 40);
             this.MnuImage.Text = "[Image]";
             // 
             // MnuViewChannels
@@ -724,7 +772,7 @@ namespace ImageGlass
             this.MnuClipboard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuClipboard.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuClipboard.Name = "MnuClipboard";
-            this.MnuClipboard.Size = new System.Drawing.Size(246, 40);
+            this.MnuClipboard.Size = new System.Drawing.Size(191, 40);
             this.MnuClipboard.Text = "[Clipboard]";
             // 
             // MnuPasteImage
@@ -782,14 +830,14 @@ namespace ImageGlass
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(243, 6);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(188, 6);
             // 
             // MnuWindowFit
             // 
             this.MnuWindowFit.CheckOnClick = true;
             this.MnuWindowFit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuWindowFit.Name = "MnuWindowFit";
-            this.MnuWindowFit.Size = new System.Drawing.Size(246, 40);
+            this.MnuWindowFit.Size = new System.Drawing.Size(191, 40);
             this.MnuWindowFit.Text = "[Window fit]";
             this.MnuWindowFit.Click += new System.EventHandler(this.MnuWindowFit_Click);
             // 
@@ -800,7 +848,7 @@ namespace ImageGlass
             this.MnuFrameless.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuFrameless.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuFrameless.Name = "MnuFrameless";
-            this.MnuFrameless.Size = new System.Drawing.Size(246, 40);
+            this.MnuFrameless.Size = new System.Drawing.Size(191, 40);
             this.MnuFrameless.Text = "[Frameless]";
             this.MnuFrameless.Click += new System.EventHandler(this.MnuFrameless_Click);
             // 
@@ -811,7 +859,7 @@ namespace ImageGlass
             this.MnuFullScreen.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuFullScreen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuFullScreen.Name = "MnuFullScreen";
-            this.MnuFullScreen.Size = new System.Drawing.Size(246, 40);
+            this.MnuFullScreen.Size = new System.Drawing.Size(191, 40);
             this.MnuFullScreen.Text = "[Full screen]";
             this.MnuFullScreen.Click += new System.EventHandler(this.MnuFullScreen_Click);
             // 
@@ -825,7 +873,7 @@ namespace ImageGlass
             this.MnuSlideshow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuSlideshow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuSlideshow.Name = "MnuSlideshow";
-            this.MnuSlideshow.Size = new System.Drawing.Size(246, 40);
+            this.MnuSlideshow.Size = new System.Drawing.Size(191, 40);
             this.MnuSlideshow.Text = "Slideshow";
             // 
             // MnuStartSlideshow
@@ -852,7 +900,7 @@ namespace ImageGlass
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(243, 6);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(188, 6);
             // 
             // MnuLayout
             // 
@@ -866,7 +914,7 @@ namespace ImageGlass
             this.MnuLayout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuLayout.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuLayout.Name = "MnuLayout";
-            this.MnuLayout.Size = new System.Drawing.Size(246, 40);
+            this.MnuLayout.Size = new System.Drawing.Size(191, 40);
             this.MnuLayout.Text = "[Layout]";
             // 
             // MnuToggleToolbar
@@ -917,7 +965,7 @@ namespace ImageGlass
             this.MnuTools.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuTools.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuTools.Name = "MnuTools";
-            this.MnuTools.Size = new System.Drawing.Size(246, 40);
+            this.MnuTools.Size = new System.Drawing.Size(191, 40);
             this.MnuTools.Text = "[Tools]";
             // 
             // MnuColorPicker
@@ -951,7 +999,7 @@ namespace ImageGlass
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(243, 6);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(188, 6);
             // 
             // MnuSettings
             // 
@@ -959,7 +1007,7 @@ namespace ImageGlass
             this.MnuSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuSettings.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuSettings.Name = "MnuSettings";
-            this.MnuSettings.Size = new System.Drawing.Size(246, 40);
+            this.MnuSettings.Size = new System.Drawing.Size(191, 40);
             this.MnuSettings.Text = "[Settings]";
             this.MnuSettings.Click += new System.EventHandler(this.MnuSettings_Click);
             // 
@@ -977,7 +1025,7 @@ namespace ImageGlass
             this.MnuHelp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuHelp.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuHelp.Name = "MnuHelp";
-            this.MnuHelp.Size = new System.Drawing.Size(246, 40);
+            this.MnuHelp.Size = new System.Drawing.Size(191, 40);
             this.MnuHelp.Text = "[Help]";
             // 
             // MnuAbout
@@ -1030,7 +1078,7 @@ namespace ImageGlass
             // toolStripMenuItem9
             // 
             this.toolStripMenuItem9.Name = "toolStripMenuItem9";
-            this.toolStripMenuItem9.Size = new System.Drawing.Size(243, 6);
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(188, 6);
             // 
             // MnuExit
             // 
@@ -1038,7 +1086,7 @@ namespace ImageGlass
             this.MnuExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuExit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuExit.Name = "MnuExit";
-            this.MnuExit.Size = new System.Drawing.Size(246, 40);
+            this.MnuExit.Size = new System.Drawing.Size(191, 40);
             this.MnuExit.Text = "[Exit]";
             this.MnuExit.Click += new System.EventHandler(this.MnuExit_Click);
             // 
@@ -1362,10 +1410,15 @@ namespace ImageGlass
         private ToolStripMenuItem MnuUnsetDefaultPhotoViewer;
         private ToolStripMenuItem MnuSetDefaultPhotoViewer;
         private ToolStripMenuItem MnuShare;
-        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripMenuItem MnuPanning;
         private ToolStripMenuItem MnuPanLeft;
         private ToolStripMenuItem MnuPanRight;
         private ToolStripMenuItem MnuPanUp;
         private ToolStripMenuItem MnuPanDown;
+        private ToolStripSeparator toolStripSeparator3;
+        private ToolStripMenuItem MnuPanToLeftSide;
+        private ToolStripMenuItem MnuPanToRightSide;
+        private ToolStripMenuItem MnuPanToTop;
+        private ToolStripMenuItem MnuPanToBottom;
     }
 }

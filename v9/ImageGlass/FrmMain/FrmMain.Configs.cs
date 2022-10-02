@@ -65,10 +65,17 @@ public partial class FrmMain
         { nameof(MnuViewPreviousFrame),     new() { new (Keys.Control | Keys.Left) } },
         { nameof(MnuViewFirstFrame),        new() { new (Keys.Control | Keys.Home) } },
         { nameof(MnuViewLastFrame),         new() { new (Keys.Control | Keys.End) } },
+
+        // MnuPanning
         { nameof(MnuPanLeft),               new() { new (Keys.Alt | Keys.Left) } },
         { nameof(MnuPanRight),              new() { new (Keys.Alt | Keys.Right) } },
         { nameof(MnuPanUp),                 new() { new (Keys.Alt | Keys.Up) } },
         { nameof(MnuPanDown),               new() { new (Keys.Alt | Keys.Down) } },
+
+        { nameof(MnuPanToLeftSide),         new() { new (Keys.Control | Keys.Alt | Keys.Left) } },
+        { nameof(MnuPanToRightSide),        new() { new (Keys.Control | Keys.Alt | Keys.Right) } },
+        { nameof(MnuPanToTop),              new() { new (Keys.Control | Keys.Alt | Keys.Up) } },
+        { nameof(MnuPanToBottom),           new() { new (Keys.Control | Keys.Alt | Keys.Down) } },
 
         // MnuZoom
         { nameof(MnuZoomIn),                new() { new (Keys.Oemplus) } }, // =
@@ -437,12 +444,7 @@ public partial class FrmMain
         MnuViewFirstFrame.Text = lang[$"{Name}.{nameof(MnuViewFirstFrame)}"];
         MnuViewLastFrame.Text = lang[$"{Name}.{nameof(MnuViewLastFrame)}"];
 
-        // panning
-        MnuPanLeft.Text = lang[$"{Name}.{nameof(MnuPanLeft)}"];
-        MnuPanRight.Text = lang[$"{Name}.{nameof(MnuPanRight)}"];
-        MnuPanUp.Text = lang[$"{Name}.{nameof(MnuPanUp)}"];
-        MnuPanDown.Text = lang[$"{Name}.{nameof(MnuPanDown)}"];
-        #endregion
+        #endregion // Menu Navigation
 
 
         // Menu Zoom
@@ -460,8 +462,23 @@ public partial class FrmMain
         MnuAutoZoom.Text = lang[$"{Name}.{nameof(MnuAutoZoom)}"];
         MnuScaleToWidth.Text = lang[$"{Name}.{nameof(MnuScaleToWidth)}"];
         MnuScaleToHeight.Text = lang[$"{Name}.{nameof(MnuScaleToHeight)}"];
-        #endregion
+        #endregion // Menu Zoom
 
+
+        // Menu Panning
+        #region Panning
+        MnuPanning.Text = lang[$"{Name}.{nameof(MnuPanning)}"];
+
+        MnuPanLeft.Text = lang[$"{Name}.{nameof(MnuPanLeft)}"];
+        MnuPanRight.Text = lang[$"{Name}.{nameof(MnuPanRight)}"];
+        MnuPanUp.Text = lang[$"{Name}.{nameof(MnuPanUp)}"];
+        MnuPanDown.Text = lang[$"{Name}.{nameof(MnuPanDown)}"];
+
+        MnuPanToLeftSide.Text = lang[$"{Name}.{nameof(MnuPanToLeftSide)}"];
+        MnuPanToRightSide.Text = lang[$"{Name}.{nameof(MnuPanToRightSide)}"];
+        MnuPanToTop.Text = lang[$"{Name}.{nameof(MnuPanToTop)}"];
+        MnuPanToBottom.Text = lang[$"{Name}.{nameof(MnuPanToBottom)}"];
+        #endregion // Menu Panning
 
         // Menu Image
         #region Menu Image
@@ -795,10 +812,6 @@ public partial class FrmMain
         MnuViewPreviousFrame.Visible = false;
         MnuViewFirstFrame.Visible = false;
         MnuViewLastFrame.Visible = false;
-        //MnuPanLeft.Visible = false;
-        //MnuPanRight.Visible = false;
-        //MnuPanUp.Visible = false;
-        //MnuPanDown.Visible = false;
 
         // MnuZoom
         //MnuZoomIn.Visible = false;

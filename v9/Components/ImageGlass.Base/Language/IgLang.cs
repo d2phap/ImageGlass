@@ -189,12 +189,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuViewPreviousFrame", "View previous frame"); //v7.5
         Add("FrmMain.MnuViewFirstFrame", "View the first frame"); //v7.5
         Add("FrmMain.MnuViewLastFrame", "View the last last"); //v7.5
-
-        Add("FrmMain.MnuPanLeft", "Pan image left"); //v9.0
-        Add("FrmMain.MnuPanRight", "Pan image right"); //v9.0
-        Add("FrmMain.MnuPanUp", "Pan image up"); //v9.0
-        Add("FrmMain.MnuPanDown", "Pan image down"); //v9.0
-        #endregion
+        #endregion // Navigation
 
         #region Zoom
         Add("FrmMain.MnuZoom", "Zoom"); //v7.0
@@ -210,6 +205,20 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuScaleToWidth", "Scale to width"); //v3.0
         Add("FrmMain.MnuScaleToHeight", "Scale to height"); //v3.0
         #endregion
+
+        #region Panning
+        Add("FrmMain.MnuPanning", "Panning"); //v9.0
+
+        Add("FrmMain.MnuPanLeft", "Pan image left"); //v9.0
+        Add("FrmMain.MnuPanRight", "Pan image right"); //v9.0
+        Add("FrmMain.MnuPanUp", "Pan image up"); //v9.0
+        Add("FrmMain.MnuPanDown", "Pan image down"); //v9.0
+
+        Add("FrmMain.MnuPanToLeftSide", "Pan image to the left side"); //v9.0
+        Add("FrmMain.MnuPanToRightSide", "Pan image to the right side"); //v9.0
+        Add("FrmMain.MnuPanToTop", "Pan image to the top"); //v9.0
+        Add("FrmMain.MnuPanToBottom", "Pan image to the bottom"); //v9.0
+        #endregion // Panning
 
         #region Image
         Add("FrmMain.MnuImage", "Image"); //v7.0
@@ -248,7 +257,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuSetLockScreen._CreatingFileError", "Could not create the image for lock screen"); //v9.0
         Add("FrmMain.MnuOpenLocation", "Open image location"); //v3.0
         Add("FrmMain.MnuImageProperties", "Image properties"); //v3.0
-        #endregion
+        #endregion // Image
 
         #region Clipboard
         Add("FrmMain.MnuClipboard", "Clipboard"); //v3.0
@@ -289,7 +298,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuToggleTopMost", "Keep window always on top"); //v3.2
         Add("FrmMain.MnuToggleTopMost._Enable", "Enabled window always on top"); // v9.0
         Add("FrmMain.MnuToggleTopMost._Disable", "Disabled window always on top"); // v9.0
-        #endregion
+        #endregion // Layout
 
         #region Tools
         Add("FrmMain.MnuTools", "Tools"); //v3.0

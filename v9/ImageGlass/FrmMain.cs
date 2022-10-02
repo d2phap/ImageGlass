@@ -1379,7 +1379,7 @@ public partial class FrmMain : Form
                 if (Config.InfoItems.Contains(nameof(ImageInfo.Dimension))
                     && Local.Metadata != null)
                 {
-                    ImageInfo.Dimension = $"{Local.Metadata.OriginalWidth} x {Local.Metadata.OriginalHeight} px";
+                    ImageInfo.Dimension = $"{Local.Metadata.Width} x {Local.Metadata.Height} px";
                 }
                 else
                 {
@@ -1977,26 +1977,6 @@ public partial class FrmMain : Form
         // TODO
     }
 
-    private void MnuPanLeft_Click(object sender, EventArgs e)
-    {
-        IG_PanLeft();
-    }
-
-    private void MnuPanRight_Click(object sender, EventArgs e)
-    {
-        IG_PanRight();
-    }
-
-    private void MnuPanUp_Click(object sender, EventArgs e)
-    {
-        IG_PanUp();
-    }
-
-    private void MnuPanDown_Click(object sender, EventArgs e)
-    {
-        IG_PanDown();
-    }
-
     #endregion // Menu Navigation
 
 
@@ -2055,6 +2035,52 @@ public partial class FrmMain : Form
 
 
     #endregion // Menu Zoom
+
+
+    // Menu Panning
+    #region Panning
+
+    private void MnuPanLeft_Click(object sender, EventArgs e)
+    {
+        IG_PanLeft();
+    }
+
+    private void MnuPanRight_Click(object sender, EventArgs e)
+    {
+        IG_PanRight();
+    }
+
+    private void MnuPanUp_Click(object sender, EventArgs e)
+    {
+        IG_PanUp();
+    }
+
+    private void MnuPanDown_Click(object sender, EventArgs e)
+    {
+        IG_PanDown();
+    }
+
+    private void MnuPanToLeftSide_Click(object sender, EventArgs e)
+    {
+        IG_PanToLeftSide();
+    }
+
+    private void MnuPanToRightSide_Click(object sender, EventArgs e)
+    {
+        IG_PanToRightSide();
+    }
+
+    private void MnuPanToTop_Click(object sender, EventArgs e)
+    {
+        IG_PanToTopSide();
+    }
+
+    private void MnuPanToBottom_Click(object sender, EventArgs e)
+    {
+        IG_PanToBottomSide();
+    }
+
+    #endregion // Menu Panning
 
 
     // Menu Layout
@@ -2302,6 +2328,7 @@ public partial class FrmMain : Form
     {
         IG_Exit();
     }
+
 
 
 

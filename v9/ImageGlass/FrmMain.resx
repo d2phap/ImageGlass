@@ -78,6 +78,13 @@
         gg==
 </value>
   </data>
+  <data name="MnuPanning.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
+        kwAAFJMBo0UY4QAAABtJREFUWEftwTEBAAAAwqD1T+1rCCAAAAAAODUSMgABGFxTEwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
   <data name="MnuImage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAU
