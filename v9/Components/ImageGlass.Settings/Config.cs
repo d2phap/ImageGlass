@@ -439,6 +439,16 @@ public static class Config
     /// </summary>
     public static bool ShowImagePreview { get; set; } = true;
 
+    /// <summary>
+    /// Enables / Disables copy multiple files.
+    /// </summary>
+    public static bool EnableCopyMultipleFiles { get; set; } = true;
+
+    /// <summary>
+    /// Enables / Disables cut multiple files.
+    /// </summary>
+    public static bool EnableCutMultipleFiles { get; set; } = true;
+
 
     #endregion
 
@@ -817,6 +827,9 @@ public static class Config
         UseEmbeddedThumbnailRawFormats = items.GetValue(nameof(UseEmbeddedThumbnailRawFormats), UseEmbeddedThumbnailRawFormats);
         UseEmbeddedThumbnailOtherFormats = items.GetValue(nameof(UseEmbeddedThumbnailOtherFormats), UseEmbeddedThumbnailOtherFormats);
         ShowImagePreview = items.GetValue(nameof(ShowImagePreview), ShowImagePreview);
+        EnableCopyMultipleFiles = items.GetValue(nameof(EnableCopyMultipleFiles), EnableCopyMultipleFiles);
+        EnableCutMultipleFiles = items.GetValue(nameof(EnableCutMultipleFiles), EnableCutMultipleFiles);
+
         HideToolbarInFullscreen = items.GetValue(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
         HideThumbnailsInFullscreen = items.GetValue(nameof(HideThumbnailsInFullscreen), HideThumbnailsInFullscreen);
 
@@ -1283,6 +1296,9 @@ public static class Config
         settings.TryAdd(nameof(UseEmbeddedThumbnailRawFormats), UseEmbeddedThumbnailRawFormats);
         settings.TryAdd(nameof(UseEmbeddedThumbnailOtherFormats), UseEmbeddedThumbnailOtherFormats);
         settings.TryAdd(nameof(ShowImagePreview), ShowImagePreview);
+        settings.TryAdd(nameof(EnableCopyMultipleFiles), EnableCopyMultipleFiles);
+        settings.TryAdd(nameof(EnableCutMultipleFiles), EnableCutMultipleFiles);
+
         settings.TryAdd(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
         settings.TryAdd(nameof(HideThumbnailsInFullscreen), HideThumbnailsInFullscreen);
 

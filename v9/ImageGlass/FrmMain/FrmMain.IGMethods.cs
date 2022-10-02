@@ -803,104 +803,123 @@ public partial class FrmMain
     #region Clipboard functions
 
     /// <summary>
-    /// Copy multiple files
+    /// Copy single or multiple files
     /// </summary>
-    private void IG_CopyMultiFiles()
+    private void IG_CopyFiles()
     {
-        // get filename
-        var filename = Local.Images.GetFileName(Local.CurrentIndex);
+        // get file path
+        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
 
-        if (Local.IsImageError || !File.Exists(filename))
+        if (Local.IsImageError || !File.Exists(filePath))
         {
             return;
         }
 
-        // update the list
-        var fileList = new List<string>();
-        fileList.AddRange(Local.StringClipboard);
-
-        for (var i = 0; i < fileList.Count; i++)
-        {
-            if (!File.Exists(fileList[i]))
-            {
-                Local.StringClipboard.Remove(fileList[i]);
-            }
-        }
-
-        // exit if duplicated filename
-        if (Local.StringClipboard.IndexOf(filename) == -1)
-        {
-            // add filename to clipboard
-            Local.StringClipboard.Add(filename);
-        }
-
         var fileDropList = new StringCollection();
-        fileDropList.AddRange(Local.StringClipboard.ToArray());
+
+        if (Config.EnableCopyMultipleFiles)
+        {
+            // update the list
+            var fileList = new List<string>();
+            fileList.AddRange(Local.StringClipboard);
+
+            for (var i = 0; i < fileList.Count; i++)
+            {
+                if (!File.Exists(fileList[i]))
+                {
+                    Local.StringClipboard.Remove(fileList[i]);
+                }
+            }
+
+            // exit if duplicated filename
+            if (Local.StringClipboard.IndexOf(filePath) == -1)
+            {
+                // add filename to clipboard
+                Local.StringClipboard.Add(filePath);
+            }
+            
+            fileDropList.AddRange(Local.StringClipboard.ToArray());
+        }
+
+        // single file copy
+        else
+        {
+            fileDropList.Add(filePath);
+        }
 
         Clipboard.Clear();
         Clipboard.SetFileDropList(fileDropList);
 
+
         PicMain.ShowMessage(
-            string.Format(Config.Language[$"{Name}.{nameof(MnuCopy)}._Success"], Local.StringClipboard.Count),
+            string.Format(Config.Language[$"{Name}.{nameof(MnuCopy)}._Success"], Config.EnableCopyMultipleFiles ? Local.StringClipboard.Count : 1),
             Config.InAppMessageDuration);
     }
 
 
     /// <summary>
-    /// Cut multiple files
+    /// Cut single or multiple filesp
     /// </summary>
-    private void IG_CutMultiFiles()
+    private void IG_CutFiles()
     {
-        _ = CutMultiFilesAsync();
+        _ = CutFilesAsync();
     }
 
-    private async Task CutMultiFilesAsync()
+    private async Task CutFilesAsync()
     {
-        // get filename
-        var filename = Local.Images.GetFileName(Local.CurrentIndex);
+        // get file path
+        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
 
-        if (Local.IsImageError || !File.Exists(filename))
+        if (Local.IsImageError || !File.Exists(filePath))
         {
             return;
         }
 
-        // update the list
-        var fileList = new List<string>();
-        fileList.AddRange(Local.StringClipboard);
+        var fileDropList = new StringCollection();
 
-        Parallel.ForEach(fileList, f =>
+        if (Config.EnableCutMultipleFiles)
         {
-            if (!File.Exists(f))
+            // update the list
+            var fileList = new List<string>();
+            fileList.AddRange(Local.StringClipboard);
+
+            Parallel.ForEach(fileList, f =>
             {
-                Local.StringClipboard.Remove(f);
-            }
-        });
+                if (!File.Exists(f))
+                {
+                    Local.StringClipboard.Remove(f);
+                }
+            });
 
-        // exit if duplicated filename
-        if (Local.StringClipboard.IndexOf(filename) == -1)
-        {
-            // add filename to clipboard
-            Local.StringClipboard.Add(filename);
+            // exit if duplicated filename
+            if (Local.StringClipboard.IndexOf(filePath) == -1)
+            {
+                // add filename to clipboard
+                Local.StringClipboard.Add(filePath);
+            }
+
+            fileDropList.AddRange(Local.StringClipboard.ToArray());
         }
+        else
+        {
+            fileDropList.Add(filePath);
+        }
+
 
         var moveEffect = new byte[] { 2, 0, 0, 0 };
-        using (var dropEffect = new MemoryStream())
-        {
-            await dropEffect.WriteAsync(moveEffect).ConfigureAwait(true);
+        using var dropEffect = new MemoryStream();
+        await dropEffect.WriteAsync(moveEffect).ConfigureAwait(true);
+        
+        var data = new DataObject();
+        data.SetFileDropList(fileDropList);
+        data.SetData("Preferred DropEffect", dropEffect);
 
-            var fileDropList = new StringCollection();
-            fileDropList.AddRange(Local.StringClipboard.ToArray());
+        Clipboard.Clear();
+        Clipboard.SetDataObject(data, true);
 
-            var data = new DataObject();
-            data.SetFileDropList(fileDropList);
-            data.SetData("Preferred DropEffect", dropEffect);
-
-            Clipboard.Clear();
-            Clipboard.SetDataObject(data, true);
-        }
 
         PicMain.ShowMessage(
-            string.Format(Config.Language[$"{Name}.{nameof(MnuCut)}._Success"], Local.StringClipboard.Count),
+            string.Format(Config.Language[$"{Name}.{nameof(MnuCut)}._Success"], Config.EnableCutMultipleFiles ? Local.StringClipboard.Count : 1),
             Config.InAppMessageDuration);
     }
 

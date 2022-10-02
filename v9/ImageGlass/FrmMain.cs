@@ -2232,12 +2232,12 @@ public partial class FrmMain : Form
 
     private void MnuCopy_Click(object sender, EventArgs e)
     {
-        IG_CopyMultiFiles();
+        IG_CopyFiles();
     }
 
     private void MnuCut_Click(object sender, EventArgs e)
     {
-        IG_CutMultiFiles();
+        IG_CutFiles();
     }
 
     private void MnuCopyPath_Click(object sender, EventArgs e)
