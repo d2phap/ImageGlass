@@ -858,8 +858,8 @@ public partial class FrmMain
         //MnuFullScreen.Visible = false;
 
         // MnuSlideshow
-        MnuSlideshow.Visible = false;
-        MnuStartSlideshow.Visible = false;
+        //MnuSlideshow.Visible = false;
+        //MnuStartSlideshow.Visible = false;
         MnuPauseResumeSlideshow.Visible = false;
         MnuExitSlideshow.Visible = false;
 

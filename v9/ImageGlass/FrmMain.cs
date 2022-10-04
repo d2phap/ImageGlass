@@ -921,12 +921,14 @@ public partial class FrmMain : Form
         }
 
 
-        Local.RaiseImageLoadingEvent(new()
+        
+        var loadingArgs = new ImageLoadingEventArgs()
         {
             CurrentIndex = Local.CurrentIndex,
             NewIndex = imageIndex,
             FilePath = string.IsNullOrEmpty(filename) ? Local.Images.GetFileName(Local.CurrentIndex) : filename,
-        });
+        };
+        Local.RaiseImageLoadingEvent(loadingArgs);
 
         #endregion // Validate image index & load image metadata
 
@@ -965,14 +967,22 @@ public partial class FrmMain : Form
                 // check if loading is cancelled
                 token?.Token.ThrowIfCancellationRequested();
 
-                Local.RaiseImageLoadedEvent(new()
+
+                var loadedArgs = new ImageLoadedEventArgs()
                 {
                     Index = imageIndex,
                     Data = photo,
                     Error = photo?.Error,
                     KeepZoomRatio = isKeepZoomRatio,
-                });
+                };
+                Local.RaiseImageLoadedEvent(loadedArgs);
             }
+
+
+            // Collect system garbage
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
         }
         catch (OperationCanceledException)
         {
@@ -1030,19 +1040,22 @@ public partial class FrmMain : Form
     {
         Local.IsImageError = false;
 
-        PicMain.ClearMessage();
-        if (e.CurrentIndex >= 0 || !string.IsNullOrEmpty(e.FilePath))
+        if (!Config.EnableSlideshow)
         {
-            PicMain.ShowMessage(Config.Language[$"{Name}._Loading"], "", delayMs: 1500);
-        }
+            PicMain.ClearMessage();
+            if (e.CurrentIndex >= 0 || !string.IsNullOrEmpty(e.FilePath))
+            {
+                PicMain.ShowMessage(Config.Language[$"{Name}._Loading"], "", delayMs: 1500);
+            }
 
-        // Select thumbnail item
-        _ = BHelper.RunAsThread(SelectCurrentThumbnail);
+            // Select thumbnail item
+            _ = BHelper.RunAsThread(SelectCurrentThumbnail);
 
-        // show image preview if it's not cached
-        if (!Local.Images.IsCached(Local.CurrentIndex))
-        {
-            ShowImagePreview(e.FilePath, _loadCancelToken.Token);
+            // show image preview if it's not cached
+            if (!Local.Images.IsCached(Local.CurrentIndex))
+            {
+                ShowImagePreview(e.FilePath, _loadCancelToken.Token);
+            }
         }
 
         _ = Task.Run(() => UpdateImageInfo(ImageInfoUpdateTypes.All, e.FilePath));
@@ -1081,26 +1094,29 @@ public partial class FrmMain : Form
             Local.ClipboardImage = null;
             Local.TempImagePath = null;
 
-            var isImageBigForFading = Local.Metadata.Width > 8000
-                || Local.Metadata.Height > 8000;
-            var enableFading = !_isShowingImagePreview && !isImageBigForFading;
-
-            // set the main image
-            PicMain.SetImage(e.Data.ImgData, enableFading);
-
-            // Reset the zoom mode if KeepZoomRatio = FALSE
-            if (!e.KeepZoomRatio)
+            if (!Config.EnableSlideshow)
             {
-                //TODO:
-                //if (Config.IsWindowFit)
-                //{
-                //    //WindowFitMode();
-                //}
-                //else
-                //{
-                // reset zoom mode
-                IG_SetZoomMode(Config.ZoomMode.ToString());
-                //}
+                var isImageBigForFading = Local.Metadata.Width > 8000
+                    || Local.Metadata.Height > 8000;
+                var enableFading = !_isShowingImagePreview && !isImageBigForFading;
+
+                // set the main image
+                PicMain.SetImage(e.Data.ImgData, enableFading);
+
+                // Reset the zoom mode if KeepZoomRatio = FALSE
+                if (!e.KeepZoomRatio)
+                {
+                    //TODO:
+                    //if (Config.IsWindowFit)
+                    //{
+                    //    //WindowFitMode();
+                    //}
+                    //else
+                    //{
+                    // reset zoom mode
+                    IG_SetZoomMode(Config.ZoomMode.ToString());
+                    //}
+                }
             }
 
             PicMain.ClearMessage();
@@ -1115,11 +1131,6 @@ public partial class FrmMain : Form
 
         _isShowingImagePreview = false;
         UpdateImageInfo(ImageInfoUpdateTypes.Dimension | ImageInfoUpdateTypes.FramesCount);
-
-        // Collect system garbage
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-        GC.Collect();
     }
 
     private void Local_OnImageListLoaded(ImageListLoadedEventArgs e)
@@ -2217,7 +2228,15 @@ public partial class FrmMain : Form
     #region Menu Slideshow
     private void MnuStartSlideshow_Click(object sender, EventArgs e)
     {
+        if (Local.FormSlideshow.IsDisposed)
+        {
+            Local.FormSlideshow = new();
+        }
 
+        Config.EnableSlideshow = true;
+        Local.FormSlideshow.TopMost = TopMost;
+        Local.FormSlideshow.Show();
+        Local.FormSlideshow.Activate();
     }
 
     private void MnuPauseResumeSlideshow_Click(object sender, EventArgs e)
