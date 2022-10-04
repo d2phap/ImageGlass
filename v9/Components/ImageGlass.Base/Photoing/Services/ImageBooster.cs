@@ -431,6 +431,25 @@ public class ImageBooster : IDisposable
 
 
     /// <summary>
+    /// Checks if the image is cached.
+    /// </summary>
+    public bool IsCached(int index)
+    {
+        try
+        {
+            if (ImgList.Count > 0 && ImgList[index] != null)
+            {
+                return ImgList[index].ImgData.IsImageNull == false;
+            }
+        }
+        catch (ArgumentOutOfRangeException) // force reload of empty list
+        { }
+
+        return false;
+    }
+
+
+    /// <summary>
     /// Get filename with the given index
     /// </summary>
     /// <param name="index"></param>
@@ -445,9 +464,7 @@ public class ImageBooster : IDisposable
             }
         }
         catch (ArgumentOutOfRangeException) // force reload of empty list
-        {
-            return string.Empty;
-        }
+        { }
 
         return string.Empty;
     }
