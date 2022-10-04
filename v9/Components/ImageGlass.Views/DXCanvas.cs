@@ -55,6 +55,9 @@ public class DXCanvas : DXControl
         Interval = SystemInformation.DoubleClickTime / 2,
     };
 
+    private float _imageOpacity = 1f;
+    private float _opacityStep = 0.05f;
+
 
     /// <summary>
     /// Gets the area of the image content to draw
@@ -941,7 +944,22 @@ public class DXCanvas : DXControl
             var point = PointToClient(Cursor.Position);
             _ = ZoomByDeltaToPoint(-20, point, requestRerender: false);
         }
+
+
+        if (_animationSource.HasFlag(AnimationSource.ImageFadeIn))
+        {
+            _imageOpacity += _opacityStep;
+
+            if (_imageOpacity > 1)
+            {
+                StopAnimation(AnimationSource.ImageFadeIn);
+                _imageOpacity = 1;
+            }
+
+            this.Invalidate();
+        }
     }
+
 
     protected override void OnRender(IGraphics g)
     {
@@ -1112,11 +1130,11 @@ public class DXCanvas : DXControl
 
         if (UseHardwareAcceleration)
         {
-            g.DrawBitmap(_imageD2D?.Object, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation);
+            g.DrawBitmap(_imageD2D?.Object, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation, _imageOpacity);
         }
         else
         {
-            g.DrawBitmap(_imageGdiPlus, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation);
+            g.DrawBitmap(_imageGdiPlus, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation, _imageOpacity);
         }
     }
 
@@ -1940,9 +1958,13 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Load image.
     /// </summary>
-    public void SetImage(IgImgData? imgData)
+    public void SetImage(IgImgData? imgData,
+        bool enableFading = true,
+        float initOpacity = 0.5f,
+        float opacityStep = 0.05f)
     {
         // disable animations
+        StopAnimation(AnimationSource.ImageFadeIn);
         StopAnimatingImage();
         DisposeImageResources();
         GC.Collect();
@@ -1970,6 +1992,7 @@ public class DXCanvas : DXControl
 
         // emit OnImageChanged event
         OnImageChanged?.Invoke(EventArgs.Empty);
+        
 
         if (CanImageAnimate && Source != ImageSource.Null)
         {
@@ -1979,6 +2002,13 @@ public class DXCanvas : DXControl
         else
         {
             Refresh();
+        }
+
+        if (enableFading)
+        {
+            _imageOpacity = initOpacity;
+            _opacityStep = opacityStep;
+            StartAnimation(AnimationSource.ImageFadeIn);
         }
     }
 

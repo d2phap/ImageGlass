@@ -32,6 +32,8 @@ public enum AnimationSource
 
     ZoomIn = 1 << 5,
     ZoomOut = 1 << 6,
+
+    ImageFadeIn = 1 << 7,
 }
 
 
