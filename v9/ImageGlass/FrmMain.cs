@@ -38,6 +38,7 @@ public partial class FrmMain : Form
     // cancellation tokens of synchronious task
     private CancellationTokenSource _loadCancelToken = new();
     private readonly MovableForm _movableForm;
+    private bool _isShowingImagePreview = false;
 
 
     // variable to back up / restore window layout when changing window mode
@@ -1038,7 +1039,11 @@ public partial class FrmMain : Form
         // Select thumbnail item
         _ = BHelper.RunAsThread(SelectCurrentThumbnail);
 
-        ShowImagePreview(e.FilePath, _loadCancelToken.Token);
+        // show image preview if it's not cached
+        if (!Local.Images.IsCached(Local.CurrentIndex))
+        {
+            ShowImagePreview(e.FilePath, _loadCancelToken.Token);
+        }
 
         _ = Task.Run(() => UpdateImageInfo(ImageInfoUpdateTypes.All, e.FilePath));
     }
@@ -1076,8 +1081,12 @@ public partial class FrmMain : Form
             Local.ClipboardImage = null;
             Local.TempImagePath = null;
 
+            var isImageBigForFading = Local.Metadata.Width > 8000
+                || Local.Metadata.Height > 8000;
+            var enableFading = !_isShowingImagePreview && !isImageBigForFading;
+
             // set the main image
-            PicMain.SetImage(e.Data.ImgData);
+            PicMain.SetImage(e.Data.ImgData, enableFading);
 
             // Reset the zoom mode if KeepZoomRatio = FALSE
             if (!e.KeepZoomRatio)
@@ -1103,6 +1112,8 @@ public partial class FrmMain : Form
             SelectCurrentThumbnail();
         }
 
+
+        _isShowingImagePreview = false;
         UpdateImageInfo(ImageInfoUpdateTypes.Dimension | ImageInfoUpdateTypes.FramesCount);
 
         // Collect system garbage
@@ -1163,14 +1174,16 @@ public partial class FrmMain : Form
         try
         {
             token.ThrowIfCancellationRequested();
-            var isImageBig = Local.Metadata.Width >= 4000 || Local.Metadata.Height >= 4000;
+
+            var isImageBigForThumbnail = Local.Metadata.Width >= 4000
+                || Local.Metadata.Height >= 4000;
 
             // get embedded thumbnail for preview
             wicSrc = PhotoCodec.GetEmbeddedThumbnail(filePath,
-                rawThumbnail: true, exifThumbnail: isImageBig, token: token);
+                rawThumbnail: true, exifThumbnail: isImageBigForThumbnail, token: token);
 
             // use thumbnail image for preview
-            if (wicSrc == null && isImageBig)
+            if (wicSrc == null && isImageBigForThumbnail)
             {
                 if (Local.CurrentIndex >= 0 && Local.CurrentIndex < Gallery.Items.Count)
                 {
@@ -1232,6 +1245,8 @@ public partial class FrmMain : Form
                     CanAnimate = false,
                     FrameCount = 1,
                 });
+
+                _isShowingImagePreview = true;
             }
             catch (OperationCanceledException) { }
         }
