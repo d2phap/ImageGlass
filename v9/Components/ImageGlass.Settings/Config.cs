@@ -179,10 +179,10 @@ public static class Config
     #region Setting items
 
     #region Boolean items
-    ///// <summary>
-    ///// Gets, sets value of slideshow state
-    ///// </summary>
-    //public static bool IsSlideshow { get; set; } = false;
+    /// <summary>
+    /// Gets, sets value indicating whether the slideshow mode is enabled or not.
+    /// </summary>
+    public static bool EnableSlideshow { get; set; } = false;
 
     ///// <summary>
     ///// Gets, sets value if the countdown timer is shown or not
@@ -195,7 +195,7 @@ public static class Config
     //public static bool IsRandomSlideshowInterval { get; set; } = false;
 
     /// <summary>
-    /// Gets, sets value indicating whether the full screen mode is enabled or not
+    /// Gets, sets value indicating whether the full screen mode is enabled or not.
     /// </summary>
     public static bool EnableFullScreen { get; set; } = false;
 
@@ -777,7 +777,7 @@ public static class Config
         // Boolean values
         #region Boolean items
 
-        //IsSlideshow = items.GetValue(nameof(IsSlideshow), IsSlideshow);
+        EnableSlideshow = items.GetValue(nameof(EnableSlideshow), EnableSlideshow);
         //IsShowSlideshowCountdown = items.GetValue(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
         //IsRandomSlideshowInterval = items.GetValue(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
         EnableFullScreen = items.GetValue(nameof(EnableFullScreen), EnableFullScreen);
@@ -1246,7 +1246,7 @@ public static class Config
 
         #region Boolean items
 
-        //settings.TryAdd(nameof(IsSlideshow), IsSlideshow);
+        settings.TryAdd(nameof(EnableSlideshow), EnableSlideshow);
         //settings.TryAdd(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
         //settings.TryAdd(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
         settings.TryAdd(nameof(EnableFullScreen), EnableFullScreen);
