@@ -27,6 +27,8 @@ namespace ImageGlass;
 
 internal class Local
 {
+    private static FrmSlideshow _frmSlideshow;
+
     #region Public events
 
     /// <summary>
@@ -126,6 +128,18 @@ internal class Local
 
     #region Public properties
 
+    /// <summary>
+    /// Gets, sets Slideshow form.
+    /// </summary>
+    public static FrmSlideshow FormSlideshow
+    {
+        get => LazyInitializer.EnsureInitialized(ref _frmSlideshow);
+        set => _frmSlideshow = value;
+    }
+
+    /// <summary>
+    /// Gets, sets the metadata of the current image in the list.
+    /// </summary>
     public static IgMetadata? Metadata { get; set; }
 
     /// <summary>
