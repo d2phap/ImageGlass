@@ -1877,6 +1877,9 @@ public partial class FrmMain
     {
         Config.EnableSlideshow = true;
 
+        // hide FrmMain
+        SetFrmMainStateInSlideshow(Config.EnableSlideshow);
+
         var slideshowIndex = 0;
         if (Local.SlideshowWindows.Count > 0)
         {
@@ -1908,6 +1911,24 @@ public partial class FrmMain
 
         Local.SlideshowWindows.Clear();
         Config.EnableSlideshow = false;
+
+        // show FrmMain
+        SetFrmMainStateInSlideshow(Config.EnableSlideshow);
+    }
+
+    private void SetFrmMainStateInSlideshow(bool enableSlideshow)
+    {
+        // hide FrmMain
+        if (enableSlideshow && Config.HideFrmMainInSlideshow)
+        {
+            Hide();
+        }
+
+        // show FrmMain
+        else if (!enableSlideshow && Config.HideFrmMainInSlideshow)
+        {
+            Show();
+        }
     }
 
 

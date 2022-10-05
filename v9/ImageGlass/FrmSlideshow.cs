@@ -41,8 +41,6 @@ public partial class FrmSlideshow : Form
         Local.OnImageLoading -= Local_OnImageLoading;
         Local.OnImageLoaded -= Local_OnImageLoaded;
 
-        PicSlideshow.Dispose();
-
         Local.RaiseSlideshowWindowClosedEvent(new(SlideshowIndex));
     }
 

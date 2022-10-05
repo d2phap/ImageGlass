@@ -179,10 +179,16 @@ public static class Config
     #region Setting items
 
     #region Boolean items
+    
     /// <summary>
     /// Gets, sets value indicating whether the slideshow mode is enabled or not.
     /// </summary>
     public static bool EnableSlideshow { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value indicating whether the FrmMain should be hidden when <see cref="EnableSlideshow"/> is on.
+    /// </summary>
+    public static bool HideFrmMainInSlideshow { get; set; } = true;
 
     ///// <summary>
     ///// Gets, sets value if the countdown timer is shown or not
@@ -778,6 +784,7 @@ public static class Config
         #region Boolean items
 
         EnableSlideshow = items.GetValue(nameof(EnableSlideshow), EnableSlideshow);
+        HideFrmMainInSlideshow = items.GetValue(nameof(HideFrmMainInSlideshow), HideFrmMainInSlideshow);
         //IsShowSlideshowCountdown = items.GetValue(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
         //IsRandomSlideshowInterval = items.GetValue(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
         EnableFullScreen = items.GetValue(nameof(EnableFullScreen), EnableFullScreen);
@@ -1247,6 +1254,7 @@ public static class Config
         #region Boolean items
 
         settings.TryAdd(nameof(EnableSlideshow), EnableSlideshow);
+        settings.TryAdd(nameof(HideFrmMainInSlideshow), HideFrmMainInSlideshow);
         //settings.TryAdd(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
         //settings.TryAdd(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
         settings.TryAdd(nameof(EnableFullScreen), EnableFullScreen);

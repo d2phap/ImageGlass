@@ -246,8 +246,6 @@ public partial class FrmMain
         // display the root layout after the window shown
         Tb0.Visible = true;
 
-
-        
     }
 
     private void FrmMainConfig_FormClosing(object? sender, FormClosingEventArgs e)
@@ -295,7 +293,6 @@ public partial class FrmMain
     /// <summary>
     /// Processes internal update requests
     /// </summary>
-    /// <param name="e"></param>
     private void Local_OnFrmMainUpdateRequested(UpdateRequests e)
     {
         if (e.HasFlag(UpdateRequests.Language))
@@ -364,6 +361,9 @@ public partial class FrmMain
         if (Local.SlideshowWindows.Count == 0)
         {
             Config.EnableSlideshow = false;
+
+            // show FrmMain
+            SetFrmMainStateInSlideshow(Config.EnableSlideshow);
         }
     }
 
