@@ -1866,6 +1866,52 @@ public partial class FrmMain
 
 
     /// <summary>
+    /// Starts a new slideshow
+    /// </summary>
+    private void IG_StartNewSlideshow()
+    {
+        _ = StartNewSlideshowAsync();
+    }
+
+    private async Task StartNewSlideshowAsync()
+    {
+        Config.EnableSlideshow = true;
+
+        var slideshowIndex = 0;
+        if (Local.SlideshowWindows.Count > 0)
+        {
+            slideshowIndex = Local.SlideshowWindows.Last().SlideshowIndex + 1;
+        }
+
+        var frmSlideshow = new FrmSlideshow(slideshowIndex);
+        frmSlideshow.TopMost = true;
+
+        Local.SlideshowWindows.Add(frmSlideshow);
+        frmSlideshow.Show();
+
+
+        await Task.Delay(500);
+        frmSlideshow.TopMost = TopMost;
+    }
+
+
+    /// <summary>
+    /// Stops and closes all slideshows
+    /// </summary>
+    private void IG_CloseAllSlideshowWindows()
+    {
+        foreach (var frm in Local.SlideshowWindows)
+        {
+            frm.IsRequestedToClose = true;
+            frm.Close();
+        }
+
+        Local.SlideshowWindows.Clear();
+        Config.EnableSlideshow = false;
+    }
+
+
+    /// <summary>
     /// Opens context menu at the current cursor position
     /// </summary>
     private void IG_OpenContextMenu()
