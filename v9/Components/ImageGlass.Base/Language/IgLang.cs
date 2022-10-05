@@ -285,9 +285,8 @@ public class IgLang : Dictionary<string, string>
 
         #region Slideshow
         Add("FrmMain.MnuSlideshow", "Slideshow"); //v3.0
-        Add("FrmMain.MnuStartSlideshow", "Start slideshow"); //v3.0
-        Add("FrmMain.MnuPauseResumeSlideshow", "Pause / Resume slideshow"); //v3.0
-        Add("FrmMain.MnuExitSlideshow", "Exit slideshow"); //v3.0
+        Add("FrmMain.MnuStartSlideshow", "Start a new slideshow"); //v9.0
+        Add("FrmMain.MnuCloseAllSlideshows", "Close all slideshows"); //v9.0
         #endregion
 
         #region Layout

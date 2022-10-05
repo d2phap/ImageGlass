@@ -117,8 +117,7 @@ public partial class FrmMain
 
         // MnuSlideshow
         { nameof(MnuStartSlideshow),        new() { new (Keys.F12) } },
-        { nameof(MnuPauseResumeSlideshow),  new() { new (Keys.Space) } },
-        { nameof(MnuExitSlideshow),         new() { new (Keys.Escape) } },
+        { nameof(MnuCloseAllSlideshows),    new() { new (Keys.Control | Keys.F12) } },
 
         // MnuLayout
         { nameof(MnuToggleToolbar),         new() { new (Keys.T) } },
@@ -192,6 +191,7 @@ public partial class FrmMain
     private void FrmMainConfig_Load(object? sender, EventArgs e)
     {
         Local.OnRequestUpdateFrmMain += Local_OnFrmMainUpdateRequested;
+        Local.OnSlideshowWindowClosed += Local_OnSlideshowWindowClosed;
 
         // IsWindowAlwaysOnTop
         IG_ToggleTopMost(Config.EnableWindowTopMost, showInAppMessage: false);
@@ -210,8 +210,14 @@ public partial class FrmMain
         // make sure all controls are painted before showing window
         Application.DoEvents();
 
+
+        // start slideshow
+        if (Config.EnableSlideshow)
+        {
+            IG_StartNewSlideshow();
+        }
         // load Full screen mode
-        if (Config.EnableFullScreen)
+        else if (Config.EnableFullScreen)
         {
             // to hide the animation effect of window border
             FormBorderStyle = FormBorderStyle.None;
@@ -238,8 +244,10 @@ public partial class FrmMain
 
         // display the root layout after the window shown
         Tb0.Visible = true;
-    }
 
+
+        
+    }
 
     private void FrmMainConfig_FormClosing(object? sender, FormClosingEventArgs e)
     {
@@ -336,6 +344,25 @@ public partial class FrmMain
             {
                 PicMain.ContextMenuStrip = null;
             }
+        }
+    }
+
+
+    /// <summary>
+    /// Handle when a slideshow window is closed.
+    /// </summary>
+    private void Local_OnSlideshowWindowClosed(SlideshowWindowClosedEventArgs e)
+    {
+        var index = Local.SlideshowWindows.FindIndex(frm => frm.SlideshowIndex == e.SlideshowIndex);
+
+        if (index >= 0 && !Local.SlideshowWindows[index].IsRequestedToClose)
+        {
+            Local.SlideshowWindows.RemoveAt(index);
+        }
+
+        if (Local.SlideshowWindows.Count == 0)
+        {
+            Config.EnableSlideshow = false;
         }
     }
 
@@ -529,8 +556,7 @@ public partial class FrmMain
         MnuSlideshow.Text = lang[$"{Name}.{nameof(MnuSlideshow)}"];
 
         MnuStartSlideshow.Text = lang[$"{Name}.{nameof(MnuStartSlideshow)}"];
-        MnuPauseResumeSlideshow.Text = lang[$"{Name}.{nameof(MnuPauseResumeSlideshow)}"];
-        MnuExitSlideshow.Text = lang[$"{Name}.{nameof(MnuExitSlideshow)}"];
+        MnuCloseAllSlideshows.Text = lang[$"{Name}.{nameof(MnuCloseAllSlideshows)}"];
         #endregion
 
         #endregion
@@ -860,8 +886,7 @@ public partial class FrmMain
         // MnuSlideshow
         //MnuSlideshow.Visible = false;
         //MnuStartSlideshow.Visible = false;
-        MnuPauseResumeSlideshow.Visible = false;
-        MnuExitSlideshow.Visible = false;
+        //MnuCloseAllSlideshows.Visible = false;
 
         // MnuLayout
         //MnuToggleToolbar.Visible = false;

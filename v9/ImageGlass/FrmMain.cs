@@ -2228,26 +2228,14 @@ public partial class FrmMain : Form
     #region Menu Slideshow
     private void MnuStartSlideshow_Click(object sender, EventArgs e)
     {
-        if (Local.FormSlideshow.IsDisposed)
-        {
-            Local.FormSlideshow = new();
-        }
-
-        Config.EnableSlideshow = true;
-        Local.FormSlideshow.TopMost = TopMost;
-        Local.FormSlideshow.Show();
-        Local.FormSlideshow.Activate();
+        IG_StartNewSlideshow();
     }
 
-    private void MnuPauseResumeSlideshow_Click(object sender, EventArgs e)
+    private void MnuCloseAllSlideshows_Click(object sender, EventArgs e)
     {
-
+        IG_CloseAllSlideshowWindows();
     }
 
-    private void MnuExitSlideshow_Click(object sender, EventArgs e)
-    {
-
-    }
     #endregion // Menu Slideshow
 
 
