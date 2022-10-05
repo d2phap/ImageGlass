@@ -1,32 +1,35 @@
-﻿using ImageGlass.Base;
-using ImageGlass.Base.WinApi;
+﻿
+using ImageGlass.Base;
 using ImageGlass.Settings;
 using ImageGlass.UI;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Windows.Markup;
 
 namespace ImageGlass;
 
 public partial class FrmSlideshow : Form
 {
-    public FrmSlideshow()
+    /// <summary>
+    /// Gets, sets the index of the slideshow.
+    /// </summary>
+    public int SlideshowIndex { get; init; }
+
+    /// <summary>
+    /// Gets, sets value indicates whether the slideshow is requested to close from <see cref="FrmMain"/>.
+    /// </summary>
+    public bool IsRequestedToClose { get; set; } = false;
+
+
+    public FrmSlideshow(int slideshowIndex)
     {
         InitializeComponent();
+
+        SlideshowIndex = slideshowIndex;
+        Text = $"Slideshow {SlideshowIndex + 1} - {Application.ProductName}";
 
         UpdateTheme();
     }
 
     private void FrmSlideshow_Load(object sender, EventArgs e)
     {
-        PicSlideshow.MouseWheel += PicSlideshow_MouseWheel;
         Local.OnImageLoading += Local_OnImageLoading;
         Local.OnImageLoaded += Local_OnImageLoaded;
 
@@ -35,9 +38,12 @@ public partial class FrmSlideshow : Form
 
     private void FrmSlideshow_FormClosing(object sender, FormClosingEventArgs e)
     {
-        PicSlideshow.MouseWheel -= PicSlideshow_MouseWheel;
         Local.OnImageLoading -= Local_OnImageLoading;
         Local.OnImageLoaded -= Local_OnImageLoaded;
+
+        PicSlideshow.Dispose();
+
+        Local.RaiseSlideshowWindowClosedEvent(new(SlideshowIndex));
     }
 
     private void UpdateTheme(SystemThemeMode mode = SystemThemeMode.Unknown)
@@ -142,12 +148,4 @@ public partial class FrmSlideshow : Form
             KeepZoomRatio = false,
         });
     }
-
-
-    private void PicSlideshow_MouseWheel(object? sender, MouseEventArgs e)
-    {
-        PicSlideshow.ZoomByDeltaToPoint(e.Delta, e.Location);
-    }
-
-    
 }
