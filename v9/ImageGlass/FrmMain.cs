@@ -1040,22 +1040,19 @@ public partial class FrmMain : Form
     {
         Local.IsImageError = false;
 
-        if (!Config.EnableSlideshow)
+        PicMain.ClearMessage();
+        if (e.CurrentIndex >= 0 || !string.IsNullOrEmpty(e.FilePath))
         {
-            PicMain.ClearMessage();
-            if (e.CurrentIndex >= 0 || !string.IsNullOrEmpty(e.FilePath))
-            {
-                PicMain.ShowMessage(Config.Language[$"{Name}._Loading"], "", delayMs: 1500);
-            }
+            PicMain.ShowMessage(Config.Language[$"{Name}._Loading"], "", delayMs: 1500);
+        }
 
-            // Select thumbnail item
-            _ = BHelper.RunAsThread(SelectCurrentThumbnail);
+        // Select thumbnail item
+        _ = BHelper.RunAsThread(SelectCurrentThumbnail);
 
-            // show image preview if it's not cached
-            if (!Local.Images.IsCached(Local.CurrentIndex))
-            {
-                ShowImagePreview(e.FilePath, _loadCancelToken.Token);
-            }
+        // show image preview if it's not cached
+        if (!Local.Images.IsCached(Local.CurrentIndex))
+        {
+            ShowImagePreview(e.FilePath, _loadCancelToken.Token);
         }
 
         _ = Task.Run(() => UpdateImageInfo(ImageInfoUpdateTypes.All, e.FilePath));
@@ -1094,29 +1091,26 @@ public partial class FrmMain : Form
             Local.ClipboardImage = null;
             Local.TempImagePath = null;
 
-            if (!Config.EnableSlideshow)
-            {
-                var isImageBigForFading = Local.Metadata.Width > 8000
+            var isImageBigForFading = Local.Metadata.Width > 8000
                     || Local.Metadata.Height > 8000;
-                var enableFading = !_isShowingImagePreview && !isImageBigForFading;
+            var enableFading = !_isShowingImagePreview && !isImageBigForFading;
 
-                // set the main image
-                PicMain.SetImage(e.Data.ImgData, enableFading);
+            // set the main image
+            PicMain.SetImage(e.Data.ImgData, enableFading);
 
-                // Reset the zoom mode if KeepZoomRatio = FALSE
-                if (!e.KeepZoomRatio)
-                {
-                    //TODO:
-                    //if (Config.IsWindowFit)
-                    //{
-                    //    //WindowFitMode();
-                    //}
-                    //else
-                    //{
-                    // reset zoom mode
-                    IG_SetZoomMode(Config.ZoomMode.ToString());
-                    //}
-                }
+            // Reset the zoom mode if KeepZoomRatio = FALSE
+            if (!e.KeepZoomRatio)
+            {
+                //TODO:
+                //if (Config.IsWindowFit)
+                //{
+                //    //WindowFitMode();
+                //}
+                //else
+                //{
+                // reset zoom mode
+                IG_SetZoomMode(Config.ZoomMode.ToString());
+                //}
             }
 
             PicMain.ClearMessage();

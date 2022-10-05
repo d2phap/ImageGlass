@@ -211,13 +211,8 @@ public partial class FrmMain
         Application.DoEvents();
 
 
-        // start slideshow
-        if (Config.EnableSlideshow)
-        {
-            IG_StartNewSlideshow();
-        }
         // load Full screen mode
-        else if (Config.EnableFullScreen)
+        if (Config.EnableFullScreen)
         {
             // to hide the animation effect of window border
             FormBorderStyle = FormBorderStyle.None;
@@ -233,6 +228,12 @@ public partial class FrmMain
         {
             // load window placement from settings
             WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
+        }
+
+        // start slideshow
+        if (Config.EnableSlideshow)
+        {
+            IG_StartNewSlideshow();
         }
 
         // load context menu config
