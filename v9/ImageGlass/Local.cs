@@ -27,7 +27,6 @@ namespace ImageGlass;
 
 internal class Local
 {
-    private static FrmSlideshow _frmSlideshow;
 
     #region Public events
 
@@ -66,6 +65,12 @@ internal class Local
     /// </summary>
     public static event FrmMainUpdateRequestedHandler? OnRequestUpdateFrmMain;
     public delegate void FrmMainUpdateRequestedHandler(UpdateRequests e);
+
+    /// <summary>
+    /// Occurs when a <see cref="FrmSlideshow"/> window is closed.
+    /// </summary>
+    public static event SlideshowWindowClosedHandler? OnSlideshowWindowClosed;
+    public delegate void SlideshowWindowClosedHandler(SlideshowWindowClosedEventArgs e);
 
 
     /// <summary>
@@ -114,9 +119,17 @@ internal class Local
 
 
     /// <summary>
+    /// Raise <see cref="OnSlideshowWindowClosed"/> event.
+    /// </summary>
+    public static void RaiseSlideshowWindowClosedEvent(SlideshowWindowClosedEventArgs e)
+    {
+        OnSlideshowWindowClosed?.Invoke(e);
+    }
+
+
+    /// <summary>
     /// Raise <see cref="OnRequestUpdateFrmMain"/> event.
     /// </summary>
-    /// <param name="e"></param>
     public static void UpdateFrmMain(UpdateRequests e)
     {
         OnRequestUpdateFrmMain?.Invoke(e);
@@ -129,13 +142,9 @@ internal class Local
     #region Public properties
 
     /// <summary>
-    /// Gets, sets Slideshow form.
+    /// Gets, sets the list of slideshow windows.
     /// </summary>
-    public static FrmSlideshow FormSlideshow
-    {
-        get => LazyInitializer.EnsureInitialized(ref _frmSlideshow);
-        set => _frmSlideshow = value;
-    }
+    public static List<FrmSlideshow> SlideshowWindows { get; set; } = new();
 
     /// <summary>
     /// Gets, sets the metadata of the current image in the list.

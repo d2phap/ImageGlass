@@ -40,3 +40,14 @@ public class ImageListLoadedEventArgs
 {
     public string? FilePath { get; init; }
 }
+
+
+public class SlideshowWindowClosedEventArgs
+{
+    public int SlideshowIndex { get; init; }
+
+    public SlideshowWindowClosedEventArgs(int slideshowIndex)
+    {
+        SlideshowIndex = slideshowIndex;
+    }
+}

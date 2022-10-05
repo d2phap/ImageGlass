@@ -28,20 +28,20 @@ public class App
     /// <summary>
     /// Gets the application executable path
     /// </summary>
-    public static string IGExePath { get => StartUpDir("ImageGlass.exe"); }
+    public static string IGExePath => StartUpDir("ImageGlass.exe");
 
 
     /// <summary>
     /// Gets the application name after removing all space characters.
     /// Example: ImageGlass Kobe => ImageGlassKobe
     /// </summary>
-    public static string AppNameCode = Application.ProductName.Replace(" ", "", StringComparison.InvariantCultureIgnoreCase);
+    public static string AppNameCode => Application.ProductName.Replace(" ", "", StringComparison.InvariantCultureIgnoreCase);
 
 
     /// <summary>
     /// Gets the product version
     /// </summary>
-    public static string Version { get => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion ?? ""; }
+    public static string Version => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion ?? "";
 
     /// <summary>
     /// Checks if the current user is administator
