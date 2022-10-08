@@ -88,11 +88,11 @@ public class IgLang : Dictionary<string, string>
     /// Saves current language to JSON file
     /// </summary>
     /// <param name="filePath"></param>
-    public void SaveAsFile(string filePath)
+    public async Task SaveAsFileAsync(string filePath)
     {
         var model = new IgLangJsonModel(Metadata, this);
 
-        BHelper.WriteJson(filePath, model);
+        await BHelper.WriteJsonAsync(filePath, model);
     }
 
 

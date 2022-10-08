@@ -267,9 +267,9 @@ public class IgTheme
     /// Saves current settings as a new config file
     /// </summary>
     /// <param name="filePath"></param>
-    public void SaveConfigAsFile(string filePath)
+    public async Task SaveConfigAsFileAsync(string filePath)
     {
-        BHelper.WriteJson(filePath, JsonModel);
+        await BHelper.WriteJsonAsync(filePath, JsonModel);
     }
 
 

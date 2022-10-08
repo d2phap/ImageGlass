@@ -103,7 +103,7 @@ public partial class BHelper
     /// </summary>
     /// <param name="jsonFilePath"></param>
     /// <param name="value"></param>
-    public static async void WriteJson(string jsonFilePath, object? value, CancellationToken token = default)
+    public static async Task WriteJsonAsync(string jsonFilePath, object? value, CancellationToken token = default)
     {
         var json = JsonSerializer.Serialize(value, JsonOptions);
 

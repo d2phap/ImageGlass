@@ -1062,12 +1062,12 @@ public static class Config
     /// <summary>
     /// Parses and writes configs to file
     /// </summary>
-    public static void Write()
+    public static async Task WriteAsync()
     {
         var jsonFile = App.ConfigDir(PathType.File, Source.UserFilename);
         var jsonObj = PrepareJsonSettingObjects();
 
-        BHelper.WriteJson(jsonFile, jsonObj);
+        await BHelper.WriteJsonAsync(jsonFile, jsonObj);
     }
 
 
