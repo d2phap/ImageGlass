@@ -42,6 +42,10 @@ namespace ImageGlass;
 
 public partial class FrmMain
 {
+    // to delay the cleaning task when disconnecting multiple slideshows
+    private CancellationTokenSource _cleanSlideshowServerCancelToken = new();
+
+
     /// <summary>
     /// Opens file picker to choose an image
     /// </summary>
@@ -1938,20 +1942,42 @@ public partial class FrmMain
             Local.SlideshowPipeServers[serverIndex] = null;
         }
 
-        var serverCount = clonedList.Count(s => s != null);
 
-        if (serverCount == 0)
+        _cleanSlideshowServerCancelToken.Cancel();
+        _cleanSlideshowServerCancelToken = new();
+        _ = CleanSlideshowServerListAsync(_cleanSlideshowServerCancelToken.Token);
+    }
+
+    private async Task CleanSlideshowServerListAsync(CancellationToken token = default)
+    {
+        try
         {
-            Config.EnableSlideshow = false;
-            Local.SlideshowPipeServers.Clear();
+            await Task.Delay(500, token);
+            token.ThrowIfCancellationRequested();
 
-            // show FrmMain
-            SetFrmMainStateInSlideshow(Config.EnableSlideshow);
+            var serverCount = Local.SlideshowPipeServers.Count(s => s != null);
+
+            if (serverCount == 0)
+            {
+                Config.EnableSlideshow = false;
+                Local.SlideshowPipeServers.Clear();
+
+                // show FrmMain
+                SetFrmMainStateInSlideshow(Config.EnableSlideshow);
+            }
         }
+        catch (OperationCanceledException) { }
     }
 
     private void SetFrmMainStateInSlideshow(bool enableSlideshow)
     {
+        if (InvokeRequired)
+        {
+            Invoke(SetFrmMainStateInSlideshow, enableSlideshow);
+            return;
+        }
+
+
         // hide FrmMain
         if (enableSlideshow && Config.HideFrmMainInSlideshow)
         {
