@@ -30,6 +30,8 @@ using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using WicNet;
 using DirectN;
+using ImageGlass.Base.NamedPipes;
+using System.IO.Pipes;
 
 namespace ImageGlass;
 
@@ -1875,45 +1877,77 @@ public partial class FrmMain
 
     private async Task StartNewSlideshowAsync()
     {
+        var slideshowIndex = 0;
+        var serverCount = Local.SlideshowPipeServers.Count(s => s != null);
+
+        if (serverCount == 0)
+        {
+            Local.SlideshowPipeServers.Clear();
+        }
+        else
+        {
+            var lastServer = Local.SlideshowPipeServers.FindLast(s => s != null);
+
+            if (lastServer != null)
+            {
+                slideshowIndex = lastServer.TagNumber + 1;
+            }
+        }
+
+        var pipeName = $"IG_Slideshow_{slideshowIndex}";
+
+        // create a new slideshow pipe server
+        var slideshowServer = new PipeServer(pipeName, PipeDirection.InOut, slideshowIndex);
+        slideshowServer.MessageReceived += SlideshowServer_MessageReceived;
+        slideshowServer.ClientDisconnected += SlideshowServer_Disconnected;
+
+        Local.SlideshowPipeServers.Add(slideshowServer);
+
+        // start the server
+        slideshowServer.Start();
+
+        // start slideshow client
+        await BHelper.RunIgcmd($"{IgCommands.START_SLIDESHOW} {pipeName}", false);
+
+        await slideshowServer.WaitForConnectionAsync();
+
         Config.EnableSlideshow = true;
+
 
         // hide FrmMain
         SetFrmMainStateInSlideshow(Config.EnableSlideshow);
 
-        var slideshowIndex = 0;
-        if (Local.SlideshowWindows.Count > 0)
-        {
-            slideshowIndex = Local.SlideshowWindows.Last().SlideshowIndex + 1;
-        }
 
-        var frmSlideshow = new FrmSlideshow(slideshowIndex);
-        frmSlideshow.TopMost = true;
-
-        Local.SlideshowWindows.Add(frmSlideshow);
-        frmSlideshow.Show();
-
-
-        await Task.Delay(500);
-        frmSlideshow.TopMost = TopMost;
+        //frmSlideshow.TopMost = TopMost;
     }
 
-
-    /// <summary>
-    /// Stops and closes all slideshows
-    /// </summary>
-    private void IG_CloseAllSlideshowWindows()
+    private void SlideshowServer_MessageReceived(object? sender, MessageReceivedEventArgs e)
     {
-        foreach (var frm in Local.SlideshowWindows)
+        MessageBox.Show(e.Message, e.PipeName);
+    }
+
+    private void SlideshowServer_Disconnected(object? sender, DisconnectedEventArgs e)
+    {
+        var clonedList = Local.SlideshowPipeServers.ToList();
+        var serverIndex = clonedList.FindIndex(s => s?.PipeName == e.PipeName);
+
+        if (serverIndex != -1)
         {
-            frm.IsRequestedToClose = true;
-            frm.Close();
+            Local.SlideshowPipeServers[serverIndex].Stop();
+            Local.SlideshowPipeServers[serverIndex].Dispose();
+            Local.SlideshowPipeServers[serverIndex] = null;
         }
 
-        Local.SlideshowWindows.Clear();
-        Config.EnableSlideshow = false;
+        var serverCount = clonedList.Count(s => s != null);
 
-        // show FrmMain
-        SetFrmMainStateInSlideshow(Config.EnableSlideshow);
+        if (serverCount == 0)
+        {
+            Config.EnableSlideshow = false;
+            Local.SlideshowPipeServers.Clear();
+
+            // show FrmMain
+            SetFrmMainStateInSlideshow(Config.EnableSlideshow);
+        }
     }
 
     private void SetFrmMainStateInSlideshow(bool enableSlideshow)
@@ -1928,6 +1962,33 @@ public partial class FrmMain
         else if (!enableSlideshow && Config.HideFrmMainInSlideshow)
         {
             Show();
+        }
+    }
+
+
+    /// <summary>
+    /// Disconnects all slideshow servers.
+    /// </summary>
+    private void DisconnectAllSlideshowServers()
+    {
+        foreach (var server in Local.SlideshowPipeServers)
+        {
+            server?.Stop();
+            server?.Dispose();
+        }
+
+        Local.SlideshowPipeServers.Clear();
+    }
+
+
+    /// <summary>
+    /// Stops and closes all slideshows
+    /// </summary>
+    private void IG_CloseAllSlideshowWindows()
+    {
+        foreach (var server in Local.SlideshowPipeServers)
+        {
+            _ = server?.SendAsync("TERMINATE");
         }
     }
 

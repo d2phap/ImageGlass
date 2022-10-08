@@ -191,7 +191,6 @@ public partial class FrmMain
     private void FrmMainConfig_Load(object? sender, EventArgs e)
     {
         Local.OnRequestUpdateFrmMain += Local_OnFrmMainUpdateRequested;
-        Local.OnSlideshowWindowClosed += Local_OnSlideshowWindowClosed;
 
         // IsWindowAlwaysOnTop
         IG_ToggleTopMost(Config.EnableWindowTopMost, showInAppMessage: false);
@@ -250,6 +249,11 @@ public partial class FrmMain
 
     private void FrmMainConfig_FormClosing(object? sender, FormClosingEventArgs e)
     {
+        _ = SaveConfigsOnClosing();
+    }
+
+    private async Task SaveConfigsOnClosing()
+    {
         // save FrmMain placement
         if (!Config.EnableFullScreen)
         {
@@ -267,10 +271,20 @@ public partial class FrmMain
         Config.LastSeenImagePath = Local.Images.GetFileName(Local.CurrentIndex);
         Config.ZoomLockValue = PicMain.ZoomFactor * 100f;
 
-        Config.Write();
+        // slideshow
+        var serverCount = Local.SlideshowPipeServers.Count(s => s != null);
+        Config.EnableSlideshow = serverCount > 0;
 
+
+        await Config.WriteAsync();
+
+
+        // cleaning
         try
         {
+            // disconnect all slideshows
+            DisconnectAllSlideshowServers();
+
             // delete trash
             Directory.Delete(App.ConfigDir(PathType.Dir, Dir.Temporary), true);
         }
@@ -342,28 +356,6 @@ public partial class FrmMain
             {
                 PicMain.ContextMenuStrip = null;
             }
-        }
-    }
-
-
-    /// <summary>
-    /// Handle when a slideshow window is closed.
-    /// </summary>
-    private void Local_OnSlideshowWindowClosed(SlideshowWindowClosedEventArgs e)
-    {
-        var index = Local.SlideshowWindows.FindIndex(frm => frm.SlideshowIndex == e.SlideshowIndex);
-
-        if (index >= 0 && !Local.SlideshowWindows[index].IsRequestedToClose)
-        {
-            Local.SlideshowWindows.RemoveAt(index);
-        }
-
-        if (Local.SlideshowWindows.Count == 0)
-        {
-            Config.EnableSlideshow = false;
-
-            // show FrmMain
-            SetFrmMainStateInSlideshow(Config.EnableSlideshow);
         }
     }
 
