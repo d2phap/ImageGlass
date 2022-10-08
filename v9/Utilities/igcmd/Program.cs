@@ -112,6 +112,23 @@ internal static class Program
         #endregion
 
 
+        #region START_SLIDESHOW <string serverName>
+        if (topCmd == IgCommands.START_SLIDESHOW)
+        {
+            if (args.Length > 1)
+            {
+                Application.Run(new FrmSlideshow(args[1]));
+            }
+            else
+            {
+                return (int)IgExitCode.Error;
+            }
+
+            return (int)IgExitCode.Done;
+        }
+        #endregion
+
+
 
         return (int)IgExitCode.Error;
     }

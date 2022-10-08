@@ -18,9 +18,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
+using ImageGlass.Base.NamedPipes;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.Services;
 using ImageGlass.Settings;
+using System.IO.Pipes;
 using WicNet;
 
 namespace ImageGlass;
@@ -142,9 +144,9 @@ internal class Local
     #region Public properties
 
     /// <summary>
-    /// Gets, sets the list of slideshow windows.
+    /// Gets, sets the list of slideshow pipe servers.
     /// </summary>
-    public static List<FrmSlideshow> SlideshowWindows { get; set; } = new();
+    public static List<PipeServer?> SlideshowPipeServers { get; set; } = new();
 
     /// <summary>
     /// Gets, sets the metadata of the current image in the list.
