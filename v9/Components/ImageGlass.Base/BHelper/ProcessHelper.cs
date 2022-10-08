@@ -109,9 +109,11 @@ public partial class BHelper
             if (waitForExit)
             {
                 await proc.WaitForExitAsync();
+
+                return proc.ExitCode;
             }
 
-            return proc.ExitCode;
+            return (int)IgExitCode.Done;
         }
         catch
         {
@@ -125,19 +127,19 @@ public partial class BHelper
     /// if admin permission is required.
     /// </summary>
     /// <returns></returns>
-    public static async Task<IgExitCode> RunExeCmd(string exePath, string args)
+    public static async Task<IgExitCode> RunExeCmd(string exePath, string args, bool waitForExit = true)
     {
         IgExitCode code;
 
         try
         {
-            code = (IgExitCode)await RunExeAsync(exePath, args, waitForExit: true);
+            code = (IgExitCode)await RunExeAsync(exePath, args, false, waitForExit);
 
 
             // If that fails due to privs error, re-attempt with admin privs.
             if (code == IgExitCode.AdminRequired)
             {
-                code = (IgExitCode)await RunExeAsync(exePath, args, asAdmin: true, waitForExit: true);
+                code = (IgExitCode)await RunExeAsync(exePath, args, asAdmin: true, waitForExit: waitForExit);
             }
         }
         catch
@@ -150,15 +152,15 @@ public partial class BHelper
 
 
     /// <summary>
-    /// Runs a command from <c>igcmd10.exe</c>, supports auto-elevating process privilege
+    /// Runs a command from <c>igcmd.exe</c>, supports auto-elevating process privilege
     /// if admin permission is required.
     /// </summary>
     /// <returns></returns>
-    public static async Task<IgExitCode> RunIgcmd(string args)
+    public static async Task<IgExitCode> RunIgcmd(string args, bool waitForExit = true)
     {
         var exePath = App.StartUpDir("igcmd.exe");
 
-        return await RunExeCmd(exePath, args);
+        return await RunExeCmd(exePath, args, waitForExit);
     }
 
 
@@ -167,10 +169,10 @@ public partial class BHelper
     /// if admin permission is required.
     /// </summary>
     /// <returns></returns>
-    public static async Task<IgExitCode> RunIgcmd10(string args)
+    public static async Task<IgExitCode> RunIgcmd10(string args, bool waitForExit = true)
     {
         var exePath = App.StartUpDir("igcmd10.exe");
 
-        return await RunExeCmd(exePath, args);
+        return await RunExeCmd(exePath, args, waitForExit);
     }
 }
