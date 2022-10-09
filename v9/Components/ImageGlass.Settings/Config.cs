@@ -728,12 +728,12 @@ public static class Config
     /// <summary>
     /// Gets, sets the interpolation mode to render the viewing image when the zoom factor is <c>less than or equals 100%</c>.
     /// </summary>
-    public static ImageInterpolation ImageInterpolationScaleDown = ImageInterpolation.SampleLinear;
+    public static ImageInterpolation ImageInterpolationScaleDown { get; set; } = ImageInterpolation.SampleLinear;
 
     /// <summary>
     /// Gets, sets the interpolation mode to render the viewing image when the zoom factor is <c>greater than 100%</c>.
     /// </summary>
-    public static ImageInterpolation ImageInterpolationScaleUp = ImageInterpolation.NearestNeighbor;
+    public static ImageInterpolation ImageInterpolationScaleUp { get; set; } = ImageInterpolation.NearestNeighbor;
 
 
     ///// <summary>

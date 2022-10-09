@@ -49,9 +49,13 @@ public partial class FrmSlideshow : Form
         _slideshowTimer.Interval = Config.SlideshowInterval;
         _slideshowTimer.Tick += SlideshowTimer_Tick;
 
+        // load configs
         _ = int.TryParse(slideshowIndex, out var indexNumber);
         Text = $"{Config.Language["FrmMain.MnuSlideshow"]} {indexNumber + 1} - {Application.ProductName}";
         TopMost = Config.EnableWindowTopMost;
+
+        PicMain.InterpolationScaleDown = Config.ImageInterpolationScaleDown;
+        PicMain.InterpolationScaleUp = Config.ImageInterpolationScaleUp;
     }
 
 
@@ -60,7 +64,7 @@ public partial class FrmSlideshow : Form
         PicMain.Render += PicMain_Render;
 
         // load the init image
-        _ = LoadImageAsync(_initImagePath, _loadImageCancelToken);
+        _ = BHelper.RunAsThread(() => _ = LoadImageAsync(_initImagePath, _loadImageCancelToken));
 
         _client = new PipeClient(_serverName, PipeDirection.InOut);
         _client.MessageReceived += Client_MessageReceived;
@@ -107,7 +111,7 @@ public partial class FrmSlideshow : Form
 
             if (list != null && list.Count > 0)
             {
-                LoadImageList(list, _initImagePath);
+                _ = BHelper.RunAsThread(() => LoadImageList(list, _initImagePath));
             }
         }
     }
@@ -309,6 +313,12 @@ public partial class FrmSlideshow : Form
 
     private async Task LoadImageAsync(string? filePath, CancellationTokenSource? tokenSrc = null)
     {
+        if (InvokeRequired)
+        {
+            Invoke(LoadImageAsync, filePath, tokenSrc);
+            return;
+        }
+
         var photo = new IgPhoto(filePath);
 
         var readSettings = new CodecReadOptions()
@@ -408,6 +418,12 @@ public partial class FrmSlideshow : Form
 
     private void SetSlideshowState(bool? enable = null, bool displayMessage = true)
     {
+        if (InvokeRequired)
+        {
+            Invoke(SetSlideshowState, enable, displayMessage);
+            return;
+        }
+
         enable ??= !_slideshowTimer.Enabled;
         var msg = "";
 
