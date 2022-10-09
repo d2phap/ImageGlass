@@ -1,4 +1,4 @@
-﻿namespace igcmd
+﻿namespace igcmd.Slideshow
 {
     partial class FrmSlideshow
     {
@@ -28,35 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.PicMain = new ImageGlass.Views.DXCanvas();
             this.SuspendLayout();
             // 
-            // button1
+            // PicMain
             // 
-            this.button1.Location = new System.Drawing.Point(472, 171);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(174, 142);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.PicMain.BaseDpi = 96F;
+            this.PicMain.CheckFPS = false;
+            this.PicMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PicMain.InterpolationScaleDown = ImageGlass.Base.PhotoBox.ImageInterpolation.SampleLinear;
+            this.PicMain.Location = new System.Drawing.Point(0, 0);
+            this.PicMain.Margin = new System.Windows.Forms.Padding(0);
+            this.PicMain.Name = "PicMain";
+            this.PicMain.NavBorderRadius = 45F;
+            this.PicMain.NavButtonSize = new System.Drawing.SizeF(90F, 90F);
+            this.PicMain.RequestUpdateFrame = false;
+            this.PicMain.Size = new System.Drawing.Size(1112, 674);
+            this.PicMain.TabIndex = 0;
             // 
             // FrmSlideshow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(1112, 674);
+            this.Controls.Add(this.PicMain);
+            this.KeyPreview = true;
             this.Name = "FrmSlideshow";
-            this.Text = "FrmSlideshow";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmSlideshow_FormClosing);
             this.Load += new System.EventHandler(this.FrmSlideshow_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmSlideshow_KeyDown);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Button button1;
+        private ImageGlass.Views.DXCanvas PicMain;
     }
 }

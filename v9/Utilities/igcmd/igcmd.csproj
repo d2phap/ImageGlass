@@ -7,12 +7,14 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>x64;x86</Platforms>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Components\ImageGlass.Base\ImageGlass.Base.csproj" />
     <ProjectReference Include="..\..\Components\ImageGlass.Settings\ImageGlass.Settings.csproj" />
     <ProjectReference Include="..\..\Components\ImageGlass.UI\ImageGlass.UI.csproj" />
+    <ProjectReference Include="..\..\Components\ImageGlass.Views\ImageGlass.Views.csproj" />
   </ItemGroup>
 
 </Project>

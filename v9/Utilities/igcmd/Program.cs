@@ -112,12 +112,12 @@ internal static class Program
         #endregion
 
 
-        #region START_SLIDESHOW <string serverName>
+        #region START_SLIDESHOW <string slideshowIndex> <string filePath>
         if (topCmd == IgCommands.START_SLIDESHOW)
         {
-            if (args.Length > 1)
+            if (args.Length > 2)
             {
-                Application.Run(new FrmSlideshow(args[1]));
+                Application.Run(new Slideshow.FrmSlideshow(args[1], args[2]));
             }
             else
             {
