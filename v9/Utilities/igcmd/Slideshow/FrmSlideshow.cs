@@ -1,11 +1,15 @@
-﻿using ImageGlass.Base;
+﻿using D2Phap;
+using ImageGlass.Base;
 using ImageGlass.Base.DirectoryComparer;
 using ImageGlass.Base.NamedPipes;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.Photoing.Codecs;
+using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.UI;
+using ImageGlass.Views;
 using System.Diagnostics;
+using System.Drawing.Drawing2D;
 using System.IO.Pipes;
 using System.Linq;
 using WicNet;
@@ -53,6 +57,8 @@ public partial class FrmSlideshow : Form
 
     private void FrmSlideshow_Load(object sender, EventArgs e)
     {
+        PicMain.Render += PicMain_Render;
+
         // load the init image
         _ = LoadImageAsync(_initImagePath, _loadImageCancelToken);
 
@@ -62,7 +68,6 @@ public partial class FrmSlideshow : Form
 
         _ = _client.ConnectAsync();
     }
-
 
     private void FrmSlideshow_FormClosing(object sender, FormClosingEventArgs e)
     {
@@ -135,6 +140,44 @@ public partial class FrmSlideshow : Form
     }
 
 
+    private void PicMain_Render(object? sender, RenderEventArgs e)
+    {
+        if (!_slideshowTimer.Enabled || !Config.ShowSlideshowCountdown) return;
+
+        // draw countdown text ----------------------------------------------
+        var text = TimeSpan.FromSeconds(_slideshowCountdown - _slideshowStopwatch.Elapsed.TotalSeconds + 1).ToString("mm':'ss");
+
+        
+        var font = new Font(Font.FontFamily, 30f);
+        var fontSize = e.Graphics.MeasureText(text, font.Name, font.Size, textDpi: DeviceDpi);
+
+        // calculate background size
+        var gapX = fontSize.Width / 4;
+        var gapY = fontSize.Height / 4;
+        var padding = DpiApi.Transform(30);
+        var bgSize = new SizeF(fontSize.Width + gapX, fontSize.Height + gapY);
+        var bgX = PicMain.Width - bgSize.Width - padding;
+        var bgY = PicMain.Height - bgSize.Height - padding;
+
+        // draw background
+        var borderRadius = BHelper.IsOS(WindowsOS.Win11) ? 10 : 1;
+        var bgColor = Color.FromArgb(150, PicMain.BackColor);
+        var bgRect = new RectangleF(bgX, bgY, bgSize.Width, bgSize.Height);
+
+        e.Graphics.DrawRectangle(bgRect, borderRadius, bgColor, bgColor);
+
+
+        // calculate text position
+        var fontX = bgX + (bgSize.Width / 2) - (fontSize.Width / 2);
+        var fontY = bgY + (bgSize.Height / 2) - (fontSize.Height / 2);
+
+        // draw text
+        var textColor = Color.FromArgb(150, ThemeUtils.InvertBlackAndWhiteColor(PicMain.BackColor));
+
+        e.Graphics.DrawText(text, font.Name, font.Size, fontX, fontY, textColor, textDpi: DeviceDpi);
+    }
+
+
     private void UpdateTheme(SystemThemeMode mode = SystemThemeMode.Unknown)
     {
         var themMode = mode;
@@ -163,6 +206,9 @@ public partial class FrmSlideshow : Form
     }
 
 
+    // Load image
+    #region Load image
+
     private void LoadImageList(IEnumerable<string> fileList, string? initFilePath = null)
     {
         _imageList = BHelper.SortImageList(fileList,
@@ -189,10 +235,6 @@ public partial class FrmSlideshow : Form
         SetSlideshowState(true, false);
     }
 
-
-
-    // Load image
-    #region Load image
 
     private async Task ViewNextImageAsync(int step = 0)
     {
@@ -607,5 +649,5 @@ public partial class FrmSlideshow : Form
         Text = ImageInfo.ToString(Config.InfoItems, false);
     }
 
-    
+
 }

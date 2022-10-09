@@ -963,8 +963,6 @@ public class DXCanvas : DXControl
 
     protected override void OnRender(IGraphics g)
     {
-        base.OnRender(g);
-
         // update drawing regions
         CalculateDrawingRegion();
 
@@ -987,6 +985,9 @@ public class DXCanvas : DXControl
 
         // navigation layer
         DrawNavigationLayer(g);
+
+
+        base.OnRender(g);
     }
 
 
