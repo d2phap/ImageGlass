@@ -43,11 +43,9 @@ public partial class FrmSlideshow : Form
         _serverName = $"{Constants.SLIDESHOW_PIPE_PREFIX}{slideshowIndex}"; ;
         _initImagePath = initImagePath;
 
-
-        UpdateTheme();
-
-        _slideshowTimer.Interval = Config.SlideshowInterval;
-        _slideshowTimer.Tick += SlideshowTimer_Tick;
+        // Get the DPI of the current display,
+        // and load theme icons
+        DpiApi.CurrentDpi = DeviceDpi;
 
         // load configs
         _ = int.TryParse(slideshowIndex, out var indexNumber);
@@ -56,12 +54,19 @@ public partial class FrmSlideshow : Form
 
         PicMain.InterpolationScaleDown = Config.ImageInterpolationScaleDown;
         PicMain.InterpolationScaleUp = Config.ImageInterpolationScaleUp;
+
+
+        UpdateTheme();
     }
 
 
     private void FrmSlideshow_Load(object sender, EventArgs e)
     {
+        _slideshowTimer.Interval = Config.SlideshowInterval;
+        _slideshowTimer.Tick += SlideshowTimer_Tick;
+
         PicMain.Render += PicMain_Render;
+
 
         // load the init image
         _ = BHelper.RunAsThread(() => _ = LoadImageAsync(_initImagePath, _loadImageCancelToken));
@@ -193,6 +198,8 @@ public partial class FrmSlideshow : Form
 
         // correct theme mode
         var isDarkMode = themMode != SystemThemeMode.Light;
+
+        MnuContext.Theme = Config.Theme;
 
         // background
         BackColor = Config.BackgroundColor;
