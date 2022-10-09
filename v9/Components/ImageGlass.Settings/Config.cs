@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.Actions;
 using ImageGlass.Base.PhotoBox;
+using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.UI;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +29,8 @@ using System.Dynamic;
 using System.Media;
 using System.Reflection;
 using System.Text;
+using System.Xml.Linq;
+using WicNet;
 
 namespace ImageGlass.Settings;
 
@@ -190,15 +193,20 @@ public static class Config
     /// </summary>
     public static bool HideFrmMainInSlideshow { get; set; } = true;
 
-    ///// <summary>
-    ///// Gets, sets value if the countdown timer is shown or not
-    ///// </summary>
-    //public static bool IsShowSlideshowCountdown { get; set; } = true;
+    /// <summary>
+    /// Gets, sets value if the countdown timer is shown or not.
+    /// </summary>
+    public static bool ShowSlideshowCountdown { get; set; } = true;
 
-    ///// <summary>
-    ///// Gets, sets value indicating whether the slide show interval is random
-    ///// </summary>
-    //public static bool IsRandomSlideshowInterval { get; set; } = false;
+    /// <summary>
+    /// Gets, sets value indicates whether the slide show interval is random.
+    /// </summary>
+    public static bool UseRandomIntervalForSlideshow { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets value indicates that slideshow will loop back to the first image when reaching the end of list.
+    /// </summary>
+    public static bool LoopSlideshow { get; set; } = true;
 
     /// <summary>
     /// Gets, sets value indicating whether the full screen mode is enabled or not.
@@ -264,11 +272,6 @@ public static class Config
     /// Gets, sets value of visibility of toolbar when start up
     /// </summary>
     public static bool ShowToolbar { get; set; } = true;
-
-    ///// <summary>
-    ///// Gets, sets value that allows user to loop back to the first image when reaching the end of list
-    ///// </summary>
-    //public static bool IsLoopBackSlideshow { get; set; } = true;
 
     /// <summary>
     /// Gets, sets value indicating that ImageGlass will loop back viewer to the first image when reaching the end of the list.
@@ -541,15 +544,15 @@ public static class Config
     ///// </summary>
     //public static int FirstLaunchVersion { get; set; } = 0;
 
-    ///// <summary>
-    ///// Gets, sets slide show interval (minimum value if it's random)
-    ///// </summary>
-    //public static int SlideShowInterval { get; set; } = 5;
+    /// <summary>
+    /// Gets, sets slide show interval (minimum value if it's random)
+    /// </summary>
+    public static int SlideshowInterval { get; set; } = 5;
 
-    ///// <summary>
-    ///// Gets, sets the maximum slide show interval value
-    ///// </summary>
-    //public static int SlideShowIntervalTo { get; set; } = 5;
+    /// <summary>
+    /// Gets, sets the maximum slide show interval value
+    /// </summary>
+    public static int SlideshowIntervalTo { get; set; } = 5;
 
     /// <summary>
     /// Gets, sets value of thumbnail dimension in pixel
@@ -785,8 +788,9 @@ public static class Config
 
         EnableSlideshow = items.GetValue(nameof(EnableSlideshow), EnableSlideshow);
         HideFrmMainInSlideshow = items.GetValue(nameof(HideFrmMainInSlideshow), HideFrmMainInSlideshow);
-        //IsShowSlideshowCountdown = items.GetValue(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
-        //IsRandomSlideshowInterval = items.GetValue(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
+        ShowSlideshowCountdown = items.GetValue(nameof(ShowSlideshowCountdown), ShowSlideshowCountdown);
+        UseRandomIntervalForSlideshow = items.GetValue(nameof(UseRandomIntervalForSlideshow), UseRandomIntervalForSlideshow);
+        LoopSlideshow = items.GetValue(nameof(LoopSlideshow), LoopSlideshow);
         EnableFullScreen = items.GetValue(nameof(EnableFullScreen), EnableFullScreen);
         ShowThumbnails = items.GetValue(nameof(ShowThumbnails), ShowThumbnails);
         ShowThumbnailScrollbars = items.GetValue(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
@@ -798,7 +802,6 @@ public static class Config
         //IsColorPickerHSVA = items.GetValue(nameof(IsColorPickerHSVA), IsColorPickerHSVA);
         //IsShowWelcome = items.GetValue(nameof(IsShowWelcome), IsShowWelcome);
         ShowToolbar = items.GetValue(nameof(ShowToolbar), ShowToolbar);
-        //IsLoopBackSlideshow = items.GetValue(nameof(IsLoopBackSlideshow), IsLoopBackSlideshow);
         EnableLoopBackNavigation = items.GetValue(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
         //EnablePressESCToQuit = items.GetValue(nameof(EnablePressESCToQuit), EnablePressESCToQuit);
         ShowCheckerBoard = items.GetValue(nameof(ShowCheckerBoard), ShowCheckerBoard);
@@ -871,11 +874,11 @@ public static class Config
         //FirstLaunchVersion = items.GetValue(nameof(FirstLaunchVersion), FirstLaunchVersion);
 
         #region Slide show
-        //SlideShowInterval = items.GetValue(nameof(SlideShowInterval), SlideShowInterval);
-        //if (SlideShowInterval < 1) SlideShowInterval = 5;
+        SlideshowInterval = items.GetValue(nameof(SlideshowInterval), SlideshowInterval);
+        if (SlideshowInterval < 1) SlideshowInterval = 5;
 
-        //SlideShowIntervalTo = items.GetValue(nameof(SlideShowIntervalTo), SlideShowIntervalTo);
-        //SlideShowIntervalTo = Math.Max(SlideShowIntervalTo, SlideShowInterval);
+        SlideshowIntervalTo = items.GetValue(nameof(SlideshowIntervalTo), SlideshowIntervalTo);
+        SlideshowIntervalTo = Math.Max(SlideshowIntervalTo, SlideshowInterval);
         #endregion
 
         #region Load thumbnail bar width & position
@@ -1255,8 +1258,9 @@ public static class Config
 
         settings.TryAdd(nameof(EnableSlideshow), EnableSlideshow);
         settings.TryAdd(nameof(HideFrmMainInSlideshow), HideFrmMainInSlideshow);
-        //settings.TryAdd(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
-        //settings.TryAdd(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
+        settings.TryAdd(nameof(ShowSlideshowCountdown), ShowSlideshowCountdown);
+        settings.TryAdd(nameof(UseRandomIntervalForSlideshow), UseRandomIntervalForSlideshow);
+        settings.TryAdd(nameof(LoopSlideshow), LoopSlideshow);
         settings.TryAdd(nameof(EnableFullScreen), EnableFullScreen);
         settings.TryAdd(nameof(ShowThumbnails), ShowThumbnails);
         settings.TryAdd(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
@@ -1268,7 +1272,6 @@ public static class Config
         //settings.TryAdd(nameof(IsColorPickerHSVA), IsColorPickerHSVA);
         //settings.TryAdd(nameof(IsShowWelcome), IsShowWelcome);
         settings.TryAdd(nameof(ShowToolbar), ShowToolbar);
-        //settings.TryAdd(nameof(IsLoopBackSlideshow), IsLoopBackSlideshow);
         settings.TryAdd(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
         //settings.TryAdd(nameof(EnablePressESCToQuit), EnablePressESCToQuit);
         settings.TryAdd(nameof(ShowCheckerBoard), ShowCheckerBoard);
@@ -1337,8 +1340,8 @@ public static class Config
         //settings.TryAdd(nameof(FrmExifToolHeight), FrmExifToolHeight);
 
         //settings.TryAdd(nameof(FirstLaunchVersion), FirstLaunchVersion);
-        //settings.TryAdd(nameof(SlideShowInterval), SlideShowInterval);
-        //settings.TryAdd(nameof(SlideShowIntervalTo), SlideShowIntervalTo);
+        settings.TryAdd(nameof(SlideshowInterval), SlideshowInterval);
+        settings.TryAdd(nameof(SlideshowIntervalTo), SlideshowIntervalTo);
         settings.TryAdd(nameof(ThumbnailSize), ThumbnailSize);
         //settings.TryAdd(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
         settings.TryAdd(nameof(ImageBoosterCacheCount), ImageBoosterCacheCount);
@@ -1615,6 +1618,7 @@ public static class Config
 
         return actions.ToList();
     }
+
 
 
     #endregion
