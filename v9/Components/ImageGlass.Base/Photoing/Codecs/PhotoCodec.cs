@@ -40,10 +40,10 @@ public static class PhotoCodec
     /// Loads metadata from file.
     /// </summary>
     /// <param name="filePath">Full path of the file</param>
-    public static IgMetadata? LoadMetadata(string filePath, CodecReadOptions? options = null)
+    public static IgMetadata? LoadMetadata(string? filePath, CodecReadOptions? options = null)
     {
         FileInfo? fi = null;
-        var meta = new IgMetadata() { FilePath = filePath };
+        var meta = new IgMetadata() { FilePath = filePath ?? string.Empty };
 
         try
         {

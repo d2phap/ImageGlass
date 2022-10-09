@@ -454,7 +454,7 @@ public class ImageBooster : IDisposable
     /// </summary>
     /// <param name="index"></param>
     /// <returns>Returns filename or empty string</returns>
-    public string GetFileName(int index)
+    public string GetFilePath(int index)
     {
         try
         {
@@ -463,7 +463,7 @@ public class ImageBooster : IDisposable
                 return ImgList[index].Filename;
             }
         }
-        catch (ArgumentOutOfRangeException) // force reload of empty list
+        catch (ArgumentOutOfRangeException)
         { }
 
         return string.Empty;
@@ -491,7 +491,7 @@ public class ImageBooster : IDisposable
     /// <returns></returns>
     public string GetFileExtension(int index)
     {
-        var filename = GetFileName(index);
+        var filename = GetFilePath(index);
 
         return Path.GetExtension(filename);
     }

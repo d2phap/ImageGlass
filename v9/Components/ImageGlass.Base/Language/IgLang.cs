@@ -709,6 +709,9 @@ public class IgLang : Dictionary<string, string>
         Add("_._IgCommandExe._DefaultError._Heading", "Invalid commands"); //v9.0
         Add("_._IgCommandExe._DefaultError._Description", "Make sure you pass the correct commands!\r\nThis executable file contains command-line functions for ImageGlass software.\r\n\r\nTo explore all command lines, please visit:\r\n{0}"); //v9.0
 
+        Add("FrmSlideshow._PauseSlideshow", "Slideshow is paused."); // v9.0
+        Add("FrmSlideshow._ResumeSlideshow", "Slideshow is resumed."); // v9.0
+
         #endregion
 
     }
