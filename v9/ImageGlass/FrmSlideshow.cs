@@ -96,7 +96,7 @@ public partial class FrmSlideshow : Form
             Local.IsImageError = true;
             Local.ImageModifiedPath = "";
 
-            var currentFile = Local.Images.GetFileName(e.Index);
+            var currentFile = Local.Images.GetFilePath(e.Index);
             if (!string.IsNullOrEmpty(currentFile) && !File.Exists(currentFile))
             {
                 Local.Images.Unload(e.Index);

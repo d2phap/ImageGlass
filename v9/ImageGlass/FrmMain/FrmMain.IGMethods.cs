@@ -79,7 +79,7 @@ public partial class FrmMain
     /// </summary>
     private void IG_ReloadList()
     {
-        _ = LoadImageListAsync(Local.Images.DistinctDirs, Local.Images.GetFileName(Local.CurrentIndex));
+        _ = LoadImageListAsync(Local.Images.DistinctDirs, Local.Images.GetFilePath(Local.CurrentIndex));
     }
 
 
@@ -698,7 +698,7 @@ public partial class FrmMain
             return;
         }
 
-        var currentFile = Local.Images.GetFileName(Local.CurrentIndex);
+        var currentFile = Local.Images.GetFilePath(Local.CurrentIndex);
         var fileToPrint = currentFile;
         var ext = Path.GetExtension(currentFile).ToUpperInvariant();
         var langPath = $"{Name}.{nameof(MnuPrint)}";
@@ -767,7 +767,7 @@ public partial class FrmMain
             return;
         }
 
-        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
+        var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
         var langPath = $"{Name}.{nameof(MnuShare)}";
 
 
@@ -814,7 +814,7 @@ public partial class FrmMain
     private void IG_CopyFiles()
     {
         // get file path
-        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
+        var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
 
         if (Local.IsImageError || !File.Exists(filePath))
         {
@@ -874,7 +874,7 @@ public partial class FrmMain
     private async Task CutFilesAsync()
     {
         // get file path
-        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
+        var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
 
         if (Local.IsImageError || !File.Exists(filePath))
         {
@@ -937,7 +937,7 @@ public partial class FrmMain
     {
         try
         {
-            Clipboard.SetText(Local.Images.GetFileName(Local.CurrentIndex));
+            Clipboard.SetText(Local.Images.GetFilePath(Local.CurrentIndex));
 
             PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuCopyPath)}._Success"], Config.InAppMessageDuration);
         }
@@ -1081,7 +1081,7 @@ public partial class FrmMain
     /// </summary>
     private void IG_OpenLocation()
     {
-        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
+        var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
 
         try
         {
@@ -1099,7 +1099,7 @@ public partial class FrmMain
     /// </summary>
     private void IG_OpenProperties()
     {
-        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
+        var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
         ExplorerApi.DisplayFileProperties(filePath, Handle);
     }
 
@@ -1118,7 +1118,7 @@ public partial class FrmMain
             return;
         }
 
-        var srcFilePath = Local.Images.GetFileName(Local.CurrentIndex);
+        var srcFilePath = Local.Images.GetFilePath(Local.CurrentIndex);
         Local.ImageModifiedPath = srcFilePath;
 
         _ = SaveImageAsync();
@@ -1209,7 +1209,7 @@ public partial class FrmMain
 
         if (Local.ClipboardImage == null)
         {
-            srcFilePath = Local.Images.GetFileName(Local.CurrentIndex);
+            srcFilePath = Local.Images.GetFilePath(Local.CurrentIndex);
             srcExt = Path.GetExtension(srcFilePath).ToLowerInvariant();
 
             if (string.IsNullOrEmpty(srcExt) || srcExt.Length < 2)
@@ -1383,7 +1383,7 @@ public partial class FrmMain
         }
         else
         {
-            filePath = Local.Images.GetFileName(Local.CurrentIndex);
+            filePath = Local.Images.GetFilePath(Local.CurrentIndex);
         }
 
         PicMain.ClearMessage();
@@ -1468,7 +1468,7 @@ public partial class FrmMain
     /// </summary>
     private void IG_Rename()
     {
-        var oldFilePath = Local.Images.GetFileName(Local.CurrentIndex);
+        var oldFilePath = Local.Images.GetFilePath(Local.CurrentIndex);
         if (!File.Exists(oldFilePath)) return;
 
 
@@ -1535,7 +1535,7 @@ public partial class FrmMain
     /// <param name="moveToRecycleBin"></param>
     private void IG_Delete(bool moveToRecycleBin = true)
     {
-        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
+        var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
         if (!File.Exists(filePath)) return;
 
         PopupResult? result = null;
@@ -1607,7 +1607,7 @@ public partial class FrmMain
             return;
         }
 
-        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
+        var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
         var ext = Path.GetExtension(filePath).ToUpperInvariant();
         var defaultExt = BHelper.IsOS(WindowsOS.Win7) ? ".bmp" : ".jpg";
         var langPath = $"{Name}.{nameof(MnuSetDesktopBackground)}";
@@ -1682,7 +1682,7 @@ public partial class FrmMain
             return;
         }
 
-        var filePath = Local.Images.GetFileName(Local.CurrentIndex);
+        var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
         var ext = Path.GetExtension(filePath).ToUpperInvariant();
         var langPath = $"{Name}.{nameof(MnuSetLockScreen)}";
 
@@ -1898,7 +1898,7 @@ public partial class FrmMain
             }
         }
 
-        var pipeName = $"IG_Slideshow_{slideshowIndex}";
+        var pipeName = $"{Constants.SLIDESHOW_PIPE_PREFIX}{slideshowIndex}";
 
         // create a new slideshow pipe server
         var slideshowServer = new PipeServer(pipeName, PipeDirection.InOut, slideshowIndex);
@@ -1909,20 +1909,23 @@ public partial class FrmMain
 
         // start the server
         slideshowServer.Start();
+        await Config.WriteAsync();
 
         // start slideshow client
-        await BHelper.RunIgcmd($"{IgCommands.START_SLIDESHOW} {pipeName}", false);
+        var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
+        await BHelper.RunIgcmd($"{IgCommands.START_SLIDESHOW} {slideshowIndex} \"{filePath}\"", false);
 
+        // wait for client connection
         await slideshowServer.WaitForConnectionAsync();
-
         Config.EnableSlideshow = true;
+
+
+        var fileListJson = BHelper.ToJson(Local.Images.FileNames);
+        await slideshowServer.SendAsync($"{SlideshowPipeCommands.SET_IMAGE_LIST}={fileListJson}");
 
 
         // hide FrmMain
         SetFrmMainStateInSlideshow(Config.EnableSlideshow);
-
-
-        //frmSlideshow.TopMost = TopMost;
     }
 
     private void SlideshowServer_MessageReceived(object? sender, MessageReceivedEventArgs e)
@@ -2014,7 +2017,7 @@ public partial class FrmMain
     {
         foreach (var server in Local.SlideshowPipeServers)
         {
-            _ = server?.SendAsync("TERMINATE");
+            _ = server?.SendAsync(Constants.SLIDESHOW_PIPE_CMD_TERMINATE);
         }
     }
 

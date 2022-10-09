@@ -268,7 +268,7 @@ public partial class FrmMain
             Config.ShowThumbnails = _showThumbnails;
         }
 
-        Config.LastSeenImagePath = Local.Images.GetFileName(Local.CurrentIndex);
+        Config.LastSeenImagePath = Local.Images.GetFilePath(Local.CurrentIndex);
         Config.ZoomLockValue = PicMain.ZoomFactor * 100f;
 
         // slideshow

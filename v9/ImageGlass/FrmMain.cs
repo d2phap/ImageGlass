@@ -494,7 +494,11 @@ public partial class FrmMain : Form
 
 
             // sort list
-            var sortedFilesList = SortImageList(allFilesToLoad);
+            // NOTE: relies on LocalSetting.ActiveImageLoadingOrder been updated first!
+            var sortedFilesList = BHelper.SortImageList(allFilesToLoad,
+                Local.ActiveImageLoadingOrder,
+                Local.ActiveImageLoadingOrderType,
+                Config.GroupImagesByDirectory);
 
             // add to image list
             Local.InitImageList(sortedFilesList, distinctDirsList);
@@ -624,151 +628,6 @@ public partial class FrmMain : Form
 
                 return extension.Length > 0 && Config.AllFormats.Contains(extension);
             }));
-    }
-
-
-    /// <summary>
-    /// Sort image list
-    /// </summary>
-    /// <param name="fileList"></param>
-    /// <returns></returns>
-    private static IEnumerable<string> SortImageList(IEnumerable<string> fileList)
-    {
-        // NOTE: relies on LocalSetting.ActiveImageLoadingOrder been updated first!
-
-        // KBR 20190605
-        // Fix observed limitation: to more closely match the Windows Explorer's sort
-        // order, we must sort by the target column, then by name.
-        var naturalSortComparer = Local.ActiveImageLoadingOrderType == ImageOrderType.Desc
-                                    ? (IComparer<string>)new ReverseWindowsNaturalSort()
-                                    : new WindowsNaturalSort();
-
-        // initiate directory sorter to a comparer that does nothing
-        // if user wants to group by directory, we initiate the real comparer
-        var directorySortComparer = (IComparer<string>)new IdentityComparer();
-        if (Config.GroupImagesByDirectory)
-        {
-            if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
-            {
-                directorySortComparer = new ReverseWindowsDirectoryNaturalSort();
-            }
-            else
-            {
-                directorySortComparer = new WindowsDirectoryNaturalSort();
-            }
-        }
-
-        // KBR 20190605 Fix observed discrepancy: using UTC for create,
-        // but not for write/access times
-
-        // Sort image file
-        if (Local.ActiveImageLoadingOrder == ImageOrderBy.FileSize)
-        {
-            if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
-            {
-                return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
-                    .ThenByDescending(f => new FileInfo(f).Length)
-                    .ThenBy(f => f, naturalSortComparer);
-            }
-            else
-            {
-                return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
-                    .ThenBy(f => new FileInfo(f).Length)
-                    .ThenBy(f => f, naturalSortComparer);
-            }
-        }
-
-        // sort by CreationTime
-        if (Local.ActiveImageLoadingOrder == ImageOrderBy.CreationTime)
-        {
-            if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
-            {
-                return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
-                    .ThenByDescending(f => new FileInfo(f).CreationTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer);
-            }
-            else
-            {
-                return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
-                    .ThenBy(f => new FileInfo(f).CreationTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer);
-            }
-        }
-
-        // sort by Extension
-        if (Local.ActiveImageLoadingOrder == ImageOrderBy.Extension)
-        {
-            if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
-            {
-                return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
-                    .ThenByDescending(f => new FileInfo(f).Extension)
-                    .ThenBy(f => f, naturalSortComparer);
-            }
-            else
-            {
-                return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
-                    .ThenBy(f => new FileInfo(f).Extension)
-                    .ThenBy(f => f, naturalSortComparer);
-            }
-        }
-
-        // sort by LastAccessTime
-        if (Local.ActiveImageLoadingOrder == ImageOrderBy.LastAccessTime)
-        {
-            if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
-            {
-                return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
-                    .ThenByDescending(f => new FileInfo(f).LastAccessTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer);
-            }
-            else
-            {
-                return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
-                    .ThenBy(f => new FileInfo(f).LastAccessTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer);
-            }
-        }
-
-        // sort by LastWriteTime
-        if (Local.ActiveImageLoadingOrder == ImageOrderBy.LastWriteTime)
-        {
-            if (Local.ActiveImageLoadingOrderType == ImageOrderType.Desc)
-            {
-                return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
-                    .ThenByDescending(f => new FileInfo(f).LastWriteTimeUtc)
-                    .ThenBy(f => f, naturalSortComparer);
-            }
-            else
-            {
-                return fileList.AsParallel()
-                    .OrderBy(f => f, directorySortComparer)
-                    .ThenBy(f => f, naturalSortComparer)
-                    .ThenBy(f => new FileInfo(f).LastWriteTimeUtc);
-            }
-        }
-
-        // sort by Random
-        if (Local.ActiveImageLoadingOrder == ImageOrderBy.Random)
-        {
-            // NOTE: ignoring the 'descending order' setting
-            return fileList.AsParallel()
-                .OrderBy(f => f, directorySortComparer)
-                .ThenBy(_ => Guid.NewGuid());
-        }
-
-        // sort by Name (default)
-        return fileList.AsParallel()
-            .OrderBy(f => f, directorySortComparer)
-            .ThenBy(f => f, naturalSortComparer);
     }
 
 
@@ -926,7 +785,7 @@ public partial class FrmMain : Form
         {
             CurrentIndex = Local.CurrentIndex,
             NewIndex = imageIndex,
-            FilePath = string.IsNullOrEmpty(filename) ? Local.Images.GetFileName(Local.CurrentIndex) : filename,
+            FilePath = string.IsNullOrEmpty(filename) ? Local.Images.GetFilePath(Local.CurrentIndex) : filename,
         };
         Local.RaiseImageLoadingEvent(loadingArgs);
 
@@ -1074,7 +933,7 @@ public partial class FrmMain : Form
             Local.IsImageError = true;
             Local.ImageModifiedPath = "";
 
-            var currentFile = Local.Images.GetFileName(e.Index);
+            var currentFile = Local.Images.GetFilePath(e.Index);
             if (!string.IsNullOrEmpty(currentFile) && !File.Exists(currentFile))
             {
                 Local.Images.Unload(e.Index);
@@ -1320,7 +1179,7 @@ public partial class FrmMain : Form
         else
         {
             var fullPath = string.IsNullOrEmpty(filename)
-                ? Local.Images.GetFileName(Local.CurrentIndex)
+                ? Local.Images.GetFilePath(Local.CurrentIndex)
                 : BHelper.ResolvePath(filename);
 
             // ListCount
@@ -1605,7 +1464,7 @@ public partial class FrmMain : Form
         #region Free path executable
         else
         {
-            var currentFilePath = Local.Images.GetFileName(Local.CurrentIndex);
+            var currentFilePath = Local.Images.GetFilePath(Local.CurrentIndex);
             var procArgs = $"{ac.Argument}".Replace(Constants.FILE_MACRO, currentFilePath);
 
             // run external command line
@@ -1783,7 +1642,7 @@ public partial class FrmMain : Form
         MnuContext.Items.Clear();
 
         var hasClipboardImage = Local.ClipboardImage != null;
-        var imageNotFound = !File.Exists(Local.Images.GetFileName(Local.CurrentIndex));
+        var imageNotFound = !File.Exists(Local.Images.GetFilePath(Local.CurrentIndex));
 
         //if (Config.IsSlideshow && !imageNotFound)
         //{
