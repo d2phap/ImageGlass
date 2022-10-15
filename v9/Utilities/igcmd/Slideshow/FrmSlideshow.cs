@@ -406,7 +406,7 @@ public partial class FrmSlideshow : Form
             var enableFading = !isImageBigForFading;
 
             // set the main image
-            PicMain.SetImage(photo.ImgData, enableFading);
+            PicMain.SetImage(photo.ImgData, enableFading, 0.4f, 0.02f);
 
             PicMain.ClearMessage();
         }
