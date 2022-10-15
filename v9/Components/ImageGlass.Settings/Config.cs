@@ -547,12 +547,12 @@ public static class Config
     /// <summary>
     /// Gets, sets slide show interval (minimum value if it's random)
     /// </summary>
-    public static int SlideshowInterval { get; set; } = 5;
+    public static float SlideshowInterval { get; set; } = 5f;
 
     /// <summary>
     /// Gets, sets the maximum slide show interval value
     /// </summary>
-    public static int SlideshowIntervalTo { get; set; } = 5;
+    public static float SlideshowIntervalTo { get; set; } = 5f;
 
     /// <summary>
     /// Gets, sets value of thumbnail dimension in pixel
@@ -875,7 +875,7 @@ public static class Config
 
         #region Slide show
         SlideshowInterval = items.GetValue(nameof(SlideshowInterval), SlideshowInterval);
-        if (SlideshowInterval < 1) SlideshowInterval = 5;
+        if (SlideshowInterval < 1) SlideshowInterval = 5f;
 
         SlideshowIntervalTo = items.GetValue(nameof(SlideshowIntervalTo), SlideshowIntervalTo);
         SlideshowIntervalTo = Math.Max(SlideshowIntervalTo, SlideshowInterval);

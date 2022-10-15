@@ -62,7 +62,7 @@ public partial class FrmSlideshow : Form
 
     private void FrmSlideshow_Load(object sender, EventArgs e)
     {
-        _slideshowTimer.Interval = Config.SlideshowInterval;
+        _slideshowTimer.Interval = 10; // support milliseconds
         _slideshowTimer.Tick += SlideshowTimer_Tick;
 
         PicMain.Render += PicMain_Render;
@@ -127,7 +127,7 @@ public partial class FrmSlideshow : Form
         if (!_slideshowStopwatch.IsRunning)
             _slideshowStopwatch.Restart();
 
-        if (_slideshowCountdown <= _slideshowStopwatch.Elapsed.TotalSeconds)
+        if (_slideshowStopwatch.Elapsed.TotalMilliseconds >= TimeSpan.FromSeconds(_slideshowCountdown).TotalMilliseconds)
         {
             // end of image list
             if (_currentIndex == _imageList.Count - 1)
@@ -144,8 +144,14 @@ public partial class FrmSlideshow : Form
             _ = ViewNextImageAsync(1);
         }
 
-        // update the countdown text
-        PicMain.Invalidate();
+
+        // only update the countdown text if it's a full second number
+        var isSecond = _slideshowStopwatch.Elapsed.Milliseconds <= 100;
+        if (isSecond)
+        {
+            PicMain.Invalidate();
+        }
+        
     }
 
 
@@ -154,7 +160,8 @@ public partial class FrmSlideshow : Form
         if (!_slideshowTimer.Enabled || !Config.ShowSlideshowCountdown) return;
 
         // draw countdown text ----------------------------------------------
-        var text = TimeSpan.FromSeconds(_slideshowCountdown - _slideshowStopwatch.Elapsed.TotalSeconds + 1).ToString("mm':'ss");
+        var countdownTime = TimeSpan.FromSeconds(_slideshowCountdown + 1);
+        var text = (countdownTime - _slideshowStopwatch.Elapsed).ToString("mm':'ss");
 
         
         var font = new Font(Font.FontFamily, 30f);
@@ -402,13 +409,24 @@ public partial class FrmSlideshow : Form
         else if (!(photo?.ImgData.IsImageNull ?? true))
         {
             var isImageBigForFading = photo.Metadata.Width > 8000
-                    || photo.Metadata.Height > 8000;
+                || photo.Metadata.Height > 8000;
             var enableFading = !isImageBigForFading;
 
             // set the main image
             PicMain.SetImage(photo.ImgData, enableFading, 0.4f, 0.02f);
 
             PicMain.ClearMessage();
+
+
+            // reset countdown timer value
+            _slideshowCountdown = RandomizeSlideshowInterval();
+
+            // since the UI does not print milliseconds,
+            // this prevents the coutdown to flash the maximum value during the first tick
+            if (_slideshowCountdown == Math.Ceiling(_slideshowCountdown))
+            {
+                _slideshowCountdown -= 0.001f;
+            }
         }
 
 
@@ -673,4 +691,16 @@ public partial class FrmSlideshow : Form
     }
 
 
+    /// <summary>
+    /// Randomize slideshow interval in seconds
+    /// </summary>
+    private static float RandomizeSlideshowInterval()
+    {
+        var intervalTo = Config.UseRandomIntervalForSlideshow ? Config.SlideshowIntervalTo : Config.SlideshowInterval;
+
+        var ran = new Random();
+        var interval = (float)(ran.NextDouble() * (intervalTo - Config.SlideshowInterval) + Config.SlideshowInterval);
+
+        return interval;
+    }
 }
