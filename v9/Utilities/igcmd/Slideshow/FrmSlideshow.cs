@@ -31,7 +31,41 @@ public partial class FrmSlideshow : Form
     private Timer _slideshowTimer = new() { Enabled = false };
     private Stopwatch _slideshowStopwatch = new(); // slideshow stopwatch
     private float _slideshowCountdown = 5; // slideshow countdown interval
-    
+
+
+    /// <summary>
+    /// Hotkeys list of main menu
+    /// </summary>
+    public static Dictionary<string, List<Hotkey>> CurrentMenuHotkeys = new()
+    {
+        // Open context menu
+	    { nameof(MnuContext),               new() { new(Keys.Alt | Keys.F) } },
+
+        { nameof(MnuPauseResumeSlideshow),  new() { new(Keys.Space) } },
+        { nameof(MnuExitSlideshow),         new() { new(Keys.Escape) } },
+        { nameof(MnuOpenMainWindow),        new() { new(Keys.F12) } },
+
+        // MnuNavigation
+        { nameof(MnuViewNext),              new() { new (Keys.Right) } },
+        { nameof(MnuViewPrevious),          new() { new (Keys.Left) } },
+        { nameof(MnuGoToFirst),             new() { new (Keys.Home) } },
+        { nameof(MnuGoToLast),              new() { new (Keys.End) } },
+
+        { nameof(MnuFullScreen),            new() { new (Keys.F11) } },
+        { nameof(MnuToggleCheckerboard),    new() { new (Keys.B) } },
+        
+        { nameof(MnuActualSize),            new() { new (Keys.D0), new (Keys.NumPad0) } },
+        { nameof(MnuAutoZoom),              new() { new (Keys.D1), new (Keys.NumPad1) } },
+        { nameof(MnuLockZoom),              new() { new (Keys.D2), new (Keys.NumPad2) } },
+        { nameof(MnuScaleToWidth),          new() { new (Keys.D3), new (Keys.NumPad3) } },
+        { nameof(MnuScaleToHeight),         new() { new (Keys.D4), new (Keys.NumPad4) } },
+        { nameof(MnuScaleToFit),            new() { new (Keys.D5), new (Keys.NumPad5) } },
+        { nameof(MnuScaleToFill),           new() { new (Keys.D6), new (Keys.NumPad6) } },
+
+        { nameof(MnuOpenWith),              new() { new (Keys.D) } },
+        { nameof(MnuOpenLocation),          new() { new (Keys.L) } },
+        { nameof(MnuCopyPath),              new() { new (Keys.Control | Keys.L) } },
+    };
 
 
     public FrmSlideshow(string slideshowIndex, string initImagePath)
@@ -76,6 +110,10 @@ public partial class FrmSlideshow : Form
         _client.Disconnected += (_, _) => Application.Exit();
 
         _ = _client.ConnectAsync();
+
+        // load menu hotkeys
+        Config.MergeHotkeys(ref CurrentMenuHotkeys, Config.MenuHotkeys);
+        LoadMenuHotkeys();
     }
 
     private void FrmSlideshow_FormClosing(object sender, FormClosingEventArgs e)
@@ -85,7 +123,49 @@ public partial class FrmSlideshow : Form
 
     private void FrmSlideshow_KeyDown(object sender, KeyEventArgs e)
     {
+        #region Register and run CONTEXT MENU shortcuts
 
+        bool CheckMenuShortcut(ToolStripMenuItem mnu)
+        {
+            var menuHotkeyList = Config.GetHotkey(CurrentMenuHotkeys, mnu.Name);
+            var menuHotkey = menuHotkeyList.SingleOrDefault(k => k.KeyData == e.KeyData);
+
+            if (menuHotkey != null)
+            {
+                // ignore invisible menu
+                if (mnu.Visible)
+                {
+                    return false;
+                }
+
+                mnu.PerformClick();
+
+                return true;
+            }
+
+            foreach (var child in mnu.DropDownItems.OfType<ToolStripMenuItem>())
+            {
+                CheckMenuShortcut(child);
+            }
+
+            return false;
+        }
+
+
+        // register context menu shortcuts
+        foreach (var item in MnuContext.Items.OfType<ToolStripMenuItem>())
+        {
+            if (CheckMenuShortcut(item))
+            {
+                return;
+            }
+        }
+        #endregion
+    }
+
+    private void FrmSlideshow_MouseDown(object sender, MouseEventArgs e)
+    {
+        
     }
 
 
@@ -703,4 +783,33 @@ public partial class FrmSlideshow : Form
 
         return interval;
     }
+
+    /// <summary>
+    /// Load hotkeys of menu
+    /// </summary>
+    /// <param name="menu"></param>
+    private void LoadMenuHotkeys(ToolStripDropDown? menu = null)
+    {
+        if (InvokeRequired)
+        {
+            Invoke(LoadMenuHotkeys, menu);
+            return;
+        }
+
+        // default: context menu
+        menu ??= MnuContext;
+
+
+        var allItems = MenuUtils.GetActualItems(menu.Items);
+        foreach (ToolStripMenuItem item in allItems)
+        {
+            item.ShortcutKeyDisplayString = Config.GetHotkeyString(CurrentMenuHotkeys, item.Name);
+
+            if (item.HasDropDownItems)
+            {
+                LoadMenuHotkeys(item.DropDown);
+            }
+        }
+    }
+
 }

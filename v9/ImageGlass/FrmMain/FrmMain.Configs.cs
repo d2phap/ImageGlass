@@ -81,13 +81,13 @@ public partial class FrmMain
         { nameof(MnuZoomIn),                new() { new (Keys.Oemplus) } }, // =
         { nameof(MnuZoomOut),               new() { new (Keys.OemMinus) } }, // -
         { nameof(MnuCustomZoom),            new() { new (Keys.Z) } },
-        { nameof(MnuActualSize),            new() { new (Keys.D0) } },
-        { nameof(MnuAutoZoom),              new() { new (Keys.D1) } },
-        { nameof(MnuLockZoom),              new() { new (Keys.D2) } },
-        { nameof(MnuScaleToWidth),          new() { new (Keys.D3) } },
-        { nameof(MnuScaleToHeight),         new() { new (Keys.D4) } },
-        { nameof(MnuScaleToFit),            new() { new (Keys.D5) } },
-        { nameof(MnuScaleToFill),           new() { new (Keys.D6) } },
+        { nameof(MnuActualSize),            new() { new (Keys.D0), new(Keys.NumPad0) } },
+        { nameof(MnuAutoZoom),              new() { new (Keys.D1), new(Keys.NumPad1) } },
+        { nameof(MnuLockZoom),              new() { new (Keys.D2), new (Keys.NumPad2) } },
+        { nameof(MnuScaleToWidth),          new() { new (Keys.D3), new (Keys.NumPad3) } },
+        { nameof(MnuScaleToHeight),         new() { new (Keys.D4), new (Keys.NumPad4) } },
+        { nameof(MnuScaleToFit),            new() { new (Keys.D5), new (Keys.NumPad5) } },
+        { nameof(MnuScaleToFill),           new() { new (Keys.D6), new (Keys.NumPad6) } },
 
         // MnuImage
         { nameof(MnuViewChannels),          new() { new (Keys.Shift | Keys.C) } },
