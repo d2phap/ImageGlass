@@ -353,7 +353,7 @@ public partial class FrmSlideshow : Form
 
         // draw countdown text ----------------------------------------------
         var countdownTime = TimeSpan.FromSeconds(_slideshowCountdown + 1);
-        var text = (countdownTime - _slideshowStopwatch.Elapsed).ToString("mm':'ss");
+        var text = (countdownTime - _slideshowStopwatch.Elapsed).ToString("mm'∶'ss");
 
         
         var font = new Font(Font.FontFamily, 30f);
