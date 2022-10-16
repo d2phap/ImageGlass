@@ -983,14 +983,14 @@ public partial class FrmSlideshow : Form
         var mnu = sender as ToolStripMenuItem;
         if (mnu is null) return;
 
-        var selectedOrder = (ImageOrderBy)(int)mnu.Tag;
 
-        if (selectedOrder != Config.ImageLoadingOrder)
+        if (mnu.Tag is ImageOrderBy selectedOrder
+            && selectedOrder != Config.ImageLoadingOrder)
         {
             Config.ImageLoadingOrder = selectedOrder;
 
-            //// reload image list
-            //IG_ReloadList();
+            // reload image list
+            _ = LoadImageListAsync(_images.FileNames, _images.GetFilePath(_currentIndex));
 
             // reload the state
             LoadMnuLoadingOrdersSubItems();
@@ -1003,14 +1003,13 @@ public partial class FrmSlideshow : Form
         var mnu = sender as ToolStripMenuItem;
         if (mnu is null) return;
 
-        var selectedType = (ImageOrderType)(int)mnu.Tag;
-
-        if (selectedType != Config.ImageLoadingOrderType)
+        if (mnu.Tag is ImageOrderType selectedType
+            && selectedType != Config.ImageLoadingOrderType)
         {
             Config.ImageLoadingOrderType = selectedType;
 
             // reload image list
-            //LoadImageListAsync();
+            _ = LoadImageListAsync(_images.FileNames, _images.GetFilePath(_currentIndex));
 
             // reload the state
             LoadMnuLoadingOrdersSubItems();
@@ -1018,8 +1017,8 @@ public partial class FrmSlideshow : Form
     }
 
 
-
     #region Menu
+
 
     private void MnuPauseResumeSlideshow_Click(object sender, EventArgs e)
     {

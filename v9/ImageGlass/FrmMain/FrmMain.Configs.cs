@@ -771,9 +771,8 @@ public partial class FrmMain
         var mnu = sender as ToolStripMenuItem;
         if (mnu is null) return;
 
-        var selectedOrder = (ImageOrderBy)(int)mnu.Tag;
-
-        if (selectedOrder != Config.ImageLoadingOrder)
+        if (mnu.Tag is ImageOrderBy selectedOrder
+            && selectedOrder != Config.ImageLoadingOrder)
         {
             Config.ImageLoadingOrder = selectedOrder;
 
@@ -790,9 +789,8 @@ public partial class FrmMain
         var mnu = sender as ToolStripMenuItem;
         if (mnu is null) return;
 
-        var selectedType = (ImageOrderType)(int)mnu.Tag;
-
-        if (selectedType != Config.ImageLoadingOrderType)
+        if (mnu.Tag is ImageOrderType selectedType
+            && selectedType != Config.ImageLoadingOrderType)
         {
             Config.ImageLoadingOrderType = selectedType;
 
