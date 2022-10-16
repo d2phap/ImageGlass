@@ -82,12 +82,6 @@ public partial class FrmSlideshow : Form
         _serverName = $"{Constants.SLIDESHOW_PIPE_PREFIX}{slideshowIndex}"; ;
         _initImagePath = initImagePath;
 
-        // Get the DPI of the current display,
-        // and load theme icons
-        DpiApi.CurrentDpi = DeviceDpi;
-
-        LoadTheme();
-
 
         // load configs
         _ = int.TryParse(slideshowIndex, out var indexNumber);
@@ -105,6 +99,37 @@ public partial class FrmSlideshow : Form
         {
             PicMain.ZoomFactor = Config.ZoomLockValue / 100f;
         }
+
+
+        // Get the DPI of the current display,
+        // and load theme icons
+        DpiApi.OnDpiChanged += OnDpiChanged;
+        DpiApi.CurrentDpi = DeviceDpi;
+
+        LoadTheme();
+    }
+
+
+    /// <summary>
+    /// Handle DPI changes
+    /// </summary>
+    private void OnDpiChanged()
+    {
+        // scale toolbar icons corresponding to DPI
+        var newIconHeight = DpiApi.Transform(Config.ToolbarIconHeight);
+
+        // reload theme
+        Config.Theme.LoadTheme(newIconHeight);
+    }
+
+
+    private void FrmSlideshow_Load(object sender, EventArgs e)
+    {
+        _slideshowTimer.Interval = 10; // support milliseconds
+        _slideshowTimer.Tick += SlideshowTimer_Tick;
+
+        PicMain.Render += PicMain_Render;
+        PicMain.MouseWheel += PicMain_MouseWheel;
 
         // windowed slideshow
         if (Config.UseWindowedSlideshow)
@@ -126,18 +151,6 @@ public partial class FrmSlideshow : Form
             SetFullScreenMode(true);
         }
 
-        // start slideshow
-        SetSlideshowState(true);
-    }
-
-
-    private void FrmSlideshow_Load(object sender, EventArgs e)
-    {
-        _slideshowTimer.Interval = 10; // support milliseconds
-        _slideshowTimer.Tick += SlideshowTimer_Tick;
-
-        PicMain.Render += PicMain_Render;
-
 
         // load the init image
         _ = BHelper.RunAsThread(() => _ = LoadImageAsync(_initImagePath, _loadImageCancelToken));
@@ -153,6 +166,9 @@ public partial class FrmSlideshow : Form
 
         // load language
         LoadLanguage();
+
+        // start slideshow
+        SetSlideshowState(true);
     }
 
 
@@ -357,6 +373,112 @@ public partial class FrmSlideshow : Form
         var textColor = Color.FromArgb(150, ThemeUtils.InvertBlackAndWhiteColor(PicMain.BackColor));
 
         e.Graphics.DrawText(text, font.Name, font.Size, fontX, fontY, textColor, textDpi: DeviceDpi);
+    }
+
+
+    private void PicMain_MouseWheel(object? sender, MouseEventArgs e)
+    {
+        MouseWheelAction action;
+
+        var eventType = ModifierKeys switch
+        {
+            Keys.Control => MouseWheelEvent.PressCtrlAndScroll,
+            Keys.Shift => MouseWheelEvent.PressShiftAndScroll,
+            Keys.Alt => MouseWheelEvent.PressAltAndScroll,
+            _ => MouseWheelEvent.Scroll,
+        };
+
+
+        // Get mouse wheel action
+        #region Get mouse wheel action
+
+        // get user-defined mouse wheel action
+        if (Config.MouseWheelActions.ContainsKey(eventType))
+        {
+            action = Config.MouseWheelActions[eventType];
+        }
+        // if not found, use the defaut mouse wheel action
+        else
+        {
+            switch (eventType)
+            {
+                case MouseWheelEvent.Scroll:
+                    action = MouseWheelAction.Zoom;
+                    break;
+                case MouseWheelEvent.PressCtrlAndScroll:
+                    action = MouseWheelAction.PanVertically;
+                    break;
+                case MouseWheelEvent.PressShiftAndScroll:
+                    action = MouseWheelAction.PanHorizontally;
+                    break;
+                case MouseWheelEvent.PressAltAndScroll:
+                    action = MouseWheelAction.BrowseImages;
+                    break;
+                default:
+                    action = MouseWheelAction.DoNothing;
+                    break;
+            }
+        }
+        #endregion
+
+
+        // Run mouse wheel action
+        #region Run mouse wheel action
+
+        if (action == MouseWheelAction.Zoom)
+        {
+            PicMain.ZoomByDeltaToPoint(e.Delta, e.Location);
+        }
+        else if (action == MouseWheelAction.PanVertically)
+        {
+            if (e.Delta > 0)
+            {
+                PicMain.PanUp(e.Delta + PicMain.PanDistance / 4);
+            }
+            else
+            {
+                PicMain.PanDown(Math.Abs(e.Delta) + PicMain.PanDistance / 4);
+            }
+        }
+        else if (action == MouseWheelAction.PanHorizontally)
+        {
+            if (e.Delta > 0)
+            {
+                PicMain.PanLeft(e.Delta + PicMain.PanDistance / 4);
+            }
+            else
+            {
+                PicMain.PanRight(Math.Abs(e.Delta) + PicMain.PanDistance / 4);
+            }
+        }
+        else if (action == MouseWheelAction.BrowseImages)
+        {
+            if (e.Delta < 0)
+            {
+                _ = ViewNextImageAsync(1);
+            }
+            else
+            {
+                _ = ViewNextImageAsync(-1);
+            }
+        }
+        #endregion
+    }
+
+
+    private void PicMain_OnNavLeftClicked(MouseEventArgs e)
+    {
+        _ = ViewNextImageAsync(-1);
+    }
+
+    private void PicMain_OnNavRightClicked(MouseEventArgs e)
+    {
+        _ = ViewNextImageAsync(1);
+    }
+
+    private void PicMain_OnZoomChanged(ZoomEventArgs e)
+    {
+        UpdateImageInfo(ImageInfoUpdateTypes.Zoom);
     }
 
 
@@ -924,7 +1046,9 @@ public partial class FrmSlideshow : Form
         PicMain.NavPressedColor = Color.FromArgb(240, Config.Theme.Settings.ToolbarBgColor);
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
-
+        PicMain.NavDisplay = Config.EnableNavigationButtons
+            ? NavButtonDisplay.Both
+            : NavButtonDisplay.None;
 
         Config.ApplyFormTheme(this, Config.Theme);
     }
@@ -1329,5 +1453,4 @@ public partial class FrmSlideshow : Form
     }
 
     #endregion
-
 }
