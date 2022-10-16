@@ -85,13 +85,12 @@ public partial class FrmSlideshow : Form
         // load configs
         _ = int.TryParse(slideshowIndex, out var indexNumber);
         Text = $"{Config.Language["FrmMain.MnuSlideshow"]} {indexNumber + 1} - {App.AppName}";
-        TopMost = Config.EnableWindowTopMost;
 
         PicMain.InterpolationScaleDown = Config.ImageInterpolationScaleDown;
         PicMain.InterpolationScaleUp = Config.ImageInterpolationScaleUp;
 
 
-        UpdateTheme();
+        LoadTheme();
     }
 
 
@@ -201,6 +200,26 @@ public partial class FrmSlideshow : Form
             {
                 _ = BHelper.RunAsThread(() => LoadImageList(list, _initImagePath));
             }
+
+            return;
+        }
+
+
+        // update language
+        if (cmd.Equals(SlideshowPipeCommands.SET_LANGUAGE, StringComparison.InvariantCultureIgnoreCase))
+        {
+            Config.Language = new IgLang(arg, App.StartUpDir(Dir.Languages));
+            LoadLanguage();
+            return;
+        }
+
+
+        // update theme
+        if (cmd.Equals(SlideshowPipeCommands.SET_THEME, StringComparison.InvariantCultureIgnoreCase))
+        {
+            Config.Theme = new IgTheme(arg, Config.ToolbarIconHeight);
+            LoadTheme();
+            return;
         }
     }
 
@@ -274,36 +293,6 @@ public partial class FrmSlideshow : Form
         var textColor = Color.FromArgb(150, ThemeUtils.InvertBlackAndWhiteColor(PicMain.BackColor));
 
         e.Graphics.DrawText(text, font.Name, font.Size, fontX, fontY, textColor, textDpi: DeviceDpi);
-    }
-
-
-    private void UpdateTheme(SystemThemeMode mode = SystemThemeMode.Unknown)
-    {
-        var themMode = mode;
-
-        if (mode == SystemThemeMode.Unknown)
-        {
-            themMode = ThemeUtils.GetSystemThemeMode();
-        }
-
-        // correct theme mode
-        var isDarkMode = themMode != SystemThemeMode.Light;
-
-        MnuContext.Theme = Config.Theme;
-
-        // background
-        BackColor = Config.BackgroundColor;
-        PicMain.BackColor = Config.BackgroundColor;
-        PicMain.ForeColor = Config.Theme.Settings.TextColor;
-
-        // navigation buttons
-        PicMain.NavHoveredColor = Color.FromArgb(200, Config.Theme.Settings.ToolbarBgColor);
-        PicMain.NavPressedColor = Color.FromArgb(240, Config.Theme.Settings.ToolbarBgColor);
-        PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
-        PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
-
-
-        Config.ApplyFormTheme(this, Config.Theme);
     }
 
 
@@ -524,6 +513,10 @@ public partial class FrmSlideshow : Form
     #endregion // Load image
 
 
+
+    /// <summary>
+    /// Sets slideshow state.
+    /// </summary>
     private void SetSlideshowState(bool? enable = null, bool displayMessage = true)
     {
         if (InvokeRequired)
@@ -787,8 +780,9 @@ public partial class FrmSlideshow : Form
         return interval;
     }
 
+
     /// <summary>
-    /// Load hotkeys of menu
+    /// Loads hotkeys of menu
     /// </summary>
     /// <param name="menu"></param>
     private void LoadMenuHotkeys(ToolStripDropDown? menu = null)
@@ -816,6 +810,42 @@ public partial class FrmSlideshow : Form
     }
 
 
+    /// <summary>
+    /// Loads theme pack
+    /// </summary>
+    private void LoadTheme(SystemThemeMode mode = SystemThemeMode.Unknown)
+    {
+        var themMode = mode;
+
+        if (mode == SystemThemeMode.Unknown)
+        {
+            themMode = ThemeUtils.GetSystemThemeMode();
+        }
+
+        // correct theme mode
+        var isDarkMode = themMode != SystemThemeMode.Light;
+
+        MnuContext.Theme = Config.Theme;
+
+        // background
+        BackColor = Config.BackgroundColor;
+        PicMain.BackColor = Config.BackgroundColor;
+        PicMain.ForeColor = Config.Theme.Settings.TextColor;
+
+        // navigation buttons
+        PicMain.NavHoveredColor = Color.FromArgb(200, Config.Theme.Settings.ToolbarBgColor);
+        PicMain.NavPressedColor = Color.FromArgb(240, Config.Theme.Settings.ToolbarBgColor);
+        PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
+        PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
+
+
+        Config.ApplyFormTheme(this, Config.Theme);
+    }
+
+
+    /// <summary>
+    /// Loads language
+    /// </summary>
     private void LoadLanguage()
     {
         var lang = Config.Language;

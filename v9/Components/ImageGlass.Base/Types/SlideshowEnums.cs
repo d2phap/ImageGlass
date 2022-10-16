@@ -24,4 +24,8 @@ public static class SlideshowPipeCommands
 {
     public static string SET_IMAGE_LIST => "set-image-list";
 
+    public static string SET_LANGUAGE => "set-language";
+
+    public static string SET_THEME => "set-theme";
+
 }
