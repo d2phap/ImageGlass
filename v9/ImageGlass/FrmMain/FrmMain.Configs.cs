@@ -311,7 +311,7 @@ public partial class FrmMain
     {
         if (e.HasFlag(UpdateRequests.Language))
         {
-            LoadLanguages();
+            LoadLanguage();
         }
         
         if (e.HasFlag(UpdateRequests.MenuHotkeys))
@@ -418,9 +418,9 @@ public partial class FrmMain
 
 
     /// <summary>
-    /// Load <see cref="MnuMain"/> language.
+    /// Load language.
     /// </summary>
-    private void LoadLanguages()
+    private void LoadLanguage()
     {
         var lang = Config.Language;
 

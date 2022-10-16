@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using System.IO.Pipes;
 using System.Linq;
+using System.Windows.Forms;
 using WicNet;
 using Timer = System.Windows.Forms.Timer;
 
@@ -43,7 +44,7 @@ public partial class FrmSlideshow : Form
 
         { nameof(MnuPauseResumeSlideshow),  new() { new(Keys.Space) } },
         { nameof(MnuExitSlideshow),         new() { new(Keys.Escape) } },
-        { nameof(MnuOpenMainWindow),        new() { new(Keys.F12) } },
+        { nameof(MnuShowMainWindow),        new() { new(Keys.F12) } },
 
         // MnuNavigation
         { nameof(MnuViewNext),              new() { new (Keys.Right) } },
@@ -83,7 +84,7 @@ public partial class FrmSlideshow : Form
 
         // load configs
         _ = int.TryParse(slideshowIndex, out var indexNumber);
-        Text = $"{Config.Language["FrmMain.MnuSlideshow"]} {indexNumber + 1} - {Application.ProductName}";
+        Text = $"{Config.Language["FrmMain.MnuSlideshow"]} {indexNumber + 1} - {App.AppName}";
         TopMost = Config.EnableWindowTopMost;
 
         PicMain.InterpolationScaleDown = Config.ImageInterpolationScaleDown;
@@ -108,12 +109,14 @@ public partial class FrmSlideshow : Form
         _client = new PipeClient(_serverName, PipeDirection.InOut);
         _client.MessageReceived += Client_MessageReceived;
         _client.Disconnected += (_, _) => Application.Exit();
-
         _ = _client.ConnectAsync();
 
         // load menu hotkeys
         Config.MergeHotkeys(ref CurrentMenuHotkeys, Config.MenuHotkeys);
         LoadMenuHotkeys();
+
+        // load language
+        LoadLanguage();
     }
 
     private void FrmSlideshow_FormClosing(object sender, FormClosingEventArgs e)
@@ -573,7 +576,7 @@ public partial class FrmSlideshow : Form
         // AppName
         if (Config.InfoItems.Contains(nameof(ImageInfo.AppName)))
         {
-            ImageInfo.AppName = Application.ProductName;
+            ImageInfo.AppName = App.AppName;
         }
         else
         {
@@ -811,5 +814,140 @@ public partial class FrmSlideshow : Form
             }
         }
     }
+
+
+    private void LoadLanguage()
+    {
+        var lang = Config.Language;
+
+        // slideshow controls
+        MnuPauseResumeSlideshow.Text = lang[$"{Name}.{nameof(MnuPauseResumeSlideshow)}"];
+        MnuExitSlideshow.Text = lang[$"{Name}.{nameof(MnuExitSlideshow)}"];
+        MnuShowMainWindow.Text = lang[$"{Name}.{nameof(MnuShowMainWindow)}"];
+
+        // toggle menus
+        MnuFullScreen.Text = lang[$"FrmMain.{nameof(MnuFullScreen)}"];
+        MnuToggleCountdown.Text = lang[$"{Name}.{nameof(MnuToggleCountdown)}"];
+        MnuToggleCheckerboard.Text = lang[$"FrmMain.{nameof(MnuToggleCheckerboard)}"];
+
+        // navigation
+        MnuChangeBackgroundColor.Text = lang[$"{Name}.{nameof(MnuChangeBackgroundColor)}"];
+        MnuNavigation.Text = lang[$"FrmMain.{nameof(MnuNavigation)}"];
+        MnuViewNext.Text = lang[$"FrmMain.{nameof(MnuViewNext)}"];
+        MnuViewPrevious.Text = lang[$"FrmMain.{nameof(MnuViewPrevious)}"];
+        MnuGoToFirst.Text = lang[$"FrmMain.{nameof(MnuGoToFirst)}"];
+        MnuGoToLast.Text = lang[$"FrmMain.{nameof(MnuGoToLast)}"];
+
+        // zoom
+        MnuActualSize.Text = lang[$"FrmMain.{nameof(MnuActualSize)}"];
+        MnuZoomModes.Text = lang[$"{Name}.{nameof(MnuZoomModes)}"];
+
+        MnuAutoZoom.Text = lang[$"FrmMain.{nameof(MnuAutoZoom)}"];
+        MnuLockZoom.Text = lang[$"FrmMain.{nameof(MnuLockZoom)}"];
+        MnuScaleToWidth.Text = lang[$"FrmMain.{nameof(MnuScaleToWidth)}"];
+        MnuScaleToHeight.Text = lang[$"FrmMain.{nameof(MnuScaleToHeight)}"];
+        MnuScaleToFit.Text = lang[$"FrmMain.{nameof(MnuScaleToFit)}"];
+        MnuScaleToFill.Text = lang[$"FrmMain.{nameof(MnuScaleToFill)}"];
+
+
+        MnuLoadingOrders.Text = lang[$"FrmMain.{nameof(MnuLoadingOrders)}"];
+        LoadMnuLoadingOrdersSubItems(); // update Loading order items
+
+        // viewing image actions
+        MnuOpenWith.Text = lang[$"FrmMain.{nameof(MnuOpenWith)}"];
+        MnuOpenLocation.Text = lang[$"FrmMain.{nameof(MnuOpenLocation)}"];
+        MnuCopyPath.Text = lang[$"FrmMain.{nameof(MnuCopyPath)}"];
+
+    }
+
+
+    /// <summary>
+    /// Load Loading order menu items
+    /// </summary>
+    private void LoadMnuLoadingOrdersSubItems()
+    {
+        // clear items
+        MnuLoadingOrders.DropDown.Items.Clear();
+
+        var newMenuIconHeight = DpiApi.Transform(Constants.MENU_ICON_HEIGHT);
+
+        // add ImageOrderBy items
+        foreach (var order in Enum.GetValues(typeof(ImageOrderBy)))
+        {
+            var orderName = Enum.GetName(typeof(ImageOrderBy), order);
+            var mnu = new ToolStripRadioButtonMenuItem()
+            {
+                Text = Config.Language[$"_.{nameof(ImageOrderBy)}._{orderName}"],
+                Tag = order,
+                CheckOnClick = true,
+                Checked = (int)order == (int)Config.ImageLoadingOrder,
+                ImageScaling = ToolStripItemImageScaling.None,
+                Image = new Bitmap(newMenuIconHeight, newMenuIconHeight)
+            };
+
+            mnu.Click += MnuLoadingOrderItem_Click;
+            MnuLoadingOrders.DropDown.Items.Add(mnu);
+        }
+
+        MnuLoadingOrders.DropDown.Items.Add(new ToolStripSeparator());
+
+        // add ImageOrderType items
+        foreach (var orderType in Enum.GetValues(typeof(ImageOrderType)))
+        {
+            var typeName = Enum.GetName(typeof(ImageOrderType), orderType);
+            var mnu = new ToolStripRadioButtonMenuItem()
+            {
+                Text = Config.Language[$"_.{nameof(ImageOrderType)}._{typeName}"],
+                Tag = orderType,
+                CheckOnClick = true,
+                Checked = (int)orderType == (int)Config.ImageLoadingOrderType,
+                ImageScaling = ToolStripItemImageScaling.None,
+                Image = new Bitmap(newMenuIconHeight, newMenuIconHeight)
+            };
+
+            mnu.Click += MnuLoadingOrderTypeItem_Click;
+            MnuLoadingOrders.DropDown.Items.Add(mnu);
+        }
+    }
+
+
+    private void MnuLoadingOrderItem_Click(object? sender, EventArgs e)
+    {
+        var mnu = sender as ToolStripMenuItem;
+        if (mnu is null) return;
+
+        var selectedOrder = (ImageOrderBy)(int)mnu.Tag;
+
+        if (selectedOrder != Config.ImageLoadingOrder)
+        {
+            Config.ImageLoadingOrder = selectedOrder;
+
+            //// reload image list
+            //IG_ReloadList();
+
+            // reload the state
+            LoadMnuLoadingOrdersSubItems();
+        }
+    }
+
+    private void MnuLoadingOrderTypeItem_Click(object? sender, EventArgs e)
+    {
+        var mnu = sender as ToolStripMenuItem;
+        if (mnu is null) return;
+
+        var selectedType = (ImageOrderType)(int)mnu.Tag;
+
+        if (selectedType != Config.ImageLoadingOrderType)
+        {
+            Config.ImageLoadingOrderType = selectedType;
+
+            //// reload image list
+            //IG_ReloadList();
+
+            // reload the state
+            LoadMnuLoadingOrdersSubItems();
+        }
+    }
+
 
 }

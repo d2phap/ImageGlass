@@ -33,30 +33,32 @@
             this.MnuContext = new ImageGlass.UI.ModernMenu(this.components);
             this.MnuPauseResumeSlideshow = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuExitSlideshow = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuOpenMainWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuShowMainWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuChangeBackgroundColor = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuFullScreen = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuToggleCheckerboard = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuToggleCountdown = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
-            this.MnuActualSize = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuZoomModes = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuLoadingOrders = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.MnuOpenWith = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuCopyPath = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuNavigation = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuViewNext = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuViewPrevious = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuGoToFirst = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuGoToLast = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuActualSize = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuZoomModes = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuAutoZoom = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuLockZoom = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuScaleToWidth = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuScaleToHeight = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuScaleToFit = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuScaleToFill = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuLoadingOrders = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.MnuOpenWith = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuCopyPath = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuContext.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,12 +84,14 @@
             this.MnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MnuPauseResumeSlideshow,
             this.MnuExitSlideshow,
-            this.MnuOpenMainWindow,
+            this.MnuShowMainWindow,
             this.toolStripMenuItem1,
-            this.MnuNavigation,
             this.MnuFullScreen,
+            this.MnuToggleCountdown,
             this.MnuToggleCheckerboard,
             this.toolStripMenuItem3,
+            this.MnuChangeBackgroundColor,
+            this.MnuNavigation,
             this.MnuActualSize,
             this.MnuZoomModes,
             this.MnuLoadingOrders,
@@ -96,14 +100,14 @@
             this.MnuOpenLocation,
             this.MnuCopyPath});
             this.MnuContext.Name = "MnuContext";
-            this.MnuContext.Size = new System.Drawing.Size(293, 389);
+            this.MnuContext.Size = new System.Drawing.Size(301, 445);
             // 
             // MnuPauseResumeSlideshow
             // 
             this.MnuPauseResumeSlideshow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuPauseResumeSlideshow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuPauseResumeSlideshow.Name = "MnuPauseResumeSlideshow";
-            this.MnuPauseResumeSlideshow.Size = new System.Drawing.Size(292, 28);
+            this.MnuPauseResumeSlideshow.Size = new System.Drawing.Size(300, 28);
             this.MnuPauseResumeSlideshow.Text = "[Pause / resume slideshow]";
             // 
             // MnuExitSlideshow
@@ -111,21 +115,29 @@
             this.MnuExitSlideshow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuExitSlideshow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuExitSlideshow.Name = "MnuExitSlideshow";
-            this.MnuExitSlideshow.Size = new System.Drawing.Size(292, 28);
+            this.MnuExitSlideshow.Size = new System.Drawing.Size(300, 28);
             this.MnuExitSlideshow.Text = "[Exit slideshow]";
             // 
-            // MnuOpenMainWindow
+            // MnuShowMainWindow
             // 
-            this.MnuOpenMainWindow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.MnuOpenMainWindow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.MnuOpenMainWindow.Name = "MnuOpenMainWindow";
-            this.MnuOpenMainWindow.Size = new System.Drawing.Size(292, 28);
-            this.MnuOpenMainWindow.Text = "[Open main window]";
+            this.MnuShowMainWindow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MnuShowMainWindow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.MnuShowMainWindow.Name = "MnuShowMainWindow";
+            this.MnuShowMainWindow.Size = new System.Drawing.Size(300, 28);
+            this.MnuShowMainWindow.Text = "[Open main window]";
+            // 
+            // MnuChangeBackgroundColor
+            // 
+            this.MnuChangeBackgroundColor.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MnuChangeBackgroundColor.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.MnuChangeBackgroundColor.Name = "MnuChangeBackgroundColor";
+            this.MnuChangeBackgroundColor.Size = new System.Drawing.Size(300, 28);
+            this.MnuChangeBackgroundColor.Text = "[Change background color...]";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(289, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(297, 6);
             // 
             // MnuFullScreen
             // 
@@ -133,7 +145,7 @@
             this.MnuFullScreen.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuFullScreen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuFullScreen.Name = "MnuFullScreen";
-            this.MnuFullScreen.Size = new System.Drawing.Size(292, 28);
+            this.MnuFullScreen.Size = new System.Drawing.Size(300, 28);
             this.MnuFullScreen.Text = "[Full screen]";
             // 
             // MnuToggleCheckerboard
@@ -142,73 +154,22 @@
             this.MnuToggleCheckerboard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuToggleCheckerboard.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuToggleCheckerboard.Name = "MnuToggleCheckerboard";
-            this.MnuToggleCheckerboard.Size = new System.Drawing.Size(292, 28);
+            this.MnuToggleCheckerboard.Size = new System.Drawing.Size(300, 28);
             this.MnuToggleCheckerboard.Text = "[Checkerboard background]";
+            // 
+            // MnuToggleCountdown
+            // 
+            this.MnuToggleCountdown.CheckOnClick = true;
+            this.MnuToggleCountdown.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MnuToggleCountdown.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.MnuToggleCountdown.Name = "MnuToggleCountdown";
+            this.MnuToggleCountdown.Size = new System.Drawing.Size(300, 28);
+            this.MnuToggleCountdown.Text = "[Show countdown]";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(289, 6);
-            // 
-            // MnuActualSize
-            // 
-            this.MnuActualSize.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.MnuActualSize.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.MnuActualSize.Name = "MnuActualSize";
-            this.MnuActualSize.Size = new System.Drawing.Size(292, 28);
-            this.MnuActualSize.Text = "[View actual size]";
-            // 
-            // MnuZoomModes
-            // 
-            this.MnuZoomModes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MnuAutoZoom,
-            this.MnuLockZoom,
-            this.MnuScaleToWidth,
-            this.MnuScaleToHeight,
-            this.MnuScaleToFit,
-            this.MnuScaleToFill});
-            this.MnuZoomModes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.MnuZoomModes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.MnuZoomModes.Name = "MnuZoomModes";
-            this.MnuZoomModes.Size = new System.Drawing.Size(292, 28);
-            this.MnuZoomModes.Text = "[Zoom modes]";
-            // 
-            // MnuLoadingOrders
-            // 
-            this.MnuLoadingOrders.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.MnuLoadingOrders.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.MnuLoadingOrders.Name = "MnuLoadingOrders";
-            this.MnuLoadingOrders.Size = new System.Drawing.Size(292, 28);
-            this.MnuLoadingOrders.Text = "[Loading orders]";
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(289, 6);
-            // 
-            // MnuOpenWith
-            // 
-            this.MnuOpenWith.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.MnuOpenWith.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.MnuOpenWith.Name = "MnuOpenWith";
-            this.MnuOpenWith.Size = new System.Drawing.Size(292, 28);
-            this.MnuOpenWith.Text = "[Open with...]";
-            // 
-            // MnuOpenLocation
-            // 
-            this.MnuOpenLocation.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.MnuOpenLocation.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.MnuOpenLocation.Name = "MnuOpenLocation";
-            this.MnuOpenLocation.Size = new System.Drawing.Size(292, 28);
-            this.MnuOpenLocation.Text = "[Open image location]";
-            // 
-            // MnuCopyPath
-            // 
-            this.MnuCopyPath.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.MnuCopyPath.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.MnuCopyPath.Name = "MnuCopyPath";
-            this.MnuCopyPath.Size = new System.Drawing.Size(292, 28);
-            this.MnuCopyPath.Text = "[Copy image path]";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(297, 6);
             // 
             // MnuNavigation
             // 
@@ -221,7 +182,7 @@
             this.MnuNavigation.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MnuNavigation.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuNavigation.Name = "MnuNavigation";
-            this.MnuNavigation.Size = new System.Drawing.Size(292, 28);
+            this.MnuNavigation.Size = new System.Drawing.Size(300, 28);
             this.MnuNavigation.Text = "[Navigation]";
             // 
             // MnuViewNext
@@ -253,47 +214,107 @@
             this.MnuGoToLast.Size = new System.Drawing.Size(272, 30);
             this.MnuGoToLast.Text = "[Go to the last image]";
             // 
+            // MnuActualSize
+            // 
+            this.MnuActualSize.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MnuActualSize.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.MnuActualSize.Name = "MnuActualSize";
+            this.MnuActualSize.Size = new System.Drawing.Size(300, 28);
+            this.MnuActualSize.Text = "[View actual size]";
+            // 
+            // MnuZoomModes
+            // 
+            this.MnuZoomModes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MnuAutoZoom,
+            this.MnuLockZoom,
+            this.MnuScaleToWidth,
+            this.MnuScaleToHeight,
+            this.MnuScaleToFit,
+            this.MnuScaleToFill});
+            this.MnuZoomModes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MnuZoomModes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.MnuZoomModes.Name = "MnuZoomModes";
+            this.MnuZoomModes.Size = new System.Drawing.Size(300, 28);
+            this.MnuZoomModes.Text = "[Zoom modes]";
+            // 
             // MnuAutoZoom
             // 
             this.MnuAutoZoom.CheckOnClick = true;
             this.MnuAutoZoom.Name = "MnuAutoZoom";
-            this.MnuAutoZoom.Size = new System.Drawing.Size(252, 30);
+            this.MnuAutoZoom.Size = new System.Drawing.Size(236, 30);
             this.MnuAutoZoom.Text = "[Auto Zoom]";
             // 
             // MnuLockZoom
             // 
             this.MnuLockZoom.CheckOnClick = true;
             this.MnuLockZoom.Name = "MnuLockZoom";
-            this.MnuLockZoom.Size = new System.Drawing.Size(252, 30);
+            this.MnuLockZoom.Size = new System.Drawing.Size(236, 30);
             this.MnuLockZoom.Text = "[Lock zoom ratio]";
             // 
             // MnuScaleToWidth
             // 
             this.MnuScaleToWidth.CheckOnClick = true;
             this.MnuScaleToWidth.Name = "MnuScaleToWidth";
-            this.MnuScaleToWidth.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToWidth.Size = new System.Drawing.Size(236, 30);
             this.MnuScaleToWidth.Text = "[Scale to width]";
             // 
             // MnuScaleToHeight
             // 
             this.MnuScaleToHeight.CheckOnClick = true;
             this.MnuScaleToHeight.Name = "MnuScaleToHeight";
-            this.MnuScaleToHeight.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToHeight.Size = new System.Drawing.Size(236, 30);
             this.MnuScaleToHeight.Text = "[Scale to height]";
             // 
             // MnuScaleToFit
             // 
             this.MnuScaleToFit.CheckOnClick = true;
             this.MnuScaleToFit.Name = "MnuScaleToFit";
-            this.MnuScaleToFit.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToFit.Size = new System.Drawing.Size(236, 30);
             this.MnuScaleToFit.Text = "[Scale to fit]";
             // 
             // MnuScaleToFill
             // 
             this.MnuScaleToFill.CheckOnClick = true;
             this.MnuScaleToFill.Name = "MnuScaleToFill";
-            this.MnuScaleToFill.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToFill.Size = new System.Drawing.Size(236, 30);
             this.MnuScaleToFill.Text = "[Scale to fill]";
+            // 
+            // MnuLoadingOrders
+            // 
+            this.MnuLoadingOrders.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MnuLoadingOrders.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.MnuLoadingOrders.Name = "MnuLoadingOrders";
+            this.MnuLoadingOrders.Size = new System.Drawing.Size(300, 28);
+            this.MnuLoadingOrders.Text = "[Loading orders]";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(297, 6);
+            // 
+            // MnuOpenWith
+            // 
+            this.MnuOpenWith.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MnuOpenWith.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.MnuOpenWith.Name = "MnuOpenWith";
+            this.MnuOpenWith.Size = new System.Drawing.Size(300, 28);
+            this.MnuOpenWith.Text = "[Open with...]";
+            // 
+            // MnuOpenLocation
+            // 
+            this.MnuOpenLocation.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MnuOpenLocation.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.MnuOpenLocation.Name = "MnuOpenLocation";
+            this.MnuOpenLocation.Size = new System.Drawing.Size(300, 28);
+            this.MnuOpenLocation.Text = "[Open image location]";
+            // 
+            // MnuCopyPath
+            // 
+            this.MnuCopyPath.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MnuCopyPath.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.MnuCopyPath.Name = "MnuCopyPath";
+            this.MnuCopyPath.Size = new System.Drawing.Size(300, 28);
+            this.MnuCopyPath.Text = "[Copy image path]";
             // 
             // FrmSlideshow
             // 
@@ -318,7 +339,7 @@
         private ImageGlass.UI.ModernMenu MnuContext;
         private ToolStripMenuItem MnuPauseResumeSlideshow;
         private ToolStripMenuItem MnuExitSlideshow;
-        private ToolStripMenuItem MnuOpenMainWindow;
+        private ToolStripMenuItem MnuShowMainWindow;
         private ToolStripSeparator toolStripMenuItem1;
         private ToolStripMenuItem MnuZoomModes;
         private ToolStripMenuItem MnuLoadingOrders;
@@ -342,5 +363,7 @@
         private ToolStripMenuItem MnuScaleToHeight;
         private ToolStripMenuItem MnuScaleToFit;
         private ToolStripMenuItem MnuScaleToFill;
+        private ToolStripMenuItem MnuToggleCountdown;
+        private ToolStripMenuItem MnuChangeBackgroundColor;
     }
 }
