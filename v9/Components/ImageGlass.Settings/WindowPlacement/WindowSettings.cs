@@ -102,6 +102,18 @@ public class WindowSettings
 
 
     /// <summary>
+    /// Gets WindowPlacement
+    /// </summary>
+    public static WindowPlacement GetPlacement(Rectangle bounds, FormWindowState formState)
+    {
+        var state = ToWindowState(formState);
+        var rect = new WpRect(bounds.X, bounds.Y, bounds.X + bounds.Width, bounds.Y + bounds.Height);
+
+        return new WindowPlacement(rect, state);
+    }
+
+
+    /// <summary>
     /// Converts <see cref="FormWindowState"/> to <see cref="WindowState"/>
     /// </summary>
     /// <param name="ws"></param>

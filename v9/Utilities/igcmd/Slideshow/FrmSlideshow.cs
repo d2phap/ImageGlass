@@ -33,6 +33,8 @@ public partial class FrmSlideshow : Form
     private Timer _slideshowTimer = new() { Enabled = false };
     private Stopwatch _slideshowStopwatch = new(); // slideshow stopwatch
     private float _slideshowCountdown = 5; // slideshow countdown interval
+    private Rectangle _windowBound = new();
+    private FormWindowState _windowState = FormWindowState.Normal;
 
 
     /// <summary>
@@ -54,6 +56,7 @@ public partial class FrmSlideshow : Form
         { nameof(MnuGoToLast),              new() { new (Keys.End) } },
 
         { nameof(MnuFullScreen),            new() { new (Keys.F11) } },
+        { nameof(MnuToggleCountdown),       new() { new (Keys.C) } },
         { nameof(MnuToggleCheckerboard),    new() { new (Keys.B) } },
         
         { nameof(MnuActualSize),            new() { new (Keys.D0), new (Keys.NumPad0) } },
@@ -83,6 +86,9 @@ public partial class FrmSlideshow : Form
         // and load theme icons
         DpiApi.CurrentDpi = DeviceDpi;
 
+        LoadTheme();
+
+
         // load configs
         _ = int.TryParse(slideshowIndex, out var indexNumber);
         Text = $"{Config.Language["FrmMain.MnuSlideshow"]} {indexNumber + 1} - {App.AppName}";
@@ -90,8 +96,38 @@ public partial class FrmSlideshow : Form
         PicMain.InterpolationScaleDown = Config.ImageInterpolationScaleDown;
         PicMain.InterpolationScaleUp = Config.ImageInterpolationScaleUp;
 
+        Config.EnableSlideshow = true;
+        MnuToggleCountdown.Checked = Config.ShowSlideshowCountdown;
 
-        LoadTheme();
+        // zoom mode
+        SetZoomMode(Config.ZoomMode);
+        if (Config.ZoomMode == ZoomMode.LockZoom)
+        {
+            PicMain.ZoomFactor = Config.ZoomLockValue / 100f;
+        }
+
+        // windowed slideshow
+        if (Config.UseWindowedSlideshow)
+        {
+            // load window placement from settings
+            WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
+        }
+        // full screen slideshow
+        else
+        {
+            // to hide the animation effect of window border
+            FormBorderStyle = FormBorderStyle.None;
+
+            // load window placement from settings here to save the initial
+            // position of window so that when user exists the fullscreen mode,
+            // it can be restore correctly
+            WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
+
+            SetFullScreenMode(true);
+        }
+
+        // start slideshow
+        SetSlideshowState(true);
     }
 
 
@@ -424,9 +460,7 @@ public partial class FrmSlideshow : Form
         #endregion // Validate image index
 
 
-        var filePath = _images.GetFilePath(_currentIndex);
-
-        await LoadImageAsync(filePath, _loadImageCancelToken);
+        await LoadImageAsync(null, _loadImageCancelToken);
     }
 
 
@@ -438,8 +472,7 @@ public partial class FrmSlideshow : Form
             return;
         }
 
-        var photo = new IgPhoto(filePath);
-
+        IgPhoto? photo;
         var readSettings = new CodecReadOptions()
         {
             ColorProfileName = Config.ColorProfile,
@@ -454,19 +487,36 @@ public partial class FrmSlideshow : Form
             CorrectRotation = true,
         };
 
+
         // get metadata
-        _currentMetadata = PhotoCodec.LoadMetadata(filePath, readSettings);
+        if (!string.IsNullOrEmpty(filePath))
+        {
+            _currentMetadata = PhotoCodec.LoadMetadata(filePath, readSettings);
+        }
+        else
+        {
+            var currentFilePath = _images.GetFilePath(_currentIndex);
+            _currentMetadata = PhotoCodec.LoadMetadata(currentFilePath, readSettings);
+        }
+        
 
         // on image loading
         OnImageLoading();
 
         try
         {
-
             // check if loading is cancelled
             tokenSrc?.Token.ThrowIfCancellationRequested();
 
-            photo = await _images.GetAsync(_currentIndex, tokenSrc: tokenSrc);
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                photo = new(filePath);
+                await photo.LoadAsync(readSettings, tokenSrc);
+            }
+            else
+            {
+                photo = await _images.GetAsync(_currentIndex, tokenSrc: tokenSrc);
+            }
 
             // check if loading is cancelled
             tokenSrc?.Token.ThrowIfCancellationRequested();
@@ -1033,13 +1083,67 @@ public partial class FrmSlideshow : Form
 
     private void MnuShowMainWindow_Click(object sender, EventArgs e)
     {
-
+        _ = _client.SendAsync(SlideshowPipeCommands.SHOW_MAIN_WINDOW);
     }
 
     private void MnuFullScreen_Click(object sender, EventArgs e)
     {
-
+        Config.UseWindowedSlideshow = !Config.UseWindowedSlideshow;
+        SetFullScreenMode(!Config.UseWindowedSlideshow);
     }
+
+    /// <summary>
+    /// Enter or Exit Full screen mode
+    /// </summary>
+    private void SetFullScreenMode(bool enable = true)
+    {
+        MnuFullScreen.Checked = enable;
+
+        // full screen
+        if (enable)
+        {
+            Visible = false;
+
+            // back up the last states of the window
+            _windowBound = Bounds;
+            _windowState = WindowState;
+
+            FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Normal;
+            Bounds = Screen.FromControl(this).Bounds;
+
+            Visible = true;
+        }
+
+        // exit full screen
+        else
+        {
+            // windows state
+            if (_windowState == FormWindowState.Normal)
+            {
+                FormBorderStyle = FormBorderStyle.Sizable;
+                WindowState = FormWindowState.Normal;
+
+                // Windows Bound (Position + Size)
+                Bounds = _windowBound;
+            }
+            else if (_windowState == FormWindowState.Maximized)
+            {
+                // Windows Bound (Position + Size)
+                var wp = WindowSettings.GetPlacement(_windowBound, _windowState);
+                WindowSettings.SetPlacementToWindow(this, wp);
+
+                // to make sure the SizeChanged event is not triggered
+                // before we set the window placement
+                FormBorderStyle = FormBorderStyle.Sizable;
+            }
+            else
+            {
+                FormBorderStyle = FormBorderStyle.Sizable;
+            }
+        }
+    }
+
 
     private void MnuToggleCountdown_Click(object sender, EventArgs e)
     {

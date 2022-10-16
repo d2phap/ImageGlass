@@ -209,6 +209,11 @@ public static class Config
     public static bool LoopSlideshow { get; set; } = true;
 
     /// <summary>
+    /// Gets, sets value indicates that slideshow is played in window mode, not full screen.
+    /// </summary>
+    public static bool UseWindowedSlideshow { get; set; } = false;
+
+    /// <summary>
     /// Gets, sets value indicating whether the full screen mode is enabled or not.
     /// </summary>
     public static bool EnableFullScreen { get; set; } = false;
@@ -791,6 +796,7 @@ public static class Config
         ShowSlideshowCountdown = items.GetValue(nameof(ShowSlideshowCountdown), ShowSlideshowCountdown);
         UseRandomIntervalForSlideshow = items.GetValue(nameof(UseRandomIntervalForSlideshow), UseRandomIntervalForSlideshow);
         LoopSlideshow = items.GetValue(nameof(LoopSlideshow), LoopSlideshow);
+        UseWindowedSlideshow = items.GetValue(nameof(UseWindowedSlideshow), UseWindowedSlideshow);
         EnableFullScreen = items.GetValue(nameof(EnableFullScreen), EnableFullScreen);
         ShowThumbnails = items.GetValue(nameof(ShowThumbnails), ShowThumbnails);
         ShowThumbnailScrollbars = items.GetValue(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
@@ -1261,6 +1267,7 @@ public static class Config
         settings.TryAdd(nameof(ShowSlideshowCountdown), ShowSlideshowCountdown);
         settings.TryAdd(nameof(UseRandomIntervalForSlideshow), UseRandomIntervalForSlideshow);
         settings.TryAdd(nameof(LoopSlideshow), LoopSlideshow);
+        settings.TryAdd(nameof(UseWindowedSlideshow), UseWindowedSlideshow);
         settings.TryAdd(nameof(EnableFullScreen), EnableFullScreen);
         settings.TryAdd(nameof(ShowThumbnails), ShowThumbnails);
         settings.TryAdd(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);

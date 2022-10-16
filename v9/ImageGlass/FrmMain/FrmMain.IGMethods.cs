@@ -1819,9 +1819,6 @@ public partial class FrmMain
             if (hideToolbar) Config.ShowToolbar = _showToolbar;
             if (hideThumbnails) Config.ShowThumbnails = _showThumbnails;
 
-            // restore background color in case of being overriden by SlideShow mode
-            PicMain.BackColor = Config.BackgroundColor;
-
             if (hideToolbar && Config.ShowToolbar)
             {
                 // Show toolbar

@@ -28,4 +28,6 @@ public static class SlideshowPipeCommands
 
     public static string SET_THEME => "set-theme";
 
+    public static string SHOW_MAIN_WINDOW => "show-main-window";
+
 }
