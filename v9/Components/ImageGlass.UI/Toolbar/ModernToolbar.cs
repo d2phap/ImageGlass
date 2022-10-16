@@ -364,7 +364,7 @@ public class ModernToolbar : ToolStrip
         var x = MainMenuButton.Bounds.Left + MainMenuButton.Bounds.Width - MainMenu.Width;
         var y = Visible ? Height: 10;
 
-        MainMenu.Show(this,x, y);
+        MainMenu.Show(this, x, y);
     }
 
     /// <summary>

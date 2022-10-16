@@ -34,12 +34,12 @@
             this.MnuPauseResumeSlideshow = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuExitSlideshow = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuShowMainWindow = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuChangeBackgroundColor = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuFullScreen = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuToggleCheckerboard = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuToggleCountdown = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuToggleCheckerboard = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.MnuChangeBackgroundColor = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuNavigation = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuViewNext = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuViewPrevious = new System.Windows.Forms.ToolStripMenuItem();
@@ -109,6 +109,7 @@
             this.MnuPauseResumeSlideshow.Name = "MnuPauseResumeSlideshow";
             this.MnuPauseResumeSlideshow.Size = new System.Drawing.Size(300, 28);
             this.MnuPauseResumeSlideshow.Text = "[Pause / resume slideshow]";
+            this.MnuPauseResumeSlideshow.Click += new System.EventHandler(this.MnuPauseResumeSlideshow_Click);
             // 
             // MnuExitSlideshow
             // 
@@ -117,6 +118,7 @@
             this.MnuExitSlideshow.Name = "MnuExitSlideshow";
             this.MnuExitSlideshow.Size = new System.Drawing.Size(300, 28);
             this.MnuExitSlideshow.Text = "[Exit slideshow]";
+            this.MnuExitSlideshow.Click += new System.EventHandler(this.MnuExitSlideshow_Click);
             // 
             // MnuShowMainWindow
             // 
@@ -125,14 +127,7 @@
             this.MnuShowMainWindow.Name = "MnuShowMainWindow";
             this.MnuShowMainWindow.Size = new System.Drawing.Size(300, 28);
             this.MnuShowMainWindow.Text = "[Open main window]";
-            // 
-            // MnuChangeBackgroundColor
-            // 
-            this.MnuChangeBackgroundColor.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.MnuChangeBackgroundColor.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.MnuChangeBackgroundColor.Name = "MnuChangeBackgroundColor";
-            this.MnuChangeBackgroundColor.Size = new System.Drawing.Size(300, 28);
-            this.MnuChangeBackgroundColor.Text = "[Change background color...]";
+            this.MnuShowMainWindow.Click += new System.EventHandler(this.MnuShowMainWindow_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -147,15 +142,7 @@
             this.MnuFullScreen.Name = "MnuFullScreen";
             this.MnuFullScreen.Size = new System.Drawing.Size(300, 28);
             this.MnuFullScreen.Text = "[Full screen]";
-            // 
-            // MnuToggleCheckerboard
-            // 
-            this.MnuToggleCheckerboard.CheckOnClick = true;
-            this.MnuToggleCheckerboard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.MnuToggleCheckerboard.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.MnuToggleCheckerboard.Name = "MnuToggleCheckerboard";
-            this.MnuToggleCheckerboard.Size = new System.Drawing.Size(300, 28);
-            this.MnuToggleCheckerboard.Text = "[Checkerboard background]";
+            this.MnuFullScreen.Click += new System.EventHandler(this.MnuFullScreen_Click);
             // 
             // MnuToggleCountdown
             // 
@@ -165,11 +152,31 @@
             this.MnuToggleCountdown.Name = "MnuToggleCountdown";
             this.MnuToggleCountdown.Size = new System.Drawing.Size(300, 28);
             this.MnuToggleCountdown.Text = "[Show countdown]";
+            this.MnuToggleCountdown.Click += new System.EventHandler(this.MnuToggleCountdown_Click);
+            // 
+            // MnuToggleCheckerboard
+            // 
+            this.MnuToggleCheckerboard.CheckOnClick = true;
+            this.MnuToggleCheckerboard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MnuToggleCheckerboard.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.MnuToggleCheckerboard.Name = "MnuToggleCheckerboard";
+            this.MnuToggleCheckerboard.Size = new System.Drawing.Size(300, 28);
+            this.MnuToggleCheckerboard.Text = "[Checkerboard background]";
+            this.MnuToggleCheckerboard.Click += new System.EventHandler(this.MnuToggleCheckerboard_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.Size = new System.Drawing.Size(297, 6);
+            // 
+            // MnuChangeBackgroundColor
+            // 
+            this.MnuChangeBackgroundColor.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MnuChangeBackgroundColor.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.MnuChangeBackgroundColor.Name = "MnuChangeBackgroundColor";
+            this.MnuChangeBackgroundColor.Size = new System.Drawing.Size(300, 28);
+            this.MnuChangeBackgroundColor.Text = "[Change background color...]";
+            this.MnuChangeBackgroundColor.Click += new System.EventHandler(this.MnuChangeBackgroundColor_Click);
             // 
             // MnuNavigation
             // 
@@ -190,12 +197,14 @@
             this.MnuViewNext.Name = "MnuViewNext";
             this.MnuViewNext.Size = new System.Drawing.Size(272, 30);
             this.MnuViewNext.Text = "[View next image]";
+            this.MnuViewNext.Click += new System.EventHandler(this.MnuViewNext_Click);
             // 
             // MnuViewPrevious
             // 
             this.MnuViewPrevious.Name = "MnuViewPrevious";
             this.MnuViewPrevious.Size = new System.Drawing.Size(272, 30);
             this.MnuViewPrevious.Text = "[View previos image]";
+            this.MnuViewPrevious.Click += new System.EventHandler(this.MnuViewPrevious_Click);
             // 
             // toolStripMenuItem4
             // 
@@ -207,12 +216,14 @@
             this.MnuGoToFirst.Name = "MnuGoToFirst";
             this.MnuGoToFirst.Size = new System.Drawing.Size(272, 30);
             this.MnuGoToFirst.Text = "[Go to the first image]";
+            this.MnuGoToFirst.Click += new System.EventHandler(this.MnuGoToFirst_Click);
             // 
             // MnuGoToLast
             // 
             this.MnuGoToLast.Name = "MnuGoToLast";
             this.MnuGoToLast.Size = new System.Drawing.Size(272, 30);
             this.MnuGoToLast.Text = "[Go to the last image]";
+            this.MnuGoToLast.Click += new System.EventHandler(this.MnuGoToLast_Click);
             // 
             // MnuActualSize
             // 
@@ -221,6 +232,7 @@
             this.MnuActualSize.Name = "MnuActualSize";
             this.MnuActualSize.Size = new System.Drawing.Size(300, 28);
             this.MnuActualSize.Text = "[View actual size]";
+            this.MnuActualSize.Click += new System.EventHandler(this.MnuActualSize_Click);
             // 
             // MnuZoomModes
             // 
@@ -241,43 +253,49 @@
             // 
             this.MnuAutoZoom.CheckOnClick = true;
             this.MnuAutoZoom.Name = "MnuAutoZoom";
-            this.MnuAutoZoom.Size = new System.Drawing.Size(236, 30);
+            this.MnuAutoZoom.Size = new System.Drawing.Size(252, 30);
             this.MnuAutoZoom.Text = "[Auto Zoom]";
+            this.MnuAutoZoom.Click += new System.EventHandler(this.MnuAutoZoom_Click);
             // 
             // MnuLockZoom
             // 
             this.MnuLockZoom.CheckOnClick = true;
             this.MnuLockZoom.Name = "MnuLockZoom";
-            this.MnuLockZoom.Size = new System.Drawing.Size(236, 30);
+            this.MnuLockZoom.Size = new System.Drawing.Size(252, 30);
             this.MnuLockZoom.Text = "[Lock zoom ratio]";
+            this.MnuLockZoom.Click += new System.EventHandler(this.MnuLockZoom_Click);
             // 
             // MnuScaleToWidth
             // 
             this.MnuScaleToWidth.CheckOnClick = true;
             this.MnuScaleToWidth.Name = "MnuScaleToWidth";
-            this.MnuScaleToWidth.Size = new System.Drawing.Size(236, 30);
+            this.MnuScaleToWidth.Size = new System.Drawing.Size(252, 30);
             this.MnuScaleToWidth.Text = "[Scale to width]";
+            this.MnuScaleToWidth.Click += new System.EventHandler(this.MnuScaleToWidth_Click);
             // 
             // MnuScaleToHeight
             // 
             this.MnuScaleToHeight.CheckOnClick = true;
             this.MnuScaleToHeight.Name = "MnuScaleToHeight";
-            this.MnuScaleToHeight.Size = new System.Drawing.Size(236, 30);
+            this.MnuScaleToHeight.Size = new System.Drawing.Size(252, 30);
             this.MnuScaleToHeight.Text = "[Scale to height]";
+            this.MnuScaleToHeight.Click += new System.EventHandler(this.MnuScaleToHeight_Click);
             // 
             // MnuScaleToFit
             // 
             this.MnuScaleToFit.CheckOnClick = true;
             this.MnuScaleToFit.Name = "MnuScaleToFit";
-            this.MnuScaleToFit.Size = new System.Drawing.Size(236, 30);
+            this.MnuScaleToFit.Size = new System.Drawing.Size(252, 30);
             this.MnuScaleToFit.Text = "[Scale to fit]";
+            this.MnuScaleToFit.Click += new System.EventHandler(this.MnuScaleToFit_Click);
             // 
             // MnuScaleToFill
             // 
             this.MnuScaleToFill.CheckOnClick = true;
             this.MnuScaleToFill.Name = "MnuScaleToFill";
-            this.MnuScaleToFill.Size = new System.Drawing.Size(236, 30);
+            this.MnuScaleToFill.Size = new System.Drawing.Size(252, 30);
             this.MnuScaleToFill.Text = "[Scale to fill]";
+            this.MnuScaleToFill.Click += new System.EventHandler(this.MnuScaleToFill_Click);
             // 
             // MnuLoadingOrders
             // 
@@ -299,6 +317,7 @@
             this.MnuOpenWith.Name = "MnuOpenWith";
             this.MnuOpenWith.Size = new System.Drawing.Size(300, 28);
             this.MnuOpenWith.Text = "[Open with...]";
+            this.MnuOpenWith.Click += new System.EventHandler(this.MnuOpenWith_Click);
             // 
             // MnuOpenLocation
             // 
@@ -307,6 +326,7 @@
             this.MnuOpenLocation.Name = "MnuOpenLocation";
             this.MnuOpenLocation.Size = new System.Drawing.Size(300, 28);
             this.MnuOpenLocation.Text = "[Open image location]";
+            this.MnuOpenLocation.Click += new System.EventHandler(this.MnuOpenLocation_Click);
             // 
             // MnuCopyPath
             // 
@@ -315,6 +335,7 @@
             this.MnuCopyPath.Name = "MnuCopyPath";
             this.MnuCopyPath.Size = new System.Drawing.Size(300, 28);
             this.MnuCopyPath.Text = "[Copy image path]";
+            this.MnuCopyPath.Click += new System.EventHandler(this.MnuCopyPath_Click);
             // 
             // FrmSlideshow
             // 

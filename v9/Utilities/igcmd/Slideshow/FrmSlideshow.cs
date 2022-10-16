@@ -118,19 +118,32 @@ public partial class FrmSlideshow : Form
         LoadLanguage();
     }
 
+
     private void FrmSlideshow_FormClosing(object sender, FormClosingEventArgs e)
     {
         _client.Dispose();
     }
 
-    private void FrmSlideshow_KeyDown(object sender, KeyEventArgs e)
+
+    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
+        var hotkey = new Hotkey(keyData);
+        var actions = Config.GetHotkeyActions(CurrentMenuHotkeys, hotkey);
+
+        // open context menu
+        if (actions.Contains(nameof(MnuContext)))
+        {
+            MnuContext.Show(this, (PicMain.Width - MnuContext.Width) / 2, (PicMain.Height - MnuContext.Height) / 2);
+            return true;
+        }
+
+
         #region Register and run CONTEXT MENU shortcuts
 
         bool CheckMenuShortcut(ToolStripMenuItem mnu)
         {
             var menuHotkeyList = Config.GetHotkey(CurrentMenuHotkeys, mnu.Name);
-            var menuHotkey = menuHotkeyList.SingleOrDefault(k => k.KeyData == e.KeyData);
+            var menuHotkey = menuHotkeyList.SingleOrDefault(k => k.KeyData == keyData);
 
             if (menuHotkey != null)
             {
@@ -159,10 +172,19 @@ public partial class FrmSlideshow : Form
         {
             if (CheckMenuShortcut(item))
             {
-                return;
+                return true;
             }
         }
         #endregion
+
+
+        return base.ProcessCmdKey(ref msg, keyData);
+    }
+
+
+    private void FrmSlideshow_KeyDown(object sender, KeyEventArgs e)
+    {
+        
     }
 
     private void FrmSlideshow_MouseDown(object sender, MouseEventArgs e)
@@ -198,7 +220,13 @@ public partial class FrmSlideshow : Form
 
             if (list != null && list.Count > 0)
             {
-                _ = BHelper.RunAsThread(() => LoadImageList(list, _initImagePath));
+                _ = BHelper.RunAsThread(async () =>
+                {
+                    await LoadImageListAsync(list, _initImagePath);
+
+                    // enable slideshow
+                    SetSlideshowState(true, false);
+                });
             }
 
             return;
@@ -299,30 +327,29 @@ public partial class FrmSlideshow : Form
     // Load image
     #region Load image
 
-    private void LoadImageList(IEnumerable<string> fileList, string? initFilePath = null)
+    private async Task LoadImageListAsync(IEnumerable<string> fileList, string? initFilePath = null)
     {
-        _imageList = BHelper.SortImageList(fileList,
-            Config.ImageLoadingOrder,
-            Config.ImageLoadingOrderType, 
-            Config.GroupImagesByDirectory).ToList();
-
-        if (string.IsNullOrEmpty(initFilePath))
+        await Task.Run(() =>
         {
-            _currentIndex = 0;
-            return;
-        }
+            _imageList = BHelper.SortImageList(fileList,
+                Config.ImageLoadingOrder,
+                Config.ImageLoadingOrderType,
+                Config.GroupImagesByDirectory).ToList();
 
-        // this part of code fixes calls on legacy 8.3 filenames
-        // (for example opening files from IBM Notes)
-        var di = new DirectoryInfo(initFilePath);
-        initFilePath = di.FullName;
+            if (string.IsNullOrEmpty(initFilePath))
+            {
+                _currentIndex = 0;
+                return;
+            }
 
-        // Find the index of current image
-        _currentIndex = _imageList.IndexOf(initFilePath);
+            // this part of code fixes calls on legacy 8.3 filenames
+            // (for example opening files from IBM Notes)
+            var di = new DirectoryInfo(initFilePath);
+            initFilePath = di.FullName;
 
-
-        // enable slideshow
-        SetSlideshowState(true, false);
+            // Find the index of current image
+            _currentIndex = _imageList.IndexOf(initFilePath);
+        });
     }
 
 
@@ -971,13 +998,203 @@ public partial class FrmSlideshow : Form
         {
             Config.ImageLoadingOrderType = selectedType;
 
-            //// reload image list
-            //IG_ReloadList();
+            // reload image list
+            //LoadImageListAsync();
 
             // reload the state
             LoadMnuLoadingOrdersSubItems();
         }
     }
 
+
+
+    #region Menu
+
+    private void MnuPauseResumeSlideshow_Click(object sender, EventArgs e)
+    {
+        SetSlideshowState(!Config.EnableSlideshow);
+    }
+
+    private void MnuExitSlideshow_Click(object sender, EventArgs e)
+    {
+        Application.Exit();
+    }
+
+    private void MnuShowMainWindow_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuFullScreen_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuToggleCountdown_Click(object sender, EventArgs e)
+    {
+        Config.ShowSlideshowCountdown = !Config.ShowSlideshowCountdown;
+        MnuToggleCountdown.Checked = Config.ShowSlideshowCountdown;
+    }
+
+    private void MnuToggleCheckerboard_Click(object sender, EventArgs e)
+    {
+        Config.ShowCheckerBoard = !Config.ShowCheckerBoard;
+        MnuToggleCheckerboard.Checked = Config.ShowCheckerBoard;
+    }
+
+    private void MnuChangeBackgroundColor_Click(object sender, EventArgs e)
+    {
+        using var cd = new ColorDialog()
+        {
+            Color = Config.BackgroundColor,
+            FullOpen = true,
+        };
+
+        if (cd.ShowDialog() == DialogResult.OK)
+        {
+            Config.BackgroundColor = cd.Color;
+
+            BackColor = Config.BackgroundColor;
+            PicMain.BackColor = Config.BackgroundColor;
+        }
+    }
+
+    private void MnuViewNext_Click(object sender, EventArgs e)
+    {
+        _ = ViewNextImageAsync(1);
+    }
+
+    private void MnuViewPrevious_Click(object sender, EventArgs e)
+    {
+        _ = ViewNextImageAsync(-1);
+    }
+
+    private void MnuGoToFirst_Click(object sender, EventArgs e)
+    {
+        _currentIndex = 0;
+        _ = ViewNextImageAsync(0);
+    }
+
+    private void MnuGoToLast_Click(object sender, EventArgs e)
+    {
+        _currentIndex = _imageList.Count - 1;
+        _ = ViewNextImageAsync(0);
+    }
+
+    private void MnuActualSize_Click(object sender, EventArgs e)
+    {
+        PicMain.ZoomFactor = 1;
+    }
+
+
+    /// <summary>
+    /// Sets the zoom mode value
+    /// </summary>
+    private void SetZoomMode(ZoomMode mode)
+    {
+        Config.ZoomMode = mode;
+
+        if (PicMain.ZoomMode == Config.ZoomMode)
+        {
+            PicMain.Refresh();
+        }
+        else
+        {
+            PicMain.ZoomMode = Config.ZoomMode;
+        }
+
+        // update menu items state
+        MnuAutoZoom.Checked = Config.ZoomMode == ZoomMode.AutoZoom;
+        MnuLockZoom.Checked = Config.ZoomMode == ZoomMode.LockZoom;
+        MnuScaleToWidth.Checked = Config.ZoomMode == ZoomMode.ScaleToWidth;
+        MnuScaleToHeight.Checked = Config.ZoomMode == ZoomMode.ScaleToHeight;
+        MnuScaleToFill.Checked = Config.ZoomMode == ZoomMode.ScaleToFill;
+        MnuScaleToFit.Checked = Config.ZoomMode == ZoomMode.ScaleToFit;
+    }
+
+    private void MnuAutoZoom_Click(object sender, EventArgs e)
+    {
+        SetZoomMode(ZoomMode.AutoZoom);
+    }
+
+    private void MnuLockZoom_Click(object sender, EventArgs e)
+    {
+        SetZoomMode(ZoomMode.LockZoom);
+    }
+
+    private void MnuScaleToWidth_Click(object sender, EventArgs e)
+    {
+        SetZoomMode(ZoomMode.ScaleToWidth);
+    }
+
+    private void MnuScaleToHeight_Click(object sender, EventArgs e)
+    {
+        SetZoomMode(ZoomMode.ScaleToHeight);
+    }
+
+    private void MnuScaleToFit_Click(object sender, EventArgs e)
+    {
+        SetZoomMode(ZoomMode.ScaleToFit);
+    }
+
+    private void MnuScaleToFill_Click(object sender, EventArgs e)
+    {
+        SetZoomMode(ZoomMode.ScaleToFill);
+    }
+
+    private void MnuOpenWith_Click(object sender, EventArgs e)
+    {
+        if (PicMain.Source == ImageSource.Null) return;
+
+        try
+        {
+            var filePath = _imageList[_currentIndex];
+            PicMain.ClearMessage();
+
+
+            using var p = new Process();
+            p.StartInfo.FileName = "openwith";
+
+            // Build the arguments
+            p.StartInfo.Arguments = $"\"{filePath}\"";
+
+            // show error dialog
+            p.StartInfo.ErrorDialog = true;
+
+            p.Start();
+        }
+        catch { }
+    }
+
+    private void MnuOpenLocation_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            var filePath = _imageList[_currentIndex];
+
+            try
+            {
+                ExplorerApi.OpenFolderAndSelectItem(filePath);
+            }
+            catch
+            {
+                Process.Start("explorer.exe", $"/select,\"{filePath}\"");
+            }
+        }
+        catch { }
+    }
+
+    private void MnuCopyPath_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Clipboard.SetText(_imageList[_currentIndex]);
+
+            PicMain.ShowMessage(Config.Language[$"FrmMain.{nameof(MnuCopyPath)}._Success"], Config.InAppMessageDuration);
+        }
+        catch { }
+    }
+
+    #endregion
 
 }
