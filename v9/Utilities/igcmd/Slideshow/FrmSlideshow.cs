@@ -4,6 +4,7 @@ using ImageGlass.Base.DirectoryComparer;
 using ImageGlass.Base.NamedPipes;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.Photoing.Codecs;
+using ImageGlass.Base.Services;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.UI;
@@ -25,7 +26,7 @@ public partial class FrmSlideshow : Form
     private string _initImagePath;
 
     private CancellationTokenSource _loadImageCancelToken = new();
-    private List<string> _imageList = new();
+    private ImageBooster _images = new();
     private int _currentIndex = -1;
     private IgMetadata? _currentMetadata = null;
 
@@ -260,7 +261,7 @@ public partial class FrmSlideshow : Form
         if (_slideshowStopwatch.Elapsed.TotalMilliseconds >= TimeSpan.FromSeconds(_slideshowCountdown).TotalMilliseconds)
         {
             // end of image list
-            if (_currentIndex == _imageList.Count - 1)
+            if (_currentIndex == _images.Length - 1)
             {
                 // loop the list
                 if (!Config.LoopSlideshow)
@@ -330,10 +331,16 @@ public partial class FrmSlideshow : Form
     {
         await Task.Run(() =>
         {
-            _imageList = BHelper.SortImageList(fileList,
+            var list = BHelper.SortImageList(fileList,
                 Config.ImageLoadingOrder,
                 Config.ImageLoadingOrderType,
-                Config.GroupImagesByDirectory).ToList();
+                Config.GroupImagesByDirectory);
+            _images = new ImageBooster(list)
+            {
+                MaxQueue = 1,
+                MaxFileSizeInMbToCache = 100,
+                MaxImageDimensionToCache = Constants.MAX_IMAGE_DIMENSION,
+            };
 
             if (string.IsNullOrEmpty(initFilePath))
             {
@@ -347,7 +354,7 @@ public partial class FrmSlideshow : Form
             initFilePath = di.FullName;
 
             // Find the index of current image
-            _currentIndex = _imageList.IndexOf(initFilePath);
+            _currentIndex = _images.IndexOf(initFilePath);
         });
     }
 
@@ -374,10 +381,10 @@ public partial class FrmSlideshow : Form
         var imageIndex = _currentIndex + step;
 
 
-        if (_imageList.Count > 0)
+        if (_images.Length > 0)
         {
             // Reach end of list
-            if (imageIndex >= _imageList.Count)
+            if (imageIndex >= _images.Length)
             {
                 if (!Config.EnableLoopBackNavigation)
                 {
@@ -403,12 +410,12 @@ public partial class FrmSlideshow : Form
 
 
         // Check if current index is greater than upper limit
-        if (imageIndex >= _imageList.Count)
+        if (imageIndex >= _images.Length)
             imageIndex = 0;
 
         // Check if current index is less than lower limit
         if (imageIndex < 0)
-            imageIndex = _imageList.Count - 1;
+            imageIndex = _images.Length - 1;
 
 
         // Update current index
@@ -417,7 +424,7 @@ public partial class FrmSlideshow : Form
         #endregion // Validate image index
 
 
-        var filePath = _imageList[_currentIndex];
+        var filePath = _images.GetFilePath(_currentIndex);
 
         await LoadImageAsync(filePath, _loadImageCancelToken);
     }
@@ -455,18 +462,22 @@ public partial class FrmSlideshow : Form
 
         try
         {
-            // check if loading is cancelled
-            tokenSrc?.Token.ThrowIfCancellationRequested();
-
-            await photo.LoadAsync(readSettings, tokenSrc);
 
             // check if loading is cancelled
             tokenSrc?.Token.ThrowIfCancellationRequested();
+
+            photo = await _images.GetAsync(_currentIndex, tokenSrc: tokenSrc);
+
+            // check if loading is cancelled
+            tokenSrc?.Token.ThrowIfCancellationRequested();
+
+            // on image loaded
+            OnImageLoaded(photo);
         }
-        catch (OperationCanceledException) { }
-
-        // on image loaded
-        OnImageLoaded(photo);
+        catch (OperationCanceledException)
+        {
+            _images.CancelLoading(_currentIndex);
+        }
     }
 
 
@@ -618,16 +629,16 @@ public partial class FrmSlideshow : Form
 
         // the viewing image is from the image list
         var fullPath = string.IsNullOrEmpty(filePath)
-                ? _imageList[_currentIndex]
+                ? _images.GetFilePath(_currentIndex)
                 : BHelper.ResolvePath(filePath);
 
         // ListCount
         if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ListCount))
         {
             if (Config.InfoItems.Contains(nameof(ImageInfo.ListCount))
-                && _imageList.Count > 0)
+                && _images.Length > 0)
             {
-                ImageInfo.ListCount = $"{_currentIndex + 1}/{_imageList.Count} {Config.Language[$"FrmMain._Files"]}";
+                ImageInfo.ListCount = $"{_currentIndex + 1}/{_images.Length} {Config.Language[$"FrmMain._Files"]}";
 
             }
             else
@@ -1096,7 +1107,7 @@ public partial class FrmSlideshow : Form
 
     private void MnuGoToLast_Click(object sender, EventArgs e)
     {
-        _currentIndex = _imageList.Count - 1;
+        _currentIndex = _images.Length - 1;
         _ = ViewNextImageAsync(0);
     }
 
@@ -1167,7 +1178,7 @@ public partial class FrmSlideshow : Form
 
         try
         {
-            var filePath = _imageList[_currentIndex];
+            var filePath = _images.GetFilePath(_currentIndex);
             PicMain.ClearMessage();
 
 
@@ -1189,7 +1200,7 @@ public partial class FrmSlideshow : Form
     {
         try
         {
-            var filePath = _imageList[_currentIndex];
+            var filePath = _images.GetFilePath(_currentIndex);
 
             try
             {
@@ -1207,7 +1218,7 @@ public partial class FrmSlideshow : Form
     {
         try
         {
-            Clipboard.SetText(_imageList[_currentIndex]);
+            Clipboard.SetText(_images.GetFilePath(_currentIndex));
 
             PicMain.ShowMessage(Config.Language[$"FrmMain.{nameof(MnuCopyPath)}._Success"], Config.InAppMessageDuration);
         }
