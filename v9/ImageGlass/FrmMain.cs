@@ -1136,7 +1136,7 @@ public partial class FrmMain : Form
         // AppName
         if (Config.InfoItems.Contains(nameof(ImageInfo.AppName)))
         {
-            ImageInfo.AppName = Application.ProductName;
+            ImageInfo.AppName = App.AppName;
         }
         else
         {

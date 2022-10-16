@@ -29,13 +29,19 @@ public class App
     /// Gets the application executable path
     /// </summary>
     public static string IGExePath => StartUpDir("ImageGlass.exe");
+    
+
+    /// <summary>
+    /// Gets the application name
+    /// </summary>
+    public static string AppName => FileVersionInfo.GetVersionInfo(IGExePath).ProductName;
 
 
     /// <summary>
     /// Gets the application name after removing all space characters.
     /// Example: ImageGlass Kobe => ImageGlassKobe
     /// </summary>
-    public static string AppNameCode => Application.ProductName.Replace(" ", "", StringComparison.InvariantCultureIgnoreCase);
+    public static string AppNameCode => FileVersionInfo.GetVersionInfo(IGExePath).ProductName.Replace(" ", "", StringComparison.InvariantCultureIgnoreCase);
 
 
     /// <summary>
@@ -43,11 +49,13 @@ public class App
     /// </summary>
     public static string Version => FileVersionInfo.GetVersionInfo(IGExePath).FileVersion ?? "";
 
+
     /// <summary>
     /// Checks if the current user is administator
     /// </summary>
     public static bool IsAdmin => new WindowsPrincipal(WindowsIdentity.GetCurrent())
        .IsInRole(WindowsBuiltInRole.Administrator);
+
 
     /// <summary>
     /// Gets value of Portable mode if the startup dir is writable
@@ -148,7 +156,7 @@ public class App
 
         // Register Capabilities info
         reg.SubKey = $@"SOFTWARE\{AppNameCode}\Capabilities";
-        if (!reg.Write("ApplicationName", Application.ProductName))
+        if (!reg.Write("ApplicationName", App.AppName))
         {
             keys.AppendLine($@"{reg.FullKey}\ApplicationName");
         }
@@ -199,7 +207,7 @@ public class App
 
             // Friendly App Name
             reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open";
-            if (!reg.Write("FriendlyAppName", Application.ProductName))
+            if (!reg.Write("FriendlyAppName", App.AppName))
             {
                 keys.AppendLine($@"{reg.FullKey}\FriendlyAppName");
             }
@@ -275,7 +283,7 @@ public class App
             SubKey = baseKey,
         };
 
-        if (!reg.Write("", $"URL: {Application.ProductName} Protocol"))
+        if (!reg.Write("", $"URL: {App.AppName} Protocol"))
         {
             return false;
         }
