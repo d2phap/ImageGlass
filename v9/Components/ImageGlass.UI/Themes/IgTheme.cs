@@ -127,7 +127,6 @@ public class IgTheme
     /// Loads theme config file into <see cref="JsonModel"/>, and validates it.
     /// </summary>
     /// <param name="themeFolderPath"></param>
-    /// <returns></returns>
     public bool ReadThemeConfig(string themeFolderPath)
     {
         // get full path of config file

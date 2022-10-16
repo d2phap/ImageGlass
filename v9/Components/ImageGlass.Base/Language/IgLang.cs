@@ -346,10 +346,6 @@ public class IgLang : Dictionary<string, string>
 
         //Add("FrmMain._ExtractPageText", "Extracting image pages. Please select output folder.");
         
-        //Add("FrmMain._SlideshowMessage", "Press ESC to exit slideshow.\n Right click to open context menu."); // v2.0 beta
-        //Add("FrmMain._SlideshowMessagePause", "Slideshow is paused"); // v4.0
-        //Add("FrmMain._SlideshowMessageResume", "Slideshow is resumed"); // v4.0
-        
         //Add("FrmMain._SaveChanges", "Saving change..."); // v2.0 final
 
         Add("FrmMain._ReachedFirstImage", "Reached the first image"); // v4.0
@@ -640,7 +636,6 @@ public class IgLang : Dictionary<string, string>
         //Add("FrmSetting.KeyActions._PanLeftRight", "Pan Left / Right"); // v7.0
         //Add("FrmSetting.KeyActions._PanUpDown", "Pan Up / Down"); // v7.0
         //Add("FrmSetting.KeyActions._ZoomInOut", "Zoom In / Out"); // v7.0
-        //Add("FrmSetting.KeyActions._PauseSlideshow", "Pause slideshow"); // v7.0
         //Add("FrmSetting.KeyActions._DoNothing", "Do nothing"); // v7.0
         #endregion
 
@@ -718,7 +713,6 @@ public class IgLang : Dictionary<string, string>
         // menu
         Add("FrmSlideshow.MnuPauseResumeSlideshow", "Pause/resume slideshow"); // v9.0
         Add("FrmSlideshow.MnuExitSlideshow", "Exit slideshow"); // v9.0
-        Add("FrmSlideshow.MnuShowMainWindow", "Show main window"); // v9.0
         Add("FrmSlideshow.MnuChangeBackgroundColor", "Change background color…"); // v9.0
 
         Add("FrmSlideshow.MnuToggleCountdown", "Show slideshow countdown"); // v9.0

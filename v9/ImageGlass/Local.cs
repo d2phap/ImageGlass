@@ -68,12 +68,6 @@ internal class Local
     public static event FrmMainUpdateRequestedHandler? OnRequestUpdateFrmMain;
     public delegate void FrmMainUpdateRequestedHandler(UpdateRequests e);
 
-    /// <summary>
-    /// Occurs when a <see cref="FrmSlideshow"/> window is closed.
-    /// </summary>
-    public static event SlideshowWindowClosedHandler? OnSlideshowWindowClosed;
-    public delegate void SlideshowWindowClosedHandler(SlideshowWindowClosedEventArgs e);
-
 
     /// <summary>
     /// Raise <see cref="OnImageListLoaded"/> event.
@@ -117,15 +111,6 @@ internal class Local
     public static void RaiseLastImageReachedEvent()
     {
         OnLastImageReached?.Invoke();
-    }
-
-
-    /// <summary>
-    /// Raise <see cref="OnSlideshowWindowClosed"/> event.
-    /// </summary>
-    public static void RaiseSlideshowWindowClosedEvent(SlideshowWindowClosedEventArgs e)
-    {
-        OnSlideshowWindowClosed?.Invoke(e);
     }
 
 

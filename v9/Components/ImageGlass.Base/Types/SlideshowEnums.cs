@@ -20,14 +20,27 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 namespace ImageGlass.Base;
 
 
+/// <summary>
+/// The list of commands for slideshow
+/// </summary>
 public static class SlideshowPipeCommands
 {
+    /// <summary>
+    /// Sends the list of file paths as JSON to the slideshow client.
+    /// </summary>
     public static string SET_IMAGE_LIST => "set-image-list";
 
+
+    /// <summary>
+    /// Sends the language to the slideshow client.
+    /// </summary>
     public static string SET_LANGUAGE => "set-language";
 
+
+    /// <summary>
+    /// Sends the theme name to the slideshow client.
+    /// </summary>
     public static string SET_THEME => "set-theme";
 
-    public static string SHOW_MAIN_WINDOW => "show-main-window";
 
 }
