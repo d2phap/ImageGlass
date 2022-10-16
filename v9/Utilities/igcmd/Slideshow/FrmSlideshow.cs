@@ -1,4 +1,22 @@
-﻿using D2Phap;
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+using D2Phap;
 using ImageGlass.Base;
 using ImageGlass.Base.DirectoryComparer;
 using ImageGlass.Base.NamedPipes;
@@ -46,8 +64,6 @@ public partial class FrmSlideshow : Form
 	    { nameof(MnuContext),               new() { new(Keys.Alt | Keys.F) } },
 
         { nameof(MnuPauseResumeSlideshow),  new() { new(Keys.Space) } },
-        { nameof(MnuExitSlideshow),         new() { new(Keys.Escape) } },
-        { nameof(MnuShowMainWindow),        new() { new(Keys.F12) } },
 
         // MnuNavigation
         { nameof(MnuViewNext),              new() { new (Keys.Right) } },
@@ -70,6 +86,8 @@ public partial class FrmSlideshow : Form
         { nameof(MnuOpenWith),              new() { new (Keys.D) } },
         { nameof(MnuOpenLocation),          new() { new (Keys.L) } },
         { nameof(MnuCopyPath),              new() { new (Keys.Control | Keys.L) } },
+
+        { nameof(MnuExitSlideshow),         new() { new(Keys.Escape) } },
     };
 
 
@@ -235,17 +253,6 @@ public partial class FrmSlideshow : Form
     }
 
 
-    private void FrmSlideshow_KeyDown(object sender, KeyEventArgs e)
-    {
-        
-    }
-
-    private void FrmSlideshow_MouseDown(object sender, MouseEventArgs e)
-    {
-        
-    }
-
-
     private void Client_MessageReceived(object? sender, MessageReceivedEventArgs e)
     {
         if (string.IsNullOrEmpty(e.Message)) return;
@@ -336,6 +343,9 @@ public partial class FrmSlideshow : Form
         }
     }
 
+
+    // PicMain events
+    #region PicMain events
 
     private void PicMain_Render(object? sender, RenderEventArgs e)
     {
@@ -480,11 +490,16 @@ public partial class FrmSlideshow : Form
     {
         UpdateImageInfo(ImageInfoUpdateTypes.Zoom);
     }
+    #endregion // PicMain events
 
 
     // Load image
     #region Load image
 
+    /// <summary>
+    /// Loads image list
+    /// </summary>
+    /// <param name="initFilePath">The initial file path to find image index.</param>
     private async Task LoadImageListAsync(IEnumerable<string> fileList, string? initFilePath = null)
     {
         await Task.Run(() =>
@@ -517,6 +532,9 @@ public partial class FrmSlideshow : Form
     }
 
 
+    /// <summary>
+    /// View the next image
+    /// </summary>
     private async Task ViewNextImageAsync(int step = 0)
     {
         _loadImageCancelToken?.Cancel();
@@ -586,6 +604,10 @@ public partial class FrmSlideshow : Form
     }
 
 
+    /// <summary>
+    /// Loads image to the viewer.
+    /// </summary>
+    /// <param name="filePath">Use <see cref="_currentIndex"/> if <paramref name="filePath"/> is <c>null</c>.</param>
     private async Task LoadImageAsync(string? filePath, CancellationTokenSource? tokenSrc = null)
     {
         if (InvokeRequired)
@@ -1064,7 +1086,6 @@ public partial class FrmSlideshow : Form
         // slideshow controls
         MnuPauseResumeSlideshow.Text = lang[$"{Name}.{nameof(MnuPauseResumeSlideshow)}"];
         MnuExitSlideshow.Text = lang[$"{Name}.{nameof(MnuExitSlideshow)}"];
-        MnuShowMainWindow.Text = lang[$"{Name}.{nameof(MnuShowMainWindow)}"];
 
         // toggle menus
         MnuFullScreen.Text = lang[$"FrmMain.{nameof(MnuFullScreen)}"];
@@ -1191,8 +1212,8 @@ public partial class FrmSlideshow : Form
     }
 
 
+    // Menu
     #region Menu
-
 
     private void MnuPauseResumeSlideshow_Click(object sender, EventArgs e)
     {
@@ -1203,11 +1224,6 @@ public partial class FrmSlideshow : Form
     private void MnuExitSlideshow_Click(object sender, EventArgs e)
     {
         Application.Exit();
-    }
-
-    private void MnuShowMainWindow_Click(object sender, EventArgs e)
-    {
-        _ = _client.SendAsync(SlideshowPipeCommands.SHOW_MAIN_WINDOW);
     }
 
     private void MnuFullScreen_Click(object sender, EventArgs e)
@@ -1452,5 +1468,6 @@ public partial class FrmSlideshow : Form
         catch { }
     }
 
-    #endregion
+    #endregion // Menu
+
 }

@@ -33,7 +33,6 @@
             this.MnuContext = new ImageGlass.UI.ModernMenu(this.components);
             this.MnuPauseResumeSlideshow = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuExitSlideshow = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuShowMainWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuFullScreen = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuToggleCountdown = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,6 +58,7 @@
             this.MnuOpenWith = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuCopyPath = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuContext.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,8 +86,6 @@
             this.MnuContext.ImageScalingSize = new System.Drawing.Size(22, 22);
             this.MnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MnuPauseResumeSlideshow,
-            this.MnuExitSlideshow,
-            this.MnuShowMainWindow,
             this.toolStripMenuItem1,
             this.MnuFullScreen,
             this.MnuToggleCountdown,
@@ -101,9 +99,11 @@
             this.toolStripMenuItem2,
             this.MnuOpenWith,
             this.MnuOpenLocation,
-            this.MnuCopyPath});
+            this.MnuCopyPath,
+            this.toolStripMenuItem5,
+            this.MnuExitSlideshow});
             this.MnuContext.Name = "MnuContext";
-            this.MnuContext.Size = new System.Drawing.Size(301, 414);
+            this.MnuContext.Size = new System.Drawing.Size(301, 423);
             // 
             // MnuPauseResumeSlideshow
             // 
@@ -122,15 +122,6 @@
             this.MnuExitSlideshow.Size = new System.Drawing.Size(300, 28);
             this.MnuExitSlideshow.Text = "[Exit slideshow]";
             this.MnuExitSlideshow.Click += new System.EventHandler(this.MnuExitSlideshow_Click);
-            // 
-            // MnuShowMainWindow
-            // 
-            this.MnuShowMainWindow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.MnuShowMainWindow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.MnuShowMainWindow.Name = "MnuShowMainWindow";
-            this.MnuShowMainWindow.Size = new System.Drawing.Size(300, 28);
-            this.MnuShowMainWindow.Text = "[Open main window]";
-            this.MnuShowMainWindow.Click += new System.EventHandler(this.MnuShowMainWindow_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -340,6 +331,11 @@
             this.MnuCopyPath.Text = "[Copy image path]";
             this.MnuCopyPath.Click += new System.EventHandler(this.MnuCopyPath_Click);
             // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(297, 6);
+            // 
             // FrmSlideshow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
@@ -350,8 +346,6 @@
             this.Name = "FrmSlideshow";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmSlideshow_FormClosing);
             this.Load += new System.EventHandler(this.FrmSlideshow_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmSlideshow_KeyDown);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FrmSlideshow_MouseDown);
             this.MnuContext.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -363,7 +357,6 @@
         private ImageGlass.UI.ModernMenu MnuContext;
         private ToolStripMenuItem MnuPauseResumeSlideshow;
         private ToolStripMenuItem MnuExitSlideshow;
-        private ToolStripMenuItem MnuShowMainWindow;
         private ToolStripSeparator toolStripMenuItem1;
         private ToolStripMenuItem MnuZoomModes;
         private ToolStripMenuItem MnuLoadingOrders;
@@ -389,5 +382,6 @@
         private ToolStripMenuItem MnuScaleToFill;
         private ToolStripMenuItem MnuToggleCountdown;
         private ToolStripMenuItem MnuChangeBackgroundColor;
+        private ToolStripSeparator toolStripMenuItem5;
     }
 }

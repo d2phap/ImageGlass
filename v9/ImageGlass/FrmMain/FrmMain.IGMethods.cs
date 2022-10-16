@@ -1927,7 +1927,7 @@ public partial class FrmMain
 
     private void SlideshowServer_MessageReceived(object? sender, MessageReceivedEventArgs e)
     {
-        MessageBox.Show(e.Message, e.PipeName);
+        //MessageBox.Show(e.Message, e.PipeName);
     }
 
     private void SlideshowServer_Disconnected(object? sender, DisconnectedEventArgs e)
@@ -1976,18 +1976,23 @@ public partial class FrmMain
             Invoke(SetFrmMainStateInSlideshow, enableSlideshow);
             return;
         }
-
+        
 
         // hide FrmMain
         if (enableSlideshow && Config.HideFrmMainInSlideshow)
         {
-            Hide();
+            if (!Config.EnableFullScreen)
+            {
+                _windowState = WindowState;
+            }
+
+            WindowState = FormWindowState.Minimized;
         }
 
         // show FrmMain
         else if (!enableSlideshow && Config.HideFrmMainInSlideshow)
         {
-            Show();
+            WindowState = _windowState;
         }
     }
 
