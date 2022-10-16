@@ -277,11 +277,10 @@ public partial class FrmSlideshow : Form
 
         // only update the countdown text if it's a full second number
         var isSecond = _slideshowStopwatch.Elapsed.Milliseconds <= 100;
-        if (isSecond)
+        if (Config.ShowSlideshowCountdown && isSecond)
         {
             PicMain.Invalidate();
         }
-        
     }
 
 
@@ -987,6 +986,7 @@ public partial class FrmSlideshow : Form
         }
     }
 
+
     private void MnuLoadingOrderTypeItem_Click(object? sender, EventArgs e)
     {
         var mnu = sender as ToolStripMenuItem;
@@ -1012,7 +1012,8 @@ public partial class FrmSlideshow : Form
 
     private void MnuPauseResumeSlideshow_Click(object sender, EventArgs e)
     {
-        SetSlideshowState(!Config.EnableSlideshow);
+        Config.EnableSlideshow = !Config.EnableSlideshow;
+        SetSlideshowState(Config.EnableSlideshow);
     }
 
     private void MnuExitSlideshow_Click(object sender, EventArgs e)
@@ -1034,12 +1035,30 @@ public partial class FrmSlideshow : Form
     {
         Config.ShowSlideshowCountdown = !Config.ShowSlideshowCountdown;
         MnuToggleCountdown.Checked = Config.ShowSlideshowCountdown;
+
+        PicMain.Invalidate();
     }
 
     private void MnuToggleCheckerboard_Click(object sender, EventArgs e)
     {
         Config.ShowCheckerBoard = !Config.ShowCheckerBoard;
         MnuToggleCheckerboard.Checked = Config.ShowCheckerBoard;
+
+        if (Config.ShowCheckerBoard)
+        {
+            if (Config.ShowCheckerboardOnlyImageRegion)
+            {
+                PicMain.CheckerboardMode = CheckerboardMode.Image;
+            }
+            else
+            {
+                PicMain.CheckerboardMode = CheckerboardMode.Client;
+            }
+        }
+        else
+        {
+            PicMain.CheckerboardMode = CheckerboardMode.None;
+        }
     }
 
     private void MnuChangeBackgroundColor_Click(object sender, EventArgs e)
