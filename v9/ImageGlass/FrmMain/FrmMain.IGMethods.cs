@@ -1923,6 +1923,9 @@ public partial class FrmMain
 
         // hide FrmMain
         SetFrmMainStateInSlideshow(Config.EnableSlideshow);
+
+        // prevent system from entering sleep mode
+        SysExecutionState.PreventSleep();
     }
 
     private void SlideshowServer_MessageReceived(object? sender, MessageReceivedEventArgs e)
@@ -1964,6 +1967,9 @@ public partial class FrmMain
 
                 // show FrmMain
                 SetFrmMainStateInSlideshow(Config.EnableSlideshow);
+
+                // allow system to enter sleep mode
+                SysExecutionState.AllowSleep();
             }
         }
         catch (OperationCanceledException) { }
