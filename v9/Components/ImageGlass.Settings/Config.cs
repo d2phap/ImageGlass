@@ -757,9 +757,14 @@ public static class Config
     #region Other types items
 
     /// <summary>
-    /// Gets, sets background color
+    /// Gets, sets background color of of the main window
     /// </summary>
     public static Color BackgroundColor { get; set; } = Color.Black;
+
+    /// <summary>
+    /// Gets, sets background color of slideshow
+    /// </summary>
+    public static Color SlideshowBackgroundColor { get; set; } = Color.Black;
 
     /// <summary>
     /// Gets, sets language pack
@@ -1048,9 +1053,9 @@ public static class Config
         #endregion
 
 
+        // must load after Theme
         #region BackgroundColor
 
-        // must load after Theme
         var bgValue = items.GetValue(nameof(BackgroundColor), string.Empty);
 
         if (string.IsNullOrEmpty(bgValue))
@@ -1061,6 +1066,17 @@ public static class Config
         {
             BackgroundColor = ThemeUtils.ColorFromHex(bgValue, true);
         }
+        #endregion
+
+
+        #region SlideshowBackgroundColor
+
+        bgValue = items.GetValue(nameof(SlideshowBackgroundColor), string.Empty);
+        if (!string.IsNullOrEmpty(bgValue))
+        {
+            SlideshowBackgroundColor = ThemeUtils.ColorFromHex(bgValue, true);
+        }
+
         #endregion
 
         #endregion
@@ -1407,6 +1423,7 @@ public static class Config
         #region Other types items
 
         settings.TryAdd(nameof(BackgroundColor), ThemeUtils.ColorToHex(BackgroundColor));
+        settings.TryAdd(nameof(SlideshowBackgroundColor), ThemeUtils.ColorToHex(SlideshowBackgroundColor));
         settings.TryAdd(nameof(Language), Path.GetFileName(Language.FileName));
         settings.TryAdd(nameof(Theme), Theme.FolderName);
 

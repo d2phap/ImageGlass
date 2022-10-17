@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using D2Phap;
 using ImageGlass.Base;
-using ImageGlass.Base.DirectoryComparer;
 using ImageGlass.Base.NamedPipes;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.Photoing.Codecs;
@@ -28,11 +27,7 @@ using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.Views;
 using System.Diagnostics;
-using System.Drawing.Drawing2D;
 using System.IO.Pipes;
-using System.Linq;
-using System.Windows.Forms;
-using WicNet;
 using Timer = System.Windows.Forms.Timer;
 
 namespace igcmd.Slideshow;
@@ -56,6 +51,7 @@ public partial class FrmSlideshow : Form
 
     private CancellationTokenSource _hideCursorCancelToken = new();
     private bool _isCursorHidden = false;
+    private bool _isColorPickerOpen = false;
 
 
     /// <summary>
@@ -77,7 +73,9 @@ public partial class FrmSlideshow : Form
         { nameof(MnuFullScreen),            new() { new (Keys.F11) } },
         { nameof(MnuToggleCountdown),       new() { new (Keys.C) } },
         { nameof(MnuToggleCheckerboard),    new() { new (Keys.B) } },
-        
+
+        { nameof(MnuChangeBackgroundColor), new() { new (Keys.M) } },
+
         { nameof(MnuActualSize),            new() { new (Keys.D0), new (Keys.NumPad0) } },
         { nameof(MnuAutoZoom),              new() { new (Keys.D1), new (Keys.NumPad1) } },
         { nameof(MnuLockZoom),              new() { new (Keys.D2), new (Keys.NumPad2) } },
@@ -274,7 +272,7 @@ public partial class FrmSlideshow : Form
 
         var arg = e.Message.Substring(++firstEqualCharPosition);
         if (string.IsNullOrEmpty(arg)) return;
-        
+
 
         // update image list
         if (cmd.Equals(SlideshowPipeCommands.SET_IMAGE_LIST, StringComparison.InvariantCultureIgnoreCase))
@@ -358,7 +356,7 @@ public partial class FrmSlideshow : Form
         var countdownTime = TimeSpan.FromSeconds(_slideshowCountdown + 1);
         var text = (countdownTime - _slideshowStopwatch.Elapsed).ToString("mm'∶'ss");
 
-        
+
         var font = new Font(Font.FontFamily, 30f);
         var fontSize = e.Graphics.MeasureText(text, font.Name, font.Size, textDpi: DeviceDpi);
 
@@ -676,7 +674,7 @@ public partial class FrmSlideshow : Form
             var currentFilePath = _images.GetFilePath(_currentIndex);
             _currentMetadata = PhotoCodec.LoadMetadata(currentFilePath, readSettings);
         }
-        
+
 
         // on image loading
         OnImageLoading();
@@ -1093,9 +1091,8 @@ public partial class FrmSlideshow : Form
         MnuContext.Theme = Config.Theme;
 
         // background
-        BackColor = Config.BackgroundColor;
-        PicMain.BackColor = Config.BackgroundColor;
-        PicMain.ForeColor = Config.Theme.Settings.TextColor;
+        BackColor = PicMain.BackColor = Config.SlideshowBackgroundColor;
+        PicMain.ForeColor = ThemeUtils.InvertBlackAndWhiteColor(BackColor);
 
         // navigation buttons
         PicMain.NavHoveredColor = Color.FromArgb(200, Config.Theme.Settings.ToolbarBgColor);
@@ -1267,7 +1264,7 @@ public partial class FrmSlideshow : Form
             await Task.Delay(3000, token);
             token.ThrowIfCancellationRequested();
 
-            if (!MnuContext.IsOpen)
+            if (!MnuContext.IsOpen && !_isColorPickerOpen)
             {
                 Cursor.Hide();
                 _isCursorHidden = true;
@@ -1391,18 +1388,19 @@ public partial class FrmSlideshow : Form
 
     private void MnuChangeBackgroundColor_Click(object sender, EventArgs e)
     {
+        _isColorPickerOpen = true;
         using var cd = new ColorDialog()
         {
-            Color = Config.BackgroundColor,
+            Color = Config.SlideshowBackgroundColor,
             FullOpen = true,
         };
 
         if (cd.ShowDialog() == DialogResult.OK)
         {
-            Config.BackgroundColor = cd.Color;
+            BackColor = PicMain.BackColor = Config.SlideshowBackgroundColor = cd.Color;
+            PicMain.ForeColor = ThemeUtils.InvertBlackAndWhiteColor(BackColor);
 
-            BackColor = Config.BackgroundColor;
-            PicMain.BackColor = Config.BackgroundColor;
+            _isColorPickerOpen = false;
         }
     }
 
@@ -1546,5 +1544,5 @@ public partial class FrmSlideshow : Form
 
     #endregion // Menu
 
-    
+
 }

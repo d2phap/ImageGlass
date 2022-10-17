@@ -28,7 +28,6 @@ using ImageGlass.UI;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text;
-using System.Windows.Media.Media3D;
 using WicNet;
 
 namespace ImageGlass;
@@ -700,7 +699,7 @@ public partial class FrmMain : Form
         {
             Local.CurrentIndex = -1;
             Local.Metadata = null;
-            
+
             UpdateImageInfo(ImageInfoUpdateTypes.All);
 
             return;
@@ -780,7 +779,7 @@ public partial class FrmMain : Form
         }
 
 
-        
+
         var loadingArgs = new ImageLoadingEventArgs()
         {
             CurrentIndex = Local.CurrentIndex,
@@ -2217,5 +2216,5 @@ public partial class FrmMain : Form
 
     #endregion // Main Menu component
 
-    
+
 }

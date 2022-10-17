@@ -17,21 +17,18 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
+using ImageGlass.Base.NamedPipes;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Library.WinAPI;
-using ImageGlass.Views;
 using ImageGlass.Settings;
 using ImageGlass.UI;
+using ImageGlass.Views;
 using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Windows.Forms;
-using System.Windows.Media.Imaging;
-using WicNet;
-using DirectN;
-using ImageGlass.Base.NamedPipes;
 using System.IO.Pipes;
+using WicNet;
 
 namespace ImageGlass;
 
@@ -334,7 +331,7 @@ public partial class FrmMain
 
         PicMain.StopAnimation(AnimationSource.ZoomIn);
     }
-    
+
 
     /// <summary>
     /// Zooms out of the image
@@ -843,7 +840,7 @@ public partial class FrmMain
                 // add filename to clipboard
                 Local.StringClipboard.Add(filePath);
             }
-            
+
             fileDropList.AddRange(Local.StringClipboard.ToArray());
         }
 
@@ -915,7 +912,7 @@ public partial class FrmMain
         var moveEffect = new byte[] { 2, 0, 0, 0 };
         using var dropEffect = new MemoryStream();
         await dropEffect.WriteAsync(moveEffect).ConfigureAwait(true);
-        
+
         var data = new DataObject();
         data.SetFileDropList(fileDropList);
         data.SetData("Preferred DropEffect", dropEffect);
@@ -1052,12 +1049,11 @@ public partial class FrmMain
     {
         // cancel the current loading image
         _loadCancelToken?.Cancel();
-        
+
         Local.ClipboardImage?.Dispose();
         Local.ClipboardImage = img;
         Local.TempImagePath = null;
 
-        // TODO:
         PicMain.SetImage(new()
         {
             Image = img,
@@ -1864,7 +1860,7 @@ public partial class FrmMain
 
         }
 
-        
+
     }
 
 
@@ -1982,7 +1978,7 @@ public partial class FrmMain
             Invoke(SetFrmMainStateInSlideshow, enableSlideshow);
             return;
         }
-        
+
 
         // hide FrmMain
         if (enableSlideshow && Config.HideFrmMainInSlideshow)
@@ -2100,8 +2096,8 @@ public partial class FrmMain
                 Flips = options,
             });
 
-            // TODO:
-            PicMain.SetImage(new() {
+            PicMain.SetImage(new()
+            {
                 Image = Local.ClipboardImage,
                 FrameCount = 1,
                 HasAlpha = true,
