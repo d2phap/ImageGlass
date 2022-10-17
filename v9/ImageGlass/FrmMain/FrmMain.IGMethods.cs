@@ -1856,6 +1856,8 @@ public partial class FrmMain
                 {
                     FormBorderStyle = FormBorderStyle.Sizable;
                 }
+
+                Config.ApplyFormTheme(this, Config.Theme);
             }
 
         }

@@ -857,7 +857,7 @@ public partial class FrmMain
         MnuStartStopAnimating.Visible = false;
         MnuExtractFrames.Visible = false;
         //MnuSetDesktopBackground.Visible = false;
-        MnuSetLockScreen.Visible = false;
+        //MnuSetLockScreen.Visible = false;
         //MnuOpenLocation.Visible = false;
         //MnuImageProperties.Visible = false;
 
@@ -869,7 +869,7 @@ public partial class FrmMain
         //MnuCut.Visible = false;
         //MnuClearClipboard.Visible = false;
 
-        toolStripMenuItem6.Visible = false;
+        //toolStripMenuItem6.Visible = false;
         MnuWindowFit.Visible = false;
         MnuFrameless.Visible = false;
         //MnuFullScreen.Visible = false;

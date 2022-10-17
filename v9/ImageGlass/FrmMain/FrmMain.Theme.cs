@@ -75,6 +75,7 @@ public partial class FrmMain
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
 
+        Config.ApplyFormTheme(this, Config.Theme);
     }
 
 }

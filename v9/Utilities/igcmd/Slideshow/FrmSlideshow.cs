@@ -1352,6 +1352,8 @@ public partial class FrmSlideshow : Form
             {
                 FormBorderStyle = FormBorderStyle.Sizable;
             }
+
+            Config.ApplyFormTheme(this, Config.Theme);
         }
     }
 
