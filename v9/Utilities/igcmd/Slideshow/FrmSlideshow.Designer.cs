@@ -32,7 +32,6 @@
             this.PicMain = new ImageGlass.Views.DXCanvas();
             this.MnuContext = new ImageGlass.UI.ModernMenu(this.components);
             this.MnuPauseResumeSlideshow = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuExitSlideshow = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuFullScreen = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuToggleCountdown = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,6 +58,7 @@
             this.MnuOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuCopyPath = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
+            this.MnuExitSlideshow = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuContext.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,6 +80,8 @@
             this.PicMain.OnZoomChanged += new ImageGlass.Views.DXCanvas.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
             this.PicMain.OnNavLeftClicked += new ImageGlass.Views.DXCanvas.NavLeftClickedEventHandler(this.PicMain_OnNavLeftClicked);
             this.PicMain.OnNavRightClicked += new ImageGlass.Views.DXCanvas.NavRightClickedEventHandler(this.PicMain_OnNavRightClicked);
+            this.PicMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicMain_MouseClick);
+            this.PicMain.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PicMain_MouseMove);
             // 
             // MnuContext
             // 
@@ -104,6 +106,7 @@
             this.MnuExitSlideshow});
             this.MnuContext.Name = "MnuContext";
             this.MnuContext.Size = new System.Drawing.Size(301, 423);
+            this.MnuContext.Opening += new System.ComponentModel.CancelEventHandler(this.MnuContext_Opening);
             // 
             // MnuPauseResumeSlideshow
             // 
@@ -113,15 +116,6 @@
             this.MnuPauseResumeSlideshow.Size = new System.Drawing.Size(300, 28);
             this.MnuPauseResumeSlideshow.Text = "[Pause / resume slideshow]";
             this.MnuPauseResumeSlideshow.Click += new System.EventHandler(this.MnuPauseResumeSlideshow_Click);
-            // 
-            // MnuExitSlideshow
-            // 
-            this.MnuExitSlideshow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.MnuExitSlideshow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.MnuExitSlideshow.Name = "MnuExitSlideshow";
-            this.MnuExitSlideshow.Size = new System.Drawing.Size(300, 28);
-            this.MnuExitSlideshow.Text = "[Exit slideshow]";
-            this.MnuExitSlideshow.Click += new System.EventHandler(this.MnuExitSlideshow_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -335,6 +329,15 @@
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
             this.toolStripMenuItem5.Size = new System.Drawing.Size(297, 6);
+            // 
+            // MnuExitSlideshow
+            // 
+            this.MnuExitSlideshow.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MnuExitSlideshow.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.MnuExitSlideshow.Name = "MnuExitSlideshow";
+            this.MnuExitSlideshow.Size = new System.Drawing.Size(300, 28);
+            this.MnuExitSlideshow.Text = "[Exit slideshow]";
+            this.MnuExitSlideshow.Click += new System.EventHandler(this.MnuExitSlideshow_Click);
             // 
             // FrmSlideshow
             // 

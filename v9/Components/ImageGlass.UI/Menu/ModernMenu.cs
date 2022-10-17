@@ -51,6 +51,11 @@ public class ModernMenu : ContextMenuStrip
     /// </summary>
     public IEnumerable<ToolStripItem> ActualItems => MenuUtils.GetActualItems(Items);
 
+    /// <summary>
+    /// Checks if the menu is open.
+    /// </summary>
+    public bool IsOpen { get; private set; } = false;
+
     #endregion
 
 
@@ -84,6 +89,18 @@ public class ModernMenu : ContextMenuStrip
         {
             FixGeneralIssues(toFixDpiSize: true, toFixDropdown: true);
         }
+    }
+
+    protected override void OnOpened(EventArgs e)
+    {
+        base.OnOpened(e);
+        IsOpen = true;
+    }
+
+    protected override void OnClosed(ToolStripDropDownClosedEventArgs e)
+    {
+        base.OnClosed(e);
+        IsOpen = false;
     }
 
     #endregion

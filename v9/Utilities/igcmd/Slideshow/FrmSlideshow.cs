@@ -54,6 +54,9 @@ public partial class FrmSlideshow : Form
     private Rectangle _windowBound = new();
     private FormWindowState _windowState = FormWindowState.Normal;
 
+    private CancellationTokenSource _hideCursorCancelToken = new();
+    private bool _isCursorHidden = false;
+
 
     /// <summary>
     /// Hotkeys list of main menu
@@ -388,8 +391,15 @@ public partial class FrmSlideshow : Form
 
     private void PicMain_MouseWheel(object? sender, MouseEventArgs e)
     {
-        MouseWheelAction action;
+        if (_isCursorHidden)
+        {
+            Cursor.Show();
+            _isCursorHidden = false;
+        }
+        DelayHideCursor();
 
+
+        MouseWheelAction action;
         var eventType = ModifierKeys switch
         {
             Keys.Control => MouseWheelEvent.PressCtrlAndScroll,
@@ -476,6 +486,18 @@ public partial class FrmSlideshow : Form
     }
 
 
+    private void PicMain_MouseClick(object sender, MouseEventArgs e)
+    {
+        if (_isCursorHidden)
+        {
+            Cursor.Show();
+            _isCursorHidden = false;
+        }
+
+        DelayHideCursor();
+    }
+
+
     private void PicMain_OnNavLeftClicked(MouseEventArgs e)
     {
         _ = ViewNextImageAsync(-1);
@@ -490,6 +512,18 @@ public partial class FrmSlideshow : Form
     {
         UpdateImageInfo(ImageInfoUpdateTypes.Zoom);
     }
+
+    private void PicMain_MouseMove(object sender, MouseEventArgs e)
+    {
+        if (_isCursorHidden)
+        {
+            Cursor.Show();
+            _isCursorHidden = false;
+        }
+
+        DelayHideCursor();
+    }
+
     #endregion // PicMain events
 
 
@@ -1212,8 +1246,48 @@ public partial class FrmSlideshow : Form
     }
 
 
+    /// <summary>
+    /// Start counting a period of time to hide cursor.
+    /// </summary>
+    private void DelayHideCursor()
+    {
+        _hideCursorCancelToken.Cancel();
+        _hideCursorCancelToken = new();
+        _ = HideCursorAsync(_hideCursorCancelToken.Token);
+    }
+
+
+    /// <summary>
+    /// Hides the cursor after 3 seconds
+    /// </summary>
+    private async Task HideCursorAsync(CancellationToken token = default)
+    {
+        try
+        {
+            await Task.Delay(3000, token);
+            token.ThrowIfCancellationRequested();
+
+            if (!MnuContext.IsOpen)
+            {
+                Cursor.Hide();
+                _isCursorHidden = true;
+            }
+        }
+        catch (OperationCanceledException) { }
+    }
+
+
     // Menu
     #region Menu
+
+    private void MnuContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+        if (_isCursorHidden)
+        {
+            Cursor.Show();
+            _isCursorHidden = false;
+        }
+    }
 
     private void MnuPauseResumeSlideshow_Click(object sender, EventArgs e)
     {
@@ -1468,6 +1542,9 @@ public partial class FrmSlideshow : Form
         catch { }
     }
 
+
+
     #endregion // Menu
 
+    
 }
