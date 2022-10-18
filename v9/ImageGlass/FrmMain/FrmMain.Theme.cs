@@ -60,6 +60,7 @@ public partial class FrmMain
         BackColor = Sp1.BackColor = Sp2.BackColor = Config.BackgroundColor;
         PicMain.BackColor = Config.BackgroundColor;
         PicMain.ForeColor = Config.Theme.Settings.TextColor;
+        PicMain.SelectionColor = Config.Theme.Settings.AccentColor;
 
         // Thumbnail bar
         Gallery.SetRenderer(new ModernGalleryRenderer(Config.Theme));

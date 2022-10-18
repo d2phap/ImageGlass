@@ -24,11 +24,16 @@ using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Views.ImageAnimator;
 using System.ComponentModel;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Windows;
 using WicNet;
 using InterpolationMode = D2Phap.InterpolationMode;
+using Point = System.Drawing.Point;
+using Size = System.Drawing.Size;
+using SystemColors = System.Drawing.SystemColors;
 
 namespace ImageGlass.Views;
 
@@ -116,6 +121,10 @@ public class DXCanvas : DXControl
     private Bitmap? _navLeftImageGdip = null;
     private Bitmap? _navRightImageGdip = null;
 
+    private RectangleF _selection = new();
+    private Point? _mouseDownPoint = null;
+    private Point? _mouseMovePoint = null;
+
     #endregion
 
 
@@ -147,6 +156,23 @@ public class DXCanvas : DXControl
         X = ImageDestBounds.X + ImageDestBounds.Width / 2,
         Y = ImageDestBounds.Y + ImageDestBounds.Height / 2,
     };
+
+
+    /// <summary>
+    /// Gets, sets the selection area.
+    /// </summary>
+    public RectangleF Selection => _selection;
+
+    /// <summary>
+    /// Enables or disables the selection.
+    /// Panning by mouse will be disabled when the selection is enabled.
+    /// </summary>
+    public bool EnableSelection { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets selection color.
+    /// </summary>
+    public Color SelectionColor { get; set; } = SystemColors.Highlight;
 
     #endregion
 
@@ -703,19 +729,28 @@ public class DXCanvas : DXControl
         #endregion
 
 
-        // Image panning check
-        #region Image panning check
+        // Image panning & Selecting check
+        #region Image panning & Selecting check
         if (Source != ImageSource.Null)
         {
-            _panHostPoint.X = e.Location.X;
-            _panHostPoint.Y = e.Location.Y;
-            _panStartPoint.X = 0;
-            _panStartPoint.Y = 0;
-            _panHostStartPoint.X = e.Location.X;
-            _panHostStartPoint.Y = e.Location.Y;
+            if (EnableSelection)
+            {
+                _mouseDownPoint = e.Location;
+                _selection = new(_mouseDownPoint.Value, new SizeF());
+            }
+            else
+            {
+                _panHostPoint.X = e.Location.X;
+                _panHostPoint.Y = e.Location.Y;
+                _panStartPoint.X = 0;
+                _panStartPoint.Y = 0;
+                _panHostStartPoint.X = e.Location.X;
+                _panHostStartPoint.Y = e.Location.Y;
+            }
         }
         #endregion
 
+        
 
         _isMouseDown = true;
         _isMouseDragged = false;
@@ -792,6 +827,7 @@ public class DXCanvas : DXControl
         #endregion
 
 
+        _mouseDownPoint = null;
         _isMouseDown = false;
         _lastClickArgs = e;
     }
@@ -802,6 +838,7 @@ public class DXCanvas : DXControl
         if (!IsReady) return;
 
         var requestRerender = false;
+        _mouseMovePoint = e.Location;
 
 
         // Navigation hoverable check
@@ -855,10 +892,18 @@ public class DXCanvas : DXControl
         {
             _isMouseDragged = true;
 
-            requestRerender = PanTo(
-                _panHostPoint.X - e.Location.X,
-                _panHostPoint.Y - e.Location.Y,
-                false);
+            if (EnableSelection)
+            {
+                _selection = BHelper.GetSelection(_mouseDownPoint, _mouseMovePoint, _destRect);
+                requestRerender = true;
+            }
+            else
+            {
+                requestRerender = PanTo(
+                    _panHostPoint.X - e.Location.X,
+                    _panHostPoint.Y - e.Location.Y,
+                    false);
+            }
         }
 
 
@@ -881,6 +926,7 @@ public class DXCanvas : DXControl
 
         _isNavLeftHovered = false;
         _isNavRightHovered = false;
+        _mouseMovePoint = null;
 
 
         if (_isNavVisible)
@@ -959,7 +1005,7 @@ public class DXCanvas : DXControl
             this.Invalidate();
         }
     }
-
+    
 
     protected override void OnRender(IGraphics g)
     {
@@ -978,6 +1024,12 @@ public class DXCanvas : DXControl
         {
             // image layer
             DrawImageLayer(g);
+        }
+
+        // Draw selection layer
+        if (EnableSelection)
+        {
+            DrawSelectionLayer(g);
         }
 
         // text message
@@ -1181,6 +1233,53 @@ public class DXCanvas : DXControl
             // draw checkerboard
             gdiG?.Graphics.FillRectangle(_checkerboardBrushGdip, region);
         }
+    }
+
+
+    /// <summary>
+    /// Draw selection layer
+    /// </summary>
+    protected virtual void DrawSelectionLayer(IGraphics g)
+    {
+        if (_selection.IsEmpty) return;
+
+
+        // fill the selection
+        g.DrawRectangle(_selection, 0, Color.FromArgb(255, Color.White), Color.FromArgb(50, Color.White));
+        g.DrawRectangle(_selection, 0, Color.FromArgb(200, Color.Black), Color.FromArgb(50, Color.Black));
+        g.DrawRectangle(_selection, 0, Color.FromArgb(200, SelectionColor), Color.FromArgb(50, SelectionColor));
+
+
+        // 4 corner resizers
+        var resizerSize = DpiApi.Transform<float>(Font.Size);
+        var resizerMargin = 4;
+        var resizerBgColor = Color.FromArgb(150, Color.White);
+        var topLeftResizer = new RectangleF(
+            _selection.X + resizerMargin,
+            _selection.Y + resizerMargin,
+            resizerSize,
+            resizerSize);
+        var topRightResizer = new RectangleF(
+            _selection.Right - resizerSize - resizerMargin,
+            _selection.Y + resizerMargin,
+            resizerSize,
+            resizerSize);
+        var bottomLeftResizer = new RectangleF(
+            _selection.X + resizerMargin,
+            _selection.Bottom - resizerSize - resizerMargin,
+            resizerSize,
+            resizerSize);
+        var bottomRightResizer = new RectangleF(
+            _selection.Right - resizerSize - resizerMargin,
+            _selection.Bottom - resizerSize - resizerMargin,
+            resizerSize,
+            resizerSize);
+
+        // draw resizers
+        g.DrawRectangle(topLeftResizer, resizerSize / 3, SelectionColor, resizerBgColor, 1.5f);
+        g.DrawRectangle(topRightResizer, resizerSize / 3, SelectionColor, resizerBgColor, 1.5f);
+        g.DrawRectangle(bottomLeftResizer, resizerSize / 3, SelectionColor, resizerBgColor, 1.5f);
+        g.DrawRectangle(bottomRightResizer, resizerSize / 3, SelectionColor, resizerBgColor, 1.5f);
     }
 
 
