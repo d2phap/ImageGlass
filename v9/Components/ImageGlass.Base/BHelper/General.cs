@@ -290,4 +290,48 @@ public partial class BHelper
 
 
 
+    /// <summary>
+    /// Gets selection rectangle from 2 points.
+    /// </summary>
+    /// <param name="point1">The first point</param>
+    /// <param name="point2">The second point</param>
+    /// <param name="limitRect">The rectangle to limit the selection</param>
+    public static RectangleF GetSelection(PointF? point1, PointF? point2, RectangleF limitRect)
+    {
+        var selectedArea = new RectangleF();
+        var fromPoint = point1 ?? new PointF();
+        var toPoint = point2 ?? new PointF();
+
+        if (fromPoint.IsEmpty || toPoint.IsEmpty) return selectedArea;
+
+        // swap fromPoint and toPoint value if toPoint is less than fromPoint
+        if (toPoint.X < fromPoint.X)
+        {
+            var tempX = fromPoint.X;
+            fromPoint.X = toPoint.X;
+            toPoint.X = tempX;
+        }
+        if (toPoint.Y < fromPoint.Y)
+        {
+            var tempY = fromPoint.Y;
+            fromPoint.Y = toPoint.Y;
+            toPoint.Y = tempY;
+        }
+
+
+        float width = Math.Abs(fromPoint.X - toPoint.X);
+        float height = Math.Abs(fromPoint.Y - toPoint.Y);
+
+        selectedArea.X = fromPoint.X;
+        selectedArea.Y = fromPoint.Y;
+        selectedArea.Width = width;
+        selectedArea.Height = height;
+
+        // limit the selected area to the limitRect
+        selectedArea.Intersect(limitRect);
+
+        return selectedArea;
+    }
+
+
 }
