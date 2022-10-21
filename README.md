@@ -16,18 +16,18 @@ It gives you the possibility to view over **80+** common image formats, includin
 
 ## 📥 Download
 <a href="https://www.microsoft.com/store/productId/9N33VZK3C7TH">
-  <img height="65" src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Get_it_from_Microsoft_Badge.svg" />
-</a>
+  <img height="69" src="https://imageglass.org/img/ms-store-badge-light.svg" /></a>
+
+<br/>
 <a href="https://imageglass.org/download">
-  <img src="https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%232A7C91&label=total%20downloads&style=for-the-badge" />
-</a>
+  <img src="https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%232A7C91&label=total%20downloads&style=for-the-badge" /></a>
+  
 <a href="https://imageglass.org/download">
-  <img src="https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%232A7C91&label=latest%20version&style=for-the-badge" />
-</a>
+  <img src="https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%232A7C91&label=latest%20version&style=for-the-badge" /></a>
 
 
 ### ImageGlass on Microsoft Store!
-- If you want to **purchase ImageGlass Store version without letting Microsoft to suck 🩸 me 15% of the amount**, you can use a one-time donation from [♥ GitHub Sponsor](https://github.com/sponsors/d2phap), then drop me a message in [ImageGlass Discord](https://discord.com/channels/818852544859209748/818852544859209751) or [email](https://imageglass.org/about), and I will send the code shortly.
+- If you want to **purchase ImageGlass Store version without letting Microsoft to suck 🩸 me 15% of the amount**, you can use the one-time donation from [♥ GitHub Sponsor](https://github.com/sponsors/d2phap), then drop me a message in [ImageGlass Discord](https://discord.com/channels/818852544859209748/818852544859209751) or [email](https://imageglass.org/about), and I will send the code shortly.
 - ImageGlass Store provides the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes.
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
@@ -66,9 +66,6 @@ The `develop` branch contains the latest commits of version 8.x while the `prod`
 - [App configs](https://imageglass.org/docs/app-configs)
 - [Command lines](https://imageglass.org/docs/command-line-utilities)
 
-
-For information on future developments, please visit [Wiki](https://github.com/d2phap/ImageGlass/wiki) and [Project](https://github.com/d2phap/ImageGlass/projects) page. 
-
 For more information about ImageGlass, go to [Documentation](https://imageglass.org/docs)
 
 
@@ -79,9 +76,10 @@ For more information about ImageGlass, go to [Documentation](https://imageglass.
 
 
 ## 💖 This project needs your help!
-ImageGlass is free and open source but developing it has taken thousands of hours of my time and a large part of my sanity. If you feel this little viewer is useful to you, it would go a great way to ensure that I can afford to take the time to continue to develop it.
+ImageGlass is an open source, free, and ad-free photo viewer, but developing and maintaining it is not. Your financial support gives me more motivation to work on future releases. You can sponsor my work on GitHub (one-time/monthly, no service fee), Patreon (monthly), PayPal,...
 
-Thanks for your gratitude and financial help!
+If you choose **GitHub Sponsor** or **Patreon**, make sure you check out **the tier benefits included**.<br/>
+Thanks for your support!
 
 <a href="https://github.com/sponsors/d2phap" target="_blank" title="Become a sponsor">
 <img src="https://img.shields.io/badge/Github-@d2phap-24292e.svg?maxAge=3600&logo=github" height="30" alt="Become a sponsor">
