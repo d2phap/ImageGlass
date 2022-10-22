@@ -736,10 +736,10 @@ namespace ImageGlass {
             numSlideshowIntervalTo.Minimum = numSlideShowInterval.Value;
 
             // format value
-            var time = TimeSpan.FromSeconds((double)numSlideShowInterval.Value).ToString("mm':'ss'.'fff");
+            var time = TimeSpan.FromSeconds((double)numSlideShowInterval.Value).ToString("mm':'ss'.'ff");
 
             if (chkRandomSlideshowInterval.Checked) {
-                var timeTo = TimeSpan.FromSeconds((double)numSlideshowIntervalTo.Value).ToString("mm':'ss'.'fff");
+                var timeTo = TimeSpan.FromSeconds((double)numSlideshowIntervalTo.Value).ToString("mm':'ss'.'ff");
 
                 time = $"{time} - {timeTo}";
             }
@@ -749,9 +749,9 @@ namespace ImageGlass {
 
         private void numSlideshowIntervalTo_ValueChanged(object sender, EventArgs e) {
             // format value
-            var time = TimeSpan.FromSeconds((double)numSlideShowInterval.Value).ToString("mm':'ss'.'fff");
+            var time = TimeSpan.FromSeconds((double)numSlideShowInterval.Value).ToString("mm':'ss'.'ff");
 
-            var timeTo = TimeSpan.FromSeconds((double)numSlideshowIntervalTo.Value).ToString("mm':'ss'.'fff");
+            var timeTo = TimeSpan.FromSeconds((double)numSlideshowIntervalTo.Value).ToString("mm':'ss'.'ff");
 
             time = $"{time} - {timeTo}";
 
