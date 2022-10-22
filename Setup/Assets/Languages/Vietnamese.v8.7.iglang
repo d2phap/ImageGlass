@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="vi-VN" langName="Tiếng Việt" author="Dương Diệu Pháp" description="Vietnamese" minVersion="8.6" isRightToLeftLayout="No"/>
+    <Info langCode="vi-VN" langName="Tiếng Việt" author="Dương Diệu Pháp" description="Vietnamese" minVersion="8.7" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="Một số cài đặt không tương thích với ImageGlass {0}. Bạn nên tự cập nhật trước khi tiếp tục.&#10;&#10;- Nhấn Yes để xem các thay đổi.&#10;- Nhấn No để mở ImageGlass với những cài đặt mặc định."/>
       <Item key="_.ImageOrderBy._Name" value="Tên (mặc định)"/>
@@ -91,7 +91,7 @@
       <Item key="frmMain.mnuMainShare" value="Chia sẻ…"/>
       <Item key="frmMain.mnuMainLayout" value="Bố cục"/>
       <Item key="frmMain.mnuMainToolbar" value="Thanh công cụ"/>
-      <Item key="frmMain.mnuMainThumbnailBar" value="Ảnh thu nhỏ"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="Bảng thu nhỏ"/>
       <Item key="frmMain.mnuMainCheckBackground" value="Nền ca rô"/>
       <Item key="frmMain.mnuMainAlwaysOnTop" value="Giữ cửa sổ luôn ở trên cùng"/>
       <Item key="frmMain.mnuMainTools" value="Công cụ"/>
@@ -197,6 +197,7 @@
       <Item key="frmSetting.chkLoopViewer" value="Xem lại hình ảnh đầu tiên khi kết thúc danh sách"/>
       <Item key="frmSetting.chkIsCenterImage" value="Canh giữa ảnh trong cửa sổ"/>
       <Item key="frmSetting.chkIsUseRawThumbnail" value="Sử dụng ảnh thu nhỏ nhúng trong định dạng RAW để hiển thị"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Tự động hiện ảnh vừa được thêm vào thư mục"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Thứ tự tải hình ảnh"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Sử dụng thứ tự sắp xếp của Windows File Explorer khi có thể"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Nhóm hình ảnh theo thư mục"/>
@@ -298,6 +299,7 @@
       <Item key="frmSetting.lblLanguageText" value="Ngôn ngữ đã cài đặt"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Làm mới"/>
       <Item key="frmSetting.lblLanguageWarning" value="Gói ngôn ngữ này có thể không tương thích với {0}"/>
+      <Item key="frmSetting.lblTranslators" value="Dịch bởi:"/>
       <Item key="frmSetting.lnkInstallLanguage" value="&gt; Cài đặt gói ngôn ngữ mới (*.iglang)…"/>
       <Item key="frmSetting.lnkCreateNew" value="&gt; Tạo gói ngôn ngữ mới…"/>
       <Item key="frmSetting.lnkEdit" value="&gt; Chỉnh sửa gói ngôn ngữ đang chọn…"/>
@@ -330,8 +332,8 @@
       <Item key="frmSetting.lblKeysUpDown" value="Mũi tên lên / xuống"/>
       <Item key="frmSetting.lblKeysLeftRight" value="Mũi tên trái / phải"/>
       <Item key="frmSetting.KeyActions._PrevNextImage" value="Xem ảnh trước / tiếp theo"/>
-      <Item key="frmSetting.KeyActions._PanLeftRight" value="Lia ảnh trái / phải"/>
-      <Item key="frmSetting.KeyActions._PanUpDown" value="Lia ảnh lên / xuống"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="Di chuyển ảnh trái / phải"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="Di chuyển ảnh lên / xuống"/>
       <Item key="frmSetting.KeyActions._ZoomInOut" value="Phóng to / thu nhỏ"/>
       <Item key="frmSetting.KeyActions._PauseSlideshow" value="Tạm dừng trình chiếu"/>
       <Item key="frmSetting.KeyActions._DoNothing" value="Không làm gì cả"/>
