@@ -2147,6 +2147,8 @@ namespace ImageGlass {
                 if (Configs.Language.FileName.ToLower().CompareTo(newString) != 0) {
                     Configs.Language = lstLanguages[cmbLanguage.SelectedIndex];
                     Local.ForceUpdateActions |= ForceUpdateActions.LANGUAGE;
+
+                    LoadLanguagePack();
                 }
             }
             #endregion
