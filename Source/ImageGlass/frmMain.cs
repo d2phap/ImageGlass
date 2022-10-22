@@ -2329,7 +2329,7 @@ namespace ImageGlass {
 
             // draw countdown text ----------------------------------------------
             var gap = DPIScaling.Transform(20);
-            var text = TimeSpan.FromSeconds(_slideshowCountdown - _slideshowStopwatch.Elapsed.TotalSeconds + 1).ToString("mm':'ss");
+            var text = TimeSpan.FromSeconds(_slideshowCountdown - _slideshowStopwatch.Elapsed.TotalSeconds + 1).ToString("mm'∶'ss");
 
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
