@@ -307,6 +307,8 @@ namespace ImageGlass {
             lblLanguageText.Text = lang[$"{Name}.{nameof(lblLanguageText)}"];
             lnkRefresh.Text = lang[$"{Name}.{nameof(lnkRefresh)}"];
             lblLanguageWarning.Text = string.Format(lang[$"{Name}.{nameof(lblLanguageWarning)}"], "ImageGlass " + Application.ProductVersion);
+            lblTranslators.Text = lang[$"{Name}.{nameof(lblTranslators)}"];
+
             lnkInstallLanguage.Text = lang[$"{Name}.{nameof(lnkInstallLanguage)}"];
             lnkCreateNew.Text = lang[$"{Name}.{nameof(lnkCreateNew)}"];
             lnkEdit.Text = lang[$"{Name}.{nameof(lnkEdit)}"];
@@ -998,7 +1000,7 @@ namespace ImageGlass {
 
                 // start from 1, the first item is already hardcoded
                 for (var i = 1; i < lstLanguages.Count; i++) {
-                    var iLang = cmbLanguage.Items.Add(lstLanguages[i].LangName);
+                    var iLang = cmbLanguage.Items.Add($"{lstLanguages[i].LangName} ({lstLanguages[i].Description})");
                     var curLang = Configs.Language.FileName;
 
                     // using current language pack
@@ -1017,9 +1019,18 @@ namespace ImageGlass {
             lblLanguageWarning.Visible = false;
 
             // check compatibility
-            var lang = new Language();
-            if (lang.MinVersion.CompareTo(lstLanguages[cmbLanguage.SelectedIndex].MinVersion) != 0) {
+            var selectedLang = lstLanguages[cmbLanguage.SelectedIndex];
+            var newLang = new Language();
+            if (newLang.MinVersion.CompareTo(selectedLang.MinVersion) != 0) {
                 lblLanguageWarning.Visible = true;
+            }
+
+            // language translators
+            if (cmbLanguage.SelectedIndex == 0) {
+                lblTranslatorNames.Text = "Dương Diệu Pháp";
+            }
+            else {
+                lblTranslatorNames.Text = selectedLang.Author;
             }
         }
 

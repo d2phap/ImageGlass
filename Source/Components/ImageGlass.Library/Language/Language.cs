@@ -611,6 +611,7 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lblLanguageText", "Installed languages");
             Items.Add("frmSetting.lnkRefresh", "> Refresh");
             Items.Add("frmSetting.lblLanguageWarning", "This language pack may be not compatible with {0}"); //v3.2
+            Items.Add("frmSetting.lblTranslators", "Translator:"); // v8.7
 
             Items.Add("frmSetting.lnkInstallLanguage", "> Install new language pack (*.iglang)…"); //v2.0 final
             Items.Add("frmSetting.lnkCreateNew", "> Create new language pack…");

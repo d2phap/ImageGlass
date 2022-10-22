@@ -231,6 +231,7 @@ namespace ImageGlass
             this.lvTheme = new System.Windows.Forms.ListView();
             this.btnThemeApply = new System.Windows.Forms.Button();
             this.tabLanguage = new System.Windows.Forms.TabPage();
+            this.lblTranslators = new System.Windows.Forms.Label();
             this.lblLanguageWarning = new System.Windows.Forms.Label();
             this.lnkInstallLanguage = new System.Windows.Forms.LinkLabel();
             this.lnkRefresh = new System.Windows.Forms.LinkLabel();
@@ -244,6 +245,7 @@ namespace ImageGlass
             this.btnApply = new System.Windows.Forms.Button();
             this.tblayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.lblTranslatorNames = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picBackgroundColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sp1)).BeginInit();
             this.sp1.Panel1.SuspendLayout();
@@ -2478,7 +2480,7 @@ namespace ImageGlass
             // 
             this.chkColorUseHSVA.AutoSize = true;
             this.chkColorUseHSVA.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkColorUseHSVA.Location = new System.Drawing.Point(44, 150);
+            this.chkColorUseHSVA.Location = new System.Drawing.Point(44, 151);
             this.chkColorUseHSVA.Margin = new System.Windows.Forms.Padding(1);
             this.chkColorUseHSVA.Name = "chkColorUseHSVA";
             this.chkColorUseHSVA.Size = new System.Drawing.Size(186, 28);
@@ -2562,7 +2564,7 @@ namespace ImageGlass
             // 
             this.chkColorUseHSLA.AutoSize = true;
             this.chkColorUseHSLA.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkColorUseHSLA.Location = new System.Drawing.Point(44, 113);
+            this.chkColorUseHSLA.Location = new System.Drawing.Point(44, 116);
             this.chkColorUseHSLA.Margin = new System.Windows.Forms.Padding(1);
             this.chkColorUseHSLA.Name = "chkColorUseHSLA";
             this.chkColorUseHSLA.Size = new System.Drawing.Size(174, 28);
@@ -2585,7 +2587,7 @@ namespace ImageGlass
             // 
             this.chkColorUseHEXA.AutoSize = true;
             this.chkColorUseHEXA.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkColorUseHEXA.Location = new System.Drawing.Point(44, 83);
+            this.chkColorUseHEXA.Location = new System.Drawing.Point(44, 81);
             this.chkColorUseHEXA.Margin = new System.Windows.Forms.Padding(1);
             this.chkColorUseHEXA.Name = "chkColorUseHEXA";
             this.chkColorUseHEXA.Size = new System.Drawing.Size(249, 28);
@@ -2962,6 +2964,8 @@ namespace ImageGlass
             // 
             this.tabLanguage.AutoScroll = true;
             this.tabLanguage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
+            this.tabLanguage.Controls.Add(this.lblTranslatorNames);
+            this.tabLanguage.Controls.Add(this.lblTranslators);
             this.tabLanguage.Controls.Add(this.lblLanguageWarning);
             this.tabLanguage.Controls.Add(this.lnkInstallLanguage);
             this.tabLanguage.Controls.Add(this.lnkRefresh);
@@ -2977,12 +2981,25 @@ namespace ImageGlass
             this.tabLanguage.TabIndex = 2;
             this.tabLanguage.Text = "Lang";
             // 
+            // lblTranslators
+            // 
+            this.lblTranslators.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTranslators.AutoSize = true;
+            this.lblTranslators.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTranslators.Location = new System.Drawing.Point(24, 111);
+            this.lblTranslators.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lblTranslators.Name = "lblTranslators";
+            this.lblTranslators.Size = new System.Drawing.Size(114, 23);
+            this.lblTranslators.TabIndex = 64;
+            this.lblTranslators.Text = "[Translators:]";
+            // 
             // lblLanguageWarning
             // 
             this.lblLanguageWarning.AutoSize = true;
             this.lblLanguageWarning.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLanguageWarning.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(234)))), ((int)(((byte)(115)))), ((int)(((byte)(17)))));
-            this.lblLanguageWarning.Location = new System.Drawing.Point(22, 83);
+            this.lblLanguageWarning.Location = new System.Drawing.Point(24, 81);
             this.lblLanguageWarning.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lblLanguageWarning.Name = "lblLanguageWarning";
             this.lblLanguageWarning.Size = new System.Drawing.Size(525, 23);
@@ -2996,7 +3013,7 @@ namespace ImageGlass
             this.lnkInstallLanguage.AutoSize = true;
             this.lnkInstallLanguage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkInstallLanguage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkInstallLanguage.Location = new System.Drawing.Point(22, 174);
+            this.lnkInstallLanguage.Location = new System.Drawing.Point(22, 315);
             this.lnkInstallLanguage.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lnkInstallLanguage.Name = "lnkInstallLanguage";
             this.lnkInstallLanguage.Size = new System.Drawing.Size(297, 23);
@@ -3012,13 +3029,13 @@ namespace ImageGlass
             this.lnkRefresh.AutoSize = true;
             this.lnkRefresh.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkRefresh.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkRefresh.Location = new System.Drawing.Point(284, 46);
+            this.lnkRefresh.Location = new System.Drawing.Point(432, 50);
             this.lnkRefresh.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lnkRefresh.Name = "lnkRefresh";
-            this.lnkRefresh.Size = new System.Drawing.Size(83, 23);
+            this.lnkRefresh.Size = new System.Drawing.Size(93, 23);
             this.lnkRefresh.TabIndex = 59;
             this.lnkRefresh.TabStop = true;
-            this.lnkRefresh.Text = "> Refresh";
+            this.lnkRefresh.Text = "[> Refresh]";
             this.lnkRefresh.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
             this.lnkRefresh.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkRefresh_LinkClicked);
             // 
@@ -3028,7 +3045,7 @@ namespace ImageGlass
             this.lnkEdit.AutoSize = true;
             this.lnkEdit.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkEdit.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkEdit.Location = new System.Drawing.Point(22, 236);
+            this.lnkEdit.Location = new System.Drawing.Point(22, 430);
             this.lnkEdit.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lnkEdit.Name = "lnkEdit";
             this.lnkEdit.Size = new System.Drawing.Size(239, 23);
@@ -3044,7 +3061,7 @@ namespace ImageGlass
             this.lnkCreateNew.AutoSize = true;
             this.lnkCreateNew.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkCreateNew.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkCreateNew.Location = new System.Drawing.Point(22, 205);
+            this.lnkCreateNew.Location = new System.Drawing.Point(22, 348);
             this.lnkCreateNew.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lnkCreateNew.Name = "lnkCreateNew";
             this.lnkCreateNew.Size = new System.Drawing.Size(229, 23);
@@ -3060,7 +3077,7 @@ namespace ImageGlass
             this.lnkGetMoreLanguage.AutoSize = true;
             this.lnkGetMoreLanguage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkGetMoreLanguage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkGetMoreLanguage.Location = new System.Drawing.Point(22, 267);
+            this.lnkGetMoreLanguage.Location = new System.Drawing.Point(22, 381);
             this.lnkGetMoreLanguage.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lnkGetMoreLanguage.Name = "lnkGetMoreLanguage";
             this.lnkGetMoreLanguage.Size = new System.Drawing.Size(222, 23);
@@ -3078,10 +3095,10 @@ namespace ImageGlass
             this.cmbLanguage.Items.AddRange(new object[] {
             "English (default)",
             "Vietnamese"});
-            this.cmbLanguage.Location = new System.Drawing.Point(28, 45);
+            this.cmbLanguage.Location = new System.Drawing.Point(28, 47);
             this.cmbLanguage.Margin = new System.Windows.Forms.Padding(1);
             this.cmbLanguage.Name = "cmbLanguage";
-            this.cmbLanguage.Size = new System.Drawing.Size(237, 31);
+            this.cmbLanguage.Size = new System.Drawing.Size(390, 31);
             this.cmbLanguage.TabIndex = 58;
             this.cmbLanguage.SelectedIndexChanged += new System.EventHandler(this.cmbLanguage_SelectedIndexChanged);
             // 
@@ -3091,9 +3108,9 @@ namespace ImageGlass
             this.lblLanguageText.Location = new System.Drawing.Point(22, 21);
             this.lblLanguageText.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.lblLanguageText.Name = "lblLanguageText";
-            this.lblLanguageText.Size = new System.Drawing.Size(161, 23);
+            this.lblLanguageText.Size = new System.Drawing.Size(171, 23);
             this.lblLanguageText.TabIndex = 1;
-            this.lblLanguageText.Text = "Installed languages:";
+            this.lblLanguageText.Text = "[Installed languages:]";
             // 
             // btnSave
             // 
@@ -3166,6 +3183,18 @@ namespace ImageGlass
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(973, 67);
             this.panel4.TabIndex = 18;
+            // 
+            // lblTranslatorNames
+            // 
+            this.lblTranslatorNames.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTranslatorNames.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTranslatorNames.Location = new System.Drawing.Point(44, 142);
+            this.lblTranslatorNames.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lblTranslatorNames.Name = "lblTranslatorNames";
+            this.lblTranslatorNames.Size = new System.Drawing.Size(677, 74);
+            this.lblTranslatorNames.TabIndex = 65;
+            this.lblTranslatorNames.Text = "[aaa, \r\nbbb, \r\nccc]";
             // 
             // frmSetting
             // 
@@ -3458,5 +3487,7 @@ namespace ImageGlass
         private System.Windows.Forms.Label lblVertPanningSpeed;
         private System.Windows.Forms.Label lblHeadPanning;
         private System.Windows.Forms.CheckBox chkAutoDisplayNewImage;
+        private System.Windows.Forms.Label lblTranslators;
+        private System.Windows.Forms.Label lblTranslatorNames;
     }
 }
