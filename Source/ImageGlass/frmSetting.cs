@@ -1070,8 +1070,6 @@ namespace ImageGlass {
                 using var p = new Process();
                 var isError = true;
                 var allExts = Configs.AllFormats;
-                // Issue #664
-                allExts.Remove(".ico");
                 var formats = Configs.GetImageFormats(allExts);
 
                 p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
