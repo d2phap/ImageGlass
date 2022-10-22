@@ -698,7 +698,7 @@ namespace ImageGlass {
 
             #endregion
 
-            // Issue #1020 : don't stop existing animation unless we're actually switching images
+            // Issue #1020: don't stop existing animation unless we're actually switching images
             // stop the animation
             if (picMain.IsAnimating) {
                 picMain.StopAnimating();

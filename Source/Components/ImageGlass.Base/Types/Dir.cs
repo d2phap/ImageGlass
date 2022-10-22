@@ -33,6 +33,11 @@ namespace ImageGlass.Base {
         public static string Languages { get; } = "Languages";
 
         /// <summary>
+        /// Gets the folder name for extension icons
+        /// </summary>
+        public static string ExtIcons { get; } = "Ext-Icons";
+
+        /// <summary>
         /// Gets the temporary folder name
         /// </summary>
         public static string Temporary { get; } = "Temp";

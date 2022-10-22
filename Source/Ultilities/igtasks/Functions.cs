@@ -180,7 +180,7 @@ namespace igtasks {
                 }
 
                 // File type icon
-                var iconPath = App.StartUpDir(@"Ext-Icons\" + ext.ToUpper().Substring(1) + ".ico");
+                var iconPath = App.ConfigDir(PathType.File, Dir.ExtIcons, $"{ext.ToUpper().Substring(1)}.ico");
                 if (!File.Exists(iconPath)) {
                     iconPath = App.IGExePath;
                 }
