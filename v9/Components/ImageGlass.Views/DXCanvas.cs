@@ -28,12 +28,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using System.Windows;
 using WicNet;
 using InterpolationMode = D2Phap.InterpolationMode;
-using Point = System.Drawing.Point;
-using Size = System.Drawing.Size;
-using SystemColors = System.Drawing.SystemColors;
 
 namespace ImageGlass.Views;
 
@@ -167,7 +163,7 @@ public class DXCanvas : DXControl
     /// Enables or disables the selection.
     /// Panning by mouse will be disabled when the selection is enabled.
     /// </summary>
-    public bool EnableSelection { get; set; } = true;
+    public bool EnableSelection { get; set; } = false;
 
     /// <summary>
     /// Gets, sets selection color.
@@ -1026,11 +1022,14 @@ public class DXCanvas : DXControl
             DrawImageLayer(g);
         }
 
-        // Draw selection layer
-        if (EnableSelection)
-        {
-            DrawSelectionLayer(g);
-        }
+
+        //// Draw selection layer
+        //if (EnableSelection)
+        //{
+        //    DrawSelectionLayer(g);
+        //}
+
+
 
         // text message
         DrawMessageLayer(g);
@@ -1243,11 +1242,62 @@ public class DXCanvas : DXControl
     {
         if (_selection.IsEmpty) return;
 
+        var scaledSelection = new RectangleF() {
+            X = _selection.X, // / _zoomFactor,
+            Y = _selection.Y, // / _zoomFactor,
+            Width = _selection.Width, // / _zoomFactor,
+            Height = _selection.Height, // / _zoomFactor,
+        };
+
+
+        // draw grid, ignore alpha value
+        using (Pen pen = new Pen(Color.FromArgb(200, SelectionColor)))
+        {
+            var width3 = scaledSelection.Width / 3;
+            var height3 = scaledSelection.Height / 3;
+
+            for (int i = 1; i < 3; i++)
+            {
+                g.DrawLine(
+                    scaledSelection.X + (i * width3),
+                    scaledSelection.Y,
+                    scaledSelection.X + (i * width3),
+                    scaledSelection.Y + scaledSelection.Height, Color.White);
+                g.DrawLine(
+                    scaledSelection.X + (i * width3),
+                    scaledSelection.Y,
+                    scaledSelection.X + (i * width3),
+                    scaledSelection.Y + scaledSelection.Height, Color.FromArgb(200, Color.Black));
+                g.DrawLine(
+                    scaledSelection.X + (i * width3),
+                    scaledSelection.Y,
+                    scaledSelection.X + (i * width3),
+                    scaledSelection.Y + scaledSelection.Height, SelectionColor);
+
+
+                g.DrawLine(
+                    scaledSelection.X,
+                    scaledSelection.Y + (i * height3),
+                    scaledSelection.X + scaledSelection.Width,
+                    scaledSelection.Y + (i * height3), Color.White);
+                g.DrawLine(
+                    scaledSelection.X,
+                    scaledSelection.Y + (i * height3),
+                    scaledSelection.X + scaledSelection.Width,
+                    scaledSelection.Y + (i * height3), Color.FromArgb(200, Color.Black));
+                g.DrawLine(
+                    scaledSelection.X,
+                    scaledSelection.Y + (i * height3),
+                    scaledSelection.X + scaledSelection.Width,
+                    scaledSelection.Y + (i * height3), SelectionColor);
+            }
+        }
+
 
         // fill the selection
-        g.DrawRectangle(_selection, 0, Color.FromArgb(255, Color.White), Color.FromArgb(50, Color.White));
-        g.DrawRectangle(_selection, 0, Color.FromArgb(200, Color.Black), Color.FromArgb(50, Color.Black));
-        g.DrawRectangle(_selection, 0, Color.FromArgb(200, SelectionColor), Color.FromArgb(50, SelectionColor));
+        g.DrawRectangle(scaledSelection, 0, Color.FromArgb(255, Color.White), Color.FromArgb(50, Color.White));
+        g.DrawRectangle(scaledSelection, 0, Color.FromArgb(200, Color.Black), Color.FromArgb(50, Color.Black));
+        g.DrawRectangle(scaledSelection, 0, Color.FromArgb(200, SelectionColor), Color.FromArgb(50, SelectionColor));
 
 
         // 4 corner resizers
@@ -1255,23 +1305,23 @@ public class DXCanvas : DXControl
         var resizerMargin = 4;
         var resizerBgColor = Color.FromArgb(150, Color.White);
         var topLeftResizer = new RectangleF(
-            _selection.X + resizerMargin,
-            _selection.Y + resizerMargin,
+            scaledSelection.X + resizerMargin,
+            scaledSelection.Y + resizerMargin,
             resizerSize,
             resizerSize);
         var topRightResizer = new RectangleF(
-            _selection.Right - resizerSize - resizerMargin,
-            _selection.Y + resizerMargin,
+            scaledSelection.Right - resizerSize - resizerMargin,
+            scaledSelection.Y + resizerMargin,
             resizerSize,
             resizerSize);
         var bottomLeftResizer = new RectangleF(
-            _selection.X + resizerMargin,
-            _selection.Bottom - resizerSize - resizerMargin,
+            scaledSelection.X + resizerMargin,
+            scaledSelection.Bottom - resizerSize - resizerMargin,
             resizerSize,
             resizerSize);
         var bottomRightResizer = new RectangleF(
-            _selection.Right - resizerSize - resizerMargin,
-            _selection.Bottom - resizerSize - resizerMargin,
+            scaledSelection.Right - resizerSize - resizerMargin,
+            scaledSelection.Bottom - resizerSize - resizerMargin,
             resizerSize,
             resizerSize);
 
