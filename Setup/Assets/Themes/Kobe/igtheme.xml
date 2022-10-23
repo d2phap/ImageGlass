@@ -9,12 +9,12 @@
       backcolor="#232A30"
       statuscolor="#dedede"
       menubackgroundcolor="#2D363E"
-      menubackgroundhovercolor="#326AD6"
+      menubackgroundhovercolor="#016485"
       menutextcolor="#dedede"
       menutexthovercolor="#dedede"
-      accentcolor="#326AD6"
-      accentlightcolor="#675AF7"
-      accentdarkcolor="#244D9C"
+      accentcolor="#016485"
+      accentlightcolor="#BD8112"
+      accentdarkcolor="#01475E"
       logo="logo.svg"
       isshowtitlebarlogo="true" />
     <toolbar_icon 
