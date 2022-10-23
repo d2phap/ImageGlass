@@ -969,9 +969,11 @@ namespace ImageGlass {
         }
 
         private void lnkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            var selectedLang = lstLanguages[cmbLanguage.SelectedIndex];
+
             using var p = new Process();
             p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-            p.StartInfo.Arguments = "igeditlang \"" + Configs.Language.FileName + "\"";
+            p.StartInfo.Arguments = "igeditlang \"" + selectedLang.FileName + "\"";
 
             try {
                 p.Start();
@@ -1028,9 +1030,11 @@ namespace ImageGlass {
             // language translators
             if (cmbLanguage.SelectedIndex == 0) {
                 lblTranslatorNames.Text = "Dương Diệu Pháp";
+                lnkEdit.Enabled = false;
             }
             else {
                 lblTranslatorNames.Text = selectedLang.Author;
+                lnkEdit.Enabled = true;
             }
         }
 
