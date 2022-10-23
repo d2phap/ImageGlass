@@ -495,7 +495,7 @@ namespace ImageGlass.UI {
             }
 
             // v8.0: Form icon
-            Logo = LoadThemeImage(dir, n, "logo", 128);
+            Logo = LoadThemeImage(dir, n, "logo", 140);
             if (Logo.Image is null) {
                 Logo.Image = Properties.Resources.DefaultLogo;
             }
