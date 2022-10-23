@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="sk-SK" langName="Slovenčina" author="Adelita Spadlita (AdlaSpadla)" description="Slovak" minVersion="8.7" isRightToLeftLayout="No"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="Niektoré nastavenia nie sú kompatibilné s Vaším ImageGlass {0}. Odporúča je pred pokračovaním aktualizovať.&#10;&#10;- Kliknite na Áno pre informácie o zmenách.&#10;- Kliknutím na tlačidlo Nie spustíte ImageGlass s predvolenými nastaveniami."/>
+      <Item key="_.ImageOrderBy._Name" value="Podľa mena (predvolené)"/>
+      <Item key="_.ImageOrderBy._Length" value="Dĺžka"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Čas vytvorenia"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Naposledy zobrazené"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Čas poslednej aktualizácie"/>
+      <Item key="_.ImageOrderBy._Extension" value="Rozšírenia"/>
+      <Item key="_.ImageOrderBy._Random" value="Náhodne"/>
+      <Item key="_.ImageOrderType._Asc" value="Vzostupne"/>
+      <Item key="_.ImageOrderType._Desc" value="Zostupne"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Nič"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Minimalizovať"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Zatvoriť"/>
+      <Item key="frmMain.mnuMainFile" value="Súbor"/>
+      <Item key="frmMain.mnuMainOpenFile" value="Otvoriť súbor…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Otvoriť obrázok zo schránky"/>
+      <Item key="frmMain.mnuMainNewWindow" value="Otvoriť v novom okne"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Nové okno nemožno otvoriť, pretože je povolená iba jedna inštancia"/>
+      <Item key="frmMain.mnuSaveImage" value="Uložiť obrázok"/>
+      <Item key="frmMain.mnuMainSaveAs" value="Uložiť obrázok ako…"/>
+      <Item key="frmMain.mnuMainRefresh" value="Obnoviť"/>
+      <Item key="frmMain.mnuMainReloadImage" value="Znova načítať obrázok"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="Znova načítať zoznam obrázkov"/>
+      <Item key="frmMain.mnuOpenWith" value="Otvoriť s…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Upraviť obrázok {0}…"/>
+      <Item key="frmMain.mnuMainPrint" value="Tlačiť…"/>
+      <Item key="frmMain.mnuMainNavigation" value="Navigácia"/>
+      <Item key="frmMain.mnuMainViewNext" value="Zobraziť ďalší obrázok"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Šípka doprava / Stránka dole"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="Zobraziť predchádzajúci obrázok"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Šípka doľava / Stránka hore"/>
+      <Item key="frmMain.mnuMainGoto" value="Ísť do…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="Prejdite na prvý obrázok"/>
+      <Item key="frmMain.mnuMainGotoLast" value="Prejdite na posledný obrázok"/>
+      <Item key="frmMain.mnuMainNextPage" value="Zobraziť ďalšiu stránku"/>
+      <Item key="frmMain.mnuMainPrevPage" value="Zobraziť predchádzajúcu stránku"/>
+      <Item key="frmMain.mnuMainFirstPage" value="Zobraziť prvú stránku"/>
+      <Item key="frmMain.mnuMainLastPage" value="Zobraziť poslednú stránku"/>
+      <Item key="frmMain.mnuMainZoom" value="Priblíženie"/>
+      <Item key="frmMain.mnuMainZoomIn" value="Priblížiť"/>
+      <Item key="frmMain.mnuMainZoomOut" value="Oddialiť"/>
+      <Item key="frmMain.mnuCustomZoom" value="Vlastné priblíženie…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="Vložte novú hodnotu priblíženia"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="Prispôsobiť veľkost"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="Prispôsobiť veľkost"/>
+      <Item key="frmMain.mnuMainActualSize" value="Skutočná veľkosť"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Uzamknúť pomer zväčšenia"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="Automatické zväčšenie"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="Prispôsobiť na šírku"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="Prispôsobiť na výšku"/>
+      <Item key="frmMain.mnuMainImage" value="Obrázok"/>
+      <Item key="frmMain.mnuMainChannels" value="Zobraziť kanály"/>
+      <Item key="frmMain.mnuMainChannels._All" value="Všetko"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="Červená"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="Zelená"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="Modrá"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="Čierna"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="Alfa"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Načítanie řady"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="Otočiť doľava"/>
+      <Item key="frmMain.mnuMainRotateRight" value="Otočiť doprava"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="Prevrátiť vodorovne"/>
+      <Item key="frmMain.mnuMainFlipVert" value="Prevrátiť zvislo"/>
+      <Item key="frmMain.mnuMainRename" value="Premenovať obrázok…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Presunúť do koša"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Odstrániť z pevného disku"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Extrahovať obrazovej stránky ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="Spustenie / zastavenie animácie obrázka"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Nastaviť ako pozadie pracovnej plochy"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="Nastaviť ako obrázok uzamknutej obrazovky"/>
+      <Item key="frmMain.mnuMainImageLocation" value="Otvoriť umiestnenie súboru"/>
+      <Item key="frmMain.mnuMainImageProperties" value="Vlastnosti obrázka"/>
+      <Item key="frmMain.mnuMainClipboard" value="Schránka"/>
+      <Item key="frmMain.mnuMainCopy" value="Kopírovať"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="Kopírovať obrazové údaje"/>
+      <Item key="frmMain.mnuMainCut" value="Vyňať"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="Kopírovať cestu k súboru"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="Vymazať schránku"/>
+      <Item key="frmMain.mnuWindowFit" value="Prispôsobiť oknu"/>
+      <Item key="frmMain.mnuMainFullScreen" value="Na celú obrazovku"/>
+      <Item key="frmMain.mnuFrameless" value="Bez rámčekov"/>
+      <Item key="frmMain.mnuMainSlideShow" value="Prezentácia"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="Spustiť prezentáciu"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="Pozastaviť / Obnoviť prezentáciu"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="Ukončiť prezentáciu"/>
+      <Item key="frmMain.mnuMainShare" value="Zdieľať…"/>
+      <Item key="frmMain.mnuMainLayout" value="Rozloženie"/>
+      <Item key="frmMain.mnuMainToolbar" value="Panel nástrojov"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="Panel miniatúr"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="Šachovnicové pozadie"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Ponechať okno vždy navrchu"/>
+      <Item key="frmMain.mnuMainTools" value="Nástroje"/>
+      <Item key="frmMain.mnuMainColorPicker" value="Výber farby"/>
+      <Item key="frmMain.mnuMainPageNav" value="Navigácia po stránke"/>
+      <Item key="frmMain.mnuMainCrop" value="Orezávanie"/>
+      <Item key="frmMain.mnuExifTool" value="Nástroj Exif"/>
+      <Item key="frmMain.mnuMainSettings" value="Nastavenie…"/>
+      <Item key="frmMain.mnuMainHelp" value="Pomoc"/>
+      <Item key="frmMain.mnuMainAbout" value="O aplikácii"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="Konfigurácia prvého spustenia…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Skontrolovať aktualizácie…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Nová verzia je k dispozícii!"/>
+      <Item key="frmMain.mnuMainReportIssue" value="Nahlásiť problém…"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Ukončiť"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="Zobrazit"/>
+      <Item key="frmMain.picMain._ErrorText" value="Program ImageGlass nemôže otvoriť tento obrázok, pretože sa zdá, že súbor je poškodený alebo nepodporovaný."/>
+      <Item key="frmMain._ImageNotExist" value="Takýto obrázok neexistuje."/>
+      <Item key="frmMain.btnMenu" value="Hlavné menu"/>
+      <Item key="frmMain._OpenFileDialog" value="Všetky podporované súbory"/>
+      <Item key="frmMain._Files" value="súbor(y)"/>
+      <Item key="frmMain._Pages" value="stránky"/>
+      <Item key="frmMain._ImageData" value="Obrazové údaje"/>
+      <Item key="frmMain._RenameDialogText" value="Premenovať"/>
+      <Item key="frmMain._RenameDialog" value="Zadajte nový názov"/>
+      <Item key="frmMain._GotoDialogText" value="Zadajte index obrázka pre jeho zobrazenie. Stlačte ENTER"/>
+      <Item key="frmMain._DeleteDialogText" value="Odstrániť súbor {0}?"/>
+      <Item key="frmMain._DeleteDialogTitle" value="Potvrdiť"/>
+      <Item key="frmMain._ExtractPageText" value="Extrahovanie obrázkových stránok. Prosím vyberte cieľovú zložku."/>
+      <Item key="frmMain._FullScreenMessage" value="Stlačte {0} pre ukončenie režimu celej obrazovky."/>
+      <Item key="frmMain._SlideshowMessage" value="Stlačte ESC na ukončenie prezentácie."/>
+      <Item key="frmMain._SlideshowMessagePause" value="Prezentácia je pozastavená"/>
+      <Item key="frmMain._SlideshowMessageResume" value="Prezentácia je pozastavená"/>
+      <Item key="frmMain._CopyFileText" value="Skopírovaný(é) {0} súbor(ov)"/>
+      <Item key="frmMain._CutFileText" value="Vyňať {0} súbor(ov)"/>
+      <Item key="frmMain._CopyImageData" value="Obrázok bol skopírovaný do schránky"/>
+      <Item key="frmMain._ClearClipboard" value="Schránka bola vymazaná"/>
+      <Item key="frmMain._SaveImage" value="Obrázok bol uložený do&#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="Ukladá sa obrázok...&#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="Obrázok sa nedá uložiť&#10;{0}."/>
+      <Item key="frmMain._Loading" value="Načítávanie..."/>
+      <Item key="frmMain._FirstItemOfList" value="Dosiahnuté prvého obrázku"/>
+      <Item key="frmMain._LastItemOfList" value="Dosiahnuté posledného obrázku"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="Úpravy pre animovaný formát nie sú podporované"/>
+      <Item key="frmMain._SetLockImage_Error" value="Nastala chyba pri nastavení obrázku uzamknutej obrazovky"/>
+      <Item key="frmMain._SetLockImage_Success" value="Obrázok uzamknutej obrazovky bol úspešne nastavený"/>
+      <Item key="frmMain._SetBackground_Error" value="Pri nastavovaní pozadia pracovnej plochy sa vyskytla chyba"/>
+      <Item key="frmMain._SetBackground_Success" value="Pozadie pracovnej plochy bolo úspešne nastavené"/>
+      <Item key="frmMain._PageExtracting" value="Vyberám obrázkové stránky..."/>
+      <Item key="frmMain._PageExtractComplete" value="Extrakcia stránky je dokončená."/>
+      <Item key="frmMain._Frameless" value="Podržaním SHIFT posúvate okno."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Schránka neobsahuje obrazové údaje."/>
+      <Item key="frmAbout.lblSlogant" value="Ľahký a všestranný prehliadač obrázkov"/>
+      <Item key="frmAbout.lblInfo" value="Informácie"/>
+      <Item key="frmAbout.lblComponent" value="Komponenty"/>
+      <Item key="frmAbout.lblReferences" value="Referencie"/>
+      <Item key="frmAbout.lblVersion" value="Verzia: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="Kontakt"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="Aktualizácie softvéru"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» Skontrolovať aktualizácie…"/>
+      <Item key="frmAbout._Text" value="O aplikácii"/>
+      <Item key="frmAbout._PortableText" value="[Prenosná]"/>
+      <Item key="frmSetting._Text" value="Nastavenie"/>
+      <Item key="frmSetting.btnSave" value="Uložiť"/>
+      <Item key="frmSetting.btnCancel" value="Zrušiť"/>
+      <Item key="frmSetting.btnApply" value="Použiť"/>
+      <Item key="frmSetting.lblGeneral" value="Všeobecné"/>
+      <Item key="frmSetting.lblImage" value="Obrázok"/>
+      <Item key="frmSetting.lblEdit" value="Upraviť"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="Súborové priradenia"/>
+      <Item key="frmSetting.lblToolbar" value="Panel nástrojov"/>
+      <Item key="frmSetting.lblLanguage" value="Jazyk"/>
+      <Item key="frmSetting.lblTheme" value="Motív"/>
+      <Item key="frmSetting.lblKeyboard" value="Klávesnica"/>
+      <Item key="frmSetting.lblHeadStartup" value="Začiatok"/>
+      <Item key="frmSetting.chkWelcomePicture" value="Zobraziť uvítací obrázok"/>
+      <Item key="frmSetting.chkLastSeenImage" value="Otvoriť naposledy videný obrázok"/>
+      <Item key="frmSetting.chkShowToolBar" value="Zobraziť panel s nástrojmi pri spustení"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="Adresár s konfiguráciou"/>
+      <Item key="frmSetting.lblHeadViewer" value="Prehliadač"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Zobraziť posuvné lišty prehliadača"/>
+      <Item key="frmSetting.chkShowNavButtons" value="Zobraziť tlačidlá so šípkami navigácie"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Zobraziť základné meno prezeraného obrázka v záhlaví"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Zobraziť šachovnicu iba v oblasti obrázka"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="Povoliť podporu dotykových gest"/>
+      <Item key="frmSetting.lblBackGroundColor" value="Farba pozadia"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Resetovať"/>
+      <Item key="frmSetting.lblHeadPanning" value="Posúvanie"/>
+      <Item key="frmSetting.lblVertPanningSpeed" value="Rýchlosť vertikálneho posúvania"/>
+      <Item key="frmSetting.lblHorzPanningSpeed" value="Rýchlosť horizontálneho posúvania"/>
+      <Item key="frmSetting.lblHeadOthers" value="Iné"/>
+      <Item key="frmSetting.chkStartWithOs" value="Spustiť s OS pre zlepšenie rýchlosti spustenia"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Beží v pozadí aj keď sa aplikácia zavrie"/>
+      <Item key="frmSetting.chkAutoUpdate" value="Automaticky kontrolovať dostupnosť aktualizácií"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="Povoliť viac inštancií programu"/>
+      <Item key="frmSetting.chkESCToQuit" value="Povolenie na stlačenie ESC na ukončenie aplikácie"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="Zobrazovať dialógové okno potvrdenia Odstránenia"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="Automatické vycentrovanie okna v režime prispôsobenia okna"/>
+      <Item key="frmSetting.chkShowToast" value="Zobraziť správu s prípitkom"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="Načítava sa obrázok"/>
+      <Item key="frmSetting.chkFindChildFolder" value="Nájdite obrázky v podradenom priečinku"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="Zobraziť skryté obrázky"/>
+      <Item key="frmSetting.chkLoopViewer" value="Keď sa dostanete na koniec zoznamu, prehliadač sa vráti na prvý obrázok"/>
+      <Item key="frmSetting.chkIsCenterImage" value="Vycentrovať obrázok na prehliadač"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="Použi vloženú miniatúru pre RAW formát"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="Poradie načítania obrázka"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Použiť Prieskumníka súborov Windows na zoradenie poradia ak je to možné"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Zoskupte obrázky podľa adresára"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="Počet obrázkov uložených v pamäti ImageBoosterom (jedným smerom)"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Prehraj zvuk pri zmene obrázka"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="Počet obrázkov pre notifikáciu"/>
+      <Item key="frmSetting.lblColorManagement" value="Správca farieb"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="Použiť aj pre obrázky bez vloženého farebného profilu"/>
+      <Item key="frmSetting.lblColorProfile" value="Farebný profil:"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="Prechádzať…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="Žiadne"/>
+      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="Použiť aktuálny profil monitora"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Vlastné…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="Nastavenie akcií kolieska myšky"/>
+      <Item key="frmSetting.lblMouseWheel" value="Koliesko myšky"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="Koliesko myšky + Alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Koliesko myšky + Ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="Koliesko myšky + Shift"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="Neurobiť nič"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="Priblíženie"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Zvyslé skrolovanie"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Vodorovné skrolovanie"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Predchádzajúci/ďalší obrázok"/>
+      <Item key="frmSetting.lblHeadZooming" value="Približovanie"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Optimalizácia približovania"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Automaticky (Nízka kvalita /Najbližšia-hranica)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Nízka kvalita"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Vysoká kvalita"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Bilineárny"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Bikubický"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Najbližšia-hranica"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Vysoká-kvalita, bilineárny"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Vysoká-kvalita, bikubický"/>
+      <Item key="frmSetting.lblZoomLevels" value="Úroveň priblíženia"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="Pri aktualizácii úrovní priblíženia sa vyskytla chyba. Chybová správa:&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Panel miniatúr"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="Zobraziť miniatúry na pravej strane"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Zobraziť posúvač miniatúr"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Rozmer miniatúry (pixel)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="Prezentácia"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="Keď sa dostanete na koniec zoznamu, prehliadač sa vráti na prvý obrázok"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="Zobraziť odpočítavanie prezentácie"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="Použiť náhodný interval"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="Interval prezentácie: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="do"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="Na celú obrazovku"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Skryť panel s nástrojmi"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Skryť panel miniatúr"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="Uložiť zobrazenie obrázka po otočení"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="Vyberte aplikáciu na úpravu obrázkov"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="Po otvorení aplikácie na úpravy:"/>
+      <Item key="frmSetting.lblImageQuality" value="Kvalita obrázku:"/>
+      <Item key="frmSetting.btnEditEditExt" value="Upraviť…"/>
+      <Item key="frmSetting.btnEditResetExt" value="Obnoviť predvolené"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="Upraviť všetky prípony…"/>
+      <Item key="frmSetting._allExtensions" value="všetky prípony súboru"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Prípona súboru"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="Názov aplikácie"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="Cesta aplikácie"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Argumenty aplikácie"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Pri uložení zachovať zmenený dátum obrázka"/>
+      <Item key="frmSetting.lblSupportedExtension" value="Podporované formáty: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Otvoriť Súborové Priradenia"/>
+      <Item key="frmSetting.btnAddNewExt" value="Pridať…"/>
+      <Item key="frmSetting.btnRegisterExt" value="Nastaviť ako predvolený prehliadač obrázkov…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Neregistrovaná prípona"/>
+      <Item key="frmSetting.btnDeleteExt" value="Vymazať"/>
+      <Item key="frmSetting.btnResetExt" value="Obnoviť predvolené"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="Nepodarilo sa zaregistrovať prepojenie Web-to-App"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="Nie je možné zaregistrovať prípony súborov pre aplikáciu ImageGlass"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="Všetky prípony súborov sú úspešne zaregistrované! Ak chcete nastaviť ImageGlass ako predvolený prehliadač fotografií, otvorte Nastavenia systému Windows &gt; Predvolené aplikácie a manuálne vyberte aplikáciu ImageGlass v sekcii Prehliadač fotografií."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Nie je možné zmazať zaregistrované prípony súborov pre aplikáciu ImageGlass"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Všetky prípony súborov boli úspešne od-registrované!"/>
+      <Item key="frmSetting.lblToolbarPosition" value="Pozícia panela s nástrojmi:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Veľkosť ikony panela s nástrojmi:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Vrch"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Spodok"/>
+      <Item key="frmSetting._separator" value="Oddeľovač"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="Konfigurácia tlačidiel na paneli nástrojov"/>
+      <Item key="frmSetting.lblUsedBtns" value="Aktuálne tlačidlá:"/>
+      <Item key="frmSetting.lblAvailBtns" value="Dostupné tlačidlá:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="Posunúť vybrané tlačidlo nadol"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="Odstráňte vybrané tlačidlo(á) z panela nástrojov"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="Pridajte vybrané tlačidlo(á) na panel s nástrojmi"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="Posunúť vybrané tlačidlo nahor"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Vycentruj v okne na paneli nástrojov tlačidlá horizontálne"/>
+      <Item key="frmSetting.chkHideTooltips" value="Skryť popisy panela nástrojov"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="Použite formát RGB s hodnotou Alpha"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="Použite formát HEX s hodnotou alfa"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="Použite formát HSL s hodnotou Alpha"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="Použite formát HSV s hodnotou Alpha"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="Predvolený formát farebného kódu pri kopírovaní"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="Automaticky zobraziť nástroj na navigáciu pre viac-stranový obrázok"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Udržujte nástroj Exif vždy navrchu"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Vyberte súbor nástroja Exif"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Nástroj Exif neexistuje alebo je neplatný &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Argumenty príkazu:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Ukážka príkazu:"/>
+      <Item key="frmSetting.lblLanguageText" value="Nainštalované jazyky"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; Obnoviť"/>
+      <Item key="frmSetting.lblLanguageWarning" value="Tento jazykový balík nemusí byť kompatibilný s {0}"/>
+      <Item key="frmSetting.lblTranslators" value="Translator:"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Nainštalujte si nový jazykový balík (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Vytvorte nový jazykový balík…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; Upravte vybraný jazykový balík…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Získajte ďalšie jazykové balíčky…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="Nainštalované témy{0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="Stiahnuť motívy…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="Obnoviť"/>
+      <Item key="frmSetting.btnThemeInstall" value="Nainštalovať…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="Odinštalovať…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="Uložiť ako…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="Otvoriť priečinok vzhľadov"/>
+      <Item key="frmSetting.btnThemeApply" value="Použiť vzhľad"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="Meno"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="Verzia"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="Autor"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="E-mail"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="Webová stránka"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="Kompatibilita"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="Popis"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="Váš vzhľad bol úspešne nainštalovaný!"/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="Váš vzhľad nebol nainštalovaný."/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="Vybratý motív sa nepodarilo odinštalovať."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="Váš vybraný motív bol uložený v priečinku {0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="Vybratý motív sa nepodarilo uložiť."/>
+      <Item key="frmSetting.btnThemeApply._Success" value="Vybraný motív bol úspešne použitý!"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="Vybratý motív nie je možné použiť."/>
+      <Item key="frmSetting.btnKeyReset" value="Obnoviť predvolené"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="Medzerník / Backspace"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="Strana Hore / Strana Dole"/>
+      <Item key="frmSetting.lblKeysUpDown" value="Hore / Dole šípky"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="Lavé / Pravé šípky"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="Predchádzajúci / Ďalší Obrázok"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="Posúvanie Doľava / Doprava"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="Posun Nahor / Nadol"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="Priblíženie / oddialenie"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="Pozastaviť prezentáciu"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="Neurobiť nič"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="Prípona súboru"/>
+      <Item key="frmAddNewFormat.btnOK" value="OK"/>
+      <Item key="frmAddNewFormat.btnClose" value="Zatvoriť"/>
+      <Item key="frmEditApp.lblFileExtension" value="Prípona súboru"/>
+      <Item key="frmEditApp.lblAppName" value="Názov aplikácie"/>
+      <Item key="frmEditApp.lblAppPath" value="Cesta aplikácie"/>
+      <Item key="frmEditApp.lblAppArguments" value="Argumenty aplikácie"/>
+      <Item key="frmEditApp.btnReset" value="Resetovať"/>
+      <Item key="frmEditApp.btnOK" value="OK"/>
+      <Item key="frmEditApp.btnClose" value="Zatvoriť"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="Náhľad"/>
+      <Item key="frmFirstLaunch._Text" value="Konfigurácia prvého spustenia"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ImageGlass potrebuje zavrieť všetky spoje procesy aby mohol aplikovať nové nastavenie, chcete pokračovať?"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="Krok {0}/{1}"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="Ďalej"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="Hotovo!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="Preskoč toto a spusť ImageGlass"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="Vyberte jazyk"/>
+      <Item key="frmFirstLaunch.lblTheme" value="Vybrať tému"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="Nastaviť ImageGlass ako predvolený prehliadač fotografií?"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="Áno"/>
+      <Item key="frmCrop.lblWidth" value="Šírka:"/>
+      <Item key="frmCrop.lblHeight" value="Výška:"/>
+      <Item key="frmCrop.btnSave" value="Uložiť"/>
+      <Item key="frmCrop.btnSaveAs" value="Uložiť ako…"/>
+      <Item key="frmCrop.btnCopy" value="Kopírovať"/>
+      <Item key="frmCrop.btnReset" value="Resetovať"/>
+      <Item key="FrmExifTool.clnProperty" value="Vlastnosti"/>
+      <Item key="FrmExifTool.clnValue" value="Hodnota"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Kopírovať hodnotu"/>
+      <Item key="FrmExifTool.btnExport" value="Export…"/>
+      <Item key="FrmExifTool.btnClose" value="Zatvoriť"/>
+    </Content>
+  </Language>
+</ImageGlass>
