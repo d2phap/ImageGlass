@@ -197,7 +197,7 @@
       <Item key="frmSetting.chkLoopViewer" value="Повторять презентацию с первого файла при достижении конца"/>
       <Item key="frmSetting.chkIsCenterImage" value="Центрировать изображение в средстве просмотра"/>
       <Item key="frmSetting.chkIsUseRawThumbnail" value="Использовать встроенные эскизы (JPEG-превью) для RAW-файлов"/>
-      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Автоматически отображать новое изображение в папке"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Порядок чтения файлов:"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Использовать порядок сортировки такой же, как и в проводнике (по возможности)"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Группировать изображения по папкам"/>
@@ -299,7 +299,7 @@
       <Item key="frmSetting.lblLanguageText" value="Установленные языки:"/>
       <Item key="frmSetting.lnkRefresh" value="Обновить список"/>
       <Item key="frmSetting.lblLanguageWarning" value="Этот языковой пакет может быть несовместим с версией {0}"/>
-      <Item key="frmSetting.lblTranslators" value="Translator:"/>
+      <Item key="frmSetting.lblTranslators" value="Переводчик:"/>
       <Item key="frmSetting.lnkInstallLanguage" value="→ Установить языковой пакет (*.iglang) ..."/>
       <Item key="frmSetting.lnkCreateNew" value="→ Создать новый языковой пакет ..."/>
       <Item key="frmSetting.lnkEdit" value="→ Редактировать выбранный языковой пакет ..."/>

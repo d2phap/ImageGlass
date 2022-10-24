@@ -197,7 +197,7 @@
       <Item key="frmSetting.chkLoopViewer" value="Keď sa dostanete na koniec zoznamu, prehliadač sa vráti na prvý obrázok"/>
       <Item key="frmSetting.chkIsCenterImage" value="Vycentrovať obrázok na prehliadač"/>
       <Item key="frmSetting.chkIsUseRawThumbnail" value="Použi vloženú miniatúru pre RAW formát"/>
-      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Automaticky zobraziť nový obrázok v priečinku"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Poradie načítania obrázka"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Použiť Prieskumníka súborov Windows na zoradenie poradia ak je to možné"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Zoskupte obrázky podľa adresára"/>
@@ -299,7 +299,7 @@
       <Item key="frmSetting.lblLanguageText" value="Nainštalované jazyky"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Obnoviť"/>
       <Item key="frmSetting.lblLanguageWarning" value="Tento jazykový balík nemusí byť kompatibilný s {0}"/>
-      <Item key="frmSetting.lblTranslators" value="Translator:"/>
+      <Item key="frmSetting.lblTranslators" value="Prekladač:"/>
       <Item key="frmSetting.lnkInstallLanguage" value="&gt; Nainštalujte si nový jazykový balík (*.iglang)…"/>
       <Item key="frmSetting.lnkCreateNew" value="&gt; Vytvorte nový jazykový balík…"/>
       <Item key="frmSetting.lnkEdit" value="&gt; Upravte vybraný jazykový balík…"/>

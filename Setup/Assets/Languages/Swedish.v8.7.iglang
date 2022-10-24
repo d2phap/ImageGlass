@@ -173,7 +173,7 @@
       <Item key="frmSetting.lblHeadConfigDir" value="Konfigurationskatalog"/>
       <Item key="frmSetting.lblHeadViewer" value="Bildvy"/>
       <Item key="frmSetting.chkShowScrollbar" value="Visa rullningslister i bildvyn"/>
-      <Item key="frmSetting.chkShowNavButtons" value="Visa navigationspilar"/>
+      <Item key="frmSetting.chkShowNavButtons" value="Visa navigeringspilar"/>
       <Item key="frmSetting.chkDisplayBasename" value="Visa bildens sökväg i namnlisten"/>
       <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Visa rutmönster endast i bildområdet"/>
       <Item key="frmSetting.chkUseTouchGesture" value="Aktivera stöd för pekgester"/>
@@ -197,7 +197,7 @@
       <Item key="frmSetting.chkLoopViewer" value="Läs in första bilden i en lista efter att sista bilden har visats"/>
       <Item key="frmSetting.chkIsCenterImage" value="Centrera bilden i visaren"/>
       <Item key="frmSetting.chkIsUseRawThumbnail" value="Använd inbäddade miniatyrbilder för RAW-format"/>
-      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Visa automatiskt nya bilder i mappar"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Sortera bilder efter"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Sortera som Windows-utforskaren om möjligt"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Gruppera bilder efter mapp"/>
@@ -299,7 +299,7 @@
       <Item key="frmSetting.lblLanguageText" value="Installerade språk"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Uppdatera"/>
       <Item key="frmSetting.lblLanguageWarning" value="Detta språkpaket kanske inte är kompatibelt med {0}"/>
-      <Item key="frmSetting.lblTranslators" value="Translator:"/>
+      <Item key="frmSetting.lblTranslators" value="Översättare:"/>
       <Item key="frmSetting.lnkInstallLanguage" value="&gt; Installera nytt språkpaket (*.iglang)…"/>
       <Item key="frmSetting.lnkCreateNew" value="&gt; Skapa nytt språkpaket…"/>
       <Item key="frmSetting.lnkEdit" value="&gt; Redigera valt språkpaket…"/>

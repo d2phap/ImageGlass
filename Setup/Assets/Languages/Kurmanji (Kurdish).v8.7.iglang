@@ -197,7 +197,7 @@
       <Item key="frmSetting.chkLoopViewer" value="Dema gihîşte dawiya rêzokê pêşandana pêşeker ji wêneya yekem dîsa dubare bike"/>
       <Item key="frmSetting.chkIsCenterImage" value="Wêneyê navendî bike li ser nîşandar"/>
       <Item key="frmSetting.chkIsUseRawThumbnail" value="Ji bo formatên RAW wêneya pêvekirî yên piçûk bi kar bîne"/>
-      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Wêneya nû di peldandê de bi xweberî nîşan bide"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Fermana barkirina wêneyê"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Heke pêkan be fermana rêzkirina Windows File Explorer bi kar bîne"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Wêneyan bi ya rêgehê kom bike"/>
@@ -299,7 +299,7 @@
       <Item key="frmSetting.lblLanguageText" value="Zimanên sazkirî"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Nû bike"/>
       <Item key="frmSetting.lblLanguageWarning" value="Dibe ku ev pakêta ziman bi {0} re ne lihevhatî be"/>
-      <Item key="frmSetting.lblTranslators" value="Translator:"/>
+      <Item key="frmSetting.lblTranslators" value="Wergêr:"/>
       <Item key="frmSetting.lnkInstallLanguage" value="&gt; Pakêta zimana nû saz bike (*.iglang)…"/>
       <Item key="frmSetting.lnkCreateNew" value="&gt; Pakêta zimana nû biafrîne…"/>
       <Item key="frmSetting.lnkEdit" value="&gt; Pakêta zimana nû serrast bike…"/>

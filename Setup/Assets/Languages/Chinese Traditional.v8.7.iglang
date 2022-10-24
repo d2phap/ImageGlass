@@ -197,7 +197,7 @@
       <Item key="frmSetting.chkLoopViewer" value="當到達清單結尾時，再回到第一張圖片繼續檢視"/>
       <Item key="frmSetting.chkIsCenterImage" value="將圖片置於檢視器中間"/>
       <Item key="frmSetting.chkIsUseRawThumbnail" value="RAW 格式使用內嵌縮圖"/>
-      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="自動顯示資料夾中的新圖片"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="圖片載入順序"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="如果可以的話，使用 Windows 檔案總管排序"/>
       <Item key="frmSetting.chkGroupByDirectory" value="按目錄將圖片分組"/>
@@ -299,7 +299,7 @@
       <Item key="frmSetting.lblLanguageText" value="已安裝的語言"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; 重新整理"/>
       <Item key="frmSetting.lblLanguageWarning" value="這個語言包可能與 {0} 不相容"/>
-      <Item key="frmSetting.lblTranslators" value="Translator:"/>
+      <Item key="frmSetting.lblTranslators" value="翻譯者："/>
       <Item key="frmSetting.lnkInstallLanguage" value="&gt; 安裝新語言包 (*.iglang)…"/>
       <Item key="frmSetting.lnkCreateNew" value="&gt; 建立新語言包…"/>
       <Item key="frmSetting.lnkEdit" value="&gt; 編輯選定的語言包…"/>

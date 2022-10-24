@@ -197,7 +197,7 @@
       <Item key="frmSetting.chkLoopViewer" value="Повертатися до першого зображення при досягненні кінця"/>
       <Item key="frmSetting.chkIsCenterImage" value="Центрувати зображення у засобі перегляду"/>
       <Item key="frmSetting.chkIsUseRawThumbnail" value="Використовувати вбудовані мініатюри для форматів RAW"/>
-      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Автоматично виводити нове зображення в теці"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Порядок завантаження зображень"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="За можливості використовувати порядок сортування як у Провіднику"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Групувати зображення за текою"/>
@@ -299,7 +299,7 @@
       <Item key="frmSetting.lblLanguageText" value="Встановлені мови"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Оновити"/>
       <Item key="frmSetting.lblLanguageWarning" value="Цей мовний пакет може бути не сумісний з версією {0}"/>
-      <Item key="frmSetting.lblTranslators" value="Translator:"/>
+      <Item key="frmSetting.lblTranslators" value="Перекладач:"/>
       <Item key="frmSetting.lnkInstallLanguage" value="&gt; Встановити новий мовний пакет (*.iglang)…"/>
       <Item key="frmSetting.lnkCreateNew" value="&gt; Створити новий мовний пакет…"/>
       <Item key="frmSetting.lnkEdit" value="&gt; Редагувати обраний мовний пакет…"/>

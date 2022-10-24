@@ -197,7 +197,7 @@
       <Item key="frmSetting.chkLoopViewer" value="Starte die Diashow wieder mit dem ersten Bild, wenn das Ende der Liste erreicht wurde"/>
       <Item key="frmSetting.chkIsCenterImage" value="Bild im Betrachter zentrieren"/>
       <Item key="frmSetting.chkIsUseRawThumbnail" value="Nutze eingebettetes Miniaturbild für RAW Formate"/>
-      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Neues Bild automatisch im Ordner anzeigen"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Bildersortierung beim Laden"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Wenn möglich, Sortierreihenfolge im Windows Explorer verwenden"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Bilder nach Verzeichnis gruppieren"/>
@@ -299,7 +299,7 @@
       <Item key="frmSetting.lblLanguageText" value="Installierte Sprachen"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Aktualisieren"/>
       <Item key="frmSetting.lblLanguageWarning" value="Dieses Sprachpaket ist evtl. nicht kompatibel mit Version {0}"/>
-      <Item key="frmSetting.lblTranslators" value="Translator:"/>
+      <Item key="frmSetting.lblTranslators" value="Übersetzer:"/>
       <Item key="frmSetting.lnkInstallLanguage" value="&gt; Neues Sprachpaket installieren (*.iglang)…"/>
       <Item key="frmSetting.lnkCreateNew" value="&gt; Neues Sprachpaket erstellen…"/>
       <Item key="frmSetting.lnkEdit" value="&gt; Ausgewähltes Sprachpaket bearbeiten…"/>
