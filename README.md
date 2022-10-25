@@ -30,7 +30,7 @@ It gives you the possibility to view over **80+** common image formats, includin
 - ImageGlass Store provides the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes.
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://github.com/ImageGlass/config/raw/main/screenshots/v8.6/8.6_1.jpg" alt="ImageGlass 8.6.7.13" width="640">
+<img src="https://github.com/ImageGlass/config/raw/main/screenshots/v8.7/8.7_1.jpg" alt="ImageGlass 8.7.10.26" width="640">
 </a><br/>
 
 
@@ -101,6 +101,8 @@ Thanks for your support!
 ![Analytics image](https://repobeats.axiom.co/api/embed/4a2781a2a149dd21826309275304696ec75b21fd.svg)
 
 To honor those people who spent their time contributing to the development of ImageGlass v8:
+- [@BenHUET](https://github.com/BenHUET)
+- [@2480258](https://github.com/2480258)
 - [@siblount](https://github.com/siblount)
 - [@SylwesterZarebski](https://github.com/SylwesterZarebski)
 - [@Sxderp](https://github.com/Sxderp)
