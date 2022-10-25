@@ -1,6 +1,6 @@
 <ImageGlass>
   <Theme>
-    <Info name="Kobe" version="8.6" author="Dương Diệu Pháp" email="phap@imageglass.org" website="https://imageglass.org" description="ImageGlass Kobe theme (Dark)" type="ImageGlass Theme Configuration" configversion="8" preview="preview.jpg" />
+    <Info name="Kobe" version="8.7" author="Dương Diệu Pháp" email="phap@imageglass.org" website="https://imageglass.org" description="ImageGlass Kobe theme (Dark)" type="ImageGlass Theme Configuration" configversion="8" preview="preview.jpg" />
     <main
       topbar="x"
       topbarcolor="#232A30"
@@ -9,12 +9,12 @@
       backcolor="#232A30"
       statuscolor="#dedede"
       menubackgroundcolor="#2D363E"
-      menubackgroundhovercolor="#9C613B"
+      menubackgroundhovercolor="#016485"
       menutextcolor="#dedede"
       menutexthovercolor="#dedede"
-      accentcolor="#9C613B"
-      accentlightcolor="#BD7C51"
-      accentdarkcolor="#855332"
+      accentcolor="#016485"
+      accentlightcolor="#BD8112"
+      accentdarkcolor="#01475E"
       logo="logo.svg"
       isshowtitlebarlogo="true" />
     <toolbar_icon 

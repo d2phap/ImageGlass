@@ -1,18 +1,22 @@
 <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
  <!-- ImageGlass icons http://www.imageglass.org -->
+
  <g>
   <title>background</title>
-  <rect fill="none" id="canvas_background" height="22" width="22" y="-1" x="-1"/>
-  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
-   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  <rect x="-1" y="-1" width="22" height="22" id="canvas_background" fill="none"/>
+  <g id="canvasGrid" width="100%" height="100%" x="0" y="0" overflow="visible" display="none">
+   <rect id="svg_2" width="100%" height="100%" x="0" y="0" stroke-width="0" fill="url(#gridpattern)"/>
   </g>
  </g>
  <g>
   <title>Layer 1</title>
-  <rect stroke="#dedede" id="svg_1" height="17.214612" width="19.36073" y="1.392694" x="0.342466" stroke-width="0.7" fill="none"/>
-  <ellipse stroke="#dedede" ry="1.689498" rx="1.689498" id="svg_13" cy="5.799087" cx="15.045661" stroke-opacity="null" stroke-width="0.7" fill="none"/>
-  <path id="svg_15" d="m2.16895,14.931507" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" stroke="#dedede" fill="none"/>
-  <path id="svg_17" d="m-5.365296,12.009132" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" stroke="#dedede" fill="none"/>
-  <path stroke="#dedede" id="svg_19" d="m2.849712,15.799087c-0.477964,-1.098866 1.173181,-9.144126 3.954057,-8.633938c2.693973,0.470942 4.171314,6.67168 4.671002,6.632433c1.021102,-0.784903 1.325261,-1.883768 2.998131,-1.962258c1.585968,0.07849 2.715697,3.296594 2.650521,3.6498" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+  <g stroke="null" id="svg_3">
+   <rect stroke="#fff" fill="none" stroke-width="0.7" x="0.31964" y="0" width="19.36073" height="12.96468" id="svg_1"/>
+   <ellipse stroke="#fff" fill="none" stroke-width="0.7" stroke-opacity="null" cx="15.02283" cy="3.44576" id="svg_13" rx="1.6895" ry="1.2724"/>
+   <path stroke="#fff" fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" d="m2.82688,10.97697c-0.47796,-0.82758 1.17318,-6.88663 3.95406,-6.5024c2.69397,0.35467 4.17131,5.02458 4.671,4.99502c1.0211,-0.59112 1.32526,-1.41871 2.99813,-1.47782c1.58597,0.05911 2.7157,2.48274 2.65052,2.74874" id="svg_19"/>
+  </g>
+  <rect id="svg_7" height="3.99993" width="3.99993" y="15.65007" x="0.35" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" stroke="#fff" fill="none"/>
+  <rect id="svg_8" height="3.99993" width="3.99993" y="15.65007" x="8.00003" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" stroke="#fff" fill="none"/>
+  <rect id="svg_9" height="3.99993" width="3.99993" y="15.65007" x="15.65007" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" stroke="#fff" fill="none"/>
  </g>
 </svg>

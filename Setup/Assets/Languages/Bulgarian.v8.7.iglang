@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="bg-BG" langName="Български" author="Alexander Sirakov" description="Bulgarian" minVersion="8.7" isRightToLeftLayout="No"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="Някои настройки не са съвместими с вашия ImageGlass {0}. Препоръчително е да ги обновите, преди да продължите.&#13;&#10;&#10;- Кликнете на Да, за да научите за промените.&#13;&#10;- Кликнете Не, за да пуснете ImageGlass с настройките по подразбиране."/>
+      <Item key="_.ImageOrderBy._Name" value="Име (по подразбиране)"/>
+      <Item key="_.ImageOrderBy._Length" value="Дължина"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Време на създаване"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Последно време на достъп"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Последно време на записване"/>
+      <Item key="_.ImageOrderBy._Extension" value="Разширение"/>
+      <Item key="_.ImageOrderBy._Random" value="Случаен"/>
+      <Item key="_.ImageOrderType._Asc" value="Възходящ"/>
+      <Item key="_.ImageOrderType._Desc" value="Низходящ"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Нищо"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Минимизирай"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Затвори"/>
+      <Item key="frmMain.mnuMainFile" value="Файл"/>
+      <Item key="frmMain.mnuMainOpenFile" value="Отвори файл…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Отвори данните за изображението от буфера"/>
+      <Item key="frmMain.mnuMainNewWindow" value="Отвори в нов прозорец"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Не може да се отвори нов прозорец, защото е разрешен само едно копие"/>
+      <Item key="frmMain.mnuSaveImage" value="Съхрани изображението"/>
+      <Item key="frmMain.mnuMainSaveAs" value="Съхрани изображението като…"/>
+      <Item key="frmMain.mnuMainRefresh" value="Опресни"/>
+      <Item key="frmMain.mnuMainReloadImage" value="Презареди изображението"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="Презареди списъка с изображения"/>
+      <Item key="frmMain.mnuOpenWith" value="Отвори с…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Редактирай изображението {0}…"/>
+      <Item key="frmMain.mnuMainPrint" value="Разпечатване…"/>
+      <Item key="frmMain.mnuMainNavigation" value="Навигация"/>
+      <Item key="frmMain.mnuMainViewNext" value="Виж следващото изображение"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Дясна Стрелка / PageDown"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="Виж предишното изображение"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Лява стрелка  / PageUp"/>
+      <Item key="frmMain.mnuMainGoto" value="Отиди на…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="Отиди на първото изображение"/>
+      <Item key="frmMain.mnuMainGotoLast" value="Отиди на последното изображение"/>
+      <Item key="frmMain.mnuMainNextPage" value="Виж следващата страница"/>
+      <Item key="frmMain.mnuMainPrevPage" value="Виж предишната страница"/>
+      <Item key="frmMain.mnuMainFirstPage" value="Виж първата страница"/>
+      <Item key="frmMain.mnuMainLastPage" value="Виж последната страница"/>
+      <Item key="frmMain.mnuMainZoom" value="Мащабиране"/>
+      <Item key="frmMain.mnuMainZoomIn" value="Приближаване"/>
+      <Item key="frmMain.mnuMainZoomOut" value="Отдалечаване"/>
+      <Item key="frmMain.mnuCustomZoom" value="Мащабиране по избор…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="Въведи нова стойност на мащаба"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="Разтегни, за да пасне"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="Разтегни за запълване"/>
+      <Item key="frmMain.mnuMainActualSize" value="Реален размер"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Заключи коефициента на мащабиране"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="Автоматично мащабиране"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="Притегляне по ширина"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="Притегляне по височина"/>
+      <Item key="frmMain.mnuMainImage" value="Изображение"/>
+      <Item key="frmMain.mnuMainChannels" value="Виж каналите"/>
+      <Item key="frmMain.mnuMainChannels._All" value="Всички"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="Червен"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="Зелен"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="Син"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="Черен"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="Алфа"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Зареждане на поредицата"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="Завърти наляво"/>
+      <Item key="frmMain.mnuMainRotateRight" value="Завърти надясно"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="Обърни Хоризонтално"/>
+      <Item key="frmMain.mnuMainFlipVert" value="Обърни Вертикално"/>
+      <Item key="frmMain.mnuMainRename" value="Преименувай изображението…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Премести в кошчето"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Изтрий от твърдия диск"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Извличане на страници от изображението ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="Започни / Спри анимирането на изображението"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Задай като фон на Работния плот"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="Задай като изображение на заключващия екран"/>
+      <Item key="frmMain.mnuMainImageLocation" value="Отвори местоположението на изображението"/>
+      <Item key="frmMain.mnuMainImageProperties" value="Свойства на изображението"/>
+      <Item key="frmMain.mnuMainClipboard" value="Буфер"/>
+      <Item key="frmMain.mnuMainCopy" value="Копирай"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="Копирай данните на изображението"/>
+      <Item key="frmMain.mnuMainCut" value="Изрежи"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="Копирай пътя до изображението"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="Изчисти буфера"/>
+      <Item key="frmMain.mnuWindowFit" value="Да пасне на Прозореца"/>
+      <Item key="frmMain.mnuMainFullScreen" value="Цял екран"/>
+      <Item key="frmMain.mnuFrameless" value="Без рамка"/>
+      <Item key="frmMain.mnuMainSlideShow" value="Презентация"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="Начало на презентацията"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="Пауза / Продължи презентацията"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="Изход от презентацията"/>
+      <Item key="frmMain.mnuMainShare" value="Сподели…"/>
+      <Item key="frmMain.mnuMainLayout" value="Оформление"/>
+      <Item key="frmMain.mnuMainToolbar" value="Инструментална лента"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="Панел с миниатюри"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="Шахматен фон"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Дръж прозореца винаги отгоре"/>
+      <Item key="frmMain.mnuMainTools" value="Инструменти"/>
+      <Item key="frmMain.mnuMainColorPicker" value="Цветови избирач"/>
+      <Item key="frmMain.mnuMainPageNav" value="Навигация в страницата"/>
+      <Item key="frmMain.mnuMainCrop" value="Изрязване"/>
+      <Item key="frmMain.mnuExifTool" value="Exif tool"/>
+      <Item key="frmMain.mnuMainSettings" value="Настройки…"/>
+      <Item key="frmMain.mnuMainHelp" value="Помощ"/>
+      <Item key="frmMain.mnuMainAbout" value="Относно"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="Настройки за първо пускане…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Провери за обновления…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="Има нова версия!"/>
+      <Item key="frmMain.mnuMainReportIssue" value="Докладвай проблем…"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Изход"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="Покажи"/>
+      <Item key="frmMain.picMain._ErrorText" value="ImageGlass не може да отвори изображението, защото файлът изглежда повреден, има щети или не се поддържа."/>
+      <Item key="frmMain._ImageNotExist" value="Показаното изображение не съществува."/>
+      <Item key="frmMain.btnMenu" value="Главно меню"/>
+      <Item key="frmMain._OpenFileDialog" value="Всички поддържани файлове"/>
+      <Item key="frmMain._Files" value="файл(ове)"/>
+      <Item key="frmMain._Pages" value="страници"/>
+      <Item key="frmMain._ImageData" value="Данни за изображение"/>
+      <Item key="frmMain._RenameDialogText" value="Преименувай"/>
+      <Item key="frmMain._RenameDialog" value="Задай ново име на файла"/>
+      <Item key="frmMain._GotoDialogText" value="Задайте индекс на изображение, за да го разгледат. Натиснете ENTER"/>
+      <Item key="frmMain._DeleteDialogText" value="Изтрий файл '{0}' ?"/>
+      <Item key="frmMain._DeleteDialogTitle" value="Потвърди"/>
+      <Item key="frmMain._ExtractPageText" value="Извличане на страници с изображения. Моля, изберете изходна папка."/>
+      <Item key="frmMain._FullScreenMessage" value="Натиснете{0}, за да излезете от режима на цял екран."/>
+      <Item key="frmMain._SlideshowMessage" value="Натиснете ESC, за да излезете от презентацията.&#10; Кликнете с десен бутон, за да отворите контекстното меню."/>
+      <Item key="frmMain._SlideshowMessagePause" value="Презентацията е на пауза"/>
+      <Item key="frmMain._SlideshowMessageResume" value="Презентацията е възобновена"/>
+      <Item key="frmMain._CopyFileText" value="Копиран(и) {0} файл(а)"/>
+      <Item key="frmMain._CutFileText" value="Изрязан(и) {0} файл(а)"/>
+      <Item key="frmMain._CopyImageData" value="Изображението беше копирано в буфера"/>
+      <Item key="frmMain._ClearClipboard" value="Буферът беше почистен"/>
+      <Item key="frmMain._SaveImage" value="Изображението беше съхранено в&#13;&#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="Съхраняване на изображение...&#13;&#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="Изображението не може да бъде съхранено&#13;&#10;{0}."/>
+      <Item key="frmMain._Loading" value="Зареждане..."/>
+      <Item key="frmMain._FirstItemOfList" value="Стигни до първото изображение"/>
+      <Item key="frmMain._LastItemOfList" value="Стигни до последното изображение"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="Изменението за анимиран формат не се поддържа"/>
+      <Item key="frmMain._SetLockImage_Error" value="Възникна грешка при задаването на изображение на заключаващия екран"/>
+      <Item key="frmMain._SetLockImage_Success" value="Изображението за заключващ екран беше зададено успешно"/>
+      <Item key="frmMain._SetBackground_Error" value="Възникна грешка при задаването на фон на работния плот"/>
+      <Item key="frmMain._SetBackground_Success" value="Фонът на работния плот беше зададен успешно"/>
+      <Item key="frmMain._PageExtracting" value="Извличане на страници с изображения..."/>
+      <Item key="frmMain._PageExtractComplete" value="Извличането на страница завърши."/>
+      <Item key="frmMain._Frameless" value="Задръжте SHIFT, за да местите прозореца."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Буферът не съдържа данни за изображения."/>
+      <Item key="frmAbout.lblSlogant" value="Лека, многофункционална програма за преглед на изображения"/>
+      <Item key="frmAbout.lblInfo" value="Информация"/>
+      <Item key="frmAbout.lblComponent" value="Компоненти"/>
+      <Item key="frmAbout.lblReferences" value="Препратки"/>
+      <Item key="frmAbout.lblVersion" value="Версия: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="Контакт"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="Софтуерни обновления"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» Провери за обновление…"/>
+      <Item key="frmAbout._Text" value="Относно"/>
+      <Item key="frmAbout._PortableText" value="[Преносима]"/>
+      <Item key="frmSetting._Text" value="Настройки"/>
+      <Item key="frmSetting.btnSave" value="Съхрани"/>
+      <Item key="frmSetting.btnCancel" value="Отказ"/>
+      <Item key="frmSetting.btnApply" value="Приложи"/>
+      <Item key="frmSetting.lblGeneral" value="Общи"/>
+      <Item key="frmSetting.lblImage" value="Изображение"/>
+      <Item key="frmSetting.lblEdit" value="Промяна на разширенията"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="Асоциации на типовете файлове"/>
+      <Item key="frmSetting.lblToolbar" value="Инструментална лента"/>
+      <Item key="frmSetting.lblLanguage" value="Език"/>
+      <Item key="frmSetting.lblTheme" value="Тема"/>
+      <Item key="frmSetting.lblKeyboard" value="Клавиатура"/>
+      <Item key="frmSetting.lblHeadStartup" value="Пускане"/>
+      <Item key="frmSetting.chkWelcomePicture" value="Показване на приветствена картинка"/>
+      <Item key="frmSetting.chkLastSeenImage" value="Отвори последно видяното изображение"/>
+      <Item key="frmSetting.chkShowToolBar" value="Покажи инструменталната лента при пускане"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="Конфигурационна папка"/>
+      <Item key="frmSetting.lblHeadViewer" value="Разглеждач"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Показване на зрителски ленти за превъртане"/>
+      <Item key="frmSetting.chkShowNavButtons" value="Показване на навигационните бутони със стрелки"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Показване на основното име на преглежданото изображение в заглавната лента"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Показване на шахматна дъска само в областта на изображението"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="Активиране на поддръжката на жестове с докосване"/>
+      <Item key="frmSetting.lblBackGroundColor" value="Цвят за фон"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Нулиране"/>
+      <Item key="frmSetting.lblHeadPanning" value="Панорамиране"/>
+      <Item key="frmSetting.lblVertPanningSpeed" value="Скорост на вертикално панорамиране"/>
+      <Item key="frmSetting.lblHorzPanningSpeed" value="Скорост на хоризонтално панорамиране"/>
+      <Item key="frmSetting.lblHeadOthers" value="Други"/>
+      <Item key="frmSetting.chkStartWithOs" value="Пускай с операционната система, за подобряване на скоростта на пускане"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Програмата да продължи да работи във фонов режим при затваряне"/>
+      <Item key="frmSetting.chkAutoUpdate" value="Проверявай автоматично за обновления"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="Разреши да работят няколко копия на програмата"/>
+      <Item key="frmSetting.chkESCToQuit" value="Разреши излизането от приложението при натискането на ESC"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="Покажи прозореца за потвърждение при изтриване"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="Автоматично центриране на прозореца в режим Пасващ Прозорец"/>
+      <Item key="frmSetting.chkShowToast" value="Показване на подсказки"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="Зареждане на изображение"/>
+      <Item key="frmSetting.chkFindChildFolder" value="Намери изображения в дъщерната папка"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="Покажи стритите изображения"/>
+      <Item key="frmSetting.chkLoopViewer" value="Връщане на зрителя в първото изображение, когато достигне края на списъка"/>
+      <Item key="frmSetting.chkIsCenterImage" value="Центрирай изображението на програмата"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="Използване на вградена миниатюра за RAW формати"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="Ред за зареждане на изображения"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Използвай реда за сортиране на Windows File Explorer, ако е възможно"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Групиране на изображения по папка"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="Брой на изображения кеширани в ImageBooster (еднопосочно)"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Подай звук, когато се смени изображението"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="Брой изображения за известяване"/>
+      <Item key="frmSetting.lblColorManagement" value="Управление на цветовете"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="Приложи и за изображения без вграден цветови профил"/>
+      <Item key="frmSetting.lblColorProfile" value="Цветови профил:"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="Преглед…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="Никакъв"/>
+      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="Използване на текущия профил на монитора"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Персонализиран…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="Действия с колелото на мишката"/>
+      <Item key="frmSetting.lblMouseWheel" value="Колело на мишката"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="Колело на мишката + Alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Колело на мишката + Ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="Колело на мишката + Shift"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="Не прави нищо"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="Мащабиране"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Вертикално превъртане"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Хоризонтално превъртане"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Предишно/Следващо изображение"/>
+      <Item key="frmSetting.lblHeadZooming" value="Мащабиране"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Оптимизация на мащабирането"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Автоматично (Ниско качество/Обработка на съседни пиксели)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Ниско качество"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Високо качество"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Би линеен метод"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Би кубичен метод"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Обработка на съседни пиксели"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Високо качество, Би линеен метод"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Високо качество, Би кубичен метод"/>
+      <Item key="frmSetting.lblZoomLevels" value="Нива на мащабиране"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="Възникна грешка при обновяването на Нивата на мащабиране. Съобщение за грешка:&#13;&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Лента с миниатюри"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="Показване на миниатюри от дясната страна"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Показване на лентата за превъртане на миниатюри"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Размер на миниатюра (пиксел)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="Презентация"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="Връщане на презентацията към първото изображение, когато стигне до края на списъка"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="Показване на обратен брояч на презентацията"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="Използване на произволен интервал"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="Интервал на презентацията: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="до"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="Цял екран"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Скриване на инструменталната лента"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Скриване на лентата с миниатюри"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="Запазване на преглежданото изображение след завъртане"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="Избор на приложение за редактиране на изображения"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="След отваряне на приложението за редакция:"/>
+      <Item key="frmSetting.lblImageQuality" value="Качество на изображението:"/>
+      <Item key="frmSetting.btnEditEditExt" value="Промени…"/>
+      <Item key="frmSetting.btnEditResetExt" value="Нулирай до подразбиране"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="Промени всички разширения…"/>
+      <Item key="frmSetting._allExtensions" value="всички разширения"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Разширение на файла"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="Име на приложението"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="Път до приложението"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Параметри на приложението"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Запазване на дата на промяна на изображението при съхраняване"/>
+      <Item key="frmSetting.lblSupportedExtension" value="Поддържани формати: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Отваряне на асоциираните видове файлове"/>
+      <Item key="frmSetting.btnAddNewExt" value="Добавяне…"/>
+      <Item key="frmSetting.btnRegisterExt" value="Задай като приложение по подразбиране за преглед на изображения…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Дерегистрация на разширения"/>
+      <Item key="frmSetting.btnDeleteExt" value="Изтриване"/>
+      <Item key="frmSetting.btnResetExt" value="Нулирай до подразбиране"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="Възникна грешка при регистриране на функцията за свързване с уеб приложението"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="Не могат да се регистрират файлови разширения за приложението ImageGlass"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="Всички файлови разширения са регистрирани успешно! За да зададете ImageGlass като програма за разглеждане на изображения по подразбиране, моля отворете Windows Settings &gt; Default Apps, и ръчно изберете приложението ImageGlass в раздел Photo Viewer."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Не могат да се изтрият регистрирани файлови разширения на приложението ImageGlass"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Всички файлови разширения са дерегистрирани успешно!"/>
+      <Item key="frmSetting.lblToolbarPosition" value="Позиция на инструменталната лента:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Размер на иконата на инструменталната лента:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="На върха"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="В дъното"/>
+      <Item key="frmSetting._separator" value="Разделител"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="Настройка на бутоните на инструменталната лента"/>
+      <Item key="frmSetting.lblUsedBtns" value="Текущи бутони:"/>
+      <Item key="frmSetting.lblAvailBtns" value="Налични бутони:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="Премести избрания бутон надолу"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="Премахни избрания/те бутон(и) от инструменталната лента"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="Добави избрания/те бутон(и) към инструменталната лента"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="Премести избрания бутон нагоре"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Центрирай бутоните в инструменталната лента хоризонтално в прозореца"/>
+      <Item key="frmSetting.chkHideTooltips" value="Скриване на подсказките на инструменталната лента"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="Използвай RGB формат с Алфа стойност"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="Използвай HEX формат с Алфа стойност"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="Използвай HSL формат с Алфа стойност"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="Използвай HSV формат с Алфа стойност"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="Цветови код по подразбиране при копиране"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="Автоматично показвай навигационния инструмент за изображения с много страници"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Дръж Exif tool винаги най-отгоре"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Избери файл на Exif tool"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Exif tool не съществува или е невалиден: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Командни аргументи:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Визуализиране на командата:"/>
+      <Item key="frmSetting.lblLanguageText" value="Инсталирани езици"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; Опресни"/>
+      <Item key="frmSetting.lblLanguageWarning" value="Този езиков пакет може да не е съвместим с {0}"/>
+      <Item key="frmSetting.lblTranslators" value="Translator:"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Инсталиране на нов езиков пакет (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Създаване на нов езиков пакет…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; Редактиране на избрания езиков пакет…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Вземи още езикови пакети…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="Инсталирани теми: {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="Свали теми…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="Опресни"/>
+      <Item key="frmSetting.btnThemeInstall" value="Инсталирай…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="Деинсталирай…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="Съхрани като…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="Отвори папката с темите"/>
+      <Item key="frmSetting.btnThemeApply" value="Приложи тема"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="Име"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="Версия"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="Автор"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="Email"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="Уеб сайт"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="Съвместимост"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="Описание"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="Темата ви беше инсталирана успешно!"/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="Темата ви не може да се инсталира."/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="Темата ви не може да се деинсталира."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="Избраната ви тема беше съхранена в {0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="Избраната ви тема не можа да се съхрани."/>
+      <Item key="frmSetting.btnThemeApply._Success" value="Избраната тема беше приложена успешно!"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="Избраната тема не можа да бъде приложена."/>
+      <Item key="frmSetting.btnKeyReset" value="Нулирай до подразбиране"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="Space / Backspace"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="PageUp / PageDown"/>
+      <Item key="frmSetting.lblKeysUpDown" value="Стрелки Нагоре / Надолу"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="Стрелки Наляво / Надясно"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="Предишно / Следващо Изображение"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="Панорама Наляво / Надясно"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="Панорама Нагоре / Надолу"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="Увеличаване / Намаляване"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="Пауза на презентация"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="Не прави нищо"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="Разширение на файла"/>
+      <Item key="frmAddNewFormat.btnOK" value="OK"/>
+      <Item key="frmAddNewFormat.btnClose" value="Затвори"/>
+      <Item key="frmEditApp.lblFileExtension" value="Разширение на файла"/>
+      <Item key="frmEditApp.lblAppName" value="Име на приложението"/>
+      <Item key="frmEditApp.lblAppPath" value="Път до приложението"/>
+      <Item key="frmEditApp.lblAppArguments" value="Параметри на приложението"/>
+      <Item key="frmEditApp.btnReset" value="Нулиране"/>
+      <Item key="frmEditApp.btnOK" value="OK"/>
+      <Item key="frmEditApp.btnClose" value="Затвори"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="Преглед"/>
+      <Item key="frmFirstLaunch._Text" value="Настройки за първо пускане"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ImageGlass трябва да затвори всичките си процеси, за да приложи новите настройки, желаете ли да продължите?"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="Стъпка {0}/{1}"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="Напред"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="Готово!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="Пропусни това и Пусни ImageGlass"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="Избор на език"/>
+      <Item key="frmFirstLaunch.lblTheme" value="Избор на тема"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="Задаване на ImageGlass като програма за преглед на снимки по подразбиране?"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="Да"/>
+      <Item key="frmCrop.lblWidth" value="Ширина:"/>
+      <Item key="frmCrop.lblHeight" value="Височина:"/>
+      <Item key="frmCrop.btnSave" value="Съхрани"/>
+      <Item key="frmCrop.btnSaveAs" value="Съхрани като…"/>
+      <Item key="frmCrop.btnCopy" value="Копирай"/>
+      <Item key="frmCrop.btnReset" value="Нулиране"/>
+      <Item key="FrmExifTool.clnProperty" value="Имущество"/>
+      <Item key="FrmExifTool.clnValue" value="Стойност"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Копиране на стойност"/>
+      <Item key="FrmExifTool.btnExport" value="Изнасяне…"/>
+      <Item key="FrmExifTool.btnClose" value="Затвори"/>
+    </Content>
+  </Language>
+</ImageGlass>

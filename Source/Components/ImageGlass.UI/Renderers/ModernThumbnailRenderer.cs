@@ -72,12 +72,12 @@ namespace ImageGlass.UI.Renderers {
 
             g.SmoothingMode = SmoothingMode.HighQuality;
             var borderRadius = Helpers.IsOS(WindowsOS.Win11) ? 5 : 1;
-            var itemPadding = new Size(5, 5);
-            var itemMargin = new Size(5, 5);
+            var itemPadding = new Size(0, 0);
+            var itemMargin = new Size(0, 5);
             var itemBounds = new Rectangle(new(
                 bounds.X,
                 bounds.Y + itemMargin.Height),
-                new(bounds.Width - itemMargin.Width, bounds.Height - 2 * itemMargin.Width));
+                new(bounds.Width - itemMargin.Width, bounds.Height - 2 * itemMargin.Height));
 
             // on selected
             if ((state & ItemState.Selected) != ItemState.None) {
@@ -95,9 +95,12 @@ namespace ImageGlass.UI.Renderers {
             var img = item.GetCachedImage(CachedImageType.Thumbnail);
             if (img != null) {
                 var pos = Utility.GetSizedImageBounds(img, new Rectangle(
-                    itemBounds.Location + itemPadding, new Size(
+                    itemBounds.Location + itemPadding,
+                    new Size(
                         itemBounds.Width - 2 * itemPadding.Width,
-                        itemBounds.Height - 2 * itemPadding.Width)));
+                        itemBounds.Height - 2 * itemPadding.Width
+                    )
+                ));
 
                 g.DrawImage(img, pos);
             }

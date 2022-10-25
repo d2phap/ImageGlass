@@ -210,7 +210,7 @@
             // 
             // timSlideShow
             // 
-            this.timSlideShow.Interval = 1000;
+            this.timSlideShow.Interval = 10;
             this.timSlideShow.Tick += new System.EventHandler(this.timSlideShow_Tick);
             // 
             // mnuMain
@@ -238,7 +238,7 @@
             this.toolStripMenuItem21,
             this.mnuMainExitApplication});
             this.mnuMain.Name = "mnuContext";
-            this.mnuMain.Size = new System.Drawing.Size(247, 470);
+            this.mnuMain.Size = new System.Drawing.Size(247, 439);
             this.mnuMain.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.mnuMain_Closed);
             this.mnuMain.Opening += new System.ComponentModel.CancelEventHandler(this.mnuMain_Opening);
             // 

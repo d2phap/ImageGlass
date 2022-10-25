@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="he-IL" langName="עברית" author="Joe Shachaf, Ronen Nisanov" description="Hebrew" minVersion="8.7" isRightToLeftLayout="Yes"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="חלק מההגדרות אינן תואמות לגרסת ImageGlass {0} המותקנת אצלכם. מומלץ לעדכן הגדרות אלו לפני שתמשיכו.&#10;- לחצו כן ללמוד על השינויים.&#10;- לחצו לא כדי להפעיל את ImageGlass עם הגדרות ברירת מחדל."/>
+      <Item key="_.ImageOrderBy._Name" value="שם (ברירת מחדל)"/>
+      <Item key="_.ImageOrderBy._Length" value="אורך"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="זמן יצירה"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="תאריך גישה אחרון"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="זמן עדכון אחרון"/>
+      <Item key="_.ImageOrderBy._Extension" value="סיומת"/>
+      <Item key="_.ImageOrderBy._Random" value="אקראי"/>
+      <Item key="_.ImageOrderType._Asc" value="סדר עולה"/>
+      <Item key="_.ImageOrderType._Desc" value="סדר יורד"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="כלום"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="מזער"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="סגור"/>
+      <Item key="frmMain.mnuMainFile" value="קובץ"/>
+      <Item key="frmMain.mnuMainOpenFile" value="פתח קובץ…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="הדבק מלוח ההעתקה"/>
+      <Item key="frmMain.mnuMainNewWindow" value="פתח חלון חדש"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="לא ניתן לפתוח חלון חדש, כי רק עותק אחד של התוכנה מאופשר"/>
+      <Item key="frmMain.mnuSaveImage" value="שמור תמונה"/>
+      <Item key="frmMain.mnuMainSaveAs" value="שמירת תמונה בשם…"/>
+      <Item key="frmMain.mnuMainRefresh" value="רענן"/>
+      <Item key="frmMain.mnuMainReloadImage" value="טען תמונה מחדש"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="טען רשימת תמונות מחדש"/>
+      <Item key="frmMain.mnuOpenWith" value="פתח באמצעות…"/>
+      <Item key="frmMain.mnuMainEditImage" value="ערוך את התמונה {0}…"/>
+      <Item key="frmMain.mnuMainPrint" value="הדפסה…"/>
+      <Item key="frmMain.mnuMainNavigation" value="ניווט"/>
+      <Item key="frmMain.mnuMainViewNext" value="צפה בתמונה הבאה"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="חץ ימינה / PageDown"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="צפה בתמונה הקודמת"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="חץ שמאל / PageUp"/>
+      <Item key="frmMain.mnuMainGoto" value="לך אל…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="עבור לתמונה הראשונה"/>
+      <Item key="frmMain.mnuMainGotoLast" value="עבור לתמונה האחרונה"/>
+      <Item key="frmMain.mnuMainNextPage" value="צפו בעמוד הבא"/>
+      <Item key="frmMain.mnuMainPrevPage" value="צפו בעמוד הקודם"/>
+      <Item key="frmMain.mnuMainFirstPage" value="צפו בעמוד הראשון"/>
+      <Item key="frmMain.mnuMainLastPage" value="צפו בעמוד האחרון"/>
+      <Item key="frmMain.mnuMainZoom" value="תקריב"/>
+      <Item key="frmMain.mnuMainZoomIn" value="התקרבות"/>
+      <Item key="frmMain.mnuMainZoomOut" value="התרחקות"/>
+      <Item key="frmMain.mnuCustomZoom" value="זום מותאם אישית…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="הזן ערך זום חדש"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="התאם לגודל מסך"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="התאם למילוי המסך"/>
+      <Item key="frmMain.mnuMainActualSize" value="גודל אמיתי"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="נעל יחס תקריב"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="זום אוטומטי"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="התאם גודל לפי רוחב"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="התאם גודל לפי גובה"/>
+      <Item key="frmMain.mnuMainImage" value="תמונה"/>
+      <Item key="frmMain.mnuMainChannels" value="הצג ערוצים"/>
+      <Item key="frmMain.mnuMainChannels._All" value="הכל"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="אדום"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="ירוק"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="כחול"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="שחור"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="אלפא"/>
+      <Item key="frmMain.mnuLoadingOrder" value="סדר לפי"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="סובב שמאלה"/>
+      <Item key="frmMain.mnuMainRotateRight" value="סובב ימינה"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="הפוך אופקית"/>
+      <Item key="frmMain.mnuMainFlipVert" value="הפוך אנכית"/>
+      <Item key="frmMain.mnuMainRename" value="שנה שם תמונה…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="העבר לסל המחזור"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="מחק מהכונן הקשיח"/>
+      <Item key="frmMain.mnuMainExtractPages" value="חלץ תמונות מדפים ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="התחל / הפסק אנימצית תמונה"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="קבע כרקע שולחן עבודה"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="הגדר כרקע למסך הנעילה"/>
+      <Item key="frmMain.mnuMainImageLocation" value="פתח מיקום תמונה"/>
+      <Item key="frmMain.mnuMainImageProperties" value="מאפייני תמונה"/>
+      <Item key="frmMain.mnuMainClipboard" value="לוח העתקה"/>
+      <Item key="frmMain.mnuMainCopy" value="העתק"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="העתק ללוח"/>
+      <Item key="frmMain.mnuMainCut" value="גזור"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="העתק מיקום תמונה בדיסק"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="נקה לוח גזירים"/>
+      <Item key="frmMain.mnuWindowFit" value="התאם חלון"/>
+      <Item key="frmMain.mnuMainFullScreen" value="מסך מלא"/>
+      <Item key="frmMain.mnuFrameless" value="ללא מסגרת"/>
+      <Item key="frmMain.mnuMainSlideShow" value="מצגת שקופיות"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="התחל תצוגת שקופיות"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="השהה / חדש מצגת שקופיות"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="צא ממצגת השקופיות"/>
+      <Item key="frmMain.mnuMainShare" value="שתף…"/>
+      <Item key="frmMain.mnuMainLayout" value="פריסה"/>
+      <Item key="frmMain.mnuMainToolbar" value="סרגל כלים"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="לוח תמונות מוקטנות"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="רקע משובץ"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="השאר חלון מעל כל החלונות"/>
+      <Item key="frmMain.mnuMainTools" value="כלים"/>
+      <Item key="frmMain.mnuMainColorPicker" value="דוגם הצבע"/>
+      <Item key="frmMain.mnuMainPageNav" value="ניווט בעמוד"/>
+      <Item key="frmMain.mnuMainCrop" value="חיתוך"/>
+      <Item key="frmMain.mnuExifTool" value="כלי Exif"/>
+      <Item key="frmMain.mnuMainSettings" value="הגדרות…"/>
+      <Item key="frmMain.mnuMainHelp" value="עזרה"/>
+      <Item key="frmMain.mnuMainAbout" value="אודות"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="הגדרות הפעלה ראשונית…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="בדוק האם יש עדכונים…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="!קיימת גירסה חדשה"/>
+      <Item key="frmMain.mnuMainReportIssue" value="דווח על בעיה…"/>
+      <Item key="frmMain.mnuMainExitApplication" value="יציאה"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="הצג"/>
+      <Item key="frmMain.picMain._ErrorText" value="התוכנה לא יכולה לפתוח קובץ זה, כי הקובץ כנראה פגוע, תקול, או לא נתמך."/>
+      <Item key="frmMain._ImageNotExist" value=".תמונה זו אינה קיימת"/>
+      <Item key="frmMain.btnMenu" value="תפריט ראשי"/>
+      <Item key="frmMain._OpenFileDialog" value="כל הקבצים הנתמכים"/>
+      <Item key="frmMain._Files" value="קובץ(צים)"/>
+      <Item key="frmMain._Pages" value="עמודים"/>
+      <Item key="frmMain._ImageData" value="מידע תמונה"/>
+      <Item key="frmMain._RenameDialogText" value="שנה שם"/>
+      <Item key="frmMain._RenameDialog" value="הזן שם קובץ חדש"/>
+      <Item key="frmMain._GotoDialogText" value="הכניסו את מזהה התמונה לצפיה בה. לחצו ENTER"/>
+      <Item key="frmMain._DeleteDialogText" value="למחוק את הקובץ '{0}'?"/>
+      <Item key="frmMain._DeleteDialogTitle" value="אשר"/>
+      <Item key="frmMain._ExtractPageText" value="מייצא תמונות עמודים. אנא ביחרו תיקית יעד."/>
+      <Item key="frmMain._FullScreenMessage" value="ליציאה ממסך מלא {0} ליחצו."/>
+      <Item key="frmMain._SlideshowMessage" value="ליחצו ESC כדי לצאת ממצגת תמונות.&#10;לחצן ימני בעכבר להצגת תפריט אפשרויות."/>
+      <Item key="frmMain._SlideshowMessagePause" value="מצגת תמונות מושהה"/>
+      <Item key="frmMain._SlideshowMessageResume" value="מצגת תמונות הותחלה מחדש"/>
+      <Item key="frmMain._CopyFileText" value="{0} קבצים הועתקו"/>
+      <Item key="frmMain._CutFileText" value="גזור {0} קבצים"/>
+      <Item key="frmMain._CopyImageData" value="התמונה הועתקה ללוח"/>
+      <Item key="frmMain._ClearClipboard" value="לוח הגזירים נוקה"/>
+      <Item key="frmMain._SaveImage" value="התמונה נשמרה ב-&#10;{0}"/>
+      <Item key="frmMain._SavingImage" value="שומר תמונה...&#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="לא ניתן לשמור את התמונה&#10;{0}."/>
+      <Item key="frmMain._Loading" value="טוען..."/>
+      <Item key="frmMain._FirstItemOfList" value="הגענו לתמונה הראשונה"/>
+      <Item key="frmMain._LastItemOfList" value="הגענו לתמונה האחרונה"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="התוכנה לא תומכת בשינוי סוג קובץ מונפש"/>
+      <Item key="frmMain._SetLockImage_Error" value="התרחשה שגיאה בעת קביעת תמונת רקע למסך הנעילה"/>
+      <Item key="frmMain._SetLockImage_Success" value="תמונת רקע במסך הנעילה הוגדרה בהצלחה"/>
+      <Item key="frmMain._SetBackground_Error" value="התרחשה שגיאה בעת קביעת תמונת רקע לשולחן העבודה"/>
+      <Item key="frmMain._SetBackground_Success" value="תמונת רקע לשולחן העבודה הוגדרה בהצלחה"/>
+      <Item key="frmMain._PageExtracting" value="Extracting image pages..."/>
+      <Item key="frmMain._PageExtractComplete" value="חילוץ עמוד הושלם."/>
+      <Item key="frmMain._Frameless" value="החזיקו את מקש ה- SHIFT לחוץ להזזת החלון."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="לוח הגזירים אינו מכיל תמונה."/>
+      <Item key="frmAbout.lblSlogant" value="צפין תמונות קל משקל ומגוון"/>
+      <Item key="frmAbout.lblInfo" value="מידע"/>
+      <Item key="frmAbout.lblComponent" value="רכיבים"/>
+      <Item key="frmAbout.lblReferences" value="הפניות"/>
+      <Item key="frmAbout.lblVersion" value="גירסה: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="צור קשר"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="עדכוני תוכנה"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="בדוק האם יש עדכונים…"/>
+      <Item key="frmAbout._Text" value="אודות"/>
+      <Item key="frmAbout._PortableText" value="[Portable]"/>
+      <Item key="frmSetting._Text" value="הגדרות"/>
+      <Item key="frmSetting.btnSave" value="שמור"/>
+      <Item key="frmSetting.btnCancel" value="ביטול"/>
+      <Item key="frmSetting.btnApply" value="החל"/>
+      <Item key="frmSetting.lblGeneral" value="כללי"/>
+      <Item key="frmSetting.lblImage" value="תמונה"/>
+      <Item key="frmSetting.lblEdit" value="ערוך"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="שיוך סוגי קבצים"/>
+      <Item key="frmSetting.lblToolbar" value="סרגל כלים"/>
+      <Item key="frmSetting.lblLanguage" value="שפה"/>
+      <Item key="frmSetting.lblTheme" value="ערכת נושא"/>
+      <Item key="frmSetting.lblKeyboard" value="לוח מקשים"/>
+      <Item key="frmSetting.lblHeadStartup" value="אתחול"/>
+      <Item key="frmSetting.chkWelcomePicture" value="הצג תמונת פתיחה"/>
+      <Item key="frmSetting.chkLastSeenImage" value="פתח תמונה האחרונה"/>
+      <Item key="frmSetting.chkShowToolBar" value="הצג סרגל כלים בעת ההפעלה"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="תיקית ההגדרות"/>
+      <Item key="frmSetting.lblHeadViewer" value="צפיין"/>
+      <Item key="frmSetting.chkShowScrollbar" value="הצג סרגלי גרירה בתצוגה"/>
+      <Item key="frmSetting.chkShowNavButtons" value="הצג כפתורים לחיצי ניווט"/>
+      <Item key="frmSetting.chkDisplayBasename" value="הצג שם מקור של התמונה בכותרת החלון"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="הצג רקע משובץ רק באזור התמונה"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="הפעל תמיכה במחוות מגע"/>
+      <Item key="frmSetting.lblBackGroundColor" value="צבע רקע"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="איפוס"/>
+      <Item key="frmSetting.lblHeadPanning" value="Panning"/>
+      <Item key="frmSetting.lblVertPanningSpeed" value="Vertical panning speed"/>
+      <Item key="frmSetting.lblHorzPanningSpeed" value="Horizontal panning speed"/>
+      <Item key="frmSetting.lblHeadOthers" value="אחרים"/>
+      <Item key="frmSetting.chkStartWithOs" value="Start with OS to improve startup speed"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Continue running in the background when the app is closed"/>
+      <Item key="frmSetting.chkAutoUpdate" value="בדוק עדכונים אוטומטית"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="אפשר עותקים מרובים של התוכנה"/>
+      <Item key="frmSetting.chkESCToQuit" value="אפשר לחיצה על ESC ליציאה מהתוכנה"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="הצג תיבת דו-שיח לאישור מחיקה"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="מרכז את החלון אוטומטית כשהחלון במצב התאמת גודל"/>
+      <Item key="frmSetting.chkShowToast" value="הצג הכרזות"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="תמונה נטענת"/>
+      <Item key="frmSetting.chkFindChildFolder" value="חפש תמונות בתתי תיקיות"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="הראה תמונות חבויות"/>
+      <Item key="frmSetting.chkLoopViewer" value="החזר את התצוגה לתמונה הראשונה בסיום רשימת התמונות"/>
+      <Item key="frmSetting.chkIsCenterImage" value="מרכז את התמונה בתצוגה"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="השתמש בתמונה ממוזערת משובצת עבור פורמטי RAW"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="סדר טעינת התמונות"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="השתמש בסדר המיון של סייר הקבצים אם אפשר"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="קבץ תמונות לפי ספריה"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="מספר התמונות במטמון באמצעות ImageBooster (חד כיווני)"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="השמע צליל כאשר התמונה משתנה"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="מספר תמונות להפעלת התרעה"/>
+      <Item key="frmSetting.lblColorManagement" value="ניהול צבעים"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="החל גם על תמונות ללא פרופיל צבע מוטמע"/>
+      <Item key="frmSetting.lblColorProfile" value="פרופיל צבע:"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="דפדף…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="ללא"/>
+      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="Use current monitor profile"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="התאמה אישית…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="פעולות גלגל עכבר"/>
+      <Item key="frmSetting.lblMouseWheel" value="גלגלת עכבר"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="גלגלת עכבר + Alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="גלגלת עכבר + Ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="גלגלת עכבר + Shift"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="אל תעשה דבר"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="תקריב"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="דפדף אנכית"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="דפדף אופקית"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="תמונה קודמת/הבאה"/>
+      <Item key="frmSetting.lblHeadZooming" value="התקרבות"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="מיטוב תקריב"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Auto (Low quality/Nearest-neighbor)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="איכות נמוכה"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="איכות גבוהה"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="ביליניארי"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="ביקיוביק"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Nearest-neighbor"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="איכות גבוהה, ביליניארי"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="איכות גבוהה, ביקובי"/>
+      <Item key="frmSetting.lblZoomLevels" value="רמות תקריב"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value=":היתה שגיאה בעת עדכון רמות זום. השגיאה היתה&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="סרגל כלים של תמונות מוקטנות"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="הראה תמונות מוקטנות בצד ימין"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="הראה סרגל גרירה של תמונות מוקטנות"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="גודל תמונה מוקטנת (בפיקסלים)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="מצגת שקופיות"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="החזר את מצגת התמונות לתמונה הראשונה בסיום המצגת"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="הצג ספירה לאחור במצגת שקפים"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="השתמש במרווח רנדומלי"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="{0} :מרווח בין תמונות במצגת"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="אל"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="מסך מלא"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="הסתר את סרגל הכלים"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="הסתר סרגל תמונות ממוזערות"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="שמור את התמונה המוצגת לאחר סיבובה"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="בחר תוכנה לעריכת תמונות"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="לאחר פתיחת תוכנית עריכה:"/>
+      <Item key="frmSetting.lblImageQuality" value="איכות תמונה:"/>
+      <Item key="frmSetting.btnEditEditExt" value="עריכה…"/>
+      <Item key="frmSetting.btnEditResetExt" value="אפס לברירת מחדל"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="ערוך את כל הסיומות…"/>
+      <Item key="frmSetting._allExtensions" value="כל סוגי הקבצים"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="סיומת קובץ"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="שם היישום"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="נתיב ליישום"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="משתני הפעלה ליישום"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="שמר את תאריך שינוי התמונה בעת שמירה"/>
+      <Item key="frmSetting.lblSupportedExtension" value="סוגי קבצים נתמכים: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="פתח חלון שיוך סוגי קבצים"/>
+      <Item key="frmSetting.btnAddNewExt" value="הוספה…"/>
+      <Item key="frmSetting.btnRegisterExt" value="הגדר כמציג התמונות ברירת המחדל…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="הסר רישום סיומות"/>
+      <Item key="frmSetting.btnDeleteExt" value="מחק"/>
+      <Item key="frmSetting.btnResetExt" value="אפס לברירת מחדל"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="לא ניתן לרשום קישור בין התוכנה לאתר"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="לא ניתן לרשום סוגי קבצים עבור ImageGlass"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value=".כל סוגי הקבצים נרשמו בהצלחה! כדי לקבוע את ImageGlass כמציג תמונות ברירת, בבקשה פתחו את הגדרות מערכת ההפעלה &lt; תוכניות ברירת מחדל, וקבעו את ImageGlass באופן ידני תחת מציגי תמונות"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="לא ניתן להסיר רישום סוגי קבצים עבור ImageGlass"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="הרישום של כל סוגי הקבצים הוסר בהצלחה!"/>
+      <Item key="frmSetting.lblToolbarPosition" value="מיקום סרגל הכלים:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="גודל סימלון בסרגל הכלים:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="למעלה"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="למטה"/>
+      <Item key="frmSetting._separator" value="מפריד"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="הגדר כפתורי סרגל כלים"/>
+      <Item key="frmSetting.lblUsedBtns" value="כפתורים נוכחיים:"/>
+      <Item key="frmSetting.lblAvailBtns" value="כפתורים אפשריים:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="הזז כפתור נבחר למטה"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="הסר כפתור(ים) נבחר(ים) מסרגל הכלים"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="הוסף כפתור(ים) נבחר(ים) לסרגל הכלים"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="העבר כפתור נבחר למעלה"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="מרכז אופקית את כפתורי סרגל הכלים ביחס לחלון"/>
+      <Item key="frmSetting.chkHideTooltips" value="הסתר טיפ כלי בסרגל הכלים"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="השתמש בפורמט RGB עם ערך Alpha"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="השתמש בפורמט HEX עם ערך Alpha"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="השתמש בפורמט HSL עם ערך Alpha"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="השתמש בפורמט HSV עם ערך Alpha"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="קוד צבע ברירת מחדל בהעתקה"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="הראה אוטומטית כלי ניווט ברמת העמוד בתמונה מרובת עמודים"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="תמיד למעלה Exif השאר כלי"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="בחר קובץ כלי Exif"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="אינו קיים או אינו תקין Exif כלי:&#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="משתני פקודה:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="תצוגה מקדימה של פקודה:"/>
+      <Item key="frmSetting.lblLanguageText" value="שפות מותקנות"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; רענן"/>
+      <Item key="frmSetting.lblLanguageWarning" value="ערכת השפה הזו עשויה שלא לתאום ל- {0}"/>
+      <Item key="frmSetting.lblTranslators" value="Translator:"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; התקן ערכת שפה חדשה (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; צור ערכת שפה חדשה…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; ערוך ערכת שפה נבחרת…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; מצא עוד ערכות שפה…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="ערכות נושא מותקנות: {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="הורד ערכות נושא…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="רענן"/>
+      <Item key="frmSetting.btnThemeInstall" value="התקן…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="הסר התקנה…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="שמירה בשם…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="פתח תיקית ערכות נושא"/>
+      <Item key="frmSetting.btnThemeApply" value="החל ערכת נושא"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="שם"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="גירסה"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="מחבר"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="דוא&quot;ל"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="אתר"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="תאימות"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="תיאור"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="ערכת הנושא שלך הותקנה בהצלחה!"/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="לא ניתן להתקין את ערכת הנושא."/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="לא ניתן להסיר את ערכת הנושא הנבחרת."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="ערכת הנושא שבחרת נשמרה ב- {0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="לא ניתן לשמור את ערכת הנושא הנבחרת."/>
+      <Item key="frmSetting.btnThemeApply._Success" value="ערכת הנושא שנבחרה הוחלה בהצלחה!"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="לא ניתן להחיל את ערכת הנושא שנבחרה."/>
+      <Item key="frmSetting.btnKeyReset" value="אפס לברירת מחדל"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="מקש רווח / Backspace"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="PageUp / PageDown"/>
+      <Item key="frmSetting.lblKeysUpDown" value="חצים למעלה / למטה"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="חיצים ימינה / שמאלה"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="תמונה קודמת / הבאה"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="הטה ימינה / שמאלה"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="סובב למעלה / למטה"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="התקרבות / התרחקות"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="השהה מצגת שקופיות"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="אל תעשה דבר"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="סיומת קובץ"/>
+      <Item key="frmAddNewFormat.btnOK" value="אישור"/>
+      <Item key="frmAddNewFormat.btnClose" value="סגור"/>
+      <Item key="frmEditApp.lblFileExtension" value="סיומת קובץ"/>
+      <Item key="frmEditApp.lblAppName" value="שם היישום"/>
+      <Item key="frmEditApp.lblAppPath" value="נתיב ליישום"/>
+      <Item key="frmEditApp.lblAppArguments" value="משתני הפעלה ליישום"/>
+      <Item key="frmEditApp.btnReset" value="איפוס"/>
+      <Item key="frmEditApp.btnOK" value="אישור"/>
+      <Item key="frmEditApp.btnClose" value="סגור"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="תצוגה מקדימה"/>
+      <Item key="frmFirstLaunch._Text" value="הגדרות הפעלה ראשונית"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="? על התוכנה להיסגר בכדי ליישם את ההגדרות החדשות, האם ברצונך להמשיך"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="צעד {0}/{1}"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="הבא"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="הסתיים!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="דלג והפעל את ImageGlass"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="בחירת שפה"/>
+      <Item key="frmFirstLaunch.lblTheme" value="בחר ערכת נושא"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="קבע את ImageGlass כברירת המחדל להצגת תמונות?"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="כן"/>
+      <Item key="frmCrop.lblWidth" value="רוחב:"/>
+      <Item key="frmCrop.lblHeight" value="גובה:"/>
+      <Item key="frmCrop.btnSave" value="שמור"/>
+      <Item key="frmCrop.btnSaveAs" value="שמירה בשם…"/>
+      <Item key="frmCrop.btnCopy" value="העתק"/>
+      <Item key="frmCrop.btnReset" value="איפוס"/>
+      <Item key="FrmExifTool.clnProperty" value="מאפיין"/>
+      <Item key="FrmExifTool.clnValue" value="ערך"/>
+      <Item key="FrmExifTool.btnCopyValue" value="העתק ערך"/>
+      <Item key="FrmExifTool.btnExport" value="ייצוא…"/>
+      <Item key="FrmExifTool.btnClose" value="סגור"/>
+    </Content>
+  </Language>
+</ImageGlass>

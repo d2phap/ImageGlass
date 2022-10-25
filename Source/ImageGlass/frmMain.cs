@@ -105,7 +105,10 @@ namespace ImageGlass {
         private bool _isDraggingImage;
 
         // slideshow countdown interval
-        private uint _slideshowCountdown = 5;
+        private float _slideshowCountdown = 5;
+
+        // slideshow stopwatch
+        private Stopwatch _slideshowStopwatch = new();
 
         // force exiting app without checking reasons
         private bool _forceExitApp = false;
@@ -653,16 +656,19 @@ namespace ImageGlass {
             }
 
 
+            // Issue #609: do not auto-reactivate slideshow if disabled
+            if (Configs.IsSlideshow && timSlideShow.Enabled) {
+                timSlideShow.Enabled = false;
+                timSlideShow.Enabled = true;
+                _slideshowStopwatch.Reset();
+            }
+
+
             #region Validate image index
 
             // temp index
             var tempIndex = Local.CurrentIndex + step;
 
-            // Issue #609: do not auto-reactivate slideshow if disabled
-            if (Configs.IsSlideshow && timSlideShow.Enabled) {
-                timSlideShow.Enabled = false;
-                timSlideShow.Enabled = true;
-            }
 
             // Issue #1019 : When showing the initial image, the ImageList is empty; don't show toast messages
             if (!Configs.IsSlideshow && !Configs.IsLoopBackViewer && Local.ImageList.Length > 0) {
@@ -692,7 +698,7 @@ namespace ImageGlass {
 
             #endregion
 
-            // Issue #1020 : don't stop existing animation unless we're actually switching images
+            // Issue #1020: don't stop existing animation unless we're actually switching images
             // stop the animation
             if (picMain.IsAnimating) {
                 picMain.StopAnimating();
@@ -796,6 +802,10 @@ namespace ImageGlass {
 
             // reset countdown timer value
             _slideshowCountdown = Configs.RandomizeSlideshowInterval();
+            // since the UI does not print milliseconds,
+            // this prevents the coutdown to flash the maximum value during the first tick
+            if (_slideshowCountdown == Math.Ceiling(_slideshowCountdown))
+                _slideshowCountdown -= 0.001f;
 
             // reset Cropping region
             ShowCropTool(mnuMainCrop.Checked);
@@ -2254,6 +2264,17 @@ namespace ImageGlass {
             // get current screen
             var screen = Screen.FromControl(this);
 
+            // Check for early exits
+            // This fixes issue(https://github.com/d2phap/ImageGlass/issues/1371)
+            // If window size already reached max, then can't be expanded more larger
+            if (picMain.Width * picMain.ZoomFactor > screen.WorkingArea.Width &&
+                picMain.Height * picMain.ZoomFactor > screen.WorkingArea.Height &&
+                Size.Width == screen.WorkingArea.Width &&
+                Size.Height == screen.WorkingArea.Height) {
+                return;
+            }
+
+
             // First, adjust our main window to theoretically fit the entire
             // picture, but not larger than desktop working area.
             var fullW = Width + picMain.Image.Width - picMain.Width;
@@ -2303,15 +2324,14 @@ namespace ImageGlass {
         /// <summary>
         /// Paint countdown clock in Slideshow mode
         /// </summary>
-        /// <param name="e"></param>
         private void PaintSlideshowClock(PaintEventArgs e) {
             if (!timSlideShow.Enabled || !Configs.IsShowSlideshowCountdown) {
                 return;
             }
 
             // draw countdown text ----------------------------------------------
-            var gap = DPIScaling.Transform(20);
-            var text = TimeSpan.FromSeconds(_slideshowCountdown).ToString("mm':'ss");
+            var countdownTime = TimeSpan.FromSeconds(_slideshowCountdown + 1);
+            var text = (countdownTime - _slideshowStopwatch.Elapsed).ToString("mm'∶'ss");
 
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
@@ -2320,6 +2340,7 @@ namespace ImageGlass {
             var fontSize = e.Graphics.MeasureString(text, font);
 
             // calculate background size
+            var gap = DPIScaling.Transform(20);
             var bgSize = new SizeF(fontSize.Width + gap, fontSize.Height + gap);
             var bgX = picMain.Width - bgSize.Width - gap;
             var bgY = picMain.Height - bgSize.Height - gap;
@@ -3738,14 +3759,15 @@ namespace ImageGlass {
         }
 
         private void timSlideShow_Tick(object sender, EventArgs e) {
-            if (_slideshowCountdown > 1) {
-                _slideshowCountdown--;
-            }
-            else {
+            if (!_slideshowStopwatch.IsRunning)
+                _slideshowStopwatch.Restart();
+
+            if (_slideshowStopwatch.Elapsed.TotalMilliseconds >= TimeSpan.FromSeconds(_slideshowCountdown).TotalMilliseconds) {
                 // end of image list
                 if (Local.CurrentIndex == Local.ImageList.Length - 1) {
                     // loop the list
                     if (!Configs.IsLoopBackSlideshow) {
+                        // pause slideshow
                         mnuMainSlideShowPause_Click(null, null);
                         return;
                     }
@@ -3754,8 +3776,12 @@ namespace ImageGlass {
                 _ = NextPicAsync(1);
             }
 
-            // update the countdown text
-            picMain.Invalidate();
+
+            // only update the countdown text if it's a full second number
+            var isSecond = _slideshowStopwatch.Elapsed.Milliseconds <= 100;
+            if (Configs.IsShowSlideshowCountdown && isSecond) {
+                picMain.Invalidate();
+            }
         }
 
         private void PicMain_Paint(object sender, PaintEventArgs e) {
@@ -4260,6 +4286,16 @@ namespace ImageGlass {
         }
         #endregion
 
+        #region Menu Common
+        private void SetShortcutExit() {
+            if (Configs.IsContinueRunningBackground) {
+                mnuMainExitApplication.ShortcutKeyDisplayString = "Shift+ESC";
+            }
+            else {
+                mnuMainExitApplication.ShortcutKeyDisplayString = Configs.IsPressESCToQuit ? "ESC" : "Alt+F4";
+            }
+        }
+        #endregion
 
         #region Context Menu
         private void OpenShortcutMenu(ToolStripMenuItem parentMenu) {
@@ -4367,6 +4403,10 @@ namespace ImageGlass {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainImageLocation));
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainImageProperties));
             }
+
+            SetShortcutExit();
+            mnuContext.Items.Add(new ToolStripSeparator());
+            mnuContext.Items.Add(UI.Menu.Clone(mnuMainExitApplication));
         }
 
         private void MnuTray_Opening(object sender, CancelEventArgs e) {
@@ -4935,6 +4975,7 @@ namespace ImageGlass {
 
                 //perform slideshow
                 timSlideShow.Enabled = true;
+                _slideshowStopwatch.Reset();
 
                 Configs.IsSlideshow = true;
                 SysExecutionState.PreventSleep();
@@ -4951,11 +4992,13 @@ namespace ImageGlass {
             // performing
             if (timSlideShow.Enabled) {
                 timSlideShow.Enabled = false;
+                _slideshowStopwatch.Stop();
 
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SlideshowMessagePause"], 2000);
             }
             else {
                 timSlideShow.Enabled = true;
+                _slideshowStopwatch.Start();
 
                 ShowToastMsg(Configs.Language.Items[$"{Name}._SlideshowMessageResume"], 2000);
             }
@@ -5669,12 +5712,7 @@ namespace ImageGlass {
                 }
 
                 // add hotkey to Exit menu
-                if (Configs.IsContinueRunningBackground) {
-                    mnuMainExitApplication.ShortcutKeyDisplayString = "Shift+ESC";
-                }
-                else {
-                    mnuMainExitApplication.ShortcutKeyDisplayString = Configs.IsPressESCToQuit ? "ESC" : "Alt+F4";
-                }
+                SetShortcutExit();
 
                 // Get EditApp for editing
                 UpdateEditAppInfoForMenu();

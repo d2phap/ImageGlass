@@ -307,6 +307,8 @@ namespace ImageGlass {
             lblLanguageText.Text = lang[$"{Name}.{nameof(lblLanguageText)}"];
             lnkRefresh.Text = lang[$"{Name}.{nameof(lnkRefresh)}"];
             lblLanguageWarning.Text = string.Format(lang[$"{Name}.{nameof(lblLanguageWarning)}"], "ImageGlass " + Application.ProductVersion);
+            lblTranslators.Text = lang[$"{Name}.{nameof(lblTranslators)}"];
+
             lnkInstallLanguage.Text = lang[$"{Name}.{nameof(lnkInstallLanguage)}"];
             lnkCreateNew.Text = lang[$"{Name}.{nameof(lnkCreateNew)}"];
             lnkEdit.Text = lang[$"{Name}.{nameof(lnkEdit)}"];
@@ -717,8 +719,8 @@ namespace ImageGlass {
             chkRandomSlideshowInterval.Checked = Configs.IsRandomSlideshowInterval;
 
             // Set value of slideshow intervals
-            numSlideShowInterval.Value = Configs.SlideShowInterval;
-            numSlideshowIntervalTo.Value = Configs.SlideShowIntervalTo;
+            numSlideShowInterval.Value = (decimal)Configs.SlideShowInterval;
+            numSlideshowIntervalTo.Value = (decimal)Configs.SlideShowIntervalTo;
             numSlideShowInterval_ValueChanged(null, null); // format interval value
 
             // Full screen configs 
@@ -736,10 +738,10 @@ namespace ImageGlass {
             numSlideshowIntervalTo.Minimum = numSlideShowInterval.Value;
 
             // format value
-            var time = TimeSpan.FromSeconds((double)numSlideShowInterval.Value).ToString("mm':'ss");
+            var time = TimeSpan.FromSeconds((double)numSlideShowInterval.Value).ToString("mm':'ss'.'ff");
 
             if (chkRandomSlideshowInterval.Checked) {
-                var timeTo = TimeSpan.FromSeconds((double)numSlideshowIntervalTo.Value).ToString("mm':'ss");
+                var timeTo = TimeSpan.FromSeconds((double)numSlideshowIntervalTo.Value).ToString("mm':'ss'.'ff");
 
                 time = $"{time} - {timeTo}";
             }
@@ -749,9 +751,9 @@ namespace ImageGlass {
 
         private void numSlideshowIntervalTo_ValueChanged(object sender, EventArgs e) {
             // format value
-            var time = TimeSpan.FromSeconds((double)numSlideShowInterval.Value).ToString("mm':'ss");
+            var time = TimeSpan.FromSeconds((double)numSlideShowInterval.Value).ToString("mm':'ss'.'ff");
 
-            var timeTo = TimeSpan.FromSeconds((double)numSlideshowIntervalTo.Value).ToString("mm':'ss");
+            var timeTo = TimeSpan.FromSeconds((double)numSlideshowIntervalTo.Value).ToString("mm':'ss'.'ff");
 
             time = $"{time} - {timeTo}";
 
@@ -967,9 +969,11 @@ namespace ImageGlass {
         }
 
         private void lnkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            var selectedLang = lstLanguages[cmbLanguage.SelectedIndex];
+
             using var p = new Process();
             p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
-            p.StartInfo.Arguments = "igeditlang \"" + Configs.Language.FileName + "\"";
+            p.StartInfo.Arguments = "igeditlang \"" + selectedLang.FileName + "\"";
 
             try {
                 p.Start();
@@ -998,7 +1002,7 @@ namespace ImageGlass {
 
                 // start from 1, the first item is already hardcoded
                 for (var i = 1; i < lstLanguages.Count; i++) {
-                    var iLang = cmbLanguage.Items.Add(lstLanguages[i].LangName);
+                    var iLang = cmbLanguage.Items.Add($"{lstLanguages[i].LangName} ({lstLanguages[i].Description})");
                     var curLang = Configs.Language.FileName;
 
                     // using current language pack
@@ -1017,9 +1021,20 @@ namespace ImageGlass {
             lblLanguageWarning.Visible = false;
 
             // check compatibility
-            var lang = new Language();
-            if (lang.MinVersion.CompareTo(lstLanguages[cmbLanguage.SelectedIndex].MinVersion) != 0) {
+            var selectedLang = lstLanguages[cmbLanguage.SelectedIndex];
+            var newLang = new Language();
+            if (newLang.MinVersion.CompareTo(selectedLang.MinVersion) != 0) {
                 lblLanguageWarning.Visible = true;
+            }
+
+            // language translators
+            if (cmbLanguage.SelectedIndex == 0) {
+                lblTranslatorNames.Text = "Dương Diệu Pháp";
+                lnkEdit.Enabled = false;
+            }
+            else {
+                lblTranslatorNames.Text = selectedLang.Author;
+                lnkEdit.Enabled = true;
             }
         }
 
@@ -1059,8 +1074,6 @@ namespace ImageGlass {
                 using var p = new Process();
                 var isError = true;
                 var allExts = Configs.AllFormats;
-                // Issue #664
-                allExts.Remove(".ico");
                 var formats = Configs.GetImageFormats(allExts);
 
                 p.StartInfo.FileName = App.StartUpDir("igtasks.exe");
@@ -2105,8 +2118,8 @@ namespace ImageGlass {
             Configs.IsShowSlideshowCountdown = chkShowSlideshowCountdown.Checked;
             Configs.IsRandomSlideshowInterval = chkRandomSlideshowInterval.Checked;
 
-            Configs.SlideShowInterval = (uint)numSlideShowInterval.Value;
-            Configs.SlideShowIntervalTo = (uint)numSlideshowIntervalTo.Value;
+            Configs.SlideShowInterval = (float)numSlideShowInterval.Value;
+            Configs.SlideShowIntervalTo = (float)numSlideshowIntervalTo.Value;
 
             // Full screen
             Configs.IsHideToolbarInFullscreen = chkHideToolbarInFullScreen.Checked;
@@ -2136,6 +2149,8 @@ namespace ImageGlass {
                 if (Configs.Language.FileName.ToLower().CompareTo(newString) != 0) {
                     Configs.Language = lstLanguages[cmbLanguage.SelectedIndex];
                     Local.ForceUpdateActions |= ForceUpdateActions.LANGUAGE;
+
+                    LoadLanguagePack();
                 }
             }
             #endregion
