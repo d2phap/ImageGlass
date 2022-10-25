@@ -13,10 +13,9 @@ ImageGlass - A lightweight, versatile image viewer
 ImageGlass is a lightweight software application whose purpose is to help you view images in a clean and intuitive working environment.
 It gives you the possibility to view over **80+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers speed up their work.
 
-
 ## 📥 Download
 <a href="https://www.microsoft.com/store/productId/9N33VZK3C7TH">
-  <img height="69" src="https://imageglass.org/img/ms-store-badge-light.svg" /></a>
+  <img height="69" src="https://user-images.githubusercontent.com/3154213/197670614-b9ecc804-ebb2-44cc-88c3-5dd321564a51.svg" /></a>
 
 <br/>
 <a href="https://imageglass.org/download">
