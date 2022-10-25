@@ -221,7 +221,7 @@
       <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Desplazarse verticalmente"/>
       <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Desplazarse verticalmente"/>
       <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Anterior/siguiente imagen"/>
-      <Item key="frmSetting.lblHeadZooming" value="Zooming"/>
+      <Item key="frmSetting.lblHeadZooming" value="Ampliación"/>
       <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Optimización de zoom"/>
       <Item key="frmSetting.cmbZoomOptimization._Auto" value="Auto (Baja calidad/Nearest-neighbor)"/>
       <Item key="frmSetting.cmbZoomOptimization._Low" value="Baja calidad"/>
