@@ -29,6 +29,7 @@ using System.Drawing.Drawing2D;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using WicNet;
+using CombineMode = D2Phap.CombineMode;
 using InterpolationMode = D2Phap.InterpolationMode;
 
 namespace ImageGlass.Views;
@@ -1023,12 +1024,11 @@ public class DXCanvas : DXControl
         }
 
 
-        //// Draw selection layer
-        //if (EnableSelection)
-        //{
-        //    DrawSelectionLayer(g);
-        //}
-
+        // Draw selection layer
+        if (EnableSelection)
+        {
+            DrawSelectionLayer(g);
+        }
 
 
         // text message
@@ -1242,12 +1242,18 @@ public class DXCanvas : DXControl
     {
         if (_selection.IsEmpty) return;
 
+        // limit the selected area to the image
+        _selection.Intersect(_destRect);
+
         var scaledSelection = new RectangleF() {
-            X = _selection.X, // / _zoomFactor,
-            Y = _selection.Y, // / _zoomFactor,
-            Width = _selection.Width, // / _zoomFactor,
-            Height = _selection.Height, // / _zoomFactor,
+            X = _selection.X,
+            Y = _selection.Y,
+            Width = _selection.Width,
+            Height = _selection.Height,
         };
+
+        using var selectionGeo = g.GetCombinedRectanglesGeometry(scaledSelection, _destRect, 0, 0, CombineMode.Xor);
+        g.DrawGeometry(selectionGeo, Color.Transparent, Color.FromArgb(120, SelectionColor));
 
 
         // draw grid, ignore alpha value
@@ -1294,42 +1300,51 @@ public class DXCanvas : DXControl
         }
 
 
-        // fill the selection
-        g.DrawRectangle(scaledSelection, 0, Color.FromArgb(255, Color.White), Color.FromArgb(50, Color.White));
-        g.DrawRectangle(scaledSelection, 0, Color.FromArgb(200, Color.Black), Color.FromArgb(50, Color.Black));
-        g.DrawRectangle(scaledSelection, 0, Color.FromArgb(200, SelectionColor), Color.FromArgb(50, SelectionColor));
+        // draw the selection border
+        g.DrawRectangle(scaledSelection, 0, Color.FromArgb(255, Color.White));
+        g.DrawRectangle(scaledSelection, 0, Color.FromArgb(200, Color.Black));
+        g.DrawRectangle(scaledSelection, 0, Color.FromArgb(200, SelectionColor));
 
 
         // 4 corner resizers
         var resizerSize = DpiApi.Transform<float>(Font.Size);
         var resizerMargin = 4;
         var resizerBgColor = Color.FromArgb(150, Color.White);
-        var topLeftResizer = new RectangleF(
-            scaledSelection.X + resizerMargin,
-            scaledSelection.Y + resizerMargin,
-            resizerSize,
-            resizerSize);
-        var topRightResizer = new RectangleF(
-            scaledSelection.Right - resizerSize - resizerMargin,
-            scaledSelection.Y + resizerMargin,
-            resizerSize,
-            resizerSize);
-        var bottomLeftResizer = new RectangleF(
-            scaledSelection.X + resizerMargin,
-            scaledSelection.Bottom - resizerSize - resizerMargin,
-            resizerSize,
-            resizerSize);
-        var bottomRightResizer = new RectangleF(
-            scaledSelection.Right - resizerSize - resizerMargin,
-            scaledSelection.Bottom - resizerSize - resizerMargin,
-            resizerSize,
-            resizerSize);
+        var resizers = new List<RectangleF>(4)
+        {
+            // top left
+            new RectangleF(
+                scaledSelection.X + resizerMargin,
+                scaledSelection.Y + resizerMargin,
+                resizerSize,
+                resizerSize),
+            // top right
+            new RectangleF(
+                scaledSelection.Right - resizerSize - resizerMargin,
+                scaledSelection.Y + resizerMargin,
+                resizerSize,
+                resizerSize),
+            // bottom left
+            new RectangleF(
+                scaledSelection.X + resizerMargin,
+                scaledSelection.Bottom - resizerSize - resizerMargin,
+                resizerSize,
+                resizerSize),
+            // bottom right
+            new RectangleF(
+                scaledSelection.Right - resizerSize - resizerMargin,
+                scaledSelection.Bottom - resizerSize - resizerMargin,
+                resizerSize,
+                resizerSize),
+        };
 
         // draw resizers
-        g.DrawRectangle(topLeftResizer, resizerSize / 3, SelectionColor, resizerBgColor, 1.5f);
-        g.DrawRectangle(topRightResizer, resizerSize / 3, SelectionColor, resizerBgColor, 1.5f);
-        g.DrawRectangle(bottomLeftResizer, resizerSize / 3, SelectionColor, resizerBgColor, 1.5f);
-        g.DrawRectangle(bottomRightResizer, resizerSize / 3, SelectionColor, resizerBgColor, 1.5f);
+        foreach (var rItem in resizers)
+        {
+            g.DrawRectangle(rItem, 0, Color.FromArgb(255, Color.White), Color.FromArgb(200, Color.Black));
+            g.DrawRectangle(rItem, 0, Color.FromArgb(200, Color.Black), Color.FromArgb(200, Color.White));
+            g.DrawRectangle(rItem, 0, Color.FromArgb(200, SelectionColor));
+        }
     }
 
 
