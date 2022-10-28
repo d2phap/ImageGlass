@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="si" langName="සිංහල" author="හෙළබස" description="Sinhala" minVersion="8.7" isRightToLeftLayout="No"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="Some settings are not compatible with your ImageGlass {0}. It's recommended to update them before continuing.&#13;&#10;&#10;- Click Yes to learn about the changes.&#13;&#10;- Click No to launch ImageGlass with default settings."/>
+      <Item key="_.ImageOrderBy._Name" value="නම (පෙරනිමි)"/>
+      <Item key="_.ImageOrderBy._Length" value="Length"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="සෑදූ වේලාව"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="අවසන් ප්‍රවේශ වේලාව"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="අවසන් ලියූ වේලාව"/>
+      <Item key="_.ImageOrderBy._Extension" value="Extension"/>
+      <Item key="_.ImageOrderBy._Random" value="අහඹු"/>
+      <Item key="_.ImageOrderType._Asc" value="ආරෝහණ"/>
+      <Item key="_.ImageOrderType._Desc" value="අවරෝහණ"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="කිසිවක් නැත"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="හකුළන්න"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="වසන්න"/>
+      <Item key="frmMain.mnuMainFile" value="ගොනුව"/>
+      <Item key="frmMain.mnuMainOpenFile" value="ගොනුව අරින්න…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Open image data from clipboard"/>
+      <Item key="frmMain.mnuMainNewWindow" value="නව කවුළුව අරින්න"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Cannot open new window because only one instance allowed"/>
+      <Item key="frmMain.mnuSaveImage" value="අනුරුව සුරකින්න"/>
+      <Item key="frmMain.mnuMainSaveAs" value="ලෙස අනුරුව සුරකින්න…"/>
+      <Item key="frmMain.mnuMainRefresh" value="නැවුම්කරන්න"/>
+      <Item key="frmMain.mnuMainReloadImage" value="අනුරුව යළි පූරණය"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="අනුරූ ලේඛනය යළි පූරණය"/>
+      <Item key="frmMain.mnuOpenWith" value="සමඟ අරින්න…"/>
+      <Item key="frmMain.mnuMainEditImage" value="{0} අනුරුව සංස්කරණය…"/>
+      <Item key="frmMain.mnuMainPrint" value="මුද්‍රණය…"/>
+      <Item key="frmMain.mnuMainNavigation" value="යාත්‍රණය"/>
+      <Item key="frmMain.mnuMainViewNext" value="ඊළඟ අනුරුව දකින්න"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="දකුණු ඊතලය / පිටුව පහළට"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="කලින් අනුරුව දකින්න"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="වම් ඊතලය / පිටුව ඉහළට"/>
+      <Item key="frmMain.mnuMainGoto" value="වෙත යන්න…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="පළමු අනුරුවට යන්න"/>
+      <Item key="frmMain.mnuMainGotoLast" value="අවසාන අනුරුවට යන්න"/>
+      <Item key="frmMain.mnuMainNextPage" value="ඊළඟ පිටුව දකින්න"/>
+      <Item key="frmMain.mnuMainPrevPage" value="කලින් පිටුව දකින්න"/>
+      <Item key="frmMain.mnuMainFirstPage" value="පළමු පිටුව දකින්න"/>
+      <Item key="frmMain.mnuMainLastPage" value="අන්තිම පිටුව දකින්න"/>
+      <Item key="frmMain.mnuMainZoom" value="විශාල කරන්න"/>
+      <Item key="frmMain.mnuMainZoomIn" value="විශාලනය"/>
+      <Item key="frmMain.mnuMainZoomOut" value="කුඩාලනය"/>
+      <Item key="frmMain.mnuCustomZoom" value="අභිරුචි විශාලනය…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="නව විශාලන අගයක් යොදන්න"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="Scale to fit"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="Scale to fill"/>
+      <Item key="frmMain.mnuMainActualSize" value="සැබෑ ප්‍රමාණය"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Lock zoom ratio"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="ස්වයං විශාලනය"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="Scale to width"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="Scale to height"/>
+      <Item key="frmMain.mnuMainImage" value="අනුරුව"/>
+      <Item key="frmMain.mnuMainChannels" value="නාලිකා දකින්න"/>
+      <Item key="frmMain.mnuMainChannels._All" value="සියල්ල"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="රතු"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="කොළ"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="නිල්"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="කළු"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="ඇල්ෆා"/>
+      <Item key="frmMain.mnuLoadingOrder" value="පූරණය වන අනුපිළිවෙල"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="වමට කරකවන්න"/>
+      <Item key="frmMain.mnuMainRotateRight" value="දකුණට හරවන්න"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="Flip Horizontal"/>
+      <Item key="frmMain.mnuMainFlipVert" value="Flip Vertical"/>
+      <Item key="frmMain.mnuMainRename" value="අනුරුව යළි නම් කරන්න…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Move to recycle bin"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Delete from hard disk"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Extract image pages ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="අනුරුව චලනය අරඹන්න / නවත්වන්න"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="වැඩතල පසුබිම ලෙස සකසන්න"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="අගුළු තිරයේ අනුරුව ලෙස සකසන්න"/>
+      <Item key="frmMain.mnuMainImageLocation" value="අනුරුවෙහි ස්ථානය අරින්න"/>
+      <Item key="frmMain.mnuMainImageProperties" value="අනුරුවෙහි ගුණාංග"/>
+      <Item key="frmMain.mnuMainClipboard" value="පසුරුපුවරුව"/>
+      <Item key="frmMain.mnuMainCopy" value="පිටපත්"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="අනුරුවෙහි දත්ත පිටපත්"/>
+      <Item key="frmMain.mnuMainCut" value="කපන්න"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="අනුරුවෙහි මාර්ගය පිටපත්"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="පසුරුපුවරුව හිස් කරන්න"/>
+      <Item key="frmMain.mnuWindowFit" value="Window fit"/>
+      <Item key="frmMain.mnuMainFullScreen" value="පූර්ණ තිරය"/>
+      <Item key="frmMain.mnuFrameless" value="රාමුරහිත"/>
+      <Item key="frmMain.mnuMainSlideShow" value="Slideshow"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="Start slideshow"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="Pause / Resume slideshow"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="Exit slideshow"/>
+      <Item key="frmMain.mnuMainShare" value="බෙදාගන්න…"/>
+      <Item key="frmMain.mnuMainLayout" value="පිරිසැලසුම"/>
+      <Item key="frmMain.mnuMainToolbar" value="මෙවලම් තීරුව"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="Thumbnail panel"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="Checkerboard background"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="කවුළුව සැමවිටම ඉහළින් තබන්න"/>
+      <Item key="frmMain.mnuMainTools" value="මෙවලම්"/>
+      <Item key="frmMain.mnuMainColorPicker" value="Color picker"/>
+      <Item key="frmMain.mnuMainPageNav" value="පිටු යාත්‍රණය"/>
+      <Item key="frmMain.mnuMainCrop" value="කප්පාදු වෙමින්"/>
+      <Item key="frmMain.mnuExifTool" value="මෙවලමෙන් පිටවන්න"/>
+      <Item key="frmMain.mnuMainSettings" value="සැකසුම්…"/>
+      <Item key="frmMain.mnuMainHelp" value="උදව්"/>
+      <Item key="frmMain.mnuMainAbout" value="පිළිබඳව"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="පළමු දියත්කිරීමේ වින්‍යාසය…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="යාවත්කාල සඳහා පරීක්‍ෂාකරන්න…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="නව අනුවාදයක් තිබේ!"/>
+      <Item key="frmMain.mnuMainReportIssue" value="දෝෂයක් වාර්තා කරන්න…"/>
+      <Item key="frmMain.mnuMainExitApplication" value="පිටවන්න"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="පෙන්වන්න"/>
+      <Item key="frmMain.picMain._ErrorText" value="ImageGlass cannot open this picture because the file appears to be damaged, corrupted or not supported."/>
+      <Item key="frmMain._ImageNotExist" value="The viewing image doesn't exist."/>
+      <Item key="frmMain.btnMenu" value="Main menu"/>
+      <Item key="frmMain._OpenFileDialog" value="සියළුම සහාය දක්වන ගොනු"/>
+      <Item key="frmMain._Files" value="ගොනු(ව)"/>
+      <Item key="frmMain._Pages" value="පිටු"/>
+      <Item key="frmMain._ImageData" value="අනුරුවෙහි දත්ත"/>
+      <Item key="frmMain._RenameDialogText" value="යළි නම් කරන්න"/>
+      <Item key="frmMain._RenameDialog" value="නම ගොනුවේනම යොදන්න"/>
+      <Item key="frmMain._GotoDialogText" value="Enter the image index to view it. Press ENTER"/>
+      <Item key="frmMain._DeleteDialogText" value="'{0}' ගොනුව මකන්නද?"/>
+      <Item key="frmMain._DeleteDialogTitle" value="තහවුරු"/>
+      <Item key="frmMain._ExtractPageText" value="Extracting image pages. Please select output folder."/>
+      <Item key="frmMain._FullScreenMessage" value="පූර්ණ තිර ආකාරයෙන් පිටවීමට {0} ඔබන්න."/>
+      <Item key="frmMain._SlideshowMessage" value="Press ESC to exit slideshow.&#10; Right click to open context menu."/>
+      <Item key="frmMain._SlideshowMessagePause" value="Slideshow is paused"/>
+      <Item key="frmMain._SlideshowMessageResume" value="Slideshow is resumed"/>
+      <Item key="frmMain._CopyFileText" value="ගොනු {0} ක් පිටපත් විය"/>
+      <Item key="frmMain._CutFileText" value="ගොනු {0} කපන්න"/>
+      <Item key="frmMain._CopyImageData" value="අනුරුව පසුරුපුවරුවට පිටපත් විය"/>
+      <Item key="frmMain._ClearClipboard" value="පසුරුපුවරුව හිස් විය"/>
+      <Item key="frmMain._SaveImage" value="{0}&#10;වෙත අනුරුව සුරැකිණි"/>
+      <Item key="frmMain._SavingImage" value="අනුරුව සුරැකෙමින්...&#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="{0}&#10;අනුරුව සුරැකීමට නොහැකිය."/>
+      <Item key="frmMain._Loading" value="පූරණය වෙමින්…"/>
+      <Item key="frmMain._FirstItemOfList" value="පළමු අනුරුවට ළඟා විය"/>
+      <Item key="frmMain._LastItemOfList" value="අවසාන අනුරුවට ළඟා විය"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="චලන ආකෘතිය සංශෝධනයට සහාය නොදක්වයි"/>
+      <Item key="frmMain._SetLockImage_Error" value="අගුළු තිරයේ අනුරුව සැකසීමේදී දෝෂයකි"/>
+      <Item key="frmMain._SetLockImage_Success" value="අගුළු තිරයේ අනුරුව සාර්ථකව සැකසිණි"/>
+      <Item key="frmMain._SetBackground_Error" value="වැඩතල පසුබිමේ අනුරුව සැකසීමේදී දෝෂයකි"/>
+      <Item key="frmMain._SetBackground_Success" value="වැඩතල පසුබිම සාර්ථකව සැකසිණි"/>
+      <Item key="frmMain._PageExtracting" value="Extracting image pages..."/>
+      <Item key="frmMain._PageExtractComplete" value="Page extraction completed."/>
+      <Item key="frmMain._Frameless" value="Hold SHIFT to move the window."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="අනුරුවේ දත්ත පසුරුපුවරුවේ අඩංගු නොවේ."/>
+      <Item key="frmAbout.lblSlogant" value="A lightweight, versatile image viewer"/>
+      <Item key="frmAbout.lblInfo" value="තොරතුරු"/>
+      <Item key="frmAbout.lblComponent" value="සංරචක"/>
+      <Item key="frmAbout.lblReferences" value="References"/>
+      <Item key="frmAbout.lblVersion" value="අනුවාදය: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="සබඳතාව"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="මෘදුකාංග යාවත්කාල"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» යාවත්කාල පරීක්‍ෂාකරන්න…"/>
+      <Item key="frmAbout._Text" value="පිළිබඳව"/>
+      <Item key="frmAbout._PortableText" value="[Portable]"/>
+      <Item key="frmSetting._Text" value="සැකසුම්"/>
+      <Item key="frmSetting.btnSave" value="සුරකින්න"/>
+      <Item key="frmSetting.btnCancel" value="අවලංගු කරන්න"/>
+      <Item key="frmSetting.btnApply" value="යොදන්න"/>
+      <Item key="frmSetting.lblGeneral" value="General"/>
+      <Item key="frmSetting.lblImage" value="අනුරුව"/>
+      <Item key="frmSetting.lblEdit" value="සංස්කරණය"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="File Type Associations"/>
+      <Item key="frmSetting.lblToolbar" value="මෙවලම් තීරුව"/>
+      <Item key="frmSetting.lblLanguage" value="භාෂාව"/>
+      <Item key="frmSetting.lblTheme" value="තේමාව"/>
+      <Item key="frmSetting.lblKeyboard" value="යතුරුපුවරුව"/>
+      <Item key="frmSetting.lblHeadStartup" value="Start up"/>
+      <Item key="frmSetting.chkWelcomePicture" value="Show welcome picture"/>
+      <Item key="frmSetting.chkLastSeenImage" value="අන්තිමට දුටු අනුරුව අරින්න"/>
+      <Item key="frmSetting.chkShowToolBar" value="ආරම්භයේදී මෙවලම් තීරුව පෙන්වන්න"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="වින්‍යාසයේ නාමාවලිය"/>
+      <Item key="frmSetting.lblHeadViewer" value="Viewer"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Display viewer scrollbars"/>
+      <Item key="frmSetting.chkShowNavButtons" value="යාත්‍රණ ඊතල බොත්තම් දර්ශනය කරන්න"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Display basename of the viewing image on title bar"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Display checkerboard only in the image region"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="Enable touch gesture support"/>
+      <Item key="frmSetting.lblBackGroundColor" value="පසුබිමේ වර්ණය"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="නැවත සකසන්න"/>
+      <Item key="frmSetting.lblHeadPanning" value="Panning"/>
+      <Item key="frmSetting.lblVertPanningSpeed" value="Vertical panning speed"/>
+      <Item key="frmSetting.lblHorzPanningSpeed" value="Horizontal panning speed"/>
+      <Item key="frmSetting.lblHeadOthers" value="වෙනත්"/>
+      <Item key="frmSetting.chkStartWithOs" value="Start with OS to improve startup speed"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Continue running in the background when the app is closed"/>
+      <Item key="frmSetting.chkAutoUpdate" value="යාවත්කාල ස්වයංක්‍රීයව පරීක්‍ෂාකරන්න"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="Allow multiple instances of the program"/>
+      <Item key="frmSetting.chkESCToQuit" value="Allow to press ESC to quit application"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="Display Delete confirmation dialog"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="Auto-center the window in Window Fit mode"/>
+      <Item key="frmSetting.chkShowToast" value="Show toast message"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="අනුරුව පූරණය වෙමින්"/>
+      <Item key="frmSetting.chkFindChildFolder" value="Find images in child folder"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="සැඟවුණු අනුරූ පෙන්වන්න"/>
+      <Item key="frmSetting.chkLoopViewer" value="Loop back viewer to the first image when reaching the end of the list"/>
+      <Item key="frmSetting.chkIsCenterImage" value="Center image on viewer"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="Use embedded thumbnail for RAW formats"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="අනුරුව පූරණය වන පිළිවෙල"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Use Windows File Explorer sort order if possible"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Group images by directory"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="Number of images cached by ImageBooster (one direction)"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="අනුරූ වෙනස් වූ විට ශබ්දය වාදනය"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="දැනුම්දිය යුතු අනුරූ ගණන"/>
+      <Item key="frmSetting.lblColorManagement" value="වර්ණය කළමණාකරනය"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="එබ්බවූ වර්ණ පැතිකඩ නැති අනුරූ සඳහා ද යොදන්න"/>
+      <Item key="frmSetting.lblColorProfile" value="වර්ණයේ පැතිකඩ:"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="පිරික්සන්න…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="කිසිවක් නැත"/>
+      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="Use current monitor profile"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="අභිරුචි…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="Mouse wheel actions"/>
+      <Item key="frmSetting.lblMouseWheel" value="Mouse wheel"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="Mouse wheel + Alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Mouse wheel + Ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="Mouse wheel + Shift"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="කිසිවක් නොකරන්න"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="විශාල කරන්න"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Scroll vertically"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Scroll horizontally"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="කලින්/ඊළඟ අනුරුව"/>
+      <Item key="frmSetting.lblHeadZooming" value="විශාල වීම"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Zoom optimization"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Auto (Low quality/Nearest-neighbor)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="අඩු ගුණත්වය"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="ඉහළ ගුණත්වය"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Bilinear"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Bicubic"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Nearest-neighbor"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="High-quality, bilinear"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="High-quality, bicubic"/>
+      <Item key="frmSetting.lblZoomLevels" value="විශාල කිරීමේ මට්ටම්"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="විශාල කිරීමේ මට්ටම් යාවත්කාල වීමේ දෝෂයකි. දෝෂ පණිවිඩය:&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Thumbnail bar"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="Show thumbnails on right side"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Show thumbnails scroll bar"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Thumbnail dimension (pixel)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="Slideshow"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="Loop back slideshow to the first image when reaching the end of the list"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="Show slideshow countdown"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="Use random interval"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="Slideshow interval: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="වෙත"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="පූර්ණ තිරය"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="මෙවලම් තීරුව සඟවන්න"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Hide thumbnail bar"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="Save the viewing image after rotating"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="Select application for image editing"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="After opening editing app:"/>
+      <Item key="frmSetting.lblImageQuality" value="අනුරුවෙහි ගුණත්වය:"/>
+      <Item key="frmSetting.btnEditEditExt" value="සංස්කරණය…"/>
+      <Item key="frmSetting.btnEditResetExt" value="පෙරනිමියට යළි සකසන්න"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="Edit all extensions…"/>
+      <Item key="frmSetting._allExtensions" value="all extensions"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="File extension"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="යෙදුමේ නම"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="යෙදුමේ මාර්ගය"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="App arguments"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Preserve the image's modified date on save"/>
+      <Item key="frmSetting.lblSupportedExtension" value="සහාය දක්වන ආකෘති: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Open File Type Associations"/>
+      <Item key="frmSetting.btnAddNewExt" value="එකතු…"/>
+      <Item key="frmSetting.btnRegisterExt" value="Set as Default photo viewer…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Unregister extensions"/>
+      <Item key="frmSetting.btnDeleteExt" value="මකන්න"/>
+      <Item key="frmSetting.btnResetExt" value="පෙරනිමියට යළි සකසන්න"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="Unable to register Web-to-App linking"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="Unable to register file extensions for ImageGlass app"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="All file extensions are registered successfully! To set ImageGlass as Default photo viewer, please open Windows Settings &gt; Default Apps, and manually select ImageGlass app under Photo Viewer section."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Unable to delete registered file extensions of ImageGlass app"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="All file extensions are unregistered successfully!"/>
+      <Item key="frmSetting.lblToolbarPosition" value="මෙවලම් තීරුවේ පිහිටුම:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="මෙවලම් තීරුවේ නිරූපකයේ පාට:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="මුදුන"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="පහළ"/>
+      <Item key="frmSetting._separator" value="Separator"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="මෙවලම් තීරුවේ බොත්තම් වින්‍යාසගත කරන්න"/>
+      <Item key="frmSetting.lblUsedBtns" value="වත්මන් බොත්තම්:"/>
+      <Item key="frmSetting.lblAvailBtns" value="තිබෙන බොත්තම්:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="තේරූ බොත්තම් පහළට ගෙනයන්න"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="තේරූ බොත්තම් මෙවලම් තීරුවෙන් ඉවත් කරන්න"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="Add selected button(s) to the toolbar"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="තේරූ බොත්තම් ඉහළට ගෙනයන්න"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Center toolbar buttons horizontally in window"/>
+      <Item key="frmSetting.chkHideTooltips" value="Hide toolbar tooltips"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="ඇල්ෆා අගය සමඟ RGB ආකෘතිය භාවිතා කරන්න"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="ඇල්ෆා අගය සමඟ HEX ආකෘතිය භාවිතා කරන්න"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="ඇල්ෆා අගය සමඟ HSL ආකෘතිය භාවිතා කරන්න"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="ඇල්ෆා අගය සමඟ HSV ආකෘතිය භාවිතා කරන්න"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="පිටපත් වීමේදී පෙරනිමි වර්ණ කේතය"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="Auto-show Page navigation tool for multi-page image"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="සැමවිටම Exif මෙවලම උඩින් තබන්න"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Exif මෙවලම් ගොනුව තෝරන්න"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Exif මෙවලම නොපවතී හෝ වලංගු නොවේ: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Command arguments:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="විධානයේ පෙරදසුන:"/>
+      <Item key="frmSetting.lblLanguageText" value="ස්ථාපිත භාෂා"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; නැවුම්කරන්න"/>
+      <Item key="frmSetting.lblLanguageWarning" value="This language pack may be not compatible with {0}"/>
+      <Item key="frmSetting.lblTranslators" value="Translator:"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; නව භාෂා ඇසුරුම ස්ථාපනය කරන්න (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; නව භාෂා ඇසුරුමක් සාදන්න…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; තේරු භාෂා ඇසුරුම සංස්කරණය…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; තව භාෂා ඇසුරුම් ගන්න…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="ස්ථාපිත තේමා: {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="තේමා බාගන්න…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="නැවුම්කරන්න"/>
+      <Item key="frmSetting.btnThemeInstall" value="ස්ථාපනය…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="අස්ථාපනය…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="ලෙස සුරකින්න…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="තේමා බහාලුම අරින්න"/>
+      <Item key="frmSetting.btnThemeApply" value="තේමාව යොදන්න"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="නම"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="අනුවාදය"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="කතෘ"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="වි-තැපෑල"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="වියමන අඩවිය"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="Compatibility"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="සවිස්තරය"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="තේමාව සාර්ථකව ස්ථාපනය කෙරිණි!"/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="ඔබගේ තේමාව ස්ථාපනය කළ නොහැකියි."/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="තේරූ තේමාව අස්ථාපනය කළ නොහැකිය."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="Your selected theme has been saved in {0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="Unable to save your selected theme."/>
+      <Item key="frmSetting.btnThemeApply._Success" value="The selected theme was applied successfully!"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="තේරූ තේමාව යෙදීමට නොහැකිය."/>
+      <Item key="frmSetting.btnKeyReset" value="පෙරනිමියට යළි සකසන්න"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="Space / Backspace"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="PageUp / PageDown"/>
+      <Item key="frmSetting.lblKeysUpDown" value="ඉහළ / පහළ ඊතල"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="වම / දකුණ ඊතල"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="කලින් / ඊළඟ අනුරුව"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="Pan Left / Right"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="Pan Up / Down"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="විශාලනය / කුඩාලනය"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="Pause slideshow"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="කිසිවක් නොකරන්න"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="File extension"/>
+      <Item key="frmAddNewFormat.btnOK" value="හරි"/>
+      <Item key="frmAddNewFormat.btnClose" value="වසන්න"/>
+      <Item key="frmEditApp.lblFileExtension" value="File extension"/>
+      <Item key="frmEditApp.lblAppName" value="යෙදුමේ නම"/>
+      <Item key="frmEditApp.lblAppPath" value="යෙදුමේ මාර්ගය"/>
+      <Item key="frmEditApp.lblAppArguments" value="App arguments"/>
+      <Item key="frmEditApp.btnReset" value="නැවත සකසන්න"/>
+      <Item key="frmEditApp.btnOK" value="හරි"/>
+      <Item key="frmEditApp.btnClose" value="වසන්න"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="පෙරදසුන"/>
+      <Item key="frmFirstLaunch._Text" value="පළමු දියත්කිරීමේ වින්‍යාසය"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ImageGlass needs to close all its processes to apply the new settings, do you want to continue?"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="පියවර {0}/{1}"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="ඊලඟ"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="අහවරයි!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="මෙය මඟහැර ඉමේජ්ග්ලාස් දියත්කරන්න"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="භාෂාව තෝරන්න"/>
+      <Item key="frmFirstLaunch.lblTheme" value="තේමාව තෝරන්න"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="Set ImageGlass as Default Photo Viewer?"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="ඔව්"/>
+      <Item key="frmCrop.lblWidth" value="පළල:"/>
+      <Item key="frmCrop.lblHeight" value="උස:"/>
+      <Item key="frmCrop.btnSave" value="සුරකින්න"/>
+      <Item key="frmCrop.btnSaveAs" value="ලෙස සුරකින්න…"/>
+      <Item key="frmCrop.btnCopy" value="පිටපත්"/>
+      <Item key="frmCrop.btnReset" value="නැවත සකසන්න"/>
+      <Item key="FrmExifTool.clnProperty" value="Property"/>
+      <Item key="FrmExifTool.clnValue" value="අගය"/>
+      <Item key="FrmExifTool.btnCopyValue" value="අගය පිටපත් කරන්න"/>
+      <Item key="FrmExifTool.btnExport" value="නිර්යාත…"/>
+      <Item key="FrmExifTool.btnClose" value="වසන්න"/>
+    </Content>
+  </Language>
+</ImageGlass>

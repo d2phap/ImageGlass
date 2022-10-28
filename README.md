@@ -13,33 +13,32 @@ ImageGlass - A lightweight, versatile image viewer
 ImageGlass is a lightweight software application whose purpose is to help you view images in a clean and intuitive working environment.
 It gives you the possibility to view over **80+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers speed up their work.
 
-
 ## 📥 Download
 <a href="https://www.microsoft.com/store/productId/9N33VZK3C7TH">
-  <img height="65" src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Get_it_from_Microsoft_Badge.svg" />
-</a>
+  <img height="69" src="https://user-images.githubusercontent.com/3154213/197670614-b9ecc804-ebb2-44cc-88c3-5dd321564a51.svg" /></a>
+
+<br/>
 <a href="https://imageglass.org/download">
-  <img src="https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%232A7C91&label=total%20downloads&style=for-the-badge" />
-</a>
+  <img src="https://img.shields.io/github/downloads/d2phap/imageglass/total?color=%232A7C91&label=total%20downloads&style=for-the-badge" /></a>
+  
 <a href="https://imageglass.org/download">
-  <img src="https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%232A7C91&label=latest%20version&style=for-the-badge" />
-</a>
+  <img src="https://img.shields.io/github/downloads/d2phap/imageglass/latest/total?color=%232A7C91&label=latest%20version&style=for-the-badge" /></a>
 
 
 ### ImageGlass on Microsoft Store!
-- If you want to **purchase ImageGlass Store version without letting Microsoft to suck 🩸 me 15% of the amount**, you can use one time donation from [♥ GitHub Sponsor](https://github.com/sponsors/d2phap), then drop me a message in [ImageGlass Discord](https://discord.com/channels/818852544859209748/818852544859209751), or [email](https://imageglass.org/about), I will send the code shortly.
+- If you want to **purchase ImageGlass Store version without letting Microsoft to suck 🩸 me 15% of the amount**, you can use the one-time donation from [♥ GitHub Sponsor](https://github.com/sponsors/d2phap), then drop me a message in [ImageGlass Discord](https://discord.com/channels/818852544859209748/818852544859209751) or [email](https://imageglass.org/about), and I will send the code shortly.
 - ImageGlass Store provides the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes.
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://github.com/ImageGlass/config/raw/main/screenshots/v8.6/8.6_1.jpg" alt="ImageGlass 8.6.7.13" width="640">
+<img src="https://github.com/ImageGlass/config/raw/main/screenshots/v8.7/8.7_1.jpg" alt="ImageGlass 8.7.10.26" width="640">
 </a><br/>
 
 
 ## 🛣 Development progress & Roadmap for ImageGlass 9.0
-ImageGlass 9.0 is the biggest update ever, supports ***hardware acceleration*** and many more. I have been rewriting the entire app for months. There will be a few more beta releases before version 9.0 reaches stable state. In the meanwhile, you will still receive the updates for version 8.x.
+ImageGlass 9.0 is the biggest update ever, supports ***hardware acceleration*** and many more. I have been rewriting the entire app for months. There will be a few more beta releases before version 9.0 reaches a stable state. In the meanwhile, you will still receive the updates for version 8.x.
 - ✅ [Version 9.0 beta 1](https://github.com/d2phap/ImageGlass/releases/tag/9.0.1.514) was released.
 - ✅ [Version 9.0 beta 2](https://github.com/d2phap/ImageGlass/releases/tag/9.0.2.904) was released. Try it and let me know your feedback.
-- 🎯 [Version 9.0 beta 3](https://github.com/d2phap/ImageGlass/projects/13) is under develpoment.
+- 🎯 [Version 9.0 beta 3](https://github.com/d2phap/ImageGlass/projects/13) is under development.
 
 ImageGlass 9 uses [.NET 6](https://devblogs.microsoft.com/dotnet/announcing-net-6/). If you are unable to install .NET 6, you can still use version 8.
   <br/>
@@ -66,9 +65,6 @@ The `develop` branch contains the latest commits of version 8.x while the `prod`
 - [App configs](https://imageglass.org/docs/app-configs)
 - [Command lines](https://imageglass.org/docs/command-line-utilities)
 
-
-For information on future developments, please visit [Wiki](https://github.com/d2phap/ImageGlass/wiki) and [Project](https://github.com/d2phap/ImageGlass/projects) page. 
-
 For more information about ImageGlass, go to [Documentation](https://imageglass.org/docs)
 
 
@@ -79,9 +75,10 @@ For more information about ImageGlass, go to [Documentation](https://imageglass.
 
 
 ## 💖 This project needs your help!
-ImageGlass is free and open source but developing it has taken thousands of hours of my time and a large part of my sanity. If you feel this little viewer is useful to you, it would go a great way to ensure that I can afford to take the time to continue to develop it.
+ImageGlass is an open source, free, and ad-free photo viewer, but developing and maintaining it is not. Your financial support gives me more motivation to work on future releases. You can sponsor my work on GitHub (one-time/monthly, no service fee), Patreon (monthly), PayPal,...
 
-Thanks for your gratitude and financial help!
+If you choose **GitHub Sponsor** or **Patreon**, make sure you check out **the tier benefits included**.<br/>
+Thanks for your support!
 
 <a href="https://github.com/sponsors/d2phap" target="_blank" title="Become a sponsor">
 <img src="https://img.shields.io/badge/Github-@d2phap-24292e.svg?maxAge=3600&logo=github" height="30" alt="Become a sponsor">
@@ -103,7 +100,9 @@ Thanks for your gratitude and financial help!
 ## 👑 Hall of fame (v8.x)
 ![Analytics image](https://repobeats.axiom.co/api/embed/4a2781a2a149dd21826309275304696ec75b21fd.svg)
 
-To honor those people who spent their time to contribute to the development of ImageGlass v8:
+To honor those people who spent their time contributing to the development of ImageGlass v8:
+- [@BenHUET](https://github.com/BenHUET)
+- [@2480258](https://github.com/2480258)
 - [@siblount](https://github.com/siblount)
 - [@SylwesterZarebski](https://github.com/SylwesterZarebski)
 - [@Sxderp](https://github.com/Sxderp)
