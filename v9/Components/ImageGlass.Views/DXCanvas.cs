@@ -118,7 +118,7 @@ public class DXCanvas : DXControl
     private Bitmap? _navLeftImageGdip = null;
     private Bitmap? _navRightImageGdip = null;
 
-    private RectangleF _selection = new();
+    private RectangleF _selectionRaw = new();
     private RectangleF _selectionBeforeMove = new();
     private bool _canDrawSelection = false;
     private Point? _mouseDownPoint = null;
@@ -179,9 +179,9 @@ public class DXCanvas : DXControl
         get
         {
             // limit the selected area to the image
-            _selection.Intersect(_destRect);
+            _selectionRaw.Intersect(_destRect);
 
-            return _selection;
+            return _selectionRaw;
         }
     }
 
@@ -823,7 +823,7 @@ public class DXCanvas : DXControl
 
             if (_canDrawSelection)
             {
-                _selection = new(_mouseDownPoint.Value, new SizeF());
+                _selectionRaw = new(_mouseDownPoint.Value, new SizeF());
             }
             else
             {
@@ -836,7 +836,7 @@ public class DXCanvas : DXControl
                 _panHostStartPoint.Y = e.Location.Y;
             }
 
-            _selectionBeforeMove = new RectangleF(_selection.Location, _selection.Size);
+            _selectionBeforeMove = new RectangleF(_selectionRaw.Location, _selectionRaw.Size);
         }
         #endregion
 
@@ -985,7 +985,7 @@ public class DXCanvas : DXControl
 
             if (_canDrawSelection)
             {
-                _selection = BHelper.GetSelection(_mouseDownPoint, _mouseMovePoint, _destRect);
+                _selectionRaw = BHelper.GetSelection(_mouseDownPoint, _mouseMovePoint, _destRect);
                 requestRerender = true;
             }
             else if (EnableSelection && IsViewingSizeSmallerViewportSize)
@@ -1011,10 +1011,10 @@ public class DXCanvas : DXControl
                 }
 
 
-                _selection.X = newX;
-                _selection.Y = newY;
-                _selection.Width = _selectionBeforeMove.Width;
-                _selection.Height = _selectionBeforeMove.Height;
+                _selectionRaw.X = newX;
+                _selectionRaw.Y = newY;
+                _selectionRaw.Width = _selectionBeforeMove.Width;
+                _selectionRaw.Height = _selectionBeforeMove.Height;
 
                 requestRerender = true;
             }
