@@ -121,6 +121,7 @@ public class DXCanvas : DXControl
     private RectangleF _selectionRaw = new();
     private RectangleF _selectionBeforeMove = new();
     private bool _canDrawSelection = false;
+    private SelectionResizer? _selectedResizer = null;
     private Point? _mouseDownPoint = null;
     private Point? _mouseMovePoint = null;
 
@@ -820,7 +821,6 @@ public class DXCanvas : DXControl
         {
             _canDrawSelection = EnableSelection && !Selection.Contains(_mouseDownPoint.Value);
 
-
             if (_canDrawSelection)
             {
                 _selectionRaw = new(_mouseDownPoint.Value, new SizeF());
@@ -836,7 +836,12 @@ public class DXCanvas : DXControl
                 _panHostStartPoint.Y = e.Location.Y;
             }
 
-            _selectionBeforeMove = new RectangleF(_selectionRaw.Location, _selectionRaw.Size);
+
+            if (EnableSelection)
+            {
+                _selectionBeforeMove = new RectangleF(_selectionRaw.Location, _selectionRaw.Size);
+                _selectedResizer = SelectionResizers.Find(i => i.Region.Contains(e.Location));
+            }
         }
         #endregion
 
@@ -919,6 +924,7 @@ public class DXCanvas : DXControl
 
         _mouseDownPoint = null;
         _isMouseDown = false;
+        _selectedResizer = null;
         _lastClickArgs = e;
     }
 
@@ -983,17 +989,27 @@ public class DXCanvas : DXControl
         {
             _isMouseDragged = true;
 
-            if (_canDrawSelection)
+
+            // resize the selection
+            if (_selectedResizer != null)
+            {
+                ResizeSelection(e.Location, _selectedResizer.Type);
+                requestRerender = true;
+            }
+
+            // draw new selection
+            else if (_canDrawSelection)
             {
                 _selectionRaw = BHelper.GetSelection(_mouseDownPoint, _mouseMovePoint, _destRect);
                 requestRerender = true;
             }
+            // move selection
             else if (EnableSelection && IsViewingSizeSmallerViewportSize)
             {
                 MoveSelection(e.Location);
-
                 requestRerender = true;
             }
+            // pan image
             else
             {
                 requestRerender = PanTo(
@@ -1004,19 +1020,18 @@ public class DXCanvas : DXControl
         }
 
 
+        // emit event OnImageMouseMove
+        var imgX = (e.X - _destRect.X) / _zoomFactor + _srcRect.X;
+        var imgY = (e.Y - _destRect.Y) / _zoomFactor + _srcRect.Y;
+        OnImageMouseMove?.Invoke(new(imgX, imgY, e.Button));
+
+        // change cursor
         if (EnableSelection)
         {
             // set resizer cursor
             var resizer = SelectionResizers.Find(i => i.Region.Contains(e.Location));
             Cursor = resizer?.Cursor ?? Parent.Cursor;
         }
-
-
-        // emit event OnImageMouseMove
-        var imgX = (e.X - _destRect.X) / _zoomFactor + _srcRect.X;
-        var imgY = (e.Y - _destRect.Y) / _zoomFactor + _srcRect.Y;
-        OnImageMouseMove?.Invoke(new(imgX, imgY, e.Button));
-
 
         // request re-render control
         if (requestRerender)
@@ -2171,7 +2186,7 @@ public class DXCanvas : DXControl
 
 
     /// <summary>
-    /// Move the current selection to the given location
+    /// Moves the current selection to the given location
     /// </summary>
     public void MoveSelection(PointF loc)
     {
@@ -2202,6 +2217,57 @@ public class DXCanvas : DXControl
         _selectionRaw.Y = newY;
         _selectionRaw.Width = _selectionBeforeMove.Width;
         _selectionRaw.Height = _selectionBeforeMove.Height;
+    }
+
+
+    /// <summary>
+    /// Resizes the current selection
+    /// </summary>
+    public void ResizeSelection(PointF loc, SelectionResizerType direction)
+    {
+        if (!EnableSelection) return;
+
+        if (direction == SelectionResizerType.Top
+            || direction == SelectionResizerType.TopLeft
+            || direction == SelectionResizerType.TopRight)
+        {
+            var gapY = _selectionBeforeMove.Y - (_mouseDownPoint?.Y ?? 0);
+            var dH = loc.Y - _selectionBeforeMove.Y + gapY;
+
+            _selectionRaw.Y = _selectionBeforeMove.Y + dH;
+            _selectionRaw.Height = _selectionBeforeMove.Height - dH;
+        }
+
+        if (direction == SelectionResizerType.Right
+            || direction == SelectionResizerType.TopRight
+            || direction == SelectionResizerType.BottomRight)
+        {
+            var gapX = _selectionBeforeMove.Right - (_mouseDownPoint?.X ?? 0);
+            var dW = loc.X - _selectionBeforeMove.Right + gapX;
+
+            _selectionRaw.Width = _selectionBeforeMove.Width + dW;
+        }
+
+        if (direction == SelectionResizerType.Bottom
+            || direction == SelectionResizerType.BottomLeft
+            || direction == SelectionResizerType.BottomRight)
+        {
+            var gapY = _selectionBeforeMove.Bottom - (_mouseDownPoint?.Y ?? 0);
+            var dH = loc.Y - _selectionBeforeMove.Bottom + gapY;
+
+            _selectionRaw.Height = _selectionBeforeMove.Height + dH;
+        }
+
+        if (direction == SelectionResizerType.Left
+            || direction == SelectionResizerType.TopLeft
+            || direction == SelectionResizerType.BottomLeft)
+        {
+            var gapX = _selectionBeforeMove.X - (_mouseDownPoint?.X ?? 0);
+            var dW = loc.X - _selectionBeforeMove.X + gapX;
+
+            _selectionRaw.X = _selectionBeforeMove.X + dW;
+            _selectionRaw.Width = _selectionBeforeMove.Width - dW;
+        }
     }
 
 
