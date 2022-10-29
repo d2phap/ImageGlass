@@ -121,7 +121,9 @@ public class DXCanvas : DXControl
     private RectangleF _selectionRaw = new();
     private RectangleF _selectionBeforeMove = new();
     private bool _canDrawSelection = false;
+    private bool _isSelectionHovered = false;
     private SelectionResizer? _selectedResizer = null;
+    
     private Point? _mouseDownPoint = null;
     private Point? _mouseMovePoint = null;
 
@@ -248,6 +250,12 @@ public class DXCanvas : DXControl
 
 
     /// <summary>
+    /// Gets, sets selection aspect ratio.
+    /// </summary>
+    public SelectionAspectRatio SelectionAspectRatio { get; set; } = SelectionAspectRatio.Free;
+
+
+    /// <summary>
     /// Enables or disables the selection.
     /// Panning by mouse will be disabled when the selection is enabled.
     /// </summary>
@@ -257,7 +265,7 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Gets, sets selection color.
     /// </summary>
-    public Color SelectionColor { get; set; } = SystemColors.Highlight;
+    public Color SelectionColor { get; set; } = Color.Black;
 
     #endregion
 
@@ -820,6 +828,7 @@ public class DXCanvas : DXControl
         if (Source != ImageSource.Null)
         {
             _canDrawSelection = EnableSelection && !Selection.Contains(_mouseDownPoint.Value);
+            requestRerender = EnableSelection && !Selection.IsEmpty;
 
             if (_canDrawSelection)
             {
@@ -926,6 +935,12 @@ public class DXCanvas : DXControl
         _isMouseDown = false;
         _selectedResizer = null;
         _lastClickArgs = e;
+
+
+        if (EnableSelection && !Selection.IsEmpty)
+        {
+            Invalidate();
+        }
     }
 
 
@@ -1031,6 +1046,11 @@ public class DXCanvas : DXControl
             // set resizer cursor
             var resizer = SelectionResizers.Find(i => i.Region.Contains(e.Location));
             Cursor = resizer?.Cursor ?? Parent.Cursor;
+
+            // show resizers on hover
+            var resizerVisible = Selection.Contains(e.Location);
+            if (!requestRerender) requestRerender = _isSelectionHovered != resizerVisible;
+            _isSelectionHovered = resizerVisible;
         }
 
         // request re-render control
@@ -1046,6 +1066,7 @@ public class DXCanvas : DXControl
 
         _isNavLeftHovered = false;
         _isNavRightHovered = false;
+        _isSelectionHovered = false;
         _mouseMovePoint = null;
 
 
@@ -1363,78 +1384,73 @@ public class DXCanvas : DXControl
     /// </summary>
     protected virtual void DrawSelectionLayer(IGraphics g)
     {
+        if (Selection.IsEmpty) return;
+
         // draw the clip selection region
         using var selectionGeo = g.GetCombinedRectanglesGeometry(Selection, _destRect, 0, 0, CombineMode.Xor);
-        g.DrawGeometry(selectionGeo, Color.Transparent, Color.FromArgb(120, SelectionColor));
-
-
-        if (Selection.IsEmpty) return;
+        g.DrawGeometry(selectionGeo, Color.Transparent, Color.FromArgb(_isMouseDown ? 100 : 200, SelectionColor));
 
 
         // draw grid, ignore alpha value
-        var width3 = Selection.Width / 3;
-        var height3 = Selection.Height / 3;
-
-        for (int i = 1; i < 3; i++)
+        if (_isSelectionHovered)
         {
-            g.DrawLine(
-                Selection.X + (i * width3),
-                Selection.Y,
-                Selection.X + (i * width3),
-                Selection.Y + Selection.Height, Color.FromArgb(200, Color.White));
-            g.DrawLine(
-                Selection.X + (i * width3),
-                Selection.Y,
-                Selection.X + (i * width3),
-                Selection.Y + Selection.Height, Color.FromArgb(150, Color.Black));
-            g.DrawLine(
-                Selection.X + (i * width3),
-                Selection.Y,
-                Selection.X + (i * width3),
-                Selection.Y + Selection.Height, Color.FromArgb(200, SelectionColor));
+            var width3 = Selection.Width / 3;
+            var height3 = Selection.Height / 3;
+
+            for (int i = 1; i < 3; i++)
+            {
+                g.DrawLine(
+                    Selection.X + (i * width3),
+                    Selection.Y,
+                    Selection.X + (i * width3),
+                    Selection.Y + Selection.Height, Color.FromArgb(200, Color.Black),
+                    0.4f);
+                g.DrawLine(
+                    Selection.X + (i * width3),
+                    Selection.Y,
+                    Selection.X + (i * width3),
+                    Selection.Y + Selection.Height, Color.FromArgb(200, Color.White),
+                    0.4f);
 
 
-            g.DrawLine(
-                Selection.X,
-                Selection.Y + (i * height3),
-                Selection.X + Selection.Width,
-                Selection.Y + (i * height3), Color.FromArgb(200, Color.White));
-            g.DrawLine(
-                Selection.X,
-                Selection.Y + (i * height3),
-                Selection.X + Selection.Width,
-                Selection.Y + (i * height3), Color.FromArgb(150, Color.Black));
-            g.DrawLine(
-                Selection.X,
-                Selection.Y + (i * height3),
-                Selection.X + Selection.Width,
-                Selection.Y + (i * height3), Color.FromArgb(200, SelectionColor));
+                g.DrawLine(
+                    Selection.X,
+                    Selection.Y + (i * height3),
+                    Selection.X + Selection.Width,
+                    Selection.Y + (i * height3), Color.FromArgb(200, Color.Black),
+                    0.4f);
+                g.DrawLine(
+                    Selection.X,
+                    Selection.Y + (i * height3),
+                    Selection.X + Selection.Width,
+                    Selection.Y + (i * height3), Color.FromArgb(200, Color.White),
+                    0.4f);
+            }
         }
 
-
         // draw the selection border
-        g.DrawRectangle(Selection, 0, Color.FromArgb(255, Color.White));
-        g.DrawRectangle(Selection, 0, Color.FromArgb(200, Color.Black));
-        g.DrawRectangle(Selection, 0, Color.FromArgb(200, SelectionColor));
+        g.DrawRectangle(Selection, 0, Color.FromArgb(255, Color.White), null, 0.3f);
 
 
         // draw resizers
-        var resizerBgColor = Color.FromArgb(10, SelectionColor);
-        foreach (var rItem in SelectionResizers)
+        if (_isSelectionHovered)
         {
-            var hideTopBottomResizers = Selection.Width < rItem.Region.Width * 5;
-            if (hideTopBottomResizers
-                && (rItem.Type == SelectionResizerType.Top
-                || rItem.Type == SelectionResizerType.Bottom)) continue;
+            foreach (var rItem in SelectionResizers)
+            {
+                var hideTopBottomResizers = Selection.Width < rItem.Region.Width * 5;
+                if (hideTopBottomResizers
+                    && (rItem.Type == SelectionResizerType.Top
+                    || rItem.Type == SelectionResizerType.Bottom)) continue;
 
-            var hideLeftRightResizers = Selection.Height < rItem.Region.Height * 5;
-            if (hideLeftRightResizers
-                && (rItem.Type == SelectionResizerType.Left
-                || rItem.Type == SelectionResizerType.Right)) continue;
+                var hideLeftRightResizers = Selection.Height < rItem.Region.Height * 5;
+                if (hideLeftRightResizers
+                    && (rItem.Type == SelectionResizerType.Left
+                    || rItem.Type == SelectionResizerType.Right)) continue;
 
-            g.DrawRectangle(rItem.Region, 1, Color.FromArgb(50, Color.White), Color.FromArgb(200, Color.Black));
-            g.DrawRectangle(rItem.Region, 1, Color.FromArgb(50, Color.Black), Color.FromArgb(220, Color.White));
-            g.DrawRectangle(rItem.Region, 1, Color.FromArgb(50, SelectionColor), resizerBgColor);
+                
+                g.DrawRectangle(rItem.Region, 0.5f, Color.FromArgb(50, Color.Black), Color.FromArgb(200, Color.Black), 0.5f);
+                g.DrawRectangle(rItem.Region, 0.5f, Color.FromArgb(50, Color.White), Color.FromArgb(200, Color.White), 0.5f);
+            }
         }
     }
 
