@@ -1326,12 +1326,12 @@ public class DXCanvas : DXControl
     /// </summary>
     protected virtual void DrawSelectionLayer(IGraphics g)
     {
-        if (Selection.IsEmpty) return;
-
-
+        // draw the clip selection region
         using var selectionGeo = g.GetCombinedRectanglesGeometry(Selection, _destRect, 0, 0, CombineMode.Xor);
         g.DrawGeometry(selectionGeo, Color.Transparent, Color.FromArgb(120, SelectionColor));
 
+
+        if (Selection.IsEmpty) return;
 
         // draw grid, ignore alpha value
         var width3 = Selection.Width / 3;
@@ -1380,12 +1380,20 @@ public class DXCanvas : DXControl
         g.DrawRectangle(Selection, 0, Color.FromArgb(200, SelectionColor));
 
 
-        // 4 corner resizers
-        var resizerBgColor = Color.FromArgb(150, Color.White);
-
         // draw resizers
+        var resizerBgColor = Color.FromArgb(150, Color.White);
         foreach (var rItem in SelectionResizers)
         {
+            var hideTopBottomResizers = Selection.Width < rItem.Region.Width * 5;
+            if (hideTopBottomResizers
+                && (rItem.Type == SelectionResizerType.Top
+                || rItem.Type == SelectionResizerType.Bottom)) continue;
+
+            var hideLeftRightResizers = Selection.Height < rItem.Region.Height * 5;
+            if (hideLeftRightResizers
+                && (rItem.Type == SelectionResizerType.Left
+                || rItem.Type == SelectionResizerType.Right)) continue;
+
             g.DrawRectangle(rItem.Region, 1, Color.FromArgb(50, Color.White), Color.FromArgb(200, Color.Black));
             g.DrawRectangle(rItem.Region, 1, Color.FromArgb(50, Color.Black), Color.FromArgb(220, Color.White));
             g.DrawRectangle(rItem.Region, 1, Color.FromArgb(50, SelectionColor), Color.FromArgb(10, SelectionColor));
