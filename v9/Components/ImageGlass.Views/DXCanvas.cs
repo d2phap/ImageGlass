@@ -990,31 +990,7 @@ public class DXCanvas : DXControl
             }
             else if (EnableSelection && IsViewingSizeSmallerViewportSize)
             {
-                // translate mousedown point to selection start point
-                var tX = (_mouseDownPoint?.X ?? 0) - _selectionBeforeMove.X;
-                var tY = (_mouseDownPoint?.Y ?? 0) - _selectionBeforeMove.Y;
-
-                // get the new selection start point
-                var newX = e.Location.X - tX;
-                var newY = e.Location.Y - tY;
-
-                if (newX < _destRect.X) newX = _destRect.X;
-                if (newY < _destRect.Y) newY = _destRect.Y;
-                if (newX + _selectionBeforeMove.Width > _destRect.Right)
-                {
-                    newX = _destRect.Right - _selectionBeforeMove.Width;
-                }
-
-                if (newY + _selectionBeforeMove.Height > _destRect.Bottom)
-                {
-                    newY = _destRect.Bottom - _selectionBeforeMove.Height;
-                }
-
-
-                _selectionRaw.X = newX;
-                _selectionRaw.Y = newY;
-                _selectionRaw.Width = _selectionBeforeMove.Width;
-                _selectionRaw.Height = _selectionBeforeMove.Height;
+                MoveSelection(e.Location);
 
                 requestRerender = true;
             }
@@ -2191,6 +2167,41 @@ public class DXCanvas : DXControl
         {
             Invalidate();
         }
+    }
+
+
+    /// <summary>
+    /// Move the current selection to the given location
+    /// </summary>
+    public void MoveSelection(PointF loc)
+    {
+        if (!EnableSelection) return;
+
+        // translate mousedown point to selection start point
+        var tX = (_mouseDownPoint?.X ?? 0) - _selectionBeforeMove.X;
+        var tY = (_mouseDownPoint?.Y ?? 0) - _selectionBeforeMove.Y;
+
+        // get the new selection start point
+        var newX = loc.X - tX;
+        var newY = loc.Y - tY;
+
+        if (newX < _destRect.X) newX = _destRect.X;
+        if (newY < _destRect.Y) newY = _destRect.Y;
+        if (newX + _selectionBeforeMove.Width > _destRect.Right)
+        {
+            newX = _destRect.Right - _selectionBeforeMove.Width;
+        }
+
+        if (newY + _selectionBeforeMove.Height > _destRect.Bottom)
+        {
+            newY = _destRect.Bottom - _selectionBeforeMove.Height;
+        }
+
+
+        _selectionRaw.X = newX;
+        _selectionRaw.Y = newY;
+        _selectionRaw.Width = _selectionBeforeMove.Width;
+        _selectionRaw.Height = _selectionBeforeMove.Height;
     }
 
 
