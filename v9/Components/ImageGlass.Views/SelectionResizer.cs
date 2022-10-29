@@ -28,7 +28,7 @@ public class SelectionResizer
 
 
     /// <summary>
-    /// Gets the cursor of the resizer
+    /// Gets the cursor of the resizer.
     /// </summary>
     public Cursor Cursor => Type switch
     {
@@ -45,7 +45,7 @@ public class SelectionResizer
 
 
     /// <summary>
-    /// Gets, sets the rectangle region of the resizer
+    /// Gets, sets the rectangle region of the resizer.
     /// </summary>
     public RectangleF Region { get; set; }
 

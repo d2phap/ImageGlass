@@ -119,6 +119,7 @@ public class DXCanvas : DXControl
     private Bitmap? _navRightImageGdip = null;
 
     private RectangleF _selection = new();
+    private RectangleF _selectionBeforeMove = new();
     private bool _canDrawSelection = false;
     private Point? _mouseDownPoint = null;
     private Point? _mouseMovePoint = null;
@@ -157,6 +158,21 @@ public class DXCanvas : DXControl
 
 
     /// <summary>
+    /// Checks if the viewing image size if smaller than the viewport size
+    /// </summary>
+    [Browsable(false)]
+    public bool IsViewingSizeSmallerViewportSize
+    {
+        get
+        {
+            var autoZoomFactor = CalculateZoomFactor(ZoomMode.AutoZoom, SourceWidth, SourceHeight);
+
+            return ZoomFactor <= autoZoomFactor;
+        }
+    }
+
+
+    /// <summary>
     /// Gets, sets the selection area.
     /// </summary>
     public RectangleF Selection {
@@ -173,6 +189,7 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Gets the resizers of the selection rectangle
     /// </summary>
+    [Browsable(false)]
     public List<SelectionResizer> SelectionResizers
     {
         get
@@ -225,7 +242,6 @@ public class DXCanvas : DXControl
                     Selection.Y + Selection.Height / 2 - resizerSize / 2,
                     resizerSize, resizerSize)),
             };
-
         }
     }
 
@@ -235,6 +251,7 @@ public class DXCanvas : DXControl
     /// Panning by mouse will be disabled when the selection is enabled.
     /// </summary>
     public bool EnableSelection { get; set; } = false;
+
 
     /// <summary>
     /// Gets, sets selection color.
@@ -803,6 +820,7 @@ public class DXCanvas : DXControl
         {
             _canDrawSelection = EnableSelection && !Selection.Contains(_mouseDownPoint.Value);
 
+
             if (_canDrawSelection)
             {
                 _selection = new(_mouseDownPoint.Value, new SizeF());
@@ -817,6 +835,8 @@ public class DXCanvas : DXControl
                 _panHostStartPoint.X = e.Location.X;
                 _panHostStartPoint.Y = e.Location.Y;
             }
+
+            _selectionBeforeMove = new RectangleF(_selection.Location, _selection.Size);
         }
         #endregion
 
@@ -902,6 +922,7 @@ public class DXCanvas : DXControl
         _lastClickArgs = e;
     }
 
+
     protected override void OnMouseMove(MouseEventArgs e)
     {
         base.OnMouseMove(e);
@@ -967,6 +988,36 @@ public class DXCanvas : DXControl
                 _selection = BHelper.GetSelection(_mouseDownPoint, _mouseMovePoint, _destRect);
                 requestRerender = true;
             }
+            else if (EnableSelection && IsViewingSizeSmallerViewportSize)
+            {
+                // translate mousedown point to selection start point
+                var tX = (_mouseDownPoint?.X ?? 0) - _selectionBeforeMove.X;
+                var tY = (_mouseDownPoint?.Y ?? 0) - _selectionBeforeMove.Y;
+
+                // get the new selection start point
+                var newX = e.Location.X - tX;
+                var newY = e.Location.Y - tY;
+
+                if (newX < _destRect.X) newX = _destRect.X;
+                if (newY < _destRect.Y) newY = _destRect.Y;
+                if (newX + _selectionBeforeMove.Width > _destRect.Right)
+                {
+                    newX = _destRect.Right - _selectionBeforeMove.Width;
+                }
+
+                if (newY + _selectionBeforeMove.Height > _destRect.Bottom)
+                {
+                    newY = _destRect.Bottom - _selectionBeforeMove.Height;
+                }
+
+
+                _selection.X = newX;
+                _selection.Y = newY;
+                _selection.Width = _selectionBeforeMove.Width;
+                _selection.Height = _selectionBeforeMove.Height;
+
+                requestRerender = true;
+            }
             else
             {
                 requestRerender = PanTo(
@@ -976,17 +1027,12 @@ public class DXCanvas : DXControl
             }
         }
 
+
         if (EnableSelection)
         {
+            // set resizer cursor
             var resizer = SelectionResizers.Find(i => i.Region.Contains(e.Location));
-            if (resizer != null)
-            {
-                Cursor = resizer.Cursor;
-            }
-            else
-            {
-                Cursor = Cursors.Default;
-            }
+            Cursor = resizer?.Cursor ?? Parent.Cursor;
         }
 
 
@@ -1333,6 +1379,7 @@ public class DXCanvas : DXControl
 
         if (Selection.IsEmpty) return;
 
+
         // draw grid, ignore alpha value
         var width3 = Selection.Width / 3;
         var height3 = Selection.Height / 3;
@@ -1381,7 +1428,7 @@ public class DXCanvas : DXControl
 
 
         // draw resizers
-        var resizerBgColor = Color.FromArgb(150, Color.White);
+        var resizerBgColor = Color.FromArgb(10, SelectionColor);
         foreach (var rItem in SelectionResizers)
         {
             var hideTopBottomResizers = Selection.Width < rItem.Region.Width * 5;
@@ -1396,7 +1443,7 @@ public class DXCanvas : DXControl
 
             g.DrawRectangle(rItem.Region, 1, Color.FromArgb(50, Color.White), Color.FromArgb(200, Color.Black));
             g.DrawRectangle(rItem.Region, 1, Color.FromArgb(50, Color.Black), Color.FromArgb(220, Color.White));
-            g.DrawRectangle(rItem.Region, 1, Color.FromArgb(50, SelectionColor), Color.FromArgb(10, SelectionColor));
+            g.DrawRectangle(rItem.Region, 1, Color.FromArgb(50, SelectionColor), resizerBgColor);
         }
     }
 
