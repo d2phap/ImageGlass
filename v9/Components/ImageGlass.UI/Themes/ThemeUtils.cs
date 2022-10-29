@@ -281,10 +281,10 @@ public partial class ThemeUtils
     /// <param name="bounds">Input rectangle</param>
     /// <param name="radius">Border radius</param>
     /// <returns></returns>
-    public static GraphicsPath GetRoundRectanglePath(RectangleF bounds, int radius)
+    public static GraphicsPath GetRoundRectanglePath(RectangleF bounds, float radius)
     {
         var diameter = radius * 2;
-        var size = new Size(diameter, diameter);
+        var size = new SizeF(diameter, diameter);
         var arc = new RectangleF(bounds.Location, size);
         var path = new GraphicsPath();
 

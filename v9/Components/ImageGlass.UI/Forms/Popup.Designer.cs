@@ -160,7 +160,6 @@
             // 
             // tableBottom
             // 
-            this.tableBottom.BackColor = System.Drawing.Color.Transparent;
             this.tableBottom.ColumnCount = 3;
             this.tableBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());

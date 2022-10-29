@@ -23,6 +23,7 @@ License: MIT, https://github.com/RobinPerris/DarkUI/blob/master/LICENSE
 ---------------------
 */
 
+using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using System.ComponentModel;
 
@@ -232,15 +233,23 @@ public class ModernButton : Button
             return;
         }
 
-
+        
         var g = e.Graphics;
-        var rect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
+        g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+
 
         var textColor = DarkColors.LightText;
         var borderColor = DarkColors.GreySelection;
-        var fillColor = _isDefault ?
-            DarkColors.DarkBlueBackground
+        var fillColor = _isDefault
+            ? DarkColors.DarkBlueBackground
             : DarkColors.LightBackground;
+
+        var borderRadius = 0f;
+        if (BHelper.IsOS(WindowsOS.Win11))
+        {
+            borderRadius = Height / 6f;
+        }
 
         if (Enabled)
         {
@@ -287,8 +296,14 @@ public class ModernButton : Button
 
 
         // draw background
+        var parentBgRect = new Rectangle(-1, -1, ClientSize.Width + 1, ClientSize.Height + 1);
+        using var parentBgBrush = new SolidBrush(Parent.BackColor);
+        g.FillRectangle(parentBgBrush, parentBgRect);
+
+        var rect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
+        using var bgPath = ThemeUtils.GetRoundRectanglePath(rect, borderRadius);
         using var bgBrush = new SolidBrush(fillColor);
-        g.FillRectangle(bgBrush, rect);
+        g.FillPath(bgBrush, bgPath);
         
 
         // draw border
@@ -298,8 +313,10 @@ public class ModernButton : Button
                 rect.Left, rect.Top,
                 rect.Width - 1, rect.Height - 1);
 
+            using var borderPath = ThemeUtils.GetRoundRectanglePath(borderRect, borderRadius);
             using var pen = new Pen(borderColor, 1);
-            g.DrawRectangle(pen, borderRect);
+
+            g.DrawPath(pen, borderPath);
         }
 
         
