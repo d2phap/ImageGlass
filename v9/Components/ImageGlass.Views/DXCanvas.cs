@@ -197,6 +197,9 @@ public class DXCanvas : DXControl
     {
         get
         {
+            if (Selection.IsEmpty) return new List<SelectionResizer>();
+
+
             var resizerSize = DpiApi.Transform<float>(Font.Size * 1.2f);
             var resizerMargin = DpiApi.Transform<float>(2);
 
@@ -1011,7 +1014,6 @@ public class DXCanvas : DXControl
                 ResizeSelection(e.Location, _selectedResizer.Type);
                 requestRerender = true;
             }
-
             // draw new selection
             else if (_canDrawSelection)
             {
@@ -1384,7 +1386,7 @@ public class DXCanvas : DXControl
     /// </summary>
     protected virtual void DrawSelectionLayer(IGraphics g)
     {
-        if (Selection.IsEmpty) return;
+        if (!_isMouseDown && Selection.IsEmpty) return;
 
         // draw the clip selection region
         using var selectionGeo = g.GetCombinedRectanglesGeometry(Selection, _destRect, 0, 0, CombineMode.Xor);
@@ -1392,7 +1394,7 @@ public class DXCanvas : DXControl
 
 
         // draw grid, ignore alpha value
-        if (_isSelectionHovered)
+        if (_isMouseDown || _isSelectionHovered)
         {
             var width3 = Selection.Width / 3;
             var height3 = Selection.Height / 3;
@@ -1433,7 +1435,7 @@ public class DXCanvas : DXControl
 
 
         // draw resizers
-        if (_isSelectionHovered)
+        if (!_isMouseDown && _isSelectionHovered)
         {
             foreach (var rItem in SelectionResizers)
             {
