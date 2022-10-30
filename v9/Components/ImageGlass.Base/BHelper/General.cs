@@ -296,7 +296,9 @@ public partial class BHelper
     /// <param name="point1">The first point</param>
     /// <param name="point2">The second point</param>
     /// <param name="limitRect">The rectangle to limit the selection</param>
-    public static RectangleF GetSelection(PointF? point1, PointF? point2, RectangleF limitRect)
+    public static RectangleF GetSelection(PointF? point1, PointF? point2,
+        SelectionAspectRatio aspectRatio, float srcWidth, float srcHeight,
+        RectangleF limitRect)
     {
         var selectedArea = new RectangleF();
         var fromPoint = point1 ?? new PointF();
@@ -329,6 +331,43 @@ public partial class BHelper
 
         // limit the selected area to the limitRect
         selectedArea.Intersect(limitRect);
+
+
+        // apply aspect ratio
+        var wRatio = 1f;
+        var hRatio = 1f;
+
+        if (aspectRatio == SelectionAspectRatio.Square)
+        {
+            selectedArea.Width = selectedArea.Height = Math.Max(selectedArea.Width, selectedArea.Height);
+        }
+        else if (aspectRatio == SelectionAspectRatio.Original)
+        {
+            if (srcWidth > srcHeight)
+            {
+                wRatio = srcWidth / srcHeight;
+            }
+            else
+            {
+                hRatio = srcHeight / srcWidth;
+            }
+        }
+        else if (aspectRatio == SelectionAspectRatio._3_2)
+        {
+            wRatio = 3f / 2;
+        }
+
+
+        // update selection size according to the ratio
+        if (wRatio > hRatio)
+        {
+            selectedArea.Height = selectedArea.Width / wRatio;
+        }
+        else
+        {
+            selectedArea.Width = selectedArea.Height / hRatio;
+        }
+
 
         return selectedArea;
     }

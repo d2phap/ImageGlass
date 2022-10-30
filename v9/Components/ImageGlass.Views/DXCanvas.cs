@@ -1025,7 +1025,10 @@ public class DXCanvas : DXControl
             // draw new selection
             else if (_canDrawSelection)
             {
-                _selectionRaw = BHelper.GetSelection(_mouseDownPoint, _mouseMovePoint, _destRect);
+                SelectionAspectRatio = SelectionAspectRatio.Original;
+
+                _selectionRaw = BHelper.GetSelection(_mouseDownPoint, _mouseMovePoint, SelectionAspectRatio, SourceWidth, SourceHeight, _destRect);
+
                 requestRerender = true;
             }
             // move selection

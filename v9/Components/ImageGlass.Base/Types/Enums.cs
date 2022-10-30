@@ -114,3 +114,22 @@ public enum FlipOptions
     Horizontal = 1 << 1,
     Vertical = 1 << 2,
 }
+
+
+/// <summary>
+/// Selection aspect ratio.
+/// </summary>
+public enum SelectionAspectRatio
+{
+    Free = 0,
+    Original = 1 << 1,
+    Square = 1 << 2,
+    _16_9 = 1 << 3,
+    _9_16 = 1 << 4,
+    _4_3 = 1 << 5,
+    _3_4 = 1 << 6,
+    _3_2 = 1 << 7,
+    _2_3 = 1 << 8,
+    _2_1 = 1 << 9,
+    _1_2 = 1 << 10,
+}
