@@ -295,9 +295,10 @@ public partial class BHelper
     /// </summary>
     /// <param name="point1">The first point</param>
     /// <param name="point2">The second point</param>
+    /// <param name="aspectRatio">Aspect ratio</param>
     /// <param name="limitRect">The rectangle to limit the selection</param>
     public static RectangleF GetSelection(PointF? point1, PointF? point2,
-        SelectionAspectRatio aspectRatio, float srcWidth, float srcHeight,
+        SizeF aspectRatio, float srcWidth, float srcHeight,
         RectangleF limitRect)
     {
         var selectedArea = new RectangleF();
@@ -320,7 +321,6 @@ public partial class BHelper
             toPoint.Y = tempY;
         }
 
-
         float width = Math.Abs(fromPoint.X - toPoint.X);
         float height = Math.Abs(fromPoint.Y - toPoint.Y);
 
@@ -333,39 +333,36 @@ public partial class BHelper
         selectedArea.Intersect(limitRect);
 
 
-        // apply aspect ratio
-        var wRatio = 1f;
-        var hRatio = 1f;
+        // free aspect ratio
+        if (aspectRatio.Width <= 0 || aspectRatio.Height <= 0)
+            return selectedArea;
 
-        if (aspectRatio == SelectionAspectRatio.Square)
-        {
-            selectedArea.Width = selectedArea.Height = Math.Max(selectedArea.Width, selectedArea.Height);
-        }
-        else if (aspectRatio == SelectionAspectRatio.Original)
-        {
-            if (srcWidth > srcHeight)
-            {
-                wRatio = srcWidth / srcHeight;
-            }
-            else
-            {
-                hRatio = srcHeight / srcWidth;
-            }
-        }
-        else if (aspectRatio == SelectionAspectRatio._3_2)
-        {
-            wRatio = 3f / 2;
-        }
 
+        var wRatio = aspectRatio.Width / aspectRatio.Height;
+        var hRatio = aspectRatio.Height / aspectRatio.Width;
 
         // update selection size according to the ratio
         if (wRatio > hRatio)
         {
             selectedArea.Height = selectedArea.Width / wRatio;
+
+            if (selectedArea.Bottom >= limitRect.Bottom)
+            {
+                var maxHeight = limitRect.Bottom - selectedArea.Y;
+                selectedArea.Width = maxHeight * wRatio;
+                selectedArea.Height = maxHeight;
+            }
         }
         else
         {
             selectedArea.Width = selectedArea.Height / hRatio;
+
+            if (selectedArea.Right >= limitRect.Right)
+            {
+                var maxWidth = limitRect.Right - selectedArea.X; ;
+                selectedArea.Width = maxWidth;
+                selectedArea.Height = maxWidth * hRatio;
+            }
         }
 
 

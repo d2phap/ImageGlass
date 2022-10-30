@@ -262,8 +262,9 @@ public class DXCanvas : DXControl
 
     /// <summary>
     /// Gets, sets selection aspect ratio.
+    /// If Width or Height is <c>less than or equals 0</c>, we will use free aspect ratio.
     /// </summary>
-    public SelectionAspectRatio SelectionAspectRatio { get; set; } = SelectionAspectRatio.Free;
+    public SizeF SelectionAspectRatio { get; set; } = new();
 
 
     /// <summary>
@@ -1025,7 +1026,6 @@ public class DXCanvas : DXControl
             // draw new selection
             else if (_canDrawSelection)
             {
-                SelectionAspectRatio = SelectionAspectRatio.Original;
 
                 _selectionRaw = BHelper.GetSelection(_mouseDownPoint, _mouseMovePoint, SelectionAspectRatio, SourceWidth, SourceHeight, _destRect);
 
