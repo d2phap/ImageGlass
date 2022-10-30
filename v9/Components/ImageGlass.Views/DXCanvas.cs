@@ -161,16 +161,24 @@ public class DXCanvas : DXControl
 
 
     /// <summary>
-    /// Checks if the viewing image size if smaller than the viewport size
+    /// Checks if the viewing image size if smaller than the viewport size.
     /// </summary>
     [Browsable(false)]
     public bool IsViewingSizeSmallerViewportSize
     {
         get
         {
-            var autoZoomFactor = CalculateZoomFactor(ZoomMode.AutoZoom, SourceWidth, SourceHeight);
+            if (_destRect.X > 0 && _destRect.Y > 0) return true;
 
-            return ZoomFactor <= autoZoomFactor;
+
+            if (SourceWidth > SourceHeight)
+            {
+                return SourceWidth * ZoomFactor <= Width;
+            }
+            else
+            {
+                return SourceHeight * ZoomFactor <= Height;
+            }
         }
     }
 
