@@ -1026,7 +1026,6 @@ public class DXCanvas : DXControl
             // draw new selection
             else if (_canDrawSelection)
             {
-
                 _selectionRaw = BHelper.GetSelection(_mouseDownPoint, _mouseMovePoint, SelectionAspectRatio, SourceWidth, SourceHeight, _destRect);
 
                 requestRerender = true;
@@ -2297,6 +2296,83 @@ public class DXCanvas : DXControl
             _selectionRaw.X = _selectionBeforeMove.X + dW;
             _selectionRaw.Width = _selectionBeforeMove.Width - dW;
         }
+
+        // limit the selected area to the image
+        _selectionRaw.Intersect(_destRect);
+
+
+        // free aspect ratio
+        if (SelectionAspectRatio.Width <= 0 || SelectionAspectRatio.Height <= 0)
+            return;
+
+
+        var wRatio = SelectionAspectRatio.Width / SelectionAspectRatio.Height;
+        var hRatio = SelectionAspectRatio.Height / SelectionAspectRatio.Width;
+
+        // update selection size according to the ratio
+        if (wRatio > hRatio)
+        {
+            if (direction == SelectionResizerType.Top
+                || direction == SelectionResizerType.TopRight
+                || direction == SelectionResizerType.TopLeft
+                || direction == SelectionResizerType.Bottom
+                || direction == SelectionResizerType.BottomLeft
+                || direction == SelectionResizerType.BottomRight)
+            {
+                _selectionRaw.Width = _selectionRaw.Height / hRatio;
+
+                if (_selectionRaw.Right >= _destRect.Right)
+                {
+                    var maxWidth = _destRect.Right - _selectionRaw.X; ;
+                    _selectionRaw.Width = maxWidth;
+                    _selectionRaw.Height = maxWidth * hRatio;
+                }
+            }
+            else
+            {
+                _selectionRaw.Height = _selectionRaw.Width / wRatio;
+            }
+            
+
+            if (_selectionRaw.Bottom >= _destRect.Bottom)
+            {
+                var maxHeight = _destRect.Bottom - _selectionRaw.Y;
+                _selectionRaw.Width = maxHeight * wRatio;
+                _selectionRaw.Height = maxHeight;
+            }
+        }
+        else
+        {
+            if (direction == SelectionResizerType.Left
+                || direction == SelectionResizerType.TopLeft
+                || direction == SelectionResizerType.BottomLeft
+                || direction == SelectionResizerType.Right
+                || direction == SelectionResizerType.TopRight
+                || direction == SelectionResizerType.BottomRight)
+            {
+                _selectionRaw.Height = _selectionRaw.Width / wRatio;
+
+                if (_selectionRaw.Bottom >= _destRect.Bottom)
+                {
+                    var maxHeight = _destRect.Bottom - _selectionRaw.Y;
+                    _selectionRaw.Width = maxHeight * wRatio;
+                    _selectionRaw.Height = maxHeight;
+                }
+            }
+            else
+            {
+                _selectionRaw.Width = _selectionRaw.Height / hRatio;
+            }
+
+
+            if (_selectionRaw.Right >= _destRect.Right)
+            {
+                var maxWidth = _destRect.Right - _selectionRaw.X;
+                _selectionRaw.Width = maxWidth;
+                _selectionRaw.Height = maxWidth * hRatio;
+            }
+        }
+
     }
 
 
