@@ -171,10 +171,10 @@
       <Item key="frmSetting.chkLastSeenImage" value="Open het laast geopende foto"/>
       <Item key="frmSetting.chkShowToolBar" value="De werkbalk weergeven bij opstarten"/>
       <Item key="frmSetting.lblHeadConfigDir" value="Configuratie map"/>
-      <Item key="frmSetting.lblHeadViewer" value="Kijker"/>
-      <Item key="frmSetting.chkShowScrollbar" value="Toon verwijder venster"/>
+      <Item key="frmSetting.lblHeadViewer" value="Canvas"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Toon scrollbalken canvas"/>
       <Item key="frmSetting.chkShowNavButtons" value="Beeldscherm navigatie pijl knoppen"/>
-      <Item key="frmSetting.chkDisplayBasename" value="Weergeef basisnaam van de getoonde afbeelding in de titelbalk"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Laat de basisnaam van de getoonde afbeelding zien in de titelbalk"/>
       <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Schaakbord alleen in de regio van de afbeelding weergeven"/>
       <Item key="frmSetting.chkUseTouchGesture" value="Schakel aanraak ondersteuning in"/>
       <Item key="frmSetting.lblBackGroundColor" value="Achtergrondkleur"/>
@@ -197,7 +197,7 @@
       <Item key="frmSetting.chkLoopViewer" value="Ga terug naar de eerste afbeelding bij het bereiken van het einde van de lijst"/>
       <Item key="frmSetting.chkIsCenterImage" value="Centreer afbeelding op het canvas"/>
       <Item key="frmSetting.chkIsUseRawThumbnail" value="Ingesloten miniatuur gebruiken voor RAW indelingen"/>
-      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Nieuwe afbeelding in map automatisch weergeven"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Afbeelding laden volgorde"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Gebruik Windows File Explorer sortering indien mogelijk"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Afbeeldingen groeperen op map"/>
@@ -235,7 +235,7 @@
       <Item key="frmSetting.txtZoomLevels._Error" value="Er is een fout opgetreden bij het bijwerken van Zoom levels. Foutmelding:&#10;&#10;{0}"/>
       <Item key="frmSetting.lblHeadThumbnailBar" value="Miniatuur paneel"/>
       <Item key="frmSetting.chkThumbnailVertical" value="Toon miniaturen aan rechterkant"/>
-      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Toon thumbnails scroll balk"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Toon scrollbalk voor miniaturen"/>
       <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Miniatuur dimensie (pixel)"/>
       <Item key="frmSetting.lblHeadSlideshow" value="Diashow"/>
       <Item key="frmSetting.chkLoopSlideshow" value="Ga terug naar de eerste afbeelding bij het bereiken van het einde van de lijst"/>
@@ -299,7 +299,7 @@
       <Item key="frmSetting.lblLanguageText" value="Geïnstalleerde talen"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Vernieuwen"/>
       <Item key="frmSetting.lblLanguageWarning" value="Dit taalpakket is mogelijk niet compatibel met {0}"/>
-      <Item key="frmSetting.lblTranslators" value="Translator:"/>
+      <Item key="frmSetting.lblTranslators" value="Vertaler:"/>
       <Item key="frmSetting.lnkInstallLanguage" value="&gt; Installeer nieuw taalpakket (*.iglang)…"/>
       <Item key="frmSetting.lnkCreateNew" value="&gt; Maak nieuw taalpakket…"/>
       <Item key="frmSetting.lnkEdit" value="&gt; Bewerk geselecteerd taalpakket…"/>

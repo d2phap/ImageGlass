@@ -677,7 +677,7 @@ namespace ImageGlass.Settings {
 
             #region Slide show
             SlideShowInterval = Get<float>(nameof(SlideShowInterval), SlideShowInterval);
-            if (SlideShowInterval < 1) SlideShowInterval = 5;
+            if (SlideShowInterval < 0) SlideShowInterval = 5;
 
             SlideShowIntervalTo = Get<float>(nameof(SlideShowIntervalTo), SlideShowIntervalTo);
             SlideShowIntervalTo = Math.Max(SlideShowIntervalTo, SlideShowInterval);
@@ -1251,6 +1251,8 @@ namespace ImageGlass.Settings {
         /// <param name="frm"></param>
         /// <param name="th"></param>
         public static void ApplyFormTheme(Form frm, Theme th) {
+            CornerApi.SetImmersiveDarkMode(frm.Handle, th.IsDarkMode);
+
             // load theme colors
             foreach (var ctr in Helpers.GetAllControls(frm, typeof(LinkLabel))) {
                 if (ctr is LinkLabel lnk) {

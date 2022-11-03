@@ -216,7 +216,7 @@ namespace ImageGlass {
 
         private void btnDonation_Click(object sender, EventArgs e) {
             try {
-                Process.Start("https://imageglass.org/source#donation?utm_source=app_" + App.Version + "&utm_medium=app_click&utm_campaign=app_donation");
+                Process.Start($"https://imageglass.org/source#donation?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_donation");
             }
             catch { }
         }
@@ -231,18 +231,23 @@ namespace ImageGlass {
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             try {
-                Process.Start("https://www.patreon.com/d2phap?utm_source=app_" + App.Version + "&utm_medium=app_click&utm_campaign=app_patreon");
+                Process.Start($"https://www.patreon.com/d2phap?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_patreon");
             }
             catch { }
         }
 
         private void picStoreApp_Click(object sender, EventArgs e) {
+            var campaignId = $"IgInAppBadgeV{App.Version}";
+            var source = "AboutWindow";
+
             try {
-                Process.Start($"ms-windows-store://pdp/?ProductId={Constants.MS_APPSTORE_ID}");
+                var url = $"ms-windows-store://pdp/?productid={Constants.MS_APPSTORE_ID}&cid={campaignId}&referrer=appbadge&source={source}";
+
+                Process.Start(url);
             }
             catch {
                 try {
-                    Process.Start($"https://www.microsoft.com/store/productId/{Constants.MS_APPSTORE_ID}");
+                    Process.Start($"https://www.microsoft.com/store/productId/{Constants.MS_APPSTORE_ID}?cid={campaignId}&referrer=appbadge&source={source}");
                 }
                 catch { }
             }

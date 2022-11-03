@@ -29,6 +29,8 @@ namespace ImageGlass.Library.WinAPI {
         /// which tells the function what attribute to set.
         /// </summary>
         private enum DWMWINDOWATTRIBUTE {
+            DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19,
+            DWMWA_USE_IMMERSIVE_DARK_MODE = 20,
             DWMWA_WINDOW_CORNER_PREFERENCE = 33
         }
 
@@ -44,7 +46,7 @@ namespace ImageGlass.Library.WinAPI {
         }
 
         [DllImport("dwmapi.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        private static extern long DwmSetWindowAttribute(IntPtr hwnd, DWMWINDOWATTRIBUTE attribute, ref DWM_WINDOW_CORNER_PREFERENCE pvAttribute, uint cbAttribute);
+        private static extern long DwmSetWindowAttribute(IntPtr hwnd, DWMWINDOWATTRIBUTE attribute, ref int pvAttribute, uint cbAttribute);
 
 
         /// <summary>
@@ -59,13 +61,34 @@ namespace ImageGlass.Library.WinAPI {
 
 
             var attribute = DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE;
-            var preference = DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND;
+            var preference = (int)DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND;
 
             DwmSetWindowAttribute(handle, attribute, ref preference, sizeof(uint));
         }
 
 
+        /// <summary>
+        /// Sets dark mode for window title bar.
+        /// </summary>
+        public static void SetImmersiveDarkMode(IntPtr wndHandle, bool enabled) {
+            static bool IsWindows10OrGreater(int build = -1) {
+                return Environment.OSVersion.Version.Major >= 10 && Environment.OSVersion.Version.Build >= build;
+            }
 
+            var attribute = 0;
+            if (IsWindows10OrGreater(18985)) {
+                attribute = (int)DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE;
+            }
+            else if (IsWindows10OrGreater(17763)) {
+                attribute = (int)DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1;
+            }
+
+            var enableDarkMode = enabled ? 1 : 0;
+
+            if (attribute != 0) {
+                _ = DwmSetWindowAttribute(wndHandle, (DWMWINDOWATTRIBUTE)attribute, ref enableDarkMode, sizeof(int));
+            }
+        }
 
 
         // Simulate mouse click

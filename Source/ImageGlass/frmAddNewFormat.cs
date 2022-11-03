@@ -59,6 +59,9 @@ namespace ImageGlass {
             txtFileExtension.Text = this.FileFormat;
 
             txtFileExtension.Focus();
+
+            // Apply theme
+            Configs.ApplyFormTheme(this, Configs.Theme);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
