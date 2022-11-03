@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using ImageGlass.Library.WinAPI;
 
 namespace ImageGlass.UI {
     public static class InputBox {
@@ -68,6 +69,8 @@ namespace ImageGlass.UI {
                 TopMost = topMost,
                 FilterOnKeyPress = filterOnKeyPressed,
             };
+
+            CornerApi.SetImmersiveDarkMode(frm.Handle, theme.IsDarkMode);
 
             if (isNumberOnly) {
                 frm.Filter = NumberFilter;

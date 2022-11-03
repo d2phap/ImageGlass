@@ -1251,6 +1251,8 @@ namespace ImageGlass.Settings {
         /// <param name="frm"></param>
         /// <param name="th"></param>
         public static void ApplyFormTheme(Form frm, Theme th) {
+            CornerApi.SetImmersiveDarkMode(frm.Handle, th.IsDarkMode);
+
             // load theme colors
             foreach (var ctr in Helpers.GetAllControls(frm, typeof(LinkLabel))) {
                 if (ctr is LinkLabel lnk) {

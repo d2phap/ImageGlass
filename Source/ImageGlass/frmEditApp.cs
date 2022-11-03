@@ -45,6 +45,9 @@ namespace ImageGlass {
         }
 
         private void frmEditApp_Load(object sender, EventArgs e) {
+            // Apply theme
+            Configs.ApplyFormTheme(this, Configs.Theme);
+
             // Issue #543 Prevent usage of characters which cause problems for settings
             txtFileExtension.KeyPress += textBox_KeyPress;
             txtAppName.KeyPress += textBox_KeyPress;

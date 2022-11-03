@@ -40,6 +40,8 @@ namespace igcmd {
         }
 
         private void LoadTheme() {
+            CornerApi.SetImmersiveDarkMode(Handle, Configs.Theme.IsDarkMode);
+
             // load theme colors
             lblStatus.ForeColor =
                 lnkUpdateReadMore.LinkColor =
