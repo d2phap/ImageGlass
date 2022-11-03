@@ -197,7 +197,7 @@
       <Item key="frmSetting.chkLoopViewer" value="Վերադառնալ առաջին պատկերին՝ վերջին պատկերն անցնելուց հետո"/>
       <Item key="frmSetting.chkIsCenterImage" value="Դիտման ռեժիմում բերել պատկերը կենտրոն"/>
       <Item key="frmSetting.chkIsUseRawThumbnail" value="Օգտագործել ներկառուցված գծապատկերը RAW ձևաչափի համար"/>
-      <Item key="frmSetting.chkAutoDisplayNewImage" value="Display new image in folder automatically"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Ավտոմատ ցուցադրել նոր պատկերը թղթապանակում"/>
       <Item key="frmSetting.lblImageLoadingOrder" value="Պատկերների բեռնման հերթականություն"/>
       <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Հնարավորության դեպքում կիրառել Windows ֆայլային հերթականությունը"/>
       <Item key="frmSetting.chkGroupByDirectory" value="Խմբավորել պատկերները ըստ պանակների"/>
@@ -299,7 +299,7 @@
       <Item key="frmSetting.lblLanguageText" value="Տեղադրված լեզուները"/>
       <Item key="frmSetting.lnkRefresh" value="&gt; Թարմացնել"/>
       <Item key="frmSetting.lblLanguageWarning" value="Լեզվային փաթեթը կարող է համադրելի չլինել հետևյալի հետ՝ {0}"/>
-      <Item key="frmSetting.lblTranslators" value="Translator:"/>
+      <Item key="frmSetting.lblTranslators" value="Թարգմանիչ․"/>
       <Item key="frmSetting.lnkInstallLanguage" value="&gt; Տեղադրել նոր լեզվային փաթեթ (*.iglang)…"/>
       <Item key="frmSetting.lnkCreateNew" value="&gt; Ստեղծել լեզվային նոր փաթեթ…"/>
       <Item key="frmSetting.lnkEdit" value="&gt; Խմբագրել ընտրվծ լեզվային փաթեթը…"/>
