@@ -677,7 +677,7 @@ namespace ImageGlass.Settings {
 
             #region Slide show
             SlideShowInterval = Get<float>(nameof(SlideShowInterval), SlideShowInterval);
-            if (SlideShowInterval < 1) SlideShowInterval = 5;
+            if (SlideShowInterval < 0) SlideShowInterval = 5;
 
             SlideShowIntervalTo = Get<float>(nameof(SlideShowIntervalTo), SlideShowIntervalTo);
             SlideShowIntervalTo = Math.Max(SlideShowIntervalTo, SlideShowInterval);
