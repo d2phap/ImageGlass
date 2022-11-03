@@ -139,7 +139,7 @@ namespace igcmd {
 
         private void btnDownload_Click(object sender, EventArgs e) {
             try {
-                Process.Start("https://imageglass.org/download?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_download");
+                Process.Start($"https://imageglass.org/download?utm_source=app_{App.Version}&utm_medium=app_click&utm_campaign=app_download");
             }
             catch {
                 MessageBox.Show("Check your Internet connection!");
@@ -153,12 +153,17 @@ namespace igcmd {
         #endregion
 
         private void picStoreApp_Click(object sender, EventArgs e) {
+            var campaignId = $"IgInAppBadgeV{App.Version}";
+            var source = "UpdaterWindow";
+
             try {
-                Process.Start($"ms-windows-store://pdp/?ProductId={Constants.MS_APPSTORE_ID}");
+                var url = $"ms-windows-store://pdp/?productid={Constants.MS_APPSTORE_ID}&cid={campaignId}&referrer=appbadge&source={source}";
+
+                Process.Start(url);
             }
             catch {
                 try {
-                    Process.Start($"https://www.microsoft.com/store/productId/{Constants.MS_APPSTORE_ID}");
+                    Process.Start($"https://www.microsoft.com/store/productId/{Constants.MS_APPSTORE_ID}?cid={campaignId}&referrer=appbadge&source={source}");
                 }
                 catch { }
             }
