@@ -50,6 +50,7 @@ public class WindowApi
     [DllImport("user32.dll")]
     private static extern uint SendInput(uint nInputs, [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs, int cbSize);
 
+
     private struct INPUT
     {
         public uint Type;
@@ -147,6 +148,18 @@ public class WindowApi
     #endregion
 
 
+    // Dark mode for title bar
+    #region Dark mode for title bar
+
+    [DllImport("dwmapi.dll")]
+    private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref bool attrValue, int attrSize);
+
+    private const int DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19;
+    private const int DWMWA_USE_IMMERSIVE_DARK_MODE = 20;
+
+    #endregion // Dark mode for title bar
+
+
     /// <summary>
     /// <para>Issue #360: IG periodically searching for dismounted device.</para>
     /// <para>
@@ -170,11 +183,11 @@ public class WindowApi
     /// <summary>
     /// Sets window state
     /// </summary>
-    /// <param name="handle"></param>
+    /// <param name="wndHandle"></param>
     /// <param name="cmd"></param>
-    public static void ShowAppWindow(IntPtr handle, ShowWindowCommands cmd)
+    public static void ShowAppWindow(IntPtr wndHandle, ShowWindowCommands cmd)
     {
-        _ = ShowWindow(handle, cmd);
+        _ = ShowWindow(wndHandle, cmd);
     }
     
 
@@ -213,5 +226,33 @@ public class WindowApi
         // return mouse 
         Cursor.Position = oldPos;
     }
+
+
+    /// <summary>
+    /// Sets dark mode for window title bar.
+    /// </summary>
+    public static void SetImmersiveDarkMode(IntPtr wndHandle, bool enabled)
+    {
+        bool IsWindows10OrGreater(int build = -1)
+        {
+            return Environment.OSVersion.Version.Major >= 10 && Environment.OSVersion.Version.Build >= build;
+        }
+
+        var attribute = 0;
+        if (IsWindows10OrGreater(18985))
+        {
+            attribute = DWMWA_USE_IMMERSIVE_DARK_MODE;
+        }
+        else if (IsWindows10OrGreater(17763))
+        {
+            attribute = DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1;
+        }
+
+        if (attribute > 0)
+        {
+            _ = DwmSetWindowAttribute(wndHandle, (int)attribute, ref enabled, sizeof(int));
+        }
+    }
+
 
 }

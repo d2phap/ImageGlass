@@ -20,7 +20,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.Actions;
 using ImageGlass.Base.PhotoBox;
-using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.UI;
 using Microsoft.Extensions.Configuration;
@@ -29,8 +28,6 @@ using System.Dynamic;
 using System.Media;
 using System.Reflection;
 using System.Text;
-using System.Xml.Linq;
-using WicNet;
 
 namespace ImageGlass.Settings;
 
@@ -1484,6 +1481,13 @@ public static class Config
     /// </summary>
     public static void ApplyFormTheme(Form frm, IgTheme th)
     {
+        // enable dark titlebar
+        if (Config.Theme.Info.IsDark)
+        {
+            WindowApi.SetImmersiveDarkMode(frm.Handle, true);
+        }
+
+
         // load theme colors
         foreach (var ctr in BHelper.GetAllControls(frm, typeof(LinkLabel)))
         {
