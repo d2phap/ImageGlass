@@ -1182,20 +1182,24 @@ public static class Config
     /// <param name="heading">Popup heading text.</param>
     /// <param name="description">Popup description.</param>
     /// <param name="details">Other details</param>
+    /// <param name="note">Note text.</param>
     /// <param name="buttons">Popup buttons.</param>
     public static PopupResult ShowInfo(
         string description = "",
         string title = "",
         string heading = "",
         string details = "",
+        string note = "",
         SHSTOCKICONID? icon = SHSTOCKICONID.SIID_INFO,
         Image? thumbnail = null,
         PopupButtons buttons = PopupButtons.OK,
         string optionText = "")
     {
+        var noteBackgroundColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Info, Config.Theme.Info.IsDark);
+
         SystemSounds.Question.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, icon, thumbnail, optionText);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, noteBackgroundColor, buttons, icon, thumbnail, optionText);
     }
 
 
@@ -1206,22 +1210,25 @@ public static class Config
     /// <param name="heading">Popup heading text.</param>
     /// <param name="description">Popup description.</param>
     /// <param name="details">Other details</param>
+    /// <param name="note">Note text.</param>
     /// <param name="buttons">Popup buttons.</param>
     public static PopupResult ShowWarning(
         string description = "",
         string title = "",
         string? heading = null,
         string details = "",
+        string note = "",
         SHSTOCKICONID? icon = SHSTOCKICONID.SIID_WARNING,
         Image? thumbnail = null,
         PopupButtons buttons = PopupButtons.OK,
         string optionText = "")
     {
         heading ??= Language["_._Warning"];
+        var noteBackgroundColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Warning, Config.Theme.Info.IsDark);
 
         SystemSounds.Exclamation.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, icon, thumbnail, optionText);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, noteBackgroundColor, buttons, icon, thumbnail, optionText);
     }
 
 
@@ -1232,22 +1239,25 @@ public static class Config
     /// <param name="heading">Popup heading text.</param>
     /// <param name="description">Popup description.</param>
     /// <param name="details">Other details</param>
+    /// <param name="note">Note text.</param>
     /// <param name="buttons">Popup buttons.</param>
     public static PopupResult ShowError(
         string description = "",
         string title = "",
         string? heading = null,
         string details = "",
+        string note = "",
         SHSTOCKICONID? icon = SHSTOCKICONID.SIID_ERROR,
         Image? thumbnail = null,
         PopupButtons buttons = PopupButtons.OK,
         string optionText = "")
     {
         heading ??= Language["_._Error"];
+        var noteBackgroundColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Danger, Config.Theme.Info.IsDark);
 
         SystemSounds.Asterisk.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, buttons, icon, thumbnail, optionText);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, noteBackgroundColor, buttons, icon, thumbnail, optionText);
     }
 
 
