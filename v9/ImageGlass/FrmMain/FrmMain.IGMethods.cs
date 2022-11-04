@@ -1132,8 +1132,8 @@ public partial class FrmMain
         if (Config.ShowSaveOverrideConfirmation)
         {
             var result = Config.ShowWarning(
-                description: filePath + "\r\n\r\n" +
-                    Config.Language[$"{langPath}._ConfirmDescription"],
+                description: filePath,
+                note: Config.Language[$"{langPath}._ConfirmDescription"],
                 title: Config.Language[langPath],
                 heading: Config.Language[$"{langPath}._Confirm"],
                 buttons: PopupButtons.Yes_No,
