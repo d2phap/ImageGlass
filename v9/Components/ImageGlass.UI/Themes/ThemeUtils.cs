@@ -23,18 +23,38 @@ using System.Globalization;
 
 namespace ImageGlass.UI;
 
-public enum SystemThemeMode
-{
-    Unknown,
-    Light,
-    Dark
-}
-
 
 public partial class ThemeUtils
 {
 
     #region PUBLIC FUNCTIONS
+
+    /// <summary>
+    /// Gets the background color for the input status.
+    /// </summary>
+    public static Color GetBackgroundColorForStatus(ColorStatus status, bool darkMode = true)
+    {
+        if (darkMode)
+        {
+            return status switch
+            {
+                ColorStatus.Info => Color.FromArgb(255, 199, 238, 255),
+                ColorStatus.Success => Color.FromArgb(255, 219, 255, 242),
+                ColorStatus.Warning => Color.FromArgb(255, 255, 239, 219),
+                ColorStatus.Danger => Color.FromArgb(255, 255, 222, 222),
+                _ => Color.FromArgb(255, 242, 242, 242),
+            };
+        }
+
+        return status switch
+        {
+            ColorStatus.Info => Color.FromArgb(255, 59, 40, 10),
+            ColorStatus.Success => Color.FromArgb(255, 59, 40, 10),
+            ColorStatus.Warning => Color.FromArgb(255, 59, 40, 10),
+            ColorStatus.Danger => Color.FromArgb(255, 59, 40, 10),
+            _ => Color.FromArgb(255, 32, 38, 43),
+        };
+    }
 
     /// <summary>
     /// Gets system theme (Dark or Light)
@@ -109,8 +129,6 @@ public partial class ThemeUtils
     /// <summary>
     /// Convert Color to HSLA
     /// </summary>
-    /// <param name="c"></param>
-    /// <returns></returns>
     public static float[] ConvertColorToHSLA(Color c)
     {
         var h = (float)Math.Round(c.GetHue());
@@ -125,8 +143,6 @@ public partial class ThemeUtils
     /// <summary>
     /// Convert Color to HSVA
     /// </summary>
-    /// <param name="c"></param>
-    /// <returns></returns>
     public static float[] ConvertColorToHSVA(Color c)
     {
         int max = Math.Max(c.R, Math.Max(c.G, c.B));
@@ -336,4 +352,21 @@ public partial class ThemeUtils
     }
 
     #endregion
+}
+
+
+public enum SystemThemeMode
+{
+    Unknown,
+    Light,
+    Dark
+}
+
+public enum ColorStatus
+{
+    Neutral,
+    Info,
+    Success,
+    Warning,
+    Danger,
 }
