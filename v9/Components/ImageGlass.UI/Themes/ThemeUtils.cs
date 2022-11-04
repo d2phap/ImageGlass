@@ -36,23 +36,25 @@ public partial class ThemeUtils
     {
         if (darkMode)
         {
+            // dark color palette
             return status switch
             {
-                ColorStatus.Info => Color.FromArgb(255, 199, 238, 255),
-                ColorStatus.Success => Color.FromArgb(255, 219, 255, 242),
-                ColorStatus.Warning => Color.FromArgb(255, 255, 239, 219),
-                ColorStatus.Danger => Color.FromArgb(255, 255, 222, 222),
-                _ => Color.FromArgb(255, 242, 242, 242),
+                ColorStatus.Info => Color.FromArgb(255, 20, 44, 59),
+                ColorStatus.Success => Color.FromArgb(255, 34, 59, 42),
+                ColorStatus.Warning => Color.FromArgb(255, 59, 40, 10),
+                ColorStatus.Danger => Color.FromArgb(255, 59, 20, 19),
+                _ => Color.FromArgb(255, 32, 38, 43),
             };
         }
 
+        // light color palette
         return status switch
         {
-            ColorStatus.Info => Color.FromArgb(255, 59, 40, 10),
-            ColorStatus.Success => Color.FromArgb(255, 59, 40, 10),
-            ColorStatus.Warning => Color.FromArgb(255, 59, 40, 10),
-            ColorStatus.Danger => Color.FromArgb(255, 59, 40, 10),
-            _ => Color.FromArgb(255, 32, 38, 43),
+            ColorStatus.Info => Color.FromArgb(255, 199, 238, 255),
+            ColorStatus.Success => Color.FromArgb(255, 219, 255, 242),
+            ColorStatus.Warning => Color.FromArgb(255, 255, 239, 219),
+            ColorStatus.Danger => Color.FromArgb(255, 255, 222, 222),
+            _ => Color.FromArgb(255, 242, 242, 242),
         };
     }
 
