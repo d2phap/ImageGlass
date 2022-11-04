@@ -206,6 +206,13 @@ namespace ImageGlass.UI {
         /// </summary>
         public bool IsShowTitlebarLogo { get; set; } = true;
 
+
+        /// <summary>
+        /// Defines this theme pack whether dark or light mode.
+        /// </summary>
+        public bool IsDarkMode { get; set; } = true;
+
+
         #endregion
 
 
@@ -503,6 +510,11 @@ namespace ImageGlass.UI {
             // v8.0: Show icon on title bar
             if (bool.TryParse(n.GetAttribute("isshowtitlebarlogo"), out var showLogo)) {
                 IsShowTitlebarLogo = showLogo;
+            }
+
+            // v8.8: Show icon on title bar
+            if (bool.TryParse(n.GetAttribute("isdarkmode"), out var isDarkMode)) {
+                IsDarkMode = isDarkMode;
             }
 
             #endregion

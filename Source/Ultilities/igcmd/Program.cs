@@ -86,9 +86,9 @@ namespace igcmd {
 
             // auto check for update
             else if (topcmd == "igautoupdate") {
-                Core.AutoUpdate();
+                Core.AutoUpdateAsync().Wait();
 
-                return 0;
+                return Configs.IsNewVersionAvailable ? 1 : 0;
             }
 
             // run first launch configs

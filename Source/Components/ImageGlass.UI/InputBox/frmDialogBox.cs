@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ImageGlass.Library.WinAPI;
 
 namespace ImageGlass.UI {
     public partial class frmDialogBox: Form {
@@ -59,6 +60,7 @@ namespace ImageGlass.UI {
             this.BackColor = theme.BackgroundColor;
             lblMessage.ForeColor = theme.TextInfoColor;
             panel1.BackColor = theme.ToolbarBackgroundColor;
+
         }
 
         /// <summary>

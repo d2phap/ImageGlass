@@ -14,7 +14,7 @@ ImageGlass is a lightweight software application whose purpose is to help you vi
 It gives you the possibility to view over **80+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers speed up their work.
 
 ## 📥 Download
-<a href="https://www.microsoft.com/store/productId/9N33VZK3C7TH">
+<a href="https://www.microsoft.com/store/productId/9N33VZK3C7TH?cid=GitHubRelease&referrer=appbadge&source=GithubD2phap">
   <img height="69" src="https://user-images.githubusercontent.com/3154213/197670614-b9ecc804-ebb2-44cc-88c3-5dd321564a51.svg" /></a>
 
 <br/>
@@ -26,11 +26,12 @@ It gives you the possibility to view over **80+** common image formats, includin
 
 
 ### ImageGlass on Microsoft Store!
-- If you want to **purchase ImageGlass Store version without letting Microsoft to suck 🩸 me 15% of the amount**, you can use the one-time donation from [♥ GitHub Sponsor](https://github.com/sponsors/d2phap), then drop me a message in [ImageGlass Discord](https://discord.com/channels/818852544859209748/818852544859209751) or [email](https://imageglass.org/about), and I will send the code shortly.
+- If you want to support the development of ImageGlass, you can purchase ImageGlass from Microsoft Store.
+- Alternatively, you can use the one-time donation from [♥ GitHub Sponsor](https://github.com/sponsors/d2phap), then drop me a message in [ImageGlass Discord](https://discord.com/channels/818852544859209748/818852544859209751) or [email](https://imageglass.org/about), and I will send the code shortly.
 - ImageGlass Store provides the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes.
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://github.com/ImageGlass/config/raw/main/screenshots/v8.7/8.7_1.jpg" alt="ImageGlass 8.7.10.26" width="640">
+<img src="https://github.com/ImageGlass/config/raw/main/screenshots/v8.7/8.7_1.jpg" alt="ImageGlass 8.7.11.6" width="640">
 </a><br/>
 
 

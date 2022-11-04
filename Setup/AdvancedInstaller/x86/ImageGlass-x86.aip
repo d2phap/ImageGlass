@@ -16,10 +16,10 @@
     <ROW Property="MSIFASTINSTALL" MultiBuildValue="MsiBuild:1"/>
     <ROW Property="Manufacturer" Value="Duong Dieu Phap"/>
     <ROW Property="MsiLogging" MultiBuildValue="MsiBuild:vp"/>
-    <ROW Property="ProductCode" Value="1033:{130894F0-8C1C-4A65-B1CA-13358E8F2F4B} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{10A0DE8A-A8A5-44BB-A80F-E946BF836D0A} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="ImageGlass"/>
-    <ROW Property="ProductVersion" Value="8.7.10.26" Type="32" TargetFile="ImageGlass.exe"/>
+    <ROW Property="ProductVersion" Value="8.7.11.6" Type="32" TargetFile="ImageGlass.exe"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{877DB994-AB03-4025-B99D-41CE565E810B}"/>
@@ -236,7 +236,6 @@
     <ROW File="Finnish.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="FINNIS~2.IGL|Finnish.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Finnish.v8.7.iglang" SelfReg="false"/>
     <ROW File="French.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="FRENCH~2.IGL|French.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\French.v8.7.iglang" SelfReg="false"/>
     <ROW File="German.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="GERMAN~2.IGL|German.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\German.v8.7.iglang" SelfReg="false"/>
-    <ROW File="GreekCyprus.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="GREEK_~2.IGL|Greek, Cyprus.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Greek, Cyprus.v8.7.iglang" SelfReg="false"/>
     <ROW File="Greek.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="GREEKV~1.IGL|Greek.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Greek.v8.7.iglang" SelfReg="false"/>
     <ROW File="Hebrew.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="HEBREW~2.IGL|Hebrew.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Hebrew.v8.7.iglang" SelfReg="false"/>
     <ROW File="Hungarian.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="HUNGAR~1.IGL|Hungarian.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Hungarian.v8.7.iglang" SelfReg="false"/>
@@ -252,7 +251,6 @@
     <ROW File="Lithuanian.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="LITHUA~1.IGL|Lithuanian.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Lithuanian.v8.7.iglang" SelfReg="false"/>
     <ROW File="Malay.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="MALAYV~1.IGL|Malay.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Malay.v8.7.iglang" SelfReg="false"/>
     <ROW File="NorwegianBokmal.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="NORWEG~3.IGL|Norwegian Bokmal.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Norwegian Bokmal.v8.7.iglang" SelfReg="false"/>
-    <ROW File="NorwegianNynorsk.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="NORWEG~4.IGL|Norwegian Nynorsk.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Norwegian Nynorsk.v8.7.iglang" SelfReg="false"/>
     <ROW File="Persian.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="PERSIA~2.IGL|Persian.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Persian.v8.7.iglang" SelfReg="false"/>
     <ROW File="Polish.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="POLISH~2.IGL|Polish.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Polish.v8.7.iglang" SelfReg="false"/>
     <ROW File="PortugueseBrazilian.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="PORTUG~3.IGL|Portuguese, Brazilian.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Portuguese, Brazilian.v8.7.iglang" SelfReg="false"/>
@@ -265,7 +263,6 @@
     <ROW File="Slovak.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="SLOVAK~2.IGL|Slovak.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Slovak.v8.7.iglang" SelfReg="false"/>
     <ROW File="Slovenian.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="SLOVEN~2.IGL|Slovenian.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Slovenian.v8.7.iglang" SelfReg="false"/>
     <ROW File="Spanish.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="SPANIS~2.IGL|Spanish.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Spanish.v8.7.iglang" SelfReg="false"/>
-    <ROW File="Swahili.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="SWAHIL~1.IGL|Swahili.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Swahili.v8.7.iglang" SelfReg="false"/>
     <ROW File="Swedish.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="SWEDIS~2.IGL|Swedish.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Swedish.v8.7.iglang" SelfReg="false"/>
     <ROW File="Tamil.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="TAMILV~2.IGL|Tamil.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Tamil.v8.7.iglang" SelfReg="false"/>
     <ROW File="Thai.v8.7.iglang" Component_="ChineseSimplified.iglang" FileName="THAIV8~2.IGL|Thai.v8.7.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Thai.v8.7.iglang" SelfReg="false"/>
@@ -451,7 +448,7 @@
     <ROW Name="SystemFoldermsiexec.exe" SourcePath="&lt;AI_RES&gt;uninstall.ico" Index="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIniFileComponent">
-    <ROW IniFile="URL" FileName="VISITI~1.URL|Visit ImageGlass website.url" DirProperty="SHORTCUTDIR" Section="InternetShortcut" Key="URL" Value="https://imageglass.org/?utm_source=app_8.7.10.26&amp;utm_medium=url_shortcut&amp;utm_campaign=app_homepage" Action="0" Component_="ImageGlass.exe"/>
+    <ROW IniFile="URL" FileName="VISITI~1.URL|Visit ImageGlass website.url" DirProperty="SHORTCUTDIR" Section="InternetShortcut" Key="URL" Value="https://imageglass.org/?utm_source=app_8.7.11.6&amp;utm_medium=url_shortcut&amp;utm_campaign=app_homepage" Action="0" Component_="ImageGlass.exe"/>
     <ROW IniFile="WorkingDirectory" FileName="VISITI~1.URL|Visit ImageGlass website.url" DirProperty="SHORTCUTDIR" Section="InternetShortcut" Key="WorkingDirectory" Value="[SHORTCUTDIR]" Action="0" Component_="ImageGlass.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
