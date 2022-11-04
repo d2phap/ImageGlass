@@ -46,82 +46,82 @@ public partial class Popup : Form
 {
     #region Borderless form
 
-    private bool isAeroEnabled;
-    private const int WM_NCPAINT = 0x0085;
-    private const int WS_EX_NOACTIVATE = 0x8000000;
-    private const int WS_EX_TOOLWINDOW = 0x00000080;
+    //private bool isAeroEnabled;
+    //private const int WM_NCPAINT = 0x0085;
+    //private const int WS_EX_NOACTIVATE = 0x8000000;
+    //private const int WS_EX_TOOLWINDOW = 0x00000080;
 
 
-    protected override CreateParams CreateParams
-    {
-        get
-        {
-            if (DesignMode) return base.CreateParams;
+    //protected override CreateParams CreateParams
+    //{
+    //    get
+    //    {
+    //        if (DesignMode) return base.CreateParams;
 
-            isAeroEnabled = CheckAeroEnabled();
-            var cp = base.CreateParams;
-
-
-            if (!isAeroEnabled)
-            {
-                cp.ExStyle |= WS_EX_NOACTIVATE | WS_EX_TOOLWINDOW;
-            }
-
-            return cp;
-        }
-    }
+    //        isAeroEnabled = CheckAeroEnabled();
+    //        var cp = base.CreateParams;
 
 
-    protected override void WndProc(ref Message m)
-    {
-        switch (m.Msg)
-        {
-            case WM_NCPAINT:
-                if (isAeroEnabled)
-                {
-                    unsafe
-                    {
-                        var value = 2;
+    //        if (!isAeroEnabled)
+    //        {
+    //            cp.ExStyle |= WS_EX_NOACTIVATE | WS_EX_TOOLWINDOW;
+    //        }
 
-                        PInvoke.DwmSetWindowAttribute(new(Handle),
-                            DWMWINDOWATTRIBUTE.DWMWA_NCRENDERING_POLICY,
-                            &value, sizeof(int));
+    //        return cp;
+    //    }
+    //}
 
 
-                        var margins = new MARGINS()
-                        {
-                            cyTopHeight = 1,
-                            cyBottomHeight = 1,
-                            cxLeftWidth = 1,
-                            cxRightWidth = 1,
-                        };
+    //protected override void WndProc(ref Message m)
+    //{
+    //    switch (m.Msg)
+    //    {
+    //        case WM_NCPAINT:
+    //            if (isAeroEnabled)
+    //            {
+    //                unsafe
+    //                {
+    //                    var value = 2;
 
-                        PInvoke.DwmExtendFrameIntoClientArea(new(Handle), &margins);
-                    }
-                }
-                break;
-
-            default:
-                break;
-        }
+    //                    PInvoke.DwmSetWindowAttribute(new(Handle),
+    //                        DWMWINDOWATTRIBUTE.DWMWA_NCRENDERING_POLICY,
+    //                        &value, sizeof(int));
 
 
-        base.WndProc(ref m);
+    //                    var margins = new MARGINS()
+    //                    {
+    //                        cyTopHeight = 1,
+    //                        cyBottomHeight = 1,
+    //                        cxLeftWidth = 1,
+    //                        cxRightWidth = 1,
+    //                    };
 
-    }
+    //                    PInvoke.DwmExtendFrameIntoClientArea(new(Handle), &margins);
+    //                }
+    //            }
+    //            break;
+
+    //        default:
+    //            break;
+    //    }
 
 
-    private static bool CheckAeroEnabled()
-    {
-        if (Environment.OSVersion.Version.Major >= 6)
-        {
-            PInvoke.DwmIsCompositionEnabled(out var enabled);
+    //    base.WndProc(ref m);
 
-            return enabled ? true : false;
-        }
+    //}
 
-        return false;
-    }
+
+    //private static bool CheckAeroEnabled()
+    //{
+    //    if (Environment.OSVersion.Version.Major >= 6)
+    //    {
+    //        PInvoke.DwmIsCompositionEnabled(out var enabled);
+
+    //        return enabled ? true : false;
+    //    }
+
+    //    return false;
+    //}
 
     #endregion
 
@@ -216,10 +216,9 @@ public partial class Popup : Form
     /// </summary>
     public string Title
     {
-        get => lblTitle.Text;
+        get => Text;
         set
         {
-            lblTitle.Text = value;
             Text = value;
         }
     }
@@ -286,6 +285,46 @@ public partial class Popup : Form
     {
         get => txtValue.Text;
         set => txtValue.Text = value;
+    }
+
+    /// <summary>
+    /// Note text.
+    /// </summary>
+    public string Note
+    {
+        get => lblNote.Text;
+        set
+        {
+            lblNote.Text = value;
+            var isVisible = !string.IsNullOrEmpty(value);
+            var rowIndex = tableMain.GetRow(panNote);
+
+            if (isVisible)
+            {
+                panNote.Visible = true;
+                tableMain.RowStyles[rowIndex].SizeType = SizeType.AutoSize;
+            }
+            else
+            {
+                panNote.Visible = false;
+                tableMain.RowStyles[rowIndex].SizeType = SizeType.Absolute;
+                tableMain.RowStyles[rowIndex].Height = 0;
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// Gets, sets the backgroundcolor of note.
+    /// </summary>
+    public Color NoteBackgroundColor
+    {
+        get => panNote.BackColor;
+        set
+        {
+            panNote.BackColor = value;
+            lblNote.ForeColor = Theme.Settings.TextColor;
+        }
     }
 
 
@@ -574,6 +613,7 @@ public partial class Popup : Form
         Heading = "";
         Description = "";
         Title = "";
+        Note = "";
         Thumbnail = null; // hide thumbnail by default
         OptionCheckBoxText = "";
 
@@ -589,6 +629,8 @@ public partial class Popup : Form
 
     protected override void OnLoad(EventArgs e)
     {
+        WindowApi.SetImmersiveDarkMode(Handle, Theme.Info.IsDark);
+
         // show thumbnail
         var showThumbnail = Thumbnail != null || ThumbnailOverlay != null;
         var columnIndex = tableMain.GetColumn(picThumbnail);
@@ -608,16 +650,7 @@ public partial class Popup : Form
 
 
         // calculate form height
-        var contentHeight = lblHeading.Height + lblHeading.Margin.Vertical +
-            lblDescription.Height + lblDescription.Margin.Vertical +
-            txtValue.Height + txtValue.Margin.Vertical;
-
-        var height = lblTitle.Height + lblTitle.Margin.Vertical +
-            Math.Max(picThumbnail.Height, contentHeight) +
-            panBottom.Height;
-
-        Height = height;
-
+        UpdateHeight();
 
 
         // set default focus
@@ -644,31 +677,6 @@ public partial class Popup : Form
         }
 
         base.OnLoad(e);
-    }
-
-
-    protected override void OnActivated(EventArgs e)
-    {
-        base.OnActivated(e);
-
-        lblTitle.ForeColor = Theme.Settings.TextColor;
-        lblTitle.BackColor = Theme.Settings.ToolbarBgColor;
-    }
-
-
-    protected override void OnDeactivate(EventArgs e)
-    {
-        base.OnDeactivate(e);
-
-
-        // title text color
-        lblTitle.ForeColor = ThemeUtils.AdjustLightness(
-            Theme.Settings.TextColor,
-            Theme.Info.IsDark ? -0.5f : 0.5f);
-
-        lblTitle.BackColor = ThemeUtils.AdjustLightness(
-            Theme.Settings.ToolbarBgColor,
-            Theme.Info.IsDark ? -0.2f : 0.2f);
     }
 
 
@@ -739,21 +747,19 @@ public partial class Popup : Form
         BackColor = Theme.Settings.BgColor;
 
         // text color
-        lblTitle.ForeColor =
-            lblHeading.ForeColor =
+        lblHeading.ForeColor =
             lblDescription.ForeColor =
+            lblNote.ForeColor =
             ChkOption.ForeColor = Theme.Settings.TextColor;
 
         // header and footer
-        lblTitle.BackColor =
-            picThumbnail.BackColor =
+        picThumbnail.BackColor =
             panBottom.BackColor = Theme.Settings.ToolbarBgColor;
 
         // dark mode
         txtValue.DarkMode =
             BtnAccept.DarkMode =
             BtnCancel.DarkMode = Theme.Info.IsDark;
-
     }
 
 
@@ -844,6 +850,8 @@ public partial class Popup : Form
     /// <param name="heading">Popup heading text.</param>
     /// <param name="description">Popup description.</param>
     /// <param name="details">Other details</param>
+    /// <param name="note">Note text.</param>
+    /// <param name="noteBackgroundColor">Background color of the note.</param>
     /// <param name="buttons">Popup buttons.</param>
     /// <param name="icon">Popup icon.</param>
     /// <param name="thumbnail"></param>
@@ -853,6 +861,8 @@ public partial class Popup : Form
         string title = "",
         string heading = "",
         string details = "",
+        string note = "",
+        Color? noteBackgroundColor = null,
         PopupButtons buttons = PopupButtons.OK,
         SHSTOCKICONID? icon = null,
         Image? thumbnail = null,
@@ -865,6 +875,8 @@ public partial class Popup : Form
             Title = title,
             Heading = heading,
             Description = description,
+            Note = note,
+            NoteBackgroundColor = noteBackgroundColor ?? Color.Transparent,
 
             Thumbnail = thumbnail ?? sysIcon,
             ThumbnailOverlay = (thumbnail != null && sysIcon != null) ? sysIcon : null,
@@ -961,7 +973,30 @@ public partial class Popup : Form
     }
 
 
+
     #endregion
 
+
+    /// <summary>
+    /// Recalculate and update window height.
+    /// </summary>
+    public void UpdateHeight()
+    {
+        // calculate form height
+        var contentHeight = lblHeading.Height + lblHeading.Margin.Vertical
+            + lblDescription.Height + lblDescription.Margin.Vertical
+            + txtValue.Height + txtValue.Margin.Vertical;
+
+        if (!string.IsNullOrEmpty(Note.Trim()))
+        {
+            contentHeight += panNote.Height + panNote.Padding.Vertical;
+        }
+
+        var height = SystemInformation.CaptionHeight + (Padding.Top * 2) +
+            Math.Max(picThumbnail.Height, contentHeight) +
+            panBottom.Height;
+
+        Height = height;
+    }
 
 }

@@ -29,9 +29,10 @@
         private void InitializeComponent()
         {
             this.tableMain = new System.Windows.Forms.TableLayoutPanel();
+            this.panNote = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblNote = new System.Windows.Forms.Label();
             this.lblHeading = new System.Windows.Forms.Label();
             this.txtValue = new ImageGlass.UI.ModernTextBox();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.lblDescription = new System.Windows.Forms.Label();
             this.picThumbnail = new System.Windows.Forms.PictureBox();
             this.ChkOption = new System.Windows.Forms.CheckBox();
@@ -40,6 +41,7 @@
             this.BtnAccept = new ImageGlass.UI.ModernButton();
             this.BtnCancel = new ImageGlass.UI.ModernButton();
             this.tableMain.SuspendLayout();
+            this.panNote.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picThumbnail)).BeginInit();
             this.panBottom.SuspendLayout();
             this.tableBottom.SuspendLayout();
@@ -51,14 +53,14 @@
             this.tableMain.ColumnCount = 2;
             this.tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableMain.Controls.Add(this.panNote, 0, 4);
             this.tableMain.Controls.Add(this.lblHeading, 1, 1);
             this.tableMain.Controls.Add(this.txtValue, 1, 3);
-            this.tableMain.Controls.Add(this.lblTitle, 0, 0);
             this.tableMain.Controls.Add(this.lblDescription, 1, 2);
             this.tableMain.Controls.Add(this.picThumbnail, 0, 1);
-            this.tableMain.Controls.Add(this.ChkOption, 0, 4);
+            this.tableMain.Controls.Add(this.ChkOption, 1, 4);
             this.tableMain.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableMain.Location = new System.Drawing.Point(1, 1);
+            this.tableMain.Location = new System.Drawing.Point(0, 20);
             this.tableMain.Margin = new System.Windows.Forms.Padding(0);
             this.tableMain.Name = "tableMain";
             this.tableMain.RowCount = 5;
@@ -67,14 +69,43 @@
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableMain.Size = new System.Drawing.Size(598, 879);
+            this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableMain.Size = new System.Drawing.Size(600, 879);
             this.tableMain.TabIndex = 1;
+            // 
+            // panNote
+            // 
+            this.panNote.AutoSize = true;
+            this.panNote.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panNote.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(52)))), ((int)(((byte)(32)))));
+            this.tableMain.SetColumnSpan(this.panNote, 10);
+            this.panNote.Controls.Add(this.lblNote);
+            this.panNote.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panNote.Location = new System.Drawing.Point(20, 144);
+            this.panNote.Margin = new System.Windows.Forms.Padding(20, 0, 20, 0);
+            this.panNote.Name = "panNote";
+            this.panNote.Padding = new System.Windows.Forms.Padding(20, 10, 20, 10);
+            this.panNote.Size = new System.Drawing.Size(560, 43);
+            this.panNote.TabIndex = 5;
+            this.panNote.Visible = false;
+            // 
+            // lblNote
+            // 
+            this.lblNote.AutoSize = true;
+            this.lblNote.ForeColor = System.Drawing.Color.White;
+            this.lblNote.Location = new System.Drawing.Point(20, 10);
+            this.lblNote.Margin = new System.Windows.Forms.Padding(0);
+            this.lblNote.Name = "lblNote";
+            this.lblNote.Size = new System.Drawing.Size(50, 23);
+            this.lblNote.TabIndex = 5;
+            this.lblNote.Text = "[###]";
             // 
             // lblHeading
             // 
             this.lblHeading.AutoSize = true;
             this.lblHeading.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblHeading.Location = new System.Drawing.Point(135, 73);
+            this.lblHeading.Location = new System.Drawing.Point(135, 0);
             this.lblHeading.Margin = new System.Windows.Forms.Padding(15, 0, 20, 20);
             this.lblHeading.Name = "lblHeading";
             this.lblHeading.Size = new System.Drawing.Size(115, 31);
@@ -87,34 +118,19 @@
             this.txtValue.DarkMode = false;
             this.txtValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtValue.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.txtValue.Location = new System.Drawing.Point(140, 167);
+            this.txtValue.Location = new System.Drawing.Point(140, 94);
             this.txtValue.Margin = new System.Windows.Forms.Padding(20, 0, 20, 20);
             this.txtValue.MaximumSize = new System.Drawing.Size(0, 240);
             this.txtValue.Name = "txtValue";
             this.txtValue.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtValue.Size = new System.Drawing.Size(438, 30);
+            this.txtValue.Size = new System.Drawing.Size(440, 30);
             this.txtValue.TabIndex = 3;
             this.txtValue.TextChanged += new System.EventHandler(this.TxtValue_TextChanged);
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
-            this.tableMain.SetColumnSpan(this.lblTitle, 2);
-            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTitle.Location = new System.Drawing.Point(0, 0);
-            this.lblTitle.Margin = new System.Windows.Forms.Padding(0, 0, 0, 30);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Padding = new System.Windows.Forms.Padding(15, 10, 0, 10);
-            this.lblTitle.Size = new System.Drawing.Size(598, 43);
-            this.lblTitle.TabIndex = 2;
-            this.lblTitle.Text = "[Title]";
-            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblDescription
             // 
             this.lblDescription.AutoSize = true;
-            this.lblDescription.Location = new System.Drawing.Point(135, 124);
+            this.lblDescription.Location = new System.Drawing.Point(135, 51);
             this.lblDescription.Margin = new System.Windows.Forms.Padding(15, 0, 20, 20);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(82, 23);
@@ -124,7 +140,7 @@
             // picThumbnail
             // 
             this.picThumbnail.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.picThumbnail.Location = new System.Drawing.Point(20, 73);
+            this.picThumbnail.Location = new System.Drawing.Point(20, 0);
             this.picThumbnail.Margin = new System.Windows.Forms.Padding(20, 0, 0, 20);
             this.picThumbnail.MaximumSize = new System.Drawing.Size(100, 100);
             this.picThumbnail.Name = "picThumbnail";
@@ -138,40 +154,44 @@
             // 
             this.ChkOption.AutoSize = true;
             this.tableMain.SetColumnSpan(this.ChkOption, 2);
-            this.ChkOption.Location = new System.Drawing.Point(0, 217);
+            this.ChkOption.Location = new System.Drawing.Point(0, 187);
             this.ChkOption.Margin = new System.Windows.Forms.Padding(0);
             this.ChkOption.Name = "ChkOption";
             this.ChkOption.Padding = new System.Windows.Forms.Padding(20, 10, 20, 20);
             this.ChkOption.Size = new System.Drawing.Size(329, 57);
             this.ChkOption.TabIndex = 5;
             this.ChkOption.Text = "[Do not show this message again]";
-            this.ChkOption.UseVisualStyleBackColor = true;
             // 
             // panBottom
             // 
             this.panBottom.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panBottom.Controls.Add(this.tableBottom);
             this.panBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panBottom.Location = new System.Drawing.Point(1, 282);
+            this.panBottom.Location = new System.Drawing.Point(0, 292);
+            this.panBottom.Margin = new System.Windows.Forms.Padding(0);
             this.panBottom.Name = "panBottom";
-            this.panBottom.Padding = new System.Windows.Forms.Padding(20);
-            this.panBottom.Size = new System.Drawing.Size(598, 81);
+            this.panBottom.Padding = new System.Windows.Forms.Padding(0, 0, 0, 20);
+            this.panBottom.Size = new System.Drawing.Size(600, 80);
             this.panBottom.TabIndex = 0;
             // 
             // tableBottom
             // 
+            this.tableBottom.AutoSize = true;
+            this.tableBottom.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableBottom.ColumnCount = 3;
             this.tableBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableBottom.Controls.Add(this.BtnAccept, 1, 0);
             this.tableBottom.Controls.Add(this.BtnCancel, 2, 0);
-            this.tableBottom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableBottom.Location = new System.Drawing.Point(20, 20);
+            this.tableBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableBottom.Location = new System.Drawing.Point(0, 0);
+            this.tableBottom.Margin = new System.Windows.Forms.Padding(0);
             this.tableBottom.Name = "tableBottom";
             this.tableBottom.RowCount = 1;
-            this.tableBottom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableBottom.Size = new System.Drawing.Size(558, 41);
+            this.tableBottom.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableBottom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableBottom.Size = new System.Drawing.Size(600, 60);
             this.tableBottom.TabIndex = 0;
             // 
             // BtnAccept
@@ -179,8 +199,8 @@
             this.BtnAccept.AutoSize = true;
             this.BtnAccept.DarkMode = false;
             this.BtnAccept.ImagePadding = 2;
-            this.BtnAccept.Location = new System.Drawing.Point(295, 0);
-            this.BtnAccept.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.BtnAccept.Location = new System.Drawing.Point(310, 20);
+            this.BtnAccept.Margin = new System.Windows.Forms.Padding(20, 20, 0, 0);
             this.BtnAccept.MinimumSize = new System.Drawing.Size(120, 0);
             this.BtnAccept.Name = "BtnAccept";
             this.BtnAccept.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
@@ -196,12 +216,12 @@
             this.BtnCancel.AutoSize = true;
             this.BtnCancel.DarkMode = false;
             this.BtnCancel.ImagePadding = 2;
-            this.BtnCancel.Location = new System.Drawing.Point(435, 0);
-            this.BtnCancel.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.BtnCancel.MinimumSize = new System.Drawing.Size(120, 0);
+            this.BtnCancel.Location = new System.Drawing.Point(450, 20);
+            this.BtnCancel.Margin = new System.Windows.Forms.Padding(20, 20, 20, 0);
+            this.BtnCancel.MinimumSize = new System.Drawing.Size(130, 40);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.BtnCancel.Size = new System.Drawing.Size(123, 40);
+            this.BtnCancel.Size = new System.Drawing.Size(130, 40);
             this.BtnCancel.SystemIcon = null;
             this.BtnCancel.TabIndex = 2;
             this.BtnCancel.Text = "[Cancel]";
@@ -214,21 +234,27 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(600, 364);
+            this.ClientSize = new System.Drawing.Size(600, 372);
+            this.ControlBox = false;
             this.Controls.Add(this.panBottom);
             this.Controls.Add(this.tableMain);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(500, 240);
             this.Name = "Popup";
-            this.Padding = new System.Windows.Forms.Padding(1);
+            this.Padding = new System.Windows.Forms.Padding(0, 20, 0, 0);
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "[Title]";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Popup_KeyDown);
             this.tableMain.ResumeLayout(false);
             this.tableMain.PerformLayout();
+            this.panNote.ResumeLayout(false);
+            this.panNote.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picThumbnail)).EndInit();
             this.panBottom.ResumeLayout(false);
+            this.panBottom.PerformLayout();
             this.tableBottom.ResumeLayout(false);
             this.tableBottom.PerformLayout();
             this.ResumeLayout(false);
@@ -240,7 +266,6 @@
         private TableLayoutPanel tableMain;
         private Panel panBottom;
         private TableLayoutPanel tableBottom;
-        private Label lblTitle;
         private Label lblDescription;
         private ModernTextBox txtValue;
         private PictureBox picThumbnail;
@@ -248,5 +273,7 @@
         private ModernButton BtnAccept;
         private ModernButton BtnCancel;
         private CheckBox ChkOption;
+        private FlowLayoutPanel panNote;
+        private Label lblNote;
     }
 }
