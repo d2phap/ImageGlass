@@ -164,14 +164,16 @@
             // 
             // panBottom
             // 
+            this.panBottom.AutoSize = true;
+            this.panBottom.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panBottom.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panBottom.Controls.Add(this.tableBottom);
             this.panBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panBottom.Location = new System.Drawing.Point(0, 292);
+            this.panBottom.Location = new System.Drawing.Point(0, 289);
             this.panBottom.Margin = new System.Windows.Forms.Padding(0);
             this.panBottom.Name = "panBottom";
-            this.panBottom.Padding = new System.Windows.Forms.Padding(0, 0, 0, 20);
-            this.panBottom.Size = new System.Drawing.Size(600, 80);
+            this.panBottom.Padding = new System.Windows.Forms.Padding(20);
+            this.panBottom.Size = new System.Drawing.Size(600, 83);
             this.panBottom.TabIndex = 0;
             // 
             // tableBottom
@@ -185,13 +187,12 @@
             this.tableBottom.Controls.Add(this.BtnAccept, 1, 0);
             this.tableBottom.Controls.Add(this.BtnCancel, 2, 0);
             this.tableBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableBottom.Location = new System.Drawing.Point(0, 0);
+            this.tableBottom.Location = new System.Drawing.Point(20, 20);
             this.tableBottom.Margin = new System.Windows.Forms.Padding(0);
             this.tableBottom.Name = "tableBottom";
             this.tableBottom.RowCount = 1;
             this.tableBottom.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableBottom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableBottom.Size = new System.Drawing.Size(600, 60);
+            this.tableBottom.Size = new System.Drawing.Size(560, 43);
             this.tableBottom.TabIndex = 0;
             // 
             // BtnAccept
@@ -199,12 +200,11 @@
             this.BtnAccept.AutoSize = true;
             this.BtnAccept.DarkMode = false;
             this.BtnAccept.ImagePadding = 2;
-            this.BtnAccept.Location = new System.Drawing.Point(310, 20);
-            this.BtnAccept.Margin = new System.Windows.Forms.Padding(20, 20, 0, 0);
-            this.BtnAccept.MinimumSize = new System.Drawing.Size(120, 0);
+            this.BtnAccept.Location = new System.Drawing.Point(280, 0);
+            this.BtnAccept.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.BtnAccept.MinimumSize = new System.Drawing.Size(130, 40);
             this.BtnAccept.Name = "BtnAccept";
-            this.BtnAccept.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.BtnAccept.Size = new System.Drawing.Size(120, 40);
+            this.BtnAccept.Size = new System.Drawing.Size(130, 43);
             this.BtnAccept.SystemIcon = null;
             this.BtnAccept.TabIndex = 1;
             this.BtnAccept.Text = "[OK]";
@@ -216,12 +216,11 @@
             this.BtnCancel.AutoSize = true;
             this.BtnCancel.DarkMode = false;
             this.BtnCancel.ImagePadding = 2;
-            this.BtnCancel.Location = new System.Drawing.Point(450, 20);
-            this.BtnCancel.Margin = new System.Windows.Forms.Padding(20, 20, 20, 0);
+            this.BtnCancel.Location = new System.Drawing.Point(430, 0);
+            this.BtnCancel.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.BtnCancel.MinimumSize = new System.Drawing.Size(130, 40);
             this.BtnCancel.Name = "BtnCancel";
-            this.BtnCancel.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.BtnCancel.Size = new System.Drawing.Size(130, 40);
+            this.BtnCancel.Size = new System.Drawing.Size(130, 43);
             this.BtnCancel.SystemIcon = null;
             this.BtnCancel.TabIndex = 2;
             this.BtnCancel.Text = "[Cancel]";
@@ -258,6 +257,7 @@
             this.tableBottom.ResumeLayout(false);
             this.tableBottom.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

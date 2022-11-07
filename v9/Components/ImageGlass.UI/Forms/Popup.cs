@@ -27,21 +27,6 @@ using Windows.Win32.UI.Controls;
 namespace ImageGlass.UI;
 
 
-/// <summary>
-/// The built-in buttons for Popup.
-/// </summary>
-public enum PopupButtons: uint
-{
-    OK = 0,
-    Close = 1,
-    Yes_No = 2,
-    OK_Cancel = 3,
-    OK_Close = 4,
-    LearnMore_Close = 5,
-    Continue_Quit = 6,
-}
-
-
 public partial class Popup : Form
 {
     #region Borderless form
@@ -999,4 +984,20 @@ public partial class Popup : Form
         Height = height;
     }
 
+}
+
+
+
+/// <summary>
+/// The built-in buttons for Popup.
+/// </summary>
+public enum PopupButtons : uint
+{
+    OK = 0,
+    Close = 1,
+    Yes_No = 2,
+    OK_Cancel = 3,
+    OK_Close = 4,
+    LearnMore_Close = 5,
+    Continue_Quit = 6,
 }
