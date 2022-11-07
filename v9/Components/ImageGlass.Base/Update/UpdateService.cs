@@ -71,22 +71,34 @@ public class UpdateService
     /// <summary>
     /// Gets the value indicates that the current app has a new update
     /// </summary>
-    public bool HasNewUpdate => CurrentReleaseInfo != null
-        && new Version(App.Version) < new Version(CurrentReleaseInfo.Version);
+    public bool HasNewUpdate
+    {
+        get
+        {
+            if (CurrentReleaseInfo == null)
+            {
+                return false;
+            }
 
+            var newVersion = new Version(CurrentReleaseInfo.Version);
+            var currentVersion = new Version(App.Version);
+
+            return newVersion > currentVersion;
+        }
+    }
 
 
     /// <summary>
     /// Gets the latest updates
     /// </summary>
     /// <returns></returns>
-    public async Task GetUpdates()
+    public async Task GetUpdatesAsync()
     {
         var url = $"https://imageglass.org/url/update?channel={Constants.UPDATE_CHANNEL}&version={App.Version}";
 
-        var requestMsg = new HttpRequestMessage(HttpMethod.Get, url);
+
         using var httpClient = new HttpClient();
-        var response = await httpClient.SendAsync(requestMsg);
+        var response = await httpClient.GetAsync(url);
 
         if (!response.IsSuccessStatusCode)
         {
