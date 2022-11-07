@@ -43,7 +43,7 @@ public class ModernGalleryRenderer : StyleRenderer
 
     public override void RenderScrollbarFiller(Graphics g)
     {
-        if (Theme.Info.IsDark)
+        if (Theme.Settings.IsDarkMode)
         {
             // dark scrollbars
             _ = SystemRenderer.ApplyTheme(ImageGalleryOwner.HScrollBar, true);

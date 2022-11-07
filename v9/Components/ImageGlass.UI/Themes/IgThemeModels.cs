@@ -50,7 +50,6 @@ public record IgThemeInfo
     public string Email { get; set; } = string.Empty;
     public string Website { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public bool IsDark { get; set; } = true;
 }
 
 
@@ -59,6 +58,12 @@ public record IgThemeInfo
 /// </summary>
 public record IgThemeSettings
 {
+    /// <summary>
+    /// Default value is <c>true</c>.
+    /// </summary>
+    public bool IsDarkMode { get; set; } = true;
+
+
     public Color AccentColor { get; set; } = ThemeUtils.ColorFromHex("#0078D7");
     public Color AccentHoverColor { get; set; } = ThemeUtils.ColorFromHex("#0d92ff");
     public Color AccentSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#0060ae");

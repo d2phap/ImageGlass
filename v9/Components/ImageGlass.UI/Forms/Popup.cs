@@ -629,7 +629,7 @@ public partial class Popup : Form
 
     protected override void OnLoad(EventArgs e)
     {
-        WindowApi.SetImmersiveDarkMode(Handle, Theme.Info.IsDark);
+        WindowApi.SetImmersiveDarkMode(Handle, Theme.Settings.IsDarkMode);
 
         // show thumbnail
         var showThumbnail = Thumbnail != null || ThumbnailOverlay != null;
@@ -759,7 +759,7 @@ public partial class Popup : Form
         // dark mode
         txtValue.DarkMode =
             BtnAccept.DarkMode =
-            BtnCancel.DarkMode = Theme.Info.IsDark;
+            BtnCancel.DarkMode = Theme.Settings.IsDarkMode;
     }
 
 

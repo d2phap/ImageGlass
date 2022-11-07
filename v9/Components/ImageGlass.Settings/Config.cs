@@ -1195,7 +1195,7 @@ public static class Config
         PopupButtons buttons = PopupButtons.OK,
         string optionText = "")
     {
-        var noteBackgroundColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Info, Config.Theme.Info.IsDark);
+        var noteBackgroundColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Info, Config.Theme.Settings.IsDarkMode);
 
         SystemSounds.Question.Play();
 
@@ -1224,7 +1224,7 @@ public static class Config
         string optionText = "")
     {
         heading ??= Language["_._Warning"];
-        var noteBackgroundColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Warning, Config.Theme.Info.IsDark);
+        var noteBackgroundColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Warning, Config.Theme.Settings.IsDarkMode);
 
         SystemSounds.Exclamation.Play();
 
@@ -1253,7 +1253,7 @@ public static class Config
         string optionText = "")
     {
         heading ??= Language["_._Error"];
-        var noteBackgroundColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Danger, Config.Theme.Info.IsDark);
+        var noteBackgroundColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Danger, Config.Theme.Settings.IsDarkMode);
 
         SystemSounds.Asterisk.Play();
 
@@ -1492,7 +1492,7 @@ public static class Config
     public static void ApplyFormTheme(Form frm, IgTheme th)
     {
         // enable dark titlebar
-        if (Config.Theme.Info.IsDark)
+        if (Config.Theme.Settings.IsDarkMode)
         {
             WindowApi.SetImmersiveDarkMode(frm.Handle, true);
         }
