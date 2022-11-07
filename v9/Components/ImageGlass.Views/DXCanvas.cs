@@ -46,7 +46,7 @@ public class DXCanvas : DXControl
 
     // to distinguish between clicks
     // https://docs.microsoft.com/en-us/dotnet/desktop/winforms/input-mouse/how-to-distinguish-between-clicks-and-double-clicks?view=netdesktop-6.0
-    private DateTime _lastClick = DateTime.Now;
+    private DateTime _lastClick = DateTime.UtcNow;
     private MouseEventArgs _lastClickArgs = new(MouseButtons.Left, 0, 0, 0, 0);
     private bool _isMouseDragged = false;
     private bool _isDoubleClick = false;
@@ -891,7 +891,7 @@ public class DXCanvas : DXControl
             {
                 _isDoubleClick = false;
 
-                var length = DateTime.Now - _lastClick;
+                var length = DateTime.UtcNow - _lastClick;
 
                 // If double click is valid, respond
                 if (_doubleClickArea.Contains(e.Location) && length < _doubleClickMaxTime)
@@ -908,7 +908,7 @@ public class DXCanvas : DXControl
                 // Double click was invalid, restart 
                 _clickTimer.Stop();
                 _clickTimer.Start();
-                _lastClick = DateTime.Now;
+                _lastClick = DateTime.UtcNow;
                 _isDoubleClick = true;
                 _doubleClickArea = new(e.Location - (SystemInformation.DoubleClickSize / 2), SystemInformation.DoubleClickSize);
             }

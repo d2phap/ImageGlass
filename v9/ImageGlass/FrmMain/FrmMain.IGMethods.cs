@@ -606,7 +606,7 @@ public partial class FrmMain
                 Icon = TaskDialogIcon.ShieldSuccessGreenBar,
                 Text = "" +
                     $"This software is released under the terms of the GNU General Public License v3.0.\r\n" +
-                    $"Copyright © 2010-{DateTime.Now.Year} by Dương Diệu Pháp. All rights reserved.",
+                    $"Copyright © 2010-{DateTime.UtcNow.Year} by Dương Diệu Pháp. All rights reserved.",
             },
 
             Expander = new()

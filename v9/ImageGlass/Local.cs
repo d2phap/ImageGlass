@@ -259,7 +259,7 @@ internal class Local
         var tempDir = App.ConfigDir(PathType.Dir, Dir.Temporary);
         Directory.CreateDirectory(tempDir);
 
-        var filename = Path.Combine(tempDir, $"temp_{DateTime.Now:yyyy-MM-dd-hh-mm-ss}{ext}");
+        var filename = Path.Combine(tempDir, $"temp_{DateTime.UtcNow:yyyy-MM-dd-hh-mm-ss}{ext}");
         quality ??= Config.ImageEditQuality;
 
 

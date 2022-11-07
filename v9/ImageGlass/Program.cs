@@ -86,7 +86,7 @@ internal static class Program
                 out var lastUpdate))
             {
                 // Check for update every 5 days
-                if (DateTime.Now.Subtract(lastUpdate).TotalDays > 5)
+                if (DateTime.UtcNow.Subtract(lastUpdate).TotalDays > 5)
                 {
                     CheckForUpdate(false);
                 }
@@ -113,14 +113,14 @@ internal static class Program
             showIfNewUpdate ??= false;
 
             var updater = new UpdateService();
-            await updater.GetUpdates();
+            await updater.GetUpdatesAsync();
 
 
             // There is a newer version
             Config.IsNewVersionAvailable = updater.HasNewUpdate;
 
             // save last update
-            Config.AutoUpdate = DateTime.Now.ToString(Constants.DATETIME_FORMAT);
+            Config.AutoUpdate = DateTime.UtcNow.ToString(Constants.DATETIME_FORMAT);
 
 
             if (updater.HasNewUpdate || showIfNewUpdate.Value)

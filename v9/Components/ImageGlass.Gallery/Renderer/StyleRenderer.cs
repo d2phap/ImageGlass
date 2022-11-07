@@ -89,7 +89,7 @@ public class StyleRenderer : IDisposable
     /// <summary>
     /// Gets whether the lazy refresh interval is exceeded.
     /// </summary>
-    internal bool LazyRefreshIntervalExceeded { get { return ((int)(DateTime.Now - lastRenderTime).TotalMilliseconds > LazyRefreshInterval); } }
+    internal bool LazyRefreshIntervalExceeded { get { return ((int)(DateTime.UtcNow - lastRenderTime).TotalMilliseconds > LazyRefreshInterval); } }
 
     #endregion
 
@@ -547,7 +547,7 @@ public class StyleRenderer : IDisposable
         }
 
         // Save the timne of this render for lazy refreshes
-        lastRenderTime = DateTime.Now;
+        lastRenderTime = DateTime.UtcNow;
 
         // Update the layout
         ImageGalleryOwner.layoutManager.Update();
