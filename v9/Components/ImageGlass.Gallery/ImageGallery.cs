@@ -1007,8 +1007,7 @@ public partial class ImageGallery : Control, IComponent
         mRenderer = renderer ?? throw new ArgumentNullException(nameof(renderer));
         mRenderer.ImageGalleryOwner = this;
 
-        if (oldRenderer != null)
-            oldRenderer.Dispose();
+        oldRenderer?.Dispose();
 
         if (layoutManager != null)
             layoutManager.Update(true);

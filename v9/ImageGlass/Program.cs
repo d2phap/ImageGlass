@@ -173,6 +173,7 @@ internal static class Program
     {
         if (Config.EnableMultiInstances)
         {
+            FormMain?.Dispose();
             Application.Run(FormMain = new FrmMain());
         }
         else
@@ -186,6 +187,7 @@ internal static class Program
                 instance.ArgsReceived += Instance_ArgumentsReceived; ;
                 instance.ListenForArgsFromChildInstances();
 
+                FormMain?.Dispose();
                 Application.Run(FormMain = new FrmMain());
             }
             else
