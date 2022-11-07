@@ -236,8 +236,8 @@ public class ModernButton : Button
         
         var g = e.Graphics;
         g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-
+        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+        g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
 
         var textColor = DarkColors.LightText;
         var borderColor = DarkColors.GreySelection;
@@ -245,11 +245,18 @@ public class ModernButton : Button
             ? DarkColors.DarkBlueBackground
             : DarkColors.LightBackground;
 
+
         var borderRadius = 0f;
         if (BHelper.IsOS(WindowsOS.Win11))
         {
             borderRadius = Height / 6f;
         }
+
+        var btnRect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
+        using var btnRectPath = ThemeUtils.GetRoundRectanglePath(btnRect, borderRadius);
+        Region = new Region(btnRectPath);
+
+
 
         if (Enabled)
         {
@@ -294,27 +301,22 @@ public class ModernButton : Button
             fillColor = DarkColors.DarkGreySelection;
         }
 
-
+        
         // draw background
-        var parentBgRect = new Rectangle(-1, -1, ClientSize.Width + 1, ClientSize.Height + 1);
-        using var parentBgBrush = new SolidBrush(Parent.BackColor);
-        g.FillRectangle(parentBgBrush, parentBgRect);
-
-        var rect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
-        using var bgPath = ThemeUtils.GetRoundRectanglePath(rect, borderRadius);
         using var bgBrush = new SolidBrush(fillColor);
-        g.FillPath(bgBrush, bgPath);
+        g.FillPath(bgBrush, btnRectPath);
         
 
         // draw border
         if (ButtonStyle == ModernButtonStyle.Normal)
         {
-            var borderRect = new Rectangle(
-                rect.Left, rect.Top,
-                rect.Width - 1, rect.Height - 1);
-
-            using var borderPath = ThemeUtils.GetRoundRectanglePath(borderRect, borderRadius);
             using var pen = new Pen(borderColor, 1);
+            pen.Alignment = System.Drawing.Drawing2D.PenAlignment.Inset;
+
+            var borderRect = new RectangleF(
+                btnRect.X + 1, btnRect.Y + 1,
+                btnRect.Width - 2, btnRect.Height - 2);
+            using var borderPath = ThemeUtils.GetRoundRectanglePath(borderRect, borderRadius);
 
             g.DrawPath(pen, borderPath);
         }
@@ -332,7 +334,7 @@ public class ModernButton : Button
         // draw icon
         if (Image != null)
         {
-            var stringSize = g.MeasureString(Text, Font, rect.Size);
+            var stringSize = g.MeasureString(Text, Font, btnRect.Size);
 
             var x = (Width / 2) - (Image.Width / 2);
             var y = (Height / 2) - (Image.Height / 2);
