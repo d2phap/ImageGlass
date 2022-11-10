@@ -32,7 +32,7 @@ using WicNet;
 
 namespace ImageGlass;
 
-public partial class FrmMain : Form
+public partial class FrmMain : ModernForm
 {
     // cancellation tokens of synchronious task
     private CancellationTokenSource _loadCancelToken = new();
@@ -63,8 +63,6 @@ public partial class FrmMain : Form
         // and load theme icons
         DpiApi.OnDpiChanged += OnDpiChanged;
         DpiApi.CurrentDpi = DeviceDpi;
-
-        SetUpFrmMainTheme();
     }
 
     private void FrmMain_Load(object sender, EventArgs e)

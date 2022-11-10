@@ -141,6 +141,7 @@ public partial class FrmMain
 
     private void SetUpFrmMainConfigs()
     {
+        SuspendLayout();
         Sp1.TabStop = false;
         Sp2.Panel2Collapsed = true;
         Sp2.TabStop = false;
@@ -183,6 +184,7 @@ public partial class FrmMain
 
         IG_ToggleCheckerboard(Config.ShowCheckerBoard);
 
+        ResumeLayout(false);
 
         Load += FrmMainConfig_Load;
         FormClosing += FrmMainConfig_FormClosing;

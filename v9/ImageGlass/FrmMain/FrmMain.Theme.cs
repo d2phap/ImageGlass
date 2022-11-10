@@ -29,25 +29,19 @@ namespace ImageGlass;
 
 public partial class FrmMain
 {
-
-    public void SetUpFrmMainTheme()
+    public override void ApplyTheme(bool darkMode, WindowBackdrop? backDrop = null)
     {
-        UpdateTheme();
-    }
+        //var themMode = mode;
 
+        //if (mode == SystemThemeMode.Unknown)
+        //{
+        //    themMode = ThemeUtils.GetSystemThemeMode();
+        //}
 
-    private void UpdateTheme(SystemThemeMode mode = SystemThemeMode.Unknown)
-    {
-        var themMode = mode;
-        
-        if (mode == SystemThemeMode.Unknown)
-        {
-            themMode = ThemeUtils.GetSystemThemeMode();
-        }
+        //// correct theme mode
+        //var isDarkMode = themMode != SystemThemeMode.Light;
 
-        // correct theme mode
-        var isDarkMode = themMode != SystemThemeMode.Light;
-
+        SuspendLayout();
 
         // toolbar
         Toolbar.Theme =
@@ -77,6 +71,10 @@ public partial class FrmMain
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
 
         Config.ApplyFormTheme(this, Config.Theme);
+
+        ResumeLayout(false);
+
+        base.ApplyTheme(darkMode, backDrop);
     }
 
 }
