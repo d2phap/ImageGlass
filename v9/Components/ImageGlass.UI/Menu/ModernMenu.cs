@@ -62,7 +62,7 @@ public class ModernMenu : ContextMenuStrip
     public ModernMenu(IContainer container) : base(container)
     {
         // apply Windows 11 Corner API
-        CornerApi.ApplyCorner(Handle);
+        WindowApi.SetRoundCorner(Handle);
     }
 
 
@@ -174,7 +174,7 @@ public class ModernMenu : ContextMenuStrip
             if (item.HasDropDownItems && toFixDropdown)
             {
                 // apply corner
-                CornerApi.ApplyCorner(item.DropDown.Handle);
+                WindowApi.SetRoundCorner(item.DropDown.Handle);
 
                 // fix dropdown direction
                 item.DropDownOpening -= Item_DropDownOpening;

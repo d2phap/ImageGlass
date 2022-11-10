@@ -115,9 +115,14 @@ public partial class BHelper
     /// <summary>
     /// Checks if the given Windows version is matched
     /// </summary>
-    /// <returns></returns>
     public static bool IsOS(WindowsOS ver)
     {
+        if (ver == WindowsOS.Win11_22H2)
+        {
+            return Environment.OSVersion.Version.Major >= 10
+                && Environment.OSVersion.Version.Build >= 22621;
+        }
+
         if (ver == WindowsOS.Win11)
         {
             return Environment.OSVersion.Version.Major >= 10
@@ -142,6 +147,17 @@ public partial class BHelper
         }
 
         return false;
+    }
+
+
+    /// <summary>
+    /// Checks if the OS is Windows 10 or greater or equals the given build number.
+    /// </summary>
+    /// <param name="build">Build number of Windows.</param>
+    public static bool IsWindows10OrGreater(int build = -1)
+    {
+        return Environment.OSVersion.Version.Major >= 10
+            && Environment.OSVersion.Version.Build >= build;
     }
 
 

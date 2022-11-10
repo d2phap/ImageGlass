@@ -16,12 +16,29 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
+using Windows.Win32;
+using Windows.Win32.Graphics.Dwm;
+using Windows.Win32.Foundation;
 
 namespace ImageGlass.Base.WinApi;
 
 public class WindowApi
 {
+    /// <summary>
+    /// The DWM_WINDOW_CORNER_PREFERENCE enum for DwmSetWindowAttribute's third parameter, 
+    /// which tells the function what value of the enum to set.
+    /// </summary>
+    private enum DWM_WINDOW_CORNER_PREFERENCE
+    {
+        DWMWCP_DEFAULT = 0,
+        DWMWCP_DONOTROUND = 1,
+        DWMWCP_ROUND = 2,
+        DWMWCP_ROUNDSMALL = 3,
+    }
+
+
     // Set error mode
     #region Set error mode
 
@@ -233,26 +250,33 @@ public class WindowApi
     /// </summary>
     public static void SetImmersiveDarkMode(IntPtr wndHandle, bool enabled)
     {
-        bool IsWindows10OrGreater(int build = -1)
-        {
-            return Environment.OSVersion.Version.Major >= 10 && Environment.OSVersion.Version.Build >= build;
-        }
+        // ~< 20H1
+        if (!BHelper.IsWindows10OrGreater(18985)) return;
 
-        var attribute = 0;
-        if (IsWindows10OrGreater(18985))
+        unsafe
         {
-            attribute = DWMWA_USE_IMMERSIVE_DARK_MODE;
-        }
-        else if (IsWindows10OrGreater(17763))
-        {
-            attribute = DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1;
-        }
-
-        if (attribute > 0)
-        {
-            _ = DwmSetWindowAttribute(wndHandle, (int)attribute, ref enabled, sizeof(int));
+            PInvoke.DwmSetWindowAttribute(new HWND(wndHandle),
+                DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE,
+                &enabled, sizeof(uint));
         }
     }
 
+
+    /// <summary>
+    /// Sets rounded corners for Windows 11.
+    /// </summary>
+    public static void SetRoundCorner(IntPtr wndHandle)
+    {
+        if (!BHelper.IsOS(WindowsOS.Win11)) return;
+
+        unsafe
+        {
+            var preference = DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND;
+
+            PInvoke.DwmSetWindowAttribute(new HWND(wndHandle),
+                DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE,
+                &preference, sizeof(uint));
+        }
+    }
 
 }

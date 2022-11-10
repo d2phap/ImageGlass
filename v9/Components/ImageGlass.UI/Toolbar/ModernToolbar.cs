@@ -275,7 +275,7 @@ public class ModernToolbar : ToolStrip
         ShowItemToolTips = false;
 
         // Apply Windows 11 corner API
-        CornerApi.ApplyCorner(OverflowButton.DropDown.Handle);
+        WindowApi.SetRoundCorner(OverflowButton.DropDown.Handle);
     }
 
 
