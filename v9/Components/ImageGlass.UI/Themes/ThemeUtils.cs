@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Base;
 using Microsoft.Win32;
 using System.Drawing.Drawing2D;
 using System.Globalization;
@@ -32,43 +33,54 @@ public partial class ThemeUtils
     /// <summary>
     /// Gets the background color for the input status.
     /// </summary>
-    public static Color GetBackgroundColorForStatus(ColorStatus status, bool darkMode = true)
+    public static Color GetBackgroundColorForStatus(ColorStatus status, bool darkMode = true, int alpha = 255)
     {
         if (darkMode)
         {
             // dark color palette
             return status switch
             {
-                ColorStatus.Info => Color.FromArgb(255, 20, 44, 59),
-                ColorStatus.Success => Color.FromArgb(255, 34, 59, 42),
-                ColorStatus.Warning => Color.FromArgb(255, 59, 40, 10),
-                ColorStatus.Danger => Color.FromArgb(255, 59, 20, 19),
-                _ => Color.FromArgb(255, 32, 38, 43),
+                ColorStatus.Info => Color.FromArgb(alpha, 20, 44, 59),
+                ColorStatus.Success => Color.FromArgb(alpha, 34, 59, 42),
+                ColorStatus.Warning => Color.FromArgb(alpha, 59, 40, 10),
+                ColorStatus.Danger => Color.FromArgb(alpha, 59, 20, 19),
+                _ => Color.FromArgb(alpha, 32, 38, 43),
             };
         }
 
         // light color palette
         return status switch
         {
-            ColorStatus.Info => Color.FromArgb(255, 199, 238, 255),
-            ColorStatus.Success => Color.FromArgb(255, 219, 255, 242),
-            ColorStatus.Warning => Color.FromArgb(255, 255, 239, 219),
-            ColorStatus.Danger => Color.FromArgb(255, 255, 222, 222),
-            _ => Color.FromArgb(255, 242, 242, 242),
+            ColorStatus.Info => Color.FromArgb(alpha, 199, 238, 255),
+            ColorStatus.Success => Color.FromArgb(alpha, 219, 255, 242),
+            ColorStatus.Warning => Color.FromArgb(alpha, 255, 239, 219),
+            ColorStatus.Danger => Color.FromArgb(alpha, 255, 222, 222),
+            _ => Color.FromArgb(alpha, 242, 242, 242),
         };
     }
+
+
+    /// <summary>
+    /// Gets theme color palatte
+    /// </summary>
+    public static IColors GetThemeColorPalatte(bool darkMode)
+    {
+        return darkMode
+            ? new DarkColors()
+            : new LightColors();
+    }
+
 
     /// <summary>
     /// Gets system theme (Dark or Light)
     /// </summary>
-    /// <returns></returns>
     public static SystemThemeMode GetSystemThemeMode()
     {
         const string regPath = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
-        const string regKeyAppTheme = "AppsUseLightTheme";
+        const string regKey = "AppsUseLightTheme";
 
         using var key = Registry.CurrentUser.OpenSubKey(regPath);
-        var regValue = key?.GetValue(regKeyAppTheme);
+        var regValue = key?.GetValue(regKey);
         var themeMode = SystemThemeMode.Dark;
 
         if (regValue != null)
@@ -81,8 +93,52 @@ public partial class ThemeUtils
             }
         }
 
-
         return themeMode;
+    }
+
+
+    /// <summary>
+    /// Gets system accent color.
+    /// </summary>
+    /// <param name="brightness">The factor (-1 = black ... +1 = white) to change the lightness.</param>
+    public static Color GetAccentColor(float brightness)
+    {
+        var accentColor = Color.FromArgb(0, 120, 215); // blue
+
+        if (BHelper.IsOSBuildOrGreater(22000))
+        {
+            const string regPath = @"Software\Microsoft\Windows\DWM";
+            const string regKey = "AccentColor";
+
+            using var key = Registry.CurrentUser.OpenSubKey(regPath);
+            var regValue = key?.GetValue(regKey);
+
+            if (regValue != null)
+            {
+                accentColor = ParseDWordColor((int)regValue);
+                accentColor = AdjustLightness(accentColor, brightness);
+            }
+        }
+        else
+        {
+            accentColor = AdjustLightness(accentColor, brightness);
+        }
+
+        return accentColor;
+    }
+
+    /// <summary>
+    /// Parses DWord color to <see cref="Color"/>.
+    /// </summary>
+    /// <param name="dColor">DWord color</param>
+    public static Color ParseDWordColor(int dColor)
+    {
+        int a = (dColor >> 24) & 0xFF,
+            r = (dColor >> 0) & 0xFF,
+            g = (dColor >> 8) & 0xFF,
+            b = (dColor >> 16) & 0xFF;
+
+        return Color.FromArgb(a, r, g, b);
     }
 
 

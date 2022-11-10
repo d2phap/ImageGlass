@@ -26,112 +26,30 @@ License: MIT, https://github.com/RobinPerris/DarkUI/blob/master/LICENSE
 namespace ImageGlass.UI;
 
 
-public sealed class DarkColors
+public class DarkColors : IColors
 {
-    public static Color GreyBackground
-    {
-        get { return Color.FromArgb(60, 63, 65); }
-    }
+    public Color GreyBackground => Color.FromArgb(60, 63, 65); // Form Background
+    public Color HeaderBackground => Color.FromArgb(57, 60, 62); // List Alt Color
+    public Color BlueBackground => Color.FromArgb(66, 77, 95);
+    public Color DarkBlueBackground => Color.FromArgb(52, 57, 66);
+    public Color DarkBackground => Color.FromArgb(43, 43, 43); // Control Clicked
+    public Color MediumBackground => Color.FromArgb(49, 51, 53);
+    public Color LightBackground => Color.FromArgb(69, 73, 74); // Control Color
+    public Color LighterBackground => Color.FromArgb(95, 101, 102); // Control Hover
+    public Color LightestBackground => Color.FromArgb(178, 178, 178);
+    public Color LightBorder => Color.FromArgb(81, 81, 81);
+    public Color DarkBorder => Color.FromArgb(51, 51, 51);
+    public Color LightText => Color.FromArgb(220, 220, 220); // Normal Text
+    public Color DisabledText => Color.FromArgb(153, 153, 153); // Disabled Text
+    public Color BlueHighlight => ThemeUtils.GetAccentColor(0.2f); // Blue Borders
+    public Color BlueSelection => ThemeUtils.GetAccentColor(0); // DropDown Selection
+    public Color GreyHighlight => Color.FromArgb(122, 128, 132); // ComboBox Arrow
+    public Color GreySelection => Color.FromArgb(92, 92, 92); // Control Border
+    public Color DarkGreySelection => Color.FromArgb(82, 82, 82);
+    public Color DarkBlueBorder => Color.FromArgb(51, 61, 78);
+    public Color LightBlueBorder => Color.FromArgb(86, 97, 114);
+    public Color ActiveControl => Color.FromArgb(159, 178, 196);
 
-    public static Color HeaderBackground
-    {
-        get { return Color.FromArgb(57, 60, 62); }
-    }
-
-    public static Color BlueBackground
-    {
-        get { return Color.FromArgb(66, 77, 95); }
-    }
-
-    public static Color DarkBlueBackground
-    {
-        get { return Color.FromArgb(52, 57, 66); }
-    }
-
-    public static Color DarkBackground
-    {
-        get { return Color.FromArgb(43, 43, 43); }
-    }
-
-    public static Color MediumBackground
-    {
-        get { return Color.FromArgb(49, 51, 53); }
-    }
-
-    public static Color LightBackground
-    {
-        get { return Color.FromArgb(69, 73, 74); }
-    }
-
-    public static Color LighterBackground
-    {
-        get { return Color.FromArgb(95, 101, 102); }
-    }
-
-    public static Color LightestBackground
-    {
-        get { return Color.FromArgb(178, 178, 178); }
-    }
-
-    public static Color LightBorder
-    {
-        get { return Color.FromArgb(81, 81, 81); }
-    }
-
-    public static Color DarkBorder
-    {
-        get { return Color.FromArgb(51, 51, 51); }
-    }
-
-    public static Color LightText
-    {
-        get { return Color.FromArgb(220, 220, 220); }
-    }
-
-    public static Color DisabledText
-    {
-        get { return Color.FromArgb(153, 153, 153); }
-    }
-
-    public static Color BlueHighlight
-    {
-        get { return Color.FromArgb(104, 151, 187); }
-    }
-
-    public static Color BlueSelection
-    {
-        get { return Color.FromArgb(75, 110, 175); }
-    }
-
-    public static Color GreyHighlight
-    {
-        get { return Color.FromArgb(122, 128, 132); }
-    }
-
-    public static Color GreySelection
-    {
-        get { return Color.FromArgb(92, 92, 92); }
-    }
-
-    public static Color DarkGreySelection
-    {
-        get { return Color.FromArgb(82, 82, 82); }
-    }
-
-    public static Color DarkBlueBorder
-    {
-        get { return Color.FromArgb(51, 61, 78); }
-    }
-
-    public static Color LightBlueBorder
-    {
-        get { return Color.FromArgb(86, 97, 114); }
-    }
-
-    public static Color ActiveControl
-    {
-        get { return Color.FromArgb(159, 178, 196); }
-    }
 }
 
 
