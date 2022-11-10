@@ -65,8 +65,9 @@ public partial class FrmMain
         Sp2.SplitterBackColor = Config.Theme.Settings.ThumbnailBarBgColor;
 
         // navigation buttons
-        PicMain.NavHoveredColor = Color.FromArgb(200, Config.Theme.Settings.ToolbarBgColor);
-        PicMain.NavPressedColor = Color.FromArgb(240, Config.Theme.Settings.ToolbarBgColor);
+        var colors = ThemeUtils.GetThemeColorPalatte(darkMode);
+        PicMain.NavHoveredColor =  Color.FromArgb(200, colors.DarkBackground);
+        PicMain.NavPressedColor = Color.FromArgb(240, colors.DarkBackground);
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
 
