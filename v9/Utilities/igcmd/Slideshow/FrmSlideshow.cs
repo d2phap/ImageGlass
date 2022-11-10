@@ -32,7 +32,7 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace igcmd.Slideshow;
 
-public partial class FrmSlideshow : Form
+public partial class FrmSlideshow : ModernForm
 {
     private PipeClient _client;
     private string _serverName;
@@ -124,8 +124,6 @@ public partial class FrmSlideshow : Form
         // and load theme icons
         DpiApi.OnDpiChanged += OnDpiChanged;
         DpiApi.CurrentDpi = DeviceDpi;
-
-        LoadTheme();
     }
 
 
@@ -307,7 +305,8 @@ public partial class FrmSlideshow : Form
         if (cmd.Equals(SlideshowPipeCommands.SET_THEME, StringComparison.InvariantCultureIgnoreCase))
         {
             Config.Theme = new IgTheme(arg, Config.ToolbarIconHeight);
-            LoadTheme();
+
+            ApplyTheme(Config.Theme.Settings.IsDarkMode);
             return;
         }
     }
@@ -1073,20 +1072,9 @@ public partial class FrmSlideshow : Form
     }
 
 
-    /// <summary>
-    /// Loads theme pack
-    /// </summary>
-    private void LoadTheme(SystemThemeMode mode = SystemThemeMode.Unknown)
+    public override void ApplyTheme(bool darkMode, WindowBackdrop? backDrop = null)
     {
-        var themMode = mode;
-
-        if (mode == SystemThemeMode.Unknown)
-        {
-            themMode = ThemeUtils.GetSystemThemeMode();
-        }
-
-        // correct theme mode
-        var isDarkMode = themMode != SystemThemeMode.Light;
+        SuspendLayout();
 
         MnuContext.Theme = Config.Theme;
 
@@ -1095,8 +1083,9 @@ public partial class FrmSlideshow : Form
         PicMain.ForeColor = ThemeUtils.InvertBlackAndWhiteColor(BackColor);
 
         // navigation buttons
-        PicMain.NavHoveredColor = Color.FromArgb(200, Config.Theme.Settings.ToolbarBgColor);
-        PicMain.NavPressedColor = Color.FromArgb(240, Config.Theme.Settings.ToolbarBgColor);
+        var colors = ThemeUtils.GetThemeColorPalatte(darkMode);
+        PicMain.NavHoveredColor = Color.FromArgb(200, colors.DarkBackground);
+        PicMain.NavPressedColor = Color.FromArgb(240, colors.DarkBackground);
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
         PicMain.NavDisplay = Config.EnableNavigationButtons
@@ -1104,6 +1093,10 @@ public partial class FrmSlideshow : Form
             : NavButtonDisplay.None;
 
         Config.ApplyFormTheme(this, Config.Theme);
+
+        ResumeLayout(false);
+
+        base.ApplyTheme(darkMode, backDrop);
     }
 
 
