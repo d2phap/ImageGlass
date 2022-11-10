@@ -209,6 +209,11 @@ public class ModernButton : Button
         Padding = new Padding(_padding);
     }
 
+    protected override void OnHandleCreated(EventArgs e)
+    {
+        base.OnHandleCreated(e);
+    }
+
     private void SetButtonState(ModernControlState buttonState)
     {
         if (_buttonState != buttonState)
@@ -226,56 +231,44 @@ public class ModernButton : Button
 
     protected override void OnPaint(PaintEventArgs e)
     {
-        // use default system style for light mode
-        if (!DarkMode)
-        {
-            base.OnPaint(e);
-            return;
-        }
+        base.OnPaint(e);
 
-        
         var g = e.Graphics;
         g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
         g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
         g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
 
-        var textColor = DarkColors.LightText;
-        var borderColor = DarkColors.GreySelection;
+        var colors = ThemeUtils.GetThemeColorPalatte(DarkMode);
+        var textColor = colors.LightText;
+        var borderColor = colors.GreySelection;
         var fillColor = _isDefault
-            ? DarkColors.DarkBlueBackground
-            : DarkColors.LightBackground;
-
+            ? colors.DarkBlueBackground
+            : colors.LightBackground;
 
         var borderRadius = 0f;
         if (BHelper.IsOS(WindowsOS.Win11))
         {
-            borderRadius = Height / 6f;
+            borderRadius = 4f;
         }
-
-        var btnRect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
-        using var btnRectPath = ThemeUtils.GetRoundRectanglePath(btnRect, borderRadius);
-        Region = new Region(btnRectPath);
-
-
 
         if (Enabled)
         {
             if (ButtonStyle == ModernButtonStyle.Normal)
             {
                 if (Focused && TabStop)
-                    borderColor = DarkColors.BlueHighlight;
+                    borderColor = colors.BlueHighlight;
 
                 switch (ButtonState)
                 {
                     case ModernControlState.Hover:
                         fillColor = _isDefault
-                            ? DarkColors.BlueBackground
-                            : DarkColors.LighterBackground;
+                            ? colors.BlueBackground
+                            : colors.LighterBackground;
                         break;
                     case ModernControlState.Pressed:
                         fillColor = _isDefault
-                            ? DarkColors.DarkBackground
-                            : DarkColors.DarkBackground;
+                            ? colors.DarkBackground
+                            : colors.DarkBackground;
                         break;
                 }
             }
@@ -284,22 +277,47 @@ public class ModernButton : Button
                 switch (ButtonState)
                 {
                     case ModernControlState.Normal:
-                        fillColor = DarkColors.GreyBackground;
+                        fillColor = colors.GreyBackground;
                         break;
                     case ModernControlState.Hover:
-                        fillColor = DarkColors.MediumBackground;
+                        fillColor = colors.MediumBackground;
                         break;
                     case ModernControlState.Pressed:
-                        fillColor = DarkColors.DarkBackground;
+                        fillColor = colors.DarkBackground;
                         break;
                 }
             }
         }
         else
         {
-            textColor = DarkColors.DisabledText;
-            fillColor = DarkColors.DarkGreySelection;
+            textColor = colors.DisabledText;
+            fillColor = colors.DarkGreySelection;
         }
+
+
+        var btnRect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
+        using var btnRectPath = ThemeUtils.GetRoundRectanglePath(btnRect, borderRadius);
+
+        //// use default system style for light mode
+        //if (!DarkMode)
+        //{
+        //    // draw border
+        //    if (ButtonStyle == ModernButtonStyle.Normal)
+        //    {
+        //        using var pen = new Pen(borderColor, 1);
+        //        pen.Alignment = System.Drawing.Drawing2D.PenAlignment.Inset;
+                
+        //        var borderRect = new RectangleF(
+        //            e.ClipRectangle.X + 2, e.ClipRectangle.Y + 2,
+        //            e.ClipRectangle.Width - 2, e.ClipRectangle.Height - 2);
+        //        using var borderPath = ThemeUtils.GetRoundRectanglePath(borderRect, borderRadius);
+
+        //        g.DrawPath(pen, borderPath);
+        //    }
+
+        //    return;
+        //}
+
 
         
         // draw background
