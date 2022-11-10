@@ -1474,7 +1474,7 @@ public partial class FrmMain
         var newName = Path.GetFileNameWithoutExtension(oldFilePath);
         var title = Config.Language[$"{Name}.{nameof(MnuRename)}"];
 
-        var frm = new Popup(Config.Theme, Config.Language)
+        using var frm = new Popup(Config.Theme, Config.Language)
         {
             Title = title,
             Value = newName,

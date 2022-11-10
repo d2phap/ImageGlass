@@ -61,12 +61,18 @@ public class ModernMenu : ContextMenuStrip
 
     public ModernMenu(IContainer container) : base(container)
     {
-        // apply Windows 11 Corner API
-        WindowApi.SetRoundCorner(Handle);
     }
 
 
     #region Protected override
+
+    protected override void OnHandleCreated(EventArgs e)
+    {
+        // apply Windows 11 Corner API
+        WindowApi.SetRoundCorner(Handle);
+
+        base.OnHandleCreated(e);
+    }
 
     protected override void OnItemAdded(ToolStripItemEventArgs e)
     {

@@ -36,8 +36,10 @@ public class ModernTextBox : TextBox
 
             if (_darkMode)
             {
-                BackColor = DarkColors.LightBackground;
-                ForeColor = DarkColors.LightText;
+                var colors = ThemeUtils.GetThemeColorPalatte(_darkMode);
+
+                BackColor = colors.LightBackground;
+                ForeColor = colors.LightText;
                 BorderStyle = BorderStyle.FixedSingle;
             }
             else
