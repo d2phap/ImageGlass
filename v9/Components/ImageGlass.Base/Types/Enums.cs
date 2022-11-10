@@ -86,7 +86,14 @@ public enum AfterOpeningEditAppAction
 /// </summary>
 public enum WindowsOS
 {
+    /// <summary>
+    /// Build 22621
+    /// </summary>
     Win11_22H2,
+
+    /// <summary>
+    /// Build 22000
+    /// </summary>
     Win11,
     Win10,
     Win10OrLater,

@@ -154,7 +154,7 @@ public partial class BHelper
     /// Checks if the OS is Windows 10 or greater or equals the given build number.
     /// </summary>
     /// <param name="build">Build number of Windows.</param>
-    public static bool IsWindows10OrGreater(int build = -1)
+    public static bool IsOSBuildOrGreater(int build = -1)
     {
         return Environment.OSVersion.Version.Major >= 10
             && Environment.OSVersion.Version.Build >= build;

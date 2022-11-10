@@ -38,6 +38,12 @@ public class WindowApi
         DWMWCP_ROUNDSMALL = 3,
     }
 
+    private enum DWMWINDOWATTRIBUTE_UNDOCUMENTED
+    {
+        DWMWA_SYSTEMBACKDROP_TYPE = 38,
+        DWMWA_MICA_EFFECT = 1029,
+    }
+
 
     // Set error mode
     #region Set error mode
@@ -251,7 +257,7 @@ public class WindowApi
     public static void SetImmersiveDarkMode(IntPtr wndHandle, bool enabled)
     {
         // ~< 20H1
-        if (!BHelper.IsWindows10OrGreater(18985)) return;
+        if (!BHelper.IsOSBuildOrGreater(18985)) return;
 
         unsafe
         {
@@ -279,4 +285,65 @@ public class WindowApi
         }
     }
 
+
+
+    /// <summary>
+    /// Sets windows backdrop.
+    /// </summary>
+    public static void SetWindowsBackdrop(IntPtr wndHandle, DWM_SYSTEMBACKDROP_TYPE type = DWM_SYSTEMBACKDROP_TYPE.DWMSBT_NONE)
+    {
+        if (!BHelper.IsOS(WindowsOS.Win11)) return;
+
+        unsafe
+        {
+            if (BHelper.IsOS(WindowsOS.Win11_22H2))
+            {
+                var attr = DWMWINDOWATTRIBUTE_UNDOCUMENTED.DWMWA_SYSTEMBACKDROP_TYPE;
+
+                _ = PInvoke.DwmSetWindowAttribute(new HWND(wndHandle),
+                   (DWMWINDOWATTRIBUTE)attr,
+                   &type, sizeof(uint));
+            }
+            else
+            {
+                var attr = DWMWINDOWATTRIBUTE_UNDOCUMENTED.DWMWA_MICA_EFFECT;
+                var preference = 1;
+
+                _ = PInvoke.DwmSetWindowAttribute(new HWND(wndHandle),
+                   (DWMWINDOWATTRIBUTE)attr,
+                   &preference, sizeof(uint));
+            }
+        }
+    }
+
+
+}
+
+
+public enum DWM_SYSTEMBACKDROP_TYPE
+{
+    /// <summary>
+    /// Let OS decides.
+    /// </summary>
+    DWMSBT_AUTO = 0,
+
+    /// <summary>
+    /// No effect.
+    /// </summary>
+    DWMSBT_NONE = 1,
+
+    /// <summary>
+    /// Mica effect.
+    /// </summary>
+    DWMSBT_MAINWINDOW = 2,
+
+    /// <summary>
+    /// Acrylic effect.
+    /// </summary>
+    DWMSBT_TRANSIENTWINDOW = 3,
+
+    /// <summary>
+    /// Draw the backdrop material effect corresponding to a window with a tabbed title bar.
+    /// </summary>
+    DWMSBT_TABBEDWINDOW = 4,
 }
