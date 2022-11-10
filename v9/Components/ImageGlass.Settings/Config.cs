@@ -1195,11 +1195,9 @@ public static class Config
         PopupButtons buttons = PopupButtons.OK,
         string optionText = "")
     {
-        var noteBackgroundColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Info, Config.Theme.Settings.IsDarkMode);
-
         SystemSounds.Question.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, noteBackgroundColor, buttons, icon, thumbnail, optionText);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, ColorStatus.Info, buttons, icon, thumbnail, optionText);
     }
 
 
@@ -1224,11 +1222,9 @@ public static class Config
         string optionText = "")
     {
         heading ??= Language["_._Warning"];
-        var noteBackgroundColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Warning, Config.Theme.Settings.IsDarkMode);
-
         SystemSounds.Exclamation.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, noteBackgroundColor, buttons, icon, thumbnail, optionText);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, ColorStatus.Warning, buttons, icon, thumbnail, optionText);
     }
 
 
@@ -1253,11 +1249,9 @@ public static class Config
         string optionText = "")
     {
         heading ??= Language["_._Error"];
-        var noteBackgroundColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Danger, Config.Theme.Settings.IsDarkMode);
-
         SystemSounds.Asterisk.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, noteBackgroundColor, buttons, icon, thumbnail, optionText);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, ColorStatus.Danger, buttons, icon, thumbnail, optionText);
     }
 
 

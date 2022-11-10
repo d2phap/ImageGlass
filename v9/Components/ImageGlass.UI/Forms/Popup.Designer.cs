@@ -93,6 +93,7 @@
             // lblNote
             // 
             this.lblNote.AutoSize = true;
+            this.lblNote.BackColor = System.Drawing.Color.Transparent;
             this.lblNote.ForeColor = System.Drawing.Color.White;
             this.lblNote.Location = new System.Drawing.Point(20, 10);
             this.lblNote.Margin = new System.Windows.Forms.Padding(0);
@@ -166,7 +167,7 @@
             // 
             this.panBottom.AutoSize = true;
             this.panBottom.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panBottom.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panBottom.BackColor = System.Drawing.Color.Transparent;
             this.panBottom.Controls.Add(this.tableBottom);
             this.panBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panBottom.Location = new System.Drawing.Point(0, 289);
@@ -180,6 +181,7 @@
             // 
             this.tableBottom.AutoSize = true;
             this.tableBottom.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableBottom.BackColor = System.Drawing.Color.Transparent;
             this.tableBottom.ColumnCount = 3;
             this.tableBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -204,6 +206,7 @@
             this.BtnAccept.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.BtnAccept.MinimumSize = new System.Drawing.Size(130, 40);
             this.BtnAccept.Name = "BtnAccept";
+            this.BtnAccept.Padding = new System.Windows.Forms.Padding(5);
             this.BtnAccept.Size = new System.Drawing.Size(130, 43);
             this.BtnAccept.SystemIcon = null;
             this.BtnAccept.TabIndex = 1;
@@ -220,6 +223,7 @@
             this.BtnCancel.Margin = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.BtnCancel.MinimumSize = new System.Drawing.Size(130, 40);
             this.BtnCancel.Name = "BtnCancel";
+            this.BtnCancel.Padding = new System.Windows.Forms.Padding(5);
             this.BtnCancel.Size = new System.Drawing.Size(130, 43);
             this.BtnCancel.SystemIcon = null;
             this.BtnCancel.TabIndex = 2;
@@ -246,6 +250,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[Title]";
+            this.TransparencyKey = System.Drawing.SystemColors.Control;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Popup_KeyDown);
             this.tableMain.ResumeLayout(false);
             this.tableMain.PerformLayout();

@@ -27,7 +27,7 @@ using Windows.Win32.UI.Controls;
 namespace ImageGlass.UI;
 
 
-public partial class Popup : Form
+public partial class Popup : ModernForm
 {
     #region Borderless form
 
@@ -188,6 +188,7 @@ public partial class Popup : Form
     private bool _unsignedIntValueOnly = false;
     private bool _floatValueOnly = false;
     private bool _unsignedFloatValueOnly = false;
+    private ColorStatus _noteStatusType = ColorStatus.Neutral;
 
 
     #region Public properties
@@ -300,15 +301,17 @@ public partial class Popup : Form
 
 
     /// <summary>
-    /// Gets, sets the backgroundcolor of note.
+    /// Gets, sets the type of the note.
     /// </summary>
-    public Color NoteBackgroundColor
+    public ColorStatus NoteStatusType
     {
-        get => panNote.BackColor;
+        get => _noteStatusType;
         set
         {
-            panNote.BackColor = value;
-            lblNote.ForeColor = Theme.Settings.TextColor;
+            _noteStatusType = value;
+
+            panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(value, IsDarkMode, 100);
+            lblNote.ForeColor = ThemeUtils.GetThemeColorPalatte(IsDarkMode).LightText;
         }
     }
 
@@ -606,7 +609,6 @@ public partial class Popup : Form
         ApplyLanguage();
 
         Theme = theme;
-        ApplyTheme();
     }
 
 
@@ -614,7 +616,7 @@ public partial class Popup : Form
 
     protected override void OnLoad(EventArgs e)
     {
-        WindowApi.SetImmersiveDarkMode(Handle, Theme.Settings.IsDarkMode);
+        ApplyTheme(Theme.Settings.IsDarkMode);
 
         // show thumbnail
         var showThumbnail = Thumbnail != null || ThumbnailOverlay != null;
@@ -686,12 +688,16 @@ public partial class Popup : Form
 
     private void TxtValue_TextChanged(object sender, EventArgs e)
     {
-        _ = ValidateInput();
+        var isValid = ValidateInput();
+        SetTextInputStyle(isValid, IsDarkMode);
     }
 
     private void BtnAccept_Click(object sender, EventArgs e)
     {
-        if (ValidateInput())
+        var isValid = ValidateInput();
+        SetTextInputStyle(isValid, IsDarkMode);
+
+        if (isValid)
         {
             AcceptForm();
         }
@@ -727,24 +733,36 @@ public partial class Popup : Form
     /// <summary>
     /// Apply theme to the form
     /// </summary>
-    private void ApplyTheme()
+    public override void ApplyTheme(bool darkMode, WindowBackdrop? backDrop = null)
     {
-        BackColor = Theme.Settings.BgColor;
+        var colors = ThemeUtils.GetThemeColorPalatte(darkMode);
+
+        SuspendLayout();
+
+        BackColor = colors.GreyBackground;
 
         // text color
         lblHeading.ForeColor =
             lblDescription.ForeColor =
             lblNote.ForeColor =
-            ChkOption.ForeColor = Theme.Settings.TextColor;
+            ChkOption.ForeColor = colors.LightText;
 
-        // header and footer
-        picThumbnail.BackColor =
-            panBottom.BackColor = Theme.Settings.ToolbarBgColor;
+        
+        panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Warning, darkMode, 100);
+        panBottom.BackColor = Color.FromArgb(10, colors.BlueSelection);
+
 
         // dark mode
         txtValue.DarkMode =
             BtnAccept.DarkMode =
-            BtnCancel.DarkMode = Theme.Settings.IsDarkMode;
+            BtnCancel.DarkMode = darkMode;
+
+
+        SetTextInputStyle(ValidateInput(), darkMode);
+
+        ResumeLayout(false);
+
+        base.ApplyTheme(darkMode, backDrop);
     }
 
 
@@ -774,20 +792,29 @@ public partial class Popup : Form
             }
         }
 
+        return isValid;
+    }
+
+
+    /// <summary>
+    /// Sets text input style
+    /// </summary>
+    private void SetTextInputStyle(bool isValid, bool darkMode)
+    {
         // invalid char
         if (!isValid)
         {
             BtnAccept.Enabled = false;
 
-            txtValue.BackColor = Theme.DangerColor;
+            txtValue.BackColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Danger, darkMode);
         }
         else
         {
-            BtnAccept.Enabled = true;
-            txtValue.BackColor = Theme.Settings.ToolbarBgColor;
-        }
+            var colors = ThemeUtils.GetThemeColorPalatte(darkMode);
 
-        return isValid;
+            BtnAccept.Enabled = true;
+            txtValue.DarkMode = darkMode;
+        }
     }
 
 
@@ -847,7 +874,7 @@ public partial class Popup : Form
         string heading = "",
         string details = "",
         string note = "",
-        Color? noteBackgroundColor = null,
+        ColorStatus? noteStatusType = null,
         PopupButtons buttons = PopupButtons.OK,
         SHSTOCKICONID? icon = null,
         Image? thumbnail = null,
@@ -861,7 +888,7 @@ public partial class Popup : Form
             Heading = heading,
             Description = description,
             Note = note,
-            NoteBackgroundColor = noteBackgroundColor ?? Color.Transparent,
+            NoteStatusType = noteStatusType ?? ColorStatus.Neutral,
 
             Thumbnail = thumbnail ?? sysIcon,
             ThumbnailOverlay = (thumbnail != null && sysIcon != null) ? sysIcon : null,
