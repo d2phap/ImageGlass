@@ -101,7 +101,7 @@ public partial class ThemeUtils
     /// Gets system accent color.
     /// </summary>
     /// <param name="brightness">The factor (-1 = black ... +1 = white) to change the lightness.</param>
-    public static Color GetAccentColor(float brightness)
+    public static Color GetAccentColor(float brightness = 0)
     {
         var accentColor = Color.FromArgb(0, 120, 215); // blue
 
@@ -218,11 +218,9 @@ public partial class ThemeUtils
 
 
     /// <summary>
-    /// Convert Hex (with alpha) to Color
+    /// Creates a new <see cref="Color"/> from the given hex color string (with alpha).
     /// </summary>
-    /// <param name="hex"></param>
-    /// <returns></returns>
-    public static Color ColorFromHex(string hex, bool @skipAlpha = false)
+    public static Color ColorFromHex(string hex, bool skipAlpha = false)
     {
         // Remove # if present
         if (hex.IndexOf('#') != -1)
@@ -276,10 +274,8 @@ public partial class ThemeUtils
 
 
     /// <summary>
-    /// Validate if Hex string is a valid color
+    /// Validates if the input hex color string is a valid color.
     /// </summary>
-    /// <param name="hex"></param>
-    /// <returns></returns>
     public static bool IsValidHex(string hex)
     {
         if (hex.StartsWith("#"))

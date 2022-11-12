@@ -27,6 +27,8 @@ public class IgTheme
 {
     private int _iconHeight = Constants.TOOLBAR_ICON_HEIGHT;
 
+    
+
     /// <summary>
     /// Filename of theme configuration since v9.0
     /// </summary>
@@ -96,9 +98,8 @@ public class IgTheme
 
 
     /// <summary>
-    /// Initialize theme pack
+    /// Initializes theme pack and reads the theme config file.
     /// </summary>
-    /// <param name="themeFolderPath"></param>
     public IgTheme(
         string themeFolderPath = "",
         int iconHeight = Constants.TOOLBAR_ICON_HEIGHT)
@@ -158,7 +159,7 @@ public class IgTheme
 
 
     /// <summary>
-    /// Loads theme from <see cref="JsonModel"/>
+    /// Loads theme from <see cref="JsonModel"/>.
     /// </summary>
     /// <param name="iconHeight">Toolbar icon height</param>
     public void LoadTheme(int? iconHeight = null)
@@ -188,7 +189,25 @@ public class IgTheme
                 // property is Color
                 if (prop?.PropertyType == typeof(Color))
                 {
-                    var colorItem = ThemeUtils.ColorFromHex(value);
+                    Color colorItem;
+                    if (value.StartsWith(Constants.THEME_SYSTEM_ACCENT_COLOR, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        var valueArr = value.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+                        var accentBrightness = 0f;
+
+                        // adjust accent color brightness
+                        if (valueArr.Length > 1)
+                        {
+                            _ = float.TryParse(valueArr[1], out accentBrightness);
+                        }
+
+                        colorItem = ThemeUtils.GetAccentColor(accentBrightness);
+                    }
+                    else
+                    {
+                        colorItem = ThemeUtils.ColorFromHex(value);
+                    }
+                    
                     prop.SetValue(Settings, colorItem);
                     continue;
                 }

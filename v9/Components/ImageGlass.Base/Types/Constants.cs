@@ -45,6 +45,8 @@ public static class Constants
     public const string SLIDESHOW_PIPE_PREFIX = "ImageGlass_Slideshow_Pipe_";
     public const string SLIDESHOW_PIPE_CMD_TERMINATE = "terminate-slideshow";
 
+    public const string THEME_SYSTEM_ACCENT_COLOR = "sys_accent_color";
+
 
     /// <summary>
     /// First launch version constant.
