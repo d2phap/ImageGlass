@@ -82,8 +82,8 @@
             this.tableMain.SetColumnSpan(this.panNote, 10);
             this.panNote.Controls.Add(this.lblNote);
             this.panNote.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panNote.Location = new System.Drawing.Point(20, 144);
-            this.panNote.Margin = new System.Windows.Forms.Padding(20, 0, 20, 0);
+            this.panNote.Location = new System.Drawing.Point(20, 164);
+            this.panNote.Margin = new System.Windows.Forms.Padding(20, 20, 20, 0);
             this.panNote.Name = "panNote";
             this.panNote.Padding = new System.Windows.Forms.Padding(20, 10, 20, 10);
             this.panNote.Size = new System.Drawing.Size(560, 43);
@@ -155,7 +155,7 @@
             // 
             this.ChkOption.AutoSize = true;
             this.tableMain.SetColumnSpan(this.ChkOption, 2);
-            this.ChkOption.Location = new System.Drawing.Point(0, 187);
+            this.ChkOption.Location = new System.Drawing.Point(0, 207);
             this.ChkOption.Margin = new System.Windows.Forms.Padding(0);
             this.ChkOption.Name = "ChkOption";
             this.ChkOption.Padding = new System.Windows.Forms.Padding(20, 10, 20, 20);
@@ -244,10 +244,11 @@
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(500, 240);
+            this.MinimumSize = new System.Drawing.Size(620, 240);
             this.Name = "Popup";
             this.Padding = new System.Windows.Forms.Padding(0, 20, 0, 0);
             this.ShowIcon = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[Title]";
             this.TransparencyKey = System.Drawing.SystemColors.Control;
