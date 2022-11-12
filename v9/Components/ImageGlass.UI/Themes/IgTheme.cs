@@ -308,4 +308,5 @@ public class IgTheme
 
         return icon as Bitmap;
     }
+
 }

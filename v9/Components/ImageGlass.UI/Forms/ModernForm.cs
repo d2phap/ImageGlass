@@ -100,7 +100,7 @@ public partial class ModernForm : Form
     /// </summary>
     private void SetBackdrop(WindowBackdrop type)
     {
-        if (!BHelper.IsOS(WindowsOS.Win11)) return;
+        if (!BHelper.IsOS(WindowsOS.Win11OrLater)) return;
         var useTransparency = type != WindowBackdrop.Default;
 
         if (useTransparency)

@@ -258,7 +258,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             pen.Color = Color.FromArgb(35, 255, 255, 255);
         }
 
-        var menuBorderRadius = BHelper.IsOS(WindowsOS.Win11) ? 8 : 0;
+        var menuBorderRadius = BHelper.IsOS(WindowsOS.Win11OrLater) ? 8 : 0;
         using var path = ThemeUtils.GetRoundRectanglePath(new()
         {
             X = 0,

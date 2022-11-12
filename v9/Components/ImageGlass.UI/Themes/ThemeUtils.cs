@@ -105,7 +105,7 @@ public partial class ThemeUtils
     {
         var accentColor = Color.FromArgb(0, 120, 215); // blue
 
-        if (BHelper.IsOSBuildOrGreater(22000))
+        if (BHelper.IsOS(WindowsOS.Win10OrLater))
         {
             const string regPath = @"Software\Microsoft\Windows\DWM";
             const string regKey = "AccentColor";

@@ -273,7 +273,7 @@ public class WindowApi
     /// </summary>
     public static void SetRoundCorner(IntPtr wndHandle)
     {
-        if (!BHelper.IsOS(WindowsOS.Win11)) return;
+        if (!BHelper.IsOS(WindowsOS.Win11OrLater)) return;
 
         unsafe
         {
@@ -292,7 +292,7 @@ public class WindowApi
     /// </summary>
     public static void SetWindowsBackdrop(IntPtr wndHandle, DWM_SYSTEMBACKDROP_TYPE type = DWM_SYSTEMBACKDROP_TYPE.DWMSBT_NONE)
     {
-        if (!BHelper.IsOS(WindowsOS.Win11)) return;
+        if (!BHelper.IsOS(WindowsOS.Win11OrLater)) return;
 
         unsafe
         {

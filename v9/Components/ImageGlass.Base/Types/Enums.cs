@@ -94,7 +94,7 @@ public enum WindowsOS
     /// <summary>
     /// Build 22000
     /// </summary>
-    Win11,
+    Win11OrLater,
     Win10,
     Win10OrLater,
     Win7,

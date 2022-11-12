@@ -123,7 +123,7 @@ public partial class BHelper
                 && Environment.OSVersion.Version.Build >= 22621;
         }
 
-        if (ver == WindowsOS.Win11)
+        if (ver == WindowsOS.Win11OrLater)
         {
             return Environment.OSVersion.Version.Major >= 10
                 && Environment.OSVersion.Version.Build >= 22000;

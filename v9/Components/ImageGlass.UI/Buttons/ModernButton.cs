@@ -246,7 +246,7 @@ public class ModernButton : Button
             : colors.LightBackground;
 
         var borderRadius = 0f;
-        if (BHelper.IsOS(WindowsOS.Win11))
+        if (BHelper.IsOS(WindowsOS.Win11OrLater))
         {
             borderRadius = 4f;
         }
