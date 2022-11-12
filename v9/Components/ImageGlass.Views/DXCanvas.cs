@@ -1588,6 +1588,7 @@ public class DXCanvas : DXControl
             // draw background
             if (leftColor != Color.Transparent)
             {
+                var borderColor = leftColor.InvertBlackOrWhite().WithAlpha(50);
                 var leftBgRect = new RectangleF()
                 {
                     X = NavLeftPos.X - NavButtonSize.Width / 2,
@@ -1596,7 +1597,7 @@ public class DXCanvas : DXControl
                     Height = NavButtonSize.Height,
                 };
 
-                g.DrawRectangle(leftBgRect, NavBorderRadius, leftColor, leftColor, 1.25f);
+                g.DrawRectangle(leftBgRect, NavBorderRadius, borderColor, leftColor, 1.25f);
             }
 
             // draw icon
@@ -1655,6 +1656,7 @@ public class DXCanvas : DXControl
             // draw background
             if (rightColor != Color.Transparent)
             {
+                var borderColor = rightColor.InvertBlackOrWhite().WithAlpha(50);
                 var rightBgRect = new RectangleF()
                 {
                     X = NavRightPos.X - NavButtonSize.Width / 2,
@@ -1663,7 +1665,7 @@ public class DXCanvas : DXControl
                     Height = NavButtonSize.Height,
                 };
 
-                g.DrawRectangle(rightBgRect, NavBorderRadius, rightColor, rightColor, 1.25f);
+                g.DrawRectangle(rightBgRect, NavBorderRadius, borderColor, rightColor, 1.25f);
             }
 
             // draw icon
