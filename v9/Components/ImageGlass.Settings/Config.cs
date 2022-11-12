@@ -1061,7 +1061,7 @@ public static class Config
         }
         else
         {
-            BackgroundColor = ThemeUtils.ColorFromHex(bgValue, true);
+            BackgroundColor = ThemeUtils.ColorFromHex(bgValue);
         }
         #endregion
 

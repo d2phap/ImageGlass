@@ -761,7 +761,7 @@ public partial class Popup : ModernForm
 
         ResumeLayout(false);
 
-        base.ApplyTheme(isDarkMode, WindowBackdrop.Tabbed);
+        base.ApplyTheme(isDarkMode, backDrop);
     }
 
 

@@ -45,7 +45,7 @@ public partial class FrmMain
         var isDarkMode = Config.Theme.Settings.IsDarkMode;
         var backdrop = WindowBackdrop.Default;
 
-        var isViewerTransparent = Config.Theme.Settings.BgColor.A != 255;
+        var isViewerTransparent = Config.BackgroundColor.A != 255;
         var isToolbarTransparent = Config.Theme.Settings.ToolbarBgColor.A != 255;
         var isGalleryTransparent = Config.Theme.Settings.ThumbnailBarBgColor.A != 255;
         var isTransparent = isViewerTransparent || isToolbarTransparent || isGalleryTransparent;
@@ -67,7 +67,7 @@ public partial class FrmMain
         BackColor = Sp1.BackColor = Sp2.BackColor = isTransparent
             ? Config.Theme.ColorPalatte.GreyBackground : Config.BackgroundColor;
 
-        PicMain.BackColor = Config.BackgroundColor;
+        PicMain.BackColor = isViewerTransparent ? BackColor : Config.BackgroundColor;
         PicMain.ForeColor = Config.Theme.Settings.TextColor;
         PicMain.SelectionColor = Config.Theme.Settings.AccentColor;
 
