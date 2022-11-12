@@ -380,7 +380,7 @@ public partial class FrmSlideshow : ModernForm
         var fontY = bgY + (bgSize.Height / 2) - (fontSize.Height / 2);
 
         // draw text
-        var textColor = Color.FromArgb(150, ThemeUtils.InvertBlackAndWhiteColor(PicMain.BackColor));
+        var textColor = PicMain.BackColor.InvertBlackOrWhite(150);
 
         e.Graphics.DrawText(text, font.Name, font.Size, fontX, fontY, textColor, textDpi: DeviceDpi);
     }
@@ -1077,7 +1077,7 @@ public partial class FrmSlideshow : ModernForm
         SuspendLayout();
 
         MnuContext.Theme = Config.Theme;
-        var colors = ThemeUtils.GetThemeColorPalatte(darkMode);
+        var colors = ThemeUtils.GetThemeColorPalatte(Config.Theme.Settings.IsDarkMode);
 
         // set transparent color
         BackColor = colors.GreyBackground;
@@ -1092,7 +1092,7 @@ public partial class FrmSlideshow : ModernForm
             ? NavButtonDisplay.Both
             : NavButtonDisplay.None;
 
-        base.ApplyTheme(darkMode, backDrop);
+        base.ApplyTheme(Config.Theme.Settings.IsDarkMode, backDrop);
 
         //if (Config.SlideshowBackgroundColor != Color.Transparent)
         //{
@@ -1397,7 +1397,7 @@ public partial class FrmSlideshow : ModernForm
         if (cd.ShowDialog() == DialogResult.OK)
         {
             BackColor = PicMain.BackColor = Config.SlideshowBackgroundColor = cd.Color;
-            PicMain.ForeColor = ThemeUtils.InvertBlackAndWhiteColor(BackColor);
+            PicMain.ForeColor = BackColor.InvertBlackOrWhite(220);
 
             _isColorPickerOpen = false;
         }
