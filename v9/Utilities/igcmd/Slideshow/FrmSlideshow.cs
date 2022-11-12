@@ -1077,15 +1077,14 @@ public partial class FrmSlideshow : ModernForm
         SuspendLayout();
 
         MnuContext.Theme = Config.Theme;
-        var colors = ThemeUtils.GetThemeColorPalatte(Config.Theme.Settings.IsDarkMode);
 
         // set transparent color
-        BackColor = colors.GreyBackground;
+        BackColor = Config.Theme.ColorPalatte.GreyBackground;
         
 
         // navigation buttons
-        PicMain.NavHoveredColor = Color.FromArgb(200, colors.DarkBackground);
-        PicMain.NavPressedColor = Color.FromArgb(240, colors.DarkBackground);
+        PicMain.NavHoveredColor = Color.FromArgb(200, Config.Theme.ColorPalatte.DarkBackground);
+        PicMain.NavPressedColor = Color.FromArgb(240, Config.Theme.ColorPalatte.DarkBackground);
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
         PicMain.NavDisplay = Config.EnableNavigationButtons
@@ -1098,7 +1097,7 @@ public partial class FrmSlideshow : ModernForm
         //{
         //    BackColor = Config.SlideshowBackgroundColor;
         //}
-        PicMain.ForeColor = colors.LightText;
+        PicMain.ForeColor = Config.Theme.ColorPalatte.LightText;
 
         ResumeLayout(false);
     }

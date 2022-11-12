@@ -44,7 +44,6 @@ public partial class FrmMain
 
         var isDarkMode = Config.Theme.Settings.IsDarkMode;
         var backdrop = WindowBackdrop.Default;
-        var colors = ThemeUtils.GetThemeColorPalatte(isDarkMode);
 
         var isViewerTransparent = Config.Theme.Settings.BgColor.A != 255;
         var isToolbarTransparent = Config.Theme.Settings.ToolbarBgColor.A != 255;
@@ -66,7 +65,7 @@ public partial class FrmMain
 
         // viewer
         BackColor = Sp1.BackColor = Sp2.BackColor = isTransparent
-            ? colors.GreyBackground : Config.BackgroundColor;
+            ? Config.Theme.ColorPalatte.GreyBackground : Config.BackgroundColor;
 
         PicMain.BackColor = Config.BackgroundColor;
         PicMain.ForeColor = Config.Theme.Settings.TextColor;
@@ -87,9 +86,9 @@ public partial class FrmMain
         var navColor = Config.Theme.Settings.ToolbarBgColor;
         if (isToolbarTransparent)
         {
-            navColor = colors.DarkBackground;
+            navColor = Config.Theme.ColorPalatte.DarkBackground;
         }
-        PicMain.NavHoveredColor = navColor.WithAlpha(220);
+        PicMain.NavHoveredColor = navColor.WithAlpha(200);
         PicMain.NavPressedColor = navColor.WithAlpha(240);
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;

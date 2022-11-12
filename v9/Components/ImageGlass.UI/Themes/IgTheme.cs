@@ -34,22 +34,6 @@ public class IgTheme
 
 
     /// <summary>
-    /// Gets the danger color.
-    /// </summary>
-    public Color DangerColor
-    {
-        get
-        {
-            var danger = Color.FromArgb(255, 255, 0, 0);
-            var themedColor = ThemeUtils.AdjustLightness(danger, Settings.IsDarkMode ? -0.8f : 0.8f);
-
-            return themedColor;
-        }
-    }
-
-
-
-    /// <summary>
     /// Gets, sets the height of toolbar icons.
     /// You need to manually call <see cref="LoadTheme"/> to update toolbar icons.
     /// </summary>
@@ -89,7 +73,6 @@ public class IgTheme
     /// </summary>
     public bool IsValid { get; internal set; } = false;
 
-    
 
     /// <summary>
     /// Theme information
@@ -106,6 +89,10 @@ public class IgTheme
     /// </summary>
     public IgThemeToolbarIcons ToolbarIcons { get; internal set; } = new();
 
+    /// <summary>
+    /// Gets color palatte according to the <see cref="Settings"/><c>.IsDarkMode</c> value.
+    /// </summary>
+    public IColors ColorPalatte => ThemeUtils.GetThemeColorPalatte(Settings.IsDarkMode);
 
 
     /// <summary>

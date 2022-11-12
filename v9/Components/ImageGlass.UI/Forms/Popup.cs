@@ -311,7 +311,7 @@ public partial class Popup : ModernForm
             _noteStatusType = value;
 
             panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(value, IsDarkMode, 100);
-            lblNote.ForeColor = ThemeUtils.GetThemeColorPalatte(IsDarkMode).LightText;
+            lblNote.ForeColor = Theme.ColorPalatte.LightText;
         }
     }
 
@@ -735,34 +735,33 @@ public partial class Popup : ModernForm
     /// </summary>
     public override void ApplyTheme(bool darkMode, WindowBackdrop? backDrop = null)
     {
-        var colors = ThemeUtils.GetThemeColorPalatte(darkMode);
-
         SuspendLayout();
 
-        BackColor = colors.GreyBackground;
+        var isDarkMode = Theme.Settings.IsDarkMode;
+        BackColor = Theme.ColorPalatte.GreyBackground;
 
         // text color
         lblHeading.ForeColor =
             lblDescription.ForeColor =
             lblNote.ForeColor =
-            ChkOption.ForeColor = colors.LightText;
+            ChkOption.ForeColor = Theme.ColorPalatte.LightText;
 
         
-        panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Warning, darkMode, 100);
-        panBottom.BackColor = Color.FromArgb(10, colors.BlueSelection);
+        panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Warning, isDarkMode, 100);
+        panBottom.BackColor = Theme.ColorPalatte.BlueSelection.WithAlpha(10);
 
 
         // dark mode
         txtValue.DarkMode =
             BtnAccept.DarkMode =
-            BtnCancel.DarkMode = darkMode;
+            BtnCancel.DarkMode = isDarkMode;
 
 
-        SetTextInputStyle(ValidateInput(), darkMode);
+        SetTextInputStyle(ValidateInput(), isDarkMode);
 
         ResumeLayout(false);
 
-        base.ApplyTheme(darkMode, backDrop);
+        base.ApplyTheme(isDarkMode, WindowBackdrop.Tabbed);
     }
 
 
@@ -810,8 +809,6 @@ public partial class Popup : ModernForm
         }
         else
         {
-            var colors = ThemeUtils.GetThemeColorPalatte(darkMode);
-
             BtnAccept.Enabled = true;
             txtValue.DarkMode = darkMode;
         }

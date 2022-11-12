@@ -73,8 +73,6 @@ public class ModernToolbar : ToolStrip
         Overflow = ToolStripItemOverflow.Never,
     };
 
-    private IColors ColorPalatte => ThemeUtils.GetThemeColorPalatte(Theme?.Settings.IsDarkMode ?? true);
-
 
     #region Public properties
 
@@ -530,8 +528,8 @@ public class ModernToolbar : ToolStrip
 
         if (isToolbarTransparent)
         {
-            BackColor = ColorPalatte.GreyBackground;
-            ForeColor = ColorPalatte.LightText;
+            BackColor = Theme.ColorPalatte.GreyBackground;
+            ForeColor = Theme.ColorPalatte.LightText;
         }
 
         Renderer = new ModernToolbarRenderer(this);
