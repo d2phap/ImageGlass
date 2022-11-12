@@ -205,7 +205,6 @@ public partial class ThemeUtils
     /// </summary>
     /// <param name="c"></param>
     /// <param name="skipAlpha"></param>
-    /// <returns></returns>
     public static string ColorToHex(Color c, bool @skipAlpha = false)
     {
         if (skipAlpha)

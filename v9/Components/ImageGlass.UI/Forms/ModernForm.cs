@@ -147,5 +147,5 @@ public enum WindowBackdrop
     /// <summary>
     /// Draw the backdrop material effect corresponding to a window with a tabbed title bar.
     /// </summary>
-    Tabbed = 4,
+    MicaAlt = 4,
 }
