@@ -216,7 +216,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
     {
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-        using var brush = new SolidBrush(Theme.Settings.ToolbarBgColor);
+        using var brush = new SolidBrush(e.BackColor);
         var rect = new Rectangle(0, 0, e.ToolStrip.Width, e.ToolStrip.Height);
         rect.Inflate(10, 10);
         rect.Location = new Point(-5, -5);
