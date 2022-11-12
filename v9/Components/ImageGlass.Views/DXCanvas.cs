@@ -93,8 +93,8 @@ public class DXCanvas : DXControl
     // checkerboard
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
     private float _checkerboardCellSize = 12f;
-    private Color _checkerboardColor1 = Color.FromArgb(25, Color.Black);
-    private Color _checkerboardColor2 = Color.FromArgb(25, Color.White);
+    private Color _checkerboardColor1 = Color.Black.WithAlpha(25);
+    private Color _checkerboardColor2 = Color.White.WithAlpha(25);
     private TextureBrush? _checkerboardBrushGdip;
     private ComObject<ID2D1BitmapBrush>? _checkerboardBrushD2D;
 
@@ -1400,7 +1400,7 @@ public class DXCanvas : DXControl
 
         // draw the clip selection region
         using var selectionGeo = g.GetCombinedRectanglesGeometry(Selection, _destRect, 0, 0, CombineMode.Xor);
-        g.DrawGeometry(selectionGeo, Color.Transparent, Color.FromArgb(_isMouseDown ? 100 : 200, SelectionColor));
+        g.DrawGeometry(selectionGeo, Color.Transparent, BackColor.WithAlpha(_isMouseDown ? 100 : 200));
 
 
         // draw grid, ignore alpha value
@@ -1415,13 +1415,19 @@ public class DXCanvas : DXControl
                     Selection.X + (i * width3),
                     Selection.Y,
                     Selection.X + (i * width3),
-                    Selection.Y + Selection.Height, Color.FromArgb(200, Color.Black),
+                    Selection.Y + Selection.Height, Color.Black.WithAlpha(200),
                     0.4f);
                 g.DrawLine(
                     Selection.X + (i * width3),
                     Selection.Y,
                     Selection.X + (i * width3),
-                    Selection.Y + Selection.Height, Color.FromArgb(200, Color.White),
+                    Selection.Y + Selection.Height, Color.White.WithAlpha(200),
+                    0.4f);
+                g.DrawLine(
+                    Selection.X + (i * width3),
+                    Selection.Y,
+                    Selection.X + (i * width3),
+                    Selection.Y + Selection.Height, SelectionColor.WithAlpha(200),
                     0.4f);
 
 
@@ -1429,19 +1435,26 @@ public class DXCanvas : DXControl
                     Selection.X,
                     Selection.Y + (i * height3),
                     Selection.X + Selection.Width,
-                    Selection.Y + (i * height3), Color.FromArgb(200, Color.Black),
+                    Selection.Y + (i * height3), Color.Black.WithAlpha(200),
                     0.4f);
                 g.DrawLine(
                     Selection.X,
                     Selection.Y + (i * height3),
                     Selection.X + Selection.Width,
-                    Selection.Y + (i * height3), Color.FromArgb(200, Color.White),
+                    Selection.Y + (i * height3), Color.White.WithAlpha(200),
+                    0.4f);
+                g.DrawLine(
+                    Selection.X,
+                    Selection.Y + (i * height3),
+                    Selection.X + Selection.Width,
+                    Selection.Y + (i * height3), SelectionColor.WithAlpha(200),
                     0.4f);
             }
         }
 
         // draw the selection border
-        g.DrawRectangle(Selection, 0, Color.FromArgb(255, Color.White), null, 0.3f);
+        g.DrawRectangle(Selection, 0, Color.White, null, 0.3f);
+        g.DrawRectangle(Selection, 0, SelectionColor, null, 0.3f);
 
 
         // draw resizers
@@ -1460,8 +1473,8 @@ public class DXCanvas : DXControl
                     || rItem.Type == SelectionResizerType.Right)) continue;
 
                 
-                g.DrawRectangle(rItem.Region, 0.5f, Color.FromArgb(50, Color.Black), Color.FromArgb(200, Color.Black), 0.5f);
-                g.DrawRectangle(rItem.Region, 0.5f, Color.FromArgb(50, Color.White), Color.FromArgb(200, Color.White), 0.5f);
+                g.DrawRectangle(rItem.Region, 0.5f, Color.Black.WithAlpha(50), Color.Black.WithAlpha(200), 0.5f);
+                g.DrawRectangle(rItem.Region, 0.5f, Color.White.WithAlpha(50), Color.White.WithAlpha(200), 0.5f);
             }
         }
     }
@@ -1533,7 +1546,7 @@ public class DXCanvas : DXControl
         };
 
 
-        var bgColor = Color.FromArgb(200, BackColor);
+        var bgColor = BackColor.WithAlpha(200);
 
         // draw background
         g.DrawRectangle(bgRegion, MessageBorderRadius, bgColor, bgColor);
@@ -1588,7 +1601,6 @@ public class DXCanvas : DXControl
             // draw background
             if (leftColor != Color.Transparent)
             {
-                var borderColor = leftColor.InvertBlackOrWhite().WithAlpha(50);
                 var leftBgRect = new RectangleF()
                 {
                     X = NavLeftPos.X - NavButtonSize.Width / 2,
@@ -1597,7 +1609,7 @@ public class DXCanvas : DXControl
                     Height = NavButtonSize.Height,
                 };
 
-                g.DrawRectangle(leftBgRect, NavBorderRadius, borderColor, leftColor, 1.25f);
+                g.DrawRectangle(leftBgRect, NavBorderRadius, leftColor, leftColor, 1.25f);
             }
 
             // draw icon
@@ -1656,7 +1668,6 @@ public class DXCanvas : DXControl
             // draw background
             if (rightColor != Color.Transparent)
             {
-                var borderColor = rightColor.InvertBlackOrWhite().WithAlpha(50);
                 var rightBgRect = new RectangleF()
                 {
                     X = NavRightPos.X - NavButtonSize.Width / 2,
@@ -1665,7 +1676,7 @@ public class DXCanvas : DXControl
                     Height = NavButtonSize.Height,
                 };
 
-                g.DrawRectangle(rightBgRect, NavBorderRadius, borderColor, rightColor, 1.25f);
+                g.DrawRectangle(rightBgRect, NavBorderRadius, rightColor, rightColor, 1.25f);
             }
 
             // draw icon

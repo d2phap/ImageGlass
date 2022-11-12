@@ -86,7 +86,7 @@ public partial class FrmMain
         var navColor = Config.Theme.Settings.ToolbarBgColor;
         if (isToolbarTransparent)
         {
-            navColor = Config.Theme.ColorPalatte.DarkBackground;
+            navColor = Config.Theme.ColorPalatte.DarkGreySelection;
         }
         PicMain.NavHoveredColor = navColor.WithAlpha(200);
         PicMain.NavPressedColor = navColor.WithAlpha(240);
