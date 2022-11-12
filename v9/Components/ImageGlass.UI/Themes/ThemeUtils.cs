@@ -127,6 +127,7 @@ public partial class ThemeUtils
         return accentColor;
     }
 
+
     /// <summary>
     /// Parses DWord color to <see cref="Color"/>.
     /// </summary>
@@ -139,22 +140,6 @@ public partial class ThemeUtils
             b = (dColor >> 16) & 0xFF;
 
         return Color.FromArgb(a, r, g, b);
-    }
-
-
-    /// <summary>
-    /// Invert the color to black or white color
-    /// </summary>
-    /// <param name="c"></param>
-    /// <returns></returns>
-    public static Color InvertBlackAndWhiteColor(Color c)
-    {
-        if (c.GetBrightness() > 0.5)
-        {
-            return Color.Black;
-        }
-
-        return Color.White;
     }
 
 
