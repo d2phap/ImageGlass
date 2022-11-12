@@ -860,7 +860,7 @@ public partial class Popup : ModernForm
     /// <param name="description">Popup description.</param>
     /// <param name="details">Other details</param>
     /// <param name="note">Note text.</param>
-    /// <param name="noteBackgroundColor">Background color of the note.</param>
+    /// <param name="noteStatusType">Background color of the note.</param>
     /// <param name="buttons">Popup buttons.</param>
     /// <param name="icon">Popup icon.</param>
     /// <param name="thumbnail"></param>

@@ -748,6 +748,12 @@ public static class Config
     ///// </summary>
     //public static AfterOpeningEditAppAction AfterEditingAction { get; set; } = AfterOpeningEditAppAction.Nothing;
 
+
+    /// <summary>
+    /// Gets, sets the interpolation mode to render the viewing image when the zoom factor is <c>greater than 100%</c>.
+    /// </summary>
+    public static WindowBackdrop WindowBackdrop { get; set; } = WindowBackdrop.Mica;
+
     #endregion
 
 
@@ -937,7 +943,7 @@ public static class Config
         ImageInterpolationScaleUp = items.GetValue(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
         //ToolbarPosition = items.GetValue(nameof(ToolbarPosition), ToolbarPosition);
         //AfterEditingAction = items.GetValue(nameof(AfterEditingAction), AfterEditingAction);
-
+        WindowBackdrop = items.GetValue(nameof(WindowBackdrop), WindowBackdrop);
 
         #endregion
 
@@ -1393,6 +1399,7 @@ public static class Config
         settings.TryAdd(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
         //settings.TryAdd(nameof(ToolbarPosition), ToolbarPosition.ToString());
         //settings.TryAdd(nameof(AfterEditingAction), AfterEditingAction.ToString());
+        settings.TryAdd(nameof(WindowBackdrop), WindowBackdrop);
 
         #endregion
 

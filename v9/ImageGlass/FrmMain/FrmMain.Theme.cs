@@ -43,7 +43,7 @@ public partial class FrmMain
         //var isDarkMode = themMode != SystemThemeMode.Light;
 
         var isDarkMode = Config.Theme.Settings.IsDarkMode;
-        var backdrop = WindowBackdrop.Default;
+        var backdrop = WindowBackdrop.None;
 
         var isViewerTransparent = Config.BackgroundColor.A != 255;
         var isToolbarTransparent = Config.Theme.Settings.ToolbarBgColor.A != 255;
@@ -51,7 +51,7 @@ public partial class FrmMain
         var isTransparent = isViewerTransparent || isToolbarTransparent || isGalleryTransparent;
         if (isTransparent)
         {
-            backdrop = WindowBackdrop.Mica;
+            backdrop = Config.WindowBackdrop;
         }
 
 

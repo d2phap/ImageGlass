@@ -141,3 +141,30 @@ public enum SelectionAspectRatio
     _2_1 = 1 << 9,
     _1_2 = 1 << 10,
 }
+
+
+/// <summary>
+/// Window backdrop effect.
+/// </summary>
+public enum WindowBackdrop
+{
+    /// <summary>
+    /// No effect.
+    /// </summary>
+    None = 1,
+
+    /// <summary>
+    /// Mica effect.
+    /// </summary>
+    Mica = 2,
+
+    /// <summary>
+    /// Acrylic effect.
+    /// </summary>
+    Acrylic = 3,
+
+    /// <summary>
+    /// Draw the backdrop material effect corresponding to a window with a tabbed title bar.
+    /// </summary>
+    MicaAlt = 4,
+}

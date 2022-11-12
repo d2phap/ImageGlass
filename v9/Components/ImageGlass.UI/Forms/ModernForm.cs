@@ -101,7 +101,7 @@ public partial class ModernForm : Form
     private void SetBackdrop(WindowBackdrop type)
     {
         if (!BHelper.IsOS(WindowsOS.Win11OrLater)) return;
-        var useTransparency = type != WindowBackdrop.Default;
+        var useTransparency = type != WindowBackdrop.None;
 
         if (useTransparency)
         {
@@ -126,26 +126,3 @@ public partial class ModernForm : Form
 
 }
 
-
-public enum WindowBackdrop
-{
-    /// <summary>
-    /// No effect.
-    /// </summary>
-    Default = 1,
-
-    /// <summary>
-    /// Mica effect.
-    /// </summary>
-    Mica = 2,
-
-    /// <summary>
-    /// Acrylic effect.
-    /// </summary>
-    Acrylic = 3,
-
-    /// <summary>
-    /// Draw the backdrop material effect corresponding to a window with a tabbed title bar.
-    /// </summary>
-    MicaAlt = 4,
-}
