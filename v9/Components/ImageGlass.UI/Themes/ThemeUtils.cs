@@ -33,17 +33,17 @@ public partial class ThemeUtils
     /// <summary>
     /// Gets the background color for the input status.
     /// </summary>
-    public static Color GetBackgroundColorForStatus(ColorStatus status, bool darkMode = true, int alpha = 255)
+    public static Color GetBackgroundColorForStatus(StatusType status, bool darkMode = true, int alpha = 255)
     {
         if (darkMode)
         {
             // dark color palette
             return status switch
             {
-                ColorStatus.Info => Color.FromArgb(alpha, 20, 44, 59),
-                ColorStatus.Success => Color.FromArgb(alpha, 34, 59, 42),
-                ColorStatus.Warning => Color.FromArgb(alpha, 59, 40, 10),
-                ColorStatus.Danger => Color.FromArgb(alpha, 59, 20, 19),
+                StatusType.Info => Color.FromArgb(alpha, 20, 44, 59),
+                StatusType.Success => Color.FromArgb(alpha, 34, 59, 42),
+                StatusType.Warning => Color.FromArgb(alpha, 59, 40, 10),
+                StatusType.Danger => Color.FromArgb(alpha, 59, 20, 19),
                 _ => Color.FromArgb(alpha, 32, 38, 43),
             };
         }
@@ -51,10 +51,10 @@ public partial class ThemeUtils
         // light color palette
         return status switch
         {
-            ColorStatus.Info => Color.FromArgb(alpha, 199, 238, 255),
-            ColorStatus.Success => Color.FromArgb(alpha, 219, 255, 242),
-            ColorStatus.Warning => Color.FromArgb(alpha, 255, 239, 219),
-            ColorStatus.Danger => Color.FromArgb(alpha, 255, 222, 222),
+            StatusType.Info => Color.FromArgb(alpha, 199, 238, 255),
+            StatusType.Success => Color.FromArgb(alpha, 219, 255, 242),
+            StatusType.Warning => Color.FromArgb(alpha, 255, 239, 219),
+            StatusType.Danger => Color.FromArgb(alpha, 255, 222, 222),
             _ => Color.FromArgb(alpha, 242, 242, 242),
         };
     }
@@ -400,7 +400,7 @@ public enum SystemThemeMode
     Dark
 }
 
-public enum ColorStatus
+public enum StatusType
 {
     Neutral,
     Info,

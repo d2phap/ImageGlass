@@ -188,7 +188,7 @@ public partial class Popup : ModernForm
     private bool _unsignedIntValueOnly = false;
     private bool _floatValueOnly = false;
     private bool _unsignedFloatValueOnly = false;
-    private ColorStatus _noteStatusType = ColorStatus.Neutral;
+    private StatusType _noteStatusType = StatusType.Neutral;
 
 
     #region Public properties
@@ -303,7 +303,7 @@ public partial class Popup : ModernForm
     /// <summary>
     /// Gets, sets the type of the note.
     /// </summary>
-    public ColorStatus NoteStatusType
+    public StatusType NoteStatusType
     {
         get => _noteStatusType;
         set
@@ -747,7 +747,7 @@ public partial class Popup : ModernForm
             ChkOption.ForeColor = Theme.ColorPalatte.LightText;
 
         
-        panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Warning, isDarkMode, 100);
+        panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(StatusType.Warning, isDarkMode, 100);
         panBottom.BackColor = Theme.ColorPalatte.BlueSelection.WithAlpha(10);
 
 
@@ -805,7 +805,7 @@ public partial class Popup : ModernForm
         {
             BtnAccept.Enabled = false;
 
-            txtValue.BackColor = ThemeUtils.GetBackgroundColorForStatus(ColorStatus.Danger, darkMode);
+            txtValue.BackColor = ThemeUtils.GetBackgroundColorForStatus(StatusType.Danger, darkMode);
         }
         else
         {
@@ -871,7 +871,7 @@ public partial class Popup : ModernForm
         string heading = "",
         string details = "",
         string note = "",
-        ColorStatus? noteStatusType = null,
+        StatusType? noteStatusType = null,
         PopupButtons buttons = PopupButtons.OK,
         SHSTOCKICONID? icon = null,
         Image? thumbnail = null,
@@ -885,7 +885,7 @@ public partial class Popup : ModernForm
             Heading = heading,
             Description = description,
             Note = note,
-            NoteStatusType = noteStatusType ?? ColorStatus.Neutral,
+            NoteStatusType = noteStatusType ?? StatusType.Neutral,
 
             Thumbnail = thumbnail ?? sysIcon,
             ThumbnailOverlay = (thumbnail != null && sysIcon != null) ? sysIcon : null,
