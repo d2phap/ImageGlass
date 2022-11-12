@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.UI;
@@ -41,7 +42,19 @@ public partial class FrmMain
         //// correct theme mode
         //var isDarkMode = themMode != SystemThemeMode.Light;
 
-        SuspendLayout();
+        var isDarkMode = Config.Theme.Settings.IsDarkMode;
+        var backdrop = WindowBackdrop.Default;
+        var colors = ThemeUtils.GetThemeColorPalatte(isDarkMode);
+
+        var isViewerTransparent = Config.Theme.Settings.BgColor.A != 255;
+        var isToolbarTransparent = Config.Theme.Settings.ToolbarBgColor.A != 255;
+        var isGalleryTransparent = Config.Theme.Settings.ThumbnailBarBgColor.A != 255;
+        var isTransparent = isViewerTransparent || isToolbarTransparent || isGalleryTransparent;
+        if (isTransparent)
+        {
+            backdrop = WindowBackdrop.Mica;
+        }
+
 
         // toolbar
         Toolbar.Theme =
@@ -50,24 +63,34 @@ public partial class FrmMain
             MnuSubMenu.Theme = Config.Theme;
         Toolbar.UpdateTheme(DpiApi.Transform(Config.ToolbarIconHeight));
 
-        // background
-        BackColor = Sp1.BackColor = Sp2.BackColor = Config.BackgroundColor;
+
+        // viewer
+        BackColor = Sp1.BackColor = Sp2.BackColor = isTransparent
+            ? colors.GreyBackground : Config.BackgroundColor;
+
         PicMain.BackColor = Config.BackgroundColor;
         PicMain.ForeColor = Config.Theme.Settings.TextColor;
-        PicMain.SelectionColor = Config.Theme.Settings.BgColor;
+        PicMain.SelectionColor = Config.Theme.Settings.AccentColor;
+
 
         // Thumbnail bar
         Gallery.SetRenderer(new ModernGalleryRenderer(Config.Theme));
-        Sp1.SplitterBackColor =
-            Gallery.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
+        var galleryBackColor = Config.Theme.Settings.ThumbnailBarBgColor;
+        if (isGalleryTransparent)
+        {
+            galleryBackColor = BackColor;
+        }
+        Sp1.SplitterBackColor = Sp2.SplitterBackColor = Gallery.BackColor = galleryBackColor;
 
-        // Side panels
-        Sp2.SplitterBackColor = Config.Theme.Settings.ThumbnailBarBgColor;
 
         // navigation buttons
-        var colors = ThemeUtils.GetThemeColorPalatte(darkMode);
-        PicMain.NavHoveredColor =  Color.FromArgb(200, colors.DarkBackground);
-        PicMain.NavPressedColor = Color.FromArgb(240, colors.DarkBackground);
+        var navColor = Config.Theme.Settings.ToolbarBgColor;
+        if (isToolbarTransparent)
+        {
+            navColor = colors.DarkBackground;
+        }
+        PicMain.NavHoveredColor = navColor.WithAlpha(220);
+        PicMain.NavPressedColor = navColor.WithAlpha(240);
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
 
@@ -75,7 +98,7 @@ public partial class FrmMain
 
         ResumeLayout(false);
 
-        base.ApplyTheme(darkMode, backDrop);
+        base.ApplyTheme(isDarkMode, backdrop);
     }
 
 }
