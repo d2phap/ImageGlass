@@ -1078,28 +1078,44 @@ public partial class FrmSlideshow : ModernForm
 
         MnuContext.Theme = Config.Theme;
 
-        // set transparent color
-        BackColor = Config.Theme.ColorPalatte.GreyBackground;
-        
+
+
+        var isDarkMode = Config.Theme.Settings.IsDarkMode;
+        var backdrop = WindowBackdrop.None;
+
+        var isTransparent = Config.SlideshowBackgroundColor.A != 255;
+        if (isTransparent)
+        {
+            backdrop = Config.WindowBackdrop;
+        }
+
+
+        // viewer
+        BackColor = isTransparent
+            ? Config.Theme.ColorPalatte.GreyBackground : Config.SlideshowBackgroundColor;
+
+        PicMain.BackColor = BackColor;
+        PicMain.ForeColor = Config.Theme.Settings.TextColor;
+        PicMain.SelectionColor = Config.Theme.Settings.AccentColor;
+
 
         // navigation buttons
-        PicMain.NavHoveredColor = Color.FromArgb(200, Config.Theme.ColorPalatte.DarkBackground);
-        PicMain.NavPressedColor = Color.FromArgb(240, Config.Theme.ColorPalatte.DarkBackground);
+        var navColor = Config.Theme.Settings.ToolbarBgColor;
+        if (navColor.A != 255)
+        {
+            navColor = Config.Theme.ColorPalatte.DarkGreySelection;
+        }
+        PicMain.NavHoveredColor = navColor.WithAlpha(200);
+        PicMain.NavPressedColor = navColor.WithAlpha(240);
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
-        PicMain.NavDisplay = Config.EnableNavigationButtons
-            ? NavButtonDisplay.Both
-            : NavButtonDisplay.None;
 
-        base.ApplyTheme(Config.Theme.Settings.IsDarkMode, backDrop);
-
-        //if (Config.SlideshowBackgroundColor != Color.Transparent)
-        //{
-        //    BackColor = Config.SlideshowBackgroundColor;
-        //}
-        PicMain.ForeColor = Config.Theme.ColorPalatte.LightText;
+        Config.ApplyFormTheme(this, Config.Theme);
 
         ResumeLayout(false);
+
+        base.ApplyTheme(isDarkMode, backdrop);
+
     }
 
 
