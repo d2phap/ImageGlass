@@ -733,7 +733,7 @@ public partial class Popup : ModernForm
     /// <summary>
     /// Apply theme to the form
     /// </summary>
-    public override void ApplyTheme(bool darkMode, WindowBackdrop? backDrop = null)
+    public override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
     {
         SuspendLayout();
 

@@ -1,3 +1,17 @@
 ﻿
 DwmSetWindowAttribute
 SystemParametersInfo
+DwmIsCompositionEnabled
+DwmExtendFrameIntoClientArea
+SaveDC
+ReleaseDC
+DeleteDC
+CreateCompatibleDC
+SelectObject
+DeleteObject
+BitBlt
+CreateDIBSection
+SetErrorMode
+ClientToScreen
+SendInput
+ShowWindow

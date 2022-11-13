@@ -237,7 +237,7 @@ internal static class Program
         // restore it to previous state.
         if (FormMain.WindowState == FormWindowState.Minimized)
         {
-            WindowApi.ShowAppWindow(FormMain.Handle, WindowApi.ShowWindowCommands.SW_RESTORE);
+            WindowApi.ShowAppWindow(FormMain.Handle, SHOW_WINDOW_CMD.SW_RESTORE);
         }
         else
         {

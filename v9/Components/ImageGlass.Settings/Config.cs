@@ -752,7 +752,7 @@ public static class Config
     /// <summary>
     /// Gets, sets the interpolation mode to render the viewing image when the zoom factor is <c>greater than 100%</c>.
     /// </summary>
-    public static WindowBackdrop WindowBackdrop { get; set; } = WindowBackdrop.Mica;
+    public static BackdropStyle WindowBackdrop { get; set; } = BackdropStyle.Mica;
 
     #endregion
 

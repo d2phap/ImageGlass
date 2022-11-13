@@ -1072,7 +1072,7 @@ public partial class FrmSlideshow : ModernForm
     }
 
 
-    public override void ApplyTheme(bool darkMode, WindowBackdrop? backDrop = null)
+    public override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
     {
         SuspendLayout();
 
@@ -1081,7 +1081,7 @@ public partial class FrmSlideshow : ModernForm
 
 
         var isDarkMode = Config.Theme.Settings.IsDarkMode;
-        var backdrop = WindowBackdrop.None;
+        var backdrop = BackdropStyle.None;
 
         var isTransparent = Config.SlideshowBackgroundColor.A != 255;
         if (isTransparent)

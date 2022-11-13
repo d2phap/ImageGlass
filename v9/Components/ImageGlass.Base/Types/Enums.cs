@@ -146,7 +146,7 @@ public enum SelectionAspectRatio
 /// <summary>
 /// Window backdrop effect.
 /// </summary>
-public enum WindowBackdrop
+public enum BackdropStyle
 {
     /// <summary>
     /// No effect.
