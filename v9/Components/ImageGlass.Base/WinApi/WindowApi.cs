@@ -130,7 +130,7 @@ public class WindowApi
 
         unsafe
         {
-            PInvoke.DwmSetWindowAttribute(new HWND(wndHandle),
+            _ = PInvoke.DwmSetWindowAttribute(new HWND(wndHandle),
                 DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE,
                 &enabled, sizeof(uint));
         }
@@ -163,7 +163,7 @@ public class WindowApi
     /// Sets windows backdrop.
     /// </summary>
     /// <returns>Returns <c>true</c> if succeeded, else <c>false</c>.</returns>
-    public static bool SetWindowsBackdrop(IntPtr wndHandle, DWM_SYSTEMBACKDROP_TYPE type = DWM_SYSTEMBACKDROP_TYPE.DWMSBT_NONE)
+    public static bool SetWindowBackdrop(IntPtr wndHandle, DWM_SYSTEMBACKDROP_TYPE type = DWM_SYSTEMBACKDROP_TYPE.DWMSBT_NONE)
     {
         if (!BHelper.IsOS(WindowsOS.Win11OrLater)) return false;
 
@@ -211,7 +211,7 @@ public class WindowApi
     /// Extends the window frame to the client area.
     /// </summary>
     /// <returns>Returns <c>true</c> if succeeded, else <c>false</c>.</returns>
-    public static bool ExtendNonClientRegion(IntPtr wndHandle, Padding? margin = null)
+    public static bool SetWindowFrame(IntPtr wndHandle, Padding? margin = null)
     {
         if (!IsCompositionEnabled()) return false;
 

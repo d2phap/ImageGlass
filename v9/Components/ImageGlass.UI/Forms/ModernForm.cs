@@ -18,11 +18,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
-using System.Windows.Forms;
 
 
 namespace ImageGlass.UI;
-
 
 /// <summary>
 /// Modern form with dark mode and backdrop support.
@@ -30,7 +28,8 @@ namespace ImageGlass.UI;
 public partial class ModernForm : Form
 {
     private bool _isDarkMode = true;
-    private WindowBackdrop _backdrop = WindowBackdrop.Mica;
+    private BackdropStyle _backdropStyle = BackdropStyle.Mica;
+    private Padding _backdropMargin = new(0);
 
 
     #region Public properties
@@ -52,44 +51,83 @@ public partial class ModernForm : Form
     /// <summary>
     /// Gets, sets window backdrop.
     /// </summary>
-    public WindowBackdrop WindowBackdrop
+    public BackdropStyle BackdropStyle
     {
-        get => _backdrop;
+        get => _backdropStyle;
         set
         {
-            _backdrop = value;
+            _backdropStyle = value;
             SetBackdrop(value);
         }
     }
 
+
+    /// <summary>
+    /// Gets, sets the backdrop margin.
+    /// </summary>
+    public Padding BackdropMargin
+    {
+        get => _backdropMargin;
+        set
+        {
+            _backdropMargin = value;
+            _ = WindowApi.SetWindowFrame(Handle, _backdropMargin);
+        }
+    }
+
+
     #endregion // Public properties
 
 
+    /// <summary>
+    /// Initializes the new instance of <see cref="ModernForm"/>.
+    /// </summary>
     public ModernForm()
     {
         InitializeComponent();
     }
 
 
+    // Protected / virtual functions
+    #region Protected / virtual functions
+
     protected override void OnHandleCreated(EventArgs e)
     {
-        ApplyTheme(_isDarkMode);
+        if (!DesignMode)
+        {
+            ApplyTheme(_isDarkMode);
+        }
 
         base.OnHandleCreated(e);
+    }
+
+
+    protected override void OnPaint(PaintEventArgs e)
+    {
+        base.OnPaint(e);
+
+        if (!DesignMode
+            && _backdropStyle != BackdropStyle.None
+            && BackdropMargin.Vertical == 0 && BackdropMargin.Horizontal == 0)
+        {
+            WindowApi.SetTransparentBlackBackground(e.Graphics, Bounds);
+        }
     }
 
 
     /// <summary>
     /// Apply theme of the window.
     /// </summary>
-    public virtual void ApplyTheme(bool darkMode, WindowBackdrop? backDrop = null)
+    public virtual void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
         _isDarkMode = darkMode;
-        _backdrop = backDrop ?? _backdrop;
+        _backdropStyle = style ?? _backdropStyle;
 
         SetDarkMode(IsDarkMode);
-        SetBackdrop(WindowBackdrop);
+        SetBackdrop(BackdropStyle);
     }
+
+    #endregion // Protected / virtual functions
 
 
     // Private functions
@@ -98,19 +136,28 @@ public partial class ModernForm : Form
     /// <summary>
     /// Sets window backdrop.
     /// </summary>
-    private void SetBackdrop(WindowBackdrop type)
+    private void SetBackdrop(BackdropStyle style)
     {
-        if (!BHelper.IsOS(WindowsOS.Win11OrLater)) return;
-        var useTransparency = type != WindowBackdrop.None;
-
-        if (useTransparency)
+        var backupBgColor = BackColor;
+        if (style != BackdropStyle.None)
         {
-            WindowApi.SetWindowsBackdrop(Handle, (DWM_SYSTEMBACKDROP_TYPE)type);
-
-            TransparencyKey = BackColor;
+            // back color must be black
+            BackColor = Color.Black;
         }
 
-        AllowTransparency = useTransparency;
+        // set backdrop style
+        var succeeded = WindowApi.SetWindowBackdrop(Handle, (DWM_SYSTEMBACKDROP_TYPE)style);
+        var margin = (succeeded && style != BackdropStyle.None)
+            ? BackdropMargin
+            : new Padding(0);
+
+        if (!succeeded)
+        {
+            BackColor = backupBgColor;
+        }
+
+        // set window frame
+        _ = WindowApi.SetWindowFrame(Handle, _backdropMargin);
     }
 
 
