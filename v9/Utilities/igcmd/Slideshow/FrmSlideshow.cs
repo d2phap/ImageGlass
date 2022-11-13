@@ -1079,38 +1079,27 @@ public partial class FrmSlideshow : ModernForm
         MnuContext.Theme = Config.Theme;
 
 
-
         var isDarkMode = Config.Theme.Settings.IsDarkMode;
         var backdrop = BackdropStyle.None;
 
-        var isTransparent = Config.SlideshowBackgroundColor.A != 255;
-        if (isTransparent)
+        if (Config.WindowBackdrop != BackdropStyle.None)
         {
             backdrop = Config.WindowBackdrop;
         }
 
-
+        
         // viewer
-        BackColor = isTransparent
-            ? Config.Theme.ColorPalatte.GreyBackground : Config.SlideshowBackgroundColor;
-
-        PicMain.BackColor = BackColor;
+        PicMain.BackColor = Config.SlideshowBackgroundColor;
         PicMain.ForeColor = Config.Theme.Settings.TextColor;
         PicMain.SelectionColor = Config.Theme.Settings.AccentColor;
 
 
         // navigation buttons
         var navColor = Config.Theme.Settings.ToolbarBgColor;
-        if (navColor.A != 255)
-        {
-            navColor = Config.Theme.ColorPalatte.DarkGreySelection;
-        }
         PicMain.NavHoveredColor = navColor.WithAlpha(200);
         PicMain.NavPressedColor = navColor.WithAlpha(240);
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
-
-        Config.ApplyFormTheme(this, Config.Theme);
 
         ResumeLayout(false);
 
@@ -1335,6 +1324,10 @@ public partial class FrmSlideshow : ModernForm
             WindowState = FormWindowState.Normal;
             Bounds = Screen.FromControl(this).Bounds;
 
+            // disable background colors
+            WindowApi.SetWindowFrame(Handle, new Padding(0));
+            PicMain.BackColor = Config.BackgroundColor.NoAlpha();
+
             Visible = true;
         }
 
@@ -1365,7 +1358,9 @@ public partial class FrmSlideshow : ModernForm
                 FormBorderStyle = FormBorderStyle.Sizable;
             }
 
-            Config.ApplyFormTheme(this, Config.Theme);
+            // re-enable background colors
+            WindowApi.SetWindowFrame(Handle, BackdropMargin);
+            PicMain.BackColor = Config.BackgroundColor;
         }
     }
 

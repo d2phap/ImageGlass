@@ -1077,7 +1077,7 @@ public static class Config
         bgValue = items.GetValue(nameof(SlideshowBackgroundColor), string.Empty);
         if (!string.IsNullOrEmpty(bgValue))
         {
-            SlideshowBackgroundColor = ThemeUtils.ColorFromHex(bgValue, true);
+            SlideshowBackgroundColor = ThemeUtils.ColorFromHex(bgValue);
         }
 
         #endregion

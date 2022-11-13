@@ -35,14 +35,10 @@ public partial class FrmMain
         var isDarkMode = Config.Theme.Settings.IsDarkMode;
         var backdrop = BackdropStyle.None;
 
-        var isViewerTransparent = Config.BackgroundColor.A != 255;
-        var isToolbarTransparent = Config.Theme.Settings.ToolbarBgColor.A != 255;
-        var isGalleryTransparent = Config.Theme.Settings.ThumbnailBarBgColor.A != 255;
-        var isTransparent = isViewerTransparent || isToolbarTransparent || isGalleryTransparent;
-        if (isTransparent)
+        if (Config.WindowBackdrop != BackdropStyle.None)
         {
             backdrop = Config.WindowBackdrop;
-            BackdropMargin = new Padding(-1);
+            BackdropMargin = new Padding(-1); // TODO: load from config / theme
         }
 
 
@@ -74,8 +70,6 @@ public partial class FrmMain
         PicMain.NavPressedColor = navColor.WithAlpha(240);
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
-
-        Config.ApplyFormTheme(this, Config.Theme);
 
         ResumeLayout(false);
 

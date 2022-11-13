@@ -68,6 +68,7 @@
             this.PicMain.CheckFPS = false;
             this.PicMain.ContextMenuStrip = this.MnuContext;
             this.PicMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PicMain.EnableSelection = false;
             this.PicMain.InterpolationScaleDown = ImageGlass.Base.PhotoBox.ImageInterpolation.SampleLinear;
             this.PicMain.Location = new System.Drawing.Point(0, 0);
             this.PicMain.Margin = new System.Windows.Forms.Padding(0);
@@ -75,6 +76,8 @@
             this.PicMain.NavBorderRadius = 45F;
             this.PicMain.NavButtonSize = new System.Drawing.SizeF(90F, 90F);
             this.PicMain.RequestUpdateFrame = false;
+            this.PicMain.SelectionAspectRatio = new System.Drawing.SizeF(0F, 0F);
+            this.PicMain.SelectionColor = System.Drawing.Color.Black;
             this.PicMain.Size = new System.Drawing.Size(1112, 674);
             this.PicMain.TabIndex = 0;
             this.PicMain.OnZoomChanged += new ImageGlass.Views.DXCanvas.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
@@ -105,7 +108,7 @@
             this.toolStripMenuItem5,
             this.MnuExitSlideshow});
             this.MnuContext.Name = "MnuContext";
-            this.MnuContext.Size = new System.Drawing.Size(301, 423);
+            this.MnuContext.Size = new System.Drawing.Size(301, 392);
             this.MnuContext.Opening += new System.ComponentModel.CancelEventHandler(this.MnuContext_Opening);
             // 
             // MnuPauseResumeSlideshow
@@ -343,6 +346,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackdropMargin = new System.Windows.Forms.Padding(-1);
             this.ClientSize = new System.Drawing.Size(1112, 674);
             this.Controls.Add(this.PicMain);
             this.KeyPreview = true;
