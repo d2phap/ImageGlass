@@ -44,7 +44,9 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
     {
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
+        // Draw Background
         #region Draw Background
+
         using var brushBg = new SolidBrush(Color.Transparent);
         var rect = new Rectangle(
             0,
@@ -72,27 +74,27 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         e.Graphics.FillPath(brushBg, path);
         e.Graphics.DrawPath(penBorder, path);
 
-        #endregion
+        #endregion // Draw Background
 
 
+        // Draw "..."
         #region Draw "..."
-        const string ELLIPSIS = "...";
-        using var font = new Font(FontFamily.GenericSerif, Toolbar.IconHeight / 3, FontStyle.Bold);
-        var fontSize = e.Graphics.MeasureString(ELLIPSIS, font);
-        using var brushFont = new SolidBrush(Color.FromArgb(180, Theme.Settings.ToolbarTextColor));
 
-        var posX = (e.Item.Width / 2) - (fontSize.Width / 2) - 1;
-        var posY = (e.Item.Height / 2) - (fontSize.Height / 2);
+        const string ELLIPSIS = "...";
+        using var font = new Font(FontFamily.GenericSerif, Toolbar.IconHeight * 0.85f, FontStyle.Bold);
+
+        var fontColor = e.Item.ForeColor.WithAlpha(e.Item.Pressed ? 140 : 180);
+        var textImg = ThemeUtils.CreateImageFromText(ELLIPSIS, font, font.Size, fontColor, Color.Transparent);
+
+        var posX = (e.Item.Width / 2) - (textImg.Width / 2) - 1;
+        var posY = (e.Item.Height / 2) - (textImg.Height / 2);
 
         // on pressed
-        if (e.Item.Pressed)
-        {
-            posY += 1;
-            brushFont.Color = Color.FromArgb(140, Theme.Settings.ToolbarTextColor);
-        }
+        if (e.Item.Pressed) posY += 1;
 
-        e.Graphics.DrawString(ELLIPSIS, font, brushFont, posX, posY);
-        #endregion
+        e.Graphics.DrawImage(textImg, posX, posY);
+
+        #endregion // Draw "..."
     }
 
 

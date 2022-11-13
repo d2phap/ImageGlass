@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using Microsoft.Win32;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Globalization;
 
 namespace ImageGlass.UI;
@@ -377,6 +378,34 @@ public partial class ThemeUtils
     public static GraphicsPath GetRoundRectanglePath(Rectangle bounds, int radius)
     {
         return GetRoundRectanglePath(new RectangleF(bounds.Location, bounds.Size), radius);
+    }
+
+
+    /// <summary>
+    /// Creates image from text
+    /// </summary>
+    public static Image CreateImageFromText(string text, Font font, float size, Color textColor, Color? backColor = null)
+    {
+        var path = new GraphicsPath();
+        path.AddString(text, font.FontFamily, (int)font.Style, size, new Point(0, 0), StringFormat.GenericTypographic);
+        var area = Rectangle.Round(path.GetBounds());
+
+        var br = Rectangle.Round(path.GetBounds());
+        var img = new Bitmap(br.Width, br.Height);
+
+        using var textBrush = new SolidBrush(textColor);
+        using var g = Graphics.FromImage(img);
+        g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+        g.SmoothingMode = SmoothingMode.HighQuality;
+        g.Clear(backColor ?? Color.Transparent);
+
+        g.TranslateTransform((img.Width - br.Width) / 2 - br.X, (img.Height - br.Height) / 2 - br.Y);
+        g.FillPath(textBrush, path);
+
+
+        g.Save();
+
+        return img;
     }
 
     #endregion

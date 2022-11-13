@@ -308,18 +308,8 @@ public class ModernToolbar : ToolStrip
 
         if (Theme is not null)
         {
-            var isToolbarTransparent = Theme.Settings.ToolbarBgColor.A != 255;
-            var backColor = BackColor;
-            var textColor = ForeColor;
-
-            if (isToolbarTransparent)
-            {
-                backColor = Theme.Settings.MenuBgColor;
-                textColor = Theme.Settings.MenuTextColor;
-            }
-
-            OverflowButton.DropDown.BackColor = backColor;
-            OverflowButton.DropDown.ForeColor = textColor;
+            OverflowButton.DropDown.BackColor = BackColor.WithAlpha(255);
+            OverflowButton.DropDown.ForeColor = ForeColor;
         }
     }
 
@@ -522,18 +512,10 @@ public class ModernToolbar : ToolStrip
 
         if (Theme is null) return;
 
-        var isToolbarTransparent = Theme.Settings.ToolbarBgColor.A != 255;
+        // update toolbar theme
         BackColor = Theme.Settings.ToolbarBgColor;
         ForeColor = Theme.Settings.ToolbarTextColor;
-
-        if (isToolbarTransparent)
-        {
-            BackColor = Theme.ColorPalatte.GreyBackground;
-            ForeColor = Theme.ColorPalatte.LightText;
-        }
-
         Renderer = new ModernToolbarRenderer(this);
-
 
         // Show / hide main menu button
         UpdateMainMenuButton();
