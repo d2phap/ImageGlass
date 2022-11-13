@@ -1803,6 +1803,12 @@ public partial class FrmMain
                 IG_ToggleGallery(false);
             }
 
+            // disable background colors
+            WindowApi.SetWindowFrame(Handle, new Padding(0));
+            Toolbar.BackColor = Config.Theme.Settings.ToolbarBgColor.NoAlpha();
+            PicMain.BackColor = Config.BackgroundColor.NoAlpha();
+            Gallery.BackColor = Config.Theme.Settings.ThumbnailBarBgColor.NoAlpha();
+
             ResumeLayout();
             Visible = true;
         }
@@ -1826,6 +1832,13 @@ public partial class FrmMain
                 // Show thumbnail
                 IG_ToggleGallery(true);
             }
+
+            // re-enable background colors
+            WindowApi.SetWindowFrame(Handle, BackdropMargin);
+            Toolbar.BackColor = Config.Theme.Settings.ToolbarBgColor;
+            PicMain.BackColor = Config.BackgroundColor;
+            Gallery.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
+
 
             ResumeLayout();
 
