@@ -30,20 +30,10 @@ namespace ImageGlass;
 
 public partial class FrmMain
 {
-    public override void ApplyTheme(bool darkMode, WindowBackdrop? backDrop = null)
+    public override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
     {
-        //var themMode = mode;
-
-        //if (mode == SystemThemeMode.Unknown)
-        //{
-        //    themMode = ThemeUtils.GetSystemThemeMode();
-        //}
-
-        //// correct theme mode
-        //var isDarkMode = themMode != SystemThemeMode.Light;
-
         var isDarkMode = Config.Theme.Settings.IsDarkMode;
-        var backdrop = WindowBackdrop.None;
+        var backdrop = BackdropStyle.None;
 
         var isViewerTransparent = Config.BackgroundColor.A != 255;
         var isToolbarTransparent = Config.Theme.Settings.ToolbarBgColor.A != 255;
@@ -52,6 +42,7 @@ public partial class FrmMain
         if (isTransparent)
         {
             backdrop = Config.WindowBackdrop;
+            BackdropMargin = new Padding(-1);
         }
 
 
@@ -64,30 +55,21 @@ public partial class FrmMain
 
 
         // viewer
-        BackColor = Sp1.BackColor = Sp2.BackColor = isTransparent
-            ? Config.Theme.ColorPalatte.GreyBackground : Config.BackgroundColor;
-
-        PicMain.BackColor = isViewerTransparent ? BackColor : Config.BackgroundColor;
+        Sp1.BackColor = Sp2.BackColor = Color.Transparent;
+        PicMain.BackColor = Config.BackgroundColor;
         PicMain.ForeColor = Config.Theme.Settings.TextColor;
         PicMain.SelectionColor = Config.Theme.Settings.AccentColor;
 
 
         // Thumbnail bar
         Gallery.SetRenderer(new ModernGalleryRenderer(Config.Theme));
-        var galleryBackColor = Config.Theme.Settings.ThumbnailBarBgColor;
-        if (isGalleryTransparent)
-        {
-            galleryBackColor = BackColor;
-        }
-        Sp1.SplitterBackColor = Sp2.SplitterBackColor = Gallery.BackColor = galleryBackColor;
+        Sp1.SplitterBackColor =
+            Sp2.SplitterBackColor =
+            Gallery.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
 
 
         // navigation buttons
         var navColor = Config.Theme.Settings.ToolbarBgColor;
-        if (isToolbarTransparent)
-        {
-            navColor = Config.Theme.ColorPalatte.DarkGreySelection;
-        }
         PicMain.NavHoveredColor = navColor.WithAlpha(200);
         PicMain.NavPressedColor = navColor.WithAlpha(240);
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
