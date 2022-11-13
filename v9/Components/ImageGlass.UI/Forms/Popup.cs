@@ -29,86 +29,6 @@ namespace ImageGlass.UI;
 
 public partial class Popup : ModernForm
 {
-    #region Borderless form
-
-    //private bool isAeroEnabled;
-    //private const int WM_NCPAINT = 0x0085;
-    //private const int WS_EX_NOACTIVATE = 0x8000000;
-    //private const int WS_EX_TOOLWINDOW = 0x00000080;
-
-
-    //protected override CreateParams CreateParams
-    //{
-    //    get
-    //    {
-    //        if (DesignMode) return base.CreateParams;
-
-    //        isAeroEnabled = CheckAeroEnabled();
-    //        var cp = base.CreateParams;
-
-
-    //        if (!isAeroEnabled)
-    //        {
-    //            cp.ExStyle |= WS_EX_NOACTIVATE | WS_EX_TOOLWINDOW;
-    //        }
-
-    //        return cp;
-    //    }
-    //}
-
-
-    //protected override void WndProc(ref Message m)
-    //{
-    //    switch (m.Msg)
-    //    {
-    //        case WM_NCPAINT:
-    //            if (isAeroEnabled)
-    //            {
-    //                unsafe
-    //                {
-    //                    var value = 2;
-
-    //                    PInvoke.DwmSetWindowAttribute(new(Handle),
-    //                        DWMWINDOWATTRIBUTE.DWMWA_NCRENDERING_POLICY,
-    //                        &value, sizeof(int));
-
-
-    //                    var margins = new MARGINS()
-    //                    {
-    //                        cyTopHeight = 1,
-    //                        cyBottomHeight = 1,
-    //                        cxLeftWidth = 1,
-    //                        cxRightWidth = 1,
-    //                    };
-
-    //                    PInvoke.DwmExtendFrameIntoClientArea(new(Handle), &margins);
-    //                }
-    //            }
-    //            break;
-
-    //        default:
-    //            break;
-    //    }
-
-
-    //    base.WndProc(ref m);
-
-    //}
-
-
-    //private static bool CheckAeroEnabled()
-    //{
-    //    if (Environment.OSVersion.Version.Major >= 6)
-    //    {
-    //        PInvoke.DwmIsCompositionEnabled(out var enabled);
-
-    //        return enabled ? true : false;
-    //    }
-
-    //    return false;
-    //}
-
-    #endregion
 
     #region Borderless form moving
 
@@ -738,7 +658,6 @@ public partial class Popup : ModernForm
         SuspendLayout();
 
         var isDarkMode = Theme.Settings.IsDarkMode;
-        BackColor = Theme.ColorPalatte.GreyBackground;
 
         // text color
         lblHeading.ForeColor =
