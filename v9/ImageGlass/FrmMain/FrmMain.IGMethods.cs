@@ -106,7 +106,7 @@ public partial class FrmMain
         if (Local.Images.Length == 0) return;
 
         var oldIndex = Local.CurrentIndex + 1;
-        var frm = new Popup(Config.Theme, Config.Language)
+        using var frm = new Popup(Config.Theme, Config.Language)
         {
             Title = Config.Language[$"{Name}.{nameof(MnuGoTo)}"],
             Value = oldIndex.ToString(),
@@ -118,10 +118,7 @@ public partial class FrmMain
         };
 
 
-        if (frm.ShowDialog() != DialogResult.OK)
-        {
-            return;
-        }
+        if (frm.ShowDialog(this) != DialogResult.OK) return;
 
         if (int.TryParse(frm.Value.Trim(), out var newIndex))
         {
@@ -358,8 +355,7 @@ public partial class FrmMain
         if (PicMain.Source == ImageSource.Null) return;
 
         var oldZoom = PicMain.ZoomFactor * 100f;
-
-        var frm = new Popup(Config.Theme, Config.Language)
+        using var frm = new Popup(Config.Theme, Config.Language)
         {
             Title = Config.Language[$"{Name}.{nameof(MnuCustomZoom)}"],
             Value = oldZoom.ToString(),
@@ -372,10 +368,7 @@ public partial class FrmMain
         };
 
 
-        if (frm.ShowDialog() != DialogResult.OK)
-        {
-            return;
-        }
+        if (frm.ShowDialog(this) != DialogResult.OK) return;
 
         if (int.TryParse(frm.Value.Trim(), out var newZoom))
         {
@@ -663,13 +656,13 @@ public partial class FrmMain
 
     private void IG_Settings()
     {
-        var path = App.ConfigDir(PathType.File, Source.UserFilename);
-        var psi = new ProcessStartInfo(path)
+        using var frmSettings = new FrmSettings()
         {
-            UseShellExecute = true,
+            CloseFormHotkey = Keys.Escape,
+            StartPosition = FormStartPosition.CenterScreen,
         };
 
-        Process.Start(psi);
+        frmSettings.ShowDialog();
     }
 
 
@@ -1144,10 +1137,7 @@ public partial class FrmMain
             // update ShowSaveOverrideConfirmation setting
             Config.ShowSaveOverrideConfirmation = !result.IsOptionChecked;
 
-            if (result.ExitResult != PopupExitResult.OK)
-            {
-                return;
-            }
+            if (result.ExitResult != PopupExitResult.OK) return;
         }
 
 
@@ -1488,10 +1478,8 @@ public partial class FrmMain
                 + Config.Language[$"{Name}.{nameof(MnuRename)}._Description"],
         };
 
-        if (frm.ShowDialog() != DialogResult.OK || string.IsNullOrEmpty(frm.Value.Trim()))
-        {
-            return;
-        }
+        if (frm.ShowDialog(this) != DialogResult.OK
+            || string.IsNullOrEmpty(frm.Value.Trim())) return;
 
         newName = frm.Value.Trim() + ext;
         var newFilePath = Path.Combine(currentFolder, newName);
