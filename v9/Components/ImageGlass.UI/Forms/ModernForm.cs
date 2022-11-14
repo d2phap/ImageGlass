@@ -76,6 +76,11 @@ public partial class ModernForm : Form
     }
 
 
+    /// <summary>
+    /// Gets, sets the keys to close the <see cref="ModernForm"/>.
+    /// </summary>
+    public Keys CloseFormHotkey { get; set; } = Keys.None;
+
     #endregion // Public properties
 
 
@@ -85,6 +90,8 @@ public partial class ModernForm : Form
     public ModernForm()
     {
         InitializeComponent();
+
+        SizeGripStyle = SizeGripStyle.Hide;
     }
 
 
@@ -125,6 +132,32 @@ public partial class ModernForm : Form
 
         SetDarkMode(IsDarkMode);
         SetBackdrop(BackdropStyle);
+    }
+
+    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    {
+        // disable parent form shotcuts
+        return false;
+    }
+
+
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        base.OnKeyDown(e);
+
+        if (CloseFormHotkey != Keys.None && e.KeyData.Equals(CloseFormHotkey))
+        {
+            CloseFormByKeys();
+        }
+    }
+
+
+    /// <summary>
+    /// Closes the window when <see cref="CloseFormHotkey"/> is pressed.
+    /// </summary>
+    protected virtual void CloseFormByKeys()
+    {
+        Close();
     }
 
     #endregion // Protected / virtual functions
