@@ -1131,7 +1131,7 @@ public static class Config
             title: Application.ProductName + " " + Application.ProductVersion,
             heading: Language[$"{langPath}._Heading"],
             description: string.Format(Language[$"{langPath}._Description"], url),
-            buttons: PopupButtons.LearnMore_Close);
+            buttons: PopupButton.LearnMore_Close);
 
 
         if (result.ExitResult == PopupExitResult.OK)
@@ -1171,7 +1171,7 @@ public static class Config
             heading: ex.Message,
             description: description,
             details: details,
-            buttons: PopupButtons.Continue_Quit);
+            buttons: PopupButton.Continue_Quit);
 
         if (result.ExitResult == PopupExitResult.Cancel)
         {
@@ -1198,7 +1198,7 @@ public static class Config
         string note = "",
         SHSTOCKICONID? icon = SHSTOCKICONID.SIID_INFO,
         Image? thumbnail = null,
-        PopupButtons buttons = PopupButtons.OK,
+        PopupButton buttons = PopupButton.OK,
         string optionText = "")
     {
         SystemSounds.Question.Play();
@@ -1224,7 +1224,7 @@ public static class Config
         string note = "",
         SHSTOCKICONID? icon = SHSTOCKICONID.SIID_WARNING,
         Image? thumbnail = null,
-        PopupButtons buttons = PopupButtons.OK,
+        PopupButton buttons = PopupButton.OK,
         string optionText = "")
     {
         heading ??= Language["_._Warning"];
@@ -1251,7 +1251,7 @@ public static class Config
         string note = "",
         SHSTOCKICONID? icon = SHSTOCKICONID.SIID_ERROR,
         Image? thumbnail = null,
-        PopupButtons buttons = PopupButtons.OK,
+        PopupButton buttons = PopupButton.OK,
         string optionText = "")
     {
         heading ??= Language["_._Error"];

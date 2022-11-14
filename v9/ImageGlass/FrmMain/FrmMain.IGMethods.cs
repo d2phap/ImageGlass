@@ -1130,7 +1130,7 @@ public partial class FrmMain
                 note: Config.Language[$"{langPath}._ConfirmDescription"],
                 title: Config.Language[langPath],
                 heading: Config.Language[$"{langPath}._Confirm"],
-                buttons: PopupButtons.Yes_No,
+                buttons: PopupButton.Yes_No,
                 thumbnail: Gallery.Items[Local.CurrentIndex].ThumbnailImage,
                 optionText: Config.Language["_._DoNotShowThisMessageAgain"]);
 
@@ -1247,7 +1247,7 @@ public partial class FrmMain
                         Config.Language[$"{langPath}._ConfirmDescription"],
                     title: Config.Language[langPath],
                     heading: Config.Language[$"{langPath}._Confirm"],
-                    buttons: PopupButtons.Yes_No,
+                    buttons: PopupButton.Yes_No,
                     optionText: Config.Language["_._DoNotShowThisMessageAgain"]);
 
                 // update ShowSaveOverrideConfirmation setting
@@ -1546,7 +1546,7 @@ public partial class FrmMain
                 description: description,
                 title: title,
                 heading: heading,
-                buttons: PopupButtons.Yes_No,
+                buttons: PopupButton.Yes_No,
                 icon: overlayIcon,
                 thumbnail: Gallery.Items[Local.CurrentIndex].ThumbnailImage,
                 optionText: Config.Language["_._DoNotShowThisMessageAgain"]);

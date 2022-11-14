@@ -775,7 +775,7 @@ public partial class Popup : ModernForm
         string details = "",
         string note = "",
         StatusType? noteStatusType = null,
-        PopupButtons buttons = PopupButtons.OK,
+        PopupButton buttons = PopupButton.OK,
         SHSTOCKICONID? icon = null,
         Image? thumbnail = null,
         string optionText = "")
@@ -818,7 +818,7 @@ public partial class Popup : ModernForm
             frm.OptionCheckBoxText = optionText;
         }
 
-        if (buttons == PopupButtons.OK_Cancel)
+        if (buttons == PopupButton.OK_Cancel)
         {
             frm.AcceptButtonText = lang["_._OK"];
             frm.ShowAcceptButton = true;
@@ -826,7 +826,7 @@ public partial class Popup : ModernForm
             frm.CancelButtonText = lang["_._Cancel"];
             frm.ShowCancelButton = true;
         }
-        else if (buttons == PopupButtons.OK_Close)
+        else if (buttons == PopupButton.OK_Close)
         {
             frm.AcceptButtonText = lang["_._OK"];
             frm.ShowAcceptButton = true;
@@ -834,7 +834,7 @@ public partial class Popup : ModernForm
             frm.CancelButtonText = lang["_._Close"];
             frm.ShowCancelButton = true;
         }
-        else if (buttons == PopupButtons.Yes_No)
+        else if (buttons == PopupButton.Yes_No)
         {
             frm.AcceptButtonText = lang["_._Yes"];
             frm.ShowAcceptButton = true;
@@ -842,7 +842,7 @@ public partial class Popup : ModernForm
             frm.CancelButtonText = lang["_._No"];
             frm.ShowCancelButton = true;
         }
-        else if (buttons == PopupButtons.LearnMore_Close)
+        else if (buttons == PopupButton.LearnMore_Close)
         {
             frm.AcceptButtonText = lang["_._LearnMore"];
             frm.ShowAcceptButton = true;
@@ -850,7 +850,7 @@ public partial class Popup : ModernForm
             frm.CancelButtonText = lang["_._Close"];
             frm.ShowCancelButton = true;
         }
-        else if (buttons == PopupButtons.Continue_Quit)
+        else if (buttons == PopupButton.Continue_Quit)
         {
             frm.AcceptButtonText = lang["_._Continue"];
             frm.ShowAcceptButton = true;
@@ -858,7 +858,7 @@ public partial class Popup : ModernForm
             frm.CancelButtonText = lang["_._Quit"];
             frm.ShowCancelButton = true;
         }
-        else if (buttons == PopupButtons.Close)
+        else if (buttons == PopupButton.Close)
         {
             frm.ShowAcceptButton = false;
 
@@ -918,7 +918,7 @@ public partial class Popup : ModernForm
 /// <summary>
 /// The built-in buttons for Popup.
 /// </summary>
-public enum PopupButtons : uint
+public enum PopupButton : uint
 {
     OK = 0,
     Close = 1,
