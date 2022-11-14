@@ -140,6 +140,7 @@
             // 
             // picThumbnail
             // 
+            this.picThumbnail.BackColor = System.Drawing.Color.Transparent;
             this.picThumbnail.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.picThumbnail.Location = new System.Drawing.Point(20, 0);
             this.picThumbnail.Margin = new System.Windows.Forms.Padding(20, 0, 0, 20);
@@ -236,7 +237,8 @@
             this.AcceptButton = this.BtnAccept;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Window;
+            this.BackdropMargin = new System.Windows.Forms.Padding(-1);
+            this.BackdropStyle = ImageGlass.Base.BackdropStyle.MicaAlt;
             this.ClientSize = new System.Drawing.Size(600, 372);
             this.ControlBox = false;
             this.Controls.Add(this.panBottom);
@@ -248,11 +250,8 @@
             this.Name = "Popup";
             this.Padding = new System.Windows.Forms.Padding(0, 20, 0, 0);
             this.ShowIcon = false;
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "[Title]";
-            this.TransparencyKey = System.Drawing.SystemColors.Control;
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Popup_KeyDown);
             this.tableMain.ResumeLayout(false);
             this.tableMain.PerformLayout();
             this.panNote.ResumeLayout(false);

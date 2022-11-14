@@ -230,7 +230,7 @@ public partial class Popup : ModernForm
         {
             _noteStatusType = value;
 
-            panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(value, IsDarkMode, 100);
+            panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(value, IsDarkMode);
             lblNote.ForeColor = Theme.ColorPalatte.LightText;
         }
     }
@@ -517,6 +517,7 @@ public partial class Popup : ModernForm
         InitializeComponent();
         RegisterFormEvents();
 
+        CloseFormHotkey = Keys.Escape;
         ShowInTaskbar = false;
         Heading = "";
         Description = "";
@@ -529,6 +530,7 @@ public partial class Popup : ModernForm
         ApplyLanguage();
 
         Theme = theme;
+        ApplyTheme(Theme.Settings.IsDarkMode);
     }
 
 
@@ -536,8 +538,6 @@ public partial class Popup : ModernForm
 
     protected override void OnLoad(EventArgs e)
     {
-        ApplyTheme(Theme.Settings.IsDarkMode);
-
         // show thumbnail
         var showThumbnail = Thumbnail != null || ThumbnailOverlay != null;
         var columnIndex = tableMain.GetColumn(picThumbnail);
@@ -587,24 +587,52 @@ public partial class Popup : ModernForm
     }
 
 
-    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    public override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
     {
-        // disable parent form shotcuts
-        return false;
+        var isDarkMode = darkMode;
+
+        if (Theme != null)
+        {
+            SuspendLayout();
+            isDarkMode = Theme.Settings.IsDarkMode;
+
+            // text color
+            lblHeading.ForeColor =
+                lblDescription.ForeColor =
+                lblNote.ForeColor =
+                ChkOption.ForeColor = Theme.ColorPalatte.LightText;
+
+
+            panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(NoteStatusType, isDarkMode);
+            panBottom.BackColor = BackColor.InvertBlackOrWhite(30);
+
+
+            // dark mode
+            txtValue.DarkMode =
+                BtnAccept.DarkMode =
+                BtnCancel.DarkMode = isDarkMode;
+
+
+            SetTextInputStyle(ValidateInput(), isDarkMode);
+            ResumeLayout(false);
+        }
+
+        base.ApplyTheme(darkMode, backDrop);
+    }
+
+
+    protected override void CloseFormByKeys()
+    {
+        // Closes the form and returns <see cref="DialogResult.Abort"/> code.
+        DialogResult = DialogResult.Abort;
+
+        base.CloseFormByKeys();
     }
 
     #endregion
 
 
     #region Form and control events
-
-    private void Popup_KeyDown(object sender, KeyEventArgs e)
-    {
-        if (e.KeyCode == Keys.Escape && !e.Control && !e.Shift && !e.Alt)
-        {
-            AbortForm();
-        }
-    }
 
     private void TxtValue_TextChanged(object sender, EventArgs e)
     {
@@ -647,40 +675,6 @@ public partial class Popup : ModernForm
             BtnAccept.Text = Language["_._OK"];
             BtnCancel.Text = Language["_._Cancel"];
         }
-    }
-
-
-    /// <summary>
-    /// Apply theme to the form
-    /// </summary>
-    public override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
-    {
-        SuspendLayout();
-
-        var isDarkMode = Theme.Settings.IsDarkMode;
-
-        // text color
-        lblHeading.ForeColor =
-            lblDescription.ForeColor =
-            lblNote.ForeColor =
-            ChkOption.ForeColor = Theme.ColorPalatte.LightText;
-
-        
-        panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(StatusType.Warning, isDarkMode, 100);
-        panBottom.BackColor = Theme.ColorPalatte.BlueSelection.WithAlpha(10);
-
-
-        // dark mode
-        txtValue.DarkMode =
-            BtnAccept.DarkMode =
-            BtnCancel.DarkMode = isDarkMode;
-
-
-        SetTextInputStyle(ValidateInput(), isDarkMode);
-
-        ResumeLayout(false);
-
-        base.ApplyTheme(isDarkMode, backDrop);
     }
 
 
@@ -740,16 +734,6 @@ public partial class Popup : ModernForm
     private void CancelForm()
     {
         DialogResult = DialogResult.Cancel;
-        Close();
-    }
-
-
-    /// <summary>
-    /// Closes the form and returns <see cref="DialogResult.Abort"/> code.
-    /// </summary>
-    private void AbortForm()
-    {
-        DialogResult = DialogResult.Abort;
         Close();
     }
 
