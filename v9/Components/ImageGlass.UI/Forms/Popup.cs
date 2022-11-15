@@ -560,19 +560,24 @@ public partial class Popup : ModernForm
         UpdateHeight();
 
 
+        base.OnLoad(e);
+
+        _ = SetFocusAsync();
+    }
+
+
+    private async Task SetFocusAsync()
+    {
+        await Task.Delay(300);
+
         // set default focus
         if (!TextInputReadOnly)
         {
-            tableMain.TabIndex = 0;
-            panBottom.TabIndex = 1;
             txtValue.Focus();
             txtValue.SelectAll();
         }
         else
         {
-            tableMain.TabIndex = 1;
-            panBottom.TabIndex = 0;
-
             if (ShowAcceptButton)
             {
                 BtnAccept.Focus();
@@ -582,8 +587,6 @@ public partial class Popup : ModernForm
                 BtnCancel.Focus();
             }
         }
-
-        base.OnLoad(e);
     }
 
 
@@ -604,7 +607,7 @@ public partial class Popup : ModernForm
 
 
             panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(NoteStatusType, isDarkMode);
-            panBottom.BackColor = BackColor.InvertBlackOrWhite(30);
+            tableBottom.BackColor = BackColor.InvertBlackOrWhite(30);
 
 
             // dark mode
@@ -906,9 +909,10 @@ public partial class Popup : ModernForm
 
         var height = SystemInformation.CaptionHeight + (Padding.Top * 2) +
             Math.Max(picThumbnail.Height, contentHeight) +
-            panBottom.Height;
+            tableBottom.Height;
 
         Height = height;
+        MinimumSize = new Size(Width, height);
     }
 
 }
