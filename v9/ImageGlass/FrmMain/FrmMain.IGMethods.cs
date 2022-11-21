@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using DirectN;
 using ImageGlass.Base;
 using ImageGlass.Base.NamedPipes;
 using ImageGlass.Base.PhotoBox;
@@ -27,6 +28,7 @@ using ImageGlass.UI;
 using ImageGlass.Views;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO.Pipes;
 using WicNet;
 
@@ -997,7 +999,7 @@ public partial class FrmMain
         // Is there a file in clipboard?
         if (Clipboard.ContainsFileDropList())
         {
-            var sFile = (string[])Clipboard.GetData(DataFormats.FileDrop);
+            var sFile = Clipboard.GetData(DataFormats.FileDrop) as string[];
 
             // load file
             PrepareLoading(sFile[0]);
@@ -1079,7 +1081,7 @@ public partial class FrmMain
         }
         catch
         {
-            Process.Start("explorer.exe", $"/select,\"{filePath}\"");
+            using var proc = Process.Start("explorer.exe", $"/select,\"{filePath}\"");
         }
     }
 
@@ -1205,7 +1207,7 @@ public partial class FrmMain
             }
         }
 
-        var saveDialog = new SaveFileDialog
+        using var saveDialog = new SaveFileDialog
         {
             Filter = SavingExts.GetFilterStringForSaveDialog(),
             FileName = string.IsNullOrEmpty(srcFilePath)
@@ -2006,7 +2008,7 @@ public partial class FrmMain
     /// <summary>
     /// Disconnects all slideshow servers.
     /// </summary>
-    private void DisconnectAllSlideshowServers()
+    private static void DisconnectAllSlideshowServers()
     {
         foreach (var server in Local.SlideshowPipeServers)
         {
@@ -2149,6 +2151,50 @@ public partial class FrmMain
 
     }
 
+
+    /// <summary>
+    /// Gets the selected image data clipped by the selection area.
+    /// </summary>
+    private async Task<WicBitmapSource?> GetSelectedImageAreaAsync()
+    {
+        if (PicMain.Source == ImageSource.Null || PicMain.SourceSelection.IsEmpty) return null;
+
+
+        if (Local.ClipboardImage != null)
+        {
+            return CropImage(Local.ClipboardImage, PicMain.SourceSelection);
+        }
+
+
+        var img = await Local.Images.GetAsync(Local.CurrentIndex);
+        if (img == null) return null;
+
+        return CropImage(img.ImgData.Image, PicMain.SourceSelection);
+    }
+
+
+    /// <summary>
+    /// Crops the image.
+    /// </summary>
+    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
+    private static WicBitmapSource? CropImage(WicBitmapSource? img, RectangleF srcSelection)
+    {
+        if (img == null) return null;
+
+        var width = (int)srcSelection.Width;
+        var height = (int)srcSelection.Height;
+
+        if (width == 0 || height == 0) return null;
+
+        var x = (int)srcSelection.X;
+        var y = (int)srcSelection.Y;
+
+
+        var bmpCom = WICImagingFactory.CreateBitmapFromSourceRect(img.ComObject, x, y, width, height);
+        var wicImg = new WicBitmapSource(bmpCom.Object);
+
+        return wicImg;
+    }
 
 }
 

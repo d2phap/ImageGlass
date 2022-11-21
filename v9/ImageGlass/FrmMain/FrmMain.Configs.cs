@@ -286,7 +286,7 @@ public partial class FrmMain
         try
         {
             // disconnect all slideshows
-            DisconnectAllSlideshowServers();
+            FrmMain.DisconnectAllSlideshowServers();
 
             // delete trash
             Directory.Delete(App.ConfigDir(PathType.Dir, Dir.Temporary), true);

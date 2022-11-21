@@ -72,7 +72,6 @@ public class DXCanvas : DXControl
 
     private Vector2 _panHostFromPoint;
     private Vector2 _panHostToPoint;
-    private Vector2 _pannedDistance = new Vector2();
     private float _panDistance = 20f;
 
     private bool _xOut = false;
@@ -971,7 +970,6 @@ public class DXCanvas : DXControl
         _isMouseDown = false;
         _selectedResizer = null;
         _lastClickArgs = e;
-        _pannedDistance = new();
 
 
         if (EnableSelection && !ClientSelection.IsEmpty)
@@ -1100,11 +1098,6 @@ public class DXCanvas : DXControl
     protected override void OnMouseLeave(EventArgs e)
     {
         base.OnMouseLeave(e);
-
-        if (!_isMouseDown)
-        {
-            _pannedDistance = new();
-        }
 
         _isNavLeftHovered = false;
         _isNavRightHovered = false;
@@ -2098,8 +2091,6 @@ public class DXCanvas : DXControl
         {
             return (bool)Invoke(PanTo, hDistance, vDistance, requestRerender);
         }
-
-        _pannedDistance = new Vector2(hDistance, vDistance);
 
         if (Source == ImageSource.Null) return false;
         if (hDistance == 0 && vDistance == 0) return false;
