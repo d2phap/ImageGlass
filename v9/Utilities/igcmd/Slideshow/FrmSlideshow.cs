@@ -1072,7 +1072,7 @@ public partial class FrmSlideshow : ModernForm
     }
 
 
-    public override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
+    protected override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
     {
         SuspendLayout();
 

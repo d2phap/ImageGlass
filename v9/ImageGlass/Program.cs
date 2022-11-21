@@ -29,7 +29,7 @@ namespace ImageGlass;
 internal static class Program
 {
     public const string APP_GUID = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
-    private static FrmMain? FormMain;
+    public static FrmMain? FormMain;
 
 
     /// <summary>

@@ -318,33 +318,13 @@ public partial class FrmMain : ModernForm
 
 
     /// <summary>
-    /// Open file picker and load the selected image
-    /// </summary>
-    private void OpenFilePicker()
-    {
-        var formats = Config.GetImageFormats(Config.AllFormats);
-        using var o = new OpenFileDialog()
-        {
-            Filter = Config.Language[$"{Name}._OpenFileDialog"] + "|" + formats,
-            CheckFileExists = true,
-            RestoreDirectory = true,
-        };
-
-        if (o.ShowDialog() == DialogResult.OK)
-        {
-            PrepareLoading(o.FileName);
-        }
-    }
-
-
-    /// <summary>
     /// Prepare and loads images from the input path
     /// </summary>
     /// <param name="inputPath">
     /// The relative/absolute path of file/folder;
     /// or a URI Scheme
     /// </param>
-    private void PrepareLoading(string inputPath)
+    public void PrepareLoading(string inputPath)
     {
         var path = BHelper.ResolvePath(inputPath);
 
@@ -371,7 +351,7 @@ public partial class FrmMain : ModernForm
     /// <param name="paths"></param>
     /// <param name="currentFile"></param>
     /// <returns></returns>
-    private async Task PrepareLoadingAsync(string[] paths, string? currentFile = null)
+    public async Task PrepareLoadingAsync(string[] paths, string? currentFile = null)
     {
         var filePath = currentFile;
 
@@ -405,7 +385,7 @@ public partial class FrmMain : ModernForm
     /// </summary>
     /// <param name="inputPaths">The list of files to load</param>
     /// <param name="currentFilePath">The image file path to view first</param>
-    private async Task LoadImageListAsync(
+    public async Task LoadImageListAsync(
         IEnumerable<string> inputPaths,
         string currentFilePath)
     {
@@ -632,7 +612,7 @@ public partial class FrmMain : ModernForm
     /// <summary>
     /// Clear and reload all thumbnail image
     /// </summary>
-    private void LoadThumbnails()
+    public void LoadThumbnails()
     {
         if (InvokeRequired)
         {
@@ -659,7 +639,7 @@ public partial class FrmMain : ModernForm
     /// <summary>
     /// Select current thumbnail
     /// </summary>
-    private void SelectCurrentThumbnail()
+    public void SelectCurrentThumbnail()
     {
         if (InvokeRequired)
         {
@@ -879,17 +859,6 @@ public partial class FrmMain : ModernForm
         await ViewNextAsync(step, isKeepZoomRatio, isSkipCache, pageIndex, filename, _loadCancelToken);
     }
 
-
-    /// <summary>
-    /// View image using index
-    /// </summary>
-    /// <param name="index">Image index</param>
-    private void GoToImage(int index)
-    {
-        Local.CurrentIndex = index;
-        _ = ViewNextCancellableAsync(0);
-    }
-
     #endregion // Image Loading functions
 
 
@@ -1024,7 +993,7 @@ public partial class FrmMain : ModernForm
     /// <summary>
     /// Show image preview using the thumbnail
     /// </summary>
-    private void ShowImagePreview(string filePath, CancellationToken token = default)
+    public void ShowImagePreview(string filePath, CancellationToken token = default)
     {
         if (InvokeRequired)
         {
@@ -1121,7 +1090,7 @@ public partial class FrmMain : ModernForm
     /// <summary>
     /// Update image info in status bar
     /// </summary>
-    private void UpdateImageInfo(ImageInfoUpdateTypes types = ImageInfoUpdateTypes.All,
+    public void UpdateImageInfo(ImageInfoUpdateTypes types = ImageInfoUpdateTypes.All,
         string? filename = null)
     {
         if (InvokeRequired)
@@ -1360,7 +1329,7 @@ public partial class FrmMain : ModernForm
     /// <summary>
     /// Executes user action
     /// </summary>
-    private void ExecuteUserAction(SingleAction? ac)
+    public void ExecuteUserAction(SingleAction? ac)
     {
         if (ac == null) return;
         if (string.IsNullOrEmpty(ac.Executable)) return;
@@ -1504,7 +1473,7 @@ public partial class FrmMain : ModernForm
     /// <summary>
     /// Executes action from mouse event
     /// </summary>
-    private void ExecuteMouseAction(MouseClickEvent e)
+    public void ExecuteMouseAction(MouseClickEvent e)
     {
         if (Config.MouseClickActions.ContainsKey(e))
         {

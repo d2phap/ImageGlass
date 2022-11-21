@@ -15,12 +15,13 @@ public partial class FrmSettings : ModernForm
         lblSettingsFilePath.Text = path;
     }
 
-    public override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
+    protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
         base.ApplyTheme(darkMode, style);
 
         lblSettingsFilePath.ForeColor = Config.Theme.ColorPalatte.LightText;
         btnOpenSettingsFile.DarkMode = Config.Theme.Settings.IsDarkMode;
+
     }
 
     private void btnOpenSettingsFile_Click(object sender, EventArgs e)
@@ -31,6 +32,6 @@ public partial class FrmSettings : ModernForm
             UseShellExecute = true,
         };
 
-        Process.Start(psi);
+        using var proc = Process.Start(psi);
     }
 }

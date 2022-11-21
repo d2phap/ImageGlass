@@ -125,7 +125,7 @@ public partial class ModernForm : Form
     /// <summary>
     /// Apply theme of the window.
     /// </summary>
-    public virtual void ApplyTheme(bool darkMode, BackdropStyle? style = null)
+    protected virtual void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
         _isDarkMode = darkMode;
         _backdropStyle = style ?? _backdropStyle;

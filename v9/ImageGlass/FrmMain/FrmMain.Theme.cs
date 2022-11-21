@@ -30,7 +30,7 @@ namespace ImageGlass;
 
 public partial class FrmMain
 {
-    public override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
+    protected override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
     {
         var isDarkMode = Config.Theme.Settings.IsDarkMode;
         var backdrop = BackdropStyle.None;

@@ -57,6 +57,27 @@ public partial class FrmMain
 
 
     /// <summary>
+    /// Open file picker and load the selected image
+    /// </summary>
+    public void OpenFilePicker()
+    {
+        var formats = Config.GetImageFormats(Config.AllFormats);
+        using var o = new OpenFileDialog()
+        {
+            Filter = Config.Language[$"{Name}._OpenFileDialog"] + "|" + formats,
+            CheckFileExists = true,
+            RestoreDirectory = true,
+        };
+
+        if (o.ShowDialog() == DialogResult.OK)
+        {
+            PrepareLoading(o.FileName);
+        }
+    }
+
+
+
+    /// <summary>
     /// Refreshes image viewport.
     /// </summary>
     public void IG_Refresh()
@@ -137,6 +158,17 @@ public partial class FrmMain
 
 
     /// <summary>
+    /// View image using index
+    /// </summary>
+    /// <param name="index">Image index</param>
+    public void GoToImage(int index)
+    {
+        Local.CurrentIndex = index;
+        _ = ViewNextCancellableAsync(0);
+    }
+
+
+    /// <summary>
     /// Views the first image in the list
     /// </summary>
     public void IG_GoToFirst()
@@ -165,7 +197,7 @@ public partial class FrmMain
         _ = PanLeftAsync();
     }
 
-    private async Task PanLeftAsync()
+    public async Task PanLeftAsync()
     {
         PicMain.StartAnimation(AnimationSource.PanLeft);
         await Task.Delay(200);
@@ -182,7 +214,7 @@ public partial class FrmMain
         _ = PanRightAsync();
     }
 
-    private async Task PanRightAsync()
+    public async Task PanRightAsync()
     {
         PicMain.StartAnimation(AnimationSource.PanRight);
         await Task.Delay(200);
@@ -199,7 +231,7 @@ public partial class FrmMain
         _ = PanUpAsync();
     }
 
-    private async Task PanUpAsync()
+    public async Task PanUpAsync()
     {
         PicMain.StartAnimation(AnimationSource.PanUp);
         await Task.Delay(200);
@@ -216,7 +248,7 @@ public partial class FrmMain
         _ = PanDownAsync();
     }
 
-    private async Task PanDownAsync()
+    public async Task PanDownAsync()
     {
         PicMain.StartAnimation(AnimationSource.PanDown);
         await Task.Delay(200);
@@ -233,7 +265,7 @@ public partial class FrmMain
         _ = PanToLeftSideAsync();
     }
 
-    private async Task PanToLeftSideAsync()
+    public async Task PanToLeftSideAsync()
     {
         var distanceX = PicMain.ImageSourceBounds.X;
 
@@ -254,7 +286,7 @@ public partial class FrmMain
         _ = PanToRightSideAsync();
     }
 
-    private async Task PanToRightSideAsync()
+    public async Task PanToRightSideAsync()
     {
         var x = PicMain.SourceWidth - PicMain.ImageSourceBounds.Width;
         var distanceX = x + PicMain.ImageSourceBounds.X;
@@ -276,7 +308,7 @@ public partial class FrmMain
         _ = PanToTopSideAsync();
     }
 
-    private async Task PanToTopSideAsync()
+    public async Task PanToTopSideAsync()
     {
         var distanceY = PicMain.ImageSourceBounds.Y;
 
@@ -297,7 +329,7 @@ public partial class FrmMain
         _ = PanToBottomSideAsync();
     }
 
-    private async Task PanToBottomSideAsync()
+    public async Task PanToBottomSideAsync()
     {
         var y = PicMain.SourceHeight - PicMain.ImageSourceBounds.Height;
         var distanceY = y + PicMain.ImageSourceBounds.Y;
@@ -324,7 +356,7 @@ public partial class FrmMain
         _ = ZoomInAsync();
     }
 
-    private async Task ZoomInAsync()
+    public async Task ZoomInAsync()
     {
         PicMain.StartAnimation(AnimationSource.ZoomIn);
         await Task.Delay(100);
@@ -341,7 +373,7 @@ public partial class FrmMain
         _ = ZoomOutAsync();
     }
 
-    private async Task ZoomOutAsync()
+    public async Task ZoomOutAsync()
     {
         PicMain.StartAnimation(AnimationSource.ZoomOut);
         await Task.Delay(100);
@@ -684,7 +716,7 @@ public partial class FrmMain
     }
 
 
-    private async Task PrintAsync()
+    public async Task PrintAsync()
     {
         // image error
         if (PicMain.Source == ImageSource.Null)
@@ -753,7 +785,7 @@ public partial class FrmMain
         _ = ShowShareDialogAsync();
     }
 
-    private async Task ShowShareDialogAsync()
+    public async Task ShowShareDialogAsync()
     {
         // image error
         if (PicMain.Source == ImageSource.Null)
@@ -865,7 +897,7 @@ public partial class FrmMain
         _ = CutFilesAsync();
     }
 
-    private async Task CutFilesAsync()
+    public async Task CutFilesAsync()
     {
         // get file path
         var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
@@ -965,7 +997,7 @@ public partial class FrmMain
 
 
     [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
-    private async Task CopyImageDataAsync()
+    public async Task CopyImageDataAsync()
     {
         if (PicMain.Source == ImageSource.Null) return;
 
@@ -1045,7 +1077,7 @@ public partial class FrmMain
         }
     }
 
-    private void LoadClipboardImage(WicBitmapSource? img)
+    public void LoadClipboardImage(WicBitmapSource? img)
     {
         // cancel the current loading image
         _loadCancelToken?.Cancel();
@@ -1121,7 +1153,7 @@ public partial class FrmMain
     }
 
 
-    private async Task SaveImageAsync()
+    public async Task SaveImageAsync()
     {
         // use backup name to avoid variable conflict
         var filePath = Local.ImageModifiedPath;
@@ -1277,7 +1309,7 @@ public partial class FrmMain
     /// <param name="destFilePath">Destination file path</param>
     /// <param name="destExt">Destination file extension. E.g. ".png"</param>
     /// <param name="srcFilePath">Source file path</param>
-    private async Task SaveImageAsAsync(string destFilePath, string destExt, string srcFilePath = "")
+    public async Task SaveImageAsAsync(string destFilePath, string destExt, string srcFilePath = "")
     {
         var hasSrcPath = !string.IsNullOrEmpty(srcFilePath);
         if (!hasSrcPath && Local.ClipboardImage == null)
@@ -1361,7 +1393,7 @@ public partial class FrmMain
         _ = OpenWithAsync();
     }
 
-    private async Task OpenWithAsync()
+    public async Task OpenWithAsync()
     {
         if (PicMain.Source == ImageSource.Null) return;
 
@@ -1419,7 +1451,7 @@ public partial class FrmMain
     }
 
 
-    private async Task UpdateDefaultPhotoViewerAsync(bool enable)
+    public async Task UpdateDefaultPhotoViewerAsync(bool enable)
     {
         var allExts = Config.AllFormats;
 
@@ -1590,7 +1622,7 @@ public partial class FrmMain
         _ = SetDesktopBackgroundAsync();
     }
 
-    private async Task SetDesktopBackgroundAsync()
+    public async Task SetDesktopBackgroundAsync()
     {
         // image error
         if (PicMain.Source == ImageSource.Null)
@@ -1665,7 +1697,7 @@ public partial class FrmMain
         _ = SetLockScreenBackgroundAsync();
     }
 
-    private async Task SetLockScreenBackgroundAsync()
+    public async Task SetLockScreenBackgroundAsync()
     {
         // image error
         if (PicMain.Source == ImageSource.Null)
@@ -1762,7 +1794,7 @@ public partial class FrmMain
     /// <param name="changeWindowState"></param>
     /// <param name="hideToolbar">Hide Toolbar</param>
     /// <param name="hideThumbnails">Hide Thumbnail bar</param>
-    private void SetFullScreenMode(bool enable = true,
+    public void SetFullScreenMode(bool enable = true,
         bool changeWindowState = true,
         bool hideToolbar = false,
         bool hideThumbnails = false)
@@ -1882,7 +1914,7 @@ public partial class FrmMain
         _ = StartNewSlideshowAsync();
     }
 
-    private async Task StartNewSlideshowAsync()
+    public async Task StartNewSlideshowAsync()
     {
         var slideshowIndex = 0;
         var serverCount = Local.SlideshowPipeServers.Count(s => s != null);
@@ -1934,7 +1966,7 @@ public partial class FrmMain
     }
 
 
-    private void SlideshowServer_Disconnected(object? sender, DisconnectedEventArgs e)
+    public void SlideshowServer_Disconnected(object? sender, DisconnectedEventArgs e)
     {
         var clonedList = Local.SlideshowPipeServers.ToList();
         var serverIndex = clonedList.FindIndex(s => s?.PipeName == e.PipeName);
@@ -1952,7 +1984,7 @@ public partial class FrmMain
         _ = CleanSlideshowServerListAsync(_cleanSlideshowServerCancelToken.Token);
     }
 
-    private async Task CleanSlideshowServerListAsync(CancellationToken token = default)
+    public async Task CleanSlideshowServerListAsync(CancellationToken token = default)
     {
         try
         {
@@ -1976,7 +2008,7 @@ public partial class FrmMain
         catch (OperationCanceledException) { }
     }
 
-    private void SetFrmMainStateInSlideshow(bool enableSlideshow)
+    public void SetFrmMainStateInSlideshow(bool enableSlideshow)
     {
         if (InvokeRequired)
         {
@@ -2007,7 +2039,7 @@ public partial class FrmMain
     /// <summary>
     /// Disconnects all slideshow servers.
     /// </summary>
-    private static void DisconnectAllSlideshowServers()
+    public static void DisconnectAllSlideshowServers()
     {
         foreach (var server in Local.SlideshowPipeServers)
         {
@@ -2090,7 +2122,7 @@ public partial class FrmMain
         _ = FlipImageAsync(options);
     }
 
-    private async Task FlipImageAsync(FlipOptions options)
+    public async Task FlipImageAsync(FlipOptions options)
     {
         if (PicMain.Source == ImageSource.Null || options == FlipOptions.None) return;
 
@@ -2169,7 +2201,7 @@ public partial class FrmMain
     /// <summary>
     /// Gets the selected image data clipped by the selection area.
     /// </summary>
-    private async Task<WicBitmapSource?> GetSelectedImageAreaAsync()
+    public async Task<WicBitmapSource?> GetSelectedImageAreaAsync()
     {
         if (PicMain.Source == ImageSource.Null || PicMain.SourceSelection.IsEmpty) return null;
 
@@ -2191,7 +2223,7 @@ public partial class FrmMain
     /// Crops the image.
     /// </summary>
     [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
-    private static WicBitmapSource? CropImage(WicBitmapSource? img, RectangleF srcSelection)
+    public static WicBitmapSource? CropImage(WicBitmapSource? img, RectangleF srcSelection)
     {
         if (img == null) return null;
 

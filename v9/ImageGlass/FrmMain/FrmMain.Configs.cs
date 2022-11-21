@@ -255,7 +255,7 @@ public partial class FrmMain
         _ = SaveConfigsOnClosing();
     }
 
-    private async Task SaveConfigsOnClosing()
+    public async Task SaveConfigsOnClosing()
     {
         // save FrmMain placement
         if (!Config.EnableFullScreen)
@@ -423,7 +423,7 @@ public partial class FrmMain
     /// <summary>
     /// Load language.
     /// </summary>
-    private void LoadLanguage()
+    public void LoadLanguage()
     {
         var lang = Config.Language;
 
@@ -610,7 +610,7 @@ public partial class FrmMain
     /// Load hotkeys of menu
     /// </summary>
     /// <param name="menu"></param>
-    private void LoadMenuHotkeys(ToolStripDropDown? menu = null)
+    public void LoadMenuHotkeys(ToolStripDropDown? menu = null)
     {
         if (InvokeRequired)
         {
@@ -638,7 +638,7 @@ public partial class FrmMain
     /// <summary>
     /// Loads text and tooltip for toolbar items
     /// </summary>
-    private void LoadToolbarItemsText()
+    public void LoadToolbarItemsText()
     {
         foreach (var item in Toolbar.Items)
         {
