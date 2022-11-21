@@ -1394,8 +1394,7 @@ public partial class FrmMain : ModernForm
         else if (ac.Executable.StartsWith("IG_"))
         {
             // Find the private method in FrmMain
-            var method = GetType().GetMethod(ac.Executable,
-                BindingFlags.Instance | BindingFlags.NonPublic);
+            var method = GetType().GetMethod(ac.Executable);
 
 
             // run built-in method

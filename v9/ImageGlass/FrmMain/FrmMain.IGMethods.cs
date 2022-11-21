@@ -30,6 +30,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Pipes;
+using System.Windows.Media.Imaging;
 using WicNet;
 
 namespace ImageGlass;
@@ -49,7 +50,7 @@ public partial class FrmMain
     /// Opens file picker to choose an image
     /// </summary>
     /// <returns></returns>
-    private void IG_OpenFile()
+    public void IG_OpenFile()
     {
         OpenFilePicker();
     }
@@ -58,7 +59,7 @@ public partial class FrmMain
     /// <summary>
     /// Refreshes image viewport.
     /// </summary>
-    private void IG_Refresh()
+    public void IG_Refresh()
     {
         PicMain.Refresh();
     }
@@ -67,7 +68,7 @@ public partial class FrmMain
     /// <summary>
     /// Reloads image file.
     /// </summary>
-    private void IG_Reload()
+    public void IG_Reload()
     {
         _ = ViewNextCancellableAsync(0, isSkipCache: true);
     }
@@ -76,7 +77,7 @@ public partial class FrmMain
     /// <summary>
     /// Reloads images list
     /// </summary>
-    private void IG_ReloadList()
+    public void IG_ReloadList()
     {
         _ = LoadImageListAsync(Local.Images.DistinctDirs, Local.Images.GetFilePath(Local.CurrentIndex));
     }
@@ -85,7 +86,7 @@ public partial class FrmMain
     /// <summary>
     /// Views previous image
     /// </summary>
-    private void IG_ViewPreviousImage()
+    public void IG_ViewPreviousImage()
     {
         _ = ViewNextCancellableAsync(-1);
     }
@@ -94,7 +95,7 @@ public partial class FrmMain
     /// <summary>
     /// View next image
     /// </summary>
-    private void IG_ViewNextImage()
+    public void IG_ViewNextImage()
     {
         _ = ViewNextCancellableAsync(1);
     }
@@ -103,7 +104,7 @@ public partial class FrmMain
     /// <summary>
     /// Views an image by its index
     /// </summary>
-    private void IG_GoTo()
+    public void IG_GoTo()
     {
         if (Local.Images.Length == 0) return;
 
@@ -138,7 +139,7 @@ public partial class FrmMain
     /// <summary>
     /// Views the first image in the list
     /// </summary>
-    private void IG_GoToFirst()
+    public void IG_GoToFirst()
     {
         GoToImage(0);
     }
@@ -147,7 +148,7 @@ public partial class FrmMain
     /// <summary>
     /// Views the last image in the list
     /// </summary>
-    private void IG_GoToLast()
+    public void IG_GoToLast()
     {
         GoToImage(Local.Images.Length - 1);
     }
@@ -159,7 +160,7 @@ public partial class FrmMain
     /// <summary>
     /// Pans the viewing image to left
     /// </summary>
-    private void IG_PanLeft()
+    public void IG_PanLeft()
     {
         _ = PanLeftAsync();
     }
@@ -176,7 +177,7 @@ public partial class FrmMain
     /// <summary>
     /// Pans the viewing image to right
     /// </summary>
-    private void IG_PanRight()
+    public void IG_PanRight()
     {
         _ = PanRightAsync();
     }
@@ -193,7 +194,7 @@ public partial class FrmMain
     /// <summary>
     /// Pans the viewing image up.
     /// </summary>
-    private void IG_PanUp()
+    public void IG_PanUp()
     {
         _ = PanUpAsync();
     }
@@ -210,7 +211,7 @@ public partial class FrmMain
     /// <summary>
     /// Pans the viewing image down.
     /// </summary>
-    private void IG_PanDown()
+    public void IG_PanDown()
     {
         _ = PanDownAsync();
     }
@@ -227,7 +228,7 @@ public partial class FrmMain
     /// <summary>
     /// Pans the viewing image to left side
     /// </summary>
-    private void IG_PanToLeftSide()
+    public void IG_PanToLeftSide()
     {
         _ = PanToLeftSideAsync();
     }
@@ -248,7 +249,7 @@ public partial class FrmMain
     /// <summary>
     /// Pans the viewing image to right side
     /// </summary>
-    private void IG_PanToRightSide()
+    public void IG_PanToRightSide()
     {
         _ = PanToRightSideAsync();
     }
@@ -270,7 +271,7 @@ public partial class FrmMain
     /// <summary>
     /// Pans the viewing image to top side
     /// </summary>
-    private void IG_PanToTopSide()
+    public void IG_PanToTopSide()
     {
         _ = PanToTopSideAsync();
     }
@@ -291,7 +292,7 @@ public partial class FrmMain
     /// <summary>
     /// Pans the viewing image to bottom side
     /// </summary>
-    private void IG_PanToBottomSide()
+    public void IG_PanToBottomSide()
     {
         _ = PanToBottomSideAsync();
     }
@@ -318,7 +319,7 @@ public partial class FrmMain
     /// <summary>
     /// Zooms into the image
     /// </summary>
-    private void IG_ZoomIn()
+    public void IG_ZoomIn()
     {
         _ = ZoomInAsync();
     }
@@ -335,7 +336,7 @@ public partial class FrmMain
     /// <summary>
     /// Zooms out of the image
     /// </summary>
-    private void IG_ZoomOut()
+    public void IG_ZoomOut()
     {
         _ = ZoomOutAsync();
     }
@@ -352,7 +353,7 @@ public partial class FrmMain
     /// <summary>
     /// Shows Input dialog for custom zoom
     /// </summary>
-    private void IG_CustomZoom()
+    public void IG_CustomZoom()
     {
         if (PicMain.Source == ImageSource.Null) return;
 
@@ -383,7 +384,7 @@ public partial class FrmMain
     /// Zoom to the current cursor location by the given factor.
     /// </summary>
     /// <param name="factor"></param>
-    private void IG_SetZoom(float factor)
+    public void IG_SetZoom(float factor)
     {
         var point = PicMain.PointToClient(Cursor.Position);
 
@@ -395,7 +396,7 @@ public partial class FrmMain
     /// Sets the zoom mode value
     /// </summary>
     /// <param name="mode"><see cref="ZoomMode"/> value in string</param>
-    private void IG_SetZoomMode(string mode)
+    public void IG_SetZoomMode(string mode)
     {
         Config.ZoomMode = BHelper.ParseEnum<ZoomMode>(mode);
 
@@ -428,7 +429,7 @@ public partial class FrmMain
     /// Toggles <see cref="Toolbar"/> visibility
     /// </summary>
     /// <param name="visible"></param>
-    private bool IG_ToggleToolbar(bool? visible = null)
+    public bool IG_ToggleToolbar(bool? visible = null)
     {
         visible ??= !Config.ShowToolbar;
         Config.ShowToolbar = visible.Value;
@@ -451,7 +452,7 @@ public partial class FrmMain
     /// </summary>
     /// <param name="visible"></param>
     /// <returns></returns>
-    private bool IG_ToggleGallery(bool? visible = null)
+    public bool IG_ToggleGallery(bool? visible = null)
     {
         visible ??= !Config.ShowThumbnails;
         Config.ShowThumbnails = visible.Value;
@@ -487,7 +488,7 @@ public partial class FrmMain
     /// Toggles checkerboard background visibility
     /// </summary>
     /// <param name="visible"></param>
-    private bool IG_ToggleCheckerboard(bool? visible = null)
+    public bool IG_ToggleCheckerboard(bool? visible = null)
     {
         visible ??= !Config.ShowCheckerBoard;
         Config.ShowCheckerBoard = visible.Value;
@@ -524,7 +525,7 @@ public partial class FrmMain
     /// </summary>
     /// <param name="enableTopMost"></param>
     /// <returns></returns>
-    private bool IG_ToggleTopMost(bool? enableTopMost = null, bool showInAppMessage = true)
+    public bool IG_ToggleTopMost(bool? enableTopMost = null, bool showInAppMessage = true)
     {
         enableTopMost ??= !Config.EnableWindowTopMost;
         Config.EnableWindowTopMost = enableTopMost.Value;
@@ -547,7 +548,7 @@ public partial class FrmMain
     /// <summary>
     /// Opens project site to report issue
     /// </summary>
-    private void IG_ReportIssue()
+    public void IG_ReportIssue()
     {
         BHelper.OpenUrl("https://github.com/d2phap/ImageGlass/issues?q=is%3Aissue+label%3Av9+", "app_report_issue");
     }
@@ -555,7 +556,7 @@ public partial class FrmMain
     /// <summary>
     /// Open About dialog
     /// </summary>
-    private void IG_About()
+    public void IG_About()
     {
         var archInfo = Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
         var appVersion = App.Version + $" ({archInfo})";
@@ -650,13 +651,13 @@ public partial class FrmMain
     /// Check for updates
     /// </summary>
     /// <param name="showNewUpdate"></param>
-    private void IG_CheckForUpdate(bool? showNewUpdate = null)
+    public void IG_CheckForUpdate(bool? showNewUpdate = null)
     {
         Program.CheckForUpdate(showNewUpdate);
     }
 
 
-    private void IG_Settings()
+    public void IG_Settings()
     {
         using var frmSettings = new FrmSettings()
         {
@@ -668,7 +669,7 @@ public partial class FrmMain
     }
 
 
-    private void IG_Exit()
+    public void IG_Exit()
     {
         Application.Exit();
     }
@@ -677,7 +678,7 @@ public partial class FrmMain
     /// <summary>
     /// Prints the viewing image data
     /// </summary>
-    private void IG_Print()
+    public void IG_Print()
     {
         _ = PrintAsync();
     }
@@ -747,7 +748,7 @@ public partial class FrmMain
     }
 
 
-    private void IG_Share()
+    public void IG_Share()
     {
         _ = ShowShareDialogAsync();
     }
@@ -804,7 +805,7 @@ public partial class FrmMain
     /// <summary>
     /// Copy single or multiple files
     /// </summary>
-    private void IG_CopyFiles()
+    public void IG_CopyFiles()
     {
         // get file path
         var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
@@ -859,7 +860,7 @@ public partial class FrmMain
     /// <summary>
     /// Cut single or multiple filesp
     /// </summary>
-    private void IG_CutFiles()
+    public void IG_CutFiles()
     {
         _ = CutFilesAsync();
     }
@@ -926,7 +927,7 @@ public partial class FrmMain
     /// <summary>
     /// Copies the ucrrent image path
     /// </summary>
-    private void IG_CopyImagePath()
+    public void IG_CopyImagePath()
     {
         try
         {
@@ -941,7 +942,7 @@ public partial class FrmMain
     /// <summary>
     /// Clears clipboard
     /// </summary>
-    private void IG_ClearClipboard()
+    public void IG_ClearClipboard()
     {
         // clear copied files in clipboard
         if (Local.StringClipboard.Count > 0)
@@ -957,44 +958,47 @@ public partial class FrmMain
     /// <summary>
     /// Copies image data to clipboard
     /// </summary>
-    private void IG_CopyImageData()
+    public void IG_CopyImageData()
     {
         _ = CopyImageDataAsync();
     }
 
+
+    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     private async Task CopyImageDataAsync()
     {
-        if (PicMain.Source == ImageSource.Null)
-        {
-            return;
-        }
+        if (PicMain.Source == ImageSource.Null) return;
 
         var bitmap = Local.ClipboardImage;
-
         if (bitmap == null)
         {
             var img = await Local.Images.GetAsync(Local.CurrentIndex);
             bitmap = img?.ImgData?.Image;
         }
 
-        if (bitmap != null)
+        if (bitmap == null) return;
+
+        var langPath = $"{Name}.{nameof(MnuCopyImageData)}";
+
+        PicMain.ClearMessage();
+        PicMain.ShowMessage(Config.Language[$"{langPath}._Copying"], "", delayMs: 1500);
+
+        // copy the selected area
+        if (!PicMain.SourceSelection.IsEmpty)
         {
-            var langPath = $"{Name}.{nameof(MnuCopyImageData)}";
-
-            PicMain.ClearMessage();
-            PicMain.ShowMessage(Config.Language[$"{langPath}._Copying"], "", delayMs: 1500);
-
-            await Task.Run(() => ClipboardEx.SetClipboardImage(bitmap));
-
-            PicMain.ShowMessage(Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
+            bitmap = CropImage(bitmap, PicMain.SourceSelection);
         }
+
+        await Task.Run(() => ClipboardEx.SetClipboardImage(bitmap));
+
+        PicMain.ShowMessage(Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
     }
 
 
     /// <summary>
     /// Pastes image from clipboard and opens it.
     /// </summary>
-    private void IG_PasteImage()
+    public void IG_PasteImage()
     {
         // Is there a file in clipboard?
         if (Clipboard.ContainsFileDropList())
@@ -1071,7 +1075,7 @@ public partial class FrmMain
     /// <summary>
     /// Open the current image's location
     /// </summary>
-    private void IG_OpenLocation()
+    public void IG_OpenLocation()
     {
         var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
 
@@ -1089,7 +1093,7 @@ public partial class FrmMain
     /// <summary>
     /// Opens image file properties dialog
     /// </summary>
-    private void IG_OpenProperties()
+    public void IG_OpenProperties()
     {
         var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
         ExplorerApi.DisplayFileProperties(filePath, Handle);
@@ -1102,7 +1106,7 @@ public partial class FrmMain
     /// <summary>
     /// Saves and overrides the current image.
     /// </summary>
-    private void IG_Save()
+    public void IG_Save()
     {
         if (Local.ClipboardImage != null)
         {
@@ -1186,7 +1190,7 @@ public partial class FrmMain
     /// <summary>
     /// Saves the viewing image as a new file.
     /// </summary>
-    private void IG_SaveAs()
+    public void IG_SaveAs()
     {
         if (PicMain.Source == ImageSource.Null)
         {
@@ -1352,7 +1356,7 @@ public partial class FrmMain
     /// <summary>
     /// Shows OpenWith dialog
     /// </summary>
-    private void IG_OpenWith()
+    public void IG_OpenWith()
     {
         _ = OpenWithAsync();
     }
@@ -1403,13 +1407,13 @@ public partial class FrmMain
     }
 
 
-    private void IG_SetDefaultPhotoViewer()
+    public void IG_SetDefaultPhotoViewer()
     {
         _ = UpdateDefaultPhotoViewerAsync(true);
     }
 
 
-    private void IG_UnsetDefaultPhotoViewer()
+    public void IG_UnsetDefaultPhotoViewer()
     {
         _ = UpdateDefaultPhotoViewerAsync(false);
     }
@@ -1455,7 +1459,7 @@ public partial class FrmMain
     /// <summary>
     /// Renames the current image.
     /// </summary>
-    private void IG_Rename()
+    public void IG_Rename()
     {
         var oldFilePath = Local.Images.GetFilePath(Local.CurrentIndex);
         if (!File.Exists(oldFilePath)) return;
@@ -1520,7 +1524,7 @@ public partial class FrmMain
     /// Sends or permenantly deletes the current image.
     /// </summary>
     /// <param name="moveToRecycleBin"></param>
-    private void IG_Delete(bool moveToRecycleBin = true)
+    public void IG_Delete(bool moveToRecycleBin = true)
     {
         var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
         if (!File.Exists(filePath)) return;
@@ -1581,7 +1585,7 @@ public partial class FrmMain
     /// <summary>
     /// Sets the viewing image as desktop background.
     /// </summary>
-    private void IG_SetDesktopBackground()
+    public void IG_SetDesktopBackground()
     {
         _ = SetDesktopBackgroundAsync();
     }
@@ -1656,7 +1660,7 @@ public partial class FrmMain
     /// <summary>
     /// Sets the viewing image as lock screen background.
     /// </summary>
-    private void IG_SetLockScreenBackground()
+    public void IG_SetLockScreenBackground()
     {
         _ = SetLockScreenBackgroundAsync();
     }
@@ -1721,7 +1725,7 @@ public partial class FrmMain
     }
 
 
-    private bool IG_ToggleFullScreen(bool? enable = null, bool showInAppMessage = true)
+    public bool IG_ToggleFullScreen(bool? enable = null, bool showInAppMessage = true)
     {
         enable ??= !Config.EnableFullScreen;
         Config.EnableFullScreen = enable.Value;
@@ -1873,7 +1877,7 @@ public partial class FrmMain
     /// <summary>
     /// Starts a new slideshow
     /// </summary>
-    private void IG_StartNewSlideshow()
+    public void IG_StartNewSlideshow()
     {
         _ = StartNewSlideshowAsync();
     }
@@ -1901,7 +1905,6 @@ public partial class FrmMain
 
         // create a new slideshow pipe server
         var slideshowServer = new PipeServer(pipeName, PipeDirection.InOut, slideshowIndex);
-        slideshowServer.MessageReceived += SlideshowServer_MessageReceived;
         slideshowServer.ClientDisconnected += SlideshowServer_Disconnected;
 
         Local.SlideshowPipeServers.Add(slideshowServer);
@@ -1930,10 +1933,6 @@ public partial class FrmMain
         SysExecutionState.PreventSleep();
     }
 
-    private void SlideshowServer_MessageReceived(object? sender, MessageReceivedEventArgs e)
-    {
-        //MessageBox.Show(e.Message, e.PipeName);
-    }
 
     private void SlideshowServer_Disconnected(object? sender, DisconnectedEventArgs e)
     {
@@ -2023,7 +2022,7 @@ public partial class FrmMain
     /// <summary>
     /// Stops and closes all slideshows
     /// </summary>
-    private void IG_CloseAllSlideshowWindows()
+    public void IG_CloseAllSlideshowWindows()
     {
         foreach (var server in Local.SlideshowPipeServers)
         {
@@ -2035,7 +2034,7 @@ public partial class FrmMain
     /// <summary>
     /// Opens context menu at the current cursor position
     /// </summary>
-    private void IG_OpenContextMenu()
+    public void IG_OpenContextMenu()
     {
         MnuContext.Show(Cursor.Position);
     }
@@ -2044,7 +2043,7 @@ public partial class FrmMain
     /// <summary>
     /// Opens main menu at the current cursor position
     /// </summary>
-    private void IG_OpenMainMenu()
+    public void IG_OpenMainMenu()
     {
         MnuMain.Show(Cursor.Position);
     }
@@ -2053,7 +2052,7 @@ public partial class FrmMain
     /// <summary>
     /// Sets <see cref="FrmMain"/> window state
     /// </summary>
-    private void IG_SetFrmMainState(string state)
+    public void IG_SetFrmMainState(string state)
     {
         WindowState = BHelper.ParseEnum<FormWindowState>(state);
     }
@@ -2063,7 +2062,7 @@ public partial class FrmMain
     /// Sets <see cref="FrmMain"/> movable state
     /// </summary>
     /// <param name="enable"></param>
-    private void IG_SetFrmMainMoveable(bool? enable = null)
+    public void IG_SetFrmMainMoveable(bool? enable = null)
     {
         enable ??= true;
         _movableForm.Key = Keys.ShiftKey | Keys.Shift;
@@ -2086,7 +2085,7 @@ public partial class FrmMain
     /// Flips the viewing image.
     /// </summary>
     /// <param name="options"></param>
-    private void IG_FlipImage(FlipOptions options)
+    public void IG_FlipImage(FlipOptions options)
     {
         _ = FlipImageAsync(options);
     }
@@ -2149,6 +2148,21 @@ public partial class FrmMain
             PicMain.SetImage(img.ImgData);
         }
 
+    }
+
+
+    public async void IG_Crop()
+    {
+        Local.ClipboardImage = await GetSelectedImageAreaAsync();
+
+        PicMain.SetImage(new IgImgData()
+        {
+            Image = Local.ClipboardImage,
+            CanAnimate = false,
+        });
+        PicMain.ClientSelection = new RectangleF();
+
+        UpdateImageInfo();
     }
 
 
