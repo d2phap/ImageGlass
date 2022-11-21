@@ -184,6 +184,7 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Gets, sets the client selection area.
     /// </summary>
+    [Browsable(false)]
     public RectangleF ClientSelection
     {
         get
@@ -204,6 +205,7 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Gets, sets the source selection area.
     /// </summary>
+    [Browsable(false)]
     public RectangleF SourceSelection
     {
         get
@@ -295,7 +297,6 @@ public class DXCanvas : DXControl
 
     /// <summary>
     /// Enables or disables the selection.
-    /// Panning by mouse will be disabled when the selection is enabled.
     /// </summary>
     public bool EnableSelection { get; set; } = false;
 
@@ -332,16 +333,19 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Checks if the input image is null.
     /// </summary>
+    [Browsable(false)]
     public ImageSource Source { get; private set; } = ImageSource.Null;
 
     /// <summary>
     /// Gets the input image's width.
     /// </summary>
+    [Browsable(false)]
     public float SourceWidth { get; private set; } = 0;
 
     /// <summary>
     /// Gets the input image's height.
     /// </summary>
+    [Browsable(false)]
     public float SourceHeight { get; private set; } = 0;
 
 
@@ -464,6 +468,7 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Gets the current <see cref="ImageInterpolation"/> mode.
     /// </summary>
+    [Browsable(false)]
     public ImageInterpolation CurrentInterpolation => ZoomFactor > 1f ? _interpolationScaledUp : _interpolationScaleDown;
 
 

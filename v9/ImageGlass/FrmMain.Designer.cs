@@ -1290,11 +1290,6 @@ namespace ImageGlass
         }
 
         #endregion
-        private UI.ModernToolbar Toolbar;
-        private TableLayoutPanel Tb0;
-        private UI.ModernSplitContainer Sp1;
-        private UI.ModernSplitContainer Sp2;
-        private UI.ModernMenu MnuMain;
         private ToolStripMenuItem MnuNavigation;
         private ToolStripMenuItem MnuZoom;
         private ToolStripMenuItem MnuImage;
@@ -1392,11 +1387,7 @@ namespace ImageGlass
         private ToolStripMenuItem MnuCheckForUpdate;
         private ToolStripMenuItem MnuReportIssue;
         private ToolStripMenuItem MnuFirstLaunch;
-        private Views.DXCanvas PicMain;
-        private Gallery.ImageGallery Gallery;
         private ToolStripSeparator toolStripSeparator1;
-        private UI.ModernMenu MnuContext;
-        private UI.ModernMenu MnuSubMenu;
         private ToolStripMenuItem itemToPreserveTheSpaceToolStripMenuItem;
         private ToolStripMenuItem itemToPreserveSpaceToolStripMenuItem;
         private ToolStripSeparator toolStripMenuItem22;
@@ -1413,5 +1404,14 @@ namespace ImageGlass
         private ToolStripMenuItem MnuPanToRightSide;
         private ToolStripMenuItem MnuPanToTop;
         private ToolStripMenuItem MnuPanToBottom;
+        public Views.DXCanvas PicMain;
+        public UI.ModernToolbar Toolbar;
+        public Gallery.ImageGallery Gallery;
+        public UI.ModernMenu MnuMain;
+        public UI.ModernMenu MnuContext;
+        public UI.ModernMenu MnuSubMenu;
+        public TableLayoutPanel Tb0;
+        public UI.ModernSplitContainer Sp1;
+        public UI.ModernSplitContainer Sp2;
     }
 }
