@@ -183,7 +183,7 @@ public class DXCanvas : DXControl
 
 
     /// <summary>
-    /// Gets, sets the selection area.
+    /// Gets, sets the client selection area.
     /// </summary>
     public RectangleF Selection {
         get
@@ -192,6 +192,33 @@ public class DXCanvas : DXControl
             _selectionRaw.Intersect(_destRect);
 
             return _selectionRaw;
+        }
+        set
+        {
+            value.Intersect(_destRect);
+            _selectionRaw = value;
+        }
+    }
+
+
+    /// <summary>
+    /// Gets, sets the source selection area.
+    /// </summary>
+    public RectangleF SourceSelection
+    {
+        get
+        {
+            var loc = this.PointClientToSource(Selection.Location);
+            var size = new SizeF(Selection.Width / ZoomFactor, Selection.Height / ZoomFactor);
+
+            return new RectangleF(loc, size);
+        }
+        set
+        {
+            var loc = this.PointSourceToClient(value.Location);
+            var size = new SizeF(value.Width * ZoomFactor, value.Height * ZoomFactor);
+
+            Selection = new RectangleF(loc, size);
         }
     }
 
@@ -1464,6 +1491,7 @@ public class DXCanvas : DXControl
                     0.4f);
             }
         }
+
 
         // draw the selection border
         g.DrawRectangle(Selection, 0, Color.White, null, 0.3f);
