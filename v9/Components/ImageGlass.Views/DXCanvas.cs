@@ -185,7 +185,7 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Gets, sets the client selection area.
     /// </summary>
-    public RectangleF Selection {
+    public RectangleF ClientSelection {
         get
         {
             // limit the selected area to the image
@@ -208,8 +208,8 @@ public class DXCanvas : DXControl
     {
         get
         {
-            var loc = this.PointClientToSource(Selection.Location);
-            var size = new SizeF(Selection.Width / ZoomFactor, Selection.Height / ZoomFactor);
+            var loc = this.PointClientToSource(ClientSelection.Location);
+            var size = new SizeF(ClientSelection.Width / ZoomFactor, ClientSelection.Height / ZoomFactor);
 
             return new RectangleF(loc, size);
         }
@@ -218,7 +218,7 @@ public class DXCanvas : DXControl
             var loc = this.PointSourceToClient(value.Location);
             var size = new SizeF(value.Width * ZoomFactor, value.Height * ZoomFactor);
 
-            Selection = new RectangleF(loc, size);
+            ClientSelection = new RectangleF(loc, size);
         }
     }
 
@@ -231,7 +231,7 @@ public class DXCanvas : DXControl
     {
         get
         {
-            if (Selection.IsEmpty) return new List<SelectionResizer>();
+            if (ClientSelection.IsEmpty) return new List<SelectionResizer>();
 
 
             var resizerSize = DpiApi.Transform<float>(Font.Size * 1.2f);
@@ -242,44 +242,44 @@ public class DXCanvas : DXControl
             {
                 // top left
                 new(SelectionResizerType.TopLeft, new RectangleF(
-                    Selection.X + resizerMargin,
-                    Selection.Y + resizerMargin,
+                    ClientSelection.X + resizerMargin,
+                    ClientSelection.Y + resizerMargin,
                     resizerSize, resizerSize)),
                 // top right
                 new(SelectionResizerType.TopRight, new RectangleF(
-                    Selection.Right - resizerSize - resizerMargin,
-                    Selection.Y + resizerMargin,
+                    ClientSelection.Right - resizerSize - resizerMargin,
+                    ClientSelection.Y + resizerMargin,
                     resizerSize, resizerSize)),
                 // bottom left
                 new(SelectionResizerType.BottomLeft, new RectangleF(
-                    Selection.X + resizerMargin,
-                    Selection.Bottom - resizerSize - resizerMargin,
+                    ClientSelection.X + resizerMargin,
+                    ClientSelection.Bottom - resizerSize - resizerMargin,
                     resizerSize, resizerSize)),
                 // bottom right
                 new(SelectionResizerType.BottomRight, new RectangleF(
-                    Selection.Right - resizerSize - resizerMargin,
-                    Selection.Bottom - resizerSize - resizerMargin,
+                    ClientSelection.Right - resizerSize - resizerMargin,
+                    ClientSelection.Bottom - resizerSize - resizerMargin,
                     resizerSize, resizerSize)),
 
                 // top
                 new(SelectionResizerType.Top, new RectangleF(
-                    Selection.X + Selection.Width / 2 - resizerSize / 2,
-                    Selection.Y + resizerMargin,
+                    ClientSelection.X + ClientSelection.Width / 2 - resizerSize / 2,
+                    ClientSelection.Y + resizerMargin,
                     resizerSize, resizerSize)),
                 // right
                 new(SelectionResizerType.Right, new RectangleF(
-                    Selection.Right - resizerSize - resizerMargin,
-                    Selection.Y + Selection.Height / 2 - resizerSize / 2,
+                    ClientSelection.Right - resizerSize - resizerMargin,
+                    ClientSelection.Y + ClientSelection.Height / 2 - resizerSize / 2,
                     resizerSize, resizerSize)),
                 // bottom
                 new(SelectionResizerType.Bottom, new RectangleF(
-                    Selection.X + Selection.Width / 2 - resizerSize / 2,
-                    Selection.Bottom - resizerSize - resizerMargin,
+                    ClientSelection.X + ClientSelection.Width / 2 - resizerSize / 2,
+                    ClientSelection.Bottom - resizerSize - resizerMargin,
                     resizerSize, resizerSize)),
                 // left
                 new(SelectionResizerType.Left, new RectangleF(
-                    Selection.X + resizerMargin,
-                    Selection.Y + Selection.Height / 2 - resizerSize / 2,
+                    ClientSelection.X + resizerMargin,
+                    ClientSelection.Y + ClientSelection.Height / 2 - resizerSize / 2,
                     resizerSize, resizerSize)),
             };
         }
@@ -865,8 +865,8 @@ public class DXCanvas : DXControl
         #region Image panning & Selecting check
         if (Source != ImageSource.Null)
         {
-            _canDrawSelection = EnableSelection && !Selection.Contains(_mouseDownPoint.Value);
-            requestRerender = EnableSelection && !Selection.IsEmpty;
+            _canDrawSelection = EnableSelection && !ClientSelection.Contains(_mouseDownPoint.Value);
+            requestRerender = EnableSelection && !ClientSelection.IsEmpty;
 
             if (_canDrawSelection)
             {
@@ -974,7 +974,7 @@ public class DXCanvas : DXControl
         _pannedDistance = new();
 
 
-        if (EnableSelection && !Selection.IsEmpty)
+        if (EnableSelection && !ClientSelection.IsEmpty)
         {
             Invalidate();
         }
@@ -1085,7 +1085,7 @@ public class DXCanvas : DXControl
             Cursor = resizer?.Cursor ?? Parent.Cursor;
 
             // show resizers on hover
-            var resizerVisible = Selection.Contains(e.Location);
+            var resizerVisible = ClientSelection.Contains(e.Location);
             if (!requestRerender) requestRerender = _isSelectionHovered != resizerVisible;
             _isSelectionHovered = resizerVisible;
         }
@@ -1436,66 +1436,66 @@ public class DXCanvas : DXControl
     /// </summary>
     protected virtual void DrawSelectionLayer(IGraphics g)
     {
-        if (!_isMouseDown && Selection.IsEmpty) return;
+        if (!_isMouseDown && ClientSelection.IsEmpty) return;
 
         // draw the clip selection region
-        using var selectionGeo = g.GetCombinedRectanglesGeometry(Selection, _destRect, 0, 0, CombineMode.Xor);
+        using var selectionGeo = g.GetCombinedRectanglesGeometry(ClientSelection, _destRect, 0, 0, CombineMode.Xor);
         g.DrawGeometry(selectionGeo, Color.Transparent, BackColor.WithAlpha(_isMouseDown ? 100 : 200));
 
 
         // draw grid, ignore alpha value
         if (_isMouseDown || _isSelectionHovered)
         {
-            var width3 = Selection.Width / 3;
-            var height3 = Selection.Height / 3;
+            var width3 = ClientSelection.Width / 3;
+            var height3 = ClientSelection.Height / 3;
 
             for (int i = 1; i < 3; i++)
             {
                 g.DrawLine(
-                    Selection.X + (i * width3),
-                    Selection.Y,
-                    Selection.X + (i * width3),
-                    Selection.Y + Selection.Height, Color.Black.WithAlpha(200),
+                    ClientSelection.X + (i * width3),
+                    ClientSelection.Y,
+                    ClientSelection.X + (i * width3),
+                    ClientSelection.Y + ClientSelection.Height, Color.Black.WithAlpha(200),
                     0.4f);
                 g.DrawLine(
-                    Selection.X + (i * width3),
-                    Selection.Y,
-                    Selection.X + (i * width3),
-                    Selection.Y + Selection.Height, Color.White.WithAlpha(200),
+                    ClientSelection.X + (i * width3),
+                    ClientSelection.Y,
+                    ClientSelection.X + (i * width3),
+                    ClientSelection.Y + ClientSelection.Height, Color.White.WithAlpha(200),
                     0.4f);
                 g.DrawLine(
-                    Selection.X + (i * width3),
-                    Selection.Y,
-                    Selection.X + (i * width3),
-                    Selection.Y + Selection.Height, SelectionColor.WithAlpha(200),
+                    ClientSelection.X + (i * width3),
+                    ClientSelection.Y,
+                    ClientSelection.X + (i * width3),
+                    ClientSelection.Y + ClientSelection.Height, SelectionColor.WithAlpha(200),
                     0.4f);
 
 
                 g.DrawLine(
-                    Selection.X,
-                    Selection.Y + (i * height3),
-                    Selection.X + Selection.Width,
-                    Selection.Y + (i * height3), Color.Black.WithAlpha(200),
+                    ClientSelection.X,
+                    ClientSelection.Y + (i * height3),
+                    ClientSelection.X + ClientSelection.Width,
+                    ClientSelection.Y + (i * height3), Color.Black.WithAlpha(200),
                     0.4f);
                 g.DrawLine(
-                    Selection.X,
-                    Selection.Y + (i * height3),
-                    Selection.X + Selection.Width,
-                    Selection.Y + (i * height3), Color.White.WithAlpha(200),
+                    ClientSelection.X,
+                    ClientSelection.Y + (i * height3),
+                    ClientSelection.X + ClientSelection.Width,
+                    ClientSelection.Y + (i * height3), Color.White.WithAlpha(200),
                     0.4f);
                 g.DrawLine(
-                    Selection.X,
-                    Selection.Y + (i * height3),
-                    Selection.X + Selection.Width,
-                    Selection.Y + (i * height3), SelectionColor.WithAlpha(200),
+                    ClientSelection.X,
+                    ClientSelection.Y + (i * height3),
+                    ClientSelection.X + ClientSelection.Width,
+                    ClientSelection.Y + (i * height3), SelectionColor.WithAlpha(200),
                     0.4f);
             }
         }
 
 
         // draw the selection border
-        g.DrawRectangle(Selection, 0, Color.White, null, 0.3f);
-        g.DrawRectangle(Selection, 0, SelectionColor, null, 0.3f);
+        g.DrawRectangle(ClientSelection, 0, Color.White, null, 0.3f);
+        g.DrawRectangle(ClientSelection, 0, SelectionColor, null, 0.3f);
 
 
         // draw resizers
@@ -1503,12 +1503,12 @@ public class DXCanvas : DXControl
         {
             foreach (var rItem in SelectionResizers)
             {
-                var hideTopBottomResizers = Selection.Width < rItem.Region.Width * 5;
+                var hideTopBottomResizers = ClientSelection.Width < rItem.Region.Width * 5;
                 if (hideTopBottomResizers
                     && (rItem.Type == SelectionResizerType.Top
                     || rItem.Type == SelectionResizerType.Bottom)) continue;
 
-                var hideLeftRightResizers = Selection.Height < rItem.Region.Height * 5;
+                var hideLeftRightResizers = ClientSelection.Height < rItem.Region.Height * 5;
                 if (hideLeftRightResizers
                     && (rItem.Type == SelectionResizerType.Left
                     || rItem.Type == SelectionResizerType.Right)) continue;
