@@ -107,4 +107,46 @@ public static class DXCanvasExtensions
         return MouseAndNavLocation.Outside;
     }
 
+
+    /// <summary>
+    /// Computes the location of the client point into source coords.
+    /// </summary>
+    public static Point PointClientToSource(this DXCanvas c, Point clientPoint)
+    {
+        return PointClientToSource(c, clientPoint);
+    }
+
+
+    /// <summary>
+    /// Computes the location of the client point into source coords.
+    /// </summary>
+    public static PointF PointClientToSource(this DXCanvas c, PointF clientPoint)
+    {
+        var x = (clientPoint.X - c.ImageDestBounds.X) / c.ZoomFactor + c.ImageSourceBounds.X;
+        var y = (clientPoint.Y - c.ImageDestBounds.Y) / c.ZoomFactor + c.ImageSourceBounds.Y;
+
+        return new PointF(x, y);
+    }
+
+
+    /// <summary>
+    /// Computes the location of the source point into client coords.
+    /// </summary>
+    public static Point PointSourceToClient(this DXCanvas c, Point srcPoint)
+    {
+        return PointSourceToClient(c, srcPoint);
+    }
+
+
+    /// <summary>
+    /// Computes the location of the source point into client coords.
+    /// </summary>
+    public static PointF PointSourceToClient(this DXCanvas c, PointF srcPoint)
+    {
+        var x = (srcPoint.X - c.ImageSourceBounds.X) * c.ZoomFactor + c.ImageDestBounds.X;
+        var y = (srcPoint.Y - c.ImageSourceBounds.Y) * c.ZoomFactor + c.ImageDestBounds.Y;
+
+        return new PointF(x, y);
+    }
+
 }
