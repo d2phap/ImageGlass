@@ -24,7 +24,6 @@ using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Views.ImageAnimator;
 using System.ComponentModel;
-using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -71,15 +70,15 @@ public class DXCanvas : DXControl
     /// </summary>
     private RectangleF _destRect = new(0, 0, 0, 0);
 
-    private Vector2 _panHostPoint;
-    private Vector2 _panStartPoint;
-    private Vector2 _panHostStartPoint;
+    private Vector2 _panHostFromPoint;
+    private Vector2 _panHostToPoint;
+    private Vector2 _pannedDistance = new Vector2();
     private float _panDistance = 20f;
 
     private bool _xOut = false;
     private bool _yOut = false;
     private bool _isMouseDown = false;
-    private Vector2 _drawPoint = new();
+    private Vector2 _zoommedPoint = new();
 
     // current zoom, minimum zoom, maximum zoom, previous zoom (bigger means zoom in)
     private float _zoomFactor = 1f;
@@ -849,12 +848,10 @@ public class DXCanvas : DXControl
             else
             {
                 // panning
-                _panHostPoint.X = e.Location.X;
-                _panHostPoint.Y = e.Location.Y;
-                _panStartPoint.X = 0;
-                _panStartPoint.Y = 0;
-                _panHostStartPoint.X = e.Location.X;
-                _panHostStartPoint.Y = e.Location.Y;
+                _panHostToPoint.X = e.Location.X;
+                _panHostToPoint.Y = e.Location.Y;
+                _panHostFromPoint.X = e.Location.X;
+                _panHostFromPoint.Y = e.Location.Y;
             }
 
 
@@ -947,6 +944,7 @@ public class DXCanvas : DXControl
         _isMouseDown = false;
         _selectedResizer = null;
         _lastClickArgs = e;
+        _pannedDistance = new();
 
 
         if (EnableSelection && !Selection.IsEmpty)
@@ -1040,8 +1038,8 @@ public class DXCanvas : DXControl
             else
             {
                 requestRerender = PanTo(
-                    _panHostPoint.X - e.Location.X,
-                    _panHostPoint.Y - e.Location.Y,
+                    _panHostToPoint.X - e.Location.X,
+                    _panHostToPoint.Y - e.Location.Y,
                     false);
             }
         }
@@ -1075,6 +1073,11 @@ public class DXCanvas : DXControl
     protected override void OnMouseLeave(EventArgs e)
     {
         base.OnMouseLeave(e);
+
+        if (!_isMouseDown)
+        {
+            _pannedDistance = new();
+        }
 
         _isNavLeftHovered = false;
         _isNavRightHovered = false;
@@ -1257,45 +1260,55 @@ public class DXCanvas : DXControl
     {
         if (Source == ImageSource.Null || _shouldRecalculateDrawingRegion is false) return;
 
-        var zoomX = _drawPoint.X;
-        var zoomY = _drawPoint.Y;
+        var zoomX = _zoommedPoint.X;
+        var zoomY = _zoommedPoint.Y;
 
         _xOut = false;
         _yOut = false;
 
-        var clientW = Width;
-        var clientH = Height;
+        var controlW = Width;
+        var controlH = Height;
+        var scaledImgWidth = SourceWidth * _zoomFactor;
+        var scaledImgHeight = SourceHeight * _zoomFactor;
 
-        if (clientW > SourceWidth * _zoomFactor)
+
+        // image width < control width
+        if (scaledImgWidth < controlW)
         {
             _srcRect.X = 0;
             _srcRect.Width = SourceWidth;
-            _destRect.X = (clientW - SourceWidth * _zoomFactor) / 2.0f;
-            _destRect.Width = SourceWidth * _zoomFactor;
+
+            _destRect.X = (controlW - scaledImgWidth) / 2.0f;
+            _destRect.Width = scaledImgWidth;
         }
         else
         {
-            _srcRect.X += (clientW / _oldZoomFactor - clientW / _zoomFactor) / ((clientW + 0.00000001f) / zoomX);
-            _srcRect.Width = clientW / _zoomFactor;
+            _srcRect.X += + (controlW / _oldZoomFactor - controlW / _zoomFactor) / ((controlW + 0.00000001f) / zoomX);
+            _srcRect.Width = controlW / _zoomFactor;
+
             _destRect.X = 0;
-            _destRect.Width = clientW;
+            _destRect.Width = controlW;
         }
 
 
-        if (clientH > SourceHeight * _zoomFactor)
+        // image height < control height
+        if (scaledImgHeight < controlH)
         {
             _srcRect.Y = 0;
             _srcRect.Height = SourceHeight;
-            _destRect.Y = (clientH - SourceHeight * _zoomFactor) / 2f;
-            _destRect.Height = SourceHeight * _zoomFactor;
+
+            _destRect.Y = (controlH - scaledImgHeight) / 2f;
+            _destRect.Height = scaledImgHeight;
         }
         else
         {
-            _srcRect.Y += (clientH / _oldZoomFactor - clientH / _zoomFactor) / ((clientH + 0.00000001f) / zoomY);
-            _srcRect.Height = clientH / _zoomFactor;
+            _srcRect.Y += (controlH / _oldZoomFactor - controlH / _zoomFactor) / ((controlH + 0.00000001f) / zoomY);
+            _srcRect.Height = controlH / _zoomFactor;
+
             _destRect.Y = 0;
-            _destRect.Height = clientH;
+            _destRect.Height = controlH;
         }
+
 
         _oldZoomFactor = _zoomFactor;
         //------------------------
@@ -1969,7 +1982,7 @@ public class DXCanvas : DXControl
         }
 
         _isManualZoom = true;
-        _drawPoint = location.ToVector2();
+        _zoommedPoint = location.ToVector2();
 
         if (requestRerender)
         {
@@ -2058,6 +2071,8 @@ public class DXCanvas : DXControl
             return (bool)Invoke(PanTo, hDistance, vDistance, requestRerender);
         }
 
+        _pannedDistance = new Vector2(hDistance, vDistance);
+
         if (Source == ImageSource.Null) return false;
         if (hDistance == 0 && vDistance == 0) return false;
 
@@ -2067,31 +2082,35 @@ public class DXCanvas : DXControl
         // horizontal
         if (hDistance != 0)
         {
-            _srcRect.X += (hDistance / _zoomFactor) + _panStartPoint.X;
+            _srcRect.X += (hDistance / _zoomFactor);
         }
 
         // vertical 
         if (vDistance != 0)
         {
-            _srcRect.Y += (vDistance / _zoomFactor) + _panStartPoint.Y;
+            _srcRect.Y += (vDistance / _zoomFactor);
         }
 
-        _drawPoint = new();
+        _zoommedPoint = new();
         _shouldRecalculateDrawingRegion = true;
 
 
         if (_xOut == false)
         {
-            _panHostPoint.X = loc.X;
+            _panHostToPoint.X = loc.X;
         }
 
         if (_yOut == false)
         {
-            _panHostPoint.Y = loc.Y;
+            _panHostToPoint.Y = loc.Y;
         }
 
+        _panHostToPoint.X = loc.X;
+        _panHostToPoint.Y = loc.Y;
+
+
         // emit event
-        OnPanning?.Invoke(new(loc, new(_panHostPoint)));
+        OnPanning?.Invoke(new PanningEventArgs(loc, new PointF(_panHostFromPoint)));
 
         if (requestRerender)
         {
