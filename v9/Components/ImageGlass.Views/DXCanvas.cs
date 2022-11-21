@@ -2453,8 +2453,8 @@ public class DXCanvas : DXControl
             SourceHeight = imgData?.Image?.Height ?? 0;
         }
 
-        const int MAX_D2D_DIMENTION = 16_384;
-        var exceedMaxDimention = SourceWidth > MAX_D2D_DIMENTION || SourceHeight > MAX_D2D_DIMENTION;
+        var exceedMaxDimention = SourceWidth > Constants.MAX_IMAGE_DIMENSION
+            || SourceHeight > Constants.MAX_IMAGE_DIMENSION;
 
         UseHardwareAcceleration = !CanImageAnimate && !exceedMaxDimention;
     }
