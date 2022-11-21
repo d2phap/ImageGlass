@@ -26,6 +26,7 @@ using ImageGlass.Gallery;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text;
 using WicNet;
@@ -684,6 +685,8 @@ public partial class FrmMain : ModernForm
     /// <summary>
     /// View the next image using jump step.
     /// </summary>
+    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
+    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP003:Dispose previous before re-assigning", Justification = "<Pending>")]
     private async Task ViewNextAsync(int step,
         bool isKeepZoomRatio = false,
         bool isSkipCache = false,
@@ -915,6 +918,7 @@ public partial class FrmMain : ModernForm
     }
 
 
+    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "<Pending>")]
     private void Local_OnImageLoaded(ImageLoadedEventArgs e)
     {
         if (InvokeRequired)
@@ -1465,7 +1469,7 @@ public partial class FrmMain : ModernForm
             var procArgs = $"{ac.Argument}".Replace(Constants.FILE_MACRO, currentFilePath);
 
             // run external command line
-            var proc = new Process
+            using var proc = new Process
             {
                 StartInfo = new(ac.Executable)
                 {

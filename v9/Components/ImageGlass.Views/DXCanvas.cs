@@ -121,7 +121,7 @@ public class DXCanvas : DXControl
     private bool _canDrawSelection = false;
     private bool _isSelectionHovered = false;
     private SelectionResizer? _selectedResizer = null;
-    
+
     private Point? _mouseDownPoint = null;
     private Point? _mouseMovePoint = null;
 
@@ -184,7 +184,8 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Gets, sets the client selection area.
     /// </summary>
-    public RectangleF ClientSelection {
+    public RectangleF ClientSelection
+    {
         get
         {
             // limit the selected area to the image
@@ -889,7 +890,7 @@ public class DXCanvas : DXControl
         }
         #endregion
 
-        
+
 
         _isMouseDown = true;
         _isMouseDragged = false;
@@ -972,7 +973,7 @@ public class DXCanvas : DXControl
         _lastClickArgs = e;
 
 
-        if (EnableSelection && !ClientSelection.IsEmpty)
+        if (EnableSelection)
         {
             Invalidate();
         }
@@ -1181,7 +1182,7 @@ public class DXCanvas : DXControl
             this.Invalidate();
         }
     }
-    
+
 
     protected override void OnRender(IGraphics g)
     {
@@ -1303,7 +1304,7 @@ public class DXCanvas : DXControl
         }
         else
         {
-            _srcRect.X += + (controlW / _oldZoomFactor - controlW / _zoomFactor) / ((controlW + 0.00000001f) / zoomX);
+            _srcRect.X += (controlW / _oldZoomFactor - controlW / _zoomFactor) / ((controlW + float.Epsilon) / zoomX);
             _srcRect.Width = controlW / _zoomFactor;
 
             _destRect.X = 0;
@@ -1322,7 +1323,7 @@ public class DXCanvas : DXControl
         }
         else
         {
-            _srcRect.Y += (controlH / _oldZoomFactor - controlH / _zoomFactor) / ((controlH + 0.00000001f) / zoomY);
+            _srcRect.Y += (controlH / _oldZoomFactor - controlH / _zoomFactor) / ((controlH + float.Epsilon) / zoomY);
             _srcRect.Height = controlH / _zoomFactor;
 
             _destRect.Y = 0;
@@ -1429,7 +1430,8 @@ public class DXCanvas : DXControl
     /// </summary>
     protected virtual void DrawSelectionLayer(IGraphics g)
     {
-        if (!_isMouseDown && ClientSelection.IsEmpty) return;
+        if (Source == ImageSource.Null || (!_isMouseDown && ClientSelection.IsEmpty))
+            return;
 
         // draw the clip selection region
         using var selectionGeo = g.GetCombinedRectanglesGeometry(ClientSelection, _destRect, 0, 0, CombineMode.Xor);
@@ -1506,7 +1508,7 @@ public class DXCanvas : DXControl
                     && (rItem.Type == SelectionResizerType.Left
                     || rItem.Type == SelectionResizerType.Right)) continue;
 
-                
+
                 g.DrawRectangle(rItem.Region, 0.5f, Color.Black.WithAlpha(50), Color.Black.WithAlpha(200), 0.5f);
                 g.DrawRectangle(rItem.Region, 0.5f, Color.White.WithAlpha(50), Color.White.WithAlpha(200), 0.5f);
             }
@@ -1676,7 +1678,7 @@ public class DXCanvas : DXControl
                     Y = NavLeftPos.Y - iconSize / 2 + iconY,
                     Width = iconSize,
                     Height = iconSize,
-                }, new RectangleF(0,0, srcIconSize.Width, srcIconSize.Height), InterpolationMode.Linear, iconOpacity);
+                }, new RectangleF(0, 0, srcIconSize.Width, srcIconSize.Height), InterpolationMode.Linear, iconOpacity);
             }
         }
 
@@ -1743,7 +1745,7 @@ public class DXCanvas : DXControl
                     Y = NavRightPos.Y - iconSize / 2 + iconY,
                     Width = iconSize,
                     Height = iconSize,
-                }, new RectangleF(0,0, srcIconSize.Width, srcIconSize.Height),
+                }, new RectangleF(0, 0, srcIconSize.Width, srcIconSize.Height),
                     InterpolationMode.Linear, iconOpacity);
             }
         }
@@ -2383,7 +2385,7 @@ public class DXCanvas : DXControl
             {
                 _selectionRaw.Height = _selectionRaw.Width / wRatio;
             }
-            
+
 
             if (_selectionRaw.Bottom >= _destRect.Bottom)
             {
@@ -2473,6 +2475,7 @@ public class DXCanvas : DXControl
 
         if (imgData == null || imgData.IsImageNull)
         {
+            ClientSelection = new RectangleF();
             Refresh();
             return;
         };
@@ -2490,7 +2493,7 @@ public class DXCanvas : DXControl
 
         // emit OnImageChanged event
         OnImageChanged?.Invoke(EventArgs.Empty);
-        
+
 
         if (CanImageAnimate && Source != ImageSource.Null)
         {
