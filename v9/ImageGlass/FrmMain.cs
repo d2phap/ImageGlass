@@ -1128,7 +1128,7 @@ public partial class FrmMain : ModernForm
 
 
         // the viewing image is a clipboard image
-        if (Local.ClipboardImage != null)
+        if (Local.ClipboardImage != null && !Local.ClipboardImage.ComObject.IsDisposed)
         {
             clipboardImageText = Config.Language[$"{Name}._ClipboardImage"];
 

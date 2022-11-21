@@ -2222,7 +2222,6 @@ public partial class FrmMain
     /// <summary>
     /// Crops the image.
     /// </summary>
-    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     public static WicBitmapSource? CropImage(WicBitmapSource? img, RectangleF srcSelection)
     {
         if (img == null) return null;
@@ -2235,11 +2234,7 @@ public partial class FrmMain
         var x = (int)srcSelection.X;
         var y = (int)srcSelection.Y;
 
-
-        var bmpCom = WICImagingFactory.CreateBitmapFromSourceRect(img.ComObject, x, y, width, height);
-        var wicImg = new WicBitmapSource(bmpCom.Object);
-
-        return wicImg;
+        return WicBitmapSource.FromSourceRect(img, x, y, width, height);
     }
 
 }
