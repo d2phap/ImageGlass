@@ -213,7 +213,7 @@ public class DXCanvas : DXControl
         get
         {
             var loc = this.PointClientToSource(ClientSelection.Location);
-            var size = new SizeF(ClientSelection.Width / ZoomFactor, ClientSelection.Height / ZoomFactor);
+            var size = new SizeF((float)Math.Round(ClientSelection.Width / ZoomFactor), (float)Math.Round(ClientSelection.Height / ZoomFactor));
 
             return new RectangleF(loc, size);
         }
@@ -1465,12 +1465,12 @@ public class DXCanvas : DXControl
         g.DrawGeometry(selectionGeo, Color.Transparent, BackColor.WithAlpha(_isMouseDown ? 100 : 200));
 
 
-        // draw grid, ignore alpha value
         if (_isMouseDown || _isSelectionHovered)
         {
             var width3 = ClientSelection.Width / 3;
             var height3 = ClientSelection.Height / 3;
 
+            // draw grid, ignore alpha value
             for (int i = 1; i < 3; i++)
             {
                 g.DrawLine(
@@ -1512,12 +1512,34 @@ public class DXCanvas : DXControl
                     ClientSelection.Y + (i * height3), SelectionColor.WithAlpha(200),
                     0.4f);
             }
+
+
+            // draw selection size
+            var text = $"{SourceSelection.Width} x {SourceSelection.Height}";
+            var textSize = g.MeasureText(text, Font.Name, Font.Size, textDpi: DeviceDpi);
+            var textPadding = new Padding(10, 5, 10, 5);
+            var textX = ClientSelection.X + (ClientSelection.Width / 2 - textSize.Width / 2);
+            var textY = ClientSelection.Y + (ClientSelection.Height / 2 - textSize.Height / 2);
+            var textBgRect = new RectangleF(
+                textX - textPadding.Left,
+                textY - textPadding.Top,
+                textSize.Width + textPadding.Horizontal,
+                textSize.Height + textPadding.Vertical);
+
+            if (textBgRect.Width + 10 < ClientSelection.Width
+                && textBgRect.Height + 10 < ClientSelection.Height)
+            {
+                g.DrawRectangle(textBgRect, textSize.Height / 5, Color.White.WithAlpha(100), Color.Black.WithAlpha(100));
+                g.DrawRectangle(textBgRect, textSize.Height / 5, SelectionColor.WithAlpha(100), SelectionColor.WithAlpha(150));
+                g.DrawText(text, Font.Name, Font.Size, textX, textY, Color.White, textDpi: DeviceDpi);
+            }
         }
 
 
         // draw the selection border
-        g.DrawRectangle(ClientSelection, 0, Color.White, null, 0.3f);
-        g.DrawRectangle(ClientSelection, 0, SelectionColor, null, 0.3f);
+        var borderWidth = (_isSelectionHovered && !_isMouseDown) ? 0.6f : 0.3f;
+        g.DrawRectangle(ClientSelection, 0, Color.White, null, borderWidth);
+        g.DrawRectangle(ClientSelection, 0, SelectionColor, null, borderWidth);
 
 
         // draw resizers
@@ -1536,8 +1558,8 @@ public class DXCanvas : DXControl
                     || rItem.Type == SelectionResizerType.Right)) continue;
 
 
-                g.DrawRectangle(rItem.Region, 0.5f, Color.Black.WithAlpha(50), Color.Black.WithAlpha(200), 0.5f);
-                g.DrawRectangle(rItem.Region, 0.5f, Color.White.WithAlpha(50), Color.White.WithAlpha(200), 0.5f);
+                g.DrawEllipse(rItem.Region, Color.White.WithAlpha(50), Color.Black.WithAlpha(200), 8f);
+                g.DrawEllipse(rItem.Region, SelectionColor.WithAlpha(255), Color.White.WithAlpha(200), 2f);
             }
         }
     }
