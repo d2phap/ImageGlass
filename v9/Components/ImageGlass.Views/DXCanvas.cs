@@ -49,7 +49,7 @@ public class DXCanvas : DXControl
     private MouseEventArgs _lastClickArgs = new(MouseButtons.Left, 0, 0, 0, 0);
     private bool _isMouseDragged = false;
     private bool _isDoubleClick = false;
-    private Rectangle _doubleClickArea = new();
+    private Rectangle _doubleClickArea = default;
     private readonly TimeSpan _doubleClickMaxTime = TimeSpan.FromMilliseconds(SystemInformation.DoubleClickTime);
     private readonly System.Windows.Forms.Timer _clickTimer = new()
     {
@@ -63,12 +63,12 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Gets the area of the image content to draw
     /// </summary>
-    private RectangleF _srcRect = new(0, 0, 0, 0);
+    private RectangleF _srcRect = default;
 
     /// <summary>
     /// Image viewport
     /// </summary>
-    private RectangleF _destRect = new(0, 0, 0, 0);
+    private RectangleF _destRect = default;
 
     private Vector2 _panHostFromPoint;
     private Vector2 _panHostToPoint;
@@ -77,7 +77,7 @@ public class DXCanvas : DXControl
     private bool _xOut = false;
     private bool _yOut = false;
     private bool _isMouseDown = false;
-    private Vector2 _zoommedPoint = new();
+    private Vector2 _zoommedPoint = default;
 
     // current zoom, minimum zoom, maximum zoom, previous zoom (bigger means zoom in)
     private float _zoomFactor = 1f;
@@ -116,8 +116,8 @@ public class DXCanvas : DXControl
     private Bitmap? _navLeftImageGdip = null;
     private Bitmap? _navRightImageGdip = null;
 
-    private RectangleF _selectionRaw = new();
-    private RectangleF _selectionBeforeMove = new();
+    private RectangleF _selectionRaw = default;
+    private RectangleF _selectionBeforeMove = default;
     private bool _canDrawSelection = false;
     private bool _isSelectionHovered = false;
     private SelectionResizer? _selectedResizer = null;
@@ -198,6 +198,8 @@ public class DXCanvas : DXControl
         {
             value.Intersect(_destRect);
             _selectionRaw = value;
+
+            OnImageSelected?.Invoke(new SelectionEventArgs(_selectionRaw, SourceSelection));
         }
     }
 
@@ -739,14 +741,14 @@ public class DXCanvas : DXControl
     #region Events
 
     /// <summary>
-    /// Occurs when the host is being panned
+    /// Occurs when the host is being panned.
     /// </summary>
     public event PanningEventHandler? OnPanning;
     public delegate void PanningEventHandler(PanningEventArgs e);
 
 
     /// <summary>
-    /// Occurs when the image is changed
+    /// Occurs when the image is changed.
     /// </summary>
     public event ImageChangedEventHandler? OnImageChanged;
     public delegate void ImageChangedEventHandler(EventArgs e);
@@ -757,6 +759,20 @@ public class DXCanvas : DXControl
     /// </summary>
     public event ImageMouseMoveEventHandler? OnImageMouseMove;
     public delegate void ImageMouseMoveEventHandler(ImageMouseMoveEventArgs e);
+
+
+    /// <summary>
+    /// Occurs when the selection area is being changed.
+    /// </summary>
+    public event ImageSelectingEventHandler? OnImageSelecting;
+    public delegate void ImageSelectingEventHandler(SelectionEventArgs e);
+
+
+    /// <summary>
+    /// Occurs when the selection area is changed.
+    /// </summary>
+    public event ImageSelectedEventHandler? OnImageSelected;
+    public delegate void ImageSelectedEventHandler(SelectionEventArgs e);
 
 
     #endregion
@@ -972,11 +988,16 @@ public class DXCanvas : DXControl
         #endregion
 
 
+        // emit selected event
+        if (EnableSelection && _isMouseDragged)
+        {
+            OnImageSelected?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+        }
+
         _mouseDownPoint = null;
         _isMouseDown = false;
         _selectedResizer = null;
         _lastClickArgs = e;
-
 
         if (EnableSelection)
         {
@@ -1057,6 +1078,7 @@ public class DXCanvas : DXControl
             {
                 _selectionRaw = BHelper.GetSelection(_mouseDownPoint, _mouseMovePoint, SelectionAspectRatio, SourceWidth, SourceHeight, _destRect);
 
+                OnImageSelecting?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
                 requestRerender = true;
             }
             // move selection
@@ -2303,6 +2325,9 @@ public class DXCanvas : DXControl
         _selectionRaw.Y = newY;
         _selectionRaw.Width = _selectionBeforeMove.Width;
         _selectionRaw.Height = _selectionBeforeMove.Height;
+
+
+        OnImageSelecting?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
     }
 
 
@@ -2359,56 +2384,36 @@ public class DXCanvas : DXControl
         _selectionRaw.Intersect(_destRect);
 
 
-        // free aspect ratio
-        if (SelectionAspectRatio.Width <= 0 || SelectionAspectRatio.Height <= 0)
-            return;
-
-
-        var wRatio = SelectionAspectRatio.Width / SelectionAspectRatio.Height;
-        var hRatio = SelectionAspectRatio.Height / SelectionAspectRatio.Width;
-
-        // update selection size according to the ratio
-        if (wRatio > hRatio)
+        // not the free aspect ratio
+        if (SelectionAspectRatio.Width > 0 && SelectionAspectRatio.Height > 0)
         {
-            if (direction == SelectionResizerType.Top
-                || direction == SelectionResizerType.TopRight
-                || direction == SelectionResizerType.TopLeft
-                || direction == SelectionResizerType.Bottom
-                || direction == SelectionResizerType.BottomLeft
-                || direction == SelectionResizerType.BottomRight)
-            {
-                _selectionRaw.Width = _selectionRaw.Height / hRatio;
+            var wRatio = SelectionAspectRatio.Width / SelectionAspectRatio.Height;
+            var hRatio = SelectionAspectRatio.Height / SelectionAspectRatio.Width;
 
-                if (_selectionRaw.Right >= _destRect.Right)
+            // update selection size according to the ratio
+            if (wRatio > hRatio)
+            {
+                if (direction == SelectionResizerType.Top
+                    || direction == SelectionResizerType.TopRight
+                    || direction == SelectionResizerType.TopLeft
+                    || direction == SelectionResizerType.Bottom
+                    || direction == SelectionResizerType.BottomLeft
+                    || direction == SelectionResizerType.BottomRight)
                 {
-                    var maxWidth = _destRect.Right - _selectionRaw.X; ;
-                    _selectionRaw.Width = maxWidth;
-                    _selectionRaw.Height = maxWidth * hRatio;
+                    _selectionRaw.Width = _selectionRaw.Height / hRatio;
+
+                    if (_selectionRaw.Right >= _destRect.Right)
+                    {
+                        var maxWidth = _destRect.Right - _selectionRaw.X; ;
+                        _selectionRaw.Width = maxWidth;
+                        _selectionRaw.Height = maxWidth * hRatio;
+                    }
                 }
-            }
-            else
-            {
-                _selectionRaw.Height = _selectionRaw.Width / wRatio;
-            }
+                else
+                {
+                    _selectionRaw.Height = _selectionRaw.Width / wRatio;
+                }
 
-
-            if (_selectionRaw.Bottom >= _destRect.Bottom)
-            {
-                var maxHeight = _destRect.Bottom - _selectionRaw.Y;
-                _selectionRaw.Width = maxHeight * wRatio;
-                _selectionRaw.Height = maxHeight;
-            }
-        }
-        else
-        {
-            if (direction == SelectionResizerType.Left
-                || direction == SelectionResizerType.TopLeft
-                || direction == SelectionResizerType.BottomLeft
-                || direction == SelectionResizerType.Right
-                || direction == SelectionResizerType.TopRight
-                || direction == SelectionResizerType.BottomRight)
-            {
-                _selectionRaw.Height = _selectionRaw.Width / wRatio;
 
                 if (_selectionRaw.Bottom >= _destRect.Bottom)
                 {
@@ -2419,18 +2424,38 @@ public class DXCanvas : DXControl
             }
             else
             {
-                _selectionRaw.Width = _selectionRaw.Height / hRatio;
-            }
+                if (direction == SelectionResizerType.Left
+                    || direction == SelectionResizerType.TopLeft
+                    || direction == SelectionResizerType.BottomLeft
+                    || direction == SelectionResizerType.Right
+                    || direction == SelectionResizerType.TopRight
+                    || direction == SelectionResizerType.BottomRight)
+                {
+                    _selectionRaw.Height = _selectionRaw.Width / wRatio;
+
+                    if (_selectionRaw.Bottom >= _destRect.Bottom)
+                    {
+                        var maxHeight = _destRect.Bottom - _selectionRaw.Y;
+                        _selectionRaw.Width = maxHeight * wRatio;
+                        _selectionRaw.Height = maxHeight;
+                    }
+                }
+                else
+                {
+                    _selectionRaw.Width = _selectionRaw.Height / hRatio;
+                }
 
 
-            if (_selectionRaw.Right >= _destRect.Right)
-            {
-                var maxWidth = _destRect.Right - _selectionRaw.X;
-                _selectionRaw.Width = maxWidth;
-                _selectionRaw.Height = maxWidth * hRatio;
+                if (_selectionRaw.Right >= _destRect.Right)
+                {
+                    var maxWidth = _destRect.Right - _selectionRaw.X;
+                    _selectionRaw.Width = maxWidth;
+                    _selectionRaw.Height = maxWidth * hRatio;
+                }
             }
         }
 
+        OnImageSelecting?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
     }
 
 
@@ -2480,7 +2505,7 @@ public class DXCanvas : DXControl
 
         if (imgData == null || imgData.IsImageNull)
         {
-            ClientSelection = new RectangleF();
+            ClientSelection = default;
             Refresh();
             return;
         };

@@ -89,3 +89,27 @@ public class ImageMouseMoveEventArgs : EventArgs
         ImageY = imgY;
     }
 }
+
+
+/// <summary>
+/// Selection event arguments
+/// </summary>
+public class SelectionEventArgs : EventArgs
+{
+    /// <summary>
+    /// Gets the client selection area.
+    /// </summary>
+    public RectangleF ClientSelection { get; private set; }
+
+    /// <summary>
+    /// Gets the source selection area.
+    /// </summary>
+    public RectangleF SourceSelection { get; private set; }
+
+
+    public SelectionEventArgs(RectangleF clientSelection, RectangleF sourceSelection)
+    {
+        ClientSelection = clientSelection;
+        SourceSelection = sourceSelection;
+    }
+}

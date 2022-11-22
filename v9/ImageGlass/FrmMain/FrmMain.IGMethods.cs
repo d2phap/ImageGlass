@@ -2191,7 +2191,7 @@ public partial class FrmMain
         LoadClipboardImage(img);
 
         // reset selection
-        PicMain.ClientSelection = new RectangleF();
+        PicMain.ClientSelection = default;
     }
 
 
