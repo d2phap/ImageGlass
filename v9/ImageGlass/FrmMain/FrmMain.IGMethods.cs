@@ -2185,16 +2185,13 @@ public partial class FrmMain
 
     public async void IG_Crop()
     {
-        Local.ClipboardImage = await GetSelectedImageAreaAsync();
+        var img = await GetSelectedImageAreaAsync();
+        if (img == null) return;
 
-        PicMain.SetImage(new IgImgData()
-        {
-            Image = Local.ClipboardImage,
-            CanAnimate = false,
-        });
+        LoadClipboardImage(img);
+
+        // reset selection
         PicMain.ClientSelection = new RectangleF();
-
-        UpdateImageInfo();
     }
 
 
