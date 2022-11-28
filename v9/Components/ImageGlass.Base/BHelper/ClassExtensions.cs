@@ -113,4 +113,24 @@ public static class ClassExtensions
         return Color.White.WithAlpha(alpha);
     }
 
+
+    /// <summary>
+    /// Fills rounded rectangle.
+    /// </summary>
+    public static void FillRoundedRectangle(this Graphics g, Brush brush, RectangleF rect, float radius, bool flatBottom = false, int bottomOffset = 0, bool flatTop = false)
+    {
+        using var path = BHelper.GetRoundRectanglePath(rect, radius, flatBottom, bottomOffset, flatTop);
+        g.FillPath(brush, path);
+    }
+
+
+    /// <summary>
+    /// Draws rounded rectangle.
+    /// </summary>
+    public static void DrawRoundedRectangle(this Graphics g, Pen pen, RectangleF rect, float radius, bool flatBottom = false, int bottomOffset = 0, bool flatTop = false)
+    {
+        using var path = BHelper.GetRoundRectanglePath(rect, radius, flatBottom, bottomOffset, flatTop);
+        g.DrawPath(pen, path);
+    }
+
 }

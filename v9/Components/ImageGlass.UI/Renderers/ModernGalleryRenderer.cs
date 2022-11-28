@@ -89,7 +89,7 @@ public class ModernGalleryRenderer : StyleRenderer
         #region Draw background
 
         using var bgBrush = new SolidBrush(Color.Transparent);
-        using var bgPath = ThemeUtils.GetRoundRectanglePath(itemBounds, BHelper.GetItemBorderRadius(itemBounds.Height, Constants.THUMBNAIL_HEIGHT));
+        using var bgPath = BHelper.GetRoundRectanglePath(itemBounds, BHelper.GetItemBorderRadius(itemBounds.Height, Constants.THUMBNAIL_HEIGHT));
 
         // on pressed
         if (state.HasFlag(ItemState.Pressed))
