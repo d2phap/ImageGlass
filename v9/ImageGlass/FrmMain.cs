@@ -52,18 +52,18 @@ public partial class FrmMain : ModernForm
     {
         InitializeComponent();
 
+        // update the DpiApi when DPI changed.
+        EnableDpiApiUpdate = true;
+
         // hide the root layout to avoid flickering render,
         // and show again when window is loaded
         Tb0.Visible = false;
-
         _movableForm = new(this);
 
         SetUpFrmMainConfigs();
 
-        // Get the DPI of the current display,
-        // and load theme icons
-        DpiApi.OnDpiChanged += OnDpiChanged;
-        DpiApi.CurrentDpi = DeviceDpi;
+        // update theme icons
+        OnDpiChanged();
     }
 
     private void FrmMain_Load(object sender, EventArgs e)
@@ -78,29 +78,18 @@ public partial class FrmMain : ModernForm
     }
 
 
-    protected override void WndProc(ref Message m)
+    protected override void OnDpiChanged()
     {
-        // WM_SYSCOMMAND
-        if (m.Msg == 0x0112)
-        {
-            // When user clicks on MAXIMIZE button on title bar
-            if (m.WParam == new IntPtr(0xF030)) // SC_MAXIMIZE
-            {
-                // The window is being maximized
-            }
-            // When user clicks on the RESTORE button on title bar
-            else if (m.WParam == new IntPtr(0xF120)) // SC_RESTORE
-            {
-                // The window is being restored
-            }
-        }
-        else if (m.Msg == DpiApi.WM_DPICHANGED)
-        {
-            // get new dpi value
-            DpiApi.CurrentDpi = (short)m.WParam;
-        }
+        base.OnDpiChanged();
 
-        base.WndProc(ref m);
+        // scale toolbar icons corresponding to DPI
+        var newIconHeight = DpiApi.Transform(Config.ToolbarIconHeight);
+
+        // reload theme
+        Config.Theme.LoadTheme(newIconHeight);
+
+        // update toolbar theme
+        Toolbar.UpdateTheme(newIconHeight);
     }
 
 
@@ -259,22 +248,6 @@ public partial class FrmMain : ModernForm
 
         // execute action
         ExecuteUserAction(tagModel.OnClick);
-    }
-
-
-    /// <summary>
-    /// Handle DPI changes
-    /// </summary>
-    private void OnDpiChanged()
-    {
-        // scale toolbar icons corresponding to DPI
-        var newIconHeight = DpiApi.Transform(Config.ToolbarIconHeight);
-
-        // reload theme
-        Config.Theme.LoadTheme(newIconHeight);
-
-        // update toolbar theme
-        Toolbar.UpdateTheme(newIconHeight);
     }
 
 

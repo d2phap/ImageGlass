@@ -29,7 +29,8 @@ public partial class ModernForm : Form
 {
     private bool _isDarkMode = true;
     private BackdropStyle _backdropStyle = BackdropStyle.Mica;
-    private Padding _backdropMargin = new(0);
+    private Padding _backdropMargin = new(-1);
+    private int _dpi = DpiApi.DPI_DEFAULT;
 
 
     #region Public properties
@@ -81,6 +82,38 @@ public partial class ModernForm : Form
     /// </summary>
     public Keys CloseFormHotkey { get; set; } = Keys.None;
 
+
+    /// <summary>
+    /// Gets the current DPI. Default value is <c>96</c>.
+    /// </summary>
+    public int Dpi => _dpi;
+
+
+    /// <summary>
+    /// Gets the current DPI scaling. Default value is <c>1.0f</c>.
+    /// </summary>
+    public float DpiScale => _dpi / 96;
+
+
+    /// <summary>
+    /// Gets, sets the value indicates that <see cref="DpiApi.CurrentDpi"/> should be updated when form DPI is changed.
+    /// </summary>
+    public bool EnableDpiApiUpdate { get; set; } = false;
+
+
+    /// <summary>
+    /// Occurs when the window is being maximized.
+    /// </summary>
+    public event WindowMaximizingHandler? OnWindowMaximizing;
+    public delegate void WindowMaximizingHandler(EventArgs e);
+
+
+    /// <summary>
+    /// Occurs when the window is being restored from maximize state.
+    /// </summary>
+    public event WindowRestoringHandler? OnWindowRestoring;
+    public delegate void WindowRestoringHandler(EventArgs e);
+
     #endregion // Public properties
 
 
@@ -90,8 +123,10 @@ public partial class ModernForm : Form
     public ModernForm()
     {
         InitializeComponent();
-
         SizeGripStyle = SizeGripStyle.Hide;
+
+
+        _dpi = DeviceDpi;
     }
 
 
@@ -106,6 +141,48 @@ public partial class ModernForm : Form
         }
 
         base.OnHandleCreated(e);
+    }
+
+
+    protected override void WndProc(ref Message m)
+    {
+        // WM_SYSCOMMAND
+        if (m.Msg == 0x0112)
+        {
+            // When user clicks on MAXIMIZE button on title bar
+            if (m.WParam == new IntPtr(0xF030)) // SC_MAXIMIZE
+            {
+                // The window is being maximized
+                OnWindowMaximizing?.Invoke(EventArgs.Empty);
+            }
+            // When user clicks on the RESTORE button on title bar
+            else if (m.WParam == new IntPtr(0xF120)) // SC_RESTORE
+            {
+                // The window is being restored
+                OnWindowRestoring?.Invoke(EventArgs.Empty);
+            }
+        }
+        else if (m.Msg == DpiApi.WM_DPICHANGED)
+        {
+            // get new dpi value
+            _dpi = (short)m.WParam;
+
+            OnDpiChanged();
+        }
+
+        base.WndProc(ref m);
+    }
+
+
+    /// <summary>
+    /// Occurs when window's DPI is changed.
+    /// </summary>
+    protected virtual void OnDpiChanged()
+    {
+        if (EnableDpiApiUpdate)
+        {
+            DpiApi.CurrentDpi = _dpi;
+        }
     }
 
 

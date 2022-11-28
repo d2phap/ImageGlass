@@ -27,10 +27,10 @@ public static class DpiApi
     public const int DPI_DEFAULT = 96;
 
     /// <summary>
-    /// Triggers <see cref="DpiChanged"/> event.
+    /// Occurs when the <see cref="CurrentDpi"/> is changed.
     /// </summary>
-    public static event DpiChanged? OnDpiChanged = null;
-    public delegate void DpiChanged();
+    public static event DpiChangedHandler? OnDpiChanged = null;
+    public delegate void DpiChangedHandler();
 
 
     /// <summary>
@@ -46,10 +46,10 @@ public static class DpiApi
         }
     }
 
+
     /// <summary>
-    /// Get DPI Scale factor
+    /// Get DPI Scale factor.
     /// </summary>
-    /// <returns></returns>
     public static float DpiScale => (float)CurrentDpi / DPI_DEFAULT;
 
 
@@ -57,7 +57,6 @@ public static class DpiApi
     /// Transform a number after applying <see cref="DpiScale"/>
     /// </summary>
     /// <param name="num">A float number</param>
-    /// <returns></returns>
     public static T Transform<T>(float num)
     {
         var type = typeof(T);
@@ -66,11 +65,10 @@ public static class DpiApi
         return (T)Convert.ChangeType(value, type);
     }
 
+
     /// <summary>
     /// Transform a number after applying <see cref="DpiScale"/>
     /// </summary>
-    /// <param name="num"></param>
-    /// <returns></returns>
     public static int Transform(int num)
     {
         return (int)Math.Round(num * DpiScale);
@@ -80,8 +78,6 @@ public static class DpiApi
     /// <summary>
     /// Transform padding after applying <see cref="DpiScale"/>
     /// </summary>
-    /// <param name="padding"></param>
-    /// <returns></returns>
     public static Padding Transform(Padding padding)
     {
         return new Padding(
