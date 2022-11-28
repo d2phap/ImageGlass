@@ -1,4 +1,6 @@
-﻿namespace ImageGlass
+﻿using ImageGlass.UI;
+
+namespace ImageGlass
 {
     partial class FrmCrop
     {
@@ -29,17 +31,17 @@
         private void InitializeComponent()
         {
             this.tableTop = new System.Windows.Forms.TableLayoutPanel();
-            this.lblX = new System.Windows.Forms.Label();
-            this.lblY = new System.Windows.Forms.Label();
-            this.lblWidth = new System.Windows.Forms.Label();
-            this.lblHeight = new System.Windows.Forms.Label();
-            this.lblAspectRatio = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.numX = new System.Windows.Forms.NumericUpDown();
-            this.numY = new System.Windows.Forms.NumericUpDown();
-            this.numWidth = new System.Windows.Forms.NumericUpDown();
-            this.numHeight = new System.Windows.Forms.NumericUpDown();
-            this.cmbAspectRatio = new System.Windows.Forms.ComboBox();
+            this.lblX = new ImageGlass.UI.ModernLabel();
+            this.lblY = new ImageGlass.UI.ModernLabel();
+            this.lblWidth = new ImageGlass.UI.ModernLabel();
+            this.lblHeight = new ImageGlass.UI.ModernLabel();
+            this.lblAspectRatio = new ImageGlass.UI.ModernLabel();
+            this.label6 = new ImageGlass.UI.ModernLabel();
+            this.numX = new ImageGlass.UI.ModernNumericUpDown();
+            this.numY = new ImageGlass.UI.ModernNumericUpDown();
+            this.numWidth = new ImageGlass.UI.ModernNumericUpDown();
+            this.numHeight = new ImageGlass.UI.ModernNumericUpDown();
+            this.cmbAspectRatio = new ImageGlass.UI.ModernComboBox();
             this.tableBottom = new System.Windows.Forms.TableLayoutPanel();
             this.btnSave = new ImageGlass.UI.ModernButton();
             this.btnSaveAs = new ImageGlass.UI.ModernButton();
@@ -88,6 +90,8 @@
             // lblX
             // 
             this.lblX.AutoSize = true;
+            this.lblX.BackColor = System.Drawing.Color.Transparent;
+            this.lblX.DarkMode = true;
             this.lblX.Location = new System.Drawing.Point(15, 20);
             this.lblX.Margin = new System.Windows.Forms.Padding(15, 20, 10, 5);
             this.lblX.Name = "lblX";
@@ -98,6 +102,8 @@
             // lblY
             // 
             this.lblY.AutoSize = true;
+            this.lblY.BackColor = System.Drawing.Color.Transparent;
+            this.lblY.DarkMode = true;
             this.lblY.Location = new System.Drawing.Point(15, 60);
             this.lblY.Margin = new System.Windows.Forms.Padding(15, 5, 10, 5);
             this.lblY.Name = "lblY";
@@ -108,6 +114,8 @@
             // lblWidth
             // 
             this.lblWidth.AutoSize = true;
+            this.lblWidth.BackColor = System.Drawing.Color.Transparent;
+            this.lblWidth.DarkMode = true;
             this.lblWidth.Location = new System.Drawing.Point(15, 95);
             this.lblWidth.Margin = new System.Windows.Forms.Padding(15, 5, 10, 5);
             this.lblWidth.Name = "lblWidth";
@@ -118,6 +126,8 @@
             // lblHeight
             // 
             this.lblHeight.AutoSize = true;
+            this.lblHeight.BackColor = System.Drawing.Color.Transparent;
+            this.lblHeight.DarkMode = true;
             this.lblHeight.Location = new System.Drawing.Point(15, 130);
             this.lblHeight.Margin = new System.Windows.Forms.Padding(15, 5, 10, 5);
             this.lblHeight.Name = "lblHeight";
@@ -128,6 +138,8 @@
             // lblAspectRatio
             // 
             this.lblAspectRatio.AutoSize = true;
+            this.lblAspectRatio.BackColor = System.Drawing.Color.Transparent;
+            this.lblAspectRatio.DarkMode = true;
             this.lblAspectRatio.Location = new System.Drawing.Point(15, 172);
             this.lblAspectRatio.Margin = new System.Windows.Forms.Padding(15, 12, 10, 5);
             this.lblAspectRatio.Name = "lblAspectRatio";
@@ -138,6 +150,8 @@
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.DarkMode = true;
             this.label6.Location = new System.Drawing.Point(15, 216);
             this.label6.Margin = new System.Windows.Forms.Padding(15, 10, 10, 5);
             this.label6.Name = "label6";
@@ -147,6 +161,7 @@
             // 
             // numX
             // 
+            this.numX.DarkMode = true;
             this.numX.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numX.Location = new System.Drawing.Point(135, 20);
             this.numX.Margin = new System.Windows.Forms.Padding(5, 20, 20, 5);
@@ -162,6 +177,7 @@
             // 
             // numY
             // 
+            this.numY.DarkMode = true;
             this.numY.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numY.Location = new System.Drawing.Point(135, 55);
             this.numY.Margin = new System.Windows.Forms.Padding(5, 0, 20, 5);
@@ -177,6 +193,7 @@
             // 
             // numWidth
             // 
+            this.numWidth.DarkMode = true;
             this.numWidth.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numWidth.Location = new System.Drawing.Point(135, 90);
             this.numWidth.Margin = new System.Windows.Forms.Padding(5, 0, 20, 5);
@@ -192,6 +209,7 @@
             // 
             // numHeight
             // 
+            this.numHeight.DarkMode = true;
             this.numHeight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numHeight.Location = new System.Drawing.Point(135, 125);
             this.numHeight.Margin = new System.Windows.Forms.Padding(5, 0, 20, 5);
@@ -207,10 +225,17 @@
             // 
             // cmbAspectRatio
             // 
+            this.cmbAspectRatio.DarkMode = true;
             this.cmbAspectRatio.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cmbAspectRatio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbAspectRatio.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cmbAspectRatio.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.cmbAspectRatio.FormattingEnabled = true;
+            this.cmbAspectRatio.Items.AddRange(new object[] {
+            "Original",
+            "Square",
+            "1:2",
+            "3:2",
+            "4:3",
+            "16:9"});
             this.cmbAspectRatio.Location = new System.Drawing.Point(135, 170);
             this.cmbAspectRatio.Margin = new System.Windows.Forms.Padding(5, 10, 20, 5);
             this.cmbAspectRatio.Name = "cmbAspectRatio";
@@ -237,56 +262,56 @@
             this.tableBottom.Size = new System.Drawing.Size(318, 130);
             this.tableBottom.TabIndex = 1;
             // 
-            // BtnSave
+            // btnSave
             // 
             this.btnSave.DarkMode = true;
             this.btnSave.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnSave.ImagePadding = 2;
             this.btnSave.Location = new System.Drawing.Point(20, 20);
             this.btnSave.Margin = new System.Windows.Forms.Padding(20, 20, 5, 5);
-            this.btnSave.Name = "BtnSave";
+            this.btnSave.Name = "btnSave";
             this.btnSave.Padding = new System.Windows.Forms.Padding(5);
             this.btnSave.Size = new System.Drawing.Size(134, 40);
             this.btnSave.SystemIcon = null;
             this.btnSave.TabIndex = 0;
             this.btnSave.Text = "[Save]";
             // 
-            // BtnSaveAs
+            // btnSaveAs
             // 
             this.btnSaveAs.DarkMode = true;
             this.btnSaveAs.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnSaveAs.ImagePadding = 2;
             this.btnSaveAs.Location = new System.Drawing.Point(164, 20);
             this.btnSaveAs.Margin = new System.Windows.Forms.Padding(5, 20, 20, 5);
-            this.btnSaveAs.Name = "BtnSaveAs";
+            this.btnSaveAs.Name = "btnSaveAs";
             this.btnSaveAs.Padding = new System.Windows.Forms.Padding(5);
             this.btnSaveAs.Size = new System.Drawing.Size(134, 40);
             this.btnSaveAs.SystemIcon = null;
             this.btnSaveAs.TabIndex = 1;
             this.btnSaveAs.Text = "[Save as...]";
             // 
-            // BtnCopy
+            // btnCopy
             // 
             this.btnCopy.DarkMode = true;
             this.btnCopy.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnCopy.ImagePadding = 2;
             this.btnCopy.Location = new System.Drawing.Point(20, 70);
             this.btnCopy.Margin = new System.Windows.Forms.Padding(20, 5, 5, 20);
-            this.btnCopy.Name = "BtnCopy";
+            this.btnCopy.Name = "btnCopy";
             this.btnCopy.Padding = new System.Windows.Forms.Padding(5);
             this.btnCopy.Size = new System.Drawing.Size(134, 40);
             this.btnCopy.SystemIcon = null;
             this.btnCopy.TabIndex = 2;
             this.btnCopy.Text = "[Copy]";
             // 
-            // BtnReset
+            // btnReset
             // 
             this.btnReset.DarkMode = true;
             this.btnReset.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnReset.ImagePadding = 2;
             this.btnReset.Location = new System.Drawing.Point(164, 70);
             this.btnReset.Margin = new System.Windows.Forms.Padding(5, 5, 20, 20);
-            this.btnReset.Name = "BtnReset";
+            this.btnReset.Name = "btnReset";
             this.btnReset.Padding = new System.Windows.Forms.Padding(5);
             this.btnReset.Size = new System.Drawing.Size(134, 40);
             this.btnReset.SystemIcon = null;
@@ -318,21 +343,21 @@
         #endregion
 
         private TableLayoutPanel tableTop;
-        private Label lblX;
-        private Label lblY;
-        private Label lblWidth;
-        private Label lblHeight;
-        private Label lblAspectRatio;
-        private Label label6;
-        private NumericUpDown numX;
-        private NumericUpDown numY;
-        private NumericUpDown numWidth;
-        private NumericUpDown numHeight;
-        private ComboBox cmbAspectRatio;
+        private ModernLabel lblX;
+        private ModernLabel lblY;
+        private ModernLabel lblWidth;
+        private ModernLabel lblHeight;
+        private ModernLabel lblAspectRatio;
+        private ModernLabel label6;
+        private ModernNumericUpDown numX;
+        private ModernNumericUpDown numY;
+        private ModernNumericUpDown numWidth;
+        private ModernNumericUpDown numHeight;
+        private ModernComboBox cmbAspectRatio;
         private TableLayoutPanel tableBottom;
-        private UI.ModernButton btnSave;
-        private UI.ModernButton btnSaveAs;
-        private UI.ModernButton btnCopy;
-        private UI.ModernButton btnReset;
+        private ModernButton btnSave;
+        private ModernButton btnSaveAs;
+        private ModernButton btnCopy;
+        private ModernButton btnReset;
     }
 }

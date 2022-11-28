@@ -52,13 +52,20 @@ public partial class FrmCrop : ToolForm
             SuspendLayout();
 
             // text color
-            lblX.ForeColor =
-                lblY.ForeColor =
-                lblWidth.ForeColor =
-                lblHeight.ForeColor =
-                lblAspectRatio.ForeColor = Theme.ColorPalatte.LightText;
+            lblX.DarkMode =
+                lblY.DarkMode =
+                lblWidth.DarkMode =
+                lblHeight.DarkMode =
+                lblAspectRatio.DarkMode = isDarkMode;
 
             tableBottom.BackColor = BackColor.InvertBlackOrWhite(30);
+
+            numX.DarkMode =
+                numY.DarkMode =
+                numWidth.DarkMode =
+                numHeight.DarkMode =
+            cmbAspectRatio.DarkMode =
+
             btnSave.DarkMode =
                 btnSaveAs.DarkMode =
                 btnCopy.DarkMode =
@@ -67,7 +74,7 @@ public partial class FrmCrop : ToolForm
             ResumeLayout(false);
         }
 
-        base.ApplyTheme(darkMode, style);
+        base.ApplyTheme(isDarkMode, style);
     }
 
 }
