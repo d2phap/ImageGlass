@@ -19,16 +19,52 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
+using ImageMagick;
+using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using WicNet;
 
 namespace ImageGlass.UI;
 
-public class IgTheme
+public class IgTheme : IDisposable
 {
+    #region IDisposable Disposing
+
+    private bool _isDisposed = false;
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_isDisposed)
+            return;
+
+        if (disposing)
+        {
+            // Free any other managed objects here.
+            Settings.Dispose();
+            ToolbarIcons.Dispose();
+        }
+
+        // Free any unmanaged objects here.
+        _isDisposed = true;
+    }
+
+    public virtual void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    ~IgTheme()
+    {
+        Dispose(false);
+    }
+
+    #endregion
+
+
     private int _iconHeight = Constants.TOOLBAR_ICON_HEIGHT;
 
     
-
     /// <summary>
     /// Filename of theme configuration since v9.0
     /// </summary>
@@ -173,9 +209,12 @@ public class IgTheme
 
         // import theme info
         Info = JsonModel.Info;
-        
 
-        #region import theme colors
+
+        #region Theme settings
+        // dispose the current values
+        Settings.Dispose();
+
         foreach (var item in JsonModel.Settings)
         {
             var value = (item.Value ?? "")?.ToString()?.Trim();
@@ -249,7 +288,10 @@ public class IgTheme
         #endregion
 
 
-        #region import toolbar icons
+        #region Toolbar icons
+        // dispose the current icons
+        ToolbarIcons.Dispose();
+
         foreach (var item in JsonModel.ToolbarIcons)
         {
             var value = (item.Value ?? "")?.ToString()?.Trim();
@@ -285,28 +327,38 @@ public class IgTheme
     /// Theme pack's icon name or image file path.
     /// Example: <c>OpenFile</c>, or <c>.\Themes\Kobe\OpenFile.svg</c>
     /// </param>
-    /// <returns></returns>
-    public Bitmap? GetToolbarIcon(string? name)
+    public Bitmap GetToolbarIcon(string? name)
     {
         if (string.IsNullOrEmpty(name)) return null;
 
         // get icon from theme pack icon name
         var icon = ToolbarIcons.GetType().GetProperty(name ?? string.Empty)?.GetValue(ToolbarIcons);
 
-        // get icon from file
-        if (icon == null)
-        {
-            var fullPath = BHelper.ResolvePath(name);
-            var data = PhotoCodec.Load(fullPath, new()
-            {
-                Width = ToolbarActualIconHeight,
-                Height = ToolbarActualIconHeight,
-            });
-
-            icon = data.Image;
-        }
+        // set empty icon
+        icon ??= CreateDefaultToolbarIcon();
 
         return icon as Bitmap;
+    }
+
+
+    /// <summary>
+    /// Creates default toolbar icon
+    /// </summary>
+    public Bitmap CreateDefaultToolbarIcon()
+    {
+        var bmp = new Bitmap(ToolbarActualIconHeight, ToolbarActualIconHeight);
+
+        var g = Graphics.FromImage(bmp);
+        g.SmoothingMode = SmoothingMode.HighQuality;
+        g.CompositingQuality = CompositingQuality.HighQuality;
+        g.TextRenderingHint = TextRenderingHint.AntiAlias;
+
+        using var brush = new SolidBrush(Settings.IsDarkMode ? Color.White.WithAlpha(100) : Color.Black.WithAlpha(100));
+
+        var rect = new Rectangle(0, 0, ToolbarActualIconHeight - 1, ToolbarActualIconHeight - 1);
+        g.FillEllipse(brush, rect);
+
+        return bmp;
     }
 
 }
