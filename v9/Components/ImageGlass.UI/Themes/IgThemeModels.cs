@@ -56,8 +56,52 @@ public record IgThemeInfo
 /// <summary>
 /// Theme colors and others
 /// </summary>
-public record IgThemeSettings
+public record IgThemeSettings : IDisposable
 {
+    #region IDisposable Disposing
+
+    private bool _isDisposed = false;
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_isDisposed)
+            return;
+
+        if (disposing)
+        {
+            // Free any other managed objects here.
+
+            NavButtonLeft?.Dispose();
+            NavButtonLeft = null;
+
+            NavButtonRight?.Dispose();
+            NavButtonRight = null;
+
+            AppLogo?.Dispose();
+            AppLogo = null;
+
+            PreviewImage?.Dispose();
+            PreviewImage = null;
+        }
+
+        // Free any unmanaged objects here.
+        _isDisposed = true;
+    }
+
+    public virtual void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    ~IgThemeSettings()
+    {
+        Dispose(false);
+    }
+
+    #endregion
+
+
     /// <summary>
     /// Default value is <c>true</c>.
     /// </summary>
@@ -124,7 +168,7 @@ public record IgThemeSettings
 /// <summary>
 /// Theme toolbar icons
 /// </summary>
-public class IgThemeToolbarIcons
+public class IgThemeToolbarIcons : IDisposable
 {
     public Bitmap? ActualSize { get; set; }
     public Bitmap? AutoZoom { get; set; }
@@ -159,6 +203,139 @@ public class IgThemeToolbarIcons
     public Bitmap? WindowFit { get; set; }
     public Bitmap? ZoomIn { get; set; }
     public Bitmap? ZoomOut { get; set; }
+
+
+    #region IDisposable Disposing
+
+    private bool _isDisposed = false;
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_isDisposed)
+            return;
+
+        if (disposing)
+        {
+            // Free any other managed objects here.
+
+            ActualSize?.Dispose();
+            ActualSize = null;
+            
+            AutoZoom?.Dispose();
+            AutoZoom = null;
+            
+            Checkerboard?.Dispose();
+            Checkerboard = null;
+            
+            ColorPicker?.Dispose();
+            ColorPicker = null;
+            
+            Crop?.Dispose();
+            Crop = null;
+            
+            Delete?.Dispose();
+            Delete = null;
+            
+            Edit?.Dispose();
+            Edit = null;
+            
+            Exit?.Dispose();
+            Exit = null;
+            
+            FlipHorz?.Dispose();
+            FlipHorz = null;
+            
+            FlipVert?.Dispose();
+            FlipVert = null;
+            
+            FullScreen?.Dispose();
+            FullScreen = null;
+            
+            GoToImage?.Dispose();
+            GoToImage = null;
+            
+            LockZoom?.Dispose();
+            LockZoom = null;
+            
+            MainMenu?.Dispose();
+            MainMenu = null;
+            
+            OpenFile?.Dispose();
+            OpenFile = null;
+            
+            Print?.Dispose();
+            Print = null;
+            
+            Refresh?.Dispose();
+            Refresh = null;
+            
+            RotateLeft?.Dispose();
+            RotateLeft = null;
+            
+            RotateRight?.Dispose();
+            RotateRight = null;
+            
+            SaveAs?.Dispose();
+            SaveAs = null;
+            
+            ScaleToFill?.Dispose();
+            ScaleToFill = null;
+            
+            ScaleToFit?.Dispose();
+            ScaleToFit = null;
+            
+            ScaleToHeight?.Dispose();
+            ScaleToHeight = null;
+            
+            ScaleToWidth?.Dispose();
+            ScaleToWidth = null;
+            
+            Slideshow?.Dispose();
+            Slideshow = null;
+            
+            ThumbnailBar?.Dispose();
+            ThumbnailBar = null;
+            
+            ViewFirstImage?.Dispose();
+            ViewFirstImage = null;
+            
+            ViewLastImage?.Dispose();
+            ViewLastImage = null;
+            
+            ViewNextImage?.Dispose();
+            ViewNextImage = null;
+            
+            ViewPreviousImage?.Dispose();
+            ViewPreviousImage = null;
+            
+            WindowFit?.Dispose();
+            WindowFit = null;
+            
+            ZoomIn?.Dispose();
+            ZoomIn = null;
+            
+            ZoomOut?.Dispose();
+            ZoomOut = null;
+            
+        }
+
+        // Free any unmanaged objects here.
+        _isDisposed = true;
+    }
+
+    public virtual void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    ~IgThemeToolbarIcons()
+    {
+        Dispose(false);
+    }
+
+    #endregion
+
 }
 
 
