@@ -35,6 +35,39 @@ public partial class FrmCrop : ToolForm
 
         // set default location offset on the parent form
         InitLocation = new Point(padding, DpiApi.Transform(top) + padding);
+
+
+        ApplyTheme(Theme.Settings.IsDarkMode);
+    }
+
+
+    protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
+    {
+        var isDarkMode = darkMode;
+
+        if (Theme != null)
+        {
+            isDarkMode = Theme.Settings.IsDarkMode;
+
+            SuspendLayout();
+
+            // text color
+            lblX.ForeColor =
+                lblY.ForeColor =
+                lblWidth.ForeColor =
+                lblHeight.ForeColor =
+                lblAspectRatio.ForeColor = Theme.ColorPalatte.LightText;
+
+            tableBottom.BackColor = BackColor.InvertBlackOrWhite(30);
+            btnSave.DarkMode =
+                btnSaveAs.DarkMode =
+                btnCopy.DarkMode =
+                btnReset.DarkMode = isDarkMode;
+
+            ResumeLayout(false);
+        }
+
+        base.ApplyTheme(darkMode, style);
     }
 
 }
