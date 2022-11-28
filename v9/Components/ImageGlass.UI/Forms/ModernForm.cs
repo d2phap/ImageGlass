@@ -102,17 +102,17 @@ public partial class ModernForm : Form
 
 
     /// <summary>
-    /// Occurs when the window is being maximized.
+    /// Occurs when the Maximize button on title bar is clicked.
     /// </summary>
-    public event WindowMaximizingHandler? OnWindowMaximizing;
-    public delegate void WindowMaximizingHandler(EventArgs e);
+    public event MaximizeButtonClickedHandler? OnMaximizeButtonClicked;
+    public delegate void MaximizeButtonClickedHandler(EventArgs e);
 
 
     /// <summary>
-    /// Occurs when the window is being restored from maximize state.
+    /// Occurs when the Restore button on title bar is clicked.
     /// </summary>
-    public event WindowRestoringHandler? OnWindowRestoring;
-    public delegate void WindowRestoringHandler(EventArgs e);
+    public event RestoreButtonClickedHandler? OnRestoreButtonClicked;
+    public delegate void RestoreButtonClickedHandler(EventArgs e);
 
     #endregion // Public properties
 
@@ -153,13 +153,13 @@ public partial class ModernForm : Form
             if (m.WParam == new IntPtr(0xF030)) // SC_MAXIMIZE
             {
                 // The window is being maximized
-                OnWindowMaximizing?.Invoke(EventArgs.Empty);
+                OnMaximizeButtonClicked?.Invoke(EventArgs.Empty);
             }
             // When user clicks on the RESTORE button on title bar
             else if (m.WParam == new IntPtr(0xF120)) // SC_RESTORE
             {
                 // The window is being restored
-                OnWindowRestoring?.Invoke(EventArgs.Empty);
+                OnRestoreButtonClicked?.Invoke(EventArgs.Empty);
             }
         }
         else if (m.Msg == DpiApi.WM_DPICHANGED)
