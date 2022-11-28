@@ -41,9 +41,9 @@ public partial class Popup : ModernForm
     /// </summary>
     protected void RegisterFormEvents()
     {
-        MouseDown += InputForm_MouseDown;
-        MouseUp += InputForm_MouseUp;
-        MouseMove += InputForm_MouseMove;
+        MouseDown += Form_MouseDown;
+        MouseUp += Form_MouseUp;
+        MouseMove += Form_MouseMove;
 
         foreach (Control control in Controls)
         {
@@ -52,9 +52,9 @@ public partial class Popup : ModernForm
                 || control is TableLayoutPanel
                 || control.HasChildren)
             {
-                control.MouseDown += InputForm_MouseDown;
-                control.MouseUp += InputForm_MouseUp;
-                control.MouseMove += InputForm_MouseMove;
+                control.MouseDown += Form_MouseDown;
+                control.MouseUp += Form_MouseUp;
+                control.MouseMove += Form_MouseMove;
             }
 
             // child controls
@@ -64,15 +64,15 @@ public partial class Popup : ModernForm
                     || childControl is PictureBox
                     || childControl is TableLayoutPanel)
                 {
-                    childControl.MouseDown += InputForm_MouseDown;
-                    childControl.MouseUp += InputForm_MouseUp;
-                    childControl.MouseMove += InputForm_MouseMove;
+                    childControl.MouseDown += Form_MouseDown;
+                    childControl.MouseUp += Form_MouseUp;
+                    childControl.MouseMove += Form_MouseMove;
                 }
             }
         }
     }
 
-    private void InputForm_MouseDown(object? sender, MouseEventArgs e)
+    private void Form_MouseDown(object? sender, MouseEventArgs e)
     {
         if (e.Clicks == 1)
         {
@@ -82,7 +82,7 @@ public partial class Popup : ModernForm
         lastLocation = e.Location;
     }
 
-    private void InputForm_MouseMove(object? sender, MouseEventArgs e)
+    private void Form_MouseMove(object? sender, MouseEventArgs e)
     {
         if (!isMouseDown)
         {
@@ -95,7 +95,7 @@ public partial class Popup : ModernForm
         Update();
     }
 
-    private void InputForm_MouseUp(object? sender, MouseEventArgs e)
+    private void Form_MouseUp(object? sender, MouseEventArgs e)
     {
         isMouseDown = false;
     }
