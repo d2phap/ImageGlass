@@ -207,6 +207,8 @@ public partial class ModernForm : Form
         _isDarkMode = darkMode;
         _backdropStyle = style ?? _backdropStyle;
 
+        if (DesignMode) return;
+
         SetDarkMode(IsDarkMode);
         SetBackdrop(BackdropStyle);
     }

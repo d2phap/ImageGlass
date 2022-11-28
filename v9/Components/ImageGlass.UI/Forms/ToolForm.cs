@@ -153,10 +153,7 @@ public partial class ToolForm : ModernForm
     public ToolForm(IgTheme theme)
     {
         InitializeComponent();
-
         Theme = theme;
-        ApplyTheme(Theme.Settings.IsDarkMode);
-
 
         Opacity = 0.85;
     }
@@ -167,24 +164,6 @@ public partial class ToolForm : ModernForm
         RegisterFormEvents();
 
         SetLocationBasedOnParent(InitLocation);
-    }
-
-
-    protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
-    {
-        var isDarkMode = darkMode;
-
-        if (Theme != null)
-        {
-            SuspendLayout();
-            isDarkMode = Theme.Settings.IsDarkMode;
-
-
-
-            ResumeLayout(false);
-        }
-
-        base.ApplyTheme(isDarkMode, style);
     }
 
 
