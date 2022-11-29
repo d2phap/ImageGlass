@@ -778,7 +778,8 @@ public partial class Popup : ModernForm
         PopupButton buttons = PopupButton.OK,
         SHSTOCKICONID? icon = null,
         Image? thumbnail = null,
-        string optionText = "")
+        string optionText = "",
+        bool topMost = false)
     {
         var sysIcon = SystemIconApi.GetSystemIcon(icon);
 
@@ -794,6 +795,8 @@ public partial class Popup : ModernForm
             ThumbnailOverlay = (thumbnail != null && sysIcon != null) ? sysIcon : null,
             ShowTextInput = false,
             ShowInTaskbar = true,
+
+            TopMost = topMost,
         };
 
         if (sysIcon != null)

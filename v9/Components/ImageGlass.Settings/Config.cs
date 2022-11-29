@@ -1203,7 +1203,7 @@ public static class Config
     {
         SystemSounds.Question.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, StatusType.Info, buttons, icon, thumbnail, optionText);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, StatusType.Info, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost);
     }
 
 
@@ -1230,7 +1230,7 @@ public static class Config
         heading ??= Language["_._Warning"];
         SystemSounds.Exclamation.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, StatusType.Warning, buttons, icon, thumbnail, optionText);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, StatusType.Warning, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost);
     }
 
 
@@ -1257,7 +1257,7 @@ public static class Config
         heading ??= Language["_._Error"];
         SystemSounds.Asterisk.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, StatusType.Danger, buttons, icon, thumbnail, optionText);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, StatusType.Danger, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost);
     }
 
 
