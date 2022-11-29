@@ -52,24 +52,6 @@ public class ModernLabel : Label
     #endregion
 
 
-    private void ResizeLabel()
-    {
-        if (!_autoUpdateHeight || _isGrowing)
-            return;
-
-        try
-        {
-            _isGrowing = true;
-            var sz = new Size(Width, int.MaxValue);
-            sz = TextRenderer.MeasureText(Text, Font, sz, TextFormatFlags.WordBreak);
-            Height = sz.Height;
-        }
-        finally
-        {
-            _isGrowing = false;
-        }
-    }
-
     public ModernLabel()
     {
         SetStyle(ControlStyles.SupportsTransparentBackColor |
@@ -105,6 +87,25 @@ public class ModernLabel : Label
             };
             var modRect = new Rectangle(0, 0, rect.Width + (int)g.MeasureString("E", Font).Width, rect.Height);
             g.DrawString(Text, Font, b, modRect, stringFormat);
+        }
+    }
+
+
+    private void ResizeLabel()
+    {
+        if (!_autoUpdateHeight || _isGrowing)
+            return;
+
+        try
+        {
+            _isGrowing = true;
+            var sz = new Size(Width, int.MaxValue);
+            sz = TextRenderer.MeasureText(Text, Font, sz, TextFormatFlags.WordBreak);
+            Height = sz.Height;
+        }
+        finally
+        {
+            _isGrowing = false;
         }
     }
 

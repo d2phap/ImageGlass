@@ -38,6 +38,7 @@ public class ModernTextBox : TextBox
             {
                 var colors = ThemeUtils.GetThemeColorPalatte(_darkMode);
 
+                Padding = new Padding(2, 2, 2, 2);
                 BackColor = colors.LightBackground;
                 ForeColor = colors.LightText;
                 BorderStyle = BorderStyle.FixedSingle;
