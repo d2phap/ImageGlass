@@ -599,19 +599,16 @@ public partial class Popup : ModernForm
             SuspendLayout();
             isDarkMode = Theme.Settings.IsDarkMode;
 
-            // text color
-            lblHeading.ForeColor =
-                lblDescription.ForeColor =
-                lblNote.ForeColor =
-                ChkOption.ForeColor = Theme.ColorPalatte.LightText;
-
-
             panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(NoteStatusType, isDarkMode);
             tableBottom.BackColor = BackColor.InvertBlackOrWhite(30);
 
 
             // dark mode
-            txtValue.DarkMode =
+            lblHeading.DarkMode =
+                lblDescription.DarkMode =
+                lblNote.DarkMode =
+                ChkOption.DarkMode =
+                txtValue.DarkMode =
                 BtnAccept.DarkMode =
                 BtnCancel.DarkMode = isDarkMode;
 

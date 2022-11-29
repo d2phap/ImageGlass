@@ -30,12 +30,12 @@
         {
             this.tableMain = new System.Windows.Forms.TableLayoutPanel();
             this.panNote = new System.Windows.Forms.FlowLayoutPanel();
-            this.lblNote = new System.Windows.Forms.Label();
-            this.lblHeading = new System.Windows.Forms.Label();
+            this.lblNote = new ImageGlass.UI.ModernLabel();
+            this.lblHeading = new ImageGlass.UI.ModernLabel();
             this.txtValue = new ImageGlass.UI.ModernTextBox();
-            this.lblDescription = new System.Windows.Forms.Label();
+            this.lblDescription = new ImageGlass.UI.ModernLabel();
             this.picThumbnail = new System.Windows.Forms.PictureBox();
-            this.ChkOption = new System.Windows.Forms.CheckBox();
+            this.ChkOption = new ImageGlass.UI.ModernCheckBox();
             this.tableBottom = new System.Windows.Forms.TableLayoutPanel();
             this.BtnAccept = new ImageGlass.UI.ModernButton();
             this.BtnCancel = new ImageGlass.UI.ModernButton();
@@ -92,6 +92,7 @@
             // 
             this.lblNote.AutoSize = true;
             this.lblNote.BackColor = System.Drawing.Color.Transparent;
+            this.lblNote.DarkMode = false;
             this.lblNote.ForeColor = System.Drawing.Color.White;
             this.lblNote.Location = new System.Drawing.Point(20, 10);
             this.lblNote.Margin = new System.Windows.Forms.Padding(0);
@@ -103,6 +104,7 @@
             // lblHeading
             // 
             this.lblHeading.AutoSize = true;
+            this.lblHeading.DarkMode = false;
             this.lblHeading.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblHeading.Location = new System.Drawing.Point(135, 0);
             this.lblHeading.Margin = new System.Windows.Forms.Padding(15, 0, 20, 20);
@@ -129,6 +131,7 @@
             // lblDescription
             // 
             this.lblDescription.AutoSize = true;
+            this.lblDescription.DarkMode = false;
             this.lblDescription.Location = new System.Drawing.Point(135, 51);
             this.lblDescription.Margin = new System.Windows.Forms.Padding(15, 0, 20, 20);
             this.lblDescription.Name = "lblDescription";
@@ -154,11 +157,12 @@
             // 
             this.ChkOption.AutoSize = true;
             this.tableMain.SetColumnSpan(this.ChkOption, 2);
-            this.ChkOption.Location = new System.Drawing.Point(0, 207);
-            this.ChkOption.Margin = new System.Windows.Forms.Padding(0);
+            this.ChkOption.DarkMode = true;
+            this.ChkOption.Location = new System.Drawing.Point(20, 217);
+            this.ChkOption.Margin = new System.Windows.Forms.Padding(20, 10, 20, 20);
             this.ChkOption.Name = "ChkOption";
-            this.ChkOption.Padding = new System.Windows.Forms.Padding(20, 10, 20, 20);
-            this.ChkOption.Size = new System.Drawing.Size(329, 57);
+            this.ChkOption.Offset = 1;
+            this.ChkOption.Size = new System.Drawing.Size(289, 27);
             this.ChkOption.TabIndex = 1;
             this.ChkOption.Text = "[Do not show this message again]";
             // 
@@ -220,7 +224,6 @@
             this.AcceptButton = this.BtnAccept;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackdropMargin = new System.Windows.Forms.Padding(-1);
             this.BackdropStyle = ImageGlass.Base.BackdropStyle.MicaAlt;
             this.ClientSize = new System.Drawing.Size(600, 493);
             this.ControlBox = false;
@@ -252,14 +255,14 @@
 
         private TableLayoutPanel tableMain;
         private TableLayoutPanel tableBottom;
-        private Label lblDescription;
+        private ModernLabel lblDescription;
         private ModernTextBox txtValue;
         private PictureBox picThumbnail;
-        private Label lblHeading;
+        private ModernLabel lblHeading;
         private ModernButton BtnAccept;
         private ModernButton BtnCancel;
-        private CheckBox ChkOption;
+        private ModernCheckBox ChkOption;
         private FlowLayoutPanel panNote;
-        private Label lblNote;
+        private ModernLabel lblNote;
     }
 }
