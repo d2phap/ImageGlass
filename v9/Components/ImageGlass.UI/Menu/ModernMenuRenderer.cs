@@ -114,6 +114,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
 
 
         using var pen = new Pen(textColor, DpiApi.Transform<float>(1.15f));
+        pen.LineJoin = LineJoin.Round;
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
         var point1 = new PointF(
@@ -159,19 +160,20 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
 
         var textColor = e.Item.Selected ? _theme.Settings.MenuTextHoverColor : _theme.Settings.MenuTextColor;
         using var pen = new Pen(textColor, DpiApi.Transform<float>(1.5f));
+        pen.LineJoin = LineJoin.Round;
         
         // left margin
         var left = 5;
 
         var point1 = new PointF(
-            (2 * e.Item.Height / 10) + left,
-            e.Item.Height / 2);
+            (3 * e.Item.Height / 10) + left,
+            (5 * e.Item.Height / 10));
         var point2 = new PointF(
             (4 * e.Item.Height / 10) + left,
-            7 * e.Item.Height / 10);
+            (6.5f * e.Item.Height / 10));
         var point3 = new PointF(
-            8 * e.Item.Height / 10 + left,
-            3 * e.Item.Height / 10);
+            (6.5f * e.Item.Height / 10) + left,
+            (3 * e.Item.Height / 10));
 
         var path = new GraphicsPath();
         path.AddLines(new PointF[] { point1, point2, point3 });
