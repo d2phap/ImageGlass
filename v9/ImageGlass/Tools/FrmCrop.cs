@@ -75,4 +75,27 @@ public partial class FrmCrop : ToolForm
         base.ApplyTheme(isDarkMode, style);
     }
 
+
+    protected override void OnLoad(EventArgs e)
+    {
+        base.OnLoad(e);
+
+        UpdateHeight();
+    }
+
+
+    /// <summary>
+    /// Recalculate and update window height.
+    /// </summary>
+    public void UpdateHeight()
+    {
+        // calculate form height
+        var contentHeight = tableTop.Height + tableTop.Padding.Vertical +
+            tableBottom.Height + (tableBottom.Padding.Vertical * 2);
+
+        Height = contentHeight;
+        MinimumSize = new Size(Width, contentHeight);
+    }
+
+
 }
