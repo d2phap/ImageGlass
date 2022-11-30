@@ -212,10 +212,32 @@ public class DXCanvas : DXControl
     {
         get
         {
-            var loc = this.PointClientToSource(ClientSelection.Location);
-            var size = new SizeF((float)Math.Round(ClientSelection.Width / ZoomFactor), (float)Math.Round(ClientSelection.Height / ZoomFactor));
+            var p1 = this.PointClientToSource(ClientSelection.Location);
+            var p2 = this.PointClientToSource(new PointF(ClientSelection.Right, ClientSelection.Bottom));
 
-            return new RectangleF(loc, size);
+            // get the min int value
+            var floorP1 = new PointF((float)Math.Floor(p1.X), (float)Math.Floor(p1.Y));
+            if (floorP1.X < 0) floorP1.X = 0;
+            if (floorP1.Y < 0) floorP1.Y = 0;
+            if (floorP1.X > SourceWidth) floorP1.X = SourceWidth;
+            if (floorP1.Y > SourceHeight) floorP1.Y = SourceHeight;
+
+            if (p1 == p2)
+            {
+                return new RectangleF(floorP1, new SizeF(0, 0));
+            }
+
+            // get the max int value
+            var ceilP2 = new PointF((float)Math.Ceiling(p2.X), (float)Math.Ceiling(p2.Y));
+            if (ceilP2.X < 0) ceilP2.X = 0;
+            if (ceilP2.Y < 0) ceilP2.Y = 0;
+            if (ceilP2.X > SourceWidth) ceilP2.X = SourceWidth;
+            if (ceilP2.Y > SourceHeight) ceilP2.Y = SourceHeight;
+
+            // the selection area is where the p1 and p2 intersected.
+            return new RectangleF(
+                floorP1,
+                new SizeF(ceilP2.X - floorP1.X, ceilP2.Y - floorP1.Y));
         }
         set
         {
