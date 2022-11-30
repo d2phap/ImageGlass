@@ -50,23 +50,21 @@ public partial class FrmCrop : ToolForm
             isDarkMode = Theme.Settings.IsDarkMode;
 
             SuspendLayout();
+            tableBottom.BackColor = BackColor.InvertBlackOrWhite(30);
 
-            // text color
-            lblX.DarkMode =
+            cmbAspectRatio.DarkMode =
+                lblX.DarkMode =
                 lblY.DarkMode =
                 lblWidth.DarkMode =
                 lblHeight.DarkMode =
-                lblAspectRatio.DarkMode = isDarkMode;
+                lblAspectRatio.DarkMode =
 
-            tableBottom.BackColor = BackColor.InvertBlackOrWhite(30);
-
-            numX.DarkMode =
+                numX.DarkMode =
                 numY.DarkMode =
                 numWidth.DarkMode =
                 numHeight.DarkMode =
-            cmbAspectRatio.DarkMode =
 
-            btnSave.DarkMode =
+                btnSave.DarkMode =
                 btnSaveAs.DarkMode =
                 btnCopy.DarkMode =
                 btnReset.DarkMode = isDarkMode;
