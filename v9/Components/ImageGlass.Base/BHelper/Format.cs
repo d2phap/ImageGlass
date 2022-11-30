@@ -148,4 +148,34 @@ public partial class BHelper
         return truncated;
     }
 
+
+    /// <summary>
+    /// Simplifies the fractions.
+    /// </summary>
+    public static int[] SimplifyFractions(params int[] numbers)
+    {
+        // get the greatest common divisor of the input numbers
+        var gcd = numbers.Aggregate((currentGcd, arg) => CalculateGcd(currentGcd, arg));
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] /= gcd;
+        }
+
+        return numbers;
+
+
+        int CalculateGcd(int a, int b)
+        {
+            while (b > 0)
+            {
+                int rem = a % b;
+                a = b;
+                b = rem;
+            }
+            return a;
+        }
+    }
+
+    
 }
