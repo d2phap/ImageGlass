@@ -31,10 +31,8 @@ namespace ImageGlass
         private void InitializeComponent()
         {
             this.tableTop = new System.Windows.Forms.TableLayoutPanel();
-            this.lblX = new ImageGlass.UI.ModernLabel();
-            this.lblY = new ImageGlass.UI.ModernLabel();
-            this.lblWidth = new ImageGlass.UI.ModernLabel();
-            this.lblHeight = new ImageGlass.UI.ModernLabel();
+            this.lblLocation = new ImageGlass.UI.ModernLabel();
+            this.lblSize = new ImageGlass.UI.ModernLabel();
             this.lblAspectRatio = new ImageGlass.UI.ModernLabel();
             this.numX = new ImageGlass.UI.ModernNumericUpDown();
             this.numY = new ImageGlass.UI.ModernNumericUpDown();
@@ -66,88 +64,62 @@ namespace ImageGlass
             this.tableTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableTop.Controls.Add(this.lblX, 0, 0);
-            this.tableTop.Controls.Add(this.lblY, 0, 1);
-            this.tableTop.Controls.Add(this.lblWidth, 0, 2);
-            this.tableTop.Controls.Add(this.lblHeight, 0, 3);
-            this.tableTop.Controls.Add(this.lblAspectRatio, 0, 4);
+            this.tableTop.Controls.Add(this.lblLocation, 0, 0);
+            this.tableTop.Controls.Add(this.lblSize, 0, 1);
+            this.tableTop.Controls.Add(this.lblAspectRatio, 0, 2);
             this.tableTop.Controls.Add(this.numX, 1, 0);
-            this.tableTop.Controls.Add(this.numY, 1, 1);
-            this.tableTop.Controls.Add(this.numWidth, 1, 2);
-            this.tableTop.Controls.Add(this.numHeight, 1, 3);
-            this.tableTop.Controls.Add(this.cmbAspectRatio, 1, 4);
-            this.tableTop.Controls.Add(this.numRatioFrom, 1, 5);
-            this.tableTop.Controls.Add(this.numRatioTo, 2, 5);
+            this.tableTop.Controls.Add(this.numY, 2, 0);
+            this.tableTop.Controls.Add(this.numWidth, 1, 1);
+            this.tableTop.Controls.Add(this.numHeight, 2, 1);
+            this.tableTop.Controls.Add(this.cmbAspectRatio, 1, 2);
+            this.tableTop.Controls.Add(this.numRatioFrom, 1, 3);
+            this.tableTop.Controls.Add(this.numRatioTo, 2, 3);
             this.tableTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableTop.Location = new System.Drawing.Point(0, 0);
             this.tableTop.Margin = new System.Windows.Forms.Padding(0);
             this.tableTop.Name = "tableTop";
             this.tableTop.Padding = new System.Windows.Forms.Padding(20, 10, 20, 10);
-            this.tableTop.RowCount = 6;
+            this.tableTop.RowCount = 4;
             this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableTop.Size = new System.Drawing.Size(318, 231);
+            this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableTop.Size = new System.Drawing.Size(330, 171);
             this.tableTop.TabIndex = 0;
             // 
-            // lblX
+            // lblLocation
             // 
-            this.lblX.AutoSize = true;
-            this.lblX.BackColor = System.Drawing.Color.Transparent;
-            this.lblX.DarkMode = true;
-            this.lblX.Location = new System.Drawing.Point(20, 10);
-            this.lblX.Margin = new System.Windows.Forms.Padding(0, 0, 10, 5);
-            this.lblX.Name = "lblX";
-            this.lblX.Size = new System.Drawing.Size(24, 23);
-            this.lblX.TabIndex = 0;
-            this.lblX.Text = "X:";
+            this.lblLocation.AutoSize = true;
+            this.lblLocation.BackColor = System.Drawing.Color.Transparent;
+            this.lblLocation.DarkMode = true;
+            this.lblLocation.Location = new System.Drawing.Point(20, 10);
+            this.lblLocation.Margin = new System.Windows.Forms.Padding(0, 0, 10, 5);
+            this.lblLocation.Name = "lblLocation";
+            this.lblLocation.Size = new System.Drawing.Size(89, 23);
+            this.lblLocation.TabIndex = 0;
+            this.lblLocation.Text = "[Location:]";
             // 
-            // lblY
+            // lblSize
             // 
-            this.lblY.AutoSize = true;
-            this.lblY.BackColor = System.Drawing.Color.Transparent;
-            this.lblY.DarkMode = true;
-            this.lblY.Location = new System.Drawing.Point(20, 50);
-            this.lblY.Margin = new System.Windows.Forms.Padding(0, 5, 10, 5);
-            this.lblY.Name = "lblY";
-            this.lblY.Size = new System.Drawing.Size(23, 23);
-            this.lblY.TabIndex = 1;
-            this.lblY.Text = "Y:";
-            // 
-            // lblWidth
-            // 
-            this.lblWidth.AutoSize = true;
-            this.lblWidth.BackColor = System.Drawing.Color.Transparent;
-            this.lblWidth.DarkMode = true;
-            this.lblWidth.Location = new System.Drawing.Point(20, 85);
-            this.lblWidth.Margin = new System.Windows.Forms.Padding(0, 5, 10, 5);
-            this.lblWidth.Name = "lblWidth";
-            this.lblWidth.Size = new System.Drawing.Size(70, 23);
-            this.lblWidth.TabIndex = 2;
-            this.lblWidth.Text = "[Width:]";
-            // 
-            // lblHeight
-            // 
-            this.lblHeight.AutoSize = true;
-            this.lblHeight.BackColor = System.Drawing.Color.Transparent;
-            this.lblHeight.DarkMode = true;
-            this.lblHeight.Location = new System.Drawing.Point(20, 120);
-            this.lblHeight.Margin = new System.Windows.Forms.Padding(0, 5, 10, 5);
-            this.lblHeight.Name = "lblHeight";
-            this.lblHeight.Size = new System.Drawing.Size(75, 23);
-            this.lblHeight.TabIndex = 3;
-            this.lblHeight.Text = "[Height:]";
+            this.lblSize.AutoSize = true;
+            this.lblSize.BackColor = System.Drawing.Color.Transparent;
+            this.lblSize.DarkMode = true;
+            this.lblSize.Location = new System.Drawing.Point(20, 45);
+            this.lblSize.Margin = new System.Windows.Forms.Padding(0, 0, 10, 5);
+            this.lblSize.Name = "lblSize";
+            this.lblSize.Size = new System.Drawing.Size(54, 23);
+            this.lblSize.TabIndex = 1;
+            this.lblSize.Text = "[Size:]";
             // 
             // lblAspectRatio
             // 
             this.lblAspectRatio.AutoSize = true;
             this.lblAspectRatio.BackColor = System.Drawing.Color.Transparent;
             this.lblAspectRatio.DarkMode = true;
-            this.lblAspectRatio.Location = new System.Drawing.Point(20, 152);
-            this.lblAspectRatio.Margin = new System.Windows.Forms.Padding(0, 2, 10, 5);
+            this.lblAspectRatio.Location = new System.Drawing.Point(20, 92);
+            this.lblAspectRatio.Margin = new System.Windows.Forms.Padding(0, 12, 10, 5);
             this.lblAspectRatio.Name = "lblAspectRatio";
             this.lblAspectRatio.Size = new System.Drawing.Size(115, 23);
             this.lblAspectRatio.TabIndex = 4;
@@ -155,11 +127,10 @@ namespace ImageGlass
             // 
             // numX
             // 
-            this.tableTop.SetColumnSpan(this.numX, 2);
             this.numX.DarkMode = true;
             this.numX.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numX.Location = new System.Drawing.Point(145, 10);
-            this.numX.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.numX.Margin = new System.Windows.Forms.Padding(0, 0, 5, 5);
             this.numX.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -167,17 +138,16 @@ namespace ImageGlass
             0});
             this.numX.Name = "numX";
             this.numX.SelectAllTextOnFocus = true;
-            this.numX.Size = new System.Drawing.Size(153, 30);
+            this.numX.Size = new System.Drawing.Size(77, 30);
             this.numX.TabIndex = 6;
             this.numX.ThousandsSeparator = true;
             // 
             // numY
             // 
-            this.tableTop.SetColumnSpan(this.numY, 2);
             this.numY.DarkMode = true;
             this.numY.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numY.Location = new System.Drawing.Point(145, 45);
-            this.numY.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.numY.Location = new System.Drawing.Point(232, 10);
+            this.numY.Margin = new System.Windows.Forms.Padding(5, 0, 0, 5);
             this.numY.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -185,17 +155,16 @@ namespace ImageGlass
             0});
             this.numY.Name = "numY";
             this.numY.SelectAllTextOnFocus = true;
-            this.numY.Size = new System.Drawing.Size(153, 30);
+            this.numY.Size = new System.Drawing.Size(78, 30);
             this.numY.TabIndex = 7;
             this.numY.ThousandsSeparator = true;
             // 
             // numWidth
             // 
-            this.tableTop.SetColumnSpan(this.numWidth, 2);
             this.numWidth.DarkMode = true;
             this.numWidth.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numWidth.Location = new System.Drawing.Point(145, 80);
-            this.numWidth.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.numWidth.Location = new System.Drawing.Point(145, 45);
+            this.numWidth.Margin = new System.Windows.Forms.Padding(0, 0, 5, 5);
             this.numWidth.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -203,17 +172,16 @@ namespace ImageGlass
             0});
             this.numWidth.Name = "numWidth";
             this.numWidth.SelectAllTextOnFocus = true;
-            this.numWidth.Size = new System.Drawing.Size(153, 30);
+            this.numWidth.Size = new System.Drawing.Size(77, 30);
             this.numWidth.TabIndex = 8;
             this.numWidth.ThousandsSeparator = true;
             // 
             // numHeight
             // 
-            this.tableTop.SetColumnSpan(this.numHeight, 2);
             this.numHeight.DarkMode = true;
             this.numHeight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numHeight.Location = new System.Drawing.Point(145, 115);
-            this.numHeight.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.numHeight.Location = new System.Drawing.Point(232, 45);
+            this.numHeight.Margin = new System.Windows.Forms.Padding(5, 0, 0, 5);
             this.numHeight.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -221,7 +189,7 @@ namespace ImageGlass
             0});
             this.numHeight.Name = "numHeight";
             this.numHeight.SelectAllTextOnFocus = true;
-            this.numHeight.Size = new System.Drawing.Size(153, 30);
+            this.numHeight.Size = new System.Drawing.Size(78, 30);
             this.numHeight.TabIndex = 9;
             this.numHeight.ThousandsSeparator = true;
             // 
@@ -241,30 +209,43 @@ namespace ImageGlass
             "3:2",
             "4:3",
             "16:9"});
-            this.cmbAspectRatio.Location = new System.Drawing.Point(145, 150);
-            this.cmbAspectRatio.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.cmbAspectRatio.Location = new System.Drawing.Point(145, 90);
+            this.cmbAspectRatio.Margin = new System.Windows.Forms.Padding(0, 10, 0, 5);
             this.cmbAspectRatio.Name = "cmbAspectRatio";
-            this.cmbAspectRatio.Size = new System.Drawing.Size(153, 31);
+            this.cmbAspectRatio.Size = new System.Drawing.Size(165, 31);
             this.cmbAspectRatio.TabIndex = 10;
+            this.cmbAspectRatio.SelectedIndexChanged += new System.EventHandler(this.cmbAspectRatio_SelectedIndexChanged);
             // 
             // numRatioFrom
             // 
             this.numRatioFrom.DarkMode = true;
-            this.numRatioFrom.Location = new System.Drawing.Point(145, 186);
+            this.numRatioFrom.Dock = System.Windows.Forms.DockStyle.Top;
+            this.numRatioFrom.Location = new System.Drawing.Point(145, 126);
             this.numRatioFrom.Margin = new System.Windows.Forms.Padding(0, 0, 5, 5);
+            this.numRatioFrom.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
             this.numRatioFrom.Name = "numRatioFrom";
             this.numRatioFrom.SelectAllTextOnFocus = true;
-            this.numRatioFrom.Size = new System.Drawing.Size(71, 30);
+            this.numRatioFrom.Size = new System.Drawing.Size(77, 30);
             this.numRatioFrom.TabIndex = 11;
             // 
             // numRatioTo
             // 
             this.numRatioTo.DarkMode = true;
-            this.numRatioTo.Location = new System.Drawing.Point(226, 186);
+            this.numRatioTo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.numRatioTo.Location = new System.Drawing.Point(232, 126);
             this.numRatioTo.Margin = new System.Windows.Forms.Padding(5, 0, 0, 5);
+            this.numRatioTo.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
             this.numRatioTo.Name = "numRatioTo";
             this.numRatioTo.SelectAllTextOnFocus = true;
-            this.numRatioTo.Size = new System.Drawing.Size(72, 30);
+            this.numRatioTo.Size = new System.Drawing.Size(78, 30);
             this.numRatioTo.TabIndex = 12;
             // 
             // tableBottom
@@ -279,13 +260,13 @@ namespace ImageGlass
             this.tableBottom.Controls.Add(this.btnCopy, 0, 1);
             this.tableBottom.Controls.Add(this.btnReset, 1, 1);
             this.tableBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableBottom.Location = new System.Drawing.Point(0, 268);
+            this.tableBottom.Location = new System.Drawing.Point(0, 192);
             this.tableBottom.Name = "tableBottom";
             this.tableBottom.Padding = new System.Windows.Forms.Padding(20, 10, 20, 10);
             this.tableBottom.RowCount = 2;
             this.tableBottom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableBottom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableBottom.Size = new System.Drawing.Size(318, 110);
+            this.tableBottom.Size = new System.Drawing.Size(330, 106);
             this.tableBottom.TabIndex = 1;
             // 
             // btnSave
@@ -294,10 +275,10 @@ namespace ImageGlass
             this.btnSave.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnSave.ImagePadding = 2;
             this.btnSave.Location = new System.Drawing.Point(20, 10);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(0, 0, 5, 5);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(0, 0, 3, 3);
             this.btnSave.Name = "btnSave";
             this.btnSave.Padding = new System.Windows.Forms.Padding(5);
-            this.btnSave.Size = new System.Drawing.Size(134, 40);
+            this.btnSave.Size = new System.Drawing.Size(142, 40);
             this.btnSave.SystemIcon = null;
             this.btnSave.TabIndex = 0;
             this.btnSave.Text = "[Save]";
@@ -308,11 +289,11 @@ namespace ImageGlass
             this.btnSaveAs.DarkMode = true;
             this.btnSaveAs.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnSaveAs.ImagePadding = 2;
-            this.btnSaveAs.Location = new System.Drawing.Point(164, 10);
-            this.btnSaveAs.Margin = new System.Windows.Forms.Padding(5, 0, 0, 5);
+            this.btnSaveAs.Location = new System.Drawing.Point(168, 10);
+            this.btnSaveAs.Margin = new System.Windows.Forms.Padding(3, 0, 0, 3);
             this.btnSaveAs.Name = "btnSaveAs";
             this.btnSaveAs.Padding = new System.Windows.Forms.Padding(5);
-            this.btnSaveAs.Size = new System.Drawing.Size(134, 40);
+            this.btnSaveAs.Size = new System.Drawing.Size(142, 40);
             this.btnSaveAs.SystemIcon = null;
             this.btnSaveAs.TabIndex = 1;
             this.btnSaveAs.Text = "[Save as...]";
@@ -322,11 +303,11 @@ namespace ImageGlass
             this.btnCopy.DarkMode = true;
             this.btnCopy.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnCopy.ImagePadding = 2;
-            this.btnCopy.Location = new System.Drawing.Point(20, 60);
-            this.btnCopy.Margin = new System.Windows.Forms.Padding(0, 5, 5, 0);
+            this.btnCopy.Location = new System.Drawing.Point(20, 56);
+            this.btnCopy.Margin = new System.Windows.Forms.Padding(0, 3, 3, 0);
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Padding = new System.Windows.Forms.Padding(5);
-            this.btnCopy.Size = new System.Drawing.Size(134, 40);
+            this.btnCopy.Size = new System.Drawing.Size(142, 40);
             this.btnCopy.SystemIcon = null;
             this.btnCopy.TabIndex = 2;
             this.btnCopy.Text = "[Copy]";
@@ -336,11 +317,11 @@ namespace ImageGlass
             this.btnReset.DarkMode = true;
             this.btnReset.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnReset.ImagePadding = 2;
-            this.btnReset.Location = new System.Drawing.Point(164, 60);
-            this.btnReset.Margin = new System.Windows.Forms.Padding(5, 5, 0, 0);
+            this.btnReset.Location = new System.Drawing.Point(168, 56);
+            this.btnReset.Margin = new System.Windows.Forms.Padding(3, 3, 0, 0);
             this.btnReset.Name = "btnReset";
             this.btnReset.Padding = new System.Windows.Forms.Padding(5);
-            this.btnReset.Size = new System.Drawing.Size(134, 40);
+            this.btnReset.Size = new System.Drawing.Size(142, 40);
             this.btnReset.SystemIcon = null;
             this.btnReset.TabIndex = 3;
             this.btnReset.Text = "[Reset]";
@@ -350,7 +331,7 @@ namespace ImageGlass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(318, 378);
+            this.ClientSize = new System.Drawing.Size(330, 298);
             this.Controls.Add(this.tableBottom);
             this.Controls.Add(this.tableTop);
             this.Location = new System.Drawing.Point(0, 0);
@@ -373,10 +354,8 @@ namespace ImageGlass
         #endregion
 
         private TableLayoutPanel tableTop;
-        private ModernLabel lblX;
-        private ModernLabel lblY;
-        private ModernLabel lblWidth;
-        private ModernLabel lblHeight;
+        private ModernLabel lblLocation;
+        private ModernLabel lblSize;
         private ModernLabel lblAspectRatio;
         private ModernNumericUpDown numX;
         private ModernNumericUpDown numY;

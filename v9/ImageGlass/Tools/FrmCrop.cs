@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.UI;
+using ImageGlass.Views;
 
 namespace ImageGlass;
 
@@ -29,12 +30,6 @@ public partial class FrmCrop : ToolForm
     {
         InitializeComponent();
         Owner = owner;
-
-        var padding = DpiApi.Transform(10);
-        var top = SystemInformation.CaptionHeight + Constants.TOOLBAR_ICON_HEIGHT * 2;
-
-        // set default location offset on the parent form
-        InitLocation = new Point(padding, DpiApi.Transform(top) + padding);
 
 
         ApplyTheme(Theme.Settings.IsDarkMode);
@@ -53,10 +48,8 @@ public partial class FrmCrop : ToolForm
             tableBottom.BackColor = BackColor.InvertBlackOrWhite(30);
 
             cmbAspectRatio.DarkMode =
-                lblX.DarkMode =
-                lblY.DarkMode =
-                lblWidth.DarkMode =
-                lblHeight.DarkMode =
+                lblLocation.DarkMode =
+                lblSize.DarkMode =
                 lblAspectRatio.DarkMode =
 
                 numX.DarkMode =
@@ -78,16 +71,61 @@ public partial class FrmCrop : ToolForm
 
     protected override void OnLoad(EventArgs e)
     {
-        base.OnLoad(e);
-
         UpdateHeight();
+        LoadAspectRatioItems();
+
+        Program.FormMain.PicMain.OnSelectionChanged += PicMain_OnImageSelecting;
+        Program.FormMain.PicMain.OnImageChanged += PicMain_OnImageChanged;
+
+
+        // set default location offset on the parent form
+        var padding = DpiApi.Transform(10);
+        var x = Owner.Right - Width - padding * 2;
+        var y = DpiApi.Transform(SystemInformation.CaptionHeight + Constants.TOOLBAR_ICON_HEIGHT * 2) + padding;
+
+        InitLocation = new Point(x, y);
+
+        base.OnLoad(e);
+    }
+
+
+    protected override void OnFormClosing(FormClosingEventArgs e)
+    {
+        base.OnFormClosing(e);
+
+        Program.FormMain.PicMain.OnSelectionChanged -= PicMain_OnImageSelecting;
+        Program.FormMain.PicMain.OnImageChanged -= PicMain_OnImageChanged;
+    }
+
+
+    private void PicMain_OnImageSelecting(Views.SelectionEventArgs e)
+    {
+        numX.Value = (decimal)e.SourceSelection.X;
+        numY.Value = (decimal)e.SourceSelection.Y;
+        numWidth.Value = (decimal)e.SourceSelection.Width;
+        numHeight.Value = (decimal)e.SourceSelection.Height;
+    }
+
+
+    private void PicMain_OnImageChanged(EventArgs e)
+    {
+        tableTop.Enabled =
+            tableBottom.Enabled = Program.FormMain.PicMain.Source != ImageSource.Null;
+
+        UpdateAspectRatioValues();
+    }
+
+
+    private void cmbAspectRatio_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        UpdateAspectRatioValues();
     }
 
 
     /// <summary>
     /// Recalculate and update window height.
     /// </summary>
-    public void UpdateHeight()
+    private void UpdateHeight()
     {
         // calculate form height
         var contentHeight = tableTop.Height + tableTop.Padding.Vertical +
@@ -96,6 +134,64 @@ public partial class FrmCrop : ToolForm
         Height = contentHeight;
         MinimumSize = new Size(Width, contentHeight);
     }
+
+
+    private void LoadAspectRatioItems()
+    {
+        cmbAspectRatio.Items.Clear();
+
+        foreach (SelectionAspectRatio arValue in Enum.GetValues(typeof(SelectionAspectRatio)))
+        {
+            var displayName = "";
+            if (Constants.AspectRatioValue.TryGetValue(arValue, out var enumValue))
+            {
+                displayName = string.Join(":", enumValue);
+            }
+            else
+            {
+                var arName = Enum.GetName(typeof(SelectionAspectRatio), arValue);
+                displayName = arName;
+            }
+
+            cmbAspectRatio.Items.Add(displayName);
+        }
+
+
+        // select item
+        cmbAspectRatio.SelectedIndex = 2;
+    }
+
+
+    private void UpdateAspectRatioValues()
+    {
+        var ratio = (SelectionAspectRatio)cmbAspectRatio.SelectedIndex;
+        var ratioFrom = 0;
+        var ratioTo = 0;
+
+        if (ratio == SelectionAspectRatio.Original)
+        {
+            var srcW = (int)Program.FormMain.PicMain.SourceWidth;
+            var srcH = (int)Program.FormMain.PicMain.SourceHeight;
+
+            if (srcW > 0 && srcH > 0)
+            {
+                var results = BHelper.SimplifyFractions(srcW, srcH);
+                ratioFrom = results[0];
+                ratioTo = results[1];
+            }
+        }
+
+        // fill selected item to the text boxes
+        else if (Constants.AspectRatioValue.TryGetValue((SelectionAspectRatio)cmbAspectRatio.SelectedIndex, out var value))
+        {
+            ratioFrom = value[0];
+            ratioTo = value[1];
+        }
+
+        numRatioFrom.Value = ratioFrom;
+        numRatioTo.Value = ratioTo;
+    }
+
 
 
 }
