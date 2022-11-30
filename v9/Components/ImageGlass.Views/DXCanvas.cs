@@ -116,11 +116,12 @@ public class DXCanvas : DXControl
     private Bitmap? _navLeftImageGdip = null;
     private Bitmap? _navRightImageGdip = null;
 
-    private RectangleF _selectionRaw = default;
+    private RectangleF _clientSelection = default;
     private RectangleF _selectionBeforeMove = default;
     private bool _canDrawSelection = false;
     private bool _isSelectionHovered = false;
     private SelectionResizer? _selectedResizer = null;
+
 
     private Point? _mouseDownPoint = null;
     private Point? _mouseMovePoint = null;
@@ -182,7 +183,7 @@ public class DXCanvas : DXControl
 
 
     /// <summary>
-    /// Gets, sets the client selection area.
+    /// Gets, sets the client selection area. This will emit the event <see cref="OnSelectionChanged"/>.
     /// </summary>
     [Browsable(false)]
     public RectangleF ClientSelection
@@ -190,16 +191,16 @@ public class DXCanvas : DXControl
         get
         {
             // limit the selected area to the image
-            _selectionRaw.Intersect(_destRect);
+            _clientSelection.Intersect(_destRect);
 
-            return _selectionRaw;
+            return _clientSelection;
         }
         set
         {
             value.Intersect(_destRect);
-            _selectionRaw = value;
+            _clientSelection = value;
 
-            OnSelectionChanged?.Invoke(new SelectionEventArgs(_selectionRaw, SourceSelection));
+            OnSelectionChanged?.Invoke(new SelectionEventArgs(_clientSelection, SourceSelection));
         }
     }
 
@@ -215,8 +216,11 @@ public class DXCanvas : DXControl
             var p1 = this.PointClientToSource(ClientSelection.Location);
             var p2 = this.PointClientToSource(new PointF(ClientSelection.Right, ClientSelection.Bottom));
 
+
             // get the min int value
-            var floorP1 = new PointF((float)Math.Floor(p1.X), (float)Math.Floor(p1.Y));
+            var floorP1 = new PointF(
+                (float)Math.Floor(Math.Round(p1.X, 1)),
+                (float)Math.Floor(Math.Round(p1.Y, 1)));
             if (floorP1.X < 0) floorP1.X = 0;
             if (floorP1.Y < 0) floorP1.Y = 0;
             if (floorP1.X > SourceWidth) floorP1.X = SourceWidth;
@@ -227,12 +231,16 @@ public class DXCanvas : DXControl
                 return new RectangleF(floorP1, new SizeF(0, 0));
             }
 
+
             // get the max int value
-            var ceilP2 = new PointF((float)Math.Ceiling(p2.X), (float)Math.Ceiling(p2.Y));
+            var ceilP2 = new PointF(
+                (float)Math.Ceiling(Math.Round(p2.X, 1)),
+                (float)Math.Ceiling(Math.Round(p2.Y, 1)));
             if (ceilP2.X < 0) ceilP2.X = 0;
             if (ceilP2.Y < 0) ceilP2.Y = 0;
             if (ceilP2.X > SourceWidth) ceilP2.X = SourceWidth;
             if (ceilP2.Y > SourceHeight) ceilP2.Y = SourceHeight;
+
 
             // the selection area is where the p1 and p2 intersected.
             return new RectangleF(
@@ -244,7 +252,9 @@ public class DXCanvas : DXControl
             var loc = this.PointSourceToClient(value.Location);
             var size = new SizeF(value.Width * ZoomFactor, value.Height * ZoomFactor);
 
-            ClientSelection = new RectangleF(loc, size);
+            var newClientSelection = new RectangleF(loc, size);
+            newClientSelection.Intersect(_destRect);
+            _clientSelection = newClientSelection;
         }
     }
 
@@ -912,7 +922,7 @@ public class DXCanvas : DXControl
 
             if (_canDrawSelection)
             {
-                _selectionRaw = new(_mouseDownPoint.Value, new SizeF());
+                _clientSelection = new(_mouseDownPoint.Value, new SizeF());
             }
             else
             {
@@ -926,7 +936,7 @@ public class DXCanvas : DXControl
 
             if (EnableSelection)
             {
-                _selectionBeforeMove = new RectangleF(_selectionRaw.Location, _selectionRaw.Size);
+                _selectionBeforeMove = new RectangleF(_clientSelection.Location, _clientSelection.Size);
                 _selectedResizer = SelectionResizers.Find(i => i.Region.Contains(e.Location));
             }
         }
@@ -1092,7 +1102,7 @@ public class DXCanvas : DXControl
             // draw new selection
             else if (_canDrawSelection)
             {
-                _selectionRaw = BHelper.GetSelection(_mouseDownPoint, _mouseMovePoint, SelectionAspectRatio, SourceWidth, SourceHeight, _destRect);
+                _clientSelection = BHelper.GetSelection(_mouseDownPoint, _mouseMovePoint, SelectionAspectRatio, SourceWidth, SourceHeight, _destRect);
 
                 OnSelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
                 requestRerender = true;
@@ -2385,10 +2395,10 @@ public class DXCanvas : DXControl
         }
 
 
-        _selectionRaw.X = newX;
-        _selectionRaw.Y = newY;
-        _selectionRaw.Width = _selectionBeforeMove.Width;
-        _selectionRaw.Height = _selectionBeforeMove.Height;
+        _clientSelection.X = newX;
+        _clientSelection.Y = newY;
+        _clientSelection.Width = _selectionBeforeMove.Width;
+        _clientSelection.Height = _selectionBeforeMove.Height;
 
 
         OnSelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
@@ -2409,8 +2419,8 @@ public class DXCanvas : DXControl
             var gapY = _selectionBeforeMove.Y - (_mouseDownPoint?.Y ?? 0);
             var dH = loc.Y - _selectionBeforeMove.Y + gapY;
 
-            _selectionRaw.Y = _selectionBeforeMove.Y + dH;
-            _selectionRaw.Height = _selectionBeforeMove.Height - dH;
+            _clientSelection.Y = _selectionBeforeMove.Y + dH;
+            _clientSelection.Height = _selectionBeforeMove.Height - dH;
         }
 
         if (direction == SelectionResizerType.Right
@@ -2420,7 +2430,7 @@ public class DXCanvas : DXControl
             var gapX = _selectionBeforeMove.Right - (_mouseDownPoint?.X ?? 0);
             var dW = loc.X - _selectionBeforeMove.Right + gapX;
 
-            _selectionRaw.Width = _selectionBeforeMove.Width + dW;
+            _clientSelection.Width = _selectionBeforeMove.Width + dW;
         }
 
         if (direction == SelectionResizerType.Bottom
@@ -2430,7 +2440,7 @@ public class DXCanvas : DXControl
             var gapY = _selectionBeforeMove.Bottom - (_mouseDownPoint?.Y ?? 0);
             var dH = loc.Y - _selectionBeforeMove.Bottom + gapY;
 
-            _selectionRaw.Height = _selectionBeforeMove.Height + dH;
+            _clientSelection.Height = _selectionBeforeMove.Height + dH;
         }
 
         if (direction == SelectionResizerType.Left
@@ -2440,12 +2450,12 @@ public class DXCanvas : DXControl
             var gapX = _selectionBeforeMove.X - (_mouseDownPoint?.X ?? 0);
             var dW = loc.X - _selectionBeforeMove.X + gapX;
 
-            _selectionRaw.X = _selectionBeforeMove.X + dW;
-            _selectionRaw.Width = _selectionBeforeMove.Width - dW;
+            _clientSelection.X = _selectionBeforeMove.X + dW;
+            _clientSelection.Width = _selectionBeforeMove.Width - dW;
         }
 
         // limit the selected area to the image
-        _selectionRaw.Intersect(_destRect);
+        _clientSelection.Intersect(_destRect);
 
 
         // not the free aspect ratio
@@ -2464,26 +2474,26 @@ public class DXCanvas : DXControl
                     || direction == SelectionResizerType.BottomLeft
                     || direction == SelectionResizerType.BottomRight)
                 {
-                    _selectionRaw.Width = _selectionRaw.Height / hRatio;
+                    _clientSelection.Width = _clientSelection.Height / hRatio;
 
-                    if (_selectionRaw.Right >= _destRect.Right)
+                    if (_clientSelection.Right >= _destRect.Right)
                     {
-                        var maxWidth = _destRect.Right - _selectionRaw.X; ;
-                        _selectionRaw.Width = maxWidth;
-                        _selectionRaw.Height = maxWidth * hRatio;
+                        var maxWidth = _destRect.Right - _clientSelection.X; ;
+                        _clientSelection.Width = maxWidth;
+                        _clientSelection.Height = maxWidth * hRatio;
                     }
                 }
                 else
                 {
-                    _selectionRaw.Height = _selectionRaw.Width / wRatio;
+                    _clientSelection.Height = _clientSelection.Width / wRatio;
                 }
 
 
-                if (_selectionRaw.Bottom >= _destRect.Bottom)
+                if (_clientSelection.Bottom >= _destRect.Bottom)
                 {
-                    var maxHeight = _destRect.Bottom - _selectionRaw.Y;
-                    _selectionRaw.Width = maxHeight * wRatio;
-                    _selectionRaw.Height = maxHeight;
+                    var maxHeight = _destRect.Bottom - _clientSelection.Y;
+                    _clientSelection.Width = maxHeight * wRatio;
+                    _clientSelection.Height = maxHeight;
                 }
             }
             else
@@ -2495,26 +2505,26 @@ public class DXCanvas : DXControl
                     || direction == SelectionResizerType.TopRight
                     || direction == SelectionResizerType.BottomRight)
                 {
-                    _selectionRaw.Height = _selectionRaw.Width / wRatio;
+                    _clientSelection.Height = _clientSelection.Width / wRatio;
 
-                    if (_selectionRaw.Bottom >= _destRect.Bottom)
+                    if (_clientSelection.Bottom >= _destRect.Bottom)
                     {
-                        var maxHeight = _destRect.Bottom - _selectionRaw.Y;
-                        _selectionRaw.Width = maxHeight * wRatio;
-                        _selectionRaw.Height = maxHeight;
+                        var maxHeight = _destRect.Bottom - _clientSelection.Y;
+                        _clientSelection.Width = maxHeight * wRatio;
+                        _clientSelection.Height = maxHeight;
                     }
                 }
                 else
                 {
-                    _selectionRaw.Width = _selectionRaw.Height / hRatio;
+                    _clientSelection.Width = _clientSelection.Height / hRatio;
                 }
 
 
-                if (_selectionRaw.Right >= _destRect.Right)
+                if (_clientSelection.Right >= _destRect.Right)
                 {
-                    var maxWidth = _destRect.Right - _selectionRaw.X;
-                    _selectionRaw.Width = maxWidth;
-                    _selectionRaw.Height = maxWidth * hRatio;
+                    var maxWidth = _destRect.Right - _clientSelection.X;
+                    _clientSelection.Width = maxWidth;
+                    _clientSelection.Height = maxWidth * hRatio;
                 }
             }
         }
