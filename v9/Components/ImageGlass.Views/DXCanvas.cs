@@ -2570,6 +2570,10 @@ public class DXCanvas : DXControl
         if (imgData == null || imgData.IsImageNull)
         {
             ClientSelection = default;
+
+            // emit OnImageChanged event
+            OnImageChanged?.Invoke(EventArgs.Empty);
+
             Refresh();
             return;
         };
