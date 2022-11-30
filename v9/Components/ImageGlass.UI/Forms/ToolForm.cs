@@ -161,16 +161,22 @@ public partial class ToolForm : ModernForm
     protected override void OnLoad(EventArgs e)
     {
         base.OnLoad(e);
-        RegisterFormEvents();
+        AddFormEvents();
 
         SetLocationBasedOnParent(InitLocation);
+    }
+
+    protected override void OnFormClosing(FormClosingEventArgs e)
+    {
+        base.OnFormClosing(e);
+        RemoveFormEvents();
     }
 
 
     /// <summary>
     /// Initialize all event handlers required to manage borderless window movement.
     /// </summary>
-    protected virtual void RegisterFormEvents()
+    protected virtual void AddFormEvents()
     {
         Move += Form_Move;
         MouseDown += Form_MouseDown;
@@ -182,37 +188,65 @@ public partial class ToolForm : ModernForm
         MouseEnter += Form_MouseEnter;
         MouseLeave += Form_MouseLeave;
 
-        foreach (Control control in Controls)
+        AddFormControlsEvents(this);
+    }
+
+
+    protected virtual void RemoveFormEvents()
+    {
+        Move -= Form_Move;
+        MouseDown -= Form_MouseDown;
+        MouseUp -= Form_MouseUp;
+        MouseMove -= Form_MouseMove;
+
+        Activated -= Form_Activated;
+        Deactivate -= Form_Deactivate;
+        MouseEnter -= Form_MouseEnter;
+        MouseLeave -= Form_MouseLeave;
+
+        RemoveFormControlsEvents(this);
+    }
+
+    private void AddFormControlsEvents(Control c)
+    {
+        foreach (Control childControl in c.Controls)
         {
-            if (control is Label
-                || control is PictureBox
-                || control is TableLayoutPanel
-                || control.HasChildren)
+            if (childControl is Label
+                || childControl is PictureBox
+                || childControl is TableLayoutPanel)
             {
-                control.MouseDown += Form_MouseDown;
-                control.MouseUp += Form_MouseUp;
-                control.MouseMove += Form_MouseMove;
+                childControl.MouseDown += Form_MouseDown;
+                childControl.MouseUp += Form_MouseUp;
+                childControl.MouseMove += Form_MouseMove;
             }
 
-            control.MouseEnter += Form_MouseEnter;
-            control.MouseLeave += Form_MouseLeave;
+            childControl.MouseEnter += Form_MouseEnter;
+            childControl.MouseLeave += Form_MouseLeave;
 
 
-            // child controls
-            foreach (Control childControl in control.Controls)
+            AddFormControlsEvents(childControl);
+        }
+    }
+
+
+    private void RemoveFormControlsEvents(Control c)
+    {
+        foreach (Control childControl in c.Controls)
+        {
+            if (childControl is Label
+                || childControl is PictureBox
+                || childControl is TableLayoutPanel)
             {
-                if (childControl is Label
-                    || childControl is PictureBox
-                    || childControl is TableLayoutPanel)
-                {
-                    childControl.MouseDown += Form_MouseDown;
-                    childControl.MouseUp += Form_MouseUp;
-                    childControl.MouseMove += Form_MouseMove;
-                }
-
-                childControl.MouseEnter += Form_MouseEnter;
-                childControl.MouseLeave += Form_MouseLeave;
+                childControl.MouseDown -= Form_MouseDown;
+                childControl.MouseUp -= Form_MouseUp;
+                childControl.MouseMove -= Form_MouseMove;
             }
+
+            childControl.MouseEnter -= Form_MouseEnter;
+            childControl.MouseLeave -= Form_MouseLeave;
+
+
+            RemoveFormControlsEvents(childControl);
         }
     }
 
@@ -253,7 +287,6 @@ public partial class ToolForm : ModernForm
 
         Location = loc;
     }
-
 
 
     private void Form_MouseEnter(object? sender, EventArgs e)
