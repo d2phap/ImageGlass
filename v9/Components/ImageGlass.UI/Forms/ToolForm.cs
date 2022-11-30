@@ -38,7 +38,7 @@ public partial class ToolForm : ModernForm
     /// <summary>
     /// Gets, sets the init location
     /// </summary>
-    public Point InitLocation { get; init; }
+    public Point InitLocation { get; set; }
 
 
     #region Events to manage the form location relative to parent

@@ -130,7 +130,6 @@ public class ModernComboBox : ComboBox
 
             var borderColor = ColorPalatte.GreySelection;
             var fillColor = _hover ? ColorPalatte.LighterBackground : ColorPalatte.LightBackground;
-            var arrowColor = ColorPalatte.LightText;
 
             if (Focused && TabStop)
                 borderColor = ColorPalatte.BlueHighlight;
@@ -159,10 +158,11 @@ public class ModernComboBox : ComboBox
             }
 
             // arrow
-            using (var p = new Pen(arrowColor, 1))
+            using (var p = new Pen(textColor, 1))
             {
                 var x = rect.Right - 10 - (_padding / 2);
                 var y = rect.Height / 2 - 2;
+
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.DrawLine(p, x, y, x + 4, y + 4);
                 g.DrawLine(p, x + 4, y + 4, x + 8, y);
