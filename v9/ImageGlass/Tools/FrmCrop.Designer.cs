@@ -30,6 +30,7 @@ namespace ImageGlass
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.TableTop = new System.Windows.Forms.TableLayoutPanel();
             this.LblLocation = new ImageGlass.UI.ModernLabel();
             this.LblSize = new ImageGlass.UI.ModernLabel();
@@ -46,6 +47,7 @@ namespace ImageGlass
             this.BtnSaveAs = new ImageGlass.UI.ModernButton();
             this.BtnCopy = new ImageGlass.UI.ModernButton();
             this.BtnReset = new ImageGlass.UI.ModernButton();
+            this.TooltipMain = new System.Windows.Forms.ToolTip(this.components);
             this.TableTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumY)).BeginInit();
@@ -285,6 +287,7 @@ namespace ImageGlass
             this.BtnSave.TabIndex = 0;
             this.BtnSave.Text = "[Save]";
             this.BtnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // BtnSaveAs
             // 
@@ -299,6 +302,7 @@ namespace ImageGlass
             this.BtnSaveAs.SystemIcon = null;
             this.BtnSaveAs.TabIndex = 1;
             this.BtnSaveAs.Text = "[Save as...]";
+            this.BtnSaveAs.Click += new System.EventHandler(this.BtnSaveAs_Click);
             // 
             // BtnCopy
             // 
@@ -313,6 +317,7 @@ namespace ImageGlass
             this.BtnCopy.SystemIcon = null;
             this.BtnCopy.TabIndex = 2;
             this.BtnCopy.Text = "[Copy]";
+            this.BtnCopy.Click += new System.EventHandler(this.BtnCopy_Click);
             // 
             // BtnReset
             // 
@@ -328,6 +333,7 @@ namespace ImageGlass
             this.BtnReset.TabIndex = 3;
             this.BtnReset.Text = "[Reset]";
             this.BtnReset.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BtnReset.Click += new System.EventHandler(this.BtnReset_Click);
             // 
             // FrmCrop
             // 
@@ -336,6 +342,7 @@ namespace ImageGlass
             this.ClientSize = new System.Drawing.Size(330, 298);
             this.Controls.Add(this.TableBottom);
             this.Controls.Add(this.TableTop);
+            this.KeyPreview = true;
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "FrmCrop";
             this.Text = "[Crop tool]";
@@ -371,5 +378,6 @@ namespace ImageGlass
         private ModernButton BtnReset;
         private ModernNumericUpDown NumRatioFrom;
         private ModernNumericUpDown NumRatioTo;
+        private ToolTip TooltipMain;
     }
 }

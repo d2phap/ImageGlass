@@ -19,8 +19,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
+using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.Views;
+using System;
 
 namespace ImageGlass;
 
@@ -90,6 +92,8 @@ public partial class FrmCrop : ToolForm
         InitLocation = new Point(x, y);
 
         base.OnLoad(e);
+
+        ApplyLanguage();
     }
 
 
@@ -103,6 +107,39 @@ public partial class FrmCrop : ToolForm
         NumY.LostFocus -= NumSelections_LostFocus;
         NumWidth.LostFocus -= NumSelections_LostFocus;
         NumHeight.LostFocus -= NumSelections_LostFocus;
+    }
+
+
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        base.OnKeyDown(e);
+
+        // get hotkey list
+        bool CheckHotkey(string action)
+        {
+            var menuHotkeyList = Config.GetHotkey(FrmMain.CurrentMenuHotkeys, action);
+            var menuHotkey = menuHotkeyList.SingleOrDefault(k => k.KeyData == e.KeyData);
+
+            return menuHotkey != null;
+        }
+        
+        if (CheckHotkey(nameof(Program.FormMain.MnuSave)))
+        {
+            BtnSave.PerformClick();
+            return;
+        }
+
+        if (CheckHotkey(nameof(Program.FormMain.MnuSaveAs)))
+        {
+            BtnSaveAs.PerformClick();
+            return;
+        }
+
+        if (CheckHotkey(nameof(Program.FormMain.MnuCopyImageData)))
+        {
+            BtnCopy.PerformClick();
+            return;
+        }
     }
 
 
@@ -169,6 +206,20 @@ public partial class FrmCrop : ToolForm
     }
 
 
+    private void ApplyLanguage()
+    {
+        // get hotkey string
+        var saveHotkey = Config.GetHotkeyString(FrmMain.CurrentMenuHotkeys, nameof(Program.FormMain.MnuSave));
+        var saveAsHotkey = Config.GetHotkeyString(FrmMain.CurrentMenuHotkeys, nameof(Program.FormMain.MnuSaveAs));
+        var copyHotkey = Config.GetHotkeyString(FrmMain.CurrentMenuHotkeys, nameof(Program.FormMain.MnuCopyImageData));
+
+        // set hotkey
+        TooltipMain.SetToolTip(BtnSave, saveHotkey);
+        TooltipMain.SetToolTip(BtnSaveAs, saveAsHotkey);
+        TooltipMain.SetToolTip(BtnCopy, copyHotkey);
+    }
+
+
     private void LoadAspectRatioItems()
     {
         CmbAspectRatio.Items.Clear();
@@ -191,7 +242,7 @@ public partial class FrmCrop : ToolForm
 
 
         // select item
-        CmbAspectRatio.SelectedIndex = 2;
+        CmbAspectRatio.SelectedIndex = 0;
     }
 
 
@@ -243,5 +294,34 @@ public partial class FrmCrop : ToolForm
     }
 
 
+    private void BtnSave_Click(object sender, EventArgs e)
+    {
+        //SaveSelectionAsync();
+    }
 
+    private async Task SaveSelectionAsync()
+    {
+        var img = await Program.FormMain.GetSelectedImageAreaAsync();
+    }
+
+
+    private void BtnSaveAs_Click(object sender, EventArgs e)
+    {
+        //
+    }
+
+
+    private void BtnCopy_Click(object sender, EventArgs e)
+    {
+        Program.FormMain.MnuCopyImageData.PerformClick();
+    }
+
+
+    private void BtnReset_Click(object sender, EventArgs e)
+    {
+        Program.FormMain.PicMain.ClientSelection = new();
+        Program.FormMain.PicMain.Invalidate();
+    }
+
+    
 }
