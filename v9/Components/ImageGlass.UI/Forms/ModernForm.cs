@@ -84,6 +84,12 @@ public partial class ModernForm : Form
 
 
     /// <summary>
+    /// Enables or disables shortcut key handling in parent form.
+    /// </summary>
+    public bool EnableParentShortcut { get; set; } = false;
+
+
+    /// <summary>
     /// Gets the current DPI. Default value is <c>96</c>.
     /// </summary>
     public int Dpi => _dpi;
@@ -216,7 +222,12 @@ public partial class ModernForm : Form
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
         // disable parent form shotcuts
-        return false;
+        if (!EnableParentShortcut)
+        {
+            return false;
+        }
+
+        return base.ProcessCmdKey(ref msg, keyData);
     }
 
 
