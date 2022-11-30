@@ -996,7 +996,6 @@ public partial class FrmMain
     }
 
 
-    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     public async Task CopyImageDataAsync()
     {
         if (PicMain.Source == ImageSource.Null) return;
@@ -1018,7 +1017,7 @@ public partial class FrmMain
         // copy the selected area
         if (!PicMain.SourceSelection.IsEmpty)
         {
-            bitmap = CropImage(bitmap, PicMain.SourceSelection);
+            bitmap = BHelper.CropImage(bitmap, PicMain.SourceSelection);
         }
 
         await Task.Run(() => ClipboardEx.SetClipboardImage(bitmap));
@@ -1224,10 +1223,7 @@ public partial class FrmMain
     /// </summary>
     public void IG_SaveAs()
     {
-        if (PicMain.Source == ImageSource.Null)
-        {
-            return;
-        }
+        if (PicMain.Source == ImageSource.Null) return;
 
         var srcFilePath = "";
         var srcExt = ".png";
@@ -2185,13 +2181,16 @@ public partial class FrmMain
 
     public async void IG_Crop()
     {
-        var img = await GetSelectedImageAreaAsync();
-        if (img == null) return;
+        var frm = new FrmCrop(this, Config.Theme);
+        frm.Show();
 
-        LoadClipboardImage(img);
+        //var img = await GetSelectedImageAreaAsync();
+        //if (img == null) return;
 
-        // reset selection
-        PicMain.ClientSelection = default;
+        //LoadClipboardImage(img);
+
+        //// reset selection
+        //PicMain.ClientSelection = default;
     }
 
 
@@ -2205,33 +2204,14 @@ public partial class FrmMain
 
         if (Local.ClipboardImage != null)
         {
-            return CropImage(Local.ClipboardImage, PicMain.SourceSelection);
+            return BHelper.CropImage(Local.ClipboardImage, PicMain.SourceSelection);
         }
 
 
         var img = await Local.Images.GetAsync(Local.CurrentIndex);
         if (img == null) return null;
 
-        return CropImage(img.ImgData.Image, PicMain.SourceSelection);
-    }
-
-
-    /// <summary>
-    /// Crops the image.
-    /// </summary>
-    public static WicBitmapSource? CropImage(WicBitmapSource? img, RectangleF srcSelection)
-    {
-        if (img == null) return null;
-
-        var width = (int)srcSelection.Width;
-        var height = (int)srcSelection.Height;
-
-        if (width == 0 || height == 0) return null;
-
-        var x = (int)srcSelection.X;
-        var y = (int)srcSelection.Y;
-
-        return WicBitmapSource.FromSourceRect(img, x, y, width, height);
+        return BHelper.CropImage(img.ImgData.Image, PicMain.SourceSelection);
     }
 
 }

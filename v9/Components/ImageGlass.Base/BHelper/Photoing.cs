@@ -560,5 +560,24 @@ public partial class BHelper
         };
     }
 
+
+    /// <summary>
+    /// Crops the image.
+    /// </summary>
+    public static WicBitmapSource? CropImage(WicBitmapSource? img, RectangleF srcSelection)
+    {
+        if (img == null) return null;
+
+        var width = (int)srcSelection.Width;
+        var height = (int)srcSelection.Height;
+
+        if (width == 0 || height == 0) return null;
+
+        var x = (int)srcSelection.X;
+        var y = (int)srcSelection.Y;
+
+        return WicBitmapSource.FromSourceRect(img, x, y, width, height);
+    }
+
 }
 
