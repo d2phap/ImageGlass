@@ -32,13 +32,11 @@ public class ModernComboBox : ComboBox
     private bool _darkMode = false;
     private int _padding = 10;
     private IColors ColorPalatte => ThemeUtils.GetThemeColorPalatte(_darkMode);
+    private float BorderRadius => BHelper.IsOS(WindowsOS.Win11OrLater) ? 3f : 0;
 
 
-
-    #region Property Region
-
-    private float BorderRadius => BHelper.IsOS(WindowsOS.Win11OrLater) ? 4f : 0;
-
+    // Public properties
+    #region Public properties
 
     /// <summary>
     /// Toggles dark mode for this <see cref="ModernButton"/> control.
@@ -85,8 +83,7 @@ public class ModernComboBox : ComboBox
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public new ComboBoxStyle DropDownStyle { get; set; }
 
-    #endregion
-
+    #endregion // Public properties
 
 
     public ModernComboBox() : base()
@@ -102,131 +99,22 @@ public class ModernComboBox : ComboBox
         base.DropDownStyle = ComboBoxStyle.DropDownList;
     }
 
-    protected override void Dispose(bool disposing)
-    {
-        if (disposing)
-            _buffer = null;
-
-        base.Dispose(disposing);
-    }
-
-    protected override void OnTabStopChanged(EventArgs e)
-    {
-        base.OnTabStopChanged(e);
-        Invalidate();
-    }
-
-    protected override void OnTabIndexChanged(EventArgs e)
-    {
-        base.OnTabIndexChanged(e);
-        Invalidate();
-    }
-
-    protected override void OnGotFocus(EventArgs e)
-    {
-        base.OnGotFocus(e);
-        Invalidate();
-    }
-
-    protected override void OnLostFocus(EventArgs e)
-    {
-        base.OnLostFocus(e);
-        Invalidate();
-    }
-
-    protected override void OnTextChanged(EventArgs e)
-    {
-        base.OnTextChanged(e);
-        Invalidate();
-    }
-
-    protected override void OnTextUpdate(EventArgs e)
-    {
-        base.OnTextUpdate(e);
-        Invalidate();
-    }
-
-    protected override void OnSelectedValueChanged(EventArgs e)
-    {
-        base.OnSelectedValueChanged(e);
-        Invalidate();
-    }
-
-    protected override void OnVisibleChanged(EventArgs e)
-    {
-        base.OnVisibleChanged(e);
-        Invalidate();
-    }
-
-    protected override void OnInvalidated(InvalidateEventArgs e)
-    {
-        base.OnInvalidated(e);
-        PaintCombobox();
-    }
-
-    protected override void OnResize(EventArgs e)
-    {
-        base.OnResize(e);
-        _buffer = null;
-        Invalidate();
-    }
-
-    protected override void OnEnabledChanged(EventArgs e)
-    {
-        base.OnEnabledChanged(e);
-        _buffer = null;
-        Invalidate();
-    }
-    protected override void OnDropDown(EventArgs e)
-    {
-        base.OnDropDown(e);
-        if (_autoExpanding)
-        {
-            int width = DropDownWidth;
-            Graphics g = CreateGraphics();
-            Font font = Font;
-            int newWidth;
-            foreach (string s in Items)
-            {
-                newWidth = (int)g.MeasureString(s, font).Width + 25;
-                if (newWidth > width)
-                    width = newWidth;
-            }
-            DropDownWidth = width;
-        }
-        _clicked = true;
-        Invalidate();
-    }
-    protected override void OnDropDownClosed(EventArgs e)
-    {
-        base.OnDropDownClosed(e);
-        _clicked = false;
-        Invalidate();
-    }
-    protected override void OnMouseEnter(EventArgs e)
-    {
-        base.OnMouseEnter(e);
-        _hover = true;
-        Invalidate();
-    }
-    protected override void OnMouseLeave(EventArgs e)
-    {
-        base.OnMouseLeave(e);
-        _hover = false;
-        Invalidate();
-    }
-
     protected override void OnPaint(PaintEventArgs e)
     {
         if (_buffer == null)
-            PaintCombobox();
+            PaintComboboxImage();
 
         var g = e.Graphics;
         g.DrawImageUnscaled(_buffer, Point.Empty);
     }
 
+    protected override void OnInvalidated(InvalidateEventArgs e)
+    {
+        base.OnInvalidated(e);
+        PaintComboboxImage();
+    }
 
-    private void PaintCombobox()
+    private void PaintComboboxImage()
     {
         if (ClientRectangle.Width <= 0 || ClientRectangle.Height <= 0)
             _buffer = new Bitmap(1, 1);
@@ -252,6 +140,7 @@ public class ModernComboBox : ComboBox
                 g.FillRectangle(b, rect);
             }
 
+            // background
             using (var b = new SolidBrush(fillColor))
             {
                 var modRect = new Rectangle(rect.Left, rect.Top, rect.Width - 1, rect.Height - 1);
@@ -260,6 +149,7 @@ public class ModernComboBox : ComboBox
                 g.SmoothingMode = SmoothingMode.None;
             }
 
+            // border
             using (var p = new Pen(borderColor, 1))
             {
                 var modRect = new Rectangle(rect.Left, rect.Top, rect.Width - 1, rect.Height - 1);
@@ -268,6 +158,7 @@ public class ModernComboBox : ComboBox
                 g.SmoothingMode = SmoothingMode.None;
             }
 
+            // arrow
             using (var p = new Pen(arrowColor, 1))
             {
                 var x = rect.Right - 10 - (_padding / 2);
@@ -277,8 +168,9 @@ public class ModernComboBox : ComboBox
                 g.DrawLine(p, x + 4, y + 4, x + 8, y);
                 g.SmoothingMode = SmoothingMode.None;
             }
-            var text = SelectedItem != null ? SelectedItem.ToString() : Text;
 
+            // text
+            var text = SelectedItem != null ? SelectedItem.ToString() : Text;
             using (var b = new SolidBrush(textColor))
             {
                 var padding = 2;
@@ -293,7 +185,7 @@ public class ModernComboBox : ComboBox
                     LineAlignment = StringAlignment.Center,
                     Alignment = StringAlignment.Near,
                     FormatFlags = StringFormatFlags.NoWrap,
-                    Trimming = StringTrimming.EllipsisCharacter
+                    Trimming = StringTrimming.EllipsisCharacter,
                 };
 
                 g.DrawString(text, Font, b, modRect, stringFormat);
@@ -351,4 +243,119 @@ public class ModernComboBox : ComboBox
         }
 
     }
+
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+            _buffer = null;
+
+        base.Dispose(disposing);
+    }
+
+    protected override void OnTabStopChanged(EventArgs e)
+    {
+        base.OnTabStopChanged(e);
+        Invalidate();
+    }
+
+    protected override void OnTabIndexChanged(EventArgs e)
+    {
+        base.OnTabIndexChanged(e);
+        Invalidate();
+    }
+
+    protected override void OnGotFocus(EventArgs e)
+    {
+        base.OnGotFocus(e);
+        Invalidate();
+    }
+
+    protected override void OnLostFocus(EventArgs e)
+    {
+        base.OnLostFocus(e);
+        Invalidate();
+    }
+
+    protected override void OnTextChanged(EventArgs e)
+    {
+        base.OnTextChanged(e);
+        Invalidate();
+    }
+
+    protected override void OnTextUpdate(EventArgs e)
+    {
+        base.OnTextUpdate(e);
+        Invalidate();
+    }
+
+    protected override void OnSelectedValueChanged(EventArgs e)
+    {
+        base.OnSelectedValueChanged(e);
+        Invalidate();
+    }
+
+    protected override void OnVisibleChanged(EventArgs e)
+    {
+        base.OnVisibleChanged(e);
+        Invalidate();
+    }
+
+    protected override void OnResize(EventArgs e)
+    {
+        base.OnResize(e);
+        _buffer = null;
+        Invalidate();
+    }
+
+    protected override void OnEnabledChanged(EventArgs e)
+    {
+        base.OnEnabledChanged(e);
+        _buffer = null;
+        Invalidate();
+    }
+
+    protected override void OnDropDown(EventArgs e)
+    {
+        base.OnDropDown(e);
+        if (_autoExpanding)
+        {
+            int width = DropDownWidth;
+            Graphics g = CreateGraphics();
+            Font font = Font;
+            int newWidth;
+            foreach (string s in Items)
+            {
+                newWidth = (int)g.MeasureString(s, font).Width + 25;
+                if (newWidth > width)
+                    width = newWidth;
+            }
+            DropDownWidth = width;
+        }
+        _clicked = true;
+        Invalidate();
+    }
+
+    protected override void OnDropDownClosed(EventArgs e)
+    {
+        base.OnDropDownClosed(e);
+        _clicked = false;
+        Invalidate();
+    }
+
+    protected override void OnMouseEnter(EventArgs e)
+    {
+        base.OnMouseEnter(e);
+        _hover = true;
+        Invalidate();
+    }
+
+    protected override void OnMouseLeave(EventArgs e)
+    {
+        base.OnMouseLeave(e);
+        _hover = false;
+        Invalidate();
+    }
+
+    
 }
