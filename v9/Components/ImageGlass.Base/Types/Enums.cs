@@ -129,17 +129,18 @@ public enum FlipOptions
 /// </summary>
 public enum SelectionAspectRatio
 {
-    Free = 0,
-    Original = 1 << 1,
-    Square = 1 << 2,
-    _16_9 = 1 << 3,
-    _9_16 = 1 << 4,
-    _4_3 = 1 << 5,
-    _3_4 = 1 << 6,
-    _3_2 = 1 << 7,
-    _2_3 = 1 << 8,
-    _2_1 = 1 << 9,
-    _1_2 = 1 << 10,
+    FreeRatio = 0,
+    Custom = 1,
+    Original = 2,
+    Ratio1_1 = 3,
+    Ratio1_2 = 4,
+    Ratio2_1 = 5,
+    Ratio2_3 = 6,
+    Ratio3_2 = 7,
+    Ratio3_4 = 8,
+    Ratio4_3 = 9,
+    Ratio9_16 = 10,
+    Ratio16_9 = 11,
 }
 
 
