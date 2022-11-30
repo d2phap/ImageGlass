@@ -74,15 +74,19 @@ public partial class FrmCrop : ToolForm
         UpdateHeight();
         LoadAspectRatioItems();
 
+        // add control events
         Program.FormMain.PicMain.OnSelectionChanged += PicMain_OnImageSelecting;
         Program.FormMain.PicMain.OnImageChanged += PicMain_OnImageChanged;
+        NumX.LostFocus += NumSelections_LostFocus;
+        NumY.LostFocus += NumSelections_LostFocus;
+        NumWidth.LostFocus += NumSelections_LostFocus;
+        NumHeight.LostFocus += NumSelections_LostFocus;
 
 
         // set default location offset on the parent form
         var padding = DpiApi.Transform(10);
         var x = padding;
         var y = DpiApi.Transform(SystemInformation.CaptionHeight + Constants.TOOLBAR_ICON_HEIGHT * 2) + padding;
-
         InitLocation = new Point(x, y);
 
         base.OnLoad(e);
@@ -95,6 +99,10 @@ public partial class FrmCrop : ToolForm
 
         Program.FormMain.PicMain.OnSelectionChanged -= PicMain_OnImageSelecting;
         Program.FormMain.PicMain.OnImageChanged -= PicMain_OnImageChanged;
+        NumX.LostFocus -= NumSelections_LostFocus;
+        NumY.LostFocus -= NumSelections_LostFocus;
+        NumWidth.LostFocus -= NumSelections_LostFocus;
+        NumHeight.LostFocus -= NumSelections_LostFocus;
     }
 
 
@@ -124,7 +132,24 @@ public partial class FrmCrop : ToolForm
 
     private void NumRatio_ValueChanged(object sender, EventArgs e)
     {
+        Program.FormMain.PicMain.SelectionAspectRatio = new SizeF((float)NumRatioFrom.Value, (float)NumRatioTo.Value);
+    }
 
+
+    private void NumSelections_LostFocus(object? sender, EventArgs e)
+    {
+        var newRect = new RectangleF(
+                (float)NumX.Value,
+                (float)NumY.Value,
+                (float)NumWidth.Value,
+                (float)NumHeight.Value);
+
+        if (newRect != Program.FormMain.PicMain.SourceSelection)
+        {
+            Program.FormMain.PicMain.SourceSelection = newRect;
+        }
+
+        Program.FormMain.PicMain.Invalidate();
     }
 
 
@@ -197,17 +222,26 @@ public partial class FrmCrop : ToolForm
             ratioTo = value[1];
         }
 
+        // load custom aspect ratio
         NumRatioFrom.Value = ratioFrom;
         NumRatioTo.Value = ratioTo;
 
-        NumRatioFrom.Visible =
-            NumRatioTo.Visible =
-            ratio == SelectionAspectRatio.Custom || ratio == SelectionAspectRatio.Original;
-        NumRatioFrom.Enabled =
-            NumRatioTo.Enabled = ratio == SelectionAspectRatio.Custom;
+        NumRatioFrom.Visible = NumRatioTo.Visible =
+            ratio == SelectionAspectRatio.Original || ratio == SelectionAspectRatio.Custom;
+        NumRatioFrom.Enabled = NumRatioTo.Enabled = ratio == SelectionAspectRatio.Custom;
 
+        // adjust form size
         UpdateHeight();
+
+
+        // load selection area data
+        NumX.Value = (decimal)Program.FormMain.PicMain.SourceSelection.X;
+        NumY.Value = (decimal)Program.FormMain.PicMain.SourceSelection.Y;
+        NumWidth.Value = (decimal)Program.FormMain.PicMain.SourceSelection.Width;
+        NumHeight.Value = (decimal)Program.FormMain.PicMain.SourceSelection.Height;
+
     }
 
-    
+
+
 }
