@@ -45,22 +45,22 @@ public partial class FrmCrop : ToolForm
             isDarkMode = Theme.Settings.IsDarkMode;
 
             SuspendLayout();
-            tableBottom.BackColor = BackColor.InvertBlackOrWhite(30);
+            TableBottom.BackColor = BackColor.InvertBlackOrWhite(30);
 
-            cmbAspectRatio.DarkMode =
-                lblLocation.DarkMode =
-                lblSize.DarkMode =
-                lblAspectRatio.DarkMode =
+            CmbAspectRatio.DarkMode =
+                LblLocation.DarkMode =
+                LblSize.DarkMode =
+                LblAspectRatio.DarkMode =
 
-                numX.DarkMode =
-                numY.DarkMode =
-                numWidth.DarkMode =
-                numHeight.DarkMode =
+                NumX.DarkMode =
+                NumY.DarkMode =
+                NumWidth.DarkMode =
+                NumHeight.DarkMode =
 
-                btnSave.DarkMode =
-                btnSaveAs.DarkMode =
-                btnCopy.DarkMode =
-                btnReset.DarkMode = isDarkMode;
+                BtnSave.DarkMode =
+                BtnSaveAs.DarkMode =
+                BtnCopy.DarkMode =
+                BtnReset.DarkMode = isDarkMode;
 
             ResumeLayout(false);
         }
@@ -80,7 +80,7 @@ public partial class FrmCrop : ToolForm
 
         // set default location offset on the parent form
         var padding = DpiApi.Transform(10);
-        var x = Owner.Right - Width - padding * 2;
+        var x = padding;
         var y = DpiApi.Transform(SystemInformation.CaptionHeight + Constants.TOOLBAR_ICON_HEIGHT * 2) + padding;
 
         InitLocation = new Point(x, y);
@@ -100,23 +100,23 @@ public partial class FrmCrop : ToolForm
 
     private void PicMain_OnImageSelecting(Views.SelectionEventArgs e)
     {
-        numX.Value = (decimal)e.SourceSelection.X;
-        numY.Value = (decimal)e.SourceSelection.Y;
-        numWidth.Value = (decimal)e.SourceSelection.Width;
-        numHeight.Value = (decimal)e.SourceSelection.Height;
+        NumX.Value = (decimal)e.SourceSelection.X;
+        NumY.Value = (decimal)e.SourceSelection.Y;
+        NumWidth.Value = (decimal)e.SourceSelection.Width;
+        NumHeight.Value = (decimal)e.SourceSelection.Height;
     }
 
 
     private void PicMain_OnImageChanged(EventArgs e)
     {
-        tableTop.Enabled =
-            tableBottom.Enabled = Program.FormMain.PicMain.Source != ImageSource.Null;
+        TableTop.Enabled =
+            TableBottom.Enabled = Program.FormMain.PicMain.Source != ImageSource.Null;
 
         UpdateAspectRatioValues();
     }
 
 
-    private void cmbAspectRatio_SelectedIndexChanged(object sender, EventArgs e)
+    private void CmbAspectRatio_SelectedIndexChanged(object sender, EventArgs e)
     {
         UpdateAspectRatioValues();
     }
@@ -128,8 +128,8 @@ public partial class FrmCrop : ToolForm
     private void UpdateHeight()
     {
         // calculate form height
-        var contentHeight = tableTop.Height + tableTop.Padding.Vertical +
-            tableBottom.Height + (tableBottom.Padding.Vertical * 2);
+        var contentHeight = TableTop.Height + TableTop.Padding.Vertical +
+            TableBottom.Height + (TableBottom.Padding.Vertical * 2);
 
         Height = contentHeight;
         MinimumSize = new Size(Width, contentHeight);
@@ -138,7 +138,7 @@ public partial class FrmCrop : ToolForm
 
     private void LoadAspectRatioItems()
     {
-        cmbAspectRatio.Items.Clear();
+        CmbAspectRatio.Items.Clear();
 
         foreach (SelectionAspectRatio arValue in Enum.GetValues(typeof(SelectionAspectRatio)))
         {
@@ -153,18 +153,18 @@ public partial class FrmCrop : ToolForm
                 displayName = arName;
             }
 
-            cmbAspectRatio.Items.Add(displayName);
+            CmbAspectRatio.Items.Add(displayName);
         }
 
 
         // select item
-        cmbAspectRatio.SelectedIndex = 2;
+        CmbAspectRatio.SelectedIndex = 2;
     }
 
 
     private void UpdateAspectRatioValues()
     {
-        var ratio = (SelectionAspectRatio)cmbAspectRatio.SelectedIndex;
+        var ratio = (SelectionAspectRatio)CmbAspectRatio.SelectedIndex;
         var ratioFrom = 0;
         var ratioTo = 0;
 
@@ -182,14 +182,14 @@ public partial class FrmCrop : ToolForm
         }
 
         // fill selected item to the text boxes
-        else if (Constants.AspectRatioValue.TryGetValue((SelectionAspectRatio)cmbAspectRatio.SelectedIndex, out var value))
+        else if (Constants.AspectRatioValue.TryGetValue((SelectionAspectRatio)CmbAspectRatio.SelectedIndex, out var value))
         {
             ratioFrom = value[0];
             ratioTo = value[1];
         }
 
-        numRatioFrom.Value = ratioFrom;
-        numRatioTo.Value = ratioTo;
+        NumRatioFrom.Value = ratioFrom;
+        NumRatioTo.Value = ratioTo;
     }
 
 
