@@ -122,11 +122,19 @@ public partial class FrmCrop : ToolForm
     }
 
 
+    private void NumRatio_ValueChanged(object sender, EventArgs e)
+    {
+
+    }
+
+
     /// <summary>
     /// Recalculate and update window height.
     /// </summary>
     private void UpdateHeight()
     {
+        MinimumSize = new Size(0, 0);
+
         // calculate form height
         var contentHeight = TableTop.Height + TableTop.Padding.Vertical +
             TableBottom.Height + (TableBottom.Padding.Vertical * 2);
@@ -168,6 +176,7 @@ public partial class FrmCrop : ToolForm
         var ratioFrom = 0;
         var ratioTo = 0;
 
+
         if (ratio == SelectionAspectRatio.Original)
         {
             var srcW = (int)Program.FormMain.PicMain.SourceWidth;
@@ -190,8 +199,15 @@ public partial class FrmCrop : ToolForm
 
         NumRatioFrom.Value = ratioFrom;
         NumRatioTo.Value = ratioTo;
+
+        NumRatioFrom.Visible =
+            NumRatioTo.Visible =
+            ratio == SelectionAspectRatio.Custom || ratio == SelectionAspectRatio.Original;
+        NumRatioFrom.Enabled =
+            NumRatioTo.Enabled = ratio == SelectionAspectRatio.Custom;
+
+        UpdateHeight();
     }
 
-
-
+    
 }

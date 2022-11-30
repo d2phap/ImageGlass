@@ -231,6 +231,7 @@ namespace ImageGlass
             this.NumRatioFrom.SelectAllTextOnFocus = true;
             this.NumRatioFrom.Size = new System.Drawing.Size(77, 30);
             this.NumRatioFrom.TabIndex = 11;
+            this.NumRatioFrom.ValueChanged += new System.EventHandler(this.NumRatio_ValueChanged);
             // 
             // NumRatioTo
             // 
@@ -247,6 +248,7 @@ namespace ImageGlass
             this.NumRatioTo.SelectAllTextOnFocus = true;
             this.NumRatioTo.Size = new System.Drawing.Size(78, 30);
             this.NumRatioTo.TabIndex = 12;
+            this.NumRatioTo.ValueChanged += new System.EventHandler(this.NumRatio_ValueChanged);
             // 
             // TableBottom
             // 
