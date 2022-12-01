@@ -1315,8 +1315,7 @@ public partial class FrmMain : ModernForm
         #region Main menu item executable
         if (ac.Executable.StartsWith("Mnu"))
         {
-            var field = GetType().GetField(ac.Executable,
-                BindingFlags.Instance | BindingFlags.NonPublic);
+            var field = GetType().GetField(ac.Executable);
             var mnu = field?.GetValue(this) as ToolStripMenuItem;
 
             if (mnu is not null)
