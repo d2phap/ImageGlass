@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
-using System;
+using ImageGlass.Base.WinApi;
 using System.ComponentModel;
 using System.Drawing.Drawing2D;
 using System.Reflection;
@@ -28,6 +28,7 @@ namespace ImageGlass.UI;
 public class ModernNumericUpDown : NumericUpDown
 {
     private bool _mouseDown = false;
+    private bool _mouseHover = false;
     private bool _darkMode = false;
     private IColors ColorPalatte => ThemeUtils.GetThemeColorPalatte(_darkMode);
     private float BorderRadius => BHelper.IsOS(WindowsOS.Win11OrLater) ? 1f : 0;
@@ -81,6 +82,10 @@ public class ModernNumericUpDown : NumericUpDown
         base.BackColor = ColorPalatte.LightBackground;
 
         Controls[0].Paint += UpDownControls_Paint;
+        Controls[0].MouseEnter += Control_MouseEnter;
+        Controls[0].MouseLeave += Control_MouseLeave;
+        Controls[1].MouseEnter += Control_MouseEnter;
+        Controls[1].MouseLeave += Control_MouseLeave;
 
         try
         {
@@ -101,6 +106,17 @@ public class ModernNumericUpDown : NumericUpDown
         }
     }
 
+    private void Control_MouseEnter(object? sender, EventArgs e)
+    {
+        _mouseHover = true;
+        this.Invalidate();
+    }
+
+    private void Control_MouseLeave(object? sender, EventArgs e)
+    {
+        _mouseHover = false;
+        this.Invalidate();
+    }
 
     private void UpDownControls_Paint(object? sender, PaintEventArgs e)
     {
@@ -130,18 +146,24 @@ public class ModernNumericUpDown : NumericUpDown
         var upArea = new Rectangle(0, 0, rect.Width, rect.Height / 2);
         var isUpHovered = upArea.Contains(mousePos);
 
-        var arrowColor = isUpHovered ? ColorPalatte.ActiveControl : ColorPalatte.GreyHighlight;
+        // arrow
+        var arrowColor = isUpHovered
+            ? ColorPalatte.GreySelection.WithBrightness(0.5f)
+            : ColorPalatte.GreySelection.WithBrightness(0.3f);
         if (isUpHovered && _mouseDown)
         {
             arrowColor = ColorPalatte.LightText;
         }
 
-        using (var p = new Pen(arrowColor, 1.5f))
+        using (var p = new Pen(arrowColor, DpiApi.Transform(1.1f)))
         {
             var x = upArea.Width / 2 - 3;
             var y = upArea.Height / 2 - 2;
 
             p.LineJoin = LineJoin.Round;
+            p.StartCap = LineCap.Round;
+            p.EndCap = LineCap.Round;
+
             g.DrawLine(p, x, y + 3, x + 3, y);
             g.DrawLine(p, x + 3, y, x + 6, y + 3);
         }
@@ -151,13 +173,15 @@ public class ModernNumericUpDown : NumericUpDown
         var downArea = new Rectangle(0, rect.Height / 2, rect.Width, rect.Height / 2);
         var isDownHovered = downArea.Contains(mousePos);
 
-        arrowColor = isDownHovered ? ColorPalatte.ActiveControl : ColorPalatte.GreyHighlight;
+        arrowColor = isDownHovered
+            ? ColorPalatte.GreySelection.WithBrightness(0.5f)
+            : ColorPalatte.GreySelection.WithBrightness(0.3f);
         if (isDownHovered && _mouseDown)
         {
             arrowColor = ColorPalatte.LightText;
         }
 
-        using (var p = new Pen(arrowColor, 1.5f))
+        using (var p = new Pen(arrowColor, DpiApi.Transform(1.1f)))
         {
             var x = downArea.Width / 2 - 3;
             var y = downArea.Top + downArea.Height / 2 - 2;
@@ -174,6 +198,17 @@ public class ModernNumericUpDown : NumericUpDown
 
     // Protected override methods
     #region Protected override methods
+
+    protected override void Dispose(bool disposing)
+    {
+        Controls[0].Paint -= UpDownControls_Paint;
+        Controls[0].MouseEnter -= Control_MouseEnter;
+        Controls[0].MouseLeave -= Control_MouseLeave;
+        Controls[1].MouseEnter -= Control_MouseEnter;
+        Controls[1].MouseLeave -= Control_MouseLeave;
+
+        base.Dispose(disposing);
+    }
 
     protected override void OnPaint(PaintEventArgs e)
     {
@@ -195,9 +230,18 @@ public class ModernNumericUpDown : NumericUpDown
         {
             borderColor = ColorPalatte.BlueHighlight;
         }
-        
-        using (var pen = new Pen(borderColor, 1.5f))
+        else if (_mouseHover)
         {
+            borderColor = borderColor.WithBrightness(0.3f);
+        }
+        
+        using (var pen = new Pen(borderColor, DpiApi.Transform(1.1f)))
+        {
+            pen.Alignment = PenAlignment.Outset;
+            pen.LineJoin = LineJoin.Round;
+            pen.StartCap = LineCap.Round;
+            pen.EndCap = LineCap.Round;
+
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.DrawRoundedRectangle(pen, borderRect, BorderRadius);
             g.SmoothingMode = SmoothingMode.None;
@@ -225,12 +269,14 @@ public class ModernNumericUpDown : NumericUpDown
     protected override void OnMouseEnter(EventArgs e)
     {
         base.OnMouseEnter(e);
+        _mouseHover = true;
         Invalidate();
     }
 
     protected override void OnMouseLeave(EventArgs e)
     {
         base.OnMouseLeave(e);
+        _mouseHover = false;
         Invalidate();
     }
 
