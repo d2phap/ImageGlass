@@ -2179,7 +2179,7 @@ public partial class FrmMain
     }
 
 
-    public async void IG_Crop()
+    public void IG_ToggleCropTool()
     {
         var frm = new FrmCrop(this, Config.Theme);
         frm.Show();

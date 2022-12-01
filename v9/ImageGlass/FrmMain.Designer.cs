@@ -127,7 +127,7 @@ namespace ImageGlass
             this.MnuToggleTopMost = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuTools = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuColorPicker = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuCropping = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuCropTool = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuPageNav = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuExifTool = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
@@ -949,7 +949,7 @@ namespace ImageGlass
             // 
             this.MnuTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MnuColorPicker,
-            this.MnuCropping,
+            this.MnuCropTool,
             this.MnuPageNav,
             this.MnuExifTool});
             this.MnuTools.Image = ((System.Drawing.Image)(resources.GetObject("MnuTools.Image")));
@@ -968,10 +968,10 @@ namespace ImageGlass
             // 
             // MnuCropping
             // 
-            this.MnuCropping.Name = "MnuCropping";
-            this.MnuCropping.Size = new System.Drawing.Size(236, 30);
-            this.MnuCropping.Text = "[Cropping]";
-            this.MnuCropping.Click += new System.EventHandler(this.MnuCropping_Click);
+            this.MnuCropTool.Name = "MnuCropTool";
+            this.MnuCropTool.Size = new System.Drawing.Size(236, 30);
+            this.MnuCropTool.Text = "[Cropping]";
+            this.MnuCropTool.Click += new System.EventHandler(this.MnuCropTool_Click);
             // 
             // MnuPageNav
             // 
@@ -1380,7 +1380,7 @@ namespace ImageGlass
         private ToolStripSeparator toolStripMenuItem20;
         public ToolStripMenuItem MnuToggleTopMost;
         public ToolStripMenuItem MnuColorPicker;
-        public ToolStripMenuItem MnuCropping;
+        public ToolStripMenuItem MnuCropTool;
         public ToolStripMenuItem MnuPageNav;
         public ToolStripMenuItem MnuExifTool;
         public ToolStripMenuItem MnuAbout;

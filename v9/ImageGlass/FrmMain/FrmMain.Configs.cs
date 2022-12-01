@@ -127,7 +127,7 @@ public partial class FrmMain
 
         // MnuTools
         { nameof(MnuColorPicker),           new() { new (Keys.K) } },
-        { nameof(MnuCropping),              new() { new (Keys.C) } },
+        { nameof(MnuCropTool),              new() { new (Keys.C) } },
         { nameof(MnuPageNav),               new() { new (Keys.P) } },
         { nameof(MnuExifTool),              new() { new (Keys.X) } },
 
@@ -503,6 +503,7 @@ public partial class FrmMain
         MnuPanToBottom.Text = lang[$"{Name}.{nameof(MnuPanToBottom)}"];
         #endregion // Menu Panning
 
+
         // Menu Image
         #region Menu Image
         MnuImage.Text = lang[$"{Name}.{nameof(MnuImage)}"];
@@ -575,7 +576,7 @@ public partial class FrmMain
 
         MnuColorPicker.Text = lang[$"{Name}.{nameof(MnuColorPicker)}"];
         MnuPageNav.Text = lang[$"{Name}.{nameof(MnuPageNav)}"];
-        MnuCropping.Text = lang[$"{Name}.{nameof(MnuCropping)}"];
+        MnuCropTool.Text = lang[$"{Name}.{nameof(MnuCropTool)}"];
         MnuExifTool.Text = lang[$"{Name}.{nameof(MnuExifTool)}"];
         #endregion
 
@@ -889,9 +890,9 @@ public partial class FrmMain
         //MnuToggleTopMost.Visible = false;
 
         // MnuTools
-        MnuTools.Visible = false;
+        //MnuTools.Visible = false;
         MnuColorPicker.Visible = false;
-        MnuCropping.Visible = false;
+        //MnuCropTool.Visible = false;
         MnuPageNav.Visible = false;
         MnuExifTool.Visible = false;
 

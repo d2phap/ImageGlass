@@ -2078,9 +2078,9 @@ public partial class FrmMain : ModernForm
 
     }
 
-    private void MnuCropping_Click(object sender, EventArgs e)
+    private void MnuCropTool_Click(object sender, EventArgs e)
     {
-
+        IG_ToggleCropTool();
     }
 
     private void MnuPageNav_Click(object sender, EventArgs e)
