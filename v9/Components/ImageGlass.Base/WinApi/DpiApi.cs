@@ -56,22 +56,12 @@ public static class DpiApi
     /// <summary>
     /// Transform a number after applying <see cref="DpiScale"/>
     /// </summary>
-    /// <param name="num">A float number</param>
-    public static T Transform<T>(float num)
+    public static T Transform<T>(T num)
     {
         var type = typeof(T);
-        var value = num * DpiScale;
+        var value = float.Parse(num.ToString()) * DpiScale;
 
         return (T)Convert.ChangeType(value, type);
-    }
-
-
-    /// <summary>
-    /// Transform a number after applying <see cref="DpiScale"/>
-    /// </summary>
-    public static int Transform(int num)
-    {
-        return (int)Math.Round(num * DpiScale);
     }
 
 

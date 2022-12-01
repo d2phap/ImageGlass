@@ -270,8 +270,8 @@ public class DXCanvas : DXControl
             if (ClientSelection.IsEmpty) return new List<SelectionResizer>();
 
 
-            var resizerSize = DpiApi.Transform<float>(Font.Size * 1.2f);
-            var resizerMargin = DpiApi.Transform<float>(2);
+            var resizerSize = DpiApi.Transform(Font.Size * 1.2f);
+            var resizerMargin = DpiApi.Transform(2);
 
             // 8 resizers
             return new List<SelectionResizer>(8)
