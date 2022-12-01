@@ -158,7 +158,9 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
     {
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-        var textColor = e.Item.Selected ? _theme.Settings.MenuTextHoverColor : _theme.Settings.MenuTextColor;
+        var textColor = e.Item.Selected
+            ? _theme.Settings.MenuTextHoverColor
+            : _theme.Settings.MenuTextColor;
         using var pen = new Pen(textColor, DpiApi.Transform<float>(1.5f));
         pen.LineJoin = LineJoin.Round;
         
@@ -181,13 +183,15 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         e.Graphics.DrawPath(pen, path);
     }
 
+
     protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
     {
+        var g = e.Graphics;
+        g.SmoothingMode = SmoothingMode.HighQuality;
+
         // hover on enable item
         if (e.Item.Selected && e.Item.Enabled)
         {
-            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-
             // boundary
             var rect = new Rectangle(
                 5, 2,
@@ -199,14 +203,35 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             using var penBorder = new Pen(Color.FromArgb(brush.Color.A, brush.Color));
 
             // draw
-            e.Graphics.FillPath(brush, path);
-            e.Graphics.DrawPath(penBorder, path);
-
-            return;
+            g.FillPath(brush, path);
+            g.DrawPath(penBorder, path);
         }
         else
         {
             base.OnRenderMenuItemBackground(e);
+        }
+
+        if (e.Item is ToolStripMenuItem mnu && mnu.CheckOnClick)
+        {
+            var bgColor = e.Item.Selected
+                ? _theme.Settings.MenuTextHoverColor
+                : _theme.Settings.MenuTextColor;
+
+            // left margin
+            var left = 5;
+            var rect = new RectangleF(
+                left,
+                0,
+                e.Item.Height,
+                e.Item.Height);
+            rect.Inflate(-e.Item.Height * 0.2f, -e.Item.Height * 0.2f);
+            var radius = BHelper.GetItemBorderRadius((int)rect.Height, Constants.MENU_ICON_HEIGHT);
+
+            using var checkAreaBrush = new SolidBrush(bgColor.WithAlpha(30));
+            using var checkAreaPen = new Pen(checkAreaBrush, 1);
+
+            g.FillRoundedRectangle(checkAreaBrush, rect, radius);
+            g.DrawRoundedRectangle(checkAreaPen, rect, radius);
         }
     }
 
@@ -271,5 +296,6 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
 
         e.Graphics.DrawPath(pen, path);
     }
+
 
 }
