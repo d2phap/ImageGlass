@@ -23,7 +23,6 @@ using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.UI;
-using System.Reflection;
 
 namespace ImageGlass;
 
@@ -392,7 +391,7 @@ public partial class FrmMain
                 // Executable is menu item
                 if (tagModel.OnClick.Executable.StartsWith("Mnu"))
                 {
-                    var field = GetType().GetField(tagModel.OnClick.Executable, BindingFlags.Instance | BindingFlags.NonPublic);
+                    var field = GetType().GetField(tagModel.OnClick.Executable);
                     var mnu = field?.GetValue(this) as ToolStripMenuItem;
 
                     if (mnu is not null)
@@ -684,7 +683,11 @@ public partial class FrmMain
             var mnu = new ToolStripRadioButtonMenuItem()
             {
                 Text = Config.Language[$"{Name}.{nameof(MnuViewChannels)}._{channelName}"],
-                Tag = channel,
+                Tag = new ModernMenuItemTag()
+                {
+                    SingleSelect = true,
+                    ColorChannel = (ColorChannel)channel,
+                },
                 CheckOnClick = true,
                 Checked = (int)channel == (int)Local.ImageChannel,
                 ImageScaling = ToolStripItemImageScaling.None,
@@ -702,12 +705,13 @@ public partial class FrmMain
         var mnu = sender as ToolStripMenuItem;
         if (mnu is null) return;
 
-        var selectedChannel = (ColorChannel)(int)mnu.Tag;
-
-        if (selectedChannel != Local.ImageChannel)
+        // get color channel from tag
+        if (mnu.Tag is ModernMenuItemTag tag
+            && tag.ColorChannel != null
+            && tag.ColorChannel.Value != Local.ImageChannel)
         {
-            Local.ImageChannel = selectedChannel;
-            Local.Images.ImageChannel = selectedChannel;
+            Local.ImageChannel = tag.ColorChannel.Value;
+            Local.Images.ImageChannel = tag.ColorChannel.Value;
 
             // update the viewing image
             _ = ViewNextCancellableAsync(0, true, true);
@@ -738,7 +742,11 @@ public partial class FrmMain
             var mnu = new ToolStripRadioButtonMenuItem()
             {
                 Text = Config.Language[$"_.{nameof(ImageOrderBy)}._{orderName}"],
-                Tag = order,
+                Tag = new ModernMenuItemTag()
+                {
+                    SingleSelect = true,
+                    ImageOrderBy = (ImageOrderBy)order,
+                },
                 CheckOnClick = true,
                 Checked = (int)order == (int)Config.ImageLoadingOrder,
                 ImageScaling = ToolStripItemImageScaling.None,
@@ -758,7 +766,11 @@ public partial class FrmMain
             var mnu = new ToolStripRadioButtonMenuItem()
             {
                 Text = Config.Language[$"_.{nameof(ImageOrderType)}._{typeName}"],
-                Tag = orderType,
+                Tag = new ModernMenuItemTag()
+                {
+                    SingleSelect = true,
+                    ImageOrderType = (ImageOrderType)orderType,
+                },
                 CheckOnClick = true,
                 Checked = (int)orderType == (int)Config.ImageLoadingOrderType,
                 ImageScaling = ToolStripItemImageScaling.None,
@@ -770,15 +782,17 @@ public partial class FrmMain
         }
     }
 
+
     private void MnuLoadingOrderItem_Click(object? sender, EventArgs e)
     {
         var mnu = sender as ToolStripMenuItem;
         if (mnu is null) return;
 
-        if (mnu.Tag is ImageOrderBy selectedOrder
-            && selectedOrder != Config.ImageLoadingOrder)
+        if (mnu.Tag is ModernMenuItemTag tag
+            && tag.ImageOrderBy != null
+            && tag.ImageOrderBy.Value != Config.ImageLoadingOrder)
         {
-            Config.ImageLoadingOrder = selectedOrder;
+            Config.ImageLoadingOrder = tag.ImageOrderBy.Value;
 
             // reload image list
             IG_ReloadList();
@@ -788,15 +802,17 @@ public partial class FrmMain
         }
     }
 
+
     private void MnuLoadingOrderTypeItem_Click(object? sender, EventArgs e)
     {
         var mnu = sender as ToolStripMenuItem;
         if (mnu is null) return;
 
-        if (mnu.Tag is ImageOrderType selectedType
-            && selectedType != Config.ImageLoadingOrderType)
+        if (mnu.Tag is ModernMenuItemTag tag
+            && tag.ImageOrderType != null
+            && tag.ImageOrderType.Value != Config.ImageLoadingOrderType)
         {
-            Config.ImageLoadingOrderType = selectedType;
+            Config.ImageLoadingOrderType = tag.ImageOrderType.Value;
 
             // reload image list
             IG_ReloadList();
