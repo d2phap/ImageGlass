@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
+using ImageGlass.Base.WinApi;
 using System.ComponentModel;
 using System.Drawing.Drawing2D;
 
@@ -128,9 +129,11 @@ public class ModernComboBox : ComboBox
                 ? ColorPalatte.LightText
                 : ColorPalatte.DisabledText;
 
+            var penWidth = DpiApi.Transform(1.1f);
             var borderColor = ColorPalatte.GreySelection;
             var fillColor = _hover ? ColorPalatte.LighterBackground : ColorPalatte.LightBackground;
 
+            borderColor = _hover ? borderColor.WithBrightness(0.3f) : borderColor;
             if (Focused && TabStop)
                 borderColor = ColorPalatte.BlueHighlight;
 
@@ -149,8 +152,13 @@ public class ModernComboBox : ComboBox
             }
 
             // border
-            using (var p = new Pen(borderColor, 1))
+            using (var p = new Pen(borderColor, penWidth))
             {
+                p.Alignment = PenAlignment.Outset;
+                p.LineJoin = LineJoin.Round;
+                p.StartCap = LineCap.Round;
+                p.EndCap = LineCap.Round;
+
                 var modRect = new Rectangle(rect.Left, rect.Top, rect.Width - 1, rect.Height - 1);
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.DrawRoundedRectangle(p, modRect, BorderRadius, _clicked, 1);
@@ -158,8 +166,16 @@ public class ModernComboBox : ComboBox
             }
 
             // arrow
-            using (var p = new Pen(textColor, 1))
+            var arrowColor = _hover
+                ? ColorPalatte.GreySelection.WithBrightness(0.5f)
+                : ColorPalatte.GreySelection.WithBrightness(0.3f);
+
+            using (var p = new Pen(arrowColor, penWidth))
             {
+                p.LineJoin = LineJoin.Round;
+                p.StartCap = LineCap.Round;
+                p.EndCap = LineCap.Round;
+
                 var x = rect.Right - 10 - (_padding / 2);
                 var y = rect.Height / 2 - 2;
 
