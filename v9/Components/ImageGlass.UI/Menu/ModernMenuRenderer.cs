@@ -102,7 +102,6 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             textColor = _theme.Settings.MenuBgColor.InvertBlackOrWhite(100);
         }
 
-
         using var pen = new Pen(textColor, DpiApi.Transform(1.15f))
         {
             LineJoin = LineJoin.Round,
@@ -189,7 +188,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         // draw check mark for checkbox
         else
         {
-            using var pen = new Pen(checkMarkBrush, DpiApi.Transform(1.5f))
+            using var pen = new Pen(checkMarkBrush, DpiApi.Transform(1.6f))
             {
                 LineJoin = LineJoin.Round,
                 StartCap = LineCap.Round,
@@ -197,14 +196,14 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             };
 
             var point1 = new PointF(
-                rect.X + (2 * rect.Height / 10),
+                rect.X + (2.5f * rect.Height / 10),
                 rect.Y + (6 * rect.Height / 10));
             var point2 = new PointF(
                 rect.X + (4 * rect.Height / 10),
-                rect.Y + (8 * rect.Height / 10));
+                rect.Y + (7.5f * rect.Height / 10));
             var point3 = new PointF(
-                rect.X + (8 * rect.Height / 10),
-                rect.Y + (2 * rect.Height / 10));
+                rect.X + (7.5f * rect.Height / 10),
+                rect.Y + (2.5f * rect.Height / 10));
 
             var path = new GraphicsPath();
             path.AddLines(new PointF[] { point1, point2, point3 });
@@ -239,12 +238,11 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             var radius = BHelper.GetItemBorderRadius(rect.Height, Constants.MENU_ICON_HEIGHT);
 
             using var brush = new SolidBrush(_theme.Settings.MenuBgHoverColor);
-            using var path = BHelper.GetRoundRectanglePath(rect, radius);
             using var penBorder = new Pen(Color.FromArgb(brush.Color.A, brush.Color), DpiApi.Transform(1f));
 
             // draw
-            g.FillPath(brush, path);
-            g.DrawPath(penBorder, path);
+            g.FillRoundedRectangle(brush, rect, radius);
+            g.DrawRoundedRectangle(penBorder, rect, radius);
         }
         else
         {
@@ -353,15 +351,15 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         }
 
         var menuBorderRadius = BHelper.IsOS(WindowsOS.Win11OrLater) ? 8 : 0;
-        using var path = BHelper.GetRoundRectanglePath(new()
+        var rect = new RectangleF()
         {
             X = 0,
             Y = 0,
             Width = e.AffectedBounds.Width - 1,
             Height = e.AffectedBounds.Height - 1,
-        }, menuBorderRadius);
+        };
 
-        e.Graphics.DrawPath(pen, path);
+        e.Graphics.DrawRoundedRectangle(pen, rect, menuBorderRadius);
     }
 
 

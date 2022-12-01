@@ -297,8 +297,6 @@ public class ModernButton : Button
         }
 
 
-        var btnRect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
-        using var btnRectPath = BHelper.GetRoundRectanglePath(btnRect, borderRadius);
 
         //// use default system style for light mode
         //if (!DarkMode)
@@ -323,8 +321,9 @@ public class ModernButton : Button
 
 
         // draw background
+        var btnRect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
         using var bgBrush = new SolidBrush(fillColor);
-        g.FillPath(bgBrush, btnRectPath);
+        g.FillRoundedRectangle(bgBrush, btnRect, borderRadius);
         
 
         // draw border

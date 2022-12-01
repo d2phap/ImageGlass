@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
+using ImageGlass.Base.WinApi;
 using ImageGlass.Gallery;
 using System.Drawing.Imaging;
 using View = ImageGlass.Gallery.View;
@@ -88,8 +89,8 @@ public class ModernGalleryRenderer : StyleRenderer
         // background
         #region Draw background
 
+        var radius = BHelper.GetItemBorderRadius(itemBounds.Height, Constants.THUMBNAIL_HEIGHT);
         using var bgBrush = new SolidBrush(Color.Transparent);
-        using var bgPath = BHelper.GetRoundRectanglePath(itemBounds, BHelper.GetItemBorderRadius(itemBounds.Height, Constants.THUMBNAIL_HEIGHT));
 
         // on pressed
         if (state.HasFlag(ItemState.Pressed))
@@ -107,11 +108,11 @@ public class ModernGalleryRenderer : StyleRenderer
             bgBrush.Color = Theme.Settings.ThumbnailItemSelectedColor;
         }
 
-        using var penBorder = new Pen(Color.FromArgb(bgBrush.Color.A, bgBrush.Color));
+        using var penBorder = new Pen(bgBrush.Color, DpiApi.Transform(1.05f));
 
         // draw background
-        g.FillPath(bgBrush, bgPath);
-        g.DrawPath(penBorder, bgPath);
+        g.FillRoundedRectangle(bgBrush, itemBounds, radius);
+        g.DrawRoundedRectangle(penBorder, itemBounds, radius);
 
         #endregion
 

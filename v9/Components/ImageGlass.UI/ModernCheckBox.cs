@@ -392,14 +392,14 @@ public class ModernCheckBox : CheckBox
                 p.EndCap = LineCap.Round;
 
                 var point1 = new PointF(
-                    checkBoxRect.X + (2 * checkBoxRect.Height / 10),
+                    checkBoxRect.X + (2f * checkBoxRect.Height / 10),
                     checkBoxRect.Y + (6 * checkBoxRect.Height / 10));
                 var point2 = new PointF(
                     checkBoxRect.X + (4 * checkBoxRect.Height / 10),
-                    checkBoxRect.Y + (8 * checkBoxRect.Height / 10));
+                    checkBoxRect.Y + (7.5f * checkBoxRect.Height / 10));
                 var point3 = new PointF(
-                    checkBoxRect.X + (8 * checkBoxRect.Height / 10),
-                    checkBoxRect.Y + (2 * checkBoxRect.Height / 10));
+                    checkBoxRect.X + (7.5f * checkBoxRect.Height / 10),
+                    checkBoxRect.Y + (2.5f * checkBoxRect.Height / 10));
 
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.DrawLine(p, point1, point2);

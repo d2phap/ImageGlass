@@ -33,7 +33,7 @@ public static partial class BHelper
             return 0;
         }
 
-        var radius = (itemHeight * 1.37f / defaultItemHeight * 3f);
+        var radius = (itemHeight * 1.3f / defaultItemHeight * 3f);
 
         // min border radius = 4
         return Math.Max(radius, 4);
@@ -45,7 +45,6 @@ public static partial class BHelper
     /// </summary>
     /// <param name="bounds">Input rectangle</param>
     /// <param name="radius">Border radius</param>
-    /// <returns></returns>
     public static GraphicsPath GetRoundRectanglePath(RectangleF bounds, float radius, bool flatBottom = false, int bottomOffset = 0, bool flatTop = false)
     {
         var diameter = radius * 2;
@@ -97,18 +96,6 @@ public static partial class BHelper
 
         path.CloseFigure();
         return path;
-    }
-
-
-    /// <summary>
-    /// Gets rounded rectangle graphic path
-    /// </summary>
-    /// <param name="bounds">Input rectangle</param>
-    /// <param name="radius">Border radius</param>
-    /// <returns></returns>
-    public static GraphicsPath GetRoundRectanglePath(Rectangle bounds, int radius, bool flatBottom = false, int bottomOffset = 0, bool flatTop = false)
-    {
-        return GetRoundRectanglePath(new RectangleF(bounds.Location, bounds.Size), radius, flatBottom, bottomOffset, flatTop);
     }
 
 }

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
+using ImageGlass.Base.WinApi;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
@@ -54,9 +55,9 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
             e.Item.Width - 2,
             e.Item.Height - 2 - Toolbar.DefaultGap * 2
         );
+        var radius = BHelper.GetItemBorderRadius(rect.Width, Constants.TOOLBAR_ICON_HEIGHT);
 
-        using var path = BHelper.GetRoundRectanglePath(rect, BHelper.GetItemBorderRadius(rect.Width, Constants.TOOLBAR_ICON_HEIGHT));
-        
+
         // on pressed
         if (e.Item.Pressed)
         {
@@ -68,11 +69,17 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
             brushBg.Color = Theme.Settings.ToolbarItemHoverColor;
         }
 
-        using var penBorder = new Pen(Color.FromArgb(brushBg.Color.A, brushBg.Color));
+        using var penBorder = new Pen(brushBg.Color, DpiApi.Transform(1.05f))
+        {
+            Alignment = PenAlignment.Outset,
+            LineJoin = LineJoin.Round,
+            StartCap = LineCap.Round,
+            EndCap = LineCap.Round,
+        };
 
         // draw
-        e.Graphics.FillPath(brushBg, path);
-        e.Graphics.DrawPath(penBorder, path);
+        e.Graphics.FillRoundedRectangle(brushBg, rect, radius);
+        e.Graphics.DrawRoundedRectangle(penBorder, rect, radius);
 
         #endregion // Draw Background
 
@@ -95,6 +102,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         e.Graphics.DrawImage(textImg, posX, posY);
 
         #endregion // Draw "..."
+    
     }
 
 
@@ -116,8 +124,8 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         rect.Inflate(-btn.Padding.All, -btn.Padding.All);
         rect.Location = new(1, 1);
 
+        var radius = BHelper.GetItemBorderRadius(rect.Height, Constants.TOOLBAR_ICON_HEIGHT);
         using var brush = new SolidBrush(Color.Transparent);
-        using var path = BHelper.GetRoundRectanglePath(rect, BHelper.GetItemBorderRadius(rect.Height, Constants.TOOLBAR_ICON_HEIGHT));
 
 
         // on pressed
@@ -148,11 +156,17 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
             return;
         }
 
-        using var penBorder = new Pen(Color.FromArgb(brush.Color.A, brush.Color));
+        using var penBorder = new Pen(brush.Color, DpiApi.Transform(1f))
+        {
+            Alignment = PenAlignment.Outset,
+            LineJoin = LineJoin.Round,
+            StartCap = LineCap.Round,
+            EndCap = LineCap.Round,
+        };
 
         // draw
-        e.Graphics.FillPath(brush, path);
-        e.Graphics.DrawPath(penBorder, path);
+        e.Graphics.FillRoundedRectangle(brush, rect, radius);
+        e.Graphics.DrawRoundedRectangle(penBorder, rect, radius);
     }
 
 
@@ -182,7 +196,6 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         if (e.Item.Pressed)
         {
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-            using var brush = new SolidBrush(Color.Cyan);
 
             // move the image down 1px for "pressed" effect
             var rect = e.ImageRectangle;
@@ -201,9 +214,10 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
         var x = e.Item.Width / 2 - 1;
+        var penWidth = DpiApi.Transform(1f);
 
-        using var penDark = new Pen(Color.FromArgb(100, 0, 0, 0));
-        using var penLight = new Pen(Color.FromArgb(100, 255, 255, 255));
+        using var penDark = new Pen(Color.Black.WithAlpha(100), penWidth);
+        using var penLight = new Pen(Color.White.WithAlpha(100), penWidth);
 
         // dark line
         e.Graphics.DrawLine(penDark, x, 0, x, e.Item.Height);
