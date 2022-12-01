@@ -190,6 +190,7 @@ public partial class FrmMain
         SizeChanged += FrmMainConfig_SizeChanged;
     }
 
+
     private void FrmMainConfig_Load(object? sender, EventArgs e)
     {
         Local.OnRequestUpdateFrmMain += Local_OnFrmMainUpdateRequested;
@@ -247,12 +248,22 @@ public partial class FrmMain
         // display the root layout after the window shown
         Tb0.Visible = true;
 
+
+        // update tag data for zoom mode menus
+        MnuAutoZoom.Tag = new ModernMenuItemTag() { SingleSelect = true };
+        MnuLockZoom.Tag = new ModernMenuItemTag() { SingleSelect = true };
+        MnuScaleToWidth.Tag = new ModernMenuItemTag() { SingleSelect = true };
+        MnuScaleToHeight.Tag = new ModernMenuItemTag() { SingleSelect = true };
+        MnuScaleToFit.Tag = new ModernMenuItemTag() { SingleSelect = true };
+        MnuScaleToFill.Tag = new ModernMenuItemTag() { SingleSelect = true };
     }
+
 
     private void FrmMainConfig_FormClosing(object? sender, FormClosingEventArgs e)
     {
         _ = SaveConfigsOnClosing();
     }
+
 
     public async Task SaveConfigsOnClosing()
     {
@@ -292,6 +303,7 @@ public partial class FrmMain
         }
         catch { }
     }
+
 
     private void FrmMainConfig_SizeChanged(object? sender, EventArgs e)
     {
@@ -476,14 +488,15 @@ public partial class FrmMain
         MnuZoomIn.Text = lang[$"{Name}.{nameof(MnuZoomIn)}"];
         MnuZoomOut.Text = lang[$"{Name}.{nameof(MnuZoomOut)}"];
         MnuCustomZoom.Text = lang[$"{Name}.{nameof(MnuCustomZoom)}"];
+        MnuActualSize.Text = lang[$"{Name}.{nameof(MnuActualSize)}"];
+
+        MnuAutoZoom.Text = lang[$"{Name}.{nameof(MnuAutoZoom)}"];
+        MnuLockZoom.Text = lang[$"{Name}.{nameof(MnuLockZoom)}"];
+        MnuScaleToWidth.Text = lang[$"{Name}.{nameof(MnuScaleToWidth)}"];
+        MnuScaleToHeight.Text = lang[$"{Name}.{nameof(MnuScaleToHeight)}"];
         MnuScaleToFit.Text = lang[$"{Name}.{nameof(MnuScaleToFit)}"];
         MnuScaleToFill.Text = lang[$"{Name}.{nameof(MnuScaleToFill)}"];
 
-        MnuActualSize.Text = lang[$"{Name}.{nameof(MnuActualSize)}"];
-        MnuLockZoom.Text = lang[$"{Name}.{nameof(MnuLockZoom)}"];
-        MnuAutoZoom.Text = lang[$"{Name}.{nameof(MnuAutoZoom)}"];
-        MnuScaleToWidth.Text = lang[$"{Name}.{nameof(MnuScaleToWidth)}"];
-        MnuScaleToHeight.Text = lang[$"{Name}.{nameof(MnuScaleToHeight)}"];
         #endregion // Menu Zoom
 
 

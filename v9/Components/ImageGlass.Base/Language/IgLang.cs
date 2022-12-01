@@ -136,9 +136,9 @@ public class IgLang : Dictionary<string, string>
         //Add("_.AfterOpeningEditAppAction._Close", "Close"); //v8.0
 
 
-        Add("_._UserAction._MenuNotFound", "The menu {0} is not found."); // v9.0
-        Add("_._UserAction._MethodNotFound", "The method {0} is not found."); // v9.0
-        Add("_._UserAction._MethodArgumentNotSupported", "The argument type of method {0} is not supported."); // v9.0
+        Add("_._UserAction._MenuNotFound", "Cannot find menu '{0}' to invoke its action."); // v9.0
+        Add("_._UserAction._MethodNotFound", "Cannot find method '{0}' to invoke its action."); // v9.0
+        Add("_._UserAction._MethodArgumentNotSupported", "The argument type of method '{0}' is not supported."); // v9.0
 
 
 
@@ -303,7 +303,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuTools", "Tools"); //v3.0
         Add("FrmMain.MnuColorPicker", "Color picker"); //v5.0
         Add("FrmMain.MnuPageNav", "Page navigation"); // v7.5
-        Add("FrmMain.MnuCropping", "Cropping"); // v7.6
+        Add("FrmMain.MnuCropTool", "Crop image"); // v7.6
         Add("FrmMain.MnuExifTool", "Exif tool"); // v8.0
         
         #endregion

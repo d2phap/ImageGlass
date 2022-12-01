@@ -32,6 +32,7 @@ public partial class BHelper
         AllowTrailingCommas = true,
         WriteIndented = true,
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        NumberHandling = JsonNumberHandling.AllowReadingFromString,
 
         Converters =
         {
@@ -51,11 +52,10 @@ public partial class BHelper
     /// <summary>
     /// Parse JSON string to object
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="json"></param>
-    /// <returns></returns>
-    public static T? ParseJson<T>(string json)
+    public static T? ParseJson<T>(string? json)
     {
+        if (json == null) return default(T);
+
         return JsonSerializer.Deserialize<T>(json, JsonOptions);
     }
 
@@ -63,9 +63,6 @@ public partial class BHelper
     /// <summary>
     /// Parse object to JSON string
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="obj"></param>
-    /// <returns></returns>
     public static string ToJson<T>(T obj)
     {
         return JsonSerializer.Serialize(obj, typeof(T), JsonOptions);
@@ -75,9 +72,6 @@ public partial class BHelper
     /// <summary>
     /// Parse JSON from a stream
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="stream"></param>
-    /// <returns></returns>
     public static async Task<T?> ParseJson<T>(Stream stream)
     {
         return await JsonSerializer.DeserializeAsync<T>(stream, JsonOptions);
@@ -87,9 +81,6 @@ public partial class BHelper
     /// <summary>
     /// Reads JSON file and parses to object
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="jsonFilePath"></param>
-    /// <returns></returns>
     public static T? ReadJson<T>(string jsonFilePath)
     {
         using var stream = File.OpenRead(jsonFilePath);
@@ -101,8 +92,6 @@ public partial class BHelper
     /// <summary>
     /// Writes an object value to JSON file
     /// </summary>
-    /// <param name="jsonFilePath"></param>
-    /// <param name="value"></param>
     public static async Task WriteJsonAsync(string jsonFilePath, object? value, CancellationToken token = default)
     {
         var json = JsonSerializer.Serialize(value, JsonOptions);

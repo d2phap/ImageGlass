@@ -446,41 +446,42 @@ namespace ImageGlass
             // MnuZoomIn
             // 
             this.MnuZoomIn.Name = "MnuZoomIn";
-            this.MnuZoomIn.Size = new System.Drawing.Size(236, 30);
+            this.MnuZoomIn.Size = new System.Drawing.Size(252, 30);
             this.MnuZoomIn.Text = "[Zoom in]";
             this.MnuZoomIn.Click += new System.EventHandler(this.MnuZoomIn_Click);
             // 
             // MnuZoomOut
             // 
             this.MnuZoomOut.Name = "MnuZoomOut";
-            this.MnuZoomOut.Size = new System.Drawing.Size(236, 30);
+            this.MnuZoomOut.Size = new System.Drawing.Size(252, 30);
             this.MnuZoomOut.Text = "[Zoom out]";
             this.MnuZoomOut.Click += new System.EventHandler(this.MnuZoomOut_Click);
             // 
             // MnuCustomZoom
             // 
             this.MnuCustomZoom.Name = "MnuCustomZoom";
-            this.MnuCustomZoom.Size = new System.Drawing.Size(236, 30);
+            this.MnuCustomZoom.Size = new System.Drawing.Size(252, 30);
             this.MnuCustomZoom.Text = "[Custom zoom...]";
             this.MnuCustomZoom.Click += new System.EventHandler(this.MnuCustomZoom_Click);
             // 
             // MnuActualSize
             // 
             this.MnuActualSize.Name = "MnuActualSize";
-            this.MnuActualSize.Size = new System.Drawing.Size(236, 30);
+            this.MnuActualSize.Size = new System.Drawing.Size(252, 30);
             this.MnuActualSize.Text = "[View actual size]";
             this.MnuActualSize.Click += new System.EventHandler(this.MnuActualSize_Click);
             // 
             // toolStripMenuItem15
             // 
             this.toolStripMenuItem15.Name = "toolStripMenuItem15";
-            this.toolStripMenuItem15.Size = new System.Drawing.Size(233, 6);
+            this.toolStripMenuItem15.Size = new System.Drawing.Size(249, 6);
             // 
             // MnuAutoZoom
             // 
             this.MnuAutoZoom.CheckOnClick = true;
             this.MnuAutoZoom.Name = "MnuAutoZoom";
-            this.MnuAutoZoom.Size = new System.Drawing.Size(236, 30);
+            this.MnuAutoZoom.Size = new System.Drawing.Size(252, 30);
+            this.MnuAutoZoom.Tag = "";
             this.MnuAutoZoom.Text = "[Auto Zoom]";
             this.MnuAutoZoom.Click += new System.EventHandler(this.MnuAutoZoom_Click);
             // 
@@ -488,7 +489,8 @@ namespace ImageGlass
             // 
             this.MnuLockZoom.CheckOnClick = true;
             this.MnuLockZoom.Name = "MnuLockZoom";
-            this.MnuLockZoom.Size = new System.Drawing.Size(236, 30);
+            this.MnuLockZoom.Size = new System.Drawing.Size(252, 30);
+            this.MnuLockZoom.Tag = "";
             this.MnuLockZoom.Text = "[Lock zoom ratio]";
             this.MnuLockZoom.Click += new System.EventHandler(this.MnuLockZoom_Click);
             // 
@@ -496,7 +498,8 @@ namespace ImageGlass
             // 
             this.MnuScaleToWidth.CheckOnClick = true;
             this.MnuScaleToWidth.Name = "MnuScaleToWidth";
-            this.MnuScaleToWidth.Size = new System.Drawing.Size(236, 30);
+            this.MnuScaleToWidth.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToWidth.Tag = "";
             this.MnuScaleToWidth.Text = "[Scale to width]";
             this.MnuScaleToWidth.Click += new System.EventHandler(this.MnuScaleToWidth_Click);
             // 
@@ -504,7 +507,8 @@ namespace ImageGlass
             // 
             this.MnuScaleToHeight.CheckOnClick = true;
             this.MnuScaleToHeight.Name = "MnuScaleToHeight";
-            this.MnuScaleToHeight.Size = new System.Drawing.Size(236, 30);
+            this.MnuScaleToHeight.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToHeight.Tag = "";
             this.MnuScaleToHeight.Text = "[Scale to height]";
             this.MnuScaleToHeight.Click += new System.EventHandler(this.MnuScaleToHeight_Click);
             // 
@@ -512,7 +516,8 @@ namespace ImageGlass
             // 
             this.MnuScaleToFit.CheckOnClick = true;
             this.MnuScaleToFit.Name = "MnuScaleToFit";
-            this.MnuScaleToFit.Size = new System.Drawing.Size(236, 30);
+            this.MnuScaleToFit.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToFit.Tag = "";
             this.MnuScaleToFit.Text = "[Scale to fit]";
             this.MnuScaleToFit.Click += new System.EventHandler(this.MnuScaleToFit_Click);
             // 
@@ -520,7 +525,8 @@ namespace ImageGlass
             // 
             this.MnuScaleToFill.CheckOnClick = true;
             this.MnuScaleToFill.Name = "MnuScaleToFill";
-            this.MnuScaleToFill.Size = new System.Drawing.Size(236, 30);
+            this.MnuScaleToFill.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToFill.Tag = "";
             this.MnuScaleToFill.Text = "[Scale to fill]";
             this.MnuScaleToFill.Click += new System.EventHandler(this.MnuScaleToFill_Click);
             // 
@@ -966,7 +972,7 @@ namespace ImageGlass
             this.MnuColorPicker.Text = "[Color picker]";
             this.MnuColorPicker.Click += new System.EventHandler(this.MnuColorPicker_Click);
             // 
-            // MnuCropping
+            // MnuCropTool
             // 
             this.MnuCropTool.Name = "MnuCropTool";
             this.MnuCropTool.Size = new System.Drawing.Size(236, 30);

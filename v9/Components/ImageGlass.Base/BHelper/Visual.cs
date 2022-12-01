@@ -26,16 +26,14 @@ public static partial class BHelper
     /// <summary>
     /// Gets menu item border radius
     /// </summary>
-    /// <param name="itemHeight"></param>
-    /// <returns></returns>
-    public static int GetItemBorderRadius(int itemHeight, int defaultItemHeight)
+    public static float GetItemBorderRadius(int itemHeight, int defaultItemHeight)
     {
         if (IsOS(WindowsOS.Win10))
         {
             return 0;
         }
 
-        var radius = (int)(itemHeight * 1.0f / defaultItemHeight * 3);
+        var radius = (itemHeight * 1.37f / defaultItemHeight * 3f);
 
         // min border radius = 4
         return Math.Max(radius, 4);
