@@ -34,6 +34,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         _theme = theme;
     }
 
+
     protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
     {
         if (e.Item.Enabled)
@@ -65,6 +66,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         }
     }
 
+
     protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
     {
         if (e.Vertical || e.Item is not ToolStripSeparator)
@@ -79,15 +81,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             var lineLeft = tsBounds.Left;
             var lineRight = tsBounds.Right;
 
-            using var pen = new Pen(Color.Black);
-            if (_theme.Settings.MenuBgColor.GetBrightness() > 0.5) // light background color
-            {
-                pen.Color = Color.FromArgb(35, 0, 0, 0);
-            }
-            else // dark background color
-            {
-                pen.Color = Color.FromArgb(35, 255, 255, 255);
-            }
+            using var pen = new Pen(_theme.Settings.MenuBgColor.InvertBlackOrWhite(10));
 
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             e.Graphics.DrawLine(pen, lineLeft, lineY, lineRight, lineY);
@@ -96,20 +90,16 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         }
     }
 
+
     protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
     {
-        var textColor = e.Item.Selected ? _theme.Settings.MenuTextHoverColor : _theme.Settings.MenuTextColor;
+        var textColor = e.Item.Selected
+            ? _theme.Settings.MenuTextHoverColor
+            : _theme.Settings.MenuTextColor;
 
         if (!e.Item.Enabled)
         {
-            if (_theme.Settings.MenuBgColor.GetBrightness() > 0.5) //light background color
-            {
-                textColor = ThemeUtils.DarkenColor(_theme.Settings.MenuBgColor, 0.5f);
-            }
-            else //dark background color
-            {
-                textColor = ThemeUtils.LightenColor(_theme.Settings.MenuBgColor, 0.5f);
-            }
+            textColor = _theme.Settings.MenuBgColor.InvertBlackOrWhite(100);
         }
 
 
@@ -154,42 +144,83 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         }
     }
 
+
     protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e)
     {
-        e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+        // is radio button?
+        var isRadioButton = false;
+        if (e.Item.Tag is ModernMenuItemTag tag && tag != null)
+        {
+            isRadioButton = tag.SingleSelect;
+        }
 
-        var textColor = e.Item.Selected
+        var g = e.Graphics;
+        g.SmoothingMode = SmoothingMode.HighQuality;
+
+
+        var markColor = e.Item.Selected
             ? _theme.Settings.MenuTextHoverColor
             : _theme.Settings.MenuTextColor;
-        using var pen = new Pen(textColor, DpiApi.Transform<float>(1.5f));
-        pen.LineJoin = LineJoin.Round;
+        if (!e.Item.Enabled)
+        {
+            markColor = markColor.WithAlpha(50);
+        }
+        using var checkMarkBrush = new SolidBrush(markColor);
+        
         
         // left margin
         var left = 5;
+        var rect = new RectangleF(left, 0, e.Item.Height, e.Item.Height);
+        rect.Inflate(-e.Item.Height * 0.2f, -e.Item.Height * 0.2f);
 
-        var point1 = new PointF(
-            (3 * e.Item.Height / 10) + left,
-            (5 * e.Item.Height / 10));
-        var point2 = new PointF(
-            (4 * e.Item.Height / 10) + left,
-            (6.5f * e.Item.Height / 10));
-        var point3 = new PointF(
-            (6.5f * e.Item.Height / 10) + left,
-            (3 * e.Item.Height / 10));
+        // draw check mark for radio button
+        if (isRadioButton)
+        {
+            var radioCheckMarkRect = rect;
+            radioCheckMarkRect.Inflate(-rect.Height * 0.3f, -rect.Height * 0.3f);
 
-        var path = new GraphicsPath();
-        path.AddLines(new PointF[] { point1, point2, point3 });
+            g.FillEllipse(checkMarkBrush, radioCheckMarkRect);
+        }
 
-        e.Graphics.DrawPath(pen, path);
+        // draw check mark for checkbox
+        else
+        {
+            using var pen = new Pen(checkMarkBrush, DpiApi.Transform<float>(1.5f));
+            pen.LineJoin = LineJoin.Round;
+
+            var point1 = new PointF(
+                (3 * e.Item.Height / 10) + left,
+                (5 * e.Item.Height / 10));
+            var point2 = new PointF(
+                (4 * e.Item.Height / 10) + left,
+                (6.5f * e.Item.Height / 10));
+            var point3 = new PointF(
+                (6.5f * e.Item.Height / 10) + left,
+                (3 * e.Item.Height / 10));
+
+            var path = new GraphicsPath();
+            path.AddLines(new PointF[] { point1, point2, point3 });
+
+            g.DrawPath(pen, path);
+        }
     }
 
 
     protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
     {
+        // is radio button?
+        var isRadioButton = false;
+        if (e.Item.Tag is ModernMenuItemTag tag && tag != null)
+        {
+            isRadioButton = tag.SingleSelect;
+        }
+
         var g = e.Graphics;
         g.SmoothingMode = SmoothingMode.HighQuality;
+        g.CompositingQuality = CompositingQuality.HighQuality;
 
-        // hover on enable item
+
+        // draw background when hovering on enable item
         if (e.Item.Selected && e.Item.Enabled)
         {
             // boundary
@@ -197,9 +228,10 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
                 5, 2,
                 e.Item.Bounds.Width - 9,
                 e.Item.Bounds.Height - 5);
+            var radius = BHelper.GetItemBorderRadius(rect.Height, Constants.MENU_ICON_HEIGHT);
 
             using var brush = new SolidBrush(_theme.Settings.MenuBgHoverColor);
-            using var path = BHelper.GetRoundRectanglePath(rect, BHelper.GetItemBorderRadius(rect.Height, Constants.MENU_ICON_HEIGHT));
+            using var path = BHelper.GetRoundRectanglePath(rect, radius);
             using var penBorder = new Pen(Color.FromArgb(brush.Color.A, brush.Color));
 
             // draw
@@ -211,28 +243,53 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             base.OnRenderMenuItemBackground(e);
         }
 
+
+        // draw check area box
         if (e.Item is ToolStripMenuItem mnu && mnu.CheckOnClick)
         {
             var bgColor = e.Item.Selected
                 ? _theme.Settings.MenuTextHoverColor
                 : _theme.Settings.MenuTextColor;
 
+            bgColor = e.Item.Enabled
+                ? bgColor.WithAlpha(20)
+                : bgColor.WithAlpha(7);
+
             // left margin
             var left = 5;
-            var rect = new RectangleF(
-                left,
-                0,
-                e.Item.Height,
-                e.Item.Height);
+            var rect = new RectangleF(left, 0, e.Item.Height, e.Item.Height);
             rect.Inflate(-e.Item.Height * 0.2f, -e.Item.Height * 0.2f);
-            var radius = BHelper.GetItemBorderRadius((int)rect.Height, Constants.MENU_ICON_HEIGHT);
 
-            using var checkAreaBrush = new SolidBrush(bgColor.WithAlpha(30));
-            using var checkAreaPen = new Pen(checkAreaBrush, 1);
+            var radius = isRadioButton
+                ? rect.Height
+                : BHelper.GetItemBorderRadius((int)rect.Height, Constants.MENU_ICON_HEIGHT);
 
-            g.FillRoundedRectangle(checkAreaBrush, rect, radius);
-            g.DrawRoundedRectangle(checkAreaPen, rect, radius);
+            using var checkAreaBrush = new SolidBrush(bgColor);
+            using var checkAreaPen = new Pen(checkAreaBrush, 1)
+            {
+                Alignment = PenAlignment.Inset,
+                LineJoin = LineJoin.Round,
+            };
+
+
+            // draw radio button box
+            if (isRadioButton)
+            {
+                var radioRect = rect;
+                radioRect.Inflate(-rect.Height * 0.1f, -rect.Height * 0.1f);
+
+                g.FillEllipse(checkAreaBrush, radioRect);
+                g.DrawEllipse(checkAreaPen, radioRect);
+            }
+
+            // draw checkbox
+            else
+            {
+                g.FillRoundedRectangle(checkAreaBrush, rect, radius);
+                g.DrawRoundedRectangle(checkAreaPen, rect, radius);
+            }
         }
+
     }
 
 
