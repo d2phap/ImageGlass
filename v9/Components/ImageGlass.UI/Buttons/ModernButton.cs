@@ -26,7 +26,7 @@ License: MIT, https://github.com/RobinPerris/DarkUI/blob/master/LICENSE
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using System.ComponentModel;
-
+using System.Drawing.Drawing2D;
 
 namespace ImageGlass.UI;
 
@@ -255,22 +255,24 @@ public class ModernButton : Button
         {
             if (ButtonStyle == ModernButtonStyle.Normal)
             {
-                if (Focused && TabStop)
-                    borderColor = colors.BlueHighlight;
-
                 switch (ButtonState)
                 {
                     case ModernControlState.Hover:
                         fillColor = _isDefault
                             ? colors.BlueBackground
                             : colors.LighterBackground;
+                        borderColor = borderColor.WithBrightness(0.3f);
                         break;
+
                     case ModernControlState.Pressed:
                         fillColor = _isDefault
                             ? colors.DarkBackground
                             : colors.DarkBackground;
                         break;
                 }
+
+                if (Focused && TabStop)
+                    borderColor = colors.BlueHighlight;
             }
             else if (ButtonStyle == ModernButtonStyle.Flat)
             {
@@ -304,9 +306,9 @@ public class ModernButton : Button
         //    // draw border
         //    if (ButtonStyle == ModernButtonStyle.Normal)
         //    {
-        //        using var pen = new Pen(borderColor, 1);
+        //        using var pen = new Pen(borderColor, DpiApi.Transform(1f));
         //        pen.Alignment = System.Drawing.Drawing2D.PenAlignment.Inset;
-                
+
         //        var borderRect = new RectangleF(
         //            e.ClipRectangle.X + 2, e.ClipRectangle.Y + 2,
         //            e.ClipRectangle.Width - 2, e.ClipRectangle.Height - 2);
@@ -319,7 +321,7 @@ public class ModernButton : Button
         //}
 
 
-        
+
         // draw background
         using var bgBrush = new SolidBrush(fillColor);
         g.FillPath(bgBrush, btnRectPath);
@@ -328,15 +330,18 @@ public class ModernButton : Button
         // draw border
         if (ButtonStyle == ModernButtonStyle.Normal)
         {
-            using var pen = new Pen(borderColor, 1);
-            pen.Alignment = System.Drawing.Drawing2D.PenAlignment.Inset;
+            var penWidth = DpiApi.Transform(1f);
+            using var pen = new Pen(borderColor, penWidth)
+            {
+                Alignment = PenAlignment.Outset,
+                LineJoin = LineJoin.Round,
+            };
 
             var borderRect = new RectangleF(
-                btnRect.X + 1, btnRect.Y + 1,
-                btnRect.Width - 2, btnRect.Height - 2);
-            using var borderPath = BHelper.GetRoundRectanglePath(borderRect, borderRadius);
+                btnRect.X, btnRect.Y,
+                btnRect.Width - penWidth, btnRect.Height - penWidth);
 
-            g.DrawPath(pen, borderPath);
+            g.DrawRoundedRectangle(pen, borderRect, borderRadius);
         }
 
         
