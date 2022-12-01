@@ -22,7 +22,6 @@ using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.Views;
-using System;
 
 namespace ImageGlass;
 

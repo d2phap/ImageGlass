@@ -81,7 +81,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             var lineLeft = tsBounds.Left;
             var lineRight = tsBounds.Right;
 
-            using var pen = new Pen(_theme.Settings.MenuBgColor.InvertBlackOrWhite(10));
+            using var pen = new Pen(_theme.Settings.MenuBgColor.InvertBlackOrWhite(10), DpiApi.Transform(1f));
 
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             e.Graphics.DrawLine(pen, lineLeft, lineY, lineRight, lineY);
@@ -103,8 +103,12 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         }
 
 
-        using var pen = new Pen(textColor, DpiApi.Transform<float>(1.15f));
-        pen.LineJoin = LineJoin.Round;
+        using var pen = new Pen(textColor, DpiApi.Transform(1.15f))
+        {
+            LineJoin = LineJoin.Round,
+            StartCap = LineCap.Round,
+            EndCap = LineCap.Round,
+        };
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
         var point1 = new PointF(
@@ -131,7 +135,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             if (!string.IsNullOrWhiteSpace(mnu?.ShortcutKeyDisplayString))
             {
                 var shortcutSize = e.Graphics.MeasureString(mnu.ShortcutKeyDisplayString, mnu.Font);
-                var shortcutRect = new RectangleF(e.ArrowRectangle.X - shortcutSize.Width - DpiApi.Transform<float>(13),
+                var shortcutRect = new RectangleF(e.ArrowRectangle.X - shortcutSize.Width - DpiApi.Transform(13),
                     e.Item.Height / 2 - shortcutSize.Height / 2,
                     shortcutSize.Width,
                     shortcutSize.Height);
@@ -185,18 +189,22 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         // draw check mark for checkbox
         else
         {
-            using var pen = new Pen(checkMarkBrush, DpiApi.Transform<float>(1.5f));
-            pen.LineJoin = LineJoin.Round;
+            using var pen = new Pen(checkMarkBrush, DpiApi.Transform(1.5f))
+            {
+                LineJoin = LineJoin.Round,
+                StartCap = LineCap.Round,
+                EndCap = LineCap.Round,
+            };
 
             var point1 = new PointF(
-                (3 * e.Item.Height / 10) + left,
-                (5 * e.Item.Height / 10));
+                rect.X + (2 * rect.Height / 10),
+                rect.Y + (6 * rect.Height / 10));
             var point2 = new PointF(
-                (4 * e.Item.Height / 10) + left,
-                (6.5f * e.Item.Height / 10));
+                rect.X + (4 * rect.Height / 10),
+                rect.Y + (8 * rect.Height / 10));
             var point3 = new PointF(
-                (6.5f * e.Item.Height / 10) + left,
-                (3 * e.Item.Height / 10));
+                rect.X + (8 * rect.Height / 10),
+                rect.Y + (2 * rect.Height / 10));
 
             var path = new GraphicsPath();
             path.AddLines(new PointF[] { point1, point2, point3 });
@@ -232,7 +240,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
 
             using var brush = new SolidBrush(_theme.Settings.MenuBgHoverColor);
             using var path = BHelper.GetRoundRectanglePath(rect, radius);
-            using var penBorder = new Pen(Color.FromArgb(brush.Color.A, brush.Color));
+            using var penBorder = new Pen(Color.FromArgb(brush.Color.A, brush.Color), DpiApi.Transform(1f));
 
             // draw
             g.FillPath(brush, path);
@@ -265,10 +273,12 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
                 : BHelper.GetItemBorderRadius((int)rect.Height, Constants.MENU_ICON_HEIGHT);
 
             using var checkAreaBrush = new SolidBrush(bgColor);
-            using var checkAreaPen = new Pen(checkAreaBrush, 1)
+            using var checkAreaPen = new Pen(checkAreaBrush, DpiApi.Transform(1f))
             {
                 Alignment = PenAlignment.Inset,
                 LineJoin = LineJoin.Round,
+                StartCap = LineCap.Round,
+                EndCap = LineCap.Round,
             };
 
 
