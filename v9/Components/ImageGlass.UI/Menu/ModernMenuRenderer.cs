@@ -238,7 +238,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             var radius = BHelper.GetItemBorderRadius(rect.Height, Constants.MENU_ICON_HEIGHT);
 
             using var brush = new SolidBrush(_theme.Settings.MenuBgHoverColor);
-            using var penBorder = new Pen(Color.FromArgb(brush.Color.A, brush.Color), DpiApi.Transform(1f));
+            using var penBorder = new Pen(brush, DpiApi.Transform(1f));
 
             // draw
             g.FillRoundedRectangle(brush, rect, radius);

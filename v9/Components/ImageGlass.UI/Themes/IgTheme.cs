@@ -231,16 +231,17 @@ public class IgTheme : IDisposable
                     Color colorItem;
                     if (value.StartsWith(Constants.THEME_SYSTEM_ACCENT_COLOR, StringComparison.InvariantCultureIgnoreCase))
                     {
-                        var valueArr = value.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-                        var accentBrightness = 0f;
+                        // example: accent:180
+                        var valueArr = value.Split(':', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+                        var accentAlpha = 255;
 
-                        // adjust accent color brightness
+                        // adjust accent color alpha
                         if (valueArr.Length > 1)
                         {
-                            _ = float.TryParse(valueArr[1], out accentBrightness);
+                            _ = int.TryParse(valueArr[1], out accentAlpha);
                         }
 
-                        colorItem = ThemeUtils.GetAccentColor(accentBrightness);
+                        colorItem = ThemeUtils.GetAccentColor().WithAlpha(accentAlpha);
                     }
                     else
                     {

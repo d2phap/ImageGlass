@@ -133,7 +133,7 @@ public record IgThemeSettings : IDisposable
 
     // Menu
     public Color MenuBgColor { get; set; } = ThemeUtils.ColorFromHex("#242b31");
-    public Color MenuBgHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
+    public Color MenuBgHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff15");
     public Color MenuTextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
     public Color MenuTextHoverColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
 
