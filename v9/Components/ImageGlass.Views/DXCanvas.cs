@@ -76,7 +76,10 @@ public class DXCanvas : DXControl
 
     private bool _xOut = false;
     private bool _yOut = false;
-    private bool _isMouseDown = false;
+    //private bool _isMouseDown = false;
+    private MouseButtons _mouseDownButton = MouseButtons.None;
+    private Point? _mouseDownPoint = null;
+    private Point? _mouseMovePoint = null;
     private Vector2 _zoommedPoint = default;
 
     // current zoom, minimum zoom, maximum zoom, previous zoom (bigger means zoom in)
@@ -123,8 +126,7 @@ public class DXCanvas : DXControl
     private SelectionResizer? _selectedResizer = null;
 
 
-    private Point? _mouseDownPoint = null;
-    private Point? _mouseMovePoint = null;
+    
 
     #endregion
 
@@ -889,8 +891,13 @@ public class DXCanvas : DXControl
         base.OnMouseDown(e);
         if (!IsReady) return;
 
-        var requestRerender = false;
+        _mouseDownButton = e.Button;
+        _isMouseDragged = false;
         _mouseDownPoint = e.Location;
+
+        var canSelect = EnableSelection && _mouseDownButton == MouseButtons.Left;
+        var requestRerender = false;
+        
 
         // Navigation clickable check
         #region Navigation clickable check
@@ -917,8 +924,8 @@ public class DXCanvas : DXControl
         #region Image panning & selecting check
         if (Source != ImageSource.Null)
         {
-            _canDrawSelection = EnableSelection && !ClientSelection.Contains(_mouseDownPoint.Value);
-            requestRerender = EnableSelection && !ClientSelection.IsEmpty;
+            _canDrawSelection = canSelect && !ClientSelection.Contains(_mouseDownPoint.Value);
+            requestRerender = canSelect && !ClientSelection.IsEmpty;
 
             if (_canDrawSelection)
             {
@@ -934,7 +941,7 @@ public class DXCanvas : DXControl
             }
 
 
-            if (EnableSelection)
+            if (canSelect)
             {
                 _selectionBeforeMove = new RectangleF(_clientSelection.Location, _clientSelection.Size);
                 _selectedResizer = SelectionResizers.Find(i => i.Region.Contains(e.Location));
@@ -942,10 +949,6 @@ public class DXCanvas : DXControl
         }
         #endregion
 
-
-
-        _isMouseDown = true;
-        _isMouseDragged = false;
 
         if (requestRerender)
         {
@@ -961,7 +964,7 @@ public class DXCanvas : DXControl
 
         // Distinguish between clicks
         #region Distinguish between clicks
-        if (_isMouseDown)
+        if (_mouseDownButton != MouseButtons.None)
         {
             if (_isDoubleClick)
             {
@@ -1019,12 +1022,14 @@ public class DXCanvas : DXControl
         #endregion
 
 
+        var mouseDownButton = _mouseDownButton;
+        _mouseDownButton = MouseButtons.None;
         _mouseDownPoint = null;
-        _isMouseDown = false;
         _selectedResizer = null;
         _lastClickArgs = e;
 
-        if (EnableSelection)
+        var canSelect = EnableSelection && mouseDownButton == MouseButtons.Left;
+        if (canSelect)
         {
             OnSelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
             Invalidate();
@@ -1037,6 +1042,7 @@ public class DXCanvas : DXControl
         base.OnMouseMove(e);
         if (!IsReady) return;
 
+        var canSelect = EnableSelection && _mouseDownButton == MouseButtons.Left;
         var requestRerender = false;
         _mouseMovePoint = e.Location;
 
@@ -1088,7 +1094,7 @@ public class DXCanvas : DXControl
 
 
         // Image panning check
-        if (_isMouseDown)
+        if (_mouseDownButton == MouseButtons.Left)
         {
             _isMouseDragged = true;
 
@@ -1108,7 +1114,7 @@ public class DXCanvas : DXControl
                 requestRerender = true;
             }
             // move selection
-            else if (EnableSelection && IsViewingSizeSmallerViewportSize)
+            else if (canSelect && IsViewingSizeSmallerViewportSize)
             {
                 MoveSelection(e.Location);
                 requestRerender = true;
@@ -1483,15 +1489,15 @@ public class DXCanvas : DXControl
     /// </summary>
     protected virtual void DrawSelectionLayer(IGraphics g)
     {
-        if (Source == ImageSource.Null || (!_isMouseDown && ClientSelection.IsEmpty))
+        if (Source == ImageSource.Null || (_mouseDownButton != MouseButtons.Left && ClientSelection.IsEmpty))
             return;
 
         // draw the clip selection region
         using var selectionGeo = g.GetCombinedRectanglesGeometry(ClientSelection, _destRect, 0, 0, CombineMode.Xor);
-        g.DrawGeometry(selectionGeo, Color.Transparent, BackColor.WithAlpha(_isMouseDown ? 100 : 200));
+        g.DrawGeometry(selectionGeo, Color.Transparent, BackColor.WithAlpha(_mouseDownButton == MouseButtons.Left ? 100 : 200));
 
 
-        if (_isMouseDown || _isSelectionHovered)
+        if (_mouseDownButton == MouseButtons.Left || _isSelectionHovered)
         {
             var width3 = ClientSelection.Width / 3;
             var height3 = ClientSelection.Height / 3;
@@ -1563,13 +1569,13 @@ public class DXCanvas : DXControl
 
 
         // draw the selection border
-        var borderWidth = (_isSelectionHovered && !_isMouseDown) ? 0.6f : 0.3f;
+        var borderWidth = (_isSelectionHovered && _mouseDownButton != MouseButtons.Left) ? 0.6f : 0.3f;
         g.DrawRectangle(ClientSelection, 0, Color.White, null, borderWidth);
         g.DrawRectangle(ClientSelection, 0, SelectionColor, null, borderWidth);
 
 
         // draw resizers
-        if (!_isMouseDown && _isSelectionHovered)
+        if (_mouseDownButton != MouseButtons.Left && _isSelectionHovered)
         {
             foreach (var rItem in SelectionResizers)
             {
