@@ -30,6 +30,8 @@ public static class ClassExtensions
     /// Negative values produce darker colors.</param>
     public static Color WithBrightness(this Color color, float brightnessFactor)
     {
+        if (brightnessFactor == 0) return color;
+
         float red = color.R;
         float green = color.G;
         float blue = color.B;

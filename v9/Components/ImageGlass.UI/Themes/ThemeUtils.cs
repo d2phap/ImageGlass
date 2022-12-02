@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
+using ImageGlass.Base.WinApi;
 using Microsoft.Win32;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -99,37 +100,6 @@ public partial class ThemeUtils
 
 
     /// <summary>
-    /// Gets system accent color.
-    /// </summary>
-    /// <param name="brightness">The factor (-1 = black ... +1 = white) to change the lightness.</param>
-    public static Color GetAccentColor(float brightness = 0)
-    {
-        var accentColor = Color.FromArgb(0, 120, 215); // blue
-
-        if (BHelper.IsOS(WindowsOS.Win10OrLater))
-        {
-            const string regPath = @"Software\Microsoft\Windows\DWM";
-            const string regKey = "AccentColor";
-
-            using var key = Registry.CurrentUser.OpenSubKey(regPath);
-            var regValue = key?.GetValue(regKey);
-
-            if (regValue != null)
-            {
-                accentColor = ParseDWordColor((int)regValue);
-                accentColor = AdjustLightness(accentColor, brightness);
-            }
-        }
-        else
-        {
-            accentColor = AdjustLightness(accentColor, brightness);
-        }
-
-        return accentColor;
-    }
-
-
-    /// <summary>
     /// Parses DWord color to <see cref="Color"/>.
     /// </summary>
     /// <param name="dColor">DWord color</param>
@@ -147,8 +117,6 @@ public partial class ThemeUtils
     /// <summary>
     /// Convert Color to CMYK
     /// </summary>
-    /// <param name="c"></param>
-    /// <returns></returns>
     public static int[] ConvertColorToCMYK(Color c)
     {
         if (c.R == 0 && c.G == 0 && c.B == 0)
@@ -314,19 +282,6 @@ public partial class ThemeUtils
         const float max = 1f;
 
         return ControlPaint.Dark(color, min + (MinMax(factor, 0f, 1f) * (max - min)));
-    }
-
-
-    /// <summary>
-    /// Adjust the lightness of the color to a value between black (-1) and white (+1).
-    /// </summary>
-    /// <param name="color">The color to change the lightness.</param>
-    /// <param name="factor">The factor (-1 = black ... +1 = white) to change the lightness.</param>
-    /// <returns>The color with the changed lightness.</returns>
-    public static Color AdjustLightness(Color color, float factor)
-    {
-        factor = MinMax(factor, -1f, 1f);
-        return factor < 0f ? DarkenColor(color, -factor) : LightenColor(color, factor);
     }
 
 

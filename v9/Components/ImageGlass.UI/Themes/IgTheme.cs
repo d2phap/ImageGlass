@@ -291,6 +291,7 @@ public class IgTheme : IDisposable
 
         // dispose the current values
         Colors = new IgThemeColors();
+        var systemAccentColor = WinColorsApi.GetAccentColor(true);
 
         foreach (var item in JsonModel.Colors)
         {
@@ -318,7 +319,7 @@ public class IgTheme : IDisposable
                             _ = int.TryParse(valueArr[1], out accentAlpha);
                         }
 
-                        colorItem = ThemeUtils.GetAccentColor().WithAlpha(accentAlpha);
+                        colorItem = systemAccentColor.WithAlpha(accentAlpha);
                     }
                     else
                     {

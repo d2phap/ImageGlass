@@ -23,6 +23,9 @@ License: MIT, https://github.com/RobinPerris/DarkUI/blob/master/LICENSE
 ---------------------
 */
 
+using ImageGlass.Base;
+using ImageGlass.Base.WinApi;
+
 namespace ImageGlass.UI;
 
 
@@ -41,8 +44,8 @@ public class LightColors : IColors
     public Color DarkBorder => Color.FromArgb(220, 220, 220);
     public Color LightText => Color.FromArgb(30, 30, 30); // Normal Text
     public Color DisabledText => Color.FromArgb(113, 113, 113); // Disabled Text
-    public Color BlueHighlight => ThemeUtils.GetAccentColor(0.2f); // Selected Control Borders
-    public Color BlueSelection => ThemeUtils.GetAccentColor(0); // DropDown Selection
+    public Color BlueHighlight => WinColorsApi.GetAccentColor(false).WithBrightness(0.2f); // Selected Control Borders
+    public Color BlueSelection => WinColorsApi.GetAccentColor(false).WithBrightness(0); // DropDown Selection
     public Color GreyHighlight => Color.FromArgb(113, 113, 113); // ComboBox Arrow
     public Color GreySelection => Color.FromArgb(204, 206, 219); // Control Border
     public Color DarkGreySelection => Color.FromArgb(202, 202, 202);
