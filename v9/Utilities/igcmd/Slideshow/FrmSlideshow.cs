@@ -129,6 +129,14 @@ public partial class FrmSlideshow : ModernForm
     }
 
 
+    protected override void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
+    {
+        Config.Theme.ReloadThemeColors();
+
+        base.OnSystemAccentColorChanged(e);
+    }
+
+
     protected override void OnDpiChanged()
     {
         base.OnDpiChanged();

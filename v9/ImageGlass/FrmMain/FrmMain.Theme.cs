@@ -54,7 +54,7 @@ public partial class FrmMain
         Sp1.BackColor = Sp2.BackColor = Color.Transparent;
         PicMain.BackColor = Config.BackgroundColor;
         PicMain.ForeColor = Config.Theme.Colors.TextColor;
-        PicMain.SelectionColor = Config.Theme.Colors.AccentColor;
+        PicMain.SelectionColor = WinColorsApi.GetAccentColor(true);
 
 
         // Thumbnail bar
@@ -74,6 +74,20 @@ public partial class FrmMain
         ResumeLayout(false);
 
         base.ApplyTheme(isDarkMode, backdrop);
+    }
+
+
+    protected override void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
+    {
+        Config.Theme.ReloadThemeColors();
+        PicMain.SelectionColor = e.AccentColor;
+        PicMain.Invalidate();
+
+        Invalidate(true);
+
+        // do not handle this event again in the parent class
+        e.Handled = true;
+        base.OnSystemAccentColorChanged(e);
     }
 
 }
