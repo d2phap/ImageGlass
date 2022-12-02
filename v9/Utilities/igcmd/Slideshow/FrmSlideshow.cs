@@ -1105,12 +1105,12 @@ public partial class FrmSlideshow : ModernForm
         
         // viewer
         PicMain.BackColor = Config.SlideshowBackgroundColor;
-        PicMain.ForeColor = Config.Theme.Settings.TextColor;
-        PicMain.SelectionColor = Config.Theme.Settings.AccentColor;
+        PicMain.ForeColor = Config.Theme.Colors.TextColor;
+        PicMain.SelectionColor = Config.Theme.Colors.AccentColor;
 
 
         // navigation buttons
-        var navColor = Config.Theme.Settings.ToolbarBgColor;
+        var navColor = Config.Theme.Colors.ToolbarBgColor;
         PicMain.NavHoveredColor = navColor.WithAlpha(200);
         PicMain.NavPressedColor = navColor.WithAlpha(240);
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;

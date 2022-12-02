@@ -42,24 +42,24 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             // on hover
             if (e.Item.Selected)
             {
-                e.TextColor = _theme.Settings.MenuTextHoverColor;
+                e.TextColor = _theme.Colors.MenuTextHoverColor;
             }
             else
             {
-                e.TextColor = _theme.Settings.MenuTextColor;
+                e.TextColor = _theme.Colors.MenuTextColor;
             }
 
             base.OnRenderItemText(e);
         }
         else
         {
-            if (_theme.Settings.MenuBgColor.GetBrightness() > 0.5) // light background color
+            if (_theme.Colors.MenuBgColor.GetBrightness() > 0.5) // light background color
             {
-                e.TextColor = ThemeUtils.DarkenColor(_theme.Settings.MenuBgColor, 0.5f);
+                e.TextColor = ThemeUtils.DarkenColor(_theme.Colors.MenuBgColor, 0.5f);
             }
             else // dark background color
             {
-                e.TextColor = ThemeUtils.LightenColor(_theme.Settings.MenuBgColor, 0.5f);
+                e.TextColor = ThemeUtils.LightenColor(_theme.Colors.MenuBgColor, 0.5f);
             }
 
             base.OnRenderItemText(e);
@@ -81,7 +81,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             var lineLeft = tsBounds.Left;
             var lineRight = tsBounds.Right;
 
-            using var pen = new Pen(_theme.Settings.MenuBgColor.InvertBlackOrWhite(10), DpiApi.Transform(1f));
+            using var pen = new Pen(_theme.Colors.MenuBgColor.InvertBlackOrWhite(10), DpiApi.Transform(1f));
 
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             e.Graphics.DrawLine(pen, lineLeft, lineY, lineRight, lineY);
@@ -94,12 +94,12 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
     protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
     {
         var textColor = e.Item.Selected
-            ? _theme.Settings.MenuTextHoverColor
-            : _theme.Settings.MenuTextColor;
+            ? _theme.Colors.MenuTextHoverColor
+            : _theme.Colors.MenuTextColor;
 
         if (!e.Item.Enabled)
         {
-            textColor = _theme.Settings.MenuBgColor.InvertBlackOrWhite(100);
+            textColor = _theme.Colors.MenuBgColor.InvertBlackOrWhite(100);
         }
 
         using var pen = new Pen(textColor, DpiApi.Transform(1.15f))
@@ -162,8 +162,8 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
 
 
         var markColor = e.Item.Selected
-            ? _theme.Settings.MenuTextHoverColor
-            : _theme.Settings.MenuTextColor;
+            ? _theme.Colors.MenuTextHoverColor
+            : _theme.Colors.MenuTextColor;
         if (!e.Item.Enabled)
         {
             markColor = markColor.WithAlpha(50);
@@ -237,7 +237,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
                 e.Item.Bounds.Height - 5);
             var radius = BHelper.GetItemBorderRadius(rect.Height, Constants.MENU_ICON_HEIGHT);
 
-            using var brush = new SolidBrush(_theme.Settings.MenuBgHoverColor);
+            using var brush = new SolidBrush(_theme.Colors.MenuBgHoverColor);
             using var penBorder = new Pen(brush, DpiApi.Transform(1f));
 
             // draw
@@ -254,8 +254,8 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         if (e.Item is ToolStripMenuItem mnu && mnu.CheckOnClick)
         {
             var bgColor = e.Item.Selected
-                ? _theme.Settings.MenuTextHoverColor
-                : _theme.Settings.MenuTextColor;
+                ? _theme.Colors.MenuTextHoverColor
+                : _theme.Colors.MenuTextColor;
 
             bgColor = e.Item.Enabled
                 ? bgColor.WithAlpha(20)
@@ -309,7 +309,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
             // draw background
-            using var brush = new SolidBrush(_theme.Settings.MenuBgColor);
+            using var brush = new SolidBrush(_theme.Colors.MenuBgColor);
             e.Graphics.FillRectangle(brush, e.AffectedBounds);
         }
         else
@@ -327,7 +327,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         if (BHelper.IsOS(WindowsOS.Win10))
         {
             // override default ugly border by a solid color
-            using var penDefault = new Pen(_theme.Settings.MenuBgColor);
+            using var penDefault = new Pen(_theme.Colors.MenuBgColor);
             e.Graphics.DrawRectangle(penDefault,
                 0,
                 0,
@@ -339,9 +339,9 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             base.OnRenderToolStripBorder(e);
         }
 
-        using var pen = new Pen(_theme.Settings.MenuBgColor);
+        using var pen = new Pen(_theme.Colors.MenuBgColor);
 
-        if (_theme.Settings.MenuBgColor.GetBrightness() > 0.5) // light background
+        if (_theme.Colors.MenuBgColor.GetBrightness() > 0.5) // light background
         {
             pen.Color = Color.FromArgb(35, 0, 0, 0);
         }

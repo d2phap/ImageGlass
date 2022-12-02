@@ -61,12 +61,12 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         // on pressed
         if (e.Item.Pressed)
         {
-            brushBg.Color = Theme.Settings.ToolbarItemActiveColor;
+            brushBg.Color = Theme.Colors.ToolbarItemActiveColor;
         }
         // on hover
         else if (e.Item.Selected)
         {
-            brushBg.Color = Theme.Settings.ToolbarItemHoverColor;
+            brushBg.Color = Theme.Colors.ToolbarItemHoverColor;
         }
 
         using var penBorder = new Pen(brushBg.Color, DpiApi.Transform(1.05f))
@@ -131,24 +131,24 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         // on pressed
         if (btn.Pressed)
         {
-            brush.Color = Theme.Settings.ToolbarItemActiveColor;
+            brush.Color = Theme.Colors.ToolbarItemActiveColor;
         }
         // on hover
         else if (btn.Selected)
         {
-            brush.Color = Theme.Settings.ToolbarItemHoverColor;
+            brush.Color = Theme.Colors.ToolbarItemHoverColor;
         }
         // on checked
         else if (btn.Checked)
         {
             if (e.Item.Enabled)
             {
-                brush.Color = Theme.Settings.ToolbarItemSelectedColor;
+                brush.Color = Theme.Colors.ToolbarItemSelectedColor;
             }
             // on checked + disabled
             else
             {
-                brush.Color = Color.FromArgb(80, Theme.Settings.ToolbarItemSelectedColor);
+                brush.Color = Color.FromArgb(80, Theme.Colors.ToolbarItemSelectedColor);
             }
         }
         else

@@ -1063,7 +1063,7 @@ public static class Config
 
         if (string.IsNullOrEmpty(bgValue))
         {
-            BackgroundColor = Theme.Settings.BgColor;
+            BackgroundColor = Theme.Colors.BgColor;
         }
         else
         {
@@ -1504,7 +1504,7 @@ public static class Config
         {
             if (ctr is LinkLabel lnk)
             {
-                lnk.LinkColor = lnk.VisitedLinkColor = Theme.Settings.AccentColor;
+                lnk.LinkColor = lnk.VisitedLinkColor = Theme.Colors.AccentColor;
             }
         }
 

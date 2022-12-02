@@ -513,8 +513,8 @@ public class ModernToolbar : ToolStrip
         if (Theme is null) return;
 
         // update toolbar theme
-        BackColor = Theme.Settings.ToolbarBgColor;
-        ForeColor = Theme.Settings.ToolbarTextColor;
+        BackColor = Theme.Colors.ToolbarBgColor;
+        ForeColor = Theme.Colors.ToolbarTextColor;
         Renderer = new ModernToolbarRenderer(this);
 
         // Show / hide main menu button
@@ -542,7 +542,7 @@ public class ModernToolbar : ToolStrip
                 if (tItem is null) continue;
 
                 // update font and alignment
-                tItem.ForeColor = Theme.Settings.ToolbarTextColor;
+                tItem.ForeColor = Theme.Colors.ToolbarTextColor;
                 tItem.Padding = new(DefaultGap);
                 tItem.Margin = new(0, DefaultGap, DefaultGap / 2, DefaultGap);
 

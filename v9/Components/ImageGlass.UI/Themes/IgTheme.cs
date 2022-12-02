@@ -66,7 +66,7 @@ public class IgTheme : IDisposable
 
     
     /// <summary>
-    /// Filename of theme configuration since v9.0
+    /// Filename of theme configuration since v9.0.
     /// </summary>
     public static string CONFIG_FILE { get; } = "igtheme.json";
 
@@ -82,48 +82,53 @@ public class IgTheme : IDisposable
     }
 
     /// <summary>
-    /// Theme API version, to check compatibility
+    /// Theme API version, to check compatibility.
     /// </summary>
     public string CONFIG_VERSION { get; } = "9";
 
     /// <summary>
-    /// Gets the name of theme folder
+    /// Gets the name of theme folder.
     /// </summary>
     public string FolderName { get; internal set; } = "";
 
     /// <summary>
-    /// Gets the name of theme folder
+    /// Gets the name of theme folder.
     /// </summary>
     public string FolderPath { get; internal set; } = "";
 
     /// <summary>
-    /// Gets theme config file path (<see cref="CONFIG_FILE"/>)
+    /// Gets theme config file path (<see cref="CONFIG_FILE"/>).
     /// </summary>
     public string ConfigFilePath { get; internal set; } = "";
 
     /// <summary>
-    /// Gets JSON model from config file (<see cref="CONFIG_FILE"/>)
+    /// Gets JSON model from config file (<see cref="CONFIG_FILE"/>).
     /// </summary>
     public IgThemeJsonModel? JsonModel { get; internal set; }
 
     /// <summary>
-    /// Checks if this theme is valid
+    /// Checks if this theme is valid.
     /// </summary>
     public bool IsValid { get; internal set; } = false;
 
 
     /// <summary>
-    /// Theme information
+    /// Theme information.
     /// </summary>
     public IgThemeInfo Info { get; internal set; } = new();
 
     /// <summary>
-    /// Theme colors
+    /// Theme settings.
     /// </summary>
     public IgThemeSettings Settings { get; internal set; } = new();
 
     /// <summary>
-    /// Theme toolbar icons
+    /// Theme colors
+    /// </summary>
+    public IgThemeColors Colors { get; internal set; } = new();
+
+    /// <summary>
+    /// Theme toolbar icons.
     /// </summary>
     public IgThemeToolbarIcons ToolbarIcons { get; internal set; } = new();
 
@@ -195,23 +200,38 @@ public class IgTheme : IDisposable
 
 
     /// <summary>
-    /// Loads theme from <see cref="JsonModel"/>.
+    /// Loads theme data from <see cref="JsonModel"/>.
     /// </summary>
-    /// <param name="iconHeight">Toolbar icon height</param>
+    /// <param name="iconHeight">Toolbar icon height.</param>
     public void LoadTheme(int? iconHeight = null)
     {
-        if (iconHeight is not null)
-        {
-            _iconHeight = iconHeight.Value;
-        }
-
         if (IsValid is false || JsonModel is null) return;
 
         // import theme info
         Info = JsonModel.Info;
 
 
-        #region Theme settings
+        // Theme settings
+        ReloadThemeSettings();
+
+
+        // Theme colors
+        ReloadThemeColors();
+
+
+        // Toolbar icons
+        ReloadToolbarIcons(iconHeight);
+
+    }
+
+
+    /// <summary>
+    /// Loads theme <see cref="Settings"/> from <see cref="JsonModel"/>.
+    /// </summary>
+    public void ReloadThemeSettings()
+    {
+        if (IsValid is false || JsonModel is null) return;
+
         // dispose the current values
         Settings.Dispose();
 
@@ -220,38 +240,11 @@ public class IgTheme : IDisposable
             var value = (item.Value ?? "")?.ToString()?.Trim();
             if (string.IsNullOrEmpty(value))
                 continue;
-            
+
             var prop = Settings.GetType().GetProperty(item.Key);
 
             try
             {
-                // property is Color
-                if (prop?.PropertyType == typeof(Color))
-                {
-                    Color colorItem;
-                    if (value.StartsWith(Constants.THEME_SYSTEM_ACCENT_COLOR, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        // example: accent:180
-                        var valueArr = value.Split(':', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-                        var accentAlpha = 255;
-
-                        // adjust accent color alpha
-                        if (valueArr.Length > 1)
-                        {
-                            _ = int.TryParse(valueArr[1], out accentAlpha);
-                        }
-
-                        colorItem = ThemeUtils.GetAccentColor().WithAlpha(accentAlpha);
-                    }
-                    else
-                    {
-                        colorItem = ThemeUtils.ColorFromHex(value);
-                    }
-                    
-                    prop.SetValue(Settings, colorItem);
-                    continue;
-                }
-
                 // property is WicBitmapSource
                 if (prop?.PropertyType == typeof(WicBitmapSource))
                 {
@@ -286,10 +279,74 @@ public class IgTheme : IDisposable
         {
             Settings.AppLogo = Properties.Resources.DefaultLogo;
         }
-        #endregion
+    }
 
 
-        #region Toolbar icons
+    /// <summary>
+    /// Loads theme <see cref="Colors"/> from <see cref="JsonModel"/>.
+    /// </summary>
+    public void ReloadThemeColors()
+    {
+        if (IsValid is false || JsonModel is null) return;
+
+        // dispose the current values
+        Colors = new IgThemeColors();
+
+        foreach (var item in JsonModel.Colors)
+        {
+            var value = (item.Value ?? "")?.ToString()?.Trim();
+            if (string.IsNullOrEmpty(value))
+                continue;
+
+            var prop = Colors.GetType().GetProperty(item.Key);
+
+            try
+            {
+                // property is Color
+                if (prop?.PropertyType == typeof(Color))
+                {
+                    Color colorItem;
+                    if (value.StartsWith(Constants.THEME_SYSTEM_ACCENT_COLOR, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        // example: accent:180
+                        var valueArr = value.Split(':', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+                        var accentAlpha = 255;
+
+                        // adjust accent color alpha
+                        if (valueArr.Length > 1)
+                        {
+                            _ = int.TryParse(valueArr[1], out accentAlpha);
+                        }
+
+                        colorItem = ThemeUtils.GetAccentColor().WithAlpha(accentAlpha);
+                    }
+                    else
+                    {
+                        colorItem = ThemeUtils.ColorFromHex(value);
+                    }
+
+                    prop.SetValue(Colors, colorItem);
+                    continue;
+                }
+            }
+            catch { }
+        }
+    }
+
+
+    /// <summary>
+    /// Loads theme <see cref="ToolbarIcons"/> from <see cref="JsonModel"/>.
+    /// </summary>
+    /// <param name="iconHeight">Toolbar icon height.</param>
+    public void ReloadToolbarIcons(int? iconHeight = null)
+    {
+        if (IsValid is false || JsonModel is null) return;
+
+        if (iconHeight is not null)
+        {
+            _iconHeight = iconHeight.Value;
+        }
+
         // dispose the current icons
         ToolbarIcons.Dispose();
 
@@ -307,12 +364,11 @@ public class IgTheme : IDisposable
             }
             catch { }
         }
-        #endregion
     }
 
 
     /// <summary>
-    /// Saves current settings as a new config file
+    /// Saves current settings as a new config file.
     /// </summary>
     /// <param name="filePath"></param>
     public async Task SaveConfigAsFileAsync(string filePath)
@@ -343,7 +399,7 @@ public class IgTheme : IDisposable
 
 
     /// <summary>
-    /// Creates default toolbar icon
+    /// Creates default toolbar icon.
     /// </summary>
     public Bitmap CreateDefaultToolbarIcon()
     {

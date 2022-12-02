@@ -1827,9 +1827,9 @@ public partial class FrmMain
 
             // disable background colors
             WindowApi.SetWindowFrame(Handle, new Padding(0));
-            Toolbar.BackColor = Config.Theme.Settings.ToolbarBgColor.NoAlpha();
+            Toolbar.BackColor = Config.Theme.Colors.ToolbarBgColor.NoAlpha();
             PicMain.BackColor = Config.BackgroundColor.NoAlpha();
-            Gallery.BackColor = Config.Theme.Settings.ThumbnailBarBgColor.NoAlpha();
+            Gallery.BackColor = Config.Theme.Colors.ThumbnailBarBgColor.NoAlpha();
 
             ResumeLayout();
             Visible = true;
@@ -1857,9 +1857,9 @@ public partial class FrmMain
 
             // re-enable background colors
             WindowApi.SetWindowFrame(Handle, BackdropMargin);
-            Toolbar.BackColor = Config.Theme.Settings.ToolbarBgColor;
+            Toolbar.BackColor = Config.Theme.Colors.ToolbarBgColor;
             PicMain.BackColor = Config.BackgroundColor;
-            Gallery.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
+            Gallery.BackColor = Config.Theme.Colors.ThumbnailBarBgColor;
 
 
             ResumeLayout();

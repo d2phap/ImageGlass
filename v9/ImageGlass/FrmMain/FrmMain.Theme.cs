@@ -53,19 +53,19 @@ public partial class FrmMain
         // viewer
         Sp1.BackColor = Sp2.BackColor = Color.Transparent;
         PicMain.BackColor = Config.BackgroundColor;
-        PicMain.ForeColor = Config.Theme.Settings.TextColor;
-        PicMain.SelectionColor = Config.Theme.Settings.AccentColor;
+        PicMain.ForeColor = Config.Theme.Colors.TextColor;
+        PicMain.SelectionColor = Config.Theme.Colors.AccentColor;
 
 
         // Thumbnail bar
         Gallery.SetRenderer(new ModernGalleryRenderer(Config.Theme));
         Sp1.SplitterBackColor =
             Sp2.SplitterBackColor =
-            Gallery.BackColor = Config.Theme.Settings.ThumbnailBarBgColor;
+            Gallery.BackColor = Config.Theme.Colors.ThumbnailBarBgColor;
 
 
         // navigation buttons
-        var navColor = Config.Theme.Settings.ToolbarBgColor;
+        var navColor = Config.Theme.Colors.ToolbarBgColor;
         PicMain.NavHoveredColor = navColor.WithAlpha(200);
         PicMain.NavPressedColor = navColor.WithAlpha(240);
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;

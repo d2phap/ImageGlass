@@ -27,12 +27,14 @@ namespace ImageGlass.UI;
 /// </summary>
 public record IgThemeMetadata
 {
-    public string Description { get; set; } = "ImageGlass theme configuration file";
-
     /// <summary>
     /// Config version of this theme to work with (required)
     /// </summary>
     public string Version { get; set; } = "9.0";
+
+    public string Description { get; set; } = "ImageGlass theme configuration file";
+
+    public string Docs { get; set; } = "Visit https://github.com/ImageGlass/theme to learn ImageGlass theme pack API.";
 }
 
 
@@ -54,7 +56,44 @@ public record IgThemeInfo
 
 
 /// <summary>
-/// Theme colors and others
+/// Theme colors
+/// </summary>
+public record IgThemeColors
+{
+    public Color AccentColor { get; set; } = ThemeUtils.ColorFromHex("#0078D7");
+    public Color AccentHoverColor { get; set; } = ThemeUtils.ColorFromHex("#0d92ff");
+    public Color AccentSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#0060ae");
+    public Color TextColor { get; set; } = ThemeUtils.ColorFromHex("#d3d3d3");
+    public Color BgColor { get; set; } = ThemeUtils.ColorFromHex("#151b1f");
+
+
+    // Toolbar
+    public Color ToolbarBgColor { get; set; } = ThemeUtils.ColorFromHex("#242b3100");
+    public Color ToolbarTextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
+    public Color ToolbarItemHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
+    public Color ToolbarItemActiveColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff22");
+    public Color ToolbarItemSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff44");
+
+
+    // Gallery
+    public Color ThumbnailBarBgColor { get; set; } = ThemeUtils.ColorFromHex("#242b3100");
+    public Color ThumbnailBarTextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
+    public Color ThumbnailItemHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
+    public Color ThumbnailItemActiveColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff22");
+    public Color ThumbnailItemSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff44");
+
+
+    // Menu
+    public Color MenuBgColor { get; set; } = ThemeUtils.ColorFromHex("#242b31");
+    public Color MenuBgHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff15");
+    public Color MenuTextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
+    public Color MenuTextHoverColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
+
+}
+
+
+/// <summary>
+/// Theme other settings
 /// </summary>
 public record IgThemeSettings : IDisposable
 {
@@ -106,37 +145,6 @@ public record IgThemeSettings : IDisposable
     /// Default value is <c>true</c>.
     /// </summary>
     public bool IsDarkMode { get; set; } = true;
-
-
-    public Color AccentColor { get; set; } = ThemeUtils.ColorFromHex("#0078D7");
-    public Color AccentHoverColor { get; set; } = ThemeUtils.ColorFromHex("#0d92ff");
-    public Color AccentSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#0060ae");
-    public Color TextColor { get; set; } = ThemeUtils.ColorFromHex("#d3d3d3");
-    public Color BgColor { get; set; } = ThemeUtils.ColorFromHex("#151b1f");
-
-
-    // Toolbar
-    public Color ToolbarBgColor { get; set; } = ThemeUtils.ColorFromHex("#242b3100");
-    public Color ToolbarTextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
-    public Color ToolbarItemHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
-    public Color ToolbarItemActiveColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff22");
-    public Color ToolbarItemSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff44");
-
-
-    // Gallery
-    public Color ThumbnailBarBgColor { get; set; } = ThemeUtils.ColorFromHex("#242b3100");
-    public Color ThumbnailBarTextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
-    public Color ThumbnailItemHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
-    public Color ThumbnailItemActiveColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff22");
-    public Color ThumbnailItemSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff44");
-
-
-    // Menu
-    public Color MenuBgColor { get; set; } = ThemeUtils.ColorFromHex("#242b31");
-    public Color MenuBgHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff15");
-    public Color MenuTextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
-    public Color MenuTextHoverColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
-
 
     /// <summary>
     /// Gets, sets the navigation left arrow
@@ -345,10 +353,12 @@ public class IgThemeToolbarIcons : IDisposable
 /// <param name="_Metadata"></param>
 /// <param name="Info"></param>
 /// <param name="Settings"></param>
+/// <param name="Colors"></param>
 /// <param name="ToolbarIcons"></param>
 public record IgThemeJsonModel(
     IgThemeMetadata _Metadata,
     IgThemeInfo Info,
     Dictionary<string, object> Settings,
+    Dictionary<string, object> Colors,
     Dictionary<string, string> ToolbarIcons)
 { }

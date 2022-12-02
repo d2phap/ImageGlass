@@ -95,17 +95,17 @@ public class ModernGalleryRenderer : StyleRenderer
         // on pressed
         if (state.HasFlag(ItemState.Pressed))
         {
-            bgBrush.Color = Theme.Settings.ThumbnailItemActiveColor;
+            bgBrush.Color = Theme.Colors.ThumbnailItemActiveColor;
         }
         // on hover
         else if (state.HasFlag(ItemState.Hovered))
         {
-            bgBrush.Color = Theme.Settings.ThumbnailItemHoverColor;
+            bgBrush.Color = Theme.Colors.ThumbnailItemHoverColor;
         }
         // on selected
         else if (state.HasFlag(ItemState.Selected))
         {
-            bgBrush.Color = Theme.Settings.ThumbnailItemSelectedColor;
+            bgBrush.Color = Theme.Colors.ThumbnailItemSelectedColor;
         }
 
         using var penBorder = new Pen(bgBrush.Color, DpiApi.Transform(1.05f));
@@ -125,19 +125,19 @@ public class ModernGalleryRenderer : StyleRenderer
         {
             textSize = TextRenderer.MeasureText(item.Text, ImageGalleryOwner.Font);
 
-            var foreColor = Theme.Settings.ThumbnailBarTextColor;
+            var foreColor = Theme.Colors.ThumbnailBarTextColor;
 
             if (state.HasFlag(ItemState.Disabled))
             {
                 // light background color
-                if (Theme.Settings.MenuBgColor.GetBrightness() > 0.5)
+                if (Theme.Colors.MenuBgColor.GetBrightness() > 0.5)
                 {
-                    foreColor = ThemeUtils.DarkenColor(Theme.Settings.ThumbnailBarBgColor, 0.5f);
+                    foreColor = ThemeUtils.DarkenColor(Theme.Colors.ThumbnailBarBgColor, 0.5f);
                 }
                 // dark background color
                 else
                 {
-                    foreColor = ThemeUtils.LightenColor(Theme.Settings.ThumbnailBarBgColor, 0.5f);
+                    foreColor = ThemeUtils.LightenColor(Theme.Colors.ThumbnailBarBgColor, 0.5f);
                 }
             }
 
