@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
-
+using Microsoft.Win32;
 
 namespace ImageGlass.UI;
 
@@ -31,6 +31,7 @@ public partial class ModernForm : Form
     private BackdropStyle _backdropStyle = BackdropStyle.Mica;
     private Padding _backdropMargin = new(-1);
     private int _dpi = DpiApi.DPI_DEFAULT;
+    private CancellationTokenSource _systemAccentColorChangedCancelToken = new();
 
 
     #region Public properties
@@ -110,15 +111,22 @@ public partial class ModernForm : Form
     /// <summary>
     /// Occurs when the Maximize button on title bar is clicked.
     /// </summary>
-    public event MaximizeButtonClickedHandler? OnMaximizeButtonClicked;
+    public event MaximizeButtonClickedHandler? MaximizeButtonClicked;
     public delegate void MaximizeButtonClickedHandler(EventArgs e);
 
 
     /// <summary>
     /// Occurs when the Restore button on title bar is clicked.
     /// </summary>
-    public event RestoreButtonClickedHandler? OnRestoreButtonClicked;
+    public event RestoreButtonClickedHandler? RestoreButtonClicked;
     public delegate void RestoreButtonClickedHandler(EventArgs e);
+
+
+    /// <summary>
+    /// Occurs when the system accent color is changed.
+    /// </summary>
+    public event SystemAccentColorChangedHandler? SystemAccentColorChanged;
+    public delegate void SystemAccentColorChangedHandler(SystemAccentColorChangedEventArgs e);
 
     #endregion // Public properties
 
@@ -159,13 +167,13 @@ public partial class ModernForm : Form
             if (m.WParam == new IntPtr(0xF030)) // SC_MAXIMIZE
             {
                 // The window is being maximized
-                OnMaximizeButtonClicked?.Invoke(EventArgs.Empty);
+                MaximizeButtonClicked?.Invoke(EventArgs.Empty);
             }
             // When user clicks on the RESTORE button on title bar
             else if (m.WParam == new IntPtr(0xF120)) // SC_RESTORE
             {
                 // The window is being restored
-                OnRestoreButtonClicked?.Invoke(EventArgs.Empty);
+                RestoreButtonClicked?.Invoke(EventArgs.Empty);
             }
         }
         else if (m.Msg == DpiApi.WM_DPICHANGED)
@@ -175,8 +183,29 @@ public partial class ModernForm : Form
 
             OnDpiChanged();
         }
+        // accent color changed: WM_DWMCOLORIZATIONCOLORCHANGED
+        else if (m.Msg == 0x0320)
+        {
+            DelayTriggerSystemAccentColorChangedEvent();
+        }
 
         base.WndProc(ref m);
+    }
+
+
+    /// <summary>
+    /// Triggers <see cref="SystemAccentColorChanged"/> event.
+    /// </summary>
+    protected virtual void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
+    {
+        // emits the event
+        SystemAccentColorChanged?.Invoke(e);
+
+        // the event is not handled
+        if (!e.Handled)
+        {
+            Invalidate(true);
+        }
     }
 
 
@@ -291,6 +320,38 @@ public partial class ModernForm : Form
     {
         WindowApi.SetImmersiveDarkMode(Handle, enable);
     }
+
+
+    /// <summary>
+    /// Delays triggering <see cref="SystemAccentColorChanged"/> event.
+    /// </summary>
+    private void DelayTriggerSystemAccentColorChangedEvent()
+    {
+        _systemAccentColorChangedCancelToken.Cancel();
+        _systemAccentColorChangedCancelToken = new();
+
+        _ = TriggerSystemAccentColorChangedEventAsync(_systemAccentColorChangedCancelToken.Token);
+    }
+
+
+    /// <summary>
+    /// Triggers <see cref="SystemAccentColorChanged"/> event.
+    /// </summary>
+    private async Task TriggerSystemAccentColorChangedEventAsync(CancellationToken token = default)
+    {
+        try
+        {
+            // since the message WM_DWMCOLORIZATIONCOLORCHANGED is triggered
+            // multiple times (3 - 5 times)
+            await Task.Delay(200, token);
+            token.ThrowIfCancellationRequested();
+
+            // emit event here
+            OnSystemAccentColorChanged(new SystemAccentColorChangedEventArgs());
+        }
+        catch (OperationCanceledException) { }
+    }
+
 
     #endregion // Private functions
 
