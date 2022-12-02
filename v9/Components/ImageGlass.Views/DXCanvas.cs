@@ -925,7 +925,7 @@ public class DXCanvas : DXControl
         if (Source != ImageSource.Null)
         {
             _canDrawSelection = canSelect && !ClientSelection.Contains(_mouseDownPoint.Value);
-            requestRerender = canSelect && !ClientSelection.IsEmpty;
+            requestRerender = requestRerender || (canSelect && !ClientSelection.IsEmpty);
 
             if (_canDrawSelection)
             {
@@ -1036,7 +1036,6 @@ public class DXCanvas : DXControl
         }
     }
 
-
     protected override void OnMouseMove(MouseEventArgs e)
     {
         base.OnMouseMove(e);
@@ -1144,7 +1143,7 @@ public class DXCanvas : DXControl
 
             // show resizers on hover
             var resizerVisible = ClientSelection.Contains(e.Location);
-            if (!requestRerender) requestRerender = _isSelectionHovered != resizerVisible;
+            requestRerender = requestRerender || _isSelectionHovered != resizerVisible;
             _isSelectionHovered = resizerVisible;
         }
 
