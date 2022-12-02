@@ -29,7 +29,7 @@ namespace ImageGlass;
 
 internal class Local
 {
-    public static FrmMain? FormMain;
+    public static FrmMain? FrmMain;
 
 
     #region Public events

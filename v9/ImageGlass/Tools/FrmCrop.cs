@@ -76,8 +76,8 @@ public partial class FrmCrop : ToolForm
         LoadAspectRatioItems();
 
         // add control events
-        Local.FormMain.PicMain.OnSelectionChanged += PicMain_OnImageSelecting;
-        Local.FormMain.PicMain.OnImageChanged += PicMain_OnImageChanged;
+        Local.FrmMain.PicMain.OnSelectionChanged += PicMain_OnImageSelecting;
+        Local.FrmMain.PicMain.OnImageChanged += PicMain_OnImageChanged;
         NumX.LostFocus += NumSelections_LostFocus;
         NumY.LostFocus += NumSelections_LostFocus;
         NumWidth.LostFocus += NumSelections_LostFocus;
@@ -100,8 +100,8 @@ public partial class FrmCrop : ToolForm
     {
         base.OnFormClosing(e);
 
-        Local.FormMain.PicMain.OnSelectionChanged -= PicMain_OnImageSelecting;
-        Local.FormMain.PicMain.OnImageChanged -= PicMain_OnImageChanged;
+        Local.FrmMain.PicMain.OnSelectionChanged -= PicMain_OnImageSelecting;
+        Local.FrmMain.PicMain.OnImageChanged -= PicMain_OnImageChanged;
         NumX.LostFocus -= NumSelections_LostFocus;
         NumY.LostFocus -= NumSelections_LostFocus;
         NumWidth.LostFocus -= NumSelections_LostFocus;
@@ -122,19 +122,19 @@ public partial class FrmCrop : ToolForm
             return menuHotkey != null;
         }
         
-        if (CheckHotkey(nameof(Local.FormMain.MnuSave)))
+        if (CheckHotkey(nameof(Local.FrmMain.MnuSave)))
         {
             BtnSave.PerformClick();
             return;
         }
 
-        if (CheckHotkey(nameof(Local.FormMain.MnuSaveAs)))
+        if (CheckHotkey(nameof(Local.FrmMain.MnuSaveAs)))
         {
             BtnSaveAs.PerformClick();
             return;
         }
 
-        if (CheckHotkey(nameof(Local.FormMain.MnuCopyImageData)))
+        if (CheckHotkey(nameof(Local.FrmMain.MnuCopyImageData)))
         {
             BtnCopy.PerformClick();
             return;
@@ -154,7 +154,7 @@ public partial class FrmCrop : ToolForm
     private void PicMain_OnImageChanged(EventArgs e)
     {
         TableTop.Enabled =
-            TableBottom.Enabled = Local.FormMain.PicMain.Source != ImageSource.Null;
+            TableBottom.Enabled = Local.FrmMain.PicMain.Source != ImageSource.Null;
 
         UpdateAspectRatioValues();
     }
@@ -168,7 +168,7 @@ public partial class FrmCrop : ToolForm
 
     private void NumRatio_ValueChanged(object sender, EventArgs e)
     {
-        Local.FormMain.PicMain.SelectionAspectRatio = new SizeF((float)NumRatioFrom.Value, (float)NumRatioTo.Value);
+        Local.FrmMain.PicMain.SelectionAspectRatio = new SizeF((float)NumRatioFrom.Value, (float)NumRatioTo.Value);
     }
 
 
@@ -180,12 +180,12 @@ public partial class FrmCrop : ToolForm
                 (float)NumWidth.Value,
                 (float)NumHeight.Value);
 
-        if (newRect != Local.FormMain.PicMain.SourceSelection)
+        if (newRect != Local.FrmMain.PicMain.SourceSelection)
         {
-            Local.FormMain.PicMain.SourceSelection = newRect;
+            Local.FrmMain.PicMain.SourceSelection = newRect;
         }
 
-        Local.FormMain.PicMain.Invalidate();
+        Local.FrmMain.PicMain.Invalidate();
     }
 
 
@@ -208,9 +208,9 @@ public partial class FrmCrop : ToolForm
     private void ApplyLanguage()
     {
         // get hotkey string
-        var saveHotkey = Config.GetHotkeyString(FrmMain.CurrentMenuHotkeys, nameof(Local.FormMain.MnuSave));
-        var saveAsHotkey = Config.GetHotkeyString(FrmMain.CurrentMenuHotkeys, nameof(Local.FormMain.MnuSaveAs));
-        var copyHotkey = Config.GetHotkeyString(FrmMain.CurrentMenuHotkeys, nameof(Local.FormMain.MnuCopyImageData));
+        var saveHotkey = Config.GetHotkeyString(FrmMain.CurrentMenuHotkeys, nameof(Local.FrmMain.MnuSave));
+        var saveAsHotkey = Config.GetHotkeyString(FrmMain.CurrentMenuHotkeys, nameof(Local.FrmMain.MnuSaveAs));
+        var copyHotkey = Config.GetHotkeyString(FrmMain.CurrentMenuHotkeys, nameof(Local.FrmMain.MnuCopyImageData));
 
         // set hotkey
         TooltipMain.SetToolTip(BtnSave, saveHotkey);
@@ -254,8 +254,8 @@ public partial class FrmCrop : ToolForm
 
         if (ratio == SelectionAspectRatio.Original)
         {
-            var srcW = (int)Local.FormMain.PicMain.SourceWidth;
-            var srcH = (int)Local.FormMain.PicMain.SourceHeight;
+            var srcW = (int)Local.FrmMain.PicMain.SourceWidth;
+            var srcH = (int)Local.FrmMain.PicMain.SourceHeight;
 
             if (srcW > 0 && srcH > 0)
             {
@@ -285,10 +285,10 @@ public partial class FrmCrop : ToolForm
 
 
         // load selection area data
-        NumX.Value = (decimal)Local.FormMain.PicMain.SourceSelection.X;
-        NumY.Value = (decimal)Local.FormMain.PicMain.SourceSelection.Y;
-        NumWidth.Value = (decimal)Local.FormMain.PicMain.SourceSelection.Width;
-        NumHeight.Value = (decimal)Local.FormMain.PicMain.SourceSelection.Height;
+        NumX.Value = (decimal)Local.FrmMain.PicMain.SourceSelection.X;
+        NumY.Value = (decimal)Local.FrmMain.PicMain.SourceSelection.Y;
+        NumWidth.Value = (decimal)Local.FrmMain.PicMain.SourceSelection.Width;
+        NumHeight.Value = (decimal)Local.FrmMain.PicMain.SourceSelection.Height;
 
     }
 
@@ -300,7 +300,7 @@ public partial class FrmCrop : ToolForm
 
     private async Task SaveSelectionAsync()
     {
-        var img = await Local.FormMain.GetSelectedImageAreaAsync();
+        var img = await Local.FrmMain.GetSelectedImageAreaAsync();
     }
 
 
@@ -312,14 +312,14 @@ public partial class FrmCrop : ToolForm
 
     private void BtnCopy_Click(object sender, EventArgs e)
     {
-        Local.FormMain.MnuCopyImageData.PerformClick();
+        Local.FrmMain.MnuCopyImageData.PerformClick();
     }
 
 
     private void BtnReset_Click(object sender, EventArgs e)
     {
-        Local.FormMain.PicMain.ClientSelection = new();
-        Local.FormMain.PicMain.Invalidate();
+        Local.FrmMain.PicMain.ClientSelection = new();
+        Local.FrmMain.PicMain.Invalidate();
     }
 
     
