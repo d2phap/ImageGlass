@@ -29,7 +29,6 @@ namespace ImageGlass;
 internal static class Program
 {
     public const string APP_GUID = "{f2a83de1-b9ac-4461-81d0-cc4547b0b27b}";
-    public static FrmMain? FormMain;
 
 
     /// <summary>
@@ -173,8 +172,8 @@ internal static class Program
     {
         if (Config.EnableMultiInstances)
         {
-            FormMain?.Dispose();
-            Application.Run(FormMain = new FrmMain());
+            Local.FormMain?.Dispose();
+            Application.Run(Local.FormMain = new FrmMain());
         }
         else
         {
@@ -187,8 +186,8 @@ internal static class Program
                 instance.ArgsReceived += Instance_ArgumentsReceived; ;
                 instance.ListenForArgsFromChildInstances();
 
-                FormMain?.Dispose();
-                Application.Run(FormMain = new FrmMain());
+                Local.FormMain?.Dispose();
+                Application.Run(Local.FormMain = new FrmMain());
             }
             else
             {
@@ -199,7 +198,7 @@ internal static class Program
 
     private static void Instance_ArgumentsReceived(object? sender, ArgsReceivedEventArgs e)
     {
-        if (FormMain == null) return;
+        if (Local.FormMain == null) return;
 
 
         // Attempt to run a 2nd instance of IG when multi-instance turned off.
@@ -218,7 +217,7 @@ internal static class Program
         Array.Copy(e.Arguments, realArgs, realCount);
 
         // Execute our delegate on the forms thread!
-        FormMain.Invoke(ActivateWindow, (object)realArgs);
+        Local.FormMain.Invoke(ActivateWindow, (object)realArgs);
     }
 
 
@@ -228,23 +227,23 @@ internal static class Program
     /// <param name="args"></param>
     private static void ActivateWindow(string[] args)
     {
-        if (FormMain == null) return;
+        if (Local.FormMain == null) return;
 
         // load image file from arg
-        FormMain.LoadImagesFromCmdArgs(args);
+        Local.FormMain.LoadImagesFromCmdArgs(args);
 
         // Issues #774, #855: if IG is normal or maximized, do nothing. If IG is minimized,
         // restore it to previous state.
-        if (FormMain.WindowState == FormWindowState.Minimized)
+        if (Local.FormMain.WindowState == FormWindowState.Minimized)
         {
-            WindowApi.ShowAppWindow(FormMain.Handle, SHOW_WINDOW_CMD.SW_RESTORE);
+            WindowApi.ShowAppWindow(Local.FormMain.Handle, SHOW_WINDOW_CMD.SW_RESTORE);
         }
         else
         {
             // Hack for issue #620: IG does not activate in normal / maximized window state
-            FormMain.TopMost = true;
-            WindowApi.ClickOnWindow(FormMain.Handle, new(0, 0));
-            FormMain.TopMost = Config.EnableWindowTopMost;
+            Local.FormMain.TopMost = true;
+            WindowApi.ClickOnWindow(Local.FormMain.Handle, new(0, 0));
+            Local.FormMain.TopMost = Config.EnableWindowTopMost;
         }
     }
 
