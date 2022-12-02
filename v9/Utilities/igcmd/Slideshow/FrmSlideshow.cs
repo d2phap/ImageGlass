@@ -96,6 +96,9 @@ public partial class FrmSlideshow : ModernForm
     {
         InitializeComponent();
 
+        // update the DpiApi when DPI changed.
+        EnableDpiApiUpdate = true;
+
         Config.Load();
 
         _serverName = $"{Constants.SLIDESHOW_PIPE_PREFIX}{slideshowIndex}"; ;
@@ -111,7 +114,7 @@ public partial class FrmSlideshow : ModernForm
 
         Config.EnableSlideshow = true;
         MnuToggleCountdown.Checked = Config.ShowSlideshowCountdown;
-
+        
         // zoom mode
         SetZoomMode(Config.ZoomMode);
         if (Config.ZoomMode == ZoomMode.LockZoom)
@@ -119,19 +122,17 @@ public partial class FrmSlideshow : ModernForm
             PicMain.ZoomFactor = Config.ZoomLockValue / 100f;
         }
 
+        // update theme icons
+        OnDpiChanged();
 
-        // Get the DPI of the current display,
-        // and load theme icons
-        DpiApi.OnDpiChanged += OnDpiChanged;
-        DpiApi.CurrentDpi = DeviceDpi;
+        ApplyTheme(Config.Theme.Settings.IsDarkMode);
     }
 
 
-    /// <summary>
-    /// Handle DPI changes
-    /// </summary>
-    private void OnDpiChanged()
+    protected override void OnDpiChanged()
     {
+        base.OnDpiChanged();
+
         // scale toolbar icons corresponding to DPI
         var newIconHeight = DpiApi.Transform(Config.ToolbarIconHeight);
 
@@ -180,6 +181,8 @@ public partial class FrmSlideshow : ModernForm
         // load menu hotkeys
         Config.MergeHotkeys(ref CurrentMenuHotkeys, Config.MenuHotkeys);
         LoadMenuHotkeys();
+
+        LoadMenuTagData();
 
         // load language
         LoadLanguage();
@@ -1072,6 +1075,18 @@ public partial class FrmSlideshow : ModernForm
     }
 
 
+    private void LoadMenuTagData()
+    {
+        // Zoom mode
+        MnuAutoZoom.Tag = new ModernMenuItemTag() { SingleSelect = true };
+        MnuLockZoom.Tag = new ModernMenuItemTag() { SingleSelect = true };
+        MnuScaleToWidth.Tag = new ModernMenuItemTag() { SingleSelect = true };
+        MnuScaleToHeight.Tag = new ModernMenuItemTag() { SingleSelect = true };
+        MnuScaleToFit.Tag = new ModernMenuItemTag() { SingleSelect = true };
+        MnuScaleToFill.Tag = new ModernMenuItemTag() { SingleSelect = true };
+    }
+
+
     protected override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
     {
         SuspendLayout();
@@ -1172,7 +1187,11 @@ public partial class FrmSlideshow : ModernForm
             var mnu = new ToolStripRadioButtonMenuItem()
             {
                 Text = Config.Language[$"_.{nameof(ImageOrderBy)}._{orderName}"],
-                Tag = order,
+                Tag = new ModernMenuItemTag()
+                {
+                    SingleSelect = true,
+                    ImageOrderBy = (ImageOrderBy)order,
+                },
                 CheckOnClick = true,
                 Checked = (int)order == (int)Config.ImageLoadingOrder,
                 ImageScaling = ToolStripItemImageScaling.None,
@@ -1192,7 +1211,11 @@ public partial class FrmSlideshow : ModernForm
             var mnu = new ToolStripRadioButtonMenuItem()
             {
                 Text = Config.Language[$"_.{nameof(ImageOrderType)}._{typeName}"],
-                Tag = orderType,
+                Tag = new ModernMenuItemTag()
+                {
+                    SingleSelect = true,
+                    ImageOrderType = (ImageOrderType)orderType,
+                },
                 CheckOnClick = true,
                 Checked = (int)orderType == (int)Config.ImageLoadingOrderType,
                 ImageScaling = ToolStripItemImageScaling.None,
