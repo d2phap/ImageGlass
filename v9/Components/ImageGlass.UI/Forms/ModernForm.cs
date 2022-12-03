@@ -226,6 +226,7 @@ public partial class ModernForm : Form
         base.OnPaint(e);
 
         if (!DesignMode
+            && IsDarkMode
             && _backdropStyle != BackdropStyle.None
             && BackdropMargin.Vertical == 0 && BackdropMargin.Horizontal == 0)
         {
@@ -290,6 +291,8 @@ public partial class ModernForm : Form
     /// </summary>
     private void SetBackdrop(BackdropStyle style)
     {
+        if (!IsDarkMode) return;
+
         var backupBgColor = BackColor;
         if (style != BackdropStyle.None)
         {

@@ -593,15 +593,14 @@ public partial class Popup : ModernForm
     protected override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
     {
         var isDarkMode = darkMode;
+        SuspendLayout();
 
         if (Theme != null)
         {
-            SuspendLayout();
             isDarkMode = Theme.Settings.IsDarkMode;
 
             panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(NoteStatusType, isDarkMode);
             tableBottom.BackColor = BackColor.InvertBlackOrWhite(30);
-
 
             // dark mode
             lblHeading.DarkMode =
@@ -614,9 +613,16 @@ public partial class Popup : ModernForm
 
 
             SetTextInputStyle(ValidateInput(), isDarkMode);
-            ResumeLayout(false);
+
+            if (!isDarkMode)
+            {
+                BackColor = Color.White;
+                tableBottom.BackColor = BackColor.InvertBlackOrWhite(10);
+            }
         }
 
+
+        ResumeLayout(false);
         base.ApplyTheme(darkMode, backDrop);
     }
 

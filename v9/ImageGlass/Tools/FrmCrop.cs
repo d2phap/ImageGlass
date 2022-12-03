@@ -41,13 +41,12 @@ public partial class FrmCrop : ToolForm
     {
         var isDarkMode = darkMode;
 
+        SuspendLayout();
         if (Theme != null)
         {
             isDarkMode = Theme.Settings.IsDarkMode;
 
-            SuspendLayout();
             TableBottom.BackColor = BackColor.InvertBlackOrWhite(30);
-
             CmbAspectRatio.DarkMode =
                 LblLocation.DarkMode =
                 LblSize.DarkMode =
@@ -63,9 +62,14 @@ public partial class FrmCrop : ToolForm
                 BtnCopy.DarkMode =
                 BtnReset.DarkMode = isDarkMode;
 
-            ResumeLayout(false);
+            if (!darkMode)
+            {
+                BackColor = Color.White;
+                TableBottom.BackColor = BackColor.InvertBlackOrWhite(10);
+            }
         }
 
+        ResumeLayout(false);
         base.ApplyTheme(isDarkMode, style);
     }
 
@@ -293,10 +297,18 @@ public partial class FrmCrop : ToolForm
     }
 
 
+    private void LnkReset_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+        Local.FrmMain.PicMain.ClientSelection = new();
+        Local.FrmMain.PicMain.Invalidate();
+    }
+
+
     private void BtnSave_Click(object sender, EventArgs e)
     {
         //SaveSelectionAsync();
     }
+
 
     private async Task SaveSelectionAsync()
     {
@@ -316,10 +328,9 @@ public partial class FrmCrop : ToolForm
     }
 
 
-    private void BtnReset_Click(object sender, EventArgs e)
+    private void BtnCrop_Click(object sender, EventArgs e)
     {
-        Local.FrmMain.PicMain.ClientSelection = new();
-        Local.FrmMain.PicMain.Invalidate();
+
     }
 
     
