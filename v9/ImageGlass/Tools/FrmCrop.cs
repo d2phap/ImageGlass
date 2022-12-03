@@ -39,12 +39,10 @@ public partial class FrmCrop : ToolForm
 
     protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
-        var isDarkMode = darkMode;
-
         SuspendLayout();
         if (Theme != null)
         {
-            isDarkMode = Theme.Settings.IsDarkMode;
+            EnableTransparent = darkMode = Theme.Settings.IsDarkMode;
 
             TableBottom.BackColor = BackColor.InvertBlackOrWhite(30);
             CmbAspectRatio.DarkMode =
@@ -60,7 +58,7 @@ public partial class FrmCrop : ToolForm
                 BtnSave.DarkMode =
                 BtnSaveAs.DarkMode =
                 BtnCopy.DarkMode =
-                BtnReset.DarkMode = isDarkMode;
+                BtnReset.DarkMode = darkMode;
 
             if (!darkMode)
             {
@@ -70,7 +68,7 @@ public partial class FrmCrop : ToolForm
         }
 
         ResumeLayout(false);
-        base.ApplyTheme(isDarkMode, style);
+        base.ApplyTheme(darkMode, style);
     }
 
 

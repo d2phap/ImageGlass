@@ -34,9 +34,9 @@ public partial class FrmMain
     {
         var isDarkMode = Config.Theme.Settings.IsDarkMode;
         var backdrop = BackdropStyle.None;
-        var enableTransparent = isDarkMode && Config.WindowBackdrop != BackdropStyle.None;
+        EnableTransparent = isDarkMode && Config.WindowBackdrop != BackdropStyle.None;
 
-        if (enableTransparent)
+        if (EnableTransparent)
         {
             backdrop = Config.WindowBackdrop;
             BackdropMargin = new Padding(-1);
@@ -56,7 +56,7 @@ public partial class FrmMain
 
 
         // toolbar
-        Toolbar.EnableTransparent = enableTransparent;
+        Toolbar.EnableTransparent = EnableTransparent;
         Toolbar.Theme =
             MnuMain.Theme =
             MnuContext.Theme =
@@ -70,7 +70,7 @@ public partial class FrmMain
 
 
         // Thumbnail bar
-        Gallery.EnableTransparent = enableTransparent;
+        Gallery.EnableTransparent = EnableTransparent;
         Gallery.SetRenderer(new ModernGalleryRenderer(Config.Theme));
         Gallery.BackColor =
             Sp1.SplitterBackColor =

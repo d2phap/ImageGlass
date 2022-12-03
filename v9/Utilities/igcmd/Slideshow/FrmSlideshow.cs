@@ -129,6 +129,38 @@ public partial class FrmSlideshow : ModernForm
     }
 
 
+    protected override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
+    {
+        SuspendLayout();
+        MnuContext.Theme = Config.Theme;
+
+
+        darkMode = Config.Theme.Settings.IsDarkMode;
+        var backdrop = BackdropStyle.None;
+
+        if (Config.WindowBackdrop != BackdropStyle.None)
+        {
+            backdrop = Config.WindowBackdrop;
+        }
+
+
+        // viewer
+        PicMain.BackColor = Config.SlideshowBackgroundColor;
+        PicMain.ForeColor = PicMain.BackColor.InvertBlackOrWhite(220);
+
+
+        // navigation buttons
+        var navColor = Config.Theme.Colors.ToolbarBgColor;
+        PicMain.NavHoveredColor = navColor.WithAlpha(200);
+        PicMain.NavPressedColor = navColor.WithAlpha(240);
+        PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
+        PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
+
+        ResumeLayout(false);
+        base.ApplyTheme(darkMode, backdrop);
+    }
+
+
     protected override void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
     {
         Config.Theme.ReloadThemeColors();
@@ -1095,42 +1127,6 @@ public partial class FrmSlideshow : ModernForm
     }
 
 
-    protected override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
-    {
-        SuspendLayout();
-
-        MnuContext.Theme = Config.Theme;
-
-
-        var isDarkMode = Config.Theme.Settings.IsDarkMode;
-        var backdrop = BackdropStyle.None;
-
-        if (Config.WindowBackdrop != BackdropStyle.None)
-        {
-            backdrop = Config.WindowBackdrop;
-        }
-
-        
-        // viewer
-        PicMain.BackColor = Config.SlideshowBackgroundColor;
-        PicMain.ForeColor = Config.Theme.Colors.TextColor;
-        PicMain.SelectionColor = Config.Theme.Colors.AccentColor;
-
-
-        // navigation buttons
-        var navColor = Config.Theme.Colors.ToolbarBgColor;
-        PicMain.NavHoveredColor = navColor.WithAlpha(200);
-        PicMain.NavPressedColor = navColor.WithAlpha(240);
-        PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
-        PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
-
-        ResumeLayout(false);
-
-        base.ApplyTheme(isDarkMode, backdrop);
-
-    }
-
-
     /// <summary>
     /// Loads language
     /// </summary>
@@ -1357,7 +1353,7 @@ public partial class FrmSlideshow : ModernForm
 
             // disable background colors
             WindowApi.SetWindowFrame(Handle, new Padding(0));
-            PicMain.BackColor = Config.BackgroundColor.NoAlpha();
+            PicMain.BackColor = Config.SlideshowBackgroundColor.NoAlpha();
 
             Visible = true;
         }
@@ -1391,7 +1387,7 @@ public partial class FrmSlideshow : ModernForm
 
             // re-enable background colors
             WindowApi.SetWindowFrame(Handle, BackdropMargin);
-            PicMain.BackColor = Config.BackgroundColor;
+            PicMain.BackColor = Config.SlideshowBackgroundColor;
         }
     }
 
@@ -1438,7 +1434,7 @@ public partial class FrmSlideshow : ModernForm
         if (cd.ShowDialog() == DialogResult.OK)
         {
             BackColor = PicMain.BackColor = Config.SlideshowBackgroundColor = cd.Color;
-            PicMain.ForeColor = BackColor.InvertBlackOrWhite(220);
+            PicMain.ForeColor = PicMain.BackColor.InvertBlackOrWhite(220);
 
             _isColorPickerOpen = false;
         }
