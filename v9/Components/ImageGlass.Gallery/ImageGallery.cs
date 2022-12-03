@@ -103,6 +103,11 @@ public partial class ImageGallery : Control, IComponent
     #region Properties
 
     /// <summary>
+    /// Enable transparent background.
+    /// </summary>
+    public bool EnableTransparent { get; set; } = true;
+
+    /// <summary>
     /// Gets or sets whether thumbnail images are automatically rotated.
     /// </summary>
     [Category("Behavior"), DefaultValue(true)]

@@ -759,8 +759,20 @@ public class StyleRenderer : IDisposable
     /// <param name="bounds">The client coordinates of the item area.</param>
     public virtual void DrawBackground(Graphics g, Rectangle bounds)
     {
-        // Clear the background
-        g.Clear(ImageGalleryOwner.BackColor);
+        // transparent background
+        if (ImageGalleryOwner.EnableTransparent)
+        {
+            // Clear the background
+            g.Clear(ImageGalleryOwner.BackColor);
+        }
+        else
+        {
+            g.Clear(ImageGalleryOwner.TopLevelControl.BackColor);
+
+            using var bgBrush = new SolidBrush(ImageGalleryOwner.BackColor);
+            g.FillRectangle(bgBrush, bounds);
+        }
+       
 
         // Draw the background image
         if (ImageGalleryOwner.BackgroundImage != null)
