@@ -29,7 +29,6 @@ public class ModernCheckBox : CheckBox
     private ModernControlState _controlState = ModernControlState.Normal;
 
     private bool _spacePressed = false;
-    private int _offset = 1;
     private bool _darkMode = false;
     private IColors ColorPalatte => ThemeUtils.GetThemeColorPalatte(_darkMode);
 
@@ -50,19 +49,6 @@ public class ModernCheckBox : CheckBox
         }
     }
 
-
-    [Category("Appearance")]
-    [Description("Offsets the check in the box to avoid a weird bug")]
-    [DefaultValue(false)]
-    public int Offset
-    {
-        get { return _offset; }
-        set
-        {
-            _offset = value;
-            Invalidate();
-        }
-    }
 
     [Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -162,20 +148,6 @@ public class ModernCheckBox : CheckBox
         get { return base.ThreeState; }
     }
 
-    [Browsable(false)]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public new bool UseCompatibleTextRendering
-    {
-        get { return false; }
-    }
-
-    [Browsable(false)]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public new bool UseVisualStyleBackColor
-    {
-        get { return false; }
-    }
-
     #endregion
 
 
@@ -185,6 +157,8 @@ public class ModernCheckBox : CheckBox
                  ControlStyles.OptimizedDoubleBuffer |
                  ControlStyles.ResizeRedraw |
                  ControlStyles.UserPaint, true);
+
+        BackColor = Color.Transparent;
     }
 
 
@@ -317,13 +291,16 @@ public class ModernCheckBox : CheckBox
 
     protected override void OnPaint(PaintEventArgs e)
     {
+        // draw parent background
+        ButtonRenderer.DrawParentBackground(e.Graphics, e.ClipRectangle, this);
+
         var g = e.Graphics;
         var rect = e.ClipRectangle;
 
         var textColor = ColorPalatte.LightText;
         var borderColor = Checked ? ColorPalatte.BlueHighlight : ColorPalatte.GreySelection;
         var fillColor = Checked ? ColorPalatte.BlueHighlight : ColorPalatte.GreyBackground;
-        
+
         if (Enabled)
         {
             if (_controlState == ModernControlState.Hover)
@@ -407,6 +384,7 @@ public class ModernCheckBox : CheckBox
                 g.SmoothingMode = SmoothingMode.None;
             }
         }
+
 
         // draw text
         using (var b = new SolidBrush(textColor))

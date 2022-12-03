@@ -161,7 +161,6 @@
             this.ChkOption.Location = new System.Drawing.Point(20, 217);
             this.ChkOption.Margin = new System.Windows.Forms.Padding(20, 10, 20, 20);
             this.ChkOption.Name = "ChkOption";
-            this.ChkOption.Offset = 1;
             this.ChkOption.Size = new System.Drawing.Size(289, 27);
             this.ChkOption.TabIndex = 1;
             this.ChkOption.Text = "[Do not show this message again]";
