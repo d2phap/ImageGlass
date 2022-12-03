@@ -81,7 +81,9 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             var lineLeft = tsBounds.Left;
             var lineRight = tsBounds.Right;
 
-            using var pen = new Pen(_theme.Colors.MenuBgColor.InvertBlackOrWhite(10), DpiApi.Transform(1f));
+            var lineColor = _theme.Colors.MenuBgColor.Blend(_theme.Colors.MenuBgColor.InvertBlackOrWhite(), 0.9f);
+
+            using var pen = new Pen(lineColor, DpiApi.Transform(1f));
 
             e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
             e.Graphics.DrawLine(pen, lineLeft, lineY, lineRight, lineY);
@@ -257,9 +259,19 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
                 ? _theme.Colors.MenuTextHoverColor
                 : _theme.Colors.MenuTextColor;
 
-            bgColor = e.Item.Enabled
-                ? bgColor.WithAlpha(20)
-                : bgColor.WithAlpha(7);
+            if (_theme.Settings.IsDarkMode)
+            {
+                bgColor = e.Item.Enabled
+                    ? bgColor.WithAlpha(20)
+                    : bgColor.WithAlpha(7);
+            }
+            else
+            {
+                bgColor = e.Item.Enabled
+                    ? bgColor.WithAlpha(80)
+                    : bgColor.WithAlpha(30);
+            }
+            
 
             // left margin
             var left = 5;
