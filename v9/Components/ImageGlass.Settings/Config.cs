@@ -1053,6 +1053,8 @@ public static class Config
             throw new InvalidDataException($"Unable to load '{th.FolderName}' theme pack. " +
                 $"Please make sure '{th.FolderName}\\{IgTheme.CONFIG_FILE}' file is valid.");
         }
+
+        Theme.ReloadThemeColors();
         #endregion
 
 
