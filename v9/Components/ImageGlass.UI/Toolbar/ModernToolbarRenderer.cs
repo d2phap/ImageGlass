@@ -230,14 +230,27 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
 
     protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
     {
+        if (e.ToolStrip is not ModernToolbar toolBar)
+        {
+            base.OnRenderToolStripBackground(e);
+            return;
+        }
+
         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-        using var brush = new SolidBrush(e.BackColor);
-        var rect = new Rectangle(0, 0, e.ToolStrip.Width, e.ToolStrip.Height);
+        var rect = new Rectangle(0, 0, toolBar.Width, toolBar.Height);
         rect.Inflate(10, 10);
         rect.Location = new Point(-5, -5);
 
+        // none-transparent background
+        if (!toolBar.EnableTransparent)
+        {
+            using var parentBgBrush = new SolidBrush(toolBar.TopLevelControl.BackColor);
+            e.Graphics.FillRectangle(parentBgBrush, rect);
+        }
+
         // draw
+        using var brush = new SolidBrush(e.BackColor);
         e.Graphics.FillRectangle(brush, rect);
 
         base.OnRenderToolStripBackground(e);

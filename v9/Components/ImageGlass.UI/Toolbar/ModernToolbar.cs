@@ -24,25 +24,6 @@ namespace ImageGlass.UI;
 
 
 /// <summary>
-/// Toolbar items alignment.
-/// </summary>
-public enum ToolbarAlignment
-{
-    Left = 0,
-    Center = 1,
-}
-
-/// <summary>
-/// Tooltip direction of toolbar item.
-/// </summary>
-public enum TooltipDirection
-{
-    Top = 0,
-    Bottom = 1,
-}
-
-
-/// <summary>
 /// Modern toolbar
 /// </summary>
 public class ModernToolbar : ToolStrip
@@ -75,6 +56,11 @@ public class ModernToolbar : ToolStrip
 
 
     #region Public properties
+
+    /// <summary>
+    /// Enable transparent background.
+    /// </summary>
+    public bool EnableTransparent { get; set; } = true;
 
     /// <summary>
     /// Show or hide main menu button of toolbar
@@ -665,3 +651,23 @@ public class ModernToolbar : ToolStrip
     //}
 
 }
+
+
+/// <summary>
+/// Toolbar items alignment.
+/// </summary>
+public enum ToolbarAlignment
+{
+    Left = 0,
+    Center = 1,
+}
+
+/// <summary>
+/// Tooltip direction of toolbar item.
+/// </summary>
+public enum TooltipDirection
+{
+    Top = 0,
+    Bottom = 1,
+}
+
