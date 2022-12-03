@@ -185,7 +185,7 @@ namespace ImageGlass
             this.Toolbar.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.Toolbar.ShowItemToolTips = false;
             this.Toolbar.ShowMainMenuButton = true;
-            this.Toolbar.Size = new System.Drawing.Size(1108, 25);
+            this.Toolbar.Size = new System.Drawing.Size(1108, 27);
             this.Toolbar.TabIndex = 1;
             this.Toolbar.Theme = null;
             this.Toolbar.ToolTipDirection = ImageGlass.UI.TooltipDirection.Bottom;
@@ -446,41 +446,41 @@ namespace ImageGlass
             // MnuZoomIn
             // 
             this.MnuZoomIn.Name = "MnuZoomIn";
-            this.MnuZoomIn.Size = new System.Drawing.Size(252, 30);
+            this.MnuZoomIn.Size = new System.Drawing.Size(236, 30);
             this.MnuZoomIn.Text = "[Zoom in]";
             this.MnuZoomIn.Click += new System.EventHandler(this.MnuZoomIn_Click);
             // 
             // MnuZoomOut
             // 
             this.MnuZoomOut.Name = "MnuZoomOut";
-            this.MnuZoomOut.Size = new System.Drawing.Size(252, 30);
+            this.MnuZoomOut.Size = new System.Drawing.Size(236, 30);
             this.MnuZoomOut.Text = "[Zoom out]";
             this.MnuZoomOut.Click += new System.EventHandler(this.MnuZoomOut_Click);
             // 
             // MnuCustomZoom
             // 
             this.MnuCustomZoom.Name = "MnuCustomZoom";
-            this.MnuCustomZoom.Size = new System.Drawing.Size(252, 30);
+            this.MnuCustomZoom.Size = new System.Drawing.Size(236, 30);
             this.MnuCustomZoom.Text = "[Custom zoom...]";
             this.MnuCustomZoom.Click += new System.EventHandler(this.MnuCustomZoom_Click);
             // 
             // MnuActualSize
             // 
             this.MnuActualSize.Name = "MnuActualSize";
-            this.MnuActualSize.Size = new System.Drawing.Size(252, 30);
+            this.MnuActualSize.Size = new System.Drawing.Size(236, 30);
             this.MnuActualSize.Text = "[View actual size]";
             this.MnuActualSize.Click += new System.EventHandler(this.MnuActualSize_Click);
             // 
             // toolStripMenuItem15
             // 
             this.toolStripMenuItem15.Name = "toolStripMenuItem15";
-            this.toolStripMenuItem15.Size = new System.Drawing.Size(249, 6);
+            this.toolStripMenuItem15.Size = new System.Drawing.Size(233, 6);
             // 
             // MnuAutoZoom
             // 
             this.MnuAutoZoom.CheckOnClick = true;
             this.MnuAutoZoom.Name = "MnuAutoZoom";
-            this.MnuAutoZoom.Size = new System.Drawing.Size(252, 30);
+            this.MnuAutoZoom.Size = new System.Drawing.Size(236, 30);
             this.MnuAutoZoom.Tag = "";
             this.MnuAutoZoom.Text = "[Auto Zoom]";
             this.MnuAutoZoom.Click += new System.EventHandler(this.MnuAutoZoom_Click);
@@ -489,7 +489,7 @@ namespace ImageGlass
             // 
             this.MnuLockZoom.CheckOnClick = true;
             this.MnuLockZoom.Name = "MnuLockZoom";
-            this.MnuLockZoom.Size = new System.Drawing.Size(252, 30);
+            this.MnuLockZoom.Size = new System.Drawing.Size(236, 30);
             this.MnuLockZoom.Tag = "";
             this.MnuLockZoom.Text = "[Lock zoom ratio]";
             this.MnuLockZoom.Click += new System.EventHandler(this.MnuLockZoom_Click);
@@ -498,7 +498,7 @@ namespace ImageGlass
             // 
             this.MnuScaleToWidth.CheckOnClick = true;
             this.MnuScaleToWidth.Name = "MnuScaleToWidth";
-            this.MnuScaleToWidth.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToWidth.Size = new System.Drawing.Size(236, 30);
             this.MnuScaleToWidth.Tag = "";
             this.MnuScaleToWidth.Text = "[Scale to width]";
             this.MnuScaleToWidth.Click += new System.EventHandler(this.MnuScaleToWidth_Click);
@@ -507,7 +507,7 @@ namespace ImageGlass
             // 
             this.MnuScaleToHeight.CheckOnClick = true;
             this.MnuScaleToHeight.Name = "MnuScaleToHeight";
-            this.MnuScaleToHeight.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToHeight.Size = new System.Drawing.Size(236, 30);
             this.MnuScaleToHeight.Tag = "";
             this.MnuScaleToHeight.Text = "[Scale to height]";
             this.MnuScaleToHeight.Click += new System.EventHandler(this.MnuScaleToHeight_Click);
@@ -516,7 +516,7 @@ namespace ImageGlass
             // 
             this.MnuScaleToFit.CheckOnClick = true;
             this.MnuScaleToFit.Name = "MnuScaleToFit";
-            this.MnuScaleToFit.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToFit.Size = new System.Drawing.Size(236, 30);
             this.MnuScaleToFit.Tag = "";
             this.MnuScaleToFit.Text = "[Scale to fit]";
             this.MnuScaleToFit.Click += new System.EventHandler(this.MnuScaleToFit_Click);
@@ -525,7 +525,7 @@ namespace ImageGlass
             // 
             this.MnuScaleToFill.CheckOnClick = true;
             this.MnuScaleToFill.Name = "MnuScaleToFill";
-            this.MnuScaleToFill.Size = new System.Drawing.Size(252, 30);
+            this.MnuScaleToFill.Size = new System.Drawing.Size(236, 30);
             this.MnuScaleToFill.Tag = "";
             this.MnuScaleToFill.Text = "[Scale to fill]";
             this.MnuScaleToFill.Click += new System.EventHandler(this.MnuScaleToFill_Click);
@@ -1110,7 +1110,7 @@ namespace ImageGlass
             this.Sp1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Sp1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.Sp1.IsSplitterFixed = true;
-            this.Sp1.Location = new System.Drawing.Point(0, 25);
+            this.Sp1.Location = new System.Drawing.Point(0, 27);
             this.Sp1.Margin = new System.Windows.Forms.Padding(0);
             this.Sp1.Name = "Sp1";
             this.Sp1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -1127,9 +1127,9 @@ namespace ImageGlass
             this.Sp1.Panel2.Controls.Add(this.Gallery);
             this.Sp1.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp1.Panel2MinSize = 0;
-            this.Sp1.Size = new System.Drawing.Size(1108, 569);
+            this.Sp1.Size = new System.Drawing.Size(1108, 567);
             this.Sp1.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.Sp1.SplitterDistance = 543;
+            this.Sp1.SplitterDistance = 541;
             this.Sp1.SplitterWidth = 1;
             this.Sp1.TabIndex = 98;
             this.Sp1.TabStop = false;
@@ -1154,7 +1154,7 @@ namespace ImageGlass
             // 
             this.Sp2.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp2.Panel2MinSize = 10;
-            this.Sp2.Size = new System.Drawing.Size(1108, 543);
+            this.Sp2.Size = new System.Drawing.Size(1108, 541);
             this.Sp2.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.Sp2.SplitterDistance = 730;
             this.Sp2.SplitterWidth = 11;
@@ -1168,6 +1168,7 @@ namespace ImageGlass
             this.PicMain.BaseDpi = 96F;
             this.PicMain.CheckerboardMode = ImageGlass.Base.PhotoBox.CheckerboardMode.Client;
             this.PicMain.CheckFPS = false;
+            this.PicMain.ClientSelection = ((System.Drawing.RectangleF)(resources.GetObject("PicMain.ClientSelection")));
             this.PicMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PicMain.EnableSelection = false;
             this.PicMain.InterpolationScaleDown = ImageGlass.Base.PhotoBox.ImageInterpolation.SampleLinear;
@@ -1179,7 +1180,8 @@ namespace ImageGlass
             this.PicMain.RequestUpdateFrame = false;
             this.PicMain.SelectionAspectRatio = new System.Drawing.SizeF(0F, 0F);
             this.PicMain.SelectionColor = System.Drawing.Color.Black;
-            this.PicMain.Size = new System.Drawing.Size(730, 543);
+            this.PicMain.Size = new System.Drawing.Size(730, 541);
+            this.PicMain.SourceSelection = ((System.Drawing.RectangleF)(resources.GetObject("PicMain.SourceSelection")));
             this.PicMain.TabIndex = 3;
             this.PicMain.OnZoomChanged += new ImageGlass.Views.DXCanvas.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
             this.PicMain.OnNavLeftClicked += new ImageGlass.Views.DXCanvas.NavLeftClickedEventHandler(this.PicMain_OnNavLeftClicked);

@@ -34,15 +34,29 @@ public partial class FrmMain
     {
         var isDarkMode = Config.Theme.Settings.IsDarkMode;
         var backdrop = BackdropStyle.None;
+        var enableTransparent = isDarkMode && Config.WindowBackdrop != BackdropStyle.None;
 
-        if (Config.WindowBackdrop != BackdropStyle.None)
+        if (enableTransparent)
         {
             backdrop = Config.WindowBackdrop;
-            BackdropMargin = new Padding(-1); // TODO: load from config / theme
+            BackdropMargin = new Padding(-1);
+
+            Sp1.BackColor = Sp2.BackColor = Color.Transparent;
+            PicMain.BackColor = Config.BackgroundColor;
+        }
+        else
+        {
+            BackdropMargin = new Padding(0);
+
+            BackColor =
+                Sp1.BackColor =
+                Sp2.BackColor =
+                PicMain.BackColor = Config.BackgroundColor.WithAlpha(255);
         }
 
 
         // toolbar
+        Toolbar.EnableTransparent = enableTransparent;
         Toolbar.Theme =
             MnuMain.Theme =
             MnuContext.Theme =
@@ -51,17 +65,16 @@ public partial class FrmMain
 
 
         // viewer
-        Sp1.BackColor = Sp2.BackColor = Color.Transparent;
-        PicMain.BackColor = Config.BackgroundColor;
         PicMain.ForeColor = Config.Theme.Colors.TextColor;
         PicMain.SelectionColor = WinColorsApi.GetAccentColor(true);
 
 
         // Thumbnail bar
+        Gallery.EnableTransparent = enableTransparent;
         Gallery.SetRenderer(new ModernGalleryRenderer(Config.Theme));
-        Sp1.SplitterBackColor =
-            Sp2.SplitterBackColor =
-            Gallery.BackColor = Config.Theme.Colors.ThumbnailBarBgColor;
+        Gallery.BackColor =
+            Sp1.SplitterBackColor =
+            Sp2.SplitterBackColor = Config.Theme.Colors.ThumbnailBarBgColor;
 
 
         // navigation buttons
