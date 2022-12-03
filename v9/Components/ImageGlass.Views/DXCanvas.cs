@@ -1493,7 +1493,7 @@ public class DXCanvas : DXControl
 
         // draw the clip selection region
         using var selectionGeo = g.GetCombinedRectanglesGeometry(ClientSelection, _destRect, 0, 0, CombineMode.Xor);
-        g.DrawGeometry(selectionGeo, Color.Transparent, BackColor.WithAlpha(_mouseDownButton == MouseButtons.Left ? 100 : 200));
+        g.DrawGeometry(selectionGeo, Color.Transparent, Color.Black.WithAlpha(_mouseDownButton == MouseButtons.Left ? 100 : 180));
 
 
         if (_mouseDownButton == MouseButtons.Left || _isSelectionHovered)
