@@ -33,8 +33,8 @@ public class LightColors : IColors
 {
     public Color GreyBackground => Color.FromArgb(231, 231, 232);
     public Color HeaderBackground => Color.FromArgb(177, 180, 182);
-    public Color BlueBackground => Color.FromArgb(255, 255, 255);
-    public Color DarkBlueBackground => Color.FromArgb(237, 242, 250);
+    public Color BlueBackground => LighterBackground.Blend(WinColorsApi.GetAccentColor(true), 0.88f); // Color.FromArgb(255, 255, 255);
+    public Color DarkBlueBackground => LightBackground.Blend(WinColorsApi.GetAccentColor(true), 0.92f); // Color.FromArgb(237, 242, 250);
     public Color DarkBackground => Color.FromArgb(220, 220, 220);
     public Color MediumBackground => Color.FromArgb(230, 231, 234);
     public Color LightBackground => Color.FromArgb(245, 245, 250); // Control Colour

@@ -239,55 +239,54 @@ public class ModernButton : Button
         g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
 
         var colors = ThemeUtils.GetThemeColorPalatte(DarkMode);
+        var accentColor = WinColorsApi.GetAccentColor(true);
+        var isCTAStyle = _isDefault || ButtonStyle == ModernButtonStyle.CTA;
+
         var textColor = colors.LightText;
         var borderColor = colors.GreySelection;
-        var fillColor = _isDefault
+        var borderRadius = BHelper.IsOS(WindowsOS.Win11OrLater) ? 4f : 0;
+        var fillColor = isCTAStyle
             ? colors.DarkBlueBackground
             : colors.LightBackground;
 
-        var borderRadius = 0f;
-        if (BHelper.IsOS(WindowsOS.Win11OrLater))
-        {
-            borderRadius = 4f;
-        }
 
         if (Enabled)
         {
-            if (ButtonStyle == ModernButtonStyle.Normal)
+            // Normal style
+            switch (ButtonState)
             {
-                switch (ButtonState)
-                {
-                    case ModernControlState.Hover:
-                        fillColor = _isDefault
-                            ? colors.BlueBackground
-                            : colors.LighterBackground;
-                        borderColor = borderColor.WithBrightness(0.3f);
-                        break;
+                case ModernControlState.Hover:
+                    fillColor = isCTAStyle
+                        ? colors.BlueBackground
+                        : colors.LighterBackground;
+                    borderColor = borderColor.WithBrightness(DarkMode ? 0.3f : -0.1f);
+                    break;
 
-                    case ModernControlState.Pressed:
-                        fillColor = _isDefault
-                            ? colors.DarkBackground
-                            : colors.DarkBackground;
-                        break;
-                }
-
-                if (Focused && TabStop)
-                    borderColor = colors.BlueHighlight;
+                case ModernControlState.Pressed:
+                    fillColor = colors.DarkBackground;
+                    break;
             }
+
+            if (Focused && TabStop)
+                borderColor = colors.BlueHighlight;
+
+
+            // Accent style
+            if (ButtonStyle == ModernButtonStyle.Accent)
+            {
+                fillColor = fillColor.Blend(WinColorsApi.GetAccentColor(true), DarkMode ? 0.7f : 0.8f);
+                borderColor = borderColor.WithAlpha(120);
+            }
+
+            // Flat style
             else if (ButtonStyle == ModernButtonStyle.Flat)
             {
-                switch (ButtonState)
+                if (ButtonState == ModernControlState.Pressed)
                 {
-                    case ModernControlState.Normal:
-                        fillColor = colors.GreyBackground;
-                        break;
-                    case ModernControlState.Hover:
-                        fillColor = colors.MediumBackground;
-                        break;
-                    case ModernControlState.Pressed:
-                        fillColor = colors.DarkBackground;
-                        break;
+                    fillColor = colors.MediumBackground;
                 }
+
+                borderColor = fillColor;
             }
         }
         else
@@ -297,53 +296,28 @@ public class ModernButton : Button
         }
 
 
-
-        //// use default system style for light mode
-        //if (!DarkMode)
-        //{
-        //    // draw border
-        //    if (ButtonStyle == ModernButtonStyle.Normal)
-        //    {
-        //        using var pen = new Pen(borderColor, DpiApi.Transform(1f));
-        //        pen.Alignment = System.Drawing.Drawing2D.PenAlignment.Inset;
-
-        //        var borderRect = new RectangleF(
-        //            e.ClipRectangle.X + 2, e.ClipRectangle.Y + 2,
-        //            e.ClipRectangle.Width - 2, e.ClipRectangle.Height - 2);
-        //        using var borderPath = ThemeUtils.GetRoundRectanglePath(borderRect, borderRadius);
-
-        //        g.DrawPath(pen, borderPath);
-        //    }
-
-        //    return;
-        //}
-
-
-
         // draw background
         var btnRect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
         using var bgBrush = new SolidBrush(fillColor);
         g.FillRoundedRectangle(bgBrush, btnRect, borderRadius);
-        
+
 
         // draw border
-        if (ButtonStyle == ModernButtonStyle.Normal)
+        var penWidth = DpiApi.Transform(1.1f);
+        using var pen = new Pen(borderColor, penWidth)
         {
-            var penWidth = DpiApi.Transform(1f);
-            using var pen = new Pen(borderColor, penWidth)
-            {
-                Alignment = PenAlignment.Outset,
-                LineJoin = LineJoin.Round,
-            };
+            Alignment = PenAlignment.Center,
+            LineJoin = LineJoin.Round,
+        };
 
-            var borderRect = new RectangleF(
-                btnRect.X, btnRect.Y,
-                btnRect.Width - penWidth, btnRect.Height - penWidth);
+        var borderRect = new RectangleF(
+            btnRect.X, btnRect.Y,
+            btnRect.Width - penWidth, btnRect.Height - penWidth);
 
-            g.DrawRoundedRectangle(pen, borderRect, borderRadius);
-        }
+        g.DrawRoundedRectangle(pen, borderRect, borderRadius);
 
-        
+
+        // draw content
         var contentRect = new Rectangle(
             Padding.Left,
             Padding.Top,

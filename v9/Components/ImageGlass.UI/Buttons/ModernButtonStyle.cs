@@ -21,5 +21,7 @@ namespace ImageGlass.UI;
 public enum ModernButtonStyle
 {
     Normal,
+    Accent,
+    CTA,
     Flat,
 }

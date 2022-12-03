@@ -33,8 +33,8 @@ public class DarkColors : IColors
 {
     public Color GreyBackground => Color.FromArgb(60, 63, 65); // Form Background
     public Color HeaderBackground => Color.FromArgb(57, 60, 62); // List Alt Color
-    public Color BlueBackground => Color.FromArgb(66, 77, 95);
-    public Color DarkBlueBackground => Color.FromArgb(52, 57, 66);
+    public Color BlueBackground => LighterBackground.Blend(WinColorsApi.GetAccentColor(true), 0.7f); // Color.FromArgb(66, 77, 95);
+    public Color DarkBlueBackground => LightBackground.Blend(WinColorsApi.GetAccentColor(true), 0.8f); // Color.FromArgb(52, 57, 66);
     public Color DarkBackground => Color.FromArgb(43, 43, 43); // Control Clicked
     public Color MediumBackground => Color.FromArgb(49, 51, 53);
     public Color LightBackground => Color.FromArgb(69, 73, 74); // Control Color
