@@ -54,6 +54,7 @@ public partial class FrmCrop : ToolForm
                 NumY.DarkMode =
                 NumWidth.DarkMode =
                 NumHeight.DarkMode =
+                LnkReset.DarkMode =
 
                 BtnSave.DarkMode =
                 BtnSaveAs.DarkMode =

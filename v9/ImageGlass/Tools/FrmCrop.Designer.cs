@@ -42,7 +42,7 @@ namespace ImageGlass
             this.CmbAspectRatio = new ImageGlass.UI.ModernComboBox();
             this.NumRatioFrom = new ImageGlass.UI.ModernNumericUpDown();
             this.NumRatioTo = new ImageGlass.UI.ModernNumericUpDown();
-            this.LnkReset = new System.Windows.Forms.LinkLabel();
+            this.LnkReset = new ModernLinkLabel();
             this.TableBottom = new System.Windows.Forms.TableLayoutPanel();
             this.BtnSave = new ImageGlass.UI.ModernButton();
             this.BtnSaveAs = new ImageGlass.UI.ModernButton();
@@ -292,7 +292,7 @@ namespace ImageGlass
             // 
             // BtnSave
             // 
-            this.BtnSave.ButtonStyle = ImageGlass.UI.ModernButtonStyle.Flat;
+            this.BtnSave.ButtonStyle = ImageGlass.UI.ModernButtonStyle.CTA;
             this.BtnSave.DarkMode = true;
             this.BtnSave.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BtnSave.ImagePadding = 2;
@@ -309,7 +309,7 @@ namespace ImageGlass
             // 
             // BtnSaveAs
             // 
-            this.BtnSaveAs.ButtonStyle = ImageGlass.UI.ModernButtonStyle.Accent;
+            this.BtnSaveAs.ButtonStyle = ImageGlass.UI.ModernButtonStyle.CTA;
             this.BtnSaveAs.DarkMode = true;
             this.BtnSaveAs.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BtnSaveAs.ImagePadding = 2;
@@ -398,6 +398,6 @@ namespace ImageGlass
         private ModernNumericUpDown NumRatioFrom;
         private ModernNumericUpDown NumRatioTo;
         private ToolTip TooltipMain;
-        private LinkLabel LnkReset;
+        private ModernLinkLabel LnkReset;
     }
 }
