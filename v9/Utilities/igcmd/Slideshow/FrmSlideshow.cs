@@ -169,6 +169,15 @@ public partial class FrmSlideshow : ModernForm
     }
 
 
+    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
+    {
+        // update theme here
+        ApplyTheme(e.IsDarkMode);
+
+        base.OnRequestUpdatingColorMode(e);
+    }
+
+
     protected override void OnDpiChanged()
     {
         base.OnDpiChanged();

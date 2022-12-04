@@ -72,6 +72,16 @@ public partial class FrmCrop : ToolForm
     }
 
 
+    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
+    {
+        // update theme here
+        ApplyTheme(e.IsDarkMode);
+        Invalidate(true);
+
+        base.OnRequestUpdatingColorMode(e);
+    }
+
+
     protected override void OnLoad(EventArgs e)
     {
         UpdateHeight();

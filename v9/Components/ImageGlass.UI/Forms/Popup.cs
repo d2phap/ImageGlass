@@ -626,6 +626,15 @@ public partial class Popup : ModernForm
     }
 
 
+    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
+    {
+        // update theme here
+        ApplyTheme(e.IsDarkMode);
+
+        base.OnRequestUpdatingColorMode(e);
+    }
+
+
     protected override void CloseFormByKeys()
     {
         // Closes the form and returns <see cref="DialogResult.Abort"/> code.
