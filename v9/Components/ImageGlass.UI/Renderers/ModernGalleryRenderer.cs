@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Gallery;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using View = ImageGlass.Gallery.View;
 
@@ -31,6 +32,7 @@ namespace ImageGlass.UI;
 public class ModernGalleryRenderer : StyleRenderer
 {
     private IgTheme Theme { get; set; }
+    private float DpiScale => (float)ImageGalleryOwner.DeviceDpi / DpiApi.DPI_DEFAULT;
 
 
     /// <summary>
@@ -85,6 +87,10 @@ public class ModernGalleryRenderer : StyleRenderer
             bounds.Y + itemMargin.Height,
             bounds.Width - itemMargin.Width,
             bounds.Height - 2 * itemMargin.Width);
+        var textSize = new Size(0, 0);
+
+        g.SmoothingMode = SmoothingMode.HighQuality;
+
 
         // background
         #region Draw background
@@ -120,7 +126,6 @@ public class ModernGalleryRenderer : StyleRenderer
         // display text
         #region Display text
 
-        var textSize = new Size(0, 0);
         if (ImageGalleryOwner.ShowItemText)
         {
             textSize = TextRenderer.MeasureText(item.Text, ImageGalleryOwner.Font);
@@ -130,7 +135,7 @@ public class ModernGalleryRenderer : StyleRenderer
             if (state.HasFlag(ItemState.Disabled))
             {
                 // light background color
-                if (Theme.Colors.MenuBgColor.GetBrightness() > 0.5)
+                if (Theme.Colors.ThumbnailBarBgColor.GetBrightness() > 0.5)
                 {
                     foreColor = ThemeUtils.DarkenColor(Theme.Colors.ThumbnailBarBgColor, 0.5f);
                 }
@@ -142,7 +147,7 @@ public class ModernGalleryRenderer : StyleRenderer
             }
 
             var text = item.Text;
-            var textRegion = new Rectangle(
+            var textRegion = new RectangleF(
                 bounds.Left + itemMargin.Width,
                 bounds.Bottom - textSize.Height - itemMargin.Height,
                 bounds.Width - itemMargin.Width * 2,
@@ -153,9 +158,21 @@ public class ModernGalleryRenderer : StyleRenderer
                 text = BHelper.EllipsisText(text, textRegion.Width, g);
             }
 
-            TextRenderer.DrawText(g, text, ImageGalleryOwner.Font, textRegion, foreColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix);
-        }
 
+            // create text image
+            using var textBmp = ThemeUtils.CreateImageFromText(text, ImageGalleryOwner.Font, ImageGalleryOwner.Font.Size, foreColor, null, DpiScale);
+
+            var loc = new PointF(
+                textRegion.X,
+                textRegion.Y + (textRegion.Height / 2 - textBmp.Height / 2));
+
+            if (state == ItemState.Pressed)
+            {
+                loc.Y += 1;
+            }
+            g.DrawImage(textBmp, loc);
+        }
+        
         #endregion
 
 
@@ -197,5 +214,8 @@ public class ModernGalleryRenderer : StyleRenderer
         #endregion
 
     }
+
+
+
 }
 

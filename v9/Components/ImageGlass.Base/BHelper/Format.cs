@@ -114,7 +114,7 @@ public partial class BHelper
 
 
     /// <summary>
-    /// Formats the rating as stars
+    /// Formats the rating as stars.
     /// </summary>
     public static string FormatStarRatingText(int rating)
     {
@@ -128,17 +128,13 @@ public partial class BHelper
 
 
     /// <summary>
-    /// Ellipses the given text
+    /// Ellipses the given text.
     /// </summary>
-    /// <param name="text"></param>
-    /// <param name="containerWidth"></param>
-    /// <param name="g"></param>
-    /// <returns></returns>
-    public static string EllipsisText(string text, int containerWidth, Graphics g)
+    public static string EllipsisText(string text, float containerWidth, Graphics g)
     {
         var textSize = g.MeasureString(text, Control.DefaultFont);
         var avgCharW = textSize.Width / text.Length;
-        var maxCharsPerSide = (int)Math.Floor(containerWidth / avgCharW / 2d) - 1;
+        var maxCharsPerSide = (int)Math.Floor((containerWidth / avgCharW / 2d) - 1);
 
         var truncated = string.Concat(
             text.AsSpan(0, maxCharsPerSide),
