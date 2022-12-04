@@ -27,6 +27,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
 {
     private ModernToolbar Toolbar { get; set; }
     private IgTheme Theme => Toolbar.Theme ?? new();
+    private float DpiScale => (float)Toolbar.DeviceDpi / DpiApi.DPI_DEFAULT;
 
 
     public ModernToolbarRenderer(ModernToolbar control)
@@ -88,10 +89,10 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         #region Draw "..."
 
         const string ELLIPSIS = "...";
-        using var font = new Font(FontFamily.GenericSerif, Toolbar.IconHeight * 0.85f, FontStyle.Bold);
+        using var font = new Font(e.Item.Font.FontFamily, e.Item.Font.Size * 1.4f, FontStyle.Bold);
 
         var fontColor = e.Item.ForeColor.WithAlpha(e.Item.Pressed ? 140 : 180);
-        var textImg = ThemeUtils.CreateImageFromText(ELLIPSIS, font, font.Size, fontColor, Color.Transparent);
+        var textImg = ThemeUtils.CreateImageFromText(ELLIPSIS, font, font.Size, fontColor, null, DpiScale);
 
         var posX = (e.Item.Width / 2) - (textImg.Width / 2) - 1;
         var posY = (e.Item.Height / 2) - (textImg.Height / 2);
@@ -173,6 +174,12 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
     protected override void OnRenderItemImage(ToolStripItemImageRenderEventArgs e)
     {
         if (e.Image is null) return;
+        e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+        var rect = e.ImageRectangle;
+
+        // fix image alignment
+        rect.X -= 1;
+        rect.Y -= 1;
 
         // change opacity of the image
         var cMatrix = new ColorMatrix { Matrix33 = 0.7f };
@@ -195,17 +202,11 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         // on pressed state
         if (e.Item.Pressed)
         {
-            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-
             // move the image down 1px for "pressed" effect
-            var rect = e.ImageRectangle;
             rect.Y += 1;
-
-            e.Graphics.DrawImage(e.Image, rect, 0, 0, e.Image.Width, e.Image.Height, GraphicsUnit.Pixel, imgAttrs);
-            return;
         }
 
-        base.OnRenderItemImage(e);
+        e.Graphics.DrawImage(e.Image, rect, 0, 0, e.Image.Width, e.Image.Height, GraphicsUnit.Pixel, imgAttrs);
     }
 
 
@@ -259,20 +260,30 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
 
     protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
     {
-        e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-
-        // on pressed
-        if (e.Item.Pressed && e.Item.TextImageRelation == TextImageRelation.ImageBeforeText)
-        {
-            using var brush = new SolidBrush(Color.FromArgb(180, e.TextColor));
-            var loc = new Point(e.TextRectangle.X + 2, e.TextRectangle.Y + 1);
-
-            e.Graphics.DrawString(e.Text, e.TextFont, brush, loc);
-        }
-        else
+        if (e.Item.TextImageRelation != TextImageRelation.ImageBeforeText)
         {
             base.OnRenderItemText(e);
+            return;
         }
+
+        var g = e.Graphics;
+        g.SmoothingMode = SmoothingMode.HighQuality;
+
+
+        // create text image
+        var textColor = e.TextColor.WithAlpha(e.Item.Pressed ? 180 : 255);
+        using var textBmp = ThemeUtils.CreateImageFromText(e.Text, e.TextFont, e.TextFont.Size, e.TextColor, null, DpiScale);
+
+        var loc = new PointF(
+            e.TextRectangle.X + (e.TextRectangle.Height * 0.3f),
+            e.TextRectangle.Y + (e.TextRectangle.Height / 2 - textBmp.Height / 2));
+
+        if (e.Item.Pressed)
+        {
+            loc.Y += 1;
+        }
+
+        e.Graphics.DrawImage(textBmp, loc);
     }
 
 }

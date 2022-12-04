@@ -260,16 +260,16 @@ public partial class ThemeUtils
 
 
     /// <summary>
-    /// Creates image from text
+    /// Creates image from text.
     /// </summary>
-    public static Image CreateImageFromText(string text, Font font, float size, Color textColor, Color? backColor = null)
+    public static Image CreateImageFromText(string text, Font font, float size, Color textColor, Color? backColor = null, float dpiScale = 1f)
     {
         var path = new GraphicsPath();
-        path.AddString(text, font.FontFamily, (int)font.Style, size, new Point(0, 0), StringFormat.GenericTypographic);
-        var area = Rectangle.Round(path.GetBounds());
+        path.AddString(text, font.FontFamily, (int)font.Style, size * dpiScale * dpiScale, new Point(0, 0), StringFormat.GenericTypographic);
 
-        var br = Rectangle.Round(path.GetBounds());
-        var img = new Bitmap(br.Width, br.Height);
+        var pathRect = path.GetBounds();
+        var br = new RectangleF(pathRect.X, pathRect.Y, pathRect.Width, pathRect.Height);
+        var img = new Bitmap((int)Math.Ceiling(br.Width) + 1, (int)Math.Ceiling(br.Height));
 
         using var textBrush = new SolidBrush(textColor);
         using var g = Graphics.FromImage(img);
@@ -277,11 +277,12 @@ public partial class ThemeUtils
         g.SmoothingMode = SmoothingMode.HighQuality;
         g.Clear(backColor ?? Color.Transparent);
 
-        g.TranslateTransform((img.Width - br.Width) / 2 - br.X, (img.Height - br.Height) / 2 - br.Y);
+        g.TranslateTransform(
+            (img.Width - br.Width) / 2 - br.X,
+            (float)Math.Floor((img.Height - br.Height) / 2 - br.Y));
         g.FillPath(textBrush, path);
-
-
         g.Save();
+
 
         return img;
     }
