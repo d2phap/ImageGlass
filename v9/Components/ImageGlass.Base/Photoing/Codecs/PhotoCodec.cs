@@ -1088,7 +1088,7 @@ public static class PhotoCodec
         {
             if (imgM.BaseWidth > options.Width || imgM.BaseHeight > options.Height)
             {
-                imgM.InterpolativeResize(options.Width, options.Height, PixelInterpolateMethod.Nearest);
+                imgM.Scale(options.Width, options.Height);
             }
         }
 
@@ -1114,7 +1114,7 @@ public static class PhotoCodec
             var newW = (int)(imgM.BaseWidth * scale);
             var newH = (int)(imgM.BaseHeight * scale);
 
-            imgM.InterpolativeResize(newW, newH, PixelInterpolateMethod.Nearest);
+            imgM.Scale(newW, newH);
         }
     }
 
