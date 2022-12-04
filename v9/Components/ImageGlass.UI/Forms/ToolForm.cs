@@ -211,7 +211,7 @@ public partial class ToolForm : ModernForm
     {
         foreach (Control childControl in c.Controls)
         {
-            if (childControl is Label
+            if ((childControl is Label && childControl is not LinkLabel)
                 || childControl is PictureBox
                 || childControl is TableLayoutPanel)
             {
@@ -233,7 +233,7 @@ public partial class ToolForm : ModernForm
     {
         foreach (Control childControl in c.Controls)
         {
-            if (childControl is Label
+            if ((childControl is Label && childControl is not LinkLabel)
                 || childControl is PictureBox
                 || childControl is TableLayoutPanel)
             {
