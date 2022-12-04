@@ -33,12 +33,11 @@ public partial class FrmMain
     protected override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
     {
         var isDarkMode = Config.Theme.Settings.IsDarkMode;
-        var backdrop = BackdropStyle.None;
-        EnableTransparent = isDarkMode && Config.WindowBackdrop != BackdropStyle.None;
+        var backdrop = backDrop ?? Config.WindowBackdrop;
 
+        EnableTransparent = Config.WindowBackdrop != BackdropStyle.Default;
         if (EnableTransparent)
         {
-            backdrop = Config.WindowBackdrop;
             BackdropMargin = new Padding(-1);
 
             Sp1.BackColor = Sp2.BackColor = Color.Transparent;
@@ -46,8 +45,6 @@ public partial class FrmMain
         }
         else
         {
-            BackdropMargin = new Padding(0);
-
             BackColor =
                 Sp1.BackColor =
                 Sp2.BackColor =

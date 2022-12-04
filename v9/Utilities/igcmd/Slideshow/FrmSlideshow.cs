@@ -136,12 +136,7 @@ public partial class FrmSlideshow : ModernForm
 
 
         darkMode = Config.Theme.Settings.IsDarkMode;
-        var backdrop = BackdropStyle.None;
-
-        if (Config.WindowBackdrop != BackdropStyle.None)
-        {
-            backdrop = Config.WindowBackdrop;
-        }
+        var backdrop = Config.WindowBackdrop;
 
 
         // viewer
