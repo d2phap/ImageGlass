@@ -74,32 +74,6 @@ public partial class ThemeUtils
 
 
     /// <summary>
-    /// Gets system theme (Dark or Light)
-    /// </summary>
-    public static SystemThemeMode GetSystemThemeMode()
-    {
-        const string regPath = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
-        const string regKey = "AppsUseLightTheme";
-
-        using var key = Registry.CurrentUser.OpenSubKey(regPath);
-        var regValue = key?.GetValue(regKey);
-        var themeMode = SystemThemeMode.Dark;
-
-        if (regValue != null)
-        {
-            var themeValue = (int)regValue;
-
-            if (themeValue > 0)
-            {
-                themeMode = SystemThemeMode.Light;
-            }
-        }
-
-        return themeMode;
-    }
-
-
-    /// <summary>
     /// Parses DWord color to <see cref="Color"/>.
     /// </summary>
     /// <param name="dColor">DWord color</param>
@@ -325,13 +299,6 @@ public partial class ThemeUtils
     #endregion
 }
 
-
-public enum SystemThemeMode
-{
-    Unknown,
-    Light,
-    Dark
-}
 
 public enum StatusType
 {

@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using Microsoft.Win32;
 using System.Runtime.InteropServices;
 using Windows.Win32;
 
@@ -53,5 +54,32 @@ public class WinColorsApi
         return color;
     }
 
-}
 
+    /// <summary>
+    /// Checks if the app color mode is dark (default).
+    /// </summary>
+    public static bool IsDarkMode
+    {
+        get
+        {
+            const string regPath = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
+            const string regKey = "AppsUseLightTheme";
+
+            using var key = Registry.CurrentUser.OpenSubKey(regPath);
+            var regValue = key?.GetValue(regKey);
+            var darkMode = true;
+
+            if (regValue != null)
+            {
+                var themeValue = (int)regValue;
+
+                if (themeValue > 0)
+                {
+                    darkMode = false;
+                }
+            }
+
+            return darkMode;
+        }
+    }
+}
