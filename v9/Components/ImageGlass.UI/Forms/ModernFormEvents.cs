@@ -17,14 +17,31 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 
 namespace ImageGlass.UI;
 
+public class SystemColorModeChangedEventArgs
+{
+    /// <summary>
+    /// Checks if the app color mode is dark.
+    /// </summary>
+    public bool IsDarkMode => WinColorsApi.IsDarkMode;
+
+
+    /// <summary>
+    /// Gets, sets value indicates that the event is already handled.
+    /// </summary>
+    public bool Handled { get; set; } = false;
+
+}
+
+
 public class SystemAccentColorChangedEventArgs
 {
     /// <summary>
-    /// System accent color.
+    /// Gets system accent color.
     /// </summary>
     public Color AccentColor => WinColorsApi.GetAccentColor(true);
 

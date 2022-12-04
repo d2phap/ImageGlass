@@ -32,6 +32,7 @@ public partial class ModernForm : Form
     private Padding _backdropMargin = new(-1);
     private int _dpi = DpiApi.DPI_DEFAULT;
     private CancellationTokenSource _systemAccentColorChangedCancelToken = new();
+    private CancellationTokenSource _requestUpdatingColorModeCancelToken = new();
 
 
     #region Public properties
@@ -134,6 +135,13 @@ public partial class ModernForm : Form
     public event SystemAccentColorChangedHandler? SystemAccentColorChanged;
     public delegate void SystemAccentColorChangedHandler(SystemAccentColorChangedEventArgs e);
 
+
+    /// <summary>
+    /// Occurs when the system app color is changed and does not match the <see cref="IsDarkMode"/> value.
+    /// </summary>
+    public event RequestUpdatingColorModeHandler? RequestUpdatingColorMode;
+    public delegate void RequestUpdatingColorModeHandler(SystemColorModeChangedEventArgs e);
+
     #endregion // Public properties
 
 
@@ -146,6 +154,8 @@ public partial class ModernForm : Form
         SizeGripStyle = SizeGripStyle.Hide;
 
         _dpi = DeviceDpi;
+
+        SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
     }
 
 
@@ -188,15 +198,16 @@ public partial class ModernForm : Form
 
             OnDpiChanged();
         }
-        // accent color changed: WM_DWMCOLORIZATIONCOLORCHANGED
+        // WM_DWMCOLORIZATIONCOLORCHANGED: accent color changed
         else if (m.Msg == 0x0320)
         {
             DelayTriggerSystemAccentColorChangedEvent();
         }
 
+
         base.WndProc(ref m);
     }
-
+    
 
     /// <summary>
     /// Triggers <see cref="SystemAccentColorChanged"/> event.
@@ -211,6 +222,16 @@ public partial class ModernForm : Form
         {
             Invalidate(true);
         }
+    }
+
+
+    /// <summary>
+    /// Triggers <see cref="RequestUpdatingColorMode"/> event.
+    /// </summary>
+    protected virtual void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
+    {
+        // emits the event
+        RequestUpdatingColorMode?.Invoke(e);
     }
 
 
@@ -254,6 +275,7 @@ public partial class ModernForm : Form
         SetBackdrop(BackdropStyle);
     }
 
+
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
         // disable parent form shotcuts
@@ -296,10 +318,8 @@ public partial class ModernForm : Form
     /// </summary>
     private void SetBackdrop(BackdropStyle style)
     {
-        if (!EnableTransparent) return;
-
         var backupBgColor = BackColor;
-        if (style != BackdropStyle.None)
+        if (style != BackdropStyle.None && EnableTransparent)
         {
             // back color must be black
             BackColor = Color.Black;
@@ -307,7 +327,7 @@ public partial class ModernForm : Form
 
         // set backdrop style
         var succeeded = WindowApi.SetWindowBackdrop(Handle, (DWM_SYSTEMBACKDROP_TYPE)style);
-        var margin = (succeeded && style != BackdropStyle.None)
+        var margin = (succeeded && style != BackdropStyle.None && EnableTransparent)
             ? BackdropMargin
             : new Padding(0);
 
@@ -317,7 +337,7 @@ public partial class ModernForm : Form
         }
 
         // set window frame
-        _ = WindowApi.SetWindowFrame(Handle, _backdropMargin);
+        _ = WindowApi.SetWindowFrame(Handle, margin);
     }
 
 
@@ -327,6 +347,54 @@ public partial class ModernForm : Form
     private void SetDarkMode(bool enable)
     {
         WindowApi.SetImmersiveDarkMode(Handle, enable);
+    }
+
+
+    private void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
+    {
+        // User settings changed:
+        // - Color mode: dark / light
+        // - Transparency
+        // - Accent color
+        // - others...
+        if (e.Category == UserPreferenceCategory.General)
+        {
+            DelayTriggerRequestUpdatingColorModeEvent();
+        }
+    }
+
+
+    /// <summary>
+    /// Delays triggering <see cref="RequestUpdatingColorMode"/> event.
+    /// </summary>
+    private void DelayTriggerRequestUpdatingColorModeEvent()
+    {
+        _requestUpdatingColorModeCancelToken.Cancel();
+        _requestUpdatingColorModeCancelToken = new();
+
+        _ = TriggerRequestUpdatingColorModeEventAsync(_requestUpdatingColorModeCancelToken.Token);
+    }
+
+
+    /// <summary>
+    /// Triggers <see cref="RequestUpdatingColorMode"/> event.
+    /// </summary>
+    private async Task TriggerRequestUpdatingColorModeEventAsync(CancellationToken token = default)
+    {
+        try
+        {
+            // since the message is triggered multiple times (3 - 5 times)
+            await Task.Delay(200, token);
+            token.ThrowIfCancellationRequested();
+
+            var eventArgs = new SystemColorModeChangedEventArgs();
+            if (IsDarkMode != eventArgs.IsDarkMode)
+            {
+                // emit event here
+                OnRequestUpdatingColorMode(eventArgs);
+            }
+        }
+        catch (OperationCanceledException) { }
     }
 
 
