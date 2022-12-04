@@ -113,7 +113,7 @@ public static class Utility
     /// <returns>New image size.</returns>
     internal static Size GetSizedImageBounds(Image image, Size fit)
     {
-        var f = Math.Max(1f * image.Width / fit.Width, image.Height / fit.Height);
+        var f = Math.Max(1f * image.Width / fit.Width, 1f * image.Height / fit.Height);
         if (f < 1.0f) f = 1.0f; // Do not upsize small images
 
         var width = (int)Math.Round(image.Width / f);

@@ -185,11 +185,12 @@ public class ModernGalleryRenderer : StyleRenderer
 
 
         // image bound
-        var imgRect = Utility.GetSizedImageBounds(img, new(
+        var imgBound = new Rectangle(
             itemBounds.X + itemPadding.Width,
             itemBounds.Y + itemPadding.Height,
             itemBounds.Width - 2 * itemPadding.Width,
-            itemBounds.Height - (2 * itemPadding.Width) - textSize.Height));
+            itemBounds.Height - (2 * itemPadding.Height) - textSize.Height);
+        var imgRect = Utility.GetSizedImageBounds(img, imgBound);
 
         if (state.HasFlag(ItemState.Pressed) || state.HasFlag(ItemState.Disabled))
         {
