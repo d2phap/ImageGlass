@@ -1169,7 +1169,8 @@ public partial class FrmMain
                 heading: Config.Language[$"{langPath}._Confirm"],
                 buttons: PopupButton.Yes_No,
                 thumbnail: Gallery.Items[Local.CurrentIndex].ThumbnailImage,
-                optionText: Config.Language["_._DoNotShowThisMessageAgain"]);
+                optionText: Config.Language["_._DoNotShowThisMessageAgain"],
+                formOwner: this);
 
             // update ShowSaveOverrideConfirmation setting
             Config.ShowSaveOverrideConfirmation = !result.IsOptionChecked;
@@ -1282,7 +1283,8 @@ public partial class FrmMain
                     title: Config.Language[langPath],
                     heading: Config.Language[$"{langPath}._Confirm"],
                     buttons: PopupButton.Yes_No,
-                    optionText: Config.Language["_._DoNotShowThisMessageAgain"]);
+                    optionText: Config.Language["_._DoNotShowThisMessageAgain"],
+                    formOwner: this);
 
                 // update ShowSaveOverrideConfirmation setting
                 Config.ShowSaveOverrideConfirmation = !result.IsOptionChecked;
@@ -1583,7 +1585,8 @@ public partial class FrmMain
                 buttons: PopupButton.Yes_No,
                 icon: overlayIcon,
                 thumbnail: Gallery.Items[Local.CurrentIndex].ThumbnailImage,
-                optionText: Config.Language["_._DoNotShowThisMessageAgain"]);
+                optionText: Config.Language["_._DoNotShowThisMessageAgain"],
+                formOwner: this);
 
             // update the delete confirm setting
             Config.ShowDeleteConfirmation = !result.IsOptionChecked;

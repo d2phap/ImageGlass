@@ -1201,11 +1201,12 @@ public static class Config
         SHSTOCKICONID? icon = SHSTOCKICONID.SIID_INFO,
         Image? thumbnail = null,
         PopupButton buttons = PopupButton.OK,
-        string optionText = "")
+        string optionText = "",
+        Form? formOwner = null)
     {
         SystemSounds.Question.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, StatusType.Info, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, StatusType.Info, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost, formOwner);
     }
 
 
@@ -1227,12 +1228,13 @@ public static class Config
         SHSTOCKICONID? icon = SHSTOCKICONID.SIID_WARNING,
         Image? thumbnail = null,
         PopupButton buttons = PopupButton.OK,
-        string optionText = "")
+        string optionText = "",
+        Form? formOwner = null)
     {
         heading ??= Language["_._Warning"];
         SystemSounds.Exclamation.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, StatusType.Warning, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, StatusType.Warning, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost, formOwner);
     }
 
 
@@ -1254,12 +1256,13 @@ public static class Config
         SHSTOCKICONID? icon = SHSTOCKICONID.SIID_ERROR,
         Image? thumbnail = null,
         PopupButton buttons = PopupButton.OK,
-        string optionText = "")
+        string optionText = "",
+        Form? formOwner = null)
     {
         heading ??= Language["_._Error"];
         SystemSounds.Asterisk.Play();
 
-        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, StatusType.Danger, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost);
+        return Popup.ShowDialog(Theme, Language, description, title, heading, details, note, StatusType.Danger, buttons, icon, thumbnail, optionText, Config.EnableWindowTopMost, formOwner);
     }
 
 

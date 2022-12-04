@@ -793,7 +793,8 @@ public partial class Popup : ModernForm
         SHSTOCKICONID? icon = null,
         Image? thumbnail = null,
         string optionText = "",
-        bool topMost = false)
+        bool topMost = false,
+        Form? formOwner = null)
     {
         var sysIcon = SystemIconApi.GetSystemIcon(icon);
 
@@ -890,7 +891,7 @@ public partial class Popup : ModernForm
             frm.ShowCancelButton = false;
         }
 
-        var exitResult = (PopupExitResult)frm.ShowDialog();
+        var exitResult = (PopupExitResult)frm.ShowDialog(formOwner);
 
 
         return new PopupResult()
