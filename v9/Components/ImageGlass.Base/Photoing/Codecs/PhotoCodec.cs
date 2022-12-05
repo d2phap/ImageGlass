@@ -1084,18 +1084,22 @@ public static class PhotoCodec
     /// </summary>
     private static void ApplySizeSettings(IMagickImage imgM, CodecReadOptions options)
     {
+        var isScaled = false;
         if (options.Width > 0 && options.Height > 0)
         {
             if (imgM.BaseWidth > options.Width || imgM.BaseHeight > options.Height)
             {
-                imgM.Scale(options.Width, options.Height);
+                imgM.Thumbnail(options.Width, options.Height);
+                isScaled = true;
             }
         }
 
 
         // the image is larger than the supported dimension
-        var isSizeTooLarge = imgM.BaseWidth > Constants.MAX_IMAGE_DIMENSION || imgM.BaseHeight > Constants.MAX_IMAGE_DIMENSION;
-        if (options.AutoScaleDownLargeImage && isSizeTooLarge)
+        var isSizeTooLarge = imgM.BaseWidth > Constants.MAX_IMAGE_DIMENSION
+            || imgM.BaseHeight > Constants.MAX_IMAGE_DIMENSION;
+
+        if (!isScaled && options.AutoScaleDownLargeImage && isSizeTooLarge)
         {
             var widthScale = 1f;
             var heightScale = 1f;
