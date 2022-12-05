@@ -206,7 +206,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
             rect.Y += 1;
         }
 
-        e.Graphics.DrawImage(e.Image, rect, 0, 0, e.Image.Width, e.Image.Height, GraphicsUnit.Pixel, imgAttrs);
+        e.Graphics.DrawImage(e.Image, rect, 0, 0, e.Image.Width, e.Image.Height, GraphicsUnit.Pixel, e.Item.Pressed ? imgAttrs : null);
     }
 
 
