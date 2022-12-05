@@ -53,7 +53,7 @@ public partial class ImageGallery : Control, IComponent
     private Image? mErrorImage;
     private bool mIntegralScroll = false;
     private ItemCollection mItems;
-    private bool mRetryOnError = true;
+    private bool mRetryOnError = false;
     internal SelectedItemCollection mSelectedItems;
     internal CheckedItemCollection mCheckedItems;
     private bool mShowFileIcons = false;

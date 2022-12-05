@@ -529,7 +529,12 @@ internal class ThumbnailCacheManager : IDisposable
         // Extract the thumbnail from the source image.
         if (thumb == null)
         {
-            thumb = request.Adaptor.GetThumbnail(request.VirtualItemKey, request.Size, request.UseEmbeddedThumbnails, request.AutoRotate);
+            try
+            {
+                thumb = request.Adaptor.GetThumbnail(request.VirtualItemKey, request.Size, request.UseEmbeddedThumbnails, request.AutoRotate);
+            }
+            // fix infinite re-cache when throwing error
+            catch { }
 
             // Save to disk cache
             if (thumb != null)
