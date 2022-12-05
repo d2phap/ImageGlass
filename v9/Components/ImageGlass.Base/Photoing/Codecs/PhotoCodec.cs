@@ -1252,6 +1252,9 @@ public static class PhotoCodec
                     "34022", // ColorTable
                     "34025", // ImageColorValue
                     "34026", // BackgroundColorValue
+
+                    // Issue https://github.com/d2phap/ImageGlass/issues/1181
+                    "32928",
                 },
             });
         }
