@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using DirectN;
 using ImageGlass.Base;
 using ImageGlass.Base.Actions;
 using ImageGlass.Base.DirectoryComparer;
@@ -882,8 +883,18 @@ public partial class FrmMain : ModernForm
                 Local.Images.Unload(e.Index);
             }
 
-            PicMain.ShowMessage(e.Error.Source + ": " + e.Error.Message,
-                Config.Language[$"{Name}.{nameof(PicMain)}._ErrorText"]);
+            var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
+            var appVersion = App.Version + $" ({archInfo}, .NET {Environment.Version})";
+
+            var debugInfo = $"ImageGlass {Constants.APP_CODE.CapitalizeFirst()} v{appVersion}" +
+                $"\r\n{ImageMagick.MagickNET.Version}" +
+                $"\r\n" +
+                $"\r\nℹ️ Error details:" +
+                $"\r\n";
+
+            PicMain.ShowMessage(debugInfo + 
+                e.Error.Source + ": " + e.Error.Message,
+                Config.Language[$"{Name}.{nameof(PicMain)}._ErrorText"] + " 🥲");
         }
 
         else if (!(e.Data?.ImgData.IsImageNull ?? true))

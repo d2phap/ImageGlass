@@ -590,7 +590,7 @@ public partial class FrmMain
     /// </summary>
     public void IG_About()
     {
-        var archInfo = Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
+        var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
         var appVersion = App.Version + $" ({archInfo})";
 
         var btnDonate = new TaskDialogButton("Donate", allowCloseDialog: false);
