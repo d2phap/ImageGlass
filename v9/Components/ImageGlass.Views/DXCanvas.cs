@@ -766,7 +766,7 @@ public class DXCanvas : DXControl
     /// </summary>
     [Category("Misc")]
     [DefaultValue(1f)]
-    public float MessageBorderRadius { get; set; } = 1f;
+    public float MessageBorderRadius { get; set; } = 6f;
 
     /// <summary>
     /// Gets the current animating source
@@ -1616,8 +1616,8 @@ public class DXCanvas : DXControl
         var drawableArea = new RectangleF(
             textMargin,
             textMargin,
-            Width - textPaddingX,
-            Height - textPaddingY);
+            Math.Max(0, Width - textPaddingX),
+            Math.Max(0, Height - textPaddingY));
 
         var hTextSize = new SizeF();
         var tTextSize = new SizeF();
@@ -1662,9 +1662,8 @@ public class DXCanvas : DXControl
         };
 
 
-        var bgColor = BackColor.WithAlpha(200);
-
         // draw background
+        var bgColor = BackColor.WithAlpha(200);
         g.DrawRectangle(bgRegion, MessageBorderRadius, bgColor, bgColor);
 
 
@@ -1677,13 +1676,14 @@ public class DXCanvas : DXControl
         // draw text heading
         if (hasHeading)
         {
-            g.DrawText(TextHeading, Font.Name, Font.Size * 1.3f, hRegion, ForeColor, DeviceDpi, StringAlignment.Center);
+            var headingColor = ForeColor.Blend(SelectionColor);
+            g.DrawText(TextHeading, Font.Name, Font.Size * 1.3f, hRegion, headingColor, DeviceDpi, StringAlignment.Center);
         }
 
         // draw text
         if (hasText)
         {
-            g.DrawText(Text, Font.Name, Font.Size, tRegion, ForeColor, DeviceDpi, StringAlignment.Center);
+            g.DrawText(Text, Font.Name, Font.Size, tRegion, ForeColor.WithAlpha(230), DeviceDpi, StringAlignment.Center);
         }
     }
 
