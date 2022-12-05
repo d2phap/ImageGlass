@@ -1242,6 +1242,20 @@ public static class PhotoCodec
                 QualityLayers = 100,
             });
         }
+        else if (ext.Equals(".TIF", StringComparison.OrdinalIgnoreCase)
+            || ext.Equals(".TIFF", StringComparison.OrdinalIgnoreCase))
+        {
+            settings.SetDefines(new TiffReadDefines
+            {
+                IgnoreTags = new[] {
+                    // Issue https://github.com/d2phap/ImageGlass/issues/1454
+                    "34022", // ColorTable
+                    "34025", // ImageColorValue
+                    "34026", // BackgroundColorValue
+                },
+            });
+        }
+
 
         if (options.Width > 0 && options.Height > 0)
         {
