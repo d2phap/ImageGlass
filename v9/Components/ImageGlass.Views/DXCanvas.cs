@@ -2285,7 +2285,8 @@ public class DXCanvas : DXControl
         }
         catch { }
 
-        if (durationMs > 0 || token.IsCancellationRequested)
+        var textNotChanged = Text.Equals(text, StringComparison.InvariantCultureIgnoreCase);
+        if (textNotChanged && (durationMs > 0 || token.IsCancellationRequested))
         {
             TextHeading = Text = string.Empty;
 
