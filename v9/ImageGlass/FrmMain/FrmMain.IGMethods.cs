@@ -787,12 +787,6 @@ public partial class FrmMain
 
     public async Task ShowShareDialogAsync()
     {
-        // image error
-        if (PicMain.Source == ImageSource.Null)
-        {
-            return;
-        }
-
         var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
         var langPath = $"{Name}.{nameof(MnuShare)}";
 
@@ -1393,8 +1387,6 @@ public partial class FrmMain
 
     public async Task OpenWithAsync()
     {
-        if (PicMain.Source == ImageSource.Null) return;
-
         string? filePath;
         var langPath = $"{Name}.{nameof(MnuOpenWith)}";
 
