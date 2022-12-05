@@ -1392,6 +1392,8 @@ public partial class FrmSlideshow : ModernForm
             // re-enable background colors
             WindowApi.SetWindowFrame(Handle, BackdropMargin);
             PicMain.BackColor = Config.SlideshowBackgroundColor;
+
+            Config.UpdateFormIcon(this);
         }
     }
 

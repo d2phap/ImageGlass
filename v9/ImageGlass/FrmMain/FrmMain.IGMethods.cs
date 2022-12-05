@@ -1828,13 +1828,15 @@ public partial class FrmMain
                 IG_ToggleGallery(false);
             }
 
-            // disable background colors
-            WindowApi.SetWindowFrame(Handle, new Padding(0));
+            // disable background transparency
             Toolbar.BackColor = Config.Theme.Colors.ToolbarBgColor.NoAlpha();
             PicMain.BackColor = Config.BackgroundColor.NoAlpha();
-            Gallery.BackColor = Config.Theme.Colors.ThumbnailBarBgColor.NoAlpha();
+            Gallery.BackColor =
+                Sp1.SplitterBackColor =
+                Sp2.SplitterBackColor = Config.Theme.Colors.ThumbnailBarBgColor.NoAlpha();
+            WindowApi.SetWindowFrame(Handle, new Padding(0));
 
-            ResumeLayout();
+            ResumeLayout(false);
             Visible = true;
         }
 
@@ -1858,14 +1860,16 @@ public partial class FrmMain
                 IG_ToggleGallery(true);
             }
 
-            // re-enable background colors
-            WindowApi.SetWindowFrame(Handle, BackdropMargin);
+            // re-enable background transparency
             Toolbar.BackColor = Config.Theme.Colors.ToolbarBgColor;
             PicMain.BackColor = Config.BackgroundColor;
-            Gallery.BackColor = Config.Theme.Colors.ThumbnailBarBgColor;
+            Gallery.BackColor =
+                Sp1.SplitterBackColor =
+                Sp2.SplitterBackColor = Config.Theme.Colors.ThumbnailBarBgColor;
+            WindowApi.SetWindowFrame(Handle, BackdropMargin);
 
+            ResumeLayout(false);
 
-            ResumeLayout();
 
             // restore window state, size, position
             if (changeWindowState)
@@ -1896,7 +1900,7 @@ public partial class FrmMain
                     FormBorderStyle = FormBorderStyle.Sizable;
                 }
 
-                Config.ApplyFormTheme(this, Config.Theme);
+                Config.UpdateFormIcon(this);
             }
 
         }

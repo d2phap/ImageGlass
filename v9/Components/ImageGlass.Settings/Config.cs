@@ -1493,35 +1493,19 @@ public static class Config
     #region Public static functions
 
     /// <summary>
-    /// Apply theme colors and logo to form
+    /// Updates form icon using theme setting.
     /// </summary>
-    public static void ApplyFormTheme(Form frm, IgTheme th)
+    public static void UpdateFormIcon(Form frm)
     {
-        // enable dark titlebar
-        if (Config.Theme.Settings.IsDarkMode)
-        {
-            WindowApi.SetImmersiveDarkMode(frm.Handle, true);
-        }
-
-
-        // load theme colors
-        foreach (var ctr in BHelper.GetAllControls(frm, typeof(LinkLabel)))
-        {
-            if (ctr is LinkLabel lnk)
-            {
-                lnk.LinkColor = lnk.VisitedLinkColor = Theme.Colors.AccentColor;
-            }
-        }
-
         // Icon theming
-        if (!th.Settings.IsShowTitlebarLogo)
+        if (!Config.Theme.Settings.IsShowTitlebarLogo)
         {
             frm.Icon = Icon.FromHandle(new Bitmap(64, 64).GetHicon());
-            FormIconApi.SetTaskbarIcon(frm, th.Settings.AppLogo.GetHicon());
+            FormIconApi.SetTaskbarIcon(frm, Config.Theme.Settings.AppLogo.GetHicon());
         }
         else
         {
-            frm.Icon = Icon.FromHandle(th.Settings.AppLogo.GetHicon());
+            frm.Icon = Icon.FromHandle(Config.Theme.Settings.AppLogo.GetHicon());
         }
     }
 
