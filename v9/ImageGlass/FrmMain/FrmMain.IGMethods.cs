@@ -2180,8 +2180,11 @@ public partial class FrmMain
 
     public void IG_ToggleCropTool()
     {
+        PicMain.EnableSelection = true;
+
         var frm = new FrmCrop(this, Config.Theme);
         frm.Show();
+
 
         //var img = await GetSelectedImageAreaAsync();
         //if (img == null) return;

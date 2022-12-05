@@ -165,7 +165,6 @@ public partial class FrmMain
 
 
         // PicMain
-        PicMain.EnableSelection = true;
         PicMain.NavDisplay = Config.EnableNavigationButtons
             ? NavButtonDisplay.Both
             : NavButtonDisplay.None;
