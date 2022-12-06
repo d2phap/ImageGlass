@@ -1243,6 +1243,7 @@ public partial class FrmMain
             RestoreDirectory = true,
             SupportMultiDottedExtensions = true,
             Title = Config.Language[$"{Name}.{nameof(MnuSaveAs)}"],
+            OverwritePrompt = !Config.ShowSaveOverrideConfirmation, // only show 1 prompt
         };
 
 
@@ -1271,12 +1272,14 @@ public partial class FrmMain
                 && Config.ShowSaveOverrideConfirmation)
             {
                 var langPath = $"{Name}.{nameof(MnuSave)}";
+
                 var result = Config.ShowWarning(
-                    description: srcFilePath + "\r\n\r\n" +
-                        Config.Language[$"{langPath}._ConfirmDescription"],
-                    title: Config.Language[langPath],
+                    description: srcFilePath,
+                    note: Config.Language[$"{langPath}._ConfirmDescription"],
+                    title: Config.Language[$"{Name}.{nameof(MnuSaveAs)}"],
                     heading: Config.Language[$"{langPath}._Confirm"],
                     buttons: PopupButton.Yes_No,
+                    thumbnail: Gallery.Items[Local.CurrentIndex].ThumbnailImage,
                     optionText: Config.Language["_._DoNotShowThisMessageAgain"],
                     formOwner: this);
 
