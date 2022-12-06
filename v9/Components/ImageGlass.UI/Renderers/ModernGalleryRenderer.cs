@@ -82,39 +82,48 @@ public class ModernGalleryRenderer : StyleRenderer
     {
         var itemPadding = new Size(5, 5);
         var itemMargin = new Size(5, 5);
-        var itemBounds = new Rectangle(
-            bounds.X,
-            bounds.Y + itemMargin.Height,
-            bounds.Width - itemMargin.Width,
-            bounds.Height - 2 * itemMargin.Width);
         var textSize = new Size(0, 0);
-
-        g.SmoothingMode = SmoothingMode.HighQuality;
 
 
         // background
         #region Draw background
 
-        var radius = BHelper.GetItemBorderRadius(itemBounds.Height, Constants.THUMBNAIL_HEIGHT);
         using var bgBrush = new SolidBrush(Color.Transparent);
+        using var penBorder = new Pen(bgBrush.Color, DpiApi.Transform(1.05f))
+        {
+            Alignment = PenAlignment.Inset,
+        };
 
         // on pressed
         if (state.HasFlag(ItemState.Pressed))
         {
-            bgBrush.Color = Theme.Colors.ThumbnailItemActiveColor;
+            penBorder.Color = bgBrush.Color = Theme.Colors.ThumbnailItemActiveColor;
         }
         // on hover
         else if (state.HasFlag(ItemState.Hovered))
         {
-            bgBrush.Color = Theme.Colors.ThumbnailItemHoverColor;
+            penBorder.Color = bgBrush.Color = Theme.Colors.ThumbnailItemHoverColor;
         }
         // on selected
         else if (state.HasFlag(ItemState.Selected))
         {
-            bgBrush.Color = Theme.Colors.ThumbnailItemSelectedColor;
+            penBorder.Color = bgBrush.Color = Theme.Colors.ThumbnailItemSelectedColor;
+        }
+        // on focused
+        else if (state.HasFlag(ItemState.Focused))
+        {
+            penBorder.Color = Theme.Colors.ThumbnailItemSelectedColor;
+            penBorder.DashStyle = DashStyle.Dash;
         }
 
-        using var penBorder = new Pen(bgBrush.Color, DpiApi.Transform(1.05f));
+
+        var itemBounds = new Rectangle(
+            bounds.X,
+            bounds.Y + itemMargin.Height,
+            bounds.Width - itemMargin.Width,
+            bounds.Height - itemMargin.Height * 2);
+        var radius = BHelper.GetItemBorderRadius((int)itemBounds.Height, Constants.THUMBNAIL_HEIGHT);
+
 
         // draw background
         g.FillRoundedRectangle(bgBrush, itemBounds, radius);
