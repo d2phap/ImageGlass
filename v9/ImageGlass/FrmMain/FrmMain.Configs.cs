@@ -390,14 +390,6 @@ public partial class FrmMain
                 var tagModel = tItem.Tag as ToolbarItemTagModel;
                 if (tagModel is null) continue;
 
-                // get config name
-                var configProp = Config.GetProp(tagModel.CheckableConfigBinding);
-                if (configProp is null) continue;
-
-                // get config value
-                var propValue = configProp.GetValue(null);
-                if (propValue is null) continue;
-
                 // load check state:
                 // Executable is menu item
                 if (tagModel.OnClick.Executable.StartsWith("Mnu"))
@@ -410,6 +402,12 @@ public partial class FrmMain
                         tItem.Checked = mnu.Checked;
                     }
                 }
+
+                // get config name
+                var configProp = Config.GetProp(tagModel.CheckableConfigBinding);
+                var propValue = configProp?.GetValue(null);
+                if (propValue is null) continue;
+
                 // Executable is IGMethod
                 // Example: OnClick = new("IG_SetZoomMode", ZoomMode.AutoZoom.ToString())
                 else if (configProp.PropertyType.IsEnum)

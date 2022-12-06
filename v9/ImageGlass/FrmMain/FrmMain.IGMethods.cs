@@ -2181,21 +2181,24 @@ public partial class FrmMain
     }
 
 
-    public void IG_ToggleCropTool()
+    /// <summary>
+    /// Crops the viewing image.
+    /// </summary>
+    public void IG_Crop()
     {
-        PicMain.EnableSelection = true;
-
-        var frm = new FrmCrop(this, Config.Theme);
-        frm.Show();
+        _ = CropAsync();
+    }
 
 
-        //var img = await GetSelectedImageAreaAsync();
-        //if (img == null) return;
+    public async Task CropAsync()
+    {
+        var img = await GetSelectedImageAreaAsync();
+        if (img == null) return;
 
-        //LoadClipboardImage(img);
+        LoadClipboardImage(img);
 
-        //// reset selection
-        //PicMain.ClientSelection = default;
+        // reset selection
+        PicMain.ClientSelection = default;
     }
 
 
@@ -2218,6 +2221,29 @@ public partial class FrmMain
 
         return BHelper.CropImage(img.ImgData.Image, PicMain.SourceSelection);
     }
+
+
+    /// <summary>
+    /// Toggles crop tool.
+    /// </summary>
+    public bool IG_ToggleCropTool(bool? visible = null)
+    {
+        visible ??= !MnuCropTool.Checked;
+
+        // update menu item state
+        MnuCropTool.Checked =
+            // set selection mode
+            PicMain.EnableSelection = visible.Value;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
+
+        var frm = new FrmCrop(this, Config.Theme);
+        frm.Show();
+
+        return visible.Value;
+    }
+
 
 }
 
