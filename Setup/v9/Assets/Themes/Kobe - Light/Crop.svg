@@ -1,0 +1,14 @@
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+ <!-- ImageGlass icons https://imageglass.org -->
+ <g>
+  <line stroke="#000000" stroke-dasharray="5,2,2,2,2,2" y2="1.180597" x2="19.069399" y1="16.175678" x1="4.074317" stroke-width="0.7" fill="none"/>
+  <g>
+   <line transform="rotate(-180 13.45100784301758,16.42488670349121) " stroke="#000000" y2="16.424891" x2="23.462124" y1="16.424891" x1="3.439893" stroke-width="0.7" fill="none"/>
+   <line transform="rotate(-90 3.741576433181763,6.715555191040039) " stroke="#000000" y2="6.715556" x2="13.752692" y1="6.715556" x1="-6.269539" stroke-width="0.7" fill="none"/>
+  </g>
+  <g>
+   <line stroke="#000000" y2="3.8249" x2="16.633359" y1="3.8249" x1="-3.388872" stroke-width="0.7" fill="none"/>
+   <line transform="rotate(90 16.33158683776856,13.534245491027834) " stroke="#000000" y2="13.534246" x2="26.342705" y1="13.534246" x1="6.320474" stroke-width="0.7" fill="none"/>
+  </g>
+ </g>
+</svg>

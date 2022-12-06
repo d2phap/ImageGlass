@@ -1,0 +1,24 @@
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+ <!-- ImageGlass icons http://www.imageglass.org -->
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="22" width="22" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path stroke="#000" transform="rotate(12.860657691955566 15.101408958435071,11.437088966369625) " id="svg_1" d="m10.831998,19.777466c4.71758,0 8.53882,-3.856155 8.53882,-8.616852c0,-4.760697 -2.95366,-7.418782 -5.89042,-8.063904" stroke-opacity="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="0.7" fill-opacity="null" fill="none"/>
+  <path transform="rotate(-147.07183837890625 5.158140182495116,7.762209892272947) " stroke="#000" id="svg_2" d="m0.88873,-0.502634c4.71758,0 8.53882,3.82123 8.53882,8.53881c0,4.71758 -2.95366,7.35159 -5.89042,7.99087" stroke-opacity="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="0.7" fill-opacity="null" fill="none"/>
+  <g transform="rotate(-55.75260925292969 16.101999282836914,3.3272240161895756) " id="svg_6">
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_3" y2="1.937726" x2="16.304282" y1="4.625398" x1="13.616611" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" stroke="#000" fill="none"/>
+   <line transform="rotate(-90 17.243551254272464,3.372886180877684) " stroke-linecap="null" stroke-linejoin="null" id="svg_5" y2="2.02905" x2="18.587387" y1="4.716722" x1="15.899716" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" stroke="#000" fill="none"/>
+  </g>
+  <g transform="rotate(135 3.681907176971435,16.523571014404293) " id="svg_9">
+   <line stroke-linecap="null" stroke-linejoin="null" id="svg_7" y2="15.134074" x2="3.884191" y1="17.821745" x1="1.196519" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" stroke="#000" fill="none"/>
+   <line transform="rotate(-90 4.823459625244145,16.56923294067383) " stroke-linecap="null" stroke-linejoin="null" id="svg_8" y2="15.225398" x2="6.167296" y1="17.91307" x1="3.479624" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" stroke="#000" fill="none"/>
+  </g>
+ </g>
+</svg>

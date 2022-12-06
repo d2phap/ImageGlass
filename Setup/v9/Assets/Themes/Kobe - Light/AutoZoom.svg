@@ -1,0 +1,13 @@
+<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+ <!-- ImageGlass icons http://www.imageglass.org -->
+ <g>
+  <title>Layer 1</title>
+  <rect stroke="#000" transform="rotate(-90 10.000000000000002,10) " fill="none" stroke-width="0.7" stroke-opacity="null" fill-opacity="null" x="0.375062" y="0.343822" width="19.249877" height="19.312356" id="svg_4"/>
+  <rect stroke="#000" id="svg_1" height="10.538957" width="12.360752" y="4.730521" x="3.819624" stroke-width="0" fill="rgba(0,0,0,0.1)"/>
+  <path id="svg_15" d="m3.4138,12.89379" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none" stroke="#000"/>
+  <g stroke="null" id="svg_6">
+   <ellipse stroke="#000" ry="0.876989" rx="1.071155" id="svg_13" cy="7.843082" cx="13.232634" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+   <path stroke="#000" id="svg_19" d="m5.500303,13.033907c-0.303031,-0.570403 0.743803,-4.746555 2.506911,-4.481722c1.707997,0.244452 2.644644,3.463152 2.961448,3.442779c0.64739,-0.407432 0.840225,-0.977834 1.900841,-1.018579c1.005514,0.040745 1.72177,1.711208 1.68045,1.894551" fill-opacity="null" stroke-opacity="null" stroke-width="0.7" fill="none"/>
+  </g>
+ </g>
+</svg>
