@@ -1037,26 +1037,41 @@ public partial class ImageGallery : Control, IComponent
 
         if (pt.X > 0 && pt.Y > 0)
         {
-            int col = (pt.X + mViewOffset.X) / layoutManager.ItemSizeWithMargin.Width;
-            int row = (pt.Y + mViewOffset.Y) / layoutManager.ItemSizeWithMargin.Height;
+            var startGap = 0;
 
-            if (ScrollOrientation == ScrollOrientation.HorizontalScroll || (ScrollOrientation == ScrollOrientation.VerticalScroll && col <= layoutManager.Cols))
+            // add extra gap for hit test because the items are centered
+            if (View == View.HorizontalStrip
+                && Items.Count <= layoutManager.Cols)
+            {
+                var currentItemsWidth = layoutManager.ItemSizeWithMargin.Width * Items.Count;
+                startGap = layoutManager.ItemAreaBounds.Width / 2 - currentItemsWidth / 2;
+            }
+
+            var col = (pt.X + mViewOffset.X - startGap) / layoutManager.ItemSizeWithMargin.Width;
+            var row = (pt.Y + mViewOffset.Y) / layoutManager.ItemSizeWithMargin.Height;
+
+
+            if (ScrollOrientation == ScrollOrientation.HorizontalScroll
+                || (ScrollOrientation == ScrollOrientation.VerticalScroll && col <= layoutManager.Cols))
             {
                 int index = row * layoutManager.Cols + col;
+
                 if (index >= 0 && index <= Items.Count - 1)
                 {
-                    Rectangle bounds = layoutManager.GetItemBounds(index);
+                    var bounds = layoutManager.GetItemBounds(index);
                     if (bounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
                         itemIndex = index;
+
                     if (ShowCheckBoxes)
                     {
-                        Rectangle checkBoxBounds = layoutManager.GetCheckBoxBounds(index);
+                        var checkBoxBounds = layoutManager.GetCheckBoxBounds(index);
                         if (checkBoxBounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
                             checkBoxHit = true;
                     }
+
                     if (ShowFileIcons)
                     {
-                        Rectangle fileIconBounds = layoutManager.GetIconBounds(index);
+                        var fileIconBounds = layoutManager.GetIconBounds(index);
                         if (fileIconBounds.Contains(pt.X + layoutManager.ItemAreaBounds.Left, pt.Y + layoutManager.ItemAreaBounds.Top))
                             fileIconHit = true;
                     }

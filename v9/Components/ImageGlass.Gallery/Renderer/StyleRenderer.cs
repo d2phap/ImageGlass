@@ -380,6 +380,7 @@ public class StyleRenderer : IDisposable
             ImageGalleryOwner.layoutManager.LastPartiallyVisible == -1)
             return;
 
+        // get items bounds
         var drawItemParams = new List<DrawItemParams>();
         for (int i = ImageGalleryOwner.layoutManager.FirstPartiallyVisible; i <= ImageGalleryOwner.layoutManager.LastPartiallyVisible; i++)
         {

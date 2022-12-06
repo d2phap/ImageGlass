@@ -200,7 +200,18 @@ internal class LayoutManager
         location.Y += cachedItemMargin.Height / 2 - _imageGallery.ViewOffset.Y;
 
         if (ImageGalleryOwner.View == View.HorizontalStrip)
-            location.X += itemIndex * mItemSizeWithMargin.Width;
+        {
+            var startGap = 0;
+
+            // center the items
+            if (ImageGalleryOwner.Items.Count <= mDisplayedCols)
+            {
+                var currentItemsWidth = mItemSizeWithMargin.Width * ImageGalleryOwner.Items.Count;
+                startGap = mItemAreaBounds.Width / 2 - currentItemsWidth / 2;
+            }
+
+            location.X += (itemIndex * mItemSizeWithMargin.Width) + startGap;
+        }
         else
         {
             location.X += (itemIndex % mDisplayedCols) * mItemSizeWithMargin.Width;
