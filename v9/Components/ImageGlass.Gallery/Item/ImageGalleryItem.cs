@@ -574,6 +574,22 @@ public class ImageGalleryItem : ICloneable
     }
 
     /// <summary>
+    /// Removes the current thumbnail and requests to update it.
+    /// </summary>
+    public void UpdateThumbnail()
+    {
+        isDirty = true;
+        if (ImageGalleryOwner != null)
+        {
+            ImageGalleryOwner.thumbnailCache.Remove(Guid, true);
+            ImageGalleryOwner.metadataCache.Remove(Guid);
+            ImageGalleryOwner.metadataCache.Add(Guid, Adaptor, mFileName);
+            if (ImageGalleryOwner.IsItemVisible(Guid))
+                ImageGalleryOwner.Refresh();
+        }
+    }
+
+    /// <summary>
     /// Returns a path string to be used for extracting the shell icon
     /// of the item. Returns the filename for icon files and executables,
     /// file extension for other files.
