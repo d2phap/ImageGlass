@@ -54,9 +54,13 @@ public partial class FrmCrop : ToolForm
                 NumY.DarkMode =
                 NumWidth.DarkMode =
                 NumHeight.DarkMode =
-                LnkReset.DarkMode =
+                
                 NumRatioFrom.DarkMode =
                 NumRatioTo.DarkMode =
+
+                BtnSettings.DarkMode =
+                BtnQuickSelect.DarkMode =
+                BtnReset.DarkMode =
 
                 BtnSave.DarkMode =
                 BtnSaveAs.DarkMode =
@@ -304,13 +308,6 @@ public partial class FrmCrop : ToolForm
     }
 
 
-    private void LnkReset_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-    {
-        Local.FrmMain.PicMain.ClientSelection = new();
-        Local.FrmMain.PicMain.Invalidate();
-    }
-
-
     private void BtnSave_Click(object sender, EventArgs e)
     {
         Local.FrmMain.IG_Save();
@@ -334,5 +331,19 @@ public partial class FrmCrop : ToolForm
         Local.FrmMain.IG_Crop();
     }
 
-    
+    private void BtnReset_Click(object sender, EventArgs e)
+    {
+        Local.FrmMain.PicMain.ClientSelection = new();
+        Local.FrmMain.PicMain.Invalidate();
+    }
+
+    private void BtnQuickSelect_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void BtnSettings_Click(object sender, EventArgs e)
+    {
+
+    }
 }
