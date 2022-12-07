@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
+using System.ComponentModel;
 
 namespace ImageGlass.UI;
 
@@ -39,6 +40,35 @@ public partial class ToolForm : ModernForm
     /// Gets, sets the init location
     /// </summary>
     public Point InitLocation { get; set; }
+
+
+    #region Make a tool window
+
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public new Size MinimumSize => new Size();
+
+
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public new Size MaximumSize => new Size();
+
+
+    protected override bool ShowWithoutActivation => true;
+
+    protected override CreateParams CreateParams
+    {
+        get
+        {
+            CreateParams baseParams = base.CreateParams;
+
+            const int WS_EX_NOACTIVATE = 0x08000000;
+            baseParams.ExStyle |= WS_EX_NOACTIVATE;
+
+            return baseParams;
+        }
+    }
+    #endregion // Make a tool window
 
 
     #region Events to manage the form location relative to parent
@@ -157,6 +187,7 @@ public partial class ToolForm : ModernForm
 
         Opacity = 0.85;
     }
+
 
     protected override void OnLoad(EventArgs e)
     {
