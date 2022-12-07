@@ -55,6 +55,8 @@ public partial class FrmCrop : ToolForm
                 NumWidth.DarkMode =
                 NumHeight.DarkMode =
                 LnkReset.DarkMode =
+                NumRatioFrom.DarkMode =
+                NumRatioTo.DarkMode =
 
                 BtnSave.DarkMode =
                 BtnSaveAs.DarkMode =
@@ -134,7 +136,7 @@ public partial class FrmCrop : ToolForm
 
             return menuHotkey != null;
         }
-        
+
         if (CheckHotkey(nameof(Local.FrmMain.MnuSave)))
         {
             BtnSave.PerformClick();
@@ -207,14 +209,11 @@ public partial class FrmCrop : ToolForm
     /// </summary>
     private void UpdateHeight()
     {
-        MinimumSize = new Size(0, 0);
-
         // calculate form height
         var contentHeight = TableTop.Height + TableTop.Padding.Vertical +
             TableBottom.Height + (TableBottom.Padding.Vertical * 2);
 
         Height = contentHeight;
-        MinimumSize = new Size(Width, contentHeight);
     }
 
 
@@ -251,7 +250,6 @@ public partial class FrmCrop : ToolForm
 
             CmbAspectRatio.Items.Add(displayName);
         }
-
 
         // select item
         CmbAspectRatio.SelectedIndex = 0;

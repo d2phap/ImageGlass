@@ -282,7 +282,7 @@ namespace ImageGlass
             this.TableBottom.Controls.Add(this.BtnCopy, 1, 1);
             this.TableBottom.Controls.Add(this.BtnCrop, 1, 0);
             this.TableBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.TableBottom.Location = new System.Drawing.Point(0, 263);
+            this.TableBottom.Location = new System.Drawing.Point(0, 260);
             this.TableBottom.Name = "TableBottom";
             this.TableBottom.Padding = new System.Windows.Forms.Padding(20, 10, 20, 10);
             this.TableBottom.RowCount = 2;
@@ -359,12 +359,11 @@ namespace ImageGlass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(330, 369);
+            this.ClientSize = new System.Drawing.Size(330, 366);
             this.Controls.Add(this.TableBottom);
             this.Controls.Add(this.TableTop);
-            this.KeyPreview = true;
-            this.Location = new System.Drawing.Point(0, 0);
             this.Name = "FrmCrop";
+            this.Opacity = 0.85D;
             this.Text = "[Crop tool]";
             this.TableTop.ResumeLayout(false);
             this.TableTop.PerformLayout();
