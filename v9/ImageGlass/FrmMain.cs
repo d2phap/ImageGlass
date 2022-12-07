@@ -238,7 +238,7 @@ public partial class FrmMain : ModernForm
         }
 
         e.TooltipContent = sb.ToString();
-        e.TooltipTitle = e.Item.Text + $" ({e.Item.Details.OriginalWidth} x {e.Item.Details.OriginalWidth})";
+        e.TooltipTitle = e.Item.Text + $" ({e.Item.Details.OriginalWidth} x {e.Item.Details.OriginalHeight})";
     }
 
 
