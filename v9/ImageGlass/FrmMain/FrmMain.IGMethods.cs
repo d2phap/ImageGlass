@@ -1133,23 +1133,7 @@ public partial class FrmMain
     /// </summary>
     public void IG_Save()
     {
-        if (Local.ClipboardImage != null)
-        {
-            IG_SaveAs();
-            return;
-        }
-
         var srcFilePath = Local.Images.GetFilePath(Local.CurrentIndex);
-        Local.ImageModifiedPath = srcFilePath;
-
-        _ = SaveImageAsync();
-    }
-
-
-    public async Task SaveImageAsync()
-    {
-        // use backup name to avoid variable conflict
-        var filePath = Local.ImageModifiedPath;
         var langPath = $"{Name}.{nameof(MnuSave)}";
 
 
@@ -1157,7 +1141,7 @@ public partial class FrmMain
         if (Config.ShowSaveOverrideConfirmation)
         {
             var result = Config.ShowWarning(
-                description: filePath,
+                description: srcFilePath,
                 note: Config.Language[$"{langPath}._ConfirmDescription"],
                 title: Config.Language[langPath],
                 heading: Config.Language[$"{langPath}._Confirm"],
@@ -1172,44 +1156,7 @@ public partial class FrmMain
             if (result.ExitResult != PopupExitResult.OK) return;
         }
 
-
-        PicMain.ShowMessage(filePath, Config.Language[$"{langPath}._Saving"]);
-
-        var img = await Local.Images.GetAsync(Local.CurrentIndex);
-        if (img?.ImgData?.Image == null)
-        {
-            Local.ImageModifiedPath = "";
-            PicMain.ShowMessage("Image is null.", Config.Language[$"{langPath}._Error"], Config.InAppMessageDuration);
-            return;
-        }
-
-        try
-        {
-            var lastWriteTime = File.GetLastWriteTime(filePath);
-
-            await PhotoCodec.SaveAsync(filePath, filePath, Local.Images.ReadOptions, Local.CurrentChanges, Config.ImageEditQuality);
-
-            // Issue #307: option to preserve the modified date/time
-            if (Config.PreserveModifiedDate)
-            {
-                File.SetLastWriteTime(filePath, lastWriteTime);
-            }
-
-            // update cache of the modified item
-            Gallery.Items[Local.CurrentIndex].UpdateDetails(true);
-
-            PicMain.ShowMessage(filePath, Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
-        }
-        catch (Exception ex)
-        {
-            PicMain.ClearMessage();
-            _ = Config.ShowError(ex.Source + ":\r\n" + ex.Message,
-                Config.Language[langPath],
-                string.Format(Config.Language[$"{langPath}._Error"]), filePath);
-        }
-
-
-        Local.ImageModifiedPath = "";
+        _ = SaveImageAsync(srcFilePath, srcFilePath);
     }
 
 
@@ -1218,8 +1165,6 @@ public partial class FrmMain
     /// </summary>
     public void IG_SaveAs()
     {
-        if (PicMain.Source == ImageSource.Null) return;
-
         var srcFilePath = "";
         var srcExt = ".png";
 
@@ -1233,6 +1178,7 @@ public partial class FrmMain
                 srcExt = ".png";
             }
         }
+
 
         using var saveDialog = new SaveFileDialog
         {
@@ -1258,124 +1204,225 @@ public partial class FrmMain
         var extIndex = !string.IsNullOrEmpty(Local.SaveAsFilterExt)
             ? SavingExts.IndexOf(Local.SaveAsFilterExt)
             : SavingExts.IndexOf(srcExt);
-
         saveDialog.FilterIndex = Math.Max(extIndex, 0) + 1;
 
-        if (saveDialog.ShowDialog() == DialogResult.OK)
+        // show dialog
+        if (saveDialog.ShowDialog() != DialogResult.OK) return;
+
+
+        var destExt = Path.GetExtension(saveDialog.FileName).ToLowerInvariant();
+        Local.SaveAsFilterExt = destExt;
+
+
+        // show override warning
+        if (File.Exists(saveDialog.FileName) && Config.ShowSaveOverrideConfirmation)
         {
-            var destExt = Path.GetExtension(saveDialog.FileName).ToLower();
-            Local.SaveAsFilterExt = destExt;
+            var langPath = $"{Name}.{nameof(MnuSave)}";
+            var fi = new FileInfo(saveDialog.FileName);
 
+            var result = Config.ShowWarning(
+                description: saveDialog.FileName + "\r\n" + BHelper.FormatSize(fi.Length),
+                note: Config.Language[$"{langPath}._ConfirmDescription"],
+                title: Config.Language[$"{Name}.{nameof(MnuSaveAs)}"],
+                heading: Config.Language[$"{langPath}._Confirm"],
+                buttons: PopupButton.Yes_No,
+                optionText: Config.Language["_._DoNotShowThisMessageAgain"],
+                formOwner: this);
 
-            // show override warning
-            if (File.Exists(saveDialog.FileName)
-                && Config.ShowSaveOverrideConfirmation)
+            // update ShowSaveOverrideConfirmation setting
+            Config.ShowSaveOverrideConfirmation = !result.IsOptionChecked;
+
+            if (result.ExitResult != PopupExitResult.OK)
             {
-                var langPath = $"{Name}.{nameof(MnuSave)}";
-
-                var result = Config.ShowWarning(
-                    description: srcFilePath,
-                    note: Config.Language[$"{langPath}._ConfirmDescription"],
-                    title: Config.Language[$"{Name}.{nameof(MnuSaveAs)}"],
-                    heading: Config.Language[$"{langPath}._Confirm"],
-                    buttons: PopupButton.Yes_No,
-                    thumbnail: Gallery.Items[Local.CurrentIndex].ThumbnailImage,
-                    optionText: Config.Language["_._DoNotShowThisMessageAgain"],
-                    formOwner: this);
-
-                // update ShowSaveOverrideConfirmation setting
-                Config.ShowSaveOverrideConfirmation = !result.IsOptionChecked;
-
-                if (result.ExitResult != PopupExitResult.OK)
-                {
-                    return;
-                }
+                return;
             }
-
-
-            _ = SaveImageAsAsync(saveDialog.FileName, destExt, srcFilePath);
         }
+
+
+        _ = SaveImageAsync(saveDialog.FileName, srcFilePath);
     }
 
 
     /// <summary>
-    /// Save image to file
+    /// Save the viewing image to file.
+    ///   <para>
+    ///     The source image is checked by this order:
+    ///     <list type="number">
+    ///       <item>Selected image area.</item>
+    ///       <item><see cref="Local.ClipboardImage"/>.</item>
+    ///       <item>Source <paramref name="srcFilePath"/> file.</item>
+    ///     </list>
+    ///   </para>
     /// </summary>
     /// <param name="destFilePath">Destination file path</param>
-    /// <param name="destExt">Destination file extension. E.g. ".png"</param>
-    /// <param name="srcFilePath">Source file path</param>
-    public async Task SaveImageAsAsync(string destFilePath, string destExt, string srcFilePath = "")
+    /// <param name="srcFilePath">
+    ///   Source file path.
+    ///   <para>
+    ///     <c>Note:**</c>
+    ///     If it's empty, ImageGlass will check for the selection and clipboard image.
+    ///   </para>
+    /// </param>
+    public async Task SaveImageAsync(string destFilePath, string srcFilePath = "")
     {
         var hasSrcPath = !string.IsNullOrEmpty(srcFilePath);
-        if (!hasSrcPath && Local.ClipboardImage == null)
-        {
-            return;
-        }
-
-        WicBitmapSource? clonedPic = null;
-        IgPhoto? img = null;
-        var srcExt = "";
         var langPath = $"{Name}.{nameof(MnuSave)}";
+        Exception? error = null;
 
         PicMain.ShowMessage(destFilePath, Config.Language[$"{langPath}._Saving"]);
 
-        // get the bitmap data from file
-        if (hasSrcPath)
-        {
-            img = await Local.Images.GetAsync(Local.CurrentIndex);
-            clonedPic = img?.ImgData?.Image?.Clone();
 
-            srcExt = Path.GetExtension(srcFilePath).ToLowerInvariant();
+        // save the selection
+        var hasSelection = PicMain.EnableSelection && !PicMain.SourceSelection.IsEmpty;
+        if (hasSelection)
+        {
+            using var selectedImg = await GetSelectedImageAreaAsync();
+            error = await DoSaveAsync(selectedImg, srcFilePath, destFilePath);
         }
-        // get bitmap from clipboard image
+
+        // save the clipboard image
         else if (Local.ClipboardImage != null)
         {
-            clonedPic = Local.ClipboardImage.Clone();
+            error = await DoSaveAsync(Local.ClipboardImage, srcFilePath, destFilePath);
         }
 
-        if (clonedPic == null)
+        // save the image in the list
+        else if (hasSrcPath)
         {
-            PicMain.ShowMessage("Image is null.", Config.Language[$"{langPath}._Error"], Config.InAppMessageDuration);
+            error = await DoSaveAsync(srcFilePath, destFilePath);
+        }
+
+        // image is empty
+        else
+        {
             return;
         }
 
+
+        // Error
+        if (error != null)
+        {
+            PicMain.ClearMessage();
+
+            _ = Config.ShowError(
+                description: error.Source + ":\r\n" + error.Message,
+                title: Config.Language[langPath],
+                heading: string.Format(Config.Language[$"{langPath}._Error"]),
+                details: destFilePath,
+                formOwner: this);
+        }
+        else
+        {
+            if (hasSelection)
+            {
+                // TODO: remove when FileWatcher ready!
+                // reload to view the updated image
+                IG_Reload();
+
+                // reset selection
+                PicMain.ClientSelection = default;
+            }
+            else if (Local.ClipboardImage != null)
+            {
+                // clear the clipboard image
+                LoadClipboardImage(null);
+
+                // TODO: remove when FileWatcher ready!
+                // reload to view the updated image
+                IG_Reload();
+            }
+
+            PicMain.ShowMessage(destFilePath, Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
+
+
+            // file was overriden
+            if (destFilePath.Equals(srcFilePath, StringComparison.InvariantCultureIgnoreCase))
+            {
+                // update cache of the modified item
+                Gallery.Items[Local.CurrentIndex].UpdateThumbnail();
+                Gallery.Items[Local.CurrentIndex].UpdateDetails(true);
+            }
+        }
+
+        // activate the FrmMain again
+        await Task.Delay(300);
+        Activate();
+    }
+
+
+    /// <summary>
+    /// Saves the given <see cref="WicBitmapSource"/> image to file.
+    /// </summary>
+    public async Task<Exception?> DoSaveAsync(WicBitmapSource? wicImg, string srcPath, string destPath)
+    {
         try
         {
+            var lastWriteTime = File.GetLastWriteTime(destPath);
+
             // base64 format
-            if (destExt == ".b64" || destExt == ".txt")
+            if (destPath.EndsWith(".b64", StringComparison.InvariantCultureIgnoreCase)
+                || destPath.EndsWith(".txt", StringComparison.InvariantCultureIgnoreCase))
             {
-                if (hasSrcPath)
-                {
-                    await PhotoCodec.SaveAsBase64Async(srcFilePath, destFilePath, Local.Images.ReadOptions, Local.CurrentChanges);
-                }
-                else if (Local.ClipboardImage != null)
-                {
-                    await PhotoCodec.SaveAsBase64Async(clonedPic, srcExt, destFilePath);
-                }
+                var srcExt = Path.GetExtension(srcPath);
+                await PhotoCodec.SaveAsBase64Async(wicImg, srcExt, destPath);
             }
             // other formats
             else
             {
-                if (hasSrcPath)
-                {
-                    await PhotoCodec.SaveAsync(srcFilePath, destFilePath, Local.Images.ReadOptions, Local.CurrentChanges, Config.ImageEditQuality);
-                }
-                else if (Local.ClipboardImage != null)
-                {
-                    await PhotoCodec.SaveAsync(clonedPic, destFilePath, Config.ImageEditQuality);
-                }
+                await PhotoCodec.SaveAsync(wicImg, destPath, Config.ImageEditQuality);
             }
 
-            PicMain.ShowMessage(destFilePath, Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
+            // Issue #307: option to preserve the modified date/time
+            if (Config.PreserveModifiedDate)
+            {
+                File.SetLastWriteTime(destPath, lastWriteTime);
+            }
         }
         catch (Exception ex)
         {
-            PicMain.ClearMessage();
-            _ = Config.ShowError(ex.Source + ":\r\n" + ex.Message,
-                Config.Language[langPath],
-                string.Format(Config.Language[$"{langPath}._Error"]), destFilePath);
+            return ex;
         }
+
+        return null;
     }
+
+
+    /// <summary>
+    /// Saves the given image path to file.
+    /// </summary>
+    public async Task<Exception?> DoSaveAsync(string srcPath, string destPath)
+    {
+        try
+        {
+            var lastWriteTime = File.GetLastWriteTime(destPath);
+
+            // base64 format
+            if (destPath.EndsWith(".b64", StringComparison.InvariantCultureIgnoreCase)
+                || destPath.EndsWith(".txt", StringComparison.InvariantCultureIgnoreCase))
+            {
+                await PhotoCodec.SaveAsBase64Async(srcPath, destPath, Local.Images.ReadOptions, Local.CurrentChanges);
+
+            }
+            // other formats
+            else
+            {
+                await PhotoCodec.SaveAsync(srcPath, destPath, Local.Images.ReadOptions, Local.CurrentChanges, Config.ImageEditQuality);
+            }
+
+            // Issue #307: option to preserve the modified date/time
+            if (Config.PreserveModifiedDate)
+            {
+                File.SetLastWriteTime(destPath, lastWriteTime);
+            }
+        }
+        catch (Exception ex)
+        {
+            return ex;
+        }
+
+        return null;
+    }
+
+
 
     #endregion // Saving
 
