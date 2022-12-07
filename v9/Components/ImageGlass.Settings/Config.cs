@@ -333,7 +333,7 @@ public static class Config
     /// <summary>
     /// Gets, sets the setting to control whether the image's original modified date value is preserved on save
     /// </summary>
-    public static bool PreserveModifiedDate { get; set; } = true;
+    public static bool PreserveModifiedDate { get; set; } = false;
 
     /// <summary>
     /// Gets, sets the value indicates that there is a new version

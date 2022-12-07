@@ -42,12 +42,12 @@ namespace ImageGlass
             this.CmbAspectRatio = new ImageGlass.UI.ModernComboBox();
             this.NumRatioFrom = new ImageGlass.UI.ModernNumericUpDown();
             this.NumRatioTo = new ImageGlass.UI.ModernNumericUpDown();
-            this.LnkReset = new ModernLinkLabel();
+            this.LnkReset = new ImageGlass.UI.ModernLinkLabel();
             this.TableBottom = new System.Windows.Forms.TableLayoutPanel();
             this.BtnSave = new ImageGlass.UI.ModernButton();
             this.BtnSaveAs = new ImageGlass.UI.ModernButton();
             this.BtnCopy = new ImageGlass.UI.ModernButton();
-            this.BtnReset = new ImageGlass.UI.ModernButton();
+            this.BtnCrop = new ImageGlass.UI.ModernButton();
             this.TooltipMain = new System.Windows.Forms.ToolTip(this.components);
             this.TableTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumX)).BeginInit();
@@ -258,6 +258,7 @@ namespace ImageGlass
             this.LnkReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LnkReset.AutoSize = true;
             this.TableTop.SetColumnSpan(this.LnkReset, 2);
+            this.LnkReset.DarkMode = false;
             this.LnkReset.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.LnkReset.Location = new System.Drawing.Point(249, 80);
             this.LnkReset.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
@@ -279,7 +280,7 @@ namespace ImageGlass
             this.TableBottom.Controls.Add(this.BtnSave, 0, 0);
             this.TableBottom.Controls.Add(this.BtnSaveAs, 0, 1);
             this.TableBottom.Controls.Add(this.BtnCopy, 1, 1);
-            this.TableBottom.Controls.Add(this.BtnReset, 1, 0);
+            this.TableBottom.Controls.Add(this.BtnCrop, 1, 0);
             this.TableBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.TableBottom.Location = new System.Drawing.Point(0, 263);
             this.TableBottom.Name = "TableBottom";
@@ -338,21 +339,21 @@ namespace ImageGlass
             this.BtnCopy.Text = "[Copy]";
             this.BtnCopy.Click += new System.EventHandler(this.BtnCopy_Click);
             // 
-            // BtnReset
+            // BtnCrop
             // 
-            this.BtnReset.DarkMode = true;
-            this.BtnReset.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BtnReset.ImagePadding = 2;
-            this.BtnReset.Location = new System.Drawing.Point(168, 10);
-            this.BtnReset.Margin = new System.Windows.Forms.Padding(3, 0, 0, 3);
-            this.BtnReset.Name = "BtnReset";
-            this.BtnReset.Padding = new System.Windows.Forms.Padding(5);
-            this.BtnReset.Size = new System.Drawing.Size(142, 40);
-            this.BtnReset.SystemIcon = null;
-            this.BtnReset.TabIndex = 3;
-            this.BtnReset.Text = "[Crop only]";
-            this.BtnReset.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.BtnReset.Click += new System.EventHandler(this.BtnCrop_Click);
+            this.BtnCrop.DarkMode = true;
+            this.BtnCrop.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.BtnCrop.ImagePadding = 2;
+            this.BtnCrop.Location = new System.Drawing.Point(168, 10);
+            this.BtnCrop.Margin = new System.Windows.Forms.Padding(3, 0, 0, 3);
+            this.BtnCrop.Name = "BtnCrop";
+            this.BtnCrop.Padding = new System.Windows.Forms.Padding(5);
+            this.BtnCrop.Size = new System.Drawing.Size(142, 40);
+            this.BtnCrop.SystemIcon = null;
+            this.BtnCrop.TabIndex = 3;
+            this.BtnCrop.Text = "[Crop only]";
+            this.BtnCrop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BtnCrop.Click += new System.EventHandler(this.BtnCrop_Click);
             // 
             // FrmCrop
             // 
@@ -394,7 +395,7 @@ namespace ImageGlass
         private ModernButton BtnSave;
         private ModernButton BtnSaveAs;
         private ModernButton BtnCopy;
-        private ModernButton BtnReset;
+        private ModernButton BtnCrop;
         private ModernNumericUpDown NumRatioFrom;
         private ModernNumericUpDown NumRatioTo;
         private ToolTip TooltipMain;

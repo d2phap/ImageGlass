@@ -59,7 +59,7 @@ public partial class FrmCrop : ToolForm
                 BtnSave.DarkMode =
                 BtnSaveAs.DarkMode =
                 BtnCopy.DarkMode =
-                BtnReset.DarkMode = darkMode;
+                BtnCrop.DarkMode = darkMode;
 
             if (!darkMode)
             {
@@ -315,31 +315,25 @@ public partial class FrmCrop : ToolForm
 
     private void BtnSave_Click(object sender, EventArgs e)
     {
-        //SaveSelectionAsync();
-    }
-
-
-    private async Task SaveSelectionAsync()
-    {
-        var img = await Local.FrmMain.GetSelectedImageAreaAsync();
+        Local.FrmMain.IG_Save();
     }
 
 
     private void BtnSaveAs_Click(object sender, EventArgs e)
     {
-        //
+        Local.FrmMain.IG_SaveAs();
     }
 
 
     private void BtnCopy_Click(object sender, EventArgs e)
     {
-        Local.FrmMain.MnuCopyImageData.PerformClick();
+        Local.FrmMain.IG_CopyImageData();
     }
 
 
     private void BtnCrop_Click(object sender, EventArgs e)
     {
-
+        Local.FrmMain.IG_Crop();
     }
 
     
