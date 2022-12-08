@@ -50,6 +50,7 @@ public class ModernButton : Button
     private int _imagePadding = 2; // Consts.Padding / 2
 
     private SHSTOCKICONID? _systemIcon = null;
+    private IconName _svgIcon = IconName.None;
 
     #endregion
 
@@ -64,12 +65,20 @@ public class ModernButton : Button
         get => _darkMode;
         set
         {
+            if (_darkMode != value)
+            {
+                UpdateSvgImage(value);
+            }
+
             _darkMode = value;
             Invalidate();
         }
     }
 
 
+    /// <summary>
+    /// Gets, sets the system icon.
+    /// </summary>
     [DefaultValue(false)]
     public SHSTOCKICONID? SystemIcon
     {
@@ -78,7 +87,26 @@ public class ModernButton : Button
         {
             _systemIcon = value;
 
+            Image?.Dispose();
             Image = SystemIconApi.GetSystemIcon(_systemIcon, false);
+            Invalidate();
+        }
+    }
+
+
+    /// <summary>
+    /// Gets, sets the SVG icon.
+    /// </summary>
+    [Browsable(false)]
+    public IconName SvgIcon
+    {
+        get => _svgIcon;
+        set
+        {
+            _svgIcon = value;
+            Image?.Dispose();
+
+            UpdateSvgImage(DarkMode);
             Invalidate();
         }
     }
@@ -129,6 +157,7 @@ public class ModernButton : Button
             Invalidate();
         }
     }
+
 
     #endregion
 
@@ -520,5 +549,16 @@ public class ModernButton : Button
 
     #endregion
 
+
+    /// <summary>
+    /// Updates the button image using <see cref="SvgIcon"/>.
+    /// </summary>
+    public void UpdateSvgImage(bool darkMode)
+    {
+        var svgPath = IconFile.GetFullPath(_svgIcon);
+        var size = Height - Padding.Vertical * 2;
+
+        Image = BHelper.ToGdiPlusBitmapFromSvg(svgPath, darkMode, size, size);
+    }
 
 }
