@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageMagick;
 using Microsoft.Win32.SafeHandles;
@@ -24,7 +25,6 @@ using System.Drawing.Imaging;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using WicNet;
 using ColorProfile = ImageMagick.ColorProfile;
@@ -243,6 +243,17 @@ public partial class BHelper
     }
 
 
+    /// <summary>
+    /// Loads and process the SVG file, replaces <c>#000</c> or <c>#fff</c>
+    /// by the corresponding hex color value of the <paramref name="darkMode"/>.
+    /// </summary>
+    public static Bitmap? ToGdiPlusBitmapFromSvg(string? svgFilePath, bool darkMode, int? width = null, int? height = null)
+    {
+        if (string.IsNullOrEmpty(svgFilePath)) return null;
+
+        using var imgM = PhotoCodec.ReadSvgWithMagick(svgFilePath, darkMode, width, height);
+        return imgM.ToBitmap(ImageFormat.Png);
+    }
 
 
     /// <summary>
@@ -577,7 +588,7 @@ public partial class BHelper
         var y = (int)srcSelection.Y;
 
         return WicBitmapSource.FromSourceRect(img, x, y, width, height);
-    }
+    }    
 
 }
 
