@@ -94,8 +94,8 @@ namespace ImageGlass
             this.TableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.TableTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.TableTop.Size = new System.Drawing.Size(330, 241);
+            this.TableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.TableTop.Size = new System.Drawing.Size(330, 221);
             this.TableTop.TabIndex = 0;
             // 
             // LblLocation
@@ -132,6 +132,7 @@ namespace ImageGlass
             this.BtnSettings.Name = "BtnSettings";
             this.BtnSettings.Padding = new System.Windows.Forms.Padding(5);
             this.BtnSettings.Size = new System.Drawing.Size(60, 40);
+            this.BtnSettings.SvgIcon = ImageGlass.Base.IconName.None;
             this.BtnSettings.SystemIcon = null;
             this.BtnSettings.TabIndex = 9;
             this.BtnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -299,6 +300,7 @@ namespace ImageGlass
             this.BtnReset.Name = "BtnReset";
             this.BtnReset.Padding = new System.Windows.Forms.Padding(5);
             this.BtnReset.Size = new System.Drawing.Size(60, 40);
+            this.BtnReset.SvgIcon = ImageGlass.Base.IconName.None;
             this.BtnReset.SystemIcon = null;
             this.BtnReset.TabIndex = 8;
             this.BtnReset.Click += new System.EventHandler(this.BtnReset_Click);
@@ -312,6 +314,7 @@ namespace ImageGlass
             this.BtnQuickSelect.Name = "BtnQuickSelect";
             this.BtnQuickSelect.Padding = new System.Windows.Forms.Padding(5);
             this.BtnQuickSelect.Size = new System.Drawing.Size(60, 40);
+            this.BtnQuickSelect.SvgIcon = ImageGlass.Base.IconName.None;
             this.BtnQuickSelect.SystemIcon = null;
             this.BtnQuickSelect.TabIndex = 7;
             this.BtnQuickSelect.Click += new System.EventHandler(this.BtnQuickSelect_Click);
@@ -348,6 +351,7 @@ namespace ImageGlass
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Padding = new System.Windows.Forms.Padding(5);
             this.BtnSave.Size = new System.Drawing.Size(142, 40);
+            this.BtnSave.SvgIcon = ImageGlass.Base.IconName.None;
             this.BtnSave.SystemIcon = null;
             this.BtnSave.TabIndex = 0;
             this.BtnSave.Text = "[Save]";
@@ -365,6 +369,7 @@ namespace ImageGlass
             this.BtnSaveAs.Name = "BtnSaveAs";
             this.BtnSaveAs.Padding = new System.Windows.Forms.Padding(5);
             this.BtnSaveAs.Size = new System.Drawing.Size(142, 40);
+            this.BtnSaveAs.SvgIcon = ImageGlass.Base.IconName.None;
             this.BtnSaveAs.SystemIcon = null;
             this.BtnSaveAs.TabIndex = 1;
             this.BtnSaveAs.Text = "[Save as...]";
@@ -380,6 +385,7 @@ namespace ImageGlass
             this.BtnCopy.Name = "BtnCopy";
             this.BtnCopy.Padding = new System.Windows.Forms.Padding(5);
             this.BtnCopy.Size = new System.Drawing.Size(142, 40);
+            this.BtnCopy.SvgIcon = ImageGlass.Base.IconName.None;
             this.BtnCopy.SystemIcon = null;
             this.BtnCopy.TabIndex = 3;
             this.BtnCopy.Text = "[Copy]";
@@ -395,6 +401,7 @@ namespace ImageGlass
             this.BtnCrop.Name = "BtnCrop";
             this.BtnCrop.Padding = new System.Windows.Forms.Padding(5);
             this.BtnCrop.Size = new System.Drawing.Size(142, 40);
+            this.BtnCrop.SvgIcon = ImageGlass.Base.IconName.None;
             this.BtnCrop.SystemIcon = null;
             this.BtnCrop.TabIndex = 2;
             this.BtnCrop.Text = "[Crop only]";

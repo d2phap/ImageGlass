@@ -32,6 +32,11 @@ public partial class FrmCrop : ToolForm
         InitializeComponent();
         Owner = owner;
 
+        BtnSettings.SvgIcon = IconName.Setting;
+        BtnReset.SvgIcon = IconName.ResetSelection;
+        BtnQuickSelect.SvgIcon = IconName.Selection;
+        BtnCopy.SvgIcon = IconName.Copy;
+
 
         ApplyTheme(Theme.Settings.IsDarkMode);
     }
