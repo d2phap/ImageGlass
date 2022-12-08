@@ -19,10 +19,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using DirectN;
 using ImageMagick;
 using ImageMagick.Formats;
+using System.Drawing.Imaging;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Media.Media3D;
 using WicNet;
+using static System.Windows.Forms.Design.AxImporter;
 using ColorProfile = ImageMagick.ColorProfile;
 
 namespace ImageGlass.Base.Photoing.Codecs;
@@ -305,6 +307,50 @@ public static class PhotoCodec
         }
 
         return string.Empty;
+    }
+
+
+    /// <summary>
+    /// Reads and processes the SVG file, replaces <c>#000</c> or <c>#fff</c>
+    /// by the corresponding hex color value of the <paramref name="darkMode"/>.
+    /// </summary>
+    public static MagickImage? ReadSvgWithMagick(string svgFilePath, bool darkMode, int? width, int? height)
+    {
+        // preprocess SVG content
+        var svg = string.Empty;
+        using var fs = new StreamReader(svgFilePath);
+        svg = fs.ReadToEnd();
+        
+
+        if (darkMode)
+        {
+            svg = svg.Replace("#000", "#fff");
+        }
+        else
+        {
+            svg = svg.Replace("#fff", "#000");
+        }
+
+        using var ms = new MemoryStream(Encoding.UTF8.GetBytes(svg));
+
+
+        // set up Magick settings
+        var settings = new MagickReadSettings();
+        settings.SetDefine("svg:xml-parse-huge", "true");
+        settings.Format = MagickFormat.Svg;
+        settings.BackgroundColor = MagickColors.Transparent;
+
+        if (width > 0 && height > 0)
+        {
+            settings.Width = width;
+            settings.Height = height;
+        }
+
+
+        var imgM = new MagickImage();
+        imgM.Read(ms, settings);
+
+        return imgM;
     }
 
 
@@ -597,7 +643,6 @@ public static class PhotoCodec
     }
 
 
-
     /// <summary>
     /// Applies changes from <see cref="IgImgChanges"/>.
     /// </summary>
@@ -637,14 +682,14 @@ public static class PhotoCodec
     /// <summary>
     /// Read image file using stream
     /// </summary>
-    private static (bool loadSuccessful, IgImgData result, string ext, MagickReadSettings settings) ReadWithStream(string filenPath, CodecReadOptions? options = null, IgImgChanges? changes = null)
+    private static (bool loadSuccessful, IgImgData result, string ext, MagickReadSettings settings) ReadWithStream(string filePath, CodecReadOptions? options = null, IgImgChanges? changes = null)
     {
         options ??= new();
         var loadSuccessful = true;
         
-        var metadata = LoadMetadata(filenPath, options);
-        var ext = Path.GetExtension(filenPath).ToUpperInvariant();
-        var settings = ParseSettings(options, filenPath);
+        var metadata = LoadMetadata(filePath, options);
+        var ext = Path.GetExtension(filePath).ToUpperInvariant();
+        var settings = ParseSettings(options, filePath);
 
         var result = new IgImgData();
         result.FrameCount = metadata?.FramesCount ?? 0;
@@ -657,7 +702,7 @@ public static class PhotoCodec
             case ".TXT": // base64 string
             case ".B64":
                 var base64Content = string.Empty;
-                using (var fs = new StreamReader(filenPath))
+                using (var fs = new StreamReader(filePath))
                 {
                     base64Content = fs.ReadToEnd();
                 }
@@ -684,11 +729,11 @@ public static class PhotoCodec
                     // Note: Using FileStream is much faster than using MagickImageCollection
                     if (result.CanAnimate)
                     {
-                        result.Bitmap = BHelper.ToGdiPlusBitmap(filenPath);
+                        result.Bitmap = BHelper.ToGdiPlusBitmap(filePath);
                     }
                     else
                     {
-                        result.Image = WicBitmapSource.Load(filenPath);
+                        result.Image = WicBitmapSource.Load(filePath);
                     }
                 }
                 catch
@@ -749,6 +794,13 @@ public static class PhotoCodec
         var result = new IgImgData(data);
 
         return result;
+    }
+
+
+    public static void InitMagickNET()
+    {
+        OpenCL.IsEnabled = true;
+        ResourceLimits.LimitMemory(new Percentage(75));
     }
 
 
