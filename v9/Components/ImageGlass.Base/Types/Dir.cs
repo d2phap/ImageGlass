@@ -12,6 +12,11 @@ public static class Dir
     public static string Themes { get; } = "Themes";
 
     /// <summary>
+    /// Gets the Icons folder name
+    /// </summary>
+    public static string Icons { get; } = "Icons";
+
+    /// <summary>
     /// Gets the Languages folder name
     /// </summary>
     public static string Languages { get; } = "Languages";
