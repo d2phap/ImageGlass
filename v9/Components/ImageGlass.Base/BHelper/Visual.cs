@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 
 namespace ImageGlass.Base;
 
@@ -96,6 +97,27 @@ public static partial class BHelper
 
         path.CloseFigure();
         return path;
+    }
+
+
+    /// <summary>
+    /// Creates default toolbar icon.
+    /// </summary>
+    public static Bitmap CreateDefaultToolbarIcon(int iconSize, bool darkMode)
+    {
+        var bmp = new Bitmap(iconSize, iconSize);
+
+        var g = Graphics.FromImage(bmp);
+        g.SmoothingMode = SmoothingMode.HighQuality;
+        g.CompositingQuality = CompositingQuality.HighQuality;
+        g.TextRenderingHint = TextRenderingHint.AntiAlias;
+
+        using var brush = new SolidBrush(darkMode ? Color.White.WithAlpha(100) : Color.Black.WithAlpha(100));
+
+        var rect = new Rectangle(0, 0, iconSize - 1, iconSize - 1);
+        g.FillEllipse(brush, rect);
+
+        return bmp;
     }
 
 }

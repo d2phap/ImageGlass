@@ -393,30 +393,10 @@ public class IgTheme : IDisposable
         var icon = ToolbarIcons.GetType().GetProperty(name ?? string.Empty)?.GetValue(ToolbarIcons);
 
         // set empty icon
-        icon ??= CreateDefaultToolbarIcon();
+        icon ??= BHelper.CreateDefaultToolbarIcon(ToolbarActualIconHeight, Settings.IsDarkMode);
 
         return icon as Bitmap;
     }
 
-
-    /// <summary>
-    /// Creates default toolbar icon.
-    /// </summary>
-    public Bitmap CreateDefaultToolbarIcon()
-    {
-        var bmp = new Bitmap(ToolbarActualIconHeight, ToolbarActualIconHeight);
-
-        var g = Graphics.FromImage(bmp);
-        g.SmoothingMode = SmoothingMode.HighQuality;
-        g.CompositingQuality = CompositingQuality.HighQuality;
-        g.TextRenderingHint = TextRenderingHint.AntiAlias;
-
-        using var brush = new SolidBrush(Settings.IsDarkMode ? Color.White.WithAlpha(100) : Color.Black.WithAlpha(100));
-
-        var rect = new Rectangle(0, 0, ToolbarActualIconHeight - 1, ToolbarActualIconHeight - 1);
-        g.FillEllipse(brush, rect);
-
-        return bmp;
-    }
 
 }
