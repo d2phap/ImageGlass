@@ -65,12 +65,8 @@ public class ModernButton : Button
         get => _darkMode;
         set
         {
-            if (_darkMode != value)
-            {
-                UpdateSvgImage(value);
-            }
-
             _darkMode = value;
+            UpdateSvgImage(_darkMode);
             Invalidate();
         }
     }
@@ -97,7 +93,7 @@ public class ModernButton : Button
     /// <summary>
     /// Gets, sets the SVG icon.
     /// </summary>
-    [Browsable(false)]
+    [DefaultValue(IconName.None)]
     public IconName SvgIcon
     {
         get => _svgIcon;
@@ -105,6 +101,7 @@ public class ModernButton : Button
         {
             _svgIcon = value;
             Image?.Dispose();
+            Image = null;
 
             UpdateSvgImage(DarkMode);
             Invalidate();
@@ -241,19 +238,19 @@ public class ModernButton : Button
     protected override void OnHandleCreated(EventArgs e)
     {
         base.OnHandleCreated(e);
+
+        UpdateSvgImage(_darkMode);
     }
 
-    private void SetButtonState(ModernControlState buttonState)
+    protected override void Dispose(bool disposing)
     {
-        if (_buttonState != buttonState)
-        {
-            _buttonState = buttonState;
-            Invalidate();
-        }
+        base.Dispose(disposing);
+
+        Image?.Dispose();
+        Image = null;
     }
 
     #endregion
-
 
 
     #region Event Handler Region
@@ -550,14 +547,29 @@ public class ModernButton : Button
     #endregion
 
 
+    private void SetButtonState(ModernControlState buttonState)
+    {
+        if (_buttonState != buttonState)
+        {
+            _buttonState = buttonState;
+            Invalidate();
+        }
+    }
+
+
     /// <summary>
     /// Updates the button image using <see cref="SvgIcon"/>.
     /// </summary>
     public void UpdateSvgImage(bool darkMode)
     {
-        var svgPath = IconFile.GetFullPath(_svgIcon);
         var size = Height - Padding.Vertical * 2;
+        if (DesignMode && _svgIcon != IconName.None)
+        {
+            Image = BHelper.CreateDefaultToolbarIcon(size, darkMode);
+            return;
+        }
 
+        var svgPath = IconFile.GetFullPath(_svgIcon);
         Image = BHelper.ToGdiPlusBitmapFromSvg(svgPath, darkMode, size, size);
     }
 
