@@ -32,12 +32,6 @@ public partial class FrmCrop : ToolForm
         InitializeComponent();
         Owner = owner;
 
-        BtnSettings.SvgIcon = IconName.Setting;
-        BtnReset.SvgIcon = IconName.ResetSelection;
-        BtnQuickSelect.SvgIcon = IconName.Selection;
-        BtnCopy.SvgIcon = IconName.Copy;
-
-
         ApplyTheme(Theme.Settings.IsDarkMode);
     }
 
@@ -228,15 +222,33 @@ public partial class FrmCrop : ToolForm
 
     private void ApplyLanguage()
     {
+        Text = Config.Language[$"{nameof(Local.FrmMain)}.{nameof(Local.FrmMain.MnuCropTool)}"];
+
+        LblAspectRatio.Text = Config.Language[$"{Name}.{nameof(LblAspectRatio)}"];
+        LblLocation.Text = Config.Language[$"{Name}.{nameof(LblLocation)}"];
+        LblSize.Text = Config.Language[$"{Name}.{nameof(LblSize)}"];
+
+        BtnSave.Text = Config.Language[$"{Name}.{nameof(BtnSave)}"];
+        BtnSaveAs.Text = Config.Language[$"{Name}.{nameof(BtnSaveAs)}"];
+        BtnCrop.Text = Config.Language[$"{Name}.{nameof(BtnCrop)}"];
+        BtnCopy.Text = Config.Language[$"{Name}.{nameof(BtnCopy)}"];
+
+
         // get hotkey string
         var saveHotkey = Config.GetHotkeyString(FrmMain.CurrentMenuHotkeys, nameof(Local.FrmMain.MnuSave));
         var saveAsHotkey = Config.GetHotkeyString(FrmMain.CurrentMenuHotkeys, nameof(Local.FrmMain.MnuSaveAs));
         var copyHotkey = Config.GetHotkeyString(FrmMain.CurrentMenuHotkeys, nameof(Local.FrmMain.MnuCopyImageData));
 
-        // set hotkey
-        TooltipMain.SetToolTip(BtnSave, saveHotkey);
-        TooltipMain.SetToolTip(BtnSaveAs, saveAsHotkey);
-        TooltipMain.SetToolTip(BtnCopy, copyHotkey);
+
+        // set tooltip
+        TooltipMain.SetToolTip(BtnQuickSelect, Config.Language[$"{Name}.{nameof(BtnQuickSelect)}._Tooltip"]);
+        TooltipMain.SetToolTip(BtnReset, Config.Language[$"{Name}.{nameof(BtnReset)}._Tooltip"]);
+        TooltipMain.SetToolTip(BtnSettings, Config.Language[$"{Name}.{nameof(BtnSettings)}._Tooltip"]);
+
+        TooltipMain.SetToolTip(BtnSave, string.Concat(Config.Language[$"{Name}.{nameof(BtnSave)}._Tooltip"], $" ({saveHotkey})"));
+        TooltipMain.SetToolTip(BtnSaveAs, string.Concat(Config.Language[$"{Name}.{nameof(BtnSaveAs)}._Tooltip"], $" ({saveAsHotkey})"));
+        TooltipMain.SetToolTip(BtnCrop, Config.Language[$"{Name}.{nameof(BtnCrop)}._Tooltip"]);
+        TooltipMain.SetToolTip(BtnCopy, string.Concat(Config.Language[$"{Name}.{nameof(BtnCopy)}._Tooltip"], $" ({copyHotkey})"));
     }
 
 
@@ -254,7 +266,12 @@ public partial class FrmCrop : ToolForm
             else
             {
                 var arName = Enum.GetName(typeof(SelectionAspectRatio), arValue);
-                displayName = arName;
+                var langPath = $"{Name}.{nameof(SelectionAspectRatio)}._{arName}";
+
+                if (!Config.Language.TryGetValue(langPath, out displayName))
+                {
+                    displayName = arName;
+                }
             }
 
             CmbAspectRatio.Items.Add(displayName);
@@ -268,8 +285,8 @@ public partial class FrmCrop : ToolForm
     private void UpdateAspectRatioValues()
     {
         var ratio = (SelectionAspectRatio)CmbAspectRatio.SelectedIndex;
-        var ratioFrom = 0;
-        var ratioTo = 0;
+        var ratioFrom = NumRatioFrom.Value;
+        var ratioTo = NumRatioTo.Value;
 
 
         if (ratio == SelectionAspectRatio.Original)

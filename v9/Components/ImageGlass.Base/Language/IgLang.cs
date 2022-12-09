@@ -678,12 +678,26 @@ public class IgLang : Dictionary<string, string>
         #endregion
 
         #region FrmCrop
-        Add("FrmCrop.lblWidth", "Width:"); //v7.6
-        Add("FrmCrop.lblHeight", "Height:"); //v7.6
-        Add("FrmCrop.btnSave", "Save"); //v7.6
-        Add("FrmCrop.btnSaveAs", "Save as…"); //v7.6
-        Add("FrmCrop.btnCopy", "Copy"); //v7.6
-        Add("FrmCrop.btnReset", "Reset"); //v8.0
+        Add("FrmCrop.LblAspectRatio", "Aspect ratio:"); //v9.0
+        Add("FrmCrop.LblLocation", "Location:"); //v9.0
+        Add("FrmCrop.LblSize", "Size:"); //v9.0
+
+        Add("FrmCrop.SelectionAspectRatio._FreeRatio", "Free ratio"); //v9.0
+        Add("FrmCrop.SelectionAspectRatio._Custom", "Custom…"); //v9.0
+        Add("FrmCrop.SelectionAspectRatio._Original", "Original"); //v9.0
+
+        Add("FrmCrop.BtnQuickSelect._Tooltip", "Quick select…"); //v9.0
+        Add("FrmCrop.BtnReset._Tooltip", "Reset selection"); //v9.0
+        Add("FrmCrop.BtnSettings._Tooltip", "Open Crop tool settings…"); //v9.0
+
+        Add("FrmCrop.BtnSave", "Save"); //v9.0
+        Add("FrmCrop.BtnSave._Tooltip", "Save image"); //v9.0
+        Add("FrmCrop.BtnSaveAs", "Save as…"); //v9.0
+        Add("FrmCrop.BtnSaveAs._Tooltip", "Save as a copy…"); //v9.0
+        Add("FrmCrop.BtnCrop", "Crop"); //v9.0
+        Add("FrmCrop.BtnCrop._Tooltip", "Crop the image only"); //v9.0
+        Add("FrmCrop.BtnCopy", "Copy"); //v9.0
+        Add("FrmCrop.BtnCopy._Tooltip", "Copy the selection to clipboard"); //v9.0
 
         #endregion
 
