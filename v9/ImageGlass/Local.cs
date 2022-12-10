@@ -22,6 +22,7 @@ using ImageGlass.Base.NamedPipes;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.Services;
 using ImageGlass.Settings;
+using ImageGlass.UI;
 using System.IO.Pipes;
 using WicNet;
 
@@ -125,10 +126,15 @@ internal class Local
     }
 
 
-    #endregion
+    #endregion // Public events
 
 
     #region Public properties
+
+    /// <summary>
+    /// Gets, sets the tools.
+    /// </summary>
+    public static Dictionary<string, ModernForm?> Tools { get; set; } = new();
 
     /// <summary>
     /// Gets, sets the list of slideshow pipe servers.
@@ -216,7 +222,7 @@ internal class Local
     /// </summary>
     public static List<string> StringClipboard { get; set; } = new();
 
-    #endregion
+    #endregion // Public properties
 
 
     #region Public Functions

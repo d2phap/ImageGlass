@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -114,9 +114,12 @@ public partial class FrmCrop : ToolForm
     }
 
 
-    protected override void OnFormClosing(FormClosingEventArgs e)
+    protected override void OnToolFormClosing(ToolFormClosingEventArgs e)
     {
-        base.OnFormClosing(e);
+        base.OnToolFormClosing(e);
+
+        // reset selection
+        BtnReset.PerformClick();
 
         Local.FrmMain.PicMain.OnSelectionChanged -= PicMain_OnImageSelecting;
         Local.FrmMain.PicMain.OnImageChanged -= PicMain_OnImageChanged;

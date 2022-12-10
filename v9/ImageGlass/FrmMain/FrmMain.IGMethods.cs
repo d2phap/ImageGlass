@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -2285,12 +2285,43 @@ public partial class FrmMain
         // update toolbar items state
         UpdateToolbarItemsState();
 
-        var frm = new FrmCrop(this, Config.Theme);
-        frm.Show();
+        Local.Tools.TryGetValue(nameof(FrmCrop), out var frm);
+        if (frm == null)
+        {
+            Local.Tools.TryAdd(nameof(FrmCrop), new FrmCrop(this, Config.Theme));
+        }
+        else if (frm.IsDisposed)
+        {
+            Local.Tools[nameof(FrmCrop)] = new FrmCrop(this, Config.Theme);
+        }
+
+        var toolForm = Local.Tools[nameof(FrmCrop)] as FrmCrop;
+        toolForm.ToolFormClosing -= ToolForm_ToolFormClosing;
+        toolForm.ToolFormClosing += ToolForm_ToolFormClosing;
+
+        if (visible.Value)
+        {
+            Local.Tools[nameof(FrmCrop)].Show();
+        }
+        else
+        {
+            Local.Tools[nameof(FrmCrop)].Close();
+        }
 
         return visible.Value;
     }
 
+
+    private void ToolForm_ToolFormClosing(ToolFormClosingEventArgs e)
+    {
+        // update menu item state
+        MnuCropTool.Checked =
+            // set selection mode
+            PicMain.EnableSelection = false;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
+    }
 
 }
 
