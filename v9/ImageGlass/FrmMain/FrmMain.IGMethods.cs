@@ -1130,6 +1130,11 @@ public partial class FrmMain
     /// </summary>
     public void IG_Save()
     {
+        _ = SaveCurrentImageAsync();
+    }
+
+    public async Task<bool> SaveCurrentImageAsync()
+    {
         var srcFilePath = Local.Images.GetFilePath(Local.CurrentIndex);
         var langPath = $"{Name}.{nameof(MnuSave)}";
 
@@ -1150,10 +1155,10 @@ public partial class FrmMain
             // update ShowSaveOverrideConfirmation setting
             Config.ShowSaveOverrideConfirmation = !result.IsOptionChecked;
 
-            if (result.ExitResult != PopupExitResult.OK) return;
+            if (result.ExitResult != PopupExitResult.OK) return false;
         }
 
-        _ = SaveImageAsync(srcFilePath, srcFilePath);
+        return await SaveImageAsync(srcFilePath, srcFilePath);
     }
 
 
@@ -1161,6 +1166,12 @@ public partial class FrmMain
     /// Saves the viewing image as a new file.
     /// </summary>
     public void IG_SaveAs()
+    {
+        _ = SaveCurrentImageAsACopyAsync();
+    }
+
+
+    public async Task<bool> SaveCurrentImageAsACopyAsync()
     {
         var srcFilePath = "";
         var srcExt = ".png";
@@ -1204,7 +1215,7 @@ public partial class FrmMain
         saveDialog.FilterIndex = Math.Max(extIndex, 0) + 1;
 
         // show dialog
-        if (saveDialog.ShowDialog() != DialogResult.OK) return;
+        if (saveDialog.ShowDialog() != DialogResult.OK) return false;
 
 
         var destExt = Path.GetExtension(saveDialog.FileName).ToLowerInvariant();
@@ -1231,12 +1242,12 @@ public partial class FrmMain
 
             if (result.ExitResult != PopupExitResult.OK)
             {
-                return;
+                return false;
             }
         }
 
 
-        _ = SaveImageAsync(saveDialog.FileName, srcFilePath);
+        return await SaveImageAsync(saveDialog.FileName, srcFilePath);
     }
 
 
@@ -1259,8 +1270,9 @@ public partial class FrmMain
     ///     If it's empty, ImageGlass will check for the selection and clipboard image.
     ///   </para>
     /// </param>
-    public async Task SaveImageAsync(string destFilePath, string srcFilePath = "")
+    public async Task<bool> SaveImageAsync(string destFilePath, string srcFilePath = "")
     {
+        var saveSource = ImageSaveSource.Undefined;
         var hasSrcPath = !string.IsNullOrEmpty(srcFilePath);
         var langPath = $"{Name}.{nameof(MnuSave)}";
         Exception? error = null;
@@ -1274,24 +1286,27 @@ public partial class FrmMain
         {
             using var selectedImg = await GetSelectedImageAreaAsync();
             error = await DoSaveAsync(selectedImg, srcFilePath, destFilePath);
+            saveSource = ImageSaveSource.SelectedArea;
         }
 
         // save the clipboard image
         else if (Local.ClipboardImage != null)
         {
             error = await DoSaveAsync(Local.ClipboardImage, srcFilePath, destFilePath);
+            saveSource = ImageSaveSource.Clipboard;
         }
 
         // save the image in the list
         else if (hasSrcPath)
         {
             error = await DoSaveAsync(srcFilePath, destFilePath);
+            saveSource = ImageSaveSource.CurrentFile;
         }
 
         // image is empty
         else
         {
-            return;
+            return false;
         }
 
 
@@ -1306,50 +1321,53 @@ public partial class FrmMain
                 heading: string.Format(Config.Language[$"{langPath}._Error"]),
                 details: destFilePath,
                 formOwner: this);
+
+            return false;
         }
-        else
+
+        // success
+        if (saveSource == ImageSaveSource.SelectedArea)
         {
-            if (hasSelection)
-            {
-                // TODO: remove when FileWatcher ready!
-                // reload to view the updated image
-                IG_Reload();
+            // TODO: remove when FileWatcher ready!
+            // reload to view the updated image
+            IG_Reload();
 
-                // reset selection
-                PicMain.ClientSelection = default;
-            }
-            else if (Local.ClipboardImage != null)
-            {
-                // clear the clipboard image
-                LoadClipboardImage(null);
+            // reset selection
+            PicMain.ClientSelection = default;
+        }
+        else if (saveSource == ImageSaveSource.Clipboard)
+        {
+            // clear the clipboard image
+            LoadClipboardImage(null);
 
-                // TODO: remove when FileWatcher ready!
-                // reload to view the updated image
-                IG_Reload();
-            }
-
-            PicMain.ShowMessage(destFilePath, Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
-
-
-            // file was overriden
-            if (destFilePath.Equals(srcFilePath, StringComparison.InvariantCultureIgnoreCase))
-            {
-                // update cache of the modified item
-                Gallery.Items[Local.CurrentIndex].UpdateThumbnail();
-                Gallery.Items[Local.CurrentIndex].UpdateDetails(true);
-            }
+            // TODO: remove when FileWatcher ready!
+            // reload to view the updated image
+            IG_Reload();
         }
 
-        // activate the FrmMain again
-        await Task.Delay(300);
-        Activate();
+        PicMain.ShowMessage(destFilePath, Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
+
+
+        // file was overriden
+        if (destFilePath.Equals(srcFilePath, StringComparison.InvariantCultureIgnoreCase))
+        {
+            // update cache of the modified item
+            Gallery.Items[Local.CurrentIndex].UpdateThumbnail();
+            Gallery.Items[Local.CurrentIndex].UpdateDetails(true);
+        }
+
+
+        // emits ImageSaved event
+        Local.RaiseImageSavedEvent(new ImageSaveEventArgs(srcFilePath, destFilePath, saveSource));
+
+        return true;
     }
 
 
     /// <summary>
     /// Saves the given <see cref="WicBitmapSource"/> image to file.
     /// </summary>
-    public async Task<Exception?> DoSaveAsync(WicBitmapSource? wicImg, string srcPath, string destPath)
+    private async Task<Exception?> DoSaveAsync(WicBitmapSource? wicImg, string srcPath, string destPath)
     {
         try
         {
@@ -1386,7 +1404,7 @@ public partial class FrmMain
     /// <summary>
     /// Saves the given image path to file.
     /// </summary>
-    public async Task<Exception?> DoSaveAsync(string srcPath, string destPath)
+    private async Task<Exception?> DoSaveAsync(string srcPath, string destPath)
     {
         try
         {
