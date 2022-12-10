@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ImageGlass>
   <Language>
-    <Info langCode="zh-TW" langName="名稱" author="Jeff Huang" description="Traditional Chinese" minVersion="8.7" isRightToLeftLayout="No"/>
+    <Info langCode="zh-TW" langName="繁體中文" author="Jeff Huang" description="Traditional Chinese" minVersion="8.7" isRightToLeftLayout="No"/>
     <Content>
       <Item key="_IncompatibleConfigs" value="某些設定與您的 ImageGlass {0} 不相容。建議您在繼續前先更新它們。&#10;&#10;- 點擊是以取得更多關於變更的資訊。&#10;- 點擊否以使用預設的設定啟動 ImageGlass。"/>
       <Item key="_.ImageOrderBy._Name" value="名稱（預設）"/>
