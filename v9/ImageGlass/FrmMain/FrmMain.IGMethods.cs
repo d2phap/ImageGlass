@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using DirectN;
 using ImageGlass.Base;
 using ImageGlass.Base.NamedPipes;
 using ImageGlass.Base.PhotoBox;
@@ -28,9 +27,7 @@ using ImageGlass.UI;
 using ImageGlass.Views;
 using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO.Pipes;
-using System.Windows.Media.Imaging;
 using WicNet;
 
 namespace ImageGlass;

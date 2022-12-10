@@ -37,7 +37,7 @@ public partial class ToolForm : ModernForm
 
 
     /// <summary>
-    /// Gets, sets the init location
+    /// Gets, sets the init location.
     /// </summary>
     public Point InitLocation { get; set; }
 
@@ -82,6 +82,7 @@ public partial class ToolForm : ModernForm
             return baseParams;
         }
     }
+
     #endregion // Make a tool window
 
 
@@ -399,5 +400,15 @@ public partial class ToolForm : ModernForm
         }
         catch { }
     }
+
+}
+
+
+public interface IToolForm
+{
+    /// <summary>
+    /// Gets the ID of the tool.
+    /// </summary>
+    string ToolId { get; }
 
 }

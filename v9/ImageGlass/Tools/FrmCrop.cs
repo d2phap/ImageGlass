@@ -25,12 +25,25 @@ using ImageGlass.Views;
 
 namespace ImageGlass;
 
-public partial class FrmCrop : ToolForm
+public partial class FrmCrop : ToolForm, IToolForm
 {
+    /// <summary>
+    /// Gets tool id.
+    /// </summary>
+    public string ToolId => "CropTool";
+
+
+    /// <summary>
+    /// Gets, sets settings for this tool, written in app's config file.
+    /// </summary>
+    public CropToolConfig Settings { get; init; }
+
+
     public FrmCrop(Form owner, IgTheme theme) : base(theme)
     {
         InitializeComponent();
         Owner = owner;
+        Settings = new(ToolId);
 
         ApplyTheme(Theme.Settings.IsDarkMode);
     }
@@ -90,8 +103,16 @@ public partial class FrmCrop : ToolForm
 
     protected override void OnLoad(EventArgs e)
     {
+        // load crop tool configs
+        Settings.LoadFromAppConfig();
+
         UpdateHeight();
+
+        // load form data
+        NumRatioFrom.Value = Settings.AspectRatioValues[0];
+        NumRatioTo.Value = Settings.AspectRatioValues[1];
         LoadAspectRatioItems();
+        UpdateAspectRatioValues();
 
         // add control events
         Local.FrmMain.PicMain.OnSelectionChanged += PicMain_OnImageSelecting;
@@ -127,6 +148,15 @@ public partial class FrmCrop : ToolForm
         NumY.LostFocus -= NumSelections_LostFocus;
         NumWidth.LostFocus -= NumSelections_LostFocus;
         NumHeight.LostFocus -= NumSelections_LostFocus;
+
+
+        // save settings
+        Settings.AspectRatioValues = new int[2] {
+            (int)NumRatioFrom.Value,
+            (int)NumRatioTo.Value,
+        };
+
+        Settings.SaveToAppConfig();
     }
 
 
@@ -258,9 +288,17 @@ public partial class FrmCrop : ToolForm
     private void LoadAspectRatioItems()
     {
         CmbAspectRatio.Items.Clear();
+        var i = 0;
+        var cmbIndex = 0;
 
         foreach (SelectionAspectRatio arValue in Enum.GetValues(typeof(SelectionAspectRatio)))
         {
+            if (arValue == Settings.AspectRatio)
+            {
+                cmbIndex = i; 
+            }
+
+
             var displayName = "";
             if (Constants.AspectRatioValue.TryGetValue(arValue, out var enumValue))
             {
@@ -278,10 +316,11 @@ public partial class FrmCrop : ToolForm
             }
 
             CmbAspectRatio.Items.Add(displayName);
+            i++;
         }
 
         // select item
-        CmbAspectRatio.SelectedIndex = 0;
+        CmbAspectRatio.SelectedIndex = cmbIndex;
     }
 
 
@@ -290,7 +329,6 @@ public partial class FrmCrop : ToolForm
         var ratio = (SelectionAspectRatio)CmbAspectRatio.SelectedIndex;
         var ratioFrom = NumRatioFrom.Value;
         var ratioTo = NumRatioTo.Value;
-
 
         if (ratio == SelectionAspectRatio.Original)
         {
@@ -330,6 +368,9 @@ public partial class FrmCrop : ToolForm
         NumWidth.Value = (decimal)Local.FrmMain.PicMain.SourceSelection.Width;
         NumHeight.Value = (decimal)Local.FrmMain.PicMain.SourceSelection.Height;
 
+
+        Settings.AspectRatio = ratio;
+        Settings.AspectRatioValues = new int[2] { (int)ratioFrom, (int)ratioTo };
     }
 
 
