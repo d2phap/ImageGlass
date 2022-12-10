@@ -211,6 +211,11 @@ public partial class FrmCrop : ToolForm, IToolForm
         NumY.Value = (decimal)e.SourceSelection.Y;
         NumWidth.Value = (decimal)e.SourceSelection.Width;
         NumHeight.Value = (decimal)e.SourceSelection.Height;
+
+        BtnSave.Enabled =
+            BtnSaveAs.Enabled =
+            BtnCrop.Enabled =
+            BtnCopy.Enabled = !e.SourceSelection.IsEmpty;
     }
 
 
@@ -383,6 +388,12 @@ public partial class FrmCrop : ToolForm, IToolForm
 
         Settings.AspectRatio = ratio;
         Settings.AspectRatioValues = new int[2] { (int)ratioFrom, (int)ratioTo };
+
+        // set buttons state
+        BtnSave.Enabled =
+            BtnSaveAs.Enabled =
+            BtnCrop.Enabled =
+            BtnCopy.Enabled = !Local.FrmMain.PicMain.SourceSelection.IsEmpty;
     }
 
 

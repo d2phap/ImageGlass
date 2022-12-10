@@ -53,19 +53,19 @@ public class CropToolConfig: IToolConfig
     /// <summary>
     /// Gets, sets the default selection type.
     /// </summary>
-    public DefaultSelectionType DefaultSelection { get; set; } = DefaultSelectionType.SelectNone;
+    public DefaultSelectionType InitSelectionType { get; set; } = DefaultSelectionType.SelectNone;
 
 
     /// <summary>
     /// Gets, sets the custom selection area is used for <see cref="DefaultSelectionType.Custom"/>.
     /// </summary>
-    public Rectangle SelectionArea {  get; set; } = Rectangle.Empty;
+    public Rectangle InitSelectedArea {  get; set; } = Rectangle.Empty;
 
 
     /// <summary>
-    /// Gets, sets the option to center the <see cref="SelectionArea"/>.
+    /// Gets, sets the option to center the <see cref="InitSelectedArea"/>.
     /// </summary>
-    public bool CenterSelectionArea { get; set; } = false;
+    public bool CenterInitSelectedArea { get; set; } = false;
 
 
     /// <summary>
@@ -85,11 +85,11 @@ public class CropToolConfig: IToolConfig
 
         // Bool configs
         CloseToolAfterSaving = config.GetValue(nameof(CloseToolAfterSaving), CloseToolAfterSaving);
-        CenterSelectionArea = config.GetValue(nameof(CenterSelectionArea), CenterSelectionArea);
+        CenterInitSelectedArea = config.GetValue(nameof(CenterInitSelectedArea), CenterInitSelectedArea);
 
         // Enum configs
         AspectRatio = config.GetValue(nameof(AspectRatio), AspectRatio);
-        DefaultSelection = config.GetValue(nameof(DefaultSelection), DefaultSelection);
+        InitSelectionType = config.GetValue(nameof(InitSelectionType), InitSelectionType);
 
         #region Array configs
 
@@ -106,13 +106,13 @@ public class CropToolConfig: IToolConfig
 
 
         // load SelectionArea
-        var bounds = config.GetValue(nameof(SelectionArea)) as dynamic as IEnumerable<object>;
+        var bounds = config.GetValue(nameof(InitSelectedArea)) as dynamic as IEnumerable<object>;
         if (bounds != null)
         {
             var numArr = bounds.Select(i => int.Parse((string)i)).ToArray();
             if (numArr.Length == 4)
             {
-                SelectionArea = new Rectangle(numArr[0], numArr[1], numArr[2], numArr[3]);
+                InitSelectedArea = new Rectangle(numArr[0], numArr[1], numArr[2], numArr[3]);
             }
         }
 
@@ -127,20 +127,20 @@ public class CropToolConfig: IToolConfig
 
         // Bool configs
         settings.TryAdd(nameof(CloseToolAfterSaving), CloseToolAfterSaving);
-        settings.TryAdd(nameof(CenterSelectionArea), CenterSelectionArea);
+        settings.TryAdd(nameof(CenterInitSelectedArea), CenterInitSelectedArea);
 
         // Enum configs
         settings.TryAdd(nameof(AspectRatio), AspectRatio);
-        settings.TryAdd(nameof(DefaultSelection), DefaultSelection);
+        settings.TryAdd(nameof(InitSelectionType), InitSelectionType);
 
         // Array configs
         settings.TryAdd(nameof(AspectRatioValues), AspectRatioValues);
-        settings.TryAdd(nameof(SelectionArea), new int[]
+        settings.TryAdd(nameof(InitSelectedArea), new int[]
         {
-            SelectionArea.Left,
-            SelectionArea.Top,
-            SelectionArea.Width,
-            SelectionArea.Height,
+            InitSelectedArea.Left,
+            InitSelectedArea.Top,
+            InitSelectedArea.Width,
+            InitSelectedArea.Height,
         });
 
 
