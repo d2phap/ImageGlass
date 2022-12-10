@@ -45,9 +45,9 @@ public class CropToolConfig: IToolConfig
 
 
     /// <summary>
-    /// Gets, sets the option to close the Crop tool after the crop is saved.
+    /// Gets, sets the option to close the Crop tool after the selected area is saved.
     /// </summary>
-    public bool CloseToolAfterDone { get; set; } = false;
+    public bool CloseToolAfterSaving { get; set; } = false;
 
 
     /// <summary>
@@ -84,7 +84,7 @@ public class CropToolConfig: IToolConfig
 
 
         // Bool configs
-        CloseToolAfterDone = config.GetValue(nameof(CloseToolAfterDone), CloseToolAfterDone);
+        CloseToolAfterSaving = config.GetValue(nameof(CloseToolAfterSaving), CloseToolAfterSaving);
         CenterSelectionArea = config.GetValue(nameof(CenterSelectionArea), CenterSelectionArea);
 
         // Enum configs
@@ -126,7 +126,7 @@ public class CropToolConfig: IToolConfig
         var settings = new ExpandoObject();
 
         // Bool configs
-        settings.TryAdd(nameof(CloseToolAfterDone), CloseToolAfterDone);
+        settings.TryAdd(nameof(CloseToolAfterSaving), CloseToolAfterSaving);
         settings.TryAdd(nameof(CenterSelectionArea), CenterSelectionArea);
 
         // Enum configs

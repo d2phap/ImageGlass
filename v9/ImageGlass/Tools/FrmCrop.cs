@@ -115,6 +115,7 @@ public partial class FrmCrop : ToolForm, IToolForm
         UpdateAspectRatioValues();
 
         // add control events
+        Local.ImageSaved += Local_ImageSaved;
         Local.FrmMain.PicMain.OnSelectionChanged += PicMain_OnImageSelecting;
         Local.FrmMain.PicMain.OnImageChanged += PicMain_OnImageChanged;
         NumX.LostFocus += NumSelections_LostFocus;
@@ -142,6 +143,7 @@ public partial class FrmCrop : ToolForm, IToolForm
         // reset selection
         BtnReset.PerformClick();
 
+        Local.ImageSaved -= Local_ImageSaved;
         Local.FrmMain.PicMain.OnSelectionChanged -= PicMain_OnImageSelecting;
         Local.FrmMain.PicMain.OnImageChanged -= PicMain_OnImageChanged;
         NumX.LostFocus -= NumSelections_LostFocus;
@@ -189,6 +191,16 @@ public partial class FrmCrop : ToolForm, IToolForm
         {
             BtnCopy.PerformClick();
             return;
+        }
+    }
+
+
+    private void Local_ImageSaved(ImageSaveEventArgs e)
+    {
+        if (Settings.CloseToolAfterSaving
+            && e.SaveSource == ImageSaveSource.SelectedArea)
+        {
+            Close();
         }
     }
 
