@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.Actions;
 using ImageGlass.Base.PhotoBox;
+using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.UI;
 using Microsoft.Extensions.Configuration;
@@ -177,6 +178,12 @@ public static class Config
 
 
     #region Setting items
+
+    /// <summary>
+    /// Gets, sets the config section of tools
+    /// </summary>
+    public static ExpandoObject Tools { get; set; } = new ExpandoObject();
+
 
     #region Boolean items
     
@@ -795,6 +802,9 @@ public static class Config
     {
         var items = Source.LoadUserConfigs();
 
+        // save the config for all tools
+        Tools = items.GetValue(nameof(Tools)).GetValue(nameof(Tools), new ExpandoObject());
+
 
         // Boolean values
         #region Boolean items
@@ -1086,6 +1096,9 @@ public static class Config
 
         #endregion
 
+
+        // initialize Magick.NET
+        PhotoCodec.InitMagickNET();
     }
 
 
@@ -1272,9 +1285,8 @@ public static class Config
     #region Private functions
 
     /// <summary>
-    /// Converts all settings to ExpandoObject for parsing JSON
+    /// Converts all settings to ExpandoObject for parsing JSON.
     /// </summary>
-    /// <returns></returns>
     private static dynamic PrepareJsonSettingObjects()
     {
         var settings = new ExpandoObject();
@@ -1420,19 +1432,6 @@ public static class Config
         #endregion
 
 
-        #region Array items
-
-        //settings.TryAdd(nameof(EditApps), GetEditApps(EditApps));
-        settings.TryAdd(nameof(AllFormats), GetImageFormats(AllFormats));
-        settings.TryAdd(nameof(SinglePageFormats), GetImageFormats(SinglePageFormats));
-        settings.TryAdd(nameof(ToolbarItems), ToolbarItems);
-        settings.TryAdd(nameof(InfoItems), InfoItems);
-        settings.TryAdd(nameof(MenuHotkeys), ParseHotkeys(MenuHotkeys));
-        settings.TryAdd(nameof(MouseClickActions), MouseClickActions);
-        settings.TryAdd(nameof(MouseWheelActions), MouseWheelActions);
-        #endregion
-
-
         #region Other types items
 
         settings.TryAdd(nameof(BackgroundColor), ThemeUtils.ColorToHex(BackgroundColor));
@@ -1442,6 +1441,22 @@ public static class Config
 
         #endregion
 
+
+        #region Array items
+
+        //settings.TryAdd(nameof(EditApps), GetEditApps(EditApps));
+        settings.TryAdd(nameof(AllFormats), GetImageFormats(AllFormats));
+        settings.TryAdd(nameof(SinglePageFormats), GetImageFormats(SinglePageFormats));
+        settings.TryAdd(nameof(InfoItems), InfoItems);
+        settings.TryAdd(nameof(MenuHotkeys), ParseHotkeys(MenuHotkeys));
+        settings.TryAdd(nameof(MouseClickActions), MouseClickActions);
+        settings.TryAdd(nameof(MouseWheelActions), MouseWheelActions);
+        settings.TryAdd(nameof(ToolbarItems), ToolbarItems);
+        #endregion
+
+
+        // Tools' settings
+        settings.TryAdd(nameof(Tools), (object)Tools);
 
         return settings;
     }
@@ -1514,9 +1529,10 @@ public static class Config
     /// Parses string dictionary to hotkey dictionary
     /// </summary>
     /// <returns></returns>
-    public static Dictionary<string, List<Hotkey>> ParseHotkeys(Dictionary<string, string[]> dict)
+    public static Dictionary<string, List<Hotkey>> ParseHotkeys(Dictionary<string, string?[]>? dict)
     {
         var result = new Dictionary<string, List<Hotkey>>();
+        if (dict == null) return result;
 
         foreach (var item in dict)
         {
