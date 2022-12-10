@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -40,6 +40,20 @@ public partial class ToolForm : ModernForm
     /// Gets, sets the init location
     /// </summary>
     public Point InitLocation { get; set; }
+
+
+    /// <summary>
+    /// Occurs when the tool form is being closed.
+    /// </summary>
+    public event ToolFormClosingHandler? ToolFormClosing;
+    public delegate void ToolFormClosingHandler(ToolFormClosingEventArgs e);
+
+
+    /// <summary>
+    /// Occurs when the tool form is closed.
+    /// </summary>
+    public event ToolFormClosedHandler? ToolFormClosed;
+    public delegate void ToolFormClosedHandler(ToolFormClosedEventArgs e);
 
 
     #region Make a tool window
@@ -197,10 +211,42 @@ public partial class ToolForm : ModernForm
         SetLocationBasedOnParent(InitLocation);
     }
 
+
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
         base.OnFormClosing(e);
+
+        var args = new ToolFormClosingEventArgs(Name, e.CloseReason, e.Cancel);
+        OnToolFormClosing(args);
+
         RemoveFormEvents();
+    }
+
+
+    protected override void OnFormClosed(FormClosedEventArgs e)
+    {
+        base.OnFormClosed(e);
+
+        var args = new ToolFormClosedEventArgs(Name, e.CloseReason);
+        OnToolFormClosed(args);
+    }
+
+
+    /// <summary>
+    /// Raises the <see cref="ToolForm.ToolFormClosing"/> event.
+    /// </summary>
+    protected virtual void OnToolFormClosing(ToolFormClosingEventArgs e)
+    {
+        ToolFormClosing?.Invoke(e);
+    }
+
+
+    /// <summary>
+    /// Raises the <see cref="ToolForm.ToolFormClosed"/> event.
+    /// </summary>
+    protected virtual void OnToolFormClosed(ToolFormClosedEventArgs e)
+    {
+        ToolFormClosed?.Invoke(e);
     }
 
 
@@ -223,6 +269,9 @@ public partial class ToolForm : ModernForm
     }
 
 
+    /// <summary>
+    /// Removes all tool form events initialized by <see cref="AddFormEvents"/>.
+    /// </summary>
     protected virtual void RemoveFormEvents()
     {
         Move -= Form_Move;
