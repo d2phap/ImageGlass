@@ -47,6 +47,7 @@ namespace ImageGlass
             this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuRefresh = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuReload = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuUnload = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuReloadImageList = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuNavigation = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuViewNext = new System.Windows.Forms.ToolStripMenuItem();
@@ -174,6 +175,7 @@ namespace ImageGlass
             this.Toolbar.AutoFocusOnHover = true;
             this.Toolbar.BackColor = System.Drawing.Color.Transparent;
             this.Tb0.SetColumnSpan(this.Toolbar, 3);
+            this.Toolbar.EnableTransparent = true;
             this.Toolbar.GripMargin = new System.Windows.Forms.Padding(0);
             this.Toolbar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.Toolbar.HideTooltips = false;
@@ -185,7 +187,7 @@ namespace ImageGlass
             this.Toolbar.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.Toolbar.ShowItemToolTips = false;
             this.Toolbar.ShowMainMenuButton = true;
-            this.Toolbar.Size = new System.Drawing.Size(1108, 27);
+            this.Toolbar.Size = new System.Drawing.Size(1108, 25);
             this.Toolbar.TabIndex = 1;
             this.Toolbar.Theme = null;
             this.Toolbar.ToolTipDirection = ImageGlass.UI.TooltipDirection.Bottom;
@@ -235,7 +237,8 @@ namespace ImageGlass
             this.toolStripMenuItem12,
             this.MnuRefresh,
             this.MnuReload,
-            this.MnuReloadImageList});
+            this.MnuReloadImageList,
+            this.MnuUnload});
             this.MnuFile.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MnuFile.Name = "MnuFile";
             this.MnuFile.Size = new System.Drawing.Size(191, 40);
@@ -320,6 +323,13 @@ namespace ImageGlass
             this.MnuReload.Size = new System.Drawing.Size(255, 30);
             this.MnuReload.Text = "[Reload image]";
             this.MnuReload.Click += new System.EventHandler(this.MnuReload_Click);
+            // 
+            // MnuUnload
+            // 
+            this.MnuUnload.Name = "MnuUnload";
+            this.MnuUnload.Size = new System.Drawing.Size(255, 30);
+            this.MnuUnload.Text = "[Unload image]";
+            this.MnuUnload.Click += new System.EventHandler(this.MnuUnload_Click);
             // 
             // MnuReloadImageList
             // 
@@ -1110,7 +1120,7 @@ namespace ImageGlass
             this.Sp1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Sp1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.Sp1.IsSplitterFixed = true;
-            this.Sp1.Location = new System.Drawing.Point(0, 27);
+            this.Sp1.Location = new System.Drawing.Point(0, 25);
             this.Sp1.Margin = new System.Windows.Forms.Padding(0);
             this.Sp1.Name = "Sp1";
             this.Sp1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -1127,9 +1137,9 @@ namespace ImageGlass
             this.Sp1.Panel2.Controls.Add(this.Gallery);
             this.Sp1.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp1.Panel2MinSize = 0;
-            this.Sp1.Size = new System.Drawing.Size(1108, 567);
+            this.Sp1.Size = new System.Drawing.Size(1108, 569);
             this.Sp1.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.Sp1.SplitterDistance = 541;
+            this.Sp1.SplitterDistance = 543;
             this.Sp1.SplitterWidth = 1;
             this.Sp1.TabIndex = 98;
             this.Sp1.TabStop = false;
@@ -1154,7 +1164,7 @@ namespace ImageGlass
             // 
             this.Sp2.Panel2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Sp2.Panel2MinSize = 10;
-            this.Sp2.Size = new System.Drawing.Size(1108, 541);
+            this.Sp2.Size = new System.Drawing.Size(1108, 543);
             this.Sp2.SplitterBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.Sp2.SplitterDistance = 730;
             this.Sp2.SplitterWidth = 11;
@@ -1173,6 +1183,7 @@ namespace ImageGlass
             this.PicMain.EnableSelection = false;
             this.PicMain.InterpolationScaleDown = ImageGlass.Base.PhotoBox.ImageInterpolation.SampleLinear;
             this.PicMain.Location = new System.Drawing.Point(0, 0);
+            this.PicMain.MessageBorderRadius = 6F;
             this.PicMain.Name = "PicMain";
             this.PicMain.NavBorderRadius = 45F;
             this.PicMain.NavButtonSize = new System.Drawing.SizeF(90F, 90F);
@@ -1180,7 +1191,7 @@ namespace ImageGlass
             this.PicMain.RequestUpdateFrame = false;
             this.PicMain.SelectionAspectRatio = new System.Drawing.SizeF(0F, 0F);
             this.PicMain.SelectionColor = System.Drawing.Color.Black;
-            this.PicMain.Size = new System.Drawing.Size(730, 541);
+            this.PicMain.Size = new System.Drawing.Size(730, 543);
             this.PicMain.SourceSelection = ((System.Drawing.RectangleF)(resources.GetObject("PicMain.SourceSelection")));
             this.PicMain.TabIndex = 3;
             this.PicMain.OnZoomChanged += new ImageGlass.Views.DXCanvas.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
@@ -1200,11 +1211,13 @@ namespace ImageGlass
             this.Gallery.CheckBoxPadding = new System.Drawing.Size(6, 6);
             this.Gallery.Dock = System.Windows.Forms.DockStyle.Top;
             this.Gallery.EnableKeyNavigation = true;
+            this.Gallery.EnableTransparent = true;
             this.Gallery.Location = new System.Drawing.Point(0, 0);
             this.Gallery.Margin = new System.Windows.Forms.Padding(0);
             this.Gallery.Name = "Gallery";
             this.Gallery.PersistentCacheDirectory = "";
             this.Gallery.PersistentCacheSize = ((long)(100));
+            this.Gallery.RetryOnError = false;
             this.Gallery.Size = new System.Drawing.Size(1108, 25);
             this.Gallery.TabIndex = 0;
             this.Gallery.ThumbnailSize = new System.Drawing.Size(70, 70);
@@ -1421,5 +1434,6 @@ namespace ImageGlass
         public TableLayoutPanel Tb0;
         public UI.ModernSplitContainer Sp1;
         public UI.ModernSplitContainer Sp2;
+        public ToolStripMenuItem MnuUnload;
     }
 }

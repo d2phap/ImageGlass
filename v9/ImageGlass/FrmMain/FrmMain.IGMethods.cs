@@ -102,6 +102,29 @@ public partial class FrmMain
 
 
     /// <summary>
+    /// Unloads the viewing image.
+    /// </summary>
+    public void IG_Unload()
+    {
+        // cancel the current loading image
+        _loadCancelToken?.Cancel();
+
+        if (Local.ClipboardImage !=null)
+        {
+            LoadClipboardImage(null);
+            _ = ViewNextCancellableAsync(0, isSkipCache: true);
+        }
+        else
+        {
+            PicMain.SetImage(null);
+            PicMain.ClearMessage();
+
+            Local.Images.Unload(Local.CurrentIndex);
+        }
+    }
+
+
+    /// <summary>
     /// Views previous image
     /// </summary>
     public void IG_ViewPreviousImage()

@@ -1757,6 +1757,11 @@ public partial class FrmMain : ModernForm
         IG_ReloadList();
     }
 
+    private void MnuUnload_Click(object sender, EventArgs e)
+    {
+        IG_Unload();
+    }
+
     #endregion // Menu File
 
 
@@ -2164,9 +2169,10 @@ public partial class FrmMain : ModernForm
 
 
 
+
     #endregion // Other menu
 
     #endregion // Main Menu component
 
-
+    
 }

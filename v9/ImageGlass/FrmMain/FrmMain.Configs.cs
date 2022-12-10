@@ -53,6 +53,7 @@ public partial class FrmMain
         { nameof(MnuRefresh),               new() { new (Keys.R) } },
         { nameof(MnuReload),                new() { new (Keys.Control | Keys.R) } },
         { nameof(MnuReloadImageList),       new() { new (Keys.Control | Keys.Shift | Keys.R) } },
+        { nameof(MnuUnload),                new() { new (Keys.U) } },
 
         // MnuNavigation
         { nameof(MnuViewNext),              new() { new (Keys.Right) } },
@@ -455,6 +456,7 @@ public partial class FrmMain
         MnuRefresh.Text = lang[$"{Name}.{nameof(MnuRefresh)}"];
         MnuReload.Text = lang[$"{Name}.{nameof(MnuReload)}"];
         MnuReloadImageList.Text = lang[$"{Name}.{nameof(MnuReloadImageList)}"];
+        MnuUnload.Text = lang[$"{Name}.{nameof(MnuUnload)}"];
 
         #endregion
 

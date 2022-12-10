@@ -161,6 +161,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuRefresh", "Refresh"); //v3.0
         Add("FrmMain.MnuReload", "Reload image"); //v5.5
         Add("FrmMain.MnuReloadImageList", "Reload image list"); //v7.0
+        Add("FrmMain.MnuUnload", "Unload image"); //v9.0
         Add("FrmMain.MnuOpenWith", "Open with…"); //v7.6
         Add("FrmMain.MnuOpenWith._CreatingFile", "Creating image file for opening with the other apps..."); //v9.0
         Add("FrmMain.MnuOpenWith._CreatingFileError", "Could not create the image file for opening with the other apps..."); //v9.0
