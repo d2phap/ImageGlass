@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -71,6 +71,12 @@ internal class Local
     public static event FrmMainUpdateRequestedHandler? OnRequestUpdateFrmMain;
     public delegate void FrmMainUpdateRequestedHandler(UpdateRequests e);
 
+    /// <summary>
+    /// Occurs when the FrmMain's state needs to be updated.
+    /// </summary>
+    public static event ImageSavedHandler? ImageSaved;
+    public delegate void ImageSavedHandler(ImageSaveEventArgs e);
+
 
     /// <summary>
     /// Raise <see cref="OnImageListLoaded"/> event.
@@ -123,6 +129,15 @@ internal class Local
     public static void UpdateFrmMain(UpdateRequests e)
     {
         OnRequestUpdateFrmMain?.Invoke(e);
+    }
+
+
+    /// <summary>
+    /// Raise <see cref="ImageSaved"/> event.
+    /// </summary>
+    public static void RaiseImageSavedEvent(ImageSaveEventArgs e)
+    {
+        ImageSaved?.Invoke(e);
     }
 
 

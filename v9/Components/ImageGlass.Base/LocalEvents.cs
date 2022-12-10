@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -50,4 +50,31 @@ public class SlideshowWindowClosedEventArgs
     {
         SlideshowIndex = slideshowIndex;
     }
+}
+
+
+public class ImageSaveEventArgs
+{
+    public string SrcFilePath { get; init; }
+    public string DestFilePath { get; init; }
+    public ImageSaveSource SaveSource { get; init; }
+
+    public ImageSaveEventArgs(string srcFilePath, string destFilePath, ImageSaveSource saveSource)
+    {
+        SrcFilePath = srcFilePath;
+        DestFilePath = destFilePath;
+        SaveSource = saveSource;
+    }
+}
+
+
+/// <summary>
+/// Options indicate what source of image is saved.
+/// </summary>
+public enum ImageSaveSource
+{
+    Undefined,
+    SelectedArea,
+    Clipboard,
+    CurrentFile,
 }
