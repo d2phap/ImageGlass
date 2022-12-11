@@ -18,92 +18,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using Windows.Win32;
-using Windows.Win32.Graphics.Dwm;
-using Windows.Win32.UI.Controls;
 
 namespace ImageGlass.UI;
 
 
-public partial class Popup : ModernForm
+public partial class Popup : DialogForm
 {
-
-    #region Borderless form moving
-
-    private bool isMouseDown; // moving windows is taking place
-    private Point lastLocation; // initial mouse position
-
-
-    /// <summary>
-    /// Initialize all event handlers required to manage borderless window movement.
-    /// </summary>
-    protected void RegisterFormEvents()
-    {
-        MouseDown += Form_MouseDown;
-        MouseUp += Form_MouseUp;
-        MouseMove += Form_MouseMove;
-
-        foreach (Control control in Controls)
-        {
-            if (control is Label
-                || control is PictureBox
-                || control is TableLayoutPanel
-                || control.HasChildren)
-            {
-                control.MouseDown += Form_MouseDown;
-                control.MouseUp += Form_MouseUp;
-                control.MouseMove += Form_MouseMove;
-            }
-
-            // child controls
-            foreach (Control childControl in control.Controls)
-            {
-                if (childControl is Label
-                    || childControl is PictureBox
-                    || childControl is TableLayoutPanel)
-                {
-                    childControl.MouseDown += Form_MouseDown;
-                    childControl.MouseUp += Form_MouseUp;
-                    childControl.MouseMove += Form_MouseMove;
-                }
-            }
-        }
-    }
-
-    private void Form_MouseDown(object? sender, MouseEventArgs e)
-    {
-        if (e.Clicks == 1)
-        {
-            isMouseDown = true;
-        }
-
-        lastLocation = e.Location;
-    }
-
-    private void Form_MouseMove(object? sender, MouseEventArgs e)
-    {
-        if (!isMouseDown)
-        {
-            return; // not moving windows, ignore
-        }
-
-        Location = new Point(Location.X - lastLocation.X + e.X,
-                Location.Y - lastLocation.Y + e.Y);
-
-        Update();
-    }
-
-    private void Form_MouseUp(object? sender, MouseEventArgs e)
-    {
-        isMouseDown = false;
-    }
-
-
-    #endregion
-
-
     private bool _intValueOnly = false;
     private bool _unsignedIntValueOnly = false;
     private bool _floatValueOnly = false;
@@ -111,6 +34,7 @@ public partial class Popup : ModernForm
     private StatusType _noteStatusType = StatusType.Neutral;
 
 
+    // Public properties
     #region Public properties
 
     public IgTheme Theme { get; private set; }
@@ -193,6 +117,7 @@ public partial class Popup : ModernForm
         set => txtValue.Text = value;
     }
 
+
     /// <summary>
     /// Note text.
     /// </summary>
@@ -230,7 +155,7 @@ public partial class Popup : ModernForm
         {
             _noteStatusType = value;
 
-            panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(value, IsDarkMode);
+            panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(value, DarkMode);
             lblNote.ForeColor = Theme.ColorPalatte.LightText;
         }
     }
@@ -268,54 +193,6 @@ public partial class Popup : ModernForm
     {
         get => txtValue.ReadOnly;
         set => txtValue.ReadOnly = value;
-    }
-
-
-    /// <summary>
-    /// Shows or hides the Shield icon for the <see cref="BtnAccept"/>.
-    /// </summary>
-    public bool ShowAcceptButtonShieldIcon
-    {
-        get => BtnAccept.SystemIcon == SHSTOCKICONID.SIID_SHIELD;
-        set => BtnAccept.SystemIcon = value ? SHSTOCKICONID.SIID_SHIELD : null;
-    }
-
-    /// <summary>
-    /// Gets, sets visibility value of the <see cref="BtnAccept"/>.
-    /// </summary>
-    public bool ShowAcceptButton
-    {
-        get => BtnAccept.Visible;
-        set => BtnAccept.Visible = value;
-    }
-
-    /// <summary>
-    /// Gets, sets text of the <see cref="BtnAccept"/>.
-    /// </summary>
-    public string AcceptButtonText
-    {
-        get => BtnAccept.Text;
-        set => BtnAccept.Text = value;
-    }
-
-
-    /// <summary>
-    /// Gets, sets visibility value of the <see cref="BtnCancel"/>.
-    /// </summary>
-    public bool ShowCancelButton
-    {
-        get => BtnCancel.Visible;
-        set => BtnCancel.Visible = value;
-    }
-
-
-    /// <summary>
-    /// Gets, sets text of the <see cref="BtnCancel"/>.
-    /// </summary>
-    public string CancelButtonText
-    {
-        get => BtnCancel.Text;
-        set => BtnCancel.Text = value;
     }
 
 
@@ -410,7 +287,7 @@ public partial class Popup : ModernForm
     /// <summary>
     /// Pattern for validation
     /// </summary>
-    public string RegexPattern { get; set; } = "";
+    public string RegexPattern { get; set; } = string.Empty;
 
 
     /// <summary>
@@ -509,13 +386,12 @@ public partial class Popup : ModernForm
     public bool FileNameValueOnly { get; set; } = false;
 
 
-    #endregion
+    #endregion // Public properties
 
 
-    public Popup(IgTheme theme, IgLang? lang)
+    public Popup(IgTheme theme, IgLang? lang) : base()
     {
         InitializeComponent();
-        RegisterFormEvents();
 
         CloseFormHotkey = Keys.Escape;
         ShowInTaskbar = false;
@@ -534,7 +410,8 @@ public partial class Popup : ModernForm
     }
 
 
-    #region Override functions
+    // Override / Virtual methods
+    #region Override / Virtual methods
 
     protected override void OnLoad(EventArgs e)
     {
@@ -555,17 +432,103 @@ public partial class Popup : ModernForm
             tableMain.ColumnStyles[columnIndex].Width = 0;
         }
 
-
-        // calculate form height
-        UpdateHeight();
-
-
         base.OnLoad(e);
 
         _ = SetFocusAsync();
     }
 
 
+    protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
+    {
+        SuspendLayout();
+        EnableTransparent = darkMode;
+
+
+        panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(NoteStatusType, darkMode);
+        TableActions.BackColor = BackColor.InvertBlackOrWhite(30);
+        SetTextInputStyle(ValidateInput(), darkMode);
+
+        if (!darkMode)
+        {
+            BackColor = Color.White;
+            TableActions.BackColor = BackColor.InvertBlackOrWhite(10);
+        }
+
+
+        base.ApplyTheme(darkMode, style);
+        ResumeLayout();
+    }
+
+
+    //protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
+    //{
+    //    // update theme here
+    //    ApplyTheme(e.IsDarkMode);
+
+    //    base.OnRequestUpdatingColorMode(e);
+    //}
+
+
+    protected override int OnUpdateHeight(bool performUpdate = true)
+    {
+        var baseHeight = base.OnUpdateHeight(false);
+
+        // calculate form height
+        var contentHeight = tableMain.Height + tableMain.Padding.Vertical;
+        var formHeight = contentHeight + baseHeight;
+
+        if (performUpdate)
+        {
+            Height = formHeight;
+            MinimumSize = new Size(Width, formHeight);
+        }
+
+        return formHeight;
+    }
+
+
+    protected override void CloseFormByKeys()
+    {
+        // Closes the form and returns <see cref="DialogResult.Abort"/> code.
+        DialogResult = DialogResult.Abort;
+
+        base.CloseFormByKeys();
+    }
+
+    #endregion // Override / Virtual methods
+
+
+    // Form and control events
+    #region Form and control events
+
+    private void TxtValue_TextChanged(object sender, EventArgs e)
+    {
+        var isValid = ValidateInput();
+        SetTextInputStyle(isValid, DarkMode);
+    }
+
+    #endregion // Form and control events
+
+
+    // Private methods
+    #region Private methods
+
+    /// <summary>
+    /// Apply language pack
+    /// </summary>
+    private void ApplyLanguage()
+    {
+        if (Language != null)
+        {
+            BtnAccept.Text = Language["_._OK"];
+            BtnCancel.Text = Language["_._Cancel"];
+        }
+    }
+
+
+    /// <summary>
+    /// Set focus to the form.
+    /// </summary>
     private async Task SetFocusAsync()
     {
         await Task.Delay(300);
@@ -590,112 +553,9 @@ public partial class Popup : ModernForm
     }
 
 
-    protected override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
-    {
-        SuspendLayout();
-
-        if (Theme != null)
-        {
-            EnableTransparent = darkMode = Theme.Settings.IsDarkMode;
-
-            panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(NoteStatusType, darkMode);
-            tableBottom.BackColor = BackColor.InvertBlackOrWhite(30);
-
-            // dark mode
-            lblHeading.DarkMode =
-                lblDescription.DarkMode =
-                lblNote.DarkMode =
-                ChkOption.DarkMode =
-                txtValue.DarkMode =
-                BtnAccept.DarkMode =
-                BtnCancel.DarkMode = darkMode;
-
-
-            SetTextInputStyle(ValidateInput(), darkMode);
-
-            if (!darkMode)
-            {
-                BackColor = Color.White;
-                tableBottom.BackColor = BackColor.InvertBlackOrWhite(10);
-            }
-        }
-
-
-        ResumeLayout(false);
-        base.ApplyTheme(darkMode, backDrop);
-    }
-
-
-    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
-    {
-        // update theme here
-        ApplyTheme(e.IsDarkMode);
-
-        base.OnRequestUpdatingColorMode(e);
-    }
-
-
-    protected override void CloseFormByKeys()
-    {
-        // Closes the form and returns <see cref="DialogResult.Abort"/> code.
-        DialogResult = DialogResult.Abort;
-
-        base.CloseFormByKeys();
-    }
-
-    #endregion
-
-
-    #region Form and control events
-
-    private void TxtValue_TextChanged(object sender, EventArgs e)
-    {
-        var isValid = ValidateInput();
-        SetTextInputStyle(isValid, IsDarkMode);
-    }
-
-    private void BtnAccept_Click(object sender, EventArgs e)
-    {
-        var isValid = ValidateInput();
-        SetTextInputStyle(isValid, IsDarkMode);
-
-        if (isValid)
-        {
-            AcceptForm();
-        }
-        else
-        {
-            txtValue.Focus();
-        }
-    }
-
-    private void BtnCancel_Click(object sender, EventArgs e)
-    {
-        CancelForm();
-    }
-
-    #endregion
-
-
-    #region Private functions
-
-    /// <summary>
-    /// Apply language pack
-    /// </summary>
-    private void ApplyLanguage()
-    {
-        if (Language != null)
-        {
-            BtnAccept.Text = Language["_._OK"];
-            BtnCancel.Text = Language["_._Cancel"];
-        }
-    }
-
-
     /// <summary>
     /// Validates the input and shows error.
     /// </summary>
-    /// <returns></returns>
     private bool ValidateInput()
     {
         var isValid = true;
@@ -741,28 +601,7 @@ public partial class Popup : ModernForm
         }
     }
 
-
-    /// <summary>
-    /// Closes the form and returns <see cref="DialogResult.Cancel"/> code.
-    /// </summary>
-    private void CancelForm()
-    {
-        DialogResult = DialogResult.Cancel;
-        Close();
-    }
-
-
-    /// <summary>
-    /// Closes the form and returns <see cref="DialogResult.OK"/> code.
-    /// </summary>
-    private void AcceptForm()
-    {
-        DialogResult = DialogResult.OK;
-        Close();
-    }
-
-
-    #endregion
+    #endregion // Private methods
 
 
     #region Static functions
@@ -905,30 +744,6 @@ public partial class Popup : ModernForm
 
 
     #endregion
-
-
-    /// <summary>
-    /// Recalculate and update window height.
-    /// </summary>
-    public void UpdateHeight()
-    {
-        // calculate form height
-        var contentHeight = lblHeading.Height + lblHeading.Margin.Vertical
-            + lblDescription.Height + lblDescription.Margin.Vertical
-            + txtValue.Height + txtValue.Margin.Vertical;
-
-        if (!string.IsNullOrEmpty(Note.Trim()))
-        {
-            contentHeight += panNote.Height + panNote.Padding.Vertical;
-        }
-
-        var height = SystemInformation.CaptionHeight + (Padding.Top * 2) +
-            Math.Max(picThumbnail.Height, contentHeight) +
-            tableBottom.Height;
-
-        Height = height;
-        MinimumSize = new Size(Width, height);
-    }
 
 }
 
