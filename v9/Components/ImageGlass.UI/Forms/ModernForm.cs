@@ -466,6 +466,8 @@ public partial class ModernForm : Form
     /// </summary>
     protected virtual void EnableFormFreeMoving(Control c)
     {
+        DisableFormFreeMoving(c);
+
         if (CanControlMoveForm(c))
         {
             c.MouseDown += Form_MouseDown;

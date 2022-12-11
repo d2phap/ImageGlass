@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
+using ImageGlass.Base.WinApi;
 
 namespace ImageGlass.UI;
 
@@ -34,14 +35,50 @@ public partial class DialogForm : ModernForm
     /// <summary>
     /// Gets, sets <see cref="BtnAccept"/>'s text.
     /// </summary>
-    public string AcceptButtonText { get; set; } = "OK";
+    public string AcceptButtonText
+    {
+        get => BtnAccept.Text;
+        set => BtnAccept.Text = value;
+    }
+
+
+    /// <summary>
+    /// Shows or hides the Shield icon for the <see cref="BtnAccept"/>.
+    /// </summary>
+    public bool ShowAcceptButtonShieldIcon
+    {
+        get => BtnAccept.SystemIcon == SHSTOCKICONID.SIID_SHIELD;
+        set => BtnAccept.SystemIcon = value ? SHSTOCKICONID.SIID_SHIELD : null;
+    }
+
+    /// <summary>
+    /// Gets, sets visibility value of the <see cref="BtnAccept"/>.
+    /// </summary>
+    public bool ShowAcceptButton
+    {
+        get => BtnAccept.Visible;
+        set => BtnAccept.Visible = value;
+    }
 
 
     /// <summary>
     /// Gets, sets <see cref="BtnCancel"/>'s text.
     /// </summary>
-    public string CancelButtonText { get; set; } = "Cancel";
+    public string CancelButtonText
+    {
+        get => BtnCancel.Text;
+        set => BtnCancel.Text = value;
+    }
 
+
+    /// <summary>
+    /// Gets, sets visibility value of the <see cref="BtnCancel"/>.
+    /// </summary>
+    public bool ShowCancelButton
+    {
+        get => BtnCancel.Visible;
+        set => BtnCancel.Visible = value;
+    }
 
     public override Keys CloseFormHotkey => Keys.Escape;
 
@@ -64,9 +101,9 @@ public partial class DialogForm : ModernForm
     // Action bar codes
     #region Action bar codes
 
-    private TableLayoutPanel TableActions;
-    private ModernButton BtnAccept;
-    private ModernButton BtnCancel;
+    internal TableLayoutPanel TableActions;
+    internal ModernButton BtnAccept;
+    internal ModernButton BtnCancel;
 
 
     /// <summary>
@@ -215,15 +252,16 @@ public partial class DialogForm : ModernForm
     protected virtual int OnUpdateHeight(bool performUpdate = true)
     {
         // calculate form height
+        var formNonClientHeight = SystemInformation.CaptionHeight + Padding.Vertical;
         var contentHeight = TableActions.Height + (TableActions.Padding.Vertical * 2);
-
+        var formHeight = formNonClientHeight + contentHeight;
 
         if (performUpdate)
         {
-            Height = contentHeight;
+            Height = formHeight;
         }
 
-        return contentHeight;
+        return formHeight;
     }
 
 
