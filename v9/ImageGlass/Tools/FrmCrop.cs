@@ -52,53 +52,30 @@ public partial class FrmCrop : ToolForm, IToolForm
     protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
         SuspendLayout();
-        if (Theme != null)
+        EnableTransparent = darkMode;
+
+
+        TableBottom.BackColor = BackColor.InvertBlackOrWhite(30);
+        if (!darkMode)
         {
-            EnableTransparent = darkMode = Theme.Settings.IsDarkMode;
-
-            TableBottom.BackColor = BackColor.InvertBlackOrWhite(30);
-            CmbAspectRatio.DarkMode =
-                LblLocation.DarkMode =
-                LblSize.DarkMode =
-                LblAspectRatio.DarkMode =
-
-                NumX.DarkMode =
-                NumY.DarkMode =
-                NumWidth.DarkMode =
-                NumHeight.DarkMode =
-                
-                NumRatioFrom.DarkMode =
-                NumRatioTo.DarkMode =
-
-                BtnSettings.DarkMode =
-                BtnQuickSelect.DarkMode =
-                BtnReset.DarkMode =
-
-                BtnSave.DarkMode =
-                BtnSaveAs.DarkMode =
-                BtnCopy.DarkMode =
-                BtnCrop.DarkMode = darkMode;
-
-            if (!darkMode)
-            {
-                BackColor = Color.White;
-                TableBottom.BackColor = BackColor.InvertBlackOrWhite(10);
-            }
+            BackColor = Color.White;
+            TableBottom.BackColor = BackColor.InvertBlackOrWhite(10);
         }
 
-        ResumeLayout(false);
+
         base.ApplyTheme(darkMode, style);
+        ResumeLayout();
     }
 
 
-    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
-    {
-        // update theme here
-        ApplyTheme(e.IsDarkMode);
-        Invalidate(true);
+    //protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
+    //{
+    //    // update theme here
+    //    ApplyTheme(e.IsDarkMode);
+    //    Invalidate(true);
 
-        base.OnRequestUpdatingColorMode(e);
-    }
+    //    base.OnRequestUpdatingColorMode(e);
+    //}
 
 
     protected override void OnLoad(EventArgs e)
