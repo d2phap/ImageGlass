@@ -453,5 +453,92 @@ public partial class ModernForm : Form
 
     #endregion // Private functions
 
+
+    // Borderless form moving
+    #region Borderless form moving
+
+    private bool _isMouseDown; // moving windows is taking place
+    private Point _lastLocation; // initial mouse position
+
+
+    /// <summary>
+    /// Enables borderless form moving by registering mouse events to the form and its child controls.
+    /// </summary>
+    protected virtual void EnableFormFreeMoving(Control c)
+    {
+        if (CanControlMoveForm(c))
+        {
+            c.MouseDown += Form_MouseDown;
+            c.MouseUp += Form_MouseUp;
+            c.MouseMove += Form_MouseMove;
+        }
+
+        foreach (Control child in c.Controls)
+        {
+            EnableFormFreeMoving(child);
+        }
+    }
+
+
+    /// <summary>
+    /// Disables borderless form moving by removing mouse events from the form and its child controls.
+    /// </summary>
+    protected virtual void DisableFormFreeMoving(Control c)
+    {
+        if (CanControlMoveForm(c))
+        {
+            c.MouseDown -= Form_MouseDown;
+            c.MouseUp -= Form_MouseUp;
+            c.MouseMove -= Form_MouseMove;
+        }
+
+
+        foreach (Control child in c.Controls)
+        {
+            DisableFormFreeMoving(child);
+        }
+    }
+
+
+    private bool CanControlMoveForm(Control c)
+    {
+        return c is Form
+            || (c is Label && c is not LinkLabel)
+            || c is PictureBox
+            || c is TableLayoutPanel
+            || c.HasChildren;
+    }
+
+
+    private void Form_MouseDown(object? sender, MouseEventArgs e)
+    {
+        if (e.Clicks == 1)
+        {
+            _isMouseDown = true;
+        }
+
+        _lastLocation = e.Location;
+    }
+
+    private void Form_MouseMove(object? sender, MouseEventArgs e)
+    {
+        // not moving windows, ignore
+        if (!_isMouseDown) return;
+
+        Location = new Point(
+            Location.X - _lastLocation.X + e.X,
+            Location.Y - _lastLocation.Y + e.Y);
+
+        Update();
+    }
+
+    private void Form_MouseUp(object? sender, MouseEventArgs e)
+    {
+        _isMouseDown = false;
+    }
+
+    #endregion // Borderless form moving
+
+
 }
 
