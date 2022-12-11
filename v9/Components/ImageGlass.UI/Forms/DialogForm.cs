@@ -80,6 +80,26 @@ public partial class DialogForm : ModernForm
         set => BtnCancel.Visible = value;
     }
 
+
+    /// <summary>
+    /// Gets, sets <see cref="BtnApply"/>'s text.
+    /// </summary>
+    public string ApplyButtonText
+    {
+        get => BtnApply.Text;
+        set => BtnApply.Text = value;
+    }
+
+
+    /// <summary>
+    /// Gets, sets visibility value of the <see cref="BtnApply"/>.
+    /// </summary>
+    public bool ShowApplyButton
+    {
+        get => BtnApply.Visible;
+        set => BtnApply.Visible = value;
+    }
+
     public override Keys CloseFormHotkey => Keys.Escape;
 
     #endregion // Public properties
@@ -104,6 +124,7 @@ public partial class DialogForm : ModernForm
     internal TableLayoutPanel TableActions;
     internal ModernButton BtnAccept;
     internal ModernButton BtnCancel;
+    internal ModernButton BtnApply;
 
 
     /// <summary>
@@ -114,6 +135,7 @@ public partial class DialogForm : ModernForm
         this.TableActions = new TableLayoutPanel();
         this.BtnAccept = new ModernButton();
         this.BtnCancel = new ModernButton();
+        this.BtnApply = new ModernButton();
         this.TableActions.SuspendLayout();
         this.SuspendLayout();
         // 
@@ -121,15 +143,17 @@ public partial class DialogForm : ModernForm
         // 
         this.TableActions.AutoSize = true;
         this.TableActions.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-        this.TableActions.ColumnCount = 3;
+        this.TableActions.ColumnCount = 4;
         this.TableActions.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         this.TableActions.ColumnStyles.Add(new ColumnStyle());
         this.TableActions.ColumnStyles.Add(new ColumnStyle());
         this.TableActions.Controls.Add(this.BtnAccept, 1, 0);
         this.TableActions.Controls.Add(this.BtnCancel, 2, 0);
+        this.TableActions.Controls.Add(this.BtnApply, 3, 0);
         this.TableActions.Dock = DockStyle.Bottom;
         this.TableActions.Location = new Point(0, 367);
         this.TableActions.Margin = new Padding(0);
+        this.TableActions.Padding = new Padding(20);
         this.TableActions.Name = "TableActions";
         this.TableActions.RowCount = 1;
         this.TableActions.RowStyles.Add(new RowStyle());
@@ -142,9 +166,10 @@ public partial class DialogForm : ModernForm
         this.BtnAccept.DarkMode = false;
         this.BtnAccept.ImagePadding = 2;
         this.BtnAccept.Location = new Point(500, 20);
-        this.BtnAccept.Margin = new Padding(0, 20, 20, 20);
+        this.BtnAccept.Margin = new Padding(10, 0, 0, 0);
         this.BtnAccept.MinimumSize = new Size(130, 40);
         this.BtnAccept.Name = "BtnAccept";
+        this.BtnAccept.Text = "[OK]";
         this.BtnAccept.Padding = new Padding(5);
         this.BtnAccept.Size = new Size(130, 43);
         this.BtnAccept.SystemIcon = null;
@@ -159,9 +184,10 @@ public partial class DialogForm : ModernForm
         this.BtnCancel.DarkMode = false;
         this.BtnCancel.ImagePadding = 2;
         this.BtnCancel.Location = new Point(650, 20);
-        this.BtnCancel.Margin = new Padding(0, 20, 20, 20);
+        this.BtnCancel.Margin = new Padding(10, 0, 0, 0);
         this.BtnCancel.MinimumSize = new Size(130, 40);
         this.BtnCancel.Name = "BtnCancel";
+        this.BtnCancel.Text = "[Cancel]";
         this.BtnCancel.Padding = new Padding(5);
         this.BtnCancel.Size = new Size(130, 43);
         this.BtnCancel.SystemIcon = null;
@@ -169,6 +195,25 @@ public partial class DialogForm : ModernForm
         this.BtnCancel.Text = CancelButtonText;
         this.BtnCancel.TextImageRelation = TextImageRelation.ImageBeforeText;
         this.BtnCancel.Click += BtnCancel_Click;
+        // 
+        // BtnApply
+        // 
+        this.BtnApply.AutoSize = true;
+        this.BtnApply.DarkMode = false;
+        this.BtnApply.ImagePadding = 2;
+        this.BtnApply.Location = new Point(800, 20);
+        this.BtnApply.Margin = new Padding(10, 0, 0, 0);
+        this.BtnApply.MinimumSize = new Size(130, 40);
+        this.BtnApply.Name = "BtnApply";
+        this.BtnApply.Text = "[Apply]";
+        this.BtnApply.Padding = new Padding(5);
+        this.BtnApply.Size = new Size(130, 43);
+        this.BtnApply.SystemIcon = null;
+        this.BtnApply.TabIndex = 3;
+        this.BtnApply.Text = ApplyButtonText;
+        this.BtnApply.TextImageRelation = TextImageRelation.ImageBeforeText;
+        this.BtnApply.Click += BtnApply_Click;
+        this.BtnApply.Visible = false; // hidden by default
 
         this.TableActions.ResumeLayout(false);
         this.TableActions.PerformLayout();
@@ -183,13 +228,19 @@ public partial class DialogForm : ModernForm
 
     private void BtnAccept_Click(object? sender, EventArgs e)
     {
-        AcceptForm();
+        OnAcceptButtonClicked();
     }
 
 
     private void BtnCancel_Click(object? sender, EventArgs e)
     {
-        CancelForm();
+        OnCancelButtonClicked();
+    }
+
+
+    private void BtnApply_Click(object? sender, EventArgs e)
+    {
+        OnApplyButtonClicked();
     }
 
     #endregion // Action bar codes
@@ -256,8 +307,8 @@ public partial class DialogForm : ModernForm
     protected virtual int OnUpdateHeight(bool performUpdate = true)
     {
         // calculate form height
-        var formNonClientHeight = SystemInformation.CaptionHeight + Padding.Vertical;
-        var contentHeight = TableActions.Height + (TableActions.Padding.Vertical * 2);
+        var formNonClientHeight = Padding.Vertical;
+        var contentHeight = TableActions.Height + TableActions.Padding.Vertical;
         var formHeight = formNonClientHeight + contentHeight;
 
         if (performUpdate)
@@ -272,7 +323,7 @@ public partial class DialogForm : ModernForm
     /// <summary>
     /// Closes the form and returns <see cref="DialogResult.OK"/> code.
     /// </summary>
-    protected virtual void AcceptForm()
+    protected virtual void OnAcceptButtonClicked()
     {
         DialogResult = DialogResult.OK;
         Close();
@@ -282,10 +333,19 @@ public partial class DialogForm : ModernForm
     /// <summary>
     /// Closes the form and returns <see cref="DialogResult.Cancel"/> code.
     /// </summary>
-    protected virtual void CancelForm()
+    protected virtual void OnCancelButtonClicked()
     {
         DialogResult = DialogResult.Cancel;
         Close();
+    }
+
+
+    /// <summary>
+    /// Occurs when <see cref="BtnApply"/> is clicked.
+    /// </summary>
+    protected virtual void OnApplyButtonClicked()
+    {
+        //
     }
 
     #endregion // Override / Virtual methods
