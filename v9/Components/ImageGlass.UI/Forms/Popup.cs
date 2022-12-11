@@ -449,6 +449,9 @@ public partial class Popup : DialogForm
         TableActions.BackColor = BackColor.InvertBlackOrWhite(30);
         SetTextInputStyle(ValidateInput(), darkMode);
 
+        lblHeading.ForeColor = WinColorsApi.GetAccentColor(false)
+            .WithBrightness(darkMode ? 0.4f : 0f);
+
         if (!darkMode)
         {
             BackColor = Color.White;
@@ -458,6 +461,17 @@ public partial class Popup : DialogForm
 
         base.ApplyTheme(darkMode, style);
         ResumeLayout();
+    }
+
+
+    protected override void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
+    {
+        base.OnSystemAccentColorChanged(e);
+
+        // update the heading color to match system accent color
+        lblHeading.ForeColor = e.AccentColor
+            .NoAlpha()
+            .WithBrightness(DarkMode ? 0.4f : 0f);
     }
 
 
