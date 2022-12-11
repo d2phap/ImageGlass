@@ -162,14 +162,10 @@ public partial class DialogForm : ModernForm
     protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
         SuspendLayout();
-
         EnableTransparent = darkMode;
+
+
         TableActions.BackColor = BackColor.InvertBlackOrWhite(30);
-
-        // dark mode
-        BtnAccept.DarkMode = BtnCancel.DarkMode = darkMode;
-
-
         if (!darkMode)
         {
             BackColor = Color.White;
@@ -177,8 +173,8 @@ public partial class DialogForm : ModernForm
         }
 
 
-        ResumeLayout(false);
         base.ApplyTheme(darkMode, style);
+        ResumeLayout();
     }
 
 
