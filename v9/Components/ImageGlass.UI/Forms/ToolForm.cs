@@ -30,6 +30,8 @@ public partial class ToolForm : ModernForm
     protected Form _currentOwner;
 
 
+    #region Public properties
+
     /// <summary>
     /// Gets, set the theme.
     /// </summary>
@@ -54,6 +56,8 @@ public partial class ToolForm : ModernForm
     /// </summary>
     public event ToolFormClosedHandler? ToolFormClosed;
     public delegate void ToolFormClosedHandler(ToolFormClosedEventArgs e);
+
+    #endregion // public properties
 
 
     #region Make a tool window
@@ -190,12 +194,7 @@ public partial class ToolForm : ModernForm
     #endregion
 
 
-    public ToolForm()
-    {
-        InitializeComponent();
-    }
-
-    public ToolForm(IgTheme theme)
+    public ToolForm(IgTheme theme) : base()
     {
         InitializeComponent();
         Theme = theme;

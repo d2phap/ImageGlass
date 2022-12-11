@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -23,12 +23,10 @@ namespace ImageGlass.UI;
 
 public class ModernLabel : Label
 {
-
     private bool _autoUpdateHeight;
     private bool _isGrowing;
     private bool _darkMode = false;
 
-    private ModernControlState _controlState = ModernControlState.Normal;
     private IColors ColorPalatte => ThemeUtils.GetThemeColorPalatte(_darkMode);
 
 
@@ -76,6 +74,8 @@ public class ModernLabel : Label
                  ControlStyles.OptimizedDoubleBuffer |
                  ControlStyles.ResizeRedraw |
                  ControlStyles.UserPaint, true);
+
+        BackColor = Color.Transparent;
     }
 
 
