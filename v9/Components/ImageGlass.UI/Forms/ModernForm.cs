@@ -27,8 +27,8 @@ namespace ImageGlass.UI;
 /// </summary>
 public partial class ModernForm : Form
 {
-    private bool _isDarkMode = true;
-    private BackdropStyle _backdropStyle = BackdropStyle.Mica;
+    private bool _darkMode = true;
+    private BackdropStyle _backdropStyle = BackdropStyle.MicaAlt;
     private Padding _backdropMargin = new(-1);
     private int _dpi = DpiApi.DPI_DEFAULT;
     private CancellationTokenSource _systemAccentColorChangedCancelToken = new();
@@ -46,12 +46,12 @@ public partial class ModernForm : Form
     /// <summary>
     /// Enables or disables form dark mode.
     /// </summary>
-    public virtual bool IsDarkMode
+    public virtual bool DarkMode
     {
-        get => _isDarkMode;
+        get => _darkMode;
         set
         {
-            _isDarkMode = value;
+            _darkMode = value;
             SetDarkMode(value);
         }
     }
@@ -137,7 +137,7 @@ public partial class ModernForm : Form
 
 
     /// <summary>
-    /// Occurs when the system app color is changed and does not match the <see cref="IsDarkMode"/> value.
+    /// Occurs when the system app color is changed and does not match the <see cref="DarkMode"/> value.
     /// </summary>
     public event RequestUpdatingColorModeHandler? RequestUpdatingColorMode;
     public delegate void RequestUpdatingColorModeHandler(SystemColorModeChangedEventArgs e);
@@ -161,17 +161,6 @@ public partial class ModernForm : Form
 
     // Protected / virtual functions
     #region Protected / virtual functions
-
-    protected override void OnHandleCreated(EventArgs e)
-    {
-        if (!DesignMode)
-        {
-            ApplyTheme(_isDarkMode);
-        }
-
-        base.OnHandleCreated(e);
-    }
-
 
     protected override void WndProc(ref Message m)
     {
@@ -253,7 +242,7 @@ public partial class ModernForm : Form
 
         if (!DesignMode
             && EnableTransparent
-            && _backdropStyle != BackdropStyle.Default
+            && BackdropStyle != BackdropStyle.Default
             && BackdropMargin.Vertical == 0 && BackdropMargin.Horizontal == 0)
         {
             WindowApi.SetTransparentBlackBackground(e.Graphics, Bounds);
@@ -266,13 +255,8 @@ public partial class ModernForm : Form
     /// </summary>
     protected virtual void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
-        _isDarkMode = darkMode;
-        _backdropStyle = style ?? _backdropStyle;
-
-        if (DesignMode) return;
-
-        SetDarkMode(_isDarkMode);
-        SetBackdrop(_backdropStyle);
+        DarkMode = darkMode;
+        BackdropStyle = style ?? _backdropStyle;
     }
 
 
@@ -307,6 +291,22 @@ public partial class ModernForm : Form
         Close();
     }
 
+
+    /// <summary>
+    /// Sets dark mode setting to the given control and its child controls.
+    /// </summary>
+    protected virtual void SetDarkModeToChildControls(bool darkMode, Control? c)
+    {
+        if (c == null || !c.HasChildren) return;
+
+        foreach (Control? child in c.Controls)
+        {
+            SetDarkModePropertyOfControl(darkMode, child);
+            SetDarkModeToChildControls(darkMode, child);
+        }
+    }
+
+
     #endregion // Protected / virtual functions
 
 
@@ -318,6 +318,8 @@ public partial class ModernForm : Form
     /// </summary>
     private void SetBackdrop(BackdropStyle style)
     {
+        if (DesignMode) return;
+
         var backupBgColor = BackColor;
         if (style != BackdropStyle.Default && EnableTransparent)
         {
@@ -346,7 +348,27 @@ public partial class ModernForm : Form
     /// </summary>
     private void SetDarkMode(bool enable)
     {
+        if (DesignMode) return;
+
+        // set dark/light mode for controls
+        SetDarkModeToChildControls(enable, this);
+
+        // apply dark/light mode for title bar
         WindowApi.SetImmersiveDarkMode(Handle, enable);
+    }
+
+
+    /// <summary>
+    /// Sets dark mode setting to the given control.
+    /// </summary>
+    private void SetDarkModePropertyOfControl(bool darkMode, Control? c)
+    {
+        if (c == null) return;
+
+        var darkModeProp = c.GetType()?.GetProperty(nameof(DarkMode));
+        if (darkModeProp == null) return;
+
+        darkModeProp.SetValue(c, darkMode);
     }
 
 
@@ -388,7 +410,7 @@ public partial class ModernForm : Form
             token.ThrowIfCancellationRequested();
 
             var eventArgs = new SystemColorModeChangedEventArgs();
-            if (IsDarkMode != eventArgs.IsDarkMode)
+            if (DarkMode != eventArgs.IsDarkMode)
             {
                 // emit event here
                 OnRequestUpdatingColorMode(eventArgs);
