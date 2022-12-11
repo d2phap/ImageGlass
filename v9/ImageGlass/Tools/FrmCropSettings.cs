@@ -31,28 +31,14 @@ public partial class FrmCropSettings : DialogForm
     public FrmCropSettings(CropToolConfig settings) : base()
     {
         InitializeComponent();
-
         Settings = settings;
+
+        ApplyTheme(Config.Theme.Settings.IsDarkMode);
     }
 
 
     // Override / Virtual methods
     #region Override / Virtual methods
-
-    protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
-    {
-        SuspendLayout();
-
-        if (Config.Theme != null)
-        {
-            EnableTransparent = darkMode = Config.Theme.Settings.IsDarkMode;
-        }
-
-
-        ResumeLayout(false);
-        base.ApplyTheme(darkMode, style);
-    }
-
 
     protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
     {
