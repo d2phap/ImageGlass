@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -40,13 +40,13 @@ public partial class ModernForm : Form
     /// <summary>
     /// Enable transparent background.
     /// </summary>
-    public bool EnableTransparent { get; set; } = true;
+    public virtual bool EnableTransparent { get; set; } = true;
 
 
     /// <summary>
     /// Enables or disables form dark mode.
     /// </summary>
-    public bool IsDarkMode
+    public virtual bool IsDarkMode
     {
         get => _isDarkMode;
         set
@@ -60,7 +60,7 @@ public partial class ModernForm : Form
     /// <summary>
     /// Gets, sets window backdrop.
     /// </summary>
-    public BackdropStyle BackdropStyle
+    public virtual BackdropStyle BackdropStyle
     {
         get => _backdropStyle;
         set
@@ -74,7 +74,7 @@ public partial class ModernForm : Form
     /// <summary>
     /// Gets, sets the backdrop margin.
     /// </summary>
-    public Padding BackdropMargin
+    public virtual Padding BackdropMargin
     {
         get => _backdropMargin;
         set
@@ -88,31 +88,31 @@ public partial class ModernForm : Form
     /// <summary>
     /// Gets, sets the keys to close the <see cref="ModernForm"/>.
     /// </summary>
-    public Keys CloseFormHotkey { get; set; } = Keys.None;
+    public virtual Keys CloseFormHotkey { get; set; } = Keys.None;
 
 
     /// <summary>
     /// Enables or disables shortcut key handling in parent form.
     /// </summary>
-    public bool EnableParentShortcut { get; set; } = false;
+    public virtual bool EnableParentShortcut { get; set; } = false;
 
 
     /// <summary>
     /// Gets the current DPI. Default value is <c>96</c>.
     /// </summary>
-    public int Dpi => _dpi;
+    public virtual int Dpi => _dpi;
 
 
     /// <summary>
     /// Gets the current DPI scaling. Default value is <c>1.0f</c>.
     /// </summary>
-    public float DpiScale => _dpi / 96;
+    public virtual float DpiScale => _dpi / 96;
 
 
     /// <summary>
     /// Gets, sets the value indicates that <see cref="DpiApi.CurrentDpi"/> should be updated when form DPI is changed.
     /// </summary>
-    public bool EnableDpiApiUpdate { get; set; } = false;
+    public virtual bool EnableDpiApiUpdate { get; set; } = false;
 
 
     /// <summary>
