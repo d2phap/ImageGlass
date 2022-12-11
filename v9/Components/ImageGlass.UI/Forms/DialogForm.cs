@@ -174,6 +174,8 @@ public partial class DialogForm : ModernForm
         this.TableActions.PerformLayout();
 
         this.Controls.Add(this.TableActions);
+        this.AcceptButton = BtnAccept;
+        this.CancelButton = BtnCancel;
         this.ResumeLayout(false);
         this.PerformLayout();
     }
