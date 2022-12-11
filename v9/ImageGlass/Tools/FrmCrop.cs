@@ -36,7 +36,7 @@ public partial class FrmCrop : ToolForm, IToolForm
     /// <summary>
     /// Gets, sets settings for this tool, written in app's config file.
     /// </summary>
-    public CropToolConfig Settings { get; init; }
+    public CropToolConfig Settings { get; set; }
 
 
     public FrmCrop(Form owner, IgTheme theme) : base(theme)
@@ -433,6 +433,11 @@ public partial class FrmCrop : ToolForm, IToolForm
 
     private void BtnSettings_Click(object sender, EventArgs e)
     {
+        using var frm = new FrmCropSettings(Settings);
 
+        if (frm.ShowDialog(this) == DialogResult.OK)
+        {
+            Settings = frm.Settings;
+        }
     }
 }
