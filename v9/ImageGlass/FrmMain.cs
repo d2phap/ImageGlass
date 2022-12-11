@@ -64,6 +64,8 @@ public partial class FrmMain : ModernForm
 
         // update theme icons
         OnDpiChanged();
+
+        ApplyTheme(Config.Theme.Settings.IsDarkMode);
     }
 
     private void FrmMain_Load(object sender, EventArgs e)

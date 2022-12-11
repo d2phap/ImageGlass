@@ -30,12 +30,13 @@ namespace ImageGlass;
 
 public partial class FrmMain
 {
-    protected override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
+    protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
-        var isDarkMode = Config.Theme.Settings.IsDarkMode;
-        var backdrop = backDrop ?? Config.WindowBackdrop;
+        SuspendLayout();
+        EnableTransparent = darkMode;
+        style ??= Config.WindowBackdrop;
 
-        EnableTransparent = Config.WindowBackdrop != BackdropStyle.Default;
+
         if (EnableTransparent)
         {
             BackdropMargin = new Padding(-1);
@@ -81,9 +82,9 @@ public partial class FrmMain
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
 
-        ResumeLayout(false);
 
-        base.ApplyTheme(isDarkMode, backdrop);
+        base.ApplyTheme(darkMode, style);
+        ResumeLayout();
     }
 
 
