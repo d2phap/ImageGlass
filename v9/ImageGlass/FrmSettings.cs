@@ -31,15 +31,8 @@ public partial class FrmSettings : ModernForm
 
         var path = App.ConfigDir(PathType.File, Source.UserFilename);
         lblSettingsFilePath.Text = path;
-    }
 
-
-    protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
-    {
-        base.ApplyTheme(darkMode, style);
-
-        lblSettingsFilePath.ForeColor = Config.Theme.ColorPalatte.LightText;
-        btnOpenSettingsFile.DarkMode = Config.Theme.Settings.IsDarkMode;
+        ApplyTheme(Config.Theme.Settings.IsDarkMode);
     }
 
 
