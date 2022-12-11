@@ -159,41 +159,6 @@ public partial class ToolForm : ModernForm
     #endregion
 
 
-    #region Borderless form moving
-
-    private bool _isMouseDown; // moving windows is taking place
-    private Point _lastLocation; // initial mouse position
-
-    private void Form_MouseDown(object? sender, MouseEventArgs e)
-    {
-        if (e.Clicks == 1)
-        {
-            _isMouseDown = true;
-        }
-
-        _lastLocation = e.Location;
-    }
-
-    private void Form_MouseMove(object? sender, MouseEventArgs e)
-    {
-        // not moving windows, ignore
-        if (!_isMouseDown) return;
-
-        Location = new Point(Location.X - _lastLocation.X + e.X,
-                Location.Y - _lastLocation.Y + e.Y);
-
-        Update();
-    }
-
-    private void Form_MouseUp(object? sender, MouseEventArgs e)
-    {
-        _isMouseDown = false;
-    }
-
-
-    #endregion
-
-
     public ToolForm(IgTheme theme) : base()
     {
         InitializeComponent();
@@ -203,11 +168,14 @@ public partial class ToolForm : ModernForm
     }
 
 
+    #region Override / Virtual methods
+
     protected override void OnLoad(EventArgs e)
     {
         base.OnLoad(e);
         AddFormEvents();
 
+        EnableFormFreeMoving(this);
         SetLocationBasedOnParent(InitLocation);
     }
 
@@ -219,6 +187,7 @@ public partial class ToolForm : ModernForm
         var args = new ToolFormClosingEventArgs(Name, e.CloseReason, e.Cancel);
         OnToolFormClosing(args);
 
+        DisableFormFreeMoving(this);
         RemoveFormEvents();
     }
 
@@ -256,9 +225,6 @@ public partial class ToolForm : ModernForm
     protected virtual void AddFormEvents()
     {
         Move += Form_Move;
-        MouseDown += Form_MouseDown;
-        MouseUp += Form_MouseUp;
-        MouseMove += Form_MouseMove;
 
         Activated += Form_Activated;
         Deactivate += Form_Deactivate;
@@ -275,9 +241,6 @@ public partial class ToolForm : ModernForm
     protected virtual void RemoveFormEvents()
     {
         Move -= Form_Move;
-        MouseDown -= Form_MouseDown;
-        MouseUp -= Form_MouseUp;
-        MouseMove -= Form_MouseMove;
 
         Activated -= Form_Activated;
         Deactivate -= Form_Deactivate;
@@ -285,49 +248,6 @@ public partial class ToolForm : ModernForm
         MouseLeave -= Form_MouseLeave;
 
         RemoveFormControlsEvents(this);
-    }
-
-    private void AddFormControlsEvents(Control c)
-    {
-        foreach (Control childControl in c.Controls)
-        {
-            if ((childControl is Label && childControl is not LinkLabel)
-                || childControl is PictureBox
-                || childControl is TableLayoutPanel)
-            {
-                childControl.MouseDown += Form_MouseDown;
-                childControl.MouseUp += Form_MouseUp;
-                childControl.MouseMove += Form_MouseMove;
-            }
-
-            childControl.MouseEnter += Form_MouseEnter;
-            childControl.MouseLeave += Form_MouseLeave;
-
-
-            AddFormControlsEvents(childControl);
-        }
-    }
-
-
-    private void RemoveFormControlsEvents(Control c)
-    {
-        foreach (Control childControl in c.Controls)
-        {
-            if ((childControl is Label && childControl is not LinkLabel)
-                || childControl is PictureBox
-                || childControl is TableLayoutPanel)
-            {
-                childControl.MouseDown -= Form_MouseDown;
-                childControl.MouseUp -= Form_MouseUp;
-                childControl.MouseMove -= Form_MouseMove;
-            }
-
-            childControl.MouseEnter -= Form_MouseEnter;
-            childControl.MouseLeave -= Form_MouseLeave;
-
-
-            RemoveFormControlsEvents(childControl);
-        }
     }
 
 
@@ -368,6 +288,34 @@ public partial class ToolForm : ModernForm
         Location = loc;
     }
 
+    #endregion // Override / Virtual methods
+
+
+    #region Private methods
+
+    private void AddFormControlsEvents(Control c)
+    {
+        foreach (Control childControl in c.Controls)
+        {
+            childControl.MouseEnter += Form_MouseEnter;
+            childControl.MouseLeave += Form_MouseLeave;
+
+            AddFormControlsEvents(childControl);
+        }
+    }
+
+
+    private void RemoveFormControlsEvents(Control c)
+    {
+        foreach (Control childControl in c.Controls)
+        {
+            childControl.MouseEnter -= Form_MouseEnter;
+            childControl.MouseLeave -= Form_MouseLeave;
+
+            RemoveFormControlsEvents(childControl);
+        }
+    }
+
 
     private void Form_MouseEnter(object? sender, EventArgs e)
     {
@@ -399,6 +347,9 @@ public partial class ToolForm : ModernForm
         }
         catch { }
     }
+
+    #endregion // Private methods
+
 
 }
 

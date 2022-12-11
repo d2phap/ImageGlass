@@ -159,8 +159,8 @@ public partial class ModernForm : Form
     }
 
 
-    // Protected / virtual functions
-    #region Protected / virtual functions
+    // Protected / virtual methods
+    #region Protected / virtual methods
 
     protected override void WndProc(ref Message m)
     {
@@ -307,11 +307,11 @@ public partial class ModernForm : Form
     }
 
 
-    #endregion // Protected / virtual functions
+    #endregion // Protected / virtual methods
 
 
-    // Private functions
-    #region Private functions
+    // Private methods
+    #region Private methods
 
     /// <summary>
     /// Sets window backdrop.
@@ -451,11 +451,11 @@ public partial class ModernForm : Form
     }
 
 
-    #endregion // Private functions
+    #endregion // Private methods
 
 
-    // Borderless form moving
-    #region Borderless form moving
+    // Free moving
+    #region Free moving
 
     private bool _isMouseDown; // moving windows is taking place
     private Point _lastLocation; // initial mouse position
@@ -537,7 +537,7 @@ public partial class ModernForm : Form
         _isMouseDown = false;
     }
 
-    #endregion // Borderless form moving
+    #endregion // Free moving
 
 
 }
