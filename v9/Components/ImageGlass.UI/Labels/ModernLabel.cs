@@ -84,7 +84,9 @@ public class ModernLabel : Label
         var g = e.Graphics;
         var rect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
 
-        var textColor = ColorPalatte.LightText;
+        var textColor = ForeColor == DefaultForeColor
+            ? ColorPalatte.LightText
+            : ForeColor;
 
         if (!Enabled)
         {
