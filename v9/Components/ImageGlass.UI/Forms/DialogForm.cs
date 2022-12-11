@@ -186,6 +186,17 @@ public partial class DialogForm : ModernForm
         base.OnLoad(e);
 
         this.TableActions.BringToFront();
+
+        // enable free form moving
+        EnableFormFreeMoving(this);
+    }
+
+
+    protected override void OnFormClosing(FormClosingEventArgs e)
+    {
+        base.OnFormClosing(e);
+
+        DisableFormFreeMoving(this);
     }
 
 
