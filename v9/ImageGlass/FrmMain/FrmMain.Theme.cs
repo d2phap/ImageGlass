@@ -33,7 +33,6 @@ public partial class FrmMain
     protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
         SuspendLayout();
-        EnableTransparent = darkMode;
         style ??= Config.WindowBackdrop;
 
 
@@ -102,13 +101,13 @@ public partial class FrmMain
     }
 
 
-    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
-    {
-        // update theme here
-        ApplyTheme(e.IsDarkMode);
+    //protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
+    //{
+    //    // update theme here
+    //    ApplyTheme(e.IsDarkMode);
 
-        base.OnRequestUpdatingColorMode(e);
-    }
+    //    base.OnRequestUpdatingColorMode(e);
+    //}
 
 }
 

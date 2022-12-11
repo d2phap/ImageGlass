@@ -204,11 +204,13 @@ public partial class DialogForm : ModernForm
         EnableTransparent = darkMode;
 
 
-        TableActions.BackColor = BackColor.InvertBlackOrWhite(30);
+        TableActions.BackColor = darkMode
+            ? Color.White.WithAlpha(30)
+            : Color.Black.WithAlpha(10);
+
         if (!darkMode)
         {
             BackColor = Color.White;
-            TableActions.BackColor = BackColor.InvertBlackOrWhite(10);
         }
 
 
