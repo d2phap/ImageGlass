@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -80,8 +80,7 @@ public class ModernGalleryRenderer : StyleRenderer
     /// <param name="bounds">The bounding rectangle of item in client coordinates.</param>
     public override void DrawItem(Graphics g, ImageGalleryItem item, ItemState state, Rectangle bounds)
     {
-        var itemPadding = new Size(5, 5);
-        var itemMargin = new Size(5, 5);
+        var itemPadding = DpiApi.Transform(new SizeF(4, 4)).ToSize();
         var textSize = new Size(0, 0);
 
 
@@ -116,18 +115,12 @@ public class ModernGalleryRenderer : StyleRenderer
             penBorder.DashStyle = DashStyle.Dash;
         }
 
-
-        var itemBounds = new Rectangle(
-            bounds.X,
-            bounds.Y + itemMargin.Height,
-            bounds.Width - itemMargin.Width,
-            bounds.Height - itemMargin.Height * 2);
-        var radius = BHelper.GetItemBorderRadius((int)itemBounds.Height, Constants.THUMBNAIL_HEIGHT);
+        var radius = BHelper.GetItemBorderRadius((int)bounds.Height, Constants.THUMBNAIL_HEIGHT);
 
 
         // draw background
-        g.FillRoundedRectangle(bgBrush, itemBounds, radius);
-        g.DrawRoundedRectangle(penBorder, itemBounds, radius);
+        g.FillRoundedRectangle(bgBrush, bounds, radius);
+        g.DrawRoundedRectangle(penBorder, bounds, radius);
 
         #endregion
 
@@ -157,9 +150,9 @@ public class ModernGalleryRenderer : StyleRenderer
 
             var text = item.Text;
             var textRegion = new RectangleF(
-                bounds.Left + itemMargin.Width,
-                bounds.Bottom - textSize.Height - itemMargin.Height,
-                bounds.Width - itemMargin.Width * 2,
+                bounds.Left + itemPadding.Width,
+                bounds.Bottom - textSize.Height - itemPadding.Height,
+                bounds.Width - itemPadding.Width * 2,
                 textSize.Height);
 
             if (textSize.Width > textRegion.Width)
@@ -195,10 +188,10 @@ public class ModernGalleryRenderer : StyleRenderer
 
         // image bound
         var imgBound = new Rectangle(
-            itemBounds.X + itemPadding.Width,
-            itemBounds.Y + itemPadding.Height,
-            itemBounds.Width - 2 * itemPadding.Width,
-            itemBounds.Height - (2 * itemPadding.Height) - textSize.Height);
+            bounds.X + itemPadding.Width,
+            bounds.Y + itemPadding.Height,
+            bounds.Width - 2 * itemPadding.Width,
+            bounds.Height - (2 * itemPadding.Height) - textSize.Height);
         var imgRect = Utility.GetSizedImageBounds(img, imgBound);
 
         if (state.HasFlag(ItemState.Pressed) || state.HasFlag(ItemState.Disabled))

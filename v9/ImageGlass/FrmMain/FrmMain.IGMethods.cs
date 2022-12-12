@@ -522,8 +522,7 @@ public partial class FrmMain
         // Gallery bar
         Gallery.Height = this.ScaleToDpi(Config.ThumbnailSize)
             + scrollBarSize
-            // vertical padding + 1/2 bottom padding
-            + this.ScaleToDpi(16 + 2);
+            + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Height * 6.5f);
         Sp1.Panel2Collapsed = !Config.ShowThumbnails;
         Sp1.SplitterDistance = Sp1.Height
             - Sp1.SplitterWidth

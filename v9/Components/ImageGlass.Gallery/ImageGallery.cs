@@ -103,6 +103,11 @@ public partial class ImageGallery : Control, IComponent
     #region Properties
 
     /// <summary>
+    /// Gets current style renderer.
+    /// </summary>
+    public StyleRenderer Renderer => mRenderer;
+
+    /// <summary>
     /// Enable transparent background.
     /// </summary>
     public bool EnableTransparent { get; set; } = true;

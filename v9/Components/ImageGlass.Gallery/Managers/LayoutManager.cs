@@ -380,7 +380,7 @@ internal class LayoutManager
 
         // Get the item size from the renderer
         mItemSize = _imageGallery.mRenderer.MeasureItem(_imageGallery.View);
-        cachedItemMargin = _imageGallery.mRenderer.MeasureItemMargin(_imageGallery.View);
+        cachedItemMargin = _imageGallery.mRenderer.MeasureItemMargin(_imageGallery.View).ToSize();
         mItemSizeWithMargin = mItemSize + cachedItemMargin;
 
         // Cache current properties to determine if we will need an update later

@@ -45,4 +45,17 @@ public static class ControlExtensions
 
         return (T)Convert.ChangeType(scaledValue, type);
     }
+
+
+    /// <summary>
+    /// Scales the given size according to the current control's DPI.
+    /// </summary>
+    public static SizeF ScaleToDpi(this Control control, SizeF size)
+    {
+        var w = control.ScaleToDpi(size.Width);
+        var h = control.ScaleToDpi(size.Height);
+
+        return new SizeF(w, h);
+    }
+
 }

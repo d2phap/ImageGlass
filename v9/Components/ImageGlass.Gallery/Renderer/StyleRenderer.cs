@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@ Url: https://github.com/oozcitak/imagelistview
 License: Apache License Version 2.0, http://www.apache.org/licenses/
 ---------------------
 */
+using ImageGlass.Base;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms.VisualStyles;
 
@@ -489,7 +490,7 @@ public class StyleRenderer : IDisposable
                 bounds.Offset(0, ImageGalleryOwner.layoutManager.ItemSizeWithMargin.Height);
 
             var itemMargin = MeasureItemMargin(ImageGalleryOwner.View);
-            bounds.Offset(0, -(itemMargin.Height - 2) / 2 - 2);
+            bounds.Offset(0, -((int)itemMargin.Height - 2) / 2 - 2);
             bounds.Height = 2;
         }
         else
@@ -498,7 +499,7 @@ public class StyleRenderer : IDisposable
                 bounds.Offset(ImageGalleryOwner.layoutManager.ItemSizeWithMargin.Width, 0);
 
             var itemMargin = MeasureItemMargin(ImageGalleryOwner.View);
-            bounds.Offset(-(itemMargin.Width - 2) / 2 - 2, 0);
+            bounds.Offset(-((int)itemMargin.Width - 2) / 2 - 2, 0);
             bounds.Width = 2;
         }
 
@@ -716,9 +717,9 @@ public class StyleRenderer : IDisposable
     /// </summary>
     /// <param name="view">The view mode for which the measurement should be made.</param>
     /// <returns>The spacing between items.</returns>
-    public virtual Size MeasureItemMargin(View view)
+    public virtual SizeF MeasureItemMargin(View view)
     {
-        return new Size(4, 4);
+        return ImageGalleryOwner.ScaleToDpi(new SizeF(4, 4));
     }
 
     /// <summary>
@@ -731,11 +732,11 @@ public class StyleRenderer : IDisposable
         // Reference text height
         int textHeight = ImageGalleryOwner.Font.Height;
 
-        var itemPadding = new Size(4, 4);
+        var itemPadding = MeasureItemMargin(view);
         var itemSize = ImageGalleryOwner.ThumbnailSize + itemPadding + itemPadding;
         itemSize.Height += textHeight + Math.Max(4, textHeight / 3); // textHeight / 3 = vertical space between thumbnail and text
 
-        return itemSize;
+        return itemSize.ToSize();
     }
 
     /// <summary>
