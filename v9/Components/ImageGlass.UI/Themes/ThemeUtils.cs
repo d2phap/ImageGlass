@@ -265,7 +265,7 @@ public partial class ThemeUtils
     public static Image CreateImageFromText(string text, Font font, float size, Color textColor, Color? backColor = null, float dpiScale = 1f)
     {
         var path = new GraphicsPath();
-        path.AddString(text, font.FontFamily, (int)font.Style, size * dpiScale * dpiScale, new Point(0, 0), StringFormat.GenericTypographic);
+        path.AddString(text, font.FontFamily, (int)font.Style, (size + size / 2) * dpiScale, new Point(0, 0), StringFormat.GenericTypographic);
 
         var pathRect = path.GetBounds();
         var br = new RectangleF(pathRect.X, pathRect.Y, pathRect.Width, pathRect.Height);
