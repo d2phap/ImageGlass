@@ -37,20 +37,27 @@ public partial class BHelper
     /// </summary>
     /// <typeparam name="T">Type</typeparam>
     /// <param name="value">Value</param>
-    /// <returns></returns>
+    /// <returns>
+    /// Returns <c>default</c> value of the type if the <paramref name="value"/>
+    /// is not convertable or null.
+    /// </returns>
     public static T? ConvertType<T>(object? value)
     {
         if (value == null) return default;
-
         var type = typeof(T);
 
-        if (type.IsEnum)
+        try
         {
-            return ParseEnum<T>(value);
-        }
-        else
-        {
+            if (type.IsEnum)
+            {
+                return ParseEnum<T>(value);
+            }
+
             return (T)Convert.ChangeType(value, type);
+        }
+        catch (Exception)
+        {
+            return default;
         }
     }
 }

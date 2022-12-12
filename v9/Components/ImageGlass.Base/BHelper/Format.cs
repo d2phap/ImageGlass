@@ -130,9 +130,9 @@ public partial class BHelper
     /// <summary>
     /// Ellipses the given text.
     /// </summary>
-    public static string EllipsisText(string text, float containerWidth, Graphics g)
+    public static string EllipsisText(string text, Font font, float containerWidth, Graphics g)
     {
-        var textSize = g.MeasureString(text, Control.DefaultFont);
+        var textSize = g.MeasureString(text, font);
         var avgCharW = textSize.Width / text.Length;
         var maxCharsPerSide = (int)Math.Floor((containerWidth / avgCharW / 2d) - 1);
 
