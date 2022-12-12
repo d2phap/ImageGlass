@@ -78,7 +78,7 @@ public class ModernMenu : ContextMenuStrip
     {
         base.OnItemAdded(e);
 
-        // manually control the height og menu by disable image scaling
+        // manually control the height of menu by disable image scaling
         e.Item.ImageScaling = ToolStripItemImageScaling.None;
 
         if (e.Item is ToolStripMenuItem item)

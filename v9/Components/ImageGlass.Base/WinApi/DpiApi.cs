@@ -76,5 +76,15 @@ public static class DpiApi
             Transform(padding.Right),
             Transform(padding.Bottom));
     }
+
+
+    /// <summary>
+    /// Transform padding after applying <see cref="DpiScale"/>
+    /// </summary>
+    public static SizeF Transform(SizeF size)
+    {
+        return new SizeF(Transform(size.Width), Transform(size.Height));
+    }
+
 }
 

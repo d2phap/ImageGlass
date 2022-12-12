@@ -27,6 +27,7 @@ namespace ImageGlass.UI;
 public class ModernMenuRenderer : ToolStripProfessionalRenderer
 {
     private IgTheme _theme { get; set; }
+    private static Padding ContentMargin => DpiApi.Transform(new Padding(5, 2, 5, 2));
 
 
     public ModernMenuRenderer(IgTheme theme) : base(new ModernMenuColors(theme))
@@ -173,9 +174,8 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         using var checkMarkBrush = new SolidBrush(markColor);
         
         
-        // left margin
-        var left = 5;
-        var rect = new RectangleF(left, 0, e.Item.Height, e.Item.Height);
+        // check rect
+        var rect = new RectangleF(ContentMargin.Left, 0, e.Item.Height, e.Item.Height);
         rect.Inflate(-e.Item.Height * 0.2f, -e.Item.Height * 0.2f);
 
         // draw check mark for radio button
@@ -228,15 +228,15 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
         g.SmoothingMode = SmoothingMode.HighQuality;
         g.CompositingQuality = CompositingQuality.HighQuality;
 
-
         // draw background when hovering on enable item
         if (e.Item.Selected && e.Item.Enabled)
         {
             // boundary
             var rect = new Rectangle(
-                5, 2,
-                e.Item.Bounds.Width - 9,
-                e.Item.Bounds.Height - 5);
+                ContentMargin.Left,
+                ContentMargin.Top,
+                e.Item.Bounds.Width - ContentMargin.Horizontal,
+                e.Item.Bounds.Height - ContentMargin.Vertical);
             var radius = BHelper.GetItemBorderRadius(rect.Height, Constants.MENU_ICON_HEIGHT);
 
             using var brush = new SolidBrush(_theme.Colors.MenuBgHoverColor);
@@ -274,8 +274,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             
 
             // left margin
-            var left = 5;
-            var rect = new RectangleF(left, 0, e.Item.Height, e.Item.Height);
+            var rect = new RectangleF(ContentMargin.Left, 0, e.Item.Height, e.Item.Height);
             rect.Inflate(-e.Item.Height * 0.2f, -e.Item.Height * 0.2f);
 
             var radius = isRadioButton
