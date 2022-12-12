@@ -48,7 +48,7 @@ public partial class FrmMain : ModernForm
     private FormWindowState _windowState = FormWindowState.Normal;
 
 
-    public FrmMain()
+    public FrmMain() : base()
     {
         InitializeComponent();
 
@@ -601,7 +601,9 @@ public partial class FrmMain : ModernForm
 
         Gallery.SuspendLayout();
         Gallery.Items.Clear();
-        Gallery.ThumbnailSize = new Size(Config.ThumbnailSize, Config.ThumbnailSize);
+
+        var thumbSize = this.ScaleToDpi(Config.ThumbnailSize);
+        Gallery.ThumbnailSize = new Size(thumbSize, thumbSize);
 
 
         foreach (string filename in Local.Images.FileNames)

@@ -164,7 +164,7 @@ public class ModernGalleryRenderer : StyleRenderer
 
             if (textSize.Width > textRegion.Width)
             {
-                text = BHelper.EllipsisText(text, textRegion.Width, g);
+                text = BHelper.EllipsisText(text, ImageGalleryOwner.Font, textRegion.Width, g);
             }
 
 

@@ -566,7 +566,7 @@ public static class Config
     /// <summary>
     /// Gets, sets value of thumbnail dimension in pixel
     /// </summary>
-    public static int ThumbnailSize { get; set; } = 70;
+    public static int ThumbnailSize { get; set; } = 50;
 
     ///// <summary>
     ///// Gets, sets width of horizontal thumbnail bar
