@@ -73,8 +73,6 @@
             this.PicMain.Location = new System.Drawing.Point(0, 0);
             this.PicMain.Margin = new System.Windows.Forms.Padding(0);
             this.PicMain.Name = "PicMain";
-            this.PicMain.NavBorderRadius = 45F;
-            this.PicMain.NavButtonSize = new System.Drawing.SizeF(90F, 90F);
             this.PicMain.RequestUpdateFrame = false;
             this.PicMain.SelectionAspectRatio = new System.Drawing.SizeF(0F, 0F);
             this.PicMain.SelectionColor = System.Drawing.Color.Black;

@@ -92,6 +92,10 @@ public partial class FrmMain : ModernForm
 
         // update toolbar theme
         Toolbar.UpdateTheme(newIconHeight);
+
+        // update picmain scaling
+        PicMain.NavButtonSize = DpiApi.Transform(PicMain.NavButtonSize);
+        PicMain.CheckerboardCellSize = DpiApi.Transform(PicMain.CheckerboardCellSize);
     }
 
 

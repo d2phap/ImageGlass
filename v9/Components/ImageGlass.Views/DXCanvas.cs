@@ -93,7 +93,7 @@ public class DXCanvas : DXControl
 
     // checkerboard
     private CheckerboardMode _checkerboardMode = CheckerboardMode.None;
-    private float _checkerboardCellSize = 12f;
+    private float _checkerboardCellSize = 10f;
     private Color _checkerboardColor1 = Color.Black.WithAlpha(25);
     private Color _checkerboardColor2 = Color.White.WithAlpha(25);
     private TextureBrush? _checkerboardBrushGdip;
@@ -113,7 +113,7 @@ public class DXCanvas : DXControl
     internal PointF NavRightPos => new(Width - NavButtonSize.Width / 2 - NAV_PADDING, Height / 2);
     private NavButtonDisplay _navDisplay = NavButtonDisplay.None;
     private bool _isNavVisible = false;
-    public float _navBorderRadius = 45f;
+    private float NavBorderRadius => NavButtonSize.Width / 2;
     private IComObject<ID2D1Bitmap>? _navLeftImage = null;
     private IComObject<ID2D1Bitmap>? _navRightImage = null;
     private Bitmap? _navLeftImageGdip = null;
@@ -272,7 +272,7 @@ public class DXCanvas : DXControl
             if (ClientSelection.IsEmpty) return new List<SelectionResizer>();
 
 
-            var resizerSize = DpiApi.Transform(Font.Size * 1.2f);
+            var resizerSize = DpiApi.Transform(Font.Size * 1.3f);
             var resizerMargin = DpiApi.Transform(2);
 
             // 8 resizers
@@ -547,7 +547,7 @@ public class DXCanvas : DXControl
 
 
     [Category("Checkerboard")]
-    [DefaultValue(typeof(float), "12")]
+    [DefaultValue(typeof(float), "10")]
     public float CheckerboardCellSize
     {
         get => _checkerboardCellSize;
@@ -664,22 +664,8 @@ public class DXCanvas : DXControl
     /// Gets, sets the navigation button size.
     /// </summary>
     [Category("Navigation")]
-    [DefaultValue(90f)]
-    public SizeF NavButtonSize { get; set; } = new(90f, 90f);
-
-    /// <summary>
-    /// Gets, sets the navigation button border radius.
-    /// </summary>
-    [Category("Navigation")]
-    [DefaultValue(1f)]
-    public float NavBorderRadius
-    {
-        get => _navBorderRadius;
-        set
-        {
-            _navBorderRadius = Math.Min(Math.Abs(value), NavButtonSize.Width / 2);
-        }
-    }
+    [DefaultValue(70f)]
+    public SizeF NavButtonSize { get; set; } = new(70f, 70f);
 
     /// <summary>
     /// Gets, sets the navigation button color when hovered.
