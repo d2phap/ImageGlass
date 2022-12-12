@@ -162,7 +162,7 @@ public partial class DialogForm : ModernForm
         // 
         // BtnAccept
         // 
-        this.BtnAccept.AutoSize = true;
+        this.BtnAccept.AutoSize = false;
         this.BtnAccept.DarkMode = false;
         this.BtnAccept.ImagePadding = 2;
         this.BtnAccept.Location = new Point(500, 20);
@@ -171,7 +171,7 @@ public partial class DialogForm : ModernForm
         this.BtnAccept.Name = "BtnAccept";
         this.BtnAccept.Text = "[OK]";
         this.BtnAccept.Padding = new Padding(5);
-        this.BtnAccept.Size = new Size(130, 43);
+        this.BtnAccept.Size = new Size(130, 40);
         this.BtnAccept.SystemIcon = null;
         this.BtnAccept.TabIndex = 1;
         this.BtnAccept.Text = AcceptButtonText;
@@ -180,7 +180,7 @@ public partial class DialogForm : ModernForm
         // 
         // BtnCancel
         // 
-        this.BtnCancel.AutoSize = true;
+        this.BtnCancel.AutoSize = false;
         this.BtnCancel.DarkMode = false;
         this.BtnCancel.ImagePadding = 2;
         this.BtnCancel.Location = new Point(650, 20);
@@ -189,7 +189,7 @@ public partial class DialogForm : ModernForm
         this.BtnCancel.Name = "BtnCancel";
         this.BtnCancel.Text = "[Cancel]";
         this.BtnCancel.Padding = new Padding(5);
-        this.BtnCancel.Size = new Size(130, 43);
+        this.BtnCancel.Size = new Size(130, 40);
         this.BtnCancel.SystemIcon = null;
         this.BtnCancel.TabIndex = 2;
         this.BtnCancel.Text = CancelButtonText;
@@ -198,7 +198,7 @@ public partial class DialogForm : ModernForm
         // 
         // BtnApply
         // 
-        this.BtnApply.AutoSize = true;
+        this.BtnApply.AutoSize = false;
         this.BtnApply.DarkMode = false;
         this.BtnApply.ImagePadding = 2;
         this.BtnApply.Location = new Point(800, 20);
@@ -207,7 +207,7 @@ public partial class DialogForm : ModernForm
         this.BtnApply.Name = "BtnApply";
         this.BtnApply.Text = "[Apply]";
         this.BtnApply.Padding = new Padding(5);
-        this.BtnApply.Size = new Size(130, 43);
+        this.BtnApply.Size = new Size(130, 40);
         this.BtnApply.SystemIcon = null;
         this.BtnApply.TabIndex = 3;
         this.BtnApply.Text = ApplyButtonText;
