@@ -32,6 +32,7 @@ public static class ConfigurationExtensions
 
         // retrieve all keys from your settings
         var configs = config.AsEnumerable().Where(_ => _.Key.StartsWith(keyName));
+        if (!configs.Any()) return null;
 
         foreach (var kvp in configs)
         {
@@ -86,9 +87,12 @@ public static class ConfigurationExtensions
                 ReplaceWithArray(input, kvp.Key, kvp.Value as ExpandoObject);
             }
 
-            var parentDict = parent as IDictionary<string, object>;
-            parentDict.Remove(key);
-            parentDict.Add(key, array);
+            if (parent != null)
+            {
+                var parentDict = parent as IDictionary<string, object>;
+                parentDict.Remove(key);
+                parentDict.Add(key, array);
+            }
         }
         else
         {

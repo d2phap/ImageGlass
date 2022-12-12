@@ -27,8 +27,10 @@ public static class ExpandoObjectExtensions
     /// <summary>
     /// Gets value from the <see cref="ExpandoObject"/>.
     /// </summary>
-    public static T GetValue<T>(this ExpandoObject expObj, string keyName, T defaultValue)
+    public static T GetValue<T>(this ExpandoObject? expObj, string keyName, T defaultValue)
     {
+        if (expObj == null) return defaultValue;
+
         var dict = (IDictionary<string, object>)(expObj as dynamic);
 
         try
@@ -46,8 +48,9 @@ public static class ExpandoObjectExtensions
     /// <summary>
     /// Gets value from the <see cref="ExpandoObject"/>.
     /// </summary>
-    public static object? GetValue(this ExpandoObject expObj, string keyName)
+    public static object? GetValue(this ExpandoObject? expObj, string keyName)
     {
+        if (expObj == null) return null;
         var dict = (IDictionary<string, object>)(expObj as dynamic);
 
         try
@@ -65,8 +68,9 @@ public static class ExpandoObjectExtensions
     /// <summary>
     /// Removes an item in <see cref="ExpandoObject"/>.
     /// </summary>
-    public static bool Remove(this ExpandoObject expObj, string keyName)
+    public static bool Remove(this ExpandoObject? expObj, string keyName)
     {
+        if (expObj == null) return false;
         var dict = expObj as dynamic as Dictionary<string, object>;
 
         return dict.Remove(keyName);
@@ -76,8 +80,9 @@ public static class ExpandoObjectExtensions
     /// <summary>
     /// Sets value to <see cref="ExpandoObject"/>.
     /// </summary>
-    public static void Set(this ExpandoObject expObj, string keyName, object value)
+    public static void Set(this ExpandoObject? expObj, string keyName, object value)
     {
+        if (expObj == null) return;
         var dict = expObj as dynamic as IDictionary<string, object?>;
 
         if (dict.ContainsKey(keyName))
