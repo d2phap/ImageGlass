@@ -44,15 +44,15 @@ public class ModernGalleryRenderer : StyleRenderer
         Theme = theme;
     }
 
-    public override void RenderScrollbarFiller(Graphics g)
-    {
-        if (Theme.Settings.IsDarkMode)
-        {
-            // dark scrollbars
-            _ = SystemRenderer.ApplyTheme(ImageGalleryOwner.HScrollBar, true);
-            _ = SystemRenderer.ApplyTheme(ImageGalleryOwner.VScrollBar, true);
-        }
-    }
+    //public override void RenderScrollbarFiller(Graphics g)
+    //{
+    //    if (Theme.Settings.IsDarkMode)
+    //    {
+    //        // dark scrollbars
+    //        _ = SystemRenderer.ApplyTheme(ImageGalleryOwner.HScrollBar, true);
+    //        _ = SystemRenderer.ApplyTheme(ImageGalleryOwner.VScrollBar, true);
+    //    }
+    //}
 
 
     /// <summary>

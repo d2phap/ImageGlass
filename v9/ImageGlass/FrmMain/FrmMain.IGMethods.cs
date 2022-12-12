@@ -515,8 +515,8 @@ public partial class FrmMain
 
         if (Config.ShowThumbnailScrollbars)
         {
-            Gallery.HScrollBar.Height = Gallery.VScrollBar.Width = DpiApi.Transform(8);
-            scrollBarSize = Gallery.HScrollBar.Height + 1;
+            //Gallery.HScrollBar.Height = Gallery.VScrollBar.Width = DpiApi.Transform(8);
+            scrollBarSize = Gallery.HScrollBar.Height;
         }
 
         // Gallery bar
