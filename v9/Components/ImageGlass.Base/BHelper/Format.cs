@@ -134,7 +134,7 @@ public partial class BHelper
     {
         var textSize = g.MeasureString(text, font);
         var avgCharW = textSize.Width / text.Length;
-        var maxCharsPerSide = (int)Math.Floor((containerWidth / avgCharW / 2d) - 1);
+        var maxCharsPerSide = (int)Math.Floor(containerWidth / avgCharW / 2d);
 
         var truncated = string.Concat(
             text.AsSpan(0, maxCharsPerSide),
