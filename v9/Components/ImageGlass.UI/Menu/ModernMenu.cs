@@ -93,7 +93,7 @@ public class ModernMenu : ContextMenuStrip
 
         if (!DesignMode)
         {
-            FixGeneralIssues(toFixDpiSize: true, toFixDropdown: true);
+            FixGeneralIssues(toFixDpiSize: true, toFixDropdown: true, IsDpiChanged);
         }
     }
 
@@ -125,9 +125,10 @@ public class ModernMenu : ContextMenuStrip
     /// </summary>
     public void FixGeneralIssues(
         bool toFixDpiSize = false,
-        bool toFixDropdown = false)
+        bool toFixDropdown = false,
+        bool toFixFontSize = false)
     {
-        FixGeneralIssues(this, toFixDpiSize, toFixDropdown);
+        FixGeneralIssues(this, Constants.MENU_ICON_HEIGHT, toFixDpiSize, toFixDropdown, toFixFontSize);
     }
 
 
@@ -143,8 +144,10 @@ public class ModernMenu : ContextMenuStrip
     /// <param name="items"></param>
     public void FixGeneralIssues(
         ToolStripDropDown menu,
+        float originalIconSize,
         bool toFixDpiSize = false,
-        bool toFixDropdown = false)
+        bool toFixDropdown = false,
+        bool toFixFontSize = false)
     {
         if (!toFixDpiSize && !toFixDropdown) return;
 
@@ -152,11 +155,15 @@ public class ModernMenu : ContextMenuStrip
         if (!allItems.Any()) return;
 
         // standard icon size
-        var iconH = DpiApi.Transform(Constants.MENU_ICON_HEIGHT);
-        var standardIcon = new Bitmap(iconH, iconH);
+        var iconH = DpiApi.Transform(originalIconSize);
 
         foreach (ToolStripMenuItem item in allItems)
         {
+            if (toFixFontSize)
+            {
+                item.Font = new Font(Font.FontFamily, iconH / 5f);
+            }
+
             #region Fix menu height
             if (toFixDpiSize)
             {
@@ -164,14 +171,14 @@ public class ModernMenu : ContextMenuStrip
 
                 if (item.Image is not null)
                 {
-                    if (item.Image.Height != standardIcon.Height)
+                    if (item.Image.Height != iconH)
                     {
-                        item.Image = new Bitmap(item.Image, standardIcon.Width, standardIcon.Height);
+                        item.Image = new Bitmap(item.Image, (int)iconH, (int)iconH);
                     }
                 }
                 else
                 {
-                    item.Image = standardIcon;
+                    item.Image = new Bitmap((int)iconH, (int)iconH);
                 }
             }
             #endregion
@@ -187,13 +194,18 @@ public class ModernMenu : ContextMenuStrip
                 item.DropDownOpening += Item_DropDownOpening;
 
                 // fix dropdown items
-                FixGeneralIssues(item.DropDown, toFixDpiSize, toFixDropdown);
+                FixGeneralIssues(item.DropDown, Constants.MENU_ICON_HEIGHT * 0.9f, toFixDpiSize, toFixDropdown);
             }
         }
 
     }
 
+
+
     #endregion
+
+
+    public bool IsDpiChanged = false;
 
 
     #region Private functions

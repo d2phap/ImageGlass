@@ -49,8 +49,6 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             {
                 e.TextColor = _theme.Colors.MenuTextColor;
             }
-
-            base.OnRenderItemText(e);
         }
         else
         {
@@ -62,9 +60,9 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             {
                 e.TextColor = ThemeUtils.LightenColor(_theme.Colors.MenuBgColor, 0.5f);
             }
-
-            base.OnRenderItemText(e);
         }
+
+        base.OnRenderItemText(e);
     }
 
 

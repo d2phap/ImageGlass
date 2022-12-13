@@ -84,6 +84,8 @@ public partial class FrmMain : ModernForm
     {
         base.OnDpiChanged();
 
+        SuspendLayout();
+
         // scale toolbar icons corresponding to DPI
         var newIconHeight = this.ScaleToDpi(Config.ToolbarIconHeight);
 
@@ -99,6 +101,17 @@ public partial class FrmMain : ModernForm
 
         // gallery
         UpdateGallerySize();
+
+        ResumeLayout(false);
+    }
+
+    protected override void OnDpiChanged(DpiChangedEventArgs e)
+    {
+        base.OnDpiChanged(e);
+        
+        MnuMain.IsDpiChanged =
+            MnuContext.IsDpiChanged =
+            MnuSubMenu.IsDpiChanged = true;
     }
 
 

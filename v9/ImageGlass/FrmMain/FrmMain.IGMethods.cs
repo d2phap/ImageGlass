@@ -543,11 +543,14 @@ public partial class FrmMain
             + scrollBarSize
             + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Height * 6.5f);
         Sp1.Panel2Collapsed = !Config.ShowThumbnails;
-        Sp1.SplitterDistance = Sp1.Height
+
+        try
+        {
+            Sp1.SplitterDistance = Sp1.Height
             - Sp1.SplitterWidth
             - Gallery.Height;
-
-        Gallery.Invalidate(true);
+        }
+        catch { }
     }
 
 
