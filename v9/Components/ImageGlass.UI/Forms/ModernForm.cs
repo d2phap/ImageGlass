@@ -180,13 +180,13 @@ public partial class ModernForm : Form
                 RestoreButtonClicked?.Invoke(EventArgs.Empty);
             }
         }
-        else if (m.Msg == DpiApi.WM_DPICHANGED)
-        {
-            // get new dpi value
-            _dpi = (short)m.WParam;
+        //else if (m.Msg == DpiApi.WM_DPICHANGED)
+        //{
+        //    // get new dpi value
+        //    _dpi = (short)m.WParam;
 
-            OnDpiChanged();
-        }
+        //    OnDpiChanged();
+        //}
         // WM_DWMCOLORIZATIONCOLORCHANGED: accent color changed
         else if (m.Msg == 0x0320)
         {
@@ -196,7 +196,29 @@ public partial class ModernForm : Form
 
         base.WndProc(ref m);
     }
-    
+
+    protected override void OnDpiChanged(DpiChangedEventArgs e)
+    {
+        base.OnDpiChanged(e);
+
+        // get new dpi value
+        _dpi = e.DeviceDpiNew;
+
+        OnDpiChanged();
+    }
+
+
+    /// <summary>
+    /// Occurs when window's DPI is changed.
+    /// </summary>
+    protected virtual void OnDpiChanged()
+    {
+        if (EnableDpiApiUpdate)
+        {
+            DpiApi.CurrentDpi = _dpi;
+        }
+    }
+
 
     /// <summary>
     /// Triggers <see cref="SystemAccentColorChanged"/> event.
@@ -221,18 +243,6 @@ public partial class ModernForm : Form
     {
         // emits the event
         RequestUpdatingColorMode?.Invoke(e);
-    }
-
-
-    /// <summary>
-    /// Occurs when window's DPI is changed.
-    /// </summary>
-    protected virtual void OnDpiChanged()
-    {
-        if (EnableDpiApiUpdate)
-        {
-            DpiApi.CurrentDpi = _dpi;
-        }
     }
 
 
