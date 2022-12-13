@@ -262,13 +262,13 @@ public partial class ThemeUtils
     /// <summary>
     /// Creates image from text.
     /// </summary>
-    public static Image CreateImageFromText(string text, Font font, float size, Color textColor, Color? backColor = null, float dpiScale = 1f)
+    public static Image CreateImageFromText(string text, Font font, Color textColor, Color? backColor = null)
     {
         // fix dpi scaling
-        size = (size + dpiScale) * dpiScale;
+        var fontSize = FontPixelToPoint(font.Height);
 
         var path = new GraphicsPath();
-        path.AddString(text, font.FontFamily, (int)font.Style, size, new Point(0, 0), StringFormat.GenericTypographic);
+        path.AddString(text, font.FontFamily, (int)font.Style, fontSize, new Point(0, 0), StringFormat.GenericTypographic);
 
         var pathRect = path.GetBounds();
         var br = new RectangleF(pathRect.X, pathRect.Y, pathRect.Width, pathRect.Height);
@@ -288,6 +288,28 @@ public partial class ThemeUtils
 
 
         return img;
+    }
+
+
+    /// <summary>
+    /// Converts font size in point to pixel.
+    /// </summary>
+    /// <param name="pt">Font size in point</param>
+    public static float FontPointToPixel(int pt)
+    {
+        // 16px = 12pt
+        return pt * 16f / 12f;
+    }
+
+
+    /// <summary>
+    /// Converts font size in pixel to point.
+    /// </summary>
+    /// <param name="px">Font size in pixel</param>
+    public static float FontPixelToPoint(float px)
+    {
+        // 16px = 12pt
+        return px * 12f / 16f;
     }
 
     #endregion

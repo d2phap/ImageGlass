@@ -92,7 +92,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         using var font = new Font(e.Item.Font.FontFamily, e.Item.Font.Size * 1.4f, FontStyle.Bold);
 
         var fontColor = e.Item.ForeColor.WithAlpha(e.Item.Pressed ? 140 : 180);
-        var textImg = ThemeUtils.CreateImageFromText(ELLIPSIS, font, font.Size, fontColor, null, DpiScale);
+        var textImg = ThemeUtils.CreateImageFromText(ELLIPSIS, font, fontColor);
 
         var posX = (e.Item.Width / 2) - (textImg.Width / 2) - 1;
         var posY = (e.Item.Height / 2) - (textImg.Height / 2);
@@ -272,7 +272,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
 
         // create text image
         var textColor = e.TextColor.WithAlpha(e.Item.Pressed ? 180 : 255);
-        using var textBmp = ThemeUtils.CreateImageFromText(e.Text, e.TextFont, e.TextFont.Size, e.TextColor, null, DpiScale);
+        using var textBmp = ThemeUtils.CreateImageFromText(e.Text, e.TextFont, e.TextColor);
 
         var loc = new PointF(
             e.TextRectangle.X + (e.TextRectangle.Height * 0.3f),
