@@ -686,7 +686,7 @@ public partial class FrmMain
         // clear items
         MnuViewChannels.DropDown.Items.Clear();
 
-        var newMenuIconHeight = DpiApi.Transform(Constants.MENU_ICON_HEIGHT);
+        var newMenuIconHeight = this.ScaleToDpi(Constants.MENU_ICON_HEIGHT);
 
         // add new items
         foreach (var channel in Enum.GetValues(typeof(ColorChannel)))
@@ -745,7 +745,7 @@ public partial class FrmMain
         // clear items
         MnuLoadingOrders.DropDown.Items.Clear();
 
-        var newMenuIconHeight = DpiApi.Transform(Constants.MENU_ICON_HEIGHT);
+        var newMenuIconHeight = this.ScaleToDpi(Constants.MENU_ICON_HEIGHT);
 
         // add ImageOrderBy items
         foreach (var order in Enum.GetValues(typeof(ImageOrderBy)))

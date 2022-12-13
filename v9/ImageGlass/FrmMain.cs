@@ -85,7 +85,7 @@ public partial class FrmMain : ModernForm
         base.OnDpiChanged();
 
         // scale toolbar icons corresponding to DPI
-        var newIconHeight = DpiApi.Transform(Config.ToolbarIconHeight);
+        var newIconHeight = this.ScaleToDpi(Config.ToolbarIconHeight);
 
         // reload theme
         Config.Theme.LoadTheme(newIconHeight);
@@ -94,8 +94,11 @@ public partial class FrmMain : ModernForm
         Toolbar.UpdateTheme(newIconHeight);
 
         // update picmain scaling
-        PicMain.NavButtonSize = DpiApi.Transform(PicMain.NavButtonSize);
-        PicMain.CheckerboardCellSize = DpiApi.Transform(PicMain.CheckerboardCellSize);
+        PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(60f, 60f));
+        PicMain.CheckerboardCellSize = this.ScaleToDpi(10f);
+
+        // gallery
+        UpdateGallerySize();
     }
 
 

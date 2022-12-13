@@ -663,9 +663,8 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Gets, sets the navigation button size.
     /// </summary>
-    [Category("Navigation")]
-    [DefaultValue(70f)]
-    public SizeF NavButtonSize { get; set; } = new(70f, 70f);
+    [Browsable(false)]
+    public SizeF NavButtonSize { get; set; } = new(60f, 60f);
 
     /// <summary>
     /// Gets, sets the navigation button color when hovered.

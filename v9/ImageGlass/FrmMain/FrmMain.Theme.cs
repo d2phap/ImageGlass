@@ -58,7 +58,7 @@ public partial class FrmMain
             MnuMain.Theme =
             MnuContext.Theme =
             MnuSubMenu.Theme = Config.Theme;
-        Toolbar.UpdateTheme(DpiApi.Transform(Config.ToolbarIconHeight));
+        Toolbar.UpdateTheme(this.ScaleToDpi(Config.ToolbarIconHeight));
 
 
         // viewer

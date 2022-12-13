@@ -509,24 +509,10 @@ public partial class FrmMain
         visible ??= !Config.ShowThumbnails;
         Config.ShowThumbnails = visible.Value;
 
-        var scrollBarSize = 0;
         Gallery.ScrollBars = Config.ShowThumbnailScrollbars;
         Gallery.ShowItemText = Config.ShowThumbnailFilename;
 
-        if (Config.ShowThumbnailScrollbars)
-        {
-            //Gallery.HScrollBar.Height = Gallery.VScrollBar.Width = DpiApi.Transform(8);
-            scrollBarSize = Gallery.HScrollBar.Height;
-        }
-
-        // Gallery bar
-        Gallery.Height = this.ScaleToDpi(Config.ThumbnailSize)
-            + scrollBarSize
-            + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Height * 6.5f);
-        Sp1.Panel2Collapsed = !Config.ShowThumbnails;
-        Sp1.SplitterDistance = Sp1.Height
-            - Sp1.SplitterWidth
-            - Gallery.Height;
+        UpdateGallerySize();
 
         // update menu item state
         MnuToggleThumbnails.Checked = Config.ShowThumbnails;
@@ -535,6 +521,33 @@ public partial class FrmMain
         UpdateToolbarItemsState();
 
         return Config.ShowThumbnails;
+    }
+
+
+    /// <summary>
+    /// Recalculates and updates size of <see cref="Gallery"/>.
+    /// </summary>
+    private void UpdateGallerySize()
+    {
+        var scrollBarSize = 0;
+        if (Config.ShowThumbnailScrollbars)
+        {
+            scrollBarSize = Gallery.HScrollBar.Height;
+        }
+
+        // update thumbnail size
+        Gallery.ThumbnailSize = this.ScaleToDpi(new SizeF(Config.ThumbnailSize, Config.ThumbnailSize)).ToSize();
+
+        // Gallery bar
+        Gallery.Height = Gallery.ThumbnailSize.Height
+            + scrollBarSize
+            + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Height * 6.5f);
+        Sp1.Panel2Collapsed = !Config.ShowThumbnails;
+        Sp1.SplitterDistance = Sp1.Height
+            - Sp1.SplitterWidth
+            - Gallery.Height;
+
+        Gallery.Invalidate(true);
     }
 
 
