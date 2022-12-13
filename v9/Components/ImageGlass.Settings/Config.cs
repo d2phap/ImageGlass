@@ -48,83 +48,77 @@ public static class Config
     {
         new()
         {
-            Id = "btn_OpenFile",
+            Id = "Btn_OpenFile",
             Alignment = ToolStripItemAlignment.Right,
             Image = "OpenFile",
             OnClick = new("MnuOpenFile"),
         },
         new()
         {
-            Id = "btn_ViewPrevious",
+            Id = "Btn_ViewPrevious",
             Image = "ViewPreviousImage",
             OnClick = new("MnuViewPrevious"),
         },
         new()
         {
-            Id = "btn_ViewNext",
+            Id = "Btn_ViewNext",
             Image = "ViewNextImage",
             OnClick = new("MnuViewNext"),
         },
         new() { Type = ToolbarItemModelType.Separator },
         new()
         {
-            Id = "btn_AutoZoom",
+            Id = "Btn_AutoZoom",
             Image = "AutoZoom",
-            CheckableConfigBinding = nameof(ZoomMode),
             OnClick = new("MnuAutoZoom"),
         },
         new()
         {
-            Id = "btn_LockZoom",
+            Id = "Btn_LockZoom",
             Image = "LockZoom",
-            CheckableConfigBinding = nameof(ZoomMode),
             OnClick = new("MnuLockZoom"),
         },
         new()
         {
-            Id = "btn_ScaleToWidth",
+            Id = "Btn_ScaleToWidth",
             Image = "ScaleToWidth",
-            CheckableConfigBinding = nameof(ZoomMode),
             OnClick = new("MnuScaleToWidth"),
         },
         new()
         {
-            Id = "btn_ScaleToHeight",
+            Id = "Btn_ScaleToHeight",
             Image = "ScaleToHeight",
-            CheckableConfigBinding = nameof(ZoomMode),
             OnClick = new("MnuScaleToHeight"),
         },
         new()
         {
-            Id = "btn_ScaleToFit",
+            Id = "Btn_ScaleToFit",
             Image = "ScaleToFit",
-            CheckableConfigBinding = nameof(ZoomMode),
             OnClick = new("MnuScaleToFit"),
         },
         new()
         {
-            Id = "btn_ScaleToFill",
+            Id = "Btn_ScaleToFill",
             Image = "ScaleToFill",
-            CheckableConfigBinding = nameof(ZoomMode),
             OnClick = new("MnuScaleToFill"),
         },
         new() { Type = ToolbarItemModelType.Separator },
         new()
         {
-            Id = "btn_Refresh",
+            Id = "Btn_Refresh",
             Image = "Refresh",
             OnClick = new("MnuRefresh"),
         },
         new()
         {
-            Id = "btn_Thumbnail",
+            Id = "Btn_Thumbnail",
             Image = "ThumbnailBar",
             CheckableConfigBinding = nameof(ShowThumbnails),
             OnClick = new("MnuToggleThumbnails"),
         },
         new()
         {
-            Id = "btn_Checkerboard",
+            Id = "Btn_Checkerboard",
             Image = "Checkerboard",
             CheckableConfigBinding = nameof(ShowCheckerBoard),
             OnClick = new("MnuToggleCheckerboard"),
@@ -132,7 +126,7 @@ public static class Config
         new() { Type = ToolbarItemModelType.Separator },
         new()
         {
-            Id = "btn_FullScreen",
+            Id = "Btn_FullScreen",
             Image = "FullScreen",
             CheckableConfigBinding = nameof(EnableFullScreen),
             OnClick = new("MnuFullScreen"),
@@ -140,18 +134,18 @@ public static class Config
         new() { Type = ToolbarItemModelType.Separator },
         //new()
         //{
-        //    Id = "btn_Edit",
+        //    Id = "Btn_Edit",
         //    Image = "Edit",
         //},
         new()
         {
-            Id = "btn_Print",
+            Id = "Btn_Print",
             Image = "Print",
             OnClick = new("MnuPrint"),
         },
         new()
         {
-            Id = "btn_Delete",
+            Id = "Btn_Delete",
             Image = "Delete",
             OnClick = new("MnuMoveToRecycleBin"),
         }
