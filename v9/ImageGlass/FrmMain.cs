@@ -86,6 +86,8 @@ public partial class FrmMain : ModernForm
 
         SuspendLayout();
 
+        Sp1.SplitterWidth = Math.Max(1, this.ScaleToDpi(1));
+
         // scale toolbar icons corresponding to DPI
         var newIconHeight = this.ScaleToDpi(Config.ToolbarIconHeight);
 
