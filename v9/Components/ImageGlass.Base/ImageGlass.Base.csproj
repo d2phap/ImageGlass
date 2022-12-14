@@ -42,7 +42,7 @@
       <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.164-beta">
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
-      <PackageReference Include="WicNet" Version="1.5.0" />
+      <PackageReference Include="WicNet" Version="1.6.1" />
     </ItemGroup>
 
 </Project>

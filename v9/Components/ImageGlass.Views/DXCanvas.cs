@@ -28,7 +28,6 @@ using System.Drawing.Drawing2D;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using WicNet;
-using CombineMode = D2Phap.CombineMode;
 using InterpolationMode = D2Phap.InterpolationMode;
 
 namespace ImageGlass.Views;
@@ -1476,9 +1475,12 @@ public class DXCanvas : DXControl
         if (Source == ImageSource.Null || (_mouseDownButton != MouseButtons.Left && ClientSelection.IsEmpty))
             return;
 
-        // draw the clip selection region
-        using var selectionGeo = g.GetCombinedRectanglesGeometry(ClientSelection, _destRect, 0, 0, CombineMode.Xor);
-        g.DrawGeometry(selectionGeo, Color.Transparent, Color.Black.WithAlpha(_mouseDownButton == MouseButtons.Left ? 100 : 180));
+        if (g is D2DGraphics dg)
+        {
+            // draw the clip selection region
+            using var selectionGeo = dg.GetCombinedRectanglesGeometry(ClientSelection, _destRect, 0, 0, D2D1_COMBINE_MODE.D2D1_COMBINE_MODE_XOR);
+            dg.DrawGeometry(selectionGeo, Color.Transparent, Color.Black.WithAlpha(_mouseDownButton == MouseButtons.Left ? 100 : 180));
+        }
 
 
         if (_mouseDownButton == MouseButtons.Left || _isSelectionHovered)
