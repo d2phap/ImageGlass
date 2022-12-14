@@ -38,11 +38,11 @@ public class ModernToolbar : ToolStrip
     private ContextMenuStrip _mainMenu = new();
     private ToolStripButton _mainMenuButton => new()
     {
-        Name = "btn_MainMenu",
+        Name = "Btn_MainMenu",
         DisplayStyle = ToolStripItemDisplayStyle.Image,
         TextImageRelation = TextImageRelation.ImageBeforeText,
-        Text = "Main menu",
-        ToolTipText = "Main menu (Alf+F)",
+        Text = "[Main menu]",
+        ToolTipText = "[Main menu (Alf+F)]",
 
         // save icon name to load later
         Tag = new ToolbarItemTagModel()
@@ -65,7 +65,10 @@ public class ModernToolbar : ToolStrip
     /// <summary>
     /// Show or hide main menu button of toolbar
     /// </summary>
-    public bool ShowMainMenuButton { get; set; } = true;
+    public bool ShowMainMenuButton {
+        get => _mainMenuButton.Visible;
+        set => _mainMenuButton.Visible = value;
+    }
 
     /// <summary>
     /// Gets main menu button
@@ -258,6 +261,7 @@ public class ModernToolbar : ToolStrip
     public ModernToolbar() : base()
     {
         ShowItemToolTips = false;
+        Items.Insert(0, _mainMenuButton);
 
         // Apply Windows 11 corner API
         WindowApi.SetRoundCorner(OverflowButton.DropDown.Handle);
@@ -470,23 +474,6 @@ public class ModernToolbar : ToolStrip
 
 
     /// <summary>
-    /// Update main menu button and the menu
-    /// </summary>
-    public void UpdateMainMenuButton()
-    {
-        var btn = GetItem(MainMenuButton.Name);
-        if (btn is null && ShowMainMenuButton)
-        {
-            Items.Insert(0, MainMenuButton);
-        }
-        else
-        {
-            Items.RemoveByKey(MainMenuButton.Name);
-        }
-    }
-
-
-    /// <summary>
     /// Update toolbar theme
     /// </summary>
     public void UpdateTheme(int? iconHeight = null)
@@ -502,9 +489,6 @@ public class ModernToolbar : ToolStrip
         BackColor = Theme.Colors.ToolbarBgColor;
         ForeColor = Theme.Colors.ToolbarTextColor;
         Renderer = new ModernToolbarRenderer(this);
-
-        // Show / hide main menu button
-        UpdateMainMenuButton();
 
         // Overflow button and Overflow dropdown
         UpdateOverflow();
@@ -638,17 +622,18 @@ public class ModernToolbar : ToolStrip
         }
     }
 
+
+    /// <summary>
+    /// Clears toolbar items, then adds <see cref="MainMenuButton"/>.
+    /// </summary>
+    public void ClearItems()
+    {
+        Items.Clear();
+        Items.Insert(0, _mainMenuButton);
+    }
+
     #endregion
 
-    //protected override bool ProcessCmdKey(ref Message m, Keys keyData)
-    //{
-    //    //if (m.HWnd.Equals(Handle) &&
-    //    //    (keyData == Keys.Left || keyData == Keys.Right ||
-    //    //    keyData == Keys.Tab))
-    //    //    return true;
-
-    //    return base.ProcessCmdKey(ref m, keyData);
-    //}
 
 }
 

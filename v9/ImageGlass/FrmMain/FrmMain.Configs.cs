@@ -151,8 +151,8 @@ public partial class FrmMain
         Toolbar.Alignment = Config.CenterToolbar
             ? ToolbarAlignment.Center
             : ToolbarAlignment.Left;
-        
-        Toolbar.Items.Clear();
+
+        Toolbar.ClearItems();
         Toolbar.AddItems(Config.ToolbarItems);
         IG_ToggleToolbar(Config.ShowToolbar);
 
