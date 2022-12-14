@@ -111,9 +111,9 @@ public partial class FrmMain : ModernForm
     {
         base.OnDpiChanged(e);
         
-        MnuMain.IsDpiChanged =
-            MnuContext.IsDpiChanged =
-            MnuSubMenu.IsDpiChanged = true;
+        MnuMain.CurrentDpi =
+            MnuContext.CurrentDpi =
+            MnuSubMenu.CurrentDpi = e.DeviceDpiNew;
     }
 
 

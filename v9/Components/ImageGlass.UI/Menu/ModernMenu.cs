@@ -29,6 +29,8 @@ namespace ImageGlass.UI;
 public class ModernMenu : ContextMenuStrip
 {
     private IgTheme _theme = new();
+    public int CurrentDpi = 96;
+    public int InitDpi = 96;
 
 
     #region Public properties
@@ -93,7 +95,7 @@ public class ModernMenu : ContextMenuStrip
 
         if (!DesignMode)
         {
-            FixGeneralIssues(toFixDpiSize: true, toFixDropdown: true, IsDpiChanged);
+            FixGeneralIssues(toFixDpiSize: true, toFixDropdown: true);
         }
     }
 
@@ -125,10 +127,9 @@ public class ModernMenu : ContextMenuStrip
     /// </summary>
     public void FixGeneralIssues(
         bool toFixDpiSize = false,
-        bool toFixDropdown = false,
-        bool toFixFontSize = false)
+        bool toFixDropdown = false)
     {
-        FixGeneralIssues(this, Constants.MENU_ICON_HEIGHT, toFixDpiSize, toFixDropdown, toFixFontSize);
+        FixGeneralIssues(this, Constants.MENU_ICON_HEIGHT, toFixDpiSize, toFixDropdown);
     }
 
 
@@ -146,8 +147,7 @@ public class ModernMenu : ContextMenuStrip
         ToolStripDropDown menu,
         float originalIconSize,
         bool toFixDpiSize = false,
-        bool toFixDropdown = false,
-        bool toFixFontSize = false)
+        bool toFixDropdown = false)
     {
         if (!toFixDpiSize && !toFixDropdown) return;
 
@@ -155,13 +155,16 @@ public class ModernMenu : ContextMenuStrip
         if (!allItems.Any()) return;
 
         // standard icon size
-        var iconH = DpiApi.Transform(originalIconSize);
+        //var iconH = this.ScaleToDpi(originalIconSize);
+        var dpiScale = CurrentDpi / 96f;
+        var fontSize = dpiScale * 16 / 4.2f;
+        var iconH = originalIconSize * dpiScale;
 
         foreach (ToolStripMenuItem item in allItems)
         {
-            if (toFixFontSize)
+            if (InitDpi != CurrentDpi)
             {
-                item.Font = new Font(Font.FontFamily, iconH / 5f);
+                item.Font = new Font(Font.FontFamily, fontSize);
             }
 
             #region Fix menu height
@@ -192,9 +195,6 @@ public class ModernMenu : ContextMenuStrip
                 // fix dropdown direction
                 item.DropDownOpening -= Item_DropDownOpening;
                 item.DropDownOpening += Item_DropDownOpening;
-
-                // fix dropdown items
-                FixGeneralIssues(item.DropDown, Constants.MENU_ICON_HEIGHT * 0.9f, toFixDpiSize, toFixDropdown);
             }
         }
 
@@ -203,9 +203,6 @@ public class ModernMenu : ContextMenuStrip
 
 
     #endregion
-
-
-    public bool IsDpiChanged = false;
 
 
     #region Private functions
@@ -217,6 +214,10 @@ public class ModernMenu : ContextMenuStrip
         {
             return; // not a dropdown item
         }
+
+
+        // fix dropdown items
+        FixGeneralIssues(mnuItem.DropDown, Constants.MENU_ICON_HEIGHT * 0.9f, toFixDpiSize: true);
 
 
         #region Fix dropdown direction

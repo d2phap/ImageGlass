@@ -51,13 +51,20 @@ public partial class FrmMain
                 PicMain.BackColor = Config.BackgroundColor.WithAlpha(255);
         }
 
+        // menu
+        MnuMain.InitDpi = 
+            MnuContext.InitDpi = 
+            MnuSubMenu.InitDpi = 
+        MnuMain.CurrentDpi =
+            MnuContext.CurrentDpi =
+            MnuSubMenu.CurrentDpi = this.DeviceDpi;
+        MnuMain.Theme =
+           MnuContext.Theme =
+           MnuSubMenu.Theme = Config.Theme;
 
         // toolbar
         Toolbar.EnableTransparent = EnableTransparent;
-        Toolbar.Theme =
-            MnuMain.Theme =
-            MnuContext.Theme =
-            MnuSubMenu.Theme = Config.Theme;
+        Toolbar.Theme = Config.Theme;
         Toolbar.UpdateTheme(this.ScaleToDpi(Config.ToolbarIconHeight));
 
 
