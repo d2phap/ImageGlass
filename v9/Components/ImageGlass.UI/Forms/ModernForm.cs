@@ -106,7 +106,7 @@ public partial class ModernForm : Form
     /// <summary>
     /// Gets the current DPI scaling. Default value is <c>1.0f</c>.
     /// </summary>
-    public virtual float DpiScale => _dpi / 96;
+    public virtual float DpiScale => _dpi / 96f;
 
 
     /// <summary>
