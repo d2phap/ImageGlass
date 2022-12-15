@@ -1637,16 +1637,19 @@ public class DXCanvas : DXControl
         var hTextSize = new SizeF();
         var tTextSize = new SizeF();
 
+        var headingFontSize = Font.Size * 1.5f;
+        var textFontSize = Font.Size * 1.1f;
+
         // heading size
         if (hasHeading)
         {
-            hTextSize = g.MeasureText(TextHeading, Font.Name, Font.Size * 1.3f, drawableArea.Width, drawableArea.Height, DeviceDpi);
+            hTextSize = g.MeasureText(TextHeading, Font.Name, headingFontSize, drawableArea.Width, drawableArea.Height, DeviceDpi);
         }
 
         // text size
         if (hasText)
         {
-            tTextSize = g.MeasureText(Text, Font.Name, Font.Size, drawableArea.Width, drawableArea.Height, DeviceDpi);
+            tTextSize = g.MeasureText(Text, Font.Name, textFontSize, drawableArea.Width, drawableArea.Height, DeviceDpi);
         }
 
         var centerX = drawableArea.X + drawableArea.Width / 2;
@@ -1686,7 +1689,7 @@ public class DXCanvas : DXControl
         if (DebugMode)
         {
             g.DrawRectangle(drawableArea, MessageBorderRadius, Color.Red);
-            g.DrawRectangle(hRegion, MessageBorderRadius, Color.Yellow);
+            g.DrawRectangle(hRegion, MessageBorderRadius, Color.Orange);
             g.DrawRectangle(tRegion, MessageBorderRadius, Color.Green);
         }
 
@@ -1695,13 +1698,13 @@ public class DXCanvas : DXControl
         if (hasHeading)
         {
             var headingColor = ForeColor.Blend(SelectionColor);
-            g.DrawText(TextHeading, Font.Name, Font.Size * 1.3f, hRegion, headingColor, DeviceDpi, StringAlignment.Center);
+            g.DrawText(TextHeading, Font.Name, headingFontSize, hRegion, headingColor, DeviceDpi, StringAlignment.Center);
         }
 
         // draw text
         if (hasText)
         {
-            g.DrawText(Text, Font.Name, Font.Size, tRegion, ForeColor.WithAlpha(230), DeviceDpi, StringAlignment.Center);
+            g.DrawText(Text, Font.Name, textFontSize, tRegion, ForeColor.WithAlpha(230), DeviceDpi, StringAlignment.Center);
         }
     }
 
@@ -1743,7 +1746,7 @@ public class DXCanvas : DXControl
                     Height = NavButtonSize.Height,
                 };
 
-                g.DrawRectangle(leftBgRect, NavBorderRadius, leftColor, leftColor, 1.25f);
+                g.DrawRectangle(leftBgRect, NavBorderRadius, leftColor.Blend(SelectionColor, 0.5f, leftColor.A), leftColor.Blend(SelectionColor, 0.7f, leftColor.A), 1.25f);
             }
 
             // draw icon
@@ -1810,7 +1813,7 @@ public class DXCanvas : DXControl
                     Height = NavButtonSize.Height,
                 };
 
-                g.DrawRectangle(rightBgRect, NavBorderRadius, rightColor, rightColor, 1.25f);
+                g.DrawRectangle(rightBgRect, NavBorderRadius, rightColor.Blend(SelectionColor, 0.5f, rightColor.A), rightColor.Blend(SelectionColor, 0.7f, rightColor.A), 1.25f);
             }
 
             // draw icon
