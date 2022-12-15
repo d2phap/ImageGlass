@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -493,7 +493,7 @@ public class ModernToolbar : ToolStrip
         // Overflow button and Overflow dropdown
         UpdateOverflow();
 
-        // Toolbar itoms
+        // Toolbar items
         foreach (var item in Items)
         {
             if (item.GetType() == typeof(ToolStripSeparator))
@@ -521,6 +521,9 @@ public class ModernToolbar : ToolStrip
                 tItem.Image = Theme.GetToolbarIcon(tagModel?.Image);
             }
         }
+
+        // update items alignment
+        UpdateAlignment();
     }
 
 

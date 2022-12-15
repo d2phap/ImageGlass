@@ -83,10 +83,11 @@ public partial class FrmMain : ModernForm
     protected override void OnDpiChanged()
     {
         base.OnDpiChanged();
-
         SuspendLayout();
 
+        // fix splitter
         Sp1.SplitterWidth = Math.Max(1, this.ScaleToDpi(1));
+        Sp2.SplitterWidth = Math.Max(1, this.ScaleToDpi(1));
 
         // scale toolbar icons corresponding to DPI
         var newIconHeight = this.ScaleToDpi(Config.ToolbarIconHeight);
@@ -99,11 +100,11 @@ public partial class FrmMain : ModernForm
 
         // update picmain scaling
         PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(60f, 60f));
-        PicMain.CheckerboardCellSize = this.ScaleToDpi(10f);
+        PicMain.CheckerboardCellSize = this.ScaleToDpi(8f);
 
         // gallery
         UpdateGallerySize();
-
+        
         ResumeLayout(false);
     }
 
@@ -1002,6 +1003,7 @@ public partial class FrmMain : ModernForm
     /// <summary>
     /// Show image preview using the thumbnail
     /// </summary>
+    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     public void ShowImagePreview(string filePath, CancellationToken token = default)
     {
         if (InvokeRequired)
@@ -1037,6 +1039,7 @@ public partial class FrmMain : ModernForm
                     if (thumb != null
                         && thumbnailPath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase))
                     {
+                        wicSrc?.Dispose();
                         wicSrc = BHelper.ToWicBitmapSource(thumb);
                     }
                 }
