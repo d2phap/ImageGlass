@@ -35,6 +35,7 @@ namespace ImageGlass.Views;
 public class DXCanvas : DXControl
 {
 
+    // Private properties
     #region Private properties
 
     private IComObject<ID2D1Bitmap>? _imageD2D = null;
@@ -57,6 +58,7 @@ public class DXCanvas : DXControl
 
     private float _imageOpacity = 1f;
     private float _opacityStep = 0.05f;
+    private bool _debugMode = false;
 
 
     /// <summary>
@@ -124,13 +126,12 @@ public class DXCanvas : DXControl
     private bool _isSelectionHovered = false;
     private SelectionResizer? _selectedResizer = null;
 
-
-    
-
-    #endregion
+    #endregion // Private properties
 
 
+    // Public properties
     #region Public properties
+
 
     // Viewport
     #region Viewport
@@ -745,6 +746,7 @@ public class DXCanvas : DXControl
     [DefaultValue("")]
     public string TextHeading { get; set; } = string.Empty;
 
+
     /// <summary>
     /// Gets, sets border radius of message box
     /// </summary>
@@ -752,11 +754,27 @@ public class DXCanvas : DXControl
     [DefaultValue(1f)]
     public float MessageBorderRadius { get; set; } = 6f;
 
+
     /// <summary>
     /// Gets the current animating source
     /// </summary>
     [Browsable(false)]
     public AnimationSource AnimationSource => _animationSource;
+
+
+    /// <summary>
+    /// Gets, sets debug mode.
+    /// </summary>
+    [Browsable(false)]
+    public bool DebugMode
+    {
+        get => _debugMode;
+        set
+        {
+            _debugMode = value;
+            CheckFPS = value;
+        }
+    }
 
     #endregion
 
@@ -795,7 +813,7 @@ public class DXCanvas : DXControl
     #endregion
 
 
-    #endregion
+    #endregion // Public properties
 
 
 
@@ -808,8 +826,6 @@ public class DXCanvas : DXControl
         {
             HighResolutionGifAnimator.SetTickTimeInMilliseconds(10);
         }
-
-
         _imageAnimator = new HighResolutionGifAnimator();
 
         _clickTimer.Tick += ClickTimer_Tick;
@@ -829,6 +845,10 @@ public class DXCanvas : DXControl
 
         _isMouseDragged = false;
     }
+
+
+    // Override / Virtual methods
+    #region Protected / Virtual methods
 
     protected override void OnLoaded()
     {
@@ -1260,6 +1280,14 @@ public class DXCanvas : DXControl
         DrawNavigationLayer(g);
 
 
+        if (DebugMode)
+        {
+            var text = $"FPS: {FPS}";
+            var textSize = g.MeasureText(text, Font.Name, Font.Size, textDpi: DeviceDpi);
+            g.DrawRectangle(0, 0, textSize.Width, textSize.Height, 0, Color.Red, Color.Black.WithAlpha(200));
+            g.DrawText(text, Font.Name, Font.Size, 0f, 0f, Color.Yellow, textDpi: DeviceDpi);
+        }
+
         base.OnRender(g);
     }
 
@@ -1654,10 +1682,13 @@ public class DXCanvas : DXControl
         g.DrawRectangle(bgRegion, MessageBorderRadius, bgColor, bgColor);
 
 
-        //// debug
-        //g.DrawRectangle(drawableArea, MessageBorderRadius, Color.Red);
-        //g.DrawRectangle(hRegion, MessageBorderRadius, Color.Yellow);
-        //g.DrawRectangle(tRegion, MessageBorderRadius, Color.Green);
+        // debug
+        if (DebugMode)
+        {
+            g.DrawRectangle(drawableArea, MessageBorderRadius, Color.Red);
+            g.DrawRectangle(hRegion, MessageBorderRadius, Color.Yellow);
+            g.DrawRectangle(tRegion, MessageBorderRadius, Color.Green);
+        }
 
 
         // draw text heading
@@ -1840,6 +1871,11 @@ public class DXCanvas : DXControl
         }
     }
 
+    #endregion // Override / Virtual methods
+
+
+    // Public methods
+    #region Public methods
 
     /// <summary>
     /// Calculates zoom factor by the input zoom mode, and source size.
@@ -2244,56 +2280,6 @@ public class DXCanvas : DXControl
     /// Set it <b>0</b> to disable,
     /// or <b>-1</b> to display permanently.</param>
     /// <param name="delayMs">Duration to delay before displaying the message.</param>
-    private async void ShowMessagePrivate(string text, string heading = "", int durationMs = -1, int delayMs = 0, bool forceUpdate = true)
-    {
-        if (durationMs == 0) return;
-
-        var token = _msgTokenSrc?.Token ?? default;
-
-        try
-        {
-            if (delayMs > 0)
-            {
-                await Task.Delay(delayMs, token);
-            }
-
-            TextHeading = heading;
-            Text = text;
-
-            if (forceUpdate)
-            {
-                Invalidate();
-            }
-
-            if (durationMs > 0)
-            {
-                await Task.Delay(durationMs, token);
-            }
-        }
-        catch { }
-
-        var textNotChanged = Text.Equals(text, StringComparison.InvariantCultureIgnoreCase);
-        if (textNotChanged && (durationMs > 0 || token.IsCancellationRequested))
-        {
-            TextHeading = Text = string.Empty;
-
-            if (forceUpdate)
-            {
-                Invalidate();
-            }
-        }
-    }
-
-
-    /// <summary>
-    /// Shows text message.
-    /// </summary>
-    /// <param name="text">Message to show</param>
-    /// <param name="heading">Heading text</param>
-    /// <param name="durationMs">Display duration in millisecond.
-    /// Set it <b>0</b> to disable,
-    /// or <b>-1</b> to display permanently.</param>
-    /// <param name="delayMs">Duration to delay before displaying the message.</param>
     public void ShowMessage(string text, string heading = "", int durationMs = -1, int delayMs = 0, bool forceUpdate = true)
     {
         if (InvokeRequired)
@@ -2527,32 +2513,6 @@ public class DXCanvas : DXControl
 
 
     /// <summary>
-    /// Loads image data.
-    /// </summary>
-    private void LoadImageData(IgImgData? imgData)
-    {
-        CanImageAnimate = imgData?.CanAnimate ?? false;
-        HasAlphaPixels = imgData?.HasAlpha ?? false;
-
-        if (CanImageAnimate)
-        {
-            SourceWidth = imgData?.Bitmap?.Width ?? 0;
-            SourceHeight = imgData?.Bitmap?.Height ?? 0;
-        }
-        else
-        {
-            SourceWidth = imgData?.Image?.Width ?? 0;
-            SourceHeight = imgData?.Image?.Height ?? 0;
-        }
-
-        var exceedMaxDimention = SourceWidth > Constants.MAX_IMAGE_DIMENSION
-            || SourceHeight > Constants.MAX_IMAGE_DIMENSION;
-
-        UseHardwareAcceleration = !CanImageAnimate && !exceedMaxDimention;
-    }
-
-
-    /// <summary>
     /// Load image.
     /// </summary>
     public void SetImage(IgImgData? imgData,
@@ -2615,13 +2575,6 @@ public class DXCanvas : DXControl
     }
 
 
-    private void OnImageFrameChanged(object? sender, EventArgs eventArgs)
-    {
-        Invalidate();
-    }
-
-
-
     /// <summary>
     /// Start animating the image if it can animate, using GDI+.
     /// </summary>
@@ -2652,6 +2605,43 @@ public class DXCanvas : DXControl
         IsImageAnimating = false;
     }
 
+    #endregion // Public methods
+
+
+    // Private methods
+    #region Private methods
+
+
+    /// <summary>
+    /// Loads image data.
+    /// </summary>
+    private void LoadImageData(IgImgData? imgData)
+    {
+        CanImageAnimate = imgData?.CanAnimate ?? false;
+        HasAlphaPixels = imgData?.HasAlpha ?? false;
+
+        if (CanImageAnimate)
+        {
+            SourceWidth = imgData?.Bitmap?.Width ?? 0;
+            SourceHeight = imgData?.Bitmap?.Height ?? 0;
+        }
+        else
+        {
+            SourceWidth = imgData?.Image?.Width ?? 0;
+            SourceHeight = imgData?.Image?.Height ?? 0;
+        }
+
+        var exceedMaxDimention = SourceWidth > Constants.MAX_IMAGE_DIMENSION
+            || SourceHeight > Constants.MAX_IMAGE_DIMENSION;
+
+        UseHardwareAcceleration = !CanImageAnimate && !exceedMaxDimention;
+    }
+
+    private void OnImageFrameChanged(object? sender, EventArgs eventArgs)
+    {
+        Invalidate();
+    }
+
 
     /// <summary>
     /// Disposes and set all checkerboard brushes to <c>null</c>.
@@ -2680,5 +2670,59 @@ public class DXCanvas : DXControl
         //_imageGdiPlus?.Dispose();
         //_imageGdiPlus = null;
     }
+
+
+    /// <summary>
+    /// Shows text message.
+    /// </summary>
+    /// <param name="text">Message to show</param>
+    /// <param name="heading">Heading text</param>
+    /// <param name="durationMs">Display duration in millisecond.
+    /// Set it <b>0</b> to disable,
+    /// or <b>-1</b> to display permanently.</param>
+    /// <param name="delayMs">Duration to delay before displaying the message.</param>
+    private async void ShowMessagePrivate(string text, string heading = "", int durationMs = -1, int delayMs = 0, bool forceUpdate = true)
+    {
+        if (durationMs == 0) return;
+
+        var token = _msgTokenSrc?.Token ?? default;
+
+        try
+        {
+            if (delayMs > 0)
+            {
+                await Task.Delay(delayMs, token);
+            }
+
+            TextHeading = heading;
+            Text = text;
+
+            if (forceUpdate)
+            {
+                Invalidate();
+            }
+
+            if (durationMs > 0)
+            {
+                await Task.Delay(durationMs, token);
+            }
+        }
+        catch { }
+
+        var textNotChanged = Text.Equals(text, StringComparison.InvariantCultureIgnoreCase);
+        if (textNotChanged && (durationMs > 0 || token.IsCancellationRequested))
+        {
+            TextHeading = Text = string.Empty;
+
+            if (forceUpdate)
+            {
+                Invalidate();
+            }
+        }
+    }
+
+
+    #endregion // Private methods
+
 
 }
