@@ -52,9 +52,6 @@ public partial class FrmMain
         }
 
         // menu
-        MnuMain.InitDpi = 
-            MnuContext.InitDpi = 
-            MnuSubMenu.InitDpi = 
         MnuMain.CurrentDpi =
             MnuContext.CurrentDpi =
             MnuSubMenu.CurrentDpi = this.DeviceDpi;

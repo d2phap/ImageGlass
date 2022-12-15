@@ -29,8 +29,6 @@ namespace ImageGlass.UI;
 public class ModernMenu : ContextMenuStrip
 {
     private IgTheme _theme = new();
-    public int CurrentDpi = 96;
-    public int InitDpi = 96;
 
 
     #region Public properties
@@ -57,6 +55,33 @@ public class ModernMenu : ContextMenuStrip
     /// Checks if the menu is open.
     /// </summary>
     public bool IsOpen { get; private set; } = false;
+
+    /// <summary>
+    /// Gets, sets the current DPI which is manually update from parent.
+    /// <para>
+    /// <c>Note**:</c><br/>
+    /// The <see cref="DeviceDpi"/> prop of the menu <c><b>is not updated</b></c> when DPI changed.<br/>
+    /// See the issue at: <see href="https://github.com/dotnet/winforms/issues/4898"/>.
+    /// </para>
+    /// </summary>
+    public int CurrentDpi { get; set; } = 96;
+
+
+    /// <summary>
+    /// Gets the initial DPI when the menu is first opended.
+    /// <para>
+    /// <c>Note**:</c><br/>
+    /// The <see cref="DeviceDpi"/> prop of the menu <c><b>is not updated</b></c> when DPI changed.<br/>
+    /// See the issue at: <see href="https://github.com/dotnet/winforms/issues/4898"/>.
+    /// </para>
+    /// </summary>
+    public new int DeviceDpi { get => base.DeviceDpi; }
+
+
+    /// <summary>
+    /// Gets the initial DPI when the menu is first opended.
+    /// </summary>
+    public int InitDpi { get => base.DeviceDpi; }
 
     #endregion
 
@@ -95,7 +120,7 @@ public class ModernMenu : ContextMenuStrip
 
         if (!DesignMode)
         {
-            FixGeneralIssues(toFixDpiSize: true, toFixDropdown: true);
+            FixGeneralIssues(this, Constants.MENU_ICON_HEIGHT);
         }
     }
 
@@ -123,78 +148,58 @@ public class ModernMenu : ContextMenuStrip
     ///   <item>Windows 11 round border</item>
     ///   <item>Dropdown direction</item>
     /// </list>
-    /// to the <see cref="ModernMenu"/> component.
-    /// </summary>
-    public void FixGeneralIssues(
-        bool toFixDpiSize = false,
-        bool toFixDropdown = false)
-    {
-        FixGeneralIssues(this, Constants.MENU_ICON_HEIGHT, toFixDpiSize, toFixDropdown);
-    }
-
-
-    /// <summary>
-    /// Apply these fixes:
-    /// <list type="bullet">
-    ///   <item>Menu height when DPI changes</item>
-    ///   <item>Windows 11 round border</item>
-    ///   <item>Dropdown direction</item>
-    /// </list>
     /// to the provided menu component.
     /// </summary>
     /// <param name="items"></param>
     public void FixGeneralIssues(
         ToolStripDropDown menu,
-        float originalIconSize,
-        bool toFixDpiSize = false,
-        bool toFixDropdown = false)
+        float originalIconSize)
     {
-        if (!toFixDpiSize && !toFixDropdown) return;
-
-        var allItems = MenuUtils.GetActualItems(menu.Items);
-        if (!allItems.Any()) return;
-
         // standard icon size
-        //var iconH = this.ScaleToDpi(originalIconSize);
         var dpiScale = CurrentDpi / 96f;
-        var fontSize = dpiScale * 16 / 4.2f;
         var iconH = originalIconSize * dpiScale;
 
-        foreach (ToolStripMenuItem item in allItems)
+        for (int i = 0; i < menu.Items.Count; i++)
         {
-            if (InitDpi != CurrentDpi)
+            if (menu.Items[i] is not ToolStripMenuItem mnuItem) continue;
+
+            if (CurrentDpi != InitDpi)
             {
-                item.Font = new Font(Font.FontFamily, fontSize);
+                var fontSize = dpiScale * 16 / 4.2f;
+                mnuItem.Font = new Font(Font.FontFamily, fontSize);
             }
 
+            // Fix menu height
             #region Fix menu height
-            if (toFixDpiSize)
-            {
-                item.ImageScaling = ToolStripItemImageScaling.None;
 
-                if (item.Image is not null)
+            mnuItem.ImageScaling = ToolStripItemImageScaling.None;
+
+            if (mnuItem.Image is not null)
+            {
+                if (mnuItem.Image.Height != iconH)
                 {
-                    if (item.Image.Height != iconH)
-                    {
-                        item.Image = new Bitmap(item.Image, (int)iconH, (int)iconH);
-                    }
-                }
-                else
-                {
-                    item.Image = new Bitmap((int)iconH, (int)iconH);
+                    mnuItem.Image = new Bitmap(mnuItem.Image, (int)iconH, (int)iconH);
                 }
             }
+            else
+            {
+                mnuItem.Image = new Bitmap((int)iconH, (int)iconH);
+            }
+
             #endregion
 
 
-            if (item.HasDropDownItems && toFixDropdown)
+            if (mnuItem.HasDropDownItems)
             {
                 // apply corner
-                WindowApi.SetRoundCorner(item.DropDown.Handle);
+                WindowApi.SetRoundCorner(mnuItem.DropDown.Handle);
 
                 // fix dropdown direction
-                item.DropDownOpening -= Item_DropDownOpening;
-                item.DropDownOpening += Item_DropDownOpening;
+                mnuItem.DropDownOpening -= Item_DropDownOpening;
+                mnuItem.DropDownOpening += Item_DropDownOpening;
+
+                // fix dropdown items
+                FixGeneralIssues(mnuItem.DropDown, Constants.MENU_ICON_HEIGHT * 0.9f);
             }
         }
 
@@ -214,11 +219,6 @@ public class ModernMenu : ContextMenuStrip
         {
             return; // not a dropdown item
         }
-
-
-        // fix dropdown items
-        FixGeneralIssues(mnuItem.DropDown, Constants.MENU_ICON_HEIGHT * 0.9f, toFixDpiSize: true);
-
 
         #region Fix dropdown direction
 
