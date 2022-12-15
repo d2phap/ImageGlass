@@ -67,7 +67,7 @@ public partial class FrmMain
 
         // viewer
         PicMain.ForeColor = Config.Theme.Colors.TextColor;
-        PicMain.SelectionColor = WinColorsApi.GetAccentColor(true);
+        PicMain.AccentColor = WinColorsApi.GetAccentColor(true);
 
 
         // Thumbnail bar
@@ -94,7 +94,7 @@ public partial class FrmMain
     protected override void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
     {
         Config.Theme.ReloadThemeColors();
-        PicMain.SelectionColor = e.AccentColor;
+        PicMain.AccentColor = e.AccentColor;
         PicMain.Invalidate();
 
         Invalidate(true);

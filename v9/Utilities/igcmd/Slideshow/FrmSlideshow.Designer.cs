@@ -75,7 +75,7 @@
             this.PicMain.Name = "PicMain";
             this.PicMain.RequestUpdateFrame = false;
             this.PicMain.SelectionAspectRatio = new System.Drawing.SizeF(0F, 0F);
-            this.PicMain.SelectionColor = System.Drawing.Color.Black;
+            this.PicMain.AccentColor = System.Drawing.Color.Black;
             this.PicMain.Size = new System.Drawing.Size(1112, 674);
             this.PicMain.TabIndex = 0;
             this.PicMain.OnZoomChanged += new ImageGlass.Views.DXCanvas.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);

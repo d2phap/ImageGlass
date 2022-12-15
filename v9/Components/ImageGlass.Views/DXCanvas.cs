@@ -185,6 +185,12 @@ public class DXCanvas : DXControl
 
 
     /// <summary>
+    /// Gets, sets accent color.
+    /// </summary>
+    public Color AccentColor { get; set; } = Color.Blue;
+
+
+    /// <summary>
     /// Gets, sets the client selection area. This will emit the event <see cref="OnSelectionChanged"/>.
     /// </summary>
     [Browsable(false)]
@@ -335,12 +341,6 @@ public class DXCanvas : DXControl
     /// Enables or disables the selection.
     /// </summary>
     public bool EnableSelection { get; set; } = false;
-
-
-    /// <summary>
-    /// Gets, sets selection color.
-    /// </summary>
-    public Color SelectionColor { get; set; } = Color.Black;
 
     #endregion
 
@@ -1535,7 +1535,7 @@ public class DXCanvas : DXControl
                     ClientSelection.X + (i * width3),
                     ClientSelection.Y,
                     ClientSelection.X + (i * width3),
-                    ClientSelection.Y + ClientSelection.Height, SelectionColor.WithAlpha(200),
+                    ClientSelection.Y + ClientSelection.Height, AccentColor.WithAlpha(200),
                     0.4f);
 
 
@@ -1555,7 +1555,7 @@ public class DXCanvas : DXControl
                     ClientSelection.X,
                     ClientSelection.Y + (i * height3),
                     ClientSelection.X + ClientSelection.Width,
-                    ClientSelection.Y + (i * height3), SelectionColor.WithAlpha(200),
+                    ClientSelection.Y + (i * height3), AccentColor.WithAlpha(200),
                     0.4f);
             }
 
@@ -1576,7 +1576,7 @@ public class DXCanvas : DXControl
                 && textBgRect.Height + 10 < ClientSelection.Height)
             {
                 g.DrawRectangle(textBgRect, textSize.Height / 5, Color.White.WithAlpha(100), Color.Black.WithAlpha(100));
-                g.DrawRectangle(textBgRect, textSize.Height / 5, SelectionColor.WithAlpha(100), SelectionColor.WithAlpha(150));
+                g.DrawRectangle(textBgRect, textSize.Height / 5, AccentColor.WithAlpha(100), AccentColor.WithAlpha(150));
                 g.DrawText(text, Font.Name, Font.Size, textX, textY, Color.White, textDpi: DeviceDpi);
             }
         }
@@ -1585,7 +1585,7 @@ public class DXCanvas : DXControl
         // draw the selection border
         var borderWidth = (_isSelectionHovered && _mouseDownButton != MouseButtons.Left) ? 0.6f : 0.3f;
         g.DrawRectangle(ClientSelection, 0, Color.White, null, borderWidth);
-        g.DrawRectangle(ClientSelection, 0, SelectionColor, null, borderWidth);
+        g.DrawRectangle(ClientSelection, 0, AccentColor, null, borderWidth);
 
 
         // draw resizers
@@ -1605,7 +1605,7 @@ public class DXCanvas : DXControl
 
 
                 g.DrawEllipse(rItem.Region, Color.White.WithAlpha(50), Color.Black.WithAlpha(200), 8f);
-                g.DrawEllipse(rItem.Region, SelectionColor.WithAlpha(255), Color.White.WithAlpha(200), 2f);
+                g.DrawEllipse(rItem.Region, AccentColor.WithAlpha(255), Color.White.WithAlpha(200), 2f);
             }
         }
     }
@@ -1697,7 +1697,7 @@ public class DXCanvas : DXControl
         // draw text heading
         if (hasHeading)
         {
-            var headingColor = ForeColor.Blend(SelectionColor);
+            var headingColor = AccentColor.Blend(Color.White, 0.7f);
             g.DrawText(TextHeading, Font.Name, headingFontSize, hRegion, headingColor, DeviceDpi, StringAlignment.Center);
         }
 
@@ -1746,7 +1746,7 @@ public class DXCanvas : DXControl
                     Height = NavButtonSize.Height,
                 };
 
-                g.DrawRectangle(leftBgRect, NavBorderRadius, leftColor.Blend(SelectionColor, 0.5f, leftColor.A), leftColor.Blend(SelectionColor, 0.7f, leftColor.A), 1.25f);
+                g.DrawRectangle(leftBgRect, NavBorderRadius, leftColor.Blend(AccentColor, 0.5f, leftColor.A), leftColor.Blend(AccentColor, 0.7f, leftColor.A), 1.25f);
             }
 
             // draw icon
@@ -1813,7 +1813,7 @@ public class DXCanvas : DXControl
                     Height = NavButtonSize.Height,
                 };
 
-                g.DrawRectangle(rightBgRect, NavBorderRadius, rightColor.Blend(SelectionColor, 0.5f, rightColor.A), rightColor.Blend(SelectionColor, 0.7f, rightColor.A), 1.25f);
+                g.DrawRectangle(rightBgRect, NavBorderRadius, rightColor.Blend(AccentColor, 0.5f, rightColor.A), rightColor.Blend(AccentColor, 0.7f, rightColor.A), 1.25f);
             }
 
             // draw icon

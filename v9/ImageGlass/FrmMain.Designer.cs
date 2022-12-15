@@ -1189,7 +1189,7 @@ namespace ImageGlass
             this.PicMain.NavDisplay = ImageGlass.Base.PhotoBox.NavButtonDisplay.Both;
             this.PicMain.RequestUpdateFrame = false;
             this.PicMain.SelectionAspectRatio = new System.Drawing.SizeF(0F, 0F);
-            this.PicMain.SelectionColor = System.Drawing.Color.Black;
+            this.PicMain.AccentColor = System.Drawing.Color.Black;
             this.PicMain.Size = new System.Drawing.Size(833, 672);
             this.PicMain.SourceSelection = ((System.Drawing.RectangleF)(resources.GetObject("PicMain.SourceSelection")));
             this.PicMain.TabIndex = 3;
