@@ -159,14 +159,14 @@ public partial class FrmMain
 
         // Thumbnail bar
         Gallery.DoNotDeletePersistentCache = true;
-        Gallery.PersistentCacheSize = 200;
+        Gallery.PersistentCacheSize = 300;
         Gallery.PersistentCacheDirectory = App.ConfigDir(PathType.Dir, Dir.ThumbnailsCache);
         Gallery.EnableKeyNavigation = false;
         IG_ToggleGallery(Config.ShowThumbnails);
 
 
         // PicMain
-        PicMain.DebugMode = true;
+        //PicMain.DebugMode = true;
         PicMain.NavDisplay = Config.EnableNavigationButtons
             ? NavButtonDisplay.Both
             : NavButtonDisplay.None;

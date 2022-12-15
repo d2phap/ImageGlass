@@ -512,7 +512,11 @@ public partial class FrmMain
         Gallery.ScrollBars = Config.ShowThumbnailScrollbars;
         Gallery.ShowItemText = Config.ShowThumbnailFilename;
 
+        // update gallery size
         UpdateGallerySize();
+
+        // toggle gallery
+        Sp1.Panel2Collapsed = !Config.ShowThumbnails;
 
         // update menu item state
         MnuToggleThumbnails.Checked = Config.ShowThumbnails;
@@ -529,10 +533,15 @@ public partial class FrmMain
     /// </summary>
     private void UpdateGallerySize()
     {
+        if (!Config.ShowThumbnails) return;
+
+
         var scrollBarSize = 0;
         if (Config.ShowThumbnailScrollbars)
         {
-            scrollBarSize = Gallery.HScrollBar.Height;
+            Gallery.HScrollBar.Height = SystemInformation.HorizontalScrollBarHeight / 2;
+            scrollBarSize += Gallery.HScrollBar.Height
+                + this.ScaleToDpi(2); // scrollbar gap
         }
 
         // update thumbnail size
@@ -542,7 +551,6 @@ public partial class FrmMain
         Gallery.Height = Gallery.ThumbnailSize.Height
             + scrollBarSize
             + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Height * 6.5f);
-        Sp1.Panel2Collapsed = !Config.ShowThumbnails;
 
         try
         {
