@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -22,9 +22,9 @@ Url: https://github.com/oozcitak/imagelistview
 License: Apache License Version 2.0, http://www.apache.org/licenses/
 ---------------------
 */
+using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
 using System.Drawing.Drawing2D;
-using System.Text;
 
 namespace ImageGlass.Gallery;
 
@@ -35,7 +35,6 @@ namespace ImageGlass.Gallery;
 public partial class GDIExtractor : IExtractor
 {
     // Exif Tag IDs
-    private const int TagThumbnailData = 0x501B;
     private const int TagOrientation = 0x0112;
 
 
@@ -51,6 +50,7 @@ public partial class GDIExtractor : IExtractor
 
 
     #region Public Methods
+
     /// <summary>
     /// Creates a thumbnail from the given image.
     /// </summary>
@@ -61,11 +61,11 @@ public partial class GDIExtractor : IExtractor
     /// <returns>The thumbnail image from the given image or null if an error occurs.</returns>
     public virtual Image? GetThumbnail(Image image, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool useExifOrientation)
     {
-        if (size.Width <= 0 || size.Height <= 0)
-            throw new ArgumentException("Thumbnail size cannot be empty.", nameof(size));
+        if (size.Width <= 0 || size.Height <= 0) return null;
 
         return GetThumbnailBmp(image, size, useExifOrientation ? GetRotation(image) : 0);
     }
+
 
     /// <summary>
     /// Creates a thumbnail from the given image file.
@@ -77,11 +77,8 @@ public partial class GDIExtractor : IExtractor
     /// <returns>The thumbnail image from the given file or null if an error occurs.</returns>
     public virtual Image? GetThumbnail(string filename, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, bool useExifOrientation)
     {
-        if (string.IsNullOrEmpty(filename))
-            throw new ArgumentException("Filename cannot be empty.", nameof(filename));
-
-        if (size.Width <= 0 || size.Height <= 0)
-            throw new ArgumentException("Thumbnail size cannot be empty.", nameof(size));
+        if (string.IsNullOrEmpty(filename)) return null;
+        if (size.Width <= 0 || size.Height <= 0) return null;
 
         return GetThumbnailBmp(filename, size, useEmbeddedThumbnails,
             useExifOrientation ? GetRotation(filename) : 0);
@@ -91,6 +88,7 @@ public partial class GDIExtractor : IExtractor
 
 
     #region Helper Methods
+
     /// <summary>
     /// Creates a thumbnail from the given image.
     /// </summary>
@@ -100,8 +98,7 @@ public partial class GDIExtractor : IExtractor
     /// <returns>The image from the given file or null if an error occurs.</returns>
     internal static Image? GetThumbnailBmp(Image image, Size size, int rotate)
     {
-        if (size.Width <= 0 || size.Height <= 0)
-            throw new ArgumentException("Thumbnail size cannot be empty.", nameof(size));
+        if (size.Width <= 0 || size.Height <= 0) return null;
 
         Image? thumb = null;
         try
@@ -122,13 +119,13 @@ public partial class GDIExtractor : IExtractor
         }
         catch
         {
-            if (thumb != null)
-                thumb.Dispose();
+            thumb?.Dispose();
             thumb = null;
         }
 
         return thumb;
     }
+
 
     /// <summary>
     /// Creates a thumbnail from the given image file.
@@ -140,12 +137,34 @@ public partial class GDIExtractor : IExtractor
     /// <returns>The image from the given file or null if an error occurs.</returns>
     internal Image? GetThumbnailBmp(string filename, Size size, UseEmbeddedThumbnails useEmbeddedThumbnails, int rotate)
     {
-        if (size.Width <= 0 || size.Height <= 0)
-            throw new ArgumentException("Thumbnail size cannot be empty.", nameof(size));
+        if (size.Width <= 0 || size.Height <= 0) return null;
 
+        Image? thumb = null;
+        
+        // extrack thumbnail from shell
+        if (useEmbeddedThumbnails == UseEmbeddedThumbnails.Always)
+        {
+            thumb = ShellThumbnailApi.GetThumbnail(filename, size.Width, size.Height, ShellThumbnailOptions.ThumbnailOnly);
+        }
 
-        return PhotoCodec.GetThumbnail(filename, size.Width, size.Height);
+        // get thumbnail from source file
+        else if (useEmbeddedThumbnails == UseEmbeddedThumbnails.Never)
+        {
+            thumb = PhotoCodec.GetThumbnail(filename, size.Width, size.Height);
+        }
+        else
+        {
+            thumb = ShellThumbnailApi.GetThumbnail(filename, size.Width, size.Height, ShellThumbnailOptions.ThumbnailOnly);
+
+            if (thumb == null)
+            {
+                thumb = PhotoCodec.GetThumbnail(filename, size.Width, size.Height);
+            }
+        }
+
+        return thumb;
     }
+
 
     /// <summary>
     /// Returns Exif rotation in degrees. Returns 0 if the metadata 
@@ -186,6 +205,7 @@ public partial class GDIExtractor : IExtractor
         return 0;
     }
 
+
     /// <summary>
     /// Returns Exif rotation in degrees. Returns 0 if the metadata 
     /// does not exist or could not be read. A negative value means
@@ -206,6 +226,7 @@ public partial class GDIExtractor : IExtractor
         return 0;
     }
 
+
     /// <summary>
     /// Scales down and rotates an image.
     /// </summary>
@@ -213,7 +234,7 @@ public partial class GDIExtractor : IExtractor
     /// <param name="scale">Uniform scaling factor</param>
     /// <param name="angle">Rotation angle</param>
     /// <returns>Scaled and rotated image</returns>
-    private static Image ScaleDownRotateBitmap(Image source, double scale, int angle)
+    private static Image? ScaleDownRotateBitmap(Image source, double scale, int angle)
     {
         if (angle % 90 != 0)
         {
@@ -260,75 +281,6 @@ public partial class GDIExtractor : IExtractor
         return thumb;
     }
 
-    /// <summary>
-    /// Checks the stream header if it matches with
-    /// any of the supported image file types.
-    /// </summary>
-    /// <param name="stream">An open stream pointing to an image file.</param>
-    /// <returns>true if the stream is an image file (BMP, TIFF, PNG, GIF, JPEG, WMF, EMF, ICO, CUR);
-    /// false otherwise.</returns>
-    public static bool IsImage(Stream stream)
-    {
-        // Sniff some bytes from the start of the stream
-        // and check against magic numbers of supported 
-        // image file formats
-        var header = new byte[8];
-        stream.Seek(0, SeekOrigin.Begin);
-        if (stream.Read(header, 0, header.Length) != header.Length)
-            return false;
-
-        // BMP
-        var bmpHeader = Encoding.ASCII.GetString(header, 0, 2);
-        if (bmpHeader == "BM") // BM - Windows bitmap
-            return true;
-        else if (bmpHeader == "BA") // BA - Bitmap array
-            return true;
-        else if (bmpHeader == "CI") // CI - Color Icon
-            return true;
-        else if (bmpHeader == "CP") // CP - Color Pointer
-            return true;
-        else if (bmpHeader == "IC") // IC - Icon
-            return true;
-        else if (bmpHeader == "PT") // PI - Pointer
-            return true;
-
-        // TIFF
-        var tiffHeader = Encoding.ASCII.GetString(header, 0, 4);
-        if (tiffHeader == "MM\x00\x2a") // Big-endian
-            return true;
-        else if (tiffHeader == "II\x2a\x00") // Little-endian
-            return true;
-
-        // PNG
-        if (header[0] == 0x89 && header[1] == 0x50 && header[2] == 0x4E && header[3] == 0x47 &&
-            header[4] == 0x0D && header[5] == 0x0A && header[6] == 0x1A && header[7] == 0x0A)
-            return true;
-
-        // GIF
-        var gifHeader = Encoding.ASCII.GetString(header, 0, 4);
-        if (gifHeader == "GIF8")
-            return true;
-
-        // JPEG
-        if (header[0] == 0xFF && header[1] == 0xD8)
-            return true;
-
-        // WMF
-        if (header[0] == 0xD7 && header[1] == 0xCD && header[2] == 0xC6 && header[3] == 0x9A)
-            return true;
-
-        // EMF
-        if (header[0] == 0x01 && header[1] == 0x00 && header[2] == 0x00 && header[3] == 0x00)
-            return true;
-
-        // Windows Icons
-        if (header[0] == 0x00 && header[1] == 0x00 && header[2] == 0x01 && header[3] == 0x00) // ICO
-            return true;
-        else if (header[0] == 0x00 && header[1] == 0x00 && header[2] == 0x02 && header[3] == 0x00) // CUR
-            return true;
-
-        return false;
-    }
 
     #endregion
 }

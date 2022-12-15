@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -19,12 +19,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using DirectN;
 using ImageMagick;
 using ImageMagick.Formats;
-using System.Drawing.Imaging;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Windows.Media.Media3D;
 using WicNet;
-using static System.Windows.Forms.Design.AxImporter;
 using ColorProfile = ImageMagick.ColorProfile;
 
 namespace ImageGlass.Base.Photoing.Codecs;
@@ -196,7 +193,8 @@ public static class PhotoCodec
     /// </summary>
     public static Bitmap? GetThumbnail(string filePath, int width, int height)
     {
-        if (string.IsNullOrEmpty(filePath)) return null;
+        if (string.IsNullOrEmpty(filePath) || width == 0 || height == 0) return null;
+
 
         var options = new CodecReadOptions()
         {
