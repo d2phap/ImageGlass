@@ -73,15 +73,15 @@ public static class ColorExtensions
 
     /// <summary>Blends the specified colors together.</summary>
     /// <param name="c">Color to blend onto the background color.</param>
-    /// <param name="backColor">Color to blend the other color onto.</param>
-    /// <param name="amount">How much of <paramref name="c"/> to keep,
-    /// “on top of” <paramref name="backColor"/>.</param>
+    /// <param name="blendColor">Color to blend the other color onto.</param>
+    /// <param name="amount">How much of the original color to keep,
+    /// “on top of” <paramref name="blendColor"/>.</param>
     /// <returns>A new blended color.</returns>
-    public static Color Blend(this Color c, Color backColor, double amount = 0.5f, int alpha = 255)
+    public static Color Blend(this Color c, Color blendColor, double amount = 0.5f, int alpha = 255)
     {
-        byte r = (byte)(c.R * amount + backColor.R * (1 - amount));
-        byte g = (byte)(c.G * amount + backColor.G * (1 - amount));
-        byte b = (byte)(c.B * amount + backColor.B * (1 - amount));
+        byte r = (byte)(c.R * amount + blendColor.R * (1 - amount));
+        byte g = (byte)(c.G * amount + blendColor.G * (1 - amount));
+        byte b = (byte)(c.B * amount + blendColor.B * (1 - amount));
 
         return Color.FromArgb(alpha, r, g, b);
     }

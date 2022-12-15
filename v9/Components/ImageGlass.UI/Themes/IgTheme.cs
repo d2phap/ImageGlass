@@ -319,7 +319,7 @@ public class IgTheme : IDisposable
                             _ = int.TryParse(valueArr[1], out accentAlpha);
                         }
 
-                        colorItem = systemAccentColor.WithAlpha(accentAlpha);
+                        colorItem = systemAccentColor.Blend(Color.White, 0.7f, accentAlpha);
                     }
                     else
                     {
