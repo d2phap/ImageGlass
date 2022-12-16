@@ -184,7 +184,6 @@ public partial class FrmCrop : ToolForm, IToolForm
     private void FrmMain_KeyDown(object? sender, KeyEventArgs e)
     {
         if (_isSquareRatioSelectionKeyPressed) return;
-
         _isSquareRatioSelectionKeyPressed = e.KeyData == _squareRatioSelectionKey;
 
         if (_isSquareRatioSelectionKeyPressed)
@@ -206,7 +205,7 @@ public partial class FrmCrop : ToolForm, IToolForm
         if (_isSquareRatioSelectionKeyPressed)
         {
             _isSquareRatioSelectionKeyPressed = false;
-            NumRatio_ValueChanged(null, EventArgs.Empty);
+            UpdateAspectRatioValues();
 
             if (Local.FrmMain.PicMain.CurrentSelectionAction == SelectionAction.Drawing)
             {
@@ -411,6 +410,14 @@ public partial class FrmCrop : ToolForm, IToolForm
 
         Settings.AspectRatio = ratio;
         Settings.AspectRatioValues = new int[2] { (int)ratioFrom, (int)ratioTo };
+        if (ratio == SelectionAspectRatio.FreeRatio)
+        {
+            Local.FrmMain.PicMain.SelectionAspectRatio = new SizeF();
+        }
+        else
+        {
+            Local.FrmMain.PicMain.SelectionAspectRatio = new SizeF((int)ratioFrom, (int)ratioTo);
+        }
 
         // set buttons state
         BtnSave.Enabled =
