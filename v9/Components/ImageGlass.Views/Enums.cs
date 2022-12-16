@@ -56,3 +56,22 @@ public enum MouseAndNavLocation
     
     BothNavs = 1 << 3,
 }
+
+
+public enum SelectionAction
+{
+    None,
+
+    /// <summary>
+    /// User is dragging to draw the selection.
+    /// </summary>
+    Drawing,
+
+    /// <summary>
+    /// User is resizing the selection.
+    /// </summary>
+    Resizing,
+
+    // User is moving the selection.
+    Moving,
+}

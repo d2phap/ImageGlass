@@ -27,6 +27,10 @@ namespace ImageGlass;
 
 public partial class FrmCrop : ToolForm, IToolForm
 {
+    private Keys _squareRatioSelectionKey = Keys.Shift | Keys.ShiftKey;
+    private bool _isSquareRatioSelectionKeyPressed = false;
+
+
     /// <summary>
     /// Gets tool id.
     /// </summary>
@@ -92,6 +96,8 @@ public partial class FrmCrop : ToolForm, IToolForm
         UpdateAspectRatioValues();
 
         // add control events
+        Local.FrmMain.KeyDown += FrmMain_KeyDown;
+        Local.FrmMain.KeyUp += FrmMain_KeyUp;
         Local.ImageSaved += Local_ImageSaved;
         Local.FrmMain.PicMain.OnSelectionChanged += PicMain_OnImageSelecting;
         Local.FrmMain.PicMain.OnImageChanged += PicMain_OnImageChanged;
@@ -120,6 +126,9 @@ public partial class FrmCrop : ToolForm, IToolForm
         // reset selection
         BtnReset.PerformClick();
 
+        // remove events
+        Local.FrmMain.KeyDown -= FrmMain_KeyDown;
+        Local.FrmMain.KeyUp -= FrmMain_KeyUp;
         Local.ImageSaved -= Local_ImageSaved;
         Local.FrmMain.PicMain.OnSelectionChanged -= PicMain_OnImageSelecting;
         Local.FrmMain.PicMain.OnImageChanged -= PicMain_OnImageChanged;
@@ -172,6 +181,43 @@ public partial class FrmCrop : ToolForm, IToolForm
     }
 
 
+    private void FrmMain_KeyDown(object? sender, KeyEventArgs e)
+    {
+        if (_isSquareRatioSelectionKeyPressed) return;
+
+        _isSquareRatioSelectionKeyPressed = e.KeyData == _squareRatioSelectionKey;
+
+        if (_isSquareRatioSelectionKeyPressed)
+        {
+            Local.FrmMain.PicMain.SelectionAspectRatio = new SizeF(1, 1);
+
+            if (Local.FrmMain.PicMain.CurrentSelectionAction == SelectionAction.Drawing)
+            {
+                Local.FrmMain.PicMain.UpdateSelectionByMousePosition();
+            }
+
+            
+            Local.FrmMain.PicMain.Invalidate();
+        }
+    }
+
+    private void FrmMain_KeyUp(object? sender, KeyEventArgs e)
+    {
+        if (_isSquareRatioSelectionKeyPressed)
+        {
+            _isSquareRatioSelectionKeyPressed = false;
+            NumRatio_ValueChanged(null, EventArgs.Empty);
+
+            if (Local.FrmMain.PicMain.CurrentSelectionAction == SelectionAction.Drawing)
+            {
+                Local.FrmMain.PicMain.UpdateSelectionByMousePosition();
+            }
+
+            Local.FrmMain.PicMain.Invalidate();
+        }
+    }
+
+
     private void Local_ImageSaved(ImageSaveEventArgs e)
     {
         if (Settings.CloseToolAfterSaving
@@ -211,12 +257,12 @@ public partial class FrmCrop : ToolForm, IToolForm
     }
 
 
-    private void NumRatio_ValueChanged(object sender, EventArgs e)
+    private void NumRatio_ValueChanged(object? sender, EventArgs e)
     {
         Local.FrmMain.PicMain.SelectionAspectRatio = new SizeF((float)NumRatioFrom.Value, (float)NumRatioTo.Value);
     }
 
-
+    
     private void NumSelections_LostFocus(object? sender, EventArgs e)
     {
         var newRect = new RectangleF(

@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -77,7 +77,6 @@ public class DXCanvas : DXControl
 
     private bool _xOut = false;
     private bool _yOut = false;
-    //private bool _isMouseDown = false;
     private MouseButtons _mouseDownButton = MouseButtons.None;
     private Point? _mouseDownPoint = null;
     private Point? _mouseMovePoint = null;
@@ -120,6 +119,7 @@ public class DXCanvas : DXControl
     private Bitmap? _navLeftImageGdip = null;
     private Bitmap? _navRightImageGdip = null;
 
+    // selection
     private RectangleF _clientSelection = default;
     private RectangleF _selectionBeforeMove = default;
     private bool _canDrawSelection = false;
@@ -341,6 +341,13 @@ public class DXCanvas : DXControl
     /// Enables or disables the selection.
     /// </summary>
     public bool EnableSelection { get; set; } = false;
+
+
+    /// <summary>
+    /// Gets the current action of selection.
+    /// </summary>
+    public SelectionAction CurrentSelectionAction { get; private set; } = SelectionAction.None;
+
 
     #endregion
 
@@ -1040,6 +1047,7 @@ public class DXCanvas : DXControl
         }
     }
 
+
     protected override void OnMouseMove(MouseEventArgs e)
     {
         base.OnMouseMove(e);
@@ -1048,6 +1056,7 @@ public class DXCanvas : DXControl
         var canSelect = EnableSelection && _mouseDownButton == MouseButtons.Left;
         var requestRerender = false;
         _mouseMovePoint = e.Location;
+        CurrentSelectionAction = SelectionAction.None;
 
 
         // Navigation hoverable check
@@ -1105,13 +1114,15 @@ public class DXCanvas : DXControl
             // resize the selection
             if (_selectedResizer != null)
             {
+                CurrentSelectionAction = SelectionAction.Resizing;
                 ResizeSelection(e.Location, _selectedResizer.Type);
                 requestRerender = true;
             }
             // draw new selection
             else if (_canDrawSelection)
             {
-                _clientSelection = BHelper.GetSelection(_mouseDownPoint, _mouseMovePoint, SelectionAspectRatio, SourceWidth, SourceHeight, _destRect);
+                CurrentSelectionAction = SelectionAction.Drawing;
+                UpdateSelectionByMousePosition();
 
                 OnSelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
                 requestRerender = true;
@@ -1119,6 +1130,7 @@ public class DXCanvas : DXControl
             // move selection
             else if (canSelect && IsViewingSizeSmallerViewportSize)
             {
+                CurrentSelectionAction = SelectionAction.Moving;
                 MoveSelection(e.Location);
                 requestRerender = true;
             }
@@ -2350,6 +2362,17 @@ public class DXCanvas : DXControl
 
 
     /// <summary>
+    /// Updates <see cref="ClientSelection"/> using <see cref="BHelper.GetSelection"/>.
+    /// </summary>
+    public void UpdateSelectionByMousePosition()
+    {
+        if (_mouseDownPoint == null || _mouseMovePoint == null) return;
+
+        _clientSelection = BHelper.GetSelection(_mouseDownPoint, _mouseMovePoint, SelectionAspectRatio, SourceWidth, SourceHeight, _destRect);
+    }
+
+
+    /// <summary>
     /// Moves the current selection to the given location
     /// </summary>
     public void MoveSelection(PointF loc)
@@ -2438,7 +2461,6 @@ public class DXCanvas : DXControl
 
         // limit the selected area to the image
         _clientSelection.Intersect(_destRect);
-
 
         // not the free aspect ratio
         if (SelectionAspectRatio.Width > 0 && SelectionAspectRatio.Height > 0)
