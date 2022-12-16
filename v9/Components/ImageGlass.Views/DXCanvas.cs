@@ -125,7 +125,7 @@ public class DXCanvas : DXControl
     private RectangleF _selectionBeforeMove = default;
     private bool _canDrawSelection = false;
     private bool _isSelectionHovered = false;
-    private bool _isResizerHovered = false;
+    private SelectionResizer? _hoveredResizer = null;
     private SelectionResizer? _selectedResizer = null;
 
     #endregion // Private properties
@@ -282,7 +282,7 @@ public class DXCanvas : DXControl
 
             var resizerSize = DpiApi.Transform(Font.Size * 1.3f);
             var resizerMargin = DpiApi.Transform(2);
-            var hitSize = DpiApi.Transform(resizerSize);
+            var hitSize = DpiApi.Transform(resizerSize * 1.3f);
 
             // top left
             var topLeft = new RectangleF(
@@ -290,8 +290,8 @@ public class DXCanvas : DXControl
                 ClientSelection.Y + resizerMargin,
                 resizerSize, resizerSize);
             var topLeftHit = new RectangleF(
-                ClientSelection.X - resizerMargin,
-                ClientSelection.Y - resizerMargin,
+                ClientSelection.X - hitSize / 2 + resizerSize / 2,
+                ClientSelection.Y - hitSize / 2 + resizerSize / 2,
                 hitSize, hitSize);
 
             // top right
@@ -300,8 +300,8 @@ public class DXCanvas : DXControl
                 ClientSelection.Y + resizerMargin,
                 resizerSize, resizerSize);
             var topRightHit = new RectangleF(
-                ClientSelection.Right - resizerSize,
-                ClientSelection.Y - resizerMargin,
+                ClientSelection.Right - hitSize / 2 - resizerSize / 2,
+                ClientSelection.Y - hitSize / 2 + resizerSize / 2,
                 hitSize, hitSize);
 
             // bottom left
@@ -310,8 +310,8 @@ public class DXCanvas : DXControl
                 ClientSelection.Bottom - resizerSize - resizerMargin,
                 resizerSize, resizerSize);
             var bottomLeftHit = new RectangleF(
-                ClientSelection.X - resizerMargin,
-                ClientSelection.Bottom - resizerSize,
+                ClientSelection.X - hitSize / 2 + resizerSize / 2,
+                ClientSelection.Bottom - hitSize / 2 - resizerSize / 2,
                 hitSize, hitSize);
 
             // bottom right
@@ -320,8 +320,8 @@ public class DXCanvas : DXControl
                 ClientSelection.Bottom - resizerSize - resizerMargin,
                 resizerSize, resizerSize);
             var bottomRightHit = new RectangleF(
-                ClientSelection.Right - resizerSize,
-                ClientSelection.Bottom - resizerSize,
+                ClientSelection.Right - hitSize / 2 - resizerSize / 2,
+                ClientSelection.Bottom  - hitSize / 2 - resizerSize / 2,
                 hitSize, hitSize);
 
             // top
@@ -330,8 +330,8 @@ public class DXCanvas : DXControl
                 ClientSelection.Y + resizerMargin,
                 resizerSize, resizerSize);
             var topHit = new RectangleF(
-                ClientSelection.X + ClientSelection.Width / 2 - resizerSize / 2,
-                ClientSelection.Y - resizerMargin,
+                ClientSelection.X + ClientSelection.Width / 2 - hitSize / 2,
+                ClientSelection.Y - hitSize / 2 + resizerSize / 2,
                 hitSize, hitSize);
 
             // right
@@ -340,8 +340,8 @@ public class DXCanvas : DXControl
                     ClientSelection.Y + ClientSelection.Height / 2 - resizerSize / 2,
                     resizerSize, resizerSize);
             var rightHit = new RectangleF(
-                    ClientSelection.Right - resizerSize,
-                    ClientSelection.Y + ClientSelection.Height / 2 - resizerSize / 2,
+                    ClientSelection.Right - hitSize / 2 - resizerSize / 2,
+                    ClientSelection.Y + ClientSelection.Height / 2 - hitSize / 2,
                     hitSize, hitSize);
 
             // bottom
@@ -350,8 +350,8 @@ public class DXCanvas : DXControl
                     ClientSelection.Bottom - resizerSize - resizerMargin,
                     resizerSize, resizerSize);
             var bottomHit = new RectangleF(
-                    ClientSelection.X + ClientSelection.Width / 2 - resizerSize / 2,
-                    ClientSelection.Bottom - resizerSize,
+                    ClientSelection.X + ClientSelection.Width / 2 - hitSize / 2,
+                    ClientSelection.Bottom - hitSize / 2 - resizerSize / 2,
                     hitSize, hitSize);
 
             // left
@@ -360,8 +360,8 @@ public class DXCanvas : DXControl
                     ClientSelection.Y + ClientSelection.Height / 2 - resizerSize / 2,
                     resizerSize, resizerSize);
             var leftHit = new RectangleF(
-                    ClientSelection.X - resizerMargin,
-                    ClientSelection.Y + ClientSelection.Height / 2 - resizerSize / 2,
+                    ClientSelection.X - hitSize / 2 + resizerSize / 2,
+                    ClientSelection.Y + ClientSelection.Height / 2 - hitSize / 2,
                     hitSize, hitSize);
 
             // 8 resizers
@@ -988,14 +988,14 @@ public class DXCanvas : DXControl
         {
             requestRerender = requestRerender || (canSelect && !ClientSelection.IsEmpty);
             _selectedResizer = SelectionResizers.Find(i => i.HitRegion.Contains(e.Location));
-            _canDrawSelection = canSelect && !_isSelectionHovered && !_isResizerHovered;
+            _canDrawSelection = canSelect && !_isSelectionHovered && _hoveredResizer == null;
 
             if (canSelect)
             {
                 _selectionBeforeMove = new RectangleF(_clientSelection.Location, _clientSelection.Size);
 
                 // resize selection
-                if (canSelect && _isResizerHovered)
+                if (canSelect && _hoveredResizer != null)
                 {
                     CurrentSelectionAction = SelectionAction.Resizing;
                 }
@@ -1222,21 +1222,17 @@ public class DXCanvas : DXControl
             // set resizer cursor
             var hoveredResizer = SelectionResizers.Find(i => i.HitRegion.Contains(e.Location));
             Cursor = hoveredResizer?.Cursor ?? Parent.Cursor;
-            
-
-            // show resizers on hover
-            var isSelectionHovered = ClientSelection.Contains(e.Location);
-            var isResizerHovered = hoveredResizer != null;
 
 
             // redraw the canvas
+            var isSelectionHovered = ClientSelection.Contains(e.Location);
             requestRerender = requestRerender
                 || _isSelectionHovered != isSelectionHovered
-                || _isResizerHovered != isResizerHovered;
+                || _hoveredResizer != hoveredResizer;
 
 
             _isSelectionHovered = isSelectionHovered;
-            _isResizerHovered = isResizerHovered;
+            _hoveredResizer = hoveredResizer;
         }
 
         // request re-render control
@@ -1596,14 +1592,17 @@ public class DXCanvas : DXControl
         {
             // draw the clip selection region
             using var selectionGeo = dg.GetCombinedRectanglesGeometry(ClientSelection, _destRect, 0, 0, D2D1_COMBINE_MODE.D2D1_COMBINE_MODE_XOR);
+
             dg.DrawGeometry(selectionGeo, Color.Transparent, Color.Black.WithAlpha(_mouseDownButton == MouseButtons.Left ? 100 : 180));
         }
 
 
-        if (_mouseDownButton == MouseButtons.Left || _isSelectionHovered || _isResizerHovered)
+        // draw selection grid, resizers
+        if (_mouseDownButton == MouseButtons.Left || _isSelectionHovered || _hoveredResizer != null)
         {
             var width3 = ClientSelection.Width / 3;
             var height3 = ClientSelection.Height / 3;
+
 
             // draw grid, ignore alpha value
             for (int i = 1; i < 3; i++)
@@ -1669,6 +1668,7 @@ public class DXCanvas : DXControl
                 g.DrawText(text, Font.Name, Font.Size, textX, textY, Color.White, textDpi: DeviceDpi);
             }
 
+
             // draw resizers
             foreach (var rItem in SelectionResizers)
             {
@@ -1682,12 +1682,23 @@ public class DXCanvas : DXControl
                     && (rItem.Type == SelectionResizerType.Left
                     || rItem.Type == SelectionResizerType.Right)) continue;
 
+                var resizerRect = rItem.IndicatorRegion;
+                var fillColor = Color.White.WithAlpha(200);
+                if (rItem.Type == _hoveredResizer?.Type)
+                {
+                    resizerRect.Inflate(this.ScaleToDpi(new SizeF(1.5f, 1.5f)));
+                    fillColor = AccentColor.WithAlpha(200);
+                }
 
-                g.DrawEllipse(rItem.IndicatorRegion, Color.White.WithAlpha(50), Color.Black.WithAlpha(200), 8f);
-                g.DrawEllipse(rItem.IndicatorRegion, AccentColor.WithAlpha(255), Color.White.WithAlpha(200), 2f);
+                g.DrawEllipse(resizerRect, Color.White.WithAlpha(50), Color.Black.WithAlpha(200), 8f);
+                g.DrawEllipse(resizerRect, AccentColor.WithAlpha(255), fillColor, 2f);
 
 
-                g.DrawRectangle(rItem.HitRegion, 0, Color.Red);
+                // draw debug Hit region
+                if (DebugMode)
+                {
+                    g.DrawRectangle(rItem.HitRegion, 0, Color.Red);
+                }
             }
         }
 
