@@ -55,6 +55,7 @@ public partial class FrmMain
         MnuMain.CurrentDpi =
             MnuContext.CurrentDpi =
             MnuSubMenu.CurrentDpi = this.DeviceDpi;
+
         MnuMain.Theme =
            MnuContext.Theme =
            MnuSubMenu.Theme = Config.Theme;

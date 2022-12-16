@@ -78,11 +78,6 @@ public class ModernMenu : ContextMenuStrip
     public new int DeviceDpi { get => base.DeviceDpi; }
 
 
-    /// <summary>
-    /// Gets the initial DPI when the menu is first opended.
-    /// </summary>
-    public int InitDpi { get => base.DeviceDpi; }
-
     #endregion
 
 
@@ -163,7 +158,7 @@ public class ModernMenu : ContextMenuStrip
         {
             if (menu.Items[i] is not ToolStripMenuItem mnuItem) continue;
 
-            if (CurrentDpi != InitDpi)
+            if (dpiScale >= 1.75f)
             {
                 var fontSize = dpiScale * 16 / 4.2f;
                 mnuItem.Font = new Font(Font.FontFamily, fontSize);
