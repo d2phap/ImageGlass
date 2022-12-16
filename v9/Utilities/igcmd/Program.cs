@@ -1,6 +1,6 @@
 /*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,6 @@ internal static class Program
         // To customize application configuration such as set high DPI settings
         // or default font, see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
-        Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
 
 
         // App-level exception handler for non-debugger
