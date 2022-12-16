@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -108,13 +108,26 @@ public partial class FrmSlideshow : ModernForm
         // load configs
         _ = int.TryParse(slideshowIndex, out var indexNumber);
         Text = $"{Config.Language["FrmMain.MnuSlideshow"]} {indexNumber + 1} - {App.AppName}";
+        SetUpFrmSlideshowConfigs();
 
+        // update theme icons
+        OnDpiChanged();
+
+        ApplyTheme(Config.Theme.Settings.IsDarkMode);
+    }
+
+
+    private void SetUpFrmSlideshowConfigs()
+    {
+        SuspendLayout();
+
+        
         PicMain.InterpolationScaleDown = Config.ImageInterpolationScaleDown;
         PicMain.InterpolationScaleUp = Config.ImageInterpolationScaleUp;
 
         Config.EnableSlideshow = true;
         MnuToggleCountdown.Checked = Config.ShowSlideshowCountdown;
-        
+
         // zoom mode
         SetZoomMode(Config.ZoomMode);
         if (Config.ZoomMode == ZoomMode.LockZoom)
@@ -122,10 +135,10 @@ public partial class FrmSlideshow : ModernForm
             PicMain.ZoomFactor = Config.ZoomLockValue / 100f;
         }
 
-        // update theme icons
-        OnDpiChanged();
+        // menu
+        MnuContext.CurrentDpi = DeviceDpi;
 
-        ApplyTheme(Config.Theme.Settings.IsDarkMode);
+        ResumeLayout(false);
     }
 
 
@@ -182,6 +195,17 @@ public partial class FrmSlideshow : ModernForm
 
         // reload theme
         Config.Theme.LoadTheme(newIconHeight);
+
+        // update picmain scaling
+        PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(60f, 60f));
+        PicMain.CheckerboardCellSize = this.ScaleToDpi(8f);
+    }
+
+    protected override void OnDpiChanged(DpiChangedEventArgs e)
+    {
+        base.OnDpiChanged(e);
+
+        MnuContext.CurrentDpi = e.DeviceDpiNew;
     }
 
 
