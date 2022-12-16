@@ -43,7 +43,6 @@ internal static class Program
         WindowApi.SetAppErrorMode();
 
         ApplicationConfiguration.Initialize();
-        Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
 
 
         // App-level exception handler for non-debugger

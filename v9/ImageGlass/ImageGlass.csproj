@@ -27,6 +27,7 @@
     <DebugType>portable</DebugType>
     <Product>$(AssemblyName)</Product>
     <AssemblyVersion></AssemblyVersion>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
   </PropertyGroup>
 
   <ItemGroup>
