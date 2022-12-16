@@ -45,18 +45,25 @@ public class SelectionResizer
 
 
     /// <summary>
-    /// Gets, sets the rectangle region of the resizer.
+    /// Gets, sets the region to resize.
     /// </summary>
-    public RectangleF Region { get; set; }
+    public RectangleF HitRegion { get; set; }
+
+
+    /// <summary>
+    /// Gets, sets the region to draw resizer.
+    /// </summary>
+    public RectangleF IndicatorRegion { get; set; }
 
 
     /// <summary>
     /// Initialize a new <see cref="SelectionResizer"/> instance.
     /// </summary>
-    public SelectionResizer(SelectionResizerType position, RectangleF region)
+    public SelectionResizer(SelectionResizerType position, RectangleF indicatorRegion, RectangleF hitRegion)
     {
         Type = position;
-        Region = region;
+        IndicatorRegion = indicatorRegion;
+        HitRegion = hitRegion;
     }
 }
 

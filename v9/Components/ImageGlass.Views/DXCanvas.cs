@@ -24,6 +24,7 @@ using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Views.ImageAnimator;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -124,6 +125,7 @@ public class DXCanvas : DXControl
     private RectangleF _selectionBeforeMove = default;
     private bool _canDrawSelection = false;
     private bool _isSelectionHovered = false;
+    private bool _isResizerHovered = false;
     private SelectionResizer? _selectedResizer = null;
 
     #endregion // Private properties
@@ -280,51 +282,100 @@ public class DXCanvas : DXControl
 
             var resizerSize = DpiApi.Transform(Font.Size * 1.3f);
             var resizerMargin = DpiApi.Transform(2);
+            var hitSize = DpiApi.Transform(resizerSize);
+
+            // top left
+            var topLeft = new RectangleF(
+                ClientSelection.X + resizerMargin,
+                ClientSelection.Y + resizerMargin,
+                resizerSize, resizerSize);
+            var topLeftHit = new RectangleF(
+                ClientSelection.X - resizerMargin,
+                ClientSelection.Y - resizerMargin,
+                hitSize, hitSize);
+
+            // top right
+            var topRight = new RectangleF(
+                ClientSelection.Right - resizerSize - resizerMargin,
+                ClientSelection.Y + resizerMargin,
+                resizerSize, resizerSize);
+            var topRightHit = new RectangleF(
+                ClientSelection.Right - resizerSize,
+                ClientSelection.Y - resizerMargin,
+                hitSize, hitSize);
+
+            // bottom left
+            var bottomLeft = new RectangleF(
+                ClientSelection.X + resizerMargin,
+                ClientSelection.Bottom - resizerSize - resizerMargin,
+                resizerSize, resizerSize);
+            var bottomLeftHit = new RectangleF(
+                ClientSelection.X - resizerMargin,
+                ClientSelection.Bottom - resizerSize,
+                hitSize, hitSize);
+
+            // bottom right
+            var bottomRight = new RectangleF(
+                ClientSelection.Right - resizerSize - resizerMargin,
+                ClientSelection.Bottom - resizerSize - resizerMargin,
+                resizerSize, resizerSize);
+            var bottomRightHit = new RectangleF(
+                ClientSelection.Right - resizerSize,
+                ClientSelection.Bottom - resizerSize,
+                hitSize, hitSize);
+
+            // top
+            var top = new RectangleF(
+                ClientSelection.X + ClientSelection.Width / 2 - resizerSize / 2,
+                ClientSelection.Y + resizerMargin,
+                resizerSize, resizerSize);
+            var topHit = new RectangleF(
+                ClientSelection.X + ClientSelection.Width / 2 - resizerSize / 2,
+                ClientSelection.Y - resizerMargin,
+                hitSize, hitSize);
+
+            // right
+            var right = new RectangleF(
+                    ClientSelection.Right - resizerSize - resizerMargin,
+                    ClientSelection.Y + ClientSelection.Height / 2 - resizerSize / 2,
+                    resizerSize, resizerSize);
+            var rightHit = new RectangleF(
+                    ClientSelection.Right - resizerSize,
+                    ClientSelection.Y + ClientSelection.Height / 2 - resizerSize / 2,
+                    hitSize, hitSize);
+
+            // bottom
+            var bottom = new RectangleF(
+                    ClientSelection.X + ClientSelection.Width / 2 - resizerSize / 2,
+                    ClientSelection.Bottom - resizerSize - resizerMargin,
+                    resizerSize, resizerSize);
+            var bottomHit = new RectangleF(
+                    ClientSelection.X + ClientSelection.Width / 2 - resizerSize / 2,
+                    ClientSelection.Bottom - resizerSize,
+                    hitSize, hitSize);
+
+            // left
+            var left = new RectangleF(
+                    ClientSelection.X + resizerMargin,
+                    ClientSelection.Y + ClientSelection.Height / 2 - resizerSize / 2,
+                    resizerSize, resizerSize);
+            var leftHit = new RectangleF(
+                    ClientSelection.X - resizerMargin,
+                    ClientSelection.Y + ClientSelection.Height / 2 - resizerSize / 2,
+                    hitSize, hitSize);
 
             // 8 resizers
             return new List<SelectionResizer>(8)
             {
-                // top left
-                new(SelectionResizerType.TopLeft, new RectangleF(
-                    ClientSelection.X + resizerMargin,
-                    ClientSelection.Y + resizerMargin,
-                    resizerSize, resizerSize)),
-                // top right
-                new(SelectionResizerType.TopRight, new RectangleF(
-                    ClientSelection.Right - resizerSize - resizerMargin,
-                    ClientSelection.Y + resizerMargin,
-                    resizerSize, resizerSize)),
-                // bottom left
-                new(SelectionResizerType.BottomLeft, new RectangleF(
-                    ClientSelection.X + resizerMargin,
-                    ClientSelection.Bottom - resizerSize - resizerMargin,
-                    resizerSize, resizerSize)),
-                // bottom right
-                new(SelectionResizerType.BottomRight, new RectangleF(
-                    ClientSelection.Right - resizerSize - resizerMargin,
-                    ClientSelection.Bottom - resizerSize - resizerMargin,
-                    resizerSize, resizerSize)),
+                new(SelectionResizerType.TopLeft, topLeft, topLeftHit),
+                new(SelectionResizerType.BottomLeft, bottomLeft, bottomLeftHit),
+                new(SelectionResizerType.TopRight, topRight, topRightHit),
+                new(SelectionResizerType.BottomRight, bottomRight, bottomRightHit),
 
-                // top
-                new(SelectionResizerType.Top, new RectangleF(
-                    ClientSelection.X + ClientSelection.Width / 2 - resizerSize / 2,
-                    ClientSelection.Y + resizerMargin,
-                    resizerSize, resizerSize)),
-                // right
-                new(SelectionResizerType.Right, new RectangleF(
-                    ClientSelection.Right - resizerSize - resizerMargin,
-                    ClientSelection.Y + ClientSelection.Height / 2 - resizerSize / 2,
-                    resizerSize, resizerSize)),
-                // bottom
-                new(SelectionResizerType.Bottom, new RectangleF(
-                    ClientSelection.X + ClientSelection.Width / 2 - resizerSize / 2,
-                    ClientSelection.Bottom - resizerSize - resizerMargin,
-                    resizerSize, resizerSize)),
-                // left
-                new(SelectionResizerType.Left, new RectangleF(
-                    ClientSelection.X + resizerMargin,
-                    ClientSelection.Y + ClientSelection.Height / 2 - resizerSize / 2,
-                    resizerSize, resizerSize)),
+                new(SelectionResizerType.Left, left, leftHit),
+                new(SelectionResizerType.Top, top, topHit),
+                new(SelectionResizerType.Right, right, rightHit),
+                new(SelectionResizerType.Bottom, bottom, bottomHit),
             };
         }
     }
@@ -935,27 +986,42 @@ public class DXCanvas : DXControl
         #region Image panning & selecting check
         if (Source != ImageSource.Null)
         {
-            _canDrawSelection = canSelect && !ClientSelection.Contains(_mouseDownPoint.Value);
             requestRerender = requestRerender || (canSelect && !ClientSelection.IsEmpty);
-
-            if (_canDrawSelection)
-            {
-                _clientSelection = new(_mouseDownPoint.Value, new SizeF());
-            }
-            else
-            {
-                // panning
-                _panHostToPoint.X = e.Location.X;
-                _panHostToPoint.Y = e.Location.Y;
-                _panHostFromPoint.X = e.Location.X;
-                _panHostFromPoint.Y = e.Location.Y;
-            }
-
+            _selectedResizer = SelectionResizers.Find(i => i.HitRegion.Contains(e.Location));
+            _canDrawSelection = canSelect && !_isSelectionHovered && !_isResizerHovered;
 
             if (canSelect)
             {
                 _selectionBeforeMove = new RectangleF(_clientSelection.Location, _clientSelection.Size);
-                _selectedResizer = SelectionResizers.Find(i => i.Region.Contains(e.Location));
+
+                // resize selection
+                if (canSelect && _isResizerHovered)
+                {
+                    CurrentSelectionAction = SelectionAction.Resizing;
+                }
+
+                // draw selection
+                else if (canSelect && _isSelectionHovered)
+                {
+                    CurrentSelectionAction = SelectionAction.Drawing;
+                }
+            }
+
+
+            // update selection
+            if (_canDrawSelection)
+            {
+                _clientSelection = new(_mouseDownPoint.Value, new SizeF());
+            }
+
+            // panning
+            else
+            {
+                
+                _panHostToPoint.X = e.Location.X;
+                _panHostToPoint.Y = e.Location.Y;
+                _panHostFromPoint.X = e.Location.X;
+                _panHostFromPoint.Y = e.Location.Y;
             }
         }
         #endregion
@@ -1154,13 +1220,23 @@ public class DXCanvas : DXControl
         if (EnableSelection)
         {
             // set resizer cursor
-            var resizer = SelectionResizers.Find(i => i.Region.Contains(e.Location));
-            Cursor = resizer?.Cursor ?? Parent.Cursor;
+            var hoveredResizer = SelectionResizers.Find(i => i.HitRegion.Contains(e.Location));
+            Cursor = hoveredResizer?.Cursor ?? Parent.Cursor;
+            
 
             // show resizers on hover
-            var resizerVisible = ClientSelection.Contains(e.Location);
-            requestRerender = requestRerender || _isSelectionHovered != resizerVisible;
-            _isSelectionHovered = resizerVisible;
+            var isSelectionHovered = ClientSelection.Contains(e.Location);
+            var isResizerHovered = hoveredResizer != null;
+
+
+            // redraw the canvas
+            requestRerender = requestRerender
+                || _isSelectionHovered != isSelectionHovered
+                || _isResizerHovered != isResizerHovered;
+
+
+            _isSelectionHovered = isSelectionHovered;
+            _isResizerHovered = isResizerHovered;
         }
 
         // request re-render control
@@ -1515,6 +1591,7 @@ public class DXCanvas : DXControl
         if (Source == ImageSource.Null || (_mouseDownButton != MouseButtons.Left && ClientSelection.IsEmpty))
             return;
 
+
         if (g is D2DGraphics dg)
         {
             // draw the clip selection region
@@ -1523,7 +1600,7 @@ public class DXCanvas : DXControl
         }
 
 
-        if (_mouseDownButton == MouseButtons.Left || _isSelectionHovered)
+        if (_mouseDownButton == MouseButtons.Left || _isSelectionHovered || _isResizerHovered)
         {
             var width3 = ClientSelection.Width / 3;
             var height3 = ClientSelection.Height / 3;
@@ -1591,6 +1668,27 @@ public class DXCanvas : DXControl
                 g.DrawRectangle(textBgRect, textSize.Height / 5, AccentColor.WithAlpha(100), AccentColor.WithAlpha(150));
                 g.DrawText(text, Font.Name, Font.Size, textX, textY, Color.White, textDpi: DeviceDpi);
             }
+
+            // draw resizers
+            foreach (var rItem in SelectionResizers)
+            {
+                var hideTopBottomResizers = ClientSelection.Width < rItem.IndicatorRegion.Width * 5;
+                if (hideTopBottomResizers
+                    && (rItem.Type == SelectionResizerType.Top
+                    || rItem.Type == SelectionResizerType.Bottom)) continue;
+
+                var hideLeftRightResizers = ClientSelection.Height < rItem.IndicatorRegion.Height * 5;
+                if (hideLeftRightResizers
+                    && (rItem.Type == SelectionResizerType.Left
+                    || rItem.Type == SelectionResizerType.Right)) continue;
+
+
+                g.DrawEllipse(rItem.IndicatorRegion, Color.White.WithAlpha(50), Color.Black.WithAlpha(200), 8f);
+                g.DrawEllipse(rItem.IndicatorRegion, AccentColor.WithAlpha(255), Color.White.WithAlpha(200), 2f);
+
+
+                g.DrawRectangle(rItem.HitRegion, 0, Color.Red);
+            }
         }
 
 
@@ -1599,27 +1697,6 @@ public class DXCanvas : DXControl
         g.DrawRectangle(ClientSelection, 0, Color.White, null, borderWidth);
         g.DrawRectangle(ClientSelection, 0, AccentColor, null, borderWidth);
 
-
-        // draw resizers
-        if (_mouseDownButton != MouseButtons.Left && _isSelectionHovered)
-        {
-            foreach (var rItem in SelectionResizers)
-            {
-                var hideTopBottomResizers = ClientSelection.Width < rItem.Region.Width * 5;
-                if (hideTopBottomResizers
-                    && (rItem.Type == SelectionResizerType.Top
-                    || rItem.Type == SelectionResizerType.Bottom)) continue;
-
-                var hideLeftRightResizers = ClientSelection.Height < rItem.Region.Height * 5;
-                if (hideLeftRightResizers
-                    && (rItem.Type == SelectionResizerType.Left
-                    || rItem.Type == SelectionResizerType.Right)) continue;
-
-
-                g.DrawEllipse(rItem.Region, Color.White.WithAlpha(50), Color.Black.WithAlpha(200), 8f);
-                g.DrawEllipse(rItem.Region, AccentColor.WithAlpha(255), Color.White.WithAlpha(200), 2f);
-            }
-        }
     }
 
 
