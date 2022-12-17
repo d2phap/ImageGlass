@@ -77,13 +77,6 @@ public partial class FrmCropSettings : DialogForm
     }
 
 
-    protected override void OnApplyButtonClicked()
-    {
-        base.OnApplyButtonClicked();
-        ApplySettings();
-    }
-
-
     #endregion // Override / Virtual methods
 
 
@@ -100,10 +93,8 @@ public partial class FrmCropSettings : DialogForm
         ChkCloseToolAfterSaving.Text = Config.Language[$"{Name}.{nameof(ChkCloseToolAfterSaving)}"];
 
         LblDefaultSelection.Text = Config.Language[$"{Name}.{nameof(LblDefaultSelection)}"];
-        LblDefaultSelectionType.Text = Config.Language[$"{Name}.{nameof(LblDefaultSelectionType)}"];
         LoadSelectionTypeItems();
 
-        LblDefaultSelectionArea.Text = Config.Language[$"{Name}.{nameof(LblDefaultSelectionArea)}"];
         ChkAutoCenterSelection.Text = Config.Language[$"{Name}.{nameof(ChkAutoCenterSelection)}"];
         LblLocation.Text = Config.Language[$"{nameof(FrmCrop)}.{nameof(LblLocation)}"];
         LblSize.Text = Config.Language[$"{nameof(FrmCrop)}.{nameof(LblSize)}"];
@@ -191,18 +182,26 @@ public partial class FrmCropSettings : DialogForm
     private void CmbSelectionType_SelectedIndexChanged(object sender, EventArgs e)
     {
         var selectionType = (DefaultSelectionType)CmbSelectionType.SelectedIndex;
-        var isCustomSelect = selectionType == DefaultSelectionType.CustomArea;
 
-        LblDefaultSelectionArea.Visible =
-            LblLocation.Visible =
+        ChkAutoCenterSelection.Visible = selectionType != DefaultSelectionType.SelectNone
+            && selectionType != DefaultSelectionType.SelectAll
+            && selectionType != DefaultSelectionType.UseTheLastSelection;
+
+
+        LblLocation.Visible =
             NumX.Visible =
             NumY.Visible =
-            ChkAutoCenterSelection.Visible =
             LblSize.Visible =
             NumWidth.Visible =
-            NumHeight.Visible = isCustomSelect;
+            NumHeight.Visible = selectionType == DefaultSelectionType.CustomArea;
 
         OnUpdateHeight();
+    }
+
+
+    private void ChkAutoCenterSelection_CheckedChanged(object sender, EventArgs e)
+    {
+        NumX.Enabled = NumY.Enabled = !ChkAutoCenterSelection.Checked;
     }
 
 

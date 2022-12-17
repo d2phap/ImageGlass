@@ -82,7 +82,7 @@ public class ModernLabel : Label
     protected override void OnPaint(PaintEventArgs e)
     {
         var g = e.Graphics;
-        var rect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
+        var rect = e.ClipRectangle;
 
         var textColor = ForeColor == DefaultForeColor
             ? ColorPalatte.LightText
@@ -103,9 +103,14 @@ public class ModernLabel : Label
             var stringFormat = new StringFormat
             {
                 LineAlignment = StringAlignment.Center,
-                Alignment = StringAlignment.Near
+                Alignment = StringAlignment.Near,
             };
-            var modRect = new Rectangle(0, 0, rect.Width + (int)g.MeasureString("E", Font).Width, rect.Height);
+
+            var leftGap = this.ScaleToDpi(-2f);
+            var modRect = new RectangleF(leftGap, 0,
+                rect.Width + g.MeasureString("E", Font).Width,
+                rect.Height);
+
             g.DrawString(Text, Font, b, modRect, stringFormat);
         }
     }

@@ -371,7 +371,7 @@ public partial class FrmCrop : ToolForm, IToolForm
         var w = 0;
         var h = 0;
 
-        if (Settings.InitSelectionType == DefaultSelectionType.KeepTheLastSelection)
+        if (Settings.InitSelectionType == DefaultSelectionType.UseTheLastSelection)
         {
             x = _lastSelectionArea.X;
             y = _lastSelectionArea.Y;
@@ -413,7 +413,7 @@ public partial class FrmCrop : ToolForm, IToolForm
 
         // auto-center the selection
         if (Settings.AutoCenterSelection
-            && Settings.InitSelectionType != DefaultSelectionType.KeepTheLastSelection)
+            && Settings.InitSelectionType != DefaultSelectionType.UseTheLastSelection)
         {
             x = srcW / 2 - w / 2;
             y = srcH / 2 - h / 2;

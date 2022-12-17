@@ -706,11 +706,9 @@ public class IgLang : Dictionary<string, string>
         Add("FrmCropSettings._Title", "Crop settings"); //v9.0
         Add("FrmCropSettings.ChkCloseToolAfterSaving", "Close Crop tool after saving"); //v9.0
         Add("FrmCropSettings.LblDefaultSelection", "Default selection settings"); //v9.0
-        Add("FrmCropSettings.LblDefaultSelectionType", "Selection type"); //v9.0
-        Add("FrmCropSettings.LblDefaultSelectionArea", "Selection area"); //v9.0
         Add("FrmCropSettings.ChkAutoCenterSelection", "Auto-center selection"); //v9.0
 
-        Add("FrmCropSettings.DefaultSelectionType._KeepTheLastSelection", "Keep the last selection"); //v9.0
+        Add("FrmCropSettings.DefaultSelectionType._UseTheLastSelection", "Use the last selection"); //v9.0
         Add("FrmCropSettings.DefaultSelectionType._SelectNone", "Select none"); //v9.0
         Add("FrmCropSettings.DefaultSelectionType._SelectX", "Select {0}"); //v9.0
         Add("FrmCropSettings.DefaultSelectionType._SelectAll", "Select all"); //v9.0

@@ -156,7 +156,9 @@ public class CropToolConfig: IToolConfig
 /// </summary>
 public enum DefaultSelectionType
 {
-    KeepTheLastSelection,
+    UseTheLastSelection,
+    CustomArea,
+    SelectAll,
     SelectNone,
     Select10Percent,
     Select20Percent,
@@ -171,6 +173,4 @@ public enum DefaultSelectionType
     Select75Percent,
     Select80Percent,
     Select90Percent,
-    SelectAll,
-    CustomArea,
 }
