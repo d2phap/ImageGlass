@@ -29,6 +29,8 @@ public partial class FrmCrop : ToolForm, IToolForm
 {
     private Keys _squareRatioSelectionKey = Keys.Shift | Keys.ShiftKey;
     private bool _isSquareRatioSelectionKeyPressed = false;
+    private bool _isDefaultSelectionLoaded = false;
+    private Rectangle _lastSelectionArea = Rectangle.Empty;
 
 
     /// <summary>
@@ -52,6 +54,9 @@ public partial class FrmCrop : ToolForm, IToolForm
         ApplyTheme(Theme.Settings.IsDarkMode);
     }
 
+
+    // Override methods
+    #region Override methods
 
     protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
@@ -94,13 +99,15 @@ public partial class FrmCrop : ToolForm, IToolForm
         NumRatioTo.Value = Settings.AspectRatioValues[1];
         LoadAspectRatioItems();
         UpdateAspectRatioValues();
+        LoadDefaultSelectionSetting(true);
 
         // add control events
         Local.FrmMain.KeyDown += FrmMain_KeyDown;
         Local.FrmMain.KeyUp += FrmMain_KeyUp;
         Local.ImageSaved += Local_ImageSaved;
-        Local.FrmMain.PicMain.OnSelectionChanged += PicMain_OnImageSelecting;
-        Local.FrmMain.PicMain.OnImageChanged += PicMain_OnImageChanged;
+        Local.FrmMain.PicMain.SelectionChanged += PicMain_OnImageSelecting;
+        Local.FrmMain.PicMain.ImageLoading += PicMain_ImageLoading;
+        Local.FrmMain.PicMain.ImageDrawn += PicMain_ImageDrawn;
         NumX.LostFocus += NumSelections_LostFocus;
         NumY.LostFocus += NumSelections_LostFocus;
         NumWidth.LostFocus += NumSelections_LostFocus;
@@ -118,7 +125,6 @@ public partial class FrmCrop : ToolForm, IToolForm
         ApplyLanguage();
     }
 
-
     protected override void OnToolFormClosing(ToolFormClosingEventArgs e)
     {
         base.OnToolFormClosing(e);
@@ -130,8 +136,9 @@ public partial class FrmCrop : ToolForm, IToolForm
         Local.FrmMain.KeyDown -= FrmMain_KeyDown;
         Local.FrmMain.KeyUp -= FrmMain_KeyUp;
         Local.ImageSaved -= Local_ImageSaved;
-        Local.FrmMain.PicMain.OnSelectionChanged -= PicMain_OnImageSelecting;
-        Local.FrmMain.PicMain.OnImageChanged -= PicMain_OnImageChanged;
+        Local.FrmMain.PicMain.SelectionChanged -= PicMain_OnImageSelecting;
+        Local.FrmMain.PicMain.ImageLoading -= PicMain_ImageLoading;
+        Local.FrmMain.PicMain.ImageDrawn -= PicMain_ImageDrawn;
         NumX.LostFocus -= NumSelections_LostFocus;
         NumY.LostFocus -= NumSelections_LostFocus;
         NumWidth.LostFocus -= NumSelections_LostFocus;
@@ -180,104 +187,11 @@ public partial class FrmCrop : ToolForm, IToolForm
         }
     }
 
-
-    private void FrmMain_KeyDown(object? sender, KeyEventArgs e)
-    {
-        if (_isSquareRatioSelectionKeyPressed) return;
-        _isSquareRatioSelectionKeyPressed = e.KeyData == _squareRatioSelectionKey;
-
-        if (_isSquareRatioSelectionKeyPressed)
-        {
-            Local.FrmMain.PicMain.SelectionAspectRatio = new SizeF(1, 1);
-
-            if (Local.FrmMain.PicMain.CurrentSelectionAction == SelectionAction.Drawing)
-            {
-                Local.FrmMain.PicMain.UpdateSelectionByMousePosition();
-            }
-
-            
-            Local.FrmMain.PicMain.Invalidate();
-        }
-    }
-
-    private void FrmMain_KeyUp(object? sender, KeyEventArgs e)
-    {
-        if (_isSquareRatioSelectionKeyPressed)
-        {
-            _isSquareRatioSelectionKeyPressed = false;
-            UpdateAspectRatioValues();
-
-            if (Local.FrmMain.PicMain.CurrentSelectionAction == SelectionAction.Drawing)
-            {
-                Local.FrmMain.PicMain.UpdateSelectionByMousePosition();
-            }
-
-            Local.FrmMain.PicMain.Invalidate();
-        }
-    }
+    #endregion // Override methods
 
 
-    private void Local_ImageSaved(ImageSaveEventArgs e)
-    {
-        if (Settings.CloseToolAfterSaving
-            && e.SaveSource == ImageSaveSource.SelectedArea)
-        {
-            Close();
-        }
-    }
-
-
-    private void PicMain_OnImageSelecting(Views.SelectionEventArgs e)
-    {
-        NumX.Value = (decimal)e.SourceSelection.X;
-        NumY.Value = (decimal)e.SourceSelection.Y;
-        NumWidth.Value = (decimal)e.SourceSelection.Width;
-        NumHeight.Value = (decimal)e.SourceSelection.Height;
-
-        BtnSave.Enabled =
-            BtnSaveAs.Enabled =
-            BtnCrop.Enabled =
-            BtnCopy.Enabled = !e.SourceSelection.IsEmpty;
-    }
-
-
-    private void PicMain_OnImageChanged(EventArgs e)
-    {
-        TableTop.Enabled =
-            TableBottom.Enabled = Local.FrmMain.PicMain.Source != ImageSource.Null;
-
-        UpdateAspectRatioValues();
-    }
-
-
-    private void CmbAspectRatio_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        UpdateAspectRatioValues();
-    }
-
-
-    private void NumRatio_ValueChanged(object? sender, EventArgs e)
-    {
-        Local.FrmMain.PicMain.SelectionAspectRatio = new SizeF((float)NumRatioFrom.Value, (float)NumRatioTo.Value);
-    }
-
-    
-    private void NumSelections_LostFocus(object? sender, EventArgs e)
-    {
-        var newRect = new RectangleF(
-                (float)NumX.Value,
-                (float)NumY.Value,
-                (float)NumWidth.Value,
-                (float)NumHeight.Value);
-
-        if (newRect != Local.FrmMain.PicMain.SourceSelection)
-        {
-            Local.FrmMain.PicMain.SourceSelection = newRect;
-        }
-
-        Local.FrmMain.PicMain.Invalidate();
-    }
-
+    // Private methods
+    #region Private methods
 
     /// <summary>
     /// Recalculate and update window height.
@@ -334,7 +248,7 @@ public partial class FrmCrop : ToolForm, IToolForm
         {
             if (arValue == Settings.AspectRatio)
             {
-                cmbIndex = i; 
+                cmbIndex = i;
             }
 
 
@@ -427,6 +341,216 @@ public partial class FrmCrop : ToolForm, IToolForm
     }
 
 
+    private void LoadSelectionFromFormInputs(bool drawSelection)
+    {
+        var newRect = new RectangleF(
+                (float)NumX.Value,
+                (float)NumY.Value,
+                (float)NumWidth.Value,
+                (float)NumHeight.Value);
+
+        if (newRect != Local.FrmMain.PicMain.SourceSelection)
+        {
+            Local.FrmMain.PicMain.SourceSelection = newRect;
+        }
+
+        if (drawSelection)
+        {
+            Local.FrmMain.PicMain.Refresh(true);
+        }
+    }
+
+
+    private void LoadDefaultSelectionSetting(bool drawSelection)
+    {
+        var srcW = (int)Local.FrmMain.PicMain.SourceWidth;
+        var srcH = (int)Local.FrmMain.PicMain.SourceHeight;
+
+        var x = 0;
+        var y = 0;
+        var w = 0;
+        var h = 0;
+
+        if (Settings.InitSelectionType == DefaultSelectionType.KeepTheLastSelection)
+        {
+            x = _lastSelectionArea.X;
+            y = _lastSelectionArea.Y;
+            w = _lastSelectionArea.Width;
+            h = _lastSelectionArea.Height;
+        }
+        else if (Settings.InitSelectionType == DefaultSelectionType.CustomArea)
+        {
+            x = Settings.InitSelectedArea.X;
+            y = Settings.InitSelectedArea.Y;
+            w = Settings.InitSelectedArea.Width;
+            h = Settings.InitSelectedArea.Height;
+        }
+        else
+        {
+            var selectPercent = 1f;
+
+            if (Settings.InitSelectionType == DefaultSelectionType.SelectAll)
+            {
+                selectPercent = 1;
+            }
+            else if (Settings.InitSelectionType == DefaultSelectionType.Select25Percent)
+            {
+                selectPercent = 0.25f;
+            }
+            else if (Settings.InitSelectionType == DefaultSelectionType.Select50Percent)
+            {
+                selectPercent = 0.5f;
+            }
+            else if (Settings.InitSelectionType == DefaultSelectionType.Select75Percent)
+            {
+                selectPercent = 0.75f;
+            }
+
+            w = (int)(srcW * selectPercent);
+            h = (int)(srcH * selectPercent);
+        }
+
+        // auto-center the selection
+        if (Settings.AutoCenterSelection
+            && Settings.InitSelectionType != DefaultSelectionType.KeepTheLastSelection)
+        {
+            x = srcW / 2 - w / 2;
+            y = srcH / 2 - h / 2;
+        }
+
+        // validate selection bounds
+        x = Math.Max(0, x);
+        y = Math.Max(0, y);
+        w = Math.Max(0, w);
+        h = Math.Max(0, h);
+
+        NumX.Value = x;
+        NumY.Value = y;
+        NumWidth.Value = w;
+        NumHeight.Value = h;
+
+        Local.FrmMain.PicMain.SourceSelection = new RectangleF(x, y, w, h);
+
+
+        _isDefaultSelectionLoaded = true;
+        if (drawSelection)
+        {
+            Local.FrmMain.PicMain.Refresh(false);
+        }
+    }
+
+
+    #endregion // Private methods
+
+
+    // Form events
+    #region Form events
+
+    private void FrmMain_KeyDown(object? sender, KeyEventArgs e)
+    {
+        if (_isSquareRatioSelectionKeyPressed) return;
+        _isSquareRatioSelectionKeyPressed = e.KeyData == _squareRatioSelectionKey;
+
+        if (_isSquareRatioSelectionKeyPressed)
+        {
+            Local.FrmMain.PicMain.SelectionAspectRatio = new SizeF(1, 1);
+
+            if (Local.FrmMain.PicMain.CurrentSelectionAction == SelectionAction.Drawing)
+            {
+                Local.FrmMain.PicMain.UpdateSelectionByMousePosition();
+            }
+
+            
+            Local.FrmMain.PicMain.Invalidate();
+        }
+    }
+
+
+    private void FrmMain_KeyUp(object? sender, KeyEventArgs e)
+    {
+        if (_isSquareRatioSelectionKeyPressed)
+        {
+            _isSquareRatioSelectionKeyPressed = false;
+            UpdateAspectRatioValues();
+
+            if (Local.FrmMain.PicMain.CurrentSelectionAction == SelectionAction.Drawing)
+            {
+                Local.FrmMain.PicMain.UpdateSelectionByMousePosition();
+            }
+
+            Local.FrmMain.PicMain.Invalidate();
+        }
+    }
+
+
+    private void Local_ImageSaved(ImageSaveEventArgs e)
+    {
+        if (Settings.CloseToolAfterSaving
+            && e.SaveSource == ImageSaveSource.SelectedArea)
+        {
+            Close();
+        }
+    }
+
+
+    private void PicMain_OnImageSelecting(Views.SelectionEventArgs e)
+    {
+        NumX.Value = (decimal)e.SourceSelection.X;
+        NumY.Value = (decimal)e.SourceSelection.Y;
+        NumWidth.Value = (decimal)e.SourceSelection.Width;
+        NumHeight.Value = (decimal)e.SourceSelection.Height;
+
+        BtnSave.Enabled =
+            BtnSaveAs.Enabled =
+            BtnCrop.Enabled =
+            BtnCopy.Enabled = !e.SourceSelection.IsEmpty;
+    }
+
+
+    private void PicMain_ImageLoading()
+    {
+        _isDefaultSelectionLoaded = false;
+        _lastSelectionArea = new Rectangle(
+                (int)NumX.Value,
+                (int)NumY.Value,
+                (int)NumWidth.Value,
+                (int)NumHeight.Value);
+    }
+
+
+    private void PicMain_ImageDrawn()
+    {
+        TableTop.Enabled =
+            TableBottom.Enabled = Local.FrmMain.PicMain.Source != ImageSource.Null;
+
+        UpdateAspectRatioValues();
+
+        // calculate default selection
+        if (!_isDefaultSelectionLoaded)
+        {
+            LoadDefaultSelectionSetting(false);
+        }
+    }
+
+
+    private void CmbAspectRatio_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        UpdateAspectRatioValues();
+    }
+
+
+    private void NumRatio_ValueChanged(object? sender, EventArgs e)
+    {
+        Local.FrmMain.PicMain.SelectionAspectRatio = new SizeF((float)NumRatioFrom.Value, (float)NumRatioTo.Value);
+    }
+
+    
+    private void NumSelections_LostFocus(object? sender, EventArgs e)
+    {
+        LoadSelectionFromFormInputs(true);
+    }
+
+    
     private void BtnSave_Click(object sender, EventArgs e)
     {
         Local.FrmMain.IG_Save();
@@ -470,4 +594,8 @@ public partial class FrmCrop : ToolForm, IToolForm
             Settings = frm.Settings;
         }
     }
+
+    #endregion // Form events
+
+
 }
