@@ -273,7 +273,7 @@ public class ModernButton : Button
 
         var textColor = colors.LightText;
         var borderColor = colors.GreySelection;
-        var borderRadius = BHelper.IsOS(WindowsOS.Win11OrLater) ? 4f : 0;
+        var borderRadius = BHelper.IsOS(WindowsOS.Win11OrLater) ? DpiApi.Transform(3f) : 0;
         var fillColor = isCTAStyle
             ? colors.DarkBlueBackground
             : colors.LightBackground;
