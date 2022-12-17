@@ -33,7 +33,7 @@ public class ImageLoadedEventArgs
     public int Index { get; init; }
     public IgPhoto? Data { get; init; }
     public Exception? Error { get; init; }
-    public bool KeepZoomRatio { get; init; }
+    public bool ResetZoom { get; init; }
 }
 
 public class ImageListLoadedEventArgs

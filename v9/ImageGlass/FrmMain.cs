@@ -668,7 +668,7 @@ public partial class FrmMain : ModernForm
     [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP003:Dispose previous before re-assigning", Justification = "<Pending>")]
     private async Task ViewNextAsync(int step,
-        bool isKeepZoomRatio = false,
+        bool resetZoom = true,
         bool isSkipCache = false,
         int pageIndex = int.MinValue,
         string filename = "",
@@ -812,7 +812,7 @@ public partial class FrmMain : ModernForm
                     Index = imageIndex,
                     Data = photo,
                     Error = photo?.Error,
-                    KeepZoomRatio = isKeepZoomRatio,
+                    ResetZoom = resetZoom,
                 };
                 Local.RaiseImageLoadedEvent(loadedArgs);
             }
@@ -833,7 +833,7 @@ public partial class FrmMain : ModernForm
         //    {
         //        Index = imageIndex,
         //        Error = ex,
-        //        KeepZoomRatio = isKeepZoomRatio,
+        //        ResetZoom = resetZoom,
         //    });
         //}
     }
@@ -843,12 +843,12 @@ public partial class FrmMain : ModernForm
     /// View the next image using jump step
     /// </summary>
     /// <param name="step">The step to change image index. Use <c>0</c> to reload the viewing image.</param>
-    /// <param name="isKeepZoomRatio"></param>
+    /// <param name="resetZoom"></param>
     /// <param name="isSkipCache"></param>
     /// <param name="pageIndex">Use <see cref="int.MinValue"/> to load the default page index.</param>
     /// <param name="filename"></param>
     public async Task ViewNextCancellableAsync(int step,
-        bool isKeepZoomRatio = false,
+        bool resetZoom = true,
         bool isSkipCache = false,
         int pageIndex = int.MinValue,
         string filename = "")
@@ -856,7 +856,7 @@ public partial class FrmMain : ModernForm
         _loadCancelToken?.Cancel();
         _loadCancelToken = new();
 
-        await ViewNextAsync(step, isKeepZoomRatio, isSkipCache, pageIndex, filename, _loadCancelToken);
+        await ViewNextAsync(step, resetZoom, isSkipCache, pageIndex, filename, _loadCancelToken);
     }
 
     #endregion // Image Loading functions
@@ -935,22 +935,7 @@ public partial class FrmMain : ModernForm
             var enableFading = !_isShowingImagePreview && !isImageBigForFading;
 
             // set the main image
-            PicMain.SetImage(e.Data.ImgData, enableFading);
-
-            // Reset the zoom mode if KeepZoomRatio = FALSE
-            if (!e.KeepZoomRatio)
-            {
-                //TODO:
-                //if (Config.IsWindowFit)
-                //{
-                //    //WindowFitMode();
-                //}
-                //else
-                //{
-                // reset zoom mode
-                IG_SetZoomMode(Config.ZoomMode.ToString());
-                //}
-            }
+            PicMain.SetImage(e.Data.ImgData, e.ResetZoom, enableFading);
 
             PicMain.ClearMessage();
         }
@@ -1090,7 +1075,7 @@ public partial class FrmMain : ModernForm
                     Image = wicSrc,
                     CanAnimate = false,
                     FrameCount = 1,
-                });
+                }, isForPreview: true);
 
                 _isShowingImagePreview = true;
             }

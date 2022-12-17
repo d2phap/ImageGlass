@@ -818,7 +818,10 @@ public partial class FrmSlideshow : ModernForm
             var enableFading = !isImageBigForFading;
 
             // set the main image
-            PicMain.SetImage(photo.ImgData, enableFading, 0.4f, 0.02f);
+            PicMain.SetImage(photo.ImgData,
+                enableFading: enableFading,
+                initOpacity: 0.4f,
+                opacityStep: 0.02f);
 
             PicMain.ClearMessage();
 
