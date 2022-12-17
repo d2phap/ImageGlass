@@ -30,14 +30,13 @@ using System.Drawing.Drawing2D;
 
 namespace ImageGlass.UI;
 
+
 [ToolboxBitmap(typeof(Button))]
 [DefaultEvent("Click")]
 public class ModernButton : Button
 {
-
-    #region Field Region
-
-    private const int DEFAULT_PADDING = 10;
+    // Private variables
+    #region Private variables
 
     private ModernButtonStyle _style = ModernButtonStyle.Normal;
     private ModernControlState _buttonState = ModernControlState.Normal;
@@ -46,16 +45,17 @@ public class ModernButton : Button
     private bool _spacePressed;
     private bool _darkMode = false;
 
-    private readonly int _padding = DEFAULT_PADDING / 2;
-    private int _imagePadding = 2; // Consts.Padding / 2
+    private readonly int _padding = 4;
+    private int _imagePadding = 2;
 
     private SHSTOCKICONID? _systemIcon = null;
     private IconName _svgIcon = IconName.None;
 
-    #endregion
+    #endregion // Private variables
 
 
-    #region Designer Property Region
+    // Public properties
+    #region Public properties
 
     /// <summary>
     /// Toggles dark mode for this <see cref="ModernButton"/> control.
@@ -102,6 +102,11 @@ public class ModernButton : Button
             _svgIcon = value;
             Image?.Dispose();
             Image = null;
+
+            if (_svgIcon != IconName.None)
+            {
+                _systemIcon = null;
+            }
 
             UpdateSvgImage(DarkMode);
             Invalidate();
@@ -155,8 +160,7 @@ public class ModernButton : Button
         }
     }
 
-
-    #endregion
+    #endregion // Public properties
 
 
     #region Code Property Region
@@ -220,7 +224,7 @@ public class ModernButton : Button
     #endregion
 
 
-    #region Constructor Region
+    
 
     public ModernButton()
     {
@@ -234,6 +238,10 @@ public class ModernButton : Button
         SetButtonState(ModernControlState.Normal);
         Padding = new Padding(_padding);
     }
+
+
+    // Override methods
+    #region Override methods
 
     protected override void OnHandleCreated(EventArgs e)
     {
@@ -249,11 +257,6 @@ public class ModernButton : Button
         Image?.Dispose();
         Image = null;
     }
-
-    #endregion
-
-
-    #region Event Handler Region
 
     protected override void OnPaint(PaintEventArgs e)
     {
@@ -421,6 +424,16 @@ public class ModernButton : Button
         }
     }
 
+    protected override void OnDpiChangedAfterParent(EventArgs e)
+    {
+        base.OnDpiChangedAfterParent(e);
+
+        if (_svgIcon != IconName.None)
+        {
+            UpdateSvgImage(DarkMode);
+        }
+    }
+
     protected override void OnMouseMove(MouseEventArgs e)
     {
         base.OnMouseMove(e);
@@ -544,7 +557,7 @@ public class ModernButton : Button
         Invalidate();
     }
 
-    #endregion
+    #endregion // Override methods
 
 
     private void SetButtonState(ModernControlState buttonState)
@@ -569,8 +582,11 @@ public class ModernButton : Button
             return;
         }
 
-        var svgPath = IconFile.GetFullPath(_svgIcon);
-        Image = BHelper.ToGdiPlusBitmapFromSvg(svgPath, darkMode, size, size);
+        if (SystemIcon == null)
+        {
+            var svgPath = IconFile.GetFullPath(_svgIcon);
+            Image = BHelper.ToGdiPlusBitmapFromSvg(svgPath, darkMode, size, size);
+        }
     }
 
 }
