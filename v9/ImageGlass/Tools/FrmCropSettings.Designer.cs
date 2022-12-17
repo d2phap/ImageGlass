@@ -235,9 +235,6 @@
             this.Controls.Add(this.tableTop);
             this.Margin = new System.Windows.Forms.Padding(12);
             this.Name = "FrmCropSettings";
-            this.ShowAcceptButton = true;
-            this.ShowApplyButton = true;
-            this.ShowCancelButton = true;
             this.Text = "[Crop settings]";
             this.Controls.SetChildIndex(this.tableTop, 0);
             this.tableTop.ResumeLayout(false);

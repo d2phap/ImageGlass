@@ -29,6 +29,10 @@ namespace ImageGlass.UI;
 /// </summary>
 public partial class DialogForm : ModernForm
 {
+    private bool _showAcceptButton = true;
+    private bool _showCancelButton = true;
+    private bool _showApplyButton = false;
+
 
     // Public properties
     #region Public properties
@@ -53,14 +57,19 @@ public partial class DialogForm : ModernForm
         set => BtnAccept.SystemIcon = value ? SHSTOCKICONID.SIID_SHIELD : null;
     }
 
+
     /// <summary>
     /// Gets, sets visibility value of the <see cref="BtnAccept"/>.
     /// </summary>
     [DefaultValue(true)]
     public bool ShowAcceptButton
     {
-        get => BtnAccept.Visible;
-        set => BtnAccept.Visible = value;
+        get => _showAcceptButton;
+        set
+        {
+            _showAcceptButton = value;
+            BtnAccept.Visible = value;
+        }
     }
 
 
@@ -80,8 +89,12 @@ public partial class DialogForm : ModernForm
     [DefaultValue(true)]
     public bool ShowCancelButton
     {
-        get => BtnCancel.Visible;
-        set => BtnCancel.Visible = value;
+        get => _showCancelButton;
+        set
+        {
+            _showCancelButton = value;
+            BtnCancel.Visible = value;
+        }
     }
 
 
@@ -101,8 +114,12 @@ public partial class DialogForm : ModernForm
     [DefaultValue(false)]
     public bool ShowApplyButton
     {
-        get => BtnApply.Visible;
-        set => BtnApply.Visible = value;
+        get => _showApplyButton;
+        set
+        {
+            _showApplyButton = value;
+            BtnApply.Visible = value;
+        }
     }
 
     public override Keys CloseFormHotkey => Keys.Escape;
@@ -175,7 +192,7 @@ public partial class DialogForm : ModernForm
         this.BtnAccept.TabIndex = 1;
         this.BtnAccept.Text = AcceptButtonText;
         this.BtnAccept.TextImageRelation = TextImageRelation.ImageBeforeText;
-        this.BtnAccept.Visible = true;
+        this.BtnAccept.Visible = _showAcceptButton;
         this.BtnAccept.Click += BtnAccept_Click;
         // 
         // BtnCancel
@@ -192,7 +209,7 @@ public partial class DialogForm : ModernForm
         this.BtnCancel.TabIndex = 2;
         this.BtnCancel.Text = CancelButtonText;
         this.BtnCancel.TextImageRelation = TextImageRelation.ImageBeforeText;
-        this.BtnCancel.Visible = true;
+        this.BtnCancel.Visible = _showCancelButton;
         this.BtnCancel.Click += BtnCancel_Click;
         // 
         // BtnApply
@@ -209,7 +226,7 @@ public partial class DialogForm : ModernForm
         this.BtnApply.TabIndex = 3;
         this.BtnApply.Text = ApplyButtonText;
         this.BtnApply.TextImageRelation = TextImageRelation.ImageBeforeText;
-        this.BtnApply.Visible = false; // hidden by default
+        this.BtnApply.Visible = _showApplyButton;
         this.BtnApply.Click += BtnApply_Click;
         
 
