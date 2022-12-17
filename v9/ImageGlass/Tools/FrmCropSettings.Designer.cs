@@ -88,10 +88,11 @@
             this.ChkCloseToolAfterSaving.BackColor = System.Drawing.Color.Transparent;
             this.tableTop.SetColumnSpan(this.ChkCloseToolAfterSaving, 3);
             this.ChkCloseToolAfterSaving.DarkMode = false;
+            this.ChkCloseToolAfterSaving.Dock = System.Windows.Forms.DockStyle.Top;
             this.ChkCloseToolAfterSaving.Location = new System.Drawing.Point(40, 39);
             this.ChkCloseToolAfterSaving.Margin = new System.Windows.Forms.Padding(0);
             this.ChkCloseToolAfterSaving.Name = "ChkCloseToolAfterSaving";
-            this.ChkCloseToolAfterSaving.Size = new System.Drawing.Size(473, 49);
+            this.ChkCloseToolAfterSaving.Size = new System.Drawing.Size(670, 49);
             this.ChkCloseToolAfterSaving.TabIndex = 2;
             this.ChkCloseToolAfterSaving.Text = "[Close Crop tool after saving]";
             this.ChkCloseToolAfterSaving.UseVisualStyleBackColor = false;
@@ -203,10 +204,11 @@
             this.ChkAutoCenterSelection.BackColor = System.Drawing.Color.Transparent;
             this.tableTop.SetColumnSpan(this.ChkAutoCenterSelection, 3);
             this.ChkAutoCenterSelection.DarkMode = false;
+            this.ChkAutoCenterSelection.Dock = System.Windows.Forms.DockStyle.Top;
             this.ChkAutoCenterSelection.Location = new System.Drawing.Point(70, 284);
             this.ChkAutoCenterSelection.Margin = new System.Windows.Forms.Padding(30, 30, 0, 0);
             this.ChkAutoCenterSelection.Name = "ChkAutoCenterSelection";
-            this.ChkAutoCenterSelection.Size = new System.Drawing.Size(440, 49);
+            this.ChkAutoCenterSelection.Size = new System.Drawing.Size(640, 49);
             this.ChkAutoCenterSelection.TabIndex = 12;
             this.ChkAutoCenterSelection.Text = "[Auto-center the selection]";
             this.ChkAutoCenterSelection.UseVisualStyleBackColor = false;
@@ -233,6 +235,7 @@
             this.ClientSize = new System.Drawing.Size(750, 727);
             this.ControlBox = false;
             this.Controls.Add(this.tableTop);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(12);
             this.Name = "FrmCropSettings";
             this.Text = "[Crop settings]";
