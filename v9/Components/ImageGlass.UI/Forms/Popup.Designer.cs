@@ -59,7 +59,7 @@
             this.tableMain.Location = new System.Drawing.Point(0, 0);
             this.tableMain.Margin = new System.Windows.Forms.Padding(0);
             this.tableMain.Name = "tableMain";
-            this.tableMain.Padding = new System.Windows.Forms.Padding(0, 20, 0, 0);
+            this.tableMain.Padding = new System.Windows.Forms.Padding(0, 39, 0, 0);
             this.tableMain.RowCount = 5;
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -67,7 +67,7 @@
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableMain.Size = new System.Drawing.Size(614, 284);
+            this.tableMain.Size = new System.Drawing.Size(1228, 537);
             this.tableMain.TabIndex = 1;
             // 
             // panNote
@@ -78,11 +78,11 @@
             this.tableMain.SetColumnSpan(this.panNote, 10);
             this.panNote.Controls.Add(this.lblNote);
             this.panNote.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panNote.Location = new System.Drawing.Point(20, 184);
-            this.panNote.Margin = new System.Windows.Forms.Padding(20, 20, 20, 0);
+            this.panNote.Location = new System.Drawing.Point(40, 344);
+            this.panNote.Margin = new System.Windows.Forms.Padding(40, 39, 40, 0);
             this.panNote.Name = "panNote";
-            this.panNote.Padding = new System.Windows.Forms.Padding(20, 10, 20, 10);
-            this.panNote.Size = new System.Drawing.Size(574, 43);
+            this.panNote.Padding = new System.Windows.Forms.Padding(40, 20, 40, 20);
+            this.panNote.Size = new System.Drawing.Size(1148, 85);
             this.panNote.TabIndex = 102;
             this.panNote.Visible = false;
             // 
@@ -92,10 +92,10 @@
             this.lblNote.BackColor = System.Drawing.Color.Transparent;
             this.lblNote.DarkMode = false;
             this.lblNote.ForeColor = System.Drawing.Color.White;
-            this.lblNote.Location = new System.Drawing.Point(20, 10);
+            this.lblNote.Location = new System.Drawing.Point(40, 20);
             this.lblNote.Margin = new System.Windows.Forms.Padding(0);
             this.lblNote.Name = "lblNote";
-            this.lblNote.Size = new System.Drawing.Size(50, 23);
+            this.lblNote.Size = new System.Drawing.Size(97, 45);
             this.lblNote.TabIndex = 5;
             this.lblNote.Text = "[###]";
             // 
@@ -105,10 +105,10 @@
             this.lblHeading.BackColor = System.Drawing.Color.Transparent;
             this.lblHeading.DarkMode = false;
             this.lblHeading.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblHeading.Location = new System.Drawing.Point(135, 20);
-            this.lblHeading.Margin = new System.Windows.Forms.Padding(15, 0, 20, 20);
+            this.lblHeading.Location = new System.Drawing.Point(270, 39);
+            this.lblHeading.Margin = new System.Windows.Forms.Padding(30, 0, 40, 39);
             this.lblHeading.Name = "lblHeading";
-            this.lblHeading.Size = new System.Drawing.Size(115, 31);
+            this.lblHeading.Size = new System.Drawing.Size(197, 54);
             this.lblHeading.TabIndex = 100;
             this.lblHeading.Text = "[Heading]";
             // 
@@ -118,12 +118,11 @@
             this.txtValue.DarkMode = false;
             this.txtValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtValue.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.txtValue.Location = new System.Drawing.Point(140, 114);
-            this.txtValue.Margin = new System.Windows.Forms.Padding(20, 0, 20, 20);
-            this.txtValue.MaximumSize = new System.Drawing.Size(0, 240);
+            this.txtValue.Location = new System.Drawing.Point(280, 216);
+            this.txtValue.Margin = new System.Windows.Forms.Padding(40, 0, 40, 39);
             this.txtValue.Name = "txtValue";
             this.txtValue.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtValue.Size = new System.Drawing.Size(454, 30);
+            this.txtValue.Size = new System.Drawing.Size(908, 50);
             this.txtValue.TabIndex = 0;
             this.txtValue.TextChanged += new System.EventHandler(this.TxtValue_TextChanged);
             // 
@@ -132,10 +131,10 @@
             this.lblDescription.AutoSize = true;
             this.lblDescription.BackColor = System.Drawing.Color.Transparent;
             this.lblDescription.DarkMode = false;
-            this.lblDescription.Location = new System.Drawing.Point(135, 71);
-            this.lblDescription.Margin = new System.Windows.Forms.Padding(15, 0, 20, 20);
+            this.lblDescription.Location = new System.Drawing.Point(270, 132);
+            this.lblDescription.Margin = new System.Windows.Forms.Padding(30, 0, 40, 39);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(82, 23);
+            this.lblDescription.Size = new System.Drawing.Size(154, 45);
             this.lblDescription.TabIndex = 101;
             this.lblDescription.Text = "[Content]";
             // 
@@ -143,12 +142,12 @@
             // 
             this.picThumbnail.BackColor = System.Drawing.Color.Transparent;
             this.picThumbnail.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.picThumbnail.Location = new System.Drawing.Point(20, 20);
-            this.picThumbnail.Margin = new System.Windows.Forms.Padding(20, 0, 0, 20);
-            this.picThumbnail.MaximumSize = new System.Drawing.Size(100, 100);
+            this.picThumbnail.Location = new System.Drawing.Point(40, 39);
+            this.picThumbnail.Margin = new System.Windows.Forms.Padding(40, 0, 0, 39);
+            this.picThumbnail.MaximumSize = new System.Drawing.Size(200, 196);
             this.picThumbnail.Name = "picThumbnail";
             this.tableMain.SetRowSpan(this.picThumbnail, 3);
-            this.picThumbnail.Size = new System.Drawing.Size(100, 100);
+            this.picThumbnail.Size = new System.Drawing.Size(200, 196);
             this.picThumbnail.TabIndex = 4;
             this.picThumbnail.TabStop = false;
             this.picThumbnail.Visible = false;
@@ -159,23 +158,24 @@
             this.ChkOption.BackColor = System.Drawing.Color.Transparent;
             this.tableMain.SetColumnSpan(this.ChkOption, 2);
             this.ChkOption.DarkMode = true;
-            this.ChkOption.Location = new System.Drawing.Point(20, 237);
-            this.ChkOption.Margin = new System.Windows.Forms.Padding(20, 10, 20, 20);
+            this.ChkOption.Location = new System.Drawing.Point(40, 449);
+            this.ChkOption.Margin = new System.Windows.Forms.Padding(40, 20, 40, 39);
             this.ChkOption.Name = "ChkOption";
-            this.ChkOption.Size = new System.Drawing.Size(289, 27);
+            this.ChkOption.Size = new System.Drawing.Size(539, 49);
             this.ChkOption.TabIndex = 1;
             this.ChkOption.Text = "[Do not show this message again]";
             this.ChkOption.UseVisualStyleBackColor = false;
             // 
             // Popup
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(18F, 45F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(614, 493);
+            this.ClientSize = new System.Drawing.Size(1228, 965);
             this.ControlBox = false;
             this.Controls.Add(this.tableMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MinimumSize = new System.Drawing.Size(620, 240);
+            this.Margin = new System.Windows.Forms.Padding(12);
+            this.MinimumSize = new System.Drawing.Size(1208, 385);
             this.Name = "Popup";
             this.ShowAcceptButton = true;
             this.ShowCancelButton = true;
