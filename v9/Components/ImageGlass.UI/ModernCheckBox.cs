@@ -328,7 +328,8 @@ public class ModernCheckBox : CheckBox
 
         var initX = Padding.Left;
         var initY = Padding.Top;
-        var checkBoxSize = DpiApi.Transform(Font.Size * 1.3f);
+        var borderRadius = DpiApi.Transform(2f);
+        var checkBoxSize = Font.Height * 0.8f;
         var checkBoxRect = new RectangleF(
             initX,
             initY + checkBoxSize / 4,
@@ -340,7 +341,7 @@ public class ModernCheckBox : CheckBox
         using (var b = new SolidBrush(fillColor))
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.FillRoundedRectangle(b, checkBoxRect, 2, false);
+            g.FillRoundedRectangle(b, checkBoxRect, borderRadius, false);
             g.SmoothingMode = SmoothingMode.None;
         }
 
@@ -353,13 +354,13 @@ public class ModernCheckBox : CheckBox
             p.EndCap = LineCap.Round;
 
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.DrawRoundedRectangle(p, checkBoxRect, 2, false);
+            g.DrawRoundedRectangle(p, checkBoxRect, borderRadius, false);
             g.SmoothingMode = SmoothingMode.None;
         }
 
         if (Checked)
         {
-            var checkMarkThickness = DpiApi.Transform(0.9f * checkBoxSize / 10);
+            var checkMarkThickness = checkBoxSize * 0.13f;
 
             // draw check mark
             using (var p = new Pen(fillColor.InvertBlackOrWhite(), checkMarkThickness))
