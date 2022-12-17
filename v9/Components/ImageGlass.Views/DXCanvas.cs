@@ -59,18 +59,13 @@ public class DXCanvas : DXControl
 
     private float _imageOpacity = 1f;
     private float _opacityStep = 0.05f;
+    private ImageDrawingState _imageDrawingState = ImageDrawingState.NotStarted;
+    private bool _isPreviewing = false;
     private bool _debugMode = false;
 
 
-    /// <summary>
-    /// Gets the area of the image content to draw
-    /// </summary>
-    private RectangleF _srcRect = default;
-
-    /// <summary>
-    /// Image viewport
-    /// </summary>
-    private RectangleF _destRect = default;
+    private RectangleF _srcRect = default; // image source rectangle
+    private RectangleF _destRect = default; // image destination rectangle
 
     private Vector2 _panHostFromPoint;
     private Vector2 _panHostToPoint;
@@ -121,6 +116,7 @@ public class DXCanvas : DXControl
     private Bitmap? _navRightImageGdip = null;
 
     // selection
+    private bool _enableSelection = false;
     private RectangleF _clientSelection = default;
     private RectangleF _selectionBeforeMove = default;
     private bool _canDrawSelection = false;
@@ -187,13 +183,19 @@ public class DXCanvas : DXControl
 
 
     /// <summary>
+    /// Gets the drawing state of the image source
+    /// </summary>
+    public ImageDrawingState ImageDrawingState => _imageDrawingState;
+
+
+    /// <summary>
     /// Gets, sets accent color.
     /// </summary>
     public Color AccentColor { get; set; } = Color.Blue;
 
 
     /// <summary>
-    /// Gets, sets the client selection area. This will emit the event <see cref="OnSelectionChanged"/>.
+    /// Gets, sets the client selection area. This will emit the event <see cref="SelectionChanged"/>.
     /// </summary>
     [Browsable(false)]
     public RectangleF ClientSelection
@@ -210,7 +212,7 @@ public class DXCanvas : DXControl
             value.Intersect(_destRect);
             _clientSelection = value;
 
-            OnSelectionChanged?.Invoke(new SelectionEventArgs(_clientSelection, SourceSelection));
+            SelectionChanged?.Invoke(new SelectionEventArgs(_clientSelection, SourceSelection));
         }
     }
 
@@ -387,11 +389,22 @@ public class DXCanvas : DXControl
     /// </summary>
     public SizeF SelectionAspectRatio { get; set; } = new();
 
-
+    
     /// <summary>
     /// Enables or disables the selection.
     /// </summary>
-    public bool EnableSelection { get; set; } = false;
+    public bool EnableSelection
+    {
+        get => _enableSelection;
+        set
+        {
+            _enableSelection = value;
+            if (!_enableSelection)
+            {
+                Cursor = Parent.Cursor;
+            }
+        }
+    }
 
 
     /// <summary>
@@ -487,7 +500,7 @@ public class DXCanvas : DXControl
                 // emit selecting event
                 if (EnableSelection && !ClientSelection.IsEmpty)
                 {
-                    OnSelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+                    SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
                 }
             }
         }
@@ -843,28 +856,42 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Occurs when the host is being panned.
     /// </summary>
-    public event PanningEventHandler? OnPanning;
+    public event PanningEventHandler? Panning;
     public delegate void PanningEventHandler(PanningEventArgs e);
 
 
     /// <summary>
-    /// Occurs when the image is changed.
+    /// Occurs when the image is being loaded.
     /// </summary>
-    public event ImageChangedEventHandler? OnImageChanged;
-    public delegate void ImageChangedEventHandler(EventArgs e);
+    public event ImageLoadingEventHandler? ImageLoading;
+    public delegate void ImageLoadingEventHandler();
+
+
+    /// <summary>
+    /// Occurs when the image is drawn adn its animation, preview finished.
+    /// </summary>
+    public event ImageLoadedEventHandler? ImageLoaded;
+    public delegate void ImageLoadedEventHandler();
+
+
+    /// <summary>
+    /// Occurs when the image is drawn to the canvas.
+    /// </summary>
+    public event ImageDrawnEventHandler? ImageDrawn;
+    public delegate void ImageDrawnEventHandler();
 
 
     /// <summary>
     /// Occurs when the mouse pointer is moved over the control
     /// </summary>
-    public event ImageMouseMoveEventHandler? OnImageMouseMove;
+    public event ImageMouseMoveEventHandler? ImageMouseMove;
     public delegate void ImageMouseMoveEventHandler(ImageMouseMoveEventArgs e);
 
 
     /// <summary>
     /// Occurs when the <see cref="ClientSelection"/> is changed.
     /// </summary>
-    public event SelectionChangedEventHandler? OnSelectionChanged;
+    public event SelectionChangedEventHandler? SelectionChanged;
     public delegate void SelectionChangedEventHandler(SelectionEventArgs e);
 
 
@@ -1108,7 +1135,7 @@ public class DXCanvas : DXControl
         var canSelect = EnableSelection && mouseDownButton == MouseButtons.Left;
         if (canSelect)
         {
-            OnSelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+            SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
             Invalidate();
         }
     }
@@ -1190,7 +1217,7 @@ public class DXCanvas : DXControl
                 CurrentSelectionAction = SelectionAction.Drawing;
                 UpdateSelectionByMousePosition();
 
-                OnSelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+                SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
                 requestRerender = true;
             }
             // move selection
@@ -1214,7 +1241,7 @@ public class DXCanvas : DXControl
         // emit event OnImageMouseMove
         var imgX = (e.X - _destRect.X) / _zoomFactor + _srcRect.X;
         var imgY = (e.Y - _destRect.Y) / _zoomFactor + _srcRect.Y;
-        OnImageMouseMove?.Invoke(new(imgX, imgY, e.Button));
+        ImageMouseMove?.Invoke(new(imgX, imgY, e.Button));
 
         // change cursor
         if (EnableSelection)
@@ -1324,14 +1351,19 @@ public class DXCanvas : DXControl
                 StopAnimation(AnimationSource.ImageFadeIn);
                 _imageOpacity = 1;
             }
-
-            this.Invalidate();
         }
     }
 
 
     protected override void OnRender(IGraphics g)
     {
+        // check if the image is already drawn
+        var isImageDrawn = _imageDrawingState == ImageDrawingState.Drawing && !_isPreviewing;
+
+        // check if this is the final draw since the image is set
+        var isImageFinalDrawn = _imageOpacity == 1 && isImageDrawn;
+
+
         // update drawing regions
         CalculateDrawingRegion();
 
@@ -1339,14 +1371,20 @@ public class DXCanvas : DXControl
         DrawCheckerboardLayer(g);
 
 
+        // draw image layer
         if (CanImageAnimate)
         {
             DrawGifFrame(g);
         }
         else
         {
-            // image layer
             DrawImageLayer(g);
+        }
+
+        // emits event ImageDrawn
+        if (isImageDrawn)
+        {
+            ImageDrawn?.Invoke();
         }
 
 
@@ -1373,6 +1411,14 @@ public class DXCanvas : DXControl
         }
 
         base.OnRender(g);
+
+
+        // emits event ImageLoaded
+        if (isImageFinalDrawn)
+        {
+            _imageDrawingState = ImageDrawingState.Done;
+            ImageLoaded?.Invoke();
+        }
     }
 
 
@@ -1971,7 +2017,7 @@ public class DXCanvas : DXControl
         // emit selecting event
         if (EnableSelection && !ClientSelection.IsEmpty)
         {
-            OnSelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+            SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
         }
     }
 
@@ -2035,11 +2081,24 @@ public class DXCanvas : DXControl
 
 
     /// <summary>
-    /// Force the control to update zoom mode and invalidate itself.
+    /// Forces the control to reset zoom mode and invalidate itself.
     /// </summary>
     public new void Refresh()
     {
-        UpdateZoomMode();
+        Refresh(true);
+    }
+
+
+    /// <summary>
+    /// Forces the control to invalidate itself.
+    /// </summary>
+    public void Refresh(bool resetZoom = true)
+    {
+        if (resetZoom)
+        {
+            UpdateZoomMode();
+        }
+        
         Invalidate();
     }
 
@@ -2163,7 +2222,7 @@ public class DXCanvas : DXControl
             // emit selecting event
             if (EnableSelection && !ClientSelection.IsEmpty)
             {
-                OnSelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+                SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
             }
 
             return true;
@@ -2239,7 +2298,7 @@ public class DXCanvas : DXControl
         // emit selecting event
         if (EnableSelection && !ClientSelection.IsEmpty)
         {
-            OnSelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+            SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
         }
 
         return true;
@@ -2358,12 +2417,12 @@ public class DXCanvas : DXControl
 
 
         // emit panning event
-        OnPanning?.Invoke(new PanningEventArgs(loc, new PointF(_panHostFromPoint)));
+        Panning?.Invoke(new PanningEventArgs(loc, new PointF(_panHostFromPoint)));
 
         // emit selecting event
         if (EnableSelection && !ClientSelection.IsEmpty)
         {
-            OnSelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+            SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
         }
 
         if (requestRerender)
@@ -2495,7 +2554,7 @@ public class DXCanvas : DXControl
         _clientSelection.Height = _selectionBeforeMove.Height;
 
 
-        OnSelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+        SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
     }
 
 
@@ -2622,7 +2681,7 @@ public class DXCanvas : DXControl
             }
         }
 
-        OnSelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+        SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
     }
 
 
@@ -2630,10 +2689,18 @@ public class DXCanvas : DXControl
     /// Load image.
     /// </summary>
     public void SetImage(IgImgData? imgData,
+        bool resetZoom = true,
         bool enableFading = true,
         float initOpacity = 0.5f,
-        float opacityStep = 0.05f)
+        float opacityStep = 0.05f,
+        bool isForPreview = false)
     {
+        // reset variables
+        _imageDrawingState = ImageDrawingState.NotStarted;
+        _isPreviewing = isForPreview;
+        _clientSelection = default;
+
+
         // disable animations
         StopAnimation(AnimationSource.ImageFadeIn);
         StopAnimatingImage();
@@ -2641,50 +2708,56 @@ public class DXCanvas : DXControl
         GC.Collect();
 
 
+        // emit OnImageChanging event
+        ImageLoading?.Invoke();
+
+
         // Check and preprocess image info
         LoadImageData(imgData);
 
         if (imgData == null || imgData.IsImageNull)
         {
-            ClientSelection = default;
-
-            // emit OnImageChanged event
-            OnImageChanged?.Invoke(EventArgs.Empty);
-
-            Refresh();
-            return;
-        };
-
-        if (UseHardwareAcceleration)
-        {
-            Source = ImageSource.Direct2D;
-            _imageD2D = DXHelper.ToD2D1Bitmap(Device, imgData.Image);
+            Refresh(resetZoom);
         }
         else
         {
-            Source = ImageSource.GDIPlus;
-            _imageGdiPlus = imgData.Bitmap;
-        }
+            if (UseHardwareAcceleration)
+            {
+                Source = ImageSource.Direct2D;
+                _imageD2D = DXHelper.ToD2D1Bitmap(Device, imgData.Image);
+            }
+            else
+            {
+                Source = ImageSource.GDIPlus;
+                _imageGdiPlus = imgData.Bitmap;
+            }
 
-        // emit OnImageChanged event
-        OnImageChanged?.Invoke(EventArgs.Empty);
 
+            // start drawing
+            _imageDrawingState = ImageDrawingState.Drawing;
+            if (CanImageAnimate && Source != ImageSource.Null)
+            {
+                UpdateZoomMode();
+                StartAnimatingImage();
+            }
+            else if (enableFading)
+            {
+                
+                _imageOpacity = initOpacity;
+                _opacityStep = opacityStep;
 
-        if (CanImageAnimate && Source != ImageSource.Null)
-        {
-            UpdateZoomMode();
-            StartAnimatingImage();
-        }
-        else
-        {
-            Refresh();
-        }
+                if (resetZoom)
+                {
+                    UpdateZoomMode();
+                }
 
-        if (enableFading)
-        {
-            _imageOpacity = initOpacity;
-            _opacityStep = opacityStep;
-            StartAnimation(AnimationSource.ImageFadeIn);
+                StartAnimation(AnimationSource.ImageFadeIn);
+            }
+            else
+            {
+                _imageOpacity = 1;
+                Refresh(resetZoom);
+            }
         }
     }
 

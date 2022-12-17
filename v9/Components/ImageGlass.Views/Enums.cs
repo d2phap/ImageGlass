@@ -75,3 +75,22 @@ public enum SelectionAction
     // User is moving the selection.
     Moving,
 }
+
+
+public enum ImageDrawingState
+{
+    /// <summary>
+    /// Image is not drawn.
+    /// </summary>
+    NotStarted,
+
+    /// <summary>
+    /// Image is being drawn, or its animation is in progress.
+    /// </summary>
+    Drawing,
+
+    /// <summary>
+    /// Image is done all drawings, animations and shown on the canvas.
+    /// </summary>
+    Done,
+}
