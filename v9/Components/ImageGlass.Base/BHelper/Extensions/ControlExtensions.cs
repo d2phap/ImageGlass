@@ -24,7 +24,7 @@ namespace ImageGlass.Base;
 public static class ControlExtensions
 {
     /// <summary>
-    /// Scales the given number according to the current control's DPI.
+    /// Scales the given number to the current control's DPI.
     /// </summary>
     public static T ScaleToDpi<T>(this Control control, T number)
     {
@@ -48,7 +48,7 @@ public static class ControlExtensions
 
 
     /// <summary>
-    /// Scales the given size according to the current control's DPI.
+    /// Scales the given size to the current control's DPI.
     /// </summary>
     public static SizeF ScaleToDpi(this Control control, SizeF size)
     {
@@ -56,6 +56,53 @@ public static class ControlExtensions
         var h = control.ScaleToDpi(size.Height);
 
         return new SizeF(w, h);
+    }
+
+
+    /// <summary>
+    /// Scales the given size to the current control's DPI.
+    /// </summary>
+    public static Size ScaleToDpi(this Control control, Size size)
+    {
+        var w = control.ScaleToDpi(size.Width);
+        var h = control.ScaleToDpi(size.Height);
+
+        return new Size(w, h);
+    }
+
+
+    /// <summary>
+    /// Scales the given padding to the current control's DPI.
+    /// </summary>
+    public static Padding ScaleToDpi(this Control control, Padding padding)
+    {
+        return new Padding(
+            control.ScaleToDpi(padding.Left),
+            control.ScaleToDpi(padding.Top),
+            control.ScaleToDpi(padding.Right),
+            control.ScaleToDpi(padding.Bottom));
+    }
+
+
+    /// <summary>
+    /// Scales the given rectangle to the current control's DPI.
+    /// </summary>
+    public static Rectangle ScaleToDpi(this Control control, Rectangle rect)
+    {
+        return new Rectangle(rect.X, rect.Y,
+            control.ScaleToDpi(rect.Width),
+            control.ScaleToDpi(rect.Height));
+    }
+
+
+    /// <summary>
+    /// Scales the given rectangle to the current control's DPI.
+    /// </summary>
+    public static RectangleF ScaleToDpi(this Control control, RectangleF rect)
+    {
+        return new RectangleF(rect.X, rect.Y,
+            control.ScaleToDpi(rect.Width),
+            control.ScaleToDpi(rect.Height));
     }
 
 }
