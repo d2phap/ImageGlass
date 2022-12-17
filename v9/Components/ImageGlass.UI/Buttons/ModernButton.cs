@@ -273,7 +273,7 @@ public class ModernButton : Button
 
         var textColor = colors.LightText;
         var borderColor = colors.GreySelection;
-        var borderRadius = BHelper.IsOS(WindowsOS.Win11OrLater) ? DpiApi.Transform(3f) : 0;
+        var borderRadius = BHelper.IsOS(WindowsOS.Win11OrLater) ? DpiApi.Transform(2.5f) : 0;
         var fillColor = isCTAStyle
             ? colors.DarkBlueBackground
             : colors.LightBackground;
@@ -340,7 +340,8 @@ public class ModernButton : Button
         };
 
         var borderRect = new RectangleF(
-            btnRect.X, btnRect.Y,
+            btnRect.X + penWidth / 3,
+            btnRect.Y + penWidth / 3,
             btnRect.Width - penWidth, btnRect.Height - penWidth);
 
         g.DrawRoundedRectangle(pen, borderRect, borderRadius);
