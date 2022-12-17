@@ -57,7 +57,7 @@ public class CropToolConfig: IToolConfig
 
 
     /// <summary>
-    /// Gets, sets the custom selection area is used for <see cref="DefaultSelectionType.Custom"/>.
+    /// Gets, sets the custom selection area is used for <see cref="DefaultSelectionType.CustomArea"/>.
     /// </summary>
     public Rectangle InitSelectedArea {  get; set; } = Rectangle.Empty;
 
@@ -156,10 +156,11 @@ public class CropToolConfig: IToolConfig
 /// </summary>
 public enum DefaultSelectionType
 {
+    KeepTheLastSelection,
     SelectNone,
     Select25Percent,
     Select50Percent,
     Select75Percent,
     SelectAll,
-    Custom,
+    CustomArea,
 }

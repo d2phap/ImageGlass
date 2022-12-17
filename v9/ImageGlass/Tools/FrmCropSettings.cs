@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 
@@ -87,6 +86,9 @@ public partial class FrmCropSettings : DialogForm
 
     #endregion // Override / Virtual methods
 
+
+    // Private methods
+    #region Private methods
 
     private void ApplyLanguage()
     {
@@ -170,7 +172,7 @@ public partial class FrmCropSettings : DialogForm
     private void CmbSelectionType_SelectedIndexChanged(object sender, EventArgs e)
     {
         var selectionType = (DefaultSelectionType)CmbSelectionType.SelectedIndex;
-        var isCustomSelect = selectionType == DefaultSelectionType.Custom;
+        var isCustomSelect = selectionType == DefaultSelectionType.CustomArea;
 
         LblDefaultSelectionArea.Visible =
             LblLocation.Visible =
@@ -185,6 +187,7 @@ public partial class FrmCropSettings : DialogForm
     }
 
 
-    
+    #endregion // Private methods
+
 
 }
