@@ -105,6 +105,7 @@ public class IgLang : Dictionary<string, string>
 
         Add("_._OK", "OK"); // v9.0
         Add("_._Cancel", "Cancel"); // v9.0
+        Add("_._Apply", "Apply"); // v9.0
         Add("_._Close", "Close"); // v9.0
         Add("_._Yes", "Yes"); // v9.0
         Add("_._No", "No"); // v9.0
@@ -699,6 +700,22 @@ public class IgLang : Dictionary<string, string>
         Add("FrmCrop.BtnCrop._Tooltip", "Crop the image only"); //v9.0
         Add("FrmCrop.BtnCopy", "Copy"); //v9.0
         Add("FrmCrop.BtnCopy._Tooltip", "Copy the selection to clipboard"); //v9.0
+
+
+        // Crop settings
+        Add("FrmCropSettings._Title", "Crop settings"); //v9.0
+        Add("FrmCropSettings.ChkCloseToolAfterSaving", "Close Crop tool after saving"); //v9.0
+        Add("FrmCropSettings.LblDefaultSelection", "Default selection settings"); //v9.0
+        Add("FrmCropSettings.LblDefaultSelectionType", "Selection type"); //v9.0
+        Add("FrmCropSettings.LblDefaultSelectionArea", "Selection area"); //v9.0
+        Add("FrmCropSettings.ChkAutoCenterSelection", "Auto-center selection"); //v9.0
+
+        Add("FrmCropSettings.DefaultSelectionType._SelectNone", "Select none"); //v9.0
+        Add("FrmCropSettings.DefaultSelectionType._Select25Percent", "Select 25%"); //v9.0
+        Add("FrmCropSettings.DefaultSelectionType._Select50Percent", "Select 50%"); //v9.0
+        Add("FrmCropSettings.DefaultSelectionType._Select75Percent", "Select 75%"); //v9.0
+        Add("FrmCropSettings.DefaultSelectionType._SelectAll", "Select all"); //v9.0
+        Add("FrmCropSettings.DefaultSelectionType._Custom", "Custom…"); //v9.0
 
         #endregion
 

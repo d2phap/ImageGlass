@@ -1682,11 +1682,12 @@ public class DXCanvas : DXControl
                     && (rItem.Type == SelectionResizerType.Left
                     || rItem.Type == SelectionResizerType.Right)) continue;
 
+                // hover style
                 var resizerRect = rItem.IndicatorRegion;
                 var fillColor = Color.White.WithAlpha(200);
                 if (rItem.Type == _hoveredResizer?.Type)
                 {
-                    resizerRect.Inflate(this.ScaleToDpi(new SizeF(1.5f, 1.5f)));
+                    resizerRect.Inflate(this.ScaleToDpi(new SizeF(1.45f, 1.45f)));
                     fillColor = AccentColor.WithAlpha(200);
                 }
 

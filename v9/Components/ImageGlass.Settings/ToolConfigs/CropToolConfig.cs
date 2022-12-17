@@ -53,7 +53,7 @@ public class CropToolConfig: IToolConfig
     /// <summary>
     /// Gets, sets the default selection type.
     /// </summary>
-    public DefaultSelectionType InitSelectionType { get; set; } = DefaultSelectionType.SelectNone;
+    public DefaultSelectionType InitSelectionType { get; set; } = DefaultSelectionType.Select50Percent;
 
 
     /// <summary>
@@ -65,7 +65,7 @@ public class CropToolConfig: IToolConfig
     /// <summary>
     /// Gets, sets the option to center the <see cref="InitSelectedArea"/>.
     /// </summary>
-    public bool CenterInitSelectedArea { get; set; } = false;
+    public bool AutoCenterSelection { get; set; } = false;
 
 
     /// <summary>
@@ -85,7 +85,7 @@ public class CropToolConfig: IToolConfig
 
         // Bool configs
         CloseToolAfterSaving = config.GetValue(nameof(CloseToolAfterSaving), CloseToolAfterSaving);
-        CenterInitSelectedArea = config.GetValue(nameof(CenterInitSelectedArea), CenterInitSelectedArea);
+        AutoCenterSelection = config.GetValue(nameof(AutoCenterSelection), AutoCenterSelection);
 
         // Enum configs
         AspectRatio = config.GetValue(nameof(AspectRatio), AspectRatio);
@@ -127,7 +127,7 @@ public class CropToolConfig: IToolConfig
 
         // Bool configs
         settings.TryAdd(nameof(CloseToolAfterSaving), CloseToolAfterSaving);
-        settings.TryAdd(nameof(CenterInitSelectedArea), CenterInitSelectedArea);
+        settings.TryAdd(nameof(AutoCenterSelection), AutoCenterSelection);
 
         // Enum configs
         settings.TryAdd(nameof(AspectRatio), AspectRatio);
@@ -157,6 +157,9 @@ public class CropToolConfig: IToolConfig
 public enum DefaultSelectionType
 {
     SelectNone,
+    Select25Percent,
+    Select50Percent,
+    Select75Percent,
     SelectAll,
     Custom,
 }

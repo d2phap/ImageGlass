@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Base;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 
@@ -38,6 +39,14 @@ public partial class FrmCropSettings : DialogForm
 
     // Override / Virtual methods
     #region Override / Virtual methods
+
+    protected override void OnLoad(EventArgs e)
+    {
+        base.OnLoad(e);
+
+        ApplyLanguage();
+        LoadSettings();
+    }
 
     protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
     {
@@ -61,8 +70,121 @@ public partial class FrmCropSettings : DialogForm
         return contentHeight;
     }
 
+
+    protected override void OnAcceptButtonClicked()
+    {
+        base.OnAcceptButtonClicked();
+        ApplySettings();
+    }
+
+
+    protected override void OnApplyButtonClicked()
+    {
+        base.OnApplyButtonClicked();
+        ApplySettings();
+    }
+
+
     #endregion // Override / Virtual methods
 
 
+    private void ApplyLanguage()
+    {
+        Text = Config.Language[$"{Name}._Title"];
+        BtnAccept.Text = Config.Language["_._OK"];
+        BtnCancel.Text = Config.Language["_._Cancel"];
+        BtnApply.Text = Config.Language["_._Apply"];
+
+        ChkCloseToolAfterSaving.Text = Config.Language[$"{Name}.{nameof(ChkCloseToolAfterSaving)}"];
+
+        LblDefaultSelection.Text = Config.Language[$"{Name}.{nameof(LblDefaultSelection)}"];
+        LblDefaultSelectionType.Text = Config.Language[$"{Name}.{nameof(LblDefaultSelectionType)}"];
+        LoadSelectionTypeItems();
+
+        LblDefaultSelectionArea.Text = Config.Language[$"{Name}.{nameof(LblDefaultSelectionArea)}"];
+        ChkAutoCenterSelection.Text = Config.Language[$"{Name}.{nameof(ChkAutoCenterSelection)}"];
+        LblLocation.Text = Config.Language[$"{nameof(FrmCrop)}.{nameof(LblLocation)}"];
+        LblSize.Text = Config.Language[$"{nameof(FrmCrop)}.{nameof(LblSize)}"];
+
+    }
+
+
+    private void LoadSettings()
+    {
+        ChkCloseToolAfterSaving.Checked = Settings.CloseToolAfterSaving;
+        LoadSelectionTypeItems();
+
+        NumX.Value = Settings.InitSelectedArea.X;
+        NumY.Value = Settings.InitSelectedArea.Y;
+        NumWidth.Value = Settings.InitSelectedArea.Width;
+        NumHeight.Value = Settings.InitSelectedArea.Height;
+
+        ChkAutoCenterSelection.Checked = Settings.AutoCenterSelection;
+    }
+
+
+    private void ApplySettings()
+    {
+        Settings.CloseToolAfterSaving = ChkCloseToolAfterSaving.Checked;
+        Settings.InitSelectionType = (DefaultSelectionType)CmbSelectionType.SelectedIndex;
+
+        Settings.InitSelectedArea = new Rectangle(
+            (int)NumX.Value,
+            (int)NumY.Value,
+            (int)NumWidth.Value,
+            (int)NumHeight.Value);
+        Settings.AutoCenterSelection = ChkAutoCenterSelection.Checked;
+    }
+
+
+    private void LoadSelectionTypeItems()
+    {
+        CmbSelectionType.Items.Clear();
+        var langPath = $"{Name}.{nameof(DefaultSelectionType)}";
+        var i = 0;
+        var cmbIndex = 0;
+
+        foreach (DefaultSelectionType enumValue in Enum.GetValues(typeof(DefaultSelectionType)))
+        {
+            if (enumValue == Settings.InitSelectionType)
+            {
+                cmbIndex = i;
+            }
+
+
+            var enumName = Enum.GetName(typeof(DefaultSelectionType), enumValue);
+            if (!Config.Language.TryGetValue($"{langPath}._{enumName}", out var displayName))
+            {
+                displayName = enumName;
+            }
+
+            CmbSelectionType.Items.Add(displayName ?? enumName);
+            i++;
+        }
+
+        // select item
+        CmbSelectionType.SelectedIndex = cmbIndex;
+    }
+
+
+    private void CmbSelectionType_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        var selectionType = (DefaultSelectionType)CmbSelectionType.SelectedIndex;
+        var isCustomSelect = selectionType == DefaultSelectionType.Custom;
+
+        LblDefaultSelectionArea.Visible =
+            LblLocation.Visible =
+            NumX.Visible =
+            NumY.Visible =
+            ChkAutoCenterSelection.Visible =
+            LblSize.Visible =
+            NumWidth.Visible =
+            NumHeight.Visible = isCustomSelect;
+
+        OnUpdateHeight();
+    }
+
+
+    
 
 }
