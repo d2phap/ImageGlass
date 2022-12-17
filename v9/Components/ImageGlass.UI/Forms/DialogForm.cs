@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
+using System.ComponentModel;
 
 namespace ImageGlass.UI;
 
@@ -45,6 +46,7 @@ public partial class DialogForm : ModernForm
     /// <summary>
     /// Shows or hides the Shield icon for the <see cref="BtnAccept"/>.
     /// </summary>
+    [DefaultValue(false)]
     public bool ShowAcceptButtonShieldIcon
     {
         get => BtnAccept.SystemIcon == SHSTOCKICONID.SIID_SHIELD;
@@ -54,6 +56,7 @@ public partial class DialogForm : ModernForm
     /// <summary>
     /// Gets, sets visibility value of the <see cref="BtnAccept"/>.
     /// </summary>
+    [DefaultValue(true)]
     public bool ShowAcceptButton
     {
         get => BtnAccept.Visible;
@@ -74,6 +77,7 @@ public partial class DialogForm : ModernForm
     /// <summary>
     /// Gets, sets visibility value of the <see cref="BtnCancel"/>.
     /// </summary>
+    [DefaultValue(true)]
     public bool ShowCancelButton
     {
         get => BtnCancel.Visible;
@@ -94,6 +98,7 @@ public partial class DialogForm : ModernForm
     /// <summary>
     /// Gets, sets visibility value of the <see cref="BtnApply"/>.
     /// </summary>
+    [DefaultValue(false)]
     public bool ShowApplyButton
     {
         get => BtnApply.Visible;
@@ -121,10 +126,10 @@ public partial class DialogForm : ModernForm
     // Action bar codes
     #region Action bar codes
 
-    internal TableLayoutPanel TableActions;
-    internal ModernButton BtnAccept;
-    internal ModernButton BtnCancel;
-    internal ModernButton BtnApply;
+    public TableLayoutPanel TableActions;
+    public ModernButton BtnAccept;
+    public ModernButton BtnCancel;
+    public ModernButton BtnApply;
 
 
     /// <summary>
@@ -152,8 +157,8 @@ public partial class DialogForm : ModernForm
         this.TableActions.Controls.Add(this.BtnApply, 3, 0);
         this.TableActions.Dock = DockStyle.Bottom;
         this.TableActions.Location = new Point(0, 367);
-        this.TableActions.Margin = new Padding(0);
-        this.TableActions.Padding = new Padding(20);
+        this.TableActions.Margin = this.ScaleToDpi(new Padding(0));
+        this.TableActions.Padding = this.ScaleToDpi(new Padding(16));
         this.TableActions.Name = "TableActions";
         this.TableActions.RowCount = 1;
         this.TableActions.RowStyles.Add(new RowStyle());
@@ -166,16 +171,15 @@ public partial class DialogForm : ModernForm
         this.BtnAccept.DarkMode = false;
         this.BtnAccept.ImagePadding = 2;
         this.BtnAccept.Location = new Point(500, 20);
-        this.BtnAccept.Margin = new Padding(10, 0, 0, 0);
-        this.BtnAccept.MinimumSize = new Size(130, 40);
+        this.BtnAccept.Margin = this.ScaleToDpi(new Padding(8, 0, 0, 0));
         this.BtnAccept.Name = "BtnAccept";
         this.BtnAccept.Text = "[OK]";
-        this.BtnAccept.Padding = new Padding(5);
-        this.BtnAccept.Size = new Size(130, 40);
+        this.BtnAccept.Size = this.ScaleToDpi(new Size(90, 30));
         this.BtnAccept.SystemIcon = null;
         this.BtnAccept.TabIndex = 1;
         this.BtnAccept.Text = AcceptButtonText;
         this.BtnAccept.TextImageRelation = TextImageRelation.ImageBeforeText;
+        this.BtnAccept.Visible = true;
         this.BtnAccept.Click += BtnAccept_Click;
         // 
         // BtnCancel
@@ -184,16 +188,15 @@ public partial class DialogForm : ModernForm
         this.BtnCancel.DarkMode = false;
         this.BtnCancel.ImagePadding = 2;
         this.BtnCancel.Location = new Point(650, 20);
-        this.BtnCancel.Margin = new Padding(10, 0, 0, 0);
-        this.BtnCancel.MinimumSize = new Size(130, 40);
+        this.BtnCancel.Margin = this.ScaleToDpi(new Padding(8, 0, 0, 0));
         this.BtnCancel.Name = "BtnCancel";
         this.BtnCancel.Text = "[Cancel]";
-        this.BtnCancel.Padding = new Padding(5);
-        this.BtnCancel.Size = new Size(130, 40);
+        this.BtnCancel.Size = this.ScaleToDpi(new Size(90, 30));
         this.BtnCancel.SystemIcon = null;
         this.BtnCancel.TabIndex = 2;
         this.BtnCancel.Text = CancelButtonText;
         this.BtnCancel.TextImageRelation = TextImageRelation.ImageBeforeText;
+        this.BtnCancel.Visible = true;
         this.BtnCancel.Click += BtnCancel_Click;
         // 
         // BtnApply
@@ -202,18 +205,17 @@ public partial class DialogForm : ModernForm
         this.BtnApply.DarkMode = false;
         this.BtnApply.ImagePadding = 2;
         this.BtnApply.Location = new Point(800, 20);
-        this.BtnApply.Margin = new Padding(10, 0, 0, 0);
-        this.BtnApply.MinimumSize = new Size(130, 40);
+        this.BtnApply.Margin = this.ScaleToDpi(new Padding(8, 0, 0, 0));
         this.BtnApply.Name = "BtnApply";
         this.BtnApply.Text = "[Apply]";
-        this.BtnApply.Padding = new Padding(5);
-        this.BtnApply.Size = new Size(130, 40);
+        this.BtnApply.Size = this.ScaleToDpi(new Size(90, 30));
         this.BtnApply.SystemIcon = null;
         this.BtnApply.TabIndex = 3;
         this.BtnApply.Text = ApplyButtonText;
         this.BtnApply.TextImageRelation = TextImageRelation.ImageBeforeText;
-        this.BtnApply.Click += BtnApply_Click;
         this.BtnApply.Visible = false; // hidden by default
+        this.BtnApply.Click += BtnApply_Click;
+        
 
         this.TableActions.ResumeLayout(false);
         this.TableActions.PerformLayout();
