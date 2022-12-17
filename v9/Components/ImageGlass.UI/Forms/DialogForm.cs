@@ -126,10 +126,10 @@ public partial class DialogForm : ModernForm
     // Action bar codes
     #region Action bar codes
 
-    public TableLayoutPanel TableActions;
-    public ModernButton BtnAccept;
-    public ModernButton BtnCancel;
-    public ModernButton BtnApply;
+    public TableLayoutPanel TableActions = new TableLayoutPanel();
+    public ModernButton BtnAccept = new ModernButton();
+    public ModernButton BtnCancel = new ModernButton();
+    public ModernButton BtnApply = new ModernButton();
 
 
     /// <summary>
@@ -137,10 +137,6 @@ public partial class DialogForm : ModernForm
     /// </summary>
     private void AppendActionBar()
     {
-        this.TableActions = new TableLayoutPanel();
-        this.BtnAccept = new ModernButton();
-        this.BtnCancel = new ModernButton();
-        this.BtnApply = new ModernButton();
         this.TableActions.SuspendLayout();
         this.SuspendLayout();
         // 
@@ -157,7 +153,7 @@ public partial class DialogForm : ModernForm
         this.TableActions.Controls.Add(this.BtnApply, 3, 0);
         this.TableActions.Dock = DockStyle.Bottom;
         this.TableActions.Location = new Point(0, 367);
-        this.TableActions.Margin = this.ScaleToDpi(new Padding(0));
+        this.TableActions.Margin = new Padding(0);
         this.TableActions.Padding = this.ScaleToDpi(new Padding(16));
         this.TableActions.Name = "TableActions";
         this.TableActions.RowCount = 1;
@@ -274,6 +270,17 @@ public partial class DialogForm : ModernForm
 
     protected override void OnLoad(EventArgs e)
     {
+        // update size and padding
+        this.BtnAccept.Size = this.ScaleToDpi(new Size(90, 30));
+        this.BtnCancel.Size = this.ScaleToDpi(new Size(90, 30));
+        this.BtnApply.Size = this.ScaleToDpi(new Size(90, 30));
+
+        this.TableActions.Padding = this.ScaleToDpi(new Padding(16));
+        this.BtnAccept.Margin = this.ScaleToDpi(new Padding(8, 0, 0, 0));
+        this.BtnCancel.Margin = this.ScaleToDpi(new Padding(8, 0, 0, 0));
+        this.BtnApply.Margin = this.ScaleToDpi(new Padding(8, 0, 0, 0));
+
+
         // adjust form size
         _ = OnUpdateHeight();
 

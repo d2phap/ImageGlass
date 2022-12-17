@@ -45,9 +45,16 @@ public partial class FrmCrop : ToolForm, IToolForm
     public CropToolConfig Settings { get; set; }
 
 
+    public FrmCrop() : base()
+    {
+        InitializeComponent();
+    }
+
     public FrmCrop(Form owner, IgTheme theme) : base(theme)
     {
         InitializeComponent();
+        if (DesignMode) return;
+
         Owner = owner;
         Settings = new(ToolId);
 
@@ -89,6 +96,12 @@ public partial class FrmCrop : ToolForm, IToolForm
 
     protected override void OnLoad(EventArgs e)
     {
+        if (DesignMode)
+        {
+            base.OnLoad(e);
+            return;
+        }
+
         // load crop tool configs
         Settings.LoadFromAppConfig();
 

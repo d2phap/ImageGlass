@@ -146,7 +146,7 @@ public partial class ToolForm : ModernForm
 
     protected override void OnShown(EventArgs e)
     {
-        if (Owner != _currentOwner)
+        if (!DesignMode && Owner != _currentOwner)
         {
             DetachEventsFromParent(_currentOwner);
             _currentOwner = Owner;
@@ -157,6 +157,13 @@ public partial class ToolForm : ModernForm
     }
 
     #endregion
+
+
+    public ToolForm() : base()
+    {
+        InitializeComponent();
+        Theme = new IgTheme();
+    }
 
 
     public ToolForm(IgTheme theme) : base()
@@ -173,6 +180,8 @@ public partial class ToolForm : ModernForm
     protected override void OnLoad(EventArgs e)
     {
         base.OnLoad(e);
+        if (DesignMode) return;
+
         AddFormEvents();
 
         EnableFormFreeMoving(this);
@@ -183,6 +192,7 @@ public partial class ToolForm : ModernForm
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
         base.OnFormClosing(e);
+        if (DesignMode) return;
 
         var args = new ToolFormClosingEventArgs(Name, e.CloseReason, e.Cancel);
         OnToolFormClosing(args);
@@ -195,6 +205,7 @@ public partial class ToolForm : ModernForm
     protected override void OnFormClosed(FormClosedEventArgs e)
     {
         base.OnFormClosed(e);
+        if (DesignMode) return;
 
         var args = new ToolFormClosedEventArgs(Name, e.CloseReason);
         OnToolFormClosed(args);
