@@ -23,15 +23,15 @@
 
     "ToolbarBgColor": "#F5F6F733",
     "ToolbarTextColor": "#000",
-    "ToolbarItemHoverColor": "accent:50",
-    "ToolbarItemActiveColor": "accent:100",
-    "ToolbarItemSelectedColor": "accent:80",
+    "ToolbarItemHoverColor": "accent:70",
+    "ToolbarItemActiveColor": "accent:120",
+    "ToolbarItemSelectedColor": "accent:100",
 
     "ThumbnailBarBgColor": "#F5F6F733",
     "ThumbnailBarTextColor": "#000",
-    "ThumbnailItemHoverColor": "accent:50",
-    "ThumbnailItemActiveColor": "accent:100",
-    "ThumbnailItemSelectedColor": "accent:80",
+    "ThumbnailItemHoverColor": "accent:70",
+    "ThumbnailItemActiveColor": "accent:120",
+    "ThumbnailItemSelectedColor": "accent:100",
 
     "MenuBgColor": "#F5F6F7",
     "MenuBgHoverColor": "accent:120",

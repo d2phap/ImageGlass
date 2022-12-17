@@ -18,7 +18,7 @@
     "NavButtonRight": "ViewNextImage.svg"
   },
   "Colors": {
-    "MenuBgHoverColor": "accent:150",
+    "MenuBgHoverColor": "accent:50",
 
     "ToolbarItemHoverColor": "accent:190",
     "ToolbarItemActiveColor": "accent:130",
