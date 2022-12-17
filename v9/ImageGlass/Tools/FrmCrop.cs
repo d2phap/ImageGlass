@@ -387,24 +387,25 @@ public partial class FrmCrop : ToolForm, IToolForm
         }
         else
         {
-            var selectPercent = 1f;
-
-            if (Settings.InitSelectionType == DefaultSelectionType.SelectAll)
+            var selectPercent = Settings.InitSelectionType switch
             {
-                selectPercent = 1;
-            }
-            else if (Settings.InitSelectionType == DefaultSelectionType.Select25Percent)
-            {
-                selectPercent = 0.25f;
-            }
-            else if (Settings.InitSelectionType == DefaultSelectionType.Select50Percent)
-            {
-                selectPercent = 0.5f;
-            }
-            else if (Settings.InitSelectionType == DefaultSelectionType.Select75Percent)
-            {
-                selectPercent = 0.75f;
-            }
+                DefaultSelectionType.SelectNone => 0f,
+                DefaultSelectionType.Select10Percent => 0.1f,
+                DefaultSelectionType.Select20Percent => 0.2f,
+                DefaultSelectionType.Select25Percent => 0.25f,
+                DefaultSelectionType.Select30Percent => 0.3f,
+                DefaultSelectionType.SelectOneThird => 1 / 3f,
+                DefaultSelectionType.Select40Percent => 0.4f,
+                DefaultSelectionType.Select50Percent => 0.5f,
+                DefaultSelectionType.Select60Percent => 0.6f,
+                DefaultSelectionType.SelectTwoThirds => 2 / 3f,
+                DefaultSelectionType.Select70Percent => 0.7f,
+                DefaultSelectionType.Select75Percent => 0.75f,
+                DefaultSelectionType.Select80Percent => 0.8f,
+                DefaultSelectionType.Select90Percent => 0.9f,
+                DefaultSelectionType.SelectAll => 1f,
+                _ => 1.0f,
+            };
 
             w = (int)(srcW * selectPercent);
             h = (int)(srcH * selectPercent);

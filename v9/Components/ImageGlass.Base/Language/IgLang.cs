@@ -712,9 +712,7 @@ public class IgLang : Dictionary<string, string>
 
         Add("FrmCropSettings.DefaultSelectionType._KeepTheLastSelection", "Keep the last selection"); //v9.0
         Add("FrmCropSettings.DefaultSelectionType._SelectNone", "Select none"); //v9.0
-        Add("FrmCropSettings.DefaultSelectionType._Select25Percent", "Select 25%"); //v9.0
-        Add("FrmCropSettings.DefaultSelectionType._Select50Percent", "Select 50%"); //v9.0
-        Add("FrmCropSettings.DefaultSelectionType._Select75Percent", "Select 75%"); //v9.0
+        Add("FrmCropSettings.DefaultSelectionType._SelectX", "Select {0}"); //v9.0
         Add("FrmCropSettings.DefaultSelectionType._SelectAll", "Select all"); //v9.0
         Add("FrmCropSettings.DefaultSelectionType._CustomArea", "Custom area…"); //v9.0
 

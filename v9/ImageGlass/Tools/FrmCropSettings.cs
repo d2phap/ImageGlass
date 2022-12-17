@@ -157,7 +157,26 @@ public partial class FrmCropSettings : DialogForm
             var enumName = Enum.GetName(typeof(DefaultSelectionType), enumValue);
             if (!Config.Language.TryGetValue($"{langPath}._{enumName}", out var displayName))
             {
-                displayName = enumName;
+                Config.Language.TryGetValue($"{langPath}._SelectX", out displayName);
+                var percentText = enumValue switch
+                {
+                    DefaultSelectionType.Select10Percent => "10%",
+                    DefaultSelectionType.Select20Percent => "20%",
+                    DefaultSelectionType.Select25Percent => "25%",
+                    DefaultSelectionType.Select30Percent => "30%",
+                    DefaultSelectionType.SelectOneThird => "1/3",
+                    DefaultSelectionType.Select40Percent => "40%",
+                    DefaultSelectionType.Select50Percent => "50%",
+                    DefaultSelectionType.Select60Percent => "60%",
+                    DefaultSelectionType.SelectTwoThirds => "2/3",
+                    DefaultSelectionType.Select70Percent => "70%",
+                    DefaultSelectionType.Select75Percent => "75%",
+                    DefaultSelectionType.Select80Percent => "80%",
+                    DefaultSelectionType.Select90Percent => "90%",
+                    _ => enumName,
+                };
+
+                displayName = string.Format(displayName ?? enumName, percentText);
             }
 
             CmbSelectionType.Items.Add(displayName ?? enumName);
