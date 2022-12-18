@@ -181,7 +181,7 @@ public partial class Popup : DialogForm
         {
             txtValue.Multiline = value;
             txtValue.Font = new Font("Consolas", Font.Size);
-            txtValue.Height = 200;
+            txtValue.Height = 300;
         }
     }
 

@@ -45,7 +45,7 @@ public class ModernButton : Button
     private bool _spacePressed;
     private bool _darkMode = false;
 
-    private readonly int _padding = 4;
+    private static readonly int _padding = 4;
     private int _imagePadding = 2;
 
     private SHSTOCKICONID? _systemIcon = null;
@@ -123,6 +123,9 @@ public class ModernButton : Button
             Invalidate();
         }
     }
+
+    public static new Padding DefaultPadding => new Padding(_padding);
+
 
     public new bool Enabled
     {

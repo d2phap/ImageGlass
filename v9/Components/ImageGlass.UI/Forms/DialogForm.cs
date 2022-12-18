@@ -180,7 +180,7 @@ public partial class DialogForm : ModernForm
         // 
         // BtnAccept
         // 
-        this.BtnAccept.AutoSize = false;
+        this.BtnAccept.AutoSize = true;
         this.BtnAccept.DarkMode = false;
         this.BtnAccept.ImagePadding = 2;
         this.BtnAccept.Location = new Point(500, 20);
@@ -197,7 +197,7 @@ public partial class DialogForm : ModernForm
         // 
         // BtnCancel
         // 
-        this.BtnCancel.AutoSize = false;
+        this.BtnCancel.AutoSize = true;
         this.BtnCancel.DarkMode = false;
         this.BtnCancel.ImagePadding = 2;
         this.BtnCancel.Location = new Point(650, 20);
@@ -214,7 +214,7 @@ public partial class DialogForm : ModernForm
         // 
         // BtnApply
         // 
-        this.BtnApply.AutoSize = false;
+        this.BtnApply.AutoSize = true;
         this.BtnApply.DarkMode = false;
         this.BtnApply.ImagePadding = 2;
         this.BtnApply.Location = new Point(800, 20);
@@ -288,14 +288,23 @@ public partial class DialogForm : ModernForm
     protected override void OnLoad(EventArgs e)
     {
         // update size and padding
-        this.BtnAccept.Size = this.ScaleToDpi(new Size(90, 30));
-        this.BtnCancel.Size = this.ScaleToDpi(new Size(90, 30));
-        this.BtnApply.Size = this.ScaleToDpi(new Size(90, 30));
+        this.BtnAccept.Size =
+            this.BtnCancel.Size =
+            this.BtnApply.Size = this.ScaleToDpi(new Size(90, 30));
 
         this.TableActions.Padding = this.ScaleToDpi(new Padding(16));
-        this.BtnAccept.Margin = this.ScaleToDpi(new Padding(8, 0, 0, 0));
-        this.BtnCancel.Margin = this.ScaleToDpi(new Padding(8, 0, 0, 0));
-        this.BtnApply.Margin = this.ScaleToDpi(new Padding(8, 0, 0, 0));
+        this.BtnAccept.Margin =
+            this.BtnCancel.Margin =
+            this.BtnApply.Margin = this.ScaleToDpi(new Padding(8, 0, 0, 0));
+
+        var buttonPadding = this.ScaleToDpi(new Padding(
+            ModernButton.DefaultPadding.Left * 2,
+            ModernButton.DefaultPadding.Top,
+            ModernButton.DefaultPadding.Right * 2,
+            ModernButton.DefaultPadding.Bottom));
+        this.BtnAccept.Padding = buttonPadding;
+        this.BtnCancel.Padding = buttonPadding;
+        this.BtnApply.Padding = buttonPadding;
 
 
         // adjust form size
