@@ -1567,28 +1567,8 @@ public partial class FrmMain
             ? IgCommands.SET_DEFAULT_PHOTO_VIEWER
             : IgCommands.UNSET_DEFAULT_PHOTO_VIEWER;
 
-        // run command
-        var result = await BHelper.RunIgcmd($"{cmd} {extensions}");
-
-        var langPath = enable
-            ? $"{Name}.{nameof(MnuSetDefaultPhotoViewer)}"
-            : $"{Name}.{nameof(MnuUnsetDefaultPhotoViewer)}";
-
-        var description = enable
-            ? Config.Language[$"{langPath}._SuccessDescription"]
-            : "";
-
-        if (result == IgExitCode.Done)
-        {
-            _ = Config.ShowInfo(description,
-                Config.Language[langPath],
-                Config.Language[$"{langPath}._Success"]);
-        }
-        else
-        {
-            _ = Config.ShowError(Config.Language[$"{langPath}._Error"],
-                Config.Language[langPath]);
-        }
+        // run command and show the results
+        _ = await BHelper.RunIgcmd($"{cmd} {extensions} {IgCommands.SHOW_UI}");
     }
 
 
