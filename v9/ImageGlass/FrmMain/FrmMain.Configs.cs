@@ -159,7 +159,7 @@ public partial class FrmMain
 
         // Thumbnail bar
         Gallery.DoNotDeletePersistentCache = true;
-        Gallery.PersistentCacheSize = 300;
+        Gallery.PersistentCacheSize = Config.ThumbnailCacheSizeInMb;
         Gallery.PersistentCacheDirectory = App.ConfigDir(PathType.Dir, Dir.ThumbnailsCache);
         Gallery.EnableKeyNavigation = false;
         IG_ToggleGallery(Config.ShowThumbnails);

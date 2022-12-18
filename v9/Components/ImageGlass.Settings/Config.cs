@@ -562,6 +562,11 @@ public static class Config
     /// </summary>
     public static int ThumbnailSize { get; set; } = 50;
 
+    /// <summary>
+    /// Gets, sets the maximum size in MB of thumbnail persistent cache.
+    /// </summary>
+    public static int ThumbnailCacheSizeInMb { get; set; } = 400;
+
     ///// <summary>
     ///// Gets, sets width of horizontal thumbnail bar
     ///// </summary>
@@ -901,6 +906,7 @@ public static class Config
 
         #region Load thumbnail bar width & position
         ThumbnailSize = items.GetValue(nameof(ThumbnailSize), ThumbnailSize);
+        ThumbnailCacheSizeInMb = items.GetValue(nameof(ThumbnailCacheSizeInMb), ThumbnailCacheSizeInMb);
 
         //if (IsThumbnailHorizontal)
         //{
@@ -1384,6 +1390,7 @@ public static class Config
         settings.TryAdd(nameof(SlideshowInterval), SlideshowInterval);
         settings.TryAdd(nameof(SlideshowIntervalTo), SlideshowIntervalTo);
         settings.TryAdd(nameof(ThumbnailSize), ThumbnailSize);
+        settings.TryAdd(nameof(ThumbnailCacheSizeInMb), ThumbnailCacheSizeInMb);
         //settings.TryAdd(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
         settings.TryAdd(nameof(ImageBoosterCacheCount), ImageBoosterCacheCount);
         settings.TryAdd(nameof(ImageBoosterCacheMaxDimension), ImageBoosterCacheMaxDimension);
