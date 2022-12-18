@@ -21,12 +21,12 @@ namespace ImageGlass.Base;
 
 public static class IgCommands
 {
-    public static string SET_WALLPAPER = "set-wallpaper";
-    public static string SET_DEFAULT_PHOTO_VIEWER = "set-default-viewer";
-    public static string UNSET_DEFAULT_PHOTO_VIEWER = "unset-default-viewer";
-    public static string START_SLIDESHOW = "start-slideshow";
+    public static string SET_WALLPAPER => "set-wallpaper";
+    public static string SET_DEFAULT_PHOTO_VIEWER => "set-default-viewer";
+    public static string UNSET_DEFAULT_PHOTO_VIEWER => "unset-default-viewer";
+    public static string START_SLIDESHOW => "start-slideshow";
 
     // igcmd10.exe
-    public static string SET_LOCK_SCREEN = "set-lock-screen";
-    public static string SHARE = "share";
+    public static string SET_LOCK_SCREEN => "set-lock-screen";
+    public static string SHARE => "share";
 }

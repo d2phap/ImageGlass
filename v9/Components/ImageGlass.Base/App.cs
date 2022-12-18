@@ -137,6 +137,7 @@ public class App
     /// <param name="extensions">Extension string, ex: *.png;*.svg;</param>
     public static (bool IsSuccessful, StringBuilder Keys) RegisterAppAndExtensions(string extensions)
     {
+        var appName = "ImageGlass";
         var keys = new StringBuilder();
         _ = UnregisterAppAndExtensions(extensions);
 
@@ -148,14 +149,14 @@ public class App
             // Register the application to Registry
             SubKey = @"SOFTWARE\RegisteredApplications"
         };
-
-        if (!reg.Write(AppNameCode, $@"SOFTWARE\{AppNameCode}\Capabilities"))
+        
+        if (!reg.Write(appName, $@"SOFTWARE\{appName}\Capabilities"))
         {
-            keys.AppendLine($@"{reg.FullKey}\{AppNameCode}");
+            keys.AppendLine($@"{reg.FullKey}\{appName}");
         }
 
         // Register Capabilities info
-        reg.SubKey = $@"SOFTWARE\{AppNameCode}\Capabilities";
+        reg.SubKey = $@"SOFTWARE\{appName}\Capabilities";
         if (!reg.Write("ApplicationName", App.AppName))
         {
             keys.AppendLine($@"{reg.FullKey}\ApplicationName");
@@ -176,10 +177,10 @@ public class App
 
         foreach (var ext in extList)
         {
-            var keyname = $"{AppNameCode}.AssocFile" + ext.ToUpper();
+            var keyname = $"{appName}.AssocFile" + ext.ToUpper();
             var extNoDot = ext[1..].ToUpperInvariant();
 
-            reg.SubKey = $@"SOFTWARE\{AppNameCode}\Capabilities\FileAssociations";
+            reg.SubKey = $@"SOFTWARE\{appName}\Capabilities\FileAssociations";
             if (!reg.Write(ext, keyname))
             {
                 keys.AppendLine($@"{reg.FullKey}\{ext}");
@@ -187,7 +188,7 @@ public class App
 
             // File type description: ImageGlass <...> JPG file
             reg.SubKey = @"SOFTWARE\Classes\" + keyname;
-            if (!reg.Write("", $"{AppNameCode} {extNoDot} file"))
+            if (!reg.Write("", $"{appName} {extNoDot} file"))
             {
                 keys.AppendLine($@"{reg.FullKey}");
             }
@@ -230,6 +231,7 @@ public class App
     /// <param name="exts">Extensions string to delete. Ex: *.png;*.bmp;</param>
     public static (bool IsSuccessful, StringBuilder Keys) UnregisterAppAndExtensions(string exts)
     {
+        var appName = "ImageGlass";
         var keys = new StringBuilder();
 
         var reg = new RegistryEx
@@ -241,23 +243,23 @@ public class App
         var extList = exts.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
         foreach (var ext in extList)
         {
-            reg.SubKey = $@"SOFTWARE\Classes\{AppNameCode}.AssocFile" + ext.ToUpper();
+            reg.SubKey = $@"SOFTWARE\Classes\{appName}.AssocFile" + ext.ToUpper();
             reg.DeleteSubKeyTree();
         }
 
-        reg.SubKey = $@"SOFTWARE\{AppNameCode}";
+        reg.SubKey = $@"SOFTWARE\{appName}";
         if (!reg.DeleteSubKeyTree())
         {
             keys.AppendLine(reg.FullKey);
         }
 
         reg.SubKey = @"SOFTWARE\RegisteredApplications";
-        if (!reg.DeleteKey(AppNameCode))
+        if (!reg.DeleteKey(appName))
         {
             keys.AppendLine(reg.FullKey);
         }
 
-        reg.SubKey = $@"SOFTWARE\{AppNameCode}\Capabilities\FileAssociations";
+        reg.SubKey = $@"SOFTWARE\{appName}\Capabilities\FileAssociations";
         if (!reg.DeleteSubKeyTree())
         {
             keys.AppendLine(reg.FullKey);
