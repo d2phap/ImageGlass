@@ -100,18 +100,64 @@ public class ModernLabel : Label
 
         using (var b = new SolidBrush(textColor))
         {
-            var stringFormat = new StringFormat
-            {
-                LineAlignment = StringAlignment.Center,
-                Alignment = StringAlignment.Near,
-            };
+            var textFormat = new StringFormat();
 
-            var leftGap = this.ScaleToDpi(-2f);
-            var modRect = new RectangleF(leftGap, 0,
-                rect.Width + g.MeasureString("E", Font).Width,
+            if (TextAlign == ContentAlignment.TopLeft)
+            {
+                textFormat.LineAlignment = StringAlignment.Near;
+                textFormat.Alignment = StringAlignment.Near;
+            }
+            else if (TextAlign == ContentAlignment.TopCenter)
+            {
+                textFormat.LineAlignment = StringAlignment.Near;
+                textFormat.Alignment = StringAlignment.Center;
+            }
+            else if (TextAlign == ContentAlignment.TopRight)
+            {
+                textFormat.LineAlignment = StringAlignment.Near;
+                textFormat.Alignment = StringAlignment.Far;
+            }
+
+
+            else if (TextAlign == ContentAlignment.MiddleLeft)
+            {
+                textFormat.LineAlignment = StringAlignment.Center;
+                textFormat.Alignment = StringAlignment.Near;
+            }
+            else if (TextAlign == ContentAlignment.MiddleCenter)
+            {
+                textFormat.LineAlignment = StringAlignment.Center;
+                textFormat.Alignment = StringAlignment.Center;
+            }
+            else if (TextAlign == ContentAlignment.MiddleRight)
+            {
+                textFormat.LineAlignment = StringAlignment.Center;
+                textFormat.Alignment = StringAlignment.Far;
+            }
+
+
+            else if (TextAlign == ContentAlignment.BottomLeft)
+            {
+                textFormat.LineAlignment = StringAlignment.Far;
+                textFormat.Alignment = StringAlignment.Near;
+            }
+            else if (TextAlign == ContentAlignment.BottomCenter)
+            {
+                textFormat.LineAlignment = StringAlignment.Far;
+                textFormat.Alignment = StringAlignment.Center;
+            }
+            else if (TextAlign == ContentAlignment.BottomRight)
+            {
+                textFormat.LineAlignment = StringAlignment.Far;
+                textFormat.Alignment = StringAlignment.Far;
+            }
+
+            var xGap = this.ScaleToDpi(2f);
+            var modRect = new RectangleF(-xGap, 0,
+                rect.Width,
                 rect.Height);
 
-            g.DrawString(Text, Font, b, modRect, stringFormat);
+            g.DrawString(Text, Font, b, modRect, textFormat);
         }
     }
 
