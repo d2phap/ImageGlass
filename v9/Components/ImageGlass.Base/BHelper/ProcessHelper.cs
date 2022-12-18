@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -133,13 +133,17 @@ public partial class BHelper
 
         try
         {
-            code = (IgExitCode)await RunExeAsync(exePath, args, false, waitForExit);
+            code = (IgExitCode)await RunExeAsync(exePath, $"{args} {IgCommands.HIDE_ADMIN_REQUIRED_ERROR_UI}", false, waitForExit);
 
 
             // If that fails due to privs error, re-attempt with admin privs.
             if (code == IgExitCode.AdminRequired)
             {
-                code = (IgExitCode)await RunExeAsync(exePath, args, asAdmin: true, waitForExit: waitForExit);
+                code = (IgExitCode)await RunExeAsync(
+                    exePath,
+                    args,
+                    asAdmin: true,
+                    waitForExit: waitForExit);
             }
         }
         catch

@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
+using System.Security;
 
 namespace igcmd;
 
@@ -58,9 +59,10 @@ public static class Functions
     /// </summary>
     /// <param name="enable"></param>
     /// <param name="ext">Extensions to proceed. Example: <c>*.png;*.jpg;</c></param>
-    /// <returns></returns>
-    public static IgExitCode SetAppExtensions(bool enable, string ext = "", bool showUI = true)
+    public static IgExitCode SetAppExtensions(bool enable, string ext = "", bool showUi = false, bool hideAdminRequiredErrorUi = false)
     {
+        var exitCode = IgExitCode.Done;
+
         if (string.IsNullOrEmpty(ext))
         {
             var allExts = Config.AllFormats;
@@ -73,8 +75,22 @@ public static class Functions
             : App.UnregisterAppAndExtensions(ext);
 
 
+        if (error == null)
+        {
+            exitCode = IgExitCode.Done;
+        }
+        else if (error is SecurityException && !App.IsAdmin)
+        {
+            exitCode = IgExitCode.AdminRequired;
+        }
+        else
+        {
+            exitCode = IgExitCode.Error;
+        }
+
+
         // show result dialog
-        if (showUI)
+        if (showUi)
         {
             var langPath = enable
                 ? "FrmMain.MnuSetDefaultPhotoViewer"
@@ -91,7 +107,7 @@ public static class Functions
                     title: Config.Language[langPath],
                     heading: Config.Language[$"{langPath}._Success"]);
             }
-            else
+            else if (exitCode != IgExitCode.AdminRequired || !hideAdminRequiredErrorUi)
             {
                 _ = Config.ShowError(
                     description: error.Message,
@@ -102,16 +118,6 @@ public static class Functions
         }
 
 
-        if (error == null)
-        {
-            return IgExitCode.Done;
-        }
-        
-        if (!App.IsAdmin)
-        {
-            return IgExitCode.AdminRequired;
-        }
-
-        return IgExitCode.Error;
+        return exitCode;
     }
 }

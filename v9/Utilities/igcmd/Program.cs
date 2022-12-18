@@ -68,6 +68,8 @@ internal static class Program
         }
 
         var topCmd = args[0].ToLower().Trim();
+        var showUI = args.Contains(IgCommands.SHOW_UI);
+        var hideAdminRequiredErrorUi = args.Contains(IgCommands.HIDE_ADMIN_REQUIRED_ERROR_UI);
 
 
         #region SET_WALLPAPER <string imgPath> [int style]
@@ -87,13 +89,12 @@ internal static class Program
         if (topCmd == IgCommands.SET_DEFAULT_PHOTO_VIEWER)
         {
             var ext = "";
-            var showUI = !args.Contains("--no-ui");
             if (args.Length > 1)
             {
                 ext = args[1];
             }
 
-            return (int)Functions.SetAppExtensions(true, ext, showUI);
+            return (int)Functions.SetAppExtensions(true, ext, showUI, hideAdminRequiredErrorUi);
         }
         #endregion
 
@@ -102,13 +103,12 @@ internal static class Program
         if (topCmd == IgCommands.UNSET_DEFAULT_PHOTO_VIEWER)
         {
             var ext = "";
-            var showUI = !args.Contains("--no-ui");
             if (args.Length > 1)
             {
                 ext = args[1];
             }
 
-            return (int)Functions.SetAppExtensions(false, ext, showUI);
+            return (int)Functions.SetAppExtensions(false, ext, showUI, hideAdminRequiredErrorUi);
         }
         #endregion
 
