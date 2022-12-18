@@ -44,8 +44,8 @@ namespace ImageGlass
             this.lblSettingsFilePath.DarkMode = false;
             this.lblSettingsFilePath.Location = new System.Drawing.Point(0, 0);
             this.lblSettingsFilePath.Name = "lblSettingsFilePath";
-            this.lblSettingsFilePath.Padding = new System.Windows.Forms.Padding(20, 19, 20, 19);
-            this.lblSettingsFilePath.Size = new System.Drawing.Size(580, 68);
+            this.lblSettingsFilePath.Padding = new System.Windows.Forms.Padding(40);
+            this.lblSettingsFilePath.Size = new System.Drawing.Size(1174, 257);
             this.lblSettingsFilePath.TabIndex = 0;
             this.lblSettingsFilePath.Text = "[Setting file]";
             this.lblSettingsFilePath.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -58,11 +58,11 @@ namespace ImageGlass
             this.btnOpenSettingsFile.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOpenSettingsFile.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenSettingsFile.Image")));
             this.btnOpenSettingsFile.ImagePadding = 2;
-            this.btnOpenSettingsFile.Location = new System.Drawing.Point(193, 90);
-            this.btnOpenSettingsFile.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.btnOpenSettingsFile.Location = new System.Drawing.Point(393, 304);
+            this.btnOpenSettingsFile.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.btnOpenSettingsFile.Name = "btnOpenSettingsFile";
-            this.btnOpenSettingsFile.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.btnOpenSettingsFile.Size = new System.Drawing.Size(192, 42);
+            this.btnOpenSettingsFile.Padding = new System.Windows.Forms.Padding(4);
+            this.btnOpenSettingsFile.Size = new System.Drawing.Size(384, 90);
             this.btnOpenSettingsFile.SystemIcon = ImageGlass.Base.WinApi.SHSTOCKICONID.SIID_DOCNOASSOC;
             this.btnOpenSettingsFile.TabIndex = 1;
             this.btnOpenSettingsFile.Text = "Open settings file";
@@ -72,12 +72,13 @@ namespace ImageGlass
             // FrmSettings
             // 
             this.AcceptButton = this.btnOpenSettingsFile;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(18F, 45F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(580, 155);
+            this.ClientSize = new System.Drawing.Size(1175, 443);
             this.Controls.Add(this.btnOpenSettingsFile);
             this.Controls.Add(this.lblSettingsFilePath);
             this.KeyPreview = true;
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmSettings";

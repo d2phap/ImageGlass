@@ -128,6 +128,7 @@ public class ModernLinkLabel : LinkLabel
         using (var brush = new SolidBrush(textColor))
         {
             var textFormat = new StringFormat();
+            textFormat.Trimming = StringTrimming.EllipsisCharacter;
 
             if (TextAlign == ContentAlignment.TopLeft)
             {
@@ -179,10 +180,14 @@ public class ModernLinkLabel : LinkLabel
                 textFormat.Alignment = StringAlignment.Far;
             }
 
-            var xGap = this.ScaleToDpi(2f);
-            var modRect = new RectangleF(-xGap, 0,
-                rect.Width,
-                rect.Height);
+            var gapX = this.ScaleToDpi(-2f);
+            var missingWidth = g.MeasureString("W", Font).Width;
+
+            var modRect = new RectangleF(
+                gapX + Padding.Left,
+                Padding.Top,
+                rect.Width + missingWidth - Padding.Horizontal * 1.5f,
+                rect.Height - Padding.Vertical);
 
             g.DrawString(Text, font, brush, modRect, textFormat);
         }

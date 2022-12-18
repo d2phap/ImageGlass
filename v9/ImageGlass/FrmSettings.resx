@@ -60,10 +60,11 @@
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnOpenSettingsFile.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAB3SURBVDhPY4CBytLi+5XlJf8JYqC6kpISA6g23ACk+Nev
-        XwQxSF1TQ/V7goaSYuCjhw8IG0qKgSCaoKGkGgjCeA0l1sDO9hZI5CDh8vKS91BjEIBYA7FhkF6oMQgw
-        aiBJeNRACBg1kCRMJwOJrQKwYaBeiCkMDACTPkVbjWb2owAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAAJOgAACToAYJjBRwAAACwSURBVFhH7dhLCsJAEIThOZJ3s2UIbkQE8ZQ+LpD9bJKU
+        zEpERqtGCFTDT1bp/taTVjvDbnsdckySll0RsamrNYPFpRRJ2HU87EcpUg183G9apBqIrxTZA4hkyF5A
+        JEH2BCIa2RuIKOQ/gOhnpBJ4OZ+eyE/lHGM93Tb46d2xXuFePd02Br5kIJuBbAayGchmIJuBbAayGchm
+        IJuBbAayGcj2PVD5iN7Scq+eXtOkNAMTDm3EHo1EdQAAAABJRU5ErkJggg==
 </value>
   </data>
 </root>
