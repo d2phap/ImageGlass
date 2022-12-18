@@ -36,9 +36,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Magick.NET-Q16-HDRI-OpenMP-x64" Version="12.2.1" />
-      <PackageReference Include="Magick.NET.SystemDrawing" Version="6.1.2" />
-      <PackageReference Include="Magick.NET.SystemWindowsMedia" Version="6.1.2" />
+      <PackageReference Include="Magick.NET-Q16-HDRI-OpenMP-x64" Version="12.2.2" />
+      <PackageReference Include="Magick.NET.SystemDrawing" Version="6.1.3" />
+      <PackageReference Include="Magick.NET.SystemWindowsMedia" Version="6.1.3" />
       <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.164-beta">
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
