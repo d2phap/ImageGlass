@@ -224,8 +224,6 @@ public class ModernButton : Button
     #endregion
 
 
-    
-
     public ModernButton()
     {
         SetStyle(ControlStyles.OptimizedDoubleBuffer |
@@ -273,7 +271,7 @@ public class ModernButton : Button
 
         var textColor = colors.LightText;
         var borderColor = colors.GreySelection;
-        var borderRadius = BHelper.IsOS(WindowsOS.Win11OrLater) ? DpiApi.Transform(2.5f) : 0;
+        var borderRadius = BHelper.IsOS(WindowsOS.Win11OrLater) ? this.ScaleToDpi(2.5f) : 0;
         var fillColor = isCTAStyle
             ? colors.DarkBlueBackground
             : colors.LightBackground;
@@ -332,7 +330,7 @@ public class ModernButton : Button
 
 
         // draw border
-        var penWidth = DpiApi.Transform(1.1f);
+        var penWidth = this.ScaleToDpi(1.1f);
         using var pen = new Pen(borderColor, penWidth)
         {
             Alignment = PenAlignment.Center,

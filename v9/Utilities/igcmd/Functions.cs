@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -59,7 +59,7 @@ public static class Functions
     /// <param name="enable"></param>
     /// <param name="ext">Extensions to proceed. Example: <c>*.png;*.jpg;</c></param>
     /// <returns></returns>
-    public static IgExitCode SetAppExtensions(bool enable, string ext = "")
+    public static IgExitCode SetAppExtensions(bool enable, string ext = "", bool showUI = true)
     {
         if (string.IsNullOrEmpty(ext))
         {
@@ -71,6 +71,35 @@ public static class Functions
         var error = enable
             ? App.RegisterAppAndExtensions(ext)
             : App.UnregisterAppAndExtensions(ext);
+
+
+        // show result dialog
+        if (showUI)
+        {
+            var langPath = enable
+                ? "FrmMain.MnuSetDefaultPhotoViewer"
+                : "FrmMain.MnuUnsetDefaultPhotoViewer";
+
+            if (error == null)
+            {
+                var description = enable
+                    ? Config.Language[$"{langPath}._SuccessDescription"]
+                    : string.Empty;
+
+                _ = Config.ShowInfo(
+                    description: description,
+                    title: Config.Language[langPath],
+                    heading: Config.Language[$"{langPath}._Success"]);
+            }
+            else
+            {
+                _ = Config.ShowError(
+                    description: error.Message,
+                    title: Config.Language[langPath],
+                    heading: Config.Language[$"{langPath}._Error"],
+                    details: error.ToString());
+            }
+        }
 
 
         if (error == null)

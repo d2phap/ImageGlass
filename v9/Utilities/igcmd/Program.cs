@@ -59,6 +59,7 @@ internal static class Program
 
         // load application configs
         Config.Load();
+        Config.Theme.LoadTheme();
         Args = args;
 
         if (args.Length == 0)
@@ -86,12 +87,13 @@ internal static class Program
         if (topCmd == IgCommands.SET_DEFAULT_PHOTO_VIEWER)
         {
             var ext = "";
+            var showUI = !args.Contains("--no-ui");
             if (args.Length > 1)
             {
                 ext = args[1];
             }
 
-            return (int)Functions.SetAppExtensions(true, ext);
+            return (int)Functions.SetAppExtensions(true, ext, showUI);
         }
         #endregion
 
@@ -100,12 +102,13 @@ internal static class Program
         if (topCmd == IgCommands.UNSET_DEFAULT_PHOTO_VIEWER)
         {
             var ext = "";
+            var showUI = !args.Contains("--no-ui");
             if (args.Length > 1)
             {
                 ext = args[1];
             }
 
-            return (int)Functions.SetAppExtensions(false, ext);
+            return (int)Functions.SetAppExtensions(false, ext, showUI);
         }
         #endregion
 
