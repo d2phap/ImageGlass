@@ -452,6 +452,11 @@ public static class Config
     public static bool ShowImagePreview { get; set; } = true;
 
     /// <summary>
+    /// Gets, sets value indicates that image fading transition is used while it's being loaded.
+    /// </summary>
+    public static bool EnableImageTransition { get; set; } = true;
+
+    /// <summary>
     /// Enables / Disables copy multiple files.
     /// </summary>
     public static bool EnableCopyMultipleFiles { get; set; } = true;
@@ -860,6 +865,7 @@ public static class Config
         UseEmbeddedThumbnailRawFormats = items.GetValue(nameof(UseEmbeddedThumbnailRawFormats), UseEmbeddedThumbnailRawFormats);
         UseEmbeddedThumbnailOtherFormats = items.GetValue(nameof(UseEmbeddedThumbnailOtherFormats), UseEmbeddedThumbnailOtherFormats);
         ShowImagePreview = items.GetValue(nameof(ShowImagePreview), ShowImagePreview);
+        EnableImageTransition = items.GetValue(nameof(EnableImageTransition), EnableImageTransition);
         EnableCopyMultipleFiles = items.GetValue(nameof(EnableCopyMultipleFiles), EnableCopyMultipleFiles);
         EnableCutMultipleFiles = items.GetValue(nameof(EnableCutMultipleFiles), EnableCutMultipleFiles);
 
@@ -1354,6 +1360,7 @@ public static class Config
         settings.TryAdd(nameof(UseEmbeddedThumbnailRawFormats), UseEmbeddedThumbnailRawFormats);
         settings.TryAdd(nameof(UseEmbeddedThumbnailOtherFormats), UseEmbeddedThumbnailOtherFormats);
         settings.TryAdd(nameof(ShowImagePreview), ShowImagePreview);
+        settings.TryAdd(nameof(EnableImageTransition), EnableImageTransition);
         settings.TryAdd(nameof(EnableCopyMultipleFiles), EnableCopyMultipleFiles);
         settings.TryAdd(nameof(EnableCutMultipleFiles), EnableCutMultipleFiles);
 

@@ -1130,7 +1130,7 @@ public partial class FrmMain
             Image = img,
             FrameCount = 1,
             HasAlpha = true,
-        });
+        }, enableFading: Config.EnableImageTransition);
         PicMain.ClearMessage();
 
         // reset zoom mode
@@ -2227,7 +2227,7 @@ public partial class FrmMain
                 Image = Local.ClipboardImage,
                 FrameCount = 1,
                 HasAlpha = true,
-            });
+            }, enableFading: Config.EnableImageTransition);
 
             return;
         }
@@ -2266,7 +2266,7 @@ public partial class FrmMain
             {
                 Flips = options,
             });
-            PicMain.SetImage(img.ImgData);
+            PicMain.SetImage(img.ImgData, enableFading: Config.EnableImageTransition);
         }
 
     }

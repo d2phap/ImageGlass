@@ -930,12 +930,19 @@ public partial class FrmMain : ModernForm
             Local.ClipboardImage = null;
             Local.TempImagePath = null;
 
-            var isImageBigForFading = Local.Metadata.Width > 8000
+
+            // enable image transition
+            var enableFadingTrainsition = false;
+            if (Config.EnableImageTransition)
+            {
+                var isImageBigForFading = Local.Metadata.Width > 8000
                     || Local.Metadata.Height > 8000;
-            var enableFading = !_isShowingImagePreview && !isImageBigForFading;
+                enableFadingTrainsition = !_isShowingImagePreview && !isImageBigForFading;
+            }
+            
 
             // set the main image
-            PicMain.SetImage(e.Data.ImgData, e.ResetZoom, enableFading);
+            PicMain.SetImage(e.Data.ImgData, e.ResetZoom, enableFadingTrainsition);
 
             PicMain.ClearMessage();
         }
@@ -1075,7 +1082,7 @@ public partial class FrmMain : ModernForm
                     Image = wicSrc,
                     CanAnimate = false,
                     FrameCount = 1,
-                }, isForPreview: true);
+                }, enableFading: Config.EnableImageTransition, isForPreview: true);
 
                 _isShowingImagePreview = true;
             }
