@@ -17,6 +17,11 @@ public static class Dir
     public static string Icons { get; } = "Icons";
 
     /// <summary>
+    /// Gets the Ext-Icons folder name
+    /// </summary>
+    public static string ExtIcons { get; } = "Ext-Icons";
+
+    /// <summary>
     /// Gets the Languages folder name
     /// </summary>
     public static string Languages { get; } = "Languages";

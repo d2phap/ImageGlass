@@ -64,19 +64,16 @@ public static class Functions
         if (string.IsNullOrEmpty(ext))
         {
             var allExts = Config.AllFormats;
-
-            // Issue #664
-            allExts.Remove(".ico");
             ext = Config.GetImageFormats(allExts);
         }
 
 
-        var result = enable
+        var error = enable
             ? App.RegisterAppAndExtensions(ext)
             : App.UnregisterAppAndExtensions(ext);
-        result.Keys.Clear();
 
-        if (result.IsSuccessful)
+
+        if (error == null)
         {
             return IgExitCode.Done;
         }

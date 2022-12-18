@@ -64,20 +64,24 @@ public class WinColorsApi
         {
             const string regPath = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
             const string regKey = "AppsUseLightTheme";
-
-            using var key = Registry.CurrentUser.OpenSubKey(regPath);
-            var regValue = key?.GetValue(regKey);
             var darkMode = true;
 
-            if (regValue != null)
+            try
             {
-                var themeValue = (int)regValue;
+                using var key = Registry.CurrentUser.OpenSubKey(regPath);
+                var regValue = key?.GetValue(regKey);
 
-                if (themeValue > 0)
+                if (regValue != null)
                 {
-                    darkMode = false;
+                    var themeValue = (int)regValue;
+
+                    if (themeValue > 0)
+                    {
+                        darkMode = false;
+                    }
                 }
             }
+            catch { }
 
             return darkMode;
         }

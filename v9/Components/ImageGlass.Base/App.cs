@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Microsoft.Win32;
 using System.Diagnostics;
+using System.Security;
 using System.Security.Principal;
 using System.Text;
 
@@ -135,137 +136,148 @@ public class App
     /// Register file type associations and app capabilities to registry
     /// </summary>
     /// <param name="extensions">Extension string, ex: *.png;*.svg;</param>
-    public static (bool IsSuccessful, StringBuilder Keys) RegisterAppAndExtensions(string extensions)
+    public static Exception? RegisterAppAndExtensions(string extensions)
     {
-        var appName = "ImageGlass";
-        var keys = new StringBuilder();
+        const string APP_NAME = "ImageGlass";
+        var capabilitiesPath = $@"Software\{APP_NAME}\Capabilities";
+
         _ = UnregisterAppAndExtensions(extensions);
 
-        var reg = new RegistryEx
-        {
-            ShowError = false,
-            BaseRegistryKey = Registry.LocalMachine,
 
-            // Register the application to Registry
-            SubKey = @"SOFTWARE\RegisteredApplications"
-        };
-        
-        if (!reg.Write(appName, $@"SOFTWARE\{appName}\Capabilities"))
+        try
         {
-            keys.AppendLine($@"{reg.FullKey}\{appName}");
+            // Register the application:
+            // HKEY_LOCAL_MACHINE\SOFTWARE\RegisteredApplications --------------------------------
+            const string regAppPath = @"Software\RegisteredApplications";
+            using (var key = Registry.LocalMachine.OpenSubKey(regAppPath, true))
+            {
+                key?.SetValue(APP_NAME, capabilitiesPath);
+            }
+
+
+            // Register application information:
+            // HKEY_LOCAL_MACHINE\SOFTWARE\ImageGlass\Capabilities -------------------------------
+            using (var key = Registry.LocalMachine.CreateSubKey(capabilitiesPath, true))
+            {
+                key?.SetValue("ApplicationName", App.AppName);
+                key?.SetValue("ApplicationIcon", $"\"{IGExePath}\", 0");
+                key?.SetValue("ApplicationDescription", "A lightweight, versatile image viewer");
+
+
+                // Register application's file type associations:
+                // HKEY_LOCAL_MACHINE\SOFTWARE\ImageGlass\Capabilities\FileAssociations ----------
+                using (var faKey = key?.CreateSubKey("FileAssociations", true))
+                {
+                    var exts = extensions.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var ext in exts)
+                    {
+                        var extNoDot = ext[1..].ToUpperInvariant();
+                        var extAssocKey = $"{APP_NAME}.AssocFile.{extNoDot}";
+
+                        // register supported extension
+                        faKey?.SetValue(ext, extAssocKey);
+
+
+                        // write extension info
+                        // HKEY_CLASSES_ROOT\ImageGlass.AssocFile.<EXT>
+                        using (var extRootKey = Registry.ClassesRoot.CreateSubKey(extAssocKey, true))
+                        {
+                            // ImageGlass <EXT> file
+                            extRootKey?.SetValue("", $"{APP_NAME} {extNoDot} file");
+
+
+                            // DefaultIcon -------------------------------------------------------
+                            // get extension icon
+                            var iconPath = ConfigDir(PathType.File, Dir.ExtIcons, $"{extNoDot}.ico");
+                            if (!File.Exists(iconPath))
+                            {
+                                iconPath = StartUpDir(Dir.ExtIcons, $"{extNoDot}.ico");
+
+                                if (!File.Exists(iconPath))
+                                {
+                                    iconPath = string.Empty;
+                                }
+                            }
+
+                            // set extension icon
+                            if (!string.IsNullOrEmpty(iconPath))
+                            {
+                                using (var faIconKey = extRootKey?.CreateSubKey("DefaultIcon", true))
+                                {
+                                    faIconKey?.SetValue("", iconPath);
+                                }
+                            }
+
+
+                            // shell/open --------------------------------------------------------
+                            using (var shellOpenKey = extRootKey?.CreateSubKey(@"shell\open", true))
+                            {
+                                shellOpenKey?.SetValue("FriendlyAppName", App.AppName);
+
+
+                                // shell/open/command --------------------------------------------
+                                using var shellOpenCmdKey = shellOpenKey?.CreateSubKey("command", true);
+                                shellOpenCmdKey?.SetValue("", $"\"{IGExePath}\" \"%1\"");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            return ex;
         }
 
-        // Register Capabilities info
-        reg.SubKey = $@"SOFTWARE\{appName}\Capabilities";
-        if (!reg.Write("ApplicationName", App.AppName))
-        {
-            keys.AppendLine($@"{reg.FullKey}\ApplicationName");
-        }
-
-        if (!reg.Write("ApplicationIcon", $"\"{IGExePath}\", 0"))
-        {
-            keys.AppendLine($@"{reg.FullKey}\ApplicationIcon");
-        }
-
-        if (!reg.Write("ApplicationDescription", "A lightweight, versatile image viewer"))
-        {
-            keys.AppendLine($@"{reg.FullKey}\ApplicationDescription");
-        }
-
-        // Register File Associations
-        var extList = extensions.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-
-        foreach (var ext in extList)
-        {
-            var keyname = $"{appName}.AssocFile" + ext.ToUpper();
-            var extNoDot = ext[1..].ToUpperInvariant();
-
-            reg.SubKey = $@"SOFTWARE\{appName}\Capabilities\FileAssociations";
-            if (!reg.Write(ext, keyname))
-            {
-                keys.AppendLine($@"{reg.FullKey}\{ext}");
-            }
-
-            // File type description: ImageGlass <...> JPG file
-            reg.SubKey = @"SOFTWARE\Classes\" + keyname;
-            if (!reg.Write("", $"{appName} {extNoDot} file"))
-            {
-                keys.AppendLine($@"{reg.FullKey}");
-            }
-
-            // File type icon
-            var iconPath = StartUpDir(@"Ext-Icons\" + extNoDot + ".ico");
-            if (!File.Exists(iconPath))
-            {
-                iconPath = IGExePath;
-            }
-
-            reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\DefaultIcon";
-            if (!reg.Write("", $"\"{iconPath}\", 0"))
-            {
-                keys.AppendLine($@"{reg.FullKey}");
-            }
-
-            // Friendly App Name
-            reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open";
-            if (!reg.Write("FriendlyAppName", App.AppName))
-            {
-                keys.AppendLine($@"{reg.FullKey}\FriendlyAppName");
-            }
-
-            // Execute command
-            reg.SubKey = @"SOFTWARE\Classes\" + keyname + @"\shell\open\command";
-            if (!reg.Write("", $"\"{IGExePath}\" \"%1\""))
-            {
-                keys.AppendLine($@"{reg.FullKey}");
-            }
-        }
-
-        return (keys.Length == 0, keys);
+        return null;
     }
 
 
     /// <summary>
     /// Unregister file type associations and app information from registry
     /// </summary>
-    /// <param name="exts">Extensions string to delete. Ex: *.png;*.bmp;</param>
-    public static (bool IsSuccessful, StringBuilder Keys) UnregisterAppAndExtensions(string exts)
+    /// <param name="extensions">Extensions string to delete. Ex: *.png;*.bmp;</param>
+    public static Exception? UnregisterAppAndExtensions(string extensions)
     {
-        var appName = "ImageGlass";
-        var keys = new StringBuilder();
+        const string APP_NAME = "ImageGlass";
 
-        var reg = new RegistryEx
+        try
         {
-            ShowError = false,
-            BaseRegistryKey = Registry.LocalMachine,
-        };
+            // Unregister the application:
+            // HKEY_LOCAL_MACHINE\SOFTWARE\RegisteredApplications --------------------------------
+            const string regAppPath = @"Software\RegisteredApplications";
+            using (var key = Registry.LocalMachine.OpenSubKey(regAppPath, true))
+            {
+                key?.DeleteValue(APP_NAME);
+            }
 
-        var extList = exts.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-        foreach (var ext in extList)
+
+            // Delete application information:
+            // HKEY_LOCAL_MACHINE\SOFTWARE\ImageGlass --------------------------------------------
+            using (var key = Registry.LocalMachine.OpenSubKey("Software", true))
+            {
+                key?.DeleteSubKeyTree(APP_NAME, false);
+            }
+
+
+            // Delete file type associations
+            // HKEY_CLASSES_ROOT\ImageGlass.AssocFile.<EXT>
+            var exts = extensions.Split("*;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var ext in exts)
+            {
+                var extNoDot = ext[1..].ToUpperInvariant();
+                var extAssocKey = $"{APP_NAME}.AssocFile.{extNoDot}";
+
+                Registry.ClassesRoot.DeleteSubKeyTree(extAssocKey, false);
+            }
+        }
+        catch (Exception ex)
         {
-            reg.SubKey = $@"SOFTWARE\Classes\{appName}.AssocFile" + ext.ToUpper();
-            reg.DeleteSubKeyTree();
+            return ex;
         }
 
-        reg.SubKey = $@"SOFTWARE\{appName}";
-        if (!reg.DeleteSubKeyTree())
-        {
-            keys.AppendLine(reg.FullKey);
-        }
-
-        reg.SubKey = @"SOFTWARE\RegisteredApplications";
-        if (!reg.DeleteKey(appName))
-        {
-            keys.AppendLine(reg.FullKey);
-        }
-
-        reg.SubKey = $@"SOFTWARE\{appName}\Capabilities\FileAssociations";
-        if (!reg.DeleteSubKeyTree())
-        {
-            keys.AppendLine(reg.FullKey);
-        }
-
-        return (keys.Length == 0, keys);
+        return null;
     }
 
 
