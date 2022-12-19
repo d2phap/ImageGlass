@@ -128,16 +128,16 @@ public partial class Popup : DialogForm
         {
             lblNote.Text = value;
             var isVisible = !string.IsNullOrEmpty(value);
-            var rowIndex = tableMain.GetRow(panNote);
+            var rowIndex = tableMain.GetRow(lblNote);
 
             if (isVisible)
             {
-                panNote.Visible = true;
+                lblNote.Visible = true;
                 tableMain.RowStyles[rowIndex].SizeType = SizeType.AutoSize;
             }
             else
             {
-                panNote.Visible = false;
+                lblNote.Visible = false;
                 tableMain.RowStyles[rowIndex].SizeType = SizeType.Absolute;
                 tableMain.RowStyles[rowIndex].Height = 0;
             }
@@ -155,7 +155,7 @@ public partial class Popup : DialogForm
         {
             _noteStatusType = value;
 
-            panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(value, DarkMode);
+            lblNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(value, DarkMode);
             lblNote.ForeColor = Theme.ColorPalatte.LightText;
         }
     }
@@ -445,7 +445,7 @@ public partial class Popup : DialogForm
         EnableTransparent = darkMode;
 
 
-        panNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(NoteStatusType, darkMode);
+        lblNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(NoteStatusType, darkMode);
         TableActions.BackColor = BackColor.InvertBlackOrWhite(30);
         SetTextInputStyle(ValidateInput(), darkMode);
 

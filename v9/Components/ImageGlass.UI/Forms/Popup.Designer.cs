@@ -29,15 +29,13 @@
         private void InitializeComponent()
         {
             this.tableMain = new System.Windows.Forms.TableLayoutPanel();
-            this.panNote = new System.Windows.Forms.FlowLayoutPanel();
-            this.lblNote = new ImageGlass.UI.ModernLabel();
             this.lblHeading = new ImageGlass.UI.ModernLabel();
+            this.lblNote = new ImageGlass.UI.ModernLabel();
             this.txtValue = new ImageGlass.UI.ModernTextBox();
             this.lblDescription = new ImageGlass.UI.ModernLabel();
             this.picThumbnail = new System.Windows.Forms.PictureBox();
             this.ChkOption = new ImageGlass.UI.ModernCheckBox();
             this.tableMain.SuspendLayout();
-            this.panNote.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picThumbnail)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,55 +47,27 @@
             this.tableMain.ColumnCount = 2;
             this.tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableMain.Controls.Add(this.panNote, 0, 4);
             this.tableMain.Controls.Add(this.lblHeading, 1, 1);
+            this.tableMain.Controls.Add(this.lblNote, 0, 4);
             this.tableMain.Controls.Add(this.txtValue, 1, 3);
             this.tableMain.Controls.Add(this.lblDescription, 1, 2);
             this.tableMain.Controls.Add(this.picThumbnail, 0, 1);
-            this.tableMain.Controls.Add(this.ChkOption, 1, 4);
+            this.tableMain.Controls.Add(this.ChkOption, 1, 5);
             this.tableMain.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableMain.Location = new System.Drawing.Point(0, 0);
             this.tableMain.Margin = new System.Windows.Forms.Padding(0);
             this.tableMain.Name = "tableMain";
             this.tableMain.Padding = new System.Windows.Forms.Padding(0, 39, 0, 0);
-            this.tableMain.RowCount = 5;
+            this.tableMain.RowCount = 7;
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableMain.Size = new System.Drawing.Size(1228, 537);
+            this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableMain.Size = new System.Drawing.Size(1228, 538);
             this.tableMain.TabIndex = 1;
-            // 
-            // panNote
-            // 
-            this.panNote.AutoSize = true;
-            this.panNote.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panNote.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(52)))), ((int)(((byte)(32)))));
-            this.tableMain.SetColumnSpan(this.panNote, 10);
-            this.panNote.Controls.Add(this.lblNote);
-            this.panNote.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panNote.Location = new System.Drawing.Point(40, 344);
-            this.panNote.Margin = new System.Windows.Forms.Padding(40, 39, 40, 0);
-            this.panNote.Name = "panNote";
-            this.panNote.Padding = new System.Windows.Forms.Padding(40, 20, 40, 20);
-            this.panNote.Size = new System.Drawing.Size(1148, 85);
-            this.panNote.TabIndex = 102;
-            this.panNote.Visible = false;
-            // 
-            // lblNote
-            // 
-            this.lblNote.AutoSize = true;
-            this.lblNote.BackColor = System.Drawing.Color.Transparent;
-            this.lblNote.DarkMode = false;
-            this.lblNote.ForeColor = System.Drawing.Color.White;
-            this.lblNote.Location = new System.Drawing.Point(40, 20);
-            this.lblNote.Margin = new System.Windows.Forms.Padding(0);
-            this.lblNote.Name = "lblNote";
-            this.lblNote.Size = new System.Drawing.Size(97, 45);
-            this.lblNote.TabIndex = 5;
-            this.lblNote.Text = "[###]";
             // 
             // lblHeading
             // 
@@ -111,6 +81,21 @@
             this.lblHeading.Size = new System.Drawing.Size(197, 54);
             this.lblHeading.TabIndex = 100;
             this.lblHeading.Text = "[Heading]";
+            // 
+            // lblNote
+            // 
+            this.lblNote.AutoSize = true;
+            this.lblNote.BackColor = System.Drawing.Color.Transparent;
+            this.tableMain.SetColumnSpan(this.lblNote, 2);
+            this.lblNote.DarkMode = false;
+            this.lblNote.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblNote.Location = new System.Drawing.Point(40, 345);
+            this.lblNote.Margin = new System.Windows.Forms.Padding(40, 40, 40, 0);
+            this.lblNote.Name = "lblNote";
+            this.lblNote.Padding = new System.Windows.Forms.Padding(20);
+            this.lblNote.Size = new System.Drawing.Size(1148, 85);
+            this.lblNote.TabIndex = 5;
+            this.lblNote.Text = "[###]";
             // 
             // txtValue
             // 
@@ -146,7 +131,7 @@
             this.picThumbnail.Margin = new System.Windows.Forms.Padding(40, 0, 0, 39);
             this.picThumbnail.MaximumSize = new System.Drawing.Size(200, 196);
             this.picThumbnail.Name = "picThumbnail";
-            this.tableMain.SetRowSpan(this.picThumbnail, 3);
+            this.tableMain.SetRowSpan(this.picThumbnail, 4);
             this.picThumbnail.Size = new System.Drawing.Size(200, 196);
             this.picThumbnail.TabIndex = 4;
             this.picThumbnail.TabStop = false;
@@ -158,7 +143,7 @@
             this.ChkOption.BackColor = System.Drawing.Color.Transparent;
             this.tableMain.SetColumnSpan(this.ChkOption, 2);
             this.ChkOption.DarkMode = true;
-            this.ChkOption.Location = new System.Drawing.Point(40, 449);
+            this.ChkOption.Location = new System.Drawing.Point(40, 450);
             this.ChkOption.Margin = new System.Windows.Forms.Padding(40, 20, 40, 39);
             this.ChkOption.Name = "ChkOption";
             this.ChkOption.Size = new System.Drawing.Size(539, 49);
@@ -170,21 +155,18 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(18F, 45F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1228, 965);
+            this.ClientSize = new System.Drawing.Size(1228, 860);
             this.ControlBox = false;
             this.Controls.Add(this.tableMain);
+            this.DarkMode = false;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(12);
             this.MinimumSize = new System.Drawing.Size(1208, 385);
             this.Name = "Popup";
-            this.ShowAcceptButton = true;
-            this.ShowCancelButton = true;
             this.Text = "[Title]";
             this.Controls.SetChildIndex(this.tableMain, 0);
             this.tableMain.ResumeLayout(false);
             this.tableMain.PerformLayout();
-            this.panNote.ResumeLayout(false);
-            this.panNote.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picThumbnail)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -199,7 +181,6 @@
         private PictureBox picThumbnail;
         private ModernLabel lblHeading;
         private ModernCheckBox ChkOption;
-        private FlowLayoutPanel panNote;
         private ModernLabel lblNote;
     }
 }
