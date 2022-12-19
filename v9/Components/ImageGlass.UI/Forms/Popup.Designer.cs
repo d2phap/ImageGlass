@@ -57,7 +57,7 @@
             this.tableMain.Location = new System.Drawing.Point(0, 0);
             this.tableMain.Margin = new System.Windows.Forms.Padding(0);
             this.tableMain.Name = "tableMain";
-            this.tableMain.Padding = new System.Windows.Forms.Padding(0, 39, 0, 0);
+            this.tableMain.Padding = new System.Windows.Forms.Padding(0, 40, 0, 40);
             this.tableMain.RowCount = 7;
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -66,7 +66,7 @@
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableMain.Size = new System.Drawing.Size(1228, 538);
+            this.tableMain.Size = new System.Drawing.Size(1228, 579);
             this.tableMain.TabIndex = 1;
             // 
             // lblHeading
@@ -75,7 +75,7 @@
             this.lblHeading.BackColor = System.Drawing.Color.Transparent;
             this.lblHeading.DarkMode = false;
             this.lblHeading.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblHeading.Location = new System.Drawing.Point(270, 39);
+            this.lblHeading.Location = new System.Drawing.Point(270, 40);
             this.lblHeading.Margin = new System.Windows.Forms.Padding(30, 0, 40, 39);
             this.lblHeading.Name = "lblHeading";
             this.lblHeading.Size = new System.Drawing.Size(197, 54);
@@ -89,7 +89,7 @@
             this.tableMain.SetColumnSpan(this.lblNote, 2);
             this.lblNote.DarkMode = false;
             this.lblNote.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblNote.Location = new System.Drawing.Point(40, 345);
+            this.lblNote.Location = new System.Drawing.Point(40, 346);
             this.lblNote.Margin = new System.Windows.Forms.Padding(40, 40, 40, 0);
             this.lblNote.Name = "lblNote";
             this.lblNote.Padding = new System.Windows.Forms.Padding(20);
@@ -103,7 +103,7 @@
             this.txtValue.DarkMode = false;
             this.txtValue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtValue.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.txtValue.Location = new System.Drawing.Point(280, 216);
+            this.txtValue.Location = new System.Drawing.Point(280, 217);
             this.txtValue.Margin = new System.Windows.Forms.Padding(40, 0, 40, 39);
             this.txtValue.Name = "txtValue";
             this.txtValue.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -116,7 +116,7 @@
             this.lblDescription.AutoSize = true;
             this.lblDescription.BackColor = System.Drawing.Color.Transparent;
             this.lblDescription.DarkMode = false;
-            this.lblDescription.Location = new System.Drawing.Point(270, 132);
+            this.lblDescription.Location = new System.Drawing.Point(270, 133);
             this.lblDescription.Margin = new System.Windows.Forms.Padding(30, 0, 40, 39);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(154, 45);
@@ -127,7 +127,7 @@
             // 
             this.picThumbnail.BackColor = System.Drawing.Color.Transparent;
             this.picThumbnail.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.picThumbnail.Location = new System.Drawing.Point(40, 39);
+            this.picThumbnail.Location = new System.Drawing.Point(40, 40);
             this.picThumbnail.Margin = new System.Windows.Forms.Padding(40, 0, 0, 39);
             this.picThumbnail.MaximumSize = new System.Drawing.Size(200, 196);
             this.picThumbnail.Name = "picThumbnail";
@@ -143,7 +143,7 @@
             this.ChkOption.BackColor = System.Drawing.Color.Transparent;
             this.tableMain.SetColumnSpan(this.ChkOption, 2);
             this.ChkOption.DarkMode = true;
-            this.ChkOption.Location = new System.Drawing.Point(40, 450);
+            this.ChkOption.Location = new System.Drawing.Point(40, 451);
             this.ChkOption.Margin = new System.Windows.Forms.Padding(40, 20, 40, 39);
             this.ChkOption.Name = "ChkOption";
             this.ChkOption.Size = new System.Drawing.Size(539, 49);

@@ -267,18 +267,13 @@ public partial class DialogForm : ModernForm
     protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
         SuspendLayout();
-        EnableTransparent = darkMode;
 
+        // show backdrop effect for title and footer
+        BackdropMargin = new Padding(0, 0, 0, this.TableActions.Height);
 
         TableActions.BackColor = darkMode
-            ? Color.White.WithAlpha(30)
-            : Color.Black.WithAlpha(10);
-
-        if (!darkMode)
-        {
-            BackColor = Color.White;
-        }
-
+            ? Color.White.WithAlpha(10)
+            : Color.White.WithAlpha(180);
 
         base.ApplyTheme(darkMode, style);
         ResumeLayout();

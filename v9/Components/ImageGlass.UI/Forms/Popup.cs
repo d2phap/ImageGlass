@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
-using System.ComponentModel;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
@@ -442,27 +441,21 @@ public partial class Popup : DialogForm
     protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
         SuspendLayout();
-        EnableTransparent = darkMode;
+        EnableTransparent = true;
 
 
         lblNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(NoteStatusType, darkMode);
-        TableActions.BackColor = BackColor.InvertBlackOrWhite(30);
         SetTextInputStyle(ValidateInput(), darkMode);
 
         lblHeading.ForeColor = WinColorsApi.GetAccentColor(false)
             .WithBrightness(darkMode ? 0.4f : 0f);
 
-        if (!darkMode)
-        {
-            BackColor = Color.White;
-            TableActions.BackColor = BackColor.InvertBlackOrWhite(10);
-        }
+        tableMain.BackColor = darkMode ? Color.FromArgb(12, 16, 18) : Color.White;
 
 
         base.ApplyTheme(darkMode, style);
         ResumeLayout();
     }
-
 
     protected override void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
     {
@@ -489,7 +482,7 @@ public partial class Popup : DialogForm
         var baseHeight = base.OnUpdateHeight(false);
 
         // calculate form height
-        var contentHeight = tableMain.Height + tableMain.Padding.Vertical;
+        var contentHeight = tableMain.Height;
         var formHeight = contentHeight + baseHeight;
 
         if (performUpdate)
