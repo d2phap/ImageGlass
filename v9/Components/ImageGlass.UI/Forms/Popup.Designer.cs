@@ -159,6 +159,7 @@
             this.ControlBox = false;
             this.Controls.Add(this.tableMain);
             this.DarkMode = false;
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(12);
             this.MinimumSize = new System.Drawing.Size(1208, 385);
