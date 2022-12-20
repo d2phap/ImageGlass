@@ -167,27 +167,40 @@ public class ModernComboBox : ComboBox
 
             // arrow
             var arrowColor = _hover
-                ? ColorPalatte.GreySelection.WithBrightness(0.5f)
-                : ColorPalatte.GreySelection.WithBrightness(0.3f);
+                ? ColorPalatte.AppText.WithAlpha(255)
+                : ColorPalatte.AppText.WithAlpha(180);
 
-            using (var p = new Pen(arrowColor, penWidth))
+            using (var arrowPen = new Pen(arrowColor, penWidth))
             {
-                p.LineJoin = LineJoin.Round;
-                p.StartCap = LineCap.Round;
-                p.EndCap = LineCap.Round;
+                arrowPen.LineJoin = LineJoin.Round;
+                arrowPen.StartCap = LineCap.Round;
+                arrowPen.EndCap = LineCap.Round;
 
-                var x = rect.Right - 10 - (_padding / 2);
-                var y = rect.Height / 2 - 2;
+
+                var arrowSize = rect.Height;
+                var initX = rect.Right - arrowSize;
+
+                var p1 = new PointF(
+                    initX + arrowSize * 0.35f,
+                            arrowSize * 0.4f);
+
+                var p2 = new PointF(
+                    initX + arrowSize * 0.5f,
+                            arrowSize * 0.55f);
+
+                var p3 = new PointF(
+                    initX + arrowSize * 0.65f,
+                            arrowSize * 0.4f);
 
                 g.SmoothingMode = SmoothingMode.AntiAlias;
-                g.DrawLine(p, x, y, x + 4, y + 4);
-                g.DrawLine(p, x + 4, y + 4, x + 8, y);
+                g.DrawLine(arrowPen, p1, p2);
+                g.DrawLine(arrowPen, p2, p3);
                 g.SmoothingMode = SmoothingMode.None;
             }
 
             // text
             var text = SelectedItem != null ? SelectedItem.ToString() : Text;
-            using (var b = new SolidBrush(textColor))
+            using (var textBrush = new SolidBrush(textColor))
             {
                 var padding = 2;
 
@@ -204,7 +217,7 @@ public class ModernComboBox : ComboBox
                     Trimming = StringTrimming.EllipsisCharacter,
                 };
 
-                g.DrawString(text, Font, b, modRect, stringFormat);
+                g.DrawString(text, Font, textBrush, modRect, stringFormat);
             }
         }
     }
