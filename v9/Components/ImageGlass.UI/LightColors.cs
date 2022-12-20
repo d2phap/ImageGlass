@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -31,6 +31,12 @@ namespace ImageGlass.UI;
 
 public class LightColors : IColors
 {
+    public Color AppBackground => Color.White;
+    public Color AppText => Color.FromArgb(30, 30, 30); // Normal Text
+    public Color AppTextDisabled => Color.FromArgb(113, 113, 113); // Disabled Text
+
+
+
     public Color GreyBackground => Color.FromArgb(231, 231, 232);
     public Color HeaderBackground => Color.FromArgb(177, 180, 182);
     public Color BlueBackground => LighterBackground.Blend(WinColorsApi.GetAccentColor(true), 0.88f); // Color.FromArgb(255, 255, 255);
@@ -42,8 +48,7 @@ public class LightColors : IColors
     public Color LightestBackground => Color.FromArgb(255, 255, 255);
     public Color LightBorder => Color.FromArgb(201, 201, 201);
     public Color DarkBorder => Color.FromArgb(220, 220, 220);
-    public Color LightText => Color.FromArgb(30, 30, 30); // Normal Text
-    public Color DisabledText => Color.FromArgb(113, 113, 113); // Disabled Text
+    
     public Color BlueHighlight => WinColorsApi.GetAccentColor(false).WithBrightness(0.2f); // Selected Control Borders
     public Color BlueSelection => WinColorsApi.GetAccentColor(false).WithBrightness(0); // DropDown Selection
     public Color GreyHighlight => Color.FromArgb(113, 113, 113); // ComboBox Arrow
