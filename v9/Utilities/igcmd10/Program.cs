@@ -59,6 +59,7 @@ internal static class Program
 
         // load application configs
         Config.Load();
+        Config.Theme.LoadTheme();
         Args = args;
 
         if (args.Length == 0)
