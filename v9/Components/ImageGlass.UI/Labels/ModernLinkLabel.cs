@@ -111,7 +111,7 @@ public class ModernLinkLabel : LinkLabel
         else
         {
             backColor = Color.Transparent;
-            textColor = ColorPalatte.DisabledText;
+            textColor = ColorPalatte.AppTextDisabled;
         }
 
         // draw hover background

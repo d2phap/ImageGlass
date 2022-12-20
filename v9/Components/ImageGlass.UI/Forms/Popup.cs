@@ -155,7 +155,7 @@ public partial class Popup : DialogForm
             _noteStatusType = value;
 
             lblNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(value, DarkMode);
-            lblNote.ForeColor = Theme.ColorPalatte.LightText;
+            lblNote.ForeColor = Theme.ColorPalatte.AppText;
         }
     }
 
@@ -449,7 +449,7 @@ public partial class Popup : DialogForm
         lblHeading.ForeColor = WinColorsApi.GetAccentColor(false)
             .WithBrightness(darkMode ? 0.4f : 0f);
 
-        tableMain.BackColor = darkMode ? Color.FromArgb(12, 16, 18) : Color.White;
+        tableMain.BackColor = Theme.ColorPalatte.AppBackground;
 
 
         base.ApplyTheme(darkMode, style);

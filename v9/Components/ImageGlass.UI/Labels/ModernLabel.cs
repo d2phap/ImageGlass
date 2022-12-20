@@ -84,12 +84,12 @@ public class ModernLabel : Label
         var g = e.Graphics;
 
         var textColor = ForeColor == DefaultForeColor
-            ? ColorPalatte.LightText
+            ? ColorPalatte.AppText
             : ForeColor;
 
         if (!Enabled)
         {
-            textColor = ColorPalatte.DisabledText;
+            textColor = ColorPalatte.AppTextDisabled;
         }
 
         using (var b = new SolidBrush(BackColor))

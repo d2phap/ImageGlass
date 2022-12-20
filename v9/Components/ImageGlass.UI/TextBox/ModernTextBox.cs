@@ -40,7 +40,7 @@ public class ModernTextBox : TextBox
 
                 Padding = new Padding(2, 2, 2, 2);
                 BackColor = colors.LightBackground;
-                ForeColor = colors.LightText;
+                ForeColor = colors.AppText;
                 BorderStyle = BorderStyle.FixedSingle;
             }
             else

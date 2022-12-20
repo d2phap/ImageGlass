@@ -48,7 +48,7 @@ public class ModernNumericUpDown : NumericUpDown
             _darkMode = value;
 
             Controls[1].BackColor = ColorPalatte.LightBackground;
-            Controls[1].ForeColor = ColorPalatte.LightText;
+            Controls[1].ForeColor = ColorPalatte.AppText;
 
             Invalidate();
         }
@@ -78,7 +78,7 @@ public class ModernNumericUpDown : NumericUpDown
                ControlStyles.ResizeRedraw |
                ControlStyles.UserPaint, true);
 
-        base.ForeColor = ColorPalatte.LightText;
+        base.ForeColor = ColorPalatte.AppText;
         base.BackColor = ColorPalatte.LightBackground;
 
         Controls[0].Paint += UpDownControls_Paint;
@@ -152,7 +152,7 @@ public class ModernNumericUpDown : NumericUpDown
             : ColorPalatte.GreySelection.WithBrightness(0.3f);
         if (isUpHovered && _mouseDown)
         {
-            arrowColor = ColorPalatte.LightText;
+            arrowColor = ColorPalatte.AppText;
         }
 
         using (var p = new Pen(arrowColor, DpiApi.Transform(1.1f)))
@@ -178,7 +178,7 @@ public class ModernNumericUpDown : NumericUpDown
             : ColorPalatte.GreySelection.WithBrightness(0.3f);
         if (isDownHovered && _mouseDown)
         {
-            arrowColor = ColorPalatte.LightText;
+            arrowColor = ColorPalatte.AppText;
         }
 
         using (var p = new Pen(arrowColor, DpiApi.Transform(1.1f)))

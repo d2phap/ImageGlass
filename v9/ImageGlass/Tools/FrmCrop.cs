@@ -77,7 +77,7 @@ public partial class FrmCrop : ToolForm, IToolForm
             ? Color.White.WithAlpha(10)
             : Color.White.WithAlpha(220);
 
-        TableTop.BackColor = darkMode ? Color.FromArgb(12, 16, 18) : Color.White;
+        TableTop.BackColor = Config.Theme.ColorPalatte.AppBackground;
 
 
         base.ApplyTheme(darkMode, style);

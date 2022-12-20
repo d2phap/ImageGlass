@@ -296,7 +296,7 @@ public class ModernCheckBox : CheckBox
 
         var g = e.Graphics;
 
-        var textColor = ColorPalatte.LightText;
+        var textColor = ColorPalatte.AppText;
         var borderColor = Checked ? ColorPalatte.BlueHighlight : ColorPalatte.GreySelection;
         var fillColor = Checked ? ColorPalatte.BlueHighlight : ColorPalatte.GreyBackground;
 
@@ -320,7 +320,7 @@ public class ModernCheckBox : CheckBox
         }
         else
         {
-            textColor = ColorPalatte.DisabledText;
+            textColor = ColorPalatte.AppTextDisabled;
             borderColor = ColorPalatte.GreySelection;
             fillColor = ColorPalatte.GreySelection;
         }

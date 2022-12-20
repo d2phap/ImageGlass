@@ -126,8 +126,8 @@ public class ModernComboBox : ComboBox
         {
             var rect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
             var textColor = Enabled
-                ? ColorPalatte.LightText
-                : ColorPalatte.DisabledText;
+                ? ColorPalatte.AppText
+                : ColorPalatte.AppTextDisabled;
 
             var penWidth = DpiApi.Transform(1.1f);
             var borderColor = ColorPalatte.GreySelection;
@@ -215,7 +215,7 @@ public class ModernComboBox : ComboBox
         var g = e.Graphics;
         var rect = e.Bounds;
 
-        var textColor = ColorPalatte.LightText;
+        var textColor = ColorPalatte.AppText;
         var fillColor = ColorPalatte.GreyBackground;
 
         if ((e.State & DrawItemState.Selected) == DrawItemState.Selected ||

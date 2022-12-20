@@ -68,7 +68,7 @@ public record IgThemeColors
 
 
     // Toolbar
-    public Color ToolbarBgColor { get; set; } = ThemeUtils.ColorFromHex("#242b3100");
+    public Color ToolbarBgColor { get; set; } = ThemeUtils.ColorFromHex("#1E242900");
     public Color ToolbarTextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
     public Color ToolbarItemHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
     public Color ToolbarItemActiveColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff22");
@@ -76,7 +76,7 @@ public record IgThemeColors
 
 
     // Gallery
-    public Color ThumbnailBarBgColor { get; set; } = ThemeUtils.ColorFromHex("#242b3100");
+    public Color ThumbnailBarBgColor { get; set; } = ThemeUtils.ColorFromHex("#1E242900");
     public Color ThumbnailBarTextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
     public Color ThumbnailItemHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff33");
     public Color ThumbnailItemActiveColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff22");
@@ -84,7 +84,7 @@ public record IgThemeColors
 
 
     // Menu
-    public Color MenuBgColor { get; set; } = ThemeUtils.ColorFromHex("#242b31");
+    public Color MenuBgColor { get; set; } = ThemeUtils.ColorFromHex("#1E2429");
     public Color MenuBgHoverColor { get; set; } = ThemeUtils.ColorFromHex("#ffffff15");
     public Color MenuTextColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");
     public Color MenuTextHoverColor { get; set; } = ThemeUtils.ColorFromHex("#dedede");

@@ -272,7 +272,7 @@ public class ModernButton : Button
         var accentColor = WinColorsApi.GetAccentColor(true);
         var isCTAStyle = _isDefault || ButtonStyle == ModernButtonStyle.CTA;
 
-        var textColor = colors.LightText;
+        var textColor = colors.AppText;
         var borderColor = colors.GreySelection;
         var borderRadius = BHelper.IsOS(WindowsOS.Win11OrLater) ? this.ScaleToDpi(2.5f) : 0;
         var fillColor = isCTAStyle
@@ -321,7 +321,7 @@ public class ModernButton : Button
         }
         else
         {
-            textColor = colors.DisabledText;
+            textColor = colors.AppTextDisabled;
             fillColor = colors.DarkGreySelection;
         }
 

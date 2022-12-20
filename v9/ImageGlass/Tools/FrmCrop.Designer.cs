@@ -336,14 +336,14 @@ namespace ImageGlass
             this.TableBottom.Controls.Add(this.BtnCopy, 1, 1);
             this.TableBottom.Controls.Add(this.BtnCrop, 1, 0);
             this.TableBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.TableBottom.Location = new System.Drawing.Point(0, 484);
+            this.TableBottom.Location = new System.Drawing.Point(0, 504);
             this.TableBottom.Margin = new System.Windows.Forms.Padding(6);
             this.TableBottom.Name = "TableBottom";
             this.TableBottom.Padding = new System.Windows.Forms.Padding(40, 30, 40, 30);
             this.TableBottom.RowCount = 2;
             this.TableBottom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.TableBottom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TableBottom.Size = new System.Drawing.Size(660, 248);
+            this.TableBottom.Size = new System.Drawing.Size(660, 228);
             this.TableBottom.TabIndex = 1;
             // 
             // BtnSave
@@ -352,7 +352,7 @@ namespace ImageGlass
             this.BtnSave.DarkMode = true;
             this.BtnSave.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BtnSave.ImagePadding = 2;
-            this.BtnSave.Location = new System.Drawing.Point(40, 40);
+            this.BtnSave.Location = new System.Drawing.Point(40, 30);
             this.BtnSave.Margin = new System.Windows.Forms.Padding(0, 0, 6, 6);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Padding = new System.Windows.Forms.Padding(10);
@@ -369,7 +369,7 @@ namespace ImageGlass
             this.BtnSaveAs.DarkMode = true;
             this.BtnSaveAs.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BtnSaveAs.ImagePadding = 2;
-            this.BtnSaveAs.Location = new System.Drawing.Point(40, 130);
+            this.BtnSaveAs.Location = new System.Drawing.Point(40, 120);
             this.BtnSaveAs.Margin = new System.Windows.Forms.Padding(0, 6, 6, 0);
             this.BtnSaveAs.Name = "BtnSaveAs";
             this.BtnSaveAs.Padding = new System.Windows.Forms.Padding(10);
@@ -385,7 +385,7 @@ namespace ImageGlass
             this.BtnCopy.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BtnCopy.Image = ((System.Drawing.Image)(resources.GetObject("BtnCopy.Image")));
             this.BtnCopy.ImagePadding = 2;
-            this.BtnCopy.Location = new System.Drawing.Point(336, 130);
+            this.BtnCopy.Location = new System.Drawing.Point(336, 120);
             this.BtnCopy.Margin = new System.Windows.Forms.Padding(6, 6, 0, 0);
             this.BtnCopy.Name = "BtnCopy";
             this.BtnCopy.Padding = new System.Windows.Forms.Padding(10);
@@ -402,7 +402,7 @@ namespace ImageGlass
             this.BtnCrop.DarkMode = true;
             this.BtnCrop.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BtnCrop.ImagePadding = 2;
-            this.BtnCrop.Location = new System.Drawing.Point(336, 40);
+            this.BtnCrop.Location = new System.Drawing.Point(336, 30);
             this.BtnCrop.Margin = new System.Windows.Forms.Padding(6, 0, 0, 6);
             this.BtnCrop.Name = "BtnCrop";
             this.BtnCrop.Padding = new System.Windows.Forms.Padding(10);
@@ -421,6 +421,7 @@ namespace ImageGlass
             this.Controls.Add(this.TableBottom);
             this.Controls.Add(this.TableTop);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Location = new System.Drawing.Point(0, 0);
             this.Margin = new System.Windows.Forms.Padding(12);
             this.Name = "FrmCrop";

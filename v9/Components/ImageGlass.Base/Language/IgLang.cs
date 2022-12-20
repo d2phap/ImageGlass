@@ -117,7 +117,7 @@ public class IgLang : Dictionary<string, string>
 
         Add("_._UnhandledException", "Unhandled exception"); // v9.0
         Add("_._UnhandledException._Description", "Unhandled exception has occurred. If you click Continue, the application will ignore this error and attempt to continue. If you click Quit, the application will close immediately."); // v9.0
-        Add("_._DoNotShowThisMessageAgain", "Do not show this message again."); // v9.0
+        Add("_._DoNotShowThisMessageAgain", "Do not show this message again"); // v9.0
 
 
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Name)}", "Name (default)"); //v8.0
