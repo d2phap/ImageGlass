@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -295,7 +295,6 @@ public class ModernCheckBox : CheckBox
         ButtonRenderer.DrawParentBackground(e.Graphics, e.ClipRectangle, this);
 
         var g = e.Graphics;
-        var rect = e.ClipRectangle;
 
         var textColor = ColorPalatte.LightText;
         var borderColor = Checked ? ColorPalatte.BlueHighlight : ColorPalatte.GreySelection;
@@ -400,8 +399,8 @@ public class ModernCheckBox : CheckBox
             var modRect = new RectangleF(
                 checkBoxRect.Right + checkBoxSize / 3,
                 initY,
-                rect.Width - checkBoxSize - Padding.Horizontal,
-                rect.Height - Padding.Vertical);
+                Bounds.Width - checkBoxSize - Padding.Horizontal,
+                Bounds.Height - Padding.Vertical);
 
             g.DrawString(Text, Font, b, modRect, stringFormat);
         }

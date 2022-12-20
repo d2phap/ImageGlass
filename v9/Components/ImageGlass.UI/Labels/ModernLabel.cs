@@ -82,7 +82,6 @@ public class ModernLabel : Label
     protected override void OnPaint(PaintEventArgs e)
     {
         var g = e.Graphics;
-        var rect = e.ClipRectangle;
 
         var textColor = ForeColor == DefaultForeColor
             ? ColorPalatte.LightText
@@ -95,7 +94,7 @@ public class ModernLabel : Label
 
         using (var b = new SolidBrush(BackColor))
         {
-            g.FillRectangle(b, rect);
+            g.FillRectangle(b, Bounds);
         }
 
         using (var b = new SolidBrush(textColor))
@@ -159,8 +158,8 @@ public class ModernLabel : Label
             var modRect = new RectangleF(
                 gapX + Padding.Left,
                 Padding.Top,
-                rect.Width + missingWidth - Padding.Horizontal * 1.5f,
-                rect.Height - Padding.Vertical);
+                Bounds.Width + missingWidth - Padding.Horizontal * 1.5f,
+                Bounds.Height - Padding.Vertical);
 
             g.DrawString(Text, Font, b, modRect, textFormat);
         }

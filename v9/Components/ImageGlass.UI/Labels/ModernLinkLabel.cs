@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2010 - 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -84,13 +84,12 @@ public class ModernLinkLabel : LinkLabel
     protected override void OnPaint(PaintEventArgs e)
     {
         // draw parent background
-        ButtonRenderer.DrawParentBackground(e.Graphics, e.ClipRectangle, this);
+        ButtonRenderer.DrawParentBackground(e.Graphics, Bounds, this);
 
         var g = e.Graphics;
         g.CompositingQuality = CompositingQuality.HighQuality;
         g.SmoothingMode = SmoothingMode.HighQuality;
 
-        var rect = e.ClipRectangle;
         var textColor = ColorPalatte.BlueHighlight;
         var backColor = DarkMode
             ? Color.White.WithAlpha(0)
@@ -118,7 +117,7 @@ public class ModernLinkLabel : LinkLabel
         // draw hover background
         using (var brush = new SolidBrush(backColor))
         {
-            var bgRect = new Rectangle(0, 0, rect.Width - 1, rect.Height - 1);
+            var bgRect = new Rectangle(0, 0, Bounds.Width - 1, Bounds.Height - 1);
             g.FillRoundedRectangle(brush, bgRect, 2f);
         }
 
@@ -186,8 +185,8 @@ public class ModernLinkLabel : LinkLabel
             var modRect = new RectangleF(
                 gapX + Padding.Left,
                 Padding.Top,
-                rect.Width + missingWidth - Padding.Horizontal * 1.5f,
-                rect.Height - Padding.Vertical);
+                Bounds.Width + missingWidth - Padding.Horizontal * 1.5f,
+                Bounds.Height - Padding.Vertical);
 
             g.DrawString(Text, font, brush, modRect, textFormat);
         }
