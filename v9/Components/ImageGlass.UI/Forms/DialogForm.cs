@@ -143,7 +143,7 @@ public partial class DialogForm : ModernForm
     // Action bar codes
     #region Action bar codes
 
-    public TableLayoutPanel TableActions = new TableLayoutPanel();
+    public TableLayoutPanel TableFooter = new TableLayoutPanel();
     public ModernButton BtnAccept = new ModernButton();
     public ModernButton BtnCancel = new ModernButton();
     public ModernButton BtnApply = new ModernButton();
@@ -154,29 +154,29 @@ public partial class DialogForm : ModernForm
     /// </summary>
     private void AppendActionBar()
     {
-        this.TableActions.SuspendLayout();
+        this.TableFooter.SuspendLayout();
         this.SuspendLayout();
         // 
         // TableActions
         // 
-        this.TableActions.AutoSize = true;
-        this.TableActions.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-        this.TableActions.ColumnCount = 4;
-        this.TableActions.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-        this.TableActions.ColumnStyles.Add(new ColumnStyle());
-        this.TableActions.ColumnStyles.Add(new ColumnStyle());
-        this.TableActions.Controls.Add(this.BtnAccept, 1, 0);
-        this.TableActions.Controls.Add(this.BtnCancel, 2, 0);
-        this.TableActions.Controls.Add(this.BtnApply, 3, 0);
-        this.TableActions.Dock = DockStyle.Bottom;
-        this.TableActions.Location = new Point(0, 367);
-        this.TableActions.Margin = new Padding(0);
-        this.TableActions.Padding = this.ScaleToDpi(new Padding(16));
-        this.TableActions.Name = "TableActions";
-        this.TableActions.RowCount = 1;
-        this.TableActions.RowStyles.Add(new RowStyle());
-        this.TableActions.Size = new Size(800, 83);
-        this.TableActions.TabIndex = 2;
+        this.TableFooter.AutoSize = true;
+        this.TableFooter.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        this.TableFooter.ColumnCount = 4;
+        this.TableFooter.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        this.TableFooter.ColumnStyles.Add(new ColumnStyle());
+        this.TableFooter.ColumnStyles.Add(new ColumnStyle());
+        this.TableFooter.Controls.Add(this.BtnAccept, 1, 0);
+        this.TableFooter.Controls.Add(this.BtnCancel, 2, 0);
+        this.TableFooter.Controls.Add(this.BtnApply, 3, 0);
+        this.TableFooter.Dock = DockStyle.Bottom;
+        this.TableFooter.Location = new Point(0, 367);
+        this.TableFooter.Margin = new Padding(0);
+        this.TableFooter.Padding = this.ScaleToDpi(new Padding(16));
+        this.TableFooter.Name = "TableFooter";
+        this.TableFooter.RowCount = 1;
+        this.TableFooter.RowStyles.Add(new RowStyle());
+        this.TableFooter.Size = new Size(800, 83);
+        this.TableFooter.TabIndex = 2;
         // 
         // BtnAccept
         // 
@@ -230,10 +230,10 @@ public partial class DialogForm : ModernForm
         this.BtnApply.Click += BtnApply_Click;
         
 
-        this.TableActions.ResumeLayout(false);
-        this.TableActions.PerformLayout();
+        this.TableFooter.ResumeLayout(false);
+        this.TableFooter.PerformLayout();
 
-        this.Controls.Add(this.TableActions);
+        this.Controls.Add(this.TableFooter);
         this.AcceptButton = BtnAccept;
         this.CancelButton = BtnCancel;
         this.ResumeLayout(false);
@@ -269,11 +269,11 @@ public partial class DialogForm : ModernForm
         SuspendLayout();
 
         // show backdrop effect for title and footer
-        BackdropMargin = new Padding(0, 0, 0, this.TableActions.Height);
+        BackdropMargin = new Padding(0, 0, 0, this.TableFooter.Height);
 
-        TableActions.BackColor = darkMode
+        TableFooter.BackColor = darkMode
             ? Color.White.WithAlpha(10)
-            : Color.White.WithAlpha(180);
+            : Color.White.WithAlpha(220);
 
         base.ApplyTheme(darkMode, style);
         ResumeLayout();
@@ -287,7 +287,7 @@ public partial class DialogForm : ModernForm
             this.BtnCancel.Size =
             this.BtnApply.Size = this.ScaleToDpi(new Size(90, 30));
 
-        this.TableActions.Padding = this.ScaleToDpi(new Padding(16));
+        this.TableFooter.Padding = this.ScaleToDpi(new Padding(16));
         this.BtnAccept.Margin =
             this.BtnCancel.Margin =
             this.BtnApply.Margin = this.ScaleToDpi(new Padding(8, 0, 0, 0));
@@ -307,7 +307,7 @@ public partial class DialogForm : ModernForm
 
         base.OnLoad(e);
 
-        this.TableActions.BringToFront();
+        this.TableFooter.BringToFront();
 
         // enable free form moving
         EnableFormFreeMoving(this);
@@ -338,7 +338,7 @@ public partial class DialogForm : ModernForm
     {
         // calculate form height
         var formNonClientHeight = Padding.Vertical;
-        var contentHeight = TableActions.Height + TableActions.Padding.Vertical;
+        var contentHeight = TableFooter.Height + TableFooter.Padding.Vertical;
         var formHeight = formNonClientHeight + contentHeight;
 
         if (performUpdate)

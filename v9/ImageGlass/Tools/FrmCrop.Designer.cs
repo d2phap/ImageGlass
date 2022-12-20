@@ -88,7 +88,7 @@ namespace ImageGlass
             this.TableTop.Location = new System.Drawing.Point(0, 0);
             this.TableTop.Margin = new System.Windows.Forms.Padding(0);
             this.TableTop.Name = "TableTop";
-            this.TableTop.Padding = new System.Windows.Forms.Padding(40, 20, 40, 20);
+            this.TableTop.Padding = new System.Windows.Forms.Padding(40);
             this.TableTop.RowCount = 6;
             this.TableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -96,7 +96,7 @@ namespace ImageGlass
             this.TableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.TableTop.Size = new System.Drawing.Size(660, 399);
+            this.TableTop.Size = new System.Drawing.Size(660, 439);
             this.TableTop.TabIndex = 0;
             // 
             // LblLocation
@@ -104,7 +104,7 @@ namespace ImageGlass
             this.LblLocation.AutoSize = true;
             this.LblLocation.BackColor = System.Drawing.Color.Transparent;
             this.LblLocation.DarkMode = true;
-            this.LblLocation.Location = new System.Drawing.Point(40, 151);
+            this.LblLocation.Location = new System.Drawing.Point(40, 171);
             this.LblLocation.Margin = new System.Windows.Forms.Padding(0, 10, 20, 10);
             this.LblLocation.Name = "LblLocation";
             this.LblLocation.Size = new System.Drawing.Size(168, 45);
@@ -116,7 +116,7 @@ namespace ImageGlass
             this.LblSize.AutoSize = true;
             this.LblSize.BackColor = System.Drawing.Color.Transparent;
             this.LblSize.DarkMode = true;
-            this.LblSize.Location = new System.Drawing.Point(40, 211);
+            this.LblSize.Location = new System.Drawing.Point(40, 231);
             this.LblSize.Margin = new System.Windows.Forms.Padding(0, 0, 20, 10);
             this.LblSize.Name = "LblSize";
             this.LblSize.Size = new System.Drawing.Size(103, 45);
@@ -129,11 +129,11 @@ namespace ImageGlass
             this.BtnSettings.Dock = System.Windows.Forms.DockStyle.Right;
             this.BtnSettings.Image = ((System.Drawing.Image)(resources.GetObject("BtnSettings.Image")));
             this.BtnSettings.ImagePadding = 0;
-            this.BtnSettings.Location = new System.Drawing.Point(550, 291);
+            this.BtnSettings.Location = new System.Drawing.Point(500, 311);
             this.BtnSettings.Margin = new System.Windows.Forms.Padding(0, 20, 0, 10);
             this.BtnSettings.Name = "BtnSettings";
-            this.BtnSettings.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
-            this.BtnSettings.Size = new System.Drawing.Size(70, 78);
+            this.BtnSettings.Padding = new System.Windows.Forms.Padding(10);
+            this.BtnSettings.Size = new System.Drawing.Size(120, 78);
             this.BtnSettings.SvgIcon = ImageGlass.Base.IconName.Setting;
             this.BtnSettings.SystemIcon = null;
             this.BtnSettings.TabIndex = 8;
@@ -145,7 +145,7 @@ namespace ImageGlass
             this.LblAspectRatio.AutoSize = true;
             this.LblAspectRatio.BackColor = System.Drawing.Color.Transparent;
             this.LblAspectRatio.DarkMode = true;
-            this.LblAspectRatio.Location = new System.Drawing.Point(40, 24);
+            this.LblAspectRatio.Location = new System.Drawing.Point(40, 44);
             this.LblAspectRatio.Margin = new System.Windows.Forms.Padding(0, 4, 4, 10);
             this.LblAspectRatio.Name = "LblAspectRatio";
             this.LblAspectRatio.Size = new System.Drawing.Size(218, 45);
@@ -156,7 +156,7 @@ namespace ImageGlass
             // 
             this.NumX.DarkMode = true;
             this.NumX.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.NumX.Location = new System.Drawing.Point(262, 151);
+            this.NumX.Location = new System.Drawing.Point(262, 171);
             this.NumX.Margin = new System.Windows.Forms.Padding(0, 10, 10, 10);
             this.NumX.Maximum = new decimal(new int[] {
             1000000,
@@ -173,7 +173,7 @@ namespace ImageGlass
             // 
             this.NumY.DarkMode = true;
             this.NumY.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.NumY.Location = new System.Drawing.Point(451, 151);
+            this.NumY.Location = new System.Drawing.Point(451, 171);
             this.NumY.Margin = new System.Windows.Forms.Padding(10, 10, 0, 10);
             this.NumY.Maximum = new decimal(new int[] {
             1000000,
@@ -190,7 +190,7 @@ namespace ImageGlass
             // 
             this.NumWidth.DarkMode = true;
             this.NumWidth.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.NumWidth.Location = new System.Drawing.Point(262, 211);
+            this.NumWidth.Location = new System.Drawing.Point(262, 231);
             this.NumWidth.Margin = new System.Windows.Forms.Padding(0, 0, 10, 10);
             this.NumWidth.Maximum = new decimal(new int[] {
             1000000,
@@ -207,7 +207,7 @@ namespace ImageGlass
             // 
             this.NumHeight.DarkMode = true;
             this.NumHeight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.NumHeight.Location = new System.Drawing.Point(451, 211);
+            this.NumHeight.Location = new System.Drawing.Point(451, 231);
             this.NumHeight.Margin = new System.Windows.Forms.Padding(10, 0, 0, 10);
             this.NumHeight.Maximum = new decimal(new int[] {
             1000000,
@@ -236,7 +236,7 @@ namespace ImageGlass
             "3:2",
             "4:3",
             "16:9"});
-            this.CmbAspectRatio.Location = new System.Drawing.Point(262, 20);
+            this.CmbAspectRatio.Location = new System.Drawing.Point(262, 40);
             this.CmbAspectRatio.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.CmbAspectRatio.Name = "CmbAspectRatio";
             this.CmbAspectRatio.Size = new System.Drawing.Size(358, 51);
@@ -247,7 +247,7 @@ namespace ImageGlass
             // 
             this.NumRatioFrom.DarkMode = true;
             this.NumRatioFrom.Dock = System.Windows.Forms.DockStyle.Top;
-            this.NumRatioFrom.Location = new System.Drawing.Point(262, 81);
+            this.NumRatioFrom.Location = new System.Drawing.Point(262, 101);
             this.NumRatioFrom.Margin = new System.Windows.Forms.Padding(0, 0, 10, 10);
             this.NumRatioFrom.Maximum = new decimal(new int[] {
             1000000,
@@ -264,7 +264,7 @@ namespace ImageGlass
             // 
             this.NumRatioTo.DarkMode = true;
             this.NumRatioTo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.NumRatioTo.Location = new System.Drawing.Point(451, 81);
+            this.NumRatioTo.Location = new System.Drawing.Point(451, 101);
             this.NumRatioTo.Margin = new System.Windows.Forms.Padding(10, 0, 0, 10);
             this.NumRatioTo.Maximum = new decimal(new int[] {
             1000000,
@@ -286,7 +286,7 @@ namespace ImageGlass
             this.flowLayoutPanel1.Controls.Add(this.BtnQuickSelect);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(40, 271);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(40, 291);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 20, 12, 10);
@@ -301,7 +301,7 @@ namespace ImageGlass
             this.BtnReset.Location = new System.Drawing.Point(269, 20);
             this.BtnReset.Margin = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.BtnReset.Name = "BtnReset";
-            this.BtnReset.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.BtnReset.Padding = new System.Windows.Forms.Padding(10);
             this.BtnReset.Size = new System.Drawing.Size(120, 78);
             this.BtnReset.SvgIcon = ImageGlass.Base.IconName.ResetSelection;
             this.BtnReset.SystemIcon = null;
@@ -317,7 +317,7 @@ namespace ImageGlass
             this.BtnQuickSelect.Location = new System.Drawing.Point(137, 20);
             this.BtnQuickSelect.Margin = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.BtnQuickSelect.Name = "BtnQuickSelect";
-            this.BtnQuickSelect.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.BtnQuickSelect.Padding = new System.Windows.Forms.Padding(10);
             this.BtnQuickSelect.Size = new System.Drawing.Size(120, 78);
             this.BtnQuickSelect.SvgIcon = ImageGlass.Base.IconName.Selection;
             this.BtnQuickSelect.SystemIcon = null;
@@ -328,7 +328,6 @@ namespace ImageGlass
             // TableBottom
             // 
             this.TableBottom.AutoSize = true;
-            this.TableBottom.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.TableBottom.ColumnCount = 2;
             this.TableBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.TableBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -337,14 +336,14 @@ namespace ImageGlass
             this.TableBottom.Controls.Add(this.BtnCopy, 1, 1);
             this.TableBottom.Controls.Add(this.BtnCrop, 1, 0);
             this.TableBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.TableBottom.Location = new System.Drawing.Point(0, 479);
-            this.TableBottom.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.TableBottom.Location = new System.Drawing.Point(0, 484);
+            this.TableBottom.Margin = new System.Windows.Forms.Padding(6);
             this.TableBottom.Name = "TableBottom";
-            this.TableBottom.Padding = new System.Windows.Forms.Padding(40, 20, 40, 20);
+            this.TableBottom.Padding = new System.Windows.Forms.Padding(40, 30, 40, 30);
             this.TableBottom.RowCount = 2;
             this.TableBottom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.TableBottom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TableBottom.Size = new System.Drawing.Size(660, 208);
+            this.TableBottom.Size = new System.Drawing.Size(660, 248);
             this.TableBottom.TabIndex = 1;
             // 
             // BtnSave
@@ -353,10 +352,10 @@ namespace ImageGlass
             this.BtnSave.DarkMode = true;
             this.BtnSave.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BtnSave.ImagePadding = 2;
-            this.BtnSave.Location = new System.Drawing.Point(40, 20);
+            this.BtnSave.Location = new System.Drawing.Point(40, 40);
             this.BtnSave.Margin = new System.Windows.Forms.Padding(0, 0, 6, 6);
             this.BtnSave.Name = "BtnSave";
-            this.BtnSave.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.BtnSave.Padding = new System.Windows.Forms.Padding(10);
             this.BtnSave.Size = new System.Drawing.Size(284, 78);
             this.BtnSave.SystemIcon = null;
             this.BtnSave.TabIndex = 0;
@@ -370,10 +369,10 @@ namespace ImageGlass
             this.BtnSaveAs.DarkMode = true;
             this.BtnSaveAs.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BtnSaveAs.ImagePadding = 2;
-            this.BtnSaveAs.Location = new System.Drawing.Point(40, 110);
+            this.BtnSaveAs.Location = new System.Drawing.Point(40, 130);
             this.BtnSaveAs.Margin = new System.Windows.Forms.Padding(0, 6, 6, 0);
             this.BtnSaveAs.Name = "BtnSaveAs";
-            this.BtnSaveAs.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.BtnSaveAs.Padding = new System.Windows.Forms.Padding(10);
             this.BtnSaveAs.Size = new System.Drawing.Size(284, 78);
             this.BtnSaveAs.SystemIcon = null;
             this.BtnSaveAs.TabIndex = 1;
@@ -386,10 +385,10 @@ namespace ImageGlass
             this.BtnCopy.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BtnCopy.Image = ((System.Drawing.Image)(resources.GetObject("BtnCopy.Image")));
             this.BtnCopy.ImagePadding = 2;
-            this.BtnCopy.Location = new System.Drawing.Point(336, 110);
+            this.BtnCopy.Location = new System.Drawing.Point(336, 130);
             this.BtnCopy.Margin = new System.Windows.Forms.Padding(6, 6, 0, 0);
             this.BtnCopy.Name = "BtnCopy";
-            this.BtnCopy.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.BtnCopy.Padding = new System.Windows.Forms.Padding(10);
             this.BtnCopy.Size = new System.Drawing.Size(284, 78);
             this.BtnCopy.SvgIcon = ImageGlass.Base.IconName.Copy;
             this.BtnCopy.SystemIcon = null;
@@ -403,10 +402,10 @@ namespace ImageGlass
             this.BtnCrop.DarkMode = true;
             this.BtnCrop.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.BtnCrop.ImagePadding = 2;
-            this.BtnCrop.Location = new System.Drawing.Point(336, 20);
+            this.BtnCrop.Location = new System.Drawing.Point(336, 40);
             this.BtnCrop.Margin = new System.Windows.Forms.Padding(6, 0, 0, 6);
             this.BtnCrop.Name = "BtnCrop";
-            this.BtnCrop.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.BtnCrop.Padding = new System.Windows.Forms.Padding(10);
             this.BtnCrop.Size = new System.Drawing.Size(284, 78);
             this.BtnCrop.SystemIcon = null;
             this.BtnCrop.TabIndex = 2;
@@ -418,12 +417,12 @@ namespace ImageGlass
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(18F, 45F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(660, 687);
+            this.ClientSize = new System.Drawing.Size(660, 732);
             this.Controls.Add(this.TableBottom);
             this.Controls.Add(this.TableTop);
             this.DoubleBuffered = true;
             this.Location = new System.Drawing.Point(0, 0);
-            this.Margin = new System.Windows.Forms.Padding(12, 12, 12, 12);
+            this.Margin = new System.Windows.Forms.Padding(12);
             this.Name = "FrmCrop";
             this.Opacity = 0.85D;
             this.Text = "[Crop tool]";

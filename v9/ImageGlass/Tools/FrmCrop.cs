@@ -68,15 +68,16 @@ public partial class FrmCrop : ToolForm, IToolForm
     protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
         SuspendLayout();
-        EnableTransparent = darkMode;
 
 
-        TableBottom.BackColor = BackColor.InvertBlackOrWhite(30);
-        if (!darkMode)
-        {
-            BackColor = Color.White;
-            TableBottom.BackColor = BackColor.InvertBlackOrWhite(10);
-        }
+        // show backdrop effect for title and footer
+        BackdropMargin = new Padding(0, 0, 0, TableBottom.Height);
+
+        TableBottom.BackColor = darkMode
+            ? Color.White.WithAlpha(10)
+            : Color.White.WithAlpha(220);
+
+        TableTop.BackColor = darkMode ? Color.FromArgb(12, 16, 18) : Color.White;
 
 
         base.ApplyTheme(darkMode, style);
@@ -104,8 +105,6 @@ public partial class FrmCrop : ToolForm, IToolForm
 
         // load crop tool configs
         Settings.LoadFromAppConfig();
-
-        UpdateHeight();
 
         // load form data
         NumRatioFrom.Value = Settings.AspectRatioValues[0];
@@ -137,6 +136,25 @@ public partial class FrmCrop : ToolForm, IToolForm
 
         ApplyLanguage();
     }
+
+
+    protected override int OnUpdateHeight(bool performUpdate = true)
+    {
+        var baseHeight = base.OnUpdateHeight(false);
+
+        // calculate form height
+        var contentHeight = TableTop.Height + TableTop.Padding.Vertical
+            + TableBottom.Height;
+        var formHeight = contentHeight + baseHeight;
+
+        if (performUpdate)
+        {
+            Height = formHeight;
+        }
+
+        return formHeight;
+    }
+
 
     protected override void OnToolFormClosing(ToolFormClosingEventArgs e)
     {
@@ -205,19 +223,6 @@ public partial class FrmCrop : ToolForm, IToolForm
 
     // Private methods
     #region Private methods
-
-    /// <summary>
-    /// Recalculate and update window height.
-    /// </summary>
-    private void UpdateHeight()
-    {
-        // calculate form height
-        var contentHeight = TableTop.Height + TableTop.Padding.Vertical +
-            TableBottom.Height + (TableBottom.Padding.Vertical * 2);
-
-        Height = contentHeight;
-    }
-
 
     private void ApplyLanguage()
     {
@@ -325,7 +330,7 @@ public partial class FrmCrop : ToolForm, IToolForm
         NumRatioFrom.Enabled = NumRatioTo.Enabled = ratio == SelectionAspectRatio.Custom;
 
         // adjust form size
-        UpdateHeight();
+        OnUpdateHeight();
 
 
         // load selection area data

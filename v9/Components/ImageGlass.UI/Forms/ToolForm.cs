@@ -98,6 +98,7 @@ public partial class ToolForm : ModernForm
 
     private void AttachEventsToParent(ModernForm frmOwner)
     {
+        if (DesignMode) return;
         if (frmOwner is not ModernForm owner) return;
 
         owner.Move += Owner_Move;
@@ -177,8 +178,28 @@ public partial class ToolForm : ModernForm
 
     #region Override / Virtual methods
 
+    /// <summary>
+    /// Recalculates and updates window height on <see cref="Form.OnLoad(EventArgs)"/> event.
+    /// </summary>
+    protected virtual int OnUpdateHeight(bool performUpdate = true)
+    {
+        // calculate form height
+        var formHeight = Padding.Vertical;
+
+        if (performUpdate)
+        {
+            Height = formHeight;
+        }
+
+        return formHeight;
+    }
+
+
     protected override void OnLoad(EventArgs e)
     {
+        // adjust form size
+        _ = OnUpdateHeight();
+
         base.OnLoad(e);
         if (DesignMode) return;
 
@@ -235,6 +256,8 @@ public partial class ToolForm : ModernForm
     /// </summary>
     protected virtual void AddFormEvents()
     {
+        if (DesignMode) return;
+
         Move += Form_Move;
 
         Activated += Form_Activated;
@@ -267,7 +290,7 @@ public partial class ToolForm : ModernForm
     /// </summary>
     protected virtual void SetLocationBasedOnParent(Point initLoc = default)
     {
-        if (Owner == null) return;
+        if (DesignMode || Owner == null) return;
 
         if (Owner.WindowState == FormWindowState.Minimized || !Owner.Visible)
         {

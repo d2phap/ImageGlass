@@ -441,7 +441,6 @@ public partial class Popup : DialogForm
     protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
         SuspendLayout();
-        EnableTransparent = true;
 
 
         lblNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(NoteStatusType, darkMode);
