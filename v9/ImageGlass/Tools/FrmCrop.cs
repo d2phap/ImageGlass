@@ -85,6 +85,15 @@ public partial class FrmCrop : ToolForm, IToolForm
     }
 
 
+    protected override void OnDpiChanged(DpiChangedEventArgs e)
+    {
+        base.OnDpiChanged(e);
+
+        OnUpdateHeight();
+        ApplyTheme(Theme.Settings.IsDarkMode);
+    }
+
+
     //protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
     //{
     //    // update theme here

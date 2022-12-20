@@ -162,7 +162,6 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(12);
-            this.MinimumSize = new System.Drawing.Size(1208, 385);
             this.Name = "Popup";
             this.Text = "[Title]";
             this.Controls.SetChildIndex(this.tableMain, 0);

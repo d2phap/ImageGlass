@@ -280,6 +280,15 @@ public partial class DialogForm : ModernForm
     }
 
 
+    protected override void OnDpiChanged(DpiChangedEventArgs e)
+    {
+        base.OnDpiChanged(e);
+
+        OnUpdateHeight();
+        ApplyTheme(DarkMode);
+    }
+
+
     protected override void OnLoad(EventArgs e)
     {
         // update size and padding

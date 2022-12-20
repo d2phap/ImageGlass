@@ -32,8 +32,6 @@ public partial class FrmCropSettings : DialogForm
     {
         InitializeComponent();
         Settings = settings;
-
-        ApplyTheme(Config.Theme.Settings.IsDarkMode);
     }
 
 
@@ -44,6 +42,7 @@ public partial class FrmCropSettings : DialogForm
     {
         base.OnLoad(e);
 
+        ApplyTheme(Config.Theme.Settings.IsDarkMode);
         ApplyLanguage();
         LoadSettings();
     }

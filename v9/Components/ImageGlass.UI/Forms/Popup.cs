@@ -413,8 +413,6 @@ public partial class Popup : DialogForm
 
     protected override void OnLoad(EventArgs e)
     {
-        ApplyTheme(Theme.Settings.IsDarkMode);
-
         // show thumbnail
         var showThumbnail = Thumbnail != null || ThumbnailOverlay != null;
         var columnIndex = tableMain.GetColumn(picThumbnail);
@@ -434,6 +432,7 @@ public partial class Popup : DialogForm
 
         base.OnLoad(e);
 
+        ApplyTheme(Theme.Settings.IsDarkMode);
         _ = SetFocusAsync();
     }
 
@@ -456,6 +455,7 @@ public partial class Popup : DialogForm
         ResumeLayout();
     }
 
+    
     protected override void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
     {
         base.OnSystemAccentColorChanged(e);
@@ -487,7 +487,6 @@ public partial class Popup : DialogForm
         if (performUpdate)
         {
             Height = formHeight;
-            MinimumSize = new Size(Width, formHeight);
         }
 
         return formHeight;
