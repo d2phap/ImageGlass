@@ -68,7 +68,7 @@
             this.tableTop.Location = new System.Drawing.Point(0, 0);
             this.tableTop.Margin = new System.Windows.Forms.Padding(0);
             this.tableTop.Name = "tableTop";
-            this.tableTop.Padding = new System.Windows.Forms.Padding(40, 39, 40, 39);
+            this.tableTop.Padding = new System.Windows.Forms.Padding(40, 40, 40, 80);
             this.tableTop.RowCount = 7;
             this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -79,7 +79,7 @@
             this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableTop.Size = new System.Drawing.Size(750, 512);
+            this.tableTop.Size = new System.Drawing.Size(750, 554);
             this.tableTop.TabIndex = 0;
             // 
             // ChkCloseToolAfterSaving
@@ -88,11 +88,10 @@
             this.ChkCloseToolAfterSaving.BackColor = System.Drawing.Color.Transparent;
             this.tableTop.SetColumnSpan(this.ChkCloseToolAfterSaving, 3);
             this.ChkCloseToolAfterSaving.DarkMode = false;
-            this.ChkCloseToolAfterSaving.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ChkCloseToolAfterSaving.Location = new System.Drawing.Point(40, 39);
+            this.ChkCloseToolAfterSaving.Location = new System.Drawing.Point(40, 40);
             this.ChkCloseToolAfterSaving.Margin = new System.Windows.Forms.Padding(0);
             this.ChkCloseToolAfterSaving.Name = "ChkCloseToolAfterSaving";
-            this.ChkCloseToolAfterSaving.Size = new System.Drawing.Size(670, 49);
+            this.ChkCloseToolAfterSaving.Size = new System.Drawing.Size(473, 49);
             this.ChkCloseToolAfterSaving.TabIndex = 2;
             this.ChkCloseToolAfterSaving.Text = "[Close Crop tool after saving]";
             this.ChkCloseToolAfterSaving.UseVisualStyleBackColor = false;
@@ -103,7 +102,7 @@
             this.CmbSelectionType.DarkMode = false;
             this.CmbSelectionType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.CmbSelectionType.FormattingEnabled = true;
-            this.CmbSelectionType.Location = new System.Drawing.Point(40, 203);
+            this.CmbSelectionType.Location = new System.Drawing.Point(40, 204);
             this.CmbSelectionType.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.CmbSelectionType.Name = "CmbSelectionType";
             this.CmbSelectionType.Size = new System.Drawing.Size(578, 51);
@@ -115,7 +114,7 @@
             this.LblLocation.AutoSize = true;
             this.LblLocation.BackColor = System.Drawing.Color.Transparent;
             this.LblLocation.DarkMode = false;
-            this.LblLocation.Location = new System.Drawing.Point(70, 363);
+            this.LblLocation.Location = new System.Drawing.Point(70, 364);
             this.LblLocation.Margin = new System.Windows.Forms.Padding(30, 30, 0, 0);
             this.LblLocation.Name = "LblLocation";
             this.LblLocation.Size = new System.Drawing.Size(168, 45);
@@ -125,7 +124,7 @@
             // NumX
             // 
             this.NumX.DarkMode = false;
-            this.NumX.Location = new System.Drawing.Point(238, 363);
+            this.NumX.Location = new System.Drawing.Point(238, 364);
             this.NumX.Margin = new System.Windows.Forms.Padding(0, 30, 10, 0);
             this.NumX.Maximum = new decimal(new int[] {
             1000000,
@@ -141,7 +140,7 @@
             // NumY
             // 
             this.NumY.DarkMode = false;
-            this.NumY.Location = new System.Drawing.Point(438, 363);
+            this.NumY.Location = new System.Drawing.Point(438, 364);
             this.NumY.Margin = new System.Windows.Forms.Padding(10, 30, 0, 0);
             this.NumY.Maximum = new decimal(new int[] {
             1000000,
@@ -157,7 +156,7 @@
             // NumWidth
             // 
             this.NumWidth.DarkMode = false;
-            this.NumWidth.Location = new System.Drawing.Point(238, 423);
+            this.NumWidth.Location = new System.Drawing.Point(238, 424);
             this.NumWidth.Margin = new System.Windows.Forms.Padding(0, 10, 10, 0);
             this.NumWidth.Maximum = new decimal(new int[] {
             1000000,
@@ -173,7 +172,7 @@
             // NumHeight
             // 
             this.NumHeight.DarkMode = false;
-            this.NumHeight.Location = new System.Drawing.Point(438, 423);
+            this.NumHeight.Location = new System.Drawing.Point(438, 424);
             this.NumHeight.Margin = new System.Windows.Forms.Padding(10, 10, 0, 0);
             this.NumHeight.Maximum = new decimal(new int[] {
             1000000,
@@ -191,7 +190,7 @@
             this.LblSize.AutoSize = true;
             this.LblSize.BackColor = System.Drawing.Color.Transparent;
             this.LblSize.DarkMode = false;
-            this.LblSize.Location = new System.Drawing.Point(70, 423);
+            this.LblSize.Location = new System.Drawing.Point(70, 424);
             this.LblSize.Margin = new System.Windows.Forms.Padding(30, 10, 0, 0);
             this.LblSize.Name = "LblSize";
             this.LblSize.Size = new System.Drawing.Size(103, 45);
@@ -204,11 +203,10 @@
             this.ChkAutoCenterSelection.BackColor = System.Drawing.Color.Transparent;
             this.tableTop.SetColumnSpan(this.ChkAutoCenterSelection, 3);
             this.ChkAutoCenterSelection.DarkMode = false;
-            this.ChkAutoCenterSelection.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ChkAutoCenterSelection.Location = new System.Drawing.Point(70, 284);
+            this.ChkAutoCenterSelection.Location = new System.Drawing.Point(70, 285);
             this.ChkAutoCenterSelection.Margin = new System.Windows.Forms.Padding(30, 30, 0, 0);
             this.ChkAutoCenterSelection.Name = "ChkAutoCenterSelection";
-            this.ChkAutoCenterSelection.Size = new System.Drawing.Size(640, 49);
+            this.ChkAutoCenterSelection.Size = new System.Drawing.Size(440, 49);
             this.ChkAutoCenterSelection.TabIndex = 12;
             this.ChkAutoCenterSelection.Text = "[Auto-center the selection]";
             this.ChkAutoCenterSelection.UseVisualStyleBackColor = false;
@@ -221,7 +219,7 @@
             this.tableTop.SetColumnSpan(this.LblDefaultSelection, 3);
             this.LblDefaultSelection.DarkMode = false;
             this.LblDefaultSelection.Font = new System.Drawing.Font("Segoe UI", 9.6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LblDefaultSelection.Location = new System.Drawing.Point(40, 148);
+            this.LblDefaultSelection.Location = new System.Drawing.Point(40, 149);
             this.LblDefaultSelection.Margin = new System.Windows.Forms.Padding(0, 60, 0, 0);
             this.LblDefaultSelection.Name = "LblDefaultSelection";
             this.LblDefaultSelection.Size = new System.Drawing.Size(278, 45);
@@ -232,7 +230,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(18F, 45F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(750, 727);
+            this.ClientSize = new System.Drawing.Size(750, 882);
             this.ControlBox = false;
             this.Controls.Add(this.tableTop);
             this.DoubleBuffered = true;

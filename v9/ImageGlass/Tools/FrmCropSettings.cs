@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Base;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 
@@ -47,6 +48,20 @@ public partial class FrmCropSettings : DialogForm
         LoadSettings();
     }
 
+
+    protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
+    {
+        SuspendLayout();
+
+
+        tableTop.BackColor = Config.Theme.ColorPalatte.AppBackground;
+
+
+        base.ApplyTheme(darkMode, style);
+        ResumeLayout();
+    }
+
+
     //protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
     //{
     //    // update theme here
@@ -59,7 +74,7 @@ public partial class FrmCropSettings : DialogForm
     protected override int OnUpdateHeight(bool performUpdate = true)
     {
         var baseHeight = base.OnUpdateHeight(false);
-        var contentHeight = tableTop.Height + tableTop.Padding.Vertical;
+        var contentHeight = tableTop.Height;
 
         if (performUpdate)
         {
