@@ -721,6 +721,7 @@ public static class PhotoCodec
                 break;
 
             case ".GIF":
+            case ".GIFV":
             case ".FAX":
                 try
                 {
