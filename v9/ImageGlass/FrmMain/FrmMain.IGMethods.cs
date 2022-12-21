@@ -536,12 +536,11 @@ public partial class FrmMain
         if (!Config.ShowThumbnails) return;
 
 
-        var scrollBarSize = 0;
-        if (Config.ShowThumbnailScrollbars)
+        var scrollBarSize = this.ScaleToDpi(1.5f); // random gap
+        if (Config.ShowThumbnailScrollbars && Gallery.HScrollBar.Visible)
         {
-            Gallery.HScrollBar.Height = SystemInformation.HorizontalScrollBarHeight / 2;
-            scrollBarSize += Gallery.HScrollBar.Height
-                + this.ScaleToDpi(2); // scrollbar gap
+            Gallery.HScrollBar.Height = (int)(SystemInformation.HorizontalScrollBarHeight * 0.75f);
+            scrollBarSize += Gallery.HScrollBar.Height;
         }
 
         // update thumbnail size
@@ -549,7 +548,7 @@ public partial class FrmMain
 
         // Gallery bar
         Gallery.Height = Gallery.ThumbnailSize.Height
-            + scrollBarSize
+            + (int)scrollBarSize
             + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Height * 6.5f);
 
         try

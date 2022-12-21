@@ -20,7 +20,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.Actions;
 using ImageGlass.Base.PhotoBox;
-using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 
@@ -162,7 +161,6 @@ public partial class FrmMain
         Gallery.PersistentCacheSize = Config.ThumbnailCacheSizeInMb;
         Gallery.PersistentCacheDirectory = App.ConfigDir(PathType.Dir, Dir.ThumbnailsCache);
         Gallery.EnableKeyNavigation = false;
-        IG_ToggleGallery(Config.ShowThumbnails);
 
 
         // PicMain
@@ -248,6 +246,10 @@ public partial class FrmMain
 
         // display the root layout after the window shown
         Tb0.Visible = true;
+
+
+        // toggle gallery (must be after Tb0.Visible)
+        IG_ToggleGallery(Config.ShowThumbnails);
 
 
         // update tag data for zoom mode menus
