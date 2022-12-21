@@ -399,7 +399,7 @@ public class DXCanvas : DXControl
         set
         {
             _enableSelection = value;
-            if (!_enableSelection)
+            if (!_enableSelection && Parent != null)
             {
                 Cursor = Parent.Cursor;
             }
