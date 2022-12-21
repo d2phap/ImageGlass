@@ -323,6 +323,7 @@ namespace ImageGlass
             this.BtnQuickSelect.SystemIcon = null;
             this.BtnQuickSelect.TabIndex = 0;
             this.BtnQuickSelect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.BtnQuickSelect.Visible = false;
             this.BtnQuickSelect.Click += new System.EventHandler(this.BtnQuickSelect_Click);
             // 
             // TableBottom
