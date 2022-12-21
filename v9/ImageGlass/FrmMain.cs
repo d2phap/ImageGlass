@@ -631,6 +631,7 @@ public partial class FrmMain : ModernForm
         }
 
         Gallery.ResumeLayout();
+        UpdateGallerySize();
 
         SelectCurrentThumbnail();
     }
