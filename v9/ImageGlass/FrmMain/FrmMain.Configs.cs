@@ -316,6 +316,8 @@ public partial class FrmMain
             Config.FrmMainWidth = Size.Width;
             Config.FrmMainHeight = Size.Height;
         }
+
+        UpdateGallerySize();
     }
 
 
