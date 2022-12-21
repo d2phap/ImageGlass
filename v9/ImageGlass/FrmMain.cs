@@ -100,7 +100,7 @@ public partial class FrmMain : ModernForm
 
         // update picmain scaling
         PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(60f, 60f));
-        PicMain.CheckerboardCellSize = this.ScaleToDpi(8f);
+        PicMain.CheckerboardCellSize = this.ScaleToDpi(Constants.VIEWER_GRID_SIZE);
 
         // gallery
         UpdateGallerySize();
