@@ -6,9 +6,9 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x64;x86</Platforms>
-      <Version>9.0.1.514</Version>
-      <FileVersion>$(Version)</FileVersion>
-      <Copyright>Copyright © 2010 - 2022 Duong Dieu Phap</Copyright>
+    <Version>9.0.3.1225</Version>
+    <FileVersion>$(Version)</FileVersion>
+    <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>
   </PropertyGroup>
 
     <ItemGroup>

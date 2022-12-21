@@ -1591,15 +1591,6 @@ public partial class FrmMain : ModernForm
                 MnuOpenWith.Enabled = false;
             }
 
-            //// add hotkey to Exit menu
-            //if (false) // Config.IsContinueRunningBackground)
-            //{
-            //    MnuExit.ShortcutKeyDisplayString = "Shift+ESC";
-            //}
-            //else
-            //{
-            //    MnuExit.ShortcutKeyDisplayString = Config.EnablePressESCToQuit ? "ESC" : "Alt+F4";
-            //}
 
             //// Get EditApp for editing
             //UpdateEditAppInfoForMenu();

@@ -10,17 +10,24 @@
     <ApplicationIcon>icon256.ico</ApplicationIcon>
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-      
-    <AssemblyTitle>A lightweight, versatile image viewer</AssemblyTitle>
+    <Product>ImageGlass</Product>
+    <Description>A lightweight, versatile image viewer</Description>
     <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>
+    <PackageProjectUrl>https://imageglass.org</PackageProjectUrl>
+    <RepositoryUrl>https://imageglass.org/source</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <Version>9.0.3.1221</Version>
     <FileVersion>$(Version)</FileVersion>
     <VersionPrefix>9.0.3</VersionPrefix>
     <VersionSuffix>beta-3</VersionSuffix>
-      
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
     <DebugType>portable</DebugType>
+    <Product>$(AssemblyName)</Product>
+    <AssemblyVersion></AssemblyVersion>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
   </PropertyGroup>
 

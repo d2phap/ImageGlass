@@ -174,7 +174,7 @@ public static class Config
     #region Setting items
 
     /// <summary>
-    /// Gets, sets the config section of tools
+    /// Gets, sets the config section of tools.
     /// </summary>
     public static ExpandoObject Tools { get; set; } = new ExpandoObject();
 
@@ -281,11 +281,6 @@ public static class Config
     /// </summary>
     public static bool EnableLoopBackNavigation { get; set; } = true;
 
-    ///// <summary>
-    ///// Gets, sets value indicating that allow quit application by ESC
-    ///// </summary>
-    //public static bool EnablePressESCToQuit { get; set; } = true;
-
     /// <summary>
     /// Gets, sets value indicating that checker board is shown or not
     /// </summary>
@@ -340,11 +335,6 @@ public static class Config
     /// Gets, sets the value indicates that there is a new version
     /// </summary>
     public static bool IsNewVersionAvailable { get; set; } = false;
-
-    ///// <summary>
-    ///// Gets, sets the value indicates that to show full image path or only base name
-    ///// </summary>
-    //public static bool IsDisplayBasenameOfImage { get; set; } = false;
 
     /// <summary>
     /// Gets, sets the value indicates that to toolbar buttons to be centered horizontally
@@ -639,7 +629,7 @@ public static class Config
     /// <summary>
     /// Gets, sets the last time to check for update. Set it to "0" to disable auto-update.
     /// </summary>
-    public static string AutoUpdate { get; set; } = "7/20/2010 12:13:08";
+    public static string AutoUpdate { get; set; } = "7/22/2010 12:13:08";
 
     /// <summary>
     /// Gets, sets the absolute file path of the last seen image
@@ -831,7 +821,6 @@ public static class Config
         //IsShowWelcome = items.GetValue(nameof(IsShowWelcome), IsShowWelcome);
         ShowToolbar = items.GetValue(nameof(ShowToolbar), ShowToolbar);
         EnableLoopBackNavigation = items.GetValue(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
-        //EnablePressESCToQuit = items.GetValue(nameof(EnablePressESCToQuit), EnablePressESCToQuit);
         ShowCheckerBoard = items.GetValue(nameof(ShowCheckerBoard), ShowCheckerBoard);
         EnableMultiInstances = items.GetValue(nameof(EnableMultiInstances), EnableMultiInstances);
         EnableWindowTopMost = items.GetValue(nameof(EnableWindowTopMost), EnableWindowTopMost);
@@ -843,7 +832,6 @@ public static class Config
         //IsSaveAfterRotating = items.GetValue(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
         PreserveModifiedDate = items.GetValue(nameof(PreserveModifiedDate), PreserveModifiedDate);
         IsNewVersionAvailable = items.GetValue(nameof(IsNewVersionAvailable), IsNewVersionAvailable);
-        //IsDisplayBasenameOfImage = items.GetValue(nameof(IsDisplayBasenameOfImage), IsDisplayBasenameOfImage);
         CenterToolbar = items.GetValue(nameof(CenterToolbar), CenterToolbar);
         OpenLastSeenImage = items.GetValue(nameof(OpenLastSeenImage), OpenLastSeenImage);
         ApplyColorProfileForAll = items.GetValue(nameof(ApplyColorProfileForAll), ApplyColorProfileForAll);
@@ -1149,7 +1137,7 @@ public static class Config
         var langPath = $"_._IgCommandExe._DefaultError";
 
         var result = ShowError(
-            title: Application.ProductName + " " + Application.ProductVersion,
+            title: Application.ProductName + " v" + Application.ProductVersion,
             heading: Language[$"{langPath}._Heading"],
             description: string.Format(Language[$"{langPath}._Description"], url),
             buttons: PopupButton.LearnMore_Close);
@@ -1326,7 +1314,6 @@ public static class Config
         //settings.TryAdd(nameof(IsShowWelcome), IsShowWelcome);
         settings.TryAdd(nameof(ShowToolbar), ShowToolbar);
         settings.TryAdd(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
-        //settings.TryAdd(nameof(EnablePressESCToQuit), EnablePressESCToQuit);
         settings.TryAdd(nameof(ShowCheckerBoard), ShowCheckerBoard);
         settings.TryAdd(nameof(EnableMultiInstances), EnableMultiInstances);
         settings.TryAdd(nameof(EnableWindowTopMost), EnableWindowTopMost);
@@ -1338,7 +1325,6 @@ public static class Config
         //settings.TryAdd(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
         settings.TryAdd(nameof(PreserveModifiedDate), PreserveModifiedDate);
         settings.TryAdd(nameof(IsNewVersionAvailable), IsNewVersionAvailable);
-        //settings.TryAdd(nameof(IsDisplayBasenameOfImage), IsDisplayBasenameOfImage);
         settings.TryAdd(nameof(CenterToolbar), CenterToolbar);
         settings.TryAdd(nameof(OpenLastSeenImage), OpenLastSeenImage);
         settings.TryAdd(nameof(ApplyColorProfileForAll), ApplyColorProfileForAll);
