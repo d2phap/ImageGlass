@@ -8,7 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>x64;x86</Platforms>
 
-    <AssemblyTitle>Command-line utility for ImageGlass</AssemblyTitle>
+    <AssemblyTitle>Igcmd: Command-line utility for ImageGlass</AssemblyTitle>
     <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>
     <Version>9.0.3.1221</Version>
     <FileVersion>$(Version)</FileVersion>

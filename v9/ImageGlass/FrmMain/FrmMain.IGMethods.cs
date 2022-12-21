@@ -1835,7 +1835,7 @@ public partial class FrmMain
                 _ = Config.ShowError(
                     description: Config.Language[$"{langPath}._Error"],
                     title: Config.Language[langPath],
-                    heading: Config.Language["_._Error"]);
+                    heading: Config.Language["_._Error"] + $"({result})");
             }
         }
     }
