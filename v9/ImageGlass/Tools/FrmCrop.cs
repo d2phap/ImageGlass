@@ -192,6 +192,7 @@ public partial class FrmCrop : ToolForm, IToolForm
         };
 
         Settings.SaveToAppConfig();
+        Local.FrmMain.Activate();
     }
 
 
