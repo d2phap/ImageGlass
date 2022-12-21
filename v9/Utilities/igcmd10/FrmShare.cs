@@ -60,7 +60,14 @@ partial class FrmShare : Form
     {
         if (Program.Args.Length > 1)
         {
-            WinShare.ShowShare(Handle, Program.Args.Skip(1).ToArray());
+            var args = Program.Args
+                // remove the exe file path
+                .Skip(1)
+                // remove the other commands
+                .Where(i => !i.StartsWith("--"))
+                .ToArray();
+
+            WinShare.ShowShare(Handle, args);
         }
         else
         {
