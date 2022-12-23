@@ -150,9 +150,9 @@ public enum SelectionAspectRatio
 public enum BackdropStyle
 {
     /// <summary>
-    /// Use default setting of Windows
+    /// Use default setting of Windows.
     /// </summary>
-    Default = 0,
+    None = 0,
 
     /// <summary>
     /// Mica effect.

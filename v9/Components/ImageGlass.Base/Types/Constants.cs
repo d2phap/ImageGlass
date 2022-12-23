@@ -29,7 +29,7 @@ namespace ImageGlass.Base;
 public static class Constants
 {
     public const string UPDATE_CHANNEL = "moon";
-    public const int MENU_ICON_HEIGHT = 25;
+    public const int MENU_ICON_HEIGHT = 24;
     public const float VIEWER_GRID_SIZE = 9f;
     public const int TOOLBAR_ICON_HEIGHT = 24;
     public const int THUMBNAIL_HEIGHT = 70;

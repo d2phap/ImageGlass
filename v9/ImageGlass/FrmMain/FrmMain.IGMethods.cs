@@ -109,7 +109,7 @@ public partial class FrmMain
         // cancel the current loading image
         _loadCancelToken?.Cancel();
 
-        if (Local.ClipboardImage !=null)
+        if (Local.ClipboardImage != null)
         {
             LoadClipboardImage(null);
             _ = ViewNextCancellableAsync(0, isSkipCache: true);

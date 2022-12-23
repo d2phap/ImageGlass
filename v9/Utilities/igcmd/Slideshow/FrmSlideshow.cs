@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using D2Phap;
+using DirectN;
 using ImageGlass.Base;
 using ImageGlass.Base.NamedPipes;
 using ImageGlass.Base.PhotoBox;
@@ -113,7 +114,7 @@ public partial class FrmSlideshow : ModernForm
         // update theme icons
         OnDpiChanged();
 
-        ApplyTheme(Config.Theme.Settings.IsDarkMode);
+        ApplyTheme(Config.Theme.Settings.IsDarkMode, Config.WindowBackdrop);
     }
 
 
@@ -142,19 +143,21 @@ public partial class FrmSlideshow : ModernForm
     }
 
 
-    protected override void ApplyTheme(bool darkMode, BackdropStyle? backDrop = null)
+    protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
         SuspendLayout();
         MnuContext.Theme = Config.Theme;
 
-
-        darkMode = Config.Theme.Settings.IsDarkMode;
-        var backdrop = Config.WindowBackdrop;
+        if (!EnableTransparent)
+        {
+            BackColor = Config.SlideshowBackgroundColor.NoAlpha();
+        }
 
 
         // viewer
         PicMain.BackColor = Config.SlideshowBackgroundColor;
         PicMain.ForeColor = PicMain.BackColor.InvertBlackOrWhite(220);
+        PicMain.AccentColor = WinColorsApi.GetAccentColor(true);
 
 
         // navigation buttons
@@ -164,8 +167,9 @@ public partial class FrmSlideshow : ModernForm
         PicMain.NavLeftImage = Config.Theme.Settings.NavButtonLeft;
         PicMain.NavRightImage = Config.Theme.Settings.NavButtonRight;
 
+
         ResumeLayout(false);
-        base.ApplyTheme(darkMode, backdrop);
+        base.ApplyTheme(darkMode, style);
     }
 
 
@@ -177,13 +181,13 @@ public partial class FrmSlideshow : ModernForm
     }
 
 
-    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
-    {
-        // update theme here
-        ApplyTheme(e.IsDarkMode);
+    //protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
+    //{
+    //    // update theme here
+    //    ApplyTheme(e.IsDarkMode);
 
-        base.OnRequestUpdatingColorMode(e);
-    }
+    //    base.OnRequestUpdatingColorMode(e);
+    //}
 
 
     protected override void OnDpiChanged()
@@ -807,8 +811,19 @@ public partial class FrmSlideshow : ModernForm
         {
             PicMain.SetImage(null);
 
-            PicMain.ShowMessage(photo.Error.Source + ": " + photo.Error.Message,
-                Config.Language[$"FrmMain.PicMain._ErrorText"]);
+            var emoji = BHelper.IsOS(WindowsOS.Win11OrLater) ? "🥲" : "🙄";
+            var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
+            var appVersion = App.Version + $" ({archInfo}, .NET {Environment.Version})";
+
+            var debugInfo = $"ImageGlass {Constants.APP_CODE.CapitalizeFirst()} v{appVersion}" +
+                $"\r\n{ImageMagick.MagickNET.Version}" +
+                $"\r\n" +
+                $"\r\nℹ️ Error details:" +
+                $"\r\n";
+
+            PicMain.ShowMessage(debugInfo +
+                photo.Error.Source + ": " + photo.Error.Message,
+                Config.Language[$"FrmMain.PicMain._ErrorText"] + $" {emoji}");
         }
 
         else if (!(photo?.ImgData.IsImageNull ?? true))
@@ -1382,9 +1397,9 @@ public partial class FrmSlideshow : ModernForm
             WindowState = FormWindowState.Normal;
             Bounds = Screen.FromControl(this).Bounds;
 
-            // disable background colors
-            WindowApi.SetWindowFrame(Handle, new Padding(0));
-            PicMain.BackColor = Config.SlideshowBackgroundColor.NoAlpha();
+            //// disable background colors
+            //WindowApi.SetWindowFrame(Handle, new Padding(0));
+            //PicMain.BackColor = Config.SlideshowBackgroundColor.NoAlpha();
 
             Visible = true;
         }
@@ -1416,9 +1431,9 @@ public partial class FrmSlideshow : ModernForm
                 FormBorderStyle = FormBorderStyle.Sizable;
             }
 
-            // re-enable background colors
-            WindowApi.SetWindowFrame(Handle, BackdropMargin);
-            PicMain.BackColor = Config.SlideshowBackgroundColor;
+            //// re-enable background colors
+            //WindowApi.SetWindowFrame(Handle, BackdropMargin);
+            //PicMain.BackColor = Config.SlideshowBackgroundColor;
 
             Config.UpdateFormIcon(this);
         }

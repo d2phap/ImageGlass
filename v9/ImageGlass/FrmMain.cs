@@ -904,12 +904,9 @@ public partial class FrmMain : ModernForm
             Local.IsImageError = true;
             Local.ImageModifiedPath = "";
 
-            var currentFile = Local.Images.GetFilePath(e.Index);
-            if (!string.IsNullOrEmpty(currentFile) && !File.Exists(currentFile))
-            {
-                Local.Images.Unload(e.Index);
-            }
+            IG_Unload();
 
+            var emoji = BHelper.IsOS(WindowsOS.Win11OrLater) ? "🥲" : "🙄";
             var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
             var appVersion = App.Version + $" ({archInfo}, .NET {Environment.Version})";
 
@@ -921,7 +918,7 @@ public partial class FrmMain : ModernForm
 
             PicMain.ShowMessage(debugInfo + 
                 e.Error.Source + ": " + e.Error.Message,
-                Config.Language[$"{Name}.{nameof(PicMain)}._ErrorText"] + " 🥲");
+                Config.Language[$"{Name}.{nameof(PicMain)}._ErrorText"] + $" {emoji}");
         }
 
         else if (!(e.Data?.ImgData.IsImageNull ?? true))

@@ -269,7 +269,7 @@ public partial class ModernForm : Form
 
         if (!DesignMode
             && EnableTransparent
-            && BackdropStyle != BackdropStyle.Default
+            && BackdropStyle != BackdropStyle.None
             && BackdropMargin.Vertical == 0 && BackdropMargin.Horizontal == 0)
         {
             WindowApi.SetTransparentBlackBackground(e.Graphics, Bounds);
@@ -348,7 +348,7 @@ public partial class ModernForm : Form
         if (DesignMode) return;
 
         var backupBgColor = BackColor;
-        if (style != BackdropStyle.Default && EnableTransparent)
+        if (style != BackdropStyle.None && EnableTransparent)
         {
             // back color must be black
             BackColor = Color.Black;
@@ -356,7 +356,7 @@ public partial class ModernForm : Form
 
         // set backdrop style
         var succeeded = WindowApi.SetWindowBackdrop(Handle, (DWM_SYSTEMBACKDROP_TYPE)style);
-        var margin = (succeeded && style != BackdropStyle.Default && EnableTransparent)
+        var margin = (succeeded && style != BackdropStyle.None && EnableTransparent)
             ? BackdropMargin
             : new Padding(0);
 
