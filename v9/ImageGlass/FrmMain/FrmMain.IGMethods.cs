@@ -698,12 +698,12 @@ public partial class FrmMain
 
                     "◾ D2Phap.DXControl\r\n" +
                     "    Distributed under the terms of the MIT license.\r\n" +
-                    "    Copyright © 2022 Dương Diệu Pháp. All rights reserved.\r\n" +
+                    "    Copyright © 2022-2023 Dương Diệu Pháp. All rights reserved.\r\n" +
                     "\r\n" +
 
                     "◾ Magick.NET\r\n" +
                     "    Distributed under the terms of the MIT license.\r\n" +
-                    "    Copyright © 2013-2022 Dirk Lemstra.\r\n" +
+                    "    Copyright © 2013-2023 Dirk Lemstra.\r\n" +
                     "\r\n" +
 
                     "◾ ExplorerSortOrder\r\n" +
