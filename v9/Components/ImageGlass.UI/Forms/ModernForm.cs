@@ -28,6 +28,7 @@ namespace ImageGlass.UI;
 public partial class ModernForm : Form
 {
     private bool _darkMode = true;
+    private bool _enableTransparent = true;
     private BackdropStyle _backdropStyle = BackdropStyle.MicaAlt;
     private Padding _backdropMargin = new(-1);
     private int _dpi = DpiApi.DPI_DEFAULT;
@@ -40,7 +41,23 @@ public partial class ModernForm : Form
     /// <summary>
     /// Enable transparent background.
     /// </summary>
-    public virtual bool EnableTransparent { get; set; } = true;
+    public virtual bool EnableTransparent
+    {
+        get
+        {
+            if (!WinColorsApi.IsTransparencyEnabled
+                || !BHelper.IsOS(WindowsOS.Win11_22H2_OrLater))
+            {
+                _enableTransparent = false;
+            }
+
+            return _enableTransparent;
+        }
+        set
+        {
+            _enableTransparent = value;
+        }
+    }
 
 
     /// <summary>

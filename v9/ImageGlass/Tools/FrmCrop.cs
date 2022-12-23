@@ -73,9 +73,20 @@ public partial class FrmCrop : ToolForm, IToolForm
         // show backdrop effect for title and footer
         BackdropMargin = new Padding(0, 0, 0, TableBottom.Height);
 
-        TableBottom.BackColor = darkMode
-            ? Color.White.WithAlpha(10)
-            : Color.White.WithAlpha(220);
+        if (EnableTransparent)
+        {
+            TableBottom.BackColor = darkMode
+                ? Color.White.WithAlpha(10)
+                : Color.White.WithAlpha(200);
+        }
+        else
+        {
+            BackColor = Theme.ColorPalatte.AppBackground;
+
+            TableBottom.BackColor = darkMode
+                ? Color.White.WithAlpha(15)
+                : Color.Black.WithAlpha(15);
+        }
 
         TableTop.BackColor = Config.Theme.ColorPalatte.AppBackground;
 

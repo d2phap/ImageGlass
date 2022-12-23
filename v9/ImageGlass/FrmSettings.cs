@@ -40,6 +40,11 @@ public partial class FrmSettings : ModernForm
     {
         EnableTransparent = darkMode;
 
+        if (!EnableTransparent)
+        {
+            BackColor = Config.Theme.ColorPalatte.AppBackground;
+        }
+
         base.ApplyTheme(darkMode, style);
     }
 

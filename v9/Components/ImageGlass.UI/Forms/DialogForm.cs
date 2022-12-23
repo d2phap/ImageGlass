@@ -271,9 +271,21 @@ public partial class DialogForm : ModernForm
         // show backdrop effect for title and footer
         BackdropMargin = new Padding(0, 0, 0, this.TableFooter.Height);
 
-        TableFooter.BackColor = darkMode
-            ? Color.White.WithAlpha(10)
-            : Color.White.WithAlpha(220);
+        if (EnableTransparent)
+        {
+            TableFooter.BackColor = darkMode
+                ? Color.White.WithAlpha(10)
+                : Color.White.WithAlpha(200);
+        }
+        else
+        {
+            var colorPalatte = ThemeUtils.GetThemeColorPalatte(darkMode);
+            BackColor = colorPalatte.AppBackground;
+
+            TableFooter.BackColor = darkMode
+                ? Color.White.WithAlpha(15)
+                : Color.Black.WithAlpha(15);
+        }
 
         base.ApplyTheme(darkMode, style);
         ResumeLayout();
