@@ -65,7 +65,7 @@ public class CropToolConfig: IToolConfig
     /// <summary>
     /// Gets, sets the option to center the <see cref="InitSelectedArea"/>.
     /// </summary>
-    public bool AutoCenterSelection { get; set; } = false;
+    public bool AutoCenterSelection { get; set; } = true;
 
 
     /// <summary>

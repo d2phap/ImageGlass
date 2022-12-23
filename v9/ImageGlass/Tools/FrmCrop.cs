@@ -471,6 +471,12 @@ public partial class FrmCrop : ToolForm, IToolForm
 
         Local.FrmMain.PicMain.SourceSelection = new RectangleF(x, y, w, h);
 
+        // set buttons state
+        BtnSave.Enabled =
+            BtnSaveAs.Enabled =
+            BtnCrop.Enabled =
+            BtnCopy.Enabled = !Local.FrmMain.PicMain.SourceSelection.IsEmpty;
+
 
         _isDefaultSelectionLoaded = true;
         if (drawSelection)

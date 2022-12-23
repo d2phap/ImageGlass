@@ -659,13 +659,15 @@ public partial class FrmMain
             AllowCancel = true,
             Caption = $"About",
 
-            Heading = $"{App.AppName} beta 2\r\n" +
+            Heading = $"{App.AppName} beta 3\r\n" +
                 $"A lightweight, versatile image viewer\r\n" +
                 $"\r\n" +
                 $"Version: {appVersion}\r\n" +
                 $".NET Runtime: {Environment.Version.ToString()}",
 
-            Text = $"Special thanks to:\r\n" +
+            Text = $"Author: Dương Diệu Pháp\r\n" +
+                    $"\r\n" +
+                    $"Special thanks to:\r\n" +
                     $"◾ Logo designer: Nguyễn Quốc Tuấn.\r\n" +
                     $"◾ Collaborator: Kevin Routley (https://github.com/fire-eggs).\r\n" +
                     $"\r\n" +
