@@ -56,6 +56,39 @@ public class WinColorsApi
 
 
     /// <summary>
+    /// Checks if the system transparency is enabled.
+    /// </summary>
+    public static bool IsTransparencyEnabled
+    {
+        get
+        {
+            const string regPath = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
+            const string regKey = "EnableTransparency";
+            var enabled = true;
+
+            try
+            {
+                using var key = Registry.CurrentUser.OpenSubKey(regPath);
+                var regValue = key?.GetValue(regKey);
+
+                if (regValue != null)
+                {
+                    var themeValue = (int)regValue;
+
+                    if (themeValue == 0)
+                    {
+                        enabled = false;
+                    }
+                }
+            }
+            catch { }
+
+            return enabled;
+        }
+    }
+
+
+    /// <summary>
     /// Checks if the app color mode is dark (default).
     /// </summary>
     public static bool IsDarkMode
@@ -86,4 +119,5 @@ public class WinColorsApi
             return darkMode;
         }
     }
+
 }

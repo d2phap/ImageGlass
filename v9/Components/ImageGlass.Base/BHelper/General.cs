@@ -113,11 +113,11 @@ public partial class BHelper
 
 
     /// <summary>
-    /// Checks if the given Windows version is matched
+    /// Checks if the given Windows version is matched.
     /// </summary>
     public static bool IsOS(WindowsOS ver)
     {
-        if (ver == WindowsOS.Win11_22H2)
+        if (ver == WindowsOS.Win11_22H2_OrLater)
         {
             return Environment.OSVersion.Version.Major >= 10
                 && Environment.OSVersion.Version.Build >= 22621;

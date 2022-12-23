@@ -170,7 +170,7 @@ public class WindowApi
         HRESULT result;
         unsafe
         {
-            if (BHelper.IsOS(WindowsOS.Win11_22H2))
+            if (BHelper.IsOS(WindowsOS.Win11_22H2_OrLater))
             {
                 var attr = DWMWINDOWATTRIBUTE_UNDOCUMENTED.DWMWA_SYSTEMBACKDROP_TYPE;
 

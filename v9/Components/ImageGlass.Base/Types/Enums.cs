@@ -89,7 +89,7 @@ public enum WindowsOS
     /// <summary>
     /// Build 22621
     /// </summary>
-    Win11_22H2,
+    Win11_22H2_OrLater,
 
     /// <summary>
     /// Build 22000
