@@ -193,6 +193,7 @@ public partial class FrmSlideshow : ModernForm
     protected override void OnDpiChanged()
     {
         base.OnDpiChanged();
+        SuspendLayout();
 
         // scale toolbar icons corresponding to DPI
         var newIconHeight = DpiApi.Transform(Config.ToolbarIconHeight);
@@ -202,7 +203,9 @@ public partial class FrmSlideshow : ModernForm
 
         // update picmain scaling
         PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(60f, 60f));
-        PicMain.CheckerboardCellSize = this.ScaleToDpi(8f);
+        PicMain.CheckerboardCellSize = this.ScaleToDpi(Constants.VIEWER_GRID_SIZE);
+
+        ResumeLayout(false);
     }
 
     protected override void OnDpiChanged(DpiChangedEventArgs e)
