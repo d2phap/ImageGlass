@@ -38,8 +38,9 @@ It gives you the possibility to view over **80+** common image formats, includin
 ## 🛣 Development progress & Roadmap for ImageGlass 9.0
 ImageGlass 9.0 is the biggest update ever, supports ***hardware acceleration*** and many more. I have been rewriting the entire app for months. There will be a few more beta releases before version 9.0 reaches a stable state. In the meanwhile, you will still receive the updates for version 8.x.
 - ✅ [Version 9.0 beta 1](https://github.com/d2phap/ImageGlass/releases/tag/9.0.1.514) was released.
-- ✅ [Version 9.0 beta 2](https://github.com/d2phap/ImageGlass/releases/tag/9.0.2.904) was released. Try it and let me know your feedback.
-- 🎯 [Version 9.0 beta 3](https://github.com/d2phap/ImageGlass/projects/13) is under development.
+- ✅ [Version 9.0 beta 2](https://github.com/d2phap/ImageGlass/releases/tag/9.0.2.904) was released.
+- ✅ [Version 9.0 beta 3](https://github.com/d2phap/ImageGlass/releases/tag/9.0.3.1225) was released. Try it and let me know your feedback.
+- 🎯 [Version 9.0 beta 4](https://github.com/d2phap/ImageGlass/projects/14) is under development.
 
 ImageGlass 9 uses [.NET 6](https://devblogs.microsoft.com/dotnet/announcing-net-6/). If you are unable to install .NET 6, you can still use version 8.
   <br/>
