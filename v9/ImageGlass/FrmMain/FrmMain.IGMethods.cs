@@ -659,7 +659,7 @@ public partial class FrmMain
             AllowCancel = true,
             Caption = $"About",
 
-            Heading = $"{App.AppName} beta 3\r\n" +
+            Heading = $"{App.AppName} beta 4\r\n" +
                 $"A lightweight, versatile image viewer\r\n" +
                 $"\r\n" +
                 $"Version: {appVersion}\r\n" +

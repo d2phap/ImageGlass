@@ -661,7 +661,7 @@ public static class PhotoCodec
 
 
         // apply flips
-        flips.ForEach(flip => bmpSrc.Rotate(flip));
+        flips.ForEach(flip => bmpSrc.FlipRotate(flip));
 
         // rotate
         if (changes.Rotation != 0)
