@@ -172,7 +172,7 @@ public partial class FrmMain
             Local.Images.SetFileName(imgIndex, newFilePath);
 
             // Update status bar title
-            UpdateImageInfo(ImageInfoUpdateTypes.Name);
+            UpdateImageInfo(ImageInfoUpdateTypes.Name | ImageInfoUpdateTypes.Path);
 
             try
             {

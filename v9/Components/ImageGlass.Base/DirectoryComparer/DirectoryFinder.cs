@@ -30,7 +30,6 @@ public static class DirectoryFinder
     /// <param name="rootDir">Starting directory</param>
     /// <param name="searchAllDirectories">When true, all sub directories will be searched as well</param>
     /// <param name="filterFn">Filter to be done on directory. use null for no filtering</param>
-    /// <returns></returns>
     public static ConcurrentBag<string> FindDirectories(string rootDir,
         bool searchAllDirectories, Predicate<string>? filterFn = null)
     {
@@ -91,7 +90,6 @@ public static class DirectoryFinder
     /// <param name="rootDir">Starting directory</param>
     /// <param name="searchAllDirectories">When true, all sub directories will be searched as well</param>
     /// <param name="filterFn">Filter function to be done on files/directory. Use null for no filtering</param>
-    /// <returns></returns>
     public static ConcurrentBag<string> FindFiles(string rootDir,
         bool searchAllDirectories, Predicate<FileInfo>? filterFn = null)
     {

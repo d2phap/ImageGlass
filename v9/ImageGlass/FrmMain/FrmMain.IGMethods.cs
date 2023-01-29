@@ -1378,10 +1378,6 @@ public partial class FrmMain
         // success
         if (saveSource == ImageSaveSource.SelectedArea)
         {
-            // TODO: remove when FileWatcher ready!
-            // reload to view the updated image
-            IG_Reload();
-
             // reset selection
             PicMain.ClientSelection = default;
         }
@@ -1389,10 +1385,6 @@ public partial class FrmMain
         {
             // clear the clipboard image
             LoadClipboardImage(null);
-
-            // TODO: remove when FileWatcher ready!
-            // reload to view the updated image
-            IG_Reload();
         }
 
         PicMain.ShowMessage(destFilePath, Config.Language[$"{langPath}._Success"], Config.InAppMessageDuration);
@@ -1621,14 +1613,6 @@ public partial class FrmMain
             {
                 File.Move(oldFilePath, newFilePath);
             }
-
-
-            // TODO: once the realtime watcher implemented, delete this:
-            Local.Images.SetFileName(Local.CurrentIndex, newFilePath);
-            Gallery.Items[Local.CurrentIndex].FileName = newFilePath;
-            Gallery.Items[Local.CurrentIndex].Text = newName;
-            UpdateImageInfo(ImageInfoUpdateTypes.Name | ImageInfoUpdateTypes.Path);
-            //////////////////////////////////////////////////////////////
         }
         catch (Exception ex)
         {
@@ -1684,13 +1668,6 @@ public partial class FrmMain
             try
             {
                 BHelper.DeleteFile(filePath, moveToRecycleBin);
-
-
-                // TODO: once the realtime watcher implemented, delete this:
-                Local.Images.Remove(Local.CurrentIndex);
-                Gallery.Items.RemoveAt(Local.CurrentIndex);
-                _ = ViewNextCancellableAsync(0);
-                //////////////////////////////////////////////////////////////
             }
             catch (Exception ex)
             {
