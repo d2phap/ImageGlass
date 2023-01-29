@@ -115,7 +115,7 @@ internal static class Program
 
 
             // There is a newer version
-            Config.IsNewVersionAvailable = updater.HasNewUpdate;
+            Config.ShowNewVersionIndicator = updater.HasNewUpdate;
 
             // save last update
             Config.AutoUpdate = DateTime.UtcNow.ToString(Constants.DATETIME_FORMAT);

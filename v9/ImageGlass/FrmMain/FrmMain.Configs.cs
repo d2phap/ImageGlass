@@ -147,7 +147,7 @@ public partial class FrmMain
 
 
         // Toolbar
-        Toolbar.Alignment = Config.CenterToolbar
+        Toolbar.Alignment = Config.EnableCenterToolbar
             ? ToolbarAlignment.Center
             : ToolbarAlignment.Left;
 

@@ -204,12 +204,12 @@ public static class Config
     /// <summary>
     /// Gets, sets value indicates that slideshow will loop back to the first image when reaching the end of list.
     /// </summary>
-    public static bool LoopSlideshow { get; set; } = true;
+    public static bool ShouldLoopSlideshow { get; set; } = true;
 
     /// <summary>
     /// Gets, sets value indicates that slideshow is played in window mode, not full screen.
     /// </summary>
-    public static bool UseWindowedSlideshow { get; set; } = false;
+    public static bool EnableWindowedSlideshow { get; set; } = false;
 
     /// <summary>
     /// Gets, sets value indicating whether the full screen mode is enabled or not.
@@ -329,27 +329,27 @@ public static class Config
     /// <summary>
     /// Gets, sets the setting to control whether the image's original modified date value is preserved on save
     /// </summary>
-    public static bool PreserveModifiedDate { get; set; } = false;
+    public static bool ShouldPreserveModifiedDate { get; set; } = false;
 
     /// <summary>
     /// Gets, sets the value indicates that there is a new version
     /// </summary>
-    public static bool IsNewVersionAvailable { get; set; } = false;
+    public static bool ShowNewVersionIndicator { get; set; } = false;
 
     /// <summary>
     /// Gets, sets the value indicates that to toolbar buttons to be centered horizontally
     /// </summary>
-    public static bool CenterToolbar { get; set; } = true;
+    public static bool EnableCenterToolbar { get; set; } = true;
 
     /// <summary>
     /// Gets, sets the value indicates that to show last seen image on startup
     /// </summary>
-    public static bool OpenLastSeenImage { get; set; } = true;
+    public static bool ShouldOpenLastSeenImage { get; set; } = true;
 
     /// <summary>
     /// Gets, sets the value indicates that the ColorProfile will be applied for all or only the images with embedded profile
     /// </summary>
-    public static bool ApplyColorProfileForAll { get; set; } = false;
+    public static bool ShouldUseColorProfileForAll { get; set; } = false;
 
     /// <summary>
     /// Gets, sets the value indicates whether to show or hide the Navigation Buttons on viewer
@@ -369,17 +369,17 @@ public static class Config
     /// <summary>
     /// Gets, sets the value indicates that Windows File Explorer sort order is used if possible
     /// </summary>
-    public static bool UseFileExplorerSortOrder { get; set; } = true;
+    public static bool ShouldUseExplorerSortOrder { get; set; } = true;
 
     /// <summary>
     /// Gets, sets the value indicates that images order should be grouped by directory
     /// </summary>
-    public static bool GroupImagesByDirectory { get; set; } = false;
+    public static bool ShouldGroupImagesByDirectory { get; set; } = false;
 
     /// <summary>
     /// Gets, sets showing/loading hidden images
     /// </summary>
-    public static bool IncludeHiddenImages { get; set; } = false;
+    public static bool ShouldLoadHiddenImages { get; set; } = false;
 
     ///// <summary>
     ///// Gets, sets value that indicates frmColorPicker tool will be open on startup
@@ -817,8 +817,8 @@ public static class Config
         HideFrmMainInSlideshow = items.GetValue(nameof(HideFrmMainInSlideshow), HideFrmMainInSlideshow);
         ShowSlideshowCountdown = items.GetValue(nameof(ShowSlideshowCountdown), ShowSlideshowCountdown);
         UseRandomIntervalForSlideshow = items.GetValue(nameof(UseRandomIntervalForSlideshow), UseRandomIntervalForSlideshow);
-        LoopSlideshow = items.GetValue(nameof(LoopSlideshow), LoopSlideshow);
-        UseWindowedSlideshow = items.GetValue(nameof(UseWindowedSlideshow), UseWindowedSlideshow);
+        ShouldLoopSlideshow = items.GetValue(nameof(ShouldLoopSlideshow), ShouldLoopSlideshow);
+        EnableWindowedSlideshow = items.GetValue(nameof(EnableWindowedSlideshow), EnableWindowedSlideshow);
         EnableFullScreen = items.GetValue(nameof(EnableFullScreen), EnableFullScreen);
         ShowThumbnails = items.GetValue(nameof(ShowThumbnails), ShowThumbnails);
         ShowThumbnailScrollbars = items.GetValue(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
@@ -840,17 +840,17 @@ public static class Config
         ShowSaveOverrideConfirmation = items.GetValue(nameof(ShowSaveOverrideConfirmation), ShowSaveOverrideConfirmation);
         //IsScrollbarsVisible = items.GetValue(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
         //IsSaveAfterRotating = items.GetValue(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
-        PreserveModifiedDate = items.GetValue(nameof(PreserveModifiedDate), PreserveModifiedDate);
-        IsNewVersionAvailable = items.GetValue(nameof(IsNewVersionAvailable), IsNewVersionAvailable);
-        CenterToolbar = items.GetValue(nameof(CenterToolbar), CenterToolbar);
-        OpenLastSeenImage = items.GetValue(nameof(OpenLastSeenImage), OpenLastSeenImage);
-        ApplyColorProfileForAll = items.GetValue(nameof(ApplyColorProfileForAll), ApplyColorProfileForAll);
+        ShouldPreserveModifiedDate = items.GetValue(nameof(ShouldPreserveModifiedDate), ShouldPreserveModifiedDate);
+        ShowNewVersionIndicator = items.GetValue(nameof(ShowNewVersionIndicator), ShowNewVersionIndicator);
+        EnableCenterToolbar = items.GetValue(nameof(EnableCenterToolbar), EnableCenterToolbar);
+        ShouldOpenLastSeenImage = items.GetValue(nameof(ShouldOpenLastSeenImage), ShouldOpenLastSeenImage);
+        ShouldUseColorProfileForAll = items.GetValue(nameof(ShouldUseColorProfileForAll), ShouldUseColorProfileForAll);
         EnableNavigationButtons = items.GetValue(nameof(EnableNavigationButtons), EnableNavigationButtons);
         ShowCheckerboardOnlyImageRegion = items.GetValue(nameof(ShowCheckerboardOnlyImageRegion), ShowCheckerboardOnlyImageRegion);
         EnableRecursiveLoading = items.GetValue(nameof(EnableRecursiveLoading), EnableRecursiveLoading);
-        UseFileExplorerSortOrder = items.GetValue(nameof(UseFileExplorerSortOrder), UseFileExplorerSortOrder);
-        GroupImagesByDirectory = items.GetValue(nameof(GroupImagesByDirectory), GroupImagesByDirectory);
-        IncludeHiddenImages = items.GetValue(nameof(IncludeHiddenImages), IncludeHiddenImages);
+        ShouldUseExplorerSortOrder = items.GetValue(nameof(ShouldUseExplorerSortOrder), ShouldUseExplorerSortOrder);
+        ShouldGroupImagesByDirectory = items.GetValue(nameof(ShouldGroupImagesByDirectory), ShouldGroupImagesByDirectory);
+        ShouldLoadHiddenImages = items.GetValue(nameof(ShouldLoadHiddenImages), ShouldLoadHiddenImages);
         //IsShowColorPickerOnStartup = items.GetValue(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
         //IsShowPageNavOnStartup = items.GetValue(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
         //IsShowPageNavAuto = items.GetValue(nameof(IsShowPageNavAuto), IsShowPageNavAuto);
@@ -1312,8 +1312,8 @@ public static class Config
         settings.TryAdd(nameof(HideFrmMainInSlideshow), HideFrmMainInSlideshow);
         settings.TryAdd(nameof(ShowSlideshowCountdown), ShowSlideshowCountdown);
         settings.TryAdd(nameof(UseRandomIntervalForSlideshow), UseRandomIntervalForSlideshow);
-        settings.TryAdd(nameof(LoopSlideshow), LoopSlideshow);
-        settings.TryAdd(nameof(UseWindowedSlideshow), UseWindowedSlideshow);
+        settings.TryAdd(nameof(ShouldLoopSlideshow), ShouldLoopSlideshow);
+        settings.TryAdd(nameof(EnableWindowedSlideshow), EnableWindowedSlideshow);
         settings.TryAdd(nameof(EnableFullScreen), EnableFullScreen);
         settings.TryAdd(nameof(ShowThumbnails), ShowThumbnails);
         settings.TryAdd(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
@@ -1335,17 +1335,17 @@ public static class Config
         settings.TryAdd(nameof(ShowSaveOverrideConfirmation), ShowSaveOverrideConfirmation);
         //settings.TryAdd(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
         //settings.TryAdd(nameof(IsSaveAfterRotating), IsSaveAfterRotating);
-        settings.TryAdd(nameof(PreserveModifiedDate), PreserveModifiedDate);
-        settings.TryAdd(nameof(IsNewVersionAvailable), IsNewVersionAvailable);
-        settings.TryAdd(nameof(CenterToolbar), CenterToolbar);
-        settings.TryAdd(nameof(OpenLastSeenImage), OpenLastSeenImage);
-        settings.TryAdd(nameof(ApplyColorProfileForAll), ApplyColorProfileForAll);
+        settings.TryAdd(nameof(ShouldPreserveModifiedDate), ShouldPreserveModifiedDate);
+        settings.TryAdd(nameof(ShowNewVersionIndicator), ShowNewVersionIndicator);
+        settings.TryAdd(nameof(EnableCenterToolbar), EnableCenterToolbar);
+        settings.TryAdd(nameof(ShouldOpenLastSeenImage), ShouldOpenLastSeenImage);
+        settings.TryAdd(nameof(ShouldUseColorProfileForAll), ShouldUseColorProfileForAll);
         settings.TryAdd(nameof(EnableNavigationButtons), EnableNavigationButtons);
         settings.TryAdd(nameof(ShowCheckerboardOnlyImageRegion), ShowCheckerboardOnlyImageRegion);
         settings.TryAdd(nameof(EnableRecursiveLoading), EnableRecursiveLoading);
-        settings.TryAdd(nameof(UseFileExplorerSortOrder), UseFileExplorerSortOrder);
-        settings.TryAdd(nameof(GroupImagesByDirectory), GroupImagesByDirectory);
-        settings.TryAdd(nameof(IncludeHiddenImages), IncludeHiddenImages);
+        settings.TryAdd(nameof(ShouldUseExplorerSortOrder), ShouldUseExplorerSortOrder);
+        settings.TryAdd(nameof(ShouldGroupImagesByDirectory), ShouldGroupImagesByDirectory);
+        settings.TryAdd(nameof(ShouldLoadHiddenImages), ShouldLoadHiddenImages);
         //settings.TryAdd(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
         //settings.TryAdd(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
         //settings.TryAdd(nameof(IsShowPageNavAuto), IsShowPageNavAuto);

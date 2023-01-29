@@ -225,7 +225,7 @@ public partial class FrmSlideshow : ModernForm
         PicMain.MouseWheel += PicMain_MouseWheel;
 
         // windowed slideshow
-        if (Config.UseWindowedSlideshow)
+        if (Config.EnableWindowedSlideshow)
         {
             // load window placement from settings
             WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
@@ -401,7 +401,7 @@ public partial class FrmSlideshow : ModernForm
             if (_currentIndex == _images.Length - 1)
             {
                 // loop the list
-                if (!Config.LoopSlideshow)
+                if (!Config.ShouldLoopSlideshow)
                 {
                     // pause slideshow
                     SetSlideshowState(false, false);
@@ -616,7 +616,7 @@ public partial class FrmSlideshow : ModernForm
             var list = BHelper.SortImageList(fileList,
                 Config.ImageLoadingOrder,
                 Config.ImageLoadingOrderType,
-                Config.GroupImagesByDirectory);
+                Config.ShouldGroupImagesByDirectory);
             _images = new ImageBooster(list)
             {
                 MaxQueue = 1,
@@ -729,7 +729,7 @@ public partial class FrmSlideshow : ModernForm
         var readSettings = new CodecReadOptions()
         {
             ColorProfileName = Config.ColorProfile,
-            ApplyColorProfileForAll = Config.ApplyColorProfileForAll,
+            ApplyColorProfileForAll = Config.ShouldUseColorProfileForAll,
             ImageChannel = ColorChannel.All,
             AutoScaleDownLargeImage = true,
             UseEmbeddedThumbnailRawFormats = Config.UseEmbeddedThumbnailRawFormats,
@@ -1376,8 +1376,8 @@ public partial class FrmSlideshow : ModernForm
 
     private void MnuFullScreen_Click(object sender, EventArgs e)
     {
-        Config.UseWindowedSlideshow = !Config.UseWindowedSlideshow;
-        SetFullScreenMode(!Config.UseWindowedSlideshow);
+        Config.EnableWindowedSlideshow = !Config.EnableWindowedSlideshow;
+        SetFullScreenMode(!Config.EnableWindowedSlideshow);
     }
 
     /// <summary>

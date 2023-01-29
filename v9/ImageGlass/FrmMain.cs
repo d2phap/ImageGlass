@@ -311,7 +311,7 @@ public partial class FrmMain : ModernForm
         }
 
         if (string.IsNullOrEmpty(pathToLoad)
-            && Config.OpenLastSeenImage
+            && Config.ShouldOpenLastSeenImage
             && File.Exists(Config.LastSeenImagePath))
         {
             pathToLoad = Config.LastSeenImagePath;
@@ -482,7 +482,7 @@ public partial class FrmMain : ModernForm
             var sortedFilesList = BHelper.SortImageList(allFilesToLoad,
                 Local.ActiveImageLoadingOrder,
                 Local.ActiveImageLoadingOrderType,
-                Config.GroupImagesByDirectory);
+                Config.ShouldGroupImagesByDirectory);
 
             // add to image list
             Local.InitImageList(sortedFilesList, distinctDirsList);
@@ -560,7 +560,7 @@ public partial class FrmMain : ModernForm
         Local.ActiveImageLoadingOrderType = Config.ImageLoadingOrderType;
 
         // Use File Explorer sort order if possible
-        if (Config.UseFileExplorerSortOrder)
+        if (Config.ShouldUseExplorerSortOrder)
         {
             if (ExplorerSortOrder.GetExplorerSortOrder(fullPath, out var explorerOrder, out var isAscending))
             {
@@ -600,7 +600,7 @@ public partial class FrmMain : ModernForm
                 var extension = fi.Extension.ToLower();
 
                 // checks if image is hidden and ignores it if so
-                if (!Config.IncludeHiddenImages)
+                if (!Config.ShouldLoadHiddenImages)
                 {
                     var attributes = fi.Attributes;
                     var isHidden = (attributes & FileAttributes.Hidden) != 0;
@@ -700,7 +700,7 @@ public partial class FrmMain : ModernForm
         var readSettings = new CodecReadOptions()
         {
             ColorProfileName = Config.ColorProfile,
-            ApplyColorProfileForAll = Config.ApplyColorProfileForAll,
+            ApplyColorProfileForAll = Config.ShouldUseColorProfileForAll,
             ImageChannel = Local.ImageChannel,
             AutoScaleDownLargeImage = true,
             UseEmbeddedThumbnailRawFormats = Config.UseEmbeddedThumbnailRawFormats,
@@ -1549,7 +1549,7 @@ public partial class FrmMain : ModernForm
         try
         {
             // Alert user if there is a new version
-            if (Config.IsNewVersionAvailable)
+            if (Config.ShowNewVersionIndicator)
             {
                 MnuCheckForUpdate.Text = MnuCheckForUpdate.Text = Config.Language[$"{Name}.{nameof(MnuCheckForUpdate)}._NewVersion"];
                 MnuHelp.BackColor = MnuCheckForUpdate.BackColor = Color.FromArgb(35, 255, 165, 2);

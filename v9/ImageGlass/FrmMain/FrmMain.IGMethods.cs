@@ -1437,7 +1437,7 @@ public partial class FrmMain
             }
 
             // Issue #307: option to preserve the modified date/time
-            if (Config.PreserveModifiedDate)
+            if (Config.ShouldPreserveModifiedDate)
             {
                 File.SetLastWriteTime(destPath, lastWriteTime);
             }
@@ -1474,7 +1474,7 @@ public partial class FrmMain
             }
 
             // Issue #307: option to preserve the modified date/time
-            if (Config.PreserveModifiedDate)
+            if (Config.ShouldPreserveModifiedDate)
             {
                 File.SetLastWriteTime(destPath, lastWriteTime);
             }
