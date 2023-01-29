@@ -19,7 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using FileWatcherEx;
 using ImageGlass.Base;
-using ImageGlass.Gallery;
 using ImageGlass.Settings;
 
 namespace ImageGlass;
@@ -39,7 +38,7 @@ public partial class FrmMain
     private void SetupFileWatcher()
     {
         // Start thread to watching deleted files
-        var thDeleteWorker = new Thread(new ThreadStart(ThreadWatcherDeleteFiles))
+        var thDeleteWorker = new Thread(new ThreadStart(ProcessDeletedFilesQueue))
         {
             Priority = ThreadPriority.BelowNormal,
             IsBackground = true,
@@ -54,11 +53,14 @@ public partial class FrmMain
     /// </summary>
     private void StartFileWatcher(string dirPath)
     {
-        // From Issue #530: file watcher currently fails nastily if given a prefixed path
-        var pathToWatch = BHelper.DePrefixLongPath(dirPath);
-
         // reset the watcher
         StopFileWatcher();
+
+        if (!Config.EnableFileWatcher) return;
+
+
+        // From Issue #530: file watcher currently fails nastily if given a prefixed path
+        var pathToWatch = BHelper.DePrefixLongPath(dirPath);
 
         // Watch all changes of current path
         _fileWatcher.FolderPath = pathToWatch;
@@ -279,7 +281,7 @@ public partial class FrmMain
     /// <summary>
     /// The queue thread to check the files needed to be deleted.
     /// </summary>
-    private void ThreadWatcherDeleteFiles()
+    private void ProcessDeletedFilesQueue()
     {
         while (true)
         {
@@ -292,7 +294,7 @@ public partial class FrmMain
             }
             else
             {
-                System.Threading.Thread.Sleep(200);
+                Thread.Sleep(200);
             }
         }
     }
