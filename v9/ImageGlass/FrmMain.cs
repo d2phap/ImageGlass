@@ -70,11 +70,15 @@ public partial class FrmMain : ModernForm
 
     private void FrmMain_Load(object sender, EventArgs e)
     {
+        SetupFileWatcher();
+
         Local.OnImageLoading += Local_OnImageLoading;
         Local.OnImageListLoaded += Local_OnImageListLoaded;
         Local.OnImageLoaded += Local_OnImageLoaded;
         Local.OnFirstImageReached += Local_OnFirstImageReached;
         Local.OnLastImageReached += Local_OnLastImageReached;
+
+        Application.ApplicationExit += Application_ApplicationExit;
 
         LoadImagesFromCmdArgs(Environment.GetCommandLineArgs());
     }
@@ -115,6 +119,12 @@ public partial class FrmMain : ModernForm
         MnuMain.CurrentDpi =
             MnuContext.CurrentDpi =
             MnuSubMenu.CurrentDpi = e.DeviceDpiNew;
+    }
+
+
+    private void Application_ApplicationExit(object? sender, EventArgs e)
+    {
+        DisposeFileWatcher();
     }
 
 
@@ -445,9 +455,7 @@ public partial class FrmMain : ModernForm
                 if (firstPath)
                 {
                     firstPath = false;
-
-                    // TODO:
-                    //WatchPath(dirPath);
+                    StartFileWatcher(dirPath);
 
                     // Seek for explorer sort order
                     DetermineSortOrder(dirPath);
