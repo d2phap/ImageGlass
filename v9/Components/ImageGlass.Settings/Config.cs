@@ -456,6 +456,11 @@ public static class Config
     /// </summary>
     public static bool EnableCutMultipleFiles { get; set; } = true;
 
+    /// <summary>
+    /// Gets, sets value indicates that ImageGlass should open the new image file added in the viewing folder.
+    /// </summary>
+    public static bool ShouldAutoOpenNewAddedImage { get; set; } = false;
+
 
     #endregion
 
@@ -856,6 +861,7 @@ public static class Config
         EnableImageTransition = items.GetValue(nameof(EnableImageTransition), EnableImageTransition);
         EnableCopyMultipleFiles = items.GetValue(nameof(EnableCopyMultipleFiles), EnableCopyMultipleFiles);
         EnableCutMultipleFiles = items.GetValue(nameof(EnableCutMultipleFiles), EnableCutMultipleFiles);
+        ShouldAutoOpenNewAddedImage = items.GetValue(nameof(ShouldAutoOpenNewAddedImage), ShouldAutoOpenNewAddedImage);
 
         HideToolbarInFullscreen = items.GetValue(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
         HideThumbnailsInFullscreen = items.GetValue(nameof(HideThumbnailsInFullscreen), HideThumbnailsInFullscreen);
@@ -1349,6 +1355,7 @@ public static class Config
         settings.TryAdd(nameof(EnableImageTransition), EnableImageTransition);
         settings.TryAdd(nameof(EnableCopyMultipleFiles), EnableCopyMultipleFiles);
         settings.TryAdd(nameof(EnableCutMultipleFiles), EnableCutMultipleFiles);
+        settings.TryAdd(nameof(ShouldAutoOpenNewAddedImage), ShouldAutoOpenNewAddedImage);
 
         settings.TryAdd(nameof(HideToolbarInFullscreen), HideToolbarInFullscreen);
         settings.TryAdd(nameof(HideThumbnailsInFullscreen), HideThumbnailsInFullscreen);
