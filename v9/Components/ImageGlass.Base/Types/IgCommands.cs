@@ -31,6 +31,7 @@ public static class IgCommands
     public static string SET_DEFAULT_PHOTO_VIEWER => "set-default-viewer";
     public static string UNSET_DEFAULT_PHOTO_VIEWER => "unset-default-viewer";
     public static string START_SLIDESHOW => "start-slideshow";
+    public static string EXPORT_FRAMES => "export-frames";
 
 
     // igcmd10.exe

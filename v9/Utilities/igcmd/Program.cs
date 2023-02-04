@@ -130,6 +130,35 @@ internal static class Program
         #endregion
 
 
+        #region EXPORT_FRAMES <string filePath>
+        if (topCmd == IgCommands.EXPORT_FRAMES)
+        {
+            if (args.Length > 1)
+            {
+                var filePath = args[1];
+                if (!File.Exists(filePath))
+                {
+                    _ = Config.ShowError(filePath,
+                        Config.Language[$"{nameof(FrmExportFrames)}._Title"],
+                        Config.Language[$"{nameof(FrmExportFrames)}._FileNotExist"]);
+
+                    return (int)IgExitCode.Error;
+                }
+                else
+                {
+                    Application.Run(new FrmExportFrames(filePath));
+                }
+            }
+            else
+            {
+                return (int)IgExitCode.Error;
+            }
+
+            return (int)IgExitCode.Done;
+        }
+        #endregion
+
+
 
         return (int)IgExitCode.Error;
     }

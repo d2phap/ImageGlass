@@ -345,8 +345,6 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain._Files", "file(s)"); // v7.5
         Add("FrmMain._Loading", "Loading..."); // v3.0
         //Add("FrmMain._Pages", "pages"); // v7.5
-
-        //Add("FrmMain._ExtractPageText", "Extracting image pages. Please select output folder.");
         
         //Add("FrmMain._SaveChanges", "Saving change..."); // v2.0 final
 
@@ -746,8 +744,19 @@ public class IgLang : Dictionary<string, string>
 
         Add("FrmSlideshow.MnuToggleCountdown", "Show slideshow countdown"); // v9.0
         Add("FrmSlideshow.MnuZoomModes", "Zoom modes"); // v9.0
-        
+
         #endregion
+
+
+        #region FrmExportFrames
+        Add("FrmExportFrames._Title", "Export image frames"); //v9.0
+        Add("FrmExportFrames._FileNotExist", "Image file does not exist"); //v7.5
+        Add("FrmExportFrames._FolderPickerTitle", "Select output folder for exporting image frames"); //v9.0
+        Add("FrmExportFrames._Exporting", "Exporting {0}/{1} frames \r\n{2}..."); //v9.0
+        Add("FrmExportFrames._ExportDone", "Exported {0} frames successfully to \r\n{1}"); //v9.0
+        Add("FrmExportFrames._OpenOutputFolder", "Open output folder"); //v9.0
+        #endregion
+
 
         #endregion
 
