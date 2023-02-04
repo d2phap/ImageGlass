@@ -1561,8 +1561,7 @@ public partial class FrmMain : ModernForm
             }
 
             MnuViewChannels.Enabled = true;
-            MnuExtractFrames.Enabled =
-                MnuToggleImageAnimation.Enabled =
+            MnuToggleImageAnimation.Enabled =
                 MnuViewPreviousFrame.Enabled =
                 MnuViewNextFrame.Enabled =
                 MnuViewFirstFrame.Enabled =
@@ -1574,15 +1573,14 @@ public partial class FrmMain : ModernForm
             {
                 MnuViewChannels.Enabled = false;
 
-                MnuExtractFrames.Enabled =
-                    MnuToggleImageAnimation.Enabled =
+                MnuToggleImageAnimation.Enabled =
                     MnuViewPreviousFrame.Enabled =
                     MnuViewNextFrame.Enabled =
                     MnuViewFirstFrame.Enabled =
                     MnuViewLastFrame.Enabled = true;
             }
 
-            MnuExtractFrames.Text = string.Format(Config.Language[$"{Name}.{nameof(MnuExtractFrames)}"], Local.Metadata?.FramesCount);
+            MnuExportFrames.Text = string.Format(Config.Language[$"{Name}.{nameof(MnuExportFrames)}"], Local.Metadata?.FramesCount);
 
             // check if igcmdWin10.exe exists!
             if (!BHelper.IsOS(WindowsOS.Win10OrLater)
@@ -1649,8 +1647,8 @@ public partial class FrmMain : ModernForm
             //{
             //    if (!Local.IsImageError && Local.Metadata?.FramesCount > 1)
             //    {
-            //        var mnu1 = MenuUtils.Clone(MnuExtractFrames);
-            //        mnu1.Text = string.Format(Config.Language[$"{Name}.{nameof(MnuExtractFrames)}"], Local.Metadata?.FramesCount);
+            //        var mnu1 = MenuUtils.Clone(MnuExportFrames);
+            //        mnu1.Text = string.Format(Config.Language[$"{Name}.{nameof(MnuExportFrames)}"], Local.Metadata?.FramesCount);
             //        mnu1.Enabled = true;
 
             //        var mnu2 = MenuUtils.Clone(MnuToggleImageAnimation);
@@ -1998,9 +1996,9 @@ public partial class FrmMain : ModernForm
         IG_ToggleImageAnimation();
     }
 
-    private void MnuExtractFrames_Click(object sender, EventArgs e)
+    private void MnuExportFrames_Click(object sender, EventArgs e)
     {
-
+        IG_ExportImageFrames();
     }
 
     private void MnuSetDesktopBackground_Click(object sender, EventArgs e)

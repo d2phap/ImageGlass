@@ -97,7 +97,7 @@ namespace ImageGlass
             this.MnuDeleteFromHardDisk = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem18 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuToggleImageAnimation = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuExtractFrames = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuExportFrames = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuSetDesktopBackground = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuSetLockScreen = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
@@ -636,7 +636,7 @@ namespace ImageGlass
             this.MnuDeleteFromHardDisk,
             this.toolStripMenuItem18,
             this.MnuToggleImageAnimation,
-            this.MnuExtractFrames,
+            this.MnuExportFrames,
             this.MnuSetDesktopBackground,
             this.MnuSetLockScreen,
             this.MnuOpenLocation,
@@ -732,12 +732,12 @@ namespace ImageGlass
             this.MnuToggleImageAnimation.Text = "[Start / stop animating image]";
             this.MnuToggleImageAnimation.Click += new System.EventHandler(this.MnuToggleImageAnimation_Click);
             // 
-            // MnuExtractFrames
+            // MnuExportFrames
             // 
-            this.MnuExtractFrames.Name = "MnuExtractFrames";
-            this.MnuExtractFrames.Size = new System.Drawing.Size(581, 54);
-            this.MnuExtractFrames.Text = "[Extract image frames]";
-            this.MnuExtractFrames.Click += new System.EventHandler(this.MnuExtractFrames_Click);
+            this.MnuExportFrames.Name = "MnuExportFrames";
+            this.MnuExportFrames.Size = new System.Drawing.Size(581, 54);
+            this.MnuExportFrames.Text = "[Extract image frames]";
+            this.MnuExportFrames.Click += new System.EventHandler(this.MnuExportFrames_Click);
             // 
             // MnuSetDesktopBackground
             // 
@@ -1380,7 +1380,7 @@ namespace ImageGlass
         public ToolStripMenuItem MnuDeleteFromHardDisk;
         private ToolStripSeparator toolStripMenuItem18;
         public ToolStripMenuItem MnuToggleImageAnimation;
-        public ToolStripMenuItem MnuExtractFrames;
+        public ToolStripMenuItem MnuExportFrames;
         public ToolStripMenuItem MnuSetDesktopBackground;
         public ToolStripMenuItem MnuSetLockScreen;
         public ToolStripMenuItem MnuOpenLocation;
