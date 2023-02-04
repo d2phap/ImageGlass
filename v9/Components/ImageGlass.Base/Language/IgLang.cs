@@ -263,13 +263,13 @@ public class IgLang : Dictionary<string, string>
 
         #region Clipboard
         Add("FrmMain.MnuClipboard", "Clipboard"); //v3.0
-        Add("FrmMain.MnuCopy", "Copy"); //v3.0
-        Add("FrmMain.MnuCopy._Success", "Copied {0} file(s)."); // v2.0 final
+        Add("FrmMain.MnuCopyFile", "Copy file"); //v3.0
+        Add("FrmMain.MnuCopyFile._Success", "Copied {0} file(s)."); // v2.0 final
         Add("FrmMain.MnuCopyImageData", "Copy image data"); //v5.0
         Add("FrmMain.MnuCopyImageData._Copying", "Copying the image data. It's going to take a while..."); // v9.0
         Add("FrmMain.MnuCopyImageData._Success", "Copied the current image data."); // v5.0
-        Add("FrmMain.MnuCut", "Cut"); //v3.0
-        Add("FrmMain.MnuCut._Success", "Cut {0} file(s)."); // v2.0 final
+        Add("FrmMain.MnuCutFile", "Cut file"); //v3.0
+        Add("FrmMain.MnuCutFile._Success", "Cut {0} file(s)."); // v2.0 final
         Add("FrmMain.MnuCopyPath", "Copy image path"); //v3.0
         Add("FrmMain.MnuCopyPath._Success", "Copied the current image path."); // v9.0
         Add("FrmMain.MnuPasteImage", "Paste image"); //v3.0

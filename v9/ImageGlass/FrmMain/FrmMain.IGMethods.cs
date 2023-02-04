@@ -925,7 +925,7 @@ public partial class FrmMain
 
 
         PicMain.ShowMessage(
-            string.Format(Config.Language[$"{Name}.{nameof(MnuCopy)}._Success"], Config.EnableCopyMultipleFiles ? Local.StringClipboard.Count : 1),
+            string.Format(Config.Language[$"{Name}.{nameof(MnuCopyFile)}._Success"], Config.EnableCopyMultipleFiles ? Local.StringClipboard.Count : 1),
             Config.InAppMessageDuration);
     }
 
@@ -992,7 +992,7 @@ public partial class FrmMain
 
 
         PicMain.ShowMessage(
-            string.Format(Config.Language[$"{Name}.{nameof(MnuCut)}._Success"], Config.EnableCutMultipleFiles ? Local.StringClipboard.Count : 1),
+            string.Format(Config.Language[$"{Name}.{nameof(MnuCutFile)}._Success"], Config.EnableCutMultipleFiles ? Local.StringClipboard.Count : 1),
             Config.InAppMessageDuration);
     }
 

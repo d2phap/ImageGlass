@@ -105,8 +105,8 @@ public partial class FrmMain
 
         // MnuClipboard
         { nameof(MnuCopyImageData),         new() { new (Keys.Control | Keys.C) } },
-        { nameof(MnuCopy),                  new() { new (Keys.Control | Keys.Shift | Keys.C) } },
-        { nameof(MnuCut),                   new() { new (Keys.Control | Keys.X) } },
+        { nameof(MnuCopyFile),              new() { new (Keys.Control | Keys.Shift | Keys.C) } },
+        { nameof(MnuCutFile),               new() { new (Keys.Control | Keys.X) } },
         { nameof(MnuCopyPath),              new() { new (Keys.Control | Keys.L) } },
         { nameof(MnuClearClipboard),        new() { new (Keys.Control | Keys.Oemtilde) } }, // Ctrl+`
 
@@ -550,9 +550,9 @@ public partial class FrmMain
         #region Menu Clipboard
         MnuClipboard.Text = lang[$"{Name}.{nameof(MnuClipboard)}"];
 
-        MnuCopy.Text = lang[$"{Name}.{nameof(MnuCopy)}"];
+        MnuCopyFile.Text = lang[$"{Name}.{nameof(MnuCopyFile)}"];
         MnuCopyImageData.Text = lang[$"{Name}.{nameof(MnuCopyImageData)}"];
-        MnuCut.Text = lang[$"{Name}.{nameof(MnuCut)}"];
+        MnuCutFile.Text = lang[$"{Name}.{nameof(MnuCutFile)}"];
         MnuCopyPath.Text = lang[$"{Name}.{nameof(MnuCopyPath)}"];
         MnuClearClipboard.Text = lang[$"{Name}.{nameof(MnuClearClipboard)}"];
         #endregion
@@ -902,8 +902,8 @@ public partial class FrmMain
         //MnuPasteImage.Visible = false;
         //MnuCopyImageData.Visible = false;
         //MnuCopyPath.Visible = false;
-        //MnuCopy.Visible = false;
-        //MnuCut.Visible = false;
+        //MnuCopyFile.Visible = false;
+        //MnuCutFile.Visible = false;
         //MnuClearClipboard.Visible = false;
 
         //toolStripMenuItem6.Visible = false;

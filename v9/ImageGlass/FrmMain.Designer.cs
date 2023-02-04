@@ -108,8 +108,8 @@ namespace ImageGlass
             this.toolStripMenuItem19 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuCopyImageData = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuCopyPath = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuCut = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuCopyFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuCutFile = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem23 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuClearClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
@@ -779,8 +779,8 @@ namespace ImageGlass
             this.toolStripMenuItem19,
             this.MnuCopyImageData,
             this.MnuCopyPath,
-            this.MnuCopy,
-            this.MnuCut,
+            this.MnuCopyFile,
+            this.MnuCutFile,
             this.toolStripMenuItem23,
             this.MnuClearClipboard});
             this.MnuClipboard.Image = ((System.Drawing.Image)(resources.GetObject("MnuClipboard.Image")));
@@ -818,17 +818,17 @@ namespace ImageGlass
             // 
             // MnuCopy
             // 
-            this.MnuCopy.Name = "MnuCopy";
-            this.MnuCopy.Size = new System.Drawing.Size(445, 54);
-            this.MnuCopy.Text = "[Copy]";
-            this.MnuCopy.Click += new System.EventHandler(this.MnuCopy_Click);
+            this.MnuCopyFile.Name = "MnuCopyFile";
+            this.MnuCopyFile.Size = new System.Drawing.Size(445, 54);
+            this.MnuCopyFile.Text = "[Copy file]";
+            this.MnuCopyFile.Click += new System.EventHandler(this.MnuCopyFile_Click);
             // 
             // MnuCut
             // 
-            this.MnuCut.Name = "MnuCut";
-            this.MnuCut.Size = new System.Drawing.Size(445, 54);
-            this.MnuCut.Text = "[Cut]";
-            this.MnuCut.Click += new System.EventHandler(this.MnuCut_Click);
+            this.MnuCutFile.Name = "MnuCutFile";
+            this.MnuCutFile.Size = new System.Drawing.Size(445, 54);
+            this.MnuCutFile.Text = "[Cut file]";
+            this.MnuCutFile.Click += new System.EventHandler(this.MnuCutFile_Click);
             // 
             // toolStripMenuItem23
             // 
@@ -1386,8 +1386,8 @@ namespace ImageGlass
         public ToolStripMenuItem MnuOpenLocation;
         public ToolStripMenuItem MnuImageProperties;
         public ToolStripMenuItem MnuCopyImageData;
-        public ToolStripMenuItem MnuCopy;
-        public ToolStripMenuItem MnuCut;
+        public ToolStripMenuItem MnuCopyFile;
+        public ToolStripMenuItem MnuCutFile;
         private ToolStripSeparator toolStripMenuItem19;
         private ToolStripSeparator toolStripMenuItem23;
         public ToolStripMenuItem MnuCopyPath;

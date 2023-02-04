@@ -1686,8 +1686,8 @@ public partial class FrmMain : ModernForm
 
         if (!imageNotFound && Local.ClipboardImage == null)
         {
-            MnuContext.Items.Add(MenuUtils.Clone(MnuCopy));
-            MnuContext.Items.Add(MenuUtils.Clone(MnuCut));
+            MnuContext.Items.Add(MenuUtils.Clone(MnuCopyFile));
+            MnuContext.Items.Add(MenuUtils.Clone(MnuCutFile));
         }
 
         if (!imageNotFound && Local.ClipboardImage == null)
@@ -2074,12 +2074,12 @@ public partial class FrmMain : ModernForm
         IG_CopyImageData();
     }
 
-    private void MnuCopy_Click(object sender, EventArgs e)
+    private void MnuCopyFile_Click(object sender, EventArgs e)
     {
         IG_CopyFiles();
     }
 
-    private void MnuCut_Click(object sender, EventArgs e)
+    private void MnuCutFile_Click(object sender, EventArgs e)
     {
         IG_CutFiles();
     }
