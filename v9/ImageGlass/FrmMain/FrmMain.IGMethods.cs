@@ -1151,14 +1151,7 @@ public partial class FrmMain
     {
         var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
 
-        try
-        {
-            ExplorerApi.OpenFolderAndSelectItem(filePath);
-        }
-        catch
-        {
-            using var proc = Process.Start("explorer.exe", $"/select,\"{filePath}\"");
-        }
+        BHelper.OpenFilePath(filePath);
     }
 
 
@@ -1729,6 +1722,35 @@ public partial class FrmMain
 
 
     /// <summary>
+    /// Exports image frames.
+    /// </summary>
+    public void IG_ExportImageFrames()
+    {
+        _ = ExportImageFramesAsync();
+    }
+
+    public async Task ExportImageFramesAsync()
+    {
+        // image error
+        if (PicMain.Source == ImageSource.Null) return;
+
+
+        var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
+
+        // clipboard image
+        if (Local.ClipboardImage != null)
+        {
+            // save image to temp file
+            filePath = await Local.SaveImageAsTempFileAsync(".png");
+        }
+
+
+        var args = string.Format($"{IgCommands.EXPORT_FRAMES} \"{filePath}\"");
+        await BHelper.RunIgcmd(args);
+    }
+
+
+    /// <summary>
     /// Sets the viewing image as desktop background.
     /// </summary>
     public void IG_SetDesktopBackground()
@@ -1739,10 +1761,7 @@ public partial class FrmMain
     public async Task SetDesktopBackgroundAsync()
     {
         // image error
-        if (PicMain.Source == ImageSource.Null)
-        {
-            return;
-        }
+        if (PicMain.Source == ImageSource.Null) return;
 
         var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
         var ext = Path.GetExtension(filePath).ToUpperInvariant();
