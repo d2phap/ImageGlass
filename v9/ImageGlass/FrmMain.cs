@@ -1562,7 +1562,7 @@ public partial class FrmMain : ModernForm
 
             MnuViewChannels.Enabled = true;
             MnuExtractFrames.Enabled =
-                MnuStartStopAnimating.Enabled =
+                MnuToggleImageAnimation.Enabled =
                 MnuViewPreviousFrame.Enabled =
                 MnuViewNextFrame.Enabled =
                 MnuViewFirstFrame.Enabled =
@@ -1575,7 +1575,7 @@ public partial class FrmMain : ModernForm
                 MnuViewChannels.Enabled = false;
 
                 MnuExtractFrames.Enabled =
-                    MnuStartStopAnimating.Enabled =
+                    MnuToggleImageAnimation.Enabled =
                     MnuViewPreviousFrame.Enabled =
                     MnuViewNextFrame.Enabled =
                     MnuViewFirstFrame.Enabled =
@@ -1613,26 +1613,21 @@ public partial class FrmMain : ModernForm
         var hasClipboardImage = Local.ClipboardImage != null;
         var imageNotFound = !File.Exists(Local.Images.GetFilePath(Local.CurrentIndex));
 
-        //if (Config.IsSlideshow && !imageNotFound)
-        //{
-        //    MnuContext.Items.Add(MenuUtils.Clone(MnuPauseResumeSlideshow));
-        //    MnuContext.Items.Add(MenuUtils.Clone(MnuExitSlideshow));
-        //    MnuContext.Items.Add(new ToolStripSeparator());
-        //}
 
         // toolbar menu
         MnuContext.Items.Add(MenuUtils.Clone(MnuToggleToolbar));
         MnuContext.Items.Add(MenuUtils.Clone(MnuToggleTopMost));
 
-        if (!hasClipboardImage)
-        {
-            MnuContext.Items.Add(new ToolStripSeparator());
-            MnuContext.Items.Add(MenuUtils.Clone(MnuLoadingOrders));
-        }
 
         // Get Edit App info
         if (!imageNotFound)
         {
+            if (!hasClipboardImage)
+            {
+                MnuContext.Items.Add(new ToolStripSeparator());
+                MnuContext.Items.Add(MenuUtils.Clone(MnuLoadingOrders));
+            }
+
             if (!Local.IsImageError
                 && !hasClipboardImage
                 && Local.Metadata?.FramesCount <= 1)
@@ -1658,7 +1653,7 @@ public partial class FrmMain : ModernForm
             //        mnu1.Text = string.Format(Config.Language[$"{Name}.{nameof(MnuExtractFrames)}"], Local.Metadata?.FramesCount);
             //        mnu1.Enabled = true;
 
-            //        var mnu2 = MenuUtils.Clone(MnuStartStopAnimating);
+            //        var mnu2 = MenuUtils.Clone(MnuToggleImageAnimation);
             //        mnu2.Enabled = true;
 
             //        MnuContext.Items.Add(mnu1);
@@ -1998,9 +1993,9 @@ public partial class FrmMain : ModernForm
         IG_Delete(false);
     }
 
-    private void MnuStartStopAnimating_Click(object sender, EventArgs e)
+    private void MnuToggleImageAnimation_Click(object sender, EventArgs e)
     {
-
+        IG_ToggleImageAnimation();
     }
 
     private void MnuExtractFrames_Click(object sender, EventArgs e)

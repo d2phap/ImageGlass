@@ -246,7 +246,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuDeleteFromHardDisk", "Delete from hard disk"); //v3.0
         Add("FrmMain.MnuDeleteFromHardDisk._Description", "Are you sure you want to permanently delete this file?"); //v3.0
         Add("FrmMain.MnuExtractFrames", "Extract image frames ({0})…"); //v7.5
-        Add("FrmMain.MnuStartStopAnimating", "Start / Stop animating image"); //v3.0
+        Add("FrmMain.MnuToggleImageAnimation", "Start / stop animating image"); //v3.0
         Add("FrmMain.MnuSetDesktopBackground", "Set as Desktop background"); //v3.0
         Add("FrmMain.MnuSetDesktopBackground._CreatingFile", "Creating image file for desktop background..."); //v9.0
         Add("FrmMain.MnuSetDesktopBackground._CreatingFileError", "Could not create the image for desktop background"); //v9.0

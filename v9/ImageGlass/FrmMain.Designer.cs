@@ -96,7 +96,7 @@ namespace ImageGlass
             this.MnuMoveToRecycleBin = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuDeleteFromHardDisk = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem18 = new System.Windows.Forms.ToolStripSeparator();
-            this.MnuStartStopAnimating = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuToggleImageAnimation = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuExtractFrames = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuSetDesktopBackground = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuSetLockScreen = new System.Windows.Forms.ToolStripMenuItem();
@@ -635,7 +635,7 @@ namespace ImageGlass
             this.MnuMoveToRecycleBin,
             this.MnuDeleteFromHardDisk,
             this.toolStripMenuItem18,
-            this.MnuStartStopAnimating,
+            this.MnuToggleImageAnimation,
             this.MnuExtractFrames,
             this.MnuSetDesktopBackground,
             this.MnuSetLockScreen,
@@ -725,12 +725,12 @@ namespace ImageGlass
             this.toolStripMenuItem18.Name = "toolStripMenuItem18";
             this.toolStripMenuItem18.Size = new System.Drawing.Size(578, 6);
             // 
-            // MnuStartStopAnimating
+            // MnuToggleImageAnimation
             // 
-            this.MnuStartStopAnimating.Name = "MnuStartStopAnimating";
-            this.MnuStartStopAnimating.Size = new System.Drawing.Size(581, 54);
-            this.MnuStartStopAnimating.Text = "[Start / Stop animating image]";
-            this.MnuStartStopAnimating.Click += new System.EventHandler(this.MnuStartStopAnimating_Click);
+            this.MnuToggleImageAnimation.Name = "MnuToggleImageAnimation";
+            this.MnuToggleImageAnimation.Size = new System.Drawing.Size(581, 54);
+            this.MnuToggleImageAnimation.Text = "[Start / stop animating image]";
+            this.MnuToggleImageAnimation.Click += new System.EventHandler(this.MnuToggleImageAnimation_Click);
             // 
             // MnuExtractFrames
             // 
@@ -1379,7 +1379,7 @@ namespace ImageGlass
         public ToolStripMenuItem MnuMoveToRecycleBin;
         public ToolStripMenuItem MnuDeleteFromHardDisk;
         private ToolStripSeparator toolStripMenuItem18;
-        public ToolStripMenuItem MnuStartStopAnimating;
+        public ToolStripMenuItem MnuToggleImageAnimation;
         public ToolStripMenuItem MnuExtractFrames;
         public ToolStripMenuItem MnuSetDesktopBackground;
         public ToolStripMenuItem MnuSetLockScreen;

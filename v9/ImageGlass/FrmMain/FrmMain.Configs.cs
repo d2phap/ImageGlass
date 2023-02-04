@@ -98,7 +98,7 @@ public partial class FrmMain
         { nameof(MnuRename),                new() { new (Keys.F2) } },
         { nameof(MnuMoveToRecycleBin),      new() { new (Keys.Delete) } },
         { nameof(MnuDeleteFromHardDisk),    new() { new (Keys.Shift | Keys.Delete) } },
-        { nameof(MnuStartStopAnimating),    new() { new (Keys.Control | Keys.Space) } },
+        { nameof(MnuToggleImageAnimation),  new() { new (Keys.Control | Keys.Space) } },
         { nameof(MnuExtractFrames),         new() { new (Keys.Control | Keys.J) } },
         { nameof(MnuOpenLocation),          new() { new (Keys.L) } },
         { nameof(MnuImageProperties),       new() { new (Keys.Control | Keys.I) } },
@@ -532,7 +532,7 @@ public partial class FrmMain
         MnuMoveToRecycleBin.Text = lang[$"{Name}.{nameof(MnuMoveToRecycleBin)}"];
         MnuDeleteFromHardDisk.Text = lang[$"{Name}.{nameof(MnuDeleteFromHardDisk)}"];
         MnuExtractFrames.Text = lang[$"{Name}.{nameof(MnuExtractFrames)}"];
-        MnuStartStopAnimating.Text = lang[$"{Name}.{nameof(MnuStartStopAnimating)}"];
+        MnuToggleImageAnimation.Text = lang[$"{Name}.{nameof(MnuToggleImageAnimation)}"];
         MnuSetDesktopBackground.Text = lang[$"{Name}.{nameof(MnuSetDesktopBackground)}"];
         MnuSetLockScreen.Text = lang[$"{Name}.{nameof(MnuSetLockScreen)}"];
         MnuOpenLocation.Text = lang[$"{Name}.{nameof(MnuOpenLocation)}"];
@@ -891,7 +891,7 @@ public partial class FrmMain
         //MnuRename.Visible = false;
         //MnuMoveToRecycleBin.Visible = false;
         //MnuDeleteFromHardDisk.Visible = false;
-        MnuStartStopAnimating.Visible = false;
+        //MnuToggleImageAnimation.Visible = false;
         MnuExtractFrames.Visible = false;
         //MnuSetDesktopBackground.Visible = false;
         //MnuSetLockScreen.Visible = false;
