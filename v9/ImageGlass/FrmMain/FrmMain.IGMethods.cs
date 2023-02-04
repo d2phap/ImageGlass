@@ -1711,6 +1711,24 @@ public partial class FrmMain
 
 
     /// <summary>
+    /// Toggle image animation for the animated format.
+    /// </summary>
+    public void IG_ToggleImageAnimation(bool? enable = null)
+    {
+        enable ??= !PicMain.IsImageAnimating;
+
+        if (enable.Value)
+        {
+            PicMain.StartAnimatingImage(); 
+        }
+        else
+        {
+            PicMain.StopAnimatingImage();
+        }
+    }
+
+
+    /// <summary>
     /// Sets the viewing image as desktop background.
     /// </summary>
     public void IG_SetDesktopBackground()
