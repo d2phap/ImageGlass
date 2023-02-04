@@ -362,7 +362,7 @@ public partial class DialogForm : ModernForm
         var contentHeight = TableFooter.Height + TableFooter.Padding.Vertical;
         var formHeight = formNonClientHeight + contentHeight;
 
-        if (performUpdate)
+        if (performUpdate && Height != formHeight)
         {
             Height = formHeight;
         }

@@ -484,7 +484,7 @@ public partial class Popup : DialogForm
         var contentHeight = tableMain.Height;
         var formHeight = contentHeight + baseHeight;
 
-        if (performUpdate)
+        if (performUpdate && Height != formHeight)
         {
             Height = formHeight;
         }

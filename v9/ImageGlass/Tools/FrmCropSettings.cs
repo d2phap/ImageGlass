@@ -73,14 +73,14 @@ public partial class FrmCropSettings : DialogForm
     protected override int OnUpdateHeight(bool performUpdate = true)
     {
         var baseHeight = base.OnUpdateHeight(false);
-        var contentHeight = tableTop.Height;
+        var formHeight = tableTop.Height + baseHeight;
 
-        if (performUpdate)
+        if (performUpdate && Height != formHeight)
         {
-            Height = contentHeight + baseHeight;
+            Height = formHeight;
         }
 
-        return contentHeight;
+        return formHeight;
     }
 
 
