@@ -234,6 +234,24 @@ public partial class BHelper
 
 
     /// <summary>
+    /// Opens file path in Explorer and selects it.
+    /// </summary>
+    public static void OpenFilePath(string? filePath)
+    {
+        if (string.IsNullOrEmpty(filePath)) return;
+
+        try
+        {
+            ExplorerApi.OpenFolderAndSelectItem(filePath);
+        }
+        catch
+        {
+            using var proc = Process.Start("explorer.exe", $"/select,\"{filePath}\"");
+        }
+    }
+
+
+    /// <summary>
     /// Delete a file
     /// </summary>
     /// <param name="filePath">Full file path to delete</param>

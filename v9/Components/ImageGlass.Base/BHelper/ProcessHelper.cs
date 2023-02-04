@@ -34,9 +34,6 @@ public partial class BHelper
     /// <summary>
     /// Runs an async function synchronous
     /// </summary>
-    /// <typeparam name="TResult"></typeparam>
-    /// <param name="func"></param>
-    /// <returns></returns>
     public static TResult RunSync<TResult>(Func<Task<TResult>> func)
     {
         var cultureUi = CultureInfo.CurrentUICulture;
@@ -54,7 +51,6 @@ public partial class BHelper
     /// <summary>
     /// Runs an async function synchronous
     /// </summary>
-    /// <param name="func"></param>
     public static void RunSync(Func<Task> func)
     {
         var cultureUi = CultureInfo.CurrentUICulture;
@@ -72,8 +68,6 @@ public partial class BHelper
     /// <summary>
     /// Runs a function in a new thread
     /// </summary>
-    /// <param name="func"></param>
-    /// <returns></returns>
     public static Thread RunAsThread(ThreadStart func, ApartmentState thState = ApartmentState.Unknown)
     {
         var th = new Thread(func)
@@ -91,8 +85,6 @@ public partial class BHelper
     /// <summary>
     /// Runs as admin
     /// </summary>
-    /// <param name="filename"></param>
-    /// <param name="args"></param>
     public static async Task<int> RunExeAsync(string filename, string args, bool asAdmin = false, bool waitForExit = false)
     {
         var proc = new Process();

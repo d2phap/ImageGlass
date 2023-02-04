@@ -1711,7 +1711,7 @@ public partial class FrmMain
 
 
     /// <summary>
-    /// Toggle image animation for the animated format.
+    /// Toggles image animation for the animated format.
     /// </summary>
     public void IG_ToggleImageAnimation(bool? enable = null)
     {
