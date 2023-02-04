@@ -535,6 +535,7 @@ public partial class ModernForm : Form
             || (c is Label && c is not LinkLabel)
             || c is PictureBox
             || c is TableLayoutPanel
+            || c is ProgressBar
             || c.HasChildren;
     }
 

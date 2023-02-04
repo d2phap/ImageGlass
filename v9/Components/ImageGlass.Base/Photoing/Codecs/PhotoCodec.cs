@@ -505,24 +505,25 @@ public static class PhotoCodec
     /// <summary>
     /// Save image pages to files, using Magick.NET
     /// </summary>
-    /// <param name="filename">The full path of source file</param>
+    /// <param name="srcFilePath">The full path of source file</param>
     /// <param name="destFolder">The destination folder to save to</param>
-    public static async IAsyncEnumerable<int> SaveFramesAsync(string filename, string destFolder, [EnumeratorCancellation] CancellationToken token = default)
+    public static async IAsyncEnumerable<(int FrameNumber, string FileName)> SaveFramesAsync(string srcFilePath, string destFolder, [EnumeratorCancellation] CancellationToken token = default)
     {
         // create dirs unless it does not exist
         Directory.CreateDirectory(destFolder);
 
-        using var imgColl = new MagickImageCollection(filename);
+        using var imgColl = new MagickImageCollection(srcFilePath);
         var index = 0;
 
         foreach (var imgM in imgColl)
         {
             index++;
             imgM.Quality = 100;
+            var newFilename = string.Empty;
 
             try
             {
-                var newFilename = Path.GetFileNameWithoutExtension(filename)
+                newFilename = Path.GetFileNameWithoutExtension(srcFilePath)
                     + " - " + index.ToString($"D{imgColl.Count.ToString().Length}")
                     + ".png";
                 var destFilePath = Path.Combine(destFolder, newFilename);
@@ -532,7 +533,7 @@ public static class PhotoCodec
             catch (OperationCanceledException) { break; }
             catch { }
 
-            yield return index;
+            yield return (index, newFilename);
         }
     }
 
