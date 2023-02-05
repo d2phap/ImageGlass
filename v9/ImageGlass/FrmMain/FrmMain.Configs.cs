@@ -848,7 +848,7 @@ public partial class FrmMain
         //MnuSave.Visible = false;
         //MnuSaveAs.Visible = false;
         //MnuOpenWith.Visible = false;
-        MnuEdit.Visible = false;
+        //MnuEdit.Visible = false;
         //MnuPrint.Visible = false;
         // MnuPrint.Visible = false;
         //MnuRefresh.Visible = false;
@@ -939,5 +939,39 @@ public partial class FrmMain
         //MnuExit.Visible = false;
     }
 
+
+    private void UpdateEditAppInfoForMenu()
+    {
+        var appName = string.Empty;
+        MnuEdit.Image = null;
+
+        // not clipboard image
+        if (Local.ClipboardImage == null)
+        {
+            // Find file format
+            var ext = Path.GetExtension(Local.Images.GetFilePath(Local.CurrentIndex)).ToLowerInvariant();
+
+            if (Config.EditApps.TryGetValue(ext, out var app) && app != null)
+            {
+                appName = $"({app.AppName})";
+
+                try
+                {
+                    // update menu icon
+                    var ico = Icon.ExtractAssociatedIcon(app.AppPath);
+                    var iconWidth = this.ScaleToDpi(Constants.MENU_ICON_HEIGHT);
+
+                    MnuEdit.Image = new Bitmap(ico.ToBitmap(), iconWidth, iconWidth);
+                }
+                catch { }
+            }
+            else if (BHelper.IsOS(WindowsOS.Win11OrLater))
+            {
+                appName = "(MS Paint)";
+            }
+        }
+
+        MnuEdit.Text = string.Format(Config.Language[$"{Name}.{nameof(MnuEdit)}"], appName);
+    }
 }
 

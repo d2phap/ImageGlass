@@ -26,6 +26,7 @@ using ImageGlass.Settings;
 using ImageGlass.UI;
 using ImageGlass.Views;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO.Pipes;
 using WicNet;
@@ -776,7 +777,7 @@ public partial class FrmMain
         var ext = Path.GetExtension(currentFile).ToUpperInvariant();
         var langPath = $"{Name}.{nameof(MnuPrint)}";
 
-        PicMain.ShowMessage(Config.Language[$"{langPath}._CreatingFile"], "", delayMs: 500);
+        PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], "", delayMs: 500);
 
 
         // print clipboard image
@@ -806,7 +807,7 @@ public partial class FrmMain
 
         if (string.IsNullOrEmpty(fileToPrint))
         {
-            _ = Config.ShowError(Config.Language[$"{langPath}._CreatingFileError"],
+            _ = Config.ShowError(Config.Language[$"_._CreatingFileError"],
                 Config.Language[langPath]);
         }
         else
@@ -841,7 +842,7 @@ public partial class FrmMain
         // print clipboard image
         if (Local.ClipboardImage != null)
         {
-            PicMain.ShowMessage(Config.Language[$"{langPath}._CreatingFile"], "", delayMs: 500);
+            PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], "", delayMs: 500);
 
             // save image to temp file
             filePath = await Local.SaveImageAsTempFileAsync(".png");
@@ -851,7 +852,7 @@ public partial class FrmMain
 
         if (!File.Exists(filePath))
         {
-            _ = Config.ShowError(Config.Language[$"{langPath}._CreatingFileError"],
+            _ = Config.ShowError(Config.Language[$"_._CreatingFileError"],
                 Config.Language[langPath]);
         }
         else
@@ -1506,7 +1507,7 @@ public partial class FrmMain
 
         if (Local.ClipboardImage != null)
         {
-            PicMain.ShowMessage(Config.Language[$"{langPath}._CreatingFile"], "", delayMs: 500);
+            PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], "", delayMs: 500);
 
             filePath = await Local.SaveImageAsTempFileAsync(".png");
         }
@@ -1520,7 +1521,7 @@ public partial class FrmMain
 
         if (!File.Exists(filePath))
         {
-            _ = Config.ShowError(Config.Language[$"{langPath}._CreatingFileError"],
+            _ = Config.ShowError(Config.Language[$"_._CreatingFileError"],
                 Config.Language[langPath]);
         }
         else
@@ -1540,6 +1541,174 @@ public partial class FrmMain
             }
             catch { }
         }
+    }
+
+
+    /// <summary>
+    /// Open app for edit action.
+    /// </summary>
+    public void IG_OpenEditApp()
+    {
+        _ = OpenEditAppAsync();
+    }
+
+    public async Task OpenEditAppAsync()
+    {
+        var langPath = $"{Name}.{nameof(MnuEdit)}";
+
+        // get file path to edit
+        string? filePath;
+        if (Local.ClipboardImage != null)
+        {
+            PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], "", delayMs: 500);
+            filePath = await Local.SaveImageAsTempFileAsync(".png");
+        }
+        else
+        {
+            filePath = Local.Images.GetFilePath(Local.CurrentIndex);
+        }
+        PicMain.ClearMessage();
+
+
+        if (!File.Exists(filePath))
+        {
+            _ = Config.ShowError(Config.Language[$"_._CreatingFileError"],
+                Config.Language[langPath]);
+
+            return;
+        }
+
+
+        // get extension
+        var ext = Path.GetExtension(filePath).ToLowerInvariant();
+
+        // get app from the extension
+        if (Config.EditApps.TryGetValue(ext, out var app) && app != null)
+        {
+            // open configured app for editing
+            using var p = new Process();
+            p.StartInfo.FileName = BHelper.ResolvePath(app.AppPath);
+
+            // build the arguments
+            var args = app.AppArguments.Replace(Constants.FILE_MACRO, filePath);
+            p.StartInfo.Arguments = $"{args}";
+
+            // show error dialog
+            p.StartInfo.ErrorDialog = true;
+
+            try
+            {
+                p.Start();
+
+                RunActionAfterEditing();
+            }
+            catch { }
+        }
+        else // Edit by default associated app
+        {
+            EditByDefaultApp(filePath);
+        }
+    }
+
+    /// <summary>
+    /// Runs the <see cref="Config.AfterEditingAction"/> action after done editing.
+    /// </summary>
+    public void RunActionAfterEditing()
+    {
+        if (Config.AfterEditingAction == AfterEditAppAction.Minimize)
+        {
+            foreach (var frm in Application.OpenForms)
+            {
+                (frm as Form).WindowState = FormWindowState.Minimized;
+            }
+        }
+        else if (Config.AfterEditingAction == AfterEditAppAction.Close)
+        {
+            IG_Exit();
+        }
+    }
+
+    /// <summary>
+    /// Edits the viewing image by default app.
+    /// </summary>
+    public void EditByDefaultApp(string filePath)
+    {
+        // windows 11 sucks the verb 'edit'
+        if (BHelper.IsOS(WindowsOS.Win11OrLater))
+        {
+            var mspaint11 = @"%LocalAppData%\Microsoft\WindowsApps\mspaint.exe";
+            var fullPath = BHelper.ResolvePath(mspaint11);
+
+            if (!File.Exists(fullPath))
+            {
+                MessageBox.Show("Could not find the default app for editing. Please associate your app in ImageGlass Settings > Edit.", filePath, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+
+            using var p11 = new Process();
+            p11.StartInfo.FileName = fullPath;
+            p11.StartInfo.Arguments = $"\"{filePath}\"";
+            p11.StartInfo.UseShellExecute = true;
+
+            try
+            {
+                p11.Start();
+
+                RunActionAfterEditing();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, filePath, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return;
+        }
+
+
+        // windows 10 or earlier ------------------------------
+        var win32ErrorMsg = string.Empty;
+
+        using var p10 = new Process();
+        p10.StartInfo.FileName = $"\"{filePath}\"";
+        p10.StartInfo.Verb = "edit";
+
+        // first try: launch the associated app for editing
+        try
+        {
+            p10.Start();
+
+            RunActionAfterEditing();
+        }
+        catch (Win32Exception ex)
+        {
+            // file does not have associated app
+            win32ErrorMsg = ex.Message;
+        }
+        catch { }
+
+        if (string.IsNullOrEmpty(win32ErrorMsg)) return;
+
+
+        // second try: use MS Paint to edit the file
+        using var p = new Process();
+        p.StartInfo.FileName = BHelper.ResolvePath("mspaint.exe");
+        p.StartInfo.Arguments = $"\"{filePath}\"";
+        p.StartInfo.UseShellExecute = true;
+
+
+        try
+        {
+            p.Start();
+
+            RunActionAfterEditing();
+        }
+        catch (Win32Exception)
+        {
+            // show error: file does not have associated app
+            MessageBox.Show(win32ErrorMsg, filePath, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        catch { }
     }
 
 
@@ -1768,7 +1937,7 @@ public partial class FrmMain
         var defaultExt = BHelper.IsOS(WindowsOS.Win7) ? ".bmp" : ".jpg";
         var langPath = $"{Name}.{nameof(MnuSetDesktopBackground)}";
 
-        PicMain.ShowMessage(Config.Language[$"{langPath}._CreatingFile"], "", delayMs: 500);
+        PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], "", delayMs: 500);
 
 
         // print clipboard image
@@ -1794,7 +1963,7 @@ public partial class FrmMain
         {
             PicMain.ClearMessage();
 
-            _ = Config.ShowError(Config.Language[$"{langPath}._CreatingFileError"],
+            _ = Config.ShowError(Config.Language[$"_._CreatingFileError"],
                 Config.Language[langPath]);
         }
         else
@@ -1842,7 +2011,7 @@ public partial class FrmMain
         var ext = Path.GetExtension(filePath).ToUpperInvariant();
         var langPath = $"{Name}.{nameof(MnuSetLockScreen)}";
 
-        PicMain.ShowMessage(Config.Language[$"{langPath}._CreatingFile"], "", delayMs: 500);
+        PicMain.ShowMessage(Config.Language[$"_._CreatingFile"], "", delayMs: 500);
 
 
         // print clipboard image
@@ -1862,7 +2031,7 @@ public partial class FrmMain
         {
             PicMain.ClearMessage();
 
-            _ = Config.ShowError(Config.Language[$"{langPath}._CreatingFileError"],
+            _ = Config.ShowError(Config.Language[$"_._CreatingFileError"],
                 Config.Language[langPath]);
         }
         else

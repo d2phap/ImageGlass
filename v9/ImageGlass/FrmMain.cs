@@ -1594,9 +1594,8 @@ public partial class FrmMain : ModernForm
                 MnuOpenWith.Enabled = false;
             }
 
-
-            //// Get EditApp for editing
-            //UpdateEditAppInfoForMenu();
+            // Get EditApp for editing
+            UpdateEditAppInfoForMenu();
         }
         catch { }
 
@@ -1639,27 +1638,9 @@ public partial class FrmMain : ModernForm
                 MnuContext.Items.Add(MenuUtils.Clone(MnuOpenWith));
             }
 
-            //UpdateEditAppInfoForMenu();
-            //MnuContext.Items.Add(MenuUtils.Clone(MnuEdit));
-
-            //#region Check if image can animate (GIF)
-            //try
-            //{
-            //    if (!Local.IsImageError && Local.Metadata?.FramesCount > 1)
-            //    {
-            //        var mnu1 = MenuUtils.Clone(MnuExportFrames);
-            //        mnu1.Text = string.Format(Config.Language[$"{Name}.{nameof(MnuExportFrames)}"], Local.Metadata?.FramesCount);
-            //        mnu1.Enabled = true;
-
-            //        var mnu2 = MenuUtils.Clone(MnuToggleImageAnimation);
-            //        mnu2.Enabled = true;
-
-            //        MnuContext.Items.Add(mnu1);
-            //        MnuContext.Items.Add(mnu2);
-            //    }
-            //}
-            //catch { }
-            //#endregion
+            // menu Edit
+            UpdateEditAppInfoForMenu();
+            MnuContext.Items.Add(MenuUtils.Clone(MnuEdit));
         }
 
 
@@ -1740,7 +1721,7 @@ public partial class FrmMain : ModernForm
 
     private void MnuEdit_Click(object sender, EventArgs e)
     {
-        // TODO
+        IG_OpenEditApp();
     }
 
     private void MnuPrint_Click(object sender, EventArgs e)
