@@ -372,4 +372,12 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
     }
 
 
+    protected override void OnRenderItemImage(ToolStripItemImageRenderEventArgs e)
+    {
+        // image rect
+        var rect = new RectangleF(ContentMargin.Left, 0, e.Item.Height, e.Item.Height);
+        rect.Inflate(-e.Item.Height * 0.15f, -e.Item.Height * 0.15f);
+
+        e.Graphics.DrawImage(e.Image, rect);
+    }
 }
