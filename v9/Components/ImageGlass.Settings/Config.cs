@@ -661,10 +661,10 @@ public static class Config
 
     #region Array items
 
-    ///// <summary>
-    ///// Gets, sets the list of Image Editing Association
-    ///// </summary>
-    //public static List<EditApp> EditApps { get; set; } = new();
+    /// <summary>
+    /// Gets, sets the list of apps for edit action.
+    /// </summary>
+    public static Dictionary<string, EditApp?> EditApps { get; set; } = new();
 
     /// <summary>
     /// Gets, sets the list of supported image formats
@@ -754,10 +754,10 @@ public static class Config
     ///// </summary>
     //public static ToolbarPosition ToolbarPosition { get; set; } = ToolbarPosition.Top;
 
-    ///// <summary>
-    ///// Gets, sets value indicates what happens after clicking Edit menu
-    ///// </summary>
-    //public static AfterOpeningEditAppAction AfterEditingAction { get; set; } = AfterOpeningEditAppAction.Nothing;
+    /// <summary>
+    /// Gets, sets value indicates what happens after clicking Edit menu
+    /// </summary>
+    public static AfterEditAppAction AfterEditingAction { get; set; } = AfterEditAppAction.Nothing;
 
 
     /// <summary>
@@ -958,7 +958,7 @@ public static class Config
         ImageInterpolationScaleDown = items.GetValue(nameof(ImageInterpolationScaleDown), ImageInterpolationScaleDown);
         ImageInterpolationScaleUp = items.GetValue(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
         //ToolbarPosition = items.GetValue(nameof(ToolbarPosition), ToolbarPosition);
-        //AfterEditingAction = items.GetValue(nameof(AfterEditingAction), AfterEditingAction);
+        AfterEditingAction = items.GetValue(nameof(AfterEditingAction), AfterEditingAction);
         WindowBackdrop = items.GetValue(nameof(WindowBackdrop), WindowBackdrop);
 
         #endregion
@@ -983,8 +983,12 @@ public static class Config
 
         #region EditApps
 
-        //var appStr = items.GetValue(nameof(EditApps), "");
-        //EditApps = GetEditApps(appStr);
+        EditApps = items.GetSection(nameof(EditApps))
+            .GetChildren()
+            .ToDictionary(
+                i => i.Key.ToLowerInvariant(),
+                i => i.Get<EditApp>()
+            );
 
         #endregion
 
@@ -1423,7 +1427,7 @@ public static class Config
         settings.TryAdd(nameof(ImageInterpolationScaleDown), ImageInterpolationScaleDown);
         settings.TryAdd(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
         //settings.TryAdd(nameof(ToolbarPosition), ToolbarPosition.ToString());
-        //settings.TryAdd(nameof(AfterEditingAction), AfterEditingAction.ToString());
+        settings.TryAdd(nameof(AfterEditingAction), AfterEditingAction.ToString());
         settings.TryAdd(nameof(WindowBackdrop), WindowBackdrop);
 
         #endregion
@@ -1452,7 +1456,7 @@ public static class Config
 
         #region Array items
 
-        //settings.TryAdd(nameof(EditApps), GetEditApps(EditApps));
+        settings.TryAdd(nameof(EditApps), EditApps);
         settings.TryAdd(nameof(AllFormats), GetImageFormats(AllFormats));
         settings.TryAdd(nameof(SinglePageFormats), GetImageFormats(SinglePageFormats));
         settings.TryAdd(nameof(InfoItems), InfoItems);
