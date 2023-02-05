@@ -1868,9 +1868,14 @@ namespace ImageGlass {
                 return;
             }
 
+            string oldcomment = "";
             var so = ShellObject.FromParsingName(filepath);
             var _usercomment = so.Properties.GetProperty(SystemProperties.System.Comment);
-            string oldcomment = _usercomment.ValueAsObject.ToString();
+            if (_usercomment.ValueAsObject != null) {
+                oldcomment = _usercomment.ValueAsObject.ToString();
+            }
+
+                
             // Show input box
 
             if (InputBox.ShowDialog(
