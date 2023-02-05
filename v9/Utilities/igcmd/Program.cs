@@ -138,7 +138,8 @@ internal static class Program
                 var filePath = args[1];
                 if (!File.Exists(filePath))
                 {
-                    _ = Config.ShowError(filePath,
+                    _ = Config.ShowError(null,
+                        filePath,
                         Config.Language[$"{nameof(FrmExportFrames)}._Title"],
                         Config.Language[$"{nameof(FrmExportFrames)}._FileNotExist"]);
 

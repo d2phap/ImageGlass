@@ -1474,7 +1474,7 @@ public partial class FrmMain : ModernForm
         // show error if any
         else
         {
-            Config.ShowError(error.ToString(), Config.Language["_._Error"], error.Message);
+            Config.ShowError(this, error.ToString(), Config.Language["_._Error"], error.Message);
         }
     }
 

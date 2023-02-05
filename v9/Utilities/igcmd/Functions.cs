@@ -102,14 +102,14 @@ public static class Functions
                     ? Config.Language[$"{langPath}._SuccessDescription"]
                     : string.Empty;
 
-                _ = Config.ShowInfo(
+                _ = Config.ShowInfo(null,
                     description: description,
                     title: Config.Language[langPath],
                     heading: Config.Language[$"{langPath}._Success"]);
             }
             else if (exitCode != IgExitCode.AdminRequired || !hideAdminRequiredErrorUi)
             {
-                _ = Config.ShowError(
+                _ = Config.ShowError(null,
                     description: error.Message,
                     title: Config.Language[langPath],
                     heading: Config.Language[$"{langPath}._Error"],

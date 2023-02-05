@@ -1152,7 +1152,7 @@ public static class Config
         var url = "https://imageglass.org/docs/command-line-utilities";
         var langPath = $"_._IgCommandExe._DefaultError";
 
-        var result = ShowError(
+        var result = ShowError(null,
             title: Application.ProductName + " v" + Application.ProductVersion,
             heading: Language[$"{langPath}._Heading"],
             description: string.Format(Language[$"{langPath}._Description"], url),
@@ -1191,7 +1191,7 @@ public static class Config
 
             ex.ToString();
 
-        var result = ShowError(
+        var result = ShowError(null,
             title: Application.ProductName + " - " + Language[langPath],
             heading: ex.Message,
             description: description,
@@ -1216,6 +1216,7 @@ public static class Config
     /// <param name="note">Note text.</param>
     /// <param name="buttons">Popup buttons.</param>
     public static PopupResult ShowInfo(
+        Form? formOwner,
         string description = "",
         string title = "",
         string heading = "",
@@ -1224,8 +1225,7 @@ public static class Config
         SHSTOCKICONID? icon = SHSTOCKICONID.SIID_INFO,
         Image? thumbnail = null,
         PopupButton buttons = PopupButton.OK,
-        string optionText = "",
-        Form? formOwner = null)
+        string optionText = "")
     {
         SystemSounds.Question.Play();
 
@@ -1243,6 +1243,7 @@ public static class Config
     /// <param name="note">Note text.</param>
     /// <param name="buttons">Popup buttons.</param>
     public static PopupResult ShowWarning(
+        Form? formOwner,
         string description = "",
         string title = "",
         string? heading = null,
@@ -1251,8 +1252,7 @@ public static class Config
         SHSTOCKICONID? icon = SHSTOCKICONID.SIID_WARNING,
         Image? thumbnail = null,
         PopupButton buttons = PopupButton.OK,
-        string optionText = "",
-        Form? formOwner = null)
+        string optionText = "")
     {
         heading ??= Language["_._Warning"];
         SystemSounds.Exclamation.Play();
@@ -1271,6 +1271,7 @@ public static class Config
     /// <param name="note">Note text.</param>
     /// <param name="buttons">Popup buttons.</param>
     public static PopupResult ShowError(
+        Form? formOwner,
         string description = "",
         string title = "",
         string? heading = null,
@@ -1279,8 +1280,7 @@ public static class Config
         SHSTOCKICONID? icon = SHSTOCKICONID.SIID_ERROR,
         Image? thumbnail = null,
         PopupButton buttons = PopupButton.OK,
-        string optionText = "",
-        Form? formOwner = null)
+        string optionText = "")
     {
         heading ??= Language["_._Error"];
         SystemSounds.Asterisk.Play();

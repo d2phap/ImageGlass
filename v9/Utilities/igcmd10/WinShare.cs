@@ -92,7 +92,7 @@ public class WinShare
         }
         catch (Exception ex)
         {
-            Config.ShowError(ex.Message);
+            Config.ShowError(null, ex.Message);
         }
         finally
         {

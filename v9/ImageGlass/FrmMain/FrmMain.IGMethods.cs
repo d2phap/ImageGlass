@@ -807,9 +807,9 @@ public partial class FrmMain
 
         if (string.IsNullOrEmpty(fileToPrint))
         {
-            _ = Config.ShowError(Config.Language[$"_._CreatingFileError"],
-                Config.Language[langPath],
-                formOwner: this);
+            _ = Config.ShowError(this,
+                Config.Language[$"_._CreatingFileError"],
+                Config.Language[langPath]);
         }
         else
         {
@@ -819,9 +819,9 @@ public partial class FrmMain
             }
             catch (Exception ex)
             {
-                _ = Config.ShowError($"{ex.Source}:\r\n{ex.Message}", "",
-                    Config.Language[$"{langPath}._Error"],
-                    formOwner: this);
+                _ = Config.ShowError(this,
+                    $"{ex.Source}:\r\n{ex.Message}", "",
+                    Config.Language[$"{langPath}._Error"]);
             }
         }
 
@@ -854,9 +854,9 @@ public partial class FrmMain
 
         if (!File.Exists(filePath))
         {
-            _ = Config.ShowError(Config.Language[$"_._CreatingFileError"],
-                Config.Language[langPath],
-                formOwner: this);
+            _ = Config.ShowError(this,
+                Config.Language[$"_._CreatingFileError"],
+                Config.Language[langPath]);
         }
         else
         {
@@ -1525,9 +1525,9 @@ public partial class FrmMain
 
         if (!File.Exists(filePath))
         {
-            _ = Config.ShowError(Config.Language[$"_._CreatingFileError"],
-                Config.Language[langPath],
-                formOwner: this);
+            _ = Config.ShowError(this,
+                Config.Language[$"_._CreatingFileError"],
+                Config.Language[langPath]);
         }
         else
         {
@@ -1577,9 +1577,9 @@ public partial class FrmMain
 
         if (!File.Exists(filePath))
         {
-            _ = Config.ShowError(Config.Language[$"_._CreatingFileError"],
-                Config.Language[langPath],
-                formOwner: this);
+            _ = Config.ShowError(this,
+                Config.Language[$"_._CreatingFileError"],
+                Config.Language[langPath]);
 
             return;
         }
@@ -1644,7 +1644,7 @@ public partial class FrmMain
         // windows 11 sucks the verb 'edit'
         if (BHelper.IsOS(WindowsOS.Win11OrLater))
         {
-            var mspaint11 = @"%LocalAppData%\Microsoft\WindowsApps\mspaint__.exe";
+            var mspaint11 = @"%LocalAppData%\Microsoft\WindowsApps\mspaint.exe";
             var mspaint11Path = BHelper.ResolvePath(mspaint11);
 
             if (!File.Exists(mspaint11Path))
@@ -1820,7 +1820,7 @@ public partial class FrmMain
         }
         catch (Exception ex)
         {
-            Config.ShowError(ex.Message, title, formOwner: this);
+            Config.ShowError(this, ex.Message, title);
         }
     }
 
@@ -1884,7 +1884,7 @@ public partial class FrmMain
             }
             catch (Exception ex)
             {
-                Config.ShowError(ex.Message, title, formOwner: this);
+                Config.ShowError(this,ex.Message, title);
             }
         }
     }
@@ -1981,9 +1981,9 @@ public partial class FrmMain
         {
             PicMain.ClearMessage();
 
-            _ = Config.ShowError(Config.Language[$"_._CreatingFileError"],
-                Config.Language[langPath],
-                formOwner: this);
+            _ = Config.ShowError(this,
+                Config.Language[$"_._CreatingFileError"],
+                Config.Language[langPath]);
         }
         else
         {
@@ -2051,9 +2051,9 @@ public partial class FrmMain
         {
             PicMain.ClearMessage();
 
-            _ = Config.ShowError(Config.Language[$"_._CreatingFileError"],
-                Config.Language[langPath],
-                formOwner: this);
+            _ = Config.ShowError(this,
+                Config.Language[$"_._CreatingFileError"],
+                Config.Language[langPath]);
         }
         else
         {
