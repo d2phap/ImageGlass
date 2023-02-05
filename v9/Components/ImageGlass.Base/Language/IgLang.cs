@@ -166,7 +166,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuReloadImageList", "Reload image list"); //v7.0
         Add("FrmMain.MnuUnload", "Unload image"); //v9.0
         Add("FrmMain.MnuOpenWith", "Open with…"); //v7.6
-        Add("FrmMain.MnuEdit", "Edit image {0}…"); //v3.0, updated 4.0
+        Add("FrmMain.MnuEdit", "Edit image {0}…"); //v3.0,
+        Add("FrmMain.MnuEdit._AppNotFound", "Could not find the associated app for editing. You can assign an app for editing this format in ImageGlass Settings > Edit."); //v9.0
         Add("FrmMain.MnuPrint", "Print…"); //v3.0
         Add("FrmMain.MnuPrint._Error", "Could not print the viewing image"); //v9.0
         Add("FrmMain.MnuShare", "Share…"); //v8.6
