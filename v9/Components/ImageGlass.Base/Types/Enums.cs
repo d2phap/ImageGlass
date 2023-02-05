@@ -71,17 +71,6 @@ public enum PathType
 
 
 /// <summary>
-/// Actions after opening editing app
-/// </summary>
-public enum AfterOpeningEditAppAction
-{
-    Nothing = 0,
-    Minimize = 1,
-    Close = 2,
-}
-
-
-/// <summary>
 /// Determines Windows OS requirement
 /// </summary>
 public enum WindowsOS

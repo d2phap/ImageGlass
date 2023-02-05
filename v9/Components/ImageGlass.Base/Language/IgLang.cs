@@ -118,6 +118,8 @@ public class IgLang : Dictionary<string, string>
         Add("_._UnhandledException", "Unhandled exception"); // v9.0
         Add("_._UnhandledException._Description", "Unhandled exception has occurred. If you click Continue, the application will ignore this error and attempt to continue. If you click Quit, the application will close immediately."); // v9.0
         Add("_._DoNotShowThisMessageAgain", "Do not show this message again"); // v9.0
+        Add($"_._CreatingFile", "Create temporary image file..."); //v9.0
+        Add($"_._CreatingFileError", "Could not create temporary image file"); //v9.0
 
 
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Name)}", "Name (default)"); //v8.0
@@ -132,10 +134,10 @@ public class IgLang : Dictionary<string, string>
         Add($"_.{nameof(ImageOrderType)}._{nameof(ImageOrderType.Asc)}", "Ascending");  //v8.0
         Add($"_.{nameof(ImageOrderType)}._{nameof(ImageOrderType.Desc)}", "Descending");  //v8.0
 
-        //Add("_.AfterOpeningEditAppAction._Nothing", "Nothing"); //v8.0
-        //Add("_.AfterOpeningEditAppAction._Minimize", "Minimize"); //v8.0
-        //Add("_.AfterOpeningEditAppAction._Close", "Close"); //v8.0
-
+        Add($"_.{nameof(AfterEditAppAction)}._{nameof(AfterEditAppAction.Nothing)}", "Nothing"); //v8.0
+        Add($"_.{nameof(AfterEditAppAction)}._{nameof(AfterEditAppAction.Minimize)}", "Minimize"); //v8.0
+        Add($"_.{nameof(AfterEditAppAction)}._{nameof(AfterEditAppAction.Close)}", "Close"); //v8.0
+        
 
         Add("_._UserAction._MenuNotFound", "Cannot find menu '{0}' to invoke its action."); // v9.0
         Add("_._UserAction._MethodNotFound", "Cannot find method '{0}' to invoke its action."); // v9.0
@@ -164,16 +166,10 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuReloadImageList", "Reload image list"); //v7.0
         Add("FrmMain.MnuUnload", "Unload image"); //v9.0
         Add("FrmMain.MnuOpenWith", "Open with…"); //v7.6
-        Add("FrmMain.MnuOpenWith._CreatingFile", "Creating image file for opening with the other apps..."); //v9.0
-        Add("FrmMain.MnuOpenWith._CreatingFileError", "Could not create the image file for opening with the other apps..."); //v9.0
         Add("FrmMain.MnuEdit", "Edit image {0}…"); //v3.0, updated 4.0
         Add("FrmMain.MnuPrint", "Print…"); //v3.0
-        Add("FrmMain.MnuPrint._CreatingFile", "Creating image file for printing..."); //v9.0
-        Add("FrmMain.MnuPrint._CreatingFileError", "Could not create the image file for printing"); //v9.0
         Add("FrmMain.MnuPrint._Error", "Could not print the viewing image"); //v9.0
         Add("FrmMain.MnuShare", "Share…"); //v8.6
-        Add("FrmMain.MnuShare._CreatingFile", "Creating image file for sharing..."); //v9.0
-        Add("FrmMain.MnuShare._CreatingFileError", "Could not create the image file for sharing"); //v9.0
         Add("FrmMain.MnuShare._Error", "Could not open Share dialog."); //v9.0
         #endregion
 
@@ -248,15 +244,11 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuExportFrames", "Export image frames ({0})…"); //v7.5
         Add("FrmMain.MnuToggleImageAnimation", "Start / stop animating image"); //v3.0
         Add("FrmMain.MnuSetDesktopBackground", "Set as Desktop background"); //v3.0
-        Add("FrmMain.MnuSetDesktopBackground._CreatingFile", "Creating image file for desktop background..."); //v9.0
-        Add("FrmMain.MnuSetDesktopBackground._CreatingFileError", "Could not create the image for desktop background"); //v9.0
         Add("FrmMain.MnuSetDesktopBackground._Error", "Could not set the viewing image as desktop background"); // v6.0
         Add("FrmMain.MnuSetDesktopBackground._Success", "Desktop background is updated"); // v6.0
         Add("FrmMain.MnuSetLockScreen", "Set as Lock screen image"); // V6.0
         Add("FrmMain.MnuSetLockScreen._Error", "Could not set the viewing image as lock screen image"); // v6.0
         Add("FrmMain.MnuSetLockScreen._Success", "Lock screen image is updated"); // v6.0
-        Add("FrmMain.MnuSetLockScreen._CreatingFile", "Creating image file for lock screen..."); //v9.0
-        Add("FrmMain.MnuSetLockScreen._CreatingFileError", "Could not create the image for lock screen"); //v9.0
         Add("FrmMain.MnuOpenLocation", "Open image location"); //v3.0
         Add("FrmMain.MnuImageProperties", "Image properties"); //v3.0
         #endregion // Image
