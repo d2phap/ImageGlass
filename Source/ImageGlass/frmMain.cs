@@ -44,6 +44,8 @@ using ImageGlass.UI;
 using ImageGlass.UI.Renderers;
 using ImageGlass.UI.ToolForms;
 using ImageMagick;
+using Microsoft.WindowsAPICodePack.Shell;
+using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 
 namespace ImageGlass {
     public partial class frmMain: Form {
@@ -909,7 +911,20 @@ namespace ImageGlass {
                     // get color profile
                     var colorProfile = Local.CurrentColor?.ColorSpace.ToString();
                     exifInfo += colorProfile?.Length > 0 ? $"{SEP}{colorProfile}" : "";
+                    // get comment
+                    var ext = Path.GetExtension(filename).ToLower();
+                    if (ext == ".jpg" | ext == ".jpeg") {
+                        try {
+                            var so = ShellObject.FromParsingName(filename);
+                            var _usercomment = so.Properties.GetProperty(SystemProperties.System.Comment);
+                            if(_usercomment.ValueAsObject != null) { 
+                                string usercomment = _usercomment.ValueAsObject.ToString();
+                                exifInfo = exifInfo + $"{SEP}" + usercomment;
+                            }
+                        }
+                        catch { }
 
+                    }
                     // get date info
                     exifInfo += $"{SEP}{GetImageDateInfo(filename)}";
                 }
@@ -1817,6 +1832,73 @@ namespace ImageGlass {
                 var newFilePath = Path.Combine(currentFolder, newName);
                 // Rename file
                 ImageInfo.RenameFile(filepath, newFilePath);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        /// <summary>
+        /// Edit Comment
+        /// </summary>
+        private void EditComment() {
+            try {
+                if (Local.ImageError != null || !File.Exists(Local.ImageList.GetFileName(Local.CurrentIndex))) {
+                    return;
+                }
+            }
+            catch { return; }
+
+            // Fix issue #397. Original logic didn't take network paths into account.
+            // Replace original logic with the Path functions to access filename bits.
+
+            // Extract the various bits of the image path
+            var filepath = Local.ImageList.GetFileName(Local.CurrentIndex);
+            var ext = Path.GetExtension(filepath).ToLower();
+            string str = null;
+            if (ext != ".jpg" & ext != ".jpeg") {
+                if (InputBox.ShowDialog(
+                    theme: Configs.Theme,
+                    message: "Not jpg or jpeg file",
+                    defaultValue: "",
+                    title: "Alert",
+                    topMost: TopMost,
+                    isFilename: true) == DialogResult.OK) { }
+                return;
+            }
+
+            var so = ShellObject.FromParsingName(filepath);
+            var _usercomment = so.Properties.GetProperty(SystemProperties.System.Comment);
+            string oldcomment = _usercomment.ValueAsObject.ToString();
+            // Show input box
+
+            if (InputBox.ShowDialog(
+                theme: Configs.Theme,
+                message: Configs.Language.Items[$"{Name}._EditComment"],
+                defaultValue: oldcomment,
+                title: Configs.Language.Items[$"{Name}._EditCommentText"],
+                topMost: TopMost,
+                isFilename: true) == DialogResult.OK) {
+                str = InputBox.Message;
+            }
+
+            if (string.IsNullOrWhiteSpace(str)) {
+                return;
+            }
+
+            string newComment = str;
+
+            // duplicated name
+            if (oldcomment == newComment) {
+                return;
+            }
+
+            try {
+                ShellPropertyWriter propertyWriter = so.Properties.GetPropertyWriter();
+                propertyWriter.WriteProperty(SystemProperties.System.Comment, new string[] { InputBox.Message });
+                propertyWriter.Close();
+                Clipboard.SetText(oldcomment);
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -3444,6 +3526,7 @@ namespace ImageGlass {
                 mnuMainFlipVert.Text = lang[$"{Name}.{nameof(mnuMainFlipVert)}"];
 
                 mnuMainRename.Text = lang[$"{Name}.{nameof(mnuMainRename)}"];
+                mnuMainComment.Text = lang[$"{Name}.{nameof(mnuMainComment)}"];
                 mnuMainMoveToRecycleBin.Text = lang[$"{Name}.{nameof(mnuMainMoveToRecycleBin)}"];
                 mnuMainDeleteFromHardDisk.Text = lang[$"{Name}.{nameof(mnuMainDeleteFromHardDisk)}"];
                 mnuMainExtractPages.Text = lang[$"{Name}.{nameof(mnuMainExtractPages)}"];
@@ -4396,6 +4479,7 @@ namespace ImageGlass {
             if (!imageNotFound && !Local.IsTempMemoryData) {
                 mnuContext.Items.Add(new ToolStripSeparator());//------------
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainRename));
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainComment));
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainMoveToRecycleBin));
 
                 mnuContext.Items.Add(new ToolStripSeparator());//------------
@@ -5232,7 +5316,9 @@ namespace ImageGlass {
         private void mnuMainRename_Click(object sender, EventArgs e) {
             RenameImage();
         }
-
+        private void mnuMainComment_Click(object sender, EventArgs e) {
+            EditComment();
+        }
         private void mnuMainMoveToRecycleBin_Click(object sender, EventArgs e) {
             try {
                 if (!File.Exists(Local.ImageList.GetFileName(Local.CurrentIndex))) {

@@ -80,6 +80,7 @@
             this.mnuMainFlipVert = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainRename = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainComment = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainMoveToRecycleBin = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainDeleteFromHardDisk = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripSeparator();
@@ -716,6 +717,7 @@
             this.mnuMainFlipVert,
             this.toolStripMenuItem6,
             this.mnuMainRename,
+            this.mnuMainComment,
             this.mnuMainMoveToRecycleBin,
             this.mnuMainDeleteFromHardDisk,
             this.toolStripMenuItem13,
@@ -821,6 +823,18 @@
             this.mnuMainRename.Size = new System.Drawing.Size(418, 31);
             this.mnuMainRename.Text = "Re&name image";
             this.mnuMainRename.Click += new System.EventHandler(this.mnuMainRename_Click);
+            // 
+            // mnuMainComment
+            // 
+            this.mnuMainComment.ForeColor = System.Drawing.Color.Black;
+            this.mnuMainComment.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.mnuMainComment.Name = "mnuMainComment";
+            this.mnuMainComment.Padding = new System.Windows.Forms.Padding(0, 2, 0, 1);
+            this.mnuMainComment.ShortcutKeyDisplayString = "Alt+C";
+            this.mnuMainComment.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
+            this.mnuMainComment.Size = new System.Drawing.Size(418, 31);
+            this.mnuMainComment.Text = "&Comment";
+            this.mnuMainComment.Click += new System.EventHandler(this.mnuMainComment_Click);
             // 
             // mnuMainMoveToRecycleBin
             // 
@@ -2128,6 +2142,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem14;
         private System.Windows.Forms.ToolStripMenuItem mnuMainClearClipboard;
         private System.Windows.Forms.ToolStripMenuItem mnuMainRename;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainComment;
         private System.Windows.Forms.ToolStripMenuItem mnuMainMoveToRecycleBin;
         private System.Windows.Forms.ToolStripMenuItem mnuMainDeleteFromHardDisk;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem21;

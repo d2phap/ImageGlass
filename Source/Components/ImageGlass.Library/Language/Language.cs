@@ -256,6 +256,7 @@ namespace ImageGlass.Library {
             Items.Add("frmMain.mnuMainFlipHorz", "Flip Horizontal"); // V6.0
             Items.Add("frmMain.mnuMainFlipVert", "Flip Vertical"); // V6.0
             Items.Add("frmMain.mnuMainRename", "Rename image…"); //v3.0
+            Items.Add("frmMain.mnuMainComment", "Image Comment"); //v3.0
             Items.Add("frmMain.mnuMainMoveToRecycleBin", "Move to recycle bin"); //v3.0
             Items.Add("frmMain.mnuMainDeleteFromHardDisk", "Delete from hard disk"); //v3.0
             Items.Add("frmMain.mnuMainExtractPages", "Extract image pages ({0})…"); //v7.5
@@ -336,6 +337,8 @@ namespace ImageGlass.Library {
             Items.Add("frmMain._ImageData", "Image data"); // v5.0
             Items.Add("frmMain._RenameDialogText", "Rename"); // v3.5
             Items.Add("frmMain._RenameDialog", "Enter new filename");
+            Items.Add("frmMain._EditCommentText", "New Comment"); // v3.5
+            Items.Add("frmMain._EditComment", "Enter new comment");
             Items.Add("frmMain._GotoDialogText", "Enter the image index to view it. Press ENTER");
             Items.Add("frmMain._DeleteDialogText", "Delete file '{0}' ?");
             Items.Add("frmMain._DeleteDialogTitle", "Confirm");
