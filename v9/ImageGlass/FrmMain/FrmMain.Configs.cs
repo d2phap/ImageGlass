@@ -958,7 +958,7 @@ public partial class FrmMain
                 try
                 {
                     // update menu icon
-                    var ico = Icon.ExtractAssociatedIcon(app.AppPath);
+                    var ico = Icon.ExtractAssociatedIcon(app.Executable);
                     var iconWidth = this.ScaleToDpi(Constants.MENU_ICON_HEIGHT);
 
                     MnuEdit.Image = new Bitmap(ico.ToBitmap(), iconWidth, iconWidth);

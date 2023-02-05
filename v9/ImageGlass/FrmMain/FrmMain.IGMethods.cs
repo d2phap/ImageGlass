@@ -1587,10 +1587,10 @@ public partial class FrmMain
         {
             // open configured app for editing
             using var p = new Process();
-            p.StartInfo.FileName = BHelper.ResolvePath(app.AppPath);
+            p.StartInfo.FileName = BHelper.ResolvePath(app.Executable);
 
             // build the arguments
-            var args = app.AppArguments.Replace(Constants.FILE_MACRO, filePath);
+            var args = app.Argument.Replace(Constants.FILE_MACRO, filePath);
             p.StartInfo.Arguments = $"{args}";
 
             // show error dialog
