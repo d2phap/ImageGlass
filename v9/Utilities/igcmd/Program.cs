@@ -20,6 +20,7 @@ using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace igcmd;
 
@@ -119,13 +120,11 @@ internal static class Program
             if (args.Length > 2)
             {
                 Application.Run(new Slideshow.FrmSlideshow(args[1], args[2]));
-            }
-            else
-            {
-                return (int)IgExitCode.Error;
+
+                return (int)IgExitCode.Done;
             }
 
-            return (int)IgExitCode.Done;
+            return (int)IgExitCode.Error;
         }
         #endregion
 
@@ -135,27 +134,10 @@ internal static class Program
         {
             if (args.Length > 1)
             {
-                var filePath = args[1];
-                if (!File.Exists(filePath))
-                {
-                    _ = Config.ShowError(null,
-                        filePath,
-                        Config.Language[$"{nameof(FrmExportFrames)}._Title"],
-                        Config.Language[$"{nameof(FrmExportFrames)}._FileNotExist"]);
-
-                    return (int)IgExitCode.Error;
-                }
-                else
-                {
-                    Application.Run(new FrmExportFrames(filePath));
-                }
-            }
-            else
-            {
-                return (int)IgExitCode.Error;
+                return (int)Functions.ExportImageFrames(args[1]);
             }
 
-            return (int)IgExitCode.Done;
+            return (int)IgExitCode.Error;
         }
         #endregion
 

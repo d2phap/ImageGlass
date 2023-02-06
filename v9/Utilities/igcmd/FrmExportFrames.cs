@@ -35,17 +35,22 @@ public partial class FrmExportFrames : DialogForm
     private int FramesCount { get; set; } = 0;
 
 
-    public FrmExportFrames(string srcFilePath) : base()
+    public FrmExportFrames(string srcFilePath, string destDirPath) : base()
     {
         InitializeComponent();
 
         // load form data
         SrcFilePath = srcFilePath;
+        DestDirPath = destDirPath;
+
         FramesCount = PhotoCodec.LoadMetadata(SrcFilePath).FramesCount;
-        ProgressBar.Maximum = FramesCount;
+        ProgressBar.Step = 1000;
+        ProgressBar.Maximum = FramesCount * ProgressBar.Step;
+        ProgressBar.Style = ProgressBarStyle.Marquee;
+
+
         LblStatus.Text = string.Format(Config.Language[$"{Name}._Exporting"], 1, FramesCount, SrcFilePath);
 
-        DestDirPath = OpenFolderPicker();
         _exportProgress = new Progress<(int, string)>(ReportProgress);
     }
 
@@ -139,34 +144,6 @@ public partial class FrmExportFrames : DialogForm
 
 
     /// <summary>
-    /// Opens folder picker and exports image frames.
-    /// </summary>
-    private string OpenFolderPicker()
-    {
-        using var fb = new FolderBrowserDialog()
-        {
-            Description = Config.Language[$"{Name}._FolderPickerTitle"],
-            ShowNewFolderButton = true,
-            UseDescriptionForTitle = true,
-            AutoUpgradeEnabled = true,
-
-#if NET7_0_OR_GREATER
-            ShowPinnedPlaces = true,
-#endif
-        };
-        var result = fb.ShowDialog();
-
-
-        if (result == DialogResult.OK && Directory.Exists(fb.SelectedPath))
-        {
-            return fb.SelectedPath;
-        }
-
-        return string.Empty;
-    }
-
-
-    /// <summary>
     /// Starts exporting image frames.
     /// </summary>
     private void StartExporting()
@@ -195,7 +172,12 @@ public partial class FrmExportFrames : DialogForm
     /// </summary>
     private void ReportProgress((int FrameNumber, string FileName) info)
     {
-        ProgressBar.Value += 1;
+        if (ProgressBar.Style != ProgressBarStyle.Continuous)
+        {
+            ProgressBar.Style = ProgressBarStyle.Continuous;
+        }
+
+        ProgressBar.PerformStep();
 
         var percent = Math.Round((info.FrameNumber * 100f) / FramesCount, 0);
         Text = $"{Config.Language[$"{Name}._Title"]} ({percent}%)";
@@ -209,6 +191,7 @@ public partial class FrmExportFrames : DialogForm
             ShowAcceptButton = true;
             BtnAccept.Focus();
 
+            ProgressBar.Value -= 1;
             LblStatus.Text = string.Format(Config.Language[$"{Name}._ExportDone"], info.FrameNumber, $"\"{DestDirPath}\"");
         }
         // in progress

@@ -21,6 +21,7 @@ using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using System.Security;
+using System.Xml.Linq;
 
 namespace igcmd;
 
@@ -120,4 +121,62 @@ public static class Functions
 
         return exitCode;
     }
+
+
+    /// <summary>
+    /// Opens folder picker and export image frames
+    /// </summary>
+    public static IgExitCode ExportImageFrames(string filePath)
+    {
+        if (!File.Exists(filePath))
+        {
+            _ = Config.ShowError(null,
+                filePath,
+                Config.Language[$"{nameof(FrmExportFrames)}._Title"],
+                Config.Language[$"{nameof(FrmExportFrames)}._FileNotExist"]);
+
+            return IgExitCode.Error;
+        }
+
+
+        var destDirPath = Functions.OpenFolderPicker(Config.Language[$"{nameof(FrmExportFrames)}._FolderPickerTitle"]);
+
+        if (!string.IsNullOrEmpty(destDirPath))
+        {
+            Application.Run(new FrmExportFrames(filePath, destDirPath));
+        }
+
+
+        return IgExitCode.Done;
+    }
+
+
+    /// <summary>
+    /// Opens folder picker and exports image frames.
+    /// </summary>
+    public static string OpenFolderPicker(string title = "")
+    {
+        using var fb = new FolderBrowserDialog()
+        {
+            Description = title,
+            ShowNewFolderButton = true,
+            UseDescriptionForTitle = true,
+            AutoUpgradeEnabled = true,
+
+#if NET7_0_OR_GREATER
+            ShowPinnedPlaces = true,
+#endif
+        };
+        var result = fb.ShowDialog();
+
+
+        if (result == DialogResult.OK && Directory.Exists(fb.SelectedPath))
+        {
+            return fb.SelectedPath;
+        }
+
+        return string.Empty;
+    }
+
+
 }

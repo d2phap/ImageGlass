@@ -36,9 +36,11 @@
             // 
             // ProgressBar
             // 
+            ProgressBar.AccessibleRole = AccessibleRole.ProgressBar;
             ProgressBar.Dock = DockStyle.Top;
             ProgressBar.Location = new Point(40, 105);
             ProgressBar.Margin = new Padding(0);
+            ProgressBar.MarqueeAnimationSpeed = 1;
             ProgressBar.Name = "ProgressBar";
             ProgressBar.Size = new Size(884, 40);
             ProgressBar.TabIndex = 3;
@@ -81,6 +83,7 @@
             ClientSize = new Size(964, 764);
             ControlBox = false;
             Controls.Add(TableTop);
+            DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "FrmExportFrames";
             ShowAcceptButton = false;
