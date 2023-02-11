@@ -395,10 +395,9 @@ public static class PhotoCodec
     /// <param name="srcBitmap">Source bitmap to save</param>
     /// <param name="destFilePath">Destination file path</param>
     /// <param name="quality">JPEG/MIFF/PNG compression level</param>
-    public static async Task SaveAsync(WicBitmapSource? srcBitmap, string destFilePath, int quality = 100, CancellationToken token = default)
+    public static async Task SaveAsync(WicBitmapSource? srcBitmap, string destFilePath, ImgTransform? transform = null, int quality = 100, CancellationToken token = default)
     {
         if (srcBitmap == null) return;
-
 
         try
         {
@@ -408,11 +407,18 @@ public static class PhotoCodec
             if (wicEncoder == null)
             {
                 // use Magick.NET for saving
-                await SaveAsync(srcBitmap, destFilePath, format: MagickFormat.Unknown, quality: quality, token);
+                await SaveAsync(srcBitmap, destFilePath, transform, format: MagickFormat.Unknown, quality: quality, token);
 
                 return;
             }
 
+
+            token.ThrowIfCancellationRequested();
+            TransformImage(srcBitmap, transform);
+
+
+            token.ThrowIfCancellationRequested();
+            using var stream = new FileStream(destFilePath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
 
             // set saving options for WIC
             var encoderOptions = new List<KeyValuePair<string, object>>();
@@ -424,9 +430,6 @@ public static class PhotoCodec
             {
                 encoderOptions.Add(new("ImageQuality", quality / 100f));
             }
-
-
-            using var stream = new FileStream(destFilePath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
 
             await Task.Run(() => srcBitmap.Save(stream, wicEncoder.ContainerFormat, encoderOptions: encoderOptions), token);
         }
@@ -441,7 +444,7 @@ public static class PhotoCodec
     /// <param name="destFilePath">Destination file path</param>
     /// <param name="format">New image format</param>
     /// <param name="quality">JPEG/MIFF/PNG compression level</param>
-    public static async Task SaveAsync(WicBitmapSource? srcBitmap, string destFilePath, MagickFormat format = MagickFormat.Unknown, int quality = 100, CancellationToken token = default)
+    public static async Task SaveAsync(WicBitmapSource? srcBitmap, string destFilePath, ImgTransform? transform = null, MagickFormat format = MagickFormat.Unknown, int quality = 100, CancellationToken token = default)
     {
         if (srcBitmap == null) return;
 
@@ -454,15 +457,17 @@ public static class PhotoCodec
             if (bitmap == null) return;
 
             using var imgM = new MagickImage();
-
             await Task.Run(() =>
             {
                 imgM.Read(bitmap);
                 imgM.Quality = quality;
             }, token);
 
-            token.ThrowIfCancellationRequested();
 
+            token.ThrowIfCancellationRequested();
+            TransformImage(imgM, transform);
+
+            token.ThrowIfCancellationRequested();
             if (format != MagickFormat.Unknown)
             {
                 await imgM.WriteAsync(destFilePath, format, token);
@@ -544,7 +549,7 @@ public static class PhotoCodec
     /// <param name="srcBitmap">Source bitmap</param>
     /// <param name="srcExt">Source file extension, example: .png</param>
     /// <param name="destFilePath">Destination file</param>
-    public static async Task SaveAsBase64Async(WicBitmapSource? srcBitmap, string srcExt, string destFilePath, CancellationToken token = default)
+    public static async Task SaveAsBase64Async(WicBitmapSource? srcBitmap, string srcExt, string destFilePath, ImgTransform? transform = null, CancellationToken token = default)
     {
         if (srcBitmap == null) return;
 
@@ -554,6 +559,9 @@ public static class PhotoCodec
 
         try
         {
+            token.ThrowIfCancellationRequested();
+            TransformImage(srcBitmap, transform);
+
             token.ThrowIfCancellationRequested();
 
             // convert bitmap to base64
@@ -594,7 +602,7 @@ public static class PhotoCodec
                 using var wicSrc = BHelper.ToWicBitmapSource(imgM.ToBitmapSource());
                 var ext = Path.GetExtension(srcFilePath);
 
-                await SaveAsBase64Async(wicSrc, ext, destFilePath, token);
+                await SaveAsBase64Async(wicSrc, ext, destFilePath, null, token);
                 return;
             }
         }
@@ -636,7 +644,7 @@ public static class PhotoCodec
 
             // for not supported formats
             var bmp = await LoadAsync(srcFilePath, readOptions, transform, token);
-            await SaveAsBase64Async(bmp.Image, srcExt, destFilePath, token);
+            await SaveAsBase64Async(bmp.Image, srcExt, destFilePath, null, token);
         }
         catch (OperationCanceledException) { }
     }
@@ -662,7 +670,10 @@ public static class PhotoCodec
 
 
         // apply flips
-        flips.ForEach(flip => bmpSrc.FlipRotate(flip));
+        foreach (var flip in flips)
+        {
+            bmpSrc.FlipRotate(flip);
+        }
 
 
         // rotate

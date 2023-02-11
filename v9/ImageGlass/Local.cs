@@ -291,7 +291,7 @@ internal class Local
         {
             try
             {
-                await PhotoCodec.SaveAsync(ClipboardImage, filename, quality.Value);
+                await PhotoCodec.SaveAsync(ClipboardImage, filename, Local.ImageTransform, quality.Value);
 
                 TempImagePath = filename;
             }
@@ -310,7 +310,7 @@ internal class Local
         {
             try
             {
-                await PhotoCodec.SaveAsync(img.ImgData.Image, filename, quality.Value);
+                await PhotoCodec.SaveAsync(img.ImgData.Image, filename, Local.ImageTransform, quality.Value);
 
                 TempImagePath = filename;
             }

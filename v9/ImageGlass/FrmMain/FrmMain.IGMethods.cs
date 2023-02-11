@@ -1326,6 +1326,7 @@ public partial class FrmMain
         Exception? error = null;
 
         PicMain.ShowMessage(destFilePath, Config.Language[$"{langPath}._Saving"]);
+        _fileWatcher.Stop();
 
 
         // save the selection
@@ -1411,6 +1412,15 @@ public partial class FrmMain
         }
 
 
+        // reload image
+        IG_Reload();
+        Gallery.Items[Local.CurrentIndex].UpdateThumbnail();
+        if (Config.EnableFileWatcher)
+        {
+            _fileWatcher.Start();
+        }
+
+
         // emits ImageSaved event
         Local.RaiseImageSavedEvent(new ImageSaveEventArgs(srcFilePath, destFilePath, saveSource));
 
@@ -1432,12 +1442,12 @@ public partial class FrmMain
                 || destPath.EndsWith(".txt", StringComparison.InvariantCultureIgnoreCase))
             {
                 var srcExt = Path.GetExtension(srcPath);
-                await PhotoCodec.SaveAsBase64Async(wicImg, srcExt, destPath);
+                await PhotoCodec.SaveAsBase64Async(wicImg, srcExt, destPath, Local.ImageTransform);
             }
             // other formats
             else
             {
-                await PhotoCodec.SaveAsync(wicImg, destPath, Config.ImageEditQuality);
+                await PhotoCodec.SaveAsync(wicImg, destPath, Local.ImageTransform, Config.ImageEditQuality);
             }
 
             // Issue #307: option to preserve the modified date/time
@@ -1445,6 +1455,9 @@ public partial class FrmMain
             {
                 File.SetLastWriteTime(destPath, lastWriteTime);
             }
+
+            // reset transformations
+            Local.ImageTransform.Clear();
         }
         catch (Exception ex)
         {
@@ -2524,59 +2537,21 @@ public partial class FrmMain
     /// </summary>
     public void IG_Rotate(RotateOption option)
     {
-        _ = RotateImageAsync(option);
-    }
-
-    public async Task RotateImageAsync(RotateOption option)
-    {
         if (PicMain.Source == ImageSource.Null || Local.IsBusy) return;
-        var rotation = option == RotateOption.Left ? -90 : 90;
 
-        Local.IsBusy = true;
-        if (Local.ClipboardImage != null)
+        var degree = option == RotateOption.Left ? -90 : 90;
+
+        // update rotation changes
+        if (PicMain.RotateImage(degree))
         {
-            PhotoCodec.TransformImage(Local.ClipboardImage, new()
-            {
-                Rotation = rotation,
-            });
-
-            PicMain.SetImage(new()
-            {
-                Image = Local.ClipboardImage,
-                FrameCount = 1,
-                HasAlpha = true,
-            }, enableFading: Config.EnableImageTransition);
-
-            Local.IsBusy = false;
-            return;
-        }
-
-
-        var img = await Local.Images.GetAsync(Local.CurrentIndex);
-        if (img?.ImgData?.Image != null)
-        {
-            var wicBmp = img.ImgData.Image.Clone();
-
-            // update rotation changes
-            PhotoCodec.TransformImage(wicBmp, new ImgTransform()
-            {
-                Rotation = rotation,
-            });
-            img.ImgData.Image.Dispose();
-            img.ImgData.Image = wicBmp;
-
-            PicMain.SetImage(img.ImgData, enableFading: Config.EnableImageTransition);
-
-
-            var currentRotation = Local.ImageTransform.Rotation + rotation;
+            var currentRotation = Local.ImageTransform.Rotation + degree;
             if (Math.Abs(currentRotation) >= 360)
             {
                 currentRotation = currentRotation % 360;
             }
+
             Local.ImageTransform.Rotation = currentRotation;
         }
-
-        Local.IsBusy = false;
     }
 
 
