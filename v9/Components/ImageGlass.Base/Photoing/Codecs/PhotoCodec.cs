@@ -1274,11 +1274,11 @@ public static class PhotoCodec
         // flip
         if (transform.Flips.HasFlag(FlipOptions.Horizontal))
         {
-            imgM.Flip();
+            imgM.Flop();
         }
         if (transform.Flips.HasFlag(FlipOptions.Vertical))
         {
-            imgM.Flop();
+            imgM.Flip();
         }
     }
 
