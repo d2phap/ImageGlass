@@ -2730,6 +2730,8 @@ public class DXCanvas : DXControl
                 if (transforms != null)
                 {
                     _ = RotateImage(transforms.Rotation, false);
+
+                    _ = FlipImage(transforms.Flips, false);
                 }
 
                 Source = ImageSource.Direct2D;
@@ -2771,59 +2773,6 @@ public class DXCanvas : DXControl
 
 
     /// <summary>
-    /// Applies transformation to the image.
-    /// </summary>
-    public bool RotateImage(float degree, bool requestRerender = true)
-    {
-        // rotation
-        if (_imageD2D == null || degree == 0 || degree == 360) return false;
-
-        
-        using var effect = Device.CreateEffect(Direct2DEffects.CLSID_D2D12DAffineTransform);
-        effect.SetInput(0, _imageD2D);
-
-
-        // rotate the image
-        var rotationMx = D2D_MATRIX_3X2_F.Rotation(degree);
-        var transformMx = D2D_MATRIX_3X2_F.Identity();
-
-        // translate the image after rotation
-        if (degree == 90 || degree == -270)
-        {
-            transformMx = rotationMx * D2D_MATRIX_3X2_F.Translation(SourceHeight, 0);
-        }
-        else if (degree == 180 || degree == -180)
-        {
-            transformMx = rotationMx * D2D_MATRIX_3X2_F.Translation(SourceWidth, SourceHeight);
-        }
-        else if (degree == 270 || degree == -90)
-        {
-            transformMx = rotationMx * D2D_MATRIX_3X2_F.Translation(0, SourceWidth);
-        }
-
-        effect.SetValue((int)D2D1_2DAFFINETRANSFORM_PROP.D2D1_2DAFFINETRANSFORM_PROP_TRANSFORM_MATRIX, transformMx);
-
-
-        // apply the transform
-        DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
-        _imageD2D = effect.GetD2D1Bitmap1(Device);
-
-        // update new source size
-        var newSize = _imageD2D.GetSize();
-        SourceWidth = newSize.width;
-        SourceHeight = newSize.height;
-
-        // render the transform
-        if (requestRerender)
-        {
-            Refresh();
-        }
-
-        return true;
-    }
-
-
-    /// <summary>
     /// Start animating the image if it can animate, using GDI+.
     /// </summary>
     public void StartAnimatingImage()
@@ -2852,6 +2801,99 @@ public class DXCanvas : DXControl
 
         IsImageAnimating = false;
     }
+
+
+    /// <summary>
+    /// Rotates the image.
+    /// </summary>
+    public bool RotateImage(float degree, bool requestRerender = true)
+    {
+        if (_imageD2D == null || degree == 0 || degree == 360) return false;
+
+        // create effect
+        using var effect = Device.CreateEffect(Direct2DEffects.CLSID_D2D12DAffineTransform);
+        effect.SetInput(0, _imageD2D);
+
+
+        // rotate the image
+        var rotationMx = D2D_MATRIX_3X2_F.Rotation(degree);
+        var transformMx = D2D_MATRIX_3X2_F.Identity();
+
+        // translate the image after rotation
+        if (degree == 90 || degree == -270)
+        {
+            transformMx = rotationMx * D2D_MATRIX_3X2_F.Translation(SourceHeight, 0);
+        }
+        else if (degree == 180 || degree == -180)
+        {
+            transformMx = rotationMx * D2D_MATRIX_3X2_F.Translation(SourceWidth, SourceHeight);
+        }
+        else if (degree == 270 || degree == -90)
+        {
+            transformMx = rotationMx * D2D_MATRIX_3X2_F.Translation(0, SourceWidth);
+        }
+
+        effect.SetValue((int)D2D1_2DAFFINETRANSFORM_PROP.D2D1_2DAFFINETRANSFORM_PROP_TRANSFORM_MATRIX, transformMx);
+
+
+        // apply the transformation
+        DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
+        _imageD2D = effect.GetD2D1Bitmap1(Device);
+
+        // update new source size
+        var newSize = _imageD2D.GetSize();
+        SourceWidth = newSize.width;
+        SourceHeight = newSize.height;
+
+        // render the transformation
+        if (requestRerender)
+        {
+            Refresh();
+        }
+
+        return true;
+    }
+
+
+    /// <summary>
+    /// Flips the image.
+    /// </summary>
+    public bool FlipImage(FlipOptions flips, bool requestRerender = true)
+    {
+        if (_imageD2D == null) return false;
+
+        // create effect
+        using var effect = Device.CreateEffect(Direct2DEffects.CLSID_D2D12DAffineTransform);
+        effect.SetInput(0, _imageD2D);
+
+
+        // flip transformation
+        if (flips.HasFlag(FlipOptions.Horizontal))
+        {
+            var flipHorizMx = new D2D_MATRIX_3X2_F(-1f, 0, 0, 1f, 0, 0);
+            effect.SetValue((int)D2D1_2DAFFINETRANSFORM_PROP.D2D1_2DAFFINETRANSFORM_PROP_TRANSFORM_MATRIX, flipHorizMx * D2D_MATRIX_3X2_F.Translation(SourceWidth, 0));
+        }
+
+        if (flips.HasFlag(FlipOptions.Vertical))
+        {
+            var flipVertMx = new D2D_MATRIX_3X2_F(1f, 0, 0, -1f, 0, 0);
+            effect.SetValue((int)D2D1_2DAFFINETRANSFORM_PROP.D2D1_2DAFFINETRANSFORM_PROP_TRANSFORM_MATRIX, flipVertMx * D2D_MATRIX_3X2_F.Translation(0, SourceHeight));
+        }
+
+
+        // apply the transformation
+        DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
+        _imageD2D = effect.GetD2D1Bitmap1(Device);
+
+        // render the transformation
+        if (requestRerender)
+        {
+            Refresh();
+        }
+
+        return true;
+    }
+
 
     #endregion // Public methods
 
