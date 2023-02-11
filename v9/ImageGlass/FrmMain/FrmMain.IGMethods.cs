@@ -2462,40 +2462,9 @@ public partial class FrmMain
     /// <param name="options"></param>
     public void IG_FlipImage(FlipOptions options)
     {
-        _ = FlipImageAsync(options);
-    }
-
-    public async Task FlipImageAsync(FlipOptions options)
-    {
-        if (PicMain.Source == ImageSource.Null
-            || options == FlipOptions.None
-            || Local.IsBusy) return;
-
-
-        Local.IsBusy = true;
-        if (Local.ClipboardImage != null)
+        // update flip changes
+        if (PicMain.FlipImage(options))
         {
-            PhotoCodec.TransformImage(Local.ClipboardImage, new()
-            {
-                Flips = options,
-            });
-
-            PicMain.SetImage(new()
-            {
-                Image = Local.ClipboardImage,
-                FrameCount = 1,
-                HasAlpha = true,
-            }, enableFading: Config.EnableImageTransition);
-
-            Local.IsBusy = false;
-            return;
-        }
-
-
-        var img = await Local.Images.GetAsync(Local.CurrentIndex);
-        if (img?.ImgData?.Image != null)
-        {
-            // update flip changes
             if (options.HasFlag(FlipOptions.Horizontal))
             {
                 if (Local.ImageTransform.Flips.HasFlag(FlipOptions.Horizontal))
@@ -2519,16 +2488,7 @@ public partial class FrmMain
                     Local.ImageTransform.Flips |= FlipOptions.Vertical;
                 }
             }
-
-
-            PhotoCodec.TransformImage(img.ImgData.Image, new ImgTransform()
-            {
-                Flips = options,
-            });
-            PicMain.SetImage(img.ImgData, enableFading: Config.EnableImageTransition);
         }
-
-        Local.IsBusy = false;
     }
 
 
