@@ -883,8 +883,8 @@ public partial class FrmMain
         //MnuViewChannels.Visible = false;
         //MnuLoadingOrders.Visible = false;
         //toolStripMenuItem16.Visible = false;
-        MnuRotateLeft.Visible = false;
-        MnuRotateRight.Visible = false;
+        //MnuRotateLeft.Visible = false;
+        //MnuRotateRight.Visible = false;
         //MnuFlipHorizontal.Visible = false;
         //MnuFlipVertical.Visible = false;
         //toolStripMenuItem17.Visible = false;

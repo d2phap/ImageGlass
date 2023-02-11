@@ -1469,7 +1469,6 @@ public partial class FrmMain
                 || destPath.EndsWith(".txt", StringComparison.InvariantCultureIgnoreCase))
             {
                 await PhotoCodec.SaveAsBase64Async(srcPath, destPath, Local.Images.ReadOptions, Local.CurrentChanges);
-
             }
             // other formats
             else
@@ -1482,6 +1481,9 @@ public partial class FrmMain
             {
                 File.SetLastWriteTime(destPath, lastWriteTime);
             }
+
+            // reset transformations
+            Local.CurrentChanges.Clear();
         }
         catch (Exception ex)
         {
@@ -2452,8 +2454,12 @@ public partial class FrmMain
 
     public async Task FlipImageAsync(FlipOptions options)
     {
-        if (PicMain.Source == ImageSource.Null || options == FlipOptions.None) return;
+        if (PicMain.Source == ImageSource.Null
+            || options == FlipOptions.None
+            || Local.IsBusy) return;
 
+
+        Local.IsBusy = true;
         if (Local.ClipboardImage != null)
         {
             PhotoCodec.ApplyIgImgChanges(Local.ClipboardImage, new()
@@ -2468,6 +2474,7 @@ public partial class FrmMain
                 HasAlpha = true,
             }, enableFading: Config.EnableImageTransition);
 
+            Local.IsBusy = false;
             return;
         }
 
@@ -2508,6 +2515,68 @@ public partial class FrmMain
             PicMain.SetImage(img.ImgData, enableFading: Config.EnableImageTransition);
         }
 
+        Local.IsBusy = false;
+    }
+
+
+    /// <summary>
+    /// Rotates the viewing image.
+    /// </summary>
+    public void IG_Rotate(RotateOption option)
+    {
+        _ = RotateImageAsync(option);
+    }
+
+    public async Task RotateImageAsync(RotateOption option)
+    {
+        if (PicMain.Source == ImageSource.Null || Local.IsBusy) return;
+        var rotation = option == RotateOption.Left ? -90 : 90;
+
+        Local.IsBusy = true;
+        if (Local.ClipboardImage != null)
+        {
+            PhotoCodec.ApplyIgImgChanges(Local.ClipboardImage, new()
+            {
+                Rotation = rotation,
+            });
+
+            PicMain.SetImage(new()
+            {
+                Image = Local.ClipboardImage,
+                FrameCount = 1,
+                HasAlpha = true,
+            }, enableFading: Config.EnableImageTransition);
+
+            Local.IsBusy = false;
+            return;
+        }
+
+
+        var img = await Local.Images.GetAsync(Local.CurrentIndex);
+        if (img?.ImgData?.Image != null)
+        {
+            var wicBmp = img.ImgData.Image.Clone();
+
+            // update rotation changes
+            PhotoCodec.ApplyIgImgChanges(wicBmp, new IgImgChanges()
+            {
+                Rotation = rotation,
+            });
+            img.ImgData.Image.Dispose();
+            img.ImgData.Image = wicBmp;
+
+            PicMain.SetImage(img.ImgData, enableFading: Config.EnableImageTransition);
+
+
+            var currentRotation = Local.CurrentChanges.Rotation + rotation;
+            if (Math.Abs(currentRotation) >= 360)
+            {
+                currentRotation = currentRotation % 360;
+            }
+            Local.CurrentChanges.Rotation = currentRotation;
+        }
+
+        Local.IsBusy = false;
     }
 
 

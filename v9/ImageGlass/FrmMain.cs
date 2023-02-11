@@ -710,8 +710,8 @@ public partial class FrmMain : ModernForm
         };
 
 
-        // Validate image index & load image metadata
-        #region Validate image index & load image metadata
+        // Validate image index
+        #region Validate image index
 
         // temp index
         var imageIndex = Local.CurrentIndex + step;
@@ -768,6 +768,11 @@ public partial class FrmMain : ModernForm
             Local.CurrentIndex = imageIndex;
         }
 
+        #endregion // Validate image index
+
+
+        // set busy state
+        Local.IsBusy = true;
 
 
         var loadingArgs = new ImageLoadingEventArgs()
@@ -778,9 +783,7 @@ public partial class FrmMain : ModernForm
         };
         Local.RaiseImageLoadingEvent(loadingArgs);
 
-        #endregion // Validate image index & load image metadata
-
-
+        
         try
         {
             // check if loading is cancelled
@@ -836,15 +839,8 @@ public partial class FrmMain : ModernForm
         {
             Local.Images.CancelLoading(imageIndex);
         }
-        //catch (Exception ex)
-        //{
-        //    Local.RaiseImageLoadedEvent(new()
-        //    {
-        //        Index = imageIndex,
-        //        Error = ex,
-        //        ResetZoom = resetZoom,
-        //    });
-        //}
+
+        Local.IsBusy = false;
     }
 
 
@@ -1001,7 +997,6 @@ public partial class FrmMain : ModernForm
     /// <summary>
     /// Show image preview using the thumbnail
     /// </summary>
-    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     public void ShowImagePreview(string filePath, CancellationToken token = default)
     {
         if (InvokeRequired)
@@ -1939,12 +1934,12 @@ public partial class FrmMain : ModernForm
 
     private void MnuRotateLeft_Click(object sender, EventArgs e)
     {
-
+        IG_Rotate(RotateOption.Left);
     }
 
     private void MnuRotateRight_Click(object sender, EventArgs e)
     {
-
+        IG_Rotate(RotateOption.Right);
     }
 
     private void MnuFlipHorizontal_Click(object sender, EventArgs e)

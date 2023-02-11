@@ -191,17 +191,11 @@ public partial class FrmMain
 
     private void FileWatcher_OnChanged(object? sender, FileChangedEvent e)
     {
-        if (Local.IsBusy)
-        {
-            return;
-        }
+        if (Local.IsBusy) return;
 
         // Only watch the supported file types
         var ext = Path.GetExtension(e.FullPath).ToLower();
-        if (!Config.AllFormats.Contains(ext))
-        {
-            return;
-        }
+        if (!Config.AllFormats.Contains(ext)) return;
 
         // update the viewing image
         var imgIndex = Local.Images.IndexOf(e.FullPath);
