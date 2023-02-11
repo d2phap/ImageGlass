@@ -179,7 +179,7 @@ internal class Local
     /// <summary>
     /// Gets, sets the changes of the current viewing image.
     /// </summary>
-    public static IgImgChanges CurrentChanges = new();
+    public static ImgTransform ImageTransform = new();
 
 
     /// <summary>

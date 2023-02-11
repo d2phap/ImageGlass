@@ -1468,12 +1468,12 @@ public partial class FrmMain
             if (destPath.EndsWith(".b64", StringComparison.InvariantCultureIgnoreCase)
                 || destPath.EndsWith(".txt", StringComparison.InvariantCultureIgnoreCase))
             {
-                await PhotoCodec.SaveAsBase64Async(srcPath, destPath, Local.Images.ReadOptions, Local.CurrentChanges);
+                await PhotoCodec.SaveAsBase64Async(srcPath, destPath, Local.Images.ReadOptions, Local.ImageTransform);
             }
             // other formats
             else
             {
-                await PhotoCodec.SaveAsync(srcPath, destPath, Local.Images.ReadOptions, Local.CurrentChanges, Config.ImageEditQuality);
+                await PhotoCodec.SaveAsync(srcPath, destPath, Local.Images.ReadOptions, Local.ImageTransform, Config.ImageEditQuality);
             }
 
             // Issue #307: option to preserve the modified date/time
@@ -1483,7 +1483,7 @@ public partial class FrmMain
             }
 
             // reset transformations
-            Local.CurrentChanges.Clear();
+            Local.ImageTransform.Clear();
         }
         catch (Exception ex)
         {
@@ -2462,7 +2462,7 @@ public partial class FrmMain
         Local.IsBusy = true;
         if (Local.ClipboardImage != null)
         {
-            PhotoCodec.ApplyIgImgChanges(Local.ClipboardImage, new()
+            PhotoCodec.TransformImage(Local.ClipboardImage, new()
             {
                 Flips = options,
             });
@@ -2485,30 +2485,30 @@ public partial class FrmMain
             // update flip changes
             if (options.HasFlag(FlipOptions.Horizontal))
             {
-                if (Local.CurrentChanges.Flips.HasFlag(FlipOptions.Horizontal))
+                if (Local.ImageTransform.Flips.HasFlag(FlipOptions.Horizontal))
                 {
-                    Local.CurrentChanges.Flips ^= FlipOptions.Horizontal;
+                    Local.ImageTransform.Flips ^= FlipOptions.Horizontal;
                 }
                 else
                 {
-                    Local.CurrentChanges.Flips |= FlipOptions.Horizontal;
+                    Local.ImageTransform.Flips |= FlipOptions.Horizontal;
                 }
             }
 
             if (options.HasFlag(FlipOptions.Vertical))
             {
-                if (Local.CurrentChanges.Flips.HasFlag(FlipOptions.Vertical))
+                if (Local.ImageTransform.Flips.HasFlag(FlipOptions.Vertical))
                 {
-                    Local.CurrentChanges.Flips ^= FlipOptions.Vertical;
+                    Local.ImageTransform.Flips ^= FlipOptions.Vertical;
                 }
                 else
                 {
-                    Local.CurrentChanges.Flips |= FlipOptions.Vertical;
+                    Local.ImageTransform.Flips |= FlipOptions.Vertical;
                 }
             }
 
 
-            PhotoCodec.ApplyIgImgChanges(img.ImgData.Image, new IgImgChanges()
+            PhotoCodec.TransformImage(img.ImgData.Image, new ImgTransform()
             {
                 Flips = options,
             });
@@ -2535,7 +2535,7 @@ public partial class FrmMain
         Local.IsBusy = true;
         if (Local.ClipboardImage != null)
         {
-            PhotoCodec.ApplyIgImgChanges(Local.ClipboardImage, new()
+            PhotoCodec.TransformImage(Local.ClipboardImage, new()
             {
                 Rotation = rotation,
             });
@@ -2558,7 +2558,7 @@ public partial class FrmMain
             var wicBmp = img.ImgData.Image.Clone();
 
             // update rotation changes
-            PhotoCodec.ApplyIgImgChanges(wicBmp, new IgImgChanges()
+            PhotoCodec.TransformImage(wicBmp, new ImgTransform()
             {
                 Rotation = rotation,
             });
@@ -2568,12 +2568,12 @@ public partial class FrmMain
             PicMain.SetImage(img.ImgData, enableFading: Config.EnableImageTransition);
 
 
-            var currentRotation = Local.CurrentChanges.Rotation + rotation;
+            var currentRotation = Local.ImageTransform.Rotation + rotation;
             if (Math.Abs(currentRotation) >= 360)
             {
                 currentRotation = currentRotation % 360;
             }
-            Local.CurrentChanges.Rotation = currentRotation;
+            Local.ImageTransform.Rotation = currentRotation;
         }
 
         Local.IsBusy = false;

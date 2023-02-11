@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 namespace ImageGlass.Base.Photoing.Codecs;
 
-public class IgImgChanges
+public class ImgTransform
 {
     /// <summary>
     /// Contains all flips of the image.

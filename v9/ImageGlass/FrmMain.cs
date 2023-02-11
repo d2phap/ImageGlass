@@ -683,7 +683,7 @@ public partial class FrmMain : ModernForm
         string filename = "",
         CancellationTokenSource? token = null)
     {
-        Local.CurrentChanges.Clear();
+        Local.ImageTransform.Clear();
 
         if (Local.Images.Length == 0 && string.IsNullOrEmpty(filename))
         {

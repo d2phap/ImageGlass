@@ -1573,6 +1573,10 @@ public class DXCanvas : DXControl
         if (UseHardwareAcceleration)
         {
             g.DrawBitmap(_imageD2D?.Object, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation, _imageOpacity);
+
+
+            //var matrix = new D2D_MATRIX_3X2_F();
+            //D2D1Functions.D2D1MakeRotateMatrix(changes.Rotation, new D2D_POINT_2F(bmpSrc.Width / 2, bmpSrc.Height / 2), ref matrix);
         }
         else
         {
