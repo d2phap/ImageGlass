@@ -114,6 +114,16 @@ public enum FlipOptions
 
 
 /// <summary>
+/// Rotate option.
+/// </summary>
+public enum RotateOption
+{
+    Left = 0,
+    Right = 1,
+}
+
+
+/// <summary>
 /// Selection aspect ratio.
 /// </summary>
 public enum SelectionAspectRatio

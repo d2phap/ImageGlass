@@ -664,11 +664,24 @@ public static class PhotoCodec
         // apply flips
         flips.ForEach(flip => bmpSrc.FlipRotate(flip));
 
+
         // rotate
-        if (changes.Rotation != 0)
+        var rotate = changes.Rotation switch
         {
-            // TODO:
-        }
+            90 => WICBitmapTransformOptions.WICBitmapTransformRotate90,
+            -270 => WICBitmapTransformOptions.WICBitmapTransformRotate90,
+
+            -90 => WICBitmapTransformOptions.WICBitmapTransformRotate270,
+            270 => WICBitmapTransformOptions.WICBitmapTransformRotate270,
+            
+            180 => WICBitmapTransformOptions.WICBitmapTransformRotate180,
+            -180 => WICBitmapTransformOptions.WICBitmapTransformRotate180,
+
+            _ => WICBitmapTransformOptions.WICBitmapTransformRotate0,
+        };
+
+        if (rotate == WICBitmapTransformOptions.WICBitmapTransformRotate0) return;
+        bmpSrc.FlipRotate(rotate);
     }
 
 
@@ -1241,6 +1254,12 @@ public static class PhotoCodec
     {
         if (changes == null) return;
 
+        // rotate
+        if (changes.Rotation != 0)
+        {
+            imgM.Rotate(changes.Rotation);
+        }
+
         // flip
         if (changes.Flips.HasFlag(FlipOptions.Horizontal))
         {
@@ -1249,12 +1268,6 @@ public static class PhotoCodec
         if (changes.Flips.HasFlag(FlipOptions.Vertical))
         {
             imgM.Flop();
-        }
-
-        // rotate
-        if (changes.Rotation != 0)
-        {
-            imgM.Rotate(changes.Rotation);
         }
     }
 
