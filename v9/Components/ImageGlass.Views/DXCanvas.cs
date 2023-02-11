@@ -24,7 +24,6 @@ using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Views.ImageAnimator;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -1572,11 +1571,8 @@ public class DXCanvas : DXControl
 
         if (UseHardwareAcceleration)
         {
-            g.DrawBitmap(_imageD2D?.Object, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation, _imageOpacity);
+            g.DrawBitmap(_imageD2D.Object, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation, _imageOpacity);
 
-
-            //var matrix = new D2D_MATRIX_3X2_F();
-            //D2D1Functions.D2D1MakeRotateMatrix(changes.Rotation, new D2D_POINT_2F(bmpSrc.Width / 2, bmpSrc.Height / 2), ref matrix);
         }
         else
         {
@@ -2697,7 +2693,8 @@ public class DXCanvas : DXControl
         bool enableFading = true,
         float initOpacity = 0.5f,
         float opacityStep = 0.05f,
-        bool isForPreview = false)
+        bool isForPreview = false,
+        ImgTransform? transforms = null)
     {
         // reset variables
         _imageDrawingState = ImageDrawingState.NotStarted;
@@ -2727,13 +2724,20 @@ public class DXCanvas : DXControl
         {
             if (UseHardwareAcceleration)
             {
-                Source = ImageSource.Direct2D;
                 _imageD2D = DXHelper.ToD2D1Bitmap(Device, imgData.Image);
+
+                // apply transformations
+                if (transforms != null)
+                {
+                    _ = RotateImage(transforms.Rotation, false);
+                }
+
+                Source = ImageSource.Direct2D;
             }
             else
             {
-                Source = ImageSource.GDIPlus;
                 _imageGdiPlus = imgData.Bitmap;
+                Source = ImageSource.GDIPlus;
             }
 
 
@@ -2746,7 +2750,7 @@ public class DXCanvas : DXControl
             }
             else if (enableFading)
             {
-                
+
                 _imageOpacity = initOpacity;
                 _opacityStep = opacityStep;
 
@@ -2763,6 +2767,59 @@ public class DXCanvas : DXControl
                 Refresh(resetZoom);
             }
         }
+    }
+
+
+    /// <summary>
+    /// Applies transformation to the image.
+    /// </summary>
+    public bool RotateImage(float degree, bool requestRerender = true)
+    {
+        // rotation
+        if (_imageD2D == null || degree == 0 || degree == 360) return false;
+
+        
+        using var effect = Device.CreateEffect(Direct2DEffects.CLSID_D2D12DAffineTransform);
+        effect.SetInput(0, _imageD2D);
+
+
+        // rotate the image
+        var rotationMx = D2D_MATRIX_3X2_F.Rotation(degree);
+        var transformMx = D2D_MATRIX_3X2_F.Identity();
+
+        // translate the image after rotation
+        if (degree == 90 || degree == -270)
+        {
+            transformMx = rotationMx * D2D_MATRIX_3X2_F.Translation(SourceHeight, 0);
+        }
+        else if (degree == 180 || degree == -180)
+        {
+            transformMx = rotationMx * D2D_MATRIX_3X2_F.Translation(SourceWidth, SourceHeight);
+        }
+        else if (degree == 270 || degree == -90)
+        {
+            transformMx = rotationMx * D2D_MATRIX_3X2_F.Translation(0, SourceWidth);
+        }
+
+        effect.SetValue((int)D2D1_2DAFFINETRANSFORM_PROP.D2D1_2DAFFINETRANSFORM_PROP_TRANSFORM_MATRIX, transformMx);
+
+
+        // apply the transform
+        DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
+        _imageD2D = effect.GetD2D1Bitmap1(Device);
+
+        // update new source size
+        var newSize = _imageD2D.GetSize();
+        SourceWidth = newSize.width;
+        SourceHeight = newSize.height;
+
+        // render the transform
+        if (requestRerender)
+        {
+            Refresh();
+        }
+
+        return true;
     }
 
 
