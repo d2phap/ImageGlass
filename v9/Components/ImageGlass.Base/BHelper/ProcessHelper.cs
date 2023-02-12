@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 // Source:
-// https://github.com/aspnet/AspNetIdentity/blob/main/src/Microsoft.AspNet.Identity.Core/AsyncHelper.cs
+// https://github.com/aspnet/AspNetIdentity/blob/b7826741279450c58b230ece98bd04b4815beabf/src/Microsoft.AspNet.Identity.Core/AsyncHelper.cs
 
 using System.Diagnostics;
 using System.Globalization;
@@ -32,7 +32,8 @@ public partial class BHelper
         TaskContinuationOptions.None, TaskScheduler.Default);
 
     /// <summary>
-    /// Runs an async function synchronous
+    /// Runs an async function synchronous.
+    /// Source: <see href="https://github.com/aspnet/AspNetIdentity/blob/b7826741279450c58b230ece98bd04b4815beabf/src/Microsoft.AspNet.Identity.Core/AsyncHelper.cs" />
     /// </summary>
     public static TResult RunSync<TResult>(Func<Task<TResult>> func)
     {
@@ -49,7 +50,8 @@ public partial class BHelper
 
 
     /// <summary>
-    /// Runs an async function synchronous
+    /// Runs an async function synchronous.
+    /// Source: <see href="https://github.com/aspnet/AspNetIdentity/blob/b7826741279450c58b230ece98bd04b4815beabf/src/Microsoft.AspNet.Identity.Core/AsyncHelper.cs" />
     /// </summary>
     public static void RunSync(Func<Task> func)
     {

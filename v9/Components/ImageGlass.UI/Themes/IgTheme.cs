@@ -248,11 +248,11 @@ public class IgTheme : IDisposable
                 // property is WicBitmapSource
                 if (prop?.PropertyType == typeof(WicBitmapSource))
                 {
-                    var data = PhotoCodec.Load(Path.Combine(FolderPath, value), new()
+                    var data = BHelper.RunSync(() => PhotoCodec.LoadAsync(Path.Combine(FolderPath, value), new()
                     {
                         Width = ToolbarActualIconHeight * 2,
                         Height = ToolbarActualIconHeight * 2,
-                    });
+                    }));
 
                     prop.SetValue(Settings, data.Image);
                     continue;
