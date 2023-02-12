@@ -362,17 +362,19 @@ public static class PhotoCodec
     /// <param name="quality">Quality</param>
     public static async Task SaveAsync(string srcFileName, string destFilePath, CodecReadOptions readOptions, ImgTransform? transform = null, int quality = 100, CancellationToken token = default)
     {
-        transform ??= new();
-
         try
         {
             var settings = ParseSettings(readOptions, srcFileName);
-            using var imgData = await ReadMagickImageAsync(srcFileName, Path.GetExtension(srcFileName), settings, readOptions with
-            {
-                // Magick.NET auto-corrects the rotation when saving,
-                // so we don't need to correct it manually.
-                CorrectRotation = false,
-            }, transform, token);
+            using var imgData = await ReadMagickImageAsync(
+                srcFileName,
+                Path.GetExtension(srcFileName),
+                settings,
+                readOptions with
+                {
+                    // Magick.NET auto-corrects the rotation when saving,
+                    // so we don't need to correct it manually.
+                    CorrectRotation = false,
+                }, transform, token);
 
             if (imgData.MultiFrameImage != null)
             {
@@ -390,72 +392,25 @@ public static class PhotoCodec
 
 
     /// <summary>
-    /// Save as image file, use WIC if the extension is supported, else use Magick.NET.
-    /// </summary>
-    /// <param name="srcBitmap">Source bitmap to save</param>
-    /// <param name="destFilePath">Destination file path</param>
-    /// <param name="quality">JPEG/MIFF/PNG compression level</param>
-    public static async Task SaveAsync(WicBitmapSource? srcBitmap, string destFilePath, ImgTransform? transform = null, int quality = 100, CancellationToken token = default)
-    {
-        if (srcBitmap == null) return;
-
-        try
-        {
-            token.ThrowIfCancellationRequested();
-
-            var wicEncoder = WicEncoder.FromFileExtension(Path.GetExtension(destFilePath));
-            if (wicEncoder == null)
-            {
-                // use Magick.NET for saving
-                await SaveAsync(srcBitmap, destFilePath, transform, format: MagickFormat.Unknown, quality: quality, token);
-
-                return;
-            }
-
-
-            token.ThrowIfCancellationRequested();
-            TransformImage(srcBitmap, transform);
-
-
-            token.ThrowIfCancellationRequested();
-            using var stream = new FileStream(destFilePath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
-
-            // set saving options for WIC
-            var encoderOptions = new List<KeyValuePair<string, object>>();
-            if (quality == 100)
-            {
-                encoderOptions.Add(new("Lossless", true));
-            }
-            else
-            {
-                encoderOptions.Add(new("ImageQuality", quality / 100f));
-            }
-
-            await Task.Run(() => srcBitmap.Save(stream, wicEncoder.ContainerFormat, encoderOptions: encoderOptions), token);
-        }
-        catch (OperationCanceledException) { }
-    }
-
-
-    /// <summary>
     /// Save as image file, use Magick.NET.
     /// </summary>
     /// <param name="srcBitmap">Source bitmap to save</param>
     /// <param name="destFilePath">Destination file path</param>
-    /// <param name="format">New image format</param>
+    /// <param name="transform">Image transformation</param>
     /// <param name="quality">JPEG/MIFF/PNG compression level</param>
-    public static async Task SaveAsync(WicBitmapSource? srcBitmap, string destFilePath, ImgTransform? transform = null, MagickFormat format = MagickFormat.Unknown, int quality = 100, CancellationToken token = default)
+    /// <param name="format">New image format</param>
+    public static async Task SaveAsync(WicBitmapSource? srcBitmap, string destFilePath, ImgTransform? transform = null, int quality = 100, MagickFormat format = MagickFormat.Unknown, CancellationToken token = default)
     {
         if (srcBitmap == null) return;
 
-
         try
         {
+            // convert to Bitmap
             token.ThrowIfCancellationRequested();
-
             using var bitmap = BHelper.ToGdiPlusBitmap(srcBitmap);
             if (bitmap == null) return;
 
+            // convert to MagickImage
             using var imgM = new MagickImage();
             await Task.Run(() =>
             {
@@ -464,9 +419,11 @@ public static class PhotoCodec
             }, token);
 
 
+            // transform image
             token.ThrowIfCancellationRequested();
             TransformImage(imgM, transform);
 
+            // write image data to file
             token.ThrowIfCancellationRequested();
             if (format != MagickFormat.Unknown)
             {
@@ -482,33 +439,7 @@ public static class PhotoCodec
 
 
     /// <summary>
-    /// Save as image file, use Magick.NET.
-    /// </summary>
-    /// <param name="srcBitmap">Source bitmap to save</param>
-    /// <param name="destFilePath">Destination file path</param>
-    /// <param name="format">New image format</param>
-    /// <param name="quality">JPEG/MIFF/PNG compression level</param>
-    public static void Save(WicBitmapSource? srcBitmap, string destFilePath, MagickFormat format = MagickFormat.Unknown, int quality = 100)
-    {
-        if (srcBitmap == null) return;
-
-        using var imgM = new MagickImage();
-        imgM.Read(srcBitmap.CopyPixels(0, 0, srcBitmap.Width, srcBitmap.Height));
-        imgM.Quality = quality;
-
-        if (format != MagickFormat.Unknown)
-        {
-            imgM.Write(destFilePath, format);
-        }
-        else
-        {
-            imgM.Write(destFilePath);
-        }
-    }
-
-
-    /// <summary>
-    /// Save image pages to files, using Magick.NET
+    /// Exports image frames to files, using Magick.NET
     /// </summary>
     /// <param name="srcFilePath">The full path of source file</param>
     /// <param name="destFolder">The destination folder to save to</param>
@@ -696,7 +627,16 @@ public static class PhotoCodec
     }
 
 
-    #endregion
+    /// <summary>
+    /// Initialize Magick.NET.
+    /// </summary>
+    public static void InitMagickNET()
+    {
+        OpenCL.IsEnabled = true;
+        ResourceLimits.LimitMemory(new Percentage(75));
+    }
+
+    #endregion // Public functions
 
 
 
@@ -818,13 +758,6 @@ public static class PhotoCodec
         var result = new IgImgData(data);
 
         return result;
-    }
-
-
-    public static void InitMagickNET()
-    {
-        OpenCL.IsEnabled = true;
-        ResourceLimits.LimitMemory(new Percentage(75));
     }
 
 
@@ -1376,7 +1309,7 @@ public static class PhotoCodec
     }
 
 
-    #endregion
+    #endregion // Private functions
 
 
 }

@@ -168,3 +168,16 @@ public enum BackdropStyle
     /// </summary>
     MicaAlt = 4,
 }
+
+
+/// <summary>
+/// Options indicate what source of image is saved.
+/// </summary>
+public enum ImageSaveSource
+{
+    Undefined,
+    SelectedArea,
+    Clipboard,
+    CurrentFile,
+}
+

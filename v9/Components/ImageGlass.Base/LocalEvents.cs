@@ -67,14 +67,3 @@ public class ImageSaveEventArgs
     }
 }
 
-
-/// <summary>
-/// Options indicate what source of image is saved.
-/// </summary>
-public enum ImageSaveSource
-{
-    Undefined,
-    SelectedArea,
-    Clipboard,
-    CurrentFile,
-}

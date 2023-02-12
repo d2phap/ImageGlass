@@ -42,7 +42,6 @@ public partial class BHelper
         if (bmp == null)
             return null;
 
-
         var prop = bmp.GetType().GetProperty("WicSourceHandle",
             BindingFlags.NonPublic | BindingFlags.Instance);
 

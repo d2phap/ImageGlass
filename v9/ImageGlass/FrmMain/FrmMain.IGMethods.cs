@@ -2462,6 +2462,8 @@ public partial class FrmMain
     /// <param name="options"></param>
     public void IG_FlipImage(FlipOptions options)
     {
+        if (PicMain.Source == ImageSource.Null || Local.IsBusy) return;
+
         // update flip changes
         if (PicMain.FlipImage(options))
         {
