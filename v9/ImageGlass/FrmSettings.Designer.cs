@@ -93,7 +93,6 @@ namespace ImageGlass
         #endregion
 
         private ModernLabel lblSettingsFilePath;
-        private ModernButton modernButton1;
         private ModernButton btnOpenSettingsFile;
     }
 }

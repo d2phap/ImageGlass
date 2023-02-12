@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-using DirectN;
 using ImageGlass.Base;
 using ImageGlass.Base.Actions;
 using ImageGlass.Base.DirectoryComparer;
@@ -108,14 +107,14 @@ public partial class FrmMain : ModernForm
 
         // gallery
         UpdateGallerySize();
-        
+
         ResumeLayout(false);
     }
 
     protected override void OnDpiChanged(DpiChangedEventArgs e)
     {
         base.OnDpiChanged(e);
-        
+
         MnuMain.CurrentDpi =
             MnuContext.CurrentDpi =
             MnuSubMenu.CurrentDpi = e.DeviceDpiNew;
@@ -329,8 +328,7 @@ public partial class FrmMain : ModernForm
     /// Prepare and loads images from the input path
     /// </summary>
     /// <param name="inputPath">
-    /// The relative/absolute path of file/folder;
-    /// or a URI Scheme
+    /// The relative/absolute path of file/folder; or a protocol path
     /// </param>
     public void PrepareLoading(string inputPath)
     {
@@ -783,7 +781,7 @@ public partial class FrmMain : ModernForm
         };
         Local.RaiseImageLoadingEvent(loadingArgs);
 
-        
+
         try
         {
             // check if loading is cancelled
@@ -829,11 +827,6 @@ public partial class FrmMain : ModernForm
                 Local.RaiseImageLoadedEvent(loadedArgs);
             }
 
-
-            // Collect system garbage
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
         }
         catch (OperationCanceledException)
         {
@@ -841,6 +834,11 @@ public partial class FrmMain : ModernForm
         }
 
         Local.IsBusy = false;
+
+        // Collect system garbage
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
     }
 
 
@@ -920,7 +918,7 @@ public partial class FrmMain : ModernForm
                 $"\r\nℹ️ Error details:" +
                 $"\r\n";
 
-            PicMain.ShowMessage(debugInfo + 
+            PicMain.ShowMessage(debugInfo +
                 e.Error.Source + ": " + e.Error.Message,
                 Config.Language[$"{Name}.{nameof(PicMain)}._ErrorText"] + $" {emoji}");
         }
@@ -941,7 +939,7 @@ public partial class FrmMain : ModernForm
                     || Local.Metadata.Height > 8000;
                 enableFadingTrainsition = !_isShowingImagePreview && !isImageBigForFading;
             }
-            
+
 
             // set the main image
             PicMain.SetImage(e.Data.ImgData, e.ResetZoom, enableFadingTrainsition);
@@ -1479,9 +1477,8 @@ public partial class FrmMain : ModernForm
     /// </summary>
     public void ExecuteMouseAction(MouseClickEvent e)
     {
-        if (Config.MouseClickActions.ContainsKey(e))
+        if (Config.MouseClickActions.TryGetValue(e, out var toggleAction))
         {
-            var toggleAction = Config.MouseClickActions[e];
             var isToggled = ToggleAction.IsToggled(toggleAction.Id);
             var action = isToggled
                 ? toggleAction.ToggleOff
@@ -2161,5 +2158,5 @@ public partial class FrmMain : ModernForm
 
     #endregion // Main Menu component
 
-    
+
 }

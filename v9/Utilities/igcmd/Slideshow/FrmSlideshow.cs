@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using D2Phap;
-using DirectN;
 using ImageGlass.Base;
 using ImageGlass.Base.NamedPipes;
 using ImageGlass.Base.PhotoBox;
@@ -122,7 +121,7 @@ public partial class FrmSlideshow : ModernForm
     {
         SuspendLayout();
 
-        
+
         PicMain.InterpolationScaleDown = Config.ImageInterpolationScaleDown;
         PicMain.InterpolationScaleUp = Config.ImageInterpolationScaleUp;
 

@@ -220,7 +220,7 @@ public static class PhotoCodec
         using var imgM = new MagickImage();
         imgM.Ping(filePath, settings);
 
-        
+
         // get RAW embedded thumbnail
         if (rawThumbnail)
         {
@@ -240,7 +240,7 @@ public static class PhotoCodec
             catch (OperationCanceledException) { return null; }
             catch { }
         }
-        
+
 
 
         // Use JPEG embedded thumbnail
@@ -298,7 +298,7 @@ public static class PhotoCodec
         var svg = string.Empty;
         using var fs = new StreamReader(svgFilePath);
         svg = fs.ReadToEnd();
-        
+
 
         if (darkMode)
         {
@@ -595,7 +595,7 @@ public static class PhotoCodec
 
             -90 => WICBitmapTransformOptions.WICBitmapTransformRotate270,
             270 => WICBitmapTransformOptions.WICBitmapTransformRotate270,
-            
+
             180 => WICBitmapTransformOptions.WICBitmapTransformRotate180,
             -180 => WICBitmapTransformOptions.WICBitmapTransformRotate180,
 
@@ -629,7 +629,7 @@ public static class PhotoCodec
     {
         options ??= new();
         var loadSuccessful = true;
-        
+
         var metadata = LoadMetadata(filePath, options);
         var ext = Path.GetExtension(filePath).ToUpperInvariant();
         var settings = ParseSettings(options, filePath);
@@ -722,7 +722,7 @@ public static class PhotoCodec
                 }
             }
         }
-        
+
 
         return (loadSuccessful, result, ext, settings);
     }

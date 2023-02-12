@@ -67,8 +67,6 @@ public class App
     /// <summary>
     /// Gets the path based on the startup folder of ImageGlass.
     /// </summary>
-    /// <param name="paths"></param>
-    /// <returns></returns>
     public static string StartUpDir(params string[] paths)
     {
         var binaryPath = typeof(App).Assembly.Location;
@@ -87,8 +85,6 @@ public class App
     /// For portable mode, ConfigDir = Installed Dir, else %appdata%\ImageGlass
     /// </summary>
     /// <param name="type">Indicates if the given path is either file or directory</param>
-    /// <param name="paths"></param>
-    /// <returns></returns>
     public static string ConfigDir(PathType type, params string[] paths)
     {
         // use StartUp dir if it's writable

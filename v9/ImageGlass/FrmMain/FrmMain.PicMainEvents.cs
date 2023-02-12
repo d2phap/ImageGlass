@@ -79,7 +79,7 @@ public partial class FrmMain
         if (e.Data is null || !e.Data.GetDataPresent(DataFormats.FileDrop))
             return;
 
-        var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+        var filePaths = (string[]?)e.Data.GetData(DataFormats.FileDrop, false);
 
         if (filePaths.Length > 1)
         {

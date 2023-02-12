@@ -1139,6 +1139,8 @@ public partial class FrmMain
         }, enableFading: Config.EnableImageTransition);
         PicMain.ClearMessage();
 
+        Local.ImageTransform.Clear();
+
         // reset zoom mode
         IG_SetZoomMode(Config.ZoomMode.ToString());
 
@@ -1899,7 +1901,7 @@ public partial class FrmMain
             }
             catch (Exception ex)
             {
-                Config.ShowError(this,ex.Message, title);
+                Config.ShowError(this, ex.Message, title);
             }
         }
     }
@@ -1914,7 +1916,7 @@ public partial class FrmMain
 
         if (enable.Value)
         {
-            PicMain.StartAnimatingImage(); 
+            PicMain.StartAnimatingImage();
         }
         else
         {
