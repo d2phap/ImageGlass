@@ -396,15 +396,15 @@ public static class Config
     ///// </summary>
     //public static bool IsShowPageNavAuto { get; set; } = false;
 
-    ///// <summary>
-    ///// Gets, sets value specifying that Window Fit mode is on
-    ///// </summary>
-    //public static bool IsWindowFit { get; set; } = false;
+    /// <summary>
+    /// Gets, sets value specifying that Window Fit mode is on
+    /// </summary>
+    public static bool EnableWindowFit { get; set; } = false;
 
-    ///// <summary>
-    ///// Gets, sets value indicates the window should be always center in Window Fit mode
-    ///// </summary>
-    //public static bool IsCenterWindowFit { get; set; } = true;
+    /// <summary>
+    /// Gets, sets value indicates the window should be always center in Window Fit mode
+    /// </summary>
+    public static bool CenterWindowFit { get; set; } = true;
 
     ///// <summary>
     ///// Gets, sets value indicates that touch gesture support enabled
@@ -854,8 +854,8 @@ public static class Config
         //IsShowColorPickerOnStartup = items.GetValue(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
         //IsShowPageNavOnStartup = items.GetValue(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
         //IsShowPageNavAuto = items.GetValue(nameof(IsShowPageNavAuto), IsShowPageNavAuto);
-        //IsWindowFit = items.GetValue(nameof(IsWindowFit), IsWindowFit);
-        //IsCenterWindowFit = items.GetValue(nameof(IsCenterWindowFit), IsCenterWindowFit);
+        EnableWindowFit = items.GetValue(nameof(EnableWindowFit), EnableWindowFit);
+        CenterWindowFit = items.GetValue(nameof(CenterWindowFit), CenterWindowFit);
         //IsUseTouchGesture = items.GetValue(nameof(IsUseTouchGesture), IsUseTouchGesture);
         //IsHideTooltips = items.GetValue(nameof(IsHideTooltips), IsHideTooltips);
         //IsExifToolAlwaysOnTop = items.GetValue(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
@@ -1353,8 +1353,8 @@ public static class Config
         //settings.TryAdd(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
         //settings.TryAdd(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
         //settings.TryAdd(nameof(IsShowPageNavAuto), IsShowPageNavAuto);
-        //settings.TryAdd(nameof(IsWindowFit), IsWindowFit);
-        //settings.TryAdd(nameof(IsCenterWindowFit), IsCenterWindowFit);
+        settings.TryAdd(nameof(EnableWindowFit), EnableWindowFit);
+        settings.TryAdd(nameof(CenterWindowFit), CenterWindowFit);
         //settings.TryAdd(nameof(IsUseTouchGesture), IsUseTouchGesture);
         //settings.TryAdd(nameof(IsHideTooltips), IsHideTooltips);
         //settings.TryAdd(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
