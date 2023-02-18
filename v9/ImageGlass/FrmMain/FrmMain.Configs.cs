@@ -254,6 +254,10 @@ public partial class FrmMain
         // toggle frameless window
         IG_ToggleFrameless(Config.EnableFrameless, false);
 
+        // toggle Window fit
+        IG_ToggleWindowFit(Config.EnableWindowFit, false);
+
+
         // update tag data for zoom mode menus
         MnuAutoZoom.Tag = new ModernMenuItemTag() { SingleSelect = true };
         MnuLockZoom.Tag = new ModernMenuItemTag() { SingleSelect = true };
@@ -928,7 +932,7 @@ public partial class FrmMain
         //MnuClearClipboard.Visible = false;
 
         //toolStripMenuItem6.Visible = false;
-        MnuWindowFit.Visible = false;
+        //MnuWindowFit.Visible = false;
         //MnuFrameless.Visible = false;
         //MnuFullScreen.Visible = false;
 

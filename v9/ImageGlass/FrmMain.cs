@@ -941,7 +941,13 @@ public partial class FrmMain : ModernForm
 
 
             // set the main image
-            PicMain.SetImage(e.Data.ImgData, e.ResetZoom, enableFadingTrainsition);
+            PicMain.SetImage(e.Data.ImgData, Config.EnableWindowFit ? false : e.ResetZoom, enableFadingTrainsition);
+
+            // update window fit
+            if (e.ResetZoom && Config.EnableWindowFit)
+            {
+                FitWindowToImage();
+            }
 
             PicMain.ClearMessage();
         }
@@ -1053,7 +1059,7 @@ public partial class FrmMain : ModernForm
                 }
                 else
                 {
-                    var zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, Local.Metadata.Width, Local.Metadata.Height);
+                    var zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, Local.Metadata.Width, Local.Metadata.Height, PicMain.Width, PicMain.Height);
 
                     previewSize = new((int)(Local.Metadata.Width * zoomFactor), (int)(Local.Metadata.Height * zoomFactor));
                 }
@@ -2001,7 +2007,7 @@ public partial class FrmMain : ModernForm
     #region Window modes menu
     private void MnuWindowFit_Click(object sender, EventArgs e)
     {
-
+        IG_ToggleWindowFit();
     }
 
     private void MnuFrameless_Click(object sender, EventArgs e)

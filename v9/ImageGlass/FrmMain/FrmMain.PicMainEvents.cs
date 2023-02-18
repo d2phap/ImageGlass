@@ -353,6 +353,12 @@ public partial class FrmMain
 
     private void PicMain_OnZoomChanged(ZoomEventArgs e)
     {
+        // Handle window fit after zoom change
+        if (Config.EnableWindowFit && (e.IsManualZoom || e.IsZoomModeChange))
+        {
+            FitWindowToImage(false);
+        }
+
         UpdateImageInfo(ImageInfoUpdateTypes.Zoom);
     }
 

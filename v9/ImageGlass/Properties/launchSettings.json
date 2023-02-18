@@ -1,8 +1,7 @@
 {
   "profiles": {
     "ImageGlass": {
-      "commandName": "Project",
-      "commandLineArgs": "\"C:\\Users\\d2pha\\Desktop\\IMG_8095.jpg\""
+      "commandName": "Project"
     }
   }
 }
