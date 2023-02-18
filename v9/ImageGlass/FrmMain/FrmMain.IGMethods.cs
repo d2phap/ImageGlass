@@ -2098,6 +2098,49 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Toggle framless mode
+    /// </summary>
+    public bool IG_ToggleFrameless(bool? enable = null, bool showInAppMessage = true)
+    {
+        enable ??= !Config.EnableFrameless;
+        Config.EnableFrameless = enable.Value;
+
+        // set frameless mode
+        FormBorderStyle = Config.EnableFrameless ? FormBorderStyle.None : FormBorderStyle.Sizable;
+
+        // update menu item state
+        MnuFrameless.Checked = Config.EnableFrameless;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
+
+        if (showInAppMessage)
+        {
+            var langPath = $"{Name}.{nameof(MnuFrameless)}";
+
+            if (Config.EnableFrameless)
+            {
+                PicMain.ShowMessage(
+                    string.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFrameless.ShortcutKeyDisplayString),
+                    Config.Language[$"{langPath}._Enable"],
+                    Config.InAppMessageDuration);
+            }
+            else
+            {
+                PicMain.ShowMessage("",
+                    Config.Language[$"{langPath}._Disable"],
+                    Config.InAppMessageDuration);
+            }
+        }
+
+        return Config.EnableFrameless;
+    }
+
+
+    /// <summary>
+    /// Toggles full screen mode.
+    /// </summary>
     public bool IG_ToggleFullScreen(bool? enable = null, bool showInAppMessage = true)
     {
         enable ??= !Config.EnableFullScreen;
@@ -2115,13 +2158,23 @@ public partial class FrmMain
         // update toolbar items state
         UpdateToolbarItemsState();
 
-        if (showInAppMessage && Config.EnableFullScreen)
+        if (showInAppMessage)
         {
             var langPath = $"{Name}.{nameof(MnuFullScreen)}";
-            PicMain.ShowMessage(
-                string.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFullScreen.ShortcutKeyDisplayString),
-                Config.Language[$"{langPath}._Enable"],
-                Config.InAppMessageDuration);
+
+            if (Config.EnableFullScreen)
+            {
+                PicMain.ShowMessage(
+                    string.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFullScreen.ShortcutKeyDisplayString),
+                    Config.Language[$"{langPath}._Enable"],
+                    Config.InAppMessageDuration);
+            }
+            else
+            {
+                PicMain.ShowMessage("",
+                    Config.Language[$"{langPath}._Disable"],
+                    Config.InAppMessageDuration);
+            }
         }
 
         return Config.EnableFullScreen;

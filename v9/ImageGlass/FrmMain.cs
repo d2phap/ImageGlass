@@ -2006,7 +2006,7 @@ public partial class FrmMain : ModernForm
 
     private void MnuFrameless_Click(object sender, EventArgs e)
     {
-
+        IG_ToggleFrameless();
     }
 
     private void MnuFullScreen_Click(object sender, EventArgs e)

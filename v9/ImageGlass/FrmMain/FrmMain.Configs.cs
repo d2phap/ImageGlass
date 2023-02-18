@@ -927,7 +927,7 @@ public partial class FrmMain
 
         //toolStripMenuItem6.Visible = false;
         MnuWindowFit.Visible = false;
-        MnuFrameless.Visible = false;
+        //MnuFrameless.Visible = false;
         //MnuFullScreen.Visible = false;
 
         // MnuSlideshow

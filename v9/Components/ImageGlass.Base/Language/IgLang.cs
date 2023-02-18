@@ -274,9 +274,14 @@ public class IgLang : Dictionary<string, string>
 
         Add("FrmMain.MnuWindowFit", "Window fit"); //v7.5
         Add("FrmMain.MnuFullScreen", "Full screen"); //v3.0
-        Add("FrmMain.MnuFullScreen._Enable", "Enabled Full screen mode"); // v9.0
+        Add("FrmMain.MnuFullScreen._Enable", "Full screen window is enabled"); // v9.0
         Add("FrmMain.MnuFullScreen._EnableDescription", "Press {0} to exit full screen mode."); // v2.0
+        Add("FrmMain.MnuFullScreen._Disable", "Full screen window is disabled"); // v9.0
+
         Add("FrmMain.MnuFrameless", "Frameless"); //v7.5
+        Add("FrmMain.MnuFrameless._Enable", "Frameless window is enabled"); // v9.0
+        Add("FrmMain.MnuFrameless._EnableDescription", "Hold Shift key to move the window."); // v7.5
+        Add("FrmMain.MnuFrameless._Disable", "Frameless window is disabled"); // v9.0
 
         #region Slideshow
         Add("FrmMain.MnuSlideshow", "Slideshow"); //v3.0
@@ -349,7 +354,7 @@ public class IgLang : Dictionary<string, string>
 
 
         //Add("FrmMain._PageExtractComplete", "Page extraction completed."); // v7.5
-        //Add("FrmMain._Frameless", "Hold SHIFT to move the window."); // v7.5
+        
 
         Add("FrmMain._ClipboardImage", "Clipboard image"); //v9.0
 
