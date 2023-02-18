@@ -15,3 +15,5 @@ SetErrorMode
 ClientToScreen
 SendInput
 ShowWindow
+ReleaseCapture
+SendMessage

@@ -17,22 +17,19 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System.Runtime.InteropServices;
+using Windows.Win32;
+using Windows.Win32.Foundation;
 
 namespace ImageGlass.Base.WinApi;
 
+
 /// <summary>
-/// Make the frameless form movable when dragging itself or its controls
+/// Make the form movable when dragging itself or its controls
 /// </summary>
 public class MovableForm
 {
     private const int WM_NCLBUTTONDOWN = 0xA1;
     private const int HT_CAPTION = 0x2;
-
-    [DllImport("user32.dll")]
-    private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-    [DllImport("user32.dll")]
-    private static extern bool ReleaseCapture();
 
     private readonly Form _form;
     private bool _isKeyDown = true;
@@ -43,7 +40,7 @@ public class MovableForm
     /// <summary>
     /// Manually enable / disable moving
     /// </summary>
-    public bool IsAllowMoving { get; set; } = true;
+    public bool EnableFreeMoving { get; set; } = true;
 
     /// <summary>
     /// Gets, sets the mouse button press for moving
@@ -60,7 +57,7 @@ public class MovableForm
     /// </summary>
     public HashSet<string> FreeMoveControlNames { get; set; } = new HashSet<string>();
 
-    #endregion
+    #endregion // Public props
 
 
     /// <summary>
@@ -120,10 +117,10 @@ public class MovableForm
         }
     }
 
-    #endregion
+    #endregion // Public methods
 
 
-    #region Events: Frameless form moving
+    #region Events: Free form moving
 
     private void Form_KeyDown(object? sender, KeyEventArgs e)
     {
@@ -151,14 +148,15 @@ public class MovableForm
 
         if (e.Clicks == 1
             && e.Button == MouseButton
-            && IsAllowMoving
+            && EnableFreeMoving
             && (_isKeyDown || isFreeMove))
         {
-            ReleaseCapture();
-            _ = SendMessage(_form.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            PInvoke.ReleaseCapture();
+            PInvoke.SendMessage(new HWND(_form.Handle), WM_NCLBUTTONDOWN, new WPARAM(HT_CAPTION), new LPARAM(0));
         }
     }
-    #endregion
+
+    #endregion // Events: Free form moving
 
 
 }

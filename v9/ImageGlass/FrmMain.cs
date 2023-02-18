@@ -36,7 +36,7 @@ public partial class FrmMain : ModernForm
 {
     // cancellation tokens of synchronious task
     private CancellationTokenSource _loadCancelToken = new();
-    private readonly MovableForm _movableForm;
+    private MovableForm _movableForm;
     private bool _isShowingImagePreview = false;
 
 
@@ -57,7 +57,6 @@ public partial class FrmMain : ModernForm
         // hide the root layout to avoid flickering render,
         // and show again when window is loaded
         Tb0.Visible = false;
-        _movableForm = new(this);
 
         SetUpFrmMainConfigs();
 

@@ -259,6 +259,25 @@ public partial class FrmMain
         MnuScaleToHeight.Tag = new ModernMenuItemTag() { SingleSelect = true };
         MnuScaleToFit.Tag = new ModernMenuItemTag() { SingleSelect = true };
         MnuScaleToFill.Tag = new ModernMenuItemTag() { SingleSelect = true };
+
+
+        #region Make form movable
+        _movableForm = new(this)
+        {
+            Key = Keys.ShiftKey | Keys.Shift,
+            FreeMoveControlNames = new HashSet<string>()
+            {
+                nameof(Toolbar),
+                nameof(Gallery),
+            },
+        };
+
+
+        // Enable frameless movable
+        _movableForm.Enable();
+        _movableForm.Enable(PicMain, Toolbar, Gallery);
+        #endregion
+
     }
 
 
