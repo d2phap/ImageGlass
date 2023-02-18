@@ -273,6 +273,9 @@ public class IgLang : Dictionary<string, string>
         #endregion
 
         Add("FrmMain.MnuWindowFit", "Window fit"); //v7.5
+        Add("FrmMain.MnuWindowFit._Enable", "Window fit is enabled"); // v9.0
+        Add("FrmMain.MnuWindowFit._Disable", "Window fit is disabled"); // v9.0
+
         Add("FrmMain.MnuFullScreen", "Full screen"); //v3.0
         Add("FrmMain.MnuFullScreen._Enable", "Full screen window is enabled"); // v9.0
         Add("FrmMain.MnuFullScreen._EnableDescription", "Press {0} to exit full screen mode."); // v2.0

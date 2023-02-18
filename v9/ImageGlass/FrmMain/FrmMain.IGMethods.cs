@@ -2099,6 +2099,134 @@ public partial class FrmMain
 
 
     /// <summary>
+    /// Toggles Window fit.
+    /// </summary>
+    public bool IG_ToggleWindowFit(bool? enable = null, bool showInAppMessage = true)
+    {
+        enable ??= !Config.EnableWindowFit;
+        Config.EnableWindowFit = enable.Value;
+
+        // set Window Fit mode
+        FitWindowToImage();
+
+        // update menu item state
+        MnuWindowFit.Checked = Config.EnableWindowFit;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
+
+        if (showInAppMessage)
+        {
+            var langPath = $"{Name}.{nameof(MnuWindowFit)}";
+            var message = Config.EnableWindowFit
+                ? Config.Language[$"{langPath}._Enable"]
+                : Config.Language[$"{langPath}._Disable"];
+
+            PicMain.ShowMessage("", message, Config.InAppMessageDuration);
+        }
+
+        return Config.EnableWindowFit;
+    }
+
+    public void FitWindowToImage(bool resetZoomMode = true)
+    {
+        if (!Config.EnableWindowFit || PicMain.Source == ImageSource.Null)
+            return; // Nothing to do
+
+        #region Set minimum size for window
+        var minH = this.ScaleToDpi(100);
+        if (Config.ShowToolbar)
+        {
+            minH += Toolbar.Height;
+        }
+
+        if (Config.ShowThumbnails)
+        {
+            minH += (int)Config.ThumbnailSize;
+        }
+
+        MinimumSize = new()
+        {
+            Width = this.ScaleToDpi(200),
+            Height = minH,
+        };
+        #endregion
+
+
+        WindowState = FormWindowState.Normal;
+
+        // get current screen
+        var workingArea = Screen.FromControl(this).WorkingArea;
+
+        // Check for early exits
+        // This fixes issue https://github.com/d2phap/ImageGlass/issues/1371
+        // If window size already reached max, then can't be expanded more larger
+        if (PicMain.SourceWidth > workingArea.Width &&
+            PicMain.SourceHeight > workingArea.Height &&
+            Width > workingArea.Width &&
+            Height > workingArea.Height)
+        {
+            return;
+        }
+
+
+        // First, adjust our main window to theoretically fit the entire
+        // picture, but not larger than desktop working area.
+        var fullW = Width + PicMain.SourceWidth - PicMain.Width;
+        var fullH = Height + PicMain.SourceHeight - PicMain.Height;
+
+        var maxWidth = Math.Min(fullW, workingArea.Width);
+        var maxHeight = Math.Min(fullH, workingArea.Height);
+
+        
+        // plus some gap if window border is resizable
+        if (FormBorderStyle != FormBorderStyle.None && fullW > workingArea.Width)
+        {
+            maxWidth -= SystemInformation.CaptionHeight / 2;
+        }
+        if (FormBorderStyle != FormBorderStyle.None && fullH > workingArea.Height)
+        {
+            maxHeight -= SystemInformation.CaptionHeight / 2;
+        }
+
+        var zoomFactor = PicMain.ZoomFactor;
+        if (resetZoomMode)
+        {
+            // recalculates zoom factor for the new size
+            zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, fullW, fullH, (int)maxWidth, (int)maxHeight);
+        }
+        
+        // get image size after zoomed
+        var zoomImgW = (int)(PicMain.SourceWidth * zoomFactor);
+        var zoomImgH = (int)(PicMain.SourceHeight * zoomFactor);
+
+        // Adjust our main window to theoretically fit the entire
+        // picture, but not larger than desktop working area.
+        fullW = Width + zoomImgW - PicMain.Width;
+        fullH = Height + zoomImgH - PicMain.Height;
+
+        maxWidth = Math.Min(fullW, workingArea.Width);
+        maxHeight = Math.Min(fullH, workingArea.Height);
+
+
+        // update the size
+        Size = new SizeF(maxWidth, maxHeight).ToSize();
+        if (resetZoomMode)
+        {
+            PicMain.SetZoomFactor(zoomFactor, false);
+        }
+        
+
+        // center window to screen
+        if (Config.CenterWindowFit)
+        {
+            App.CenterFormToScreen(this);
+        }
+    }
+
+
+
+    /// <summary>
     /// Toggle framless mode
     /// </summary>
     public bool IG_ToggleFrameless(bool? enable = null, bool showInAppMessage = true)
