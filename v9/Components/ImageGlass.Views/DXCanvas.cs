@@ -477,32 +477,18 @@ public class DXCanvas : DXControl
 
     /// <summary>
     /// Gets, sets current zoom factor (<c>1.0f = 100%</c>).
+    /// This also sets <see cref="_isManualZoom"/> to <c>true</c>.
+    /// 
+    /// <para>
+    /// Use <see cref="SetZoomFactor(float, bool)"/> for more options.
+    /// </para>
     /// </summary>
     [Category("Zooming")]
     [DefaultValue(1.0f)]
     public float ZoomFactor
     {
         get => _zoomFactor;
-        set
-        {
-            if (_zoomFactor != value)
-            {
-                _zoomFactor = Math.Min(MaxZoom, Math.Max(value, MinZoom));
-
-                _isManualZoom = true;
-                _shouldRecalculateDrawingRegion = true;
-
-                Invalidate();
-
-                OnZoomChanged?.Invoke(new(_zoomFactor));
-
-                // emit selecting event
-                if (EnableSelection && !ClientSelection.IsEmpty)
-                {
-                    SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
-                }
-            }
-        }
+        set => SetZoomFactor(value, true);
     }
 
     /// <summary>
@@ -583,12 +569,6 @@ public class DXCanvas : DXControl
     [Browsable(false)]
     public ImageInterpolation CurrentInterpolation => ZoomFactor > 1f ? _interpolationScaledUp : _interpolationScaleDown;
 
-
-    /// <summary>
-    /// Occurs when <see cref="ZoomFactor"/> value changes.
-    /// </summary>
-    public event ZoomChangedEventHandler? OnZoomChanged = null;
-    public delegate void ZoomChangedEventHandler(ZoomEventArgs e);
 
     #endregion
 
@@ -851,6 +831,12 @@ public class DXCanvas : DXControl
 
     // Events
     #region Events
+
+    /// <summary>
+    /// Occurs when <see cref="ZoomFactor"/> value changes.
+    /// </summary>
+    public event ZoomChangedEventHandler? OnZoomChanged = null;
+    public delegate void ZoomChangedEventHandler(ZoomEventArgs e);
 
     /// <summary>
     /// Occurs when the host is being panned.
@@ -2008,11 +1994,12 @@ public class DXCanvas : DXControl
         if (!IsReady || Source == ImageSource.Null) return;
 
         // get zoom factor after applying the zoom mode
-        _zoomFactor = CalculateZoomFactor(mode ?? _zoomMode, SourceWidth, SourceHeight);
+        var zoomMode = mode ?? _zoomMode;
+        _zoomFactor = CalculateZoomFactor(zoomMode, SourceWidth, SourceHeight, Width, Height);
         _isManualZoom = false;
         _shouldRecalculateDrawingRegion = true;
 
-        OnZoomChanged?.Invoke(new(ZoomFactor));
+        OnZoomChanged?.Invoke(new(ZoomFactor, _isManualZoom, mode != _zoomMode));
 
         // emit selecting event
         if (EnableSelection && !ClientSelection.IsEmpty)
@@ -2028,13 +2015,35 @@ public class DXCanvas : DXControl
     #region Public methods
 
     /// <summary>
+    /// Sets zoom factor value.
+    /// </summary>
+    /// <param name="zoomValue">Zoom factor value</param>
+    /// <param name="isManualZoom">Value for <see cref="_isManualZoom"/></param>
+    public void SetZoomFactor(float zoomValue, bool isManualZoom)
+    {
+        if (_zoomFactor == zoomValue) return;
+
+        _zoomFactor = Math.Min(MaxZoom, Math.Max(zoomValue, MinZoom));
+        _isManualZoom = isManualZoom;
+        _shouldRecalculateDrawingRegion = true;
+
+        Invalidate();
+
+        OnZoomChanged?.Invoke(new(_zoomFactor, _isManualZoom, false));
+
+        // emit selecting event
+        if (EnableSelection && !ClientSelection.IsEmpty)
+        {
+            SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+        }
+    }
+
+
+    /// <summary>
     /// Calculates zoom factor by the input zoom mode, and source size.
     /// </summary>
-    public float CalculateZoomFactor(ZoomMode zoomMode, float srcWidth, float srcHeight)
+    public float CalculateZoomFactor(ZoomMode zoomMode, float srcWidth, float srcHeight, int viewportW, int viewportH)
     {
-        var viewportW = Width;
-        var viewportH = Height;
-
         var horizontalPadding = Padding.Left + Padding.Right;
         var verticalPadding = Padding.Top + Padding.Bottom;
         var widthScale = (viewportW - horizontalPadding) / srcWidth;
@@ -2216,7 +2225,7 @@ public class DXCanvas : DXControl
             PanTo(zoomedDistance.Width, zoomedDistance.Height, requestRerender);
 
             // emit OnZoomChanged event
-            OnZoomChanged?.Invoke(new(_zoomFactor));
+            OnZoomChanged?.Invoke(new(_zoomFactor, _isManualZoom, false));
 
 
             // emit selecting event
@@ -2292,7 +2301,7 @@ public class DXCanvas : DXControl
         }
 
         // emit OnZoomChanged event
-        OnZoomChanged?.Invoke(new(_zoomFactor));
+        OnZoomChanged?.Invoke(new(_zoomFactor, _isManualZoom, false));
 
 
         // emit selecting event
