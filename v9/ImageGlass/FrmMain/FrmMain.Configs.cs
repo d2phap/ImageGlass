@@ -261,6 +261,7 @@ public partial class FrmMain
         MnuScaleToFill.Tag = new ModernMenuItemTag() { SingleSelect = true };
 
 
+        // Make form movable
         #region Make form movable
         _movableForm = new(this)
         {
@@ -268,14 +269,13 @@ public partial class FrmMain
             FreeMoveControlNames = new HashSet<string>()
             {
                 nameof(Toolbar),
-                nameof(Gallery),
             },
         };
 
 
         // Enable frameless movable
         _movableForm.Enable();
-        _movableForm.Enable(PicMain, Toolbar, Gallery);
+        _movableForm.Enable(PicMain, Toolbar);
         #endregion
 
     }
