@@ -212,6 +212,11 @@ public static class Config
     public static bool EnableWindowedSlideshow { get; set; } = false;
 
     /// <summary>
+    /// Gets, sets value of FrmMain's frameless mode.
+    /// </summary>
+    public static bool EnableFrameless { get; set; } = false;
+
+    /// <summary>
     /// Gets, sets value indicating whether the full screen mode is enabled or not.
     /// </summary>
     public static bool EnableFullScreen { get; set; } = false;
@@ -295,11 +300,6 @@ public static class Config
     /// Gets, sets value indicating that FrmMain is always on top or not.
     /// </summary>
     public static bool EnableWindowTopMost { get; set; } = false;
-
-    ///// <summary>
-    ///// Gets, sets value of FrmMain's frameless mode.
-    ///// </summary>
-    //public static bool IsWindowFrameless { get; set; } = false;
 
     ///// <summary>
     ///// Gets, sets the direction of thumbnail bar
@@ -819,6 +819,7 @@ public static class Config
         UseRandomIntervalForSlideshow = items.GetValue(nameof(UseRandomIntervalForSlideshow), UseRandomIntervalForSlideshow);
         ShouldLoopSlideshow = items.GetValue(nameof(ShouldLoopSlideshow), ShouldLoopSlideshow);
         EnableWindowedSlideshow = items.GetValue(nameof(EnableWindowedSlideshow), EnableWindowedSlideshow);
+        EnableFrameless = items.GetValue(nameof(EnableFrameless), EnableFrameless);
         EnableFullScreen = items.GetValue(nameof(EnableFullScreen), EnableFullScreen);
         ShowThumbnails = items.GetValue(nameof(ShowThumbnails), ShowThumbnails);
         ShowThumbnailScrollbars = items.GetValue(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
@@ -834,7 +835,6 @@ public static class Config
         ShowCheckerBoard = items.GetValue(nameof(ShowCheckerBoard), ShowCheckerBoard);
         EnableMultiInstances = items.GetValue(nameof(EnableMultiInstances), EnableMultiInstances);
         EnableWindowTopMost = items.GetValue(nameof(EnableWindowTopMost), EnableWindowTopMost);
-        //IsWindowFrameless = items.GetValue(nameof(IsWindowFrameless), IsWindowFrameless);
         //IsThumbnailHorizontal = items.GetValue(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
         ShowDeleteConfirmation = items.GetValue(nameof(ShowDeleteConfirmation), ShowDeleteConfirmation);
         ShowSaveOverrideConfirmation = items.GetValue(nameof(ShowSaveOverrideConfirmation), ShowSaveOverrideConfirmation);
@@ -1318,6 +1318,7 @@ public static class Config
         settings.TryAdd(nameof(UseRandomIntervalForSlideshow), UseRandomIntervalForSlideshow);
         settings.TryAdd(nameof(ShouldLoopSlideshow), ShouldLoopSlideshow);
         settings.TryAdd(nameof(EnableWindowedSlideshow), EnableWindowedSlideshow);
+        settings.TryAdd(nameof(EnableFrameless), EnableFrameless);
         settings.TryAdd(nameof(EnableFullScreen), EnableFullScreen);
         settings.TryAdd(nameof(ShowThumbnails), ShowThumbnails);
         settings.TryAdd(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
@@ -1333,7 +1334,6 @@ public static class Config
         settings.TryAdd(nameof(ShowCheckerBoard), ShowCheckerBoard);
         settings.TryAdd(nameof(EnableMultiInstances), EnableMultiInstances);
         settings.TryAdd(nameof(EnableWindowTopMost), EnableWindowTopMost);
-        //settings.TryAdd(nameof(IsWindowFrameless), IsWindowFrameless);
         //settings.TryAdd(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
         settings.TryAdd(nameof(ShowDeleteConfirmation), ShowDeleteConfirmation);
         settings.TryAdd(nameof(ShowSaveOverrideConfirmation), ShowSaveOverrideConfirmation);
