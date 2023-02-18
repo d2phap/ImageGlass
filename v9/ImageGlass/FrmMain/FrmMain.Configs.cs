@@ -251,6 +251,8 @@ public partial class FrmMain
         // toggle gallery (must be after Tb0.Visible)
         IG_ToggleGallery(Config.ShowThumbnails);
 
+        // toggle frameless window
+        IG_ToggleFrameless(Config.EnableFrameless, false);
 
         // update tag data for zoom mode menus
         MnuAutoZoom.Tag = new ModernMenuItemTag() { SingleSelect = true };
