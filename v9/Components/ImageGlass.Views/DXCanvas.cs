@@ -104,8 +104,12 @@ public class DXCanvas : DXControl
     private bool _isNavLeftPressed = false;
     private bool _isNavRightHovered = false;
     private bool _isNavRightPressed = false;
-    internal PointF NavLeftPos => new(DrawingArea.Left + NavButtonSize.Width / 2 + NAV_PADDING, Height / 2);
-    internal PointF NavRightPos => new(DrawingArea.Right - NavButtonSize.Width / 2 - NAV_PADDING, Height / 2);
+    internal PointF NavLeftPos => new(
+        DrawingArea.Left + NavButtonSize.Width / 2 + NAV_PADDING,
+        DrawingArea.Top + DrawingArea.Height / 2);
+    internal PointF NavRightPos => new(
+        DrawingArea.Right - NavButtonSize.Width / 2 - NAV_PADDING,
+        DrawingArea.Top + DrawingArea.Height / 2);
     private NavButtonDisplay _navDisplay = NavButtonDisplay.None;
     private bool _isNavVisible = false;
     private float NavBorderRadius => NavButtonSize.Width / 2;
