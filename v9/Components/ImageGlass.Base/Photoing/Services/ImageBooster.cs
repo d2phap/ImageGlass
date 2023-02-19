@@ -517,10 +517,13 @@ public class ImageBooster : IDisposable
     /// <summary>
     /// Unload and release resources of item with the given index
     /// </summary>
-    /// <param name="index"></param>
     public void Unload(int index)
     {
-        ImgList[index]?.Dispose();
+        try
+        {
+            ImgList[index]?.Dispose();
+        }
+        catch (ArgumentOutOfRangeException) { }
     }
 
 

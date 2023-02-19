@@ -104,8 +104,8 @@ public class DXCanvas : DXControl
     private bool _isNavLeftPressed = false;
     private bool _isNavRightHovered = false;
     private bool _isNavRightPressed = false;
-    internal PointF NavLeftPos => new(NavButtonSize.Width / 2 + NAV_PADDING, Height / 2);
-    internal PointF NavRightPos => new(Width - NavButtonSize.Width / 2 - NAV_PADDING, Height / 2);
+    internal PointF NavLeftPos => new(DrawingArea.Left + NavButtonSize.Width / 2 + NAV_PADDING, Height / 2);
+    internal PointF NavRightPos => new(DrawingArea.Right - NavButtonSize.Width / 2 - NAV_PADDING, Height / 2);
     private NavButtonDisplay _navDisplay = NavButtonDisplay.None;
     private bool _isNavVisible = false;
     private float NavBorderRadius => NavButtonSize.Width / 2;
@@ -132,6 +132,15 @@ public class DXCanvas : DXControl
 
     // Viewport
     #region Viewport
+
+    /// <summary>
+    /// Gets the drawing area after deducting <see cref="Padding"/>.
+    /// </summary>
+    public RectangleF DrawingArea => new RectangleF(
+        Padding.Left,
+        Padding.Top,
+        Width - Padding.Horizontal,
+        Height - Padding.Vertical);
 
     /// <summary>
     /// Gets rectangle of the viewport.
@@ -166,7 +175,7 @@ public class DXCanvas : DXControl
     {
         get
         {
-            if (_destRect.X > 0 && _destRect.Y > 0) return true;
+            if (_destRect.X > DrawingArea.Left && _destRect.Y > DrawingArea.Top) return true;
 
 
             if (SourceWidth > SourceHeight)
@@ -1472,8 +1481,8 @@ public class DXCanvas : DXControl
         _xOut = false;
         _yOut = false;
 
-        var controlW = Width;
-        var controlH = Height;
+        var controlW = DrawingArea.Width;
+        var controlH = DrawingArea.Height;
         var scaledImgWidth = SourceWidth * _zoomFactor;
         var scaledImgHeight = SourceHeight * _zoomFactor;
 
@@ -1484,7 +1493,7 @@ public class DXCanvas : DXControl
             _srcRect.X = 0;
             _srcRect.Width = SourceWidth;
 
-            _destRect.X = (controlW - scaledImgWidth) / 2.0f;
+            _destRect.X = (controlW - scaledImgWidth) / 2.0f + DrawingArea.Left;
             _destRect.Width = scaledImgWidth;
         }
         else
@@ -1492,7 +1501,7 @@ public class DXCanvas : DXControl
             _srcRect.X += (controlW / _oldZoomFactor - controlW / _zoomFactor) / ((controlW + float.Epsilon) / zoomX);
             _srcRect.Width = controlW / _zoomFactor;
 
-            _destRect.X = 0;
+            _destRect.X = DrawingArea.Left;
             _destRect.Width = controlW;
         }
 
@@ -1503,7 +1512,7 @@ public class DXCanvas : DXControl
             _srcRect.Y = 0;
             _srcRect.Height = SourceHeight;
 
-            _destRect.Y = (controlH - scaledImgHeight) / 2f;
+            _destRect.Y = (controlH - scaledImgHeight) / 2f + DrawingArea.Top;
             _destRect.Height = scaledImgHeight;
         }
         else
@@ -1511,7 +1520,7 @@ public class DXCanvas : DXControl
             _srcRect.Y += (controlH / _oldZoomFactor - controlH / _zoomFactor) / ((controlH + float.Epsilon) / zoomY);
             _srcRect.Height = controlH / _zoomFactor;
 
-            _destRect.Y = 0;
+            _destRect.Y = DrawingArea.Top;
             _destRect.Height = controlH;
         }
 
@@ -1586,7 +1595,7 @@ public class DXCanvas : DXControl
         }
         else
         {
-            region = ClientRectangle;
+            region = DrawingArea;
         }
 
 
@@ -1755,15 +1764,15 @@ public class DXCanvas : DXControl
         if (!hasHeading && !hasText) return;
 
         var textMargin = 20;
-        var textPaddingX = textMargin * 2;
-        var textPaddingY = textMargin * 2;
+        var textPaddingX = Padding.Horizontal;
+        var textPaddingY = Padding.Vertical;
         var gap = hasHeading && hasText
             ? textMargin
             : 0;
 
         var drawableArea = new RectangleF(
-            textMargin,
-            textMargin,
+            textPaddingX / 2,
+            textPaddingY / 2,
             Math.Max(0, Width - textPaddingX),
             Math.Max(0, Height - textPaddingY));
 
@@ -1793,7 +1802,7 @@ public class DXCanvas : DXControl
             X = centerX - hTextSize.Width / 2,
             Y = centerY - ((hTextSize.Height + tTextSize.Height) / 2) - gap / 2,
             Width = hTextSize.Width + textPaddingX - drawableArea.X * 2 + 1,
-            Height = hTextSize.Height + textMargin - drawableArea.Y,
+            Height = hTextSize.Height + textPaddingY / 2 - drawableArea.Y,
         };
 
         var tRegion = new RectangleF()
@@ -1801,14 +1810,14 @@ public class DXCanvas : DXControl
             X = centerX - tTextSize.Width / 2,
             Y = centerY - ((hTextSize.Height + tTextSize.Height) / 2) + hTextSize.Height + gap / 2,
             Width = tTextSize.Width + textPaddingX - drawableArea.X * 2 + 1,
-            Height = tTextSize.Height + textMargin - drawableArea.Y,
+            Height = tTextSize.Height + textPaddingY / 2 - drawableArea.Y,
         };
 
         var bgRegion = new RectangleF()
         {
             X = Math.Min(tRegion.X, hRegion.X) - textMargin / 2,
             Y = Math.Min(tRegion.Y, hRegion.Y) - textMargin / 2,
-            Width = Math.Max(tRegion.Width, hRegion.Width) + textPaddingX / 2,
+            Width = Math.Max(tRegion.Width, hRegion.Width) + textMargin,
             Height = tRegion.Height + hRegion.Height + textMargin + gap,
         };
 
