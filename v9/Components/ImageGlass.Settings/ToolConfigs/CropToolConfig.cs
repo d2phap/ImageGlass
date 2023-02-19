@@ -27,7 +27,7 @@ namespace ImageGlass;
 /// <summary>
 /// Provides settings for Crop tool.
 /// </summary>
-public class CropToolConfig: IToolConfig
+public class CropToolConfig : IToolConfig
 {
     public string ToolId { get; init; }
 
@@ -59,7 +59,7 @@ public class CropToolConfig: IToolConfig
     /// <summary>
     /// Gets, sets the custom selection area is used for <see cref="DefaultSelectionType.CustomArea"/>.
     /// </summary>
-    public Rectangle InitSelectedArea {  get; set; } = Rectangle.Empty;
+    public Rectangle InitSelectedArea { get; set; } = Rectangle.Empty;
 
 
     /// <summary>

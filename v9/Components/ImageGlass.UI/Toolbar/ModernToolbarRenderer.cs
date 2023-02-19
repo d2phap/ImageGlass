@@ -103,7 +103,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         e.Graphics.DrawImage(textImg, posX, posY);
 
         #endregion // Draw "..."
-    
+
     }
 
 

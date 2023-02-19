@@ -84,8 +84,8 @@ public class IgImgData : IDisposable
     public bool CanAnimate { get; set; } = false;
     public IExifProfile? ExifProfile { get; set; } = null;
     public IColorProfile? ColorProfile { get; set; } = null;
-    
-    
+
+
     public IgImgData() { }
 
 

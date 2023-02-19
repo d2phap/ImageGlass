@@ -39,7 +39,7 @@ public interface IColors
     Color LightestBackground { get; }
     Color LightBorder { get; }
     Color DarkBorder { get; }
-    
+
     Color BlueHighlight { get; }
     Color BlueSelection { get; }
     Color GreyHighlight { get; }

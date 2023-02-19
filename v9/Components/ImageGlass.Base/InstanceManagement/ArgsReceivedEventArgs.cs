@@ -23,6 +23,7 @@ namespace ImageGlass.Base.InstanceManagement;
 /// <summary>
 /// Holds a list of arguments given to an application at startup.
 /// </summary>
-public class ArgsReceivedEventArgs: EventArgs {
+public class ArgsReceivedEventArgs : EventArgs
+{
     public string[] Arguments { get; set; } = Array.Empty<string>();
 }

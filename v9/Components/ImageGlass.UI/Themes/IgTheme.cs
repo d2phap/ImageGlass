@@ -19,9 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
-using ImageMagick;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
 using WicNet;
 
 namespace ImageGlass.UI;
@@ -64,7 +61,7 @@ public class IgTheme : IDisposable
 
     private int _iconHeight = Constants.TOOLBAR_ICON_HEIGHT;
 
-    
+
     /// <summary>
     /// Filename of theme configuration since v9.0.
     /// </summary>

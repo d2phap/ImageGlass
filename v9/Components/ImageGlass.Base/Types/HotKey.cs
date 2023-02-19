@@ -195,7 +195,7 @@ public class Hotkey
         {
             strB.Append(KeyStr);
         }
-        
+
 
         return strB.ToString();
     }

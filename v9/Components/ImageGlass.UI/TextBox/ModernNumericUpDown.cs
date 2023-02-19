@@ -234,7 +234,7 @@ public class ModernNumericUpDown : NumericUpDown
         {
             borderColor = borderColor.WithBrightness(0.3f);
         }
-        
+
         using (var pen = new Pen(borderColor, DpiApi.Transform(1.1f)))
         {
             pen.Alignment = PenAlignment.Outset;

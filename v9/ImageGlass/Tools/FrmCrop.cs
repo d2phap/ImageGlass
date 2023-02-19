@@ -506,7 +506,7 @@ public partial class FrmCrop : ToolForm, IToolForm
                 Local.FrmMain.PicMain.UpdateSelectionByMousePosition();
             }
 
-            
+
             Local.FrmMain.PicMain.Invalidate();
         }
     }
@@ -590,13 +590,13 @@ public partial class FrmCrop : ToolForm, IToolForm
         Local.FrmMain.PicMain.SelectionAspectRatio = new SizeF((float)NumRatioFrom.Value, (float)NumRatioTo.Value);
     }
 
-    
+
     private void NumSelections_LostFocus(object? sender, EventArgs e)
     {
         LoadSelectionFromFormInputs(true);
     }
 
-    
+
     private void BtnSave_Click(object sender, EventArgs e)
     {
         Local.FrmMain.IG_Save();

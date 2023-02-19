@@ -22,14 +22,12 @@ Url: https://www.codeproject.com/Articles/810030/IPC-with-Named-Pipes
 License: CPOL, http://www.codeproject.com/info/cpol10.aspx
 ---------------------
 */
-using System;
 
 namespace ImageGlass.Base.NamedPipes;
 
 using System;
 using System.IO.Pipes;
 using System.Text;
-using System.Threading;
 
 /// <summary>
 /// A simple class for connecting to the named-pipe server.
@@ -143,11 +141,11 @@ public class PipeClient : IDisposable
         ClientStream.BeginRead(
             clientState.Buffer,
             0,
-            clientState.Buffer.Length, 
-            ReadCallback, 
+            clientState.Buffer.Length,
+            ReadCallback,
             clientState);
     }
-    
+
 
     /// <summary>
     /// The read callback.

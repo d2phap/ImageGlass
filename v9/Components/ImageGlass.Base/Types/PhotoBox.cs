@@ -97,7 +97,8 @@ public enum CheckerboardMode
 /// <summary>
 /// Specifies the display styles for navigation button
 /// </summary>
-public enum NavButtonDisplay {
+public enum NavButtonDisplay
+{
     None = 0,
     Both = 1,
     Left = 2,

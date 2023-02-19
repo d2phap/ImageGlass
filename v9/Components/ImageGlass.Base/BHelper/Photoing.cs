@@ -57,14 +57,14 @@ public partial class BHelper
         return wicSrc;
     }
 
-    
+
     /// <summary>
     /// Converts <see cref="Bitmap"/> to <see cref="WicBitmapSource"/>.
     /// </summary>
     public static WicBitmapSource? ToWicBitmapSource(Bitmap? bmp)
     {
         if (bmp == null) return null;
-        
+
         var wicSrc = WicBitmapSource.FromHBitmap(bmp.GetHbitmap());
         wicSrc.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
 
@@ -150,7 +150,7 @@ public partial class BHelper
         return src;
     }
 
-    
+
     /// <summary>
     /// Converts <see cref="WicBitmapSource"/> to <see cref="Bitmap"/>.
     /// https://stackoverflow.com/a/2897325/2856887
@@ -587,7 +587,7 @@ public partial class BHelper
         var y = (int)srcSelection.Y;
 
         return WicBitmapSource.FromSourceRect(img, x, y, width, height);
-    }    
+    }
 
 }
 

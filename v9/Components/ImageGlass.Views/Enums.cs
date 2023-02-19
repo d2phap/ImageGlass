@@ -50,10 +50,10 @@ public enum ImageSource
 public enum MouseAndNavLocation
 {
     Outside = 0,
-    
+
     LeftNav = 1 << 1,
     RightNav = 1 << 2,
-    
+
     BothNavs = 1 << 3,
 }
 

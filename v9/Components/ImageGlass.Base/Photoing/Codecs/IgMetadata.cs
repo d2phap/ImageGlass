@@ -62,13 +62,13 @@ public class IgMetadata
     public DateTime? ExifDateTimeOriginal { get; set; } = null;
     public DateTime? ExifDateTime { get; set; } = null;
     public string? ExifImageDescription { get; set; } = null;
-    public string? ExifModel { get;set;} = null;
-    public string? ExifArtist { get;set;} = null;
-    public string? ExifCopyright { get;set;} = null;
+    public string? ExifModel { get; set; } = null;
+    public string? ExifArtist { get; set; } = null;
+    public string? ExifCopyright { get; set; } = null;
     public string? ExifSoftware { get; set; } = null;
-    public float? ExifExposureTime { get;set;} = null;
-    public float? ExifFNumber { get;set;} = null;
-    public int? ExifISOSpeed { get;set;} = null;
-    public float? ExifFocalLength { get;set;} = null;
-    
+    public float? ExifExposureTime { get; set; } = null;
+    public float? ExifFNumber { get; set; } = null;
+    public int? ExifISOSpeed { get; set; } = null;
+    public float? ExifFocalLength { get; set; } = null;
+
 }

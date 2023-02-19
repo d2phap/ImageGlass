@@ -17,8 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using System;
-
 namespace ImageGlass.Base;
 
 public static class ControlExtensions
@@ -37,7 +35,7 @@ public static class ControlExtensions
             floatValue = fNum.Value;
         }
         catch { return number; }
-            
+
 
         var dpiScale = control.DeviceDpi / 96f;
         var scaledValue = floatValue * dpiScale;

@@ -16,18 +16,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-using D2Phap;
-using DirectN;
 using ImageGlass.Base.PhotoBox;
-using System.Runtime.InteropServices;
-using WicNet;
 
 namespace ImageGlass.Views;
 
 
 public static class DXCanvasExtensions
 {
- 
+
     /// <summary>
     /// Checks if the input point is inside the navigation buttons.
     /// </summary>

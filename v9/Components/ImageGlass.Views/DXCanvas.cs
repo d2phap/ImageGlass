@@ -397,7 +397,7 @@ public class DXCanvas : DXControl
                 resizerSize, resizerSize);
             var bottomRightHit = new RectangleF(
                 ClientSelection.Right - hitSize / 2 - resizerSize / 2,
-                ClientSelection.Bottom  - hitSize / 2 - resizerSize / 2,
+                ClientSelection.Bottom - hitSize / 2 - resizerSize / 2,
                 hitSize, hitSize);
 
             // top
@@ -463,7 +463,7 @@ public class DXCanvas : DXControl
     /// </summary>
     public SizeF SelectionAspectRatio { get; set; } = new();
 
-    
+
     /// <summary>
     /// Enables or disables the selection.
     /// </summary>
@@ -1046,7 +1046,7 @@ public class DXCanvas : DXControl
 
         var canSelect = EnableSelection && _mouseDownButton == MouseButtons.Left;
         var requestRerender = false;
-        
+
 
         // Navigation clickable check
         #region Navigation clickable check
@@ -1104,7 +1104,7 @@ public class DXCanvas : DXControl
             // panning
             else
             {
-                
+
                 _panHostToPoint.X = e.Location.X;
                 _panHostToPoint.Y = e.Location.Y;
                 _panHostFromPoint.X = e.Location.X;
@@ -2160,7 +2160,7 @@ public class DXCanvas : DXControl
         {
             UpdateZoomMode();
         }
-        
+
         Invalidate();
     }
 

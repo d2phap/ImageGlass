@@ -34,7 +34,7 @@ public static class SavingExts
         new SavingExt { Ext = ".bmp", Description = "BMP" },
         new SavingExt { Ext = ".gif", Description = "GIF" },
         new SavingExt { Ext = ".ico", Description = "ICO" },
-        
+
         new SavingExt { Ext = ".emf", Description = "EMF" },
         new SavingExt { Ext = ".exif", Description = "EXIF" },
         new SavingExt { Ext = ".tiff", Description = "TIFF" },
@@ -74,7 +74,7 @@ public static class SavingExts
     public static int IndexOf(string ext)
     {
         ext = ext.ToLowerInvariant();
-        
+
         for (int i = 0; i < SupportedExts.Count; i++)
         {
             if (SupportedExts[i].Ext == ext)

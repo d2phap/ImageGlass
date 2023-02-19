@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-using ImageGlass.Base;
 using System.ComponentModel;
 
 namespace ImageGlass.UI;
@@ -127,7 +126,7 @@ public partial class ToolForm : ModernForm
         if (Owner == null) return;
 
         _isFormOwnerMoving = true;
-        
+
 
         if (Owner.WindowState == FormWindowState.Normal)
         {

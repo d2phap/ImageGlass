@@ -174,7 +174,7 @@ public class ModernGalleryRenderer : StyleRenderer
             }
             g.DrawImage(textBmp, loc);
         }
-        
+
         #endregion
 
 

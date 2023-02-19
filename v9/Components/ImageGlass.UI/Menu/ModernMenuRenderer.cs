@@ -170,8 +170,8 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
             markColor = markColor.WithAlpha(50);
         }
         using var checkMarkBrush = new SolidBrush(markColor);
-        
-        
+
+
         // check rect
         var rect = new RectangleF(ContentMargin.Left, 0, e.Item.Height, e.Item.Height);
         rect.Inflate(-e.Item.Height * 0.2f, -e.Item.Height * 0.2f);
@@ -269,7 +269,7 @@ public class ModernMenuRenderer : ToolStripProfessionalRenderer
                     ? bgColor.WithAlpha(80)
                     : bgColor.WithAlpha(30);
             }
-            
+
 
             // left margin
             var rect = new RectangleF(ContentMargin.Left, 0, e.Item.Height, e.Item.Height);

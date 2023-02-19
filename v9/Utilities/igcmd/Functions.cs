@@ -21,7 +21,6 @@ using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using System.Security;
-using System.Xml.Linq;
 
 namespace igcmd;
 

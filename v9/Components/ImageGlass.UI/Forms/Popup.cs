@@ -455,7 +455,7 @@ public partial class Popup : DialogForm
         ResumeLayout();
     }
 
-    
+
     protected override void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
     {
         base.OnSystemAccentColorChanged(e);

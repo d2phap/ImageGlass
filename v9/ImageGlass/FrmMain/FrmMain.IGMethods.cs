@@ -2171,7 +2171,7 @@ public partial class FrmMain
         var maxWidth = Math.Min(fullW, workingArea.Width);
         var maxHeight = Math.Min(fullH, workingArea.Height);
 
-        
+
         // plus some gap if window border is resizable
         if (FormBorderStyle != FormBorderStyle.None && fullW > workingArea.Width)
         {
@@ -2188,7 +2188,7 @@ public partial class FrmMain
             // recalculates zoom factor for the new size
             zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, fullW, fullH, (int)maxWidth, (int)maxHeight);
         }
-        
+
         // get image size after zoomed
         var zoomImgW = (int)(PicMain.SourceWidth * zoomFactor);
         var zoomImgH = (int)(PicMain.SourceHeight * zoomFactor);
@@ -2208,7 +2208,7 @@ public partial class FrmMain
         {
             PicMain.SetZoomFactor(zoomFactor, false);
         }
-        
+
 
         // center window to screen
         if (Config.CenterWindowFit)

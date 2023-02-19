@@ -348,7 +348,7 @@ public partial class FrmMain
         {
             LoadLanguage();
         }
-        
+
         if (e.HasFlag(UpdateRequests.MenuHotkeys))
         {
             LoadMenuHotkeys();
@@ -374,7 +374,7 @@ public partial class FrmMain
                     executable = action.Executable.Trim();
                 }
             }
-            
+
 
             // set context menu = MnuContext
             if (executable == nameof(IG_OpenContextMenu))
@@ -976,7 +976,7 @@ public partial class FrmMain
                     // update menu icon
                     using var ico = Icon.ExtractAssociatedIcon(app.Executable);
                     var iconWidth = this.ScaleToDpi(Constants.MENU_ICON_HEIGHT);
-                    
+
                     MnuEdit.Image = new Bitmap(ico.ToBitmap(), iconWidth, iconWidth);
                 }
                 catch { }

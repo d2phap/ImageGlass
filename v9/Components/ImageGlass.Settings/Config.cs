@@ -180,7 +180,7 @@ public static class Config
 
 
     #region Boolean items
-    
+
     /// <summary>
     /// Gets, sets value indicating whether the slideshow mode is enabled or not.
     /// </summary>
@@ -593,7 +593,7 @@ public static class Config
     /// If this value is <c>less than or equals 0</c>, the option will be ignored.
     /// </summary>
     public static float ImageBoosterCacheMaxFileSizeInMb { get; set; } = 100f;
-    
+
     /// <summary>
     /// Gets, sets fixed width on zooming
     /// </summary>
@@ -1009,7 +1009,7 @@ public static class Config
             .Select(i => i.Get<ToolbarItemModel>());
         ToolbarItems = toolbarItems.Any() ? toolbarItems.ToList() : DefaultToolbarItems;
 
-        
+
         // info items
         var infoItems = items.GetSection(nameof(InfoItems))
             .GetChildren()
@@ -1033,7 +1033,7 @@ public static class Config
             .ToDictionary(
                 i => BHelper.ParseEnum<MouseClickEvent>(i.Key),
                 i => i.Get<ToggleAction>());
-        
+
 
         // mouse wheel actions
         MouseWheelActions = items.GetSection(nameof(MouseWheelActions))
@@ -1640,7 +1640,7 @@ public static class Config
         return hotkeyList ?? new List<Hotkey>(0);
     }
 
-    
+
     /// <summary>
     /// Gets hotkey's KeyData.
     /// </summary>
@@ -1652,7 +1652,7 @@ public static class Config
         return keyDataList ?? new List<Keys>(1) { defaultValue };
     }
 
-    
+
     /// <summary>
     /// Gets actions from the input hotkey.
     /// </summary>

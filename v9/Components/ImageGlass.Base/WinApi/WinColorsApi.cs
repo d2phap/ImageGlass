@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
-using Windows.Win32;
 
 namespace ImageGlass.Base.WinApi;
 

@@ -45,7 +45,7 @@ public class UpdateService
         }
     }
 
-    
+
     /// <summary>
     /// Gets the suitable download package information
     /// </summary>

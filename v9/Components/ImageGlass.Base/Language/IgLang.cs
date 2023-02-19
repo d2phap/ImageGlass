@@ -137,7 +137,7 @@ public class IgLang : Dictionary<string, string>
         Add($"_.{nameof(AfterEditAppAction)}._{nameof(AfterEditAppAction.Nothing)}", "Nothing"); //v8.0
         Add($"_.{nameof(AfterEditAppAction)}._{nameof(AfterEditAppAction.Minimize)}", "Minimize"); //v8.0
         Add($"_.{nameof(AfterEditAppAction)}._{nameof(AfterEditAppAction.Close)}", "Close"); //v8.0
-        
+
 
         Add("_._UserAction._MenuNotFound", "Cannot find menu '{0}' to invoke its action."); // v9.0
         Add("_._UserAction._MethodNotFound", "Cannot find method '{0}' to invoke its action."); // v9.0
@@ -308,7 +308,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuPageNav", "Page navigation"); // v7.5
         Add("FrmMain.MnuCropTool", "Crop image"); // v7.6
         Add("FrmMain.MnuExifTool", "Exif tool"); // v8.0
-        
+
         #endregion
 
         Add("FrmMain.MnuSettings", "Settings…"); // v3.0
@@ -345,19 +345,19 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain._OpenFileDialog", "All supported files");
         Add("FrmMain._Files", "file(s)"); // v7.5
         Add("FrmMain._Loading", "Loading..."); // v3.0
-        //Add("FrmMain._Pages", "pages"); // v7.5
-        
+                                               //Add("FrmMain._Pages", "pages"); // v7.5
+
         //Add("FrmMain._SaveChanges", "Saving change..."); // v2.0 final
 
         Add("FrmMain._ReachedFirstImage", "Reached the first image"); // v4.0
         Add("FrmMain._ReachedLastLast", "Reached the last image"); // v4.0
-        //Add("FrmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); // Added V5.0; Modified V6.0
-        //Add("FrmMain._SetLockImage_Error", "There was an error while setting lock screen image"); // v6.0
-        //Add("FrmMain._SetLockImage_Success", "Lock screen image was set successfully"); //v6.0
+                                                                   //Add("FrmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); // Added V5.0; Modified V6.0
+                                                                   //Add("FrmMain._SetLockImage_Error", "There was an error while setting lock screen image"); // v6.0
+                                                                   //Add("FrmMain._SetLockImage_Success", "Lock screen image was set successfully"); //v6.0
 
 
         //Add("FrmMain._PageExtractComplete", "Page extraction completed."); // v7.5
-        
+
 
         Add("FrmMain._ClipboardImage", "Clipboard image"); //v9.0
 

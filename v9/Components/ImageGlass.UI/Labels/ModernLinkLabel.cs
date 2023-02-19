@@ -19,7 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using System.ComponentModel;
 using System.Drawing.Drawing2D;
-using System.Drawing.Text;
 
 namespace ImageGlass.UI;
 
@@ -94,7 +93,7 @@ public class ModernLinkLabel : LinkLabel
         var backColor = DarkMode
             ? Color.White.WithAlpha(0)
             : Color.Black.WithAlpha(0);
-        
+
         if (Enabled)
         {
             if (_controlState == ModernControlState.Hover)

@@ -20,7 +20,6 @@ using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using System.Diagnostics;
-using System.Xml.Linq;
 
 namespace igcmd;
 

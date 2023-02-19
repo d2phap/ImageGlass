@@ -26,7 +26,7 @@ namespace ImageGlass.Base;
 public enum ImageInfoUpdateTypes
 {
     None = 0,
-    
+
     All = 1 << 1,
     AppName = 1 << 2,
     Name = 1 << 3,

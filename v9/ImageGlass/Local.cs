@@ -23,7 +23,6 @@ using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.Services;
 using ImageGlass.Settings;
 using ImageGlass.UI;
-using System.IO.Pipes;
 using WicNet;
 
 namespace ImageGlass;
@@ -323,7 +322,7 @@ internal class Local
         return TempImagePath;
     }
 
-    
+
 
     #endregion
 

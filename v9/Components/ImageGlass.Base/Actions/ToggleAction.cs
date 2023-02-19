@@ -32,7 +32,7 @@ public class ToggleAction
     /// </summary>
     private static readonly Dictionary<Guid, bool> _manager = new();
 
-    
+
     /// <summary>
     /// Gets the id of the action for toggling.
     /// </summary>
@@ -70,11 +70,11 @@ public class ToggleAction
         {
             return isToggled;
         }
-        
+
         return false;
     }
 
-    
+
     /// <summary>
     /// Sets the toggling value of the given action
     /// </summary>
@@ -89,6 +89,6 @@ public class ToggleAction
             _manager.Add(actionId, isToggled);
         }
     }
-    
+
 }
 

@@ -228,103 +228,103 @@ public class IgThemeToolbarIcons : IDisposable
 
             ActualSize?.Dispose();
             ActualSize = null;
-            
+
             AutoZoom?.Dispose();
             AutoZoom = null;
-            
+
             Checkerboard?.Dispose();
             Checkerboard = null;
-            
+
             ColorPicker?.Dispose();
             ColorPicker = null;
-            
+
             Crop?.Dispose();
             Crop = null;
-            
+
             Delete?.Dispose();
             Delete = null;
-            
+
             Edit?.Dispose();
             Edit = null;
-            
+
             Exit?.Dispose();
             Exit = null;
-            
+
             FlipHorz?.Dispose();
             FlipHorz = null;
-            
+
             FlipVert?.Dispose();
             FlipVert = null;
-            
+
             FullScreen?.Dispose();
             FullScreen = null;
-            
+
             GoToImage?.Dispose();
             GoToImage = null;
-            
+
             LockZoom?.Dispose();
             LockZoom = null;
-            
+
             MainMenu?.Dispose();
             MainMenu = null;
-            
+
             OpenFile?.Dispose();
             OpenFile = null;
-            
+
             Print?.Dispose();
             Print = null;
-            
+
             Refresh?.Dispose();
             Refresh = null;
-            
+
             RotateLeft?.Dispose();
             RotateLeft = null;
-            
+
             RotateRight?.Dispose();
             RotateRight = null;
-            
+
             SaveAs?.Dispose();
             SaveAs = null;
-            
+
             ScaleToFill?.Dispose();
             ScaleToFill = null;
-            
+
             ScaleToFit?.Dispose();
             ScaleToFit = null;
-            
+
             ScaleToHeight?.Dispose();
             ScaleToHeight = null;
-            
+
             ScaleToWidth?.Dispose();
             ScaleToWidth = null;
-            
+
             Slideshow?.Dispose();
             Slideshow = null;
-            
+
             ThumbnailBar?.Dispose();
             ThumbnailBar = null;
-            
+
             ViewFirstImage?.Dispose();
             ViewFirstImage = null;
-            
+
             ViewLastImage?.Dispose();
             ViewLastImage = null;
-            
+
             ViewNextImage?.Dispose();
             ViewNextImage = null;
-            
+
             ViewPreviousImage?.Dispose();
             ViewPreviousImage = null;
-            
+
             WindowFit?.Dispose();
             WindowFit = null;
-            
+
             ZoomIn?.Dispose();
             ZoomIn = null;
-            
+
             ZoomOut?.Dispose();
             ZoomOut = null;
-            
+
         }
 
         // Free any unmanaged objects here.

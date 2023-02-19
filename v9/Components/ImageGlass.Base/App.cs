@@ -18,9 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using Microsoft.Win32;
 using System.Diagnostics;
-using System.Security;
 using System.Security.Principal;
-using System.Text;
 
 namespace ImageGlass.Base;
 
@@ -30,7 +28,7 @@ public class App
     /// Gets the application executable path
     /// </summary>
     public static string IGExePath => StartUpDir("ImageGlass.exe");
-    
+
 
     /// <summary>
     /// Gets the application name

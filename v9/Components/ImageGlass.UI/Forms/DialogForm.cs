@@ -228,7 +228,7 @@ public partial class DialogForm : ModernForm
         this.BtnApply.TextImageRelation = TextImageRelation.ImageBeforeText;
         this.BtnApply.Visible = _showApplyButton;
         this.BtnApply.Click += BtnApply_Click;
-        
+
 
         this.TableFooter.ResumeLayout(false);
         this.TableFooter.PerformLayout();

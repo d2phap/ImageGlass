@@ -22,7 +22,7 @@ namespace ImageGlass.UI;
 public class ModernSplitContainer : SplitContainer
 {
     private Color _splitterColor = Color.Transparent;
-    
+
     public Color SplitterBackColor
     {
         get => _splitterColor;

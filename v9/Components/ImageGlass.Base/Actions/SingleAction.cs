@@ -44,13 +44,13 @@ public class SingleAction
     /// </summary>
     public string Executable { get; set; } = string.Empty;
 
-    
+
     /// <summary>
     /// Argument to pass to the <see cref="Executable"/>.
     /// </summary>
     public object Argument { get; set; } = string.Empty;
 
-    
+
     /// <summary>
     /// Next action to execute after running <see cref="Executable"/>.
     /// </summary>
@@ -72,5 +72,5 @@ public class SingleAction
         Argument = arguments.Trim();
         NextAction = nextAction;
     }
-    
+
 }

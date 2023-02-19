@@ -144,7 +144,8 @@ public class IgPhoto : IDisposable
             Metadata ??= PhotoCodec.LoadMetadata(Filename, options);
             FramesCount = Metadata?.FramesCount ?? 0;
 
-            if (options.FirstFrameOnly == null) {
+            if (options.FirstFrameOnly == null)
+            {
                 options = options with
                 {
                     FirstFrameOnly = FramesCount < 2,
@@ -169,7 +170,8 @@ public class IgPhoto : IDisposable
             // done loading
             IsDone = true;
         }
-        catch (OperationCanceledException) {
+        catch (OperationCanceledException)
+        {
             Unload();
             Dispose();
         }

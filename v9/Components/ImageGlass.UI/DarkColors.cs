@@ -52,7 +52,7 @@ public class DarkColors : IColors
     public Color LightestBackground => Color.FromArgb(178, 178, 178);
     public Color LightBorder => Color.FromArgb(81, 81, 81);
     public Color DarkBorder => Color.FromArgb(51, 51, 51);
-    
+
     public Color BlueHighlight => WinColorsApi.GetAccentColor(false).WithBrightness(0.2f); // Blue Borders
     public Color BlueSelection => WinColorsApi.GetAccentColor(false).WithBrightness(0); // DropDown Selection
     public Color GreyHighlight => Color.FromArgb(122, 128, 132); // ComboBox Arrow

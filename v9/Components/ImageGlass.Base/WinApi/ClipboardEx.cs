@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base.Photoing.Codecs;
 using WicNet;
 
 namespace ImageGlass.Base.WinApi;
@@ -79,7 +78,7 @@ public static class ClipboardEx
     {
         var dataObj = Clipboard.GetDataObject();
         if (dataObj == null) return null;
-        
+
         WicBitmapSource? clipboardImage = null;
 
         // Order: try PNG, move on to try 32-bit ARGB DIB, then try the normal
@@ -120,7 +119,7 @@ public static class ClipboardEx
     {
         var dataObj = Clipboard.GetDataObject();
         if (dataObj == null) return false;
-        
+
         // Order: try PNG, move on to try 32-bit ARGB DIB, then try the normal
         // Bitmap and Image types.
         var hasPng = dataObj.GetDataPresent("PNG", false);
@@ -129,5 +128,5 @@ public static class ClipboardEx
 
         return hasPng || hasBitmap || hasImage;
     }
-    
+
 }

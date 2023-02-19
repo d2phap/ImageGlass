@@ -386,5 +386,5 @@ public class ModernComboBox : ComboBox
         Invalidate();
     }
 
-    
+
 }

@@ -65,7 +65,8 @@ public class ModernToolbar : ToolStrip
     /// <summary>
     /// Show or hide main menu button of toolbar
     /// </summary>
-    public bool ShowMainMenuButton {
+    public bool ShowMainMenuButton
+    {
         get => _mainMenuButton.Visible;
         set => _mainMenuButton.Visible = value;
     }
@@ -78,7 +79,8 @@ public class ModernToolbar : ToolStrip
     /// <summary>
     /// Gets, sets main menu
     /// </summary>
-    public ContextMenuStrip MainMenu {
+    public ContextMenuStrip MainMenu
+    {
         get => _mainMenu;
         set
         {
@@ -351,7 +353,7 @@ public class ModernToolbar : ToolStrip
     public void ShowMainMenu()
     {
         var x = MainMenuButton.Bounds.Left + MainMenuButton.Bounds.Width - MainMenu.Width;
-        var y = Visible ? Height: 10;
+        var y = Visible ? Height : 10;
 
         MainMenu.Show(this, x, y);
     }
@@ -380,7 +382,7 @@ public class ModernToolbar : ToolStrip
         _tooltipTokenSrc = new();
 
         _tooltip.Hide(this);
-        
+
         try
         {
             const int TOOLTIP_HEIGHT = 28;
@@ -537,12 +539,12 @@ public class ModernToolbar : ToolStrip
     {
         var item = Items[name];
 
-        if (item is null || item.GetType() != typeof (T))
+        if (item is null || item.GetType() != typeof(T))
         {
             return default;
         }
 
-        return (T)Convert.ChangeType(item, typeof (T));
+        return (T)Convert.ChangeType(item, typeof(T));
     }
 
 

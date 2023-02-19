@@ -17,9 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base;
-using ImageGlass.Base.WinApi;
-using Microsoft.Win32;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Globalization;
