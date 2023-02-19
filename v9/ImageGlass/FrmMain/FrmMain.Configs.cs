@@ -141,10 +141,6 @@ public partial class FrmMain
     private void SetUpFrmMainConfigs()
     {
         SuspendLayout();
-        Sp1.TabStop = false;
-        Sp2.Panel2Collapsed = true;
-        Sp2.TabStop = false;
-
 
         // Toolbar
         Toolbar.Alignment = Config.EnableCenterToolbar
@@ -153,7 +149,6 @@ public partial class FrmMain
 
         Toolbar.ClearItems();
         Toolbar.AddItems(Config.ToolbarItems);
-        IG_ToggleToolbar(Config.ShowToolbar);
 
 
         // Thumbnail bar
@@ -241,14 +236,10 @@ public partial class FrmMain
         Local.UpdateFrmMain(UpdateRequests.MouseActions);
 
 
-        // make sure all other painting are done before showing the root layout
-        Application.DoEvents();
+        // toggle toolbar
+        IG_ToggleToolbar(Config.ShowToolbar);
 
-        // display the root layout after the window shown
-        Tb0.Visible = true;
-
-
-        // toggle gallery (must be after Tb0.Visible)
+        // toggle gallery
         IG_ToggleGallery(Config.ShowThumbnails);
 
         // toggle frameless window

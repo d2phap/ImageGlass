@@ -39,15 +39,11 @@ public partial class FrmMain
         if (EnableTransparent)
         {
             BackdropMargin = new Padding(-1);
-
-            Sp1.BackColor = Sp2.BackColor = Color.Transparent;
             PicMain.BackColor = Config.BackgroundColor;
         }
         else
         {
             BackColor =
-                Sp1.BackColor =
-                Sp2.BackColor =
                 PicMain.BackColor = Config.BackgroundColor.WithAlpha(255);
         }
 
@@ -74,9 +70,7 @@ public partial class FrmMain
         // Thumbnail bar
         Gallery.EnableTransparent = EnableTransparent;
         Gallery.SetRenderer(new ModernGalleryRenderer(Config.Theme));
-        Gallery.BackColor =
-            Sp1.SplitterBackColor =
-            Sp2.SplitterBackColor = Config.Theme.Colors.ThumbnailBarBgColor;
+        Gallery.BackColor = Config.Theme.Colors.ThumbnailBarBgColor;
 
 
         // navigation buttons

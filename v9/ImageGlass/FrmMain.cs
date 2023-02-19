@@ -54,10 +54,7 @@ public partial class FrmMain : ModernForm
         // update the DpiApi when DPI changed.
         EnableDpiApiUpdate = true;
 
-        // hide the root layout to avoid flickering render,
-        // and show again when window is loaded
-        Tb0.Visible = false;
-
+        // update form settings according to user config
         SetUpFrmMainConfigs();
 
         // update theme icons
@@ -86,10 +83,6 @@ public partial class FrmMain : ModernForm
     {
         base.OnDpiChanged();
         SuspendLayout();
-
-        // fix splitter
-        Sp1.SplitterWidth = Math.Max(1, this.ScaleToDpi(1));
-        Sp2.SplitterWidth = Math.Max(1, this.ScaleToDpi(1));
 
         // scale toolbar icons corresponding to DPI
         var newIconHeight = this.ScaleToDpi(Config.ToolbarIconHeight);

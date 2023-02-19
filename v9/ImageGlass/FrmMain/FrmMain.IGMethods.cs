@@ -489,6 +489,7 @@ public partial class FrmMain
 
         // Toolbar
         Toolbar.Visible = Config.ShowToolbar;
+        PicMain.PaddingTop = Config.ShowToolbar ? Toolbar.Height : 0;
 
         // update menu item state
         MnuToggleToolbar.Checked = Config.ShowToolbar;
@@ -517,7 +518,7 @@ public partial class FrmMain
         UpdateGallerySize();
 
         // toggle gallery
-        Sp1.Panel2Collapsed = !Config.ShowThumbnails;
+        Gallery.Visible = Config.ShowThumbnails;
 
         // update menu item state
         MnuToggleThumbnails.Checked = Config.ShowThumbnails;
@@ -551,14 +552,6 @@ public partial class FrmMain
         Gallery.Height = Gallery.ThumbnailSize.Height
             + (int)scrollBarSize
             + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Height * 6.5f);
-
-        try
-        {
-            Sp1.SplitterDistance = Sp1.Height
-            - Sp1.SplitterWidth
-            - Gallery.Height;
-        }
-        catch { }
     }
 
 
