@@ -134,8 +134,69 @@ public class DXCanvas : DXControl
     #region Viewport
 
     /// <summary>
+    /// Gets, sets the left padding.
+    /// </summary>
+    [Browsable(false)]
+    public int PaddingLeft
+    {
+        get => Padding.Left;
+        set
+        {
+            Padding = new Padding(value, Padding.Top, Padding.Right, Padding.Bottom);
+            _shouldRecalculateDrawingRegion = true;
+            Refresh(!_isManualZoom);
+        }
+    }
+
+    /// <summary>
+    /// Gets, sets the top padding.
+    /// </summary>
+    [Browsable(false)]
+    public int PaddingTop
+    {
+        get => Padding.Top;
+        set
+        {
+            Padding = new Padding(Padding.Left, value, Padding.Right, Padding.Bottom);
+            _shouldRecalculateDrawingRegion = true;
+            Refresh(!_isManualZoom);
+        }
+    }
+
+    /// <summary>
+    /// Gets, sets the right padding.
+    /// </summary>
+    [Browsable(false)]
+    public int PaddingRight
+    {
+        get => Padding.Right;
+        set
+        {
+            Padding = new Padding(Padding.Left, Padding.Top, value, Padding.Bottom);
+            _shouldRecalculateDrawingRegion = true;
+            Refresh(!_isManualZoom);
+        }
+    }
+
+    /// <summary>
+    /// Gets, sets the bottom padding.
+    /// </summary>
+    [Browsable(false)]
+    public int PaddingBottom
+    {
+        get => Padding.Bottom;
+        set
+        {
+            Padding = new Padding(Padding.Left, Padding.Top, Padding.Right, value);
+            _shouldRecalculateDrawingRegion = true;
+            Refresh(!_isManualZoom);
+        }
+    }
+
+    /// <summary>
     /// Gets the drawing area after deducting <see cref="Padding"/>.
     /// </summary>
+    [Browsable(false)]
     public RectangleF DrawingArea => new RectangleF(
         Padding.Left,
         Padding.Top,
@@ -193,6 +254,7 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Gets the drawing state of the image source
     /// </summary>
+    [Browsable(false)]
     public ImageDrawingState ImageDrawingState => _imageDrawingState;
 
 
