@@ -31,17 +31,8 @@ public static class DXCanvasExtensions
     /// <summary>
     /// Checks if the input point is inside the navigation buttons.
     /// </summary>
-    /// <param name="point"></param>
-    /// <param name="onlyCheckLeftNav">
-    /// If the value is
-    /// <list type="bullet">
-    ///   <item><c>null</c>, checks both navs</item>
-    ///   <item><c>true</c>, checks only left nav</item>
-    ///   <item><c>false</c>, checks only right nav</item>
-    /// </list>
-    /// </param>
     public static MouseAndNavLocation CheckWhichNav(this DXCanvas c, Point point,
-        bool? onlyCheckLeftNav = null)
+        NavCheck navCheck = NavCheck.Both)
     {
         var isLocationInNavLeft = false;
         var isLocationInNavRight = false;
@@ -49,42 +40,34 @@ public static class DXCanvasExtensions
 
         if (c.NavDisplay == NavButtonDisplay.Left || c.NavDisplay == NavButtonDisplay.Both)
         {
-            if (onlyCheckLeftNav == null || onlyCheckLeftNav == false)
+            if (navCheck == NavCheck.Both || navCheck == NavCheck.RightOnly)
             {
                 // right clickable region
                 var rightClickable = new RectangleF(
-                    c.NavRightPos.X - c.NavButtonSize.Width / 2,
-                    c.NavRightPos.Y - c.NavButtonSize.Height / 2,
+                    c.NavRightPos.X - c.NavButtonSize.Width / 2 + c.NAV_PADDING,
+                    c.DrawingArea.Top,
                     c.NavButtonSize.Width,
-                    c.NavButtonSize.Height);
+                    c.DrawingArea.Height);
 
-                // emit nav button event if the point inside the rect
-                if (rightClickable.Contains(point))
-                {
-                    // nav right clicked
-                    isLocationInNavRight = true;
-                }
+                // check if the point inside the rect;
+                isLocationInNavRight = rightClickable.Contains(point);
             }
         }
 
 
         if (c.NavDisplay == NavButtonDisplay.Right || c.NavDisplay == NavButtonDisplay.Both)
         {
-            if (onlyCheckLeftNav == null || onlyCheckLeftNav == true)
+            if (navCheck == NavCheck.Both || navCheck == NavCheck.LeftOnly)
             {
                 // left clickable region
                 var leftClickable = new RectangleF(
-                    c.NavLeftPos.X - c.NavButtonSize.Width / 2,
-                    c.NavLeftPos.Y - c.NavButtonSize.Height / 2,
+                    c.NavLeftPos.X - c.NavButtonSize.Width / 2 - c.NAV_PADDING,
+                    c.DrawingArea.Top,
                     c.NavButtonSize.Width,
-                    c.NavButtonSize.Height);
+                    c.DrawingArea.Height);
 
-                // emit nav button event if the point inside the rect
-                if (leftClickable.Contains(point))
-                {
-                    // nav left clicked
-                    isLocationInNavLeft = true;
-                }
+                // check if the point inside the rect
+                isLocationInNavLeft = leftClickable.Contains(point);
             }
         }
 

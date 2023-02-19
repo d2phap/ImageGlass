@@ -99,7 +99,7 @@ public class DXCanvas : DXControl
     private bool _shouldRecalculateDrawingRegion = true;
 
     // Navigation buttons
-    private const float NAV_PADDING = 20f;
+    internal float NAV_PADDING => 20f;
     private bool _isNavLeftHovered = false;
     private bool _isNavLeftPressed = false;
     private bool _isNavRightHovered = false;
@@ -1053,13 +1053,13 @@ public class DXCanvas : DXControl
         if (e.Button == MouseButtons.Left)
         {
             // calculate whether the point inside the left nav
-            if (this.CheckWhichNav(e.Location, true) == MouseAndNavLocation.LeftNav)
+            if (this.CheckWhichNav(e.Location, NavCheck.LeftOnly) == MouseAndNavLocation.LeftNav)
             {
                 _isNavLeftPressed = true;
             }
 
             // calculate whether the point inside the right nav
-            if (this.CheckWhichNav(e.Location, false) == MouseAndNavLocation.RightNav)
+            if (this.CheckWhichNav(e.Location, NavCheck.RightOnly) == MouseAndNavLocation.RightNav)
             {
                 _isNavRightPressed = true;
             }
@@ -1166,7 +1166,7 @@ public class DXCanvas : DXControl
             if (_isNavRightPressed)
             {
                 // emit nav button event if the point inside the right nav
-                if (this.CheckWhichNav(e.Location, false) == MouseAndNavLocation.RightNav)
+                if (this.CheckWhichNav(e.Location, NavCheck.RightOnly) == MouseAndNavLocation.RightNav)
                 {
                     OnNavRightClicked?.Invoke(e);
                 }
@@ -1174,7 +1174,7 @@ public class DXCanvas : DXControl
             else if (_isNavLeftPressed)
             {
                 // emit nav button event if the point inside the left nav
-                if (this.CheckWhichNav(e.Location, true) == MouseAndNavLocation.LeftNav)
+                if (this.CheckWhichNav(e.Location, NavCheck.LeftOnly) == MouseAndNavLocation.LeftNav)
                 {
                     OnNavLeftClicked?.Invoke(e);
                 }
@@ -1217,33 +1217,11 @@ public class DXCanvas : DXControl
         // no button pressed
         if (e.Button == MouseButtons.None)
         {
-            // left hoverable region
-            if (NavDisplay == NavButtonDisplay.Left
-                || NavDisplay == NavButtonDisplay.Both)
-            {
-                var leftHoverable = new RectangleF(
-                NavLeftPos.X - NavButtonSize.Width / 2 - NAV_PADDING,
-                NavLeftPos.Y - NavButtonSize.Height / 2 * 3,
-                NavButtonSize.Width + NAV_PADDING,
-                NavButtonSize.Height * 3);
+            // calculate whether the point inside the left nav
+            _isNavLeftHovered = this.CheckWhichNav(e.Location, NavCheck.LeftOnly) == MouseAndNavLocation.LeftNav;
 
-                // calculate whether the point inside the rect
-                _isNavLeftHovered = leftHoverable.Contains(e.Location);
-            }
-
-            // right hoverable region
-            if (NavDisplay == NavButtonDisplay.Right
-                || NavDisplay == NavButtonDisplay.Both)
-            {
-                var rightHoverable = new RectangleF(
-                NavRightPos.X - NavButtonSize.Width / 2,
-                NavRightPos.Y - NavButtonSize.Height / 2 * 3,
-                NavButtonSize.Width + NAV_PADDING,
-                NavButtonSize.Height * 3);
-
-                // calculate whether the point inside the rect
-                _isNavRightHovered = rightHoverable.Contains(e.Location);
-            }
+            // calculate whether the point inside the right nav
+            _isNavRightHovered = this.CheckWhichNav(e.Location, NavCheck.RightOnly) == MouseAndNavLocation.RightNav;
 
             if (!_isNavLeftHovered && !_isNavRightHovered && _isNavVisible)
             {

@@ -94,3 +94,11 @@ public enum ImageDrawingState
     /// </summary>
     Done,
 }
+
+
+public enum NavCheck
+{
+    Both,
+    LeftOnly,
+    RightOnly,
+}
