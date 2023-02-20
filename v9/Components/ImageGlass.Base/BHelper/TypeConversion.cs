@@ -41,9 +41,9 @@ public partial class BHelper
     /// Returns <c>default</c> value of the type if the <paramref name="value"/>
     /// is not convertable or null.
     /// </returns>
-    public static T? ConvertType<T>(object? value)
+    public static T? ConvertType<T>(object? value, T? defaultValue = default)
     {
-        if (value == null) return default;
+        if (value == null) return defaultValue;
         var type = typeof(T);
 
         try
@@ -57,7 +57,7 @@ public partial class BHelper
         }
         catch (Exception)
         {
-            return default;
+            return defaultValue;
         }
     }
 }
