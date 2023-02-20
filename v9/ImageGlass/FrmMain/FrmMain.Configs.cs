@@ -1001,7 +1001,7 @@ public partial class FrmMain
     {
         const string SEPARATOR = ";";
 
-        // Toolbar
+        // load Toolbar layout setting
         var toolbarDock = DockStyle.Top;
         var toolbarDockingOrder = 0;
         if (Config.Layout.TryGetValue(nameof(Toolbar), out var toolbarLayoutStr))
@@ -1019,7 +1019,7 @@ public partial class FrmMain
         }
 
 
-        // Gallery
+        // load Gallery layout setting
         var galleryDock = DockStyle.Bottom;
         var galleryDockingOrder = 0;
         if (Config.Layout.TryGetValue(nameof(Gallery), out var galleryLayoutStr))
@@ -1037,11 +1037,23 @@ public partial class FrmMain
         }
 
 
+        // update layout
+        #region update layout
         SuspendLayout();
 
         // update position
         Toolbar.Dock = toolbarDock;
         Gallery.Dock = galleryDock;
+        if (galleryDock == DockStyle.Left || galleryDock == DockStyle.Right)
+        {
+            Gallery.View = ImageGlass.Gallery.View.Thumbnails;
+            Gallery.ScrollBars = true;
+        }
+        else
+        {
+            Gallery.ScrollBars = Config.ShowThumbnailScrollbars || Gallery.View == ImageGlass.Gallery.View.Thumbnails;
+        }
+        UpdateGallerySize();
 
 
         // update docking order
@@ -1058,6 +1070,8 @@ public partial class FrmMain
         PicMain.BringToFront();
 
         ResumeLayout(false);
+        #endregion // update layout
+    
     }
 
 }

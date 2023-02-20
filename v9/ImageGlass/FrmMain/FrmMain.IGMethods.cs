@@ -510,7 +510,7 @@ public partial class FrmMain
         visible ??= !Config.ShowThumbnails;
         Config.ShowThumbnails = visible.Value;
 
-        Gallery.ScrollBars = Config.ShowThumbnailScrollbars;
+        Gallery.ScrollBars = Config.ShowThumbnailScrollbars || Gallery.View == ImageGlass.Gallery.View.Thumbnails;
         Gallery.ShowItemText = Config.ShowThumbnailFilename;
 
         // update gallery size
@@ -536,21 +536,39 @@ public partial class FrmMain
     {
         if (!Config.ShowThumbnails) return;
 
-
         var scrollBarSize = this.ScaleToDpi(1.5f); // random gap
-        if (Config.ShowThumbnailScrollbars && Gallery.HScrollBar.Visible)
+        if (Gallery.ScrollBars && Gallery.HScrollBar.Visible)
         {
-            Gallery.HScrollBar.Height = (int)(SystemInformation.HorizontalScrollBarHeight * 0.75f);
+            Gallery.VScrollBar.Height =
+                Gallery.HScrollBar.Height =
+                    (int)(SystemInformation.HorizontalScrollBarHeight * 0.75f);
+
             scrollBarSize += Gallery.HScrollBar.Height;
         }
 
         // update thumbnail size
-        Gallery.ThumbnailSize = this.ScaleToDpi(new SizeF(Config.ThumbnailSize, Config.ThumbnailSize)).ToSize();
+        Gallery.ThumbnailSize = this.ScaleToDpi(new Size(Config.ThumbnailSize, Config.ThumbnailSize));
 
-        // Gallery bar
-        Gallery.Height = Gallery.ThumbnailSize.Height
-            + (int)scrollBarSize
-            + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Height * 6.5f);
+
+        // Thumbnails view
+        if (Gallery.View == ImageGlass.Gallery.View.Thumbnails)
+        {
+            var minWidth = Gallery.ThumbnailSize.Width
+                + (int)scrollBarSize
+                + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Width * 6.5f);
+
+            Gallery.Width = Math.Max(minWidth, Config.ThumbnailBarWidth);
+            Config.ThumbnailBarWidth = Gallery.Width;
+        }
+        // HorizontalStrip view
+        else
+        {
+            // Gallery bar
+            Gallery.Height = Gallery.ThumbnailSize.Height
+                + (int)scrollBarSize
+                + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Height * 6.5f);
+        }
+        
     }
 
 

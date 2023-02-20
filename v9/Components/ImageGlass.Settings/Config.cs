@@ -572,10 +572,10 @@ public static class Config
     /// </summary>
     public static int ThumbnailCacheSizeInMb { get; set; } = 400;
 
-    ///// <summary>
-    ///// Gets, sets width of horizontal thumbnail bar
-    ///// </summary>
-    //public static int ThumbnailBarWidth { get; set; } = new ThumbnailItemInfo(ThumbnailDimension, true).GetTotalDimension();
+    /// <summary>
+    /// Gets, sets width of horizontal thumbnail bar.
+    /// </summary>
+    public static int ThumbnailBarWidth { get; set; } = (int)(ThumbnailSize * 2.5);
 
     /// <summary>
     /// Gets, sets the number of images cached by <see cref="Base.Services.ImageBooster"/>.
@@ -914,19 +914,7 @@ public static class Config
         #region Load thumbnail bar width & position
         ThumbnailSize = items.GetValue(nameof(ThumbnailSize), ThumbnailSize);
         ThumbnailCacheSizeInMb = items.GetValue(nameof(ThumbnailCacheSizeInMb), ThumbnailCacheSizeInMb);
-
-        //if (IsThumbnailHorizontal)
-        //{
-        //    // Get minimum width needed for thumbnail dimension
-        //    var tbMinWidth = new ThumbnailItemInfo(ThumbnailDimension, true).GetTotalDimension();
-
-        //    // Get the greater width value
-        //    ThumbnailBarWidth = Math.Max(ThumbnailBarWidth, tbMinWidth);
-        //}
-        //else
-        //{
-        //    ThumbnailBarWidth = items.GetValue(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
-        //}
+        ThumbnailBarWidth = items.GetValue(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
         #endregion
 
         ImageBoosterCacheCount = items.GetValue(nameof(ImageBoosterCacheCount), ImageBoosterCacheCount);
@@ -1411,7 +1399,7 @@ public static class Config
         settings.TryAdd(nameof(SlideshowIntervalTo), SlideshowIntervalTo);
         settings.TryAdd(nameof(ThumbnailSize), ThumbnailSize);
         settings.TryAdd(nameof(ThumbnailCacheSizeInMb), ThumbnailCacheSizeInMb);
-        //settings.TryAdd(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
+        settings.TryAdd(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
         settings.TryAdd(nameof(ImageBoosterCacheCount), ImageBoosterCacheCount);
         settings.TryAdd(nameof(ImageBoosterCacheMaxDimension), ImageBoosterCacheMaxDimension);
         settings.TryAdd(nameof(ImageBoosterCacheMaxFileSizeInMb), ImageBoosterCacheMaxFileSizeInMb);
