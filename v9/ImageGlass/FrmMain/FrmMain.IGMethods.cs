@@ -489,7 +489,6 @@ public partial class FrmMain
 
         // Toolbar
         Toolbar.Visible = Config.ShowToolbar;
-        PicMain.PaddingTop = Config.ShowToolbar ? Toolbar.Height : 0;
 
         // update menu item state
         MnuToggleToolbar.Checked = Config.ShowToolbar;

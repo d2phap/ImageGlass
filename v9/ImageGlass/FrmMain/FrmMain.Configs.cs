@@ -177,6 +177,9 @@ public partial class FrmMain
 
         IG_ToggleCheckerboard(Config.ShowCheckerBoard);
 
+        // set up layout
+        ApplyAppLayout();
+
         ResumeLayout(false);
 
         Load += FrmMainConfig_Load;
@@ -989,5 +992,73 @@ public partial class FrmMain
 
         MnuEdit.Text = string.Format(Config.Language[$"{Name}.{nameof(MnuEdit)}"], appName);
     }
+
+
+    /// <summary>
+    /// Makes app layout changes according to <see cref="Config.Layout"/>.
+    /// </summary>
+    private void ApplyAppLayout()
+    {
+        const string SEPARATOR = ";";
+
+        // Toolbar
+        var toolbarDock = DockStyle.Top;
+        var toolbarDockingOrder = 0;
+        if (Config.Layout.TryGetValue(nameof(Toolbar), out var toolbarLayoutStr))
+        {
+            var options = toolbarLayoutStr?.Split(SEPARATOR, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+            if (options?.Length > 1)
+            {
+                _ = int.TryParse(options[1], out toolbarDockingOrder);
+            }
+            if (options?.Length > 0)
+            {
+                toolbarDock = BHelper.ConvertType<DockStyle>(options[0], toolbarDock);
+            }
+        }
+
+
+        // Gallery
+        var galleryDock = DockStyle.Bottom;
+        var galleryDockingOrder = 0;
+        if (Config.Layout.TryGetValue(nameof(Gallery), out var galleryLayoutStr))
+        {
+            var options = galleryLayoutStr?.Split(SEPARATOR, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+            if (options?.Length > 1)
+            {
+                _ = int.TryParse(options[1], out galleryDockingOrder);
+            }
+            if (options?.Length > 0)
+            {
+                galleryDock = BHelper.ConvertType<DockStyle>(options[0], galleryDock);
+            }
+        }
+
+
+        SuspendLayout();
+
+        // update position
+        Toolbar.Dock = toolbarDock;
+        Gallery.Dock = galleryDock;
+
+
+        // update docking order
+        if (toolbarDockingOrder <= galleryDockingOrder)
+        {
+            Toolbar.SendToBack();
+        }
+        else
+        {
+            Gallery.SendToBack();
+        }
+
+        // make sure PicMain always on top
+        PicMain.BringToFront();
+
+        ResumeLayout(false);
+    }
+
 }
 
