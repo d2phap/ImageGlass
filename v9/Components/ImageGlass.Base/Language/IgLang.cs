@@ -551,8 +551,6 @@ public class IgLang : Dictionary<string, string>
         #region TAB Toolbar
         //Add("FrmSetting.lblToolbarPosition", "Toolbar position:"); // v5.5
         //Add("FrmSetting.lblToolbarIconHeight", "Toolbar icon size:");
-        //Add("FrmSetting.cmbToolbarPosition._Top", "Top"); // v5.5
-        //Add("FrmSetting.cmbToolbarPosition._Bottom", "Bottom"); // v5.5
 
         //// V5.0
         //Add("FrmSetting._separator", "Separator"); // i.e. 'toolbar separator'

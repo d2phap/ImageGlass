@@ -749,11 +749,6 @@ public static class Config
     public static ImageInterpolation ImageInterpolationScaleUp { get; set; } = ImageInterpolation.NearestNeighbor;
 
 
-    ///// <summary>
-    ///// Gets, sets toolbar position
-    ///// </summary>
-    //public static ToolbarPosition ToolbarPosition { get; set; } = ToolbarPosition.Top;
-
     /// <summary>
     /// Gets, sets value indicates what happens after clicking Edit menu
     /// </summary>
@@ -963,7 +958,6 @@ public static class Config
         ZoomMode = items.GetValue(nameof(ZoomMode), ZoomMode);
         ImageInterpolationScaleDown = items.GetValue(nameof(ImageInterpolationScaleDown), ImageInterpolationScaleDown);
         ImageInterpolationScaleUp = items.GetValue(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
-        //ToolbarPosition = items.GetValue(nameof(ToolbarPosition), ToolbarPosition);
         AfterEditingAction = items.GetValue(nameof(AfterEditingAction), AfterEditingAction);
         WindowBackdrop = items.GetValue(nameof(WindowBackdrop), WindowBackdrop);
 
@@ -1441,7 +1435,6 @@ public static class Config
         settings.TryAdd(nameof(ZoomMode), ZoomMode.ToString());
         settings.TryAdd(nameof(ImageInterpolationScaleDown), ImageInterpolationScaleDown);
         settings.TryAdd(nameof(ImageInterpolationScaleUp), ImageInterpolationScaleUp);
-        //settings.TryAdd(nameof(ToolbarPosition), ToolbarPosition.ToString());
         settings.TryAdd(nameof(AfterEditingAction), AfterEditingAction.ToString());
         settings.TryAdd(nameof(WindowBackdrop), WindowBackdrop);
 

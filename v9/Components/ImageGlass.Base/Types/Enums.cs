@@ -36,16 +36,6 @@ public enum UpdateRequests
 
 
 /// <summary>
-/// Toolbar position
-/// </summary>
-public enum ToolbarPosition
-{
-    Top = 0,
-    Bottom = 1,
-}
-
-
-/// <summary>
 /// Color channels of image, the value should be same as MagickImage.Channels enum
 /// </summary>
 public enum ColorChannel
