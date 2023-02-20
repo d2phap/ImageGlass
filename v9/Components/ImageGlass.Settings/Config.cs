@@ -790,6 +790,12 @@ public static class Config
     /// </summary>
     public static IgTheme Theme { get; set; }
 
+    /// <summary>
+    /// Gets, sets layout for FrmMain. Syntax:
+    /// <c>Dictionary["ControlName", "DockStyle;order"]</c>
+    /// </summary>
+    public static Dictionary<string, string?> Layout { get; set; } = new();
+
     #endregion
 
     #endregion
@@ -1041,6 +1047,15 @@ public static class Config
             .ToDictionary(
                 i => BHelper.ParseEnum<MouseWheelEvent>(i.Key),
                 i => BHelper.ParseEnum<MouseWheelAction>(i.Value));
+
+
+        // Layout
+        Layout = items.GetSection(nameof(Layout))
+            .GetChildren()
+            .ToDictionary(
+                i => i.Key,
+                i => i.Get<string>()
+            );
 
         #endregion
 
@@ -1464,6 +1479,8 @@ public static class Config
         settings.TryAdd(nameof(MouseClickActions), MouseClickActions);
         settings.TryAdd(nameof(MouseWheelActions), MouseWheelActions);
         settings.TryAdd(nameof(ToolbarItems), ToolbarItems);
+        settings.TryAdd(nameof(Layout), Layout);
+
         #endregion
 
 
