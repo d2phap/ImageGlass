@@ -19,13 +19,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
+using ImageGlass.UI;
 using System.ComponentModel;
 
-namespace ImageGlass.UI;
+namespace ImageGlass.Settings;
 
 
 /// <summary>
-/// Dialog form with dark mode and backdrop support.
+/// Dialog form with theme support.
 /// </summary>
 public partial class DialogForm : ModernForm
 {
@@ -289,6 +290,16 @@ public partial class DialogForm : ModernForm
 
         base.ApplyTheme(darkMode, style);
         ResumeLayout();
+    }
+
+
+    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
+    {
+        // update theme
+        ApplyTheme(Config.Theme.Settings.IsDarkMode);
+        Invalidate(true);
+
+        base.OnRequestUpdatingColorMode(e);
     }
 
 

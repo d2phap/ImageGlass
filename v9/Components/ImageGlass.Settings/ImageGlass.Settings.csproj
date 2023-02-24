@@ -72,6 +72,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Compile Update="Forms\DialogForm.cs" />
       <Compile Update="Forms\Popup.cs" />
       <Compile Update="Forms\ToolForm.cs" />
     </ItemGroup>
