@@ -168,6 +168,11 @@ public static class Config
     };
 
 
+    /// <summary>
+    /// Gets, sets current theme.
+    /// </summary>
+    public static IgTheme Theme { get; set; } = new();
+
     #endregion
 
 
@@ -300,11 +305,6 @@ public static class Config
     /// Gets, sets value indicating that FrmMain is always on top or not.
     /// </summary>
     public static bool EnableWindowTopMost { get; set; } = false;
-
-    ///// <summary>
-    ///// Gets, sets the direction of thumbnail bar
-    ///// </summary>
-    //public static bool IsThumbnailHorizontal { get; set; } = true;
 
     /// <summary>
     /// Gets, sets value indicating that Confirmation dialog is displayed when deleting image
@@ -646,6 +646,16 @@ public static class Config
     /// </summary>
     public static string LastSeenImagePath { get; set; } = "";
 
+    /// <summary>
+    /// Gets, sets the theme name for dark mode.
+    /// </summary>
+    public static string DarkTheme { get; set; } = "";
+
+    /// <summary>
+    /// Gets, sets the theme name for light mode.
+    /// </summary>
+    public static string LightTheme { get; set; } = "";
+
     ///// <summary>
     ///// Gets, sets the absolute file path of the exiftool executable file
     ///// </summary>
@@ -760,7 +770,7 @@ public static class Config
     /// </summary>
     public static BackdropStyle WindowBackdrop { get; set; } = BackdropStyle.Mica;
 
-    #endregion
+    #endregion // Enum items
 
 
     #region Other types items
@@ -781,20 +791,14 @@ public static class Config
     public static IgLang Language { get; set; }
 
     /// <summary>
-    /// Gets, sets theme
-    /// </summary>
-    public static IgTheme Theme { get; set; }
-
-    /// <summary>
     /// Gets, sets layout for FrmMain. Syntax:
     /// <c>Dictionary["ControlName", "DockStyle;order"]</c>
     /// </summary>
     public static Dictionary<string, string?> Layout { get; set; } = new();
 
-    #endregion
+    #endregion // Other types items
 
-    #endregion
-
+    #endregion // Setting items
 
 
 
@@ -836,7 +840,6 @@ public static class Config
         ShowCheckerBoard = items.GetValue(nameof(ShowCheckerBoard), ShowCheckerBoard);
         EnableMultiInstances = items.GetValue(nameof(EnableMultiInstances), EnableMultiInstances);
         EnableWindowTopMost = items.GetValue(nameof(EnableWindowTopMost), EnableWindowTopMost);
-        //IsThumbnailHorizontal = items.GetValue(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
         ShowDeleteConfirmation = items.GetValue(nameof(ShowDeleteConfirmation), ShowDeleteConfirmation);
         ShowSaveOverrideConfirmation = items.GetValue(nameof(ShowSaveOverrideConfirmation), ShowSaveOverrideConfirmation);
         //IsScrollbarsVisible = items.GetValue(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
@@ -960,6 +963,9 @@ public static class Config
 
         AutoUpdate = items.GetValue(nameof(AutoUpdate), AutoUpdate);
         LastSeenImagePath = items.GetValue(nameof(LastSeenImagePath), LastSeenImagePath);
+        DarkTheme = items.GetValue(nameof(DarkTheme), DarkTheme);
+        LightTheme = items.GetValue(nameof(LightTheme), LightTheme);
+
         //ExifToolExePath = items.GetValue(nameof(ExifToolExePath), ExifToolExePath);
         //ExifToolCommandArgs = items.GetValue(nameof(ExifToolCommandArgs), ExifToolCommandArgs);
 
@@ -1051,31 +1057,7 @@ public static class Config
         #endregion
 
 
-        #region Theme
-        var themeFolderName = items.GetValue(nameof(Theme), Constants.DEFAULT_THEME);
-        var th = new IgTheme(App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
-
-        if (th.IsValid)
-        {
-            Theme = th;
-        }
-        else
-        {
-            // load default theme
-            Theme = new(App.StartUpDir(Dir.Themes, Constants.DEFAULT_THEME));
-        }
-
-        if (!Theme.IsValid)
-        {
-            throw new InvalidDataException($"Unable to load '{th.FolderName}' theme pack. " +
-                $"Please make sure '{th.FolderName}\\{IgTheme.CONFIG_FILE}' file is valid.");
-        }
-
-        Theme.ReloadThemeColors();
-        #endregion
-
-
-        // must load after Theme
+        // must load before Theme
         #region BackgroundColor
 
         var bgValue = items.GetValue(nameof(BackgroundColor), string.Empty);
@@ -1089,6 +1071,10 @@ public static class Config
             BackgroundColor = ThemeUtils.ColorFromHex(bgValue);
         }
         #endregion
+
+
+        // load theme
+        LoadThemePack(WinColorsApi.IsDarkMode, true, true);
 
 
         #region SlideshowBackgroundColor
@@ -1106,6 +1092,71 @@ public static class Config
 
         // initialize Magick.NET
         PhotoCodec.InitMagickNET();
+    }
+
+
+    /// <summary>
+    /// Loads theme pack <see cref="Config.Theme"/> and only theme colors.
+    /// </summary>
+    /// <param name="darkMode">
+    /// Determine which theme should be loaded: <see cref="DarkTheme"/> or <see cref="LightTheme"/>.
+    /// </param>
+    /// <param name="useFallBackTheme">
+    /// If theme pack is invalid, should load the default theme pack <see cref="Constants.DEFAULT_THEME"/>?
+    /// </param>
+    /// <param name="throwIfThemeInvalid">
+    /// If theme pack is invalid, should throw exception?
+    /// </param>
+    /// <exception cref="InvalidDataException"></exception>
+    public static void LoadThemePack(bool darkMode, bool useFallBackTheme, bool throwIfThemeInvalid)
+    {
+        var themeFolderName = darkMode ? DarkTheme : LightTheme;
+        if (string.IsNullOrEmpty(themeFolderName))
+        {
+            themeFolderName = Constants.DEFAULT_THEME;
+        }
+
+        var th = new IgTheme(App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
+
+        if (!th.IsValid)
+        {
+            if (useFallBackTheme)
+            {
+                th.Dispose();
+                th = null;
+
+                // load default theme
+                th = new(App.StartUpDir(Dir.Themes, Constants.DEFAULT_THEME));
+            }
+        }
+
+        if (!th.IsValid && throwIfThemeInvalid)
+        {
+            th.Dispose();
+            th = null;
+
+            throw new InvalidDataException($"Unable to load '{th.FolderName}' theme pack. " +
+                $"Please make sure '{th.FolderName}\\{IgTheme.CONFIG_FILE}' file is valid.");
+        }
+
+        // update the name of dark/light theme
+        if (darkMode) DarkTheme = th.FolderName;
+        else LightTheme = th.FolderName;
+
+
+        // load theme colors
+        th.ReloadThemeColors();
+
+        // load background color
+        if (Config.BackgroundColor == Theme.Colors.BgColor)
+        {
+            Config.BackgroundColor = th.Colors.BgColor;
+        }
+
+
+        // set to the current theme
+        Theme?.Dispose();
+        Theme = th;
     }
 
 
@@ -1331,7 +1382,6 @@ public static class Config
         settings.TryAdd(nameof(ShowCheckerBoard), ShowCheckerBoard);
         settings.TryAdd(nameof(EnableMultiInstances), EnableMultiInstances);
         settings.TryAdd(nameof(EnableWindowTopMost), EnableWindowTopMost);
-        //settings.TryAdd(nameof(IsThumbnailHorizontal), IsThumbnailHorizontal);
         settings.TryAdd(nameof(ShowDeleteConfirmation), ShowDeleteConfirmation);
         settings.TryAdd(nameof(ShowSaveOverrideConfirmation), ShowSaveOverrideConfirmation);
         //settings.TryAdd(nameof(IsScrollbarsVisible), IsScrollbarsVisible);
@@ -1434,6 +1484,8 @@ public static class Config
         settings.TryAdd(nameof(ColorProfile), ColorProfile);
         settings.TryAdd(nameof(AutoUpdate), AutoUpdate);
         settings.TryAdd(nameof(LastSeenImagePath), LastSeenImagePath);
+        settings.TryAdd(nameof(DarkTheme), DarkTheme);
+        settings.TryAdd(nameof(LightTheme), LightTheme);
         //settings.TryAdd(nameof(ExifToolExePath), ExifToolExePath);
         //settings.TryAdd(nameof(ExifToolCommandArgs), ExifToolCommandArgs);
 
@@ -1445,7 +1497,6 @@ public static class Config
         settings.TryAdd(nameof(BackgroundColor), ThemeUtils.ColorToHex(BackgroundColor));
         settings.TryAdd(nameof(SlideshowBackgroundColor), ThemeUtils.ColorToHex(SlideshowBackgroundColor));
         settings.TryAdd(nameof(Language), Path.GetFileName(Language.FileName));
-        settings.TryAdd(nameof(Theme), Theme.FolderName);
 
         #endregion
 
