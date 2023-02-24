@@ -2770,11 +2770,11 @@ public partial class FrmMain
         Local.Tools.TryGetValue(nameof(FrmCrop), out var frm);
         if (frm == null)
         {
-            Local.Tools.TryAdd(nameof(FrmCrop), new FrmCrop(this, Config.Theme));
+            Local.Tools.TryAdd(nameof(FrmCrop), new FrmCrop(this));
         }
         else if (frm.IsDisposed)
         {
-            Local.Tools[nameof(FrmCrop)] = new FrmCrop(this, Config.Theme);
+            Local.Tools[nameof(FrmCrop)] = new FrmCrop(this);
         }
 
         var toolForm = Local.Tools[nameof(FrmCrop)] as FrmCrop;

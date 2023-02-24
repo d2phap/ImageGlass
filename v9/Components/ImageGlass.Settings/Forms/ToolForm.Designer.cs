@@ -1,4 +1,4 @@
-﻿namespace ImageGlass.UI
+﻿namespace ImageGlass.Settings
 {
     partial class ToolForm
     {

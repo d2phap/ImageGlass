@@ -73,6 +73,7 @@
 
     <ItemGroup>
       <Compile Update="Forms\Popup.cs" />
+      <Compile Update="Forms\ToolForm.cs" />
     </ItemGroup>
 
 </Project>

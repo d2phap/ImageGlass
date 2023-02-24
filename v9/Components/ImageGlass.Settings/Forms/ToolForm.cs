@@ -16,9 +16,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+using ImageGlass.UI;
 using System.ComponentModel;
 
-namespace ImageGlass.UI;
+namespace ImageGlass.Settings;
 
 
 /// <summary>
@@ -30,12 +31,6 @@ public partial class ToolForm : ModernForm
 
 
     #region Public properties
-
-    /// <summary>
-    /// Gets, set the theme.
-    /// </summary>
-    public IgTheme Theme { get; set; }
-
 
     /// <summary>
     /// Gets, sets the init location.
@@ -162,15 +157,6 @@ public partial class ToolForm : ModernForm
     public ToolForm() : base()
     {
         InitializeComponent();
-        Theme = new IgTheme();
-    }
-
-
-    public ToolForm(IgTheme theme) : base()
-    {
-        InitializeComponent();
-        Theme = theme;
-
         Opacity = 0.85;
     }
 
@@ -206,6 +192,16 @@ public partial class ToolForm : ModernForm
 
         EnableFormFreeMoving(this);
         SetLocationBasedOnParent(InitLocation);
+    }
+
+
+    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
+    {
+        // update theme
+        ApplyTheme(Config.Theme.Settings.IsDarkMode);
+        Invalidate(true);
+
+        base.OnRequestUpdatingColorMode(e);
     }
 
 

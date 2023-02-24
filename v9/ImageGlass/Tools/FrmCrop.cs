@@ -50,7 +50,7 @@ public partial class FrmCrop : ToolForm, IToolForm
         InitializeComponent();
     }
 
-    public FrmCrop(Form owner, IgTheme theme) : base(theme)
+    public FrmCrop(Form owner) : base()
     {
         InitializeComponent();
         if (DesignMode) return;
@@ -58,7 +58,7 @@ public partial class FrmCrop : ToolForm, IToolForm
         Owner = owner;
         Settings = new(ToolId);
 
-        ApplyTheme(Theme.Settings.IsDarkMode);
+        ApplyTheme(Config.Theme.Settings.IsDarkMode);
     }
 
 
@@ -81,7 +81,7 @@ public partial class FrmCrop : ToolForm, IToolForm
         }
         else
         {
-            BackColor = Theme.ColorPalatte.AppBackground;
+            BackColor = Config.Theme.ColorPalatte.AppBackground;
 
             TableBottom.BackColor = darkMode
                 ? Color.White.WithAlpha(15)
@@ -101,19 +101,8 @@ public partial class FrmCrop : ToolForm, IToolForm
         base.OnDpiChanged(e);
 
         OnUpdateHeight();
-        ApplyTheme(Theme.Settings.IsDarkMode);
-    }
-
-
-    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
-    {
-        // update theme
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
-        Invalidate(true);
-
-        base.OnRequestUpdatingColorMode(e);
     }
-
 
     protected override void OnLoad(EventArgs e)
     {
