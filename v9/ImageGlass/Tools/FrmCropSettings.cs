@@ -61,15 +61,6 @@ public partial class FrmCropSettings : DialogForm
     }
 
 
-    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
-    {
-        // update theme here
-        ApplyTheme(Config.Theme.Settings.IsDarkMode);
-
-        base.OnRequestUpdatingColorMode(e);
-    }
-
-
     protected override int OnUpdateHeight(bool performUpdate = true)
     {
         var baseHeight = base.OnUpdateHeight(false);

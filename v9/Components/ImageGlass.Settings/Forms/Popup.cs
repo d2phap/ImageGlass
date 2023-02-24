@@ -437,6 +437,7 @@ public partial class Popup : DialogForm
 
 
         lblNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(NoteStatusType, darkMode);
+        lblNote.ForeColor = Config.Theme.ColorPalatte.AppText;
         SetTextInputStyle(ValidateInput(), darkMode);
 
         lblHeading.ForeColor = WinColorsApi.GetAccentColor(false)
@@ -459,15 +460,6 @@ public partial class Popup : DialogForm
             .NoAlpha()
             .WithBrightness(DarkMode ? 0.4f : 0f);
     }
-
-
-    //protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
-    //{
-    //    // update theme here
-    //    ApplyTheme(e.IsDarkMode);
-
-    //    base.OnRequestUpdatingColorMode(e);
-    //}
 
 
     protected override int OnUpdateHeight(bool performUpdate = true)
