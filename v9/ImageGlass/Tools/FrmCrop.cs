@@ -105,14 +105,14 @@ public partial class FrmCrop : ToolForm, IToolForm
     }
 
 
-    //protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
-    //{
-    //    // update theme here
-    //    ApplyTheme(e.IsDarkMode);
-    //    Invalidate(true);
+    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
+    {
+        // update theme
+        ApplyTheme(Config.Theme.Settings.IsDarkMode);
+        Invalidate(true);
 
-    //    base.OnRequestUpdatingColorMode(e);
-    //}
+        base.OnRequestUpdatingColorMode(e);
+    }
 
 
     protected override void OnLoad(EventArgs e)

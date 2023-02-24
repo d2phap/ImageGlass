@@ -61,13 +61,13 @@ public partial class FrmCropSettings : DialogForm
     }
 
 
-    //protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
-    //{
-    //    // update theme here
-    //    ApplyTheme(e.IsDarkMode);
+    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
+    {
+        // update theme here
+        ApplyTheme(Config.Theme.Settings.IsDarkMode);
 
-    //    base.OnRequestUpdatingColorMode(e);
-    //}
+        base.OnRequestUpdatingColorMode(e);
+    }
 
 
     protected override int OnUpdateHeight(bool performUpdate = true)
