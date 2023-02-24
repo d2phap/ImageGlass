@@ -151,7 +151,7 @@ public partial class FrmMain
         if (Local.Images.Length == 0) return;
 
         var oldIndex = Local.CurrentIndex + 1;
-        using var frm = new Popup(Config.Theme, Config.Language)
+        using var frm = new Popup()
         {
             Title = Config.Language[$"{Name}.{nameof(MnuGoTo)}"],
             Value = oldIndex.ToString(),
@@ -411,7 +411,7 @@ public partial class FrmMain
         if (PicMain.Source == ImageSource.Null) return;
 
         var oldZoom = PicMain.ZoomFactor * 100f;
-        using var frm = new Popup(Config.Theme, Config.Language)
+        using var frm = new Popup()
         {
             Title = Config.Language[$"{Name}.{nameof(MnuCustomZoom)}"],
             Value = oldZoom.ToString(),
@@ -1800,7 +1800,7 @@ public partial class FrmMain
         var newName = Path.GetFileNameWithoutExtension(oldFilePath);
         var title = Config.Language[$"{Name}.{nameof(MnuRename)}"];
 
-        using var frm = new Popup(Config.Theme, Config.Language)
+        using var frm = new Popup()
         {
             Title = title,
             Value = newName,

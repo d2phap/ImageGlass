@@ -18,10 +18,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
+using ImageGlass.UI;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace ImageGlass.UI;
+namespace ImageGlass.Settings;
 
 
 public partial class Popup : DialogForm
@@ -35,10 +36,6 @@ public partial class Popup : DialogForm
 
     // Public properties
     #region Public properties
-
-    public IgTheme Theme { get; private set; }
-    public IgLang? Language { get; private set; }
-
 
     /// <summary>
     /// Form title
@@ -155,7 +152,7 @@ public partial class Popup : DialogForm
             _noteStatusType = value;
 
             lblNote.BackColor = ThemeUtils.GetBackgroundColorForStatus(value, DarkMode);
-            lblNote.ForeColor = Theme.ColorPalatte.AppText;
+            lblNote.ForeColor = Config.Theme.ColorPalatte.AppText;
         }
     }
 
@@ -388,7 +385,7 @@ public partial class Popup : DialogForm
     #endregion // Public properties
 
 
-    public Popup(IgTheme theme, IgLang? lang) : base()
+    public Popup() : base()
     {
         InitializeComponent();
 
@@ -401,10 +398,7 @@ public partial class Popup : DialogForm
         Thumbnail = null; // hide thumbnail by default
         OptionCheckBoxText = "";
 
-        Language = lang;
         ApplyLanguage();
-
-        Theme = theme;
     }
 
 
@@ -432,7 +426,7 @@ public partial class Popup : DialogForm
 
         base.OnLoad(e);
 
-        ApplyTheme(Theme.Settings.IsDarkMode);
+        ApplyTheme(Config.Theme.Settings.IsDarkMode);
         _ = SetFocusAsync();
     }
 
@@ -448,7 +442,7 @@ public partial class Popup : DialogForm
         lblHeading.ForeColor = WinColorsApi.GetAccentColor(false)
             .WithBrightness(darkMode ? 0.4f : 0f);
 
-        tableMain.BackColor = Theme.ColorPalatte.AppBackground;
+        tableMain.BackColor = Config.Theme.ColorPalatte.AppBackground;
 
 
         base.ApplyTheme(darkMode, style);
@@ -524,11 +518,8 @@ public partial class Popup : DialogForm
     /// </summary>
     private void ApplyLanguage()
     {
-        if (Language != null)
-        {
-            BtnAccept.Text = Language["_._OK"];
-            BtnCancel.Text = Language["_._Cancel"];
-        }
+        BtnAccept.Text = Config.Language["_._OK"];
+        BtnCancel.Text = Config.Language["_._Cancel"];
     }
 
 
@@ -610,6 +601,7 @@ public partial class Popup : DialogForm
     #endregion // Private methods
 
 
+    // Static functions
     #region Static functions
 
     /// <summary>
@@ -627,7 +619,7 @@ public partial class Popup : DialogForm
     /// <param name="icon">Popup icon.</param>
     /// <param name="thumbnail"></param>
     /// <param name="optionText"></param>
-    public static PopupResult ShowDialog(IgTheme theme, IgLang lang,
+    public static PopupResult ShowDialog(
         string description = "",
         string title = "",
         string heading = "",
@@ -643,7 +635,7 @@ public partial class Popup : DialogForm
     {
         var sysIcon = SystemIconApi.GetSystemIcon(icon);
 
-        var frm = new Popup(theme, lang)
+        var frm = new Popup()
         {
             Title = title,
             Heading = heading,
@@ -683,54 +675,54 @@ public partial class Popup : DialogForm
 
         if (buttons == PopupButton.OK_Cancel)
         {
-            frm.AcceptButtonText = lang["_._OK"];
+            frm.AcceptButtonText = Config.Language["_._OK"];
             frm.ShowAcceptButton = true;
 
-            frm.CancelButtonText = lang["_._Cancel"];
+            frm.CancelButtonText = Config.Language["_._Cancel"];
             frm.ShowCancelButton = true;
         }
         else if (buttons == PopupButton.OK_Close)
         {
-            frm.AcceptButtonText = lang["_._OK"];
+            frm.AcceptButtonText = Config.Language["_._OK"];
             frm.ShowAcceptButton = true;
 
-            frm.CancelButtonText = lang["_._Close"];
+            frm.CancelButtonText = Config.Language["_._Close"];
             frm.ShowCancelButton = true;
         }
         else if (buttons == PopupButton.Yes_No)
         {
-            frm.AcceptButtonText = lang["_._Yes"];
+            frm.AcceptButtonText = Config.Language["_._Yes"];
             frm.ShowAcceptButton = true;
 
-            frm.CancelButtonText = lang["_._No"];
+            frm.CancelButtonText = Config.Language["_._No"];
             frm.ShowCancelButton = true;
         }
         else if (buttons == PopupButton.LearnMore_Close)
         {
-            frm.AcceptButtonText = lang["_._LearnMore"];
+            frm.AcceptButtonText = Config.Language["_._LearnMore"];
             frm.ShowAcceptButton = true;
 
-            frm.CancelButtonText = lang["_._Close"];
+            frm.CancelButtonText = Config.Language["_._Close"];
             frm.ShowCancelButton = true;
         }
         else if (buttons == PopupButton.Continue_Quit)
         {
-            frm.AcceptButtonText = lang["_._Continue"];
+            frm.AcceptButtonText = Config.Language["_._Continue"];
             frm.ShowAcceptButton = true;
 
-            frm.CancelButtonText = lang["_._Quit"];
+            frm.CancelButtonText = Config.Language["_._Quit"];
             frm.ShowCancelButton = true;
         }
         else if (buttons == PopupButton.Close)
         {
             frm.ShowAcceptButton = false;
 
-            frm.CancelButtonText = lang["_._Close"];
+            frm.CancelButtonText = Config.Language["_._Close"];
             frm.ShowCancelButton = true;
         }
         else
         {
-            frm.CancelButtonText = lang["_._OK"];
+            frm.CancelButtonText = Config.Language["_._OK"];
             frm.ShowAcceptButton = true;
 
             frm.ShowCancelButton = false;
@@ -751,20 +743,4 @@ public partial class Popup : DialogForm
 
     #endregion
 
-}
-
-
-
-/// <summary>
-/// The built-in buttons for Popup.
-/// </summary>
-public enum PopupButton : uint
-{
-    OK = 0,
-    Close = 1,
-    Yes_No = 2,
-    OK_Cancel = 3,
-    OK_Close = 4,
-    LearnMore_Close = 5,
-    Continue_Quit = 6,
 }

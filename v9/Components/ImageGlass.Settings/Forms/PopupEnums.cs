@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-namespace ImageGlass.UI;
+namespace ImageGlass.Settings;
 
 public enum PopupExitResult
 {
@@ -61,4 +61,19 @@ public class PopupResult
     /// Gets the check state of the <see cref="Popup.ChkOption"/>
     /// </summary>
     public bool IsOptionChecked { get; internal set; } = false;
+}
+
+
+/// <summary>
+/// The built-in buttons for Popup.
+/// </summary>
+public enum PopupButton : uint
+{
+    OK = 0,
+    Close = 1,
+    Yes_No = 2,
+    OK_Cancel = 3,
+    OK_Close = 4,
+    LearnMore_Close = 5,
+    Continue_Quit = 6,
 }

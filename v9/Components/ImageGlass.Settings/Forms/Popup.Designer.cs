@@ -1,4 +1,6 @@
-﻿namespace ImageGlass.UI
+﻿using ImageGlass.UI;
+
+namespace ImageGlass.Settings
 {
     partial class Popup
     {

@@ -71,4 +71,8 @@
         <ProjectReference Include="..\ImageGlass.UI\ImageGlass.UI.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Forms\Popup.cs" />
+    </ItemGroup>
+
 </Project>
