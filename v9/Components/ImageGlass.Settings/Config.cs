@@ -1116,6 +1116,12 @@ public static class Config
             themeFolderName = Constants.DEFAULT_THEME;
         }
 
+        // theme pack is already updated
+        if (themeFolderName.Equals(Theme.FolderName, StringComparison.InvariantCultureIgnoreCase))
+        {
+            return;
+        }
+
         var th = new IgTheme(App.ConfigDir(PathType.Dir, Dir.Themes, themeFolderName));
 
         if (!th.IsValid)

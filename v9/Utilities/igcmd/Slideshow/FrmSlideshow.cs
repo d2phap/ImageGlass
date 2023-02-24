@@ -180,13 +180,19 @@ public partial class FrmSlideshow : ModernForm
     }
 
 
-    //protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
-    //{
-    //    // update theme here
-    //    ApplyTheme(e.IsDarkMode);
+    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
+    {
+        // theme mode is changed, need to load the corresponding theme pack
+        Config.LoadThemePack(e.IsDarkMode, true, true);
 
-    //    base.OnRequestUpdatingColorMode(e);
-    //}
+        // load the theme icons
+        OnDpiChanged();
+
+        // apply theme to controls
+        ApplyTheme(Config.Theme.Settings.IsDarkMode);
+
+        base.OnRequestUpdatingColorMode(e);
+    }
 
 
     protected override void OnDpiChanged()
