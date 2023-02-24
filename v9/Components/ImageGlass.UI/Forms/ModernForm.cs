@@ -436,12 +436,8 @@ public partial class ModernForm : Form
             await Task.Delay(200, token);
             token.ThrowIfCancellationRequested();
 
-            var eventArgs = new SystemColorModeChangedEventArgs();
-            if (DarkMode != eventArgs.IsDarkMode)
-            {
-                // emit event here
-                OnRequestUpdatingColorMode(eventArgs);
-            }
+            // emit event here
+            OnRequestUpdatingColorMode(new SystemColorModeChangedEventArgs());
         }
         catch (OperationCanceledException) { }
     }
