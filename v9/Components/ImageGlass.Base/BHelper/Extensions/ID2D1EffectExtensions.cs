@@ -26,7 +26,7 @@ public static class ID2D1EffectExtensions
     /// <summary>
     /// Gets <see cref="ID2D1Bitmap1"/> from <see cref="ID2D1Effect"/>.
     /// </summary>
-    public static ComObject<ID2D1Bitmap1> GetD2D1Bitmap1(this IComObject<ID2D1Effect> effect, ID2D1DeviceContext? dc)
+    public static IComObject<ID2D1Bitmap1> GetD2D1Bitmap1(this IComObject<ID2D1Effect> effect, IComObject<ID2D1DeviceContext6>? dc)
     {
         // create D2D1Bitmap from WICBitmapSource
         var bmpProps = new D2D1_BITMAP_PROPERTIES1()
@@ -42,30 +42,30 @@ public static class ID2D1EffectExtensions
         };
 
         var effectOutputImage = effect.GetOutput();
-        dc.GetImageLocalBounds(effectOutputImage.Object, out var outputRect);
-        dc.CreateBitmap(outputRect.SizeU, IntPtr.Zero, 0, ref bmpProps, out var newD2dBitmap);
+        dc.Object.GetImageLocalBounds(effectOutputImage.Object, out var outputRect);
+        var newD2dBitmap = dc.CreateBitmap<ID2D1Bitmap1>(outputRect.SizeU, bmpProps);
 
 
         // save current Target, replace by ID2D1Bitmap
-        dc.GetTarget(out var oldTarget);
+        dc.Object.GetTarget(out var oldTarget);
         var oldTargetObj = new ComObject<ID2D1Image>(oldTarget);
         dc.SetTarget(newD2dBitmap);
 
 
         // draw Image on Target
         dc.BeginDraw();
-        dc.DrawImage(effectOutputImage.Object, IntPtr.Zero, IntPtr.Zero, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
+        dc.DrawImage(effectOutputImage, D2D1_INTERPOLATION_MODE.D2D1_INTERPOLATION_MODE_NEAREST_NEIGHBOR, D2D1_COMPOSITE_MODE.D2D1_COMPOSITE_MODE_SOURCE_OVER);
         dc.EndDraw();
 
 
         // set previous Target
-        dc.SetTarget(oldTargetObj.Object);
+        dc.SetTarget(oldTargetObj);
 
 
         // release resources
         oldTargetObj.Dispose();
         effectOutputImage.Dispose();
 
-        return new ComObject<ID2D1Bitmap1>(newD2dBitmap);
+        return newD2dBitmap;
     }
 }
