@@ -59,7 +59,7 @@ public static class VHelper
     /// <summary>
     /// Creates checkerboard tile brush (Direct2D)
     /// </summary>
-    public static ComObject<ID2D1BitmapBrush> CreateCheckerBoxTileD2D(ID2D1DeviceContext dc, float cellSize, Color cellColor1, Color cellColor2)
+    public static ComObject<ID2D1BitmapBrush1> CreateCheckerBoxTileD2D(IComObject<ID2D1DeviceContext6> dc, float cellSize, Color cellColor1, Color cellColor2)
     {
         // create tile: [X,O]
         //              [O,X]
@@ -98,19 +98,19 @@ public static class VHelper
 
         // create D2DBitmap from WICBitmapSource
         using var bmp = DXHelper.ToD2D1Bitmap(dc, tileImg);
-        var bmpPropsPtr = new D2D1_BITMAP_BRUSH_PROPERTIES()
+        var bmpPropsPtr = new D2D1_BITMAP_BRUSH_PROPERTIES1()
         {
             extendModeX = D2D1_EXTEND_MODE.D2D1_EXTEND_MODE_WRAP,
             extendModeY = D2D1_EXTEND_MODE.D2D1_EXTEND_MODE_WRAP,
         }.StructureToPtr();
 
         // create bitmap brush
-        dc.CreateBitmapBrush(bmp.Object, bmpPropsPtr, IntPtr.Zero, out ID2D1BitmapBrush bmpBrush).ThrowOnError();
+        dc.Object.CreateBitmapBrush(bmp.Object, bmpPropsPtr, IntPtr.Zero, out ID2D1BitmapBrush1 bmpBrush).ThrowOnError();
 
 
         Marshal.FreeHGlobal(bmpPropsPtr);
 
-        return new ComObject<ID2D1BitmapBrush>(bmpBrush);
+        return new ComObject<ID2D1BitmapBrush1>(bmpBrush);
     }
 
 }
