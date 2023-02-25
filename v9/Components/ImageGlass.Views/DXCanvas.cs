@@ -38,7 +38,7 @@ public class DXCanvas : DXControl
     // Private properties
     #region Private properties
 
-    private IComObject<ID2D1Bitmap>? _imageD2D = null;
+    private IComObject<ID2D1Bitmap1>? _imageD2D = null;
     private Bitmap? _imageGdiPlus = null;
     private CancellationTokenSource? _msgTokenSrc;
 
@@ -92,7 +92,7 @@ public class DXCanvas : DXControl
     private Color _checkerboardColor1 = Color.Black.WithAlpha(25);
     private Color _checkerboardColor2 = Color.White.WithAlpha(25);
     private TextureBrush? _checkerboardBrushGdip;
-    private ComObject<ID2D1BitmapBrush>? _checkerboardBrushD2D;
+    private ComObject<ID2D1BitmapBrush1>? _checkerboardBrushD2D;
 
     private IImageAnimator _imageAnimator;
     private AnimationSource _animationSource = AnimationSource.None;
@@ -113,8 +113,8 @@ public class DXCanvas : DXControl
     private NavButtonDisplay _navDisplay = NavButtonDisplay.None;
     private bool _isNavVisible = false;
     private float NavBorderRadius => NavButtonSize.Width / 2;
-    private IComObject<ID2D1Bitmap>? _navLeftImage = null;
-    private IComObject<ID2D1Bitmap>? _navRightImage = null;
+    private IComObject<ID2D1Bitmap1>? _navLeftImage = null;
+    private IComObject<ID2D1Bitmap1>? _navRightImage = null;
     private Bitmap? _navLeftImageGdip = null;
     private Bitmap? _navRightImageGdip = null;
 
@@ -1610,7 +1610,7 @@ public class DXCanvas : DXControl
 
         if (UseHardwareAcceleration)
         {
-            g.DrawBitmap(_imageD2D.Object, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation, _imageOpacity);
+            g.DrawBitmap(_imageD2D, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation, _imageOpacity);
 
         }
         else
@@ -1649,7 +1649,7 @@ public class DXCanvas : DXControl
             _checkerboardBrushD2D ??= VHelper.CreateCheckerBoxTileD2D(Device, CheckerboardCellSize, CheckerboardColor1, CheckerboardColor2);
 
             // draw checkerboard
-            Device.FillRectangle(DXHelper.ToD2DRectF(region), _checkerboardBrushD2D.Object);
+            Device.FillRectangle(DXHelper.ToD2DRectF(region), _checkerboardBrushD2D);
         }
         else
         {
@@ -1944,7 +1944,7 @@ public class DXCanvas : DXControl
                 SizeF srcIconSize;
                 if (UseHardwareAcceleration && _navLeftImage != null)
                 {
-                    bmpObj = _navLeftImage.Object;
+                    bmpObj = _navLeftImage;
                     _navLeftImage.Object.GetSize(out var size);
 
                     srcIconSize = DXHelper.ToSize(size);
@@ -2011,7 +2011,7 @@ public class DXCanvas : DXControl
                 SizeF srcIconSize;
                 if (UseHardwareAcceleration && _navRightImage != null)
                 {
-                    bmpObj = _navRightImage.Object;
+                    bmpObj = _navRightImage;
                     _navRightImage.Object.GetSize(out var size);
 
                     srcIconSize = DXHelper.ToSize(size);
@@ -2956,6 +2956,28 @@ public class DXCanvas : DXControl
         return true;
     }
 
+
+    /// <summary>
+    /// Gets pixel color.
+    /// </summary>
+    /// <returns>
+    /// <see cref="Color.Transparent"/> if the <see cref="Source"/> is <see cref="ImageSource.Null"/>.
+    /// </returns>
+    public Color GetColorAt(int x, int y)
+    {
+        if (Source == ImageSource.Direct2D)
+        {
+            return _imageD2D.GetPixelColor(Device, x, y);
+        }
+
+        if (Source == ImageSource.GDIPlus)
+        {
+            return _imageGdiPlus.GetPixelColor(x, y);
+        }
+
+
+        return Color.Transparent;
+    }
 
     #endregion // Public methods
 
