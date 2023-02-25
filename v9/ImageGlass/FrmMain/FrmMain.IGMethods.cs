@@ -1623,7 +1623,7 @@ public partial class FrmMain
             p.StartInfo.FileName = BHelper.ResolvePath(app.Executable);
 
             // build the arguments
-            var args = app.Argument.Replace(Constants.FILE_MACRO, filePath);
+            var args = app.Argument.Replace(Constants.FILE_MACRO, $"\"{filePath}\"");
             p.StartInfo.Arguments = $"{args}";
 
             // show error dialog
