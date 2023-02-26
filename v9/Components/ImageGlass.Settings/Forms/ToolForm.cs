@@ -383,11 +383,17 @@ public partial class ToolForm : ModernForm
 }
 
 
-public interface IToolForm
+public interface IToolForm<T>
 {
     /// <summary>
     /// Gets the ID of the tool.
     /// </summary>
     string ToolId { get; }
+
+
+    /// <summary>
+    /// Gets, sets settings for this tool, written in app's config file.
+    /// </summary>
+    T Settings { get; set; }
 
 }

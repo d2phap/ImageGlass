@@ -25,7 +25,7 @@ using ImageGlass.Views;
 
 namespace ImageGlass;
 
-public partial class FrmCrop : ToolForm, IToolForm
+public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
 {
     private Keys _squareRatioSelectionKey = Keys.Shift | Keys.ShiftKey;
     private bool _isSquareRatioSelectionKeyPressed = false;
@@ -33,15 +33,7 @@ public partial class FrmCrop : ToolForm, IToolForm
     private Rectangle _lastSelectionArea = Rectangle.Empty;
 
 
-    /// <summary>
-    /// Gets tool id.
-    /// </summary>
     public string ToolId => "CropTool";
-
-
-    /// <summary>
-    /// Gets, sets settings for this tool, written in app's config file.
-    /// </summary>
     public CropToolConfig Settings { get; set; }
 
 
