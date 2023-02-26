@@ -19,6 +19,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
+using ImageGlass.UI;
+using ImageGlass.Views;
 
 namespace ImageGlass;
 
@@ -134,11 +136,16 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
 
     private void PicMain_ImageMouseClick(object? sender, Views.ImageMouseEventArgs e)
     {
-        if (e.ImageX < 0 || e.ImageY < 0
+        if (sender is not DXCanvas PicMain
+            || e.ImageX < 0 || e.ImageY < 0
             || e.ImageX > Local.FrmMain.PicMain.SourceWidth
             || e.ImageY > Local.FrmMain.PicMain.SourceHeight) return;
 
-        ShowPickedColor((int)e.ImageX, (int)e.ImageY);
+        var x = (int)e.ImageX;
+        var y = (int)e.ImageY;
+        var color = PicMain.GetColorAt(x, y);
+
+        ShowPickedColor(color, x, y);
     }
 
     protected override int OnUpdateHeight(bool performUpdate = true)
@@ -206,9 +213,36 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
     }
 
 
-    private void ShowPickedColor(int x, int y)
+    private void ShowPickedColor(Color color, int x, int y)
     {
         TxtLocation.Text = $"{x}, {y}";
+        PanColor.BackColor = color;
+        LblCursorLocation.ForeColor = color.InvertBlackOrWhite();
+
+        var alpha = Math.Round(color.A / 255f, 3);
+        var alphaText = string.Empty;
+
+        // RGBA color -----------------------------------------------
+        alphaText = Settings.ShowRgbWithAlpha ? $", {alpha}" : "";
+        TxtRgb.Text = $"{color.R}, {color.G}, {color.B}{alphaText}";
+
+        // HEXA color -----------------------------------------------
+        TxtHex.Text = ThemeUtils.ColorToHex(color, !Settings.ShowHexWithAlpha);
+
+        // CMYK color -----------------------------------------------
+        var cmyk = ThemeUtils.ConvertColorToCMYK(color);
+        TxtCmyk.Text = $"{cmyk[0]}%, {cmyk[1]}%, {cmyk[2]}%, {cmyk[3]}%";
+
+        // HSLA color -----------------------------------------------
+        var hsla = ThemeUtils.ConvertColorToHSLA(color);
+        alphaText = Settings.ShowHslWithAlpha ? $", {hsla[3]}" : "";
+        TxtHsl.Text = $"{hsla[0]}, {hsla[1]}%, {hsla[2]}%{alphaText}";
+
+        // HSLA color -----------------------------------------------
+        var hsva = ThemeUtils.ConvertColorToHSVA(color);
+        alphaText = Settings.ShowHslWithAlpha ? $", {hsva[3]}" : "";
+        TxtHsv.Text = $"{hsva[0]}, {hsva[1]}%, {hsva[2]}%{alphaText}";
+
     }
 
     #endregion // Private methods
