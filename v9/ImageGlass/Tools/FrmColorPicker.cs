@@ -245,8 +245,43 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
 
     }
 
-    #endregion // Private methods
 
+    private void BtnCopyLocation_Click(object sender, EventArgs e)
+    {
+        Clipboard.SetText(TxtLocation.Text);
+    }
+
+    private void BtnCopyRgb_Click(object sender, EventArgs e)
+    {
+        Clipboard.SetText(TxtRgb.Text);
+    }
+
+    private void BtnCopyHex_Click(object sender, EventArgs e)
+    {
+        Clipboard.SetText(TxtHex.Text);
+    }
+
+    private void BtnCopyCmyk_Click(object sender, EventArgs e)
+    {
+        Clipboard.SetText(TxtCmyk.Text);
+    }
+
+    private void BtnCopyHsl_Click(object sender, EventArgs e)
+    {
+        Clipboard.SetText(TxtHsl.Text);
+    }
+
+    private void BtnCopyHsv_Click(object sender, EventArgs e)
+    {
+        Clipboard.SetText(TxtHsv.Text);
+    }
+
+    private void BtnSettings_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    #endregion // Private methods
 
 
 }

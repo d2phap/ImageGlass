@@ -115,6 +115,7 @@
             BtnSettings.SystemIcon = null;
             BtnSettings.TabIndex = 12;
             BtnSettings.TextImageRelation = TextImageRelation.ImageBeforeText;
+            BtnSettings.Click += BtnSettings_Click;
             // 
             // BtnCopyHsv
             // 
@@ -131,6 +132,7 @@
             BtnCopyHsv.SystemIcon = null;
             BtnCopyHsv.TabIndex = 11;
             BtnCopyHsv.TextImageRelation = TextImageRelation.ImageBeforeText;
+            BtnCopyHsv.Click += BtnCopyHsv_Click;
             // 
             // BtnCopyHsl
             // 
@@ -147,6 +149,7 @@
             BtnCopyHsl.SystemIcon = null;
             BtnCopyHsl.TabIndex = 9;
             BtnCopyHsl.TextImageRelation = TextImageRelation.ImageBeforeText;
+            BtnCopyHsl.Click += BtnCopyHsl_Click;
             // 
             // BtnCopyCmyk
             // 
@@ -163,6 +166,7 @@
             BtnCopyCmyk.SystemIcon = null;
             BtnCopyCmyk.TabIndex = 7;
             BtnCopyCmyk.TextImageRelation = TextImageRelation.ImageBeforeText;
+            BtnCopyCmyk.Click += BtnCopyCmyk_Click;
             // 
             // BtnCopyHex
             // 
@@ -179,6 +183,7 @@
             BtnCopyHex.SystemIcon = null;
             BtnCopyHex.TabIndex = 5;
             BtnCopyHex.TextImageRelation = TextImageRelation.ImageBeforeText;
+            BtnCopyHex.Click += BtnCopyHex_Click;
             // 
             // BtnCopyRgb
             // 
@@ -195,6 +200,7 @@
             BtnCopyRgb.SystemIcon = null;
             BtnCopyRgb.TabIndex = 3;
             BtnCopyRgb.TextImageRelation = TextImageRelation.ImageBeforeText;
+            BtnCopyRgb.Click += BtnCopyRgb_Click;
             // 
             // TxtHsv
             // 
@@ -294,6 +300,7 @@
             // PanColor
             // 
             PanColor.BackColor = Color.SaddleBrown;
+            PanColor.BorderStyle = BorderStyle.FixedSingle;
             TableLayout.SetColumnSpan(PanColor, 2);
             PanColor.Controls.Add(LblCursorLocation);
             PanColor.Dock = DockStyle.Fill;
@@ -311,7 +318,7 @@
             LblCursorLocation.ForeColor = Color.White;
             LblCursorLocation.Location = new Point(0, 0);
             LblCursorLocation.Name = "LblCursorLocation";
-            LblCursorLocation.Size = new Size(475, 60);
+            LblCursorLocation.Size = new Size(473, 58);
             LblCursorLocation.TabIndex = 0;
             LblCursorLocation.TextAlign = ContentAlignment.MiddleCenter;
             // 
@@ -395,6 +402,7 @@
             BtnCopyLocation.SystemIcon = null;
             BtnCopyLocation.TabIndex = 1;
             BtnCopyLocation.TextImageRelation = TextImageRelation.ImageBeforeText;
+            BtnCopyLocation.Click += BtnCopyLocation_Click;
             // 
             // FrmColorPicker
             // 
