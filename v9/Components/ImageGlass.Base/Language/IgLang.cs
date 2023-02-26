@@ -114,6 +114,7 @@ public class IgLang : Dictionary<string, string>
         Add("_._Quit", "Quit"); // v9.0
         Add("_._Error", "Error"); // v9.0
         Add("_._Warning", "Warning"); // v9.0
+        Add("_.Copy", "Copy"); //v9.0
 
         Add("_._UnhandledException", "Unhandled exception"); // v9.0
         Add("_._UnhandledException._Description", "Unhandled exception has occurred. If you click Continue, the application will ignore this error and attempt to continue. If you click Quit, the application will close immediately."); // v9.0
@@ -712,6 +713,13 @@ public class IgLang : Dictionary<string, string>
         Add("FrmCropSettings.DefaultSelectionType._CustomArea", "Custom area…"); //v9.0
 
         #endregion
+
+        #region FrmColorPicker
+
+        Add("FrmColorPicker.BtnSettings._Tooltip", "Open Color picker settings…"); //v9.0
+
+        #endregion
+
 
         #region FrmExifTool
         Add("FrmExifTool.clnProperty", "Property"); // v8.0
