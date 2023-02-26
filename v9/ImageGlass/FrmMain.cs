@@ -2072,7 +2072,7 @@ public partial class FrmMain : ModernForm
 
     private void MnuColorPicker_Click(object sender, EventArgs e)
     {
-
+        IG_ToggleColorPicker();
     }
 
     private void MnuCropTool_Click(object sender, EventArgs e)

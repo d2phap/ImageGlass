@@ -2777,18 +2777,7 @@ public partial class FrmMain
             Local.Tools[nameof(FrmCrop)] = new FrmCrop(this);
         }
 
-        var toolForm = Local.Tools[nameof(FrmCrop)] as FrmCrop;
-        toolForm.ToolFormClosing -= ToolForm_ToolFormClosing;
-        toolForm.ToolFormClosing += ToolForm_ToolFormClosing;
-
-        if (visible.Value)
-        {
-            Local.Tools[nameof(FrmCrop)].Show();
-        }
-        else
-        {
-            Local.Tools[nameof(FrmCrop)].Close();
-        }
+        ToggleTool(Local.Tools[nameof(FrmCrop)], visible.Value);
 
         return visible.Value;
     }
@@ -2796,13 +2785,66 @@ public partial class FrmMain
 
     private void ToolForm_ToolFormClosing(ToolFormClosingEventArgs e)
     {
-        // update menu item state
-        MnuCropTool.Checked =
-            // set selection mode
-            PicMain.EnableSelection = false;
+        if (e.Name == nameof(MnuCropTool))
+        {
+            // update menu item state
+            MnuCropTool.Checked =
+                // set selection mode
+                PicMain.EnableSelection = false;
+        }
+        else if (e.Name == nameof(FrmColorPicker))
+        {
+            MnuColorPicker.Checked = false;
+        }
+        
 
         // update toolbar items state
         UpdateToolbarItemsState();
+    }
+
+
+    /// <summary>
+    /// Toggles Color picker tool.
+    /// </summary>
+    public bool IG_ToggleColorPicker(bool? visible = null)
+    {
+        visible ??= !MnuColorPicker.Checked;
+
+        // update menu item state
+        MnuColorPicker.Checked = visible.Value;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
+
+        Local.Tools.TryGetValue(nameof(FrmColorPicker), out var frm);
+        if (frm == null)
+        {
+            Local.Tools.TryAdd(nameof(FrmColorPicker), new FrmColorPicker(this));
+        }
+        else if (frm.IsDisposed)
+        {
+            Local.Tools[nameof(FrmColorPicker)] = new FrmColorPicker(this);
+        }
+
+        ToggleTool(Local.Tools[nameof(FrmColorPicker)], visible.Value);
+
+        return visible.Value;
+    }
+
+    private void ToggleTool(ToolForm form, bool visible)
+    {
+        var toolForm = Local.Tools[form.Name];
+        toolForm.ToolFormClosing -= ToolForm_ToolFormClosing;
+        toolForm.ToolFormClosing += ToolForm_ToolFormClosing;
+
+        if (visible)
+        {
+            Local.Tools[form.Name].Show();
+        }
+        else
+        {
+            Local.Tools[form.Name].Close();
+        }
     }
 
 }

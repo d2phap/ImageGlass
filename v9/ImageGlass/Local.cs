@@ -148,7 +148,7 @@ internal class Local
     /// <summary>
     /// Gets, sets the tools.
     /// </summary>
-    public static Dictionary<string, ModernForm?> Tools { get; set; } = new();
+    public static Dictionary<string, ToolForm?> Tools { get; set; } = new();
 
     /// <summary>
     /// Gets, sets the list of slideshow pipe servers.
