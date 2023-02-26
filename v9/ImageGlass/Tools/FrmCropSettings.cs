@@ -19,7 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using ImageGlass.Base;
 using ImageGlass.Settings;
-using ImageGlass.UI;
 
 namespace ImageGlass;
 
@@ -45,6 +44,10 @@ public partial class FrmCropSettings : DialogForm
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
         ApplyLanguage();
         LoadSettings();
+
+
+        var workingArea = Screen.FromControl(this).WorkingArea;
+        if (Bottom > workingArea.Bottom) Top = workingArea.Bottom - Height;
     }
 
 

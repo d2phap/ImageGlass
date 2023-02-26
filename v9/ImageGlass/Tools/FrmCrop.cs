@@ -622,7 +622,12 @@ public partial class FrmCrop : ToolForm, IToolForm
 
     private void BtnSettings_Click(object sender, EventArgs e)
     {
-        using var frm = new FrmCropSettings(Settings);
+        using var frm = new FrmCropSettings(Settings)
+        {
+            StartPosition = FormStartPosition.Manual,
+            Left = Left,
+            Top = Bottom,
+        };
 
         if (frm.ShowDialog(this) == DialogResult.OK)
         {
