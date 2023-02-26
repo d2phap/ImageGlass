@@ -78,9 +78,9 @@
             this.PicMain.AccentColor = System.Drawing.Color.Black;
             this.PicMain.Size = new System.Drawing.Size(1112, 674);
             this.PicMain.TabIndex = 0;
-            this.PicMain.OnZoomChanged += new ImageGlass.Views.DXCanvas.ZoomChangedEventHandler(this.PicMain_OnZoomChanged);
-            this.PicMain.OnNavLeftClicked += new ImageGlass.Views.DXCanvas.NavLeftClickedEventHandler(this.PicMain_OnNavLeftClicked);
-            this.PicMain.OnNavRightClicked += new ImageGlass.Views.DXCanvas.NavRightClickedEventHandler(this.PicMain_OnNavRightClicked);
+            this.PicMain.OnZoomChanged += this.PicMain_OnZoomChanged;
+            this.PicMain.OnNavLeftClicked += this.PicMain_OnNavLeftClicked;
+            this.PicMain.OnNavRightClicked += this.PicMain_OnNavRightClicked;
             this.PicMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicMain_MouseClick);
             this.PicMain.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PicMain_MouseMove);
             // 

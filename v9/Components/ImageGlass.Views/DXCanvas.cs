@@ -286,7 +286,7 @@ public class DXCanvas : DXControl
             value.Intersect(_destRect);
             _clientSelection = value;
 
-            SelectionChanged?.Invoke(new SelectionEventArgs(_clientSelection, SourceSelection));
+            SelectionChanged?.Invoke(this, new SelectionEventArgs(_clientSelection, SourceSelection));
         }
     }
 
@@ -842,22 +842,6 @@ public class DXCanvas : DXControl
         }
     }
 
-
-    /// <summary>
-    /// Occurs when the left navigation button clicked.
-    /// </summary>
-    [Category("Navigation")]
-    public event NavLeftClickedEventHandler? OnNavLeftClicked = null;
-    public delegate void NavLeftClickedEventHandler(MouseEventArgs e);
-
-
-    /// <summary>
-    /// Occurs when the right navigation button clicked.
-    /// </summary>
-    [Category("Navigation")]
-    public event NavRightClickedEventHandler? OnNavRightClicked = null;
-    public delegate void NavRightClickedEventHandler(MouseEventArgs e);
-
     #endregion
 
 
@@ -910,49 +894,60 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Occurs when <see cref="ZoomFactor"/> value changes.
     /// </summary>
-    public event ZoomChangedEventHandler? OnZoomChanged = null;
-    public delegate void ZoomChangedEventHandler(ZoomEventArgs e);
+    public event EventHandler<ZoomEventArgs>? OnZoomChanged = null;
 
     /// <summary>
     /// Occurs when the host is being panned.
     /// </summary>
-    public event PanningEventHandler? Panning;
-    public delegate void PanningEventHandler(PanningEventArgs e);
+    public event EventHandler<PanningEventArgs>? Panning;
 
 
     /// <summary>
     /// Occurs when the image is being loaded.
     /// </summary>
-    public event ImageLoadingEventHandler? ImageLoading;
-    public delegate void ImageLoadingEventHandler();
+    public event EventHandler? ImageLoading;
 
 
     /// <summary>
     /// Occurs when the image is drawn adn its animation, preview finished.
     /// </summary>
-    public event ImageLoadedEventHandler? ImageLoaded;
-    public delegate void ImageLoadedEventHandler();
+    public event EventHandler? ImageLoaded;
 
 
     /// <summary>
     /// Occurs when the image is drawn to the canvas.
     /// </summary>
-    public event ImageDrawnEventHandler? ImageDrawn;
-    public delegate void ImageDrawnEventHandler();
+    public event EventHandler? ImageDrawn;
 
 
     /// <summary>
-    /// Occurs when the mouse pointer is moved over the control
+    /// Occurs when the mouse pointer is moved over the control.
     /// </summary>
-    public event ImageMouseMoveEventHandler? ImageMouseMove;
-    public delegate void ImageMouseMoveEventHandler(ImageMouseMoveEventArgs e);
+    public event EventHandler<ImageMouseEventArgs>? ImageMouseMove;
+
+
+    /// <summary>
+    /// Occurs when the control is clicked by the mouse.
+    /// </summary>
+    public event EventHandler<ImageMouseEventArgs>? ImageMouseClick;
 
 
     /// <summary>
     /// Occurs when the <see cref="ClientSelection"/> is changed.
     /// </summary>
-    public event SelectionChangedEventHandler? SelectionChanged;
-    public delegate void SelectionChangedEventHandler(SelectionEventArgs e);
+    public event EventHandler<SelectionEventArgs>? SelectionChanged;
+
+
+    /// <summary>
+    /// Occurs when the left navigation button clicked.
+    /// </summary>
+    public event EventHandler<MouseEventArgs>? OnNavLeftClicked;
+
+
+    /// <summary>
+    /// Occurs when the right navigation button clicked.
+    /// </summary>
+    public event EventHandler<MouseEventArgs>? OnNavRightClicked;
 
 
     #endregion
@@ -1155,6 +1150,12 @@ public class DXCanvas : DXControl
                 _isDoubleClick = true;
                 _doubleClickArea = new(e.Location - (SystemInformation.DoubleClickSize / 2), SystemInformation.DoubleClickSize);
             }
+
+
+            // emit event ImageMouseClick
+            var imgX = (e.X - _destRect.X) / _zoomFactor + _srcRect.X;
+            var imgY = (e.Y - _destRect.Y) / _zoomFactor + _srcRect.Y;
+            ImageMouseClick?.Invoke(this, new(imgX, imgY, e.Button));
         }
         #endregion
 
@@ -1168,7 +1169,7 @@ public class DXCanvas : DXControl
                 // emit nav button event if the point inside the right nav
                 if (this.CheckWhichNav(e.Location, NavCheck.RightOnly) == MouseAndNavLocation.RightNav)
                 {
-                    OnNavRightClicked?.Invoke(e);
+                    OnNavRightClicked?.Invoke(this, e);
                 }
             }
             else if (_isNavLeftPressed)
@@ -1176,7 +1177,7 @@ public class DXCanvas : DXControl
                 // emit nav button event if the point inside the left nav
                 if (this.CheckWhichNav(e.Location, NavCheck.LeftOnly) == MouseAndNavLocation.LeftNav)
                 {
-                    OnNavLeftClicked?.Invoke(e);
+                    OnNavLeftClicked?.Invoke(this, e);
                 }
             }
         }
@@ -1195,7 +1196,7 @@ public class DXCanvas : DXControl
         var canSelect = EnableSelection && mouseDownButton == MouseButtons.Left;
         if (canSelect)
         {
-            SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+            SelectionChanged?.Invoke(this, new SelectionEventArgs(ClientSelection, SourceSelection));
             Invalidate();
         }
     }
@@ -1255,7 +1256,7 @@ public class DXCanvas : DXControl
                 CurrentSelectionAction = SelectionAction.Drawing;
                 UpdateSelectionByMousePosition();
 
-                SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+                SelectionChanged?.Invoke(this, new SelectionEventArgs(ClientSelection, SourceSelection));
                 requestRerender = true;
             }
             // move selection
@@ -1276,10 +1277,10 @@ public class DXCanvas : DXControl
         }
 
 
-        // emit event OnImageMouseMove
+        // emit event ImageMouseMove
         var imgX = (e.X - _destRect.X) / _zoomFactor + _srcRect.X;
         var imgY = (e.Y - _destRect.Y) / _zoomFactor + _srcRect.Y;
-        ImageMouseMove?.Invoke(new(imgX, imgY, e.Button));
+        ImageMouseMove?.Invoke(this, new(imgX, imgY, e.Button));
 
         // change cursor
         if (EnableSelection)
@@ -1422,7 +1423,7 @@ public class DXCanvas : DXControl
         // emits event ImageDrawn
         if (isImageDrawn)
         {
-            ImageDrawn?.Invoke();
+            ImageDrawn?.Invoke(this, EventArgs.Empty);
         }
 
 
@@ -1455,7 +1456,7 @@ public class DXCanvas : DXControl
         if (isImageFinalDrawn)
         {
             _imageDrawingState = ImageDrawingState.Done;
-            ImageLoaded?.Invoke();
+            ImageLoaded?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -2052,12 +2053,12 @@ public class DXCanvas : DXControl
         _isManualZoom = false;
         _shouldRecalculateDrawingRegion = true;
 
-        OnZoomChanged?.Invoke(new(ZoomFactor, _isManualZoom, mode != _zoomMode));
+        OnZoomChanged?.Invoke(this, new(ZoomFactor, _isManualZoom, mode != _zoomMode));
 
         // emit selecting event
         if (EnableSelection && !ClientSelection.IsEmpty)
         {
-            SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+            SelectionChanged?.Invoke(this, new SelectionEventArgs(ClientSelection, SourceSelection));
         }
     }
 
@@ -2082,12 +2083,12 @@ public class DXCanvas : DXControl
 
         Invalidate();
 
-        OnZoomChanged?.Invoke(new(_zoomFactor, _isManualZoom, false));
+        OnZoomChanged?.Invoke(this, new(_zoomFactor, _isManualZoom, false));
 
         // emit selecting event
         if (EnableSelection && !ClientSelection.IsEmpty)
         {
-            SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+            SelectionChanged?.Invoke(this, new SelectionEventArgs(ClientSelection, SourceSelection));
         }
     }
 
@@ -2278,13 +2279,13 @@ public class DXCanvas : DXControl
             PanTo(zoomedDistance.Width, zoomedDistance.Height, requestRerender);
 
             // emit OnZoomChanged event
-            OnZoomChanged?.Invoke(new(_zoomFactor, _isManualZoom, false));
+            OnZoomChanged?.Invoke(this, new(_zoomFactor, _isManualZoom, false));
 
 
             // emit selecting event
             if (EnableSelection && !ClientSelection.IsEmpty)
             {
-                SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+                SelectionChanged?.Invoke(this, new SelectionEventArgs(ClientSelection, SourceSelection));
             }
 
             return true;
@@ -2354,13 +2355,13 @@ public class DXCanvas : DXControl
         }
 
         // emit OnZoomChanged event
-        OnZoomChanged?.Invoke(new(_zoomFactor, _isManualZoom, false));
+        OnZoomChanged?.Invoke(this, new(_zoomFactor, _isManualZoom, false));
 
 
         // emit selecting event
         if (EnableSelection && !ClientSelection.IsEmpty)
         {
-            SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+            SelectionChanged?.Invoke(this, new SelectionEventArgs(ClientSelection, SourceSelection));
         }
 
         return true;
@@ -2479,12 +2480,12 @@ public class DXCanvas : DXControl
 
 
         // emit panning event
-        Panning?.Invoke(new PanningEventArgs(loc, new PointF(_panHostFromPoint)));
+        Panning?.Invoke(this, new PanningEventArgs(loc, new PointF(_panHostFromPoint)));
 
         // emit selecting event
         if (EnableSelection && !ClientSelection.IsEmpty)
         {
-            SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+            SelectionChanged?.Invoke(this, new SelectionEventArgs(ClientSelection, SourceSelection));
         }
 
         if (requestRerender)
@@ -2616,7 +2617,7 @@ public class DXCanvas : DXControl
         _clientSelection.Height = _selectionBeforeMove.Height;
 
 
-        SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+        SelectionChanged?.Invoke(this, new SelectionEventArgs(ClientSelection, SourceSelection));
     }
 
 
@@ -2743,7 +2744,7 @@ public class DXCanvas : DXControl
             }
         }
 
-        SelectionChanged?.Invoke(new SelectionEventArgs(ClientSelection, SourceSelection));
+        SelectionChanged?.Invoke(this, new SelectionEventArgs(ClientSelection, SourceSelection));
     }
 
 
@@ -2772,7 +2773,7 @@ public class DXCanvas : DXControl
 
 
         // emit OnImageChanging event
-        ImageLoading?.Invoke();
+        ImageLoading?.Invoke(this, EventArgs.Empty);
 
 
         // Check and preprocess image info

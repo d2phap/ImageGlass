@@ -566,7 +566,7 @@ public partial class FrmSlideshow : ModernForm
     }
 
 
-    private void PicMain_MouseClick(object sender, MouseEventArgs e)
+    private void PicMain_MouseClick(object? sender, MouseEventArgs e)
     {
         if (_isCursorHidden)
         {
@@ -578,22 +578,22 @@ public partial class FrmSlideshow : ModernForm
     }
 
 
-    private void PicMain_OnNavLeftClicked(MouseEventArgs e)
+    private void PicMain_OnNavLeftClicked(object? sender, MouseEventArgs e)
     {
         _ = ViewNextImageAsync(-1);
     }
 
-    private void PicMain_OnNavRightClicked(MouseEventArgs e)
+    private void PicMain_OnNavRightClicked(object? sender, MouseEventArgs e)
     {
         _ = ViewNextImageAsync(1);
     }
 
-    private void PicMain_OnZoomChanged(ZoomEventArgs e)
+    private void PicMain_OnZoomChanged(object? sender, ZoomEventArgs e)
     {
         UpdateImageInfo(ImageInfoUpdateTypes.Zoom);
     }
 
-    private void PicMain_MouseMove(object sender, MouseEventArgs e)
+    private void PicMain_MouseMove(object? sender, MouseEventArgs e)
     {
         if (_isCursorHidden)
         {

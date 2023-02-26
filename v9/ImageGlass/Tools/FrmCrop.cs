@@ -520,7 +520,7 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
     }
 
 
-    private void PicMain_OnImageSelecting(Views.SelectionEventArgs e)
+    private void PicMain_OnImageSelecting(object? sender, Views.SelectionEventArgs e)
     {
         NumX.Value = (decimal)e.SourceSelection.X;
         NumY.Value = (decimal)e.SourceSelection.Y;
@@ -534,7 +534,7 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
     }
 
 
-    private void PicMain_ImageLoading()
+    private void PicMain_ImageLoading(object? sender, EventArgs e)
     {
         _isDefaultSelectionLoaded = false;
         _lastSelectionArea = new Rectangle(
@@ -545,7 +545,7 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
     }
 
 
-    private void PicMain_ImageDrawn()
+    private void PicMain_ImageDrawn(object? sender, EventArgs e)
     {
         TableTop.Enabled =
             TableBottom.Enabled = Local.FrmMain.PicMain.Source != ImageSource.Null;

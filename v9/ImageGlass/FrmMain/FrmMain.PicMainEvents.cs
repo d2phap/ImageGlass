@@ -339,17 +339,17 @@ public partial class FrmMain
     }
 
 
-    private void PicMain_OnNavLeftClicked(MouseEventArgs e)
+    private void PicMain_OnNavLeftClicked(object? sender, MouseEventArgs e)
     {
         _ = ViewNextCancellableAsync(-1);
     }
 
-    private void PicMain_OnNavRightClicked(MouseEventArgs e)
+    private void PicMain_OnNavRightClicked(object? sender, MouseEventArgs e)
     {
         _ = ViewNextCancellableAsync(1);
     }
 
-    private void PicMain_OnZoomChanged(ZoomEventArgs e)
+    private void PicMain_OnZoomChanged(object? sender, ZoomEventArgs e)
     {
         // Handle window fit after zoom change
         if (Config.EnableWindowFit && (e.IsManualZoom || e.IsZoomModeChange))

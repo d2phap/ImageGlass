@@ -74,9 +74,9 @@ public class ZoomEventArgs : EventArgs
 
 
 /// <summary>
-/// MouseMouse event arguments
+/// Mouse event arguments
 /// </summary>
-public class ImageMouseMoveEventArgs : EventArgs
+public class ImageMouseEventArgs : EventArgs
 {
     /// <summary>
     /// Gets the x-coordinate of the image
@@ -94,7 +94,7 @@ public class ImageMouseMoveEventArgs : EventArgs
     public MouseButtons Button { get; private set; } = MouseButtons.Left;
 
 
-    public ImageMouseMoveEventArgs(float imgX, float imgY, MouseButtons button)
+    public ImageMouseEventArgs(float imgX, float imgY, MouseButtons button)
     {
         Button = button;
         ImageX = imgX;
