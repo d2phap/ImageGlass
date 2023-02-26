@@ -101,6 +101,8 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
         ApplySettings();
 
         // add control events
+        Local.FrmMain.PicMain.ImageMouseMove += PicMain_ImageMouseMove;
+        Local.FrmMain.PicMain.ImageMouseClick += PicMain_ImageMouseClick;
 
 
         // set default location offset on the parent form
@@ -114,6 +116,30 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
         ApplyLanguage();
     }
 
+    private void PicMain_ImageMouseMove(object? sender, Views.ImageMouseEventArgs e)
+    {
+        if (e.Button != MouseButtons.None) return;
+
+        if (e.ImageX < 0 || e.ImageY < 0
+            || e.ImageX > Local.FrmMain.PicMain.SourceWidth
+            || e.ImageY > Local.FrmMain.PicMain.SourceHeight)
+        {
+            LblCursorLocation.Text = string.Empty;
+        }
+        else
+        {
+            LblCursorLocation.Text = $"({(int)e.ImageX}, {(int)e.ImageY})";
+        }
+    }
+
+    private void PicMain_ImageMouseClick(object? sender, Views.ImageMouseEventArgs e)
+    {
+        if (e.ImageX < 0 || e.ImageY < 0
+            || e.ImageX > Local.FrmMain.PicMain.SourceWidth
+            || e.ImageY > Local.FrmMain.PicMain.SourceHeight) return;
+
+        ShowPickedColor((int)e.ImageX, (int)e.ImageY);
+    }
 
     protected override int OnUpdateHeight(bool performUpdate = true)
     {
@@ -137,6 +163,8 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
         base.OnToolFormClosing(e);
 
         // remove events
+        Local.FrmMain.PicMain.ImageMouseMove -= PicMain_ImageMouseMove;
+        Local.FrmMain.PicMain.ImageMouseClick -= PicMain_ImageMouseClick;
 
 
         // save settings
@@ -175,6 +203,12 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
 
         LblCmyk.Text = "CMYK:";
         LblLocation.Text = "X, Y:";
+    }
+
+
+    private void ShowPickedColor(int x, int y)
+    {
+        TxtLocation.Text = $"{x}, {y}";
     }
 
     #endregion // Private methods
