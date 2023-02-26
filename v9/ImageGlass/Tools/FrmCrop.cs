@@ -126,13 +126,6 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
         NumWidth.LostFocus += NumSelections_LostFocus;
         NumHeight.LostFocus += NumSelections_LostFocus;
 
-
-        // set default location offset on the parent form
-        var padding = DpiApi.Transform(10);
-        var x = padding;
-        var y = DpiApi.Transform(SystemInformation.CaptionHeight + Constants.TOOLBAR_ICON_HEIGHT * 2) + padding;
-        InitLocation = new Point(x, y);
-
         base.OnLoad(e);
 
         ApplyLanguage();

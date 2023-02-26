@@ -2839,6 +2839,25 @@ public partial class FrmMain
 
         if (visible)
         {
+            // set default location offset on the parent form
+            var padding = DpiApi.Transform(10);
+            var x = padding;
+            var y = PicMain.Top + padding;
+            var loc = PointToScreen(new Point(x, y));
+            loc.Offset(-Left, -Top);
+
+            var totolHeight = 0;
+            foreach (var formName in Local.Tools.Keys)
+            {
+                totolHeight += Local.Tools[formName].Height + padding;
+            }
+
+            var workspaceHeight = Screen.FromControl(this).WorkingArea.Height - padding;
+            var column = totolHeight / workspaceHeight;
+            loc.X += column * Local.Tools[form.Name].Width;
+            loc.Y += totolHeight - Local.Tools[form.Name].Height;
+
+            Local.Tools[form.Name].InitLocation = loc;
             Local.Tools[form.Name].Show();
         }
         else

@@ -299,7 +299,7 @@
             // 
             // PanColor
             // 
-            PanColor.BackColor = Color.SaddleBrown;
+            PanColor.BackColor = Color.Transparent;
             PanColor.BorderStyle = BorderStyle.FixedSingle;
             TableLayout.SetColumnSpan(PanColor, 2);
             PanColor.Controls.Add(LblCursorLocation);

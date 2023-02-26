@@ -106,13 +106,6 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
         Local.FrmMain.PicMain.ImageMouseMove += PicMain_ImageMouseMove;
         Local.FrmMain.PicMain.ImageMouseClick += PicMain_ImageMouseClick;
 
-
-        // set default location offset on the parent form
-        var padding = DpiApi.Transform(10);
-        var x = padding;
-        var y = DpiApi.Transform(SystemInformation.CaptionHeight + Constants.TOOLBAR_ICON_HEIGHT * 2) + padding;
-        InitLocation = new Point(x, y);
-
         base.OnLoad(e);
 
         ApplyLanguage();
