@@ -56,7 +56,7 @@ public partial class FrmCropSettings : DialogForm
         SuspendLayout();
 
 
-        tableTop.BackColor = Config.Theme.ColorPalatte.AppBackground;
+        TableTop.BackColor = Config.Theme.ColorPalatte.AppBackground;
 
 
         base.ApplyTheme(darkMode, style);
@@ -67,7 +67,7 @@ public partial class FrmCropSettings : DialogForm
     protected override int OnUpdateHeight(bool performUpdate = true)
     {
         var baseHeight = base.OnUpdateHeight(false);
-        var formHeight = tableTop.Height + baseHeight;
+        var formHeight = TableTop.Height + baseHeight;
 
         if (performUpdate && Height != formHeight)
         {

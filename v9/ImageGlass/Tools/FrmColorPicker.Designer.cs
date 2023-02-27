@@ -59,6 +59,8 @@
             // 
             // TableLayout
             // 
+            TableLayout.AutoSize = true;
+            TableLayout.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             TableLayout.ColumnCount = 3;
             TableLayout.ColumnStyles.Add(new ColumnStyle());
             TableLayout.ColumnStyles.Add(new ColumnStyle());
@@ -88,7 +90,7 @@
             TableLayout.Margin = new Padding(0);
             TableLayout.Name = "TableLayout";
             TableLayout.Padding = new Padding(40);
-            TableLayout.RowCount = 8;
+            TableLayout.RowCount = 7;
             TableLayout.RowStyles.Add(new RowStyle());
             TableLayout.RowStyles.Add(new RowStyle());
             TableLayout.RowStyles.Add(new RowStyle());
@@ -96,8 +98,8 @@
             TableLayout.RowStyles.Add(new RowStyle());
             TableLayout.RowStyles.Add(new RowStyle());
             TableLayout.RowStyles.Add(new RowStyle());
-            TableLayout.RowStyles.Add(new RowStyle());
-            TableLayout.Size = new Size(660, 552);
+            TableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            TableLayout.Size = new Size(660, 570);
             TableLayout.TabIndex = 0;
             // 
             // BtnSettings
@@ -419,6 +421,7 @@
             TableLayout.PerformLayout();
             PanColor.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

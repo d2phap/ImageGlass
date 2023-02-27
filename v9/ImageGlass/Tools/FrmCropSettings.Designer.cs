@@ -28,231 +28,214 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tableTop = new System.Windows.Forms.TableLayoutPanel();
-            this.ChkCloseToolAfterSaving = new ImageGlass.UI.ModernCheckBox();
-            this.CmbSelectionType = new ImageGlass.UI.ModernComboBox();
-            this.LblLocation = new ImageGlass.UI.ModernLabel();
-            this.NumX = new ImageGlass.UI.ModernNumericUpDown();
-            this.NumY = new ImageGlass.UI.ModernNumericUpDown();
-            this.NumWidth = new ImageGlass.UI.ModernNumericUpDown();
-            this.NumHeight = new ImageGlass.UI.ModernNumericUpDown();
-            this.LblSize = new ImageGlass.UI.ModernLabel();
-            this.ChkAutoCenterSelection = new ImageGlass.UI.ModernCheckBox();
-            this.LblDefaultSelection = new ImageGlass.UI.ModernLabel();
-            this.tableTop.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NumX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumWidth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumHeight)).BeginInit();
-            this.SuspendLayout();
+            TableTop = new TableLayoutPanel();
+            ChkCloseToolAfterSaving = new UI.ModernCheckBox();
+            CmbSelectionType = new UI.ModernComboBox();
+            LblLocation = new UI.ModernLabel();
+            NumX = new UI.ModernNumericUpDown();
+            NumY = new UI.ModernNumericUpDown();
+            NumWidth = new UI.ModernNumericUpDown();
+            NumHeight = new UI.ModernNumericUpDown();
+            LblSize = new UI.ModernLabel();
+            ChkAutoCenterSelection = new UI.ModernCheckBox();
+            LblDefaultSelection = new UI.ModernLabel();
+            TableTop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)NumX).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)NumY).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)NumWidth).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)NumHeight).BeginInit();
+            SuspendLayout();
             // 
-            // tableTop
+            // TableTop
             // 
-            this.tableTop.AutoSize = true;
-            this.tableTop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableTop.ColumnCount = 3;
-            this.tableTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableTop.Controls.Add(this.ChkCloseToolAfterSaving, 0, 0);
-            this.tableTop.Controls.Add(this.CmbSelectionType, 0, 2);
-            this.tableTop.Controls.Add(this.LblLocation, 0, 4);
-            this.tableTop.Controls.Add(this.NumX, 1, 4);
-            this.tableTop.Controls.Add(this.NumY, 2, 4);
-            this.tableTop.Controls.Add(this.NumWidth, 1, 5);
-            this.tableTop.Controls.Add(this.NumHeight, 2, 5);
-            this.tableTop.Controls.Add(this.LblSize, 0, 5);
-            this.tableTop.Controls.Add(this.ChkAutoCenterSelection, 0, 3);
-            this.tableTop.Controls.Add(this.LblDefaultSelection, 0, 1);
-            this.tableTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableTop.Location = new System.Drawing.Point(0, 0);
-            this.tableTop.Margin = new System.Windows.Forms.Padding(0);
-            this.tableTop.Name = "tableTop";
-            this.tableTop.Padding = new System.Windows.Forms.Padding(40, 40, 40, 80);
-            this.tableTop.RowCount = 7;
-            this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableTop.Size = new System.Drawing.Size(750, 554);
-            this.tableTop.TabIndex = 0;
+            TableTop.AutoSize = true;
+            TableTop.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            TableTop.ColumnCount = 3;
+            TableTop.ColumnStyles.Add(new ColumnStyle());
+            TableTop.ColumnStyles.Add(new ColumnStyle());
+            TableTop.ColumnStyles.Add(new ColumnStyle());
+            TableTop.Controls.Add(ChkCloseToolAfterSaving, 0, 0);
+            TableTop.Controls.Add(CmbSelectionType, 0, 2);
+            TableTop.Controls.Add(LblLocation, 0, 4);
+            TableTop.Controls.Add(NumX, 1, 4);
+            TableTop.Controls.Add(NumY, 2, 4);
+            TableTop.Controls.Add(NumWidth, 1, 5);
+            TableTop.Controls.Add(NumHeight, 2, 5);
+            TableTop.Controls.Add(LblSize, 0, 5);
+            TableTop.Controls.Add(ChkAutoCenterSelection, 0, 3);
+            TableTop.Controls.Add(LblDefaultSelection, 0, 1);
+            TableTop.Dock = DockStyle.Top;
+            TableTop.Location = new Point(0, 0);
+            TableTop.Margin = new Padding(0);
+            TableTop.Name = "TableTop";
+            TableTop.Padding = new Padding(40, 40, 40, 80);
+            TableTop.RowCount = 7;
+            TableTop.RowStyles.Add(new RowStyle());
+            TableTop.RowStyles.Add(new RowStyle());
+            TableTop.RowStyles.Add(new RowStyle());
+            TableTop.RowStyles.Add(new RowStyle());
+            TableTop.RowStyles.Add(new RowStyle());
+            TableTop.RowStyles.Add(new RowStyle());
+            TableTop.RowStyles.Add(new RowStyle());
+            TableTop.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            TableTop.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            TableTop.Size = new Size(750, 554);
+            TableTop.TabIndex = 0;
             // 
             // ChkCloseToolAfterSaving
             // 
-            this.ChkCloseToolAfterSaving.AutoSize = true;
-            this.ChkCloseToolAfterSaving.BackColor = System.Drawing.Color.Transparent;
-            this.tableTop.SetColumnSpan(this.ChkCloseToolAfterSaving, 3);
-            this.ChkCloseToolAfterSaving.DarkMode = false;
-            this.ChkCloseToolAfterSaving.Location = new System.Drawing.Point(40, 40);
-            this.ChkCloseToolAfterSaving.Margin = new System.Windows.Forms.Padding(0);
-            this.ChkCloseToolAfterSaving.Name = "ChkCloseToolAfterSaving";
-            this.ChkCloseToolAfterSaving.Size = new System.Drawing.Size(473, 49);
-            this.ChkCloseToolAfterSaving.TabIndex = 2;
-            this.ChkCloseToolAfterSaving.Text = "[Close Crop tool after saving]";
-            this.ChkCloseToolAfterSaving.UseVisualStyleBackColor = false;
+            ChkCloseToolAfterSaving.AutoSize = true;
+            ChkCloseToolAfterSaving.BackColor = Color.Transparent;
+            TableTop.SetColumnSpan(ChkCloseToolAfterSaving, 3);
+            ChkCloseToolAfterSaving.DarkMode = false;
+            ChkCloseToolAfterSaving.Location = new Point(40, 40);
+            ChkCloseToolAfterSaving.Margin = new Padding(0);
+            ChkCloseToolAfterSaving.Name = "ChkCloseToolAfterSaving";
+            ChkCloseToolAfterSaving.Size = new Size(473, 49);
+            ChkCloseToolAfterSaving.TabIndex = 2;
+            ChkCloseToolAfterSaving.Text = "[Close Crop tool after saving]";
+            ChkCloseToolAfterSaving.UseVisualStyleBackColor = false;
             // 
             // CmbSelectionType
             // 
-            this.tableTop.SetColumnSpan(this.CmbSelectionType, 3);
-            this.CmbSelectionType.DarkMode = false;
-            this.CmbSelectionType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.CmbSelectionType.FormattingEnabled = true;
-            this.CmbSelectionType.Location = new System.Drawing.Point(40, 204);
-            this.CmbSelectionType.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.CmbSelectionType.Name = "CmbSelectionType";
-            this.CmbSelectionType.Size = new System.Drawing.Size(578, 51);
-            this.CmbSelectionType.TabIndex = 3;
-            this.CmbSelectionType.SelectedIndexChanged += new System.EventHandler(this.CmbSelectionType_SelectedIndexChanged);
+            TableTop.SetColumnSpan(CmbSelectionType, 3);
+            CmbSelectionType.DarkMode = false;
+            CmbSelectionType.DrawMode = DrawMode.OwnerDrawVariable;
+            CmbSelectionType.FormattingEnabled = true;
+            CmbSelectionType.Location = new Point(40, 204);
+            CmbSelectionType.Margin = new Padding(0, 10, 0, 0);
+            CmbSelectionType.Name = "CmbSelectionType";
+            CmbSelectionType.Size = new Size(578, 51);
+            CmbSelectionType.TabIndex = 3;
+            CmbSelectionType.SelectedIndexChanged += CmbSelectionType_SelectedIndexChanged;
             // 
             // LblLocation
             // 
-            this.LblLocation.AutoSize = true;
-            this.LblLocation.BackColor = System.Drawing.Color.Transparent;
-            this.LblLocation.DarkMode = false;
-            this.LblLocation.Location = new System.Drawing.Point(70, 364);
-            this.LblLocation.Margin = new System.Windows.Forms.Padding(30, 30, 0, 0);
-            this.LblLocation.Name = "LblLocation";
-            this.LblLocation.Size = new System.Drawing.Size(168, 45);
-            this.LblLocation.TabIndex = 5;
-            this.LblLocation.Text = "[Location:]";
+            LblLocation.AutoSize = true;
+            LblLocation.BackColor = Color.Transparent;
+            LblLocation.DarkMode = false;
+            LblLocation.Location = new Point(70, 364);
+            LblLocation.Margin = new Padding(30, 30, 0, 0);
+            LblLocation.Name = "LblLocation";
+            LblLocation.Size = new Size(168, 45);
+            LblLocation.TabIndex = 5;
+            LblLocation.Text = "[Location:]";
             // 
             // NumX
             // 
-            this.NumX.DarkMode = false;
-            this.NumX.Location = new System.Drawing.Point(238, 364);
-            this.NumX.Margin = new System.Windows.Forms.Padding(0, 30, 10, 0);
-            this.NumX.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.NumX.Name = "NumX";
-            this.NumX.SelectAllTextOnFocus = true;
-            this.NumX.Size = new System.Drawing.Size(180, 50);
-            this.NumX.TabIndex = 6;
-            this.NumX.ThousandsSeparator = true;
+            NumX.DarkMode = false;
+            NumX.Location = new Point(238, 364);
+            NumX.Margin = new Padding(0, 30, 10, 0);
+            NumX.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            NumX.Name = "NumX";
+            NumX.SelectAllTextOnFocus = true;
+            NumX.Size = new Size(180, 50);
+            NumX.TabIndex = 6;
+            NumX.ThousandsSeparator = true;
             // 
             // NumY
             // 
-            this.NumY.DarkMode = false;
-            this.NumY.Location = new System.Drawing.Point(438, 364);
-            this.NumY.Margin = new System.Windows.Forms.Padding(10, 30, 0, 0);
-            this.NumY.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.NumY.Name = "NumY";
-            this.NumY.SelectAllTextOnFocus = true;
-            this.NumY.Size = new System.Drawing.Size(180, 50);
-            this.NumY.TabIndex = 7;
-            this.NumY.ThousandsSeparator = true;
+            NumY.DarkMode = false;
+            NumY.Location = new Point(438, 364);
+            NumY.Margin = new Padding(10, 30, 0, 0);
+            NumY.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            NumY.Name = "NumY";
+            NumY.SelectAllTextOnFocus = true;
+            NumY.Size = new Size(180, 50);
+            NumY.TabIndex = 7;
+            NumY.ThousandsSeparator = true;
             // 
             // NumWidth
             // 
-            this.NumWidth.DarkMode = false;
-            this.NumWidth.Location = new System.Drawing.Point(238, 424);
-            this.NumWidth.Margin = new System.Windows.Forms.Padding(0, 10, 10, 0);
-            this.NumWidth.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.NumWidth.Name = "NumWidth";
-            this.NumWidth.SelectAllTextOnFocus = true;
-            this.NumWidth.Size = new System.Drawing.Size(180, 50);
-            this.NumWidth.TabIndex = 9;
-            this.NumWidth.ThousandsSeparator = true;
+            NumWidth.DarkMode = false;
+            NumWidth.Location = new Point(238, 424);
+            NumWidth.Margin = new Padding(0, 10, 10, 0);
+            NumWidth.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            NumWidth.Name = "NumWidth";
+            NumWidth.SelectAllTextOnFocus = true;
+            NumWidth.Size = new Size(180, 50);
+            NumWidth.TabIndex = 9;
+            NumWidth.ThousandsSeparator = true;
             // 
             // NumHeight
             // 
-            this.NumHeight.DarkMode = false;
-            this.NumHeight.Location = new System.Drawing.Point(438, 424);
-            this.NumHeight.Margin = new System.Windows.Forms.Padding(10, 10, 0, 0);
-            this.NumHeight.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.NumHeight.Name = "NumHeight";
-            this.NumHeight.SelectAllTextOnFocus = true;
-            this.NumHeight.Size = new System.Drawing.Size(180, 50);
-            this.NumHeight.TabIndex = 10;
-            this.NumHeight.ThousandsSeparator = true;
+            NumHeight.DarkMode = false;
+            NumHeight.Location = new Point(438, 424);
+            NumHeight.Margin = new Padding(10, 10, 0, 0);
+            NumHeight.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            NumHeight.Name = "NumHeight";
+            NumHeight.SelectAllTextOnFocus = true;
+            NumHeight.Size = new Size(180, 50);
+            NumHeight.TabIndex = 10;
+            NumHeight.ThousandsSeparator = true;
             // 
             // LblSize
             // 
-            this.LblSize.AutoSize = true;
-            this.LblSize.BackColor = System.Drawing.Color.Transparent;
-            this.LblSize.DarkMode = false;
-            this.LblSize.Location = new System.Drawing.Point(70, 424);
-            this.LblSize.Margin = new System.Windows.Forms.Padding(30, 10, 0, 0);
-            this.LblSize.Name = "LblSize";
-            this.LblSize.Size = new System.Drawing.Size(103, 45);
-            this.LblSize.TabIndex = 11;
-            this.LblSize.Text = "[Size:]";
+            LblSize.AutoSize = true;
+            LblSize.BackColor = Color.Transparent;
+            LblSize.DarkMode = false;
+            LblSize.Location = new Point(70, 424);
+            LblSize.Margin = new Padding(30, 10, 0, 0);
+            LblSize.Name = "LblSize";
+            LblSize.Size = new Size(103, 45);
+            LblSize.TabIndex = 11;
+            LblSize.Text = "[Size:]";
             // 
             // ChkAutoCenterSelection
             // 
-            this.ChkAutoCenterSelection.AutoSize = true;
-            this.ChkAutoCenterSelection.BackColor = System.Drawing.Color.Transparent;
-            this.tableTop.SetColumnSpan(this.ChkAutoCenterSelection, 3);
-            this.ChkAutoCenterSelection.DarkMode = false;
-            this.ChkAutoCenterSelection.Location = new System.Drawing.Point(70, 285);
-            this.ChkAutoCenterSelection.Margin = new System.Windows.Forms.Padding(30, 30, 0, 0);
-            this.ChkAutoCenterSelection.Name = "ChkAutoCenterSelection";
-            this.ChkAutoCenterSelection.Size = new System.Drawing.Size(440, 49);
-            this.ChkAutoCenterSelection.TabIndex = 12;
-            this.ChkAutoCenterSelection.Text = "[Auto-center the selection]";
-            this.ChkAutoCenterSelection.UseVisualStyleBackColor = false;
-            this.ChkAutoCenterSelection.CheckedChanged += new System.EventHandler(this.ChkAutoCenterSelection_CheckedChanged);
+            ChkAutoCenterSelection.AutoSize = true;
+            ChkAutoCenterSelection.BackColor = Color.Transparent;
+            TableTop.SetColumnSpan(ChkAutoCenterSelection, 3);
+            ChkAutoCenterSelection.DarkMode = false;
+            ChkAutoCenterSelection.Location = new Point(70, 285);
+            ChkAutoCenterSelection.Margin = new Padding(30, 30, 0, 0);
+            ChkAutoCenterSelection.Name = "ChkAutoCenterSelection";
+            ChkAutoCenterSelection.Size = new Size(440, 49);
+            ChkAutoCenterSelection.TabIndex = 12;
+            ChkAutoCenterSelection.Text = "[Auto-center the selection]";
+            ChkAutoCenterSelection.UseVisualStyleBackColor = false;
+            ChkAutoCenterSelection.CheckedChanged += ChkAutoCenterSelection_CheckedChanged;
             // 
             // LblDefaultSelection
             // 
-            this.LblDefaultSelection.AutoSize = true;
-            this.LblDefaultSelection.BackColor = System.Drawing.Color.Transparent;
-            this.tableTop.SetColumnSpan(this.LblDefaultSelection, 3);
-            this.LblDefaultSelection.DarkMode = false;
-            this.LblDefaultSelection.Font = new System.Drawing.Font("Segoe UI", 9.6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LblDefaultSelection.Location = new System.Drawing.Point(40, 149);
-            this.LblDefaultSelection.Margin = new System.Windows.Forms.Padding(0, 60, 0, 0);
-            this.LblDefaultSelection.Name = "LblDefaultSelection";
-            this.LblDefaultSelection.Size = new System.Drawing.Size(278, 45);
-            this.LblDefaultSelection.TabIndex = 13;
-            this.LblDefaultSelection.Text = "[Default selection]";
+            LblDefaultSelection.AutoSize = true;
+            LblDefaultSelection.BackColor = Color.Transparent;
+            TableTop.SetColumnSpan(LblDefaultSelection, 3);
+            LblDefaultSelection.DarkMode = false;
+            LblDefaultSelection.Font = new Font("Segoe UI", 9.6F, FontStyle.Regular, GraphicsUnit.Point);
+            LblDefaultSelection.Location = new Point(40, 149);
+            LblDefaultSelection.Margin = new Padding(0, 60, 0, 0);
+            LblDefaultSelection.Name = "LblDefaultSelection";
+            LblDefaultSelection.Size = new Size(278, 45);
+            LblDefaultSelection.TabIndex = 13;
+            LblDefaultSelection.Text = "[Default selection]";
             // 
             // FrmCropSettings
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(18F, 45F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(750, 882);
-            this.ControlBox = false;
-            this.Controls.Add(this.tableTop);
-            this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(12);
-            this.Name = "FrmCropSettings";
-            this.Text = "[Crop settings]";
-            this.Controls.SetChildIndex(this.tableTop, 0);
-            this.tableTop.ResumeLayout(false);
-            this.tableTop.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NumX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NumHeight)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(18F, 45F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(750, 882);
+            ControlBox = false;
+            Controls.Add(TableTop);
+            DoubleBuffered = true;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(12);
+            Name = "FrmCropSettings";
+            Text = "[Crop settings]";
+            Controls.SetChildIndex(TableTop, 0);
+            TableTop.ResumeLayout(false);
+            TableTop.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)NumX).EndInit();
+            ((System.ComponentModel.ISupportInitialize)NumY).EndInit();
+            ((System.ComponentModel.ISupportInitialize)NumWidth).EndInit();
+            ((System.ComponentModel.ISupportInitialize)NumHeight).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private TableLayoutPanel tableTop;
+        private TableLayoutPanel TableTop;
         private UI.ModernCheckBox ChkCloseToolAfterSaving;
         private UI.ModernComboBox CmbSelectionType;
         private UI.ModernLabel LblLocation;

@@ -568,10 +568,7 @@ public class IgLang : Dictionary<string, string>
         #endregion
 
         #region TAB Tools
-        //Add("FrmSetting.chkColorUseRGBA", "Use RGB format with Alpha value"); //v5.0
-        //Add("FrmSetting.chkColorUseHEXA", "Use HEX format with Alpha value"); //v5.0
-        //Add("FrmSetting.chkColorUseHSLA", "Use HSL format with Alpha value"); //v5.0
-        //Add("FrmSetting.chkColorUseHSVA", "Use HSV format with Alpha value"); //v8.0
+        
         //Add("FrmSetting.lblDefaultColorCode", "Default color code format when copying"); //v5.0
 
         //Add("FrmSetting.chkShowPageNavAuto", "Auto-show Page navigation tool for multi-page image"); //v7.5
@@ -717,6 +714,13 @@ public class IgLang : Dictionary<string, string>
         #region FrmColorPicker
 
         Add("FrmColorPicker.BtnSettings._Tooltip", "Open Color picker settings…"); //v9.0
+
+        // Color picker settings
+        Add("FrmColorPickerSettings._Title", "Color picker settings"); //v9.0
+        Add("FrmColorPickerSettings.ChkShowRgbA", "Use RGB format with alpha value"); //v5.0
+        Add("FrmColorPickerSettings.ChkShowHexA", "Use HEX format with alpha value"); //v5.0
+        Add("FrmColorPickerSettings.ChkShowHslA", "Use HSL format with alpha value"); //v5.0
+        Add("FrmColorPickerSettings.ChkShowHsvA", "Use HSV format with alpha value"); //v8.0
 
         #endregion
 

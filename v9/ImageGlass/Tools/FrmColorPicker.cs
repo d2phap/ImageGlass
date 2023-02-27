@@ -26,6 +26,9 @@ namespace ImageGlass;
 
 public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
 {
+    private Color? _pickedColor = null;
+    private Point _pickedLocation = Point.Empty;
+
 
     public string ToolId => "ColorPicker";
     public ColorPickerConfig Settings { get; set; }
@@ -123,7 +126,7 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
         }
         else
         {
-            LblCursorLocation.Text = $"({(int)e.ImageX}, {(int)e.ImageY})";
+            LblCursorLocation.Text = $"{(int)e.ImageX}, {(int)e.ImageY}";
         }
     }
 
@@ -136,9 +139,10 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
 
         var x = (int)e.ImageX;
         var y = (int)e.ImageY;
-        var color = PicMain.GetColorAt(x, y);
+        _pickedColor = PicMain.GetColorAt(x, y);
+        _pickedLocation = new Point(x, y);
 
-        ShowPickedColor(color, x, y);
+        ShowPickedColor(_pickedColor, x, y);
     }
 
     protected override int OnUpdateHeight(bool performUpdate = true)
@@ -203,11 +207,17 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
 
         LblCmyk.Text = "CMYK:";
         LblLocation.Text = "X, Y:";
+
+        ShowPickedColor(_pickedColor, _pickedLocation.X, _pickedLocation.Y);
     }
 
 
-    private void ShowPickedColor(Color color, int x, int y)
+    private void ShowPickedColor(Color? pickedColor, int x, int y)
     {
+        if (pickedColor == null) return;
+        var color = pickedColor.Value;
+
+
         TxtLocation.Text = $"{x}, {y}";
         PanColor.BackColor = color;
         LblCursorLocation.ForeColor = color.InvertBlackOrWhite();
@@ -271,7 +281,19 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
 
     private void BtnSettings_Click(object sender, EventArgs e)
     {
+        using var frm = new FrmColorPickerSettings(Settings)
+        {
+            StartPosition = FormStartPosition.Manual,
+            Left = Left,
+            Top = Bottom,
+        };
 
+        if (frm.ShowDialog(this) == DialogResult.OK)
+        {
+            Settings = frm.Settings;
+
+            ApplySettings();
+        }
     }
 
     #endregion // Private methods
