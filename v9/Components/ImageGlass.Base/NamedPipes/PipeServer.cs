@@ -161,6 +161,7 @@ public class PipeServer : IDisposable
     private void ConnectionCallback(IAsyncResult result)
     {
         if (result.AsyncState is not PipeServerState pipeServer) return;
+        if (IsDisposed) return;
 
         pipeServer.PipeServer.EndWaitForConnection(result);
         pipeServer.PipeServer.BeginRead(pipeServer.Buffer, 0, 255, ReadCallback, pipeServer);
@@ -173,6 +174,7 @@ public class PipeServer : IDisposable
     private void ReadCallback(IAsyncResult result)
     {
         if (result.AsyncState is not PipeServerState pipeState) return;
+        if (IsDisposed) return;
 
         var received = pipeState.PipeServer.EndRead(result);
 
