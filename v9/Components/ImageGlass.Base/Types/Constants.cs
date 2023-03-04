@@ -42,6 +42,9 @@ public static class Constants
     public const string CURRENT_MONITOR_PROFILE = "CurrentMonitorProfile";
     public const int MAX_IMAGE_DIMENSION = 16_384;
 
+    public const string TOOL_PIPE_PREFIX = "ImageGlass_Tool_Pipe_";
+    public const string TOOL_PIPE_TERMINATE = "ImageGlass_Tool_Pipe-terminate";
+
     public const string SLIDESHOW_PIPE_PREFIX = "ImageGlass_Slideshow_Pipe_";
     public const string SLIDESHOW_PIPE_CMD_TERMINATE = "terminate-slideshow";
 

@@ -22,7 +22,7 @@ using ImageGlass.Base.NamedPipes;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.Services;
 using ImageGlass.Settings;
-using ImageGlass.UI;
+using System.IO.Pipes;
 using WicNet;
 
 namespace ImageGlass;
@@ -154,6 +154,11 @@ internal class Local
     /// Gets, sets the list of slideshow pipe servers.
     /// </summary>
     public static List<PipeServer?> SlideshowPipeServers { get; set; } = new();
+
+    /// <summary>
+    /// Gets, sets the list of tool pipe servers.
+    /// </summary>
+    public static Dictionary<string, PipeServer?> ToolPipeServers { get; set; } = new();
 
     /// <summary>
     /// Gets, sets the metadata of the current image in the list.
@@ -323,6 +328,73 @@ internal class Local
     }
 
 
+    /// <summary>
+    /// Open tool as a <see cref="PipeServer"/>.
+    /// </summary>
+    public static async Task OpenPipedToolAsync(string toolExecutable)
+    {
+        if (Local.ToolPipeServers.ContainsKey(toolExecutable)) return;
+
+        // prepend tool prefix to create pipe name
+        var pipeName = $"{Constants.TOOL_PIPE_PREFIX}{toolExecutable}";
+
+        // create a new tool server
+        var toolServer = new PipeServer(pipeName, PipeDirection.InOut);
+        toolServer.ClientDisconnected += ToolServer_ClientDisconnected;
+        Local.ToolPipeServers.Add(toolExecutable, toolServer);
+
+        // start the server
+        toolServer.Start();
+        await Config.WriteAsync();
+
+        // start tool client
+        var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
+        await BHelper.RunExeCmd($"{toolExecutable}", $"\"{filePath}\"", false);
+
+        // wait for client connection
+        await toolServer.WaitForConnectionAsync();
+    }
+
+
+    private static void ToolServer_ClientDisconnected(object? sender, DisconnectedEventArgs e)
+    {
+        // get toolExecutable from pipe name
+        var toolExecutable = e.PipeName[Constants.TOOL_PIPE_PREFIX.Length..];
+
+        // retrieve toolServer from toolExecutable
+        if (!Local.ToolPipeServers.TryGetValue(toolExecutable, out var toolServer)
+            || toolServer is not PipeServer) return;
+
+        // remove events
+        toolServer.Stop();
+        toolServer.ClientDisconnected -= ToolServer_ClientDisconnected;
+        toolServer.Dispose();
+        toolServer = null;
+
+        // remove tool server
+        Local.ToolPipeServers.Remove(toolExecutable);
+    }
+
+
+    /// <summary>
+    /// Closes <see cref="PipeServer"/> tool.
+    /// </summary>
+    public static async Task ClosePipedToolAsync(string toolExecutable)
+    {
+        if (!Local.ToolPipeServers.TryGetValue(toolExecutable, out var toolServer)
+            || toolServer is not PipeServer) return;
+
+        if (toolServer.ServerStream.IsConnected)
+        {
+            await toolServer.SendAsync(Constants.TOOL_PIPE_TERMINATE);
+
+            // wait for 3 seconds for client to disconnect
+            await Task.Delay(3000);
+        }
+
+        // remove tool server
+        ToolServer_ClientDisconnected(null, new DisconnectedEventArgs(toolServer.PipeName));
+    }
 
     #endregion
 
