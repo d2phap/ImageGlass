@@ -2087,7 +2087,7 @@ public partial class FrmMain : ModernForm
 
     private void MnuExifTool_Click(object sender, EventArgs e)
     {
-
+        IG_ToggleExifTool();
     }
 
 

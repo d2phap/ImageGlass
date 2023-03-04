@@ -23,7 +23,6 @@ using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Library.WinAPI;
 using ImageGlass.Settings;
-using ImageGlass.UI;
 using ImageGlass.Views;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -568,7 +567,7 @@ public partial class FrmMain
                 + (int)scrollBarSize
                 + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Height * 6.5f);
         }
-        
+
     }
 
 
@@ -2753,84 +2752,8 @@ public partial class FrmMain
 
 
     /// <summary>
-    /// Toggles crop tool.
+    /// Toggle tool window
     /// </summary>
-    public bool IG_ToggleCropTool(bool? visible = null)
-    {
-        visible ??= !MnuCropTool.Checked;
-
-        // update menu item state
-        MnuCropTool.Checked =
-            // set selection mode
-            PicMain.EnableSelection = visible.Value;
-
-        // update toolbar items state
-        UpdateToolbarItemsState();
-
-        Local.Tools.TryGetValue(nameof(FrmCrop), out var frm);
-        if (frm == null)
-        {
-            Local.Tools.TryAdd(nameof(FrmCrop), new FrmCrop(this));
-        }
-        else if (frm.IsDisposed)
-        {
-            Local.Tools[nameof(FrmCrop)] = new FrmCrop(this);
-        }
-
-        ToggleTool(Local.Tools[nameof(FrmCrop)], visible.Value);
-
-        return visible.Value;
-    }
-
-
-    private void ToolForm_ToolFormClosing(ToolFormClosingEventArgs e)
-    {
-        if (e.Name == nameof(MnuCropTool))
-        {
-            // update menu item state
-            MnuCropTool.Checked =
-                // set selection mode
-                PicMain.EnableSelection = false;
-        }
-        else if (e.Name == nameof(FrmColorPicker))
-        {
-            MnuColorPicker.Checked = false;
-        }
-        
-
-        // update toolbar items state
-        UpdateToolbarItemsState();
-    }
-
-
-    /// <summary>
-    /// Toggles Color picker tool.
-    /// </summary>
-    public bool IG_ToggleColorPicker(bool? visible = null)
-    {
-        visible ??= !MnuColorPicker.Checked;
-
-        // update menu item state
-        MnuColorPicker.Checked = visible.Value;
-
-        // update toolbar items state
-        UpdateToolbarItemsState();
-
-        Local.Tools.TryGetValue(nameof(FrmColorPicker), out var frm);
-        if (frm == null)
-        {
-            Local.Tools.TryAdd(nameof(FrmColorPicker), new FrmColorPicker(this));
-        }
-        else if (frm.IsDisposed)
-        {
-            Local.Tools[nameof(FrmColorPicker)] = new FrmColorPicker(this);
-        }
-
-        ToggleTool(Local.Tools[nameof(FrmColorPicker)], visible.Value);
-
-        return visible.Value;
-    }
-
     private void ToggleTool(ToolForm form, bool visible)
     {
         var toolForm = Local.Tools[form.Name];
@@ -2864,6 +2787,111 @@ public partial class FrmMain
         {
             Local.Tools[form.Name].Close();
         }
+    }
+
+    private void ToolForm_ToolFormClosing(ToolFormClosingEventArgs e)
+    {
+        if (e.Name == nameof(MnuCropTool))
+        {
+            // update menu item state
+            MnuCropTool.Checked =
+                // set selection mode
+                PicMain.EnableSelection = false;
+        }
+        else if (e.Name == nameof(FrmColorPicker))
+        {
+            MnuColorPicker.Checked = false;
+        }
+
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
+    }
+
+
+    /// <summary>
+    /// Toggles crop tool.
+    /// </summary>
+    public bool IG_ToggleCropTool(bool? visible = null)
+    {
+        visible ??= !MnuCropTool.Checked;
+
+        // update menu item state
+        MnuCropTool.Checked =
+            // set selection mode
+            PicMain.EnableSelection = visible.Value;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
+
+        Local.Tools.TryGetValue(nameof(FrmCrop), out var frm);
+        if (frm == null)
+        {
+            Local.Tools.TryAdd(nameof(FrmCrop), new FrmCrop(this));
+        }
+        else if (frm.IsDisposed)
+        {
+            Local.Tools[nameof(FrmCrop)] = new FrmCrop(this);
+        }
+
+        ToggleTool(Local.Tools[nameof(FrmCrop)], visible.Value);
+
+        return visible.Value;
+    }
+
+
+    /// <summary>
+    /// Toggles Color picker tool.
+    /// </summary>
+    public bool IG_ToggleColorPicker(bool? visible = null)
+    {
+        visible ??= !MnuColorPicker.Checked;
+
+        // update menu item state
+        MnuColorPicker.Checked = visible.Value;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
+
+        Local.Tools.TryGetValue(nameof(FrmColorPicker), out var frm);
+        if (frm == null)
+        {
+            Local.Tools.TryAdd(nameof(FrmColorPicker), new FrmColorPicker(this));
+        }
+        else if (frm.IsDisposed)
+        {
+            Local.Tools[nameof(FrmColorPicker)] = new FrmColorPicker(this);
+        }
+
+        ToggleTool(Local.Tools[nameof(FrmColorPicker)], visible.Value);
+
+        return visible.Value;
+    }
+
+
+    /// <summary>
+    /// Toggles exif tool.
+    /// </summary>
+    public bool IG_ToggleExifTool(bool? visible = null)
+    {
+        visible ??= !MnuExifTool.Checked;
+
+        // update menu item state
+        MnuExifTool.Checked = visible.Value;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
+
+        if (visible.Value)
+        {
+            _ = Local.OpenPipedToolAsync(toolExe);
+        }
+        else
+        {
+            _ = Local.ClosePipedToolAsync(toolExe);
+        }
+
+        return visible.Value;
     }
 
 }

@@ -946,7 +946,7 @@ public partial class FrmMain
         //MnuColorPicker.Visible = false;
         //MnuCropTool.Visible = false;
         MnuPageNav.Visible = false;
-        MnuExifTool.Visible = false;
+        //MnuExifTool.Visible = false;
 
         // MnuHelp
         //MnuAbout.Visible = false;
