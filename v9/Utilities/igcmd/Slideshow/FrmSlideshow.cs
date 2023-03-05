@@ -101,7 +101,7 @@ public partial class FrmSlideshow : ModernForm
 
         Config.Load();
 
-        _serverName = $"{Constants.SLIDESHOW_PIPE_PREFIX}{slideshowIndex}"; ;
+        _serverName = $"{Constants.SLIDESHOW_PIPE_PREFIX}{slideshowIndex}";
         _initImagePath = initImagePath;
 
 
