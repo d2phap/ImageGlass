@@ -22,7 +22,10 @@ namespace ImageGlass.Tools;
 
 public static class ImageGlassTool
 {
-    public const string PIPENAME_PREFIX = "igtool_";
+    /// <summary>
+    /// Gets the pipename prefix.
+    /// </summary>
+    public static string PIPENAME_PREFIX => "<IG_TOOL>_";
 
     /// <summary>
     /// Gets the message separator constant.
@@ -41,32 +44,29 @@ public static class ToolServerMsgs
     /// <summary>
     /// Requests <see cref="PipeClient"/> to terminate the process.
     /// </summary>
-    public const string TOOL_TERMINATE = "igtool.cmd.tool_terminate";
+    public static string TOOL_TERMINATE => "igtool.cmd.tool_terminate";
+
 
 
     /// <summary>
     /// Occurs when an image is being loaded.
     /// </summary>
-    public const string IMAGE_LOADING = "igtool.cmd.image_loading";
+    public static string IMAGE_LOADING => "igtool.cmd.image_loading";
 
     /// <summary>
     /// Occurs when the image is loaded.
     /// </summary>
-    public const string IMAGE_LOADED = "igtool.cmd.image_loaded";
-
-    /// <summary>
-    /// Occurs when the image is error.
-    /// </summary>
-    public const string IMAGE_ERROR = "igtool.cmd.image_error";
+    public static string IMAGE_LOADED => "igtool.cmd.image_loaded";
 
     /// <summary>
     /// Occurs when the image is unloaded.
     /// </summary>
-    public const string IMAGE_UNLOADED = "igtool.cmd.image_unloaded";
+    public static string IMAGE_UNLOADED => "igtool.cmd.image_unloaded";
+
 
 
     /// <summary>
     /// Occurs when the image list is updated.
     /// </summary>
-    public const string IMAGE_LIST_UPDATED = "igtool.cmd.list_updated";
+    public static string IMAGE_LIST_UPDATED => "igtool.cmd.list_updated";
 }

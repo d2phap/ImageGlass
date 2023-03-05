@@ -247,11 +247,11 @@ public class PipeServer : IDisposable
     /// and <paramref name="msgData"/>:
     /// <code>$"{<paramref name="msgName"/>}{<see cref="ImageGlassTool.MSG_SEPARATOR"/>}{<paramref name="msgData"/>}"</code>
     /// </summary>
-    public async Task SendAsync(string msgName, string msgData = "")
+    public async Task SendAsync(string msgName, string? msgData = "")
     {
         if (IsDisposed) return;
 
-        var buffer = Encoding.UTF8.GetBytes($"{msgName}{ImageGlassTool.MSG_SEPARATOR}{msgData}");
+        var buffer = Encoding.UTF8.GetBytes($"{msgName}{ImageGlassTool.MSG_SEPARATOR}{msgData ?? ""}");
 
         await ServerStream.WriteAsync(buffer);
     }
