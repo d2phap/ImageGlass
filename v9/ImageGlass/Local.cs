@@ -91,7 +91,7 @@ internal class Local
         ImageListLoaded?.Invoke(e);
 
         // emit event to all tools
-        BroadcastMessageToAllToolServers(ToolServerMsgs.IMAGE_LIST_UPDATED, e);
+        _ = BroadcastMessageToAllToolServersAsync(ToolServerMsgs.IMAGE_LIST_UPDATED, e);
     }
 
 
@@ -103,7 +103,7 @@ internal class Local
         ImageLoading?.Invoke(e);
 
         // emit event to all tools
-        BroadcastMessageToAllToolServers(ToolServerMsgs.IMAGE_LOADING, e);
+        _ = BroadcastMessageToAllToolServersAsync(ToolServerMsgs.IMAGE_LOADING, e);
     }
 
 
@@ -115,7 +115,7 @@ internal class Local
         ImageLoaded?.Invoke(e);
 
         // emit event to all tools
-        BroadcastMessageToAllToolServers(ToolServerMsgs.IMAGE_LOADED, e);
+        _ = BroadcastMessageToAllToolServersAsync(ToolServerMsgs.IMAGE_LOADED, e);
     }
 
 
@@ -127,7 +127,7 @@ internal class Local
         ImageUnloaded?.Invoke(e);
 
         // emit event to all tools
-        BroadcastMessageToAllToolServers(ToolServerMsgs.IMAGE_UNLOADED, e);
+        _ = BroadcastMessageToAllToolServersAsync(ToolServerMsgs.IMAGE_UNLOADED, e);
     }
 
 
@@ -358,19 +358,22 @@ internal class Local
     /// <summary>
     /// Sends message to all tool servers
     /// </summary>
-    public static void BroadcastMessageToAllToolServers(string msgName, object? data)
+    public static async Task BroadcastMessageToAllToolServersAsync(string msgName, object? data)
     {
         if (Local.ToolPipeServers.Count == 0) return;
         var msgData = BHelper.ToJson(data ?? "") ?? "";
 
         // emit event to all tools
-        Parallel.ForEach(Local.ToolPipeServers, (server) =>
-        {
-            if (server.Value is PipeServer tool)
+        await Parallel.ForEachAsync(
+            Local.ToolPipeServers,
+            new ParallelOptions() { MaxDegreeOfParallelism = 20 },
+            async (server, token) =>
             {
-                _ = tool.SendAsync(msgName, msgData);
-            }
-        });
+                if (server.Value is PipeServer tool)
+                {
+                    await tool.SendAsync(msgName, msgData);
+                }
+            });
     }
 
     /// <summary>
