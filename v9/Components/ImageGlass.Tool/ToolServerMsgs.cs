@@ -20,22 +20,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 namespace ImageGlass.Tools;
 
 
-public static class ImageGlassTool
-{
-    /// <summary>
-    /// Gets the pipename prefix.
-    /// </summary>
-    public static string PIPENAME_PREFIX => "<IG_TOOL>_";
-
-    /// <summary>
-    /// Gets the message separator constant.
-    /// This constant is auto-inserted in between message name and message data.
-    /// </summary>
-    public static string MSG_SEPARATOR => "{:<IG_TOOL>:}";
-}
-
-
-
 /// <summary>
 /// Contains messages of <see cref="PipeServer"/> to send to <see cref="PipeClient"/>.
 /// </summary>
