@@ -15,12 +15,6 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
----------------------
-This source code is based on Christopher Morgan's NamedPipes project:
-Url: https://www.codeproject.com/Articles/810030/IPC-with-Named-Pipes
-License: CPOL, http://www.codeproject.com/info/cpol10.aspx
----------------------
 */
 
 namespace ImageGlass.Tools;
@@ -58,4 +52,5 @@ public class MessageReceivedEventArgs : EventArgs
         MessageName = msgName;
         MessageData = msgData;
     }
+
 }

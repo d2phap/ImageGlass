@@ -186,15 +186,16 @@ public class PipeServer : IDisposable
         }
 
         var stringData = Encoding.UTF8.GetString(pipeState.Buffer, 0, received);
-        var separatorPosition = stringData.IndexOf(ImageGlassTool.MSG_SEPARATOR);
-        var msgDataPosition = separatorPosition + ImageGlassTool.MSG_SEPARATOR.Length;
-        var msgName = stringData[0..separatorPosition];
-        var msgData = stringData[msgDataPosition..];
-
-        pipeState.Message.Append(msgData);
+        pipeState.Message.Append(stringData);
 
         if (pipeState.PipeServer.IsMessageComplete)
         {
+            var fullMsg = pipeState.Message.ToString();
+            var separatorPosition = fullMsg.IndexOf(ImageGlassTool.MSG_SEPARATOR);
+            var msgDataPosition = separatorPosition + ImageGlassTool.MSG_SEPARATOR.Length;
+            var msgName = fullMsg[0..separatorPosition];
+            var msgData = fullMsg[msgDataPosition..];
+
             MessageReceived?.Invoke(this, new MessageReceivedEventArgs(PipeName, msgName, msgData));
             pipeState.Message.Clear();
         }
