@@ -2490,7 +2490,7 @@ public partial class FrmMain
 
 
         var fileListJson = BHelper.ToJson(Local.Images.FileNames);
-        await slideshowServer.SendAsync($"{SlideshowPipeCommands.SET_IMAGE_LIST}={fileListJson}");
+        await slideshowServer.SendAsync(SlideshowPipeCommands.SET_IMAGE_LIST, fileListJson);
 
 
         // hide FrmMain

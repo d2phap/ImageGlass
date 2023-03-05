@@ -337,28 +337,23 @@ public partial class FrmSlideshow : ModernForm
 
     private void Client_MessageReceived(object? sender, MessageReceivedEventArgs e)
     {
-        if (string.IsNullOrEmpty(e.Message)) return;
+        if (string.IsNullOrEmpty(e.MessageName)) return;
 
-        if (e.Message == ToolServerMsgs.TOOL_TERMINATE)
+
+        // terminate slideshow
+        if (e.MessageName == ToolServerMsgs.TOOL_TERMINATE)
         {
             Application.Exit();
             return;
         }
 
-        var firstEqualCharPosition = e.Message.IndexOf("=");
-        if (firstEqualCharPosition == -1) return;
 
-        var cmd = e.Message.Substring(0, firstEqualCharPosition);
-        if (string.IsNullOrEmpty(cmd)) return;
-
-        var arg = e.Message.Substring(++firstEqualCharPosition);
-        if (string.IsNullOrEmpty(arg)) return;
-
+        if (string.IsNullOrEmpty(e.MessageData)) return;
 
         // update image list
-        if (cmd.Equals(SlideshowPipeCommands.SET_IMAGE_LIST, StringComparison.InvariantCultureIgnoreCase))
+        if (e.MessageName.Equals(SlideshowPipeCommands.SET_IMAGE_LIST, StringComparison.InvariantCultureIgnoreCase))
         {
-            var list = BHelper.ParseJson<List<string>>(arg);
+            var list = BHelper.ParseJson<List<string>>(e.MessageData);
 
             if (list != null && list.Count > 0)
             {
@@ -376,18 +371,18 @@ public partial class FrmSlideshow : ModernForm
 
 
         // update language
-        if (cmd.Equals(SlideshowPipeCommands.SET_LANGUAGE, StringComparison.InvariantCultureIgnoreCase))
+        if (e.MessageName.Equals(SlideshowPipeCommands.SET_LANGUAGE, StringComparison.InvariantCultureIgnoreCase))
         {
-            Config.Language = new IgLang(arg, App.StartUpDir(Dir.Languages));
+            Config.Language = new IgLang(e.MessageData, App.StartUpDir(Dir.Languages));
             LoadLanguage();
             return;
         }
 
 
         // update theme
-        if (cmd.Equals(SlideshowPipeCommands.SET_THEME, StringComparison.InvariantCultureIgnoreCase))
+        if (e.MessageName.Equals(SlideshowPipeCommands.SET_THEME, StringComparison.InvariantCultureIgnoreCase))
         {
-            Config.Theme = new IgTheme(arg, Config.ToolbarIconHeight);
+            Config.Theme = new IgTheme(e.MessageData, Config.ToolbarIconHeight);
 
             ApplyTheme(Config.Theme.Settings.IsDarkMode);
             return;
