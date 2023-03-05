@@ -53,6 +53,12 @@ internal class Local
     public delegate void ImageLoadedHandler(ImageLoadedEventArgs e);
 
     /// <summary>
+    /// Occurs when the image is unloaded.
+    /// </summary>
+    public static event ImageUnloadedHandler? ImageUnloaded;
+    public delegate void ImageUnloadedHandler(ImageUnloadedEventArgs e);
+
+    /// <summary>
     /// Occurs when the first image is reached.
     /// </summary>
     public static event FirstImageReachedHandler? FirstImageReached;
@@ -83,6 +89,9 @@ internal class Local
     public static void RaiseImageListLoadedEvent(ImageListLoadedEventArgs e)
     {
         ImageListLoaded?.Invoke(e);
+
+        // emit event to all tools
+        BroadcastMessageToAllToolServers(ToolServerMsgs.IMAGE_LIST_UPDATED, e);
     }
 
 
@@ -92,6 +101,9 @@ internal class Local
     public static void RaiseImageLoadingEvent(ImageLoadingEventArgs e)
     {
         ImageLoading?.Invoke(e);
+
+        // emit event to all tools
+        BroadcastMessageToAllToolServers(ToolServerMsgs.IMAGE_LOADING, e);
     }
 
 
@@ -101,6 +113,21 @@ internal class Local
     public static void RaiseImageLoadedEvent(ImageLoadedEventArgs e)
     {
         ImageLoaded?.Invoke(e);
+
+        // emit event to all tools
+        BroadcastMessageToAllToolServers(ToolServerMsgs.IMAGE_LOADED, e);
+    }
+
+
+    /// <summary>
+    /// Raise <see cref="ImageUnloaded"/> event.
+    /// </summary>
+    public static void RaiseImageUnloadedEvent(ImageUnloadedEventArgs e)
+    {
+        ImageUnloaded?.Invoke(e);
+
+        // emit event to all tools
+        BroadcastMessageToAllToolServers(ToolServerMsgs.IMAGE_UNLOADED, e);
     }
 
 
@@ -327,6 +354,24 @@ internal class Local
         return TempImagePath;
     }
 
+
+    /// <summary>
+    /// Sends message to all tool servers
+    /// </summary>
+    public static void BroadcastMessageToAllToolServers(string msgName, object? data)
+    {
+        if (Local.ToolPipeServers.Count == 0) return;
+        var msgData = BHelper.ToJson(data ?? "") ?? "";
+
+        // emit event to all tools
+        Parallel.ForEach(Local.ToolPipeServers, (server) =>
+        {
+            if (server.Value is PipeServer tool)
+            {
+                _ = tool.SendAsync(msgName, msgData);
+            }
+        });
+    }
 
     /// <summary>
     /// Open tool as a <see cref="PipeServer"/>.

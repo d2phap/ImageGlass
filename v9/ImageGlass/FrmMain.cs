@@ -763,15 +763,16 @@ public partial class FrmMain : ModernForm
 
         // set busy state
         Local.IsBusy = true;
+        var imgFilePath = string.IsNullOrEmpty(filename)
+            ? Local.Images.GetFilePath(Local.CurrentIndex)
+            : filename;
 
-
-        var loadingArgs = new ImageLoadingEventArgs()
+        Local.RaiseImageLoadingEvent(new ImageLoadingEventArgs()
         {
             CurrentIndex = Local.CurrentIndex,
             NewIndex = imageIndex,
-            FilePath = string.IsNullOrEmpty(filename) ? Local.Images.GetFilePath(Local.CurrentIndex) : filename,
-        };
-        Local.RaiseImageLoadingEvent(loadingArgs);
+            FilePath = imgFilePath,
+        });
 
 
         try
@@ -809,20 +810,26 @@ public partial class FrmMain : ModernForm
                 token?.Token.ThrowIfCancellationRequested();
 
 
-                var loadedArgs = new ImageLoadedEventArgs()
+                Local.RaiseImageLoadedEvent(new ImageLoadedEventArgs()
                 {
                     Index = imageIndex,
+                    FilePath = imgFilePath,
                     Data = photo,
                     Error = photo?.Error,
                     ResetZoom = resetZoom,
-                };
-                Local.RaiseImageLoadedEvent(loadedArgs);
+                });
             }
 
         }
         catch (OperationCanceledException)
         {
             Local.Images.CancelLoading(imageIndex);
+
+            Local.RaiseImageUnloadedEvent(new ImageUnloadedEventArgs()
+            {
+                Index = imageIndex,
+                FilePath = imgFilePath,
+            });
         }
 
         Local.IsBusy = false;

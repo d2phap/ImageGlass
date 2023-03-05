@@ -120,6 +120,12 @@ public partial class FrmMain
             PicMain.ClearMessage();
 
             Local.Images.Unload(Local.CurrentIndex);
+
+            Local.RaiseImageUnloadedEvent(new ImageUnloadedEventArgs()
+            {
+                Index = Local.CurrentIndex,
+                FilePath = Local.Images.GetFilePath(Local.CurrentIndex),
+            });
         }
     }
 

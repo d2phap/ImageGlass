@@ -31,9 +31,17 @@ public class ImageLoadingEventArgs
 public class ImageLoadedEventArgs
 {
     public int Index { get; init; }
+
+    public string? FilePath { get; init; }
     public IgPhoto? Data { get; init; }
     public Exception? Error { get; init; }
     public bool ResetZoom { get; init; }
+}
+
+public class ImageUnloadedEventArgs
+{
+    public int Index { get; init; }
+    public string? FilePath { get; init; }
 }
 
 public class ImageListLoadedEventArgs
