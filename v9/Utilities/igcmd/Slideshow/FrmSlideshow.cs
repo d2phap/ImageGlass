@@ -18,12 +18,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using D2Phap;
 using ImageGlass.Base;
-using ImageGlass.Base.NamedPipes;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.Services;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
+using ImageGlass.Tools;
 using ImageGlass.UI;
 using ImageGlass.Views;
 using System.Diagnostics;
@@ -339,7 +339,7 @@ public partial class FrmSlideshow : ModernForm
     {
         if (string.IsNullOrEmpty(e.Message)) return;
 
-        if (e.Message == Constants.SLIDESHOW_PIPE_CMD_TERMINATE)
+        if (e.Message == ToolServerMsgs.TOOL_TERMINATE)
         {
             Application.Exit();
             return;

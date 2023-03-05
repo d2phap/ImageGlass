@@ -23,13 +23,13 @@ License: CPOL, http://www.codeproject.com/info/cpol10.aspx
 ---------------------
 */
 
-namespace ImageGlass.Base.NamedPipes;
+namespace ImageGlass.Tools;
 
 
 /// <summary>
 /// Message received event arguments.
 /// </summary>
-public class MessageReceivedEventArgs : EventArgs
+public class DisconnectedEventArgs : EventArgs
 {
     /// <summary>
     /// Gets the name of the pipe.
@@ -38,17 +38,10 @@ public class MessageReceivedEventArgs : EventArgs
 
 
     /// <summary>
-    /// Gets the message received from the named-pipe.
+    /// Initializes a new instance of the <see cref="DisconnectedEventArgs"/> class.
     /// </summary>
-    public string Message { get; private set; }
-
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="MessageReceivedEventArgs"/> class.
-    /// </summary>
-    public MessageReceivedEventArgs(string pipeName, string message)
+    public DisconnectedEventArgs(string pipeName)
     {
         PipeName = pipeName;
-        Message = message;
     }
 }

@@ -25,15 +25,14 @@ License: CPOL, http://www.codeproject.com/info/cpol10.aspx
 using System.IO.Pipes;
 using System.Text;
 
-namespace ImageGlass.Base.NamedPipes;
+namespace ImageGlass.Tools;
 
 
 /// <summary>
-/// Asynchronous state for the pipe server.
+/// Asynchronous state for the pipe client.
 /// </summary>
-internal class PipeServerState
+internal class PipeClientState
 {
-
     private const int BufferSize = 8125;
 
 
@@ -47,15 +46,10 @@ internal class PipeServerState
     /// <summary>
     /// Gets the pipe server.
     /// </summary>
-    public NamedPipeServerStream PipeServer { get; private set; }
+    public NamedPipeClientStream PipeClient { get; private set; }
 
     /// <summary>
-    /// The external cancellation token.
-    /// </summary>
-    public CancellationToken ExternalCancellationToken { get; private set; }
-
-    /// <summary>
-    /// Gets the message.
+    /// Gets or sets the message.
     /// </summary>
     public StringBuilder Message { get; private set; }
 
@@ -65,26 +59,24 @@ internal class PipeServerState
     #region Constructors
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="PipeServerState"/> class.
+    /// Initializes a new instance of the <see cref="PipeClientState"/> class.
     /// </summary>
     /// <param name="pipeServer">The pipe server instance.</param>
-    /// <param name="token">A token referenced by and external cancellation token.</param>
-    public PipeServerState(NamedPipeServerStream pipeServer, CancellationToken token)
-        : this(pipeServer, new byte[BufferSize], token)
+    public PipeClientState(NamedPipeClientStream pipeServer)
+        : this(pipeServer, new byte[BufferSize])
     {
     }
 
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="PipeServerState"/> class.
+    /// Initializes a new instance of the <see cref="PipeClientState"/> class.
     /// </summary>
     /// <param name="pipeServer">The pipe server instance.</param>
     /// <param name="buffer">The byte buffer.</param>
-    /// <param name="token">A token referenced by and external cancellation token.</param>
-    public PipeServerState(NamedPipeServerStream pipeServer, byte[] buffer, CancellationToken token)
+    public PipeClientState(NamedPipeClientStream pipeServer, byte[] buffer)
     {
-        this.PipeServer = pipeServer;
+        this.PipeClient = pipeServer;
         this.Buffer = buffer;
-        this.ExternalCancellationToken = token;
         this.Message = new StringBuilder();
     }
 

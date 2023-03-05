@@ -22,7 +22,7 @@ Url: https://www.codeproject.com/Articles/810030/IPC-with-Named-Pipes
 License: CPOL, http://www.codeproject.com/info/cpol10.aspx
 ---------------------
 */
-namespace ImageGlass.Base.NamedPipes;
+namespace ImageGlass.Tools;
 
 using System;
 using System.IO.Pipes;
@@ -126,7 +126,6 @@ public class PipeServer : IDisposable
             PipeOptions.Asynchronous);
 
         _cancellationTokenSource = new CancellationTokenSource();
-
     }
 
 

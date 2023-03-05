@@ -23,10 +23,11 @@ License: CPOL, http://www.codeproject.com/info/cpol10.aspx
 ---------------------
 */
 
-namespace ImageGlass.Base.NamedPipes;
+namespace ImageGlass.Tools;
 
 using System;
 using System.IO.Pipes;
+using System.Runtime.Versioning;
 using System.Text;
 
 /// <summary>

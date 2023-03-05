@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
-using ImageGlass.Base.NamedPipes;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Library.WinAPI;
 using ImageGlass.Settings;
+using ImageGlass.Tools;
 using ImageGlass.Views;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -2519,6 +2519,7 @@ public partial class FrmMain
         _ = CleanSlideshowServerListAsync(_cleanSlideshowServerCancelToken.Token);
     }
 
+
     public async Task CleanSlideshowServerListAsync(CancellationToken token = default)
     {
         try
@@ -2593,7 +2594,7 @@ public partial class FrmMain
     {
         foreach (var server in Local.SlideshowPipeServers)
         {
-            _ = server?.SendAsync(Constants.SLIDESHOW_PIPE_CMD_TERMINATE);
+            _ = server?.SendAsync(ToolServerMsgs.TOOL_TERMINATE);
         }
     }
 
@@ -2882,6 +2883,7 @@ public partial class FrmMain
         // update toolbar items state
         UpdateToolbarItemsState();
 
+        var toolExe = @"D:\DEV\Avalonia\AvaloniaApplication2\AvaloniaApplication2\bin\Debug\net7.0\AvaloniaApplication2.exe";
         if (visible.Value)
         {
             _ = Local.OpenPipedToolAsync(toolExe);

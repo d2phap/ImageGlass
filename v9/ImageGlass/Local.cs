@@ -18,10 +18,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base;
-using ImageGlass.Base.NamedPipes;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.Services;
 using ImageGlass.Settings;
+using ImageGlass.Tools;
 using System.IO.Pipes;
 using WicNet;
 
@@ -336,7 +336,7 @@ internal class Local
         if (Local.ToolPipeServers.ContainsKey(toolExecutable)) return;
 
         // prepend tool prefix to create pipe name
-        var pipeName = $"{Constants.TOOL_PIPE_PREFIX}{toolExecutable}";
+        var pipeName = $"{ImageGlassTool.PIPENAME_PREFIX}{toolExecutable}";
 
         // create a new tool server
         var toolServer = new PipeServer(pipeName, PipeDirection.InOut);
@@ -359,7 +359,7 @@ internal class Local
     private static void ToolServer_ClientDisconnected(object? sender, DisconnectedEventArgs e)
     {
         // get toolExecutable from pipe name
-        var toolExecutable = e.PipeName[Constants.TOOL_PIPE_PREFIX.Length..];
+        var toolExecutable = e.PipeName[ImageGlassTool.PIPENAME_PREFIX.Length..];
 
         // retrieve toolServer from toolExecutable
         if (!Local.ToolPipeServers.TryGetValue(toolExecutable, out var toolServer)
@@ -386,7 +386,7 @@ internal class Local
 
         if (toolServer.ServerStream.IsConnected)
         {
-            await toolServer.SendAsync(Constants.TOOL_PIPE_TERMINATE);
+            await toolServer.SendAsync(ToolServerMsgs.TOOL_TERMINATE);
 
             // wait for 3 seconds for client to disconnect
             await Task.Delay(3000);
