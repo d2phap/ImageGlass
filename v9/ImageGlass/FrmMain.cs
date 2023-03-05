@@ -67,11 +67,11 @@ public partial class FrmMain : ModernForm
     {
         SetupFileWatcher();
 
-        Local.OnImageLoading += Local_OnImageLoading;
-        Local.OnImageListLoaded += Local_OnImageListLoaded;
-        Local.OnImageLoaded += Local_OnImageLoaded;
-        Local.OnFirstImageReached += Local_OnFirstImageReached;
-        Local.OnLastImageReached += Local_OnLastImageReached;
+        Local.ImageLoading += Local_ImageLoading;
+        Local.ImageListLoaded += Local_ImageListLoaded;
+        Local.ImageLoaded += Local_ImageLoaded;
+        Local.FirstImageReached += Local_FirstImageReached;
+        Local.LastImageReached += Local_LastImageReached;
 
         Application.ApplicationExit += Application_ApplicationExit;
 
@@ -859,7 +859,7 @@ public partial class FrmMain : ModernForm
 
     #region Local.Images event
 
-    private void Local_OnImageLoading(ImageLoadingEventArgs e)
+    private void Local_ImageLoading(ImageLoadingEventArgs e)
     {
         Local.IsImageError = false;
 
@@ -883,11 +883,11 @@ public partial class FrmMain : ModernForm
 
 
     [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "<Pending>")]
-    private void Local_OnImageLoaded(ImageLoadedEventArgs e)
+    private void Local_ImageLoaded(ImageLoadedEventArgs e)
     {
         if (InvokeRequired)
         {
-            Invoke(Local_OnImageLoaded, e);
+            Invoke(Local_ImageLoaded, e);
             return;
         }
 
@@ -956,7 +956,7 @@ public partial class FrmMain : ModernForm
         UpdateImageInfo(ImageInfoUpdateTypes.Dimension | ImageInfoUpdateTypes.FramesCount);
     }
 
-    private void Local_OnImageListLoaded(ImageListLoadedEventArgs e)
+    private void Local_ImageListLoaded(ImageListLoadedEventArgs e)
     {
         if (!string.IsNullOrEmpty(e.FilePath))
         {
@@ -969,7 +969,7 @@ public partial class FrmMain : ModernForm
         _ = BHelper.RunAsThread(LoadThumbnails);
     }
 
-    private void Local_OnFirstImageReached()
+    private void Local_FirstImageReached()
     {
         if (!Config.EnableLoopBackNavigation)
         {
@@ -978,7 +978,7 @@ public partial class FrmMain : ModernForm
         }
     }
 
-    private void Local_OnLastImageReached()
+    private void Local_LastImageReached()
     {
         if (!Config.EnableLoopBackNavigation)
         {

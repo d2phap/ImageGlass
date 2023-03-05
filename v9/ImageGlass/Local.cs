@@ -37,37 +37,37 @@ internal class Local
     /// <summary>
     /// Occurs when <see cref="Images"/> is loaded.
     /// </summary>
-    public static event ImageListLoadedHandler? OnImageListLoaded;
+    public static event ImageListLoadedHandler? ImageListLoaded;
     public delegate void ImageListLoadedHandler(ImageListLoadedEventArgs e);
 
     /// <summary>
     /// Occurs when the requested image is being loaded.
     /// </summary>
-    public static event ImageLoadingHandler? OnImageLoading;
+    public static event ImageLoadingHandler? ImageLoading;
     public delegate void ImageLoadingHandler(ImageLoadingEventArgs e);
 
     /// <summary>
     /// Occurs when the requested image is loaded.
     /// </summary>
-    public static event ImageLoadedHandler? OnImageLoaded;
+    public static event ImageLoadedHandler? ImageLoaded;
     public delegate void ImageLoadedHandler(ImageLoadedEventArgs e);
 
     /// <summary>
     /// Occurs when the first image is reached.
     /// </summary>
-    public static event FirstImageReachedHandler? OnFirstImageReached;
+    public static event FirstImageReachedHandler? FirstImageReached;
     public delegate void FirstImageReachedHandler();
 
     /// <summary>
     /// Occurs when the last image is reached.
     /// </summary>
-    public static event LastImageReachedHandler? OnLastImageReached;
+    public static event LastImageReachedHandler? LastImageReached;
     public delegate void LastImageReachedHandler();
 
     /// <summary>
     /// Occurs when the FrmMain's state needs to be updated.
     /// </summary>
-    public static event FrmMainUpdateRequestedHandler? OnRequestUpdateFrmMain;
+    public static event FrmMainUpdateRequestedHandler? RequestUpdateFrmMain;
     public delegate void FrmMainUpdateRequestedHandler(UpdateRequests e);
 
     /// <summary>
@@ -78,56 +78,56 @@ internal class Local
 
 
     /// <summary>
-    /// Raise <see cref="OnImageListLoaded"/> event.
+    /// Raise <see cref="ImageListLoaded"/> event.
     /// </summary>
     public static void RaiseImageListLoadedEvent(ImageListLoadedEventArgs e)
     {
-        OnImageListLoaded?.Invoke(e);
+        ImageListLoaded?.Invoke(e);
     }
 
 
     /// <summary>
-    /// Raise <see cref="OnImageLoading"/> event.
+    /// Raise <see cref="ImageLoading"/> event.
     /// </summary>
     public static void RaiseImageLoadingEvent(ImageLoadingEventArgs e)
     {
-        OnImageLoading?.Invoke(e);
+        ImageLoading?.Invoke(e);
     }
 
 
     /// <summary>
-    /// Raise <see cref="OnImageLoaded"/> event.
+    /// Raise <see cref="ImageLoaded"/> event.
     /// </summary>
     public static void RaiseImageLoadedEvent(ImageLoadedEventArgs e)
     {
-        OnImageLoaded?.Invoke(e);
+        ImageLoaded?.Invoke(e);
     }
 
 
     /// <summary>
-    /// Raise <see cref="OnFirstImageReached"/> event.
+    /// Raise <see cref="FirstImageReached"/> event.
     /// </summary>
     public static void RaiseFirstImageReachedEvent()
     {
-        OnFirstImageReached?.Invoke();
+        FirstImageReached?.Invoke();
     }
 
 
     /// <summary>
-    /// Raise <see cref="OnLastImageReached"/> event.
+    /// Raise <see cref="LastImageReached"/> event.
     /// </summary>
     public static void RaiseLastImageReachedEvent()
     {
-        OnLastImageReached?.Invoke();
+        LastImageReached?.Invoke();
     }
 
 
     /// <summary>
-    /// Raise <see cref="OnRequestUpdateFrmMain"/> event.
+    /// Raise <see cref="RequestUpdateFrmMain"/> event.
     /// </summary>
     public static void UpdateFrmMain(UpdateRequests e)
     {
-        OnRequestUpdateFrmMain?.Invoke(e);
+        RequestUpdateFrmMain?.Invoke(e);
     }
 
 
