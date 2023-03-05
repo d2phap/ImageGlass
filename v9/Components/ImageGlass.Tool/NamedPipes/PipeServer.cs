@@ -36,6 +36,7 @@ using System.Threading;
 public class PipeServer : IDisposable
 {
     private CancellationTokenSource _cancellationTokenSource;
+    
 
 
     #region IDisposable Disposing
@@ -185,11 +186,16 @@ public class PipeServer : IDisposable
         }
 
         var stringData = Encoding.UTF8.GetString(pipeState.Buffer, 0, received);
-        pipeState.Message.Append(stringData);
+        var separatorPosition = stringData.IndexOf(ImageGlassTool.MSG_SEPARATOR);
+        var msgDataPosition = separatorPosition + ImageGlassTool.MSG_SEPARATOR.Length;
+        var msgName = stringData[0..separatorPosition];
+        var msgData = stringData[msgDataPosition..];
+
+        pipeState.Message.Append(msgData);
 
         if (pipeState.PipeServer.IsMessageComplete)
         {
-            MessageReceived?.Invoke(this, new MessageReceivedEventArgs(PipeName, stringData));
+            MessageReceived?.Invoke(this, new MessageReceivedEventArgs(PipeName, msgName, msgData));
             pipeState.Message.Clear();
         }
 
@@ -236,14 +242,16 @@ public class PipeServer : IDisposable
 
 
     /// <summary>
-    /// Sends a string to the client.
+    /// Sends a message to the client. The final message is packed with
+    /// a <see cref="ImageGlassTool.MSG_SEPARATOR"/> between the <paramref name="msgName"/>
+    /// and <paramref name="msgData"/>:
+    /// <code>$"{<paramref name="msgName"/>}{<see cref="ImageGlassTool.MSG_SEPARATOR"/>}{<paramref name="msgData"/>}"</code>
     /// </summary>
-    /// <param name="value">The string to send to the server.</param>
-    public async Task SendAsync(string value)
+    public async Task SendAsync(string msgName, string msgData = "")
     {
         if (IsDisposed) return;
 
-        var buffer = Encoding.UTF8.GetBytes(value);
+        var buffer = Encoding.UTF8.GetBytes($"{msgName}{ImageGlassTool.MSG_SEPARATOR}{msgData}");
 
         await ServerStream.WriteAsync(buffer);
     }

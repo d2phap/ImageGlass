@@ -40,15 +40,22 @@ public class MessageReceivedEventArgs : EventArgs
     /// <summary>
     /// Gets the message received from the named-pipe.
     /// </summary>
-    public string Message { get; private set; }
+    public string MessageName { get; private set; }
+
+
+    /// <summary>
+    /// Gets the message received from the named-pipe.
+    /// </summary>
+    public string MessageData { get; private set; }
 
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MessageReceivedEventArgs"/> class.
     /// </summary>
-    public MessageReceivedEventArgs(string pipeName, string message)
+    public MessageReceivedEventArgs(string pipeName, string msgName, string msgData)
     {
         PipeName = pipeName;
-        Message = message;
+        MessageName = msgName;
+        MessageData = msgData;
     }
 }

@@ -23,6 +23,12 @@ namespace ImageGlass.Tools;
 public static class ImageGlassTool
 {
     public const string PIPENAME_PREFIX = "igtool_";
+
+    /// <summary>
+    /// Gets the message separator constant.
+    /// This constant is auto-inserted in between message name and message data.
+    /// </summary>
+    public static string MSG_SEPARATOR => "{:<IG_TOOL>:}";
 }
 
 
