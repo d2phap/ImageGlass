@@ -381,7 +381,8 @@ internal class Local
     /// </summary>
     public static async Task OpenPipedToolAsync(IgTool? tool)
     {
-        if (tool == null || Local.ToolPipeServers.ContainsKey(tool.ToolId)) return;
+        if (tool == null || tool.IsEmpty
+            || Local.ToolPipeServers.ContainsKey(tool.ToolId)) return;
 
         // prepend tool prefix to create pipe name
         var pipeName = $"{ImageGlassTool.PIPENAME_PREFIX}{tool.Executable}";
@@ -407,6 +408,15 @@ internal class Local
 
     private static void ToolServer_ClientDisconnected(object? sender, DisconnectedEventArgs e)
     {
+        if (FrmMain.InvokeRequired)
+        {
+            FrmMain.Invoke(delegate
+            {
+                ToolServer_ClientDisconnected(sender, e);
+            });
+            return;
+        }
+
         // get tool info
         var item = Local.ToolPipeServers.FirstOrDefault(i => i.Value.PipeName
             .Equals(e.PipeName, StringComparison.InvariantCultureIgnoreCase));
