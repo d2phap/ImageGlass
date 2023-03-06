@@ -724,15 +724,22 @@ public class IgLang : Dictionary<string, string>
 
 
         // External tools ----------------------------------------------------
+        Add("FrmToolNotFound._Title", "Tool not found"); // v9.0
+        Add("FrmToolNotFound._Locate", "Locate…"); // v9.0
+        Add("FrmToolNotFound.LblHeading", "{0} is not found!"); // v9.0
+        Add("FrmToolNotFound.LblDescription", "ImageGlass could not find executable file of {0}. Do you want to locate it?"); // v9.0
+        Add("FrmToolNotFound.LblDownloadToolText", "You can download more tools for ImageGlass at:"); // v9.0
+
+
         #region Tool_ExifTool
-        Add("_.Tools.Tool_ExifTool", "Exif tool"); // v8.0
+        Add($"_.Tools.{Constants.IGTOOL_EXIFTOOL}", "Exif tool"); // v8.0
 
-        Add("_.Tools.Tool_ExifTool.ClnProperty", "Property"); // v8.0
-        Add("_.Tools.Tool_ExifTool.ClnValue", "Value"); // v8.0
+        Add($"_.Tools.{Constants.IGTOOL_EXIFTOOL}.ClnProperty", "Property"); // v8.0
+        Add($"_.Tools.{Constants.IGTOOL_EXIFTOOL}.ClnValue", "Value"); // v8.0
 
-        Add("_.Tools.Tool_ExifTool.BtnCopyValue", "Copy value"); // v8.0
-        Add("_.Tools.Tool_ExifTool.BtnExport", "Export…"); // v8.0
-        Add("_.Tools.Tool_ExifTool.BtnClose", "Close"); // v8.0
+        Add($"_.Tools.{Constants.IGTOOL_EXIFTOOL}.BtnCopyValue", "Copy value"); // v8.0
+        Add($"_.Tools.{Constants.IGTOOL_EXIFTOOL}.BtnExport", "Export…"); // v8.0
+        Add($"_.Tools.{Constants.IGTOOL_EXIFTOOL}.BtnClose", "Close"); // v8.0
 
         #endregion
 
