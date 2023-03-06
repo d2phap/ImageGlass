@@ -377,19 +377,19 @@ internal class Local
     }
 
     /// <summary>
-    /// Open tool as a <see cref="PipeServer"/>.
+    /// Opens tool as a <see cref="PipeServer"/>.
     /// </summary>
-    public static async Task OpenPipedToolAsync(string toolExecutable)
+    public static async Task OpenPipedToolAsync(IgTool? tool)
     {
-        if (Local.ToolPipeServers.ContainsKey(toolExecutable)) return;
+        if (tool == null || Local.ToolPipeServers.ContainsKey(tool.ToolId)) return;
 
         // prepend tool prefix to create pipe name
-        var pipeName = $"{ImageGlassTool.PIPENAME_PREFIX}{toolExecutable}";
+        var pipeName = $"{ImageGlassTool.PIPENAME_PREFIX}{tool.Executable}";
 
         // create a new tool server
         var toolServer = new PipeServer(pipeName, PipeDirection.InOut);
         toolServer.ClientDisconnected += ToolServer_ClientDisconnected;
-        Local.ToolPipeServers.Add(toolExecutable, toolServer);
+        Local.ToolPipeServers.Add(tool.ToolId, toolServer);
 
         // start the server
         toolServer.Start();
@@ -397,7 +397,8 @@ internal class Local
 
         // start tool client
         var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
-        await BHelper.RunExeCmd($"{toolExecutable}", $"\"{filePath}\"", false);
+        var args = tool.Argument?.Replace(Constants.FILE_MACRO, $"\"{filePath}\"");
+        _ = BHelper.RunExeCmd($"{tool.Executable}", args, false);
 
         // wait for client connection
         await toolServer.WaitForConnectionAsync();
@@ -406,12 +407,18 @@ internal class Local
 
     private static void ToolServer_ClientDisconnected(object? sender, DisconnectedEventArgs e)
     {
-        // get toolExecutable from pipe name
-        var toolExecutable = e.PipeName[ImageGlassTool.PIPENAME_PREFIX.Length..];
+        // get tool info
+        var item = Local.ToolPipeServers.FirstOrDefault(i => i.Value.PipeName
+            .Equals(e.PipeName, StringComparison.InvariantCultureIgnoreCase));
 
-        // retrieve toolServer from toolExecutable
-        if (!Local.ToolPipeServers.TryGetValue(toolExecutable, out var toolServer)
-            || toolServer is not PipeServer) return;
+        var toolId = item.Key;
+        var toolServer = item.Value;
+
+        // update menu state
+        if (FrmMain.MnuTools.DropDownItems[toolId] is ToolStripMenuItem mnuItem)
+        {
+            mnuItem.Checked = false;
+        }
 
         // remove events
         toolServer.Stop();
@@ -420,16 +427,17 @@ internal class Local
         toolServer = null;
 
         // remove tool server
-        Local.ToolPipeServers.Remove(toolExecutable);
+        Local.ToolPipeServers.Remove(toolId);
     }
 
 
     /// <summary>
     /// Closes <see cref="PipeServer"/> tool.
     /// </summary>
-    public static async Task ClosePipedToolAsync(string toolExecutable)
+    public static async Task ClosePipedToolAsync(IgTool? tool)
     {
-        if (!Local.ToolPipeServers.TryGetValue(toolExecutable, out var toolServer)
+        if (tool == null
+            || !Local.ToolPipeServers.TryGetValue(tool.ToolId, out var toolServer)
             || toolServer is not PipeServer) return;
 
         if (toolServer.ServerStream.IsConnected)

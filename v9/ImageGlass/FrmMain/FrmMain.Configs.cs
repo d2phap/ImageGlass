@@ -197,7 +197,8 @@ public partial class FrmMain
         // load language pack
         Local.UpdateFrmMain(UpdateRequests.Language);
 
-        // load menu hotkeys
+        // load menu
+        LoadExternalTools();
         Config.MergeHotkeys(ref CurrentMenuHotkeys, Config.MenuHotkeys);
         Local.UpdateFrmMain(UpdateRequests.MenuHotkeys);
 
@@ -611,6 +612,14 @@ public partial class FrmMain
         MnuColorPicker.Text = lang[$"{Name}.{nameof(MnuColorPicker)}"];
         MnuPageNav.Text = lang[$"{Name}.{nameof(MnuPageNav)}"];
         MnuCropTool.Text = lang[$"{Name}.{nameof(MnuCropTool)}"];
+
+        foreach (var item in MnuTools.DropDownItems)
+        {
+            if (item is not ToolStripMenuItem mnuItem) continue;
+            if (!Config.Language.TryGetValue($"_.Tools.{mnuItem.Name}", out var toolDisplayName)) continue;
+
+            mnuItem.Text = toolDisplayName;
+        }
         #endregion
 
 
@@ -853,6 +862,73 @@ public partial class FrmMain
 
             // reload the state
             LoadMnuLoadingOrdersSubItems();
+        }
+    }
+
+
+    /// <summary>
+    /// Load external tools to MnuTools.
+    /// </summary>
+    private void LoadExternalTools()
+    {
+        // clear external tools
+        foreach (ToolStripItem item in MnuTools.DropDownItems)
+        {
+            if (item.Name.Equals(nameof(MnuColorPicker))
+                || item.Name.Equals(nameof(MnuCropTool))
+                || item.Name.Equals(nameof(MnuPageNav))) continue;
+
+            item.Click -= MnuExternalTool_Click;
+            MnuTools.DropDownItems.Remove(item);
+        }
+
+        // add separator to separate built-in and external tools
+        if (Config.Tools.Count > 0)
+        {
+            MnuTools.DropDownItems.Add(new ToolStripSeparator());
+        }
+
+        var newMenuIconHeight = this.ScaleToDpi(Constants.MENU_ICON_HEIGHT);
+
+        // add external tools
+        foreach (var item in Config.Tools)
+        {
+            _ = Config.Language.TryGetValue($"_.Tools.{item.ToolId}", out var toolName);
+
+            var mnu = new ToolStripMenuItem()
+            {
+                Name = item.ToolId,
+                Text = toolName ?? item.ToolName ?? item.ToolId,
+                CheckOnClick = item.CanToggle ?? false,
+                Checked = false,
+                ImageScaling = ToolStripItemImageScaling.None,
+                Image = new Bitmap(newMenuIconHeight, newMenuIconHeight),
+            };
+
+            mnu.Click += MnuExternalTool_Click;
+            MnuTools.DropDownItems.Add(mnu);
+        }
+    }
+
+
+    private void MnuExternalTool_Click(object? sender, EventArgs e)
+    {
+        if (sender is not ToolStripMenuItem mnu
+            || Config.Tools.SingleOrDefault(i => i.ToolId.Equals(mnu.Name)) is not IgTool tool) return;
+
+        var visible = !mnu.Checked;
+        if (mnu.CheckOnClick)
+        {
+            visible = mnu.Checked;
+        }
+
+        if (visible)
+        {
+            _ = Local.OpenPipedToolAsync(tool);
+        }
+        else
+        {
+            _ = Local.ClosePipedToolAsync(tool);
         }
     }
 

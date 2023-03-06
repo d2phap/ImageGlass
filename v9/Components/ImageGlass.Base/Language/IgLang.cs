@@ -308,8 +308,6 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuColorPicker", "Color picker"); //v5.0
         Add("FrmMain.MnuPageNav", "Page navigation"); // v7.5
         Add("FrmMain.MnuCropTool", "Crop image"); // v7.6
-        Add("FrmMain.MnuExifTool", "Exif tool"); // v8.0
-
         #endregion
 
         Add("FrmMain.MnuSettings", "Settings…"); // v3.0
@@ -725,16 +723,18 @@ public class IgLang : Dictionary<string, string>
         #endregion
 
 
-        #region FrmExifTool
-        Add("FrmExifTool.clnProperty", "Property"); // v8.0
-        Add("FrmExifTool.clnValue", "Value"); // v8.0
+        // External tools ----------------------------------------------------
+        #region Tool_ExifTool
+        Add("_.Tools.Tool_ExifTool", "Exif tool"); // v8.0
 
-        Add("FrmExifTool.btnCopyValue", "Copy value"); // v8.0
-        Add("FrmExifTool.btnExport", "Export…"); // v8.0
-        Add("FrmExifTool.btnClose", "Close"); // v8.0
+        Add("_.Tools.Tool_ExifTool.ClnProperty", "Property"); // v8.0
+        Add("_.Tools.Tool_ExifTool.ClnValue", "Value"); // v8.0
+
+        Add("_.Tools.Tool_ExifTool.BtnCopyValue", "Copy value"); // v8.0
+        Add("_.Tools.Tool_ExifTool.BtnExport", "Export…"); // v8.0
+        Add("_.Tools.Tool_ExifTool.BtnClose", "Close"); // v8.0
 
         #endregion
-
 
 
         #region igcmd.exe
