@@ -50,7 +50,7 @@
             TableTop.Location = new Point(0, 0);
             TableTop.Margin = new Padding(0);
             TableTop.Name = "TableTop";
-            TableTop.Padding = new Padding(40);
+            TableTop.Padding = new Padding(35, 40, 40, 40);
             TableTop.RowCount = 4;
             TableTop.RowStyles.Add(new RowStyle());
             TableTop.RowStyles.Add(new RowStyle());
@@ -64,8 +64,8 @@
             LblDownloadToolText.AutoSize = true;
             LblDownloadToolText.BackColor = Color.Transparent;
             LblDownloadToolText.DarkMode = false;
-            LblDownloadToolText.Location = new Point(43, 264);
-            LblDownloadToolText.Margin = new Padding(3, 0, 0, 10);
+            LblDownloadToolText.Location = new Point(40, 264);
+            LblDownloadToolText.Margin = new Padding(5, 0, 0, 10);
             LblDownloadToolText.Name = "LblDownloadToolText";
             LblDownloadToolText.Size = new Size(728, 45);
             LblDownloadToolText.TabIndex = 3;
@@ -76,8 +76,8 @@
             LblDescription.AutoSize = true;
             LblDescription.BackColor = Color.Transparent;
             LblDescription.DarkMode = false;
-            LblDescription.Location = new Point(43, 134);
-            LblDescription.Margin = new Padding(3, 0, 0, 40);
+            LblDescription.Location = new Point(40, 134);
+            LblDescription.Margin = new Padding(5, 0, 0, 40);
             LblDescription.Name = "LblDescription";
             LblDescription.Size = new Size(1029, 90);
             LblDescription.TabIndex = 1;
@@ -89,8 +89,8 @@
             LblHeading.BackColor = Color.Transparent;
             LblHeading.DarkMode = false;
             LblHeading.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            LblHeading.Location = new Point(43, 40);
-            LblHeading.Margin = new Padding(3, 0, 0, 40);
+            LblHeading.Location = new Point(40, 40);
+            LblHeading.Margin = new Padding(5, 0, 0, 40);
             LblHeading.Name = "LblHeading";
             LblHeading.Size = new Size(426, 54);
             LblHeading.TabIndex = 0;
@@ -100,7 +100,7 @@
             // 
             LnkGetTools.AutoSize = true;
             LnkGetTools.BackColor = Color.Transparent;
-            LnkGetTools.Location = new Point(40, 319);
+            LnkGetTools.Location = new Point(35, 319);
             LnkGetTools.Margin = new Padding(0, 0, 0, 40);
             LnkGetTools.Name = "LnkGetTools";
             LnkGetTools.Size = new Size(422, 45);
