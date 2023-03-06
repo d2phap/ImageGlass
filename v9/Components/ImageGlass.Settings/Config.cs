@@ -724,7 +724,7 @@ public static class Config
     {
         new IgTool()
         {
-            ToolId = "Tool_ExifTool",
+            ToolId = Constants.IGTOOL_EXIFTOOL,
             ToolName = "Exif tool",
             Executable = "",
             Argument = Constants.FILE_MACRO,

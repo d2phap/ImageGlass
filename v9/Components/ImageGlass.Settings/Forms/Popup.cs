@@ -627,7 +627,7 @@ public partial class Popup : DialogForm
     {
         var sysIcon = SystemIconApi.GetSystemIcon(icon);
 
-        var frm = new Popup()
+        using var frm = new Popup()
         {
             Title = title,
             Heading = heading,

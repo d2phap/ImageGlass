@@ -43,8 +43,10 @@ public static class Constants
     public const int MAX_IMAGE_DIMENSION = 16_384;
 
     public const string SLIDESHOW_PIPE_PREFIX = "ImageGlass_Slideshow_Pipe_";
-
     public const string THEME_SYSTEM_ACCENT_COLOR = "accent";
+
+    // predefined built-in tool names
+    public const string IGTOOL_EXIFTOOL = "Tool_ExifTool";
 
 
     /// <summary>

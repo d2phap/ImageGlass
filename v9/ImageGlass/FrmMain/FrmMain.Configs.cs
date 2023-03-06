@@ -916,6 +916,30 @@ public partial class FrmMain
         if (sender is not ToolStripMenuItem mnu
             || Config.Tools.SingleOrDefault(i => i.ToolId.Equals(mnu.Name)) is not IgTool tool) return;
 
+
+        // Tool not found
+        if (tool.IsEmpty)
+        {
+            using var frm = new FrmToolNotFound(tool.ToolId);
+            var result = frm.ShowDialog(this);
+
+            using var openDlg = new OpenFileDialog()
+            {
+                Filter = "Executable file (*.exe)|*.exe",
+                CheckFileExists = true,
+            };
+
+            if (result != DialogResult.OK
+                || openDlg.ShowDialog() != DialogResult.OK)
+            {
+                if (mnu.CheckOnClick) mnu.Checked = !mnu.Checked;
+                return;
+            }
+
+            tool.Executable = openDlg.FileName;
+        }
+
+
         var visible = !mnu.Checked;
         if (mnu.CheckOnClick)
         {
@@ -1145,7 +1169,7 @@ public partial class FrmMain
 
         ResumeLayout(false);
         #endregion // update layout
-    
+
     }
 
 }
