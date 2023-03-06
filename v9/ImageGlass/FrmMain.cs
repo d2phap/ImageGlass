@@ -1441,7 +1441,7 @@ public partial class FrmMain : ModernForm
         else
         {
             var currentFilePath = Local.Images.GetFilePath(Local.CurrentIndex);
-            var procArgs = $"{ac.Argument}".Replace(Constants.FILE_MACRO, currentFilePath);
+            var procArgs = $"{ac.Argument}".Replace(Constants.FILE_MACRO, $"\"{currentFilePath}\"");
 
             // run external command line
             using var proc = new Process
@@ -2091,12 +2091,6 @@ public partial class FrmMain : ModernForm
     {
 
     }
-
-    private void MnuExifTool_Click(object sender, EventArgs e)
-    {
-        IG_ToggleExifTool();
-    }
-
 
 
     #endregion // Menu Tools

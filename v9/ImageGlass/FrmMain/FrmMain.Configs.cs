@@ -128,7 +128,6 @@ public partial class FrmMain
         { nameof(MnuColorPicker),           new() { new (Keys.K) } },
         { nameof(MnuCropTool),              new() { new (Keys.C) } },
         { nameof(MnuPageNav),               new() { new (Keys.P) } },
-        { nameof(MnuExifTool),              new() { new (Keys.X) } },
 
         // MnuHelp
         { nameof(MnuAbout),                 new() { new (Keys.F1) } },
@@ -612,7 +611,6 @@ public partial class FrmMain
         MnuColorPicker.Text = lang[$"{Name}.{nameof(MnuColorPicker)}"];
         MnuPageNav.Text = lang[$"{Name}.{nameof(MnuPageNav)}"];
         MnuCropTool.Text = lang[$"{Name}.{nameof(MnuCropTool)}"];
-        MnuExifTool.Text = lang[$"{Name}.{nameof(MnuExifTool)}"];
         #endregion
 
 

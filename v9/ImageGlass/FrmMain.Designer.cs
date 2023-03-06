@@ -130,7 +130,6 @@ namespace ImageGlass
             MnuColorPicker = new ToolStripMenuItem();
             MnuCropTool = new ToolStripMenuItem();
             MnuPageNav = new ToolStripMenuItem();
-            MnuExifTool = new ToolStripMenuItem();
             toolStripMenuItem8 = new ToolStripSeparator();
             MnuSettings = new ToolStripMenuItem();
             MnuHelp = new ToolStripMenuItem();
@@ -854,7 +853,7 @@ namespace ImageGlass
             // 
             // MnuTools
             // 
-            MnuTools.DropDownItems.AddRange(new ToolStripItem[] { MnuColorPicker, MnuCropTool, MnuPageNav, MnuExifTool });
+            MnuTools.DropDownItems.AddRange(new ToolStripItem[] { MnuColorPicker, MnuCropTool, MnuPageNav });
             MnuTools.Image = (Image)resources.GetObject("MnuTools.Image");
             MnuTools.ImageAlign = ContentAlignment.MiddleLeft;
             MnuTools.ImageScaling = ToolStripItemImageScaling.None;
@@ -882,13 +881,6 @@ namespace ImageGlass
             MnuPageNav.Size = new Size(434, 54);
             MnuPageNav.Text = "[Page navigation]";
             MnuPageNav.Click += MnuPageNav_Click;
-            // 
-            // MnuExifTool
-            // 
-            MnuExifTool.Name = "MnuExifTool";
-            MnuExifTool.Size = new Size(434, 54);
-            MnuExifTool.Text = "[Exif tool]";
-            MnuExifTool.Click += MnuExifTool_Click;
             // 
             // toolStripMenuItem8
             // 
@@ -1204,7 +1196,6 @@ namespace ImageGlass
         public ToolStripMenuItem MnuColorPicker;
         public ToolStripMenuItem MnuCropTool;
         public ToolStripMenuItem MnuPageNav;
-        public ToolStripMenuItem MnuExifTool;
         public ToolStripMenuItem MnuAbout;
         public ToolStripMenuItem MnuCheckForUpdate;
         public ToolStripMenuItem MnuReportIssue;

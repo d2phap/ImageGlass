@@ -2875,32 +2875,5 @@ public partial class FrmMain
         return visible.Value;
     }
 
-
-    /// <summary>
-    /// Toggles exif tool.
-    /// </summary>
-    public bool IG_ToggleExifTool(bool? visible = null)
-    {
-        visible ??= !MnuExifTool.Checked;
-
-        // update menu item state
-        MnuExifTool.Checked = visible.Value;
-
-        // update toolbar items state
-        UpdateToolbarItemsState();
-
-        var toolExe = @"D:\DEV\Avalonia\AvaloniaApplication2\AvaloniaApplication2\bin\Debug\net7.0\AvaloniaApplication2.exe";
-        if (visible.Value)
-        {
-            _ = Local.OpenPipedToolAsync(toolExe);
-        }
-        else
-        {
-            _ = Local.ClosePipedToolAsync(toolExe);
-        }
-
-        return visible.Value;
-    }
-
 }
 
