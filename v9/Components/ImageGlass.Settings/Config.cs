@@ -179,9 +179,9 @@ public static class Config
     #region Setting items
 
     /// <summary>
-    /// Gets, sets the config section of tools.
+    /// Gets, sets the config section of tool settings.
     /// </summary>
-    public static ExpandoObject Tools { get; set; } = new ExpandoObject();
+    public static ExpandoObject ToolSettings { get; set; } = new ExpandoObject();
 
 
     #region Boolean items
@@ -711,6 +711,27 @@ public static class Config
     /// </summary>
     public static Dictionary<MouseWheelEvent, MouseWheelAction> MouseWheelActions = new();
 
+    /// <summary>
+    /// Gets, sets layout for FrmMain. Syntax:
+    /// <c>Dictionary["ControlName", "DockStyle;order"]</c>
+    /// </summary>
+    public static Dictionary<string, string?> Layout { get; set; } = new();
+
+    /// <summary>
+    /// Gets, sets tools.
+    /// </summary>
+    public static List<IgTool?> Tools { get; set; } = new()
+    {
+        new IgTool()
+        {
+            ToolId = "Tool_ExifTool",
+            ToolName = "Exif tool",
+            Executable = "",
+            Argument = Constants.FILE_MACRO,
+            CanToggle = true,
+        },
+    };
+
     #endregion
 
 
@@ -790,12 +811,6 @@ public static class Config
     /// </summary>
     public static IgLang Language { get; set; }
 
-    /// <summary>
-    /// Gets, sets layout for FrmMain. Syntax:
-    /// <c>Dictionary["ControlName", "DockStyle;order"]</c>
-    /// </summary>
-    public static Dictionary<string, string?> Layout { get; set; } = new();
-
     #endregion // Other types items
 
     #endregion // Setting items
@@ -812,7 +827,7 @@ public static class Config
         var items = Source.LoadUserConfigs();
 
         // save the config for all tools
-        Tools = items.GetValue(nameof(Tools)).GetValue(nameof(Tools), new ExpandoObject());
+        ToolSettings = items.GetValue(nameof(ToolSettings)).GetValue(nameof(ToolSettings), new ExpandoObject());
 
 
         // Boolean values
@@ -1044,6 +1059,18 @@ public static class Config
                 i => i.Key,
                 i => i.Get<string>()
             );
+
+
+        // Tools
+        var toolsList = items.GetSection(nameof(Tools))
+            .GetChildren()
+            .Select(i => i.Get<IgTool>())
+            .Where(i => i != null && !i.IsEmpty);
+        if (toolsList != null && toolsList.Any())
+        {
+            Tools.Clear();
+            Tools = toolsList.ToList();
+        }
 
         #endregion
 
@@ -1518,12 +1545,13 @@ public static class Config
         settings.TryAdd(nameof(MouseWheelActions), MouseWheelActions);
         settings.TryAdd(nameof(ToolbarItems), ToolbarItems);
         settings.TryAdd(nameof(Layout), Layout);
+        settings.TryAdd(nameof(Tools), Tools);
 
         #endregion
 
 
         // Tools' settings
-        settings.TryAdd(nameof(Tools), (object)Tools);
+        settings.TryAdd(nameof(ToolSettings), (object)ToolSettings);
 
         return settings;
     }
