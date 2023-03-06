@@ -29,13 +29,13 @@ public interface IToolConfig
 
 
     /// <summary>
-    /// Loads and parse tool's config from app's <see cref="Config.Tools"/>.
+    /// Loads and parse tool's config from app's <see cref="Config.ToolSettings"/>.
     /// </summary>
     void LoadFromAppConfig();
 
 
     /// <summary>
-    /// Saves the tool's config to app's <see cref="Config.Tools"/>.
+    /// Saves the tool's config to app's <see cref="Config.ToolSettings"/>.
     /// </summary>
     void SaveToAppConfig();
 

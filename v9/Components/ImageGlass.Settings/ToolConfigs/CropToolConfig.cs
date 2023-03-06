@@ -79,7 +79,7 @@ public class CropToolConfig : IToolConfig
 
     public void LoadFromAppConfig()
     {
-        var toolConfig = Config.Tools.GetValue(ToolId);
+        var toolConfig = Config.ToolSettings.GetValue(ToolId);
         if (toolConfig is not ExpandoObject config) return;
 
 
@@ -145,7 +145,7 @@ public class CropToolConfig : IToolConfig
 
 
         // save to app config
-        Config.Tools.Set(ToolId, settings);
+        Config.ToolSettings.Set(ToolId, settings);
     }
 
 }

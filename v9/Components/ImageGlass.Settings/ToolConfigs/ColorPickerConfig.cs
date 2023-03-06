@@ -65,7 +65,7 @@ public class ColorPickerConfig : IToolConfig
 
     public void LoadFromAppConfig()
     {
-        var toolConfig = Config.Tools.GetValue(ToolId);
+        var toolConfig = Config.ToolSettings.GetValue(ToolId);
         if (toolConfig is not ExpandoObject config) return;
 
         // load configs
@@ -86,6 +86,6 @@ public class ColorPickerConfig : IToolConfig
         settings.TryAdd(nameof(ShowHsvWithAlpha), ShowHsvWithAlpha);
 
         // save to app config
-        Config.Tools.Set(ToolId, settings);
+        Config.ToolSettings.Set(ToolId, settings);
     }
 }
