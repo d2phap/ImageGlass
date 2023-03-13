@@ -863,6 +863,7 @@ namespace ImageGlass
             // 
             // MnuColorPicker
             // 
+            MnuColorPicker.CheckOnClick = true;
             MnuColorPicker.Name = "MnuColorPicker";
             MnuColorPicker.Size = new Size(434, 54);
             MnuColorPicker.Text = "[Color picker]";
@@ -870,6 +871,7 @@ namespace ImageGlass
             // 
             // MnuCropTool
             // 
+            MnuCropTool.CheckOnClick = true;
             MnuCropTool.Name = "MnuCropTool";
             MnuCropTool.Size = new Size(434, 54);
             MnuCropTool.Text = "[Cropping]";
@@ -877,6 +879,7 @@ namespace ImageGlass
             // 
             // MnuPageNav
             // 
+            MnuPageNav.CheckOnClick = true;
             MnuPageNav.Name = "MnuPageNav";
             MnuPageNav.Size = new Size(434, 54);
             MnuPageNav.Text = "[Page navigation]";

@@ -2821,7 +2821,7 @@ public partial class FrmMain
     /// </summary>
     public bool IG_ToggleCropTool(bool? visible = null)
     {
-        visible ??= !MnuCropTool.Checked;
+        visible ??= MnuCropTool.Checked;
 
         // update menu item state
         MnuCropTool.Checked =
@@ -2852,7 +2852,7 @@ public partial class FrmMain
     /// </summary>
     public bool IG_ToggleColorPicker(bool? visible = null)
     {
-        visible ??= !MnuColorPicker.Checked;
+        visible ??= MnuColorPicker.Checked;
 
         // update menu item state
         MnuColorPicker.Checked = visible.Value;
