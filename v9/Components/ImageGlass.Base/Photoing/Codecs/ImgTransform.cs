@@ -20,16 +20,36 @@ namespace ImageGlass.Base.Photoing.Codecs;
 
 public class ImgTransform
 {
+    private float _rotation = 0;
+    private FlipOptions _flipOptions = FlipOptions.None;
+
+
     /// <summary>
     /// Contains all flips of the image.
     /// </summary>
-    public FlipOptions Flips { get; set; } = FlipOptions.None;
+    public FlipOptions Flips
+    {
+        get => _flipOptions;
+        set
+        {
+            _flipOptions = value;
+            Changed?.Invoke(this, EventArgs.Empty);
+        }
+    }
 
 
     /// <summary>
     /// Contains the rotation in degree of the image.
     /// </summary>
-    public float Rotation { get; set; } = 0;
+    public float Rotation
+    {
+        get => _rotation;
+        set
+        {
+            _rotation = value;
+            Changed?.Invoke(this, EventArgs.Empty);
+        }
+    }
 
 
     /// <summary>
@@ -39,11 +59,19 @@ public class ImgTransform
 
 
     /// <summary>
+    /// Occurs when there is a change.
+    /// </summary>
+    public event EventHandler<EventArgs>? Changed;
+
+
+    /// <summary>
     /// Clears all pending changes.
     /// </summary>
     public void Clear()
     {
         Flips = FlipOptions.None;
         Rotation = 0;
+
+        Changed?.Invoke(this, EventArgs.Empty);
     }
 }
