@@ -50,76 +50,76 @@ public static class Config
         {
             Id = "Btn_OpenFile",
             Alignment = ToolStripItemAlignment.Right,
-            Image = "OpenFile",
+            Image = nameof(Theme.ToolbarIcons.OpenFile),
             OnClick = new("MnuOpenFile"),
         },
         new()
         {
             Id = "Btn_ViewPrevious",
-            Image = "ViewPreviousImage",
+            Image = nameof(Theme.ToolbarIcons.ViewPreviousImage),
             OnClick = new("MnuViewPrevious"),
         },
         new()
         {
             Id = "Btn_ViewNext",
-            Image = "ViewNextImage",
+            Image = nameof(Theme.ToolbarIcons.ViewNextImage),
             OnClick = new("MnuViewNext"),
         },
         new() { Type = ToolbarItemModelType.Separator },
         new()
         {
             Id = "Btn_AutoZoom",
-            Image = "AutoZoom",
+            Image = nameof(Theme.ToolbarIcons.AutoZoom),
             OnClick = new("MnuAutoZoom"),
         },
         new()
         {
             Id = "Btn_LockZoom",
-            Image = "LockZoom",
+            Image = nameof(Theme.ToolbarIcons.LockZoom),
             OnClick = new("MnuLockZoom"),
         },
         new()
         {
             Id = "Btn_ScaleToWidth",
-            Image = "ScaleToWidth",
+            Image = nameof(Theme.ToolbarIcons.ScaleToWidth),
             OnClick = new("MnuScaleToWidth"),
         },
         new()
         {
             Id = "Btn_ScaleToHeight",
-            Image = "ScaleToHeight",
+            Image = nameof(Theme.ToolbarIcons.ScaleToHeight),
             OnClick = new("MnuScaleToHeight"),
         },
         new()
         {
             Id = "Btn_ScaleToFit",
-            Image = "ScaleToFit",
+            Image = nameof(Theme.ToolbarIcons.ScaleToFit),
             OnClick = new("MnuScaleToFit"),
         },
         new()
         {
             Id = "Btn_ScaleToFill",
-            Image = "ScaleToFill",
+            Image = nameof(Theme.ToolbarIcons.ScaleToFill),
             OnClick = new("MnuScaleToFill"),
         },
         new() { Type = ToolbarItemModelType.Separator },
         new()
         {
             Id = "Btn_Refresh",
-            Image = "Refresh",
+            Image = nameof(Theme.ToolbarIcons.Refresh),
             OnClick = new("MnuRefresh"),
         },
         new()
         {
             Id = "Btn_Thumbnail",
-            Image = "ThumbnailBar",
+            Image = nameof(Theme.ToolbarIcons.ThumbnailBar),
             CheckableConfigBinding = nameof(ShowThumbnails),
             OnClick = new("MnuToggleThumbnails"),
         },
         new()
         {
             Id = "Btn_Checkerboard",
-            Image = "Checkerboard",
+            Image = nameof(Theme.ToolbarIcons.Checkerboard),
             CheckableConfigBinding = nameof(ShowCheckerBoard),
             OnClick = new("MnuToggleCheckerboard"),
         },
@@ -127,26 +127,28 @@ public static class Config
         new()
         {
             Id = "Btn_FullScreen",
-            Image = "FullScreen",
+            Image = nameof(Theme.ToolbarIcons.FullScreen),
             CheckableConfigBinding = nameof(EnableFullScreen),
             OnClick = new("MnuFullScreen"),
         },
+        new()
+        {
+            Id = "Btn_Slideshow",
+            Image = nameof(Theme.ToolbarIcons.Slideshow),
+            CheckableConfigBinding = nameof(EnableSlideshow),
+            OnClick = new("MnuStartSlideshow"),
+        },
         new() { Type = ToolbarItemModelType.Separator },
-        //new()
-        //{
-        //    Id = "Btn_Edit",
-        //    Image = "Edit",
-        //},
         new()
         {
             Id = "Btn_Print",
-            Image = "Print",
+            Image = nameof(Theme.ToolbarIcons.Print),
             OnClick = new("MnuPrint"),
         },
         new()
         {
             Id = "Btn_Delete",
-            Image = "Delete",
+            Image = nameof(Theme.ToolbarIcons.Delete),
             OnClick = new("MnuMoveToRecycleBin"),
         }
     };
