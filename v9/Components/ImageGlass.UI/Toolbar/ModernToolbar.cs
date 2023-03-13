@@ -552,7 +552,6 @@ public class ModernToolbar : ToolStrip
     /// Gets ToolStripButton by name
     /// </summary>
     /// <param name="name">Name of item</param>
-    /// <returns></returns>
     public ToolStripButton? GetItem(string name)
     {
         return GetItem<ToolStripButton>(name);
@@ -560,21 +559,24 @@ public class ModernToolbar : ToolStrip
 
 
     /// <summary>
-    /// Adds new toolbar item
+    /// Adds new toolbar item.
     /// </summary>
     /// <param name="model">Item model</param>
+    /// <param name="position">The location in the items list at which to insert the toolbar item</param>
     /// <param name="modifier">Modifier function to modify item properties</param>
-    /// <returns></returns>
     public ToolbarAddItemResult AddItem(ToolbarItemModel model,
+        int? position = null,
         Action<ToolStripItem>? modifier = null)
     {
+        position ??= Items.Count;
+
         // separator
         if (model.Type == ToolbarItemModelType.Separator)
         {
             var sItem = new ToolStripSeparator();
             modifier?.Invoke(sItem);
 
-            Items.Add(sItem);
+            Items.Insert(position.Value, sItem);
             return ToolbarAddItemResult.Success;
         }
 
@@ -607,7 +609,7 @@ public class ModernToolbar : ToolStrip
         };
 
         modifier?.Invoke(bItem);
-        Items.Add(bItem);
+        Items.Insert(position.Value, bItem);
 
         return ToolbarAddItemResult.Success;
     }
@@ -623,7 +625,7 @@ public class ModernToolbar : ToolStrip
     {
         foreach (var item in list)
         {
-            _ = AddItem(item, modifier);
+            _ = AddItem(item, null, modifier);
         }
     }
 
