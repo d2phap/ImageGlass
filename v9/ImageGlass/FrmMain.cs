@@ -72,12 +72,12 @@ public partial class FrmMain : ModernForm
         Local.ImageLoaded += Local_ImageLoaded;
         Local.FirstImageReached += Local_FirstImageReached;
         Local.LastImageReached += Local_LastImageReached;
+        Local.ImageTransform.Changed += ImageTransform_Changed;
 
         Application.ApplicationExit += Application_ApplicationExit;
 
         LoadImagesFromCmdArgs(Environment.GetCommandLineArgs());
     }
-
 
     protected override void OnDpiChanged()
     {
@@ -991,6 +991,33 @@ public partial class FrmMain : ModernForm
         {
             PicMain.ShowMessage(Config.Language[$"{Name}._ReachedLastLast"],
                 Config.InAppMessageDuration);
+        }
+    }
+
+    private void ImageTransform_Changed(object? sender, EventArgs e)
+    {
+        const string TOOLBAR_BUTTON_SAVE_TRANSFORMATION = "Btn_SaveImageTransformation";
+        var btnItem = Toolbar.GetItem(TOOLBAR_BUTTON_SAVE_TRANSFORMATION);
+
+        // has changes, show Save button
+        if (Local.ImageTransform.HasChanges && btnItem == null)
+        {
+            Toolbar.AddItem(new()
+            {
+                Id = TOOLBAR_BUTTON_SAVE_TRANSFORMATION,
+                Image = nameof(Config.Theme.ToolbarIcons.SaveAs),
+                OnClick = new(nameof(MnuSave)),
+                Alignment = ToolStripItemAlignment.Right,
+                Text = MnuSave.Text,
+                DisplayStyle = ToolStripItemDisplayStyle.ImageAndText,
+            }, 1);
+
+            Toolbar.UpdateTheme();
+        }
+        // no change, hide button
+        else if (!Local.ImageTransform.HasChanges && btnItem != null)
+        {
+            Toolbar.Items.RemoveByKey(TOOLBAR_BUTTON_SAVE_TRANSFORMATION);
         }
     }
 
