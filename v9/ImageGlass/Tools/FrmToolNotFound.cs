@@ -47,6 +47,8 @@ public partial class FrmToolNotFound : DialogForm
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
         ApplyLanguage();
 
+        TopMost = Config.EnableWindowTopMost;
+
 
         var workingArea = Screen.FromControl(this).WorkingArea;
         if (Bottom > workingArea.Bottom) Top = workingArea.Bottom - Height;

@@ -732,8 +732,6 @@ public class IgLang : Dictionary<string, string>
 
 
         #region Tool_ExifTool
-        Add($"_.Tools.{Constants.IGTOOL_EXIFTOOL}", "Exif tool"); // v8.0
-
         Add($"_.Tools.{Constants.IGTOOL_EXIFTOOL}.ClnProperty", "Property"); // v8.0
         Add($"_.Tools.{Constants.IGTOOL_EXIFTOOL}.ClnValue", "Value"); // v8.0
 

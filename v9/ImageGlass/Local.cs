@@ -399,7 +399,7 @@ internal class Local
         // start tool client
         var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
         var args = tool.Argument?.Replace(Constants.FILE_MACRO, $"\"{filePath}\"");
-        _ = BHelper.RunExeCmd($"{tool.Executable}", args, false);
+        _ = BHelper.RunExeCmd($"{tool.Executable}", $"-EnableWindowTopMost={Config.EnableWindowTopMost} {args}", false);
 
         // wait for client connection
         await toolServer.WaitForConnectionAsync();

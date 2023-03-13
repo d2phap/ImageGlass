@@ -46,7 +46,7 @@ public static class Constants
     public const string THEME_SYSTEM_ACCENT_COLOR = "accent";
 
     // predefined built-in tool names
-    public const string IGTOOL_EXIFTOOL = "Tool_ExifTool";
+    public const string IGTOOL_EXIFTOOL = "Tool_ExifGlass";
 
 
     /// <summary>
