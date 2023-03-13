@@ -923,20 +923,13 @@ public partial class FrmMain
             using var frm = new FrmToolNotFound(tool.ToolId);
             var result = frm.ShowDialog(this);
 
-            using var openDlg = new OpenFileDialog()
-            {
-                Filter = "Executable file (*.exe)|*.exe",
-                CheckFileExists = true,
-            };
-
-            if (result != DialogResult.OK
-                || openDlg.ShowDialog() != DialogResult.OK)
+            if (result != DialogResult.OK)
             {
                 if (mnu.CheckOnClick) mnu.Checked = !mnu.Checked;
                 return;
             }
 
-            tool.Executable = openDlg.FileName;
+            tool.Executable = frm.ExecutablePath;
         }
 
 

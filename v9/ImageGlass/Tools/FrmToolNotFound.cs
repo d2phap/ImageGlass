@@ -30,6 +30,12 @@ public partial class FrmToolNotFound : DialogForm
     private IgTool? Tool => Config.Tools.SingleOrDefault(i => i.ToolId.Equals(_toolId));
 
 
+    /// <summary>
+    /// Gets the executable path of the tool.
+    /// </summary>
+    public string ExecutablePath { get; private set; } = string.Empty;
+
+
     public FrmToolNotFound(string toolId = "") : base()
     {
         InitializeComponent();
@@ -102,6 +108,23 @@ public partial class FrmToolNotFound : DialogForm
         return formHeight;
     }
 
+
+    protected override void OnAcceptButtonClicked()
+    {
+        ExecutablePath = TxtExecutable.Text.Trim();
+
+        // invalid executable path
+        if (string.IsNullOrEmpty(ExecutablePath))
+        {
+            TxtExecutable.Focus();
+            return;
+        }
+
+
+        base.OnAcceptButtonClicked();
+    }
+
+
     #endregion // Override / Virtual methods
 
 
@@ -114,7 +137,7 @@ public partial class FrmToolNotFound : DialogForm
         if (Tool == null) return;
 
         Text = Config.Language[$"{Name}._Title"];
-        BtnAccept.Text = Config.Language[$"{Name}._Locate"];
+        BtnAccept.Text = Config.Language["_._OK"];
         BtnCancel.Text = Config.Language["_._Cancel"];
         BtnApply.Text = Config.Language["_._Apply"];
 
@@ -123,6 +146,7 @@ public partial class FrmToolNotFound : DialogForm
         LblHeading.Text = string.Format(Config.Language[$"{Name}.{nameof(LblHeading)}"], toolName);
         LblDescription.Text = string.Format(Config.Language[$"{Name}.{nameof(LblDescription)}"], toolName);
         LblDownloadToolText.Text = Config.Language[$"{Name}.{nameof(LblDownloadToolText)}"];
+        BtnSelectExecutable.Text = Config.Language[$"{Name}.{nameof(BtnSelectExecutable)}"];
     }
 
 
@@ -132,9 +156,21 @@ public partial class FrmToolNotFound : DialogForm
     }
 
 
+    private void BtnSelectExecutable_Click(object sender, EventArgs e)
+    {
+        using var openDlg = new OpenFileDialog()
+        {
+            Filter = "Executable file (*.exe)|*.exe",
+            SupportMultiDottedExtensions = true,
+        };
+        if (openDlg.ShowDialog() != DialogResult.OK) return;
+
+
+        TxtExecutable.Text = openDlg.FileName;
+    }
+
+
     #endregion // Private methods
-
-
 
 
 }

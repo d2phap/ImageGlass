@@ -725,9 +725,9 @@ public class IgLang : Dictionary<string, string>
 
         // External tools ----------------------------------------------------
         Add("FrmToolNotFound._Title", "Tool not found"); // v9.0
-        Add("FrmToolNotFound._Locate", "Locate…"); // v9.0
+        Add("FrmToolNotFound.BtnSelectExecutable", "Select…"); // v9.0
         Add("FrmToolNotFound.LblHeading", "{0} is not found!"); // v9.0
-        Add("FrmToolNotFound.LblDescription", "ImageGlass could not find executable file of {0}. Do you want to locate it?"); // v9.0
+        Add("FrmToolNotFound.LblDescription", "ImageGlass could not find executable file of {0}. Please provide the executable path of the tool."); // v9.0
         Add("FrmToolNotFound.LblDownloadToolText", "You can download more tools for ImageGlass at:"); // v9.0
 
 
