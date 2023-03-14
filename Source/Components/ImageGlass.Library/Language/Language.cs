@@ -468,6 +468,7 @@ namespace ImageGlass.Library {
             Items.Add("frmSetting.lblImageBoosterCachedCount", "Number of images cached by ImageBooster (one direction)"); //v7.0
             Items.Add("frmSetting.chkIsPlayImageChangeSound", "Play sound when image changes"); //v8.4
             Items.Add("frmSetting.lblNumberImagesNotify", "Number of images to notify"); //v8.4
+            Items.Add("frmSetting.chkShowSetDesktopInContext", "Show option to set image as desktop background in context menu"); //v8.4
             #endregion
 
             #region Color Management

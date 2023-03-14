@@ -70,6 +70,11 @@ namespace ImageGlass.Settings {
         public static bool IsPlayImageChangeSound { get; set; } = false;
 
         /// <summary>
+        /// Gets, sets value of show set as desktop background in context menu
+        /// </summary>
+        public static bool ShowSetDesktopInContext { get; set; } = true;
+
+        /// <summary>
         /// Gets, sets value indicating whether the window is full screen or not
         /// </summary>
         public static bool IsFullScreen { get; set; } = false;
@@ -618,6 +623,7 @@ namespace ImageGlass.Settings {
             IsShowSlideshowCountdown = Get<bool>(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
             IsRandomSlideshowInterval = Get<bool>(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
             IsPlayImageChangeSound = Get<bool>(nameof(IsPlayImageChangeSound), IsPlayImageChangeSound);
+            ShowSetDesktopInContext = Get<bool>(nameof(ShowSetDesktopInContext), ShowSetDesktopInContext);
             IsFullScreen = Get<bool>(nameof(IsFullScreen), IsFullScreen);
             IsShowThumbnail = Get<bool>(nameof(IsShowThumbnail), IsShowThumbnail);
             IsCenterImage = Get<bool>(nameof(IsCenterImage), IsCenterImage);
@@ -867,6 +873,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsShowSlideshowCountdown), IsShowSlideshowCountdown);
             Set(nameof(IsRandomSlideshowInterval), IsRandomSlideshowInterval);
             Set(nameof(IsPlayImageChangeSound), IsPlayImageChangeSound);
+            Set(nameof(ShowSetDesktopInContext), ShowSetDesktopInContext);
             Set(nameof(IsFullScreen), IsFullScreen);
             Set(nameof(IsShowThumbnail), IsShowThumbnail);
             Set(nameof(IsCenterImage), IsCenterImage);

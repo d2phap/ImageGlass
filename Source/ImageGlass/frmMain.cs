@@ -118,6 +118,9 @@ namespace ImageGlass {
 
         private bool _shouldPlayImgChangeAlert = Configs.IsPlayImageChangeSound;
 
+        // show set as desktop background in context menu
+        private bool _shouldShowSetAsDesktopBackgroundInContext = Configs.ShowSetDesktopInContext;
+
         private readonly ToolFormManager _toolManager = new();
 
         private MovableForm _movableForm;
@@ -4366,7 +4369,7 @@ namespace ImageGlass {
                 #endregion
             }
 
-            if (!imageNotFound && !imageError || Local.IsTempMemoryData) {
+            if (Configs.ShowSetDesktopInContext && (!imageNotFound && !imageError || Local.IsTempMemoryData)) {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainSetAsDesktop));
 
                 // check if igcmdWin10.exe exists!

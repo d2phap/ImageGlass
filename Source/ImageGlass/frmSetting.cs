@@ -242,6 +242,7 @@ namespace ImageGlass {
             lblImageBoosterCachedCount.Text = lang[$"{Name}.{nameof(lblImageBoosterCachedCount)}"];
             chkIsPlayImageChangeSound.Text = lang[$"{Name}.{nameof(chkIsPlayImageChangeSound)}"];
             lblNumberImagesNotify.Text = lang[$"{Name}.{nameof(lblNumberImagesNotify)}"];
+            chkShowSetDesktopInContext.Text = lang[$"{Name}.{nameof(chkShowSetDesktopInContext)}"];
 
             lblColorManagement.Text = lang[$"{Name}.{nameof(lblColorManagement)}"];//
             chkApplyColorProfile.Text = lang[$"{Name}.{nameof(chkApplyColorProfile)}"];
@@ -581,6 +582,9 @@ namespace ImageGlass {
             // Number of Images after which sound is played
             chkIsPlayImageChangeSound.Checked = Configs.IsPlayImageChangeSound;
             numNumberImagesNotify.Value = Configs.NumberImagesNotify;
+
+            // Show set as desktop background in context menu
+            chkShowSetDesktopInContext.Checked = Configs.ShowSetDesktopInContext;
 
             #region Load items of cmbImageOrder
             var loadingOrderList = Enum.GetNames(typeof(ImageOrderBy));
@@ -1988,6 +1992,9 @@ namespace ImageGlass {
             // image changes alert
             Configs.IsPlayImageChangeSound = chkIsPlayImageChangeSound.Checked;
             Configs.NumberImagesNotify = (uint)numNumberImagesNotify.Value;
+
+            // show set as desktop background in context menu
+            Configs.ShowSetDesktopInContext = chkShowSetDesktopInContext.Checked;
 
             #region ImageLoadingOrder: MainFormForceUpdateAction.IMAGE_LIST
             newInt = cmbImageOrder.SelectedIndex;
