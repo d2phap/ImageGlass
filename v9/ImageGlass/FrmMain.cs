@@ -240,7 +240,7 @@ public partial class FrmMain : ModernForm
 
     private void Gallery_ItemTooltipShowing(object sender, ItemTooltipShowingEventArgs e)
     {
-        var langPath = $"{nameof(FrmMain)}.{nameof(Gallery)}.Tooltip";
+        var langPath = "_.Metadata";
 
         // build tooltip content
         var sb = new StringBuilder();
@@ -249,16 +249,32 @@ public partial class FrmMain : ModernForm
         sb.AppendLine($"{Config.Language[$"{langPath}._{nameof(IgMetadata.FileLastWriteTime)}"]}: {e.Item.Details.FileLastWriteTimeFormated}");
         var tooltipLinesCount = 4;
 
+        // FramesCount
         if (e.Item.Details.FramesCount > 1)
         {
             sb.AppendLine($"{Config.Language[$"{langPath}._{nameof(IgMetadata.FramesCount)}"]}: {e.Item.Details.FramesCount}");
             tooltipLinesCount++;
         }
 
+        // Rating
         var rating = BHelper.FormatStarRatingText(e.Item.Details.ExifRatingPercent);
         if (!string.IsNullOrEmpty(rating))
         {
-            sb.AppendLine($"{Config.Language[$"{langPath}._Rating"]}: {rating}");
+            sb.AppendLine($"{Config.Language[$"{langPath}._{nameof(IgMetadata.ExifRatingPercent)}"]}: {rating}");
+            tooltipLinesCount++;
+        }
+
+        // ColorSpace
+        if (!string.IsNullOrEmpty(e.Item.Details.ColorSpace))
+        {
+            sb.AppendLine($"{Config.Language[$"{langPath}._{nameof(IgMetadata.ColorSpace)}"]}: {e.Item.Details.ColorSpace}");
+            tooltipLinesCount++;
+        }
+
+        // ColorProfile
+        if (!string.IsNullOrEmpty(e.Item.Details.ColorProfile))
+        {
+            sb.AppendLine($"{Config.Language[$"{langPath}._{nameof(IgMetadata.ColorProfile)}"]}: {e.Item.Details.ColorProfile}");
             tooltipLinesCount++;
         }
 

@@ -144,6 +144,15 @@ public class IgLang : Dictionary<string, string>
         Add("_._UserAction._MethodNotFound", "Cannot find method '{0}' to invoke its action."); // v9.0
         Add("_._UserAction._MethodArgumentNotSupported", "The argument type of method '{0}' is not supported."); // v9.0
 
+        // Gallery tooltip
+        Add($"_.Metadata._{nameof(IgMetadata.FileSize)}", "File size"); //v9.0
+        Add($"_.Metadata._{nameof(IgMetadata.FileCreationTime)}", "Date created"); //v9.0
+        Add($"_.Metadata._{nameof(IgMetadata.FileLastAccessTime)}", "Date accessed"); //v9.0
+        Add($"_.Metadata._{nameof(IgMetadata.FileLastWriteTime)}", "Date modified"); //v9.0
+        Add($"_.Metadata._{nameof(IgMetadata.FramesCount)}", "Frames"); //v9.0
+        Add($"_.Metadata._{nameof(IgMetadata.ExifRatingPercent)}", "Rating"); //v9.0
+        Add($"_.Metadata._{nameof(IgMetadata.ColorSpace)}", "Color space"); //v9.0
+        Add($"_.Metadata._{nameof(IgMetadata.ColorProfile)}", "Color profile"); //v9.0
 
 
         #region FrmMain
@@ -350,10 +359,9 @@ public class IgLang : Dictionary<string, string>
 
         Add("FrmMain._ReachedFirstImage", "Reached the first image"); // v4.0
         Add("FrmMain._ReachedLastLast", "Reached the last image"); // v4.0
-                                                                   //Add("FrmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); // Added V5.0; Modified V6.0
-                                                                   //Add("FrmMain._SetLockImage_Error", "There was an error while setting lock screen image"); // v6.0
-                                                                   //Add("FrmMain._SetLockImage_Success", "Lock screen image was set successfully"); //v6.0
-
+        //Add("FrmMain._CannotRotateAnimatedFile", "Modification for animated format is not supported"); // Added V5.0; Modified V6.0
+        //Add("FrmMain._SetLockImage_Error", "There was an error while setting lock screen image"); // v6.0
+        //Add("FrmMain._SetLockImage_Success", "Lock screen image was set successfully"); //v6.0
 
         //Add("FrmMain._PageExtractComplete", "Page extraction completed."); // v7.5
 
@@ -362,14 +370,6 @@ public class IgLang : Dictionary<string, string>
 
 
         #endregion
-
-        // Gallery tooltip
-        Add($"FrmMain.Gallery.Tooltip._{nameof(IgMetadata.FileSize)}", "File size"); //v9.0
-        Add($"FrmMain.Gallery.Tooltip._{nameof(IgMetadata.FileCreationTime)}", "Date created"); //v9.0
-        Add($"FrmMain.Gallery.Tooltip._{nameof(IgMetadata.FileLastAccessTime)}", "Date accessed"); //v9.0
-        Add($"FrmMain.Gallery.Tooltip._{nameof(IgMetadata.FileLastWriteTime)}", "Date modified"); //v9.0
-        Add($"FrmMain.Gallery.Tooltip._{nameof(IgMetadata.FramesCount)}", "Frames"); //v9.0
-        Add($"FrmMain.Gallery.Tooltip._Rating", "Rating"); //v9.0
 
 
         #endregion
@@ -566,7 +566,7 @@ public class IgLang : Dictionary<string, string>
         #endregion
 
         #region TAB Tools
-        
+
         //Add("FrmSetting.lblDefaultColorCode", "Default color code format when copying"); //v5.0
 
         //Add("FrmSetting.chkShowPageNavAuto", "Auto-show Page navigation tool for multi-page image"); //v7.5

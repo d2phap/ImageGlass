@@ -864,7 +864,6 @@ public static class PhotoCodec
     /// Processes single-frame Magick image
     /// </summary>
     /// <param name="refImgM">Input Magick image to process</param>
-    /// <returns></returns>
     private static (IColorProfile? ColorProfile, IExifProfile? ExifProfile, MagickImage? ThumbM) ProcessMagickImage(MagickImage refImgM, CodecReadOptions options, string ext, bool requestThumbnail)
     {
         IColorProfile? colorProfile = null;
