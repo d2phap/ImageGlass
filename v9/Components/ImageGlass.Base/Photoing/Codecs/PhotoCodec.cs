@@ -920,6 +920,13 @@ public static class PhotoCodec
                         imgColor);
                 }
             }
+
+
+            // make sure the output color space is not CMYK
+            if (refImgM.ColorSpace == ColorSpace.CMYK)
+            {
+                refImgM.ColorSpace = ColorSpace.sRGB;
+            }
         }
 
 
