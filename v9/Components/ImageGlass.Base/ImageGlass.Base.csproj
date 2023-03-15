@@ -93,4 +93,8 @@
       <PackageReference Include="WicNet" Version="1.6.4.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ImageGlass.Webp\ImageGlass.WebP.csproj" />
+    </ItemGroup>
+
 </Project>
