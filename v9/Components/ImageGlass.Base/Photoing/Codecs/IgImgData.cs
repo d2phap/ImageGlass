@@ -47,8 +47,6 @@ public class IgImgData : IDisposable
             Bitmap?.Dispose();
             Bitmap = null;
 
-            ExifProfile = null;
-            ColorProfile = null;
             FrameCount = 0;
             HasAlpha = false;
             CanAnimate = false;
@@ -82,8 +80,6 @@ public class IgImgData : IDisposable
     public int FrameCount { get; set; } = 0;
     public bool HasAlpha { get; set; } = false;
     public bool CanAnimate { get; set; } = false;
-    public IExifProfile? ExifProfile { get; set; } = null;
-    public IColorProfile? ColorProfile { get; set; } = null;
 
 
     public IgImgData() { }
@@ -95,8 +91,6 @@ public class IgImgData : IDisposable
     public IgImgData(IgMagickReadData data)
     {
         FrameCount = data.FrameCount;
-        ColorProfile = data.ColorProfile;
-        ExifProfile = data.ExifProfile;
 
         if (data.MultiFrameImage != null)
         {

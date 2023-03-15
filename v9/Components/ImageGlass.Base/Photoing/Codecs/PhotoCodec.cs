@@ -83,9 +83,9 @@ public static class PhotoCodec
             if (imgC.Count > 0)
             {
                 using var imgM = imgC[0];
-                var exifProfile = imgM.GetExifProfile();
 
-                if (exifProfile != null)
+                // EXIF profile
+                if (imgM.GetExifProfile() is IExifProfile exifProfile)
                 {
                     // ExifRatingPercent
                     meta.ExifRatingPercent = GetExifValue(exifProfile, ExifTag.RatingPercent);
@@ -97,7 +97,6 @@ public static class PhotoCodec
                     // ExifDateTime
                     dt = GetExifValue(exifProfile, ExifTag.DateTime);
                     meta.ExifDateTime = BHelper.ConvertDateTime(dt);
-
 
                     meta.ExifArtist = GetExifValue(exifProfile, ExifTag.Artist);
                     meta.ExifCopyright = GetExifValue(exifProfile, ExifTag.Copyright);
@@ -122,6 +121,12 @@ public static class PhotoCodec
                         : rational.Numerator / rational.Denominator;
                 }
 
+                // Color profile
+                if (imgM.GetColorProfile() is IColorProfile colorProfile)
+                {
+                    meta.ColorProfile = colorProfile.ColorSpace.ToString();
+                }
+
                 meta.Width = imgM.Width;
                 meta.Height = imgM.Height;
 
@@ -130,6 +135,7 @@ public static class PhotoCodec
 
                 meta.HasAlpha = imgC.Any(i => i.HasAlpha);
                 meta.CanAnimate = imgC.Count > 1 && imgC.Any(i => i.AnimationDelay > 0);
+                meta.ColorSpace = imgM.ColorSpace.ToString();
             }
         }
         catch { }

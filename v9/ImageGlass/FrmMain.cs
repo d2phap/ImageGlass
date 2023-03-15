@@ -680,7 +680,7 @@ public partial class FrmMain : ModernForm
             Local.CurrentIndex = -1;
             Local.Metadata = null;
 
-            UpdateImageInfo(ImageInfoUpdateTypes.All);
+            LoadImageInfo(ImageInfoUpdateTypes.All);
 
             return;
         }
@@ -885,7 +885,7 @@ public partial class FrmMain : ModernForm
             ShowImagePreview(e.FilePath, _loadCancelToken.Token);
         }
 
-        _ = Task.Run(() => UpdateImageInfo(ImageInfoUpdateTypes.All, e.FilePath));
+        _ = Task.Run(() => LoadImageInfo(ImageInfoUpdateTypes.All, e.FilePath));
     }
 
 
@@ -960,7 +960,7 @@ public partial class FrmMain : ModernForm
 
 
         _isShowingImagePreview = false;
-        UpdateImageInfo(ImageInfoUpdateTypes.Dimension | ImageInfoUpdateTypes.FramesCount);
+        LoadImageInfo(ImageInfoUpdateTypes.Dimension | ImageInfoUpdateTypes.FramesCount);
     }
 
     private void Local_ImageListLoaded(ImageListLoadedEventArgs e)
@@ -970,7 +970,7 @@ public partial class FrmMain : ModernForm
             UpdateCurrentIndex(e.FilePath);
         }
 
-        UpdateImageInfo(ImageInfoUpdateTypes.ListCount);
+        LoadImageInfo(ImageInfoUpdateTypes.ListCount);
 
         // Load thumnbnail
         _ = BHelper.RunAsThread(LoadThumbnails);
@@ -1123,14 +1123,14 @@ public partial class FrmMain : ModernForm
 
 
     /// <summary>
-    /// Update image info in status bar
+    /// Loads image info in status bar
     /// </summary>
-    public void UpdateImageInfo(ImageInfoUpdateTypes types = ImageInfoUpdateTypes.All,
+    public void LoadImageInfo(ImageInfoUpdateTypes types = ImageInfoUpdateTypes.All,
         string? filename = null)
     {
         if (InvokeRequired)
         {
-            Invoke(UpdateImageInfo, types, filename);
+            Invoke(LoadImageInfo, types, filename);
             return;
         }
 
@@ -1352,6 +1352,32 @@ public partial class FrmMain : ModernForm
                 }
 
                 ImageInfo.DateTimeAuto = dtStr;
+            }
+
+            // ColorSpace
+            if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ColorSpace))
+            {
+                if (Config.InfoItems.Contains(nameof(ImageInfo.ColorSpace))
+                    && Local.Metadata != null
+                    && !string.IsNullOrEmpty(Local.Metadata.ColorSpace))
+                {
+                    var colorProfile = !string.IsNullOrEmpty(Local.Metadata.ColorProfile)
+                        ? Local.Metadata.ColorProfile
+                        : "-";
+
+                    if (Local.Metadata.ColorSpace.Equals(colorProfile, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        ImageInfo.ColorSpace = Local.Metadata.ColorSpace;
+                    }
+                    else
+                    {
+                        ImageInfo.ColorSpace = $"{Local.Metadata.ColorSpace}/{colorProfile}";
+                    }
+                }
+                else
+                {
+                    ImageInfo.ColorSpace = string.Empty;
+                }
             }
 
         }

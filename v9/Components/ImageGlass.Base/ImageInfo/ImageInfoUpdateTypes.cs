@@ -43,4 +43,5 @@ public enum ImageInfoUpdateTypes
     ExifDateTimeOriginal = 1 << 13,
 
     ExifRating = 1 << 14,
+    ColorSpace = 1 << 15,
 }

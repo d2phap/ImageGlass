@@ -56,6 +56,9 @@ public class IgMetadata
     public bool HasAlpha { get; set; } = false;
     public bool CanAnimate { get; set; } = false;
 
+    public string ColorSpace { get; set; } = string.Empty;
+    public string ColorProfile { get; set; } = string.Empty;
+
 
     // EXIF metadata
     public int ExifRatingPercent { get; set; } = 0;

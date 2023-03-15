@@ -172,7 +172,7 @@ public partial class FrmMain
             Local.Images.SetFileName(imgIndex, newFilePath);
 
             // Update status bar title
-            UpdateImageInfo(ImageInfoUpdateTypes.Name | ImageInfoUpdateTypes.Path);
+            LoadImageInfo(ImageInfoUpdateTypes.Name | ImageInfoUpdateTypes.Path);
 
             try
             {
@@ -261,7 +261,7 @@ public partial class FrmMain
         Gallery.Refresh();
 
         // File count has changed - update title bar
-        UpdateImageInfo(ImageInfoUpdateTypes.ListCount);
+        LoadImageInfo(ImageInfoUpdateTypes.ListCount);
 
         // display the file just added
         if (Config.ShouldAutoOpenNewAddedImage)

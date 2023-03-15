@@ -164,6 +164,7 @@ public static class Config
         nameof(ImageInfo.Zoom),
         nameof(ImageInfo.Dimension),
         nameof(ImageInfo.FileSize),
+        nameof(ImageInfo.ColorSpace),
         nameof(ImageInfo.ExifRating),
         nameof(ImageInfo.DateTimeAuto),
         nameof(ImageInfo.AppName),

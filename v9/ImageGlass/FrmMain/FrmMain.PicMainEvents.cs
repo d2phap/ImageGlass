@@ -357,7 +357,7 @@ public partial class FrmMain
             FitWindowToImage(false);
         }
 
-        UpdateImageInfo(ImageInfoUpdateTypes.Zoom);
+        LoadImageInfo(ImageInfoUpdateTypes.Zoom);
     }
 
 }
