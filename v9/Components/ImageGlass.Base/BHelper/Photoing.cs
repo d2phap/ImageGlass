@@ -25,6 +25,7 @@ using System.Drawing.Imaging;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using WicNet;
 using ColorProfile = ImageMagick.ColorProfile;
@@ -52,7 +53,15 @@ public partial class BHelper
         var obj = Marshal.GetObjectForIUnknown(srcHandle.DangerousGetHandle());
 
         var wicSrc = new WicBitmapSource(obj);
-        wicSrc.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+        try
+        {
+            wicSrc.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+        }
+        catch (InvalidOperationException)
+        {
+            // cannot convert format
+            return null;
+        }
 
         return wicSrc;
     }
@@ -66,7 +75,16 @@ public partial class BHelper
         if (bmp == null) return null;
 
         var wicSrc = WicBitmapSource.FromHBitmap(bmp.GetHbitmap());
-        wicSrc.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+
+        try
+        {
+            wicSrc.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+        }
+        catch (InvalidOperationException)
+        {
+            // cannot convert format
+            return null;
+        }
 
         return wicSrc;
     }
@@ -92,7 +110,15 @@ public partial class BHelper
         if (stream == null) return null;
 
         var wicSrc = WicBitmapSource.Load(stream);
-        wicSrc.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+        try
+        {
+            wicSrc.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+        }
+        catch (InvalidOperationException)
+        {
+            // cannot convert format
+            return null;
+        }
 
         return wicSrc;
     }
@@ -146,7 +172,15 @@ public partial class BHelper
 
         if (src == null) return null;
 
-        src.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+        try
+        {
+            src.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+        }
+        catch (InvalidOperationException)
+        {
+            // cannot convert format
+            return null;
+        }
         return src;
     }
 
@@ -171,6 +205,33 @@ public partial class BHelper
           PixelFormat.Format32bppPArgb);
 
         source.CopyPixels(data.Height * data.Stride, data.Scan0, data.Stride);
+
+        bmp.UnlockBits(data);
+
+        return bmp;
+    }
+
+
+    /// <summary>
+    /// Converts <see cref="BitmapSource"/> to <see cref="Bitmap"/>.
+    /// https://stackoverflow.com/a/2897325/2856887
+    /// </summary>
+    public static Bitmap? ToGdiPlusBitmap(BitmapSource? source)
+    {
+        if (source == null)
+            return null;
+
+        var bmp = new Bitmap(
+          (int)source.Width,
+          (int)source.Height,
+          PixelFormat.Format32bppPArgb);
+
+        var data = bmp.LockBits(
+          new Rectangle(new(0, 0), bmp.Size),
+          ImageLockMode.WriteOnly,
+          PixelFormat.Format32bppPArgb);
+
+        source.CopyPixels(Int32Rect.Empty, data.Scan0, data.Height * data.Stride, data.Stride);
 
         bmp.UnlockBits(data);
 

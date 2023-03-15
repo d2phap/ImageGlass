@@ -2994,8 +2994,9 @@ public class DXCanvas : DXControl
     {
         CanImageAnimate = imgData?.CanAnimate ?? false;
         HasAlphaPixels = imgData?.HasAlpha ?? false;
+        var hasGdiPlusSource = imgData?.Bitmap != null;
 
-        if (CanImageAnimate)
+        if (CanImageAnimate || hasGdiPlusSource)
         {
             SourceWidth = imgData?.Bitmap?.Width ?? 0;
             SourceHeight = imgData?.Bitmap?.Height ?? 0;
@@ -3009,7 +3010,7 @@ public class DXCanvas : DXControl
         var exceedMaxDimention = SourceWidth > Constants.MAX_IMAGE_DIMENSION
             || SourceHeight > Constants.MAX_IMAGE_DIMENSION;
 
-        UseHardwareAcceleration = !CanImageAnimate && !exceedMaxDimention;
+        UseHardwareAcceleration = !hasGdiPlusSource && !CanImageAnimate && !exceedMaxDimention;
     }
 
     private void OnImageFrameChanged(object? sender, EventArgs eventArgs)

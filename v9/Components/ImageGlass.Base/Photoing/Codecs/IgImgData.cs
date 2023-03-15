@@ -110,14 +110,26 @@ public class IgImgData : IDisposable
             }
             else
             {
-                using var bmp = data.MultiFrameImage.ToBitmap(ImageFormat.Tiff);
-                Image = BHelper.ToWicBitmapSource(bmp);
+                Bitmap = data.MultiFrameImage.ToBitmap(ImageFormat.Tiff);
+                Image = BHelper.ToWicBitmapSource(Bitmap);
+
+                if (Image != null)
+                {
+                    Bitmap.Dispose();
+                    Bitmap = null;
+                }
             }
         }
         else
         {
-            Image = BHelper.ToWicBitmapSource(data.SingleFrameImage?.ToBitmapSource());
             HasAlpha = data.SingleFrameImage?.HasAlpha ?? false;
+            Image = BHelper.ToWicBitmapSource(data.SingleFrameImage?.ToBitmapSourceWithDensity());
+
+            // fall back to GDI+ Bitmap
+            if (Image == null)
+            {
+                Bitmap = data.SingleFrameImage.ToBitmapWithDensity();
+            }
         }
     }
 }
