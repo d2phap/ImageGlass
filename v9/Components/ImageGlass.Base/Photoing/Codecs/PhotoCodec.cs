@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using DirectN;
+using ImageGlass.WebP;
 using ImageMagick;
 using ImageMagick.Formats;
 using System.Runtime.CompilerServices;
@@ -50,6 +51,7 @@ public static class PhotoCodec
         }
         catch { }
         if (fi == null) return meta;
+        var ext = fi.Extension.ToLowerInvariant();
 
         meta.FileName = fi.Name;
         meta.FileExtension = fi.Extension.ToUpperInvariant();
@@ -134,7 +136,8 @@ public static class PhotoCodec
                 meta.OriginalHeight = imgM.BaseHeight;
 
                 meta.HasAlpha = imgC.Any(i => i.HasAlpha);
-                meta.CanAnimate = imgC.Count > 1 && imgC.Any(i => i.AnimationDelay > 0);
+                meta.CanAnimate = imgC.Count > 1
+                    && imgC.Any(i => i.GifDisposeMethod != GifDisposeMethod.Undefined);
                 meta.ColorSpace = imgM.ColorSpace.ToString();
             }
         }
@@ -685,6 +688,28 @@ public static class PhotoCodec
                     {
                         result.Image = WicBitmapSource.Load(filePath);
                     }
+                }
+                catch
+                {
+                    loadSuccessful = false;
+                }
+                break;
+
+            case ".WEBP":
+                try
+                {
+                    using var webp = new WebPWrapper();
+                    var aniWebP = webp.AnimLoad(filePath);
+
+                    var ms = new MemoryStream();
+                    using var gif = new GifEncoder(ms);
+
+                    foreach (var frame in aniWebP)
+                    {
+                        gif.AddFrame(frame.Bitmap, frameDelay: TimeSpan.FromMilliseconds(frame.Duration));
+                    }
+
+                    result.Bitmap = new Bitmap(ms);
                 }
                 catch
                 {
