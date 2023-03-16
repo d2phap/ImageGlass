@@ -9,30 +9,31 @@
   </PropertyGroup>
 
     <ItemGroup>
-        <Content Include="libwebp_x64.dll">
+        <ContentWithTargetPath Include="..\..\Libs\libwebp\x64\libwebp.dll">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="libwebp_x86.dll">
+            <TargetPath>libwebp.dll</TargetPath>
+        </ContentWithTargetPath>
+        <None Include="..\..\Libs\libwebp\x64\libwebp.dll" />
+
+
+        <ContentWithTargetPath Include="..\..\Libs\libwebp\x64\libsharpyuv.dll">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="x64\libwebp.dll">
+            <TargetPath>libsharpyuv.dll</TargetPath>
+        </ContentWithTargetPath>
+        <None Include="..\..\Libs\libwebp\x64\libsharpyuv.dll" />
+
+        <ContentWithTargetPath Include="..\..\Libs\libwebp\x64\libwebpdecoder.dll">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="x64\libwebpdecoder.dll">
+            <TargetPath>libwebpdecoder.dll</TargetPath>
+        </ContentWithTargetPath>
+        <None Include="..\..\Libs\libwebp\x64\libwebpdecoder.dll" />
+
+        <ContentWithTargetPath Include="..\..\Libs\libwebp\x64\libwebpdemux.dll">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="x64\libwebpdemux.dll">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="x86\libwebp.dll">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="x86\libwebpdecoder.dll">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-        <Content Include="x86\libwebpdemux.dll">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
+            <TargetPath>libwebpdemux.dll</TargetPath>
+        </ContentWithTargetPath>
+        <None Include="..\..\Libs\libwebp\x64\libwebpdemux.dll" />
+        
     </ItemGroup>
 
 </Project>
