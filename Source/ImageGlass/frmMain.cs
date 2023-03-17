@@ -2259,7 +2259,9 @@ namespace ImageGlass {
             picMain.HorizontalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
             picMain.VerticalScrollBarStyle = ImageBoxScrollBarStyle.Hide;
 
-            WindowState = FormWindowState.Normal;
+            if (WindowState == FormWindowState.Maximized) {
+                WindowState = FormWindowState.Normal;
+            }
 
             // get current screen
             var screen = Screen.FromControl(this);
@@ -4030,6 +4032,8 @@ namespace ImageGlass {
         }
 
         private void picMain_Zoomed(object sender, ImageBoxZoomEventArgs e) {
+            if (e.Source == ImageBoxActionSources.Unknown) return;
+
             _isManuallyZoomed = true;
 
             // Handle window fit after zoom change
