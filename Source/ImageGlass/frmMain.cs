@@ -4514,15 +4514,17 @@ namespace ImageGlass {
             Local.IsBusy = isBusy;
 
             if (isBusy) {
-                sp0.Cursor = Cursors.WaitCursor;
                 KeyPreview = false;
 
                 if (!string.IsNullOrEmpty(msg)) {
-                    ShowToastMsg(msg, msgDuration, msgDelay);
+                    try {
+                        await Task.Delay(msgDelay, _busyCancelToken.Token);
+                        ShowToastMsg(msg, msgDuration);
+                    }
+                    catch { }
                 }
             }
             else {
-                sp0.Cursor = Cursors.Default;
                 ShowToastMsg(msg, 0);
             }
 
