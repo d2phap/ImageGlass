@@ -102,16 +102,13 @@ public partial class FrmMain
 
     protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
     {
-        // theme mode is changed, need to load the corresponding theme pack
-        Config.LoadThemePack(e.IsDarkMode, true, true);
+        base.OnRequestUpdatingColorMode(e);
 
         // load the theme icons
         OnDpiChanged();
 
         // apply theme to controls
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
-
-        base.OnRequestUpdatingColorMode(e);
     }
 
 }

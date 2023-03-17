@@ -32,7 +32,7 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace igcmd.Slideshow;
 
-public partial class FrmSlideshow : ModernForm
+public partial class FrmSlideshow : ThemedForm
 {
     private PipeClient _client;
     private string _serverName;
@@ -182,16 +182,13 @@ public partial class FrmSlideshow : ModernForm
 
     protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
     {
-        // theme mode is changed, need to load the corresponding theme pack
-        Config.LoadThemePack(e.IsDarkMode, true, true);
+        base.OnRequestUpdatingColorMode(e);
 
         // load the theme icons
         OnDpiChanged();
 
         // apply theme to controls
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
-
-        base.OnRequestUpdatingColorMode(e);
     }
 
 

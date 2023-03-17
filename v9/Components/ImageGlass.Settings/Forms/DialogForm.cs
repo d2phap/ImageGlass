@@ -28,7 +28,7 @@ namespace ImageGlass.Settings;
 /// <summary>
 /// Dialog form with theme support.
 /// </summary>
-public partial class DialogForm : ModernForm
+public partial class DialogForm : ThemedForm
 {
     private bool _showAcceptButton = true;
     private bool _showCancelButton = true;
@@ -295,11 +295,11 @@ public partial class DialogForm : ModernForm
 
     protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
     {
+        base.OnRequestUpdatingColorMode(e);
+
         // update theme
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
         Invalidate(true);
-
-        base.OnRequestUpdatingColorMode(e);
     }
 
 

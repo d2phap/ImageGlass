@@ -23,7 +23,7 @@ using System.Diagnostics;
 
 namespace ImageGlass;
 
-public partial class FrmSettings : ModernForm
+public partial class FrmSettings : ThemedForm
 {
     public FrmSettings()
     {
@@ -51,10 +51,10 @@ public partial class FrmSettings : ModernForm
 
     protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
     {
+        base.OnRequestUpdatingColorMode(e);
+
         // apply theme to controls
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
-
-        base.OnRequestUpdatingColorMode(e);
     }
 
 

@@ -25,7 +25,7 @@ namespace ImageGlass.Settings;
 /// <summary>
 /// Common functionalities for floating tool window
 /// </summary>
-public partial class ToolForm : ModernForm
+public partial class ToolForm : ThemedForm
 {
     protected Form _currentOwner;
 
@@ -197,11 +197,11 @@ public partial class ToolForm : ModernForm
 
     protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
     {
+        base.OnRequestUpdatingColorMode(e);
+
         // update theme
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
         Invalidate(true);
-
-        base.OnRequestUpdatingColorMode(e);
     }
 
 

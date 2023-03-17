@@ -32,7 +32,7 @@ using WicNet;
 
 namespace ImageGlass;
 
-public partial class FrmMain : ModernForm
+public partial class FrmMain : ThemedForm
 {
     // cancellation tokens of synchronious task
     private CancellationTokenSource _loadCancelToken = new();

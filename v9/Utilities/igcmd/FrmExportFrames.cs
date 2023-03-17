@@ -89,15 +89,6 @@ public partial class FrmExportFrames : DialogForm
     }
 
 
-    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
-    {
-        // theme mode is changed, need to load the corresponding theme pack
-        Config.LoadThemePack(e.IsDarkMode, true, true);
-
-        base.OnRequestUpdatingColorMode(e);
-    }
-
-
     protected override int OnUpdateHeight(bool performUpdate = true)
     {
         var baseHeight = base.OnUpdateHeight(false);
