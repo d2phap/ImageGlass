@@ -39,10 +39,11 @@ set FILES[8]=ImageGlass.Library.dll
 set FILES[9]=ImageGlass.Services.dll
 set FILES[10]=ImageGlass.Settings.dll
 set FILES[11]=ImageGlass.UI.dll
+set FILES[12]=ImageGlass.WebP.dll
 
-set FILES[12]=bs-sdk.dll
-set FILES[13]=FileWatcherEx.dll
-set FILES[14]=ExplorerSortOrder.dll
+set FILES[13]=bs-sdk.dll
+set FILES[14]=FileWatcherEx.dll
+set FILES[15]=ExplorerSortOrder.dll
 
 
 :: C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x64\signtool.exe
