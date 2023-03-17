@@ -625,8 +625,8 @@ namespace ImageGlass {
             }
 
             // Save previous image if it was modified
-            if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating) {
-                _ = SaveImageChangeAsync();
+            if (ShouldSaveImage()) {
+                await SaveImageChangeAsync(true);
 
                 // remove the old image data from cache
                 Local.ImageList.Unload(Local.CurrentIndex);
@@ -3364,7 +3364,7 @@ namespace ImageGlass {
             // Save image if it was modified
             if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating) {
                 var confirmSave = MessageBox.Show(
-                    Configs.Language.Items[$"{Name}._SaveConfirm"],
+                    string.Format(Configs.Language.Items[$"{Name}._SaveConfirm"], Local.ImageModifiedPath),
                     Configs.Language.Items[$"{Name}.{nameof(mnuSaveImage)}"],
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
