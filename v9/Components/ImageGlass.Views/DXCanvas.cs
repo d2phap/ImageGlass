@@ -1868,7 +1868,7 @@ public class DXCanvas : DXControl
 
 
         // draw background
-        var bgColor = BackColor.WithAlpha(200);
+        var bgColor = ForeColor.InvertBlackOrWhite(200);
         g.DrawRectangle(bgRegion, MessageBorderRadius, bgColor, bgColor);
 
 
