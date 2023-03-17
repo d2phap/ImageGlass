@@ -349,7 +349,9 @@ namespace ImageGlass.Library {
             Items.Add("frmMain._CutFileText", "Cut {0} file(s)"); // v2.0 final
             Items.Add("frmMain._CopyImageData", "Image was copied to clipboard"); // v5.0
             Items.Add("frmMain._ClearClipboard", "Clipboard was cleared"); // v2.0 final
-            Items.Add("frmMain._SaveConfirm", "Do you want to save the viewing image?\r\n{0}\r\n\r\nImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."); // v8.8
+            Items.Add("frmMain._SaveConfirm", "Do you want to save this image?\r\n{0}"); // v8.8
+            Items.Add("frmMain._SaveOverrideConfirm", "Are you sure you want to override this image?\r\n{0}"); // v8.8
+            Items.Add("frmMain._SaveDescription", "ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."); // v8.8
             Items.Add("frmMain._SaveImage", "Image was saved to\r\n{0}"); // v5.0
             Items.Add("frmMain._SavingImage", "Saving image...\r\n{0}"); // v7.6
             Items.Add("frmMain._SaveImageError", "Unable to save image\r\n{0}."); // v5.0

@@ -3364,7 +3364,9 @@ namespace ImageGlass {
             // Save image if it was modified
             if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating) {
                 var confirmSave = MessageBox.Show(
-                    string.Format(Configs.Language.Items[$"{Name}._SaveConfirm"], Local.ImageModifiedPath),
+                    string.Format(Configs.Language.Items[$"{Name}._SaveConfirm"], Local.ImageModifiedPath) +
+                    "\r\n\r\n" +
+                    Configs.Language.Items[$"{Name}._SaveDescription"],
                     Configs.Language.Items[$"{Name}.{nameof(mnuSaveImage)}"],
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
@@ -4661,8 +4663,19 @@ namespace ImageGlass {
                 return;
             }
 
-            Local.ImageModifiedPath = currentFile;
-            _ = SaveImageChangeAsync(true);
+
+            var confirmSave = MessageBox.Show(
+                    string.Format(Configs.Language.Items[$"{Name}._SaveOverrideConfirm"], currentFile) +
+                    "\r\n\r\n" +
+                    Configs.Language.Items[$"{Name}._SaveDescription"],
+                    Configs.Language.Items[$"{Name}.{nameof(mnuSaveImage)}"],
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+            if (confirmSave == DialogResult.Yes) {
+                Local.ImageModifiedPath = currentFile;
+                _ = SaveImageChangeAsync(true);
+            }
         }
 
         private void mnuMainSaveAs_Click(object sender, EventArgs e) {
