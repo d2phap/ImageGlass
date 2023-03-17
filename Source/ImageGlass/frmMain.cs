@@ -3266,7 +3266,7 @@ namespace ImageGlass {
             }
         }
 
-        private async void frmMain_FormClosing(object sender, FormClosingEventArgs e) {
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e) {
             // wait for task done
             if (Local.IsBusy) {
                 e.Cancel = true;
@@ -3284,7 +3284,13 @@ namespace ImageGlass {
                     var processCount = Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName).Length;
 
                     if (processCount > 1) {
-                        await PrepareToExitAppAsync();
+                        if (ShouldSaveImage()) {
+                            e.Cancel = true;
+                            _ = SaveImageChangeAsync(true);
+                        }
+                        else {
+                            PrepareToExitApp();
+                        }
 
                         return;
                     }
@@ -3299,7 +3305,13 @@ namespace ImageGlass {
 
             // close the app
             else {
-                await PrepareToExitAppAsync();
+                if (ShouldSaveImage()) {
+                    e.Cancel = true;
+                    _ = SaveImageChangeAsync(true);
+                }
+                else {
+                    PrepareToExitApp();
+                }
             }
         }
 
@@ -3348,15 +3360,27 @@ namespace ImageGlass {
             }
         }
 
-        private async Task PrepareToExitAppAsync() {
+        private bool ShouldSaveImage() {
+            // Save image if it was modified
+            if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating) {
+                var confirmSave = MessageBox.Show(
+                    Configs.Language.Items[$"{Name}._SaveConfirm"],
+                    Configs.Language.Items[$"{Name}.{nameof(mnuSaveImage)}"],
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (confirmSave == DialogResult.Yes) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void PrepareToExitApp() {
             try {
                 // release resource of the file system watcher
                 _fileWatcher.Dispose();
-
-                // Save image if it was modified
-                if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating) {
-                    await SaveImageChangeAsync(true);
-                }
 
                 // clear temp files
                 var tempDir = App.ConfigDir(PathType.Dir, Dir.Temporary);
