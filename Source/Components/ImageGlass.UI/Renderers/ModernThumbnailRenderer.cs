@@ -79,6 +79,7 @@ namespace ImageGlass.UI.Renderers {
                 bounds.Y + itemMargin.Height),
                 new(bounds.Width - itemMargin.Width, bounds.Height - 2 * itemMargin.Height));
 
+
             // on selected
             if ((state & ItemState.Selected) != ItemState.None) {
                 using var brush = new SolidBrush(theme.AccentColor);
