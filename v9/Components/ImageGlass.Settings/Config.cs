@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using DirectN;
 using ImageGlass.Base;
 using ImageGlass.Base.Actions;
 using ImageGlass.Base.PhotoBox;
@@ -24,6 +25,7 @@ using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageGlass.UI;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Win32;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Media;
@@ -40,6 +42,8 @@ public static class Config
 
     #region Internal properties
     private static readonly Source _source = new();
+    private static CancellationTokenSource _requestUpdatingColorModeCancelToken = new();
+
 
     /// <summary>
     /// Gets the default set of toolbar buttons
@@ -175,6 +179,14 @@ public static class Config
     /// Gets, sets current theme.
     /// </summary>
     public static IgTheme Theme { get; set; } = new();
+
+
+    /// <summary>
+    /// Occurs when the system app color is changed and does not match the current <see cref="Theme"/>'s dark mode.
+    /// </summary>
+    public static event RequestUpdatingColorModeHandler? RequestUpdatingColorMode;
+    public delegate void RequestUpdatingColorModeHandler(SystemColorModeChangedEventArgs e);
+
 
     #endregion
 
@@ -1122,6 +1134,9 @@ public static class Config
 
         // initialize Magick.NET
         PhotoCodec.InitMagickNET();
+
+        // listen to system events
+        SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
     }
 
 
@@ -1560,6 +1575,7 @@ public static class Config
     }
 
 
+    // ImageFormats
     #region ImageFormats
 
     /// <summary>
@@ -1597,8 +1613,55 @@ public static class Config
         return sb.ToString();
     }
 
-    #endregion
+    #endregion // ImageFormats
 
+
+    // System events
+    #region System events
+
+    private static void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
+    {
+        // User settings changed:
+        // - Color mode: dark / light
+        // - Transparency
+        // - Accent color
+        // - others...
+        if (e.Category == UserPreferenceCategory.General)
+        {
+            DelayTriggerRequestUpdatingColorModeEvent();
+        }
+    }
+
+
+    /// <summary>
+    /// Delays triggering <see cref="RequestUpdatingColorMode"/> event.
+    /// </summary>
+    private static void DelayTriggerRequestUpdatingColorModeEvent()
+    {
+        _requestUpdatingColorModeCancelToken.Cancel();
+        _requestUpdatingColorModeCancelToken = new();
+
+        _ = TriggerRequestUpdatingColorModeEventAsync(_requestUpdatingColorModeCancelToken.Token);
+    }
+
+
+    /// <summary>
+    /// Triggers <see cref="RequestUpdatingColorMode"/> event.
+    /// </summary>
+    private static async Task TriggerRequestUpdatingColorModeEventAsync(CancellationToken token = default)
+    {
+        try
+        {
+            // since the message is triggered multiple times (3 - 5 times)
+            await Task.Delay(200, token);
+            token.ThrowIfCancellationRequested();
+
+            // emit event here
+            RequestUpdatingColorMode?.Invoke(new SystemColorModeChangedEventArgs(WinColorsApi.IsDarkMode));
+        }
+        catch (OperationCanceledException) { }
+    }
+    #endregion // System events
 
     #endregion
 

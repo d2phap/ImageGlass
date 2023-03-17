@@ -33,7 +33,6 @@ public partial class ModernForm : Form
     private Padding _backdropMargin = new(-1);
     private int _dpi = DpiApi.DPI_DEFAULT;
     private CancellationTokenSource _systemAccentColorChangedCancelToken = new();
-    private CancellationTokenSource _requestUpdatingColorModeCancelToken = new();
 
 
     #region Public properties
@@ -152,13 +151,6 @@ public partial class ModernForm : Form
     public event SystemAccentColorChangedHandler? SystemAccentColorChanged;
     public delegate void SystemAccentColorChangedHandler(SystemAccentColorChangedEventArgs e);
 
-
-    /// <summary>
-    /// Occurs when the system app color is changed and does not match the <see cref="DarkMode"/> value.
-    /// </summary>
-    public event RequestUpdatingColorModeHandler? RequestUpdatingColorMode;
-    public delegate void RequestUpdatingColorModeHandler(SystemColorModeChangedEventArgs e);
-
     #endregion // Public properties
 
 
@@ -171,8 +163,6 @@ public partial class ModernForm : Form
         SizeGripStyle = SizeGripStyle.Hide;
 
         _dpi = DeviceDpi;
-
-        SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
     }
 
 
@@ -250,16 +240,6 @@ public partial class ModernForm : Form
         {
             Invalidate(true);
         }
-    }
-
-
-    /// <summary>
-    /// Triggers <see cref="RequestUpdatingColorMode"/> event.
-    /// </summary>
-    protected virtual void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
-    {
-        // emits the event
-        RequestUpdatingColorMode?.Invoke(e);
     }
 
 
@@ -396,50 +376,6 @@ public partial class ModernForm : Form
         if (darkModeProp == null) return;
 
         darkModeProp.SetValue(c, darkMode);
-    }
-
-
-    private void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
-    {
-        // User settings changed:
-        // - Color mode: dark / light
-        // - Transparency
-        // - Accent color
-        // - others...
-        if (e.Category == UserPreferenceCategory.General)
-        {
-            DelayTriggerRequestUpdatingColorModeEvent();
-        }
-    }
-
-
-    /// <summary>
-    /// Delays triggering <see cref="RequestUpdatingColorMode"/> event.
-    /// </summary>
-    private void DelayTriggerRequestUpdatingColorModeEvent()
-    {
-        _requestUpdatingColorModeCancelToken.Cancel();
-        _requestUpdatingColorModeCancelToken = new();
-
-        _ = TriggerRequestUpdatingColorModeEventAsync(_requestUpdatingColorModeCancelToken.Token);
-    }
-
-
-    /// <summary>
-    /// Triggers <see cref="RequestUpdatingColorMode"/> event.
-    /// </summary>
-    private async Task TriggerRequestUpdatingColorModeEventAsync(CancellationToken token = default)
-    {
-        try
-        {
-            // since the message is triggered multiple times (3 - 5 times)
-            await Task.Delay(200, token);
-            token.ThrowIfCancellationRequested();
-
-            // emit event here
-            OnRequestUpdatingColorMode(new SystemColorModeChangedEventArgs());
-        }
-        catch (OperationCanceledException) { }
     }
 
 
