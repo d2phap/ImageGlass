@@ -1,0 +1,21 @@
+Build instructions for libwebp.dll 
+==================================
+
+Current version : 1.2.1
+
+Download libwebp-{version}.tar.gz from the downloads list at http://downloads.webmproject.org/releases/webp 
+and extract its contents.
+
+Run "x86 Native Tools Command Prompt for VS2019"
+
+Change to the libwebp-{version} directory, run:
+
+nmake /f Makefile.vc CFG=release-dynamic RTLIBCFG=static OBJDIR=output
+
+Run "x64 Native Tools Command Prompt for VS2019"
+
+Change to the libwebp-{version} directory, run:
+
+nmake /f Makefile.vc CFG=release-dynamic RTLIBCFG=static OBJDIR=output
+
+Copy to x86 and x64 directories from /output/bin/
