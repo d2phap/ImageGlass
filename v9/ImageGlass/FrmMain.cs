@@ -36,6 +36,7 @@ public partial class FrmMain : ThemedForm
 {
     // cancellation tokens of synchronious task
     private CancellationTokenSource _loadCancelToken = new();
+    private IProgress<ProgressReporterEventArgs> _uiReporter;
     private MovableForm _movableForm;
     private bool _isShowingImagePreview = false;
 
@@ -50,6 +51,9 @@ public partial class FrmMain : ThemedForm
     public FrmMain() : base()
     {
         InitializeComponent();
+
+        // initialize UI thread reporter
+        _uiReporter = new Progress<ProgressReporterEventArgs>(ReportToUIThread);
 
         // update the DpiApi when DPI changed.
         EnableDpiApiUpdate = true;
@@ -67,9 +71,7 @@ public partial class FrmMain : ThemedForm
     {
         SetupFileWatcher();
 
-        Local.ImageLoading += Local_ImageLoading;
         Local.ImageListLoaded += Local_ImageListLoaded;
-        Local.ImageLoaded += Local_ImageLoaded;
         Local.FirstImageReached += Local_FirstImageReached;
         Local.LastImageReached += Local_LastImageReached;
         Local.ImageTransform.Changed += ImageTransform_Changed;
@@ -291,6 +293,7 @@ public partial class FrmMain : ThemedForm
         // execute action
         ExecuteUserAction(tagModel.OnClick);
     }
+
 
 
     #region Image Loading functions
@@ -781,12 +784,12 @@ public partial class FrmMain : ThemedForm
             ? Local.Images.GetFilePath(Local.CurrentIndex)
             : filename;
 
-        Local.RaiseImageLoadingEvent(new ImageLoadingEventArgs()
+        _uiReporter.Report(new(new ImageLoadingEventArgs()
         {
-            CurrentIndex = Local.CurrentIndex,
+            Index = Local.CurrentIndex,
             NewIndex = imageIndex,
             FilePath = imgFilePath,
-        });
+        }, nameof(Local.RaiseImageLoadingEvent)));
 
 
         try
@@ -824,14 +827,14 @@ public partial class FrmMain : ThemedForm
                 token?.Token.ThrowIfCancellationRequested();
 
 
-                Local.RaiseImageLoadedEvent(new ImageLoadedEventArgs()
+                _uiReporter.Report(new(new ImageLoadedEventArgs()
                 {
                     Index = imageIndex,
                     FilePath = imgFilePath,
                     Data = photo,
                     Error = photo?.Error,
                     ResetZoom = resetZoom,
-                });
+                }, nameof(Local.RaiseImageLoadedEvent)));
             }
 
         }
@@ -839,11 +842,11 @@ public partial class FrmMain : ThemedForm
         {
             Local.Images.CancelLoading(imageIndex);
 
-            Local.RaiseImageUnloadedEvent(new ImageUnloadedEventArgs()
+            _uiReporter.Report(new(new ImageEventArgs()
             {
                 Index = imageIndex,
                 FilePath = imgFilePath,
-            });
+            }, nameof(Local.RaiseImageUnloadedEvent)));
         }
 
         Local.IsBusy = false;
@@ -879,13 +882,42 @@ public partial class FrmMain : ThemedForm
 
 
     #region Local.Images event
+    private void ReportToUIThread(ProgressReporterEventArgs e)
+    {
+        // Image is being loaded
+        if (e.Type.Equals(nameof(Local.RaiseImageLoadingEvent), StringComparison.InvariantCultureIgnoreCase)
+            && e.Data is ImageLoadingEventArgs e1)
+        {
+            Local.RaiseImageLoadingEvent(e1);
+            HandleImageProgress_Loading(e1);
+            return;
+        }
 
-    private void Local_ImageLoading(ImageLoadingEventArgs e)
+        // Image is loaded
+        if (e.Type.Equals(nameof(Local.RaiseImageLoadedEvent), StringComparison.InvariantCultureIgnoreCase)
+            && e.Data is ImageLoadedEventArgs e2)
+        {
+            Local.RaiseImageLoadedEvent(e2);
+            HandleImageProgress_Loaded(e2);
+            return;
+        }
+
+        // Image is unloaded
+        if (e.Type.Equals(nameof(Local.RaiseImageUnloadedEvent), StringComparison.InvariantCultureIgnoreCase)
+            && e.Data is ImageEventArgs e3)
+        {
+            Local.RaiseImageUnloadedEvent(e3);
+            return;
+        }
+    }
+
+
+    private void HandleImageProgress_Loading(ImageLoadingEventArgs e)
     {
         Local.IsImageError = false;
 
         PicMain.ClearMessage();
-        if (e.CurrentIndex >= 0 || !string.IsNullOrEmpty(e.FilePath))
+        if (e.Index >= 0 || !string.IsNullOrEmpty(e.FilePath))
         {
             PicMain.ShowMessage(Config.Language[$"{Name}._Loading"], "", delayMs: 1500);
         }
@@ -904,14 +936,8 @@ public partial class FrmMain : ThemedForm
 
 
     [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP007:Don't dispose injected", Justification = "<Pending>")]
-    private void Local_ImageLoaded(ImageLoadedEventArgs e)
+    private void HandleImageProgress_Loaded(ImageLoadedEventArgs e)
     {
-        if (InvokeRequired)
-        {
-            Invoke(Local_ImageLoaded, e);
-            return;
-        }
-
         // image error
         if (e.Error != null)
         {
@@ -976,6 +1002,7 @@ public partial class FrmMain : ThemedForm
         _isShowingImagePreview = false;
         LoadImageInfo(ImageInfoUpdateTypes.Dimension | ImageInfoUpdateTypes.FramesCount);
     }
+
 
     private void Local_ImageListLoaded(ImageListLoadedEventArgs e)
     {
