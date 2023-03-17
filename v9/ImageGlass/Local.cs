@@ -62,13 +62,13 @@ internal class Local
     /// Occurs when the first image is reached.
     /// </summary>
     public static event FirstImageReachedHandler? FirstImageReached;
-    public delegate void FirstImageReachedHandler();
+    public delegate void FirstImageReachedHandler(ImageEventArgs e);
 
     /// <summary>
     /// Occurs when the last image is reached.
     /// </summary>
     public static event LastImageReachedHandler? LastImageReached;
-    public delegate void LastImageReachedHandler();
+    public delegate void LastImageReachedHandler(ImageEventArgs e);
 
     /// <summary>
     /// Occurs when the FrmMain's state needs to be updated.
@@ -134,18 +134,18 @@ internal class Local
     /// <summary>
     /// Raise <see cref="FirstImageReached"/> event.
     /// </summary>
-    public static void RaiseFirstImageReachedEvent()
+    public static void RaiseFirstImageReachedEvent(ImageEventArgs e)
     {
-        FirstImageReached?.Invoke();
+        FirstImageReached?.Invoke(e);
     }
 
 
     /// <summary>
     /// Raise <see cref="LastImageReached"/> event.
     /// </summary>
-    public static void RaiseLastImageReachedEvent()
+    public static void RaiseLastImageReachedEvent(ImageEventArgs e)
     {
-        LastImageReached?.Invoke();
+        LastImageReached?.Invoke(e);
     }
 
 

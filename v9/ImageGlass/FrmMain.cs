@@ -71,11 +71,8 @@ public partial class FrmMain : ThemedForm
     {
         SetupFileWatcher();
 
-        Local.ImageListLoaded += Local_ImageListLoaded;
-        Local.FirstImageReached += Local_FirstImageReached;
-        Local.LastImageReached += Local_LastImageReached;
-        Local.ImageTransform.Changed += ImageTransform_Changed;
 
+        Local.ImageTransform.Changed += ImageTransform_Changed;
         Application.ApplicationExit += Application_ApplicationExit;
 
         LoadImagesFromCmdArgs(Environment.GetCommandLineArgs());
@@ -497,10 +494,11 @@ public partial class FrmMain : ThemedForm
             // Find the index of current image
             UpdateCurrentIndex(currentFilePath);
 
-            Local.RaiseImageListLoadedEvent(new()
+
+            _uiReporter.Report(new(new ImageListLoadedEventArgs()
             {
                 FilePath = currentFilePath,
-            });
+            }, nameof(Local.RaiseImageListLoadedEvent)));
         });
     }
 
@@ -722,6 +720,7 @@ public partial class FrmMain : ThemedForm
 
         // temp index
         var imageIndex = Local.CurrentIndex + step;
+        var oldImgPath = Local.Images.GetFilePath(Local.CurrentIndex);
 
 
         if (Local.Images.Length > 0)
@@ -729,23 +728,26 @@ public partial class FrmMain : ThemedForm
             // Reach end of list
             if (imageIndex >= Local.Images.Length)
             {
-                Local.RaiseLastImageReachedEvent();
-
-                if (!Config.EnableLoopBackNavigation)
+                _uiReporter.Report(new(new ImageEventArgs()
                 {
-                    return;
-                }
+                    Index = Local.CurrentIndex,
+                    FilePath = oldImgPath,
+                }, nameof(Local.RaiseLastImageReachedEvent)));
+
+                if (!Config.EnableLoopBackNavigation) return;
             }
 
             // Reach the first image of list
             if (imageIndex < 0)
             {
-                Local.RaiseFirstImageReachedEvent();
-
-                if (!Config.EnableLoopBackNavigation)
+                _uiReporter.Report(new(new ImageEventArgs()
                 {
-                    return;
-                }
+                    Index = Local.CurrentIndex,
+                    FilePath = oldImgPath,
+                }, nameof(Local.RaiseFirstImageReachedEvent)));
+
+
+                if (!Config.EnableLoopBackNavigation) return;
             }
         }
 
@@ -881,7 +883,9 @@ public partial class FrmMain : ThemedForm
     #endregion // Image Loading functions
 
 
-    #region Local.Images event
+    // UI reporter
+    #region UI reporter
+
     private void ReportToUIThread(ProgressReporterEventArgs e)
     {
         // Image is being loaded
@@ -907,6 +911,33 @@ public partial class FrmMain : ThemedForm
             && e.Data is ImageEventArgs e3)
         {
             Local.RaiseImageUnloadedEvent(e3);
+            return;
+        }
+
+        // Image list is loaded
+        if (e.Type.Equals(nameof(Local.RaiseImageListLoadedEvent), StringComparison.InvariantCultureIgnoreCase)
+            && e.Data is ImageListLoadedEventArgs e4)
+        {
+            Local.RaiseImageListLoadedEvent(e4);
+            HandleImageList_Loaded(e4);
+            return;
+        }
+
+        // the first image is reached
+        if (e.Type.Equals(nameof(Local.RaiseFirstImageReachedEvent), StringComparison.InvariantCultureIgnoreCase)
+            && e.Data is ImageEventArgs e5)
+        {
+            Local.RaiseFirstImageReachedEvent(e5);
+            HandleImage_FirstReached();
+            return;
+        }
+
+        // the last image is reached
+        if (e.Type.Equals(nameof(Local.RaiseLastImageReachedEvent), StringComparison.InvariantCultureIgnoreCase)
+            && e.Data is ImageEventArgs e6)
+        {
+            Local.RaiseLastImageReachedEvent(e6);
+            HandleImage_LastReached();
             return;
         }
     }
@@ -1004,7 +1035,7 @@ public partial class FrmMain : ThemedForm
     }
 
 
-    private void Local_ImageListLoaded(ImageListLoadedEventArgs e)
+    private void HandleImageList_Loaded(ImageListLoadedEventArgs e)
     {
         if (!string.IsNullOrEmpty(e.FilePath))
         {
@@ -1014,10 +1045,11 @@ public partial class FrmMain : ThemedForm
         LoadImageInfo(ImageInfoUpdateTypes.ListCount);
 
         // Load thumnbnail
-        _ = BHelper.RunAsThread(LoadThumbnails);
+        BHelper.RunAsThread(LoadThumbnails);
     }
 
-    private void Local_FirstImageReached()
+
+    private void HandleImage_FirstReached()
     {
         if (!Config.EnableLoopBackNavigation)
         {
@@ -1026,7 +1058,8 @@ public partial class FrmMain : ThemedForm
         }
     }
 
-    private void Local_LastImageReached()
+
+    private void HandleImage_LastReached()
     {
         if (!Config.EnableLoopBackNavigation)
         {
@@ -1034,6 +1067,7 @@ public partial class FrmMain : ThemedForm
                 Config.InAppMessageDuration);
         }
     }
+
 
     private void ImageTransform_Changed(object? sender, EventArgs e)
     {
@@ -1062,7 +1096,8 @@ public partial class FrmMain : ThemedForm
         }
     }
 
-    #endregion // Local.Images event
+
+    #endregion // UI reporter
 
 
     /// <summary>
