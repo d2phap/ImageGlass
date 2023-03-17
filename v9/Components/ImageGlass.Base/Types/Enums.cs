@@ -57,6 +57,7 @@ public enum PathType
 {
     File,
     Dir,
+    Unknown,
 }
 
 

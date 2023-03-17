@@ -1653,7 +1653,7 @@ public static class Config
         try
         {
             // since the message is triggered multiple times (3 - 5 times)
-            await Task.Delay(200, token);
+            await Task.Delay(100, token);
             token.ThrowIfCancellationRequested();
 
             // emit event here

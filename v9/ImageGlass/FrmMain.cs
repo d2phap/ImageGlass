@@ -319,7 +319,7 @@ public partial class FrmMain : ThemedForm
 
         if (string.IsNullOrEmpty(pathToLoad)
             && Config.ShouldOpenLastSeenImage
-            && File.Exists(Config.LastSeenImagePath))
+            && BHelper.CheckPath(Config.LastSeenImagePath) == PathType.File)
         {
             pathToLoad = Config.LastSeenImagePath;
         }
@@ -341,10 +341,12 @@ public partial class FrmMain : ThemedForm
     public void PrepareLoading(string inputPath)
     {
         var path = BHelper.ResolvePath(inputPath);
-
         if (string.IsNullOrEmpty(path)) return;
 
-        if (BHelper.IsDirectory(path))
+        var pathType = BHelper.CheckPath(path);
+        if (pathType == PathType.Unknown) return;
+
+        if (pathType == PathType.Dir)
         {
             _ = PrepareLoadingAsync(new string[] { inputPath }, "");
         }
@@ -371,7 +373,7 @@ public partial class FrmMain : ThemedForm
 
         if (string.IsNullOrEmpty(currentFile))
         {
-            filePath = paths.AsParallel().FirstOrDefault(i => !BHelper.IsDirectory(i));
+            filePath = paths.AsParallel().FirstOrDefault(i => BHelper.CheckPath(i) == PathType.File);
             filePath = BHelper.ResolvePath(filePath);
         }
 
@@ -424,17 +426,13 @@ public partial class FrmMain : ThemedForm
 
             foreach (var aPath in distinctDirsList)
             {
-                var dirPath = aPath;
-                var isDir = false;
+                var pathType = BHelper.CheckPath(aPath);
+                if (pathType == PathType.Unknown) continue;
 
-                try
-                {
-                    isDir = BHelper.IsDirectory(aPath);
-                }
-                catch { continue; }
+                var dirPath = aPath;
 
                 // path is directory
-                if (isDir)
+                if (pathType == PathType.Dir)
                 {
                     // Issue #415: If the folder name ends in ALT+255 (alternate space),
                     // DirectoryInfo strips it.

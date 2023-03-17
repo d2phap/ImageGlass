@@ -106,8 +106,6 @@ public partial class BHelper
     /// <summary>
     /// Get distinct directories list from paths list.
     /// </summary>
-    /// <param name="pathList">Paths list</param>
-    /// <returns></returns>
     public static List<string> GetDistinctDirsFromPaths(IEnumerable<string> pathList)
     {
         if (!pathList.Any())
@@ -119,25 +117,30 @@ public partial class BHelper
 
         foreach (var path in pathList)
         {
-            if (File.Exists(path))
+            var pathType = CheckPath(path);
+            if (pathType == PathType.Unknown) continue;
+
+            if (pathType == PathType.Dir)
+            {
+                hashedDirsList.Add(path);
+            }
+            else
             {
                 string dir;
                 if (string.Equals(Path.GetExtension(path), ".lnk", StringComparison.CurrentCultureIgnoreCase))
                 {
                     var shortcutPath = FileShortcutApi.GetTargetPathFromShortcut(path);
+                    var shortcutPathType = CheckPath(shortcutPath);
+                    if (shortcutPathType == PathType.Unknown) continue;
 
                     // get the DIR path of shortcut target
-                    if (File.Exists(shortcutPath))
-                    {
-                        dir = Path.GetDirectoryName(shortcutPath) ?? "";
-                    }
-                    else if (Directory.Exists(shortcutPath))
+                    if (shortcutPathType == PathType.Dir)
                     {
                         dir = shortcutPath;
                     }
                     else
                     {
-                        continue;
+                        dir = Path.GetDirectoryName(shortcutPath) ?? "";
                     }
                 }
                 else
@@ -147,30 +150,32 @@ public partial class BHelper
 
                 hashedDirsList.Add(dir);
             }
-            else if (Directory.Exists(path))
-            {
-                hashedDirsList.Add(path);
-            }
-            else
-            {
-                continue;
-            }
         }
 
         return hashedDirsList.ToList();
     }
 
 
-    /// <summary>
-    /// Checks whether the input path is a directory
-    /// </summary>
-    /// <param name="path"></param>
-    /// <returns></returns>
-    public static bool IsDirectory(string path)
-    {
-        var attrs = File.GetAttributes(path);
 
-        return attrs.HasFlag(FileAttributes.Directory);
+    /// <summary>
+    /// Checks type of the path.
+    /// </summary>
+    public static PathType CheckPath(string path)
+    {
+        try
+        {
+            var attrs = File.GetAttributes(path);
+
+            if (attrs.HasFlag(FileAttributes.Directory))
+            {
+                return PathType.Dir;
+            }
+
+            return PathType.File;
+        }
+        catch { }
+
+        return PathType.Unknown;
     }
 
 
