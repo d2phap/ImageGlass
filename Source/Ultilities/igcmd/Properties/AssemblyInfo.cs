@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Duong Dieu Phap")]
 [assembly: AssemblyProduct("igcmd - ImageGlass commands")]
-[assembly: AssemblyCopyright("Copyright © 2013-2022 Duong Dieu Phap")]
+[assembly: AssemblyCopyright("Copyright © 2013-2023 Duong Dieu Phap")]
 [assembly: AssemblyTrademark("ImageGlass")]
 [assembly: AssemblyCulture("")]
 

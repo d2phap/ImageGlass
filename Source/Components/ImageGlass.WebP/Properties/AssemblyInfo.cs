@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ImageGlass.WebP")]
 [assembly: AssemblyDescription("WebP wrapper for ImageGlass")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Duong Dieu Phap")]
 [assembly: AssemblyProduct("ImageGlass.WebP")]
 [assembly: AssemblyCopyright("Copyright © Duong Dieu Phap 2023")]
 [assembly: AssemblyTrademark("")]
