@@ -56,7 +56,7 @@ internal class Local
     /// Occurs when the image is unloaded.
     /// </summary>
     public static event ImageUnloadedHandler? ImageUnloaded;
-    public delegate void ImageUnloadedHandler(ImageUnloadedEventArgs e);
+    public delegate void ImageUnloadedHandler(ImageEventArgs e);
 
     /// <summary>
     /// Occurs when the first image is reached.
@@ -122,7 +122,7 @@ internal class Local
     /// <summary>
     /// Raise <see cref="ImageUnloaded"/> event.
     /// </summary>
-    public static void RaiseImageUnloadedEvent(ImageUnloadedEventArgs e)
+    public static void RaiseImageUnloadedEvent(ImageEventArgs e)
     {
         ImageUnloaded?.Invoke(e);
 

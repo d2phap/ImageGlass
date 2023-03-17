@@ -18,39 +18,57 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using ImageGlass.Base.Photoing.Codecs;
+using System;
 
 namespace ImageGlass.Base;
 
-public class ImageLoadingEventArgs
+
+public class ImageEventArgs : EventArgs
 {
-    public int CurrentIndex { get; init; }
-    public int NewIndex { get; init; }
+    /// <summary>
+    /// Gets the current viewing image's index.
+    /// </summary>
+    public int Index { get; init; }
+
+    /// <summary>
+    /// Gets the current viewing image's path.
+    /// </summary>
     public string? FilePath { get; init; }
 }
 
-public class ImageLoadedEventArgs
+public class ImageLoadingEventArgs : ImageEventArgs
 {
-    public int Index { get; init; }
+    /// <summary>
+    /// Gets the loading image's index.
+    /// </summary>
+    public int NewIndex { get; init; }
+}
 
-    public string? FilePath { get; init; }
+public class ImageLoadedEventArgs : ImageEventArgs
+{
+    /// <summary>
+    /// Gets the loaded image data.
+    /// </summary>
     public IgPhoto? Data { get; init; }
+
+    /// <summary>
+    /// Gets the laoded image error.
+    /// </summary>
     public Exception? Error { get; init; }
+
+    /// <summary>
+    /// Gets the value indicating that the viewer should reset zoom value.
+    /// </summary>
     public bool ResetZoom { get; init; }
 }
 
-public class ImageUnloadedEventArgs
-{
-    public int Index { get; init; }
-    public string? FilePath { get; init; }
-}
-
-public class ImageListLoadedEventArgs
+public class ImageListLoadedEventArgs : EventArgs
 {
     public string? FilePath { get; init; }
 }
 
 
-public class SlideshowWindowClosedEventArgs
+public class SlideshowWindowClosedEventArgs : EventArgs
 {
     public int SlideshowIndex { get; init; }
 
@@ -61,7 +79,7 @@ public class SlideshowWindowClosedEventArgs
 }
 
 
-public class ImageSaveEventArgs
+public class ImageSaveEventArgs : EventArgs
 {
     public string SrcFilePath { get; init; }
     public string DestFilePath { get; init; }

@@ -121,7 +121,7 @@ public partial class FrmMain
 
             Local.Images.Unload(Local.CurrentIndex);
 
-            Local.RaiseImageUnloadedEvent(new ImageUnloadedEventArgs()
+            Local.RaiseImageUnloadedEvent(new ImageEventArgs()
             {
                 Index = Local.CurrentIndex,
                 FilePath = Local.Images.GetFilePath(Local.CurrentIndex),
