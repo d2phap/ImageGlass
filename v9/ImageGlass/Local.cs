@@ -399,7 +399,7 @@ internal class Local
         // start tool client
         var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
         var args = tool.Argument?.Replace(Constants.FILE_MACRO, $"\"{filePath}\"");
-        _ = BHelper.RunExeCmd($"{tool.Executable}", $"-EnableWindowTopMost={Config.EnableWindowTopMost} {args}", false);
+        _ = BHelper.RunExeCmd($"{tool.Executable}", $"-{ImageGlassTool.CMD_WINDOW_TOP_MOST}={Config.EnableWindowTopMost} {args}", false);
 
         // wait for client connection
         await toolServer.WaitForConnectionAsync();
@@ -453,9 +453,6 @@ internal class Local
         if (toolServer.ServerStream.IsConnected)
         {
             await toolServer.SendAsync(ToolServerMsgs.TOOL_TERMINATE);
-
-            // wait for 3 seconds for client to disconnect
-            await Task.Delay(3000);
         }
 
         // remove tool server

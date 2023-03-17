@@ -31,4 +31,10 @@ public static class ImageGlassTool
     /// This constant is auto-inserted in between message name and message data.
     /// </summary>
     public static string MSG_SEPARATOR => "{:<IG_TOOL>:}";
+
+    /// <summary>
+    /// Gets the command-line for enabling window top most.
+    /// </summary>
+    public static string CMD_WINDOW_TOP_MOST => "EnableWindowTopMost";
+
 }
