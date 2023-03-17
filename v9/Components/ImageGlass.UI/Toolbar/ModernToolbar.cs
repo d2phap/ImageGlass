@@ -487,6 +487,8 @@ public class ModernToolbar : ToolStrip
 
         if (Theme is null) return;
 
+        SuspendLayout();
+
         // update toolbar theme
         BackColor = Theme.Colors.ToolbarBgColor;
         ForeColor = Theme.Colors.ToolbarTextColor;
@@ -526,6 +528,8 @@ public class ModernToolbar : ToolStrip
 
         // update items alignment
         UpdateAlignment();
+
+        ResumeLayout(false);
     }
 
 

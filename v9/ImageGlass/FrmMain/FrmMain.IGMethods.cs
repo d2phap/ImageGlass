@@ -541,6 +541,8 @@ public partial class FrmMain
     {
         if (!Config.ShowThumbnails) return;
 
+        Gallery.SuspendLayout();
+
         var scrollBarSize = this.ScaleToDpi(1.5f); // random gap
         if (Gallery.ScrollBars && Gallery.HScrollBar.Visible)
         {
@@ -574,6 +576,7 @@ public partial class FrmMain
                 + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Height * 6.5f);
         }
 
+        Gallery.ResumeLayout(false);
     }
 
 
