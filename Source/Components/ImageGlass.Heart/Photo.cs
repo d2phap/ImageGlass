@@ -24,6 +24,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ImageGlass.WebP;
 using ImageMagick;
 using ImageMagick.Formats;
 
@@ -147,6 +148,27 @@ namespace ImageGlass.Heart {
                     }
                     break;
 
+                case ".WEBP":
+                    try {
+                        using var webp = new WebPWrapper();
+                        var aniWebP = webp.AnimLoad(filename);
+
+                        var ms = new MemoryStream();
+                        using var gif = new GifEncoder(ms);
+
+                        foreach (var frame in aniWebP) {
+                            gif.AddFrame(frame.Bitmap, frameDelay: TimeSpan.FromMilliseconds(frame.Duration));
+                        }
+
+                        bitmap = new Bitmap(ms);
+                    }
+                    catch {
+                        // #637: falls over with certain images, fallback to MagickImage
+                        ReadWithMagickImage();
+                    }
+                    break;
+
+
 
                 default:
                     ReadWithMagickImage();
@@ -236,17 +258,11 @@ namespace ImageGlass.Heart {
                 if (imgColl.Count > 1 && forceLoadFirstPage is false) {
                     imgColl.Read(filename, settings);
 
-                    // convert WEBP to GIF for animation
-                    if (ext == ".WEBP") {
-                        bitmap = imgColl.ToBitmap(ImageFormat.Gif);
-                    }
-                    else {
-                        foreach (var imgPageM in imgColl) {
-                            (exif, colorProfile) = PreprocesMagickImage((MagickImage)imgPageM);
-                        }
+                    Parallel.ForEach(imgColl, (imgPageM) => {
+                        (exif, colorProfile) = PreprocesMagickImage((MagickImage)imgPageM);
+                    });
 
-                        bitmap = imgColl.ToBitmap();
-                    }
+                    bitmap = imgColl.ToBitmap();
 
                     return;
                 }

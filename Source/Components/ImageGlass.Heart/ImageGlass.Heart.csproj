@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="BitmapBooster.cs" />
     <Compile Include="Factory.cs" />
+    <Compile Include="GifEncoder.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Img.cs" />
     <Compile Include="ImgData.cs" />
@@ -125,6 +126,10 @@
     <ProjectReference Include="..\ImageGlass.Library\ImageGlass.Library.csproj">
       <Project>{4BB719ED-B68B-4CB1-AAAF-BA0E3BC5FE81}</Project>
       <Name>ImageGlass.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageGlass.WebP\ImageGlass.WebP.csproj">
+      <Project>{86ce01e1-a747-4db1-a834-2065ffaced0f}</Project>
+      <Name>ImageGlass.WebP</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
