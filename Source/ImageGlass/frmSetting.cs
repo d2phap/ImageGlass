@@ -1534,7 +1534,7 @@ namespace ImageGlass {
             UpdateExifToolCommandPreview();
         }
 
-        private void lnkSelectExifTool_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+        private async void lnkSelectExifTool_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             var ofd = new OpenFileDialog() {
                 CheckFileExists = true,
                 Filter = "exiftool.exe file|*.exe",
@@ -1543,7 +1543,7 @@ namespace ImageGlass {
             if (ofd.ShowDialog() == DialogResult.OK) {
                 var exif = new ExifToolWrapper(ofd.FileName);
 
-                if (!exif.CheckExists()) {
+                if (!await exif.CheckExistAsync()) {
                     var msg = string.Format(
                         Configs.Language.Items[$"{Name}.{nameof(lnkSelectExifTool)}._NotFound"],
                         ofd.FileName);
