@@ -71,9 +71,9 @@ namespace ImageGlass.UI.Renderers {
             }
 
             g.SmoothingMode = SmoothingMode.HighQuality;
-            var borderRadius = Helpers.IsOS(WindowsOS.Win11) ? 5 : 1;
+            var borderRadius = Helpers.IsOS(WindowsOS.Win11) ? DPIScaling.Transform(5) : 1;
             var itemPadding = new Size(0, 0);
-            var itemMargin = new Size(0, 5);
+            var itemMargin = new Size(DPIScaling.Transform(2), DPIScaling.Transform(4));
             var itemBounds = new Rectangle(new(
                 bounds.X,
                 bounds.Y + itemMargin.Height),

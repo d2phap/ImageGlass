@@ -2352,7 +2352,7 @@ namespace ImageGlass {
             var fontY = bgY + (bgSize.Height / 2) - (fontSize.Height / 2);
 
             // draw background
-            var borderRadius = Helpers.IsOS(WindowsOS.Win11) ? 10 : 1;
+            var borderRadius = Helpers.IsOS(WindowsOS.Win11) ? DPIScaling.Transform(10) : 1;
             using var bgBrush = new SolidBrush(Color.FromArgb(150, picMain.BackColor));
             using var path = Theme.GetRoundRectanglePath(new RectangleF(bgX, bgY, bgSize.Width, bgSize.Height), borderRadius);
             e.Graphics.FillPath(bgBrush, path);
