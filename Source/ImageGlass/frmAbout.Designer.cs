@@ -44,6 +44,7 @@
             this.picStoreApp = new System.Windows.Forms.PictureBox();
             this.tab1 = new ImageGlass.UI.NakedTabControl();
             this.tpInfo = new System.Windows.Forms.TabPage();
+            this.lnkPrivacy = new System.Windows.Forms.LinkLabel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lnkCollaborator = new System.Windows.Forms.LinkLabel();
@@ -53,7 +54,7 @@
             this.lblCopyright = new System.Windows.Forms.Label();
             this.lblUpdate = new System.Windows.Forms.Label();
             this.lblInfoContact = new System.Windows.Forms.Label();
-            this.lnkFacebook = new System.Windows.Forms.LinkLabel();
+            this.lnkLicense = new System.Windows.Forms.LinkLabel();
             this.lnkEmail = new System.Windows.Forms.LinkLabel();
             this.lnkProjectPage = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
@@ -89,7 +90,7 @@
             this.picLogo.BackColor = System.Drawing.Color.Transparent;
             this.picLogo.Image = ((System.Drawing.Image)(resources.GetObject("picLogo.Image")));
             this.picLogo.Location = new System.Drawing.Point(41, 39);
-            this.picLogo.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.picLogo.Margin = new System.Windows.Forms.Padding(7);
             this.picLogo.MaximumSize = new System.Drawing.Size(159, 159);
             this.picLogo.Name = "picLogo";
             this.picLogo.Size = new System.Drawing.Size(159, 159);
@@ -148,7 +149,7 @@
             // 
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Location = new System.Drawing.Point(987, -73);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(7);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(165, 61);
             this.btnClose.TabIndex = 17;
@@ -176,8 +177,8 @@
             // 
             this.sp0.Panel2.Controls.Add(this.tab1);
             this.sp0.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.sp0.Size = new System.Drawing.Size(1630, 910);
-            this.sp0.SplitterDistance = 250;
+            this.sp0.Size = new System.Drawing.Size(1630, 1192);
+            this.sp0.SplitterDistance = 300;
             this.sp0.SplitterWidth = 7;
             this.sp0.TabIndex = 19;
             // 
@@ -191,14 +192,14 @@
             this.tableLayoutPanel1.Controls.Add(this.lblComponent, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(5);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 537F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(250, 450);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(300, 450);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // lblReferences
@@ -212,7 +213,7 @@
             this.lblReferences.Margin = new System.Windows.Forms.Padding(0);
             this.lblReferences.Name = "lblReferences";
             this.lblReferences.Padding = new System.Windows.Forms.Padding(25, 0, 25, 0);
-            this.lblReferences.Size = new System.Drawing.Size(250, 84);
+            this.lblReferences.Size = new System.Drawing.Size(300, 84);
             this.lblReferences.TabIndex = 20;
             this.lblReferences.Tag = "3";
             this.lblReferences.Text = "References";
@@ -234,7 +235,7 @@
             this.lblInfo.Margin = new System.Windows.Forms.Padding(0);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Padding = new System.Windows.Forms.Padding(25, 0, 25, 0);
-            this.lblInfo.Size = new System.Drawing.Size(250, 84);
+            this.lblInfo.Size = new System.Drawing.Size(300, 84);
             this.lblInfo.TabIndex = 18;
             this.lblInfo.Tag = "1";
             this.lblInfo.Text = "Info";
@@ -256,7 +257,7 @@
             this.lblComponent.Margin = new System.Windows.Forms.Padding(0);
             this.lblComponent.Name = "lblComponent";
             this.lblComponent.Padding = new System.Windows.Forms.Padding(25, 0, 25, 0);
-            this.lblComponent.Size = new System.Drawing.Size(250, 84);
+            this.lblComponent.Size = new System.Drawing.Size(300, 84);
             this.lblComponent.TabIndex = 19;
             this.lblComponent.Tag = "2";
             this.lblComponent.Text = "Components";
@@ -273,10 +274,10 @@
             this.picStoreApp.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picStoreApp.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.picStoreApp.Image = ((System.Drawing.Image)(resources.GetObject("picStoreApp.Image")));
-            this.picStoreApp.Location = new System.Drawing.Point(0, 792);
-            this.picStoreApp.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.picStoreApp.Location = new System.Drawing.Point(0, 1074);
+            this.picStoreApp.Margin = new System.Windows.Forms.Padding(5);
             this.picStoreApp.Name = "picStoreApp";
-            this.picStoreApp.Size = new System.Drawing.Size(250, 118);
+            this.picStoreApp.Size = new System.Drawing.Size(300, 118);
             this.picStoreApp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picStoreApp.TabIndex = 22;
             this.picStoreApp.TabStop = false;
@@ -295,7 +296,7 @@
             this.tab1.Name = "tab1";
             this.tab1.Padding = new System.Drawing.Point(0, 0);
             this.tab1.SelectedIndex = 0;
-            this.tab1.Size = new System.Drawing.Size(1373, 910);
+            this.tab1.Size = new System.Drawing.Size(1323, 1192);
             this.tab1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tab1.TabIndex = 0;
             this.tab1.SelectedIndexChanged += new System.EventHandler(this.tab1_SelectedIndexChanged);
@@ -304,6 +305,7 @@
             // 
             this.tpInfo.AutoScroll = true;
             this.tpInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
+            this.tpInfo.Controls.Add(this.lnkPrivacy);
             this.tpInfo.Controls.Add(this.linkLabel1);
             this.tpInfo.Controls.Add(this.panel2);
             this.tpInfo.Controls.Add(this.lnkCollaborator);
@@ -313,7 +315,7 @@
             this.tpInfo.Controls.Add(this.lblCopyright);
             this.tpInfo.Controls.Add(this.lblUpdate);
             this.tpInfo.Controls.Add(this.lblInfoContact);
-            this.tpInfo.Controls.Add(this.lnkFacebook);
+            this.tpInfo.Controls.Add(this.lnkLicense);
             this.tpInfo.Controls.Add(this.lnkEmail);
             this.tpInfo.Controls.Add(this.lnkProjectPage);
             this.tpInfo.Controls.Add(this.linkLabel2);
@@ -323,9 +325,29 @@
             this.tpInfo.Margin = new System.Windows.Forms.Padding(0);
             this.tpInfo.Name = "tpInfo";
             this.tpInfo.Padding = new System.Windows.Forms.Padding(0, 34, 0, 0);
-            this.tpInfo.Size = new System.Drawing.Size(1365, 853);
+            this.tpInfo.Size = new System.Drawing.Size(1315, 1135);
             this.tpInfo.TabIndex = 0;
             this.tpInfo.Text = "tpInfo";
+            // 
+            // lnkPrivacy
+            // 
+            this.lnkPrivacy.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
+            this.lnkPrivacy.AutoSize = true;
+            this.lnkPrivacy.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lnkPrivacy.ForeColor = System.Drawing.Color.Black;
+            this.lnkPrivacy.LinkArea = new System.Windows.Forms.LinkArea(16, 99);
+            this.lnkPrivacy.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lnkPrivacy.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
+            this.lnkPrivacy.Location = new System.Drawing.Point(97, 885);
+            this.lnkPrivacy.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.lnkPrivacy.Name = "lnkPrivacy";
+            this.lnkPrivacy.Size = new System.Drawing.Size(624, 47);
+            this.lnkPrivacy.TabIndex = 18;
+            this.lnkPrivacy.TabStop = true;
+            this.lnkPrivacy.Text = "Privacy policy: https://imageglass.org/privacy";
+            this.lnkPrivacy.UseCompatibleTextRendering = true;
+            this.lnkPrivacy.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
+            this.lnkPrivacy.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkPrivacy_LinkClicked);
             // 
             // linkLabel1
             // 
@@ -349,8 +371,8 @@
             // 
             // panel2
             // 
-            this.panel2.Location = new System.Drawing.Point(654, 1139);
-            this.panel2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.panel2.Location = new System.Drawing.Point(683, 1063);
+            this.panel2.Margin = new System.Windows.Forms.Padding(5);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(184, 63);
             this.panel2.TabIndex = 17;
@@ -407,7 +429,7 @@
             this.lnkCheckUpdate.LinkArea = new System.Windows.Forms.LinkArea(0, 99);
             this.lnkCheckUpdate.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkCheckUpdate.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkCheckUpdate.Location = new System.Drawing.Point(97, 1008);
+            this.lnkCheckUpdate.Location = new System.Drawing.Point(97, 1045);
             this.lnkCheckUpdate.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.lnkCheckUpdate.Name = "lnkCheckUpdate";
             this.lnkCheckUpdate.Size = new System.Drawing.Size(269, 47);
@@ -435,12 +457,12 @@
             this.lblUpdate.AutoSize = true;
             this.lblUpdate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblUpdate.ForeColor = System.Drawing.Color.Black;
-            this.lblUpdate.Location = new System.Drawing.Point(43, 939);
+            this.lblUpdate.Location = new System.Drawing.Point(43, 978);
             this.lblUpdate.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.lblUpdate.Name = "lblUpdate";
-            this.lblUpdate.Size = new System.Drawing.Size(275, 41);
+            this.lblUpdate.Size = new System.Drawing.Size(262, 41);
             this.lblUpdate.TabIndex = 13;
-            this.lblUpdate.Text = "Software updates:";
+            this.lblUpdate.Text = "Software update:";
             // 
             // lblInfoContact
             // 
@@ -454,25 +476,25 @@
             this.lblInfoContact.TabIndex = 2;
             this.lblInfoContact.Text = "Contact:";
             // 
-            // lnkFacebook
+            // lnkLicense
             // 
-            this.lnkFacebook.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
-            this.lnkFacebook.AutoSize = true;
-            this.lnkFacebook.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lnkFacebook.ForeColor = System.Drawing.Color.Black;
-            this.lnkFacebook.LinkArea = new System.Windows.Forms.LinkArea(10, 99);
-            this.lnkFacebook.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkFacebook.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkFacebook.Location = new System.Drawing.Point(97, 831);
-            this.lnkFacebook.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
-            this.lnkFacebook.Name = "lnkFacebook";
-            this.lnkFacebook.Size = new System.Drawing.Size(689, 47);
-            this.lnkFacebook.TabIndex = 10;
-            this.lnkFacebook.TabStop = true;
-            this.lnkFacebook.Text = "Facebook: https://www.facebook.com/ImageGlass";
-            this.lnkFacebook.UseCompatibleTextRendering = true;
-            this.lnkFacebook.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkFacebook.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkFacebook_LinkClicked);
+            this.lnkLicense.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
+            this.lnkLicense.AutoSize = true;
+            this.lnkLicense.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lnkLicense.ForeColor = System.Drawing.Color.Black;
+            this.lnkLicense.LinkArea = new System.Windows.Forms.LinkArea(9, 99);
+            this.lnkLicense.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lnkLicense.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
+            this.lnkLicense.Location = new System.Drawing.Point(97, 825);
+            this.lnkLicense.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.lnkLicense.Name = "lnkLicense";
+            this.lnkLicense.Size = new System.Drawing.Size(535, 47);
+            this.lnkLicense.TabIndex = 10;
+            this.lnkLicense.TabStop = true;
+            this.lnkLicense.Text = "License: https://imageglass.org/license";
+            this.lnkLicense.UseCompatibleTextRendering = true;
+            this.lnkLicense.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
+            this.lnkLicense.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkLicense_LinkClicked);
             // 
             // lnkEmail
             // 
@@ -503,7 +525,7 @@
             this.lnkProjectPage.LinkArea = new System.Windows.Forms.LinkArea(8, 99);
             this.lnkProjectPage.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkProjectPage.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkProjectPage.Location = new System.Drawing.Point(97, 772);
+            this.lnkProjectPage.Location = new System.Drawing.Point(97, 766);
             this.lnkProjectPage.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.lnkProjectPage.Name = "lnkProjectPage";
             this.lnkProjectPage.Size = new System.Drawing.Size(527, 47);
@@ -575,7 +597,7 @@
             this.tpComponents.Margin = new System.Windows.Forms.Padding(0);
             this.tpComponents.Name = "tpComponents";
             this.tpComponents.Padding = new System.Windows.Forms.Padding(50, 0, 0, 0);
-            this.tpComponents.Size = new System.Drawing.Size(1167, 853);
+            this.tpComponents.Size = new System.Drawing.Size(1365, 853);
             this.tpComponents.TabIndex = 1;
             this.tpComponents.Text = "tpComponents";
             // 
@@ -587,12 +609,12 @@
             this.txtComponents.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txtComponents.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(1)))), ((int)(((byte)(1)))));
             this.txtComponents.Location = new System.Drawing.Point(50, 0);
-            this.txtComponents.Margin = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.txtComponents.Margin = new System.Windows.Forms.Padding(16);
             this.txtComponents.Name = "txtComponents";
             this.txtComponents.ReadOnly = true;
             this.txtComponents.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtComponents.ShortcutsEnabled = false;
-            this.txtComponents.Size = new System.Drawing.Size(1117, 853);
+            this.txtComponents.Size = new System.Drawing.Size(1315, 853);
             this.txtComponents.TabIndex = 4;
             this.txtComponents.Text = "List of components here...";
             // 
@@ -604,7 +626,7 @@
             this.tpReferences.Margin = new System.Windows.Forms.Padding(0);
             this.tpReferences.Name = "tpReferences";
             this.tpReferences.Padding = new System.Windows.Forms.Padding(50, 0, 0, 0);
-            this.tpReferences.Size = new System.Drawing.Size(1167, 853);
+            this.tpReferences.Size = new System.Drawing.Size(1365, 853);
             this.tpReferences.TabIndex = 2;
             this.tpReferences.Text = "tpReferences";
             // 
@@ -616,12 +638,12 @@
             this.txtReferences.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txtReferences.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(1)))), ((int)(((byte)(1)))));
             this.txtReferences.Location = new System.Drawing.Point(50, 0);
-            this.txtReferences.Margin = new System.Windows.Forms.Padding(16, 16, 16, 16);
+            this.txtReferences.Margin = new System.Windows.Forms.Padding(16);
             this.txtReferences.Name = "txtReferences";
             this.txtReferences.ReadOnly = true;
             this.txtReferences.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtReferences.ShortcutsEnabled = false;
-            this.txtReferences.Size = new System.Drawing.Size(1117, 853);
+            this.txtReferences.Size = new System.Drawing.Size(1315, 853);
             this.txtReferences.TabIndex = 3;
             this.txtReferences.Text = resources.GetString("txtReferences.Text");
             // 
@@ -631,7 +653,7 @@
             this.btnDonation.Cursor = System.Windows.Forms.Cursors.Help;
             this.btnDonation.Image = ((System.Drawing.Image)(resources.GetObject("btnDonation.Image")));
             this.btnDonation.Location = new System.Drawing.Point(1490, 39);
-            this.btnDonation.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.btnDonation.Margin = new System.Windows.Forms.Padding(7);
             this.btnDonation.Name = "btnDonation";
             this.btnDonation.Size = new System.Drawing.Size(100, 100);
             this.btnDonation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -652,7 +674,7 @@
             this.panHeader.Margin = new System.Windows.Forms.Padding(0);
             this.panHeader.MinimumSize = new System.Drawing.Size(0, 251);
             this.panHeader.Name = "panHeader";
-            this.panHeader.Padding = new System.Windows.Forms.Padding(34, 34, 34, 34);
+            this.panHeader.Padding = new System.Windows.Forms.Padding(34);
             this.panHeader.Size = new System.Drawing.Size(1630, 251);
             this.panHeader.TabIndex = 22;
             // 
@@ -677,12 +699,12 @@
             this.tableLayoutPanel2.Controls.Add(this.panHeader, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(5);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1630, 1161);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1630, 1443);
             this.tableLayoutPanel2.TabIndex = 23;
             // 
             // frmAbout
@@ -692,14 +714,14 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(165)))), ((int)(((byte)(168)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(1630, 1161);
+            this.ClientSize = new System.Drawing.Size(1630, 1443);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.tableLayoutPanel2);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.Margin = new System.Windows.Forms.Padding(7);
             this.MinimumSize = new System.Drawing.Size(1640, 1184);
             this.Name = "frmAbout";
             this.RightToLeftLayout = true;
@@ -736,7 +758,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.LinkLabel lnkIGHomepage;
         private System.Windows.Forms.LinkLabel lnkProjectPage;
-        private System.Windows.Forms.LinkLabel lnkFacebook;
+        private System.Windows.Forms.LinkLabel lnkLicense;
         private System.Windows.Forms.Label lblUpdate;
         private System.Windows.Forms.LinkLabel lnkCheckUpdate;
         private System.Windows.Forms.Label lblAppName;
@@ -765,5 +787,6 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.PictureBox picStoreApp;
+        private System.Windows.Forms.LinkLabel lnkPrivacy;
     }
 }
