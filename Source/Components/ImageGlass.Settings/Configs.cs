@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ImageGlass.Base;
@@ -450,6 +451,10 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static List<ToolbarButton> ToolbarButtons { get; set; } = Constants.DefaultToolbarButtons;
 
+        /// <summary>
+        /// Gets, sets the list of disabled menus
+        /// </summary>
+        public static List<string> DisabledMenus { get; set; } = new();
 
         #endregion
 
@@ -790,6 +795,11 @@ namespace ImageGlass.Settings {
 
             #endregion
 
+            #region DisabledMenus
+            var menuNamesStr = Get<string>(nameof(DisabledMenus), string.Empty);
+            DisabledMenus = menuNamesStr.Split(";".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+            #endregion
+
             #endregion
 
             #region Other types items
@@ -973,6 +983,7 @@ namespace ImageGlass.Settings {
             Set(nameof(SinglePageFormats), GetImageFormats(SinglePageFormats));
             Set(nameof(KeyComboActions), GetKeyComboActions(KeyComboActions));
             Set(nameof(ToolbarButtons), GetToolbarButtons(ToolbarButtons));
+            Set(nameof(DisabledMenus), string.Join(";", DisabledMenus));
 
             #endregion
 
