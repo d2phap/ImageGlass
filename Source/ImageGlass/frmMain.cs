@@ -2901,6 +2901,8 @@ namespace ImageGlass {
 
                 // auto-focus on hover
                 toolMain.AutoFocus = Configs.AutoFocusToolbarOnHover;
+
+                LoadMenusState();
             }
             #endregion
 
@@ -4351,45 +4353,61 @@ namespace ImageGlass {
             // clear current items
             mnuContext.Items.Clear();
 
-            if (Configs.IsSlideshow && !imageNotFound) {
+            if (Configs.IsSlideshow && !imageNotFound && mnuMainSlideShow.Enabled) {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainSlideShowPause));
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainSlideShowExit));
                 mnuContext.Items.Add(new ToolStripSeparator());
             }
 
             // toolbar menu
-            mnuContext.Items.Add(UI.Menu.Clone(mnuMainToolbar));
-            mnuContext.Items.Add(UI.Menu.Clone(mnuMainAlwaysOnTop));
+            if (mnuMainToolbar.Enabled) {
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainToolbar));
+            }
+            if (mnuMainAlwaysOnTop.Enabled) {
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainAlwaysOnTop));
+            }
 
-            mnuContext.Items.Add(new ToolStripSeparator());
-            mnuContext.Items.Add(UI.Menu.Clone(mnuLoadingOrder));
+            if (mnuLoadingOrder.Enabled) {
+                mnuContext.Items.Add(new ToolStripSeparator());
+                mnuContext.Items.Add(UI.Menu.Clone(mnuLoadingOrder));
+            }
 
             // Get Edit App info
             if (!imageNotFound) {
-                if (!imageError && !Local.IsTempMemoryData && Local.CurrentPageCount <= 1) {
+                if (!imageError
+                    && !Local.IsTempMemoryData
+                    && Local.CurrentPageCount <= 1
+                    && mnuMainChannels.Enabled) {
                     mnuContext.Items.Add(UI.Menu.Clone(mnuMainChannels));
                 }
 
-                mnuContext.Items.Add(new ToolStripSeparator());
-                if (!Helpers.IsOS(WindowsOS.Win7)) {
+                if (!Helpers.IsOS(WindowsOS.Win7) && mnuOpenWith.Enabled) {
+                    mnuContext.Items.Add(new ToolStripSeparator());
                     mnuContext.Items.Add(UI.Menu.Clone(mnuOpenWith));
                 }
 
-                UpdateEditAppInfoForMenu();
-                mnuContext.Items.Add(UI.Menu.Clone(mnuMainEditImage));
+                if (mnuMainEditImage.Enabled) {
+                    UpdateEditAppInfoForMenu();
+                    mnuContext.Items.Add(UI.Menu.Clone(mnuMainEditImage));
+                }
 
                 #region Check if image can animate (GIF)
                 try {
                     if (!imageError && Local.CurrentPageCount > 1) {
-                        var mnu1 = UI.Menu.Clone(mnuMainExtractPages);
-                        mnu1.Text = string.Format(Configs.Language.Items[$"{Name}.mnuMainExtractPages"], Local.CurrentPageCount);
-                        mnu1.Enabled = true;
+                        if (mnuMainExtractPages.Enabled) {
+                            var mnu1 = UI.Menu.Clone(mnuMainExtractPages);
+                            mnu1.Text = string.Format(Configs.Language.Items[$"{Name}.{nameof(mnuMainExtractPages)}"], Local.CurrentPageCount);
+                            mnu1.Enabled = true;
 
-                        var mnu2 = UI.Menu.Clone(mnuMainStartStopAnimating);
-                        mnu2.Enabled = true;
+                            mnuContext.Items.Add(mnu1);
+                        }
 
-                        mnuContext.Items.Add(mnu1);
-                        mnuContext.Items.Add(mnu2);
+                        if (mnuMainStartStopAnimating.Enabled) {
+                            var mnu2 = UI.Menu.Clone(mnuMainStartStopAnimating);
+                            mnu2.Enabled = true;
+
+                            mnuContext.Items.Add(mnu2);
+                        }
                     }
                 }
                 catch { }
@@ -4397,10 +4415,14 @@ namespace ImageGlass {
             }
 
             if (!imageNotFound && !imageError || Local.IsTempMemoryData) {
-                mnuContext.Items.Add(UI.Menu.Clone(mnuMainSetAsDesktop));
+                if (mnuMainSetAsDesktop.Enabled) {
+                    mnuContext.Items.Add(UI.Menu.Clone(mnuMainSetAsDesktop));
+                }
 
                 // check if igcmdWin10.exe exists!
-                if (Helpers.IsOS(WindowsOS.Win10OrLater) && File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
+                if (mnuMainSetAsLockImage.Enabled
+                    && Helpers.IsOS(WindowsOS.Win10OrLater)
+                    && File.Exists(App.StartUpDir("igcmdWin10.exe"))) {
                     mnuContext.Items.Add(UI.Menu.Clone(mnuMainSetAsLockImage));
                 }
             }
@@ -4408,35 +4430,37 @@ namespace ImageGlass {
             #region Menu group: CLIPBOARD
             mnuContext.Items.Add(new ToolStripSeparator());//------------
 
-            if (picMain.Image != null) {
+            if (picMain.Image != null && mnuMainCopyImageData.Enabled) {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainCopyImageData));
             }
 
             if (!imageNotFound && !Local.IsTempMemoryData) {
-                mnuContext.Items.Add(UI.Menu.Clone(mnuMainCopy));
-                mnuContext.Items.Add(UI.Menu.Clone(mnuMainCut));
+                if (mnuMainCopy.Enabled) mnuContext.Items.Add(UI.Menu.Clone(mnuMainCopy));
+                if (mnuMainCut.Enabled) mnuContext.Items.Add(UI.Menu.Clone(mnuMainCut));
             }
 
-            mnuContext.Items.Add(UI.Menu.Clone(mnuMainOpenImageData));
-            if (!imageNotFound && !Local.IsTempMemoryData) {
+            if (mnuMainOpenImageData.Enabled) mnuContext.Items.Add(UI.Menu.Clone(mnuMainOpenImageData));
+            if (!imageNotFound && !Local.IsTempMemoryData && mnuMainClearClipboard.Enabled) {
                 mnuContext.Items.Add(UI.Menu.Clone(mnuMainClearClipboard));
             }
             #endregion
 
             if (!imageNotFound && !Local.IsTempMemoryData) {
                 mnuContext.Items.Add(new ToolStripSeparator());//------------
-                mnuContext.Items.Add(UI.Menu.Clone(mnuMainRename));
-                mnuContext.Items.Add(UI.Menu.Clone(mnuMainMoveToRecycleBin));
+                if (mnuMainRename.Enabled) mnuContext.Items.Add(UI.Menu.Clone(mnuMainRename));
+                if (mnuMainMoveToRecycleBin.Enabled) mnuContext.Items.Add(UI.Menu.Clone(mnuMainMoveToRecycleBin));
 
                 mnuContext.Items.Add(new ToolStripSeparator());//------------
-                mnuContext.Items.Add(UI.Menu.Clone(mnuMainCopyImagePath));
-                mnuContext.Items.Add(UI.Menu.Clone(mnuMainImageLocation));
-                mnuContext.Items.Add(UI.Menu.Clone(mnuMainImageProperties));
+                if (mnuMainCopyImagePath.Enabled) mnuContext.Items.Add(UI.Menu.Clone(mnuMainCopyImagePath));
+                if (mnuMainImageLocation.Enabled) mnuContext.Items.Add(UI.Menu.Clone(mnuMainImageLocation));
+                if (mnuMainImageProperties.Enabled) mnuContext.Items.Add(UI.Menu.Clone(mnuMainImageProperties));
             }
 
-            SetShortcutExit();
-            mnuContext.Items.Add(new ToolStripSeparator());
-            mnuContext.Items.Add(UI.Menu.Clone(mnuMainExitApplication));
+            if (mnuMainExitApplication.Enabled) {
+                SetShortcutExit();
+                mnuContext.Items.Add(new ToolStripSeparator());
+                mnuContext.Items.Add(UI.Menu.Clone(mnuMainExitApplication));
+            }
         }
 
         private void MnuTray_Opening(object sender, CancelEventArgs e) {
@@ -5759,8 +5783,22 @@ namespace ImageGlass {
 
                 // Get EditApp for editing
                 UpdateEditAppInfoForMenu();
+
+
+                // load DisabledMenus
+                LoadMenusState();
             }
             catch { }
+        }
+
+        private void LoadMenusState() {
+            // load DisabledMenus
+            foreach (var mnuName in Configs.DisabledMenus) {
+                var field = GetType().GetField(mnuName, BindingFlags.Instance | BindingFlags.NonPublic);
+                if (field?.GetValue(this) is not ToolStripMenuItem mnu) continue;
+
+                mnu.Enabled = false;
+            }
         }
 
         private void mnuMain_Closed(object sender, ToolStripDropDownClosedEventArgs e) {
