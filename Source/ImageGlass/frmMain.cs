@@ -626,7 +626,7 @@ namespace ImageGlass {
 
             // Save previous image if it was modified
             if (ShouldSaveImage()) {
-                await SaveImageChangeAsync(true);
+                await OpenSaveImageAsync();
 
                 // remove the old image data from cache
                 Local.ImageList.Unload(Local.CurrentIndex);
@@ -1969,16 +1969,24 @@ namespace ImageGlass {
         /// <summary>
         /// Save all change of image
         /// </summary>
-        /// <param name="showError"></param>
-        /// <returns></returns>
         private async Task SaveImageChangeAsync(bool showError = false) {
             // use backup name to avoid variable conflict
-            var filename = Local.ImageModifiedPath;
+            var filePath = Local.ImageModifiedPath;
+            var fileExt = Path.GetExtension(filePath);
+            var dirPath = Path.GetDirectoryName(filePath);
+            var fileName = Path.GetFileNameWithoutExtension(filePath);
 
-            _ = SetAppBusyAsync(true, string.Format(Configs.Language.Items[$"{Name}._SavingImage"], filename));
+            // temporary file must be in the same drive
+            var backupOriginalFilePath = Path.Combine(dirPath, fileName + "_IG_BACKUP" + fileExt);
+            var tempFilePath = Path.Combine(dirPath, fileName + "_IG_NEW" + fileExt);
+
+            _ = SetAppBusyAsync(true, string.Format(Configs.Language.Items[$"{Name}._SavingImage"], filePath));
+
+            // disable file watcher
+            _fileWatcher.Stop();
 
             try {
-                var lastWriteTime = File.GetLastWriteTime(filename);
+                var lastWriteTime = File.GetLastWriteTime(filePath);
                 Bitmap newBitmap;
 
                 if (!picMain.SelectionRegion.IsEmpty) {
@@ -1988,15 +1996,17 @@ namespace ImageGlass {
                     newBitmap = new Bitmap(picMain.Image);
                 }
 
-                await Task.Run(() => {
-                    // override the current image file
-                    Heart.Photo.Save(newBitmap, filename, quality: Configs.ImageEditQuality);
+                // save the current image to a temp file
+                Heart.Photo.Save(newBitmap, tempFilePath, quality: Configs.ImageEditQuality);
 
-                    // Issue #307: option to preserve the modified date/time
-                    if (Configs.IsPreserveModifiedDate) {
-                        File.SetLastWriteTime(filename, lastWriteTime);
-                    }
-                });
+                // replace file content
+                File.Replace(tempFilePath, filePath, backupOriginalFilePath, false);
+
+
+                // Issue #307: option to preserve the modified date/time
+                if (Configs.IsPreserveModifiedDate) {
+                    File.SetLastWriteTime(filePath, lastWriteTime);
+                }
 
                 // update cache of the modified item
                 var img = await Local.ImageList.GetImgAsync(Local.CurrentIndex).ConfigureAwait(true);
@@ -2004,12 +2014,18 @@ namespace ImageGlass {
             }
             catch (Exception ex) {
                 if (showError) {
-                    MessageBox.Show(string.Format(Configs.Language.Items[$"{Name}._SaveImageError"], filename) + "\r\n\r\n" + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(string.Format(Configs.Language.Items[$"{Name}._SaveImageError"], filePath) + "\r\n\r\n" + ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+            finally {
+                File.Delete(backupOriginalFilePath);
             }
 
             Local.ImageModifiedPath = "";
             await SetAppBusyAsync(false);
+
+            // enable file watcher
+            _fileWatcher.Start();
         }
 
         /// <summary>
@@ -2392,10 +2408,10 @@ namespace ImageGlass {
         private void CropActionEvent(frmCrop.CropActionEvent actionEvent) {
             switch (actionEvent) {
                 case frmCrop.CropActionEvent.Save:
-                    _ = SaveImageChangeAsync();
+                    _ = OpenSaveImageAsync();
                     break;
                 case frmCrop.CropActionEvent.SaveAs:
-                    mnuMainSaveAs_Click(null, null);
+                    _ = OpenSaveImageAsAsync();
                     break;
                 case frmCrop.CropActionEvent.Copy:
                     mnuMainCopyImageData_Click(null, null);
@@ -3288,7 +3304,7 @@ namespace ImageGlass {
                     if (processCount > 1) {
                         if (ShouldSaveImage()) {
                             e.Cancel = true;
-                            _ = SaveImageChangeAsync(true);
+                            _ = OpenSaveImageAsync();
                         }
                         else {
                             PrepareToExitApp();
@@ -3309,7 +3325,7 @@ namespace ImageGlass {
             else {
                 if (ShouldSaveImage()) {
                     e.Cancel = true;
-                    _ = SaveImageChangeAsync(true);
+                    _ = OpenSaveImageAsync();
                 }
                 else {
                     PrepareToExitApp();
@@ -3336,7 +3352,7 @@ namespace ImageGlass {
 
                 // Save image if it was modified
                 if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating) {
-                    await SaveImageChangeAsync(true);
+                    await OpenSaveImageAsync();
                 }
                 Application.DoEvents();
 
@@ -4557,10 +4573,8 @@ namespace ImageGlass {
         }
 
         /// <summary>
-        /// Sets app's busy state. UI interaction is blocked while the app is busy
+        /// Sets app's busy state. UI interaction is blocked while the app is busy.
         /// </summary>
-        /// <param name="isBusy"></param>
-        /// <param name="msg"></param>
         private async Task SetAppBusyAsync(bool isBusy, string msg = "", int disableDelay = 0, int msgDelay = 0, int msgDuration = 30_000) {
             _busyCancelToken.Cancel();
             _busyCancelToken = new();
@@ -4679,11 +4693,22 @@ namespace ImageGlass {
 
 
         private void mnuSaveImage_Click(object sender, EventArgs e) {
+            _ = OpenSaveImageAsync();
+        }
+
+        private async Task OpenSaveImageAsync() {
             var currentFile = Local.ImageList.GetFileName(Local.CurrentIndex);
+            var ext = Path.GetExtension(currentFile).ToLowerInvariant();
+            var isWritableFormat = Constants.IMAGE_WRITE_FORMATS.Contains($"*.{ext};");
 
             // trigger "Save image as"
-            if (Local.IsTempMemoryData || !picMain.SelectionRegion.IsEmpty || string.IsNullOrEmpty(currentFile)) {
-                mnuMainSaveAs_Click(null, null);
+            if (Local.IsTempMemoryData
+                || !picMain.SelectionRegion.IsEmpty
+                || string.IsNullOrEmpty(currentFile)
+                || !isWritableFormat) {
+                await OpenSaveImageAsAsync();
+
+                Local.ImageModifiedPath = "";
                 return;
             }
 
@@ -4698,11 +4723,15 @@ namespace ImageGlass {
 
             if (confirmSave == DialogResult.Yes) {
                 Local.ImageModifiedPath = currentFile;
-                _ = SaveImageChangeAsync(true);
+                await SaveImageChangeAsync(true);
             }
         }
 
         private void mnuMainSaveAs_Click(object sender, EventArgs e) {
+            _ = OpenSaveImageAsAsync();
+        }
+
+        private async Task OpenSaveImageAsAsync() {
             var currentFile = Local.ImageList.GetFileName(Local.CurrentIndex);
             var ext = Path.GetExtension(currentFile);
 
@@ -4749,7 +4778,7 @@ namespace ImageGlass {
 
                 var destExt = Path.GetExtension(saveDialog.FileName).Substring(1);
 
-                _ = SaveImageAsAsync(saveDialog.FileName, destExt);
+                await SaveImageAsAsync(saveDialog.FileName, destExt);
             }
         }
 
