@@ -626,7 +626,7 @@ namespace ImageGlass {
 
             // Save previous image if it was modified
             if (ShouldSaveImage()) {
-                await OpenSaveImageAsync();
+                await OpenSaveImageAsync(false);
 
                 // remove the old image data from cache
                 Local.ImageList.Unload(Local.CurrentIndex);
@@ -2408,7 +2408,7 @@ namespace ImageGlass {
         private void CropActionEvent(frmCrop.CropActionEvent actionEvent) {
             switch (actionEvent) {
                 case frmCrop.CropActionEvent.Save:
-                    _ = OpenSaveImageAsync();
+                    _ = OpenSaveImageAsync(true);
                     break;
                 case frmCrop.CropActionEvent.SaveAs:
                     _ = OpenSaveImageAsAsync();
@@ -3304,7 +3304,7 @@ namespace ImageGlass {
                     if (processCount > 1) {
                         if (ShouldSaveImage()) {
                             e.Cancel = true;
-                            _ = OpenSaveImageAsync();
+                            _ = OpenSaveImageAsync(false);
                         }
                         else {
                             PrepareToExitApp();
@@ -3325,7 +3325,7 @@ namespace ImageGlass {
             else {
                 if (ShouldSaveImage()) {
                     e.Cancel = true;
-                    _ = OpenSaveImageAsync();
+                    _ = OpenSaveImageAsync(false);
                 }
                 else {
                     PrepareToExitApp();
@@ -3352,7 +3352,7 @@ namespace ImageGlass {
 
                 // Save image if it was modified
                 if (File.Exists(Local.ImageModifiedPath) && Configs.IsSaveAfterRotating) {
-                    await OpenSaveImageAsync();
+                    await OpenSaveImageAsync(true);
                 }
                 Application.DoEvents();
 
@@ -4693,13 +4693,13 @@ namespace ImageGlass {
 
 
         private void mnuSaveImage_Click(object sender, EventArgs e) {
-            _ = OpenSaveImageAsync();
+            _ = OpenSaveImageAsync(true);
         }
 
-        private async Task OpenSaveImageAsync() {
+        private async Task OpenSaveImageAsync(bool showOverrideConfirm) {
             var currentFile = Local.ImageList.GetFileName(Local.CurrentIndex);
             var ext = Path.GetExtension(currentFile).ToLowerInvariant();
-            var isWritableFormat = Constants.IMAGE_WRITE_FORMATS.Contains($"*.{ext};");
+            var isWritableFormat = Constants.IMAGE_WRITE_FORMATS.Contains($"*{ext};");
 
             // trigger "Save image as"
             if (Local.IsTempMemoryData
@@ -4712,14 +4712,16 @@ namespace ImageGlass {
                 return;
             }
 
-
-            var confirmSave = MessageBox.Show(
-                    string.Format(Configs.Language.Items[$"{Name}._SaveOverrideConfirm"], currentFile) +
-                    "\r\n\r\n" +
-                    Configs.Language.Items[$"{Name}._SaveDescription"],
-                    Configs.Language.Items[$"{Name}.{nameof(mnuSaveImage)}"],
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning);
+            var confirmSave = DialogResult.Yes;
+            if (showOverrideConfirm) {
+                confirmSave = MessageBox.Show(
+                        string.Format(Configs.Language.Items[$"{Name}._SaveOverrideConfirm"], currentFile) +
+                        "\r\n\r\n" +
+                        Configs.Language.Items[$"{Name}._SaveDescription"],
+                        Configs.Language.Items[$"{Name}.{nameof(mnuSaveImage)}"],
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
+            }
 
             if (confirmSave == DialogResult.Yes) {
                 Local.ImageModifiedPath = currentFile;
