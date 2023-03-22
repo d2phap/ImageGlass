@@ -11,12 +11,14 @@ echo:
 
 echo Arguments: -----------------------------------------------------------
 echo "1: %1"
+echo "2: %2"
 echo "CD: %CD%"
 echo:
 echo:
 
 
 set SOLUTION_DIR=%1
+set BUILD_CONFIG=%2
 set OUTPUT_DIR=%CD%\
 set IGCMD_WIN10_DIR=%OUTPUT_DIR:\ImageGlass\bin\=\Ultilities\igcmdWin10\bin\%
 set THEME_DIR=%SOLUTION_DIR%..\Setup\Assets\Themes\
@@ -25,6 +27,7 @@ set THEME_DIR=%SOLUTION_DIR%..\Setup\Assets\Themes\
 echo 1. Creating variables:
 echo -----------------------------------------------------------------------
 echo SOLUTION_DIR: %SOLUTION_DIR%
+echo BUILD_CONFIG: %BUILD_CONFIG%
 echo OUTPUT_DIR: %OUTPUT_DIR%
 echo IGCMD_WIN10_DIR: %IGCMD_WIN10_DIR%
 echo THEME_DIR: %THEME_DIR%
@@ -34,7 +37,12 @@ echo:
 
 echo 2. Copy files from %IGCMD_WIN10_DIR%
 echo -----------------------------------------------------------------------
-xcopy /Q /K /D /H /Y %IGCMD_WIN10_DIR%*.* .\
+IF NOT %BUILD_CONFIG% == Release_MSIX (
+  echo Copying files...
+  xcopy /Q /K /D /H /Y %IGCMD_WIN10_DIR%*.* .\
+) ELSE (
+  echo Skip!
+)
 echo:
 echo:
 
