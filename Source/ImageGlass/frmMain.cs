@@ -5651,6 +5651,7 @@ namespace ImageGlass {
 
             if (Configs.IsWindowFrameless) {
                 FormBorderStyle = FormBorderStyle.None;
+                CornerApi.ApplyCorner(Handle);
 
                 // Enable frameless movable
                 _movableForm.Enable();
