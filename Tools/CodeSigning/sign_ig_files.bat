@@ -46,8 +46,8 @@ set FILES[14]=FileWatcherEx.dll
 set FILES[15]=ExplorerSortOrder.dll
 
 
-:: C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x64\signtool.exe
-set TOOL="signtool.exe"
+::set TOOL="signtool.exe"
+set TOOL="C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x64\signtool.exe"
 set x=0
 
 

@@ -11,12 +11,15 @@
   <Identity
     Name="9662DuongDieuPhap.ImageGlass"
     Publisher="CN=29F1B9EC-D220-4DC3-BEDB-01A9CCA51904"
-    Version="8.8.5.0" />
+    Version="8.8.3.0" />
 
   <Properties>
     <DisplayName>ImageGlass</DisplayName>
     <PublisherDisplayName>Duong Dieu Phap</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
+    <Description>A lightweight, versatile image viewer</Description>
+      
+    <FileSystemWriteVirtualization xmlns="http://schemas.microsoft.com/appx/manifest/desktop/windows10/6">enabled</FileSystemWriteVirtualization>
   </Properties>
 
   <Dependencies>
@@ -144,7 +147,7 @@
 
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
-      <rescap:Capability Name="broadFileSystemAccess" />
-      <rescap:Capability Name="allowElevation" />
+    <rescap:Capability Name="broadFileSystemAccess" />
+    <rescap:Capability Name="allowElevation" />
   </Capabilities>
 </Package>
