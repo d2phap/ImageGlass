@@ -409,7 +409,7 @@ namespace ImageGlass.Settings {
         /// <summary>
         /// Gets, sets the absolute file path of the exiftool executable file
         /// </summary>
-        public static string ExifToolExePath { get; set; } = "";
+        public static string ExifToolExePath { get; set; } = "exiftool";
 
         /// <summary>
         /// Gets, sets the custom arguments for Exif tool command

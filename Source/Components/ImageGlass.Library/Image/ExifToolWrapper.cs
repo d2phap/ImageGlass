@@ -39,7 +39,7 @@ namespace ImageGlass.Library.Image {
         /// <summary>
         /// Gets, sets the path of Exiftool executable file.
         /// </summary>
-        public string ToolPath { get; set; } = string.Empty;
+        public string ToolPath { get; set; } = "exiftool";
 
         /// <summary>
         /// Gets default commands to pass to Exiftool.

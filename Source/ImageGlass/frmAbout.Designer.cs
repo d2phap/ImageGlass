@@ -597,7 +597,7 @@
             this.tpComponents.Margin = new System.Windows.Forms.Padding(0);
             this.tpComponents.Name = "tpComponents";
             this.tpComponents.Padding = new System.Windows.Forms.Padding(50, 0, 0, 0);
-            this.tpComponents.Size = new System.Drawing.Size(1365, 853);
+            this.tpComponents.Size = new System.Drawing.Size(1315, 1135);
             this.tpComponents.TabIndex = 1;
             this.tpComponents.Text = "tpComponents";
             // 
@@ -614,7 +614,7 @@
             this.txtComponents.ReadOnly = true;
             this.txtComponents.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtComponents.ShortcutsEnabled = false;
-            this.txtComponents.Size = new System.Drawing.Size(1315, 853);
+            this.txtComponents.Size = new System.Drawing.Size(1265, 1135);
             this.txtComponents.TabIndex = 4;
             this.txtComponents.Text = "List of components here...";
             // 
@@ -626,7 +626,7 @@
             this.tpReferences.Margin = new System.Windows.Forms.Padding(0);
             this.tpReferences.Name = "tpReferences";
             this.tpReferences.Padding = new System.Windows.Forms.Padding(50, 0, 0, 0);
-            this.tpReferences.Size = new System.Drawing.Size(1365, 853);
+            this.tpReferences.Size = new System.Drawing.Size(1315, 1135);
             this.tpReferences.TabIndex = 2;
             this.tpReferences.Text = "tpReferences";
             // 
@@ -643,7 +643,7 @@
             this.txtReferences.ReadOnly = true;
             this.txtReferences.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.txtReferences.ShortcutsEnabled = false;
-            this.txtReferences.Size = new System.Drawing.Size(1315, 853);
+            this.txtReferences.Size = new System.Drawing.Size(1265, 1135);
             this.txtReferences.TabIndex = 3;
             this.txtReferences.Text = resources.GetString("txtReferences.Text");
             // 
@@ -687,9 +687,9 @@
             this.lblCodeName.Location = new System.Drawing.Point(561, 52);
             this.lblCodeName.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.lblCodeName.Name = "lblCodeName";
-            this.lblCodeName.Size = new System.Drawing.Size(120, 50);
+            this.lblCodeName.Size = new System.Drawing.Size(105, 50);
             this.lblCodeName.TabIndex = 21;
-            this.lblCodeName.Text = "Moon";
+            this.lblCodeName.Text = "Kobe";
             // 
             // tableLayoutPanel2
             // 
