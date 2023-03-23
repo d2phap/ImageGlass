@@ -337,7 +337,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\info.png" />
-    <None Include="resources.bat" />
+    <None Include="post_build.bat" />
     <EmbeddedResource Include="frmSetting.resx">
       <DependentUpon>frmSetting.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -442,7 +442,7 @@
     <PreBuildEvent>"$(DevEnvDir)\devenv" "$(SolutionDir)\ImageGlass.sln" /Build $(ConfigurationName) /Project "$(SolutionDir)\Ultilities\igcmdWin10\igcmdWin10.csproj"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>"$(ProjectDir)resources.bat" "$(SolutionDir)" $(Configuration)</PostBuildEvent>
+    <PostBuildEvent>"$(ProjectDir)post_build.bat" "$(SolutionDir)" $(Configuration) $(Platform)</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
