@@ -99,7 +99,7 @@ public partial class FrmMain
         { nameof(MnuMoveToRecycleBin),      new() { new (Keys.Delete) } },
         { nameof(MnuDeleteFromHardDisk),    new() { new (Keys.Shift | Keys.Delete) } },
         { nameof(MnuToggleImageAnimation),  new() { new (Keys.Control | Keys.Space) } },
-        { nameof(MnuExportFrames),         new() { new (Keys.Control | Keys.J) } },
+        { nameof(MnuExportFrames),          new() { new (Keys.Control | Keys.J) } },
         { nameof(MnuOpenLocation),          new() { new (Keys.L) } },
         { nameof(MnuImageProperties),       new() { new (Keys.Control | Keys.I) } },
 
@@ -128,6 +128,7 @@ public partial class FrmMain
         { nameof(MnuColorPicker),           new() { new (Keys.K) } },
         { nameof(MnuCropTool),              new() { new (Keys.C) } },
         { nameof(MnuPageNav),               new() { new (Keys.P) } },
+        { Constants.IGTOOL_EXIFTOOL,        new() { new (Keys.X) } },
 
         // MnuHelp
         { nameof(MnuAbout),                 new() { new (Keys.F1) } },
