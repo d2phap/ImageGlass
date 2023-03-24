@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2022 DUONG DIEU PHAP
+Copyright (C) 2010 -2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
+using CliWrap;
+using CliWrap.Buffered;
 
 namespace ImageGlass.Base.Update {
     public class UpdateService {
@@ -79,6 +83,44 @@ namespace ImageGlass.Base.Update {
 
                 return newVersion > currentVersion;
             }
+        }
+
+
+        /// <summary>
+        /// Checks the requirements for the update.
+        /// </summary>
+        public async Task<Dictionary<string, bool>> CheckRequirementsAsync() {
+            var list = new Dictionary<string, bool>();
+            var newVersion = new Version(CurrentReleaseInfo.Version);
+            if (newVersion.Major < 9) return list;
+
+            // Windows 64-bit
+            list.Add("64-bit Windows", false); // Environment.Is64BitOperatingSystem);
+
+            // .NET Desktop Runtime versions
+            try {
+                var cli = Cli.Wrap("dotnet");
+                var cmdOutput = await cli.WithArguments("--list-runtimes")
+                    .ExecuteBufferedAsync(Encoding.UTF8);
+
+                if (cmdOutput.StandardOutput.Contains("Microsoft.WindowsDesktop.App 6")) {
+                    list.Add(".NET Desktop Runtime 6.0", true);
+                }
+                else if (cmdOutput.StandardOutput.Contains("Microsoft.WindowsDesktop.App 7")) {
+                    list.Add(".NET Desktop Runtime 7.0", true);
+                }
+                else if (cmdOutput.StandardOutput.Contains("Microsoft.WindowsDesktop.App 8")) {
+                    list.Add(".NET Desktop Runtime 8.0", true);
+                }
+                else {
+                    throw new Exception(".NET Desktop Runtime not found");
+                }
+            }
+            catch {
+                list.Add(".NET Desktop Runtime", false);
+            }
+
+            return list;
         }
 
 

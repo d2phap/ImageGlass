@@ -45,12 +45,12 @@ namespace ImageGlass {
             this.Close();
         }
 
-        private void FrmExif_Load(object sender, EventArgs e) {
+        private async void FrmExif_Load(object sender, EventArgs e) {
             SystemRenderer.ApplyTheme(lvExifItems);
 
             // check if exif tool exists
-            this.exifTool.ToolPath = Environment.ExpandEnvironmentVariables(Configs.ExifToolExePath);
-            if (!this.exifTool.CheckExists()) {
+            this.exifTool.ToolPath = Configs.ExifToolExePath;
+            if (!await this.exifTool.CheckExistAsync()) {
                 SetUIVisibility(true);
             }
             else {
@@ -104,7 +104,7 @@ namespace ImageGlass {
             }
         }
 
-        private void lnkSelectExifTool_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+        private async void lnkSelectExifTool_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             var ofd = new OpenFileDialog() {
                 CheckFileExists = true,
                 Filter = "exiftool.exe file|*.exe",
@@ -113,7 +113,7 @@ namespace ImageGlass {
             if (ofd.ShowDialog() == DialogResult.OK) {
                 this.exifTool = new ExifToolWrapper(ofd.FileName);
 
-                if (!this.exifTool.CheckExists()) {
+                if (!await this.exifTool.CheckExistAsync()) {
                     SetUIVisibility(true);
                     lblNotFound.Text = string.Format(
                         Configs.Language.Items[$"{nameof(frmSetting)}.lnkSelectExifTool._NotFound"],
@@ -179,8 +179,14 @@ namespace ImageGlass {
                 txtExifToolCommandPreview.Visible = false;
             }
             else {
-                this.Text = Path.GetFileName(Configs.ExifToolExePath);
-                this.Icon = Icon.ExtractAssociatedIcon(Configs.ExifToolExePath);
+                try {
+                    this.Text = Path.GetFileName(Configs.ExifToolExePath);
+                    this.Icon = Icon.ExtractAssociatedIcon(Configs.ExifToolExePath);
+                }
+                catch {
+                    this.Text = "Exiftool";
+                    this.Icon = Icon.FromHandle(Configs.Theme.Logo.Image.GetHicon());
+                }
 
                 panNotFound.Visible = false;
                 lvExifItems.Visible = true;
@@ -196,7 +202,7 @@ namespace ImageGlass {
             var filename = Local.ImageList.GetFileName(Local.CurrentIndex);
 
             // preprocess unicode filename and load exif data
-            await this.exifTool.LoadAndProcessExifDataAsync(filename, Configs.ExifToolCommandArgs);
+            await this.exifTool.ReadAsync(filename, default, Configs.ExifToolCommandArgs);
 
             lvExifItems.Items.Clear();
             lvExifItems.Groups.Clear();

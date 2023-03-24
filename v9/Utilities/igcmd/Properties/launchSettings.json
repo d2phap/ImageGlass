@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "igcmd": {
-      "commandName": "Project",
-      "commandLineArgs": "start-slideshow 0 \"C:\\Users\\d2pha\\Desktop\\file2.tif\""
-    }
-  }
-}

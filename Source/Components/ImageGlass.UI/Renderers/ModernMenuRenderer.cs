@@ -185,7 +185,7 @@ namespace ImageGlass.UI.Renderers {
                 e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
                 // Windows 11 style
-                var borderRadius = 5;
+                var borderRadius = DPIScaling.Transform(5);
                 var rect = new Rectangle(3, 1, e.Item.Bounds.Width - 6, e.Item.Bounds.Height - 2);
                 using var brush = new SolidBrush(theme.MenuBackgroundHoverColor);
 
@@ -232,7 +232,7 @@ namespace ImageGlass.UI.Renderers {
                 pen.Color = Color.FromArgb(35, 255, 255, 255);
             }
 
-            var menuBorderRadius = Helpers.IsOS(WindowsOS.Win11) ? 8 : 0;
+            var menuBorderRadius = Helpers.IsOS(WindowsOS.Win11) ? DPIScaling.Transform(8) : 0;
             using var path = Theme.GetRoundRectanglePath(new() {
                 X = 0,
                 Y = 0,

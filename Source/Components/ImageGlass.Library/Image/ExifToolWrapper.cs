@@ -1,6 +1,6 @@
 ﻿/*
 ImageGlass Project - Image viewer for Windows
-Copyright (C) 2022 DUONG DIEU PHAP
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
 Project homepage: https://imageglass.org
 
 This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ImageGlass.Base;
+using CliWrap;
+using CliWrap.Buffered;
 
 namespace ImageGlass.Library.Image {
     public struct ExifTagItem {
@@ -34,120 +34,87 @@ namespace ImageGlass.Library.Image {
         public string Value;
     }
 
+
     public class ExifToolWrapper: List<ExifTagItem> {
+        /// <summary>
+        /// Gets, sets the path of Exiftool executable file.
+        /// </summary>
+        public string ToolPath { get; set; } = "exiftool";
 
         /// <summary>
-        /// Gets, sets full path of Exif tool executable file
+        /// Gets default commands to pass to Exiftool.
         /// </summary>
-        public string ToolPath { get; set; } = string.Empty;
+        public static string DefaultCommands => "-fast -G -t -m -q -H";
 
 
         /// <summary>
-        /// Initialize the instance
+        /// Initialize new instance of <see cref="ExifTool"/>.
         /// </summary>
-        /// <param name="toolPath">Full path of Exif tool executable file</param>
-        public ExifToolWrapper(string toolPath) {
-            this.ToolPath = toolPath;
+        public ExifToolWrapper(string toolPath = "") {
+            ToolPath = toolPath;
         }
 
 
+        // Public methods
         #region Public methods
 
         /// <summary>
         /// Check if Exif tool exists
         /// </summary>
-        /// <returns></returns>
-        public bool CheckExists() {
-            var output = "";
-            var fullPath = App.ToAbsolutePath(ToolPath); // $"\"{this.ToolPath}\" -ver";
+        public async Task<bool> CheckExistAsync() {
+            try {
+                var cmd = Cli.Wrap(ToolPath);
+                var cmdResult = await cmd
+                        .WithArguments("-ver")
+                        .ExecuteBufferedAsync(Encoding.UTF8);
 
-            if (!File.Exists(fullPath)) {
+                // check the output
+                if (cmdResult.StandardOutput.Length < 4 || cmdResult.StandardError.Length > 0)
+                    return false;
+
+                // (could check version number here if you care)
+                return true;
+            }
+            catch {
                 return false;
             }
-            else {
-                try {
-                    (output, stdErr) = Open("-ver");
-                }
-                catch (Exception) {
-                }
+        }
+
+
+        /// <summary>
+        /// Reads file's metadata.
+        /// </summary>
+        /// <param name="filePath">Path of file to read.</param>
+        /// <param name="exifToolCmd">Additional commands for Exiftool.</param>
+        public async Task ReadAsync(
+            string filePath,
+            CancellationToken cancelToken = default,
+            params string[] exifToolCmd) {
+            var cmdOutput = string.Empty;
+            var pathContainsUnicode = CheckAndPurifyUnicodePath(filePath, out var cleanPath);
+
+            try {
+                var cmd = Cli.Wrap(ToolPath);
+                var cmdResult = await cmd
+                    .WithArguments($"{DefaultCommands} {string.Join(" ", exifToolCmd)} \"{cleanPath}\"")
+                    .WithValidation(CommandResultValidation.None)
+                    .ExecuteBufferedAsync(Encoding.UTF8, cancelToken);
+
+                cmdOutput = cmdResult.StandardOutput;
             }
-
-            // check the output
-            if (output.Length < 4 || stdErr.Length > 0)
-                return false;
-
-            // (could check version number here if you care)
-            return true;
-        }
-
-
-        /// <summary>
-        /// Checks if the image has exif data
-        /// </summary>
-        /// <returns></returns>
-        public bool HasExifData() {
-            return (this.Count > 0);
-        }
-
-
-        /// <summary>
-        /// Finds Exif tag
-        /// </summary>
-        /// <param name="tagName"></param>
-        /// <returns></returns>
-        public ExifTagItem Find(string tagName) {
-            var itemsQuery = from tagItem in this
-                             where tagItem.Name == tagName
-                             select tagItem;
-
-            return itemsQuery.First();
-        }
-
-
-        /// <summary>
-        /// Preprocess unicode filename and load exif data
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <returns></returns>
-        public async Task LoadAndProcessExifDataAsync(string filename, string arguments = "") {
-            const int MAX_ANSICODE = 255;
-            const string DATE_FORMAT = "yyyy:MM:dd hh:mm:sszzz";
-
-
-            await Task.Run(() => {
-                var nonUnicodeFilename = filename;
-                var containsUnicodeName = filename.Any(c => c > MAX_ANSICODE);
-
-                // if filename contains unicode char
-                if (containsUnicodeName) {
-                    nonUnicodeFilename = ProcessUnicodeFilename(filename);
-                }
-
-                // load exif data
-                LoadExifData(nonUnicodeFilename, arguments);
-
-
-                if (containsUnicodeName) {
-                    // process exif data
-                    var replacements = new Dictionary<string, Func<string>> {
-                        { "File Name", () => Path.GetFileName(filename) },
-                        { "Directory", () => Path.GetDirectoryName(filename) },
-                        { "File Modification Date/Time", () => ImageInfo.GetWriteTime(filename).ToString(DATE_FORMAT) },
-                        { "File Access Date/Time", () => ImageInfo.GetLastAccess(filename).ToString(DATE_FORMAT) },
-                        { "File Creation Date/Time", () => ImageInfo.GetCreateTime(filename).ToString(DATE_FORMAT) },
-                    };
-
-                    for (var i = 0; i < this.Count; i++) {
-                        var item = this[i];
-
-                        if (replacements.ContainsKey(item.Name)) {
-                            item.Value = replacements[item.Name].Invoke();
-                            this[i] = item;
-                        }
+            finally {
+                // delete temporary file
+                if (pathContainsUnicode) {
+                    try {
+                        File.Delete(cleanPath);
                     }
+                    catch { }
                 }
-            });
+            }
+
+            ParseExifTags(cmdOutput, Path.GetFileName(filePath));
         }
+
 
 
         /// <summary>
@@ -185,133 +152,100 @@ namespace ImageGlass.Library.Image {
             sw.Close();
         }
 
-        #endregion
+        #endregion // Public methods
 
 
+        // Private methods
         #region Private methods
 
-        private string stdOut = null;
-        private string stdErr = null;
-        private ProcessStartInfo psi = null;
-        private Process activeProcess = null;
-
-        private void Thread_ReadStandardError() {
-            if (activeProcess != null) {
-                stdErr = activeProcess.StandardError.ReadToEnd();
-            }
-        }
-
-        private void Thread_ReadStandardOut() {
-            if (activeProcess != null) {
-                stdOut = activeProcess.StandardOutput.ReadToEnd();
-            }
-        }
-
-
         /// <summary>
-        /// Execute exif tool command line
+        /// Parses Exiftool's command-line output.
         /// </summary>
-        /// <param name="cmd"></param>
-        /// <returns></returns>
-        private (string stdOut, string stdErr) Open(string cmd = "") {
-            this.psi = new ProcessStartInfo() {
-                FileName = App.ToAbsolutePath(this.ToolPath),
-                Arguments = cmd,
-                CreateNoWindow = true,
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-            };
+        private void ParseExifTags(string cmdOutput, string originalFileName) {
+            var index = 0;
+            Clear();
 
-            var thread_ReadStandardError = new Thread(new ThreadStart(Thread_ReadStandardError));
-            var thread_ReadStandardOut = new Thread(new ThreadStart(Thread_ReadStandardOut));
+            while (cmdOutput.Length > 0) {
+                var epos = cmdOutput.IndexOf('\r');
+                if (epos < 0) epos = cmdOutput.Length;
 
-            activeProcess = Process.Start(psi);
-            if (psi.RedirectStandardError) {
-                thread_ReadStandardError.Start();
-            }
-            if (psi.RedirectStandardOutput) {
-                thread_ReadStandardOut.Start();
-            }
-            activeProcess.WaitForExit();
-
-            thread_ReadStandardError.Join();
-            thread_ReadStandardOut.Join();
-
-            return (stdOut, stdErr);
-        }
-
-
-        /// <summary>
-        /// Copy and rename unicode file path to non-unicode path
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <returns></returns>
-        private string ProcessUnicodeFilename(string filename) {
-            // exiftool does not support unicode filename
-            var ext = Path.GetExtension(filename);
-            var nonUnicodeDir = App.ConfigDir(PathType.Dir, Dir.Temporary);
-            var nonUnicodeFilename = Path.Combine(nonUnicodeDir, Guid.NewGuid().ToString("N") + ext);
-
-            try {
-                Directory.CreateDirectory(nonUnicodeDir);
-                File.Copy(filename, nonUnicodeFilename, true);
-            }
-            catch (Exception) { }
-
-            return nonUnicodeFilename;
-        }
-
-
-        /// <summary>
-        /// Execute Exif tool to retrieve data
-        /// </summary>
-        /// <param name="imageFilename"></param>
-        /// <param name="removeWhiteSpaceInTagNames"></param>
-        private void LoadExifData(string imageFilename, string commands = "") {
-            // exiftool command
-            var (output, _) = Open($"-fast -G -t -m -q {commands} \"{imageFilename}\"");
-
-            // parse the output into tags
-            this.Clear();
-            while (output.Length > 0) {
-                var epos = output.IndexOf('\r');
-
-                if (epos < 0)
-                    epos = output.Length;
-                var tmp = output.Substring(0, epos);
+                var tmp = cmdOutput.Substring(0, epos);
                 var tpos1 = tmp.IndexOf('\t');
                 var tpos2 = tmp.IndexOf('\t', tpos1 + 1);
+                var tpos3 = tmp.IndexOf('\t', tpos2 + 1);
 
                 if (tpos1 > 0 && tpos2 > 0) {
-                    var taggroup = tmp.Substring(0, tpos1);
+                    var tagGroup = tmp.Substring(0, tpos1);
                     ++tpos1;
-                    var tagname = tmp.Substring(tpos1, tpos2 - tpos1);
+
+                    var tagId = tmp.Substring(tpos1, tpos2 - tpos1);
                     ++tpos2;
-                    var tagvalue = tmp.Substring(tpos2, tmp.Length - tpos2);
+
+                    var tagName = tmp.Substring(tpos2, tpos3 - tpos2);
+                    ++tpos3;
+
+                    var tagValue = tmp.Substring(tpos3, tmp.Length - tpos3);
+
 
                     // special processing for tags with binary data 
-                    tpos1 = tagvalue.IndexOf(", use -b option to extract");
+                    tpos1 = tagValue.IndexOf(", use -b option to extract");
                     if (tpos1 >= 0)
-                        tagvalue.Remove(tpos1, 26);
+                        _ = tagValue.Remove(tpos1, 26);
 
-                    ExifTagItem itm;
-                    itm.Name = tagname;
-                    itm.Value = tagvalue;
-                    itm.Group = taggroup;
-                    this.Add(itm);
+                    // 
+                    if (tagName.Equals("File Name")) tagValue = originalFileName;
+
+                    Add(new ExifTagItem() {
+                        Name = tagName,
+                        Value = tagValue,
+                        Group = tagGroup,
+                    });
+
+                    index++;
                 }
 
                 // is \r followed by \n ?
-                if (epos < output.Length)
-                    epos += (output[epos + 1] == '\n') ? 2 : 1;
+                if (epos < cmdOutput.Length)
+                    epos += (cmdOutput[epos + 1] == '\n') ? 2 : 1;
 
-                output = output.Substring(epos, output.Length - epos);
+                cmdOutput = cmdOutput.Substring(epos, cmdOutput.Length - epos);
             }
         }
 
 
-        #endregion
+        /// <summary>
+        /// Purifies <paramref name="filePath"/> if it contains unicode character.
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if the <paramref name="filePath"/> contains unicode and is purified.
+        /// </returns>
+        private static bool CheckAndPurifyUnicodePath(string filePath, out string cleanPath) {
+            const int MAX_ANSICODE = 255;
+
+
+            // exiftool does not support unicode filename
+            var dirPath = Path.GetDirectoryName(filePath) ?? "";
+            var fileNameNoExt = Path.GetFileNameWithoutExtension(filePath);
+            var ext = Path.GetExtension(filePath);
+
+
+            // directory has unicode char
+            if (filePath.Any(c => c > MAX_ANSICODE)) {
+                // copy and rename it
+                try {
+                    cleanPath = Path.GetTempFileName() + ext;
+                    File.Copy(filePath, cleanPath, true);
+
+                    return true;
+                }
+                catch (Exception) { }
+            }
+
+            cleanPath = filePath;
+            return false;
+        }
+
+        #endregion // Private methods
 
     }
 }

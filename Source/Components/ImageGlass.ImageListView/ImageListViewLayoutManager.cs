@@ -200,8 +200,17 @@ namespace ImageGlass.ImageListView {
                 location.X += cachedItemMargin.Width / 2 - mImageListView.ViewOffset.X;
                 location.Y += cachedItemMargin.Height / 2 - mImageListView.ViewOffset.Y;
 
-                if (mImageListView.View == View.Gallery)
-                    location.X += itemIndex * mItemSizeWithMargin.Width;
+                if (mImageListView.View == View.Gallery) {
+                    var startGap = 0;
+
+                    // center the items
+                    if (mImageListView.Items.Count <= mDisplayedCols) {
+                        var currentItemsWidth = mItemSizeWithMargin.Width * mImageListView.Items.Count;
+                        startGap = mItemAreaBounds.Width / 2 - currentItemsWidth / 2;
+                    }
+
+                    location.X += (itemIndex * mItemSizeWithMargin.Width) + startGap;
+                }
                 else {
                     location.X += (itemIndex % mDisplayedCols) * mItemSizeWithMargin.Width;
                     location.Y += (itemIndex / mDisplayedCols) * mItemSizeWithMargin.Height;
