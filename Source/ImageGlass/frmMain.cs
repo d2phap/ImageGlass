@@ -1687,9 +1687,7 @@ namespace ImageGlass {
         /// <summary>
         /// Apply zoom mode
         /// </summary>
-        /// <param name="zoomMode"></param>
-        /// <param name="isResetScrollPosition"></param>
-        private void ApplyZoomMode(ZoomMode zoomMode, bool isResetScrollPosition = true) {
+        private void ApplyZoomMode(ZoomMode zoomMode, bool isResetScrollPosition = true, ImageBoxActionSources actionSrc = ImageBoxActionSources.Unknown) {
             if (picMain.Image == null) {
                 return;
             }
@@ -1703,20 +1701,20 @@ namespace ImageGlass {
             switch (zoomMode) {
                 case ZoomMode.ScaleToWidth:
                     frac = picMain.Width / (1f * picMain.Image.Width);
-                    picMain.Zoom = frac * 100;
+                    picMain.SetZoom(frac * 100, actionSrc);
                     break;
 
                 case ZoomMode.ScaleToHeight:
                     frac = picMain.Height / (1f * picMain.Image.Height);
-                    picMain.Zoom = frac * 100;
+                    picMain.SetZoom(frac * 100, actionSrc);
                     break;
 
                 case ZoomMode.ScaleToFit:
-                    picMain.ZoomToFit();
+                    picMain.ZoomToFit(actionSrc);
                     break;
 
                 case ZoomMode.LockZoomRatio:
-                    picMain.Zoom = Configs.ZoomLockValue;
+                    picMain.SetZoom(Configs.ZoomLockValue, actionSrc);
                     break;
 
                 case ZoomMode.ScaleToFill:
@@ -1730,12 +1728,12 @@ namespace ImageGlass {
                         frac = picMain.Height / (1f * picMain.Image.Height);
                     }
 
-                    picMain.Zoom = frac * 100;
+                    picMain.SetZoom(frac * 100, actionSrc);
                     break;
 
                 case ZoomMode.AutoZoom:
                 default:
-                    picMain.ZoomAuto();
+                    picMain.ZoomAuto(actionSrc);
                     break;
             }
 
@@ -5227,7 +5225,7 @@ namespace ImageGlass {
                 return;
             }
 
-            picMain.ZoomIn();
+            picMain.ZoomIn(ImageBoxActionSources.User);
         }
 
         private void mnuMainZoomOut_Click(object sender, EventArgs e) {
@@ -5235,7 +5233,7 @@ namespace ImageGlass {
                 return;
             }
 
-            picMain.ZoomOut();
+            picMain.ZoomOut(ImageBoxActionSources.User);
         }
 
         private void mnuCustomZoom_Click(object sender, EventArgs e) {
@@ -5251,7 +5249,8 @@ namespace ImageGlass {
                 isNumberOnly: true,
                 topMost: TopMost,
                 filterOnKeyPressed: true) == DialogResult.OK) {
-                picMain.Zoom = Convert.ToSingle(InputBox.Message);
+                var newZoom = Convert.ToSingle(InputBox.Message);
+                picMain.SetZoom(newZoom, ImageBoxActionSources.User);
                 picMain.CenterToImage();
             }
         }
@@ -5261,7 +5260,7 @@ namespace ImageGlass {
                 return;
             }
 
-            picMain.ActualSize();
+            picMain.ActualSize(ImageBoxActionSources.User);
 
             if (Configs.IsCenterImage) {
                 picMain.CenterToImage();
@@ -5289,42 +5288,42 @@ namespace ImageGlass {
             Configs.ZoomMode = ZoomMode.AutoZoom;
 
             SelectUIZoomMode();
-            ApplyZoomMode(Configs.ZoomMode);
+            ApplyZoomMode(Configs.ZoomMode, actionSrc: ImageBoxActionSources.User);
         }
 
         private void mnuMainScaleToWidth_Click(object sender, EventArgs e) {
             Configs.ZoomMode = ZoomMode.ScaleToWidth;
 
             SelectUIZoomMode();
-            ApplyZoomMode(Configs.ZoomMode);
+            ApplyZoomMode(Configs.ZoomMode, actionSrc: ImageBoxActionSources.User);
         }
 
         private void mnuMainScaleToHeight_Click(object sender, EventArgs e) {
             Configs.ZoomMode = ZoomMode.ScaleToHeight;
 
             SelectUIZoomMode();
-            ApplyZoomMode(Configs.ZoomMode);
+            ApplyZoomMode(Configs.ZoomMode, actionSrc: ImageBoxActionSources.User);
         }
 
         private void mnuMainScaleToFit_Click(object sender, EventArgs e) {
             Configs.ZoomMode = ZoomMode.ScaleToFit;
 
             SelectUIZoomMode();
-            ApplyZoomMode(Configs.ZoomMode);
+            ApplyZoomMode(Configs.ZoomMode, actionSrc: ImageBoxActionSources.User);
         }
 
         private void mnuMainScaleToFill_Click(object sender, EventArgs e) {
             Configs.ZoomMode = ZoomMode.ScaleToFill;
 
             SelectUIZoomMode();
-            ApplyZoomMode(Configs.ZoomMode);
+            ApplyZoomMode(Configs.ZoomMode, actionSrc: ImageBoxActionSources.User);
         }
 
         private void mnuMainLockZoomRatio_Click(object sender, EventArgs e) {
             Configs.ZoomMode = ZoomMode.LockZoomRatio;
 
             SelectUIZoomMode();
-            ApplyZoomMode(Configs.ZoomMode);
+            ApplyZoomMode(Configs.ZoomMode, actionSrc: ImageBoxActionSources.User);
         }
 
         private void mnuMainRename_Click(object sender, EventArgs e) {
