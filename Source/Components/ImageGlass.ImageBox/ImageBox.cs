@@ -1703,7 +1703,7 @@ namespace ImageGlass {
         [Category("Appearance")]
         public virtual double Zoom {
             get { return _zoom; }
-            set { SetZoom(value, value > Zoom ? ImageBoxZoomActions.ZoomIn : ImageBoxZoomActions.ZoomOut, ImageBoxActionSources.Unknown); }
+            set { SetZoom(value, ImageBoxActionSources.Unknown); }
         }
 
         /// <summary>
@@ -1802,8 +1802,8 @@ namespace ImageGlass {
         /// <summary>
         ///   Resets the zoom to 100%.
         /// </summary>
-        public virtual void ActualSize() {
-            PerformActualSize(ImageBoxActionSources.Unknown);
+        public virtual void ActualSize(ImageBoxActionSources actionSrc = ImageBoxActionSources.Unknown) {
+            PerformActualSize(actionSrc);
         }
 
         /// <summary>
@@ -2580,35 +2580,35 @@ namespace ImageGlass {
         ///   Zooms into the image
         /// </summary>
         public virtual void ZoomIn() {
-            ZoomIn(true);
+            ZoomIn(ImageBoxActionSources.Unknown, true);
         }
 
         /// <summary>
         ///   Zooms into the image
         /// </summary>
         /// <param name="preservePosition"><c>true</c> if the current scrolling position should be preserved relative to the new zoom level, <c>false</c> to reset.</param>
-        public virtual void ZoomIn(bool preservePosition) {
-            PerformZoomIn(ImageBoxActionSources.Unknown, preservePosition);
+        public virtual void ZoomIn(ImageBoxActionSources actionSrc, bool preservePosition = true) {
+            PerformZoomIn(actionSrc, preservePosition);
         }
 
         /// <summary>
         ///   Zooms out of the image
         /// </summary>
         public virtual void ZoomOut() {
-            ZoomOut(true);
+            ZoomOut(ImageBoxActionSources.Unknown, true);
         }
 
         /// <summary>
         ///   Zooms out of the image
         /// </summary>
         /// <param name="preservePosition"><c>true</c> if the current scrolling position should be preserved relative to the new zoom level, <c>false</c> to reset.</param>
-        public virtual void ZoomOut(bool preservePosition) {
-            PerformZoomOut(ImageBoxActionSources.Unknown, preservePosition);
+        public virtual void ZoomOut(ImageBoxActionSources actionSrc, bool preservePosition = true) {
+            PerformZoomOut(actionSrc, preservePosition);
         }
         /// <summary>
         ///   Zooms to the maximum size for displaying the entire image within the bounds of the control.
         /// </summary>
-        public virtual void ZoomToFit() {
+        public virtual void ZoomToFit(ImageBoxActionSources actionSrc = ImageBoxActionSources.Unknown) {
             if (!ViewSize.IsEmpty) {
                 Rectangle innerRectangle;
                 double zoom;
@@ -2635,14 +2635,14 @@ namespace ImageGlass {
                     }
                 }
 
-                Zoom = zoom;
+                SetZoom(zoom, actionSrc);
             }
         }
 
         /// <summary>
         /// [IG_CHANGE] Zooms to the maximum size for displaying the entire image within the bounds of the control. If image size is smaller than viewer size, keep its original size.
         /// </summary>
-        public virtual void ZoomAuto() {
+        public virtual void ZoomAuto(ImageBoxActionSources actionSrc = ImageBoxActionSources.Unknown) {
             if (!ViewSize.IsEmpty) {
                 Rectangle innerRectangle;
                 double zoom;
@@ -2674,7 +2674,7 @@ namespace ImageGlass {
                     }
                 }
 
-                Zoom = zoom;
+                SetZoom(zoom, actionSrc);
             }
         }
 
@@ -4571,6 +4571,18 @@ namespace ImageGlass {
             PerformZoom(ImageBoxZoomActions.ZoomOut, source, preservePosition);
         }
 
+
+        /// <summary>
+        /// Updates the current zoom.
+        /// </summary>
+        /// <param name="value">The new zoom value.</param>
+        /// <param name="source">The source of the zoom operation.</param>
+        public void SetZoom(double value, ImageBoxActionSources source) {
+            var action = value > Zoom ? ImageBoxZoomActions.ZoomIn : ImageBoxZoomActions.ZoomOut;
+
+            SetZoom(value, action, source);
+        }
+
         /// <summary>
         /// Updates the current zoom.
         /// </summary>
@@ -4595,6 +4607,7 @@ namespace ImageGlass {
                 OnZoomed(new ImageBoxZoomEventArgs(actions, source, previousZoom, Zoom));
             }
         }
+
 
         #endregion
 
