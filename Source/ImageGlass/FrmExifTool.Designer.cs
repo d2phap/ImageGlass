@@ -46,9 +46,10 @@
             this.panel1.Controls.Add(this.btnExport);
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 488);
+            this.panel1.Location = new System.Drawing.Point(0, 874);
+            this.panel1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(852, 90);
+            this.panel1.Size = new System.Drawing.Size(1526, 161);
             this.panel1.TabIndex = 17;
             // 
             // btnCopyValue
@@ -57,9 +58,10 @@
             this.btnCopyValue.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCopyValue.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCopyValue.ForeColor = System.Drawing.Color.Black;
-            this.btnCopyValue.Location = new System.Drawing.Point(26, 26);
+            this.btnCopyValue.Location = new System.Drawing.Point(47, 47);
+            this.btnCopyValue.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnCopyValue.Name = "btnCopyValue";
-            this.btnCopyValue.Size = new System.Drawing.Size(179, 42);
+            this.btnCopyValue.Size = new System.Drawing.Size(321, 75);
             this.btnCopyValue.TabIndex = 2;
             this.btnCopyValue.Text = "[Copy value]";
             this.btnCopyValue.UseVisualStyleBackColor = true;
@@ -71,9 +73,10 @@
             this.btnExport.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnExport.ForeColor = System.Drawing.Color.Black;
-            this.btnExport.Location = new System.Drawing.Point(510, 26);
+            this.btnExport.Location = new System.Drawing.Point(913, 47);
+            this.btnExport.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(155, 42);
+            this.btnExport.Size = new System.Drawing.Size(278, 75);
             this.btnExport.TabIndex = 3;
             this.btnExport.Text = "[Export...]";
             this.btnExport.UseVisualStyleBackColor = true;
@@ -85,9 +88,10 @@
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnClose.ForeColor = System.Drawing.Color.Black;
-            this.btnClose.Location = new System.Drawing.Point(671, 26);
+            this.btnClose.Location = new System.Drawing.Point(1202, 47);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(155, 42);
+            this.btnClose.Size = new System.Drawing.Size(278, 75);
             this.btnClose.TabIndex = 4;
             this.btnClose.Text = "[Close]";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -106,11 +110,12 @@
             this.lvExifItems.FullRowSelect = true;
             this.lvExifItems.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvExifItems.HideSelection = false;
-            this.lvExifItems.Location = new System.Drawing.Point(26, 23);
+            this.lvExifItems.Location = new System.Drawing.Point(47, 41);
+            this.lvExifItems.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.lvExifItems.MultiSelect = false;
             this.lvExifItems.Name = "lvExifItems";
             this.lvExifItems.ShowItemToolTips = true;
-            this.lvExifItems.Size = new System.Drawing.Size(800, 365);
+            this.lvExifItems.Size = new System.Drawing.Size(1430, 651);
             this.lvExifItems.TabIndex = 0;
             this.lvExifItems.UseCompatibleStateImageBehavior = false;
             this.lvExifItems.View = System.Windows.Forms.View.Details;
@@ -122,12 +127,12 @@
             // clnProperty
             // 
             this.clnProperty.Text = "[Property]";
-            this.clnProperty.Width = 250;
+            this.clnProperty.Width = 300;
             // 
             // clnValue
             // 
             this.clnValue.Text = "[Value]";
-            this.clnValue.Width = 400;
+            this.clnValue.Width = 800;
             // 
             // panNotFound
             // 
@@ -135,8 +140,9 @@
             this.panNotFound.Controls.Add(this.lblNotFound);
             this.panNotFound.Dock = System.Windows.Forms.DockStyle.Top;
             this.panNotFound.Location = new System.Drawing.Point(0, 0);
+            this.panNotFound.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.panNotFound.Name = "panNotFound";
-            this.panNotFound.Size = new System.Drawing.Size(852, 165);
+            this.panNotFound.Size = new System.Drawing.Size(1526, 296);
             this.panNotFound.TabIndex = 18;
             // 
             // lnkSelectExifTool
@@ -144,9 +150,10 @@
             this.lnkSelectExifTool.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(108)))), ((int)(((byte)(177)))));
             this.lnkSelectExifTool.AutoSize = true;
             this.lnkSelectExifTool.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(208)))));
-            this.lnkSelectExifTool.Location = new System.Drawing.Point(22, 114);
+            this.lnkSelectExifTool.Location = new System.Drawing.Point(39, 204);
+            this.lnkSelectExifTool.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lnkSelectExifTool.Name = "lnkSelectExifTool";
-            this.lnkSelectExifTool.Size = new System.Drawing.Size(148, 23);
+            this.lnkSelectExifTool.Size = new System.Drawing.Size(258, 41);
             this.lnkSelectExifTool.TabIndex = 1;
             this.lnkSelectExifTool.TabStop = true;
             this.lnkSelectExifTool.Text = "Select Exif tool file";
@@ -155,9 +162,10 @@
             // 
             // lblNotFound
             // 
-            this.lblNotFound.Location = new System.Drawing.Point(22, 30);
+            this.lblNotFound.Location = new System.Drawing.Point(39, 54);
+            this.lblNotFound.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblNotFound.Name = "lblNotFound";
-            this.lblNotFound.Size = new System.Drawing.Size(804, 84);
+            this.lblNotFound.Size = new System.Drawing.Size(1440, 150);
             this.lblNotFound.TabIndex = 0;
             this.lblNotFound.Text = "[The Exif tool does not exist or invalid\r\nC:\\aaa\\bbb\\xxx.exe]";
             // 
@@ -166,20 +174,21 @@
             this.txtExifToolCommandPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtExifToolCommandPreview.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
-            this.txtExifToolCommandPreview.Location = new System.Drawing.Point(26, 407);
+            this.txtExifToolCommandPreview.Location = new System.Drawing.Point(47, 729);
+            this.txtExifToolCommandPreview.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtExifToolCommandPreview.Multiline = true;
             this.txtExifToolCommandPreview.Name = "txtExifToolCommandPreview";
             this.txtExifToolCommandPreview.ReadOnly = true;
             this.txtExifToolCommandPreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtExifToolCommandPreview.Size = new System.Drawing.Size(800, 65);
+            this.txtExifToolCommandPreview.Size = new System.Drawing.Size(1430, 113);
             this.txtExifToolCommandPreview.TabIndex = 1;
             // 
             // FrmExifTool
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(134F, 134F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(240F, 240F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(203)))), ((int)(((byte)(204)))));
-            this.ClientSize = new System.Drawing.Size(852, 578);
+            this.ClientSize = new System.Drawing.Size(1526, 1035);
             this.Controls.Add(this.txtExifToolCommandPreview);
             this.Controls.Add(this.panNotFound);
             this.Controls.Add(this.lvExifItems);
@@ -187,6 +196,7 @@
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.KeyPreview = true;
+            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.Name = "FrmExifTool";
             this.Text = "[Exif tool]";
             this.Activated += new System.EventHandler(this.FrmExifTool_Activated);

@@ -24,6 +24,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ImageGlass.WebP;
 using ImageMagick;
 using ImageMagick.Formats;
 
@@ -61,19 +62,49 @@ namespace ImageGlass.Heart {
             IColorProfile colorProfile = null;
 
             var ext = Path.GetExtension(filename).ToUpperInvariant();
-            var settings = new MagickReadSettings();
+            var settings = new MagickReadSettings {
+                // https://github.com/dlemstra/Magick.NET/issues/1077
+                SyncImageWithExifProfile = true,
+                SyncImageWithTiffProperties = true,
+            };
 
             #region Settings
-            if (ext == ".SVG") {
+            if (ext.Equals(".SVG", StringComparison.OrdinalIgnoreCase)) {
                 settings.BackgroundColor = MagickColors.Transparent;
                 settings.SetDefine("svg:xml-parse-huge", "true");
             }
+            else if (ext.Equals(".HEIC", StringComparison.OrdinalIgnoreCase)
+                || ext.Equals(".HEIF", StringComparison.OrdinalIgnoreCase)) {
+                settings.SetDefines(new HeicReadDefines {
+                    PreserveOrientation = true,
+                    DepthImage = true,
+                });
+            }
+            else if (ext.Equals(".JP2", StringComparison.OrdinalIgnoreCase)) {
+                settings.SetDefines(new Jp2ReadDefines {
+                    QualityLayers = 100,
+                });
+            }
+            else if (ext.Equals(".TIF", StringComparison.OrdinalIgnoreCase)
+                || ext.Equals(".TIFF", StringComparison.OrdinalIgnoreCase)) {
+                settings.SetDefines(new TiffReadDefines {
+                    IgnoreTags = new[] {
+                    // Issue https://github.com/d2phap/ImageGlass/issues/1454
+                    "34022", // ColorTable
+                    "34025", // ImageColorValue
+                    "34026", // BackgroundColorValue
+
+                    // Issue https://github.com/d2phap/ImageGlass/issues/1181
+                    "32928",
+                },
+                });
+            }
+
 
             if (size.Width > 0 && size.Height > 0) {
                 settings.Width = size.Width;
                 settings.Height = size.Height;
             }
-
 
             // Fixed #708: length and filesize do not match
             settings.SetDefines(new BmpReadDefines {
@@ -86,6 +117,7 @@ namespace ImageGlass.Heart {
                 OutputColor = DngOutputColor.AdobeRGB,
                 ReadThumbnail = true,
             });
+
 
             #endregion
 
@@ -115,6 +147,27 @@ namespace ImageGlass.Heart {
                         ReadWithMagickImage();
                     }
                     break;
+
+                case ".WEBP":
+                    try {
+                        using var webp = new WebPWrapper();
+                        var aniWebP = webp.AnimLoad(filename);
+
+                        var ms = new MemoryStream();
+                        using var gif = new GifEncoder(ms);
+
+                        foreach (var frame in aniWebP) {
+                            gif.AddFrame(frame.Bitmap, frameDelay: TimeSpan.FromMilliseconds(frame.Duration));
+                        }
+
+                        bitmap = new Bitmap(ms);
+                    }
+                    catch {
+                        // #637: falls over with certain images, fallback to MagickImage
+                        ReadWithMagickImage();
+                    }
+                    break;
+
 
 
                 default:
@@ -188,7 +241,6 @@ namespace ImageGlass.Heart {
 
 
             void ReadWithMagickImage() {
-                var checkRotation = ext != ".HEIC";
                 using var imgColl = new MagickImageCollection();
 
                 // Issue #530: ImageMagick falls over if the file path is longer than the (old) windows limit of 260 characters. Workaround is to read the file bytes, but that requires using the "long path name" prefix to succeed.
@@ -206,17 +258,11 @@ namespace ImageGlass.Heart {
                 if (imgColl.Count > 1 && forceLoadFirstPage is false) {
                     imgColl.Read(filename, settings);
 
-                    // convert WEBP to GIF for animation
-                    if (ext == ".WEBP") {
-                        bitmap = imgColl.ToBitmap(ImageFormat.Gif);
-                    }
-                    else {
-                        foreach (var imgPageM in imgColl) {
-                            (exif, colorProfile) = PreprocesMagickImage((MagickImage)imgPageM, checkRotation);
-                        }
+                    Parallel.ForEach(imgColl, (imgPageM) => {
+                        (exif, colorProfile) = PreprocesMagickImage((MagickImage)imgPageM);
+                    });
 
-                        bitmap = imgColl.ToBitmap();
-                    }
+                    bitmap = imgColl.ToBitmap();
 
                     return;
                 }
@@ -246,7 +292,7 @@ namespace ImageGlass.Heart {
 
 
                 imgM.Quality = quality;
-                (exif, colorProfile) = PreprocesMagickImage(imgM, checkRotation);
+                (exif, colorProfile) = PreprocesMagickImage(imgM);
 
                 using var channelImgM = ApplyColorChannel(imgM, channel);
                 bitmap = channelImgM.ToBitmap();

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackagingLayoutTemplate xmlns="http://schemas.microsoft.com/appx/makeappx/2017">
+
+    <GeneratedPackageFamily ID="pf-{BundleArchitectures}"
+      FileName="{PackageId}_{Version}_{BundleArchitectures}.{PackageExtPrefix}bundle"
+      FlatBundle="true" ManifestPath="{AppxManifestPath}" ResourceManager="false" Encrypt="false">
+
+        <GeneratedPackage ID="{PackageArchitecture}"
+          FileName="{PackageId}_{Version}_{PackageArchitecture}.{PackageExtPrefix}"
+          ProcessorArchitecture="{PackageArchitecture}" ManifestPath="{AppxManifestPath}"
+          Encrypt="false" Compress="true">
+            <GeneratedFiles />
+            <GeneratedResources />
+
+            <Files>
+                <File SourcePath="..\..\Setup\Assets\**"
+                      DestinationPath="ImageGlass\**" />
+                <File ExcludePath="..\..\Setup\Assets\Themes\Kobe\logo.svg" />
+                <File SourcePath="..\..\Setup\Settings\logo_star.svg"
+                      DestinationPath="ImageGlass\Themes\Kobe\logo.svg" />
+                
+                <File SourcePath="..\..\EULA.txt"
+                      DestinationPath="ImageGlass\EULA.txt" />
+                
+                <File SourcePath="..\..\Setup\Settings\igconfig.admin.xml"
+                      DestinationPath="ImageGlass\igconfig.admin.xml" />
+                
+            </Files>
+        </GeneratedPackage>
+
+    </GeneratedPackageFamily>
+</PackagingLayoutTemplate>

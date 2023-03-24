@@ -825,8 +825,9 @@ namespace ImageGlass.ImageListView {
             public virtual Size MeasureItemMargin(View view) {
                 if (view == View.Details)
                     return new Size(2, 0);
-                else
+                else {
                     return new Size(4, 4);
+                }
             }
             /// <summary>
             /// Returns item size for the given view mode.

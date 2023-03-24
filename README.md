@@ -10,8 +10,7 @@ ImageGlass - A lightweight, versatile image viewer
 [![Twitter Follow](https://img.shields.io/twitter/follow/duongdieuphap?style=social)](https://twitter.com/duongdieuphap)
 
 
-ImageGlass is a lightweight software application whose purpose is to help you view images in a clean and intuitive working environment.
-It gives you the possibility to view over **80+** common image formats, including `.gif`, `.svg`, `.png`, `.heic`, ... and many more advanced features which help normal users or designers speed up their work.
+ImageGlass is a lightweight software designed for seamless viewing of images in a clean and intuitive interface. With support for over 80 common image formats including `WEBP`, `GIF`, `SVG`, `PNG`, `JXL`, `HEIC`,... ImageGlass also offers advanced features that cater to the needs of both regular users and designers, making it the excellent tool to enhance workflow efficiency.
 
 ## 📥 Download
 <a href="https://www.microsoft.com/store/productId/9N33VZK3C7TH?cid=GitHubRelease&referrer=appbadge&source=GithubD2phap">
@@ -31,7 +30,7 @@ It gives you the possibility to view over **80+** common image formats, includin
 - ImageGlass Store provides the convenience of fast, easy installation onto all of your Windows devices along with fully automatic, behind-the-scenes updates with all the newest features, improvements, and fixes.
 
 <a href="https://www.imageglass.org/download" target="_blank" title="View screen shots">
-<img src="https://github.com/ImageGlass/config/raw/main/screenshots/v8.7/8.7_1.jpg" alt="ImageGlass 8.7.11.6" width="640">
+<img src="https://raw.githubusercontent.com/ImageGlass/website-content/main/releases/screenshots/v8.8/8.8_1.jpg" alt="ImageGlass 8.8.3.28" width="640">
 </a><br/>
 
 
@@ -50,14 +49,18 @@ ImageGlass 9 uses [.NET 6](https://devblogs.microsoft.com/dotnet/announcing-net-
 
 
 ## 👨‍💻 Development
-- Windows 10
+- Windows 11
 - Visual Studio 2022
 - .NET Framework 4.8 for v8.x, .NET 6 for v9.0
 
 The `develop` branch contains the latest commits of version 8.x while the `prod` branch is for the final stable release. For the source code of version 9.0 beta, you can check `v9` branch.
 
-**``Pull Request``** is most welcome!
 
+## 🗝️ License
+- ImageGlass source code is released under the terms of the GNU GPLv3.
+- For end user license, please refer to https://imageglass.org/license.
+
+> Starting from **April 1st, 2023 and ImageGlass version 8.8**, it is now required for users to register for a free license in order to use ImageGlass for non-personal purposes. This update has been announced on the [ImageGlass website](https://imageglass.org/news/imageglass-end-user-license-agreement-eula-update-81), and you can find more information about the new End User License Agreement (EULA) update at https://imageglass.org/license.
 
 
 ## 📚 Docs
@@ -66,6 +69,7 @@ The `develop` branch contains the latest commits of version 8.x while the `prod`
 - [Shortcuts](https://imageglass.org/docs/ui-shortcuts-reference)
 - [App configs](https://imageglass.org/docs/app-configs)
 - [Command lines](https://imageglass.org/docs/command-line-utilities)
+- [EULA](https://imageglass.org/license)
 
 For more information about ImageGlass, go to [Documentation](https://imageglass.org/docs)
 
@@ -77,7 +81,9 @@ For more information about ImageGlass, go to [Documentation](https://imageglass.
 
 
 ## 💖 This project needs your help!
-ImageGlass is an open source, free, and ad-free photo viewer, but developing and maintaining it is not. Your financial support gives me more motivation to work on future releases. You can sponsor my work on GitHub (one-time/monthly, no service fee), Patreon (monthly), PayPal,...
+ImageGlass is an open source, free, and ad-free photo viewer, but developing and maintaining it is not. By providing financial support, you can help me stay motivated and continue to deliver even better versions in the future.
+
+You can sponsor my work through various platforms, such as GitHub (one-time or monthly donations with no service fee), Patreon (monthly donations), and PayPal.
 
 If you choose **GitHub Sponsor** or **Patreon**, make sure you check out **the tier benefits included**.<br/>
 Thanks for your support!

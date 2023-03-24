@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageGlass>
+  <Language>
+    <Info langCode="ro-RO" langName="Română" author="RazvanS" description="Romanian" minVersion="8.8" isRightToLeftLayout="No"/>
+    <Content>
+      <Item key="_IncompatibleConfigs" value="Anumite setări nu sunt compatibile cu Image Glass {0}. E recomandat să fie actualizate înainte de a continua.&#10;&#10;- Apasă Da pentru a vedea modificările.&#10;- Apasă Nu pentru a porni ImageGlass cu opțiunile implicite."/>
+      <Item key="_.ImageOrderBy._Name" value="Nume (implicit)"/>
+      <Item key="_.ImageOrderBy._Length" value="Lungime"/>
+      <Item key="_.ImageOrderBy._CreationTime" value="Ora creării"/>
+      <Item key="_.ImageOrderBy._LastAccessTime" value="Data ultimei accesări"/>
+      <Item key="_.ImageOrderBy._LastWriteTime" value="Ultima actualizare"/>
+      <Item key="_.ImageOrderBy._Extension" value="Extensie"/>
+      <Item key="_.ImageOrderBy._Random" value="Aleator"/>
+      <Item key="_.ImageOrderType._Asc" value="Crescător"/>
+      <Item key="_.ImageOrderType._Desc" value="Descrescător"/>
+      <Item key="_.AfterOpeningEditAppAction._Nothing" value="Nimic"/>
+      <Item key="_.AfterOpeningEditAppAction._Minimize" value="Micşorează"/>
+      <Item key="_.AfterOpeningEditAppAction._Close" value="Închidere"/>
+      <Item key="frmMain.mnuMainFile" value="Fișier"/>
+      <Item key="frmMain.mnuMainOpenFile" value="Deschide fişier…"/>
+      <Item key="frmMain.mnuMainOpenImageData" value="Deschide imaginea din clipboard"/>
+      <Item key="frmMain.mnuMainNewWindow" value="Deschide o nouă fereastră"/>
+      <Item key="frmMain.mnuMainNewWindow._Error" value="Este permisă doar o singură fereastră"/>
+      <Item key="frmMain.mnuSaveImage" value="Salvează imaginea"/>
+      <Item key="frmMain.mnuMainSaveAs" value="Salvează imaginea ca…"/>
+      <Item key="frmMain.mnuMainRefresh" value="Reîmprospătare"/>
+      <Item key="frmMain.mnuMainReloadImage" value="Reîncarcă imaginea"/>
+      <Item key="frmMain.mnuMainReloadImageList" value="Reîncarcă lista de imagini"/>
+      <Item key="frmMain.mnuOpenWith" value="Deschide cu…"/>
+      <Item key="frmMain.mnuMainEditImage" value="Editează imaginea {0}…"/>
+      <Item key="frmMain.mnuMainPrint" value="Tipărește…"/>
+      <Item key="frmMain.mnuMainNavigation" value="Navigare"/>
+      <Item key="frmMain.mnuMainViewNext" value="Vezi imaginea urmatoare"/>
+      <Item key="frmMain.mnuMainViewNext.Shortcut" value="Săgeata dreaptă / PageDown"/>
+      <Item key="frmMain.mnuMainViewPrevious" value="Vezi imaginea anterioară"/>
+      <Item key="frmMain.mnuMainViewPrevious.Shortcut" value="Săgeata stângă / PageUp"/>
+      <Item key="frmMain.mnuMainGoto" value="Mergi la…"/>
+      <Item key="frmMain.mnuMainGotoFirst" value="Mergi la prima imagine"/>
+      <Item key="frmMain.mnuMainGotoLast" value="Mergi la ultima imagine"/>
+      <Item key="frmMain.mnuMainNextPage" value="Vezi pagina următoare"/>
+      <Item key="frmMain.mnuMainPrevPage" value="Vezi pagina anterioară"/>
+      <Item key="frmMain.mnuMainFirstPage" value="Vezi prima pagină"/>
+      <Item key="frmMain.mnuMainLastPage" value="Vezi ultima pagină"/>
+      <Item key="frmMain.mnuMainZoom" value="Lupă"/>
+      <Item key="frmMain.mnuMainZoomIn" value="Mărire"/>
+      <Item key="frmMain.mnuMainZoomOut" value="Micșorare"/>
+      <Item key="frmMain.mnuCustomZoom" value="Zoom personalizat…"/>
+      <Item key="frmMain.mnuCustomZoom._Text" value="Introduceți o nouă valoare de zoom"/>
+      <Item key="frmMain.mnuMainScaleToFit" value="Scalează să încapă"/>
+      <Item key="frmMain.mnuMainScaleToFill" value="Scalează să umple"/>
+      <Item key="frmMain.mnuMainActualSize" value="Dimensiune reală"/>
+      <Item key="frmMain.mnuMainLockZoomRatio" value="Blocare aspect"/>
+      <Item key="frmMain.mnuMainAutoZoom" value="Zoom automat"/>
+      <Item key="frmMain.mnuMainScaleToWidth" value="Scalare după lățime"/>
+      <Item key="frmMain.mnuMainScaleToHeight" value="Scalare după înălțime"/>
+      <Item key="frmMain.mnuMainImage" value="Imagine"/>
+      <Item key="frmMain.mnuMainChannels" value="Vizualizare canale"/>
+      <Item key="frmMain.mnuMainChannels._All" value="Toate"/>
+      <Item key="frmMain.mnuMainChannels._Red" value="Roșu"/>
+      <Item key="frmMain.mnuMainChannels._Green" value="Verde"/>
+      <Item key="frmMain.mnuMainChannels._Blue" value="Albastru"/>
+      <Item key="frmMain.mnuMainChannels._Black" value="Negru"/>
+      <Item key="frmMain.mnuMainChannels._Alpha" value="Transparență"/>
+      <Item key="frmMain.mnuLoadingOrder" value="Ordinea de încărcare"/>
+      <Item key="frmMain.mnuMainRotateLeft" value="Rotire la stânga"/>
+      <Item key="frmMain.mnuMainRotateRight" value="Rotire la dreapta"/>
+      <Item key="frmMain.mnuMainFlipHorz" value="Rotește pe orizontală"/>
+      <Item key="frmMain.mnuMainFlipVert" value="Rotește pe verticală"/>
+      <Item key="frmMain.mnuMainRename" value="Redenumește imaginea…"/>
+      <Item key="frmMain.mnuMainMoveToRecycleBin" value="Mutare in coșul de gunoi"/>
+      <Item key="frmMain.mnuMainDeleteFromHardDisk" value="Șterge definitivă"/>
+      <Item key="frmMain.mnuMainExtractPages" value="Extrage paginile imaginii ({0})…"/>
+      <Item key="frmMain.mnuMainStartStopAnimating" value="Pornire/oprire animare imagine"/>
+      <Item key="frmMain.mnuMainSetAsDesktop" value="Plasează ca imagine de fundal"/>
+      <Item key="frmMain.mnuMainSetAsLockImage" value="Setează ca fundal pentru lockscreen"/>
+      <Item key="frmMain.mnuMainImageLocation" value="Deschidere localizare imagine"/>
+      <Item key="frmMain.mnuMainImageProperties" value="Proprietăți imagine"/>
+      <Item key="frmMain.mnuMainClipboard" value="Clipboard"/>
+      <Item key="frmMain.mnuMainCopy" value="Copiază"/>
+      <Item key="frmMain.mnuMainCopyImageData" value="Copiează date imagine"/>
+      <Item key="frmMain.mnuMainCut" value="Decupează"/>
+      <Item key="frmMain.mnuMainCopyImagePath" value="Copiază calea imaginii"/>
+      <Item key="frmMain.mnuMainClearClipboard" value="Golește clipboard"/>
+      <Item key="frmMain.mnuWindowFit" value="Potrivire fereastră"/>
+      <Item key="frmMain.mnuMainFullScreen" value="Ecran complet"/>
+      <Item key="frmMain.mnuFrameless" value="Fară ramă"/>
+      <Item key="frmMain.mnuMainSlideShow" value="Prezentare"/>
+      <Item key="frmMain.mnuMainSlideShowStart" value="Pornire prezentare"/>
+      <Item key="frmMain.mnuMainSlideShowPause" value="Oprește/reia prezentare"/>
+      <Item key="frmMain.mnuMainSlideShowExit" value="Părăsire prezentare"/>
+      <Item key="frmMain.mnuMainShare" value="Distribuie…"/>
+      <Item key="frmMain.mnuMainLayout" value="Dispunere"/>
+      <Item key="frmMain.mnuMainToolbar" value="Bara de unelte"/>
+      <Item key="frmMain.mnuMainThumbnailBar" value="Panou pictograme"/>
+      <Item key="frmMain.mnuMainCheckBackground" value="Fundal caroiat"/>
+      <Item key="frmMain.mnuMainAlwaysOnTop" value="Păstrează fereastra deasupra"/>
+      <Item key="frmMain.mnuMainTools" value="Unelte"/>
+      <Item key="frmMain.mnuMainColorPicker" value="Selector culoare"/>
+      <Item key="frmMain.mnuMainPageNav" value="Navigare pagini"/>
+      <Item key="frmMain.mnuMainCrop" value="Decupare"/>
+      <Item key="frmMain.mnuExifTool" value="Utilitar Exif"/>
+      <Item key="frmMain.mnuMainSettings" value="Configurări…"/>
+      <Item key="frmMain.mnuMainHelp" value="Ajutor"/>
+      <Item key="frmMain.mnuMainAbout" value="Despre"/>
+      <Item key="frmMain.mnuMainFirstLaunch" value="Configurații pentru prima lansare…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NoUpdate" value="Verificați dacă există actualizări…"/>
+      <Item key="frmMain.mnuMainCheckForUpdate._NewVersion" value="O nouă versiune este disponibilă!"/>
+      <Item key="frmMain.mnuMainReportIssue" value="Raportează o problemă…"/>
+      <Item key="frmMain.mnuMainExitApplication" value="Ieșire"/>
+      <Item key="frmMain.mnuTrayShowWindow" value="Afișare"/>
+      <Item key="frmMain.picMain._ErrorText" value="ImageGlass nu poate deschide această imagine, deoarece fişierul pare a fi deteriorat, corupt sau nu e suportat."/>
+      <Item key="frmMain._ImageNotExist" value="Imaginea de vizualizat nu există."/>
+      <Item key="frmMain.btnMenu" value="Meniu principal"/>
+      <Item key="frmMain._OpenFileDialog" value="Toate tipurile de fișiere suportate"/>
+      <Item key="frmMain._Files" value="fişier(e)"/>
+      <Item key="frmMain._Pages" value="pagini"/>
+      <Item key="frmMain._ImageData" value="Date imagine"/>
+      <Item key="frmMain._RenameDialogText" value="Redenumeste"/>
+      <Item key="frmMain._RenameDialog" value="Introdu nume nou"/>
+      <Item key="frmMain._GotoDialogText" value="Introduceți indexul imaginii pentru a-l vedea. Apăsați ENTER"/>
+      <Item key="frmMain._DeleteDialogText" value="Ştergeţi fişierul {0}?"/>
+      <Item key="frmMain._DeleteDialogTitle" value="Confirmă"/>
+      <Item key="frmMain._ExtractPageText" value="Se extrag paginile imaginii. Vă rugăm selectați folderul destinatar."/>
+      <Item key="frmMain._FullScreenMessage" value="Apasă {0} pentru a ieși din modul ecran complet."/>
+      <Item key="frmMain._SlideshowMessage" value="Apăsați ESC pentru a ieși din prezentare.&#10;Click dreapta pentru a deschide meniul contextual."/>
+      <Item key="frmMain._SlideshowMessagePause" value="Prezentare oprită"/>
+      <Item key="frmMain._SlideshowMessageResume" value="Prezentare reluată"/>
+      <Item key="frmMain._CopyFileText" value="Am copiat {0} fișier(e)"/>
+      <Item key="frmMain._CutFileText" value="Am decupat {0} fișier(e)"/>
+      <Item key="frmMain._CopyImageData" value="Imagine copiată în clipboard"/>
+      <Item key="frmMain._ClearClipboard" value="Clipboard golit"/>
+      <Item key="frmMain._SaveConfirm" value="Do you want to save this image?&#13;&#10;{0}"/>
+      <Item key="frmMain._SaveOverrideConfirm" value="Are you sure you want to override this image?&#13;&#10;{0}"/>
+      <Item key="frmMain._SaveDescription" value="ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."/>
+      <Item key="frmMain._SaveImage" value="Imaginea a fost salvata în {0}"/>
+      <Item key="frmMain._SavingImage" value="Salvare imagine...&#10;{0}"/>
+      <Item key="frmMain._SaveImageError" value="Imposibil de salvat imaginea&#10;{0}."/>
+      <Item key="frmMain._Loading" value="Încărcare..."/>
+      <Item key="frmMain._FirstItemOfList" value="Am ajuns la prima imagine"/>
+      <Item key="frmMain._LastItemOfList" value="Am ajuns la ultima imagine"/>
+      <Item key="frmMain._CannotRotateAnimatedFile" value="Modificația pentru imagini animate nu este suportată"/>
+      <Item key="frmMain._SetLockImage_Error" value="A fost o eroare la setarea imaginei a ecranului de blocare"/>
+      <Item key="frmMain._SetLockImage_Success" value="Imaginea a ecranului de blocare a fost setată"/>
+      <Item key="frmMain._SetBackground_Error" value="A fost o eroare la setarea imaginei de fundal a desktopului"/>
+      <Item key="frmMain._SetBackground_Success" value="Imaginea de fundal a desktopului a fost setată"/>
+      <Item key="frmMain._PageExtracting" value="Se extrag paginile imaginii..."/>
+      <Item key="frmMain._PageExtractComplete" value="Extragerea paginii finalizată."/>
+      <Item key="frmMain._Frameless" value="Țineți apăsat SHIFT pentru a muta fereastra."/>
+      <Item key="frmMain._InvalidImageClipboardData" value="Clipboardul nu conţine imagini."/>
+      <Item key="frmAbout.lblSlogant" value="Un vizualizator de imagini ușor, versatil"/>
+      <Item key="frmAbout.lblInfo" value="Informaţii"/>
+      <Item key="frmAbout.lblComponent" value="Componente"/>
+      <Item key="frmAbout.lblReferences" value="Referințe"/>
+      <Item key="frmAbout.lblVersion" value="Versiunea: {0}"/>
+      <Item key="frmAbout.lblInfoContact" value="Contact"/>
+      <Item key="frmAbout.lblSoftwareUpdate" value="Actualizare software"/>
+      <Item key="frmAbout.lnkCheckUpdate" value="» Verificați dacă există actualizări…"/>
+      <Item key="frmAbout._Text" value="Despre"/>
+      <Item key="frmAbout._PortableText" value="[Portable]"/>
+      <Item key="frmSetting._Text" value="Configurări"/>
+      <Item key="frmSetting.btnSave" value="Salvează"/>
+      <Item key="frmSetting.btnCancel" value="Anulează"/>
+      <Item key="frmSetting.btnApply" value="Aplică"/>
+      <Item key="frmSetting.lblGeneral" value="General"/>
+      <Item key="frmSetting.lblImage" value="Imagine"/>
+      <Item key="frmSetting.lblEdit" value="Editează"/>
+      <Item key="frmSetting.lblFileTypeAssoc" value="Asocieri de tipuri de fișiere"/>
+      <Item key="frmSetting.lblToolbar" value="Bara de unelte"/>
+      <Item key="frmSetting.lblLanguage" value="Limba"/>
+      <Item key="frmSetting.lblTheme" value="Tema"/>
+      <Item key="frmSetting.lblKeyboard" value="Tastatură"/>
+      <Item key="frmSetting.lblHeadStartup" value="Pornește"/>
+      <Item key="frmSetting.chkWelcomePicture" value="Arată imagine de întâmpinare"/>
+      <Item key="frmSetting.chkLastSeenImage" value="Deschide ultima imagine văzută"/>
+      <Item key="frmSetting.chkShowToolBar" value="Arătă bara de instrumente la deschidere"/>
+      <Item key="frmSetting.lblHeadConfigDir" value="Folderul de configurație"/>
+      <Item key="frmSetting.lblHeadViewer" value="Vizualizator"/>
+      <Item key="frmSetting.chkShowScrollbar" value="Afişează bara de derulare a vizualizatorului"/>
+      <Item key="frmSetting.chkShowNavButtons" value="Afişează butoanele săgeții de navigare"/>
+      <Item key="frmSetting.chkDisplayBasename" value="Afişare numele de bază al imaginii vizualizate în bara de titlu"/>
+      <Item key="frmSetting.chkShowCheckerboardOnlyImage" value="Afişează caroiaj numai în regiunea imaginii"/>
+      <Item key="frmSetting.chkUseTouchGesture" value="Activare suport pentru gesturi"/>
+      <Item key="frmSetting.lblBackGroundColor" value="Culoare de fundal"/>
+      <Item key="frmSetting.lnkResetBackgroundColor" value="Resetează"/>
+      <Item key="frmSetting.lblHeadPanning" value="Panoramare"/>
+      <Item key="frmSetting.lblVertPanningSpeed" value="Viteza de panoramare pe verticală"/>
+      <Item key="frmSetting.lblHorzPanningSpeed" value="Viteza de panoramare pe orizontală"/>
+      <Item key="frmSetting.lblHeadOthers" value="Altele"/>
+      <Item key="frmSetting.chkStartWithOs" value="Rulează cu OS pentru a îmbunătăți viteza de pornire"/>
+      <Item key="frmSetting.chkContinueRunningBackground" value="Continuă rularea în fundal atunci când aplicația este închisă"/>
+      <Item key="frmSetting.chkAutoUpdate" value="Caută automat actualizări"/>
+      <Item key="frmSetting.chkAllowMultiInstances" value="Permite mai multe instanțe ale programului"/>
+      <Item key="frmSetting.chkESCToQuit" value="Permite apăsarea ESC pentru a părăsi aplicația"/>
+      <Item key="frmSetting.chkConfirmationDelete" value="Arată dialogul de confirmație pentru ștergere"/>
+      <Item key="frmSetting.chkCenterWindowFit" value="Auto-centrează fereastra în modul Fereastră"/>
+      <Item key="frmSetting.chkShowToast" value="Arată căsuțe cu mesaj"/>
+      <Item key="frmSetting.lblHeadImageLoading" value="Imaginea se încarcă"/>
+      <Item key="frmSetting.chkFindChildFolder" value="Găsește imagini în folderul copil"/>
+      <Item key="frmSetting.chkShowHiddenImages" value="Afișează imaginile ascunse"/>
+      <Item key="frmSetting.chkLoopViewer" value="Repetă vizualizatorul la prima imagine atunci când ajunge la sfârșitul listei"/>
+      <Item key="frmSetting.chkIsCenterImage" value="Centrează imaginea pe vizualizator"/>
+      <Item key="frmSetting.chkIsUseRawThumbnail" value="Utilizați miniatura încorporată pentru formatele RAW"/>
+      <Item key="frmSetting.chkAutoDisplayNewImage" value="Afișează noua imagine automat în director"/>
+      <Item key="frmSetting.lblImageLoadingOrder" value="Ordine încărcare imagine"/>
+      <Item key="frmSetting.chkUseFileExplorerSortOrder" value="Folosiți ordinea de sortare a fișierelor Windows Explorer dacă este posibil"/>
+      <Item key="frmSetting.chkGroupByDirectory" value="Grupează imaginile după director"/>
+      <Item key="frmSetting.lblImageBoosterCachedCount" value="Numărul de imagini stocate de ImageBooster (o direcție)"/>
+      <Item key="frmSetting.chkIsPlayImageChangeSound" value="Redă un sunet când imaginea se schimbă"/>
+      <Item key="frmSetting.lblNumberImagesNotify" value="Numărul de imagini de notificat"/>
+      <Item key="frmSetting.lblColorManagement" value="Gestionare culori"/>
+      <Item key="frmSetting.chkApplyColorProfile" value="Aplică și pentru imaginile fără profilul de culoare încorporat"/>
+      <Item key="frmSetting.lblColorProfile" value="Profil de culoare:"/>
+      <Item key="frmSetting.lnkColorProfileBrowse" value="Răsfoiește…"/>
+      <Item key="frmSetting.cmbColorProfile._None" value="Nimic"/>
+      <Item key="frmSetting.cmbColorProfile._CurrentMonitorProfile" value="Utilizați profilul actual al monitorului"/>
+      <Item key="frmSetting.cmbColorProfile._CustomProfileFile" value="Personalizat…"/>
+      <Item key="frmSetting.lblHeadMouseWheelActions" value="Acțiuni pentru rotița mouse-ului"/>
+      <Item key="frmSetting.lblMouseWheel" value="Rotița mouse-ului"/>
+      <Item key="frmSetting.lblMouseWheelAlt" value="Rotița mouse-ului + Alt"/>
+      <Item key="frmSetting.lblMouseWheelCtrl" value="Rotița mouse-ului + Ctrl"/>
+      <Item key="frmSetting.lblMouseWheelShift" value="Rotița mouse-ului + Shift"/>
+      <Item key="frmSetting.cmbMouseWheel._DoNothing" value="Nicio acțiune"/>
+      <Item key="frmSetting.cmbMouseWheel._Zoom" value="Lupă"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollVertically" value="Derulare verticală"/>
+      <Item key="frmSetting.cmbMouseWheel._ScrollHorizontally" value="Derulare orizontală"/>
+      <Item key="frmSetting.cmbMouseWheel._BrowseImages" value="Imaginea anterioară/următoare"/>
+      <Item key="frmSetting.lblHeadZooming" value="Nivel zoom"/>
+      <Item key="frmSetting.lblGeneral_ZoomOptimization" value="Optimizare zoom"/>
+      <Item key="frmSetting.cmbZoomOptimization._Auto" value="Auto (Calitate scăzută/Vecinul apropiat)"/>
+      <Item key="frmSetting.cmbZoomOptimization._Low" value="Calitate scăzută"/>
+      <Item key="frmSetting.cmbZoomOptimization._High" value="Calitate înaltă"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bilinear" value="Bilineară"/>
+      <Item key="frmSetting.cmbZoomOptimization._Bicubic" value="Bicubică"/>
+      <Item key="frmSetting.cmbZoomOptimization._NearestNeighbor" value="Vecinul apropiat"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBilinear" value="Calitate înaltă, biliniară"/>
+      <Item key="frmSetting.cmbZoomOptimization._HighQualityBicubic" value="Calitate înaltă, bicubică"/>
+      <Item key="frmSetting.lblZoomLevels" value="Nivel mărire"/>
+      <Item key="frmSetting.txtZoomLevels._Error" value="A apărut o eroare la actualizarea nivelurilor Zoom. Mesaj de eroare:&#10;&#10;{0}"/>
+      <Item key="frmSetting.lblHeadThumbnailBar" value="Bara de miniaturi"/>
+      <Item key="frmSetting.chkThumbnailVertical" value="Arată miniaturi pe partea dreapta"/>
+      <Item key="frmSetting.chkShowThumbnailScrollbar" value="Arată bara de derulare a miniaturilor"/>
+      <Item key="frmSetting.lblGeneral_ThumbnailSize" value="Dimensiune fișier miniatură (pixeli)"/>
+      <Item key="frmSetting.lblHeadSlideshow" value="Prezentare"/>
+      <Item key="frmSetting.chkLoopSlideshow" value="Întoarce la prima imagine, atunci când ajunge la sfârşitul listei"/>
+      <Item key="frmSetting.chkShowSlideshowCountdown" value="Arată numărătoarea inversă slideshow"/>
+      <Item key="frmSetting.chkRandomSlideshowInterval" value="Folosește interval aleatoriu"/>
+      <Item key="frmSetting.lblSlideshowInterval" value="Interval diapozitiv: {0}"/>
+      <Item key="frmSetting.lblSlideshowIntervalTo" value="către"/>
+      <Item key="frmSetting.lblHeadFullScreen" value="Ecran complet"/>
+      <Item key="frmSetting.chkHideToolbarInFullScreen" value="Ascundeți bara de instrumente"/>
+      <Item key="frmSetting.chkHideThumbnailBarInFullScreen" value="Ascundeți bara de miniaturi"/>
+      <Item key="frmSetting.chkSaveOnRotate" value="Salvează imaginea de vizualizare după rotire"/>
+      <Item key="frmSetting.lblSelectAppForEdit" value="Selectați aplicația pentru editarea imaginii"/>
+      <Item key="frmSetting.lblAfterEditingApp" value="După deschiderea aplicației de editare:"/>
+      <Item key="frmSetting.lblImageQuality" value="Calitatea imaginii:"/>
+      <Item key="frmSetting.btnEditEditExt" value="Editează…"/>
+      <Item key="frmSetting.btnEditResetExt" value="Resetare la valorile implicite"/>
+      <Item key="frmSetting.btnEditEditAllExt" value="Editează toate extensiile…"/>
+      <Item key="frmSetting._allExtensions" value="toate extensiile"/>
+      <Item key="frmSetting.lvImageEditing.clnFileExtension" value="Extensie fișier"/>
+      <Item key="frmSetting.lvImageEditing.clnAppName" value="Numele aplicației"/>
+      <Item key="frmSetting.lvImageEditing.clnAppPath" value="Calea către aplicație"/>
+      <Item key="frmSetting.lvImageEditing.clnAppArguments" value="Argumentele aplicației"/>
+      <Item key="frmSetting.chkSaveModifyDate" value="Păstrează data modificării imaginii la salvare"/>
+      <Item key="frmSetting.lblSupportedExtension" value="Formate suportate: {0}"/>
+      <Item key="frmSetting.lnkOpenFileAssoc" value="Deschide asocierile tipurilor de fișiere"/>
+      <Item key="frmSetting.btnAddNewExt" value="Adaugă…"/>
+      <Item key="frmSetting.btnRegisterExt" value="Setează ca vizualizator de fotografie implicit…"/>
+      <Item key="frmSetting.btnUnregisterExt" value="Renunțați la extensii"/>
+      <Item key="frmSetting.btnDeleteExt" value="Șterge"/>
+      <Item key="frmSetting.btnResetExt" value="Resetare la valorile implicite"/>
+      <Item key="frmSetting._RegisterWebToApp_Error" value="Imposibil de înregistrat conexiunea Web-to-App"/>
+      <Item key="frmSetting._RegisterAppExtensions_Error" value="Imposibil de înregistrat extensii de fișiere pentru aplicația ImageGlass"/>
+      <Item key="frmSetting._RegisterAppExtensions_Success" value="Toate extensiile fisierelor au fost inregistrate cu succes! Pentru a seta ImageGlass ca vizualizator de fotografii implicit, vă rugăm să deschideți Setări Windows &gt; Aplicații implicite și să selectați manual aplicația ImageGlass sub secțiunea Vizualizare Foto."/>
+      <Item key="frmSetting._UnregisterAppExtensions_Error" value="Imposibil de șters extensiile de fișiere înregistrate ale aplicației ImageGlass"/>
+      <Item key="frmSetting._UnregisterAppExtensions_Success" value="Toate extensiile fisierelor au fost de-înregistrate cu succes!"/>
+      <Item key="frmSetting.lblToolbarPosition" value="Poziție bară de instrumente:"/>
+      <Item key="frmSetting.lblToolbarIconHeight" value="Dimensiunea pictogramei din bara de instrumente:"/>
+      <Item key="frmSetting.cmbToolbarPosition._Top" value="Sus"/>
+      <Item key="frmSetting.cmbToolbarPosition._Bottom" value="Jos"/>
+      <Item key="frmSetting._separator" value="Separator"/>
+      <Item key="frmSetting.lblToolbar._Tooltip" value="Configurați butoanele din bara de instrumente"/>
+      <Item key="frmSetting.lblUsedBtns" value="Butoane curente:"/>
+      <Item key="frmSetting.lblAvailBtns" value="Butoane disponibile:"/>
+      <Item key="frmSetting.btnMoveDown._Tooltip" value="Mută butonul selectat în jos"/>
+      <Item key="frmSetting.btnMoveLeft._Tooltip" value="Șterge butoanele selectate din bara de unelte"/>
+      <Item key="frmSetting.btnMoveRight._Tooltip" value="Adaugă butoanele selectate în bara de instrumente"/>
+      <Item key="frmSetting.btnMoveUp._Tooltip" value="Mută butonul selectat în sus"/>
+      <Item key="frmSetting.chkHorzCenterToolbarBtns" value="Centrează butoanele din bara de instrumente orizontal în fereastră"/>
+      <Item key="frmSetting.chkHideTooltips" value="Ascunde sfaturile pentru bara de instrumente"/>
+      <Item key="frmSetting.chkColorUseRGBA" value="Utilizați formatul RGB cu valoarea Alpha"/>
+      <Item key="frmSetting.chkColorUseHEXA" value="Utilizați formatul HEX cu valoarea Alpha"/>
+      <Item key="frmSetting.chkColorUseHSLA" value="Utilizați formatul FSL cu valoarea Alpha"/>
+      <Item key="frmSetting.chkColorUseHSVA" value="Utilizați formatul HSV cu valoarea Alpha"/>
+      <Item key="frmSetting.lblDefaultColorCode" value="Formatul implicit de cod de culoare la copiere"/>
+      <Item key="frmSetting.chkShowPageNavAuto" value="Afișare automată a uneltei de navigare a paginii pentru imagini multipagină"/>
+      <Item key="frmSetting.chkExifToolAlwaysOnTop" value="Păstrează unealta Exif întotdeauna deasupra"/>
+      <Item key="frmSetting.lnkSelectExifTool" value="Selectaţi fişierul uneltei Exif"/>
+      <Item key="frmSetting.lnkSelectExifTool._NotFound" value="Instrumentul Exif nu există sau este invalid: &#10;{0}"/>
+      <Item key="frmSetting.lblExifToolCommandArgs" value="Argumentele liniei de comandă:"/>
+      <Item key="frmSetting.lblExifToolCommandPreview" value="Previzualizare comandă:"/>
+      <Item key="frmSetting.lblLanguageText" value="Limbi instalate"/>
+      <Item key="frmSetting.lnkRefresh" value="&gt; Reîmprospătare"/>
+      <Item key="frmSetting.lblLanguageWarning" value="Această limbă poate fi încompatibilă cu {0}"/>
+      <Item key="frmSetting.lblTranslators" value="Traducător:"/>
+      <Item key="frmSetting.lnkInstallLanguage" value="&gt; Instalaţi un nou pachet de limbă (*.iglang)…"/>
+      <Item key="frmSetting.lnkCreateNew" value="&gt; Creați un nou pachet lingvistic…"/>
+      <Item key="frmSetting.lnkEdit" value="&gt; Editează pachetul de limbă selectat…"/>
+      <Item key="frmSetting.lnkGetMoreLanguage" value="&gt; Obține mai multe pachete de limbă…"/>
+      <Item key="frmSetting.lblInstalledThemes" value="Teme instalate: {0}"/>
+      <Item key="frmSetting.lnkThemeDownload" value="Descarcă teme…"/>
+      <Item key="frmSetting.btnThemeRefresh" value="Reîmprospătare"/>
+      <Item key="frmSetting.btnThemeInstall" value="Instalează…"/>
+      <Item key="frmSetting.btnThemeUninstall" value="Dezinstalează…"/>
+      <Item key="frmSetting.btnThemeSaveAs" value="Salvează ca…"/>
+      <Item key="frmSetting.btnThemeFolderOpen" value="Deschide dosarul cu teme"/>
+      <Item key="frmSetting.btnThemeApply" value="Aplică tema"/>
+      <Item key="frmSetting.txtThemeInfo._Name" value="Nume"/>
+      <Item key="frmSetting.txtThemeInfo._Version" value="Versiune"/>
+      <Item key="frmSetting.txtThemeInfo._Author" value="Autor"/>
+      <Item key="frmSetting.txtThemeInfo._Email" value="E-mail"/>
+      <Item key="frmSetting.txtThemeInfo._Website" value="Site web"/>
+      <Item key="frmSetting.txtThemeInfo._Compatibility" value="Compatibilitate"/>
+      <Item key="frmSetting.txtThemeInfo._Description" value="Descriere"/>
+      <Item key="frmSetting.btnThemeInstall._Success" value="Tema a fost instalată cu succes!"/>
+      <Item key="frmSetting.btnThemeInstall._Error" value="Nu s-a putut instala tema."/>
+      <Item key="frmSetting.btnThemeUninstall._Error" value="Nu s-a putut dezinstala tema selectata."/>
+      <Item key="frmSetting.btnThemeSaveAs._Success" value="Tema selectata a fost salvata in {0}"/>
+      <Item key="frmSetting.btnThemeSaveAs._Error" value="Nu s-a putut salva tema selectata."/>
+      <Item key="frmSetting.btnThemeApply._Success" value="Tema selectata a fost aplicata cu succes!"/>
+      <Item key="frmSetting.btnThemeApply._Error" value="Nu s-a putut aplica tema selectata."/>
+      <Item key="frmSetting.btnKeyReset" value="Resetare la valorile implicite"/>
+      <Item key="frmSetting.lblKeysSpaceBack" value="Space / Backspace"/>
+      <Item key="frmSetting.lblKeysPageUpDown" value="Pagină Sus / Pagină Jos"/>
+      <Item key="frmSetting.lblKeysUpDown" value="Săgețile Sus / Jos"/>
+      <Item key="frmSetting.lblKeysLeftRight" value="Săgețile Stânga / Dreapta"/>
+      <Item key="frmSetting.KeyActions._PrevNextImage" value="Imaginea anterioară/următoare"/>
+      <Item key="frmSetting.KeyActions._PanLeftRight" value="Pan stânga / Dreapta"/>
+      <Item key="frmSetting.KeyActions._PanUpDown" value="Pan Sus / Jos"/>
+      <Item key="frmSetting.KeyActions._ZoomInOut" value="Mărire/Micșorare"/>
+      <Item key="frmSetting.KeyActions._PauseSlideshow" value="Oprește prezentarea"/>
+      <Item key="frmSetting.KeyActions._DoNothing" value="Nicio acțiune"/>
+      <Item key="frmAddNewFormat.lblFileExtension" value="Extensie fișier"/>
+      <Item key="frmAddNewFormat.btnOK" value="Ok"/>
+      <Item key="frmAddNewFormat.btnClose" value="Închidere"/>
+      <Item key="frmEditApp.lblFileExtension" value="Extensie fișier"/>
+      <Item key="frmEditApp.lblAppName" value="Numele aplicației"/>
+      <Item key="frmEditApp.lblAppPath" value="Calea către aplicație"/>
+      <Item key="frmEditApp.lblAppArguments" value="Argumentele aplicației"/>
+      <Item key="frmEditApp.btnReset" value="Resetează"/>
+      <Item key="frmEditApp.btnOK" value="Ok"/>
+      <Item key="frmEditApp.btnClose" value="Închidere"/>
+      <Item key="frmEditApp.lblPreviewLabel" value="Avanpremieră"/>
+      <Item key="frmFirstLaunch._Text" value="Configurări inițiale"/>
+      <Item key="frmFirstLaunch._ConfirmCloseProcess" value="ImageGlass trebuie să închidă toate procesele sale pentru a aplica noile setări, vrei să continui?"/>
+      <Item key="frmFirstLaunch.lblStepNumber" value="Pasul {0} din {1}"/>
+      <Item key="frmFirstLaunch.btnNextStep" value="Următorul"/>
+      <Item key="frmFirstLaunch.btnNextStep._Done" value="Gata!"/>
+      <Item key="frmFirstLaunch.lnkSkip" value="Săriți pesta asta și lansați ImageGlass"/>
+      <Item key="frmFirstLaunch.lblLanguage" value="Selectează limba"/>
+      <Item key="frmFirstLaunch.lblTheme" value="Selectează tema"/>
+      <Item key="frmFirstLaunch.lblDefaultApp" value="Setati ImageGlass ca vizualizator de fotografii definit?"/>
+      <Item key="frmFirstLaunch.btnSetDefaultApp" value="Da"/>
+      <Item key="frmCrop.lblWidth" value="Lățime:"/>
+      <Item key="frmCrop.lblHeight" value="Înălţime:"/>
+      <Item key="frmCrop.btnSave" value="Salvează"/>
+      <Item key="frmCrop.btnSaveAs" value="Salvează ca…"/>
+      <Item key="frmCrop.btnCopy" value="Copiază"/>
+      <Item key="frmCrop.btnReset" value="Resetează"/>
+      <Item key="FrmExifTool.clnProperty" value="Proprietate"/>
+      <Item key="FrmExifTool.clnValue" value="Valoare"/>
+      <Item key="FrmExifTool.btnCopyValue" value="Copiază valoarea"/>
+      <Item key="FrmExifTool.btnExport" value="Exportă…"/>
+      <Item key="FrmExifTool.btnClose" value="Închidere"/>
+    </Content>
+  </Language>
+</ImageGlass>

@@ -41,7 +41,7 @@ namespace ImageGlass.UI.Renderers {
             const float space = 0.12f;
             var btn = (ToolStripOverflowButton)e.Item;
             var brushBg = new SolidBrush(Color.Black);
-            var borderRadius = Helpers.IsOS(WindowsOS.Win11) ? 5 : 1;
+            var borderRadius = Helpers.IsOS(WindowsOS.Win11) ? DPIScaling.Transform(5) : 1;
             var rect = new RectangleF(
                 e.Item.Bounds.Width * space,
                 e.Item.Bounds.Height * space,
@@ -91,7 +91,7 @@ namespace ImageGlass.UI.Renderers {
                 e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
                 var btn = e.Item as ToolStripButton;
-                var borderRadius = Helpers.IsOS(WindowsOS.Win11) ? 5 : 1;
+                var borderRadius = Helpers.IsOS(WindowsOS.Win11) ? DPIScaling.Transform(5) : 1;
                 using var path = Theme.GetRoundRectanglePath(btn.ContentRectangle, borderRadius);
 
                 // on pressed

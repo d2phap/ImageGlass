@@ -17,11 +17,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using ImageGlass.Base.Update;
-using ImageGlass.Settings;
-using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ImageGlass.Base.Update;
+using ImageGlass.Settings;
 
 namespace igcmd {
     public static class Core {
@@ -36,13 +35,17 @@ namespace igcmd {
             }
             catch { }
 
-            Configs.IsNewVersionAvailable = updater.HasNewUpdate;
+            // get requirements of the new update
+            var updateRequirements = await updater.CheckRequirementsAsync();
+            var canUpdate = !updateRequirements.ContainsValue(false);
 
-            if (updater.HasNewUpdate) {
+            Configs.IsNewVersionAvailable = updater.HasNewUpdate && canUpdate;
+
+            if (Configs.IsNewVersionAvailable) {
                 Application.Run(new frmCheckForUpdate());
             }
 
-            return updater.HasNewUpdate;
+            return Configs.IsNewVersionAvailable;
         }
 
 
