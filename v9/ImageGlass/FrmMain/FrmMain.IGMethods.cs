@@ -2152,7 +2152,7 @@ public partial class FrmMain
             return; // Nothing to do
 
         #region Set minimum size for window
-        var minH = this.ScaleToDpi(100);
+        var minH = this.ScaleToDpi(50);
         if (Config.ShowToolbar)
         {
             minH += Toolbar.Height;
@@ -2165,7 +2165,7 @@ public partial class FrmMain
 
         MinimumSize = new()
         {
-            Width = this.ScaleToDpi(200),
+            Width = this.ScaleToDpi(50),
             Height = minH,
         };
         #endregion
@@ -2267,6 +2267,8 @@ public partial class FrmMain
 
             if (Config.EnableFrameless)
             {
+                WindowApi.SetRoundCorner(Handle);
+
                 PicMain.ShowMessage(
                     string.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFrameless.ShortcutKeyDisplayString),
                     Config.Language[$"{langPath}._Enable"],
