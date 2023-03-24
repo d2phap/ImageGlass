@@ -52,14 +52,64 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="AI_INSTALLPERUSER" ComponentId="{3C727F62-5F7F-449F-86CA-BFCB21DB8626}" Directory_="APPDIR" Attributes="260" KeyPath="AI_INSTALLPERUSER" Options="1"/>
     <ROW Component="APPDIR" ComponentId="{9AA73F17-00E0-4CFF-BB31-59859F667103}" Directory_="APPDIR" Attributes="0"/>
+    <ROW Component="ARI.ico" ComponentId="{A0D80D4C-C7E5-4C24-AB16-7C5000BE9A55}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="ARI.ico"/>
+    <ROW Component="ARW.ico" ComponentId="{EB08D754-6BF7-448B-8EEA-E30BE86F44B3}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="ARW.ico"/>
+    <ROW Component="AVIF.ico" ComponentId="{EB0E3A0C-6915-4ABA-AB6F-B0CA42DB7298}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="AVIF.ico"/>
     <ROW Component="ActualSize.svg" ComponentId="{92D6E58E-E96F-40C7-91E2-2DF66DE54A43}" Directory_="Kobe_Dir" Attributes="0" KeyPath="ActualSize.svg" Type="0"/>
     <ROW Component="ApplicationDescription" ComponentId="{B7B2B1D5-B0D0-48F3-B2AA-4E8BB2CD8EB5}" Directory_="APPDIR" Attributes="4" KeyPath="ApplicationDescription"/>
-    <ROW Component="ChineseSimplified.iglang" ComponentId="{E1A33E6A-C638-46FE-B098-83B0C9F212DC}" Directory_="Languages_Dir" Attributes="0" KeyPath="ArabicEgypt.v8.8.iglang" Type="0"/>
+    <ROW Component="ArabicEgypt.v8.8.iglang" ComponentId="{9714AD78-B723-4760-98B4-AA43794B607B}" Directory_="Languages_Dir" Attributes="0" KeyPath="ArabicEgypt.v8.8.iglang"/>
+    <ROW Component="Armenian.v8.8.iglang" ComponentId="{EB11904E-7387-46F8-ACBE-36C61C07E736}" Directory_="Languages_Dir" Attributes="0" KeyPath="Armenian.v8.8.iglang"/>
+    <ROW Component="B64.ico" ComponentId="{2F166698-6047-4FBA-B86A-376373ED250A}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="B64.ico"/>
+    <ROW Component="BAY.ico" ComponentId="{85A68216-F097-4F8C-AA56-2F729C7E8300}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="BAY.ico"/>
+    <ROW Component="BMP.ico" ComponentId="{15BDE13A-B5D3-4E3F-97A8-25D94E6F5BCD}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="BMP.ico"/>
+    <ROW Component="Bengali.v8.8.iglang" ComponentId="{74B76B7C-FA77-423F-8145-40629D3805AA}" Directory_="Languages_Dir" Attributes="0" KeyPath="Bengali.v8.8.iglang"/>
+    <ROW Component="Bulgarian.v8.8.iglang" ComponentId="{18635E88-F8B0-4B2A-B61A-854CB3F10DB5}" Directory_="Languages_Dir" Attributes="0" KeyPath="Bulgarian.v8.8.iglang"/>
+    <ROW Component="CAP.ico" ComponentId="{89A69C24-D3FF-4793-AFF9-49FD4D3CD5F4}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="CAP.ico"/>
+    <ROW Component="CR2.ico" ComponentId="{8721FED8-2972-49DF-A0D5-0D18F30AB027}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="CR2.ico"/>
+    <ROW Component="CR3.ico" ComponentId="{BD3645A6-51BF-47BF-9323-B8F09011B108}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="CR3.ico"/>
+    <ROW Component="CRW.ico" ComponentId="{7AE3AE21-2ADB-49F0-9DA8-E26F5EFA8FCE}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="CRW.ico"/>
+    <ROW Component="CUR.ico" ComponentId="{EE0056EE-1F96-43C3-AA8D-81C2B0DB82DA}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="CUR.ico"/>
+    <ROW Component="CUT.ico" ComponentId="{720BCA9A-1821-4484-AE2C-819956A8AD48}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="CUT.ico"/>
+    <ROW Component="Catalan.v8.8.iglang" ComponentId="{B3285C7F-F584-4C30-B4E0-EAE70852D72D}" Directory_="Languages_Dir" Attributes="0" KeyPath="Catalan.v8.8.iglang"/>
+    <ROW Component="ChineseSimplified.iglang" ComponentId="{E1A33E6A-C638-46FE-B098-83B0C9F212DC}" Directory_="Languages_Dir" Attributes="0" KeyPath="Turkish.v8.8.iglang" Type="0"/>
+    <ROW Component="ChineseSimplified.v8.8.iglang" ComponentId="{8ABAC656-F9A9-47F2-9BCA-A4E1E08089CA}" Directory_="Languages_Dir" Attributes="0" KeyPath="ChineseSimplified.v8.8.iglang"/>
+    <ROW Component="ChineseTraditional.v8.8.iglang" ComponentId="{8CB0668A-CF52-4950-BE7D-3D6527B8CFE9}" Directory_="Languages_Dir" Attributes="0" KeyPath="ChineseTraditional.v8.8.iglang"/>
     <ROW Component="CliWrap.dll" ComponentId="{FF43D7B1-39AB-4361-94C7-42BB024AB25C}" Directory_="APPDIR" Attributes="256" KeyPath="CliWrap.dll"/>
+    <ROW Component="Croatian.v8.8.iglang" ComponentId="{0E2FE88E-2A56-4AA6-AABD-7D34AFB197AA}" Directory_="Languages_Dir" Attributes="0" KeyPath="Croatian.v8.8.iglang"/>
+    <ROW Component="Czech.v8.8.iglang" ComponentId="{B50B52CC-7686-4F2B-B490-5DBC7297F331}" Directory_="Languages_Dir" Attributes="0" KeyPath="Czech.v8.8.iglang"/>
+    <ROW Component="DATA.ico" ComponentId="{3C314261-A1F8-4D3F-B8C5-7E8C86091318}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="DATA.ico"/>
+    <ROW Component="DCR.ico" ComponentId="{F2E06533-BBD1-4842-B449-68D3F58C33CB}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="DCR.ico"/>
+    <ROW Component="DCS.ico" ComponentId="{1577B2A0-1F76-4F76-A60A-088AE7DE2701}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="DCS.ico"/>
+    <ROW Component="DDS.ico" ComponentId="{0172137C-48D2-419C-90C9-6A5F77BEF219}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="DDS.ico"/>
+    <ROW Component="DIB.ico" ComponentId="{36031030-D59A-40F9-85CB-A196ABE535E1}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="DIB.ico"/>
+    <ROW Component="DNG.ico" ComponentId="{B813020D-9F45-4445-9410-B99D971778F3}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="DNG.ico"/>
+    <ROW Component="DRF.ico" ComponentId="{70D5BF07-3428-47CC-9515-9689182E8EE3}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="DRF.ico"/>
+    <ROW Component="Danish.v8.8.iglang" ComponentId="{3C76D373-F76C-4DA1-915B-28FB20C93E4A}" Directory_="Languages_Dir" Attributes="0" KeyPath="Danish.v8.8.iglang"/>
     <ROW Component="DotNetZip.dll" ComponentId="{5D27819E-C2EB-40C6-BA3F-8B732C573718}" Directory_="APPDIR" Attributes="256" KeyPath="DotNetZip.dll"/>
+    <ROW Component="Dutch.v8.8.iglang" ComponentId="{6A8E5066-74D6-4228-A97E-4F025E4A66AF}" Directory_="Languages_Dir" Attributes="0" KeyPath="Dutch.v8.8.iglang"/>
+    <ROW Component="EIP.ico" ComponentId="{2C65939A-B1CA-4C83-9A03-D0196E6E5CD4}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="EIP.ico"/>
+    <ROW Component="EMF.ico" ComponentId="{659E0D4D-8969-4A07-BD69-F39CF6DB7C69}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="EMF.ico"/>
+    <ROW Component="ERF.ico" ComponentId="{3BCFBDE2-8EA5-4B7D-BFA8-14A35D98FCF5}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="ERF.ico"/>
+    <ROW Component="EXIF.ico" ComponentId="{CE94C309-5744-440E-8C88-DD269A06960D}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="EXIF.ico"/>
+    <ROW Component="EXR.ico" ComponentId="{C1B93A3F-0C15-4BF1-AD63-02CB546ACD92}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="EXR.ico"/>
     <ROW Component="ExplorerSortOrder.dll" ComponentId="{05FADDCB-6D1F-49DA-B320-7A4C2F2235ED}" Directory_="APPDIR" Attributes="256" KeyPath="ExplorerSortOrder.dll"/>
-    <ROW Component="FR.ico" ComponentId="{DC5A65C2-C114-4E39-ABF7-7FC553E47112}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="FR.ico" Type="0"/>
+    <ROW Component="FFF.ico" ComponentId="{7501AE74-49F1-4037-9AF9-4D474F252DFA}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="FFF.ico"/>
+    <ROW Component="FR.ico" ComponentId="{DC5A65C2-C114-4E39-ABF7-7FC553E47112}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="QOI.ico" Type="0"/>
+    <ROW Component="FR.ico_1" ComponentId="{E6343C9D-D04A-416E-9AE7-D9987A8D6BE3}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="FR.ico"/>
     <ROW Component="FileWatcherEx.dll" ComponentId="{796F67A6-68D4-4372-89AF-221F9A708E8A}" Directory_="APPDIR" Attributes="256" KeyPath="FileWatcherEx.dll"/>
+    <ROW Component="Finnish.v8.8.iglang" ComponentId="{DD9052E1-94F0-42AE-9BD6-A496A4ECDD26}" Directory_="Languages_Dir" Attributes="0" KeyPath="Finnish.v8.8.iglang"/>
+    <ROW Component="French.v8.8.iglang" ComponentId="{1A8C4304-5110-418D-9491-D7AE77BB5DF7}" Directory_="Languages_Dir" Attributes="0" KeyPath="French.v8.8.iglang"/>
+    <ROW Component="GIF.ico" ComponentId="{804D4631-FF33-4C94-AEBB-EDE09D06FBCF}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="GIF.ico"/>
+    <ROW Component="GPR.ico" ComponentId="{5F73FDF9-1DAF-4257-83A8-7367ADEED9CE}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="GPR.ico"/>
+    <ROW Component="German.v8.8.iglang" ComponentId="{C3305CD9-1489-4857-AB5D-9F75F24717D5}" Directory_="Languages_Dir" Attributes="0" KeyPath="German.v8.8.iglang"/>
+    <ROW Component="Greek.v8.8.iglang" ComponentId="{FB9AE4DF-09A6-4ECB-A00F-E2901CFAC21E}" Directory_="Languages_Dir" Attributes="0" KeyPath="Greek.v8.8.iglang"/>
+    <ROW Component="HDR.ico" ComponentId="{0C68B429-DF28-40A8-AC47-ECD9D64893FA}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="HDR.ico"/>
+    <ROW Component="HEIC.ico" ComponentId="{A18F45BA-98A9-4CC7-9D73-DED9C34962F1}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="HEIC.ico"/>
+    <ROW Component="HEIF.ico" ComponentId="{4FFF2C27-8FBF-4A52-B3DD-30F1E0A3279A}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="HEIF.ico"/>
+    <ROW Component="Hebrew.v8.8.iglang" ComponentId="{79C00898-4AC2-4BD6-B5AC-78073DE01E93}" Directory_="Languages_Dir" Attributes="0" KeyPath="Hebrew.v8.8.iglang"/>
+    <ROW Component="Hungarian.v8.8.iglang" ComponentId="{1562FA38-F2F5-472E-9890-96CCB7CE493F}" Directory_="Languages_Dir" Attributes="0" KeyPath="Hungarian.v8.8.iglang"/>
+    <ROW Component="ICO.ico" ComponentId="{03ED895B-3B4E-4D7D-AE3F-82D0944E0898}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="ICO.ico"/>
+    <ROW Component="IIQ.ico" ComponentId="{AED3A1F1-E916-4415-BDDF-D630ECB5B435}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="IIQ.ico"/>
     <ROW Component="ImageGlass" ComponentId="{11796634-B050-449E-A628-A9EB328399D3}" Directory_="ImageGlass_Dir" Attributes="4" KeyPath="ImageGlass"/>
     <ROW Component="ImageGlass.Base.dll" ComponentId="{3ADF8C84-CBD3-4B14-A3F4-3A047F406700}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.Base.dll"/>
     <ROW Component="ImageGlass.Heart.dll" ComponentId="{14333082-6527-432A-A6BB-FFA85529C4AB}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.Heart.dll"/>
@@ -72,18 +122,75 @@
     <ROW Component="ImageGlass.WebP.dll" ComponentId="{5AF1D8F9-5838-4810-87E9-0B435B392A1F}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.WebP.dll"/>
     <ROW Component="ImageGlass.exe" ComponentId="{72CA36B0-774B-46F6-9203-43DDE7E4542B}" Directory_="APPDIR" Attributes="256" KeyPath="ImageGlass.exe"/>
     <ROW Component="ImageGlass_1" ComponentId="{E9D95C0F-39AA-469A-8F34-1B4B2F12D887}" Directory_="ImageGlass_Dir" Attributes="4" KeyPath="ImageGlass_1"/>
+    <ROW Component="Indonesian.v8.8.iglang" ComponentId="{1DBE34D4-CFA8-4576-A2F7-7B2B853D965A}" Directory_="Languages_Dir" Attributes="0" KeyPath="Indonesian.v8.8.iglang"/>
     <ROW Component="InstallImageGlass.exeComponentShortcuts" ComponentId="{B87E0971-188D-4CB5-A0AA-09BA01AFDCCA}" Directory_="APPDIR" Attributes="260" KeyPath="InstallImageGlass.exeComponentShort"/>
     <ROW Component="InstallImageGlass.exeComponentShortcuts_1" ComponentId="{2D80E483-AC9F-43B6-8269-264557A3F59C}" Directory_="APPDIR" Attributes="260" KeyPath="InstallImageGlass.exeComponentSho_1"/>
     <ROW Component="Installdefault.jpgComponentShortcuts" ComponentId="{6E7E5941-BEB3-4FDD-8DBE-E424283B573C}" Directory_="APPDIR" Attributes="260" KeyPath="Installdefault.jpgComponentShortcut"/>
     <ROW Component="Installdefault.jpgComponentShortcuts_1" ComponentId="{D9FE90AB-8055-47AC-B358-17BCE2B52E6F}" Directory_="APPDIR" Attributes="260" KeyPath="Installdefault.jpgComponentShortc_1"/>
+    <ROW Component="Irish.v8.8.iglang" ComponentId="{C960C964-22CF-4CC6-B4C1-304D84A3B8B0}" Directory_="Languages_Dir" Attributes="0" KeyPath="Irish.v8.8.iglang"/>
+    <ROW Component="Italian.v8.8.iglang" ComponentId="{FBC3DBAD-7605-431E-848B-2E3447F94A7F}" Directory_="Languages_Dir" Attributes="0" KeyPath="Italian.v8.8.iglang"/>
+    <ROW Component="JFIF.ico" ComponentId="{9619CFA6-E9B0-49B2-847E-CF33D6F77C3C}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="JFIF.ico"/>
+    <ROW Component="JPE.ico" ComponentId="{7F0AF512-48AD-4114-A87B-C8F2D3C7D611}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="JPE.ico"/>
+    <ROW Component="JPEG.ico" ComponentId="{AD64E421-F839-4E47-9693-B2E4043C3688}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="JPEG.ico"/>
+    <ROW Component="JPG.ico" ComponentId="{C92A5CFF-9414-410A-BFC1-8E57D12C07FD}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="JPG.ico"/>
+    <ROW Component="JXL.ico" ComponentId="{04E3A254-BB9E-4C04-8935-1AD49615DDA4}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="JXL.ico"/>
+    <ROW Component="Japanese.v8.8.iglang" ComponentId="{BAEC8EB0-8A57-4B4D-97A5-B09E00FB9D4C}" Directory_="Languages_Dir" Attributes="0" KeyPath="Japanese.v8.8.iglang"/>
+    <ROW Component="K25.ico" ComponentId="{39E7EE75-2869-4314-A84D-BB20DA325019}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="K25.ico"/>
+    <ROW Component="KDC.ico" ComponentId="{20345006-F35D-4A44-936F-7B723A0C5609}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="KDC.ico"/>
+    <ROW Component="Korean.v8.8.iglang" ComponentId="{61235A2E-04ED-4705-8C50-AB33E66D93B5}" Directory_="Languages_Dir" Attributes="0" KeyPath="Korean.v8.8.iglang"/>
+    <ROW Component="KurmanjiKurdish.v8.8.iglang" ComponentId="{7DC951DC-C906-4E65-BA87-29AA3D21B6D6}" Directory_="Languages_Dir" Attributes="0" KeyPath="KurmanjiKurdish.v8.8.iglang"/>
+    <ROW Component="Kyrgyz.v8.8.iglang" ComponentId="{73420F70-47B1-4B92-BC29-FFA2B58B08B6}" Directory_="Languages_Dir" Attributes="0" KeyPath="Kyrgyz.v8.8.iglang"/>
     <ROW Component="LightGray.DuongDieuPhap.igtheme" ComponentId="{09420836-583B-4CDE-8B72-C8FD8913272C}" Directory_="Themes_Dir" Attributes="0" KeyPath="LightGray.DuongDieuPhap.igtheme" Type="0"/>
+    <ROW Component="Lithuanian.v8.8.iglang" ComponentId="{82BF4807-206E-473F-B050-9CF2C31B1471}" Directory_="Languages_Dir" Attributes="0" KeyPath="Lithuanian.v8.8.iglang"/>
+    <ROW Component="MDC.ico" ComponentId="{C9865D40-2696-42C1-B7E0-3FA6C93F8D0D}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="MDC.ico"/>
+    <ROW Component="MEF.ico" ComponentId="{8C71D734-18EF-4954-A889-7E1BE1C4A4CF}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="MEF.ico"/>
+    <ROW Component="MOS.ico" ComponentId="{54DE1FF4-E2A3-490E-9E5B-66C5D5CBFC13}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="MOS.ico"/>
+    <ROW Component="MRW.ico" ComponentId="{47D416A0-F782-4A0C-9C63-723C3540ED38}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="MRW.ico"/>
     <ROW Component="Magick.NET.Core.dll" ComponentId="{081F80D0-B71C-4051-808C-D00ED690C7A9}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NET.Core.dll"/>
     <ROW Component="Magick.NET.SystemDrawing.dll" ComponentId="{49C3A863-E32A-4ED2-BA23-736A2D3C9097}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NET.SystemDrawing.dll"/>
     <ROW Component="Magick.NETQ16HDRIOpenMPx64.dll" ComponentId="{13A80422-84AB-4139-B60F-C68809981F3A}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NETQ16HDRIOpenMPx64.dll"/>
     <ROW Component="Magick.NativeQ16HDRIOpenMPx64.dll" ComponentId="{820AC108-78BA-49DF-AD7D-06357D7DE7A0}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NativeQ16HDRIOpenMPx64.dll"/>
+    <ROW Component="Malay.v8.8.iglang" ComponentId="{595B91D6-FA1E-429D-B273-F49E401DD536}" Directory_="Languages_Dir" Attributes="0" KeyPath="Malay.v8.8.iglang"/>
     <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{1CFB66DD-B353-4A9C-A639-048E707D5DA4}" Directory_="APPDIR" Attributes="256" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
+    <ROW Component="NEF.ico" ComponentId="{B1C0528B-CEEE-44AD-B12A-DAEAAE280339}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="NEF.ico"/>
+    <ROW Component="NRW.ico" ComponentId="{CE7788E9-2284-433E-A051-30B8083B123F}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="NRW.ico"/>
+    <ROW Component="NorwegianBokmal.v8.8.iglang" ComponentId="{405750BC-A13B-4E0A-9D65-872EC3A801CB}" Directory_="Languages_Dir" Attributes="0" KeyPath="NorwegianBokmal.v8.8.iglang"/>
+    <ROW Component="OBM.ico" ComponentId="{73C15C3F-D11C-4BA0-8FC4-2C91557BEF63}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="OBM.ico"/>
+    <ROW Component="ORF.ico" ComponentId="{7BAA4F75-8785-4C7B-A86A-50A80B2D8F67}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="ORF.ico"/>
+    <ROW Component="PBM.ico" ComponentId="{E0C21A05-790B-4439-A73F-EEF05C54FE8D}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="PBM.ico"/>
+    <ROW Component="PCX.ico" ComponentId="{846E8F19-176C-4BB9-99DD-0BF89E7D24BB}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="PCX.ico"/>
+    <ROW Component="PEF.ico" ComponentId="{D3AC2243-74D8-4C75-8A2A-D6291A25832A}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="PEF.ico"/>
+    <ROW Component="PGM.ico" ComponentId="{968C5885-DC90-4F96-9ECD-FF0D48DF436B}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="PGM.ico"/>
+    <ROW Component="PNG.ico" ComponentId="{5180F1D5-11D8-4EF3-B648-32183FAD755E}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="PNG.ico"/>
+    <ROW Component="PPM.ico" ComponentId="{7EF3FA77-5F5F-415D-AFB8-1D9778E0570A}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="PPM.ico"/>
+    <ROW Component="PSD.ico" ComponentId="{9D8E8799-4348-4137-8EB2-EA660F928439}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="PSD.ico"/>
+    <ROW Component="PTX.ico" ComponentId="{C39F5798-FD09-4EB6-B1F1-9F525936EF66}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="PTX.ico"/>
+    <ROW Component="PXN.ico" ComponentId="{7A4D0593-6CE6-457D-BF6A-0B8092B34B69}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="PXN.ico"/>
+    <ROW Component="Persian.v8.8.iglang" ComponentId="{E54D0D1E-981B-4F58-9E7C-B121584358B7}" Directory_="Languages_Dir" Attributes="0" KeyPath="Persian.v8.8.iglang"/>
+    <ROW Component="Polish.v8.8.iglang" ComponentId="{0E467582-429C-4AC8-9CEE-AFEEC5B44558}" Directory_="Languages_Dir" Attributes="0" KeyPath="Polish.v8.8.iglang"/>
+    <ROW Component="Portuguese.v8.8.iglang" ComponentId="{25CD0CA5-EA50-4434-9B8F-EBBF01CB625E}" Directory_="Languages_Dir" Attributes="0" KeyPath="Portuguese.v8.8.iglang"/>
+    <ROW Component="PortugueseBrazilian.v8.8.iglang" ComponentId="{7256B03B-A54A-4348-8891-D34E58203D4A}" Directory_="Languages_Dir" Attributes="0" KeyPath="PortugueseBrazilian.v8.8.iglang"/>
+    <ROW Component="R3D.ico" ComponentId="{4CE3DB49-342B-4E2B-A1B8-6504AED52ED7}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="R3D.ico"/>
+    <ROW Component="RAF.ico" ComponentId="{F9DE5CFC-BE31-402A-A865-1479E0780D7A}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="RAF.ico"/>
+    <ROW Component="RAW.ico" ComponentId="{B653196C-D30A-4622-AA99-3FE336541DC6}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="RAW.ico"/>
+    <ROW Component="RW2.ico" ComponentId="{2792B9C7-5EB8-49DF-A65C-9F2A8A0FCB26}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="RW2.ico"/>
+    <ROW Component="RWL.ico" ComponentId="{96609B6A-4BED-4AE4-AF59-7EED2043FD0A}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="RWL.ico"/>
+    <ROW Component="RWZ.ico" ComponentId="{CC0D4151-3976-4088-943F-8A6DE5850D60}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="RWZ.ico"/>
     <ROW Component="Registry" ComponentId="{8FB9A6E2-EB42-405D-B57B-7E83B423B08E}" Directory_="APPDIR" Attributes="260" KeyPath="ProductName"/>
+    <ROW Component="Romanian.v8.8.iglang" ComponentId="{5544E4AF-6660-45F8-AB58-11B3163C5A30}" Directory_="Languages_Dir" Attributes="0" KeyPath="Romanian.v8.8.iglang"/>
+    <ROW Component="Russian.v8.8.iglang" ComponentId="{82BB30BA-6EA4-49E6-9406-E7FD79F91534}" Directory_="Languages_Dir" Attributes="0" KeyPath="Russian.v8.8.iglang"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{A0ECB089-2670-479A-B45D-4C76901F0F14}" Directory_="SHORTCUTDIR" Attributes="0"/>
+    <ROW Component="SR2.ico" ComponentId="{975F09E3-0CE6-4C99-87FE-32946BC986E8}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="SR2.ico"/>
+    <ROW Component="SRF.ico" ComponentId="{BEC02EFA-99F0-4114-81F0-1AEB4F3A5CB6}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="SRF.ico"/>
+    <ROW Component="SRW.ico" ComponentId="{95F91115-7B75-4192-AD36-9AF3DEB9B30B}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="SRW.ico"/>
+    <ROW Component="SVG.ico" ComponentId="{A1ABF8F6-5CB6-4BE3-A6AF-4101F719D38C}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="SVG.ico"/>
+    <ROW Component="SerbianCyrillic.v8.8.iglang" ComponentId="{F7AE308A-B8D9-42E6-99BC-2490ED25A5FB}" Directory_="Languages_Dir" Attributes="0" KeyPath="SerbianCyrillic.v8.8.iglang"/>
+    <ROW Component="SerbianLatin.v8.8.iglang" ComponentId="{104D68D0-D1ED-44EF-99BD-47C6FA14D508}" Directory_="Languages_Dir" Attributes="0" KeyPath="SerbianLatin.v8.8.iglang"/>
+    <ROW Component="Sinhala.v8.8.iglang" ComponentId="{2325E651-C6DD-4CF4-BB0C-0CBFC7ED8E3E}" Directory_="Languages_Dir" Attributes="0" KeyPath="Sinhala.v8.8.iglang"/>
+    <ROW Component="Slovak.v8.8.iglang" ComponentId="{89C60232-FC31-44EA-9517-1ECA722A90F9}" Directory_="Languages_Dir" Attributes="0" KeyPath="Slovak.v8.8.iglang"/>
+    <ROW Component="Slovenian.v8.8.iglang" ComponentId="{149F5D7D-1F2E-494F-928D-0350DBE34185}" Directory_="Languages_Dir" Attributes="0" KeyPath="Slovenian.v8.8.iglang"/>
+    <ROW Component="Spanish.v8.8.iglang" ComponentId="{CB1A7EB7-D770-4B44-B8DE-7FB80BF8D7FB}" Directory_="Languages_Dir" Attributes="0" KeyPath="Spanish.v8.8.iglang"/>
+    <ROW Component="Swedish.v8.8.iglang" ComponentId="{E3AE0E8B-DE8A-487F-BC84-9AFE981EBFBE}" Directory_="Languages_Dir" Attributes="0" KeyPath="Swedish.v8.8.iglang"/>
     <ROW Component="System.Buffers.dll" ComponentId="{851AE655-8084-4A48-B22C-E1B9172EE0DB}" Directory_="APPDIR" Attributes="256" KeyPath="System.Buffers.dll"/>
     <ROW Component="System.Memory.dll" ComponentId="{FFEBBF60-8227-4DAD-828F-874C9D0854A4}" Directory_="APPDIR" Attributes="256" KeyPath="System.Memory.dll"/>
     <ROW Component="System.Numerics.Vectors.dll" ComponentId="{1750B48D-373B-4414-8806-9FB403B3393A}" Directory_="APPDIR" Attributes="256" KeyPath="System.Numerics.Vectors.dll"/>
@@ -93,6 +200,19 @@
     <ROW Component="System.Text.Json.dll" ComponentId="{DF65149F-3AC7-417E-969A-B6D8C0B72DBC}" Directory_="APPDIR" Attributes="256" KeyPath="System.Text.Json.dll"/>
     <ROW Component="System.Threading.Tasks.Extensions.dll" ComponentId="{78A46CCE-30A5-4370-BAB1-2BA46E2A2322}" Directory_="APPDIR" Attributes="256" KeyPath="System.Threading.Tasks.Extensions.dll"/>
     <ROW Component="System.ValueTuple.dll" ComponentId="{58017FC4-BFD5-449F-8686-E7BD2A57E448}" Directory_="APPDIR" Attributes="256" KeyPath="System.ValueTuple.dll"/>
+    <ROW Component="TGA.ico" ComponentId="{547D837F-49C0-4EA9-A284-4D36FFF10F54}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="TGA.ico"/>
+    <ROW Component="TIF.ico" ComponentId="{A37D5FD6-1CD0-4508-B654-E14DD6E67073}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="TIF.ico"/>
+    <ROW Component="TIFF.ico" ComponentId="{32EA8313-8A3E-42DC-9E15-969F003B3F71}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="TIFF.ico"/>
+    <ROW Component="Thai.v8.8.iglang" ComponentId="{F042D932-1D48-432D-BF2B-731F37703E84}" Directory_="Languages_Dir" Attributes="0" KeyPath="Thai.v8.8.iglang"/>
+    <ROW Component="Ukrainian.v8.8.iglang" ComponentId="{B0FD8C3A-A080-4DCC-9673-1A280C3DE538}" Directory_="Languages_Dir" Attributes="0" KeyPath="Ukrainian.v8.8.iglang"/>
+    <ROW Component="Vietnamese.v8.8.iglang" ComponentId="{A0A727C1-A28A-45B6-8A6A-4C938FD6B372}" Directory_="Languages_Dir" Attributes="0" KeyPath="Vietnamese.v8.8.iglang"/>
+    <ROW Component="WEBP.ico" ComponentId="{523E7FCE-977D-4E4A-84AD-F146F1C210BF}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="WEBP.ico"/>
+    <ROW Component="WIC.ico" ComponentId="{E699AEB8-BD04-4A53-B98C-DE70613FAF02}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="WIC.ico"/>
+    <ROW Component="WMF.ico" ComponentId="{8F75DF66-973B-4723-9E41-78478950101B}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="WMF.ico"/>
+    <ROW Component="WPG.ico" ComponentId="{1C32073E-CE57-43A9-AE32-B14721674989}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="WPG.ico"/>
+    <ROW Component="X3F.ico" ComponentId="{11AA44FA-40CB-4ADE-B8C9-EA4DC9510741}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="X3F.ico"/>
+    <ROW Component="XBM.ico" ComponentId="{AB1BECD2-905C-4476-8245-3054CBB11D0B}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="XBM.ico"/>
+    <ROW Component="XPM.ico" ComponentId="{753643D4-E418-4764-83F4-319CE765A171}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="XPM.ico"/>
     <ROW Component="default.jpg" ComponentId="{DD9ACEDA-3C46-41C1-8C97-5A3D7275ED67}" Directory_="APPDIR" Attributes="0" KeyPath="default.jpg" Type="0"/>
     <ROW Component="igcmd.exe" ComponentId="{79DBFD0C-6566-47C3-BD99-795F9D1770BD}" Directory_="APPDIR" Attributes="256" KeyPath="igcmd.exe"/>
     <ROW Component="igcmdWin10.exe" ComponentId="{BFC7BA57-67B0-4EB8-A3B2-4FE3262313A0}" Directory_="APPDIR" Attributes="256" KeyPath="igcmdWin10.exe"/>
@@ -100,8 +220,10 @@
     <ROW Component="vcomp140.dll" ComponentId="{BB07C4B6-D5EA-497E-B17D-01DB1AA1343B}" Directory_="APPDIR" Attributes="256" KeyPath="vcomp140.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="FileTypeAssociations" Feature_Parent="MainFeature" Title="File Type Associations" Description="Description" Display="3" Level="1" Directory_="APPDIR" Attributes="0" Options="13"/>
-    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
+    <ROW Feature="ExtensionIcons" Title="Extension Icons" Description="Description" Display="7" Level="1" Directory_="APPDIR" Attributes="0"/>
+    <ROW Feature="FileTypeAssociations" Title="File Type Associations" Description="Description" Display="11" Level="4" Directory_="APPDIR" Attributes="0" Options="13"/>
+    <ROW Feature="LanguagePacks" Title="Language Packs" Description="Description" Display="5" Level="1" Directory_="APPDIR" Attributes="0"/>
+    <ROW Feature="MainFeatures" Title="Main Features" Description="Description" Display="3" Level="1" Directory_="APPDIR" Attributes="16"/>
     <ROW Feature="_3fr" Feature_Parent="FileTypeAssociations" Title=".3fr" Description="Description" Display="5" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
     <ROW Feature="ari" Feature_Parent="FileTypeAssociations" Title=".ari" Description="Description" Display="7" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
     <ROW Feature="arw" Feature_Parent="FileTypeAssociations" Title=".arw" Description="Description" Display="9" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
@@ -179,81 +301,81 @@
     <ROW Feature="x3f" Feature_Parent="FileTypeAssociations" Title=".x3f" Description="Description" Display="153" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
     <ROW Feature="xbm" Feature_Parent="FileTypeAssociations" Title=".xbm" Description="Description" Display="155" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
     <ROW Feature="xpm" Feature_Parent="FileTypeAssociations" Title=".xpm" Description="Description" Display="157" Level="1" Directory_="APPDIR" Attributes="0" Options="27"/>
-    <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
+    <ATTRIBUTE name="CurrentFeature" value="MainFeatures"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="ImageGlass.exe" Component_="ImageGlass.exe" FileName="IMAGEG~1.EXE|ImageGlass.exe" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.exe" SelfReg="false"/>
-    <ROW File="FR.ico" Component_="FR.ico" FileName="3FR.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\3FR.ico" SelfReg="false"/>
-    <ROW File="ARI.ico" Component_="FR.ico" FileName="ARI.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\ARI.ico" SelfReg="false"/>
-    <ROW File="ARW.ico" Component_="FR.ico" FileName="ARW.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\ARW.ico" SelfReg="false"/>
-    <ROW File="BAY.ico" Component_="FR.ico" FileName="BAY.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\BAY.ico" SelfReg="false"/>
-    <ROW File="BMP.ico" Component_="FR.ico" FileName="BMP.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\BMP.ico" SelfReg="false"/>
-    <ROW File="CAP.ico" Component_="FR.ico" FileName="CAP.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\CAP.ico" SelfReg="false"/>
-    <ROW File="CR2.ico" Component_="FR.ico" FileName="CR2.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\CR2.ico" SelfReg="false"/>
-    <ROW File="CRW.ico" Component_="FR.ico" FileName="CRW.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\CRW.ico" SelfReg="false"/>
-    <ROW File="CUR.ico" Component_="FR.ico" FileName="CUR.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\CUR.ico" SelfReg="false"/>
-    <ROW File="CUT.ico" Component_="FR.ico" FileName="CUT.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\CUT.ico" SelfReg="false"/>
-    <ROW File="DATA.ico" Component_="FR.ico" FileName="DATA.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\DATA.ico" SelfReg="false"/>
-    <ROW File="DCR.ico" Component_="FR.ico" FileName="DCR.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\DCR.ico" SelfReg="false"/>
-    <ROW File="DCS.ico" Component_="FR.ico" FileName="DCS.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\DCS.ico" SelfReg="false"/>
-    <ROW File="DDS.ico" Component_="FR.ico" FileName="DDS.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\DDS.ico" SelfReg="false"/>
-    <ROW File="DIB.ico" Component_="FR.ico" FileName="DIB.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\DIB.ico" SelfReg="false"/>
-    <ROW File="DNG.ico" Component_="FR.ico" FileName="DNG.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\DNG.ico" SelfReg="false"/>
-    <ROW File="DRF.ico" Component_="FR.ico" FileName="DRF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\DRF.ico" SelfReg="false"/>
-    <ROW File="EIP.ico" Component_="FR.ico" FileName="EIP.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\EIP.ico" SelfReg="false"/>
-    <ROW File="EMF.ico" Component_="FR.ico" FileName="EMF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\EMF.ico" SelfReg="false"/>
-    <ROW File="ERF.ico" Component_="FR.ico" FileName="ERF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\ERF.ico" SelfReg="false"/>
-    <ROW File="EXIF.ico" Component_="FR.ico" FileName="EXIF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\EXIF.ico" SelfReg="false"/>
-    <ROW File="EXR.ico" Component_="FR.ico" FileName="EXR.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\EXR.ico" SelfReg="false"/>
-    <ROW File="FFF.ico" Component_="FR.ico" FileName="FFF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\FFF.ico" SelfReg="false"/>
-    <ROW File="GIF.ico" Component_="FR.ico" FileName="GIF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\GIF.ico" SelfReg="false"/>
-    <ROW File="GPR.ico" Component_="FR.ico" FileName="GPR.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\GPR.ico" SelfReg="false"/>
-    <ROW File="HDR.ico" Component_="FR.ico" FileName="HDR.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\HDR.ico" SelfReg="false"/>
-    <ROW File="HEIC.ico" Component_="FR.ico" FileName="HEIC.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\HEIC.ico" SelfReg="false"/>
-    <ROW File="IIQ.ico" Component_="FR.ico" FileName="IIQ.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\IIQ.ico" SelfReg="false"/>
-    <ROW File="JFIF.ico" Component_="FR.ico" FileName="JFIF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\JFIF.ico" SelfReg="false"/>
-    <ROW File="JPE.ico" Component_="FR.ico" FileName="JPE.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\JPE.ico" SelfReg="false"/>
-    <ROW File="JPEG.ico" Component_="FR.ico" FileName="JPEG.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\JPEG.ico" SelfReg="false"/>
-    <ROW File="JPG.ico" Component_="FR.ico" FileName="JPG.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\JPG.ico" SelfReg="false"/>
-    <ROW File="K25.ico" Component_="FR.ico" FileName="K25.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\K25.ico" SelfReg="false"/>
-    <ROW File="KDC.ico" Component_="FR.ico" FileName="KDC.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\KDC.ico" SelfReg="false"/>
-    <ROW File="MDC.ico" Component_="FR.ico" FileName="MDC.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\MDC.ico" SelfReg="false"/>
-    <ROW File="MEF.ico" Component_="FR.ico" FileName="MEF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\MEF.ico" SelfReg="false"/>
-    <ROW File="MOS.ico" Component_="FR.ico" FileName="MOS.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\MOS.ico" SelfReg="false"/>
-    <ROW File="MRW.ico" Component_="FR.ico" FileName="MRW.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\MRW.ico" SelfReg="false"/>
-    <ROW File="NEF.ico" Component_="FR.ico" FileName="NEF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\NEF.ico" SelfReg="false"/>
-    <ROW File="NRW.ico" Component_="FR.ico" FileName="NRW.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\NRW.ico" SelfReg="false"/>
-    <ROW File="OBM.ico" Component_="FR.ico" FileName="OBM.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\OBM.ico" SelfReg="false"/>
-    <ROW File="ORF.ico" Component_="FR.ico" FileName="ORF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\ORF.ico" SelfReg="false"/>
-    <ROW File="PBM.ico" Component_="FR.ico" FileName="PBM.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PBM.ico" SelfReg="false"/>
-    <ROW File="PCX.ico" Component_="FR.ico" FileName="PCX.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PCX.ico" SelfReg="false"/>
-    <ROW File="PEF.ico" Component_="FR.ico" FileName="PEF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PEF.ico" SelfReg="false"/>
-    <ROW File="PGM.ico" Component_="FR.ico" FileName="PGM.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PGM.ico" SelfReg="false"/>
-    <ROW File="PNG.ico" Component_="FR.ico" FileName="PNG.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PNG.ico" SelfReg="false"/>
-    <ROW File="PPM.ico" Component_="FR.ico" FileName="PPM.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PPM.ico" SelfReg="false"/>
-    <ROW File="PSD.ico" Component_="FR.ico" FileName="PSD.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PSD.ico" SelfReg="false"/>
-    <ROW File="PTX.ico" Component_="FR.ico" FileName="PTX.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PTX.ico" SelfReg="false"/>
-    <ROW File="PXN.ico" Component_="FR.ico" FileName="PXN.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PXN.ico" SelfReg="false"/>
-    <ROW File="R3D.ico" Component_="FR.ico" FileName="R3D.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\R3D.ico" SelfReg="false"/>
-    <ROW File="RAF.ico" Component_="FR.ico" FileName="RAF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\RAF.ico" SelfReg="false"/>
-    <ROW File="RAW.ico" Component_="FR.ico" FileName="RAW.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\RAW.ico" SelfReg="false"/>
-    <ROW File="RW2.ico" Component_="FR.ico" FileName="RW2.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\RW2.ico" SelfReg="false"/>
-    <ROW File="RWL.ico" Component_="FR.ico" FileName="RWL.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\RWL.ico" SelfReg="false"/>
-    <ROW File="RWZ.ico" Component_="FR.ico" FileName="RWZ.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\RWZ.ico" SelfReg="false"/>
-    <ROW File="SR2.ico" Component_="FR.ico" FileName="SR2.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\SR2.ico" SelfReg="false"/>
-    <ROW File="SRF.ico" Component_="FR.ico" FileName="SRF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\SRF.ico" SelfReg="false"/>
-    <ROW File="SRW.ico" Component_="FR.ico" FileName="SRW.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\SRW.ico" SelfReg="false"/>
-    <ROW File="SVG.ico" Component_="FR.ico" FileName="SVG.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\SVG.ico" SelfReg="false"/>
-    <ROW File="TGA.ico" Component_="FR.ico" FileName="TGA.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\TGA.ico" SelfReg="false"/>
-    <ROW File="TIF.ico" Component_="FR.ico" FileName="TIF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\TIF.ico" SelfReg="false"/>
-    <ROW File="TIFF.ico" Component_="FR.ico" FileName="TIFF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\TIFF.ico" SelfReg="false"/>
-    <ROW File="WEBP.ico" Component_="FR.ico" FileName="WEBP.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\WEBP.ico" SelfReg="false"/>
-    <ROW File="WIC.ico" Component_="FR.ico" FileName="WIC.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\WIC.ico" SelfReg="false"/>
-    <ROW File="WMF.ico" Component_="FR.ico" FileName="WMF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\WMF.ico" SelfReg="false"/>
-    <ROW File="WPG.ico" Component_="FR.ico" FileName="WPG.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\WPG.ico" SelfReg="false"/>
-    <ROW File="X3F.ico" Component_="FR.ico" FileName="X3F.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\X3F.ico" SelfReg="false"/>
-    <ROW File="XBM.ico" Component_="FR.ico" FileName="XBM.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\XBM.ico" SelfReg="false"/>
-    <ROW File="XPM.ico" Component_="FR.ico" FileName="XPM.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\XPM.ico" SelfReg="false"/>
+    <ROW File="FR.ico" Component_="FR.ico_1" FileName="3FR.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\3FR.ico" SelfReg="false"/>
+    <ROW File="ARI.ico" Component_="ARI.ico" FileName="ARI.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\ARI.ico" SelfReg="false"/>
+    <ROW File="ARW.ico" Component_="ARW.ico" FileName="ARW.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\ARW.ico" SelfReg="false"/>
+    <ROW File="BAY.ico" Component_="BAY.ico" FileName="BAY.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\BAY.ico" SelfReg="false"/>
+    <ROW File="BMP.ico" Component_="BMP.ico" FileName="BMP.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\BMP.ico" SelfReg="false"/>
+    <ROW File="CAP.ico" Component_="CAP.ico" FileName="CAP.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\CAP.ico" SelfReg="false"/>
+    <ROW File="CR2.ico" Component_="CR2.ico" FileName="CR2.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\CR2.ico" SelfReg="false"/>
+    <ROW File="CRW.ico" Component_="CRW.ico" FileName="CRW.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\CRW.ico" SelfReg="false"/>
+    <ROW File="CUR.ico" Component_="CUR.ico" FileName="CUR.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\CUR.ico" SelfReg="false"/>
+    <ROW File="CUT.ico" Component_="CUT.ico" FileName="CUT.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\CUT.ico" SelfReg="false"/>
+    <ROW File="DATA.ico" Component_="DATA.ico" FileName="DATA.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\DATA.ico" SelfReg="false"/>
+    <ROW File="DCR.ico" Component_="DCR.ico" FileName="DCR.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\DCR.ico" SelfReg="false"/>
+    <ROW File="DCS.ico" Component_="DCS.ico" FileName="DCS.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\DCS.ico" SelfReg="false"/>
+    <ROW File="DDS.ico" Component_="DDS.ico" FileName="DDS.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\DDS.ico" SelfReg="false"/>
+    <ROW File="DIB.ico" Component_="DIB.ico" FileName="DIB.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\DIB.ico" SelfReg="false"/>
+    <ROW File="DNG.ico" Component_="DNG.ico" FileName="DNG.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\DNG.ico" SelfReg="false"/>
+    <ROW File="DRF.ico" Component_="DRF.ico" FileName="DRF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\DRF.ico" SelfReg="false"/>
+    <ROW File="EIP.ico" Component_="EIP.ico" FileName="EIP.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\EIP.ico" SelfReg="false"/>
+    <ROW File="EMF.ico" Component_="EMF.ico" FileName="EMF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\EMF.ico" SelfReg="false"/>
+    <ROW File="ERF.ico" Component_="ERF.ico" FileName="ERF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\ERF.ico" SelfReg="false"/>
+    <ROW File="EXIF.ico" Component_="EXIF.ico" FileName="EXIF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\EXIF.ico" SelfReg="false"/>
+    <ROW File="EXR.ico" Component_="EXR.ico" FileName="EXR.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\EXR.ico" SelfReg="false"/>
+    <ROW File="FFF.ico" Component_="FFF.ico" FileName="FFF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\FFF.ico" SelfReg="false"/>
+    <ROW File="GIF.ico" Component_="GIF.ico" FileName="GIF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\GIF.ico" SelfReg="false"/>
+    <ROW File="GPR.ico" Component_="GPR.ico" FileName="GPR.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\GPR.ico" SelfReg="false"/>
+    <ROW File="HDR.ico" Component_="HDR.ico" FileName="HDR.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\HDR.ico" SelfReg="false"/>
+    <ROW File="HEIC.ico" Component_="HEIC.ico" FileName="HEIC.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\HEIC.ico" SelfReg="false"/>
+    <ROW File="IIQ.ico" Component_="IIQ.ico" FileName="IIQ.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\IIQ.ico" SelfReg="false"/>
+    <ROW File="JFIF.ico" Component_="JFIF.ico" FileName="JFIF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\JFIF.ico" SelfReg="false"/>
+    <ROW File="JPE.ico" Component_="JPE.ico" FileName="JPE.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\JPE.ico" SelfReg="false"/>
+    <ROW File="JPEG.ico" Component_="JPEG.ico" FileName="JPEG.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\JPEG.ico" SelfReg="false"/>
+    <ROW File="JPG.ico" Component_="JPG.ico" FileName="JPG.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\JPG.ico" SelfReg="false"/>
+    <ROW File="K25.ico" Component_="K25.ico" FileName="K25.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\K25.ico" SelfReg="false"/>
+    <ROW File="KDC.ico" Component_="KDC.ico" FileName="KDC.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\KDC.ico" SelfReg="false"/>
+    <ROW File="MDC.ico" Component_="MDC.ico" FileName="MDC.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\MDC.ico" SelfReg="false"/>
+    <ROW File="MEF.ico" Component_="MEF.ico" FileName="MEF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\MEF.ico" SelfReg="false"/>
+    <ROW File="MOS.ico" Component_="MOS.ico" FileName="MOS.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\MOS.ico" SelfReg="false"/>
+    <ROW File="MRW.ico" Component_="MRW.ico" FileName="MRW.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\MRW.ico" SelfReg="false"/>
+    <ROW File="NEF.ico" Component_="NEF.ico" FileName="NEF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\NEF.ico" SelfReg="false"/>
+    <ROW File="NRW.ico" Component_="NRW.ico" FileName="NRW.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\NRW.ico" SelfReg="false"/>
+    <ROW File="OBM.ico" Component_="OBM.ico" FileName="OBM.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\OBM.ico" SelfReg="false"/>
+    <ROW File="ORF.ico" Component_="ORF.ico" FileName="ORF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\ORF.ico" SelfReg="false"/>
+    <ROW File="PBM.ico" Component_="PBM.ico" FileName="PBM.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PBM.ico" SelfReg="false"/>
+    <ROW File="PCX.ico" Component_="PCX.ico" FileName="PCX.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PCX.ico" SelfReg="false"/>
+    <ROW File="PEF.ico" Component_="PEF.ico" FileName="PEF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PEF.ico" SelfReg="false"/>
+    <ROW File="PGM.ico" Component_="PGM.ico" FileName="PGM.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PGM.ico" SelfReg="false"/>
+    <ROW File="PNG.ico" Component_="PNG.ico" FileName="PNG.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PNG.ico" SelfReg="false"/>
+    <ROW File="PPM.ico" Component_="PPM.ico" FileName="PPM.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PPM.ico" SelfReg="false"/>
+    <ROW File="PSD.ico" Component_="PSD.ico" FileName="PSD.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PSD.ico" SelfReg="false"/>
+    <ROW File="PTX.ico" Component_="PTX.ico" FileName="PTX.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PTX.ico" SelfReg="false"/>
+    <ROW File="PXN.ico" Component_="PXN.ico" FileName="PXN.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\PXN.ico" SelfReg="false"/>
+    <ROW File="R3D.ico" Component_="R3D.ico" FileName="R3D.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\R3D.ico" SelfReg="false"/>
+    <ROW File="RAF.ico" Component_="RAF.ico" FileName="RAF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\RAF.ico" SelfReg="false"/>
+    <ROW File="RAW.ico" Component_="RAW.ico" FileName="RAW.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\RAW.ico" SelfReg="false"/>
+    <ROW File="RW2.ico" Component_="RW2.ico" FileName="RW2.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\RW2.ico" SelfReg="false"/>
+    <ROW File="RWL.ico" Component_="RWL.ico" FileName="RWL.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\RWL.ico" SelfReg="false"/>
+    <ROW File="RWZ.ico" Component_="RWZ.ico" FileName="RWZ.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\RWZ.ico" SelfReg="false"/>
+    <ROW File="SR2.ico" Component_="SR2.ico" FileName="SR2.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\SR2.ico" SelfReg="false"/>
+    <ROW File="SRF.ico" Component_="SRF.ico" FileName="SRF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\SRF.ico" SelfReg="false"/>
+    <ROW File="SRW.ico" Component_="SRW.ico" FileName="SRW.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\SRW.ico" SelfReg="false"/>
+    <ROW File="SVG.ico" Component_="SVG.ico" FileName="SVG.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\SVG.ico" SelfReg="false"/>
+    <ROW File="TGA.ico" Component_="TGA.ico" FileName="TGA.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\TGA.ico" SelfReg="false"/>
+    <ROW File="TIF.ico" Component_="TIF.ico" FileName="TIF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\TIF.ico" SelfReg="false"/>
+    <ROW File="TIFF.ico" Component_="TIFF.ico" FileName="TIFF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\TIFF.ico" SelfReg="false"/>
+    <ROW File="WEBP.ico" Component_="WEBP.ico" FileName="WEBP.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\WEBP.ico" SelfReg="false"/>
+    <ROW File="WIC.ico" Component_="WIC.ico" FileName="WIC.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\WIC.ico" SelfReg="false"/>
+    <ROW File="WMF.ico" Component_="WMF.ico" FileName="WMF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\WMF.ico" SelfReg="false"/>
+    <ROW File="WPG.ico" Component_="WPG.ico" FileName="WPG.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\WPG.ico" SelfReg="false"/>
+    <ROW File="X3F.ico" Component_="X3F.ico" FileName="X3F.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\X3F.ico" SelfReg="false"/>
+    <ROW File="XBM.ico" Component_="XBM.ico" FileName="XBM.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\XBM.ico" SelfReg="false"/>
+    <ROW File="XPM.ico" Component_="XPM.ico" FileName="XPM.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\XPM.ico" SelfReg="false"/>
     <ROW File="ActualSize.svg" Component_="ActualSize.svg" FileName="ACTUAL~1.SVG|ActualSize.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\ActualSize.svg" SelfReg="false"/>
     <ROW File="AdjustWindowSize.svg" Component_="ActualSize.svg" FileName="ADJUST~1.SVG|AdjustWindowSize.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\AdjustWindowSize.svg" SelfReg="false"/>
     <ROW File="AutoZoom.svg" Component_="ActualSize.svg" FileName="AutoZoom.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\AutoZoom.svg" SelfReg="false"/>
@@ -290,57 +412,57 @@
     <ROW File="ZoomIn.svg" Component_="ActualSize.svg" FileName="ZoomIn.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\ZoomIn.svg" SelfReg="false"/>
     <ROW File="ZoomOut.svg" Component_="ActualSize.svg" FileName="ZoomOut.svg" Attributes="0" SourcePath="..\..\Assets\Themes\Kobe\ZoomOut.svg" SelfReg="false"/>
     <ROW File="LightGray.DuongDieuPhap.igtheme" Component_="LightGray.DuongDieuPhap.igtheme" FileName="2017-L~1.IGT|2017-Light-Gray.Duong-Dieu-Phap.igtheme" Attributes="0" SourcePath="..\..\Assets\Themes\2017-Light-Gray.Duong-Dieu-Phap.igtheme" SelfReg="false"/>
-    <ROW File="AVIF.ico" Component_="FR.ico" FileName="AVIF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\AVIF.ico" SelfReg="false"/>
-    <ROW File="B64.ico" Component_="FR.ico" FileName="B64.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\B64.ico" SelfReg="false"/>
-    <ROW File="CR3.ico" Component_="FR.ico" FileName="CR3.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\CR3.ico" SelfReg="false"/>
-    <ROW File="HEIF.ico" Component_="FR.ico" FileName="HEIF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\HEIF.ico" SelfReg="false"/>
-    <ROW File="ICO.ico" Component_="FR.ico" FileName="ICO.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\ICO.ico" SelfReg="false"/>
-    <ROW File="JXL.ico" Component_="FR.ico" FileName="JXL.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\JXL.ico" SelfReg="false"/>
+    <ROW File="AVIF.ico" Component_="AVIF.ico" FileName="AVIF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\AVIF.ico" SelfReg="false"/>
+    <ROW File="B64.ico" Component_="B64.ico" FileName="B64.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\B64.ico" SelfReg="false"/>
+    <ROW File="CR3.ico" Component_="CR3.ico" FileName="CR3.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\CR3.ico" SelfReg="false"/>
+    <ROW File="HEIF.ico" Component_="HEIF.ico" FileName="HEIF.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\HEIF.ico" SelfReg="false"/>
+    <ROW File="ICO.ico" Component_="ICO.ico" FileName="ICO.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\ICO.ico" SelfReg="false"/>
+    <ROW File="JXL.ico" Component_="JXL.ico" FileName="JXL.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\JXL.ico" SelfReg="false"/>
     <ROW File="QOI.ico" Component_="FR.ico" FileName="QOI.ico" Attributes="0" SourcePath="..\..\Assets\Ext-Icons\QOI.ico" SelfReg="false"/>
-    <ROW File="ArabicEgypt.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="ARABIC~1.IGL|Arabic, Egypt.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Arabic, Egypt.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Armenian.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="ARMENI~2.IGL|Armenian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Armenian.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Bengali.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="BENGAL~1.IGL|Bengali.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Bengali.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Bulgarian.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="BULGAR~2.IGL|Bulgarian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Bulgarian.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Catalan.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="CATALA~1.IGL|Catalan.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Catalan.v8.8.iglang" SelfReg="false"/>
-    <ROW File="ChineseSimplified.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="CHINES~1.IGL|Chinese Simplified.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Chinese Simplified.v8.8.iglang" SelfReg="false"/>
-    <ROW File="ChineseTraditional.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="CHINES~2.IGL|Chinese Traditional.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Chinese Traditional.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Croatian.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="CROATI~1.IGL|Croatian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Croatian.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Czech.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="CZECHV~1.IGL|Czech.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Czech.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Danish.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="DANISH~1.IGL|Danish.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Danish.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Dutch.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="DUTCHV~1.IGL|Dutch.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Dutch.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Finnish.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="FINNIS~1.IGL|Finnish.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Finnish.v8.8.iglang" SelfReg="false"/>
-    <ROW File="French.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="FRENCH~1.IGL|French.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\French.v8.8.iglang" SelfReg="false"/>
-    <ROW File="German.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="GERMAN~1.IGL|German.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\German.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Greek.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="GREEKV~2.IGL|Greek.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Greek.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Hebrew.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="HEBREW~1.IGL|Hebrew.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Hebrew.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Hungarian.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="HUNGAR~2.IGL|Hungarian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Hungarian.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Indonesian.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="INDONE~1.IGL|Indonesian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Indonesian.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Irish.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="IRISHV~1.IGL|Irish.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Irish.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Italian.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="ITALIA~1.IGL|Italian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Italian.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Japanese.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="JAPANE~1.IGL|Japanese.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Japanese.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Korean.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="KOREAN~1.IGL|Korean.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Korean.v8.8.iglang" SelfReg="false"/>
-    <ROW File="KurmanjiKurdish.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="KURMAN~1.IGL|Kurmanji (Kurdish).v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Kurmanji (Kurdish).v8.8.iglang" SelfReg="false"/>
-    <ROW File="Kyrgyz.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="KYRGYZ~1.IGL|Kyrgyz.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Kyrgyz.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Lithuanian.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="LITHUA~2.IGL|Lithuanian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Lithuanian.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Malay.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="MALAYV~2.IGL|Malay.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Malay.v8.8.iglang" SelfReg="false"/>
-    <ROW File="NorwegianBokmal.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="NORWEG~1.IGL|Norwegian Bokmal.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Norwegian Bokmal.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Persian.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="PERSIA~1.IGL|Persian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Persian.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Polish.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="POLISH~1.IGL|Polish.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Polish.v8.8.iglang" SelfReg="false"/>
-    <ROW File="PortugueseBrazilian.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="PORTUG~1.IGL|Portuguese, Brazilian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Portuguese, Brazilian.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Portuguese.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="PORTUG~2.IGL|Portuguese.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Portuguese.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Romanian.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="ROMANI~1.IGL|Romanian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Romanian.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Russian.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="RUSSIA~1.IGL|Russian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Russian.v8.8.iglang" SelfReg="false"/>
-    <ROW File="SerbianCyrillic.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="SERBIA~1.IGL|Serbian (Cyrillic).v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Serbian (Cyrillic).v8.8.iglang" SelfReg="false"/>
-    <ROW File="SerbianLatin.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="SERBIA~2.IGL|Serbian (Latin).v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Serbian (Latin).v8.8.iglang" SelfReg="false"/>
-    <ROW File="Sinhala.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="SINHAL~1.IGL|Sinhala.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Sinhala.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Slovak.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="SLOVAK~1.IGL|Slovak.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Slovak.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Slovenian.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="SLOVEN~1.IGL|Slovenian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Slovenian.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Spanish.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="SPANIS~1.IGL|Spanish.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Spanish.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Swedish.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="SWEDIS~1.IGL|Swedish.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Swedish.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Thai.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="THAIV8~1.IGL|Thai.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Thai.v8.8.iglang" SelfReg="false"/>
+    <ROW File="ArabicEgypt.v8.8.iglang" Component_="ArabicEgypt.v8.8.iglang" FileName="ARABIC~1.IGL|Arabic, Egypt.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Arabic, Egypt.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Armenian.v8.8.iglang" Component_="Armenian.v8.8.iglang" FileName="ARMENI~2.IGL|Armenian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Armenian.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Bengali.v8.8.iglang" Component_="Bengali.v8.8.iglang" FileName="BENGAL~1.IGL|Bengali.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Bengali.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Bulgarian.v8.8.iglang" Component_="Bulgarian.v8.8.iglang" FileName="BULGAR~2.IGL|Bulgarian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Bulgarian.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Catalan.v8.8.iglang" Component_="Catalan.v8.8.iglang" FileName="CATALA~1.IGL|Catalan.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Catalan.v8.8.iglang" SelfReg="false"/>
+    <ROW File="ChineseSimplified.v8.8.iglang" Component_="ChineseSimplified.v8.8.iglang" FileName="CHINES~1.IGL|Chinese Simplified.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Chinese Simplified.v8.8.iglang" SelfReg="false"/>
+    <ROW File="ChineseTraditional.v8.8.iglang" Component_="ChineseTraditional.v8.8.iglang" FileName="CHINES~2.IGL|Chinese Traditional.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Chinese Traditional.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Croatian.v8.8.iglang" Component_="Croatian.v8.8.iglang" FileName="CROATI~1.IGL|Croatian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Croatian.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Czech.v8.8.iglang" Component_="Czech.v8.8.iglang" FileName="CZECHV~1.IGL|Czech.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Czech.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Danish.v8.8.iglang" Component_="Danish.v8.8.iglang" FileName="DANISH~1.IGL|Danish.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Danish.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Dutch.v8.8.iglang" Component_="Dutch.v8.8.iglang" FileName="DUTCHV~1.IGL|Dutch.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Dutch.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Finnish.v8.8.iglang" Component_="Finnish.v8.8.iglang" FileName="FINNIS~1.IGL|Finnish.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Finnish.v8.8.iglang" SelfReg="false"/>
+    <ROW File="French.v8.8.iglang" Component_="French.v8.8.iglang" FileName="FRENCH~1.IGL|French.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\French.v8.8.iglang" SelfReg="false"/>
+    <ROW File="German.v8.8.iglang" Component_="German.v8.8.iglang" FileName="GERMAN~1.IGL|German.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\German.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Greek.v8.8.iglang" Component_="Greek.v8.8.iglang" FileName="GREEKV~2.IGL|Greek.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Greek.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Hebrew.v8.8.iglang" Component_="Hebrew.v8.8.iglang" FileName="HEBREW~1.IGL|Hebrew.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Hebrew.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Hungarian.v8.8.iglang" Component_="Hungarian.v8.8.iglang" FileName="HUNGAR~2.IGL|Hungarian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Hungarian.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Indonesian.v8.8.iglang" Component_="Indonesian.v8.8.iglang" FileName="INDONE~1.IGL|Indonesian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Indonesian.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Irish.v8.8.iglang" Component_="Irish.v8.8.iglang" FileName="IRISHV~1.IGL|Irish.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Irish.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Italian.v8.8.iglang" Component_="Italian.v8.8.iglang" FileName="ITALIA~1.IGL|Italian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Italian.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Japanese.v8.8.iglang" Component_="Japanese.v8.8.iglang" FileName="JAPANE~1.IGL|Japanese.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Japanese.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Korean.v8.8.iglang" Component_="Korean.v8.8.iglang" FileName="KOREAN~1.IGL|Korean.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Korean.v8.8.iglang" SelfReg="false"/>
+    <ROW File="KurmanjiKurdish.v8.8.iglang" Component_="KurmanjiKurdish.v8.8.iglang" FileName="KURMAN~1.IGL|Kurmanji (Kurdish).v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Kurmanji (Kurdish).v8.8.iglang" SelfReg="false"/>
+    <ROW File="Kyrgyz.v8.8.iglang" Component_="Kyrgyz.v8.8.iglang" FileName="KYRGYZ~1.IGL|Kyrgyz.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Kyrgyz.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Lithuanian.v8.8.iglang" Component_="Lithuanian.v8.8.iglang" FileName="LITHUA~2.IGL|Lithuanian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Lithuanian.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Malay.v8.8.iglang" Component_="Malay.v8.8.iglang" FileName="MALAYV~2.IGL|Malay.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Malay.v8.8.iglang" SelfReg="false"/>
+    <ROW File="NorwegianBokmal.v8.8.iglang" Component_="NorwegianBokmal.v8.8.iglang" FileName="NORWEG~1.IGL|Norwegian Bokmal.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Norwegian Bokmal.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Persian.v8.8.iglang" Component_="Persian.v8.8.iglang" FileName="PERSIA~1.IGL|Persian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Persian.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Polish.v8.8.iglang" Component_="Polish.v8.8.iglang" FileName="POLISH~1.IGL|Polish.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Polish.v8.8.iglang" SelfReg="false"/>
+    <ROW File="PortugueseBrazilian.v8.8.iglang" Component_="PortugueseBrazilian.v8.8.iglang" FileName="PORTUG~1.IGL|Portuguese, Brazilian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Portuguese, Brazilian.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Portuguese.v8.8.iglang" Component_="Portuguese.v8.8.iglang" FileName="PORTUG~2.IGL|Portuguese.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Portuguese.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Romanian.v8.8.iglang" Component_="Romanian.v8.8.iglang" FileName="ROMANI~1.IGL|Romanian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Romanian.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Russian.v8.8.iglang" Component_="Russian.v8.8.iglang" FileName="RUSSIA~1.IGL|Russian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Russian.v8.8.iglang" SelfReg="false"/>
+    <ROW File="SerbianCyrillic.v8.8.iglang" Component_="SerbianCyrillic.v8.8.iglang" FileName="SERBIA~1.IGL|Serbian (Cyrillic).v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Serbian (Cyrillic).v8.8.iglang" SelfReg="false"/>
+    <ROW File="SerbianLatin.v8.8.iglang" Component_="SerbianLatin.v8.8.iglang" FileName="SERBIA~2.IGL|Serbian (Latin).v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Serbian (Latin).v8.8.iglang" SelfReg="false"/>
+    <ROW File="Sinhala.v8.8.iglang" Component_="Sinhala.v8.8.iglang" FileName="SINHAL~1.IGL|Sinhala.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Sinhala.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Slovak.v8.8.iglang" Component_="Slovak.v8.8.iglang" FileName="SLOVAK~1.IGL|Slovak.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Slovak.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Slovenian.v8.8.iglang" Component_="Slovenian.v8.8.iglang" FileName="SLOVEN~1.IGL|Slovenian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Slovenian.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Spanish.v8.8.iglang" Component_="Spanish.v8.8.iglang" FileName="SPANIS~1.IGL|Spanish.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Spanish.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Swedish.v8.8.iglang" Component_="Swedish.v8.8.iglang" FileName="SWEDIS~1.IGL|Swedish.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Swedish.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Thai.v8.8.iglang" Component_="Thai.v8.8.iglang" FileName="THAIV8~1.IGL|Thai.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Thai.v8.8.iglang" SelfReg="false"/>
     <ROW File="Turkish.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="TURKIS~2.IGL|Turkish.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Turkish.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Ukrainian.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="UKRAIN~2.IGL|Ukrainian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Ukrainian.v8.8.iglang" SelfReg="false"/>
-    <ROW File="Vietnamese.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="VIETNA~1.IGL|Vietnamese.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Vietnamese.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Ukrainian.v8.8.iglang" Component_="Ukrainian.v8.8.iglang" FileName="UKRAIN~2.IGL|Ukrainian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Ukrainian.v8.8.iglang" SelfReg="false"/>
+    <ROW File="Vietnamese.v8.8.iglang" Component_="Vietnamese.v8.8.iglang" FileName="VIETNA~1.IGL|Vietnamese.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Vietnamese.v8.8.iglang" SelfReg="false"/>
     <ROW File="default.jpg" Component_="default.jpg" FileName="default.jpg" Attributes="0" SourcePath="..\..\Assets\default.jpg" SelfReg="false"/>
     <ROW File="ReadMe.rtf" Component_="default.jpg" FileName="ReadMe.rtf" Attributes="0" SourcePath="..\..\Assets\ReadMe.rtf" SelfReg="false"/>
     <ROW File="igcmd.exe" Component_="igcmd.exe" FileName="igcmd.exe" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\igcmd.exe" SelfReg="false"/>
@@ -620,23 +742,21 @@
     <ROW Extension="xpm" Component_="ImageGlass.exe" ProgId_="ImageGlass.AssocFile.XPM" Feature_="xpm" Options="38"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
-    <ROW Feature_="MainFeature" Component_="APPDIR"/>
-    <ROW Feature_="MainFeature" Component_="default.jpg"/>
-    <ROW Feature_="MainFeature" Component_="ImageGlass.exe"/>
-    <ROW Feature_="MainFeature" Component_="SHORTCUTDIR"/>
-    <ROW Feature_="MainFeature" Component_="Registry"/>
-    <ROW Feature_="MainFeature" Component_="ImageGlass"/>
-    <ROW Feature_="MainFeature" Component_="LightGray.DuongDieuPhap.igtheme"/>
-    <ROW Feature_="MainFeature" Component_="FR.ico"/>
-    <ROW Feature_="MainFeature" Component_="ChineseSimplified.iglang"/>
-    <ROW Feature_="MainFeature" Component_="ActualSize.svg"/>
-    <ROW Feature_="MainFeature" Component_="AI_INSTALLPERUSER"/>
-    <ROW Feature_="MainFeature" Component_="Installdefault.jpgComponentShortcuts"/>
-    <ROW Feature_="MainFeature" Component_="InstallImageGlass.exeComponentShortcuts"/>
-    <ROW Feature_="MainFeature" Component_="ImageGlass_1"/>
-    <ROW Feature_="MainFeature" Component_="InstallImageGlass.exeComponentShortcuts_1"/>
-    <ROW Feature_="MainFeature" Component_="Installdefault.jpgComponentShortcuts_1"/>
-    <ROW Feature_="MainFeature" Component_="ApplicationDescription"/>
+    <ROW Feature_="MainFeatures" Component_="APPDIR"/>
+    <ROW Feature_="MainFeatures" Component_="default.jpg"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.exe"/>
+    <ROW Feature_="MainFeatures" Component_="SHORTCUTDIR"/>
+    <ROW Feature_="MainFeatures" Component_="Registry"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass"/>
+    <ROW Feature_="MainFeatures" Component_="LightGray.DuongDieuPhap.igtheme"/>
+    <ROW Feature_="MainFeatures" Component_="ActualSize.svg"/>
+    <ROW Feature_="MainFeatures" Component_="AI_INSTALLPERUSER"/>
+    <ROW Feature_="MainFeatures" Component_="Installdefault.jpgComponentShortcuts"/>
+    <ROW Feature_="MainFeatures" Component_="InstallImageGlass.exeComponentShortcuts"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass_1"/>
+    <ROW Feature_="MainFeatures" Component_="InstallImageGlass.exeComponentShortcuts_1"/>
+    <ROW Feature_="MainFeatures" Component_="Installdefault.jpgComponentShortcuts_1"/>
+    <ROW Feature_="MainFeatures" Component_="ApplicationDescription"/>
     <ROW Feature_="_3fr" Component_="ImageGlass.exe"/>
     <ROW Feature_="ari" Component_="ImageGlass.exe"/>
     <ROW Feature_="arw" Component_="ImageGlass.exe"/>
@@ -714,37 +834,159 @@
     <ROW Feature_="x3f" Component_="ImageGlass.exe"/>
     <ROW Feature_="xbm" Component_="ImageGlass.exe"/>
     <ROW Feature_="xpm" Component_="ImageGlass.exe"/>
-    <ROW Feature_="MainFeature" Component_="igcmd.exe"/>
-    <ROW Feature_="MainFeature" Component_="igcmdWin10.exe"/>
-    <ROW Feature_="MainFeature" Component_="igtasks.exe"/>
-    <ROW Feature_="MainFeature" Component_="CliWrap.dll"/>
-    <ROW Feature_="MainFeature" Component_="DotNetZip.dll"/>
-    <ROW Feature_="MainFeature" Component_="ExplorerSortOrder.dll"/>
-    <ROW Feature_="MainFeature" Component_="FileWatcherEx.dll"/>
-    <ROW Feature_="MainFeature" Component_="ImageGlass.Base.dll"/>
-    <ROW Feature_="MainFeature" Component_="ImageGlass.Heart.dll"/>
-    <ROW Feature_="MainFeature" Component_="ImageGlass.ImageBox.dll"/>
-    <ROW Feature_="MainFeature" Component_="ImageGlass.ImageListView.dll"/>
-    <ROW Feature_="MainFeature" Component_="ImageGlass.Library.dll"/>
-    <ROW Feature_="MainFeature" Component_="ImageGlass.Services.dll"/>
-    <ROW Feature_="MainFeature" Component_="ImageGlass.Settings.dll"/>
-    <ROW Feature_="MainFeature" Component_="ImageGlass.UI.dll"/>
-    <ROW Feature_="MainFeature" Component_="ImageGlass.WebP.dll"/>
-    <ROW Feature_="MainFeature" Component_="Magick.NativeQ16HDRIOpenMPx64.dll"/>
-    <ROW Feature_="MainFeature" Component_="Magick.NET.Core.dll"/>
-    <ROW Feature_="MainFeature" Component_="Magick.NET.SystemDrawing.dll"/>
-    <ROW Feature_="MainFeature" Component_="Magick.NETQ16HDRIOpenMPx64.dll"/>
-    <ROW Feature_="MainFeature" Component_="Microsoft.Bcl.AsyncInterfaces.dll"/>
-    <ROW Feature_="MainFeature" Component_="System.Buffers.dll"/>
-    <ROW Feature_="MainFeature" Component_="System.Memory.dll"/>
-    <ROW Feature_="MainFeature" Component_="System.Numerics.Vectors.dll"/>
-    <ROW Feature_="MainFeature" Component_="System.Runtime.CompilerServices.Unsafe.dll"/>
-    <ROW Feature_="MainFeature" Component_="System.Runtime.WindowsRuntime.dll"/>
-    <ROW Feature_="MainFeature" Component_="System.Text.Encodings.Web.dll"/>
-    <ROW Feature_="MainFeature" Component_="System.Text.Json.dll"/>
-    <ROW Feature_="MainFeature" Component_="System.Threading.Tasks.Extensions.dll"/>
-    <ROW Feature_="MainFeature" Component_="System.ValueTuple.dll"/>
-    <ROW Feature_="MainFeature" Component_="vcomp140.dll"/>
+    <ROW Feature_="MainFeatures" Component_="igcmd.exe"/>
+    <ROW Feature_="MainFeatures" Component_="igcmdWin10.exe"/>
+    <ROW Feature_="MainFeatures" Component_="igtasks.exe"/>
+    <ROW Feature_="MainFeatures" Component_="CliWrap.dll"/>
+    <ROW Feature_="MainFeatures" Component_="DotNetZip.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ExplorerSortOrder.dll"/>
+    <ROW Feature_="MainFeatures" Component_="FileWatcherEx.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.Base.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.Heart.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.ImageBox.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.ImageListView.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.Library.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.Services.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.Settings.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.UI.dll"/>
+    <ROW Feature_="MainFeatures" Component_="ImageGlass.WebP.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Magick.NativeQ16HDRIOpenMPx64.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Magick.NET.Core.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Magick.NET.SystemDrawing.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Magick.NETQ16HDRIOpenMPx64.dll"/>
+    <ROW Feature_="MainFeatures" Component_="Microsoft.Bcl.AsyncInterfaces.dll"/>
+    <ROW Feature_="MainFeatures" Component_="System.Buffers.dll"/>
+    <ROW Feature_="MainFeatures" Component_="System.Memory.dll"/>
+    <ROW Feature_="MainFeatures" Component_="System.Numerics.Vectors.dll"/>
+    <ROW Feature_="MainFeatures" Component_="System.Runtime.CompilerServices.Unsafe.dll"/>
+    <ROW Feature_="MainFeatures" Component_="System.Runtime.WindowsRuntime.dll"/>
+    <ROW Feature_="MainFeatures" Component_="System.Text.Encodings.Web.dll"/>
+    <ROW Feature_="MainFeatures" Component_="System.Text.Json.dll"/>
+    <ROW Feature_="MainFeatures" Component_="System.Threading.Tasks.Extensions.dll"/>
+    <ROW Feature_="MainFeatures" Component_="System.ValueTuple.dll"/>
+    <ROW Feature_="MainFeatures" Component_="vcomp140.dll"/>
+    <ROW Feature_="ExtensionIcons" Component_="RAF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="DRF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="FR.ico_1"/>
+    <ROW Feature_="ExtensionIcons" Component_="ARI.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="CUR.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="ARW.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="CRW.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="PXN.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="BAY.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="DDS.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="BMP.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="CAP.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="SR2.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="PEF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="CR2.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="SVG.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="XBM.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="CUT.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="KDC.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="MRW.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="XPM.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="DATA.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="R3D.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="GIF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="DNG.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="DCR.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="DCS.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="PSD.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="DIB.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="EIP.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="JPEG.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="EMF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="JPG.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="ERF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="MEF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="EXIF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="TIF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="RWZ.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="EXR.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="FFF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="GPR.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="HDR.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="K25.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="HEIC.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="ORF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="IIQ.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="JFIF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="JPE.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="MDC.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="MOS.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="RWL.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="NEF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="SRF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="NRW.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="OBM.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="PBM.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="PCX.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="PGM.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="PNG.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="PPM.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="PTX.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="SRW.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="RAW.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="RW2.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="TGA.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="TIFF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="FR.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="WEBP.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="WIC.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="WMF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="WPG.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="X3F.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="AVIF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="B64.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="CR3.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="HEIF.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="ICO.ico"/>
+    <ROW Feature_="ExtensionIcons" Component_="JXL.ico"/>
+    <ROW Feature_="LanguagePacks" Component_="NorwegianBokmal.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Bengali.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Korean.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="ArabicEgypt.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Sinhala.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Armenian.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Bulgarian.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Hungarian.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Catalan.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Lithuanian.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="ChineseSimplified.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="ChineseTraditional.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Slovak.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Portuguese.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Croatian.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Czech.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Persian.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Danish.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Dutch.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Finnish.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="French.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="German.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Greek.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Hebrew.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Indonesian.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Irish.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Italian.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Japanese.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="KurmanjiKurdish.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Vietnamese.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Kyrgyz.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Malay.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Polish.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="PortugueseBrazilian.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Romanian.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Russian.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Ukrainian.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="SerbianCyrillic.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="SerbianLatin.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Slovenian.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Spanish.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Swedish.v8.8.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="ChineseSimplified.iglang"/>
+    <ROW Feature_="LanguagePacks" Component_="Thai.v8.8.iglang"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="ImageGlass_1.exe" SourcePath="..\..\..\Source\ImageGlass\bin\x64\Release\ImageGlass.exe" Index="0"/>
@@ -1073,8 +1315,8 @@
     <ROW Extension_="xpm" Component_="ImageGlass.exe" Verb="open" Sequence="0" Command="&amp;Open" Argument="&quot;%1&quot;"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.SynchronizedFolderComponent">
-    <ROW Directory_="Languages_Dir" SourcePath="..\..\Assets\Languages" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
-    <ROW Directory_="ExtIcons_Dir" SourcePath="..\..\Assets\Ext-Icons" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
-    <ROW Directory_="Themes_Dir" SourcePath="..\..\Assets\Themes" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
+    <ROW Directory_="Languages_Dir" SourcePath="..\..\Assets\Languages" Feature="MainFeatures" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
+    <ROW Directory_="ExtIcons_Dir" SourcePath="..\..\Assets\Ext-Icons" Feature="MainFeatures" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
+    <ROW Directory_="Themes_Dir" SourcePath="..\..\Assets\Themes" Feature="MainFeatures" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
   </COMPONENT>
 </DOCUMENT>
