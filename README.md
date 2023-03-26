@@ -57,10 +57,7 @@ The `develop` branch contains the latest commits of version 8.x while the `prod`
 
 
 ## 🗝️ License
-- ImageGlass source code is released under the terms of the GNU GPLv3.
-- For end user license, please refer to https://imageglass.org/license.
-
-> Starting from **April 1st, 2023 and ImageGlass version 8.8**, it is now required for users to register for a free license in order to use ImageGlass for non-personal purposes. This update has been announced on the [ImageGlass website](https://imageglass.org/news/imageglass-end-user-license-agreement-eula-update-81), and you can find more information about the new End User License Agreement (EULA) update at https://imageglass.org/license.
+ImageGlass is free for both personal and commercial use, except the Store version. If you intend to use ImageGlass at your place of business or for commercial purposes, it's recommended but not enforced to register at https://imageglass.org/license.
 
 
 ## 📚 Docs

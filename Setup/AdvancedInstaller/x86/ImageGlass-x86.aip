@@ -8,7 +8,6 @@
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPCONTACT" Value="phap@imageglass.org"/>
     <ROW Property="ARPHELPLINK" Value="https://imageglass.org/support"/>
-    <ROW Property="ARPNOMODIFY" MultiBuildValue="MsiBuild:1"/>
     <ROW Property="ARPPRODUCTICON" Value="ImageGlass_1.exe" Type="8"/>
     <ROW Property="ARPURLINFOABOUT" Value="https://imageglass.org/support"/>
     <ROW Property="ARPURLUPDATEINFO" Value="https://imageglass.org/download"/>
@@ -73,7 +72,7 @@
     <ROW Component="ChineseSimplified.iglang" ComponentId="{BB127617-1307-4A95-AA13-857EDDBD5765}" Directory_="Languages_Dir" Attributes="0" KeyPath="Vietnamese.v8.8.iglang" Type="0"/>
     <ROW Component="ChineseSimplified.v8.8.iglang" ComponentId="{1FF77646-134E-4022-A8D4-90E513D2CA04}" Directory_="Languages_Dir" Attributes="0" KeyPath="ChineseSimplified.v8.8.iglang"/>
     <ROW Component="ChineseTraditional.v8.8.iglang" ComponentId="{E561D50F-0F4A-40EC-BA02-694BFC67F139}" Directory_="Languages_Dir" Attributes="0" KeyPath="ChineseTraditional.v8.8.iglang"/>
-    <ROW Component="CliWrap.dll" ComponentId="{D2C292FA-6B45-46BB-9DC4-32AEACA3E8EF}" Directory_="APPDIR" Attributes="0" KeyPath="CliWrap.dll"/>
+    <ROW Component="CliWrap.dll" ComponentId="{0EF51A90-9856-4BF6-BC6D-B51889ED4C43}" Directory_="APPDIR" Attributes="0" KeyPath="CliWrap.dll"/>
     <ROW Component="Croatian.v8.8.iglang" ComponentId="{69DC24B8-4990-451C-B389-CDF77C5EFAFB}" Directory_="Languages_Dir" Attributes="0" KeyPath="Croatian.v8.8.iglang"/>
     <ROW Component="Czech.v8.8.iglang" ComponentId="{2B394779-B463-4AD4-BF81-72304850C9D3}" Directory_="Languages_Dir" Attributes="0" KeyPath="Czech.v8.8.iglang"/>
     <ROW Component="DATA.ico" ComponentId="{BB2A358D-6295-40E8-9566-03EBCD085A81}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="DATA.ico"/>
@@ -84,18 +83,18 @@
     <ROW Component="DNG.ico" ComponentId="{5BE7A024-DB2B-483A-AF68-96342DACC6DB}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="DNG.ico"/>
     <ROW Component="DRF.ico" ComponentId="{6CC0B32D-345F-45CC-B344-FE203DD45905}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="DRF.ico"/>
     <ROW Component="Danish.v8.8.iglang" ComponentId="{9F808F3A-5419-4B7A-A51A-EF80DC021F38}" Directory_="Languages_Dir" Attributes="0" KeyPath="Danish.v8.8.iglang"/>
-    <ROW Component="DotNetZip.dll" ComponentId="{A1500E15-8FF7-4159-AC9A-D120FFBB91AD}" Directory_="APPDIR" Attributes="0" KeyPath="DotNetZip.dll"/>
+    <ROW Component="DotNetZip.dll" ComponentId="{66AF186C-8712-4816-B568-A24A467F79BF}" Directory_="APPDIR" Attributes="0" KeyPath="DotNetZip.dll"/>
     <ROW Component="Dutch.v8.8.iglang" ComponentId="{EA73F480-2DAC-4E45-93EB-F4B1C0EA1009}" Directory_="Languages_Dir" Attributes="0" KeyPath="Dutch.v8.8.iglang"/>
     <ROW Component="EIP.ico" ComponentId="{8CDE9277-6FAB-49CE-B9C1-91894D7FBD96}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="EIP.ico"/>
     <ROW Component="EMF.ico" ComponentId="{B043DD3B-C097-48D1-8711-87D2CF72511E}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="EMF.ico"/>
     <ROW Component="ERF.ico" ComponentId="{C76FA640-2A84-4F3C-878C-DCD41FDF79A8}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="ERF.ico"/>
-    <ROW Component="EULA.txt" ComponentId="{00BEC80B-7849-4E77-B4DD-F4CF6812A766}" Directory_="APPDIR" Attributes="0" KeyPath="EULA.txt" Type="0"/>
+    <ROW Component="EULA.txt" ComponentId="{00BEC80B-7849-4E77-B4DD-F4CF6812A766}" Directory_="APPDIR" Attributes="0" KeyPath="ReadMe.rtf" Type="0"/>
     <ROW Component="EXIF.ico" ComponentId="{F7F1BE47-4480-4328-B2E8-0EAACF7C48A1}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="EXIF.ico"/>
     <ROW Component="EXR.ico" ComponentId="{1C5E6712-5FC8-4EC5-A6D6-9D408F79CCA1}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="EXR.ico"/>
     <ROW Component="FFF.ico" ComponentId="{5C0A0112-F828-4BFC-991F-88BF4CBA672B}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="FFF.ico"/>
     <ROW Component="FR.ico" ComponentId="{34E6BE39-CCFB-4975-B578-A6C9954260CE}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="QOI.ico" Type="0"/>
     <ROW Component="FR.ico_1" ComponentId="{79FA0D35-FFDE-4805-AC3B-20D108EF2875}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="FR.ico"/>
-    <ROW Component="FileWatcherEx.dll" ComponentId="{11A591CB-57C9-4AE2-9773-7E31397E1B5B}" Directory_="APPDIR" Attributes="0" KeyPath="FileWatcherEx.dll"/>
+    <ROW Component="FileWatcherEx.dll" ComponentId="{7D374904-FBBC-4701-A718-4DF40FAA02D1}" Directory_="APPDIR" Attributes="0" KeyPath="FileWatcherEx.dll"/>
     <ROW Component="Finnish.v8.8.iglang" ComponentId="{84579F49-67CB-4154-9F41-76EA461B82DA}" Directory_="Languages_Dir" Attributes="0" KeyPath="Finnish.v8.8.iglang"/>
     <ROW Component="French.v8.8.iglang" ComponentId="{E97395D6-E1D2-4517-ADEB-3921EBBDE692}" Directory_="Languages_Dir" Attributes="0" KeyPath="French.v8.8.iglang"/>
     <ROW Component="GIF.ico" ComponentId="{2CCB8E7A-C73A-4EFB-88A6-1515E325E0BE}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="GIF.ico"/>
@@ -110,15 +109,15 @@
     <ROW Component="ICO.ico" ComponentId="{66E037AB-A551-4035-8A7B-D1D6974E11BF}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="ICO.ico"/>
     <ROW Component="IIQ.ico" ComponentId="{DC902175-B579-4ACC-A575-69BF7277C0CF}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="IIQ.ico"/>
     <ROW Component="ImageGlass" ComponentId="{78DD08BC-4B8C-41C6-AC6C-224AF0EE6B9D}" Directory_="ImageGlass_Dir" Attributes="0"/>
-    <ROW Component="ImageGlass.Base.dll" ComponentId="{A3980F37-FBD7-4EC1-8D92-7BD76E460AAC}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.Base.dll"/>
-    <ROW Component="ImageGlass.Heart.dll" ComponentId="{12FEC754-EAD8-45FE-B5FD-DCB3D8D551E5}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.Heart.dll"/>
-    <ROW Component="ImageGlass.ImageBox.dll" ComponentId="{D7506229-7E5B-4A4A-BA15-C2A18BDB98B1}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.ImageBox.dll"/>
-    <ROW Component="ImageGlass.ImageListView.dll" ComponentId="{DF6A8F47-8F44-4A62-A626-01BFF16802B6}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.ImageListView.dll"/>
-    <ROW Component="ImageGlass.Library.dll" ComponentId="{E2A15A90-0DE9-429F-8A74-4DBA44B9E00A}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.Library.dll"/>
-    <ROW Component="ImageGlass.Services.dll" ComponentId="{2D1322CB-B5C6-4EFF-9A04-20D77DCDDB0E}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.Services.dll"/>
-    <ROW Component="ImageGlass.Settings.dll" ComponentId="{9AA493F3-2FF0-4281-9613-53B02870C51D}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.Settings.dll"/>
-    <ROW Component="ImageGlass.UI.dll" ComponentId="{1D15AD89-0E19-4874-BE59-08AB73F134F6}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.UI.dll"/>
-    <ROW Component="ImageGlass.WebP.dll" ComponentId="{E7AF1104-96CA-4D8B-991D-652BBC623AA3}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.WebP.dll"/>
+    <ROW Component="ImageGlass.Base.dll" ComponentId="{02D9C160-3C5D-4190-A367-0978C6978C7D}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.Base.dll"/>
+    <ROW Component="ImageGlass.Heart.dll" ComponentId="{228D16C4-FD85-47EE-AB93-A784B8F90B53}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.Heart.dll"/>
+    <ROW Component="ImageGlass.ImageBox.dll" ComponentId="{8E661339-804D-41B4-BEAD-99D9B08FF1EE}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.ImageBox.dll"/>
+    <ROW Component="ImageGlass.ImageListView.dll" ComponentId="{7E57E512-BA0E-4D88-8F75-D3A4C396A724}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.ImageListView.dll"/>
+    <ROW Component="ImageGlass.Library.dll" ComponentId="{CEFC5881-696F-4DA4-AC24-DB7C853421CF}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.Library.dll"/>
+    <ROW Component="ImageGlass.Services.dll" ComponentId="{03B5BFC5-B38E-49ED-BAAC-2B16F44B1F87}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.Services.dll"/>
+    <ROW Component="ImageGlass.Settings.dll" ComponentId="{D4317D2C-A66D-44E1-AE68-A378FE344DE4}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.Settings.dll"/>
+    <ROW Component="ImageGlass.UI.dll" ComponentId="{C4900982-0255-49DB-BB48-742C2A14F128}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.UI.dll"/>
+    <ROW Component="ImageGlass.WebP.dll" ComponentId="{DAF5C361-B8B3-47C8-B9DF-A2FEA613F648}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.WebP.dll"/>
     <ROW Component="ImageGlass.exe" ComponentId="{72CA36B0-774B-46F6-9203-43DDE7E4542B}" Directory_="APPDIR" Attributes="0" KeyPath="ImageGlass.exe"/>
     <ROW Component="Indonesian.v8.8.iglang" ComponentId="{86DC85D9-18BD-4157-98AC-F00BC62E24C5}" Directory_="Languages_Dir" Attributes="0" KeyPath="Indonesian.v8.8.iglang"/>
     <ROW Component="InstallImageGlass.exeComponentShortcuts" ComponentId="{EF05F015-05B5-494D-8F8C-8D51F04F8344}" Directory_="APPDIR" Attributes="4" KeyPath="InstallImageGlass.exeComponentShort"/>
@@ -141,12 +140,12 @@
     <ROW Component="MEF.ico" ComponentId="{4D7EDD06-E0FA-4C8D-B3D2-AB8E356DA9EB}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="MEF.ico"/>
     <ROW Component="MOS.ico" ComponentId="{2BB0284A-0A89-4D1C-ACCE-0F6B721D725C}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="MOS.ico"/>
     <ROW Component="MRW.ico" ComponentId="{1A689C7C-9F1B-48B2-900C-5DE399E81F02}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="MRW.ico"/>
-    <ROW Component="Magick.NET.Core.dll" ComponentId="{A7B7F158-7746-4104-9EEC-6E9A701DFF59}" Directory_="APPDIR" Attributes="0" KeyPath="Magick.NET.Core.dll"/>
-    <ROW Component="Magick.NET.SystemDrawing.dll" ComponentId="{9D7D82CD-CCDF-4248-8496-0461271DE15E}" Directory_="APPDIR" Attributes="0" KeyPath="Magick.NET.SystemDrawing.dll"/>
-    <ROW Component="Magick.NETQ8x86.dll" ComponentId="{6C8B9D6B-CACE-49A0-8C13-B0C6649C007E}" Directory_="APPDIR" Attributes="0" KeyPath="Magick.NETQ8x86.dll"/>
-    <ROW Component="Magick.NativeQ8x86.dll" ComponentId="{3CF81E95-261B-4621-A7F5-D116E216EADD}" Directory_="APPDIR" Attributes="0" KeyPath="Magick.NativeQ8x86.dll"/>
+    <ROW Component="Magick.NET.Core.dll" ComponentId="{281A1AFA-636D-4661-9189-93F80E4138F0}" Directory_="APPDIR" Attributes="0" KeyPath="Magick.NET.Core.dll"/>
+    <ROW Component="Magick.NET.SystemDrawing.dll" ComponentId="{FB52A248-1B0D-4EB4-A49E-F1BBDCF9F875}" Directory_="APPDIR" Attributes="0" KeyPath="Magick.NET.SystemDrawing.dll"/>
+    <ROW Component="Magick.NETQ8x86.dll" ComponentId="{60A97EF7-45AA-4985-BAFF-C181C2E80E28}" Directory_="APPDIR" Attributes="0" KeyPath="Magick.NETQ8x86.dll"/>
+    <ROW Component="Magick.NativeQ8x86.dll" ComponentId="{F19C97EB-00D6-4620-A162-3A206A1DA6A0}" Directory_="APPDIR" Attributes="0" KeyPath="Magick.NativeQ8x86.dll"/>
     <ROW Component="Malay.v8.8.iglang" ComponentId="{6DD60601-9CAF-4978-9579-C7F4FE9CD854}" Directory_="Languages_Dir" Attributes="0" KeyPath="Malay.v8.8.iglang"/>
-    <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{A7270799-C7CD-41E1-A231-05E9A0DD9D1A}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
+    <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{F1AC4C66-670E-4083-9841-A1DBE84CC72C}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
     <ROW Component="NEF.ico" ComponentId="{374F3E23-1B0C-4703-9D08-5B839CFB52EC}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="NEF.ico"/>
     <ROW Component="NRW.ico" ComponentId="{718C8654-C57A-405D-A6CC-A6252A8DC3C4}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="NRW.ico"/>
     <ROW Component="NorwegianBokmal.v8.8.iglang" ComponentId="{0B8F9676-C4C2-4244-A742-67D733702461}" Directory_="Languages_Dir" Attributes="0" KeyPath="NorwegianBokmal.v8.8.iglang"/>
@@ -186,15 +185,15 @@
     <ROW Component="Slovenian.v8.8.iglang" ComponentId="{A991CF90-A332-4E0C-9600-138542713D9A}" Directory_="Languages_Dir" Attributes="0" KeyPath="Slovenian.v8.8.iglang"/>
     <ROW Component="Spanish.v8.8.iglang" ComponentId="{A14C278B-791C-4C47-A642-0E0BFCD88683}" Directory_="Languages_Dir" Attributes="0" KeyPath="Spanish.v8.8.iglang"/>
     <ROW Component="Swedish.v8.8.iglang" ComponentId="{0F758B40-7607-4C47-9AA2-9710B123D1D9}" Directory_="Languages_Dir" Attributes="0" KeyPath="Swedish.v8.8.iglang"/>
-    <ROW Component="System.Buffers.dll" ComponentId="{43B4D294-3799-434E-B71D-14EEDD98C547}" Directory_="APPDIR" Attributes="0" KeyPath="System.Buffers.dll"/>
-    <ROW Component="System.Memory.dll" ComponentId="{EC211701-6501-4602-B470-A7505977585B}" Directory_="APPDIR" Attributes="0" KeyPath="System.Memory.dll"/>
-    <ROW Component="System.Numerics.Vectors.dll" ComponentId="{6B97C499-1709-4A35-816E-2C2AE8701BBE}" Directory_="APPDIR" Attributes="0" KeyPath="System.Numerics.Vectors.dll"/>
-    <ROW Component="System.Runtime.CompilerServices.Unsafe.dll" ComponentId="{27929C5E-7A8F-4C14-8063-FBD1D859D922}" Directory_="APPDIR" Attributes="0" KeyPath="System.Runtime.CompilerServices.Unsafe.dll"/>
-    <ROW Component="System.Runtime.WindowsRuntime.dll" ComponentId="{4BF5A9AD-4F3E-490A-B5D7-732DD5C11411}" Directory_="APPDIR" Attributes="0" KeyPath="System.Runtime.WindowsRuntime.dll"/>
-    <ROW Component="System.Text.Encodings.Web.dll" ComponentId="{153D6104-0094-4B19-B7E3-F3B5A3F86D70}" Directory_="APPDIR" Attributes="0" KeyPath="System.Text.Encodings.Web.dll"/>
-    <ROW Component="System.Text.Json.dll" ComponentId="{C45A5D04-BB33-483E-987E-5FC4FDF38EF8}" Directory_="APPDIR" Attributes="0" KeyPath="System.Text.Json.dll"/>
-    <ROW Component="System.Threading.Tasks.Extensions.dll" ComponentId="{1502444F-0338-4D71-A479-EA1D78F7692B}" Directory_="APPDIR" Attributes="0" KeyPath="System.Threading.Tasks.Extensions.dll"/>
-    <ROW Component="System.ValueTuple.dll" ComponentId="{7551F8A0-57C3-414C-9836-8E07DB536805}" Directory_="APPDIR" Attributes="0" KeyPath="System.ValueTuple.dll"/>
+    <ROW Component="System.Buffers.dll" ComponentId="{0D78509E-CFAD-4D04-B3DC-399AB75C4FD4}" Directory_="APPDIR" Attributes="0" KeyPath="System.Buffers.dll"/>
+    <ROW Component="System.Memory.dll" ComponentId="{D006B970-1AA0-405F-B63E-D4D15B008A27}" Directory_="APPDIR" Attributes="0" KeyPath="System.Memory.dll"/>
+    <ROW Component="System.Numerics.Vectors.dll" ComponentId="{E1808239-39E5-4CFA-9563-3E16102B0346}" Directory_="APPDIR" Attributes="0" KeyPath="System.Numerics.Vectors.dll"/>
+    <ROW Component="System.Runtime.CompilerServices.Unsafe.dll" ComponentId="{A576EE56-AD46-484F-ABA0-69965B40A7BA}" Directory_="APPDIR" Attributes="0" KeyPath="System.Runtime.CompilerServices.Unsafe.dll"/>
+    <ROW Component="System.Runtime.WindowsRuntime.dll" ComponentId="{4DAE7216-DFB8-4688-91CF-5305FC58CACC}" Directory_="APPDIR" Attributes="0" KeyPath="System.Runtime.WindowsRuntime.dll"/>
+    <ROW Component="System.Text.Encodings.Web.dll" ComponentId="{4E4BA093-79B7-4343-9659-D3E55E3517A8}" Directory_="APPDIR" Attributes="0" KeyPath="System.Text.Encodings.Web.dll"/>
+    <ROW Component="System.Text.Json.dll" ComponentId="{00601AB9-FC9A-4BAB-AB55-2E83C0D6D3CD}" Directory_="APPDIR" Attributes="0" KeyPath="System.Text.Json.dll"/>
+    <ROW Component="System.Threading.Tasks.Extensions.dll" ComponentId="{775468B8-D860-451D-9C2F-FDE742DCC295}" Directory_="APPDIR" Attributes="0" KeyPath="System.Threading.Tasks.Extensions.dll"/>
+    <ROW Component="System.ValueTuple.dll" ComponentId="{81D3C297-D326-416A-B0B5-F13DD5CF05BA}" Directory_="APPDIR" Attributes="0" KeyPath="System.ValueTuple.dll"/>
     <ROW Component="TGA.ico" ComponentId="{D4ECD41E-72BE-47B4-BF5E-4FDC4126F4DC}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="TGA.ico"/>
     <ROW Component="TIF.ico" ComponentId="{05575764-FAED-4F23-9440-EE3752CEEBEE}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="TIF.ico"/>
     <ROW Component="TIFF.ico" ComponentId="{761520F4-A0D3-413D-B0D9-AADD93E92395}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="TIFF.ico"/>
@@ -208,14 +207,14 @@
     <ROW Component="X3F.ico" ComponentId="{4392C281-2EA1-4736-92C4-DFCE1CCAE2AF}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="X3F.ico"/>
     <ROW Component="XBM.ico" ComponentId="{15E0902A-2458-4DE2-BAC3-8C9FA13A6F14}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="XBM.ico"/>
     <ROW Component="XPM.ico" ComponentId="{12CACD5D-7997-4A02-9326-D3663D33D87E}" Directory_="ExtIcons_Dir" Attributes="0" KeyPath="XPM.ico"/>
-    <ROW Component="igcmd.exe" ComponentId="{8CA685A9-B5F4-4A46-A9A6-14F27A8E9CED}" Directory_="APPDIR" Attributes="0" KeyPath="igcmd.exe"/>
-    <ROW Component="igcmdWin10.exe" ComponentId="{385704CF-53F3-42D4-A690-60A877F1540F}" Directory_="APPDIR" Attributes="0" KeyPath="igcmdWin10.exe"/>
-    <ROW Component="igtasks.exe" ComponentId="{68CEECE0-9AD4-4107-BDB9-798A78822490}" Directory_="APPDIR" Attributes="0" KeyPath="igtasks.exe"/>
+    <ROW Component="igcmd.exe" ComponentId="{F5A82969-BAD5-4198-907B-41F4F32013F7}" Directory_="APPDIR" Attributes="0" KeyPath="igcmd.exe"/>
+    <ROW Component="igcmdWin10.exe" ComponentId="{5BC3D9AF-0EEF-41A4-978F-60071A18A2FF}" Directory_="APPDIR" Attributes="0" KeyPath="igcmdWin10.exe"/>
+    <ROW Component="igtasks.exe" ComponentId="{62D59ADF-FE04-4677-B5FE-27F7C08C8F61}" Directory_="APPDIR" Attributes="0" KeyPath="igtasks.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="ExtensionIcons" Title="ExtensionIcons" Description="Description" Display="5" Level="1" Directory_="APPDIR" Attributes="0"/>
-    <ROW Feature="LanguagePacks" Title="LanguagePacks" Description="Description" Display="3" Level="1" Directory_="APPDIR" Attributes="0"/>
-    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="16"/>
+    <ROW Feature="ExtensionIcons" Title="Extension Icons (optional, included by default)" Description="Description" Display="5" Level="1" Directory_="APPDIR" Attributes="0"/>
+    <ROW Feature="LanguagePacks" Title="Language Packs (optional, included by default)" Description="Description" Display="3" Level="1" Directory_="APPDIR" Attributes="0"/>
+    <ROW Feature="MainFeature" Title="Main Features (required)" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="16"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
@@ -378,9 +377,8 @@
     <ROW File="Turkish.v8.8.iglang" Component_="Turkish.v8.8.iglang" FileName="TURKIS~2.IGL|Turkish.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Turkish.v8.8.iglang" SelfReg="false"/>
     <ROW File="Ukrainian.v8.8.iglang" Component_="Ukrainian.v8.8.iglang" FileName="UKRAIN~2.IGL|Ukrainian.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Ukrainian.v8.8.iglang" SelfReg="false"/>
     <ROW File="Vietnamese.v8.8.iglang" Component_="ChineseSimplified.iglang" FileName="VIETNA~1.IGL|Vietnamese.v8.8.iglang" Attributes="0" SourcePath="..\..\Assets\Languages\Vietnamese.v8.8.iglang" SelfReg="false"/>
-    <ROW File="EULA.txt" Component_="EULA.txt" FileName="EULA.txt" Attributes="0" SourcePath="..\..\..\EULA.txt" SelfReg="false"/>
-    <ROW File="default.jpg" Component_="EULA.txt" FileName="default.jpg" Attributes="0" SourcePath="..\..\Assets\default.jpg" SelfReg="false"/>
     <ROW File="ReadMe.rtf" Component_="EULA.txt" FileName="ReadMe.rtf" Attributes="0" SourcePath="..\..\Assets\ReadMe.rtf" SelfReg="false"/>
+    <ROW File="default.jpg" Component_="EULA.txt" FileName="default.jpg" Attributes="0" SourcePath="..\..\Assets\default.jpg" SelfReg="false"/>
     <ROW File="igcmd.exe" Component_="igcmd.exe" FileName="igcmd.exe" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\igcmd.exe" SelfReg="false"/>
     <ROW File="igcmdWin10.exe" Component_="igcmdWin10.exe" FileName="IGCMDW~1.EXE|igcmdWin10.exe" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\igcmdWin10.exe" SelfReg="false"/>
     <ROW File="igtasks.exe" Component_="igtasks.exe" FileName="igtasks.exe" Attributes="0" SourcePath="..\..\..\Source\ImageGlass\bin\x86\Release\igtasks.exe" SelfReg="false"/>
@@ -755,7 +753,7 @@
     <ROW Shortcut="ImageGlass" Directory_="ImageGlass_Dir" Name="IMAGEG~1|ImageGlass" Component_="ImageGlass.exe" Target="[#ImageGlass.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
     <ROW Shortcut="ImageGlass_1" Directory_="SHORTCUTDIR" Name="IMAGEG~2|ImageGlass" Component_="InstallImageGlass.exeComponentShortcuts" Target="[APPDIR]\ImageGlass.exe" Description="ImageGlass" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
     <ROW Shortcut="ImageGlass_2" Directory_="DesktopFolder" Name="IMAGEG~2|ImageGlass" Component_="InstallImageGlass.exeComponentShortcuts" Target="[APPDIR]\ImageGlass.exe" Description="ImageGlass" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="UninstallProductNameProductVersion" Directory_="ImageGlass_Dir" Name="UNINST~1.22|Uninstall [|ProductName] [|ProductVersion]" Component_="CliWrap.dll" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Hotkey="0" Icon_="SystemFoldermsiexec.exe" IconIndex="0" ShowCmd="1"/>
+    <ROW Shortcut="UninstallProductNameProductVersion" Directory_="ImageGlass_Dir" Name="UNINST~1.22|Uninstall [|ProductName] [|ProductVersion]" Component_="French.v8.8.iglang" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Hotkey="0" Icon_="SystemFoldermsiexec.exe" IconIndex="0" ShowCmd="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
