@@ -153,12 +153,34 @@
     </None>
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="call $(ProjectDir)post-build.bat $(SolutionDir) $(TargetDir) $(ConfigurationName) $(Platform)" />
-  </Target>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="&quot;$(DevEnvDir)devenv&quot; &quot;$(SolutionDir)ImageGlass.sln&quot; /Build $(ConfigurationName) /Project &quot;$(SolutionDir)Utilities\igcmd10\igcmd10.csproj&quot;" />
-  </Target>
+    <!-- Clean files -->
+    <Target Name="DeleteFiles" AfterTargets="AfterClean">
+        <ItemGroup>
+            <IG_FilesToClean Include="$(OutDir)\**\*.*" Exclude="$(OutDir)\**\igconfig.json" />
+        </ItemGroup>
 
+        <Delete Files="@(IG_FilesToClean)" />
+    </Target>
+
+
+    <!-- Build & copy igcmd10 -->
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+        <Exec Command="&quot;$(DevEnvDir)devenv&quot; &quot;$(SolutionDir)ImageGlass.sln&quot; /Build $(ConfigurationName) /Project &quot;$(SolutionDir)Utilities\igcmd10\igcmd10.csproj&quot;" />
+
+        <ItemGroup>
+            <IG_IGCMD10 Include="..\Utilities\igcmd10\bin\$(Platform)\$(ConfigurationName)\$(TargetFramework)10.0.19041.0\\*.*" />
+        </ItemGroup>
+        <Copy SourceFiles="@(IG_IGCMD10)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+    </Target>
+
+    
+    <!-- Copy resources -->
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <ItemGroup>
+            <IG_Themes Include="..\..\Setup\v9\Assets\Themes\**\*.*" />
+        </ItemGroup>
+        
+        <Copy SourceFiles="@(IG_Themes)" DestinationFolder="$(OutputPath)\Themes\%(RecursiveDir)" SkipUnchangedFiles="true" />
+    </Target>
 </Project>
