@@ -23,6 +23,8 @@
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
     <DebugType>portable</DebugType>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <Configurations>Debug;Release;Publish_Release</Configurations>
+      
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|x64'">
@@ -30,6 +32,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|x64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net6.0-windows|x64'">
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
@@ -41,11 +47,19 @@
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net6.0-windows|x86'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|ARM32'">
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|ARM32'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net6.0-windows|ARM32'">
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
@@ -57,11 +71,19 @@
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net6.0-windows|ARM64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows|x64'">
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows|x64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net7.0-windows|x64'">
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
@@ -73,6 +95,10 @@
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net7.0-windows|x86'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows|ARM32'">
     <DebugType>embedded</DebugType>
   </PropertyGroup>
@@ -81,11 +107,19 @@
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net7.0-windows|ARM32'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows|ARM64'">
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows|ARM64'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish_Release|net7.0-windows|ARM64'">
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
@@ -116,7 +150,7 @@
     <ProjectReference Include="..\Components\ImageGlass.Tool\ImageGlass.Tools.csproj" />
     <ProjectReference Include="..\Components\ImageGlass.UI\ImageGlass.UI.csproj" />
     <ProjectReference Include="..\Components\ImageGlass.Views\ImageGlass.Views.csproj" />
-    <ProjectReference Include="..\Utilities\igcmd\igcmd.csproj" />
+    <ProjectReference Include="..\Utilities\igcmd\igcmd.csproj" Condition="$(ConfigurationName) != 'Publish_Release'" />
   </ItemGroup>
 
   <ItemGroup>
@@ -148,9 +182,6 @@
     <None Update="Icons\Setting.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="post-build.bat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 
@@ -165,12 +196,13 @@
 
 
     <!-- Build & copy igcmd10 -->
-    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="$(ConfigurationName) == 'Release'">
         <Exec Command="&quot;$(DevEnvDir)devenv&quot; &quot;$(SolutionDir)ImageGlass.sln&quot; /Build $(ConfigurationName) /Project &quot;$(SolutionDir)Utilities\igcmd10\igcmd10.csproj&quot;" />
 
         <ItemGroup>
-            <IG_IGCMD10 Include="..\Utilities\igcmd10\bin\$(Platform)\$(ConfigurationName)\$(TargetFramework)10.0.19041.0\\*.*" />
+            <IG_IGCMD10 Include="..\Utilities\igcmd10\bin\$(Platform)\$(ConfigurationName)\$(TargetFramework)10.0.19041.0\*.*" />
         </ItemGroup>
+
         <Copy SourceFiles="@(IG_IGCMD10)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
     </Target>
 
@@ -183,4 +215,8 @@
         
         <Copy SourceFiles="@(IG_Themes)" DestinationFolder="$(OutputPath)\Themes\%(RecursiveDir)" SkipUnchangedFiles="true" />
     </Target>
+
+    <PropertyGroup>
+        <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
+    </PropertyGroup>
 </Project>
