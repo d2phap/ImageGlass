@@ -976,7 +976,8 @@ namespace ImageGlass.WebP
 
         static UnsafeNativeMethods()
         {
-            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), IntPtr.Size == 4 ? "x86" : "x64");
+            
+            string path = Path.Combine(Application.StartupPath, IntPtr.Size == 4 ? "x86" : "x64");
             LoadLibrary(Path.Combine(path, "libwebp.dll"));
             LoadLibrary(Path.Combine(path, "libwebpdecoder.dll"));
             LoadLibrary(Path.Combine(path, "libwebpdemux.dll"));

@@ -67,12 +67,8 @@ public class App
     /// </summary>
     public static string StartUpDir(params string[] paths)
     {
-        var binaryPath = typeof(App).Assembly.Location;
-        var path = Path.GetDirectoryName(binaryPath) ?? "";
-
         var newPaths = paths.ToList();
-        newPaths.Insert(0, path);
-
+        newPaths.Insert(0, Application.StartupPath);
 
         return Path.Combine(newPaths.ToArray());
     }
