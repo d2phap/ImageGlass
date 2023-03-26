@@ -1227,6 +1227,5 @@ namespace ImageGlass
         public UI.ModernMenu MnuContext;
         public UI.ModernMenu MnuSubMenu;
         public ToolStripMenuItem MnuUnload;
-        private TableLayoutPanel TbLayout;
     }
 }
