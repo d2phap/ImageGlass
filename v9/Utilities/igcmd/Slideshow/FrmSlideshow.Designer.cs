@@ -33,6 +33,8 @@
             this.MnuContext = new ImageGlass.UI.ModernMenu(this.components);
             this.MnuPauseResumeSlideshow = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.MnuWindowFit = new ToolStripMenuItem();
+            this.MnuFrameless = new ToolStripMenuItem();
             this.MnuFullScreen = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuToggleCountdown = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuToggleCheckerboard = new System.Windows.Forms.ToolStripMenuItem();
@@ -90,6 +92,8 @@
             this.MnuContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MnuPauseResumeSlideshow,
             this.toolStripMenuItem1,
+            MnuWindowFit,
+            MnuFrameless,
             this.MnuFullScreen,
             this.MnuToggleCountdown,
             this.MnuToggleCheckerboard,
@@ -122,6 +126,26 @@
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(297, 6);
+            // 
+            // MnuWindowFit
+            // 
+            this.MnuWindowFit.CheckOnClick = true;
+            this.MnuWindowFit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MnuWindowFit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.MnuWindowFit.Name = "MnuWindowFit";
+            this.MnuWindowFit.Size = new System.Drawing.Size(300, 28);
+            this.MnuWindowFit.Text = "[Window fit]";
+            this.MnuWindowFit.Click += new System.EventHandler(this.MnuWindowFit_Click);
+            // 
+            // MnuFrameless
+            // 
+            this.MnuFrameless.CheckOnClick = true;
+            this.MnuFrameless.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MnuFrameless.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.MnuFrameless.Name = "MnuFrameless";
+            this.MnuFrameless.Size = new System.Drawing.Size(300, 28);
+            this.MnuFrameless.Text = "[Frameless]";
+            this.MnuFrameless.Click += new System.EventHandler(this.MnuFrameless_Click);
             // 
             // MnuFullScreen
             // 
@@ -367,6 +391,8 @@
         private ToolStripMenuItem MnuLoadingOrders;
         private ToolStripSeparator toolStripMenuItem2;
         private ToolStripMenuItem MnuToggleCheckerboard;
+        private ToolStripMenuItem MnuWindowFit;
+        private ToolStripMenuItem MnuFrameless;
         private ToolStripMenuItem MnuFullScreen;
         private ToolStripMenuItem MnuOpenLocation;
         private ToolStripMenuItem MnuCopyPath;

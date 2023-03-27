@@ -70,6 +70,8 @@ public partial class FrmSlideshow : ThemedForm
         { nameof(MnuGoToFirst),             new() { new (Keys.Home) } },
         { nameof(MnuGoToLast),              new() { new (Keys.End) } },
 
+        { nameof(MnuWindowFit),             new() { new (Keys.F9) } },
+        { nameof(MnuFrameless),             new() { new (Keys.F10) } },
         { nameof(MnuFullScreen),            new() { new (Keys.F11) } },
         { nameof(MnuToggleCountdown),       new() { new (Keys.C) } },
         { nameof(MnuToggleCheckerboard),    new() { new (Keys.B) } },
@@ -1185,6 +1187,8 @@ public partial class FrmSlideshow : ThemedForm
         MnuExitSlideshow.Text = lang[$"{Name}.{nameof(MnuExitSlideshow)}"];
 
         // toggle menus
+        MnuWindowFit.Text = lang[$"FrmMain.{nameof(MnuWindowFit)}"];
+        MnuFrameless.Text = lang[$"FrmMain.{nameof(MnuFrameless)}"];
         MnuFullScreen.Text = lang[$"FrmMain.{nameof(MnuFullScreen)}"];
         MnuToggleCountdown.Text = lang[$"{Name}.{nameof(MnuToggleCountdown)}"];
         MnuToggleCheckerboard.Text = lang[$"FrmMain.{nameof(MnuToggleCheckerboard)}"];
@@ -1369,6 +1373,16 @@ public partial class FrmSlideshow : ThemedForm
     private void MnuExitSlideshow_Click(object sender, EventArgs e)
     {
         Application.Exit();
+    }
+
+    private void MnuWindowFit_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void MnuFrameless_Click(object sender, EventArgs e)
+    {
+
     }
 
     private void MnuFullScreen_Click(object sender, EventArgs e)
