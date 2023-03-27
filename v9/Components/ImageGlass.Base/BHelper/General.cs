@@ -58,6 +58,31 @@ public partial class BHelper
 
 
     /// <summary>
+    /// Center the given rectangle to the rectangle.
+    /// </summary>
+    /// <param name="rect1"></param>
+    /// <param name="rect2"></param>
+    /// <param name="limitRect1Size"></param>
+    public static Rectangle CenterRectToRect(Rectangle rect1, Rectangle rect2, bool limitRect1Size = false)
+    {
+        var x = rect2.X + ((rect2.Width - rect1.Width) / 2);
+        var y = rect2.Y + ((rect2.Height - rect1.Height) / 2);
+        var width = rect1.Width;
+        var height = rect1.Height;
+
+        if (limitRect1Size)
+        {
+            x = Math.Max(rect2.X, x);
+            y = Math.Max(rect2.Y, y);
+            width = Math.Min(rect1.Width, rect2.Width);
+            height = Math.Min(rect1.Height, rect2.Height);
+        }
+
+        return new Rectangle(x, y, width, height);
+    }
+
+
+    /// <summary>
     /// Get all controls by type
     /// </summary>
     public static IEnumerable<Control> GetAllControls(Control control, Type type)
