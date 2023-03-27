@@ -212,6 +212,7 @@ public partial class FrmSlideshow : ThemedForm
         ResumeLayout(false);
     }
 
+
     protected override void OnDpiChanged(DpiChangedEventArgs e)
     {
         base.OnDpiChanged(e);
@@ -584,6 +585,12 @@ public partial class FrmSlideshow : ThemedForm
 
     private void PicMain_OnZoomChanged(object? sender, ZoomEventArgs e)
     {
+        // Handle window fit after zoom change
+        if (Config.EnableWindowFit && (e.IsManualZoom || e.IsZoomModeChange))
+        {
+            FitWindowToImage(false);
+        }
+
         UpdateImageInfo(ImageInfoUpdateTypes.Zoom);
     }
 
@@ -836,9 +843,16 @@ public partial class FrmSlideshow : ThemedForm
 
             // set the main image
             PicMain.SetImage(photo.ImgData,
+                resetZoom: true,
                 enableFading: enableFading,
                 initOpacity: 0.4f,
                 opacityStep: 0.02f);
+
+            // update window fit
+            if (Config.EnableWindowFit)
+            {
+                FitWindowToImage(false);
+            }
 
             PicMain.ClearMessage();
 
@@ -1377,12 +1391,168 @@ public partial class FrmSlideshow : ThemedForm
 
     private void MnuWindowFit_Click(object sender, EventArgs e)
     {
-
+        IG_ToggleWindowFit();
     }
+
+    /// <summary>
+    /// Toggles Window fit.
+    /// </summary>
+    private bool IG_ToggleWindowFit(bool? enable = null, bool showInAppMessage = true)
+    {
+        enable ??= !Config.EnableWindowFit;
+        Config.EnableWindowFit = enable.Value;
+
+        // set Window Fit mode
+        FitWindowToImage();
+
+        // update menu item state
+        MnuWindowFit.Checked = Config.EnableWindowFit;
+
+        if (showInAppMessage)
+        {
+            var langPath = $"FrmMain.{nameof(MnuWindowFit)}";
+            var message = Config.EnableWindowFit
+                ? Config.Language[$"{langPath}._Enable"]
+                : Config.Language[$"{langPath}._Disable"];
+
+            PicMain.ShowMessage("", message, Config.InAppMessageDuration);
+        }
+
+        return Config.EnableWindowFit;
+    }
+
+    private void FitWindowToImage(bool resetZoomMode = true)
+    {
+        if (!Config.EnableWindowFit || PicMain.Source == ImageSource.Null)
+            return; // Nothing to do
+
+        #region Set minimum size for window
+        var minH = this.ScaleToDpi(50);
+
+        MinimumSize = new()
+        {
+            Width = this.ScaleToDpi(50),
+            Height = minH,
+        };
+        #endregion
+
+
+        WindowState = FormWindowState.Normal;
+
+        // get current screen
+        var workingArea = Screen.FromControl(this).WorkingArea;
+
+        // Check for early exits
+        // This fixes issue https://github.com/d2phap/ImageGlass/issues/1371
+        // If window size already reached max, then can't be expanded more larger
+        if (PicMain.SourceWidth > workingArea.Width &&
+            PicMain.SourceHeight > workingArea.Height &&
+            Width > workingArea.Width &&
+            Height > workingArea.Height)
+        {
+            return;
+        }
+
+
+        // First, adjust our main window to theoretically fit the entire
+        // picture, but not larger than desktop working area.
+        var fullW = Width + PicMain.SourceWidth - PicMain.Width;
+        var fullH = Height + PicMain.SourceHeight - PicMain.Height;
+
+        var maxWidth = Math.Min(fullW, workingArea.Width);
+        var maxHeight = Math.Min(fullH, workingArea.Height);
+
+
+        // plus some gap if window border is resizable
+        if (FormBorderStyle != FormBorderStyle.None && fullW > workingArea.Width)
+        {
+            maxWidth -= SystemInformation.CaptionHeight / 2;
+        }
+        if (FormBorderStyle != FormBorderStyle.None && fullH > workingArea.Height)
+        {
+            maxHeight -= SystemInformation.CaptionHeight / 2;
+        }
+
+        var zoomFactor = PicMain.ZoomFactor;
+        if (resetZoomMode)
+        {
+            // recalculates zoom factor for the new size
+            zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, fullW, fullH, (int)maxWidth, (int)maxHeight);
+        }
+
+        // get image size after zoomed
+        var zoomImgW = (int)(PicMain.SourceWidth * zoomFactor);
+        var zoomImgH = (int)(PicMain.SourceHeight * zoomFactor);
+
+        // Adjust our main window to theoretically fit the entire
+        // picture, but not larger than desktop working area.
+        fullW = Width + zoomImgW - PicMain.Width;
+        fullH = Height + zoomImgH - PicMain.Height;
+
+
+        var newBound = new Rectangle(Left, Top,
+            (int)(Math.Min(fullW, workingArea.Width)),
+            (int)(Math.Min(fullH, workingArea.Height)));
+        var boundChanges = BoundsSpecified.Size;
+
+        // center window to screen
+        if (Config.CenterWindowFit)
+        {
+            newBound = BHelper.CenterRectToRect(newBound, workingArea, true);
+            boundChanges = BoundsSpecified.All;
+        }
+
+        // update the size
+        this.SetBounds(newBound.X, newBound.Y, newBound.Width, newBound.Height, boundChanges);
+
+        if (resetZoomMode)
+        {
+            PicMain.SetZoomFactor(zoomFactor, false);
+        }
+    }
+
 
     private void MnuFrameless_Click(object sender, EventArgs e)
     {
+        IG_ToggleFrameless();
+    }
 
+    /// <summary>
+    /// Toggle framless mode
+    /// </summary>
+    private bool IG_ToggleFrameless(bool? enable = null, bool showInAppMessage = true)
+    {
+        enable ??= !Config.EnableFrameless;
+        Config.EnableFrameless = enable.Value;
+
+        // set frameless mode
+        FormBorderStyle = Config.EnableFrameless ? FormBorderStyle.None : FormBorderStyle.Sizable;
+
+        // update menu item state
+        MnuFrameless.Checked = Config.EnableFrameless;
+
+        if (showInAppMessage)
+        {
+            var langPath = $"FrmMain.{nameof(MnuFrameless)}";
+
+            if (Config.EnableFrameless)
+            {
+                WindowApi.SetRoundCorner(Handle);
+
+                PicMain.ShowMessage(
+                    string.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFrameless.ShortcutKeyDisplayString),
+                    Config.Language[$"{langPath}._Enable"],
+                    Config.InAppMessageDuration);
+            }
+            else
+            {
+                PicMain.ShowMessage("",
+                    Config.Language[$"{langPath}._Disable"],
+                    Config.InAppMessageDuration);
+            }
+        }
+
+        return Config.EnableFrameless;
     }
 
     private void MnuFullScreen_Click(object sender, EventArgs e)
