@@ -206,14 +206,40 @@ public partial class FrmMain
         // TODO: hide menu items that haven't implemented
         HideUnreadyMenuItems();
 
+        // Initialize form movable
+        #region Form movable
+        _movableForm = new(this)
+        {
+            Key = Keys.ShiftKey | Keys.Shift,
+            FreeMoveControlNames = new HashSet<string>()
+            {
+                nameof(Toolbar),
+            },
+        };
+
+        // Enable form movable
+        IG_SetFrmMainMoveable(true);
+        #endregion // Form movable
 
         // make sure all controls are painted before showing window
         Application.DoEvents();
+
+        // toggle toolbar
+        IG_ToggleToolbar(Config.ShowToolbar);
+
+        // toggle gallery
+        IG_ToggleGallery(Config.ShowThumbnails);
 
 
         // load Full screen mode
         if (Config.EnableFullScreen)
         {
+            // toggle frameless window
+            IG_ToggleFrameless(Config.EnableFrameless, false);
+
+            // toggle Window fit
+            IG_ToggleWindowFit(Config.EnableWindowFit, false);
+
             // to hide the animation effect of window border
             FormBorderStyle = FormBorderStyle.None;
 
@@ -228,6 +254,12 @@ public partial class FrmMain
         {
             // load window placement from settings
             WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
+
+            // toggle frameless window
+            IG_ToggleFrameless(Config.EnableFrameless, false);
+
+            // toggle Window fit
+            IG_ToggleWindowFit(Config.EnableWindowFit, false);
         }
 
         // start slideshow
@@ -240,19 +272,6 @@ public partial class FrmMain
         Local.UpdateFrmMain(UpdateRequests.MouseActions);
 
 
-        // toggle toolbar
-        IG_ToggleToolbar(Config.ShowToolbar);
-
-        // toggle gallery
-        IG_ToggleGallery(Config.ShowThumbnails);
-
-        // toggle frameless window
-        IG_ToggleFrameless(Config.EnableFrameless, false);
-
-        // toggle Window fit
-        IG_ToggleWindowFit(Config.EnableWindowFit, false);
-
-
         // update tag data for zoom mode menus
         MnuAutoZoom.Tag = new ModernMenuItemTag() { SingleSelect = true };
         MnuLockZoom.Tag = new ModernMenuItemTag() { SingleSelect = true };
@@ -260,24 +279,6 @@ public partial class FrmMain
         MnuScaleToHeight.Tag = new ModernMenuItemTag() { SingleSelect = true };
         MnuScaleToFit.Tag = new ModernMenuItemTag() { SingleSelect = true };
         MnuScaleToFill.Tag = new ModernMenuItemTag() { SingleSelect = true };
-
-
-        // Make form movable
-        #region Make form movable
-        _movableForm = new(this)
-        {
-            Key = Keys.ShiftKey | Keys.Shift,
-            FreeMoveControlNames = new HashSet<string>()
-            {
-                nameof(Toolbar),
-            },
-        };
-
-
-        // Enable frameless movable
-        _movableForm.Enable();
-        _movableForm.Enable(PicMain, Toolbar);
-        #endregion
 
     }
 
