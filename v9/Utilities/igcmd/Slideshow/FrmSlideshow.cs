@@ -229,15 +229,16 @@ public partial class FrmSlideshow : ThemedForm
         PicMain.Render += PicMain_Render;
         PicMain.MouseWheel += PicMain_MouseWheel;
 
-        // windowed slideshow
-        if (Config.EnableWindowedSlideshow)
-        {
-            // load window placement from settings
-            WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
-        }
         // full screen slideshow
-        else
+        if (Config.EnableFullscreenSlideshow)
         {
+            // toggle frameless window
+            IG_ToggleFrameless(Config.EnableFrameless, false);
+
+            // toggle Window fit
+            IG_ToggleWindowFit(Config.EnableWindowFit, false);
+
+
             // to hide the animation effect of window border
             FormBorderStyle = FormBorderStyle.None;
 
@@ -246,7 +247,19 @@ public partial class FrmSlideshow : ThemedForm
             // it can be restore correctly
             WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
 
-            SetFullScreenMode(true);
+            IG_ToggleFullScreen(true, false);
+        }
+        // windowed slideshow
+        else
+        {
+            // load window placement from settings
+            WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
+
+            // toggle frameless window
+            IG_ToggleFrameless(Config.EnableFrameless, false);
+
+            // toggle Window fit
+            IG_ToggleWindowFit(Config.EnableWindowFit, false);
         }
 
 
@@ -1402,15 +1415,27 @@ public partial class FrmSlideshow : ThemedForm
         enable ??= !Config.EnableWindowFit;
         Config.EnableWindowFit = enable.Value;
 
+        if (Config.EnableWindowFit)
+        {
+            // exit full screen
+            if (Config.EnableFullScreen)
+            {
+                IG_ToggleFullScreen(false, false);
+            }
+        }
+
         // set Window Fit mode
         FitWindowToImage();
 
         // update menu item state
         MnuWindowFit.Checked = Config.EnableWindowFit;
 
+        // disable maximize button
+        MaximizeBox = !Config.EnableWindowFit;
+
         if (showInAppMessage)
         {
-            var langPath = $"{Name}.{nameof(MnuWindowFit)}";
+            var langPath = $"FrmMain.{nameof(MnuWindowFit)}";
             var message = Config.EnableWindowFit
                 ? Config.Language[$"{langPath}._Enable"]
                 : Config.Language[$"{langPath}._Disable"];
@@ -1524,6 +1549,15 @@ public partial class FrmSlideshow : ThemedForm
         enable ??= !Config.EnableFrameless;
         Config.EnableFrameless = enable.Value;
 
+        if (Config.EnableWindowFit)
+        {
+            // exit full screen
+            if (Config.EnableFullScreen)
+            {
+                IG_ToggleFullScreen(false, false);
+            }
+        }
+
         // set frameless mode
         FormBorderStyle = Config.EnableFrameless ? FormBorderStyle.None : FormBorderStyle.Sizable;
 
@@ -1556,8 +1590,60 @@ public partial class FrmSlideshow : ThemedForm
 
     private void MnuFullScreen_Click(object sender, EventArgs e)
     {
-        Config.EnableWindowedSlideshow = !Config.EnableWindowedSlideshow;
-        SetFullScreenMode(!Config.EnableWindowedSlideshow);
+        IG_ToggleFullScreen();
+    }
+
+    /// <summary>
+    /// Toggles full screen mode.
+    /// </summary>
+    public bool IG_ToggleFullScreen(bool? enable = null, bool showInAppMessage = true)
+    {
+        enable ??= !Config.EnableFullscreenSlideshow;
+        Config.EnableFullscreenSlideshow = enable.Value;
+
+        if (Config.EnableFullscreenSlideshow)
+        {
+            // exit full screen
+            if (Config.EnableWindowFit)
+            {
+                IG_ToggleWindowFit(false, false);
+            }
+
+            // exit frameless
+            if (Config.EnableFrameless)
+            {
+                IG_ToggleFrameless(false, false);
+            }
+        }
+
+        // disable round corner in full screen
+        WindowApi.SetRoundCorner(Handle, !Config.EnableFullscreenSlideshow);
+
+        SetFullScreenMode(enable.Value);
+
+        // update menu item state
+        MnuFullScreen.Checked = Config.EnableFullscreenSlideshow;
+
+        if (showInAppMessage)
+        {
+            var langPath = $"FrmMain.{nameof(MnuFullScreen)}";
+
+            if (Config.EnableFullscreenSlideshow)
+            {
+                PicMain.ShowMessage(
+                    string.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFullScreen.ShortcutKeyDisplayString),
+                    Config.Language[$"{langPath}._Enable"],
+                    Config.InAppMessageDuration);
+            }
+            else
+            {
+                PicMain.ShowMessage("",
+                    Config.Language[$"{langPath}._Disable"],
+                    Config.InAppMessageDuration);
+            }
+        }
+
+        return Config.EnableFullscreenSlideshow;
     }
 
     /// <summary>
@@ -1579,10 +1665,6 @@ public partial class FrmSlideshow : ThemedForm
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Normal;
             Bounds = Screen.FromControl(this).Bounds;
-
-            //// disable background colors
-            //WindowApi.SetWindowFrame(Handle, new Padding(0));
-            //PicMain.BackColor = Config.SlideshowBackgroundColor.NoAlpha();
 
             Visible = true;
         }
@@ -1613,10 +1695,6 @@ public partial class FrmSlideshow : ThemedForm
             {
                 FormBorderStyle = FormBorderStyle.Sizable;
             }
-
-            //// re-enable background colors
-            //WindowApi.SetWindowFrame(Handle, BackdropMargin);
-            //PicMain.BackColor = Config.SlideshowBackgroundColor;
 
             Config.UpdateFormIcon(this);
         }

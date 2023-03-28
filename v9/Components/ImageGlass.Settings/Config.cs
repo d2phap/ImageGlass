@@ -227,9 +227,9 @@ public static class Config
     public static bool ShouldLoopSlideshow { get; set; } = true;
 
     /// <summary>
-    /// Gets, sets value indicates that slideshow is played in window mode, not full screen.
+    /// Gets, sets value indicates that slideshow is played in full screen, not window mode.
     /// </summary>
-    public static bool EnableWindowedSlideshow { get; set; } = false;
+    public static bool EnableFullscreenSlideshow { get; set; } = true;
 
     /// <summary>
     /// Gets, sets value of FrmMain's frameless mode.
@@ -853,7 +853,7 @@ public static class Config
         ShowSlideshowCountdown = items.GetValue(nameof(ShowSlideshowCountdown), ShowSlideshowCountdown);
         UseRandomIntervalForSlideshow = items.GetValue(nameof(UseRandomIntervalForSlideshow), UseRandomIntervalForSlideshow);
         ShouldLoopSlideshow = items.GetValue(nameof(ShouldLoopSlideshow), ShouldLoopSlideshow);
-        EnableWindowedSlideshow = items.GetValue(nameof(EnableWindowedSlideshow), EnableWindowedSlideshow);
+        EnableFullscreenSlideshow = items.GetValue(nameof(EnableFullscreenSlideshow), EnableFullscreenSlideshow);
         EnableFrameless = items.GetValue(nameof(EnableFrameless), EnableFrameless);
         EnableFullScreen = items.GetValue(nameof(EnableFullScreen), EnableFullScreen);
         ShowThumbnails = items.GetValue(nameof(ShowThumbnails), ShowThumbnails);
@@ -1416,7 +1416,7 @@ public static class Config
         settings.TryAdd(nameof(ShowSlideshowCountdown), ShowSlideshowCountdown);
         settings.TryAdd(nameof(UseRandomIntervalForSlideshow), UseRandomIntervalForSlideshow);
         settings.TryAdd(nameof(ShouldLoopSlideshow), ShouldLoopSlideshow);
-        settings.TryAdd(nameof(EnableWindowedSlideshow), EnableWindowedSlideshow);
+        settings.TryAdd(nameof(EnableFullscreenSlideshow), EnableFullscreenSlideshow);
         settings.TryAdd(nameof(EnableFrameless), EnableFrameless);
         settings.TryAdd(nameof(EnableFullScreen), EnableFullScreen);
         settings.TryAdd(nameof(ShowThumbnails), ShowThumbnails);
