@@ -2040,28 +2040,6 @@ public class DXCanvas : DXControl
     }
 
 
-    /// <summary>
-    /// Updates zoom mode.
-    /// </summary>
-    protected virtual void UpdateZoomMode(ZoomMode? mode = null)
-    {
-        if (!IsReady || Source == ImageSource.Null) return;
-
-        // get zoom factor after applying the zoom mode
-        var zoomMode = mode ?? _zoomMode;
-        _zoomFactor = CalculateZoomFactor(zoomMode, SourceWidth, SourceHeight, Width, Height);
-        _isManualZoom = false;
-        _shouldRecalculateDrawingRegion = true;
-
-        OnZoomChanged?.Invoke(this, new(ZoomFactor, _isManualZoom, mode != _zoomMode));
-
-        // emit selecting event
-        if (EnableSelection && !ClientSelection.IsEmpty)
-        {
-            SelectionChanged?.Invoke(this, new SelectionEventArgs(ClientSelection, SourceSelection));
-        }
-    }
-
     #endregion // Override / Virtual methods
 
 
@@ -2083,7 +2061,14 @@ public class DXCanvas : DXControl
 
         Invalidate();
 
-        OnZoomChanged?.Invoke(this, new(_zoomFactor, _isManualZoom, false));
+        OnZoomChanged?.Invoke(this, new ZoomEventArgs()
+        {
+            ZoomFactor = _zoomFactor,
+            IsManualZoom = _isManualZoom,
+            IsZoomModeChange = false,
+            IsPreviewingImage = _isPreviewing,
+            ChangeSource = ZoomChangeSource.Unknown,
+        });
 
         // emit selecting event
         if (EnableSelection && !ClientSelection.IsEmpty)
@@ -2144,6 +2129,36 @@ public class DXCanvas : DXControl
 
 
     /// <summary>
+    /// Updates zoom mode.
+    /// </summary>
+    public void SetZoomMode(ZoomMode? mode = null, bool isManualZoom = false)
+    {
+        if (!IsReady || Source == ImageSource.Null) return;
+
+        // get zoom factor after applying the zoom mode
+        var zoomMode = mode ?? _zoomMode;
+        _zoomFactor = CalculateZoomFactor(zoomMode, SourceWidth, SourceHeight, Width, Height);
+        _isManualZoom = isManualZoom;
+        _shouldRecalculateDrawingRegion = true;
+
+        OnZoomChanged?.Invoke(this, new ZoomEventArgs()
+        {
+            ZoomFactor = ZoomFactor,
+            IsManualZoom = _isManualZoom,
+            IsZoomModeChange = mode != _zoomMode,
+            IsPreviewingImage = _isPreviewing,
+            ChangeSource = ZoomChangeSource.ZoomMode,
+        });
+
+        // emit selecting event
+        if (EnableSelection && !ClientSelection.IsEmpty)
+        {
+            SelectionChanged?.Invoke(this, new SelectionEventArgs(ClientSelection, SourceSelection));
+        }
+    }
+
+
+    /// <summary>
     /// Forces the control to reset zoom mode and invalidate itself.
     /// </summary>
     public new void Refresh()
@@ -2155,11 +2170,11 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Forces the control to invalidate itself.
     /// </summary>
-    public void Refresh(bool resetZoom = true)
+    public void Refresh(bool resetZoom = true, bool isManualZoom = false)
     {
         if (resetZoom)
         {
-            UpdateZoomMode();
+            SetZoomMode(null, isManualZoom);
         }
 
         Invalidate();
@@ -2279,7 +2294,14 @@ public class DXCanvas : DXControl
             PanTo(zoomedDistance.Width, zoomedDistance.Height, requestRerender);
 
             // emit OnZoomChanged event
-            OnZoomChanged?.Invoke(this, new(_zoomFactor, _isManualZoom, false));
+            OnZoomChanged?.Invoke(this, new ZoomEventArgs()
+            {
+                ZoomFactor = _zoomFactor,
+                IsManualZoom = _isManualZoom,
+                IsZoomModeChange = false,
+                IsPreviewingImage = _isPreviewing,
+                ChangeSource = ZoomChangeSource.Unknown,
+            });
 
 
             // emit selecting event
@@ -2355,7 +2377,14 @@ public class DXCanvas : DXControl
         }
 
         // emit OnZoomChanged event
-        OnZoomChanged?.Invoke(this, new(_zoomFactor, _isManualZoom, false));
+        OnZoomChanged?.Invoke(this, new ZoomEventArgs()
+        {
+            ZoomFactor = _zoomFactor,
+            IsManualZoom = _isManualZoom,
+            IsZoomModeChange = false,
+            IsPreviewingImage = _isPreviewing,
+            ChangeSource = ZoomChangeSource.Unknown,
+        });
 
 
         // emit selecting event
@@ -2810,7 +2839,7 @@ public class DXCanvas : DXControl
             _imageDrawingState = ImageDrawingState.Drawing;
             if (CanImageAnimate && Source != ImageSource.Null)
             {
-                UpdateZoomMode();
+                SetZoomMode();
                 StartAnimatingImage();
             }
             else if (enableFading)
@@ -2821,7 +2850,7 @@ public class DXCanvas : DXControl
 
                 if (resetZoom)
                 {
-                    UpdateZoomMode();
+                    SetZoomMode();
                 }
 
                 StartAnimation(AnimationSource.ImageFadeIn);

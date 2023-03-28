@@ -49,27 +49,39 @@ public class PanningEventArgs : EventArgs
 public class ZoomEventArgs : EventArgs
 {
     /// <summary>
-    /// Gets zoom factor
+    /// Gets, sets zoom factor
     /// </summary>
-    public float ZoomFactor { get; private set; } = 0f;
+    public float ZoomFactor { get; set; } = 0f;
 
     /// <summary>
     /// Gets, sets the value indicates that zoom factor is changed manually by <see cref="DXCanvas.ZoomFactor"/>
     /// </summary>
-    public bool IsManualZoom { get; private set; } = false;
+    public bool IsManualZoom { get; set; } = false;
 
     /// <summary>
     /// Gets, sets the value indicates that <see cref="DXCanvas.ZoomMode"/> is changed.
     /// </summary>
-    public bool IsZoomModeChange { get; private set; } = false;
+    public bool IsZoomModeChange { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets the value indicates that the displaying image is for temporarily previewing.
+    /// </summary>
+    public bool IsPreviewingImage { get; set; } = false;
+
+    /// <summary>
+    /// Gets, sets the source that causes zoom value changed.
+    /// </summary>
+    public ZoomChangeSource ChangeSource { get; set; } = ZoomChangeSource.Unknown;
 
 
-    public ZoomEventArgs(float zoomFactor, bool isManualZoom, bool isZoomModeChanged)
-    {
-        ZoomFactor = zoomFactor;
-        IsManualZoom = isManualZoom;
-        IsZoomModeChange = isZoomModeChanged;
-    }
+    public ZoomEventArgs() { }
+}
+
+
+public enum ZoomChangeSource
+{
+    Unknown,
+    ZoomMode,
 }
 
 
