@@ -350,14 +350,6 @@ public partial class FrmMain
         _ = ViewNextCancellableAsync(1);
     }
 
-    private void PicMain_ImageLoaded(object sender, EventArgs e)
-    {
-        if (Config.ZoomMode == ZoomMode.LockZoom)
-        {
-            Config.ZoomLockValue = PicMain.ZoomFactor * 100f;
-        }
-    }
-
     private void PicMain_OnZoomChanged(object? sender, ZoomEventArgs e)
     {
         // Handle window fit after zoom change
