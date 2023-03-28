@@ -111,6 +111,22 @@ public partial class FrmMain : ThemedForm
             MnuSubMenu.CurrentDpi = e.DeviceDpiNew;
     }
 
+    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    {
+        // to fix arrow keys sometimes does not regconize
+        if (keyData == Keys.Up
+            || keyData == Keys.Down
+            || keyData == Keys.Left
+            || keyData == Keys.Right)
+        {
+            FrmMain_KeyDown(this, new KeyEventArgs(keyData));
+
+            return true;
+        }
+
+        return base.ProcessCmdKey(ref msg, keyData);
+    }
+
 
     private void Application_ApplicationExit(object? sender, EventArgs e)
     {
@@ -150,6 +166,7 @@ public partial class FrmMain : ThemedForm
         }
 
 
+        // Register and run MAIN MENU shortcuts
         #region Register and run MAIN MENU shortcuts
 
         bool CheckMenuShortcut(ToolStripMenuItem mnu)
@@ -160,10 +177,7 @@ public partial class FrmMain : ThemedForm
             if (menuHotkey != null)
             {
                 // ignore invisible menu
-                if (mnu.Visible)
-                {
-                    return false;
-                }
+                if (mnu.Visible) return false;
 
                 if (mnu.HasDropDownItems)
                 {
@@ -189,13 +203,9 @@ public partial class FrmMain : ThemedForm
         // register context menu shortcuts
         foreach (var item in MnuMain.Items.OfType<ToolStripMenuItem>())
         {
-            if (CheckMenuShortcut(item))
-            {
-                return;
-            }
+            if (CheckMenuShortcut(item)) return;
         }
         #endregion
-
     }
 
 
