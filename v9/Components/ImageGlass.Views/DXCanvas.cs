@@ -2137,13 +2137,15 @@ public class DXCanvas : DXControl
     /// </summary>
     public void SetZoomMode(ZoomMode? mode = null, bool isManualZoom = false)
     {
-        if (!IsReady || Source == ImageSource.Null) return;
-
         // get zoom factor after applying the zoom mode
         var zoomMode = mode ?? _zoomMode;
+        _zoomMode = zoomMode;
         _zoomFactor = CalculateZoomFactor(zoomMode, SourceWidth, SourceHeight, Width, Height);
         _isManualZoom = isManualZoom;
         _shouldRecalculateDrawingRegion = true;
+
+
+        if (!IsReady || Source == ImageSource.Null) return;
 
         OnZoomChanged?.Invoke(this, new ZoomEventArgs()
         {
