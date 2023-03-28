@@ -2143,6 +2143,9 @@ public partial class FrmMain
         // update menu item state
         MnuWindowFit.Checked = Config.EnableWindowFit;
 
+        // disable maximize button
+        MaximizeBox = !Config.EnableWindowFit;
+
         // update toolbar items state
         UpdateToolbarItemsState();
 
