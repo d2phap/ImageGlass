@@ -457,7 +457,7 @@ public partial class FrmMain
     public void IG_SetZoomMode(string mode)
     {
         Config.ZoomMode = BHelper.ParseEnum<ZoomMode>(mode);
-        PicMain.SetZoomMode(Config.ZoomMode, true);
+        PicMain.ZoomMode = Config.ZoomMode;
 
         // update menu items state
         MnuAutoZoom.Checked = Config.ZoomMode == ZoomMode.AutoZoom;
@@ -2128,6 +2128,15 @@ public partial class FrmMain
         enable ??= !Config.EnableWindowFit;
         Config.EnableWindowFit = enable.Value;
 
+        if (Config.EnableWindowFit)
+        {
+            // exit full screen
+            if (Config.EnableFullScreen)
+            {
+                IG_ToggleFullScreen(false, false);
+            }
+        }
+
         // set Window Fit mode
         FitWindowToImage();
 
@@ -2157,20 +2166,6 @@ public partial class FrmMain
 
         WindowState = FormWindowState.Normal;
 
-        // get current screen
-        var workingArea = Screen.FromControl(this).WorkingArea;
-
-        // Check for early exits
-        // This fixes issue https://github.com/d2phap/ImageGlass/issues/1371
-        // If window size already reached max, then can't be expanded more larger
-        if (PicMain.SourceWidth > workingArea.Width &&
-            PicMain.SourceHeight > workingArea.Height &&
-            Width > workingArea.Width &&
-            Height > workingArea.Height)
-        {
-            return;
-        }
-
         // get the gap of the window to the viewer control
         // it includes boder, titlebar, toolbar, gallery,...
         var horzGap = Width - ClientSize.Width;
@@ -2199,6 +2194,9 @@ public partial class FrmMain
             }
         }
 
+
+        // get current screen
+        var workingArea = Screen.FromControl(this).WorkingArea;
 
         // get source image size
         var srcImgW = PicMain.SourceWidth;
@@ -2270,7 +2268,6 @@ public partial class FrmMain
 
         if (resetZoomMode)
         {
-            PicMain.ZoomFactor = zoomFactor;
             PicMain.SetZoomFactor(zoomFactor, false);
         }
     }
@@ -2283,6 +2280,15 @@ public partial class FrmMain
     {
         enable ??= !Config.EnableFrameless;
         Config.EnableFrameless = enable.Value;
+
+        if (Config.EnableFrameless)
+        {
+            // exit full screen
+            if (Config.EnableFullScreen)
+            {
+                IG_ToggleFullScreen(false, false);
+            }
+        }
 
         // set frameless mode
         FormBorderStyle = Config.EnableFrameless ? FormBorderStyle.None : FormBorderStyle.Sizable;
@@ -2327,6 +2333,24 @@ public partial class FrmMain
     {
         enable ??= !Config.EnableFullScreen;
         Config.EnableFullScreen = enable.Value;
+
+        if (Config.EnableFullScreen)
+        {
+            // exit full screen
+            if (Config.EnableWindowFit)
+            {
+                IG_ToggleWindowFit(false, false);
+            }
+
+            // exit frameless
+            if (Config.EnableFrameless)
+            {
+                IG_ToggleFrameless(false, false);
+            }
+        }
+
+        // disable round corner in full screen
+        WindowApi.SetRoundCorner(Handle, !Config.EnableFullScreen);
 
         SetFullScreenMode(
             enable: enable.Value,
@@ -2405,16 +2429,11 @@ public partial class FrmMain
                 IG_ToggleGallery(false);
             }
 
-            //// disable background transparency
-            //Toolbar.BackColor = Config.Theme.Colors.ToolbarBgColor.NoAlpha();
-            //PicMain.BackColor = Config.BackgroundColor.NoAlpha();
-            //Gallery.BackColor =
-            //    Sp1.SplitterBackColor =
-            //    Sp2.SplitterBackColor = Config.Theme.Colors.ThumbnailBarBgColor.NoAlpha();
-            //WindowApi.SetWindowFrame(Handle, new Padding(0));
-
             ResumeLayout(false);
             Visible = true;
+
+            // disable free moving
+            IG_SetFrmMainMoveable(false);
         }
 
         // exit full screen
@@ -2437,15 +2456,10 @@ public partial class FrmMain
                 IG_ToggleGallery(true);
             }
 
-            //// re-enable background transparency
-            //Toolbar.BackColor = Config.Theme.Colors.ToolbarBgColor;
-            //PicMain.BackColor = Config.BackgroundColor;
-            //Gallery.BackColor =
-            //    Sp1.SplitterBackColor =
-            //    Sp2.SplitterBackColor = Config.Theme.Colors.ThumbnailBarBgColor;
-            //WindowApi.SetWindowFrame(Handle, BackdropMargin);
-
             ResumeLayout(false);
+
+            // renable free moving
+            IG_SetFrmMainMoveable(true);
 
 
             // restore window state, size, position
@@ -2674,7 +2688,6 @@ public partial class FrmMain
     /// <summary>
     /// Sets <see cref="FrmMain"/> movable state
     /// </summary>
-    /// <param name="enable"></param>
     public void IG_SetFrmMainMoveable(bool? enable = null)
     {
         enable ??= true;
@@ -2683,12 +2696,12 @@ public partial class FrmMain
         if (enable.Value)
         {
             _movableForm.Enable();
-            _movableForm.Enable(Toolbar, PicMain, Gallery);
+            _movableForm.Enable(Toolbar, PicMain);
         }
         else
         {
             _movableForm.Disable();
-            _movableForm.Disable(Toolbar, PicMain, Gallery);
+            _movableForm.Disable(Toolbar, PicMain);
         }
 
     }

@@ -1428,24 +1428,13 @@ public partial class FrmSlideshow : ThemedForm
 
         WindowState = FormWindowState.Normal;
 
-        // get current screen
-        var workingArea = Screen.FromControl(this).WorkingArea;
-
-        // Check for early exits
-        // This fixes issue https://github.com/d2phap/ImageGlass/issues/1371
-        // If window size already reached max, then can't be expanded more larger
-        if (PicMain.SourceWidth > workingArea.Width &&
-            PicMain.SourceHeight > workingArea.Height &&
-            Width > workingArea.Width &&
-            Height > workingArea.Height)
-        {
-            return;
-        }
-
         // get the gap of the window to the viewer control
         // it includes boder, titlebar, toolbar, gallery,...
         var horzGap = Width - ClientSize.Width;
         var vertGap = Height - ClientSize.Height;
+
+        // get current screen
+        var workingArea = Screen.FromControl(this).WorkingArea;
 
         // get source image size
         var srcImgW = PicMain.SourceWidth;
@@ -1517,7 +1506,6 @@ public partial class FrmSlideshow : ThemedForm
 
         if (resetZoomMode)
         {
-            PicMain.ZoomFactor = zoomFactor;
             PicMain.SetZoomFactor(zoomFactor, false);
         }
     }
