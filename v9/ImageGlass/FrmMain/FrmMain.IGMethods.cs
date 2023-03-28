@@ -493,6 +493,12 @@ public partial class FrmMain
         // update toolbar items state
         UpdateToolbarItemsState();
 
+        // update window fit
+        if (Config.EnableWindowFit)
+        {
+            FitWindowToImage(false);
+        }
+
         return Config.ShowToolbar;
     }
 
@@ -501,7 +507,6 @@ public partial class FrmMain
     /// Toggles <see cref="Gallery"/> visibility
     /// </summary>
     /// <param name="visible"></param>
-    /// <returns></returns>
     public bool IG_ToggleGallery(bool? visible = null)
     {
         visible ??= !Config.ShowThumbnails;
@@ -521,6 +526,13 @@ public partial class FrmMain
 
         // update toolbar items state
         UpdateToolbarItemsState();
+
+
+        // update window fit
+        if (Config.EnableWindowFit)
+        {
+            FitWindowToImage(false);
+        }
 
         return Config.ShowThumbnails;
     }
@@ -2247,8 +2259,8 @@ public partial class FrmMain
         // set min size for window
         MinimumSize = new()
         {
-            Width = horzGap,
-            Height = vertGap,
+            Width = horzGap + this.ScaleToDpi(50),
+            Height = vertGap + this.ScaleToDpi(50),
         };
 
         // update window position and size
@@ -2260,7 +2272,6 @@ public partial class FrmMain
             PicMain.SetZoomFactor(zoomFactor, false);
         }
     }
-
 
 
     /// <summary>
@@ -2276,6 +2287,10 @@ public partial class FrmMain
 
         // update menu item state
         MnuFrameless.Checked = Config.EnableFrameless;
+        if (Config.EnableFrameless)
+        {
+            WindowApi.SetRoundCorner(Handle);
+        }
 
         // update toolbar items state
         UpdateToolbarItemsState();
@@ -2286,8 +2301,6 @@ public partial class FrmMain
 
             if (Config.EnableFrameless)
             {
-                WindowApi.SetRoundCorner(Handle);
-
                 PicMain.ShowMessage(
                     string.Format(Config.Language[$"{langPath}._EnableDescription"], MnuFrameless.ShortcutKeyDisplayString),
                     Config.Language[$"{langPath}._Enable"],
