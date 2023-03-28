@@ -2210,14 +2210,16 @@ public partial class FrmMain
         {
             if (Config.ZoomMode == ZoomMode.LockZoom)
             {
-                PicMain.ZoomFactor = Config.ZoomLockValue / 100f;
+                PicMain.SetZoomFactor(Config.ZoomLockValue / 100f, false);
             }
+            else
+            {
+                var maxViewerWidth = workingArea.Width - horzGap;
+                var maxViewerHeight = workingArea.Height - vertGap;
 
-            var maxViewerWidth = workingArea.Width - horzGap;
-            var maxViewerHeight = workingArea.Height - vertGap;
-
-            // recalculate zoom factor for the new size
-            zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, srcImgW, srcImgH, maxViewerWidth, maxViewerHeight);
+                // recalculate zoom factor for the new size
+                zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, srcImgW, srcImgH, maxViewerWidth, maxViewerHeight);
+            }
         }
 
         // get image size after zoomed
