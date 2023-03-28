@@ -457,15 +457,7 @@ public partial class FrmMain
     public void IG_SetZoomMode(string mode)
     {
         Config.ZoomMode = BHelper.ParseEnum<ZoomMode>(mode);
-
-        if (PicMain.ZoomMode == Config.ZoomMode)
-        {
-            PicMain.Refresh();
-        }
-        else
-        {
-            PicMain.ZoomMode = Config.ZoomMode;
-        }
+        PicMain.SetZoomMode(Config.ZoomMode, true);
 
         // update menu items state
         MnuAutoZoom.Checked = Config.ZoomMode == ZoomMode.AutoZoom;
@@ -2151,26 +2143,6 @@ public partial class FrmMain
         if (!Config.EnableWindowFit || PicMain.Source == ImageSource.Null)
             return; // Nothing to do
 
-        #region Set minimum size for window
-        var minH = this.ScaleToDpi(50);
-        if (Config.ShowToolbar)
-        {
-            minH += Toolbar.Height;
-        }
-
-        if (Config.ShowThumbnails)
-        {
-            minH += (int)Config.ThumbnailSize;
-        }
-
-        MinimumSize = new()
-        {
-            Width = this.ScaleToDpi(50),
-            Height = minH,
-        };
-        #endregion
-
-
         WindowState = FormWindowState.Normal;
 
         // get current screen
@@ -2187,58 +2159,105 @@ public partial class FrmMain
             return;
         }
 
+        // get the gap of the window to the viewer control
+        // it includes boder, titlebar, toolbar, gallery,...
+        var horzGap = Width - ClientSize.Width;
+        var vertGap = Height - ClientSize.Height;
 
-        // First, adjust our main window to theoretically fit the entire
-        // picture, but not larger than desktop working area.
-        var fullW = Width + PicMain.SourceWidth - PicMain.Width;
-        var fullH = Height + PicMain.SourceHeight - PicMain.Height;
-
-        var maxWidth = Math.Min(fullW, workingArea.Width);
-        var maxHeight = Math.Min(fullH, workingArea.Height);
-
-
-        // plus some gap if window border is resizable
-        if (FormBorderStyle != FormBorderStyle.None && fullW > workingArea.Width)
+        if (Config.ShowThumbnails)
         {
-            maxWidth -= SystemInformation.CaptionHeight / 2;
+            if (Gallery.Dock == DockStyle.Left || Gallery.Dock == DockStyle.Right)
+            {
+                horzGap += Gallery.Width;
+            }
+            else
+            {
+                vertGap += Gallery.Height;
+            }
         }
-        if (FormBorderStyle != FormBorderStyle.None && fullH > workingArea.Height)
+        if (Config.ShowToolbar)
         {
-            maxHeight -= SystemInformation.CaptionHeight / 2;
+            if (Toolbar.Dock == DockStyle.Left || Toolbar.Dock == DockStyle.Right)
+            {
+                horzGap += Toolbar.Width;
+            }
+            else
+            {
+                vertGap += Toolbar.Height;
+            }
         }
 
+
+        // get source image size
+        var srcImgW = PicMain.SourceWidth;
+        var srcImgH = PicMain.SourceHeight;
+
+        // get zoom factor
         var zoomFactor = PicMain.ZoomFactor;
         if (resetZoomMode)
         {
-            // recalculates zoom factor for the new size
-            zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, fullW, fullH, (int)maxWidth, (int)maxHeight);
+            if (Config.ZoomMode == ZoomMode.LockZoom)
+            {
+                PicMain.ZoomFactor = Config.ZoomLockValue / 100f;
+            }
+
+            var maxViewerWidth = workingArea.Width - horzGap;
+            var maxViewerHeight = workingArea.Height - vertGap;
+
+            // recalculate zoom factor for the new size
+            zoomFactor = PicMain.CalculateZoomFactor(Config.ZoomMode, srcImgW, srcImgH, maxViewerWidth, maxViewerHeight);
         }
 
         // get image size after zoomed
-        var zoomImgW = (int)(PicMain.SourceWidth * zoomFactor);
-        var zoomImgH = (int)(PicMain.SourceHeight * zoomFactor);
+        var zoomImgW = (int)(srcImgW * zoomFactor);
+        var zoomImgH = (int)(srcImgH * zoomFactor);
 
-        // Adjust our main window to theoretically fit the entire
-        // picture, but not larger than desktop working area.
-        fullW = Width + zoomImgW - PicMain.Width;
-        fullH = Height + zoomImgH - PicMain.Height;
-
-        maxWidth = Math.Min(fullW, workingArea.Width);
-        maxHeight = Math.Min(fullH, workingArea.Height);
-
-
-        // update the size
-        Size = new SizeF(maxWidth, maxHeight).ToSize();
-        if (resetZoomMode)
+        // adjust the viewer size to fit the entire image
+        // but not larger than desktop working area.
+        var viewerBound = new Rectangle()
         {
-            PicMain.SetZoomFactor(zoomFactor, false);
+            Width = Math.Min(zoomImgW, workingArea.Width - horzGap),
+            Height = Math.Min(zoomImgH, workingArea.Height - vertGap),
+        };
+
+        // adjust viewer size and position to the desktop working area
+        viewerBound = BHelper.CenterRectToRect(viewerBound,
+            new Rectangle(
+                workingArea.X + horzGap / 2,
+                workingArea.Y + vertGap / 2,
+                workingArea.Width - horzGap,
+                workingArea.Height - vertGap),
+            true);
+
+        // add the gaps to make window bound
+        var winBound = new Rectangle(
+            viewerBound.X - horzGap / 2,
+            viewerBound.Y - vertGap / 2,
+            viewerBound.Width + horzGap,
+            viewerBound.Height + vertGap);
+
+        // check center window to screen option
+        if (!Config.CenterWindowFit)
+        {
+            winBound.X = Left;
+            winBound.Y = Top;
         }
 
 
-        // center window to screen
-        if (Config.CenterWindowFit)
+        // set min size for window
+        MinimumSize = new()
         {
-            App.CenterFormToScreen(this);
+            Width = horzGap,
+            Height = vertGap,
+        };
+
+        // update window position and size
+        SetBounds(winBound.X, winBound.Y, winBound.Width, winBound.Height, BoundsSpecified.All);
+
+        if (resetZoomMode)
+        {
+            PicMain.ZoomFactor = zoomFactor;
+            PicMain.SetZoomFactor(zoomFactor, false);
         }
     }
 

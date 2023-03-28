@@ -999,6 +999,7 @@ namespace ImageGlass
             PicMain.OnNavLeftClicked += PicMain_OnNavLeftClicked;
             PicMain.OnNavRightClicked += PicMain_OnNavRightClicked;
             PicMain.OnZoomChanged += PicMain_OnZoomChanged;
+            PicMain.ImageLoaded += PicMain_ImageLoaded;
             PicMain.DragDrop += PicMain_DragDrop;
             PicMain.DragOver += PicMain_DragOver;
             PicMain.KeyDown += PicMain_KeyDown;
