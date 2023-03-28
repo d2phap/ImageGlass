@@ -2133,7 +2133,7 @@ public class DXCanvas : DXControl
 
 
     /// <summary>
-    /// Updates zoom mode.
+    /// Updates zoom mode logic. This <u><c>does not</c></u> redraw the viewing image.
     /// </summary>
     public void SetZoomMode(ZoomMode? mode = null, bool isManualZoom = false)
     {

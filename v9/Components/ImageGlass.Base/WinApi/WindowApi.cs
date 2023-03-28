@@ -138,17 +138,21 @@ public class WindowApi
 
 
     /// <summary>
-    /// Sets rounded corners for Windows 11.
+    /// Sets round corner option for Windows 11.
     /// </summary>
+    /// <param name="wndHandle">Window's handle.</param>
+    /// <param name="enable"><c>true</c> to make the corner round, <c>false</c> to use square.</param>
     /// <returns>Returns <c>true</c> if succeeded, else <c>false</c>.</returns>
-    public static bool SetRoundCorner(IntPtr wndHandle)
+    public static bool SetRoundCorner(IntPtr wndHandle, bool enable = true)
     {
         if (!BHelper.IsOS(WindowsOS.Win11OrLater)) return false;
 
         HRESULT result;
         unsafe
         {
-            var preference = DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND;
+            var preference = enable
+                ? DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND
+                : DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_DONOTROUND;
 
             result = PInvoke.DwmSetWindowAttribute(new HWND(wndHandle),
                 DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE,
