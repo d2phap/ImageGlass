@@ -1612,11 +1612,15 @@ public class DXCanvas : DXControl
         if (UseHardwareAcceleration)
         {
             g.DrawBitmap(_imageD2D, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation, _imageOpacity);
-
         }
         else
         {
-            g.DrawBitmap(_imageGdiPlus, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation, _imageOpacity);
+            try
+            {
+                // make sure no exception when _imageGdiPlus is disposed
+                g.DrawBitmap(_imageGdiPlus, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation, _imageOpacity);
+            }
+            catch { }
         }
     }
 
