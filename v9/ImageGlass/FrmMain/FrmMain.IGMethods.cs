@@ -2511,7 +2511,7 @@ public partial class FrmMain
         enable ??= !Config.EnableSlideshow;
         Config.EnableSlideshow = enable.Value;
 
-        SetSlideshowMode(enable.Value);
+        _ = SetSlideshowModeAsync(enable.Value);
 
         // update menu item state
         MnuSlideshow.Checked = Config.EnableSlideshow;
@@ -2526,7 +2526,7 @@ public partial class FrmMain
     /// <summary>
     /// Enter or exit slideshow mode.
     /// </summary>
-    public void SetSlideshowMode(bool enable)
+    public async Task SetSlideshowModeAsync(bool enable)
     {
         var tool = new IgTool()
         {
@@ -2539,13 +2539,33 @@ public partial class FrmMain
 
         if (enable)
         {
-            var fileListJson = BHelper.ToJson(Local.Images.FileNames);
-
-            _ = Local.OpenPipedToolAsync(tool, (toolServer) =>
+            // try to connect to slideshow tool
+            if (await Local.OpenPipedToolAsync(tool) is not PipeServer toolServer)
             {
-                toolServer.ClientDisconnected += SlideshowToolServer_ClientDisconnected;
-            });
+                Config.EnableSlideshow = false;
+
+                // update menu item state
+                MnuSlideshow.Checked = Config.EnableSlideshow;
+
+                // update toolbar items state
+                UpdateToolbarItemsState();
+
+                return;
+            }
+
+
             Config.EnableSlideshow = true;
+            toolServer.ClientDisconnected += SlideshowToolServer_ClientDisconnected;
+
+
+            // send the list of images
+            var data = new ImageListLoadedToolEventArgs()
+            {
+                Files = Local.Images.FileNames,
+            };
+            var jsonData = BHelper.ToJson(data);
+            _ = toolServer.SendAsync(ToolServerMsgs.IMAGE_LIST_UPDATED, jsonData);
+
 
             // hide FrmMain
             SetFrmMainStateInSlideshow(Config.EnableSlideshow);

@@ -386,11 +386,10 @@ internal class Local
     /// <summary>
     /// Opens tool as a <see cref="PipeServer"/>.
     /// </summary>
-    public static async Task OpenPipedToolAsync(IgTool? tool,
-        Action<PipeServer>? toolServerCreatingCallBack = null)
+    public static async Task<PipeServer?> OpenPipedToolAsync(IgTool? tool)
     {
         if (tool == null || tool.IsEmpty
-            || Local.ToolPipeServers.ContainsKey(tool.ToolId)) return;
+            || Local.ToolPipeServers.ContainsKey(tool.ToolId)) return null;
 
         // prepend tool prefix to create pipe name
         var pipeName = $"{ImageGlassTool.PIPENAME_PREFIX}{tool.Executable}";
@@ -399,7 +398,6 @@ internal class Local
         var toolServer = new PipeServer(pipeName, PipeDirection.InOut);
         toolServer.ClientDisconnected += ToolServer_ClientDisconnected;
 
-        toolServerCreatingCallBack?.Invoke(toolServer);
         Local.ToolPipeServers.Add(tool.ToolId, toolServer);
 
         // start the server
@@ -413,6 +411,8 @@ internal class Local
 
         // wait for client connection
         await toolServer.WaitForConnectionAsync();
+
+        return toolServer;
     }
 
     private static void ToolServer_ClientDisconnected(object? sender, DisconnectedEventArgs e)
