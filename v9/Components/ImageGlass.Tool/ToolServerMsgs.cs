@@ -53,4 +53,14 @@ public static class ToolServerMsgs
     /// Occurs when the image list is updated.
     /// </summary>
     public static string IMAGE_LIST_UPDATED => "igtool.cmd.list_updated";
+
+    /// <summary>
+    /// Occurs when the language is updated.
+    /// </summary>
+    public static string LANG_UPDATED => "igtool.cmd.lang_updated";
+
+    /// <summary>
+    /// Occurs when the theme is updated.
+    /// </summary>
+    public static string THEME_UPDATED => "igtool.cmd.theme_updated";
 }
