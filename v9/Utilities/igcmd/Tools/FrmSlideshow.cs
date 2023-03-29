@@ -35,8 +35,7 @@ namespace igcmd.Tools;
 
 public partial class FrmSlideshow : ThemedForm
 {
-    private PipeClient _client;
-    private string _serverName;
+    private PipeClient? _client;
     private string _initImagePath;
 
     private CancellationTokenSource _loadImageCancelToken = new();
@@ -95,23 +94,25 @@ public partial class FrmSlideshow : ThemedForm
     };
 
 
-    public FrmSlideshow(string slideshowIndex, string initImagePath)
+    public FrmSlideshow(string initImagePath)
     {
         InitializeComponent();
 
         // update the DpiApi when DPI changed.
         EnableDpiApiUpdate = true;
-
         Config.Load();
-
-        _serverName = $"{Constants.SLIDESHOW_PIPE_PREFIX}{slideshowIndex}";
-        _initImagePath = initImagePath;
 
 
         // load configs
-        _ = int.TryParse(slideshowIndex, out var indexNumber);
-        Text = $"{Config.Language["FrmMain.MnuSlideshow"]} {indexNumber + 1} - {App.AppName}";
+        _initImagePath = initImagePath;
+
+        Text = $"{Config.Language["FrmMain.MnuSlideshow"]} - {App.AppName}";
         SetUpFrmSlideshowConfigs();
+
+        // initialize pipe client
+        InitializePipeClient();
+        _ = _client?.ConnectAsync();
+
 
         // update theme icons
         OnDpiChanged();
@@ -195,15 +196,10 @@ public partial class FrmSlideshow : ThemedForm
         // load the init image
         _ = BHelper.RunAsThread(() => _ = LoadImageAsync(_initImagePath, _loadImageCancelToken));
 
-        _client = new PipeClient(_serverName, PipeDirection.InOut);
-        _client.MessageReceived += Client_MessageReceived;
-        _client.Disconnected += (_, _) => Application.Exit();
-        _ = _client.ConnectAsync();
 
         // load menu hotkeys
         Config.MergeHotkeys(ref CurrentMenuHotkeys, Config.MenuHotkeys);
         LoadMenuHotkeys();
-
         LoadMenuTagData();
 
         // load language
@@ -358,6 +354,19 @@ public partial class FrmSlideshow : ThemedForm
     #endregion // Protected methods
 
 
+
+    // ImageGlass server connection
+    #region ImageGlass server connection
+
+    private void InitializePipeClient()
+    {
+        var serverName = ImageGlassTool.CreateServerName();
+
+        _client = new PipeClient(serverName, PipeDirection.InOut);
+        _client.MessageReceived += Client_MessageReceived;
+        _client.Disconnected += (_, _) => Application.Exit();
+    }
+
     private void Client_MessageReceived(object? sender, MessageReceivedEventArgs e)
     {
         if (string.IsNullOrEmpty(e.MessageName)) return;
@@ -412,37 +421,7 @@ public partial class FrmSlideshow : ThemedForm
         }
     }
 
-
-    private void SlideshowTimer_Tick(object? sender, EventArgs e)
-    {
-        if (!_slideshowStopwatch.IsRunning)
-            _slideshowStopwatch.Restart();
-
-        if (_slideshowStopwatch.Elapsed.TotalMilliseconds >= TimeSpan.FromSeconds(_slideshowCountdown).TotalMilliseconds)
-        {
-            // end of image list
-            if (_currentIndex == _images.Length - 1)
-            {
-                // loop the list
-                if (!Config.ShouldLoopSlideshow)
-                {
-                    // pause slideshow
-                    SetSlideshowState(false, false);
-                    return;
-                }
-            }
-
-            _ = ViewNextImageAsync(1);
-        }
-
-
-        // only update the countdown text if it's a full second number
-        var isSecond = _slideshowStopwatch.Elapsed.Milliseconds <= 100;
-        if (Config.ShowSlideshowCountdown && isSecond)
-        {
-            PicMain.Invalidate();
-        }
-    }
+    #endregion // ImageGlass server connection
 
 
     // PicMain events
@@ -903,6 +882,41 @@ public partial class FrmSlideshow : ThemedForm
     #endregion // Load image
 
 
+    // Slideshow methods
+    #region Slideshow methods
+
+    private void SlideshowTimer_Tick(object? sender, EventArgs e)
+    {
+        if (!_slideshowStopwatch.IsRunning)
+            _slideshowStopwatch.Restart();
+
+        if (_slideshowStopwatch.Elapsed.TotalMilliseconds >= TimeSpan.FromSeconds(_slideshowCountdown).TotalMilliseconds)
+        {
+            // end of image list
+            if (_currentIndex == _images.Length - 1)
+            {
+                // loop the list
+                if (!Config.ShouldLoopSlideshow)
+                {
+                    // pause slideshow
+                    SetSlideshowState(false, false);
+                    return;
+                }
+            }
+
+            _ = ViewNextImageAsync(1);
+        }
+
+
+        // only update the countdown text if it's a full second number
+        var isSecond = _slideshowStopwatch.Elapsed.Milliseconds <= 100;
+        if (Config.ShowSlideshowCountdown && isSecond)
+        {
+            PicMain.Invalidate();
+        }
+    }
+
+
     /// <summary>
     /// Sets slideshow state.
     /// </summary>
@@ -939,6 +953,22 @@ public partial class FrmSlideshow : ThemedForm
             PicMain.ShowMessage(msg, Config.InAppMessageDuration);
         }
     }
+
+
+    /// <summary>
+    /// Randomize slideshow interval in seconds
+    /// </summary>
+    private static float RandomizeSlideshowInterval()
+    {
+        var intervalTo = Config.UseRandomIntervalForSlideshow ? Config.SlideshowIntervalTo : Config.SlideshowInterval;
+
+        var ran = new Random();
+        var interval = (float)(ran.NextDouble() * (intervalTo - Config.SlideshowInterval) + Config.SlideshowInterval);
+
+        return interval;
+    }
+
+    #endregion Slideshow methods
 
 
     /// <summary>
@@ -1157,61 +1187,6 @@ public partial class FrmSlideshow : ThemedForm
 
 
     /// <summary>
-    /// Randomize slideshow interval in seconds
-    /// </summary>
-    private static float RandomizeSlideshowInterval()
-    {
-        var intervalTo = Config.UseRandomIntervalForSlideshow ? Config.SlideshowIntervalTo : Config.SlideshowInterval;
-
-        var ran = new Random();
-        var interval = (float)(ran.NextDouble() * (intervalTo - Config.SlideshowInterval) + Config.SlideshowInterval);
-
-        return interval;
-    }
-
-
-    /// <summary>
-    /// Loads hotkeys of menu
-    /// </summary>
-    /// <param name="menu"></param>
-    private void LoadMenuHotkeys(ToolStripDropDown? menu = null)
-    {
-        if (InvokeRequired)
-        {
-            Invoke(LoadMenuHotkeys, menu);
-            return;
-        }
-
-        // default: context menu
-        menu ??= MnuContext;
-
-
-        var allItems = MenuUtils.GetActualItems(menu.Items);
-        foreach (ToolStripMenuItem item in allItems)
-        {
-            item.ShortcutKeyDisplayString = Config.GetHotkeyString(CurrentMenuHotkeys, item.Name);
-
-            if (item.HasDropDownItems)
-            {
-                LoadMenuHotkeys(item.DropDown);
-            }
-        }
-    }
-
-
-    private void LoadMenuTagData()
-    {
-        // Zoom mode
-        MnuAutoZoom.Tag = new ModernMenuItemTag() { SingleSelect = true };
-        MnuLockZoom.Tag = new ModernMenuItemTag() { SingleSelect = true };
-        MnuScaleToWidth.Tag = new ModernMenuItemTag() { SingleSelect = true };
-        MnuScaleToHeight.Tag = new ModernMenuItemTag() { SingleSelect = true };
-        MnuScaleToFit.Tag = new ModernMenuItemTag() { SingleSelect = true };
-        MnuScaleToFill.Tag = new ModernMenuItemTag() { SingleSelect = true };
-    }
-
-
-    /// <summary>
     /// Loads language
     /// </summary>
     private void LoadLanguage()
@@ -1257,6 +1232,81 @@ public partial class FrmSlideshow : ThemedForm
         MnuOpenLocation.Text = lang[$"FrmMain.{nameof(MnuOpenLocation)}"];
         MnuCopyPath.Text = lang[$"FrmMain.{nameof(MnuCopyPath)}"];
 
+    }
+
+
+    /// <summary>
+    /// Start counting a period of time to hide cursor.
+    /// </summary>
+    private void DelayHideCursor()
+    {
+        _hideCursorCancelToken.Cancel();
+        _hideCursorCancelToken = new();
+        _ = HideCursorAsync(_hideCursorCancelToken.Token);
+    }
+
+
+    /// <summary>
+    /// Hides the cursor after 3 seconds
+    /// </summary>
+    private async Task HideCursorAsync(CancellationToken token = default)
+    {
+        try
+        {
+            await Task.Delay(3000, token);
+            token.ThrowIfCancellationRequested();
+
+            if (!MnuContext.IsOpen && !_isColorPickerOpen)
+            {
+                Cursor.Hide();
+                _isCursorHidden = true;
+            }
+        }
+        catch (OperationCanceledException) { }
+    }
+
+
+    // Load menu settings
+    #region Load menu settings
+
+    /// <summary>
+    /// Loads hotkeys of menu
+    /// </summary>
+    /// <param name="menu"></param>
+    private void LoadMenuHotkeys(ToolStripDropDown? menu = null)
+    {
+        if (InvokeRequired)
+        {
+            Invoke(LoadMenuHotkeys, menu);
+            return;
+        }
+
+        // default: context menu
+        menu ??= MnuContext;
+
+
+        var allItems = MenuUtils.GetActualItems(menu.Items);
+        foreach (ToolStripMenuItem item in allItems)
+        {
+            item.ShortcutKeyDisplayString = Config.GetHotkeyString(CurrentMenuHotkeys, item.Name);
+
+            if (item.HasDropDownItems)
+            {
+                LoadMenuHotkeys(item.DropDown);
+            }
+        }
+    }
+
+
+    private void LoadMenuTagData()
+    {
+        // Zoom mode
+        MnuAutoZoom.Tag = new ModernMenuItemTag() { SingleSelect = true };
+        MnuLockZoom.Tag = new ModernMenuItemTag() { SingleSelect = true };
+        MnuScaleToWidth.Tag = new ModernMenuItemTag() { SingleSelect = true };
+        MnuScaleToHeight.Tag = new ModernMenuItemTag() { SingleSelect = true };
+        MnuScaleToFit.Tag = new ModernMenuItemTag() { SingleSelect = true };
+        MnuScaleToFill.Tag = new ModernMenuItemTag() { SingleSelect = true };
     }
 
 
@@ -1356,40 +1406,11 @@ public partial class FrmSlideshow : ThemedForm
         }
     }
 
-
-    /// <summary>
-    /// Start counting a period of time to hide cursor.
-    /// </summary>
-    private void DelayHideCursor()
-    {
-        _hideCursorCancelToken.Cancel();
-        _hideCursorCancelToken = new();
-        _ = HideCursorAsync(_hideCursorCancelToken.Token);
-    }
+    #endregion // Load menu settings
 
 
-    /// <summary>
-    /// Hides the cursor after 3 seconds
-    /// </summary>
-    private async Task HideCursorAsync(CancellationToken token = default)
-    {
-        try
-        {
-            await Task.Delay(3000, token);
-            token.ThrowIfCancellationRequested();
-
-            if (!MnuContext.IsOpen && !_isColorPickerOpen)
-            {
-                Cursor.Hide();
-                _isCursorHidden = true;
-            }
-        }
-        catch (OperationCanceledException) { }
-    }
-
-
-    // Menu
-    #region Menu
+    // Menu events
+    #region Menu events
 
     private void MnuContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
     {
@@ -1894,9 +1915,7 @@ public partial class FrmSlideshow : ThemedForm
         catch { }
     }
 
-
-
-    #endregion // Menu
+    #endregion // Menu events
 
 
 }

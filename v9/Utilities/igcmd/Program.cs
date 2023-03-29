@@ -25,7 +25,23 @@ namespace igcmd;
 
 internal static class Program
 {
-    public static string[] Args = Array.Empty<string>();
+    /// <summary>
+    /// Gets the command-line arguments after filtering out the configs.
+    /// </summary>
+    public static string[] CmdArgs
+    {
+        get
+        {
+            // remove the command lines begin with '-'
+            // example: igcmd.exe -ENableWindowTopMost=True
+            var Args = Environment.GetCommandLineArgs()
+                .Skip(1) // skip the exe itself path
+                .Where(cmd => !cmd.StartsWith(Constants.CONFIG_CMD_PREFIX))
+                .ToArray() ?? Array.Empty<string>();
+
+            return Args;
+        }
+    }
 
 
     /// <summary>
@@ -60,27 +76,26 @@ internal static class Program
         // load application configs
         Config.Load();
         Config.Theme.LoadTheme();
-        Args = args;
 
-        if (args.Length == 0)
+        if (CmdArgs.Length == 0)
         {
             return Config.ShowDefaultIgCommandError(nameof(igcmd));
         }
 
-        var topCmd = args[0].ToLower().Trim();
-        var showUI = args.Contains(IgCommands.SHOW_UI);
-        var hideAdminRequiredErrorUi = args.Contains(IgCommands.HIDE_ADMIN_REQUIRED_ERROR_UI);
+        var topCmd = CmdArgs[0].ToLower().Trim();
+        var showUI = CmdArgs.Contains(IgCommands.SHOW_UI);
+        var hideAdminRequiredErrorUi = CmdArgs.Contains(IgCommands.HIDE_ADMIN_REQUIRED_ERROR_UI);
 
 
         #region SET_WALLPAPER <string imgPath> [int style]
         if (topCmd == IgCommands.SET_WALLPAPER)
         {
-            if (args.Length < 3)
+            if (CmdArgs.Length < 3)
             {
                 return Config.ShowDefaultIgCommandError(nameof(igcmd));
             }
 
-            return (int)Functions.SetDesktopWallpaper(args[1], args[2]);
+            return (int)Functions.SetDesktopWallpaper(CmdArgs[1], CmdArgs[2]);
         }
         #endregion
 
@@ -89,9 +104,9 @@ internal static class Program
         if (topCmd == IgCommands.SET_DEFAULT_PHOTO_VIEWER)
         {
             var ext = "";
-            if (args.Length > 1)
+            if (CmdArgs.Length > 1)
             {
-                ext = args[1];
+                ext = CmdArgs[1];
             }
 
             return (int)Functions.SetAppExtensions(true, ext, showUI, hideAdminRequiredErrorUi);
@@ -103,9 +118,9 @@ internal static class Program
         if (topCmd == IgCommands.UNSET_DEFAULT_PHOTO_VIEWER)
         {
             var ext = "";
-            if (args.Length > 1)
+            if (CmdArgs.Length > 1)
             {
-                ext = args[1];
+                ext = CmdArgs[1];
             }
 
             return (int)Functions.SetAppExtensions(false, ext, showUI, hideAdminRequiredErrorUi);
@@ -113,12 +128,12 @@ internal static class Program
         #endregion
 
 
-        #region START_SLIDESHOW <string slideshowIndex> <string filePath>
+        #region START_SLIDESHOW <string filePath>
         if (topCmd == IgCommands.START_SLIDESHOW)
         {
-            if (args.Length > 2)
+            if (CmdArgs.Length > 1)
             {
-                Application.Run(new Tools.FrmSlideshow(args[1], args[2]));
+                Application.Run(new Tools.FrmSlideshow(CmdArgs[1]));
 
                 return (int)IgExitCode.Done;
             }
@@ -131,9 +146,9 @@ internal static class Program
         #region EXPORT_FRAMES <string filePath>
         if (topCmd == IgCommands.EXPORT_FRAMES)
         {
-            if (args.Length > 1)
+            if (CmdArgs.Length > 1)
             {
-                return (int)Functions.ExportImageFrames(args[1]);
+                return (int)Functions.ExportImageFrames(CmdArgs[1]);
             }
 
             return (int)IgExitCode.Error;
