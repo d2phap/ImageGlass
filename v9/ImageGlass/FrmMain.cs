@@ -2158,22 +2158,12 @@ public partial class FrmMain : ThemedForm
     {
         IG_ToggleFullScreen();
     }
+
+    private void MnuSlideshow_Click(object sender, EventArgs e)
+    {
+        IG_ToggleSlideshow();
+    }
     #endregion // Window modes menu
-
-
-    // Menu Slideshow
-    #region Menu Slideshow
-    private void MnuStartSlideshow_Click(object sender, EventArgs e)
-    {
-        IG_StartNewSlideshow();
-    }
-
-    private void MnuCloseAllSlideshows_Click(object sender, EventArgs e)
-    {
-        IG_CloseAllSlideshowWindows();
-    }
-
-    #endregion // Menu Slideshow
 
 
     // Menu Clipboard
@@ -2281,15 +2271,6 @@ public partial class FrmMain : ThemedForm
     {
         IG_Exit();
     }
-
-
-
-
-
-
-
-
-
 
 
     #endregion // Other menu

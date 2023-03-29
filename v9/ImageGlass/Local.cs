@@ -178,11 +178,6 @@ internal class Local
     public static Dictionary<string, ToolForm?> Tools { get; set; } = new();
 
     /// <summary>
-    /// Gets, sets the list of slideshow pipe servers.
-    /// </summary>
-    public static List<PipeServer?> SlideshowPipeServers { get; set; } = new();
-
-    /// <summary>
     /// Gets, sets the list of tool pipe servers.
     /// </summary>
     public static Dictionary<string, PipeServer?> ToolPipeServers { get; set; } = new();

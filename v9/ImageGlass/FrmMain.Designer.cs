@@ -117,8 +117,6 @@ namespace ImageGlass
             MnuFrameless = new ToolStripMenuItem();
             MnuFullScreen = new ToolStripMenuItem();
             MnuSlideshow = new ToolStripMenuItem();
-            MnuStartSlideshow = new ToolStripMenuItem();
-            MnuCloseAllSlideshows = new ToolStripMenuItem();
             toolStripMenuItem7 = new ToolStripSeparator();
             MnuLayout = new ToolStripMenuItem();
             MnuToggleToolbar = new ToolStripMenuItem();
@@ -777,27 +775,14 @@ namespace ImageGlass
             // 
             // MnuSlideshow
             // 
-            MnuSlideshow.DropDownItems.AddRange(new ToolStripItem[] { MnuStartSlideshow, MnuCloseAllSlideshows });
+            MnuSlideshow.CheckOnClick = true;
             MnuSlideshow.Image = (Image)resources.GetObject("MnuSlideshow.Image");
             MnuSlideshow.ImageAlign = ContentAlignment.MiddleLeft;
             MnuSlideshow.ImageScaling = ToolStripItemImageScaling.None;
             MnuSlideshow.Name = "MnuSlideshow";
             MnuSlideshow.Size = new Size(293, 52);
-            MnuSlideshow.Text = "Slideshow";
-            // 
-            // MnuStartSlideshow
-            // 
-            MnuStartSlideshow.Name = "MnuStartSlideshow";
-            MnuStartSlideshow.Size = new Size(490, 54);
-            MnuStartSlideshow.Text = "[Start new slideshow]";
-            MnuStartSlideshow.Click += MnuStartSlideshow_Click;
-            // 
-            // MnuCloseAllSlideshows
-            // 
-            MnuCloseAllSlideshows.Name = "MnuCloseAllSlideshows";
-            MnuCloseAllSlideshows.Size = new Size(490, 54);
-            MnuCloseAllSlideshows.Text = "[Close all slideshows]";
-            MnuCloseAllSlideshows.Click += MnuCloseAllSlideshows_Click;
+            MnuSlideshow.Text = "[Slideshow]";
+            MnuSlideshow.Click += MnuSlideshow_Click;
             // 
             // toolStripMenuItem7
             // 
@@ -1106,6 +1091,7 @@ namespace ImageGlass
             PerformLayout();
         }
 
+
         #endregion
         public ToolStripMenuItem MnuNavigation;
         public ToolStripMenuItem MnuZoom;
@@ -1189,8 +1175,6 @@ namespace ImageGlass
         private ToolStripSeparator toolStripMenuItem23;
         public ToolStripMenuItem MnuCopyPath;
         public ToolStripMenuItem MnuClearClipboard;
-        public ToolStripMenuItem MnuStartSlideshow;
-        public ToolStripMenuItem MnuCloseAllSlideshows;
         public ToolStripMenuItem MnuToggleToolbar;
         public ToolStripMenuItem MnuToggleThumbnails;
         public ToolStripMenuItem MnuToggleCheckerboard;

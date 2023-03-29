@@ -113,10 +113,7 @@ public partial class FrmMain
         { nameof(MnuWindowFit),             new() { new (Keys.F9) } },
         { nameof(MnuFrameless),             new() { new (Keys.F10) } },
         { nameof(MnuFullScreen),            new() { new (Keys.F11) } },
-
-        // MnuSlideshow
-        { nameof(MnuStartSlideshow),        new() { new (Keys.F12) } },
-        { nameof(MnuCloseAllSlideshows),    new() { new (Keys.Control | Keys.F12) } },
+        { nameof(MnuSlideshow),             new() { new (Keys.F12) } },
 
         // MnuLayout
         { nameof(MnuToggleToolbar),         new() { new (Keys.T) } },
@@ -265,7 +262,7 @@ public partial class FrmMain
         // start slideshow
         if (Config.EnableSlideshow)
         {
-            IG_StartNewSlideshow();
+            IG_ToggleSlideshow();
         }
 
         // load context menu config
@@ -308,20 +305,14 @@ public partial class FrmMain
         Config.LastSeenImagePath = Local.Images.GetFilePath(Local.CurrentIndex);
         Config.ZoomLockValue = PicMain.ZoomFactor * 100f;
 
-        // slideshow
-        var serverCount = Local.SlideshowPipeServers.Count(s => s != null);
-        Config.EnableSlideshow = serverCount > 0;
 
-
+        // save config to file
         await Config.WriteAsync();
 
 
         // cleaning
         try
         {
-            // disconnect all slideshows
-            FrmMain.DisconnectAllSlideshowServers();
-
             // delete trash
             Directory.Delete(App.ConfigDir(PathType.Dir, Dir.Temporary), true);
         }
@@ -584,15 +575,7 @@ public partial class FrmMain
         MnuWindowFit.Text = lang[$"{Name}.{nameof(MnuWindowFit)}"];
         MnuFullScreen.Text = lang[$"{Name}.{nameof(MnuFullScreen)}"];
         MnuFrameless.Text = lang[$"{Name}.{nameof(MnuFrameless)}"];
-
-        // Menu Slideshow
-        #region Menu Slideshow
         MnuSlideshow.Text = lang[$"{Name}.{nameof(MnuSlideshow)}"];
-
-        MnuStartSlideshow.Text = lang[$"{Name}.{nameof(MnuStartSlideshow)}"];
-        MnuCloseAllSlideshows.Text = lang[$"{Name}.{nameof(MnuCloseAllSlideshows)}"];
-        #endregion
-
         #endregion
 
 

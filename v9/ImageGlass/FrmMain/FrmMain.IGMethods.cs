@@ -2504,106 +2504,76 @@ public partial class FrmMain
 
 
     /// <summary>
-    /// Starts a new slideshow
+    /// Toggles slideshow.
     /// </summary>
-    public void IG_StartNewSlideshow()
+    public bool IG_ToggleSlideshow(bool? enable = null)
     {
-        _ = StartNewSlideshowAsync();
+        enable ??= !Config.EnableSlideshow;
+        Config.EnableSlideshow = enable.Value;
+
+        SetSlideshowMode(enable.Value);
+
+        // update menu item state
+        MnuSlideshow.Checked = Config.EnableSlideshow;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
+
+        return Config.EnableSlideshow;
     }
 
-    public async Task StartNewSlideshowAsync()
-    {
-        var slideshowIndex = 0;
-        var serverCount = Local.SlideshowPipeServers.Count(s => s != null);
 
-        if (serverCount == 0)
+    /// <summary>
+    /// Enter or exit slideshow mode.
+    /// </summary>
+    public void SetSlideshowMode(bool enable)
+    {
+        var tool = new IgTool()
         {
-            Local.SlideshowPipeServers.Clear();
+            ToolId = Constants.IGTOOL_SLIDESHOW,
+            ToolName = "[Slideshow]",
+            Executable = "igcmd.exe",
+            Argument = $"{IgCommands.START_SLIDESHOW} {Constants.FILE_MACRO}",
+            CanToggle = true,
+        };
+
+        if (enable)
+        {
+            var fileListJson = BHelper.ToJson(Local.Images.FileNames);
+
+            _ = Local.OpenPipedToolAsync(tool, (toolServer) =>
+            {
+                toolServer.ClientDisconnected += SlideshowToolServer_ClientDisconnected;
+            });
+            Config.EnableSlideshow = true;
+
+            // hide FrmMain
+            SetFrmMainStateInSlideshow(Config.EnableSlideshow);
+
+            // prevent system from entering sleep mode
+            SysExecutionState.PreventSleep();
         }
         else
         {
-            var lastServer = Local.SlideshowPipeServers.FindLast(s => s != null);
-
-            if (lastServer != null)
+            _ = Local.ClosePipedToolAsync(tool, (toolServer) =>
             {
-                slideshowIndex = lastServer.TagNumber + 1;
-            }
+                toolServer.ClientDisconnected -= SlideshowToolServer_ClientDisconnected;
+            });
+
+            var pipeName = $"{ImageGlassTool.PIPENAME_PREFIX}{tool.Executable}";
+            SlideshowToolServer_ClientDisconnected(null, new DisconnectedEventArgs(pipeName));
         }
+    }
 
-        var pipeName = $"{Constants.SLIDESHOW_PIPE_PREFIX}{slideshowIndex}";
+    private void SlideshowToolServer_ClientDisconnected(object? sender, DisconnectedEventArgs e)
+    {
+        Config.EnableSlideshow = false;
 
-        // create a new slideshow pipe server
-        var slideshowServer = new PipeServer(pipeName, PipeDirection.InOut, slideshowIndex);
-        slideshowServer.ClientDisconnected += SlideshowServer_Disconnected;
-
-        Local.SlideshowPipeServers.Add(slideshowServer);
-
-        // start the server
-        slideshowServer.Start();
-        await Config.WriteAsync();
-
-        // start slideshow client
-        var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
-        await BHelper.RunIgcmd($"{IgCommands.START_SLIDESHOW} {slideshowIndex} \"{filePath}\"", false);
-
-        // wait for client connection
-        await slideshowServer.WaitForConnectionAsync();
-        Config.EnableSlideshow = true;
-
-
-        var fileListJson = BHelper.ToJson(Local.Images.FileNames);
-        await slideshowServer.SendAsync(SlideshowPipeCommands.SET_IMAGE_LIST, fileListJson);
-
-
-        // hide FrmMain
+        // show FrmMain
         SetFrmMainStateInSlideshow(Config.EnableSlideshow);
 
-        // prevent system from entering sleep mode
-        SysExecutionState.PreventSleep();
-    }
-
-
-    public void SlideshowServer_Disconnected(object? sender, DisconnectedEventArgs e)
-    {
-        var clonedList = Local.SlideshowPipeServers.ToList();
-        var serverIndex = clonedList.FindIndex(s => s?.PipeName == e.PipeName);
-
-        if (serverIndex != -1)
-        {
-            Local.SlideshowPipeServers[serverIndex].Stop();
-            Local.SlideshowPipeServers[serverIndex].Dispose();
-            Local.SlideshowPipeServers[serverIndex] = null;
-        }
-
-
-        _cleanSlideshowServerCancelToken.Cancel();
-        _cleanSlideshowServerCancelToken = new();
-        _ = CleanSlideshowServerListAsync(_cleanSlideshowServerCancelToken.Token);
-    }
-
-
-    public async Task CleanSlideshowServerListAsync(CancellationToken token = default)
-    {
-        try
-        {
-            await Task.Delay(500, token);
-            token.ThrowIfCancellationRequested();
-
-            var serverCount = Local.SlideshowPipeServers.Count(s => s != null);
-
-            if (serverCount == 0)
-            {
-                Config.EnableSlideshow = false;
-                Local.SlideshowPipeServers.Clear();
-
-                // show FrmMain
-                SetFrmMainStateInSlideshow(Config.EnableSlideshow);
-
-                // allow system to enter sleep mode
-                SysExecutionState.AllowSleep();
-            }
-        }
-        catch (OperationCanceledException) { }
+        // allow system to enter sleep mode
+        SysExecutionState.AllowSleep();
     }
 
     public void SetFrmMainStateInSlideshow(bool enableSlideshow)
@@ -2630,33 +2600,6 @@ public partial class FrmMain
         else if (!enableSlideshow && Config.HideFrmMainInSlideshow)
         {
             WindowState = _windowState;
-        }
-    }
-
-
-    /// <summary>
-    /// Disconnects all slideshow servers.
-    /// </summary>
-    public static void DisconnectAllSlideshowServers()
-    {
-        foreach (var server in Local.SlideshowPipeServers)
-        {
-            server?.Stop();
-            server?.Dispose();
-        }
-
-        Local.SlideshowPipeServers.Clear();
-    }
-
-
-    /// <summary>
-    /// Stops and closes all slideshows
-    /// </summary>
-    public void IG_CloseAllSlideshowWindows()
-    {
-        foreach (var server in Local.SlideshowPipeServers)
-        {
-            _ = server?.SendAsync(ToolServerMsgs.TOOL_TERMINATE);
         }
     }
 

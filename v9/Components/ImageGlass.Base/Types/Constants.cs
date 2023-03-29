@@ -47,6 +47,7 @@ public static class Constants
 
     // predefined built-in tool names
     public const string IGTOOL_EXIFTOOL = "Tool_ExifGlass";
+    public const string IGTOOL_SLIDESHOW = "Tool_Slideshow";
 
 
     /// <summary>
