@@ -507,7 +507,7 @@ public partial class FrmMain : ThemedForm
 
             _uiReporter.Report(new(new ImageListLoadedEventArgs()
             {
-                FilePath = currentFilePath,
+                InitFilePath = currentFilePath,
             }, nameof(Local.RaiseImageListLoadedEvent)));
         });
     }
@@ -1047,9 +1047,9 @@ public partial class FrmMain : ThemedForm
 
     private void HandleImageList_Loaded(ImageListLoadedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(e.FilePath))
+        if (!string.IsNullOrEmpty(e.InitFilePath))
         {
-            UpdateCurrentIndex(e.FilePath);
+            UpdateCurrentIndex(e.InitFilePath);
         }
 
         LoadImageInfo(ImageInfoUpdateTypes.ListCount);

@@ -64,7 +64,12 @@ public class ImageLoadedEventArgs : ImageEventArgs
 
 public class ImageListLoadedEventArgs : EventArgs
 {
-    public string? FilePath { get; init; }
+    public string? InitFilePath { get; init; }
+}
+
+public class ImageListLoadedToolEventArgs : ImageListLoadedEventArgs
+{
+    public List<string> Files { get; init; }
 }
 
 

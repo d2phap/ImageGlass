@@ -90,8 +90,20 @@ internal class Local
     {
         ImageListLoaded?.Invoke(e);
 
+        var filesList = new List<string>();
+        if (Local.ToolPipeServers.Count > 0)
+        {
+            filesList.AddRange(Local.Images.FileNames);
+        }
+
+        var eventArgs = new ImageListLoadedToolEventArgs()
+        {
+            InitFilePath = e.InitFilePath,
+            Files = filesList,
+        };
+
         // emit event to all tools
-        _ = BroadcastMessageToAllToolServersAsync(ToolServerMsgs.IMAGE_LIST_UPDATED, e);
+        _ = BroadcastMessageToAllToolServersAsync(ToolServerMsgs.IMAGE_LIST_UPDATED, eventArgs);
     }
 
 
