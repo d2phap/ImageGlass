@@ -140,7 +140,7 @@ public static class Config
             Id = "Btn_Slideshow",
             Image = nameof(Theme.ToolbarIcons.Slideshow),
             CheckableConfigBinding = nameof(EnableSlideshow),
-            OnClick = new("MnuStartSlideshow"),
+            OnClick = new("MnuSlideshow"),
         },
         new() { Type = ToolbarItemModelType.Separator },
         new()
