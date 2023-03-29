@@ -373,8 +373,6 @@
             this.Controls.Add(this.PicMain);
             this.KeyPreview = true;
             this.Name = "FrmSlideshow";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmSlideshow_FormClosing);
-            this.Load += new System.EventHandler(this.FrmSlideshow_Load);
             this.MnuContext.ResumeLayout(false);
             this.ResumeLayout(false);
 

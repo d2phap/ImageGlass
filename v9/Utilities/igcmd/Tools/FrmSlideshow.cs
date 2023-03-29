@@ -26,6 +26,7 @@ using ImageGlass.Settings;
 using ImageGlass.Tools;
 using ImageGlass.UI;
 using ImageGlass.Views;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO.Pipes;
 using Timer = System.Windows.Forms.Timer;
@@ -144,6 +145,83 @@ public partial class FrmSlideshow : ThemedForm
     }
 
 
+    // Protected methods
+    #region Protected methods
+
+    protected override void OnLoad(EventArgs e)
+    {
+        base.OnLoad(e);
+
+        _slideshowTimer.Interval = 10; // support milliseconds
+        _slideshowTimer.Tick += SlideshowTimer_Tick;
+
+        PicMain.Render += PicMain_Render;
+        PicMain.MouseWheel += PicMain_MouseWheel;
+
+        // full screen slideshow
+        if (Config.EnableFullscreenSlideshow)
+        {
+            // toggle frameless window
+            IG_ToggleFrameless(Config.EnableFrameless, false);
+
+            // toggle Window fit
+            IG_ToggleWindowFit(Config.EnableWindowFit, false);
+
+
+            // to hide the animation effect of window border
+            FormBorderStyle = FormBorderStyle.None;
+
+            // load window placement from settings here to save the initial
+            // position of window so that when user exists the fullscreen mode,
+            // it can be restore correctly
+            WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
+
+            IG_ToggleFullScreen(true, false);
+        }
+        // windowed slideshow
+        else
+        {
+            // load window placement from settings
+            WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
+
+            // toggle frameless window
+            IG_ToggleFrameless(Config.EnableFrameless, false);
+
+            // toggle Window fit
+            IG_ToggleWindowFit(Config.EnableWindowFit, false);
+        }
+
+
+        // load the init image
+        _ = BHelper.RunAsThread(() => _ = LoadImageAsync(_initImagePath, _loadImageCancelToken));
+
+        _client = new PipeClient(_serverName, PipeDirection.InOut);
+        _client.MessageReceived += Client_MessageReceived;
+        _client.Disconnected += (_, _) => Application.Exit();
+        _ = _client.ConnectAsync();
+
+        // load menu hotkeys
+        Config.MergeHotkeys(ref CurrentMenuHotkeys, Config.MenuHotkeys);
+        LoadMenuHotkeys();
+
+        LoadMenuTagData();
+
+        // load language
+        LoadLanguage();
+
+        // start slideshow
+        SetSlideshowState(true);
+    }
+
+
+    protected override void OnClosing(CancelEventArgs e)
+    {
+        base.OnClosing(e);
+
+        _client.Dispose();
+    }
+
+
     protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
         SuspendLayout();
@@ -221,76 +299,6 @@ public partial class FrmSlideshow : ThemedForm
     }
 
 
-    private void FrmSlideshow_Load(object sender, EventArgs e)
-    {
-        _slideshowTimer.Interval = 10; // support milliseconds
-        _slideshowTimer.Tick += SlideshowTimer_Tick;
-
-        PicMain.Render += PicMain_Render;
-        PicMain.MouseWheel += PicMain_MouseWheel;
-
-        // full screen slideshow
-        if (Config.EnableFullscreenSlideshow)
-        {
-            // toggle frameless window
-            IG_ToggleFrameless(Config.EnableFrameless, false);
-
-            // toggle Window fit
-            IG_ToggleWindowFit(Config.EnableWindowFit, false);
-
-
-            // to hide the animation effect of window border
-            FormBorderStyle = FormBorderStyle.None;
-
-            // load window placement from settings here to save the initial
-            // position of window so that when user exists the fullscreen mode,
-            // it can be restore correctly
-            WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
-
-            IG_ToggleFullScreen(true, false);
-        }
-        // windowed slideshow
-        else
-        {
-            // load window placement from settings
-            WindowSettings.SetPlacementToWindow(this, WindowSettings.GetFrmMainPlacementFromConfig());
-
-            // toggle frameless window
-            IG_ToggleFrameless(Config.EnableFrameless, false);
-
-            // toggle Window fit
-            IG_ToggleWindowFit(Config.EnableWindowFit, false);
-        }
-
-
-        // load the init image
-        _ = BHelper.RunAsThread(() => _ = LoadImageAsync(_initImagePath, _loadImageCancelToken));
-
-        _client = new PipeClient(_serverName, PipeDirection.InOut);
-        _client.MessageReceived += Client_MessageReceived;
-        _client.Disconnected += (_, _) => Application.Exit();
-        _ = _client.ConnectAsync();
-
-        // load menu hotkeys
-        Config.MergeHotkeys(ref CurrentMenuHotkeys, Config.MenuHotkeys);
-        LoadMenuHotkeys();
-
-        LoadMenuTagData();
-
-        // load language
-        LoadLanguage();
-
-        // start slideshow
-        SetSlideshowState(true);
-    }
-
-
-    private void FrmSlideshow_FormClosing(object sender, FormClosingEventArgs e)
-    {
-        _client.Dispose();
-    }
-
-
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
         var hotkey = new Hotkey(keyData);
@@ -346,6 +354,8 @@ public partial class FrmSlideshow : ThemedForm
 
         return base.ProcessCmdKey(ref msg, keyData);
     }
+
+    #endregion // Protected methods
 
 
     private void Client_MessageReceived(object? sender, MessageReceivedEventArgs e)
@@ -891,7 +901,6 @@ public partial class FrmSlideshow : ThemedForm
     }
 
     #endregion // Load image
-
 
 
     /// <summary>
