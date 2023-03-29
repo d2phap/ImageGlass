@@ -2536,20 +2536,15 @@ public partial class FrmMain
             Argument = $"{IgCommands.START_SLIDESHOW} {Constants.FILE_MACRO}",
             CanToggle = true,
         };
+        var pipeName = $"{ImageGlassTool.PIPENAME_PREFIX}{tool.Executable}";
+
 
         if (enable)
         {
             // try to connect to slideshow tool
             if (await Local.OpenPipedToolAsync(tool) is not PipeServer toolServer)
             {
-                Config.EnableSlideshow = false;
-
-                // update menu item state
-                MnuSlideshow.Checked = Config.EnableSlideshow;
-
-                // update toolbar items state
-                UpdateToolbarItemsState();
-
+                SlideshowToolServer_ClientDisconnected(null, new DisconnectedEventArgs(pipeName));
                 return;
             }
 
@@ -2580,13 +2575,19 @@ public partial class FrmMain
                 toolServer.ClientDisconnected -= SlideshowToolServer_ClientDisconnected;
             });
 
-            var pipeName = $"{ImageGlassTool.PIPENAME_PREFIX}{tool.Executable}";
+            
             SlideshowToolServer_ClientDisconnected(null, new DisconnectedEventArgs(pipeName));
         }
     }
 
     private void SlideshowToolServer_ClientDisconnected(object? sender, DisconnectedEventArgs e)
     {
+        if (InvokeRequired)
+        {
+            Invoke(SlideshowToolServer_ClientDisconnected, sender, e);
+            return;
+        }
+
         Config.EnableSlideshow = false;
 
         // show FrmMain
@@ -2594,6 +2595,12 @@ public partial class FrmMain
 
         // allow system to enter sleep mode
         SysExecutionState.AllowSleep();
+
+        // update menu item state
+        MnuSlideshow.Checked = Config.EnableSlideshow;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
     }
 
     public void SetFrmMainStateInSlideshow(bool enableSlideshow)

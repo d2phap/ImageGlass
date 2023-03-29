@@ -295,12 +295,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuFrameless._Enable", "Frameless window is enabled"); // v9.0
         Add("FrmMain.MnuFrameless._EnableDescription", "Hold Shift key to move the window."); // v7.5
         Add("FrmMain.MnuFrameless._Disable", "Frameless window is disabled"); // v9.0
-
-        #region Slideshow
         Add("FrmMain.MnuSlideshow", "Slideshow"); //v3.0
-        Add("FrmMain.MnuStartSlideshow", "Start a new slideshow"); //v9.0
-        Add("FrmMain.MnuCloseAllSlideshows", "Close all slideshows"); //v9.0
-        #endregion
 
         #region Layout
         Add("FrmMain.MnuLayout", "Layout"); //v3.0
