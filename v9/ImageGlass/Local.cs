@@ -392,7 +392,8 @@ internal class Local
             || Local.ToolPipeServers.ContainsKey(tool.ToolId)) return null;
 
         // prepend tool prefix to create pipe name
-        var pipeName = $"{ImageGlassTool.PIPENAME_PREFIX}{tool.Executable}";
+        var toolExeName = Path.GetFileName(tool.Executable);
+        var pipeName = $"{ImageGlassTool.PIPENAME_PREFIX}{toolExeName}";
 
         // create a new tool server
         var toolServer = new PipeServer(pipeName, PipeDirection.InOut);

@@ -896,6 +896,7 @@ public partial class FrmMain
     }
 
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP004:Don't ignore created IDisposable", Justification = "<Pending>")]
     private void MnuExternalTool_Click(object? sender, EventArgs e)
     {
         if (sender is not ToolStripMenuItem mnu
