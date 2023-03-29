@@ -383,15 +383,24 @@ public partial class FrmSlideshow : ThemedForm
         if (string.IsNullOrEmpty(e.MessageData)) return;
 
         // update image list
-        if (e.MessageName.Equals(SlideshowPipeCommands.SET_IMAGE_LIST, StringComparison.InvariantCultureIgnoreCase))
+        if (e.MessageName.Equals(ToolServerMsgs.IMAGE_LIST_UPDATED, StringComparison.InvariantCultureIgnoreCase))
         {
-            var list = BHelper.ParseJson<List<string>>(e.MessageData);
+            var data = BHelper.ParseJson<ImageListLoadedToolEventArgs>(e.MessageData);
+            var newInitFile = !_initImagePath.Equals(data.InitFilePath, StringComparison.InvariantCultureIgnoreCase);
 
-            if (list != null && list.Count > 0)
+            _initImagePath = data.InitFilePath ?? _initImagePath;
+
+            if (data != null && data.Files.Count > 0)
             {
                 _ = BHelper.RunAsThread(async () =>
                 {
-                    await LoadImageListAsync(list, _initImagePath);
+                    // update the current image if it's not same
+                    if (!string.IsNullOrEmpty(data.InitFilePath) && newInitFile)
+                    {
+                        _ = LoadImageAsync(_initImagePath, _loadImageCancelToken);
+                    }
+
+                    await LoadImageListAsync(data.Files, _initImagePath);
 
                     // enable slideshow
                     SetSlideshowState(true, false);
@@ -403,7 +412,7 @@ public partial class FrmSlideshow : ThemedForm
 
 
         // update language
-        if (e.MessageName.Equals(SlideshowPipeCommands.SET_LANGUAGE, StringComparison.InvariantCultureIgnoreCase))
+        if (e.MessageName.Equals(ToolServerMsgs.LANG_UPDATED, StringComparison.InvariantCultureIgnoreCase))
         {
             Config.Language = new IgLang(e.MessageData, App.StartUpDir(Dir.Languages));
             LoadLanguage();
@@ -412,7 +421,7 @@ public partial class FrmSlideshow : ThemedForm
 
 
         // update theme
-        if (e.MessageName.Equals(SlideshowPipeCommands.SET_THEME, StringComparison.InvariantCultureIgnoreCase))
+        if (e.MessageName.Equals(ToolServerMsgs.THEME_UPDATED, StringComparison.InvariantCultureIgnoreCase))
         {
             Config.Theme = new IgTheme(e.MessageData, Config.ToolbarIconHeight);
 
