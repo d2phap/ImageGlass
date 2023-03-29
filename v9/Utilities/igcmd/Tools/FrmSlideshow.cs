@@ -30,7 +30,7 @@ using System.Diagnostics;
 using System.IO.Pipes;
 using Timer = System.Windows.Forms.Timer;
 
-namespace igcmd.Slideshow;
+namespace igcmd.Tools;
 
 public partial class FrmSlideshow : ThemedForm
 {

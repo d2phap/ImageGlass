@@ -118,7 +118,7 @@ internal static class Program
         {
             if (args.Length > 2)
             {
-                Application.Run(new Slideshow.FrmSlideshow(args[1], args[2]));
+                Application.Run(new Tools.FrmSlideshow(args[1], args[2]));
 
                 return (int)IgExitCode.Done;
             }

@@ -1,4 +1,4 @@
-﻿namespace igcmd.Slideshow
+﻿namespace igcmd.Tools
 {
     partial class FrmSlideshow
     {

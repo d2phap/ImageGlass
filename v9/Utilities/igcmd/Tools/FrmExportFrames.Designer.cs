@@ -1,4 +1,4 @@
-﻿namespace igcmd
+﻿namespace igcmd.Tools
 {
     partial class FrmExportFrames
     {

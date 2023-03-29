@@ -22,7 +22,7 @@ using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 
-namespace igcmd;
+namespace igcmd.Tools;
 
 public partial class FrmExportFrames : DialogForm
 {
