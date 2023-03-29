@@ -379,7 +379,8 @@ internal class Local
     /// <summary>
     /// Opens tool as a <see cref="PipeServer"/>.
     /// </summary>
-    public static async Task OpenPipedToolAsync(IgTool? tool)
+    public static async Task OpenPipedToolAsync(IgTool? tool,
+        Action<PipeServer>? toolServerCreatingCallBack = null)
     {
         if (tool == null || tool.IsEmpty
             || Local.ToolPipeServers.ContainsKey(tool.ToolId)) return;
@@ -390,6 +391,8 @@ internal class Local
         // create a new tool server
         var toolServer = new PipeServer(pipeName, PipeDirection.InOut);
         toolServer.ClientDisconnected += ToolServer_ClientDisconnected;
+
+        toolServerCreatingCallBack?.Invoke(toolServer);
         Local.ToolPipeServers.Add(tool.ToolId, toolServer);
 
         // start the server
@@ -404,7 +407,6 @@ internal class Local
         // wait for client connection
         await toolServer.WaitForConnectionAsync();
     }
-
 
     private static void ToolServer_ClientDisconnected(object? sender, DisconnectedEventArgs e)
     {
@@ -431,10 +433,13 @@ internal class Local
         }
 
         // remove events
-        toolServer.Stop();
-        toolServer.ClientDisconnected -= ToolServer_ClientDisconnected;
-        toolServer.Dispose();
-        toolServer = null;
+        if (toolServer != null)
+        {
+            toolServer.Stop();
+            toolServer.ClientDisconnected -= ToolServer_ClientDisconnected;
+            toolServer.Dispose();
+            toolServer = null;
+        }
 
         // remove tool server
         Local.ToolPipeServers.Remove(toolId);
@@ -444,7 +449,8 @@ internal class Local
     /// <summary>
     /// Closes <see cref="PipeServer"/> tool.
     /// </summary>
-    public static async Task ClosePipedToolAsync(IgTool? tool)
+    public static async Task ClosePipedToolAsync(IgTool? tool,
+        Action<PipeServer>? toolServerClosingCallBack = null)
     {
         if (tool == null
             || !Local.ToolPipeServers.TryGetValue(tool.ToolId, out var toolServer)
@@ -454,6 +460,8 @@ internal class Local
         {
             await toolServer.SendAsync(ToolServerMsgs.TOOL_TERMINATE);
         }
+
+        toolServerClosingCallBack?.Invoke(toolServer);
 
         // remove tool server
         ToolServer_ClientDisconnected(null, new DisconnectedEventArgs(toolServer.PipeName));
