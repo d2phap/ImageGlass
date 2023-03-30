@@ -135,6 +135,7 @@ public static class PhotoCodec
                 meta.OriginalWidth = imgM.BaseWidth;
                 meta.OriginalHeight = imgM.BaseHeight;
 
+                meta.SupportsWriting = imgM.FormatInfo.SupportsWriting;
                 meta.HasAlpha = imgC.Any(i => i.HasAlpha);
                 meta.CanAnimate = imgC.Count > 1
                     && imgC.Any(i => i.GifDisposeMethod != GifDisposeMethod.Undefined);
@@ -349,11 +350,19 @@ public static class PhotoCodec
     /// <param name="readOptions">Options for reading image file</param>
     /// <param name="transform">Changes for writing image file</param>
     /// <param name="quality">Quality</param>
+    /// <exception cref="FileFormatException"></exception>
     public static async Task SaveAsync(string srcFileName, string destFilePath, CodecReadOptions readOptions, ImgTransform? transform = null, int quality = 100, CancellationToken token = default)
     {
         try
         {
+            var metadata = LoadMetadata(srcFileName, readOptions);
+            if (!metadata.SupportsWriting)
+            {
+                throw new FileFormatException("Unsupported image format.");
+            }
+
             var settings = ParseSettings(readOptions, srcFileName);
+            
             using var imgData = await ReadMagickImageAsync(
                 srcFileName,
                 Path.GetExtension(srcFileName),

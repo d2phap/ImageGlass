@@ -46,6 +46,12 @@ public class IgMetadata
     public string FileSizeFormated => BHelper.FormatSize(FileSize);
 
 
+    /// <summary>
+    /// Gets a value indicating whether the format can be written.
+    /// </summary>
+    public bool SupportsWriting { get; set; } = true;
+
+
     // Image data
     public int OriginalWidth { get; set; } = 0;
     public int OriginalHeight { get; set; } = 0;
