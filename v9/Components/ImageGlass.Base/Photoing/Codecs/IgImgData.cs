@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageMagick;
 using System.Drawing.Imaging;
 using WicNet;
+using static ImageGlass.WebP.WebPWrapper;
 
 namespace ImageGlass.Base.Photoing.Codecs;
 
@@ -44,9 +45,22 @@ public class IgImgData : IDisposable
             Image?.Dispose();
             Image = null;
 
-            Bitmap?.Dispose();
-            Bitmap = null;
+            if (Source is Bitmap bmp)
+            {
+                bmp.Dispose();
+            }
+            else if (Source is IEnumerable<FrameData> frames)
+            {
+                foreach (var frame in frames)
+                {
+                    frame.Bitmap.Dispose();
+                    frame.Bitmap = null;
+                }
+            }
+            Source = null;
 
+            Width = 0;
+            Height = 0;
             FrameCount = 0;
             HasAlpha = false;
             CanAnimate = false;
@@ -71,12 +85,19 @@ public class IgImgData : IDisposable
 
 
     public WicBitmapSource? Image { get; set; } = null;
-    public Bitmap? Bitmap { get; set; } = null;
+
+    /// <summary>
+    /// Represent other type of image source.
+    /// </summary>
+    public object? Source { get; set; } = null;
+
+    public int Width { get; set; } = 0;
+    public int Height { get; set; } = 0;
 
     /// <summary>
     /// Checks if both <see cref="Image"/> and <see cref="Bitmap"/> are null;
     /// </summary>
-    public bool IsImageNull => Image == null && Bitmap == null;
+    public bool IsImageNull => Image == null && Source == null;
     public int FrameCount { get; set; } = 0;
     public bool HasAlpha { get; set; } = false;
     public bool CanAnimate { get; set; } = false;
@@ -94,35 +115,39 @@ public class IgImgData : IDisposable
 
         if (data.MultiFrameImage != null)
         {
-            CanAnimate = data.MultiFrameImage.Any(imgM => imgM.GifDisposeMethod != GifDisposeMethod.Undefined);
+            Width = data.MultiFrameImage[0]?.Width ?? 0;
+            Height = data.MultiFrameImage[0]?.Height ?? 0;
             HasAlpha = data.MultiFrameImage.Any(imgM => imgM.HasAlpha);
+            CanAnimate = data.MultiFrameImage.Any(imgM => imgM.GifDisposeMethod != GifDisposeMethod.Undefined);
 
             if (CanAnimate)
             {
                 data.MultiFrameImage.Coalesce();
-                Bitmap = data.MultiFrameImage.ToBitmap(ImageFormat.Gif);
+                Source = data.MultiFrameImage.ToBitmap(ImageFormat.Gif);
             }
             else
             {
-                Bitmap = data.MultiFrameImage.ToBitmap(ImageFormat.Tiff);
-                Image = BHelper.ToWicBitmapSource(Bitmap);
+                Source = data.MultiFrameImage.ToBitmap(ImageFormat.Tiff);
+                Image = BHelper.ToWicBitmapSource(Source as Bitmap);
 
                 if (Image != null)
                 {
-                    Bitmap.Dispose();
-                    Bitmap = null;
+                    (Source as Bitmap).Dispose();
+                    Source = null;
                 }
             }
         }
         else
         {
+            Width = data.SingleFrameImage?.Width ?? 0;
+            Height = data.SingleFrameImage?.Height ?? 0;
             HasAlpha = data.SingleFrameImage?.HasAlpha ?? false;
             Image = BHelper.ToWicBitmapSource(data.SingleFrameImage?.ToBitmapSourceWithDensity());
 
             // fall back to GDI+ Bitmap
             if (Image == null)
             {
-                Bitmap = data.SingleFrameImage.ToBitmapWithDensity();
+                Source = data.SingleFrameImage.ToBitmapWithDensity();
             }
         }
     }
