@@ -708,17 +708,25 @@ public static class PhotoCodec
                 try
                 {
                     using var webp = new WebPWrapper();
-                    var aniWebP = webp.AnimLoad(filePath);
 
-                    var ms = new MemoryStream();
-                    using var gif = new GifEncoder(ms);
-
-                    foreach (var frame in aniWebP)
+                    if (result.CanAnimate)
                     {
-                        gif.AddFrame(frame.Bitmap, frameDelay: TimeSpan.FromMilliseconds(frame.Duration));
-                    }
+                        var aniWebP = webp.AnimLoad(filePath);
 
-                    result.Bitmap = new Bitmap(ms);
+                        var ms = new MemoryStream();
+                        using var gif = new GifEncoder(ms);
+
+                        foreach (var frame in aniWebP)
+                        {
+                            gif.AddFrame(frame.Bitmap, frameDelay: TimeSpan.FromMilliseconds(frame.Duration));
+                        }
+
+                        result.Bitmap = new Bitmap(ms);
+                    }
+                    else
+                    {
+                        result.Image = BHelper.ToWicBitmapSource(webp.Load(filePath));
+                    }
                 }
                 catch
                 {
@@ -1169,6 +1177,11 @@ public static class PhotoCodec
                 },
             });
         }
+
+        settings.SetDefines(new WebPWriteDefines()
+        {
+            ThreadLevel = true,
+        });
 
 
         if (options.Width > 0 && options.Height > 0)
