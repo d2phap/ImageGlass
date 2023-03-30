@@ -181,6 +181,12 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         rect.X -= 1;
         rect.Y -= 1;
 
+        // when button has text
+        if (e.Item.DisplayStyle == ToolStripItemDisplayStyle.ImageAndText)
+        {
+            rect.X += (int)(2 * this.DpiScale);
+        }
+
         // change opacity of the image
         var cMatrix = new ColorMatrix { Matrix33 = 0.7f };
         var imgAttrs = new ImageAttributes();
@@ -276,7 +282,7 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
 
         var loc = new PointF(
             e.TextRectangle.X + (e.TextRectangle.Height * 0.3f),
-            e.TextRectangle.Y + (e.TextRectangle.Height / 2 - textBmp.Height / 2));
+            e.TextRectangle.Y + (e.TextRectangle.Height / 2 - textBmp.Height / 2) + 1);
 
         if (e.Item.Pressed)
         {
