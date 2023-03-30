@@ -652,10 +652,15 @@ public static class PhotoCodec
         var ext = Path.GetExtension(filePath).ToUpperInvariant();
         var settings = ParseSettings(options, filePath);
 
-        var result = new IgImgData();
-        result.FrameCount = metadata?.FramesCount ?? 0;
-        result.HasAlpha = metadata?.HasAlpha ?? false;
-        result.CanAnimate = metadata?.CanAnimate ?? false;
+        var result = new IgImgData()
+        {
+            Width = metadata.Width,
+            Height = metadata.Height,
+            FrameCount = metadata?.FramesCount ?? 0,
+            HasAlpha = metadata?.HasAlpha ?? false,
+            CanAnimate = metadata?.CanAnimate ?? false,
+        };
+        
 
         #region Read image data
         switch (ext)
@@ -670,7 +675,7 @@ public static class PhotoCodec
 
                 if (result.CanAnimate)
                 {
-                    result.Bitmap = BHelper.ToGdiPlusBitmapFromBase64(base64Content);
+                    result.Source = BHelper.ToGdiPlusBitmapFromBase64(base64Content);
                 }
                 else
                 {
@@ -691,7 +696,7 @@ public static class PhotoCodec
                     // Note: Using FileStream is much faster than using MagickImageCollection
                     if (result.CanAnimate)
                     {
-                        result.Bitmap = BHelper.ToGdiPlusBitmap(filePath);
+                        result.Source = BHelper.ToGdiPlusBitmap(filePath);
                     }
                     else
                     {
@@ -713,15 +718,18 @@ public static class PhotoCodec
                     {
                         var aniWebP = webp.AnimLoad(filePath);
 
-                        var ms = new MemoryStream();
-                        using var gif = new GifEncoder(ms);
-
-                        foreach (var frame in aniWebP)
+                        // standadize frame duration
+                        foreach (var frameData in aniWebP)
                         {
-                            gif.AddFrame(frame.Bitmap, frameDelay: TimeSpan.FromMilliseconds(frame.Duration));
+                            if (frameData.Duration == 0)
+                            {
+                                frameData.Duration = 100;
+                            }
+
+                            frameData.Duration /= 2;
                         }
 
-                        result.Bitmap = new Bitmap(ms);
+                        result.Source = aniWebP;
                     }
                     else
                     {
@@ -758,15 +766,15 @@ public static class PhotoCodec
                     result.Image = BHelper.ToWicBitmapSource(imgM.ToBitmapSource());
                 }
             }
-            else if (result.Bitmap != null)
+            else if (result.Source is Bitmap bmp)
             {
-                if (result.Bitmap.Width > options.Width || result.Bitmap.Height > options.Height)
+                if (bmp.Width > options.Width || bmp.Height > options.Height)
                 {
-                    imgM.Read(result.Bitmap);
+                    imgM.Read(bmp);
 
                     ApplySizeSettings(imgM, options);
 
-                    result.Bitmap = imgM.ToBitmap();
+                    result.Source = imgM.ToBitmap();
                 }
             }
         }
