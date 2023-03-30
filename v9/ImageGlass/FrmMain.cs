@@ -710,102 +710,104 @@ public partial class FrmMain : ThemedForm
             return;
         }
 
-
-        IgPhoto? photo = null;
-        var readSettings = new CodecReadOptions()
-        {
-            ColorProfileName = Config.ColorProfile,
-            ApplyColorProfileForAll = Config.ShouldUseColorProfileForAll,
-            ImageChannel = Local.ImageChannel,
-            AutoScaleDownLargeImage = true,
-            UseEmbeddedThumbnailRawFormats = Config.UseEmbeddedThumbnailRawFormats,
-            UseEmbeddedThumbnailOtherFormats = Config.UseEmbeddedThumbnailOtherFormats,
-            EmbeddedThumbnailMinWidth = Config.EmbeddedThumbnailMinWidth,
-            EmbeddedThumbnailMinHeight = Config.EmbeddedThumbnailMinHeight,
-        };
-
-
-        // Validate image index
-        #region Validate image index
-
         // temp index
         var imageIndex = Local.CurrentIndex + step;
         var oldImgPath = Local.Images.GetFilePath(Local.CurrentIndex);
-
-
-        if (Local.Images.Length > 0)
-        {
-            // Reach end of list
-            if (imageIndex >= Local.Images.Length)
-            {
-                _uiReporter.Report(new(new ImageEventArgs()
-                {
-                    Index = Local.CurrentIndex,
-                    FilePath = oldImgPath,
-                }, nameof(Local.RaiseLastImageReachedEvent)));
-
-                if (!Config.EnableLoopBackNavigation) return;
-            }
-
-            // Reach the first image of list
-            if (imageIndex < 0)
-            {
-                _uiReporter.Report(new(new ImageEventArgs()
-                {
-                    Index = Local.CurrentIndex,
-                    FilePath = oldImgPath,
-                }, nameof(Local.RaiseFirstImageReachedEvent)));
-
-
-                if (!Config.EnableLoopBackNavigation) return;
-            }
-        }
-
-
-        // Check if current index is greater than upper limit
-        if (imageIndex >= Local.Images.Length)
-            imageIndex = 0;
-
-        // Check if current index is less than lower limit
-        if (imageIndex < 0)
-            imageIndex = Local.Images.Length - 1;
-
-
-        // load image metadata
-        if (!string.IsNullOrEmpty(filename))
-        {
-            photo = new IgPhoto(filename);
-            readSettings.FirstFrameOnly = Config.SinglePageFormats.Contains(photo.Extension);
-
-            Local.Metadata = PhotoCodec.LoadMetadata(filename, readSettings);
-        }
-        else
-        {
-            Local.Metadata = Local.Images.GetMetadata(imageIndex);
-
-            // Update current index
-            Local.CurrentIndex = imageIndex;
-        }
-
-        #endregion // Validate image index
-
-
-        // set busy state
-        Local.IsBusy = true;
         var imgFilePath = string.IsNullOrEmpty(filename)
             ? Local.Images.GetFilePath(Local.CurrentIndex)
             : filename;
 
-        _uiReporter.Report(new(new ImageLoadingEventArgs()
-        {
-            Index = Local.CurrentIndex,
-            NewIndex = imageIndex,
-            FilePath = imgFilePath,
-        }, nameof(Local.RaiseImageLoadingEvent)));
-
 
         try
         {
+            // check if loading is cancelled
+            token?.Token.ThrowIfCancellationRequested();
+
+            IgPhoto? photo = null;
+            var readSettings = new CodecReadOptions()
+            {
+                ColorProfileName = Config.ColorProfile,
+                ApplyColorProfileForAll = Config.ShouldUseColorProfileForAll,
+                ImageChannel = Local.ImageChannel,
+                AutoScaleDownLargeImage = true,
+                UseEmbeddedThumbnailRawFormats = Config.UseEmbeddedThumbnailRawFormats,
+                UseEmbeddedThumbnailOtherFormats = Config.UseEmbeddedThumbnailOtherFormats,
+                EmbeddedThumbnailMinWidth = Config.EmbeddedThumbnailMinWidth,
+                EmbeddedThumbnailMinHeight = Config.EmbeddedThumbnailMinHeight,
+            };
+
+
+            // Validate image index
+            #region Validate image index
+
+            if (Local.Images.Length > 0)
+            {
+                // Reach end of list
+                if (imageIndex >= Local.Images.Length)
+                {
+                    _uiReporter.Report(new(new ImageEventArgs()
+                    {
+                        Index = Local.CurrentIndex,
+                        FilePath = oldImgPath,
+                    }, nameof(Local.RaiseLastImageReachedEvent)));
+
+                    if (!Config.EnableLoopBackNavigation) return;
+                }
+
+                // Reach the first image of list
+                if (imageIndex < 0)
+                {
+                    _uiReporter.Report(new(new ImageEventArgs()
+                    {
+                        Index = Local.CurrentIndex,
+                        FilePath = oldImgPath,
+                    }, nameof(Local.RaiseFirstImageReachedEvent)));
+
+
+                    if (!Config.EnableLoopBackNavigation) return;
+                }
+            }
+
+
+            // Check if current index is greater than upper limit
+            if (imageIndex >= Local.Images.Length)
+                imageIndex = 0;
+
+            // Check if current index is less than lower limit
+            if (imageIndex < 0)
+                imageIndex = Local.Images.Length - 1;
+
+
+            // load image metadata
+            if (!string.IsNullOrEmpty(filename))
+            {
+                photo = new IgPhoto(filename);
+                readSettings.FirstFrameOnly = Config.SinglePageFormats.Contains(photo.Extension);
+
+                Local.Metadata = PhotoCodec.LoadMetadata(filename, readSettings);
+            }
+            else
+            {
+                Local.Metadata = Local.Images.GetMetadata(imageIndex);
+
+                // Update current index
+                Local.CurrentIndex = imageIndex;
+            }
+
+            #endregion // Validate image index
+
+
+            // set busy state
+            Local.IsBusy = true;
+
+            _uiReporter.Report(new(new ImageLoadingEventArgs()
+            {
+                Index = Local.CurrentIndex,
+                NewIndex = imageIndex,
+                FilePath = imgFilePath,
+            }, nameof(Local.RaiseImageLoadingEvent)));
+
+
             // check if loading is cancelled
             token?.Token.ThrowIfCancellationRequested();
 
