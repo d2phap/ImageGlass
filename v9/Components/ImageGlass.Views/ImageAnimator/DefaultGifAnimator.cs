@@ -22,6 +22,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 * THANKS [Meowski] FOR THIS CONTRIBUTION
 *******************************************/
 
+using ImageGlass.Base.Photoing.Codecs;
+
 namespace ImageGlass.Views.ImageAnimator;
 
 /// <summary>

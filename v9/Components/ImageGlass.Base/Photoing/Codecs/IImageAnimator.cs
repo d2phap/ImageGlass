@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 * THANKS [Meowski] FOR THIS CONTRIBUTION
 *******************************************/
 
-namespace ImageGlass.Views.ImageAnimator;
+namespace ImageGlass.Base.Photoing.Codecs;
 
 /// <summary>
 /// Used to animate gifs. 

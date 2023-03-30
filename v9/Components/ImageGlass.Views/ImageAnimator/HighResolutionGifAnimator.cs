@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 * THANKS [Meowski] FOR THIS CONTRIBUTION
 *******************************************/
 
+using ImageGlass.Base.Photoing.Codecs;
 using System.Collections.Concurrent;
 using System.Drawing.Imaging;
 
