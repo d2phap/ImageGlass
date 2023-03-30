@@ -2724,6 +2724,13 @@ public partial class FrmMain
                 }
             }
         }
+        else
+        {
+            PicMain.ShowMessage(
+                text: Config.Language["_._NotSupported._Transformation"],
+                heading: Config.Language["_._NotSupported"],
+                durationMs: Config.InAppMessageDuration);
+        }
     }
 
 
@@ -2746,6 +2753,13 @@ public partial class FrmMain
             }
 
             Local.ImageTransform.Rotation = currentRotation;
+        }
+        else
+        {
+            PicMain.ShowMessage(
+                text: Config.Language["_._NotSupported._Transformation"],
+                heading: Config.Language["_._NotSupported"],
+                durationMs: Config.InAppMessageDuration);
         }
     }
 

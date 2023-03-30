@@ -126,6 +126,10 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
         NumWidth.LostFocus += NumSelections_LostFocus;
         NumHeight.LostFocus += NumSelections_LostFocus;
 
+        TableTop.Enabled =
+            TableBottom.Enabled = Local.FrmMain.PicMain.Source != ImageSource.Null
+                && !Local.FrmMain.PicMain.CanImageAnimate;
+
         base.OnLoad(e);
 
         ApplyLanguage();
@@ -541,8 +545,9 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
     private void PicMain_ImageDrawn(object? sender, EventArgs e)
     {
         TableTop.Enabled =
-            TableBottom.Enabled = Local.FrmMain.PicMain.Source != ImageSource.Null;
-
+            TableBottom.Enabled = Local.FrmMain.PicMain.Source != ImageSource.Null
+                && !Local.FrmMain.PicMain.CanImageAnimate;
+        
         UpdateAspectRatioValues();
 
         // calculate default selection

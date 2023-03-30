@@ -45,7 +45,14 @@ public partial class Popup : DialogForm
         get => Text;
         set
         {
-            Text = value;
+            if (string.IsNullOrEmpty(value))
+            {
+                Text = " ";
+            }
+            else
+            {
+                Text = value;
+            }
         }
     }
 

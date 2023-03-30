@@ -121,6 +121,8 @@ public class IgLang : Dictionary<string, string>
         Add("_._DoNotShowThisMessageAgain", "Do not show this message again"); // v9.0
         Add($"_._CreatingFile", "Create temporary image file..."); //v9.0
         Add($"_._CreatingFileError", "Could not create temporary image file"); //v9.0
+        Add($"_._NotSupported", "Unsupported format"); //v9.0
+        Add($"_._NotSupported._Transformation", "ImageGlass does not support rotation, flipping for animated formats."); //v9.0
 
 
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Name)}", "Name (default)"); //v8.0
