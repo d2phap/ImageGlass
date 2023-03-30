@@ -1379,6 +1379,11 @@ public partial class FrmMain
         // image is empty
         else
         {
+            if (Config.EnableFileWatcher)
+            {
+                _fileWatcher.Start();
+            }
+
             return false;
         }
 
@@ -1389,11 +1394,15 @@ public partial class FrmMain
             PicMain.ClearMessage();
 
             _ = Config.ShowError(
-                description: error.Source + ":\r\n" + error.Message,
+                description: error.Source + ":\r\n" + error.Message + "\r\n\r\n" + destFilePath,
                 title: Config.Language[langPath],
                 heading: string.Format(Config.Language[$"{langPath}._Error"]),
-                details: destFilePath,
                 formOwner: this);
+
+            if (Config.EnableFileWatcher)
+            {
+                _fileWatcher.Start();
+            }
 
             return false;
         }
