@@ -22,53 +22,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 * THANKS [Meowski] FOR THIS CONTRIBUTION
 *******************************************/
 
-using ImageGlass.Base.Photoing.Codecs;
-
-namespace ImageGlass.Views.ImageAnimator;
+namespace ImageGlass.Base.Photoing.Animators;
 
 /// <summary>
-/// This is a wrapper for the original System.Drawing animator.
-/// See <see cref="System.Drawing.ImageAnimator"/>.
+/// Used to animate gifs. 
 /// </summary>
-public class DefaultGifAnimator : IImageAnimator
+public interface IImageAnimator
 {
-
     /// <summary>
     /// Updates the time frame for this image.
     /// </summary>
-    /// <param name="image"></param>
-    public void UpdateFrames(Image? image)
-    {
-        System.Drawing.ImageAnimator.UpdateFrames(image);
-    }
+    void UpdateFrames(Image? image);
 
     /// <summary>
     /// Stops updating frames for the given image. 
     /// </summary>
-    /// <param name="image"></param>
-    /// <param name="eventHandler"></param>
-    public void StopAnimate(Image? image, EventHandler eventHandler)
-    {
-        System.Drawing.ImageAnimator.StopAnimate(image, eventHandler);
-    }
+    void StopAnimate(Image? image, EventHandler eventHandler);
 
     /// <summary>
     /// Animates the given image. 
     /// </summary>
-    /// <param name="image"></param>
-    /// <param name="eventHandler"></param>
-    public void Animate(Image? image, EventHandler eventHandler)
-    {
-        System.Drawing.ImageAnimator.Animate(image, eventHandler);
-    }
+    void Animate(Image? image, EventHandler onFrameChangedHandler);
 
     /// <summary>
     /// Determines whether an image can be animated.
     /// </summary>
-    /// <param name="image"></param>
-    /// <returns></returns>
-    public bool CanAnimate(Image? image)
-    {
-        return System.Drawing.ImageAnimator.CanAnimate(image);
-    }
+    /// <returns> true if the given image can be animated, otherwise false. </returns>
+    bool CanAnimate(Image? image);
 }
