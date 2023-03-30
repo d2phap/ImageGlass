@@ -132,7 +132,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FileWatcherEx" Version="2.3.0" />
+    <PackageReference Include="FileWatcherEx" Version="2.4.0" />
     <PackageReference Include="IDisposableAnalyzers" Version="4.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
