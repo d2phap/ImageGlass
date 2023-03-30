@@ -1098,6 +1098,7 @@ public partial class FrmMain : ThemedForm
             }, 1);
 
             Toolbar.UpdateAlignment();
+            LoadImageInfo(ImageInfoUpdateTypes.Path | ImageInfoUpdateTypes.Name);
         }
         // no change, hide button
         else if (!Local.ImageTransform.HasChanges && btnItem != null)
@@ -1105,6 +1106,7 @@ public partial class FrmMain : ThemedForm
             Toolbar.Items.RemoveByKey(TOOLBAR_BUTTON_SAVE_TRANSFORMATION);
 
             Toolbar.UpdateAlignment();
+            LoadImageInfo(ImageInfoUpdateTypes.Path | ImageInfoUpdateTypes.Name);
         }
     }
 
@@ -1282,7 +1284,6 @@ public partial class FrmMain : ThemedForm
                     && Local.Images.Length > 0)
                 {
                     ImageInfo.ListCount = $"{Local.CurrentIndex + 1}/{Local.Images.Length} {Config.Language[$"{Name}._Files"]}";
-
                 }
                 else
                 {
@@ -1295,7 +1296,8 @@ public partial class FrmMain : ThemedForm
             {
                 if (Config.InfoItems.Contains(nameof(ImageInfo.Name)))
                 {
-                    ImageInfo.Name = Path.GetFileName(fullPath);
+                    var askterisk = Local.ImageTransform.HasChanges ? "*" : "";
+                    ImageInfo.Name = Path.GetFileName(fullPath) + askterisk;
                 }
                 else
                 {
@@ -1308,7 +1310,8 @@ public partial class FrmMain : ThemedForm
             {
                 if (Config.InfoItems.Contains(nameof(ImageInfo.Path)))
                 {
-                    ImageInfo.Path = fullPath;
+                    var askterisk = Local.ImageTransform.HasChanges ? "*" : "";
+                    ImageInfo.Path = fullPath + askterisk;
                 }
                 else
                 {
