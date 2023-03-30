@@ -1097,12 +1097,14 @@ public partial class FrmMain : ThemedForm
                 DisplayStyle = ToolStripItemDisplayStyle.ImageAndText,
             }, 1);
 
-            Toolbar.UpdateTheme();
+            Toolbar.UpdateAlignment();
         }
         // no change, hide button
         else if (!Local.ImageTransform.HasChanges && btnItem != null)
         {
             Toolbar.Items.RemoveByKey(TOOLBAR_BUTTON_SAVE_TRANSFORMATION);
+
+            Toolbar.UpdateAlignment();
         }
     }
 

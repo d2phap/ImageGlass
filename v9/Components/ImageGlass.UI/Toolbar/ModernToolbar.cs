@@ -67,8 +67,8 @@ public class ModernToolbar : ToolStrip
     /// </summary>
     public bool ShowMainMenuButton
     {
-        get => _mainMenuButton.Visible;
-        set => _mainMenuButton.Visible = value;
+        get => MainMenuButton.Visible;
+        set => MainMenuButton.Visible = value;
     }
 
     /// <summary>
@@ -440,10 +440,16 @@ public class ModernToolbar : ToolStrip
         if (Alignment == ToolbarAlignment.Center)
         {
             // get the correct content width, excluding the sticky right items
+            var rightContentWidth = 0;
             var toolbarContentWidth = ShowMainMenuButton ? MainMenuButton.Width : 0;
             foreach (ToolStripItem item in Items)
             {
                 toolbarContentWidth += item.Width;
+
+                if (item.Alignment == ToolStripItemAlignment.Right)
+                {
+                    rightContentWidth += item.Width;
+                }
 
                 // reset margin
                 item.Margin = defaultMargin;
@@ -451,8 +457,8 @@ public class ModernToolbar : ToolStrip
 
 
             // if the content cannot fit the toolbar size:
-            // if (toolbarContentWidth > Width)
-            if (OverflowButton.Visible)
+            if (rightContentWidth + toolbarContentWidth >= Width)
+            //if (OverflowButton.Visible)
             {
                 // align left
                 firstBtn.Margin = defaultMargin;
@@ -526,10 +532,10 @@ public class ModernToolbar : ToolStrip
             }
         }
 
+        ResumeLayout(false);
+
         // update items alignment
         UpdateAlignment();
-
-        ResumeLayout(false);
     }
 
 
