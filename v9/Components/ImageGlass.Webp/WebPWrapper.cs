@@ -565,7 +565,7 @@ namespace ImageGlass.WebP
         /// </remarks>
         public class FrameData
         {
-            public Bitmap Bitmap { get; set; }
+            public Bitmap? Bitmap { get; set; }
 
             public int Duration { get; set; }
         }

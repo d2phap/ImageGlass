@@ -28,6 +28,7 @@ using System.Drawing.Drawing2D;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using WicNet;
+using static ImageGlass.WebP.WebPWrapper;
 using InterpolationMode = D2Phap.InterpolationMode;
 
 namespace ImageGlass.Views;
@@ -40,6 +41,7 @@ public class DXCanvas : DXControl
 
     private IComObject<ID2D1Bitmap1>? _imageD2D = null;
     private Bitmap? _imageGdiPlus = null;
+    private WebPAnimator? _webpAnimator = null;
     private CancellationTokenSource? _msgTokenSrc;
 
 
@@ -61,6 +63,7 @@ public class DXCanvas : DXControl
     private ImageDrawingState _imageDrawingState = ImageDrawingState.NotStarted;
     private bool _isPreviewing = false;
     private bool _debugMode = false;
+    private AnimatorSource _animatorSource = AnimatorSource.None;
 
 
     private RectangleF _srcRect = default; // image source rectangle
@@ -94,7 +97,7 @@ public class DXCanvas : DXControl
     private TextureBrush? _checkerboardBrushGdip;
     private ComObject<ID2D1BitmapBrush1>? _checkerboardBrushD2D;
 
-    private IImageAnimator _imageAnimator;
+    private IImageAnimator _gifAnimator;
     private AnimationSource _animationSource = AnimationSource.None;
     private bool _shouldRecalculateDrawingRegion = true;
 
@@ -966,7 +969,7 @@ public class DXCanvas : DXControl
         {
             HighResolutionGifAnimator.SetTickTimeInMilliseconds(10);
         }
-        _imageAnimator = new HighResolutionGifAnimator();
+        _gifAnimator = new HighResolutionGifAnimator();
 
         _clickTimer.Tick += ClickTimer_Tick;
     }
@@ -1411,7 +1414,7 @@ public class DXCanvas : DXControl
 
 
         // draw image layer
-        if (CanImageAnimate)
+        if (CanImageAnimate && _animatorSource == AnimatorSource.Gif)
         {
             DrawGifFrame(g);
         }
@@ -1478,7 +1481,7 @@ public class DXCanvas : DXControl
         {
             if (IsImageAnimating && !DesignMode)
             {
-                _imageAnimator.UpdateFrames(_imageGdiPlus);
+                _gifAnimator.UpdateFrames(_imageGdiPlus);
             }
 
             g.DrawBitmap(_imageGdiPlus, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation);
@@ -1495,7 +1498,7 @@ public class DXCanvas : DXControl
         {
             // stop the animation and reset to the first frame.
             IsImageAnimating = false;
-            _imageAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
+            _gifAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
         }
         catch (InvalidOperationException)
         {
@@ -1506,7 +1509,7 @@ public class DXCanvas : DXControl
 
             // stop the animation and reset to the first frame.
             IsImageAnimating = false;
-            _imageAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
+            _gifAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
         }
 
         gdip.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
@@ -2796,13 +2799,14 @@ public class DXCanvas : DXControl
     {
         // reset variables
         _imageDrawingState = ImageDrawingState.NotStarted;
+        _animationSource = AnimationSource.None;
         _isPreviewing = isForPreview;
         _clientSelection = default;
 
 
         // disable animations
         StopAnimation(AnimationSource.ImageFadeIn);
-        StopAnimatingImage();
+        StopCurrentAnimator();
         DisposeImageResources();
         GC.Collect();
 
@@ -2836,7 +2840,18 @@ public class DXCanvas : DXControl
             }
             else
             {
-                _imageGdiPlus = imgData.Bitmap;
+                if (imgData.Source is IEnumerable<FrameData> webpFrames)
+                {
+                    _webpAnimator = new WebPAnimator(webpFrames);
+                    _webpAnimator.FrameChanged += WebpAnimator_FrameChanged;
+
+                    _imageGdiPlus = _webpAnimator.GetFrame(0)?.Bitmap;
+                }
+                else
+                {
+                    _imageGdiPlus = imgData.Source as Bitmap;
+                }
+
                 Source = ImageSource.GDIPlus;
             }
 
@@ -2846,7 +2861,7 @@ public class DXCanvas : DXControl
             if (CanImageAnimate && Source != ImageSource.Null)
             {
                 SetZoomMode();
-                StartAnimatingImage();
+                StartAnimator();
             }
             else if (enableFading)
             {
@@ -2873,14 +2888,22 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Start animating the image if it can animate, using GDI+.
     /// </summary>
-    public void StartAnimatingImage()
+    public void StartAnimator()
     {
         if (IsImageAnimating || !CanImageAnimate || Source == ImageSource.Null)
             return;
 
         try
         {
-            _imageAnimator.Animate(_imageGdiPlus, OnImageFrameChanged);
+            if (_animatorSource == AnimatorSource.WebP)
+            {
+                _webpAnimator?.Animate();
+            }
+            else if (_animatorSource == AnimatorSource.Gif)
+            {
+                _gifAnimator.Animate(_imageGdiPlus, OnImageFrameChanged);
+            }
+
             IsImageAnimating = true;
         }
         catch (Exception) { }
@@ -2890,11 +2913,12 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Stop animating the image
     /// </summary>
-    public void StopAnimatingImage()
+    public void StopCurrentAnimator()
     {
         if (Source != ImageSource.Null)
         {
-            _imageAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
+            _webpAnimator?.StopAnimate();
+            _gifAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
         }
 
         IsImageAnimating = false;
@@ -3027,25 +3051,39 @@ public class DXCanvas : DXControl
     /// </summary>
     private void LoadImageData(IgImgData? imgData)
     {
+        SourceWidth = imgData?.Width ?? 0;
+        SourceHeight = imgData?.Height ?? 0;
         CanImageAnimate = imgData?.CanAnimate ?? false;
         HasAlphaPixels = imgData?.HasAlpha ?? false;
-        var hasGdiPlusSource = imgData?.Bitmap != null;
 
-        if (CanImageAnimate || hasGdiPlusSource)
+
+        if (imgData?.Source is IEnumerable<FrameData> webpFrames)
         {
-            SourceWidth = imgData?.Bitmap?.Width ?? 0;
-            SourceHeight = imgData?.Bitmap?.Height ?? 0;
+            _animatorSource = AnimatorSource.WebP;
+            UseHardwareAcceleration = false;
+        }
+        else if (imgData?.Source is Bitmap bmp)
+        {
+            if (CanImageAnimate)
+            {
+                _animatorSource = AnimatorSource.Gif;
+            }
+
+            UseHardwareAcceleration = false;
         }
         else
         {
-            SourceWidth = imgData?.Image?.Width ?? 0;
-            SourceHeight = imgData?.Image?.Height ?? 0;
+            var exceedMaxDimention = SourceWidth > Constants.MAX_IMAGE_DIMENSION
+                || SourceHeight > Constants.MAX_IMAGE_DIMENSION;
+
+            UseHardwareAcceleration = !CanImageAnimate && !exceedMaxDimention;
         }
+    }
 
-        var exceedMaxDimention = SourceWidth > Constants.MAX_IMAGE_DIMENSION
-            || SourceHeight > Constants.MAX_IMAGE_DIMENSION;
-
-        UseHardwareAcceleration = !hasGdiPlusSource && !CanImageAnimate && !exceedMaxDimention;
+    private void WebpAnimator_FrameChanged(object? sender, FrameChangedEventArgs e)
+    {
+        _imageGdiPlus = e.Bitmap;
+        Invalidate();
     }
 
     private void OnImageFrameChanged(object? sender, EventArgs eventArgs)
@@ -3075,6 +3113,13 @@ public class DXCanvas : DXControl
         Source = ImageSource.Null;
 
         DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
+
+        if (_webpAnimator != null)
+        {
+            _webpAnimator.FrameChanged -= WebpAnimator_FrameChanged;
+            _webpAnimator.Dispose();
+            _webpAnimator = null;
+        }
 
         // *** Do not dispose the GDI Bitmap because it's a ref to the Local.Images
 

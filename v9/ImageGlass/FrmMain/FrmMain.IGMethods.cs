@@ -1947,11 +1947,11 @@ public partial class FrmMain
 
         if (enable.Value)
         {
-            PicMain.StartAnimatingImage();
+            PicMain.StartAnimator();
         }
         else
         {
-            PicMain.StopAnimatingImage();
+            PicMain.StopCurrentAnimator();
         }
     }
 

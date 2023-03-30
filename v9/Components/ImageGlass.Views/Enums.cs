@@ -102,3 +102,11 @@ public enum NavCheck
     LeftOnly,
     RightOnly,
 }
+
+
+public enum AnimatorSource
+{
+    None = 0,
+    Gif,
+    WebP,
+}
