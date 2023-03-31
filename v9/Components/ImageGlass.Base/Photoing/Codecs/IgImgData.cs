@@ -113,6 +113,7 @@ public class IgImgData : IDisposable
     {
         FrameCount = data.FrameCount;
 
+        // multi-frames
         if (data.MultiFrameImage != null)
         {
             Width = data.MultiFrameImage[0]?.Width ?? 0;
@@ -127,16 +128,11 @@ public class IgImgData : IDisposable
             }
             else
             {
-                Source = data.MultiFrameImage.ToBitmap(ImageFormat.Tiff);
-                Image = BHelper.ToWicBitmapSource(Source as Bitmap);
-
-                if (Image != null)
-                {
-                    (Source as Bitmap).Dispose();
-                    Source = null;
-                }
+                var bytes = data.MultiFrameImage.ToByteArray(MagickFormat.Tiff);
+                Source = WicBitmapDecoder.Load(new MemoryStream(bytes));
             }
         }
+        // single frame
         else
         {
             Width = data.SingleFrameImage?.Width ?? 0;

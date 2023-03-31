@@ -2790,6 +2790,7 @@ public class DXCanvas : DXControl
     /// Load image.
     /// </summary>
     public void SetImage(IgImgData? imgData,
+        uint frameIndex = 0,
         bool resetZoom = true,
         bool enableFading = true,
         float initOpacity = 0.5f,
@@ -2826,7 +2827,15 @@ public class DXCanvas : DXControl
         {
             if (UseHardwareAcceleration)
             {
-                _imageD2D = DXHelper.ToD2D1Bitmap(Device, imgData.Image);
+                if (imgData?.Source is WicBitmapDecoder decoder)
+                {
+                    var frame = decoder.GetFrame((int)frameIndex);
+                    _imageD2D = DXHelper.ToD2D1Bitmap(Device, frame);
+                }
+                else
+                {
+                    _imageD2D = DXHelper.ToD2D1Bitmap(Device, imgData.Image);
+                }
 
                 // apply transformations
                 if (transforms != null)
@@ -3074,7 +3083,7 @@ public class DXCanvas : DXControl
         else
         {
             var exceedMaxDimention = SourceWidth > Constants.MAX_IMAGE_DIMENSION
-                || SourceHeight > Constants.MAX_IMAGE_DIMENSION;
+            || SourceHeight > Constants.MAX_IMAGE_DIMENSION;
 
             UseHardwareAcceleration = !CanImageAnimate && !exceedMaxDimention;
         }
