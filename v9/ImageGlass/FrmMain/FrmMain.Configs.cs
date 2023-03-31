@@ -957,11 +957,11 @@ public partial class FrmMain
         //MnuGoTo.Visible = false;
         //MnuGoToFirst.Visible = false;
         //MnuGoToLast.Visible = false;
-        toolStripMenuItem14.Visible = false;
-        MnuViewNextFrame.Visible = false;
-        MnuViewPreviousFrame.Visible = false;
-        MnuViewFirstFrame.Visible = false;
-        MnuViewLastFrame.Visible = false;
+        //toolStripMenuItem14.Visible = false;
+        //MnuViewNextFrame.Visible = false;
+        //MnuViewPreviousFrame.Visible = false;
+        //MnuViewFirstFrame.Visible = false;
+        //MnuViewLastFrame.Visible = false;
 
         // MnuZoom
         //MnuZoomIn.Visible = false;

@@ -27,7 +27,6 @@ using ImageGlass.Viewer;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO.Pipes;
 using WicNet;
 
 namespace ImageGlass;
@@ -209,6 +208,55 @@ public partial class FrmMain
     public void IG_GoToLast()
     {
         GoToImage(Local.Images.Length - 1);
+    }
+
+
+    /// <summary>
+    /// Views an image frame
+    /// </summary>
+    /// <param name="frameIndex">Frame index</param>
+    public void IG_ViewFrame(int frameIndex)
+    {
+        _ = ViewNextCancellableAsync(0, frameIndex: frameIndex);
+    }
+
+
+    /// <summary>
+    /// Views the next image frame
+    /// </summary>
+    public void IG_ViewNextFrame()
+    {
+        Local.CurrentFrameIndex++;
+        _ = ViewNextCancellableAsync(0, frameIndex: (int)Local.CurrentFrameIndex);
+    }
+
+
+    /// <summary>
+    /// Views the previous image frame
+    /// </summary>
+    public void IG_ViewPreviousFrame()
+    {
+        Local.CurrentFrameIndex--;
+        _ = ViewNextCancellableAsync(0, frameIndex: (int)Local.CurrentFrameIndex);
+    }
+
+
+    /// <summary>
+    /// Views the first image frame
+    /// </summary>
+    public void IG_ViewFirstFrame()
+    {
+        _ = ViewNextCancellableAsync(0, frameIndex: 0);
+    }
+
+
+    /// <summary>
+    /// Views the last image frame
+    /// </summary>
+    public void IG_ViewLastFrame()
+    {
+        var lastFrameIndex = (Local.Metadata?.FramesCount ?? 1) - 1;
+        _ = ViewNextCancellableAsync(0, frameIndex: lastFrameIndex);
     }
 
 
@@ -2584,7 +2632,7 @@ public partial class FrmMain
                 toolServer.ClientDisconnected -= SlideshowToolServer_ClientDisconnected;
             });
 
-            
+
             SlideshowToolServer_ClientDisconnected(null, new DisconnectedEventArgs(pipeName));
         }
     }

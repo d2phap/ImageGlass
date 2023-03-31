@@ -199,7 +199,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuViewNextFrame", "View next frame"); //v7.5
         Add("FrmMain.MnuViewPreviousFrame", "View previous frame"); //v7.5
         Add("FrmMain.MnuViewFirstFrame", "View the first frame"); //v7.5
-        Add("FrmMain.MnuViewLastFrame", "View the last last"); //v7.5
+        Add("FrmMain.MnuViewLastFrame", "View the last frame"); //v7.5
         #endregion // Navigation
 
         #region Zoom

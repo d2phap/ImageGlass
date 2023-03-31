@@ -1959,22 +1959,22 @@ public partial class FrmMain : ThemedForm
 
     private void MnuViewNextFrame_Click(object sender, EventArgs e)
     {
-        // TODO
+        IG_ViewNextFrame();
     }
 
     private void MnuViewPreviousFrame_Click(object sender, EventArgs e)
     {
-        // TODO
+        IG_ViewPreviousFrame();
     }
 
     private void MnuViewFirstFrame_Click(object sender, EventArgs e)
     {
-        // TODO
+        IG_ViewFirstFrame();
     }
 
     private void MnuViewLastFrame_Click(object sender, EventArgs e)
     {
-        // TODO
+        IG_ViewLastFrame();
     }
 
     #endregion // Menu Navigation
