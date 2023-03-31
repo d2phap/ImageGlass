@@ -693,7 +693,7 @@ public partial class FrmMain : ThemedForm
     private async Task ViewNextAsync(int step,
         bool resetZoom = true,
         bool isSkipCache = false,
-        int frameIndex = int.MinValue,
+        int? frameIndex = null,
         string filePath = "",
         CancellationTokenSource? token = null)
     {
@@ -877,12 +877,12 @@ public partial class FrmMain : ThemedForm
     /// <param name="step">The step to change image index. Use <c>0</c> to reload the viewing image.</param>
     /// <param name="resetZoom"></param>
     /// <param name="isSkipCache"></param>
-    /// <param name="frameIndex">Use <see cref="int.MinValue"/> to load the default page index.</param>
-    /// <param name="filePath">Load this file and ignore the image list</param>
+    /// <param name="frameIndex">Use <c>null</c> to load the default frame index.</param>
+    /// <param name="filePath">Load this file and ignore the image list.</param>
     public async Task ViewNextCancellableAsync(int step,
         bool resetZoom = true,
         bool isSkipCache = false,
-        int frameIndex = int.MinValue,
+        int? frameIndex = null,
         string filePath = "")
     {
         _loadCancelToken?.Cancel();
@@ -968,7 +968,7 @@ public partial class FrmMain : ThemedForm
         _ = BHelper.RunAsThread(SelectCurrentThumbnail);
 
         // show image preview if it's not cached
-        if (!Local.Images.IsCached(Local.CurrentIndex) && e.FrameIndex == int.MinValue)
+        if (!Local.Images.IsCached(Local.CurrentIndex))
         {
             ShowImagePreview(e.FilePath, _loadCancelToken.Token);
         }

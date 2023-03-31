@@ -325,11 +325,11 @@ public class ImageBooster : IDisposable
 
 
     /// <summary>
-    /// Gets image metadata
+    /// Gets image metadata.
     /// </summary>
-    /// <param name="index">Image index</param>
-    /// <param name="frameIndex">Frame index</param>
-    public IgMetadata? GetMetadata(int index, int frameIndex)
+    /// <param name="index">Image index.</param>
+    /// <param name="frameIndex">Frame index, if value is <c>null</c>, it will load the first frame.</param>
+    public IgMetadata? GetMetadata(int index, int? frameIndex)
     {
         try
         {

@@ -91,7 +91,7 @@ public record CodecReadOptions
     /// <summary>
     /// Gets, sets the requested image frame index for metadata reading.
     /// </summary>
-    public int FrameIndex { get; set; } = 0;
+    public int? FrameIndex { get; set; } = null;
 
     /// <summary>
     /// Gets, sets the value indicates that if the image dimension exceeds the supported value,
