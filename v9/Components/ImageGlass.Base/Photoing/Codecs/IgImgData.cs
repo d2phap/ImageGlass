@@ -59,8 +59,6 @@ public class IgImgData : IDisposable
             }
             Source = null;
 
-            Width = 0;
-            Height = 0;
             FrameCount = 0;
             HasAlpha = false;
             CanAnimate = false;
@@ -91,9 +89,6 @@ public class IgImgData : IDisposable
     /// </summary>
     public object? Source { get; set; } = null;
 
-    public int Width { get; set; } = 0;
-    public int Height { get; set; } = 0;
-
     /// <summary>
     /// Checks if both <see cref="Image"/> and <see cref="Bitmap"/> are null;
     /// </summary>
@@ -116,8 +111,6 @@ public class IgImgData : IDisposable
         // multi-frames
         if (data.MultiFrameImage != null)
         {
-            Width = data.MultiFrameImage[0]?.Width ?? 0;
-            Height = data.MultiFrameImage[0]?.Height ?? 0;
             HasAlpha = data.MultiFrameImage.Any(imgM => imgM.HasAlpha);
             CanAnimate = data.MultiFrameImage.Any(imgM => imgM.GifDisposeMethod != GifDisposeMethod.Undefined);
 
@@ -135,8 +128,6 @@ public class IgImgData : IDisposable
         // single frame
         else
         {
-            Width = data.SingleFrameImage?.Width ?? 0;
-            Height = data.SingleFrameImage?.Height ?? 0;
             HasAlpha = data.SingleFrameImage?.HasAlpha ?? false;
             Image = BHelper.ToWicBitmapSource(data.SingleFrameImage?.ToBitmapSourceWithDensity());
 

@@ -2816,7 +2816,7 @@ public class DXCanvas : DXControl
 
 
         // Check and preprocess image info
-        LoadImageData(imgData);
+        LoadImageData(imgData, frameIndex);
 
         if (imgData == null || imgData.IsImageNull)
         {
@@ -3057,21 +3057,28 @@ public class DXCanvas : DXControl
     /// <summary>
     /// Loads image data.
     /// </summary>
-    private void LoadImageData(IgImgData? imgData)
+    private void LoadImageData(IgImgData? imgData, uint frameIndex)
     {
-        SourceWidth = imgData?.Width ?? 0;
-        SourceHeight = imgData?.Height ?? 0;
+        SourceWidth = 0;
+        SourceHeight = 0;
         CanImageAnimate = imgData?.CanAnimate ?? false;
         HasAlphaPixels = imgData?.HasAlpha ?? false;
 
 
         if (imgData?.Source is IEnumerable<FrameData> webpFrames)
         {
+            var firstFrame = webpFrames.FirstOrDefault();
+            SourceWidth = firstFrame.Bitmap?.Width ?? 0;
+            SourceHeight = firstFrame.Bitmap?.Height ?? 0;
+
             _animatorSource = AnimatorSource.WebP;
             UseHardwareAcceleration = false;
         }
         else if (imgData?.Source is Bitmap bmp)
         {
+            SourceWidth = bmp.Width;
+            SourceHeight = bmp.Height;
+
             if (CanImageAnimate)
             {
                 _animatorSource = AnimatorSource.Gif;
@@ -3081,8 +3088,22 @@ public class DXCanvas : DXControl
         }
         else
         {
+            if (imgData?.Source is WicBitmapDecoder decoder)
+            {
+                var size = decoder.GetFrame((int)frameIndex).Size;
+
+                SourceWidth = size.Width;
+                SourceHeight = size.Height;
+            }
+            else
+            {
+                SourceWidth = imgData?.Image?.Width ?? 0;
+                SourceHeight = imgData?.Image?.Height ?? 0;
+            }
+            
+
             var exceedMaxDimention = SourceWidth > Constants.MAX_IMAGE_DIMENSION
-            || SourceHeight > Constants.MAX_IMAGE_DIMENSION;
+                || SourceHeight > Constants.MAX_IMAGE_DIMENSION;
 
             UseHardwareAcceleration = !CanImageAnimate && !exceedMaxDimention;
         }

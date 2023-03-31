@@ -657,8 +657,6 @@ public static class PhotoCodec
 
         var result = new IgImgData()
         {
-            Width = metadata.Width,
-            Height = metadata.Height,
             FrameCount = metadata?.FramesCount ?? 0,
             HasAlpha = metadata?.HasAlpha ?? false,
             CanAnimate = metadata?.CanAnimate ?? false,
