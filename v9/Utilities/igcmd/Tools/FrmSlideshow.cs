@@ -39,6 +39,7 @@ public partial class FrmSlideshow : ThemedForm
     private string _initImagePath;
 
     private CancellationTokenSource _loadImageCancelToken = new();
+    private MovableForm _movableForm;
     private ImageBooster _images = new();
     private int _currentIndex = -1;
     private IgMetadata? _currentMetadata = null;
@@ -159,6 +160,19 @@ public partial class FrmSlideshow : ThemedForm
         PicMain.Render += PicMain_Render;
         PicMain.MouseWheel += PicMain_MouseWheel;
 
+
+        // Initialize form movable
+        #region Form movable
+        _movableForm = new(this)
+        {
+            Key = Keys.ShiftKey | Keys.Shift,
+        };
+
+        // Enable form movable
+        IG_SetWindowMoveable(true);
+        #endregion // Form movable
+
+
         // full screen slideshow
         if (Config.EnableFullscreenSlideshow)
         {
@@ -207,6 +221,7 @@ public partial class FrmSlideshow : ThemedForm
 
         // start slideshow
         SetSlideshowState(true);
+
     }
 
 
@@ -1657,6 +1672,27 @@ public partial class FrmSlideshow : ThemedForm
         return Config.EnableFrameless;
     }
 
+    /// <summary>
+    /// Sets <see cref="FrmSlideshow"/> movable state
+    /// </summary>
+    public void IG_SetWindowMoveable(bool? enable = null)
+    {
+        enable ??= true;
+        _movableForm.Key = Keys.ShiftKey | Keys.Shift;
+
+        if (enable.Value)
+        {
+            _movableForm.Enable();
+            _movableForm.Enable(PicMain);
+        }
+        else
+        {
+            _movableForm.Disable();
+            _movableForm.Disable(PicMain);
+        }
+
+    }
+
     private void MnuFullScreen_Click(object sender, EventArgs e)
     {
         IG_ToggleFullScreen();
@@ -1736,11 +1772,18 @@ public partial class FrmSlideshow : ThemedForm
             Bounds = Screen.FromControl(this).Bounds;
 
             Visible = true;
+
+            // disable free moving
+            IG_SetWindowMoveable(false);
         }
 
         // exit full screen
         else
         {
+            // renable free moving
+            IG_SetWindowMoveable(true);
+
+
             // windows state
             if (_windowState == FormWindowState.Normal)
             {

@@ -215,7 +215,7 @@ public partial class FrmMain
         };
 
         // Enable form movable
-        IG_SetFrmMainMoveable(true);
+        IG_SetWindowMoveable(true);
         #endregion // Form movable
 
         // make sure all controls are painted before showing window

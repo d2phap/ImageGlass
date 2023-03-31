@@ -2493,7 +2493,7 @@ public partial class FrmMain
             Visible = true;
 
             // disable free moving
-            IG_SetFrmMainMoveable(false);
+            IG_SetWindowMoveable(false);
         }
 
         // exit full screen
@@ -2519,7 +2519,7 @@ public partial class FrmMain
             ResumeLayout(false);
 
             // renable free moving
-            IG_SetFrmMainMoveable(true);
+            IG_SetWindowMoveable(true);
 
 
             // restore window state, size, position
@@ -2718,7 +2718,7 @@ public partial class FrmMain
     /// <summary>
     /// Sets <see cref="FrmMain"/> movable state
     /// </summary>
-    public void IG_SetFrmMainMoveable(bool? enable = null)
+    public void IG_SetWindowMoveable(bool? enable = null)
     {
         enable ??= true;
         _movableForm.Key = Keys.ShiftKey | Keys.Shift;
