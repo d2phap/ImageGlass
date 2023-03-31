@@ -58,6 +58,10 @@ public class IgMetadata
     public int Width { get; set; } = 0;
     public int Height { get; set; } = 0;
 
+    /// <summary>
+    /// Gets the frame index of this metadata.
+    /// </summary>
+    public uint FrameIndex { get; set; } = 0;
     public int FramesCount { get; set; } = 0;
     public bool HasAlpha { get; set; } = false;
     public bool CanAnimate { get; set; } = false;

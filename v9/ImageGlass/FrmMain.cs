@@ -733,6 +733,7 @@ public partial class FrmMain : ThemedForm
                 UseEmbeddedThumbnailOtherFormats = Config.UseEmbeddedThumbnailOtherFormats,
                 EmbeddedThumbnailMinWidth = Config.EmbeddedThumbnailMinWidth,
                 EmbeddedThumbnailMinHeight = Config.EmbeddedThumbnailMinHeight,
+                FrameIndex = frameIndex,
             };
 
 
@@ -784,14 +785,15 @@ public partial class FrmMain : ThemedForm
                 readSettings.FirstFrameOnly = Config.SinglePageFormats.Contains(photo.Extension);
 
                 if (isSkipCache || Local.Metadata == null
-                    || !Local.Metadata.FilePath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase))
+                    || !Local.Metadata.FilePath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase)
+                    || Local.Metadata.FrameIndex != frameIndex)
                 {
                     Local.Metadata = PhotoCodec.LoadMetadata(filePath, readSettings);
                 }
             }
             else
             {
-                Local.Metadata = Local.Images.GetMetadata(imageIndex);
+                Local.Metadata = Local.Images.GetMetadata(imageIndex, frameIndex);
 
                 // Update current index
                 Local.CurrentIndex = imageIndex;
@@ -801,22 +803,7 @@ public partial class FrmMain : ThemedForm
 
 
             // image frame index
-            if (frameIndex != int.MinValue)
-            {
-                // Check if frame index is greater than upper limit
-                if (frameIndex >= Local.Metadata.FramesCount)
-                    frameIndex = 0;
-
-                // Check if frame index is less than lower limit
-                else if (frameIndex < 0)
-                    frameIndex = Local.Metadata.FramesCount - 1;
-
-                Local.CurrentFrameIndex = (uint)frameIndex;
-            }
-            else
-            {
-                Local.CurrentFrameIndex = 0;
-            }
+            Local.CurrentFrameIndex = Local.Metadata.FrameIndex;
 
 
             // set busy state

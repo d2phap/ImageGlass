@@ -25,19 +25,19 @@ namespace ImageGlass.Base.Photoing.Codecs;
 public record CodecReadOptions
 {
     /// <summary>
-    /// Gets, sets the requested width of the image
+    /// Gets, sets the requested width of the image.
     /// </summary>
-    public int Width = 0;
+    public int Width { get; set; }  = 0;
 
     /// <summary>
-    /// Gets, sets the requested height of the image
+    /// Gets, sets the requested height of the image.
     /// </summary>
-    public int Height = 0;
+    public int Height { get; set; } = 0;
 
     /// <summary>
     /// Gets, sets the value indicates whether the color profile should be ignored.
     /// </summary>
-    public bool IgnoreColorProfile = false;
+    public bool IgnoreColorProfile { get; set; } = false;
 
     /// <summary>
     /// Gets sets ColorProfile name of path
@@ -87,6 +87,11 @@ public record CodecReadOptions
     /// If it's <c>null</c>, the coder will decide.
     /// </summary>
     public bool? FirstFrameOnly { get; set; } = null;
+
+    /// <summary>
+    /// Gets, sets the requested image frame index for metadata reading.
+    /// </summary>
+    public int FrameIndex { get; set; } = 0;
 
     /// <summary>
     /// Gets, sets the value indicates that if the image dimension exceeds the supported value,

@@ -80,11 +80,23 @@ public static class PhotoCodec
                 imgC.Ping(filePath, settings);
             }
 
+            meta.FrameIndex = 0;
             meta.FramesCount = imgC.Count;
 
             if (imgC.Count > 0)
             {
-                using var imgM = imgC[0];
+                var frameIndex = options?.FrameIndex ?? 0;
+
+                // Check if frame index is greater than upper limit
+                if (frameIndex >= imgC.Count)
+                    frameIndex = 0;
+
+                // Check if frame index is less than lower limit
+                else if (frameIndex < 0)
+                    frameIndex = imgC.Count - 1;
+
+                meta.FrameIndex = (uint)frameIndex;
+                using var imgM = imgC[frameIndex];
 
                 // EXIF profile
                 if (imgM.GetExifProfile() is IExifProfile exifProfile)

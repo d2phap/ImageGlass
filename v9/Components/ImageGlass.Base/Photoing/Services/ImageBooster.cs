@@ -325,18 +325,23 @@ public class ImageBooster : IDisposable
 
 
     /// <summary>
-    /// Gets image metadat
+    /// Gets image metadata
     /// </summary>
     /// <param name="index">Image index</param>
-    /// <returns></returns>
-    public IgMetadata? GetMetadata(int index)
+    /// <param name="frameIndex">Frame index</param>
+    public IgMetadata? GetMetadata(int index, int frameIndex)
     {
         try
         {
-            if (ImgList[index].Metadata is null)
+            if (ImgList[index].Metadata == null
+                || ImgList[index].Metadata.FrameIndex != frameIndex)
             {
                 ImgList[index].Metadata = PhotoCodec.LoadMetadata(
-                    ImgList[index].Filename, ReadOptions);
+                    ImgList[index].Filename,
+                    ReadOptions with
+                    {
+                        FrameIndex = frameIndex,
+                    });
             }
 
             return ImgList[index].Metadata;
