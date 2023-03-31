@@ -60,9 +60,6 @@ public record IgThemeInfo
 /// </summary>
 public record IgThemeColors
 {
-    public Color AccentColor { get; set; } = ThemeUtils.ColorFromHex("#0078D7");
-    public Color AccentHoverColor { get; set; } = ThemeUtils.ColorFromHex("#0d92ff");
-    public Color AccentSelectedColor { get; set; } = ThemeUtils.ColorFromHex("#0060ae");
     public Color TextColor { get; set; } = ThemeUtils.ColorFromHex("#d3d3d3");
     public Color BgColor { get; set; } = ThemeUtils.ColorFromHex("#151b1f00");
 
@@ -164,7 +161,7 @@ public record IgThemeSettings : IDisposable
     /// <summary>
     /// Show or hide logo on title bar of window
     /// </summary>
-    public bool IsShowTitlebarLogo { get; set; } = true;
+    public bool ShowTitlebarLogo { get; set; } = true;
 
     /// <summary>
     /// The preview image of the theme

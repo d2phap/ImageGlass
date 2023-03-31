@@ -1674,7 +1674,7 @@ public static class Config
     public static void UpdateFormIcon(Form frm)
     {
         // Icon theming
-        if (!Config.Theme.Settings.IsShowTitlebarLogo)
+        if (!Config.Theme.Settings.ShowTitlebarLogo)
         {
             frm.Icon = Icon.FromHandle(new Bitmap(64, 64).GetHicon());
             FormIconApi.SetTaskbarIcon(frm, Config.Theme.Settings.AppLogo.GetHicon());
