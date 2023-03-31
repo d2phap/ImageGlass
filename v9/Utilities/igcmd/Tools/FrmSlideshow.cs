@@ -1029,8 +1029,9 @@ public partial class FrmSlideshow : ThemedForm
             if (Config.InfoItems.Contains(nameof(ImageInfo.ListCount))
                 && _images.Length > 0)
             {
-                ImageInfo.ListCount = $"{_currentIndex + 1}/{_images.Length} {Config.Language[$"FrmMain._Files"]}";
-
+                ImageInfo.ListCount = string.Format(
+                    Config.Language[$"_.{nameof(ImageInfo)}._{nameof(ImageInfo.ListCount)}"],
+                    _currentIndex + 1, _images.Length);
             }
             else
             {
@@ -1085,7 +1086,9 @@ public partial class FrmSlideshow : ThemedForm
                 && _currentMetadata != null
                 && _currentMetadata.FramesCount > 1)
             {
-                ImageInfo.FramesCount = $"{_currentMetadata.FramesCount} frames";
+                ImageInfo.FramesCount = string.Format(
+                    Config.Language[$"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FramesCount)}"],
+                    1, _currentMetadata.FramesCount);
             }
             else
             {
@@ -1189,6 +1192,33 @@ public partial class FrmSlideshow : ThemedForm
 
             ImageInfo.DateTimeAuto = dtStr;
         }
+
+        // ColorSpace
+        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.ColorSpace))
+        {
+            if (Config.InfoItems.Contains(nameof(ImageInfo.ColorSpace))
+                && _currentMetadata != null
+                && !string.IsNullOrEmpty(_currentMetadata.ColorSpace))
+            {
+                var colorProfile = !string.IsNullOrEmpty(_currentMetadata.ColorProfile)
+                    ? _currentMetadata.ColorProfile
+                    : "-";
+
+                if (_currentMetadata.ColorSpace.Equals(colorProfile, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    ImageInfo.ColorSpace = _currentMetadata.ColorSpace;
+                }
+                else
+                {
+                    ImageInfo.ColorSpace = $"{_currentMetadata.ColorSpace}/{colorProfile}";
+                }
+            }
+            else
+            {
+                ImageInfo.ColorSpace = string.Empty;
+            }
+        }
+
 
 
         Text = ImageInfo.ToString(Config.InfoItems, false);
