@@ -594,11 +594,8 @@ public class DXCanvas : DXControl
         get => _zoomMode;
         set
         {
-            if (_zoomMode != value)
-            {
-                _zoomMode = value;
-                Refresh();
-            }
+            _zoomMode = value;
+            Refresh();
         }
     }
 
