@@ -1297,7 +1297,9 @@ public partial class FrmMain : ThemedForm
                 if (Config.InfoItems.Contains(nameof(ImageInfo.ListCount))
                     && Local.Images.Length > 0)
                 {
-                    ImageInfo.ListCount = $"{Local.CurrentIndex + 1}/{Local.Images.Length} {Config.Language[$"{Name}._Files"]}";
+                    ImageInfo.ListCount = string.Format(
+                        Config.Language[$"_.{nameof(ImageInfo)}._{nameof(ImageInfo.ListCount)}"],
+                        Local.CurrentIndex + 1, Local.Images.Length);
                 }
                 else
                 {
@@ -1354,7 +1356,9 @@ public partial class FrmMain : ThemedForm
                     && Local.Metadata != null
                     && Local.Metadata.FramesCount > 1)
                 {
-                    ImageInfo.FramesCount = $"{Local.Metadata.FramesCount} frames";
+                    ImageInfo.FramesCount = string.Format(
+                        Config.Language[$"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FramesCount)}"],
+                        Local.CurrentFrameIndex + 1, Local.Metadata.FramesCount);
                 }
                 else
                 {

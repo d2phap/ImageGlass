@@ -156,6 +156,10 @@ public class IgLang : Dictionary<string, string>
         Add($"_.Metadata._{nameof(IgMetadata.ColorSpace)}", "Color space"); //v9.0
         Add($"_.Metadata._{nameof(IgMetadata.ColorProfile)}", "Color profile"); //v9.0
 
+        // image info
+        Add($"_.{nameof(ImageInfo)}._{nameof(ImageInfo.ListCount)}", "{0}/{1} file(s)"); //v9.0
+        Add($"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FramesCount)}", "{0}/{1} frame(s)"); //v9.0
+
 
         #region FrmMain
 
@@ -348,9 +352,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuMain", "Main menu"); // v3.0
 
         Add("FrmMain._OpenFileDialog", "All supported files");
-        Add("FrmMain._Files", "file(s)"); // v7.5
         Add("FrmMain._Loading", "Loading..."); // v3.0
-                                               //Add("FrmMain._Pages", "pages"); // v7.5
 
         //Add("FrmMain._SaveChanges", "Saving change..."); // v2.0 final
 
