@@ -65,7 +65,7 @@ public static class PhotoCodec
 
         try
         {
-            var settings = ParseSettings(options, filePath);
+            var settings = ParseSettings(options, false, filePath);
             using var imgC = new MagickImageCollection();
 
             if (filePath.Length > 260)
@@ -196,7 +196,7 @@ public static class PhotoCodec
             UseEmbeddedThumbnailOtherFormats = true,
             ApplyColorProfileForAll = false,
         };
-        var settings = ParseSettings(options, filePath);
+        var settings = ParseSettings(options, false, filePath);
         var ext = Path.GetExtension(filePath).ToLower();
 
 
@@ -224,7 +224,7 @@ public static class PhotoCodec
         }
         catch (OperationCanceledException) { return null; }
 
-        var settings = ParseSettings(new() { FirstFrameOnly = true }, filePath);
+        var settings = ParseSettings(new() { FirstFrameOnly = true }, false, filePath);
         WicBitmapSource? result = null;
 
         using var imgM = new MagickImage();
@@ -353,6 +353,8 @@ public static class PhotoCodec
     /// <exception cref="FileFormatException"></exception>
     public static async Task SaveAsync(string srcFileName, string destFilePath, CodecReadOptions readOptions, ImgTransform? transform = null, int quality = 100, CancellationToken token = default)
     {
+        var ext = Path.GetExtension(destFilePath).ToUpperInvariant();
+
         try
         {
             var metadata = LoadMetadata(srcFileName, readOptions);
@@ -361,8 +363,9 @@ public static class PhotoCodec
                 throw new FileFormatException("Unsupported image format.");
             }
 
-            var settings = ParseSettings(readOptions, srcFileName);
-            
+            var settings = ParseSettings(readOptions, true, srcFileName);
+
+
             using var imgData = await ReadMagickImageAsync(
                 srcFileName,
                 Path.GetExtension(srcFileName),
@@ -650,7 +653,7 @@ public static class PhotoCodec
 
         var metadata = LoadMetadata(filePath, options);
         var ext = Path.GetExtension(filePath).ToUpperInvariant();
-        var settings = ParseSettings(options, filePath);
+        var settings = ParseSettings(options, false, filePath);
 
         var result = new IgImgData()
         {
@@ -1136,7 +1139,7 @@ public static class PhotoCodec
     /// <summary>
     /// Parse <see cref="CodecReadOptions"/> to <see cref="MagickReadSettings"/>
     /// </summary>
-    private static MagickReadSettings ParseSettings(CodecReadOptions? options, string filename = "")
+    private static MagickReadSettings ParseSettings(CodecReadOptions? options, bool writePurpose, string filename = "")
     {
         options ??= new();
 
@@ -1186,11 +1189,6 @@ public static class PhotoCodec
             });
         }
 
-        settings.SetDefines(new WebPWriteDefines()
-        {
-            ThreadLevel = true,
-        });
-
 
         if (options.Width > 0 && options.Height > 0)
         {
@@ -1212,6 +1210,18 @@ public static class PhotoCodec
             ReadThumbnail = true,
         });
 
+
+        if (writePurpose)
+        {
+            if (ext == ".TIF" || ext == ".TIFF")
+            {
+                settings.SetDefines(new TiffWriteDefines
+                {
+                    WriteLayers = true,
+                    PreserveCompression = true,
+                });
+            }
+        }
 
         return settings;
     }
