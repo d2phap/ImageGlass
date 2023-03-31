@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using ImageGlass.Base;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Globalization;
@@ -34,27 +35,15 @@ public partial class ThemeUtils
     /// </summary>
     public static Color GetBackgroundColorForStatus(StatusType status, bool darkMode = true, int alpha = 255)
     {
-        if (darkMode)
-        {
-            // dark color palette
-            return status switch
-            {
-                StatusType.Info => Color.FromArgb(alpha, 20, 44, 59),
-                StatusType.Success => Color.FromArgb(alpha, 34, 59, 42),
-                StatusType.Warning => Color.FromArgb(alpha, 59, 40, 10),
-                StatusType.Danger => Color.FromArgb(alpha, 59, 20, 19),
-                _ => Color.FromArgb(alpha, 32, 38, 43),
-            };
-        }
+        var colors = GetThemeColorPalatte(darkMode);
 
-        // light color palette
         return status switch
         {
-            StatusType.Info => Color.FromArgb(alpha, 199, 238, 255),
-            StatusType.Success => Color.FromArgb(alpha, 219, 255, 242),
-            StatusType.Warning => Color.FromArgb(alpha, 255, 239, 219),
-            StatusType.Danger => Color.FromArgb(alpha, 255, 222, 222),
-            _ => Color.FromArgb(alpha, 242, 242, 242),
+            StatusType.Info => colors.BgInfo.WithAlpha(alpha),
+            StatusType.Success => colors.BgSuccess.WithAlpha(alpha),
+            StatusType.Warning => colors.BgWarning.WithAlpha(alpha),
+            StatusType.Danger => colors.BgDanger.WithAlpha(alpha),
+            _ => colors.BgNeutral.WithAlpha(alpha),
         };
     }
 
@@ -101,11 +90,11 @@ public partial class ThemeUtils
         var yellow = (1.0 - (c.B / 255.0) - black) / (1.0 - black);
 
         return new[] {
-                (int) Math.Round(cyan*100),
-                (int) Math.Round(magenta*100),
-                (int) Math.Round(yellow*100),
-                (int) Math.Round(black*100)
-            };
+            (int)Math.Round(cyan * 100),
+            (int)Math.Round(magenta * 100),
+            (int)Math.Round(yellow * 100),
+            (int)Math.Round(black * 100)
+        };
     }
 
 
@@ -143,8 +132,6 @@ public partial class ThemeUtils
     /// <summary>
     /// Convert Color to HEX (with alpha)
     /// </summary>
-    /// <param name="c"></param>
-    /// <param name="skipAlpha"></param>
     public static string ColorToHex(Color c, bool @skipAlpha = false)
     {
         if (skipAlpha)

@@ -49,4 +49,11 @@ public class DarkColors : IColors
     public Color ControlBorder => Color.FromArgb(92, 92, 92); // Control Border
     public Color ControlBorderAccent => WinColorsApi.GetAccentColor(false).WithBrightness(0.2f); // Accent Border
 
+
+    // status background color
+    public Color BgNeutral => Color.FromArgb(32, 38, 43);
+    public Color BgInfo => Color.FromArgb(20, 44, 59);
+    public Color BgSuccess => Color.FromArgb(34, 59, 42);
+    public Color BgWarning => Color.FromArgb(59, 40, 10);
+    public Color BgDanger => Color.FromArgb(59, 20, 19);
 }

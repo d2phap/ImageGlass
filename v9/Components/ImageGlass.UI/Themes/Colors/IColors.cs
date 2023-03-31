@@ -39,4 +39,10 @@ public interface IColors
     Color ControlBorder { get; }
     Color ControlBorderAccent { get; }
 
+
+    Color BgNeutral { get; }
+    Color BgInfo { get; }
+    Color BgSuccess { get; }
+    Color BgWarning { get; }
+    Color BgDanger { get; }
 }

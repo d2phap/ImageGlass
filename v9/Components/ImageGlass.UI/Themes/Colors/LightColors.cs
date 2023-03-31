@@ -49,4 +49,11 @@ public class LightColors : IColors
     public Color ControlBorder => Color.FromArgb(204, 206, 219); // Control Border
     public Color ControlBorderAccent => WinColorsApi.GetAccentColor(false).WithBrightness(0.2f); // Accent Border
 
+
+    // status background color
+    public Color BgNeutral => Color.FromArgb(242, 242, 242);
+    public Color BgInfo => Color.FromArgb(199, 238, 255);
+    public Color BgSuccess => Color.FromArgb(219, 255, 242);
+    public Color BgWarning => Color.FromArgb(255, 239, 219);
+    public Color BgDanger => Color.FromArgb(255, 222, 222);
 }
