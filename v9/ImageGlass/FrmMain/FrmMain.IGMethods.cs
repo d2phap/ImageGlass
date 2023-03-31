@@ -2846,7 +2846,7 @@ public partial class FrmMain
 
     private void ToolForm_ToolFormClosing(ToolFormClosingEventArgs e)
     {
-        if (e.Name == nameof(MnuCropTool))
+        if (e.Name == nameof(FrmCrop))
         {
             // update menu item state
             MnuCropTool.Checked =
