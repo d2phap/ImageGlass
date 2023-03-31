@@ -215,10 +215,14 @@ internal class Local
     public static int CurrentIndex { get; set; } = -1;
 
     /// <summary>
+    /// Gets, sets the current frame index of the viewing image
+    /// </summary>
+    public static uint CurrentFrameIndex { get; set; } = 0;
+
+    /// <summary>
     /// Gets, sets the changes of the current viewing image.
     /// </summary>
     public static ImgTransform ImageTransform = new();
-
 
     /// <summary>
     /// Gets, sets the value if the current image is error

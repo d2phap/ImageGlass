@@ -366,7 +366,7 @@ public partial class FrmMain : ThemedForm
             _ = LoadImageListAsync(new string[] { inputPath }, path);
 
             // load the current image
-            _ = ViewNextCancellableAsync(0, filename: path);
+            _ = ViewNextCancellableAsync(0, filePath: path);
         }
     }
 
@@ -398,7 +398,7 @@ public partial class FrmMain : ThemedForm
         else
         {
             // load the current image
-            _ = ViewNextCancellableAsync(0, filename: filePath);
+            _ = ViewNextCancellableAsync(0, filePath: filePath);
 
             // load images list
             _ = LoadImageListAsync(paths, currentFile ?? filePath ?? "");
@@ -689,18 +689,17 @@ public partial class FrmMain : ThemedForm
     /// <summary>
     /// View the next image using jump step.
     /// </summary>
-    [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP001:Dispose created", Justification = "<Pending>")]
     [SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP003:Dispose previous before re-assigning", Justification = "<Pending>")]
     private async Task ViewNextAsync(int step,
         bool resetZoom = true,
         bool isSkipCache = false,
-        int pageIndex = int.MinValue,
-        string filename = "",
+        int frameIndex = int.MinValue,
+        string filePath = "",
         CancellationTokenSource? token = null)
     {
         Local.ImageTransform.Clear();
 
-        if (Local.Images.Length == 0 && string.IsNullOrEmpty(filename))
+        if (Local.Images.Length == 0 && string.IsNullOrEmpty(filePath))
         {
             Local.CurrentIndex = -1;
             Local.Metadata = null;
@@ -713,17 +712,17 @@ public partial class FrmMain : ThemedForm
         // temp index
         var imageIndex = Local.CurrentIndex + step;
         var oldImgPath = Local.Images.GetFilePath(Local.CurrentIndex);
-        var imgFilePath = string.IsNullOrEmpty(filename)
+        var imgFilePath = string.IsNullOrEmpty(filePath)
             ? Local.Images.GetFilePath(Local.CurrentIndex)
-            : filename;
+            : filePath;
 
 
         try
         {
             // check if loading is cancelled
             token?.Token.ThrowIfCancellationRequested();
-
             IgPhoto? photo = null;
+
             var readSettings = new CodecReadOptions()
             {
                 ColorProfileName = Config.ColorProfile,
@@ -779,12 +778,16 @@ public partial class FrmMain : ThemedForm
 
 
             // load image metadata
-            if (!string.IsNullOrEmpty(filename))
+            if (!string.IsNullOrEmpty(filePath))
             {
-                photo = new IgPhoto(filename);
+                photo = new IgPhoto(filePath);
                 readSettings.FirstFrameOnly = Config.SinglePageFormats.Contains(photo.Extension);
 
-                Local.Metadata = PhotoCodec.LoadMetadata(filename, readSettings);
+                if (isSkipCache || Local.Metadata == null
+                    || !Local.Metadata.FilePath.Equals(filePath, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    Local.Metadata = PhotoCodec.LoadMetadata(filePath, readSettings);
+                }
             }
             else
             {
@@ -797,6 +800,25 @@ public partial class FrmMain : ThemedForm
             #endregion // Validate image index
 
 
+            // image frame index
+            if (frameIndex != int.MinValue)
+            {
+                // Check if frame index is greater than upper limit
+                if (frameIndex >= Local.Metadata.FramesCount)
+                    frameIndex = 0;
+
+                // Check if frame index is less than lower limit
+                else if (frameIndex < 0)
+                    frameIndex = Local.Metadata.FramesCount - 1;
+
+                Local.CurrentFrameIndex = (uint)frameIndex;
+            }
+            else
+            {
+                Local.CurrentFrameIndex = 0;
+            }
+
+
             // set busy state
             Local.IsBusy = true;
 
@@ -805,6 +827,7 @@ public partial class FrmMain : ThemedForm
                 Index = Local.CurrentIndex,
                 NewIndex = imageIndex,
                 FilePath = imgFilePath,
+                FrameIndex = Local.CurrentFrameIndex,
             }, nameof(Local.RaiseImageLoadingEvent)));
 
 
@@ -816,40 +839,34 @@ public partial class FrmMain : ThemedForm
             Local.Images.ReadOptions = readSettings;
 
 
-            if (pageIndex != int.MinValue)
+            // directly load the image file, skip image list
+            if (photo != null)
             {
-                //UpdateActivePage();
+                await photo.LoadAsync(readSettings, token);
             }
             else
             {
-                // directly load the image file, skip image list
-                if (photo != null)
-                {
-                    await photo.LoadAsync(readSettings, token);
-                }
-                else
-                {
-                    photo = await Local.Images.GetAsync(
-                        imageIndex,
-                        useCache: !isSkipCache,
-                        pageIndex: pageIndex,
-                        tokenSrc: token
-                    );
-                }
-
-                // check if loading is cancelled
-                token?.Token.ThrowIfCancellationRequested();
-
-
-                _uiReporter.Report(new(new ImageLoadedEventArgs()
-                {
-                    Index = imageIndex,
-                    FilePath = imgFilePath,
-                    Data = photo,
-                    Error = photo?.Error,
-                    ResetZoom = resetZoom,
-                }, nameof(Local.RaiseImageLoadedEvent)));
+                photo = await Local.Images.GetAsync(
+                    imageIndex,
+                    useCache: !isSkipCache,
+                    tokenSrc: token
+                );
             }
+
+
+            // check if loading is cancelled
+            token?.Token.ThrowIfCancellationRequested();
+
+
+            _uiReporter.Report(new(new ImageLoadedEventArgs()
+            {
+                Index = imageIndex,
+                FrameIndex = Local.CurrentFrameIndex,
+                FilePath = imgFilePath,
+                Data = photo,
+                Error = photo?.Error,
+                ResetZoom = resetZoom,
+            }, nameof(Local.RaiseImageLoadedEvent)));
 
         }
         catch (OperationCanceledException)
@@ -878,18 +895,18 @@ public partial class FrmMain : ThemedForm
     /// <param name="step">The step to change image index. Use <c>0</c> to reload the viewing image.</param>
     /// <param name="resetZoom"></param>
     /// <param name="isSkipCache"></param>
-    /// <param name="pageIndex">Use <see cref="int.MinValue"/> to load the default page index.</param>
-    /// <param name="filename"></param>
+    /// <param name="frameIndex">Use <see cref="int.MinValue"/> to load the default page index.</param>
+    /// <param name="filePath">Load this file and ignore the image list</param>
     public async Task ViewNextCancellableAsync(int step,
         bool resetZoom = true,
         bool isSkipCache = false,
-        int pageIndex = int.MinValue,
-        string filename = "")
+        int frameIndex = int.MinValue,
+        string filePath = "")
     {
         _loadCancelToken?.Cancel();
         _loadCancelToken = new();
 
-        await ViewNextAsync(step, resetZoom, isSkipCache, pageIndex, filename, _loadCancelToken);
+        await ViewNextAsync(step, resetZoom, isSkipCache, frameIndex, filePath, _loadCancelToken);
     }
 
     #endregion // Image Loading functions
@@ -969,7 +986,7 @@ public partial class FrmMain : ThemedForm
         _ = BHelper.RunAsThread(SelectCurrentThumbnail);
 
         // show image preview if it's not cached
-        if (!Local.Images.IsCached(Local.CurrentIndex))
+        if (!Local.Images.IsCached(Local.CurrentIndex) && e.FrameIndex == int.MinValue)
         {
             ShowImagePreview(e.FilePath, _loadCancelToken.Token);
         }
@@ -1024,7 +1041,10 @@ public partial class FrmMain : ThemedForm
 
 
             // set the main image
-            PicMain.SetImage(e.Data.ImgData, Config.EnableWindowFit ? false : e.ResetZoom, enableFadingTrainsition);
+            PicMain.SetImage(e.Data.ImgData,
+                e.FrameIndex,
+                Config.EnableWindowFit ? false : e.ResetZoom,
+                enableFadingTrainsition);
 
             // update window fit
             if (e.ResetZoom && Config.EnableWindowFit)
@@ -1085,7 +1105,7 @@ public partial class FrmMain : ThemedForm
     {
         const string TOOLBAR_BUTTON_SAVE_TRANSFORMATION = "Btn_SaveImageTransformation";
         var btnItem = Toolbar.GetItem(TOOLBAR_BUTTON_SAVE_TRANSFORMATION);
-        
+
         // has changes, show Save button
         if (Local.ImageTransform.HasChanges && btnItem == null)
         {

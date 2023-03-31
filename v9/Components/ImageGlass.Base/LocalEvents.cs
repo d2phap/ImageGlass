@@ -42,10 +42,20 @@ public class ImageLoadingEventArgs : ImageEventArgs
     /// Gets the loading image's index.
     /// </summary>
     public int NewIndex { get; init; }
+
+    /// <summary>
+    /// Gets the loading image frame index.
+    /// </summary>
+    public uint FrameIndex { get; init; }
 }
 
 public class ImageLoadedEventArgs : ImageEventArgs
 {
+    /// <summary>
+    /// Gets the loaded image frame index.
+    /// </summary>
+    public uint FrameIndex { get; init; }
+
     /// <summary>
     /// Gets the loaded image data.
     /// </summary>
