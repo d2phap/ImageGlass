@@ -1221,6 +1221,15 @@ public static class PhotoCodec
                     PreserveCompression = true,
                 });
             }
+            else if (ext == ".WEBP")
+            {
+                settings.SetDefines(new WebPWriteDefines
+                {
+                    Lossless = true,
+                    ThreadLevel = true,
+                    AlphaQuality = 100,
+                });
+            }
         }
 
         return settings;

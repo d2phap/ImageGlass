@@ -33,6 +33,7 @@ public static class SavingExts
         new SavingExt { Ext = ".jxl", Description = "JXL" },
         new SavingExt { Ext = ".bmp", Description = "BMP" },
         new SavingExt { Ext = ".gif", Description = "GIF" },
+        new SavingExt { Ext = ".webp", Description = "WEBP" },
         new SavingExt { Ext = ".ico", Description = "ICO" },
 
         new SavingExt { Ext = ".emf", Description = "EMF" },
