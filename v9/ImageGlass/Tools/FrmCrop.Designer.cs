@@ -134,7 +134,7 @@ namespace ImageGlass
             this.BtnSettings.Name = "BtnSettings";
             this.BtnSettings.Padding = new System.Windows.Forms.Padding(10);
             this.BtnSettings.Size = new System.Drawing.Size(120, 78);
-            this.BtnSettings.SvgIcon = ImageGlass.Base.IconName.Setting;
+            this.BtnSettings.SvgIcon = ImageGlass.UI.IconName.Setting;
             this.BtnSettings.SystemIcon = null;
             this.BtnSettings.TabIndex = 8;
             this.BtnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -303,7 +303,7 @@ namespace ImageGlass
             this.BtnReset.Name = "BtnReset";
             this.BtnReset.Padding = new System.Windows.Forms.Padding(10);
             this.BtnReset.Size = new System.Drawing.Size(120, 78);
-            this.BtnReset.SvgIcon = ImageGlass.Base.IconName.ResetSelection;
+            this.BtnReset.SvgIcon = ImageGlass.UI.IconName.ResetSelection;
             this.BtnReset.SystemIcon = null;
             this.BtnReset.TabIndex = 1;
             this.BtnReset.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -319,7 +319,7 @@ namespace ImageGlass
             this.BtnQuickSelect.Name = "BtnQuickSelect";
             this.BtnQuickSelect.Padding = new System.Windows.Forms.Padding(10);
             this.BtnQuickSelect.Size = new System.Drawing.Size(120, 78);
-            this.BtnQuickSelect.SvgIcon = ImageGlass.Base.IconName.Selection;
+            this.BtnQuickSelect.SvgIcon = ImageGlass.UI.IconName.Selection;
             this.BtnQuickSelect.SystemIcon = null;
             this.BtnQuickSelect.TabIndex = 0;
             this.BtnQuickSelect.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -391,7 +391,7 @@ namespace ImageGlass
             this.BtnCopy.Name = "BtnCopy";
             this.BtnCopy.Padding = new System.Windows.Forms.Padding(10);
             this.BtnCopy.Size = new System.Drawing.Size(284, 78);
-            this.BtnCopy.SvgIcon = ImageGlass.Base.IconName.Copy;
+            this.BtnCopy.SvgIcon = ImageGlass.UI.IconName.Copy;
             this.BtnCopy.SystemIcon = null;
             this.BtnCopy.TabIndex = 3;
             this.BtnCopy.Text = "[Copy]";

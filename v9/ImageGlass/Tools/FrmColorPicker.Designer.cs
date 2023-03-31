@@ -113,7 +113,7 @@
             BtnSettings.Name = "BtnSettings";
             BtnSettings.Padding = new Padding(8);
             BtnSettings.Size = new Size(80, 60);
-            BtnSettings.SvgIcon = Base.IconName.Setting;
+            BtnSettings.SvgIcon = UI.IconName.Setting;
             BtnSettings.SystemIcon = null;
             BtnSettings.TabIndex = 12;
             BtnSettings.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -130,7 +130,7 @@
             BtnCopyHsv.Name = "BtnCopyHsv";
             BtnCopyHsv.Padding = new Padding(8);
             BtnCopyHsv.Size = new Size(80, 60);
-            BtnCopyHsv.SvgIcon = Base.IconName.Copy;
+            BtnCopyHsv.SvgIcon = UI.IconName.Copy;
             BtnCopyHsv.SystemIcon = null;
             BtnCopyHsv.TabIndex = 11;
             BtnCopyHsv.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -147,7 +147,7 @@
             BtnCopyHsl.Name = "BtnCopyHsl";
             BtnCopyHsl.Padding = new Padding(8);
             BtnCopyHsl.Size = new Size(80, 60);
-            BtnCopyHsl.SvgIcon = Base.IconName.Copy;
+            BtnCopyHsl.SvgIcon = UI.IconName.Copy;
             BtnCopyHsl.SystemIcon = null;
             BtnCopyHsl.TabIndex = 9;
             BtnCopyHsl.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -164,7 +164,7 @@
             BtnCopyCmyk.Name = "BtnCopyCmyk";
             BtnCopyCmyk.Padding = new Padding(8);
             BtnCopyCmyk.Size = new Size(80, 60);
-            BtnCopyCmyk.SvgIcon = Base.IconName.Copy;
+            BtnCopyCmyk.SvgIcon = UI.IconName.Copy;
             BtnCopyCmyk.SystemIcon = null;
             BtnCopyCmyk.TabIndex = 7;
             BtnCopyCmyk.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -181,7 +181,7 @@
             BtnCopyHex.Name = "BtnCopyHex";
             BtnCopyHex.Padding = new Padding(8);
             BtnCopyHex.Size = new Size(80, 60);
-            BtnCopyHex.SvgIcon = Base.IconName.Copy;
+            BtnCopyHex.SvgIcon = UI.IconName.Copy;
             BtnCopyHex.SystemIcon = null;
             BtnCopyHex.TabIndex = 5;
             BtnCopyHex.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -198,7 +198,7 @@
             BtnCopyRgb.Name = "BtnCopyRgb";
             BtnCopyRgb.Padding = new Padding(8);
             BtnCopyRgb.Size = new Size(80, 60);
-            BtnCopyRgb.SvgIcon = Base.IconName.Copy;
+            BtnCopyRgb.SvgIcon = UI.IconName.Copy;
             BtnCopyRgb.SystemIcon = null;
             BtnCopyRgb.TabIndex = 3;
             BtnCopyRgb.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -400,7 +400,7 @@
             BtnCopyLocation.Name = "BtnCopyLocation";
             BtnCopyLocation.Padding = new Padding(8);
             BtnCopyLocation.Size = new Size(80, 60);
-            BtnCopyLocation.SvgIcon = Base.IconName.Copy;
+            BtnCopyLocation.SvgIcon = UI.IconName.Copy;
             BtnCopyLocation.SystemIcon = null;
             BtnCopyLocation.TabIndex = 1;
             BtnCopyLocation.TextImageRelation = TextImageRelation.ImageBeforeText;

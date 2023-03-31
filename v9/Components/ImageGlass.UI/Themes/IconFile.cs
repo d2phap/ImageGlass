@@ -17,7 +17,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-namespace ImageGlass.Base;
+using ImageGlass.Base;
+
+namespace ImageGlass.UI;
 
 public class IconFile
 {
