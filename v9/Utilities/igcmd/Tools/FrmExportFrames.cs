@@ -81,7 +81,7 @@ public partial class FrmExportFrames : DialogForm
         SuspendLayout();
 
         LblStatus.DarkMode = DarkMode;
-        TableTop.BackColor = Config.Theme.ColorPalatte.AppBackground;
+        TableTop.BackColor = Config.Theme.ColorPalatte.AppBg;
 
 
         base.ApplyTheme(darkMode, style);

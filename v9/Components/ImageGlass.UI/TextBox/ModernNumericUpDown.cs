@@ -47,7 +47,7 @@ public class ModernNumericUpDown : NumericUpDown
         {
             _darkMode = value;
 
-            Controls[1].BackColor = ColorPalatte.LightBackground;
+            Controls[1].BackColor = ColorPalatte.ControlBg;
             Controls[1].ForeColor = ColorPalatte.AppText;
 
             Invalidate();
@@ -79,7 +79,7 @@ public class ModernNumericUpDown : NumericUpDown
                ControlStyles.UserPaint, true);
 
         base.ForeColor = ColorPalatte.AppText;
-        base.BackColor = ColorPalatte.LightBackground;
+        base.BackColor = ColorPalatte.ControlBg;
 
         Controls[0].Paint += UpDownControls_Paint;
         Controls[0].MouseEnter += Control_MouseEnter;
@@ -133,11 +133,10 @@ public class ModernNumericUpDown : NumericUpDown
 
 
         // up/down background
-        using (var b = new SolidBrush(ColorPalatte.HeaderBackground))
+        using (var bgBrush = new SolidBrush(ColorPalatte.ControlBg))
         {
             var modRect = new Rectangle(rect.X - 2, rect.Y - 1, rect.Width + 2, rect.Height + 1);
-
-            g.FillRectangle(new SolidBrush(ColorPalatte.LightBackground), modRect);
+            g.FillRectangle(bgBrush, modRect);
         }
 
 
@@ -148,8 +147,8 @@ public class ModernNumericUpDown : NumericUpDown
 
         // arrow
         var arrowColor = isUpHovered
-            ? ColorPalatte.GreySelection.WithBrightness(0.5f)
-            : ColorPalatte.GreySelection.WithBrightness(0.3f);
+            ? ColorPalatte.ControlBorder.WithBrightness(0.5f)
+            : ColorPalatte.ControlBorder.WithBrightness(0.3f);
         if (isUpHovered && _mouseDown)
         {
             arrowColor = ColorPalatte.AppText;
@@ -174,8 +173,8 @@ public class ModernNumericUpDown : NumericUpDown
         var isDownHovered = downArea.Contains(mousePos);
 
         arrowColor = isDownHovered
-            ? ColorPalatte.GreySelection.WithBrightness(0.5f)
-            : ColorPalatte.GreySelection.WithBrightness(0.3f);
+            ? ColorPalatte.ControlBorder.WithBrightness(0.5f)
+            : ColorPalatte.ControlBorder.WithBrightness(0.3f);
         if (isDownHovered && _mouseDown)
         {
             arrowColor = ColorPalatte.AppText;
@@ -225,10 +224,10 @@ public class ModernNumericUpDown : NumericUpDown
 
 
         // draw border
-        var borderColor = ColorPalatte.GreySelection;
+        var borderColor = ColorPalatte.ControlBorder;
         if (Focused && TabStop)
         {
-            borderColor = ColorPalatte.BlueHighlight;
+            borderColor = ColorPalatte.ControlBorderAccent;
         }
         else if (_mouseHover)
         {

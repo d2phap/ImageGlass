@@ -56,7 +56,7 @@ public partial class FrmCropSettings : DialogForm
         SuspendLayout();
 
 
-        TableTop.BackColor = Config.Theme.ColorPalatte.AppBackground;
+        TableTop.BackColor = Config.Theme.ColorPalatte.AppBg;
 
 
         base.ApplyTheme(darkMode, style);

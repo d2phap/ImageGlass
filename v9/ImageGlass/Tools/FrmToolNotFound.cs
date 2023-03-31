@@ -72,7 +72,7 @@ public partial class FrmToolNotFound : DialogForm
                 .WithBrightness(darkMode ? 0.4f : 0f);
         LnkGetTools.ActiveLinkColor = LnkGetTools.LinkColor.WithBrightness(0.3f);
 
-        TableTop.BackColor = Config.Theme.ColorPalatte.AppBackground;
+        TableTop.BackColor = Config.Theme.ColorPalatte.AppBg;
 
 
         base.ApplyTheme(darkMode, style);

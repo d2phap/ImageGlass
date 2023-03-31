@@ -21,31 +21,22 @@ namespace ImageGlass.UI;
 
 public interface IColors
 {
-    Color AppBackground { get; }
+    Color AppBg { get; }
     Color AppText { get; }
     Color AppTextDisabled { get; }
+    Color Accent { get; }
 
 
+    Color ControlBg { get; }
+    Color ControlBgHover { get; }
+    Color ControlBgPressed { get; }
+    Color ControlBgPressed2 { get; }
+    Color ControlBgDisabled { get; }
+    Color ControlBgAccent { get; }
+    Color ControlBgAccentHover { get; }
 
 
-    Color GreyBackground { get; }
-    Color HeaderBackground { get; }
-    Color BlueBackground { get; }
-    Color DarkBlueBackground { get; }
-    Color DarkBackground { get; }
-    Color MediumBackground { get; }
-    Color LightBackground { get; }
-    Color LighterBackground { get; }
-    Color LightestBackground { get; }
-    Color LightBorder { get; }
-    Color DarkBorder { get; }
+    Color ControlBorder { get; }
+    Color ControlBorderAccent { get; }
 
-    Color BlueHighlight { get; }
-    Color BlueSelection { get; }
-    Color GreyHighlight { get; }
-    Color GreySelection { get; }
-    Color DarkGreySelection { get; }
-    Color DarkBlueBorder { get; }
-    Color LightBlueBorder { get; }
-    Color ActiveControl { get; }
 }

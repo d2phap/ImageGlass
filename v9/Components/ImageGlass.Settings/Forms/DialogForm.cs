@@ -281,7 +281,7 @@ public partial class DialogForm : ThemedForm
         else
         {
             var colorPalatte = ThemeUtils.GetThemeColorPalatte(darkMode);
-            BackColor = colorPalatte.AppBackground;
+            BackColor = colorPalatte.AppBg;
 
             TableFooter.BackColor = darkMode
                 ? Color.White.WithAlpha(15)

@@ -130,14 +130,14 @@ public class ModernComboBox : ComboBox
                 : ColorPalatte.AppTextDisabled;
 
             var penWidth = DpiApi.Transform(1.1f);
-            var borderColor = ColorPalatte.GreySelection;
-            var fillColor = _hover ? ColorPalatte.LighterBackground : ColorPalatte.LightBackground;
+            var borderColor = ColorPalatte.ControlBorder;
+            var fillColor = _hover ? ColorPalatte.ControlBgHover : ColorPalatte.ControlBg;
 
             borderColor = _hover ? borderColor.WithBrightness(0.3f) : borderColor;
             if (Focused && TabStop)
-                borderColor = ColorPalatte.BlueHighlight;
+                borderColor = ColorPalatte.ControlBorderAccent;
 
-            using (var b = new SolidBrush(ColorPalatte.GreyBackground))
+            using (var b = new SolidBrush(ColorPalatte.ControlBg))
             {
                 g.FillRectangle(b, rect);
             }
@@ -229,15 +229,15 @@ public class ModernComboBox : ComboBox
         var rect = e.Bounds;
 
         var textColor = ColorPalatte.AppText;
-        var fillColor = ColorPalatte.GreyBackground;
+        var fillColor = ColorPalatte.ControlBg;
 
         if ((e.State & DrawItemState.Selected) == DrawItemState.Selected ||
             (e.State & DrawItemState.Focus) == DrawItemState.Focus ||
             (e.State & DrawItemState.NoFocusRect) != DrawItemState.NoFocusRect && !TabStop)
         {
-            fillColor = ColorPalatte.BlueSelection;
+            fillColor = ColorPalatte.Accent;
             if (!_darkMode)
-                textColor = ColorPalatte.GreyBackground;
+                textColor = ColorPalatte.ControlBg;
         }
 
 

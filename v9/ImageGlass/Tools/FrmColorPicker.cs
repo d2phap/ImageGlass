@@ -66,10 +66,10 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
 
         if (!EnableTransparent)
         {
-            BackColor = Config.Theme.ColorPalatte.AppBackground;
+            BackColor = Config.Theme.ColorPalatte.AppBg;
         }
 
-        TableLayout.BackColor = Config.Theme.ColorPalatte.AppBackground;
+        TableLayout.BackColor = Config.Theme.ColorPalatte.AppBg;
 
         base.ApplyTheme(darkMode, style);
 
@@ -78,7 +78,7 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
             TxtHex.BackColor =
             TxtCmyk.BackColor =
             TxtHsl.BackColor =
-            TxtHsv.BackColor = Config.Theme.ColorPalatte.AppBackground;
+            TxtHsv.BackColor = Config.Theme.ColorPalatte.AppBg;
 
         ResumeLayout();
     }

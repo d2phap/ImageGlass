@@ -297,8 +297,8 @@ public class ModernCheckBox : CheckBox
         var g = e.Graphics;
 
         var textColor = ColorPalatte.AppText;
-        var borderColor = Checked ? ColorPalatte.BlueHighlight : ColorPalatte.GreySelection;
-        var fillColor = Checked ? ColorPalatte.BlueHighlight : ColorPalatte.GreyBackground;
+        var borderColor = Checked ? ColorPalatte.ControlBorderAccent : ColorPalatte.ControlBorder;
+        var fillColor = Checked ? ColorPalatte.ControlBorderAccent : ColorPalatte.ControlBg;
 
         if (Enabled)
         {
@@ -315,14 +315,14 @@ public class ModernCheckBox : CheckBox
 
             if (Focused)
             {
-                borderColor = ColorPalatte.BlueHighlight;
+                borderColor = ColorPalatte.ControlBorderAccent;
             }
         }
         else
         {
             textColor = ColorPalatte.AppTextDisabled;
-            borderColor = ColorPalatte.GreySelection;
-            fillColor = ColorPalatte.GreySelection;
+            borderColor = ColorPalatte.ControlBorder;
+            fillColor = ColorPalatte.ControlBorder;
         }
 
         var initX = Padding.Left;

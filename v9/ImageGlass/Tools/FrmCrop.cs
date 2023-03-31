@@ -73,14 +73,14 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
         }
         else
         {
-            BackColor = Config.Theme.ColorPalatte.AppBackground;
+            BackColor = Config.Theme.ColorPalatte.AppBg;
 
             TableBottom.BackColor = darkMode
                 ? Color.White.WithAlpha(15)
                 : Color.Black.WithAlpha(15);
         }
 
-        TableTop.BackColor = Config.Theme.ColorPalatte.AppBackground;
+        TableTop.BackColor = Config.Theme.ColorPalatte.AppBg;
 
 
         base.ApplyTheme(darkMode, style);

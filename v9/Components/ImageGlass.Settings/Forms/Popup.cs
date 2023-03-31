@@ -450,7 +450,7 @@ public partial class Popup : DialogForm
         lblHeading.ForeColor = WinColorsApi.GetAccentColor(false)
             .WithBrightness(darkMode ? 0.4f : 0f);
 
-        tableMain.BackColor = Config.Theme.ColorPalatte.AppBackground;
+        tableMain.BackColor = Config.Theme.ColorPalatte.AppBg;
 
 
         base.ApplyTheme(darkMode, style);

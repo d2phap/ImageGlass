@@ -89,7 +89,7 @@ public class ModernLinkLabel : LinkLabel
         g.CompositingQuality = CompositingQuality.HighQuality;
         g.SmoothingMode = SmoothingMode.HighQuality;
 
-        var textColor = ColorPalatte.BlueHighlight;
+        var textColor = ColorPalatte.ControlBorderAccent;
         var backColor = DarkMode
             ? Color.White.WithAlpha(0)
             : Color.Black.WithAlpha(0);

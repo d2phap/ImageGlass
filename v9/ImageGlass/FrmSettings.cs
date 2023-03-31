@@ -42,7 +42,7 @@ public partial class FrmSettings : ThemedForm
 
         if (!EnableTransparent)
         {
-            BackColor = Config.Theme.ColorPalatte.AppBackground;
+            BackColor = Config.Theme.ColorPalatte.AppBg;
         }
 
         base.ApplyTheme(darkMode, style);

@@ -273,11 +273,11 @@ public class ModernButton : Button
         var isCTAStyle = _isDefault || ButtonStyle == ModernButtonStyle.CTA;
 
         var textColor = colors.AppText;
-        var borderColor = colors.GreySelection;
+        var borderColor = colors.ControlBorder;
         var borderRadius = BHelper.IsOS(WindowsOS.Win11OrLater) ? this.ScaleToDpi(2.5f) : 0;
         var fillColor = isCTAStyle
-            ? colors.DarkBlueBackground
-            : colors.LightBackground;
+            ? colors.ControlBgAccent
+            : colors.ControlBg;
 
 
         if (Enabled)
@@ -287,18 +287,18 @@ public class ModernButton : Button
             {
                 case ModernControlState.Hover:
                     fillColor = isCTAStyle
-                        ? colors.BlueBackground
-                        : colors.LighterBackground;
+                        ? colors.ControlBgAccentHover
+                        : colors.ControlBgHover;
                     borderColor = borderColor.WithBrightness(DarkMode ? 0.3f : -0.1f);
                     break;
 
                 case ModernControlState.Pressed:
-                    fillColor = colors.DarkBackground;
+                    fillColor = colors.ControlBgPressed;
                     break;
             }
 
             if (Focused && TabStop)
-                borderColor = colors.BlueHighlight;
+                borderColor = colors.ControlBorderAccent;
 
 
             // Accent style
@@ -313,7 +313,7 @@ public class ModernButton : Button
             {
                 if (ButtonState == ModernControlState.Pressed)
                 {
-                    fillColor = colors.MediumBackground;
+                    fillColor = colors.ControlBgPressed2;
                 }
 
                 borderColor = fillColor;
@@ -322,7 +322,7 @@ public class ModernButton : Button
         else
         {
             textColor = colors.AppTextDisabled;
-            fillColor = colors.DarkGreySelection;
+            fillColor = colors.ControlBgDisabled;
         }
 
 
