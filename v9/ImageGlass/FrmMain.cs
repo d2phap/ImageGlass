@@ -881,11 +881,6 @@ public partial class FrmMain : ThemedForm
         }
 
         Local.IsBusy = false;
-
-        // Collect system garbage
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-        GC.Collect();
     }
 
 

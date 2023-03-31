@@ -2809,7 +2809,6 @@ public class DXCanvas : DXControl
         StopAnimation(AnimationSource.ImageFadeIn);
         StopCurrentAnimator();
         DisposeImageResources();
-        GC.Collect();
 
 
         // emit OnImageChanging event
