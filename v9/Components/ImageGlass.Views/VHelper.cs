@@ -21,7 +21,7 @@ using DirectN;
 using System.Runtime.InteropServices;
 using WicNet;
 
-namespace ImageGlass.Views;
+namespace ImageGlass.Viewer;
 
 
 /// <summary>

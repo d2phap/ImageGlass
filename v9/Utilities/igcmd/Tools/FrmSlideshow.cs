@@ -25,7 +25,7 @@ using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.Tools;
 using ImageGlass.UI;
-using ImageGlass.Views;
+using ImageGlass.Viewer;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO.Pipes;

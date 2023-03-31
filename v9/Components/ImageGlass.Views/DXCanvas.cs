@@ -31,7 +31,7 @@ using WicNet;
 using static ImageGlass.WebP.WebPWrapper;
 using InterpolationMode = D2Phap.InterpolationMode;
 
-namespace ImageGlass.Views;
+namespace ImageGlass.Viewer;
 
 public class DXCanvas : DXControl
 {

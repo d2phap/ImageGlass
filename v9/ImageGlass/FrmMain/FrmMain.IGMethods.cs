@@ -23,7 +23,7 @@ using ImageGlass.Base.WinApi;
 using ImageGlass.Library.WinAPI;
 using ImageGlass.Settings;
 using ImageGlass.Tools;
-using ImageGlass.Views;
+using ImageGlass.Viewer;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;

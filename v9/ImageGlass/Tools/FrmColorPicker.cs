@@ -20,7 +20,7 @@ using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.UI;
-using ImageGlass.Views;
+using ImageGlass.Viewer;
 
 namespace ImageGlass;
 
@@ -114,7 +114,7 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
         ApplyLanguage();
     }
 
-    private void PicMain_ImageMouseMove(object? sender, Views.ImageMouseEventArgs e)
+    private void PicMain_ImageMouseMove(object? sender, Viewer.ImageMouseEventArgs e)
     {
         if (e.Button != MouseButtons.None) return;
 
@@ -130,7 +130,7 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
         }
     }
 
-    private void PicMain_ImageMouseClick(object? sender, Views.ImageMouseEventArgs e)
+    private void PicMain_ImageMouseClick(object? sender, Viewer.ImageMouseEventArgs e)
     {
         if (sender is not DXCanvas PicMain
             || e.ImageX < 0 || e.ImageY < 0

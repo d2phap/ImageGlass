@@ -21,7 +21,7 @@ using ImageGlass.Base;
 using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.UI;
-using ImageGlass.Views;
+using ImageGlass.Viewer;
 
 namespace ImageGlass;
 
@@ -517,7 +517,7 @@ public partial class FrmCrop : ToolForm, IToolForm<CropToolConfig>
     }
 
 
-    private void PicMain_OnImageSelecting(object? sender, Views.SelectionEventArgs e)
+    private void PicMain_OnImageSelecting(object? sender, Viewer.SelectionEventArgs e)
     {
         NumX.Value = (decimal)e.SourceSelection.X;
         NumY.Value = (decimal)e.SourceSelection.Y;

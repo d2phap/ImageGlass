@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.PicMain = new ImageGlass.Views.DXCanvas();
+            this.PicMain = new ImageGlass.Viewer.DXCanvas();
             this.MnuContext = new ImageGlass.UI.ModernMenu(this.components);
             this.MnuPauseResumeSlideshow = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
@@ -380,7 +380,7 @@
 
         #endregion
 
-        private ImageGlass.Views.DXCanvas PicMain;
+        private ImageGlass.Viewer.DXCanvas PicMain;
         private ImageGlass.UI.ModernMenu MnuContext;
         private ToolStripMenuItem MnuPauseResumeSlideshow;
         private ToolStripMenuItem MnuExitSlideshow;

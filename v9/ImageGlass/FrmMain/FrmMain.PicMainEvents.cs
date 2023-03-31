@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.PhotoBox;
 using ImageGlass.Settings;
-using ImageGlass.Views;
+using ImageGlass.Viewer;
 
 namespace ImageGlass;
 

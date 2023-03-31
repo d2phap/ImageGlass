@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base.PhotoBox;
 
-namespace ImageGlass.Views;
+namespace ImageGlass.Viewer;
 
 
 public static class DXCanvasExtensions
