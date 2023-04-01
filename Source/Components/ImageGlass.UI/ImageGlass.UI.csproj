@@ -115,10 +115,10 @@
       <HintPath>..\..\packages\DotNetZip.1.16.0\lib\net40\DotNetZip.dll</HintPath>
     </Reference>
     <Reference Include="Magick.NET.Core, Version=13.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Magick.NET.Core.13.0.0\lib\netstandard20\Magick.NET.Core.dll</HintPath>
+      <HintPath>..\..\packages\Magick.NET.Core.13.0.1\lib\netstandard20\Magick.NET.Core.dll</HintPath>
     </Reference>
     <Reference Include="Magick.NET.SystemDrawing, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Magick.NET.SystemDrawing.7.0.0\lib\net462\Magick.NET.SystemDrawing.dll</HintPath>
+      <HintPath>..\..\packages\Magick.NET.SystemDrawing.7.0.1\lib\net462\Magick.NET.SystemDrawing.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
