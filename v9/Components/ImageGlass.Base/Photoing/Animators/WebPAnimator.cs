@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using static ImageGlass.WebP.WebPWrapper;
+using ImageGlass.Base.Photoing.Codecs;
 
 namespace ImageGlass.Base.Photoing.Animators;
 
@@ -35,11 +35,10 @@ public class WebPAnimator : IDisposable
         if (disposing)
         {
             // Free any other managed objects here.
-            _frames = Enumerable.Empty<FrameData>();
-
-            _framesCount = 0;
             _frameIndex = 0;
             _enable = false;
+
+            // don't dispose _frames here
         }
 
         // Free any unmanaged objects here.
@@ -60,18 +59,25 @@ public class WebPAnimator : IDisposable
     #endregion
 
 
-    private IEnumerable<FrameData> _frames;
+    private AnimatedImage _frames;
     private int _framesCount = 0;
     private int _frameIndex = 0;
     private bool _enable = false;
 
+
+    /// <summary>
+    /// Occurs when the image frame is changed.
+    /// </summary>
     public event EventHandler<FrameChangedEventArgs> FrameChanged;
 
 
-    public WebPAnimator(IEnumerable<FrameData> frames)
+    /// <summary>
+    /// Initialize new instance of <see cref="WebPAnimator"/>.
+    /// </summary>
+    public WebPAnimator(AnimatedImage frames)
     {
         _frames = frames;
-        _framesCount = frames.Count();
+        _framesCount = frames.FramesCount;
     }
 
 
@@ -101,15 +107,9 @@ public class WebPAnimator : IDisposable
     /// <summary>
     /// Gets image frame data.
     /// </summary>
-    public FrameData? GetFrame(int frameIndex)
+    public ImageFrameData? GetFrame(int frameIndex)
     {
-        try
-        {
-            return _frames.ElementAt(frameIndex);
-        }
-        catch { }
-
-        return null;
+        return _frames.GetFrame(frameIndex);
     }
 
 
@@ -127,18 +127,17 @@ public class WebPAnimator : IDisposable
             }
 
             var frame = GetFrame(_frameIndex);
-            Thread.Sleep(frame.Duration);
-
-            FrameChanged?.Invoke(this, new FrameChangedEventArgs()
+            if (frame != null)
             {
-                FrameIndex = _frameIndex,
-                Bitmap = frame.Bitmap,
-            });
+                FrameChanged?.Invoke(this, new FrameChangedEventArgs()
+                {
+                    FrameData = frame,
+                });
+            }
 
-            Thread.Sleep(frame.Duration);
+            Thread.Sleep(frame?.Duration ?? 10);
         }
     }
-
 
 }
 
@@ -146,12 +145,7 @@ public class WebPAnimator : IDisposable
 public class FrameChangedEventArgs : EventArgs
 {
     /// <summary>
-    /// The current frame index.
+    /// Gets the current frame data.
     /// </summary>
-    public int FrameIndex { get; init; }
-
-    /// <summary>
-    /// The current frame bitmap.
-    /// </summary>
-    public Bitmap? Bitmap { get; init; }
+    public ImageFrameData? FrameData { get; init; }
 }
