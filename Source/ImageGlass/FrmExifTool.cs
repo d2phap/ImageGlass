@@ -34,6 +34,14 @@ namespace ImageGlass {
 
             // Apply theme
             Configs.ApplyFormTheme(this, Configs.Theme);
+
+
+            // Load config
+            // Windows Bound (Position + Size)
+            Bounds = Configs.FrmExifToolWindowBound;
+
+            // windows state
+            WindowState = Configs.FrmExifToolWindowState;
         }
 
 
@@ -50,20 +58,13 @@ namespace ImageGlass {
 
             // check if exif tool exists
             this.exifTool.ToolPath = Configs.ExifToolExePath;
-            if (!await this.exifTool.CheckExistAsync()) {
-                SetUIVisibility(true);
-            }
-            else {
-                SetUIVisibility(false);
+
+            var exiftoolFound = await this.exifTool.CheckExistAsync();
+            SetUIVisibility(exiftoolFound);
+
+            if (exiftoolFound) {
                 Local_OnImageChanged(null, null);
             }
-
-            // Load config
-            // Windows Bound (Position + Size)
-            Bounds = Configs.FrmExifToolWindowBound;
-
-            // windows state
-            WindowState = Configs.FrmExifToolWindowState;
 
             Local.OnImageChanged += Local_OnImageChanged;
         }
@@ -113,17 +114,19 @@ namespace ImageGlass {
             if (ofd.ShowDialog() == DialogResult.OK) {
                 this.exifTool = new ExifToolWrapper(ofd.FileName);
 
-                if (!await this.exifTool.CheckExistAsync()) {
-                    SetUIVisibility(true);
+                var exiftoolFound = await this.exifTool.CheckExistAsync();
+                SetUIVisibility(exiftoolFound);
+
+                if (exiftoolFound) {
+                    Configs.ExifToolExePath = ofd.FileName;
+                    Local_OnImageChanged(null, null);
+                }
+                else {
                     lblNotFound.Text = string.Format(
                         Configs.Language.Items[$"{nameof(frmSetting)}.lnkSelectExifTool._NotFound"],
                         ofd.FileName);
                 }
-                else {
-                    Configs.ExifToolExePath = ofd.FileName;
-                    SetUIVisibility(false);
-                    Local_OnImageChanged(null, null);
-                }
+
             }
         }
 
@@ -169,16 +172,9 @@ namespace ImageGlass {
         /// <summary>
         /// Change UI according to existence of Exif tool
         /// </summary>
-        /// <param name="isNotFound"></param>
-        private void SetUIVisibility(bool isNotFound) {
-            if (isNotFound) {
-                this.Text = Configs.Language.Items["frmMain.mnuExifTool"];
-
-                panNotFound.Visible = true;
-                lvExifItems.Visible = false;
-                txtExifToolCommandPreview.Visible = false;
-            }
-            else {
+        /// <param name="exiftoolFound"></param>
+        private void SetUIVisibility(bool exiftoolFound) {
+            if (exiftoolFound) {
                 try {
                     this.Text = Path.GetFileName(Configs.ExifToolExePath);
                     this.Icon = Icon.ExtractAssociatedIcon(Configs.ExifToolExePath);
@@ -187,11 +183,16 @@ namespace ImageGlass {
                     this.Text = "Exiftool";
                     this.Icon = Icon.FromHandle(Configs.Theme.Logo.Image.GetHicon());
                 }
-
-                panNotFound.Visible = false;
-                lvExifItems.Visible = true;
-                txtExifToolCommandPreview.Visible = true;
             }
+            else {
+                this.Text = Configs.Language.Items["frmMain.mnuExifTool"];
+            }
+
+            panNotFound.Visible = !exiftoolFound;
+            lvExifItems.Visible = exiftoolFound;
+            txtExifToolCommandPreview.Visible = exiftoolFound;
+            btnCopyValue.Visible = exiftoolFound;
+            btnExport.Visible = exiftoolFound;
         }
 
 
