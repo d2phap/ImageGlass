@@ -19,7 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageMagick;
 using System.Drawing.Imaging;
 using WicNet;
-using static ImageGlass.WebP.WebPWrapper;
 
 namespace ImageGlass.Base.Photoing.Codecs;
 
@@ -32,11 +31,11 @@ public class IgImgData : IDisposable
 
     #region IDisposable Disposing
 
-    private bool _isDisposed = false;
+    public bool IsDisposed = false;
 
     protected virtual void Dispose(bool disposing)
     {
-        if (_isDisposed)
+        if (IsDisposed)
             return;
 
         if (disposing)
@@ -49,13 +48,17 @@ public class IgImgData : IDisposable
             {
                 bmp.Dispose();
             }
-            else if (Source is IEnumerable<FrameData> frames)
+            else if (Source is WicBitmapDecoder decoder)
             {
-                foreach (var frame in frames)
+                decoder.Dispose();
+            }
+            else if (Source is AnimatedImage animatedImg)
+            {
+                foreach (var frame in animatedImg.Frames)
                 {
-                    frame.Bitmap.Dispose();
-                    frame.Bitmap = null;
+                    frame.Dispose();
                 }
+                animatedImg.Dispose();
             }
             Source = null;
 
@@ -65,7 +68,7 @@ public class IgImgData : IDisposable
         }
 
         // Free any unmanaged objects here.
-        _isDisposed = true;
+        IsDisposed = true;
     }
 
     public virtual void Dispose()

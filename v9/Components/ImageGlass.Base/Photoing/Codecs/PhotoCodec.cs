@@ -673,7 +673,7 @@ public static class PhotoCodec
             HasAlpha = metadata?.HasAlpha ?? false,
             CanAnimate = metadata?.CanAnimate ?? false,
         };
-        
+
 
         #region Read image data
         switch (ext)
@@ -730,19 +730,13 @@ public static class PhotoCodec
                     if (result.CanAnimate)
                     {
                         var aniWebP = webp.AnimLoad(filePath);
-
-                        // standadize frame duration
-                        foreach (var frameData in aniWebP)
+                        var frames = aniWebP.Select(frame =>
                         {
-                            if (frameData.Duration == 0)
-                            {
-                                frameData.Duration = 100;
-                            }
+                            var duration = frame.Duration > 0 ? frame.Duration : 100;
+                            return new ImageFrameData(frame.Bitmap, duration);
+                        });
 
-                            frameData.Duration /= 2;
-                        }
-
-                        result.Source = aniWebP;
+                        result.Source = new AnimatedImage(frames);
                     }
                     else
                     {
