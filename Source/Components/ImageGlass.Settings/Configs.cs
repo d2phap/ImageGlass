@@ -320,6 +320,11 @@ namespace ImageGlass.Settings {
         /// </summary>
         public static bool AutoFocusToolbarOnHover { get; set; } = false;
 
+        /// <summary>
+        /// Gets, sets value indicates that the app name should be hidden.
+        /// </summary>
+        public static bool HideAppName { get; set; } = false;
+
 
         #endregion
 
@@ -673,6 +678,7 @@ namespace ImageGlass.Settings {
             IsStartWithOs = Get<bool>(nameof(IsStartWithOs), IsStartWithOs);
             AutoDisplayNewImageInFolder = Get<bool>(nameof(AutoDisplayNewImageInFolder), AutoDisplayNewImageInFolder);
             AutoFocusToolbarOnHover = Get<bool>(nameof(AutoFocusToolbarOnHover), AutoFocusToolbarOnHover);
+            HideAppName = Get<bool>(nameof(HideAppName), HideAppName);
 
             #endregion
 
@@ -927,6 +933,7 @@ namespace ImageGlass.Settings {
             Set(nameof(IsStartWithOs), IsStartWithOs);
             Set(nameof(AutoDisplayNewImageInFolder), AutoDisplayNewImageInFolder);
             Set(nameof(AutoFocusToolbarOnHover), AutoFocusToolbarOnHover);
+            Set(nameof(HideAppName), HideAppName);
 
             #endregion
 
