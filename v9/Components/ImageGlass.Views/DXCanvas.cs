@@ -28,7 +28,6 @@ using System.Drawing.Drawing2D;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using WicNet;
-using static ImageGlass.WebP.WebPWrapper;
 using InterpolationMode = D2Phap.InterpolationMode;
 
 namespace ImageGlass.Viewer;
@@ -2798,6 +2797,7 @@ public class DXCanvas : DXControl
         // reset variables
         _imageDrawingState = ImageDrawingState.NotStarted;
         _animationSource = AnimationSource.None;
+        _animatorSource = AnimatorSource.None;
         _isPreviewing = isForPreview;
         _clientSelection = default;
 
@@ -2845,12 +2845,10 @@ public class DXCanvas : DXControl
             }
             else
             {
-                if (imgData.Source is IEnumerable<FrameData> webpFrames)
+                if (imgData.Source is AnimatedImage animatedImg)
                 {
-                    _webpAnimator = new WebPAnimator(webpFrames);
+                    _webpAnimator = new WebPAnimator(animatedImg);
                     _webpAnimator.FrameChanged += WebpAnimator_FrameChanged;
-
-                    _imageGdiPlus = _webpAnimator.GetFrame(0)?.Bitmap;
                 }
                 else
                 {
@@ -3062,14 +3060,17 @@ public class DXCanvas : DXControl
         HasAlphaPixels = imgData?.HasAlpha ?? false;
 
 
-        if (imgData?.Source is IEnumerable<FrameData> webpFrames)
+        if (imgData?.Source is AnimatedImage animatedImg)
         {
-            var firstFrame = webpFrames.FirstOrDefault();
-            SourceWidth = firstFrame.Bitmap?.Width ?? 0;
-            SourceHeight = firstFrame.Bitmap?.Height ?? 0;
+            var firstFrame = animatedImg.GetFrame(0);
+            if (firstFrame?.Bitmap is Bitmap bmp)
+            {
+                SourceWidth = bmp.Width;
+                SourceHeight = bmp.Height;
 
-            _animatorSource = AnimatorSource.WebP;
-            UseHardwareAcceleration = false;
+                _animatorSource = AnimatorSource.WebP;
+                UseHardwareAcceleration = false;
+            }
         }
         else if (imgData?.Source is Bitmap bmp)
         {
@@ -3097,7 +3098,7 @@ public class DXCanvas : DXControl
                 SourceWidth = imgData?.Image?.Width ?? 0;
                 SourceHeight = imgData?.Image?.Height ?? 0;
             }
-            
+
 
             var exceedMaxDimention = SourceWidth > Constants.MAX_IMAGE_DIMENSION
                 || SourceHeight > Constants.MAX_IMAGE_DIMENSION;
@@ -3108,8 +3109,13 @@ public class DXCanvas : DXControl
 
     private void WebpAnimator_FrameChanged(object? sender, FrameChangedEventArgs e)
     {
-        _imageGdiPlus = e.Bitmap;
-        Invalidate();
+        if (!IsImageAnimating || _animatorSource != AnimatorSource.WebP) return;
+
+        if (e.FrameData?.Bitmap is Bitmap bmp)
+        {
+            _imageGdiPlus = bmp;
+            Invalidate();
+        }
     }
 
     private void OnImageFrameChanged(object? sender, EventArgs eventArgs)
