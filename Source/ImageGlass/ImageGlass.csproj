@@ -268,9 +268,7 @@
     <Compile Include="ToolForms\frmCrop.Designer.cs">
       <DependentUpon>frmCrop.cs</DependentUpon>
     </Compile>
-    <Compile Include="ToolForms\frmPageNav.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="ToolForms\frmPageNav.cs" />
     <Compile Include="ToolForms\frmPageNav.Designer.cs">
       <DependentUpon>frmPageNav.cs</DependentUpon>
     </Compile>
