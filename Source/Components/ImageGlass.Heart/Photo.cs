@@ -258,11 +258,17 @@ namespace ImageGlass.Heart {
                 if (imgColl.Count > 1 && forceLoadFirstPage is false) {
                     imgColl.Read(filename, settings);
 
-                    Parallel.ForEach(imgColl, (imgPageM) => {
-                        (exif, colorProfile) = PreprocesMagickImage((MagickImage)imgPageM);
-                    });
+                    // fallback: convert WEBP to GIF for animation
+                    if (ext == ".WEBP") {
+                        bitmap = imgColl.ToBitmap(ImageFormat.Gif);
+                    }
+                    else {
+                        Parallel.ForEach(imgColl, (imgPageM) => {
+                            (exif, colorProfile) = PreprocesMagickImage((MagickImage)imgPageM);
+                        });
 
-                    bitmap = imgColl.ToBitmap();
+                        bitmap = imgColl.ToBitmap();
+                    }
 
                     return;
                 }
