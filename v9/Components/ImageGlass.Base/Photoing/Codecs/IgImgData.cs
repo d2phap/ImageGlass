@@ -119,8 +119,17 @@ public class IgImgData : IDisposable
 
             if (CanAnimate)
             {
+                // fall back to use Magick.NET
                 data.MultiFrameImage.Coalesce();
-                Source = data.MultiFrameImage.ToBitmap(ImageFormat.Gif);
+                var frames = data.MultiFrameImage.AsEnumerable().Select(frame =>
+                {
+                    var duration = frame.AnimationDelay > 0 ? frame.AnimationDelay : 10;
+                    duration = duration * 1000 / frame.AnimationTicksPerSecond;
+
+                    return new ImageFrameData(frame.ToBitmap(ImageFormat.Gif), duration);
+                });
+
+                Source = new AnimatedImage(frames);
             }
             else
             {
