@@ -41,7 +41,6 @@ public class DXCanvas : DXControl
 
     private IComObject<ID2D1Bitmap1>? _imageD2D = null;
     private Bitmap? _imageGdiPlus = null;
-    private WebPAnimator? _imgAnimator = null;
     private CancellationTokenSource? _msgTokenSrc;
 
 
@@ -63,7 +62,6 @@ public class DXCanvas : DXControl
     private ImageDrawingState _imageDrawingState = ImageDrawingState.NotStarted;
     private bool _isPreviewing = false;
     private bool _debugMode = false;
-    private AnimatorSource _animatorSource = AnimatorSource.None;
 
 
     private RectangleF _srcRect = default; // image source rectangle
@@ -97,7 +95,9 @@ public class DXCanvas : DXControl
     private TextureBrush? _checkerboardBrushGdip;
     private ComObject<ID2D1BitmapBrush1>? _checkerboardBrushD2D;
 
-    private IImageAnimator _gifAnimator;
+    private AnimatorSource _animatorSource = AnimatorSource.None;
+    private GifAnimator? _gifAnimator = null;
+    private WebPAnimator? _imgAnimator = null;
     private AnimationSource _animationSource = AnimationSource.None;
     private bool _shouldRecalculateDrawingRegion = true;
 
@@ -961,13 +961,6 @@ public class DXCanvas : DXControl
     {
         SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.UserPaint, true);
 
-        // request for high resolution gif animation
-        if (!TimerApi.HasRequestedRateAtLeastAsFastAs(10) && TimerApi.TimeBeginPeriod(10))
-        {
-            HighResolutionGifAnimator.SetTickTimeInMilliseconds(10);
-        }
-        _gifAnimator = new HighResolutionGifAnimator();
-
         _clickTimer.Tick += ClickTimer_Tick;
     }
 
@@ -1411,14 +1404,8 @@ public class DXCanvas : DXControl
 
 
         // draw image layer
-        if (CanImageAnimate && IsImageAnimating && _animatorSource == AnimatorSource.GifAnimator)
-        {
-            DrawGifFrame(g);
-        }
-        else
-        {
-            DrawImageLayer(g);
-        }
+        DrawImageLayer(g);
+
 
         // emits event ImageDrawn
         if (isImageDrawn)
@@ -1458,58 +1445,6 @@ public class DXCanvas : DXControl
             _imageDrawingState = ImageDrawingState.Done;
             ImageLoaded?.Invoke(this, EventArgs.Empty);
         }
-    }
-
-
-    /// <summary>
-    /// Draw GIF frame using GDI+
-    /// </summary>
-    protected virtual void DrawGifFrame(IGraphics g)
-    {
-        if (Source == ImageSource.Null) return;
-
-        // use GDI+ to handle GIF animation
-        if (g is not GdipGraphics gdip) return;
-
-        gdip.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
-        gdip.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-        try
-        {
-            if (IsImageAnimating && !DesignMode)
-            {
-                _gifAnimator.UpdateFrames(_imageGdiPlus);
-            }
-
-            g.DrawBitmap(_imageGdiPlus, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation);
-        }
-        catch (ArgumentException)
-        {
-            // ignore errors that occur due to the image being disposed
-        }
-        catch (OutOfMemoryException)
-        {
-            // also ignore errors that occur due to running out of memory
-        }
-        catch (ExternalException)
-        {
-            // stop the animation and reset to the first frame.
-            IsImageAnimating = false;
-            _gifAnimator.StopAnimate(_imageGdiPlus);
-        }
-        catch (InvalidOperationException)
-        {
-            // issue #373: a race condition caused this exception: deleting
-            // the image from underneath us could cause a collision in
-            // HighResolutionGif_animator. I've not been able to repro;
-            // hopefully this is the correct response.
-
-            // stop the animation and reset to the first frame.
-            IsImageAnimating = false;
-            _gifAnimator.StopAnimate(_imageGdiPlus);
-        }
-
-        gdip.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
     }
 
 
@@ -1615,12 +1550,19 @@ public class DXCanvas : DXControl
         }
         else
         {
+            if (g is not GdipGraphics ggdi) return;
+
+            ggdi.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
+            ggdi.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
             try
             {
                 // make sure no exception when _imageGdiPlus is disposed
                 g.DrawBitmap(_imageGdiPlus, _destRect, _srcRect, (InterpolationMode)CurrentInterpolation, _imageOpacity);
             }
             catch { }
+
+            ggdi.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
         }
     }
 
@@ -2918,14 +2860,7 @@ public class DXCanvas : DXControl
             }
             else if (_animatorSource == AnimatorSource.GifAnimator)
             {
-                DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
-
-                Source = ImageSource.GDIPlus;
-                UseHardwareAcceleration = false;
-
-                // since _imageGdiPlus is not disposed when calling SetImage,
-                // we can use it here without re-assign
-                _gifAnimator.Animate(_imageGdiPlus, GifImage_FrameChanged);
+                _gifAnimator?.Animate();
             }
 
             IsImageAnimating = true;
@@ -2939,11 +2874,8 @@ public class DXCanvas : DXControl
     /// </summary>
     public void StopCurrentAnimator()
     {
-        if (Source != ImageSource.Null)
-        {
-            _imgAnimator?.StopAnimate();
-            _gifAnimator.StopAnimate(_imageGdiPlus);
-        }
+        _imgAnimator?.StopAnimate();
+        _gifAnimator?.StopAnimate();
 
         IsImageAnimating = false;
     }
@@ -3106,7 +3038,7 @@ public class DXCanvas : DXControl
                 SourceHeight = bmp.Height;
 
                 _animatorSource = AnimatorSource.ImageAnimator;
-                UseHardwareAcceleration = !autoAnimate;
+                UseHardwareAcceleration = true;
             }
         }
         else if (imgData?.Source is Bitmap bmp)
@@ -3120,7 +3052,7 @@ public class DXCanvas : DXControl
                 _animatorSource = AnimatorSource.GifAnimator;
             }
 
-            UseHardwareAcceleration = !autoAnimate;
+            UseHardwareAcceleration = true;
         }
         else
         {
@@ -3151,12 +3083,20 @@ public class DXCanvas : DXControl
     /// </summary>
     private void CreateAnimatorFromSource(IgImgData? imgData)
     {
-        if (imgData?.Source is not AnimatedImage animatedImg) return;
+        if (imgData?.Source is AnimatedImage animatedImg)
+        {
+            DisposeAnimator();
 
-        DisposeAnimator();
+            _imgAnimator = new WebPAnimator(animatedImg);
+            _imgAnimator.FrameChanged += ImageAnimator_FrameChanged;
+        }
 
-        _imgAnimator = new WebPAnimator(animatedImg);
-        _imgAnimator.FrameChanged += ImageAnimator_FrameChanged;
+        else if (imgData?.Source is Bitmap bmp && CanImageAnimate)
+        {
+            _gifAnimator = new GifAnimator(bmp);
+            _gifAnimator.FrameChanged += GifAnimator_FrameChanged;
+        }
+
     }
 
 
@@ -3165,11 +3105,19 @@ public class DXCanvas : DXControl
     /// </summary>
     private void DisposeAnimator()
     {
-        if (_imgAnimator == null) return;
+        if (_imgAnimator != null)
+        {
+            _imgAnimator.FrameChanged -= ImageAnimator_FrameChanged;
+            _imgAnimator.Dispose();
+            _imgAnimator = null;
+        }
 
-        _imgAnimator.FrameChanged -= ImageAnimator_FrameChanged;
-        _imgAnimator.Dispose();
-        _imgAnimator = null;
+        if (_gifAnimator != null)
+        {
+            _gifAnimator.FrameChanged -= GifAnimator_FrameChanged;
+            _gifAnimator.Dispose();
+            _gifAnimator = null;
+        }
     }
 
 
@@ -3178,26 +3126,61 @@ public class DXCanvas : DXControl
 #if DEBUG
         Trace.WriteLine("######### ImageAnimator_FrameChanged");
 #endif
-        if (!IsImageAnimating || _animatorSource != AnimatorSource.ImageAnimator) return;
+        if (InvokeRequired)
+        {
+            Invoke(delegate { ImageAnimator_FrameChanged(sender, e); });
+            return;
+        }
 
+        if (!IsImageAnimating || _animatorSource != AnimatorSource.ImageAnimator) return;
         if (e.FrameData?.Bitmap is Bitmap bmp)
         {
+            //DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
+
+            //_imageGdiPlus = bmp;
+            //Source = ImageSource.GDIPlus;
+            //UseHardwareAcceleration = false;
+
+            //Invalidate();
+
+
             DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
 
-            _imageGdiPlus = bmp;
-            Source = ImageSource.GDIPlus;
-            UseHardwareAcceleration = false;
+            using var wicSrc = BHelper.ToWicBitmapSource(bmp);
+            _imageD2D = DXHelper.ToD2D1Bitmap(Device, wicSrc);
+
+            Source = ImageSource.Direct2D;
+            UseHardwareAcceleration = true;
 
             Invalidate();
         }
     }
 
-    private void GifImage_FrameChanged(object? sender, EventArgs eventArgs)
+    private void GifAnimator_FrameChanged(object? sender, EventArgs e)
     {
 #if DEBUG
-        Trace.WriteLine(">>>>>>>> GifImage_FrameChanged");
+        Trace.WriteLine(">>>>>>>>>>>> GifAnimator_FrameChanged");
 #endif
-        Invalidate();
+
+        if (InvokeRequired)
+        {
+            Invoke(delegate { GifAnimator_FrameChanged(sender, e); });
+            return;
+        }
+
+        if (!IsImageAnimating || _animatorSource != AnimatorSource.GifAnimator) return;
+        if (sender is Bitmap bmp)
+        {
+            DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
+
+            using var wicSrc = BHelper.ToWicBitmapSource(bmp);
+            _imageD2D = DXHelper.ToD2D1Bitmap(Device, wicSrc);
+
+            Source = ImageSource.Direct2D;
+            UseHardwareAcceleration = true;
+
+            Invalidate();
+        }
     }
 
 
