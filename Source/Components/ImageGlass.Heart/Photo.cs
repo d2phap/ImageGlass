@@ -150,17 +150,26 @@ namespace ImageGlass.Heart {
 
                 case ".WEBP":
                     try {
-                        using var webp = new WebPWrapper();
-                        var aniWebP = webp.AnimLoad(filename);
+                        using var imgC = new MagickImageCollection();
+                        imgC.Ping(filename);
 
-                        var ms = new MemoryStream();
-                        using var gif = new GifEncoder(ms);
+                        if (imgC.Count > 1) {
+                            using var webp = new WebPWrapper();
+                            var aniWebP = webp.AnimLoad(filename);
 
-                        foreach (var frame in aniWebP) {
-                            gif.AddFrame(frame.Bitmap, frameDelay: TimeSpan.FromMilliseconds(frame.Duration));
+                            var ms = new MemoryStream();
+                            using var gif = new GifEncoder(ms);
+
+                            foreach (var frame in aniWebP) {
+                                gif.AddFrame(frame.Bitmap, frameDelay: TimeSpan.FromMilliseconds(frame.Duration));
+                            }
+
+                            bitmap = new Bitmap(ms);
                         }
-
-                        bitmap = new Bitmap(ms);
+                        else {
+                            // read single frame
+                            ReadWithMagickImage();
+                        }
                     }
                     catch {
                         // #637: falls over with certain images, fallback to MagickImage
