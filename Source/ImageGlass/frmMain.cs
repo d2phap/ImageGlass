@@ -866,7 +866,8 @@ namespace ImageGlass {
                 return;
             }
 
-            var appName = Application.ProductName;
+            var appName = Configs.HideAppName ? "" : Application.ProductName;
+            var appNameWithDash = Configs.HideAppName ? "" : $"- {Application.ProductName}";
             const string SEP = "  |  ";
             var imgSize = string.Empty;
             var fileSize = string.Empty;
@@ -884,10 +885,10 @@ namespace ImageGlass {
                     catch { }
 
                     // (Image data)  |  {zoom}  |  {image size} - ImageGlass
-                    Text = $"{imgData}  |  {zoom}  |  {imgSize}  - {appName}";
+                    Text = $"{imgData}  |  {zoom}  |  {imgSize}  {appNameWithDash}";
                 }
                 else {
-                    Text = $"{imgData}  |  {zoom}  - {appName}";
+                    Text = $"{imgData}  |  {zoom}  {appNameWithDash}";
                 }
             }
             else {
@@ -935,9 +936,9 @@ namespace ImageGlass {
                     Local.FPageNav.lblPageInfo.Text = "";
 
                     if (!isShowMoreData) // size and date not available
-                        Text = $"{filename}{SEP}{indexTotal}  - {appName}";
+                        Text = $"{filename}{SEP}{indexTotal}  {appNameWithDash}";
                     else
-                        Text = $"{filename}{SEP}{indexTotal}{SEP}{fileSize}  - {appName}";
+                        Text = $"{filename}{SEP}{indexTotal}{SEP}{fileSize}  {appNameWithDash}";
                 }
                 else {
                     zoom = $"{picMain.Zoom:F2}%";
@@ -960,10 +961,10 @@ namespace ImageGlass {
                         }
                         catch { }
 
-                        Text = $"{filename}{SEP}{indexTotal}{SEP}{pageInfo}{zoom}{SEP}{imgSize}{SEP}{fileSize}{exifInfo}  - {appName}";
+                        Text = $"{filename}{SEP}{indexTotal}{SEP}{pageInfo}{zoom}{SEP}{imgSize}{SEP}{fileSize}{exifInfo}  {appNameWithDash}";
                     }
                     else {
-                        Text = $"{filename}{SEP}{indexTotal}{SEP}{pageInfo}{zoom}{SEP}{fileSize}{exifInfo}  - {appName}";
+                        Text = $"{filename}{SEP}{indexTotal}{SEP}{pageInfo}{zoom}{SEP}{fileSize}{exifInfo}  {appNameWithDash}";
                     }
                 }
             }

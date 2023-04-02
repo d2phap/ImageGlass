@@ -90,6 +90,8 @@ namespace ImageGlass.Library.Image {
             string filePath,
             CancellationToken cancelToken = default,
             params string[] exifToolCmd) {
+            if (string.IsNullOrEmpty(filePath)) return;
+
             var cmdOutput = string.Empty;
             var pathContainsUnicode = CheckAndPurifyUnicodePath(filePath, out var cleanPath);
 
@@ -220,6 +222,11 @@ namespace ImageGlass.Library.Image {
         /// <c>true</c> if the <paramref name="filePath"/> contains unicode and is purified.
         /// </returns>
         private static bool CheckAndPurifyUnicodePath(string filePath, out string cleanPath) {
+            if (string.IsNullOrEmpty(filePath)) {
+                cleanPath = string.Empty;
+                return false;
+            }
+
             const int MAX_ANSICODE = 255;
 
 
