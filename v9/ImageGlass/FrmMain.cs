@@ -1017,7 +1017,7 @@ public partial class FrmMain : ThemedForm
 
             // enable image transition
             var enableFadingTrainsition = false;
-            if (Config.EnableImageTransition)
+            if (Config.EnableImageTransition && !e.IsViewingSeparateFrame)
             {
                 var isImageBigForFading = Local.Metadata.Width > 8000
                     || Local.Metadata.Height > 8000;
