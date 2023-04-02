@@ -19,8 +19,8 @@
                 <File SourcePath="..\..\Setup\Settings\logo_star.svg"
                       DestinationPath="ImageGlass\Themes\Kobe\logo.svg" />
                 
-                <File SourcePath="..\..\EULA.txt"
-                      DestinationPath="ImageGlass\EULA.txt" />
+                <File SourcePath="..\..\LICENSE"
+                      DestinationPath="ImageGlass\LICENSE" />
                 
                 <File SourcePath="..\..\Setup\Settings\igconfig.admin.xml"
                       DestinationPath="ImageGlass\igconfig.admin.xml" />
