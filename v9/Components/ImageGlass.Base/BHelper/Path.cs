@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base.WinApi;
 using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Diagnostics;
 using System.Web;
 
@@ -260,13 +261,16 @@ public partial class BHelper
     /// Delete a file
     /// </summary>
     /// <param name="filePath">Full file path to delete</param>
-    /// <param name="moveToRecycleBin">True: Move to Recycle bin | False: Delete permanently</param>
-    /// <returns></returns>
+    /// <param name="moveToRecycleBin"><c>true</c>: Move to Recycle bin; <c>false</c>: Delete permanently</param>
     public static void DeleteFile(string filePath, bool moveToRecycleBin = true)
     {
         var option = moveToRecycleBin ? RecycleOption.SendToRecycleBin : RecycleOption.DeletePermanently;
 
-        FileSystem.DeleteFile(filePath, UIOption.OnlyErrorDialogs, option);
+        try
+        {
+            FileSystem.DeleteFile(filePath, UIOption.OnlyErrorDialogs, option);
+        }
+        catch (OperationCanceledException) { }
     }
 
 }

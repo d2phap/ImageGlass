@@ -246,7 +246,7 @@ public partial class BHelper
     /// <param name="useICM">Use color profile.</param>
     public static Bitmap ToGdiPlusBitmap(string filePath, bool useICM = true)
     {
-        using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+        using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
         var ms = new MemoryStream();
         fs.CopyTo(ms);
         ms.Position = 0;

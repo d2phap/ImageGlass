@@ -1967,8 +1967,8 @@ public partial class FrmMain
         {
             try
             {
+                IG_Unload();
                 BHelper.DeleteFile(filePath, moveToRecycleBin);
-
 
                 // manually update the change if FileWatcher is not enabled
                 if (!Config.EnableFileWatcher)
