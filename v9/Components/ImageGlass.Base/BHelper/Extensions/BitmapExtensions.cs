@@ -51,4 +51,22 @@ public static class BitmapExtensions
             return color;
         }
     }
+
+
+    /// <summary>
+    /// Sets the active frame of the bitmap using <see cref="FrameDimension.Time"/>.
+    /// </summary>
+    public static void SetActiveTimeFrame(this Bitmap? bmp, int frameIndex)
+    {
+        if (bmp == null || frameIndex < 0) return;
+
+        var frameCount = bmp.GetFrameCount(FrameDimension.Time);
+
+        // Check if frame index is greater than upper limit
+        if (frameIndex >= frameCount) return;
+
+        // Set active frame index
+        bmp.SelectActiveFrame(FrameDimension.Time, frameIndex);
+    }
+
 }

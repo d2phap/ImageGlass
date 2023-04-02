@@ -1024,12 +1024,13 @@ public partial class FrmMain : ThemedForm
                 enableFadingTrainsition = !_isShowingImagePreview && !isImageBigForFading;
             }
 
+            var resetZoom = (Config.EnableWindowFit || e.IsViewingSeparateFrame) ? false : e.ResetZoom;
 
             // set the main image
             PicMain.SetImage(e.Data.ImgData,
                 autoAnimate: !e.IsViewingSeparateFrame,
                 frameIndex: e.FrameIndex,
-                resetZoom: Config.EnableWindowFit ? false : e.ResetZoom,
+                resetZoom: resetZoom,
                 enableFading: enableFadingTrainsition);
 
             // update window fit

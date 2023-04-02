@@ -1410,7 +1410,7 @@ public class DXCanvas : DXControl
 
 
         // draw image layer
-        if (CanImageAnimate && _animatorSource == AnimatorSource.GifAnimator)
+        if (CanImageAnimate && IsImageAnimating && _animatorSource == AnimatorSource.GifAnimator)
         {
             DrawGifFrame(g);
         }
@@ -2840,6 +2840,13 @@ public class DXCanvas : DXControl
 
                     _imageD2D = DXHelper.ToD2D1Bitmap(Device, wicSrc);
                 }
+                else if (imgData.Source is Bitmap bmp)
+                {
+                    bmp.SetActiveTimeFrame((int)frameIndex);
+                    var wicSrc = BHelper.ToWicBitmapSource(bmp);
+
+                    _imageD2D = DXHelper.ToD2D1Bitmap(Device, wicSrc);
+                }
                 else
                 {
                     _imageD2D = DXHelper.ToD2D1Bitmap(Device, imgData.Image);
@@ -2910,6 +2917,13 @@ public class DXCanvas : DXControl
             }
             else if (_animatorSource == AnimatorSource.GifAnimator)
             {
+                DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
+
+                Source = ImageSource.GDIPlus;
+                UseHardwareAcceleration = false;
+
+                // since _imageGdiPlus is not disposed when calling SetImage,
+                // we can use it here without re-assign
                 _gifAnimator.Animate(_imageGdiPlus, GifImage_FrameChanged);
             }
 
@@ -3096,6 +3110,7 @@ public class DXCanvas : DXControl
         }
         else if (imgData?.Source is Bitmap bmp)
         {
+            bmp.SetActiveTimeFrame((int)frameIndex);
             SourceWidth = bmp.Width;
             SourceHeight = bmp.Height;
 
@@ -3104,7 +3119,7 @@ public class DXCanvas : DXControl
                 _animatorSource = AnimatorSource.GifAnimator;
             }
 
-            UseHardwareAcceleration = false;
+            UseHardwareAcceleration = !autoAnimate;
         }
         else
         {
