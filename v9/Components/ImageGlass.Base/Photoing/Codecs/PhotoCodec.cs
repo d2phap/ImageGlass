@@ -51,10 +51,10 @@ public static class PhotoCodec
         }
         catch { }
         if (fi == null) return meta;
-        var ext = fi.Extension.ToLowerInvariant();
+        var ext = fi.Extension.ToUpperInvariant();
 
         meta.FileName = fi.Name;
-        meta.FileExtension = fi.Extension.ToUpperInvariant();
+        meta.FileExtension = ext;
         meta.FolderPath = fi.DirectoryName ?? string.Empty;
         meta.FolderName = Path.GetFileName(meta.FolderPath);
 
@@ -149,9 +149,11 @@ public static class PhotoCodec
 
                 meta.SupportsWriting = imgM.FormatInfo.SupportsWriting;
                 meta.HasAlpha = imgC.Any(i => i.HasAlpha);
-                meta.CanAnimate = imgC.Count > 1
-                    && imgC.Any(i => i.GifDisposeMethod != GifDisposeMethod.Undefined);
                 meta.ColorSpace = imgM.ColorSpace.ToString();
+
+                var isAnimatedExtension = ext == ".GIF" || ext == ".GIFV" || ext == ".WEBP";
+                meta.CanAnimate = imgC.Count > 1
+                    && (isAnimatedExtension || imgC.Any(i => i.GifDisposeMethod != GifDisposeMethod.Undefined));
             }
         }
         catch { }
