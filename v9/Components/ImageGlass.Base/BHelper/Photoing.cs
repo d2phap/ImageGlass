@@ -75,21 +75,29 @@ public partial class BHelper
     {
         if (bmp == null) return null;
 
-        var hBmp = bmp.GetHbitmap();
-        var wicSrc = WicBitmapSource.FromHBitmap(hBmp);
+        WicBitmapSource? wicSrc = null;
+        IntPtr? hBmp = null;
 
         try
         {
+            hBmp = bmp.GetHbitmap();
+            wicSrc = WicBitmapSource.FromHBitmap(hBmp.Value);
             wicSrc.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
+        }
+        catch (ArgumentException)
+        {
+            // ignore: bmp is disposed
         }
         catch (InvalidOperationException)
         {
             // cannot convert format
-            return null;
         }
         finally
         {
-            PInvoke.DeleteObject(new Windows.Win32.Graphics.Gdi.HGDIOBJ(hBmp));
+            if (hBmp != null)
+            {
+                PInvoke.DeleteObject(new Windows.Win32.Graphics.Gdi.HGDIOBJ(hBmp.Value));
+            }
         }
 
         return wicSrc;
