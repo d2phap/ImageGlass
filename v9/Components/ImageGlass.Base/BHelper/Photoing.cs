@@ -76,12 +76,12 @@ public partial class BHelper
         if (bmp == null) return null;
 
         WicBitmapSource? wicSrc = null;
-        IntPtr? hBmp = null;
+        var hBitmap = new IntPtr();
 
         try
         {
-            hBmp = bmp.GetHbitmap();
-            wicSrc = WicBitmapSource.FromHBitmap(hBmp.Value);
+            hBitmap = bmp.GetHbitmap();
+            wicSrc = WicBitmapSource.FromHBitmap(hBitmap);
             wicSrc.ConvertTo(WicPixelFormat.GUID_WICPixelFormat32bppPBGRA);
         }
         catch (ArgumentException)
@@ -94,10 +94,7 @@ public partial class BHelper
         }
         finally
         {
-            if (hBmp != null)
-            {
-                PInvoke.DeleteObject(new Windows.Win32.Graphics.Gdi.HGDIOBJ(hBmp.Value));
-            }
+            PInvoke.DeleteObject(new Windows.Win32.Graphics.Gdi.HGDIOBJ(hBitmap));
         }
 
         return wicSrc;
@@ -171,7 +168,21 @@ public partial class BHelper
                 using (var ms = new MemoryStream(ByteData) { Position = 0 })
                 {
                     using var bitm = new Bitmap(ms, true);
-                    src = WicBitmapSource.FromHBitmap(bitm.GetHbitmap());
+                    var hBitmap = new IntPtr();
+
+                    try
+                    {
+                        hBitmap = bitm.GetHbitmap();
+                        src = WicBitmapSource.FromHBitmap(hBitmap);
+                    }
+                    catch (ArgumentException)
+                    {
+                        // ignore: bmp is disposed
+                    }
+                    finally
+                    {
+                        PInvoke.DeleteObject(new Windows.Win32.Graphics.Gdi.HGDIOBJ(hBitmap));
+                    }
                 }
                 break;
 
