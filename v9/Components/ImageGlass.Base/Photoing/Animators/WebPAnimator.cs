@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base.Photoing.Codecs;
+using System.Drawing;
+using System.Runtime.InteropServices;
 
 namespace ImageGlass.Base.Photoing.Animators;
 
@@ -68,7 +70,7 @@ public class WebPAnimator : IDisposable
     /// <summary>
     /// Occurs when the image frame is changed.
     /// </summary>
-    public event EventHandler<FrameChangedEventArgs> FrameChanged;
+    public event EventHandler FrameChanged;
 
 
     /// <summary>
@@ -126,26 +128,42 @@ public class WebPAnimator : IDisposable
                 _frameIndex = 0;
             }
 
-            var frame = GetFrame(_frameIndex);
-            if (frame != null)
-            {
-                FrameChanged?.Invoke(this, new FrameChangedEventArgs()
-                {
-                    FrameData = frame,
-                });
-            }
 
-            Thread.Sleep(frame?.Duration ?? 10);
+            try
+            {
+                var frame = GetFrame(_frameIndex);
+                if (frame != null)
+                {
+                    lock (frame)
+                    {
+                        // update frame
+                        FrameChanged?.Invoke(frame.Bitmap, EventArgs.Empty);
+                    }
+                }
+
+                Thread.Sleep(frame?.Duration ?? 10);
+            }
+            catch (ArgumentException)
+            {
+                // ignore errors that occur due to the image being disposed
+            }
+            catch (OutOfMemoryException)
+            {
+                // also ignore errors that occur due to running out of memory
+            }
+            catch (ExternalException)
+            {
+                // ignore
+            }
+            catch (InvalidOperationException)
+            {
+                // issue #373: a race condition caused this exception: deleting
+                // the image from underneath us could cause a collision in
+                // HighResolutionGif_animator. I've not been able to repro;
+                // hopefully this is the correct response.
+
+                // ignore
+            }
         }
     }
-
-}
-
-
-public class FrameChangedEventArgs : EventArgs
-{
-    /// <summary>
-    /// Gets the current frame data.
-    /// </summary>
-    public ImageFrameData? FrameData { get; init; }
 }

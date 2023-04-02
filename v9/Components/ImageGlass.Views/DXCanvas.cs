@@ -3088,13 +3088,13 @@ public class DXCanvas : DXControl
             DisposeAnimator();
 
             _imgAnimator = new WebPAnimator(animatedImg);
-            _imgAnimator.FrameChanged += ImageAnimator_FrameChanged;
+            _imgAnimator.FrameChanged += ImgAnimator_FrameChanged;
         }
 
         else if (imgData?.Source is Bitmap bmp && CanImageAnimate)
         {
             _gifAnimator = new GifAnimator(bmp);
-            _gifAnimator.FrameChanged += GifAnimator_FrameChanged;
+            _gifAnimator.FrameChanged += ImgAnimator_FrameChanged;
         }
 
     }
@@ -3107,68 +3107,32 @@ public class DXCanvas : DXControl
     {
         if (_imgAnimator != null)
         {
-            _imgAnimator.FrameChanged -= ImageAnimator_FrameChanged;
+            _imgAnimator.FrameChanged -= ImgAnimator_FrameChanged;
             _imgAnimator.Dispose();
             _imgAnimator = null;
         }
 
         if (_gifAnimator != null)
         {
-            _gifAnimator.FrameChanged -= GifAnimator_FrameChanged;
+            _gifAnimator.FrameChanged -= ImgAnimator_FrameChanged;
             _gifAnimator.Dispose();
             _gifAnimator = null;
         }
     }
 
-
-    private void ImageAnimator_FrameChanged(object? sender, FrameChangedEventArgs e)
+    private void ImgAnimator_FrameChanged(object? sender, EventArgs e)
     {
 #if DEBUG
-        Trace.WriteLine("######### ImageAnimator_FrameChanged");
-#endif
-        if (InvokeRequired)
-        {
-            Invoke(delegate { ImageAnimator_FrameChanged(sender, e); });
-            return;
-        }
-
-        if (!IsImageAnimating || _animatorSource != AnimatorSource.ImageAnimator) return;
-        if (e.FrameData?.Bitmap is Bitmap bmp)
-        {
-            //DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
-
-            //_imageGdiPlus = bmp;
-            //Source = ImageSource.GDIPlus;
-            //UseHardwareAcceleration = false;
-
-            //Invalidate();
-
-
-            DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
-
-            using var wicSrc = BHelper.ToWicBitmapSource(bmp);
-            _imageD2D = DXHelper.ToD2D1Bitmap(Device, wicSrc);
-
-            Source = ImageSource.Direct2D;
-            UseHardwareAcceleration = true;
-
-            Invalidate();
-        }
-    }
-
-    private void GifAnimator_FrameChanged(object? sender, EventArgs e)
-    {
-#if DEBUG
-        Trace.WriteLine(">>>>>>>>>>>> GifAnimator_FrameChanged");
+        Trace.WriteLine(">>>>>>>>>>>> ImgAnimator_FrameChanged");
 #endif
 
         if (InvokeRequired)
         {
-            Invoke(delegate { GifAnimator_FrameChanged(sender, e); });
+            Invoke(delegate { ImgAnimator_FrameChanged(sender, e); });
             return;
         }
 
-        if (!IsImageAnimating || _animatorSource != AnimatorSource.GifAnimator) return;
+        if (!IsImageAnimating || _animatorSource == AnimatorSource.None) return;
         if (sender is Bitmap bmp)
         {
             DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
