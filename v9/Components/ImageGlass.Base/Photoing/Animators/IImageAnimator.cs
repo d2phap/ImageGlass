@@ -37,12 +37,12 @@ public interface IImageAnimator
     /// <summary>
     /// Stops updating frames for the given image. 
     /// </summary>
-    void StopAnimate(Image? image, EventHandler eventHandler);
+    void StopAnimate(Image? image);
 
     /// <summary>
     /// Animates the given image. 
     /// </summary>
-    void Animate(Image? image, EventHandler onFrameChangedHandler);
+    void Animate(Image? image, EventHandler FrameChangedHandler);
 
     /// <summary>
     /// Determines whether an image can be animated.

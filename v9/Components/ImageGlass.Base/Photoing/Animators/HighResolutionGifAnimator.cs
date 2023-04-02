@@ -108,7 +108,8 @@ public class HighResolutionGifAnimator : IImageAnimator
         GifImageData data;
         lock (image)
         {
-            data = new GifImageData(image, eventHandler);
+            data = new GifImageData(image);
+            data.FrameChanged += eventHandler;
         }
 
         Thread heartbeat = new Thread(() =>
@@ -121,6 +122,8 @@ public class HighResolutionGifAnimator : IImageAnimator
                 sleepTime = getSleepAmountInMilliseconds(data.GetCurrentDelayInMilliseconds());
                 Thread.Sleep(sleepTime);
             }
+
+            data.FrameChanged -= eventHandler;
         });
         heartbeat.IsBackground = true;
         heartbeat.Name = "heartbeat - HighResolutionAnimator";
@@ -154,14 +157,17 @@ public class HighResolutionGifAnimator : IImageAnimator
     /// </summary>
     /// <param name="image"></param>
     /// <param name="eventHandler"></param>
-    public void StopAnimate(Image? image, EventHandler eventHandler)
+    public void StopAnimate(Image? image)
     {
         if (image == null)
             return;
 
         GifImageData? outData;
+
         if (ourImageState.TryRemove(image, out outData))
+        {
             Interlocked.Exchange(ref outData.myIsThreadDead, 1);
+        }
     }
 
     // See if we have more than one frame in the time dimension.
@@ -204,6 +210,9 @@ public class HighResolutionGifAnimator : IImageAnimator
         return false;
     }
 
+
+
+
     private class GifImageData
     {
         private static readonly int FrameDelayTag = 0x5100;
@@ -212,12 +221,13 @@ public class HighResolutionGifAnimator : IImageAnimator
         // image is used for identification in map
         //
         public int myIsThreadDead;
+        public bool myIsDirty;
+        public event EventHandler FrameChanged;
+
 
         private readonly Image myImage;
-        private readonly EventHandler myOnFrameChangedHandler;
         private readonly int myNumFrames;
         private readonly int[] myFrameDelaysInCentiseconds;
-        public bool myIsDirty;
         private int myCurrentFrame;
 
         // KBR 20190614 respect the GIF loop count value
@@ -226,7 +236,7 @@ public class HighResolutionGifAnimator : IImageAnimator
 
         // image should be locked by caller
         //
-        public GifImageData(Image image, EventHandler onFrameChangedHandler)
+        public GifImageData(Image image)
         {
             myIsThreadDead = 0;
             myImage = image;
@@ -238,7 +248,6 @@ public class HighResolutionGifAnimator : IImageAnimator
             PopulateFrameDelays(image);
             myCurrentFrame = 0;
             myIsDirty = false;
-            myOnFrameChangedHandler = onFrameChangedHandler;
             maxLoopCount = BitConverter.ToInt16(image.GetPropertyItem(LoopCountTag).Value, 0);
             currentLoopCount = 0;
         }
@@ -264,7 +273,7 @@ public class HighResolutionGifAnimator : IImageAnimator
                 }
             }
             myIsDirty = true;
-            myOnFrameChangedHandler(myImage, EventArgs.Empty);
+            FrameChanged(myImage, EventArgs.Empty);
         }
 
         public int GetCurrentDelayInMilliseconds()
@@ -303,4 +312,6 @@ public class HighResolutionGifAnimator : IImageAnimator
             }
         }
     }
+
+
 }

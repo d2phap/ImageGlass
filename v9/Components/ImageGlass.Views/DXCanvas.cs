@@ -24,6 +24,7 @@ using ImageGlass.Base.Photoing.Animators;
 using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -1494,7 +1495,7 @@ public class DXCanvas : DXControl
         {
             // stop the animation and reset to the first frame.
             IsImageAnimating = false;
-            _gifAnimator.StopAnimate(_imageGdiPlus, GifImage_FrameChanged);
+            _gifAnimator.StopAnimate(_imageGdiPlus);
         }
         catch (InvalidOperationException)
         {
@@ -1505,7 +1506,7 @@ public class DXCanvas : DXControl
 
             // stop the animation and reset to the first frame.
             IsImageAnimating = false;
-            _gifAnimator.StopAnimate(_imageGdiPlus, GifImage_FrameChanged);
+            _gifAnimator.StopAnimate(_imageGdiPlus);
         }
 
         gdip.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
@@ -2941,7 +2942,7 @@ public class DXCanvas : DXControl
         if (Source != ImageSource.Null)
         {
             _imgAnimator?.StopAnimate();
-            _gifAnimator.StopAnimate(_imageGdiPlus, GifImage_FrameChanged);
+            _gifAnimator.StopAnimate(_imageGdiPlus);
         }
 
         IsImageAnimating = false;
@@ -3174,6 +3175,9 @@ public class DXCanvas : DXControl
 
     private void ImageAnimator_FrameChanged(object? sender, FrameChangedEventArgs e)
     {
+#if DEBUG
+        Trace.WriteLine("######### ImageAnimator_FrameChanged");
+#endif
         if (!IsImageAnimating || _animatorSource != AnimatorSource.ImageAnimator) return;
 
         if (e.FrameData?.Bitmap is Bitmap bmp)
@@ -3190,6 +3194,9 @@ public class DXCanvas : DXControl
 
     private void GifImage_FrameChanged(object? sender, EventArgs eventArgs)
     {
+#if DEBUG
+        Trace.WriteLine(">>>>>>>> GifImage_FrameChanged");
+#endif
         Invalidate();
     }
 
