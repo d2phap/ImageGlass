@@ -28,6 +28,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using WicNet;
+using Windows.Win32;
 using ColorProfile = ImageMagick.ColorProfile;
 
 namespace ImageGlass.Base;
@@ -74,7 +75,8 @@ public partial class BHelper
     {
         if (bmp == null) return null;
 
-        var wicSrc = WicBitmapSource.FromHBitmap(bmp.GetHbitmap());
+        var hBmp = bmp.GetHbitmap();
+        var wicSrc = WicBitmapSource.FromHBitmap(hBmp);
 
         try
         {
@@ -84,6 +86,10 @@ public partial class BHelper
         {
             // cannot convert format
             return null;
+        }
+        finally
+        {
+            PInvoke.DeleteObject(new Windows.Win32.Graphics.Gdi.HGDIOBJ(hBmp));
         }
 
         return wicSrc;
