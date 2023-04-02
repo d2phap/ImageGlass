@@ -40,7 +40,7 @@ public class DXCanvas : DXControl
 
     private IComObject<ID2D1Bitmap1>? _imageD2D = null;
     private Bitmap? _imageGdiPlus = null;
-    private WebPAnimator? _webpAnimator = null;
+    private WebPAnimator? _imgAnimator = null;
     private CancellationTokenSource? _msgTokenSrc;
 
 
@@ -1410,7 +1410,7 @@ public class DXCanvas : DXControl
 
 
         // draw image layer
-        if (CanImageAnimate && _animatorSource == AnimatorSource.Gif)
+        if (CanImageAnimate && _animatorSource == AnimatorSource.GifAnimator)
         {
             DrawGifFrame(g);
         }
@@ -1494,7 +1494,7 @@ public class DXCanvas : DXControl
         {
             // stop the animation and reset to the first frame.
             IsImageAnimating = false;
-            _gifAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
+            _gifAnimator.StopAnimate(_imageGdiPlus, GifImage_FrameChanged);
         }
         catch (InvalidOperationException)
         {
@@ -1505,7 +1505,7 @@ public class DXCanvas : DXControl
 
             // stop the animation and reset to the first frame.
             IsImageAnimating = false;
-            _gifAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
+            _gifAnimator.StopAnimate(_imageGdiPlus, GifImage_FrameChanged);
         }
 
         gdip.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
@@ -2792,6 +2792,7 @@ public class DXCanvas : DXControl
         float initOpacity = 0.5f,
         float opacityStep = 0.05f,
         bool isForPreview = false,
+        bool autoAnimate = true,
         ImgTransform? transforms = null)
     {
         // reset variables
@@ -2813,7 +2814,7 @@ public class DXCanvas : DXControl
 
 
         // Check and preprocess image info
-        LoadImageData(imgData, frameIndex);
+        LoadImageData(imgData, frameIndex, autoAnimate);
 
         if (imgData == null || imgData.IsImageNull)
         {
@@ -2821,12 +2822,23 @@ public class DXCanvas : DXControl
         }
         else
         {
+            // initialize animator if the image source is AnimatedImage
+            CreateAnimatorFromSource(imgData);
+
+
             if (UseHardwareAcceleration)
             {
                 if (imgData?.Source is WicBitmapDecoder decoder)
                 {
                     var frame = decoder.GetFrame((int)frameIndex);
                     _imageD2D = DXHelper.ToD2D1Bitmap(Device, frame);
+                }
+                else if (imgData.Source is AnimatedImage animatedImg)
+                {
+                    var frame = animatedImg.GetFrame((int)frameIndex);
+                    var wicSrc = BHelper.ToWicBitmapSource(frame.Bitmap as Bitmap);
+
+                    _imageD2D = DXHelper.ToD2D1Bitmap(Device, wicSrc);
                 }
                 else
                 {
@@ -2837,7 +2849,6 @@ public class DXCanvas : DXControl
                 if (transforms != null)
                 {
                     _ = RotateImage(transforms.Rotation, false);
-
                     _ = FlipImage(transforms.Flips, false);
                 }
 
@@ -2845,14 +2856,9 @@ public class DXCanvas : DXControl
             }
             else
             {
-                if (imgData.Source is AnimatedImage animatedImg)
+                if (imgData.Source is Bitmap bmp)
                 {
-                    _webpAnimator = new WebPAnimator(animatedImg);
-                    _webpAnimator.FrameChanged += WebpAnimator_FrameChanged;
-                }
-                else
-                {
-                    _imageGdiPlus = imgData.Source as Bitmap;
+                    _imageGdiPlus = bmp;
                 }
 
                 Source = ImageSource.GDIPlus;
@@ -2861,7 +2867,7 @@ public class DXCanvas : DXControl
 
             // start drawing
             _imageDrawingState = ImageDrawingState.Drawing;
-            if (CanImageAnimate && Source != ImageSource.Null)
+            if (CanImageAnimate && Source != ImageSource.Null && autoAnimate)
             {
                 SetZoomMode();
                 StartAnimator();
@@ -2898,13 +2904,13 @@ public class DXCanvas : DXControl
 
         try
         {
-            if (_animatorSource == AnimatorSource.WebP)
+            if (_animatorSource == AnimatorSource.ImageAnimator)
             {
-                _webpAnimator?.Animate();
+                _imgAnimator?.Animate();
             }
-            else if (_animatorSource == AnimatorSource.Gif)
+            else if (_animatorSource == AnimatorSource.GifAnimator)
             {
-                _gifAnimator.Animate(_imageGdiPlus, OnImageFrameChanged);
+                _gifAnimator.Animate(_imageGdiPlus, GifImage_FrameChanged);
             }
 
             IsImageAnimating = true;
@@ -2920,8 +2926,8 @@ public class DXCanvas : DXControl
     {
         if (Source != ImageSource.Null)
         {
-            _webpAnimator?.StopAnimate();
-            _gifAnimator.StopAnimate(_imageGdiPlus, OnImageFrameChanged);
+            _imgAnimator?.StopAnimate();
+            _gifAnimator.StopAnimate(_imageGdiPlus, GifImage_FrameChanged);
         }
 
         IsImageAnimating = false;
@@ -3042,17 +3048,33 @@ public class DXCanvas : DXControl
         return Color.Transparent;
     }
 
+
+    /// <summary>
+    /// Disposes and set all image resources to <c>null</c>.
+    /// </summary>
+    public void DisposeImageResources()
+    {
+        Source = ImageSource.Null;
+
+        DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
+        DisposeAnimator();
+
+        // *** Do not dispose the GDI Bitmap because it's a ref to the Local.Images
+
+        //_imageGdiPlus?.Dispose();
+        //_imageGdiPlus = null;
+    }
+
     #endregion // Public methods
 
 
     // Private methods
     #region Private methods
 
-
     /// <summary>
     /// Loads image data.
     /// </summary>
-    private void LoadImageData(IgImgData? imgData, uint frameIndex)
+    private void LoadImageData(IgImgData? imgData, uint frameIndex, bool autoAnimate)
     {
         SourceWidth = 0;
         SourceHeight = 0;
@@ -3062,14 +3084,14 @@ public class DXCanvas : DXControl
 
         if (imgData?.Source is AnimatedImage animatedImg)
         {
-            var firstFrame = animatedImg.GetFrame(0);
-            if (firstFrame?.Bitmap is Bitmap bmp)
+            var frame = animatedImg.GetFrame((int)frameIndex);
+            if (frame?.Bitmap is Bitmap bmp)
             {
                 SourceWidth = bmp.Width;
                 SourceHeight = bmp.Height;
 
-                _animatorSource = AnimatorSource.WebP;
-                UseHardwareAcceleration = false;
+                _animatorSource = AnimatorSource.ImageAnimator;
+                UseHardwareAcceleration = !autoAnimate;
             }
         }
         else if (imgData?.Source is Bitmap bmp)
@@ -3079,7 +3101,7 @@ public class DXCanvas : DXControl
 
             if (CanImageAnimate)
             {
-                _animatorSource = AnimatorSource.Gif;
+                _animatorSource = AnimatorSource.GifAnimator;
             }
 
             UseHardwareAcceleration = false;
@@ -3107,18 +3129,51 @@ public class DXCanvas : DXControl
         }
     }
 
-    private void WebpAnimator_FrameChanged(object? sender, FrameChangedEventArgs e)
+
+    /// <summary>
+    /// Resets the current image animator.
+    /// </summary>
+    private void CreateAnimatorFromSource(IgImgData? imgData)
     {
-        if (!IsImageAnimating || _animatorSource != AnimatorSource.WebP) return;
+        if (imgData?.Source is not AnimatedImage animatedImg) return;
+
+        DisposeAnimator();
+
+        _imgAnimator = new WebPAnimator(animatedImg);
+        _imgAnimator.FrameChanged += ImageAnimator_FrameChanged;
+    }
+
+
+    /// <summary>
+    /// Disposes the current image animator.
+    /// </summary>
+    private void DisposeAnimator()
+    {
+        if (_imgAnimator == null) return;
+
+        _imgAnimator.FrameChanged -= ImageAnimator_FrameChanged;
+        _imgAnimator.Dispose();
+        _imgAnimator = null;
+    }
+
+
+    private void ImageAnimator_FrameChanged(object? sender, FrameChangedEventArgs e)
+    {
+        if (!IsImageAnimating || _animatorSource != AnimatorSource.ImageAnimator) return;
 
         if (e.FrameData?.Bitmap is Bitmap bmp)
         {
+            DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
+
             _imageGdiPlus = bmp;
+            Source = ImageSource.GDIPlus;
+            UseHardwareAcceleration = false;
+
             Invalidate();
         }
     }
 
-    private void OnImageFrameChanged(object? sender, EventArgs eventArgs)
+    private void GifImage_FrameChanged(object? sender, EventArgs eventArgs)
     {
         Invalidate();
     }
@@ -3134,29 +3189,6 @@ public class DXCanvas : DXControl
 
         _checkerboardBrushD2D?.Dispose();
         _checkerboardBrushD2D = null;
-    }
-
-
-    /// <summary>
-    /// Disposes and set all image resources to <c>null</c>.
-    /// </summary>
-    private void DisposeImageResources()
-    {
-        Source = ImageSource.Null;
-
-        DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
-
-        if (_webpAnimator != null)
-        {
-            _webpAnimator.FrameChanged -= WebpAnimator_FrameChanged;
-            _webpAnimator.Dispose();
-            _webpAnimator = null;
-        }
-
-        // *** Do not dispose the GDI Bitmap because it's a ref to the Local.Images
-
-        //_imageGdiPlus?.Dispose();
-        //_imageGdiPlus = null;
     }
 
 

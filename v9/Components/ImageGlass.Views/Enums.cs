@@ -107,6 +107,6 @@ public enum NavCheck
 public enum AnimatorSource
 {
     None = 0,
-    Gif,
-    WebP,
+    GifAnimator,
+    ImageAnimator,
 }
