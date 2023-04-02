@@ -47,6 +47,11 @@ public class ImageLoadingEventArgs : ImageEventArgs
     /// Gets the loading image frame index.
     /// </summary>
     public uint FrameIndex { get; init; }
+
+    /// <summary>
+    /// Gets the value indicating that the image is being viewed as a separate frame.
+    /// </summary>
+    public bool IsViewingSeparateFrame { get; init; }
 }
 
 public class ImageLoadedEventArgs : ImageEventArgs
@@ -70,6 +75,11 @@ public class ImageLoadedEventArgs : ImageEventArgs
     /// Gets the value indicating that the viewer should reset zoom value.
     /// </summary>
     public bool ResetZoom { get; init; }
+
+    /// <summary>
+    /// Gets the value indicating that the image is being viewed as a separate frame.
+    /// </summary>
+    public bool IsViewingSeparateFrame { get; init; }
 }
 
 public class ImageListLoadedEventArgs : EventArgs

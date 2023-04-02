@@ -815,6 +815,7 @@ public partial class FrmMain : ThemedForm
                 NewIndex = imageIndex,
                 FilePath = imgFilePath,
                 FrameIndex = Local.CurrentFrameIndex,
+                IsViewingSeparateFrame = frameIndex != null,
             }, nameof(Local.RaiseImageLoadingEvent)));
 
 
@@ -849,6 +850,7 @@ public partial class FrmMain : ThemedForm
             {
                 Index = imageIndex,
                 FrameIndex = Local.CurrentFrameIndex,
+                IsViewingSeparateFrame = frameIndex != null,
                 FilePath = imgFilePath,
                 Data = photo,
                 Error = photo?.Error,
@@ -859,6 +861,7 @@ public partial class FrmMain : ThemedForm
         catch (OperationCanceledException)
         {
             Local.Images.CancelLoading(imageIndex);
+            PicMain.DisposeImageResources();
 
             _uiReporter.Report(new(new ImageEventArgs()
             {
@@ -1024,9 +1027,10 @@ public partial class FrmMain : ThemedForm
 
             // set the main image
             PicMain.SetImage(e.Data.ImgData,
-                e.FrameIndex,
-                Config.EnableWindowFit ? false : e.ResetZoom,
-                enableFadingTrainsition);
+                autoAnimate: !e.IsViewingSeparateFrame,
+                frameIndex: e.FrameIndex,
+                resetZoom: Config.EnableWindowFit ? false : e.ResetZoom,
+                enableFading: enableFadingTrainsition);
 
             // update window fit
             if (e.ResetZoom && Config.EnableWindowFit)
