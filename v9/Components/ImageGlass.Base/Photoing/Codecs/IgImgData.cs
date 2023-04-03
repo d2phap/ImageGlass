@@ -141,12 +141,17 @@ public class IgImgData : IDisposable
         else
         {
             HasAlpha = data.SingleFrameImage?.HasAlpha ?? false;
-            Image = BHelper.ToWicBitmapSource(data.SingleFrameImage?.ToBitmapSourceWithDensity());
 
-            // fall back to GDI+ Bitmap
-            if (Image == null)
+            if (HasAlpha)
             {
-                Source = data.SingleFrameImage.ToBitmapWithDensity();
+                // for alpha accuracy
+                Image = BHelper.ToWicBitmapSource(data.SingleFrameImage?.ToBitmapSourceWithDensity());
+            }
+            else
+            {
+                // for lower memory
+                var bmp = data.SingleFrameImage?.ToBitmapWithDensity();
+                Image = BHelper.ToWicBitmapSource(bmp);
             }
         }
     }
