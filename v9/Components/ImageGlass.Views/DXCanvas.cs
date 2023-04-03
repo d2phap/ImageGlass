@@ -96,8 +96,7 @@ public class DXCanvas : DXControl
     private ComObject<ID2D1BitmapBrush1>? _checkerboardBrushD2D;
 
     private AnimatorSource _animatorSource = AnimatorSource.None;
-    private GifAnimator? _gifAnimator = null;
-    private WebPAnimator? _imgAnimator = null;
+    private ImgAnimator? _imgAnimator = null;
     private AnimationSource _animationSource = AnimationSource.None;
     private bool _shouldRecalculateDrawingRegion = true;
 
@@ -2771,25 +2770,29 @@ public class DXCanvas : DXControl
 
             if (UseHardwareAcceleration)
             {
-                if (imgData?.Source is WicBitmapDecoder decoder)
-                {
-                    var frame = decoder.GetFrame((int)frameIndex);
-                    _imageD2D = DXHelper.ToD2D1Bitmap(Device, frame);
-                }
-                else if (imgData.Source is AnimatedImage animatedImg)
+                // viewing single frame of animated image
+                if (imgData.Source is AnimatedImage animatedImg && !autoAnimate)
                 {
                     var frame = animatedImg.GetFrame((int)frameIndex);
                     var wicSrc = BHelper.ToWicBitmapSource(frame.Bitmap as Bitmap);
 
                     _imageD2D = DXHelper.ToD2D1Bitmap(Device, wicSrc);
                 }
-                else if (imgData.Source is Bitmap bmp)
+                // viewing single frame of animated GIF
+                else if (imgData.Source is Bitmap bmp && !autoAnimate)
                 {
                     bmp.SetActiveTimeFrame((int)frameIndex);
                     var wicSrc = BHelper.ToWicBitmapSource(bmp);
 
                     _imageD2D = DXHelper.ToD2D1Bitmap(Device, wicSrc);
                 }
+                // viewing non-animated multiple frames
+                else if(imgData?.Source is WicBitmapDecoder decoder)
+                {
+                    var frame = decoder.GetFrame((int)frameIndex);
+                    _imageD2D = DXHelper.ToD2D1Bitmap(Device, frame);
+                }
+                // viewing single frame
                 else
                 {
                     _imageD2D = DXHelper.ToD2D1Bitmap(Device, imgData.Image);
@@ -2806,6 +2809,7 @@ public class DXCanvas : DXControl
             }
             else
             {
+                // viewing single frame of GDI+ Bitmap
                 if (imgData.Source is Bitmap bmp)
                 {
                     _imageGdiPlus = bmp;
@@ -2854,15 +2858,7 @@ public class DXCanvas : DXControl
 
         try
         {
-            if (_animatorSource == AnimatorSource.ImageAnimator)
-            {
-                _imgAnimator?.Animate();
-            }
-            else if (_animatorSource == AnimatorSource.GifAnimator)
-            {
-                _gifAnimator?.Animate();
-            }
-
+            _imgAnimator?.Animate();
             IsImageAnimating = true;
         }
         catch (Exception) { }
@@ -2875,8 +2871,6 @@ public class DXCanvas : DXControl
     public void StopCurrentAnimator()
     {
         _imgAnimator?.StopAnimate();
-        _gifAnimator?.StopAnimate();
-
         IsImageAnimating = false;
     }
 
@@ -3038,7 +3032,6 @@ public class DXCanvas : DXControl
                 SourceHeight = bmp.Height;
 
                 _animatorSource = AnimatorSource.ImageAnimator;
-                UseHardwareAcceleration = true;
             }
         }
         else if (imgData?.Source is Bitmap bmp)
@@ -3051,8 +3044,6 @@ public class DXCanvas : DXControl
             {
                 _animatorSource = AnimatorSource.GifAnimator;
             }
-
-            UseHardwareAcceleration = true;
         }
         else
         {
@@ -3068,13 +3059,13 @@ public class DXCanvas : DXControl
                 SourceWidth = imgData?.Image?.Width ?? 0;
                 SourceHeight = imgData?.Image?.Height ?? 0;
             }
-
-
-            var exceedMaxDimention = SourceWidth > Constants.MAX_IMAGE_DIMENSION
-                || SourceHeight > Constants.MAX_IMAGE_DIMENSION;
-
-            UseHardwareAcceleration = !CanImageAnimate && !exceedMaxDimention;
         }
+
+
+        var exceedMaxDimention = SourceWidth > Constants.MAX_IMAGE_DIMENSION
+            || SourceHeight > Constants.MAX_IMAGE_DIMENSION;
+
+        UseHardwareAcceleration = !exceedMaxDimention;
     }
 
 
@@ -3083,20 +3074,20 @@ public class DXCanvas : DXControl
     /// </summary>
     private void CreateAnimatorFromSource(IgImgData? imgData)
     {
+        if (_animatorSource == AnimatorSource.None) return;
+        DisposeAnimator();
+
+
         if (imgData?.Source is AnimatedImage animatedImg)
         {
-            DisposeAnimator();
-
             _imgAnimator = new WebPAnimator(animatedImg);
-            _imgAnimator.FrameChanged += ImgAnimator_FrameChanged;
         }
-
         else if (imgData?.Source is Bitmap bmp && CanImageAnimate)
         {
-            _gifAnimator = new GifAnimator(bmp);
-            _gifAnimator.FrameChanged += ImgAnimator_FrameChanged;
+            _imgAnimator = new GifAnimator(bmp);
         }
 
+        _imgAnimator.FrameChanged += ImgAnimator_FrameChanged;
     }
 
 
@@ -3110,13 +3101,6 @@ public class DXCanvas : DXControl
             _imgAnimator.FrameChanged -= ImgAnimator_FrameChanged;
             _imgAnimator.Dispose();
             _imgAnimator = null;
-        }
-
-        if (_gifAnimator != null)
-        {
-            _gifAnimator.FrameChanged -= ImgAnimator_FrameChanged;
-            _gifAnimator.Dispose();
-            _gifAnimator = null;
         }
     }
 
