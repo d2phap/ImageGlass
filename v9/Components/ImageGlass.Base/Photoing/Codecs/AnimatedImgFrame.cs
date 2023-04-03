@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 namespace ImageGlass.Base.Photoing.Codecs;
 
-public class ImageFrameData : IDisposable
+public class AnimatedImgFrame : IDisposable
 {
 
     #region IDisposable Disposing
@@ -49,7 +49,7 @@ public class ImageFrameData : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    ~ImageFrameData()
+    ~AnimatedImgFrame()
     {
         Dispose(false);
     }
@@ -70,11 +70,11 @@ public class ImageFrameData : IDisposable
 
 
     /// <summary>
-    /// Initialize new instance of <see cref="ImageFrameData"/>.
+    /// Initialize new instance of <see cref="AnimatedImgFrame"/>.
     /// </summary>
     /// <param name="bmpSrc"></param>
     /// <param name="duration"></param>
-    public ImageFrameData(IDisposable? bmpSrc, int duration)
+    public AnimatedImgFrame(IDisposable? bmpSrc, int duration)
     {
         Bitmap = bmpSrc;
         Duration = duration;

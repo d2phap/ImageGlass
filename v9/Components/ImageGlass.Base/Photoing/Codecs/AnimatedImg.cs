@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 namespace ImageGlass.Base.Photoing.Codecs;
 
-public class AnimatedImage : IDisposable
+public class AnimatedImg : IDisposable
 {
 
     #region IDisposable Disposing
@@ -34,7 +34,7 @@ public class AnimatedImage : IDisposable
         {
             // Free any other managed objects here.
             FramesCount = 0;
-            Frames = Enumerable.Empty<ImageFrameData>();
+            Frames = Enumerable.Empty<AnimatedImgFrame>();
         }
 
         // Free any unmanaged objects here.
@@ -47,7 +47,7 @@ public class AnimatedImage : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    ~AnimatedImage()
+    ~AnimatedImg()
     {
         Dispose(false);
     }
@@ -58,7 +58,7 @@ public class AnimatedImage : IDisposable
     /// <summary>
     /// Gets frames list.
     /// </summary>
-    public IEnumerable<ImageFrameData> Frames { get; private set; }
+    public IEnumerable<AnimatedImgFrame> Frames { get; private set; }
 
     /// <summary>
     /// Gets frams count.
@@ -67,9 +67,9 @@ public class AnimatedImage : IDisposable
 
 
     /// <summary>
-    /// Initialize new instance of <see cref="AnimatedImage"/>.
+    /// Initialize new instance of <see cref="AnimatedImg"/>.
     /// </summary>
-    public AnimatedImage(IEnumerable<ImageFrameData> frames)
+    public AnimatedImg(IEnumerable<AnimatedImgFrame> frames)
     {
         Frames = frames;
         FramesCount = frames.Count();
@@ -79,7 +79,7 @@ public class AnimatedImage : IDisposable
     /// <summary>
     /// Gets frame data.
     /// </summary>
-    public ImageFrameData? GetFrame(int frameIndex)
+    public AnimatedImgFrame? GetFrame(int frameIndex)
     {
         try
         {

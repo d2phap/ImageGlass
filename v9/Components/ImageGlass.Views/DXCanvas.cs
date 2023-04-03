@@ -2771,7 +2771,7 @@ public class DXCanvas : DXControl
             if (UseHardwareAcceleration)
             {
                 // viewing single frame of animated image
-                if (imgData.Source is AnimatedImage animatedImg && !autoAnimate)
+                if (imgData.Source is AnimatedImg animatedImg && !autoAnimate)
                 {
                     var frame = animatedImg.GetFrame((int)frameIndex);
                     var wicSrc = BHelper.ToWicBitmapSource(frame.Bitmap as Bitmap);
@@ -3023,7 +3023,7 @@ public class DXCanvas : DXControl
         HasAlphaPixels = imgData?.HasAlpha ?? false;
 
 
-        if (imgData?.Source is AnimatedImage animatedImg)
+        if (imgData?.Source is AnimatedImg animatedImg)
         {
             var frame = animatedImg.GetFrame((int)frameIndex);
             if (frame?.Bitmap is Bitmap bmp)
@@ -3078,9 +3078,9 @@ public class DXCanvas : DXControl
         DisposeAnimator();
 
 
-        if (imgData?.Source is AnimatedImage animatedImg)
+        if (imgData?.Source is AnimatedImg animatedImg)
         {
-            _imgAnimator = new WebPAnimator(animatedImg);
+            _imgAnimator = new AnimatedImgAnimator(animatedImg);
         }
         else if (imgData?.Source is Bitmap bmp && CanImageAnimate)
         {

@@ -20,15 +20,15 @@ using ImageGlass.Base.Photoing.Codecs;
 
 namespace ImageGlass.Base.Photoing.Animators;
 
-public class WebPAnimator : ImgAnimator
+public class AnimatedImgAnimator : ImgAnimator
 {
-    private AnimatedImage _frames;
+    private AnimatedImg _frames;
 
 
     /// <summary>
-    /// Initialize new instance of <see cref="WebPAnimator"/>.
+    /// Initialize new instance of <see cref="AnimatedImgAnimator"/>.
     /// </summary>
-    public WebPAnimator(AnimatedImage frames)
+    public AnimatedImgAnimator(AnimatedImg frames)
     {
         lock (frames)
         {
@@ -71,7 +71,7 @@ public class WebPAnimator : ImgAnimator
     /// <summary>
     /// Gets image frame data.
     /// </summary>
-    private ImageFrameData? GetFrame(int frameIndex)
+    private AnimatedImgFrame? GetFrame(int frameIndex)
     {
         return _frames.GetFrame(frameIndex);
     }

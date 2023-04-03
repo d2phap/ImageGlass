@@ -735,10 +735,10 @@ public static class PhotoCodec
                         var frames = aniWebP.Select(frame =>
                         {
                             var duration = frame.Duration > 0 ? frame.Duration : 100;
-                            return new ImageFrameData(frame.Bitmap, duration);
+                            return new AnimatedImgFrame(frame.Bitmap, duration);
                         });
 
-                        result.Source = new AnimatedImage(frames);
+                        result.Source = new AnimatedImg(frames);
                     }
                     else
                     {

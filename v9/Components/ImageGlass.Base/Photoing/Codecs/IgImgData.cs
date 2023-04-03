@@ -52,7 +52,7 @@ public class IgImgData : IDisposable
             {
                 decoder.Dispose();
             }
-            else if (Source is AnimatedImage animatedImg)
+            else if (Source is AnimatedImg animatedImg)
             {
                 foreach (var frame in animatedImg.Frames)
                 {
@@ -126,10 +126,10 @@ public class IgImgData : IDisposable
                     var duration = frame.AnimationDelay > 0 ? frame.AnimationDelay : 10;
                     duration = duration * 1000 / frame.AnimationTicksPerSecond;
 
-                    return new ImageFrameData(frame.ToBitmap(ImageFormat.Gif), duration);
+                    return new AnimatedImgFrame(frame.ToBitmap(ImageFormat.Gif), duration);
                 });
 
-                Source = new AnimatedImage(frames);
+                Source = new AnimatedImg(frames);
             }
             else
             {
