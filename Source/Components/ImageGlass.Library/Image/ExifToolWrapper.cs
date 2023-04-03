@@ -176,7 +176,7 @@ namespace ImageGlass.Library.Image {
                 var tpos2 = tmp.IndexOf('\t', tpos1 + 1);
                 var tpos3 = tmp.IndexOf('\t', tpos2 + 1);
 
-                if (tpos1 > 0 && tpos2 > 0) {
+                if (tpos1 > 0 && tpos2 > 0 && tpos3 > 0) {
                     var tagGroup = tmp.Substring(0, tpos1);
                     ++tpos1;
 
