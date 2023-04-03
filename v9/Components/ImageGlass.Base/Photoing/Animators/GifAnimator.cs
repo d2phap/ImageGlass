@@ -16,80 +16,18 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-using ImageGlass.Base.WinApi;
 using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
 
 namespace ImageGlass.Base.Photoing.Animators;
 
-public class GifAnimator : IDisposable
+public class GifAnimator : ImgAnimator
 {
-
-    #region IDisposable Disposing
-
-    public bool IsDisposed = false;
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (IsDisposed)
-            return;
-
-        if (disposing)
-        {
-            // Free any other managed objects here.
-            _enable = false;
-
-            _frameIndex = 0;
-            _frameCount = 0;
-            _maxLoopCount = 0;
-            _loopIndex = 0;
-
-            Array.Clear(_frameDelays);
-            // don't dispose _bitmap here
-        }
-
-        // Free any unmanaged objects here.
-        IsDisposed = true;
-    }
-
-    public virtual void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    ~GifAnimator()
-    {
-        Dispose(false);
-    }
-
-    #endregion
-
-
 
     private readonly Bitmap? _bitmap;
     private int[] _frameDelays; // in millisecond
-    private int _minTickTimeInMillisecond = 20;
-
-    private int _frameCount = 0;
-    private int _frameIndex = 0;
-    private int _maxLoopCount = 0;
-    private int _loopIndex = 0;
-    private bool _enable = false;
 
     private readonly int FRAME_DELAY_TAG = 0x5100;
     private readonly int LOOP_COUNT_TAG = 20737;
-
-
-    /// <summary>
-    /// Gets the bitmap.
-    /// </summary>
-    public Bitmap? Bitmap => _bitmap;
-
-    /// <summary>
-    /// Occurs when the image frame is changed.
-    /// </summary>
-    public event EventHandler<EventArgs> FrameChanged;
 
 
     /// <summary>
@@ -97,12 +35,6 @@ public class GifAnimator : IDisposable
     /// </summary>
     public GifAnimator(Bitmap bmp)
     {
-        // request for high resolution gif animation
-        if (!TimerApi.HasRequestedRateAtLeastAsFastAs(10) && TimerApi.TimeBeginPeriod(10))
-        {
-            SetTickTimeInMilliseconds(10);
-        }
-
         lock (bmp)
         {
             _bitmap = bmp;
@@ -111,29 +43,42 @@ public class GifAnimator : IDisposable
     }
 
 
-    /// <summary>
-    /// Starts animating the image frames.
-    /// </summary>
-    public void Animate()
+
+    // Protected virtual methods
+    #region Protected virtual methods
+
+    protected override bool CanAnimate()
     {
-        if (_bitmap == null) return;
-
-        _enable = true;
-
-        var _thHeartBeat = new Thread(OnThreadHeartBeatTicked);
-        _thHeartBeat.IsBackground = true;
-        _thHeartBeat.Name = "heartbeat - GifAnimator";
-        _thHeartBeat.Start();
+        return _bitmap != null;
     }
 
 
-    /// <summary>
-    /// Stops image animation.
-    /// </summary>
-    public void StopAnimate()
+    protected override int GetFrameDelay(int frameIndex)
     {
-        _enable = false;
+        return _frameDelays[_frameIndex];
     }
+
+
+    protected override void UpdateFrame(int frameIndex)
+    {
+        lock (_bitmap)
+        {
+            // update frame
+            _bitmap.SetActiveTimeFrame(_frameIndex);
+
+            TriggerFrameChangedEvent(_bitmap);
+        }
+    }
+
+
+    protected override void OnDisposing()
+    {
+        base.OnDisposing();
+
+        Array.Clear(_frameDelays);
+    }
+
+    #endregion // Protected virtual methods
 
 
     /// <summary>
@@ -172,94 +117,5 @@ public class GifAnimator : IDisposable
         }
     }
 
-
-    /// <summary>
-    /// Process image frame tick
-    /// </summary>
-    private void OnThreadHeartBeatTicked()
-    {
-        var initSleepTime = GetSleepAmountInMilliseconds(_frameDelays[_frameIndex]);
-        Thread.Sleep(initSleepTime);
-
-        while (_enable)
-        {
-            _frameIndex++;
-            if (_frameIndex >= _frameCount)
-            {
-                _frameIndex = 0;
-                _loopIndex++;
-
-                if (_maxLoopCount > 0 && _loopIndex >= _maxLoopCount)
-                {
-                    _enable = false;
-                    return;
-                }
-            }
-
-
-            try
-            {
-                lock (_bitmap)
-                {
-                    // update frame
-                    _bitmap.SetActiveTimeFrame(_frameIndex);
-                }
-
-                FrameChanged?.Invoke(_bitmap, EventArgs.Empty);
-
-
-                var sleepTime = GetSleepAmountInMilliseconds(_frameDelays[_frameIndex]);
-                Thread.Sleep(sleepTime);
-            }
-            catch (ArgumentException)
-            {
-                // ignore errors that occur due to the image being disposed
-            }
-            catch (OutOfMemoryException)
-            {
-                // also ignore errors that occur due to running out of memory
-            }
-            catch (ExternalException)
-            {
-                // ignore
-            }
-            catch (InvalidOperationException)
-            {
-                // issue #373: a race condition caused this exception: deleting
-                // the image from underneath us could cause a collision in
-                // HighResolutionGif_animator. I've not been able to repro;
-                // hopefully this is the correct response.
-
-                // ignore
-            }
-        }
-    }
-
-
-    /// <summary>
-    /// Sets the tick for the animation thread. The thread may use a lower tick to ensure
-    /// the passed value is divisible by 10 (the gif format operates in units of 10 ms).
-    /// </summary>
-    /// <param name="value"> Ideally should be a multiple of 10. </param>
-    /// <returns>The actual tick value that will be used</returns>
-    private void SetTickTimeInMilliseconds(int value)
-    {
-        // 10 is the minimum value, as a GIF's lowest tick rate is 10ms 
-        //
-        var newTickValue = Math.Max(10, (value / 10) * 10);
-        _minTickTimeInMillisecond = newTickValue;
-    }
-
-
-    /// <summary>
-    /// Given a delay amount, return either the minimum tick or delay, whichever is greater.
-    /// </summary>
-    /// <returns> the time to sleep during a tick in milliseconds </returns>
-    private int GetSleepAmountInMilliseconds(int delayInMilliseconds)
-    {
-        return Math.Max(_minTickTimeInMillisecond, delayInMilliseconds);
-    }
-
 }
-
 
