@@ -254,7 +254,7 @@ namespace ImageGlass {
                 fileSample = @"C:\fake dir\sample photo.jpg";
             }
 
-            txtExifToolCommandPreview.Text = $"\"{toolPath}\" -fast -G -t -m -q {Configs.ExifToolCommandArgs} \"{fileSample}\"";
+            txtExifToolCommandPreview.Text = $"\"{toolPath}\" {ExifToolWrapper.DefaultCommands} {Configs.ExifToolCommandArgs} \"{fileSample}\"";
         }
 
 

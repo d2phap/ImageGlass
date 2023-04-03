@@ -1569,7 +1569,7 @@ namespace ImageGlass {
                 fileSample = @"C:\fake dir\sample photo.jpg";
             }
 
-            txtExifToolCommandPreview.Text = $"\"{toolPath}\" -fast -G -t -m -q {txtExifToolCommandArgs.Text.Trim().Replace("\n", "")} \"{fileSample}\"";
+            txtExifToolCommandPreview.Text = $"\"{toolPath}\" {ExifToolWrapper.DefaultCommands} {txtExifToolCommandArgs.Text.Trim().Replace("\n", "")} \"{fileSample}\"";
         }
 
 
