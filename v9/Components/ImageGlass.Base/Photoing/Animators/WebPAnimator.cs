@@ -17,60 +17,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base.Photoing.Codecs;
-using System.Drawing;
-using System.Runtime.InteropServices;
 
 namespace ImageGlass.Base.Photoing.Animators;
 
-public class WebPAnimator : IDisposable
+public class WebPAnimator : ImgAnimator
 {
-
-    #region IDisposable Disposing
-
-    public bool IsDisposed = false;
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (IsDisposed)
-            return;
-
-        if (disposing)
-        {
-            // Free any other managed objects here.
-            _frameIndex = 0;
-            _enable = false;
-
-            // don't dispose _frames here
-        }
-
-        // Free any unmanaged objects here.
-        IsDisposed = true;
-    }
-
-    public virtual void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    ~WebPAnimator()
-    {
-        Dispose(false);
-    }
-
-    #endregion
-
-
     private AnimatedImage _frames;
-    private int _framesCount = 0;
-    private int _frameIndex = 0;
-    private bool _enable = false;
-
-
-    /// <summary>
-    /// Occurs when the image frame is changed.
-    /// </summary>
-    public event EventHandler FrameChanged;
 
 
     /// <summary>
@@ -78,92 +30,49 @@ public class WebPAnimator : IDisposable
     /// </summary>
     public WebPAnimator(AnimatedImage frames)
     {
-        _frames = frames;
-        _framesCount = frames.FramesCount;
+        lock (frames)
+        {
+            _frames = frames;
+            _frameCount = frames.FramesCount;
+        }
     }
 
 
-    /// <summary>
-    /// Starts animating the image frames.
-    /// </summary>
-    public void Animate()
+    // Protected virtual methods
+    #region Protected virtual methods
+
+    protected override bool CanAnimate()
     {
-        _enable = true;
-
-        var _thHeartBeat = new Thread(OnThreadHeartBeatTicked);
-        _thHeartBeat.IsBackground = true;
-        _thHeartBeat.Name = "heartbeat - WebPAnimator";
-        _thHeartBeat.Start();
+        return _frames != null;
     }
 
 
-    /// <summary>
-    /// Stops image animation.
-    /// </summary>
-    public void StopAnimate()
+    protected override int GetFrameDelay(int frameIndex)
     {
-        _enable = false;
+        return GetFrame(_frameIndex)?.Duration ?? 0;
     }
+
+
+    protected override void UpdateFrame(int frameIndex)
+    {
+        lock (_frames)
+        {
+            var frame = GetFrame(_frameIndex);
+            if (frame != null)
+            {
+                TriggerFrameChangedEvent(frame.Bitmap);
+            }
+        }
+    }
+
+    #endregion // Protected virtual methods
 
 
     /// <summary>
     /// Gets image frame data.
     /// </summary>
-    public ImageFrameData? GetFrame(int frameIndex)
+    private ImageFrameData? GetFrame(int frameIndex)
     {
         return _frames.GetFrame(frameIndex);
-    }
-
-
-    private void OnThreadHeartBeatTicked()
-    {
-        var initFrame = GetFrame(_frameIndex);
-        Thread.Sleep(initFrame.Duration);
-
-        while (_enable)
-        {
-            _frameIndex++;
-            if (_frameIndex >= _framesCount)
-            {
-                _frameIndex = 0;
-            }
-
-
-            try
-            {
-                var frame = GetFrame(_frameIndex);
-                if (frame != null)
-                {
-                    lock (frame)
-                    {
-                        // update frame
-                        FrameChanged?.Invoke(frame.Bitmap, EventArgs.Empty);
-                    }
-                }
-
-                Thread.Sleep(frame?.Duration ?? 10);
-            }
-            catch (ArgumentException)
-            {
-                // ignore errors that occur due to the image being disposed
-            }
-            catch (OutOfMemoryException)
-            {
-                // also ignore errors that occur due to running out of memory
-            }
-            catch (ExternalException)
-            {
-                // ignore
-            }
-            catch (InvalidOperationException)
-            {
-                // issue #373: a race condition caused this exception: deleting
-                // the image from underneath us could cause a collision in
-                // HighResolutionGif_animator. I've not been able to repro;
-                // hopefully this is the correct response.
-
-                // ignore
-            }
-        }
     }
 }
