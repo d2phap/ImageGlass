@@ -1051,6 +1051,10 @@ public partial class FrmMain : ThemedForm
 
         _isShowingImagePreview = false;
         LoadImageInfo(ImageInfoUpdateTypes.Dimension | ImageInfoUpdateTypes.FramesCount);
+
+
+        // Collect system garbage
+        Local.GcCollect();
     }
 
 

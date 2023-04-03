@@ -126,6 +126,9 @@ public partial class FrmMain
                 FilePath = Local.Images.GetFilePath(Local.CurrentIndex),
             });
         }
+
+        // Collect system garbage
+        Local.GcCollect();
     }
 
 

@@ -23,12 +23,15 @@ using ImageGlass.Base.Services;
 using ImageGlass.Settings;
 using ImageGlass.Tools;
 using System.IO.Pipes;
+using System.Runtime;
 using WicNet;
 
 namespace ImageGlass;
 
 internal class Local
 {
+    private static CancellationTokenSource? _gcTokenSrc;
+
     public static FrmMain? FrmMain;
 
 
@@ -479,6 +482,41 @@ internal class Local
         ToolServer_ClientDisconnected(null, new DisconnectedEventArgs(toolServer.PipeName));
     }
 
-    #endregion
+
+    /// <summary>
+    /// Delay calling <see cref="GC.Collect"/> for <paramref name="delayMs"/> milliseconds.
+    /// </summary>
+    public static void GcCollect(int delayMs = 500)
+    {
+        _gcTokenSrc?.Cancel();
+        _gcTokenSrc = new();
+
+        _ = GCCollectAsync(delayMs, _gcTokenSrc.Token);
+    }
+
+    private static async Task GCCollectAsync(int delayMs, CancellationToken token)
+    {
+        try
+        {
+            // check if task is cancelled
+            token.ThrowIfCancellationRequested();
+
+            await Task.Delay(delayMs, token);
+
+            // check if task is cancelled
+            token.ThrowIfCancellationRequested();
+
+            // Collect system garbage
+            GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+        }
+        catch (TaskCanceledException) { }
+        catch (OperationCanceledException) { }
+    }
+
+    #endregion // Public functions
 
 }
