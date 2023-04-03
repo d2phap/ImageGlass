@@ -101,7 +101,7 @@ namespace ImageGlass {
 
         private void btnCopyValue_Click(object sender, EventArgs e) {
             if (lvExifItems.SelectedItems.Count > 0) {
-                Clipboard.SetText(lvExifItems.SelectedItems[0].SubItems[2].Text);
+                Clipboard.SetText(lvExifItems.SelectedItems[0].SubItems[3].Text);
             }
         }
 
@@ -234,6 +234,7 @@ namespace ImageGlass {
                     li.Font = new Font(this.Font, FontStyle.Bold);
                 }
 
+                _ = li.SubItems.Add(item.TagId);
                 _ = li.SubItems.Add(item.Name);
                 _ = li.SubItems.Add(item.Value);
                 _ = lvExifItems.Items.Add(li);

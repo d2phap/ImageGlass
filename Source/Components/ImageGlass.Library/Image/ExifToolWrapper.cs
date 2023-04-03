@@ -30,6 +30,7 @@ using CliWrap.Buffered;
 namespace ImageGlass.Library.Image {
     public struct ExifTagItem {
         public string Group;
+        public string TagId;
         public string Name;
         public string Value;
     }
@@ -198,6 +199,7 @@ namespace ImageGlass.Library.Image {
                     if (tagName.Equals("File Name")) tagValue = originalFileName;
 
                     Add(new ExifTagItem() {
+                        TagId = tagId,
                         Name = tagName,
                         Value = tagValue,
                         Group = tagGroup,
