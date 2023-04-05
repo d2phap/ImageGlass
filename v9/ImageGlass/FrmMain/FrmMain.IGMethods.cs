@@ -3002,6 +3002,13 @@ public partial class FrmMain
 
         if (visible)
         {
+            // display frame info
+            ToolbarContext.AddItem(new()
+            {
+                Id = Constants.PAGE_NAV_TOOLBAR_FRAME_INFO,
+                DisplayStyle = ToolStripItemDisplayStyle.Text,
+            });
+
             // view first frame
             ToolbarContext.AddItem(new()
             {
@@ -3023,17 +3030,9 @@ public partial class FrmMain
             ToolbarContext.AddItem(new()
             {
                 Id = Constants.PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION,
+                Image = nameof(Config.Theme.ToolbarIcons.Play),
                 OnClick = new(nameof(MnuToggleImageAnimation)),
             });
-
-
-            // display frame info
-            ToolbarContext.AddItem(new()
-            {
-                Id = Constants.PAGE_NAV_TOOLBAR_FRAME_INFO,
-                DisplayStyle = ToolStripItemDisplayStyle.Text,
-            });
-
 
             // view next frame
             ToolbarContext.AddItem(new()
@@ -3049,6 +3048,15 @@ public partial class FrmMain
                 Id = "Btn_ViewLastFrame",
                 Image = nameof(Config.Theme.ToolbarIcons.ViewLastImage),
                 OnClick = new(nameof(MnuViewLastFrame)),
+            });
+
+
+            // export all frames
+            ToolbarContext.AddItem(new()
+            {
+                Id = "Btn_ExportAllFrames",
+                Image = nameof(Config.Theme.ToolbarIcons.Export),
+                OnClick = new(nameof(MnuExportFrames)),
             });
 
             LoadToolbarItemsText(ToolbarContext);
@@ -3071,16 +3079,8 @@ public partial class FrmMain
     {
         if (!ToolbarContext.Visible) return;
 
-
-        var lbl = ToolbarContext.GetItem<ToolStripLabel>(Constants.PAGE_NAV_TOOLBAR_FRAME_INFO);
-        var btn = ToolbarContext.GetItem(Constants.PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION);
-
-        if (lbl != null) lbl.Visible = !PicMain.CanImageAnimate;
-        if (btn != null) btn.Visible = PicMain.CanImageAnimate;
-
-
         // update frame info
-        if (lbl != null && lbl.Visible)
+        if (ToolbarContext.GetItem<ToolStripLabel>(Constants.PAGE_NAV_TOOLBAR_FRAME_INFO) is ToolStripLabel lbl)
         {
             var frameInfo = new StringBuilder(3);
             if (Local.Metadata != null)
@@ -3090,26 +3090,33 @@ public partial class FrmMain
                 frameInfo.Append(Local.Metadata.FramesCount);
             }
 
+            lbl.Padding = new Padding(lbl.Padding.Left, lbl.Padding.Top, this.ScaleToDpi(5), lbl.Padding.Bottom);
             lbl.Text = frameInfo.ToString();
         }
 
 
         // update state of Toggle animation button
-        if (btn != null && btn.Visible)
+        if (ToolbarContext.GetItem(Constants.PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION) is ToolStripButton btn)
         {
-            if (PicMain.IsImageAnimating)
+            btn.Enabled = PicMain.CanImageAnimate;
+            if (btn.Tag is ToolbarItemTagModel model)
             {
-                btn.Image = Config.Theme.GetToolbarIcon(nameof(Config.Theme.ToolbarIcons.Pause));
+                if (!PicMain.IsImageAnimating || !btn.Enabled)
+                {
+                    model.Image = nameof(Config.Theme.ToolbarIcons.Play);
+                }
+                else
+                {
+                    model.Image = nameof(Config.Theme.ToolbarIcons.Pause);
+                }
+
+                btn.Image = Config.Theme.GetToolbarIcon(model.Image);
             }
-            else
-            {
-                btn.Image = Config.Theme.GetToolbarIcon(nameof(Config.Theme.ToolbarIcons.Play));
-            }
+
         }
 
 
         ToolbarContext.UpdateAlignment();
-
     }
 
 }

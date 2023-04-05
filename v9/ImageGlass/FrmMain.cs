@@ -94,10 +94,8 @@ public partial class FrmMain : ThemedForm
 
         // update toolbar theme
         Toolbar.UpdateTheme(newIconHeight);
-        if (ToolbarContext.Visible)
-        {
-            ToolbarContext.UpdateTheme(newIconHeight);
-        }
+        ToolbarContext.UpdateTheme(newIconHeight);
+        UpdatePageNavToolbarButtonState();
 
         // update picmain scaling
         PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(60f, 60f));
@@ -1770,8 +1768,6 @@ public partial class FrmMain : ThemedForm
                     MnuViewFirstFrame.Enabled =
                     MnuViewLastFrame.Enabled = true;
             }
-
-            MnuExportFrames.Text = string.Format(Config.Language[$"{Name}.{nameof(MnuExportFrames)}"], Local.Metadata?.FramesCount);
 
             // check if igcmdWin10.exe exists!
             if (!BHelper.IsOS(WindowsOS.Win10OrLater)

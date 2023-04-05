@@ -256,6 +256,12 @@ public partial class ThemeUtils
 
         var pathRect = path.GetBounds();
         var br = new RectangleF(pathRect.X, pathRect.Y, pathRect.Width, pathRect.Height);
+        if (br.IsEmpty)
+        {
+            br.Width = 1;
+            br.Height = 1;
+        }
+
         var img = new Bitmap((int)Math.Ceiling(br.Width) + 1, (int)Math.Ceiling(br.Height));
 
         using var textBrush = new SolidBrush(textColor);
