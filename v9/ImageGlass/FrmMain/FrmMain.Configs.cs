@@ -1077,51 +1077,45 @@ public partial class FrmMain
     private void ApplyAppLayout()
     {
         const string SEPARATOR = ";";
-
-        // load Toolbar layout setting
-        var toolbarDock = DockStyle.Top;
-        var toolbarDockingOrder = 0;
-        if (Config.Layout.TryGetValue(nameof(Toolbar), out var toolbarLayoutStr))
+        var dict = new Dictionary<Control, (DockStyle Dock, int DockOrder)>()
         {
-            var options = toolbarLayoutStr?.Split(SEPARATOR, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-
-            if (options?.Length > 1)
-            {
-                _ = int.TryParse(options[1], out toolbarDockingOrder);
-            }
-            if (options?.Length > 0)
-            {
-                toolbarDock = BHelper.ConvertType<DockStyle>(options[0], toolbarDock);
-            }
-        }
+            { Toolbar, (DockStyle.Top, 0) },
+            { Gallery, (DockStyle.Bottom, 0) },
+        };
 
 
-        // load Gallery layout setting
-        var galleryDock = DockStyle.Bottom;
-        var galleryDockingOrder = 0;
-        if (Config.Layout.TryGetValue(nameof(Gallery), out var galleryLayoutStr))
-        {
-            var options = galleryLayoutStr?.Split(SEPARATOR, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-
-            if (options?.Length > 1)
-            {
-                _ = int.TryParse(options[1], out galleryDockingOrder);
-            }
-            if (options?.Length > 0)
-            {
-                galleryDock = BHelper.ConvertType<DockStyle>(options[0], galleryDock);
-            }
-        }
-
-
-        // update layout
-        #region update layout
+        // load layout setting
         SuspendLayout();
+        foreach (var (control, info) in dict)
+        {
+            var (dockStyle, dockOrder) = info;
 
-        // update position
-        Toolbar.Dock = toolbarDock;
-        Gallery.Dock = galleryDock;
-        if (galleryDock == DockStyle.Left || galleryDock == DockStyle.Right)
+            if (Config.Layout.TryGetValue(control.Name, out var layoutStr))
+            {
+                // Bottom;0
+                var options = layoutStr?.Split(SEPARATOR,
+                    StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+                if (options?.Length > 1)
+                {
+                    _ = int.TryParse(options[1], out dockOrder);
+                }
+
+                if (options?.Length > 0)
+                {
+                    dockStyle = BHelper.ConvertType<DockStyle>(options[0], dockStyle);
+                }
+
+                dict[control] = (dockStyle, dockOrder);
+            }
+
+            // update control dock style
+            control.Dock = dockStyle;
+        }
+
+
+        // update Gallery bar layout
+        if (Gallery.Dock == DockStyle.Left || Gallery.Dock == DockStyle.Right)
         {
             Gallery.View = ImageGlass.Gallery.View.Thumbnails;
             Gallery.ScrollBars = true;
@@ -1134,20 +1128,15 @@ public partial class FrmMain
 
 
         // update docking order
-        if (toolbarDockingOrder <= galleryDockingOrder)
+        var orderedDict = dict.OrderByDescending(i => i.Value.DockOrder);
+        foreach (var (control, _) in orderedDict)
         {
-            Toolbar.SendToBack();
-        }
-        else
-        {
-            Gallery.SendToBack();
+            control.SendToBack();
         }
 
         // make sure PicMain always on top
         PicMain.BringToFront();
-
         ResumeLayout(false);
-        #endregion // update layout
 
     }
 
