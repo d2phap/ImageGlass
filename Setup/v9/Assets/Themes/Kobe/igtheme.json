@@ -60,6 +60,9 @@
     "ViewPreviousImage": "ViewPreviousImage.svg",
     "WindowFit": "WindowFit.svg",
     "ZoomIn": "ZoomIn.svg",
-    "ZoomOut": "ZoomOut.svg"
+    "ZoomOut": "ZoomOut.svg",
+    "Play": "Play.svg",
+    "Pause": "Pause.svg",
+    "Export": "Export.svg"
   }
 }
