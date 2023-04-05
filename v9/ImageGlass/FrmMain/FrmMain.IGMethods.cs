@@ -3022,7 +3022,7 @@ public partial class FrmMain
                 // play/pause frame animation
                 ToolbarContext.AddItem(new()
                 {
-                    Id = "Btn_ToggleFrameAnimation",
+                    Id = Constants.PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION,
                     Image = nameof(Config.Theme.Settings.AppLogo),
                     OnClick = new(nameof(MnuToggleImageAnimation)),
                 });
@@ -3040,7 +3040,7 @@ public partial class FrmMain
                 // display frame info
                 ToolbarContext.AddItem(new()
                 {
-                    Id = "Lbl_FrameInfo",
+                    Id = Constants.PAGE_NAV_TOOLBAR_FRAME_INFO,
                     DisplayStyle = ToolStripItemDisplayStyle.Text,
                     Image = nameof(Config.Theme.Settings.AppLogo),
                     Text = frameInfo.ToString(),

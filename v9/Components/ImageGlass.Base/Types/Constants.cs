@@ -49,6 +49,9 @@ public static class Constants
     public const string IGTOOL_EXIFTOOL = "Tool_ExifGlass";
     public const string IGTOOL_SLIDESHOW = "Tool_Slideshow";
 
+    public const string PAGE_NAV_TOOLBAR_FRAME_INFO = "Lbl_PageNav_FrameInfo";
+    public const string PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION = "Btn_PageNav_ToggleFrameAnimation";
+
 
     /// <summary>
     /// Gets the aspect ratio value.

@@ -1390,7 +1390,7 @@ public partial class FrmMain : ThemedForm
                         frameInfo.ToString());
 
                     // update frame info on PageNav toolbar
-                    if (ToolbarContext.GetItem<ToolStripLabel>("Lbl_FrameInfo") is ToolStripLabel lbl)
+                    if (ToolbarContext.GetItem<ToolStripLabel>(Constants.PAGE_NAV_TOOLBAR_FRAME_INFO) is ToolStripLabel lbl)
                     {
                         lbl.Text = frameInfo.ToString();
                     }
