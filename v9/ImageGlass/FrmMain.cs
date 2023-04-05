@@ -94,7 +94,10 @@ public partial class FrmMain : ThemedForm
 
         // update toolbar theme
         Toolbar.UpdateTheme(newIconHeight);
-        ToolbarContext.UpdateTheme(newIconHeight);
+        if (ToolbarContext.Visible)
+        {
+            ToolbarContext.UpdateTheme(newIconHeight);
+        }
 
         // update picmain scaling
         PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(60f, 60f));
@@ -1310,9 +1313,14 @@ public partial class FrmMain : ThemedForm
                 if (Config.InfoItems.Contains(nameof(ImageInfo.ListCount))
                     && Local.Images.Length > 0)
                 {
+                    var listInfo = new StringBuilder(3);
+                    listInfo.Append(Local.CurrentIndex + 1);
+                    listInfo.Append('/');
+                    listInfo.Append(Local.Images.Length);
+
                     ImageInfo.ListCount = string.Format(
                         Config.Language[$"_.{nameof(ImageInfo)}._{nameof(ImageInfo.ListCount)}"],
-                        Local.CurrentIndex + 1, Local.Images.Length);
+                        listInfo.ToString());
                 }
                 else
                 {
@@ -1369,9 +1377,23 @@ public partial class FrmMain : ThemedForm
                     && Local.Metadata != null
                     && Local.Metadata.FramesCount > 1)
                 {
+                    var frameInfo = new StringBuilder(3);
+                    if (Local.Metadata != null)
+                    {
+                        frameInfo.Append(Local.Metadata.FrameIndex + 1);
+                        frameInfo.Append('/');
+                        frameInfo.Append(Local.Metadata.FramesCount);
+                    }
+
                     ImageInfo.FramesCount = string.Format(
                         Config.Language[$"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FramesCount)}"],
-                        Local.CurrentFrameIndex + 1, Local.Metadata.FramesCount);
+                        frameInfo.ToString());
+
+                    // update frame info on PageNav toolbar
+                    if (ToolbarContext.GetItem<ToolStripLabel>("Lbl_FrameInfo") is ToolStripLabel lbl)
+                    {
+                        lbl.Text = frameInfo.ToString();
+                    }
                 }
                 else
                 {
@@ -2254,7 +2276,7 @@ public partial class FrmMain : ThemedForm
 
     private void MnuPageNav_Click(object sender, EventArgs e)
     {
-
+        IG_TogglePageNavTool();
     }
 
 
