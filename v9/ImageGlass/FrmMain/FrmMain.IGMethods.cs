@@ -2005,6 +2005,8 @@ public partial class FrmMain
         {
             PicMain.StopCurrentAnimator();
         }
+
+        UpdatePageNavToolbarButtonState();
     }
 
 
@@ -3017,35 +3019,20 @@ public partial class FrmMain
             });
 
 
-            if (PicMain.CanImageAnimate)
+            // play/pause frame animation
+            ToolbarContext.AddItem(new()
             {
-                // play/pause frame animation
-                ToolbarContext.AddItem(new()
-                {
-                    Id = Constants.PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION,
-                    Image = nameof(Config.Theme.Settings.AppLogo),
-                    OnClick = new(nameof(MnuToggleImageAnimation)),
-                });
-            }
-            else
-            {
-                var frameInfo = new StringBuilder();
-                if (Local.Metadata != null)
-                {
-                    frameInfo.Append(Local.Metadata.FrameIndex + 1);
-                    frameInfo.Append('/');
-                    frameInfo.Append(Local.Metadata.FramesCount);
-                }
+                Id = Constants.PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION,
+                OnClick = new(nameof(MnuToggleImageAnimation)),
+            });
 
-                // display frame info
-                ToolbarContext.AddItem(new()
-                {
-                    Id = Constants.PAGE_NAV_TOOLBAR_FRAME_INFO,
-                    DisplayStyle = ToolStripItemDisplayStyle.Text,
-                    Image = nameof(Config.Theme.Settings.AppLogo),
-                    Text = frameInfo.ToString(),
-                });
-            }
+
+            // display frame info
+            ToolbarContext.AddItem(new()
+            {
+                Id = Constants.PAGE_NAV_TOOLBAR_FRAME_INFO,
+                DisplayStyle = ToolStripItemDisplayStyle.Text,
+            });
 
 
             // view next frame
@@ -3070,6 +3057,59 @@ public partial class FrmMain
         ToolbarContext.Visible = visible;
         ToolbarContext.UpdateTheme();
         ToolbarContext.ResumeLayout(true);
+
+
+        // update frame info on PageNav toolbar
+        UpdatePageNavToolbarButtonState();
+    }
+
+
+    /// <summary>
+    /// Updates PageNav toolbar buttons state
+    /// </summary>
+    private void UpdatePageNavToolbarButtonState()
+    {
+        if (!ToolbarContext.Visible) return;
+
+
+        var lbl = ToolbarContext.GetItem<ToolStripLabel>(Constants.PAGE_NAV_TOOLBAR_FRAME_INFO);
+        var btn = ToolbarContext.GetItem(Constants.PAGE_NAV_TOOLBAR_TOGGLE_ANIMATION);
+
+        if (lbl != null) lbl.Visible = !PicMain.CanImageAnimate;
+        if (btn != null) btn.Visible = PicMain.CanImageAnimate;
+
+
+        // update frame info
+        if (lbl != null && lbl.Visible)
+        {
+            var frameInfo = new StringBuilder(3);
+            if (Local.Metadata != null)
+            {
+                frameInfo.Append(Local.Metadata.FrameIndex + 1);
+                frameInfo.Append('/');
+                frameInfo.Append(Local.Metadata.FramesCount);
+            }
+
+            lbl.Text = frameInfo.ToString();
+        }
+
+
+        // update state of Toggle animation button
+        if (btn != null && btn.Visible)
+        {
+            if (PicMain.IsImageAnimating)
+            {
+                btn.Image = Config.Theme.GetToolbarIcon(nameof(Config.Theme.ToolbarIcons.Pause));
+            }
+            else
+            {
+                btn.Image = Config.Theme.GetToolbarIcon(nameof(Config.Theme.ToolbarIcons.Play));
+            }
+        }
+
+
+        ToolbarContext.UpdateAlignment();
+
     }
 
 }

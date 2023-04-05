@@ -1388,17 +1388,14 @@ public partial class FrmMain : ThemedForm
                     ImageInfo.FramesCount = string.Format(
                         Config.Language[$"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FramesCount)}"],
                         frameInfo.ToString());
-
-                    // update frame info on PageNav toolbar
-                    if (ToolbarContext.GetItem<ToolStripLabel>(Constants.PAGE_NAV_TOOLBAR_FRAME_INFO) is ToolStripLabel lbl)
-                    {
-                        lbl.Text = frameInfo.ToString();
-                    }
                 }
                 else
                 {
                     ImageInfo.FramesCount = string.Empty;
                 }
+
+                // update frame info on PageNav toolbar
+                UpdatePageNavToolbarButtonState();
             }
 
             // Dimension
