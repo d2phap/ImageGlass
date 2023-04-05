@@ -34,6 +34,8 @@ namespace ImageGlass;
 
 public partial class FrmMain : ThemedForm
 {
+    public readonly ModernToolbar ToolbarContext = new ModernToolbar();
+
     // cancellation tokens of synchronious task
     private CancellationTokenSource _loadCancelToken = new();
     private IProgress<ProgressReporterEventArgs> _uiReporter;
@@ -47,10 +49,10 @@ public partial class FrmMain : ThemedForm
     private Rectangle _windowBound = new();
     private FormWindowState _windowState = FormWindowState.Normal;
 
-
     public FrmMain() : base()
     {
         InitializeComponent();
+        InitializeToolbarContext();
 
         // initialize UI thread reporter
         _uiReporter = new Progress<ProgressReporterEventArgs>(ReportToUIThread);
@@ -66,6 +68,7 @@ public partial class FrmMain : ThemedForm
 
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
     }
+
 
     private void FrmMain_Load(object sender, EventArgs e)
     {
@@ -91,6 +94,7 @@ public partial class FrmMain : ThemedForm
 
         // update toolbar theme
         Toolbar.UpdateTheme(newIconHeight);
+        ToolbarContext.UpdateTheme(newIconHeight);
 
         // update picmain scaling
         PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(60f, 60f));
@@ -292,7 +296,7 @@ public partial class FrmMain : ThemedForm
     }
 
 
-    private void Toolbar_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+    private void Toolbar_ItemClicked(object? sender, ToolStripItemClickedEventArgs e)
     {
         var tagModel = e.ClickedItem.Tag as ToolbarItemTagModel;
         if (tagModel == null) return;

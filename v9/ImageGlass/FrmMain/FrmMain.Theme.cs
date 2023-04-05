@@ -62,6 +62,12 @@ public partial class FrmMain
         Toolbar.UpdateTheme(this.ScaleToDpi(Config.ToolbarIconHeight));
 
 
+        // toolbar context
+        ToolbarContext.EnableTransparent = EnableTransparent;
+        ToolbarContext.Theme = Config.Theme;
+        ToolbarContext.UpdateTheme(this.ScaleToDpi(Config.ToolbarIconHeight));
+
+
         // viewer
         PicMain.ForeColor = Config.Theme.Colors.TextColor;
         PicMain.AccentColor = WinColorsApi.GetAccentColor(true);

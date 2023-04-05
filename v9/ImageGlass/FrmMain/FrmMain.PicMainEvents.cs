@@ -31,7 +31,7 @@ namespace ImageGlass;
 
 public partial class FrmMain
 {
-    private void PicMain_DragOver(object sender, DragEventArgs e)
+    private void PicMain_DragOver(object? sender, DragEventArgs e)
     {
         try
         {
@@ -67,7 +67,7 @@ public partial class FrmMain
     }
 
 
-    private void PicMain_DragDrop(object sender, DragEventArgs e)
+    private void PicMain_DragDrop(object? sender, DragEventArgs e)
     {
         _ = HandlePicMainDragDropAsync(e);
     }

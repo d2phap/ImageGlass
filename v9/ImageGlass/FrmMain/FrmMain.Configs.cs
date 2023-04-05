@@ -185,6 +185,31 @@ public partial class FrmMain
     }
 
 
+    /// <summary>
+    /// Initialize context toolbar. Call once after <see cref="InitializeComponent"/> function.
+    /// </summary>
+    private void InitializeToolbarContext()
+    {
+        SuspendLayout();
+
+        ToolbarContext.SuspendLayout();
+        ToolbarContext.Alignment = UI.ToolbarAlignment.Center;
+        ToolbarContext.AutoFocusOnHover = true;
+        ToolbarContext.GripMargin = new Padding(0);
+        ToolbarContext.GripStyle = ToolStripGripStyle.Hidden;
+        ToolbarContext.MainMenu = MnuMain;
+        ToolbarContext.Name = "ToolbarContext";
+        ToolbarContext.ShowItemToolTips = false;
+        ToolbarContext.ShowMainMenuButton = false;
+        ToolbarContext.TabIndex = 3;
+        ToolbarContext.Visible = false;
+
+        Controls.Add(ToolbarContext);
+        ToolbarContext.ResumeLayout(false);
+        ResumeLayout(false);
+    }
+
+
     private void FrmMainConfig_Load(object? sender, EventArgs e)
     {
         Local.RequestUpdateFrmMain += Local_FrmMainUpdateRequested;
@@ -1081,6 +1106,7 @@ public partial class FrmMain
         {
             { Toolbar, (DockStyle.Top, 0) },
             { Gallery, (DockStyle.Bottom, 0) },
+            { ToolbarContext, (DockStyle.Bottom, 1) },
         };
 
 
