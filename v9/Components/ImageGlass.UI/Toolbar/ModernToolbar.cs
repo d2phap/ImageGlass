@@ -595,31 +595,62 @@ public class ModernToolbar : ToolStrip
             return ToolbarAddItemResult.ItemExists;
 
 
-        // button
-        var bItem = new ToolStripButton()
+        ToolStripItem? toolstripItem = null;
+
+        // text label
+        if (model.DisplayStyle == ToolStripItemDisplayStyle.Text)
         {
-            Name = model.Id,
-            DisplayStyle = model.DisplayStyle,
-            Text = model.Text,
-            ToolTipText = model.Text,
-            Alignment = model.Alignment,
-
-            TextImageRelation = TextImageRelation.ImageBeforeText,
-            TextAlign = ContentAlignment.MiddleRight,
-
-            // save metadata
-            Tag = new ToolbarItemTagModel()
+            toolstripItem = new ToolStripLabel()
             {
-                Image = model.Image,
-                CheckableConfigBinding = model.CheckableConfigBinding,
-                OnClick = model.OnClick,
-            },
+                Name = model.Id,
+                DisplayStyle = model.DisplayStyle,
+                Text = model.Text,
+                ToolTipText = model.Text,
+                Alignment = model.Alignment,
 
-            Image = Theme?.GetToolbarIcon(model.Image),
-        };
+                TextImageRelation = TextImageRelation.TextBeforeImage,
+                TextAlign = ContentAlignment.MiddleCenter,
 
-        modifier?.Invoke(bItem);
-        Items.Insert(position.Value, bItem);
+                // save metadata
+                Tag = new ToolbarItemTagModel()
+                {
+                    OnClick = model.OnClick,
+                },
+            };
+        }
+        // button
+        else
+        {
+            toolstripItem = new ToolStripButton()
+            {
+                Name = model.Id,
+                DisplayStyle = model.DisplayStyle,
+                Text = model.Text,
+                ToolTipText = model.Text,
+                Alignment = model.Alignment,
+
+                TextImageRelation = TextImageRelation.ImageBeforeText,
+                TextAlign = ContentAlignment.MiddleRight,
+
+                // save metadata
+                Tag = new ToolbarItemTagModel()
+                {
+                    Image = model.Image,
+                    CheckableConfigBinding = model.CheckableConfigBinding,
+                    OnClick = model.OnClick,
+                },
+
+                Image = Theme?.GetToolbarIcon(model.Image),
+            };
+        }
+
+        if (toolstripItem == null)
+        {
+            return ToolbarAddItemResult.InvalidModel;
+        }
+
+        modifier?.Invoke(toolstripItem);
+        Items.Insert(position.Value, toolstripItem);
 
         return ToolbarAddItemResult.Success;
     }
