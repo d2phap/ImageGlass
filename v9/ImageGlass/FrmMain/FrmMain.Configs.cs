@@ -196,6 +196,7 @@ public partial class FrmMain
         ToolbarContext.Alignment = UI.ToolbarAlignment.Center;
         ToolbarContext.AutoFocusOnHover = true;
         ToolbarContext.GripMargin = new Padding(0);
+        ToolbarContext.Padding = new Padding(this.ScaleToDpi(4));
         ToolbarContext.GripStyle = ToolStripGripStyle.Hidden;
         ToolbarContext.Name = "ToolbarContext";
         ToolbarContext.ShowItemToolTips = false;
