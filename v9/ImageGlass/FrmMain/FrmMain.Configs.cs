@@ -202,6 +202,7 @@ public partial class FrmMain
         ToolbarContext.ShowMainMenuButton = false;
         ToolbarContext.TabIndex = 3;
         ToolbarContext.Visible = false;
+        ToolbarContext.ItemClicked += Toolbar_ItemClicked;
 
         Controls.Add(ToolbarContext);
         ToolbarContext.ResumeLayout(false);
@@ -235,6 +236,7 @@ public partial class FrmMain
             FreeMoveControlNames = new HashSet<string>()
             {
                 nameof(Toolbar),
+                nameof(ToolbarContext),
             },
         };
 

@@ -605,7 +605,6 @@ public class ModernToolbar : ToolStrip
                 Name = model.Id,
                 DisplayStyle = model.DisplayStyle,
                 Text = model.Text,
-                ToolTipText = model.Text,
                 Alignment = model.Alignment,
 
                 TextImageRelation = TextImageRelation.TextBeforeImage,
