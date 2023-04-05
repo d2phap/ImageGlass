@@ -440,8 +440,8 @@ public class ModernToolbar : ToolStrip
         if (Alignment == ToolbarAlignment.Center)
         {
             // get the correct content width, excluding the sticky right items
+            var toolbarContentWidth = 0;
             var rightContentWidth = 0;
-            var toolbarContentWidth = ShowMainMenuButton ? MainMenuButton.Width : 0;
             foreach (ToolStripItem item in Items)
             {
                 toolbarContentWidth += item.Width;
@@ -453,6 +453,16 @@ public class ModernToolbar : ToolStrip
 
                 // reset margin
                 item.Margin = defaultMargin;
+            }
+
+            if (ShowMainMenuButton)
+            {
+                toolbarContentWidth += MainMenuButton.Width;
+            }
+            else
+            {
+                rightContentWidth -= MainMenuButton.Width;
+                toolbarContentWidth -= MainMenuButton.Width;
             }
 
 
