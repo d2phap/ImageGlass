@@ -27,6 +27,7 @@ using ImageGlass.Viewer;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Text;
 using WicNet;
 
 namespace ImageGlass;
@@ -2729,14 +2730,13 @@ public partial class FrmMain
         if (enable.Value)
         {
             _movableForm.Enable();
-            _movableForm.Enable(Toolbar, PicMain);
+            _movableForm.Enable(Toolbar, ToolbarContext, PicMain);
         }
         else
         {
             _movableForm.Disable();
-            _movableForm.Disable(Toolbar, PicMain);
+            _movableForm.Disable(Toolbar, ToolbarContext, PicMain);
         }
-
     }
 
 
@@ -2972,6 +2972,104 @@ public partial class FrmMain
         ToggleTool(Local.Tools[nameof(FrmColorPicker)], visible.Value);
 
         return visible.Value;
+    }
+
+
+    public bool IG_TogglePageNavTool(bool? visible = null)
+    {
+        visible ??= MnuPageNav.Checked;
+
+        // update menu item state
+        MnuPageNav.Checked = visible.Value;
+
+        // update toolbar items state
+        UpdateToolbarItemsState();
+
+        // toggle page nav toolbar
+        TogglePageNavToolbar(visible.Value);
+
+        return visible.Value;
+    }
+
+
+    private void TogglePageNavToolbar(bool visible)
+    {
+        ToolbarContext.SuspendLayout();
+        ToolbarContext.ClearItems();
+        ToolbarContext.ShowMainMenuButton = false;
+
+        if (visible)
+        {
+            // view first frame
+            ToolbarContext.AddItem(new()
+            {
+                Id = "Btn_ViewLastFrame",
+                Image = nameof(Config.Theme.ToolbarIcons.ViewFirstImage),
+                OnClick = new(nameof(MnuViewFirstFrame)),
+            });
+
+            // view previous frame
+            ToolbarContext.AddItem(new()
+            {
+                Id = "Btn_ViewPreviousFrame",
+                Image = nameof(Config.Theme.ToolbarIcons.ViewPreviousImage),
+                OnClick = new(nameof(MnuViewPreviousFrame)),
+            });
+
+
+            if (PicMain.CanImageAnimate)
+            {
+                // play/pause frame animation
+                ToolbarContext.AddItem(new()
+                {
+                    Id = "Btn_ToggleFrameAnimation",
+                    Image = nameof(Config.Theme.Settings.AppLogo),
+                    OnClick = new(nameof(MnuToggleImageAnimation)),
+                });
+            }
+            else
+            {
+                var frameInfo = new StringBuilder();
+                if (Local.Metadata != null)
+                {
+                    frameInfo.Append(Local.Metadata.FrameIndex + 1);
+                    frameInfo.Append('/');
+                    frameInfo.Append(Local.Metadata.FramesCount);
+                }
+
+                // display frame info
+                ToolbarContext.AddItem(new()
+                {
+                    Id = "Lbl_FrameInfo",
+                    DisplayStyle = ToolStripItemDisplayStyle.Text,
+                    Image = nameof(Config.Theme.Settings.AppLogo),
+                    Text = frameInfo.ToString(),
+                });
+            }
+
+
+            // view next frame
+            ToolbarContext.AddItem(new()
+            {
+                Id = "Btn_ViewNextFrame",
+                Image = nameof(Config.Theme.ToolbarIcons.ViewNextImage),
+                OnClick = new(nameof(MnuViewNextFrame)),
+            });
+
+            // view last frame
+            ToolbarContext.AddItem(new()
+            {
+                Id = "Btn_ViewLastFrame",
+                Image = nameof(Config.Theme.ToolbarIcons.ViewLastImage),
+                OnClick = new(nameof(MnuViewLastFrame)),
+            });
+
+            LoadToolbarItemsText(ToolbarContext);
+        }
+
+        ToolbarContext.Visible = visible;
+        ToolbarContext.UpdateTheme();
+        ToolbarContext.ResumeLayout(true);
     }
 
 }
