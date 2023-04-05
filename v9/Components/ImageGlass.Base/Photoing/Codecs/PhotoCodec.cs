@@ -1194,7 +1194,10 @@ public static class PhotoCodec
                 },
             });
         }
-
+        else if (ext.Equals(".APNG", StringComparison.OrdinalIgnoreCase))
+        {
+            settings.Format = MagickFormat.APng;
+        }
 
         if (options.Width > 0 && options.Height > 0)
         {

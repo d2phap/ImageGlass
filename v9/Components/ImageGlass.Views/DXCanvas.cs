@@ -3026,10 +3026,10 @@ public class DXCanvas : DXControl
         if (imgData?.Source is AnimatedImg animatedImg)
         {
             var frame = animatedImg.GetFrame((int)frameIndex);
-            if (frame?.Bitmap is Bitmap bmp)
+            if (frame?.Bitmap is IDisposable src)
             {
-                SourceWidth = bmp.Width;
-                SourceHeight = bmp.Height;
+                SourceWidth = (src as dynamic).Width;
+                SourceHeight = (src as dynamic).Height;
 
                 _animatorSource = AnimatorSource.ImageAnimator;
             }
@@ -3117,12 +3117,19 @@ public class DXCanvas : DXControl
         }
 
         if (!IsImageAnimating || _animatorSource == AnimatorSource.None) return;
-        if (sender is Bitmap bmp)
+        if (sender is IDisposable src)
         {
             DXHelper.DisposeD2D1Bitmap(ref _imageD2D);
 
-            using var wicSrc = BHelper.ToWicBitmapSource(bmp);
-            _imageD2D = DXHelper.ToD2D1Bitmap(Device, wicSrc);
+            if (src is Bitmap bmp)
+            {
+                using var wicSrc = BHelper.ToWicBitmapSource(bmp);
+                _imageD2D = DXHelper.ToD2D1Bitmap(Device, wicSrc);
+            }
+            else if (src is WicBitmapSource wicSrc)
+            {
+                _imageD2D = DXHelper.ToD2D1Bitmap(Device, wicSrc);
+            }
 
             Source = ImageSource.Direct2D;
             UseHardwareAcceleration = true;

@@ -126,7 +126,7 @@ public class IgImgData : IDisposable
                     var duration = frame.AnimationDelay > 0 ? frame.AnimationDelay : 10;
                     duration = duration * 1000 / frame.AnimationTicksPerSecond;
 
-                    return new AnimatedImgFrame(frame.ToBitmap(ImageFormat.Gif), duration);
+                    return new AnimatedImgFrame(frame.ToBitmap(), duration);
                 });
 
                 Source = new AnimatedImg(frames);
