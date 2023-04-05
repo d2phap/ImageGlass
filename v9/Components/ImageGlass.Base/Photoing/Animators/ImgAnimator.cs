@@ -75,7 +75,7 @@ public class ImgAnimator : IDisposable
     protected int _loopIndex = 0;
 
     protected bool _enable = false;
-    protected int _minTickTimeInMillisecond = 20;
+    protected TimeSpan _minTickTimeInMillisecond = TimeSpan.FromMilliseconds(20);
 
 
     /// <summary>
@@ -145,7 +145,7 @@ public class ImgAnimator : IDisposable
     /// <b>This function needs to be re-implemented in the inherited class.</b>
     /// </summary>
     /// <exception cref="NotImplementedException"></exception>
-    protected virtual int GetFrameDelay(int frameIndex)
+    protected virtual TimeSpan GetFrameDelay(int frameIndex)
     {
         throw new NotImplementedException();
     }
@@ -257,7 +257,7 @@ public class ImgAnimator : IDisposable
         // 10 is the minimum value, as a GIF's lowest tick rate is 10ms 
         //
         var newTickValue = Math.Max(10, (value / 10) * 10);
-        _minTickTimeInMillisecond = newTickValue;
+        _minTickTimeInMillisecond = TimeSpan.FromMilliseconds(newTickValue);
     }
 
 
@@ -265,9 +265,14 @@ public class ImgAnimator : IDisposable
     /// Given a delay amount, return either the minimum tick or delay, whichever is greater.
     /// </summary>
     /// <returns> the time to sleep during a tick in milliseconds </returns>
-    private int GetSleepAmountInMilliseconds(int delayInMilliseconds)
+    private TimeSpan GetSleepAmountInMilliseconds(TimeSpan delay)
     {
-        return Math.Max(_minTickTimeInMillisecond, delayInMilliseconds);
+        if (delay > _minTickTimeInMillisecond)
+        {
+            return delay;
+        }
+
+        return _minTickTimeInMillisecond;
     }
 
     #endregion // Private / Protected methods

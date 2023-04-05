@@ -33,7 +33,7 @@ public class AnimatedImgFrame : IDisposable
         if (disposing)
         {
             // Free any other managed objects here.
-            Duration = 0;
+            Duration = TimeSpan.Zero;
 
             Bitmap?.Dispose();
             Bitmap = null;
@@ -66,7 +66,7 @@ public class AnimatedImgFrame : IDisposable
     /// <summary>
     /// Gets frame duration in millisecond.
     /// </summary>
-    public int Duration { get; private set; }
+    public TimeSpan Duration { get; private set; }
 
 
     /// <summary>
@@ -75,6 +75,17 @@ public class AnimatedImgFrame : IDisposable
     /// <param name="bmpSrc"></param>
     /// <param name="duration"></param>
     public AnimatedImgFrame(IDisposable? bmpSrc, int duration)
+    {
+        Bitmap = bmpSrc;
+        Duration = TimeSpan.FromMilliseconds(duration);
+    }
+
+    /// <summary>
+    /// Initialize new instance of <see cref="AnimatedImgFrame"/>.
+    /// </summary>
+    /// <param name="bmpSrc"></param>
+    /// <param name="duration"></param>
+    public AnimatedImgFrame(IDisposable? bmpSrc, TimeSpan duration)
     {
         Bitmap = bmpSrc;
         Duration = duration;

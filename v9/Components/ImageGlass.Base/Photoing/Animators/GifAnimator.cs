@@ -53,9 +53,9 @@ public class GifAnimator : ImgAnimator
     }
 
 
-    protected override int GetFrameDelay(int frameIndex)
+    protected override TimeSpan GetFrameDelay(int frameIndex)
     {
-        return _frameDelays[_frameIndex];
+        return TimeSpan.FromMilliseconds(_frameDelays[_frameIndex]);
     }
 
 

@@ -47,9 +47,14 @@ public class AnimatedImgAnimator : ImgAnimator
     }
 
 
-    protected override int GetFrameDelay(int frameIndex)
+    protected override TimeSpan GetFrameDelay(int frameIndex)
     {
-        return GetFrame(_frameIndex)?.Duration ?? 0;
+        if (GetFrame(_frameIndex) is AnimatedImgFrame frame)
+        {
+            return frame.Duration;
+        }
+
+        return TimeSpan.Zero;
     }
 
 
