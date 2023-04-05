@@ -197,7 +197,6 @@ public partial class FrmMain
         ToolbarContext.AutoFocusOnHover = true;
         ToolbarContext.GripMargin = new Padding(0);
         ToolbarContext.GripStyle = ToolStripGripStyle.Hidden;
-        ToolbarContext.MainMenu = MnuMain;
         ToolbarContext.Name = "ToolbarContext";
         ToolbarContext.ShowItemToolTips = false;
         ToolbarContext.ShowMainMenuButton = false;
@@ -373,7 +372,7 @@ public partial class FrmMain
         if (e.HasFlag(UpdateRequests.MenuHotkeys))
         {
             LoadMenuHotkeys();
-            LoadToolbarItemsText();
+            LoadToolbarItemsText(Toolbar);
         }
 
         if (e.HasFlag(UpdateRequests.MouseActions))
@@ -419,8 +418,10 @@ public partial class FrmMain
     /// <summary>
     /// Updates items state of <see cref="Toolbar"/>
     /// </summary>
-    private void UpdateToolbarItemsState()
+    private void UpdateToolbarItemsState(bool performLayout = true)
     {
+        Toolbar.SuspendLayout();
+
         // Toolbar itoms
         foreach (var item in Toolbar.Items)
         {
@@ -468,6 +469,8 @@ public partial class FrmMain
                 }
             }
         }
+
+        Toolbar.ResumeLayout(performLayout);
     }
 
 
@@ -654,7 +657,7 @@ public partial class FrmMain
 
 
         // Toolbar
-        LoadToolbarItemsText();
+        LoadToolbarItemsText(Toolbar);
 
     }
 
@@ -691,9 +694,9 @@ public partial class FrmMain
     /// <summary>
     /// Loads text and tooltip for toolbar items
     /// </summary>
-    public void LoadToolbarItemsText()
+    public void LoadToolbarItemsText(ModernToolbar modernToolbar)
     {
-        foreach (var item in Toolbar.Items)
+        foreach (var item in modernToolbar.Items)
         {
             if (item.GetType() == typeof(ToolStripButton))
             {
@@ -1047,7 +1050,7 @@ public partial class FrmMain
         //MnuTools.Visible = false;
         //MnuColorPicker.Visible = false;
         //MnuCropTool.Visible = false;
-        MnuPageNav.Visible = false;
+        //MnuPageNav.Visible = false;
         //MnuExifTool.Visible = false;
 
         // MnuHelp
@@ -1154,7 +1157,9 @@ public partial class FrmMain
 
 
         // update docking order
-        var orderedDict = dict.OrderByDescending(i => i.Value.DockOrder);
+        var orderedDict = dict.OrderBy(i => i.Value.Dock)
+            .ThenByDescending(i => i.Value.DockOrder);
+
         foreach (var (control, _) in orderedDict)
         {
             control.SendToBack();
