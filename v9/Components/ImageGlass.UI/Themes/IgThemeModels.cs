@@ -208,6 +208,8 @@ public class IgThemeToolbarIcons : IDisposable
     public Bitmap? WindowFit { get; set; }
     public Bitmap? ZoomIn { get; set; }
     public Bitmap? ZoomOut { get; set; }
+    public Bitmap? Play { get; set; }
+    public Bitmap? Pause { get; set; }
 
 
     #region IDisposable Disposing
@@ -322,6 +324,11 @@ public class IgThemeToolbarIcons : IDisposable
             ZoomOut?.Dispose();
             ZoomOut = null;
 
+            Play?.Dispose();
+            Play = null;
+
+            Pause?.Dispose();
+            Pause = null;
         }
 
         // Free any unmanaged objects here.
