@@ -266,12 +266,6 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
 
     protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
     {
-        if (e.Item.TextImageRelation != TextImageRelation.ImageBeforeText)
-        {
-            base.OnRenderItemText(e);
-            return;
-        }
-
         var g = e.Graphics;
         g.SmoothingMode = SmoothingMode.HighQuality;
 
@@ -283,6 +277,22 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         var loc = new PointF(
             e.TextRectangle.X + (e.TextRectangle.Height * 0.3f),
             e.TextRectangle.Y + (e.TextRectangle.Height / 2 - textBmp.Height / 2) + 1);
+
+        if (e.Item.DisplayStyle == ToolStripItemDisplayStyle.Text)
+        {
+            if (e.Item.TextAlign == ContentAlignment.MiddleCenter)
+            {
+                loc.X = e.TextRectangle.X + (e.TextRectangle.Width / 2 - textBmp.Width / 2);
+            }
+            else if (e.Item.TextAlign == ContentAlignment.MiddleRight)
+            {
+                loc.X = e.TextRectangle.X + (e.TextRectangle.Right - textBmp.Width);
+            }
+            else
+            {
+                loc.X = e.TextRectangle.X;
+            }
+        }
 
         if (e.Item.Pressed)
         {
