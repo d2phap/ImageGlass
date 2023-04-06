@@ -29,6 +29,7 @@ using ImageGlass.Viewer;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO.Pipes;
+using System.Text;
 using Timer = System.Windows.Forms.Timer;
 
 namespace igcmd.Tools;
@@ -617,7 +618,7 @@ public partial class FrmSlideshow : ThemedForm
             FitWindowToImage(e.ChangeSource == ZoomChangeSource.ZoomMode);
         }
 
-        UpdateImageInfo(ImageInfoUpdateTypes.Zoom);
+        LoadImageInfo(ImageInfoUpdateTypes.Zoom);
     }
 
     private void PicMain_MouseMove(object? sender, MouseEventArgs e)
@@ -828,7 +829,7 @@ public partial class FrmSlideshow : ThemedForm
         PicMain.ShowMessage(Config.Language[$"FrmMain._Loading"], "", delayMs: 1500);
 
 
-        _ = BHelper.RunAsThread(() => UpdateImageInfo(ImageInfoUpdateTypes.All, _currentMetadata.FilePath));
+        _ = BHelper.RunAsThread(() => LoadImageInfo(ImageInfoUpdateTypes.All, _currentMetadata.FilePath));
     }
 
 
@@ -895,7 +896,7 @@ public partial class FrmSlideshow : ThemedForm
         }
 
 
-        UpdateImageInfo(ImageInfoUpdateTypes.Dimension | ImageInfoUpdateTypes.FramesCount);
+        LoadImageInfo(ImageInfoUpdateTypes.Dimension | ImageInfoUpdateTypes.FramesCount);
 
         // Collect system garbage
         GC.Collect();
@@ -998,11 +999,11 @@ public partial class FrmSlideshow : ThemedForm
     /// <summary>
     /// Gets image info in status bar.
     /// </summary>
-    private void UpdateImageInfo(ImageInfoUpdateTypes types = ImageInfoUpdateTypes.All, string? filePath = null)
+    private void LoadImageInfo(ImageInfoUpdateTypes types = ImageInfoUpdateTypes.All, string? filePath = null)
     {
         if (InvokeRequired)
         {
-            Invoke(UpdateImageInfo, types, filePath);
+            Invoke(LoadImageInfo, types, filePath);
             return;
         }
 
@@ -1044,9 +1045,14 @@ public partial class FrmSlideshow : ThemedForm
             if (Config.InfoItems.Contains(nameof(ImageInfo.ListCount))
                 && _images.Length > 0)
             {
+                var listInfo = new StringBuilder(3);
+                listInfo.Append(_currentIndex + 1);
+                listInfo.Append('/');
+                listInfo.Append(_images.Length);
+
                 ImageInfo.ListCount = string.Format(
                     Config.Language[$"_.{nameof(ImageInfo)}._{nameof(ImageInfo.ListCount)}"],
-                    _currentIndex + 1, _images.Length);
+                    listInfo.ToString());
             }
             else
             {
@@ -1103,7 +1109,7 @@ public partial class FrmSlideshow : ThemedForm
             {
                 ImageInfo.FramesCount = string.Format(
                     Config.Language[$"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FramesCount)}"],
-                    1, _currentMetadata.FramesCount);
+                    _currentMetadata.FramesCount);
             }
             else
             {
