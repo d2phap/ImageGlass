@@ -35,7 +35,7 @@ public enum ImageInfoUpdateTypes
     Dimension = 1 << 6,
     ListCount = 1 << 7,
     Zoom = 1 << 8,
-    FramesCount = 1 << 9,
+    FrameCount = 1 << 9,
 
     DateTimeAuto = 1 << 10,
     ModifiedDateTime = 1 << 11,

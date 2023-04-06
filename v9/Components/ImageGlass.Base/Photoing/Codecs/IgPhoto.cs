@@ -91,7 +91,7 @@ public class IgPhoto : IDisposable
     /// <summary>
     /// Gets, sets number of image frames.
     /// </summary>
-    public int FramesCount { get; set; } = 0;
+    public int FrameCount { get; set; } = 0;
 
     /// <summary>
     /// Gets the image data.
@@ -142,13 +142,13 @@ public class IgPhoto : IDisposable
         {
             // load image data
             Metadata ??= PhotoCodec.LoadMetadata(Filename, options);
-            FramesCount = Metadata?.FramesCount ?? 0;
+            FrameCount = Metadata?.FrameCount ?? 0;
 
             if (options.FirstFrameOnly == null)
             {
                 options = options with
                 {
-                    FirstFrameOnly = FramesCount < 2,
+                    FirstFrameOnly = FrameCount < 2,
                 };
             }
 
@@ -208,7 +208,7 @@ public class IgPhoto : IDisposable
         // reset info
         IsDone = false;
         Error = null;
-        FramesCount = 0;
+        FrameCount = 0;
 
         // unload image
         ImgData?.Dispose();

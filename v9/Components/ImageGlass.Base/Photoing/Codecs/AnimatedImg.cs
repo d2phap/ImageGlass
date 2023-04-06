@@ -33,7 +33,7 @@ public class AnimatedImg : IDisposable
         if (disposing)
         {
             // Free any other managed objects here.
-            FramesCount = 0;
+            FrameCount = 0;
             Frames = Enumerable.Empty<AnimatedImgFrame>();
         }
 
@@ -63,7 +63,7 @@ public class AnimatedImg : IDisposable
     /// <summary>
     /// Gets frams count.
     /// </summary>
-    public int FramesCount { get; private set; } = 0;
+    public int FrameCount { get; private set; } = 0;
 
 
     /// <summary>
@@ -72,7 +72,7 @@ public class AnimatedImg : IDisposable
     public AnimatedImg(IEnumerable<AnimatedImgFrame> frames)
     {
         Frames = frames;
-        FramesCount = frames.Count();
+        FrameCount = frames.Count();
     }
 
 

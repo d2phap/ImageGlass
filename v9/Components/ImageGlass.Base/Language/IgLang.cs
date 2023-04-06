@@ -151,14 +151,14 @@ public class IgLang : Dictionary<string, string>
         Add($"_.Metadata._{nameof(IgMetadata.FileCreationTime)}", "Date created"); //v9.0
         Add($"_.Metadata._{nameof(IgMetadata.FileLastAccessTime)}", "Date accessed"); //v9.0
         Add($"_.Metadata._{nameof(IgMetadata.FileLastWriteTime)}", "Date modified"); //v9.0
-        Add($"_.Metadata._{nameof(IgMetadata.FramesCount)}", "Frames"); //v9.0
+        Add($"_.Metadata._{nameof(IgMetadata.FrameCount)}", "Frames"); //v9.0
         Add($"_.Metadata._{nameof(IgMetadata.ExifRatingPercent)}", "Rating"); //v9.0
         Add($"_.Metadata._{nameof(IgMetadata.ColorSpace)}", "Color space"); //v9.0
         Add($"_.Metadata._{nameof(IgMetadata.ColorProfile)}", "Color profile"); //v9.0
 
         // image info
         Add($"_.{nameof(ImageInfo)}._{nameof(ImageInfo.ListCount)}", "{0} file(s)"); //v9.0
-        Add($"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FramesCount)}", "{0} frame(s)"); //v9.0
+        Add($"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FrameCount)}", "{0} frame(s)"); //v9.0
 
 
         #region FrmMain

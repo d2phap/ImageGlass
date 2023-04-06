@@ -62,7 +62,7 @@ public class IgMetadata
     /// Gets the frame index of this metadata.
     /// </summary>
     public uint FrameIndex { get; set; } = 0;
-    public int FramesCount { get; set; } = 0;
+    public int FrameCount { get; set; } = 0;
     public bool HasAlpha { get; set; } = false;
     public bool CanAnimate { get; set; } = false;
 

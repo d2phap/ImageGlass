@@ -263,10 +263,10 @@ public partial class FrmMain : ThemedForm
         sb.AppendLine($"{Config.Language[$"{langPath}._{nameof(IgMetadata.FileLastWriteTime)}"]}: {e.Item.Details.FileLastWriteTimeFormated}");
         var tooltipLinesCount = 4;
 
-        // FramesCount
-        if (e.Item.Details.FramesCount > 1)
+        // FrameCount
+        if (e.Item.Details.FrameCount > 1)
         {
-            sb.AppendLine($"{Config.Language[$"{langPath}._{nameof(IgMetadata.FramesCount)}"]}: {e.Item.Details.FramesCount}");
+            sb.AppendLine($"{Config.Language[$"{langPath}._{nameof(IgMetadata.FrameCount)}"]}: {e.Item.Details.FrameCount}");
             tooltipLinesCount++;
         }
 
@@ -1055,7 +1055,7 @@ public partial class FrmMain : ThemedForm
 
 
         _isShowingImagePreview = false;
-        LoadImageInfo(ImageInfoUpdateTypes.Dimension | ImageInfoUpdateTypes.FramesCount);
+        LoadImageInfo(ImageInfoUpdateTypes.Dimension | ImageInfoUpdateTypes.FrameCount);
 
 
         // Collect system garbage
@@ -1368,28 +1368,28 @@ public partial class FrmMain : ThemedForm
                 }
             }
 
-            // FramesCount
-            if (updateAll || types.HasFlag(ImageInfoUpdateTypes.FramesCount))
+            // FrameCount
+            if (updateAll || types.HasFlag(ImageInfoUpdateTypes.FrameCount))
             {
-                if (Config.InfoItems.Contains(nameof(ImageInfo.FramesCount))
+                if (Config.InfoItems.Contains(nameof(ImageInfo.FrameCount))
                     && Local.Metadata != null
-                    && Local.Metadata.FramesCount > 1)
+                    && Local.Metadata.FrameCount > 1)
                 {
                     var frameInfo = new StringBuilder(3);
                     if (Local.Metadata != null)
                     {
                         frameInfo.Append(Local.Metadata.FrameIndex + 1);
                         frameInfo.Append('/');
-                        frameInfo.Append(Local.Metadata.FramesCount);
+                        frameInfo.Append(Local.Metadata.FrameCount);
                     }
 
-                    ImageInfo.FramesCount = string.Format(
-                        Config.Language[$"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FramesCount)}"],
+                    ImageInfo.FrameCount = string.Format(
+                        Config.Language[$"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FrameCount)}"],
                         frameInfo.ToString());
                 }
                 else
                 {
-                    ImageInfo.FramesCount = string.Empty;
+                    ImageInfo.FrameCount = string.Empty;
                 }
 
                 // update frame info on PageNav toolbar
@@ -1758,7 +1758,7 @@ public partial class FrmMain : ThemedForm
 
             MnuSetLockScreen.Enabled = true;
 
-            if (Local.Metadata?.FramesCount > 1)
+            if (Local.Metadata?.FrameCount > 1)
             {
                 MnuViewChannels.Enabled = false;
 
@@ -1814,7 +1814,7 @@ public partial class FrmMain : ThemedForm
 
             if (!Local.IsImageError
                 && !hasClipboardImage
-                && Local.Metadata?.FramesCount <= 1)
+                && Local.Metadata?.FrameCount <= 1)
             {
                 MnuContext.Items.Add(MenuUtils.Clone(MnuViewChannels));
             }

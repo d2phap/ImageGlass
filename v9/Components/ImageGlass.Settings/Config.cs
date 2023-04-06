@@ -164,7 +164,7 @@ public static class Config
     {
         nameof(ImageInfo.Name),
         nameof(ImageInfo.ListCount),
-        nameof(ImageInfo.FramesCount),
+        nameof(ImageInfo.FrameCount),
         nameof(ImageInfo.Zoom),
         nameof(ImageInfo.Dimension),
         nameof(ImageInfo.FileSize),

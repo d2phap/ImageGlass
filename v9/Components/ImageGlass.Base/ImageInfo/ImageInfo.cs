@@ -27,7 +27,7 @@ public static class ImageInfo
     public static string? Path { get; set; } = null;
     public static string? FileSize { get; set; } = null;
     public static string? Dimension { get; set; } = null;
-    public static string? FramesCount { get; set; } = null;
+    public static string? FrameCount { get; set; } = null;
     public static string? ListCount { get; set; } = null;
     public static string? Zoom { get; set; } = null;
     public static string? ModifiedDateTime { get; set; } = null;
@@ -45,7 +45,7 @@ public static class ImageInfo
         && Path == null
         && FileSize == null
         && Dimension == null
-        && FramesCount == null
+        && FrameCount == null
         && ListCount == null
         && Zoom == null
 
@@ -73,7 +73,7 @@ public static class ImageInfo
                 Name =
                 Path =
                 FileSize =
-                FramesCount =
+                FrameCount =
                 ModifiedDateTime =
                 ExifRating =
                 ExifDateTime =

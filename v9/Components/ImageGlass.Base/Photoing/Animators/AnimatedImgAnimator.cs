@@ -33,7 +33,7 @@ public class AnimatedImgAnimator : ImgAnimator
         lock (frames)
         {
             _frames = frames;
-            _frameCount = frames.FramesCount;
+            _frameCount = frames.FrameCount;
         }
     }
 

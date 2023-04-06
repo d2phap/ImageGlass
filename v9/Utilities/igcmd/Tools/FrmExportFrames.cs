@@ -32,7 +32,7 @@ public partial class FrmExportFrames : DialogForm
 
     private string SrcFilePath { get; set; } = string.Empty;
     private string DestDirPath { get; set; } = string.Empty;
-    private int FramesCount { get; set; } = 0;
+    private int FrameCount { get; set; } = 0;
 
 
     public FrmExportFrames(string srcFilePath, string destDirPath) : base()
@@ -43,13 +43,13 @@ public partial class FrmExportFrames : DialogForm
         SrcFilePath = srcFilePath;
         DestDirPath = destDirPath;
 
-        FramesCount = PhotoCodec.LoadMetadata(SrcFilePath).FramesCount;
+        FrameCount = PhotoCodec.LoadMetadata(SrcFilePath).FrameCount;
         ProgressBar.Step = 1000;
-        ProgressBar.Maximum = FramesCount * ProgressBar.Step;
+        ProgressBar.Maximum = FrameCount * ProgressBar.Step;
         ProgressBar.Style = ProgressBarStyle.Marquee;
 
 
-        LblStatus.Text = string.Format(Config.Language[$"{Name}._Exporting"], 1, FramesCount, SrcFilePath);
+        LblStatus.Text = string.Format(Config.Language[$"{Name}._Exporting"], 1, FrameCount, SrcFilePath);
 
         _exportProgress = new Progress<(int, string)>(ReportProgress);
     }
@@ -170,11 +170,11 @@ public partial class FrmExportFrames : DialogForm
 
         ProgressBar.PerformStep();
 
-        var percent = Math.Round((info.FrameNumber * 100f) / FramesCount, 0);
+        var percent = Math.Round((info.FrameNumber * 100f) / FrameCount, 0);
         Text = $"{Config.Language[$"{Name}._Title"]} ({percent}%)";
 
         // Done
-        if (info.FrameNumber == FramesCount)
+        if (info.FrameNumber == FrameCount)
         {
             AcceptButtonText = Config.Language[$"{Name}._OpenOutputFolder"];
             CancelButtonText = Config.Language["_._Close"];
@@ -189,7 +189,7 @@ public partial class FrmExportFrames : DialogForm
         else
         {
             var frameFilePath = Path.Combine(DestDirPath, info.FileName);
-            LblStatus.Text = string.Format(Config.Language[$"{Name}._Exporting"], info.FrameNumber, FramesCount, $"\"{frameFilePath}\"");
+            LblStatus.Text = string.Format(Config.Language[$"{Name}._Exporting"], info.FrameNumber, FrameCount, $"\"{frameFilePath}\"");
         }
 
         OnUpdateHeight();

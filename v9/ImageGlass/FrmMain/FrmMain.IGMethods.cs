@@ -259,7 +259,7 @@ public partial class FrmMain
     /// </summary>
     public void IG_ViewLastFrame()
     {
-        var lastFrameIndex = (Local.Metadata?.FramesCount ?? 1) - 1;
+        var lastFrameIndex = (Local.Metadata?.FrameCount ?? 1) - 1;
         _ = ViewNextCancellableAsync(0, frameIndex: lastFrameIndex);
     }
 
@@ -855,7 +855,7 @@ public partial class FrmMain
 
 
         // print clipboard image
-        if (Local.ClipboardImage != null || Local.Metadata?.FramesCount == 1)
+        if (Local.ClipboardImage != null || Local.Metadata?.FrameCount == 1)
         {
             // save image to temp file
             fileToPrint = await Local.SaveImageAsTempFileAsync(quality: 100);
@@ -869,7 +869,7 @@ public partial class FrmMain
 
             File.Copy(currentFile, fileToPrint, true);
         }
-        else if (Local.Metadata?.FramesCount > 1
+        else if (Local.Metadata?.FrameCount > 1
             && !ext.Equals(".GIF", StringComparison.OrdinalIgnoreCase)
             && !ext.Equals(".TIF", StringComparison.OrdinalIgnoreCase)
             && !ext.Equals(".TIFF", StringComparison.OrdinalIgnoreCase))
@@ -3087,7 +3087,7 @@ public partial class FrmMain
             {
                 frameInfo.Append(Local.Metadata.FrameIndex + 1);
                 frameInfo.Append('/');
-                frameInfo.Append(Local.Metadata.FramesCount);
+                frameInfo.Append(Local.Metadata.FrameCount);
             }
 
             lbl.Padding = new Padding(lbl.Padding.Left, lbl.Padding.Top, this.ScaleToDpi(5), lbl.Padding.Bottom);

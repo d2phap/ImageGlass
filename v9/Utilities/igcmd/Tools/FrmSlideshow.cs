@@ -896,7 +896,7 @@ public partial class FrmSlideshow : ThemedForm
         }
 
 
-        LoadImageInfo(ImageInfoUpdateTypes.Dimension | ImageInfoUpdateTypes.FramesCount);
+        LoadImageInfo(ImageInfoUpdateTypes.Dimension | ImageInfoUpdateTypes.FrameCount);
 
         // Collect system garbage
         GC.Collect();
@@ -1100,20 +1100,20 @@ public partial class FrmSlideshow : ThemedForm
             }
         }
 
-        // FramesCount
-        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.FramesCount))
+        // FrameCount
+        if (updateAll || types.HasFlag(ImageInfoUpdateTypes.FrameCount))
         {
-            if (Config.InfoItems.Contains(nameof(ImageInfo.FramesCount))
+            if (Config.InfoItems.Contains(nameof(ImageInfo.FrameCount))
                 && _currentMetadata != null
-                && _currentMetadata.FramesCount > 1)
+                && _currentMetadata.FrameCount > 1)
             {
-                ImageInfo.FramesCount = string.Format(
-                    Config.Language[$"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FramesCount)}"],
-                    _currentMetadata.FramesCount);
+                ImageInfo.FrameCount = string.Format(
+                    Config.Language[$"_.{nameof(ImageInfo)}._{nameof(ImageInfo.FrameCount)}"],
+                    _currentMetadata.FrameCount);
             }
             else
             {
-                ImageInfo.FramesCount = string.Empty;
+                ImageInfo.FrameCount = string.Empty;
             }
         }
 

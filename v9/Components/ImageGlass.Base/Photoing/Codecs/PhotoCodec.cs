@@ -81,7 +81,7 @@ public static class PhotoCodec
             }
 
             meta.FrameIndex = 0;
-            meta.FramesCount = imgC.Count;
+            meta.FrameCount = imgC.Count;
 
             if (imgC.Count > 0)
             {
@@ -671,7 +671,7 @@ public static class PhotoCodec
 
         var result = new IgImgData()
         {
-            FrameCount = metadata?.FramesCount ?? 0,
+            FrameCount = metadata?.FrameCount ?? 0,
             HasAlpha = metadata?.HasAlpha ?? false,
             CanAnimate = metadata?.CanAnimate ?? false,
         };
