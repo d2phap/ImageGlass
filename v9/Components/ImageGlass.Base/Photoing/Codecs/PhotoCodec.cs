@@ -849,9 +849,18 @@ public static class PhotoCodec
         {
             await imgColl.ReadAsync(filename, settings, cancelToken);
 
-            foreach (var imgPageM in imgColl)
+            var i = 0;
+            foreach (var imgFrameM in imgColl)
             {
-                ProcessMagickImage((MagickImage)imgPageM, options, ext, false);
+                ProcessMagickImage((MagickImage)imgFrameM, options, ext, false);
+
+                // apply transformation
+                if (i == transform?.FrameIndex || transform?.FrameIndex == -1)
+                {
+                    TransformImage(imgFrameM, transform);
+                }
+
+                i++;
             }
 
             result.MultiFrameImage = imgColl;

@@ -1103,7 +1103,7 @@ public partial class FrmMain
             Clipboard.Clear();
         }
 
-        PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuClearClipboard)}._ClearClipboard"], Config.InAppMessageDuration);
+        PicMain.ShowMessage(Config.Language[$"{Name}.{nameof(MnuClearClipboard)}._Success"], Config.InAppMessageDuration);
     }
 
 
@@ -1522,6 +1522,11 @@ public partial class FrmMain
         {
             var lastWriteTime = File.GetLastWriteTime(destPath);
 
+            // only save the current frame if Page Nav tool is open
+            Local.ImageTransform.FrameIndex = MnuPageNav.Checked
+                ? (int)Local.CurrentFrameIndex
+                : -1;
+
             // base64 format
             if (destPath.EndsWith(".b64", StringComparison.InvariantCultureIgnoreCase)
                 || destPath.EndsWith(".txt", StringComparison.InvariantCultureIgnoreCase))
@@ -1561,6 +1566,11 @@ public partial class FrmMain
         try
         {
             var lastWriteTime = File.GetLastWriteTime(destPath);
+
+            // only save the current frame if Page Nav tool is open
+            Local.ImageTransform.FrameIndex = MnuPageNav.Checked
+                ? (int)Local.CurrentFrameIndex
+                : -1;
 
             // base64 format
             if (destPath.EndsWith(".b64", StringComparison.InvariantCultureIgnoreCase)
@@ -2776,6 +2786,7 @@ public partial class FrmMain
                     Local.ImageTransform.Flips |= FlipOptions.Vertical;
                 }
             }
+
         }
         else
         {

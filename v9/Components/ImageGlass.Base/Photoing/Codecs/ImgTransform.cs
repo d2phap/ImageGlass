@@ -53,6 +53,13 @@ public class ImgTransform
 
 
     /// <summary>
+    /// Gets, sets frame index to apply the transformation to. Use <c>-1</c> to apply to all frames.
+    /// Default value is <c>-1</c>.
+    /// </summary>
+    public int FrameIndex { get; set; } = -1;
+
+
+    /// <summary>
     /// Checks if there are changes.
     /// </summary>
     public bool HasChanges => Flips != FlipOptions.None || Rotation != 0;
@@ -71,6 +78,7 @@ public class ImgTransform
     {
         Flips = FlipOptions.None;
         Rotation = 0;
+        FrameIndex = -1;
 
         Changed?.Invoke(this, EventArgs.Empty);
     }
