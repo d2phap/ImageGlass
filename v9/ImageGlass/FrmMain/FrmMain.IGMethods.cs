@@ -710,6 +710,10 @@ public partial class FrmMain
     /// </summary>
     public void IG_About()
     {
+        using var frm = new FrmAbout();
+        frm.ShowDialog();
+
+
         var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
         var appVersion = App.Version + $" ({archInfo})";
 

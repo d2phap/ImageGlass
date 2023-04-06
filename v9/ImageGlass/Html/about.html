@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+    :root {
+      color-scheme: dark light;
+
+      /* theme colors (dark is default) */
+      --colorBg: 21 27 31;
+      --colorText: 232 232 232;
+
+      --colorAccent: 0 99 177;
+      --colorBorder: var(--colorText) / 0.1;
+
+      --shadow: 0 1px 10px -5px rgb(0 0 0 / 50%);
+      --scrollBarSize-px: 7px;
+
+      --fontBase: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variant", "Segoe UI";
+      --fontCode: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --colorBg: 255 255 255;
+        --colorText: 0 0 0;
+      }
+    }
+
+    html {
+      font-family: var(--fontBase);
+      color: rgb(var(--colorText) / 1);
+      overflow: hidden;
+    }
+    body {
+      margin: 0;
+      padding: 1rem;
+      font-size: 13px;
+      max-height: 100vh;
+      overflow: auto;
+      line-height: normal;
+    }
+    ::-webkit-scrollbar {
+      width: var(--scrollBarSize-px);
+      height: var(--scrollBarSize-px);
+      background: transparent;
+      cursor: pointer;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: rgb(var(--colorText) / 0.3);
+      border-radius: var(--scrollBarSize-px);
+      border-color: transparent;
+      border-style: solid;
+      border-width: calc((var(--scrollBarSize-px) / 2.5) - 1px);
+      background-clip: padding-box;
+      cursor: pointer;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      border-width: 0;
+      background-color: rgb(var(--colorText) / 0.35);
+    }
+    ::-webkit-scrollbar-thumb:active {
+      border-width: 0;
+      background-color: rgb(var(--colorText) / 0.5);
+    }
+    pre,
+    code,
+    kbd,
+    samp {
+      font-family: var(--fontCode);
+      font-size: 1em;
+    }
+    pre {
+      overflow-x: hidden;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    sup, sub {
+      font-size: 60%;
+    }
+    b,
+    strong {
+      font-weight: 500;
+    }
+    p {
+      margin-top: 0.5em;
+      margin-bottom: 1em;
+    }
+    p:last-of-type {
+      margin-bottom: 0;
+    }
+    hr {
+      margin: 1rem 0;
+      height: 0.05rem;
+      background-color: rgb(var(--colorText) / 0.3);
+      border: 0;
+    }
+    ul {
+      padding-left: 1.5rem;
+      margin-top: 0;
+    }
+    h1, h2, h3, h4, h5 {
+      font-weight: 500;
+    }
+    a,
+    a:visited {
+      transition: all ease 300ms;
+      color: rgb(var(--colorAccent) / 1);
+    }
+    a:hover {
+      transform: translateY(-1px);
+    }
+    a:active {
+      transform: translateY(1px);
+      transition: all ease 70ms;
+    }
+    .text-accent {
+      color: rgb(var(--colorAccent) / 1);
+    }
+    .text-danger {
+      color: rgb(219, 19, 24);
+    }
+    .text-warning {
+      color: rgb(205, 98, 0);
+    }
+    .text-success {
+      color: rgb(31, 146, 84);
+    }
+    .text-info {
+      color: rgb(0, 102, 212);
+    }
+    .box {
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+    }
+    .box-danger {
+      background-color: rgb(219, 19, 24, 0.1);
+    }
+    .box-warning {
+      background-color: rgb(205, 98, 0, 0.1);
+    }
+    .box-success {
+      background-color: rgb(31, 146, 84, 0.1);
+    }
+    .box-info {
+      background-color: rgb(0, 102, 212, 0.1);
+    }
+    details {
+      padding-left: 1.35rem;
+    }
+    details summary {
+      display: inline-block;
+      cursor: pointer;
+      margin-left: -1.35rem;
+      margin-bottom: 0.5em;
+    }
+    details summary > * {
+      display: inline;
+    }
+    details summary::marker {
+      content: none;
+    }
+    details summary::before {
+      content: "▶️";
+    }
+    details[open] summary::before {
+      content: "🔽";
+    }
+    .mt-0 {
+      margin-top: 0;
+    }
+    .mb-0 {
+      margin-bottom: 0;
+    }
+
+    #app {
+      display: flex;
+    }
+    #app aside {
+      position: sticky;
+      top: 0;
+    }
+  </style>
+</head>
+
+<body id="app">
+  <aside style="padding-right: 2rem;">
+    <img src="../Themes/Kobe/logo.svg" height="64" alt="Logo" />
+  </aside>
+
+  <main>
+    <h1 class="mt-0 mb-0">ImageGlass <sup>Kobe</sup></h1>
+    <p>A lightweight, versatile image viewer</p>
+
+    <h3 class="mb-0">
+      Version: 9.0.4.410 (64-bit)<br />
+      .NET Runtime: 6.0.15
+    </h3>
+    <p>
+      Copyright © 2010-2023 by Dương Diệu Pháp.<br/>
+      All rights reserved.
+    </p>
+
+    <h4 class="mb-0">
+      Special thanks to:
+    </h4>
+    <ul>
+      <li>Logo designer: Nguyễn Quốc Tuấn</li>
+      <li>Collaborator: Kevin Routley (<a target="_blank" href="https://github.com/fire-eggs">https://github.com/fire-eggs</a>)</li>
+    </ul>
+
+    <h4 class="mb-0">Contact</h4>
+    <ul>
+      <li>Homepage: <a target="_blank" href="https://imageglass.org">https://imageglass.org</a></li>
+      <li>GitHub: <a target="_blank" href="https://github.com/d2phap/ImageGlass">https://github.com/d2phap/ImageGlass</a></li>
+      <li>Email: <a href="mailto:phap@imageglass.org">phap@imageglass.org</a></li>
+    </ul><br/>
+
+
+    <details>
+      <summary>
+        <h3>License and credits</h3>
+      </summary>
+
+      <div>
+        <h4 class="mt-0 mb-0">WicNet</h4>
+        <ul>
+          <li>Distributed under the terms of the MIT license.</li>
+          <li>Copyright © 2022 Simon Mourier. All rights reserved.</li>
+        </ul>
+
+        <h4 class="mb-0">D2Phap.DXControl</h4>
+        <ul>
+          <li>Distributed under the terms of the MIT license.</li>
+          <li>Copyright © 2022-2023 Dương Diệu Pháp. All rights reserved.</li>
+        </ul>
+
+
+        <h4 class="mb-0">Magick.NET</h4>
+        <ul>
+          <li>Distributed under the terms of the MIT license.</li>
+          <li>Copyright © 2013-2023 Dirk Lemstra.</li>
+        </ul>
+
+
+        <h4 class="mb-0">ExplorerSortOrder</h4>
+        <ul>
+          <li>Distributed under the terms of the Apache License 2.0.</li>
+          <li>Copyright © 2019 Kevin Routley.</li>
+        </ul>
+
+
+        <h4 class="mb-0">ImageGlass.Gallery</h4>
+        <ul>
+          <li>This software uses code of ImageListView licensed under the Apache License 2.0.</li>
+          <li>Copyright © 2013 Özgür Özçıtak.</li>
+        </ul>
+
+
+        <h4 class="mb-0">libwebp</h4>
+        <ul>
+          <li>This software uses code of libwebp.</li>
+          <li>Copyright (c) 2010, Google Inc. All rights reserved.</li>
+        </ul>
+
+
+        <h4 class="mb-0">All Microsoft.Extensions libraries</h4>
+        <ul>
+          <li>Distributed under the terms of the MIT license.</li>
+          <li>Copyright © Microsoft Corporation. All rights reserved.</li>
+        </ul>
+      </div>
+    </details>
+    <br/>
+  </main>
+
+</body>
+
+</html>
