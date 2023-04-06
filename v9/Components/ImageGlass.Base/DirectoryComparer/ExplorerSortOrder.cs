@@ -40,7 +40,6 @@ public static class ExplorerSortOrder
         { "System.Size", ImageOrderBy.FileSize },
         { "System.DateCreated", ImageOrderBy.CreationTime },
         { "System.DateAccessed", ImageOrderBy.LastAccessTime },
-        { "System.Rating", ImageOrderBy.Rating },
     };
 
     [DllImport("ExplorerSortOrder.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode, EntryPoint = "GetExplorerSortOrder")]

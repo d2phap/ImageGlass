@@ -131,7 +131,6 @@ public class IgLang : Dictionary<string, string>
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.LastAccessTime)}", "Last access time"); //v8.0
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.LastWriteTime)}", "Last write time"); //v8.0
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Extension)}", "Extension"); //v8.0
-        Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Rating)}", "Rating"); //v8.0
         Add($"_.{nameof(ImageOrderBy)}._{nameof(ImageOrderBy.Random)}", "Random"); //v8.0
 
         Add($"_.{nameof(ImageOrderType)}._{nameof(ImageOrderType.Asc)}", "Ascending");  //v8.0
