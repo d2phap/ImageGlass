@@ -100,12 +100,20 @@ public partial class FrmAbout : ThemedForm
         Web2.CoreWebView2.Settings.IsSwipeNavigationEnabled = false;
         Web2.CoreWebView2.Settings.AreDefaultScriptDialogsEnabled = false;
         Web2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
-        //Web2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
+
+        Web2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
+        Web2.CoreWebView2.Settings.AreDevToolsEnabled = false;
+#if DEBUG
+        Web2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = true;
+        Web2.CoreWebView2.Settings.AreDevToolsEnabled = true;
+#endif
+
+        Web2.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
+
 
         Web2.Source = new Uri(App.StartUpDir(@"Html\about.html"));
         Web2.Focus();
     }
-
 
     private void Web2_NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
     {
@@ -118,6 +126,14 @@ public partial class FrmAbout : ThemedForm
         var accent = Config.Theme.ColorPalatte.Accent.WithBrightness(0.2f);
         var rgb = $"{accent.R} {accent.G} {accent.B}";
         await Web2.ExecuteScriptAsync($"document.documentElement.style.setProperty('--Accent', '{rgb}');");
+    }
+
+
+    private void CoreWebView2_NewWindowRequested(object? sender, CoreWebView2NewWindowRequestedEventArgs e)
+    {
+        e.Handled = true;
+
+        BHelper.OpenUrl(e.Uri, "app_about");
     }
 
 
