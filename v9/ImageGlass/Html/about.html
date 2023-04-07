@@ -42,8 +42,8 @@
     }
     body {
       margin: 0;
-      padding: 1rem;
       font-size: 13px;
+      height: 100vh;
       max-height: 100vh;
       overflow: auto;
       line-height: normal;
@@ -112,6 +112,7 @@
     }
     a,
     a:visited {
+      display: inline-block;
       transition: all ease 300ms;
       color: rgb(var(--colorAccent) / 1);
     }
@@ -120,7 +121,7 @@
     }
     a:active {
       transform: translateY(1px);
-      transition: all ease 70ms;
+      transition: all ease 80ms;
     }
     .text-accent {
       color: rgb(var(--colorAccent) / 1);
@@ -182,106 +183,153 @@
     }
 
     #app {
-      display: flex;
+      display: grid;
+      grid-template-areas: "main" "footer";
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr min-content;
     }
-    #app aside {
+    #top {
+      grid-area: main;
+      display: flex;
+      padding: 1rem;
+      background-color: rgb(var(--colorBg) / 0.85);
+      max-height: fit-content;
+      overflow: auto;
+    }
+    #top > aside {
       position: sticky;
       top: 0;
+    }
+    #app > footer {
+      grid-area: footer;
+      padding: 1rem;
+      background-color: rgb(var(--colorBg) / 0.5);
+      display: flex;
+      align-items: center;
+    }
+    #app > footer button {
+      appearance: none;
+      margin-left: 0.5rem;
+      padding: 0.35rem 1rem;
+      background-color: rgb(var(--colorBg) / 0.75);
+      border-radius: 0.25rem;
+      border: 1px solid rgb(var(--colorBorder));
+      transition: all ease 300ms;
+    }
+    #app > footer button:hover {
+      background-color: rgb(var(--colorBg) / 0.55);
+    }
+    #app > footer button:active {
+      background-color: rgb(var(--colorBg) / 0.25);
+      transition: all ease 80ms;
+    }
+    #app > footer button#BtnImageGlassStore {
+      margin-left: 0;
+      margin-right: auto;
     }
   </style>
 </head>
 
 <body id="app">
-  <aside style="padding-right: 2rem;">
-    <img src="../Themes/Kobe/logo.svg" height="64" alt="Logo" />
-  </aside>
+  <div id="top">
+    <aside style="padding-right: 2rem;">
+      <img src="../Themes/Kobe/logo.svg" height="64" alt="Logo" />
+    </aside>
+  
+    <main>
+      <h1 class="mt-0 mb-0">ImageGlass <sup>Kobe</sup></h1>
+      <p>A lightweight, versatile image viewer</p><br/>
+  
+      <h3 class="mb-0 mt-0">
+        Version: 9.0.4.410 (64-bit)<br />
+        .NET Runtime: 6.0.15
+      </h3>
+      <p>
+        Copyright © 2010-2023 by Dương Diệu Pháp.<br/>
+        All rights reserved.
+      </p>
+  
+      <h4 class="mb-0">
+        Special thanks to:
+      </h4>
+      <ul>
+        <li>Logo designer: Nguyễn Quốc Tuấn</li>
+        <li>Collaborator: Kevin Routley (<a target="_blank" href="https://github.com/fire-eggs">https://github.com/fire-eggs</a>)</li>
+      </ul>
+  
+      <h4 class="mb-0">Contact</h4>
+      <ul>
+        <li>Homepage: <a target="_blank" href="https://imageglass.org">https://imageglass.org</a></li>
+        <li>GitHub: <a target="_blank" href="https://github.com/d2phap/ImageGlass">https://github.com/d2phap/ImageGlass</a></li>
+        <li>Email: <a href="mailto:phap@imageglass.org">phap@imageglass.org</a></li>
+      </ul><br/>
+  
+  
+      <details>
+        <summary>
+          <h3>License and credits</h3>
+        </summary>
+  
+        <div>
+          <h4 class="mt-0 mb-0">WicNet</h4>
+          <ul>
+            <li>Distributed under the terms of the MIT license.</li>
+            <li>Copyright © 2022 Simon Mourier. All rights reserved.</li>
+          </ul>
+  
+          <h4 class="mb-0">D2Phap.DXControl</h4>
+          <ul>
+            <li>Distributed under the terms of the MIT license.</li>
+            <li>Copyright © 2022-2023 Dương Diệu Pháp. All rights reserved.</li>
+          </ul>
+  
+  
+          <h4 class="mb-0">Magick.NET</h4>
+          <ul>
+            <li>Distributed under the terms of the MIT license.</li>
+            <li>Copyright © 2013-2023 Dirk Lemstra.</li>
+          </ul>
+  
+  
+          <h4 class="mb-0">ExplorerSortOrder</h4>
+          <ul>
+            <li>Distributed under the terms of the Apache License 2.0.</li>
+            <li>Copyright © 2019 Kevin Routley.</li>
+          </ul>
+  
+  
+          <h4 class="mb-0">ImageGlass.Gallery</h4>
+          <ul>
+            <li>This software uses code of ImageListView licensed under the Apache License 2.0.</li>
+            <li>Copyright © 2013 Özgür Özçıtak.</li>
+          </ul>
+  
+  
+          <h4 class="mb-0">libwebp</h4>
+          <ul>
+            <li>This software uses code of libwebp.</li>
+            <li>Copyright (c) 2010, Google Inc. All rights reserved.</li>
+          </ul>
+  
+  
+          <h4 class="mb-0">All Microsoft.Extensions libraries</h4>
+          <ul>
+            <li>Distributed under the terms of the MIT license.</li>
+            <li>Copyright © Microsoft Corporation. All rights reserved.</li>
+          </ul>
+        </div>
+      </details>
+      <br/>
+    </main>
+  </div>
 
-  <main>
-    <h1 class="mt-0 mb-0">ImageGlass <sup>Kobe</sup></h1>
-    <p>A lightweight, versatile image viewer</p>
+  <footer>
+    <button id="BtnImageGlassStore">XXXX</button>
 
-    <h3 class="mb-0">
-      Version: 9.0.4.410 (64-bit)<br />
-      .NET Runtime: 6.0.15
-    </h3>
-    <p>
-      Copyright © 2010-2023 by Dương Diệu Pháp.<br/>
-      All rights reserved.
-    </p>
-
-    <h4 class="mb-0">
-      Special thanks to:
-    </h4>
-    <ul>
-      <li>Logo designer: Nguyễn Quốc Tuấn</li>
-      <li>Collaborator: Kevin Routley (<a target="_blank" href="https://github.com/fire-eggs">https://github.com/fire-eggs</a>)</li>
-    </ul>
-
-    <h4 class="mb-0">Contact</h4>
-    <ul>
-      <li>Homepage: <a target="_blank" href="https://imageglass.org">https://imageglass.org</a></li>
-      <li>GitHub: <a target="_blank" href="https://github.com/d2phap/ImageGlass">https://github.com/d2phap/ImageGlass</a></li>
-      <li>Email: <a href="mailto:phap@imageglass.org">phap@imageglass.org</a></li>
-    </ul><br/>
-
-
-    <details>
-      <summary>
-        <h3>License and credits</h3>
-      </summary>
-
-      <div>
-        <h4 class="mt-0 mb-0">WicNet</h4>
-        <ul>
-          <li>Distributed under the terms of the MIT license.</li>
-          <li>Copyright © 2022 Simon Mourier. All rights reserved.</li>
-        </ul>
-
-        <h4 class="mb-0">D2Phap.DXControl</h4>
-        <ul>
-          <li>Distributed under the terms of the MIT license.</li>
-          <li>Copyright © 2022-2023 Dương Diệu Pháp. All rights reserved.</li>
-        </ul>
-
-
-        <h4 class="mb-0">Magick.NET</h4>
-        <ul>
-          <li>Distributed under the terms of the MIT license.</li>
-          <li>Copyright © 2013-2023 Dirk Lemstra.</li>
-        </ul>
-
-
-        <h4 class="mb-0">ExplorerSortOrder</h4>
-        <ul>
-          <li>Distributed under the terms of the Apache License 2.0.</li>
-          <li>Copyright © 2019 Kevin Routley.</li>
-        </ul>
-
-
-        <h4 class="mb-0">ImageGlass.Gallery</h4>
-        <ul>
-          <li>This software uses code of ImageListView licensed under the Apache License 2.0.</li>
-          <li>Copyright © 2013 Özgür Özçıtak.</li>
-        </ul>
-
-
-        <h4 class="mb-0">libwebp</h4>
-        <ul>
-          <li>This software uses code of libwebp.</li>
-          <li>Copyright (c) 2010, Google Inc. All rights reserved.</li>
-        </ul>
-
-
-        <h4 class="mb-0">All Microsoft.Extensions libraries</h4>
-        <ul>
-          <li>Distributed under the terms of the MIT license.</li>
-          <li>Copyright © Microsoft Corporation. All rights reserved.</li>
-        </ul>
-      </div>
-    </details>
-    <br/>
-  </main>
-
+    <button id="BtnCheckForUpdate">Check for update</button>
+    <button id="BtnDonate">Donate</button>
+    <button id="BtnClose">Close</button>
+  </footer>
 </body>
 
 </html>

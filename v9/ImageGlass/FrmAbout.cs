@@ -14,6 +14,7 @@ public partial class FrmAbout : ThemedForm
     public FrmAbout()
     {
         InitializeComponent();
+        CloseFormHotkey = Keys.Escape;
 
         Web2.CoreWebView2InitializationCompleted += Web2_CoreWebView2InitializationCompleted;
         Web2.NavigationCompleted += Web2_NavigationCompleted;
@@ -99,8 +100,6 @@ public partial class FrmAbout : ThemedForm
 
     protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
-        EnableTransparent = darkMode;
-
         if (!EnableTransparent)
         {
             BackColor = Config.Theme.ColorPalatte.AppBg;

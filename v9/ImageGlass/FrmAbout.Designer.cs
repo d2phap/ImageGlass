@@ -40,7 +40,7 @@
             Web2.Dock = DockStyle.Fill;
             Web2.Location = new Point(0, 0);
             Web2.Name = "Web2";
-            Web2.Size = new Size(1501, 1067);
+            Web2.Size = new Size(1468, 1300);
             Web2.TabIndex = 0;
             Web2.ZoomFactor = 1D;
             // 
@@ -48,7 +48,7 @@
             // 
             AutoScaleDimensions = new SizeF(18F, 45F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1501, 1067);
+            ClientSize = new Size(1468, 1300);
             Controls.Add(Web2);
             Name = "FrmAbout";
             Text = "[About]";
