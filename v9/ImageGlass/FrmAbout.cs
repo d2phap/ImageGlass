@@ -1,5 +1,21 @@
-﻿
+﻿/*
+ImageGlass Project - Image viewer for Windows
+Copyright (C) 2010 - 2023 DUONG DIEU PHAP
+Project homepage: https://imageglass.org
 
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
 using ImageGlass.Base;
 using ImageGlass.Settings;
 using Microsoft.Web.WebView2.Core;
@@ -24,6 +40,35 @@ public partial class FrmAbout : ThemedForm
 
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
     }
+
+
+
+    // Protected / override methods
+    #region Protected / override methods
+
+    protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
+    {
+        if (!EnableTransparent)
+        {
+            BackColor = Config.Theme.ColorPalatte.AppBg;
+        }
+
+        base.ApplyTheme(darkMode, style);
+    }
+
+
+    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
+    {
+        base.OnRequestUpdatingColorMode(e);
+
+        // apply theme to controls
+        ApplyTheme(Config.Theme.Settings.IsDarkMode);
+
+        _ = SetWeb2AccentColor();
+    }
+
+    #endregion // Protected / override methods
+
 
     private async Task InitWebview2()
     {
@@ -57,21 +102,22 @@ public partial class FrmAbout : ThemedForm
         Web2.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
         //Web2.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
 
-        Web2.CoreWebView2.WebMessageReceived += CoreWebView2_WebMessageReceived;
-
         Web2.Source = new Uri(App.StartUpDir(@"Html\about.html"));
         Web2.Focus();
-    }
-
-    private void CoreWebView2_WebMessageReceived(object? sender, CoreWebView2WebMessageReceivedEventArgs e)
-    {
-        throw new NotImplementedException();
     }
 
 
     private void Web2_NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
     {
-        //
+        _ = SetWeb2AccentColor();
+    }
+
+
+    private async Task SetWeb2AccentColor()
+    {
+        var accent = Config.Theme.ColorPalatte.Accent.WithBrightness(0.2f);
+        var rgb = $"{accent.R} {accent.G} {accent.B}";
+        await Web2.ExecuteScriptAsync($"document.documentElement.style.setProperty('--Accent', '{rgb}');");
     }
 
 
@@ -97,24 +143,5 @@ public partial class FrmAbout : ThemedForm
         //}
     }
 
-
-    protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
-    {
-        if (!EnableTransparent)
-        {
-            BackColor = Config.Theme.ColorPalatte.AppBg;
-        }
-
-        base.ApplyTheme(darkMode, style);
-    }
-
-
-    protected override void OnRequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
-    {
-        base.OnRequestUpdatingColorMode(e);
-
-        // apply theme to controls
-        ApplyTheme(Config.Theme.Settings.IsDarkMode);
-    }
 
 }

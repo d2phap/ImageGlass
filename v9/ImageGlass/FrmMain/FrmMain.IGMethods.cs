@@ -712,6 +712,7 @@ public partial class FrmMain
     {
         using var frm = new FrmAbout();
         frm.ShowDialog();
+        return;
 
 
         var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
