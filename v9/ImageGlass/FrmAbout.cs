@@ -20,6 +20,7 @@ using ImageGlass.Base;
 using ImageGlass.Properties;
 using ImageGlass.Settings;
 using Microsoft.Web.WebView2.Core;
+using System.Dynamic;
 using System.Text;
 
 namespace ImageGlass;
@@ -32,7 +33,6 @@ public partial class FrmAbout : ThemedForm
     public FrmAbout()
     {
         InitializeComponent();
-        CloseFormHotkey = Keys.Escape;
 
         Web2.CoreWebView2InitializationCompleted += Web2_CoreWebView2InitializationCompleted;
         Web2.NavigationCompleted += Web2_NavigationCompleted;
@@ -68,6 +68,7 @@ public partial class FrmAbout : ThemedForm
 
         _ = SetWeb2AccentColor();
     }
+
 
     #endregion // Protected / override methods
 
@@ -144,11 +145,17 @@ public partial class FrmAbout : ThemedForm
         _ = SetWeb2AccentColor();
 
         _ = Web2.ExecuteScriptAsync("""
+            window.onkeydown = (e) => {
+                e.preventDefault();
+                console.log(e);
+                window.chrome.webview?.postMessage({ Name: 'KeyDown', Data: e.key });
+            }
+
             function Button_Clicked(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 console.log(e);
-                window.chrome.webview?.postMessage(e.target.id);
+                window.chrome.webview?.postMessage({ Name: 'Button_Clicked', Data: e.target.id });
             };
 
             document.getElementById('BtnImageGlassStore').addEventListener('click', Button_Clicked, false);
@@ -180,23 +187,37 @@ public partial class FrmAbout : ThemedForm
 
     private void Web2_WebMessageReceived(object? sender, CoreWebView2WebMessageReceivedEventArgs e)
     {
-        var btnId = BHelper.ParseJson<string>(e.WebMessageAsJson);
+        var msg = BHelper.ParseJson<ExpandoObject>(e.WebMessageAsJson) as dynamic;
+        var name = msg.Name.ToString();
 
-        if (btnId.Equals("BtnImageGlassStore", StringComparison.InvariantCultureIgnoreCase))
+        if (name == "KeyDown")
         {
-            Local.FrmMain.IG_OpenMsStore();
+            var key = msg.Data.ToString();
+            if (key == "Escape")
+            {
+                Close();
+            }
         }
-        else if (btnId.Equals("BtnCheckForUpdate", StringComparison.InvariantCultureIgnoreCase))
+        else if (name == "Button_Clicked")
         {
-            Local.FrmMain.IG_CheckForUpdate(true);
-        }
-        else if (btnId.Equals("BtnDonate", StringComparison.InvariantCultureIgnoreCase))
-        {
-            BHelper.OpenUrl("https://imageglass.org/support#donation", "app_about_donate");
-        }
-        else if (btnId.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
-        {
-            Close();
+            var btnId = msg.Data.ToString();
+
+            if (btnId.Equals("BtnImageGlassStore", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Local.FrmMain.IG_OpenMsStore();
+            }
+            else if (btnId.Equals("BtnCheckForUpdate", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Local.FrmMain.IG_CheckForUpdate(true);
+            }
+            else if (btnId.Equals("BtnDonate", StringComparison.InvariantCultureIgnoreCase))
+            {
+                BHelper.OpenUrl("https://imageglass.org/support#donation", "app_about_donate");
+            }
+            else if (btnId.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Close();
+            }
         }
     }
 
