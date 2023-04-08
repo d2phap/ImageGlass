@@ -171,7 +171,10 @@ public partial class FrmAbout : ThemedForm
     {
         var accent = Config.Theme.ColorPalatte.Accent.WithBrightness(0.2f);
         var rgb = $"{accent.R} {accent.G} {accent.B}";
-        await Web2.ExecuteScriptAsync($"document.documentElement.style.setProperty('--Accent', '{rgb}');");
+        await Web2.ExecuteScriptAsync($"""
+            document.documentElement.style.setProperty('--Accent', '{rgb}');
+            document.documentElement.setAttribute('color-mode', '{(Config.Theme.Settings.IsDarkMode ? "dark" : "light")}');
+            """);
     }
 
 

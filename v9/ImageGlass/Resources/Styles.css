@@ -8,8 +8,6 @@
 }
 
 :root {
-    color-scheme: dark light;
-
     /* theme colors (dark is default) */
     --InvertColor: 255 255 255;
     --AppBg: 20 25 28;
@@ -37,9 +35,12 @@
     --fontBase: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variant", "Segoe UI";
     --fontCode: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
 }
-
-@media (prefers-color-scheme: light) {
-    :root {
+html {
+    font-family: var(--fontBase);
+    color: rgb(var(--AppText));
+    overflow: hidden;
+}
+    html[color-mode=light] {
         --InvertColor: 0 0 0;
         --AppBg: 255 255 255;
         --AppText: 30 30 30;
@@ -61,13 +62,6 @@
         --BgWarning: 255 239 219;
         --BgDanger: 255 222 222;
     }
-}
-
-html {
-    font-family: var(--fontBase);
-    color: rgb(var(--AppText));
-    overflow: hidden;
-}
 
 body {
     margin: 0;
@@ -118,6 +112,7 @@ button {
     position: relative;
     font-size: 90%;
     font-family: var(--fontBase);
+    color: rgb(var(--AppText));
     padding: 0.3rem 1rem 0.35rem 1rem;
     background-color: rgb(var(--ControlBg));
     border-radius: 0.15rem;
