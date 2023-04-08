@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using System.Globalization;
+using System.Text;
 
 namespace ImageGlass.Base;
 
@@ -34,5 +35,20 @@ public static class StringExtensions
             return char.ToUpper(thisString[0]) + thisString.Substring(1);
 
         return char.ToUpper(thisString[0], culture) + thisString.Substring(1);
+    }
+
+
+    /// <summary>
+    /// Replaces string.
+    /// </summary>
+    public static string ReplaceMultiple(this string value, IEnumerable<Tuple<string, string>> toReplace)
+    {
+        var result = new StringBuilder(value);
+        foreach (var item in toReplace)
+        {
+            result.Replace(item.Item1, item.Item2);
+        }
+
+        return result.ToString();
     }
 }

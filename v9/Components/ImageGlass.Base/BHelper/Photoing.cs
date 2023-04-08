@@ -20,6 +20,7 @@ using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Base.WinApi;
 using ImageMagick;
 using Microsoft.Win32.SafeHandles;
+using System;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Reflection;
@@ -342,6 +343,19 @@ public partial class BHelper
 
 
     /// <summary>
+    /// Converts Bitmap to base64 PNG format.
+    /// </summary>
+    public static string? ToBase64Png(Bitmap? bmp)
+    {
+        using var ms = new MemoryStream();
+        bmp.Save(ms, ImageFormat.Png);
+        var base64 = Convert.ToBase64String(ms.ToArray());
+
+        return base64;
+    }
+
+
+    /// <summary>
     /// Returns Exif rotation in degrees. Returns 0 if the metadata
     /// does not exist or could not be read. A negative value means
     /// the image needs to be mirrored about the vertical axis.
@@ -627,8 +641,6 @@ public partial class BHelper
 
         return WicCodec.GUID_ContainerFormatPng;
     }
-
-
 
 
     /// <summary>
