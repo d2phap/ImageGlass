@@ -41,12 +41,12 @@ public static class StringExtensions
     /// <summary>
     /// Replaces string.
     /// </summary>
-    public static string ReplaceMultiple(this string value, IEnumerable<Tuple<string, string>> toReplace)
+    public static string ReplaceMultiple(this string value, IEnumerable<(string Variable, string Value)> toReplace)
     {
         var result = new StringBuilder(value);
         foreach (var item in toReplace)
         {
-            result.Replace(item.Item1, item.Item2);
+            result.Replace(item.Variable, item.Value);
         }
 
         return result.ToString();

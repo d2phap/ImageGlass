@@ -1,0 +1,304 @@
+﻿*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+:root {
+    /* theme colors (dark is default) */
+    --InvertColor: 255 255 255;
+    --AppBg: 20 25 28;
+    --AppText: 210 210 210;
+    --AppTextDisabled: 140 140 140;
+    --Accent: 0 99 177;
+    --ControlBg: 69 73 74;
+    --ControlBgHover: 95 101 102;
+    --ControlBgPressed: 43 43 43;
+    --ControlBgPressed2: 49 51 53;
+    --ControlBgDisabled: 82 82 82;
+    --ControlCtaBg: rgb(var(--Accent) / 0.2);
+    --ControlCtaBgHover: rgb(var(--Accent) / 0.3);
+    --ControlBorder: rgb(var(--InvertColor) / 0.1);
+    --ControlBorderHover: rgb(var(--InvertColor) / 0.3);
+    --ControlCtaBorder: rgb(var(--InvertColor) / 0.2);
+    --ControlCtaBorderHover: rgb(var(--InvertColor) / 0.4);
+    --BgNeutral: 32 38 43;
+    --BgInfo: 20 44 59;
+    --BgSuccess: 34 59 42;
+    --BgWarning: 59 40 10;
+    --BgDanger: 59 20 19;
+    --shadow: 0 1px 10px -5px rgb(0 0 0 / 50%);
+    --scrollBarSize-px: 8px;
+    --fontBase: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variant", "Segoe UI";
+    --fontCode: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+}
+html {
+    font-family: var(--fontBase);
+    color: rgb(var(--AppText));
+    overflow: hidden;
+}
+    html[color-mode=light] {
+        --InvertColor: 0 0 0;
+        --AppBg: 255 255 255;
+        --AppText: 30 30 30;
+        --AppTextDisabled: 113 113 113;
+        --ControlBg: 245 245 250;
+        --ControlBgHover: 235 235 240;
+        --ControlBgPressed: 220 220 220;
+        --ControlBgPressed2: 230 231 234;
+        --ControlBgDisabled: 202 202 202;
+        --ControlCtaBg: rgb(var(--Accent) / 0.15);
+        --ControlCtaBgHover: rgb(var(--Accent) / 0.25);
+        --ControlBorder: rgb(var(--InvertColor) / 0.2);
+        --ControlBorderHover: rgb(var(--InvertColor) / 0.3);
+        --ControlCtaBorder: rgb(var(--InvertColor) / 0.2);
+        --ControlCtaBorderHover: rgb(var(--InvertColor) / 0.3);
+        --BgNeutral: 242 242 242;
+        --BgInfo: 199 238 255;
+        --BgSuccess: 219 255 242;
+        --BgWarning: 255 239 219;
+        --BgDanger: 255 222 222;
+    }
+
+body {
+    margin: 0;
+    font-size: 13px;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: auto;
+    line-height: normal;
+    animation: fadeIn 200ms ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+::-webkit-scrollbar {
+    width: var(--scrollBarSize-px);
+    height: var(--scrollBarSize-px);
+    background: transparent;
+    cursor: pointer;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--AppText) / 0.3);
+    border-radius: var(--scrollBarSize-px);
+    border-color: transparent;
+    border-style: solid;
+    border-width: calc((var(--scrollBarSize-px) / 2.5) - 1px);
+    background-clip: padding-box;
+    cursor: pointer;
+}
+    ::-webkit-scrollbar-thumb:hover {
+        border-width: 0;
+        background-color: rgb(var(--AppText) / 0.35);
+    }
+    ::-webkit-scrollbar-thumb:active {
+        border-width: 0;
+        background-color: rgb(var(--AppText) / 0.5);
+    }
+
+button {
+    appearance: none;
+    position: relative;
+    font-size: 90%;
+    font-family: var(--fontBase);
+    color: rgb(var(--AppText));
+    padding: 0.3rem 1rem 0.35rem 1rem;
+    background-color: rgb(var(--ControlBg));
+    border-radius: 0.15rem;
+    border: 0.075rem solid var(--ControlBorder);
+    transition: all ease 300ms;
+}
+    button * {
+        pointer-events: none;
+    }
+    button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        display: block;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background-color: rgb(var(--ControlBg));
+    }
+    button:hover {
+        background-color: rgb(var(--ControlBgHover));
+        border-color: var(--ControlBorderHover);
+    }
+    button:focus {
+        outline: none;
+        border-color: rgb(var(--Accent));
+    }
+    button[type=submit] {
+        background-color: var(--ControlCtaBg);
+        border-color: var(--ControlCtaBorder);
+    }
+        button[type=submit]:hover {
+            background-color: var(--ControlCtaBgHover);
+            border-color: var(--ControlCtaBorderHover);
+        }
+        button[type=submit]:focus {
+            background-color: var(--ControlCtaBgHover);
+            border-color: rgb(var(--Accent));
+        }
+        button:active,
+        button[type=submit]:active {
+            background-color: rgb(var(--ControlBgPressed));
+            border-color: rgb(var(--Accent));
+            transition: all ease 80ms;
+        }
+
+.panel {
+    padding: 1rem;
+    background-color: rgb(var(--AppBg) / 0.5);
+    display: flex;
+    align-items: center;
+}
+    .panel > button {
+        margin-left: 0.5rem;
+    }
+
+pre,
+code,
+kbd,
+samp {
+    font-family: var(--fontCode);
+    font-size: 1em;
+}
+
+pre {
+    overflow-x: hidden;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+sup, sub {
+    font-size: 60%;
+}
+
+b,
+strong {
+    font-weight: 500;
+}
+
+p {
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+}
+    p:last-of-type {
+        margin-bottom: 0;
+    }
+
+hr {
+    margin: 1rem 0;
+    height: 0.05rem;
+    background-color: rgb(var(--AppText) / 0.3);
+    border: 0;
+}
+
+ul {
+    padding-left: 1.5rem;
+    margin-top: 0;
+}
+
+h1, h2, h3, h4, h5 {
+    font-weight: 500;
+}
+
+a,
+a:visited {
+    display: inline-block;
+    text-underline-position: under;
+    transition: all ease 300ms;
+    color: rgb(var(--Accent));
+    border-radius: 0.25em;
+    padding: 0 0.25em 0.1em 0.25em;
+}
+
+    a:hover {
+        background-color: rgb(var(--InvertColor) / 0.1);
+        filter: brightness(1.3);
+    }
+
+    a:active {
+        background-color: rgb(var(--InvertColor) / 0.05);
+        filter: brightness(0.95);
+        transition: all ease 80ms;
+    }
+
+.text-accent {
+    color: rgb(var(--Accent) / 1);
+}
+.text-danger {
+    color: rgb(219, 19, 24);
+}
+.text-warning {
+    color: rgb(205, 98, 0);
+}
+.text-success {
+    color: rgb(31, 146, 84);
+}
+.text-info {
+    color: rgb(0, 102, 212);
+}
+
+.box {
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+.box-danger {
+    background-color: rgb(219, 19, 24, 0.1);
+}
+.box-warning {
+    background-color: rgb(205, 98, 0, 0.1);
+}
+.box-success {
+    background-color: rgb(31, 146, 84, 0.1);
+}
+.box-info {
+    background-color: rgb(0, 102, 212, 0.1);
+}
+
+details {
+    padding-left: 1.35rem;
+}
+    details summary {
+        display: inline-block;
+        cursor: pointer;
+        margin-left: -1.35rem;
+        margin-bottom: 0.5em;
+    }
+        details summary > * {
+            display: inline;
+        }
+        details summary::marker {
+            content: none;
+        }
+        details summary::before {
+            content: "▶️";
+        }
+    details[open] summary::before {
+        content: "🔽";
+    }
+
+.mt-0 {
+    margin-top: 0;
+}
+.mb-0 {
+    margin-bottom: 0;
+}
