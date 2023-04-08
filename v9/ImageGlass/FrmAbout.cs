@@ -17,8 +17,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
+using ImageGlass.Base.Photoing.Codecs;
+using ImageGlass.Properties;
 using ImageGlass.Settings;
 using Microsoft.Web.WebView2.Core;
+using System.Text;
 
 namespace ImageGlass;
 
@@ -110,10 +113,32 @@ public partial class FrmAbout : ThemedForm
 
         Web2.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
 
-
-        Web2.Source = new Uri(App.StartUpDir(@"Html\about.html"));
+        LoadWebPage();
         Web2.Focus();
     }
+
+    private void LoadWebPage()
+    {
+        var base64Logo = BHelper.ToBase64Png(Config.Theme.Settings.AppLogo);
+        var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
+        var msStoreBadge = Encoding.UTF8.GetString(Resources.MsStoreBadge);
+
+
+        var pageBodyHtml = File.ReadAllText(App.StartUpDir(@"Html\about.html"));
+        var pageHtml = Resources.Layout.ReplaceMultiple(new []
+        {
+            Tuple.Create("{{styles.css}}", Resources.Styles),
+            Tuple.Create("{{body.html}}", pageBodyHtml),
+            Tuple.Create("{{AppLogo}}", $"data:image/png;base64,{base64Logo}"),
+            Tuple.Create("{{AppVersion}}", $"{App.Version} ({archInfo})"),
+            Tuple.Create("{{AppRuntime}}", Environment.Version.ToString()),
+            Tuple.Create("{{CopyrightsYear}}", DateTime.UtcNow.Year.ToString()),
+            Tuple.Create("{{MsStoreBadge}}", $"{Encoding.UTF8.GetString(Resources.MsStoreBadge)}"),
+        });
+
+        Web2.CoreWebView2.NavigateToString(pageHtml);
+    }
+
 
     private void Web2_NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
     {

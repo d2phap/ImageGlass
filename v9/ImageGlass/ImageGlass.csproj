@@ -125,6 +125,8 @@
 
   <ItemGroup>
     <None Remove="Html\about.html" />
+    <None Remove="styles.css" />
+    <None Remove="WebResources\layout.html" />
   </ItemGroup>
 
   <ItemGroup>
@@ -159,6 +161,15 @@
     <ProjectReference Include="..\Components\ImageGlass.UI\ImageGlass.UI.csproj" />
     <ProjectReference Include="..\Components\ImageGlass.Views\ImageGlass.Viewer.csproj" />
     <ProjectReference Include="..\Utilities\igcmd\igcmd.csproj" Condition="$(ConfigurationName) != 'Publish_Release'" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="WebResources\layout.html">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="WebResources\styles.css">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
