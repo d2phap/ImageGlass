@@ -124,6 +124,9 @@ button {
     border: 0.075rem solid var(--ControlBorder);
     transition: all ease 300ms;
 }
+    button * {
+        pointer-events: none;
+    }
     button::before {
         content: "";
         position: absolute;

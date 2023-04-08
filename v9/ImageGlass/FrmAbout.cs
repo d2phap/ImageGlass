@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 using ImageGlass.Base;
-using ImageGlass.Base.Photoing.Codecs;
 using ImageGlass.Properties;
 using ImageGlass.Settings;
 using Microsoft.Web.WebView2.Core;
@@ -125,7 +124,7 @@ public partial class FrmAbout : ThemedForm
 
 
         var pageBodyHtml = File.ReadAllText(App.StartUpDir(@"Html\about.html"));
-        var pageHtml = Resources.Layout.ReplaceMultiple(new []
+        var pageHtml = Resources.Layout.ReplaceMultiple(new[]
         {
             Tuple.Create("{{styles.css}}", Resources.Styles),
             Tuple.Create("{{body.html}}", pageBodyHtml),
@@ -143,14 +142,20 @@ public partial class FrmAbout : ThemedForm
     private void Web2_NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
     {
         _ = SetWeb2AccentColor();
-    }
 
+        _ = Web2.ExecuteScriptAsync("""
+            function Button_Clicked(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log(e);
+                window.chrome.webview?.postMessage(e.target.id);
+            };
 
-    private async Task SetWeb2AccentColor()
-    {
-        var accent = Config.Theme.ColorPalatte.Accent.WithBrightness(0.2f);
-        var rgb = $"{accent.R} {accent.G} {accent.B}";
-        await Web2.ExecuteScriptAsync($"document.documentElement.style.setProperty('--Accent', '{rgb}');");
+            document.getElementById('BtnImageGlassStore').addEventListener('click', Button_Clicked, false);
+            document.getElementById('BtnCheckForUpdate').addEventListener('click', Button_Clicked, false);
+            document.getElementById('BtnDonate').addEventListener('click', Button_Clicked, false);
+            document.getElementById('BtnClose').addEventListener('click', Button_Clicked, false);
+        """);
     }
 
 
@@ -162,26 +167,34 @@ public partial class FrmAbout : ThemedForm
     }
 
 
+    private async Task SetWeb2AccentColor()
+    {
+        var accent = Config.Theme.ColorPalatte.Accent.WithBrightness(0.2f);
+        var rgb = $"{accent.R} {accent.G} {accent.B}";
+        await Web2.ExecuteScriptAsync($"document.documentElement.style.setProperty('--Accent', '{rgb}');");
+    }
+
+
     private void Web2_WebMessageReceived(object? sender, CoreWebView2WebMessageReceivedEventArgs e)
     {
-        //var msg = e.WebMessageAsJson;
-        //var json = WebMessage.FromJson<object>(msg);
-        //var code = json?.Code ?? string.Empty;
-        //var data = json?.Data ?? null;
+        var btnId = BHelper.ParseJson<string>(e.WebMessageAsJson);
 
-        //if (code == WebMessageCodes.UI_SystemThemeChanged)
-        //{
-        //    bool isLightTheme = data?.ToString() == "light";
-
-        //    if (isLightTheme)
-        //    {
-        //        UpdateTheme(SystemTheme.Light);
-        //    }
-        //    else
-        //    {
-        //        UpdateTheme(SystemTheme.Dark);
-        //    }
-        //}
+        if (btnId.Equals("BtnImageGlassStore", StringComparison.InvariantCultureIgnoreCase))
+        {
+            Local.FrmMain.IG_OpenMsStore();
+        }
+        else if (btnId.Equals("BtnCheckForUpdate", StringComparison.InvariantCultureIgnoreCase))
+        {
+            Local.FrmMain.IG_CheckForUpdate(true);
+        }
+        else if (btnId.Equals("BtnDonate", StringComparison.InvariantCultureIgnoreCase))
+        {
+            BHelper.OpenUrl("https://imageglass.org/support#donation", "app_about_donate");
+        }
+        else if (btnId.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
+        {
+            Close();
+        }
     }
 
 
