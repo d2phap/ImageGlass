@@ -28,37 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Web2 = new Microsoft.Web.WebView2.WinForms.WebView2();
-            ((System.ComponentModel.ISupportInitialize)Web2).BeginInit();
             SuspendLayout();
-            // 
-            // Web2
-            // 
-            Web2.AllowExternalDrop = true;
-            Web2.CreationProperties = null;
-            Web2.DefaultBackgroundColor = Color.White;
-            Web2.Dock = DockStyle.Fill;
-            Web2.Location = new Point(0, 0);
-            Web2.Name = "Web2";
-            Web2.Size = new Size(1468, 1312);
-            Web2.TabIndex = 0;
-            Web2.ZoomFactor = 1D;
             // 
             // FrmAbout
             // 
             AutoScaleDimensions = new SizeF(18F, 45F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1468, 1312);
-            Controls.Add(Web2);
-            MaximizeBox = false;
+            ClientSize = new Size(1454, 1245);
+            Location = new Point(0, 0);
             Name = "FrmAbout";
-            Text = "[About]";
-            ((System.ComponentModel.ISupportInitialize)Web2).EndInit();
+            Text = "FrmAbout";
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Microsoft.Web.WebView2.WinForms.WebView2 Web2;
     }
 }

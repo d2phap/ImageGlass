@@ -138,7 +138,7 @@
 
   <ItemGroup>
     <PackageReference Include="FileWatcherEx" Version="2.4.0" />
-    <PackageReference Include="IDisposableAnalyzers" Version="4.0.4">
+    <PackageReference Include="IDisposableAnalyzers" Version="4.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -146,7 +146,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1661.34" />
   </ItemGroup>
 
   <ItemGroup>
