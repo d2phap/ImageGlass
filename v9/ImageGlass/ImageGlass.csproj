@@ -125,14 +125,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Html\about.html" />
     <None Remove="styles.css" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Html\about.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="icon256.ico" />
   </ItemGroup>
 

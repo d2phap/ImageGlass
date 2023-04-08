@@ -122,14 +122,14 @@ public partial class FrmAbout : ThemedForm
         var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
         var msStoreBadge = Encoding.UTF8.GetString(Resources.MsStoreBadge);
 
-
-        var pageBodyHtml = File.ReadAllText(App.StartUpDir(@"Html\about.html"));
         var pageHtml = Resources.Layout.ReplaceMultiple(new[]
         {
             Tuple.Create("{{styles.css}}", Resources.Styles),
-            Tuple.Create("{{body.html}}", pageBodyHtml),
+            Tuple.Create("{{body.html}}", Resources.Page_About),
             Tuple.Create("{{AppLogo}}", $"data:image/png;base64,{base64Logo}"),
-            Tuple.Create("{{AppVersion}}", $"{App.Version} ({archInfo})"),
+            Tuple.Create("{{AppCode}}", Constants.APP_CODE),
+            Tuple.Create("{{AppVersion}}", App.Version),
+            Tuple.Create("{{AppArchitecture}}", archInfo),
             Tuple.Create("{{AppRuntime}}", Environment.Version.ToString()),
             Tuple.Create("{{CopyrightsYear}}", DateTime.UtcNow.Year.ToString()),
             Tuple.Create("{{MsStoreBadge}}", $"{Encoding.UTF8.GetString(Resources.MsStoreBadge)}"),

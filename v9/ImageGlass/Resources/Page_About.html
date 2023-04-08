@@ -42,6 +42,9 @@
   #BtnImageGlassStore:active {
     box-shadow: transparent;
   }
+  .app-code {
+      text-transform: capitalize;
+  }
 </style>
 
 
@@ -51,16 +54,26 @@
   </aside>
 
   <main>
-    <h1 class="mt-0 mb-0 text-accent">ImageGlass <sup>Kobe</sup></h1>
+    <h1 class="mt-0 mb-0 text-accent">ImageGlass <sup class="app-code">{{AppCode}}</sup></h1>
     <p>A lightweight, versatile image viewer</p><br />
 
     <h3 class="mb-0 mt-0">
-      Version: {{AppVersion}}<br />
-      .NET Runtime: {{AppRuntime}}
+        Version: {{AppVersion}} ({{AppArchitecture}})<br />
+        .NET Runtime: {{AppRuntime}}
     </h3>
     <p>
       Copyright © 2010-{{CopyrightsYear}} by Dương Diệu Pháp.<br />
       All rights reserved.
+    </p>
+
+    <p>
+        <a target="_blank" href="https://imageglass.org/license?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about">
+            Software license
+        </a>
+
+        <a target="_blank" href="https://imageglass.org/privacy?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about">
+            Privacy policy
+        </a>
     </p>
 
     <h4 class="mb-0">
@@ -69,12 +82,13 @@
     <ul>
       <li>Logo designer: Nguyễn Quốc Tuấn</li>
       <li>Collaborator: Kevin Routley (<a target="_blank"
-          href="https://github.com/fire-eggs">https://github.com/fire-eggs</a>)</li>
+          href="https://github.com/fire-eggs">https://github.com/fire-eggs</a>)
+      </li>
     </ul>
 
     <h4 class="mb-0">Contact</h4>
     <ul>
-      <li>Homepage: <a target="_blank" href="https://imageglass.org">https://imageglass.org</a></li>
+      <li>Homepage: <a target="_blank" href="https://imageglass.org?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about">https://imageglass.org</a></li>
       <li>GitHub: <a target="_blank"
           href="https://github.com/d2phap/ImageGlass">https://github.com/d2phap/ImageGlass</a></li>
       <li>Email: <a href="mailto:phap@imageglass.org">phap@imageglass.org</a></li>
@@ -83,7 +97,7 @@
 
     <details>
       <summary>
-        <h3>License and credits</h3>
+        <h3>Credits</h3>
       </summary>
 
       <div>

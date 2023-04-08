@@ -228,6 +228,7 @@ h1, h2, h3, h4, h5 {
 a,
 a:visited {
     display: inline-block;
+    text-underline-position: under;
     transition: all ease 300ms;
     color: rgb(var(--Accent));
     border-radius: 0.25em;
