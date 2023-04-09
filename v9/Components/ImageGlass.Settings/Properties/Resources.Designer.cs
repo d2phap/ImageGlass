@@ -22,7 +22,7 @@ namespace ImageGlass.Settings.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace ImageGlass.Settings.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ImageGlass.Settings.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace ImageGlass.Settings.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -76,7 +76,7 @@ namespace ImageGlass.Settings.Properties {
         ///&lt;/body&gt;
         ///&lt;/html&gt;.
         /// </summary>
-        internal static string Layout {
+        public static string Layout {
             get {
                 return ResourceManager.GetString("Layout", resourceCulture);
             }
@@ -85,7 +85,7 @@ namespace ImageGlass.Settings.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] MsStoreBadge {
+        public static byte[] MsStoreBadge {
             get {
                 object obj = ResourceManager.GetObject("MsStoreBadge", resourceCulture);
                 return ((byte[])(obj));
@@ -116,7 +116,7 @@ namespace ImageGlass.Settings.Properties {
         ///    --ControlBgDisabled: 82 82 82;
         ///    - [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Styles {
+        public static string Styles {
             get {
                 return ResourceManager.GetString("Styles", resourceCulture);
             }

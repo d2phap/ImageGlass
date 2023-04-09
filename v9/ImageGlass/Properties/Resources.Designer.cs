@@ -61,38 +61,6 @@ namespace ImageGlass.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
-        ///&lt;html lang=&quot;en&quot;&gt;
-        ///&lt;head&gt;
-        ///  &lt;meta charset=&quot;UTF-8&quot;&gt;
-        ///  &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
-        ///  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-        ///
-        ///  &lt;style&gt;{{styles.css}}&lt;/style&gt;
-        ///&lt;/head&gt;
-        ///
-        ///&lt;body id=&quot;app&quot;&gt;
-        ///  {{body.html}}
-        ///&lt;/body&gt;
-        ///&lt;/html&gt;.
-        /// </summary>
-        internal static string Layout {
-            get {
-                return ResourceManager.GetString("Layout", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] MsStoreBadge {
-            get {
-                object obj = ResourceManager.GetObject("MsStoreBadge", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &lt;style&gt;
         ///  #app {
         ///    display: grid;
@@ -126,37 +94,6 @@ namespace ImageGlass.Properties {
         internal static string Page_About {
             get {
                 return ResourceManager.GetString("Page_About", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to *,
-        ///*::before,
-        ///*::after {
-        ///    box-sizing: border-box;
-        ///    user-drag: none;
-        ///    -webkit-user-drag: none;
-        ///    user-select: none;
-        ///}
-        ///
-        ///:root {
-        ///    color-scheme: dark light;
-        ///
-        ///    /* theme colors (dark is default) */
-        ///    --InvertColor: 255 255 255;
-        ///    --AppBg: 20 25 28;
-        ///    --AppText: 210 210 210;
-        ///    --AppTextDisabled: 140 140 140;
-        ///    --Accent: 0 99 177;
-        ///    --ControlBg: 69 73 74;
-        ///    --ControlBgHover: 95 101 102;
-        ///    --ControlBgPressed: 43 43 43;
-        ///    --ControlBgPressed2: 49 51 53;
-        ///    --Co [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string Styles {
-            get {
-                return ResourceManager.GetString("Styles", resourceCulture);
             }
         }
     }

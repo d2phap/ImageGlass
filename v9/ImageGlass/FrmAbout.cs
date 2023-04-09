@@ -19,10 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Properties;
 using ImageGlass.Settings;
-using Microsoft.Web.WebView2.Core;
-using System.Dynamic;
 using System.Text;
-using System.Windows.Interop;
 
 namespace ImageGlass;
 
@@ -47,7 +44,7 @@ public partial class FrmAbout : WebForm
     {
         var base64Logo = BHelper.ToBase64Png(Config.Theme.Settings.AppLogo);
         var archInfo = Environment.Is64BitProcess ? "64-bit" : "32-bit";
-        var msStoreBadge = Encoding.UTF8.GetString(Resources.MsStoreBadge);
+        var msStoreBadge = Encoding.UTF8.GetString(Settings.Properties.Resources.MsStoreBadge);
 
         return new List<(string Variable, string Value)>
         {
@@ -57,7 +54,7 @@ public partial class FrmAbout : WebForm
             ("{{AppArchitecture}}", archInfo),
             ("{{AppRuntime}}", Environment.Version.ToString()),
             ("{{CopyrightsYear}}", DateTime.UtcNow.Year.ToString()),
-            ("{{MsStoreBadge}}", $"{Encoding.UTF8.GetString(Resources.MsStoreBadge)}"),
+            ("{{MsStoreBadge}}", msStoreBadge),
         };
     }
 
