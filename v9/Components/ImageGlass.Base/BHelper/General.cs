@@ -369,4 +369,30 @@ public partial class BHelper
     }
 
 
+    /// <summary>
+    /// Opens ImageGlass site om Microsoft Store.
+    /// </summary>
+    public static void OpenImageGlassMsStore()
+    {
+        var campaignId = $"IgInAppBadgeV{App.Version}";
+        var source = "AboutWindow";
+
+        try
+        {
+            var url = $"ms-windows-store://pdp/?productid={Constants.MS_APPSTORE_ID}&cid={campaignId}&referrer=appbadge&source={source}";
+
+            BHelper.OpenUrl(url);
+        }
+        catch
+        {
+            try
+            {
+                var url = $"https://www.microsoft.com/store/productId/{Constants.MS_APPSTORE_ID}?cid={campaignId}&referrer=appbadge&source={source}";
+
+                BHelper.OpenUrl(url);
+            }
+            catch { }
+        }
+    }
+
 }

@@ -729,33 +729,6 @@ public partial class FrmMain
     }
 
 
-    /// <summary>
-    /// Opens Microsoft Store
-    /// </summary>
-    public void IG_OpenMsStore()
-    {
-        var campaignId = $"IgInAppBadgeV{App.Version}";
-        var source = "AboutWindow";
-
-        try
-        {
-            var url = $"ms-windows-store://pdp/?productid={Constants.MS_APPSTORE_ID}&cid={campaignId}&referrer=appbadge&source={source}";
-
-            BHelper.OpenUrl(url);
-        }
-        catch
-        {
-            try
-            {
-                var url = $"https://www.microsoft.com/store/productId/{Constants.MS_APPSTORE_ID}?cid={campaignId}&referrer=appbadge&source={source}";
-
-                BHelper.OpenUrl(url);
-            }
-            catch { }
-        }
-    }
-
-
     public void IG_Settings()
     {
         using var frmSettings = new FrmSettings()
