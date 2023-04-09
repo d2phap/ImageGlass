@@ -39,6 +39,8 @@ public partial class FrmAbout : WebForm
         base.OnLoad(e);
 
         Config.UpdateFormIcon(this);
+
+        UrlCampaignString = "app_about";
         Text = Config.Language[$"{nameof(FrmMain)}.{nameof(Local.FrmMain.MnuAbout)}"];
     }
 
@@ -97,6 +99,8 @@ public partial class FrmAbout : WebForm
             document.getElementById('BtnCheckForUpdate').addEventListener('click', Button_Clicked, false);
             document.getElementById('BtnDonate').addEventListener('click', Button_Clicked, false);
             document.getElementById('BtnClose').addEventListener('click', Button_Clicked, false);
+
+            document.getElementById('BtnCheckForUpdate').focus();
         """);
     }
 

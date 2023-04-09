@@ -26,9 +26,14 @@ namespace ImageGlass;
 
 public partial class WebForm : ThemedForm
 {
+    /// <summary>
+    /// Gets, sets campaign for hyperlink url.
+    /// </summary>
     protected string UrlCampaignString { get; set; } = "app_unknown";
-    protected bool IsWeb2Ready { get; set; } = false;
 
+    /// <summary>
+    /// Gets the <see cref="WebView2"/> instance.
+    /// </summary>
     protected WebView2 Web2 => WebV;
 
 
@@ -118,6 +123,9 @@ public partial class WebForm : ThemedForm
     #endregion // Virtual methods
 
 
+    // Private methods
+    #region Private methods
+
     private async Task InitWebview2()
     {
         var options = new CoreWebView2EnvironmentOptions
@@ -133,10 +141,39 @@ public partial class WebForm : ThemedForm
     }
 
 
+    private void LoadWebPage()
+    {
+        var templates = new List<(string, string)>()
+        {
+            ("{{styles.css}}", Resources.Styles),
+            ("{{body.html}}", OnLoadingWebSource()),
+        };
+        templates.AddRange(OnWebTemplateParsing());
+
+        var pageHtml = Resources.Layout.ReplaceMultiple(templates);
+        WebV.CoreWebView2.NavigateToString(pageHtml);
+    }
+
+
+    private async Task SetWeb2AccentColor()
+    {
+        var accent = Config.Theme.ColorPalatte.Accent.WithBrightness(0.2f);
+        var rgb = $"{accent.R} {accent.G} {accent.B}";
+
+        await WebV.ExecuteScriptAsync($"""
+            document.documentElement.style.setProperty('--Accent', '{rgb}');
+            document.documentElement.setAttribute('color-mode', '{(Config.Theme.Settings.IsDarkMode ? "dark" : "light")}');
+            """);
+    }
+
+    #endregion // Private methods
+
+
+    // Webview2 events
+    #region Webview2 events
+
     private void Web2_CoreWebView2InitializationCompleted(object? sender, CoreWebView2InitializationCompletedEventArgs e)
     {
-        IsWeb2Ready = true;
-
         WebV.DefaultBackgroundColor = Color.Transparent;
         WebV.CoreWebView2.Settings.IsZoomControlEnabled = false;
         WebV.CoreWebView2.Settings.IsStatusBarEnabled = false;
@@ -162,26 +199,11 @@ public partial class WebForm : ThemedForm
     }
 
 
-    private void LoadWebPage()
-    {
-        var templates = new List<(string, string)>()
-        {
-            ("{{styles.css}}", Resources.Styles),
-            ("{{body.html}}", OnLoadingWebSource()),
-        };
-        templates.AddRange(OnWebTemplateParsing());
-
-        var pageHtml = Resources.Layout.ReplaceMultiple(templates);
-        WebV.CoreWebView2.NavigateToString(pageHtml);
-    }
-
-
     private void Web2_NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
     {
         _ = SetWeb2AccentColor();
         _ = WebV.ExecuteScriptAsync("""
             window.onkeydown = (e) => {
-                e.preventDefault();
                 console.log(e);
                 window.chrome.webview?.postMessage({ Name: 'KeyDown', Data: e.key });
             }
@@ -207,20 +229,17 @@ public partial class WebForm : ThemedForm
             {
                 Close();
             }
+#if DEBUG
+            else if (msg.Data == "F12")
+            {
+                WebV.CoreWebView2.OpenDevToolsWindow();
+            }
+#endif
         }
 
         OnWeb2MessageReceived(msg.Name, msg.Data ?? string.Empty);
     }
 
+    #endregion // Webview2 events
 
-    private async Task SetWeb2AccentColor()
-    {
-        var accent = Config.Theme.ColorPalatte.Accent.WithBrightness(0.2f);
-        var rgb = $"{accent.R} {accent.G} {accent.B}";
-
-        await WebV.ExecuteScriptAsync($"""
-            document.documentElement.style.setProperty('--Accent', '{rgb}');
-            document.documentElement.setAttribute('color-mode', '{(Config.Theme.Settings.IsDarkMode ? "dark" : "light")}');
-            """);
-    }
 }
