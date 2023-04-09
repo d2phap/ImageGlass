@@ -189,12 +189,12 @@ public partial class FrmColorPicker : ToolForm, IToolForm<ColorPickerConfig>
         Text = Config.Language[$"{nameof(Local.FrmMain)}.{nameof(Local.FrmMain.MnuColorPicker)}"];
 
         TooltipMain.SetToolTip(BtnSettings, Config.Language[$"{Name}.{nameof(BtnSettings)}._Tooltip"]);
-        TooltipMain.SetToolTip(BtnCopyLocation, Config.Language[$"_.Copy"]);
-        TooltipMain.SetToolTip(BtnCopyRgb, Config.Language[$"_.Copy"]);
-        TooltipMain.SetToolTip(BtnCopyHex, Config.Language[$"_.Copy"]);
-        TooltipMain.SetToolTip(BtnCopyCmyk, Config.Language[$"_.Copy"]);
-        TooltipMain.SetToolTip(BtnCopyHsl, Config.Language[$"_.Copy"]);
-        TooltipMain.SetToolTip(BtnCopyHsv, Config.Language[$"_.Copy"]);
+        TooltipMain.SetToolTip(BtnCopyLocation, Config.Language[$"_._Copy"]);
+        TooltipMain.SetToolTip(BtnCopyRgb, Config.Language[$"_._Copy"]);
+        TooltipMain.SetToolTip(BtnCopyHex, Config.Language[$"_._Copy"]);
+        TooltipMain.SetToolTip(BtnCopyCmyk, Config.Language[$"_._Copy"]);
+        TooltipMain.SetToolTip(BtnCopyHsl, Config.Language[$"_._Copy"]);
+        TooltipMain.SetToolTip(BtnCopyHsv, Config.Language[$"_._Copy"]);
     }
 
 

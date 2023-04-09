@@ -114,7 +114,8 @@ public class IgLang : Dictionary<string, string>
         Add("_._Quit", "Quit"); // v9.0
         Add("_._Error", "Error"); // v9.0
         Add("_._Warning", "Warning"); // v9.0
-        Add("_.Copy", "Copy"); //v9.0
+        Add("_._Copy", "Copy"); //v9.0
+        Add("_._CheckForUpdate", "Check for update…"); //v5.0
 
         Add("_._UnhandledException", "Unhandled exception"); // v9.0
         Add("_._UnhandledException._Description", "Unhandled exception has occurred. If you click Continue, the application will ignore this error and attempt to continue. If you click Quit, the application will close immediately."); // v9.0
@@ -325,7 +326,6 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuHelp", "Help"); //v7.0
         Add("FrmMain.MnuAbout", "About"); //v3.0
         Add("FrmMain.MnuFirstLaunch", "First-launch configurations…"); //v5.0
-        Add("FrmMain.MnuCheckForUpdate._NoUpdate", "Check for update…"); //v5.0
         Add("FrmMain.MnuCheckForUpdate._NewVersion", "A new version is available!"); //v5.0
         Add("FrmMain.MnuReportIssue", "Report an issue…"); //v3.0
 
@@ -373,16 +373,18 @@ public class IgLang : Dictionary<string, string>
         #endregion
 
         #region FrmAbout
-        //Add("FrmAbout.lblSlogant", "A lightweight, versatile image viewer"); //changed 4.0
-        //Add("FrmAbout.lblInfo", "Information");
-        //Add("FrmAbout.lblComponent", "Components");
-        //Add("FrmAbout.lblReferences", "References");
-        //Add("FrmAbout.lblVersion", "Version: {0}");
-        //Add("FrmAbout.lblInfoContact", "Contact");
-        //Add("FrmAbout.lblSoftwareUpdate", "Software updates");
-        //Add("FrmAbout.lnkCheckUpdate", "» Check for update…");
-        //Add("FrmAbout._Text", "About");
-        //Add("FrmAbout._PortableText", "[Portable]"); //v4.0
+        Add("FrmAbout._Slogan", "A lightweight, versatile image viewer");
+        Add("FrmAbout._Version", "Version:");
+        Add("FrmAbout._License", "Software license");
+        Add("FrmAbout._Privacy", "Privacy policy");
+        Add("FrmAbout._Thanks", "Special thanks to:");
+        Add("FrmAbout._LogoDesigner", "Logo designer:");
+        Add("FrmAbout._Collaborator", "Collaborator:");
+        Add("FrmAbout._Contact", "Contact");
+        Add("FrmAbout._Homepage", "Homepage:");
+        Add("FrmAbout._Email", "Email:");
+        Add("FrmAbout._Credits", "Credits");
+        Add("FrmAbout._Donate", "Donate");
         #endregion
 
         #region FrmSetting

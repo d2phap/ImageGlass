@@ -34,6 +34,15 @@ public partial class FrmAbout : WebForm
     // Protected / override methods
     #region Protected / override methods
 
+    protected override void OnLoad(EventArgs e)
+    {
+        base.OnLoad(e);
+
+        Config.UpdateFormIcon(this);
+        Text = Config.Language[$"{nameof(FrmMain)}.{nameof(Local.FrmMain.MnuAbout)}"];
+    }
+
+
     protected override string OnLoadingWebSource()
     {
         return Resources.Page_About;
@@ -55,6 +64,22 @@ public partial class FrmAbout : WebForm
             ("{{AppRuntime}}", Environment.Version.ToString()),
             ("{{CopyrightsYear}}", DateTime.UtcNow.Year.ToString()),
             ("{{MsStoreBadge}}", msStoreBadge),
+
+            // language
+            ("{{_Slogan}}", Config.Language[$"{nameof(FrmAbout)}._Slogan"]),
+            ("{{_Version}}", Config.Language[$"{nameof(FrmAbout)}._Version"]),
+            ("{{_License}}", Config.Language[$"{nameof(FrmAbout)}._License"]),
+            ("{{_Privacy}}", Config.Language[$"{nameof(FrmAbout)}._Privacy"]),
+            ("{{_Thanks}}", Config.Language[$"{nameof(FrmAbout)}._Thanks"]),
+            ("{{_LogoDesigner}}", Config.Language[$"{nameof(FrmAbout)}._LogoDesigner"]),
+            ("{{_Collaborator}}", Config.Language[$"{nameof(FrmAbout)}._Collaborator"]),
+            ("{{_Contact}}", Config.Language[$"{nameof(FrmAbout)}._Contact"]),
+            ("{{_Homepage}}", Config.Language[$"{nameof(FrmAbout)}._Homepage"]),
+            ("{{_Email}}", Config.Language[$"{nameof(FrmAbout)}._Email"]),
+            ("{{_Credits}}", Config.Language[$"{nameof(FrmAbout)}._Credits"]),
+            ("{{_Donate}}", Config.Language[$"{nameof(FrmAbout)}._Donate"]),
+            ("{{_CheckForUpdate}}", Config.Language[$"_._CheckForUpdate"]),
+            ("{{_Close}}", Config.Language[$"_._Close"]),
         };
     }
 

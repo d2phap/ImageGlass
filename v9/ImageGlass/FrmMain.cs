@@ -1745,7 +1745,7 @@ public partial class FrmMain : ThemedForm
             }
             else
             {
-                MnuCheckForUpdate.Text = MnuCheckForUpdate.Text = Config.Language[$"{Name}.{nameof(MnuCheckForUpdate)}._NoUpdate"];
+                MnuCheckForUpdate.Text = MnuCheckForUpdate.Text = Config.Language["_._CheckForUpdate"];
                 MnuHelp.BackColor = MnuCheckForUpdate.BackColor = Color.Transparent;
             }
 
