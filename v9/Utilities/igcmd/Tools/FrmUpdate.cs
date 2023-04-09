@@ -95,6 +95,7 @@ public partial class FrmUpdate : WebForm
         };
     }
 
+
     protected override void OnWeb2NavigationCompleted()
     {
         _ = Web2.ExecuteScriptAsync("""
@@ -120,11 +121,11 @@ public partial class FrmUpdate : WebForm
         {
             if (data.Equals("BtnImageGlassStore", StringComparison.InvariantCultureIgnoreCase))
             {
-                //Local.FrmMain.IG_OpenMsStore();
+                BHelper.OpenImageGlassMsStore();
             }
             else if (data.Equals("BtnUpdate", StringComparison.InvariantCultureIgnoreCase))
             {
-                // TODO
+                BHelper.OpenUrl(_updater.CurrentReleaseInfo?.ChangelogUrl.ToString(), UrlCampaignString);
             }
             else if (data.Equals("BtnClose", StringComparison.InvariantCultureIgnoreCase))
             {

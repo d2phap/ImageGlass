@@ -113,7 +113,7 @@ public partial class FrmAbout : WebForm
         {
             if (data.Equals("BtnImageGlassStore", StringComparison.InvariantCultureIgnoreCase))
             {
-                Local.FrmMain.IG_OpenMsStore();
+                BHelper.OpenImageGlassMsStore();
             }
             else if (data.Equals("BtnCheckForUpdate", StringComparison.InvariantCultureIgnoreCase))
             {
