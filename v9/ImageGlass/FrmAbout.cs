@@ -37,17 +37,18 @@ public partial class FrmAbout : WebForm
     protected override void OnLoad(EventArgs e)
     {
         base.OnLoad(e);
-
-        Config.UpdateFormIcon(this);
+        if (DesignMode) return;
 
         UrlCampaignString = "app_about";
         Text = Config.Language[$"{nameof(FrmMain)}.{nameof(Local.FrmMain.MnuAbout)}"];
     }
 
 
-    protected override string OnLoadingWebSource()
+    protected override void OnWeb2Ready()
     {
-        return Resources.Page_About;
+        base.OnWeb2Ready();
+
+        _ = LoadWeb2ContentAsync(Resources.Page_About);
     }
 
 
@@ -84,6 +85,7 @@ public partial class FrmAbout : WebForm
             ("{{_Close}}", Config.Language[$"_._Close"]),
         };
     }
+
 
     protected override void OnWeb2NavigationCompleted()
     {

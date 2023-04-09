@@ -28,14 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAbout));
             SuspendLayout();
             // 
             // FrmAbout
             // 
             AutoScaleDimensions = new SizeF(18F, 45F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1454, 1410);
+            AutoSize = true;
+            ClientSize = new Size(1527, 1291);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Location = new Point(0, 0);
+            MinimizeBox = false;
             Name = "FrmAbout";
             ResumeLayout(false);
         }

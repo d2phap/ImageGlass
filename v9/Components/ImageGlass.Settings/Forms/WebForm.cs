@@ -26,6 +26,9 @@ namespace ImageGlass;
 
 public partial class WebForm : ThemedForm
 {
+    private bool _isNavigationCompleted = false;
+
+
     /// <summary>
     /// Gets, sets campaign for hyperlink url.
     /// </summary>
@@ -55,6 +58,12 @@ public partial class WebForm : ThemedForm
     // Protected / override methods
     #region Protected / override methods
 
+    protected override void OnLoad(EventArgs e)
+    {
+        base.OnLoad(e);
+        Config.UpdateFormIcon(this);
+    }
+
     protected override void ApplyTheme(bool darkMode, BackdropStyle? style = null)
     {
         if (!EnableTransparent)
@@ -82,6 +91,15 @@ public partial class WebForm : ThemedForm
 
     // Virtual methods
     #region Virtual methods
+
+    /// <summary>
+    /// Occurs when Web2 is ready.
+    /// </summary>
+    protected virtual void OnWeb2Ready()
+    {
+
+    }
+
 
     /// <summary>
     /// Occurs when Web2 sends a message to <see cref="WebForm"/>.
@@ -133,25 +151,24 @@ public partial class WebForm : ThemedForm
             AdditionalBrowserArguments = "--disable-web-security --allow-file-access-from-files --allow-file-access",
         };
 
-        var env = await CoreWebView2Environment.CreateAsync(
-            userDataFolder: App.ConfigDir(PathType.Dir, "ViewerData"),
-            options: options);
-
-        await WebV.EnsureCoreWebView2Async(env);
-    }
-
-
-    private void LoadWebPage()
-    {
-        var templates = new List<(string, string)>()
+        try
         {
-            ("{{styles.css}}", Resources.Styles),
-            ("{{body.html}}", OnLoadingWebSource()),
-        };
-        templates.AddRange(OnWebTemplateParsing());
+            var env = await CoreWebView2Environment.CreateAsync(
+                userDataFolder: App.ConfigDir(PathType.Dir, "ViewerData"),
+                options: options);
 
-        var pageHtml = Resources.Layout.ReplaceMultiple(templates);
-        WebV.CoreWebView2.NavigateToString(pageHtml);
+            await WebV.EnsureCoreWebView2Async(env);
+        }
+        catch (Exception ex)
+        {
+            Config.ShowError(this,
+                description: ex.Source,
+                title: Config.Language["_._Error"],
+                heading: ex.Message,
+                details: ex.ToString());
+
+            Close();
+        }
     }
 
 
@@ -184,23 +201,23 @@ public partial class WebForm : ThemedForm
         WebV.CoreWebView2.Settings.IsSwipeNavigationEnabled = false;
         WebV.CoreWebView2.Settings.AreDefaultScriptDialogsEnabled = false;
         WebV.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
-
         WebV.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
+
         WebV.CoreWebView2.Settings.AreDevToolsEnabled = false;
 #if DEBUG
-        WebV.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = true;
         WebV.CoreWebView2.Settings.AreDevToolsEnabled = true;
 #endif
 
         WebV.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
 
-        LoadWebPage();
-        WebV.Focus();
+        OnWeb2Ready();
     }
 
 
     private void Web2_NavigationCompleted(object? sender, CoreWebView2NavigationCompletedEventArgs e)
     {
+        _isNavigationCompleted = true;
+
         _ = SetWeb2AccentColor();
         _ = WebV.ExecuteScriptAsync("""
             window.onkeydown = (e) => {
@@ -241,5 +258,31 @@ public partial class WebForm : ThemedForm
     }
 
     #endregion // Webview2 events
+
+
+    /// <summary>
+    /// Reloads Web2 content.
+    /// </summary>
+    public async Task LoadWeb2ContentAsync(string html, bool enableFadingTransition = true)
+    {
+        _isNavigationCompleted = false;
+
+        var templates = new List<(string, string)>()
+        {
+            ("{{LoadingAnimation}}", enableFadingTransition.ToString()),
+            ("{{styles.css}}", Resources.Styles),
+            ("{{body.html}}", html),
+        };
+        templates.AddRange(OnWebTemplateParsing());
+
+        var pageHtml = Resources.Layout.ReplaceMultiple(templates);
+        WebV.CoreWebView2.NavigateToString(pageHtml);
+
+        // wait for the navigation completed
+        while (!_isNavigationCompleted)
+        {
+            await Task.Delay(100);
+        }
+    }
 
 }
