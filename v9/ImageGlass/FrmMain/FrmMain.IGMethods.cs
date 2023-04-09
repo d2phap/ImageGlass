@@ -705,12 +705,16 @@ public partial class FrmMain
         BHelper.OpenUrl("https://github.com/d2phap/ImageGlass/issues?q=is%3Aissue+label%3Av9+", "app_report_issue");
     }
 
+
     /// <summary>
     /// Open About dialog
     /// </summary>
     public void IG_About()
     {
-        using var frm = new FrmAbout();
+        using var frm = new FrmAbout()
+        {
+            StartPosition = FormStartPosition.CenterParent,
+        };
         frm.ShowDialog();
     }
 
