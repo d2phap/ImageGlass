@@ -123,43 +123,8 @@ internal static class Program
 
             if (updater.HasNewUpdate || showIfNewUpdate.Value)
             {
-                var archInfo = Environment.Is64BitOperatingSystem ? "x64" : "x86";
-                var currentVersion = App.Version + $" ({archInfo})";
-
-                var newVersion = updater.CurrentReleaseInfo?.Version + $" ({updater.DownloadInfo?.Architecture})";
-
-                var btnWhatNew = new TaskDialogButton(updater.HasNewUpdate ? "What's new?" : "Read changelog", allowCloseDialog: true);
-                var btnClose = new TaskDialogButton("Close", allowCloseDialog: true);
-
-                btnWhatNew.Click += (object? sender, EventArgs e) =>
-                {
-                    BHelper.OpenUrl(updater.CurrentReleaseInfo?.ChangelogUrl.ToString(), "app_update");
-                };
-
-
-                _ = TaskDialog.ShowDialog(new()
-                {
-                    Caption = $"Check for update",
-                    Icon = TaskDialogIcon.Information,
-
-                    Heading = updater.HasNewUpdate
-                            ? "There is a new update! 🙂"
-                            : "You are using the latest version! 🙃",
-
-                    Text = $"{updater.CurrentReleaseInfo?.Title}\r\n" +
-                        $"----------------------\r\n" +
-                        $"{updater.CurrentReleaseInfo?.Description}\r\n" +
-                        $"\r\n" +
-
-                        $"Current version: {currentVersion}\r\n" +
-                        $"New version: {newVersion}\r\n" +
-                        $"Published date: {updater.CurrentReleaseInfo?.PublishedDate.ToString(Constants.DATETIME_FORMAT)}",
-
-                    Buttons = new TaskDialogButtonCollection { btnWhatNew, btnClose },
-                    AllowCancel = true,
-                });
+                _ = BHelper.RunIgcmd(IgCommands.CHECK_FOR_UPDATE);
             }
-
         });
     }
 

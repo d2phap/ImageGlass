@@ -33,6 +33,8 @@ public static class IgCommands
     public static string START_SLIDESHOW => "start-slideshow";
     public static string EXPORT_FRAMES => "export-frames";
 
+    public static string CHECK_FOR_UPDATE => "check-for-update";
+
 
     // igcmd10.exe
     public static string SET_LOCK_SCREEN => "set-lock-screen";

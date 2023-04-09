@@ -156,6 +156,15 @@ internal static class Program
         #endregion
 
 
+        #region CHECK_FOR_UPDATE
+        if (topCmd == IgCommands.CHECK_FOR_UPDATE)
+        {
+            Application.Run(new Tools.FrmUpdate());
+
+            return (int)IgExitCode.Done;
+        }
+        #endregion
+
 
         return (int)IgExitCode.Error;
     }

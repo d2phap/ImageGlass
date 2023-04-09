@@ -1,0 +1,147 @@
+﻿<style>
+  #app {
+    display: grid;
+    grid-template-areas: "main" "footer";
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr min-content;
+  }
+
+  #top {
+    grid-area: main;
+    display: flex;
+    padding: 1rem;
+    background-color: rgb(var(--AppBg) / 0.85);
+    max-height: fit-content;
+    overflow: auto;
+  }
+
+  #top>aside {
+    position: sticky;
+    top: 0;
+    min-width: 4rem;
+  }
+
+  #app>footer {
+    grid-area: footer;
+    padding: 0 1rem 0 0;
+  }
+
+  #BtnImageGlassStore {
+    display: flex;
+    margin-left: 0;
+    margin-right: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  #BtnImageGlassStore svg {
+    height: 56px;
+  }
+
+  #BtnImageGlassStore:hover {
+    box-shadow: 0 4px 15px -10px #000;
+  }
+
+  #BtnImageGlassStore:active {
+    box-shadow: transparent;
+  }
+
+  .app-code {
+    text-transform: capitalize;
+  }
+
+  .icon {
+    font-size: 2.5rem;
+    opacity: 0;
+    transition: all ease 300ms;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  @keyframes rotating {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .icon.status--checking {
+    opacity: 1;
+    animation: rotating 1000ms ease infinite;
+  }
+
+  .status--checking,
+  .status--updated,
+  .status--outdated {
+    opacity: 0;
+    display: none;
+  }
+
+  [app-status=checking] .status--checking,
+  [app-status=updated] .status--updated,
+  [app-status=outdated] .status--outdated {
+    opacity: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+
+
+<div id="top">
+  <aside>
+    <span class="icon status--checking">🌀</span>
+    <span class="icon status--updated">🥰</span>
+    <span class="icon status--outdated">🤩</span>
+  </aside>
+
+  <main>
+    <h1 class="mt-0 text-accent">
+      <span class="status--checking">Checking for update...</span>
+      <span class="status--updated">You are using the latest version</span>
+      <span class="status--outdated">There is a new update!</span>
+    </h1>
+
+    <div style="margin-left: 0.5rem;">
+        <div>Current version: {{AppVersion}} ({{AppArchitecture}})</div>
+        <div>
+            <span class="status--updated status--outdated">
+                The latest version: {{NewVersion}} ({{AppArchitecture}})
+            </span>
+        </div>
+        <div>
+            <span class="status--updated status--outdated">
+                Published date: {{PublishedDate}}
+            </span>
+        </div>
+    </div>
+
+
+    <h2>
+      <a class="status--updated status--outdated" target="_blank" href="{{ReleaseLink}}">
+        {{ReleaseTitle}}
+      </a>
+    </h2>
+    <div style="margin-left: 0.5rem;">
+      <span class="status--updated status--outdated">
+        {{ReleaseDetails}}
+      </span>
+    </div>
+    <br />
+  </main>
+</div>
+
+
+<footer class="panel">
+  <button id="BtnImageGlassStore">
+    {{MsStoreBadge}}
+  </button>
+
+  <button id="BtnUpdate" type="submit">{{_Update}}</button>
+  <button id="BtnClose">{{_Close}}</button>
+</footer>
