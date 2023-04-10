@@ -1,4 +1,4 @@
-<style>
+﻿<style>
     #app {
         display: grid;
         grid-template-areas: "main" "footer";
@@ -22,20 +22,17 @@
 
     #app > footer {
         grid-area: footer;
-        padding: 0 1rem 0 0;
+        padding: 1rem;
+        justify-content: end;
     }
 
     #BtnImageGlassStore {
         display: flex;
-        margin-left: 0;
-        margin-right: auto;
         padding: 0;
-        border: 0;
-        border-radius: 0;
     }
 
         #BtnImageGlassStore svg {
-            height: 56px;
+            height: 50px;
         }
 
         #BtnImageGlassStore:hover {
@@ -71,6 +68,10 @@
         </p>
 
         <p>
+            <a target="_blank" href="https://imageglass.org/support#donate?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about">
+                {{_Donate}}
+            </a>
+            
             <a target="_blank" href="https://imageglass.org/license?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about">
                 {{_License}}
             </a>
@@ -78,6 +79,12 @@
             <a target="_blank" href="https://imageglass.org/privacy?utm_source=app_{{AppVersion}}&utm_medium=app_click&utm_campaign=app_about">
                 {{_Privacy}}
             </a>
+        </p>
+
+        <p>
+            <button id="BtnImageGlassStore">
+                {{MsStoreBadge}}
+            </button>
         </p>
 
         <h4 class="mb-0">
@@ -161,10 +168,6 @@
 
 
 <footer class="panel">
-    <button id="BtnImageGlassStore">
-        {{MsStoreBadge}}
-    </button>
-
     <button id="BtnCheckForUpdate" type="submit">{{_CheckForUpdate}}</button>
     <button id="BtnDonate">{{_Donate}}</button>
     <button id="BtnClose">{{_Close}}</button>

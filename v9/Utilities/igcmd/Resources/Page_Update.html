@@ -23,16 +23,13 @@
 
     #app > footer {
         grid-area: footer;
-        padding: 0 1rem 0 0;
+        padding: 1rem;
+        justify-content: end;
     }
 
     #BtnImageGlassStore {
         display: flex;
-        margin-left: 0;
-        margin-right: auto;
         padding: 0;
-        border: 0;
-        border-radius: 0;
     }
 
         #BtnImageGlassStore svg {
@@ -107,11 +104,11 @@
     <main>
         <h1 class="mt-0 text-accent">
             <span class="status--checking">Checking for update...</span>
-            <span class="status--updated">You are using the latest version</span>
-            <span class="status--outdated">There is a new update!</span>
+            <span class="status--updated">You are using the latest version!</span>
+            <span class="status--outdated">A new update is available!</span>
         </h1>
 
-        <div style="margin-left: 0.5rem;">
+        <p>
             <div>Current version: {{AppVersion}} ({{AppArchitecture}})</div>
             <div>
                 <span class="status--updated status--outdated">
@@ -123,7 +120,11 @@
                     Published date: {{PublishedDate}}
                 </span>
             </div>
-        </div>
+        </p>
+
+        <p>
+            <button id="BtnImageGlassStore">{{MsStoreBadge}}</button>
+        </p>
 
 
         <h2>
@@ -131,7 +132,7 @@
                 {{ReleaseTitle}}
             </a>
         </h2>
-        <div style="margin-left: 0.5rem;">
+        <div>
             <span class="status--updated status--outdated">
                 {{ReleaseDetails}}
             </span>
@@ -142,10 +143,6 @@
 
 
 <footer class="panel">
-    <button id="BtnImageGlassStore">
-        {{MsStoreBadge}}
-    </button>
-
     <button id="BtnUpdate" type="submit">{{_Update}}</button>
     <button id="BtnClose">{{_Close}}</button>
 </footer>
