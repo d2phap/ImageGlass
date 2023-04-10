@@ -302,4 +302,11 @@ public class ModernToolbarRenderer : ToolStripSystemRenderer
         e.Graphics.DrawImage(textBmp, loc);
     }
 
+
+    protected override void OnRenderLabelBackground(ToolStripItemRenderEventArgs e)
+    {
+        // disable text item background
+        //base.OnRenderLabelBackground(e);
+    }
+
 }
