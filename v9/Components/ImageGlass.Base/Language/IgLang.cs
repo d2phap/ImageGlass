@@ -121,7 +121,7 @@ public class IgLang : Dictionary<string, string>
         Add("_._UnhandledException", "Unhandled exception"); // v9.0
         Add("_._UnhandledException._Description", "Unhandled exception has occurred. If you click Continue, the application will ignore this error and attempt to continue. If you click Quit, the application will close immediately."); // v9.0
         Add("_._DoNotShowThisMessageAgain", "Do not show this message again"); // v9.0
-        Add($"_._CreatingFile", "Create temporary image file..."); //v9.0
+        Add($"_._CreatingFile", "Create temporary image file…"); //v9.0
         Add($"_._CreatingFileError", "Could not create temporary image file"); //v9.0
         Add($"_._NotSupported", "Unsupported format"); //v9.0
         Add($"_._NotSupported._Transformation", "ImageGlass does not support rotation, flipping for animated formats."); //v9.0
@@ -173,8 +173,8 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuNewWindow._Error", "Cannot open new window because only one instance allowed"); //v7.0
         Add("FrmMain.MnuSave", "Save"); //v8.1
         Add("FrmMain.MnuSave._Confirm", "Are you sure you want to override this image?"); //v9.0
-        Add("FrmMain.MnuSave._ConfirmDescription", "ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,... when saving your image."); //v9.0
-        Add("FrmMain.MnuSave._Saving", "Saving image..."); //v9.0
+        Add("FrmMain.MnuSave._ConfirmDescription", "ImageGlass is not a professional photo editor, please be aware of losing the quality, metadata, layers,… when saving your image."); //v9.0
+        Add("FrmMain.MnuSave._Saving", "Saving image…"); //v9.0
         Add("FrmMain.MnuSave._Success", "Image is saved"); //v9.0
         Add("FrmMain.MnuSave._Error", "Could not save the image"); //v9.0
         Add("FrmMain.MnuSaveAs", "Save as…"); //v3.0
@@ -276,7 +276,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuCopyFile", "Copy file"); //v3.0
         Add("FrmMain.MnuCopyFile._Success", "Copied {0} file(s)."); // v2.0 final
         Add("FrmMain.MnuCopyImageData", "Copy image data"); //v5.0
-        Add("FrmMain.MnuCopyImageData._Copying", "Copying the image data. It's going to take a while..."); // v9.0
+        Add("FrmMain.MnuCopyImageData._Copying", "Copying the image data. It's going to take a while…"); // v9.0
         Add("FrmMain.MnuCopyImageData._Success", "Copied the current image data."); // v5.0
         Add("FrmMain.MnuCutFile", "Cut file"); //v3.0
         Add("FrmMain.MnuCutFile._Success", "Cut {0} file(s)."); // v2.0 final
@@ -352,9 +352,9 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuMain", "Main menu"); // v3.0
 
         Add("FrmMain._OpenFileDialog", "All supported files");
-        Add("FrmMain._Loading", "Loading..."); // v3.0
+        Add("FrmMain._Loading", "Loading…"); // v3.0
 
-        //Add("FrmMain._SaveChanges", "Saving change..."); // v2.0 final
+        //Add("FrmMain._SaveChanges", "Saving change…"); // v2.0 final
 
         Add("FrmMain._ReachedFirstImage", "Reached the first image"); // v4.0
         Add("FrmMain._ReachedLastLast", "Reached the last image"); // v4.0
@@ -769,9 +769,19 @@ public class IgLang : Dictionary<string, string>
         Add("FrmExportFrames._Title", "Export image frames"); //v9.0
         Add("FrmExportFrames._FileNotExist", "Image file does not exist"); //v7.5
         Add("FrmExportFrames._FolderPickerTitle", "Select output folder for exporting image frames"); //v9.0
-        Add("FrmExportFrames._Exporting", "Exporting {0}/{1} frames \r\n{2}..."); //v9.0
+        Add("FrmExportFrames._Exporting", "Exporting {0}/{1} frames \r\n{2}…"); //v9.0
         Add("FrmExportFrames._ExportDone", "Exported {0} frames successfully to \r\n{1}"); //v9.0
         Add("FrmExportFrames._OpenOutputFolder", "Open output folder"); //v9.0
+        #endregion
+
+
+        #region FrmUpdate
+        Add("FrmUpdate._StatusChecking", "Checking for update…"); //v9.0
+        Add("FrmUpdate._StatusUpdated", "You are using the latest version!"); //v9.0
+        Add("FrmUpdate._StatusOutdated", "A new update is available!"); //v9.0
+        Add("FrmUpdate._CurrentVersion", "Current version: {0}"); //v9.0
+        Add("FrmUpdate._LatestVersion", "The latest version: {0}"); //v9.0
+        Add("FrmUpdate._PublishedDate", "Published date: {0}"); //v9.0
         #endregion
 
 

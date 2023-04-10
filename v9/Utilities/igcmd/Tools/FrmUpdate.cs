@@ -79,17 +79,29 @@ public partial class FrmUpdate : WebForm
         {
             ("{{AppLogo}}", $"data:image/png;base64,{base64Logo}"),
             ("{{AppCode}}", Constants.APP_CODE),
-            ("{{AppVersion}}", App.Version),
-            ("{{AppArchitecture}}", archInfo),
             ("{{MsStoreBadge}}", msStoreBadge),
 
-            ("{{NewVersion}}", newVersion),
             ("{{ReleaseTitle}}", releaseTitle),
             ("{{ReleaseLink}}", releaseLink),
             ("{{ReleaseDetails}}", releaseDetails),
-            ("{{PublishedDate}}", releasedDate),
 
             // language
+            ("{{_StatusChecking}}", Config.Language[$"{nameof(FrmUpdate)}._StatusChecking"]),
+            ("{{_StatusUpdated}}", Config.Language[$"{nameof(FrmUpdate)}._StatusUpdated"]),
+            ("{{_StatusOutdated}}", Config.Language[$"{nameof(FrmUpdate)}._StatusOutdated"]),
+
+            ("{{_CurrentVersion}}", string.Format(
+                Config.Language[$"{nameof(FrmUpdate)}._CurrentVersion"],
+                $"{App.Version} ({archInfo})")),
+
+            ("{{_LatestVersion}}", string.Format(
+                Config.Language[$"{nameof(FrmUpdate)}._LatestVersion"],
+                $"{newVersion} ({archInfo})")),
+
+            ("{{_PublishedDate}}", string.Format(
+                Config.Language[$"{nameof(FrmUpdate)}._PublishedDate"],
+                releasedDate)),
+
             ("{{_Update}}", Config.Language[$"_._Update"]),
             ("{{_Close}}", Config.Language[$"_._Close"]),
         };

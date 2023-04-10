@@ -103,22 +103,21 @@
 
     <main>
         <h1 class="mt-0 text-accent">
-            <span class="status--checking">Checking for update...</span>
-            <span class="status--updated">You are using the latest version!</span>
-            <span class="status--outdated">A new update is available!</span>
+            <span class="status--checking">{{_StatusChecking}}</span>
+            <span class="status--updated">{{_StatusUpdated}}</span>
+            <span class="status--outdated">{{_StatusOutdated}}</span>
         </h1>
 
         <p>
-            <div>Current version: {{AppVersion}} ({{AppArchitecture}})</div>
+            <div>{{_CurrentVersion}}</div>
             <div>
                 <span class="status--updated status--outdated">
-                    The latest version: {{NewVersion}} ({{AppArchitecture}})
+                    {{_LatestVersion}}
                 </span>
             </div>
             <div>
                 <span class="status--updated status--outdated">
-                    Published date: {{PublishedDate}}
-                </span>
+                    {{_PublishedDate}}
             </div>
         </p>
 
