@@ -85,7 +85,6 @@ public partial class WebForm : ThemedForm
         _ = SetWeb2AccentColor();
     }
 
-
     #endregion // Protected / override methods
 
 

@@ -37,6 +37,7 @@ public class ThemedForm : ModernForm
         Config.RequestUpdatingColorMode += Config_RequestUpdatingColorMode;
     }
 
+
     private void Config_RequestUpdatingColorMode(SystemColorModeChangedEventArgs e)
     {
         if (InvokeRequired)

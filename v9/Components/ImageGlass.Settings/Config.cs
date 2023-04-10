@@ -43,6 +43,7 @@ public static class Config
     #region Internal properties
     private static readonly Source _source = new();
     private static CancellationTokenSource _requestUpdatingColorModeCancelToken = new();
+    private static bool _isDarkMode = WinColorsApi.IsDarkMode;
 
 
     /// <summary>
@@ -1194,6 +1195,8 @@ public static class Config
         if (darkMode) DarkTheme = th.FolderName;
         else LightTheme = th.FolderName;
 
+        // load theme settings
+        th.ReloadThemeSettings();
 
         // load theme colors
         th.ReloadThemeColors();
@@ -1653,11 +1656,18 @@ public static class Config
         try
         {
             // since the message is triggered multiple times (3 - 5 times)
-            await Task.Delay(100, token);
+            await Task.Delay(10, token);
             token.ThrowIfCancellationRequested();
 
-            // emit event here
-            RequestUpdatingColorMode?.Invoke(new SystemColorModeChangedEventArgs(WinColorsApi.IsDarkMode));
+
+            var isDarkMode = WinColorsApi.IsDarkMode;
+            if (_isDarkMode != isDarkMode)
+            {
+                _isDarkMode = isDarkMode;
+
+                // emit event here
+                RequestUpdatingColorMode?.Invoke(new SystemColorModeChangedEventArgs(_isDarkMode));
+            }
         }
         catch (OperationCanceledException) { }
     }
