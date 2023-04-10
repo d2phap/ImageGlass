@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Settings;
 using ImageGlass.Settings.Properties;
+using ImageGlass.UI;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
 
@@ -81,6 +82,12 @@ public partial class WebForm : ThemedForm
 
         // apply theme to controls
         ApplyTheme(Config.Theme.Settings.IsDarkMode);
+    }
+
+
+    protected override void OnSystemAccentColorChanged(SystemAccentColorChangedEventArgs e)
+    {
+        base.OnSystemAccentColorChanged(e);
 
         _ = SetWeb2AccentColor();
     }
