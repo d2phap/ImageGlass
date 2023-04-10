@@ -197,7 +197,7 @@ internal class LayoutManager
     {
         var location = mItemAreaBounds.Location;
         location.X += cachedItemMargin.Width / 2 - _imageGallery.ViewOffset.X;
-        location.Y += cachedItemMargin.Height / 2 - _imageGallery.ViewOffset.Y;
+        location.Y += cachedItemMargin.Height / 2 - _imageGallery.ViewOffset.Y + ImageGalleryOwner.Padding.Top;
 
         if (ImageGalleryOwner.View == View.HorizontalStrip)
         {
@@ -472,6 +472,7 @@ internal class LayoutManager
         {
             mClientArea.Inflate(-1, -1);
         }
+
         mItemAreaBounds = mClientArea;
 
         // Allocate space for scrollbars

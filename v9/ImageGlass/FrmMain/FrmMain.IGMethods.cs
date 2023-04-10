@@ -617,6 +617,7 @@ public partial class FrmMain
         if (Gallery.View == ImageGlass.Gallery.View.Thumbnails)
         {
             var minWidth = Gallery.ThumbnailSize.Width
+                + Gallery.Padding.Horizontal
                 + (int)scrollBarSize
                 + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Width * 6.5f);
 
@@ -628,6 +629,7 @@ public partial class FrmMain
         {
             // Gallery bar
             Gallery.Height = Gallery.ThumbnailSize.Height
+                + Gallery.Padding.Vertical
                 + (int)scrollBarSize
                 + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Height * 6.5f);
         }

@@ -153,6 +153,7 @@ public partial class FrmMain
         Gallery.PersistentCacheSize = Config.ThumbnailCacheSizeInMb;
         Gallery.PersistentCacheDirectory = App.ConfigDir(PathType.Dir, Dir.ThumbnailsCache);
         Gallery.EnableKeyNavigation = false;
+        Gallery.Padding = this.ScaleToDpi(new Padding(2));
 
 
         // PicMain
