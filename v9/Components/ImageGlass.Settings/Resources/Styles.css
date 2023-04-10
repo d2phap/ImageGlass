@@ -62,9 +62,6 @@ html {
         --BgWarning: 255 239 219;
         --BgDanger: 255 222 222;
     }
-    html[loading-animation=True] {
-        animation: fadeIn 200ms ease forwards;
-    }
 body {
     margin: 0;
     font-size: 12px;
@@ -72,16 +69,6 @@ body {
     max-height: 100vh;
     overflow: auto;
     line-height: normal;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
 }
 
 ::-webkit-scrollbar {

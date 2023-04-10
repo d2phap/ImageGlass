@@ -269,13 +269,12 @@ public partial class WebForm : ThemedForm
     /// <summary>
     /// Reloads Web2 content.
     /// </summary>
-    public async Task LoadWeb2ContentAsync(string html, bool enableFadingTransition = true)
+    public async Task LoadWeb2ContentAsync(string html)
     {
         _isNavigationCompleted = false;
 
         var templates = new List<(string, string)>()
         {
-            ("{{LoadingAnimation}}", enableFadingTransition.ToString()),
             ("{{styles.css}}", Resources.Styles),
             ("{{body.html}}", html),
         };
