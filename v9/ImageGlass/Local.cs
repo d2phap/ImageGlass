@@ -438,7 +438,7 @@ internal class Local
         var item = Local.ToolPipeServers.FirstOrDefault(i => i.Value.PipeName
             .Equals(e.PipeName, StringComparison.InvariantCultureIgnoreCase));
 
-        var toolId = item.Key;
+        if (item.Key is not string toolId) return;
         var toolServer = item.Value;
 
         // update menu state

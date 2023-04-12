@@ -28,7 +28,6 @@ using ImageGlass.UI;
 using ImageGlass.Viewer;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO.Pipes;
 using System.Text;
 using Timer = System.Windows.Forms.Timer;
 
@@ -36,7 +35,7 @@ namespace igcmd.Tools;
 
 public partial class FrmSlideshow : ThemedForm
 {
-    private PipeClient? _client;
+    private ImageGlassTool _igTool = new();
     private string _initImagePath;
 
     private CancellationTokenSource _loadImageCancelToken = new();
@@ -111,9 +110,8 @@ public partial class FrmSlideshow : ThemedForm
         Text = $"{Config.Language["FrmMain.MnuSlideshow"]} - {App.AppName}";
         SetUpFrmSlideshowConfigs();
 
-        // initialize pipe client
-        InitializePipeClient();
-        _ = _client?.ConnectAsync();
+        // initialize ImageGlassTool
+        _ = ConnectToImageGlassAsync();
 
 
         // update theme icons
@@ -229,8 +227,7 @@ public partial class FrmSlideshow : ThemedForm
     protected override void OnClosing(CancelEventArgs e)
     {
         base.OnClosing(e);
-
-        _client.Dispose();
+        _igTool.Dispose();
     }
 
 
@@ -371,32 +368,27 @@ public partial class FrmSlideshow : ThemedForm
 
 
 
-    // ImageGlass server connection
-    #region ImageGlass server connection
+    // ImageGlassTool connection
+    #region ImageGlassTool connection
 
-    private void InitializePipeClient()
+    private async Task ConnectToImageGlassAsync()
     {
-        var serverName = ImageGlassTool.CreateServerName();
-
-        _client = new PipeClient(serverName, PipeDirection.InOut);
-        _client.MessageReceived += Client_MessageReceived;
-        _client.Disconnected += (_, _) => Application.Exit();
+        _igTool.ToolMessageReceived += IgTool_ToolMessageReceived;
+        _igTool.ToolClosingRequest += IgTool_ToolClosingRequest;
+        await _igTool.ConnectAsync();
     }
 
-    private void Client_MessageReceived(object? sender, MessageReceivedEventArgs e)
+
+    private void IgTool_ToolClosingRequest(object? sender, DisconnectedEventArgs e)
     {
-        if (string.IsNullOrEmpty(e.MessageName)) return;
+        Close();
+    }
 
 
-        // terminate slideshow
-        if (e.MessageName == ToolServerMsgs.TOOL_TERMINATE)
-        {
-            Application.Exit();
-            return;
-        }
-
-
+    private void IgTool_ToolMessageReceived(object? sender, MessageReceivedEventArgs e)
+    {
         if (string.IsNullOrEmpty(e.MessageData)) return;
+
 
         // update image list
         if (e.MessageName.Equals(ToolServerMsgs.IMAGE_LIST_UPDATED, StringComparison.InvariantCultureIgnoreCase))
