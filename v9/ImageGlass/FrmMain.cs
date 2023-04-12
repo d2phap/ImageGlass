@@ -717,9 +717,6 @@ public partial class FrmMain : ThemedForm
         // temp index
         var imageIndex = Local.CurrentIndex + step;
         var oldImgPath = Local.Images.GetFilePath(Local.CurrentIndex);
-        var imgFilePath = string.IsNullOrEmpty(filePath)
-            ? Local.Images.GetFilePath(Local.CurrentIndex)
-            : filePath;
 
 
         try
@@ -810,6 +807,10 @@ public partial class FrmMain : ThemedForm
             // image frame index
             Local.CurrentFrameIndex = Local.Metadata.FrameIndex;
 
+            var imgFilePath = string.IsNullOrEmpty(filePath)
+                ? Local.Images.GetFilePath(Local.CurrentIndex)
+                : filePath;
+
 
             // set busy state
             Local.IsBusy = true;
@@ -867,6 +868,10 @@ public partial class FrmMain : ThemedForm
         {
             Local.Images.CancelLoading(imageIndex);
             PicMain.DisposeImageResources();
+
+            var imgFilePath = string.IsNullOrEmpty(filePath)
+                ? Local.Images.GetFilePath(Local.CurrentIndex)
+                : filePath;
 
             _uiReporter.Report(new(new ImageEventArgs()
             {
