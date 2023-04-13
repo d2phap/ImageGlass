@@ -87,8 +87,9 @@ public enum WindowsOS
 public enum IgExitCode : int
 {
     Done = 0,
-    Error = 1,
-    AdminRequired = 2,
+    AdminRequired = 1,
+    Error = 2,
+    Error_FileNotFound = 3,
 }
 
 

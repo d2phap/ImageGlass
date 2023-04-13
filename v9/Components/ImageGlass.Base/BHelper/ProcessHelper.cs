@@ -109,8 +109,13 @@ public partial class BHelper
 
             return (int)IgExitCode.Done;
         }
-        catch
+        catch (Exception ex)
         {
+            if (ex.Message.Contains("system cannot find the file", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return (int)IgExitCode.Error_FileNotFound;
+            }
+
             return (int)IgExitCode.Error;
         }
     }
