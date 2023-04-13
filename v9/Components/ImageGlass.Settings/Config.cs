@@ -741,8 +741,8 @@ public static class Config
         new IgTool()
         {
             ToolId = Constants.IGTOOL_EXIFTOOL,
-            ToolName = "ExifGlass - Exif metadata viewer",
-            Executable = "",
+            ToolName = "ExifGlass - EXIF metadata viewer",
+            Executable = "exifglass",
             Argument = Constants.FILE_MACRO,
             IsIntegrated = true,
         },

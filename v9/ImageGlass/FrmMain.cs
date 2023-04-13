@@ -2277,6 +2277,11 @@ public partial class FrmMain : ThemedForm
         IG_TogglePageNavTool();
     }
 
+    private void MnuGetMoreTools_Click(object sender, EventArgs e)
+    {
+        BHelper.OpenUrl("https://imageglass.org/tools", "app_get_more_tools");
+    }
+
 
     #endregion // Menu Tools
 

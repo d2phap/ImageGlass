@@ -319,6 +319,7 @@ public class IgLang : Dictionary<string, string>
         Add("FrmMain.MnuColorPicker", "Color picker"); //v5.0
         Add("FrmMain.MnuPageNav", "Page navigation"); // v7.5
         Add("FrmMain.MnuCropTool", "Crop image"); // v7.6
+        Add("FrmMain.MnuGetMoreTools", "Get more tools…"); // v9.0
         #endregion
 
         Add("FrmMain.MnuSettings", "Settings…"); // v3.0

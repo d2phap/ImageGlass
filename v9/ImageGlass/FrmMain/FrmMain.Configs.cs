@@ -629,6 +629,7 @@ public partial class FrmMain
         MnuColorPicker.Text = lang[$"{Name}.{nameof(MnuColorPicker)}"];
         MnuPageNav.Text = lang[$"{Name}.{nameof(MnuPageNav)}"];
         MnuCropTool.Text = lang[$"{Name}.{nameof(MnuCropTool)}"];
+        MnuGetMoreTools.Text = lang[$"{Name}.{nameof(MnuGetMoreTools)}"];
 
         foreach (var item in MnuTools.DropDownItems)
         {
@@ -893,19 +894,24 @@ public partial class FrmMain
         {
             if (item.Name.Equals(nameof(MnuColorPicker))
                 || item.Name.Equals(nameof(MnuCropTool))
-                || item.Name.Equals(nameof(MnuPageNav))) continue;
+                || item.Name.Equals(nameof(MnuPageNav))
+                || item.Name.Equals(nameof(MnuExternalToolsSeparator))
+                || item.Name.Equals(nameof(MnuGetMoreTools))) continue;
 
             item.Click -= MnuExternalTool_Click;
             MnuTools.DropDownItems.Remove(item);
         }
 
+        var mnuGetMoreToolsIndex = MnuTools.DropDownItems.IndexOf(MnuGetMoreTools);
+
         // add separator to separate built-in and external tools
         if (Config.Tools.Count > 0)
         {
-            MnuTools.DropDownItems.Add(new ToolStripSeparator());
+            MnuTools.DropDownItems.Insert(mnuGetMoreToolsIndex, new ToolStripSeparator());
         }
 
         var newMenuIconHeight = this.ScaleToDpi(Constants.MENU_ICON_HEIGHT);
+        var i = 0;
 
         // add external tools
         foreach (var item in Config.Tools)
@@ -923,7 +929,8 @@ public partial class FrmMain
             };
 
             mnu.Click += MnuExternalTool_Click;
-            MnuTools.DropDownItems.Add(mnu);
+            MnuTools.DropDownItems.Insert(mnuGetMoreToolsIndex + i, mnu);
+            i++;
         }
     }
 
