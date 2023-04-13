@@ -98,7 +98,7 @@ public partial class FrmToolNotFound : DialogForm
     protected override int OnUpdateHeight(bool performUpdate = true)
     {
         var baseHeight = base.OnUpdateHeight(false);
-        var formHeight = TableTop.Height + baseHeight;
+        var formHeight = TableTop.Height + TableTop.Padding.Bottom + baseHeight;
 
         if (performUpdate && Height != formHeight)
         {
