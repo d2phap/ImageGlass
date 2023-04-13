@@ -393,7 +393,7 @@ public partial class FrmSlideshow : ThemedForm
         // update image list
         if (e.MessageName.Equals(ImageGlassEvents.IMAGE_LIST_UPDATED, StringComparison.InvariantCultureIgnoreCase))
         {
-            var data = BHelper.ParseJson<IgImageListUpdatedEventArgs>(e.MessageData);
+            var data = IgImageListUpdatedEventArgs.Deserialize(e.MessageData);
             var newInitFile = !_initImagePath.Equals(data.InitFilePath, StringComparison.InvariantCultureIgnoreCase);
 
             _initImagePath = data.InitFilePath ?? _initImagePath;
