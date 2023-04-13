@@ -2527,7 +2527,7 @@ public partial class FrmMain
             ToolName = "[Slideshow]",
             Executable = "igcmd.exe",
             Argument = $"{IgCommands.START_SLIDESHOW} {Constants.FILE_MACRO}",
-            CanToggle = true,
+            IsIntegrated = true,
         };
         var pipeName = $"{ImageGlassTool.PIPENAME_PREFIX}{tool.Executable}";
 

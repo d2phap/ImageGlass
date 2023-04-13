@@ -45,11 +45,9 @@ public class IgTool
 
 
     /// <summary>
-    /// Gets, sets value indicating that the tool
-    /// supports <c>ToolServerMsgs.TOOL_TERMINATE</c> message so that it can be closed by ImageGlass.
-    /// It will be displayed in Tools menu with a checkbox.
+    /// Gets, sets value indicates that the tool is integrated with <c>ImageGlass.Tools</c>.
     /// </summary>
-    public bool? CanToggle { get; set; } = false;
+    public bool? IsIntegrated { get; set; } = false;
 
 
     /// <summary>

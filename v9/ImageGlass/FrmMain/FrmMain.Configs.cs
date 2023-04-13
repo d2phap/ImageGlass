@@ -916,7 +916,7 @@ public partial class FrmMain
             {
                 Name = item.ToolId,
                 Text = toolName ?? item.ToolName ?? item.ToolId,
-                CheckOnClick = item.CanToggle ?? false,
+                CheckOnClick = item.IsIntegrated ?? false,
                 Checked = false,
                 ImageScaling = ToolStripItemImageScaling.None,
                 Image = new Bitmap(newMenuIconHeight, newMenuIconHeight),

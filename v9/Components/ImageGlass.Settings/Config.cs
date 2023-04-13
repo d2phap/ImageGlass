@@ -744,7 +744,7 @@ public static class Config
             ToolName = "ExifGlass - Exif metadata viewer",
             Executable = "",
             Argument = Constants.FILE_MACRO,
-            CanToggle = true,
+            IsIntegrated = true,
         },
     };
 
