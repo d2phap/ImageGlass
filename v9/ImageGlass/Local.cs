@@ -424,8 +424,15 @@ internal class Local
 
 
         // prepend tool prefix to create pipe name
-        var toolExeName = Path.GetFileName(tool.Executable);
-        var pipeName = $"{ImageGlassTool.PIPENAME_PREFIX}{toolExeName}";
+        var toolFileName = Path.GetFileNameWithoutExtension(tool.Executable);
+        var toolFileExt = Path.GetExtension(tool.Executable);
+        if (string.IsNullOrEmpty(toolFileExt))
+        {
+            toolFileExt = ".exe";
+        }
+
+        var toolExecutable = $"{toolFileName}{toolFileExt}";
+        var pipeName = $"{ImageGlassTool.PIPENAME_PREFIX}{toolExecutable}";
 
         // create a new tool server
         var toolServer = new PipeServer(pipeName, PipeDirection.InOut);
