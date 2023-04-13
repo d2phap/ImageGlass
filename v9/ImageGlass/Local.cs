@@ -393,10 +393,17 @@ internal class Local
     /// <summary>
     /// Opens tool as a <see cref="PipeServer"/>.
     /// </summary>
+    /// <param name="tool"></param>
+    /// <returns></returns>
+    /// <exception cref="FileNotFoundException"></exception>
     public static async Task<PipeServer?> OpenPipedToolAsync(IgTool? tool)
     {
-        if (tool == null || tool.IsEmpty
-            || Local.ToolPipeServers.ContainsKey(tool.ToolId)) return null;
+        if (tool == null || tool.IsEmpty)
+        {
+            throw new FileNotFoundException();
+        }
+        if (ToolPipeServers.TryGetValue(tool.ToolId, out PipeServer? server)) return server;
+
 
         // prepend tool prefix to create pipe name
         var toolExeName = Path.GetFileName(tool.Executable);
@@ -412,10 +419,22 @@ internal class Local
         toolServer.Start();
         await Config.WriteAsync();
 
+
         // start tool client
         var filePath = Local.Images.GetFilePath(Local.CurrentIndex);
         var args = tool.Argument?.Replace(Constants.FILE_MACRO, $"\"{filePath}\"");
-        _ = BHelper.RunExeCmd($"{tool.Executable}", $"-{ImageGlassTool.CMD_WINDOW_TOP_MOST}={Config.EnableWindowTopMost} {args}", false);
+        var exitCode = await BHelper.RunExeCmd($"{tool.Executable}", $"-{ImageGlassTool.CMD_WINDOW_TOP_MOST}={Config.EnableWindowTopMost} {args}", false);
+
+        if (exitCode == IgExitCode.Error_FileNotFound)
+        {
+            toolServer.Stop();
+            toolServer.Dispose();
+            toolServer = null;
+            Local.ToolPipeServers.Remove(tool.ToolId);
+
+            throw new FileNotFoundException();
+        }
+
 
         // wait for client connection
         await toolServer.WaitForConnectionAsync();

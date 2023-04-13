@@ -928,27 +928,17 @@ public partial class FrmMain
     }
 
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("IDisposableAnalyzers.Correctness", "IDISP004:Don't ignore created IDisposable", Justification = "<Pending>")]
     private void MnuExternalTool_Click(object? sender, EventArgs e)
     {
-        if (sender is not ToolStripMenuItem mnu
-            || Config.Tools.SingleOrDefault(i => i.ToolId.Equals(mnu.Name)) is not IgTool tool) return;
+        if (sender is not ToolStripMenuItem mnu) return;
+
+        _ = OpenExternalToolAsync(mnu);
+    }
 
 
-        // Tool not found
-        if (tool.IsEmpty)
-        {
-            using var frm = new FrmToolNotFound(tool.ToolId);
-            var result = frm.ShowDialog(this);
-
-            if (result != DialogResult.OK)
-            {
-                if (mnu.CheckOnClick) mnu.Checked = !mnu.Checked;
-                return;
-            }
-
-            tool.Executable = frm.ExecutablePath;
-        }
+    private async Task OpenExternalToolAsync(ToolStripMenuItem mnu)
+    {
+        if (Config.Tools.SingleOrDefault(i => i.ToolId.Equals(mnu.Name)) is not IgTool tool) return;
 
 
         var visible = !mnu.Checked;
@@ -959,7 +949,28 @@ public partial class FrmMain
 
         if (visible)
         {
-            _ = Local.OpenPipedToolAsync(tool);
+            try
+            {
+                _ = await Local.OpenPipedToolAsync(tool);
+            }
+            catch (FileNotFoundException)
+            {
+                using var frm = new FrmToolNotFound(tool.ToolId);
+                var result = frm.ShowDialog(this);
+
+                if (result != DialogResult.OK)
+                {
+                    if (mnu.CheckOnClick) mnu.Checked = !mnu.Checked;
+                    return;
+                }
+
+
+                // fix the tool's path
+                tool.Executable = frm.ExecutablePath;
+
+                // run again
+                _ = await Local.OpenPipedToolAsync(tool);
+            }
         }
         else
         {

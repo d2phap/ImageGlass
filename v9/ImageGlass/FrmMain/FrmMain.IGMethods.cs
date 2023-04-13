@@ -858,7 +858,7 @@ public partial class FrmMain
             var result = await BHelper.RunIgcmd10(args);
 
 
-            if (result == IgExitCode.Error)
+            if (result == IgExitCode.Error || result == IgExitCode.Error_FileNotFound)
             {
                 _ = Config.ShowError(
                     description: Config.Language[$"{langPath}._Error"],
