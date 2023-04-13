@@ -2547,12 +2547,12 @@ public partial class FrmMain
 
 
             // send the list of images
-            var data = new ImageListLoadedToolEventArgs()
+            var data = new IgImageListUpdatedEventArgs()
             {
                 Files = Local.Images.FileNames,
             };
             var jsonData = BHelper.ToJson(data);
-            _ = toolServer.SendAsync(ToolServerMsgs.IMAGE_LIST_UPDATED, jsonData);
+            _ = toolServer.SendAsync(ImageGlassEvents.IMAGE_LIST_UPDATED, jsonData);
 
 
             // hide FrmMain

@@ -67,7 +67,7 @@ public class ImageLoadedEventArgs : ImageEventArgs
     public IgPhoto? Data { get; init; }
 
     /// <summary>
-    /// Gets the laoded image error.
+    /// Gets the loaded image error.
     /// </summary>
     public Exception? Error { get; init; }
 
@@ -85,11 +85,6 @@ public class ImageLoadedEventArgs : ImageEventArgs
 public class ImageListLoadedEventArgs : EventArgs
 {
     public string? InitFilePath { get; init; }
-}
-
-public class ImageListLoadedToolEventArgs : ImageListLoadedEventArgs
-{
-    public List<string> Files { get; init; }
 }
 
 

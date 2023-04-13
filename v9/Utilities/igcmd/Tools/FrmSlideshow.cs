@@ -391,9 +391,9 @@ public partial class FrmSlideshow : ThemedForm
 
 
         // update image list
-        if (e.MessageName.Equals(ToolServerMsgs.IMAGE_LIST_UPDATED, StringComparison.InvariantCultureIgnoreCase))
+        if (e.MessageName.Equals(ImageGlassEvents.IMAGE_LIST_UPDATED, StringComparison.InvariantCultureIgnoreCase))
         {
-            var data = BHelper.ParseJson<ImageListLoadedToolEventArgs>(e.MessageData);
+            var data = BHelper.ParseJson<IgImageListUpdatedEventArgs>(e.MessageData);
             var newInitFile = !_initImagePath.Equals(data.InitFilePath, StringComparison.InvariantCultureIgnoreCase);
 
             _initImagePath = data.InitFilePath ?? _initImagePath;
@@ -420,7 +420,7 @@ public partial class FrmSlideshow : ThemedForm
 
 
         // update language
-        if (e.MessageName.Equals(ToolServerMsgs.LANG_UPDATED, StringComparison.InvariantCultureIgnoreCase))
+        if (e.MessageName.Equals(ImageGlassEvents.LANG_UPDATED, StringComparison.InvariantCultureIgnoreCase))
         {
             Config.Language = new IgLang(e.MessageData, App.StartUpDir(Dir.Languages));
             LoadLanguage();
@@ -429,7 +429,7 @@ public partial class FrmSlideshow : ThemedForm
 
 
         // update theme
-        if (e.MessageName.Equals(ToolServerMsgs.THEME_UPDATED, StringComparison.InvariantCultureIgnoreCase))
+        if (e.MessageName.Equals(ImageGlassEvents.THEME_UPDATED, StringComparison.InvariantCultureIgnoreCase))
         {
             Config.Theme = new IgTheme(e.MessageData, Config.ToolbarIconHeight);
 

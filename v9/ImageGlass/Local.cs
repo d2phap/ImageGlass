@@ -99,14 +99,14 @@ internal class Local
             filesList.AddRange(Local.Images.FileNames);
         }
 
-        var eventArgs = new ImageListLoadedToolEventArgs()
+        var eventArgs = new IgImageListUpdatedEventArgs()
         {
             InitFilePath = e.InitFilePath,
             Files = filesList,
         };
 
         // emit event to all tools
-        _ = BroadcastMessageToAllToolServersAsync(ToolServerMsgs.IMAGE_LIST_UPDATED, eventArgs);
+        _ = BroadcastMessageToAllToolServersAsync(ImageGlassEvents.IMAGE_LIST_UPDATED, eventArgs);
     }
 
 
@@ -118,7 +118,14 @@ internal class Local
         ImageLoading?.Invoke(e);
 
         // emit event to all tools
-        _ = BroadcastMessageToAllToolServersAsync(ToolServerMsgs.IMAGE_LOADING, e);
+        _ = BroadcastMessageToAllToolServersAsync(ImageGlassEvents.IMAGE_LOADING, new IgImageLoadingEventArgs()
+        {
+            Index = e.Index,
+            NewIndex = e.NewIndex,
+            FilePath = e.FilePath,
+            FrameIndex = e.FrameIndex,
+            IsViewingSeparateFrame = e.IsViewingSeparateFrame,
+        });
     }
 
 
@@ -130,7 +137,14 @@ internal class Local
         ImageLoaded?.Invoke(e);
 
         // emit event to all tools
-        _ = BroadcastMessageToAllToolServersAsync(ToolServerMsgs.IMAGE_LOADED, e);
+        _ = BroadcastMessageToAllToolServersAsync(ImageGlassEvents.IMAGE_LOADED, new IgImageLoadedEventArgs()
+        {
+            Index = e.Index,
+            FilePath = e.FilePath,
+            FrameIndex = e.FrameIndex,
+            IsViewingSeparateFrame = e.IsViewingSeparateFrame,
+            IsError = e.Error != null,
+        });
     }
 
 
@@ -142,7 +156,11 @@ internal class Local
         ImageUnloaded?.Invoke(e);
 
         // emit event to all tools
-        _ = BroadcastMessageToAllToolServersAsync(ToolServerMsgs.IMAGE_UNLOADED, e);
+        _ = BroadcastMessageToAllToolServersAsync(ImageGlassEvents.IMAGE_UNLOADED, new IgImageUnloadedEventArgs()
+        {
+            Index = e.Index,
+            FilePath = e.FilePath,
+        });
     }
 
 
@@ -492,7 +510,8 @@ internal class Local
 
         if (toolServer.ServerStream.IsConnected)
         {
-            await toolServer.SendAsync(ToolServerMsgs.TOOL_TERMINATE);
+            var json = BHelper.ToJson(new IgToolTernimatingEventArgs());
+            await toolServer.SendAsync(ImageGlassEvents.TOOL_TERMINATE, json);
         }
 
         toolServerClosingCallBack?.Invoke(toolServer);
