@@ -73,11 +73,11 @@ public class Source
     /// </summary>
     public static IConfigurationRoot LoadUserConfigs()
     {
-        // filter the command lines begin with '-'
-        // example: ImageGlass.exe -FrmMainWidth=900
+        // filter the command lines begin with '/'
+        // example: ImageGlass.exe /FrmMainWidth=900
         var args = Environment.GetCommandLineArgs()
             .Where(cmd => cmd.StartsWith(Constants.CONFIG_CMD_PREFIX))
-            .Select(cmd => cmd[1..]) // trim '-' from the command
+            .Select(cmd => cmd[1..]) // trim '/' from the command
             .ToArray();
 
         try

@@ -32,8 +32,9 @@ internal static class Program
     {
         get
         {
-            // remove the command lines begin with '-'
-            // example: igcmd.exe -ENableWindowTopMost=True
+            // remove the command lines begin with '/'
+            // example: igcmd.exe /EnableWindowTopMost=True --ui
+            // returns: --ui
             var Args = Environment.GetCommandLineArgs()
                 .Skip(1) // skip the exe itself path
                 .Where(cmd => !cmd.StartsWith(Constants.CONFIG_CMD_PREFIX))
