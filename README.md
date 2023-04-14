@@ -38,14 +38,14 @@ ImageGlass is a lightweight software designed for seamless viewing of images in 
 ImageGlass 9.0 is the biggest update ever, supports ***hardware acceleration*** and many more. I have been rewriting the entire app for months. There will be a few more beta releases before version 9.0 reaches a stable state. In the meanwhile, you will still receive the updates for version 8.x.
 - ✅ [Version 9.0 beta 1](https://github.com/d2phap/ImageGlass/releases/tag/9.0.1.514) was released.
 - ✅ [Version 9.0 beta 2](https://github.com/d2phap/ImageGlass/releases/tag/9.0.2.904) was released.
-- ✅ [Version 9.0 beta 3](https://github.com/d2phap/ImageGlass/releases/tag/9.0.3.1225) was released. Try it and let me know your feedback.
-- 🎯 [Version 9.0 beta 4](https://github.com/d2phap/ImageGlass/projects/14) is under development.
+- ✅ [Version 9.0 beta 3](https://github.com/d2phap/ImageGlass/releases/tag/9.0.3.1225) was released.
+- ✅ [Version 9.0 beta 4](https://github.com/d2phap/ImageGlass/releases/tag/9.0.4.416) was released. Try it and let me know your feedback.
+- 🎯 [Version 9.0 beta 5](https://github.com/d2phap/ImageGlass/projects/15) is under development.
 
-ImageGlass 9 uses [.NET 6](https://devblogs.microsoft.com/dotnet/announcing-net-6/). If you are unable to install .NET 6, you can still use version 8.
-  <br/>
-  <a href="https://devblogs.microsoft.com/dotnet/announcing-net-6/" target="_blank" rel="noreferrer noopener">
-    <img src="https://kontext.tech/api/flex/medias/obj-2290" alt="ImageGlass on .NET 6" style="height:50px" />
-  </a>
+### 🔴 ImageGlass 9 minimum requirements:
+- [.NET Desktop Runtime 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+- [Webview2 runtime 64-bit](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section)
+- Windows 10 64-bit
 
 
 ## 👨‍💻 Development
@@ -68,7 +68,7 @@ ImageGlass is free for both personal and commercial use, except the Store versio
 - [Command lines](https://imageglass.org/docs/command-line-utilities)
 - [EULA](https://imageglass.org/license)
 
-For more information about ImageGlass, go to [Documentation](https://imageglass.org/docs)
+For more information about ImageGlass, go to [ImageGlass Docs](https://imageglass.org/docs).
 
 
 ## 🤼 Community and Support
