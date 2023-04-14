@@ -10,10 +10,10 @@
 
     <AssemblyTitle>Igcmd10: Command-line utility (Windows 10, 11) for ImageGlass</AssemblyTitle>
     <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>
-    <Version>9.0.3.1225</Version>
+    <Version>9.0.4.416</Version>
     <FileVersion>$(Version)</FileVersion>
-    <VersionPrefix>9.0.3</VersionPrefix>
-    <VersionSuffix>beta-3</VersionSuffix>
+    <VersionPrefix>9.0.4</VersionPrefix>
+    <VersionSuffix>beta-4</VersionSuffix>
 
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
 
