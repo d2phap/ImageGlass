@@ -30,6 +30,7 @@ using CliWrap.Buffered;
 namespace ImageGlass.Library.Image {
     public struct ExifTagItem {
         public string Group;
+        public string TagId;
         public string Name;
         public string Value;
     }
@@ -176,7 +177,7 @@ namespace ImageGlass.Library.Image {
                 var tpos2 = tmp.IndexOf('\t', tpos1 + 1);
                 var tpos3 = tmp.IndexOf('\t', tpos2 + 1);
 
-                if (tpos1 > 0 && tpos2 > 0) {
+                if (tpos1 > 0 && tpos2 > 0 && tpos3 > 0) {
                     var tagGroup = tmp.Substring(0, tpos1);
                     ++tpos1;
 
@@ -198,6 +199,7 @@ namespace ImageGlass.Library.Image {
                     if (tagName.Equals("File Name")) tagValue = originalFileName;
 
                     Add(new ExifTagItem() {
+                        TagId = tagId,
                         Name = tagName,
                         Value = tagValue,
                         Group = tagGroup,
