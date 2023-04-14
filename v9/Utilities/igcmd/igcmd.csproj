@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Platforms>x64;x86</Platforms>
+    <Platforms>x64;x86;ARM64</Platforms>
 
     <AssemblyTitle>Igcmd: Command-line utility for ImageGlass</AssemblyTitle>
     <Copyright>Copyright © 2010 - 2023 Duong Dieu Phap</Copyright>
@@ -84,9 +84,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Tools\FrmUpdate.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="Tools\FrmUpdate.cs" />
   </ItemGroup>
 
   <ItemGroup>
