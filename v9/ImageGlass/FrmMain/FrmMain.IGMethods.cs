@@ -2645,7 +2645,7 @@ public partial class FrmMain
     /// <summary>
     /// Sets <see cref="FrmMain"/> window state
     /// </summary>
-    public void IG_SetFrmMainState(string state)
+    public void IG_SetWindowState(string state)
     {
         WindowState = BHelper.ParseEnum<FormWindowState>(state);
     }
