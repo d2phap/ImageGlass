@@ -549,8 +549,8 @@ public partial class DXCanvas : DXControl
     /// Gets, sets the maximum zoom factor (<c>1.0f = 100%</c>).
     /// </summary>
     [Category("Zooming")]
-    [DefaultValue(35.0f)]
-    public float MaxZoom { get; set; } = 35f;
+    [DefaultValue(100.0f)]
+    public float MaxZoom { get; set; } = 100f;
 
     /// <summary>
     /// Gets, sets current zoom factor (<c>1.0f = 100%</c>).
@@ -2289,35 +2289,35 @@ public partial class DXCanvas : DXControl
     /// </returns>
     public bool ZoomByDeltaToPoint(float delta, PointF? point = null, bool requestRerender = true)
     {
+        var newZomFactor = _zoomFactor;
         var speed = delta / (501f - ZoomSpeed);
-        var location = point ?? new PointF(-1, -1);
 
+        // zoom in
+        if (delta > 0)
+        {
+            newZomFactor = _zoomFactor * (1f + speed);
+        }
+        // zoom out
+        else if (delta < 0)
+        {
+            newZomFactor = _zoomFactor / (1f - speed);
+        }
+
+        newZomFactor = Math.Min(Math.Max(MinZoom, newZomFactor), MaxZoom);
+        if (newZomFactor == _zoomFactor) return false;
+
+
+        var location = point ?? new PointF(-1, -1);
         // use the center point if the point is outside
         if (!Bounds.Contains((int)location.X, (int)location.Y))
         {
             location = ImageViewportCenterPoint;
         }
 
-        // zoom in
-        if (delta > 0)
-        {
-            if (_zoomFactor > MaxZoom)
-                return false;
+        _oldZoomFactor = _zoomFactor;
+        _zoomFactor = newZomFactor;
+        _shouldRecalculateDrawingRegion = true;
 
-            _oldZoomFactor = _zoomFactor;
-            _zoomFactor *= 1f + speed;
-            _shouldRecalculateDrawingRegion = true;
-        }
-        // zoom out
-        else if (delta < 0)
-        {
-            if (_zoomFactor < MinZoom)
-                return false;
-
-            _oldZoomFactor = _zoomFactor;
-            _zoomFactor /= 1f - speed;
-            _shouldRecalculateDrawingRegion = true;
-        }
 
         _isManualZoom = true;
         _zoommedPoint = location.ToVector2();
