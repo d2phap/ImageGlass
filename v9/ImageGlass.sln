@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageGlass.WebP", "Componen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageGlass.Tools", "..\..\..\@imageglass\ImageGlass.Tools\Source\ImageGlass.Tools\ImageGlass.Tools.csproj", "{95827B78-AC54-45A7-971A-9278FD0FCDEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageGlass.WinTouch", "Components\ImageGlass.WinTouch\ImageGlass.WinTouch.csproj", "{96A8D885-BB41-428F-90F5-021F345B4166}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -222,6 +224,24 @@ Global
 		{95827B78-AC54-45A7-971A-9278FD0FCDEF}.Release|x64.Build.0 = Release|x64
 		{95827B78-AC54-45A7-971A-9278FD0FCDEF}.Release|x86.ActiveCfg = Release|x86
 		{95827B78-AC54-45A7-971A-9278FD0FCDEF}.Release|x86.Build.0 = Release|x86
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Debug|x64.Build.0 = Debug|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Debug|x86.Build.0 = Debug|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Publish_Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Publish_Release|Any CPU.Build.0 = Release|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Publish_Release|x64.ActiveCfg = Release|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Publish_Release|x64.Build.0 = Release|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Publish_Release|x86.ActiveCfg = Release|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Publish_Release|x86.Build.0 = Release|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Release|x64.ActiveCfg = Release|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Release|x64.Build.0 = Release|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Release|x86.ActiveCfg = Release|Any CPU
+		{96A8D885-BB41-428F-90F5-021F345B4166}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -236,6 +256,7 @@ Global
 		{117022C1-BA6E-40FC-BA93-8CC99EC9A79B} = {7C1E4F51-84BC-4B62-84CB-8261C06033E7}
 		{4CAAB9A9-D051-4BC2-8DD0-78F44D6DC932} = {7C1E4F51-84BC-4B62-84CB-8261C06033E7}
 		{95827B78-AC54-45A7-971A-9278FD0FCDEF} = {7C1E4F51-84BC-4B62-84CB-8261C06033E7}
+		{96A8D885-BB41-428F-90F5-021F345B4166} = {7C1E4F51-84BC-4B62-84CB-8261C06033E7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {215F5BF3-8E73-4DAE-B634-B4864C9D6FD1}
