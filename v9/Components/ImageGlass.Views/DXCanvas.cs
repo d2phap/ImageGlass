@@ -2207,6 +2207,8 @@ public partial class DXCanvas : DXControl
     /// </returns>
     public bool ZoomToPoint(float factor, PointF? point = null, bool requestRerender = true)
     {
+        if (factor >= MaxZoom || factor <= MinZoom) return false;
+
         var location = point ?? new PointF(-1, -1);
 
         // use the center point if the point is outside
