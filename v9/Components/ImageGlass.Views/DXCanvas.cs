@@ -2289,23 +2289,25 @@ public partial class DXCanvas : DXControl
     /// </returns>
     public bool ZoomByDeltaToPoint(float delta, PointF? point = null, bool requestRerender = true)
     {
-        var newZomFactor = _zoomFactor;
+        var newZoomFactor = _zoomFactor;
         var speed = delta / (501f - ZoomSpeed);
 
         // zoom in
         if (delta > 0)
         {
-            newZomFactor = _zoomFactor * (1f + speed);
+            newZoomFactor = _zoomFactor * (1f + speed);
         }
         // zoom out
         else if (delta < 0)
         {
-            newZomFactor = _zoomFactor / (1f - speed);
+            newZoomFactor = _zoomFactor / (1f - speed);
         }
 
-        newZomFactor = Math.Min(Math.Max(MinZoom, newZomFactor), MaxZoom);
-        if (newZomFactor == _zoomFactor) return false;
+        newZoomFactor = Math.Min(Math.Max(MinZoom, newZoomFactor), MaxZoom);
+        if (newZoomFactor == _zoomFactor) return false;
 
+        // snap to zoom 100%
+        if (0.95 < newZoomFactor && newZoomFactor < 1.05) newZoomFactor = 1f;
 
         var location = point ?? new PointF(-1, -1);
         // use the center point if the point is outside
@@ -2315,7 +2317,7 @@ public partial class DXCanvas : DXControl
         }
 
         _oldZoomFactor = _zoomFactor;
-        _zoomFactor = newZomFactor;
+        _zoomFactor = newZoomFactor;
         _shouldRecalculateDrawingRegion = true;
 
 
