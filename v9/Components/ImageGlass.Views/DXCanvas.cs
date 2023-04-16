@@ -33,7 +33,7 @@ using InterpolationMode = D2Phap.InterpolationMode;
 
 namespace ImageGlass.Viewer;
 
-public class DXCanvas : DXControl
+public partial class DXCanvas : DXControl
 {
 
     // Private properties
@@ -959,8 +959,10 @@ public class DXCanvas : DXControl
     public DXCanvas()
     {
         SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.UserPaint, true);
-
         _clickTimer.Tick += ClickTimer_Tick;
+
+        // touch gesture support
+        InitializeTouchGesture();
     }
 
     private void ClickTimer_Tick(object? sender, EventArgs e)
