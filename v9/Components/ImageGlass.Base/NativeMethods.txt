@@ -17,3 +17,4 @@ SendInput
 ShowWindow
 ReleaseCapture
 SendMessage
+GetSystemMetrics

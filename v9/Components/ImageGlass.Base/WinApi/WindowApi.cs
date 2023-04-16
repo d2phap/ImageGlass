@@ -24,6 +24,7 @@ using Windows.Win32.Graphics.Gdi;
 using Windows.Win32.System.Diagnostics.Debug;
 using Windows.Win32.UI.Controls;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace ImageGlass.Base.WinApi;
 
@@ -292,6 +293,16 @@ public class WindowApi
         g.ReleaseHdc();
     }
 
+
+    /// <summary>
+    /// Checks if this is a touch device.
+    /// </summary>
+    public static bool IsTouchDevice()
+    {
+        var numberOfTouches = PInvoke.GetSystemMetrics(SYSTEM_METRICS_INDEX.SM_MAXIMUMTOUCHES);
+
+        return numberOfTouches > 0;
+    }
 
 }
 
