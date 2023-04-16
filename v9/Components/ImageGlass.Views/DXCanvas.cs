@@ -2199,15 +2199,28 @@ public partial class DXCanvas : DXControl
     /// If its value is <c>null</c> or outside of the <see cref="ViewBox"/> control,
     /// <c><see cref="ImageViewportCenterPoint"/></c> is used.
     /// </param>
+    /// <param name="snapZoomValue">
+    /// The boundary value for snapping zoom factor. Example: 0.15 => [0.85; zoom=1; 1.15].
+    /// </param>
     /// <returns>
     ///   <list type="table">
     ///     <item><c>true</c> if the viewport is changed.</item>
     ///     <item><c>false</c> if the viewport is unchanged.</item>
     ///   </list>
     /// </returns>
-    public bool ZoomToPoint(float factor, PointF? point = null, bool requestRerender = true)
+    public bool ZoomToPoint(float factor, PointF? point = null, bool requestRerender = true, float snapZoomValue = 0f)
     {
         if (factor >= MaxZoom || factor <= MinZoom) return false;
+        var newZoomFactor = factor;
+
+        // snap to zoom X * 100%
+        if (snapZoomValue > 0)
+        {
+            var intZoom = Math.Max(1, (int)newZoomFactor);
+            var minSnapZoom = intZoom - 0.1f;
+            var maxSnapZoom = intZoom + 0.1f;
+            if (minSnapZoom < newZoomFactor && newZoomFactor < maxSnapZoom) newZoomFactor = intZoom;
+        }
 
         var location = point ?? new PointF(-1, -1);
 
@@ -2224,8 +2237,8 @@ public partial class DXCanvas : DXControl
         // the location after zoomed
         var zoomedLocation = new PointF()
         {
-            X = (location.X - gapX) * factor / ZoomFactor,
-            Y = (location.Y - gapY) * factor / ZoomFactor,
+            X = (location.X - gapX) * newZoomFactor / ZoomFactor,
+            Y = (location.Y - gapY) * newZoomFactor / ZoomFactor,
         };
 
         // the distance of 2 points after zoomed
@@ -2235,10 +2248,10 @@ public partial class DXCanvas : DXControl
             Height = zoomedLocation.Y - location.Y,
         };
 
-        // perform zoom if the factor is different
-        if (_zoomFactor != factor)
+        // perform zoom if the new zoom factor is different
+        if (_zoomFactor != newZoomFactor)
         {
-            _zoomFactor = Math.Min(MaxZoom, Math.Max(factor, MinZoom));
+            _zoomFactor = Math.Min(MaxZoom, Math.Max(newZoomFactor, MinZoom));
             _shouldRecalculateDrawingRegion = true;
             _isManualZoom = true;
 
@@ -2281,13 +2294,17 @@ public partial class DXCanvas : DXControl
     /// Client's cursor location to zoom out.
     /// <c><see cref="ImageViewportCenterPoint"/></c> is the default value.
     /// </param>
+    /// <param name="snapZoomValue">
+    /// The boundary value for snapping zoom factor. Example: 0.15 => [0.85; zoom=1; 1.15].
+    /// </param>
     /// <returns>
     ///   <list type="table">
     ///     <item><c>true</c> if the viewport is changed.</item>
     ///     <item><c>false</c> if the viewport is unchanged.</item>
     ///   </list>
     /// </returns>
-    public bool ZoomByDeltaToPoint(float delta, PointF? point = null, bool requestRerender = true)
+    public bool ZoomByDeltaToPoint(float delta, PointF? point = null,
+        bool requestRerender = true, float snapZoomValue = 0f)
     {
         var newZoomFactor = _zoomFactor;
         var speed = delta / (501f - ZoomSpeed);
@@ -2306,8 +2323,17 @@ public partial class DXCanvas : DXControl
         newZoomFactor = Math.Min(Math.Max(MinZoom, newZoomFactor), MaxZoom);
         if (newZoomFactor == _zoomFactor) return false;
 
-        // snap to zoom 100%
-        if (0.95 < newZoomFactor && newZoomFactor < 1.05) newZoomFactor = 1f;
+
+        // snap to zoom X * 100%
+        if (snapZoomValue > 0)
+        {
+            // snap to zoom X * 100%
+            var intZoom = Math.Max(1, (int)newZoomFactor);
+            var minSnapZoom = intZoom - snapZoomValue;
+            var maxSnapZoom = intZoom + snapZoomValue;
+            if (minSnapZoom < newZoomFactor && newZoomFactor < maxSnapZoom) newZoomFactor = intZoom;
+        }
+
 
         var location = point ?? new PointF(-1, -1);
         // use the center point if the point is outside
