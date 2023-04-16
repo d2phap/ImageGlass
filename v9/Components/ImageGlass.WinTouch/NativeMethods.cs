@@ -60,8 +60,8 @@ internal static class NativeMethods
         var allConfigs = configs.Select(i => new GESTURECONFIG()
         {
             dwID = (GESTURECONFIG_ID)i.Id,
-            dwWant = i.Want,
-            dwBlock = i.Block,
+            dwWant = (uint)i.Want,
+            dwBlock = (uint)i.Block,
         }).ToArray().AsSpan();
 
         var result = PInvoke.SetGestureConfig(new HWND(hwnd), (uint)allConfigs.Length, allConfigs,

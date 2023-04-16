@@ -33,19 +33,20 @@ public struct GestureConfig
     /// <summary>
     /// The identifier for the type of configuration that will have messages enabled or disabled.
     /// </summary>
-    public GestureInfoId Id;
+    public GestureConfigId Id;
 
     /// <summary>
     /// The messages to enable.
     /// </summary>
-    public uint Want;
+    public GestureConfigFlags Want;
 
     /// <summary>
     /// The messages to disable.
     /// </summary>
-    public uint Block;
+    public GestureConfigFlags Block;
 
-    public GestureConfig(GestureInfoId id, uint want, uint block)
+
+    public GestureConfig(GestureConfigId id, GestureConfigFlags want, GestureConfigFlags block)
     {
         Id = id;
         Want = want;
@@ -56,18 +57,35 @@ public struct GestureConfig
 
 
 /// <summary>
-/// Gesture configuration flags
+/// Gesture configuration ID
 /// </summary>
-public class GestureConfigFlags
+public enum GestureConfigId : uint
 {
-    public const int GC_ALLGESTURES = 0x00000001;
-    public const int GC_ZOOM = 0x00000001;
-    public const int GC_PAN = 0x00000001;
-    public const int GC_PAN_WITH_SINGLE_FINGER_VERTICALLY = 0x00000002;
-    public const int GC_PAN_WITH_SINGLE_FINGER_HORIZONTALLY = 0x00000004;
-    public const int GC_PAN_WITH_GUTTER = 0x00000008;
-    public const int GC_PAN_WITH_INERTIA = 0x00000010;
-    public const int GC_ROTATE = 0x00000001;
-    public const int GC_TWOFINGERTAP = 0x00000001;
-    public const int GC_PRESSANDTAP = 0x00000001;
+    Undefined = 0,
+    GID_ZOOM = 0x00000003,
+    GID_PAN = 0x00000004,
+    GID_ROTATE = 0x00000005,
+    GID_TWOFINGERTAP = 0x00000006,
+    GID_PRESSANDTAP = 0x00000007,
+}
+
+
+[Flags]
+public enum GestureConfigFlags : uint
+{
+    None = 0,
+
+    /// <summary>
+    /// Use with <see cref="GestureConfigId.Undefined"/>
+    /// </summary>
+    GC_ALLGESTURES = 0x00000001,
+    GC_ZOOM = 0x00000001,
+    GC_PAN = 0x00000001,
+    GC_PAN_WITH_SINGLE_FINGER_VERTICALLY = 0x00000002,
+    GC_PAN_WITH_SINGLE_FINGER_HORIZONTALLY = 0x00000004,
+    GC_PAN_WITH_GUTTER = 0x00000008,
+    GC_PAN_WITH_INERTIA = 0x00000010,
+    GC_ROTATE = 0x00000001,
+    GC_TWOFINGERTAP = 0x00000001,
+    GC_PRESSANDTAP = 0x00000001,
 }

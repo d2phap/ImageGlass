@@ -53,7 +53,16 @@ public sealed class GestureListener : NativeWindow
     /// </summary>
     /// <param name="parent">The parent.</param>
     public GestureListener(Control parent) : this(parent, new[] {
-        new GestureConfig(0, GestureConfigFlags.GC_ALLGESTURES, 0),
+        new GestureConfig(GestureConfigId.GID_PAN,
+            GestureConfigFlags.GC_PAN_WITH_SINGLE_FINGER_VERTICALLY
+            | GestureConfigFlags.GC_PAN_WITH_SINGLE_FINGER_VERTICALLY
+            | GestureConfigFlags.GC_PAN_WITH_INERTIA,
+
+            // block GC_PAN_WITH_GUTTER for proper panning:
+            // https://stackoverflow.com/a/38367704/2856887
+            GestureConfigFlags.GC_PAN_WITH_GUTTER),
+
+        new GestureConfig(GestureConfigId.GID_ZOOM, GestureConfigFlags.GC_ZOOM, GestureConfigFlags.None),
     })
     { }
 
@@ -178,6 +187,7 @@ public sealed class GestureListener : NativeWindow
             Pan(this, args);
             return args.Handled;
         }
+
         return false;
     }
 
