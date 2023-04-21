@@ -624,13 +624,12 @@ public partial class FrmMain
         // Thumbnails view
         if (Gallery.View == ImageGlass.Gallery.View.Thumbnails)
         {
-            var minWidth = Gallery.ThumbnailSize.Width
-                + Gallery.Padding.Horizontal
-                + (int)vScrollBarSize
-                + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Width * 6.5f);
+            var gapWidth = Gallery.Padding.Horizontal + (int)vScrollBarSize;
+            var itemMargin = (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Width * 6.5f);
+            var minWidth = Gallery.ThumbnailSize.Width + gapWidth + itemMargin;
+            var width = (Config.GalleryColumns * (Gallery.ThumbnailSize.Width + itemMargin)) + gapWidth;
 
-            Gallery.Width = Math.Max(minWidth, Config.ThumbnailBarWidth);
-            Config.ThumbnailBarWidth = Gallery.Width;
+            Gallery.Width = Math.Max(minWidth, width);
         }
         // HorizontalStrip view
         else

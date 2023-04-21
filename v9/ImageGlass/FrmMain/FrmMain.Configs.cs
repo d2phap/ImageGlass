@@ -151,10 +151,11 @@ public partial class FrmMain
 
         // Thumbnail bar
         Gallery.DoNotDeletePersistentCache = true;
-        Gallery.PersistentCacheSize = Config.ThumbnailCacheSizeInMb;
+        Gallery.PersistentCacheSize = Config.GalleryCacheSizeInMb;
         Gallery.PersistentCacheDirectory = App.ConfigDir(PathType.Dir, Dir.ThumbnailsCache);
         Gallery.EnableKeyNavigation = false;
         Gallery.Padding = this.ScaleToDpi(new Padding(2));
+        Gallery.ResizedByResizer += Gallery_ResizedByResizer;
 
 
         // PicMain
@@ -305,7 +306,6 @@ public partial class FrmMain
         MnuScaleToHeight.Tag = new ModernMenuItemTag() { SingleSelect = true };
         MnuScaleToFit.Tag = new ModernMenuItemTag() { SingleSelect = true };
         MnuScaleToFill.Tag = new ModernMenuItemTag() { SingleSelect = true };
-
     }
 
 
@@ -359,8 +359,15 @@ public partial class FrmMain
             Config.FrmMainWidth = Size.Width;
             Config.FrmMainHeight = Size.Height;
         }
+    }
 
-        UpdateGallerySize();
+
+    private void Gallery_ResizedByResizer(object? sender, EventArgs e)
+    {
+        if (Gallery.View == ImageGlass.Gallery.View.Thumbnails)
+        {
+            Config.GalleryColumns = Gallery.MaxColumns;
+        }
     }
 
 

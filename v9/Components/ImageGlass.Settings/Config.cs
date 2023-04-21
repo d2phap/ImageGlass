@@ -510,12 +510,12 @@ public static class Config
     /// <summary>
     /// Gets, sets the maximum size in MB of thumbnail persistent cache.
     /// </summary>
-    public static int ThumbnailCacheSizeInMb { get; set; } = 400;
+    public static int GalleryCacheSizeInMb { get; set; } = 400;
 
     /// <summary>
-    /// Gets, sets width of horizontal thumbnail bar.
+    /// Gets, sets number of thumbnail columns displayed in vertical gallery.
     /// </summary>
-    public static int ThumbnailBarWidth { get; set; } = (int)(ThumbnailSize * 2.5);
+    public static int GalleryColumns { get; set; } = 3;
 
     /// <summary>
     /// Gets, sets the number of images cached by <see cref="Base.Services.ImageBooster"/>.
@@ -837,8 +837,11 @@ public static class Config
 
         #region Load thumbnail bar width & position
         ThumbnailSize = items.GetValue(nameof(ThumbnailSize), ThumbnailSize);
-        ThumbnailCacheSizeInMb = items.GetValue(nameof(ThumbnailCacheSizeInMb), ThumbnailCacheSizeInMb);
-        ThumbnailBarWidth = items.GetValue(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
+        ThumbnailSize = Math.Max(20, ThumbnailSize);
+        GalleryCacheSizeInMb = items.GetValue(nameof(GalleryCacheSizeInMb), GalleryCacheSizeInMb);
+
+        GalleryColumns = items.GetValue(nameof(GalleryColumns), GalleryColumns);
+        GalleryColumns = Math.Max(1, GalleryColumns);
         #endregion
 
         ImageBoosterCacheCount = items.GetValue(nameof(ImageBoosterCacheCount), ImageBoosterCacheCount);
@@ -1372,8 +1375,8 @@ public static class Config
         settings.TryAdd(nameof(SlideshowInterval), SlideshowInterval);
         settings.TryAdd(nameof(SlideshowIntervalTo), SlideshowIntervalTo);
         settings.TryAdd(nameof(ThumbnailSize), ThumbnailSize);
-        settings.TryAdd(nameof(ThumbnailCacheSizeInMb), ThumbnailCacheSizeInMb);
-        settings.TryAdd(nameof(ThumbnailBarWidth), ThumbnailBarWidth);
+        settings.TryAdd(nameof(GalleryCacheSizeInMb), GalleryCacheSizeInMb);
+        settings.TryAdd(nameof(GalleryColumns), GalleryColumns);
         settings.TryAdd(nameof(ImageBoosterCacheCount), ImageBoosterCacheCount);
         settings.TryAdd(nameof(ImageBoosterCacheMaxDimension), ImageBoosterCacheMaxDimension);
         settings.TryAdd(nameof(ImageBoosterCacheMaxFileSizeInMb), ImageBoosterCacheMaxFileSizeInMb);
