@@ -395,6 +395,17 @@ public enum TooltipDirection
     Bottom,
 }
 
+
+/// <summary>
+/// Represents the mouse state of <see cref="ImageGallery"/>.
+/// </summary>
+public enum MouseState
+{
+    Normal,
+    Hovered,
+    Pressed,
+}
+
 #endregion
 
 

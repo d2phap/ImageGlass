@@ -22,6 +22,8 @@ Url: https://github.com/oozcitak/imagelistview
 License: Apache License Version 2.0, http://www.apache.org/licenses/
 ---------------------
 */
+using ImageGlass.Base.WinApi;
+
 namespace ImageGlass.Gallery;
 
 
@@ -104,6 +106,16 @@ public partial class ImageGallery
         /// </summary>
         public Rectangle SelectionRectangle { get; private set; } = new();
 
+        /// <summary>
+        /// Gets the resizer bound.
+        /// </summary>
+        public bool IsResizerHit { get; private set; } = false;
+
+        /// <summary>
+        /// Gets the mouse state.
+        /// </summary>
+        public MouseState MouseState { get; private set; } = MouseState.Normal;
+
         #endregion
 
 
@@ -150,11 +162,14 @@ public partial class ImageGallery
 
 
         #region Mouse Event Handlers
+
         /// <summary>
         /// Handles control's MouseDown event.
         /// </summary>
         public void MouseDown(MouseEventArgs e)
         {
+            MouseState = MouseState.Pressed;
+
             if ((e.Button & MouseButtons.Left) != MouseButtons.None)
                 LeftButton = true;
             if ((e.Button & MouseButtons.Right) != MouseButtons.None)
@@ -172,6 +187,21 @@ public partial class ImageGallery
             {
                 HoveredItem.Pressed = true;
             }
+
+            if (_imageGallery.Resizer != ResizerType.None)
+            {
+                _imageGallery.Refresh();
+                UpdateCursor();
+
+                if (!IsResizerHit) return;
+
+                // Tell the OS that you want to drag the window.
+                WindowApi.SetResizerOnMouseDown(_imageGallery.Handle, _imageGallery.Resizer);
+
+                // calling WindowApi.SetResizer() also releases the mouse capture,
+                // so the mouse state here is mouse up
+                MouseState = MouseState.Normal;
+            }
         }
 
         /// <summary>
@@ -179,6 +209,11 @@ public partial class ImageGallery
         /// </summary>
         public void MouseMove(MouseEventArgs e)
         {
+            if (MouseState == MouseState.Normal)
+            {
+                MouseState = MouseState.Hovered;
+            }
+
             var oldHoveredItem = HoveredItem;
 
             DoHitTest(e.Location);
@@ -368,6 +403,13 @@ public partial class ImageGallery
                 _imageGallery.Refresh();
             }
 
+
+            if (_imageGallery.Resizer != ResizerType.None)
+            {
+                _imageGallery.Refresh();
+                UpdateCursor();
+            }
+
             _imageGallery.ResumePaint();
         }
 
@@ -376,6 +418,8 @@ public partial class ImageGallery
         /// </summary>
         public void MouseUp(MouseEventArgs e)
         {
+            MouseState = MouseState.Hovered;
+
             DoHitTest(e.Location);
 
             _imageGallery.SuspendPaint();
@@ -555,6 +599,8 @@ public partial class ImageGallery
         /// </summary>
         public void MouseLeave()
         {
+            MouseState = MouseState.Normal;
+
             if (HoveredItem != null)
             {
                 if (HoveredItem != null)
@@ -565,6 +611,13 @@ public partial class ImageGallery
 
                 HoveredItem = null;
                 _imageGallery.Refresh();
+            }
+
+            if (_imageGallery.Resizer != ResizerType.None)
+            {
+                IsResizerHit = false;
+                _imageGallery.Refresh();
+                UpdateCursor();
             }
         }
 
@@ -891,6 +944,7 @@ public partial class ImageGallery
 
             inItemArea = h.IsInItemArea;
             overCheckBox = h.IsCheckBoxHit;
+            IsResizerHit = h.IsResizerHit;
         }
 
         /// <summary>
@@ -939,6 +993,29 @@ public partial class ImageGallery
                 index = _imageGallery.Items.Count - 1;
 
             return index;
+        }
+
+
+        private void UpdateCursor()
+        {
+            if (!IsResizerHit) _imageGallery.Cursor = Cursors.Default;
+            else
+            {
+                if (_imageGallery.Resizer == ResizerType.HTTOP
+                    || _imageGallery.Resizer == ResizerType.HTBOTTOM)
+                {
+                    _imageGallery.Cursor = Cursors.SizeNS;
+                }
+                else if (_imageGallery.Resizer == ResizerType.HTLEFT
+                    || _imageGallery.Resizer == ResizerType.HTRIGHT)
+                {
+                    _imageGallery.Cursor = Cursors.SizeWE;
+                }
+                else
+                {
+                    _imageGallery.Cursor = Cursors.Arrow;
+                }
+            }
         }
 
         #endregion

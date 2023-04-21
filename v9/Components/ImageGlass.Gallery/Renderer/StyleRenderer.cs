@@ -23,6 +23,7 @@ License: Apache License Version 2.0, http://www.apache.org/licenses/
 ---------------------
 */
 using ImageGlass.Base;
+using ImageGlass.Base.WinApi;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms.VisualStyles;
 
@@ -534,6 +535,35 @@ public class StyleRenderer : IDisposable
         }
     }
 
+    /// <summary>
+    /// Renders the resizer.
+    /// </summary>
+    private void RenderResizer(Graphics g)
+    {
+        if (ImageGalleryOwner.Resizer == ResizerType.None) return;
+
+        g.SetClip(ImageGalleryOwner.layoutManager.ClientArea);
+
+
+        var opacity = 0;
+        if (ImageGalleryOwner.navigationManager.IsResizerHit)
+        {
+            if (ImageGalleryOwner.navigationManager.MouseState == MouseState.Pressed)
+            {
+                opacity = 70;
+            }
+            else
+            {
+                opacity = 35;
+            }
+        }
+
+        var color = ImageGalleryOwner.BackColor.InvertBlackOrWhite(opacity);
+        using var brush = new SolidBrush(color);
+
+        g.FillRectangle(brush, ImageGalleryOwner.ResizerBound);
+    }
+
 
     /// <summary>
     /// Renders the control.
@@ -589,10 +619,13 @@ public class StyleRenderer : IDisposable
         // Scrollbar filler
         RenderScrollbarFiller(g);
 
+        // resizer
+        RenderResizer(g);
+
         // Draw on to the control
         bufferGraphics.Render(graphics);
     }
-    
+
     /// <summary>
     /// Loads and returns the large gallery image for the given item.
     /// </summary>
@@ -774,7 +807,7 @@ public class StyleRenderer : IDisposable
             using var bgBrush = new SolidBrush(ImageGalleryOwner.BackColor);
             g.FillRectangle(bgBrush, bounds);
         }
-       
+
 
         // Draw the background image
         if (ImageGalleryOwner.BackgroundImage != null)
