@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using ImageGlass.Base;
 using ImageGlass.Base.Actions;
 using ImageGlass.Base.PhotoBox;
+using ImageGlass.Base.WinApi;
 using ImageGlass.Settings;
 using ImageGlass.UI;
 
@@ -1170,10 +1171,16 @@ public partial class FrmMain
         {
             Gallery.View = ImageGlass.Gallery.View.Thumbnails;
             Gallery.ScrollBars = true;
+
+            Gallery.Resizer = Gallery.Dock == DockStyle.Left
+                ? ResizerType.HTRIGHT
+                : ResizerType.HTLEFT;
         }
         else
         {
             Gallery.ScrollBars = Config.ShowThumbnailScrollbars || Gallery.View == ImageGlass.Gallery.View.Thumbnails;
+
+            Gallery.Resizer = ResizerType.None;
         }
         UpdateGallerySize();
 

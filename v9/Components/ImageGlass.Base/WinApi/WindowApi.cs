@@ -283,11 +283,11 @@ public class WindowApi
             }
 
             // Remember to clean up
-            PInvoke.SelectObject(memoryDc, bitmapOld);
+            _ = PInvoke.SelectObject(memoryDc, bitmapOld);
 
-            PInvoke.DeleteObject(bitmapGdiObj);
-            PInvoke.ReleaseDC(new HWND(memoryDc.Value), memoryDc); // (IntPtr, -1)
-            PInvoke.DeleteDC(createdHdc);
+            _ = PInvoke.DeleteObject(bitmapGdiObj);
+            _ = PInvoke.ReleaseDC(new HWND(memoryDc.Value), memoryDc); // (IntPtr, -1)
+            _ = PInvoke.DeleteDC(createdHdc);
         }
 
         g.ReleaseHdc();
@@ -304,6 +304,24 @@ public class WindowApi
         return numberOfTouches > 0;
     }
 
+
+    /// <summary>
+    /// Makes control resizable. This should be called in <c>MouseDown</c> event.
+    /// </summary>
+    public static void SetResizerOnMouseDown(IntPtr handle, ResizerType type)
+    {
+        if (type == ResizerType.None) return;
+
+        const int WM_NCLBUTTONDOWN = 0x00A1;
+        var typePtr = new IntPtr((int)type);
+
+        // Release current mouse capture
+        _ = PInvoke.ReleaseCapture();
+
+        // Tell the OS that you want to drag the window.
+        _ = PInvoke.SendMessage(new HWND(handle), WM_NCLBUTTONDOWN,
+            new WPARAM((uint)typePtr), new LPARAM());
+    }
 }
 
 
@@ -415,4 +433,21 @@ public enum DWM_SYSTEMBACKDROP_TYPE
     /// Draw the backdrop material effect corresponding to a window with a tabbed title bar.
     /// </summary>
     DWMSBT_TABBEDWINDOW = 4,
+}
+
+
+public enum ResizerType : int
+{
+    None = -1,
+
+    HTTOP = 12,
+    HTTOPLEFT = 13,
+    HTTOPRIGHT = 14,
+
+    HTBOTTOM = 15,
+    HTBOTTOMLEFT = 16,
+    HTBOTTOMRIGHT = 17,
+
+    HTLEFT = 10,
+    HTRIGHT = 11,
 }
