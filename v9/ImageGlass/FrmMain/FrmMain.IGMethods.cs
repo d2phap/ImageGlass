@@ -599,15 +599,23 @@ public partial class FrmMain
 
         Gallery.SuspendLayout();
 
-        var scrollBarSize = this.ScaleToDpi(1.5f); // random gap
-        if (Gallery.ScrollBars && Gallery.HScrollBar.Visible)
+        // get scroll bar size
+        var hScrollBarSize = this.ScaleToDpi(1.5f); // random gap
+        var vScrollBarSize = hScrollBarSize; // random gap
+        if (Gallery.HScrollBar.Visible)
         {
-            Gallery.VScrollBar.Height =
-                Gallery.HScrollBar.Height =
-                    (int)(SystemInformation.HorizontalScrollBarHeight * 0.75f);
-
-            scrollBarSize += Gallery.HScrollBar.Height;
+            Gallery.HScrollBar.Height =
+                (int)(SystemInformation.HorizontalScrollBarHeight * 0.75f);
+            hScrollBarSize += Gallery.HScrollBar.Height;
         }
+
+        if (Gallery.VScrollBar.Visible)
+        {
+            Gallery.VScrollBar.Width =
+                (int)(SystemInformation.HorizontalScrollBarHeight * 0.75f);
+            vScrollBarSize += Gallery.VScrollBar.Width;
+        }
+
 
         // update thumbnail size
         Gallery.ThumbnailSize = this.ScaleToDpi(new Size(Config.ThumbnailSize, Config.ThumbnailSize));
@@ -618,7 +626,7 @@ public partial class FrmMain
         {
             var minWidth = Gallery.ThumbnailSize.Width
                 + Gallery.Padding.Horizontal
-                + (int)scrollBarSize
+                + (int)vScrollBarSize
                 + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Width * 6.5f);
 
             Gallery.Width = Math.Max(minWidth, Config.ThumbnailBarWidth);
@@ -630,7 +638,7 @@ public partial class FrmMain
             // Gallery bar
             Gallery.Height = Gallery.ThumbnailSize.Height
                 + Gallery.Padding.Vertical
-                + (int)scrollBarSize
+                + (int)hScrollBarSize
                 + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Height * 6.5f);
         }
 
