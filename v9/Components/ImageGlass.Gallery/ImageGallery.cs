@@ -24,8 +24,8 @@ License: Apache License Version 2.0, http://www.apache.org/licenses/
 */
 
 using ImageGlass.Base;
+using ImageGlass.Base.WinApi;
 using System.ComponentModel;
-using System.Text;
 
 namespace ImageGlass.Gallery;
 
@@ -76,7 +76,8 @@ public partial class ImageGallery : Control, IComponent
     private bool controlSuspended = false;
     private int rendererSuspendCount = 0;
     private bool rendererNeedsPaint = true;
-    private readonly System.Timers.Timer lazyRefreshTimer = new() {
+    private readonly System.Timers.Timer lazyRefreshTimer = new()
+    {
         Interval = StyleRenderer.LazyRefreshInterval,
         Enabled = false,
     };
@@ -111,6 +112,62 @@ public partial class ImageGallery : Control, IComponent
     /// Enable transparent background.
     /// </summary>
     public bool EnableTransparent { get; set; } = true;
+
+    /// <summary>
+    /// Gets, sets resizer.
+    /// </summary>
+    public ResizerType Resizer { get; set; } = ResizerType.None;
+
+    /// <summary>
+    /// Gets, sets the size of <see cref="Resizer"/>. Default is <c>4px</c>.
+    /// </summary>
+    public int ResizerSize { get; set; } = 5;
+
+    /// <summary>
+    /// Gets resizer bound.
+    /// </summary>
+    public Rectangle ResizerBound
+    {
+        get
+        {
+            var resizerSize = this.ScaleToDpi(ResizerSize);
+            if (Resizer == ResizerType.HTBOTTOM && HScrollBar.Visible)
+            {
+                resizerSize += HScrollBar.Height;
+            }
+            else if (Resizer == ResizerType.HTRIGHT && VScrollBar.Visible)
+            {
+                resizerSize += VScrollBar.Width;
+            }
+
+            // get resizer bound
+            var resizerRect = ClientRectangle;
+            if (Resizer == ResizerType.HTTOP)
+            {
+                resizerRect.Height = resizerSize;
+            }
+            else if (Resizer == ResizerType.HTBOTTOM)
+            {
+                resizerRect.Y = ClientRectangle.Height - resizerSize;
+                resizerRect.Height = resizerSize;
+            }
+            else if (Resizer == ResizerType.HTLEFT)
+            {
+                resizerRect.Width = resizerSize;
+            }
+            else if (Resizer == ResizerType.HTRIGHT)
+            {
+                resizerRect.X = ClientRectangle.Width - resizerSize;
+                resizerRect.Width = resizerSize;
+            }
+            else
+            {
+                resizerRect = Rectangle.Empty;
+            }
+
+            return resizerRect;
+        }
+    }
 
     /// <summary>
     /// Gets or sets whether thumbnail images are automatically rotated.
@@ -1032,9 +1089,10 @@ public partial class ImageGallery : Control, IComponent
     /// <param name="hitInfo">Details of the hit test.</param>
     public void HitTest(Point pt, out HitInfo hitInfo)
     {
-        int itemIndex = -1;
-        bool checkBoxHit = false;
-        bool fileIconHit = false;
+        var itemIndex = -1;
+        var checkBoxHit = false;
+        var fileIconHit = false;
+        var resizerHit = false;
 
         // Normalize to item area coordinates
         pt.X -= layoutManager.ItemAreaBounds.Left;
@@ -1085,8 +1143,15 @@ public partial class ImageGallery : Control, IComponent
         }
 
 
-        hitInfo = new HitInfo(itemIndex, checkBoxHit, fileIconHit);
+        // resizer hit test
+        if (pt.X >= 0 && pt.Y >= 0)
+        {
+            resizerHit = ResizerBound.Contains(pt);
+        }
+
+        hitInfo = new HitInfo(itemIndex, checkBoxHit, fileIconHit, resizerHit);
     }
+
 
     /// <summary>
     /// Scrolls the image list view to place the item with the specified
@@ -1540,6 +1605,7 @@ public partial class ImageGallery : Control, IComponent
             mRenderer.Render(e.Graphics);
         rendererNeedsPaint = false;
     }
+
 
     /// <summary>
     /// Handles the MouseDown event.

@@ -57,6 +57,11 @@ public class HitInfo
     /// </summary>
     public bool IsInItemArea { get; private set; }
 
+    /// <summary>
+    /// Gets the rectange bound of resizer.
+    /// </summary>
+    public bool IsResizerHit { get; private set; } = false;
+
     #endregion
 
 
@@ -68,13 +73,14 @@ public class HitInfo
     /// <param name="checkBoxHit">if set to true the mouse cursor is over a checkbox.</param>
     /// <param name="fileIconHit">if set to true the mouse cursor is over a file icon.</param>
     /// <param name="inItemArea">if set to true the mouse is in the item area.</param>
-    private HitInfo(int itemIndex, bool checkBoxHit, bool fileIconHit, bool inItemArea)
+    private HitInfo(int itemIndex, bool checkBoxHit, bool fileIconHit, bool inItemArea, bool resizerHit)
     {
         ItemIndex = itemIndex;
         IsCheckBoxHit = checkBoxHit;
         IsFileIconHit = fileIconHit;
 
         IsInItemArea = inItemArea;
+        IsResizerHit = resizerHit;
     }
 
     /// <summary>
@@ -83,7 +89,8 @@ public class HitInfo
     /// <param name="itemIndex">Index of the item.</param>
     /// <param name="checkBoxHit">if set to true the mouse cursor is over a checkbox.</param>
     /// <param name="fileIconHit">if set to true the mouse cursor is over a file icon.</param>
-    internal HitInfo(int itemIndex, bool checkBoxHit, bool fileIconHit) : this(itemIndex, checkBoxHit, fileIconHit, true) { }
+    internal HitInfo(int itemIndex, bool checkBoxHit, bool fileIconHit, bool resizerHit)
+        : this(itemIndex, checkBoxHit, fileIconHit, true, resizerHit) { }
 
     #endregion
 
