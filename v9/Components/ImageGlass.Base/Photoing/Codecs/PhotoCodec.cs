@@ -1098,8 +1098,6 @@ public static class PhotoCodec
     /// <param name="profile"></param>
     private static void ApplyRotation(IMagickImage imgM, IExifProfile? profile, string ext)
     {
-        if (ext == ".HEIC" || ext == ".HEIF") return;
-
         if (ext == ".TGA")
         {
             imgM.AutoOrient();
