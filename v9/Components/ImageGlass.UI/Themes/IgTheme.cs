@@ -389,11 +389,18 @@ public class IgTheme : IDisposable
         // get icon from theme pack icon name
         var icon = ToolbarIcons.GetType().GetProperty(name ?? string.Empty)?.GetValue(ToolbarIcons);
 
-        // set empty icon
-        icon ??= BHelper.CreateDefaultToolbarIcon(ToolbarActualIconHeight, Settings.IsDarkMode);
+        // load icon from custom file
+        try
+        {
+            icon = PhotoCodec.GetThumbnail(name, ToolbarActualIconHeight, ToolbarActualIconHeight);
+        }
+        catch
+        {
+            // set empty icon
+            icon ??= BHelper.CreateDefaultToolbarIcon(ToolbarActualIconHeight, Settings.IsDarkMode);
+        }
 
         return icon as Bitmap;
     }
-
 
 }
