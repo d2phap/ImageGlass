@@ -170,6 +170,11 @@ public partial class ImageGallery : Control, IComponent
     }
 
     /// <summary>
+    /// Gets the maximum number of columns that can be displayed.
+    /// </summary>
+    public int MaxColumns => layoutManager.Cols;
+
+    /// <summary>
     /// Gets or sets whether thumbnail images are automatically rotated.
     /// </summary>
     [Category("Behavior"), DefaultValue(true)]
@@ -2242,6 +2247,12 @@ public partial class ImageGallery : Control, IComponent
     /// </summary>
     [Category("Behavior")]
     public event EventHandler<ItemTooltipShowingEventArgs>? ItemTooltipShowing;
+
+    /// <summary>
+    /// Occurs when <see cref="ImageGallery"/> is resized by <see cref="Resizer"/>.
+    /// </summary>
+    [Category("Behavior")]
+    public event EventHandler? ResizedByResizer;
 
     #endregion
 }

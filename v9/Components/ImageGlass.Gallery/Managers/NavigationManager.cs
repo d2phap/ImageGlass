@@ -201,6 +201,8 @@ public partial class ImageGallery
                 // calling WindowApi.SetResizer() also releases the mouse capture,
                 // so the mouse state here is mouse up
                 MouseState = MouseState.Normal;
+
+                _imageGallery.ResizedByResizer?.Invoke(_imageGallery, new EventArgs());
             }
         }
 
