@@ -273,26 +273,6 @@ public static class Config
     //public static bool IsCenterImage { get; set; } = true;
 
     ///// <summary>
-    ///// Check if user wants to display RGBA color code for Color Picker tool
-    ///// </summary>
-    //public static bool IsColorPickerRGBA { get; set; } = true;
-
-    ///// <summary>
-    ///// Check if user wants to display HEX with Alpha color code for Color Picker tool
-    ///// </summary>
-    //public static bool IsColorPickerHEXA { get; set; } = true;
-
-    ///// <summary>
-    ///// Check if user wants to display HSL with Alpha color code for Color Picker tool
-    ///// </summary>
-    //public static bool IsColorPickerHSLA { get; set; } = true;
-
-    ///// <summary>
-    ///// Check if user wants to display HSV with Alpha color code for Color Picker tool
-    ///// </summary>
-    //public static bool IsColorPickerHSVA { get; set; } = true;
-
-    ///// <summary>
     ///// Gets, sets welcome picture value
     ///// </summary>
     //public static bool IsShowWelcome { get; set; } = true;
@@ -397,21 +377,6 @@ public static class Config
     /// </summary>
     public static bool ShouldLoadHiddenImages { get; set; } = false;
 
-    ///// <summary>
-    ///// Gets, sets value that indicates frmColorPicker tool will be open on startup
-    ///// </summary>
-    //public static bool IsShowColorPickerOnStartup { get; set; } = false;
-
-    ///// <summary>
-    ///// Gets, sets value that indicates frmPageNav tool will be open on startup
-    ///// </summary>
-    //public static bool IsShowPageNavOnStartup { get; set; } = false;
-
-    ///// <summary>
-    ///// Gets, sets value that indicates page navigation tool auto-show on the multiple pages image
-    ///// </summary>
-    //public static bool IsShowPageNavAuto { get; set; } = false;
-
     /// <summary>
     /// Gets, sets value specifying that Window Fit mode is on
     /// </summary>
@@ -421,26 +386,6 @@ public static class Config
     /// Gets, sets value indicates the window should be always center in Window Fit mode
     /// </summary>
     public static bool CenterWindowFit { get; set; } = true;
-
-    ///// <summary>
-    ///// Gets, sets value indicates that touch gesture support enabled
-    ///// </summary>
-    //public static bool IsUseTouchGesture { get; set; } = true;
-
-    ///// <summary>
-    ///// Gets, sets value indicates that tooltips are to be hidden
-    ///// </summary>
-    //public static bool IsHideTooltips { get; set; } = false;
-
-    ///// <summary>
-    ///// Gets, sets value indicates that FrmExifTool always show on top
-    ///// </summary>
-    //public static bool IsExifToolAlwaysOnTop { get; set; } = true;
-
-    ///// <summary>
-    ///// Gets, sets value indicates that to keep the title bar of FrmMain empty
-    ///// </summary>
-    //public static bool IsUseEmptyTitleBar { get; set; } = false;
 
     /// <summary>
     /// Displays the embedded thumbnail for RAW formats if found.
@@ -540,27 +485,6 @@ public static class Config
     ///// Gets, sets height of settings window
     ///// </summary>
     //public static int FrmSettingsHeight { get; set; } = 750;
-
-
-    ///// <summary>
-    ///// Gets, sets 'Left' position of ExifTool window
-    ///// </summary>
-    //public static int FrmExifToolPositionX { get; set; } = 200;
-
-    ///// <summary>
-    ///// Gets, sets 'Top' position of ExifTool window
-    ///// </summary>
-    //public static int FrmExifToolPositionY { get; set; } = 200;
-
-    ///// <summary>
-    ///// Gets, sets width of ExifTool window
-    ///// </summary>
-    //public static int FrmExifToolWidth { get; set; } = 800;
-
-    ///// <summary>
-    ///// Gets, sets height of ExifTool window
-    ///// </summary>
-    //public static int FrmExifToolHeight { get; set; } = 600;
 
 
     ///// <summary>
@@ -672,16 +596,6 @@ public static class Config
     /// </summary>
     public static string LightTheme { get; set; } = "";
 
-    ///// <summary>
-    ///// Gets, sets the absolute file path of the exiftool executable file
-    ///// </summary>
-    //public static string ExifToolExePath { get; set; } = "";
-
-    ///// <summary>
-    ///// Gets, sets the custom arguments for Exif tool command
-    ///// </summary>
-    //public static string ExifToolCommandArgs { get; set; } = "";
-
     #endregion
 
 
@@ -758,17 +672,10 @@ public static class Config
     /// </summary>
     public static WindowState FrmMainState { get; set; } = WindowState.Normal;
 
-
     ///// <summary>
     ///// Gets, sets state of settings window
     ///// </summary>
     //public static WindowState FrmSettingsState { get; set; } = WindowState.Normal;
-
-
-    ///// <summary>
-    ///// Gets, sets state of exif tool window
-    ///// </summary>
-    //public static WindowState FrmExifToolState { get; set; } = WindowState.Normal;
 
     /// <summary>
     /// Gets, sets image loading order
@@ -861,10 +768,6 @@ public static class Config
         ShowThumbnailScrollbars = items.GetValue(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
         ShowThumbnailFilename = items.GetValue(nameof(ShowThumbnailFilename), ShowThumbnailFilename);
         //IsCenterImage = items.GetValue(nameof(IsCenterImage), IsCenterImage);
-        //IsColorPickerRGBA = items.GetValue(nameof(IsColorPickerRGBA), IsColorPickerRGBA);
-        //IsColorPickerHEXA = items.GetValue(nameof(IsColorPickerHEXA), IsColorPickerHEXA);
-        //IsColorPickerHSLA = items.GetValue(nameof(IsColorPickerHSLA), IsColorPickerHSLA);
-        //IsColorPickerHSVA = items.GetValue(nameof(IsColorPickerHSVA), IsColorPickerHSVA);
         //IsShowWelcome = items.GetValue(nameof(IsShowWelcome), IsShowWelcome);
         ShowToolbar = items.GetValue(nameof(ShowToolbar), ShowToolbar);
         EnableLoopBackNavigation = items.GetValue(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
@@ -886,15 +789,8 @@ public static class Config
         ShouldUseExplorerSortOrder = items.GetValue(nameof(ShouldUseExplorerSortOrder), ShouldUseExplorerSortOrder);
         ShouldGroupImagesByDirectory = items.GetValue(nameof(ShouldGroupImagesByDirectory), ShouldGroupImagesByDirectory);
         ShouldLoadHiddenImages = items.GetValue(nameof(ShouldLoadHiddenImages), ShouldLoadHiddenImages);
-        //IsShowColorPickerOnStartup = items.GetValue(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
-        //IsShowPageNavOnStartup = items.GetValue(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
-        //IsShowPageNavAuto = items.GetValue(nameof(IsShowPageNavAuto), IsShowPageNavAuto);
         EnableWindowFit = items.GetValue(nameof(EnableWindowFit), EnableWindowFit);
         CenterWindowFit = items.GetValue(nameof(CenterWindowFit), CenterWindowFit);
-        //IsUseTouchGesture = items.GetValue(nameof(IsUseTouchGesture), IsUseTouchGesture);
-        //IsHideTooltips = items.GetValue(nameof(IsHideTooltips), IsHideTooltips);
-        //IsExifToolAlwaysOnTop = items.GetValue(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
-        //IsUseEmptyTitleBar = items.GetValue(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
         UseEmbeddedThumbnailRawFormats = items.GetValue(nameof(UseEmbeddedThumbnailRawFormats), UseEmbeddedThumbnailRawFormats);
         UseEmbeddedThumbnailOtherFormats = items.GetValue(nameof(UseEmbeddedThumbnailOtherFormats), UseEmbeddedThumbnailOtherFormats);
         ShowImagePreview = items.GetValue(nameof(ShowImagePreview), ShowImagePreview);
@@ -927,12 +823,6 @@ public static class Config
         //FrmSettingsPositionY = items.GetValue(nameof(FrmSettingsPositionY), FrmSettingsPositionY);
         //FrmSettingsWidth = items.GetValue(nameof(FrmSettingsWidth), FrmSettingsWidth);
         //FrmSettingsHeight = items.GetValue(nameof(FrmSettingsHeight), FrmSettingsHeight);
-
-        //// FrmExifTool
-        //FrmExifToolPositionX = items.GetValue(nameof(FrmExifToolPositionX), FrmExifToolPositionX);
-        //FrmExifToolPositionY = items.GetValue(nameof(FrmExifToolPositionY), FrmExifToolPositionY);
-        //FrmExifToolWidth = items.GetValue(nameof(FrmExifToolWidth), FrmExifToolWidth);
-        //FrmExifToolHeight = items.GetValue(nameof(FrmExifToolHeight), FrmExifToolHeight);
 
 
         //FirstLaunchVersion = items.GetValue(nameof(FirstLaunchVersion), FirstLaunchVersion);
@@ -974,7 +864,6 @@ public static class Config
 
         FrmMainState = items.GetValue(nameof(FrmMainState), FrmMainState);
         //FrmSettingsState = items.GetValue(nameof(FrmSettingsState), FrmSettingsState);
-        //FrmExifToolState = items.GetValue(nameof(FrmExifToolState), FrmExifToolState);
         ImageLoadingOrder = items.GetValue(nameof(ImageLoadingOrder), ImageLoadingOrder);
         ImageLoadingOrderType = items.GetValue(nameof(ImageLoadingOrderType), ImageLoadingOrderType);
         ZoomMode = items.GetValue(nameof(ZoomMode), ZoomMode);
@@ -996,9 +885,6 @@ public static class Config
         LastSeenImagePath = items.GetValue(nameof(LastSeenImagePath), LastSeenImagePath);
         DarkTheme = items.GetValue(nameof(DarkTheme), DarkTheme);
         LightTheme = items.GetValue(nameof(LightTheme), LightTheme);
-
-        //ExifToolExePath = items.GetValue(nameof(ExifToolExePath), ExifToolExePath);
-        //ExifToolCommandArgs = items.GetValue(nameof(ExifToolCommandArgs), ExifToolCommandArgs);
 
         #endregion
 
@@ -1426,10 +1312,6 @@ public static class Config
         settings.TryAdd(nameof(ShowThumbnailScrollbars), ShowThumbnailScrollbars);
         settings.TryAdd(nameof(ShowThumbnailFilename), ShowThumbnailFilename);
         //settings.TryAdd(nameof(IsCenterImage), IsCenterImage);
-        //settings.TryAdd(nameof(IsColorPickerRGBA), IsColorPickerRGBA);
-        //settings.TryAdd(nameof(IsColorPickerHEXA), IsColorPickerHEXA);
-        //settings.TryAdd(nameof(IsColorPickerHSLA), IsColorPickerHSLA);
-        //settings.TryAdd(nameof(IsColorPickerHSVA), IsColorPickerHSVA);
         //settings.TryAdd(nameof(IsShowWelcome), IsShowWelcome);
         settings.TryAdd(nameof(ShowToolbar), ShowToolbar);
         settings.TryAdd(nameof(EnableLoopBackNavigation), EnableLoopBackNavigation);
@@ -1451,14 +1333,8 @@ public static class Config
         settings.TryAdd(nameof(ShouldUseExplorerSortOrder), ShouldUseExplorerSortOrder);
         settings.TryAdd(nameof(ShouldGroupImagesByDirectory), ShouldGroupImagesByDirectory);
         settings.TryAdd(nameof(ShouldLoadHiddenImages), ShouldLoadHiddenImages);
-        //settings.TryAdd(nameof(IsShowColorPickerOnStartup), IsShowColorPickerOnStartup);
-        //settings.TryAdd(nameof(IsShowPageNavOnStartup), IsShowPageNavOnStartup);
-        //settings.TryAdd(nameof(IsShowPageNavAuto), IsShowPageNavAuto);
         settings.TryAdd(nameof(EnableWindowFit), EnableWindowFit);
         settings.TryAdd(nameof(CenterWindowFit), CenterWindowFit);
-        //settings.TryAdd(nameof(IsUseTouchGesture), IsUseTouchGesture);
-        //settings.TryAdd(nameof(IsHideTooltips), IsHideTooltips);
-        //settings.TryAdd(nameof(IsExifToolAlwaysOnTop), IsExifToolAlwaysOnTop);
         //settings.TryAdd(nameof(IsUseEmptyTitleBar), IsUseEmptyTitleBar);
         settings.TryAdd(nameof(UseEmbeddedThumbnailRawFormats), UseEmbeddedThumbnailRawFormats);
         settings.TryAdd(nameof(UseEmbeddedThumbnailOtherFormats), UseEmbeddedThumbnailOtherFormats);
@@ -1492,12 +1368,6 @@ public static class Config
         //settings.TryAdd(nameof(FrmSettingsWidth), FrmSettingsWidth);
         //settings.TryAdd(nameof(FrmSettingsHeight), FrmSettingsHeight);
 
-        //// FrmExifTool
-        //settings.TryAdd(nameof(FrmExifToolPositionX), FrmExifToolPositionX);
-        //settings.TryAdd(nameof(FrmExifToolPositionY), FrmExifToolPositionY);
-        //settings.TryAdd(nameof(FrmExifToolWidth), FrmExifToolWidth);
-        //settings.TryAdd(nameof(FrmExifToolHeight), FrmExifToolHeight);
-
         //settings.TryAdd(nameof(FirstLaunchVersion), FirstLaunchVersion);
         settings.TryAdd(nameof(SlideshowInterval), SlideshowInterval);
         settings.TryAdd(nameof(SlideshowIntervalTo), SlideshowIntervalTo);
@@ -1521,7 +1391,6 @@ public static class Config
 
         settings.TryAdd(nameof(FrmMainState), FrmMainState.ToString());
         //settings.TryAdd(nameof(FrmSettingsState), FrmSettingsState.ToString());
-        //settings.TryAdd(nameof(FrmExifToolState), FrmExifToolState.ToString());
         settings.TryAdd(nameof(ImageLoadingOrder), ImageLoadingOrder.ToString());
         settings.TryAdd(nameof(ImageLoadingOrderType), ImageLoadingOrderType.ToString());
         settings.TryAdd(nameof(ZoomMode), ZoomMode.ToString());
@@ -1540,8 +1409,6 @@ public static class Config
         settings.TryAdd(nameof(LastSeenImagePath), LastSeenImagePath);
         settings.TryAdd(nameof(DarkTheme), DarkTheme);
         settings.TryAdd(nameof(LightTheme), LightTheme);
-        //settings.TryAdd(nameof(ExifToolExePath), ExifToolExePath);
-        //settings.TryAdd(nameof(ExifToolCommandArgs), ExifToolCommandArgs);
 
         #endregion
 
