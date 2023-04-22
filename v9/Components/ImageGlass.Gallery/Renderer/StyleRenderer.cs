@@ -673,11 +673,9 @@ public class StyleRenderer : IDisposable
         var height = Math.Max(ImageGalleryOwner.Height, 1);
 
         bufferContext.MaximumBuffer = new Size(width, height);
-
         ClearBuffer();
 
         bufferGraphics = bufferContext.Allocate(graphics, new Rectangle(0, 0, width, height));
-
         creatingGraphics = false;
 
         InitializeGraphics(bufferGraphics.Graphics);
@@ -742,7 +740,9 @@ public class StyleRenderer : IDisposable
         var filler = new Rectangle(bounds.Right, bounds.Bottom, ImageGalleryOwner.vScrollBar.Width, ImageGalleryOwner.hScrollBar.Height);
 
         g.SetClip(filler);
-        g.FillRectangle(SystemBrushes.Control, filler);
+
+        using var brush = new SolidBrush(ImageGalleryOwner.BackColor);
+        g.FillRectangle(brush, filler);
     }
 
     /// <summary>
