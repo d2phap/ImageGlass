@@ -97,7 +97,7 @@ public partial class FrmMain : ThemedForm
         UpdatePageNavToolbarButtonState();
 
         // update picmain scaling
-        PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(60f, 60f));
+        PicMain.NavButtonSize = this.ScaleToDpi(new SizeF(50f, 50f));
         PicMain.CheckerboardCellSize = this.ScaleToDpi(Constants.VIEWER_GRID_SIZE);
 
         // gallery

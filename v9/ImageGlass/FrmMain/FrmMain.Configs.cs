@@ -1184,12 +1184,24 @@ public partial class FrmMain
             Gallery.Resizer = Gallery.Dock == DockStyle.Left
                 ? ResizerType.HTRIGHT
                 : ResizerType.HTLEFT;
+
+            if (Gallery.Dock == DockStyle.Left)
+            {
+                Gallery.Resizer = ResizerType.HTRIGHT;
+                PicMain.Padding = new Padding();
+            }
+            else
+            {
+                Gallery.Resizer = ResizerType.HTLEFT;
+                PicMain.Padding = this.ScaleToDpi(new Padding(0, 0, 2, 0));
+            }
         }
         else
         {
             Gallery.ScrollBars = Config.ShowThumbnailScrollbars || Gallery.View == ImageGlass.Gallery.View.Thumbnails;
 
             Gallery.Resizer = ResizerType.None;
+            PicMain.Padding = new Padding();
         }
         UpdateGallerySize();
 

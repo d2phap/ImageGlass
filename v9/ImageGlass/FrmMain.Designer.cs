@@ -989,7 +989,6 @@ namespace ImageGlass
             PicMain.Margin = new Padding(0);
             PicMain.MessageBorderRadius = 6F;
             PicMain.Name = "PicMain";
-            PicMain.NavButtonSize = new SizeF(70F, 70F);
             PicMain.NavDisplay = Base.PhotoBox.NavButtonDisplay.Both;
             PicMain.PaddingBottom = 0;
             PicMain.PaddingLeft = 0;
