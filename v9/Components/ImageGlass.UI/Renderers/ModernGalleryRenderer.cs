@@ -44,15 +44,18 @@ public class ModernGalleryRenderer : StyleRenderer
         Theme = theme;
     }
 
-    //public override void RenderScrollbarFiller(Graphics g)
-    //{
-    //    if (Theme.Settings.IsDarkMode)
-    //    {
-    //        // dark scrollbars
-    //        _ = SystemRenderer.ApplyTheme(ImageGalleryOwner.HScrollBar, true);
-    //        _ = SystemRenderer.ApplyTheme(ImageGalleryOwner.VScrollBar, true);
-    //    }
-    //}
+
+    public override void InitializeGraphics(Graphics g)
+    {
+        base.InitializeGraphics(g);
+
+        // set scroll bar dark/light mode
+        _ = ExplorerApi.SetWindowTheme(ImageGalleryOwner.VScrollBar.Handle,
+            "ScrollBar", Theme.Settings.IsDarkMode);
+
+        _ = ExplorerApi.SetWindowTheme(ImageGalleryOwner.HScrollBar.Handle,
+            "ScrollBar", Theme.Settings.IsDarkMode);
+    }
 
 
     /// <summary>
