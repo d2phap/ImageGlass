@@ -241,13 +241,16 @@ public partial class FrmMain : ThemedForm
 
     private void Gallery_ItemClick(object sender, ItemClickEventArgs e)
     {
-        if (e.Item.Index == Local.CurrentIndex)
+        if (e.Buttons == MouseButtons.Left)
         {
-            PicMain.Refresh();
-        }
-        else
-        {
-            GoToImage(e.Item.Index);
+            if (e.Item.Index == Local.CurrentIndex)
+            {
+                PicMain.Refresh();
+            }
+            else
+            {
+                GoToImage(e.Item.Index);
+            }
         }
     }
 
