@@ -629,6 +629,9 @@ public partial class FrmMain
             var minWidth = Gallery.ThumbnailSize.Width + gapWidth + itemMargin;
             var width = (Config.GalleryColumns * (Gallery.ThumbnailSize.Width + itemMargin)) + gapWidth;
 
+            // limit the width of gallery not to fill the window width
+            width = Math.Min(Width - minWidth, width);
+
             Gallery.Width = Math.Max(minWidth, width);
         }
         // HorizontalStrip view
