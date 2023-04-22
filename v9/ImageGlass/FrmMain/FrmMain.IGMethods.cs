@@ -599,24 +599,6 @@ public partial class FrmMain
 
         Gallery.SuspendLayout();
 
-        // get scroll bar size
-        var hScrollBarSize = this.ScaleToDpi(1.5f); // random gap
-        var vScrollBarSize = hScrollBarSize; // random gap
-        if (Gallery.HScrollBar.Visible)
-        {
-            Gallery.HScrollBar.Height =
-                (int)(SystemInformation.HorizontalScrollBarHeight * 0.75f);
-            hScrollBarSize += Gallery.HScrollBar.Height;
-        }
-
-        if (Gallery.VScrollBar.Visible)
-        {
-            Gallery.VScrollBar.Width =
-                (int)(SystemInformation.HorizontalScrollBarHeight * 0.75f);
-            vScrollBarSize += Gallery.VScrollBar.Width;
-        }
-
-
         // update thumbnail size
         Gallery.ThumbnailSize = this.ScaleToDpi(new Size(Config.ThumbnailSize, Config.ThumbnailSize));
 
@@ -624,23 +606,55 @@ public partial class FrmMain
         // Thumbnails view
         if (Gallery.View == ImageGlass.Gallery.View.Thumbnails)
         {
-            var gapWidth = Gallery.Padding.Horizontal + (int)vScrollBarSize;
-            var itemMargin = (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Width * 6.5f);
-            var minWidth = Gallery.ThumbnailSize.Width + gapWidth + itemMargin;
-            var width = (Config.GalleryColumns * (Gallery.ThumbnailSize.Width + itemMargin)) + gapWidth;
+            var itemWidth = Gallery.Renderer.MeasureItem(Gallery.View).Width;
+            var itemPadding = (itemWidth - Gallery.ThumbnailSize.Width) / 2;
+
+            // calculate gap
+            var gapWidth = this.ScaleToDpi(itemPadding + Config.GalleryColumns)
+                + this.ScaleToDpi(Config.GalleryColumns);
+            if (Config.GalleryColumns == 1)
+            {
+                gapWidth = (int)this.ScaleToDpi(1.5f);
+            }
+
+            var scrollBarSize = 0;
+            if (Gallery.ScrollBars)
+            {
+                Gallery.VScrollBar.Width =
+                    Gallery.HScrollBar.Height =
+                        (int)(SystemInformation.VerticalScrollBarWidth * 0.75f);
+
+                scrollBarSize = Gallery.VScrollBar.Width;
+            }
+
+            var totalGap = Gallery.Padding.Horizontal + gapWidth + scrollBarSize;
+            var minWidth = itemWidth + totalGap;
+            var width = (Config.GalleryColumns * itemWidth) + totalGap;
 
             // limit the width of gallery not to fill the window width
-            width = Math.Min(Width - minWidth, width);
+            width = (int)Math.Min(Width - minWidth, width);
 
-            Gallery.Width = Math.Max(minWidth, width);
+            Gallery.Width = (int)Math.Max(minWidth, width);
         }
         // HorizontalStrip view
         else
         {
+            // calculate scrollbar size
+            var scrollBarSize = 0;
+            if (Gallery.ScrollBars && Gallery.HScrollBar.Visible)
+            {
+                Gallery.VScrollBar.Width =
+                    Gallery.HScrollBar.Height =
+                        (int)(SystemInformation.HorizontalScrollBarHeight * 0.75f);
+                scrollBarSize = Gallery.HScrollBar.Height;
+            }
+
+            var gapWidth = this.ScaleToDpi(1.5f); // random gap
+
             // Gallery bar
             Gallery.Height = Gallery.ThumbnailSize.Height
                 + Gallery.Padding.Vertical
-                + (int)hScrollBarSize
+                + (int)gapWidth + scrollBarSize
                 + (int)(Gallery.Renderer.MeasureItemMargin(Gallery.View).Height * 6.5f);
         }
 
